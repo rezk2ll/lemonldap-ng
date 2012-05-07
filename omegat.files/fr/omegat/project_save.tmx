@@ -2864,6 +2864,22 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../documentation/current/installdeb.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035132Z" changeid="xavier">
+        <seg>../documentation/current/installdeb.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/installrpm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035131Z" changeid="xavier">
+        <seg>../documentation/current/installrpm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../documentation/current/logs.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103842Z" changeid="xavier">
@@ -3144,6 +3160,38 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/icons/flags/de.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035400Z" changeid="xavier">
+        <seg>../media/icons/flags/de.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/flags/fr.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035253Z" changeid="xavier">
+        <seg>../media/icons/flags/fr.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/flags/ua.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035324Z" changeid="xavier">
+        <seg>../media/icons/flags/ua.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/flags/us.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035407Z" changeid="xavier">
+        <seg>../media/icons/flags/us.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/icons/gpg.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -3244,6 +3292,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/icons/xfmail.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/logos/logo_abuledu.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035440Z" changeid="xavier">
+        <seg>../media/logos/logo_abuledu.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -3312,10 +3368,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=200&amp;h=155</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035807Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=200&amp;h=155</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=800&amp;amp;h=622</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=800&amp;h=622</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035806Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=800&amp;h=622</seg>
       </tuv>
     </tu>
     <tu>
@@ -3328,10 +3400,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=200&amp;h=155</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035809Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=200&amp;h=155</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=800&amp;amp;h=622</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=800&amp;h=622</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035808Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=800&amp;h=622</seg>
       </tuv>
     </tu>
     <tu>
@@ -3344,10 +3432,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-password.png?w=200&amp;h=155</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035811Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-password.png?w=200&amp;h=155</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-password.png?w=800&amp;amp;h=622</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-password.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-password.png?w=800&amp;h=622</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035810Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-password.png?w=800&amp;h=622</seg>
       </tuv>
     </tu>
     <tu>
@@ -3360,10 +3464,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=200&amp;h=155</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035815Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=200&amp;h=155</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=800&amp;amp;h=622</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=800&amp;h=622</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035811Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=800&amp;h=622</seg>
       </tuv>
     </tu>
     <tu>
@@ -3376,10 +3496,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=200&amp;h=133</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035757Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=200&amp;h=133</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=800&amp;amp;h=534</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=800&amp;h=534</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035756Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=800&amp;h=534</seg>
       </tuv>
     </tu>
     <tu>
@@ -3392,10 +3528,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=200&amp;h=133</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035758Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=200&amp;h=133</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=800&amp;amp;h=534</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=800&amp;h=534</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035757Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=800&amp;h=534</seg>
       </tuv>
     </tu>
     <tu>
@@ -3408,10 +3560,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_logout_menu.png?w=200&amp;h=133</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035800Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.4/0.9.4_logout_menu.png?w=200&amp;h=133</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.4/0.9.4_logout_menu.png?w=800&amp;amp;h=534</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/0.9.4/0.9.4_logout_menu.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_logout_menu.png?w=800&amp;h=534</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035759Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.4/0.9.4_logout_menu.png?w=800&amp;h=534</seg>
       </tuv>
     </tu>
     <tu>
@@ -3424,10 +3592,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_menu.png?w=200&amp;h=133</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035803Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_menu.png?w=200&amp;h=133</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.4/0.9.4_password_menu.png?w=800&amp;amp;h=534</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/0.9.4/0.9.4_password_menu.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_menu.png?w=800&amp;h=534</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035802Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_menu.png?w=800&amp;h=534</seg>
       </tuv>
     </tu>
     <tu>
@@ -3440,10 +3624,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_reset.png?w=200&amp;h=133</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035805Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_reset.png?w=200&amp;h=133</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.4/0.9.4_password_reset.png?w=800&amp;amp;h=534</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/0.9.4/0.9.4_password_reset.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_reset.png?w=800&amp;h=534</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035804Z" changeid="xavier">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_reset.png?w=800&amp;h=534</seg>
       </tuv>
     </tu>
     <tu>
@@ -3456,10 +3656,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/menu.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035728Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/dark/menu.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/dark/menu.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/dark/menu.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/menu.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035727Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/dark/menu.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3472,10 +3688,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/password.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035730Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/dark/password.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/dark/password.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/dark/password.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/password.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035729Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/dark/password.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3488,10 +3720,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/portal.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035732Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/dark/portal.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/dark/portal.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/dark/portal.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/portal.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035731Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/dark/portal.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3504,10 +3752,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/menu.png?w=200&amp;h=130</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035733Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/impact/menu.png?w=200&amp;h=130</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/impact/menu.png?w=800&amp;amp;h=523</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/impact/menu.png?w=800&amp;amp;h=523</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/menu.png?w=800&amp;h=523</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035733Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/impact/menu.png?w=800&amp;h=523</seg>
       </tuv>
     </tu>
     <tu>
@@ -3520,10 +3784,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/password.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035735Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/impact/password.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/impact/password.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/impact/password.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/password.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035734Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/impact/password.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3536,10 +3816,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/portal.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035737Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/impact/portal.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/impact/portal.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/impact/portal.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/portal.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035736Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/impact/portal.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3552,10 +3848,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/accordeon_dark.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035743Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/manager/accordeon_dark.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/manager/accordeon_dark.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/manager/accordeon_dark.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/accordeon_dark.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035743Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/manager/accordeon_dark.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3568,10 +3880,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/accordeon_light.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035745Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/manager/accordeon_light.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/manager/accordeon_light.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/manager/accordeon_light.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/accordeon_light.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035744Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/manager/accordeon_light.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3584,10 +3912,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/tree_dark.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035747Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/manager/tree_dark.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/manager/tree_dark.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/manager/tree_dark.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/tree_dark.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035746Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/manager/tree_dark.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3600,10 +3944,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/tree_light.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035750Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/manager/tree_light.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/manager/tree_light.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/manager/tree_light.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/tree_light.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035749Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/manager/tree_light.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3616,10 +3976,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/menu.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035738Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/pastel/menu.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/pastel/menu.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/pastel/menu.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/menu.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035738Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/pastel/menu.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3632,10 +4008,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/password.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035740Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/pastel/password.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/pastel/password.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/pastel/password.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/password.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035739Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/pastel/password.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3648,10 +4040,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/portal.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035742Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/pastel/portal.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/pastel/portal.png?w=800&amp;amp;h=515</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/pastel/portal.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/portal.png?w=800&amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035741Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/pastel/portal.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
     <tu>
@@ -3664,10 +4072,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035752Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=800&amp;amp;h=514</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=800&amp;amp;h=514</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=800&amp;h=514</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035751Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=800&amp;h=514</seg>
       </tuv>
     </tu>
     <tu>
@@ -3680,10 +4104,138 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=200&amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035755Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=200&amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=800&amp;amp;h=514</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=800&amp;amp;h=514</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=800&amp;h=514</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035753Z" changeid="xavier">
+        <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=800&amp;h=514</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step1.png?w=200&amp;h=114</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035649Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step1.png?w=200&amp;h=114</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step1.png?w=800&amp;h=458</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035647Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step1.png?w=800&amp;h=458</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step2.png?w=200&amp;h=112</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035654Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step2.png?w=200&amp;h=112</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step2.png?w=800&amp;h=448</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035651Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step2.png?w=800&amp;h=448</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step3.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035657Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step3.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step3.png?w=200&amp;h=91</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035659Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step3.png?w=200&amp;h=91</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step4.png?w=200&amp;h=114</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035704Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step4.png?w=200&amp;h=114</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step4.png?w=800&amp;h=456</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035702Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step4.png?w=800&amp;h=456</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step5.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035706Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step5.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step5.png?w=200&amp;h=91</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035708Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/mailreset/mailreset_step5.png?w=200&amp;h=91</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/manager/notifications_explorer_create.png?w=200&amp;h=129</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035713Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/manager/notifications_explorer_create.png?w=200&amp;h=129</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/manager/notifications_explorer_create.png?w=800&amp;h=519</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035710Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/manager/notifications_explorer_create.png?w=800&amp;h=519</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/notifications/sample_notification.png?w=200&amp;h=84</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035718Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/notifications/sample_notification.png?w=200&amp;h=84</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.1/notifications/sample_notification.png?w=800&amp;h=339</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035716Z" changeid="xavier">
+        <seg>../media/screenshots/1.1/notifications/sample_notification.png?w=800&amp;h=339</seg>
       </tuv>
     </tu>
     <tu>
@@ -6128,6 +6680,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/flags/de.png?id=press</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035358Z" changeid="xavier">
+        <seg>/_detail/icons/flags/de.png?id=press</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/icons/flags/fr.png?id=documentation%3Aconferences</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103609Z" changeid="xavier">
@@ -6136,10 +6696,34 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/flags/fr.png?id=press</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035252Z" changeid="xavier">
+        <seg>/_detail/icons/flags/fr.png?id=press</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/flags/ua.png?id=press</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035322Z" changeid="xavier">
+        <seg>/_detail/icons/flags/ua.png?id=press</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/icons/flags/us.png?id=documentation%3Aconferences</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103553Z" changeid="xavier">
         <seg>/_detail/icons/flags/us.png?id=documentation%3Aconferences</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/flags/us.png?id=press</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035406Z" changeid="xavier">
+        <seg>/_detail/icons/flags/us.png?id=press</seg>
       </tuv>
     </tu>
     <tu>
@@ -6324,6 +6908,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/icons/xfmail.png?id=contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/logos/logo_abuledu.png?id=references</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035438Z" changeid="xavier">
+        <seg>/_detail/logos/logo_abuledu.png?id=references</seg>
       </tuv>
     </tu>
     <tu>
@@ -6568,10 +7160,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step1.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035650Z" changeid="xavier">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step1.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/screenshots/1.1/mailreset/mailreset_step2.png?id=documentation%3A1.2%3Aresetpassword</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145621Z" changeid="guimard">
         <seg>/_detail/screenshots/1.1/mailreset/mailreset_step2.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step2.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035656Z" changeid="xavier">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step2.png?id=screenshots</seg>
       </tuv>
     </tu>
     <tu>
@@ -6584,10 +7192,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step3.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035701Z" changeid="xavier">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step3.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/screenshots/1.1/mailreset/mailreset_step4.png?id=documentation%3A1.2%3Aresetpassword</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145742Z" changeid="guimard">
         <seg>/_detail/screenshots/1.1/mailreset/mailreset_step4.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step4.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035705Z" changeid="xavier">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step4.png?id=screenshots</seg>
       </tuv>
     </tu>
     <tu>
@@ -6600,6 +7224,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step5.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035709Z" changeid="xavier">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step5.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/screenshots/1.1/manager/notifications_explorer_create.png?id=documentation%3A1.2%3Anotifications</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T055443Z" changeid="guimard">
@@ -6608,10 +7240,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/manager/notifications_explorer_create.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035714Z" changeid="xavier">
+        <seg>/_detail/screenshots/1.1/manager/notifications_explorer_create.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/screenshots/1.1/notifications/sample_notification.png?id=documentation%3A1.2%3Anotifications</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T060527Z" changeid="guimard">
         <seg>/_detail/screenshots/1.1/notifications/sample_notification.png?id=documentation%3A1.2%3Anotifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/notifications/sample_notification.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035719Z" changeid="xavier">
+        <seg>/_detail/screenshots/1.1/notifications/sample_notification.png?id=screenshots</seg>
       </tuv>
     </tu>
     <tu>
@@ -6816,6 +7464,22 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>1.0 and 1.1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035725Z" changeid="xavier">
+        <seg>1.0 et 1.1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>1.1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035445Z" changeid="xavier">
+        <seg>1.1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>10.0.0.1:20000 10.0.0.2:20000</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T050742Z" changeid="guimard">
@@ -6872,6 +7536,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>20</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035325Z" changeid="xavier">
+        <seg>20</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>2009</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103724Z" changeid="xavier">
@@ -6912,10 +7584,34 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>22</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035315Z" changeid="xavier">
+        <seg>22</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>2_pub</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095853Z" changeid="xavier">
         <seg>2_pub</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>31</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035304Z" changeid="xavier">
+        <seg>31</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>6 avril 2012: &lt;a0&gt;Configurer LemonLDAP::NG comme serveur CAS&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035300Z" changeid="xavier">
+        <seg>6 avril 2012 : &lt;a0&gt;Configurer LemonLDAP::NG comme serveur CAS&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -8842,6 +9538,46 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141309Z" changeid="guimard">
         <seg>le dépôt &lt;a0&gt;RPMForge&lt;/a0&gt;, pour activer ce dépôt : &lt;a1&gt;https://rpmrepo.org/RPMforge/Using&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2387 -- Fr doc in progress (browseable)&lt;/a0&gt; by guimard (2012/04/10 06:18)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035848Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2387 -- Fr doc in progress (browseable)&lt;/a0&gt; by guimard (2012/04/10 06:18)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2388 -- Fr doc in progress (lmConfigEditor)&lt;/a0&gt; by guimard (2012/04/10 06:28)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035842Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2388 -- Fr doc in progress (lmConfigEditor)&lt;/a0&gt; by guimard (2012/04/10 06:28)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2389 -- Fr doc in progress (ldapconfbackend)&lt;/a0&gt; by guimard (2012/04/11 06:28)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035840Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2389 -- Fr doc in progress (ldapconfbackend)&lt;/a0&gt; by guimard (2012/04/11 06:28)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2390 -- Update documentation&lt;/a0&gt; by clement_oudot (2012/04/11 18:30)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035837Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2390 -- Update documentation&lt;/a0&gt; by clement_oudot (2012/04/11 18:30)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2391 -- Fix bug on password form display (#LEMONLDAP-251)&lt;/a0&gt; by clement_oudot (2012/04/12 14:41)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035833Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2391 -- Fix bug on password form display (#LEMONLDAP-251)&lt;/a0&gt; by clement_oudot (2012/04/12 14:41)</seg>
       </tuv>
     </tu>
     <tu>
@@ -18048,6 +18784,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>AbulEdu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035437Z" changeid="xavier">
+        <seg>AbulEdu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Accept all authenticated users:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -18236,6 +18980,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102639Z" changeid="xavier">
         <seg>Admin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Admin Magazin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035404Z" changeid="xavier">
+        <seg>Admin Magazin</seg>
       </tuv>
     </tu>
     <tu>
@@ -20492,6 +21244,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195437Z" changeid="xavier">
         <seg>Clément OUDOT</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Clément OUDOT's blog</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035356Z" changeid="xavier">
+        <seg>Blog de Clément OUDOT</seg>
       </tuv>
     </tu>
     <tu>
@@ -23740,6 +24500,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Generic articles</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035250Z" changeid="xavier">
+        <seg>Articles génériques</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Get the packages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093159Z" changeid="xavier">
@@ -26404,6 +27172,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Jan 2012: &lt;a0&gt;Configuration de LemonLDAP::NG avec Google Authenticator&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035312Z" changeid="xavier">
+        <seg>Jan 2012 : &lt;a0&gt;Configuration de LemonLDAP::NG avec Google Authenticator&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Jean-Thomas CHECCO</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26800,6 +27576,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>LemonLDAP::NG - Version hors-ligne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG 1.0 release</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035427Z" changeid="xavier">
+        <seg>Sortie de LemonLDAP::NG 1.0</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG 1.1 release</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035341Z" changeid="xavier">
+        <seg>Sortie de LemonLDAP::NG 1.1</seg>
       </tuv>
     </tu>
     <tu>
@@ -27370,6 +28162,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LinuxFR</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035345Z" changeid="xavier">
+        <seg>LinuxFR</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Little effort is required to translate the encoded string back into the user name and password, and many popular security tools will decode the strings “on the fly”.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101838Z" changeid="xavier">
@@ -27626,6 +28426,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>MBConsulting</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035410Z" changeid="xavier">
+        <seg>MBConsulting</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>MD5</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195344Z" changeid="xavier">
@@ -27710,6 +28518,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063357Z" changeid="guimard">
         <seg>Table de caractères des mails</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Mail reset feature</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035646Z" changeid="xavier">
+        <seg>Fonctionnalité de réinitialisation de mot-de-passe</seg>
       </tuv>
     </tu>
     <tu>
@@ -28652,6 +29468,22 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051649Z" changeid="guimard">
         <seg>Systèmes de notification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Nov 2011: &lt;a0&gt;LINUXOID - Единая аутентификация для веб-приложений с LemonLDAP::NG&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035330Z" changeid="xavier">
+        <seg>Nov 2011 : &lt;a0&gt;LINUXOID - Единая аутентификация для веб-приложений с LemonLDAP::NG&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Nov 2011: &lt;a0&gt;ZDNet - La gendarmerie nationale renforce la sécurité de l’accès à son SI&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035320Z" changeid="xavier">
+        <seg>Nov 2011 : &lt;a0&gt;ZDNet - La gendarmerie nationale renforce la sécurité de l’accès à son SI&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -29878,6 +30710,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Portal and Manager skins have not evolved a lot since 1.0, so 1.0 screenshots are still up to date.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035601Z" changeid="xavier">
+        <seg>Les thèmes du portail et du manager n'ont pas beaucoup évolué depuis la version 1.0, donc les captures d'écran 1.0 restent valables.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Portal checks authentication</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -30090,6 +30930,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Présentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Press</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035145Z" changeid="xavier">
+        <seg>Presse</seg>
       </tuv>
     </tu>
     <tu>
@@ -32550,6 +33398,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Some articles published somewhere in the world wide web.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035242Z" changeid="xavier">
+        <seg>Quelques articles publiés quelque part sur le web.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Some can be mandatory, so if they are not returned by IDP, the session will not open.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220423Z" changeid="xavier">
@@ -32698,6 +33554,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Version stable (1.0)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Stable version (1.1.2)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035157Z" changeid="xavier">
+        <seg>Version stable (1.1.2)</seg>
       </tuv>
     </tu>
     <tu>
@@ -35826,6 +36690,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Toolinux</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035412Z" changeid="xavier">
+        <seg>Toolinux</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Transaction Summary
 ===================================================
 Install      82 Package(s)
@@ -38426,6 +39298,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You will find here screenshots of the new features.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035630Z" changeid="xavier">
+        <seg>On trouve ici les captures d'écran des nouvelles fonctionnalités.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You will need a very recent version of Lasso (&gt;= 2.3.0).</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -40164,6 +41044,94 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation/conferences.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/current/applications/bugzilla.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035821Z" changeid="xavier">
+        <seg>documentation/current/applications/bugzilla.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/current/applications/dokuwiki.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035823Z" changeid="xavier">
+        <seg>documentation/current/applications/dokuwiki.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/current/applications/obm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035820Z" changeid="xavier">
+        <seg>documentation/current/applications/obm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/current/applications/sympa.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035825Z" changeid="xavier">
+        <seg>documentation/current/applications/sympa.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/current/applications/zimbra.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035824Z" changeid="xavier">
+        <seg>documentation/current/applications/zimbra.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/current/installdeb.html#llng_repository</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035207Z" changeid="xavier">
+        <seg>documentation/current/installdeb.html#llng_repository</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/current/installdeb.html#official_repository</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035206Z" changeid="xavier">
+        <seg>documentation/current/installdeb.html#official_repository</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/current/installrpm.html#yum_repository</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035201Z" changeid="xavier">
+        <seg>documentation/current/installrpm.html#yum_repository</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/current/prereq.html#apt-get</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035208Z" changeid="xavier">
+        <seg>documentation/current/prereq.html#apt-get</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/current/prereq.html#yum</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035202Z" changeid="xavier">
+        <seg>documentation/current/prereq.html#yum</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/current/start.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035134Z" changeid="xavier">
+        <seg>documentation/current/start.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -42424,6 +43392,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://coudot.blogs.linagora.com/index.php/post/2010/12/01/Sortie-de-LemonLDAP%3A%3ANG-10</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035430Z" changeid="xavier">
+        <seg>http://coudot.blogs.linagora.com/index.php/post/2010/12/01/Sortie-de-LemonLDAP%3A%3ANG-10</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://coudot.blogs.linagora.com/index.php/post/2011/07/21/Sortie-de-LemonLDAP%3A%3ANG-11</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035346Z" changeid="xavier">
+        <seg>http://coudot.blogs.linagora.com/index.php/post/2011/07/21/Sortie-de-LemonLDAP%3A%3ANG-11</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://deb.entrouvert.org/</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -42672,6 +43656,54 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=11045</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035209Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=11045</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=13166</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035211Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=13166</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=17132</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035158Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=17132</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=17133</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035200Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=17133</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=17134</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035159Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=17134</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=17135</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035204Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=17135</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://forge.ow2.org/project/showfiles.php?group_id=274</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -42756,6 +43788,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153633Z" changeid="xavier">
         <seg>http://help.sap.com/saphelp_nw70/helpdata/en/d0/a3d940c2653126e10000000a1550b0/frameset.htm</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://herve.vanmeerbeck.free.fr/?p=53</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035251Z" changeid="xavier">
+        <seg>http://herve.vanmeerbeck.free.fr/?p=53</seg>
       </tuv>
     </tu>
     <tu>
@@ -43016,6 +44056,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://linuxfr.org/news/sortie-de-lemonldapng-11</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035342Z" changeid="xavier">
+        <seg>http://linuxfr.org/news/sortie-de-lemonldapng-11</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://linuxfr.org/news/sortie-de-lemonldapng-version-10</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035418Z" changeid="xavier">
+        <seg>http://linuxfr.org/news/sortie-de-lemonldapng-version-10</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://mail.ow2.org/wws/arc/lemonldap-ng-changes</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -43076,6 +44132,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://marcelhaise.com/rmll2009/#LemonLDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://mb-c.pro/en/archives/7657</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035405Z" changeid="xavier">
+        <seg>http://mb-c.pro/en/archives/7657</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://mb-c.pro/fr/archives/1468</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035431Z" changeid="xavier">
+        <seg>http://mb-c.pro/fr/archives/1468</seg>
       </tuv>
     </tu>
     <tu>
@@ -43544,6 +44616,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://toolinux.com/Sortie-de-LemonLDAP-NG-1-0</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035433Z" changeid="xavier">
+        <seg>http://toolinux.com/Sortie-de-LemonLDAP-NG-1-0</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://toolinux.com/Sortie-de-LemonLDAP-NG-1-1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035411Z" changeid="xavier">
+        <seg>http://toolinux.com/Sortie-de-LemonLDAP-NG-1-1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://twitter.com/lemonldapng</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -43704,6 +44792,46 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2387</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035843Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2387</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2388</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035841Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2388</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2389</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035838Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2389</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2390</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035835Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2390</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2391</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035827Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2391</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Documentation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -43732,6 +44860,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T173632Z" changeid="xavier">
         <seg>http://wiki.zimbra.com/index.php?title=Preauth#Preparing_a_domain_for_preauth</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.admin-magazin.de/News/Single-Sign-on-im-Web-mit-LemonLDAP-NG-1.1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035357Z" changeid="xavier">
+        <seg>http://www.admin-magazin.de/News/Single-Sign-on-im-Web-mit-LemonLDAP-NG-1.1</seg>
       </tuv>
     </tu>
     <tu>
@@ -43804,6 +44940,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://www.facebook.com/home.php?#!/pages/LemonldapNG/328254254936</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.fitzdsl.net/?p=286</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035301Z" changeid="xavier">
+        <seg>http://www.fitzdsl.net/?p=286</seg>
       </tuv>
     </tu>
     <tu>
@@ -44184,6 +45328,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.tux.in.ua/articles/2810</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035321Z" changeid="xavier">
+        <seg>http://www.tux.in.ua/articles/2810</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.wikipedia.org</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074442Z" changeid="xavier">
@@ -44212,6 +45364,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162059Z" changeid="xavier">
         <seg>http://www.yubico.com/yubikey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.zdnet.fr/actualites/la-gendarmerie-nationale-renforce-la-securite-de-l-acces-a-son-si-39765875.htm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035314Z" changeid="xavier">
+        <seg>http://www.zdnet.fr/actualites/la-gendarmerie-nationale-renforce-la-securite-de-l-acces-a-son-si-39765875.htm</seg>
       </tuv>
     </tu>
     <tu>
@@ -44252,6 +45412,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061624Z" changeid="guimard">
         <seg>https</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://auth.abuledu.net/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035442Z" changeid="xavier">
+        <seg>https://auth.abuledu.net/</seg>
       </tuv>
     </tu>
     <tu>
@@ -44416,10 +45584,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>icons:flags:de.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035359Z" changeid="xavier">
+        <seg>icons:flags:de.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>icons:flags:fr.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103610Z" changeid="xavier">
         <seg>icons:flags:fr.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:flags:ua.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035323Z" changeid="xavier">
+        <seg>icons:flags:ua.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -45310,6 +46494,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>logos:logo_abuledu.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035439Z" changeid="xavier">
+        <seg>logos:logo_abuledu.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>logos:logo_bpi.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -45522,6 +46714,46 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063444Z" changeid="guimard">
         <seg>mailUrl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailreset_step1.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035648Z" changeid="xavier">
+        <seg>mailreset_step1.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailreset_step2.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035652Z" changeid="xavier">
+        <seg>mailreset_step2.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailreset_step3.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035658Z" changeid="xavier">
+        <seg>mailreset_step3.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailreset_step4.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035703Z" changeid="xavier">
+        <seg>mailreset_step4.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailreset_step5.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035707Z" changeid="xavier">
+        <seg>mailreset_step5.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -45814,6 +47046,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063738Z" changeid="guimard">
         <seg>notificationWildcard</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>notifications_explorer_create.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035712Z" changeid="xavier">
+        <seg>notifications_explorer_create.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -46252,6 +47492,22 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>press</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035141Z" changeid="xavier">
+        <seg>press</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>press.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035135Z" changeid="xavier">
+        <seg>press.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>protect the manager by &lt;a0&gt;LL::NG&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T094901Z" changeid="xavier">
@@ -46550,6 +47806,14 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064040Z" changeid="guimard">
         <seg>samlStorageOptions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>sample_notification.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035717Z" changeid="xavier">
+        <seg>sample_notification.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -47792,6 +49056,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>~1800</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>~40 000</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T035441Z" changeid="xavier">
+        <seg>~40 000</seg>
       </tuv>
     </tu>
     <tu>
