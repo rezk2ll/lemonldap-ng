@@ -434,7 +434,7 @@ sub checkMessage {
             if ( $self->param('SAMLResponse') ) {
 
                 # Response in query string
-                $response = $self->param('SAMLResponse');
+                $response = $self->query_string();
                 $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
                     'debug' );
 
@@ -443,7 +443,7 @@ sub checkMessage {
             if ( $self->param('SAMLRequest') ) {
 
                 # Request in query string
-                $request = $self->param('SAMLRequest');
+                $request = $self->query_string();
                 $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
 
             }
@@ -451,7 +451,7 @@ sub checkMessage {
             if ( $self->param('SAMLart') ) {
 
                 # Artifact in query string
-                $artifact = $self->param('SAMLart');
+                $artifact = $self->query_string();
                 $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
                     'debug' );
 
