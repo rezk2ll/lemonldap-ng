@@ -2450,6 +2450,7 @@ sub issuerForAuthUser {
 #@return Lemonldap::NG::Portal constant
 sub autoRedirect {
     my $self = shift;
+    $self->clearHiddenFormValue();
 
     # Default redirection URL
     $self->{urldc} ||= $self->{portal}

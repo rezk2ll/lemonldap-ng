@@ -2951,14 +2951,7 @@ sub sendSLOErrorResponse {
     }
 
     # Send unvalidated SLO response
-    unless ( $self->sendLogoutResponseToServiceProvider( $logout, $method ) ) {
-        $self->lmLog( "Could not send SLO error response", 'error' );
-        $self->quit();
-    }
-
-    $self->lmLog( "SLO response error sent", 'debug' );
-
-    $self->quit();
+    return $self->sendLogoutResponseToServiceProvider( $logout, $method );
 }
 
 1;
