@@ -450,17 +450,12 @@ sub new {
     }
 
     # Trusted domains
-    unless ( defined( $self->{trustedDomains} ) ) {
-        $self->{trustedDomains} = $self->{domain};
-    }
-    if ( $self->{trustedDomains} eq '*' ) {
-        $self->{trustedDomains} = '|\w[\w\-\.]*\w';
-    }
-    elsif ( $self->{trustedDomains} ) {
-        $self->{trustedDomains} = '|(?:[^/]*)?(?:'
-          . join( '|',
-            ( map { s/\./\\\./g; $_ } split /\s+/, $self->{trustedDomains} ) )
-          . ')';
+    $self->{trustedDomains} ||= "";
+    $self->{trustedDomains} = "*" if ($self->{trustedDomains} =~ /(^|\s)\*(\s|$)/);
+    if ( $self->{trustedDomains} and $self->{trustedDomains} ne "*" ) {
+        $self->{trustedDomains} =~ s#(^|\s+)\.#[^/]+.#g;
+        $self->{trustedDomains} = '(' . join( '|', split(/\s+/, $self->{trustedDomains}) ) . ')';
+        $self->{trustedDomains} =~ s/\./\\./g;
     }
 
     return $self;
@@ -746,6 +741,20 @@ sub buildHiddenForm {
     }
 
     return $val;
+}
+
+## @method boolean isTrustedUrl(string url)
+# Check if an URL's domain name is declared in LL::NG config or is declared as trusted domain
+# @param url Parameter url
+# @param value Parameter value
+# @return 1 if url can be trusted, 0 else
+sub isTrustedUrl {
+    my ( $self, $url ) = splice @_;
+    return
+           $url =~ m#^https?://$self->{reVHosts}(:\d+)?/#o
+        || $self->{trustedDomains} eq "*"
+        || $self->{trustedDomains}
+        && $url =~ m#^https?://$self->{trustedDomains}(:\d+)?/#o ;
 }
 
 ## @method boolean checkXSSAttack(string name, string value)
@@ -1542,11 +1551,7 @@ sub controlUrlOrigin {
         }
 
         # Non protected hosts
-        if (    $tmp
-            and $tmp !~
-/^https?:\/\/(?:$self->{reVHosts}$self->{trustedDomains})(?::\d+)?(?:\/.*)?$/o
-          )
-        {
+        if ( $tmp and !$self->isTrustedUrl($tmp) ) {
             $self->lmLog(
                 "URL contains a non protected host (param: "
                   . ( $self->param('logout') ? 'HTTP Referer' : 'urldc' )
@@ -2482,17 +2487,17 @@ sub autoRedirect {
         # Cross-domain mechanism
         if (    $self->{cda}
             and $self->{id}
-            and $self->{urldc} !~ m#^http(s?)://[^/]*$self->{domain}/#oi )
+            and $self->{urldc} !~ m#^https?://[^/]*$self->{domain}(:\d+)?/#oi
+            and $self->isTrustedUrl( $self->{urldc} ) )
         {
-            my $ssl = $1;
+            my $ssl = $self->{urldc} =~ /^https/;
             $self->lmLog( 'CDA request', 'debug' );
             $self->{urldc} .=
                 ( $self->{urldc} =~ /\?/ ? '&' : '?' ) 
-              . $self->{cookieName} . "="
-              . (
-                ( $self->{securedCookie} < 2 or $ssl )
-                ? $self->{id}
-                : $self->{sessionInfo}->{_httpSession}
+                . (
+                  $self->{securedCookie} < 2 or $ssl 
+                ? $self->{cookieName} .     "=" . $self->{id}
+                : $self->{cookieName} . "http=" . $self->{sessionInfo}->{_httpSession}
               );
         }
 
