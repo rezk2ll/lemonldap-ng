@@ -104,7 +104,7 @@ sub delete {
     return _execute( $self,
             "UPDATE $self->{dbiTable} "
           . "SET done='$ts[5]-$ts[4]-$ts[3] $ts[2]:$ts[1]' "
-          . "WHERE done IS NULL AND date='$d' AND uid='$u' AND ref='$r'" );
+          . "WHERE done IS NULL AND uid='$u' AND ref='$r' AND date='$d'" );
 }
 
 ## @method boolean purge(string myref)
@@ -123,7 +123,7 @@ sub purge {
     $d =~ s/'/''/g;
     return _execute( $self,
             "DELETE FROM $self->{dbiTable} "
-          . "WHERE done IS NOT NULL AND date='$d' AND uid='$u' AND ref='$r'" );
+          . "WHERE done IS NOT NULL AND uid='$u' AND ref='$r' AND date='$d'" );
 }
 
 ## @method boolean newNotif(string date, string uid, string ref, string condition, string xml)
