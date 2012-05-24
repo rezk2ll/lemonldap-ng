@@ -805,6 +805,9 @@ sub msg {
 sub error {
     my $self = shift;
     my $code = shift || $self->{error};
+    if (my $lang = shift) { # only for SOAP error requests
+        $self->{lang} = $self->extract_lang($lang);
+    }
     my $msg;
 
     # Check for customized message
@@ -830,11 +833,7 @@ sub error {
 
     # Return message
     # Manage SOAP
-    return (
-        $ENV{HTTP_SOAPACTION}
-        ? SOAP::Data->name( result => $msg )->type('string')
-        : $msg
-    );
+    return $msg;
 }
 
 ##@method string error_type(int code)

@@ -50,8 +50,8 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
   <!-- authentication service -->
 
   <wsdl:message name="errorRequest">
-    <wsdl:part name="lang" type="xsd:string" />
     <wsdl:part name="code" type="xsd:int" />
+    <wsdl:part name="lang" type="xsd:string" />
   </wsdl:message>
   <wsdl:message name="errorResponse">
     <wsdl:part name="result" type="xsd:string" />

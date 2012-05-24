@@ -332,7 +332,7 @@ sub _sub {
 #@return array of user's preferred languages (two letters)
 sub extract_lang {
     my $self  = shift;
-    my @langs = split /,\s*/, ( $ENV{HTTP_ACCEPT_LANGUAGE} || "" );
+    my @langs = split /,\s*/, ( shift || $ENV{HTTP_ACCEPT_LANGUAGE} || "" );
     my @res   = ();
     foreach (@langs) {
 
