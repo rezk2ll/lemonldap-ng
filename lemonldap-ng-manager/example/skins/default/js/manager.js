@@ -891,8 +891,8 @@ function samlAttribute(id) {
 	display('samlAttribute',lmtext(id));
 	$('#newsamlattributeb,#delsamlattributeb').show();
 }
-function samlAttributeRoot(){
-	currentId=simpleTreeCollection[0].getSelected().attr('id');
+function samlAttributeRoot(id){
+	currentId=id;
 	display('default','');
 	$('#newsamlattributebr').show();
 }

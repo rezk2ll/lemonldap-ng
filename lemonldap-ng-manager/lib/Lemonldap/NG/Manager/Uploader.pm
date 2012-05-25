@@ -146,7 +146,7 @@ s/^text_(NewID_)?li_([\w\/\+\=]+)(\d)(?:_\d+)?$/decode_base64($2.'='x $3)/e;
 
             # Special case: avoid bug with node created from parent node
             if ( $id =~
-/^(virtualHosts|samlIDPMetaDataExportedAttributes|samlSPMetaDataExportedAttributes|generalParameters\/authParams\/choiceParams)/
+/^(virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode|generalParameters\/authParams\/choiceParams)/
               )
             {
                 $self->lmLog( "Special trigger for $id (attribute $name)",
@@ -165,11 +165,11 @@ s/^virtualHosts\/([^\/]*)?\/header.*/exportedHeaders\/$1\/$name/;
 
                 # SAML IDP attribute
                 $id =~
-s/^samlIDPMetaDataExportedAttributes\/([^\/]*)?.*/samlIDPMetaDataExportedAttributes\/$1\/$name/;
+s/^samlIDPMetaDataNode\/([^\/]*)?.*/samlIDPMetaDataExportedAttributes\/$1\/$name/;
 
                 # SAML SP attribute
                 $id =~
-s/^samlSPMetaDataExportedAttributes\/([^\/]*)?.*/samlSPMetaDataExportedAttributes\/$1\/$name/;
+s/^samlSPMetaDataNode\/([^\/]*)?.*/samlSPMetaDataExportedAttributes\/$1\/$name/;
 
                 # Authentication choice
                 $id =~
