@@ -38,4 +38,5 @@ t/20-Lemonldap-NG-Handler-CDA.t
 t/30-Lemonldap-NG-Handler-CGI.t
 t/40-Lemonldap-NG-Handler-Proxy.t
 t/50-Lemonldap-NG-Handler-SecureToken.t
+t/51-Lemonldap-NG-Handler-Zimbra.t
 t/99-pod.t
