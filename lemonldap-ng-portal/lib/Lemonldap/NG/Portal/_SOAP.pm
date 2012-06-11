@@ -94,19 +94,11 @@ sub getCookies {
         $self->updateSession();
     }
     my @tmp = ();
-    push @tmp, SOAP::Data->name( error => $self->{error} );
+    push @tmp, SOAP::Data->name( errorCode => $self->{error} );
     my @cookies = ();
     unless ( $self->{error} ) {
         foreach ( @{ $self->{cookie} } ) {
-            push @cookies, SOAP::Data->name( $_->name, $_->value );
-        }
-        push @cookies,
-          SOAP::Data->name( $self->{cookieName} . 'update', time() );
-    }
-    else {
-        my @cookieNames = split /\s+/, $self->{cookieName};
-        foreach (@cookieNames) {
-            push @cookies, SOAP::Data->name( $_, 0 );
+            push @cookies, SOAP::Data->name( $_->name, $_->value )->type("string");
         }
     }
     push @tmp, SOAP::Data->name( cookies => \SOAP::Data->value(@cookies) );

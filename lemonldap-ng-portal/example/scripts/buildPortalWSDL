@@ -23,7 +23,6 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
       <complexType name="CookiesSequence">
         <sequence>
           __XMLCOOKIELIST__
-          <element name="lemonldapupdate" type="xsd:string"></element>
         </sequence>
       </complexType>
       <complexType name="AttributesSequence">
@@ -34,7 +33,7 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
       <complexType name="GetCookieResponse">
         <sequence>
           <element name="errorCode" type="xsd:int"></element>
-          <element name="cookies" type="tns1:CookiesSequence"></element>
+          <element name="cookies" minOccurs="0" type="tns1:CookiesSequence"></element>
         </sequence>
       </complexType>
       <complexType name="GetAttributesResponse">
@@ -153,7 +152,7 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
     <wsdl:part name="uri" type="xsd:string" />
   </wsdl:message>
   <wsdl:message name="isAuthorizedURIResponse">
-    <wsdl:part name="result" type="xsd:boolean" />
+    <wsdl:part name="result" type="xsd:int" />
   </wsdl:message>
 
   <wsdl:message name="getMenuApplicationsRequest">
