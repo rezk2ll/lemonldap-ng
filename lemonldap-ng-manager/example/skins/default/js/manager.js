@@ -793,6 +793,7 @@ function btext(id) {
 	$('#btextKey').attr('value',lmtext(id));
 	$('#btextValue').attr('value',lmdata(id));
 	display('btext',lmtext(id));
+	$('#btextValue,#btextKey').elastic()
 	$('#newkb,#delkb').show();
 }
 function bool(id) {
@@ -977,6 +978,7 @@ function rules(id){
 	$('#rulKey').attr('value',b[2]);
 	$('#rulValue').attr('value',lmdata(id));
 	display('rules',lmtext(lmparent(id)));
+	$('#rulComment,#rulKey,#rulValue').elastic();
 	if(t=='default'){
 		$('#rulKey').attr('readonly','readonly');
 		$('#rulCommentDiv').css('display','none');
@@ -994,23 +996,24 @@ function rulesRoot(id){
 	$('#newrbr').show();
 }
 function grantSessionRules(id){
-        currentId=id;
-        var t=lmtext(id);
-        var b=t.match(/^(.*?)(?:|##(.*))$/);
-        if(typeof(b[2])=='undefined')b[2]='';
-        var v=lmdata(id);
-        if(v=='#')v=''
-        $('#grantSessionRulKey').attr('value',b[1]);
-        $('#grantSessionRulComment').attr('value',b[2]);
-        $('#grantSessionRulValue').attr('value',v);
-        display('grantSessionRules',lmtext(lmparent(id)));
-        $('#delkb').show();
-        $('#newgsrb').show();
+	currentId=id;
+	var t=lmtext(id);
+	var b=t.match(/^(.*?)(?:|##(.*))$/);
+	if(typeof(b[2])=='undefined')b[2]='';
+	var v=lmdata(id);
+	if(v=='#')v=''
+	$('#grantSessionRulKey').attr('value',b[1]);
+	$('#grantSessionRulComment').attr('value',b[2]);
+	$('#grantSessionRulValue').attr('value',v);
+	display('grantSessionRules',lmtext(lmparent(id)));
+	$('#grantSessionRulKey,#grantSessionRulComment,#grantSessionRulValue').elastic();
+	$('#delkb').show();
+	$('#newgsrb').show();
 }
 function grantSessionRulesRoot(id){
-        currentId=id;
-        display('default','');
-        $('#newgsrbr').show();
+	currentId=id;
+	display('default','');
+	$('#newgsrbr').show();
 }
 function reloadAuthParams() {
 	var value=$('#authText').attr('value');

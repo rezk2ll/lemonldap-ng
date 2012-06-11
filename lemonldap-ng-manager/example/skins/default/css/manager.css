@@ -54,6 +54,12 @@ input, select, textarea
 	border:1px solid #bbb;
 	padding:5px 10px;
 	margin:5px;
+	vertical-align: middle;
+}
+
+textarea.elastic {
+	max-height: 8em;
+	font:bold 9pt sans-serif;
 }
 
 textarea#filearea

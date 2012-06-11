@@ -16,6 +16,7 @@
 <script src="<TMPL_VAR NAME="DIR">/js/jquery-ui-1.8.6.custom.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/jquery.cookie.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/jquery.ajaxfileupload.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/js/jquery.elastic.source.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/tree.js" type="text/JavaScript"></script>
 <script type="text/JavaScript">//<![CDATA[
 	var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';
@@ -362,7 +363,8 @@
 
 
     <div id="content_btext" class="hidden">
-     <input type="text" id="btextKey" /> <input type="text" id="btextValue" />
+     <textarea class="elastic" id="btextKey" rows="1" cols="25"></textarea>
+     <textarea class="elastic" id="btextValue" rows="1" cols="40"></textarea>
      <br />
      <button onclick="setlminputtext(currentId,btextKey);setlminputdata(currentId,btextValue);return false;" >
      <lang en="Apply" fr="Appliquer" />
@@ -372,16 +374,16 @@
     <!-- Rule -->
     <div id="content_rules" class="hidden">
      <table border="0"><tbody><tr><td>
-	 <div id="rulCommentDiv">
-	 	<lang en="Comment" fr="Commentaire" /><br/>
-	         <input type='text' id="rulComment" size="30" />
-	 </div>
-	 <lang en="Expression" fr="Expression" /><br/>
-         <textarea id="rulKey" cols="30" rows="2"></textarea>
+      <div id="rulCommentDiv">
+       <lang en="Comment" fr="Commentaire" /><br/>
+       <textarea class="elastic" id="rulComment" rows="1" cols="30"></textarea>
+      </div>
+      <lang en="Expression" fr="Expression" /><br/>
+      <textarea class="elastic" id="rulKey" rows="1" cols="30"></textarea>
      </td>
      <td>
-	 <lang en="Rule" fr="Règle" /><br/>
-         <textarea id="rulValue" cols="50" rows="4"></textarea>
+      <lang en="Rule" fr="Règle" /><br/>
+      <textarea class="elastic" id="rulValue" rows="1" cols="50"></textarea>
      </td></tr></tbody></table>
      <br />
      <button onclick="setlmrule(currentId,rulComment,rulKey,rulValue);return false;" >
@@ -392,16 +394,16 @@
     <!-- Grant session rule -->
     <div id="content_grantSessionRules" class="hidden">
      <table border="0"><tbody><tr><td>
-         <div id="grantSessionRulCommentDiv">
-                <lang en="Comment" fr="Commentaire" /><br/>
-                 <input type='text' id="grantSessionRulComment" size="30" />
-         </div>
-         <lang en="Condition" fr="Condition" /><br/>
-         <textarea id="grantSessionRulKey" cols="30" rows="2"></textarea>
+      <div id="grantSessionRulCommentDiv">
+       <lang en="Comment" fr="Commentaire" /><br/>
+       <textarea class="elastic" id="grantSessionRulComment" rows="1" cols="30"></textarea>
+      </div>
+      <lang en="Condition" fr="Condition" /><br/>
+      <textarea class="elastic" id="grantSessionRulKey" cols="30" rows="1"></textarea>
      </td>
      <td>
          <lang en="Message" fr="Message" /><br/>
-         <textarea id="grantSessionRulValue" cols="50" rows="4"></textarea>
+         <textarea class="elastic" id="grantSessionRulValue" cols="50" rows="1"></textarea>
      </td></tr></tbody></table>
      <br />
      <button onclick="setlmgrantsessionrule(currentId,grantSessionRulComment,grantSessionRulKey,grantSessionRulValue);return false;" >
@@ -413,7 +415,7 @@
     <div id="content_authParams" class="hidden">
      <select id="authText"></select>
      <br/>
-     <input type="text" id="authOptions" class="hidden" />
+     <input type="text" id="authOptions" class="hidden" size="30"/>
      <br/>
      <button onclick="reloadAuthParams();return false;" >
      <lang en="Apply" fr="Appliquer" />
@@ -433,7 +435,7 @@
 
     <!-- Vhost -->
     <div id="content_vhost" class="hidden">
-     <input type="text" id="vhost" />
+     <input type="text" id="vhost" size="30"/>
      <br />
      <button onclick="setlminputtext(currentId,vhost);return false;" >
      <lang en="Apply" fr="Appliquer" />
@@ -442,7 +444,7 @@
 
     <!-- samlIdpMetaData -->
     <div id="content_samlIdpMetaData" class="hidden">
-     <input type="text" id="samlIdpMetaData" />
+     <input type="text" id="samlIdpMetaData" size="30"/>
      <br />
      <button onclick="setlminputtext(currentId,samlIdpMetaData);return false;" >
      <lang en="Apply" fr="Appliquer" />
@@ -451,7 +453,7 @@
 
     <!-- samlSpMetaData -->
     <div id="content_samlSpMetaData" class="hidden">
-     <input type="text" id="samlSpMetaData" />
+     <input type="text" id="samlSpMetaData" size="30"/>
      <br />
      <button onclick="setlminputtext(currentId,samlSpMetaData);return false;" >
      <lang en="Apply" fr="Appliquer" />
@@ -636,11 +638,11 @@
      <table>
       <tr>
        <td><lang en="POST URL" fr="URL POST"/></td>
-       <td><input type="text" id="postKey" /></td>
+       <td><input type="text" id="postKey" size="40"/></td>
       </tr>
       <tr>
        <td><lang en="Target URL (optional)" fr="URL cible (optionnelle)"/></td>
-       <td><input type="text" id="postUrl" /></td>
+       <td><input type="text" id="postUrl" size="40"/></td>
       </tr>
      </table>
      <br />
