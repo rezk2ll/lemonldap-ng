@@ -2,23 +2,26 @@
 
 use Lemonldap::NG::Portal::SharedConf;
 
-my $portal = Lemonldap::NG::Portal::SharedConf->new( {} );
+my $self = Lemonldap::NG::Portal::SharedConf->new( {} );
 
-unless ( $portal->{Soap} ) {
+unless ( $self->{Soap} ) {
     print STDERR "Lemonldap::NG Portal SOAP capability is disabled.\n"
       . "Set 'Soap' option to 1 in manager or lemonldap-ng.ini to enable it.\n";
     exit;
 }
 
-my @cookies = ( $portal->{cookieName} );
-push @cookies, "$portal->{cookieName}.http"
-  if ( $portal->{securedCookie} >= 2 );
+my $portal = $self->{portal};
+$portal .= "index.pl" if ( $portal =~ /\/$/ );
+
+my @cookies = ( $self->{cookieName} );
+push @cookies, "$self->{cookieName}.http"
+  if ( $self->{securedCookie} >= 2 );
 my $cookieList = join "\n",
   map { "<element name='$_' type='xsd:string'></element>" } @cookies;
 
 my $attrList = join "\n",
   map { "<element name='$_' type='xsd:string' nillable='true'></element>" }
-  $portal->exportedAttr;
+  $self->attributeList;
 
 print <<EOT;
 <?xml version="1.0" encoding="UTF-8"?>
@@ -117,7 +120,7 @@ $attrList
 
   <wsdl:service name="authenticationService">
     <wsdl:port binding="impl:authenticationBinding" name="authenticationPort">
-      <wsdlsoap:address location="$portal->{portal}" />
+      <wsdlsoap:address location="$portal" />
     </wsdl:port>
   </wsdl:service>
 
@@ -152,7 +155,7 @@ $attrList
 
   <wsdl:service name="notificationService">
     <wsdl:port binding="impl:notificationBinding" name="notificationPort">
-      <wsdlsoap:address location="$portal->{portal}/notification" />
+      <wsdlsoap:address location="$portal/notification" />
     </wsdl:port>
   </wsdl:service>
 
@@ -229,7 +232,7 @@ $attrList
 
   <wsdl:service name="sessionsService">
     <wsdl:port binding="impl:sessionsBinding" name="sessionsPort">
-      <wsdlsoap:address location="$portal->{portal}/sessions" />
+      <wsdlsoap:address location="$portal/sessions" />
     </wsdl:port>
   </wsdl:service>
 
