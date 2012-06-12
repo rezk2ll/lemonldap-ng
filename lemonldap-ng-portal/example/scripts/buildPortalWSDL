@@ -1,8 +1,26 @@
 #!/usr/bin/perl
 
-use Lemonldap::NG::Common::BuildWSDL;
+use Lemonldap::NG::Portal::SharedConf;
 
-print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
+my $portal = Lemonldap::NG::Portal::SharedConf->new( {} );
+
+unless ( $portal->{Soap} ) {
+    print STDERR "Lemonldap::NG Portal SOAP capability is disabled.\n"
+      . "Set 'Soap' option to 1 in manager or lemonldap-ng.ini to enable it.\n";
+    exit;
+}
+
+my @cookies = ( $portal->{cookieName} );
+push @cookies, "$portal->{cookieName}.http"
+  if ( $portal->{securedCookie} >= 2 );
+my $cookieList = join "\n",
+  map { "<element name='$_' type='xsd:string'></element>" } @cookies;
+
+my $attrList = join "\n",
+  map { "<element name='$_' type='xsd:string' nillable='true'></element>" }
+  $portal->attributeList;
+
+print <<EOT;
 <?xml version="1.0" encoding="UTF-8"?>
 
 <wsdl:definitions
@@ -22,12 +40,12 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
 
       <complexType name="CookiesSequence">
         <sequence>
-          __XMLCOOKIELIST__
+$cookieList
         </sequence>
       </complexType>
       <complexType name="AttributesSequence">
         <sequence>
-          __ATTRLIST__
+$attrList
         </sequence>
       </complexType>
       <complexType name="GetCookieResponse">
@@ -99,7 +117,7 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
 
   <wsdl:service name="authenticationService">
     <wsdl:port binding="impl:authenticationBinding" name="authenticationPort">
-      <wsdlsoap:address location="__PORTAL__" />
+      <wsdlsoap:address location="$portal->{portal}" />
     </wsdl:port>
   </wsdl:service>
 
@@ -134,7 +152,7 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
 
   <wsdl:service name="notificationService">
     <wsdl:port binding="impl:notificationBinding" name="notificationPort">
-      <wsdlsoap:address location="__PORTAL__/notification" />
+      <wsdlsoap:address location="$portal->{portal}/notification" />
     </wsdl:port>
   </wsdl:service>
 
@@ -211,7 +229,7 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
 
   <wsdl:service name="sessionsService">
     <wsdl:port binding="impl:sessionsBinding" name="sessionsPort">
-      <wsdlsoap:address location="__PORTAL__/sessions" />
+      <wsdlsoap:address location="$portal->{portal}/sessions" />
     </wsdl:port>
   </wsdl:service>
 

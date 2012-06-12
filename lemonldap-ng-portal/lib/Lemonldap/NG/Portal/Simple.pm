@@ -287,10 +287,11 @@ sub new {
     $self->loadModule('Lemonldap::NG::Portal::Display');
 
     # Rules to allow redirection
-    $self->{mustRedirect} = (
-        ( $ENV{REQUEST_METHOD} eq 'POST' and not $self->param('newpassword') )
-          or $self->param('logout')
-    ) ? 1 : 0;
+    $self->{mustRedirect} =
+      defined $ENV{REQUEST_METHOD}
+      ? ( $ENV{REQUEST_METHOD} eq "POST" and not $self->param('newpassword') )
+      : $self->param('logout') ? 1
+      :                          0;
 
     # Push authentication/userDB/passwordDB modules in @ISA
     foreach my $type (qw(authentication userDB passwordDB)) {
@@ -451,10 +452,12 @@ sub new {
 
     # Trusted domains
     $self->{trustedDomains} ||= "";
-    $self->{trustedDomains} = "*" if ($self->{trustedDomains} =~ /(^|\s)\*(\s|$)/);
+    $self->{trustedDomains} = "*"
+      if ( $self->{trustedDomains} =~ /(^|\s)\*(\s|$)/ );
     if ( $self->{trustedDomains} and $self->{trustedDomains} ne "*" ) {
         $self->{trustedDomains} =~ s#(^|\s+)\.#[^/]+.#g;
-        $self->{trustedDomains} = '(' . join( '|', split(/\s+/, $self->{trustedDomains}) ) . ')';
+        $self->{trustedDomains} =
+          '(' . join( '|', split( /\s+/, $self->{trustedDomains} ) ) . ')';
         $self->{trustedDomains} =~ s/\./\\./g;
     }
 
@@ -751,10 +754,10 @@ sub buildHiddenForm {
 sub isTrustedUrl {
     my ( $self, $url ) = splice @_;
     return
-           $url =~ m#^https?://$self->{reVHosts}(:\d+)?/#o
-        || $self->{trustedDomains} eq "*"
-        || $self->{trustedDomains}
-        && $url =~ m#^https?://$self->{trustedDomains}(:\d+)?/#o ;
+         $url =~ m#^https?://$self->{reVHosts}(:\d+)?/#o
+      || $self->{trustedDomains} eq "*"
+      || $self->{trustedDomains}
+      && $url =~ m#^https?://$self->{trustedDomains}(:\d+)?/#o;
 }
 
 ## @method boolean checkXSSAttack(string name, string value)
@@ -805,7 +808,7 @@ sub msg {
 sub error {
     my $self = shift;
     my $code = shift || $self->{error};
-    if (my $lang = shift) { # only for SOAP error requests
+    if ( my $lang = shift ) {    # only for SOAP error requests
         $self->{lang} = $self->extract_lang($lang);
     }
     my $msg;
@@ -820,7 +823,7 @@ sub error {
     $msg ||= $self->{ "error_" . $code };
 
     # Use customized message or built-in message
-    if (defined $msg) {
+    if ( defined $msg ) {
 
         # Manage UTF-8
         utf8::decode($msg);
@@ -2491,12 +2494,13 @@ sub autoRedirect {
         {
             my $ssl = $self->{urldc} =~ /^https/;
             $self->lmLog( 'CDA request', 'debug' );
-            $self->{urldc} .=
-                ( $self->{urldc} =~ /\?/ ? '&' : '?' ) 
-                . (
-                  $self->{securedCookie} < 2 or $ssl 
-                ? $self->{cookieName} .     "=" . $self->{id}
-                : $self->{cookieName} . "http=" . $self->{sessionInfo}->{_httpSession}
+            $self->{urldc} .= ( $self->{urldc} =~ /\?/ ? '&' : '?' )
+              . (
+                $self->{securedCookie} < 2
+                  or $ssl
+                ? $self->{cookieName} . "=" . $self->{id}
+                : $self->{cookieName} . "http="
+                  . $self->{sessionInfo}->{_httpSession}
               );
         }
 

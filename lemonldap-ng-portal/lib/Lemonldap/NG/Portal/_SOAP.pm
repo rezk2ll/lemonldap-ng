@@ -98,7 +98,8 @@ sub getCookies {
     my @cookies = ();
     unless ( $self->{error} ) {
         foreach ( @{ $self->{cookie} } ) {
-            push @cookies, SOAP::Data->name( $_->name, $_->value )->type("string");
+            push @cookies,
+              SOAP::Data->name( $_->name, $_->value )->type("string");
         }
     }
     push @tmp, SOAP::Data->name( cookies => \SOAP::Data->value(@cookies) );
@@ -135,8 +136,8 @@ sub getAttributes {
             "SOAP attributes request for " . $h->{ $self->{whatToTrace} } );
         push @tmp, SOAP::Data->name( error => 0 )->type('int');
         push @tmp,
-          SOAP::Data->name( attributes =>
-              _buildSoapHash( $h, split /\s+/, $self->{exportedAttr} ) );
+          SOAP::Data->name(
+            attributes => _buildSoapHash( $h, $self->exportedAttr ) );
         untie %$h;
     }
     my $res = SOAP::Data->name( session => \SOAP::Data->value(@tmp) );
@@ -299,6 +300,38 @@ sub getMenuApplications {
     # Return result
     return _buildSoapHash( { menu => $appslist } );
 
+}
+
+#########################
+# Auxiliary subroutines #
+#########################
+
+## @method array exportedAttr
+# Parse XML string to sustitute macros
+# @return list of session data available through getAttribute SOAP request
+sub exportedAttr {
+    my $self = shift;
+    if ( $self->{exportedAttr} and $self->{exportedAttr} !~ /^\s*\+/ ) {
+        return split /\s+/, $self->{exportedAttr};
+    }
+    else {
+        my @attributes = (
+            'authenticationLevel', 'groups',
+            'ipAddr',              'xForwardedForAddr',
+            'startTime',           '_utime'
+        );
+        if ( my $exportedAttr = $self->{exportedAttr} ) {
+            $exportedAttr =~ s/^\s*\+\s+//;
+            @attributes = ( @attributes, split( /\s+/, $exportedAttr ) );
+        }
+
+        # convert @attributes into hash to remove duplicates
+        my %attributes = map( { $_ => 1 } @attributes );
+        %attributes =
+          ( %attributes, %{ $self->{exportedVars} }, %{ $self->{macros} }, );
+
+        return sort keys %attributes;
+    }
 }
 
 #######################
