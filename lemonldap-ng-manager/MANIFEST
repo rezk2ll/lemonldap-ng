@@ -48,6 +48,7 @@ example/skins/default/js/jquery-1.4.2.min.js
 example/skins/default/js/jquery-ui-1.8.6.custom.min.js
 example/skins/default/js/jquery.ajaxfileupload.js
 example/skins/default/js/jquery.cookie.js
+example/skins/default/js/jquery.elastic.source.js
 example/skins/default/js/manager.js
 example/skins/default/js/notifications.js
 example/skins/default/js/sessions.js
