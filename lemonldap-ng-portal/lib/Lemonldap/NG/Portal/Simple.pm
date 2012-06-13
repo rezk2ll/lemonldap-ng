@@ -11,7 +11,6 @@ use warnings;
 use Exporter 'import';
 
 use warnings;
-use File::Basename;
 use MIME::Base64;
 use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
@@ -964,15 +963,6 @@ sub getPersistentSession {
         return 0;
     }
     return \%h;
-}
-
-##@method string getApacheHtdocsPath()
-# Return the absolute path to the htdocs directory where is portal script.
-# @return path string
-sub getApacheHtdocsPath {
-    my $self = shift;
-    my ( $name, $path, $suffix ) = fileparse( $ENV{SCRIPT_FILENAME} );
-    return $path;
 }
 
 ## @method protected string _md5hash(string s)

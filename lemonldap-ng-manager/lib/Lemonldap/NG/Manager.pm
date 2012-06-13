@@ -6,7 +6,6 @@
 package Lemonldap::NG::Manager;
 
 use strict;
-use File::Basename;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);    #inherits
 use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
 use Lemonldap::NG::Common::Conf::Constants;   #inherits
@@ -52,10 +51,6 @@ sub new {
       unless defined $self->{managerTreeAutoClose};
     $self->{managerTreeJqueryCss} = "true"
       unless defined $self->{managerTreeJqueryCss};
-
-    # Absolute path to the htdocs directory where is manager script.
-    my ( $mname, $mpath, $msuffix ) = fileparse( $ENV{SCRIPT_FILENAME} );
-    $self->{managerHtdocsPath} = $mpath;
 
     # Save conf if ?data=
     if ( my $rdata = $self->rparam('data') ) {

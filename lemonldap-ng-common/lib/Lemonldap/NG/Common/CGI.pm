@@ -7,6 +7,7 @@ package Lemonldap::NG::Common::CGI;
 
 use strict;
 
+use File::Basename;
 use MIME::Base64;
 use Time::Local;
 use CGI;
@@ -130,6 +131,13 @@ sub setApacheUser {
         }
     }
     $ENV{REMOTE_USER} = $user;
+}
+
+##@method string getApacheHtdocsPath()
+# Return absolute path to the htdocs directory where the current script is
+# @return path string
+sub getApacheHtdocsPath {
+    return dirname( $ENV{SCRIPT_FILENAME} || $0 );
 }
 
 ## @method void soapTest(string soapFunctions, object obj)

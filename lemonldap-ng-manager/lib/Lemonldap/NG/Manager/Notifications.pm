@@ -12,7 +12,6 @@
 package Lemonldap::NG::Manager::Notifications;
 
 use strict;
-use File::Basename;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
 use Lemonldap::NG::Portal::Notification;
 use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
@@ -106,10 +105,6 @@ sub new {
 
     # Multi values separator
     $self->{multiValuesSeparator} ||= '; ';
-
-    # Absolute path to the htdocs directory where is manager script.
-    my ( $mname, $mpath, $msuffix ) = fileparse( $ENV{SCRIPT_FILENAME} );
-    $self->{managerHtdocsPath} = $mpath;
 
     # Now we're ready to display sessions. Choose display type
     foreach my $k ( $self->param() ) {

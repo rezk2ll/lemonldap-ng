@@ -31,7 +31,7 @@ my $skin = $cgi->{managerSkin} or $cgi->abort('managerSkin is not defined');
 my $css = 'tree.css';
 my $css_theme = 'ui-lightness';
 my $skin_dir  = 'skins';
-my $main_dir  = $cgi->{managerHtdocsPath};
+my $main_dir  = $cgi->getApacheHtdocsPath;
 
 my $template = HTML::Template->new(
     filename          => "$main_dir/$skin_dir/$skin/sessions.tpl",
