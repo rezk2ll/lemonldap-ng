@@ -21,7 +21,7 @@ my $cookieList = join "\n",
 
 my $attrList = join "\n",
   map { "<element name='$_' type='xsd:string' nillable='true'></element>" }
-  $self->attributeList;
+  $self->exportedAttr;
 
 print <<EOT;
 <?xml version="1.0" encoding="UTF-8"?>
