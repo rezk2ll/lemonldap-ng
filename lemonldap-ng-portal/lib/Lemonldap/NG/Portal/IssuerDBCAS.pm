@@ -121,6 +121,12 @@ sub issuerForUnAuthUser {
             "Get validate request with ticket $ticket for service $service",
             'debug' );
 
+        unless ( $ticket =~ s/^ST-// ) {
+            $self->lmLog( "Provided ticket is not a service ticket (ST)",
+                'error' );
+            $self->returnCasValidateError();
+        }
+
         my $casServiceSession = $self->getCasSession($ticket);
 
         unless ($casServiceSession) {
