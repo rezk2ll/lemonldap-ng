@@ -35,8 +35,6 @@ This tutorial will guide you into a minimal installation and configuration proce
 </li>
 <li class="level1"><div class="li"> A web browser launched from the computer (to access localhost)</div>
 </li>
-<li class="level1"><div class="li"> An <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory with a user account (default suffix: dc=example,dc=com)</div>
-</li>
 <li class="level1"><div class="li"> A cup of coffee (or tea, we are open minded)</div>
 </li>
 </ul>
@@ -47,7 +45,7 @@ This tutorial will guide you into a minimal installation and configuration proce
 </p>
 
 </div>
-<!-- SECTION "Quick start tutorial" [1-425] -->
+<!-- SECTION "Quick start tutorial" [1-347] -->
 <h2><a name="installation" id="installation">Installation</a></h2>
 <div class="level2">
 
@@ -65,7 +63,7 @@ Get the tarball on <a href="../download.html" class="wikilink1" title="download"
 </p>
 
 </div>
-<!-- SECTION "Installation" [426-879] -->
+<!-- SECTION "Installation" [348-801] -->
 <h3><a name="extract" id="extract">Extract</a></h3>
 <div class="level3">
 <pre class="code">
@@ -74,7 +72,7 @@ cd lemonldap-ng-*
 </pre>
 
 </div>
-<!-- SECTION "Extract" [880-963] -->
+<!-- SECTION "Extract" [802-885] -->
 <h3><a name="build" id="build">Build</a></h3>
 <div class="level3">
 <pre class="code">
@@ -83,36 +81,20 @@ make test
 </pre>
 
 </div>
-<!-- SECTION "Build" [964-1011] -->
+<!-- SECTION "Build" [886-933] -->
 <h3><a name="install" id="install">Install</a></h3>
 <div class="level3">
 <pre class="code">
 sudo make install
 </pre>
 
-<p>
-<p><div class="notetip">
-If your <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> suffix is not dc=example,dc=com, use:
-
-</p>
-<pre class="code">
-sudo make install LDAPSUFFIX=mysuffix
-</pre>
-
-<p>
-
-You can also change the host and port with options LDAPHOST and LDAPPORT.
-
-</div></p>
-</p>
-
 </div>
-<!-- SECTION "Install" [1012-1262] -->
+<!-- SECTION "Install" [934-986] -->
 <h2><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [1263-1289] -->
+<!-- SECTION "Configuration" [987-1013] -->
 <h3><a name="system" id="system">System</a></h3>
 <div class="level3">
 
@@ -126,7 +108,7 @@ sudo make postconf
 </pre>
 
 </div>
-<!-- SECTION "System" [1290-1395] -->
+<!-- SECTION "System" [1014-1119] -->
 <h3><a name="apache" id="apache">Apache</a></h3>
 <div class="level3">
 
@@ -148,22 +130,42 @@ sudo apachectl restart
 </pre>
 
 </div>
-<!-- SECTION "Apache" [1396-1759] -->
+<!-- SECTION "Apache" [1120-1483] -->
 <h2><a name="run" id="run">Run</a></h2>
 <div class="level2">
 
+<p>
+
+Since LemonLDAP::NG 1.2, the <a href="../documentation/current/authdemo.html" class="wikilink2" title="documentation:latest:authdemo" rel="nofollow">demonstration backend</a> is configured by default. Demonstration backend has hard coded user accounts:
+
+</p>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 leftalign"> Login  </th><th class="col1"> Password </th><th class="col2"> Role </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  rtyler  </td><td class="col1 centeralign">  rtyler  </td><td class="col2 centeralign">  user  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  msmith  </td><td class="col1 centeralign">  msmith  </td><td class="col2 centeralign">  user  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 centeralign">  dwho  </td><td class="col1 centeralign">  dwho  </td><td class="col2 centeralign">  administrator  </td>
+	</tr>
+</table>
+
 </div>
-<!-- SECTION "Run" [1760-1776] -->
+<!-- SECTION "Run" [1484-1800] -->
 <h3><a name="open_sso_session" id="open_sso_session">Open SSO session</a></h3>
 <div class="level3">
 
 <p>
 
-Go on <a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a> and log with <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> user account.
+Go on <a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a> and log with one of the demonstration account.
 </p>
 
 </div>
-<!-- SECTION "Open SSO session" [1777-1867] -->
+<!-- SECTION "Open SSO session" [1801-1906] -->
 <h3><a name="access_protected_application" id="access_protected_application">Access protected application</a></h3>
 <div class="level3">
 
@@ -173,14 +175,14 @@ Try <a href="http://test1.example.com" class="urlextern" title="http://test1.exa
 </p>
 
 </div>
-<!-- SECTION "Access protected application" [1868-1965] -->
+<!-- SECTION "Access protected application" [1907-2004] -->
 <h3><a name="edit_configuration" id="edit_configuration">Edit configuration</a></h3>
 <div class="level3">
 
 <p>
 
-Go on <a href="http://manager.example.com" class="urlextern" title="http://manager.example.com"  rel="nofollow">http://manager.example.com</a>
+Log with the dwho account and go on <a href="http://manager.example.com" class="urlextern" title="http://manager.example.com"  rel="nofollow">http://manager.example.com</a>
 </p>
 
 </div>
-<!-- SECTION "Edit configuration" [1966-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Edit configuration" [2005-] --></div><!-- closes <div class="dokuwiki export">-->
