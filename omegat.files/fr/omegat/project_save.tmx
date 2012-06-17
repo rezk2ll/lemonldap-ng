@@ -2880,6 +2880,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../documentation/current/authdemo.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065405Z" changeid="xavier">
+        <seg>../documentation/current/authdemo.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../documentation/current/installdeb.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T035132Z" changeid="xavier">
@@ -9650,6 +9658,46 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T183450Z" changeid="xavier">
         <seg>&lt;a0&gt;Rev 2429 -- French translation finished !!!&lt;/a0&gt; by guimard (2012/05/07 05:59)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2449 -- Repair portal URL rewriting in buildPortalWSDL (Lemonldap-473)&lt;/a0&gt; by fxdeltombe (2012/06/12 18:24)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065650Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2449 -- Repair portal URL rewriting in buildPortalWSDL (Lemonldap-473)&lt;/a0&gt; by fxdeltombe (2012/06/12 18:24)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2450 -- Restore change of SVN commit r2448 (removed by mistake on ...&lt;/a0&gt; by fxdeltombe (2012/06/13 20:20)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065647Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2450 -- Restore change of SVN commit r2448 (removed by mistake on ...&lt;/a0&gt; by fxdeltombe (2012/06/13 20:20)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2451 -- Portal's and manager's CGI scripts runnable in shell (Lemonldap-476)&lt;/a0&gt; by fxdeltombe (2012/06/13 20:43)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065645Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2451 -- Portal's and manager's CGI scripts runnable in shell (Lemonldap-476)&lt;/a0&gt; by fxdeltombe (2012/06/13 20:43)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2452 -- Check that only one entry is returned by LDAP directory ...&lt;/a0&gt; by clement_oudot (2012/06/16 10:52)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065642Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2452 -- Check that only one entry is returned by LDAP directory ...&lt;/a0&gt; by clement_oudot (2012/06/16 10:52)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2453 -- Fix CAS 1.0 validate method (#LEMONLDAP-478)&lt;/a0&gt; by clement_oudot (2012/06/16 22:52)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065637Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2453 -- Fix CAS 1.0 validate method (#LEMONLDAP-478)&lt;/a0&gt; by clement_oudot (2012/06/16 22:52)</seg>
       </tuv>
     </tu>
     <tu>
@@ -24884,6 +24932,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go on &lt;a0&gt;http://auth.example.com&lt;/a0&gt; and log with one of the demonstration account.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065520Z" changeid="xavier">
+        <seg>Allez sur &lt;a0&gt;http://auth.example.com&lt;/a0&gt; et connectez-vous avec l'un des comptes de démonstration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go on &lt;a0&gt;http://manager.example.com&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28466,6 +28522,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Log with the dwho account and go on &lt;a0&gt;http://manager.example.com&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065627Z" changeid="xavier">
+        <seg>Connectez-vous avec le compte dwho sur &lt;a0&gt;http://manager.example.com&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Log4Perl compatibility</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -31390,6 +31454,22 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>RHEL/CentOS 5</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065629Z" changeid="xavier">
+        <seg>RHEL/CentOS 5</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RHEL/CentOS 6</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065630Z" changeid="xavier">
+        <seg>RHEL/CentOS 6</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>RHEL/CentOS/Fedora</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -33282,6 +33362,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T052100Z" changeid="guimard">
         <seg>Depuis la version 1.1.0, un explorateur de notifications est disponible dans le manager, et les notifications peuvent être faites pour tous les utilisateurs, avec possibilité d'affichage conditionnel.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Since LemonLDAP::NG 1.2, the &lt;a0&gt;demonstration backend&lt;/a0&gt; is configured by default.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065450Z" changeid="xavier">
+        <seg>Depuis la version 1.2 de LemonLDAP::NG, le &lt;a0&gt;backend de démonstration&lt;/a0&gt; est sélectionné par défaut.</seg>
       </tuv>
     </tu>
     <tu>
@@ -36126,6 +36214,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T114128Z" changeid="xavier">
         <seg>Ce module est également disponible dans le répertoire &lt;c0&gt;contribs&lt;/c0&gt; du &lt;a2&gt;dépôt subversion&lt;/a2&gt; de &lt;a1&gt;LL::NG&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This module is also available on &lt;a0&gt;GitHub&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065402Z" changeid="xavier">
+        <seg>Ce module est également disponible sur &lt;a0&gt;GitHub&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -42944,6 +43040,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:latest:authdemo</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065406Z" changeid="xavier">
+        <seg>documentation:latest:authdemo</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:latest:installdeb</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -43956,6 +44060,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T035204Z" changeid="xavier">
         <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=17135</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18116</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065632Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18116</seg>
       </tuv>
     </tu>
     <tu>
@@ -45128,6 +45240,46 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2449</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065648Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2449</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2450</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065646Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2450</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2451</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065643Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2451</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2452</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065638Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2452</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2453</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065634Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2453</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Documentation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -45748,6 +45900,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T182638Z" changeid="xavier">
         <seg>https://github.com/9h37/django-lemonldap</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://github.com/coudot/apache-session-ldap</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120617T065341Z" changeid="xavier">
+        <seg>https://github.com/coudot/apache-session-ldap</seg>
       </tuv>
     </tu>
     <tu>
