@@ -478,7 +478,7 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
-* Fri Oct 07 2011 Clement Oudot <clem.oudot@gmail.com> - 1.2.0-1
+* Sun Jun 17 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.0-1
 - Update to 1.2.0
 * Fri Oct 07 2011 Clement Oudot <clem.oudot@gmail.com> - 1.1.2-1
 - Update to 1.1.2
