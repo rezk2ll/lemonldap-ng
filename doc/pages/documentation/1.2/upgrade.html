@@ -73,11 +73,19 @@ Multi SSL;LDAP
 
 <p>
 
-<img src="/lib/images/smileys/fixme.gif" class="middle" alt="FIXME" /> We now configure multiple condition with specific messages, not just one opening condition
+In LemonLDAP::NG 1.1, you could configure a condition that will be evaluated to allow the sesson creation.
+</p>
+
+<p>
+Now, you can define as many conditions as you want. See the <a href="../../documentation/1.2/sessions.html" class="wikilink1" title="documentation:1.2:sessions">sessions configuration page</a> to know how.
+</p>
+
+<p>
+If you had defined a condition in LemonLDAP::NG 1.1, you are encouraged to redefine it in the new format.
 </p>
 
 </div>
-<!-- SECTION "Opening conditions" [756-885] -->
+<!-- SECTION "Opening conditions" [756-1117] -->
 <h2><a name="login_history" id="login_history">Login history</a></h2>
 <div class="level2">
 
@@ -87,7 +95,7 @@ The <a href="../../documentation/1.2/loginhistory.html" class="wikilink1" title=
 </p>
 
 </div>
-<!-- SECTION "Login history" [886-1078] -->
+<!-- SECTION "Login history" [1118-1310] -->
 <h2><a name="unprotect_rule" id="unprotect_rule">Unprotect rule</a></h2>
 <div class="level2">
 
@@ -97,7 +105,7 @@ The <code>unprotect</code> rule in Manager now deletes headers forged by an unau
 </p>
 
 </div>
-<!-- SECTION "Unprotect rule" [1079-1306] -->
+<!-- SECTION "Unprotect rule" [1311-1538] -->
 <h2><a name="custom_authentication_module" id="custom_authentication_module">Custom authentication module</a></h2>
 <div class="level2">
 
@@ -128,4 +136,4 @@ For example:
 <span class="br0">&#125;</span></pre>
 
 </div>
-<!-- SECTION "Custom authentication module" [1307-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Custom authentication module" [1539-] --></div><!-- closes <div class="dokuwiki export">-->

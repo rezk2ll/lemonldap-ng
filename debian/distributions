@@ -3,4 +3,5 @@ Suite: unstable
 Codename: squeeze
 Architectures: i386 amd64 powerpc sparc source
 Components: main
+SignWith: yes
 

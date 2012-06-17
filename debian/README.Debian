@@ -72,7 +72,7 @@ $ scp *.deb *.dsc *.changes *.debian.tar.gz *.orig.tar.gz lemonldapng@lemonldap-
 Then connect on the server and launch reprepro:
 $ ssh lemonldapng@lemonldap-ng.org
 lemonldapng@lemonldap-ng.org$ cd deb/
-lemonldapng@lemonldap-ng.org$ reprepro -Vb . include squeeze ../incoming/lemonldap-ng_VERSION_i386.changes
+lemonldapng@lemonldap-ng.org$ reprepro --ask-passphrase -Vb . include squeeze ../incoming/lemonldap-ng_VERSION_i386.changes
 
 See also reprepro configuration file: 'distributions'
 

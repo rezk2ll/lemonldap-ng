@@ -112,11 +112,28 @@ Packages are available on the <a href="../../download.html" class="wikilink1" ti
 
 </div>
 <!-- SECTION "Manual download" [1215-1301] -->
+<h2><a name="package_gpg_signature" id="package_gpg_signature">Package GPG signature</a></h2>
+<div class="level2">
+
+<p>
+
+The GPG key can be downloaded here: <a href="../media/rpm-gpg-key-ow2" class="media mediafile mf_" title="rpm-gpg-key-ow2">rpm-gpg-key-ow2</a>
+</p>
+
+<p>
+Install it to trust packages:
+</p>
+<pre class="code">
+apt-key add rpm-gpg-key-ow2
+</pre>
+
+</div>
+<!-- SECTION "Package GPG signature" [1302-1470] -->
 <h2><a name="install_packages" id="install_packages">Install packages</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install packages" [1302-1331] -->
+<!-- SECTION "Install packages" [1471-1500] -->
 <h3><a name="with_aptitude" id="with_aptitude">With aptitude</a></h3>
 <div class="level3">
 <pre class="code">
@@ -124,7 +141,7 @@ aptitude install lemonldap-ng
 </pre>
 
 </div>
-<!-- SECTION "With aptitude" [1332-1402] -->
+<!-- SECTION "With aptitude" [1501-1571] -->
 <h3><a name="with_dpkg" id="with_dpkg">With dpkg</a></h3>
 <div class="level3">
 
@@ -142,12 +159,12 @@ dpkg -i liblemonldap-ng-* lemonldap-ng*
 </pre>
 
 </div>
-<!-- SECTION "With dpkg" [1403-1551] -->
+<!-- SECTION "With dpkg" [1572-1720] -->
 <h2><a name="first_configuration_steps" id="first_configuration_steps">First configuration steps</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "First configuration steps" [1552-1590] -->
+<!-- SECTION "First configuration steps" [1721-1759] -->
 <h3><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h3>
 <div class="level3">
 
@@ -158,7 +175,7 @@ By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>ex
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- SECTION "Change default DNS domain" [1591-1905] -->
+<!-- SECTION "Change default DNS domain" [1760-2074] -->
 <h3><a name="enable_llng_sites" id="enable_llng_sites">Enable LL::NG sites</a></h3>
 <div class="level3">
 
@@ -180,7 +197,7 @@ Restart Apache:
 apache2ctl restart</pre>
 
 </div>
-<!-- SECTION "Enable LL::NG sites" [1906-2156] -->
+<!-- SECTION "Enable LL::NG sites" [2075-2325] -->
 <h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
 <div class="level3">
 
@@ -202,7 +219,7 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </p>
 
 </div>
-<!-- SECTION "Upgrade" [2157-4315] -->
+<!-- SECTION "Upgrade" [2326-4484] -->
 <h3><a name="dns" id="dns">DNS</a></h3>
 <div class="level3">
 
@@ -229,7 +246,7 @@ Follow the <a href="../../documentation/1.2/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- SECTION "DNS" [4316-4588] -->
+<!-- SECTION "DNS" [4485-4757] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -250,7 +267,7 @@ Follow the <a href="../../documentation/1.2/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- SECTION "File location" [4589-5125] -->
+<!-- SECTION "File location" [4758-5294] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -266,4 +283,4 @@ make debian-packages
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [5126-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [5295-] --></div><!-- closes <div class="dokuwiki export">-->
