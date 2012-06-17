@@ -20,7 +20,6 @@ requires:
     Crypt::Rijndael:      0
     DBI:                  0
     HTTP::Headers:        0
-    IO::String:           0
     Regexp::Assemble:     0
     SOAP::Lite:           0
     Storable:             0
@@ -29,7 +28,7 @@ no_index:
     directory:
         - t
         - inc
-generated_by:       ExtUtils::MakeMaker version 6.55_02
+generated_by:       ExtUtils::MakeMaker version 6.57_05
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4

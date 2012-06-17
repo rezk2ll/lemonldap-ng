@@ -15,12 +15,8 @@ build_requires:
     IO::String:           0
 requires:
     CGI:                  3.08
-    Convert::PEM:         0
-    Crypt::OpenSSL::RSA:  0
-    Crypt::OpenSSL::X509:  0
     File::Basename:       0
     HTML::Template:       0
-    IO::String:           0
     JSON:                 0
     Lemonldap::NG::Common:  1.2.0
     Lemonldap::NG::Handler:  1.2.0
@@ -33,7 +29,7 @@ no_index:
     directory:
         - t
         - inc
-generated_by:       ExtUtils::MakeMaker version 6.55_02
+generated_by:       ExtUtils::MakeMaker version 6.57_05
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4
