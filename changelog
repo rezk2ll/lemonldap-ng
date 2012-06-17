@@ -1,5 +1,126 @@
 lemonldap-ng (1.2.0) stable; urgency=low
 
+    * [LEMONLDAP-251] - Error on form based UserDB modules afeter an non
+      formed based Auth module display the form
+    * [LEMONLDAP-320] - Unprotect rule does not delete headers
+    * [LEMONLDAP-367] - Debian package on a fresh install still need upgrade
+      procedure
+    * [LEMONLDAP-368] - user root can't have lmConfigEditor running because of
+      wrong file permissions
+    * [LEMONLDAP-369] - perl error reported in logs when HTTP header
+      "Accept-Language" not defined
+    * [LEMONLDAP-370] - behaviour of tree menu in manager
+    * [LEMONLDAP-371] - custom function declaration doesn't work through
+      management UI
+    * [LEMONLDAP-373] - Field values lost in manager
+    * [LEMONLDAP-375] - empty query string in redirect url 
+    * [LEMONLDAP-376] - wrong authentication mode stored in session with
+      authMulti when SSLRequire set to 0
+    * [LEMONLDAP-380] - Mail reset session not destroyed when password is
+      changed
+    * [LEMONLDAP-384] - When force password reset form is incomplete, user is
+      redirected to main authentication screen
+    * [LEMONLDAP-390] - Saml Attribute form not reset in Manager
+    * [LEMONLDAP-391] - [Choice] No choice should return PE_FIRSTACCESS and
+      not PE_FORMEMPTY
+    * [LEMONLDAP-392] - Bad URL error when connected to the menu display the
+      login form instead of the menu
+    * [LEMONLDAP-393] - Can't create samlIDPMetaDataExportedAttributes or
+      samlSPMetaDataExportedAttributes
+    * [LEMONLDAP-394] - RelayState is sometimes not transferred by SAML IdP
+    * [LEMONLDAP-397] - [SAML] server error when SOAP SLO request is sent by
+      IDP, and SOAP access is not possible on SP
+    * [LEMONLDAP-399] - invalid syntax of wsdl made by buildPortalWSDL
+    * [LEMONLDAP-401] - SOAP method getMenuApplications lock the session
+    * [LEMONLDAP-405] - No redirect with impact skin
+    * [LEMONLDAP-407] - Missing dependency Crypt::OpenSSL::Bignum
+    * [LEMONLDAP-410] - Manager should reject vhost value like
+      test.example.com:8080
+    * [LEMONLDAP-411] - LDAP change password as user and extended modify
+      password change are not working
+    * [LEMONLDAP-418] - Typo bug in Debian control file
+    * [LEMONLDAP-420] - Unable to access to http virtualhosts
+    * [LEMONLDAP-425] - Error code: 200, SyntaxError: JSON.parse in Manager
+    * [LEMONLDAP-426] - Unused perl-Apache-AuthNetLDAP dependency in spec file
+    * [LEMONLDAP-427] - _deleteSessionFromLocalStorage should exit directly if
+      no $id given
+    * [LEMONLDAP-429] - links to css and js in html broken if portal url is
+      not a root url
+    * [LEMONLDAP-437] - SAML: redirect binding not working
+    * [LEMONLDAP-441] - Manager do not display a correct error when
+      configuration store fails
+    * [LEMONLDAP-445] - Portal personalized messages are UTF8 doubled encoded
+    * [LEMONLDAP-446] - Server error when a password mail reset session is
+      unavailable and the token is passed to mail.pl
+    * [LEMONLDAP-447] - Bad identifier in grantSession logs
+    * [LEMONLDAP-448] - defined(%hash) is deprecated 
+    * [LEMONLDAP-450] - SAML Authn not working with binding HTTP Redirect
+    * [LEMONLDAP-454] - Replace $ip with client IP in forging HTTP headers
+      doesn't work
+    * [LEMONLDAP-455] - Notification error because text is not valid UTF-8
+    * [LEMONLDAP-464] - LL::NG::Handler::AuthBasic displays login / password
+      in error log
+    * [LEMONLDAP-465] - Error messages with portal SOAP services
+    * [LEMONLDAP-466] - SAML logout not working with js redirection
+    * [LEMONLDAP-467] - SAML redirection seen as CDA requests
+    * [LEMONLDAP-469] - No CAS authentication with CDA enabled
+    * [LEMONLDAP-470] - Zimbra PreAuth Handler syntax error
+    * [LEMONLDAP-472] - Debian package not signed
+    * [LEMONLDAP-473] - SOAP items
+    * [LEMONLDAP-478] - CAS Issuer do not work with CAS v1
+    * [LEMONLDAP-276] - Parameters to specify sub directories for portal and
+      manager URL
+    * [LEMONLDAP-377] - Add error cases in mail reset by mail management
+    * [LEMONLDAP-382] - Move session update on password change in the main
+      modifyPassword method
+    * [LEMONLDAP-383] - Update local cache when session is updated
+    * [LEMONLDAP-387] - prompt custom messages when ungrant session
+    * [LEMONLDAP-398] - Old value 'ldap' for authentication is not accepted in
+      Manager
+    * [LEMONLDAP-400] - Reload SAML server cache on new configuration
+    * [LEMONLDAP-403] - Alphabetical order in authentication modules select
+    * [LEMONLDAP-404] - Check only path in the URI instead of full URL to
+      match an IssuerDB action path
+    * [LEMONLDAP-408] - Allow CAS to be on other urls than /cas
+    * [LEMONLDAP-421] - Double cookie but single session
+    * [LEMONLDAP-422] - Telling the authenticated user that he will be
+      redirected
+    * [LEMONLDAP-432] - Check conditions in AuthSlave and UserDBSlave
+    * [LEMONLDAP-438] - User is not informed of SAML single logout success
+    * [LEMONLDAP-453] - Add authentication mode in auth log
+    * [LEMONLDAP-458] - Force FollowSymLinks option in Apache configuration
+    * [LEMONLDAP-468] - optimize default structure of notifications table and
+      requests
+    * [LEMONLDAP-474] - textarea instead of text input
+    * [LEMONLDAP-475] - Text items for session display
+    * [LEMONLDAP-476] - Allow execution of portal's and manager's CGI in shell
+    * [LEMONLDAP-236] - SSO with public/auth Website
+    * [LEMONLDAP-249] - Manage apply key with the manager
+    * [LEMONLDAP-342] - Create a "maintenance" rule target to disallow an
+      application
+    * [LEMONLDAP-378] - Display confirmation mail creation date and expiration
+      date in mail reset screens
+    * [LEMONLDAP-379] - Use session attributes in templates
+    * [LEMONLDAP-385] - Option to send a mail when the password is changed
+    * [LEMONLDAP-389] - store and display login history
+    * [LEMONLDAP-396] - Radius authentication module
+    * [LEMONLDAP-416] - Create Auth/UserDB/PasswordDB Demo
+    * [LEMONLDAP-417] - Apache Fitler to add application panel on protected
+      pages
+    * [LEMONLDAP-424] - keyword 'skip' in access rules, to skip access control
+    * [LEMONLDAP-442] - Keep only current version documentation offline
+    * [LEMONLDAP-443] - Option to bypass XSS checks on fields or URL
+    * [LEMONLDAP-449] - Possibility to set custom template parameters
+    * [LEMONLDAP-456] - Allow to set false value of a customized error message
+      to test it in a template
+    * [LEMONLDAP-459] - Translate cookie domain in internat proxy (lmProxy)
+    * [LEMONLDAP-477] - Refuse authentication if 2 entries match the
+      authentication filter
+    * [LEMONLDAP-406] - missing dependency on a basic portal installation
+    * [LEMONLDAP-413] - Verify that oldPassword is not empty
+    * [LEMONLDAP-435] - Move contribs modules to github
+    * [LEMONLDAP-444] - Reorganize files in SVN repository
+
 lemonldap-ng (1.1.2) stable; urgency=low
 
     * [LEMONLDAP-355] - The "basic($uid,$_password)" extended function makes an
