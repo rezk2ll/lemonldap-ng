@@ -245,6 +245,23 @@ apachectl restart</pre>
 
 </div>
 <!-- SECTION "Apache virtual host" [3137-3531] -->
+<h3><a name="reload_virtual_host" id="reload_virtual_host">Reload virtual host</a></h3>
+<div class="level3">
+
+<p>
+
+To allow the manager to reload the configuration, register the reload virtual host name in the hosts of the server:
+
+</p>
+<pre class="code shell">echo &quot;127.0.0.1 reload.example.com&quot; &gt;&gt; /etc/hosts</pre>
+
+<p>
+<p><div class="notetip">Adapt the reload virtual host name to the domain you configured.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Reload virtual host" [3532-3833] -->
 <h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
 <div class="level3">
 
@@ -278,7 +295,7 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </p>
 
 </div>
-<!-- SECTION "Upgrade" [3532-6041] -->
+<!-- SECTION "Upgrade" [3834-6343] -->
 <h3><a name="dns" id="dns">DNS</a></h3>
 <div class="level3">
 
@@ -305,7 +322,7 @@ Follow the <a href="../../documentation/1.2/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- SECTION "DNS" [6042-6314] -->
+<!-- SECTION "DNS" [6344-6616] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -322,7 +339,7 @@ Follow the <a href="../../documentation/1.2/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- SECTION "File location" [6315-6671] -->
+<!-- SECTION "File location" [6617-6973] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -356,4 +373,4 @@ rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [6672-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [6974-] --></div><!-- closes <div class="dokuwiki export">-->
