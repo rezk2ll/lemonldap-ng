@@ -16,7 +16,7 @@ use Tie::File;
 my $offline_script_url =
   'http://lemonldap-ng.org/lib/plugins/offline/create.php';
 my $offline_zip_url = 'http://lemonldap-ng.org/lib/plugins/offline/offline.zip';
-my $remove_versions = [ qw/latest 1.0 1.1/ ];
+my $remove_versions = [ qw/latest 1.0 1.1 1.2/ ];
 my $rc;
 
 # Launch remote offline script

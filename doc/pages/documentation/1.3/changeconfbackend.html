@@ -1,0 +1,90 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="how_to_change_configuration_backend" id="how_to_change_configuration_backend">How to change configuration backend</a></h1>
+<div class="level1">
+
+<p>
+
+LemonLDAP::NG provides a script to change configuration backend easily keeping history. It is set in LemonLDAP::NG utilities directory (<code>convertConfig</code>).
+</p>
+
+</div>
+<!-- SECTION "How to change configuration backend" [1-208] -->
+<h2><a name="how_it_works" id="how_it_works">How it works</a></h2>
+<div class="level2">
+
+<p>
+
+The <code>convertConfig</code> utility reads 2 <acronym title="LemonLDAP::NG">LL::NG</acronym> configuration files (<code>lemonldap-ng.ini</code>):
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Current</strong>: to extract all configuration history</div>
+</li>
+<li class="level1"><div class="li"> <strong>New</strong>: to write all configuration history</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "How it works" [209-426] -->
+<h2><a name="let_s_go" id="let_s_go">Let&#039;s go</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Prepare your new lemonldap-ng.ini file</div>
+</li>
+<li class="level1"><div class="li"> Configure your new backend (create <acronym title="Structured Query Language">SQL</acronym> database,…)</div>
+</li>
+<li class="level1"><div class="li"> Launch that:</div>
+</li>
+</ul>
+<pre class="code shell">convertConfig --current=/etc/lemonldap-ng/lemonldap-ng.ini --new=/new/lemonldap-ng.ini</pre>
+<ul>
+<li class="level1"><div class="li"> Install the new lemonldap-ng.ini file at the place of the old file in all <acronym title="LemonLDAP::NG">LL::NG</acronym> servers</div>
+</li>
+<li class="level1"><div class="li"> Restart all your Apache servers</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Let's go" [427-803] -->
+<h2><a name="see_also" id="see_also">See also</a></h2>
+<div class="level2">
+
+<p>
+
+Documentation is available for configuration backends :
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="../../documentation/1.3/sqlconfbackend.html" class="wikilink1" title="documentation:1.3:sqlconfbackend">SQL</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.3/fileconfbackend.html" class="wikilink1" title="documentation:1.3:fileconfbackend">File</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.3/ldapconfbackend.html" class="wikilink1" title="documentation:1.3:ldapconfbackend">LDAP</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.3/soapconfbackend.html" class="wikilink1" title="documentation:1.3:soapconfbackend">SOAP proxy mechanism</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "See also" [804-] --></div><!-- closes <div class="dokuwiki export">-->
