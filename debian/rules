@@ -77,31 +77,8 @@ install: build
 			APACHEGROUP=www-data \
 			DOCDIR=/usr/share/doc/lemonldap-ng-doc
 
-	# FOR OFFICIAL RELEASES
-	# ---------------------
-	# Since Lenny, jquery.js is provided by libjs-jquery
-	#find $(CURDIR)/debian/tmp -type f -regex '.*/jquery-[0-9].*\.js' -delete
-	#find $(CURDIR)/debian/tmp -type f -name jquery.js -delete
-	#rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)/*-skins/*/jquery.js
-
-	# Now, jquery.cookie.js is provided by libjs-jquery-cookie
-	#find $(CURDIR)/debian/tmp -type f -name jquery.cookie.js -delete
-	#rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)/*-skins/*/jquery.cookie.js
-
-	# TODO: uncomment this when Debian jquery-ui version will be upgraded to 1.8.6
-	#find $(CURDIR)/debian/tmp -type f -regex '.*/jquery-ui-[0-9].*\.js' -delete
-	#find $(CURDIR)/debian/tmp -type f -name jquery-ui.js -delete
-	#rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)/*-skins/*/jquery-ui.js
-	# TODO: restore this in Perl (with final \ )
-	#	s#src=(["'"'"']).*?jquery-ui(-\d[\.\w\-]*?)?.js#src=$$1/javascript/jquery-ui/jquery-ui.min.js#i;'
-	#perl -i -pe 's#src=(["'"'"']).*?jquery(-\d[\.\w\-]*?)?.js#src=$$1/javascript/jquery/jquery.min.js#i; \
-	#		s#src=(["'"'"']).*?jquery\.cookie\.js#src=$$1/javascript/jquery-cookie/jquery.cookie.min.js#i;' \
-	#	$$(find $(CURDIR)/debian/tmp/examples/manager/ -name *.pl -type f) \
-	#	$$(find	$(CURDIR)/debian/tmp$(LMSHAREDIR)/manager-skins/*/ \
-	#		$(CURDIR)/debian/tmp$(LMSHAREDIR)/portal-skins/*/ -type f -name *.tpl)
-
-	#test -n "$$LOCALBUILD" || ./scripts/minifierjs $$(find debian/tmp/ -name '*.js')
-	#test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')
+	test -n "$$LOCALBUILD" || ./scripts/minifierjs $$(find debian/tmp/ -name '*.js')
+	test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')
 
 	# Move perl scripts in /usr/share, links are created by *.postinst scripts
 	mkdir debian/tmp/usr/share/lemonldap-ng/manager debian/tmp/usr/share/lemonldap-ng/portal
