@@ -44,9 +44,6 @@
 %endif
 
 %define lm_dnsdomain example.com
-%define lm_ldaphost localhost
-%define lm_ldapport 389
-%define lm_ldapsuffix dc=example,dc=com
 
 #==============================================================================
 # Main package
@@ -294,10 +291,7 @@ rm -rf %{buildroot}
 	CONFDIR=%{lm_confdir} \
 	CRONDIR=%{_sysconfdir}/cron.d \
 	DATADIR=%{lm_vardir} \
-	DNSDOMAIN=%{lm_dnsdomain} \
-	LDAPHOST=%{lm_ldaphost} \
-	LDAPPORT=%{lm_ldapport} \
-	LDAPSUFFIX=%{lm_ldapsuffix}
+	DNSDOMAIN=%{lm_dnsdomain}
 
 # Remove some unwanted files
 find $RPM_BUILD_ROOT -name .packlist -exec rm -f {} \;
