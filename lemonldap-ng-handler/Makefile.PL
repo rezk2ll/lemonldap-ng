@@ -10,7 +10,7 @@ WriteMakefile(
     PMLIBDIRS    => ['lib'],
     META_MERGE   => { 'recommends' => { 'SOAP::Lite' => 0, }, },
     BUILD_REQUIRES =>
-      { 'IO::Pipe' => 0, 'Test::MockObject' => 0, 'Digest::SHA1' => 0 },
+      { 'IO::Pipe' => 0, 'Test::MockObject' => 0 },
     PREREQ_PM => {
         'Apache::Session'                => 0,
         'LWP::UserAgent'                 => 0,
