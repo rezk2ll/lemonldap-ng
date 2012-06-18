@@ -96,6 +96,21 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
 </pre>
 
 <p>
+<p><div class="notetip">
+Change the base <acronym title="Uniform Resource Locator">URL</acronym> for EL6 packages:
+
+</p>
+<pre class="file">
+baseurl=http://lemonldap-ng.org/rpm6/
+</pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+<p>
 Run this to update packages cache:
 
 </p>
@@ -117,7 +132,7 @@ See <a href="../../documentation/1.2/prereq.html#yum" class="wikilink1" title="d
 </p>
 
 </div>
-<!-- SECTION "YUM repository" [974-1617] -->
+<!-- SECTION "YUM repository" [974-1728] -->
 <h3><a name="manual_download" id="manual_download">Manual download</a></h3>
 <div class="level3">
 
@@ -127,7 +142,7 @@ RPMs are available on the <a href="../../download.html" class="wikilink1" title=
 </p>
 
 </div>
-<!-- SECTION "Manual download" [1618-1700] -->
+<!-- SECTION "Manual download" [1729-1811] -->
 <h2><a name="package_gpg_signature" id="package_gpg_signature">Package GPG signature</a></h2>
 <div class="level2">
 
@@ -144,12 +159,12 @@ rpm --import rpm-gpg-key-ow2
 </pre>
 
 </div>
-<!-- SECTION "Package GPG signature" [1701-1866] -->
+<!-- SECTION "Package GPG signature" [1812-1977] -->
 <h2><a name="install_packages" id="install_packages">Install packages</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install packages" [1867-1896] -->
+<!-- SECTION "Install packages" [1978-2007] -->
 <h3><a name="with_yum" id="with_yum">With YUM</a></h3>
 <div class="level3">
 
@@ -176,7 +191,7 @@ yum localinstall lemonldap-ng-* perl-Lemonldap-NG-*
 </pre>
 
 </div>
-<!-- SECTION "With YUM" [1897-2314] -->
+<!-- SECTION "With YUM" [2008-2425] -->
 <h3><a name="with_rpm" id="with_rpm">With RPM</a></h3>
 <div class="level3">
 
@@ -206,12 +221,12 @@ Install the package <code>lemonldap-ng-conf</code> on all server which contains 
 </p>
 
 </div>
-<!-- SECTION "With RPM" [2315-2782] -->
+<!-- SECTION "With RPM" [2426-2893] -->
 <h2><a name="first_configuration_steps" id="first_configuration_steps">First configuration steps</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "First configuration steps" [2783-2821] -->
+<!-- SECTION "First configuration steps" [2894-2932] -->
 <h3><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h3>
 <div class="level3">
 
@@ -222,7 +237,7 @@ By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>ex
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- SECTION "Change default DNS domain" [2822-3136] -->
+<!-- SECTION "Change default DNS domain" [2933-3247] -->
 <h3><a name="apache_virtual_host" id="apache_virtual_host">Apache virtual host</a></h3>
 <div class="level3">
 
@@ -244,7 +259,7 @@ Check Apache configuration and restart:
 apachectl restart</pre>
 
 </div>
-<!-- SECTION "Apache virtual host" [3137-3531] -->
+<!-- SECTION "Apache virtual host" [3248-3642] -->
 <h3><a name="reload_virtual_host" id="reload_virtual_host">Reload virtual host</a></h3>
 <div class="level3">
 
@@ -261,7 +276,7 @@ To allow the manager to reload the configuration, register the reload virtual ho
 </p>
 
 </div>
-<!-- SECTION "Reload virtual host" [3532-3833] -->
+<!-- SECTION "Reload virtual host" [3643-3944] -->
 <h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
 <div class="level3">
 
@@ -295,7 +310,7 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </p>
 
 </div>
-<!-- SECTION "Upgrade" [3834-6343] -->
+<!-- SECTION "Upgrade" [3945-6454] -->
 <h3><a name="dns" id="dns">DNS</a></h3>
 <div class="level3">
 
@@ -322,7 +337,7 @@ Follow the <a href="../../documentation/1.2/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- SECTION "DNS" [6344-6616] -->
+<!-- SECTION "DNS" [6455-6727] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -339,7 +354,7 @@ Follow the <a href="../../documentation/1.2/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- SECTION "File location" [6617-6973] -->
+<!-- SECTION "File location" [6728-7084] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -373,4 +388,4 @@ rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [6974-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [7085-] --></div><!-- closes <div class="dokuwiki export">-->

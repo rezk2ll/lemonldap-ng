@@ -28,4 +28,6 @@ Then connect on server and launch repodata:
 $ ssh lemonldapng@lemonldap-ng.org
 lemonldapng@lemonldap-ng.org$ createrepo rpm/
 
+Do the same for EL6 RPMs in rpm6/ directory.
+
 That's all!
