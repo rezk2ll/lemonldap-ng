@@ -63,7 +63,7 @@ use Digest::MD5;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.2.1';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;
@@ -1981,13 +1981,27 @@ sub setMacros {
 # * store all groups name that the user match in $self->{sessionInfo}->{groups}
 #@return Lemonldap::NG::Portal constant
 sub setLocalGroups {
-    my $self = shift;
-    my $groups;
+    my $self   = shift;
+    my $groups = "";
     while ( my ( $group, $expr ) = each %{ $self->{groups} } ) {
         $groups .= $group . $self->{multiValuesSeparator}
           if ( $self->safe->reval($expr) );
     }
-    $self->{sessionInfo}->{groups} = $groups;
+
+    # Join local and UserDB groups
+    if ($groups) {
+        $self->{sessionInfo}->{groups} .=
+          $self->{multiValuesSeparator} . $groups;
+    }
+
+    # Clear values separator at begin or end
+    if ( $self->{sessionInfo}->{groups} ) {
+        $self->{sessionInfo}->{groups} =~
+          s/^\Q$self->{multiValuesSeparator}\E//;
+        $self->{sessionInfo}->{groups} =~
+          s/\Q$self->{multiValuesSeparator}\E$//;
+    }
+
     PE_OK;
 }
 
