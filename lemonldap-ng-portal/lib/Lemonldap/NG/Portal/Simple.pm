@@ -1924,14 +1924,16 @@ sub setSessionInfo {
     # Get the current user module
     $self->{sessionInfo}->{_userDB} = $self->get_module("user");
 
-    # Store IP address
-    $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
-
-    # Extract and store client IP from X-FORWARDED-FOR header
+    # Store IP address from remote address or X-FORWARDED-FOR header
     my $xheader = $ENV{HTTP_X_FORWARDED_FOR};
     $xheader =~ s/(.*?)(\,)+.*/$1/ if $xheader;
-    $self->{sessionInfo}->{xForwardedForAddr} = $xheader
-      || $ENV{REMOTE_ADDR};
+
+    if ( $xheader and $self->{useXForwardedForIP} ) {
+        $self->{sessionInfo}->{ipAddr} = $xheader;
+    }
+    else {
+        $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
+    }
 
     # Date and time
     if ( $self->{updateSession} ) {

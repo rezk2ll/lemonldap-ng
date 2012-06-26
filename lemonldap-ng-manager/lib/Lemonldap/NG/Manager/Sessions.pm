@@ -24,7 +24,7 @@ use utf8;
 our $whatToTrace;
 *whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.2.1';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI
@@ -74,9 +74,8 @@ sub new {
     %{ $self->{globalStorageOptions} } = %$globalStorageOptions;
     $self->{globalStorageOptions}->{backend} = $globalStorage;
 
-    # Check if we use X-FORWARDED-FOR header for IP
-    $self->{ipField} =
-      $self->{useXForwardedForIP} ? "xForwardedForAddr" : "ipAddr";
+    # IP field
+    $self->{ipField} = "ipAddr";
 
     # Multi values separator
     $self->{multiValuesSeparator} ||= '; ';
@@ -482,7 +481,7 @@ sub session {
     # Map attributes to categories
     my $categories = {
         'dateTitle'       => [qw(_utime startTime updateTime _lastAuthnUTime)],
-        'connectionTitle' => [qw(ipAddr xForwardedForAddr _timezone _url)],
+        'connectionTitle' => [qw(ipAddr _timezone _url)],
         'authenticationTitle' =>
           [qw(_session_id _user _password authenticationLevel)],
         'modulesTitle' => [qw(_auth _userDB _passwordDB _issuerDB _authChoice)],
@@ -887,8 +886,6 @@ sessions
         https         => 1,
         jqueryUri     => '/js/jquery/jquery.js',
         imagePath     => '/js/jquery.simple.tree/',
-        # Force the use of X-FORWARDED-FOR for IP
-        useXForwardedForIP => 1,
         # Optionnal
         protection    => 'rule: $uid eq "admin"',
         # Or to use rules from manager
