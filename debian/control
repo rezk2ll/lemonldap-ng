@@ -39,6 +39,7 @@ Architecture: all
 Depends: ${misc:Depends}, libapache-session-perl, libwww-perl,
  liblemonldap-ng-conf-perl (= ${binary:Version}),
  libapache2-mod-perl2, liburi-perl
+Recommends: libapache-session-browseable-perl
 Suggests: liblemonldap-ng-portal-perl, libsoap-lite-perl
 Description: Lemonldap::NG Apache module part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
@@ -68,8 +69,8 @@ Depends: ${misc:Depends},
  libcrypt-openssl-rsa-perl, libcrypt-openssl-x509-perl, libxml-simple-perl,
  libjson-perl, libconvert-pem-perl
 Pre-Depends: debconf
-Recommends: libapache-session-perl, libsoap-lite-perl,
- lemonldap-ng-doc (= ${binary:Version})
+Recommends: libapache-session-browseable-perl | libapache-session-perl,
+ libsoap-lite-perl, lemonldap-ng-doc (= ${binary:Version})
 Description: Lemonldap::NG manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers.
@@ -87,7 +88,8 @@ Depends: ${misc:Depends},
 Pre-Depends: debconf
 Recommends: libemail-date-format-perl, libconvert-pem-perl,
  libnet-openid-consumer-perl | libnet-openid-server-perl |
- liblasso-perl (>=2.3.0) | libnet-twitter-perl
+ liblasso-perl (>=2.3.0) | libnet-twitter-perl,
+ libapache-session-browseable-perl
 Suggests: slapd, libnet-twitter-perl, libnet-openid-consumer-perl,
  libnet-openid-server-perl, liblasso-perl (>=2.3.0),
  liblemonldap-ng-handler-perl (= ${binary:Version}), libnet-ldap-perl (>=1:0.38),
