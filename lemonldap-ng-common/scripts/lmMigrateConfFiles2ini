@@ -126,10 +126,11 @@ else {
 my $conf;
 if ( -e $new ) {
     -w $new or quit( 4, "$new is not writeable" );
-    $conf = Config::IniFiles->new( -file => $new )
-      or quit( 4,
-        "Unable to open $new:\n\t"
-          . join( "\n\t", @Config::IniFiles::errors ) );
+    $conf = Config::IniFiles->new( -file => $new, -allowcontinue => 1 )
+      or quit(
+        4,
+        "Unable to open $new:\n\t" . join( "\n\t", @Config::IniFiles::errors )
+      );
 }
 else {
     $conf = Config::IniFiles->new();
