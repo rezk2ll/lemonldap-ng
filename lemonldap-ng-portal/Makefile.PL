@@ -25,7 +25,8 @@ WriteMakefile(
     },
     PREREQ_PM => {
         'Apache::Session'        => 0,
-        'CGI'                    => 3.08,
+        'Authen::Captcha'        => 0,
+	'CGI'                    => 3.08,
         'File::Basename'         => 0,
         'HTML::Template'         => 0,
         'Lemonldap::NG::Common'  => '1.2.0',

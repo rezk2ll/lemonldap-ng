@@ -317,6 +317,9 @@ install_manager_site:	install_conf_dir
 
 install_portal_site:	install_conf_dir
 	# Portal install
+	@mkdir -p $(PORTALDIR)/captcha_output/
+	@mkdir -p $(DATADIR)/captcha/data
+	@chmod -R 777 $(DATADIR)/captcha $(PORTALDIR)/captcha_output/
 	@install -v -d $(RPORTALDIR) $(RPORTALSKINSDIR) \
 		$(RPORTALDIR)/skins/ \
 		$(RCRONDIR) $(RCONFDIR)

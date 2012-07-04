@@ -65,7 +65,16 @@ if (
         DISPLAY_MAILSENT        => 0,
         DISPLAY_PASSWORD_FORM   => 0,
     );
-}
+
+    # Display captcha if it's enabled
+    if ( $portal->{captcha_enabled} ) {
+      $template->param(
+	CAPTCHA_IMG    =>  $portal->{captcha_img},
+	CAPTCHA_CODE   =>  $portal->{captcha_img},
+	CAPTCHA_SIZE   =>  $portal->{captcha_size}
+      );
+    }
+  }
 
 # Display mail confirmation resent form
 if ( $portal->{error} == PE_MAILCONFIRMATION_ALREADY_SENT ) {

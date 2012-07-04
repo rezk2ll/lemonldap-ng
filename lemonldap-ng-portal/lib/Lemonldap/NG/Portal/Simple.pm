@@ -12,6 +12,7 @@ use Exporter 'import';
 
 use warnings;
 use MIME::Base64;
+use Authen::Captcha;
 use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
 require POSIX;
@@ -145,6 +146,8 @@ use constant {
     PE_RADIUSCONNECTFAILED              => 73,
     PE_MUST_SUPPLY_OLD_PASSWORD         => 74,
     PE_FORBIDDENIP                      => 75,
+    PE_CAPTCHAERROR                     => 76,
+    PE_CAPTCHAEMPTY                     => 77,
 
     # Portal messages
     PM_USER                  => 0,
@@ -193,7 +196,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PE_MISSINGREQATTR PE_BADPARTNER PE_MAILCONFIRMATION_ALREADY_SENT
   PE_PASSWORDFORMEMPTY PE_CAS_SERVICE_NOT_ALLOWED PE_MAILFIRSTACCESS
   PE_MAILNOTFOUND PE_PASSWORDFIRSTACCESS PE_MAILCONFIRMOK
-  PE_MUST_SUPPLY_OLD_PASSWORD PE_FORBIDDENIP
+  PE_MUST_SUPPLY_OLD_PASSWORD PE_FORBIDDENIP PE_CAPTCHAERROR PE_CAPTCHAEMPTY
   PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
@@ -459,7 +462,13 @@ sub new {
           '(' . join( '|', split( /\s+/, $self->{trustedDomains} ) ) . ')';
         $self->{trustedDomains} =~ s/\./\\./g;
     }
-
+    
+    # init the captcha feature if it's enabled
+    if ( $self->{captcha_enabled} ) {
+        eval $self->initCaptcha();
+	$self->{captcha_initialized} = 1 unless $@ ;
+    }
+    
     return $self;
 }
 
@@ -636,6 +645,12 @@ sub setDefaultValues {
     $self->{ldapPasswordResetAttribute}      ||= "pwdReset";
     $self->{ldapPasswordResetAttributeValue} ||= "TRUE";
     $self->{mailOnPasswordChange}            ||= 0;
+    
+    # Captcha parameters 
+    $self->{captcha_enabled}   = 0;
+    $self->{captcha_size}      = 6;
+    $self->{captcha_output} = '/usr/local/lemonldap-ng/htdocs/portal/captcha_output/';
+    $self->{captcha_data}   = '/usr/local/lemonldap-ng/data/captcha/data/';
 
     # Notification
     $self->{notificationWildcard} ||= "allusers";
@@ -743,6 +758,22 @@ sub buildHiddenForm {
     }
 
     return $val;
+}
+
+## @method void initCaptcha()
+# init captcha module and generate captcha
+sub initCaptcha {
+    my $self = shift;
+    opendir(OUTPUT, $self->{captcha_output}) or $self->lmLog("Can't open captcha output dir", "error");
+    opendir(DATA, $self->{captcha_data}) or  $self->lmLog("Can't open captcha data dir", "error");
+    foreach(readdir(OUTPUT)) {
+        system("rm -f $_ &>/dev/null")
+	    or $self->lmLog("Can't clean captcha output dir!", "warn");
+    }
+    $self->{captcha} = Authen::Captcha->new(data_folder => $self->{captcha_data}, output_folder => $self->{captcha_output});
+    $self->{captcha_code} = $self->{captcha}->generate_code($self->{captcha_size});
+    $self->{captcha_img} = "/captcha_output/" . $self->{captcha_code} . ".png";
+    closedir(DATA) and closedir(OUTPUT);
 }
 
 ## @method boolean isTrustedUrl(string url)

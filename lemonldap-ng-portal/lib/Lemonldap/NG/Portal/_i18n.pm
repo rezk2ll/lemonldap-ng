@@ -206,6 +206,8 @@ sub error_fr {
         'La connexion au serveur Radius a échoué',
         "L'ancien mot de passe est obligatoire",
         'Vous venez d\'une adresse IP qui n\'est pas accréditée',
+	'Mauvais code',
+	'Vous devez entrez le captcha'
     ];
 }
 
@@ -290,6 +292,8 @@ sub error_en {
         'Radius connection has failed',
         'Old password is required',
         'You came from an unaccredited IP address',
+	'Wrong code',
+	'You have to tape the captcha'
     ];
 }
 
@@ -374,7 +378,8 @@ sub error_ro {
         'Un e-mail a fost trimis',
         'Radius connection has failed',
         'Old password is required',
-        'You came from an unaccredited IP address',
+        'You came from an unaccredited IP address','Bad cod',
+        'trebuie să introduceţi CAPTCHA'
     ];
 }
 

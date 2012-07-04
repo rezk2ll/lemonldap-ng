@@ -29,6 +29,8 @@ use POSIX;
 #   - extractMailInfo
 #   - getMailUser
 #   - storeMailSession
+#   - initCaptcha
+#   - checkCaptcha
 #   - sendConfirmationMail
 #   - changePassword
 #   - sendPasswordMail
@@ -50,15 +52,17 @@ sub process {
 
     $self->{error} = $self->_subProcess(
         qw(smtpInit userDBInit passwordDBInit extractMailInfo
-          getMailUser setSessionInfo setMacros setGroups
-          setPersistentSessionInfo setLocalGroups storeMailSession
-          sendConfirmationMail changePassword sendPasswordMail)
+          getMailUser initCaptcha checkCaptcha setSessionInfo 
+	  setMacros setGroups setPersistentSessionInfo setLocalGroups 
+	  storeMailSession sendConfirmationMail changePassword sendPasswordMail)
     );
 
     return (
         (
                  $self->{error} <= 0
               or $self->{error} == PE_PASSWORD_OK
+	      or $self->{error} == PE_CAPTCHAERROR
+	      or $self->{error} == PE_CAPTCHAEMPTY
               or $self->{error} == PE_MAILCONFIRMOK
               or $self->{error} == PE_MAILOK
         ) ? 0 : 1
