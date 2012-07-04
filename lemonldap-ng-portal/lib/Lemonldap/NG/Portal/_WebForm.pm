@@ -47,6 +47,7 @@ sub extractFormInfo {
             && ( $self->{confirmpassword} = $self->param('confirmpassword') ) );
     }
 
+    # 4. If the captcha feature is enabled, captcha form
     if ( $self->{captcha_enabled} ) {
         my $captcha_user_code;
 	if ( $self->param('captcha_user_code') && $self->param('captcha_code') ) {
