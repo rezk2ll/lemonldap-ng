@@ -1,4 +1,4 @@
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 BEGIN {
   use_ok("Lemonldap::NG::Portal::Simple");
@@ -28,6 +28,8 @@ my $p = Lemonldap::NG::Portal::Simple->new(
 mkdir "./tmp";
 $p->{captcha_output} = "./tmp/output";
 $p->{captcha_data} = "./tmp/data";
+
+# create dir
 mkdir $p->{captcha_output};
 mkdir $p->{captcha_data};
 
@@ -35,6 +37,10 @@ ok(ref($p) eq "Lemonldap::NG::Portal::Simple");
 
 # try to init a captcha
 ok($p->initCaptcha());
+ 
+# try a wrong values to check checkCaptcha method
+$p->checkCaptcha("12D3EO", $p->{captcha_code});
+ok(1 ne $p->{captcha_result});
 
 END {
   system("rm -rf ./tmp");
