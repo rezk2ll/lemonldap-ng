@@ -2,6 +2,18 @@ lemonldap-ng (1.3.0) stable; urgency=low
 
 lemonldap-ng (1.2.1) stable; urgency=low
 
+    * [LEMONLDAP-479] - LDAP groups are not stored in the session anymore
+    * [LEMONLDAP-481] - option --latest doesn't work in script convertConfig
+    * [LEMONLDAP-486] - X Forwarded For option is not used in login history
+    * [LEMONLDAP-487] - lmMigrateConfFiles2ini do not support continuation
+      lines in ini file
+    * [LEMONLDAP-488] - Quote not escaped when converting old application list
+      XML file
+    * [LEMONLDAP-484] - Use CSS3 standard attribute for shadow and rounded
+      corners
+    * [LEMONLDAP-485] - Template inclusion error when sending an HTML mail
+    * [LEMONLDAP-483] - Remove all defined() on @array or %hash of LL::NG code
+
 lemonldap-ng (1.2.0) stable; urgency=low
 
     * [LEMONLDAP-251] - Error on form based UserDB modules afeter an non
