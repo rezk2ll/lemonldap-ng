@@ -4400,6 +4400,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/logos/logo-ul.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080409Z" changeid="xavier">
+        <seg>../media/logos/logo-ul.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/logos/logo_abuledu.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154658Z" changeid="xavier">
@@ -4428,6 +4436,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/logos/logo_linagora.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/logos/logo_ministere_justice.jpg</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080336Z" changeid="xavier">
+        <seg>../media/logos/logo_ministere_justice.jpg</seg>
       </tuv>
     </tu>
     <tu>
@@ -5340,6 +5356,86 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T035716Z" changeid="xavier">
         <seg>../media/screenshots/1.1/notifications/sample_notification.png?w=800&amp;h=339</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.2/authentication_portal_1340022238188.png?w=200&amp;h=124</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080503Z" changeid="xavier">
+        <seg>../media/screenshots/1.2/authentication_portal_1340022238188.png?w=200&amp;h=124</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.2/authentication_portal_1340022238188.png?w=800&amp;h=496</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080501Z" changeid="xavier">
+        <seg>../media/screenshots/1.2/authentication_portal_1340022238188.png?w=800&amp;h=496</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.2/authentication_portal_1340022292201.png?w=200&amp;h=125</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080505Z" changeid="xavier">
+        <seg>../media/screenshots/1.2/authentication_portal_1340022292201.png?w=200&amp;h=125</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.2/authentication_portal_1340022292201.png?w=800&amp;h=503</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080503Z" changeid="xavier">
+        <seg>../media/screenshots/1.2/authentication_portal_1340022292201.png?w=800&amp;h=503</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.2/lemonldap_ng_manager_1340022440100.png?w=200&amp;h=124</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080508Z" changeid="xavier">
+        <seg>../media/screenshots/1.2/lemonldap_ng_manager_1340022440100.png?w=200&amp;h=124</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.2/lemonldap_ng_manager_1340022440100.png?w=800&amp;h=496</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080506Z" changeid="xavier">
+        <seg>../media/screenshots/1.2/lemonldap_ng_manager_1340022440100.png?w=800&amp;h=496</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.2/lemonldap_ng_sample_protected_application_1340022329086.png?w=200&amp;h=125</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080511Z" changeid="xavier">
+        <seg>../media/screenshots/1.2/lemonldap_ng_sample_protected_application_1340022329086.png?w=200&amp;h=125</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.2/lemonldap_ng_sample_protected_application_1340022329086.png?w=800&amp;h=503</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080508Z" changeid="xavier">
+        <seg>../media/screenshots/1.2/lemonldap_ng_sample_protected_application_1340022329086.png?w=800&amp;h=503</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.2/lemonldap_ng_session_explorer_1340022388573.png?w=200&amp;h=124</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080515Z" changeid="xavier">
+        <seg>../media/screenshots/1.2/lemonldap_ng_session_explorer_1340022388573.png?w=200&amp;h=124</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.2/lemonldap_ng_session_explorer_1340022388573.png?w=800&amp;h=496</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080512Z" changeid="xavier">
+        <seg>../media/screenshots/1.2/lemonldap_ng_session_explorer_1340022388573.png?w=800&amp;h=496</seg>
       </tuv>
     </tu>
     <tu>
@@ -8584,6 +8680,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/logos/logo-ul.png?id=references</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080408Z" changeid="xavier">
+        <seg>/_detail/logos/logo-ul.png?id=references</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/logos/logo_abuledu.png?id=references</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T035438Z" changeid="xavier">
@@ -8612,6 +8716,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/logos/logo_linagora.png?id=references</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/logos/logo_ministere_justice.jpg?id=references</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080334Z" changeid="xavier">
+        <seg>/_detail/logos/logo_ministere_justice.jpg?id=references</seg>
       </tuv>
     </tu>
     <tu>
@@ -9208,6 +9320,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>1.2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080426Z" changeid="xavier">
+        <seg>1.2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>10.0.0.1:20000 10.0.0.2:20000</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T050742Z" changeid="guimard">
@@ -9228,6 +9348,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>127.0.0.1:6379</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>1800+</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080405Z" changeid="xavier">
+        <seg>1800+</seg>
       </tuv>
     </tu>
     <tu>
@@ -11434,6 +11562,46 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T042725Z" changeid="xavier">
         <seg>&lt;a0&gt;Rev 2472 -- Tag release 1.2.0&lt;/a0&gt; by clement_oudot (2012/06/18 12:01)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2493 -- [LEMONLDAP-217] add a captcha feature to the portal&lt;/a0&gt; by kharec (2012/07/04 14:33)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080527Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2493 -- [LEMONLDAP-217] add a captcha feature to the portal&lt;/a0&gt; by kharec (2012/07/04 14:33)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2494 -- Just fix a typo on mail.pl&lt;/a0&gt; by kharec (2012/07/04 14:35)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080524Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2494 -- Just fix a typo on mail.pl&lt;/a0&gt; by kharec (2012/07/04 14:35)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2495 -- Add comments&lt;/a0&gt; by kharec (2012/07/04 16:22)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080523Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2495 -- Add comments&lt;/a0&gt; by kharec (2012/07/04 16:22)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2496 -- add an unary test for captcha methods&lt;/a0&gt; by kharec (2012/07/04 17:18)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080521Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2496 -- add an unary test for captcha methods&lt;/a0&gt; by kharec (2012/07/04 17:18)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2497 -- add a test on checkCaptcha method&lt;/a0&gt; by kharec (2012/07/05 09:33)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080519Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2497 -- add a test on checkCaptcha method&lt;/a0&gt; by kharec (2012/07/05 09:33)</seg>
       </tuv>
     </tu>
     <tu>
@@ -27204,6 +27372,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Here are some screenshots of 1.2 new features.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080500Z" changeid="xavier">
+        <seg>Ici se trouvent quelques captures d'écran illustrant les nouvelles fonctionnalités de la version 1.2.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Here are the main options used by &lt;a0&gt;LL::NG&lt;/a0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T070359Z" changeid="xavier">
@@ -29820,6 +29996,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is used to protect access to intranet.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080403Z" changeid="xavier">
+        <seg>LemonLDAP::NG est utilisé pour protéger l'accès à l'Intranet.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG is written in &lt;a0&gt;Perl&lt;/a0&gt; and requires a lot of &lt;a1&gt;Perl&lt;/a1&gt; dependencies.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -29880,6 +30064,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144246Z" changeid="xavier">
         <seg>LemonLDAP::NG fournit 3 fichiers de configuration Apache :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG used as &lt;a0&gt;CAS&lt;/a0&gt; server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080422Z" changeid="xavier">
+        <seg>LemonLDAP::NG utilisé comme serveur &lt;a0&gt;CAS&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30894,6 +31086,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083018Z" changeid="xavier">
         <seg>Mini howtos</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Ministère de la Justice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080333Z" changeid="xavier">
+        <seg>Ministère de la Justice</seg>
       </tuv>
     </tu>
     <tu>
@@ -33454,6 +33654,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>References are listed in alphabetic order.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080329Z" changeid="xavier">
+        <seg>Les références sont listées dans l'ordre alphabétique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Regexp::Assemble</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140837Z" changeid="guimard">
@@ -35642,6 +35850,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T035157Z" changeid="xavier">
         <seg>Version stable (1.1.2)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Stable version (1.2.0)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080302Z" changeid="xavier">
+        <seg>Version stable (1.2.0)</seg>
       </tuv>
     </tu>
     <tu>
@@ -39006,6 +39222,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Université de Limoges</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080407Z" changeid="xavier">
+        <seg>Université de Limoges</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Unoptimized for &lt;a0&gt;session explorer&lt;/a0&gt; and &lt;a1&gt;single session&lt;/a1&gt; features.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082204Z" changeid="xavier">
@@ -42358,6 +42582,22 @@ apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>authentication_portal_1340022238188.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080502Z" changeid="xavier">
+        <seg>authentication_portal_1340022238188.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>authentication_portal_1340022292201.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080504Z" changeid="xavier">
+        <seg>authentication_portal_1340022292201.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -46736,6 +46976,54 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18201</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080303Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18201</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18202</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080305Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18202</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18203</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080306Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18203</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18204</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080307Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18204</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18205</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080304Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18205</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18206</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080306Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18206</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://forge.ow2.org/project/showfiles.php?group_id=274</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -47984,6 +48272,46 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2493</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080525Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2493</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2494</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080523Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2494</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2495</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080522Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2495</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2496</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080521Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2496</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2497</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080516Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2497</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Documentation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -48588,6 +48916,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>https://auth.sso.sbay.org/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://cas.unilim.fr/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080424Z" changeid="xavier">
+        <seg>https://cas.unilim.fr/</seg>
       </tuv>
     </tu>
     <tu>
@@ -49590,6 +49926,30 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>lemonldap_ng_manager_1340022440100.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080507Z" changeid="xavier">
+        <seg>lemonldap_ng_manager_1340022440100.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap_ng_sample_protected_application_1340022329086.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080510Z" changeid="xavier">
+        <seg>lemonldap_ng_sample_protected_application_1340022329086.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap_ng_session_explorer_1340022388573.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080513Z" changeid="xavier">
+        <seg>lemonldap_ng_session_explorer_1340022388573.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>lemonldapng</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072340Z" changeid="xavier">
@@ -49670,6 +50030,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>logos:logo-ul.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080408Z" changeid="xavier">
+        <seg>logos:logo-ul.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>logos:logo_abuledu.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T035439Z" changeid="xavier">
@@ -49698,6 +50066,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>logos:logo_linagora.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>logos:logo_ministere_justice.jpg</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080335Z" changeid="xavier">
+        <seg>logos:logo_ministere_justice.jpg</seg>
       </tuv>
     </tu>
     <tu>
@@ -52228,6 +52604,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>~17000</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080423Z" changeid="xavier">
+        <seg>~17000</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>~1800</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -52264,6 +52648,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>~500</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>~7500</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120707T080405Z" changeid="xavier">
+        <seg>~7500</seg>
       </tuv>
     </tu>
     <tu>
