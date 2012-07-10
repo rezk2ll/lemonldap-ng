@@ -3,12 +3,12 @@
 use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::Conf::Constants;
 use Data::Dumper;
-use POSIX;
+use POSIX qw(setuid setgid);
 use strict;
 
 eval {
-    POSIX::setgid( ( getgrnam('__APACHEGROUP__') )[2] );
-    POSIX::setuid( ( getpwnam('__APACHEUSER__') )[2] );
+    setgid( ( getgrnam('__APACHEGROUP__') )[2] );
+    setuid( ( getpwnam('__APACHEUSER__') )[2] );
     print STDERR "Running as uid $> and gid $)\n";
 };
 

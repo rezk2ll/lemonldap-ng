@@ -8,13 +8,13 @@ package Lemonldap::NG::Portal::MailReset;
 use strict;
 use warnings;
 
-our $VERSION = '1.2.1';
+our $VERSION = '1.2.2';
 
 use Lemonldap::NG::Portal::Simple qw(:all);
 use base qw(Lemonldap::NG::Portal::SharedConf Exporter);
 use HTML::Template;
 use Encode;
-use POSIX;
+use POSIX qw(strftime);
 
 #inherits Lemonldap::NG::Portal::_SMTP
 
@@ -225,8 +225,8 @@ sub sendConfirmationMail {
     $self->lmLog( "Mail expiration timestamp: $expTimestamp", 'debug' );
 
     $self->{expMailDate} =
-      &POSIX::strftime( "%d/%m/%Y", localtime $expTimestamp );
-    $self->{expMailTime} = &POSIX::strftime( "%H:%M", localtime $expTimestamp );
+      strftime( "%d/%m/%Y", localtime $expTimestamp );
+    $self->{expMailTime} = strftime( "%H:%M", localtime $expTimestamp );
 
     # Mail session start date
     my $startTimestamp = $self->{mailSessionStartTimestamp};
@@ -234,9 +234,9 @@ sub sendConfirmationMail {
     $self->lmLog( "Mail start timestamp: $startTimestamp", 'debug' );
 
     $self->{startMailDate} =
-      &POSIX::strftime( "%d/%m/%Y", localtime $startTimestamp );
+      strftime( "%d/%m/%Y", localtime $startTimestamp );
     $self->{startMailTime} =
-      &POSIX::strftime( "%H:%M", localtime $startTimestamp );
+      strftime( "%H:%M", localtime $startTimestamp );
 
     # Ask if user want another confirmation email
     if ( $self->{mail_already_sent} and !$self->param('resendconfirmation') ) {
