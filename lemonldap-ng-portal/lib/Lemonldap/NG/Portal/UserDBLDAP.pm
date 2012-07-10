@@ -80,7 +80,7 @@ sub search {
         $self->lmLog( 'LDAP Search error: ' . $mesg->error, 'error' );
         return PE_LDAPERROR;
     }
-    unless ( $mesg->count() == 1 ) {
+    if ( $mesg->count() > 1 ) {
         $self->lmLog( 'More than one entry returned by LDAP directory',
             'error' );
         return PE_BADCREDENTIALS;
