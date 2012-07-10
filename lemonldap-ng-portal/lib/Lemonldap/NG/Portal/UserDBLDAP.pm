@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.2.2';
 
 ## @method int userDBInit()
 # Transform ldapGroupAttributeNameSearch in ARRAY ref
