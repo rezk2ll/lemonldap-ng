@@ -25,7 +25,7 @@ sub available {
     my $self = shift;
     opendir D, $self->{dirName};
     my @conf = readdir(D);
-    close D;
+    closedir D;
     @conf = sort { $a <=> $b } map { /lmConf-(\d+)/ ? $1 : () } @conf;
     return @conf;
 }
