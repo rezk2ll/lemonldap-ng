@@ -4,7 +4,7 @@ use strict;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Conf::Serializer;
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.2.2';
 
 sub prereq {
     my $self = shift;
