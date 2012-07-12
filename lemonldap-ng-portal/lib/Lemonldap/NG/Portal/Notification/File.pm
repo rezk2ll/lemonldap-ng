@@ -56,7 +56,7 @@ sub get {
         @notif = grep /^\d{8}${fns}${uid}${fns}${tmp}${fns}?\S*\.xml$/,
           readdir(D);
     }
-    close D;
+    closedir D;
     my $files;
     foreach my $file (@notif) {
         unless ( open F, $self->{dirName} . "/$file" ) {
