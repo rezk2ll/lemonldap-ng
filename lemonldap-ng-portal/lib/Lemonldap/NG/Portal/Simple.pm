@@ -45,7 +45,7 @@ use Digest::MD5;
 #inherits Lemonldap::NG::Portal::IssuerDBOpenID
 #inherits Lemonldap::NG::Portal::IssuerDBSAML
 #inherits Lemonldap::NG::Portal::Menu
-#link Lemonldap::NG::Portal::Notification protected notification
+#link Lemonldap::NG::Common::Notification protected notification
 #inherits Lemonldap::NG::Portal::PasswordDBChoice;
 #inherits Lemonldap::NG::Portal::PasswordDBDBI;
 #inherits Lemonldap::NG::Portal::PasswordDBLDAP;
@@ -64,7 +64,7 @@ use Digest::MD5;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.2.1';
+our $VERSION = '1.3.0';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;
@@ -405,7 +405,7 @@ sub new {
 
     # Notifications
     if ( $self->{notification} ) {
-        require Lemonldap::NG::Portal::Notification;
+        require Lemonldap::NG::Common::Notification;
         my $tmp;
 
         # Use configuration options
@@ -436,8 +436,8 @@ sub new {
         }
 
         $tmp->{p}            = $self;
-        $self->{notifObject} = Lemonldap::NG::Portal::Notification->new($tmp);
-        $self->abort($Lemonldap::NG::Portal::Notification::msg)
+        $self->{notifObject} = Lemonldap::NG::Common::Notification->new($tmp);
+        $self->abort($Lemonldap::NG::Common::Notification::msg)
           unless ( $self->{notifObject} );
     }
 
@@ -1593,7 +1593,7 @@ sub controlUrlOrigin {
 
 ##@apmethod int checkNotifBack()
 # Checks if a message has been notified to the connected user.
-# Call Lemonldap::NG::Portal::Notification::checkNotification()
+# Call Lemonldap::NG::Common::Notification::checkNotification()
 #@return Lemonldap::NG::Portal error code
 sub checkNotifBack {
     my $self = shift;
@@ -2433,7 +2433,7 @@ sub buildCookie {
 
 ##@apmethod int checkNotification()
 # Check if messages has to be notified.
-# Call Lemonldap::NG::Portal::Notification::getNotification().
+# Call Lemonldap::NG::Common::Notification::getNotification().
 #@return Lemonldap::NG::Portal constant
 sub checkNotification {
     my $self = shift;

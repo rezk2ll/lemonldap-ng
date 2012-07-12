@@ -3,12 +3,12 @@
 
 ## @class
 # File storage methods for notifications
-package Lemonldap::NG::Portal::Notification::File;
+package Lemonldap::NG::Common::Notification::File;
 
 use strict;
 use MIME::Base64;
 
-our $VERSION = '1.1.1';
+our $VERSION = '1.3.0';
 
 ## @method boolean prereq()
 # Check if parameters are set and if storage directory exists.
@@ -16,7 +16,7 @@ our $VERSION = '1.1.1';
 sub prereq {
     my $self = shift;
     unless ( $self->{dirName} ) {
-        $Lemonldap::NG::Portal::Notification::msg =
+        $Lemonldap::NG::Common::Notification::msg =
           '"dirName" is required in "File" notification type !';
         return 0;
     }
@@ -25,7 +25,7 @@ sub prereq {
         $self->{dirName} .= "/$self->{table}";
     }
     unless ( -d $self->{dirName} ) {
-        $Lemonldap::NG::Portal::Notification::msg =
+        $Lemonldap::NG::Common::Notification::msg =
           "Directory \"$self->{dirName}\" does not exist !";
         return 0;
     }

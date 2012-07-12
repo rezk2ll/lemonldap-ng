@@ -181,9 +181,6 @@ lib/Lemonldap/NG/Portal/IssuerDBOpenID.pm
 lib/Lemonldap/NG/Portal/IssuerDBSAML.pm
 lib/Lemonldap/NG/Portal/MailReset.pm
 lib/Lemonldap/NG/Portal/Menu.pm
-lib/Lemonldap/NG/Portal/Notification.pm
-lib/Lemonldap/NG/Portal/Notification/DBI.pm
-lib/Lemonldap/NG/Portal/Notification/File.pm
 lib/Lemonldap/NG/Portal/OpenID/Server.pm
 lib/Lemonldap/NG/Portal/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/PasswordDBChoice.pm

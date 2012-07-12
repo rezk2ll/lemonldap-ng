@@ -3,14 +3,14 @@
 
 ## @class
 # DBI storage methods for notifications
-package Lemonldap::NG::Portal::Notification::DBI;
+package Lemonldap::NG::Common::Notification::DBI;
 
 use strict;
 use Time::Local;
 use DBI;
 use utf8;
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.3.0';
 
 ## @method boolean prereq()
 # Check if DBI parameters are set.

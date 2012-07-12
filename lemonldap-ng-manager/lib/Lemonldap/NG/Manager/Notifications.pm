@@ -13,7 +13,7 @@ package Lemonldap::NG::Manager::Notifications;
 
 use strict;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
-use Lemonldap::NG::Portal::Notification;
+use Lemonldap::NG::Common::Notification;
 use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
 use Lemonldap::NG::Common::Conf::Constants;   #inherits
 require Lemonldap::NG::Manager::_i18n;        #inherits
@@ -22,7 +22,7 @@ use utf8;
 our $whatToTrace;
 *whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.3.0';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI
@@ -99,8 +99,8 @@ sub new {
     }
 
     $tmp->{p}            = $self;
-    $self->{notifObject} = Lemonldap::NG::Portal::Notification->new($tmp);
-    $class->abort($Lemonldap::NG::Portal::Notification::msg)
+    $self->{notifObject} = Lemonldap::NG::Common::Notification->new($tmp);
+    $class->abort($Lemonldap::NG::Common::Notification::msg)
       unless ( $self->{notifObject} );
 
     # Multi values separator

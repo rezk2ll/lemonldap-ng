@@ -1,9 +1,9 @@
 ##@file
-# Notification system for Lemonldap::NG portal
+# Notification system for Lemonldap::NG portal and manager
 
 ##@class
-# Notification system for Lemonldap::NG portal
-package Lemonldap::NG::Portal::Notification;
+# Notification system for Lemonldap::NG portal and manager
+package Lemonldap::NG::Common::Notification;
 
 use strict;
 use utf8;
@@ -12,33 +12,33 @@ use XML::LibXML;
 use XML::LibXSLT;
 use CGI::Cookie;
 
-#inherits Lemonldap::NG::Portal::Notification::DBI
-#inherits Lemonldap::NG::Portal::Notification::File
+#inherits Lemonldap::NG::Common::Notification::DBI
+#inherits Lemonldap::NG::Common::Notification::File
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.3.0';
 our ( $msg, $parser );
 
-## @cmethod Lemonldap::NG::Portal::Notification new(hashref storage)
+## @cmethod Lemonldap::NG::Common::Notification new(hashref storage)
 # Constructor.
 # @param $storage same syntax as Lemonldap::NG::Common::Conf object
-# @return Lemonldap::NG::Portal::Notification object
+# @return Lemonldap::NG::Common::Notification object
 sub new {
     my ( $class, $storage ) = splice @_;
     my $self = bless {}, $class;
     (%$self) = (%$storage);
     unless ( $self->{p} ) {
         $msg = "p=>portal is required";
-        return 0;
+	return 0;
     }
     my $type = $self->{type};
-    $self->{type} = "Lemonldap::NG::Portal::Notification::$self->{type}"
+    $self->{type} = "Lemonldap::NG::Common::Notification::$self->{type}"
       unless ( $self->{type} =~ /::/ );
     eval "require $self->{type}";
     if ($@) {
         $msg = "Error: unknown storage type $type";
-        return 0;
+	return 0;
     }
-    unless ( $self->_prereq ) {
+    unless ($self->_prereq ) {
         return 0;
     }
 
@@ -54,7 +54,7 @@ sub new {
 # @param $level Level (debug|info|notice|error)
 sub lmLog {
     my ( $self, $mess, $level ) = splice @_;
-    $self->{p}->lmLog( "[Notification] $mess", $level );
+    $self->{p}->lmLog( "[Notification] $mess", $level);
 }
 
 ## @method string getNotification(Lemonldap::NG::Portal portal)
@@ -64,7 +64,7 @@ sub lmLog {
 # @return HTML fragment containing form content
 sub getNotification {
     my ( $self, $portal ) = splice @_;
-    my ( @files, $form );
+    my (@files, $form );
 
     # Get user datas,
     my $uid = $portal->{notificationField} || $portal->{whatToTrace} || 'uid';
@@ -80,7 +80,7 @@ sub getNotification {
 
     # 3. Join results
     my $n = {};
-    if ( $user and $all ) { $n = { %$user, %$all }; }
+    if ( $user and $all ) { $n = { %$user, %$all }; }
     else                  { $n = $user ? $user : $all; }
 
     # Return 0 if no files were found
@@ -90,81 +90,82 @@ sub getNotification {
     my $xslt       = XML::LibXSLT->new();
     my $style_file = (
         -e $portal->{notificationXSLTfile}
-        ? $portal->{notificationXSLTfile}
-        : $portal->getApacheHtdocsPath() . "skins/common/notification.xsl"
+	? $portal->{notificationXSLTfile}
+	: $portal->getApacheHtdocsPath() . "skins/common/notification.xsl"
     );
     my $style_doc  = $parser->parse_file($style_file);
     my $stylesheet = $xslt->parse_stylesheet($style_doc);
 
     # Prepare HTML code
     @files = map { $n->{$_} } sort keys %$n;
-    my $i = 0;    # Files count
+    my $i = 0;
     foreach my $file (@files) {
         eval {
             my $xml = $parser->parse_string($file);
-            my $j   = 0;                              # Notifications count
+	    my $j   = 0;                              # Notifications count
 
-            # Browse notifications in file
-            foreach my $notif (
-                $xml->documentElement->getElementsByTagName('notification') )
+	    # Browse notifications in file
+	    foreach my $notif (
+	       $xml->documentElement->getElementByTagName('notification')
+     )
             {
+	
+	        # Get the reference
+	        my $reference = $notif->getAttribute('reference');
 
-                # Get the reference
-                my $reference = $notif->getAttribute('reference');
+	        $self->lmLog( "Get reference $reference", 'debug' );
 
-                $self->lmLog( "Get reference $reference", 'debug' );
+	        # Check it in session
+	        if (
+	            exists $portal->{sessionInfo}
+		    ->{ "notification_" . $reference } )
+	        {
 
-                # Check it in session
-                if (
-                    exists $portal->{sessionInfo}
-                    ->{ "notification_" . $reference } )
-                {
+	            # The notification was already accepted
+		    $self->lmLog(
+		        "Notification $reference was already accepted", 
+		        'debug' );
 
-                    # The notification was already accepted
-                    $self->lmLog(
-                        "Notification $reference was already accepted",
-                        'debug' );
-
-                    # Remove it from XML
-                    $notif->unbindNode();
-                    next;
+		    # Remove it from XML
+		    $notif->unbindNode();
+		    next;
                 }
 
-                # Check condition if any
-                my $condition = $notif->getAttribute('condition');
+	        # Check condition if any
+	        my $condition = $notif->getAttribute('condition');
 
-                if ($condition) {
+	        if ($condition) {
 
-                    $self->lmLog( "Get condition $condition", 'debug' );
+	            $self->lmLog( "Get condition $condition", 'debug' );
 
-                    unless ( $portal->safe->reval($condition) ) {
-                        $self->lmLog( "Notification condition not accepted",
-                            'debug' );
+		    unless ( $portal->safe->reval($condition) ) {
+		        $self->lmLog( "Notification condition not accepted",
+		            'debug' );
+		    
+		        # Remove it from XML
+		        $notif->unbindNode();
+		        next;
 
-                        # Remove it from XML
-                        $notif->unbindNode();
-                        next;
-
-                    }
+		    }  
                 }
 
-                $j++;
-            }
+	        $j++;
+	    }
+	
+	    # Go to next file if no notification found
+	    next unless $j;
+	    $i++;
 
-            # Go to next file if no notification found
-            next unless $j;
-            $i++;
-
-            # Transform XML into HTML
-            my $results = $stylesheet->transform( $xml, start => $i );
-            $form .= $stylesheet->output_string($results);
-        };
-        if ($@) {
-            $self->lmLog(
-                "Bad XML file: a notification for $uid was not done ($@)",
-                'warn' );
-            return 0;
-        }
+	    # Transform XML into HTML
+	    my $results = $stylesheet->transform( $xml, start => $i );
+	    $form .= $stylesheet->output_string($results);
+	};
+	if ($@) {
+	    $self->lmLog(
+	        "Bad XML File: a notification for $uid was not done ($@)",
+		'warn' );
+	    return 0;
+	}
     }
 
     # Stop here if nothing to display
@@ -174,17 +175,17 @@ sub getNotification {
     $i = 0;
     while ( my $tmp = shift @{ $portal->{cookie} } ) {
         $i++;
-        my $t = $portal->{cipher}->encrypt( $tmp->value );
-        unless ( defined($t) ) {
-            $self->lmLog(
+	my $t = $portal->{cipher}->encrypt( $tmp->value );
+	unless ( defined($t) ) {
+	    $self->lmLog(
 "Notification for $uid was not done : $Lemonldap::NG::Common::Crypto::msg",
                 'warn'
-            );
-            return 0;
-        }
-        $tmp->value($t);
-        $form .= qq{<input type="hidden" id="cookie$i" name="cookie$i" value="}
-          . $tmp->as_string . '" />';
+	    );
+	    return 0;
+	}
+	$tmp->value($t);
+	$form .= qq{<input type="hidden" id="cookie$i" name="cookie$i" value="}
+	  . $tmp->as_string . '" />';
     }
     $form .= '<input type="hidden" name="type" value="notification"/>';
     return $form;
@@ -198,131 +199,124 @@ sub checkNotification {
     my ( $self, $portal ) = splice @_, 0, 2;
     my ( $refs, $checks );
 
-    # First, rebuild environment (cookies,...)
+    # First, rebuild environment (cookies, ...)
     foreach ( $portal->param() ) {
         if (/^cookie/) {
-            my @tmp   = split /(?:=|;\s+)/, $portal->param($_);
-            my %tmp   = @tmp;
-            my $value = $portal->{cipher}->decrypt( $tmp[1] );
-            unless ( defined($value) ) {
-                $self->lmLog( "Unable to decrypt cookie", 'warn' );
-                return 0;
+	    my @tmp   = split /(?:=|;\s+)/, $portal->param($_);
+	    my %tmp   = @tmp;
+	    my $value = $portal->{cipher}->decrypt( $tmp[1] );
+	    unless ( defined($value) ) {
+	        $self->lmLog( "Unable to decrypt cookie", 'warn');
+		return 0;
+	    }
+	    push @{ $portal->{cookie} }, 
+	      $portal->cookie(
+	        -name   => $tmp[0],
+		-value  => $value, 
+		-domain => $tmp{domain},
+		-path   => "/",
+		-secure => ( grep( /^secure$/, @tmp ) ? 1 : 0 ),
+		@_,
+	      );
+	    if ( $tmp[0] eq $portal->{cookieName} ) {
+	        my $tmp = $portal->{existingSession};
+		$portal->{existingSession} = sub { 0 };
+		$portal->controlExistingSession($value);
+		$portal->{existingSession} = $tmp;
             }
-            push @{ $portal->{cookie} },
-              $portal->cookie(
-                -name   => $tmp[0],
-                -value  => $value,
-                -domain => $tmp{domain},
-                -path   => "/",
-                -secure => ( grep( /^secure$/, @tmp ) ? 1 : 0 ),
-                @_,
-              );
-            if ( $tmp[0] eq $portal->{cookieName} ) {
-                my $tmp = $portal->{existingSession};
-                $portal->{existingSession} = sub { 0 };
-                $portal->controlExistingSession($value);
-                $portal->{existingSession} = $tmp;
-            }
-        }
-        elsif (s/^reference//) {
-            $refs->{$_} = $portal->param("reference$_");
-        }
-        elsif ( s/^check// and /^(\d+x\d+)x(\d+)$/ ) {
-            push @{ $checks->{$1} }, $2;
-        }
+	}
+	elsif (s/^reference//) {
+	    $refs->{$_} = $portal->param("reference$_");
+	}
+	elsif ( s/^check// and /^(\d+x\d+)x(\d+)$/ ) {
+	    push @{ $checks->{$1} }, $2;
+	}
     }
     $portal->controlExistingSession() unless ( $portal->{sessionInfo} );
     unless ( $portal->{sessionInfo} ) {
         $self->lmLog( "Invalid session", 'warn' );
-        return 0;
+	return 0;
     }
     my $result = 1;
     foreach my $ref ( keys %$refs ) {
-        my $uid =
-             $portal->{notificationField}
-          || $portal->{whatToTrace}
-          || 'uid';
-        $uid =~ s/\$//g;
-        $uid = $portal->{sessionInfo}->{$uid};
+        my $uid = 
+	     $portal->{notificationField}
+	  || $portal->{whatToTrace}
+	  || 'uid';
+	$uid =~ s/\$//g;
+	$uid = $portal->{sessionInfo}->{$uid};
 
-        # Get notifications by references
-        # 1. For the user
-        my $user = $self->_get( $uid, $refs->{$ref} );
+	# Get notifications by references
+	# 1. For the user
+	my $user = $self->_get( $uid, $refs->{$ref} );
 
-        # 2. For all users
-        my $all = $self->_get( $portal->{notificationWildcard}, $refs->{$ref} );
+	# 2. For all users
+	my $all = $self->_get( $portal->{notificationWildcard}, $refs->{$ref} );
 
-        # 3. Join results
-        my $files = {};
-        if ( $user and $all ) { $files = { %$user, %$all }; }
-        else                  { $files = $user ? $user : $all; }
+	# 3. Join results
+	my $files = {};
+	if ( $user and $all ) { $files = { %$user, %$all }; }
+	else                  { $files = { $user ? $user : $all; }
 
-        unless ($files) {
-            $self->lmLog( "Can't find notification $refs->{$ref} for $uid",
-                'error' );
-            next;
+	unless ($files) {
+	    $self->lmLog( "Can't find notification $refs->{$ref} for $uid", 
+	         'error');
+	    next;
         }
 
-        # Browse found files
-        foreach my $file ( keys %$files ) {
-            my $xml;
-            eval { $xml = $parser->parse_string( $files->{$file} ) };
-            if ($@) {
-                $self->lmLog( "Bad XML notification for $uid", 'error' );
-                next;
+	# Browse found files
+	foreach my $files ( keys %$files ) {
+	    my $xml;
+	    eval { $xml = $parser->parse_string( $files->{$file} ) };
+	    if ($@) {
+	        $self->lmLog( "Bad XML notifications for $uid", 'error' );
+		next;
             }
+            
+	    # Browse notifications in file
+	    foreach my $notif (
+	        $xml->documentElement->getElementsByTagName('notification') )
+	    {
+	        my $reference  = $notif->getAttribute('reference');
+		my @tmp        = $notif->getElementsByTagName('check');
+		my $checkCount = @tmp;
+		if ( $checkCount == 0
+		    or
+		    ( $checks->{$ref} and $checkCount == @{ $checks->{$ref} } )
+		  )
+		{
 
-            # Browse notifications in file
-            foreach my $notif (
-                $xml->documentElement->getElementsByTagName('notification') )
-            {
-                my $reference  = $notif->getAttribute('reference');
-                my @tmp        = $notif->getElementsByTagName('check');
-                my $checkCount = @tmp;
-                if ( $checkCount == 0
-                    or
-                    ( $checks->{$ref} and $checkCount == @{ $checks->{$ref} } )
-                  )
-                {
+		    # Notification is accepted
 
-                    # Notification is accepted
+		    $self->lmLog(
+		        "$uid has accepted notification $refs->{$ref}",
+			'notice');
+		    # 1. Register acceptation in persistent session
+		    my $time     = time();
+		    my $notifkey = "notification_" . $refs->{$ref};
+		    $portal->updatePersistentSession(
+		        { $notifkey => $time },
+		    );
 
-                    $self->lmLog(
-                        "$uid has accepted notification $refs->{$ref}",
-                        'notice' );
+		    $self->lmLog("Notification " . $refs->{$ref} 
+		                  . " registered in persistent session",
+				 'debug'
+		    );
 
-                    # 1. Register acceptation in persistent session
-                    my $time     = time();
-                    my $notifkey = "notification_" . $refs->{$ref};
-                    $portal->updatePersistentSession(
-                        { $notifkey => $time },
-
-                    );
-
-                    $self->lmLog(
-                        "Notification "
-                          . $refs->{$ref}
-                          . " registered in persistent session",
-                        'debug'
-                    );
-
-                    # 2. Delete it if not a wildcard notification
-                    if ( exists $user->{$file} ) {
-
-                        if ( $self->_delete($file) ) {
+		    
+		    # 2. Delete it if not a wildcard notification
+		    if ( exists $user->{$file} ) {
+			    
+			if ( $self->_delete($file) ) {
                             $self->lmLog(
                                 "Notification " . $refs->{$ref} . " deleted",
                                 'debug' );
-                        }
                         else {
-                            $self->lmLog(
-"Unable to delete notification $refs->{$ref} for $uid",
-                                'error'
-                            );
-                        }
-                    }
-                }
-                else {
+			    $self->lmLog("Unable to delete notification $refs->{$ref} for $uid", 'warn');
+			}
+		    }
+		}
+		else {
                     $self->lmLog(
                         "$uid has not accepted notification $refs->{$ref}",
                         'notice' );
@@ -428,7 +422,7 @@ sub _get {
 
     # Debug lines. Must be removed ?
     die ref($self)
-      unless ( ref($self) eq 'Lemonldap::NG::Portal::Notification' );
+      unless ( ref($self) eq 'Lemonldap::NG::Common::Notification' );
     return &{ $_[0]->{type} . '::get' }(@_);
 }
 
@@ -463,25 +457,27 @@ sub _newNotif {
 
 1;
 
+
 __END__
 
 =head1 NAME
 
 =encoding utf8
 
-Lemonldap::NG::Portal::Notification - Provides notification messages system.
+Lemonldap::NG::Common::Notification - Provides notification messages system.
 
 =head1 SYNOPSIS
 
-    use Lemonldap::NG::Portal;
+    use Lemonldap::NG::Common;
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Portal::Notification.
+Lemonldap::NG::Common::Notification.
 
 =head1 SEE ALSO
 
 L<Lemonldap::NG::Portal>,
+L<Lemonldap::NG::Manager>,
 
 =head1 AUTHOR
 
@@ -506,5 +502,3 @@ it under the same terms as Perl itself, either Perl version 5.10.0 or,
 at your option, any later version of Perl 5 you may have available.
 
 =cut
-
-
