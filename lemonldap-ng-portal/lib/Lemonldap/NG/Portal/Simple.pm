@@ -15,7 +15,7 @@ use MIME::Base64;
 use Authen::Captcha;
 use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
-require POSIX;
+use POSIX qw(strftime);
 use Lemonldap::NG::Portal::_i18n;    #inherits
 use Lemonldap::NG::Common::Apache::Session
   ;    #link protected session Apache::Session object
@@ -1111,7 +1111,7 @@ sub updateSession {
             }
 
             # Store updateTime
-            $h->{updateTime} = &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
+            $h->{updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
 
             untie %$h;
         }
@@ -1969,12 +1969,12 @@ sub setSessionInfo {
     # Date and time
     if ( $self->{updateSession} ) {
         $self->{sessionInfo}->{updateTime} =
-          &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
+          strftime( "%Y%m%d%H%M%S", localtime() );
     }
     else {
         $self->{sessionInfo}->{_utime} ||= time();
         $self->{sessionInfo}->{startTime} =
-          &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
+          strftime( "%Y%m%d%H%M%S", localtime() );
     }
 
     # Get environment variables matching exportedVars
