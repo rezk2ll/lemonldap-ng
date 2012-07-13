@@ -20,7 +20,6 @@ WriteMakefile(
         'JSON'                   => 0,
         'Lemonldap::NG::Common'  => '1.2.0',
         'Lemonldap::NG::Handler' => '1.2.0',
-        'Lemonldap::NG::Portal'  => '1.2.0',
         'LWP::UserAgent'         => 0,
         'XML::LibXML'            => 0,
         'XML::LibXSLT'           => 0,
