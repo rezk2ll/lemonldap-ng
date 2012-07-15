@@ -5,13 +5,10 @@ Source: http://forge.objectweb.org/project/showfiles.php?group_id=274
 
 Files: tree.js
 Copyright: 2008, Peter Panov <panov@elcat.kg>, IKEEN Group http://www.ikeen.com
-License: BSD
+License: BSD-3-Clause
 
 Files: jquery.base64.js
 Copyright: Muhammad Hussein Fattahizadeh < muhammad [AT] semnanweb [DOT] com >
-License: GPL-2
-
-Files: *.js
 License: GPL-2
 
 Files: lemonldap-ng-portal/examples/skins/common/apps/*.png
@@ -36,7 +33,7 @@ License: GPL-2
     On Debian GNU/Linux systems, the complete text of the GNU General
     Public License can be found in `/usr/share/common-licenses/GPL-2'
 
-License: BSD
+License: BSD-3-Clause
     Copyright (c) The Regents of the University of California.
     All rights reserved.
     Redistribution and use in source and binary forms, with or without
@@ -50,7 +47,7 @@ License: BSD
     3. Neither the name of the University nor the names of its contributors
        may be used to endorse or promote products derived from this software
     without specific prior written permission.
-
+    .
     THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
     ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
     IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -62,12 +59,4 @@ License: BSD
     LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
     OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
     SUCH DAMAGE.
-
-License: LGPL
-    This package is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as
-    published by the Free Software Foundation.
-    On Debian GNU/Linux systems, the complete text of the GNU Lesser
-    General Public License can be found in
-    `/usr/share/common-licenses/LGPL-3'.
 
