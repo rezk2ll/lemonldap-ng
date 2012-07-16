@@ -1456,6 +1456,32 @@ sub stamp {
     return $self->{cipher} ? $self->{cipher}->encrypt( time() ) : 1;
 }
 
+## @method string convertSec(int sec)
+# Convert seconds to hours, minutes, seconds
+# @param $sec number of seconds
+# @return a formated time
+sub convertSec {
+    my ( $self, $sec ) = splice @_;
+
+    # If we only have seconds
+    return "00:00:$sec" if ( $sec < 60 );
+
+    # Calculate the minutes
+    my $min = $sec / 60, $sec %= 60;
+    $min = int($min);
+    return "00:$min:$sec" if ( $min < 60 );
+
+    # Calculate the hours
+    my $hrs = $min / 60, $min %= 60;
+    $hrs = int($hrs);
+    return "$hrs:$min:$sec" if ( $hrs < 24 );
+
+    # Calculate the days
+    my $days = $hrs / 24, $hrs %= 24;
+    $days = int($days);
+    return "$days:$hrs:$min:$sec" if ( $days < 365 );
+}
+							      
 ###############################################################
 # MAIN subroutine: call all steps until one returns something #
 #                  different than PE_OK                       #
