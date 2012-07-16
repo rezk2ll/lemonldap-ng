@@ -10,15 +10,12 @@
 # Variables
 #==============================================================================
 
-%define perl_vendorlib %(eval "`%{__perl} -V:installvendorlib`"; echo $installvendorlib)
-%define perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
-
 %define real_name lemonldap-ng
-%define real_version 1.2.0
-%define cpan_common_version  1.2.0
-%define cpan_handler_version 1.2.0
-%define cpan_manager_version 1.2.0
-%define cpan_portal_version  1.2.0
+%define real_version 1.2.1
+%define cpan_common_version  %{real_version}
+%define cpan_handler_version %{real_version}
+%define cpan_manager_version %{real_version}
+%define cpan_portal_version  %{real_version}
 
 %define lm_prefix /usr
 %define lm_sharedir %{_datadir}/lemonldap-ng
@@ -35,13 +32,8 @@
 %endif
 
 # Apache User and Group
-%if 0%{?rhl}%{?rhel}%{?fedora}
 %define lm_apacheuser apache
 %define lm_apachegroup apache
-%else
-%define lm_apacheuser wwwrun                                     
-%define lm_apachegroup www
-%endif
 
 %define lm_dnsdomain example.com
 
@@ -52,13 +44,15 @@ Name:           %{real_name}
 Version:        %{real_version}
 Release:        1%{?dist}
 Summary:        LemonLDAP-NG WebSSO
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
 License:        GPL+ or Artistic
 URL:            http://lemonldap-ng.org
-
 Source0:        http://lemonldap-ng.org/download/%{name}-%{version}.tar.gz
-
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildArch:      noarch
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
@@ -85,27 +79,26 @@ BuildRequires:  perl(Class::Inspector)
 BuildRequires:  perl(Test::MockObject)
 BuildRequires:  perl(Clone)
 %else
-# SuSE Linux needs rpm packages for perl scripts                                                                                           
-BuildRequires:  perl, perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone
+BuildRequires:  perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-Net-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone
 %endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
-Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires: perl(Apache::Session)
 Requires: perl(IO::String)
 Requires: mod_perl
 %else
 Requires: cron, apache2, apache2-mod_perl
-Requires: perl >= %(eval "`%{__perl} -V:version`"; echo $version)
 Requires: perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String
 Requires: perl-ldap, perl-MIME-Base64, perl-CGI, perl-CGI-Session, perl-DBI, perl-HTML-Template, perl-SOAP-Lite, perl-IPC-ShareLite, perl-Convert-ASN1, perl-Error
 %endif
+
 Requires: lemonldap-ng-conf >= %{real_version}
 Requires: lemonldap-ng-doc >= %{real_version}
 Requires: lemonldap-ng-handler >= %{real_version}
 Requires: lemonldap-ng-manager >= %{real_version}
 Requires: lemonldap-ng-portal >= %{real_version}
 Requires: lemonldap-ng-test >= %{real_version}
+
 %if 0%{?rhl}%{?rhel}%{?fedora}
 Requires: perl(Lemonldap::NG::Common) >= %{cpan_common_version}
 Requires: perl(Lemonldap::NG::Handler) >= %{cpan_handler_version}
@@ -119,7 +112,7 @@ Requires: perl-Lemonldap-NG-Portal >= %{cpan_portal_version}
 %endif
 
 %description
-LemonLDAP::NG is a modular Web-SSO based on Apache::Session modules. It
+LemonLdap::NG is a modular Web-SSO based on Apache::Session modules. It
 simplifies the build of a protected area with a few changes in the
 application. It manages both authentication and authorization and provides
 headers for accounting. 
@@ -130,7 +123,11 @@ So you can have a full AAA protection for your web space as described below.
 #==============================================================================
 %package -n lemonldap-ng-conf
 Summary:        LemonLDAP-NG configuration
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
 Requires(post):  httpd
 
 %description -n lemonldap-ng-conf
@@ -141,7 +138,11 @@ This package contains the main storage configuration.
 #==============================================================================
 %package -n lemonldap-ng-doc
 Summary:        LemonLDAP-NG documentation
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
 
 %description -n lemonldap-ng-doc
 This package contains html documentation.
@@ -151,7 +152,11 @@ This package contains html documentation.
 #==============================================================================
 %package -n lemonldap-ng-handler
 Summary:        LemonLDAP-NG Handler
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
 
 %description -n lemonldap-ng-handler
 This package deploys the Apache Handler.
@@ -161,7 +166,11 @@ This package deploys the Apache Handler.
 #==============================================================================
 %package -n lemonldap-ng-manager
 Summary:        LemonLDAP-NG administration interface
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
 
 %description -n lemonldap-ng-manager
 This package deploys the adminsitration interface and sessions explorer.
@@ -181,7 +190,11 @@ This package deploys the authentication portal.
 #==============================================================================
 %package -n lemonldap-ng-test
 Summary:        LemonLDAP-NG test applications
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
 
 %description -n lemonldap-ng-test
 This package deploys small test applications.
@@ -192,7 +205,11 @@ This package deploys small test applications.
 %package -n perl-Lemonldap-NG-Common
 Summary:        LemonLDAP-NG Common Modules
 Version:        %{cpan_common_version}
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
 
 %description -n perl-Lemonldap-NG-Common
 This package installs the configuration libraries used by other LemonLDAP::NG modules.
@@ -203,7 +220,11 @@ This package installs the configuration libraries used by other LemonLDAP::NG mo
 %package -n perl-Lemonldap-NG-Handler
 Summary:        LemonLDAP-NG Handler Modules
 Version:        %{cpan_handler_version}
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
 
 %description -n perl-Lemonldap-NG-Handler
 This package installs the Apache module part (handler) used to protect web areas.
@@ -214,7 +235,11 @@ This package installs the Apache module part (handler) used to protect web areas
 %package -n perl-Lemonldap-NG-Manager
 Summary:        LemonLDAP-NG Manager Modules
 Version:        %{cpan_manager_version}
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
 
 %description -n perl-Lemonldap-NG-Manager
 This package installs the administration interface (manager).
@@ -225,7 +250,11 @@ This package installs the administration interface (manager).
 %package -n perl-Lemonldap-NG-Portal
 Summary:        LemonLDAP-NG Portal Modules
 Version:        %{cpan_portal_version}
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
 
 %description -n perl-Lemonldap-NG-Portal
 This package installs the authentication portal.
@@ -234,50 +263,25 @@ This package installs the authentication portal.
 # Source preparation
 #==============================================================================
 %prep
-%setup -n %{real_name}-%{real_version} -q
-
-# Remove unwanted provides/requires
-# We remove Lemonldap::NG requires because the requires are set in the header
-cat << \EOF > %{name}-prov
-#!/bin/sh
-%{__perl_provides} $* |\
-sed -e '/perl(My::.*)/d'
-EOF
-
-%define __perl_provides %{_builddir}/%{name}-%{real_version}/%{name}-prov
-chmod +x %{__perl_provides}
-
-
-cat << \EOF > %{name}-req
-#!/bin/sh
-%{__perl_requires} $* |\
-sed -e '/perl(lasso)/d' |\
-sed -e '/perl(Net::OpenID::Server)/d' |\
-sed -e '/perl(AuthCAS)/d'
-EOF
-
-%define __perl_requires %{_builddir}/%{name}-%{real_version}/%{name}-req
-chmod +x %{__perl_requires}
+%setup -q -n %{real_name}-%{real_version}.tar.gz
 
 #==============================================================================
 # Building
 #==============================================================================
 %build
-%{__make} %{?_smp_mflags} configure STORAGECONFFILE=%{lm_storagefile} PERLOPTIONS="INSTALLDIRS=vendor"
-%{__make} %{?_smp_mflags}
+%{__make} configure STORAGECONFFILE=%{lm_storagefile} PERLOPTIONS="INSTALLDIRS=vendor"
+%{__make} 
+
+# run Test
+%{__make} test
 
 #==============================================================================
 # Installation
-#==============================================================================
+#============================================================================
 %install
-%if 0%{?rhl}%{?rhel}%{?fedora}
 rm -rf %{buildroot}
-%endif
 
-# Tests
-%{__make} %{?_smp_mflags} test
-# Install 
-%{__make} %{?_smp_mflags} install \
+%{__make} install \
 	DESTDIR=%{buildroot} \
 	PREFIX=%{lm_prefix} \
 	BINDIR=%{lm_sharedir}/bin \
@@ -294,9 +298,9 @@ rm -rf %{buildroot}
 	DNSDOMAIN=%{lm_dnsdomain}
 
 # Remove some unwanted files
-find $RPM_BUILD_ROOT -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -name perllocal.pod -exec rm -f {} \;
-find $RPM_BUILD_ROOT -name *.bak -exec rm -f {} \;
+find %{buildroot} -name .packlist -exec rm -f {} \;
+find %{buildroot} -name perllocal.pod -exec rm -f {} \;
+find %{buildroot} -name *.bak -exec rm -f {} \;
 
 # Set apache user in some files (see Makefile)
 # Note: we do not use the APACHEUSER and APACHEGROUP in make install
@@ -319,10 +323,10 @@ chmod 770 %{buildroot}%{lm_vardir}/sessions/lock
 chmod 770 %{buildroot}%{lm_vardir}/notifications
 
 # Touch for ghost
-mkdir -p $RPM_BUILD_ROOT%{apache_confdir}
-touch $RPM_BUILD_ROOT%{apache_confdir}/z-lemonldap-ng-handler.conf
-touch $RPM_BUILD_ROOT%{apache_confdir}/z-lemonldap-ng-manager.conf
-touch $RPM_BUILD_ROOT%{apache_confdir}/z-lemonldap-ng-portal.conf
+mkdir -p %buildroot%{apache_confdir}
+touch %buildroot%{apache_confdir}/z-lemonldap-ng-handler.conf
+touch %buildroot%{apache_confdir}/z-lemonldap-ng-manager.conf
+touch %buildroot%{apache_confdir}/z-lemonldap-ng-portal.conf
 
 #==============================================================================
 # Post Installation
@@ -344,15 +348,10 @@ fi
 if [ $1 -gt 1 ] ; then
 	if [ -e %{lm_confdir}/storage.conf -o -e %{lm_confdir}/apply.conf -o -e %{lm_confdir}/apps-list.xml ] ; then
 		# Run migration script
-		%{lm_sharedir}/bin/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
+		%{lm_sharedir}/bin/lmMigrateConfFiles2ini &> /dev/null || :
 		# Fix ownership
 		chgrp %{lm_apachegroup} %{lm_storagefile} || :
 	fi
-fi
-# Set editor alternatives if it does not exist
-update-alternatives --display editor > /dev/null 2>&1
-if [ $? -ne 0 ] ; then
-	update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
 fi
 
 #==============================================================================
@@ -362,14 +361,14 @@ fi
 # Package removal
 if [ $1 -eq 0 ] ; then
 	# Remove symlink in Apache configuration
-	rm -f %{apache_confdir}/z-lemonldap-ng-handler.conf 2>&1 > /dev/null || :
-	rm -f %{apache_confdir}/z-lemonldap-ng-manager.conf 2>&1 > /dev/null || :
-	rm -f %{apache_confdir}/z-lemonldap-ng-portal.conf 2>&1 > /dev/null  || :
+	rm -f %{apache_confdir}/z-lemonldap-ng-handler.conf &> /dev/null || :
+	rm -f %{apache_confdir}/z-lemonldap-ng-manager.conf &> /dev/null || :
+	rm -f %{apache_confdir}/z-lemonldap-ng-portal.conf &> /dev/null  || :
 fi
 # Upgrade from previous version
 if [ $1 -eq 1 ] ; then
 	# Remove old symlink in Apache configuration
-	rm -f %{apache_confdir}/z-lemonldap-ng.conf 2&>1 >/dev/null || :
+	rm -f %{apache_confdir}/z-lemonldap-ng.conf &> /dev/null || :
 fi
 
 %clean
@@ -472,6 +471,9 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
+* Mon Jul 16 2012 Sandro Cazzaniga <cazzaniga.sandro@gmail.com> - 1.2.1-1
+- Update to 1.2.1
+- Improve spec portability 
 * Sun Jun 17 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.0-1
 - Update to 1.2.0
 * Fri Oct 07 2011 Clement Oudot <clem.oudot@gmail.com> - 1.1.2-1
