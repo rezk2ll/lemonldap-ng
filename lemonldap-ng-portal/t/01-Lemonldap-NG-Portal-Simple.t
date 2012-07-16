@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 11;
+use Test::More tests => 10;
 
 BEGIN { use_ok( 'Lemonldap::NG::Portal::Simple', ':all' ) }
 
@@ -93,7 +93,4 @@ ok( $p->process > 0, 'User OK' );
 
 # Cookie test
 ok( $p->{cookie}->[0]->value eq '1', 'Cookie value' );
-
-# convertSec test
-ok($p->convertSec(650) eq '00:10:50', 'convertSec');
 

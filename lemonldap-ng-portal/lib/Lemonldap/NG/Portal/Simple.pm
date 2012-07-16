@@ -1462,24 +1462,27 @@ sub stamp {
 # @return a formated time
 sub convertSec {
     my ( $self, $sec ) = splice @_;
+    my ( $day, $hrs, $min ) = (0, 0, 0);
 
-    # If we only have seconds
-    return "00:00:$sec" if ( $sec < 60 );
-
-    # Calculate the minutes
-    my $min = $sec / 60, $sec %= 60;
-    $min = int($min);
-    return "00:$min:$sec" if ( $min < 60 );
+     # Calculate the minutes
+    if ( $sec > 60 ) {
+        $min = $sec / 60, $sec %= 60;
+        $min = int($min);
+    }
 
     # Calculate the hours
-    my $hrs = $min / 60, $min %= 60;
-    $hrs = int($hrs);
-    return "$hrs:$min:$sec" if ( $hrs < 24 );
+    if ( $min > 60 ) { 
+        $hrs = $min / 60, $min %= 60;
+	$hrs = int($hrs);
+    }
 
     # Calculate the days
-    my $days = $hrs / 24, $hrs %= 24;
-    $days = int($days);
-    return "$days:$hrs:$min:$sec" if ( $days < 365 );
+    if ( $hrs > 24 ) {
+        $day = $hrs / 24, $hrs %= 24;
+	$day = int($day);
+    }
+
+    return ( $day, $hrs, $min, $sec );
 }
 							      
 ###############################################################

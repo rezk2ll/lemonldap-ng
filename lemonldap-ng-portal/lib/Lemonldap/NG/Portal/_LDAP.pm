@@ -175,9 +175,9 @@ sub userBind {
         }
         if ( $resp->time_before_expiration ) {
             $self->{portal}->info( "<h3>"
-                  . $self->convertSec($resp->time_before_expiration) . " "
-                  . $self->msg(PM_PP_EXP_WARNING)
-                  . "</h3>" );
+                  . printf($self->msg( PM_PP_EXP_WARNING ), 
+		    self->convertSec($resp->time_before_expiration))
+		  . "</h3>" );
         }
 
         my $pp_error = $resp->pp_error;
