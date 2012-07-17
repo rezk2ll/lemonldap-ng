@@ -32,8 +32,13 @@
 %endif
 
 # Apache User and Group
+%if 0%{?rhl}%{?rhel}%{?fedora}
 %define lm_apacheuser apache
 %define lm_apachegroup apache
+%else
+%define lm_apacheuser wwwrun
+%define lm_apachegroup www
+%endif
 
 %define lm_dnsdomain example.com
 
