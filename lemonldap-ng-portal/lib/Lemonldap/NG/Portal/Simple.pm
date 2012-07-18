@@ -767,6 +767,7 @@ sub initCaptcha {
     opendir(OUTPUT, $self->{captcha_output}) or $self->lmLog("Can't open captcha output dir", "error");
     opendir(DATA, $self->{captcha_data}) or  $self->lmLog("Can't open captcha data dir", "error");
     foreach(readdir(OUTPUT)) {
+        next if ( $_ eq ".." or $_ eq "." );
         system("rm -f $_ &>/dev/null")
 	    or $self->lmLog("Can't clean captcha output dir!", "warn");
     }
