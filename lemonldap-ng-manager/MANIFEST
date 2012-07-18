@@ -103,4 +103,5 @@ README
 t/10-Manager.t
 t/20-Manager-i18n.t
 t/30-Manager-Struct.t
+t/40-Manager-Sessions.t
 t/99-pod.t
