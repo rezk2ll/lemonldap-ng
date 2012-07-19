@@ -55,22 +55,21 @@ sub extractFormInfo {
 	    $self->{captcha_code} = $self->param('captcha_code');
 	}
 	$self->{captcha_result} = $self->checkCaptcha($captcha_user_code, $self->{captcha_code});
+        if ( $self->{captcha_result} != 1 ) {
+            if ( $self->{captcha_result} == -3 or $self->{captcha_result} == -2 ) {
+	        $self->lmLog("Captcha failed: wrong code", "error");
+	        return PE_CAPTCHAERROR;
+	    }
+	    elsif ( $self->{captcha_result} == 0 ) {
+	        $self->lmLog("Captcha failed: code not checked (file error)", "error");
+	        return PE_CAPTCHAERROR;
+            }
+	    elsif ( $self->{captcha_result} == -1 ) {
+	         $self->lmLog("Captcha failed: code has expired", "error");
+	         return PE_CAPTCHAERROR;
+	    }
+        }
     }
-    if ( $self->{captcha_result} != 1 ) {
-        if ( $self->{captcha_result} == -3 or $self->{captcha_result} == -2 ) {
-	    $self->lmLog("Captcha failed: wrong code", "error");
-	    return PE_CAPTCHAERROR;
-	}
-	elsif ( $self->{captcha_result} == 0 ) {
-	    $self->lmLog("Captcha failed: code not checked (file error)", "error");
-	    return PE_CAPTCHAERROR;
-	}
-	elsif ( $self->{captcha_result} == -1 ) {
-	  $self->lmLog("Captcha failed: code has expired", "error");
-	  return PE_CAPTCHAERROR;
-	}
-    }
-
     # Other parameters
     $self->{timezone} = $self->param('timezone');
     $self->{userControl} ||= '^[\w\.\-@]+$';
