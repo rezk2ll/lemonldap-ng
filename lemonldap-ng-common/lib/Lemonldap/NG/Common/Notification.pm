@@ -80,7 +80,7 @@ sub getNotification {
 
     # 3. Join results
     my $n = {};
-    if ( $user and $all ) { $n = { %$user, %$all }; }
+    if ( $user and $all ) { $n = { %$user, %$all }; }
     else                  { $n = $user ? $user : $all; }
 
     # Return 0 if no files were found
