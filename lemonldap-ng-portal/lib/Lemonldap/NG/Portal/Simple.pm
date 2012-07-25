@@ -466,8 +466,8 @@ sub new {
     # init the captcha feature if it's enabled
     if ( $self->{captcha_enabled} ) {
         eval $self->initCaptcha();
-	$self->{captcha_initialized} = 1 unless $@ ;
-    }
+	    $self->lmLog("Can't init captcha: $@", "error");
+     }
     
     return $self;
 }
@@ -647,10 +647,10 @@ sub setDefaultValues {
     $self->{mailOnPasswordChange}            ||= 0;
     
     # Captcha parameters 
-    $self->{captcha_enabled}   = 0;
-    $self->{captcha_size}      = 6;
+    $self->{captcha_enabled} = 0;
+    $self->{captcha_size} = 6;
     $self->{captcha_output} = '/usr/local/lemonldap-ng/htdocs/portal/captcha_output/';
-    $self->{captcha_data}   = '/usr/local/lemonldap-ng/data/captcha/data/';
+    $self->{captcha_data} =  '/usr/local/lemonldap-ng/data/captcha/data/';
 
     # Notification
     $self->{notificationWildcard} ||= "allusers";
@@ -760,8 +760,9 @@ sub buildHiddenForm {
     return $val;
 }
 
-## @method void initCaptcha()
+## @method void initCaptcha(void)
 # init captcha module and generate captcha
+# @return nothing
 sub initCaptcha {
     my $self = shift;
     opendir(OUTPUT, $self->{captcha_output}) or $self->lmLog("Can't open captcha output dir", "error");
@@ -1474,15 +1475,16 @@ sub convertSec {
     # Calculate the hours
     if ( $min > 60 ) { 
         $hrs = $min / 60, $min %= 60;
-	$hrs = int($hrs);
+	    $hrs = int($hrs);
     }
 
     # Calculate the days
     if ( $hrs > 24 ) {
         $day = $hrs / 24, $hrs %= 24;
-	$day = int($day);
+	    $day = int($day);
     }
 
+    # Return the date
     return ( $day, $hrs, $min, $sec );
 }
 							      
