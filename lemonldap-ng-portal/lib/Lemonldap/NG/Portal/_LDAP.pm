@@ -14,7 +14,7 @@ use Encode;
 use strict;
 
 our @EXPORT   = qw(ldap);
-our $VERSION  = '1.2.0';
+our $VERSION  = '1.3.0';
 our $ppLoaded = 0;
 
 BEGIN {
@@ -177,7 +177,7 @@ sub userBind {
             $self->{portal}->info(
                 "<h3>"
                   . printf( $self->msg(PM_PP_EXP_WARNING),
-                    self->convertSec( $resp->time_before_expiration )
+                    $self->convertSec( $resp->time_before_expiration )
                   )
                   . "</h3>"
             );
