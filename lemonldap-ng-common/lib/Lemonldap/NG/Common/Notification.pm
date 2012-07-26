@@ -21,7 +21,7 @@ our ( $msg, $parser );
 ## @cmethod Lemonldap::NG::Common::Notification new(hashref storage)
 # Constructor.
 # @param $storage same syntax as Lemonldap::NG::Common::Conf object
-# @return Lemonldap::NG::Portal::Notification object
+# @return Lemonldap::NG::Common::Notification object
 sub new {
     my ( $class, $storage ) = splice @_;
     my $self = bless {}, $class;
