@@ -10,12 +10,12 @@ use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use XML::Simple;
 use MIME::Base64;
 use String::Random;
-use LWP::UserAgent;    # SOAP call
-use HTTP::Request;     # SOAP call
-use POSIX qw(strftime);             # Convert SAML2 date into timestamp
-use Time::Local;       # Convert SAML2 date into timestamp
-use Encode;            # Encode attribute values
-use URI;               # Get metadata URL path
+use LWP::UserAgent;        # SOAP call
+use HTTP::Request;         # SOAP call
+use POSIX qw(strftime);    # Convert SAML2 date into timestamp
+use Time::Local;           # Convert SAML2 date into timestamp
+use Encode;                # Encode attribute values
+use URI;                   # Get metadata URL path
 
 # Special comments for doxygen
 #inherits Lemonldap::NG::Common::Conf::SAML::Metadata protected service_metadata

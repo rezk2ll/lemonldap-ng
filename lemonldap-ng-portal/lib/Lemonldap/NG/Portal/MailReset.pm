@@ -52,17 +52,17 @@ sub process {
 
     $self->{error} = $self->_subProcess(
         qw(smtpInit userDBInit passwordDBInit extractMailInfo
-          getMailUser initCaptcha checkCaptcha setSessionInfo 
-	  setMacros setGroups setPersistentSessionInfo setLocalGroups 
-	  storeMailSession sendConfirmationMail changePassword sendPasswordMail)
+          getMailUser initCaptcha checkCaptcha setSessionInfo
+          setMacros setGroups setPersistentSessionInfo setLocalGroups
+          storeMailSession sendConfirmationMail changePassword sendPasswordMail)
     );
 
     return (
         (
                  $self->{error} <= 0
               or $self->{error} == PE_PASSWORD_OK
-	      or $self->{error} == PE_CAPTCHAERROR
-	      or $self->{error} == PE_CAPTCHAEMPTY
+              or $self->{error} == PE_CAPTCHAERROR
+              or $self->{error} == PE_CAPTCHAEMPTY
               or $self->{error} == PE_MAILCONFIRMOK
               or $self->{error} == PE_MAILOK
         ) ? 0 : 1
@@ -224,19 +224,16 @@ sub sendConfirmationMail {
 
     $self->lmLog( "Mail expiration timestamp: $expTimestamp", 'debug' );
 
-    $self->{expMailDate} =
-      strftime( "%d/%m/%Y", localtime $expTimestamp );
-    $self->{expMailTime} = strftime( "%H:%M", localtime $expTimestamp );
+    $self->{expMailDate} = strftime( "%d/%m/%Y", localtime $expTimestamp );
+    $self->{expMailTime} = strftime( "%H:%M",    localtime $expTimestamp );
 
     # Mail session start date
     my $startTimestamp = $self->{mailSessionStartTimestamp};
 
     $self->lmLog( "Mail start timestamp: $startTimestamp", 'debug' );
 
-    $self->{startMailDate} =
-      strftime( "%d/%m/%Y", localtime $startTimestamp );
-    $self->{startMailTime} =
-      strftime( "%H:%M", localtime $startTimestamp );
+    $self->{startMailDate} = strftime( "%d/%m/%Y", localtime $startTimestamp );
+    $self->{startMailTime} = strftime( "%H:%M",    localtime $startTimestamp );
 
     # Ask if user want another confirmation email
     if ( $self->{mail_already_sent} and !$self->param('resendconfirmation') ) {

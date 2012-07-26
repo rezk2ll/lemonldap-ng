@@ -462,13 +462,13 @@ sub new {
           '(' . join( '|', split( /\s+/, $self->{trustedDomains} ) ) . ')';
         $self->{trustedDomains} =~ s/\./\\./g;
     }
-    
+
     # init the captcha feature if it's enabled
     if ( $self->{captcha_enabled} ) {
         eval $self->initCaptcha();
-	    $self->lmLog("Can't init captcha: $@", "error");
-     }
-    
+        $self->lmLog( "Can't init captcha: $@", "error" );
+    }
+
     return $self;
 }
 
@@ -645,12 +645,13 @@ sub setDefaultValues {
     $self->{ldapPasswordResetAttribute}      ||= "pwdReset";
     $self->{ldapPasswordResetAttributeValue} ||= "TRUE";
     $self->{mailOnPasswordChange}            ||= 0;
-    
-    # Captcha parameters 
+
+    # Captcha parameters
     $self->{captcha_enabled} = 0;
-    $self->{captcha_size} = 6;
-    $self->{captcha_output} = '/usr/local/lemonldap-ng/htdocs/portal/captcha_output/';
-    $self->{captcha_data} =  '/usr/local/lemonldap-ng/data/captcha/data/';
+    $self->{captcha_size}    = 6;
+    $self->{captcha_output} =
+      '/usr/local/lemonldap-ng/htdocs/portal/captcha_output/';
+    $self->{captcha_data} = '/usr/local/lemonldap-ng/data/captcha/data/';
 
     # Notification
     $self->{notificationWildcard} ||= "allusers";
@@ -765,15 +766,21 @@ sub buildHiddenForm {
 # @return nothing
 sub initCaptcha {
     my $self = shift;
-    opendir(OUTPUT, $self->{captcha_output}) or $self->lmLog("Can't open captcha output dir", "error");
-    opendir(DATA, $self->{captcha_data}) or  $self->lmLog("Can't open captcha data dir", "error");
-    foreach(readdir(OUTPUT)) {
+    opendir( OUTPUT, $self->{captcha_output} )
+      or $self->lmLog( "Can't open captcha output dir", "error" );
+    opendir( DATA, $self->{captcha_data} )
+      or $self->lmLog( "Can't open captcha data dir", "error" );
+    foreach ( readdir(OUTPUT) ) {
         next if ( $_ eq ".." or $_ eq "." );
         system("rm -f $_ &>/dev/null")
-	    or $self->lmLog("Can't clean captcha output dir!", "warn");
+          or $self->lmLog( "Can't clean captcha output dir!", "warn" );
     }
-    $self->{captcha} = Authen::Captcha->new(data_folder => $self->{captcha_data}, output_folder => $self->{captcha_output});
-    $self->{captcha_code} = $self->{captcha}->generate_code($self->{captcha_size});
+    $self->{captcha} = Authen::Captcha->new(
+        data_folder   => $self->{captcha_data},
+        output_folder => $self->{captcha_output}
+    );
+    $self->{captcha_code} =
+      $self->{captcha}->generate_code( $self->{captcha_size} );
     $self->{captcha_img} = "/captcha_output/" . $self->{captcha_code} . ".png";
     closedir(DATA) and closedir(OUTPUT);
 }
@@ -1464,30 +1471,30 @@ sub stamp {
 # @return a formated time
 sub convertSec {
     my ( $self, $sec ) = splice @_;
-    my ( $day, $hrs, $min ) = (0, 0, 0);
+    my ( $day, $hrs, $min ) = ( 0, 0, 0 );
 
-     # Calculate the minutes
+    # Calculate the minutes
     if ( $sec > 60 ) {
         $min = $sec / 60, $sec %= 60;
         $min = int($min);
     }
 
     # Calculate the hours
-    if ( $min > 60 ) { 
+    if ( $min > 60 ) {
         $hrs = $min / 60, $min %= 60;
-	    $hrs = int($hrs);
+        $hrs = int($hrs);
     }
 
     # Calculate the days
     if ( $hrs > 24 ) {
         $day = $hrs / 24, $hrs %= 24;
-	    $day = int($day);
+        $day = int($day);
     }
 
     # Return the date
     return ( $day, $hrs, $min, $sec );
 }
-							      
+
 ###############################################################
 # MAIN subroutine: call all steps until one returns something #
 #                  different than PE_OK                       #

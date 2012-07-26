@@ -457,8 +457,7 @@ sub struct {
 
                 # SSL
                 sslParams => {
-                    _nodes =>
-                      [qw(SSLAuthnLevel SSLVar)],
+                    _nodes        => [qw(SSLAuthnLevel SSLVar)],
                     _help         => 'authSSL',
                     SSLAuthnLevel => 'int:/SSLAuthnLevel',
                     SSLVar        => 'text:/SSLVar',

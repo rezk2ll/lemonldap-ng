@@ -206,8 +206,8 @@ sub error_fr {
         'La connexion au serveur Radius a échoué',
         "L'ancien mot de passe est obligatoire",
         'Vous venez d\'une adresse IP qui n\'est pas accréditée',
-	'Mauvais code',
-	'Vous devez entrez le captcha'
+        'Mauvais code',
+        'Vous devez entrez le captcha'
     ];
 }
 
@@ -249,7 +249,7 @@ sub error_en {
         'Password too young',
         'Password used too recently',
         ' authentications remaining, change your password!',
-        '%d days, %d hours, %d minutes and %d seconds before password expiration, change it!',
+'%d days, %d hours, %d minutes and %d seconds before password expiration, change it!',
         'Passwords mismatch',
         'Password successfully changed',
         'You have a new message',
@@ -292,8 +292,8 @@ sub error_en {
         'Radius connection has failed',
         'Old password is required',
         'You came from an unaccredited IP address',
-	'Wrong code',
-	'You have to tape the captcha'
+        'Wrong code',
+        'You have to tape the captcha'
     ];
 }
 
@@ -336,7 +336,7 @@ sub error_ro {
         'Prea parolă nouă',
         'Parola folosit prea recent',
         ' authentications rămase, schimbaţi-vă parola!',
-        '%d zile, %d ora, %d minute şi %d secundes înainte de expirarea parola dvs., asiguraţi-vă pentru a schimba!',
+'%d zile, %d ora, %d minute şi %d secundes înainte de expirarea parola dvs., asiguraţi-vă pentru a schimba!',
         'Parolele nu se potrivesc',
         'Parola a fost schimbată',
         'Ai un mesaj nou',
@@ -378,7 +378,8 @@ sub error_ro {
         'Un e-mail a fost trimis',
         'Radius connection has failed',
         'Old password is required',
-        'You came from an unaccredited IP address','Bad cod',
+        'You came from an unaccredited IP address',
+        'Bad cod',
         'trebuie să introduceţi CAPTCHA'
     ];
 }

@@ -204,13 +204,13 @@ sub display {
         );
 
         # Display captcha if it's enabled
-	if ( $self->{captcha_enabled} ) {
+        if ( $self->{captcha_enabled} ) {
             %templateParams = (
-	        %templateParams,
-	        CAPTCHA_IMG   => $self->{captcha_img},
-	        CAPTCHA_CODE  => $self->{captcha_code},
-	        CAPTCHA_SIZE  => $self->{captcha_size}
-	    );
+                %templateParams,
+                CAPTCHA_IMG  => $self->{captcha_img},
+                CAPTCHA_CODE => $self->{captcha_code},
+                CAPTCHA_SIZE => $self->{captcha_size}
+            );
         }
 
         # Show password form if password policy error

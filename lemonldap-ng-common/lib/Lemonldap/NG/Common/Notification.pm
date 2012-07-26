@@ -1,8 +1,8 @@
 ##@file
-# Notification system for Lemonldap::NG 
+# Notification system for Lemonldap::NG
 
 ##@class
-# Notification system for Lemonldap::NG 
+# Notification system for Lemonldap::NG
 package Lemonldap::NG::Common::Notification;
 
 use strict;
