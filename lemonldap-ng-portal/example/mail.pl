@@ -71,7 +71,7 @@ if (
 if ( $portal->{captcha_enabled} ) {
     $template->param(
         CAPTCHA_IMG  => $portal->{captcha_img},
-        CAPTCHA_CODE => $portal->{captcha_img},
+        CAPTCHA_CODE => $portal->{captcha_code},
         CAPTCHA_SIZE => $portal->{captcha_size}
     );
 }
