@@ -163,7 +163,7 @@ sub error_fr {
         'Mot de passe trop récent',
         'Mot de passe utilisé trop récemment',
         ' authentifications restantes, changez votre mot de passe !',
-'%d jours, %d heures, %d minutes et %d secondes avant expiration de votre mot de passe, pensez à le changer !',
+'%s jours, %s heures, %s minutes et %s secondes avant expiration de votre mot de passe, pensez à le changer !',
         'Les mots de passe ne correspondent pas',
         'Le mot de passe a été changé',
         'Vous avez un nouveau message',
