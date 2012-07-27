@@ -141,7 +141,7 @@ All <acronym title="Secure Sockets Layer">SSL</acronym> options are documented i
 Here are the main options used by <acronym title="LemonLDAP::NG">LL::NG</acronym>:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>SSLVerifyClient</strong>: set to <code>optional</code> to allow user with a bad certificate to access to <acronym title="LemonLDAP::NG">LL::NG</acronym> portal page (to display error or use another authentication method)</div>
+<li class="level1"><div class="li"> <strong>SSLVerifyClient</strong>: set to <code>optional</code> to allow user with a bad certificate to access to <acronym title="LemonLDAP::NG">LL::NG</acronym> portal page. To switch to another authentication backend, use the <a href="../../documentation/1.3/authmulti.html" class="wikilink1" title="documentation:1.3:authmulti">Multi</a> module, for example: <code>Multi <acronym title="Secure Sockets Layer">SSL</acronym>;<acronym title="Lightweight Directory Access Protocol">LDAP</acronym></code></div>
 </li>
 <li class="level1"><div class="li"> <strong>SSLOptions</strong>: set to <code>+StdEnvVars</code> to get certificate fields in environment variables</div>
 </li>
@@ -150,7 +150,7 @@ Here are the main options used by <acronym title="LemonLDAP::NG">LL::NG</acronym
 </ul>
 
 </div>
-<!-- SECTION "Apache portal SSL configuration" [1525-2303] -->
+<!-- SECTION "Apache portal SSL configuration" [1525-2361] -->
 <h3><a name="configuration_of_lemonldapng" id="configuration_of_lemonldapng">Configuration of LemonLDAP::NG</a></h3>
 <div class="level3">
 
@@ -176,4 +176,4 @@ Then, go in <code><acronym title="Secure Sockets Layer">SSL</acronym> parameters
 </ul>
 
 </div>
-<!-- SECTION "Configuration of LemonLDAP::NG" [2304-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Configuration of LemonLDAP::NG" [2362-] --></div><!-- closes <div class="dokuwiki export">-->
