@@ -60,12 +60,6 @@ sub getConf {
 
     %$self = ( %$self, %$confCached, %args, );
 
-    # localStorage should be declared in configuration object
-    # See Handler::SharedConf
-    foreach (qw(localStorage localStorageOptions)) {
-        $self->{$_} ||= $self->__lmConf->{$_};
-    }
-
     $self->lmLog( "Now using configuration: " . $confCached->{cfgNum},
         'debug' );
 
