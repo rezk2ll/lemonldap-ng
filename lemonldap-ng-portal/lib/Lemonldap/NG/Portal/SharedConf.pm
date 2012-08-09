@@ -9,6 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple qw(:all);
 use Lemonldap::NG::Common::Conf;            #link protected lmConf Configuration
 use Lemonldap::NG::Common::Conf::Constants; #inherits
+use Regexp::Assemble;
 
 *EXPORT_OK   = *Lemonldap::NG::Portal::Simple::EXPORT_OK;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
@@ -56,6 +57,14 @@ sub getConf {
                 $Lemonldap::NG::Common::Conf::msg );
         }
         %$confCached = ( %$gConf, %$lConf );
+
+        my $re = Regexp::Assemble->new();
+        foreach ( keys %{ $confCached->{locationRules} } ) {
+            $_ = quotemeta($_);
+            $re->add($_);
+        }
+        $confCached->{reVHosts} = $re->as_string;
+
     }
 
     %$self = ( %$self, %$confCached, %args, );

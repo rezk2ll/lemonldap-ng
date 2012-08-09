@@ -12,7 +12,6 @@ no strict 'refs';
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Crypto
   ;    #link protected cipher Object "cypher" in configuration hash
-use Regexp::Assemble;
 use Config::IniFiles;
 
 #inherits Lemonldap::NG::Common::Conf::File
@@ -115,9 +114,7 @@ sub saveConf {
         return DATABASE_LOCKED if ( $self->isLocked() or not $self->lock() );
     }
     $conf->{cfgNum} = $last + 1 unless ( $self->{cfgNumFixed} );
-    foreach my $k (qw(reVHosts cipher)) {
-        delete( $conf->{$k} );
-    }
+    delete $conf->{cipher};
 
     # Try to store configuration
     my $tmp = $self->store($conf);
@@ -170,22 +167,17 @@ sub getConf {
                 $r = $self->getDBConf($args);
             }
         }
-        if ( $args->{clean} ) {
-            delete $r->{reVHosts};
-        }
-        else {
-            print STDERR
-              "Warning: key is not defined, set it in the manager !\n"
-              unless ( $r->{key} );
-            eval {
-                $r->{cipher} =
-                  Lemonldap::NG::Common::Crypto->new( $r->{key}
-                      || 'lemonldap-ng-key' );
-            };
-            if ($@) {
-                $msg .= "Bad key: $@. \n";
-                return $r;
-            }
+        print STDERR
+          "Warning: key is not defined, set it in the manager !\n"
+          unless ( $r->{key} );
+        eval {
+            $r->{cipher} =
+              Lemonldap::NG::Common::Crypto->new( $r->{key}
+                  || 'lemonldap-ng-key' );
+        };
+        if ($@) {
+            $msg .= "Bad key: $@. \n";
+            return $r;
         }
         return $r;
     }
@@ -306,12 +298,6 @@ sub getDBConf {
     }
     my $conf = $self->load( $args->{cfgNum} );
     $msg .= "Get configuration $conf->{cfgNum}.\n";
-    my $re = Regexp::Assemble->new();
-    foreach ( keys %{ $conf->{locationRules} } ) {
-        $_ = quotemeta($_);
-        $re->add($_);
-    }
-    $conf->{reVHosts} = $re->as_string;
     $self->setLocalConf($conf)
       if ( $self->{refLocalStorage} and not( $args->{noCache} ) );
     return $conf;

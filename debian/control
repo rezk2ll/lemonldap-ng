@@ -50,7 +50,7 @@ Description: Lemonldap::NG Apache module part
 
 Package: liblemonldap-ng-conf-perl
 Architecture: all
-Depends: ${misc:Depends}, debconf, libcache-cache-perl, libregexp-assemble-perl,
+Depends: ${misc:Depends}, debconf, libcache-cache-perl,
  libcrypt-rijndael-perl, libconfig-inifiles-perl, libxml-simple-perl,
  libcrypt-openssl-bignum-perl
 Recommends: libsoap-lite-perl, libdbi-perl
@@ -84,7 +84,7 @@ Depends: ${misc:Depends},
  libapache-session-perl, libnet-ldap-perl, libmime-lite-perl,
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
  libsoap-lite-perl, libcrypt-openssl-x509-perl, libclone-perl,
- libhtml-template-perl
+ libhtml-template-perl, libregexp-assemble-perl
 Pre-Depends: debconf
 Recommends: libemail-date-format-perl, libconvert-pem-perl,
  libnet-openid-consumer-perl | libnet-openid-server-perl |

@@ -36,7 +36,6 @@ unless ($conf) {
 open F1, ">$refFile"  or quit($!);
 open F2, ">$editFile" or quit($!);
 my $tmp = $conf->getConf();
-delete $tmp->{reVHosts};
 delete $tmp->{cipher};
 delete $tmp->{cfgAuthor};
 delete $tmp->{cfgAuthorIP};
