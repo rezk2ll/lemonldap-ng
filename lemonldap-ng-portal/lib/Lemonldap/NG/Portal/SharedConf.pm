@@ -72,18 +72,6 @@ sub getConf {
     1;
 }
 
-## @method list getProtectedSites()
-# With SharedConf, $locationRules contains a hash table with virtual hosts as
-# keys. So we can use it to know all protected virtual hosts.
-# @return list list of protected virtual hosts.
-sub getProtectedSites {
-    my $self = shift;
-    my @tab  = ();
-    return ( keys %{ $self->{locationRules} } )
-      if ( ref $self->{locationRules} );
-    return ();
-}
-
 sub __lmConf {
     my $self = shift;
     return $self->{lmConf} if ( $self->{lmConf} );

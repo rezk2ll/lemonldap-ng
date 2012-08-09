@@ -366,8 +366,7 @@ session information.
 =item * globalStorageOptions : parameters to bind to L<Apache::Session> module
 
 =item * locationRules : this parameter is used by L<Lemonldap::NG::Handler> to
-read the rules. It can be set in the portal just to display protected sites by
-the function C<getProtectedSites>.
+read the rules.
 
 =item * authentication: sheme to authenticate users (default: "ldap"). It can
 be set to:
