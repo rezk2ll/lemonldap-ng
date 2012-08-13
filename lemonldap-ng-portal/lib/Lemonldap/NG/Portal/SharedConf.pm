@@ -15,7 +15,7 @@ use Regexp::Assemble;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.2.2';
 use base qw(Lemonldap::NG::Portal::Simple);
 our $confCached;
 
