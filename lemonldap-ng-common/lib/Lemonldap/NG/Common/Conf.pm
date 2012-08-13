@@ -19,7 +19,7 @@ use Config::IniFiles;
 #inherits Lemonldap::NG::Common::Conf::SOAP
 #inherits Lemonldap::NG::Common::Conf::LDAP
 
-our $VERSION = '1.2.1';
+our $VERSION = '1.2.2';
 our $msg;
 our $iniObj;
 
@@ -396,7 +396,7 @@ Web-SSO configuration.
                   # To use local cache, set :
                   localStorage => "Cache::FileCache",
                   localStorageOptions = {
-                      'namespace' => 'lemonldap-ng',
+                      'namespace' => 'lemonldap-ng-config',
                       'default_expires_in' => 600,
                       'directory_umask' => '007',
                       'cache_root' => '/tmp',

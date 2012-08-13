@@ -25,7 +25,6 @@ my $conf = $lmconf->getLocalConf(HANDLERSECTION)
 print "Configuration loaded\n" if $debug;
 exit 0 unless ( $conf->{localStorage} );
 eval "require $conf->{localStorage}";
-$conf->{localStorageOptions}->{namespace}          ||= "lemonldap";
 $conf->{localStorageOptions}->{default_expires_in} ||= 600;
 my $c = $conf->{localStorage}->new( $conf->{localStorageOptions} );
 $c->purge();

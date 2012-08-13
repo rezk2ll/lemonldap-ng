@@ -24,7 +24,7 @@ use utf8;
 our $whatToTrace;
 *whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '1.2.1';
+our $VERSION = '1.2.2';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI
@@ -872,7 +872,7 @@ sessions
   our $cgi ||= Lemonldap::NG::Manager::Sessions->new({
         localStorage        => "Cache::FileCache",
         localStorageOptions => {
-            'namespace'          => 'lemonldap-ng',
+            'namespace'          => 'lemonldap-ng-config',
             'default_expires_in' => 600,
             'directory_umask'    => '007',
             'cache_root'         => '/tmp',
