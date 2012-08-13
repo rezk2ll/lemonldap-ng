@@ -32,7 +32,7 @@ use constant MAINTENANCE_CODE => 503;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.2.2';
 
 our %EXPORT_TAGS;
 
@@ -457,7 +457,6 @@ sub localInit($$) {
     my ( $class, $args ) = splice @_;
     if ( $localStorage = $args->{localStorage} ) {
         $localStorageOptions = $args->{localStorageOptions};
-        $localStorageOptions->{namespace}          ||= "lemonldap";
         $localStorageOptions->{default_expires_in} ||= 600;
         $class->purgeCache();
     }
