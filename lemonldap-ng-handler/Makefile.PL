@@ -19,6 +19,7 @@ WriteMakefile(
         'CGI'                            => 3.08,
         'URI'                            => 0,
         'Apache::Session::Generate::MD5' => 0,
+	'Test::Pod'                      => 0,
     },    # e.g., Module::Name => 1.1
     (
         $] >= 5.005
