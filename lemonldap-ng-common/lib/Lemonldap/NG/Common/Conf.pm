@@ -167,8 +167,7 @@ sub getConf {
                 $r = $self->getDBConf($args);
             }
         }
-        print STDERR
-          "Warning: key is not defined, set it in the manager !\n"
+        print STDERR "Warning: key is not defined, set it in the manager !\n"
           unless ( $r->{key} );
         eval {
             $r->{cipher} =
