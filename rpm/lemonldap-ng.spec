@@ -11,7 +11,7 @@
 #==============================================================================
 
 %define real_name lemonldap-ng
-%define real_version 1.2.1
+%define real_version 1.2.2
 %define cpan_common_version  %{real_version}
 %define cpan_handler_version %{real_version}
 %define cpan_manager_version %{real_version}
