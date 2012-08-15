@@ -2307,7 +2307,7 @@ sub mkSessionArray {
         $tmp .= "<tr>";
         $tmp .= "<td>$session->{user}</td>" if ($displayUser);
         $tmp .=
-"<td><script>var _date=new Date($session->{_utime}*1000);document.write(_date.toLocaleString());</script></td>";
+"<td><script type=\"text/javascript\">var _date=new Date($session->{_utime}*1000);document.write(_date.toLocaleString());</script></td>";
         $tmp .= "<td>$session->{ipAddr}</td>";
         $tmp .= "<td>" . ( $session->{$_} || "" ) . "</td>"
           foreach ( keys %{ $self->{sessionDataToRemember} } );
