@@ -259,7 +259,9 @@ sub userModifyPassword {
             return PE_BADOLDPASSWORD if ( $mesg->code == 53 );
         }
         else {
-            if ( $self->{portal}->{portalRequireOldPassword} ) {
+            if ( $self->{portal}->{portalRequireOldPassword} 
+	        and !$self->{portal}->{mail_token} ) 
+	    {
 
                 return PE_MUST_SUPPLY_OLD_PASSWORD if ( !$oldpassword );
 
