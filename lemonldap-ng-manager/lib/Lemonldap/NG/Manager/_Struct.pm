@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use Lemonldap::NG::Common::Regexp;
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.2.2';
 
 ## @method protected hashref cstruct(hashref h,string k)
 # Merge $h with the structure produced with $k and return it.
@@ -1442,7 +1442,7 @@ sub testStruct {
                 my @s = split( /[\s,]+/, $l );
                 foreach my $s (@s) {
                     $s =~
-/^(?:ldap(?:s|\+tls|i)?:\/\/)?\w[\w\-\.]+\w(?::\d{0,5})?\/?$/
+m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?::\d{1,5})?/?.*)$}o
                       or return ( 0, "Bad ldap uri \"$s\"" );
                 }
                 return 1;
