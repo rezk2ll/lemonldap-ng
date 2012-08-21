@@ -385,7 +385,9 @@ sub ldap {
     unless ( $self->{_multi} ) {
         return $self->{ldap} if ( ref( $self->{ldap} ) );
     }
-    $self->lmLog("LDAP Cache disabled in multi mode", 'debug');
+    else {
+        $self->lmLog("LDAP Cache disabled in multi mode", 'debug');
+    }
     if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
         and my $mesg = $self->{ldap}->bind )
     {
