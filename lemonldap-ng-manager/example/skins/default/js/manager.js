@@ -439,7 +439,7 @@ function setlmsamlassertion(id){
 	var bin=$('#samlAssertionBinding').attr('value');
 	var loc=$('#samlAssertionLocation').attr('value');
 	var def='0';
-	if($('#samlAssertionDefaultOn').attr('checked')==true){
+	if($('#samlAssertionDefaultOn').attr('checked')){
 		def='1';
 	}
 	// Update default value in other assertions.
@@ -476,7 +476,7 @@ function setlmsamlattribute(id){
 	var form=$('#samlAttributeFormat').attr('value');
 	var altr=$('#samlAttributeFriendlyName').attr('value');
 	var mand='0';
-	if($('#samlAttributeMandatoryOn').attr('checked')==true){
+	if($('#samlAttributeMandatoryOn').attr('checked')){
 		mand='1';
 	}
 	var v=mand+';'+name+';'+form+';'+altr;
@@ -493,7 +493,7 @@ function setlmsamlservice(id){
 function setopenididplist(id){
 	var type=0;
 	var list=$('#openid_serverlist_text').attr('value');
-	if($('#openid_serverlist_white').attr('checked')==true){
+	if($('#openid_serverlist_white').attr('checked')){
 		type=1;
 	}
 	setlmdata(id,type+';'+list);
@@ -1017,7 +1017,7 @@ function grantSessionRulesRoot(id){
 }
 function reloadAuthParams() {
 	var value=$('#authText').attr('value');
-	if($('#authOptions').is(':visible')==true){
+	if($('#authOptions').is(':visible')){
 		value+=' '+$('#authOptions').attr('value');
 	}
 	setlmdata(currentId,value);
