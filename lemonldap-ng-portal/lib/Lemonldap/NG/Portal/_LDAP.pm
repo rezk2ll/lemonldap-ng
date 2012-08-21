@@ -259,9 +259,9 @@ sub userModifyPassword {
             return PE_BADOLDPASSWORD if ( $mesg->code == 53 );
         }
         else {
-            if ( $self->{portal}->{portalRequireOldPassword} 
-	        and !$self->{portal}->{mail_token} ) 
-	    {
+            if ( $self->{portal}->{portalRequireOldPassword}
+                and !$self->{portal}->{mail_token} )
+            {
 
                 return PE_MUST_SUPPLY_OLD_PASSWORD if ( !$oldpassword );
 
@@ -382,7 +382,10 @@ sub userModifyPassword {
 # @return Lemonldap::NG::Portal::_LDAP object
 sub ldap {
     my $self = shift;
-    return $self->{ldap} if ( ref( $self->{ldap} ) );
+    unless ( $self->{_multi} ) {
+        return $self->{ldap} if ( ref( $self->{ldap} ) );
+    }
+    $self->lmLog("LDAP Cache disabled in multi mode", 'debug');
     if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
         and my $mesg = $self->{ldap}->bind )
     {
