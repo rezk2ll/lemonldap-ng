@@ -91,7 +91,7 @@ sub getNotification {
     my $style_file = (
         -e $portal->{notificationXSLTfile}
         ? $portal->{notificationXSLTfile}
-        : $portal->getApacheHtdocsPath() . "skins/common/notification.xsl"
+        : $portal->getApacheHtdocsPath() . "/skins/common/notification.xsl"
     );
     my $style_doc  = $parser->parse_file($style_file);
     my $stylesheet = $xslt->parse_stylesheet($style_doc);
