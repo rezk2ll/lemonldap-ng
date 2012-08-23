@@ -1,7 +1,7 @@
 Label: LemonLDAP::NG
 Suite: unstable
 Codename: squeeze
-Architectures: i386 amd64 powerpc sparc source
+Architectures: i386 amd64 powerpc sparc armel source
 Components: main
 SignWith: yes
 
