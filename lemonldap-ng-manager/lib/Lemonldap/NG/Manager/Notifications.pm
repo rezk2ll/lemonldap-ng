@@ -570,7 +570,7 @@ sub newNotif {
         $res .= '<h1 class="ui-widget-header ui-corner-all">'
           . $self->translate('error') . '</h1>';
         $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= $self->translated('notificationNotCreated');
+        $res .= $self->translate('notificationNotCreated');
         $res .= '</div>';
         return $res;
 
