@@ -387,13 +387,68 @@ sub newNotification {
     return $count;
 }
 
+## @method int deleteNotification(string $uid, string $myref)
+## Delete notifications for the connected user
+## @param $uid of the user
+## @param $myref notification's reference
+## @return number of deleted notifications
+sub deleteNotification {
+    my ( $self, $uid, $myref ) = splice @_;
+    my ( @files, @data );
+
+    # Get notifications
+    my $user = $self->_get($uid);
+    my $all  = $self->_get( $self->{notificationWildcard} );
+
+    # Join results
+    my $n = {};
+    if ( $user and $all ) { $n = { %$user, %$all }; }
+    else                  { $n = $user ? $user : $all; }
+
+    # Return 0 if no files were found
+    return 0 unless ($n);
+
+    @files = map { $n->{$_} } sort keys %$user;
+
+    # Counting
+    my $count = 0;
+
+    foreach my $file (@files) {
+        my $xml = $parser->parse_string($file);
+
+        # Browse notification in file
+        foreach my $notif (
+            $xml->documentElement->getElementsByTagName('notification') ) )
+          {
+
+              # Get notification's data
+              unless ( my $attr = $notif->getAttribute($myref) ) {
+                  $self->lmLog( "Can't find notification $myref!", 'error' );
+                  next;
+              }
+              else {
+                  push @data, $notif->getAttribute($_);
+              }
+
+              # Delete the notification (really)
+              foreach (@data) {
+                  eval { $self->purge($_) };
+                  next if ($@);
+                  $self->lmLog( "Notification $_ was removed.", 'debug' );
+                  $count++;
+              }
+        }
+    }
+    return $count;
+}
+
 ## @method hashref getAll()
 # Return all messages not notified. Wrapper for storage module getAll()
 # @return hashref where keys are internal reference and values are hashref with
 # keys date, uid and ref.
 sub getAll {
-    no strict 'refs';
-    return &{ $_[0]->{type} . '::getAll' }(@_);
+      no strict 'refs';
+      return &{ $_[0]->{type} . '::getAll' }(@_);
 }
 
 ## @method hashref getDone()
@@ -402,8 +457,8 @@ sub getAll {
 # @return hashref where keys are internal reference and values are hashref with
 # keys notified, uid and ref.
 sub getDone {
-    no strict 'refs';
-    return &{ $_[0]->{type} . '::getDone' }(@_);
+      no strict 'refs';
+      return &{ $_[0]->{type} . '::getDone' }(@_);
 }
 
 ## @method boolean purge(string myref)
@@ -411,8 +466,8 @@ sub getDone {
 # @param $myref identifier returned by get or getAll
 # @return true if something was deleted
 sub purge {
-    no strict 'refs';
-    return &{ $_[0]->{type} . '::purge' }(@_);
+      no strict 'refs';
+      return &{ $_[0]->{type} . '::purge' }(@_);
 }
 
 ## @method private hashref _get(string uid,string ref)
@@ -423,21 +478,21 @@ sub purge {
 # @param $ref Notification reference
 # @return hashref where keys are internal reference and values are XML strings
 sub _get {
-    no strict 'refs';
-    my $self = $_[0];
+      no strict 'refs';
+      my $self = $_[0];
 
-    # Debug lines. Must be removed ?
-    die ref($self)
-      unless ( ref($self) eq 'Lemonldap::NG::Common::Notification' );
-    return &{ $_[0]->{type} . '::get' }(@_);
+      # Debug lines. Must be removed ?
+      die ref($self)
+        unless ( ref($self) eq 'Lemonldap::NG::Common::Notification' );
+      return &{ $_[0]->{type} . '::get' }(@_);
 }
 
 ## @method private boolean _delete(string myref)
 # Mark a notification as done. Wrapper for storage module delete()
 # @param $myref identifier returned by get() or getAll()
 sub _delete {
-    no strict 'refs';
-    return &{ $_[0]->{type} . '::delete' }(@_);
+      no strict 'refs';
+      return &{ $_[0]->{type} . '::delete' }(@_);
 }
 
 ## @method private boolean _prereq()
@@ -445,8 +500,8 @@ sub _delete {
 # prereq()
 # @return true if all is OK
 sub _prereq {
-    no strict 'refs';
-    return &{ $_[0]->{type} . '::prereq' }(@_);
+      no strict 'refs';
+      return &{ $_[0]->{type} . '::prereq' }(@_);
 }
 
 ## @method private boolean _newNotif(string date, string uid, string ref, string xml)
@@ -457,8 +512,8 @@ sub _prereq {
 # @param xml XML notification
 # @return true if succeed
 sub _newNotif {
-    no strict 'refs';
-    return &{ $_[0]->{type} . '::newNotif' }(@_);
+      no strict 'refs';
+      return &{ $_[0]->{type} . '::newNotif' }(@_);
 }
 
 1;
