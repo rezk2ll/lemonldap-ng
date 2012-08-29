@@ -425,7 +425,7 @@ sub new {
 
             # Get the type
             $tmp->{type} =~ s/.*:://;
-            $tmp->{type} =~ s/(CBDI|RDBI)/DBI/;    # CDBI/RDBI are DBI
+            $tmp->{type} =~ s/(CDBI|RDBI)/DBI/;    # CDBI/RDBI are DBI
 
             # If type not File or DBI, abort
             $self->abort("Only File or DBI supported for Notifications")
