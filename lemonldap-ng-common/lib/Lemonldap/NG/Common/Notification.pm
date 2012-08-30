@@ -398,12 +398,7 @@ sub deleteNotification {
 
     # Get notifications
     my $user = $self->_get($uid);
-    my $all  = $self->_get( $self->{notificationWildcard} );
-
-    # Join results
-    my $n = {};
-    if ( $user and $all ) { $n = { %$user, %$all }; }
-    else                  { $n = $user ? $user : $all; }
+    my $n = $user;
 
     # Return 0 if no files were found
     return 0 unless ($n);
