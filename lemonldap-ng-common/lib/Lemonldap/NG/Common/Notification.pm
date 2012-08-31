@@ -394,7 +394,7 @@ sub newNotification {
 ## @return number of deleted notifications
 sub deleteNotification {
     my ( $self, $uid, $myref ) = splice @_;
-    my ( @files, @data );
+    my @data;
 
     # Check input parameters
     unless ( $uid and $myref ) {
@@ -403,21 +403,23 @@ sub deleteNotification {
             'error' );
         return 0;
     }
+    
+    $self->lmLog(
+  "SOAP service deleteNotification called for uid $uid and reference $myref",
+           'debug'
+    );
 
     # Get notifications
     my $user = $self->_get($uid);
-    my $n    = $user;
-
+    
     # Return 0 if no files were found
-    return 0 unless ($n);
-
-    @files = map { $n->{$_} } sort keys %$user;
+    return 0 unless ($user);
 
     # Counting
     my $count = 0;
 
-    foreach my $file (@files) {
-        my $xml = $parser->parse_string($file);
+    foreach my $ref ( keys %$user ) {
+        my $xml = $parser->parse_string($user->{$ref});
 
         # Browse notification in file
         foreach my $notif (
