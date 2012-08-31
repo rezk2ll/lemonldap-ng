@@ -396,9 +396,17 @@ sub deleteNotification {
     my ( $self, $uid, $myref ) = splice @_;
     my ( @files, @data );
 
+    # Check input parameters
+    unless ( $uid and $myref ) {
+        $self->lmLog(
+            "SOAP service deleteNotification called without all parameters",
+            'error' );
+        return 0;
+    }
+
     # Get notifications
     my $user = $self->_get($uid);
-    my $n = $user;
+    my $n    = $user;
 
     # Return 0 if no files were found
     return 0 unless ($n);
@@ -417,12 +425,8 @@ sub deleteNotification {
           {
 
               # Get notification's data
-              unless ( my $attr = $notif->getAttribute($myref) ) {
-                  $self->lmLog( "Can't find notification $myref!", 'error' );
-                  next;
-              }
-              else {
-                  push @data, $notif->getAttribute($_);
+              if ( $notif->getAttribute('reference') eq $myref ) {
+                  push @data, $myref;
               }
 
               # Delete the notification (really)
