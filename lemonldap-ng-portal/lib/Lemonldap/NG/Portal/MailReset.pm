@@ -321,8 +321,9 @@ sub changePassword {
     }
 
     # Modify the password
+    $self->{portalRequireOldPassword} = 0;
     my $result = $self->modifyPassword();
-
+ 
     # Mail token can be used only one time, delete the session if all is ok
     if ( $result == PE_PASSWORD_OK or $result == PE_OK ) {
 
