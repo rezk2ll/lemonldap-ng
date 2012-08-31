@@ -70,7 +70,8 @@ APACHESESSIONFILELOCKDIR=$(APACHESESSIONFILEDIR)/lock
 RAPACHESESSIONFILELOCKDIR=$(DESTDIR)/$(APACHESESSIONFILELOCKDIR)
 
 # Lemonldap-ng notifications storage dir
-RFILENOTIFDIR=$(DESTDIR)/$(DATADIR)/notifications
+APACHEFILENOTIFDIR=$(DATADIR)/notifications
+RFILENOTIFDIR=$(DESTDIR)/$(APACHEFILENOTIFDIR)
 
 # Apache user/group
 APACHEUSER=
@@ -401,7 +402,8 @@ install_conf_dir:	install_sessions_dir install_notif_dir
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
 	@$(PERL) -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
-		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;' $(RFILECONFIGDIR)/lmConf-1
+		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;\
+		s#__NOTIFICATIONDIR__#$(APACHEFILENOTIFDIR)#g;' $(RFILECONFIGDIR)/lmConf-1
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		chown $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
