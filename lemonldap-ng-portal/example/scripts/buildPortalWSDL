@@ -14,7 +14,7 @@ my $portal = $self->{portal};
 $portal .= "index.pl" if ( $portal =~ /\/$/ );
 
 my @cookies = ( $self->{cookieName} );
-push @cookies, "$self->{cookieName}.http"
+push @cookies, "$self->{cookieName}http"
   if ( $self->{securedCookie} >= 2 );
 my $cookieList = join "\n",
   map { "<element name='$_' type='xsd:string'></element>" } @cookies;
