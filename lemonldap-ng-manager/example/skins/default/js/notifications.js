@@ -84,7 +84,7 @@ function purge(id) {
 function newNotif() {
 	var data = $("#newNotif").html();
 	$('#data').html(data);
-	$("input#date").datepicker({'dateFormat':'yy-mm-dd'});
+	$("#data input#date").datepicker({'dateFormat':'yy-mm-dd'});
 	return;
 }
 
