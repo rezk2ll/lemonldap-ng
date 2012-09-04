@@ -81,6 +81,7 @@ sub generateKeys {
 sub sendJSONResponse {
     my ( $self, $content ) = splice @_;
     my $json         = new JSON();
+    $json->canonical();
     my $json_content = '';
 
     # All systems do not have the most recent JSON version.

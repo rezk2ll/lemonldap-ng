@@ -752,7 +752,7 @@ sub applyConf {
     $ua->timeout(10);
 
     # Parse apply values
-    foreach ( sort keys %reloadUrls ) {
+    foreach ( keys %reloadUrls ) {
         my ( $host, $request ) = ( $_, $reloadUrls{$_} );
         my ( $method, $vhost, $uri ) =
           ( $request =~ /^(https?):\/\/([^\/]+)(.*)$/ );
