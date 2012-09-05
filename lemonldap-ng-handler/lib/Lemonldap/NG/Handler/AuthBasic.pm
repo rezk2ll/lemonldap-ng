@@ -16,7 +16,7 @@ use base qw(Lemonldap::NG::Handler::SharedConf);
 use utf8;
 no utf8;
 
-our $VERSION = '1.1.2';
+our $VERSION = '1.2.2';
 
 # We need just this constant, that's why Portal is 'required' but not 'used'
 *PE_OK = *Lemonldap::NG::Portal::SharedConf::PE_OK;
@@ -54,7 +54,7 @@ sub run ($$) {
     my ( $id, $user, $pass );
     unless ( $user = lmHeaderIn( $apacheRequest, 'Authorization' ) ) {
         lmSetErrHeaderOut( $apacheRequest,
-            'WWW-Authenticate' => 'Basic realm="Lemonldap::NG"' );
+            'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
         return AUTH_REQUIRED;
     }
     $user =~ s/^Basic\s*//;
@@ -89,12 +89,14 @@ sub run ($$) {
                 my $res = $r->result();
 
                 # If authentication failed, display error
-                if ( $res->{error} ) {
+                if ( $res->{errorCode} ) {
                     $class->lmLog(
-                        "Authentication failed for $user "
-                          . $soap->error( 'fr', $res->{error} )->result(),
+                        "Authentication failed for $user: "
+                          . $soap->error( $res->{errorCode}, 'en' )->result(),
                         'notice'
                     );
+                    lmSetErrHeaderOut( $apacheRequest,
+                        'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
                     return AUTH_REQUIRED;
                 }
                 $cv = $res->{cookies}->{$cookieName};
