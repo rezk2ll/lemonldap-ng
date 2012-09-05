@@ -950,7 +950,7 @@ sub run ($$) {
     }
 
     # Cross domain authentication
-    if ( $cda and $args =~ s/[\?&]?($cookieName=\w+)$//oi ) {
+    if ( $cda and $args =~ s/[\?&]?($cookieName(http)?=\w+)$//oi ) {
         my $str = $1;
         $class->lmLog( 'CDA request', 'debug' );
         $apacheRequest->args($args);
