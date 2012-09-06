@@ -1212,7 +1212,13 @@ sub extractRelayState {
         $self->{$_} = $samlSessionInfo->{$_};
     }
 
-    untie %$samlSessionInfo;
+    # delete relaystate session
+    eval { tied(%$samlSessionInfo)->delete(); };
+    if ($@) {
+        $self->lmLog( "Unable to delete relaystate $relaystate", 'error' );
+    } else {
+        $self->lmLog( "Relaystate $relaystate was deleted", 'debug' );
+    }
 
     return 1;
 }
