@@ -792,13 +792,10 @@ sub createAuthnRequest {
     }
 
     # Set RelayState
-    my $infos;
-    foreach (qw /urldc checkLogins/) {
-        $infos->{$_} = $self->{$_} if $self->{$_};
+    if (my $relaystate = $self->storeRelayState(qw /urldc checkLogins/)) {
+        $login->msg_relayState($relaystate);
+        $self->lmLog( "Set $relaystate in RelayState", 'debug' );
     }
-    my $relaystate = $self->storeRelayState($infos);
-    $login->msg_relayState($relaystate);
-    $self->lmLog( "Set $relaystate in RelayState", 'debug' );
 
     # Customize request
     my $request = $login->request();
@@ -1163,7 +1160,14 @@ sub acceptSSO {
 # corresponding session_id
 # @param infos HASH reference of information
 sub storeRelayState {
-    my ( $self, $infos ) = splice @_;
+    my ( $self, @data ) = splice @_;
+
+    # check if there are data to store
+    my $infos;
+    foreach (@data) {
+        $infos->{$_} = $self->{$_} if $self->{$_};
+    }
+    return unless ($infos);
 
     # Create relaystate session
     my $samlSessionInfo = $self->getSamlSession();
@@ -1365,13 +1369,10 @@ sub createLogoutRequest {
     }
 
     # Set RelayState
-    my $infos;
-    foreach (qw /urldc checkLogins/) {
-        $infos->{$_} = $self->{$_} if $self->{$_};
+    if (my $relaystate = $self->storeRelayState(qw /urldc/)) {
+        $logout->msg_relayState($relaystate);
+        $self->lmLog( "Set $relaystate in RelayState", 'debug' );
     }
-    my $relaystate = $self->storeRelayState($infos);
-    $logout->msg_relayState($relaystate);
-    $self->lmLog( "Set $relaystate in RelayState", 'debug' );
 
     # Signature
     if ( $signSLOMessage == 0 ) {
