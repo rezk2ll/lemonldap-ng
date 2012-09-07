@@ -2581,8 +2581,7 @@ sub autoRedirect {
             $self->lmLog( 'CDA request', 'debug' );
             $self->{urldc} .= ( $self->{urldc} =~ /\?/ ? '&' : '?' )
               . (
-                $self->{securedCookie} < 2
-                  or $ssl
+                ( $self->{securedCookie} < 2 or $ssl )
                 ? $self->{cookieName} . "=" . $self->{id}
                 : $self->{cookieName} . "http="
                   . $self->{sessionInfo}->{_httpSession}
