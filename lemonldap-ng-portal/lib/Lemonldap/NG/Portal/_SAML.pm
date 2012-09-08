@@ -792,7 +792,7 @@ sub createAuthnRequest {
     }
 
     # Set RelayState
-    if (my $relaystate = $self->storeRelayState(qw /urldc checkLogins/)) {
+    if ( my $relaystate = $self->storeRelayState(qw /urldc checkLogins/) ) {
         $login->msg_relayState($relaystate);
         $self->lmLog( "Set $relaystate in RelayState", 'debug' );
     }
@@ -1220,7 +1220,8 @@ sub extractRelayState {
     eval { tied(%$samlSessionInfo)->delete(); };
     if ($@) {
         $self->lmLog( "Unable to delete relaystate $relaystate", 'error' );
-    } else {
+    }
+    else {
         $self->lmLog( "Relaystate $relaystate was deleted", 'debug' );
     }
 
@@ -1369,7 +1370,7 @@ sub createLogoutRequest {
     }
 
     # Set RelayState
-    if (my $relaystate = $self->storeRelayState(qw /urldc/)) {
+    if ( my $relaystate = $self->storeRelayState(qw /urldc/) ) {
         $logout->msg_relayState($relaystate);
         $self->lmLog( "Set $relaystate in RelayState", 'debug' );
     }

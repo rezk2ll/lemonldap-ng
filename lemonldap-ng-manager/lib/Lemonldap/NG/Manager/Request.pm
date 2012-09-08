@@ -80,7 +80,7 @@ sub generateKeys {
 # @return Void
 sub sendJSONResponse {
     my ( $self, $content ) = splice @_;
-    my $json         = new JSON();
+    my $json = new JSON();
     $json->canonical();
     my $json_content = '';
 

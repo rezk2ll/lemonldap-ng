@@ -438,10 +438,10 @@ sub deleteNotification {
 
             # Delete the notification (really)
             foreach (@data) {
-                eval { $self->purge($_) };
-                next if ($@);
-                $self->lmLog( "Notification $_ was removed.", 'debug' );
-                $count++;
+                if ( $self->purge($_) ) {
+                    $self->lmLog( "Notification $_ was removed.", 'debug' );
+                    $count++;
+                }
             }
         }
     }

@@ -42,13 +42,13 @@ sub modifyPassword {
     return PE_OK unless ( $self->{newpassword} );
 
     # Check if portal require old password
-    if ( $self->{portalRequireOldPassword } ) {
+    if ( $self->{portalRequireOldPassword} ) {
         unless ( $self->{oldpassword} ) {
             $self->lmLog( "Portal require old password", 'error' );
             return PE_PP_MUST_SUPPLY_OLD_PASSWORD;
         }
     }
-    
+
     # Verify confirmation password matching
     return PE_PASSWORD_MISMATCH
       unless ( $self->{newpassword} eq $self->{confirmpassword} );

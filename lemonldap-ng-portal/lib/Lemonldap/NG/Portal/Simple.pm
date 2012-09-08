@@ -446,8 +446,10 @@ sub new {
         $self->loadModule('Lemonldap::NG::Portal::_SOAP');
         if ( $self->{notification} and $ENV{PATH_INFO} ) {
             $self->{CustomSOAPServices} ||= {};
-            $self->{CustomSOAPServices}->{'/notification'} =
-              { f => 'newNotification', o => $self->{notifObject} };
+            $self->{CustomSOAPServices}->{'/notification'} = {
+                f => 'newNotification deleteNotification',
+                o => $self->{notifObject}
+            };
         }
         $self->startSoapServices();
     }
@@ -766,13 +768,13 @@ sub buildHiddenForm {
 # @return nothing
 sub initCaptcha {
     my $self = shift;
-    
+
     # Store captcha data
     opendir( OUTPUT, $self->{captcha_output} )
       or $self->lmLog( "Can't open captcha output dir", "error" );
     opendir( DATA, $self->{captcha_data} )
       or $self->lmLog( "Can't open captcha data dir", "error" );
-    
+
     # Clean previous captcha datas
     foreach ( readdir(OUTPUT) ) {
         next if ( $_ eq ".." or $_ eq "." );

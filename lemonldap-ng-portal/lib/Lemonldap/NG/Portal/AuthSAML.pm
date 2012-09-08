@@ -1302,6 +1302,7 @@ sub authLogout {
 
         $self->{postUrl} = $slo_url;
         $self->{postFields} = { 'SAMLRequest' => $slo_body };
+
         # RelayState
         $self->{postFields}->{'RelayState'} = $logout->msg_relayState
           if ( $logout->msg_relayState );
