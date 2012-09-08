@@ -1931,6 +1931,7 @@ sub existingSession {
 #@return Lemonldap::NG::Portal constant
 sub extractFormInfo {
     my $self = shift;
+    return PE_OK if $self->{skipExtractFormInfo};
     $self->{checkLogins} = $self->param('checkLogins');
     return $self->SUPER::extractFormInfo;
 }
