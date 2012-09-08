@@ -956,7 +956,7 @@ sub run ($$) {
         $apacheRequest->args($args);
         my $host          = $apacheRequest->get_server_name();
         my $redirectUrl   = $class->_buildUrl( $apacheRequest->uri );
-        my $redirectHttps = ( $redirectUrl =~ m/^ĥttps/ );
+        my $redirectHttps = ( $redirectUrl =~ m/^https/ );
         lmSetErrHeaderOut( $apacheRequest,
             'Location' => $redirectUrl . ( $args ? "?" . $args : "" ) );
         $host =~ s/^[^\.]+\.(.*\..*$)/$1/;
