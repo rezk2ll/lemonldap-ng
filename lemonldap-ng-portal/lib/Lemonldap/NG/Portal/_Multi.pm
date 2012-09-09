@@ -68,6 +68,9 @@ sub try {
     my $old = $self->{stack}->[$type]->[0]->{n};
     my $ci;
 
+    # Store last module used
+    $self->{last}->[$type] = $old;
+
     if ( $ci = $self->{p}->safe->reval( $self->{stack}->[$type]->[0]->{c} ) ) {
 
         # Log used module
@@ -113,7 +116,10 @@ sub next {
         shift @{ $self->{stack}->[ 1 - $type ] };
     }
     shift @{ $self->{stack}->[$type] };
+
+    # Manage end of the stack
     return 0 unless ( @{ $self->{stack}->[$type] } );
+
     %{ $self->{p} } = (
         %{ $self->{p} },
         %{ $self->{p}->{multi}->{ $self->{stack}->[$type]->[0]->{n} } }
