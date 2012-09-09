@@ -237,7 +237,7 @@ sub setAuthSessionInfo {
 }
 
 sub authenticate {
-    Lemonldap::NG::Portal::Simple::PE_ERROR;
+    Lemonldap::NG::Portal::Simple::PE_OK;
 }
 
 package Lemonldap::NG::Portal::UserDB1;
