@@ -60,7 +60,6 @@ sub run ($$) {
     $user =~ s/^Basic\s*//;
 
     # DEBUG
-    $class->lmLog( "user: $user", 'debug' );
     $id = md5_base64($user);
 
     # II - recover the user datas
@@ -77,6 +76,8 @@ sub run ($$) {
               ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
             $user = decode_base64($user);
             ( $user, $pass ) = ( $user =~ /^(.*?):(.*)$/ );
+            $class->lmLog( "AuthBasic authentication for user: $user",
+                'debug' );
             my $r = $soap->getCookies( $user, $pass );
             my $cv;
 
@@ -131,7 +132,7 @@ sub run ($$) {
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );
     $class->updateStatus( $datas->{$whatToTrace}, $apacheRequest->uri, 'OK' );
-    $class->logGranted($uri);
+    $class->logGranted( $uri, $datas );
 
     # ACCOUNTING
     # 2 - Inform remote application
