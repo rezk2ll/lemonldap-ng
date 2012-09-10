@@ -292,7 +292,7 @@ When all is ok, click on <code>Create</code>.
 
 </div>
 <!-- SECTION "Create new notifications with notifications explorer" [5900-6245] -->
-<h3><a name="create_new_notifications_trough_soap" id="create_new_notifications_trough_soap">Create new notifications trough SOAP</a></h3>
+<h3><a name="notifications_trough_soap" id="notifications_trough_soap">Notifications trough SOAP</a></h3>
 <div class="level3">
 
 <p>
@@ -346,8 +346,37 @@ New notifications can be insert using <acronym title="Simple Object Access Proto
     <a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> <span class="st0">&quot;$res notification(s) have been inserted<span class="es0">\n</span>&quot;</span><span class="sy0">;</span>
 <span class="br0">&#125;</span></pre>
 
+<p>
+
+You can also delete some notifications with <acronym title="Simple Object Access Protocol">SOAP</acronym>, once <acronym title="Simple Object Access Protocol">SOAP</acronym> is activated:
+</p>
+
 </div>
-<!-- SECTION "Create new notifications trough SOAP" [6246-7604] -->
+
+<h4><a name="deletion_example_in_perl" id="deletion_example_in_perl">Deletion example in Perl</a></h4>
+<div class="level4">
+<pre class="code perl"><span class="co1">#!/usr/bin/perl</span>
+&nbsp;
+<span class="kw2">use</span> SOAP<span class="sy0">::</span><span class="me2">Lite</span><span class="sy0">;</span>
+<span class="kw2">use</span> utf8<span class="sy0">;</span>
+&nbsp;
+<span class="kw1">my</span> <span class="re0">$lite</span> <span class="sy0">=</span> SOAP<span class="sy0">::</span><span class="me2">Lite</span>
+        <span class="sy0">-&gt;</span><span class="me1">uri</span><span class="br0">&#40;</span><span class="st_h">'urn:Lemonldap::NG::Common::CGI::SOAPService'</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">proxy</span><span class="br0">&#40;</span><span class="st_h">'http://auth.example.com/index.pl/notification'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+&nbsp;
+<span class="re0">$r</span> <span class="sy0">=</span> <span class="re0">$lite</span><span class="sy0">-&gt;</span><span class="me1">deleteNotification</span><span class="br0">&#40;</span><span class="st_h">'foo.bar'</span><span class="sy0">,</span> <span class="st_h">'ABC'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">if</span> <span class="br0">&#40;</span> <span class="re0">$r</span><span class="sy0">-&gt;</span><span class="me1">fault</span> <span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> <span class="kw2">STDERR</span> <span class="st0">&quot;SOAP Error: &quot;</span> <span class="sy0">.</span> <span class="re0">$r</span><span class="sy0">-&gt;</span><span class="me1">fault</span><span class="sy0">-&gt;</span><span class="br0">&#123;</span>faultstring<span class="br0">&#125;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw1">else</span> <span class="br0">&#123;</span>
+    <span class="kw1">my</span> <span class="re0">$res</span> <span class="sy0">=</span> <span class="re0">$r</span><span class="sy0">-&gt;</span><span class="me1">result</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> <span class="st0">&quot;$res notification(s) have been deleted<span class="es0">\n</span>&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+<!-- SECTION "Notifications trough SOAP" [6246-8142] -->
 <h3><a name="test_notification" id="test_notification">Test notification</a></h3>
 <div class="level3">
 
@@ -365,4 +394,4 @@ Try also to create a global notification (to the uid “allusers”), and connec
 </p>
 
 </div>
-<!-- SECTION "Test notification" [7605-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Test notification" [8143-] --></div><!-- closes <div class="dokuwiki export">-->
