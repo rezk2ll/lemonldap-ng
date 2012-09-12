@@ -77,6 +77,23 @@ if (   defined $conf->{samlStorage}
     print "SAML backend $module will be used\n" if $debug;
 }
 
+# CAS
+if (   defined $conf->{casStorage}
+    or keys %{ $conf->{casStorageOptions} } )
+{
+
+    # Load module
+    $module = $conf->{casStorage} || $conf->{globalStorage};
+    eval "use $module";
+    die $@ if ($@);
+    $conf->{casStorageOptions}->{backend} = $module;
+
+    # Add module in managed backends
+    push @backends, $conf->{casStorageOptions};
+
+    print "CAS backend $module will be used\n" if $debug;
+}
+
 #=============================================================================
 # Load and purge sessions
 #=============================================================================
