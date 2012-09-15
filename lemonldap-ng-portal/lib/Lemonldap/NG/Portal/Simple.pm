@@ -479,8 +479,7 @@ sub new {
 # @param module module name
 # @return boolean
 sub loadModule {
-    my $self   = shift;
-    my $module = shift;
+    my ($self, $module) = splice @_;
 
     return 1 unless $module;
 
