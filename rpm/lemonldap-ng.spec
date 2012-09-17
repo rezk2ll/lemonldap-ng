@@ -10,8 +10,11 @@
 # Variables
 #==============================================================================
 
+%define perl_vendorlib %(eval "`%{__perl} -V:installvendorlib`"; echo $installvendorlib)
+%define perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
+
 %define real_name lemonldap-ng
-%define real_version 1.2.2
+%define real_version 1.3.0
 %define cpan_common_version  %{real_version}
 %define cpan_handler_version %{real_version}
 %define cpan_manager_version %{real_version}
@@ -84,7 +87,7 @@ BuildRequires:  perl(Class::Inspector)
 BuildRequires:  perl(Test::MockObject)
 BuildRequires:  perl(Clone)
 %else
-BuildRequires:  perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-Net-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone
+BuildRequires:  perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone
 %endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
@@ -268,17 +271,40 @@ This package installs the authentication portal.
 # Source preparation
 #==============================================================================
 %prep
-%setup -q -n %{real_name}-%{real_version}.tar.gz
+%setup -n %{real_name}-%{real_version} -q
+
+# Remove unwanted provides/requires
+# We remove Lemonldap::NG requires because the requires are set in the header
+cat << \EOF > %{name}-prov
+#!/bin/sh
+%{__perl_provides} $* |\
+sed -e '/perl(My::.*)/d'
+EOF
+
+%define __perl_provides %{_builddir}/%{name}-%{real_version}/%{name}-prov
+chmod +x %{__perl_provides}
+
+
+cat << \EOF > %{name}-req
+#!/bin/sh
+%{__perl_requires} $* |\
+sed -e '/perl(lasso)/d' |\
+sed -e '/perl(Net::OpenID::Server)/d' |\
+sed -e '/perl(AuthCAS)/d'
+EOF
+
+%define __perl_requires %{_builddir}/%{name}-%{real_version}/%{name}-req
+chmod +x %{__perl_requires}
 
 #==============================================================================
 # Building
 #==============================================================================
 %build
-%{__make} configure STORAGECONFFILE=%{lm_storagefile} PERLOPTIONS="INSTALLDIRS=vendor"
-%{__make} 
+%{__make} %{?_smp_mflags} configure STORAGECONFFILE=%{lm_storagefile} PERLOPTIONS="INSTALLDIRS=vendor"
+%{__make} %{?_smp_mflags}
 
-# run Test
-%{__make} test
+# Run Tests
+%{__make} %{?_smp_mflags} test
 
 #==============================================================================
 # Installation
@@ -286,7 +312,7 @@ This package installs the authentication portal.
 %install
 rm -rf %{buildroot}
 
-%{__make} install \
+%{__make} %{?_smp_mflags} install \
 	DESTDIR=%{buildroot} \
 	PREFIX=%{lm_prefix} \
 	BINDIR=%{lm_sharedir}/bin \
@@ -353,10 +379,15 @@ fi
 if [ $1 -gt 1 ] ; then
 	if [ -e %{lm_confdir}/storage.conf -o -e %{lm_confdir}/apply.conf -o -e %{lm_confdir}/apps-list.xml ] ; then
 		# Run migration script
-		%{lm_sharedir}/bin/lmMigrateConfFiles2ini &> /dev/null || :
+		%{lm_sharedir}/bin/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
 		# Fix ownership
 		chgrp %{lm_apachegroup} %{lm_storagefile} || :
 	fi
+fi
+# Set editor alternatives if it does not exist
+update-alternatives --display editor > /dev/null 2>&1
+if [ $? -ne 0 ] ; then
+        update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
 fi
 
 #==============================================================================
@@ -366,14 +397,14 @@ fi
 # Package removal
 if [ $1 -eq 0 ] ; then
 	# Remove symlink in Apache configuration
-	rm -f %{apache_confdir}/z-lemonldap-ng-handler.conf &> /dev/null || :
-	rm -f %{apache_confdir}/z-lemonldap-ng-manager.conf &> /dev/null || :
-	rm -f %{apache_confdir}/z-lemonldap-ng-portal.conf &> /dev/null  || :
+	rm -f %{apache_confdir}/z-lemonldap-ng-handler.conf 2>&1 > /dev/null || :
+	rm -f %{apache_confdir}/z-lemonldap-ng-manager.conf 2>&1 > /dev/null || :
+	rm -f %{apache_confdir}/z-lemonldap-ng-portal.conf 2>&1 > /dev/null  || :
 fi
 # Upgrade from previous version
 if [ $1 -eq 1 ] ; then
 	# Remove old symlink in Apache configuration
-	rm -f %{apache_confdir}/z-lemonldap-ng.conf &> /dev/null || :
+	rm -f %{apache_confdir}/z-lemonldap-ng.conf 2>&1 > /dev/null || :
 fi
 
 %clean
@@ -476,9 +507,10 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
-* Mon Jul 16 2012 Sandro Cazzaniga <cazzaniga.sandro@gmail.com> - 1.2.1-1
+* Mon Sep 17 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.2-1
+- Update to 1.2.2
+* Fri Jul 05 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.1-1
 - Update to 1.2.1
-- Improve spec portability 
 * Sun Jun 17 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.0-1
 - Update to 1.2.0
 * Fri Oct 07 2011 Clement Oudot <clem.oudot@gmail.com> - 1.1.2-1

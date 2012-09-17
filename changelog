@@ -1,5 +1,47 @@
 lemonldap-ng (1.3.0) stable; urgency=low
 
+lemonldap-ng (1.2.2) stable; urgency=low
+
+    * [LEMONLDAP-436] - LDAP Search error when authenticating and identifying
+      on two LDAP (AD) with Multi modules
+    * [LEMONLDAP-490] - bad error log when user sends wrong login
+    * [LEMONLDAP-497] - CDA not working
+    * [LEMONLDAP-498] - DBI config storage does not use transactions
+    * [LEMONLDAP-506] - When working with 2 LDAP in Multi Mode, LDAP connexion
+      not reinitialized on second LDAP if user not found in first LDAP
+    * [LEMONLDAP-509] - regex for ldapServer on storing in Manager is too
+      string/wrong
+    * [LEMONLDAP-510] - javascript: $('...').attr('checked')==true never neems
+      to evaluate to TRUE
+    * [LEMONLDAP-515] - Parameter portalRequireOldPassword not checked in DBI
+    * [LEMONLDAP-516] - date popup in notification manager
+    * [LEMONLDAP-517] - typo in cookie name in portal WSDL
+    * [LEMONLDAP-518] - SAML session purge
+    * [LEMONLDAP-519] - SOAP webservice getCookies() should work with Auth
+      Multi
+    * [LEMONLDAP-522] - Cross-domain authentication and http cookies
+    * [LEMONLDAP-523] - RelayState is not sent in SAML logout requests by POST
+      method
+    * [LEMONLDAP-527] - Error with CDA when redirecting to other domain with
+      lemon cookie as a get parameter
+    * [LEMONLDAP-528] - With CDA, even if service url is https, cookie secure
+      flag is not set for the second domain
+    * [LEMONLDAP-529] - getDisplayType not well called in Multi backend
+    * [LEMONLDAP-530] - on androïd device, accept language misunderstood
+    * [LEMONLDAP-491] - Don't import all functions of POSIX
+    * [LEMONLDAP-494] - Lemonldap::NG::Portal::_DBI::hash_password and wrong
+      log type
+    * [LEMONLDAP-501] - All sessions browsed at SAML authentication
+    * [LEMONLDAP-505] - Make portal W3C compliant for html validation
+    * [LEMONLDAP-507] - It's better to "warn" the user when we create a fake
+      jail
+    * [LEMONLDAP-508] - Add armel architecture for debian repository
+    * [LEMONLDAP-514] - Enable notifications by default
+    * [LEMONLDAP-521] - arguments of custom functions
+    * [LEMONLDAP-249] - Manage apply key with the manager
+    * [LEMONLDAP-511] - A new SOAP webservice for deleting notifications
+    * [LEMONLDAP-504] - CLONE - Verify that oldPassword is not empty
+
 lemonldap-ng (1.2.1) stable; urgency=low
 
     * [LEMONLDAP-479] - LDAP groups are not stored in the session anymore
