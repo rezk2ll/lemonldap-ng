@@ -71,13 +71,13 @@ VI - Update DEB repository
 
 The DEB repository is hosted on http://lemonldap-ng.org/deb
 
-Copy all generated files (*.deb, *.dsc, *.changes, ...):
-$ scp *.deb *.dsc *.changes *.debian.tar.gz *.orig.tar.gz lemonldapng@lemonldap-ng.org:incoming/
+Copy all deb files:
+$ scp *.deb lemonldapng@lemonldap-ng.org:incoming/
 
 Then connect on the server and launch reprepro:
 $ ssh lemonldapng@lemonldap-ng.org
 lemonldapng@lemonldap-ng.org$ cd deb/
-lemonldapng@lemonldap-ng.org$ reprepro --ask-passphrase -Vb . include squeeze ../incoming/lemonldap-ng_VERSION_i386.changes
+lemonldapng@lemonldap-ng.org$ reprepro --ask-passphrase -Vb . includedeb squeeze ../incoming/*1.2.2*deb
 
 See also reprepro configuration file: 'distributions'
 
