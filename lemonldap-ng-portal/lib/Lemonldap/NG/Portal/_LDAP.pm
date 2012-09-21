@@ -415,11 +415,7 @@ sub ldap {
 # @param attributes to get from found groups (array ref)
 # @return string groups separated with multiValuesSeparator
 sub searchGroups {
-    my $self       = shift;
-    my $base       = shift;
-    my $key        = shift;
-    my $value      = shift;
-    my $attributes = shift;
+    my ($self, $base, $key, $value, $attributes) = splice @_;
 
     my $portal = $self->{portal};
     my $groups;
@@ -502,9 +498,7 @@ sub searchGroups {
 # @param attribute Attribute name
 # @return string value
 sub getLdapValue {
-    my $self      = shift;
-    my $entry     = shift;
-    my $attribute = shift;
+    my ($self, $entry, $attribute) = splice @_;
 
     return $entry->dn() if ( $attribute eq "dn" );
 
