@@ -409,11 +409,6 @@ sub deleteNotification {
         'debug'
     );
 
-    $self->lmLog(
-"SOAP service deleteNotification called for uid $uid and reference $myref",
-        'debug'
-    );
-
     # Get notifications
     my $user = $self->_get($uid);
 
