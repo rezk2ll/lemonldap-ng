@@ -107,23 +107,28 @@ sub delete {
           . "WHERE done IS NULL AND uid='$u' AND ref='$r' AND date='$d'" );
 }
 
-## @method boolean purge(string myref)
+## @method boolean purge(string myref, boolean force)
 # Purge notification (really delete record)
 # @param $myref identifier returned by get or getAll
+# @param $force force purge for not deleted session
 # @return true if something was deleted
 sub purge {
-    my ( $self, $myref ) = @_;
+    my ( $self, $myref, $force ) = @_;
     my ( $d, $u, $r );
     unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
         $self->lmLog( "Bad reference $myref", 'warn' );
         return 0;
     }
+
+    my $clause;
+    $clause = "done IS NOT NULL AND" unless ($force);
+
     $u =~ s/'/''/g;
     $r =~ s/'/''/g;
     $d =~ s/'/''/g;
     return _execute( $self,
             "DELETE FROM $self->{dbiTable} "
-          . "WHERE done IS NOT NULL AND uid='$u' AND ref='$r' AND date='$d'" );
+          . "WHERE $clause AND uid='$u' AND ref='$r' AND date='$d'" );
 }
 
 ## @method boolean newNotif(string date, string uid, string ref, string condition, string xml)

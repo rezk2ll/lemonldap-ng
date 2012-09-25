@@ -433,7 +433,7 @@ sub deleteNotification {
 
             # Delete the notification (really)
             foreach (@data) {
-                if ( $self->purge($_) ) {
+                if ( $self->purge( $_, 1 ) ) {
                     $self->lmLog( "Notification $_ was removed.", 'debug' );
                     $count++;
                 }
@@ -462,9 +462,10 @@ sub getDone {
     return &{ $_[0]->{type} . '::getDone' }(@_);
 }
 
-## @method boolean purge(string myref)
+## @method boolean purge(string myref, boolean force)
 # Purge notification (really delete record). Wrapper for storage module purge()
 # @param $myref identifier returned by get or getAll
+# @param $force force purge for not deleted session
 # @return true if something was deleted
 sub purge {
     no strict 'refs';
