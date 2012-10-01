@@ -8,18 +8,18 @@ WriteMakefile(
     VERSION_FROM => 'lib/Lemonldap/NG/Handler.pm',
     LICENSE      => 'perl',
     PMLIBDIRS    => ['lib'],
-    META_MERGE   => { 'recommends' => { 'SOAP::Lite' => 0, }, },
     BUILD_REQUIRES =>
       { 'IO::Pipe' => 0, 'Test::MockObject' => 0 },
     PREREQ_PM => {
         'Apache::Session'                => 0,
         'LWP::UserAgent'                 => 0,
         'Cache::Cache'                   => 0,
-        'Lemonldap::NG::Common'          => '1.2.0',
+        'Lemonldap::NG::Common'          => '1.3.0',
         'CGI'                            => 3.08,
         'URI'                            => 0,
         'Apache::Session::Generate::MD5' => 0,
 	'Test::Pod'                      => 0,
+	'SOAP::Lite'                     => 0,
     },    # e.g., Module::Name => 1.1
     (
         $] >= 5.005
