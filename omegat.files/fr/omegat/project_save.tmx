@@ -3224,6 +3224,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.3/handlerauthbasic.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042156Z" changeid="xavier">
+        <seg>../../documentation/1.3/handlerauthbasic.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.3/header_remote_user_conversion.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T042011Z" changeid="xavier">
@@ -6948,6 +6956,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T041752Z" changeid="xavier">
         <seg>../pages/documentation/1.3/authradius.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.3/handlerauthbasic.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T035917Z" changeid="xavier">
+        <seg>../pages/documentation/1.3/handlerauthbasic.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -11606,6 +11622,46 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2616 -- Fix Multi backend unit test (#LEMONLDAP-519)&lt;/a0&gt; by clement_oudot (2012/09/09 22:54)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042254Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2616 -- Fix Multi backend unit test (#LEMONLDAP-519)&lt;/a0&gt; by clement_oudot (2012/09/09 22:54)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2617 -- Allow to get display type in Multi backend (#LEMONLDAP-529)&lt;/a0&gt; by clement_oudot (2012/09/09 23:37)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042252Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2617 -- Allow to get display type in Multi backend (#LEMONLDAP-529)&lt;/a0&gt; by clement_oudot (2012/09/09 23:37)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2618 -- Fix AuthBasic Handler logging (#LEMONLDAP-519)&lt;/a0&gt; by clement_oudot (2012/09/10 11:23)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042249Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2618 -- Fix AuthBasic Handler logging (#LEMONLDAP-519)&lt;/a0&gt; by clement_oudot (2012/09/10 11:23)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2619 -- Add deleteNotification webservice in WSDL (#LEMONLDAP-511)&lt;/a0&gt; by clement_oudot (2012/09/10 12:09)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042237Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2619 -- Add deleteNotification webservice in WSDL (#LEMONLDAP-511)&lt;/a0&gt; by clement_oudot (2012/09/10 12:09)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2620 -- Add AuthBasic Handler in default installation (#LEMONLDAP-519)&lt;/a0&gt; by clement_oudot (2012/09/10 12:34)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042234Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2620 -- Add AuthBasic Handler in default installation (#LEMONLDAP-519)&lt;/a0&gt; by clement_oudot (2012/09/10 12:34)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Rules&lt;/a0&gt; are applied in alphabetical order (comment and regular expression).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095523Z" changeid="xavier">
@@ -11870,6 +11926,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Twitter&lt;/a0&gt; is a famous microblogging server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T040207Z" changeid="xavier">
+        <seg>&lt;a0&gt;Twitter&lt;/a0&gt; est un serveur de microblog célèbre.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Twitter&lt;/a0&gt; is a famous short messaging server.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12090,6 +12154,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;findAttr.pl now scans undocumented parameters&lt;/a0&gt; by guimard (2010/12/05 14:41)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;handlerauthbasic&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T035919Z" changeid="xavier">
+        <seg>&lt;a0&gt;handlerauthbasic&lt;/a0&gt;&lt;br1/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12900,6 +12972,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a2&gt;header_remote_user_conversion&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T035920Z" changeid="xavier">
+        <seg>&lt;a2&gt;header_remote_user_conversion&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a2&gt;highavailability&lt;/a2&gt;&lt;br3/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111530Z" changeid="xavier">
@@ -13184,6 +13264,18 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a41&gt;&lt;s42&gt;print&lt;/s42&gt;&lt;/a41&gt; &lt;s43&gt;STDERR&lt;/s43&gt; &lt;s44&gt;&quot;SOAP Error: &quot;&lt;/s44&gt; &lt;s45&gt;.&lt;/s45&gt; &lt;s46&gt;$r&lt;/s46&gt;&lt;s47&gt;-&gt;&lt;/s47&gt;&lt;s48&gt;fault&lt;/s48&gt;&lt;s49&gt;-&gt;&lt;/s49&gt;&lt;s50&gt;{&lt;/s50&gt;faultstring&lt;s51&gt;}&lt;/s51&gt;&lt;s52&gt;;&lt;/s52&gt;
+&lt;s53&gt;}&lt;/s53&gt;
+&lt;s54&gt;else&lt;/s54&gt; &lt;s55&gt;{&lt;/s55&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041629Z" changeid="xavier">
+        <seg>&lt;a41&gt;&lt;s42&gt;print&lt;/s42&gt;&lt;/a41&gt; &lt;s43&gt;STDERR&lt;/s43&gt; &lt;s44&gt;&quot;SOAP Error: &quot;&lt;/s44&gt; &lt;s45&gt;.&lt;/s45&gt; &lt;s46&gt;$r&lt;/s46&gt;&lt;s47&gt;-&gt;&lt;/s47&gt;&lt;s48&gt;fault&lt;/s48&gt;&lt;s49&gt;-&gt;&lt;/s49&gt;&lt;s50&gt;{&lt;/s50&gt;faultstring&lt;s51&gt;}&lt;/s51&gt;&lt;s52&gt;;&lt;/s52&gt;
+&lt;s53&gt;}&lt;/s53&gt;
+&lt;s54&gt;else&lt;/s54&gt; &lt;s55&gt;{&lt;/s55&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a4&gt;&lt;s5&gt;return&lt;/s5&gt;&lt;/a4&gt; &lt;s6&gt;&quot;logo&quot;&lt;/s6&gt;&lt;s7&gt;;&lt;/s7&gt;
 &lt;s8&gt;}&lt;/s8&gt;</seg>
       </tuv>
@@ -13254,6 +13346,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111522Z" changeid="xavier">
         <seg>&lt;a4&gt;fileconfbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;highavailability&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T035920Z" changeid="xavier">
+        <seg>&lt;a4&gt;highavailability&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13336,6 +13436,16 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       <tuv lang="FR-FR" changedate="20120419T060432Z" changeid="guimard">
         <seg>&lt;a63&gt;&lt;s64&gt;print&lt;/s64&gt;&lt;/a63&gt; &lt;s65&gt;&quot;$res notification(s) have been inserted&lt;s66&gt;\n&lt;/s66&gt;&quot;&lt;/s65&gt;&lt;s67&gt;;&lt;/s67&gt;
 &lt;s68&gt;}&lt;/s68&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a65&gt;&lt;s66&gt;print&lt;/s66&gt;&lt;/a65&gt; &lt;s67&gt;&quot;$res notification(s) have been deleted&lt;s68&gt;\n&lt;/s68&gt;&quot;&lt;/s67&gt;&lt;s69&gt;;&lt;/s69&gt;
+&lt;s70&gt;}&lt;/s70&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041630Z" changeid="xavier">
+        <seg>&lt;a65&gt;&lt;s66&gt;print&lt;/s66&gt;&lt;/a65&gt; &lt;s67&gt;&quot;$res notification(s) have been deleted&lt;s68&gt;\n&lt;/s68&gt;&quot;&lt;/s67&gt;&lt;s69&gt;;&lt;/s69&gt;
+&lt;s70&gt;}&lt;/s70&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -16594,10 +16704,26 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SSLVerifyClient&lt;/s0&gt;: set to &lt;c1&gt;optional&lt;/c1&gt; to allow user with a bad certificate to access to &lt;a2&gt;LL::NG&lt;/a2&gt; portal page.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T040033Z" changeid="xavier">
+        <seg>&lt;s0&gt;SSLVerifyClient&lt;/s0&gt; : mettre à &lt;c1&gt;optional&lt;/c1&gt; pour autoriser les utilisateurs ne disposant pas d'un certificat valide à accéder à la page du portail &lt;a2&gt;LL::NG&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;STORAGECONFFILE&lt;/s0&gt;: location of default storage configuration file (default: /usr/local/lemonldap-ng/etc/lemonldap-ng.ini)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161419Z" changeid="xavier">
         <seg>&lt;s0&gt;STORAGECONFFILE&lt;/s0&gt; : emplacement du du fichier de configuration du stockage par défaut (défaut : /usr/local/lemonldap-ng/etc/lemonldap-ng.ini)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Sandro Cazzaniga&lt;/s0&gt;: developer, Mageia packager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T035955Z" changeid="xavier">
+        <seg>&lt;s0&gt;Sandro Cazzaniga&lt;/s0&gt;: developeur, empaqueteur Mageia</seg>
       </tuv>
     </tu>
     <tu>
@@ -17188,6 +17314,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;absolute &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt; if it is run by handler (e.g. /admin/index.php?param=foo).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T040520Z" changeid="xavier">
+        <seg>&lt;s0&gt;l'&lt;a1&gt;URL&lt;/a1&gt; absolue&lt;/s0&gt; si elle est appelée par un agent (e.g. /admin/index.php?param=foo).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;accept&lt;/s0&gt;: all authenticated users will access surveys</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102950Z" changeid="xavier">
@@ -17336,6 +17470,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T182814Z" changeid="xavier">
         <seg>&lt;s0&gt;default_access&lt;/s0&gt; (optionnel) : resultat à retourner si &lt;s1&gt;start&lt;/s1&gt; et &lt;s2&gt;end&lt;/s2&gt; sont vides</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;deleteNotification&lt;/s0&gt;: delete notification(s) for a user (see &lt;a1&gt;Notifications system&lt;/a1&gt; for more)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042154Z" changeid="xavier">
+        <seg>&lt;s0&gt;deleteNotification&lt;/s0&gt; : efface une ou plusieurs notifications d'un utilisateur (voir le &lt;a1&gt;système des notifications&lt;/a1&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -17646,6 +17788,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191206Z" changeid="xavier">
         <seg>&lt;s0&gt;passThrough&lt;/s0&gt; (optionnel) : Autorise ou non l'accès anonyme.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;portal full &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt; if custom function is run by portal (e.g. &lt;a2&gt;https://auth.example.com/&lt;/a2&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T040429Z" changeid="xavier">
+        <seg>&lt;s0&gt;l'&lt;a1&gt;URL&lt;/a1&gt; complète du portail&lt;/s0&gt; si la fonction personnalisée est appelée par le portail (i.e. &lt;a2&gt;https://auth.example.com/&lt;/a2&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -18615,6 +18765,24 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
         <seg>&lt;s17&gt;-&gt;&lt;/s17&gt;&lt;s18&gt;proxy&lt;/s18&gt;&lt;s19&gt;(&lt;/s19&gt;&lt;s20&gt;'http://auth.example.com/index.pl/notification'&lt;/s20&gt;&lt;s21&gt;)&lt;/s21&gt;&lt;s22&gt;;&lt;/s22&gt;
  
  
+&lt;s23&gt;$r&lt;/s23&gt; &lt;s24&gt;=&lt;/s24&gt; &lt;s25&gt;$lite&lt;/s25&gt;&lt;s26&gt;-&gt;&lt;/s26&gt;&lt;s27&gt;deleteNotification&lt;/s27&gt;&lt;s28&gt;(&lt;/s28&gt;&lt;s29&gt;'foo.bar'&lt;/s29&gt;&lt;s30&gt;,&lt;/s30&gt; &lt;s31&gt;'ABC'&lt;/s31&gt;&lt;s32&gt;)&lt;/s32&gt;&lt;s33&gt;;&lt;/s33&gt;
+ 
+&lt;s34&gt;if&lt;/s34&gt; &lt;s35&gt;(&lt;/s35&gt; &lt;s36&gt;$r&lt;/s36&gt;&lt;s37&gt;-&gt;&lt;/s37&gt;&lt;s38&gt;fault&lt;/s38&gt; &lt;s39&gt;)&lt;/s39&gt; &lt;s40&gt;{&lt;/s40&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041628Z" changeid="xavier">
+        <seg>&lt;s17&gt;-&gt;&lt;/s17&gt;&lt;s18&gt;proxy&lt;/s18&gt;&lt;s19&gt;(&lt;/s19&gt;&lt;s20&gt;'http://auth.example.com/index.pl/notification'&lt;/s20&gt;&lt;s21&gt;)&lt;/s21&gt;&lt;s22&gt;;&lt;/s22&gt;
+ 
+ 
+&lt;s23&gt;$r&lt;/s23&gt; &lt;s24&gt;=&lt;/s24&gt; &lt;s25&gt;$lite&lt;/s25&gt;&lt;s26&gt;-&gt;&lt;/s26&gt;&lt;s27&gt;deleteNotification&lt;/s27&gt;&lt;s28&gt;(&lt;/s28&gt;&lt;s29&gt;'foo.bar'&lt;/s29&gt;&lt;s30&gt;,&lt;/s30&gt; &lt;s31&gt;'ABC'&lt;/s31&gt;&lt;s32&gt;)&lt;/s32&gt;&lt;s33&gt;;&lt;/s33&gt;
+ 
+&lt;s34&gt;if&lt;/s34&gt; &lt;s35&gt;(&lt;/s35&gt; &lt;s36&gt;$r&lt;/s36&gt;&lt;s37&gt;-&gt;&lt;/s37&gt;&lt;s38&gt;fault&lt;/s38&gt; &lt;s39&gt;)&lt;/s39&gt; &lt;s40&gt;{&lt;/s40&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s17&gt;-&gt;&lt;/s17&gt;&lt;s18&gt;proxy&lt;/s18&gt;&lt;s19&gt;(&lt;/s19&gt;&lt;s20&gt;'http://auth.example.com/index.pl/notification'&lt;/s20&gt;&lt;s21&gt;)&lt;/s21&gt;&lt;s22&gt;;&lt;/s22&gt;
+ 
+ 
 &lt;s23&gt;$r&lt;/s23&gt; &lt;s24&gt;=&lt;/s24&gt; &lt;s25&gt;$lite&lt;/s25&gt;&lt;s26&gt;-&gt;&lt;/s26&gt;&lt;s27&gt;newNotification&lt;/s27&gt;&lt;s28&gt;(&lt;/s28&gt;
 &lt;s29&gt;'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
 &lt;root&gt;
@@ -18817,6 +18985,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155331Z" changeid="xavier">
         <seg>&lt;s1&gt;ServerName&lt;/s1&gt; auth.example.com
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; basic.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041402Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; basic.example.com
  </seg>
       </tuv>
     </tu>
@@ -19242,6 +19420,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182126Z" changeid="xavier">
         <seg>&lt;s2&gt;# DocumentRoot&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s2&gt;# Load AuthBasic Handler&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041403Z" changeid="xavier">
+        <seg>&lt;s2&gt;# Load AuthBasic Handler&lt;/s2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -19864,6 +20050,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s56&gt;my&lt;/s56&gt; &lt;s57&gt;$res&lt;/s57&gt; &lt;s58&gt;=&lt;/s58&gt; &lt;s59&gt;$r&lt;/s59&gt;&lt;s60&gt;-&gt;&lt;/s60&gt;&lt;s61&gt;result&lt;/s61&gt;&lt;s62&gt;(&lt;/s62&gt;&lt;s63&gt;)&lt;/s63&gt;&lt;s64&gt;;&lt;/s64&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041630Z" changeid="xavier">
+        <seg>&lt;s56&gt;my&lt;/s56&gt; &lt;s57&gt;$res&lt;/s57&gt; &lt;s58&gt;=&lt;/s58&gt; &lt;s59&gt;$r&lt;/s59&gt;&lt;s60&gt;-&gt;&lt;/s60&gt;&lt;s61&gt;result&lt;/s61&gt;&lt;s62&gt;(&lt;/s62&gt;&lt;s63&gt;)&lt;/s63&gt;&lt;s64&gt;;&lt;/s64&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s59&gt;# For MediaWiki &lt; 1.13
 &lt;/s59&gt;        &lt;s60&gt;$wgHooks&lt;/s60&gt;&lt;s61&gt;[&lt;/s61&gt;&lt;s62&gt;'AutoAuthenticate'&lt;/s62&gt;&lt;s63&gt;]&lt;/s63&gt;&lt;s64&gt;[&lt;/s64&gt;&lt;s65&gt;]&lt;/s65&gt; &lt;s66&gt;=&lt;/s66&gt; &lt;a67&gt;&lt;s68&gt;array&lt;/s68&gt;&lt;/a67&gt;&lt;s69&gt;(&lt;/s69&gt;&lt;s70&gt;$wgAuth&lt;/s70&gt;&lt;s71&gt;,&lt;/s71&gt;&lt;s72&gt;'autoAuthenticate'&lt;/s72&gt;&lt;s73&gt;)&lt;/s73&gt;&lt;s74&gt;;&lt;/s74&gt;</seg>
       </tuv>
@@ -20006,6 +20200,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T111903Z" changeid="xavier">
         <seg>&lt;s5&gt;my&lt;/s5&gt; &lt;s6&gt;$portal&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt; &lt;a8&gt;&lt;s9&gt;shift&lt;/s9&gt;&lt;/a8&gt;&lt;s10&gt;;&lt;/s10&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s5&gt;my&lt;/s5&gt; &lt;s6&gt;$url&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt; &lt;a8&gt;&lt;s9&gt;shift&lt;/s9&gt;&lt;/a8&gt;&lt;s10&gt;;&lt;/s10&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T040210Z" changeid="xavier">
+        <seg>&lt;s5&gt;my&lt;/s5&gt; &lt;s6&gt;$url&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt; &lt;a8&gt;&lt;s9&gt;shift&lt;/s9&gt;&lt;/a8&gt;&lt;s10&gt;;&lt;/s10&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -22088,6 +22290,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>AuthBasic Handler</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T040550Z" changeid="xavier">
+        <seg>Agent AuthBasic</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>AuthCAS</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140916Z" changeid="guimard">
@@ -22676,6 +22886,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103447Z" changeid="xavier">
         <seg>Mais on peut le transmettre tout de même si nécessaire :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>But you have to allow sessions web services, see &lt;a0&gt;SOAP sessions backend&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041516Z" changeid="xavier">
+        <seg>Il faut en revanche autoriser le service web des sessions, voir le &lt;a0&gt;backend de sessions SOAP&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23856,6 +24074,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure the virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt; but use AuthBaisc Handler instead of default Handler.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041359Z" changeid="xavier">
+        <seg>Configurer l'hôte virtuel comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt; mais utiliser l'agent AuthBasic au lieu de l'agent par défaut.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure the virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt; but use Secure Token Handler instead of default Handler.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T205151Z" changeid="xavier">
@@ -24588,6 +24814,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Efface les autres sessions de l'utilisateur si les adresses &lt;a0&gt;IP&lt;/a0&gt; diffèrent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Deletion example in Perl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041625Z" changeid="xavier">
+        <seg>Exemple d'effacement en Perl</seg>
       </tuv>
     </tu>
     <tu>
@@ -25932,6 +26166,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>First parameter passed to the custom function is the requested &lt;a0&gt;URL&lt;/a0&gt;, that is</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T040332Z" changeid="xavier">
+        <seg>Le premier paramètre passé à la fonction personnalisée est l'&lt;a0&gt;URL&lt;/a0&gt; demandée, c'est à dire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>First step: create a rule to grant access only if the user has a role in the application:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T142645Z" changeid="guimard">
@@ -26648,6 +26890,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T035250Z" changeid="xavier">
         <seg>Articles génériques</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Genève</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042202Z" changeid="xavier">
+        <seg>Genève</seg>
       </tuv>
     </tu>
     <tu>
@@ -27780,6 +28030,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If not authenticated (or authentication is forced) try to find it (userDB module) and to authenticate it (auth module), create session, calculate groups and macros and store them.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041925Z" changeid="xavier">
+        <seg>Si ce n'est pas le cas (ou si l'authentification est forcée) tente de le trouver (module userDB) et de l'authentifier (module d'authentification), crée la session, calcule les groupes et macros et les stocke</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If not set, the secret token is calculated using the general encryption key.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083441Z" changeid="xavier">
@@ -28200,6 +28458,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111210T073926Z" changeid="xavier">
         <seg>Importés d'un serveur &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In 1.3, &lt;a0&gt;LL::NG&lt;/a0&gt; have a captcha feature which is used in this case.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042010Z" changeid="xavier">
+        <seg>Dans la version 1.3, &lt;a0&gt;LL::NG&lt;/a0&gt; dispose d'une fonctionnalité &quot;captcha&quot; qui est utilisée dans ce cas.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31520,6 +31786,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>No parameters needed.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041425Z" changeid="xavier">
+        <seg>Aucun paramètres n'est requis.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>NoSQL (Redis)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082233Z" changeid="xavier">
@@ -31640,6 +31914,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Notification delete function:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042032Z" changeid="xavier">
+        <seg>Fonction d'effacement de notification :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Notification format</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T054126Z" changeid="guimard">
@@ -31684,6 +31966,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051649Z" changeid="guimard">
         <seg>Systèmes de notification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Notifications trough SOAP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041526Z" changeid="xavier">
+        <seg>Notifications via SOAP</seg>
       </tuv>
     </tu>
     <tu>
@@ -32626,6 +32916,16 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlHeaderParserHandler My::AuthBasic
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041405Z" changeid="xavier">
+        <seg>PerlHeaderParserHandler My::AuthBasic
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlHeaderParserHandler My::Package</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081620Z" changeid="xavier">
@@ -32732,6 +33032,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T155825Z" changeid="xavier">
         <seg>PerlOutputFilterHandler Lemonldap::NG::Handler::Menu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlRequire __HANDLERDIR__/MyHandlerAuthBasic.pm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041404Z" changeid="xavier">
+        <seg>PerlRequire __HANDLERDIR__/MyHandlerAuthBasic.pm</seg>
       </tuv>
     </tu>
     <tu>
@@ -33458,6 +33766,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Paquets RPM RHEL5</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RMLL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042200Z" changeid="xavier">
+        <seg>RMLL</seg>
       </tuv>
     </tu>
     <tu>
@@ -35862,6 +36178,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Stable version (1.2.1)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042223Z" changeid="xavier">
+        <seg>Version stable (1.2.1)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Stack multiple backends</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T081342Z" changeid="xavier">
@@ -36392,6 +36716,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The AuthBasic Handler is a special Handler that will us AuthBasic to authenticate to a virtual host, and then play authorizations rules to allow access to the virtual host.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T040839Z" changeid="xavier">
+        <seg>L'agent AuthBasic est un agent spécial qui utilise l'authentification web basique pour authentifier dans un hôte virtuel et qui utilise ensuite les règles d'autorisation pour valider les accès à l'hôte virtuel.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The AuthDemo and UserDBDemo will allow you to log in and get the standard attributes (uid, cn and mail).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T115404Z" changeid="xavier">
@@ -36428,6 +36760,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T065007Z" changeid="xavier">
         <seg>L'agent doit être chargé avant tout hôte virtuel à protéger.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The Handler will send a &lt;a0&gt;WWW&lt;/a0&gt;-Authenticate header to the client, to request user and password, and then check the credentials using &lt;a1&gt;SOAP&lt;/a1&gt; getCookies web service.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041048Z" changeid="xavier">
+        <seg>L'agent envoie un en-tête &lt;a0&gt;WWW&lt;/a0&gt;-Authenticate au client pour demander le couple compte-mot-de-passe et ensuite le vérifie en utilisant le service web &lt;a1&gt;SOAP&lt;/a1&gt; getCookies.</seg>
       </tuv>
     </tu>
     <tu>
@@ -37890,6 +38230,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This can be useful to allow an third party application to access a virtual host with users credentials by sending a Basic challenge to it.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041259Z" changeid="xavier">
+        <seg>Ce peut être pratique pour autoriser une application cliente à accéder à un hôte virtuel avec un authentifiant en envoyant un en-tête basique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This can happend when you use lmConfigEditor or launch &lt;s0&gt;cron files&lt;/s0&gt; with a different user than Apache process.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T113322Z" changeid="xavier">
@@ -38910,6 +39258,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053122Z" changeid="guimard">
         <seg>Pour résumer les options disponibles :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To switch to another authentication backend, use the &lt;a3&gt;Multi&lt;/a3&gt; module, for example: &lt;c4&gt;Multi &lt;a5&gt;SSL&lt;/a5&gt;;&lt;a6&gt;LDAP&lt;/a6&gt;&lt;/c4&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T040139Z" changeid="xavier">
+        <seg>Pour basculer vers un autre backend d'authentification, utiliser le module &lt;a3&gt;Multi&lt;/a3&gt;, par exemple : &lt;c4&gt;Multi &lt;a5&gt;SSL&lt;/a5&gt;;&lt;a6&gt;LDAP&lt;/a6&gt;&lt;/c4&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -40186,6 +40542,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>When session is granted, the Handler will then check the authorizations like the standard Handler.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041124Z" changeid="xavier">
+        <seg>Lorsque la session est validée, l'agent examine les autorisations comme un agent standard.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When status feature is activated, Handlers and portal will collect statistics and save them in their local cache.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083528Z" changeid="xavier">
@@ -40374,6 +40738,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Wordpress, GLPI, OBM, Dokuwiki, …</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>World Wide Web</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T040855Z" changeid="xavier">
+        <seg>World Wide Web</seg>
       </tuv>
     </tu>
     <tu>
@@ -40606,6 +40978,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120220T203826Z" changeid="xavier">
         <seg>Il est également possible de copier-coller les métadatas : cliquer simplement sur le bouton éditer.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also delete some notifications with &lt;a0&gt;SOAP&lt;/a0&gt;, once &lt;a1&gt;SOAP&lt;/a1&gt; is activated:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T041606Z" changeid="xavier">
+        <seg>On peut également effacer certaines notifications avec &lt;a0&gt;SOAP&lt;/a0&gt;, si &lt;a1&gt;SOAP&lt;/a1&gt; est activé :</seg>
       </tuv>
     </tu>
     <tu>
@@ -42646,6 +43026,14 @@ apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>par adresses &lt;a0&gt;IP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>by date</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042213Z" changeid="xavier">
+        <seg>par date</seg>
       </tuv>
     </tu>
     <tu>
@@ -45392,6 +45780,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.3:handlerauthbasic</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042157Z" changeid="xavier">
+        <seg>documentation:1.3:handlerauthbasic</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.3:header_remote_user_conversion</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T041824Z" changeid="xavier">
@@ -47024,6 +47420,54 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18305</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042224Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18305</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18306</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042225Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18306</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18307</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042227Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18307</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18308</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042229Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18308</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18309</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042226Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18309</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18310</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042228Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18310</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://forge.ow2.org/project/showfiles.php?group_id=274</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -47336,6 +47780,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2012/13eme-rencontres-mondiales-du-logiciel-libre/sryyt/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042203Z" changeid="xavier">
+        <seg>http://lanyrd.com/2012/13eme-rencontres-mondiales-du-logiciel-libre/sryyt/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://lanyrd.com/2012/fosdem/spfqq/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103555Z" changeid="xavier">
@@ -47344,10 +47796,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2012/solutionslinux/sryym/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042206Z" changeid="xavier">
+        <seg>http://lanyrd.com/2012/solutionslinux/sryym/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://lasso.entrouver.org</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://lasso.entrouver.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lasso.entrouvert.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042012Z" changeid="xavier">
+        <seg>http://lasso.entrouvert.org</seg>
       </tuv>
     </tu>
     <tu>
@@ -47628,6 +48096,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T204315Z" changeid="xavier">
         <seg>http://repo.cyrus-project.org/centos5-i386/RPMS.cyrus-extras/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://schedule2012.rmll.info/Le-WebSSO-LemonLDAP-NG-presentation-et-nouveautes-de-la-version-1-2?lang=en</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042158Z" changeid="xavier">
+        <seg>http://schedule2012.rmll.info/Le-WebSSO-LemonLDAP-NG-presentation-et-nouveautes-de-la-version-1-2?lang=en</seg>
       </tuv>
     </tu>
     <tu>
@@ -48312,6 +48788,46 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2616</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042253Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2616</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2617</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042251Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2617</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2618</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042238Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2618</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2619</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042235Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2619</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2620</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042230Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2620</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Documentation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -48776,6 +49292,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.solutionslinux.fr/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T042205Z" changeid="xavier">
+        <seg>http://www.solutionslinux.fr/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.solutionslinux.fr/animation_51_168_1611_p.html?cid=756</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103627Z" changeid="xavier">
@@ -48900,6 +49424,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T035442Z" changeid="xavier">
         <seg>https://auth.abuledu.net/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://auth.example.com/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121005T040334Z" changeid="xavier">
+        <seg>https://auth.example.com/</seg>
       </tuv>
     </tu>
     <tu>
