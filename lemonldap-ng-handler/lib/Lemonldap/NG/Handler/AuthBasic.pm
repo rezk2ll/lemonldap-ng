@@ -65,7 +65,7 @@ sub run ($$) {
     # II - recover the user datas
     #  2.1 search if the user was the same as previous (very efficient in
     #      persistent connection).
-    unless ( $id eq $datas->{_session_id} ) {
+    unless ( $id eq $datas->{_cache_id} ) {
 
         # 2.2 search in the local cache if exists
         unless ( $refLocalStorage and $datas = $refLocalStorage->get($id) ) {
@@ -116,6 +116,7 @@ sub run ($$) {
                 return $class->goToPortal($uri);
             }
             $datas->{$_} = $h{$_} foreach ( keys %h );
+            $datas->{_cache_id} = $id;
 
             # Store now the user in the local storage
             if ($refLocalStorage) {
