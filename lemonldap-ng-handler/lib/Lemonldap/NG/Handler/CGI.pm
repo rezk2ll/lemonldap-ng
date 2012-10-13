@@ -50,7 +50,7 @@ sub new {
     }
 
     # Protection
-    if ( $self->{protection} ) {
+    if ( $self->{protection} and $self->{protection} ne 'none' ) {
         $self->authenticate();
 
         # ACCOUNTING
