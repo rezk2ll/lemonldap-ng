@@ -11662,6 +11662,46 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2638 -- *[LEMONLDAP-538] Fix loglevel&lt;/a0&gt; by kharec (2012/09/25 19:00)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063619Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2638 -- *[LEMONLDAP-538] Fix loglevel&lt;/a0&gt; by kharec (2012/09/25 19:00)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2639 -- *[LEMONLDAP-538] Fix loglevel&lt;/a0&gt; by kharec (2012/09/25 19:04)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063616Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2639 -- *[LEMONLDAP-538] Fix loglevel&lt;/a0&gt; by kharec (2012/09/25 19:04)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2640 -- Update Makefile.PL with correct versions, add dependency on SOAP::Lite for ...&lt;/a0&gt; by clement_oudot (2012/10/01 09:58)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063615Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2640 -- Update Makefile.PL with correct versions, add dependency on SOAP::Lite for ...&lt;/a0&gt; by clement_oudot (2012/10/01 09:58)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2641 -- Frdoc update&lt;/a0&gt; by guimard (2012/10/05 06:23)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063613Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2641 -- Frdoc update&lt;/a0&gt; by guimard (2012/10/05 06:23)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2642 -- Manage persistent sessions in LL::NG::Handler::AuthBasic (Lemonldap-543)&lt;/a0&gt; by fxdeltombe (2012/10/12 20:35)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063610Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2642 -- Manage persistent sessions in LL::NG::Handler::AuthBasic (Lemonldap-543)&lt;/a0&gt; by fxdeltombe (2012/10/12 20:35)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Rules&lt;/a0&gt; are applied in alphabetical order (comment and regular expression).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095523Z" changeid="xavier">
@@ -16720,6 +16760,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Sandro CAZZANIGA&lt;/s0&gt;: developer, Mageia packager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063332Z" changeid="xavier">
+        <seg>&lt;s0&gt;Sandro CAZZANIGA&lt;/s0&gt;: developer, empaqueteur Mageia</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Sandro Cazzaniga&lt;/s0&gt;: developer, Mageia packager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121005T035955Z" changeid="xavier">
@@ -18822,6 +18870,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095000Z" changeid="xavier">
         <seg>&lt;s17&gt;Allow&lt;/s17&gt; from 192.168.142.0/24</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s17&gt;KEY&lt;/s17&gt; _whatToTrace &lt;s18&gt;(&lt;/s18&gt;_whatToTrace&lt;s19&gt;)&lt;/s19&gt;&lt;s20&gt;,&lt;/s20&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063545Z" changeid="xavier">
+        <seg>&lt;s17&gt;KEY&lt;/s17&gt; _whatToTrace &lt;s18&gt;(&lt;/s18&gt;_whatToTrace&lt;s19&gt;)&lt;/s19&gt;&lt;s20&gt;,&lt;/s20&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -25762,6 +25818,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095643Z" changeid="xavier">
         <seg>Exemple avec EPEL:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example with MySQL and index set to _whatToTrace+ipAddr (recommended)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063540Z" changeid="xavier">
+        <seg>Exemple avec MySQL et l'index mis à _whatToTrace+ipAddr (recommandé)</seg>
       </tuv>
     </tu>
     <tu>
@@ -36186,6 +36250,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Stable version (1.2.2)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063601Z" changeid="xavier">
+        <seg>Version stable (1.2.2)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Stack multiple backends</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T081342Z" changeid="xavier">
@@ -42540,6 +42612,22 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>_whatToTrace ipAddr</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063548Z" changeid="xavier">
+        <seg>_whatToTrace ipAddr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_whatToTrace varchar&lt;s11&gt;(&lt;/s11&gt;255&lt;s12&gt;)&lt;/s12&gt;&lt;s13&gt;,&lt;/s13&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063542Z" changeid="xavier">
+        <seg>_whatToTrace varchar&lt;s11&gt;(&lt;/s11&gt;255&lt;s12&gt;)&lt;/s12&gt;&lt;s13&gt;,&lt;/s13&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>a15a18c8bb17e6f67886a9af1898c018b9f5a072</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195416Z" changeid="xavier">
@@ -47468,6 +47556,54 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18483</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063602Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18483</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18484</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063604Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18484</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18485</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063606Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18485</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18486</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063604Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18486</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18487</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063605Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18487</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18488</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063607Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=18488</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://forge.ow2.org/project/showfiles.php?group_id=274</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -48824,6 +48960,46 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121005T042230Z" changeid="xavier">
         <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2620</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2638</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063618Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2638</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2639</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063615Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2639</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2640</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063614Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2640</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2641</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063612Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2641</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2642</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121014T063608Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2642</seg>
       </tuv>
     </tu>
     <tu>
