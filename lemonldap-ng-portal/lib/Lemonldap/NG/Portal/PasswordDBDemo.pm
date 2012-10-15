@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::PasswordDBDemo;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.2.2';
 
 ## @apmethod int passwordDBInit()
 # Check the use of AuthDemo
@@ -40,7 +40,7 @@ sub modifyPassword {
     if ( $self->{portalRequireOldPassword} ) {
         unless ( $self->{oldpassword} ) {
             $self->lmLog( "Portal require old password", 'error' );
-            return PE_PP_MUST_SUPPLY_OLD_PASSSWORD;
+            return PE_PP_MUST_SUPPLY_OLD_PASSWORD;
         }
     }
 
