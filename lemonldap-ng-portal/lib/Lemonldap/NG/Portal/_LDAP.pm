@@ -170,14 +170,14 @@ sub userBind {
         if ( $resp->grace_authentications_remaining ) {
             $self->{portal}->info( "<h3>"
                   . $resp->grace_authentications_remaining . " "
-                  . $self->msg(PM_PP_GRACE)
+                  . $self->{portal}->msg(PM_PP_GRACE)
                   . "</h3>" );
         }
         if ( $resp->time_before_expiration ) {
             $self->{portal}->info(
                 "<h3>"
-                  . printf( $self->msg(PM_PP_EXP_WARNING),
-                    $self->convertSec( $resp->time_before_expiration )
+                  . printf( $self->{portal}->msg(PM_PP_EXP_WARNING),
+                    $self->{portal}->convertSec( $resp->time_before_expiration )
                   )
                   . "</h3>"
             );
@@ -415,7 +415,7 @@ sub ldap {
 # @param attributes to get from found groups (array ref)
 # @return string groups separated with multiValuesSeparator
 sub searchGroups {
-    my ($self, $base, $key, $value, $attributes) = splice @_;
+    my ( $self, $base, $key, $value, $attributes ) = splice @_;
 
     my $portal = $self->{portal};
     my $groups;
@@ -498,7 +498,7 @@ sub searchGroups {
 # @param attribute Attribute name
 # @return string value
 sub getLdapValue {
-    my ($self, $entry, $attribute) = splice @_;
+    my ( $self, $entry, $attribute ) = splice @_;
 
     return $entry->dn() if ( $attribute eq "dn" );
 
