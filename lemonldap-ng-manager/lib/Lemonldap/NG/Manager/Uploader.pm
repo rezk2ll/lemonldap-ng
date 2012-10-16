@@ -20,7 +20,7 @@ use Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Request;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
-our $VERSION = '1.2.2';
+our $VERSION = '1.2.3';
 our ( $stylesheet, $parser );
 
 ## @method void confUpload(ref rdata)
@@ -744,8 +744,9 @@ sub applyConf {
     # Get apply section values
     my %reloadUrls =
       %{ $self->confObj->getLocalConf( APPLYSECTION, undef, 0 ) };
-    %reloadUrls = %{ $self->confObj->getConf->{reloadUrls} }
-      unless (%reloadUrls);
+    if ( !%reloadUrls && $self->confObj->getConf->{reloadUrls} ) {
+        %reloadUrls = %{ $self->confObj->getConf->{reloadUrls} };
+    }
 
     # Create user agent
     my $ua = new LWP::UserAgent( requests_redirectable => [] );
