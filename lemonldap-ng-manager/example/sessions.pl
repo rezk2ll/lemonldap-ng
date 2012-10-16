@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use strict;
+use Lemonldap::NG::Manager;
 use Lemonldap::NG::Manager::Sessions;
 use HTML::Template;
 
@@ -44,6 +45,7 @@ $template->param( TREE        => $cgi->tree() );
 $template->param( DIR         => "$skin_dir/$skin" );
 $template->param( CSS         => $css );
 $template->param( CSS_THEME   => $css_theme );
+$template->param( VERSION     => $Lemonldap::NG::Manager::VERSION );
 print $cgi->header('text/html; charset=utf-8');
 print $template->output;
 

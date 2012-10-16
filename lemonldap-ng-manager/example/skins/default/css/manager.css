@@ -111,6 +111,14 @@ option
 	overflow-y:auto;
 }
 
+#version {
+	position: absolute;
+	top: 50px;
+	left: 15px;
+	color: white;
+	font-size:6pt;
+}
+
 #buttons, #edition, #help, #data
 {
 	text-align:center;

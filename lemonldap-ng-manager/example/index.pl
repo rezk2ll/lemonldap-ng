@@ -43,6 +43,7 @@ $template->param( TREE_AUTOCLOSE => $manager->{managerTreeAutoClose} );
 $template->param( TREE_JQUERYCSS => $manager->{managerTreeJqueryCss} );
 $template->param( CSS            => $manager->{managerCss} );
 $template->param( CSS_THEME      => $manager->{managerCssTheme} );
+$template->param( VERSION        => $Lemonldap::NG::Manager::VERSION );
 print $manager->header('text/html; charset=utf-8');
 print $template->output;
 

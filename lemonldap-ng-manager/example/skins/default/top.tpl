@@ -21,3 +21,5 @@
 <!-- Header -->
 </div>
 
+<TMPL_IF NAME="VERSION"><div id="version">Version <TMPL_VAR NAME="VERSION"></div></TMPL_IF>
+
