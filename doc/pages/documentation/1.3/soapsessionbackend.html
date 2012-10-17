@@ -32,7 +32,7 @@
 <ul>
 <li class="level1"><div class="li"> <strong>sessions/</strong>: read only access to sessions (enough for distant Handlers)</div>
 </li>
-<li class="level1"><div class="li"> <strong>adminSessions/</strong>: read/write access to sessions (required for distant Portal or distant Manager)</div>
+<li class="level1"><div class="li"> <strong>adminSessions/</strong>: read/write access to sessions (required for distant Portal, distant Manager or distant Handlers which modify sessions)</div>
 </li>
 </ul>
 
@@ -50,12 +50,12 @@ To configure it, <acronym title="Simple Object Access Protocol">SOAP</acronym> s
 </p>
 
 </div>
-<!-- SECTION "SOAP session backend" [1-792] -->
+<!-- SECTION "SOAP session backend" [1-832] -->
 <h2><a name="setup" id="setup">Setup</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Setup" [793-811] -->
+<!-- SECTION "Setup" [833-851] -->
 <h3><a name="manager" id="manager">Manager</a></h3>
 <div class="level3">
 
@@ -80,8 +80,14 @@ Then, set <code>Lemonldap::NG::Common::Apache::Session::<acronym title="Simple O
 	</tr>
 </table>
 
+<p>
+
+<p><div class="notetip">Use /adminSessions if the Handler need to modify the session, for example if you configured an idle timeout.
+</div></p>
+</p>
+
 </div>
-<!-- SECTION "Manager" [812-1283] -->
+<!-- SECTION "Manager" [852-1450] -->
 <h3><a name="apache" id="apache">Apache</a></h3>
 <div class="level3">
 
@@ -104,7 +110,7 @@ Sessions <acronym title="Simple Object Access Protocol">SOAP</acronym> end point
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Apache" [1284-1789] -->
+<!-- SECTION "Apache" [1451-1956] -->
 <h3><a name="real_session_backend" id="real_session_backend">Real session backend</a></h3>
 <div class="level3">
 
@@ -127,4 +133,4 @@ For example, if real sessions are stored in <a href="../../documentation/1.3/fil
 </p>
 
 </div>
-<!-- SECTION "Real session backend" [1790-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Real session backend" [1957-] --></div><!-- closes <div class="dokuwiki export">-->
