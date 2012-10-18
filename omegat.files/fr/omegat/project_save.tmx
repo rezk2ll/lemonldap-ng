@@ -11702,6 +11702,46 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2649 -- Restore trunk versions of main modules&lt;/a0&gt; by clement_oudot (2012/10/16 14:00)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040408Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2649 -- Restore trunk versions of main modules&lt;/a0&gt; by clement_oudot (2012/10/16 14:00)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2650 -- Fix call to msg and convertSec routines in _LDAP.pm (#LEMONLDAP-548)&lt;/a0&gt; by clement_oudot (2012/10/16 14:34)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040406Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2650 -- Fix call to msg and convertSec routines in _LDAP.pm (#LEMONLDAP-548)&lt;/a0&gt; by clement_oudot (2012/10/16 14:34)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2651 -- Update Handler AuthBasic in 1.2 branch (#LEMONLDAP-543)&lt;/a0&gt; by clement_oudot (2012/10/16 16:11)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040404Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2651 -- Update Handler AuthBasic in 1.2 branch (#LEMONLDAP-543)&lt;/a0&gt; by clement_oudot (2012/10/16 16:11)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2652 -- Display version in Manager (#LEMONLDAP-549)&lt;/a0&gt; by clement_oudot (2012/10/16 16:46)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040402Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2652 -- Display version in Manager (#LEMONLDAP-549)&lt;/a0&gt; by clement_oudot (2012/10/16 16:46)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2653 -- Check reload URLs parameter to avoid Perl error (#LEMONLDAP-552)&lt;/a0&gt; by clement_oudot (2012/10/16 17:48)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040357Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2653 -- Check reload URLs parameter to avoid Perl error (#LEMONLDAP-552)&lt;/a0&gt; by clement_oudot (2012/10/16 17:48)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Rules&lt;/a0&gt; are applied in alphabetical order (comment and regular expression).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095523Z" changeid="xavier">
@@ -17346,6 +17386,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: historic project leader, developer, Debian packager, administrator of big Lemonldap::NG instances</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040001Z" changeid="xavier">
+        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: Leader historique du projet, developpeur, empaqueteur Debian, administrateur de grosses installations de Lemonldap::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: historic project leader, developer, administrator of big Lemonldap::NG instances</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17390,6 +17438,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T200319Z" changeid="xavier">
         <seg>&lt;s0&gt;adminSessions/&lt;/s0&gt; : accès en lecture/écriture aux sessions (nécessaire pour les portails ou manager distants)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;adminSessions/&lt;/s0&gt;: read/write access to sessions (required for distant Portal, distant Manager or distant Handlers which modify sessions)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040155Z" changeid="xavier">
+        <seg>&lt;s0&gt;adminSessions/&lt;/s0&gt; : accès en lecture/écriture aux sessions (nécessaire pour les portails ou manager distants ou les handlers distants qui modifient les sessions)</seg>
       </tuv>
     </tu>
     <tu>
@@ -26402,6 +26458,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T140120Z" changeid="xavier">
         <seg>pour bloquer les attaques en force brute avec fail2ban</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For databases like PostgreSQL, don't forget to add “Commit” with a value of 1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040042Z" changeid="xavier">
+        <seg>Pour les bases de données telles PostgreSQL, ne pas oublier d'ajouter “Commit” avec une valeur de 1</seg>
       </tuv>
     </tu>
     <tu>
@@ -39762,6 +39826,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Use /adminSessions if the Handler need to modify the session, for example if you configured an idle timeout.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040321Z" changeid="xavier">
+        <seg>Utiliser /adminSessions si l'agent doit modifier la session, par exemple si on configure un délai d'inactivité des sessions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Use &lt;a0&gt;our own Debian repository&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -49000,6 +49072,46 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121014T063608Z" changeid="xavier">
         <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2642</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2649</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040406Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2649</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2650</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040404Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2650</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2651</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040402Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2651</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2652</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040358Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2652</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2653</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20121018T040352Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2653</seg>
       </tuv>
     </tu>
     <tu>
