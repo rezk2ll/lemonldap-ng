@@ -701,7 +701,7 @@ function changeSkinImage(skin) {
 	// Custom field can the be edited
 	if ((skin!='pastel') && (skin!='dark') && (skin!='impact')){
 		skin = 'custom';
-		$('#skinText').attr('readonly','');
+		$('#skinText').removeAttr('readonly');
 	} else {
 		$('#skinText').attr('readonly','readonly');
 	}
@@ -846,8 +846,8 @@ function samlAssertion(id) {
 	var t=lmdata(id).split(';');
 
 	// Reset text fields
-	$('#samlAssertionIndex').attr('value','');
-	$('#samlAssertionLocation').attr('value','');
+	$('#samlAssertionIndex').removeAttr('value');
+	$('#samlAssertionLocation').removeAttr('value');
 
 	// Fill fields
 	if(t[0]==1){
@@ -870,9 +870,9 @@ function samlAttribute(id) {
 	var t=lmdata(id).split(';');
 
 	// Reset text fields
-	$('#samlAttributeKey').attr('value','');
-	$('#samlAttributeName').attr('value','');
-	$('#samlAttributeFriendlyName').attr('value','');
+	$('#samlAttributeKey').removeAttr('value');
+	$('#samlAttributeName').removeAttr('value');
+	$('#samlAttributeFriendlyName').removeAttr('value');
 
 	// Fill fields
 	if(t[0]==1){
@@ -984,7 +984,7 @@ function rules(id){
 		$('#rulCommentDiv').css('display','none');
 	}
 	else{
-		$('#rulKey').attr('readonly','');
+		$('#rulKey').removeAttr('readonly');
 		$('#rulCommentDiv').css('display','block');
 		$('#delkb').show();
 	}
@@ -1083,7 +1083,7 @@ function newRule(){
 function newGrantSessionRuleR(){
         var newIdValue=newId(currentId);
         simpleTreeCollection[0].addNode(newIdValue,text4newCondition,function(d,s){
-                $('>span',s).attr('onClick','grantSessionRules("'+newIdValue+'")').attr('name','##'+text4newCondition).attr('value','').attr('id','text_'+newIdValue);
+                $('>span',s).attr('onClick','grantSessionRules("'+newIdValue+'")').attr('name','##'+text4newCondition).removeAttr('value').attr('id','text_'+newIdValue);
                 grantSessionRules(newIdValue);
         });
         return false;
@@ -1091,7 +1091,7 @@ function newGrantSessionRuleR(){
 function newGrantSessionRule(){
         var newIdValue=newId(currentId);
         simpleTreeCollection[0].newNodeAfter(newIdValue,text4newCondition,function(d,s){
-                $('>span',s).attr('onClick','grantSessionRules("'+newIdValue+'")').attr('name','##'+text4newCondition).attr('value','').attr('id','text_'+newIdValue);
+                $('>span',s).attr('onClick','grantSessionRules("'+newIdValue+'")').attr('name','##'+text4newCondition).removeAttr('value').attr('id','text_'+newIdValue);
                 grantSessionRules(newIdValue);
         });
         return false;
@@ -1511,7 +1511,7 @@ function changeAppsLogo(logo) {
 	// Custom field can be edited
 	if ((logo!='attach.png') && (logo!='bell.png') && (logo!='bookmark.png') && (logo!='configure.png') && (logo!='database.png') && (logo!='demo.png') && (logo!='docs.png') && (logo!='folder.png') && (logo!='gear.png') && (logo!='help.png') && (logo!='mailappt.png') && (logo!='money.png') && (logo!='network.png') && (logo!='terminal.png') && (logo!='thumbnail.png') && (logo!='tools.png') && (logo!='tux.png') && (logo!='web.png') && (logo!='wheels.png')){
 		logo = 'custom.png';
-		$('#applicationListApplicationLogo').attr('readonly','');
+		$('#applicationListApplicationLogo').removeAttr('readonly');
 	} else {
 		$('#applicationListApplicationLogo').attr('readonly','readonly');
 	}
@@ -1532,7 +1532,7 @@ function newPostR(){
 	var newIdValue=newId(currentId);
 	var newPostKey = 'none';
 	simpleTreeCollection[0].addNode(newIdValue,newPostKey,function(d,s){
-		$('>span',s).attr('onClick','post("'+newIdValue+'")').attr('name',newPostKey).attr('value','').attr('id','text_'+newIdValue);
+		$('>span',s).attr('onClick','post("'+newIdValue+'")').attr('name',newPostKey).removeAttr('value').attr('id','text_'+newIdValue);
 		post(newIdValue);
 	});
 	return false;
