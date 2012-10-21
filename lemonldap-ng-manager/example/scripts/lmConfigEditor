@@ -50,7 +50,7 @@ if (`diff $refFile $editFile`) {
     my $buf;
 
     # Check if the new configuration hash is valid
-    open F1, $editFile;
+    open F1, $editFile->filename();
     while (<F1>) {
         $buf .= $_;
     }
