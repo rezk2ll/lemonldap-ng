@@ -3,22 +3,19 @@
 use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::Conf::Constants;
 use Data::Dumper;
+use English qw(-no_match_vars);
+use File::Temp;
 use POSIX qw(setuid setgid);
 use strict;
 
 eval {
     setgid( ( getgrnam('__APACHEGROUP__') )[2] );
     setuid( ( getpwnam('__APACHEUSER__') )[2] );
-    print STDERR "Running as uid $> and gid $)\n";
+    print STDERR "Running as uid $EUID and gid $EGID\n";
 };
 
-our $refFile  = `mktemp`;
-our $editFile = `mktemp`;
 
-chomp $refFile;
-chomp $editFile;
-
-if ( $> == 0 ) {
+if ( $EUID == 0 ) {
     print STDERR
       "$0 must not be launched as root since local cache can be corrupted\n"
       . "Continue (y/N)? ";
@@ -33,18 +30,18 @@ unless ($conf) {
     exit 1;
 }
 
-open F1, ">$refFile"  or quit($!);
-open F2, ">$editFile" or quit($!);
 my $tmp = $conf->getConf();
 delete $tmp->{cipher};
 delete $tmp->{cfgAuthor};
 delete $tmp->{cfgAuthorIP};
 delete $tmp->{cfgDate};
 $tmp = Dumper($tmp);
-print F1 $tmp;
-print F2 $tmp;
-close F1;
-close F2;
+my $refFile  = File::Temp->new(UNLINK => 1);
+my $editFile = File::Temp->new(UNLINK => 1);
+print $refFile $tmp;
+print $editFile $tmp;
+close $refFile;
+close $editFile;
 
 system "editor $editFile";
 
@@ -58,7 +55,7 @@ if (`diff $refFile $editFile`) {
         $buf .= $_;
     }
     eval $buf;
-    quit($@) if ($@);
+    die $EVAL_ERROR if $EVAL_ERROR;
 
     # Update author and date
     $VAR1->{cfgAuthor}   = "lmConfigEditor";
@@ -93,12 +90,3 @@ else {
     print STDERR "Configuration not changed\n";
 }
 
-unlink $editFile;
-unlink $refFile;
-
-sub quit {
-    unlink $editFile;
-    unlink $refFile;
-    print STDERR "$_[0]\n";
-    exit 1;
-}
