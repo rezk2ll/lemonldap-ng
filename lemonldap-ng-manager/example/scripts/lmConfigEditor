@@ -14,7 +14,6 @@ eval {
     print STDERR "Running as uid $EUID and gid $EGID\n";
 };
 
-
 if ( $EUID == 0 ) {
     print STDERR
       "$0 must not be launched as root since local cache can be corrupted\n"
@@ -31,13 +30,14 @@ unless ($conf) {
 }
 
 my $tmp = $conf->getConf();
+delete $tmp->{reVHosts};
 delete $tmp->{cipher};
 delete $tmp->{cfgAuthor};
 delete $tmp->{cfgAuthorIP};
 delete $tmp->{cfgDate};
 $tmp = Dumper($tmp);
-my $refFile  = File::Temp->new(UNLINK => 1);
-my $editFile = File::Temp->new(UNLINK => 1);
+my $refFile  = File::Temp->new( UNLINK => 1 );
+my $editFile = File::Temp->new( UNLINK => 1 );
 print $refFile $tmp;
 print $editFile $tmp;
 close $refFile;
