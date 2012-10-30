@@ -14,11 +14,17 @@ use Lemonldap::NG::Common::Apache::Session;
 use strict;
 use Getopt::Std;
 
+# Options
+# -d: debug mode
+# -f: force delete of corrupted sessions
 our $opt_d;
-getopts('d');
+our $opt_f;
+getopts('df');
 
 my $debug     = $opt_d;
+my $force     = $opt_f;
 my $nb_purged = 0;
+my $nb_error  = 0;
 
 #=============================================================================
 # Load configuration
@@ -99,6 +105,13 @@ for my $options (@backends) {
 
             print "Check session $id\n" if $debug;
 
+            # Empty session need to be removed
+            unless ($entry) {
+                push @t, $id;
+                print "Session $id is empty (corrupted?), delete forced\n"
+                  if $debug;
+            }
+
             # Do net check sessions without _utime
             return undef unless $entry->{_utime};
 
@@ -121,16 +134,23 @@ for my $options (@backends) {
     );
 
     # Delete sessions
+    my @errors;
     for my $id (@t) {
         my %h;
         eval { tie %h, "Lemonldap::NG::Common::Apache::Session", $id, $options };
         if ($@) {
             print "Error while opening session $id: $@\n" if $debug;
+            print STDERR "Error on session $id\n";
+            $nb_error++;
+            push @errors, $id;
             next;
         }
         eval { tied(%h)->delete; };
         if ($@) {
             print "Error while deleting session $id: $@\n" if $debug;
+            print STDERR "Error on session $id\n";
+            $nb_error++;
+            push @errors, $id;
             next;
         }
         print "Session $id has been purged\n" if $debug;
@@ -144,10 +164,32 @@ for my $options (@backends) {
         my $lock_directory = $options->{LockDirectory} || $options->{Directory};
         $l->clean( $lock_directory, $conf->{timeout} );
     }
+
+    # Force deletion of corrupted sessions for File backend
+    if (    $options->{backend} =~ /^Apache::Session::(?:Browseable::)?File$/i
+        and $force )
+    {
+        foreach (@errors) {
+            my $id = $_;
+            eval { unlink $options->{Directory} . "/$id"; };
+            if ($@) {
+                print STDERR "Unable to remove session $id\n";
+            }
+            else {
+                print STDERR "Session $id removed with force\n";
+                $nb_error--;
+            }
+        }
+    }
 }
 
 #=============================================================================
-# Exit with success
+# Exit
 #=============================================================================
 print "$nb_purged sessions have been purged\n" if $debug;
-exit 0;
+print STDERR
+  "$nb_error sessions remaining, try to purge them with force (option -f)\n"
+  if $nb_error;
+
+my $exit = $nb_error ? 1 : 0;
+exit $exit;
