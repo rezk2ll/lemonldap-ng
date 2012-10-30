@@ -176,7 +176,8 @@ sub userBind {
         if ( $resp->time_before_expiration ) {
             $self->{portal}->info(
                 "<h3>"
-                  . printf( $self->{portal}->msg(PM_PP_EXP_WARNING),
+                  . sprintf(
+                    $self->{portal}->msg(PM_PP_EXP_WARNING),
                     $self->{portal}->convertSec( $resp->time_before_expiration )
                   )
                   . "</h3>"
