@@ -12,8 +12,12 @@ use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Apache::Session;
 use strict;
+use Getopt::Std;
 
-my $debug     = 0;
+our $opt_d;
+getopts('d');
+
+my $debug     = $opt_d;
 my $nb_purged = 0;
 
 #=============================================================================
@@ -61,7 +65,7 @@ if ( defined $conf->{globalStorage} ) {
 }
 
 # SAML
-if (   defined $conf->{samlStorage}
+if ( defined $conf->{samlStorage}
     or keys %{ $conf->{samlStorageOptions} } )
 {
 
@@ -92,6 +96,8 @@ for my $options (@backends) {
             my $entry = shift;
             my $id    = shift;
             my $time  = time;
+
+            print "Check session $id\n" if $debug;
 
             # Do net check sessions without _utime
             return undef unless $entry->{_utime};
