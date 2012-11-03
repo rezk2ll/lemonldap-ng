@@ -5,16 +5,14 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-REFDIR=/usr/share/lemonldap-ng/portal/
-RUNDIR=/var/lib/lemonldap-ng/portal/
-FILES=$(find $REFDIR -name '*pl' -printf "%f ")
-SESSIONSDIR=/var/lib/lemonldap-ng/sessions
-
 BUILDPORTALWSDL=/usr/share/lemonldap-ng/bin/buildPortalWSDL
 WSDLFILE=/var/lib/lemonldap-ng/portal/portal.wsdl
+
+CAPTCHA_DIR=/var/lib/lemonldap-ng/portal/captcha_output
 
 if [ "$1" == "configure" ]
 then
 	$BUILDPORTALWSDL > $WSDLFILE || true
+	chown -R www-data:www-data $CAPTCHA_DIR
 fi
 
