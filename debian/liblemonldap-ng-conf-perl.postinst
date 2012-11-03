@@ -8,17 +8,20 @@ set -e
 FIRSTCONFFILE=/var/lib/lemonldap-ng/conf/lmConf-1
 CONFDIR=/etc/lemonldap-ng
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
+CONFSTORAGEDIR=/var/lib/lemonldap-ng/conf
+LMINIFILE=/etc/lemonldap-ng/lemonldap-ng.ini
+MIGRATION=/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini
 
 if [ "$1" == "configure" ]
 then
 	chmod 770 $SESSIONSDIR
 	chmod 770 $SESSIONSDIR/lock
 	chown -R www-data:www-data $SESSIONSDIR
-	chown -R www-data:www-data /var/lib/lemonldap-ng/conf
-	chmod 750 /var/lib/lemonldap-ng/conf
-	chmod 640 /var/lib/lemonldap-ng/conf/*
-	chgrp www-data /etc/lemonldap-ng/lemonldap-ng.ini
-	chmod 640 /etc/lemonldap-ng/lemonldap-ng.ini
+	chown -R www-data:www-data $CONFSTORAGEDIR
+	chmod 750 $CONFSTORAGEDIR
+	chmod 640 $CONFSTORAGEDIR/*
+	chgrp www-data $LMINIFILE
+	chmod 640 $LMINIFILE
 
 	for i in domain ldapServer ldapPort ldapBase managerDn managerPassword portal; do
 		db_get liblemonldap-ng-conf-perl/$i || true
@@ -30,7 +33,7 @@ then
 			db_get liblemonldap-ng-conf-perl/migrate
 			if [ "$RET" ]; then
 				# Run migration script
-				/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
+				$MIGRATION 2>&1 > /dev/null || :
 			fi
 		fi
 	fi
