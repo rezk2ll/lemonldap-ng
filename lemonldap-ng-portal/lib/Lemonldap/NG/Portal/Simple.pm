@@ -12,7 +12,6 @@ use Exporter 'import';
 
 use warnings;
 use MIME::Base64;
-use Authen::Captcha;
 use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
 use POSIX qw(strftime);
@@ -766,6 +765,8 @@ sub buildHiddenForm {
 # init captcha module and generate captcha
 # @return nothing
 sub initCaptcha {
+    require Authen::Captcha;
+
     my $self = shift;
 
     # Store captcha data
