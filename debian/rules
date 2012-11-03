@@ -1,63 +1,19 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
-# Sample debian/rules that uses debhelper.
-# This file was originally written by Joey Hess and Craig Small.
-# As a special exception, when this file is copied by dh-make into a
-# dh-make output file, you may use that output file without restriction.
-# This special exception was added by Craig Small in version 0.37 of dh-make.
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-export PERL_MM_USE_DEFAULT=1
-
 LMSHAREDIR=/usr/share/lemonldap-ng
 LMVARDIR=/var/lib/lemonldap-ng
 
-configure: configure-stamp
-configure-stamp:
-	dh_testdir
+%:
+	dh $@
 
-	# Add here commands to configure the package.
+override_dh_auto_configure:
 	$(MAKE) configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
-			PERLOPTIONS="INSTALLDIRS=vendor"
+		PERLOPTIONS="INSTALLDIRS=vendor"
 
-	touch configure-stamp
-
-
-build: build-stamp
-
-build-indep: build-stamp
-
-build-arch:
-
-build-stamp: configure-stamp 
-	dh_testdir
-
-	# Add here commands to compile the package.
-	$(MAKE)
-
-	touch $@
-
-clean:
-	dh_testdir
-	dh_testroot
-	debconf-updatepo
-	rm -f build-stamp configure-stamp
-
-	# Add here commands to clean up after the build process.
-	[ ! -f Makefile ] || $(MAKE) clean
-
-	dh_clean 
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_prep
-	dh_installdirs
-
-	# Add here commands to install the package into debian/lemonldap-ng.
-	$(MAKE) test
+override_dh_auto_install:
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp \
 			PREFIX=/usr/ \
 			LMPREFIX=/usr/share/lemonldap-ng/ \
@@ -85,41 +41,3 @@ install: build
 	mv debian/tmp/var/lib/lemonldap-ng/portal/*.pl debian/tmp/usr/share/lemonldap-ng/portal/
 	mv debian/tmp/var/lib/lemonldap-ng/manager/*pl debian/tmp/usr/share/lemonldap-ng/manager/
 
-# Build architecture-independent files here.
-binary-indep: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs changelog
-	dh_installdocs
-	dh_installexamples
-	dh_install
-	chmod +x debian/liblemonldap-ng-portal-perl$(LMSHAREDIR)/bin/purgeCentralCache
-	chmod +x debian/liblemonldap-ng-handler-perl$(LMSHAREDIR)/bin/purgeLocalCache
-#	dh_installmenu
-	dh_installdebconf	
-#	dh_installlogrotate
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_python
-#	dh_installinit
-	dh_installcron
-#	dh_installinfo
-	dh_installman
-	dh_link
-	dh_strip
-	dh_compress -X.pm -X.pl
-	dh_fixperms
-#	dh_perl
-#	dh_makeshlibs
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-# Build architecture-dependent files here.
-binary-arch: build install
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
