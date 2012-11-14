@@ -75,6 +75,7 @@ BuildRequires:  perl(MIME::Lite)
 BuildRequires:  perl(SOAP::Lite)
 BuildRequires:  perl(XML::Simple)
 BuildRequires:  perl(XML::LibXSLT)
+BuildRequires:  perl(Authen::Captcha)
 BuildRequires:  perl(String::Random)
 BuildRequires:  perl(Email::Date::Format)
 BuildRequires:  perl(Crypt::Rijndael)
@@ -87,7 +88,7 @@ BuildRequires:  perl(Class::Inspector)
 BuildRequires:  perl(Test::MockObject)
 BuildRequires:  perl(Clone)
 %else
-BuildRequires:  perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone
+BuildRequires:  perl-Regexp-Assemble, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone
 %endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
