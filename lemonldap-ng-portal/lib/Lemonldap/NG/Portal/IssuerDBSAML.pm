@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;
 our @ISA = qw(Lemonldap::NG::Portal::_SAML);
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.2.3';
 
 ## @method void issuerDBInit()
 # Load and check SAML configuration
@@ -1593,6 +1593,22 @@ sub issuerForAuthUser {
                 $self->lmLog( "SSO response signature according to metadata",
                     'debug' );
             }
+
+            # log that a SAML authn response is build
+            my $user = $self->{sessionInfo}->{ $self->{whatToTrace} };
+            my $nameIDLog;
+            foreach my $format qw(persistent transient) {
+                if ( $login->nameIdentifier->Format eq
+                    $self->getNameIDFormat($format) )
+                {
+                    $nameIDLog =
+                      " with $format NameID " . $login->nameIdentifier->content;
+                    last;
+                }
+            }
+            $self->_sub( 'userNotice',
+"SAML authentication response sent to SAML SP $spConfKey for $user$nameIDLog"
+            );
 
             # Build SAML response
             $protocolProfile = $login->protocolProfile();
