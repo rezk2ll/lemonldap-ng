@@ -6,7 +6,7 @@
 # Use Dokuwiki offline plugin
 #
 # This script is part of LemonLDAP::NG project
-# Released under GPL licence
+# Released under GPL license
 #====================================================================
 
 use strict;
