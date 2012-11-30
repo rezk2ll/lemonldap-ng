@@ -1,83 +1,58 @@
-lemonldap-ng for Debian
------------------------
+FIRST CONFIGURATION STEPS
 
-Topics:
- 1 - Manager installation
- 2 - Portal installation
- 3 - Area protection
- 4 - Configuration storage
- 5 - Build packages
- 6 - Update the repository
+1 - Change default DNS domain
+-----------------------------
 
-I - LEMONLDAP::NG MANAGER INSTALLATION
-----------------------------------------
-Package: liblemonldap-ng-manager-perl
+By default, DNS domain is example.com. You can change using dpkg-reconfigure or
+with a quick sed command. For example, we change it to ow2.org:
 
-liblemonldap-ng-manager-perl installs files named manager-apache.conf and
-manager-apache2.conf in /etc/lemonldap-ng/. Include it in apache configuration
-and configure it (virtual host has to be adapt).
+  sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* \
+         /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl
 
+2 - Enable LL::NG sites in Apache
+---------------------------------
 
-II - LEMONLDAP::NG PORTAL INSTALLATION
---------------------------------------
-Package: liblemonldap-ng-portal-perl
+Enable the components you've installed:
 
-WARNING : since version 0.9.3, login form template has change. You have to
-change your /var/lib/lemonldap-ng/portal/index.pl file using
-/usr/share/lemonldap-ng/portal/index.pl
+  a2ensite handler-apache2.conf
+  a2ensite portal-apache2.conf
+  a2ensite manager-apache2.conf
 
-liblemonldap-ng-portal-perl installs files named portal-apache.conf and
-portal-apache2.conf in /etc/lemonldap-ng/. Include it in apache configuration
-and configure it (virtual host has to be adapt). You can also customize
-/var/lib/lemonldap-ng/portal/index.pl to adapt it to your site. This file is
-protected against upgrade.
+and enable mod_perl if not already loaded:
 
+  a2enmod perl
 
-III - LEMONLDAP::NG AREA PROTECTION
-----------------------------------
-Package: liblemonldap-ng-handler-perl
+Then restart Apache:
 
-liblemonldap-ng-handler-perl installs a file named MyHandler.pm in
-/var/lib/lemonldap-ng/handler/. See handler-apache.conf or handler-apache2.conf
-in /etc/lemonldap-ng/ to know how to use it.
+  apache2ctl configtest
+  apache2ctl restart
 
-You can also copy /usr/share/doc/lemonldap-ng/examples/test.pl into
-/var/lib/lemonldap-ng/index.pl to see how to use Lemonldap::NG with a Perl or
-PHP application.
+3 - Check your DNS
+------------------
 
+Be sure that your browser can join (adapt it with your domain):
+- auth.example.com   : the authentication portal
+- manager.example.com: the configuration interface
 
-IV - LEMONLDAP::NG CONFIGURATION FILES
----------------------------------------
-Package: liblemonldap-ng-conf-perl
-
-Note that configuration files are now grouped in
-/etc/lemonldap-ng/lemonldap-ng.ini
-
-V - Build DEB packages
------------------------
-
-Note: official packages build is now hosted on https://github.com/guimard/LemonLDAP--NG-Debian-packaging
-
-Untar the archive and launch:
-$ make debian-packages
-
-Packages are in /tmp
-
-Sign packages:
-$ dpkg-sig -p --sign builder /tmp/*.deb
-
-VI - Update DEB repository
+4 - Connect to the manager
 --------------------------
 
-The DEB repository is hosted on http://lemonldap-ng.org/deb
+Go to http://manager.example.com/, you'll be redirected to the portal. Then
+enjoy!
 
-Copy all deb files:
-$ scp *.deb lemonldapng@lemonldap-ng.org:incoming/
+5 - Default accounts
+--------------------
 
-Then connect on the server and launch reprepro:
-$ ssh lemonldapng@lemonldap-ng.org
-lemonldapng@lemonldap-ng.org$ cd deb/
-lemonldapng@lemonldap-ng.org$ reprepro --ask-passphrase -Vb . includedeb squeeze ../incoming/*1.2.2*deb
+By default, LemonLDAP::NG use "Demo" authentication backend, so you can use the
+following accounts:
 
-See also reprepro configuration file: 'distributions'
+  Login  Password    Role
+  rtyler  rtyler     user
+  msmith  msmith     user
+   dwho    dwho  administrator
+
+6 - See more
+------------
+
+http://lemonldap-ng.org/
 

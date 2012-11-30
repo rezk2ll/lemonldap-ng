@@ -36,7 +36,6 @@ override_dh_auto_install:
 	test -n "$$LOCALBUILD" || ./scripts/minifierjs $$(find debian/tmp/ -name '*.js')
 	test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')
 
-	# Move perl scripts in /usr/share, links are created by *.postinst scripts
 	mkdir debian/tmp/usr/share/lemonldap-ng/manager debian/tmp/usr/share/lemonldap-ng/portal
 	mv debian/tmp/var/lib/lemonldap-ng/portal/*.pl debian/tmp/usr/share/lemonldap-ng/portal/
 	mv debian/tmp/var/lib/lemonldap-ng/manager/*pl debian/tmp/usr/share/lemonldap-ng/manager/

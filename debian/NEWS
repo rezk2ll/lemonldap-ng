@@ -1,0 +1,8 @@
+lemonldap-ng (1.2.2-2) unstable; urgency=low
+
+  Since 1.2.2, LemonLDAP::NG uses 'Demo' authentication backend by default
+  and the manager is protected by default by LemonLDAP::NG. So for an
+  unconfigured installation, you have to use dwho account to access to the
+  manager (password dwho)
+
+ -- Xavier Guimard <x.guimard@free.fr>  Thu, 29 Nov 2012 06:22:45 +0100

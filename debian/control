@@ -1,5 +1,6 @@
 Source: lemonldap-ng
-Maintainer: Xavier Guimard <x.guimard@free.fr>
+Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
+Uploaders: Xavier Guimard <x.guimard@free.fr>
 Section: perl
 Priority: optional
 Build-Depends: debhelper (>= 8),
@@ -23,9 +24,9 @@ Build-Depends-Indep: libapache-session-perl,
                      liburi-perl,
                      libwww-perl,
                      libxml-libxslt-perl,
-                     libxml-simple-perl
+                     libxml-simple-perl,
+                     perl
 Standards-Version: 3.9.4
-DM-Upload-Allowed: yes
 Homepage: http://lemonldap-ng.org/
 
 Package: lemonldap-ng
@@ -59,7 +60,9 @@ Depends: ${misc:Depends},
          liburi-perl,
          libwww-perl
 Recommends: libapache-session-browseable-perl
-Suggests: liblemonldap-ng-portal-perl,
+Suggests: libcache-memcached-perl,
+          libdigest-hmac-perl,
+          liblemonldap-ng-portal-perl,
           libsoap-lite-perl
 Description: Lemonldap::NG Apache module part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
@@ -126,10 +129,11 @@ Recommends: libapache-session-browseable-perl,
             libconvert-pem-perl,
             libemail-date-format-perl,
             libnet-ldap-perl,
-            libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl (>=2.3.0) | libnet-twitter-perl
-Suggests: libauthen-captcha-perl,
+            libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl (>= 2.3.0) | libnet-twitter-perl | libauthcas-perl
+Suggests: libauthcas-perl,
+          libauthen-captcha-perl,
           libauthen-sasl-perl,
-          liblasso-perl (>=2.3.0),
+          liblasso-perl (>= 2.3.0),
           liblemonldap-ng-handler-perl (= ${binary:Version}),
           libnet-openid-consumer-perl,
           libnet-openid-server-perl,

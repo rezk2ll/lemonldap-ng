@@ -1,4 +1,1 @@
-/usr/share
-/var/lib/lemonldap-ng/handler
-/var/lib/lemonldap-ng/sessions
 /var/lib/lemonldap-ng/sessions/lock
