@@ -54,6 +54,7 @@ Description: Lemonldap::NG Web-SSO system documentation
 Package: liblemonldap-ng-handler-perl
 Architecture: all
 Depends: ${misc:Depends},
+         ${perl:Depends},
          libapache2-mod-perl2,
          libapache-session-perl,
          liblemonldap-ng-conf-perl (= ${binary:Version}),
@@ -74,6 +75,7 @@ Description: Lemonldap::NG Apache module part
 Package: liblemonldap-ng-conf-perl
 Architecture: all
 Depends: ${misc:Depends},
+         ${perl:Depends},
          debconf,
          libcache-cache-perl,
          libconfig-inifiles-perl,
@@ -91,6 +93,7 @@ Description: Lemonldap::NG common files
 Package: liblemonldap-ng-manager-perl
 Architecture: all
 Depends: ${misc:Depends},
+         ${perl:Depends},
          libconvert-pem-perl,
          libcrypt-openssl-rsa-perl,
          libcrypt-openssl-x509-perl,
@@ -114,6 +117,7 @@ Description: Lemonldap::NG manager part
 Package: liblemonldap-ng-portal-perl
 Architecture: all
 Depends: ${misc:Depends},
+         ${perl:Depends},
          libapache-session-perl,
          libclone-perl,
          libcrypt-openssl-x509-perl,
