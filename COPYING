@@ -3,8 +3,8 @@ Copyright: 2008, Peter Panov <panov@elcat.kg>, IKEEN Group http://www.ikeen.com
 License: BSD-3-Clause
 
 Files: jquery.cookie.js
-Copyright: 2006 Klaus Hartl (stilbuero.de)
-License: GPL-2+
+Copyright: 2010, Klaus Hartl (stilbuero.de)
+License: GPL-3+
 
 Files: jquery.base64.js
 Copyright: Muhammad Hussein Fattahizadeh <muhammad@semnanweb.com>
@@ -16,7 +16,7 @@ License: MIT
 
 Files: jquery*.js
 Copyright: 2010, The jQuery project and the jQuery UI team
-License: GPL-2+
+License: GPL-2+ or MIT
 
 Files: lemonldap-ng-portal/examples/skins/common/apps/*.png
 Copyright: 2006-2007 Everaldo Coelho, Crystal Project
