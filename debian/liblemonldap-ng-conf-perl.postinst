@@ -5,37 +5,38 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-FIRSTCONFFILE=/var/lib/lemonldap-ng/conf/lmConf-1
 CONFDIR=/etc/lemonldap-ng
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 CONFSTORAGEDIR=/var/lib/lemonldap-ng/conf
+FIRSTCONFFILE=$CONFSTORAGEDIR/lmConf-1
 LMINIFILE=/etc/lemonldap-ng/lemonldap-ng.ini
 MIGRATION=/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini
 
 if [ "$1" == "configure" ]
 then
-	chmod 770 $SESSIONSDIR
-	chmod 770 $SESSIONSDIR/lock
-	chown -R www-data:www-data $SESSIONSDIR
-	chown -R www-data:www-data $CONFSTORAGEDIR
-	chmod 750 $CONFSTORAGEDIR
-	chmod 640 $CONFSTORAGEDIR/*
-	chgrp www-data $LMINIFILE
-	chmod 640 $LMINIFILE
+    chown www-data:www-data $SESSIONSDIR $SESSIONSDIR/lock \
+                            $CONFSTORAGEDIR $FIRSTCONFFILE
+    chgrp www-data $LMINIFILE
+    chmod 770 $SESSIONSDIR $SESSIONSDIR/lock
+    chmod 750 $CONFSTORAGEDIR
+    chmod 640 $CONFSTORAGEDIR/*
+    chmod 640 $LMINIFILE
 
-	for i in domain ldapServer ldapPort ldapBase managerDn managerPassword portal; do
-		db_get liblemonldap-ng-conf-perl/$i || true
-		perl -000 -i -pe "s#^$i(\\n\\s+)('?)[^\\n]*?('?)\$#$i\${1}\${2}$RET\${3}#m" $FIRSTCONFFILE
-	done
-	testversion=`echo $2|sed -e 's/^0\.9.*$/X/'`
-	if [ "$testversion" = "X" ]; then
-		if [ -e $CONFDIR/storage.conf -o -e $CONFDIR/apply.conf -o -e $CONFDIR/apps-list.xml ] ; then
-			db_get liblemonldap-ng-conf-perl/migrate
-			if [ "$RET" ]; then
-				# Run migration script
-				$MIGRATION 2>&1 > /dev/null || :
-			fi
-		fi
-	fi
+    for i in domain ldapServer ldapPort ldapBase managerDn managerPassword portal; do
+        db_get liblemonldap-ng-conf-perl/$i || true
+        perl -000 -i -pe "s#^$i(\\n\\s+)('?)[^\\n]*?('?)\$#$i\${1}\${2}$RET\${3}#m" $FIRSTCONFFILE
+    done
+
+    # Run migration script to convert menu format if old version is 0.9
+    if dpkg --compare-versions "$2" lt "1.0"; then
+        if [ -e $CONFDIR/storage.conf -o -e $CONFDIR/apply.conf -o -e $CONFDIR/apps-list.xml ] ; then
+            db_get liblemonldap-ng-conf-perl/migrate
+            if [ "$RET" ]; then
+                $MIGRATION 2>&1 > /dev/null || :
+            fi
+        fi
+    fi
 fi
+
+#DEBHELPER#
 exit 0

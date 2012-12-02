@@ -10,3 +10,5 @@ then
 	db_purge
 fi
 
+#DEBHELPER#
+exit 0
