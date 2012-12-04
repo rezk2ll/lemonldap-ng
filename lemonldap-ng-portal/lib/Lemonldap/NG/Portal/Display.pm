@@ -109,6 +109,7 @@ sub display {
                 APPSLIST_MENU => $self->{menuAppslistMenu},  # For old templates
                 APPSLIST_DESC => $self->{menuAppslistDesc},  # For old templates
                 SCRIPT_NAME   => $ENV{SCRIPT_NAME},
+                APPSLIST_ORDER => $self->{sessionInfo}->{'appsListOrder'},
             );
 
         }

@@ -1826,6 +1826,15 @@ sub controlExistingSession {
                   . '{"auth":true}';
                 $self->quit();
             }
+
+            # Special ajax request "storeAppsListOrder"
+            if ( $self->param('storeAppsListOrder') ) {
+                my $order = $self->param('storeAppsListOrder');
+                $self->lmLog( "Get new apps list order: $order", 'debug' );
+                $self->updatePersistentSession( { appsListOrder => $order } );
+                $self->quit();
+            }
+ 
             $self->{id} = $id;
 
             # A session has been found => call existingSession
