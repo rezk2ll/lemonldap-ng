@@ -61,4 +61,7 @@ my @links = (
 
 splice @index, 22, 1, @links;
 
+# Remove external logos
+system('rm -rf doc/media/applications/ doc/media/logos/');
+
 exit 0;
