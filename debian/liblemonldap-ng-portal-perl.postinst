@@ -1,5 +1,4 @@
 #!/bin/bash
-# Maintainer: #DEBHELPER#
 
 set -e
 
@@ -16,5 +15,5 @@ then
 	chown www-data:www-data $CAPTCHA_DIR
 fi
 
-#DEBHELPER#
+# Maintainer: #DEBHELPER#
 exit 0

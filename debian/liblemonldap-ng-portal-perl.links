@@ -3,4 +3,4 @@
 /usr/share/lemonldap-ng/portal/index.pl /var/lib/lemonldap-ng/portal/index.pl
 /usr/share/lemonldap-ng/portal/mail.pl /var/lib/lemonldap-ng/portal/mail.pl
 /usr/share/lemonldap-ng/portal/metadata.pl /var/lib/lemonldap-ng/portal/metadata.pl
-
+/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin.pl /usr/share/doc/liblemonldap-ng-portal-perl/examples/index.pl

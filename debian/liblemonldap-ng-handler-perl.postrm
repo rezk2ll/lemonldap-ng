@@ -1,5 +1,4 @@
 #!/bin/bash
-# Maintainer: #DEBHELPER#
 
 set -e
 
@@ -15,5 +14,5 @@ then
 	rm -f /var/lib/lemonldap-ng/handler/MyHandler.pm
 fi
 
-#DEBHELPER#
+# Maintainer: #DEBHELPER#
 exit 0

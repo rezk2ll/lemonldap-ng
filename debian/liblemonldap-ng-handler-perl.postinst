@@ -1,5 +1,4 @@
 #!/bin/bash
-# Maintainer: #DEBHELPER#
 
 set -e
 
@@ -14,5 +13,5 @@ then
     [ -e $HANDLERFILE ] || cp $EXAMPLEHANDLERFILE $HANDLERFILE
 fi
 
-#DEBHELPER#
+# Maintainer: #DEBHELPER#
 exit 0

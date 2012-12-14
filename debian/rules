@@ -4,7 +4,15 @@
 #export DH_VERBOSE=1
 
 LMSHAREDIR=/usr/share/lemonldap-ng
-LMVARDIR=/var/lib/lemonldap-ng
+LMVARDIR  =/var/lib/lemonldap-ng
+TMP       = $(CURDIR)/debian/tmp
+
+CONFDIR=/etc/lemonldap-ng
+SESSIONSDIR=$(LMVARDIR)/sessions
+CONFSTORAGEDIR=$(LMVARDIR)/conf
+FIRSTCONFFILE=$(CONFSTORAGEDIR)/lmConf-1
+LMINIFILE=$(CONFDIR)/lemonldap-ng.ini
+CAPTCHADIR=$(LMVARDIR)/portal/captcha_output
 
 %:
 	dh $@
@@ -36,7 +44,10 @@ override_dh_auto_install:
 	test -n "$$LOCALBUILD" || ./scripts/minifierjs $$(find debian/tmp/ -name '*.js')
 	test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')
 
-	mkdir debian/tmp/usr/share/lemonldap-ng/manager debian/tmp/usr/share/lemonldap-ng/portal
-	mv debian/tmp/var/lib/lemonldap-ng/portal/*.pl debian/tmp/usr/share/lemonldap-ng/portal/
-	mv debian/tmp/var/lib/lemonldap-ng/manager/*pl debian/tmp/usr/share/lemonldap-ng/manager/
+	mkdir $(TMP)/$(LMSHAREDIR)/manager $(TMP)/$(LMSHAREDIR)/portal
+	mv $(TMP)/$(LMVARDIR)/portal/*.pl $(TMP)/$(LMSHAREDIR)/portal/
+	mv $(TMP)/$(LMVARDIR)/manager/*pl $(TMP)/$(LMSHAREDIR)/manager/
+
+override_dh_compress:
+	dh_compress -X favicon.ico
 
