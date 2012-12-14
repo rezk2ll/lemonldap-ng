@@ -1,5 +1,4 @@
 #!/bin/bash
-# Maintainer: #DEBHELPER#
 
 set -e
 
@@ -10,5 +9,5 @@ then
 	db_purge
 fi
 
-#DEBHELPER#
+# Maintainer: #DEBHELPER#
 exit 0
