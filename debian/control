@@ -13,7 +13,6 @@ Build-Depends-Indep: libapache-session-perl,
                      libcrypt-openssl-x509-perl,
                      libcrypt-rijndael-perl,
                      libconfig-inifiles-perl,
-                     libconvert-pem-perl,
                      libdbi-perl,
                      libhtml-template-perl,
                      libio-string-perl,
@@ -36,9 +35,11 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          liblemonldap-ng-manager-perl (= ${binary:Version}),
          liblemonldap-ng-portal-perl (= ${binary:Version})
-Description: Lemonldap::NG Web-SSO system
+Description: LemonLDAP::NG is an OpenID, CAS and SAML compatible Web-SSO system
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers.
+ or directly on application Apache servers. It can bu used in conjunction with
+ OpenID, CAS and SAML systems as identity or service provider. It can also be
+ used as proxy between those federation systems.
  .
  This package is a metapackage that install handler, manager and portal.
 
@@ -48,7 +49,9 @@ Section: doc
 Depends: ${misc:Depends}
 Description: Lemonldap::NG Web-SSO system documentation
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers.
+ or directly on application Apache servers. It can bu used in conjunction with
+ OpenID, CAS and SAML systems as identity or service provider. It can also be
+ used as proxy between those federation systems.
  .
  This package contains html documentation.
 
@@ -66,9 +69,11 @@ Suggests: libcache-memcached-perl,
           libdigest-hmac-perl,
           liblemonldap-ng-portal-perl,
           libsoap-lite-perl
-Description: Lemonldap::NG Apache module part
+Description: Lemonldap::NG Apache handler part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers.
+ or directly on application Apache servers. It can bu used in conjunction with
+ OpenID, CAS and SAML systems as identity or service provider. It can also be
+ used as proxy between those federation systems.
  .
  This package installs the Apache module part (handler) used to protect web
  areas.
@@ -87,7 +92,9 @@ Recommends: libdbi-perl,
             libsoap-lite-perl
 Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers.
+ or directly on application Apache servers. It can bu used in conjunction with
+ OpenID, CAS and SAML systems as identity or service provider. It can also be
+ used as proxy between those federation systems.
  .
  This package installs common files used by other Lemonldap::NG modules.
 
@@ -111,7 +118,9 @@ Recommends: lemonldap-ng-doc (= ${binary:Version}),
 Pre-Depends: debconf
 Description: Lemonldap::NG manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers.
+ or directly on application Apache servers. It can bu used in conjunction with
+ OpenID, CAS and SAML systems as identity or service provider. It can also be
+ used as proxy between those federation systems.
  .
  This package installs the administration interface (manager).
 
@@ -147,7 +156,9 @@ Suggests: libauthcas-perl,
 Pre-Depends: debconf
 Description: Lemonldap::NG authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers.
+ or directly on application Apache servers. It can bu used in conjunction with
+ OpenID, CAS and SAML systems as identity or service provider. It can also be
+ used as proxy between those federation systems.
  .
  This package installs the authentication portal.
 
