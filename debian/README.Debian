@@ -17,6 +17,7 @@ Enable the components you've installed:
   a2ensite handler-apache2.conf
   a2ensite portal-apache2.conf
   a2ensite manager-apache2.conf
+  a2ensite test-apache2.conf
 
 and enable mod_perl if not already loaded:
 

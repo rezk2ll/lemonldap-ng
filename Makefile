@@ -248,6 +248,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 		cp --remove-destination _example/etc/portal-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp --remove-destination _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp --remove-destination _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp --remove-destination _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR); \
 	fi
 	@$(PERL) -i -pe 's#__HANDLER__#${HANDLERDIR}/MyHandler.pm#; \
@@ -271,6 +272,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo "      include ${CONFDIR}/portal-apache$(APACHEVERSION).conf"
 	@echo "      include ${CONFDIR}/handler-apache$(APACHEVERSION).conf"
 	@echo "      include ${CONFDIR}/manager-apache$(APACHEVERSION).conf"
+	@echo "      include ${CONFDIR}/test-apache$(APACHEVERSION).conf"
 	@echo
 	@echo "2 - Restart Apache:"
 	@echo "      apache$(APACHEVERSION)ctl restart"

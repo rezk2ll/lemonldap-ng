@@ -375,6 +375,9 @@ fi
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-portal.conf ] ; then
 	ln -s %{lm_confdir}/portal-apache2.conf %{apache_confdir}/z-lemonldap-ng-portal.conf || :
 fi
+if [ ! -e %{apache_confdir}/z-lemonldap-ng-test.conf ] ; then
+	ln -s %{lm_confdir}/test-apache2.conf %{apache_confdir}/z-lemonldap-ng-test.conf || :
+fi
 # Upgrade from previous version
 # See http://lemonldap-ng.org/documentation/1.0/upgrade
 if [ $1 -gt 1 ] ; then
@@ -401,6 +404,7 @@ if [ $1 -eq 0 ] ; then
 	rm -f %{apache_confdir}/z-lemonldap-ng-handler.conf 2>&1 > /dev/null || :
 	rm -f %{apache_confdir}/z-lemonldap-ng-manager.conf 2>&1 > /dev/null || :
 	rm -f %{apache_confdir}/z-lemonldap-ng-portal.conf 2>&1 > /dev/null  || :
+	rm -f %{apache_confdir}/z-lemonldap-ng-test.conf 2>&1 > /dev/null  || :
 fi
 # Upgrade from previous version
 if [ $1 -eq 1 ] ; then
@@ -423,9 +427,11 @@ rm -rf %{buildroot}
 %config(noreplace) %{lm_confdir}/handler-apache2.conf
 %config(noreplace) %{lm_confdir}/manager-apache2.conf
 %config(noreplace) %{lm_confdir}/portal-apache2.conf
+%config(noreplace) %{lm_confdir}/test-apache2.conf
 %ghost %{apache_confdir}/z-lemonldap-ng-handler.conf
 %ghost %{apache_confdir}/z-lemonldap-ng-manager.conf
 %ghost %{apache_confdir}/z-lemonldap-ng-portal.conf
+%ghost %{apache_confdir}/z-lemonldap-ng-test.conf
 %dir %{lm_vardir}
 %dir %{lm_sharedir}
 %dir %{lm_sharedir}/bin
