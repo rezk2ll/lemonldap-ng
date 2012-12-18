@@ -20,7 +20,7 @@ use URI;                   # Get metadata URL path
 # Special comments for doxygen
 #inherits Lemonldap::NG::Common::Conf::SAML::Metadata protected service_metadata
 
-our $VERSION = '1.2.2';
+our $VERSION = '1.3.0';
 our $samlCache;
 our $initGlibDone;
 
@@ -2249,6 +2249,21 @@ sub disableSignatureVerification {
     return $self->checkLassoError($@);
 }
 
+## @method boolean forceSignatureVerification(Lasso::Profile profile)
+# Modify Lasso signature hint to force signature verification
+# @param profile Lasso profile object
+# @return result
+sub forceSignatureVerification {
+    my ( $self, $profile ) = splice @_;
+
+    eval {
+        Lasso::Profile::set_signature_verify_hint( $profile,
+            Lasso::Constants::PROFILE_SIGNATURE_VERIFY_HINT_FORCE );
+    };
+
+    return $self->checkLassoError($@);
+}
+
 ## @method string getAuthnContext(string context)
 # Convert configuration string into SAML2 AuthnContextClassRef string
 # @param context configuration string
@@ -3239,6 +3254,10 @@ Modify Lasso signature hint to force signature
 =head2 disableSignatureVerification
 
 Modify Lasso signature hint to disable signature verification
+
+=head2 forceSignatureVerification
+
+Modify Lasso signature hint to force signature verification
 
 =head2 getAuthnContext
 

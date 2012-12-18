@@ -150,7 +150,17 @@ sub issuerForUnAuthUser {
               ->{samlSPMetaDataOptionsCheckSSOMessageSignature};
 
             if ($checkSSOMessageSignature) {
-                unless ( $self->checkSignatureStatus($login) ) {
+
+                $self->forceSignatureVerification($login);
+
+                if ($artifact) {
+                    $result = $self->processArtResponseMsg( $login, $request );
+                }
+                else {
+                    $result = $self->processAuthnRequestMsg( $login, $request );
+                }
+
+                unless ($result) {
                     $self->lmLog( "Signature is not valid", 'error' );
                     return PE_SAML_SIGNATURE_ERROR;
                 }
@@ -277,7 +287,10 @@ sub issuerForUnAuthUser {
               ->{samlSPMetaDataOptionsCheckSLOMessageSignature};
 
             if ($checkSLOMessageSignature) {
-                unless ( $self->checkSignatureStatus($logout) ) {
+
+                $self->forceSignatureVerification($logout);
+
+                unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
                     $self->lmLog( "Signature is not valid", 'error' );
                     return $self->sendSLOErrorResponse( $logout, $method );
                 }
@@ -1203,7 +1216,17 @@ sub issuerForAuthUser {
               ->{samlSPMetaDataOptionsCheckSSOMessageSignature};
 
             if ($checkSSOMessageSignature) {
-                unless ( $self->checkSignatureStatus($login) ) {
+
+                $self->forceSignatureVerification($login);
+
+                if ($artifact) {
+                    $result = $self->processArtResponseMsg( $login, $request );
+                }
+                else {
+                    $result = $self->processAuthnRequestMsg( $login, $request );
+                }
+
+                unless ($result) {
                     $self->lmLog( "Signature is not valid", 'error' );
                     return PE_SAML_SIGNATURE_ERROR;
                 }
@@ -1867,7 +1890,10 @@ sub issuerForAuthUser {
               ->{samlSPMetaDataOptionsCheckSLOMessageSignature};
 
             if ($checkSLOMessageSignature) {
-                unless ( $self->checkSignatureStatus($logout) ) {
+
+                $self->forceSignatureVerification($logout);
+
+                unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
                     $self->lmLog( "Signature is not valid", 'error' );
                     return $self->sendSLOErrorResponse( $logout, $method );
                 }
