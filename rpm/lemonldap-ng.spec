@@ -359,6 +359,7 @@ mkdir -p %buildroot%{apache_confdir}
 touch %buildroot%{apache_confdir}/z-lemonldap-ng-handler.conf
 touch %buildroot%{apache_confdir}/z-lemonldap-ng-manager.conf
 touch %buildroot%{apache_confdir}/z-lemonldap-ng-portal.conf
+touch %buildroot%{apache_confdir}/z-lemonldap-ng-test.conf
 
 #==============================================================================
 # Post Installation
