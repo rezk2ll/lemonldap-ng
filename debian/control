@@ -37,9 +37,14 @@ Depends: ${misc:Depends},
          liblemonldap-ng-portal-perl (= ${binary:Version})
 Description: LemonLDAP::NG is an OpenID, CAS and SAML compatible Web-SSO system
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers. It can bu used in conjunction with
+ or directly on application Apache servers. It can be used in conjunction with
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
+ .
+ It manages both authentication and authorization and provides headers fors
+ accounting. So you can have a full AAA protection. Authorization are build by
+ associating a regular expression and a rule. Regular expression is applied on
+ the requested URL and the rule calculates if the user is authorizated.
  .
  This package is a metapackage that install handler, manager and portal.
 
@@ -49,9 +54,14 @@ Section: doc
 Depends: ${misc:Depends}
 Description: Lemonldap::NG Web-SSO system documentation
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers. It can bu used in conjunction with
+ or directly on application Apache servers. It can be used in conjunction with
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
+ .
+ It manages both authentication and authorization and provides headers fors
+ accounting. So you can have a full AAA protection. Authorization are build by
+ associating a regular expression and a rule. Regular expression is applied on
+ the requested URL and the rule calculates if the user is authorizated.
  .
  This package contains html documentation.
 
@@ -71,9 +81,14 @@ Suggests: libcache-memcached-perl,
           libsoap-lite-perl
 Description: Lemonldap::NG Apache handler part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers. It can bu used in conjunction with
+ or directly on application Apache servers. It can be used in conjunction with
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
+ .
+ It manages both authentication and authorization and provides headers fors
+ accounting. So you can have a full AAA protection. Authorization are build by
+ associating a regular expression and a rule. Regular expression is applied on
+ the requested URL and the rule calculates if the user is authorizated.
  .
  This package installs the Apache module part (handler) used to protect web
  areas.
@@ -92,9 +107,14 @@ Recommends: libdbi-perl,
             libsoap-lite-perl
 Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers. It can bu used in conjunction with
+ or directly on application Apache servers. It can be used in conjunction with
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
+ .
+ It manages both authentication and authorization and provides headers fors
+ accounting. So you can have a full AAA protection. Authorization are build by
+ associating a regular expression and a rule. Regular expression is applied on
+ the requested URL and the rule calculates if the user is authorizated.
  .
  This package installs common files used by other Lemonldap::NG modules.
 
@@ -118,9 +138,14 @@ Recommends: lemonldap-ng-doc (= ${binary:Version}),
 Pre-Depends: debconf
 Description: Lemonldap::NG manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers. It can bu used in conjunction with
+ or directly on application Apache servers. It can be used in conjunction with
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
+ .
+ It manages both authentication and authorization and provides headers fors
+ accounting. So you can have a full AAA protection. Authorization are build by
+ associating a regular expression and a rule. Regular expression is applied on
+ the requested URL and the rule calculates if the user is authorizated.
  .
  This package installs the administration interface (manager).
 
@@ -156,9 +181,14 @@ Suggests: libauthcas-perl,
 Pre-Depends: debconf
 Description: Lemonldap::NG authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
- or directly on application Apache servers. It can bu used in conjunction with
+ or directly on application Apache servers. It can be used in conjunction with
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
+ .
+ It manages both authentication and authorization and provides headers fors
+ accounting. So you can have a full AAA protection. Authorization are build by
+ associating a regular expression and a rule. Regular expression is applied on
+ the requested URL and the rule calculates if the user is authorizated.
  .
  This package installs the authentication portal.
 

@@ -14,10 +14,15 @@ with a quick sed command. For example, we change it to ow2.org:
 
 Enable the components you've installed:
 
-  a2ensite handler-apache2.conf
+  # Portal
   a2ensite portal-apache2.conf
+
+  # Manager
   a2ensite manager-apache2.conf
   a2ensite test-apache2.conf
+
+  # Handler
+  a2ensite handler-apache2.conf
 
 and enable mod_perl if not already loaded:
 
@@ -51,6 +56,15 @@ following accounts:
   rtyler  rtyler     user
   msmith  msmith     user
    dwho    dwho  administrator
+
+6 - Base configuration file
+---------------------------
+
+The configuration is managed by the manager with the exception of some basic
+parameters such as the storage type configuration. These parameters are defined
+in the file /etc/lemonldap-ng/lemonldap-ng.ini.
+
+This file can also be used to override the global configuration locally
 
 6 - See more
 ------------
