@@ -24,7 +24,6 @@ requires:
     Test::Pod:            0
     XML::LibXML:          0
     XML::LibXSLT:         0
-    XML::Simple:          0
 no_index:
     directory:
         - t

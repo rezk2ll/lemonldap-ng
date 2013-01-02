@@ -103,6 +103,8 @@ Depends: ${misc:Depends},
          libcrypt-openssl-bignum-perl,
          libcrypt-rijndael-perl,
          libxml-simple-perl
+         libxml-libxml-perl,
+         libxml-libxslt-perl,
 Recommends: libdbi-perl,
             libsoap-lite-perl
 Description: Lemonldap::NG common files
@@ -131,7 +133,6 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libxml-libxml-perl,
          libxml-libxslt-perl,
-         libxml-simple-perl
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libapache-session-browseable-perl | libapache-session-perl,
             libsoap-lite-perl
@@ -162,8 +163,6 @@ Depends: ${misc:Depends},
          libregexp-assemble-perl,
          libsoap-lite-perl,
          libstring-random-perl,
-         libxml-libxml-perl,
-         libxml-libxslt-perl
 Recommends: libapache-session-browseable-perl,
             libconvert-pem-perl,
             libemail-date-format-perl,

@@ -35,6 +35,8 @@ WriteMakefile(
         'SOAP::Lite'             => 0,
         'Storable'               => 0,
         'XML::Simple'            => 0,
+        'XML::LibXML'            => 0,
+        'XML::LibXSLT'           => 0,
 	'Test::Pod'              => 0,
         'Crypt::OpenSSL::RSA'    => 0,
         'Crypt::OpenSSL::X509'   => 0,
