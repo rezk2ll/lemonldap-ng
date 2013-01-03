@@ -971,7 +971,7 @@ sub getApacheSession {
 
         # Session not available (expired ?)
         if ($id) {
-            $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})",
+            $self->lmLog( "Session $id can't be retrieved (" . $self->ipAddr . ")",
                 'info' )
               unless $noInfo;
         }
@@ -1212,7 +1212,7 @@ sub _subProcess {
 sub updateStatus {
     my $self = shift;
     print $Lemonldap::NG::Handler::Simple::statusPipe (
-        $self->{user} ? $self->{user} : $ENV{REMOTE_ADDR} )
+        $self->{user} ? $self->{user} : $self->ipAddr )
       . " => $ENV{SERVER_NAME}$ENV{SCRIPT_NAME} "
       . $self->{error} . "\n"
       if ($Lemonldap::NG::Handler::Simple::statusPipe);
@@ -2006,7 +2006,7 @@ sub modifyPassword {
 }
 
 ##@apmethod int setSessionInfo()
-# Set ipAddr, xForwardedForAddr, startTime, updateTime, _utime and _userDB
+# Set ipAddr, startTime, updateTime, _utime and _userDB
 # Call setSessionInfo() in UserDB* module
 #@return Lemonldap::NG::Portal constant
 sub setSessionInfo {
@@ -2016,15 +2016,7 @@ sub setSessionInfo {
     $self->{sessionInfo}->{_userDB} = $self->get_module("user");
 
     # Store IP address from remote address or X-FORWARDED-FOR header
-    my $xheader = $ENV{HTTP_X_FORWARDED_FOR};
-    $xheader =~ s/(.*?)(\,)+.*/$1/ if $xheader;
-
-    if ( $xheader and $self->{useXForwardedForIP} ) {
-        $self->{sessionInfo}->{ipAddr} = $xheader;
-    }
-    else {
-        $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
-    }
+    $self->{sessionInfo}->{ipAddr} = $self->ipAddr;
 
     # Date and time
     if ( $self->{updateSession} ) {
@@ -2236,7 +2228,7 @@ sub removeOther {
     if ( $self->{singleUserByIP} ) {
         my $sessions =
           $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
-            'ipAddr', $ENV{REMOTE_ADDR} );
+            'ipAddr', $self->ipAddr );
         foreach my $id ( keys %$sessions ) {
             next if ( $current and $current eq $id );
             my $h = $self->getApacheSession( $id, 1 ) or next;

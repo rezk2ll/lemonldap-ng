@@ -645,8 +645,6 @@ notifications
           type=>'File',
           dirName=>"/tmp/",
         },
-        # Force the use of X-FORWARDED-FOR for IP
-        useXForwardedForIP => 1,
         # Optionnal
         protection    => 'rule: $uid eq "admin"',
         # Or to use rules from manager

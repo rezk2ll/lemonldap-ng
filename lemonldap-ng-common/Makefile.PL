@@ -41,6 +41,7 @@ WriteMakefile(
         'Crypt::OpenSSL::RSA'    => 0,
         'Crypt::OpenSSL::X509'   => 0,
         'Crypt::OpenSSL::Bignum' => 0,
+        'Net::CIDR::Lite'        => 0,
     },    # e.g., Module::Name => 1.1
           #EXE_FILES => [ 'scripts/convertConfig', ],
     (

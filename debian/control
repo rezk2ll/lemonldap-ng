@@ -105,6 +105,7 @@ Depends: ${misc:Depends},
          libxml-simple-perl,
          libxml-libxml-perl,
          libxml-libxslt-perl,
+         libnet-cidr-lite-perl
 Recommends: libdbi-perl,
             libsoap-lite-perl
 Description: Lemonldap::NG common files

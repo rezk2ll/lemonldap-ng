@@ -358,7 +358,7 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
 
     # 1.5 Author attributes for accounting
     $newConf->{cfgAuthor}   = $ENV{REMOTE_USER} || 'anonymous';
-    $newConf->{cfgAuthorIP} = $ENV{REMOTE_ADDR};
+    $newConf->{cfgAuthorIP} = $self->ipAddr;
     $newConf->{cfgDate}     = time();
 
     # 1.6 Global tests

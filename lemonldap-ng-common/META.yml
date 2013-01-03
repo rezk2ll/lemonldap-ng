@@ -27,6 +27,7 @@ requires:
     XML::Simple:          0
     XML::LibXML:          0
     XML::LibXSLT:         0
+    Net::CIDR::Lite:      0
 no_index:
     directory:
         - t
