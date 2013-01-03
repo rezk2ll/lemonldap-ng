@@ -102,7 +102,7 @@ Depends: ${misc:Depends},
          libconfig-inifiles-perl,
          libcrypt-openssl-bignum-perl,
          libcrypt-rijndael-perl,
-         libxml-simple-perl
+         libxml-simple-perl,
          libxml-libxml-perl,
          libxml-libxslt-perl,
 Recommends: libdbi-perl,
