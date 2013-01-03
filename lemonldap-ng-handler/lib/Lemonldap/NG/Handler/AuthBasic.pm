@@ -71,8 +71,17 @@ sub run ($$) {
         unless ( $refLocalStorage and $datas = $refLocalStorage->get($id) ) {
 
             # 2.3 Authentication by Lemonldap::NG::Portal using SOAP request
+
+            # Add client IP as X-Forwarded-For IP in SOAP request
+            my $xheader = lmHeaderIn( $apacheRequest, 'X-Forwarded-For' );
+            $xheader .= ", " if ($xheader);
+            $xheader .= $apacheRequest->connection->remote_ip;
+            my $soapHeaders =
+              HTTP::Headers->new( "X-Forwarded-For" => $xheader );
+
             my $soap =
-              SOAP::Lite->proxy( $class->portal() )
+              SOAP::Lite->proxy( $class->portal(),
+                default_headers => $soapHeaders )
               ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
             $user = decode_base64($user);
             ( $user, $pass ) = ( $user =~ /^(.*?):(.*)$/ );
