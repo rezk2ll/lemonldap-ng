@@ -9,7 +9,7 @@ package Lemonldap::NG::Manager::_i18n;
 
 use strict;
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '1.2.0';
+our $VERSION = '1.2.3';
 
 ## @method string translate(string text,string lang)
 # Returns $text translated in $lang.
@@ -363,7 +363,6 @@ sub en {
         virtualHosts                => 'Virtual Hosts',
         warning                     => 'Warning',
         whatToTrace                 => "REMOTE_USER",
-        xForwardedForAddr           => 'Forwarded IP address',
         yubikeyAuthnLevel           => 'Authentication level',
         yubikeyClientID             => 'API client ID',
         yubikeyParams               => 'Yubikey parameters',
@@ -819,7 +818,6 @@ sub fr {
         virtualHosts           => 'Hôtes virtuels',
         warning                => 'Attention',
         whatToTrace            => "REMOTE_USER",
-        xForwardedForAddr      => 'Adresse IP transférée',
         yubikeyAuthnLevel      => "Niveau d'authentification",
         yubikeyClientID        => "Identifiant client de l'API",
         yubikeyParams          => "Paramètres Yubikey",
