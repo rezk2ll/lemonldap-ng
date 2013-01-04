@@ -144,16 +144,16 @@ sub run ($$) {
     $class->updateStatus( $datas->{$whatToTrace}, $apacheRequest->uri, 'OK' );
     $class->logGranted( $uri, $datas );
 
-    # ACCOUNTING
-    # 2 - Inform remote application
-    $class->sendHeaders;
-
     # SECURITY
     # Hide Lemonldap::NG cookie
     $class->hideCookie;
 
     # Hide user password
-    $class->lmSetHeaderIn( $apacheRequest, Authorization => '' );
+    $class->lmUnsetHeaderIn( $apacheRequest, "Authorization");
+
+    # ACCOUNTING
+    # 2 - Inform remote application
+    $class->sendHeaders;
     OK;
 }
 

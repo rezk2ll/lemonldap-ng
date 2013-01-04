@@ -32,7 +32,7 @@ use constant MAINTENANCE_CODE => 503;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.2.2';
+our $VERSION = '1.2.3';
 
 our %EXPORT_TAGS;
 
@@ -826,8 +826,12 @@ sub hideCookie {
     my $class = shift;
     $class->lmLog( "removing cookie", 'debug' );
     my $tmp = lmHeaderIn( $apacheRequest, 'Cookie' );
-    $tmp =~ s/$cookieName(?:http)?[^,;]*[,;]?//og;
-    $class->lmSetHeaderIn( $apacheRequest, 'Cookie' => $tmp );
+    $tmp =~ s/$cookieName(http)?=[^,;]*[,;\s]*//og;
+    if ($tmp) {
+        $class->lmSetHeaderIn( $apacheRequest, 'Cookie' => $tmp );
+    } else {
+        $class->lmUnsetHeaderIn( $apacheRequest, 'Cookie' );
+    }
 }
 
 ## @rmethod protected string encodeUrl(string url)
