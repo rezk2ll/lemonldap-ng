@@ -229,7 +229,8 @@ By default, Apache configuration files will be installed in <code>/usr/local/lem
 </p>
 <pre class="code file apache"><span class="kw1">include</span> /usr/local/lemonldap-ng/etc/portal-apache2.conf
 <span class="kw1">include</span> /usr/local/lemonldap-ng/etc/handler-apache2.conf
-<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/manager-apache2.conf</pre>
+<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/manager-apache2.conf
+<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/test-apache2.conf</pre>
 
 <p>
 <p><div class="notetip">
@@ -243,6 +244,8 @@ By default, Apache configuration files will be installed in <code>/usr/local/lem
 <pre class="code">
 a2ensite manager-apache2.conf
 a2ensite portal-apache2.conf
+a2ensite handler-apache2.conf
+a2ensite test-apache2.conf
 </pre>
 
 <p>
@@ -257,7 +260,7 @@ a2ensite portal-apache2.conf
 </p>
 
 </div>
-<!-- SECTION "Link Apache configuration" [2966-3673] -->
+<!-- SECTION "Link Apache configuration" [2966-3784] -->
 <h2><a name="install_cron_jobs" id="install_cron_jobs">Install cron jobs</a></h2>
 <div class="level2">
 
@@ -281,7 +284,7 @@ sudo ln -s /usr/local/lemonldap-ng/etc/cron.d/* /etc/cron.d/
 </pre>
 
 </div>
-<!-- SECTION "Install cron jobs" [3674-3883] -->
+<!-- SECTION "Install cron jobs" [3785-3994] -->
 <h2><a name="dns" id="dns">DNS</a></h2>
 <div class="level2">
 
@@ -309,4 +312,4 @@ Follow the <a href="../../documentation/1.3/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- SECTION "DNS" [3884-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "DNS" [3995-] --></div><!-- closes <div class="dokuwiki export">-->
