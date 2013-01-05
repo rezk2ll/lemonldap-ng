@@ -11742,6 +11742,46 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2710 -- Apply svn commit r2709 to 1.2 branch (#LEMONLDAP-559)&lt;/a0&gt; by fxdeltombe (2013/01/03 19:54)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115833Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2710 -- Apply svn commit r2709 to 1.2 branch (#LEMONLDAP-559)&lt;/a0&gt; by fxdeltombe (2013/01/03 19:54)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2711 -- X-Forwarded-For Header in SOAP request sent by LL::NG::Handler::AuthBasic (#LEMONLDAP-572)&lt;/a0&gt; by fxdeltombe (2013/01/03 20:56)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115829Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2711 -- X-Forwarded-For Header in SOAP request sent by LL::NG::Handler::AuthBasic (#LEMONLDAP-572)&lt;/a0&gt; by fxdeltombe (2013/01/03 20:56)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2712 -- Apply svn commit r2711 to 1.2 branch (#LEMONLDAP-572)&lt;/a0&gt; by fxdeltombe (2013/01/03 20:57)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115826Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2712 -- Apply svn commit r2711 to 1.2 branch (#LEMONLDAP-572)&lt;/a0&gt; by fxdeltombe (2013/01/03 20:57)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2713 -- Do not send void HTTP headers to apps (#LEMONLDAP-573)&lt;/a0&gt; by fxdeltombe (2013/01/04 18:54)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115823Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2713 -- Do not send void HTTP headers to apps (#LEMONLDAP-573)&lt;/a0&gt; by fxdeltombe (2013/01/04 18:54)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2714 -- Apply svn commit r2713 to 1.2 branch (#LEMONLDAP-573)&lt;/a0&gt; by fxdeltombe (2013/01/04 18:55)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115815Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2714 -- Apply svn commit r2713 to 1.2 branch (#LEMONLDAP-573)&lt;/a0&gt; by fxdeltombe (2013/01/04 18:55)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Rules&lt;/a0&gt; are applied in alphabetical order (comment and regular expression).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095523Z" changeid="xavier">
@@ -17706,6 +17746,20 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
         <seg>&lt;s0&gt;include&lt;/s0&gt; /usr/local/lemonldap-ng/etc/portal-apache2.conf
 &lt;s1&gt;include&lt;/s1&gt; /usr/local/lemonldap-ng/etc/handler-apache2.conf
 &lt;s2&gt;include&lt;/s2&gt; /usr/local/lemonldap-ng/etc/manager-apache2.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;include&lt;/s0&gt; /usr/local/lemonldap-ng/etc/portal-apache2.conf
+&lt;s1&gt;include&lt;/s1&gt; /usr/local/lemonldap-ng/etc/handler-apache2.conf
+&lt;s2&gt;include&lt;/s2&gt; /usr/local/lemonldap-ng/etc/manager-apache2.conf
+&lt;s3&gt;include&lt;/s3&gt; /usr/local/lemonldap-ng/etc/test-apache2.conf</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115753Z" changeid="xavier">
+        <seg>&lt;s0&gt;include&lt;/s0&gt; /usr/local/lemonldap-ng/etc/portal-apache2.conf
+&lt;s1&gt;include&lt;/s1&gt; /usr/local/lemonldap-ng/etc/handler-apache2.conf
+&lt;s2&gt;include&lt;/s2&gt; /usr/local/lemonldap-ng/etc/manager-apache2.conf
+&lt;s3&gt;include&lt;/s3&gt; /usr/local/lemonldap-ng/etc/test-apache2.conf</seg>
       </tuv>
     </tu>
     <tu>
@@ -29382,6 +29436,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Issy Les Moulineaux</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115810Z" changeid="xavier">
+        <seg>Issy-les-Moulineaux</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It allows to put &lt;a0&gt;LL::NG&lt;/a0&gt;::portal behind another web &lt;a1&gt;SSO&lt;/a1&gt;, or behind a &lt;a2&gt;SSL&lt;/a2&gt; hardware to delegate &lt;a3&gt;SSL&lt;/a3&gt; authentication to that hardware.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T160808Z" changeid="xavier">
@@ -32310,6 +32372,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144049Z" changeid="xavier">
         <seg>Préfixe OID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OW2 Con</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115759Z" changeid="xavier">
+        <seg>OW2 Con</seg>
       </tuv>
     </tu>
     <tu>
@@ -42728,12 +42798,40 @@ a2ensite manager-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>a2ensite handler-apache2.conf
+a2ensite portal-apache2.conf
+a2ensite manager-apache2.conf
+a2ensite test-apache2.conf</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115750Z" changeid="xavier">
+        <seg>a2ensite handler-apache2.conf
+a2ensite portal-apache2.conf
+a2ensite manager-apache2.conf
+a2ensite test-apache2.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>a2ensite manager-apache2.conf
 a2ensite portal-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T162138Z" changeid="xavier">
         <seg>a2ensite manager-apache2.conf
 a2ensite portal-apache2.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>a2ensite manager-apache2.conf
+a2ensite portal-apache2.conf
+a2ensite handler-apache2.conf
+a2ensite test-apache2.conf</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115754Z" changeid="xavier">
+        <seg>a2ensite manager-apache2.conf
+a2ensite portal-apache2.conf
+a2ensite handler-apache2.conf
+a2ensite test-apache2.conf</seg>
       </tuv>
     </tu>
     <tu>
@@ -48004,6 +48102,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2012/ow2-con12/scbcwz/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115812Z" changeid="xavier">
+        <seg>http://lanyrd.com/2012/ow2-con12/scbcwz/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://lanyrd.com/2012/solutionslinux/sryym/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121005T042206Z" changeid="xavier">
@@ -48200,6 +48306,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051040Z" changeid="guimard">
         <seg>http://oss.oetiker.ch/mrtg/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://ow2.org/view/OW2Con-2012/Session_OW2_Project_Spotlight</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115757Z" changeid="xavier">
+        <seg>http://ow2.org/view/OW2Con-2012/Session_OW2_Project_Spotlight</seg>
       </tuv>
     </tu>
     <tu>
@@ -49112,6 +49226,46 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121018T040352Z" changeid="xavier">
         <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2653</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2710</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115831Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2710</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2711</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115827Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2711</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2712</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115824Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2712</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2713</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115816Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2713</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2714</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20130105T115814Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2714</seg>
       </tuv>
     </tu>
     <tu>
