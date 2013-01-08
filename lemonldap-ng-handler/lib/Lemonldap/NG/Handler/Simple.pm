@@ -829,7 +829,8 @@ sub hideCookie {
     $tmp =~ s/$cookieName(http)?=[^,;]*[,;\s]*//og;
     if ($tmp) {
         $class->lmSetHeaderIn( $apacheRequest, 'Cookie' => $tmp );
-    } else {
+    }
+    else {
         $class->lmUnsetHeaderIn( $apacheRequest, 'Cookie' );
     }
 }
@@ -1500,8 +1501,7 @@ sub postUrlInit {
         $d->{postUrl} ||= $url;
 
         # Register POST form for POST URL
-        $transform->{ $d->{postUrl} } =
-          sub { $class->buildPostForm( $d->{postUrl} ) }
+        $transform->{$url} = sub { $class->buildPostForm( $d->{postUrl} ) }
           if ( $url ne $d->{postUrl} );
 
         # Get datas to POST
@@ -1527,8 +1527,8 @@ sub postUrlInit {
         }
 
         $class->lmLog( "Compiling POST request for $url", 'debug' );
-        $transform->{$url} = sub {
-            return $class->buildPostForm($url)
+        $transform->{ $d->{postUrl} } = sub {
+            return $class->buildPostForm( $d->{postUrl} )
               if ( $apacheRequest->method ne 'POST' );
             $apacheRequest->add_input_filter(
                 sub {
