@@ -1429,7 +1429,7 @@ sub buildPostForm {
             my $r = shift;
             $r->content_type('text/html; charset=UTF-8');
             $r->print(
-qq{<html><body onload="document.getElementById('f').submit()"><form id="f" method="post" action="$url"><input type=hidden name="a" value="}
+qq{<html><body onload="document.getElementById('f').submit()"><form id="f" method="post" action="$url" style="visibility:hidden"><input type=hidden name="a" value="}
                   . sprintf( "%0" . $count . "d", 1 )
                   . qq{"/><input type="submit" value="Ok"/></form></body></html>}
             );
