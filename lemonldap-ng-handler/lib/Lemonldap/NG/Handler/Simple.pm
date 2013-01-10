@@ -907,6 +907,9 @@ sub retrieveSession {
     # Update the session to notify activity, if necessary
     $h{_lastSeen} = time() if ($timeoutActivity);
 
+    # Set _session_id key
+    $h{_session_id} = $id;
+
     # Store data in current shared variables
     $datas->{$_} = $h{$_} foreach ( keys %h );
 
