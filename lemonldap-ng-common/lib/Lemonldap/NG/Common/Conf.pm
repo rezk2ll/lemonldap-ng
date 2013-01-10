@@ -19,7 +19,7 @@ use Config::IniFiles;
 #inherits Lemonldap::NG::Common::Conf::SOAP
 #inherits Lemonldap::NG::Common::Conf::LDAP
 
-our $VERSION = '1.2.2';
+our $VERSION = '1.3.0';
 our $msg;
 our $iniObj;
 
@@ -177,6 +177,11 @@ sub getConf {
         if ($@) {
             $msg .= "Bad key: $@. \n";
             return $r;
+        }
+
+        # Convert old option useXForwardedForIP into trustedProxies
+        if ( $r->{useXForwardedForIP} == 1 ) {
+            $r->{trustedProxies} = '*';
         }
         return $r;
     }
