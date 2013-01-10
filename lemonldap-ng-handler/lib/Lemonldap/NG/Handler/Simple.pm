@@ -1553,15 +1553,25 @@ sub postFilter {
 
     unless ( $f->ctx ) {
         $f->ctx(1);
+
+        # Create the transformed form data
         my $u = URI->new('http:');
         $u->query_form( { $class->safe->reval($data) } );
         my $s = $u->query();
+
+        # Eat all fake data sent by client
         $l = $f->r->headers_in->{'Content-Length'};
+        while ( $f->read( my $b, $l ) ) { }
+
+        # Send to application real data
         $f->r->headers_in->set( 'Content-Length' => length($s) );
         $f->r->headers_in->set(
             'Content-Type' => 'application/x-www-form-urlencoded' );
         $f->print($s);
-        while ( $f->read( my $b, $l ) ) { }
+
+        $class->lmLog( "Send POST data $s", 'debug' );
+
+        # Mark this filter as done
         $f->seen_eos(1);
     }
     return OK;
