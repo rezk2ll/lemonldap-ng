@@ -478,7 +478,7 @@ sub new {
 # @param module module name
 # @return boolean
 sub loadModule {
-    my ($self, $module) = splice @_;
+    my ( $self, $module ) = splice @_;
 
     return 1 unless $module;
 
@@ -971,7 +971,8 @@ sub getApacheSession {
 
         # Session not available (expired ?)
         if ($id) {
-            $self->lmLog( "Session $id can't be retrieved (" . $self->ipAddr . ")",
+            $self->lmLog(
+                "Session $id can't be retrieved (" . $self->ipAddr . ")",
                 'info' )
               unless $noInfo;
         }
@@ -1744,21 +1745,35 @@ sub controlExistingSession {
                 }
 
                 # Call logout for the module used to authenticate
+                $self->lmLog(
+                    "Process logout for authentication module " . $h->{_auth},
+                    'debug' );
+
                 if ( $h->{'_auth'} ne $self->get_module('auth') ) {
-                    $self->loadModule(
-                        "Lemonldap::NG::Portal::Auth" . $h->{_auth} );
-                    eval {
-                        $self->{error} =
-                          $self->_sub( "Lemonldap::NG::Portal::Auth"
-                              . $h->{_auth}
-                              . "::authLogout" );
-                    };
+                    my $module_name =
+                      'Lemonldap::NG::Portal::Auth' . $h->{_auth};
+
+                    unless ( $self->loadModule($module_name) ) {
+                        $self->lmLog( "Unable to load $module_name", 'error' );
+                    }
+                    else {
+                        eval {
+                            $self->{error} = $self->_subProcess(
+                                $module_name . "::authInit",
+                                $module_name . "::authLogout"
+                            );
+                        };
+                    }
                 }
                 else {
-                    eval { $self->{error} = $self->_sub('authLogout'); };
+                    eval {
+                        $self->{error} =
+                          $self->_subProcess( 'authInit', 'authLogout' );
+                    };
                 }
                 if ($@) {
-                    $self->lmLog( "Error when calling authLogout: $@",
+                    $self->lmLog(
+                        "Error when calling authentication logout: $@",
                         'debug' );
                 }
                 return $self->{error} if $self->{error} > 0;
@@ -1834,7 +1849,7 @@ sub controlExistingSession {
                 $self->updatePersistentSession( { appsListOrder => $order } );
                 $self->quit();
             }
- 
+
             $self->{id} = $id;
 
             # A session has been found => call existingSession
@@ -2227,8 +2242,8 @@ sub removeOther {
     }
     if ( $self->{singleUserByIP} ) {
         my $sessions =
-          $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
-            'ipAddr', $self->ipAddr );
+          $self->{globalStorage}
+          ->searchOn( $self->{globalStorageOptions}, 'ipAddr', $self->ipAddr );
         foreach my $id ( keys %$sessions ) {
             next if ( $current and $current eq $id );
             my $h = $self->getApacheSession( $id, 1 ) or next;
