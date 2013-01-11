@@ -1584,9 +1584,9 @@ sub storeReplayProtection {
 
     return 0 unless $samlSessionInfo;
 
-    $samlSessionInfo->{type}   = 'assertion';    # Session type
-    $samlSessionInfo->{_utime} = time();         # Creation time
-    $samlSessionInfo->{ID}     = $samlID;
+    $samlSessionInfo->{type}       = 'assertion';    # Session type
+    $samlSessionInfo->{_utime}     = time();         # Creation time
+    $samlSessionInfo->{_assert_id} = $samlID;
 
     if ( defined $samlData && $samlData ) {
         $samlSessionInfo->{data} = $samlData;
@@ -1617,7 +1617,7 @@ sub replayProtection {
 
     my $sessions =
       $self->{samlStorage}
-      ->searchOn( $self->{samlStorageOptions}, "ID", $samlID );
+      ->searchOn( $self->{samlStorageOptions}, "_assert_id", $samlID );
 
     if ( my @keys = keys %$sessions ) {
 
@@ -1716,7 +1716,7 @@ sub storeArtifact {
 
     $samlSessionInfo->{type}     = 'artifact';                   # Session type
     $samlSessionInfo->{_utime}   = time();                       # Creation time
-    $samlSessionInfo->{ID}       = $id;
+    $samlSessionInfo->{_art_id}  = $id;
     $samlSessionInfo->{message}  = $message;
     $samlSessionInfo->{_saml_id} = $session_id if $session_id;
 
@@ -1743,7 +1743,8 @@ sub loadArtifact {
     }
 
     my $sessions =
-      $self->{samlStorage}->searchOn( $self->{samlStorageOptions}, "ID", $id );
+      $self->{samlStorage}
+      ->searchOn( $self->{samlStorageOptions}, "_art_id", $id );
 
     if ( my @keys = keys %$sessions ) {
 
