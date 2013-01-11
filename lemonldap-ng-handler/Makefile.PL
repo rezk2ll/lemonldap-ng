@@ -4,13 +4,12 @@ use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 WriteMakefile(
-    NAME         => 'Lemonldap::NG::Handler',
-    VERSION_FROM => 'lib/Lemonldap/NG/Handler.pm',
-    LICENSE      => 'perl',
-    PMLIBDIRS    => ['lib'],
-    BUILD_REQUIRES =>
-      { 'IO::Pipe' => 0, 'Test::MockObject' => 0 },
-    PREREQ_PM => {
+    NAME           => 'Lemonldap::NG::Handler',
+    VERSION_FROM   => 'lib/Lemonldap/NG/Handler.pm',
+    LICENSE        => 'perl',
+    PMLIBDIRS      => ['lib'],
+    BUILD_REQUIRES => { 'IO::Pipe' => 0, 'Test::MockObject' => 0 },
+    PREREQ_PM      => {
         'Apache::Session'                => 0,
         'LWP::UserAgent'                 => 0,
         'Cache::Cache'                   => 0,
@@ -18,8 +17,10 @@ WriteMakefile(
         'CGI'                            => 3.08,
         'URI'                            => 0,
         'Apache::Session::Generate::MD5' => 0,
-	'Test::Pod'                      => 0,
-	'SOAP::Lite'                     => 0,
+        'Test::Pod'                      => 1.00,
+        'SOAP::Lite'                     => 0,
+        'Cache::Memcached'               => 0,
+        'Digest::HMAC_SHA1'              => 0,
     },    # e.g., Module::Name => 1.1
     (
         $] >= 5.005

@@ -37,11 +37,12 @@ WriteMakefile(
         'XML::Simple'            => 0,
         'XML::LibXML'            => 0,
         'XML::LibXSLT'           => 0,
-	'Test::Pod'              => 0,
+        'Test::Pod'              => 1.00,
         'Crypt::OpenSSL::RSA'    => 0,
         'Crypt::OpenSSL::X509'   => 0,
         'Crypt::OpenSSL::Bignum' => 0,
         'Net::CIDR::Lite'        => 0,
+        'Net::LDAP'              => 0,
     },    # e.g., Module::Name => 1.1
           #EXE_FILES => [ 'scripts/convertConfig', ],
     (

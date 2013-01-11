@@ -23,7 +23,7 @@ WriteMakefile(
         'LWP::UserAgent'         => 0,
         'XML::LibXML'            => 0,
         'XML::LibXSLT'           => 0,
-	'Test::Pod'              => 0,
+        'Test::Pod'              => 1.00,
     },    # e.g., Module::Name => 1.1
     (
         $] >= 5.005

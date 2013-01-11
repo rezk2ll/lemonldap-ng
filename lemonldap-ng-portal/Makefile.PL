@@ -9,6 +9,7 @@ WriteMakefile(
     LICENSE      => 'gpl',
     META_MERGE   => {
         'recommends' => {
+            'AuthCAS'               => 0,
             'Convert::PEM'          => 0,
             'Crypt::OpenSSL::X509'  => 0,
             'Email::Date::Format'   => 0,
@@ -19,14 +20,17 @@ WriteMakefile(
         },
     },
     BUILD_REQUIRES => {
-        'Crypt::OpenSSL::X509' => 0,
-        'IO::String'           => 0,
-        'SOAP::Lite'           => 0,
+        'AuthCAS'               => 0,
+        'Crypt::OpenSSL::X509'  => 0,
+        'IO::String'            => 0,
+        'Net::OpenID::Consumer' => 0,
+        'Net::OpenID::Server'   => 0,
+        'SOAP::Lite'            => 0,
     },
     PREREQ_PM => {
         'Apache::Session'        => 0,
         'Authen::Captcha'        => 0,
-	'CGI'                    => 3.08,
+        'CGI'                    => 3.08,
         'File::Basename'         => 0,
         'HTML::Template'         => 0,
         'Lemonldap::NG::Common'  => '1.3.0',
@@ -34,7 +38,7 @@ WriteMakefile(
         'MIME::Lite'             => 0,
         'Net::LDAP'              => 0,
         'String::Random'         => 0,
-	'Test::Pod'              => 0,
+        'Test::Pod'              => 1.00,
         'Clone'                  => 0,
         'URI'                    => 0,
     },

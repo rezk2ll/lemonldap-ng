@@ -21,10 +21,11 @@ requires:
     DBI:                  0
     HTTP::Headers:        0
     Net::CIDR::Lite:      0
+    Net::LDAP:            0
     Regexp::Assemble:     0
     SOAP::Lite:           0
     Storable:             0
-    Test::Pod:            0
+    Test::Pod:            1
     XML::LibXML:          0
     XML::LibXSLT:         0
     XML::Simple:          0
