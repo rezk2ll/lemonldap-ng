@@ -36,7 +36,7 @@ WriteMakefile(
         'Lemonldap::NG::Common'  => '1.3.0',
         'Lemonldap::NG::Handler' => '1.3.0',
         'MIME::Lite'             => 0,
-        'Net::LDAP'              => 0,
+        'Net::LDAP'              => 0.38,
         'String::Random'         => 0,
         'Test::Pod'              => 1.00,
         'Clone'                  => 0,
