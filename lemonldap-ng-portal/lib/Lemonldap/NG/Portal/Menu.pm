@@ -39,6 +39,7 @@ sub menuInit {
       unless $self->{ignorePasswordChange};
 
     # Default menu error code
+    $self->{menuError} = PE_PASSWORD_OK if ( $self->{passwordWasChanged} );
     $self->{menuError} ||= $self->{error};
 
     # Tab to display
