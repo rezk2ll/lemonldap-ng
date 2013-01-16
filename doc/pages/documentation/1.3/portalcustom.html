@@ -51,7 +51,17 @@ LemonLDAP::NG is shipped with 3 skins:
 
 <p>
 
-You can change the skin in Manager: <code>General Parameters</code> &gt; <code>Portal</code> &gt; <code>Customization</code> &gt; <code>Skin</code>.
+But you can make your own, see Skin customization below.
+</p>
+
+</div>
+<!-- SECTION "Skin" [143-289] -->
+<h3><a name="default_skin" id="default_skin">Default skin</a></h3>
+<div class="level3">
+
+<p>
+
+You can change the default skin in Manager: <code>General Parameters</code> &gt; <code>Portal</code> &gt; <code>Customization</code> &gt; <code>Default skin</code>.
 </p>
 
 <p>
@@ -59,7 +69,27 @@ You can change the skin in Manager: <code>General Parameters</code> &gt; <code>P
 </p>
 
 </div>
-<!-- SECTION "Skin" [143-382] -->
+<!-- SECTION "Default skin" [290-480] -->
+<h3><a name="skin_rules" id="skin_rules">Skin rules</a></h3>
+<div class="level3">
+
+<p>
+
+You might want to display different skin depending on the <acronym title="Uniform Resource Locator">URL</acronym> that was called before being redirected to the portal, or the <acronym title="Internet Protocol">IP</acronym> address of the user.
+</p>
+
+<p>
+To achieve this, you can create a rule in the Manager: select <code>General Parameters</code> &gt; <code>Portal</code> &gt; <code>Customization</code> &gt; <code>Skin display rules</code> on click on “New key”. Then fill the two fields;
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Rule</strong>: a <acronym title="Practical Extraction and Report Language">Perl</acronym> expression (you can use %ENV hash to get environment variables, or $_url to get <acronym title="Uniform Resource Locator">URL</acronym> called before redirection, or $ipAddr to use user <acronym title="Internet Protocol">IP</acronym> address). If the rule evaluation is true,  the corresponding skin is applied.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Skin</strong>: the name of the skin to use.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Skin rules" [481-1123] -->
 <h3><a name="skin_files" id="skin_files">Skin files</a></h3>
 <div class="level3">
 
@@ -84,7 +114,7 @@ A skin will often refer to the <code>common</code> skin, which is not a real ski
 </p>
 
 </div>
-<!-- SECTION "Skin files" [383-717] -->
+<!-- SECTION "Skin files" [1124-1458] -->
 <h3><a name="skin_customization" id="skin_customization">Skin customization</a></h3>
 <div class="level3">
 
@@ -145,7 +175,7 @@ To configure your new skin in Manager, select the custom skin, and enter your sk
 </p>
 
 </div>
-<!-- SECTION "Skin customization" [718-1812] -->
+<!-- SECTION "Skin customization" [1459-2553] -->
 <h3><a name="error_messages" id="error_messages">Error messages</a></h3>
 <div class="level3">
 
@@ -159,7 +189,7 @@ Error messages are defined in source code. If they really do not please you, ove
 <span class="re1">error_0</span> <span class="sy0">=</span><span class="re2"> Big brother is watching you, authenticated user</span></pre>
 
 </div>
-<!-- SECTION "Error messages" [1813-2150] -->
+<!-- SECTION "Error messages" [2554-2891] -->
 <h3><a name="template_parameters" id="template_parameters">Template parameters</a></h3>
 <div class="level3">
 
@@ -179,7 +209,7 @@ Then you will be able to use it in your template like this:
 <pre class="code file html4strict">Hello <span class="sc2">&lt;TMPL_VAR <span class="kw3">NAME</span><span class="sy0">=</span><span class="st0">&quot;myparam&quot;</span>&gt;</span>!</pre>
 
 </div>
-<!-- SECTION "Template parameters" [2151-2521] -->
+<!-- SECTION "Template parameters" [2892-3262] -->
 <h2><a name="other_parameters" id="other_parameters">Other parameters</a></h2>
 <div class="level2">
 <ul>
@@ -215,4 +245,4 @@ Then you will be able to use it in your template like this:
 </p>
 
 </div>
-<!-- SECTION "Other parameters" [2522-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Other parameters" [3263-] --></div><!-- closes <div class="dokuwiki export">-->
