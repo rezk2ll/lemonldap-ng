@@ -44,7 +44,7 @@
 	var text4protect='<lang en="Protect" fr="Protéger" />';
 	var text4newCategory='<lang en="Category identifier" fr="Identifiant de la catégorie" />';
 	var text4newApplication='<lang en="Application identifier" fr="Identifiant de l\'application" />';
-        var text4newCondition='<lang en="New Condition" fr="nouvelle Condition" />';
+        var text4newCondition='<lang en="New Condition" fr="Nouvelle Condition" />';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/js/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />

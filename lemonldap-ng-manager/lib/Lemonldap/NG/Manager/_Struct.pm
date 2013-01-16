@@ -291,11 +291,16 @@ sub struct {
 
                 portalCustomization => {
                     _nodes => [
-                        qw(portalSkin portalAutocomplete portalCheckLogins portalUserAttr portalOpenLinkInNewWindow portalAntiFrame passwordManagement)
+                        qw(portalSkin cn:portalSkinRules portalAutocomplete portalCheckLogins portalUserAttr portalOpenLinkInNewWindow portalAntiFrame passwordManagement)
                     ],
                     _help => 'portalcustom',
 
                     portalSkin => 'text:/portalSkin:portalcustom:skinSelect',
+                    portalSkinRules => {
+                        _nodes => ['hash:/portalSkinRules:portalcustom:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'portalcustom',
+                    },
                     portalAutocomplete => 'bool:/portalAutocomplete',
                     portalCheckLogins  => 'bool:/portalCheckLogins',
                     portalUserAttr     => 'text:/portalUserAttr',
@@ -715,9 +720,9 @@ sub struct {
 
             # LOGS PARAMETERS
             logParams => {
-                _nodes => [qw(syslog trustedProxies whatToTrace)],
-                _help  => 'logs',
-                syslog => 'text:/syslog',
+                _nodes         => [qw(syslog trustedProxies whatToTrace)],
+                _help          => 'logs',
+                syslog         => 'text:/syslog',
                 trustedProxies => 'text:/trustedProxies',
                 whatToTrace    => 'text:/whatToTrace',
             },
@@ -1553,6 +1558,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test    => qr/\w+$/,
             msgFail => 'Bad skin name',
         },
+        portalSkinRules => {
+            keyTest    => $perlExpr,
+            keyMsgFail => 'Bad skin rule',
+            test       => qr/\w+$/,
+            msgFail    => 'Bad skin name',
+        },
         portalUserAttr => {
             test    => qr/\w+$/,
             msgFail => 'Unvalid session field',
@@ -1604,7 +1615,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             msgFail => 'Bad number',
         },
         trustedProxies => $testNotDefined,
-        userControl => {
+        userControl    => {
             test    => $pcre,
             msgFail => 'Bad regular expression',
         },
