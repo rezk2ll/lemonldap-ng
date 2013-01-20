@@ -17,6 +17,7 @@ WriteMakefile(
             'Net::OpenID::Consumer' => 0,
             'Net::OpenID::Server'   => 0,
             'Net::Twitter'          => 0,
+            'SOAP::Lite'            => 0,
         },
     },
     BUILD_REQUIRES => {
