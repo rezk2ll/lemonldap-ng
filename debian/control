@@ -71,7 +71,6 @@ Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
          libapache2-mod-perl2,
-         libapache-session-perl,
          liblemonldap-ng-conf-perl (= ${binary:Version}),
          liburi-perl,
          libwww-perl
@@ -99,6 +98,7 @@ Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
          debconf,
+         libapache-session-perl,
          libcache-cache-perl,
          libconfig-inifiles-perl,
          libcrypt-openssl-bignum-perl,
@@ -136,7 +136,7 @@ Depends: ${misc:Depends},
          libxml-libxml-perl,
          libxml-libxslt-perl,
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
-            libapache-session-browseable-perl | libapache-session-perl,
+            libapache-session-browseable-perl,
             libsoap-lite-perl
 Pre-Depends: debconf
 Description: Lemonldap::NG manager part
@@ -156,7 +156,6 @@ Package: liblemonldap-ng-portal-perl
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
-         libapache-session-perl,
          libclone-perl,
          libcrypt-openssl-x509-perl,
          libhtml-template-perl,
