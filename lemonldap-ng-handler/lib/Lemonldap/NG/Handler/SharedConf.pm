@@ -134,7 +134,7 @@ sub run($$) {
 # Test if configuration has changed and launch setConf() if needed.
 # If the optional boolean $local is true, remote configuration is not tested:
 # only local cached configuration is tested if available. $local is given to
-# Lemonldap::NG::Conf::getConf()
+# Lemonldap::NG::Common::getConf()
 # @param $local boolean
 # @return Apache constant
 sub testConf {

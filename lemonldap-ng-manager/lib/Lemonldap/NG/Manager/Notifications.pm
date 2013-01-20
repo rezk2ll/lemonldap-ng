@@ -640,7 +640,7 @@ notifications
             'cache_root'         => '/tmp',
             'cache_depth'        => 5,
         },
-        configStorage => $Lemonldap::NG::Conf::configStorage,
+        configStorage => $Lemonldap::NG::Common::configStorage,
         configStorage=>{
           type=>'File',
           dirName=>"/tmp/",

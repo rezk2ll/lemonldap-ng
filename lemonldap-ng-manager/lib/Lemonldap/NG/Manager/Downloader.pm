@@ -545,7 +545,7 @@ sub corresp {
 }
 
 ## @method protected void sendCfgParams(hashref h)
-# Send Author, IP, and date from a Lemonldap::NG::Conf
+# Send Author, IP, and date from a Lemonldap::NG conf
 sub sendCfgParams {
     my ( $self, $h ) = @_;
     my $cfgDatas = {};
