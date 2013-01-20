@@ -16,7 +16,6 @@ WriteMakefile(
         'Lemonldap::NG::Common'          => '1.3.0',
         'CGI'                            => 3.08,
         'URI'                            => 0,
-        'Apache::Session::Generate::MD5' => 0,
         'Test::Pod'                      => 1.00,
         'SOAP::Lite'                     => 0,
         'Cache::Memcached'               => 0,
