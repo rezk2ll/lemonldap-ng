@@ -14,7 +14,6 @@ WriteMakefile(
         'IO::String'           => 0,
     },
     PREREQ_PM => {
-        'CGI'                    => 3.08,
         'File::Basename'         => 0,
         'HTML::Template'         => 0,
         'JSON'                   => 0,
