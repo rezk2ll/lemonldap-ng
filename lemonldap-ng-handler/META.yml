@@ -12,8 +12,6 @@ build_requires:
     IO::Pipe:          0
     Test::MockObject:  0
 requires:
-    Apache::Session:      0
-    Apache::Session::Generate::MD5:  0
     Cache::Cache:         0
     Cache::Memcached:     0
     CGI:                  3.08

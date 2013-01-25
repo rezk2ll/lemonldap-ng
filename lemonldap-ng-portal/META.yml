@@ -16,7 +16,6 @@ build_requires:
     Net::OpenID::Server:  0
     SOAP::Lite:           0
 requires:
-    Apache::Session:      0
     Authen::Captcha:      0
     CGI:                  3.08
     Clone:                0

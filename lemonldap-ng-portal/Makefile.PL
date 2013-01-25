@@ -29,7 +29,6 @@ WriteMakefile(
         'SOAP::Lite'            => 0,
     },
     PREREQ_PM => {
-        'Apache::Session'        => 0,
         'Authen::Captcha'        => 0,
         'CGI'                    => 3.08,
         'File::Basename'         => 0,
