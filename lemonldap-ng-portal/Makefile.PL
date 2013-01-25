@@ -30,6 +30,7 @@ WriteMakefile(
         'Authen::Captcha'        => 0,
         'CGI'                    => 3.08,
         'HTML::Template'         => 0,
+        'HTTP::Message'          => 0,
         'Lemonldap::NG::Common'  => '1.3.0',
         'Lemonldap::NG::Handler' => '1.3.0',
         'MIME::Lite'             => 0,

@@ -17,6 +17,7 @@ requires:
     Cache::Memcached:     0
     CGI:                  3.08
     Digest::HMAC_SHA1:    0
+    HTTP::Message:        0
     Lemonldap::NG::Common:  1.3.0
     LWP::UserAgent:       0
     SOAP::Lite:           0

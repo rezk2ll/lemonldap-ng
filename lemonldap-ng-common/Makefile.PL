@@ -30,7 +30,7 @@ WriteMakefile(
         'Config::IniFiles'       => 0,
         'Crypt::Rijndael'        => 0,
         'DBI'                    => 0,
-        'HTTP::Headers'          => 0,
+        'HTTP::Message'          => 0,
         'Regexp::Assemble'       => 0,
         'SOAP::Lite'             => 0,
         'Storable'               => 0,

@@ -19,7 +19,7 @@ requires:
     Crypt::Rijndael:      0
     DBI:                  0
     File::Basename:       0
-    HTTP::Headers:        0
+    HTTP::Message:        0
     Net::CIDR::Lite:      0
     Net::LDAP:            0
     Regexp::Assemble:     0
