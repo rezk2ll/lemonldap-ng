@@ -8,19 +8,28 @@ WriteMakefile(
     VERSION_FROM   => 'lib/Lemonldap/NG/Handler.pm',
     LICENSE        => 'perl',
     PMLIBDIRS      => ['lib'],
-    BUILD_REQUIRES => { 'IO::Pipe' => 0, 'Test::MockObject' => 0 },
-    PREREQ_PM      => {
-        'LWP'                            => 0,
-        'Cache::Cache'                   => 0,
-        'Lemonldap::NG::Common'          => '1.3.0',
-        'CGI'                            => 3.08,
-        'URI'                            => 0,
-        'Test::Pod'                      => 1.00,
+    BUILD_REQUIRES => {
+        'Cache::Memcached'  => 0,
+        'Digest::HMAC_SHA1' => 0,
+        'HTTP::Message'     => 0,
+        'IO::Pipe'          => 0,
         'SOAP::Lite'                     => 0,
-        'Cache::Memcached'               => 0,
-        'Digest::HMAC_SHA1'              => 0,
+        'Test::MockObject'  => 0,
+        'Test::Pod'         => 0,
+    },
+    META_MERGE => {
+        'recommends' => {
+            'Cache::Memcached'  => 0,
+            'Digest::HMAC_SHA1' => 0,
+            'HTTP::Message'     => 0,
+        'SOAP::Lite'                     => 0,
+        },
+    },
+    PREREQ_PM => {
         'Apache::Session::Generate::MD5' => 0,
-        'HTTP::Message'                  => 0,
+        'CGI'                            => 3.08,
+        'Lemonldap::NG::Common'          => '1.3.0',
+        'LWP'                            => 0,
         'URI'                            => 0,
     },    # e.g., Module::Name => 1.1
     (
