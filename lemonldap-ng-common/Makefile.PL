@@ -25,6 +25,7 @@ WriteMakefile(
     LICENSE        => 'perl',
     BUILD_REQUIRES => {
         'IO::String' => 0,
+        'Net::LDAP'  => 0,
         'Test::Pod'  => 1.00,
     },
     META_MERGE => {
