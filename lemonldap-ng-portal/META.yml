@@ -28,6 +28,7 @@ requires:
     String::Random:       0
     Test::Pod:            1
     URI:                  0
+    XML::Simple:          0
 no_index:
     directory:
         - t

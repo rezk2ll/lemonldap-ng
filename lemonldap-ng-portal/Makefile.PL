@@ -40,6 +40,7 @@ WriteMakefile(
         'Test::Pod'              => 1.00,
         'Clone'                  => 0,
         'URI'                    => 0,
+        'XML::Simple'            => 0,
     },
     (
         $] >= 5.005
