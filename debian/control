@@ -6,6 +6,7 @@ Priority: optional
 Build-Depends: debhelper (>= 8),
                po-debconf
 Build-Depends-Indep: libapache-session-perl,
+                     libauthcas-perl,
                      libauthen-captcha-perl,
                      libcache-cache-perl,
                      libnet-cidr-lite-perl,
@@ -15,17 +16,24 @@ Build-Depends-Indep: libapache-session-perl,
                      libcrypt-rijndael-perl,
                      libconfig-inifiles-perl,
                      libdbi-perl,
+                     libdigest-hmac-perl,
                      libhtml-template-perl,
+                     libhttp-message-perl,
                      libio-string-perl,
+                     libjson-perl,
                      libmime-lite-perl,
                      libnet-ldap-perl,
+                     libnet-openid-consumer-perl,
+                     libnet-openid-server-perl,
                      libregexp-assemble-perl,
                      libsoap-lite-perl,
                      libstring-random-perl,
-                     liburi-perl,
                      libwww-perl,
+                     libxml-libxml-perl,
                      libxml-libxslt-perl,
                      libxml-simple-perl,
+                     libtest-mockobject-perl,
+                     libtest-pod-perl,
                      perl
 Standards-Version: 3.9.4
 Homepage: http://lemonldap-ng.org/
@@ -72,7 +80,6 @@ Depends: ${misc:Depends},
          ${perl:Depends},
          libapache2-mod-perl2,
          liblemonldap-ng-conf-perl (= ${binary:Version}),
-         liburi-perl,
          libwww-perl
 Recommends: libapache-session-browseable-perl
 Suggests: libcache-memcached-perl,
@@ -101,14 +108,18 @@ Depends: ${misc:Depends},
          libapache-session-perl,
          libcache-cache-perl,
          libconfig-inifiles-perl,
-         libcrypt-openssl-bignum-perl,
+         libcrypt-openssl-rsa-perl,
          libcrypt-rijndael-perl,
-         libxml-simple-perl,
-         libxml-libxml-perl,
-         libxml-libxslt-perl,
-         libnet-cidr-lite-perl
-Recommends: libdbi-perl,
-            libsoap-lite-perl
+         libdbi-perl,
+         libfile-basename-perl,
+         libnet-cidr-lite-perl,
+         libregexp-assemble-perl,
+         libsoap-lite-perl
+Recommends: libhtml-template-perl,
+            libhtml-message-perl,
+            libnet-ldap-perl,
+            libxml-libxml-perl,
+            libxml-simple-perl
 Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
@@ -128,16 +139,15 @@ Depends: ${misc:Depends},
          ${perl:Depends},
          libconvert-pem-perl,
          libcrypt-openssl-rsa-perl,
-         libcrypt-openssl-x509-perl,
          libhtml-template-perl,
          libjson-perl,
          liblemonldap-ng-conf-perl (= ${binary:Version}),
          liblemonldap-ng-handler-perl (= ${binary:Version}),
+         libwww-perl,
          libxml-libxml-perl,
-         libxml-libxslt-perl,
+         libxml-libxslt-perl
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
-            libapache-session-browseable-perl,
-            libsoap-lite-perl
+            libapache-session-browseable-perl
 Pre-Depends: debconf
 Description: Lemonldap::NG manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
@@ -156,27 +166,30 @@ Package: liblemonldap-ng-portal-perl
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
+         libauthen-captcha-perl,
          libclone-perl,
-         libcrypt-openssl-x509-perl,
          libhtml-template-perl,
          liblemonldap-ng-conf-perl (= ${binary:Version}),
-         libmime-lite-perl,
-         libregexp-assemble-perl,
-         libsoap-lite-perl,
-         libstring-random-perl,
+         liblemonldap-ng-handler-perl (= ${binary:Version}),
+         libnet-ldap-perl
 Recommends: libapache-session-browseable-perl,
-            libconvert-pem-perl,
-            libemail-date-format-perl,
-            libnet-ldap-perl,
             libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl (>= 2.3.0) | libnet-twitter-perl | libauthcas-perl
 Suggests: libauthcas-perl,
-          libauthen-captcha-perl,
-          libauthen-sasl-perl,
+          libdbi-perl,
+          libglib-perl,
+          libhttp-message-perl,
           liblasso-perl (>= 2.3.0),
-          liblemonldap-ng-handler-perl (= ${binary:Version}),
+          libmime-lite-perl,
           libnet-openid-consumer-perl,
           libnet-openid-server-perl,
           libnet-twitter-perl,
+          libsoap-lite,
+          libstring-random-perl,
+          liburi-perl,
+          libwww-perl,
+          libxml-libxml-perl,
+          libxml-libxslt-perl,
+          libxml-simple-perl,
           slapd
 Pre-Depends: debconf
 Description: Lemonldap::NG authentication portal part
