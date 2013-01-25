@@ -10,8 +10,6 @@ WriteMakefile(
     META_MERGE   => {
         'recommends' => {
             'AuthCAS'               => 0,
-            'Convert::PEM'          => 0,
-            'Crypt::OpenSSL::X509'  => 0,
             'Email::Date::Format'   => 0,
             'Lasso'                 => '2.3.0',
             'Net::OpenID::Consumer' => 0,
@@ -22,7 +20,6 @@ WriteMakefile(
     },
     BUILD_REQUIRES => {
         'AuthCAS'               => 0,
-        'Crypt::OpenSSL::X509'  => 0,
         'IO::String'            => 0,
         'Net::OpenID::Consumer' => 0,
         'Net::OpenID::Server'   => 0,

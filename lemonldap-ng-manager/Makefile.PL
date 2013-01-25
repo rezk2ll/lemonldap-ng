@@ -8,12 +8,13 @@ WriteMakefile(
     VERSION_FROM   => 'lib/Lemonldap/NG/Manager.pm',    # finds $VERSION
     LICENSE        => 'perl',
     BUILD_REQUIRES => {
-        'Convert::PEM'         => 0,
-        'Crypt::OpenSSL::RSA'  => 0,
-        'Crypt::OpenSSL::X509' => 0,
-        'IO::String'           => 0,
+        'Convert::PEM'        => 0,
+        'Crypt::OpenSSL::RSA' => 0,
+        'IO::String'          => 0,
     },
     PREREQ_PM => {
+        'Convert::PEM'           => 0,
+        'Crypt::OpenSSL::RSA'    => 0,
         'File::Basename'         => 0,
         'HTML::Template'         => 0,
         'JSON'                   => 0,

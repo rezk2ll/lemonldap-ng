@@ -11,9 +11,10 @@ configure_requires:
 build_requires:
     Convert::PEM:         0
     Crypt::OpenSSL::RSA:  0
-    Crypt::OpenSSL::X509:  0
     IO::String:           0
 requires:
+    Convert::PEM:         0
+    Crypt::OpenSSL::RSA:  0
     File::Basename:       0
     HTML::Template:       0
     JSON:                 0
