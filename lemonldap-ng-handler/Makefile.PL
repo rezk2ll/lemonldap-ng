@@ -19,6 +19,7 @@ WriteMakefile(
         'SOAP::Lite'                     => 0,
         'Cache::Memcached'               => 0,
         'Digest::HMAC_SHA1'              => 0,
+        'Apache::Session::Generate::MD5' => 0,
     },    # e.g., Module::Name => 1.1
     (
         $] >= 5.005
