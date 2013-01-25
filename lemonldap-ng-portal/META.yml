@@ -39,6 +39,7 @@ meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4
 recommends:
+    Apache::Session::Browseable:  0
     AuthCAS:              0
     DBI:                  0
     Glib:                 0
