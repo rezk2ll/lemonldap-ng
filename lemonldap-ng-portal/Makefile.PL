@@ -10,6 +10,7 @@ WriteMakefile(
     META_MERGE   => {
         'recommends' => {
             'AuthCAS'               => 0,
+            'DBI'                   => 0,
             'Email::Date::Format'   => 0,
             'Lasso'                 => '2.3.0',
             'Net::OpenID::Consumer' => 0,
