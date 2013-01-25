@@ -11,6 +11,7 @@ WriteMakefile(
         'recommends' => {
             'AuthCAS'               => 0,
             'DBI'                   => 0,
+            'Glib'                  => 0,
             'Lasso'                 => '2.3.0',
             'Net::OpenID::Consumer' => 0,
             'Net::OpenID::Server'   => 0,
