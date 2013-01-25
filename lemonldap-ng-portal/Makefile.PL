@@ -28,7 +28,6 @@ WriteMakefile(
     PREREQ_PM => {
         'Authen::Captcha'        => 0,
         'CGI'                    => 3.08,
-        'File::Basename'         => 0,
         'HTML::Template'         => 0,
         'Lemonldap::NG::Common'  => '1.3.0',
         'Lemonldap::NG::Handler' => '1.3.0',

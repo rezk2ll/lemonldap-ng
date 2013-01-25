@@ -42,6 +42,7 @@ WriteMakefile(
         'Crypt::OpenSSL::X509'   => 0,
         'Net::CIDR::Lite'        => 0,
         'Net::LDAP'              => 0,
+        'File::Basename'         => 0,
     },    # e.g., Module::Name => 1.1
           #EXE_FILES => [ 'scripts/convertConfig', ],
     (
