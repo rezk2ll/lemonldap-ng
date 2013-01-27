@@ -1429,6 +1429,14 @@ sub issuerForAuthUser {
                 $nameIDContent = $self->getMetaDataURL( "samlEntityID", 0, 1 );
             }
 
+            # Manage Transient NameID format
+            if ( $nameIDFormat eq $self->getNameIDFormat("transient") ) {
+                eval {
+                    my @assert = $login->response->Assertion;
+                    $nameIDContent = $assert[0]->Subject->NameID->content;
+                };
+            }
+
             if ( $login->nameIdentifier ) {
                 $login->nameIdentifier->Format($nameIDFormat);
                 $login->nameIdentifier->content($nameIDContent)
