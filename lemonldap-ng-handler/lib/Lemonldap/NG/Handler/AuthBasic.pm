@@ -10,6 +10,7 @@ use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 use Digest::MD5 qw(md5_base64);
 use MIME::Base64;
+use HTTP::Headers;
 use SOAP::Lite;    # link protected portalRequest
 
 use base qw(Lemonldap::NG::Handler::SharedConf);
