@@ -314,7 +314,7 @@ sub display {
 
     # Load specific skin from skinRules
     if ( $self->{portalSkinRules} ) {
-        foreach my $skinRule ( sort keys $self->{portalSkinRules} ) {
+        foreach my $skinRule ( sort keys %{ $self->{portalSkinRules} } ) {
             if ( $self->safe->reval($skinRule) ) {
                 $skin = $self->{portalSkinRules}->{$skinRule};
                 $self->lmLog( "Skin $skin selected from skin rule", 'debug' );
