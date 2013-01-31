@@ -1,5 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+See http://jira.ow2.org/browse/LEMONLDAP#selectedTab=com.atlassian.jira.plugin.system.project:changelog-panel&allVersions=true
+for newer revisions
+
 0.9   Mon jun 29 11:58:54 2009
 	- Doxygen documentation
 	- Sessions.pm now use $whatToTrace parameter instead of $uid
