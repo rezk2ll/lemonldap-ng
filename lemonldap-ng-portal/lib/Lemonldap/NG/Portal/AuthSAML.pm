@@ -1490,7 +1490,7 @@ L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::UserDBSAML>, L<Lemonldap::NG:
 
 =item Sandro Cazzaniga, E<lt>cazzaniga.sandro@gmail.comE<gt>
 
-=item Thomas Chemineau, E<lt>thomas.chemineau@linagora.comE<gt>
+=item Thomas Chemineau, E<lt>thomas.chemineau@gmail.comE<gt>
 
 =back
 
@@ -1516,7 +1516,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =item Copyright (C) 2010, 2011, 2012 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
 
-=item Copyright (C) 2010 by Thomas Chemineau, E<lt>thomas.chemineau@linagora.comE<gt>
+=item Copyright (C) 2010 by Thomas Chemineau, E<lt>thomas.chemineau@gmail.comE<gt>
 
 =back
 

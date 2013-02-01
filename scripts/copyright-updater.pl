@@ -52,7 +52,7 @@ binmode( STDOUT, ":utf8" );
 my $authors = {
     guimard       => 'Xavier Guimard, E<lt>x.guimard@free.frE<gt>',
     clement_oudot => 'Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>',
-    tchemineau => 'Thomas Chemineau, E<lt>thomas.chemineau@linagora.comE<gt>',
+    tchemineau => 'Thomas Chemineau, E<lt>thomas.chemineau@gmail.comE<gt>',
     kharec     => 'Sandro Cazzaniga, E<lt>cazzaniga.sandro@gmail.comE<gt>',
     fxdeltombe => 'François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>',
 };
@@ -188,6 +188,15 @@ __END__
 2011 clement_oudot
 2011 guimard
 2012 clement_oudot
+# lemonldap-ng-portal/lib/Lemonldap/NG/Portal/Notification.pm
+2009 guimard
+2010 clement_oudot
+2010 guimard
+2011 clement_oudot
+2011 guimard
+2012 clement_oudot
+2012 guimard
+2012 kharec
 # lemonldap-ng-common/lib/Lemonldap/NG/Common/Notification.pm
 2009 guimard
 2010 clement_oudot
