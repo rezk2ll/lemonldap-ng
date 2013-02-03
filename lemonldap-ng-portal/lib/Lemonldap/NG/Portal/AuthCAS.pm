@@ -259,7 +259,7 @@ __END__
 =encoding utf8
 
 Lemonldap::NG::Portal::AuthCAS - Perl extension for building Lemonldap::NG
-compatible portals with CAS authentication. EXPERIMENTAL AND NOT FINISHED!
+compatible portals with CAS authentication.
 
 =head1 SYNOPSIS
 
