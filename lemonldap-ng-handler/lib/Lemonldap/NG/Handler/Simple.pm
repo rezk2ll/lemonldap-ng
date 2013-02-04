@@ -962,15 +962,13 @@ sub run ($$) {
         my $str = $1;
         $class->lmLog( 'CDA request', 'debug' );
         $apacheRequest->args($args);
-        my $host          = $apacheRequest->get_server_name();
         my $redirectUrl   = $class->_buildUrl( $apacheRequest->uri );
         my $redirectHttps = ( $redirectUrl =~ m/^https/ );
         lmSetErrHeaderOut( $apacheRequest,
             'Location' => $redirectUrl . ( $args ? "?" . $args : "" ) );
-        $host =~ s/^[^\.]+\.(.*\..*$)/$1/;
         lmSetErrHeaderOut(
             $apacheRequest,
-            'Set-Cookie' => "$str; domain=$host; path=/"
+            'Set-Cookie' => "$str; path=/"
               . ( $redirectHttps ? "; secure"   : "" )
               . ( $httpOnly      ? "; HttpOnly" : "" )
               . (
