@@ -4,12 +4,12 @@ Upstream-Contact: Xavier Guimard <x.guimard@free.fr>
 Source: http://forge.objectweb.org/project/showfiles.php?group_id=274
 
 Files: *
-Copyright: 2004-2012, Xavier Guimard <x.guimard@free.fr>
- 2004-2012, Clement Oudot <clem.oudot@gmail.com>
- 2004-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
- 2008-2012, François-Xavier Deltombe <fxdeltombe@gmail.com>
- 2012, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
-License: Artistic or GPL-1+
+Copyright: 2006-2013, Xavier Guimard <x.guimard@free.fr>
+ 2006-2013, Clement Oudot <clem.oudot@gmail.com>
+ 2004-2011, Thomas Chemineau <thomas.chemineau@gmail.com>
+ 2012-2013, François-Xavier Deltombe <fxdeltombe@gmail.com>
+ 2012-2013, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
+License: GPL-2+
 
 Files: *.js
 Copyright: 2004-2012, Xavier Guimard <x.guimard@free.fr>
