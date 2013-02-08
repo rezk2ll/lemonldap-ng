@@ -458,7 +458,7 @@ sub new {
     $self->{trustedDomains} = "*"
       if ( $self->{trustedDomains} =~ /(^|\s)\*(\s|$)/ );
     if ( $self->{trustedDomains} and $self->{trustedDomains} ne "*" ) {
-        $self->{trustedDomains} =~ s#((^|\s+))\.#${1}[^/]+.#g;
+        $self->{trustedDomains} =~ s#(^|\s+)\.#${1}[^/]+.#g;
         $self->{trustedDomains} =
           '(' . join( '|', split( /\s+/, $self->{trustedDomains} ) ) . ')';
         $self->{trustedDomains} =~ s/\./\\./g;
