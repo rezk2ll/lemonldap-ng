@@ -104,7 +104,7 @@ License: GPL-2+
 
 Files: debian/*
 Copyright: 2004-2012, Xavier Guimard <x.guimard@free.fr>
-License: Artistic or GPL-1+
+License: GPL-2+
 
 License: Artistic
  This program is free software; you can redistribute it and/or modify
