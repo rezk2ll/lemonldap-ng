@@ -59,17 +59,23 @@ RCRONDIR=$(DESTDIR)/$(CRONDIR)
 CONFFILENAME=lemonldap-ng.ini
 STORAGECONFFILE=$(CONFDIR)/$(CONFFILENAME)
 
-# Lemonldap-ng configuration storage dir
+# LL::NG configuration storage dir
 FILECONFIGDIR=$(DATADIR)/conf
 RFILECONFIGDIR=$(DESTDIR)/$(FILECONFIGDIR)
 
-# Apache::Session::File storage dir
+# LL::NG sessions storage dir
 APACHESESSIONFILEDIR=$(DATADIR)/sessions
 RAPACHESESSIONFILEDIR=$(DESTDIR)/$(APACHESESSIONFILEDIR)
 APACHESESSIONFILELOCKDIR=$(APACHESESSIONFILEDIR)/lock
-RAPACHESESSIONFILELOCKDIR=$(DESTDIR)/$(APACHESESSIONFILELOCKDIR)
+RAPACHESESSIONFILELOCKDIR=$(DESTDIR)/$(APACHEPSESSIONFILELOCKDIR)
 
-# Lemonldap-ng notifications storage dir
+# LL::NG persistent sessions storage dir
+APACHEPSESSIONFILEDIR=$(DATADIR)/psessions
+RAPACHEPSESSIONFILEDIR=$(DESTDIR)/$(APACHEPSESSIONFILEDIR)
+APACHEPSESSIONFILELOCKDIR=$(APACHEPSESSIONFILEDIR)/lock
+RAPACHEPSESSIONFILELOCKDIR=$(DESTDIR)/$(APACHEPSESSIONFILELOCKDIR)
+
+# LL::NG notifications storage dir
 APACHEFILENOTIFDIR=$(DATADIR)/notifications
 RFILENOTIFDIR=$(DESTDIR)/$(APACHEFILENOTIFDIR)
 
@@ -287,7 +293,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo "5 - Connect to Manager at http://manager.${DNSDOMAIN}/ to edit configuration"
 	@echo
 	@if [ ! "$(APACHEUSER)" ]; then \
-		echo;echo "    Warning, since APACHEUSER was not set, $(APACHESESSIONFILEDIR) and $(CONFDIR) have permissive permissions."; \
+		echo;echo "    Warning, since APACHEUSER was not set, $(APACHESESSIONFILEDIR), $(APACHEPSESSIONFILEDIR) and $(CONFDIR) have permissive permissions."; \
 		echo "    Fix them by yourself to restrict their view to apache process only"; \
 	fi
 	@echo
@@ -388,6 +394,7 @@ install_examples_site:
 		$(REXAMPLESDIR)/manager/skins \
 	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
 	@$(PERL) -i -pe 's#__SESSIONDIR__#$(APACHESESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl
+	@$(PERL) -i -pe 's#__PSESSIONDIR__#$(APACHEPSESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl
 
 install_doc_site:
 	# Offline documentation install
@@ -404,6 +411,7 @@ install_conf_dir:	install_sessions_dir install_notif_dir
 	fi
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
 	@$(PERL) -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1
+	@$(PERL) -000 -i -pe "s#^(persistentStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHEPSESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHEPSESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
 		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;\
 		s#__NOTIFICATIONDIR__#$(APACHEFILENOTIFDIR)#g;' $(RFILECONFIGDIR)/lmConf-1
@@ -421,16 +429,16 @@ install_conf_dir:	install_sessions_dir install_notif_dir
 	@rm -rf $$(find $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR) -type d -name .svn)
 
 install_sessions_dir:
-	@install -m 777 -v -d $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR)
+	@install -m 777 -v -d $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR)
 	# Fix Apache::Session directories permissions
 	@if [ "$(APACHEUSER)" != "" ]; then \
-		chown $(APACHEUSER) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) || exit 1; \
+		chown $(APACHEUSER) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR)|| exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) || exit 1; \
+			chgrp $(APACHEGROUP) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
 		fi; \
-		chmod 770 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
+		chmod 770 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR); \
 	else \
-		chmod 777 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
+		chmod 777 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR); \
 	fi
 
 install_notif_dir:

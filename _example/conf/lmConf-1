@@ -4,6 +4,9 @@ applicationList
 globalStorage
 	'Apache::Session::File'
 
+persistentStorage
+	'Apache::Session::File'
+
 cookieName
 	'lemonldap'
 
@@ -39,6 +42,9 @@ exportedHeaders
 
 globalStorageOptions
 	'$data1 = {&#39;Directory&#39; => &#39;__SESSIONDIR__&#39;};'
+
+persistentStorageOptions
+	'$data1 = {&#39;Directory&#39; => &#39;__PSESSIONDIR__&#39;};'
 
 cfgNum
 	1
