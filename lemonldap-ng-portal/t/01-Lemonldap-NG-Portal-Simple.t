@@ -95,6 +95,6 @@ ok( $p->process > 0, 'User OK' );
 ok( $p->{cookie}->[0]->value eq '1', 'Cookie value' );
 
 # Time conversion
-my ($d, $h, $m, $s) = $p->convertSec('123456');
-ok( $d == 1 && $h == 10 && $m == 17 && $s == 36, 'Time conversion');
+my ( $d, $h, $m, $s ) = $p->convertSec('123456');
+ok( $d == 1 && $h == 10 && $m == 17 && $s == 36, 'Time conversion' );
 
