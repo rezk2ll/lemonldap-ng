@@ -29,8 +29,6 @@ use POSIX qw(strftime);
 #   - extractMailInfo
 #   - getMailUser
 #   - storeMailSession
-#   - initCaptcha
-#   - checkCaptcha
 #   - sendConfirmationMail
 #   - changePassword
 #   - sendPasswordMail
@@ -52,9 +50,8 @@ sub process {
 
     $self->{error} = $self->_subProcess(
         qw(smtpInit userDBInit passwordDBInit extractMailInfo
-          getMailUser initCaptcha checkCaptcha setSessionInfo
-          setMacros setGroups setPersistentSessionInfo setLocalGroups
-          storeMailSession sendConfirmationMail changePassword sendPasswordMail)
+          getMailUser setSessionInfo setMacros setGroups setPersistentSessionInfo
+          setLocalGroups storeMailSession sendConfirmationMail changePassword sendPasswordMail)
     );
 
     return (
