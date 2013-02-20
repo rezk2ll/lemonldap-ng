@@ -647,11 +647,11 @@ sub setDefaultValues {
     $self->{mailOnPasswordChange}            ||= 0;
 
     # Captcha parameters
-    $self->{captcha_enabled} = 0;
-    $self->{captcha_size}    = 6;
-    $self->{captcha_output} =
+    $self->{captcha_enabled} = 0 unless defined $self->{captcha_enabled};
+    $self->{captcha_size}    = 6 unless defined $self->{captcha_size};
+    $self->{captcha_output} ||=
       '/usr/local/lemonldap-ng/htdocs/portal/captcha_output/';
-    $self->{captcha_data} = '/usr/local/lemonldap-ng/data/captcha/data/';
+    $self->{captcha_data} ||= '/usr/local/lemonldap-ng/data/captcha/data/';
 
     # Notification
     $self->{notificationWildcard} ||= "allusers";
