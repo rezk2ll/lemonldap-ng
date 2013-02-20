@@ -67,7 +67,7 @@ RFILECONFIGDIR=$(DESTDIR)/$(FILECONFIGDIR)
 APACHESESSIONFILEDIR=$(DATADIR)/sessions
 RAPACHESESSIONFILEDIR=$(DESTDIR)/$(APACHESESSIONFILEDIR)
 APACHESESSIONFILELOCKDIR=$(APACHESESSIONFILEDIR)/lock
-RAPACHESESSIONFILELOCKDIR=$(DESTDIR)/$(APACHEPSESSIONFILELOCKDIR)
+RAPACHESESSIONFILELOCKDIR=$(DESTDIR)/$(APACHESESSIONFILELOCKDIR)
 
 # LL::NG persistent sessions storage dir
 APACHEPSESSIONFILEDIR=$(DATADIR)/psessions
@@ -78,6 +78,14 @@ RAPACHEPSESSIONFILELOCKDIR=$(DESTDIR)/$(APACHEPSESSIONFILELOCKDIR)
 # LL::NG notifications storage dir
 APACHEFILENOTIFDIR=$(DATADIR)/notifications
 RFILENOTIFDIR=$(DESTDIR)/$(APACHEFILENOTIFDIR)
+
+# LL::NG captcha data dir
+CAPTCHADIR=$(DATADIR)/captcha/data
+RCAPTCHADIR=$(DESTDIR)/$(CAPTCHADIR)
+
+# LL::NG captcha output dir
+CAPTCHAOUTPUTDIR=$(PORTALDIR)/captcha_output
+RCAPTCHAOUTPUTDIR=$(DESTDIR)/$(CAPTCHAOUTPUTDIR)
 
 # Apache user/group
 APACHEUSER=
@@ -293,7 +301,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo "5 - Connect to Manager at http://manager.${DNSDOMAIN}/ to edit configuration"
 	@echo
 	@if [ ! "$(APACHEUSER)" ]; then \
-		echo;echo "    Warning, since APACHEUSER was not set, $(APACHESESSIONFILEDIR), $(APACHEPSESSIONFILEDIR) and $(CONFDIR) have permissive permissions."; \
+		echo;echo "    Warning, since APACHEUSER was not set, $(APACHESESSIONFILEDIR), $(APACHEPSESSIONFILEDIR), $(CAPTCHADIR), $(RCAPTCHAOUTPUTDIR) and $(CONFDIR) have permissive permissions."; \
 		echo "    Fix them by yourself to restrict their view to apache process only"; \
 	fi
 	@echo
@@ -326,9 +334,6 @@ install_manager_site:	install_conf_dir
 
 install_portal_site:	install_conf_dir
 	# Portal install
-	@mkdir -p $(RPORTALDIR)/captcha_output/
-	@mkdir -p $(RDATADIR)/captcha/data
-	@chmod -R 1777 $(RDATADIR)/captcha $(RPORTALDIR)/captcha_output/
 	@install -v -d $(RPORTALDIR) $(RPORTALSKINSDIR) \
 		$(RPORTALDIR)/skins/ \
 		$(RCRONDIR) $(RCONFDIR)
@@ -402,7 +407,7 @@ install_doc_site:
 	@install -v -d $(RDOCDIR)
 	@cp -dR --remove-destination doc/* $(RDOCDIR)
 
-install_conf_dir:	install_sessions_dir install_notif_dir
+install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 	# Configuration files install
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
@@ -432,7 +437,7 @@ install_sessions_dir:
 	@install -m 777 -v -d $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR)
 	# Fix Apache::Session directories permissions
 	@if [ "$(APACHEUSER)" != "" ]; then \
-		chown $(APACHEUSER) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR)|| exit 1; \
+		chown $(APACHEUSER) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
 			chgrp $(APACHEGROUP) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) $(RAPACHEPSESSIONFILEDIR) $(RAPACHEPSESSIONFILELOCKDIR) || exit 1; \
 		fi; \
@@ -452,6 +457,19 @@ install_notif_dir:
 		chmod 770 $(RFILENOTIFDIR); \
 	else \
 		chmod 777 $(RFILENOTIFDIR); \
+	fi
+
+install_captcha_dir:
+	@install -m 777 -v -d $(RCAPTCHADIR) $(RCAPTCHAOUTPUTDIR)
+	# Fix captcha directory permissions
+	@if [ "$(APACHEUSER)" != "" ]; then \
+		chown $(APACHEUSER) $(RCAPTCHADIR) $(RCAPTCHAOUTPUTDIR) || exit 1; \
+		if [ "$(APACHEGROUP)" != "" ]; then \
+			chgrp $(APACHEGROUP) $(RCAPTCHADIR) $(RCAPTCHAOUTPUTDIR) || exit 1; \
+		fi; \
+		chmod 770 $(RCAPTCHADIR) $(RCAPTCHAOUTPUTDIR); \
+	else \
+		chmod 777 $(RCAPTCHADIR) $(RCAPTCHAOUTPUTDIR); \
 	fi
 
 postconf_hosts:
