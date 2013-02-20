@@ -36,11 +36,12 @@ mkdir $p->{captcha_data};
 ok( ref($p) eq "Lemonldap::NG::Portal::Simple" );
 
 # try to init a captcha
-ok( $p->initCaptcha() );
+$p->initCaptcha;
+ok( $p->{captcha_img}, "Generation of captcha image" );
 
 # try a wrong values to check checkCaptcha method
-$p->checkCaptcha( "12D3EO", $p->{captcha_code} );
-ok( 1 ne $p->{captcha_result} );
+my $captcha_result = $p->checkCaptcha( "12D3EO", $p->{captcha_code} );
+ok( 1 ne $captcha_result, "Verification of captcha" );
 
 END {
     system("rm -rf ./tmp");

@@ -123,6 +123,51 @@ sub extractMailInfo {
 
         # Use submitted value
         $self->{mail} = $self->param('mail');
+
+        # Captcha for mail form
+        if ( $self->{captcha_mail_enabled} && $self->{mail} ) {
+            $self->{captcha_user_code}  = $self->param('captcha_user_code');
+            $self->{captcha_check_code} = $self->param('captcha_code');
+
+            unless ( $self->{captcha_user_code} && $self->{captcha_check_code} )
+            {
+                $self->lmLog( "Captcha not filled", 'warn' );
+                return PE_CAPTCHAEMPTY;
+            }
+
+            $self->lmLog(
+                "Captcha data received: "
+                  . $self->{captcha_user_code} . " and "
+                  . $self->{captcha_check_code},
+                'debug'
+            );
+
+            # Check captcha
+            my $captcha_result =
+              $self->checkCaptcha( $self->{captcha_user_code},
+                $self->{captcha_check_code} );
+
+            if ( $captcha_result != 1 ) {
+                if (   $captcha_result == -3
+                    or $captcha_result == -2 )
+                {
+                    $self->lmLog( "Captcha failed: wrong code", 'warn' );
+                    return PE_CAPTCHAERROR;
+                }
+                elsif ( $captcha_result == 0 ) {
+                    $self->lmLog(
+                        "Captcha failed: code not checked (file error)",
+                        'warn' );
+                    return PE_CAPTCHAERROR;
+                }
+                elsif ( $captcha_result == -1 ) {
+                    $self->lmLog( "Captcha failed: code has expired", 'warn' );
+                    return PE_CAPTCHAERROR;
+                }
+            }
+            $self->lmLog( "Captcha code verified", 'debug' );
+        }
+
     }
 
     $self->{userControl} ||= '^[\w\.\-@]+$';

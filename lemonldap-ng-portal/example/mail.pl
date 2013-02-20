@@ -54,6 +54,8 @@ if (
            $portal->{error} == PE_MAILFORMEMPTY
         or $portal->{error} == PE_MAILFIRSTACCESS
         or $portal->{error} == PE_MAILNOTFOUND
+        or $portal->{error} == PE_CAPTCHAERROR
+        or $portal->{error} == PE_CAPTCHAEMPTY
     )
     and !$portal->{mail_token}
   )
@@ -68,7 +70,7 @@ if (
 }
 
 # Display captcha if it's enabled
-if ( $portal->{captcha_enabled} ) {
+if ( $portal->{captcha_img} ) {
     $template->param(
         CAPTCHA_IMG  => $portal->{captcha_img},
         CAPTCHA_CODE => $portal->{captcha_code},

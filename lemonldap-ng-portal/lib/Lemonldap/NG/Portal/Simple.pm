@@ -464,10 +464,10 @@ sub new {
         $self->{trustedDomains} =~ s/\./\\./g;
     }
 
-    # init the captcha feature if it's enabled
-    if ( $self->{captcha_enabled} ) {
-        eval $self->initCaptcha();
-        $self->lmLog( "Can't init captcha: $@", "error" );
+    # Init the captcha feature if it's enabled
+    if ( $self->{captcha_login_enabled} || $self->{captcha_mail_enabled} ) {
+        eval { $self->initCaptcha(); };
+        $self->lmLog( "Can't init captcha: $@", "error" ) if $@;
     }
 
     return $self;
@@ -647,8 +647,9 @@ sub setDefaultValues {
     $self->{mailOnPasswordChange}            ||= 0;
 
     # Captcha parameters
-    $self->{captcha_enabled} = 0 unless defined $self->{captcha_enabled};
-    $self->{captcha_size}    = 6 unless defined $self->{captcha_size};
+    $self->{captcha_login_enabled} = 0 unless defined $self->{captcha_login_enabled};
+    $self->{captcha_mail_enabled}  = 0 unless defined $self->{captcha_mail_enabled};
+    $self->{captcha_size}          = 6 unless defined $self->{captcha_size};
     $self->{captcha_output} ||=
       '/usr/local/lemonldap-ng/htdocs/portal/captcha_output/';
     $self->{captcha_data} ||= '/usr/local/lemonldap-ng/data/captcha/data/';
@@ -765,22 +766,10 @@ sub buildHiddenForm {
 # init captcha module and generate captcha
 # @return nothing
 sub initCaptcha {
-    require Authen::Captcha;
-
     my $self = shift;
 
-    # Store captcha data
-    opendir( OUTPUT, $self->{captcha_output} )
-      or $self->lmLog( "Can't open captcha output dir", "error" );
-    opendir( DATA, $self->{captcha_data} )
-      or $self->lmLog( "Can't open captcha data dir", "error" );
-
-    # Clean previous captcha datas
-    foreach ( readdir(OUTPUT) ) {
-        next if ( $_ eq ".." or $_ eq "." );
-        system("rm -f $_ &>/dev/null")
-          or $self->lmLog( "Can't clean captcha output dir!", "warn" );
-    }
+    # Load module
+    require Authen::Captcha;
 
     # Build Authen::Captcha object
     $self->{captcha} = Authen::Captcha->new(
@@ -793,7 +782,9 @@ sub initCaptcha {
       $self->{captcha}->generate_code( $self->{captcha_size} );
     $self->{captcha_img} = "/captcha_output/" . $self->{captcha_code} . ".png";
 
-    closedir(DATA) and closedir(OUTPUT);
+    $self->lmLog( "Captcha code generated: " . $self->{captcha_code}, 'debug' );
+
+    return;
 }
 
 ## @method boolean isTrustedUrl(string url)
