@@ -99,7 +99,8 @@ color:#000;
 }
 
 #logincontent form {
-height:230px;
+min-height:200px;
+height:auto;
 }
 
 #mailcontent form {

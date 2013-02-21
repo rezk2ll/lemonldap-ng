@@ -70,7 +70,7 @@ if (
 }
 
 # Display captcha if it's enabled
-if ( $portal->{captcha_img} ) {
+if ( $portal->{captcha_mail_enabled} ) {
     $template->param(
         CAPTCHA_IMG  => $portal->{captcha_img},
         CAPTCHA_CODE => $portal->{captcha_code},

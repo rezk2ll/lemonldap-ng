@@ -647,12 +647,11 @@ sub setDefaultValues {
     $self->{mailOnPasswordChange}            ||= 0;
 
     # Captcha parameters
-    $self->{captcha_login_enabled} = 0 unless defined $self->{captcha_login_enabled};
-    $self->{captcha_mail_enabled}  = 0 unless defined $self->{captcha_mail_enabled};
-    $self->{captcha_size}          = 6 unless defined $self->{captcha_size};
-    $self->{captcha_output} ||=
-      '/usr/local/lemonldap-ng/htdocs/portal/captcha_output/';
-    $self->{captcha_data} ||= '/usr/local/lemonldap-ng/data/captcha/data/';
+    $self->{captcha_login_enabled} = 0
+      unless defined $self->{captcha_login_enabled};
+    $self->{captcha_mail_enabled} = 0
+      unless defined $self->{captcha_mail_enabled};
+    $self->{captcha_size} = 6 unless defined $self->{captcha_size};
 
     # Notification
     $self->{notificationWildcard} ||= "allusers";
@@ -913,6 +912,7 @@ sub error_type {
                 PE_NOTIFICATION,                  PE_BADURL,
                 PE_CONFIRM,                       PE_MAILFORMEMPTY,
                 PE_MAILCONFIRMATION_ALREADY_SENT, PE_PASSWORDFORMEMPTY,
+                PE_CAPTCHAEMPTY,
             )
         )
       );

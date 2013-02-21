@@ -205,7 +205,7 @@ sub display {
         );
 
         # Display captcha if it's enabled
-        if ( $self->{captcha_img} ) {
+        if ( $self->{captcha_login_enabled} ) {
             %templateParams = (
                 %templateParams,
                 CAPTCHA_IMG  => $self->{captcha_img},
