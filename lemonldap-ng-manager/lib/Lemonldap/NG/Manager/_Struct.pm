@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use Lemonldap::NG::Common::Regexp;
 
-our $VERSION = '1.2.3';
+our $VERSION = '1.3.0';
 
 ## @method protected hashref cstruct(hashref h,string k)
 # Merge $h with the structure produced with $k and return it.
@@ -259,8 +259,10 @@ sub struct {
 
             # PORTAL PARAMETERS
             portalParams => {
-                _nodes => [qw(portal n:portalMenu n:portalCustomization)],
-                _help  => 'portalParams',
+                _nodes => [
+                    qw(portal n:portalMenu n:portalCustomization n:portalCaptcha)
+                ],
+                _help => 'portalParams',
 
                 portal => 'text:/portal:portal:text',
 
@@ -320,6 +322,18 @@ sub struct {
                         hideOldPassword      => 'bool:/hideOldPassword',
                         mailOnPasswordChange => 'bool:/mailOnPasswordChange',
                     },
+
+                },
+
+                portalCaptcha => {
+                    _nodes => [
+                        qw(captcha_login_enabled captcha_mail_enabled captcha_size captcha_data captcha_output)
+                    ],
+                    captcha_login_enabled => 'bool:/captcha_login_enabled',
+                    captcha_mail_enabled  => 'bool:/captcha_mail_enabled',
+                    captcha_size          => 'int:/captcha_size',
+                    captcha_data          => 'text:/captcha_data',
+                    captcha_output        => 'text:/captcha_output',
                 },
             },
 
@@ -1364,9 +1378,14 @@ sub testStruct {
             },
             msgFail => 'Bad module name',
         },
-        cda        => $boolean,
-        checkXSS   => $boolean,
-        cookieName => {
+        captcha_login_enabled => $boolean,
+        captcha_mail_enabled  => $boolean,
+        captcha_size          => $integer,
+        captcha_data          => $testNotDefined,
+        captcha_output        => $testNotDefined,
+        cda                   => $boolean,
+        checkXSS              => $boolean,
+        cookieName            => {
             test    => qr/^[a-zA-Z]\w*$/,
             msgFail => 'Bad cookie name',
         },
@@ -1895,25 +1914,30 @@ sub defaultConf {
         applicationList => {
             'default' => { catname => 'Default category', type => "category" }
         },
-        authentication           => 'LDAP',
-        authChoiceParam          => 'lmAuth',
-        CAS_pgtFile              => '/tmp/pgt.txt',
-        casAccessControlPolicy   => 'none',
-        cda                      => '0',
-        checkXSS                 => '1',
-        cookieName               => 'lemonldap',
-        domain                   => 'example.com',
-        failedLoginNumber        => '5',
-        globalStorage            => 'Apache::Session::File',
-        hideOldPassword          => '0',
-        httpOnly                 => '1',
-        https                    => '0',
-        issuerDBSAMLActivation   => '0',
-        issuerDBSAMLPath         => '^/saml/',
-        issuerDBSAMLRule         => '1',
-        issuerDBCASActivation    => '0',
-        issuerDBCASPath          => '^/cas/',
-        issuerDBCASRule          => '1',
+        authentication         => 'LDAP',
+        authChoiceParam        => 'lmAuth',
+        captcha_login_enabled  => '0',
+        captcha_mail_enabled   => '0',
+        captcha_size           => '6',
+        captcha_data           => '/var/lib/lemonldap-ng/captcha/data',
+        captcha_output         => '/var/lib/lemonldap-ng/portal/captcha_output',
+        CAS_pgtFile            => '/tmp/pgt.txt',
+        casAccessControlPolicy => 'none',
+        cda                    => '0',
+        checkXSS               => '1',
+        cookieName             => 'lemonldap',
+        domain                 => 'example.com',
+        failedLoginNumber      => '5',
+        globalStorage          => 'Apache::Session::File',
+        hideOldPassword        => '0',
+        httpOnly               => '1',
+        https                  => '0',
+        issuerDBSAMLActivation => '0',
+        issuerDBSAMLPath       => '^/saml/',
+        issuerDBSAMLRule       => '1',
+        issuerDBCASActivation  => '0',
+        issuerDBCASPath        => '^/cas/',
+        issuerDBCASRule        => '1',
         issuerDBOpenIDActivation => '0',
         issuerDBOpenIDPath       => '^/openidserver/',
         issuerDBOpenIDRule       => '1',

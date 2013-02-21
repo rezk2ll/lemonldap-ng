@@ -419,7 +419,9 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 	@$(PERL) -000 -i -pe "s#^(persistentStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHEPSESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHEPSESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
 		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;\
-		s#__NOTIFICATIONDIR__#$(APACHEFILENOTIFDIR)#g;' $(RFILECONFIGDIR)/lmConf-1
+		s#__NOTIFICATIONDIR__#$(APACHEFILENOTIFDIR)#g;\
+		s#__CAPTCHADIR__#$(CAPTCHADIR)#g;\
+		s#__CAPTCHAOUTPUTDIR__#$(CAPTCHAOUTPUTDIR)#g;' $(RFILECONFIGDIR)/lmConf-1
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		chown $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
