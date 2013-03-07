@@ -4,6 +4,7 @@ example/mrtg/lmng-mrtg
 example/mrtg/mrtg.cfg.example
 example/notfound.html
 example/notifications.pl
+example/scripts/lemonldap-ng-cli
 example/scripts/lmConfigEditor
 example/sessions.pl
 example/skins/default/css/accordion.css
@@ -91,6 +92,7 @@ example/skins/default/ui-lightness/jquery-ui-1.8.6.custom.css
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/_i18n.pm
 lib/Lemonldap/NG/Manager/_Struct.pm
+lib/Lemonldap/NG/Manager/Cli.pm
 lib/Lemonldap/NG/Manager/Downloader.pm
 lib/Lemonldap/NG/Manager/Notifications.pm
 lib/Lemonldap/NG/Manager/Request.pm

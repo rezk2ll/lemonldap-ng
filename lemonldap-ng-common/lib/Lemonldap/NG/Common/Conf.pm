@@ -180,7 +180,7 @@ sub getConf {
         }
 
         # Convert old option useXForwardedForIP into trustedProxies
-        if ( $r->{useXForwardedForIP} == 1 ) {
+        if ( defined $r->{useXForwardedForIP} and $r->{useXForwardedForIP} == 1 ) {
             $r->{trustedProxies} = '*';
         }
         return $r;
