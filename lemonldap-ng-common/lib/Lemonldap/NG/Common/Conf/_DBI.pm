@@ -72,8 +72,6 @@ sub lock {
         return 1;
     }
     else {
-
-        # TODO
         return 1;
     }
 }
@@ -92,8 +90,6 @@ sub isLocked {
         return 0;
     }
     else {
-
-        # TODO
         return 0;
     }
 }
@@ -112,8 +108,6 @@ sub unlock {
         return 1;
     }
     else {
-
-        # TODO
         return 1;
     }
 }
