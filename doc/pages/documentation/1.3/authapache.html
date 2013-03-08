@@ -272,7 +272,7 @@ Modify the portal virtual host:
       KrbAuthRealms EXAMPLE.COM
       Krb5KeyTab /etc/lemonldap-ng/auth.keytab
       KrbVerifyKDC <span class="kw2">Off</span>
-      KrbServiceName HTTP
+      KrbServiceName HTTP/auth.example.com
       <span class="kw1">require</span> valid-<span class="kw1">user</span>
     &lt;/<span class="kw3">IfModule</span>&gt;
 &nbsp;
@@ -286,7 +286,7 @@ Modify the portal virtual host:
 </p>
 
 </div>
-<!-- SECTION "Configuration of Apache virtual host" [3990-4773] -->
+<!-- SECTION "Configuration of Apache virtual host" [3990-4790] -->
 <h3><a name="time_to_test" id="time_to_test">Time to test</a></h3>
 <div class="level3">
 
@@ -297,4 +297,4 @@ Configure <acronym title="Internet Explorer">IE</acronym> or Firefox to trust <c
 </p>
 
 </div>
-<!-- SECTION "Time to test" [4774-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Time to test" [4791-] --></div><!-- closes <div class="dokuwiki export">-->
