@@ -4,42 +4,47 @@ use Lemonldap::NG::Manager::Cli;
 use POSIX;
 use strict;
 
-sub giveUpPrivileges
-{
-     my ($user, $group) = @_;
+sub giveUpPrivileges {
+    my ( $user, $group ) = @_;
 
-     if (not defined ($user))
-     {
-          $user = "nobody";
-     }
+    if ( not defined($user) ) {
+        $user = "nobody";
+    }
 
-     if (not defined ($group))
-     {
-          $group = "nobody";
-     }
+    if ( not defined($group) ) {
+        $group = "nobody";
+    }
 
-     # become $user:$group and give up root privileges
-     POSIX::setgid ((getgrnam ($group))[2]);
-     POSIX::setuid ((getpwnam ($user))[2]);
+    # become $user:$group and give up root privileges
+    POSIX::setgid( ( getgrnam($group) )[2] );
+    POSIX::setuid( ( getpwnam($user) )[2] );
 
-     # if we are still root
-     if ($> == 0)
-     {
-          # ask the user to continue or abort
-          print STDERR "$0 must not be launchezd as root since local cache can be corrupted.\n";
-          print STDERR "Continue (y/N)? ";
-          my $res = <STDIN>;
-          exit 1 unless ($res =~ /^y/i);
-     }
+    # if we are still root
+    if ( $> == 0 ) {
+
+        # ask the user to continue or abort
+        print STDERR
+"$0 must not be launched as root since local cache can be corrupted.\n";
+        print STDERR "Continue (y/N)? ";
+        my $res = <STDIN>;
+        exit 1 unless ( $res =~ /^y/i );
+    }
 }
 
-&giveUpPrivileges ("__APACHEUSER__", "__APACHEGROUP__");
+&giveUpPrivileges( "www-data", "www-data" );
 
-my $app = Lemonldap::NG::Manager::Cli->new ();
+# Display usage unless command
+unless (@ARGV) {
+    print STDERR "Usage: $0 <action> <params>\n";
+    print STDERR "Enter $0 help to get more information\n";
+    exit 1;
+}
 
-my $ret = $app->run (@ARGV);
+my $app = Lemonldap::NG::Manager::Cli->new();
 
-exit ($ret);
+my $ret = $app->run(@ARGV);
+
+exit($ret);
 
 __END__
 
