@@ -513,8 +513,14 @@ dist:	clean
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
-debian-dist:	dist
-	@mv lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX)
+debian-dist:	clean
+	@mkdir -p lemonldap-ng-$(VERSION)
+	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|omegat.files\)") lemonldap-ng-$(VERSION)
+	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
+	@find $$dir -name '*.bak' -delete
+	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
+	@$(COMPRESS) lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
+	@rm -rf lemonldap-ng-$(VERSION)
 
 zip-dist:
 	$(MAKE) dist "COMPRESS=zip -r" COMPRESSSUFFIX=zip
