@@ -16,10 +16,12 @@ Build-Depends-Indep: libapache-session-perl,
                      libconfig-inifiles-perl,
                      libdbi-perl,
                      libdigest-hmac-perl,
+                     libglib-perl,
                      libhtml-template-perl,
                      libhttp-message-perl,
                      libio-string-perl,
                      libjson-perl,
+                     liblasso-perl (>= 2.3.0),
                      libmime-lite-perl,
                      libnet-cidr-lite-perl,
                      libnet-ldap-perl,
@@ -37,6 +39,8 @@ Build-Depends-Indep: libapache-session-perl,
                      libxml-simple-perl,
                      perl
 Standards-Version: 3.9.4
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-perl/packages/lemonldap-ng.git
+Vcs-Git: git://anonscm.debian.org/pkg-perl/packages/lemonldap-ng.git
 Homepage: http://lemonldap-ng.org/
 
 Package: lemonldap-ng
@@ -51,10 +55,10 @@ Description: LemonLDAP::NG is an OpenID, CAS and SAML compatible Web-SSO system
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
  .
- It manages both authentication and authorization and provides headers fors
- accounting. So you can have a full AAA protection. Authorization are build by
+ It manages both authentication and authorization and provides headers for
+ accounting. So you can have a full AAA protection. Authorization are built by
  associating a regular expression and a rule. Regular expression is applied on
- the requested URL and the rule calculates if the user is authorizated.
+ the requested URL and the rule calculates if the user is authorized.
  .
  This package is a metapackage that install handler, manager and portal.
 
@@ -68,10 +72,10 @@ Description: Lemonldap::NG Web-SSO system documentation
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
  .
- It manages both authentication and authorization and provides headers fors
- accounting. So you can have a full AAA protection. Authorization are build by
+ It manages both authentication and authorization and provides headers for
+ accounting. So you can have a full AAA protection. Authorization are built by
  associating a regular expression and a rule. Regular expression is applied on
- the requested URL and the rule calculates if the user is authorizated.
+ the requested URL and the rule calculates if the user is authorized.
  .
  This package contains html documentation.
 
@@ -82,7 +86,8 @@ Depends: ${misc:Depends},
          libapache2-mod-perl2,
          liblemonldap-ng-conf-perl (= ${binary:Version}),
          libwww-perl
-Recommends: libapache-session-browseable-perl
+Recommends: libapache-session-browseable-perl,
+            libhttp-message-perl
 Suggests: libcache-memcached-perl,
           libdigest-hmac-perl,
           liblemonldap-ng-portal-perl,
@@ -93,10 +98,10 @@ Description: Lemonldap::NG Apache handler part
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
  .
- It manages both authentication and authorization and provides headers fors
- accounting. So you can have a full AAA protection. Authorization are build by
+ It manages both authentication and authorization and provides headers for
+ accounting. So you can have a full AAA protection. Authorization are built by
  associating a regular expression and a rule. Regular expression is applied on
- the requested URL and the rule calculates if the user is authorizated.
+ the requested URL and the rule calculates if the user is authorized.
  .
  This package installs the Apache module part (handler) used to protect web
  areas.
@@ -110,6 +115,7 @@ Depends: ${misc:Depends},
          libcache-cache-perl,
          libconfig-inifiles-perl,
          libcrypt-openssl-rsa-perl,
+         libcrypt-openssl-x509-perl,
          libcrypt-rijndael-perl,
          libdbi-perl,
          libnet-cidr-lite-perl,
@@ -126,10 +132,10 @@ Description: Lemonldap::NG common files
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
  .
- It manages both authentication and authorization and provides headers fors
- accounting. So you can have a full AAA protection. Authorization are build by
+ It manages both authentication and authorization and provides headers for
+ accounting. So you can have a full AAA protection. Authorization are built by
  associating a regular expression and a rule. Regular expression is applied on
- the requested URL and the rule calculates if the user is authorizated.
+ the requested URL and the rule calculates if the user is authorized.
  .
  This package installs common files used by other Lemonldap::NG modules.
 
@@ -155,10 +161,10 @@ Description: Lemonldap::NG manager part
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
  .
- It manages both authentication and authorization and provides headers fors
- accounting. So you can have a full AAA protection. Authorization are build by
+ It manages both authentication and authorization and provides headers for
+ accounting. So you can have a full AAA protection. Authorization are built by
  associating a regular expression and a rule. Regular expression is applied on
- the requested URL and the rule calculates if the user is authorizated.
+ the requested URL and the rule calculates if the user is authorized.
  .
  This package installs the administration interface (manager).
 
@@ -166,7 +172,6 @@ Package: liblemonldap-ng-portal-perl
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
-         libauthen-captcha-perl,
          libclone-perl,
          libhtml-template-perl,
          liblemonldap-ng-conf-perl (= ${binary:Version}),
@@ -175,6 +180,7 @@ Depends: ${misc:Depends},
 Recommends: libapache-session-browseable-perl,
             libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl (>= 2.3.0) | libnet-twitter-perl | libauthcas-perl
 Suggests: libauthcas-perl,
+          libauthen-captcha-perl,
           libdbi-perl,
           libglib-perl,
           libhttp-message-perl,
@@ -198,10 +204,10 @@ Description: Lemonldap::NG authentication portal part
  OpenID, CAS and SAML systems as identity or service provider. It can also be
  used as proxy between those federation systems.
  .
- It manages both authentication and authorization and provides headers fors
- accounting. So you can have a full AAA protection. Authorization are build by
+ It manages both authentication and authorization and provides headers for
+ accounting. So you can have a full AAA protection. Authorization are built by
  associating a regular expression and a rule. Regular expression is applied on
- the requested URL and the rule calculates if the user is authorizated.
+ the requested URL and the rule calculates if the user is authorized.
  .
  This package installs the authentication portal.
 
