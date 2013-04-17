@@ -4,18 +4,26 @@ Upstream-Contact: Xavier Guimard <x.guimard@free.fr>
 Source: http://forge.objectweb.org/project/showfiles.php?group_id=274
 
 Files: *
-Copyright: 2004-2012, Xavier Guimard <x.guimard@free.fr>
- 2004-2012, Clement Oudot <clem.oudot@gmail.com>
- 2004-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
- 2008-2012, François-Xavier Deltombe <fxdeltombe@gmail.com>
- 2012, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
-License: Artistic or GPL-1+
+Copyright: 2006-2013, Xavier Guimard <x.guimard@free.fr>
+ 2006-2013, Clement Oudot <clem.oudot@gmail.com>
+ 2004-2011, Thomas Chemineau <thomas.chemineau@gmail.com>
+ 2012-2013, François-Xavier Deltombe <fxdeltombe@gmail.com>
+ 2012-2013, Sandro Cazzaniga <cazzaniga.sandro@gmail.com>
+License: GPL-2+
 
 Files: *.js
 Copyright: 2004-2012, Xavier Guimard <x.guimard@free.fr>
  2004-2012, Clement Oudot <clem.oudot@gmail.com>
  2004-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
 License: GPL-2+
+
+Files: lemonldap-ng-portal/example/skins/common/portal.js
+Copyright: 2004-2012, Xavier Guimard <x.guimard@free.fr>
+ 2004-2012, Clement Oudot <clem.oudot@gmail.com>
+ 2004-2012, Thomas Chemineau <thomas.chemineau@gmail.com>
+License: GPL-2+
+Comment: a little part of it comes from JQuery-UI examples
+ (http://snipplr.com/view/29434/)
 
 Files: *tree.js lemonldap-ng-manager/example/skins/default/images/tree/*
 Copyright: 2008, Peter Panov <panov@elcat.kg>
@@ -103,8 +111,8 @@ Copyright: 2004, Entr'ouvert <http://www.entrouvert.com/>
 License: GPL-2+
 
 Files: debian/*
-Copyright: 2004-2012, Xavier Guimard <x.guimard@free.fr>
-License: Artistic or GPL-1+
+Copyright: 2004-2013, Xavier Guimard <x.guimard@free.fr>
+License: GPL-2+
 
 License: Artistic
  This program is free software; you can redistribute it and/or modify
@@ -147,6 +155,14 @@ License: GPL-3+
  .
  The complete text of version 3 of the GNU General
  Public License can be found in http://opensource.org/licenses/GPL-3.0
+
+License: LGPL-2
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; version 2.
+ .
+ The full text of the GNU Lesser General Public License
+ version 2 can be found in http://opensource.org/licenses/LGPL-2.1
 
 License: LGPL-3
  This program is free software; you can redistribute it and/or modify
