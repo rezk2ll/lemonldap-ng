@@ -12,8 +12,7 @@ CAPTCHA_DIR=/var/lib/lemonldap-ng/portal/captcha_output
 if [ "$1" == "configure" ]
 then
 	$BUILDPORTALWSDL > $WSDLFILE || true
-	chown www-data:www-data $CAPTCHA_DIR
 fi
 
-# Maintainer: #DEBHELPER#
+#DEBHELPER#
 exit 0

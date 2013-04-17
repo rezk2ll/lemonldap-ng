@@ -9,5 +9,5 @@ then
 	db_purge
 fi
 
-# Maintainer: #DEBHELPER#
+#DEBHELPER#
 exit 0

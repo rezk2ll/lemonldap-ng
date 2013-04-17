@@ -14,5 +14,5 @@ then
 	rm -f /var/lib/lemonldap-ng/handler/MyHandler.pm
 fi
 
-# Maintainer: #DEBHELPER#
+#DEBHELPER#
 exit 0

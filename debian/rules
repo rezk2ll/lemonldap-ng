@@ -51,3 +51,20 @@ override_dh_auto_install:
 override_dh_compress:
 	dh_compress -X favicon.ico
 
+# Fix lemonldap-ng dirs permissions and owner since dh_fixperms change them:
+#  * global configuration dirs must be writable by www-data but not readable
+#    by all (also sessions, captcha,... dirs)
+#  * lemonldap-ng.ini must not be readable by all
+override_dh_fixperms:
+	dh_fixperms
+	chown www-data:www-data \
+		debian/*/$(SESSIONSDIR) \
+		debian/*/$(SESSIONSDIR)/lock \
+		debian/liblemonldap-ng-conf-perl/$(CONFSTORAGEDIR) \
+		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR)
+	chgrp www-data debian/liblemonldap-ng-conf-perl/$(LMINIFILE) \
+		debian/liblemonldap-ng-conf-perl/$(FIRSTCONFFILE)
+	chmod 770 debian/*/$(SESSIONSDIR) debian/*/$(SESSIONSDIR)/lock
+	chmod 750 debian/liblemonldap-ng-conf-perl/$(CONFSTORAGEDIR)
+	chmod 640 debian/liblemonldap-ng-conf-perl/$(FIRSTCONFFILE) \
+		debian/liblemonldap-ng-conf-perl/$(LMINIFILE)
