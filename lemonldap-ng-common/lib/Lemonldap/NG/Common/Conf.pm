@@ -84,7 +84,7 @@ sub new {
         }
         return 0 unless $self->prereq;
         $self->{mdone}++;
-        $msg .= "$self->{type} loaded.\n";
+        $msg = "$self->{type} loaded.\n";
     }
     if ( $self->{localStorage} and not defined( $self->{refLocalStorage} ) ) {
         eval "use $self->{localStorage};";
@@ -180,7 +180,9 @@ sub getConf {
         }
 
         # Convert old option useXForwardedForIP into trustedProxies
-        if ( defined $r->{useXForwardedForIP} and $r->{useXForwardedForIP} == 1 ) {
+        if ( defined $r->{useXForwardedForIP}
+            and $r->{useXForwardedForIP} == 1 )
+        {
             $r->{trustedProxies} = '*';
         }
         return $r;
