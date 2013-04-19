@@ -620,6 +620,8 @@ sub _stToStr {
 1;
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 Lemonldap::NG::Manager::Notifications - Perl extension to manage Lemonldap::NG
