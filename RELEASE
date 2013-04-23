@@ -52,7 +52,10 @@ $ make clean && make dist
 - Debian packaging:
 Note: official packages build is now hosted on https://github.com/guimard/LemonLDAP--NG-Debian-packaging
 
-Untar the archive and launch:
+Create the debian specific tarball:
+$ make clean && make debian-dist
+
+Untar the debian archive and launch:
 $ make debian-packages
 
 Packages are in /tmp
