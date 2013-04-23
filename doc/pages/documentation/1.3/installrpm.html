@@ -220,13 +220,29 @@ Install the package <code>lemonldap-ng-conf</code> on all server which contains 
 </div></p>
 </p>
 
+<p>
+<p><div class="notewarning">
+If you install packages on 64bits system, create those symbolic links:
+
+</p>
+<pre class="code">
+ln -s /usr/lib/perl5/vendor_perl/5.8.8/Lemonldap /usr/lib64/perl5/
+ln -s /usr/lib/perl5/vendor_perl/5.8.8/auto/Lemonldap /usr/lib64/perl5/auto/
+</pre>
+
+<p>
+
+
+</div></p>
+</p>
+
 </div>
-<!-- SECTION "With RPM" [2426-2893] -->
+<!-- SECTION "With RPM" [2426-3147] -->
 <h2><a name="first_configuration_steps" id="first_configuration_steps">First configuration steps</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "First configuration steps" [2894-2932] -->
+<!-- SECTION "First configuration steps" [3148-3186] -->
 <h3><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h3>
 <div class="level3">
 
@@ -237,7 +253,7 @@ By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>ex
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- SECTION "Change default DNS domain" [2933-3247] -->
+<!-- SECTION "Change default DNS domain" [3187-3501] -->
 <h3><a name="apache_virtual_host" id="apache_virtual_host">Apache virtual host</a></h3>
 <div class="level3">
 
@@ -259,7 +275,7 @@ Check Apache configuration and restart:
 apachectl restart</pre>
 
 </div>
-<!-- SECTION "Apache virtual host" [3248-3642] -->
+<!-- SECTION "Apache virtual host" [3502-3896] -->
 <h3><a name="reload_virtual_host" id="reload_virtual_host">Reload virtual host</a></h3>
 <div class="level3">
 
@@ -276,7 +292,7 @@ To allow the manager to reload the configuration, register the reload virtual ho
 </p>
 
 </div>
-<!-- SECTION "Reload virtual host" [3643-3944] -->
+<!-- SECTION "Reload virtual host" [3897-4198] -->
 <h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
 <div class="level3">
 
@@ -310,7 +326,7 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </p>
 
 </div>
-<!-- SECTION "Upgrade" [3945-6454] -->
+<!-- SECTION "Upgrade" [4199-6708] -->
 <h3><a name="dns" id="dns">DNS</a></h3>
 <div class="level3">
 
@@ -337,7 +353,7 @@ Follow the <a href="../../documentation/1.3/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- SECTION "DNS" [6455-6727] -->
+<!-- SECTION "DNS" [6709-6981] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -354,7 +370,7 @@ Follow the <a href="../../documentation/1.3/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- SECTION "File location" [6728-7084] -->
+<!-- SECTION "File location" [6982-7338] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -388,4 +404,4 @@ rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [7085-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [7339-] --></div><!-- closes <div class="dokuwiki export">-->

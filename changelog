@@ -1,5 +1,76 @@
 lemonldap-ng (1.3.0) stable; urgency=low
 
+lemonldap-ng (1.2.4) stable; urgency=low
+
+    * [LEMONLDAP-590] - Memory Leak in Lemonldap::NG::Common::Conf
+    * [LEMONLDAP-592] - Encoding problems in POD
+    * [LEMONLDAP-593] - Auth Multi getDisplayType error when using # in Multi
+      line configuration
+    * [LEMONLDAP-589] - Debug info always printed in
+      Lemonldap::NG::Common::Conf::LDAP
+    * [LEMONLDAP-594] - Remove debian repository from distribution
+
+lemonldap-ng (1.2.3) stable; urgency=low
+
+    * [LEMONLDAP-316] - Accentued letters in application list raise an error
+      when configuration is stored in LDAP
+    * [LEMONLDAP-536] - Password reset by mail do not work with DBI backend
+    * [LEMONLDAP-537] - Web service deleteNotification do not work with DBI
+      backend
+    * [LEMONLDAP-538] - Bad log level in _DBI.pm
+    * [LEMONLDAP-539] - Add SOAP::Lite dependency for Handler CPAN module
+    * [LEMONLDAP-543] - LL:NG::Handler::AuthBasic fails to manage persistent
+      connections
+    * [LEMONLDAP-544] - Bad indexes in Browseable doc
+    * [LEMONLDAP-545] - "none" target does not work in Handler/CGI.pm
+    * [LEMONLDAP-548] - Error when displaying password policy messages (grace
+      or expiration)
+    * [LEMONLDAP-550] - Cannot use Target Url in Form Replay
+    * [LEMONLDAP-551] - Invalid GET Request after Form Replay
+    * [LEMONLDAP-552] - Error on configuration save if no reloadUrls defined
+    * [LEMONLDAP-553] - SOAP Error: id is required at
+      /usr/share/perl5/Lemonldap/NG/Portal/_SOAP.pm line 165
+    * [LEMONLDAP-555] - Rules field stay in readonly with JQuery 1.7.2
+    * [LEMONLDAP-556] - Cookie sent to untrusted domain with CDA
+    * [LEMONLDAP-557] - Get Key From All Sessions in File backend can fail on
+      corrupted sessions
+    * [LEMONLDAP-561] - SAML transient NameID does not work
+    * [LEMONLDAP-562] - CAS Authn + SAML IDP: authLogout error
+    * [LEMONLDAP-570] - SAML messages signatures are not verified - SECURITY
+      ISSUE
+    * [LEMONLDAP-574] - Local cache purge script does not work
+    * [LEMONLDAP-579] - missing dir in handler debian package
+    * [LEMONLDAP-580] - Mail subject is not correctly encoded
+    * [LEMONLDAP-412] - Passwrd policy expiration warning time not friendly
+      displayed
+    * [LEMONLDAP-512] - free size for cipher key
+    * [LEMONLDAP-554] - Some improvements on lmConfigEditor
+    * [LEMONLDAP-559] - Refine useXForwardedForIP option by setting trusted
+      proxies
+    * [LEMONLDAP-563] - CAS Authn + SAML IDP: Passing request parameters to
+      redirect
+    * [LEMONLDAP-566] - Allow to sort categories in the application list
+    * [LEMONLDAP-568] - Split Test and Handler Apache configuration
+    * [LEMONLDAP-569] - Fix application div height in application list
+    * [LEMONLDAP-572] - Add X-Forwarded-For Header in SOAP request sent by
+      LL::NG::Handler::AuthBasic
+    * [LEMONLDAP-573] - Do not send void HTTP headers
+    * [LEMONLDAP-576] - Hide post form when using Form Replay
+    * [LEMONLDAP-577] - Display "Password changed" in Menu
+    * [LEMONLDAP-549] - Display LL::NG version in Manager
+    * [LEMONLDAP-560] - logging SAML authn response
+    * [LEMONLDAP-578] - Rules to display a skin depending on called URL or IP
+      address
+    * [LEMONLDAP-535] - Force the ip adress when calling the webservice
+      urn:/Lemonldap::NG::Common::CGI::SOAPService
+    * [LEMONLDAP-546] - Form replay: POST request is not sent
+    * [LEMONLDAP-541] - Handler SOAP errors : setAttributes is not an
+      authorizated function
+    * [LEMONLDAP-547] - Update Browseable documentation in case of SAML in use
+    * [LEMONLDAP-565] - Update META.yml files
+    * [LEMONLDAP-581] - Clean Perl dependencies
+    * [LEMONLDAP-582] - Update .pm copyrights
+
 lemonldap-ng (1.2.2) stable; urgency=low
 
     * [LEMONLDAP-436] - LDAP Search error when authenticating and identifying
