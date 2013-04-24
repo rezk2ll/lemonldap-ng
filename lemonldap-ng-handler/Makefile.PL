@@ -9,7 +9,6 @@ WriteMakefile(
     LICENSE        => 'perl',
     PMLIBDIRS      => ['lib'],
     BUILD_REQUIRES => {
-        'Cache::Memcached'  => 0,
         'Digest::HMAC_SHA1' => 0,
         'HTTP::Message'     => 0,
         'IO::Pipe'          => 0,
