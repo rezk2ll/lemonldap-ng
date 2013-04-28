@@ -603,6 +603,7 @@ function formateSelectAuth(id,value){
 	}
 	formateSelect(id,[
 		'Apache=Apache',
+		'AD=Active Directory',
 		'Choice=Authentication choice',
 		'CAS=Central Authentication Service (CAS)',
 		'DBI=Database (DBI)',
@@ -658,6 +659,7 @@ function formateSelectUser(id,value){
 		value="LDAP";
 	}
 	formateSelect(id,[
+		'AD=Active Directory',
 		'DBI=Database (DBI)',
 		'Demo=Demonstration',
 		'LDAP=LDAP',
@@ -682,6 +684,7 @@ function formateSelectPassword(id,value){
 		value="LDAP";
 	}
 	formateSelect(id,[
+		'AD=Active Directory',
 		'DBI=Database (DBI)',
 		'Demo=Demonstration',
 		'LDAP=LDAP',

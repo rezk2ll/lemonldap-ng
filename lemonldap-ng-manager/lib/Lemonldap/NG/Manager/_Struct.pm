@@ -364,8 +364,9 @@ sub struct {
                       )
                     {
                         my $tmp = {
+                            ad      => ['ldapParams'],
                             ldap    => ['ldapParams'],
-                            ssl     => [qw(ldapParams sslParams)],
+                            ssl     => ['sslParams'],
                             cas     => ['casParams'],
                             radius  => ['radiusParams'],
                             remote  => ['remoteParams'],
