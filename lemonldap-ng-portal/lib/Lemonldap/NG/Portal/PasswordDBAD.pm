@@ -15,7 +15,7 @@ our $VERSION = '1.3.0';
 use base qw(Lemonldap::NG::Portal::PasswordDBLDAP);
 
 *_formateFilter = *Lemonldap::NG::Portal::UserDBAD::formateFilter;
-*_search = *Lemonldap::NG::Portal::UserDBAD::search;
+*_search        = *Lemonldap::NG::Portal::UserDBAD::search;
 
 ## @apmethod int modifyPassword()
 # Modify the password by LDAP mechanism.
