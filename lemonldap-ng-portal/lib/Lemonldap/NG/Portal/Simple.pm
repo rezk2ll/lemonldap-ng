@@ -2061,8 +2061,9 @@ sub setSessionInfo {
 #@return Lemonldap::NG::Portal constant
 sub setMacros {
     my $self = shift;
-    foreach (sort keys %{ $self->{macros} }) {
-        $self->{sessionInfo}->{$_} = $self->safe->reval( $self->{macros}->{$_} );
+    foreach ( sort keys %{ $self->{macros} } ) {
+        $self->{sessionInfo}->{$_} =
+          $self->safe->reval( $self->{macros}->{$_} );
     }
     PE_OK;
 }
@@ -2072,27 +2073,16 @@ sub setMacros {
 # * store all groups name that the user match in $self->{sessionInfo}->{groups}
 #@return Lemonldap::NG::Portal constant
 sub setLocalGroups {
-    my $self   = shift;
-    my $groups = "";
-    foreach (sort keys %{ $self->{groups} } ) {
-        $groups .= $_ . $self->{multiValuesSeparator}
+    my $self = shift;
+    foreach ( sort keys %{ $self->{groups} } ) {
+        $self->{sessionInfo}->{groups} .= $self->{multiValuesSeparator} . $_
           if ( $self->safe->reval( $self->{groups}->{$_} ) );
     }
-
-    # Join local and UserDB groups
-    if ($groups) {
-        $self->{sessionInfo}->{groups} .=
-          $self->{multiValuesSeparator} . $groups;
-    }
-
-    # Clear values separator at begin or end
+    # Clear values separator at the beginning
     if ( $self->{sessionInfo}->{groups} ) {
         $self->{sessionInfo}->{groups} =~
           s/^\Q$self->{multiValuesSeparator}\E//;
-        $self->{sessionInfo}->{groups} =~
-          s/\Q$self->{multiValuesSeparator}\E$//;
     }
-
     PE_OK;
 }
 
