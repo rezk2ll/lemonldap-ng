@@ -2061,8 +2061,8 @@ sub setSessionInfo {
 #@return Lemonldap::NG::Portal constant
 sub setMacros {
     my $self = shift;
-    while ( my ( $n, $e ) = each( %{ $self->{macros} } ) ) {
-        $self->{sessionInfo}->{$n} = $self->safe->reval($e);
+    foreach (sort keys %{ $self->{macros} }) {
+        $self->{sessionInfo}->{$_} = $self->safe->reval( $self->{macros}->{$_} );
     }
     PE_OK;
 }
@@ -2074,9 +2074,9 @@ sub setMacros {
 sub setLocalGroups {
     my $self   = shift;
     my $groups = "";
-    while ( my ( $group, $expr ) = each %{ $self->{groups} } ) {
-        $groups .= $group . $self->{multiValuesSeparator}
-          if ( $self->safe->reval($expr) );
+    foreach (sort keys %{ $self->{groups} } ) {
+        $groups .= $_ . $self->{multiValuesSeparator}
+          if ( $self->safe->reval( $self->{groups}->{$_} ) );
     }
 
     # Join local and UserDB groups
