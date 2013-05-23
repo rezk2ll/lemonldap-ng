@@ -119,6 +119,8 @@ __END__
 # * PE_RADIUSCONNECTFAILED		 73
 # * PE_MUST_SUPPLY_OLD_PASSWORD          74
 # * PE_FORBIDDENIP                       75
+# * PE_CAPTCHAERROR                      76
+# * PE_CAPTCHAEMPTY                      77
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -206,8 +208,8 @@ sub error_fr {
         'La connexion au serveur Radius a échoué',
         "L'ancien mot de passe est obligatoire",
         'Vous venez d\'une adresse IP qui n\'est pas accréditée',
-        'Mauvais code',
-        'Vous devez entrez le captcha'
+        'Erreur dans la saisie du captcha',
+        'Vous devez saisir le captcha'
     ];
 }
 
@@ -292,8 +294,8 @@ sub error_en {
         'Radius connection has failed',
         'Old password is required',
         'You came from an unaccredited IP address',
-        'Wrong code',
-        'You have to tape the captcha'
+        'You failed at typing the captcha',
+        'You have to type the captcha'
     ];
 }
 
@@ -379,7 +381,7 @@ sub error_ro {
         'Radius connection has failed',
         'Old password is required',
         'You came from an unaccredited IP address',
-        'Bad cod',
+        'You failed at typing the captcha',
         'trebuie să introduceţi CAPTCHA'
     ];
 }
