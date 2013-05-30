@@ -750,9 +750,9 @@ sub buildHiddenForm {
 
         # Build hidden input HTML code
         $val .=
-            '<input type="hidden" name="' 
-          . $_ 
-          . '" id="' 
+            '<input type="hidden" name="'
+          . $_
+          . '" id="'
           . $_
           . '" value="'
           . $self->{portalHiddenFormValues}->{$_} . '" />';
@@ -2078,6 +2078,7 @@ sub setLocalGroups {
         $self->{sessionInfo}->{groups} .= $self->{multiValuesSeparator} . $_
           if ( $self->safe->reval( $self->{groups}->{$_} ) );
     }
+
     # Clear values separator at the beginning
     if ( $self->{sessionInfo}->{groups} ) {
         $self->{sessionInfo}->{groups} =~

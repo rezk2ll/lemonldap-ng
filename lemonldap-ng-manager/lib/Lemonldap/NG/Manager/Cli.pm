@@ -102,8 +102,8 @@ sub parseCmd {
 
             # define action
             $self->{action} = {
-                type   => "help",
-                  save => 0,
+                type => "help",
+                save => 0,
             };
 
         }
@@ -529,8 +529,8 @@ sub parseCmd {
 
             # define action
             $self->{action} = {
-                type   => "get-exported-vars",
-                  save => 0
+                type => "get-exported-vars",
+                save => 0
             };
         }
 
@@ -700,8 +700,8 @@ sub parseCmd {
 
             # define action
             $self->{action} = {
-                type   => "vhost-list",
-                  save => 0
+                type => "vhost-list",
+                save => 0
             };
         }
 
@@ -713,8 +713,8 @@ sub parseCmd {
 
             # define action
             $self->{action} = {
-                type   => "global-storage",
-                  save => 0
+                type => "global-storage",
+                save => 0
             };
         }
 
@@ -762,8 +762,8 @@ sub parseCmd {
 
             # define action
             $self->{action} = {
-                type   => "reload-urls",
-                  save => 0
+                type => "reload-urls",
+                save => 0
             };
         }
 

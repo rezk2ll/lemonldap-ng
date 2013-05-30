@@ -104,8 +104,14 @@ $p->{groups} = {
 };
 
 ok( $p->process > 0, 'User OK' );
-ok( $p->{sessionInfo}->{macro4} eq "foo", "Macros computed in alphanumeric order" );
-ok( $p->{sessionInfo}->{groups} =~ /\bgroup4\b/, "Groups computed in alphanumeric order" );
+ok(
+    $p->{sessionInfo}->{macro4} eq "foo",
+    "Macros computed in alphanumeric order"
+);
+ok(
+    $p->{sessionInfo}->{groups} =~ /\bgroup4\b/,
+    "Groups computed in alphanumeric order"
+);
 
 # Cookie test
 ok( $p->{cookie}->[0]->value eq '1', 'Cookie value' );
