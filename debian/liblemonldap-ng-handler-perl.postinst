@@ -13,5 +13,5 @@ then
     [ -e $HANDLERFILE ] || cp $EXAMPLEHANDLERFILE $HANDLERFILE
 fi
 
-# Maintainer: #DEBHELPER#
+#DEBHELPER#
 exit 0
