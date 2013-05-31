@@ -45,7 +45,7 @@ BEGIN {
     # Load Lasso.pm
     eval 'use Lasso;';
     if ($@) {
-        print STDERR "Lasso.pm not loaded :$@";
+        print STDERR "Lasso.pm not loaded: $@";
         eval 'use constant LASSO => 0;use constant BADLASSO => 0;';
     }
     else {
