@@ -9,7 +9,6 @@ distribution_type:  module
 configure_requires:
     ExtUtils::MakeMaker:  0
 build_requires:
-    Cache::Memcached:   0
     Digest::HMAC_SHA1:  0
     HTTP::Message:      0
     IO::Pipe:           0

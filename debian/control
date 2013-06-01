@@ -176,7 +176,8 @@ Depends: ${misc:Depends},
          libhtml-template-perl,
          liblemonldap-ng-conf-perl (= ${binary:Version}),
          liblemonldap-ng-handler-perl (= ${binary:Version}),
-         libnet-ldap-perl
+         libnet-ldap-perl,
+         libunicode-string-perl
 Recommends: libapache-session-browseable-perl,
             libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl (>= 2.3.0) | libnet-twitter-perl | libauthcas-perl
 Suggests: libauthcas-perl,

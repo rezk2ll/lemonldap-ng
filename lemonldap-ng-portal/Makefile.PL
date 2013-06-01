@@ -51,6 +51,7 @@ WriteMakefile(
         'Lemonldap::NG::Common'  => '1.3.0',
         'Lemonldap::NG::Handler' => '1.3.0',
         'Net::LDAP'              => 0.38,
+        'Unicode::String'        => 0,
     },
     (
         $] >= 5.005
