@@ -40,11 +40,10 @@ sub modifyPassword {
     $self->lmLog( "Modify password request for " . $self->{dn}, 'debug' );
 
     # Call the modify password method for AD
-    # TODO
-    my $code = $self->ldap->userModifyADPassword(
-        $self->{dn},              $self->{newpassword},
-        $self->{confirmpassword}, $self->{oldpassword}
-    );
+    my $code =
+      $self->ldap->userModifyPassword( $self->{dn}, $self->{newpassword},
+        $self->{confirmpassword},
+        $self->{oldpassword}, 1 );
 
     return $code unless ( $code == PE_PASSWORD_OK );
 

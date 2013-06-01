@@ -11,6 +11,7 @@ use Exporter;
 use base qw(Exporter Net::LDAP);
 use Lemonldap::NG::Portal::Simple;
 use Encode;
+use Unicode::String qw(utf8);
 use strict;
 
 our @EXPORT   = qw(ldap);
@@ -215,31 +216,61 @@ sub userBind {
     return PE_BADCREDENTIALS;
 }
 
-## @method private int _changePassword(string newpassword,string confirmpassword,string oldpassword)
+## @method int userModifyPassword(string dn, string newpassword, string confirmpassword, string oldpassword, boolean ad)
 # Change user's password.
+# @param $dn DN
 # @param $newpassword New password
 # @param $confirmpassword New password
 # @param $oldpassword Current password
+# @param $ad Active Directory mode
 # @return Lemonldap::NG::Portal constant
 sub userModifyPassword {
-    my ( $self, $dn, $newpassword, $confirmpassword, $oldpassword ) = splice @_;
+    my ( $self, $dn, $newpassword, $confirmpassword, $oldpassword, $ad ) =
+      splice @_;
+    my $ppolicyControl     = $self->{portal}->{ldapPpolicyControl};
+    my $setPassword        = $self->{portal}->{ldapSetPassword};
+    my $asUser             = $self->{portal}->{ldapChangePasswordAsUser};
+    my $requireOldPassword = $self->{portal}->{portalRequireOldPassword};
+    my $passwordAttribute  = "userPassword";
     my $err;
     my $mesg;
 
     # Verify confirmation password matching
-    return PE_PASSWORD_MISMATCH unless ( $newpassword eq $confirmpassword );
+    unless ( $newpassword eq $confirmpassword ) {
+        $self->{portal}->lmLog(
+"Password $newpassword and password $confirmpassword are not the same",
+            'debug'
+        );
+        return PE_PASSWORD_MISMATCH;
+    }
+
+    # Adjust configuration for AD
+    if ($ad) {
+        $ppolicyControl    = 0;
+        $setPassword       = 0;
+        $asUser            = 0;
+        $passwordAttribute = "unicodePwd";
+
+        # Encode password for AD
+        $newpassword = utf8( chr(34) . $newpassword . chr(34) )->utf16le();
+
+        $self->{portal}->lmLog( "Active Directory mode enabled", 'debug' );
+
+    }
 
     # First case: no ppolicy
-    if ( !$self->{portal}->{ldapPpolicyControl} ) {
+    if ( !$ppolicyControl ) {
 
-        if ( $self->{portal}->{ldapSetPassword} ) {
+        if ($setPassword) {
 
             # Bind as user if oldpassword and ldapChangePasswordAsUser
-            if ( $oldpassword and $self->{portal}->{ldapChangePasswordAsUser} )
-            {
+            if ( $oldpassword and $asUser ) {
 
                 $mesg = $self->bind( $dn, password => $oldpassword );
-                return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
+                if ( $mesg->code != 0 ) {
+                    $self->{portal}->lmLog( "Bad old password", 'debug' );
+                    return PE_BADOLDPASSWORD;
+                }
             }
 
             # Use SetPassword extended operation
@@ -257,29 +288,39 @@ sub userModifyPassword {
               );
 
             # Catch the "Unwilling to perform" error
-            return PE_BADOLDPASSWORD if ( $mesg->code == 53 );
+            if ( $mesg->code == 53 ) {
+                $self->{portal}->lmLog( "Bad old password", 'debug' );
+                return PE_BADOLDPASSWORD;
+            }
         }
         else {
-            if ( $self->{portal}->{portalRequireOldPassword} ) {
+            if ($requireOldPassword) {
 
                 return PE_MUST_SUPPLY_OLD_PASSWORD if ( !$oldpassword );
 
                 # Check old password with a bind
                 $mesg = $self->bind( $dn, password => $oldpassword );
-                return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
+                if ( $mesg->code != 0 ) {
+                    $self->{portal}->lmLog( "Bad old password", 'debug' );
+                    return PE_BADOLDPASSWORD;
+                }
 
           # Rebind as Manager only if user is not granted to change its password
-                $self->bind()
-                  unless $self->{portal}->{ldapChangePasswordAsUser};
+                $self->bind() unless $asUser;
             }
 
             # Use standard modification
             $mesg =
-              $self->modify( $dn, replace => { userPassword => $newpassword } );
+              $self->modify( $dn,
+                replace => { $passwordAttribute => $newpassword } );
         }
 
+        $self->{portal}
+          ->lmLog( "Modification return code: " . $mesg->code, 'debug' );
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
+        return PE_PP_INSUFFICIENT_PASSWORD_QUALITY
+          if ( $mesg->code == 53 && $ad );
         return PE_LDAPERROR unless ( $mesg->code == 0 );
         $self->{portal}
           ->_sub( 'userNotice', "Password changed $self->{portal}->{user}" );
@@ -290,14 +331,15 @@ sub userModifyPassword {
         # Create Control object
         my $pp = Net::LDAP::Control::PasswordPolicy->new;
 
-        if ( $self->{portal}->{ldapSetPassword} ) {
+        if ($setPassword) {
 
             # Bind as user if oldpassword and ldapChangePasswordAsUser
-            if ( $oldpassword and $self->{portal}->{ldapChangePasswordAsUser} )
-            {
-
+            if ( $oldpassword and $asUser ) {
                 $mesg = $self->bind( $dn, password => $oldpassword );
-                return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
+                if ( $mesg->code != 0 ) {
+                    $self->{portal}->lmLog( "Bad old password", 'debug' );
+                    return PE_BADOLDPASSWORD;
+                }
             }
 
 # Use SetPassword extended operation
@@ -319,24 +361,30 @@ sub userModifyPassword {
               );
 
             # Catch the "Unwilling to perform" error
-            return PE_BADOLDPASSWORD if ( $mesg->code == 53 );
+            if ( $mesg->code == 53 ) {
+                $self->{portal}->lmLog( "Bad old password", 'debug' );
+                return PE_BADOLDPASSWORD;
+            }
         }
         else {
             if ($oldpassword) {
 
                 # Check old password with a bind
                 $mesg = $self->bind( $dn, password => $oldpassword );
-                return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
+                if ( $mesg->code != 0 ) {
+                    $self->{portal}->lmLog( "Bad old password", 'debug' );
+                    return PE_BADOLDPASSWORD;
+                }
 
           # Rebind as Manager only if user is not granted to change its password
                 $self->bind()
-                  unless $self->{portal}->{ldapChangePasswordAsUser};
+                  unless $asUser;
             }
 
             # Use standard modification
             $mesg = $self->modify(
                 $dn,
-                replace => { userPassword => $newpassword },
+                replace => { $passwordAttribute => $newpassword },
                 control => [$pp]
             );
         }
@@ -344,6 +392,8 @@ sub userModifyPassword {
         # Get server control response
         my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
 
+        $self->{portal}
+          ->lmLog( "Modification return code: " . $mesg->code, 'debug' );
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
         if ( $mesg->code == 0 ) {
