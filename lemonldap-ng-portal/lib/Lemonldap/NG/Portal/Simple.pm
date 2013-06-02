@@ -551,8 +551,7 @@ sub setDefaultValues {
     $self->{cookieName}     ||= "lemonldap";
     $self->{authentication} ||= 'LDAP';
     $self->{authentication} =~ s/^ldap/LDAP/;
-    $self->{SMTPServer}     ||= 'localhost';
-    $self->{mailLDAPFilter} ||= '(&(mail=$mail)(objectClass=inetOrgPerson))';
+    $self->{SMTPServer}           ||= 'localhost';
     $self->{randomPasswordRegexp} ||= '[A-Z]{3}[a-z]{5}.\d{2}';
     $self->{mailFrom}             ||= "noreply@" . $self->{domain};
     $self->{mailSubject}          ||= "[LemonLDAP::NG] Your new password";
@@ -750,9 +749,9 @@ sub buildHiddenForm {
 
         # Build hidden input HTML code
         $val .=
-            '<input type="hidden" name="'
-          . $_
-          . '" id="'
+            '<input type="hidden" name="' 
+          . $_ 
+          . '" id="' 
           . $_
           . '" value="'
           . $self->{portalHiddenFormValues}->{$_} . '" />';
