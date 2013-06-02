@@ -47,8 +47,20 @@ sub modifyPassword {
 
     return $code unless ( $code == PE_PASSWORD_OK );
 
-    # If password policy and force reset, set reset flag
-    # TODO
+    # If force reset, set reset flag
+    if ( $self->{forceReset} ) {
+        my $result =
+          $self->ldap->modify( $self->{dn},
+            replace => { 'pwdLastSet' => '0' } );
+
+        unless ( $result->code == 0 ) {
+            $self->lmLog( "LDAP modify pwdLastSet error: " . $result->code,
+                'error' );
+            $code = PE_LDAPERROR;
+        }
+
+        $self->lmLog( "pwdLastSet set to 0", 'debug' );
+    }
 
     return $code;
 }
