@@ -567,7 +567,7 @@ sub session {
         foreach ( keys %session ) {
             next if $_ !~ /^notification_(.+)/;
             $res .=
-                '<li><strong>' 
+                '<li><strong>'
               . $1
               . '</strong>: '
               . $session{$_} . " ("
@@ -665,19 +665,17 @@ sub session {
 sub uidByIp {
     my ( $self, $ip ) = splice @_;
     my ( $byUser, $res );
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+    $res = Lemonldap::NG::Common::Apache::Session->searchOn(
         $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            my $id    = shift;
-            next if ( $entry->{_httpSessionType} );
-            if ( $entry->{ $self->{ipField} } eq $ip ) {
-                push @{ $byUser->{ $entry->{$whatToTrace} } },
-                  { id => $id, startTime => $entry->{startTime} };
-            }
-            undef;
+        $self->{ipField}, $ip );
+    while ( my ( $id, $entry ) = each(%$res) ) {
+        next if ( $entry->{_httpSessionType} );
+        if ( $entry->{ $self->{ipField} } eq $ip ) {
+            push @{ $byUser->{ $entry->{$whatToTrace} } },
+              { id => $id, startTime => $entry->{startTime} };
         }
-    );
+    }
+    $res = '';
     foreach my $user ( sort keys %$byUser ) {
         $res .= "<li id=\"ip$user\"><span>$user</span><ul>";
         foreach my $session ( sort { $a->{startTime} <=> $b->{startTime} }
@@ -699,19 +697,17 @@ sub uidByIp {
 sub uid {
     my ( $self, $uid ) = splice @_;
     my ( $byIp, $res );
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+    $res = Lemonldap::NG::Common::Apache::Session->searchOn(
         $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            my $id    = shift;
-            next if ( $entry->{_httpSessionType} );
-            if ( $entry->{$whatToTrace} eq $uid ) {
-                push @{ $byIp->{ $entry->{ $self->{ipField} } } },
-                  { id => $id, startTime => $entry->{startTime} };
-            }
-            undef;
+        $whatToTrace, $uid );
+    while ( my ( $id, $entry ) = each(%$res) ) {
+        next if ( $entry->{_httpSessionType} );
+        if ( $entry->{$whatToTrace} eq $uid ) {
+            push @{ $byIp->{ $entry->{ $self->{ipField} } } },
+              { id => $id, startTime => $entry->{startTime} };
         }
-    );
+    }
+    $res = '';
     foreach my $ip ( sort keys %$byIp ) {
         $res .= "<li class=\"open\" id=\"uid$ip\"><span>$ip</span><ul>";
         foreach my $session ( sort { $a->{startTime} <=> $b->{startTime} }
