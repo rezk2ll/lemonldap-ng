@@ -185,18 +185,16 @@ sub doubleIp {
     my ( $byUid, $byIp, $res, $count );
 
     # Parse all sessions
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+    $res = Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
         $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            my $id    = shift;
-            next if ( $entry->{_httpSessionType} );
-            push @{ $byUid->{ $entry->{$whatToTrace} }
-                  ->{ $entry->{ $self->{ipField} } } },
-              { id => $id, startTime => $entry->{startTime} };
-            undef;
-        }
-    );
+        [ '_httpSessionType', $whatToTrace, $self->{ipField}, 'startTime' ] );
+    while ( my ( $id, $entry ) = each %$res ) {
+        next if ( $entry->{_httpSessionType} );
+        push @{ $byUid->{ $entry->{$whatToTrace} }
+              ->{ $entry->{ $self->{ipField} } } },
+          { id => $id, startTime => $entry->{startTime} };
+    }
+    $res = '';
 
     # Build tree sorted by uid (or other field chosen in whatToTrace parameter)
     foreach my $uid (
@@ -215,7 +213,8 @@ sub doubleIp {
             $res .= "<li class=\"open\" id=\"di$ip\"><span>$ip</span><ul>";
 
             # For each IP node, store sessions sorted by start time
-            foreach my $session ( sort { $a->{startTime} <=> $b->{startTime} }
+            foreach
+              my $session ( sort { $a->{startTime} <=> $b->{startTime} }
                 @{ $byUid->{$uid}->{$ip} } )
             {
                 $res .=
@@ -252,6 +251,7 @@ sub fullip {
     $reip =~ s/\\\*/\.\*/g;
 
     # Parse all sessions and store only if IP match regexp
+    # TODO: change this with a new request type
     Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
         $self->{globalStorageOptions},
         sub {
@@ -302,6 +302,7 @@ sub fulluid {
     $reuser =~ s/\\\*/\.\*/g;
 
     # Parse all sessions to find user that match regexp
+    # TODO: change this with a new request type
     Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
         $self->{globalStorageOptions},
         sub {
@@ -731,6 +732,8 @@ sub letter {
     my $self   = shift;
     my $letter = $self->param('letter');
     my ( $byUid, $res );
+
+    # TODO: change this with a new request type
     Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
         $self->{globalStorageOptions},
         sub {
@@ -778,6 +781,8 @@ sub _ipclasses {
     my $partial = $p ? "$p." : '';
     my $repartial = quotemeta($partial);
     my ( $byIp, $count, $res );
+
+    # TODO: change this with a new request type
     Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
         $self->{globalStorageOptions},
         sub {
