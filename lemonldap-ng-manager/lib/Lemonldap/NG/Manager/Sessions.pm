@@ -246,26 +246,17 @@ sub fullip {
     my ( $self, $req ) = splice @_;
     my ( $byUid, $res );
 
-    # Build regexp based on IP request
-    my $reip = quotemeta($req);
-    $reip =~ s/\\\*/\.\*/g;
-
-    # Parse all sessions and store only if IP match regexp
-    # TODO: change this with a new request type
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+    # Parse sessions and store only if IP match regexp
+    $res = Lemonldap::NG::Common::Apache::Session->searchOnExpr(
         $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            my $id    = shift;
-            next if ( $entry->{_httpSessionType} );
-            if ( $entry->{ $self->{ipField} } =~ /$reip/ ) {
-                push @{ $byUid->{ $entry->{ $self->{ipField} } }
-                      ->{ $entry->{$whatToTrace} } },
-                  { id => $id, startTime => $entry->{startTime} };
-            }
-            undef;
-        }
-    );
+        $self->{ipField}, $req, $whatToTrace, 'startTime', $self->{ipField} );
+    while ( my ( $id, $entry ) = each %$res ) {
+        next if ( $entry->{_httpSessionType} );
+        push @{ $byUid->{ $entry->{ $self->{ipField} } }
+              ->{ $entry->{$whatToTrace} } },
+          { id => $id, startTime => $entry->{startTime} };
+    }
+    $res = '';
 
     # Build tree sorted by IP
     foreach my $ip ( sort keys %$byUid ) {
