@@ -249,7 +249,8 @@ sub fullip {
     # Parse sessions and store only if IP match regexp
     $res = Lemonldap::NG::Common::Apache::Session->searchOnExpr(
         $self->{globalStorageOptions},
-        $self->{ipField}, $req, $whatToTrace, 'startTime', $self->{ipField} );
+        $self->{ipField}, $req, $whatToTrace, 'startTime', $self->{ipField},
+        '_httpSessionType' );
     while ( my ( $id, $entry ) = each %$res ) {
         next if ( $entry->{_httpSessionType} );
         push @{ $byUid->{ $entry->{ $self->{ipField} } }
@@ -288,27 +289,19 @@ sub fulluid {
     my ( $self, $req ) = splice @_;
     my ( $byUid, $res );
 
-    # Build regexp based on request
-    my $reuser = quotemeta($req);
-    $reuser =~ s/\\\*/\.\*/g;
-
-    # Parse all sessions to find user that match regexp
-    # TODO: change this with a new request type
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+    # Parse sessions to find user that match regexp
+    $res = Lemonldap::NG::Common::Apache::Session->searchOnExpr(
         $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            my $id    = shift;
-            next if ( $entry->{_httpSessionType} );
-            if ( $entry->{$whatToTrace} =~ /^$reuser$/ ) {
-                push @{ $byUid->{ $entry->{$whatToTrace} } },
-                  { id => $id, startTime => $entry->{startTime} };
-            }
-            undef;
-        }
-    );
+        $whatToTrace, $req, $whatToTrace, 'startTime', '_httpSessionType' );
+    while ( my ( $id, $entry ) = each %$res ) {
+        next if ( $entry->{_httpSessionType} );
+        push @{ $byUid->{ $entry->{$whatToTrace} } },
+          { id => $id, startTime => $entry->{startTime} };
+    }
+    $res = '';
 
     # Build tree sorted by uid
+    $res .= "<li id=\"re\"><span>$req</span><ul>";
     foreach my $uid ( sort keys %$byUid ) {
         $res .= $self->ajaxNode(
             $uid,
@@ -323,6 +316,7 @@ sub fulluid {
             "uid=$uid"
         );
     }
+    $res .= "</ul></li>";
 }
 
 ## @method protected string ipclasses()
@@ -724,16 +718,14 @@ sub letter {
     my $letter = $self->param('letter');
     my ( $byUid, $res );
 
-    # TODO: change this with a new request type
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+    $res = Lemonldap::NG::Common::Apache::Session->searchOnExpr(
         $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            next if ( $entry->{_httpSessionType} );
-            $entry->{$whatToTrace} =~ /^$letter/ or return undef;
-            $byUid->{ $entry->{$whatToTrace} }++;
-        },
-    );
+        $whatToTrace, "${letter}*", '_httpSessionType', $whatToTrace );
+    while ( my ( $id, $entry ) = each %$res ) {
+        next if ( $entry->{_httpSessionType} );
+        $byUid->{ $entry->{$whatToTrace} }++;
+    }
+    $res = '';
     foreach my $uid ( sort keys %$byUid ) {
         $res .= $self->ajaxNode(
             $uid,
@@ -773,20 +765,16 @@ sub _ipclasses {
     my $repartial = quotemeta($partial);
     my ( $byIp, $count, $res );
 
-    # TODO: change this with a new request type
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+    $res = Lemonldap::NG::Common::Apache::Session->searchOnExpr(
         $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            next if ( $entry->{_httpSessionType} );
-            $entry->{ $self->{ipField} } =~ /^$repartial(\d+)/
-              or return undef;
-            $byIp->{$1}++;
-            $count++;
-            undef;
-        }
-    );
-
+        $self->{ipField}, "${partial}*", '_httpSessionType', $self->{ipField} );
+    while ( my ( $id, $entry ) = each %$res ) {
+        next if ( $entry->{_httpSessionType} );
+        $entry->{ $self->{ipField} } =~ /^$repartial(\d+)/ or next;
+        $byIp->{$1}++;
+        $count++;
+    }
+    $res = '';
     foreach my $ip ( sort { $a <=> $b } keys %$byIp ) {
         $res .= $self->ajaxNode(
             "$partial$ip",
