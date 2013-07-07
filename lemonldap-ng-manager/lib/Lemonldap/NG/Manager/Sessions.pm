@@ -134,17 +134,16 @@ sub list {
     $count = 0;
 
     # Parse all sessions to store first letter
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+    $res = Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
         $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            next if ( $entry->{_httpSessionType} );
-            $entry->{$whatToTrace} =~ /^(\w)/ or return undef;
-            $byUid->{$1}++;
-            $count++;
-            undef;
-        }
-    );
+        [ '_httpSessionType', $whatToTrace ] );
+    while ( my ( $id, $entry ) = each %$res ) {
+        next if ( $entry->{_httpSessionType} );
+        next unless $entry->{$whatToTrace} =~ /^(\w)/;
+        $byUid->{$1}++;
+        $count++;
+    }
+    $res = '';
 
     # Build tree sorted by first letter
     foreach my $letter ( sort keys %$byUid ) {
