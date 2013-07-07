@@ -6,22 +6,23 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME           => 'Lemonldap::NG::Handler',
     VERSION_FROM   => 'lib/Lemonldap/NG/Handler.pm',
-    LICENSE        => 'perl',
+    LICENSE        => 'gpl',
     PMLIBDIRS      => ['lib'],
     BUILD_REQUIRES => {
         'Digest::HMAC_SHA1' => 0,
         'HTTP::Message'     => 0,
         'IO::Pipe'          => 0,
-        'SOAP::Lite'                     => 0,
+        'SOAP::Lite'        => 0,
         'Test::MockObject'  => 0,
         'Test::Pod'         => 0,
     },
     META_MERGE => {
         'recommends' => {
-            'Cache::Memcached'  => 0,
-            'Digest::HMAC_SHA1' => 0,
-            'HTTP::Message'     => 0,
-        'SOAP::Lite'                     => 0,
+            'Cache::Memcached'     => 0,
+            'Digest::HMAC_SHA1'    => 0,
+            'HTTP::Message'        => 0,
+            'LWP::Protocol::https' => 0,
+            'SOAP::Lite'           => 0,
         },
     },
     PREREQ_PM => {

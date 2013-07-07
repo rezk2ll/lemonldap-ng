@@ -4,7 +4,7 @@ version:            1.3.0
 abstract:           Common files for Lemonldap::NG infrastructure
 author:
     - Xavier Guimard <x.guimard@free.fr>, Clément Oudot <clement@oodo.net>
-license:            perl
+license:            gpl
 distribution_type:  module
 configure_requires:
     ExtUtils::MakeMaker:  0
