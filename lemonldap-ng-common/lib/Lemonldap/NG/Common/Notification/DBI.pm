@@ -37,13 +37,14 @@ sub prereq {
 sub get {
     my ( $self, $uid, $ref ) = @_;
     return () unless ($uid);
-    $uid =~ s/'/''/g;
-    $ref =~ s/'/''/g;
-    _execute( $self,
-            "SELECT * FROM $self->{dbiTable} WHERE done IS NULL AND uid='$uid'"
-          . ( $ref ? " AND ref='$ref'" : '' )
-          . "ORDER BY date" )
-      or return ();
+    _execute(
+        $self,
+        "SELECT * FROM $self->{dbiTable} WHERE done IS NULL AND uid=?"
+          . ( $ref ? " AND ref=?" : '' )
+          . "ORDER BY date",
+        $uid,
+        ( $ref ? $ref : () )
+    ) or return ();
     my $result;
     while ( my $h = $self->{sth}->fetchrow_hashref() ) {
 
@@ -95,16 +96,18 @@ sub delete {
         $self->lmLog( "Bad reference $myref", 'warn' );
         return 0;
     }
-    $u =~ s/'/''/g;
-    $r =~ s/'/''/g;
-    $d =~ s/'/''/g;
     my @ts = localtime();
     $ts[5] += 1900;
     $ts[4]++;
-    return _execute( $self,
-            "UPDATE $self->{dbiTable} "
+    return _execute(
+        $self,
+        "UPDATE $self->{dbiTable} "
           . "SET done='$ts[5]-$ts[4]-$ts[3] $ts[2]:$ts[1]' "
-          . "WHERE done IS NULL AND uid='$u' AND ref='$r' AND date='$d'" );
+          . "WHERE done IS NULL AND uid=? AND ref=? AND date=?",
+        $u,
+        $r,
+        $d
+    );
 }
 
 ## @method boolean purge(string myref, boolean force)
@@ -123,12 +126,14 @@ sub purge {
     my $clause;
     $clause = "done IS NOT NULL AND" unless ($force);
 
-    $u =~ s/'/''/g;
-    $r =~ s/'/''/g;
-    $d =~ s/'/''/g;
-    return _execute( $self,
-            "DELETE FROM $self->{dbiTable} "
-          . "WHERE $clause AND uid='$u' AND ref='$r' AND date='$d'" );
+    return _execute(
+        $self,
+        "DELETE FROM $self->{dbiTable} "
+          . "WHERE $clause uid=? AND ref=? AND date=?",
+        $u,
+        $r,
+        $d
+    );
 }
 
 ## @method boolean newNotif(string date, string uid, string ref, string condition, string xml)
@@ -141,22 +146,27 @@ sub purge {
 # @return true if succeed
 sub newNotif {
     my ( $self, $date, $uid, $ref, $condition, $xml ) = @_;
-    $uid       =~ s/'/''/g;
-    $ref       =~ s/'/''/g;
-    $date      =~ s/'/''/g;
-    $condition =~ s/'/''/g;
     $xml = $xml->serialize();
-    $xml =~ s/'/''/g;
 
     my $res =
       $condition =~ /.+/
-      ? _execute( $self,
-            "INSERT INTO $self->{dbiTable} (date,uid,ref,cond,xml) "
-          . "VALUES('$date','$uid','$ref','$condition','$xml')" )
+      ? _execute(
+        $self,
+        "INSERT INTO $self->{dbiTable} (date,uid,ref,cond,xml) "
+          . "VALUES(?,?,?,?,?)",
+        $date,
+        $uid,
+        $ref,
+        $condition,
+        $xml
+      )
       : _execute(
         $self,
-        "INSERT INTO $self->{dbiTable} (date,uid,ref,xml) "
-          . "VALUES('$date','$uid','$ref','$xml')"
+        "INSERT INTO $self->{dbiTable} (date,uid,ref,xml) " . "VALUES(?,?,?,?)",
+        $date,
+        $uid,
+        $ref,
+        $xml
       );
     return $res;
 }
@@ -181,18 +191,18 @@ sub getDone {
     return $result;
 }
 
-## @method private object _execute(string query)
+## @method private object _execute(string query, array args)
 # Execute a query and catch errors
 # @return number of lines touched or 1 if select succeed
 sub _execute {
-    my ( $self, $query ) = @_;
+    my ( $self, $query, @args ) = @_;
     my $dbh = _dbh($self) or return 0;
     unless ( $self->{sth} = $dbh->prepare($query) ) {
         $self->lmLog( $dbh->errstr(), 'warn' );
         return 0;
     }
     my $tmp;
-    unless ( $tmp = $self->{sth}->execute() ) {
+    unless ( $tmp = $self->{sth}->execute(@args) ) {
         $self->lmLog( $self->{sth}->errstr(), 'warn' );
         return 0;
     }
