@@ -114,8 +114,8 @@ sub unlock {
 
 sub delete {
     my ( $self, $cfgNum ) = @_;
-    $self->_dbh->do(
-        "DELETE from " . $self->{dbiTable} . " WHERE cfgNum=$cfgNum" );
+    $self->_dbh->do( "DELETE from " . $self->{dbiTable} . " WHERE cfgNum=?",
+        {}, $cfgNum );
 }
 
 sub logError {
