@@ -426,9 +426,9 @@ sub safe {
         }
         next if ( $class->can($_) );
         eval "sub $_ {
-            return $sub(\$apacheRequest->uri
-                . ( \$apacheRequest->args ? '?' . \$apacheRequest->args : '' )
-                , \@_)
+            my \$uri = \$apacheRequest->unparsed_uri();
+            Apache2::URI::unescape_url(\$uri);
+            return $sub(\$uri, \@_)
             }";
         $class->lmLog( $@, 'error' ) if ($@);
     }
@@ -979,7 +979,8 @@ sub run ($$) {
         );
         return REDIRECT;
     }
-    my $uri = $apacheRequest->uri . ( $args ? "?$args" : "" );
+    my $uri = $apacheRequest->unparsed_uri();
+    my $uri_orig = $uri;
     Apache2::URI::unescape_url($uri);
 
     my $protection = $class->isUnprotected($uri);
@@ -1053,7 +1054,7 @@ sub run ($$) {
         # if the cookie was fetched, a log is sent by retrieveSession()
         $class->updateStatus( $apacheRequest->connection->remote_ip,
             $apacheRequest->uri, $id ? 'EXPIRED' : 'REDIRECT' );
-        return $class->goToPortal($uri);
+        return $class->goToPortal($uri_orig);
     }
 }
 
@@ -1320,7 +1321,7 @@ sub abort {
     # If abort is called without a valid request, fall to die
     eval {
         my $args = $apacheRequest->args;
-        my $uri = $apacheRequest->uri . ( $args ? "?$args" : "" );
+        my $uri = $apacheRequest->unparsed_uri();
 
         # Set error 500 in logs even if "useRedirectOnError" is set
         $apacheRequest->push_handlers(
