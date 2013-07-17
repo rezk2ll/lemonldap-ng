@@ -979,7 +979,7 @@ sub run ($$) {
         );
         return REDIRECT;
     }
-    my $uri = $apacheRequest->unparsed_uri();
+    my $uri      = $apacheRequest->unparsed_uri();
     my $uri_orig = $uri;
     Apache2::URI::unescape_url($uri);
 
@@ -1321,7 +1321,7 @@ sub abort {
     # If abort is called without a valid request, fall to die
     eval {
         my $args = $apacheRequest->args;
-        my $uri = $apacheRequest->unparsed_uri();
+        my $uri  = $apacheRequest->unparsed_uri();
 
         # Set error 500 in logs even if "useRedirectOnError" is set
         $apacheRequest->push_handlers(

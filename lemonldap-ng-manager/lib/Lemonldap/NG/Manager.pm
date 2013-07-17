@@ -133,7 +133,7 @@ sub menu {
     my $self = shift;
     require Lemonldap::NG::Manager::Downloader;
     return
-        '<ul class="simpleTree">' 
+        '<ul class="simpleTree">'
       . $self->li( 'root', 'root' )
       . $self->span(
         id   => 'root',
