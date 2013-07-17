@@ -6,6 +6,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="Content-Script-Type" content="text/javascript" />
 	<meta http-equiv="cache-control" content="no-cache" />
+	<TMPL_IF NAME="browserIdEnabled">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	</TMPL_IF>
         <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/styles.css" />
         <link href="<TMPL_VAR NAME="SKIN_PATH">/common/favicon.ico" rel="icon" type="image/x-icon" />
         <link href="<TMPL_VAR NAME="SKIN_PATH">/common/favicon.ico" rel="shortcut icon" />
@@ -17,6 +20,17 @@
         <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/jquery-ui-1.8.5.custom.min.js"></script>
         <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/jquery.base64.js"></script>
         <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/jquery.cookie.js"></script>
+	<TMPL_IF NAME="browserIdEnabled">
+        <script src="https://login.persona.org/include.js"></script>
+        </TMPL_IF>
+	<TMPL_IF NAME="browserIdLoadLoginScript">
+        <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/browserid.js"></script>
+        <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/browseridlogin.js"></script>
+        </TMPL_IF>
+	<TMPL_IF NAME="browserIdLoadLogoutScript">
+        <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/browserid.js"></script>
+        <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/browseridlogout.js"></script>
+        </TMPL_IF>
         <script type="text/javascript">//<![CDATA[
             var displaytab='<TMPL_VAR NAME="DISPLAY_TAB">';
             var choicetab='<TMPL_VAR NAME="CHOICE_VALUE">';
