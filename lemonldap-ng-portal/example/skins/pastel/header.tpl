@@ -24,6 +24,11 @@
         <script src="https://login.persona.org/include.js"></script>
         </TMPL_IF>
         <TMPL_IF NAME="browserIdLoadLoginScript">
+        <script type="text/javascript">//<![CDATA[
+            var browserIdSiteName='<TMPL_VAR NAME="browserIdSiteName">';
+            var browserIdSiteLogo='<TMPL_VAR NAME="browserIdSiteLogo">';
+            var browserIdBackgroundColor='<TMPL_VAR NAME="browserIdBackgroundColor">';
+        //]]></script>
         <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/browserid.js"></script>
         <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/browseridlogin.js"></script>
         </TMPL_IF>

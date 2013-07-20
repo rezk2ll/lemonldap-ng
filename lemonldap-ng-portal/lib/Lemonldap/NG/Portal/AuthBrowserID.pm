@@ -23,9 +23,17 @@ sub authInit {
       "https://verifier.login.persona.org/verify";
     $self->{browserIdAuthnLevel} = "2"
       unless defined $self->{browserIdAuthnLevel};
+    $self->{browserIdSiteName} ||= "LemonLDAP::NG";
+    $self->{browserIdSiteLogo};
+    $self->{browserIdBackgroundColor} ||= "#000";
 
     # Enable BrowserID in template
     $self->{tpl_browserIdEnabled} = 1;
+
+    # Set BrowserID customization parameters
+    $self->{tpl_browserIdSiteName} = $self->{browserIdSiteName} if $self->{browserIdSiteName};
+    $self->{tpl_browserIdSiteLogo} = $self->{browserIdSiteLogo} if $self->{browserIdSiteLogo};
+    $self->{tpl_browserIdBackgroundColor} = $self->{browserIdBackgroundColor} if $self->{browserIdBackgroundColor};
 
     PE_OK;
 }
