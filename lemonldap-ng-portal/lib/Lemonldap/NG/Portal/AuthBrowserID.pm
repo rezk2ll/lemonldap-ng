@@ -35,6 +35,7 @@ sub authInit {
 sub setAuthSessionInfo {
     my $self = shift;
 
+    $self->{sessionInfo}->{_user}               = $self->{user};
     $self->{sessionInfo}->{authenticationLevel} = $self->{browserIdAuthnLevel};
 
     PE_OK;
@@ -46,11 +47,81 @@ sub setAuthSessionInfo {
 sub extractFormInfo {
     my $self = shift;
 
-    # Assertion should be in POST browserIdAssertion parameter (ajax call)
+    # Assertion should be browserIdAssertion parameter
     if ( $self->{browserIdAssertion} = $self->param('browserIdAssertion') ) {
         $self->lmLog(
             "BrowserID Assertion found: " . $self->{browserIdAssertion},
             'debug' );
+
+        # Resolve assertion
+        my $ua = new LWP::UserAgent;
+        push @{ $ua->requests_redirectable }, 'POST';
+
+        my $postdata =
+            "assertion="
+          . $self->{browserIdAssertion}
+          . "&audience="
+          . $self->{portal};
+
+        $self->lmLog( "Send $postdata to " . $self->{browserIdVerificationURL},
+            'debug' );
+
+        my $request =
+          HTTP::Request->new( 'POST' => $self->{browserIdVerificationURL} );
+        $request->content_type('application/x-www-form-urlencoded');
+        $request->content($postdata);
+
+        my $answer = $ua->request($request);
+
+        $self->lmLog( "Verification response: " . $answer->as_string, 'debug' );
+
+        if ( $answer->code() == "200" ) {
+
+            # Get JSON answser
+            my $browserIdVerificationAnswer = $answer->content;
+            $self->lmLog(
+                "Received BrowserID answer: $browserIdVerificationAnswer",
+                'debug' );
+
+            my $json = new JSON();
+            $self->{browserIdAnswer} =
+              $json->decode($browserIdVerificationAnswer);
+
+            if ( $self->{browserIdAnswer}->{status} eq "okay" ) {
+                $self->{user} = $self->{browserIdAnswer}->{email};
+
+                $self->lmLog(
+                    "Found user "
+                      . $self->{user}
+                      . " in BrowserID verification answer",
+                    'debug'
+                );
+
+                # TODO - check audience
+                # TODO - adjust session duration with BrowserID expires field
+                # TODO - check SSL certificate
+
+                return PE_OK;
+            }
+            else {
+                $self->lmLog(
+                    "Assertion "
+                      . $self->{browserIdAssertion}
+                      . " not verified by BrowserID provider",
+                    'error'
+                );
+                return PE_ERROR;
+            }
+        }
+        else {
+            $self->lmLog(
+                "Fail to validate BrowserId assertion "
+                  . $self->{browserIdAssertion},
+                'error'
+            );
+            return PE_ERROR;
+        }
+
         return PE_OK;
     }
 
@@ -63,78 +134,7 @@ sub extractFormInfo {
 # Verify assertion and audience
 # @return Lemonldap::NG::Portal constant
 sub authenticate {
-    my $self = shift;
-
-    # Return unless BrowserID assertion
-    return PE_FIRSTACCESS unless ( $self->{browserIdAssertion} );
-
-    my $ua = new LWP::UserAgent;
-    push @{ $ua->requests_redirectable }, 'POST';
-
-    my $postdata =
-        "assertion="
-      . $self->{browserIdAssertion}
-      . "&audience="
-      . $self->{portal};
-
-    $self->lmLog( "Send $postdata to " . $self->{browserIdVerificationURL},
-        'debug' );
-
-    my $request =
-      HTTP::Request->new( 'POST' => $self->{browserIdVerificationURL} );
-    $request->content_type('application/x-www-form-urlencoded');
-    $request->content($postdata);
-
-    my $answer = $ua->request($request);
-
-    $self->lmLog( "Verification response: " . $answer->as_string, 'debug' );
-
-    if ( $answer->code() == "200" ) {
-
-        # Get JSON answser
-        my $browserIdVerificationAnswer = $answer->content;
-        $self->lmLog( "Received BrowserID answer: $browserIdVerificationAnswer",
-            'debug' );
-
-        my $json = new JSON();
-        $self->{browserIdAnswer} = $json->decode($browserIdVerificationAnswer);
-
-        if ( $self->{browserIdAnswer}->{status} eq "okay" ) {
-            $self->{_user} = $self->{browserIdAnswer}->{email};
-            $self->{sessionInfo}->{user} = $self->{_user};
-
-            $self->lmLog(
-                "Found user "
-                  . $self->{_user}
-                  . " in BrowserID verification answer",
-                'debug'
-            );
-
-            # TODO - check audience
-            # TODO - adjust session duration with BrowserID expires field
-            # TODO - check SSL certificate
-
-            return PE_OK;
-        }
-        else {
-            $self->lmLog(
-                "Assertion "
-                  . $self->{browserIdAssertion}
-                  . " not verified by BrowserID provider",
-                'error'
-            );
-            return PE_ERROR;
-        }
-    }
-    else {
-        $self->lmLog(
-            "Fail to validate BrowserId assertion "
-              . $self->{browserIdAssertion},
-            'error'
-        );
-        return PE_ERROR;
-    }
-
+    PE_OK;
 }
 
 ## @apmethod int authFinish()
