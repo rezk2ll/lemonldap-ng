@@ -6,6 +6,7 @@
 var helpCh={
 	'advanced':'/pages/documentation/current/start.html#advanced_features',
 	'authApache':'/pages/documentation/current/authapache.html',
+	'authBrowserID':'/pages/documentation/current/authbrowserid.html',
 	'authDBI':'/pages/documentation/current/authdbi.html',
 	'authDBIConnection':'/pages/documentation/current/authdbi.html#connection',
 	'authDBILevel':'/pages/documentation/current/authdbi.html#authentication_level',
@@ -604,6 +605,7 @@ function formateSelectAuth(id,value){
 	formateSelect(id,[
 		'Apache=Apache',
 		'AD=Active Directory',
+		'BrowserID=BrowserID (Mozilla Persona)',
 		'Choice=Authentication choice',
 		'CAS=Central Authentication Service (CAS)',
 		'DBI=Database (DBI)',

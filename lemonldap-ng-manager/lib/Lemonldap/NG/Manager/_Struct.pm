@@ -378,12 +378,13 @@ sub struct {
                             null    => ['nullParams'],
                             slave   => ['slaveParams'],
                             choice  => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
                             ],
                             multi => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
                             ],
-                            yubikey => ['yubikeyParams'],
+                            yubikey   => ['yubikeyParams'],
+                            browserid => ['browserIdParams'],
                         }->{$mod};
                         if ($tmp) {
                             $res{$_}++ foreach (@$tmp);
@@ -654,6 +655,21 @@ sub struct {
                     yubikeyClientID     => 'text:/yubikeyClientID',
                     yubikeySecretKey    => 'text:/yubikeySecretKey',
                     yubikeyPublicIDSize => 'int:/yubikeyPublicIDSize',
+                },
+
+                # BrowserID
+                browserIdParams => {
+                    _nodes => [
+                        qw(browserIdAuthnLevel browserIdVerificationURL browserIdSiteName browserIdSiteLogo browserIdBackgroundColor)
+                    ],
+                    _help               => 'authBrowserID',
+                    browserIdAuthnLevel => 'int:/browserIdAuthnLevel',
+                    browserIdVerificationURL =>
+                      'text:/browserIdVerificationURL',
+                    browserIdSiteName => 'text:/browserIdSiteName',
+                    browserIdSiteLogo => 'text:/browserIdSiteLogo',
+                    browserIdBackgroundColor =>
+                      'text:/browserIdBackgroundColor',
                 },
 
             },
@@ -1904,6 +1920,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         secureTokenUrls             => $testNotDefined,
         secureTokenHeader           => $testNotDefined,
         secureTokenAllowOnError     => $boolean,
+
+        # BrowserID
+        browserIdAuthnLevel      => $integer,
+        browserIdVerificationURL => $testNotDefined,
+        browserIdSiteName        => $testNotDefined,
+        browserIdSiteLogo        => $testNotDefined,
+        browserIdBackgroundColor => $testNotDefined,
     };
 }
 
@@ -2130,16 +2153,17 @@ sub defaultConf {
         samlCommonDomainCookieActivation              => 0,
 
         # Authentication levels
-        ldapAuthnLevel    => 2,
-        dbiAuthnLevel     => 2,
-        SSLAuthnLevel     => 5,
-        CAS_authnLevel    => 1,
-        openIdAuthnLevel  => 1,
-        twitterAuthnLevel => 1,
-        apacheAuthnLevel  => 4,
-        nullAuthnLevel    => 0,
-        slaveAuthnLevel   => 2,
-        yubikeyAuthnLevel => 3,
+        ldapAuthnLevel      => 2,
+        dbiAuthnLevel       => 2,
+        SSLAuthnLevel       => 5,
+        CAS_authnLevel      => 1,
+        openIdAuthnLevel    => 1,
+        twitterAuthnLevel   => 1,
+        apacheAuthnLevel    => 4,
+        nullAuthnLevel      => 0,
+        slaveAuthnLevel     => 2,
+        yubikeyAuthnLevel   => 3,
+        browserIdAuthnLevel => 1,
 
     };
 }
