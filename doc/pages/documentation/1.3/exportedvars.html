@@ -105,6 +105,14 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 <span class="co1"># Use a group in a rule</span>
 <span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="sy0">/</span><span class="re0">\badmin</span><span class="re0">\b</span><span class="sy0">/</span></pre>
 
+<p>
+Note that groups are computed after macros, so a group rule may involve a macro value.
+</p>
+
+<p>
+Besides, macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
+</p>
+
 </div>
 </div>
 <div class="level2">

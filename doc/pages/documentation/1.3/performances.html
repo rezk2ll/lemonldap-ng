@@ -38,10 +38,11 @@ Lemonldap::NG is designed to be very performant. In particular, it use Apache2 t
 <p>
 
 Handlers check rights and calculate headers for each <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> hit. So to improve performances, avoid too complex rules by using the macro or the groups or local macros.
+
 </p>
 
 </div>
-<!-- SECTION "Handler performance" [255-453] -->
+<!-- SECTION "Handler performance" [255-452] -->
 <h3><a name="macros_and_groups" id="macros_and_groups">Macros and groups</a></h3>
 <div class="level3">
 
@@ -81,8 +82,16 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 <span class="co1"># Use a group in a rule</span>
 <span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="sy0">/</span><span class="re0">\badmin</span><span class="re0">\b</span><span class="sy0">/</span></pre>
 
+<p>
+Note that groups are computed after macros, so a group rule may involve a macro value.
+</p>
+
+<p>
+Besides, macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
+</p>
+
 </div>
-<!-- SECTION "Macros and groups" [454-1308] -->
+<!-- SECTION "Macros and groups" [453-1719] -->
 <h3><a name="local_macros" id="local_macros">Local macros</a></h3>
 <div class="level3">
 
@@ -101,12 +110,12 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 </p>
 
 </div>
-<!-- SECTION "Local macros" [1309-1966] -->
+<!-- SECTION "Local macros" [1720-2377] -->
 <h2><a name="portal_performances" id="portal_performances">Portal performances</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Portal performances" [1967-1999] -->
+<!-- SECTION "Portal performances" [2378-2410] -->
 <h3><a name="general_performances" id="general_performances">General performances</a></h3>
 <div class="level3">
 
@@ -121,7 +130,7 @@ The portal is the biggest component of Lemonldap::NG. It is recommended to use M
 &lt;/<span class="kw3">Files</span>&gt;</pre>
 
 </div>
-<!-- SECTION "General performances" [2000-2343] -->
+<!-- SECTION "General performances" [2411-2754] -->
 <h3><a name="starting_performances" id="starting_performances">Starting performances</a></h3>
 <div class="level3">
 
@@ -141,7 +150,7 @@ To make the portal start faster when the server is relaunched, add those lines i
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- SECTION "Starting performances" [2344-2919] -->
+<!-- SECTION "Starting performances" [2755-3330] -->
 <h3><a name="apachesession_performances" id="apachesession_performances">Apache::Session performances</a></h3>
 <div class="level3">
 
@@ -150,7 +159,7 @@ To make the portal start faster when the server is relaunched, add those lines i
 Lemonldap::NG handlers use a local cache to store sessions (for 10 minutes). So Apache::Session module is not a problem for handlers. It can be a brake for the portal:
 </p>
 <ol>
-<li class="level1"><div class="li"> When you use the multiple sessions restriction parameters, sessions are parsed for each authentication unless you use an <a href="http://search.cpan.org/perldoc?Apache::Session::Browseable" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> module.</div>
+<li class="level1"><div class="li"> When you use the multiple sessions restriction parameters, sessions are parsed for each authentication unless you use an <a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> module.</div>
 </li>
 <li class="level1"><div class="li"> Since MySQL does not have always transaction feature, Apache::Session::MySQL has been designed to use MySQL locks. Since MySQL performances are very bad using this, if you want to store sessions in a MySQL database, prefer one of the following</div>
 </li>
@@ -163,7 +172,7 @@ Lemonldap::NG handlers use a local cache to store sessions (for 10 minutes). So 
 
 <p>
 
-In “Apache::Session module” field, set ”<a href="http://search.cpan.org/perldoc?Apache::Session::Flex" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Flex"  rel="nofollow">Apache::Session::Flex</a>” and use the following parameters:
+In “Apache::Session module” field, set ”<a href="https://metacpan.org/module/Apache::Session::Flex" class="urlextern" title="https://metacpan.org/module/Apache::Session::Flex"  rel="nofollow">Apache::Session::Flex</a>” and use the following parameters:
 
 </p>
 <pre class="code">
@@ -188,7 +197,7 @@ Password   -&gt; ...
 
 <p>
 
-<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> is a wrapper for other Apache::Session modules that add the capability to manage indexes. To use it (with MySQL for example), choose “Apache::Session::Browseable::MySQL” as “Apache::Session module” and use the following parameters:
+<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> is a wrapper for other Apache::Session modules that add the capability to manage indexes. To use it (with MySQL for example), choose “Apache::Session::Browseable::MySQL” as “Apache::Session module” and use the following parameters:
 
 </p>
 <pre class="code">
@@ -203,7 +212,7 @@ Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </p>
 
 <p>
-<p><div class="notetip">A <a href="http://search.cpan.org/perldoc?Apache::Session::Browseable::Redis" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> has been created, it is the faster
+<p><div class="notetip">A <a href="https://metacpan.org/module/Apache::Session::Browseable::Redis" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> has been created, it is the faster (except for session explorer, defeated by Apache::Session::Browseable::<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">DBI</a>/<a href="https://metacpan.org/module/Apache::Session::Browseable::LDAP" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::LDAP"  rel="nofollow">LDAP</a> &gt;= 1.0)
 </div></p>
 </p>
 
@@ -213,7 +222,7 @@ Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </p>
 
 </div>
-<!-- SECTION "Apache::Session performances" [2920-4987] -->
+<!-- SECTION "Apache::Session performances" [3331-5600] -->
 <h3><a name="ldap_performances" id="ldap_performances">LDAP performances</a></h3>
 <div class="level3">
 
@@ -263,4 +272,4 @@ ldapgroups -&gt; memberOf
 </p>
 
 </div>
-<!-- SECTION "LDAP performances" [4988-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "LDAP performances" [5601-] --></div><!-- closes <div class="dokuwiki export">-->

@@ -160,11 +160,15 @@ multi <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
 
 <p>
 
-When using this module, <acronym title="LemonLDAP::NG">LL::NG</acronym> portal will be called only if Apache does not return “401 Authentication required”, but this is not the Apache behaviour: if the auth module fails, Apache returns 401. We&#039;re studying a future solution for this…
+When using this module, <acronym title="LemonLDAP::NG">LL::NG</acronym> portal will be called only if Apache does not return “401 Authentication required”, but this is not the Apache behaviour: if the auth module fails, Apache returns 401.
+</p>
+
+<p>
+To bypass this, follow the documentation of <a href="../../documentation/1.3/authapache.html#use_kerberos_with_multiple_authentication_backend" class="wikilink1" title="documentation:1.3:authapache">AuthApache module</a>
 </p>
 
 </div>
-<!-- SECTION "AuthApache authentication" [2481-2762] -->
+<!-- SECTION "AuthApache authentication" [2481-2845] -->
 <h3><a name="ssl_authentication" id="ssl_authentication">SSL authentication</a></h3>
 <div class="level3">
 
@@ -175,4 +179,4 @@ To chain <acronym title="Secure Sockets Layer">SSL</acronym>, you have to set �
 </p>
 
 </div>
-<!-- SECTION "SSL authentication" [2763-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "SSL authentication" [2846-] --></div><!-- closes <div class="dokuwiki export">-->
