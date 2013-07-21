@@ -212,8 +212,7 @@ sub doubleIp {
             $res .= "<li class=\"open\" id=\"di$ip\"><span>$ip</span><ul>";
 
             # For each IP node, store sessions sorted by start time
-            foreach
-              my $session ( sort { $a->{startTime} <=> $b->{startTime} }
+            foreach my $session ( sort { $a->{startTime} <=> $b->{startTime} }
                 @{ $byUid->{$uid}->{$ip} } )
             {
                 $res .=
@@ -473,8 +472,9 @@ sub session {
         'saml'         => [
             qw(_idp _idpConfKey _samlToken _lassoSessionDump _lassoIdentityDump)
         ],
-        'groups' => [qw(groups)],
-        'ldap'   => [qw(dn)],
+        'groups'    => [qw(groups)],
+        'ldap'      => [qw(dn)],
+        'BrowserID' => [qw(_browserIdAnswer _browserIdAnswerRaw)],
     };
 
     # Display categories
@@ -552,7 +552,7 @@ sub session {
         foreach ( keys %session ) {
             next if $_ !~ /^notification_(.+)/;
             $res .=
-                '<li><strong>'
+                '<li><strong>' 
               . $1
               . '</strong>: '
               . $session{$_} . " ("

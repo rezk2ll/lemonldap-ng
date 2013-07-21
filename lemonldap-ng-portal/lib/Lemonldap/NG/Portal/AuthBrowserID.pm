@@ -48,6 +48,8 @@ sub setAuthSessionInfo {
 
     $self->{sessionInfo}->{_user}               = $self->{user};
     $self->{sessionInfo}->{authenticationLevel} = $self->{browserIdAuthnLevel};
+    $self->{sessionInfo}->{_browserIdAnswer}    = $self->{browserIdAnswer};
+    $self->{sessionInfo}->{_browserIdAnswerRaw} = $self->{browserIdAnswerRaw};
 
     PE_OK;
 }
@@ -89,14 +91,14 @@ sub extractFormInfo {
         if ( $answer->code() == "200" ) {
 
             # Get JSON answser
-            my $browserIdVerificationAnswer = $answer->content;
+            $self->{browserIdAnswerRaw} = $answer->content;
             $self->lmLog(
-                "Received BrowserID answer: $browserIdVerificationAnswer",
+                "Received BrowserID answer: " . $self->{browserIdAnswerRaw},
                 'debug' );
 
             my $json = new JSON();
             $self->{browserIdAnswer} =
-              $json->decode($browserIdVerificationAnswer);
+              $json->decode( $self->{browserIdAnswerRaw} );
 
             if ( $self->{browserIdAnswer}->{status} eq "okay" ) {
                 $self->{user} = $self->{browserIdAnswer}->{email};
