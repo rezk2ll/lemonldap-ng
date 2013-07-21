@@ -31,9 +31,12 @@ sub authInit {
     $self->{tpl_browserIdEnabled} = 1;
 
     # Set BrowserID customization parameters
-    $self->{tpl_browserIdSiteName} = $self->{browserIdSiteName} if $self->{browserIdSiteName};
-    $self->{tpl_browserIdSiteLogo} = $self->{browserIdSiteLogo} if $self->{browserIdSiteLogo};
-    $self->{tpl_browserIdBackgroundColor} = $self->{browserIdBackgroundColor} if $self->{browserIdBackgroundColor};
+    $self->{tpl_browserIdSiteName} = $self->{browserIdSiteName}
+      if $self->{browserIdSiteName};
+    $self->{tpl_browserIdSiteLogo} = $self->{browserIdSiteLogo}
+      if $self->{browserIdSiteLogo};
+    $self->{tpl_browserIdBackgroundColor} = $self->{browserIdBackgroundColor}
+      if $self->{browserIdBackgroundColor};
 
     PE_OK;
 }
@@ -112,12 +115,24 @@ sub extractFormInfo {
                 return PE_OK;
             }
             else {
-                $self->lmLog(
-                    "Assertion "
-                      . $self->{browserIdAssertion}
-                      . " not verified by BrowserID provider",
-                    'error'
-                );
+                if ( $self->{browserIdAnswer}->{reason} ) {
+                    $self->lmLog(
+                        "Assertion "
+                          . $self->{browserIdAssertion}
+                          . " verification error:"
+                          . $self->{browserIdAnswer}->{reason},
+                        'error'
+                    );
+
+                }
+                else {
+                    $self->lmLog(
+                        "Assertion "
+                          . $self->{browserIdAssertion}
+                          . " not verified by BrowserID provider",
+                        'error'
+                    );
+                }
                 return PE_ERROR;
             }
         }
