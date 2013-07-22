@@ -121,7 +121,7 @@ sub extractFormInfo {
                     $self->lmLog(
                         "Assertion "
                           . $self->{browserIdAssertion}
-                          . " verification error:"
+                          . " verification error: "
                           . $self->{browserIdAnswer}->{reason},
                         'error'
                     );
