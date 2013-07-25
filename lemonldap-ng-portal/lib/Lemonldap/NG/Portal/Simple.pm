@@ -749,9 +749,9 @@ sub buildHiddenForm {
 
         # Build hidden input HTML code
         $val .=
-            '<input type="hidden" name="'
-          . $_
-          . '" id="'
+            '<input type="hidden" name="' 
+          . $_ 
+          . '" id="' 
           . $_
           . '" value="'
           . $self->{portalHiddenFormValues}->{$_} . '" />';
@@ -1293,6 +1293,9 @@ sub safe {
 
         # Refresh the portal object inside it
         $safe->{p} = $self;
+
+        # Refresh environment variables
+        $safe->share_from( 'main', ['%ENV'] );
 
         return $safe;
     }
