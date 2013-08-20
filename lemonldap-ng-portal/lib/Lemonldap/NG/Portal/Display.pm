@@ -17,7 +17,6 @@ our $VERSION = '1.3.0';
 sub display {
     my $self = shift;
 
-    my $skin     = $self->{portalSkin};
     my $skin_dir = $self->getApacheHtdocsPath() . "/skins";
     my ( $skinfile, %templateParams );
     my $http_error = $self->param('lmError');
@@ -308,21 +307,8 @@ sub display {
 
     }
 
-    # Fill sessionInfo to eval rule if empty (unauthenticated user)
-    $self->{sessionInfo}->{_url}   ||= $self->{urldc};
-    $self->{sessionInfo}->{ipAddr} ||= $self->ipAddr;
-
-    # Load specific skin from skinRules
-    if ( $self->{portalSkinRules} ) {
-        foreach my $skinRule ( sort keys %{ $self->{portalSkinRules} } ) {
-            if ( $self->safe->reval($skinRule) ) {
-                $skin = $self->{portalSkinRules}->{$skinRule};
-                $self->lmLog( "Skin $skin selected from skin rule", 'debug' );
-            }
-        }
-    }
-
     ## Common template params
+    my $skin       = $self->getSkin();
     my $portalPath = $self->{portal};
     $portalPath =~ s#^https?://[^/]+/?#/#;
     $portalPath =~ s#[^/]+\.pl$##;

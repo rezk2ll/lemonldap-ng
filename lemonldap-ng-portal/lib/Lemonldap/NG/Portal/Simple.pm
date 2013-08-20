@@ -1472,7 +1472,7 @@ sub stamp {
 
 ## @method string convertSec(int sec)
 # Convert seconds to hours, minutes, seconds
-#Â @param $sec number of seconds
+# @param $sec number of seconds
 # @return a formated time
 sub convertSec {
     my ( $self, $sec ) = splice @_;
@@ -1498,6 +1498,31 @@ sub convertSec {
 
     # Return the date
     return ( $day, $hrs, $min, $sec );
+}
+
+## @method string getSkin()
+# Return skin name
+# @return skin name
+sub getSkin {
+    my ($self) = splice @_;
+
+    my $skin = $self->{portalSkin};
+
+    # Fill sessionInfo to eval rule if empty (unauthenticated user)
+    $self->{sessionInfo}->{_url}   ||= $self->{urldc};
+    $self->{sessionInfo}->{ipAddr} ||= $self->ipAddr;
+
+    # Load specific skin from skinRules
+    if ( $self->{portalSkinRules} ) {
+        foreach my $skinRule ( sort keys %{ $self->{portalSkinRules} } ) {
+            if ( $self->safe->reval($skinRule) ) {
+                $skin = $self->{portalSkinRules}->{$skinRule};
+                $self->lmLog( "Skin $skin selected from skin rule", 'debug' );
+            }
+        }
+    }
+
+    return $skin;
 }
 
 ###############################################################
