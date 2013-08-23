@@ -34,6 +34,9 @@ sub display {
         # Check URL
         $self->_sub('controlUrlOrigin');
 
+        # Load session content
+        $self->_sub('controlExistingSession');
+
         %templateParams = (
             PORTAL_URL => $self->{portal},
             LOGOUT_URL => $self->{portal} . "?logout=1",
