@@ -15,7 +15,7 @@ use Regexp::Assemble;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
 
-our $VERSION = '1.2.2';
+our $VERSION = '1.3.0';
 use base qw(Lemonldap::NG::Portal::Simple);
 our $confCached;
 
@@ -42,6 +42,10 @@ sub getConf {
     }
     else {
         %args = @_;
+    }
+
+    if ( defined( $args{configStorage} ) ) {
+        $self->{configStorage} = $args{configStorage};
     }
 
     my $num = $self->__lmConf->lastCfg;
