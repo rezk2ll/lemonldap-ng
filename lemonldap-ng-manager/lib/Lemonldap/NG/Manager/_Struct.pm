@@ -2260,6 +2260,21 @@ sub globalTests {
             else { return 1; }
         },
 
+        # Force vhost to be lowercase
+        vhostUpperCase => sub {
+            my @pb;
+            foreach my $vh ( keys %{ $conf->{locationRules} } ) {
+                push @pb, $vh if ( $vh ne lc $vh );
+            }
+            if (@pb) {
+                return ( 0,
+                        'Virtual hosts '
+                      . join( ', ', @pb )
+                      . " must be in lower case" );
+            }
+            else { return 1; }
+        },
+
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
             foreach my $type (qw(OpenID SAML)) {
