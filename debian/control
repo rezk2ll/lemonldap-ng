@@ -32,7 +32,7 @@ Build-Depends-Indep: libapache-session-perl,
                      libtest-mockobject-perl,
                      libtest-pod-perl,
                      liburi-perl,
-                     libwww-perl (<< 6) | libhttp-message-perl,
+                     libhttp-message-perl | libwww-perl (<< 6),
                      libwww-perl,
                      libxml-libxml-perl,
                      libxml-libxslt-perl,
@@ -49,7 +49,7 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          liblemonldap-ng-manager-perl (= ${binary:Version}),
          liblemonldap-ng-portal-perl (= ${binary:Version})
-Description: LemonLDAP::NG is an OpenID, CAS and SAML compatible Web-SSO system
+Description: OpenID, CAS and SAML compatible Web-SSO system
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
  OpenID, CAS and SAML systems as identity or service provider. It can also be
@@ -87,8 +87,8 @@ Depends: ${misc:Depends},
          liblemonldap-ng-conf-perl (= ${binary:Version}),
          libwww-perl
 Recommends: libapache-session-browseable-perl,
-            libwww-perl (<< 6) | libhttp-message-perl,
-            libwww-perl (<< 6) | liblwp-protocol-https-perl
+            libhttp-message-perl | libwww-perl (<< 6),
+            liblwp-protocol-https-perl | libwww-perl (<< 6)
 Suggests: libcache-memcached-perl,
           libdigest-hmac-perl,
           liblemonldap-ng-portal-perl,
@@ -124,8 +124,8 @@ Depends: ${misc:Depends},
          libsoap-lite-perl
 Recommends: libhtml-template-perl,
             libnet-ldap-perl,
-            libwww-perl (<< 6) | libhttp-message-perl,
-            libwww-perl (<< 6) | liblwp-protocol-https-perl,
+            libhttp-message-perl | libwww-perl (<< 6),
+            liblwp-protocol-https-perl | libwww-perl (<< 6),
             libxml-libxml-perl,
             libxml-simple-perl
 Description: Lemonldap::NG common files
@@ -156,7 +156,7 @@ Depends: ${misc:Depends},
          libxml-libxslt-perl
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libapache-session-browseable-perl,
-            libwww-perl (<< 6) | liblwp-protocol-https-perl
+            liblwp-protocol-https-perl | libwww-perl (<< 6)
 Pre-Depends: debconf
 Description: Lemonldap::NG manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
@@ -195,8 +195,8 @@ Suggests: libauthcas-perl,
           libnet-twitter-perl,
           libsoap-lite-perl,
           liburi-perl,
-          libwww-perl (<< 6) | libhttp-message-perl,
-          libwww-perl (<< 6) | liblwp-protocol-https-perl,
+          libhttp-message-perl | libwww-perl (<< 6),
+          liblwp-protocol-https-perl | libwww-perl (<< 6),
           libwww-perl,
           libxml-libxml-perl,
           libxml-libxslt-perl,
