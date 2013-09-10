@@ -1505,9 +1505,12 @@ sub isUnprotected {
 sub grant {
     my ( $class, $uri ) = splice @_;
     for ( my $i = 0 ; $i < $locationCount ; $i++ ) {
-        return &{ $locationCondition->[$i] }($datas)
-          if ( $uri =~ $locationRegexp->[$i] );
+        if ( $uri =~ $locationRegexp->[$i] ) {
+            $class->lmLog( 'debug', 'Regexp ' . ( $i + 1 ) . ' match' );
+            return &{ $locationCondition->[$i] }($datas);
+        }
     }
+    $class->lmLog( 'debug', 'Apply default rule' );
     return &$defaultCondition($datas);
 }
 

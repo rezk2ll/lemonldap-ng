@@ -173,6 +173,7 @@ sub grant {
     my $vhost = $apacheRequest->hostname;
     for ( my $i = 0 ; $i < $locationCount->{$vhost} ; $i++ ) {
         if ( $uri =~ $locationRegexp->{$vhost}->[$i] ) {
+            $class->lmLog( 'debug', "$vhost: Regexp " . ( $i + 1 ) . ' match' );
             return &{ $locationCondition->{$vhost}->[$i] }($datas);
         }
     }
@@ -183,6 +184,7 @@ sub grant {
         );
         return 0;
     }
+    $class->lmLog( 'debug', "$vhost: Apply default rule" );
     return &{ $defaultCondition->{$vhost} }($datas);
 }
 
