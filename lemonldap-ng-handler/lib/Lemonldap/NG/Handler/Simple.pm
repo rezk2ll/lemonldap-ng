@@ -42,19 +42,19 @@ our @EXPORT;
 
 # Shared variables
 our (
-    $locationRegexp,     $locationCondition,   $defaultCondition,
-    $locationProtection, $defaultProtection,   $forgeHeaders,
-    $apacheRequest,      $locationCount,       $cookieName,
-    $datas,              $globalStorage,       $globalStorageOptions,
-    $localStorage,       $localStorageOptions, $whatToTrace,
-    $https,              $refLocalStorage,     $safe,
-    $port,               $statusPipe,          $statusOut,
-    $customFunctions,    $transform,           $cda,
-    $childInitDone,      $httpOnly,            $cookieExpiration,
-    $timeoutActivity,    $datasUpdate,         $useRedirectOnForbidden,
-    $useRedirectOnError, $useSafeJail,         $securedCookie,
-    $key,                $cipher,              $headerList,
-    $maintenance,
+    $locationRegexp,         $locationCondition,     $defaultCondition,
+    $locationProtection,     $locationConditionText, $defaultProtection,
+    $forgeHeaders,           $apacheRequest,         $locationCount,
+    $cookieName,             $datas,                 $globalStorage,
+    $globalStorageOptions,   $localStorage,          $localStorageOptions,
+    $whatToTrace,            $https,                 $refLocalStorage,
+    $safe,                   $port,                  $statusPipe,
+    $statusOut,              $customFunctions,       $transform,
+    $cda,                    $childInitDone,         $httpOnly,
+    $cookieExpiration,       $timeoutActivity,       $datasUpdate,
+    $useRedirectOnForbidden, $useRedirectOnError,    $useSafeJail,
+    $securedCookie,          $key,                   $cipher,
+    $headerList,             $maintenance
 );
 
 ##########################################
@@ -68,8 +68,8 @@ BEGIN {
         globalStorage => [qw( $globalStorage $globalStorageOptions )],
         locationRules => [
             qw(
-              $locationCondition $defaultCondition $locationCount
-              $locationProtection $defaultProtection $datasUpdate
+              $locationCondition $locationConditionText $defaultCondition
+              $locationCount $locationProtection $defaultProtection $datasUpdate
               $locationRegexp $apacheRequest $datas safe $customFunctions
               $useSafeJail
               )
@@ -140,6 +140,7 @@ BEGIN {
             require threads::shared;
             threads::shared::share($locationRegexp);
             threads::shared::share($locationCondition);
+            threads::shared::share($locationConditionText);
             threads::shared::share($defaultCondition);
             threads::shared::share($locationProtection);
             threads::shared::share($defaultProtection);
@@ -1386,6 +1387,8 @@ sub locationRulesInit {
                 $locationProtection->[$locationCount]
             ) = $class->conditionSub( $args->{locationRules}->{$_} );
             $locationRegexp->[$locationCount] = qr/$_/;
+            $locationConditionText->[$locationCount] =
+              /^\(\?#(.*?)\)/ ? $1 : /^(.*?)##(.+)$/ ? $2 : $_;
             $locationCount++;
         }
     }
@@ -1506,7 +1509,8 @@ sub grant {
     my ( $class, $uri ) = splice @_;
     for ( my $i = 0 ; $i < $locationCount ; $i++ ) {
         if ( $uri =~ $locationRegexp->[$i] ) {
-            $class->lmLog( 'debug', 'Regexp ' . ( $i + 1 ) . ' match' );
+            $class->lmLog( 'debug',
+                'Regexp "' . $locationConditionText->[$i] . '" match' );
             return &{ $locationCondition->[$i] }($datas);
         }
     }

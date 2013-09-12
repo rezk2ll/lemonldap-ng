@@ -73,6 +73,8 @@ sub locationRulesInit {
                     $args->{locationRules}->{$vhost}->{$_} );
                 $locationRegexp->{$vhost}->[ $locationCount->{$vhost} ] =
                   qr/$_/;
+                $locationConditionText->{$vhost}->[ $locationCount->{$vhost} ] =
+                  /^\(\?#(.*?)\)/ ? $1 : /^(.*?)##(.+)$/ ? $2 : $_;
                 $locationCount->{$vhost}++;
             }
         }
@@ -173,7 +175,10 @@ sub grant {
     my $vhost = $apacheRequest->hostname;
     for ( my $i = 0 ; $i < $locationCount->{$vhost} ; $i++ ) {
         if ( $uri =~ $locationRegexp->{$vhost}->[$i] ) {
-            $class->lmLog( 'debug', "$vhost: Regexp " . ( $i + 1 ) . ' match' );
+            $class->lmLog( 'debug',
+                    'Regexp "'
+                  . $locationConditionText->{$vhost}->[$i]
+                  . '" match' );
             return &{ $locationCondition->{$vhost}->[$i] }($datas);
         }
     }
