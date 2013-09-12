@@ -1509,8 +1509,9 @@ sub grant {
     my ( $class, $uri ) = splice @_;
     for ( my $i = 0 ; $i < $locationCount ; $i++ ) {
         if ( $uri =~ $locationRegexp->[$i] ) {
-            $class->lmLog( 'debug',
-                'Regexp "' . $locationConditionText->[$i] . '" match' );
+            $class->lmLog(
+                'Regexp "' . $locationConditionText->[$i] . '" match',
+                'debug' );
             return &{ $locationCondition->[$i] }($datas);
         }
     }
