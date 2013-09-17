@@ -14,7 +14,7 @@ require Lemonldap::NG::Manager::_Struct;    #inherits
 require Lemonldap::NG::Manager::_i18n;      #inherits
 require Lemonldap::NG::Manager::Request;    #inherits
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.3.0';
 
 ## @method string node(string node)
 # Build the part of the tree that does not depends of the the configuration.
@@ -349,35 +349,37 @@ sub confNode {
               );
 
             # Loop on post data (expr)
+            if ( defined $h->{$posturi}->{expr} ) {
 
-            if ( %{ $h->{$posturi}->{expr} } ) {
-                $res .= '<ul>';
-            }
+                if ( %{ $h->{$posturi}->{expr} } ) {
+                    $res .= '<ul>';
+                }
 
-            foreach my $postdata ( sort keys %{ $h->{$posturi}->{expr} } ) {
+                foreach my $postdata ( sort keys %{ $h->{$posturi}->{expr} } ) {
 
-                $id = "$target/$posturi/$postdata";
-                $id =~ s/=*$//;
+                    $id = "$target/$posturi/$postdata";
+                    $id =~ s/=*$//;
 
-                # Display menu item
-                $self->lmLog( "Display menu item for POST data $postdata",
-                    'debug' );
+                    # Display menu item
+                    $self->lmLog( "Display menu item for POST data $postdata",
+                        'debug' );
 
-                $res .= $self->li($id)
-                  . $self->span(
-                    id   => $id,
-                    text => "$postdata",
-                    name => "postdata:$postdata",
-                    data => $h->{$posturi}->{expr}->{$postdata},
-                    js   => "postData",
-                    help => $help,
-                    noT  => 1
-                  ) . "</li>";
+                    $res .= $self->li($id)
+                      . $self->span(
+                        id   => $id,
+                        text => "$postdata",
+                        name => "postdata:$postdata",
+                        data => $h->{$posturi}->{expr}->{$postdata},
+                        js   => "postData",
+                        help => $help,
+                        noT  => 1
+                      ) . "</li>";
 
-            }
+                }
 
-            if ( %{ $h->{$posturi}->{expr} } ) {
-                $res .= '</ul>';
+                if ( %{ $h->{$posturi}->{expr} } ) {
+                    $res .= '</ul>';
+                }
             }
 
             $res .= "</li>";
