@@ -1327,8 +1327,10 @@ sub testStruct {
         return 1
           if ( $@ =~ /Global symbol "\$.*requires explicit package/ );
         return ( 1,
-            "Function \"<b>$1</b>\" must be declared in customFunctions" )
-          if ( $@ =~ /Bareword "(.*?)" not allowed while "strict subs"/ );
+            "Function \"<b>$1$2</b>\" must be declared in customFunctions" )
+          if ( $@ =~
+/(?:Bareword "(\w+)" not allowed while "strict subs"|Undefined subroutine &(?:.*?::)?(\w+))/
+          );
         return ( 0, $@ );
     };
     my $noAssign = sub {

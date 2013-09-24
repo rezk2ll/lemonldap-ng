@@ -562,6 +562,9 @@ sub applyTest {
     my ( $res, $msg );
     if ( ref($test) eq 'CODE' ) {
         ( $res, $msg ) = &$test($value);
+        $self->lmLog( "Test returns an error :\n  value=$value\n  msg=$msg",
+            'warn' )
+          unless ($res);
     }
     else {
         $res = ( $value =~ $test ? 1 : 0 );
