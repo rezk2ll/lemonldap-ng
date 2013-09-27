@@ -67,6 +67,7 @@ ok( $h->forgeHeadersInit, 'forgeHeadersInit' );
 ok( $h->forgeHeadersInit( { exportedHeaders => { Auth => '$uid', } } ),
     'forgeHeadersInit 2' );
 
+open STDERR, '>/dev/null';
 ok( $h->grant('/s'),    'basic rule "accept"' );
 ok( !$h->grant('/no'),  'basic rule "deny"' );
 ok( $h->grant('/a/a'),  'bad ordered rule 1/2' );
