@@ -248,12 +248,13 @@ sub userModifyPassword {
     if ($ad) {
         $ppolicyControl    = 0;
         $setPassword       = 0;
-        $asUser            = 0;
         $passwordAttribute = "unicodePwd";
 
         # Encode password for AD
         $newpassword = utf8( chr(34) . $newpassword . chr(34) )->utf16le();
-
+        if ($oldpassword) {
+            $oldpassword = utf8( chr(34) . $oldpassword . chr(34) )->utf16le();
+        }
         $self->{portal}->lmLog( "Active Directory mode enabled", 'debug' );
 
     }
@@ -294,27 +295,41 @@ sub userModifyPassword {
             }
         }
         else {
-            if ($requireOldPassword) {
 
-                return PE_MUST_SUPPLY_OLD_PASSWORD if ( !$oldpassword );
+            # AD specific
+            # Change password as user with a delete/add modification
+            if ( $ad and $oldpassword ) {
 
-                # Check old password with a bind
-                $mesg = $self->bind( $dn, password => $oldpassword );
-                if ( $mesg->code != 0 ) {
-                    $self->{portal}->lmLog( "Bad old password", 'debug' );
-                    return PE_BADOLDPASSWORD;
-                }
+                $mesg = $self->modify(
+                    $dn,
+                    delete => { $passwordAttribute => $oldpassword },
+                    add    => { $passwordAttribute => $newpassword }
+                );
 
-          # Rebind as Manager only if user is not granted to change its password
-                $self->bind() unless $asUser;
             }
 
-            # Use standard modification
-            $mesg =
-              $self->modify( $dn,
-                replace => { $passwordAttribute => $newpassword } );
-        }
+            else {
+                if ($requireOldPassword) {
 
+                    return PE_MUST_SUPPLY_OLD_PASSWORD if ( !$oldpassword );
+
+                    # Check old password with a bind
+                    $mesg = $self->bind( $dn, password => $oldpassword );
+                    if ( $mesg->code != 0 ) {
+                        $self->{portal}->lmLog( "Bad old password", 'debug' );
+                        return PE_BADOLDPASSWORD;
+                    }
+
+          # Rebind as Manager only if user is not granted to change its password
+                    $self->bind() unless $asUser;
+                }
+
+                # Use standard modification
+                $mesg =
+                  $self->modify( $dn,
+                    replace => { $passwordAttribute => $newpassword } );
+            }
+        }
         $self->{portal}
           ->lmLog( "Modification return code: " . $mesg->code, 'debug' );
         return PE_WRONGMANAGERACCOUNT
@@ -444,7 +459,9 @@ sub ldap {
             $self->lmLog( "LDAP error: " . $mesg->error, 'error' );
         }
         else {
-            if ( $self->{ldapPpolicyControl} and not $self->{ldap}->loadPP() ) {
+            if ( $self->{ldapPpolicyControl}
+                and not $self->{ldap}->loadPP() )
+            {
                 $self->lmLog( "LDAP password policy error", 'error' );
             }
             else {
