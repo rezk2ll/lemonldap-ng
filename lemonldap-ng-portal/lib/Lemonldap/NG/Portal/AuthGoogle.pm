@@ -12,7 +12,7 @@ use Lemonldap::NG::Common::Regexp;
 use LWP::UserAgent;
 use Cache::FileCache;
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.3.0';
 our $initDone;
 
 BEGIN {
