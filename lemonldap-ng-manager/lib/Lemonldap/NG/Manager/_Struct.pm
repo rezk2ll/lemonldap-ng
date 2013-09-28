@@ -372,16 +372,17 @@ sub struct {
                             remote  => ['remoteParams'],
                             proxy   => ['proxyParams'],
                             openid  => ['openIdParams'],
+                            google  => ['googleParams'],
                             twitter => ['twitterParams'],
                             dbi     => ['dbiParams'],
                             apache  => ['apacheParams'],
                             null    => ['nullParams'],
                             slave   => ['slaveParams'],
                             choice  => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
                             ],
                             multi => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
                             ],
                             yubikey   => ['yubikeyParams'],
                             browserid => ['browserIdParams'],
@@ -548,6 +549,13 @@ sub struct {
                     openIdSecret     => 'text:/openIdSecret',
                     openIdIDPList =>
                       'text:/openIdIDPList:authOpenID:openididplist',
+                },
+
+                # Google
+                googleParams => {
+                    _nodes           => [qw(googleAuthnLevel)],
+                    _help            => 'authGoogle',
+                    googleAuthnLevel => 'int:/googleAuthnLevel',
                 },
 
                 # Twitter
@@ -1845,6 +1853,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         # OpenID
         openIdAuthnLevel => $integer,
         openIdSecret     => $testNotDefined,
+
+        # Google
+        googleAuthnLevel => $integer,
 
         # Twitter
         twitterAuthnLevel => $integer,
