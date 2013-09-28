@@ -610,6 +610,7 @@ function formateSelectAuth(id,value){
 		'CAS=Central Authentication Service (CAS)',
 		'DBI=Database (DBI)',
 		'Demo=Demonstration',
+		'Google=Google',
 		'LDAP=LDAP',
 		'Multi=Multiple',
 		'Null=None',
