@@ -17,7 +17,7 @@
                         <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
                         <lang en="Cancel" fr="Annuler" />
                 </button>
-                <button type="submit" class="positive" tabindex="3">
+                <button type="submit" class="positive" tabindex="3" name="google_go" value="1">
                         <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
                         <lang en="Connect" fr="Se connecter" />
                 </button>

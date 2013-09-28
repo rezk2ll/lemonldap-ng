@@ -158,7 +158,7 @@ sub authForce {
 ## @method string getDisplayType
 # @return display type
 sub getDisplayType {
-    return "openidform";
+    return "googleform";
 }
 
 1;
