@@ -44,12 +44,6 @@
 
 	</TMPL_IF>
 
-        <TMPL_IF NAME="googleform">
-
-	<TMPL_INCLUDE NAME="googleform.tpl">
-
-	</TMPL_IF>
-
         <TMPL_IF NAME="yubikeyform">
 
 	<TMPL_INCLUDE NAME="yubikeyform.tpl">
@@ -120,18 +114,6 @@
 	<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
 	<input type="hidden" name="timezone" />
 	<TMPL_INCLUDE NAME="openidform.tpl">
-	</form>
-		
-        </TMPL_IF>
-
-	<TMPL_IF NAME="DISPLAY_GOOGLE_FORM">
-
-	<form action="#" method="post" class="login">
-	<!-- Hidden fields -->
-	<TMPL_VAR NAME="HIDDEN_INPUTS">
-	<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
-	<input type="hidden" name="timezone" />
-	<TMPL_INCLUDE NAME="googleform.tpl">
 	</form>
 		
         </TMPL_IF>
