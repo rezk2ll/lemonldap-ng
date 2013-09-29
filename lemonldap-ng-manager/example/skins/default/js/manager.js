@@ -665,6 +665,7 @@ function formateSelectUser(id,value){
 		'AD=Active Directory',
 		'DBI=Database (DBI)',
 		'Demo=Demonstration',
+		'Google=Google',
 		'LDAP=LDAP',
 		'Multi=Multiple',
 		'Null=None',

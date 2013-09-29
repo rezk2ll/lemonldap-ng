@@ -10,21 +10,52 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Common::Regexp;
 use LWP::UserAgent;
+use URI::Escape;
 use Cache::FileCache;
+
+use constant AXSPECURL      => 'http://openid.net/srv/ax/1.0';
+use constant GOOGLEENDPOINT => 'https://www.google.com/accounts/o8/id';
 
 our $VERSION = '1.3.0';
 our $initDone;
+our $googleEndPoint;
 
 BEGIN {
     eval {
         require threads::shared;
         threads::shared::share($initDone);
+        threads::shared::share($googleEndPoint);
     };
 }
 
 ## @apmethod int authInit()
 # @return Lemonldap::NG::Portal constant
 sub authInit {
+    my $self = shift;
+
+    # Get the Google OpenID endpoint
+    unless ($googleEndPoint) {
+        $self->{ua} ||= LWP::UserAgent->new();
+        my $response =
+          $self->{ua}->get( GOOGLEENDPOINT, Accept => 'application/xrds+xml' );
+        if ( $response->is_success ) {
+
+            # Dirty XML parse
+            # (searching for <URI>https://www.google.com/accounts/o8/ud</URI>)
+            my $tmp = $response->decoded_content;
+            if ( $tmp =~ m#<URI.*?>(\S+)</URI>#i ) {
+                $googleEndPoint = $1;
+            }
+            else {
+                $self->lmLog( 'Here is the Google response: '
+                      . $response->decoded_content );
+                $self->abort('Can\'t find endpoint in Googe response');
+            }
+        }
+        else {
+            $self->abort('Can\'t access to Google endpoint');
+        }
+    }
     PE_OK;
 }
 
@@ -38,12 +69,14 @@ sub extractFormInfo {
 
     # 1. If no openid element has been detected
     my $openid = $self->param('openid.mode');
+
+    # TODO: direct access to Google page
     return PE_FIRSTACCESS
       unless ( $self->param('google_go') or $openid );
 
     # 2. Check Google responses
     if ($openid) {
-        my $check_url = 'https://www.google.com/accounts/o8/ud' . '?' . join(
+        my $check_url = "$googleEndPoint?" . join(
             '&',
             map {
                 my $val = $self->param($_);
@@ -51,63 +84,80 @@ sub extractFormInfo {
                 sprintf '%s=%s', uri_escape_utf8($_), uri_escape_utf8($val);
             } $self->param()
         );
-        use URI::Escape;
-        use LWP::UserAgent;
 
-        # TODO : catch errors here
         my $response =
           LWP::UserAgent->new()->get( $check_url, Accept => 'text/plain' );
-        my %tmp =
-          map { my ( $key, $value ) = split /:/, $_, 2; $key => $value }
-          split /\n/, $response->decoded_content;
-        return PE_OK if ( $tmp{is_valid} eq 'true' );
+        if ( $response->is_success ) {
+            my %tmp =
+              map { my ( $key, $value ) = split /:/, $_, 2; $key => $value }
+              split /\n/, $response->decoded_content;
+            if ( $tmp{is_valid} eq 'true' ) {
+                my ($ns) = map {
+                        ( /openid\.ns\.(.*)/ and $self->param($_) eq AXSPECURL )
+                      ? ($1)
+                      : ()
+                } $self->param();
+                if ($ns) {
+                    $self->{user}  = $self->param("openid.$ns.value.email");
+                    $self->{_AXNS} = $ns;
+                }
+                else {
+                    $self->{user} = $self->param('openid.claimed_id');
+                }
+                return PE_OK;
+            }
 
-        # TODO: look for returned errors
-        return PE_BADCREDENTIALS;
+            # TODO: look for returned errors
+            return PE_BADCREDENTIALS;
+        }
+        else {
+            $self->abort('Can\'t verify Google authentication');
+        }
     }
 
-    # 3. Check if an OpenID url has been submitted
+    # 3. Redirect user to Google login page
     else {
         my $check_url =
-            'https://www.google.com/accounts/o8/ud'
+            $googleEndPoint
           . '?openid.mode=checkid_setup'
           . '&openid.ns=http://specs.openid.net/auth/2.0'
           . '&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select'
           . '&openid.identity=http://specs.openid.net/auth/2.0/identifier_select'
-          . '&openid.return_to='
-          . $self->{portal} . '?'
-          . ( $self->{_url} ? "url=$self->{_url}&" : '' )
-          . (
-            $self->param( $self->{authChoiceParam} )
-            ? "&"
-              . $self->{authChoiceParam} . "="
-              . $self->param( $self->{authChoiceParam} )
-            : ''
-          );
-
-# TODO: Add Google AX extension. Here is OpenID SREG example
-# If UserDB uses OpenID, add "OpenID Simple Registration Extension"
-# compatible fields
-#if ( $self->get_module('user') eq 'OpenID' ) {
-#    my ( @r, @o );
-#    while ( my ( $v, $k ) = each %{ $self->{exportedVars} } ) {
-#        if ( $k =~ /^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
-#          )
-#        {
-#            if   ( $v =~ s/^!// ) { push @r, $k }
-#            else                  { push @o, $k }
-#        }
-#        else {
-#            $self->lmLog( "Unknown \"OpenID Simple Registration Extension\" field name: $k",
-#                'warn'
-#            );
-#        }
-#    }
-#    my @tmp;
-#    push @tmp, 'openid.sreg.required' => join( ',', @r ) if (@r);
-#    push @tmp, 'openid.sreg.optional' => join( ',', @o ) if (@o);
-#    OpenID::util::push_url_arg( \$check_url, @tmp ) if (@tmp);
-#}
+          . '&openid.ns.ax='
+          . AXSPECURL
+          . '&openid.ax.mode=fetch_request'
+          . '&openid.ax.type.email=http://axschema.org/contact/email'
+          . '&openid.ax.required=email';
+        if ( $self->get_module('user') eq 'Google' ) {
+            my ( @r, @o );
+            while ( my ( $v, $k ) = each %{ $self->{exportedVars} } ) {
+                next if ( $k eq 'email' );
+                if ( $k =~ /^(?:(?:la(?:nguag|stnam)|firstnam)e|country)$/ ) {
+                    $check_url .= ",$k";
+                }
+                else {
+                    $self->lmLog( "Field name: $k is not exported by Google",
+                        'warn' );
+                }
+            }
+        }
+        my $sep = '?';
+        my $ret = $self->{portal};
+        foreach my $v (
+            [ $self->{_url}, "url" ],
+            [
+                $self->param( $self->{authChoiceParam} ),
+                $self->{authChoiceParam}
+            ]
+          )
+        {
+            if ( $v->[0] ) {
+                $ret .= "$sep$v->[1]=$v->[0]";
+                $sep = '&';
+            }
+        }
+        $check_url .= '&openid.return_to=' . uri_escape_utf8($ret);
+        print STDERR $check_url . "\n";
         print $self->redirect($check_url);
         $self->quit();
     }
@@ -168,15 +218,15 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::AuthOpenID - Perl extension for building Lemonldap::NG
-compatible portals with OpenID authentication.
+Lemonldap::NG::Portal::AuthGoogle - Perl extension for building Lemonldap::NG
+compatible portals with Google authentication.
 
 =head1 SYNOPSIS
 
   use Lemonldap::NG::Portal::SharedConf;
   my $portal = new Lemonldap::NG::Portal::Simple(
          configStorage     => {...}, # See Lemonldap::NG::Portal
-         authentication    => 'OpenID',
+         authentication    => 'Google',
     );
 
   if($portal->process()) {
@@ -196,7 +246,7 @@ compatible portals with OpenID authentication.
 =head1 DESCRIPTION
 
 This library just overload few methods of Lemonldap::NG::Portal::Simple to use
-OpenID authentication mechanism.
+Google authentication mechanism.
 
 See L<Lemonldap::NG::Portal::Simple> for usage and other methods.
 
