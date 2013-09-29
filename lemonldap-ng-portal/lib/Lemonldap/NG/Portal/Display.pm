@@ -189,8 +189,6 @@ sub display {
         );
     }
 
-    # TODO: Manage Google errors
-
     # 2.5 Authentication has been refused OR this is the first access
     else {
         $skinfile       = 'login.tpl';
@@ -237,7 +235,6 @@ sub display {
                 REQUIRE_OLDPASSWORD =>
                   1,    # Old password is required to check user credentials
                 DISPLAY_FORM          => 0,
-                DISPLAY_GOOGLE_FORM   => 0,
                 DISPLAY_OPENID_FORM   => 0,
                 DISPLAY_YUBIKEY_FORM  => 0,
                 DISPLAY_PASSWORD      => 1,
@@ -263,7 +260,6 @@ sub display {
                 %templateParams,
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0,
-                DISPLAY_GOOGLE_FORM   => 0,
                 DISPLAY_OPENID_FORM   => 0,
                 DISPLAY_YUBIKEY_FORM  => 0,
                 AUTH_LOOP             => [],
@@ -284,7 +280,6 @@ sub display {
                     CHOICE_PARAM         => $self->{authChoiceParam},
                     CHOICE_VALUE         => $self->{_authChoice},
                     DISPLAY_FORM         => 0,
-                    DISPLAY_GOOGLE_FORM  => 0,
                     DISPLAY_OPENID_FORM  => 0,
                     DISPLAY_YUBIKEY_FORM => 0,
                 );
@@ -300,7 +295,6 @@ sub display {
                 %templateParams = (
                     %templateParams,
                     DISPLAY_FORM => $displayType eq "standardform" ? 1 : 0,
-                    DISPLAY_GOOGLE_FORM => $displayType eq "googleform" ? 1 : 0,
                     DISPLAY_OPENID_FORM => $displayType eq "openidform" ? 1 : 0,
                     DISPLAY_YUBIKEY_FORM => $displayType eq "yubikeyform"
                     ? 1
