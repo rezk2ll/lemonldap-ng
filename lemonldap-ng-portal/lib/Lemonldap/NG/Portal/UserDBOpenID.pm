@@ -42,20 +42,19 @@ sub getUser {
 sub setSessionInfo {
     my $self = shift;
     if ( ref( $self->{exportedVars} ) eq 'HASH' ) {
-        foreach my $k ( keys %{ $self->{exportedVars} } ) {
+        while ( my ( $k, $v ) = each %{ $self->{exportedVars} } ) {
             my $attr = $k;
             my $required = ( $attr =~ s/^!// );
-            if ( $self->{exportedVars}->{$k} =~
+            if ( $v =~
 /^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
               )
             {
-                $self->{sessionInfo}->{$attr} =
-                  $self->param("openid.sreg.$self->{exportedVars}->{$k}");
+                $self->{sessionInfo}->{$attr} = $self->param("openid.sreg.$v");
             }
             else {
                 $self->lmLog(
                     'Ignoring attribute '
-                      . $self->{exportedVars}->{$k}
+                      . $v
                       . ' which is not a valid OpenID SREG attribute',
                     'warn'
                 );
