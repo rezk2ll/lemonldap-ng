@@ -2170,6 +2170,7 @@ sub defaultConf {
         dbiAuthnLevel       => 2,
         SSLAuthnLevel       => 5,
         CAS_authnLevel      => 1,
+        googleAuthnLevel    => 1,
         openIdAuthnLevel    => 1,
         twitterAuthnLevel   => 1,
         apacheAuthnLevel    => 4,
