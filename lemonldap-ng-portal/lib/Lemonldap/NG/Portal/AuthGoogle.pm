@@ -28,16 +28,17 @@ BEGIN {
     };
 }
 
-## @apmethod int authInit()
-# @return Lemonldap::NG::Portal constant
-sub authInit {
+## @method string googleEndPoint()
+# Return the Google OpenID endpoint given by
+# https://www.google.com/accounts/o8/id
+# @return string
+sub googleEndPoint {
     my $self = shift;
 
     # Get the Google OpenID endpoint
     unless ($googleEndPoint) {
-        $self->{ua} ||= LWP::UserAgent->new();
         my $response =
-          $self->{ua}->get( GOOGLEENDPOINT, Accept => 'application/xrds+xml' );
+          $self->ua()->get( GOOGLEENDPOINT, Accept => 'application/xrds+xml' );
         if ( $response->is_success ) {
 
             # Dirty XML parse
@@ -56,6 +57,73 @@ sub authInit {
             $self->abort('Can\'t access to Google endpoint');
         }
     }
+    return $googleEndPoint;
+}
+
+## @method LWP::UserAgent ua()
+# @return LWP::UserAgent object
+sub ua {
+    my $self = shift;
+    return $self->{ua} ||= LWP::UserAgent->new();
+}
+
+## @method boolean checkGoogleSession()
+# Search for claimed_id in persistent sessions DB.
+# @return true if sessions was recovered
+sub checkGoogleSession {
+    my $self = shift;
+
+    # Now User is authenticated, check for datas returned
+    ( $self->{_AXNS} ) = map {
+            ( /^openid\.ns\.(.*)/ and $self->param($_) eq AXSPECURL )
+          ? ($1)
+          : ()
+    } $self->param();
+
+    my $id = $self->_md5hash( $self->param('openid.claimed_id') );
+    my $h  = $self->getPersistentSession($id);
+    unless ( $self->{_AXNS} ) {
+        if ($h) {
+            $self->{user} = $h->{email};
+            while ( my ( $k, $v ) = each %$h ) {
+                $self->{googleSessionInfo}->{$k} = $v;
+            }
+        }
+    }
+    else {
+        $self->{user} = $self->param("openid.$self->{_AXNS}.value.email");
+        unless ($h) {
+            $h = {};
+            my %opts = %{ $self->{persistentStorageOptions} };
+            $opts{setId} = $id;
+            eval { tie %$h, $self->{persistentStorage}, undef, \%opts; };
+            if ($@) {
+                $self->abort(
+"Unable to create persistent session required to use Google backend: $@"
+                );
+            }
+            else {
+                $self->lmLog(
+                    "Persistent session $h->{_session_id} created to store "
+                      . $self->{user}
+                      . ' Google shared datas',
+                    'debug'
+                );
+            }
+        }
+        foreach my $k ( $self->param() ) {
+            if ( $k =~ /^openid\.$self->{_AXNS}\.value\.(\w+)$/ ) {
+                $self->{googleSessionInfo}->{$1} = $h->{$1} = $self->param($k);
+            }
+        }
+        untie %$h;
+    }
+    return $self->{user};
+}
+
+## @apmethod int authInit()
+# @return Lemonldap::NG::Portal constant
+sub authInit {
     PE_OK;
 }
 
@@ -65,10 +133,9 @@ sub authInit {
 sub extractFormInfo {
     my $self = shift;
 
-    my $ua = LWP::UserAgent->new();
-
     # 1. If no openid element has been detected
     my $openid = $self->param('openid.mode');
+    my $ax     = '';
 
     # TODO: direct access to Google page
     return PE_FIRSTACCESS
@@ -76,7 +143,7 @@ sub extractFormInfo {
 
     # 2. Check Google responses
     if ($openid) {
-        my $check_url = "$googleEndPoint?" . join(
+        my $check_url = $self->googleEndPoint() . "?" . join(
             '&',
             map {
                 my $val = $self->param($_);
@@ -85,83 +152,84 @@ sub extractFormInfo {
             } $self->param()
         );
 
-        my $response =
-          LWP::UserAgent->new()->get( $check_url, Accept => 'text/plain' );
-        if ( $response->is_success ) {
+        my $response = $self->ua()->get( $check_url, Accept => 'text/plain' );
+        unless ( $response->is_success ) {
+            $self->abort('Can\'t verify Google authentication');
+        }
+        else {
             my %tmp =
               map { my ( $key, $value ) = split /:/, $_, 2; $key => $value }
               split /\n/, $response->decoded_content;
-            if ( $tmp{is_valid} eq 'true' ) {
-                my ($ns) = map {
-                        ( /openid\.ns\.(.*)/ and $self->param($_) eq AXSPECURL )
-                      ? ($1)
-                      : ()
-                } $self->param();
-                if ($ns) {
-                    $self->{user}  = $self->param("openid.$ns.value.email");
-                    $self->{_AXNS} = $ns;
-                }
-                else {
-                    $self->{user} = $self->param('openid.claimed_id');
-                }
-                return PE_OK;
+            unless ( $tmp{is_valid} eq 'true' ) {
+                return PE_BADCREDENTIALS;
             }
 
-            # TODO: look for returned errors
-            return PE_BADCREDENTIALS;
-        }
-        else {
-            $self->abort('Can\'t verify Google authentication');
+            # Datas are missing, prepare to launch a new request with
+            # AX request
+            unless ( $self->checkGoogleSession() ) {
+                $ax =
+                    '&openid.ns.ax='
+                  . AXSPECURL
+                  . '&openid.ax.mode=fetch_request'
+                  . '&openid.ax.type.email=http://axschema.org/contact/email'
+                  . '&openid.ax.required=email';
+                if ( $self->get_module('user') eq 'Google' ) {
+                    my $u;
+                    while ( my ( $v, $k ) = each %{ $self->{exportedVars} } ) {
+                        next if ( $k eq 'email' );
+                        if ( $k =~
+                            /^(?:(?:la(?:nguag|stnam)|firstnam)e|country)$/ )
+                        {
+                            $ax .= ",$k";
+                            $u  .= "&openid.ax.type.$k="
+                              . {
+                                country =>
+                                  "http://axschema.org/contact/country/home",
+                                firstname =>
+                                  "http://axschema.org/namePerson/first",
+                                lastname =>
+                                  "http://axschema.org/namePerson/last",
+                                language => "http://axschema.org/pref/language"
+                              }->{$k};
+                        }
+                        else {
+                            $self->lmLog(
+                                "Field name: $k is not exported by Google",
+                                'warn' );
+                        }
+                    }
+                    $ax .= $u;
+                }
+            }
+            else {
+                return PE_OK;
+            }
         }
     }
 
     # 3. Redirect user to Google login page
-    else {
-        my $check_url =
-            $googleEndPoint
-          . '?openid.mode=checkid_setup'
-          . '&openid.ns=http://specs.openid.net/auth/2.0'
-          . '&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select'
-          . '&openid.identity=http://specs.openid.net/auth/2.0/identifier_select'
-          . '&openid.ns.ax='
-          . AXSPECURL
-          . '&openid.ax.mode=fetch_request'
-          . '&openid.ax.type.email=http://axschema.org/contact/email'
-          . '&openid.ax.required=email';
-        if ( $self->get_module('user') eq 'Google' ) {
-            my ( @r, @o );
-            while ( my ( $v, $k ) = each %{ $self->{exportedVars} } ) {
-                next if ( $k eq 'email' );
-                if ( $k =~ /^(?:(?:la(?:nguag|stnam)|firstnam)e|country)$/ ) {
-                    $check_url .= ",$k";
-                }
-                else {
-                    $self->lmLog( "Field name: $k is not exported by Google",
-                        'warn' );
-                }
-            }
+    my $check_url =
+        $self->googleEndPoint()
+      . '?openid.mode=checkid_setup'
+      . '&openid.ns=http://specs.openid.net/auth/2.0'
+      . '&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select'
+      . '&openid.identity=http://specs.openid.net/auth/2.0/identifier_select'
+      . $ax;
+    my $sep = '?';
+    my $ret = $self->{portal};
+    foreach my $v (
+        [ $self->{_url},                            "url" ],
+        [ $self->param( $self->{authChoiceParam} ), $self->{authChoiceParam} ]
+      )
+    {
+        if ( $v->[0] ) {
+            $ret .= "$sep$v->[1]=$v->[0]";
+            $sep = '&';
         }
-        my $sep = '?';
-        my $ret = $self->{portal};
-        foreach my $v (
-            [ $self->{_url}, "url" ],
-            [
-                $self->param( $self->{authChoiceParam} ),
-                $self->{authChoiceParam}
-            ]
-          )
-        {
-            if ( $v->[0] ) {
-                $ret .= "$sep$v->[1]=$v->[0]";
-                $sep = '&';
-            }
-        }
-        $check_url .= '&openid.return_to=' . uri_escape_utf8($ret);
-        print STDERR $check_url . "\n";
-        print $self->redirect($check_url);
-        $self->quit();
     }
-    PE_OK;
+    $check_url .= '&openid.return_to=' . uri_escape_utf8($ret);
+    print $self->redirect($check_url);
+    $self->quit();
 }
 
 ## @apmethod int setAuthSessionInfo()

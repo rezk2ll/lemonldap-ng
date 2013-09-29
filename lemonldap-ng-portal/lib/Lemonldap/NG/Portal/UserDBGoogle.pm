@@ -41,20 +41,13 @@ sub getUser {
 # @return Lemonldap::NG::Portal error code
 sub setSessionInfo {
     my $self = shift;
-    unless ( $self->{_AXNS} ) {
-        $self->abort(
-            'AX namespace not found in Google response, no datas will be stored'
-        );
-    }
     foreach my $k ( keys %{ $self->{exportedVars} } ) {
         my $attr = $k;
         my $required = ( $attr =~ s/^!// );
         if ( $self->{exportedVars}->{$k} =~
             /^(?:(?:la(?:nguag|stnam)|firstnam)e|country|email)$/ )
         {
-            $self->{sessionInfo}->{$attr} =
-              $self->param(
-                "openid.$self->{_AXNS}.value.$self->{exportedVars}->{$k}");
+            $self->{sessionInfo}->{$attr} = $self->{googleSessionInfo}->{$attr};
         }
         else {
             $self->lmLog(
@@ -64,11 +57,11 @@ sub setSessionInfo {
                 'warn'
             );
         }
-
         if ( $required and not defined( $self->{sessionInfo}->{$attr} ) ) {
             $self->lmLog(
-                "Required parameter $attr is not provided by Google, aborted",
-                'warn' );
+"Required parameter $attr is not provided by Google server, aborted",
+                'warn'
+            );
 
             $self->{mustRedirect} = 0;
             return PE_MISSINGREQATTR;
