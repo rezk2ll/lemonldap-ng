@@ -35,7 +35,6 @@ BEGIN {
 sub googleEndPoint {
     my $self = shift;
 
-    # Get the Google OpenID endpoint
     unless ($googleEndPoint) {
         my $response =
           $self->ua()->get( GOOGLEENDPOINT, Accept => 'application/xrds+xml' );
@@ -73,25 +72,36 @@ sub ua {
 sub checkGoogleSession {
     my $self = shift;
 
-    # Now User is authenticated, check for datas returned
+    # Find in Google response for AX attributes
+    # See https://developers.google.com/accounts/docs/OpenID#Parameters
+    # for more
     ( $self->{_AXNS} ) = map {
             ( /^openid\.ns\.(.*)/ and $self->param($_) eq AXSPECURL )
           ? ($1)
           : ()
     } $self->param();
 
+    # Look at persistent database
     my $id = $self->_md5hash( $self->param('openid.claimed_id') );
     my $h  = $self->getPersistentSession($id);
+    my $gs;
+
+    # No AX response, if datas are already shared, store them
     unless ( $self->{_AXNS} ) {
         if ($h) {
             $self->{user} = $h->{email};
             while ( my ( $k, $v ) = each %$h ) {
-                $self->{googleSessionInfo}->{$k} = $v;
+                $gs->{$k} = $v;
             }
         }
     }
     else {
+
+        # First store email as user key. Note that this is the returned value
+        # so if it's empty, request is retried
         $self->{user} = $self->param("openid.$self->{_AXNS}.value.email");
+
+        # If persistent session does not exist, create it
         unless ($h) {
             $h = {};
             my %opts = %{ $self->{persistentStorageOptions} };
@@ -111,12 +121,40 @@ sub checkGoogleSession {
                 );
             }
         }
+
+        # Retrieve AX datas
         foreach my $k ( $self->param() ) {
             if ( $k =~ /^openid\.$self->{_AXNS}\.value\.(\w+)$/ ) {
-                $self->{googleSessionInfo}->{$1} = $h->{$1} = $self->param($k);
+                $gs->{$1} = $h->{$1} = $self->param($k);
             }
         }
         untie %$h;
+    }
+
+    # Now store datas in session
+    while ( my ( $k, $v ) = each %{ $self->{exportedVars} } ) {
+        my $attr = $k;
+        $attr =~ s/^!//;
+
+        # Value (ie AX attribute) must be one of:
+        if ( $v =~ /^(?:(?:la(?:nguag|stnam)|firstnam)e|country|email)$/ ) {
+
+            # One value is missing -> retry
+            unless ( exists( $gs->{$v} ) ) {
+                $self->lmLog( "$attr required attribute is missing, retrying",
+                    'info' );
+                return 0;
+            }
+            $self->{sessionInfo}->{$attr} = $gs->{$v};
+        }
+        else {
+            $self->lmLog(
+                'Ignoring attribute '
+                  . $self->{exportedVars}->{$k}
+                  . ' which is not a valid Google OpenID AX attribute',
+                'warn'
+            );
+        }
     }
     return $self->{user};
 }
@@ -132,17 +170,14 @@ sub authInit {
 # @return Lemonldap::NG::Portal constant
 sub extractFormInfo {
     my $self = shift;
+    my $ax   = '';
 
-    # 1. If no openid element has been detected
-    my $openid = $self->param('openid.mode');
-    my $ax     = '';
+    # 1. Check Google responses
+    if ( $self->param('openid.mode') ) {
 
-    # TODO: direct access to Google page
-    return PE_FIRSTACCESS
-      unless ( $self->param('google_go') or $openid );
+        # 1.1 First, verify that the response isn't forged
 
-    # 2. Check Google responses
-    if ($openid) {
+        # Build verification request
         my $check_url = $self->googleEndPoint() . "?" . join(
             '&',
             map {
@@ -152,6 +187,7 @@ sub extractFormInfo {
             } $self->param()
         );
 
+        # Launch request
         my $response = $self->ua()->get( $check_url, Accept => 'text/plain' );
         unless ( $response->is_success ) {
             $self->abort('Can\'t verify Google authentication');
@@ -160,19 +196,27 @@ sub extractFormInfo {
             my %tmp =
               map { my ( $key, $value ) = split /:/, $_, 2; $key => $value }
               split /\n/, $response->decoded_content;
+
+            # Reject invalid requests
             unless ( $tmp{is_valid} eq 'true' ) {
                 return PE_BADCREDENTIALS;
             }
 
-            # Datas are missing, prepare to launch a new request with
-            # AX request
+            # 1.2 Check if datas are already shared with Google
             unless ( $self->checkGoogleSession() ) {
+
+                # Datas are missing, prepare to launch a new request with
+                # AX request
+
+                # a) email is required, will be used as 'user' field
                 $ax =
                     '&openid.ns.ax='
                   . AXSPECURL
                   . '&openid.ax.mode=fetch_request'
                   . '&openid.ax.type.email=http://axschema.org/contact/email'
                   . '&openid.ax.required=email';
+
+                # b) if UserDB is Google, ask for exported variables
                 if ( $self->get_module('user') eq 'Google' ) {
                     my $u;
                     while ( my ( $v, $k ) = each %{ $self->{exportedVars} } ) {
@@ -201,13 +245,16 @@ sub extractFormInfo {
                     $ax .= $u;
                 }
             }
+
+            # 1.3 Datas are recovered, user is authenticated
             else {
                 return PE_OK;
             }
         }
     }
 
-    # 3. Redirect user to Google login page
+    # 2. Redirect user to Google login page:
+    #    * no OpenID response or missing datas
     my $check_url =
         $self->googleEndPoint()
       . '?openid.mode=checkid_setup'
@@ -321,7 +368,8 @@ See L<Lemonldap::NG::Portal::Simple> for usage and other methods.
 =head1 SEE ALSO
 
 L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::Simple>,
-L<http://lemonldap-ng.org/>
+L<http://lemonldap-ng.org/>,
+L<https://developers.google.com/accounts/docs/OpenID>
 
 =head1 AUTHOR
 
@@ -347,9 +395,9 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =over
 
-=item Copyright (C) 2010 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+=item Copyright (C) 2013 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
-=item Copyright (C) 2010, 2012 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
+=item Copyright (C) 2013 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
 
 =back
 
@@ -367,5 +415,4 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see L<http://www.gnu.org/licenses/>.
 
 =cut
-
 

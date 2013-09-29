@@ -35,29 +35,18 @@ sub getUser {
 }
 
 ## @apmethod int setSessionInfo()
-# Check if there are some exportedVars in Google response.
-# See https://developers.google.com/accounts/docs/OpenID#Parameters
-# for more
+# Since the job is done by AuthGoogle, here just check that required
+# attributes are not null
 # @return Lemonldap::NG::Portal error code
 sub setSessionInfo {
     my $self = shift;
     foreach my $k ( keys %{ $self->{exportedVars} } ) {
         my $attr = $k;
-        my $required = ( $attr =~ s/^!// );
-        if ( $self->{exportedVars}->{$k} =~
-            /^(?:(?:la(?:nguag|stnam)|firstnam)e|country|email)$/ )
-        {
-            $self->{sessionInfo}->{$attr} = $self->{googleSessionInfo}->{$attr};
-        }
-        else {
-            $self->lmLog(
-                'Ignoring attribute '
-                  . $self->{exportedVars}->{$k}
-                  . ' which is not a valid Google OpenID AX attribute',
-                'warn'
-            );
-        }
-        if ( $required and not defined( $self->{sessionInfo}->{$attr} ) ) {
+        next
+          unless ( $attr =~ s/^!//
+            and $self->{exportedVars}->{$k} =~
+            /^(?:(?:la(?:nguag|stnam)|firstnam)e|country|email)$/ );
+        unless ( defined( $self->{sessionInfo}->{$attr} ) ) {
             $self->lmLog(
 "Required parameter $attr is not provided by Google server, aborted",
                 'warn'
