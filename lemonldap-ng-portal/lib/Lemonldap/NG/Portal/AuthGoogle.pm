@@ -44,7 +44,7 @@ sub googleEndPoint {
             # Dirty XML parse
             # (searching for <URI>https://www.google.com/accounts/o8/ud</URI>)
             my $tmp = $response->decoded_content;
-            if ( $tmp =~ m#<URI.*?>(\S+)</URI>#i ) {
+            if ( $tmp =~ m#<URI.*?>(\S+)</URI>#mi ) {
                 $googleEndPoint = $1;
             }
             else {
