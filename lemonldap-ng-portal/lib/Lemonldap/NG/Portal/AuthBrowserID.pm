@@ -24,8 +24,8 @@ sub authInit {
     $self->{browserIdAuthnLevel} = "2"
       unless defined $self->{browserIdAuthnLevel};
     $self->{browserIdSiteName} ||= "LemonLDAP::NG";
-    $self->{browserIdSiteLogo};
     $self->{browserIdBackgroundColor} ||= "#000";
+    $self->{browserIdAutoLogin}       ||= "0";
 
     # Enable BrowserID in template
     $self->{tpl_browserIdEnabled} = 1;
@@ -37,6 +37,8 @@ sub authInit {
       if $self->{browserIdSiteLogo};
     $self->{tpl_browserIdBackgroundColor} = $self->{browserIdBackgroundColor}
       if $self->{browserIdBackgroundColor};
+    $self->{tpl_browserIdAutoLogin} = $self->{browserIdAutoLogin}
+      if $self->{browserIdAutoLogin};
 
     PE_OK;
 }

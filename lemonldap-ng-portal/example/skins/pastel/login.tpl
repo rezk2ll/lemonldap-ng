@@ -130,6 +130,48 @@
 		
         </TMPL_IF>
 
+	<TMPL_IF NAME="DISPLAY_LOGO_FORM">
+
+	<form action="#" method="post" class="login">
+	<!-- Hidden fields -->
+	<TMPL_VAR NAME="HIDDEN_INPUTS">
+	<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+	<input type="hidden" name="timezone" />
+
+	<h3><lang en="Authentication with" fr="Authentification avec"/> <TMPL_VAR NAME="module"></h3>		
+
+		<table>
+	        <TMPL_IF NAME="module">
+		<tr class="authLogo"><td>
+		<img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" />
+		</td></tr>
+		</TMPL_IF>
+
+                <TMPL_IF NAME="CHECK_LOGINS">
+                <tr><td colspan="2"><div class="buttons">
+                <label for="checkLogins">
+                    <input type="checkbox" id="checkLogins" name="checkLogins" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF>/>
+                    <lang en="Check my last logins" fr="Voir mes dernières connexions"/>
+                </label>
+                </div></td></tr>
+                </TMPL_IF>
+
+		<tr><td>
+		<div class="buttons">
+		<button type="reset" class="negative" tabindex="4">
+			<img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
+			<lang en="Cancel" fr="Annuler" />
+		</button>
+		<button type="submit" class="positive" tabindex="3">
+			<img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
+			<lang en="Connect" fr="Se connecter" />
+		</button>
+		</div></td></tr>
+
+        </table>
+
+        </TMPL_IF>
+
 	<TMPL_IF NAME="DISPLAY_PASSWORD">
 
 	<TMPL_INCLUDE NAME="password.tpl">
