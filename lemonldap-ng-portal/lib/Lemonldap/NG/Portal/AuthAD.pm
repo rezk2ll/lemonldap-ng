@@ -12,6 +12,7 @@ use Lemonldap::NG::Portal::Simple;
 use base qw(Lemonldap::NG::Portal::AuthLDAP);
 
 *_formateFilter = *Lemonldap::NG::Portal::UserDBAD::formateFilter;
+*getDisplayType = *Lemonldap::NG::Portal::AuthLDAP::getDisplayType;
 
 ## @apmethod int authInit()
 # Add specific attributes for search
