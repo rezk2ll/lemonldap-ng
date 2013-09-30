@@ -16,10 +16,10 @@ if(autocomplete.match('1')){autocomplete='on';}
 if(autocomplete.match('0')){autocomplete='off';}
 
 /* Set newwindow value (default is false) */
-if(newwindow.match('1')){newwindow=true;}else{newwindow=false};
+if(newwindow.match('1')){newwindow=true;}else{newwindow=false;}
 
 /* Set antiframe value (default is true) */
-if(antiframe.match('0')){antiframe=false;}else{antiframe=true};
+if(antiframe.match('0')){antiframe=false;}else{antiframe=true;}
 
 /* jQuery */
 $(document).ready(function(){
