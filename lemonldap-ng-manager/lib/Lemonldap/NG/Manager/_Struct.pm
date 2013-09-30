@@ -668,10 +668,11 @@ sub struct {
                 # BrowserID
                 browserIdParams => {
                     _nodes => [
-                        qw(browserIdAuthnLevel browserIdVerificationURL browserIdSiteName browserIdSiteLogo browserIdBackgroundColor)
+                        qw(browserIdAuthnLevel browserIdAutoLogin browserIdVerificationURL browserIdSiteName browserIdSiteLogo browserIdBackgroundColor)
                     ],
                     _help               => 'authBrowserID',
                     browserIdAuthnLevel => 'int:/browserIdAuthnLevel',
+                    browserIdAutoLogin  => 'bool:/browserIdAutoLogin',
                     browserIdVerificationURL =>
                       'text:/browserIdVerificationURL',
                     browserIdSiteName => 'text:/browserIdSiteName',
@@ -1936,6 +1937,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
 
         # BrowserID
         browserIdAuthnLevel      => $integer,
+        browserIdAutoLogin       => $boolean,
         browserIdVerificationURL => $testNotDefined,
         browserIdSiteName        => $testNotDefined,
         browserIdSiteLogo        => $testNotDefined,
