@@ -323,7 +323,7 @@ sub authForce {
 ## @method string getDisplayType
 # @return display type
 sub getDisplayType {
-    return "googleform";
+    return "logo";
 }
 
 1;
