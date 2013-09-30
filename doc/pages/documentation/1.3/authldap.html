@@ -55,7 +55,7 @@
 
 <p>
 
-This works with every <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> v2 or v3 server, including Active Directory.
+This works with every <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> v2 or v3 server, including <a href="../../documentation/1.3/authad.html" class="wikilink1" title="documentation:1.3:authad">Active Directory</a>.
 </p>
 
 <p>
@@ -71,7 +71,7 @@ This works with every <acronym title="Lightweight Directory Access Protocol">LDA
 </ul>
 
 </div>
-<!-- SECTION "Presentation" [85-885] -->
+<!-- SECTION "Presentation" [85-896] -->
 <h2><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
@@ -80,8 +80,14 @@ This works with every <acronym title="Lightweight Directory Access Protocol">LDA
 In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> for authentication, users and/or password modules.
 </p>
 
+<p>
+<p><div class="notetip">
+For <a href="../../documentation/1.3/authad.html" class="wikilink1" title="documentation:1.3:authad">Active Directory</a>, choose <code>Active Directory</code> instead of <code><acronym title="Lightweight Directory Access Protocol">LDAP</acronym></code>.
+</div></p>
+</p>
+
 </div>
-<!-- SECTION "Configuration" [886-1050] -->
+<!-- SECTION "Configuration" [897-1162] -->
 <h3><a name="authentication_level" id="authentication_level">Authentication level</a></h3>
 <div class="level3">
 
@@ -107,7 +113,7 @@ As <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> is a lo
 </p>
 
 </div>
-<!-- SECTION "Authentication level" [1051-1416] -->
+<!-- SECTION "Authentication level" [1163-1528] -->
 <h3><a name="connection" id="connection">Connection</a></h3>
 <div class="level3">
 <ul>
@@ -138,7 +144,7 @@ As <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> is a lo
 </ul>
 
 </div>
-<!-- SECTION "Connection" [1417-2608] -->
+<!-- SECTION "Connection" [1529-2720] -->
 <h3><a name="filters" id="filters">Filters</a></h3>
 <div class="level3">
 
@@ -160,7 +166,7 @@ As <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> is a lo
 <p>
 
 <p><div class="notetip">
-For Active Directory, use this as authentication filter:
+For Active Directory, the default authentication filter is:
 
 </p>
 <pre class="code">
@@ -169,7 +175,7 @@ For Active Directory, use this as authentication filter:
 
 <p>
 
-And this as mail filter:
+And the mail filter is:
 
 </p>
 <pre class="code">
@@ -183,7 +189,7 @@ And this as mail filter:
 </p>
 
 </div>
-<!-- SECTION "Filters" [2609-3253] -->
+<!-- SECTION "Filters" [2721-3367] -->
 <h3><a name="groups" id="groups">Groups</a></h3>
 <div class="level3">
 <ul>
@@ -204,7 +210,7 @@ And this as mail filter:
 </ul>
 
 </div>
-<!-- SECTION "Groups" [3254-4088] -->
+<!-- SECTION "Groups" [3368-4202] -->
 <h3><a name="password" id="password">Password</a></h3>
 <div class="level3">
 <ul>
@@ -225,7 +231,7 @@ And this as mail filter:
 </ul>
 
 </div>
-<!-- SECTION "Password" [4089-5077] -->
+<!-- SECTION "Password" [4203-5191] -->
 <h2><a name="schema_extension" id="schema_extension">Schema extension</a></h2>
 <div class="level2">
 
@@ -254,7 +260,7 @@ Of course, standard <acronym title="Lightweight Directory Access Protocol">LDAP<
 </p>
 
 </div>
-<!-- SECTION "Schema extension" [5078-5741] -->
+<!-- SECTION "Schema extension" [5192-5855] -->
 <h3><a name="oid_prefix" id="oid_prefix">OID prefix</a></h3>
 <div class="level3">
 
@@ -267,7 +273,7 @@ The prefix 1.3.6.1.4.1.10943 is owned by <a href="http://www.linagora.com" class
 </p>
 
 </div>
-<!-- SECTION "OID prefix" [5742-5986] -->
+<!-- SECTION "OID prefix" [5856-6100] -->
 <h3><a name="openldap_schema" id="openldap_schema">OpenLDAP schema</a></h3>
 <div class="level3">
 
@@ -308,4 +314,4 @@ You can add this object class to any entry of your directory.
 </p>
 
 </div>
-<!-- SECTION "OpenLDAP schema" [5987-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "OpenLDAP schema" [6101-] --></div><!-- closes <div class="dokuwiki export">-->
