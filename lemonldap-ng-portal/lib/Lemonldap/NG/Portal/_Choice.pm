@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::_Choice;
 
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.3.0';
 
 ## @cmethod Lemonldap::NG::Portal::_Choice new(Lemonldap::NG::Portal::Simple portal)
 # Constructor
@@ -41,7 +41,7 @@ sub new {
         my $samlModule = 'Lemonldap::NG::Portal::AuthSAML';
         my $samlForce  = 0;
         eval {
-            $portal->loadModule($samlModule);
+            $portal->loadModule( $samlModule, 1 );
             $authForce = $samlModule . '::authForce';
             $samlForce = $portal->$authForce;
         };

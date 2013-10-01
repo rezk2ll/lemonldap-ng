@@ -473,19 +473,20 @@ sub new {
     return $self;
 }
 
-##@method boolean loadModule(string module)
+##@method boolean loadModule(string module, boolean ignoreError)
 # Load a module into portal namespace
 # @param module module name
+# @param ignoreError set to 1 if error should not appear in logs
 # @return boolean
 sub loadModule {
-    my ( $self, $module ) = splice @_;
+    my ( $self, $module, $ignoreError ) = splice @_;
 
     return 1 unless $module;
 
     # Load module test
     eval "require $module";
     if ($@) {
-        $self->lmLog( "$module load error: $@", 'error' );
+        $self->lmLog( "$module load error: $@", 'error' ) unless $ignoreError;
         return 0;
     }
 
