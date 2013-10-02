@@ -128,7 +128,6 @@ sub checkGoogleSession {
                 $gs->{$1} = $h->{$1} = $self->param($k);
             }
         }
-        untie %$h;
     }
 
     # Now store datas in session
@@ -139,11 +138,28 @@ sub checkGoogleSession {
         # Value (ie AX attribute) must be one of:
         if ( $v =~ /^(?:(?:la(?:nguag|stnam)|firstnam)e|country|email)$/ ) {
 
-            # One value is missing -> retry
+            # One value is missing:
             unless ( exists( $gs->{$v} ) ) {
-                $self->lmLog( "$attr required attribute is missing, retrying",
-                    'info' );
-                return 0;
+
+                # Case 1: value was asked but not returned, set an empty value
+                #         in persistent session (so that it's defined)
+                if ( $self->{_AXNS} ) {
+                    $self->lmLog(
+"$attr required attribute is missing in Google response, storing ''",
+                        'info'
+                    );
+                    $h->{$v} = $gs->{$v} = '';
+                }
+
+                # Case 2: value is not stored, probably configuration has
+                #         changed and this value was never asked
+                else {
+                    $self->lmLog(
+"$attr required attribute is missing in persistent session, let's ask it",
+                        'info'
+                    );
+                    return 0;
+                }
             }
             $self->{sessionInfo}->{$attr} = $gs->{$v};
         }
@@ -156,6 +172,7 @@ sub checkGoogleSession {
             );
         }
     }
+    untie %$h if ($h);
     return $self->{user};
 }
 
