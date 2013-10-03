@@ -2293,7 +2293,7 @@ sub globalTests {
 
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
-            foreach my $type (qw(OpenID SAML)) {
+            foreach my $type (qw(Google OpenID SAML)) {
                 return ( 0,
 "\"$type\" can not be used as user database without using \"$type\" for authentication"
                   )
@@ -2327,9 +2327,54 @@ sub globalTests {
                 1,
                 (
                     @tmp
-                    ? 'Values of parameters '
-                      . join( ',', @tmp )
-                      . ' are not defined in exported attributes or macros'
+                    ? 'Values of parameter(s) "'
+                      . join( ', ', @tmp )
+                      . '" are not defined in exported attributes or macros'
+                    : ''
+                )
+            );
+        },
+
+        # Test that variables are exported if Google is used as UserDB
+        checkUserDBGoogleAXParams => sub {
+            my @tmp;
+            if ( $conf->{userDB} =~ /^Google/ ) {
+                while ( my ( $k, $v ) = each %{ $conf->{exportedVars} } ) {
+                    if ( $v !~ Lemonldap::NG::Common::Regexp::GOOGLEAXATTR() ) {
+                        push @tmp, $v;
+                    }
+                }
+            }
+            return (
+                1,
+                (
+                    @tmp
+                    ? 'Values of parameter(s) "'
+                      . join( ', ', @tmp )
+                      . '" are not exported by Google'
+                    : ''
+                )
+            );
+        },
+
+        # Test that variables are exported if OpenID is used as UserDB
+        checkUserDBOpenIDParams => sub {
+            my @tmp;
+            if ( $conf->{userDB} =~ /^OpenID/ ) {
+                while ( my ( $k, $v ) = each %{ $conf->{exportedVars} } ) {
+                    if ( $v !~ Lemonldap::NG::Common::Regexp::OPENIDSREGATTR() )
+                    {
+                        push @tmp, $v;
+                    }
+                }
+            }
+            return (
+                1,
+                (
+                    @tmp
+                    ? 'Values of parameter(s) "'
+                      . join( ', ', @tmp )
+                      . '" are not exported by OpenID SREG'
                     : ''
                 )
             );
