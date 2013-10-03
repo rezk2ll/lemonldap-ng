@@ -3,7 +3,6 @@
 
 ##@class
 # Google authentication backend class.
-# The form must return a google_go field
 package Lemonldap::NG::Portal::AuthGoogle;
 
 use strict;
@@ -11,19 +10,16 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Common::Regexp;
 use LWP::UserAgent;
 use URI::Escape;
-use Cache::FileCache;
 
 use constant AXSPECURL      => 'http://openid.net/srv/ax/1.0';
 use constant GOOGLEENDPOINT => 'https://www.google.com/accounts/o8/id';
 
 our $VERSION = '1.3.0';
-our $initDone;
 our $googleEndPoint;
 
 BEGIN {
     eval {
         require threads::shared;
-        threads::shared::share($initDone);
         threads::shared::share($googleEndPoint);
     };
 }
