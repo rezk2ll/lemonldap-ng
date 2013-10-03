@@ -48,12 +48,15 @@ sub cstruct {
                         _help  => 'post',
                     },
                     vhostOptions => {
-                        _nodes => [qw(vhostPort vhostHttps vhostMaintenance)],
+                        _nodes => [
+                            qw(vhostPort vhostHttps vhostMaintenance vhostAliases)
+                        ],
                         vhostPort  => "int:/vhostOptions/$k2/vhostPort",
                         vhostHttps => "trool:/vhostOptions/$k2/vhostHttps",
                         vhostMaintenance =>
                           "bool:/vhostOptions/$k2/vhostMaintenance",
-                        _help => 'vhostOptions',
+                        vhostAliases => "text:/vhostOptions/$k2/vhostAliases",
+                        _help        => 'vhostOptions',
                     },
                 }
             }
@@ -1678,7 +1681,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             keyTest    => Lemonldap::NG::Common::Regexp::HOSTNAME(),
             keyMsgFail => 'Bad virtual host name',
             '*'        => {
-                keyTest    => qr/^vhost(Port|Https|Maintenance)$/,
+                keyTest    => qr/^vhost(Port|Https|Maintenance|Aliases)$/,
                 keyMsgFail => 'Bad option name',
             },
         },
