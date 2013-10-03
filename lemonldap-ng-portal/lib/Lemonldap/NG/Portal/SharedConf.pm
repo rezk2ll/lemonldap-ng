@@ -63,9 +63,20 @@ sub getConf {
         %$confCached = ( %$gConf, %$lConf );
 
         my $re = Regexp::Assemble->new();
-        foreach ( keys %{ $confCached->{locationRules} } ) {
-            $_ = quotemeta($_);
-            $re->add($_);
+        foreach my $vhost ( keys %{ $confCached->{locationRules} } ) {
+            my $quotedVhost = quotemeta($vhost);
+            $self->lmLog( "Vhost $vhost added in reVHosts", 'debug' );
+            $re->add($quotedVhost);
+
+            # Add aliases
+            if ( $confCached->{vhostOptions}->{$vhost}->{vhostAliases} ) {
+                foreach my $alias ( split /\s+/,
+                    $confCached->{vhostOptions}->{$vhost}->{vhostAliases} )
+                {
+                    $self->lmLog( "Alias $alias added in reVHosts", 'debug' );
+                    $re->add( quotemeta($alias) );
+                }
+            }
         }
         $confCached->{reVHosts} = $re->as_string;
 
