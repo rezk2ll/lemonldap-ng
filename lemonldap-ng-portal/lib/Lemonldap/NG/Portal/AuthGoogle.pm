@@ -136,7 +136,7 @@ sub checkGoogleSession {
         $attr =~ s/^!//;
 
         # Value (ie AX attribute) must be one of:
-        if ( $v =~ /^(?:(?:la(?:nguag|stnam)|firstnam)e|country|email)$/ ) {
+        if ( $v =~ Lemonldap::NG::Common::Regexp::GOOGLEAXATTR() ) {
 
             # One value is missing:
             unless ( exists( $gs->{$v} ) ) {

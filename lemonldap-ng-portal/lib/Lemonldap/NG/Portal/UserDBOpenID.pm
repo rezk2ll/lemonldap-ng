@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::UserDBOpenID;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+use Lemonldap::NG::Common::Regexp;
 
 our $VERSION = '1.0.0';
 
@@ -45,10 +46,7 @@ sub setSessionInfo {
         while ( my ( $k, $v ) = each %{ $self->{exportedVars} } ) {
             my $attr = $k;
             my $required = ( $attr =~ s/^!// );
-            if ( $v =~
-/^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
-              )
-            {
+            if ( $v =~ Lemonldap::NG::Common::Regexp::OPENIDSREGATTR() ) {
                 $self->{sessionInfo}->{$attr} = $self->param("openid.sreg.$v");
             }
             else {

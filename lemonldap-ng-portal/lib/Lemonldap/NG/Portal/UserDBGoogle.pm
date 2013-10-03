@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::UserDBGoogle;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+use Lemonldap::NG::Common::Regexp;
 
 our $VERSION = '1.0.0';
 
@@ -45,7 +46,7 @@ sub setSessionInfo {
         next
           unless ( $attr =~ s/^!//
             and $self->{exportedVars}->{$k} =~
-            /^(?:(?:la(?:nguag|stnam)|firstnam)e|country|email)$/ );
+            Lemonldap::NG::Common::Regexp::GOOGLEAXATTR() );
         unless ( defined( $self->{sessionInfo}->{$attr} ) ) {
             $self->lmLog(
 "Required parameter $attr is not provided by Google server, aborted",

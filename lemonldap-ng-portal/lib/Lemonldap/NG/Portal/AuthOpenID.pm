@@ -151,10 +151,7 @@ sub extractFormInfo {
         if ( $self->get_module('user') eq 'OpenID' ) {
             my ( @r, @o );
             while ( my ( $v, $k ) = each %{ $self->{exportedVars} } ) {
-                if ( $k =~
-/^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
-                  )
-                {
+                if ( $k =~ Lemonldap::NG::Common::Regexp::OPENIDSREGATTR() ) {
                     if   ( $v =~ s/^!// ) { push @r, $k }
                     else                  { push @o, $k }
                 }
