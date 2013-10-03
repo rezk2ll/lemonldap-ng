@@ -95,7 +95,7 @@ sub locationRulesInit {
             # Default police
             ( $defaultCondition->{$alias}, $defaultProtection->{$alias} ) =
               $class->conditionSub('accept')
-              unless ( $defaultCondition->{$vhost} );
+              unless ( $defaultCondition->{$alias} );
         }
 
     }
