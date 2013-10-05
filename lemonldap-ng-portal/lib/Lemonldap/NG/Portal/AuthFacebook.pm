@@ -9,18 +9,17 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Common::Regexp;
 use LWP::UserAgent;
-#use URI::Escape;
-use Net::Facebook::Oauth2;
+use URI::Escape;
 
 our $VERSION = '1.3.0';
-#our $initDone;
+our $initDone;
 
-#BEGIN {
-#    eval {
-#        require threads::shared;
-#        threads::shared::share($initDone);
-#    };
-#}
+BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($initDone);
+    };
+}
 
 ## @method LWP::UserAgent ua()
 # @return LWP::UserAgent object
@@ -29,9 +28,46 @@ sub ua {
     return $self->{ua} ||= LWP::UserAgent->new();
 }
 
+## @method Net::Facebook::Oauth2 fb()
+# @return Net::Facebook::Oauth2 object
+sub fb {
+    my $self = shift;
+    return $self->{_fb} if ( $self->{_fb} );
+
+    # Build callback uri
+    my $sep = '?';
+    my $ret = $self->{portal};
+    foreach my $v (
+        [ $self->{_url},                            "url" ],
+        [ $self->param( $self->{authChoiceParam} ), $self->{authChoiceParam} ]
+      )
+    {
+        if ( $v->[0] ) {
+            $ret .= "$sep$v->[1]=$v->[0]";
+            $sep = '&';
+        }
+    }
+
+    # Build Net::Facebook::Oauth2 object
+    $self->{_fb} = Net::Facebook::Oauth2->new(
+        application_id     => '316131503062',
+        application_secret => 'e3979b1a6fa02f4833505ccc80987ae3',
+        callback           => $ret,
+    );
+    unless ( $self->{_fb} ) {
+        $self->abort('Unable to build Net::Facebook::Oauth2 object');
+    }
+    return $self->{_fb};
+}
+
 ## @apmethod int authInit()
 # @return Lemonldap::NG::Portal constant
 sub authInit {
+    my $self = shift;
+    unless ($initDone) {
+        eval { require Net::Facebook::Oauth2; };
+        $self->abort( 'Unable to load Net::Facebook::Oauth2', $@ ) if ($@);
+    }
     PE_OK;
 }
 
@@ -41,12 +77,39 @@ sub authInit {
 sub extractFormInfo {
     my $self = shift;
 
+# TODO: replace this
+#
+#   Lemonldap-ng-dev
+#   App ID:     **********
+#   App Secret:     ************
+#
+#   Doc : https://developers.facebook.com/tools/explorer
+#
+#   Other TODO: doc must say that AppID => https://developers.facebook.com/apps
+#
+#   Datas:
+#   http://graph.facebook.com/100000458059472?fields=id,name,first_name,middle_name,last_name,link,username,gender,locale,timezone,email,location,website
+
     # 1. Check Facebook responses
-    if ( $self->param('code') ) {
+    if ( my $code = $self->param('code') ) {
+        if ( my $access_token = $self->fb()->get_access_token( code => $code ) )
+        {
+            $self->{sessionInfo}->{_facebookToken} = $access_token;
+
+            # TODO
+            $self->{user} = $access_token;
+            return PE_OK;
+        }
+        return PE_BADCREDENTIALS;
     }
 
-    # 2. Redirect user to Facebook login page:
-    #    * no OpenID response or missing datas
+    # 2. Else redirect user to Facebook login page:
+
+    # Build Facbook redirection
+    my $check_url = $self->fb()->get_authorization_url(
+        scope   => [ 'offline_access', 'publish_stream' ],
+        display => 'page',
+    );
     print $self->redirect($check_url);
     $self->quit();
 }
@@ -59,7 +122,8 @@ sub setAuthSessionInfo {
 
     $self->{sessionInfo}->{'_user'} = $self->{user};
 
-    $self->{sessionInfo}->{authenticationLevel} = $self->{facebookAuthnLevel};
+    $self->{sessionInfo}->{authenticationLevel} = $self->{facebookAuthnLevel}
+      || 1;
 
     PE_OK;
 }
