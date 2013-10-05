@@ -95,7 +95,7 @@ sub extractFormInfo {
             my @fields = ( 'id', 'username' );
 
             # Look at wanted fields
-            if ( $self->{userDB} =~ /^Facebook/ ) {
+            if ( $self->get_module('user') =~ /^Facebook/ ) {
                 push @fields,
                   map { /^(\w+)$/ ? ($1) : () }
                   values %{ $self->{exportedVars} };
