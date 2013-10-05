@@ -376,16 +376,17 @@ sub struct {
                             proxy   => ['proxyParams'],
                             openid  => ['openIdParams'],
                             google  => ['googleParams'],
+                            facebook=> ['facebookParams'],
                             twitter => ['twitterParams'],
                             dbi     => ['dbiParams'],
                             apache  => ['apacheParams'],
                             null    => ['nullParams'],
                             slave   => ['slaveParams'],
                             choice  => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
                             ],
                             multi => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
                             ],
                             yubikey   => ['yubikeyParams'],
                             browserid => ['browserIdParams'],
@@ -559,6 +560,15 @@ sub struct {
                     _nodes           => [qw(googleAuthnLevel)],
                     _help            => 'authGoogle',
                     googleAuthnLevel => 'int:/googleAuthnLevel',
+                },
+
+                # Facebook
+                facebookParams => {
+                    _nodes           => [qw(facebookAuthnLevel facebookAppId facebookAppSecret)],
+                    _help            => 'authFacebook',
+                    facebookAuthnLevel => 'int:/facebookAuthnLevel',
+                    facebookAppId      => 'text:facebookAppId',
+                    facebookAppSecret  => 'text:facebookAppSecret',
                 },
 
                 # Twitter
@@ -1861,6 +1871,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         # Google
         googleAuthnLevel => $integer,
 
+        # Facebook
+        facebookAuthnLevel => $integer,
+        facebookAppId      => $testNotDefined,
+        facebookAppSecret  => $testNotDefined,
+
         # Twitter
         twitterAuthnLevel => $integer,
         twitterKey        => $testNotDefined,
@@ -2177,6 +2192,7 @@ sub defaultConf {
         CAS_authnLevel      => 1,
         googleAuthnLevel    => 1,
         openIdAuthnLevel    => 1,
+        facebookAuthnLevel  => 1,
         twitterAuthnLevel   => 1,
         apacheAuthnLevel    => 4,
         nullAuthnLevel      => 0,
@@ -2296,7 +2312,7 @@ sub globalTests {
 
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
-            foreach my $type (qw(Google OpenID SAML)) {
+            foreach my $type (qw(Facebook Google OpenID SAML)) {
                 return ( 0,
 "\"$type\" can not be used as user database without using \"$type\" for authentication"
                   )
