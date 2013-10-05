@@ -19,6 +19,7 @@ WriteMakefile(
             'LWP'                         => 0,
             'LWP::Protocol::https'        => 0,
             'MIME::Lite'                  => 0,
+            'Net::Facebook::Oauth2'       => 0,
             'Net::OpenID::Consumer'       => 0,
             'Net::OpenID::Server'         => 0,
             'Net::Twitter'                => 0,
