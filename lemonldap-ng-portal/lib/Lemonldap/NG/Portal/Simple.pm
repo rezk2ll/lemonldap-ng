@@ -25,9 +25,12 @@ use Digest::MD5;
 # Special comments for doxygen
 #inherits Lemonldap::NG::Portal::_SOAP
 #inherits Lemonldap::NG::Portal::AuthApache;
+#inherits Lemonldap::NG::Portal::AuthAD;
 #inherits Lemonldap::NG::Portal::AuthCAS;
 #inherits Lemonldap::NG::Portal::AuthChoice;
 #inherits Lemonldap::NG::Portal::AuthDBI;
+#inherits Lemonldap::NG::Portal::AuthFacebook;
+#inherits Lemonldap::NG::Portal::AuthGoogle;
 #inherits Lemonldap::NG::Portal::AuthLDAP;
 #inherits Lemonldap::NG::Portal::AuthMulti;
 #inherits Lemonldap::NG::Portal::AuthNull;
@@ -49,8 +52,11 @@ use Digest::MD5;
 #inherits Lemonldap::NG::Portal::PasswordDBDBI;
 #inherits Lemonldap::NG::Portal::PasswordDBLDAP;
 #inherits Lemonldap::NG::Portal::PasswordDBNull;
+#inherits Lemonldap::NG::Portal::UserDBAD;
 #inherits Lemonldap::NG::Portal::UserDBChoice;
 #inherits Lemonldap::NG::Portal::UserDBDBI;
+#inherits Lemonldap::NG::Portal::UserDBFacebook;
+#inherits Lemonldap::NG::Portal::UserDBGoogle;
 #inherits Lemonldap::NG::Portal::UserDBLDAP;
 #inherits Lemonldap::NG::Portal::UserDBMulti;
 #inherits Lemonldap::NG::Portal::UserDBNull;
@@ -629,13 +635,16 @@ sub setDefaultValues {
     $self->{ldapAuthnLevel}   = 2 unless defined $self->{ldapAuthnLevel};
     $self->{dbiAuthnLevel}    = 2 unless defined $self->{dbiAuthnLevel};
     $self->{SSLAuthnLevel}    = 5 unless defined $self->{SSLAuthnLevel};
-    $self->{CAS_authnLevel}   = 1 unless defined $self->{CAS_authnLevel};
-    $self->{openIdAuthnLevel} = 1 unless defined $self->{openIdAuthnLevel};
-    $self->{twitterAuthnLevel} = 1
-      unless defined $self->{twitterAuthnLevel};
     $self->{apacheAuthnLevel} = 4 unless defined $self->{apacheAuthnLevel};
     $self->{nullAuthnLevel}   = 0 unless defined $self->{nullAuthnLevel};
     $self->{radiusAuthnLevel} = 3 unless defined $self->{radiusAuthnLevel};
+    foreach my $k (
+        qw(CAS_authnLevel openIdAuthnLevel twitterAuthnLevel googleAuthnLevel
+        facebookAuthnLevel)
+      )
+    {
+        $self->{$k} = 1 unless defined $self->{$k};
+    }
 
     # Other
     $self->{logoutServices} ||= {};
@@ -750,9 +759,9 @@ sub buildHiddenForm {
 
         # Build hidden input HTML code
         $val .=
-            '<input type="hidden" name="' 
-          . $_ 
-          . '" id="' 
+            '<input type="hidden" name="'
+          . $_
+          . '" id="'
           . $_
           . '" value="'
           . $self->{portalHiddenFormValues}->{$_} . '" />';
