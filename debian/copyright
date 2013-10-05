@@ -25,6 +25,11 @@ License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
  (http://snipplr.com/view/29434/)
 
+Files: lemonldap-ng-portal/example/skins/common/Google.png lemonldap-ng-portal/example/skins/common/Facebook.png
+Copyright: http://tempest.deviantart.com/
+License: CC-3
+Comment: Downloaded from http://www.iconspedia.com/
+
 Files: *tree.js lemonldap-ng-manager/example/skins/default/images/tree/*
 Copyright: 2008, Peter Panov <panov@elcat.kg>
 License: BSD-3-Clause
