@@ -97,7 +97,12 @@ sub extractFormInfo {
             $self->{sessionInfo}->{_facebookToken} = $access_token;
 
             # TODO
-            $self->{user} = $access_token;
+            my $datas = $self->fb->get('https://graph.facebook.com/me',{fields=>'id,username'})->as_hash;
+            $self->{user} = $datas->{username} || $access_token;
+            $self->lmLog( 'Good Facebook authentication', 'debug' );
+
+            # Force redirection to avoid displaying Oauth datas
+            $self->{mustRedirect} = 1;
             return PE_OK;
         }
         return PE_BADCREDENTIALS;
@@ -105,7 +110,8 @@ sub extractFormInfo {
 
     # 2. Else redirect user to Facebook login page:
 
-    # Build Facbook redirection
+    # Build Facebook redirection
+    # TODO: use a param to use "publish_stream" or not
     my $check_url = $self->fb()->get_authorization_url(
         scope   => [ 'offline_access', 'publish_stream' ],
         display => 'page',
