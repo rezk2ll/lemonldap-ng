@@ -17,15 +17,14 @@ our $VERSION = '1.0.0';
 sub userDBInit {
     my $self = shift;
 
-    if ( $self->get_module('auth') eq 'OpenID' ) {
-    }
-    else {
+    unless ( $self->get_module('auth') =~ /^OpenID/ ) {
         $self->lmLog(
 'UserDBOpenID isn\'t useable unless authentication module is set to OpenID',
             'error'
         );
         return PE_ERROR;
     }
+    PE_OK;
 }
 
 ## @apmethod int getUser()

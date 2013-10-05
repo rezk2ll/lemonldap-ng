@@ -16,7 +16,7 @@ our $VERSION = '1.3.0';
 sub userDBInit {
     my $self = shift;
 
-    if ( $self->get_module('auth') eq 'Demo' ) {
+    if ( $self->get_module('auth') =~ /^Demo/ ) {
 
         # Call authInit if demo accounts not found
         $self->authInit() unless defined $self->{_demoAccounts};

@@ -17,15 +17,14 @@ our $VERSION = '1.3.0';
 sub userDBInit {
     my $self = shift;
 
-    if ( $self->get_module('auth') eq 'Google' ) {
-    }
-    else {
+    unless ( $self->get_module('auth') =~ /^Google/ ) {
         $self->lmLog(
 'UserDBGoogle isn\'t useable unless authentication module is set to Google',
             'error'
         );
         return PE_ERROR;
     }
+    PE_OK;
 }
 
 ## @apmethod int getUser()
