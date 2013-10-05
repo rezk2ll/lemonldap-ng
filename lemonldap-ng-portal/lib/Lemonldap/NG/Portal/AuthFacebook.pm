@@ -3,6 +3,9 @@
 
 ##@class
 # Facebook authentication backend class.
+#
+# You need to have an application ID and an application secret (take a look at
+# https://developers.facebook.com/apps
 package Lemonldap::NG::Portal::AuthFacebook;
 
 use strict;
@@ -49,13 +52,15 @@ sub fb {
     }
 
     # Build Net::Facebook::Oauth2 object
-    $self->{_fb} = Net::Facebook::Oauth2->new(
-        application_id     => '316131503062',
-        application_secret => 'e3979b1a6fa02f4833505ccc80987ae3',
-        callback           => $ret,
-    );
+    eval {
+        $self->{_fb} = Net::Facebook::Oauth2->new(
+            application_id     => $self->{facebookAppId},
+            application_secret => $self->{facebookAppSecret},
+            callback           => $ret,
+        );
+    };
     unless ( $self->{_fb} ) {
-        $self->abort('Unable to build Net::Facebook::Oauth2 object');
+        $self->abort( 'Unable to build Net::Facebook::Oauth2 object', $@ );
     }
     return $self->{_fb};
 }
@@ -67,6 +72,9 @@ sub authInit {
     unless ($initDone) {
         eval { require Net::Facebook::Oauth2; };
         $self->abort( 'Unable to load Net::Facebook::Oauth2', $@ ) if ($@);
+        foreach my $arg (qw(facebookAppId facebookAppSecret)) {
+            $self->abort("Parameter $arg is required") unless ( $self->{$arg} );
+        }
     }
     PE_OK;
 }
@@ -77,29 +85,60 @@ sub authInit {
 sub extractFormInfo {
     my $self = shift;
 
-# TODO: replace this
-#
-#   Lemonldap-ng-dev
-#   App ID:     **********
-#   App Secret:     ************
-#
-#   Doc : https://developers.facebook.com/tools/explorer
-#
-#   Other TODO: doc must say that AppID => https://developers.facebook.com/apps
-#
-#   Datas:
-#   http://graph.facebook.com/100000458059472?fields=id,name,first_name,middle_name,last_name,link,username,gender,locale,timezone,email,location,website
-
     # 1. Check Facebook responses
     if ( my $code = $self->param('code') ) {
         if ( my $access_token = $self->fb()->get_access_token( code => $code ) )
         {
             $self->{sessionInfo}->{_facebookToken} = $access_token;
 
-            # TODO
-            my $datas = $self->fb->get('https://graph.facebook.com/me',{fields=>'id,username'})->as_hash;
-            $self->{user} = $datas->{username} || $access_token;
-            $self->lmLog( 'Good Facebook authentication', 'debug' );
+            # Get fields (see https://developers.facebook.com/tools/explorer)
+            my @fields = ( 'id', 'username' );
+
+            # Look at wanted fields
+            if ( $self->{userDB} =~ /^Facebook/ ) {
+                push @fields,
+                  map { /^(\w+)$/ ? ($1) : () }
+                  values %{ $self->{exportedVars} };
+            }
+            my $datas;
+
+            # When a field is not granted, Facebook returns only an error
+            # without real explanation. So here we try to reduce query until
+            # having a valid response
+            while (@fields) {
+                $datas = $self->fb->get(
+                    'https://graph.facebook.com/me',
+                    { fields => join( ',', @fields ) }
+                )->as_hash;
+                unless ( ref $datas ) {
+                    $self->lmLog( "Unable to get any Facebook field", 'error' );
+                    return PE_ERROR;
+                }
+                if ( $datas->{error} ) {
+                    my $tmp = pop @fields;
+                    $self->lmLog(
+"Unable to get some Facebook fields ($datas->{error}->{message}). Retrying without $tmp",
+                        'warn'
+                    );
+                }
+                else {
+                    last;
+                }
+            }
+            unless (@fields) {
+                $self->lmLog( "Unable to get any Facebook field", 'error' );
+                return PE_ERROR;
+            }
+
+            # Look if a field can be used to trace user
+            unless ( $self->{user} = $datas->{username} ) {
+                $self->lmLog( 'Unable to get Facebook username', 'warn' );
+                unless ( $self->{user} = $datas->{id} ) {
+                    $self->lmLog( 'Unable to get Facebook id', 'error' );
+                    return PE_ERROR;
+                }
+            }
+            $self->{_facebookDatas} = $datas;
 
             # Force redirection to avoid displaying Oauth datas
             $self->{mustRedirect} = 1;
@@ -113,7 +152,7 @@ sub extractFormInfo {
     # Build Facebook redirection
     # TODO: use a param to use "publish_stream" or not
     my $check_url = $self->fb()->get_authorization_url(
-        scope   => [ 'offline_access', 'publish_stream' ],
+        scope   => ['offline_access'],
         display => 'page',
     );
     print $self->redirect($check_url);
