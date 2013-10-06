@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 use Lemonldap::NG::Manager::Cli;
-use POSIX;
+use POSIX qw(setuid setgid);
 use strict;
 
 sub giveUpPrivileges {
@@ -16,8 +16,8 @@ sub giveUpPrivileges {
     }
 
     # become $user:$group and give up root privileges
-    POSIX::setgid( ( getgrnam($group) )[2] );
-    POSIX::setuid( ( getpwnam($user) )[2] );
+    setgid( ( getgrnam($group) )[2] );
+    setuid( ( getpwnam($user) )[2] );
 
     # if we are still root
     if ( $> == 0 ) {
