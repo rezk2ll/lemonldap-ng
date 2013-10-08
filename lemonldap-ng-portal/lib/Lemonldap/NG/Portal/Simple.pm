@@ -572,6 +572,8 @@ sub setDefaultValues {
     $self->{confirmFormMethod}  ||= "post";
     $self->{redirectFormMethod} ||= "get";
     $self->{authChoiceParam}    ||= "lmAuth";
+    $self->{hiddenAttributes} = "_password"
+      unless defined $self->{hiddenAttributes};
 
     # Set default userDB and passwordDB to DBI if authentication is DBI
     if ( $self->{authentication} =~ /DBI/i ) {
@@ -759,9 +761,9 @@ sub buildHiddenForm {
 
         # Build hidden input HTML code
         $val .=
-            '<input type="hidden" name="'
-          . $_
-          . '" id="'
+            '<input type="hidden" name="' 
+          . $_ 
+          . '" id="' 
           . $_
           . '" value="'
           . $self->{portalHiddenFormValues}->{$_} . '" />';
@@ -2453,9 +2455,11 @@ sub store {
       or return PE_APACHESESSIONERROR;
     foreach my $k ( keys %{ $self->{sessionInfo} } ) {
         next unless defined $self->{sessionInfo}->{$k};
-        $self->lmLog(
-            "Store " . $self->{sessionInfo}->{$k} . " in session key $k",
-            'debug' );
+        my $displayValue = $self->{sessionInfo}->{$k};
+        if ( $self->{hiddenAttributes} =~ /\b$k\b/ ) {
+            $displayValue = '****';
+        }
+        $self->lmLog( "Store $displayValue in session key $k", 'debug' );
         $h->{$k} = $self->{sessionInfo}->{$k};
     }
     untie %$h;

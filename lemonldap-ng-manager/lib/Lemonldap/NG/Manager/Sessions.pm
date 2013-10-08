@@ -24,7 +24,7 @@ use utf8;
 our $whatToTrace;
 *whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '1.2.5';
+our $VERSION = '1.3.0';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI
@@ -79,6 +79,10 @@ sub new {
 
     # Multi values separator
     $self->{multiValuesSeparator} ||= '; ';
+
+    # Attributes to hide
+    $self->{hiddenAttributes} = "_password"
+      unless defined $self->{hiddenAttributes};
 
     # Now we're ready to display sessions. Choose display type
     foreach my $k ( $self->param() ) {
@@ -445,8 +449,8 @@ sub session {
             $value = $newvalue;
         }
 
-        # Hide password
-        $value = '******' if ( $_ =~ /^_password$/ );
+        # Hide attributes
+        $value = '****' if ( $self->{hiddenAttributes} =~ /\b$_\b/ );
 
         # Manage timestamp
         if ( $_ =~ /^(_utime|_lastAuthnUTime)$/ ) {
