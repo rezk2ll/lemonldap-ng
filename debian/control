@@ -183,7 +183,8 @@ Depends: ${misc:Depends},
          libstring-random-perl,
          libunicode-string-perl
 Recommends: libapache-session-browseable-perl,
-            libnet-facebook-oauth2-perl | libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl (>= 2.3.0) | libnet-twitter-perl | libauthcas-perl
+            libnet-facebook-oauth2-perl | libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl (>= 2.3.0) | libnet-twitter-perl | libauthcas-perl,
+            libwww-perl
 Suggests: libauthcas-perl,
           libauthen-captcha-perl,
           libdbi-perl,
@@ -198,7 +199,6 @@ Suggests: libauthcas-perl,
           liburi-perl,
           libhttp-message-perl | libwww-perl (<< 6),
           liblwp-protocol-https-perl | libwww-perl (<< 6),
-          libwww-perl,
           libxml-libxml-perl,
           libxml-libxslt-perl,
           libxml-simple-perl,
