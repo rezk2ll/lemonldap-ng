@@ -7,10 +7,10 @@ package Lemonldap::NG::Portal::_SAML;
 
 use strict;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
+use Lemonldap::NG::Portal::_Browser;
 use XML::Simple;
 use MIME::Base64;
 use String::Random;
-use LWP::UserAgent;        # SOAP call
 use HTTP::Request;         # SOAP call
 use POSIX qw(strftime);    # Convert SAML2 date into timestamp
 use Time::Local;           # Convert SAML2 date into timestamp
@@ -20,6 +20,7 @@ use URI;                   # Get metadata URL path
 # Special comments for doxygen
 #inherits Lemonldap::NG::Common::Conf::SAML::Metadata protected service_metadata
 
+our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
 our $VERSION = '1.3.0';
 our $samlCache;
 our $initGlibDone;
@@ -1662,10 +1663,6 @@ sub resolveArtifact {
     my ( $self, $profile, $artifact, $method ) = splice @_;
     my $message;
 
-    # LWP User Agent
-    my $ua = new LWP::UserAgent;
-    push @{ $ua->requests_redirectable }, 'POST';
-
     # Login profile
     if ( $profile->isa("Lasso::Login") ) {
 
@@ -1691,7 +1688,7 @@ sub resolveArtifact {
             'debug' );
 
         # SOAP call
-        my $soap_answer = $ua->request($request);
+        my $soap_answer = $self->ua()->request($request);
         if ( $soap_answer->code() == "200" ) {
             $message = $soap_answer->content();
             $self->lmLog( "Get message $message", 'debug' );
@@ -1898,10 +1895,6 @@ sub sendSOAPMessage {
     my ( $self, $endpoint, $message ) = splice @_;
     my $response;
 
-    # LWP User Agent
-    my $ua = new LWP::UserAgent;
-    push @{ $ua->requests_redirectable }, 'POST';
-
     my $request = HTTP::Request->new( 'POST' => $endpoint );
     $request->content_type('text/xml');
     $request->content($message);
@@ -1909,7 +1902,7 @@ sub sendSOAPMessage {
     $self->lmLog( "Send SOAP message $message to $endpoint", 'debug' );
 
     # SOAP call
-    my $soap_answer = $ua->request($request);
+    my $soap_answer = $self->ua()->request($request);
     if ( $soap_answer->code() == "200" ) {
         $response = $soap_answer->content();
         $self->lmLog( "Get response $response", 'debug' );

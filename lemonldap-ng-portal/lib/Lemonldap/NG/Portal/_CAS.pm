@@ -6,9 +6,10 @@
 package Lemonldap::NG::Portal::_CAS;
 
 use strict;
-use LWP::UserAgent;
+use Lemonldap::NG::Portal::_Browser;
 
-our $VERSION = '1.0.0';
+our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
+our $VERSION = '1.3.0';
 
 ## @method hashref getCasSession(string id)
 # Try to recover the CAS session corresponding to id and return session datas
@@ -238,10 +239,7 @@ sub deleteCasSession {
 sub callPgtUrl {
     my ( $self, $pgtUrl, $pgtIou, $pgtId ) = splice @_;
 
-    # LWP User Agent
-    my $ua = new LWP::UserAgent;
-    push @{ $ua->requests_redirectable }, 'POST';
-    $ua->env_proxy();
+    $self->ua()->env_proxy();
 
     # Build URL
     my $url = $pgtUrl;
@@ -251,7 +249,7 @@ sub callPgtUrl {
     $self->lmLog( "Call URL $url", 'debug' );
 
     # GET URL
-    my $response = $ua->get($url);
+    my $response = $self->ua()->get($url);
 
     # Return result
     return $response->is_success();

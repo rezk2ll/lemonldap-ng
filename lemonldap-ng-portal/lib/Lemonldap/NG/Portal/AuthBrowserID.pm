@@ -7,10 +7,11 @@ package Lemonldap::NG::Portal::AuthBrowserID;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
-use LWP::UserAgent;
+use Lemonldap::NG::Portal::_Browser;
 use HTTP::Request;
 use JSON;
 
+our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
 our $VERSION = '1.3.0';
 
 ## @apmethod int authInit()
@@ -69,9 +70,6 @@ sub extractFormInfo {
             'debug' );
 
         # Resolve assertion
-        my $ua = new LWP::UserAgent;
-        push @{ $ua->requests_redirectable }, 'POST';
-
         my $postdata =
             "assertion="
           . $self->{browserIdAssertion}
@@ -86,7 +84,7 @@ sub extractFormInfo {
         $request->content_type('application/x-www-form-urlencoded');
         $request->content($postdata);
 
-        my $answer = $ua->request($request);
+        my $answer = $self->ua()->request($request);
 
         $self->lmLog( "Verification response: " . $answer->as_string, 'debug' );
 

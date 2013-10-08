@@ -9,10 +9,11 @@ package Lemonldap::NG::Portal::AuthOpenID;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Common::Regexp;
-use LWP::UserAgent;
+use Lemonldap::NG::Portal::_Browser;
 use Cache::FileCache;
 
-our $VERSION = '1.2.0';
+our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
+our $VERSION = '1.3.0';
 our $initDone;
 
 BEGIN {
@@ -48,11 +49,8 @@ sub authInit {
 sub extractFormInfo {
     my $self = shift;
 
-    my $ua = LWP::UserAgent->new();
-
-    # TODO : LWP options to use a proxy for example
     $self->{csr} = Net::OpenID::Consumer->new(
-        ua              => $ua,
+        ua              => $self->ua(),
         cache           => $self->{refLocalStorage} || Cache::FileCache->new,
         args            => $self,
         consumer_secret => $self->{openIdSecret},

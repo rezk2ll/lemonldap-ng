@@ -11,9 +11,10 @@ package Lemonldap::NG::Portal::AuthFacebook;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Common::Regexp;
-use LWP::UserAgent;
+use Lemonldap::NG::Portal::_Browser;
 use URI::Escape;
 
+our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
 our $VERSION = '1.3.0';
 our $initDone;
 
@@ -22,13 +23,6 @@ BEGIN {
         require threads::shared;
         threads::shared::share($initDone);
     };
-}
-
-## @method LWP::UserAgent ua()
-# @return LWP::UserAgent object
-sub ua {
-    my $self = shift;
-    return $self->{ua} ||= LWP::UserAgent->new();
 }
 
 ## @method Net::Facebook::Oauth2 fb()

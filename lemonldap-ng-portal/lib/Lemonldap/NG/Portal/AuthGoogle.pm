@@ -8,12 +8,13 @@ package Lemonldap::NG::Portal::AuthGoogle;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Common::Regexp;
-use LWP::UserAgent;
+use Lemonldap::NG::Portal::_Browser;
 use URI::Escape;
 
 use constant AXSPECURL      => 'http://openid.net/srv/ax/1.0';
 use constant GOOGLEENDPOINT => 'https://www.google.com/accounts/o8/id';
 
+our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
 our $VERSION = '1.3.0';
 our $googleEndPoint;
 
@@ -53,13 +54,6 @@ sub googleEndPoint {
         }
     }
     return $googleEndPoint;
-}
-
-## @method LWP::UserAgent ua()
-# @return LWP::UserAgent object
-sub ua {
-    my $self = shift;
-    return $self->{ua} ||= LWP::UserAgent->new();
 }
 
 ## @method boolean checkGoogleSession()
