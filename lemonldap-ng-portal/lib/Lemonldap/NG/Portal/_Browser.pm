@@ -22,7 +22,7 @@ sub ua {
     # TODO : LWP options to use a proxy for example
     $_ua = LWP::UserAgent->new() or $self->abort($@);
     push @{ $_ua->requests_redirectable }, 'POST';
-    $self->ua()->env_proxy();
+    $_ua->env_proxy();
     return $_ua;
 }
 
