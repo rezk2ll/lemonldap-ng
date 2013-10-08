@@ -239,8 +239,6 @@ sub deleteCasSession {
 sub callPgtUrl {
     my ( $self, $pgtUrl, $pgtIou, $pgtId ) = splice @_;
 
-    $self->ua()->env_proxy();
-
     # Build URL
     my $url = $pgtUrl;
     $url .= ( $pgtUrl =~ /\?/ ? '&' : '?' );
@@ -253,7 +251,6 @@ sub callPgtUrl {
 
     # Return result
     return $response->is_success();
-
 }
 
 1;
