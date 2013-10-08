@@ -110,10 +110,6 @@ sub extractFormInfo {
                     'debug'
                 );
 
-                # TODO - check audience
-                # TODO - adjust session duration with BrowserID expires field
-                # TODO - check SSL certificate
-
                 return PE_OK;
             }
             else {
