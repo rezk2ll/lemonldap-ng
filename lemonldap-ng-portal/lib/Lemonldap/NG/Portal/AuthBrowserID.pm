@@ -24,7 +24,7 @@ sub authInit {
       "https://verifier.login.persona.org/verify";
     $self->{browserIdAuthnLevel} = "2"
       unless defined $self->{browserIdAuthnLevel};
-    $self->{browserIdSiteName} ||= "LemonLDAP::NG";
+    $self->{browserIdSiteName}        ||= "LemonLDAP::NG";
     $self->{browserIdBackgroundColor} ||= "#000";
     $self->{browserIdAutoLogin}       ||= "0";
 
@@ -135,7 +135,7 @@ sub extractFormInfo {
                         'error'
                     );
                 }
-                return PE_ERROR;
+                return PE_BADCREDENTIALS;
             }
         }
         else {
