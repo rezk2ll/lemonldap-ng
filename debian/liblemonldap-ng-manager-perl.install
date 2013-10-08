@@ -5,3 +5,4 @@
 /usr/share/lemonldap-ng/manager
 /var/lib/lemonldap-ng/manager
 /usr/share/lemonldap-ng/bin/lmConfigEditor
+/usr/share/lemonldap-ng/bin/lemonldap-ng-cli
