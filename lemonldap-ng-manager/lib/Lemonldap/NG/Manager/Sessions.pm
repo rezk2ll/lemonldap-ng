@@ -556,7 +556,7 @@ sub session {
         foreach ( keys %session ) {
             next if $_ !~ /^notification_(.+)/;
             $res .=
-                '<li><strong>' 
+                '<li><strong>'
               . $1
               . '</strong>: '
               . $session{$_} . " ("

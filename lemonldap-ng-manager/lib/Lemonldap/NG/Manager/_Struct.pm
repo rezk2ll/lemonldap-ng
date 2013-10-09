@@ -367,22 +367,22 @@ sub struct {
                       )
                     {
                         my $tmp = {
-                            ad      => ['ldapParams'],
-                            ldap    => ['ldapParams'],
-                            ssl     => ['sslParams'],
-                            cas     => ['casParams'],
-                            radius  => ['radiusParams'],
-                            remote  => ['remoteParams'],
-                            proxy   => ['proxyParams'],
-                            openid  => ['openIdParams'],
-                            google  => ['googleParams'],
-                            facebook=> ['facebookParams'],
-                            twitter => ['twitterParams'],
-                            dbi     => ['dbiParams'],
-                            apache  => ['apacheParams'],
-                            null    => ['nullParams'],
-                            slave   => ['slaveParams'],
-                            choice  => [
+                            ad       => ['ldapParams'],
+                            ldap     => ['ldapParams'],
+                            ssl      => ['sslParams'],
+                            cas      => ['casParams'],
+                            radius   => ['radiusParams'],
+                            remote   => ['remoteParams'],
+                            proxy    => ['proxyParams'],
+                            openid   => ['openIdParams'],
+                            google   => ['googleParams'],
+                            facebook => ['facebookParams'],
+                            twitter  => ['twitterParams'],
+                            dbi      => ['dbiParams'],
+                            apache   => ['apacheParams'],
+                            null     => ['nullParams'],
+                            slave    => ['slaveParams'],
+                            choice   => [
                                 qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
                             ],
                             multi => [
@@ -564,8 +564,9 @@ sub struct {
 
                 # Facebook
                 facebookParams => {
-                    _nodes           => [qw(facebookAuthnLevel facebookAppId facebookAppSecret)],
-                    _help            => 'authFacebook',
+                    _nodes =>
+                      [qw(facebookAuthnLevel facebookAppId facebookAppSecret)],
+                    _help              => 'authFacebook',
                     facebookAuthnLevel => 'int:/facebookAuthnLevel',
                     facebookAppId      => 'text:facebookAppId',
                     facebookAppSecret  => 'text:facebookAppSecret',

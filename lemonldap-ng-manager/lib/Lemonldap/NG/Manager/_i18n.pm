@@ -616,7 +616,7 @@ sub fr {
         error          => 'Erreur',
         exportedAttr   => 'Attributs exportés par le portail (SOAP)',
         exportedVars   => 'Attributs à exporter',
-        facebookAppId          => 'ID de l\'application Facebook',
+        facebookAppId  => 'ID de l\'application Facebook',
         facebookAppSecret      => 'Secret de l\'application Facebook',
         facebookAuthnLevel     => 'Niveau d\'authentification',
         facebookParams         => 'Paramètres Facebook',
