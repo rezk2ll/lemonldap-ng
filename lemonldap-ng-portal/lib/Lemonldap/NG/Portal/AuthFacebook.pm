@@ -141,6 +141,13 @@ sub extractFormInfo {
         return PE_BADCREDENTIALS;
     }
 
+    if ( my $error_code = $self->param('error_code') ) {
+        my $error_message = $self->param('error_message');
+        $self->lmLog( "Facebook error code $error_code: $error_message",
+            'error' );
+        return PE_ERROR;
+    }
+
     # 2. Else redirect user to Facebook login page:
 
     # Build Facebook redirection
