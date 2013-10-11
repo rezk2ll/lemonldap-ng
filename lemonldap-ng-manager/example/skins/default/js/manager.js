@@ -1406,7 +1406,7 @@ function authChoiceRoot(id){
 function newChoiceR(){
 	var newIdValue=newId(currentId);
 	simpleTreeCollection[0].addNode(newIdValue,text4newKey,function(d,s){
-		$('>span',s).attr('onClick','authChoice("'+newIdValue+'")').attr('name',text4newKey).attr('value','Null|Null|Null').attr('id','text_'+newIdValue);
+		$('>span',s).attr('onClick','authChoice("'+newIdValue+'")').attr('name',text4newKey).attr('value','Null|Null|Null|').attr('id','text_'+newIdValue);
 		authChoice(newIdValue);
 	});
 	return false;
@@ -1414,7 +1414,7 @@ function newChoiceR(){
 function newChoice(){
 	var newIdValue=newId(currentId);
 	simpleTreeCollection[0].newNodeAfter(newIdValue,text4newKey,function(d,s){
-		$('>span',s).attr('onClick','authChoice("'+newIdValue+'")').attr('name',text4newKey).attr('value','Null|Null|Null').attr('id','text_'+newIdValue);
+		$('>span',s).attr('onClick','authChoice("'+newIdValue+'")').attr('name',text4newKey).attr('value','Null|Null|Null|').attr('id','text_'+newIdValue);
 		authChoice(newIdValue);
 	});
 	return false;
@@ -1429,6 +1429,7 @@ function authChoice(id){
 	formateSelectAuth('authChoiceAuth',t[0]);
 	formateSelectUser('authChoiceUser',t[1]);
 	formateSelectPassword('authChoicePassword',t[2]);
+	$('#authChoiceURL').attr('value',t[3]);
 	display('authChoice',lmtext(id));
 	$('#newchoice,#delchoice').show();
 }
@@ -1437,8 +1438,9 @@ function setlmauthchoice(id){
 	var auth=$('#authChoiceAuth').attr('value');
 	var user=$('#authChoiceUser').attr('value');
 	var password=$('#authChoicePassword').attr('value');
+	var url=$('#authChoiceURL').attr('value');
 	setlmtext(id,key);
-	setlmdata(id,auth+'|'+user+'|'+password);
+	setlmdata(id,auth+'|'+user+'|'+password+'|'+url);
 }
 
 /* Application list */

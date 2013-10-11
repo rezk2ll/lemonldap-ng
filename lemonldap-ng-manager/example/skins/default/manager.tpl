@@ -577,6 +577,10 @@
        <td><lang en="Password module" fr="Module de mots de passe"/></td>
        <td><select id="authChoicePassword"></select></td>
       </tr>
+      <tr>
+       <td><lang en="URL" fr="URL"/></td>
+       <td><input type="text" id="authChoiceURL" /></td>
+      </tr>
      </table>
      <br />
      <button onclick="setlmauthchoice(currentId);return false;" >

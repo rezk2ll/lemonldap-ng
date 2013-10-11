@@ -181,13 +181,17 @@ sub _buildAuthLoop {
         $name =~ s/\_/ /g;
 
         # Find modules associated to authChoice
-        my ( $auth, $userDB, $passwordDB ) =
+        my ( $auth, $userDB, $passwordDB, $url ) =
           split( /\|/, $self->{authChoiceModules}->{$_} );
 
         if ( $auth and $userDB and $passwordDB ) {
 
+            # Default URL
+            $url ||= "#";
+
             # Options to store in the loop
-            my $optionsLoop = { name => $name, key => $_, module => $auth };
+            my $optionsLoop =
+              { name => $name, key => $_, module => $auth, url => $url };
 
             # Get displayType for this module
             my $modulePrefix = 'Lemonldap::NG::Portal::';

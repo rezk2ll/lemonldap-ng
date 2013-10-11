@@ -37,7 +37,7 @@
 
       <div id="<TMPL_VAR NAME="key">">
 
-      <form action="#" method="post" class="login">
+      <form action="<TMPL_VAR NAME="url">" method="post" class="login">
 
       <!-- Hidden fields -->
       <TMPL_VAR NAME="HIDDEN_INPUTS">
