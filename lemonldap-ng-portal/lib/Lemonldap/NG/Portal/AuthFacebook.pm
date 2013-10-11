@@ -80,6 +80,8 @@ sub extractFormInfo {
     my $self = shift;
 
     # 1. Check Facebook responses
+
+    # 1.1 Good responses
     if ( my $code = $self->param('code') ) {
         if ( my $access_token = $self->fb()->get_access_token( code => $code ) )
         {
@@ -141,6 +143,7 @@ sub extractFormInfo {
         return PE_BADCREDENTIALS;
     }
 
+    # 1.2 Bad responses
     if ( my $error_code = $self->param('error_code') ) {
         my $error_message = $self->param('error_message');
         $self->lmLog( "Facebook error code $error_code: $error_message",

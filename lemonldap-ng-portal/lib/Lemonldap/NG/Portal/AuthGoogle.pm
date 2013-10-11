@@ -32,6 +32,7 @@ BEGIN {
 sub googleEndPoint {
     my $self = shift;
 
+    # First time, get and store Google endpoint
     unless ($googleEndPoint) {
         my $response =
           $self->ua()->get( GOOGLEENDPOINT, Accept => 'application/xrds+xml' );
@@ -40,17 +41,21 @@ sub googleEndPoint {
             # Dirty XML parse
             # (searching for <URI>https://www.google.com/accounts/o8/ud</URI>)
             my $tmp = $response->decoded_content;
-            if ( $tmp =~ m#<URI.*?>(\S+)</URI>#mi ) {
+            if ( $tmp =~ m#<URI.*?>\s*(\S+)\s*</URI>#mi ) {
                 $googleEndPoint = $1;
             }
             else {
-                $self->lmLog( 'Here is the Google response: '
-                      . $response->decoded_content );
-                $self->abort('Can\'t find endpoint in Googe response');
+                $self->lmLog(
+                    'Here is the Google response: '
+                      . $response->decoded_content,
+                    'error'
+                );
+                $self->abort('Can\'t find endpoint in Google response');
             }
         }
         else {
-            $self->abort('Can\'t access to Google endpoint');
+            $self->abort( 'Can\'t access to Google endpoint:',
+                $response->status_line );
         }
     }
     return $googleEndPoint;
@@ -85,7 +90,7 @@ sub checkGoogleSession {
             }
         }
     }
-    else {
+    else {    # Parse AX response
 
         # First store email as user key. Note that this is the returned value
         # so if it's empty, request is retried
@@ -99,7 +104,7 @@ sub checkGoogleSession {
             eval { tie %$h, $self->{persistentStorage}, undef, \%opts; };
             if ($@) {
                 $self->abort(
-"Unable to create persistent session required to use Google backend: $@"
+"Unable to create persistent session, required to use Google backend: $@"
                 );
             }
             else {
@@ -112,7 +117,7 @@ sub checkGoogleSession {
             }
         }
 
-        # Retrieve AX datas
+        # Retrieve AX datas (and store them in persistent session)
         foreach my $k ( $self->param() ) {
             if ( $k =~ /^openid\.$self->{_AXNS}\.value\.(\w+)$/ ) {
                 $gs->{$1} = $h->{$1} = $self->param($k);
@@ -153,6 +158,8 @@ sub checkGoogleSession {
             }
             $self->{sessionInfo}->{$attr} = $gs->{$v};
         }
+
+        # If an exported variable is not AX compliant, just warn
         else {
             $self->lmLog(
                 'Ignoring attribute '
@@ -162,7 +169,11 @@ sub checkGoogleSession {
             );
         }
     }
+
+    # Save persistent session
     untie %$h if ($h);
+
+    # Boolean value: ~false if no $user value
     return $self->{user};
 }
 
@@ -197,7 +208,8 @@ sub extractFormInfo {
         # Launch request
         my $response = $self->ua()->get( $check_url, Accept => 'text/plain' );
         unless ( $response->is_success ) {
-            $self->abort('Can\'t verify Google authentication');
+            $self->abort( 'Can\'t verify Google authentication',
+                $response->status_line );
         }
         else {
             my %tmp =
@@ -212,8 +224,8 @@ sub extractFormInfo {
             # 1.2 Check if datas are already shared with Google
             unless ( $self->checkGoogleSession() ) {
 
-                # Datas are missing, prepare to launch a new request with
-                # AX request
+                # Datas are missing, prepare AX query which will be added to
+                # the request to Google
 
                 # a) email is required, will be used as 'user' field
                 $ax =
@@ -228,11 +240,15 @@ sub extractFormInfo {
                     my $u;
                     while ( my ( $v, $k ) = each %{ $self->{exportedVars} } ) {
                         next if ( $k eq 'email' );
+
+                        # Check if wanted attribute is known by Google
                         if ( $k =~
                             /^(?:(?:la(?:nguag|stnam)|firstnam)e|country)$/ )
                         {
                             $ax .= ",$k";
-                            $u  .= "&openid.ax.type.$k="
+
+                            # Note: AX type seems to be required by Google
+                            $u .= "&openid.ax.type.$k="
                               . {
                                 country =>
                                   "http://axschema.org/contact/country/home",
@@ -265,27 +281,35 @@ sub extractFormInfo {
     }
 
     # 2. Redirect user to Google login page:
-    #    * no OpenID response or missing datas
+    #    => no OpenID response or missing datas
+
+    # Build request to Google
     my $check_url =
         $self->googleEndPoint()
       . '?openid.mode=checkid_setup'
       . '&openid.ns=http://specs.openid.net/auth/2.0'
       . '&openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select'
       . '&openid.identity=http://specs.openid.net/auth/2.0/identifier_select'
-      . $ax;
-    my $sep = '?';
-    my $ret = $self->{portal};
+      . $ax;    # Requested attributes if set
+
+    # Build portal URI...
+    my $sep      = '?';
+    my $returnTo = $self->{portal};
     foreach my $v (
         [ $self->{_url},                            "url" ],
         [ $self->param( $self->{authChoiceParam} ), $self->{authChoiceParam} ]
       )
     {
         if ( $v->[0] ) {
-            $ret .= "$sep$v->[1]=$v->[0]";
+            $returnTo .= "$sep$v->[1]=$v->[0]";
             $sep = '&';
         }
     }
-    $check_url .= '&openid.return_to=' . uri_escape_utf8($ret);
+
+    # ... and add it
+    $check_url .= '&openid.return_to=' . uri_escape_utf8($returnTo);
+
+    # Now redirect user
     print $self->redirect($check_url);
     $self->quit();
 }
