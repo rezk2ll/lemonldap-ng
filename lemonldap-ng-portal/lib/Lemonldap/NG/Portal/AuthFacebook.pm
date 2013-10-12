@@ -69,6 +69,7 @@ sub authInit {
         foreach my $arg (qw(facebookAppId facebookAppSecret)) {
             $self->abort("Parameter $arg is required") unless ( $self->{$arg} );
         }
+        $initDone++;
     }
     PE_OK;
 }
