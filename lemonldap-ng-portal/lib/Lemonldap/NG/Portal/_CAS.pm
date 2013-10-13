@@ -26,7 +26,7 @@ sub getCasSession {
 
         # Session not available
         if ($id) {
-            $self->lmLog( "CAS session $id isn't yet available", 'info' );
+            $self->_sub( 'userInfo', "CAS session $id isn't yet available" );
         }
         else {
             $self->lmLog( "Unable to create new CAS session: $@", 'error' );

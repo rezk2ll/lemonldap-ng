@@ -77,7 +77,7 @@ sub extractFormInfo {
 
         # If confirmation is needed
         if ( my $setup_url = $csr->user_setup_url ) {
-            $self->lmLog( 'OpenID confirmation needed', 'info' );
+            $self->_sub( 'userInfo', 'OpenID confirmation needed' );
             print $self->redirect($setup_url);
             $self->quit();
         }
@@ -113,7 +113,8 @@ sub extractFormInfo {
         if ( $tmp =~
             $self->{_reopenIdIDPList} xor $self->{_openIdIDPListIsWhite} )
         {
-            $self->lmLog( "$url is forbidden for openID exchange", 'warn' );
+            $self->_sub( 'userNotice',
+                "$url is forbidden for openID exchange" );
             $self->{_msg} =
               "OpenID error: $tmp is forbidden for OpenID echange";
             return PE_BADPARTNER;

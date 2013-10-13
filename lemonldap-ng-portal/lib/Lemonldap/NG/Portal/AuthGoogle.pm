@@ -139,9 +139,8 @@ sub checkGoogleSession {
                 # Case 1: value was asked but not returned, set an empty value
                 #         in persistent session (so that it's defined)
                 if ( $self->{_AXNS} ) {
-                    $self->lmLog(
-"$v required attribute is missing in Google response, storing ''",
-                        'info'
+                    $self->_sub( 'userInfo',
+"$v required attribute is missing in Google response, storing ''"
                     );
                     $h->{$v} = $gs->{$v} = '';
                 }
@@ -149,9 +148,8 @@ sub checkGoogleSession {
                 # Case 2: value is not stored, probably configuration has
                 #         changed and this value was never asked
                 else {
-                    $self->lmLog(
-"$v required attribute is missing in persistent session, let's ask it",
-                        'info'
+                    $self->_sub( 'userInfo',
+"$v required attribute is missing in persistent session, let's ask it"
                     );
                     return 0;
                 }
