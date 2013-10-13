@@ -91,7 +91,6 @@ sub store {
 sub load {
     my ( $self, $cfgNum, $fields ) = @_;
     my $f = '';
-    print STDERR "Coucou\n";
     open FILE, "$self->{dirName}/lmConf-$cfgNum.js" or die "$!$@";
     while (<FILE>) {
         $f .= $_;
