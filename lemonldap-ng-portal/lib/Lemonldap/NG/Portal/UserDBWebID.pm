@@ -40,7 +40,24 @@ sub getUser {
 sub setSessionInfo {
     my $self = shift;
 
-    # TODO
+    unless ( $self->{_webid} ) {
+        $self->lmLog( 'No webid object found', 'error' );
+        return PE_ERROR;
+    }
+
+    while ( my ( $k, $v ) = each %{ $self->{exportedVars} } ) {
+        my $attr = $k;
+        my $req;
+        $attr =~ s/^!// and $req = 1;
+        eval { $self->{sessionInfo}->{$attr} = $self->{_webid}->get($v) };
+        $self->lmLog( "Unable to get $v from FOAF document: $@", 'error' )
+          if ($@);
+        if ( $req and not $self->{sessionInfo}->{$attr} ) {
+            $self->_sub( 'userNotice',
+                "Required attribute $v is missing (user: $self->{user})" );
+            return PE_MISSINGREQATTR;
+        }
+    }
     PE_OK;
 }
 

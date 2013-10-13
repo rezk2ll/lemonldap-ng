@@ -1458,7 +1458,7 @@ sub testStruct {
         exportedVars => {
             keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
             keyMsgFail => 'Bad variable name',
-            test       => qr/^[a-zA-Z][\w-]*$/,
+            test       => qr/^[a-zA-Z][\w:\-]*$/,
             msgFail    => 'Bad attribute name',
         },
         failedLoginNumber => $integer,
