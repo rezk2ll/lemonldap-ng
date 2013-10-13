@@ -378,15 +378,16 @@ sub struct {
                             google   => ['googleParams'],
                             facebook => ['facebookParams'],
                             twitter  => ['twitterParams'],
+                            webid    => ['webIDParams'],
                             dbi      => ['dbiParams'],
                             apache   => ['apacheParams'],
                             null     => ['nullParams'],
                             slave    => ['slaveParams'],
                             choice   => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams webIDParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
                             ],
                             multi => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams webIDParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
                             ],
                             yubikey   => ['yubikeyParams'],
                             browserid => ['browserIdParams'],
@@ -582,6 +583,14 @@ sub struct {
                     twitterKey        => 'text:/twitterKey',
                     twitterSecret     => 'text:/twitterSecret',
                     twitterAppName    => 'text:/twitterAppName',
+                },
+
+                # WebID
+                webIDParams => {
+                    _nodes          => [qw(webIDAuthnLevel webIDWhitelist)],
+                    _help           => 'authWebID',
+                    webIDAuthnLevel => 'int:webIDAuthnLevel',
+                    webIDWhitelist  => 'text:/webIDWhitelist',
                 },
 
                 # DBI
@@ -1883,6 +1892,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         twitterSecret     => $testNotDefined,
         twitterAppName    => $testNotDefined,
 
+        # WebID
+        webIDAuthnLevel => $integer,
+        webIDWhitelist  => $testNotDefined,
+
         # DBI
         dbiAuthnLevel       => $integer,
         dbiAuthChain        => $testNotDefined,
@@ -2195,6 +2208,7 @@ sub defaultConf {
         openIdAuthnLevel    => 1,
         facebookAuthnLevel  => 1,
         twitterAuthnLevel   => 1,
+        webIDAuthnLevel     => 1,
         apacheAuthnLevel    => 4,
         nullAuthnLevel      => 0,
         slaveAuthnLevel     => 2,
@@ -2313,7 +2327,7 @@ sub globalTests {
 
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
-            foreach my $type (qw(Facebook Google OpenID SAML)) {
+            foreach my $type (qw(Facebook Google OpenID SAML WebID)) {
                 return ( 0,
 "\"$type\" can not be used as user database without using \"$type\" for authentication"
                   )

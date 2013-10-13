@@ -30,6 +30,7 @@ var helpCh={
 	'authSlave':'/pages/documentation/current/authslave.html',
 	'authSSL':'/pages/documentation/current/authssl.html',
 	'authTwitter':'/pages/documentation/current/authtwitter.html',
+	'authWebID':'/pages/documentation/current/authwebid.html',
 	'authYubikey':'/pages/documentation/current/authyubikey.html',
 	'cookies':'/pages/documentation/current/ssocookie.html',
 	'customfunctions':'/pages/documentation/current/customfunctions.html',
@@ -625,6 +626,7 @@ function formateSelectAuth(id,value){
 		'Slave=Slave',
 		'SSL=SSL',
 		'Twitter=Twitter',
+		'WebID=WebID',
 		'Yubikey=Yubikey'
 		],value);
 }
@@ -677,7 +679,8 @@ function formateSelectUser(id,value){
 		'Proxy=Proxy',
 		'Remote=Remote',
 		'SAML=SAML v2',
-		'Slave=Slave'
+		'Slave=Slave',
+		'WebID=WebID'
 		],value);
 }
 function passworddbParams(id) {
