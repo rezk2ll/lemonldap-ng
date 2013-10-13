@@ -12,8 +12,6 @@ use Lemonldap::NG::Portal::AuthNull;
 our $VERSION = '1.2.3';
 our @ISA     = qw(Lemonldap::NG::Portal::AuthNull);
 
-*authenticate = *extractFormInfo;
-
 ## @apmethod int authInit()
 # Check if SSL environment variables are set.
 # @return Lemonldap::NG::Portal constant
@@ -33,8 +31,13 @@ sub extractFormInfo {
         $self->{user} = $user;
         return PE_OK;
     }
+    elsif ( $ENV{SSL_CLIENT_S_DN} ) {
+        $self->_sub( 'userError',
+            "$self->{SSLVar} was not found in user certificate" );
+        return PE_BADCERTIFICATE;
+    }
     else {
-        $self->_sub( 'userError', "No certificate found for " . $self->ipAddr );
+        $self->_sub( 'userError', 'No certificate found' );
         return PE_CERTIFICATEREQUIRED;
     }
 }
@@ -49,6 +52,13 @@ sub setAuthSessionInfo {
     $self->{sessionInfo}->{'_user'} = $self->{'user'};
 
     $self->{sessionInfo}->{authenticationLevel} = $self->{SSLAuthnLevel};
+    PE_OK;
+}
+
+## @apmethod int authenticate()
+# Does nothing, job is done in extractFormInfo()
+# @return Lemonldap::NG::Portal constant
+sub authenticate {
     PE_OK;
 }
 
