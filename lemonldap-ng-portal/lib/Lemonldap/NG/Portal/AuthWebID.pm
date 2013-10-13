@@ -1,10 +1,6 @@
 ##@file
 # WebID authentication backend file
 
-#############################
-### EXPERIMENTAL MODULE ! ###
-#############################
-
 ##@class
 # WebID authentication backend class
 package Lemonldap::NG::Portal::AuthWebID;
