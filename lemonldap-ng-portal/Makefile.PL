@@ -54,6 +54,7 @@ WriteMakefile(
         'HTML::Template'        => 0,
         'Lemonldap::NG::Common' => '1.3.0',
         'Net::LDAP'             => 0.38,
+        'Regexp::Assemble'      => 0,
         'Unicode::String'       => 0,
     },
     (

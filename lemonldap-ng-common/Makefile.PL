@@ -48,7 +48,6 @@ WriteMakefile(
         'DBI'                  => 0,
         'File::Basename'       => 0,
         'Net::CIDR::Lite'      => 0,
-        'Regexp::Assemble'     => 0,
         'SOAP::Lite'           => 0,
         'Storable'             => 0,
     },    # e.g., Module::Name => 1.1
