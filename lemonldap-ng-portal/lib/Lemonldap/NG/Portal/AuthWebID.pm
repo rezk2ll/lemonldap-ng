@@ -88,3 +88,87 @@ sub extractFormInfo {
 }
 1;
 __END__
+
+=head1 NAME
+
+=encoding utf8
+
+Lemonldap::NG::Portal::AuthWebID - Perl extension for building Lemonldap::NG
+compatible portals with WebID authentication.
+
+=head1 SYNOPSIS
+
+  use Lemonldap::NG::Portal::SharedConf;
+  my $portal = new Lemonldap::NG::Portal::Simple(
+         configStorage     => {...}, # See Lemonldap::NG::Portal
+         authentication    => 'WebID',
+    );
+
+  if($portal->process()) {
+    # Write here the menu with CGI methods. This page is displayed ONLY IF
+    # the user was not redirected here.
+    print $portal->header('text/html; charset=utf8'); # DON'T FORGET THIS (see CGI(3))
+    print "...";
+  }
+  else {
+    # If the user enters here, IT MEANS THAT CAS REDIRECTION DOES NOT WORK
+    print $portal->header('text/html; charset=utf8'); # DON'T FORGET THIS (see CGI(3))
+    print "<html><body><h1>Unable to work</h1>";
+    print "This server isn't well configured. Contact your administrator.";
+    print "</body></html>";
+  }
+
+=head1 DESCRIPTION
+
+This library just overload few methods of Lemonldap::NG::Portal::Simple to use
+WebID authentication mechanism.
+
+See L<Lemonldap::NG::Portal::Simple> for usage and other methods.
+
+=head1 SEE ALSO
+
+L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::Simple>,
+L<http://lemonldap-ng.org/>, L<Web::ID>
+L<http://www.w3.org/wiki/WebID>
+
+=head1 AUTHOR
+
+=over
+
+=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<http://jira.ow2.org>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+
+=head1 COPYRIGHT AND LICENSE
+
+=over
+
+=item Copyright (C) 2013 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=back
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut
+
