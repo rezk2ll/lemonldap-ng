@@ -148,6 +148,7 @@ example/skins/pastel/yubikeyform.tpl
 example/soapconfigtest.pl
 example/soaptest.pl
 lib/Lemonldap/NG/Portal.pm
+lib/Lemonldap/NG/Portal/_Browser.pm
 lib/Lemonldap/NG/Portal/_CAS.pm
 lib/Lemonldap/NG/Portal/_Choice.pm
 lib/Lemonldap/NG/Portal/_DBI.pm
@@ -182,6 +183,7 @@ lib/Lemonldap/NG/Portal/AuthSAML.pm
 lib/Lemonldap/NG/Portal/AuthSlave.pm
 lib/Lemonldap/NG/Portal/AuthSSL.pm
 lib/Lemonldap/NG/Portal/AuthTwitter.pm
+lib/Lemonldap/NG/Portal/AuthWebID.pm
 lib/Lemonldap/NG/Portal/AuthYubikey.pm
 lib/Lemonldap/NG/Portal/CDA.pm
 lib/Lemonldap/NG/Portal/CDC.pm
@@ -216,6 +218,7 @@ lib/Lemonldap/NG/Portal/UserDBProxy.pm
 lib/Lemonldap/NG/Portal/UserDBRemote.pm
 lib/Lemonldap/NG/Portal/UserDBSAML.pm
 lib/Lemonldap/NG/Portal/UserDBSlave.pm
+lib/Lemonldap/NG/Portal/UserDBWebID.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
