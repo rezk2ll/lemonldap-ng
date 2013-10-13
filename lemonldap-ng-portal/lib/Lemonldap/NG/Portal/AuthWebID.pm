@@ -60,22 +60,30 @@ sub authInit {
 sub extractFormInfo {
     my $self = shift;
 
-    # 1. Verify SSL exchange using AuthSSL::extractFormInfo()
-    my $tmp = $self->SUPER::extractFormInfo(@_);
-    return $tmp unless ( $tmp eq PE_OK );
+    # 1. Verify SSL exchange
+    unless ( $ENV{SSL_CLIENT_S_DN} ) {
+        $self->_sub( 'userError', "No certificate found for " . $self->ipAddr );
+        $self->lmLog(
+'No certificate found, be sure to have "SSLOptions +StdEnvVars +ExportCertData" for .pl files',
+            'debug'
+        );
+        return PE_CERTIFICATEREQUIRED;
+    }
 
     # 2. Return an error if SSL_CLIENT_CERT is not set
-    $self->abort( 'SSL configuration error',
-        'Unable to get client certificate, SSL_CLIENT_CERT is not set' )
-      unless ( $ENV{SSL_CLIENT_CERT} );
+    $self->abort(
+        'SSL configuration error',
+        'Unable to get client certificate, SSL_CLIENT_CERT is not set<br/>'
+          . 'Be sure to have "SSLOptions +StdEnvVars +ExportCertData" for .pl files'
+    ) unless ( $ENV{SSL_CLIENT_CERT} );
 
     # 3. Verify that certificate is WebID compliant
-    return PE_BADCREDENTIALS
-      unless ( $self->{webid} =
-        Web::ID->new( certificate => $ENV{SSL_CLIENT_CERT} ) );
-
-    # WebID URI is used as user field
-    $self->{user} = $self->{webid}->uri;
+    #    NB: WebID URI is used as user field
+    eval {
+        $self->{webid} = Web::ID->new( certificate => $ENV{SSL_CLIENT_CERT} )
+          and $self->{user} = $self->{webid}->uri->as_string;
+    };
+    return PE_BADCERTIFICATE if ( $@ or not( $self->{user} ) );
 
     # 4. Verify that FOAF host is in white list
     return PE_BADPARTNER unless ( $self->{user} =~ $reWebIDWhitelist );
