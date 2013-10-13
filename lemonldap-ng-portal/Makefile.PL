@@ -26,6 +26,7 @@ WriteMakefile(
             'SOAP::Lite'                  => 0,
             'String::Random'              => 0,
             'URI'                         => 0,
+            'Web::ID'                     => 0,
             'XML::LibXSLT'                => 0,
             'XML::LibXML'                 => 0,
             'XML::Simple'                 => 0,
