@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::AuthNull;
 
-our $VERSION = '1.2.3';
+our $VERSION = '1.3.0';
 our @ISA     = qw(Lemonldap::NG::Portal::AuthNull);
 
 ## @apmethod int authInit()
@@ -56,10 +56,12 @@ sub setAuthSessionInfo {
 }
 
 ## @apmethod int authenticate()
-# Does nothing, job is done in extractFormInfo()
+# Just test that SSL authentication has been done: job is done in
+# extractFormInfo()
 # @return Lemonldap::NG::Portal constant
 sub authenticate {
-    PE_OK;
+    my $self = shift;
+    return $ENV{ $self->{SSLVar} } ? PE_OK : PE_ERROR;
 }
 
 ## @method string getDisplayType
