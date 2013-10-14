@@ -24,6 +24,8 @@ BEGIN {
     };
 }
 
+*getDisplayType = *Lemonldap::NG::Portal::AuthSSL::getDisplayType;
+
 ## @apmethod int authInit()
 # @return Lemonldap::NG::Portal constant
 sub authInit {
@@ -90,6 +92,7 @@ sub extractFormInfo {
     # 6. OK, access granted
     return PE_OK;
 }
+
 1;
 __END__
 
