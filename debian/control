@@ -157,6 +157,8 @@ Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libapache-session-browseable-perl,
             liblwp-protocol-https-perl | libwww-perl (<< 6)
 Pre-Depends: debconf
+Provides: liblemonldap-ng-cli-perl
+Conflicts: liblemonldap-ng-cli-perl
 Description: Lemonldap::NG manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
