@@ -24,7 +24,7 @@
 
 	<div id="<TMPL_VAR NAME="key">">
 
-	<form action="<TMPL_VAR NAME="url">" method="post" class="login">
+	<form action="<TMPL_VAR NAME="url">" method="post" class="login <TMPL_VAR NAME="module">">
 
 	<!-- Hidden fields -->
 	<TMPL_VAR NAME="HIDDEN_INPUTS">
@@ -132,7 +132,7 @@
 
 	<TMPL_IF NAME="DISPLAY_LOGO_FORM">
 
-	<form action="#" method="post" class="login">
+	<form action="#" method="post" class="login <TMPL_VAR NAME="module">">
 	<!-- Hidden fields -->
 	<TMPL_VAR NAME="HIDDEN_INPUTS">
 	<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />

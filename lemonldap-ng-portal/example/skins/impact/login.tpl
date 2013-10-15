@@ -37,7 +37,7 @@
 
       <div id="<TMPL_VAR NAME="key">">
 
-      <form action="<TMPL_VAR NAME="url">" method="post" class="login">
+      <form action="<TMPL_VAR NAME="url">" method="post" class="login <TMPL_IF NAME="module"><TMPL_VAR NAME="module"></TMPL_IF>">
 
       <!-- Hidden fields -->
       <TMPL_VAR NAME="HIDDEN_INPUTS">
@@ -204,7 +204,7 @@
       <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
       <hr class="solid" />
       <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
-      <form action="#" method="post" class="login">
+      <form action="#" method="post" class="login <TMPL_VAR NAME="module">">
         <TMPL_VAR NAME="HIDDEN_INPUTS">
         <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
         <input type="hidden" name="timezone" />

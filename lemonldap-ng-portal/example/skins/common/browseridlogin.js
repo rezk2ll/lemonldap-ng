@@ -7,7 +7,7 @@ $(document).ready(function(){
 
 	// Intercept submit the first time
 	var intercepted = 0;
-	$("form.login").submit(function( event ) {
+	$("form.BrowserID").submit(function( event ) {
 		if (!intercepted) {
 			event.preventDefault();
 			intercepted = 1;
