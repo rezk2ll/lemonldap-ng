@@ -250,12 +250,7 @@ sub lmSetApacheUser {
 # @return string
 sub regRemoteIp {
     my ( $class, $str ) = splice @_;
-    if ( MP() == 2 ) {
-        $str =~ s/\$datas->\{ip\}/\$apacheRequest->connection->remote_ip/g;
-    }
-    else {
-        $str =~ s/\$datas->\{ip\}/\$apacheRequest->remote_ip/g;
-    }
+    $str =~ s/\$datas->\{ip\}/ip()/g;
     return $str;
 }
 
@@ -922,7 +917,12 @@ sub retrieveSession {
 
 sub ip {
     my $ip = 'unknownIP';
-    eval { $ip = $apacheRequest->connection->remote_ip };
+    eval {
+        $ip =
+          ( MP() == 2 )
+          ? $apacheRequest->connection->remote_ip
+          : $apacheRequest->remote_ip;
+    };
     return $ip;
 }
 
