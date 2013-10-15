@@ -76,7 +76,7 @@ sub run ($$) {
             # Add client IP as X-Forwarded-For IP in SOAP request
             my $xheader = lmHeaderIn( $apacheRequest, 'X-Forwarded-For' );
             $xheader .= ", " if ($xheader);
-            $xheader .= $apacheRequest->connection->remote_ip;
+            $xheader .= $class->ip();
             my $soapHeaders =
               HTTP::Headers->new( "X-Forwarded-For" => $xheader );
 
@@ -121,8 +121,8 @@ sub run ($$) {
                 # The cookie isn't yet available
                 $class->lmLog( "The cookie $cv isn't yet available: $@",
                     'info' );
-                $class->updateStatus( $apacheRequest->connection->remote_ip,
-                    $apacheRequest->uri, 'EXPIRED' );
+                $class->updateStatus( $class->ip(), $apacheRequest->uri,
+                    'EXPIRED' );
                 return $class->goToPortal($uri);
             }
             $datas->{$_} = $h{$_} foreach ( keys %h );

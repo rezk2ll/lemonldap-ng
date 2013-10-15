@@ -445,7 +445,8 @@ sub safe {
     # Share objets with Safe jail
     $safe->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
-    $safe->share( '&encode_base64', '$datas', '&portal', '$apacheRequest', @t );
+    $safe->share( '&encode_base64', '&ip', '$datas', '&portal',
+        '$apacheRequest', @t );
 
     return $safe;
 }
@@ -852,12 +853,8 @@ sub encodeUrl {
 # @return Apache2::Const::REDIRECT
 sub goToPortal {
     my ( $class, $url, $arg ) = splice @_;
-    $class->lmLog(
-        "Redirect "
-          . $apacheRequest->connection->remote_ip
-          . " to portal (url was $url)",
-        'debug'
-    );
+    $class->lmLog( "Redirect " . $class->ip() . " to portal (url was $url)",
+        'debug' );
     my $urlc_init = $class->encodeUrl($url);
     lmSetHeaderOut( $apacheRequest,
             'Location' => $class->portal()
@@ -921,6 +918,12 @@ sub retrieveSession {
     untie %h;
     $datasUpdate = time();
     return 1;
+}
+
+sub ip {
+    my $ip = 'unknownIP';
+    eval { $ip = $apacheRequest->connection->remote_ip };
+    return $ip;
 }
 
 # MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
@@ -988,8 +991,7 @@ sub run ($$) {
 
     if ( $protection == SKIP ) {
         $class->lmLog( "Access control skipped", "debug" );
-        $class->updateStatus( $apacheRequest->connection->remote_ip,
-            $apacheRequest->uri, 'SKIP' );
+        $class->updateStatus( $class->ip(), $apacheRequest->uri, 'SKIP' );
         $class->hideCookie;
         $class->cleanHeaders;
         return OK;
@@ -1039,8 +1041,7 @@ sub run ($$) {
 
         # Ignore unprotected URIs
         $class->lmLog( "No valid session but unprotected access", "debug" );
-        $class->updateStatus( $apacheRequest->connection->remote_ip,
-            $apacheRequest->uri, 'UNPROTECT' );
+        $class->updateStatus( $class->ip(), $apacheRequest->uri, 'UNPROTECT' );
         $class->hideCookie;
         $class->cleanHeaders;
         return OK;
@@ -1053,8 +1054,8 @@ sub run ($$) {
           unless ($id);
 
         # if the cookie was fetched, a log is sent by retrieveSession()
-        $class->updateStatus( $apacheRequest->connection->remote_ip,
-            $apacheRequest->uri, $id ? 'EXPIRED' : 'REDIRECT' );
+        $class->updateStatus( $class->ip(), $apacheRequest->uri,
+            $id ? 'EXPIRED' : 'REDIRECT' );
         return $class->goToPortal($uri_orig);
     }
 }
@@ -1716,8 +1717,7 @@ sub unlog ($$) {
     my $class;
     ( $class, $apacheRequest ) = splice @_;
     $class->localUnlog;
-    $class->updateStatus( $apacheRequest->connection->remote_ip,
-        $apacheRequest->uri, 'LOGOUT' );
+    $class->updateStatus( $class->ip(), $apacheRequest->uri, 'LOGOUT' );
     return $class->goToPortal( '/', 'logout=1' );
 }
 
