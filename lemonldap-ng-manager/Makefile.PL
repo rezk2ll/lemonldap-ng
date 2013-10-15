@@ -11,8 +11,9 @@ WriteMakefile(
         'IO::String' => 0,
         'Test::Pod'  => 1.00,
     },
-    META_MERGE => { 'LWP::Protocol::https' => 0, },
-    PREREQ_PM  => {
+    META_MERGE       => { 'LWP::Protocol::https' => 0, },
+    MIN_PERL_VERSION => '5.010',
+    PREREQ_PM        => {
         'Convert::PEM'           => 0,
         'Crypt::OpenSSL::RSA'    => 0,
         'HTML::Template'         => 0,

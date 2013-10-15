@@ -6,6 +6,7 @@ use strict;
 use Lemonldap::NG::Common::Conf;
 
 use feature qw (switch);
+use 5.010;
 
 # Constants
 
