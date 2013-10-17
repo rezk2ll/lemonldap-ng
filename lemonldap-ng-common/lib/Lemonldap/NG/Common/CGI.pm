@@ -237,7 +237,7 @@ sub abort {
     my $t2html = $t2;
     $t2html =~ s#\n#<br />#g;
 
-    print $cgi->header( -type => 'text/html; charset=utf8', );
+    print $cgi->header( -type => 'text/html; charset=utf-8', );
     print $cgi->start_html(
         -title    => $t1,
         -encoding => 'utf8',

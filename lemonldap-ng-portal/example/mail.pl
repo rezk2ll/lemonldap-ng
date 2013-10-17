@@ -134,6 +134,6 @@ if ( my $customParams = $portal->getCustomTemplateParameters() ) {
     }
 }
 
-print $portal->header('text/html; charset=utf8');
+print $portal->header('text/html; charset=utf-8');
 print $template->output;
 
