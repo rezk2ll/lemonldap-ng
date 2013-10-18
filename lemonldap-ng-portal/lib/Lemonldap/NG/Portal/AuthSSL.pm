@@ -61,7 +61,9 @@ sub setAuthSessionInfo {
 # @return Lemonldap::NG::Portal constant
 sub authenticate {
     my $self = shift;
-    return $ENV{ $self->{SSLVar} } ? PE_OK : PE_ERROR;
+    return ( $self->{user} and $ENV{ $self->{SSLVar} } )
+      ? PE_OK
+      : $self->extractFormInfo();
 }
 
 ## @method string getDisplayType
