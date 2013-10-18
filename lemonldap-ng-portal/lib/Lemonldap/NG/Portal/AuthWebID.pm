@@ -88,9 +88,19 @@ sub extractFormInfo {
 
     # 5. Verify FOAF document
     return PE_BADCREDENTIALS unless ( $self->{_webid}->valid() );
+    $self->{_webIdAuthDone}++;
 
     # 6. OK, access granted
     return PE_OK;
+}
+
+## @apmethod int authenticate()
+# Just test that authentication has been done: job is done in
+# extractFormInfo() else launch extractFormInfo()
+# @return Lemonldap::NG::Portal constant
+sub authenticate {
+    my $self = shift;
+    return $self->{_webIdAuthDone} ? PE_OK : $self->{extractFormInfo};
 }
 
 1;
