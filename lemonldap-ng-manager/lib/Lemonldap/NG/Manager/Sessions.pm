@@ -97,7 +97,7 @@ sub new {
     # Case else : store tree type choosen to use it later in tree()
     $self->{_tree} = grep /^(?:full(?:uid|ip)|ipclasses|doubleIp)$/,
       $self->param();
-    #
+
     # default display : list by uid
     $self->{_tree} ||= 'list';
     $self->lmLog( "Session display type: $self->{_tree}", 'debug' );
