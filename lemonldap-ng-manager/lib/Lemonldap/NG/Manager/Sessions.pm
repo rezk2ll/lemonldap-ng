@@ -85,24 +85,22 @@ sub new {
       unless defined $self->{hiddenAttributes};
 
     # Now we're ready to display sessions. Choose display type
-    foreach my $k ( $self->param() ) {
-
-        # Case ajax request : execute corresponding sub and quit
-        if ( grep { $_ eq $k } qw(delete session id uidByIp uid letter p) ) {
-            print $self->header( -type => 'text/html;charset=utf-8' );
-            print $self->$k( $self->param($k) );
-            $self->quit();
-        }
-
-        # Case else : store tree type choosen to use it later in tree()
-        elsif ( grep { $_ eq $k } qw(doubleIp fullip fulluid ipclasses) ) {
-            $self->{_tree} = $k;
-            last;
-        }
+    if ( my ($k) = grep /^(?:uid(?:ByIp)?|session|delete|letter|id|p)$/,
+        $self->param() )
+    {
+        print $self->header( -type => 'text/html;charset=utf-8' );
+        $self->lmLog( "Ajax request: $k", 'debug' );
+        print $self->$k( $self->param($k) );
+        $self->quit();
     }
 
+    # Case else : store tree type choosen to use it later in tree()
+    $self->{_tree} = grep /^(?:full(?:uid|ip)|ipclasses|doubleIp)$/,
+      $self->param();
+    #
     # default display : list by uid
     $self->{_tree} ||= 'list';
+    $self->lmLog( "Session display type: $self->{_tree}", 'debug' );
 
     return $self;
 }
