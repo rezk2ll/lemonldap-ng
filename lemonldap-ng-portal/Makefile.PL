@@ -9,7 +9,6 @@ WriteMakefile(
     LICENSE      => 'gpl',
     META_MERGE   => {
         'recommends' => {
-            'Apache::Session::Browseable' => 0,
             'AuthCAS'                     => 0,
             'DBI'                         => 0,
             'Glib'                        => 0,

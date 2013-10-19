@@ -30,11 +30,12 @@ WriteMakefile(
     },
     META_MERGE => {
         'recommends' => {
-            'HTML::Template' => 0,
-            'HTTP::Message'  => 0,
-            'Net::LDAP'      => 0,
-            'XML::Simple'    => 0,
-            'XML::LibXML'    => 0,
+            'Apache::Session::Browseable' => 0,
+            'HTML::Template'              => 0,
+            'HTTP::Message'               => 0,
+            'Net::LDAP'                   => 0,
+            'XML::Simple'                 => 0,
+            'XML::LibXML'                 => 0,
         },
     },
     PREREQ_PM => {
