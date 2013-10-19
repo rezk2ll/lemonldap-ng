@@ -84,7 +84,8 @@ sub new {
     $self->{hiddenAttributes} = "_password"
       unless defined $self->{hiddenAttributes};
 
-    # Now we're ready to display sessions. Choose display type
+    # Now we're ready to display sessions. Choose display type:
+    # case AJAX request
     if ( my ($k) = grep /^(?:uid(?:ByIp)?|session|delete|letter|id|p)$/,
         $self->param() )
     {
@@ -94,7 +95,7 @@ sub new {
         $self->quit();
     }
 
-    # Case else : store tree type choosen to use it later in tree()
+    # case else : store tree type choosen to use it later in tree()
     $self->{_tree} = grep /^(?:full(?:uid|ip)|ipclasses|doubleIp)$/,
       $self->param();
 
