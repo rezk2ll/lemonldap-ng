@@ -96,7 +96,7 @@ sub new {
     }
 
     # case else : store tree type choosen to use it later in tree()
-    $self->{_tree} = grep /^(?:full(?:uid|ip)|ipclasses|doubleIp)$/,
+    ( $self->{_tree} ) = grep /^(?:full(?:uid|ip)|ipclasses|doubleIp)$/,
       $self->param();
 
     # default display : list by uid
@@ -655,7 +655,8 @@ sub uidByIp {
     my ( $byUser, $res );
     $res = Lemonldap::NG::Common::Apache::Session->searchOn(
         $self->{globalStorageOptions},
-        $self->{ipField}, $ip );
+        $self->{ipField}, $ip, '_httpSessionType', $whatToTrace,
+        $self->{ipField}, 'startTime' );
     while ( my ( $id, $entry ) = each(%$res) ) {
         next if ( $entry->{_httpSessionType} );
         if ( $entry->{ $self->{ipField} } eq $ip ) {
@@ -687,7 +688,8 @@ sub uid {
     my ( $byIp, $res );
     $res = Lemonldap::NG::Common::Apache::Session->searchOn(
         $self->{globalStorageOptions},
-        $whatToTrace, $uid );
+        $whatToTrace, $uid, '_httpSessionType', $whatToTrace,
+        $self->{ipField}, 'startTime' );
     while ( my ( $id, $entry ) = each(%$res) ) {
         next if ( $entry->{_httpSessionType} );
         if ( $entry->{$whatToTrace} eq $uid ) {
