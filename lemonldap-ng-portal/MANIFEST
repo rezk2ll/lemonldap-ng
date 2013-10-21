@@ -1,6 +1,7 @@
 Changes
 example/cas.pl
 example/cdc.pl
+example/index.fcgi
 example/index.pl
 example/index_simple.pl
 example/index_skin.pl

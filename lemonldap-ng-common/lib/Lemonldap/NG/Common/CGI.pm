@@ -18,8 +18,8 @@ use Net::CIDR::Lite;
 #parameter syslog Indicates syslog facility for logging user actions
 
 our $VERSION = '1.2.3';
-
-use base qw(CGI);
+our $_SUPER;
+our @ISA;
 
 BEGIN {
     if ( exists $ENV{MOD_PERL} ) {
@@ -33,6 +33,18 @@ BEGIN {
     else {
         eval 'use constant MP => 0;';
     }
+    $_SUPER = 'CGI';
+    @ISA    = ('CGI');
+}
+
+sub import {
+    my $pkg = shift;
+    if ( $pkg eq __PACKAGE__ and @_ and $_[0] eq "fast" ) {
+        eval 'use CGI::Fast';
+        die($@) if ($@);
+        unshift @ISA, 'CGI::Fast';
+        $_SUPER = 'CGI::Fast';
+    }
 }
 
 ## @cmethod Lemonldap::NG::Common::CGI new(@p)
@@ -42,7 +54,7 @@ BEGIN {
 # @return new Lemonldap::NG::Common::CGI object
 sub new {
     my $class = shift;
-    my $self  = CGI->new(@_);
+    my $self = $_SUPER->new(@_) or return undef;
     $self->{_prm} = {};
     my @tmp = $self->param();
     foreach (@tmp) {
@@ -209,7 +221,7 @@ sub header_public {
             $ref = timegm( $6, $5, $4, $1, $m, $3 );
             if ( $ref == $date ) {
                 print $self->SUPER::header( -status => '304 Not Modified', @_ );
-                exit;
+                $self->quit();
             }
         }
     }
@@ -260,7 +272,7 @@ a {
     print
       '<center><a href="http://lemonldap-ng.org">LemonLDAP::NG</a></center>';
     print STDERR ( ref($self) || $self ) . " error: $t1, $t2\n";
-    exit;
+    $self->quit();
 }
 
 ##@method private void startSyslog()
@@ -404,7 +416,13 @@ sub session_template {
 ## @method private void quit()
 # Simply exit.
 sub quit {
-    exit;
+    my $self = shift;
+    if ( $_SUPER eq 'CGI::Fast' ) {
+        next LMAUTH;
+    }
+    else {
+        exit;
+    }
 }
 
 ##@method string ipAddr()

@@ -233,7 +233,7 @@ sub new {
     binmode( STDOUT, ":utf8" );
     my $class = shift;
     return $class if ( ref($class) );
-    my $self = $class->SUPER::new();
+    my $self = $class->SUPER::new() or return undef;
 
     # Reinit _url
     $self->{_url} = '';
