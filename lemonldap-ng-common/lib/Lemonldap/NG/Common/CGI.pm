@@ -39,7 +39,7 @@ BEGIN {
 
 sub import {
     my $pkg = shift;
-    if ( $pkg eq __PACKAGE__ and @_ and $_[0] eq "fast" ) {
+    if ( $pkg eq __PACKAGE__ and @_ and $_[0] eq "fastcgi" ) {
         eval 'use CGI::Fast';
         die($@) if ($@);
         unshift @ISA, 'CGI::Fast';

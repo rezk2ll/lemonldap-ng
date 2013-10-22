@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Lemonldap::NG::Common::CGI qw(fast);
+use Lemonldap::NG::Common::CGI qw(fastcgi);
 use Lemonldap::NG::Portal::SharedConf;
 use HTML::Template;
 use strict;
