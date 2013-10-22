@@ -44,7 +44,7 @@
 There are two ways to configure <acronym title="Single Sign On">SSO</acronym> with Sympa:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Auto login</strong>: a special <acronym title="LemonLDAP::NG">LL::NG</acronym> Handler will generate Sympa cookie</div>
+<li class="level1"><div class="li"> <strong>Auto login</strong>: a special <acronym title="LemonLDAP::NG">LL::NG</acronym> Handler will generate Sympa cookie (for Sympa 5 only !)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Magic authentication</strong>: a special <acronym title="Single Sign On">SSO</acronym> <acronym title="Uniform Resource Locator">URL</acronym> is protected by <acronym title="LemonLDAP::NG">LL::NG</acronym>, Sympa will display a button for users who wants to use this feature.</div>
 </li>
@@ -56,9 +56,9 @@ There are two ways to configure <acronym title="Single Sign On">SSO</acronym> wi
 How to choose? Here are some advices:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Auto login</strong> is very secure, as Sympa cookie is only exchanged between <acronym title="LemonLDAP::NG">LL::NG</acronym> Handler and Sympa (user cannot see it)</div>
+<li class="level1"><div class="li"> <strong>Auto login</strong> is very secure for Sympa 5, as Sympa cookie is only exchanged between <acronym title="LemonLDAP::NG">LL::NG</acronym> Handler and Sympa (user cannot see it)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Magic authentication</strong> allows to mix standard Sympa authentication and <acronym title="Single Sign On">SSO</acronym> </div>
+<li class="level1"><div class="li"> <strong>Magic authentication</strong> allows to mix standard Sympa authentication and <acronym title="Single Sign On">SSO</acronym></div>
 </li>
 </ul>
 
@@ -68,7 +68,7 @@ How to choose? Here are some advices:
 </p>
 
 </div>
-<!-- SECTION "Presentation" [59-668] -->
+<!-- SECTION "Presentation" [59-700] -->
 <h2><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
@@ -78,7 +78,7 @@ Choose one of the following method:
 </p>
 
 </div>
-<!-- SECTION "Configuration" [669-732] -->
+<!-- SECTION "Configuration" [701-764] -->
 <h3><a name="auto_login" id="auto_login">Auto login</a></h3>
 <div class="level3">
 
@@ -133,7 +133,7 @@ Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- SECTION "Auto login" [733-1691] -->
+<!-- SECTION "Auto login" [765-1723] -->
 <h3><a name="magic_authentication" id="magic_authentication">Magic authentication</a></h3>
 <div class="level3">
 
@@ -157,13 +157,28 @@ And fill it:
 </p>
 <pre class="file">
 generic_sso
-        service_name                   LemonLDAP::NG
+        service_name                   Centralized auth service
         service_id                          lemonldapng
         email_http_header            HTTP_MAIL
         netid_http_header             HTTP_AUTH_USER
         internal_email_by_netid    1
         logout_url                          http://sympa.example.com/wws/logout
 </pre>
+
+<p>
+<p><div class="notetip">
+You can also disable internal Sympa authentication to keep only LemonLDAP::NG by removing user_table paragraph
+</p>
+
+<p>
+Note that if you use FastCGI, you must restart Apache to enable changes.
+
+</div></p>
+</p>
+
+<p>
+You can also use &lt;portal&gt;?logout=1 as logout_url to remove LemonLDAP::NG session when “disconnect” is chosen.
+</p>
 
 </div>
 
@@ -186,7 +201,7 @@ Configure Sympa virtual host like other <a href="../../../documentation/1.3/conf
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 <p>
-<p><div class="notetip">The location <acronym title="Uniform Resource Locator">URL</acronym> is based on the <code>service_id</code> defined in Sympa apache configuration.
+<p><div class="notetip">The location <acronym title="Uniform Resource Locator">URL</acronym> end is based on the <code>service_id</code> defined in Sympa apache configuration.
 </div></p>
 </p>
 
@@ -211,4 +226,4 @@ Configure the <a href="../../../documentation/1.3/writingrulesand_headers.html#r
 </ul>
 
 </div>
-<!-- SECTION "Magic authentication" [1692-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Magic authentication" [1724-] --></div><!-- closes <div class="dokuwiki export">-->

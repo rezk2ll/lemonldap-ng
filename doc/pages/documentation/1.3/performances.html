@@ -129,8 +129,22 @@ The portal is the biggest component of Lemonldap::NG. It is recommended to use M
     PerlResponseHandler ModPerl::Registry
 &lt;/<span class="kw3">Files</span>&gt;</pre>
 
+<p>
+You can also use a Fast <acronym title="Common Gateway Interface">CGI</acronym> server using index.fcgi given in portal examples.
+</p>
+
 </div>
-<!-- SECTION "General performances" [2411-2754] -->
+<!-- SECTION "General performances" [2411-2833] -->
+<h3><a name="configuration_access" id="configuration_access">Configuration access</a></h3>
+<div class="level3">
+
+<p>
+
+If you set <code>useLocalConf</code> to 1 in lemonldap-ng.ini (section [Portal]), the portal will use only a cached configuration. To refresh it, you have to set an handler on the same server to use the refresh mechanism or to restart the server after each configuration change.
+</p>
+
+</div>
+<!-- SECTION "Configuration access" [2834-3136] -->
 <h3><a name="starting_performances" id="starting_performances">Starting performances</a></h3>
 <div class="level3">
 
@@ -150,7 +164,7 @@ To make the portal start faster when the server is relaunched, add those lines i
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- SECTION "Starting performances" [2755-3330] -->
+<!-- SECTION "Starting performances" [3137-3712] -->
 <h3><a name="apachesession_performances" id="apachesession_performances">Apache::Session performances</a></h3>
 <div class="level3">
 
@@ -222,7 +236,7 @@ Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </p>
 
 </div>
-<!-- SECTION "Apache::Session performances" [3331-5600] -->
+<!-- SECTION "Apache::Session performances" [3713-5982] -->
 <h3><a name="ldap_performances" id="ldap_performances">LDAP performances</a></h3>
 <div class="level3">
 
@@ -272,4 +286,4 @@ ldapgroups -&gt; memberOf
 </p>
 
 </div>
-<!-- SECTION "LDAP performances" [5601-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "LDAP performances" [5983-] --></div><!-- closes <div class="dokuwiki export">-->
