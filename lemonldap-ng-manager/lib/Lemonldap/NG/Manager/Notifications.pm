@@ -81,7 +81,7 @@ sub new {
 
     # Else use the configuration backend
     else {
-        (%$tmp) = ( %{ $conf } );
+        (%$tmp) = (%$conf);
         $class->abort( "notificationStorage not defined",
             "This parameter is required to use notification system" )
           unless ( ref($tmp) );

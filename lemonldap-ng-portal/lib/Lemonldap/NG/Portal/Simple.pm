@@ -761,12 +761,7 @@ sub buildHiddenForm {
           if $self->checkXSSAttack( $_, $self->{portalHiddenFormValues}->{$_} );
 
         # Build hidden input HTML code
-        $val .=
-            '<input type="hidden" name="' 
-          . $_ 
-          . '" id="' 
-          . $_
-          . '" value="'
+        $val .= qq{<input type="hidden" name="$_" id="$_" value="}
           . $self->{portalHiddenFormValues}->{$_} . '" />';
     }
 
