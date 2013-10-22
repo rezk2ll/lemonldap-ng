@@ -57,7 +57,7 @@
 		<table>
 	        <TMPL_IF NAME="module">
 		<tr class="authLogo"><td>
-		<img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" />
+		<img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" alt="" />
 		</td></tr>
 		</TMPL_IF>
 
@@ -143,7 +143,7 @@
 		<table>
 	        <TMPL_IF NAME="module">
 		<tr class="authLogo"><td>
-		<img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" />
+		<img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" alt="" />
 		</td></tr>
 		</TMPL_IF>
 
@@ -169,6 +169,7 @@
 		</div></td></tr>
 
         </table>
+	</form>
 
         </TMPL_IF>
 
