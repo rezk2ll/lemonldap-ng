@@ -4,40 +4,6 @@
 ## @class
 # LDAP storage methods for notifications
 
-# Use case: copy and adapt the following lines into lemonldap-ng.ini
-#
-# [Portal]
-#
-# notification = 1
-# notificationStorage = LDAP
-# notificationStorageOptions = {             \
-#    'ldapServer'            => 'ldap://directory.com:389',\
-#    'ldapBindDN'            => 'cn=lemonldap,ou=people,dc=directory,dc=com',\
-#    'ldapBindPassword'      => 'secret',\
-#    'notifBase'             => 'ou=notifications,ou=websso,dc=directory,dc=com',\
-#    'notificationWildcard'  => 'allusers',\
-#    'fileNameSeparator'     => '_',\
-# }
-#
-# [...]
-#
-# [Manager]
-#
-# notificationStorage = LDAP
-# notificationStorageOptions = {             \
-#    'ldapServer'            => 'ldap://directory.com:389',\
-#    'ldapBindDN'            => 'cn=lemonldap,ou=people,dc=directory,dc=com',\
-#    'ldapBindPassword'      => 'secret',\
-#    'notifBase'             => 'ou=notifications,ou=websso,dc=directory,dc=com',\
-#    'notificationWildcard'  => 'allusers',\
-#    'fileNameSeparator'     => '_',\
-# }
-#
-#
-# possible other notificationStorageOptions are:
-# caFile, caPath, ldapPort
-# notifBase can be replaced by ldapConfBase
-
 package Lemonldap::NG::Common::Notification::LDAP;
 
 use strict;
@@ -46,19 +12,13 @@ use MIME::Base64;
 use Net::LDAP;
 use utf8;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.3.0';
 
 ## @method boolean prereq()
 # Check if LDAP parameters are set.
 # @return true if all is OK
 sub prereq {
     my $self = shift;
-    if ( $self->{notifBase} ) {
-        $self->{ldapConfBase} = $self->{notifBase};
-    }
-    else {
-        $self->{ldapConfBase} =~ s/[^,]+,/ou=notifications,/;
-    }
     unless ( $self->{ldapServer} ) {
         $self->lmLog( '"ldapServer" is required in LDAP notification type',
             'error' );
@@ -66,6 +26,10 @@ sub prereq {
           '"ldapServer" is required in LDAP notification type';
         return 0;
     }
+    if ( $self->{table} ) {
+        $self->{ldapConfBase} =~ s/^\w+=\w+(,.*)$/ou=$self->{table}$1/;
+    }
+
     $self->lmLog( 'Warning: "ldapBindDN" parameter is not set', 'warn' )
       unless ( $self->{ldapBindDN} );
     1;
@@ -153,7 +117,7 @@ sub delete {
     $ts[4]++;
     return _modify(
         $self,
-        '(&(objectClass=applicationProcess)(description={uid}'
+        '(&(objectClass=applicationProcess)(description={uid}' 
           . $u
           . ')(description={ref}'
           . $r
@@ -181,7 +145,7 @@ sub purge {
     my $clause;
     $clause = '(description={done}*)' unless ($force);
     return _delete( $self,
-            '(&(objectClass=applicationProcess)(description={uid}'
+            '(&(objectClass=applicationProcess)(description={uid}' 
           . $u
           . ')(description={ref}'
           . $r

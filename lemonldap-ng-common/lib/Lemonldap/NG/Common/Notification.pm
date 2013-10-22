@@ -35,7 +35,7 @@ sub new {
       unless ( $self->{type} =~ /::/ );
     eval "require $self->{type}";
     if ($@) {
-        $msg = "Error: unknown storage type $type";
+        $msg = "Error: unknown storage type $type ($@)";
         return 0;
     }
     unless ( $self->_prereq ) {

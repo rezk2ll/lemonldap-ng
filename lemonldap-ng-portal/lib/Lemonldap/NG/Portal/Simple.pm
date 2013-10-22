@@ -433,9 +433,9 @@ sub new {
             $tmp->{type} =~ s/.*:://;
             $tmp->{type} =~ s/(CDBI|RDBI)/DBI/;    # CDBI/RDBI are DBI
 
-            # If type not File or DBI, abort
-            $self->abort("Only File or DBI supported for Notifications")
-              unless $tmp->{type} =~ /^(File|DBI)$/;
+            # If type not File, DBI or LDAP, abort
+            $self->abort("Only File, DBI or LDAP supported for Notifications")
+              unless $tmp->{type} =~ /^(File|DBI|LDAP)$/;
 
             # Force table name
             $tmp->{table} = 'notifications';
@@ -762,9 +762,9 @@ sub buildHiddenForm {
 
         # Build hidden input HTML code
         $val .=
-            '<input type="hidden" name="'
-          . $_
-          . '" id="'
+            '<input type="hidden" name="' 
+          . $_ 
+          . '" id="' 
           . $_
           . '" value="'
           . $self->{portalHiddenFormValues}->{$_} . '" />';

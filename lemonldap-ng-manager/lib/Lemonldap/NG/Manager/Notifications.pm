@@ -81,7 +81,7 @@ sub new {
 
     # Else use the configuration backend
     else {
-        (%$tmp) = ( %{ $self->{lmConf} } );
+        (%$tmp) = ( %{ $conf } );
         $class->abort( "notificationStorage not defined",
             "This parameter is required to use notification system" )
           unless ( ref($tmp) );
@@ -91,8 +91,8 @@ sub new {
         $tmp->{type} =~ s/(CBDI|RDBI)/DBI/;    # CDBI/RDBI are DBI
 
         # If type not File or DBI, abort
-        $class->abort("Only File or DBI supported for Notifications")
-          unless $tmp->{type} =~ /^(File|DBI)$/;
+        $class->abort("Only File, DBI or LDAP supported for Notifications")
+          unless $tmp->{type} =~ /^(File|DBI|LDAP)$/;
 
         # Force table name
         $tmp->{table} = 'notifications';
