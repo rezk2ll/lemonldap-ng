@@ -63,7 +63,7 @@
 
 		<!-- Name and link (mandatory) -->
 		<h4 class="appname <TMPL_VAR NAME="appid">">
-		<a href="<TMPL_VAR NAME="appuri">" alt="<TMPL_VAR NAME="appname">">
+		<a href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="appname">">
 		<TMPL_VAR NAME="appname">
 		</a>
 		</h4>
@@ -107,7 +107,7 @@
 
 		<!-- Name and link (mandatory) -->
 		<h4 class="appname <TMPL_VAR NAME="appid">">
-		<a href="<TMPL_VAR NAME="appuri">" alt="<TMPL_VAR NAME="appname">">
+		<a href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="appname">">
 		<TMPL_VAR NAME="appname">
 		</a>
 		</h4>
@@ -155,7 +155,7 @@
 		<TMPL_VAR NAME="SUCCESS_LOGIN">
                 </TMPL_IF>
 		<TMPL_IF NAME="FAILED_LOGIN">
-		<h3><lang en="Last failed logins" fr="Derni&egrave;res connexions refusées" /></h3>
+		<h3><lang en="Last failed logins" fr="Derni&egrave;res connexions refus&eacute;es" /></h3>
 		<TMPL_VAR NAME="FAILED_LOGIN">
 		</TMPL_IF>
                 </div>
