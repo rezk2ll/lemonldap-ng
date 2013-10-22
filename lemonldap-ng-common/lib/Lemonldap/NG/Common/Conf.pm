@@ -138,7 +138,7 @@ sub saveConf {
 # @return Lemonldap::NG configuration
 sub getConf {
     my ( $self, $args ) = @_;
-    if (    $args->{'local'}
+    if (    $args->{local}
         and ref( $self->{refLocalStorage} )
         and my $res = $self->{refLocalStorage}->get('conf') )
     {

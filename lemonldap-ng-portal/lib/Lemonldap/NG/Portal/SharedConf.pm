@@ -48,18 +48,37 @@ sub getConf {
         $self->{configStorage} = $args{configStorage};
     }
 
-    my $num = $self->__lmConf->lastCfg;
+    my $num;
+    my $lConf;
+
+    # If useLocalConf is set, just verify that current conf has the same number
+    # than local cache one
+    if ( $confCached and $confCached->{useLocalConf} ) {
+        $lConf = $self->__lmConf->getLocalConf(PORTALSECTION);
+        eval { $num = $lConf->{cfgNum} };
+    }
+    else {
+        $num = $self->__lmConf->lastCfg();
+    }
 
     # Reload configuration
     unless ( $confCached and $confCached->{cfgNum} == $num ) {
-        $self->lmLog( "Cached configuration too old, get configuration $num",
-            'debug' );
-        my $gConf = $self->__lmConf->getConf( { cfgNum => $num } );
-        my $lConf = $self->__lmConf->getLocalConf(PORTALSECTION);
+        $lConf ||= $self->__lmConf->getLocalConf(PORTALSECTION);
+        my $prm = { cfgNum => $num };
+        if ( $args{useLocalConf} or $lConf->{useLocalConf} ) {
+            $prm->{local} = 1;
+            $self->lmLog( 'useLocalConf set to true', 'debug' );
+        }
+        my $gConf = $self->__lmConf->getConf($prm);
         unless ( ref($gConf) and ref($lConf) ) {
             $self->abort( "Cannot get configuration",
                 $Lemonldap::NG::Common::Conf::msg );
         }
+        $self->lmLog(
+            "Cached configuration too old, get configuration $num "
+              . "($Lemonldap::NG::Common::Conf::msg)",
+            'debug'
+        );
         %$confCached = ( %$gConf, %$lConf );
 
         my $re = Regexp::Assemble->new();
