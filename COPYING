@@ -25,6 +25,11 @@ License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
  (http://snipplr.com/view/29434/)
 
+Files: lemonldap-ng-portal/example/skins/common/BrowserID.png
+Copyright: Mozilla
+Licence: non-free
+Comment: Downloaded from https://github.com/mozilla/persona.org/blob/master/public/images/persona-logo-wordmark.png
+
 Files: lemonldap-ng-portal/example/skins/common/Google.png lemonldap-ng-portal/example/skins/common/Facebook.png
 Copyright: http://tempest.deviantart.com/
 License: CC-3
