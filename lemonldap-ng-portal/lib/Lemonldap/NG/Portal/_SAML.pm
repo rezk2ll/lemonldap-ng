@@ -1178,8 +1178,13 @@ sub storeRelayState {
     # Session type
     $samlSessionInfo->{_type} = "relaystate";
 
-    # UNIX time
-    $samlSessionInfo->{_utime} = time();
+    # Set _utime for session autoremove
+    # Use default session timeout and relayState session timeout to compute it
+    my $time                  = time();
+    my $timeout               = $self->{timeout};
+    my $samlRelayStateTimeout = $self->{samlRelayStateTimeout} || $timeout;
+
+    $samlSessionInfo->{_utime} = $time + ( $samlRelayStateTimeout - $timeout );
 
     # Store infos in relaystate session
     foreach ( keys %$infos ) {

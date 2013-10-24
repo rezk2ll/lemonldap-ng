@@ -626,6 +626,8 @@ sub setDefaultValues {
       unless defined $self->{samlAuthnContextMapTLSClient};
     $self->{samlAuthnContextMapKerberos} = 4
       unless defined $self->{samlAuthnContextMapKerberos};
+    $self->{samlRelayStateTimeout} = 600
+      unless defined $self->{samlRelayStateTimeout};
 
     # CAS
     $self->{casStorage} ||= $self->{globalStorage};

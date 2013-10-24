@@ -515,6 +515,7 @@ sub en {
         samlCommonDomainCookieDomain     => 'Common domain',
         samlCommonDomainCookieReader     => 'Reader URL',
         samlCommonDomainCookieWriter     => 'Writer URL',
+        samlRelayStateTimeout            => 'RelayState session timeout',
     };
 }
 
@@ -1005,6 +1006,7 @@ sub fr {
         samlCommonDomainCookieDomain     => 'Domaine commun',
         samlCommonDomainCookieReader     => 'URL de lecture',
         samlCommonDomainCookieWriter     => 'URL d\'écriture',
+        samlRelayStateTimeout => 'Durée de vie d\'une session RelayState',
     };
 }
 
