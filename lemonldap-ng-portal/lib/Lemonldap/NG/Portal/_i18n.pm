@@ -9,6 +9,7 @@ package Lemonldap::NG::Portal::_i18n;
 
 use AutoLoader qw(AUTOLOAD);
 our $VERSION = '1.3.0';
+use utf8;
 
 ## @fn string msg(int msg, array ref lang)
 # @param $msg Number of msg to resolve
@@ -33,7 +34,9 @@ sub error {
     $error = 0 if ( $error < 0 );
     foreach ( @{$lang} ) {
         if ( __PACKAGE__->can("error_$_") ) {
-            return &{"error_$_"}->[$error];
+            my $tmp = &{"error_$_"}->[$error];
+            utf8::encode($tmp) if ( $ENV{FCGI_ROLE} );
+            return $tmp;
         }
     }
     return &error_en->[$error];
