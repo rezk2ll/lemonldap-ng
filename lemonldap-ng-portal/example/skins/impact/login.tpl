@@ -209,8 +209,6 @@
         <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
         <input type="hidden" name="timezone" />
 
-        <h3><lang en="Authentication with" fr="Authentification avec"/> <TMPL_VAR NAME="module"></h3>
-
         <table>
                 <TMPL_IF NAME="module">
                 <tr class="authLogo"><td>

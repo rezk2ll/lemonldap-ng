@@ -52,7 +52,7 @@
 
         <TMPL_IF NAME="logo">
 
-		<h3><lang en="Authentication with" fr="Authentification avec"/> <TMPL_VAR NAME="module"></h3>		
+                <h3><lang en="Please enter your credentials" fr="Merci de vous authentifier"/></h3>
 
 		<table>
 	        <TMPL_IF NAME="module">
@@ -138,7 +138,7 @@
 	<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
 	<input type="hidden" name="timezone" />
 
-	<h3><lang en="Authentication with" fr="Authentification avec"/> <TMPL_VAR NAME="module"></h3>		
+                <h3><lang en="Please enter your credentials" fr="Merci de vous authentifier"/></h3>
 
 		<table>
 	        <TMPL_IF NAME="module">
