@@ -35,7 +35,7 @@ License: Apache-2.0
 
 Files: lemonldap-ng-portal/example/skins/common/BrowserID.png
 Copyright: 2013, Xavier Guimard <x.guimard@free.fr>
-Licence: CC-3
+License: CC-3
 Comment: created using images of YellowIcon and Innerer Schweinehund
  (http://findicons.com/icon/168665/firefox?id=292029 and
   http://commons.wikimedia.org/wiki/File:Mail-closed.svg)
@@ -79,7 +79,6 @@ Copyright: Jan Jarfalk - http://www.unwrongest.com
 License: MIT
 
 Files: *jquery-ui*.js *jquery-ui*.css */ui-lightness/images/*
-Homepage: http://jqueryui.com/
 Copyright: 2008 Paul Bakaus (ui.jquery.com)
  Brandon Aaron
  David Bolter
@@ -105,6 +104,7 @@ Copyright: 2008 Paul Bakaus (ui.jquery.com)
  Richard D. Worth (rdworth.org)
  Jörn Zaefferer (bassistance.de)
 License: GPL-2 or MIT
+Homepage: http://jqueryui.com/
 
 Files: lemonldap-ng-portal/example/skins/common/apps/*
  lemonldap-ng-manager/example/skins/default/images/apps-logos/*
@@ -147,7 +147,7 @@ Files: debian/*
 Copyright: 2004-2013, Xavier Guimard <x.guimard@free.fr>
 License: GPL-2+
 
-License: Apache 2.0
+License: Apache-2.0
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
@@ -169,57 +169,6 @@ License: Artistic
  .
  On Debian systems, the complete text of the Artistic License can be
  found in `/usr/share/common-licenses/Artistic'.
-
-License: GPL-1+
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 1, or (at your option)
- any later version.
- .
- On Debian systems, the complete text of version 1 of the GNU General
- Public License can be found in `/usr/share/common-licenses/GPL-1'.
-
-License: GPL-2
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; version 2.
- .
- On Debian systems, the complete text of version 2 of the GNU General
- Public License can be found in `/usr/share/common-licenses/GPL-2'
-
-License: GPL-2+
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2, or (at your option)
- any later version.
- .
- On Debian systems, the complete text of version 2 of the GNU General
- Public License can be found in `/usr/share/common-licenses/GPL-2'
-
-License: GPL-3+
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 3, or (at your option)
- any later version.
- .
- On Debian systems, the complete text of version 3 of the GNU General
- Public License can be found in `/usr/share/common-licenses/GPL-2'
-
-License: LGPL-2
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as
- published by the Free Software Foundation; version 2.
- .
- On Debian systems, the full text of the GNU Lesser General Public License
- version 2 can be found in the file `/usr/share/common-licenses/LGPL-2'.
-
-License: LGPL-3
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU Lesser General Public License as
- published by the Free Software Foundation; version 3.
- .
- On Debian systems, the full text of the GNU Lesser General Public License
- version 3 can be found in the file `/usr/share/common-licenses/LGPL-3'.
 
 License: BSD-3-Clause
  Copyright (c) The Regents of the University of California.
@@ -247,25 +196,6 @@ License: BSD-3-Clause
  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  SUCH DAMAGE.
-
-License: MIT
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- .
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
- .
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
 
 License: CC-3
  CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE LEGAL
@@ -555,6 +485,76 @@ License: CC-3
  .
  Creative Commons may be contacted at http://creativecommons.org/.
 
+License: GPL-1+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 1, or (at your option)
+ any later version.
+ .
+ On Debian systems, the complete text of version 1 of the GNU General
+ Public License can be found in `/usr/share/common-licenses/GPL-1'.
+
+License: GPL-2
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; version 2.
+ .
+ On Debian systems, the complete text of version 2 of the GNU General
+ Public License can be found in `/usr/share/common-licenses/GPL-2'
+
+License: GPL-2+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2, or (at your option)
+ any later version.
+ .
+ On Debian systems, the complete text of version 2 of the GNU General
+ Public License can be found in `/usr/share/common-licenses/GPL-2'
+
+License: GPL-3+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 3, or (at your option)
+ any later version.
+ .
+ On Debian systems, the complete text of version 3 of the GNU General
+ Public License can be found in `/usr/share/common-licenses/GPL-2'
+
+License: LGPL-2
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; version 2.
+ .
+ On Debian systems, the full text of the GNU Lesser General Public License
+ version 2 can be found in the file `/usr/share/common-licenses/LGPL-2'.
+
+License: LGPL-3
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; version 3.
+ .
+ On Debian systems, the full text of the GNU Lesser General Public License
+ version 3 can be found in the file `/usr/share/common-licenses/LGPL-3'.
+
+License: MIT
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
 License: W3C
  Copyright © 1994-2001 World Wide Web Consortium, (Massachusetts Institute of
  Technology, Institut National de Recherche en Informatique et en Automatique,
@@ -596,4 +596,3 @@ License: W3C
  publicity pertaining to the software without specific, written prior
  permission. Title to copyright in this software and any associated
  documentation will at all times remain with copyright holders.
-
