@@ -25,6 +25,13 @@ License: GPL-2+
 Comment: a little part of it comes from JQuery-UI examples
  (http://snipplr.com/view/29434/)
 
+Files: lemonldap-ng-portal/example/skins/common/BrowserID.png
+Copyright: 2013, Xavier Guimard <x.guimard@free.fr>
+Licence: CC-3
+Comment: created using images of YellowIcon and Innerer Schweinehund
+ (http://findicons.com/icon/168665/firefox?id=292029 and
+  http://commons.wikimedia.org/wiki/File:Mail-closed.svg)
+
 Files: lemonldap-ng-portal/example/skins/common/Google.png lemonldap-ng-portal/example/skins/common/Facebook.png
 Copyright: http://tempest.deviantart.com/
 License: CC-3
