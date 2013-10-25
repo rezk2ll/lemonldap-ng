@@ -22,12 +22,12 @@
 
 
 
-<h1><a name="fast_cgi_support" id="fast_cgi_support">Fast CGI support</a></h1>
+<h1><a name="fastcgi_support" id="fastcgi_support">FastCGI support</a></h1>
 <div class="level1">
 
 <p>
 
-<acronym title="LemonLDAP::NG">LL::NG</acronym> CGIs <em>(Portal, Manager,…)</em> can be used under a <a href="http://en.wikipedia.org/wiki/FastCGI" class="urlextern" title="http://en.wikipedia.org/wiki/FastCGI"  rel="nofollow">Fast CGI system</a> very easily. You just have to load <acronym title="LemonLDAP::NG">LL::NG</acronym> fast <acronym title="Common Gateway Interface">CGI</acronym> support and write a loop in the <acronym title="Common Gateway Interface">CGI</acronym>. Example with the portal:
+<acronym title="LemonLDAP::NG">LL::NG</acronym> CGIs <em>(Portal, Manager,…)</em> can be used under a <a href="http://en.wikipedia.org/wiki/FastCGI" class="urlextern" title="http://en.wikipedia.org/wiki/FastCGI"  rel="nofollow">FastCGI system</a> very easily. You just have to load <acronym title="LemonLDAP::NG">LL::NG</acronym> FastCGI support and write a loop in the <acronym title="Common Gateway Interface">CGI</acronym>. Example with the portal:
 
 <pre class="code perl"><span class="co1">#!/usr/bin/perl</span>
 <b>use Lemonldap::NG::Common::CGI qw(fastcgi);</b>
