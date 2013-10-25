@@ -522,6 +522,22 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>$uid =~ /^coudot$/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083220Z" changeid="xavier">
+        <seg>$uid =~ /^coudot$/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>$uid eq &quot;coudot&quot;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T123105Z" changeid="xavier">
+        <seg>$uid eq &quot;coudot&quot;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>$uid eq “root”</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095718Z" changeid="xavier">
@@ -10802,6 +10818,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;IP&lt;/a0&gt; of the user (can be the X Forwarded For &lt;a1&gt;IP&lt;/a1&gt; if trusted proxies are configured)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083815Z" changeid="xavier">
+        <seg>&lt;a0&gt;IP&lt;/a0&gt; de l'utilisateur (peut être celle de l'en-tête X-Forwarded-For si des proxies agréés ont été configurés)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Identity provider&lt;/a0&gt;: how forward user identity</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T073347Z" changeid="guimard">
@@ -11134,6 +11158,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T075427Z" changeid="xavier">
         <seg>Les CGI de &lt;a0&gt;LL::NG&lt;/a0&gt; &lt;e1&gt;(portail, manager,…)&lt;/e1&gt; peuvent être utilisées facilement dans un environnement &lt;a2&gt;Fast CGI&lt;/a2&gt; very easily.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; CGIs &lt;e1&gt;(Portal, Manager,…)&lt;/e1&gt; can be used under a &lt;a2&gt;FastCGI system&lt;/a2&gt; very easily.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T123007Z" changeid="xavier">
+        <seg>Les CGI de &lt;a0&gt;LL::NG&lt;/a0&gt; &lt;e1&gt;(portail, manager,…)&lt;/e1&gt; peuvent être utilisées facilement dans un environnement &lt;a2&gt;Fast CGI&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11526,6 +11558,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070302Z" changeid="guimard">
         <seg>Paramètre &lt;a0&gt;LWP::UserAgent&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Lanyrd&lt;/a0&gt; &lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131754Z" changeid="xavier">
+        <seg>&lt;a0&gt;Lanyrd&lt;/a0&gt; &lt;br1/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12066,6 +12106,46 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 3005 -- Update notifications doc (#LEMONLDAP-457)&lt;/a0&gt; by clement_oudot (2013/10/22 18:31)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131833Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 3005 -- Update notifications doc (#LEMONLDAP-457)&lt;/a0&gt; by clement_oudot (2013/10/22 18:31)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 3006 -- Some cosmetics changes&lt;/a0&gt; by guimard (2013/10/22 18:48)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131831Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 3006 -- Some cosmetics changes&lt;/a0&gt; by guimard (2013/10/22 18:48)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 3007 -- Correct XHTML: * needs to be XHTML transitional to ...&lt;/a0&gt; by guimard (2013/10/22 20:14)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131830Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 3007 -- Correct XHTML: * needs to be XHTML transitional to ...&lt;/a0&gt; by guimard (2013/10/22 20:14)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 3008 -- Correct XHTML: * alt is not an attribute of ...&lt;/a0&gt; by guimard (2013/10/22 20:27)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131829Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 3008 -- Correct XHTML: * alt is not an attribute of ...&lt;/a0&gt; by guimard (2013/10/22 20:27)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 3009 -- Add a specific timeout parameter for SAML RelayState sessions (#LEMONLDAP-524)&lt;/a0&gt; by clement_oudot (2013/10/24 14:35)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131826Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 3009 -- Add a specific timeout parameter for SAML RelayState sessions (#LEMONLDAP-524)&lt;/a0&gt; by clement_oudot (2013/10/24 14:35)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Rules&lt;/a0&gt; are applied in alphabetical order (comment and regular expression).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095523Z" changeid="xavier">
@@ -12078,6 +12158,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;SAML&lt;/a0&gt; 2.0 / Shibboleth</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; IDP preselection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T082751Z" changeid="xavier">
+        <seg>Préselection d'IDP &lt;a0&gt;SAML&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12118,6 +12206,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>La configuration du service &lt;a0&gt;SAML&lt;/a0&gt; est une étape commune pour configurer &lt;a1&gt;LL::NG&lt;/a1&gt; comme &lt;a2&gt;fournisseur de service SAML (SP)&lt;/a2&gt; ou &lt;a3&gt;fournisseur d'identité SAML (IDP)&lt;/a3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; token</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131306Z" changeid="xavier">
+        <seg>Jeton &lt;a0&gt;SAML&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12418,6 +12514,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; used before being redirected to the portal (empty if portal was used as entry point)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084018Z" changeid="xavier">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; utilisée avant d'être redirigé vers le portail (vide si le portail a été utilisé comme point d'entrée)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;User database&lt;/a0&gt;: where collect user information</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T073254Z" changeid="guimard">
@@ -12558,6 +12662,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111517Z" changeid="xavier">
         <seg>&lt;a0&gt;error&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;exported variables&lt;/a0&gt; collected from UserDB backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T082923Z" changeid="xavier">
+        <seg>les &lt;a0&gt;variables exportées&lt;/a0&gt; collectées depuis le backend utilisateur</seg>
       </tuv>
     </tu>
     <tu>
@@ -13388,6 +13500,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a28&gt;status&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;Dailymotion&lt;/a2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131755Z" changeid="xavier">
+        <seg>&lt;a2&gt;Dailymotion&lt;/a2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -22086,6 +22206,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Access rule in virtual host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T082728Z" changeid="xavier">
+        <seg>Règle d'accès à un hôte virtuel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Access rule: &lt;c0&gt;$groups =~ /\badministrators\b/&lt;/c0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23718,6 +23846,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Below are documented internal variables.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083317Z" changeid="xavier">
+        <seg>Ci-dessous sont documentées les variables internes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Berlin</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103737Z" changeid="xavier">
@@ -24518,6 +24654,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Choice done if &lt;a0&gt;authentication choice&lt;/a0&gt; was used</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083638Z" changeid="xavier">
+        <seg>Choix de l'utilisateur si le &lt;a0&gt;backend d'authentification Choice&lt;/a0&gt; a été utilisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Choice modules</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24874,6 +25018,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094451Z" changeid="xavier">
         <seg>La configuration se trouve dans /etc/lemonldap-ng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configuration key of IDP used for authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131256Z" changeid="xavier">
+        <seg>Clef de configuration de l'IDP utilisé pour l'authentification</seg>
       </tuv>
     </tu>
     <tu>
@@ -25290,6 +25442,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153639Z" changeid="xavier">
         <seg>Connecteurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Consent to share attribute &lt;e0&gt;id&lt;/e0&gt; trough OpenID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131702Z" changeid="xavier">
+        <seg>Consentement de partage de l'attribut &lt;e0&gt;id&lt;/e0&gt; via OpenID</seg>
       </tuv>
     </tu>
     <tu>
@@ -25718,6 +25878,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Data around the authentication process.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084037Z" changeid="xavier">
+        <seg>Données concernant le processus d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Data concerning the first connection to the portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083707Z" changeid="xavier">
+        <seg>Donnée concernant la première connexion au portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Data related to &lt;a0&gt;SAML&lt;/a0&gt; protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084458Z" changeid="xavier">
+        <seg>Donnée relative au protocole &lt;a0&gt;SAML&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Data should not contains accents or special characters, as &lt;a0&gt;HTTP&lt;/a0&gt; protocol only allow &lt;a1&gt;ASCII&lt;/a1&gt; values in header (but depending on the &lt;a2&gt;HTTP&lt;/a2&gt; server, you can use &lt;a3&gt;ISO&lt;/a3&gt; encoded values)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T112715Z" changeid="xavier">
@@ -25798,10 +25982,66 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Datas around the authentication process.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T123136Z" changeid="xavier">
+        <seg>Données concernant le processus d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Datas concerning the first connection to the portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T123131Z" changeid="xavier">
+        <seg>Données concernant la première connexion au portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Datas related to &lt;a0&gt;SAML&lt;/a0&gt; protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T123142Z" changeid="xavier">
+        <seg>Donnée relative au protocole &lt;a0&gt;SAML&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Date of birth</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083112Z" changeid="xavier">
         <seg>Date of birth</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Date of session creation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084353Z" changeid="xavier">
+        <seg>Date et heure (timestamp) de la création de la session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Date of session last modification</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084415Z" changeid="xavier">
+        <seg>Date de la dernière modification de la session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Date of validation of the notification &lt;e0&gt;id&lt;/e0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131730Z" changeid="xavier">
+        <seg>Date de validation de la notification &lt;e0&gt;id&lt;/e0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Dates</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084239Z" changeid="xavier">
+        <seg>Dates</seg>
       </tuv>
     </tu>
     <tu>
@@ -26106,6 +26346,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173146Z" changeid="xavier">
         <seg>Distinguished Name</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Distinguished name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131613Z" changeid="xavier">
+        <seg>Nom distinct (distinguished name)</seg>
       </tuv>
     </tu>
     <tu>
@@ -27197,6 +27445,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
         <seg>Fast CGI support</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T075202Z" changeid="xavier">
+        <seg>Support FastCGI</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>FastCGI support</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T122941Z" changeid="xavier">
         <seg>Support FastCGI</seg>
       </tuv>
     </tu>
@@ -28558,6 +28814,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111526Z" changeid="xavier">
         <seg>H</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>HASH of login success and failures</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131453Z" changeid="xavier">
+        <seg>Table des connexion réussies ou échouées</seg>
       </tuv>
     </tu>
     <tu>
@@ -30570,6 +30834,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Issuer module (can be multivalued)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083436Z" changeid="xavier">
+        <seg>Module fournisseur (peut-être multivalué)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Issuer rewrite rules (requires &lt;c0&gt;mod_rewrite&lt;/c0&gt;):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064327Z" changeid="xavier">
@@ -31090,6 +31362,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Key</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083409Z" changeid="xavier">
+        <seg>Clef</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Key (&lt;a0&gt;LL::NG&lt;/a0&gt; name)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T161957Z" changeid="xavier">
@@ -31398,6 +31678,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Lasso</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lasso identity dump</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131340Z" changeid="xavier">
+        <seg>Dump de l'identité Lasso</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lasso session dump</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131327Z" changeid="xavier">
+        <seg>Dump de session Lasso</seg>
       </tuv>
     </tu>
     <tu>
@@ -32856,6 +33152,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Modules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083319Z" changeid="xavier">
+        <seg>Modules</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Montreal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103608Z" changeid="xavier">
@@ -33042,6 +33346,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Nom</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Name of IDP used for authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131230Z" changeid="xavier">
+        <seg>Nom de l'IDP utilisé pour l'authentification</seg>
       </tuv>
     </tu>
     <tu>
@@ -33870,6 +34182,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Only with UserDB &lt;a0&gt;LDAP&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131519Z" changeid="xavier">
+        <seg>Seulement avec une base utilisateurs &lt;a0&gt;LDAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Open SSO session</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -34002,6 +34322,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194915Z" changeid="xavier">
         <seg>Oracle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Order of categories in the menu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131749Z" changeid="xavier">
+        <seg>Ordre des catégories dans le menu</seg>
       </tuv>
     </tu>
     <tu>
@@ -34290,6 +34618,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T072647Z" changeid="guimard">
         <seg>Formulaire de changement de mot-de-passe (dans le menu)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password found from login process (only if &lt;a0&gt;password store in session&lt;/a0&gt; is configured)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084236Z" changeid="xavier">
+        <seg>Mot-de-passe fournit lors du processus d'authentification (seulement si le &lt;a0&gt;stockage du mot-de-passe dans la sessions&lt;/a0&gt; est configuré)</seg>
       </tuv>
     </tu>
     <tu>
@@ -35530,6 +35866,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T091930Z" changeid="xavier">
         <seg>Enregistrer le fournisseur de service dans LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Register what module was used for authentication, user data, password, …</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083404Z" changeid="xavier">
+        <seg>Enregistre les modules utilisés pour l'authentification, les données utilisateurs, les mots-de-passe, …</seg>
       </tuv>
     </tu>
     <tu>
@@ -37010,6 +37354,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Session identifier (carried in cookie)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084102Z" changeid="xavier">
+        <seg>Identifiant de session (porté par le cookie)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Session key containing email address</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063511Z" changeid="guimard">
@@ -37782,6 +38134,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20121014T063601Z" changeid="xavier">
         <seg>Version stable (1.2.2)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Stable version (1.2.5)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131815Z" changeid="xavier">
+        <seg>Version stable (1.2.5)</seg>
       </tuv>
     </tu>
     <tu>
@@ -40622,10 +40982,34 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Timestamp of last authentication time</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084438Z" changeid="xavier">
+        <seg>Date et heure (timestamp) de la dernière authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Timestamp of session creation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084331Z" changeid="xavier">
+        <seg>Date et heure (timestamp) de la création de la session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Timezone</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083115Z" changeid="xavier">
         <seg>Timezone</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Timezone of the user, set with javascript from standard login form (will be empty if other authentication methods are used)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083927Z" changeid="xavier">
+        <seg>Timezone de l'utilisateur, renseignée par javascript dans le formulaire d'authentification (vide si une autres méthode d'authentification est utilisée)</seg>
       </tuv>
     </tu>
     <tu>
@@ -41666,6 +42050,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Use the name you want but this values in the value field.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T122845Z" changeid="xavier">
+        <seg>Utiliser n'importe quel nom de clef mais ces valeurs dans le champ « valeur ».</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Use with caution.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T063813Z" changeid="xavier">
@@ -41730,6 +42122,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>User choice done if &lt;a0&gt;authentication choice&lt;/a0&gt; was used</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T123120Z" changeid="xavier">
+        <seg>Choix de l'utilisateur si le &lt;a0&gt;backend d'authentification Choice&lt;/a0&gt; a été utilisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User clicks on the link &lt;c0&gt;Reset my password&lt;/c0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145518Z" changeid="guimard">
@@ -41750,6 +42150,14 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145638Z" changeid="guimard">
         <seg>L'utilisateur entre son adresse de courriel (ou une autre information) dans le formulaire de réinitialisation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User found from login process</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084127Z" changeid="xavier">
+        <seg>Nom d'utilisateur trouvé dans le processus d'authentification</seg>
       </tuv>
     </tu>
     <tu>
@@ -42126,6 +42534,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Variables are stored in the user session.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T082814Z" changeid="xavier">
+        <seg>Les variables sont stockées dans la session utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Variables can be used in rules and headers.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T082457Z" changeid="xavier">
@@ -42218,6 +42634,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Nous appelons “base de données” un dispositif dans lequel nous pouvons lire et écrire des données.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>We can distinguish several kind of variables:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T082829Z" changeid="xavier">
+        <seg>On peut distinguer plusieurs types de variables :</seg>
       </tuv>
     </tu>
     <tu>
@@ -42482,6 +42906,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Lorsque vous validez les fichiers &lt;a0&gt;OmegaT&lt;/a0&gt; dans le dépôt svn, n'y poussez pas les fichiers de sauvegarde.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>When you know the key of the variable, you just have to prefix it with the dollar sign to use it, for example to test if &lt;c0&gt;uid&lt;/c0&gt; variable match &lt;c1&gt;coudot&lt;/c1&gt; :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083219Z" changeid="xavier">
+        <seg>En connaissant le nom d'une variable, il suffit de la préfixer avec un signe dollar pour l'utiliser, par exemple pour savoir si la variable &lt;c0&gt;uid&lt;/c0&gt; contient &lt;c1&gt;coudot&lt;/c1&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -42958,6 +43390,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also use a FastCGI server using index.fcgi given in portal examples.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T123056Z" changeid="xavier">
+        <seg>On peut utiliser un serveur FastCGI en utilisant le fichier index.fcgi disponible dans les exemples du portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also use caFile and caPath parameters.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184733Z" changeid="xavier">
@@ -43242,6 +43682,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouver importer un certificat contenant la clef publique au lieu d'une simple clef.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can inspect a user session with the sessions explorer (in Manager)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083259Z" changeid="xavier">
+        <seg>On peut inspecter une session utilisateur avec l'explorateur de sessions (accessible depuis le manager)</seg>
       </tuv>
     </tu>
     <tu>
@@ -43730,6 +44178,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous avez simplement à créer les fonctions error_zz et msg_zz &lt;e1&gt;(où zz est votre code international, exemple: “fr” pour le français)&lt;/e1&gt; en copiant error_en et msg_en.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You just have to load &lt;a3&gt;LL::NG&lt;/a3&gt; FastCGI support and write a loop in the &lt;a4&gt;CGI&lt;/a4&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T123034Z" changeid="xavier">
+        <seg>Il suffit de charger le support FastCGI de &lt;a3&gt;LL::NG&lt;/a3&gt; et d'écrire une boucle dans la &lt;a4&gt;CGI&lt;/a4&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -44572,10 +45028,114 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>_auth</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083410Z" changeid="xavier">
+        <seg>_auth</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_authChoice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083437Z" changeid="xavier">
+        <seg>_authChoice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>_cas_id</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20130203T113819Z" changeid="xavier">
         <seg>_cas_id</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_idp</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T123147Z" changeid="xavier">
+        <seg>_idp</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_idpConfKey</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131231Z" changeid="xavier">
+        <seg>_idpConfKey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_issuerDB</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083415Z" changeid="xavier">
+        <seg>_issuerDB</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_lassoIdentityDump</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131328Z" changeid="xavier">
+        <seg>_lassoIdentityDump</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_lassoSessionDump</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131309Z" changeid="xavier">
+        <seg>_lassoSessionDump</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_lastAuthnUTime</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084417Z" changeid="xavier">
+        <seg>_lastAuthnUTime</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_notification_&lt;e0&gt;id&lt;/e0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131341Z" changeid="xavier">
+        <seg>_notification_&lt;e0&gt;id&lt;/e0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_openid_&lt;e0&gt;id&lt;/e0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131615Z" changeid="xavier">
+        <seg>_openid_&lt;e0&gt;id&lt;/e0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084149Z" changeid="xavier">
+        <seg>_password</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_passwordDB</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083413Z" changeid="xavier">
+        <seg>_passwordDB</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_samlToken</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131258Z" changeid="xavier">
+        <seg>_samlToken</seg>
       </tuv>
     </tu>
     <tu>
@@ -44592,6 +45152,54 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T064525Z" changeid="xavier">
         <seg>_saml_id ProxyID _nameID _assert_id _art_id _session_id</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_session_id</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084040Z" changeid="xavier">
+        <seg>_session_id</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_timezone</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083817Z" changeid="xavier">
+        <seg>_timezone</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_url</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083936Z" changeid="xavier">
+        <seg>_url</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084104Z" changeid="xavier">
+        <seg>_user</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_userDB</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083412Z" changeid="xavier">
+        <seg>_userDB</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_utime</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084240Z" changeid="xavier">
+        <seg>_utime</seg>
       </tuv>
     </tu>
     <tu>
@@ -44954,6 +45562,14 @@ apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>appsListOrder</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131733Z" changeid="xavier">
+        <seg>appsListOrder</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>apt-cache search lemonldap-ng</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093242Z" changeid="xavier">
@@ -45062,6 +45678,14 @@ apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>authenticationLevel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084237Z" changeid="xavier">
+        <seg>authenticationLevel</seg>
       </tuv>
     </tu>
     <tu>
@@ -45864,6 +46488,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070112Z" changeid="guimard">
         <seg>dirName</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dn</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131521Z" changeid="xavier">
+        <seg>dn</seg>
       </tuv>
     </tu>
     <tu>
@@ -49736,6 +50368,54 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19326</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131818Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19326</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19327</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131817Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19327</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19328</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131819Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19328</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19329</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131820Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19329</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19330</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131819Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19330</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19331</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131820Z" changeid="xavier">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;file_id=19331</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://forge.ow2.org/project/showfiles.php?group_id=274</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -50760,6 +51440,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://video.rmll.info/videos/permalink/v124cb7b8e410b3db28b/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131756Z" changeid="xavier">
+        <seg>http://video.rmll.info/videos/permalink/v124cb7b8e410b3db28b/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://webchat.freenode.net</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -51296,6 +51984,46 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=3005</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131832Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=3005</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=3006</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131830Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=3006</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=3007</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131829Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=3007</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=3008</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131828Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=3008</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=3009</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131821Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=3009</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Documentation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -51380,6 +52108,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103647Z" changeid="xavier">
         <seg>http://www.daasi.de/ldapcon2011/index.php?site=lemonldap</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.dailymotion.com/video/xvom9l_ow2con-12-clement-oudot_tech?search_algo=2#.UR31OX1m1iU</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131751Z" changeid="xavier">
+        <seg>http://www.dailymotion.com/video/xvom9l_ow2con-12-clement-oudot_tech?search_algo=2#.UR31OX1m1iU</seg>
       </tuv>
     </tu>
     <tu>
@@ -52632,10 +53368,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>internal variables, managed by LemonLDAP::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T082843Z" changeid="xavier">
+        <seg>les variables internes, gérées par LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>internal_email_by_netid    1</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081457Z" changeid="xavier">
         <seg>internal_email_by_netid    1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ipAddr</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T083709Z" changeid="xavier">
+        <seg>ipAddr</seg>
       </tuv>
     </tu>
     <tu>
@@ -53248,6 +54000,14 @@ ln -s /usr/lib/perl5/vendor_perl/5.8.8/auto/Lemonldap /usr/lib64/perl5/auto/</se
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>loginHistory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T131424Z" changeid="xavier">
+        <seg>loginHistory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>logos:logo-ul.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120707T080408Z" changeid="xavier">
@@ -53356,6 +54116,14 @@ ln -s /usr/lib/perl5/vendor_perl/5.8.8/auto/Lemonldap /usr/lib64/perl5/auto/</se
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081459Z" changeid="xavier">
         <seg>logout_url                          http://sympa.example.com/wws/logout</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>macro and groups</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T082953Z" changeid="xavier">
+        <seg>les macro et groupes</seg>
       </tuv>
     </tu>
     <tu>
@@ -54992,6 +55760,14 @@ ssoRoles: admin</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>startTime</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084339Z" changeid="xavier">
+        <seg>startTime</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>static: 'StaticValue' (a static value)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193234Z" changeid="xavier">
@@ -55454,6 +56230,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042436Z" changeid="xavier">
         <seg>update-alternatives --config editor</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>updateTime</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T084357Z" changeid="xavier">
+        <seg>updateTime</seg>
       </tuv>
     </tu>
     <tu>
