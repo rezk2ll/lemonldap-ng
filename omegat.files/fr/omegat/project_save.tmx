@@ -692,6 +692,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>*.partner.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063959Z" changeid="xavier">
+        <seg>*.partenaire.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>----&lt;/s156&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112332Z" changeid="xavier">
@@ -2960,10 +2968,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.3/authad.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063147Z" changeid="xavier">
+        <seg>../../documentation/1.3/authad.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.3/authapache.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T041759Z" changeid="xavier">
         <seg>../../documentation/1.3/authapache.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.3/authapache.html#use_kerberos_with_multiple_authentication_backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063402Z" changeid="xavier">
+        <seg>../../documentation/1.3/authapache.html#use_kerberos_with_multiple_authentication_backend</seg>
       </tuv>
     </tu>
     <tu>
@@ -10040,6 +10064,20 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;VirtualHost _default_:443&gt;
+ServerName auth.example.com
+SSLEngine on
+SSLCertificateFile ...</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064317Z" changeid="xavier">
+        <seg>&lt;VirtualHost _default_:443&gt;
+ServerName auth.example.com
+SSLEngine on
+SSLCertificateFile ...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;&lt;s1&gt;package&lt;/s1&gt;&lt;/a0&gt; SSOExtensions&lt;s2&gt;;&lt;/s2&gt;
  
 &lt;s3&gt;sub&lt;/s3&gt; function1 &lt;s4&gt;{&lt;/s4&gt;</seg>
@@ -12360,6 +12398,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;Version 1.1&lt;/a0&gt; (version en développement)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;WebID&lt;/a0&gt; is a way to uniquely identify a person, company, organisation, or other agent using a &lt;a1&gt;URI&lt;/a1&gt; and a certificate.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063651Z" changeid="xavier">
+        <seg>&lt;a0&gt;WebID&lt;/a0&gt; est un moyen d'identification unique de personnes, entreprises, organisation, ou autre agent en utilisant une &lt;a1&gt;URI&lt;/a1&gt; et un certificat.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17998,6 +18044,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;WebID whitelist&lt;/s0&gt;: list of space separated hosts granted to host FOAF document.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063926Z" changeid="xavier">
+        <seg>&lt;s0&gt;Liste blanche WebID&lt;/s0&gt; : liste de noms d'hôtes, séparés par des espaces, autorisés à héberger les documents FOAF.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Writer &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; used by &lt;a3&gt;SAML&lt;/a3&gt; IDP to write the cookie.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22516,6 +22570,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>And the mail filter is:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063355Z" changeid="xavier">
+        <seg>Et le filtre d'adresse mail est :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>And this as mail filter:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114424Z" changeid="xavier">
@@ -22920,6 +22982,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220837Z" changeid="xavier">
         <seg>Comme les mots-de-passe ne sernt pas gérés par &lt;a0&gt;LL::NG&lt;/a0&gt;, il est possile de désactiver le &lt;a1&gt;module mots-de-passe du menu&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>As same for groups: a group rule may involve another, previously computed group.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064937Z" changeid="xavier">
+        <seg>De même pour les groupes : une règle de groupe peut en utiliser une autre calculée précédemment.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23504,6 +23574,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103737Z" changeid="xavier">
         <seg>Berlin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Besides, macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064736Z" changeid="xavier">
+        <seg>Egalement, les macros et groupes sont calculés dans l'ordre alpha-numerique, c'est à dire dans l'ordre d'affichage dans le manager.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27160,6 +27238,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For &lt;a0&gt;Active Directory&lt;/a0&gt;, choose &lt;c1&gt;Active Directory&lt;/c1&gt; instead of &lt;c2&gt;&lt;a3&gt;LDAP&lt;/a3&gt;&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063249Z" changeid="xavier">
+        <seg>Pour &lt;a0&gt;Active Directory&lt;/a0&gt;, choisir &lt;c1&gt;Active Directory&lt;/c1&gt; au lieu de &lt;c2&gt;&lt;a3&gt;LDAP&lt;/a3&gt;&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For Active Directory, the default authentication filter is:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063332Z" changeid="xavier">
+        <seg>Pour Active Directory, le filtre d'authentification par défaut est :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For Active Directory, use this as authentication filter:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114412Z" changeid="xavier">
@@ -27396,6 +27490,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071951Z" changeid="xavier">
         <seg>Par exemple, dans portal/index.pl:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064838Z" changeid="xavier">
+        <seg>Par exemple, la macro “macro1” sear calculée avant la macro “macro2” : donc l'expression de macro2 peut utiliser la valeur $macro1.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29320,6 +29422,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you use WebID as user database, declare values in exported variables :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064017Z" changeid="xavier">
+        <seg>Si on utilise WebID comme base de données utilisateurs, déclarer les valeurs dans les « variables exportées » :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you use features like &lt;a0&gt;SAML&lt;/a0&gt; (authentication and issuer), &lt;a1&gt;CAS&lt;/a1&gt; (issuer) and password reset self-service, you also need to index some fields.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20130203T113621Z" changeid="xavier">
@@ -29644,6 +29754,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Dans le manager, allez dans &lt;c0&gt;Paramètres generaux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisissez Twitter comme module d'authentication.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose WebID for authentication module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063755Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres generaux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir WebID comme module d'authentication.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30468,6 +30586,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Il est recommendé d'utiliser ModPerl::Registry au lieu d'utiliser le dispositif &quot;cgi-script&quot; tel qu'indiqué dans les fichiers de configuration d'Apache proposés en exemple (portal-apache2.conf):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is recommended to use optional_no_ca since WebID doesn't use certificate authorities :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064315Z" changeid="xavier">
+        <seg>Il est recommandé d'utiliser « optional_no_ca » car WebID n'utilise pas d'autorité de certification :</seg>
       </tuv>
     </tu>
     <tu>
@@ -32956,6 +33082,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Note that groups are computed after macros, so a group rule may involve a macro value.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064621Z" changeid="xavier">
+        <seg>Noter que les groupes sont calculés après les macros, donc une règle de groupe peut utiliser une valeur issue d'une macro.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Note that if the user is already authenticated on the first portal, all redirections are transparent.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050633Z" changeid="xavier">
@@ -34444,6 +34578,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Portal host must be configured to use &lt;a0&gt;SSL&lt;/a0&gt; and must ask for client certificate.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064158Z" changeid="xavier">
+        <seg>L'hôte du portail doit être configuré pour utiliser &lt;a0&gt;SSL&lt;/a0&gt; et doit demander un certificat client.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Portal menu</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T080724Z" changeid="guimard">
@@ -35908,6 +36050,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SSLCertificateKeyFile ...</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064318Z" changeid="xavier">
+        <seg>SSLCertificateKeyFile ...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SSLLDAPField</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064307Z" changeid="guimard">
@@ -35928,6 +36078,18 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064357Z" changeid="guimard">
         <seg>SSLVar</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SSLVerifyClient optional_no_ca
+...
+&lt;/VirtualHost&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064320Z" changeid="xavier">
+        <seg>SSLVerifyClient optional_no_ca
+...
+&lt;/VirtualHost&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -37716,6 +37878,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Take a look at &lt;a0&gt;http://xmlns.com/foaf/spec/#sec-crossref&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064054Z" changeid="xavier">
+        <seg>Voir &lt;a0&gt;http://xmlns.com/foaf/spec/#sec-crossref&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Tarball</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -37760,6 +37930,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Version en test</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Tests</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064322Z" changeid="xavier">
+        <seg>Tests</seg>
       </tuv>
     </tu>
     <tu>
@@ -38322,6 +38500,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154226Z" changeid="xavier">
         <seg>Les paramètres suivants sont utilisés pour l'exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The following table list fields to index depending on the feature you want to increase performance:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064521Z" changeid="xavier">
+        <seg>Le tableau suivant liste les champs à indexer suivant les fonctionnalités dont on souhaite améliorer les performances :</seg>
       </tuv>
     </tu>
     <tu>
@@ -39156,6 +39342,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR">
         <seg>Allez ensuite dans &lt;c0&gt;Paramètres Twitter&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;WebID parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063817Z" changeid="xavier">
+        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres WebID&lt;/c0&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -40112,6 +40306,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This works with every &lt;a0&gt;LDAP&lt;/a0&gt; v2 or v3 server, including &lt;a1&gt;Active Directory&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063224Z" changeid="xavier">
+        <seg>Ceci fonctionne avec tout serveur &lt;a0&gt;LDAP&lt;/a0&gt; v2 ou v3, dont &lt;a1&gt;Active Directory&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This works with every &lt;a0&gt;LDAP&lt;/a0&gt; v2 or v3 server, including Active Directory.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201549Z" changeid="xavier">
@@ -40252,6 +40454,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070751Z" changeid="guimard">
         <seg>Pour contourner ce problème, &lt;a0&gt;LL::NG&lt;/a0&gt; peut se souvenir du mot-de-passe utilisé dans la phase d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To bypass this, follow the documentation of &lt;a0&gt;AuthApache module&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063439Z" changeid="xavier">
+        <seg>Pour outrepasser ceci, suivre la documentation du &lt;a0&gt;module AuthApache&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -40572,6 +40782,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20121005T040139Z" changeid="xavier">
         <seg>Pour basculer vers un autre backend d'authentification, utiliser le module &lt;a3&gt;Multi&lt;/a3&gt;, par exemple : &lt;c4&gt;Multi &lt;a5&gt;SSL&lt;/a5&gt;;&lt;a6&gt;LDAP&lt;/a6&gt;&lt;/c4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To test this, you can build your own WebID certificate using one of :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064409Z" changeid="xavier">
+        <seg>Pour tester ceci, on peut se construire son propre certificat WebID en utilisant au choix :</seg>
       </tuv>
     </tu>
     <tu>
@@ -41816,6 +42034,22 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Web::ID::Certificate::Generator</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064412Z" changeid="xavier">
+        <seg>Web::ID::Certificate::Generator</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>WebID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063456Z" changeid="xavier">
+        <seg>WebID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When &lt;a0&gt;LL::NG&lt;/a0&gt; is configured as OpenID identity provider, users can share their authentication using [PORTAL]/openidserver/[login] where:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082321Z" changeid="xavier">
@@ -42424,6 +42658,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also use WebID as user database.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063806Z" changeid="xavier">
+        <seg>On peut également utiliser WebID comme base de données utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also use caFile and caPath parameters.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184733Z" changeid="xavier">
@@ -42928,6 +43170,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can use '*' character.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063944Z" changeid="xavier">
+        <seg>On peut utiliser le caractère '*'.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can use &lt;c0&gt;0&lt;/c0&gt; or &lt;c1&gt;1&lt;/c1&gt; to disable/enable the module, or use a more complex rule.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T134736Z" changeid="guimard">
@@ -43316,6 +43566,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous devez installer une version récente (&gt;3) du paquet &lt;a0&gt;Net::Twitter&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need &lt;a0&gt;Web::ID&lt;/a0&gt; package.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063706Z" changeid="xavier">
+        <seg>Le paquet &lt;a0&gt;Web::ID&lt;/a0&gt; est nécessaire.</seg>
       </tuv>
     </tu>
     <tu>
@@ -44018,6 +44276,14 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20130203T113800Z" changeid="xavier">
         <seg>_saml_id ProxyID _nameID _assert_id _art_id</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>_saml_id ProxyID _nameID _assert_id _art_id _session_id</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064525Z" changeid="xavier">
+        <seg>_saml_id ProxyID _nameID _assert_id _art_id _session_id</seg>
       </tuv>
     </tu>
     <tu>
@@ -47050,6 +47316,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.3:authad</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063148Z" changeid="xavier">
+        <seg>documentation:1.3:authad</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.3:authapache</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T041800Z" changeid="xavier">
@@ -48406,6 +48680,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050449Z" changeid="xavier">
         <seg>fullname</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>gen-webid-cert.sh</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064419Z" changeid="xavier">
+        <seg>gen-webid-cert.sh</seg>
       </tuv>
     </tu>
     <tu>
@@ -51162,6 +51444,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.w3.org/wiki/WebID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063457Z" changeid="xavier">
+        <seg>http://www.w3.org/wiki/WebID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.wikipedia.org</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074442Z" changeid="xavier">
@@ -51206,6 +51496,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T112611Z" changeid="xavier">
         <seg>http://www.zimbra.com/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://xmlns.com/foaf/spec/#sec-crossref</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064022Z" changeid="xavier">
+        <seg>http://xmlns.com/foaf/spec/#sec-crossref</seg>
       </tuv>
     </tu>
     <tu>
@@ -51330,6 +51628,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>https://gist.github.com/njh/2432427</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064417Z" changeid="xavier">
+        <seg>https://gist.github.com/njh/2432427</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>https://github.com/9h37/django-lemonldap</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T182638Z" changeid="xavier">
@@ -51346,10 +51652,34 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>https://metacpan.org/module/Web::ID::Certificate::Generator</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064411Z" changeid="xavier">
+        <seg>https://metacpan.org/module/Web::ID::Certificate::Generator</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>https://metacpan.org/release/Net-Facebook-Oauth2</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T061126Z" changeid="xavier">
         <seg>https://metacpan.org/release/Net-Facebook-Oauth2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://metacpan.org/release/Web-ID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063652Z" changeid="xavier">
+        <seg>https://metacpan.org/release/Web-ID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://my-profile.eu/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064414Z" changeid="xavier">
+        <seg>https://my-profile.eu/</seg>
       </tuv>
     </tu>
     <tu>
@@ -51886,6 +52216,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20130203T113734Z" changeid="xavier">
         <seg>ipAddr &lt;e0&gt;WHATTOTRACE&lt;/e0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ipAddr &lt;e0&gt;WHATTOTRACE&lt;/e0&gt; _httpSessionType ipAddr</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064523Z" changeid="xavier">
+        <seg>ipAddr &lt;e0&gt;WHATTOTRACE&lt;/e0&gt; _httpSessionType ipAddr</seg>
       </tuv>
     </tu>
     <tu>
@@ -52972,6 +53310,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>my-profile.eu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064416Z" changeid="xavier">
+        <seg>my-profile.eu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>mysqladmin create lemonldapng</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T204812Z" changeid="xavier">
@@ -52992,6 +53338,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120501Z" changeid="xavier">
         <seg>nom</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>name =&gt; foaf:name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T064103Z" changeid="xavier">
+        <seg>nom =&gt; foaf:name</seg>
       </tuv>
     </tu>
     <tu>
