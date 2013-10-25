@@ -386,6 +386,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>#v</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051215Z" changeid="xavier">
+        <seg>#v</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>#w</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6952,6 +6960,22 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../pages/documentation/1.3/authad.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051236Z" changeid="xavier">
+        <seg>../pages/documentation/1.3/authad.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.3/authbrowserid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051237Z" changeid="xavier">
+        <seg>../pages/documentation/1.3/authbrowserid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../pages/documentation/1.3/authdemo.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T041751Z" changeid="xavier">
@@ -6960,10 +6984,42 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../pages/documentation/1.3/authfacebook.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051238Z" changeid="xavier">
+        <seg>../pages/documentation/1.3/authfacebook.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.3/authgoogle.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051239Z" changeid="xavier">
+        <seg>../pages/documentation/1.3/authgoogle.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../pages/documentation/1.3/authradius.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T041752Z" changeid="xavier">
         <seg>../pages/documentation/1.3/authradius.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.3/authwebid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051240Z" changeid="xavier">
+        <seg>../pages/documentation/1.3/authwebid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.3/fastcgi.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051307Z" changeid="xavier">
+        <seg>../pages/documentation/1.3/fastcgi.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -6988,6 +7044,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T041756Z" changeid="xavier">
         <seg>../pages/documentation/1.3/loginhistory.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.3/variables.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051347Z" changeid="xavier">
+        <seg>../pages/documentation/1.3/variables.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -9514,6 +9578,16 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;/&lt;s11&gt;Directory&lt;/s11&gt;&gt;
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053721Z" changeid="xavier">
+        <seg>&lt;/&lt;s11&gt;Directory&lt;/s11&gt;&gt;
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;/&lt;s12&gt;IfModule&lt;/s12&gt;&gt;
  </seg>
       </tuv>
@@ -9606,6 +9680,18 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="FR-FR" changedate="20120420T095003Z" changeid="xavier">
         <seg>&lt;/&lt;s19&gt;Location&lt;/s19&gt;&gt;
 &lt;/&lt;s20&gt;VirtualHost&lt;/s20&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;/&lt;s20&gt;Location&lt;/s20&gt;&gt;
+ 
+&lt;/&lt;s21&gt;VirtualHost&lt;/s21&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053738Z" changeid="xavier">
+        <seg>&lt;/&lt;s20&gt;Location&lt;/s20&gt;&gt;
+ 
+&lt;/&lt;s21&gt;VirtualHost&lt;/s21&gt;&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -9794,6 +9880,22 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;&lt;s13&gt;Location&lt;/s13&gt; /kerberos.pl&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053727Z" changeid="xavier">
+        <seg>&lt;&lt;s13&gt;Location&lt;/s13&gt; /kerberos.pl&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;&lt;s14&gt;IfModule&lt;/s14&gt; auth_kerb_module&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053731Z" changeid="xavier">
+        <seg>&lt;&lt;s14&gt;IfModule&lt;/s14&gt; auth_kerb_module&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;&lt;s14&gt;IfModule&lt;/s14&gt; mod_rewrite.c&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064415Z" changeid="xavier">
@@ -9970,6 +10072,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
 &lt;s5&gt;$_SERVER&lt;/s5&gt;&lt;s6&gt;[&lt;/s6&gt;&lt;s7&gt;'PHP_AUTH_USER'&lt;/s7&gt;&lt;s8&gt;]&lt;/s8&gt; &lt;s9&gt;=&lt;/s9&gt; &lt;s10&gt;$_SERVER&lt;/s10&gt;&lt;s11&gt;[&lt;/s11&gt;&lt;s12&gt;'REMOTE_USER'&lt;/s12&gt;&lt;s13&gt;]&lt;/s13&gt;&lt;s14&gt;;&lt;/s14&gt;
  
 &lt;s15&gt;if&lt;/s15&gt; &lt;s16&gt;(&lt;/s16&gt;&lt;s17&gt;(&lt;/s17&gt;&lt;s18&gt;!&lt;/s18&gt;&lt;a19&gt;&lt;s20&gt;empty&lt;/s20&gt;&lt;/a19&gt;&lt;s21&gt;(&lt;/s21&gt;&lt;s22&gt;$_SERVER&lt;/s22&gt;&lt;s23&gt;[&lt;/s23&gt;&lt;s24&gt;'PHP_AUTH_USER'&lt;/s24&gt;&lt;s25&gt;]&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt; &lt;s27&gt;&amp;&amp;&lt;/s27&gt; &lt;s28&gt;!&lt;/s28&gt;&lt;a29&gt;&lt;s30&gt;empty&lt;/s30&gt;&lt;/a29&gt;&lt;s31&gt;(&lt;/s31&gt;&lt;s32&gt;$_SERVER&lt;/s32&gt;&lt;s33&gt;[&lt;/s33&gt;&lt;s34&gt;'REMOTE_USER'&lt;/s34&gt;&lt;s35&gt;]&lt;/s35&gt;&lt;s36&gt;)&lt;/s36&gt;&lt;s37&gt;)&lt;/s37&gt; &lt;s38&gt;||&lt;/s38&gt; &lt;s39&gt;$_COOKIE&lt;/s39&gt;&lt;s40&gt;[&lt;/s40&gt;&lt;s41&gt;$wgDBserver&lt;/s41&gt; &lt;s42&gt;.&lt;/s42&gt; &lt;s43&gt;'UserID'&lt;/s43&gt;&lt;s44&gt;]&lt;/s44&gt;&lt;s45&gt;)&lt;/s45&gt; &lt;s46&gt;{&lt;/s46&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;A&lt;/a0&gt; &lt;a1&gt;B&lt;/a1&gt; &lt;a2&gt;C&lt;/a2&gt; &lt;a3&gt;D&lt;/a3&gt; &lt;a4&gt;E&lt;/a4&gt; &lt;a5&gt;F&lt;/a5&gt; &lt;a6&gt;G&lt;/a6&gt; &lt;a7&gt;H&lt;/a7&gt; &lt;a8&gt;I&lt;/a8&gt; J K &lt;a9&gt;L&lt;/a9&gt; &lt;a10&gt;M&lt;/a10&gt; &lt;a11&gt;N&lt;/a11&gt; &lt;a12&gt;O&lt;/a12&gt; &lt;a13&gt;P&lt;/a13&gt; &lt;a14&gt;Q&lt;/a14&gt; &lt;a15&gt;R&lt;/a15&gt; &lt;a16&gt;S&lt;/a16&gt; &lt;a17&gt;T&lt;/a17&gt; &lt;a18&gt;U&lt;/a18&gt; &lt;a19&gt;V&lt;/a19&gt; &lt;a20&gt;W&lt;/a20&gt; X Y &lt;a21&gt;Z&lt;/a21&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051234Z" changeid="xavier">
+        <seg>&lt;a0&gt;A&lt;/a0&gt; &lt;a1&gt;B&lt;/a1&gt; &lt;a2&gt;C&lt;/a2&gt; &lt;a3&gt;D&lt;/a3&gt; &lt;a4&gt;E&lt;/a4&gt; &lt;a5&gt;F&lt;/a5&gt; &lt;a6&gt;G&lt;/a6&gt; &lt;a7&gt;H&lt;/a7&gt; &lt;a8&gt;I&lt;/a8&gt; J K &lt;a9&gt;L&lt;/a9&gt; &lt;a10&gt;M&lt;/a10&gt; &lt;a11&gt;N&lt;/a11&gt; &lt;a12&gt;O&lt;/a12&gt; &lt;a13&gt;P&lt;/a13&gt; &lt;a14&gt;Q&lt;/a14&gt; &lt;a15&gt;R&lt;/a15&gt; &lt;a16&gt;S&lt;/a16&gt; &lt;a17&gt;T&lt;/a17&gt; &lt;a18&gt;U&lt;/a18&gt; &lt;a19&gt;V&lt;/a19&gt; &lt;a20&gt;W&lt;/a20&gt; X Y &lt;a21&gt;Z&lt;/a21&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -10218,6 +10328,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095940Z" changeid="xavier">
         <seg>&lt;a0&gt;Configurer le serveur Apache&lt;/a0&gt; qui héberge le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Configure the Apache server&lt;/a0&gt; that host the portal to use the Apache Kerberos authentication module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051839Z" changeid="xavier">
+        <seg>&lt;a0&gt;Configurer le serveur Apache&lt;/a0&gt; qui héberge le portail utilisant le module d'authentification Kerberos d'Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -12334,6 +12452,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;fastcgi&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051316Z" changeid="xavier">
+        <seg>&lt;a0&gt;fastcgi&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;features&lt;/a0&gt;&lt;br1/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111521Z" changeid="xavier">
@@ -12454,6 +12580,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a10&gt;authbrowserid&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051252Z" changeid="xavier">
+        <seg>&lt;a10&gt;authbrowserid&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a10&gt;authchoice&lt;/a10&gt;&lt;br11/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111443Z" changeid="xavier">
@@ -12474,6 +12608,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T182524Z" changeid="xavier">
         <seg>&lt;a10&gt;drupal&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;formreplay&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051341Z" changeid="xavier">
+        <seg>&lt;a10&gt;formreplay&lt;/a10&gt;&lt;br11/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12550,6 +12692,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a12&gt;authcas&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051252Z" changeid="xavier">
+        <seg>&lt;a12&gt;authcas&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a12&gt;authdbi&lt;/a12&gt;&lt;br13/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111445Z" changeid="xavier">
@@ -12622,6 +12772,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a14&gt;authchoice&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051253Z" changeid="xavier">
+        <seg>&lt;a14&gt;authchoice&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a14&gt;authdemo&lt;/a14&gt;&lt;br15/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120004Z" changeid="xavier">
@@ -12674,6 +12832,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a14&gt;soapservices&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a16&gt;authdbi&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051253Z" changeid="xavier">
+        <seg>&lt;a16&gt;authdbi&lt;/a16&gt;&lt;br17/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12736,6 +12902,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
 &lt;s21&gt;}&lt;/s21&gt;
  
 &lt;s22&gt;1&lt;/s22&gt;&lt;s23&gt;;&lt;/s23&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a18&gt;authdemo&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051254Z" changeid="xavier">
+        <seg>&lt;a18&gt;authdemo&lt;/a18&gt;&lt;br19/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12804,6 +12978,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a1&gt;Of course, there are other differences&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T054442Z" changeid="xavier">
+        <seg>&lt;a1&gt;Il y a bien sur d'autres différences&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a1&gt;SOAP&lt;/a1&gt; functions are protected by Apache, you can change this in &lt;a2&gt;Apache portal configuration&lt;/a2&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T171633Z" changeid="xavier">
@@ -12816,6 +12998,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a1&gt;Essayez le client web Freenode&lt;/a1&gt; !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a20&gt;authfacebook&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051255Z" changeid="xavier">
+        <seg>&lt;a20&gt;authfacebook&lt;/a20&gt;&lt;br21/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12868,6 +13058,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a22&gt;authgoogle&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051255Z" changeid="xavier">
+        <seg>&lt;a22&gt;authgoogle&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a22&gt;authopenid&lt;/a22&gt;&lt;br23/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120007Z" changeid="xavier">
@@ -12904,6 +13102,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a22&gt;sqlsessionbackend&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a24&gt;authldap&lt;/a24&gt;&lt;br25/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051256Z" changeid="xavier">
+        <seg>&lt;a24&gt;authldap&lt;/a24&gt;&lt;br25/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12956,6 +13162,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a26&gt;authmulti&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051256Z" changeid="xavier">
+        <seg>&lt;a26&gt;authmulti&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a26&gt;authradius&lt;/a26&gt;&lt;br27/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120009Z" changeid="xavier">
@@ -13000,6 +13214,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a26&gt;start&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a28&gt;authnull&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051257Z" changeid="xavier">
+        <seg>&lt;a28&gt;authnull&lt;/a28&gt;&lt;br29/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13156,6 +13378,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a2&gt;features&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051333Z" changeid="xavier">
+        <seg>&lt;a2&gt;features&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a2&gt;federationproxy&lt;/a2&gt;&lt;br3/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111522Z" changeid="xavier">
@@ -13260,6 +13490,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a30&gt;authopenid&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051257Z" changeid="xavier">
+        <seg>&lt;a30&gt;authopenid&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a30&gt;authsaml&lt;/a30&gt;&lt;br31/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120010Z" changeid="xavier">
@@ -13316,6 +13554,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a32&gt;authproxy&lt;/a32&gt;&lt;br33/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051258Z" changeid="xavier">
+        <seg>&lt;a32&gt;authproxy&lt;/a32&gt;&lt;br33/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a32&gt;authslave&lt;/a32&gt;&lt;br33/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120011Z" changeid="xavier">
@@ -13364,6 +13610,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a34&gt;authradius&lt;/a34&gt;&lt;br35/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051258Z" changeid="xavier">
+        <seg>&lt;a34&gt;authradius&lt;/a34&gt;&lt;br35/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a34&gt;authssl&lt;/a34&gt;&lt;br35/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120013Z" changeid="xavier">
@@ -13404,6 +13658,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a36&gt;authremote&lt;/a36&gt;&lt;br37/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051259Z" changeid="xavier">
+        <seg>&lt;a36&gt;authremote&lt;/a36&gt;&lt;br37/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a36&gt;authtwitter&lt;/a36&gt;&lt;br37/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120014Z" changeid="xavier">
@@ -13424,6 +13686,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T173219Z" changeid="xavier">
         <seg>&lt;a36&gt;syntax&lt;/a36&gt;&lt;br37/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a38&gt;authsaml&lt;/a38&gt;&lt;br39/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051259Z" changeid="xavier">
+        <seg>&lt;a38&gt;authsaml&lt;/a38&gt;&lt;br39/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13456,6 +13726,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a40&gt;authslave&lt;/a40&gt;&lt;br41/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051300Z" changeid="xavier">
+        <seg>&lt;a40&gt;authslave&lt;/a40&gt;&lt;br41/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a41&gt;&lt;s42&gt;print&lt;/s42&gt;&lt;/a41&gt; &lt;s43&gt;STDERR&lt;/s43&gt; &lt;s44&gt;&quot;SOAP Error: &quot;&lt;/s44&gt; &lt;s45&gt;.&lt;/s45&gt; &lt;s46&gt;$r&lt;/s46&gt;&lt;s47&gt;-&gt;&lt;/s47&gt;&lt;s48&gt;fault&lt;/s48&gt;&lt;s49&gt;-&gt;&lt;/s49&gt;&lt;s50&gt;{&lt;/s50&gt;faultstring&lt;s51&gt;}&lt;/s51&gt;&lt;s52&gt;;&lt;/s52&gt;
 &lt;s53&gt;}&lt;/s53&gt;
 &lt;s54&gt;else&lt;/s54&gt; &lt;s55&gt;{&lt;/s55&gt;</seg>
@@ -13464,6 +13742,38 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
         <seg>&lt;a41&gt;&lt;s42&gt;print&lt;/s42&gt;&lt;/a41&gt; &lt;s43&gt;STDERR&lt;/s43&gt; &lt;s44&gt;&quot;SOAP Error: &quot;&lt;/s44&gt; &lt;s45&gt;.&lt;/s45&gt; &lt;s46&gt;$r&lt;/s46&gt;&lt;s47&gt;-&gt;&lt;/s47&gt;&lt;s48&gt;fault&lt;/s48&gt;&lt;s49&gt;-&gt;&lt;/s49&gt;&lt;s50&gt;{&lt;/s50&gt;faultstring&lt;s51&gt;}&lt;/s51&gt;&lt;s52&gt;;&lt;/s52&gt;
 &lt;s53&gt;}&lt;/s53&gt;
 &lt;s54&gt;else&lt;/s54&gt; &lt;s55&gt;{&lt;/s55&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a42&gt;authssl&lt;/a42&gt;&lt;br43/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051300Z" changeid="xavier">
+        <seg>&lt;a42&gt;authssl&lt;/a42&gt;&lt;br43/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a44&gt;authtwitter&lt;/a44&gt;&lt;br45/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051301Z" changeid="xavier">
+        <seg>&lt;a44&gt;authtwitter&lt;/a44&gt;&lt;br45/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a46&gt;authwebid&lt;/a46&gt;&lt;br47/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051303Z" changeid="xavier">
+        <seg>&lt;a46&gt;authwebid&lt;/a46&gt;&lt;br47/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a48&gt;authyubikey&lt;/a48&gt;&lt;br49/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051304Z" changeid="xavier">
+        <seg>&lt;a48&gt;authyubikey&lt;/a48&gt;&lt;br49/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13490,6 +13800,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103655Z" changeid="xavier">
         <seg>&lt;a4&gt;YouTube&lt;/a4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;authad&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051248Z" changeid="xavier">
+        <seg>&lt;a4&gt;authad&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13530,6 +13848,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111518Z" changeid="xavier">
         <seg>&lt;a4&gt;extendedfunctions&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;federationproxy&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051335Z" changeid="xavier">
+        <seg>&lt;a4&gt;federationproxy&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13642,6 +13968,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a6&gt;authapache&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051249Z" changeid="xavier">
+        <seg>&lt;a6&gt;authapache&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a6&gt;authbasic&lt;/a6&gt;&lt;br7/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111440Z" changeid="xavier">
@@ -13670,6 +14004,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111513Z" changeid="xavier">
         <seg>&lt;a6&gt;download&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;fileconfbackend&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051337Z" changeid="xavier">
+        <seg>&lt;a6&gt;fileconfbackend&lt;/a6&gt;&lt;br7/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13754,6 +14096,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a8&gt;authbasic&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051251Z" changeid="xavier">
+        <seg>&lt;a8&gt;authbasic&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a8&gt;authcas&lt;/a8&gt;&lt;br9/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111441Z" changeid="xavier">
@@ -13782,6 +14132,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111513Z" changeid="xavier">
         <seg>&lt;a8&gt;drupal&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;filesessionbackend&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051340Z" changeid="xavier">
+        <seg>&lt;a8&gt;filesessionbackend&lt;/a8&gt;&lt;br9/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -14156,6 +14514,28 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
 admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$admin&lt;/s2&gt; &lt;s3&gt;||=&lt;/s3&gt; &lt;s4&gt;(&lt;/s4&gt;&lt;s5&gt;$uid&lt;/s5&gt; &lt;s6&gt;eq&lt;/s6&gt; &lt;s7&gt;'foo'&lt;/s7&gt; &lt;s8&gt;or&lt;/s8&gt; &lt;s9&gt;$uid&lt;/s9&gt; &lt;s10&gt;eq&lt;/s10&gt; &lt;s11&gt;'bar'&lt;/s11&gt;&lt;s12&gt;)&lt;/s12&gt;
 &lt;s13&gt;# en-tête&lt;/s13&gt;
 Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$displayName&lt;/s16&gt; &lt;s17&gt;||=&lt;/s17&gt; &lt;s18&gt;$givenName&lt;/s18&gt;&lt;s19&gt;.&lt;/s19&gt;&lt;s20&gt;&quot; &quot;&lt;/s20&gt;&lt;s21&gt;.&lt;/s21&gt;&lt;s22&gt;$surName&lt;/s22&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;#!/usr/bin/perl&lt;/s0&gt;
+&lt;s1&gt;use&lt;/s1&gt; CGI &lt;s2&gt;':cgi-lib'&lt;/s2&gt;&lt;s3&gt;;&lt;/s3&gt;
+&lt;s4&gt;use&lt;/s4&gt; strict&lt;s5&gt;;&lt;/s5&gt;
+&lt;s6&gt;use&lt;/s6&gt; MIME&lt;s7&gt;::&lt;/s7&gt;&lt;s8&gt;Base64&lt;/s8&gt;&lt;s9&gt;;&lt;/s9&gt;
+&lt;s10&gt;use&lt;/s10&gt; CGI&lt;s11&gt;::&lt;/s11&gt;&lt;s12&gt;Carp&lt;/s12&gt; &lt;s13&gt;'fatalsToBrowser'&lt;/s13&gt;&lt;s14&gt;;&lt;/s14&gt;
+&lt;s15&gt;my&lt;/s15&gt; &lt;s16&gt;$uri&lt;/s16&gt; &lt;s17&gt;=&lt;/s17&gt; &lt;s18&gt;$ENV&lt;/s18&gt;&lt;s19&gt;{&lt;/s19&gt;&lt;s20&gt;&quot;REDIRECT_QUERY_STRING&quot;&lt;/s20&gt;&lt;s21&gt;}&lt;/s21&gt;&lt;s22&gt;;&lt;/s22&gt;
+&lt;a23&gt;&lt;s24&gt;print&lt;/s24&gt;&lt;/a23&gt; CGI&lt;s25&gt;::&lt;/s25&gt;&lt;s26&gt;header&lt;/s26&gt;&lt;s27&gt;(&lt;/s27&gt;&lt;s28&gt;-&lt;/s28&gt;Refresh &lt;s29&gt;=&gt;&lt;/s29&gt; &lt;s30&gt;'0; URL=http://auth.example.com/?'&lt;/s30&gt;&lt;s31&gt;.&lt;/s31&gt;&lt;s32&gt;$uri&lt;/s32&gt;&lt;s33&gt;)&lt;/s33&gt;&lt;s34&gt;;&lt;/s34&gt;
+&lt;a35&gt;&lt;s36&gt;exit&lt;/s36&gt;&lt;/a35&gt;&lt;s37&gt;(&lt;/s37&gt;0&lt;s38&gt;)&lt;/s38&gt;&lt;s39&gt;;&lt;/s39&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053634Z" changeid="xavier">
+        <seg>&lt;s0&gt;#!/usr/bin/perl&lt;/s0&gt;
+&lt;s1&gt;use&lt;/s1&gt; CGI &lt;s2&gt;':cgi-lib'&lt;/s2&gt;&lt;s3&gt;;&lt;/s3&gt;
+&lt;s4&gt;use&lt;/s4&gt; strict&lt;s5&gt;;&lt;/s5&gt;
+&lt;s6&gt;use&lt;/s6&gt; MIME&lt;s7&gt;::&lt;/s7&gt;&lt;s8&gt;Base64&lt;/s8&gt;&lt;s9&gt;;&lt;/s9&gt;
+&lt;s10&gt;use&lt;/s10&gt; CGI&lt;s11&gt;::&lt;/s11&gt;&lt;s12&gt;Carp&lt;/s12&gt; &lt;s13&gt;'fatalsToBrowser'&lt;/s13&gt;&lt;s14&gt;;&lt;/s14&gt;
+&lt;s15&gt;my&lt;/s15&gt; &lt;s16&gt;$uri&lt;/s16&gt; &lt;s17&gt;=&lt;/s17&gt; &lt;s18&gt;$ENV&lt;/s18&gt;&lt;s19&gt;{&lt;/s19&gt;&lt;s20&gt;&quot;REDIRECT_QUERY_STRING&quot;&lt;/s20&gt;&lt;s21&gt;}&lt;/s21&gt;&lt;s22&gt;;&lt;/s22&gt;
+&lt;a23&gt;&lt;s24&gt;print&lt;/s24&gt;&lt;/a23&gt; CGI&lt;s25&gt;::&lt;/s25&gt;&lt;s26&gt;header&lt;/s26&gt;&lt;s27&gt;(&lt;/s27&gt;&lt;s28&gt;-&lt;/s28&gt;Refresh &lt;s29&gt;=&gt;&lt;/s29&gt; &lt;s30&gt;'0; URL=http://auth.example.com/?'&lt;/s30&gt;&lt;s31&gt;.&lt;/s31&gt;&lt;s32&gt;$uri&lt;/s32&gt;&lt;s33&gt;)&lt;/s33&gt;&lt;s34&gt;;&lt;/s34&gt;
+&lt;a35&gt;&lt;s36&gt;exit&lt;/s36&gt;&lt;/a35&gt;&lt;s37&gt;(&lt;/s37&gt;0&lt;s38&gt;)&lt;/s38&gt;&lt;s39&gt;;&lt;/s39&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -14606,6 +14986,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; de votre organisation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: optional, can be used to redirect on another &lt;a2&gt;URL&lt;/a2&gt; (for example &lt;a3&gt;https://authssl.example.com&lt;/a3&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T060010Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt; : optionnel, peut être utilisée pour rediriger l'utilisateur vers une autre &lt;a2&gt;URL&lt;/a2&gt; (par exemple &lt;a3&gt;https://authssl.example.com&lt;/a3&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -15224,6 +15612,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Auto login&lt;/s0&gt; is very secure for Sympa 5, as Sympa cookie is only exchanged between &lt;a1&gt;LL::NG&lt;/a1&gt; Handler and Sympa (user cannot see it)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051943Z" changeid="xavier">
+        <seg>&lt;s0&gt;Auto login&lt;/s0&gt; est très sécurisé pour Sympa 5 car le cookie Sympa est seulement échangé entre le handler &lt;a1&gt;LL::NG&lt;/a1&gt; et Sympa (les utilisateurs ne le voient pas)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Auto login&lt;/s0&gt; is very secure, as Sympa cookie is only exchanged between &lt;a1&gt;LL::NG&lt;/a1&gt; Handler and Sympa (user cannot see it)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080818Z" changeid="xavier">
@@ -15236,6 +15632,30 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080534Z" changeid="xavier">
         <seg>&lt;s0&gt;Auto login&lt;/s0&gt;: handler spécial de &lt;a1&gt;LL::NG&lt;/a1&gt; qui génère le cookie Sympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Auto login&lt;/s0&gt;: a special &lt;a1&gt;LL::NG&lt;/a1&gt; Handler will generate Sympa cookie (for Sympa 5 only !)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051911Z" changeid="xavier">
+        <seg>&lt;s0&gt;Auto login&lt;/s0&gt;: handler spécial de &lt;a1&gt;LL::NG&lt;/a1&gt; qui génère le cookie Sympa (pour Symp 5 seulement !)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Auto login&lt;/s0&gt;: set to 1 to use auto login.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T055128Z" changeid="xavier">
+        <seg>&lt;s0&gt;Authentification automatique&lt;/s0&gt; : mettre à 1 pour utiliser la connexion automatique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Backgound color&lt;/s0&gt;: Background color displayed in the BrowserID login window</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T055835Z" changeid="xavier">
+        <seg>&lt;s0&gt;Couleur d'arrière plan&lt;/s0&gt; : Couleur d'arrière plan affichée dans la fenêtre d'authentification BrowserID</seg>
       </tuv>
     </tu>
     <tu>
@@ -15394,8 +15814,8 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       <tuv lang="EN-US">
         <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt;: project leader, lead developer, graphics, documentation, community management</seg>
       </tuv>
-      <tuv lang="FR-FR">
-        <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt;: Leader du projet, développeur principal, graphisme, documentation, gestion de la communauté</seg>
+      <tuv lang="FR-FR" changedate="20131025T051435Z" changeid="xavier">
+        <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt; : Leader du projet, développeur principal, graphisme, documentation, gestion de la communauté</seg>
       </tuv>
     </tu>
     <tu>
@@ -15500,6 +15920,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161626Z" changeid="xavier">
         <seg>&lt;s0&gt;DNSDOMAIN&lt;/s0&gt; : domaine &lt;a1&gt;DNS&lt;/a1&gt; proncipal (défaut : example.com)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;David COUTADEUR&lt;/s0&gt;: developer, tester</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051444Z" changeid="xavier">
+        <seg>&lt;s0&gt;David COUTADEUR&lt;/s0&gt; : developeur, testeur</seg>
       </tuv>
     </tu>
     <tu>
@@ -15784,8 +16212,8 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       <tuv lang="EN-US">
         <seg>&lt;s0&gt;François-Xavier DELTOMBE&lt;/s0&gt;: developer, tester</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120107T142727Z" changeid="xavier">
-        <seg>&lt;s0&gt;François-Xavier DELTOMBE&lt;/s0&gt;: developeur, testeur</seg>
+      <tuv lang="FR-FR" changedate="20131025T051419Z" changeid="xavier">
+        <seg>&lt;s0&gt;François-Xavier DELTOMBE&lt;/s0&gt; : developeur, testeur</seg>
       </tuv>
     </tu>
     <tu>
@@ -16936,6 +17364,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Sandro CAZZANIGA&lt;/s0&gt;: developer, tester</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051415Z" changeid="xavier">
+        <seg>&lt;s0&gt;Sandro CAZZANIGA&lt;/s0&gt; : developeur, testeur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Sandro Cazzaniga&lt;/s0&gt;: developer, Mageia packager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121005T035955Z" changeid="xavier">
@@ -17184,6 +17620,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Requête d'authentification signée&lt;/s0&gt; : mettre à « activé » pour toujours signer les requêtes d'authentifications.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Site Logo&lt;/s0&gt;: Logo that will be displayed in the BrowserID login window.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T055509Z" changeid="xavier">
+        <seg>&lt;s0&gt;Logo du site&lt;/s0&gt; : Logo qui sera affiché dans la fenêtre d'authentification BrowserID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Site Name&lt;/s0&gt;: Name that will be displayed in the BrowserID login window</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T055434Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom du site&lt;/s0&gt; : Nom qui sera affiché dans la fenêtre d'authentification BrowserID</seg>
       </tuv>
     </tu>
     <tu>
@@ -17482,6 +17934,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Verification &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; used to verifiy the BrowserID assertion.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T055238Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; de vérification&lt;/s0&gt; : &lt;a2&gt;URL&lt;/a2&gt; utilisée pour vérifier l'assertion BrowserID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Version&lt;/s0&gt;: &lt;a1&gt;LDAP&lt;/a1&gt; protocol version.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114022Z" changeid="xavier">
@@ -17524,8 +17984,8 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       <tuv lang="EN-US">
         <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: historic project leader, developer, Debian packager, administrator of big Lemonldap::NG instances</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20121018T040001Z" changeid="xavier">
-        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: Leader historique du projet, developpeur, empaqueteur Debian, administrateur de grosses installations de Lemonldap::NG</seg>
+      <tuv lang="FR-FR" changedate="20131025T051426Z" changeid="xavier">
+        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt; : Leader historique du projet, developpeur, empaqueteur Debian, administrateur de grosses installations de Lemonldap::NG</seg>
       </tuv>
     </tu>
     <tu>
@@ -18488,6 +18948,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s12&gt;ErrorDocument&lt;/s12&gt; 401 /login.pl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053723Z" changeid="xavier">
+        <seg>&lt;s12&gt;ErrorDocument&lt;/s12&gt; 401 /login.pl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s12&gt;Order&lt;/s12&gt; &lt;s13&gt;allow&lt;/s13&gt;,&lt;s14&gt;deny&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T094959Z" changeid="xavier">
@@ -18820,6 +19288,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190304Z" changeid="xavier">
         <seg>&lt;s15&gt;&lt;s16&gt;&lt;role&lt;/s16&gt; &lt;s17&gt;rolename&lt;/s17&gt;=&lt;s18&gt;&quot;role1&quot;&lt;/s18&gt;&lt;s19&gt;/&gt;&lt;/s19&gt;&lt;/s15&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s15&gt;AuthType&lt;/s15&gt; Kerberos</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053732Z" changeid="xavier">
+        <seg>&lt;s15&gt;AuthType&lt;/s15&gt; Kerberos</seg>
       </tuv>
     </tu>
     <tu>
@@ -21046,6 +21522,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s9&gt;Options&lt;/s9&gt; +ExecCGI +&lt;s10&gt;FollowSymLinks&lt;/s10&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053716Z" changeid="xavier">
+        <seg>&lt;s9&gt;Options&lt;/s9&gt; +ExecCGI +&lt;s10&gt;FollowSymLinks&lt;/s10&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s9&gt;RewriteEngine&lt;/s9&gt; &lt;s10&gt;On&lt;/s10&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064403Z" changeid="xavier">
@@ -21468,6 +21952,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T052151Z" changeid="guimard">
         <seg>Activation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Active Directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T052614Z" changeid="xavier">
+        <seg>Active Directory</seg>
       </tuv>
     </tu>
     <tu>
@@ -22728,6 +23220,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Authentication with Kerberos</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051721Z" changeid="xavier">
+        <seg>Authentification avec Kerberos</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication with login/password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051545Z" changeid="xavier">
+        <seg>Authentification par nom-de-compte/mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authentication, Authorization and Accounting (AAA) mechanisms</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23036,6 +23544,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T071814Z" changeid="xavier">
         <seg>Le backend de session explorable (&lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt;) fonctionne exactement comme le module Apache::Session::* correspondant mais ajoute des index qui améliore les performances de l'&lt;a1&gt;explorateur de session&lt;/a1&gt; et les &lt;a2&gt;restrictions de sessions&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>BrowserID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T054032Z" changeid="xavier">
+        <seg>BrowserID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>BrowserID is also known as Mozilla Persona.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T054217Z" changeid="xavier">
+        <seg>BrowserID est également connu sous le nom de « Mozilla Persona ».</seg>
       </tuv>
     </tu>
     <tu>
@@ -23920,6 +24444,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Compatible password modification</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T052908Z" changeid="xavier">
+        <seg>Compatibilité des modifications de mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Compilation</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191431Z" changeid="xavier">
@@ -24212,6 +24744,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074949Z" changeid="xavier">
         <seg>Configurer l'hôte virtuel Mediawiki comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure Multiple authentication backend (for example: Apache;&lt;a0&gt;LDAP&lt;/a0&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T054011Z" changeid="xavier">
+        <seg>Configurer le backend d'authentification multiple (par exemple : Apache;&lt;a0&gt;LDAP&lt;/a0&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -24620,6 +25160,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T204812Z" changeid="xavier">
         <seg>Créer une base de données si nécessaire :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Create a redirection script, called login.pl:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053600Z" changeid="xavier">
+        <seg>Créer un script de redirection, appelé login.pl:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Create a symlink on portal/index.pl to define the kerberos authentication end point:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053538Z" changeid="xavier">
+        <seg>Créer un lien symbolique vers portal/index.pl pour définir le point final d'authentification kerberos :</seg>
       </tuv>
     </tu>
     <tu>
@@ -28900,6 +29456,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose BrowserID for authentication.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T054611Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir BrowserID pour l'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Choice for authentication.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T185122Z" changeid="xavier">
@@ -29716,6 +30280,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It is a Single Sign On protocol similar to OpenID, but based on user email address rather than a &lt;a0&gt;URL&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T054409Z" changeid="xavier">
+        <seg>C'est un protocole d'authentification unique (Single Sign On) similaire à OpenID, mais basé sur l'adresse emailde l'utilisateur au lieu d'une &lt;a0&gt;URL&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It is advised to use separate session backends for standard sessions, &lt;a0&gt;SAML&lt;/a0&gt; sessions and &lt;a1&gt;CAS&lt;/a1&gt; sessions, in order to manage index separately.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20130203T114111Z" changeid="xavier">
@@ -30132,10 +30704,26 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>KrbMethodK5Passwd &lt;s17&gt;Off&lt;/s17&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053736Z" changeid="xavier">
+        <seg>KrbMethodK5Passwd &lt;s17&gt;Off&lt;/s17&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>KrbMethodNegotiate &lt;s12&gt;On&lt;/s12&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155341Z" changeid="xavier">
         <seg>KrbMethodNegotiate &lt;s12&gt;On&lt;/s12&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>KrbMethodNegotiate &lt;s16&gt;On&lt;/s16&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053735Z" changeid="xavier">
+        <seg>KrbMethodNegotiate &lt;s16&gt;On&lt;/s16&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -30148,10 +30736,26 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>KrbServiceName HTTP/auth.example.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053001Z" changeid="xavier">
+        <seg>KrbServiceName HTTP/auth.example.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>KrbVerifyKDC &lt;s14&gt;Off&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155343Z" changeid="xavier">
         <seg>KrbVerifyKDC &lt;s14&gt;Off&lt;/s14&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>KrbVerifyKDC &lt;s18&gt;Off&lt;/s18&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053737Z" changeid="xavier">
+        <seg>KrbVerifyKDC &lt;s18&gt;Off&lt;/s18&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -30360,6 +30964,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Laissez vide pour désactiver cette fonctionnalité.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Leave blank to use Mozilla default verification &lt;a3&gt;URL&lt;/a3&gt; (&lt;a4&gt;https://verifier.login.persona.org/verify&lt;/a4&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T055354Z" changeid="xavier">
+        <seg>Laisser vide pour utiliser l'&lt;a3&gt;URL&lt;/a3&gt; de vérification par défaut de Mozilla (&lt;a4&gt;https://verifier.login.persona.org/verify&lt;/a4&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -31730,6 +32342,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Modify LemonLDAP::NG Portal &lt;a0&gt;URL&lt;/a0&gt; trough Manager to: &lt;a1&gt;http://auth.example.com/kerberos.pl&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053904Z" changeid="xavier">
+        <seg>Modifier l'&lt;a0&gt;URL&lt;/a0&gt; du portail LemonLDAP::NG via le manager à la valeur : &lt;a1&gt;http://auth.example.com/kerberos.pl&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Modify Manager protection</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083033Z" changeid="xavier">
@@ -31742,6 +32362,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T073741Z" changeid="guimard">
         <seg>Modifie le mot-de-passe si demandé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Modify the Apache virtual host to separate the Kerberos Authentication module:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053713Z" changeid="xavier">
+        <seg>Modifier l'hôte virtuel Apache pour séparer le module d'authentification Kerberos :</seg>
       </tuv>
     </tu>
     <tu>
@@ -32204,6 +32832,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050633Z" changeid="xavier">
         <seg>Noter que si l'utilisateur est déjà authentifié sur le premier portail, toutes les redirections sont transparentes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Note that if you use FastCGI, you must restart Apache to enable changes.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T052224Z" changeid="xavier">
+        <seg>Noter que si on utilise FastCGI, il faut redémarrer Apache pour activer les changements.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34600,10 +35236,26 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Reset password on next logon workflow</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T052934Z" changeid="xavier">
+        <seg>Réinitialisation du mot-de-passe à la connexion suivante</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Response Location should be empty, as &lt;a0&gt;SOAP&lt;/a0&gt; responses are directly returned (synchronous binding).</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Le point d'accès des réponses peut être vide car les réponses &lt;a0&gt;SOAP&lt;/a0&gt; sont directement retournées (connexions synchrones).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Restart Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T054028Z" changeid="xavier">
+        <seg>Redémarrer Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -35656,6 +36308,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See the full description of the protocol here: &lt;a0&gt;https://developer.mozilla.org/en-US/docs/Mozilla/Persona&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T054514Z" changeid="xavier">
+        <seg>Voir la description complète du protocole ici : &lt;a0&gt;https://developer.mozilla.org/en-US/docs/Mozilla/Persona&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Select &lt;c0&gt;Metadata&lt;/c0&gt;, and unprotect the field to paste the following value:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T194844Z" changeid="xavier">
@@ -36496,6 +37156,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Specific default values for filters to match AD schema</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T052818Z" changeid="xavier">
+        <seg>Valeurs spécifiques par défaut des filtres pour correspondre au schéma AD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Sponsored by</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -37106,6 +37774,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The Active Directory module is based on the &lt;a0&gt;LDAP module&lt;/a0&gt;, with these features:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T052733Z" changeid="xavier">
+        <seg>Le module Active Directory est basé sur le &lt;a0&gt;module LDAP&lt;/a0&gt;, avec ces caractéristiques :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The AuthBasic Handler is a special Handler that will us AuthBasic to authenticate to a virtual host, and then play authorizations rules to allow access to the virtual host.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121005T040839Z" changeid="xavier">
@@ -37354,6 +38030,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The configuration is the same as the &lt;a0&gt;LDAP module&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T052958Z" changeid="xavier">
+        <seg>La configuration est la même que mour le &lt;a0&gt;module LDAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The configuration is then displayed as a big &lt;a0&gt;Perl&lt;/a0&gt; Hash, that you can edit:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042608Z" changeid="xavier">
@@ -37534,6 +38218,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155302Z" changeid="xavier">
         <seg>L'intégration avec &lt;a0&gt;LL::NG&lt;/a0&gt; est la suivante :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The location &lt;a0&gt;URL&lt;/a0&gt; end is based on the &lt;c1&gt;service_id&lt;/c1&gt; defined in Sympa apache configuration.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T052612Z" changeid="xavier">
+        <seg>La fin de l'&lt;a0&gt;URL&lt;/a0&gt; est construite à partir du &lt;c1&gt;service_id&lt;/c1&gt; defini dans la configuration Apache de Sympa.</seg>
       </tuv>
     </tu>
     <tu>
@@ -38244,6 +38936,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;BrowserID parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T055107Z" changeid="xavier">
+        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres BrowserID&lt;/c0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then, go in &lt;c0&gt;Choice Parameters&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194354Z" changeid="xavier">
@@ -38948,6 +39648,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This mode is not compatible with a lot of browsers which block pop-ups.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T055202Z" changeid="xavier">
+        <seg>Ce mode n'est pas compatible avec de nombreux navigateurs qui bloquent les pop-ups.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This mode must not be used for other purpose than test and demonstration!</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T115144Z" changeid="xavier">
@@ -38992,6 +39700,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120411T041935Z" changeid="xavier">
         <seg>Ce nom est utilisé dans l'entrée &lt;a0&gt;DN&lt;/a0&gt;, par exemple &lt;c1&gt;cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This needs some hacking because the Apache Kerberos authentication module do not work if &lt;c0&gt;require valid-user&lt;/c0&gt; is not set.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053414Z" changeid="xavier">
+        <seg>Ceci requiert quelques astuces car le module d'authentification Kerberos d'Apache ne fonctionne pas si &lt;c0&gt;require valid-user&lt;/c0&gt; n'est pas indiqué.</seg>
       </tuv>
     </tu>
     <tu>
@@ -39288,6 +40004,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083115Z" changeid="xavier">
         <seg>Timezone</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To achieve this, follow these steps:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053443Z" changeid="xavier">
+        <seg>Pour le réussir, suivre ces étapes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -39696,6 +40420,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour télécharger les traductions, demandez à &lt;a0&gt;lemonldap-ng-dev@ow2.org&lt;/a0&gt; pour les mettres en ligne.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To use Active Directory as &lt;a0&gt;LDAP&lt;/a0&gt; backend, you must change few things in the manager :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051612Z" changeid="xavier">
+        <seg>Pour utiliser Active Directory comme serveur &lt;a0&gt;LDAP&lt;/a0&gt;, vous devez effectuer quelques modifications dans le manager :</seg>
       </tuv>
     </tu>
     <tu>
@@ -40152,6 +40884,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Use Kerberos with Multiple authentication backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053051Z" changeid="xavier">
+        <seg>Utiliser Kerberos avec plusieurs backend d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Use LDAP for configuration</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113633Z" changeid="xavier">
@@ -40284,6 +41024,14 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095002Z" changeid="xavier">
         <seg>Utiliser “&lt;a0&gt;LDAP&lt;/a0&gt;” comme systèmes d'authentification et de gestion utilisateurs,</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use “Active Directory” as authentication, userDB and passwordDBbackends,</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051709Z" changeid="xavier">
+        <seg>Utiliser “Active Directory” comme systèmes d'authentification, de gestion des utilisateurs et des mots-de-passe,</seg>
       </tuv>
     </tu>
     <tu>
@@ -40612,6 +41360,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Using LemonLDAP::NG with Active-Directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051507Z" changeid="xavier">
+        <seg>Utiliser Lemonldap::NG avec Active-Directory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Using Lemonldap::NG with Active-Directory</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T094814Z" changeid="xavier">
@@ -40656,6 +41412,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200318Z" changeid="xavier">
         <seg>En utilisant ce système, on peut avoir une simple interopérabilité entre 2 organisations utilisant chacune leur système &lt;a0&gt;LL::NG&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>V</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051345Z" changeid="xavier">
+        <seg>V</seg>
       </tuv>
     </tu>
     <tu>
@@ -41276,6 +42040,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You &lt;s1&gt;must&lt;/s1&gt; provide a full &lt;a2&gt;URI&lt;/a2&gt; (for example /skins/common/lemonldap-ng_square.png) and use HTTPS on the portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T055658Z" changeid="xavier">
+        <seg>&lt;s1&gt;Il faut&lt;/s1&gt; fournir une &lt;a2&gt;URI&lt;/a2&gt; complète (par exemple /skins/common/lemonldap-ng_square.png) et utiliser HTTPS pour le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You also need to know the technical name of configuration parameter to do this.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071940Z" changeid="xavier">
@@ -41420,6 +42192,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also disable internal Sympa authentication to keep only LemonLDAP::NG by removing user_table paragraph</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T052115Z" changeid="xavier">
+        <seg>Il est également possible de désactiver l'authentification interne de Sympa pour ne garder que celle de LemonLDAP::NG en supprimant le paragraphe user_table</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also display a check box on the authentication form, to allow user to see their login history before beeing redirected to the protected application (see &lt;a0&gt;portal customization&lt;/a0&gt;).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T173411Z" changeid="xavier">
@@ -41448,6 +42228,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160957Z" changeid="xavier">
         <seg>On peut aussi passer des paramètres à la commande make install, avec cette syntaxe :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also use &lt;portal&gt;?logout=1 as logout_url to remove LemonLDAP::NG session when “disconnect” is chosen.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T052536Z" changeid="xavier">
+        <seg>On peut aussi utiliser &lt;portal&gt;?logout=1 comme URL de déconnexion pour supprimer la session LemonLDAP::NG lorsque la déconnexion est demandée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -41908,6 +42696,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can then choose any other module for users and password but if you want to totally delegate authentication to BrowserID, choose &lt;a0&gt;None&lt;/a0&gt; for users and password.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T054835Z" changeid="xavier">
+        <seg>On peut ensuite choisir n'importe quel autre module de gestion des utilisateurs et des mots-de-passe mais pour déléguer totalement l'authentification à BrowserID, choisir &lt;a0&gt;None&lt;/a0&gt; pour la gestion des utilisateurs et des mots de passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can then choose any other module for users and password.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -42232,6 +43028,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous devriez utilisez les options &lt;a2&gt;securedCookie&lt;/a2&gt; pour éviter le vol de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You may want to use the &lt;a0&gt;Mutliple authentication backend&lt;/a0&gt; to fail back to another authentication for user without Kerberos ticket.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053313Z" changeid="xavier">
+        <seg>On peut souhaiter utiliser le &lt;a0&gt;backend d'authentification multiple&lt;/a0&gt; pour retomber sur un autre système d'authentification pour les utilisateurs sans ticket Kerberos.</seg>
       </tuv>
     </tu>
     <tu>
@@ -47502,6 +48306,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://auth.example.com/kerberos.pl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053740Z" changeid="xavier">
+        <seg>http://auth.example.com/kerberos.pl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://auth.example.com/openidserver/foo.bar</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082408Z" changeid="xavier">
@@ -48406,6 +49218,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://ldapcon.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051446Z" changeid="xavier">
+        <seg>http://ldapcon.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://ldapcon.org/img/ldapcon_2013_logo_square_date.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051448Z" changeid="xavier">
+        <seg>http://ldapcon.org/img/ldapcon_2013_logo_square_date.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://lemonldap.ow2.org/NG/devel-doc/</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -48602,6 +49430,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121409Z" changeid="xavier">
         <seg>http://perldoc.perl.org/Safe.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://perldoc.perl.org/functions/exit.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053608Z" changeid="xavier">
+        <seg>http://perldoc.perl.org/functions/exit.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -50190,10 +51026,34 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>https://authssl.example.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T055921Z" changeid="xavier">
+        <seg>https://authssl.example.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>https://cas.unilim.fr/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120707T080424Z" changeid="xavier">
         <seg>https://cas.unilim.fr/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://developer.mozilla.org/en-US/docs/Mozilla/Persona</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T054451Z" changeid="xavier">
+        <seg>https://developer.mozilla.org/en-US/docs/Mozilla/Persona</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://developer.mozilla.org/en-US/docs/Mozilla/Persona/FAQ?redirectlocale=en-US&amp;redirectslug=Persona%2FFAQ#How_does_Persona_compare_to_OpenID.3F</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T054034Z" changeid="xavier">
+        <seg>https://developer.mozilla.org/en-US/docs/Mozilla/Persona/FAQ?redirectlocale=en-US&amp;redirectslug=Persona%2FFAQ#How_does_Persona_compare_to_OpenID.3F</seg>
       </tuv>
     </tu>
     <tu>
@@ -50266,6 +51126,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162241Z" changeid="xavier">
         <seg>https://upgrade.yubico.com/getapikey/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://verifier.login.persona.org/verify</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T055204Z" changeid="xavier">
+        <seg>https://verifier.login.persona.org/verify</seg>
       </tuv>
     </tu>
     <tu>
@@ -51264,6 +52132,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093145Z" changeid="xavier">
         <seg>liblemonldap-ng-portal-perl : fichiers du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ln -s /var/lib/lemonldap-ng/portal/index.pl /var/lib/lemonldap-ng/portal/kerberos.pl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053540Z" changeid="xavier">
+        <seg>ln -s /var/lib/lemonldap-ng/portal/index.pl /var/lib/lemonldap-ng/portal/kerberos.pl</seg>
       </tuv>
     </tu>
     <tu>
@@ -52840,6 +53716,14 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>service_name                   Centralized auth service</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T052002Z" changeid="xavier">
+        <seg>service_name                   Centralized auth service</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>service_name                   LemonLDAP::NG</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081455Z" changeid="xavier">
@@ -53598,6 +54482,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>variables</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T051350Z" changeid="xavier">
+        <seg>variables</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>vi /etc/apt/sources.list.d/lemonldap-ng.list</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093553Z" changeid="xavier">
@@ -53634,6 +54526,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T111852Z" changeid="xavier">
         <seg>vi /root/SSOExtensions.pm</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>vi /var/lib/lemonldap-ng/portal/login.pl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T053603Z" changeid="xavier">
+        <seg>vi /var/lib/lemonldap-ng/portal/login.pl</seg>
       </tuv>
     </tu>
     <tu>
