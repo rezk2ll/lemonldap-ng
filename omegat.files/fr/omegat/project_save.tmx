@@ -10620,6 +10620,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Facebook&lt;/a0&gt; is a famous social network service.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T060920Z" changeid="xavier">
+        <seg>&lt;a0&gt;Facebook&lt;/a0&gt; est un célèbre réseau social.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Fr translation in progress&lt;/a0&gt; by guimard (2010/12/09 05:46)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16166,6 +16174,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T070912Z" changeid="xavier">
         <seg>&lt;s0&gt;Champ extrait du certificat&lt;/s0&gt; : champ du certificat affecté à la variable interne $user</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Facebook application ID&lt;/s0&gt;: the application ID you get</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061457Z" changeid="xavier">
+        <seg>&lt;s0&gt;ID de l'application Facebook&lt;/s0&gt; : l'identifiant d'application obtenu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Facebook application secret&lt;/s0&gt;: the corresponding secret</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061538Z" changeid="xavier">
+        <seg>&lt;s0&gt;Secret de l'application Facebook&lt;/s0&gt; : le secret correspondant</seg>
       </tuv>
     </tu>
     <tu>
@@ -21740,6 +21764,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A specific persistent session is created with this module, to store attribute values returned by Google.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063036Z" changeid="xavier">
+        <seg>Une session persistente est créée avec ce module pour stocker les valeurs d'attribut renvoyées par Google.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A start date and an end date (to open or close the service even the entry already exists)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T143847Z" changeid="xavier">
@@ -26872,6 +26904,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Facebook</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T060857Z" changeid="xavier">
+        <seg>Facebook</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Facebook uses &lt;a1&gt;OAuth2&lt;/a1&gt; protocol to allow applications to reuse its own authentication process (it means, if your are connected to Facebook, other applications can trust Facebook and let you in).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061125Z" changeid="xavier">
+        <seg>Facebook utilise le protocole &lt;a1&gt;OAuth2&lt;/a1&gt; pour autoriser les applications à réutiliser son propre prcessus d'authentification (ce qui signifie que si on est connecté à Facebook, d'autres applications peuvent agréer Facebook et accepter l'utilisateur).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Facebook: &lt;a0&gt;Group&lt;/a0&gt; / &lt;a1&gt;Page&lt;/a1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28128,6 +28176,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Google</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062047Z" changeid="xavier">
+        <seg>Google</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Google Apps</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182234Z" changeid="xavier">
@@ -28156,6 +28212,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T052221Z" changeid="xavier">
         <seg>Google Apps ne dispose pas de paramètre de configuration pour rediriger les utilisateurs vers une &lt;a0&gt;URL&lt;/a0&gt; spécifique après la déconnexion Google Apps (voir &lt;a1&gt;Google Apps control panel&lt;/a1&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Google proposes to allow applications to reuse its own authentication process using &lt;a0&gt;OpenID&lt;/a0&gt; protocol (it means, if your are connected to Google, other applications can trust Google and let you in).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062232Z" changeid="xavier">
+        <seg>Google propose d'autoriser les applications à réutiliser son propre processus d'authentification en utilisant le protocole &lt;a0&gt;OpenID&lt;/a0&gt; (ce qui signifie que si on est connecté à Google, d'autres applications peuvent agréer Google et accepter l'utilisateur).</seg>
       </tuv>
     </tu>
     <tu>
@@ -29032,6 +29096,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If this session is lost, Google will ask a confirmation for each requested attribute.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T063117Z" changeid="xavier">
+        <seg>Si cette session est perdue, Google redemandera confirmation pour chaque attribut demandé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If using &lt;a0&gt;LL::NG&lt;/a0&gt; as reverse proxy, configure the &lt;c1&gt;Auth-User&lt;/c1&gt; &lt;a2&gt;header&lt;/a2&gt;, else no headers are needed.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115758Z" changeid="xavier">
@@ -29232,6 +29304,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you use Facebook as user database, declare values in exported variables :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061649Z" changeid="xavier">
+        <seg>Si on utilise Facebook comme base de données utilisateurs, déclarer les valeurs dans les « variables exportées » :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you use TLS, you can set any of the &lt;a0&gt;Net::LDAP&lt;/a0&gt; start_tls() sub like &lt;c1&gt;ldap+tls://server/verify=none&amp;capath=/etc/ssl&lt;/c1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184710Z" changeid="xavier">
@@ -29256,10 +29336,34 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you want to access to other datas, you have to use Google in &lt;c2&gt;General Parameters&lt;/c2&gt; &gt; &lt;c3&gt;Authentication modules &gt; User module&lt;/c3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062555Z" changeid="xavier">
+        <seg>Pour accéder aux autres données, utiliser Google in &lt;c2&gt;Paramètres generaux&lt;/c2&gt; &gt; &lt;c3&gt;Modules d'authentification &gt; Modules d'utilisateurs&lt;/c3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you want to become member of &lt;a1&gt;LL::NG&lt;/a1&gt; team ask to &lt;a2&gt;lemonldap-ng-dev@ow2.org&lt;/a2&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>SI vous souhaitez devenir membre de l'équipe &lt;a1&gt;LL::NG&lt;/a1&gt; demandez-le également à &lt;a2&gt;lemonldap-ng-dev@ow2.org&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you want to refuse access when a data is missing, just add a ”!” before the key name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061757Z" changeid="xavier">
+        <seg>Pour imposer qu'une valeur soit renseignée, ajouter un ”!” devant le nom de clef</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you want to require that a field is set, add ”!” before the key name :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062851Z" changeid="xavier">
+        <seg>Pour imposer qu'une valeur soit renseignée, ajouter un ”!” devant le nom de clef :</seg>
       </tuv>
     </tu>
     <tu>
@@ -29476,6 +29580,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195957Z" changeid="xavier">
         <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &quot;base de données&quot; (&lt;a2&gt;DBI&lt;/a2&gt;) pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Facebook for authentication module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061312Z" changeid="xavier">
+        <seg>Dans le manager, allez dans &lt;c0&gt;Paramètres generaux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisissez Facebook comme module d'authentication.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Google for authentication module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062257Z" changeid="xavier">
+        <seg>Dans le manager, allez dans &lt;c0&gt;Paramètres generaux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisissez Google comme module d'authentication.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30356,6 +30476,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T123617Z" changeid="xavier">
         <seg>Il se traouve dans le répertoire des utilitaires LemonLDAP::NG (&lt;c0&gt;convertConfig&lt;/c0&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is stored in session datas under the name &lt;s0&gt;$_facebookToken&lt;/s0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062031Z" changeid="xavier">
+        <seg>Il est stocké dans les données de session sous le nom &lt;s0&gt;$_facebookToken&lt;/s0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -36180,6 +36308,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;https://developers.facebook.com/apps&lt;/a0&gt; on how to do that.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061249Z" changeid="xavier">
+        <seg>Voir &lt;a0&gt;https://developers.facebook.com/apps&lt;/a0&gt; pour en savoir plus.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;mod_proxy&lt;/a0&gt; and &lt;a1&gt;mod_rewrite&lt;/a1&gt; documentation for more about configuring Apache reverse-proxies.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T134648Z" changeid="xavier">
@@ -38792,6 +38928,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then in exported variables, you can ask only for :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062643Z" changeid="xavier">
+        <seg>Ensuite dans les « variables exportées », on ne peut demander que :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then install lasso and lasso-perl packages.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T204436Z" changeid="xavier">
@@ -38948,6 +39092,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194354Z" changeid="xavier">
         <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Choice&lt;/c0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;Facebook parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061356Z" changeid="xavier">
+        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Facebook&lt;/c0&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -39528,6 +39680,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This is mandatory if you want to use an Apache authentication module, which is run by Apache before showing the LemonLDAP::NG portal page.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T060842Z" changeid="xavier">
+        <seg>Obligatoire toutefois si on veut utiliser un module d'authentification Apache, qui sont lancés par Apache avant d'afficher la page du portail LemonLDAP::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This is not the case of &lt;a0&gt;Memcached&lt;/a0&gt; for example.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -39932,6 +40092,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144241Z" changeid="xavier">
         <seg>Il fournit les classes auxiliaires &lt;c0&gt;ssoUser&lt;/c0&gt; avec les attributs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This will use email as login name (for accounting, session explorer,…).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062411Z" changeid="xavier">
+        <seg>L'adresse email est utilisée comme nom de compte (pour la traçabilité, l'explorateur de session,…).</seg>
       </tuv>
     </tu>
     <tu>
@@ -41008,6 +41176,14 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T100019Z" changeid="xavier">
         <seg>Utiliser les commentaires pour ordonner les règles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use the name you want but this values as value.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062820Z" changeid="xavier">
+        <seg>Utiliser n'importe quel nom de clef mais ces valeurs dans le champ « valeur ».</seg>
       </tuv>
     </tu>
     <tu>
@@ -42240,6 +42416,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also use Facebook as user database.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061344Z" changeid="xavier">
+        <seg>On peut également utiliser Facebook comme base de données utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also use caFile and caPath parameters.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184733Z" changeid="xavier">
@@ -42672,6 +42856,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can show them using &lt;a0&gt;Facebook Graph API explorer&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061922Z" changeid="xavier">
+        <seg>On peut les voir en utilisant l'&lt;a0&gt;explorateur de l'API Graph de Facebook&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can simply checkout sources with the following command:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -42804,6 +42996,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T134148Z" changeid="xavier">
         <seg>On peut utiliser les règles suivantes à la place :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can use the same Facebook access token in your applications.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062005Z" changeid="xavier">
+        <seg>On peut réutiliser le même ticket d'accès Facebook dans les applications.</seg>
       </tuv>
     </tu>
     <tu>
@@ -43104,6 +43304,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need &lt;a0&gt;Net::Facebook::Oauth2&lt;/a0&gt; package.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061149Z" changeid="xavier">
+        <seg>La paquet &lt;a0&gt;Net::Facebook::Oauth2&lt;/a0&gt; est nécessaire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You need &lt;a0&gt;Net::Twitter&lt;/a0&gt; package, with a very recent version (&gt;3).</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -43196,6 +43404,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071630Z" changeid="xavier">
         <seg>Il est nécessaire de connaître le nom technique du paramètre de configuration pour le faire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need to register a new application on Facebook to get an application ID and a secret.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061233Z" changeid="xavier">
+        <seg>Il faut enregistrer la nouvelle application dans Facebook pour obtenir un identifiant d'application et un secret.</seg>
       </tuv>
     </tu>
     <tu>
@@ -48042,6 +48258,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>dwho@badwolf.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T060851Z" changeid="xavier">
+        <seg>dwho@badwolf.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>each area has 2 portals:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200333Z" changeid="xavier">
@@ -48158,6 +48382,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T135204Z" changeid="xavier">
         <seg>pare-feux (attention toutefois si plus d'une application se trouve derrière le pare-feu)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>firstname</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062647Z" changeid="xavier">
+        <seg>firstname</seg>
       </tuv>
     </tu>
     <tu>
@@ -48490,6 +48722,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://en.wikipedia.org/wiki/OAuth2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T060900Z" changeid="xavier">
+        <seg>http://en.wikipedia.org/wiki/OAuth2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://en.wikipedia.org/wiki/OpenID</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -48534,6 +48774,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103656Z" changeid="xavier">
         <seg>http://event.appsec-forum.ch/27-oct-appsec-conferences/#c1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://facebook.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T060859Z" changeid="xavier">
+        <seg>http://facebook.com</seg>
       </tuv>
     </tu>
     <tu>
@@ -51058,6 +51306,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>https://developers.facebook.com/apps</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061150Z" changeid="xavier">
+        <seg>https://developers.facebook.com/apps</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://developers.facebook.com/tools/explorer</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061758Z" changeid="xavier">
+        <seg>https://developers.facebook.com/tools/explorer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>https://forge.indepnet.net/projects/glpi/wiki/GLPI-SSO</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153617Z" changeid="xavier">
@@ -51078,6 +51342,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120617T065341Z" changeid="xavier">
         <seg>https://github.com/coudot/apache-session-ldap</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://metacpan.org/release/Net-Facebook-Oauth2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061126Z" changeid="xavier">
+        <seg>https://metacpan.org/release/Net-Facebook-Oauth2</seg>
       </tuv>
     </tu>
     <tu>
@@ -51482,6 +51754,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>in the value field, set the field name.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061820Z" changeid="xavier">
+        <seg>dans le champ valeur, mettre le nom du champ.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>include /usr/share/lemonldap-ng/ressources/sso.schema</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144214Z" changeid="xavier">
@@ -51700,6 +51980,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050450Z" changeid="xavier">
         <seg>language</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lastname</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062649Z" changeid="xavier">
+        <seg>lastname</seg>
       </tuv>
     </tu>
     <tu>
@@ -52652,6 +52940,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>msmith@badwolf.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T060849Z" changeid="xavier">
+        <seg>msmith@badwolf.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>multi</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063701Z" changeid="guimard">
@@ -53508,6 +53804,14 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>rtyler@badwolf.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T060846Z" changeid="xavier">
+        <seg>rtyler@badwolf.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>samlStorage</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064040Z" changeid="guimard">
@@ -54354,6 +54658,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>use any key name you want.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T061707Z" changeid="xavier">
+        <seg>utiliser n'importe quel nom de clef.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>useRedirectOnError</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064553Z" changeid="guimard">
@@ -54862,10 +55174,26 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>“myfield ⇒ firstname” can be ””</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062925Z" changeid="xavier">
+        <seg>“mavariable ⇒ firstname” peut valoir ””</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>“static-value”</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T061202Z" changeid="xavier">
         <seg>“static-value”</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>”!myfield ⇒ lastname” must be set</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20131025T062948Z" changeid="xavier">
+        <seg>”!mavariable ⇒ lastname” doit être renseignée</seg>
       </tuv>
     </tu>
     <tu>
