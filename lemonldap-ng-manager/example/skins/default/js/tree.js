@@ -272,10 +272,7 @@ $.fn.simpleTree = function(opt){
 			trigger.click(function(event){
 				TREE.nodeToggle(node);
 			});
-			if(!$.browser.msie)
-			{
-				trigger.css('float','left');
-			}
+			trigger.css('float','left');
 			if(typeof TREE.option.afterSetTrigger == 'function')
 			{
 				TREE.option.afterSetTrigger(node);
