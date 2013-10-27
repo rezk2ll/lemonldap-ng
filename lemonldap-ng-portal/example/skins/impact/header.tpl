@@ -17,8 +17,8 @@
   <link rel="openid.server" href="<TMPL_VAR NAME="PROVIDERURI">" />
   <link rel="openid2.provider" href="<TMPL_VAR NAME="PROVIDERURI">" />
  </TMPL_IF>
- <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/jquery-1.4.2.min.js"></script>
- <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/jquery-ui-1.8.5.custom.min.js"></script>
+ <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/jquery-1.10.2.min.js"></script>
+ <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/jquery-ui-1.10.3.custom.min.js"></script>
  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/jquery.base64.js"></script>
  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/jquery.cookie.js"></script>
  <TMPL_IF NAME="browserIdEnabled">

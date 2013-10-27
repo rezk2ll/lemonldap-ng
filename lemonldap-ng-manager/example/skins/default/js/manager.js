@@ -197,7 +197,7 @@ $(document).ready(function(){
 		simpleTreeSetMenuStyle($.cookie("managermenu"));
 	}
 	if($.cookie("managertheme")) {
-		$("link#csstheme").attr("href",themepath+$.cookie("managertheme")+'/jquery-ui-'+jqueryuiversion+'.custom.css');
+		$("link#csstheme").attr("href",themepath+$.cookie("managertheme")+'/jquery-ui-'+jqueryuiversion+'.custom.min.css');
 	}
 	$("#css-switch #organization button").click(function(){
 		var style=$(this).attr("alt");
@@ -209,7 +209,7 @@ $(document).ready(function(){
 	$("#css-switch #theme button").click(function(){
 		var theme=$(this).attr("alt");
 		$.cookie("managertheme",theme, {expires: 365, path: '/'});
-		$("link#csstheme").attr("href",themepath+theme+'/jquery-ui-'+jqueryuiversion+'.custom.css');
+		$("link#csstheme").attr("href",themepath+theme+'/jquery-ui-'+jqueryuiversion+'.custom.min.css');
 		$('#css-switch').dialog( "close" );
 		return false;
 	});
