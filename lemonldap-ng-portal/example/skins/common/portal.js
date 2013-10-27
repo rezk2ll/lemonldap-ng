@@ -48,12 +48,15 @@ $(document).ready(function(){
 	$("input[name=timezone]").val( -(new Date().getTimezoneOffset()/60) );
 
 	/* Menu tabs */
-	$("#menu").tabs();
-	$("#menu").tabs("select",displaytab);
+	$("#menu").tabs({active:0});
+	// TODO: replace 0 here ^ by the number of the tab to display (displaytab)
+	// OLD : $("#menu").tabs("select",displaytab);
 
 	/* Authentication choice tabs */
-	$("#authMenu").tabs({cookie: {name: 'lemonldapauthchoice'}});
-	$("#authMenu").tabs("select",choicetab);
+	$("#authMenu").tabs({active:0});
+	// TODO: same problem + cookie
+	//$("#authMenu").tabs({cookie: {name: 'lemonldapauthchoice'}});
+	//$("#authMenu").tabs("select",choicetab);
 
 	/* Focus on first visible input */
 	$("input[type!=hidden]:first").focus();
