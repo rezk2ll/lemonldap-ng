@@ -386,7 +386,7 @@ sub translate_template {
     my $text_ref = shift;
 
     # Decode UTF-8
-    utf8::decode($$text_ref);
+    utf8::decode($$text_ref) unless ( $ENV{FCGI_ROLE} );
 
     # Test if a translation is available for the selected language
     # If not available, return the first translated string
