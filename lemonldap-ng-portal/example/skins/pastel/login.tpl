@@ -16,7 +16,6 @@
           <li title="<TMPL_VAR NAME="key">"><a href="#<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
         </TMPL_LOOP>
       </ul>
-    </div>
 
     <!-- Forms -->
     <TMPL_LOOP NAME="AUTH_LOOP">
@@ -83,6 +82,7 @@
         </form>
       </div>
     </TMPL_LOOP>
+    </div> <!-- end authloop -->
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_FORM">
