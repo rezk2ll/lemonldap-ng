@@ -374,9 +374,9 @@ function setlminputdata(id,input){
 	setlmdata(id,inputvalue);
 }
 function setlmrule(id,c,r,v){
-	c=$(c).attr('value');
-	r=$(r).attr('value');
-	v=$(v).attr('value');
+	c=$(c).val();
+	r=$(r).val();
+	v=$(v).val();
 	var re=r;
 	var text=r;
 	if(c.length>0){
@@ -389,9 +389,9 @@ function setlmrule(id,c,r,v){
 	$('#text_'+safeSelector(id)).text(text);
 }
 function setlmgrantsessionrule(id,c,r,v){
-        c=$(c).attr('value');
-        r=$(r).attr('value');
-        v=$(v).attr('value') || '#';
+        c=$(c).val();
+        r=$(r).val();
+        v=$(v).val() || '#';
         var re=r;
         var text=r;
         if(c.length>0){
@@ -426,7 +426,7 @@ function setlmfile(id,input){
 			}else{
 				data.content = data.content.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
 				setlmdata(id,data.content);
-				$('#filearea').attr('value',lmdata(id));
+				$('#filearea').val(lmdata(id));
 				display('filearea',lmtext(id));
 			}
 		},
@@ -439,9 +439,9 @@ function setlmfile(id,input){
 	return false;
 }
 function setlmsamlassertion(id){
-	var ind=$('#samlAssertionIndex').attr('value');
-	var bin=$('#samlAssertionBinding').attr('value');
-	var loc=$('#samlAssertionLocation').attr('value');
+	var ind=$('#samlAssertionIndex').val();
+	var bin=$('#samlAssertionBinding').val();
+	var loc=$('#samlAssertionLocation').val();
 	var def='0';
 	if($('#samlAssertionDefaultOn').attr('checked')){
 		def='1';
@@ -476,27 +476,27 @@ function setlmsamlassertion(id){
 	setlmdata(id,v);
 }
 function setlmsamlattribute(id){
-	var name=$('#samlAttributeName').attr('value');
-	var form=$('#samlAttributeFormat').attr('value');
-	var altr=$('#samlAttributeFriendlyName').attr('value');
+	var name=$('#samlAttributeName').val();
+	var form=$('#samlAttributeFormat').val();
+	var altr=$('#samlAttributeFriendlyName').val();
 	var mand='0';
 	if($('#samlAttributeMandatoryOn').attr('checked')){
 		mand='1';
 	}
 	var v=mand+';'+name+';'+form+';'+altr;
-	setlmtext(id,$('#samlAttributeKey').attr('value'));
+	setlmtext(id,$('#samlAttributeKey').val());
 	setlmdata(id,v);
 }
 function setlmsamlservice(id){
-	var bin=$('#samlServiceBinding').attr('value');
-	var loc=$('#samlServiceLocation').attr('value');
-	var rep=$('#samlServiceResponseLocation').attr('value');
+	var bin=$('#samlServiceBinding').val();
+	var loc=$('#samlServiceLocation').val();
+	var rep=$('#samlServiceResponseLocation').val();
 	var v=bin+';'+loc+';'+rep;
 	setlmdata(id,v);
 }
 function setopenididplist(id){
 	var type=0;
-	var list=$('#openid_serverlist_text').attr('value');
+	var list=$('#openid_serverlist_text').val();
 	if($('#openid_serverlist_white').attr('checked')){
 		type=1;
 	}
@@ -575,7 +575,7 @@ function authParams(id) {
 	var t=splitModuleAndOptions(lmdata(id));
 
 	// Update options field
-		$('#authOptions').attr('value',t[1]);
+		$('#authOptions').val(t[1]);
 
 	if(t[1].length>1){
 		$('#authOptions').show();
@@ -588,7 +588,7 @@ function authParams(id) {
 	$('#authText').change(function(){
 		var isMulti=false;
 		$('#content_authParams option:selected').each(function(){
-			if($(this).attr('value')=='Multi'){isMulti=true;}
+			if($(this).val()=='Multi'){isMulti=true;}
 		});
 		if(isMulti){
 			$('#authOptions').show();
@@ -636,7 +636,7 @@ function userdbParams(id) {
 	var t=splitModuleAndOptions(lmdata(id));
 
 	// Update options field
-	$('#authOptions').attr('value',t[1]);
+	$('#authOptions').val(t[1]);
 
 	if(t[1].length>1){
 		$('#authOptions').show();
@@ -649,7 +649,7 @@ function userdbParams(id) {
 	$('#authText').change(function(){
 		var isMulti=false;
 		$('#content_authParams option:selected').each(function(){
-			if($(this).attr('value')=='Multi'){isMulti=true;}
+			if($(this).val()=='Multi'){isMulti=true;}
 		});
 		if(isMulti){
 			$('#authOptions').show();
@@ -804,8 +804,8 @@ function casAccessControlPolicyParams(id) {
 }
 function btext(id) {
 	currentId=id;
-	$('#btextKey').attr('value',lmtext(id));
-	$('#btextValue').attr('value',lmdata(id));
+	$('#btextKey').val(lmtext(id));
+	$('#btextValue').val(lmdata(id));
 	display('btext',lmtext(id));
 	$('#btextValue,#btextKey').elastic()
 	$('#newkb,#delkb').show();
@@ -824,17 +824,17 @@ function trool(id) {
 }
 function int(id) {
 	currentId=id;
-	$('#int').attr('value',lmdata(id));
+	$('#int').val(lmdata(id));
 	display('int',lmtext(id));
 }
 function text(id) {
 	currentId=id;
-	$('#text').attr('value',lmdata(id));
+	$('#text').val(lmdata(id));
 	display('text',lmtext(id));
 }
 function textarea(id) {
 	currentId=id;
-	$('#textarea').attr('value',lmdata(id));
+	$('#textarea').val(lmdata(id));
 	display('textarea',lmtext(id));
 }
 function filearea(id) {
@@ -842,7 +842,7 @@ function filearea(id) {
 	$('#urlinput').hide();
 	$('#downloadfile').hide();
 	$('#generatefile').hide();
-	$('#filearea').attr('value',lmdata(id));
+	$('#filearea').val(lmdata(id));
 	/* Only samlIDPMetaDataXML and samlSPMetaDataXML element could be loaded from URL */
 	if(lmtext(id)=='samlIDPMetaDataXML'){$('#urlinput').show();}
 	if(lmtext(id)=='samlSPMetaDataXML') {$('#urlinput').show();}
@@ -869,14 +869,14 @@ function samlAssertion(id) {
 	}else{
 		$('#samlAssertionDefaultOff').attr('checked',true);
 	}
-	$('#samlAssertionIndex').attr('value',t[1]);
+	$('#samlAssertionIndex').val(t[1]);
 	formateSelect('samlAssertionBinding',[
 		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact=Artifact',
 		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST=HTTP POST',
 		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect=HTTP Redirect',
 		'urn:oasis:names:tc:SAML:2.0:bindings:SOAP=SOAP'
 		],t[2]);
-	$('#samlAssertionLocation').attr('value',t[3]);
+	$('#samlAssertionLocation').val(t[3]);
 	display('samlAssertion',lmtext(id));
 }
 function samlAttribute(id) {
@@ -894,15 +894,15 @@ function samlAttribute(id) {
 	}else{
 		$('#samlAttributeMandatoryOff').attr('checked',true);
 	}
-	$('#samlAttributeKey').attr('value',lmtext(id));
-	$('#samlAttributeName').attr('value',t[1]);
+	$('#samlAttributeKey').val(lmtext(id));
+	$('#samlAttributeName').val(t[1]);
 	formateSelect('samlAttributeFormat',[
 		'=',
 		'urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified=Unspecified',
 		'urn:oasis:names:tc:SAML:2.0:attrname-format:uri=URI',
 		'urn:oasis:names:tc:SAML:2.0:attrname-format:basic=Basic'
 		],t[2]);
-	$('#samlAttributeFriendlyName').attr('value',t[3]);
+	$('#samlAttributeFriendlyName').val(t[3]);
 	display('samlAttribute',lmtext(id));
 	$('#newsamlattributeb,#delsamlattributeb').show();
 }
@@ -913,7 +913,7 @@ function samlAttributeRoot(id){
 }
 function samlIdpMetaData(id){
 	currentId=id;
-	$('#samlIdpMetaData').attr('value',lmtext(id));
+	$('#samlIdpMetaData').val(lmtext(id));
 	display('samlIdpMetaData',lmtext(id));
 	if($('#li_'+myB64('/samlIDPMetaDataNode')).find('span').size()==1){
 		$('#delidpsamlmetadatab').hide();
@@ -924,7 +924,7 @@ function samlIdpMetaData(id){
 }
 function samlSpMetaData(id){
 	currentId=id;
-	$('#samlSpMetaData').attr('value',lmtext(id));
+	$('#samlSpMetaData').val(lmtext(id));
 	display('samlSpMetaData',lmtext(id));
 	if($('#li_'+myB64('/samlSPMetaDataNode')).find('span').size()==1){
 		$('#delspsamlmetadatab').hide();
@@ -942,8 +942,8 @@ function samlService(id) {
 		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact=HTTP Artifact',
 		'urn:oasis:names:tc:SAML:2.0:bindings:SOAP=SOAP'
 		],t[0]);
-	$('#samlServiceLocation').attr('value',t[1]);
-	$('#samlServiceResponseLocation').attr('value',t[2]);
+	$('#samlServiceLocation').val(t[1]);
+	$('#samlServiceResponseLocation').val(t[2]);
 	display('samlService',lmtext(id));
 }
 function openididplist(id) {
@@ -954,7 +954,7 @@ function openididplist(id) {
 	}else{
 		$('#openid_serverlist_black').attr('checked',true);
 	}
-	$('#openid_serverlist_text').attr('value',t[1]);
+	$('#openid_serverlist_text').val(t[1]);
 	display('openid_serverlist',lmtext(id));
 }
 function securedCookieValues(id){
@@ -969,7 +969,7 @@ function securedCookieValues(id){
 }
 function vhost(id){
 	currentId=id;
-	$('#vhost').attr('value',lmtext(id));
+	$('#vhost').val(lmtext(id));
 	display('vhost',lmtext(id));
 	$('#bdelvh,#bnewvh').show();
 }
@@ -988,9 +988,10 @@ function rules(id){
 	var t=lmtext(id);
 	var b=t.match(/^(?:\(\?#(.*?)\))?(.*)/);
 	if(typeof(b[1])=='undefined')b[1]='';
-	$('#rulComment').attr('value',b[1]);
-	$('#rulKey').attr('value',b[2]);
-	$('#rulValue').attr('value',lmdata(id));
+	//$('#rulComment').val(b[1]);
+	$('#rulComment').val(b[1]);
+	$('#rulKey').val(b[2]);
+	$('#rulValue').val(lmdata(id));
 	display('rules',lmtext(lmparent(id)));
 	$('#rulComment,#rulKey,#rulValue').elastic();
 	if(t=='default'){
@@ -1016,9 +1017,9 @@ function grantSessionRules(id){
 	if(typeof(b[2])=='undefined')b[2]='';
 	var v=lmdata(id);
 	if(v=='#')v=''
-	$('#grantSessionRulKey').attr('value',b[1]);
-	$('#grantSessionRulComment').attr('value',b[2]);
-	$('#grantSessionRulValue').attr('value',v);
+	$('#grantSessionRulKey').val(b[1]);
+	$('#grantSessionRulComment').val(b[2]);
+	$('#grantSessionRulValue').val(v);
 	display('grantSessionRules',lmtext(lmparent(id)));
 	$('#grantSessionRulKey,#grantSessionRulComment,#grantSessionRulValue').elastic();
 	$('#delkb').show();
@@ -1030,9 +1031,9 @@ function grantSessionRulesRoot(id){
 	$('#newgsrbr').show();
 }
 function reloadAuthParams() {
-	var value=$('#authText').attr('value');
+	var value=$('#authText').val();
 	if($('#authOptions').is(':visible')){
-		value+=' '+$('#authOptions').attr('value');
+		value+=' '+$('#authOptions').val();
 	}
 	setlmdata(currentId,value);
 	$.ajax({
@@ -1428,20 +1429,20 @@ function delChoice(){
 function authChoice(id){
 	currentId=id;
 	var t=lmdata(id).split('|');
-	$('#authChoiceKey').attr('value',lmtext(id));
+	$('#authChoiceKey').val(lmtext(id));
 	formateSelectAuth('authChoiceAuth',t[0]);
 	formateSelectUser('authChoiceUser',t[1]);
 	formateSelectPassword('authChoicePassword',t[2]);
-	$('#authChoiceURL').attr('value',t[3]);
+	$('#authChoiceURL').val(t[3]);
 	display('authChoice',lmtext(id));
 	$('#newchoice,#delchoice').show();
 }
 function setlmauthchoice(id){
-	var key=$('#authChoiceKey').attr('value');
-	var auth=$('#authChoiceAuth').attr('value');
-	var user=$('#authChoiceUser').attr('value');
-	var password=$('#authChoicePassword').attr('value');
-	var url=$('#authChoiceURL').attr('value');
+	var key=$('#authChoiceKey').val();
+	var auth=$('#authChoiceAuth').val();
+	var user=$('#authChoiceUser').val();
+	var password=$('#authChoicePassword').val();
+	var url=$('#authChoiceURL').val();
 	setlmtext(id,key);
 	setlmdata(id,auth+'|'+user+'|'+password+'|'+url);
 }
@@ -1470,8 +1471,8 @@ function delCategory(){
 
 function applicationListCategory(id){
 	currentId=id;
-	$('#applicationListCategoryKey').attr('value',lmtext(id));
-	$('#applicationListCategoryName').attr('value',lmdata(id));
+	$('#applicationListCategoryKey').val(lmtext(id));
+	$('#applicationListCategoryName').val(lmdata(id));
 	display('applicationListCategory',lmtext(id));
 	$('#delcategory,#newapplicationr').show();
 }
@@ -1492,23 +1493,23 @@ function delApplication(){
 }
 
 function setlmapplication(id){
-	var key=$('#applicationListApplicationKey').attr('value');
-	var name=$('#applicationListApplicationName').attr('value');
-	var url=$('#applicationListApplicationURL').attr('value');
-	var desc=$('#applicationListApplicationDescription').attr('value');
-	var logo=$('#applicationListApplicationLogo').attr('value');
-	var display=$('#applicationListApplicationDisplay').attr('value');
+	var key=$('#applicationListApplicationKey').val();
+	var name=$('#applicationListApplicationName').val();
+	var url=$('#applicationListApplicationURL').val();
+	var desc=$('#applicationListApplicationDescription').val();
+	var logo=$('#applicationListApplicationLogo').val();
+	var display=$('#applicationListApplicationDisplay').val();
 	setlmtext(id,key);
 	setlmdata(id,name+'|'+url+'|'+desc+'|'+logo+'|'+display);
 }
 
 function applicationListApplication(id){
 	currentId=id;
-	$('#applicationListApplicationKey').attr('value',lmtext(id));
+	$('#applicationListApplicationKey').val(lmtext(id));
 	var t=lmdata(id).split('|');
-	$('#applicationListApplicationName').attr('value',t[0]);
-	$('#applicationListApplicationURL').attr('value',t[1]);
-	$('#applicationListApplicationDescription').attr('value',t[2]);
+	$('#applicationListApplicationName').val(t[0]);
+	$('#applicationListApplicationURL').val(t[1]);
+	$('#applicationListApplicationDescription').val(t[2]);
 	changeAppsLogo(t[3]);
 	formateSelect('applicationListApplicationDisplay',[
 		'auto=Automatic',
@@ -1566,8 +1567,8 @@ function newPostDataR(){
 
 function post(id){
 	currentId=id;
-	$('#postKey').attr('value',lmtext(id));
-	$('#postUrl').attr('value',lmdata(id));
+	$('#postKey').val(lmtext(id));
+	$('#postUrl').val(lmdata(id));
 	display('post',lmtext(lmparent(id)));
 	$('#delpost,#newpostdatar').show();
 }
@@ -1575,8 +1576,8 @@ function post(id){
 function postData(id){
 	currentId=id;
 	var cleankey = lmtext(id).replace('postdata:','');
-	$('#postDataKey').attr('value',cleankey);
-	$('#postDataValue').attr('value',lmdata(id));
+	$('#postDataKey').val(cleankey);
+	$('#postDataValue').val(lmdata(id));
 	display('postdata',cleankey);
 	$('#delpostdata').show();
 }
