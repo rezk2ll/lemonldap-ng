@@ -46,6 +46,7 @@ padding: 0 10px;
 opacity:1;
 font-size:12pt;
 border-left: orange solid 20px;
+text-align: left;
 }
 
 /* Tables */
@@ -101,6 +102,7 @@ color:#000;
 #logincontent form {
 min-height:200px;
 height:auto;
+margin: 20px;
 }
 
 #mailcontent form {
@@ -135,7 +137,7 @@ border-radius:10px 10px 10px 10px;
 color:#CCC;
 }
 
-#authMenu li.ui-tabs-selected a {
+#authMenu li.ui-tabs-active a {
 color:#000;
 }
 
@@ -218,7 +220,7 @@ width:600px;
 color:#CCC;
 }
 
-#menucontent li.ui-tabs-selected a {
+#menucontent li.ui-tabs-active a {
 color:#000;
 }
 
@@ -268,7 +270,7 @@ margin-bottom:5px;
 .ui-tabs-nav li a{
 }
 
-li.ui-tabs-selected{
+li.ui-tabs-active{
 }
 
 /* Applications list */

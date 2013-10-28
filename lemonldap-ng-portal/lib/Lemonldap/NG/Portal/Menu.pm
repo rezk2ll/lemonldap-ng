@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::_LibAccess;
 use base qw(Lemonldap::NG::Portal::_LibAccess);
 use Clone qw(clone);
 
-our $VERSION  = '1.1.0';
+our $VERSION  = '1.3.0';
 our $catlevel = 0;
 
 ## @method void menuInit()
@@ -48,7 +48,7 @@ sub menuInit {
 
     # Default to appslist if invalid tab URL parameter
     $self->{menuDisplayTab} = "appslist"
-      unless ( $self->{menuDisplayTab} =~ /^(password|logout)$/ );
+      unless ( $self->{menuDisplayTab} =~ /^(password|logout|loginHistory)$/ );
 
     # Force password tab in case of password error
     $self->{menuDisplayTab} = "password"
