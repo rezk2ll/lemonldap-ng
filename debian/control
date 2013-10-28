@@ -84,7 +84,7 @@ Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
          libapache2-mod-perl2,
-         liblemonldap-ng-conf-perl (= ${binary:Version}),
+         liblemonldap-ng-common-perl (= ${binary:Version}),
          libwww-perl
 Recommends: libhttp-message-perl | libwww-perl (<< 6),
             liblwp-protocol-https-perl | libwww-perl (<< 6)
@@ -106,7 +106,9 @@ Description: Lemonldap::NG Apache handler part
  This package installs the Apache module part (handler) used to protect web
  areas.
 
-Package: liblemonldap-ng-conf-perl
+Package: liblemonldap-ng-common-perl
+Conflicts: liblemonldap-ng-conf-perl
+Provides: liblemonldap-ng-conf-perl
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
@@ -148,7 +150,7 @@ Depends: ${misc:Depends},
          libcrypt-openssl-rsa-perl,
          libhtml-template-perl,
          libjson-perl,
-         liblemonldap-ng-conf-perl (= ${binary:Version}),
+         liblemonldap-ng-common-perl (= ${binary:Version}),
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libwww-perl,
          libxml-libxml-perl,
@@ -178,7 +180,7 @@ Depends: ${misc:Depends},
          ${perl:Depends},
          libclone-perl,
          libhtml-template-perl,
-         liblemonldap-ng-conf-perl (= ${binary:Version}),
+         liblemonldap-ng-common-perl (= ${binary:Version}),
          libmime-lite-perl,
          libnet-ldap-perl,
          libregexp-assemble-perl,

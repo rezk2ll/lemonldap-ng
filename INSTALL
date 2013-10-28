@@ -66,7 +66,7 @@ libraries which are installed in /usr/share/perl5/Lemonldap/NG/
 ---------------------------
 
 If you have build Debian packages, configuration is done by Debconf. See
-/usr/share/doc/liblemonldap-ng-conf/README.Debian to use it.
+/usr/share/doc/liblemonldap-ng-common/README.Debian to use it.
 
 After build, you have a new file named example/apache.conf. You just have to
 include this file in Apache configuration:

@@ -1,4 +1,4 @@
-Template: liblemonldap-ng-conf-perl/ldapServer
+Template: liblemonldap-ng-common-perl/ldapServer
 Type: string
 Default: localhost
 _Description: LDAP server:
@@ -6,48 +6,48 @@ _Description: LDAP server:
  Lemonldap::NG.
  You can modify this value later using the Lemonldap::NG manager.
 
-Template: liblemonldap-ng-conf-perl/domain
+Template: liblemonldap-ng-common-perl/domain
 Type: string
 Default: example.com
 _Description: Lemonldap::NG DNS domain:
  Set here the main domain protected by Lemonldap::NG.
  You can modify this value later using the Lemonldap::NG manager.
 
-Template: liblemonldap-ng-conf-perl/portal
+Template: liblemonldap-ng-common-perl/portal
 Type: string
 Default: http://auth.example.com/
 _Description: Lemonldap::NG portal:
  Set here the Lemonldap::NG portal URL.
  You can modify this value later using the Lemonldap::NG manager.
 
-Template: liblemonldap-ng-conf-perl/ldapPort
+Template: liblemonldap-ng-common-perl/ldapPort
 Type: string
 Default: 389
 _Description: LDAP server port:
  Set here the port used by the LDAP server.
  You can modify this value later using the Lemonldap::NG manager.
 
-Template: liblemonldap-ng-conf-perl/ldapBase
+Template: liblemonldap-ng-common-perl/ldapBase
 Type: string
 Default: dc=example,dc=com
 _Description: LDAP search base:
  Set here the search base to use in LDAP queries.
  You can modify this value later using the Lemonldap::NG manager.
 
-Template: liblemonldap-ng-conf-perl/managerDn
+Template: liblemonldap-ng-common-perl/managerDn
 Type: string
 _Description: LDAP account:
  Set here the account that Lemonldap::NG has to use for its LDAP requests.
  Leaving it blank causes Lemonldap::NG to use anonymous connections.
  You can modify this value later using the Lemonldap::NG manager.
 
-Template: liblemonldap-ng-conf-perl/managerPassword
+Template: liblemonldap-ng-common-perl/managerPassword
 Type: string
 _Description: LDAP password:
  Set here the password for the Lemonldap::NG LDAP account.
  You can modify this value later using the Lemonldap::NG manager.
 
-Template: liblemonldap-ng-conf-perl/migrate
+Template: liblemonldap-ng-common-perl/migrate
 Type: boolean
 _Description: Lemonldap::NG configuration files have changed, try to migrate your files?
 

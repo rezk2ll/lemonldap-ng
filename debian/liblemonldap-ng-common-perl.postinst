@@ -14,7 +14,7 @@ MIGRATION=/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini
 if [ "$1" == "configure" ]
 then
     for i in domain ldapServer ldapPort ldapBase managerDn managerPassword portal; do
-        db_get liblemonldap-ng-conf-perl/$i || true
+        db_get liblemonldap-ng-common-perl/$i || true
         perl -000 -i -pe "s#^$i(\\n\\s+)('?)[^\\n]*?('?)\$#$i\${1}\${2}$RET\${3}#m" $FIRSTCONFFILE
     done
 
@@ -22,7 +22,7 @@ then
     if [ "$2" != "" ]; then
         if dpkg --compare-versions $2 lt 1.0; then
             if [ -e $CONFDIR/storage.conf -o -e $CONFDIR/apply.conf -o -e $CONFDIR/apps-list.xml ] ; then
-                db_get liblemonldap-ng-conf-perl/migrate
+                db_get liblemonldap-ng-common-perl/migrate
                 if [ "$RET" ]; then
                     $MIGRATION 2>&1 > /dev/null || :
                 fi

@@ -60,11 +60,11 @@ override_dh_fixperms:
 	chown www-data:www-data \
 		debian/*/$(SESSIONSDIR) \
 		debian/*/$(SESSIONSDIR)/lock \
-		debian/liblemonldap-ng-conf-perl/$(CONFSTORAGEDIR) \
+		debian/liblemonldap-ng-common-perl/$(CONFSTORAGEDIR) \
 		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR)
-	chgrp www-data debian/liblemonldap-ng-conf-perl/$(LMINIFILE) \
-		debian/liblemonldap-ng-conf-perl/$(FIRSTCONFFILE)
+	chgrp www-data debian/liblemonldap-ng-common-perl/$(LMINIFILE) \
+		debian/liblemonldap-ng-common-perl/$(FIRSTCONFFILE)
 	chmod 770 debian/*/$(SESSIONSDIR) debian/*/$(SESSIONSDIR)/lock
-	chmod 750 debian/liblemonldap-ng-conf-perl/$(CONFSTORAGEDIR)
-	chmod 640 debian/liblemonldap-ng-conf-perl/$(FIRSTCONFFILE) \
-		debian/liblemonldap-ng-conf-perl/$(LMINIFILE)
+	chmod 750 debian/liblemonldap-ng-common-perl/$(CONFSTORAGEDIR)
+	chmod 640 debian/liblemonldap-ng-common-perl/$(FIRSTCONFFILE) \
+		debian/liblemonldap-ng-common-perl/$(LMINIFILE)
