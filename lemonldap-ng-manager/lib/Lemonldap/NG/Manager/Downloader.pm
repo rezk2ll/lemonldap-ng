@@ -17,7 +17,7 @@ require Lemonldap::NG::Manager::Request;    #inherits
 our $VERSION = '1.3.0';
 
 ## @method string node(string node)
-# Build the part of the tree that does not depends of the the configuration.
+# Build the part of the tree that does not depends of the configuration.
 # Call corresp(), ajaxNode(), confNode() or itself with li() and span().
 #@param $node Node to display
 #@return HTML string
