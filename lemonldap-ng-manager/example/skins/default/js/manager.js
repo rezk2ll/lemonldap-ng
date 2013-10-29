@@ -443,7 +443,7 @@ function setlmsamlassertion(id){
 	var bin=$('#samlAssertionBinding').val();
 	var loc=$('#samlAssertionLocation').val();
 	var def='0';
-	if($('#samlAssertionDefaultOn').attr('checked')){
+	if($('#samlAssertionDefaultOn').prop('checked',true)){
 		def='1';
 	}
 	// Update default value in other assertions.
@@ -480,7 +480,7 @@ function setlmsamlattribute(id){
 	var form=$('#samlAttributeFormat').val();
 	var altr=$('#samlAttributeFriendlyName').val();
 	var mand='0';
-	if($('#samlAttributeMandatoryOn').attr('checked')){
+	if($('#samlAttributeMandatoryOn').prop('checked',true)){
 		mand='1';
 	}
 	var v=mand+';'+name+';'+form+';'+altr;
@@ -497,7 +497,7 @@ function setlmsamlservice(id){
 function setopenididplist(id){
 	var type=0;
 	var list=$('#openid_serverlist_text').val();
-	if($('#openid_serverlist_white').attr('checked')){
+	if($('#openid_serverlist_white').prop('checked',true)){
 		type=1;
 	}
 	setlmdata(id,type+';'+list);
@@ -812,14 +812,14 @@ function btext(id) {
 }
 function bool(id) {
 	currentId=id;
-	if(lmdata(id)==1){$('#On').attr('checked',true)}else{$('#Off').attr('checked',true)}
+	if(lmdata(id)==1){$('#On').attr('checked','checked')}else{$('#Off').attr('checked','checked')}
 	display('bool',lmtext(id));
 }
 function trool(id) {
 	currentId=id;
-	if(lmdata(id)==1){$('#TrOn').attr('checked',true)}
-	else{if(lmdata(id)==0){$('#TrOff').attr('checked',true)}
-	else{$('#TrDefault').attr('checked',true)}}
+	if(lmdata(id)==1){$('#TrOn').attr('checked','checked')}
+	else{if(lmdata(id)==0){$('#TrOff').attr('checked','checked')}
+	else{$('#TrDefault').attr('checked','checked')}}
 	display('trool',lmtext(id));
 }
 function int(id) {
@@ -865,9 +865,9 @@ function samlAssertion(id) {
 
 	// Fill fields
 	if(t[0]==1){
-		$('#samlAssertionDefaultOn').attr('checked',true);
+		$('#samlAssertionDefaultOn').attr('checked','checked');
 	}else{
-		$('#samlAssertionDefaultOff').attr('checked',true);
+		$('#samlAssertionDefaultOff').attr('checked','checked');
 	}
 	$('#samlAssertionIndex').val(t[1]);
 	formateSelect('samlAssertionBinding',[
@@ -890,9 +890,9 @@ function samlAttribute(id) {
 
 	// Fill fields
 	if(t[0]==1){
-		$('#samlAttributeMandatoryOn').attr('checked',true);
+		$('#samlAttributeMandatoryOn').attr('checked','checked');
 	}else{
-		$('#samlAttributeMandatoryOff').attr('checked',true);
+		$('#samlAttributeMandatoryOff').attr('checked','checked');
 	}
 	$('#samlAttributeKey').val(lmtext(id));
 	$('#samlAttributeName').val(t[1]);
@@ -950,9 +950,9 @@ function openididplist(id) {
 	currentId=id;
 	var t=lmdata(id).split(';');
 	if(t[0]==1){
-		$('#openid_serverlist_white').attr('checked',true);
+		$('#openid_serverlist_white').attr('checked','checked');
 	}else{
-		$('#openid_serverlist_black').attr('checked',true);
+		$('#openid_serverlist_black').attr('checked','checked');
 	}
 	$('#openid_serverlist_text').val(t[1]);
 	display('openid_serverlist',lmtext(id));
@@ -1642,12 +1642,12 @@ function boolOrPerlExpr(id){
 	$('#bopeValue').val('');
 	$('#bopeValue').hide();
 	if(lmdata(id)==1){
-		$('#bopeOn').attr('checked',true);
+		$('#bopeOn').attr('checked','checked');
 	}else{
 		if(lmdata(id)==0){
-			$('#bopeOff').attr('checked',true);
+			$('#bopeOff').attr('checked','checked');
 		}else{
-			$('#bopeExpr').attr('checked',true);
+			$('#bopeExpr').attr('checked','checked');
 			$('#bopeValue').val(lmdata(id));
 			$('#bopeValue').show();
 		}
