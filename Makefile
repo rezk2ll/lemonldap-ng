@@ -201,6 +201,7 @@ manager_test:	manager handler_test common_test
 	@$(MAKE) -C ${SRCMANAGERDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/ -I../${SRCHANDLERDIR}/blib/lib/"
 
 extra_test:	all
+	cd ${SRCPORTALDIR} && prove xt
 	PERL_DL_NONLAZY=1 $(PERL) "-MExtUtils::Command::MM" "-e" "test_harness(0, 'lemonldap-ng-common/blib/lib', 'lemonldap-ng-handler/blib/lib', 'lemonldap-ng-manager/blib/lib', 'lemonldap-ng-portal/blib/lib')" extra-tests/*.t
 
 #
