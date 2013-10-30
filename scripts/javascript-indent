@@ -1,0 +1,19 @@
+#!/usr/bin/perl -w
+
+use JavaScript::Beautifier qw/js_beautify/;
+
+unless ( $ARGV[0] and -e $ARGV[0] ) {
+    die "Usage $0 <file.js>";
+}
+
+open F, $ARGV[0] or die($!);
+my $src;
+while (<F>) { $src .= $_; }
+close F;
+
+open F, ">",$ARGV[0] or die($!);
+
+print F js_beautify( $src, {
+    indent_size => 1, indent_character => "\t", preserve_newlines => 1 }
+);
+
