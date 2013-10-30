@@ -358,7 +358,7 @@ function setlmtext(id,v,prefixvalue){
 }
 function setlminputtext(id,input,prefixvalue){
 	var inputname=$(input).attr('id');
-	var inputvalue=$(input).attr('value');
+	var inputvalue=$(input).val();
 	if(!prefixvalue){prefixvalue="";}
 	if(inputvalue.length==0){
 		alert('No '+inputname);
@@ -370,7 +370,7 @@ function setlmdata(id,v){
 	$('#text_'+safeSelector(id)).attr('value',escape(v));
 }
 function setlminputdata(id,input){
-	var inputvalue=$(input).attr('value');
+	var inputvalue=$(input).val();
 	setlmdata(id,inputvalue);
 }
 function setlmrule(id,c,r,v){
