@@ -1,0 +1,84 @@
+#!/bin/bash
+
+# This example script can be used to compact a skin (pastel by default)
+# It uses CSS sprite and remove spaces in HTML
+
+# Note: it must be launched in the skin dir
+
+NAME=img
+SRC=pastel
+DST=pastel-compact
+rm -rf $NAME $DST
+mkdir $NAME $DST
+find $SRC/ -type f -iname '*.css' -exec cat {} \; | \
+perl -ne 'if(m#\@import url\(\s*"[\./]+(.*?.css)"#){print `cat $1`}else{print}' \
+	| perl -pe 'if(!s#url\s*\(\s*"?(?:\.\./)?(\.\./common/[^\)"]*)"?\s*\)#url\("$1")#){
+			if(s#url\s*\(\s*"?(?:.*?/)?([\w\-]+\.(?:png|gif|jpe?g))"?\s*\)#url\("$1")#){
+				$name=$1;
+				$img=`find '$SRC'/ -type f -name $name`;
+				chomp $img;
+				if($img){
+					`cp $img '$DST'`;
+				}
+				else{
+					$img=`find common/ -type f -name $name`;
+					chomp $img;
+					if($img){
+						s#url\("#url\("../common/#;
+					}
+					else {
+						print STDERR "$name not found\n";
+					}
+				}
+			}
+		}'>styles2.css
+LIST=$(find $SRC -type f -iname '*.tpl')
+for L in $LIST; do
+	perl -ne 's/^\s+//;
+		s/\s*$/\n/s;
+		next if(/^$/);
+		$j=1 if(m#<script#i);
+		$j=0 if(m#</script#i);
+		s#/css/#/#;
+		if(s/<img[^>]*
+		(?:<TMPL[^>]*>)?[^>]*?
+		((?:\w+|<TMPL_VAR\s+NAME="\w+"\s*>))(\.(?:png|gif|jpe?g))[^>]*>
+		/<div class="sprite-img-$1"><\/div>/xg){
+				my $img=$1.$2;
+				chomp $img;
+				unless($img=~/^</){
+					$img=`find '$SRC'/ common/ -type f -name $img`;
+					chomp $img;
+					unless($imgs{$img}){
+						`cp $img '$NAME'`;
+						$imgs{$img}++;
+					}
+				}
+		}
+		if((/^<!DOCTYPE/ or $ind) and !/>$/) {
+			$ind=1;
+		}
+		elsif((/^<!DOCTYPE/ or $ind) and />$/) {
+			$ind=0;
+		}
+		elsif(!/^<\?xml/i and !m#^//# and !$j) {
+			chomp;
+		}
+		print "\n" if(m#^</?TMPL_IF#);
+		print;' $L >${L/$SRC/$DST}
+done
+LIST=$(find $SRC -type l -iname '*.tpl')
+for L in $LIST; do
+	echo "####### $L"
+	cp -d $L $DST
+done
+AUTHLIST=$(ls /usr/share/perl5/Lemonldap/NG/Portal/Auth*|sed -e 's/.*\/Auth/common\//' -e 's/\.pm/\.png/')
+for FILE in $AUTHLIST; do
+	[ -e $FILE ] && cp $FILE $NAME
+done
+glue-sprite $NAME $DST
+find $DST/ -type f -iname '*.css' -exec cat {} \; -delete >styles.css
+cat styles.css styles2.css > $DST/styles.css
+rm -f styles.css styles2.css
+rm -rf $NAME
+
