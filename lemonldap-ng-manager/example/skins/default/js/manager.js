@@ -489,7 +489,7 @@ function setlmsamlservice(id){
 	setlmdata(id,v);
 }
 function setopenididplist(id){
-	var type=$('input[type=radio][name=openid_serverlist_textBoolean]:checked').attr("value");
+	var type=$('input[type=radio][name=openIdServerlistBoolean]:checked').attr("value");
 	var list=$('#openid_serverlist_text').val();
 	setlmdata(id,type+';'+list);
 }

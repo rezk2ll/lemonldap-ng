@@ -543,8 +543,8 @@
      <table>
       <tr>
        <td><lang en="List type" fr="Type de liste"/></td>
-       <td><input id="openid_serverlist_black" type="radio" name="openid_serverlist_blackBoolean" value="0" /><label for="openid_serverlist_black"><lang en="Black list" fr="Liste noire"/></label>
-           <input id="openid_serverlist_white" type="radio" name="openid_serverlist_blackBoolean" value="1" /><label for="openid_serverlist_white"><lang en="White list" fr="Liste blanche"/></label>
+       <td><input id="openid_serverlist_black" type="radio" name="openIdServerlistBoolean" value="0" /><label for="openid_serverlist_black"><lang en="Black list" fr="Liste noire"/></label>
+           <input id="openid_serverlist_white" type="radio" name="openIdServerlistBoolean" value="1" /><label for="openid_serverlist_white"><lang en="White list" fr="Liste blanche"/></label>
        </td>
       </tr>
       <tr>
