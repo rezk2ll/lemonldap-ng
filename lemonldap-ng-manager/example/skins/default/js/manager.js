@@ -442,10 +442,7 @@ function setlmsamlassertion(id){
 	var ind=$('#samlAssertionIndex').val();
 	var bin=$('#samlAssertionBinding').val();
 	var loc=$('#samlAssertionLocation').val();
-	var def='0';
-	if($('#samlAssertionDefaultOn').prop('checked',true)){
-		def='1';
-	}
+	var def=$('input[type=radio][name=samlAssertionDefaultBoolean]:checked').attr("value");
 	// Update default value in other assertions.
 	var parentId=lmparent(id);
 	var t=$('#'+parentId).find('span').get();
@@ -479,10 +476,7 @@ function setlmsamlattribute(id){
 	var name=$('#samlAttributeName').val();
 	var form=$('#samlAttributeFormat').val();
 	var altr=$('#samlAttributeFriendlyName').val();
-	var mand='0';
-	if($('#samlAttributeMandatoryOn').prop('checked',true)){
-		mand='1';
-	}
+	var mand=$('input[type=radio][name=samlAttributeMandatoryBoolean]:checked').attr("value");
 	var v=mand+';'+name+';'+form+';'+altr;
 	setlmtext(id,$('#samlAttributeKey').val());
 	setlmdata(id,v);
@@ -495,11 +489,8 @@ function setlmsamlservice(id){
 	setlmdata(id,v);
 }
 function setopenididplist(id){
-	var type=0;
+	var type=$('input[type=radio][name=openid_serverlist_textBoolean]:checked').attr("value");
 	var list=$('#openid_serverlist_text').val();
-	if($('#openid_serverlist_white').prop('checked',true)){
-		type=1;
-	}
 	setlmdata(id,type+';'+list);
 }
 function display(div,title) {
@@ -812,14 +803,14 @@ function btext(id) {
 }
 function bool(id) {
 	currentId=id;
-	if(lmdata(id)==1){$('#On').attr('checked','checked')}else{$('#Off').attr('checked','checked')}
+	if(lmdata(id)==1){$('#On').prop('checked',true)}else{$('#Off').prop('checked',true)}
 	display('bool',lmtext(id));
 }
 function trool(id) {
 	currentId=id;
-	if(lmdata(id)==1){$('#TrOn').attr('checked','checked')}
-	else{if(lmdata(id)==0){$('#TrOff').attr('checked','checked')}
-	else{$('#TrDefault').attr('checked','checked')}}
+	if(lmdata(id)==1){$('#TrOn').prop('checked',true)}
+	else{if(lmdata(id)==0){$('#TrOff').prop('checked',true)}
+	else{$('#TrDefault').prop('checked',true)}}
 	display('trool',lmtext(id));
 }
 function int(id) {
@@ -865,9 +856,9 @@ function samlAssertion(id) {
 
 	// Fill fields
 	if(t[0]==1){
-		$('#samlAssertionDefaultOn').attr('checked','checked');
+		$('#samlAssertionDefaultOn').prop('checked',true);
 	}else{
-		$('#samlAssertionDefaultOff').attr('checked','checked');
+		$('#samlAssertionDefaultOff').prop('checked',true);
 	}
 	$('#samlAssertionIndex').val(t[1]);
 	formateSelect('samlAssertionBinding',[
@@ -890,9 +881,9 @@ function samlAttribute(id) {
 
 	// Fill fields
 	if(t[0]==1){
-		$('#samlAttributeMandatoryOn').attr('checked','checked');
+		$('#samlAttributeMandatoryOn').prop('checked',true);
 	}else{
-		$('#samlAttributeMandatoryOff').attr('checked','checked');
+		$('#samlAttributeMandatoryOff').prop('checked',true);
 	}
 	$('#samlAttributeKey').val(lmtext(id));
 	$('#samlAttributeName').val(t[1]);
@@ -950,9 +941,9 @@ function openididplist(id) {
 	currentId=id;
 	var t=lmdata(id).split(';');
 	if(t[0]==1){
-		$('#openid_serverlist_white').attr('checked','checked');
+		$('#openid_serverlist_white').prop('checked',true);
 	}else{
-		$('#openid_serverlist_black').attr('checked','checked');
+		$('#openid_serverlist_black').prop('checked',true);
 	}
 	$('#openid_serverlist_text').val(t[1]);
 	display('openid_serverlist',lmtext(id));
@@ -1642,12 +1633,12 @@ function boolOrPerlExpr(id){
 	$('#bopeValue').val('');
 	$('#bopeValue').hide();
 	if(lmdata(id)==1){
-		$('#bopeOn').attr('checked','checked');
+		$('#bopeOn').prop('checked',true);
 	}else{
 		if(lmdata(id)==0){
-			$('#bopeOff').attr('checked','checked');
+			$('#bopeOff').prop('checked',true);
 		}else{
-			$('#bopeExpr').attr('checked','checked');
+			$('#bopeExpr').prop('checked',true);
 			$('#bopeValue').val(lmdata(id));
 			$('#bopeValue').show();
 		}
@@ -1656,7 +1647,7 @@ function boolOrPerlExpr(id){
 }
 
 function setlmbope(id){
-	if($('#bopeExpr:checked').val()=='-1'){
+	if($('input[type=radio][name=bope]:checked').attr("value")=='-1'){
 		setlmdata(id,$('#bopeValue').val());
 	}
 }

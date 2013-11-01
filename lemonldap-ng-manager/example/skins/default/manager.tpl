@@ -471,8 +471,8 @@
        <td><lang en="Name" fr="Nom"/></td>
        <td><input type="text" id="samlAttributeName" /></td>
        <td><lang en="Mandatory" fr="Obligatoire"/></td>
-       <td><input id="samlAttributeMandatoryOn" type="radio" name="boolean" value="1" /><label for="samlAttributeMandatoryOn"><lang en="On" fr="Activé"/></label>
-           <input id="samlAttributeMandatoryOff" type="radio" name="boolean" value="0" /><label for="samlAttributeMandatoryOff"><lang en="Off" fr="Désactivé"/></label>
+       <td><input id="samlAttributeMandatoryOn" type="radio" name="samlAttributeMandatoryBoolean" value="1" /><label for="samlAttributeMandatoryOn"><lang en="On" fr="Activé"/></label>
+           <input id="samlAttributeMandatoryOff" type="radio" name="samlAttributeMandatoryBoolean" value="0" /><label for="samlAttributeMandatoryOff"><lang en="Off" fr="Désactivé"/></label>
        </td>
       </tr>
       <tr>
@@ -493,8 +493,8 @@
      <table>
       <tr>
        <td><lang en="Default" fr="Par défaut"/></td>
-       <td><input id="samlAssertionDefaultOn" type="radio" name="boolean" value="1" /><label for="samlAssertionDefaultOn"><lang en="On" fr="Activé"/></label>
-           <input id="samlAssertionDefaultOff" type="radio" name="boolean" value="0" /><label for="samlAssertionDefaultOff"><lang en="Off" fr="Désactivé"/></label>
+       <td><input id="samlAssertionDefaultOn" type="radio" name="samlAssertionDefaultBoolean" value="1" /><label for="samlAssertionDefaultOn"><lang en="On" fr="Activé"/></label>
+           <input id="samlAssertionDefaultOff" type="radio" name="samlAssertionDefaultBoolean" value="0" /><label for="samlAssertionDefaultOff"><lang en="Off" fr="Désactivé"/></label>
        </td>
       </tr>
       <tr class="hidden">
@@ -543,8 +543,8 @@
      <table>
       <tr>
        <td><lang en="List type" fr="Type de liste"/></td>
-       <td><input id="openid_serverlist_black" type="radio" name="boolean" value="0" /><label for="openid_serverlist_black"><lang en="Black list" fr="Liste noire"/></label>
-           <input id="openid_serverlist_white" type="radio" name="boolean" value="1" /><label for="openid_serverlist_white"><lang en="White list" fr="Liste blanche"/></label>
+       <td><input id="openid_serverlist_black" type="radio" name="openid_serverlist_blackBoolean" value="0" /><label for="openid_serverlist_black"><lang en="Black list" fr="Liste noire"/></label>
+           <input id="openid_serverlist_white" type="radio" name="openid_serverlist_blackBoolean" value="1" /><label for="openid_serverlist_white"><lang en="White list" fr="Liste blanche"/></label>
        </td>
       </tr>
       <tr>
