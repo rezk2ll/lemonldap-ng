@@ -38,6 +38,10 @@ $ svn cp trunk branches/lemonldap-ng_version_VERSION-bugfixes
 - Tag the version on SVN from the branch:
 $ svn cp branches/lemonldap-ng_version_VERSION-bugfixes tags/lemonldap-ng_version_VERSION
 
+- Change "latest" symlink in dokuwiki 
+
+- Edit scripts/doc.pl in trunk to point on the new documentation path
+
 Make the distribution
 ---------------------
 
@@ -85,6 +89,8 @@ Then connect on the server and launch reprepro:
 $ ssh lemonldapng@lemonldap-ng.org
 lemonldapng@lemonldap-ng.org$ cd deb/
 lemonldapng@lemonldap-ng.org$ reprepro --ask-passphrase -Vb . include squeeze ../incoming/lemonldap-ng_VERSION_i386.changes
+or
+lemonldapng@sd-22107:~/deb$ reprepro --ask-passphrase -Vb . includedeb squeeze ../incoming/*VERSION*deb
 
 See also reprepro configuration file: 'distributions'
 
