@@ -1,0 +1,115 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="single_sign_on_cookie_domain_and_portal_url" id="single_sign_on_cookie_domain_and_portal_url">Single Sign On cookie, domain and portal URL</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Single Sign On cookie, domain and portal URL" [1-58] -->
+<h2><a name="sso_cookie" id="sso_cookie">SSO cookie</a></h2>
+<div class="level2">
+
+<p>
+
+The <acronym title="Single Sign On">SSO</acronym> cookie is build by the portal (as described in the <a href="../../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">login kinematic</a>), or by the Handler for cross domain authentication (see <a href="../../documentation/presentation.html#cross_domain_authentication_cda" class="wikilink1" title="documentation:presentation">CDA kinematic</a>).
+</p>
+
+<p>
+To edit <acronym title="Single Sign On">SSO</acronym> cookie parameters, go in Manager, <code>General Parameters</code> &gt; <code>Cookies</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Cookie name</strong>: name of the cookie, can be changed to avoid conflicts with other LemonLDAP::NG installations</div>
+</li>
+<li class="level1"><div class="li"> <strong>Domain</strong>: validity domain for the cookie (the cookie will not be sent on other domains)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Multiple domains</strong>: enable <a href="../../documentation/1.4/cda.html" class="wikilink1" title="documentation:1.4:cda">cross domain mechanism</a> (without this, you cannot extend <acronym title="Single Sign On">SSO</acronym> to other domains)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Secured cookie</strong>: 4 options:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>Non secured cookie</strong>: the cookie can be sent over <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> and HTTPS connections</div>
+</li>
+<li class="level2"><div class="li"> <strong>Secured cookie</strong>: the cookie can only be sent over HTTPS</div>
+</li>
+<li class="level2"><div class="li"> <strong>Double cookie</strong>: two cookies are delivered, one for <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> and HTTPS connections, the other for HTTPS only</div>
+</li>
+<li class="level2"><div class="li"> <strong>Double cookie for single session</strong>: as same, two cookies are delivered, but only one session is written in session database</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Javascript protection</strong>: set httpOnly flag, to avoid cookie been caught by javascript code</div>
+</li>
+<li class="level1"><div class="li"> <strong>Cookie expiration time</strong>: by default, <acronym title="Single Sign On">SSO</acronym> cookie is a session cookie, which mean it will be destroyed when the browser is closed. You can change this behavior and set a cookie duration, for example:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>+30s</strong>: 30 seconds from session creation</div>
+</li>
+<li class="level2"><div class="li"> <strong>+10m</strong>: ten minutes from session creation</div>
+</li>
+<li class="level2"><div class="li"> <strong>+1h</strong>: one hour from session creation</div>
+</li>
+<li class="level2"><div class="li"> <strong>+3M</strong>: three months from session creation</div>
+</li>
+<li class="level2"><div class="li"> <strong>+10y</strong>: ten years from session creation</div>
+</li>
+<li class="level2"><div class="li"> <strong>Thursday, 25-Apr-1999 00:40:33 GMT</strong>:  at the indicated time and date (but this is probably a bad idea)</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+
+<p><div class="notewarning">When you change cookie expiration time, it is written on the user hard disk unlike session cookie
+</div></p>
+</p>
+
+<p>
+<p><div class="noteimportant">Changing the domain value will not update other configuration parameters, like virtual host names, portal <acronym title="Uniform Resource Locator">URL</acronym>, etc. You have to update them by yourself.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "SSO cookie" [59-2129] -->
+<h2><a name="portal_url" id="portal_url">Portal URL</a></h2>
+<div class="level2">
+
+<p>
+
+Portal <acronym title="Uniform Resource Locator">URL</acronym> is the address used to redirect users on the authentication portal by:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Handler</strong>: user is redirected if he has no <acronym title="Single Sign On">SSO</acronym> cookie (or in <a href="../../documentation/1.4/cda.html" class="wikilink1" title="documentation:1.4:cda">CDA</a> mode)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Portal</strong>: the portal redirect on itself in many cases (credentials POST, <acronym title="Security Assertion Markup Language">SAML</acronym>, etc.)</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="notewarning">The portal <acronym title="Uniform Resource Locator">URL</acronym> <strong>must</strong> be inside <acronym title="Single Sign On">SSO</acronym> domain. If secured cookie is enabled, the portal <acronym title="Uniform Resource Locator">URL</acronym> <strong>must</strong> be HTTPS.
+</div></p>
+
+</p>
+
+</div>
+<!-- SECTION "Portal URL" [2130-] --></div><!-- closes <div class="dokuwiki export">-->

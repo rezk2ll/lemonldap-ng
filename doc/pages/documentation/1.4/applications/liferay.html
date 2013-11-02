@@ -1,0 +1,214 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="liferay" id="liferay">Liferay</a></h1>
+<div class="level1">
+
+<p>
+
+<a href="/_detail/applications/liferay_logo.png?id=documentation%3A1.4%3Aapplications%3Aliferay" class="media" title="applications:liferay_logo.png"><img src="../../../../media/applications/liferay_logo.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- SECTION "Liferay" [1-62] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+<a href="http://www.liferay.com/" class="urlextern" title="http://www.liferay.com/"  rel="nofollow">Liferay</a> is an enterprise portal.
+</p>
+
+<p>
+Liferay can use <acronym title="LemonLDAP::NG">LL::NG</acronym> as an <acronym title="Single Sign On">SSO</acronym> provider but you have to manage how users are created:
+</p>
+<ul>
+<li class="level1"><div class="li"> By hand in Liferay administration screens</div>
+</li>
+<li class="level1"><div class="li"> Imported from an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory</div>
+</li>
+</ul>
+
+<p>
+
+Of course, integration will be full if you use the <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory as users backend for <acronym title="LemonLDAP::NG">LL::NG</acronym> and Liferay.
+</p>
+
+<p>
+<p><div class="noteimportant">If the user is not created, or can not be created via <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> import, the connection to Liferay will be refused. With <acronym title="Lightweight Directory Access Protocol">LDAP</acronym>, login, mail, first name and last name are required attributes. If one is missing, the user is not created.
+</div></p>
+</p>
+
+<p>
+This documentation just explains how to set up the <acronym title="Single Sign On">SSO</acronym> part. Please refer to Liferay documentation to enable <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> provisionning.
+</p>
+
+</div>
+<!-- SECTION "Presentation" [63-811] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Configuration" [812-838] -->
+<h3><a name="liferay_administration" id="liferay_administration">Liferay administration</a></h3>
+<div class="level3">
+
+<p>
+
+Access to Liferay (first time):
+</p>
+
+<p>
+<a href="/_detail/documentation/liferay_1.png?id=documentation%3A1.4%3Aapplications%3Aliferay" class="media" title="documentation:liferay_1.png"><img src="../../../../media/documentation/liferay_1.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Login as administrator:
+</p>
+
+<p>
+<a href="/_detail/documentation/liferay_2.png?id=documentation%3A1.4%3Aapplications%3Aliferay" class="media" title="documentation:liferay_2.png"><img src="../../../../media/documentation/liferay_2.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Go to <code>My Account</code>:
+</p>
+
+<p>
+<a href="/_detail/documentation/liferay_3.png?id=documentation%3A1.4%3Aapplications%3Aliferay" class="media" title="documentation:liferay_3.png"><img src="../../../../media/documentation/liferay_3.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Go to <code>Portal</code> » <code>Settings</code>:
+</p>
+
+<p>
+<a href="/_detail/documentation/liferay_4.png?id=documentation%3A1.4%3Aapplications%3Aliferay" class="media" title="documentation:liferay_4.png"><img src="../../../../media/documentation/liferay_4.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Go to <code>Configuration</code> » <code>Authentication</code>:
+</p>
+
+<p>
+<a href="/_detail/documentation/liferay_5.png?id=documentation%3A1.4%3Aapplications%3Aliferay" class="media" title="documentation:liferay_5.png"><img src="../../../../media/documentation/liferay_5.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+In <code>General</code>, fill at least the following information:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>How do users authenticate?</strong>: by login</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="notetip">We advice to deactivate other options, cause users will use <acronym title="LemonLDAP::NG">LL::NG</acronym> portal to modify or reset their password.
+</div></p>
+</p>
+
+<p>
+<a href="/_detail/documentation/liferay_6.png?id=documentation%3A1.4%3Aapplications%3Aliferay" class="media" title="documentation:liferay_6.png"><img src="../../../../media/documentation/liferay_6.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+<p><div class="noteimportant">
+You need to activate <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> authentication, else <acronym title="Single Sign On">SSO</acronym> authentication will not work. Do this in the control panel or in the configuration file:
+
+</p>
+<pre class="file">
+ldap.auth.enabled=true
+</pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+<p>
+Then use the <code>SiteMinder</code> tab to configure <acronym title="Single Sign On">SSO</acronym>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Enabled</strong>: Yes</div>
+</li>
+<li class="level1"><div class="li"> <strong>Import from <acronym title="Lightweight Directory Access Protocol">LDAP</acronym></strong>: Yes (see <a href="#presentation" title="documentation:1.4:applications:liferay &crarr;" class="wikilink1">presentation</a>)</div>
+</li>
+<li class="level1"><div class="li"> <strong>User Header</strong>: Auth-User (case sensitive)</div>
+</li>
+</ul>
+
+<p>
+
+<a href="/_detail/documentation/liferay_7.png?id=documentation%3A1.4%3Aapplications%3Aliferay" class="media" title="documentation:liferay_7.png"><img src="../../../../media/documentation/liferay_7.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+<p><div class="noteimportant">Do not forget to save your changes!
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Liferay administration" [839-2004] -->
+<h3><a name="liferay_virtual_host_in_apache" id="liferay_virtual_host_in_apache">Liferay virtual host in Apache</a></h3>
+<div class="level3">
+
+<p>
+
+Configure Liferay virtual host like other <a href="../../../documentation/1.4/configvhost.html" class="wikilink1" title="documentation:1.4:configvhost">protected virtual host</a>.
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+       <span class="kw1">ServerName</span> liferay.example.com
+&nbsp;
+       PerlHeaderParserHandler My::Package
+&nbsp;
+       ...
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+</div>
+<!-- SECTION "Liferay virtual host in Apache" [2005-2290] -->
+<h3><a name="liferay_virtual_host_in_manager" id="liferay_virtual_host_in_manager">Liferay virtual host in Manager</a></h3>
+<div class="level3">
+
+<p>
+
+Go to the Manager and <a href="../../../documentation/1.4/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:1.4:configvhost">create a new virtual host</a> for Liferay.
+</p>
+
+<p>
+Just configure the <a href="../../../documentation/1.4/writingrulesand_headers.html#rules" class="wikilink1" title="documentation:1.4:writingrulesand_headers">access rules</a>. You can add a rule for logout:
+
+</p>
+<pre class="code">
+ ^/c/portal/logout =&gt; logout_sso
+</pre>
+
+<p>
+Configure the <code>Auth-User</code> <a href="../../../documentation/1.4/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:1.4:writingrulesand_headers">header</a>.
+</p>
+
+</div>
+<!-- SECTION "Liferay virtual host in Manager" [2291-] --></div><!-- closes <div class="dokuwiki export">-->

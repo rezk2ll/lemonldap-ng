@@ -1,0 +1,126 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="handler_redirections" id="handler_redirections">Handler Redirections</a></h1>
+<div class="level1">
+
+<p>
+
+<p><div class="noteclassic">When a user access a Handler without a cookie, he is redirected on portal, and the target <acronym title="Uniform Resource Locator">URL</acronym> is encoded in redirection <acronym title="Uniform Resource Locator">URL</acronym> (to redirect user after authentication process).
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Handler Redirections" [1-223] -->
+<h2><a name="protocol_and_port" id="protocol_and_port">Protocol and port</a></h2>
+<div class="level2">
+
+<p>
+
+To encode the redirection <acronym title="Uniform Resource Locator">URL</acronym>, the handler will use some Apache environment variables and also configuration settings:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>HTTPS</strong>: use https as protocol</div>
+</li>
+<li class="level1"><div class="li"> <strong>Port</strong>: port of the application (by default, 80 for http, 443 for https)</div>
+</li>
+</ul>
+
+<p>
+
+These parameters can be configured in Manager, in <code>General Parameters</code> &gt; <code>Advanced parameters</code> &gt; <code>Handler redirections</code>.
+</p>
+
+<p>
+<p><div class="notetip">These settings can be overriden per virtual host, see <a href="../../documentation/1.4/configvhost.html" class="wikilink1" title="documentation:1.4:configvhost">virtual host management</a>.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Protocol and port" [224-731] -->
+<h2><a name="forbidden_and_server_error" id="forbidden_and_server_error">Forbidden and Server error</a></h2>
+<div class="level2">
+
+<p>
+
+Handler use the default Apache error code for the following cases:
+</p>
+<ul>
+<li class="level1"><div class="li"> User has no access authorization: FORBIDDEN (403)</div>
+</li>
+<li class="level1"><div class="li"> An error occurs on server side: SERVER_ERROR (500)</div>
+</li>
+<li class="level1"><div class="li"> The application is in maintenance: <acronym title="Hyper Text Transfer Protocol">HTTP</acronym>_SERVICE_UNAVAILABLE (503)</div>
+</li>
+</ul>
+
+<p>
+
+These errors can be catch trough Apache <code>ErrorDocument</code> directive, to redirect user on a specific page:
+</p>
+<pre class="code file apache"><span class="co1"># Common error page and security parameters</span>
+<span class="kw1">ErrorDocument</span> 403 http://auth.example.com/?lmError=403
+<span class="kw1">ErrorDocument</span> 500 http://auth.example.com/?lmError=500
+<span class="kw1">ErrorDocument</span> <span class="nu0">503</span> http://auth.example.com/?lmError=<span class="nu0">503</span></pre>
+
+<p>
+It is also possible to redirect the user without using <code>ErrorDocument</code>: the Handler will not return 403, 500, 503 code, but code 302 (REDIRECT). 
+</p>
+
+<p>
+The user will be redirected on portal <acronym title="Uniform Resource Locator">URL</acronym> with error in the <code>lmError</code> <acronym title="Uniform Resource Locator">URL</acronym> parameter.
+</p>
+
+<p>
+These parameters can be configured in Manager, in <code>General Parameters</code> &gt; <code>Advanced parameters</code> &gt; <code>Handler redirections</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Redirect on forbidden</strong>: use 302 instead 403</div>
+</li>
+<li class="level1"><div class="li"> <strong>Redirect on error</strong>: use 302 instead 500 or 503</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Forbidden and Server error" [732-1828] -->
+<h1><a name="portal_redirections" id="portal_redirections">Portal Redirections</a></h1>
+<div class="level1">
+
+<p>
+
+<p><div class="noteclassic">If a user is redirected from handler to portal for authentication and once he is authenticated, portal redirects him to the redirection <acronym title="Uniform Resource Locator">URL</acronym>.
+</div></p>
+</p>
+
+<p>
+The redirection from portal can be done either with code 303 (See Other), or with a JavaScript redirection.
+</p>
+
+<p>
+Often the redirection takes some time because it is user&#039;s first access to the protected app, so a new app session has to be created : JavaScript redirection improves user experience by informing that authentication is performed, and by preventing from clicking again on the button because it is too slow.
+
+</p>
+
+</div>
+<!-- SECTION "Portal Redirections" [1829-] --></div><!-- closes <div class="dokuwiki export">-->

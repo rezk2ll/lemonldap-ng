@@ -1,0 +1,428 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="notifications_system" id="notifications_system">Notifications system</a></h1>
+<div class="level1">
+
+<p>
+
+Since version 0.9.4, LemonLDAP::NG can be used to notify some messages to users: if a user has a message, the message will be displayed when he will access to the portal. If the message contains check boxes, the user has to check all of them else he can not access to the portal and get his session cookie.
+</p>
+
+<p>
+Since 1.1.0, a notification explorer is available in Manager, and notifications can be done for all users, with the possibility to display conditions. When the user accept the notification, the reference is stored in his persistent session.
+</p>
+
+</div>
+<!-- SECTION "Notifications system" [1-586] -->
+<h2><a name="installation" id="installation">Installation</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Installation" [587-612] -->
+<h3><a name="activation" id="activation">Activation</a></h3>
+<div class="level3">
+
+<p>
+
+You just have to activate Notifications in the Manager (General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Activation) or in lemonldap-ng.ini:
+
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">notification</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
+
+</div>
+<!-- SECTION "Activation" [613-831] -->
+<h3><a name="storage" id="storage">Storage</a></h3>
+<div class="level3">
+
+<p>
+
+By default, notifications will be stored in the same database as configuration:
+</p>
+<ul>
+<li class="level1"><div class="li"> if you use “File” system and your “dirName” is set to /usr/local/lemonldap-ng/conf/, the notifications will be stored in /usr/local/lemonldap-ng/notifications/</div>
+</li>
+<li class="level1"><div class="li"> if you use “CDBI” or “RDBI” system, the notifications will be stored in the same database as configuration and in a table called “notifications”.</div>
+</li>
+<li class="level1"><div class="li">  if you use “<acronym title="Lightweight Directory Access Protocol">LDAP</acronym>” system, the notifications will be stored in the same directory as configuration and in a branch called “notifications”.</div>
+</li>
+</ul>
+
+<p>
+
+You can change default parameters using the “notificationStorage” and “notificationStorageOptions” parameters with the same syntax as configuration storage parameters. To do this in Manager, go in General Parameters &gt; Advanced Parameters &gt; Notifications.
+</p>
+
+</div>
+
+<h4><a name="file" id="file">File</a></h4>
+<div class="level4">
+
+<p>
+
+Parameters for File backend are the same as <a href="../../documentation/1.4/fileconfbackend.html" class="wikilink1" title="documentation:1.4:fileconfbackend">File configuration backend</a>.
+</p>
+
+<p>
+<p><div class="noteimportant">You need to create yourself the directory and set write access to Apache user. For example:
+
+</p>
+<pre class="code">
+mkdir /usr/local/lemonldap-ng/notifications/
+chown www-data /usr/local/lemonldap-ng/notifications/
+</pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+<p>
+<p><div class="notetip">The file name default separator is <code>_</code>, this can be a problem if you register notifications for users having <code>_</code> in their login. You can change the separator with the <code>fileNameSeparator</code> option, and set another value, for example <code>@</code>.
+</div></p>
+</p>
+
+<p>
+To summary available options:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>dirName</strong>: directory where notifications are stored.</div>
+</li>
+<li class="level1"><div class="li"> <strong>fileNameSeparator</strong>: file name separator.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="dbi" id="dbi">DBI</a></h4>
+<div class="level4">
+
+<p>
+
+Parameters for <acronym title="Database Interface">DBI</acronym> backend are the same as <a href="../../documentation/1.4/sqlconfbackend.html" class="wikilink1" title="documentation:1.4:sqlconfbackend">DBI configuration backend</a>.
+</p>
+
+<p>
+<p><div class="noteimportant">You have to create the table by yourself:
+
+</p>
+<pre class="code sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> notifications <span class="br0">&#40;</span>
+  date datetime <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+  uid varchar<span class="br0">&#40;</span>255<span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+  ref varchar<span class="br0">&#40;</span>255<span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+  cond varchar<span class="br0">&#40;</span>255<span class="br0">&#41;</span> <span class="kw1">DEFAULT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+  xml longblob <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+  done datetime <span class="kw1">DEFAULT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+  <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span> <span class="br0">&#40;</span>date<span class="sy0">,</span> uid<span class="sy0">,</span>ref<span class="br0">&#41;</span>
+<span class="br0">&#41;</span></pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+<p>
+To summary available options:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>dbiChain</strong>: <acronym title="Database Interface">DBI</acronym> connection.</div>
+</li>
+<li class="level1"><div class="li"> <strong>dbiUser</strong>: <acronym title="Database Interface">DBI</acronym> user.</div>
+</li>
+<li class="level1"><div class="li"> <strong>dbiPassword</strong>: <acronym title="Database Interface">DBI</acronym> password.</div>
+</li>
+<li class="level1"><div class="li"> <strong>table</strong>: Notifications table name.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="ldap" id="ldap">LDAP</a></h4>
+<div class="level4">
+
+<p>
+
+Parameters for <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> backend are the same as <a href="../../documentation/1.4/ldapconfbackend.html" class="wikilink1" title="documentation:1.4:ldapconfbackend">LDAP configuration backend</a>.
+</p>
+
+<p>
+<p><div class="noteimportant">You have to create the branch by yourself
+</div></p>
+</p>
+
+<p>
+To summary available options:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>ldapServer</strong>: <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> <acronym title="Uniform Resource Locator">URL</acronym>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>ldapBindDN</strong>: <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> user.</div>
+</li>
+<li class="level1"><div class="li"> <strong>ldapBindPassword</strong>: <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password.</div>
+</li>
+<li class="level1"><div class="li"> <strong>ldapConfBase</strong>: Notifications branch <acronym title="Distinguished Name">DN</acronym>.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Storage" [832-3326] -->
+<h3><a name="wildcard" id="wildcard">Wildcard</a></h3>
+<div class="level3">
+
+<p>
+
+The notifications module uses a wildcard to manage notifications for all users. The default value of this wilcard is <code>allusers</code>, but you can change it if <code>allusers</code> is a known identifier in your system.
+</p>
+
+<p>
+To change it, go in General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Wildcard for all users, and set for example <code>alluserscustom</code>.
+</p>
+
+<p>
+Then creating a notification for <code>alluserscustom</code> will display the notification for all users.
+</p>
+
+</div>
+<!-- SECTION "Wildcard" [3327-3796] -->
+<h3><a name="custom_xslt_file" id="custom_xslt_file">Custom XSLT file</a></h3>
+<div class="level3">
+
+<p>
+
+The transformation between notification <acronym title="Extensible Markup Language">XML</acronym> content and <acronym title="HyperText Markup Language">HTML</acronym> display is done with <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym>. The default <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym> file is in portal/skins/common/notification.xsl. You can create your own <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym> file and store in another place, for example /etc/lemonldap-ng. Then just configure the new <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym> file path in Manager, go in General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Custom <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym> file and set for example <code>/etc/lemonldap-ng/notification.xsl</code>.
+</p>
+
+</div>
+<!-- SECTION "Custom XSLT file" [3797-4269] -->
+<h2><a name="using_notification_system" id="using_notification_system">Using notification system</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Using notification system" [4270-4308] -->
+<h3><a name="notification_format" id="notification_format">Notification format</a></h3>
+<div class="level3">
+
+<p>
+
+Notifications are <acronym title="Extensible Markup Language">XML</acronym> files containing:
+</p>
+<ul>
+<li class="level1"><div class="li"> &lt;notification&gt; element(s) :</div>
+<ul>
+<li class="level2"><div class="li"> Required attributes:</div>
+<ul>
+<li class="level3"><div class="li"> date: creation date (format YYYY-MM-DD)</div>
+</li>
+<li class="level3"><div class="li"> ref: a reference that can be used later to know what has been notified and when</div>
+</li>
+<li class="level3"><div class="li"> uid: the user login (it must correspond to the attribute set in whatToTrace parameter, uid by default), or the wildcard string (by default: <code>allusers</code>) if the notification should be displayed for every user.</div>
+</li>
+</ul>
+</li>
+<li class="level2"><div class="li"> Optional attributes:</div>
+<ul>
+<li class="level3"><div class="li"> condition: condition to display the notification, can use all session variables.</div>
+</li>
+</ul>
+</li>
+<li class="level2"><div class="li"> Sub elements:</div>
+<ul>
+<li class="level3"><div class="li"> &lt;title&gt;: title to display: will be inserted in <acronym title="HyperText Markup Language">HTML</acronym> page enclosed in &lt;h2 class=“notifText”&gt;…&lt;/h2&gt;</div>
+</li>
+<li class="level3"><div class="li"> &lt;subtitle&gt;: subtitle to display: will be inserted in <acronym title="HyperText Markup Language">HTML</acronym> page enclosed in &lt;h2 class=“notifText”&gt;…&lt;/h2&gt;</div>
+</li>
+<li class="level3"><div class="li"> &lt;text&gt;: paragraph to display: will be inserted in <acronym title="HyperText Markup Language">HTML</acronym> page enclosed in &lt;p class=“notifText”&gt;…&lt;/p&gt;</div>
+</li>
+<li class="level3"><div class="li"> &lt;check&gt;: paragraph to display with a checkbox: will be inserted in <acronym title="HyperText Markup Language">HTML</acronym> page enclosed in &lt;p class=“notifCheck”&gt;&lt;input type=“checkbox” /&gt;…&lt;/p&gt;</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+
+<p><div class="noteimportant">All other elements will be removed including <acronym title="HyperText Markup Language">HTML</acronym> elements like &lt;b&gt;.
+</div></p>
+</p>
+
+<p>
+<p><div class="notetip">One notification <acronym title="Extensible Markup Language">XML</acronym> document can contain several notifications messages.
+</div></p>
+</p>
+
+<p>
+Example :
+
+</p>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">&quot;1.0&quot;</span> <span class="re0">encoding</span>=<span class="st0">&quot;UTF-8&quot;</span> <span class="re0">standalone</span>=<span class="st0">&quot;no&quot;</span><span class="re2">?&gt;</span></span>
+<span class="sc3"><span class="re1">&lt;root<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;notification</span> <span class="re0">uid</span>=<span class="st0">&quot;foo.bar&quot;</span> <span class="re0">date</span>=<span class="st0">&quot;2009-01-27&quot;</span> <span class="re0">reference</span>=<span class="st0">&quot;ABC&quot;</span><span class="re2">&gt;</span></span>
+<span class="sc3"><span class="re1">&lt;title<span class="re2">&gt;</span></span></span>You have new authorizations<span class="sc3"><span class="re1">&lt;/title<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;subtitle<span class="re2">&gt;</span></span></span>Application 1<span class="sc3"><span class="re1">&lt;/subtitle<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;text<span class="re2">&gt;</span></span></span>You have been granted to access to appli-1<span class="sc3"><span class="re1">&lt;/text<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;subtitle<span class="re2">&gt;</span></span></span>Application 2<span class="sc3"><span class="re1">&lt;/subtitle<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;text<span class="re2">&gt;</span></span></span>You have been granted to access to appli-2<span class="sc3"><span class="re1">&lt;/text<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;subtitle<span class="re2">&gt;</span></span></span>Acceptation<span class="sc3"><span class="re1">&lt;/subtitle<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;check<span class="re2">&gt;</span></span></span>I know that I can access to appli-1 <span class="sc3"><span class="re1">&lt;/check<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;check<span class="re2">&gt;</span></span></span>I know that I can access to appli-2 <span class="sc3"><span class="re1">&lt;/check<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/notification<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;notification</span> <span class="re0">uid</span>=<span class="st0">&quot;allusers&quot;</span> <span class="re0">date</span>=<span class="st0">&quot;2009-01-27&quot;</span> <span class="re0">reference</span>=<span class="st0">&quot;disclaimer&quot;</span> <span class="re0">condition</span>=<span class="st0">&quot;$ipAddr =~ /^192/&quot;</span><span class="re2">&gt;</span></span>
+<span class="sc3"><span class="re1">&lt;title<span class="re2">&gt;</span></span></span>This is your first access on this system<span class="sc3"><span class="re1">&lt;/title<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;text<span class="re2">&gt;</span></span></span>Be a nice user and do not break it please.<span class="sc3"><span class="re1">&lt;/text<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;check<span class="re2">&gt;</span></span></span>Of course I am not evil!<span class="sc3"><span class="re1">&lt;/check<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/notification<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/root<span class="re2">&gt;</span></span></span></pre>
+
+</div>
+<!-- SECTION "Notification format" [4309-6407] -->
+<h3><a name="create_new_notifications_with_notifications_explorer" id="create_new_notifications_with_notifications_explorer">Create new notifications with notifications explorer</a></h3>
+<div class="level3">
+
+<p>
+
+In Manager, click on <code>notifications explorer</code> and then on the <code>Create</code> button.
+</p>
+
+<p>
+<a href="/_detail/screenshots/1.1/manager/notifications_explorer_create.png?id=documentation%3A1.4%3Anotifications" class="media" title="screenshots:1.1:manager:notifications_explorer_create.png"><img src="../../../media/screenshots/1.1/manager/notifications_explorer_create.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Then fill all inputs to create the notification. Only the condition is not mandatory.
+</p>
+
+<p>
+When all is ok, click on <code>Create</code>.
+</p>
+
+</div>
+<!-- SECTION "Create new notifications with notifications explorer" [6408-6753] -->
+<h3><a name="notifications_trough_soap" id="notifications_trough_soap">Notifications trough SOAP</a></h3>
+<div class="level3">
+
+<p>
+
+New notifications can be insert using <acronym title="Simple Object Access Protocol">SOAP</acronym> request (described in the WSDL file generated by buildPortalWSDL tool). To activate <acronym title="Simple Object Access Protocol">SOAP</acronym> on the portal:
+</p>
+<ul>
+<li class="level1"><div class="li"> Enable <acronym title="Simple Object Access Protocol">SOAP</acronym> in General parameters » Advanced parameters » <acronym title="Simple Object Access Protocol">SOAP</acronym></div>
+</li>
+<li class="level1"><div class="li"> Enable Notifications <acronym title="Simple Object Access Protocol">SOAP</acronym> service in Apache configuration:</div>
+</li>
+</ul>
+<pre class="code file apache"><span class="co1"># SOAP functions for notification insertion (disabled by default)</span>
+&lt;<span class="kw3">Location</span> /index.pl/notification&gt;
+    <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+    <span class="kw1">Deny</span> from <span class="kw2">all</span>
+    <span class="kw1">Allow</span> from 192.168.2.0/24
+&lt;/<span class="kw3">Location</span>&gt;</pre>
+
+</div>
+
+<h4><a name="insertion_example_in_perl" id="insertion_example_in_perl">Insertion example in Perl</a></h4>
+<div class="level4">
+<pre class="code perl"><span class="co1">#!/usr/bin/perl</span>
+&nbsp;
+<span class="kw2">use</span> SOAP<span class="sy0">::</span><span class="me2">Lite</span><span class="sy0">;</span>
+<span class="kw2">use</span> utf8<span class="sy0">;</span>
+&nbsp;
+<span class="kw1">my</span> <span class="re0">$lite</span> <span class="sy0">=</span> SOAP<span class="sy0">::</span><span class="me2">Lite</span>
+        <span class="sy0">-&gt;</span><span class="me1">uri</span><span class="br0">&#40;</span><span class="st_h">'urn:Lemonldap::NG::Common::CGI::SOAPService'</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">proxy</span><span class="br0">&#40;</span><span class="st_h">'http://auth.example.com/index.pl/notification'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+&nbsp;
+<span class="re0">$r</span> <span class="sy0">=</span> <span class="re0">$lite</span><span class="sy0">-&gt;</span><span class="me1">newNotification</span><span class="br0">&#40;</span>
+<span class="st_h">'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;root&gt;
+&lt;notification uid=&quot;foo.bar&quot; date=&quot;2009-01-27&quot; reference=&quot;ABC&quot;&gt;
+&lt;text&gt; You have been granted to access to appli-1 &lt;/text&gt;
+&lt;text&gt; You have been granted to access to appli-2 &lt;/text&gt;
+&lt;check&gt; I know that I can acces to appli-1 &lt;/check&gt;
+&lt;check&gt; I know that I can acces to appli-2 &lt;/check&gt;
+&lt;/notification&gt;
+&lt;/root&gt;
+'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">if</span> <span class="br0">&#40;</span> <span class="re0">$r</span><span class="sy0">-&gt;</span><span class="me1">fault</span> <span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> <span class="kw2">STDERR</span> <span class="st0">&quot;SOAP Error: &quot;</span> <span class="sy0">.</span> <span class="re0">$r</span><span class="sy0">-&gt;</span><span class="me1">fault</span><span class="sy0">-&gt;</span><span class="br0">&#123;</span>faultstring<span class="br0">&#125;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw1">else</span> <span class="br0">&#123;</span>
+    <span class="kw1">my</span> <span class="re0">$res</span> <span class="sy0">=</span> <span class="re0">$r</span><span class="sy0">-&gt;</span><span class="me1">result</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> <span class="st0">&quot;$res notification(s) have been inserted<span class="es0">\n</span>&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+<p>
+
+You can also delete some notifications with <acronym title="Simple Object Access Protocol">SOAP</acronym>, once <acronym title="Simple Object Access Protocol">SOAP</acronym> is activated:
+</p>
+
+</div>
+
+<h4><a name="deletion_example_in_perl" id="deletion_example_in_perl">Deletion example in Perl</a></h4>
+<div class="level4">
+<pre class="code perl"><span class="co1">#!/usr/bin/perl</span>
+&nbsp;
+<span class="kw2">use</span> SOAP<span class="sy0">::</span><span class="me2">Lite</span><span class="sy0">;</span>
+<span class="kw2">use</span> utf8<span class="sy0">;</span>
+&nbsp;
+<span class="kw1">my</span> <span class="re0">$lite</span> <span class="sy0">=</span> SOAP<span class="sy0">::</span><span class="me2">Lite</span>
+        <span class="sy0">-&gt;</span><span class="me1">uri</span><span class="br0">&#40;</span><span class="st_h">'urn:Lemonldap::NG::Common::CGI::SOAPService'</span><span class="br0">&#41;</span>
+        <span class="sy0">-&gt;</span><span class="me1">proxy</span><span class="br0">&#40;</span><span class="st_h">'http://auth.example.com/index.pl/notification'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+&nbsp;
+<span class="re0">$r</span> <span class="sy0">=</span> <span class="re0">$lite</span><span class="sy0">-&gt;</span><span class="me1">deleteNotification</span><span class="br0">&#40;</span><span class="st_h">'foo.bar'</span><span class="sy0">,</span> <span class="st_h">'ABC'</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw1">if</span> <span class="br0">&#40;</span> <span class="re0">$r</span><span class="sy0">-&gt;</span><span class="me1">fault</span> <span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    <a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> <span class="kw2">STDERR</span> <span class="st0">&quot;SOAP Error: &quot;</span> <span class="sy0">.</span> <span class="re0">$r</span><span class="sy0">-&gt;</span><span class="me1">fault</span><span class="sy0">-&gt;</span><span class="br0">&#123;</span>faultstring<span class="br0">&#125;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span>
+<span class="kw1">else</span> <span class="br0">&#123;</span>
+    <span class="kw1">my</span> <span class="re0">$res</span> <span class="sy0">=</span> <span class="re0">$r</span><span class="sy0">-&gt;</span><span class="me1">result</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> <span class="st0">&quot;$res notification(s) have been deleted<span class="es0">\n</span>&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+<!-- SECTION "Notifications trough SOAP" [6754-8650] -->
+<h3><a name="test_notification" id="test_notification">Test notification</a></h3>
+<div class="level3">
+
+<p>
+
+You&#039;ve simply to insert a notification and connect to the portal using the same UID. You will be prompted.
+</p>
+
+<p>
+<a href="/_detail/screenshots/1.1/notifications/sample_notification.png?id=documentation%3A1.4%3Anotifications" class="media" title="screenshots:1.1:notifications:sample_notification.png"><img src="../../../media/screenshots/1.1/notifications/sample_notification.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Try also to create a global notification (to the uid “allusers”), and connect with any user, the message will be prompted.
+</p>
+
+</div>
+<!-- SECTION "Test notification" [8651-] --></div><!-- closes <div class="dokuwiki export">-->

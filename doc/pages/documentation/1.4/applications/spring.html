@@ -1,0 +1,78 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="spring_security_acegi" id="spring_security_acegi">Spring Security (ACEGI)</a></h1>
+<div class="level1">
+
+<p>
+
+<a href="/_detail/applications/spring_logo.png?id=documentation%3A1.4%3Aapplications%3Aspring" class="media" title="applications:spring_logo.png"><img src="../../../../media/applications/spring_logo.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- SECTION "Spring Security (ACEGI)" [1-77] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+<a href="http://static.springsource.org/spring-security/site/" class="urlextern" title="http://static.springsource.org/spring-security/site/"  rel="nofollow">Spring Security</a> is the new ACEGI name. This is a well known security framework for J2EE applications.
+</p>
+
+<p>
+Spring Security provides a default <code>pre-authentication</code> mechanism that can be used to connect your J2EE application to <acronym title="LemonLDAP::NG">LL::NG</acronym>.
+</p>
+
+</div>
+<!-- SECTION "Presentation" [78-394] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+<p>
+
+You can find all suitable information here: <a href="http://static.springsource.org/spring-security/site/docs/3.0.x/reference/preauth.html" class="urlextern" title="http://static.springsource.org/spring-security/site/docs/3.0.x/reference/preauth.html"  rel="nofollow">http://static.springsource.org/spring-security/site/docs/3.0.x/reference/preauth.html</a>
+</p>
+
+<p>
+To summarize, to get the user connected trough the <code>Auth-User</code> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> Header, use this Sping Security configuration:
+</p>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;bean</span> <span class="re0">id</span>=<span class="st0">&quot;LemonLDAPNGFilter&quot;</span> <span class="re0">class</span>=</span>
+<span class="sc3"><span class="st0">&quot;org.springframework.security.web.authentication.preauth.header.RequestHeaderPreAuthenticatedProcessingFilter&quot;</span><span class="re2">&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;security:custom-filter</span> <span class="re0">position</span>=<span class="st0">&quot;PRE_AUTH_FILTER&quot;</span> <span class="re2">/&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;property</span> <span class="re0">name</span>=<span class="st0">&quot;principalRequestHeader&quot;</span> <span class="re0">value</span>=<span class="st0">&quot;Auth-User&quot;</span><span class="re2">/&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;property</span> <span class="re0">name</span>=<span class="st0">&quot;authenticationManager&quot;</span> <span class="re0">ref</span>=<span class="st0">&quot;authenticationManager&quot;</span> <span class="re2">/&gt;</span></span>
+<span class="sc3"><span class="re1">&lt;/bean<span class="re2">&gt;</span></span></span>
+&nbsp;
+<span class="sc3"><span class="re1">&lt;bean</span> <span class="re0">id</span>=<span class="st0">&quot;preauthAuthProvider&quot;</span> <span class="re0">class</span>=<span class="st0">&quot;org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider&quot;</span><span class="re2">&gt;</span></span>
+  <span class="sc3"><span class="re1">&lt;security:custom-authentication-provider</span> <span class="re2">/&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;property</span> <span class="re0">name</span>=<span class="st0">&quot;preAuthenticatedUserDetailsService&quot;</span><span class="re2">&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;bean</span> <span class="re0">id</span>=<span class="st0">&quot;userDetailsServiceWrapper&quot;</span> <span class="re0">class</span>=<span class="st0">&quot;org.springframework.security.userdetails.UserDetailsByNameServiceWrapper&quot;</span><span class="re2">&gt;</span></span>
+      <span class="sc3"><span class="re1">&lt;property</span> <span class="re0">name</span>=<span class="st0">&quot;userDetailsService&quot;</span> <span class="re0">ref</span>=<span class="st0">&quot;userDetailsService&quot;</span><span class="re2">/&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;/bean<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/property<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/bean<span class="re2">&gt;</span></span></span>
+&nbsp;
+<span class="sc3"><span class="re1">&lt;security:authentication-manager</span> <span class="re0">alias</span>=<span class="st0">&quot;authenticationManager&quot;</span> <span class="re2">/&gt;</span></span></pre>
+
+</div>
+<!-- SECTION "Configuration" [395-] --></div><!-- closes <div class="dokuwiki export">-->

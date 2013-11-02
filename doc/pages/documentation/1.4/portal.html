@@ -1,0 +1,138 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="the_portal" id="the_portal">The portal</a></h1>
+<div class="level1">
+
+<p>
+
+The portal is the main component of <acronym title="LemonLDAP::NG">LL::NG</acronym>. It provides many features:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Authentication service</strong> of course</div>
+<ul>
+<li class="level2"><div class="li"> Web based for normal users:</div>
+<ul>
+<li class="level3"><div class="li"> using own database (<a href="../../documentation/1.4/authldap.html" class="wikilink1" title="documentation:1.4:authldap">LDAP</a>, <a href="../../documentation/1.4/authdbi.html" class="wikilink1" title="documentation:1.4:authdbi">SQL</a>, …)</div>
+</li>
+<li class="level3"><div class="li"> using Apache authentication system (used for <a href="../../documentation/1.4/authssl.html" class="wikilink1" title="documentation:1.4:authssl">SSL</a>, <a href="../../documentation/1.4/authapache.html" class="wikilink1" title="documentation:1.4:authapache">Kerberos</a>, <a href="../../documentation/1.4/authapache.html" class="wikilink1" title="documentation:1.4:authapache">HTTP basic authentication</a>, …)</div>
+</li>
+<li class="level3"><div class="li"> using external identity provider (<a href="../../documentation/1.4/authsaml.html" class="wikilink1" title="documentation:1.4:authsaml">SAML</a>, <a href="../../documentation/1.4/authopenid.html" class="wikilink1" title="documentation:1.4:authopenid">OpenID</a>, <a href="../../documentation/1.4/authcas.html" class="wikilink1" title="documentation:1.4:authcas">CAS</a>, <a href="../../documentation/1.4/authtwitter.html" class="wikilink1" title="documentation:1.4:authtwitter">Twitter</a>, other <acronym title="LemonLDAP::NG">LL::NG</acronym> system, …)</div>
+</li>
+<li class="level3"><div class="li"> all together (based on user <a href="../../documentation/1.4/authchoice.html" class="wikilink1" title="documentation:1.4:authchoice">choice</a>, <a href="../../documentation/1.4/authmulti.html" class="wikilink1" title="documentation:1.4:authmulti">rules</a>, …)</div>
+</li>
+</ul>
+</li>
+<li class="level2"><div class="li"> <a href="../../documentation/1.4/soapservices.html" class="wikilink1" title="documentation:1.4:soapservices">SOAP based</a> for client-server software, specific development, …</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Identity provider</strong>: <acronym title="LemonLDAP::NG">LL::NG</acronym> is able to provide identity service using:</div>
+<ul>
+<li class="level2"><div class="li"> <a href="../../documentation/1.4/idpsaml.html" class="wikilink1" title="documentation:1.4:idpsaml">SAML</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="../../documentation/1.4/idpopenid.html" class="wikilink1" title="documentation:1.4:idpopenid">OpenID</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="../../documentation/1.4/idpcas.html" class="wikilink1" title="documentation:1.4:idpcas">CAS</a></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong><a href="../../documentation/1.4/federationproxy.html" class="wikilink1" title="documentation:1.4:federationproxy">Identity provider proxy</a></strong>: <acronym title="LemonLDAP::NG">LL::NG</acronym> can be used as proxy translator between systems talking <acronym title="Security Assertion Markup Language">SAML</acronym>, OpenID, <acronym title="Central Authentication Service">CAS</acronym>, …</div>
+</li>
+<li class="level1"><div class="li"> <strong>Internal <acronym title="Simple Object Access Protocol">SOAP</acronym> server</strong> used by <a href="../../documentation/1.4/soapconfbackend.html" class="wikilink1" title="documentation:1.4:soapconfbackend">SOAP configuration backend</a> and usable for specific development (see <a href="../../documentation/1.4/soapservices.html" class="wikilink1" title="documentation:1.4:soapservices">SOAP services</a> for more)</div>
+</li>
+<li class="level1"><div class="li"> Interactive <strong>management of user passwords</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> Password change form (in menu)</div>
+</li>
+<li class="level2"><div class="li"> Self service reset (send a mail to the user with a to change the password)</div>
+</li>
+<li class="level2"><div class="li"> Force password change with <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password policy password reset flag</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong><a href="../../documentation/1.4/portalmenu.html" class="wikilink1" title="documentation:1.4:portalmenu">Application menu</a></strong>: display authorized applications in categories</div>
+</li>
+<li class="level1"><div class="li"> <strong><a href="../../documentation/1.4/notifications.html" class="wikilink1" title="documentation:1.4:notifications">Notifications</a></strong>: prompt users with a message if found in the notification database</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "The portal" [1-1598] -->
+<h2><a name="functioning" id="functioning">Functioning</a></h2>
+<div class="level2">
+
+<p>
+
+<acronym title="LemonLDAP::NG">LL::NG</acronym> portal is a modular component. It needs 4 modules to work:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="../../documentation/1.4/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:1.4:start">Authentication</a>: how check user credentials</div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.4/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:1.4:start">User database</a>: where collect user information</div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.4/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:1.4:start">Password database</a>: where change password</div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.4/start.html#identity_provider" class="wikilink1" title="documentation:1.4:start">Identity provider</a>: how forward user identity</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="notetip">Each module can be disabled using the <code>Null</code> backend.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Functioning" [1599-2145] -->
+<h2><a name="kinematics" id="kinematics">Kinematics</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> Check if <acronym title="Uniform Resource Locator">URL</acronym> asked is valid</div>
+</li>
+<li class="level1"><div class="li"> Check if user is already authenticated</div>
+<ul>
+<li class="level2"><div class="li"> If not authenticated (or authentication is forced) try to find it (userDB module) and to authenticate it (auth module), create session, calculate groups and macros and store them. In 1.3, <acronym title="LemonLDAP::NG">LL::NG</acronym> have a captcha feature which is used in this case.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Modify password if asked</div>
+</li>
+<li class="level1"><div class="li"> Provides identity if asked</div>
+</li>
+<li class="level1"><div class="li"> Build <a href="../../documentation/1.4/ssocookie.html" class="wikilink1" title="documentation:1.4:ssocookie">cookie(s)</a></div>
+</li>
+<li class="level1"><div class="li"> Redirect user to the asked <acronym title="Uniform Resource Locator">URL</acronym> or display menu</div>
+</li>
+</ol>
+
+<p>
+
+<p><div class="noteclassic">See also <a href="../../documentation/presentation.html#kinematics" class="wikilink1" title="documentation:presentation">general kinematics presentation</a>.
+</div></p>
+
+</p>
+
+</div>
+<!-- SECTION "Kinematics" [2146-] --></div><!-- closes <div class="dokuwiki export">-->

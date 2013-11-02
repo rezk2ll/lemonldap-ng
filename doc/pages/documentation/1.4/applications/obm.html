@@ -1,0 +1,330 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="obm" id="obm">OBM</a></h1>
+<div class="level1">
+
+<p>
+
+<a href="/_detail/applications/obm_logo.png?id=documentation%3A1.4%3Aapplications%3Aobm" class="media" title="applications:obm_logo.png"><img src="../../../../media/applications/obm_logo.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- SECTION "OBM" [1-54] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+<a href="http://obm.org" class="urlextern" title="http://obm.org"  rel="nofollow">OBM</a> is enterprise-class messaging and collaboration platform for workgroup or enterprises with many thousands users. OBM includes Groupware, messaging server, CRM, <acronym title="Lightweight Directory Access Protocol">LDAP</acronym>, Windows Domain, smartphone and <acronym title="Personal Digital Assistant">PDA</acronym> synchronization…
+</p>
+
+<p>
+OBM is shipped with a <acronym title="LemonLDAP::NG">LL::NG</acronym> plugin with these features:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Single Sign On">SSO</acronym> on OBM web interface</div>
+</li>
+<li class="level1"><div class="li"> Logout</div>
+</li>
+<li class="level1"><div class="li"> User provisioning (account auto creation at first connection)</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Presentation" [55-488] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Configuration" [489-515] -->
+<h3><a name="obm1" id="obm1">OBM</a></h3>
+<div class="level3">
+
+<p>
+
+To enable <acronym title="LemonLDAP::NG">LL::NG</acronym> authentication plugin, go in <code>/etc/obm/obm_conf.inc</code>:
+</p>
+<pre class="code file php"><span class="re0">$auth_kind</span> <span class="sy0">=</span> <span class="st_h">'LemonLDAP'</span><span class="sy0">;</span>
+&nbsp;
+<span class="re0">$lemonldap_config</span> <span class="sy0">=</span> <a href="http://www.php.net/array"><span class="kw3">Array</span></a><span class="br0">&#40;</span>
+                <span class="st0">&quot;auto_update&quot;</span>           <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="sy0">,</span>
+                <span class="st0">&quot;auto_update_force_user&quot;</span> <span class="sy0">=&gt;</span> <span class="kw4">true</span><span class="sy0">,</span>
+                <span class="st0">&quot;auto_update_force_group&quot;</span> <span class="sy0">=&gt;</span> <span class="kw4">false</span><span class="sy0">,</span>
+                <span class="st0">&quot;url_logout&quot;</span>            <span class="sy0">=&gt;</span> <span class="st0">&quot;https://OBMURL/logout&quot;</span><span class="sy0">,</span>
+                <span class="st0">&quot;server_ip_address&quot;</span>     <span class="sy0">=&gt;</span> <span class="st0">&quot;localhost&quot;</span><span class="sy0">,</span>
+                <span class="st0">&quot;server_ip_check&quot;</span>       <span class="sy0">=&gt;</span> <span class="kw4">false</span><span class="sy0">,</span>
+                <span class="st0">&quot;debug_level&quot;</span>           <span class="sy0">=&gt;</span> <span class="st0">&quot;NONE&quot;</span><span class="sy0">,</span>
+<span class="co1">//                &quot;debug_header_name&quot;     =&gt; &quot;HTTP_OBM_UID&quot;,</span>
+<span class="co1">//                &quot;group_header_name&quot;     =&gt; &quot;HTTP_OBM_GROUPS&quot;,</span>
+                <span class="st0">&quot;headers_map&quot;</span>           <span class="sy0">=&gt;</span> <a href="http://www.php.net/array"><span class="kw3">Array</span></a><span class="br0">&#40;</span>
+                        <span class="co1">//&quot;userobm_gid&quot;                   =&gt; &quot;HTTP_OBM_GID&quot;,</span>
+                        <span class="co1">//&quot;userobm_domain_id&quot;           =&gt; ,</span>
+                        <span class="st0">&quot;userobm_login&quot;</span>                 <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_UID&quot;</span><span class="sy0">,</span>
+                        <span class="st0">&quot;userobm_password&quot;</span>              <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_USERPASSWORD&quot;</span><span class="sy0">,</span>
+                        <span class="co1">//&quot;userobm_password_type&quot;       =&gt; ,</span>
+                        <span class="st0">&quot;userobm_perms&quot;</span>                 <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_PERMS&quot;</span><span class="sy0">,</span>
+                        <span class="co1">//&quot;userobm_kind&quot;                =&gt; ,</span>
+                        <span class="st0">&quot;userobm_lastname&quot;</span>              <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_SN&quot;</span><span class="sy0">,</span>
+                        <span class="st0">&quot;userobm_firstname&quot;</span>             <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_GIVENNAME&quot;</span><span class="sy0">,</span>
+<span class="co1">//                        &quot;userobm_title&quot;                 =&gt; &quot;HTTP_OBM_TITLE&quot;,</span>
+                        <span class="st0">&quot;userobm_email&quot;</span>                 <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_MAIL&quot;</span><span class="sy0">,</span>
+                        <span class="st0">&quot;userobm_datebegin&quot;</span>             <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_DATEBEGIN&quot;</span><span class="sy0">,</span>
+                        <span class="co1">//&quot;userobm_account_dateexp&quot;     =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_delegation_target&quot;   =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_delegation&quot;          =&gt; ,</span>
+                        <span class="st0">&quot;userobm_description&quot;</span>           <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_DESCRIPTION&quot;</span><span class="sy0">,</span>
+                        <span class="co1">//&quot;userobm_archive&quot;             =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_hidden&quot;              =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_status&quot;              =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_local&quot;               =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_photo_id&quot;            =&gt; ,</span>
+                        <span class="st0">&quot;userobm_phone&quot;</span>                 <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_TELEPHONENUMBER&quot;</span><span class="sy0">,</span>
+                        <span class="co1">//&quot;userobom_phone2&quot;             =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_mobile&quot;              =&gt; ,</span>
+                        <span class="st0">&quot;userobm_fax&quot;</span>                   <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_FACSIMILETELEPHONENUMBER&quot;</span><span class="sy0">,</span>
+                        <span class="co1">//&quot;userobm_fax2&quot;                =&gt; ,</span>
+                        <span class="st0">&quot;userobm_company&quot;</span>               <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_O&quot;</span><span class="sy0">,</span>
+                        <span class="co1">//&quot;userobm_direction&quot;           =&gt; ,</span>
+                        <span class="st0">&quot;userobm_service&quot;</span>               <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_OU&quot;</span><span class="sy0">,</span>
+                        <span class="st0">&quot;userobm_address1&quot;</span>              <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_POSTALADDRESS&quot;</span><span class="sy0">,</span>
+                        <span class="co1">//&quot;userobm_address2&quot;            =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_address3&quot;            =&gt; ,</span>
+                        <span class="st0">&quot;userobm_zipcode&quot;</span>               <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_POSTALCODE&quot;</span><span class="sy0">,</span>
+                        <span class="st0">&quot;userobm_town&quot;</span>                  <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_L&quot;</span><span class="sy0">,</span>
+                        <span class="st0">&quot;userobm_zipcode&quot;</span>               <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_POSTALCODE&quot;</span><span class="sy0">,</span>
+                        <span class="st0">&quot;userobm_town&quot;</span>                  <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_L&quot;</span><span class="sy0">,</span>
+                        <span class="co1">//&quot;userobm_expresspostal&quot;       =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_host_id&quot;             =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_web_perms&quot;           =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_web_list&quot;            =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_web_all&quot;             =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_mail_perms&quot;          =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_mail_ext_perms&quot;      =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_mail_server_id&quot;      =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_mail_server_hostname&quot; =&gt; ,</span>
+                        <span class="st0">&quot;userobm_mail_quota&quot;</span>            <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_MAILQUOTA&quot;</span><span class="sy0">,</span>
+                        <span class="co1">//&quot;userobm_nomade_perms&quot;        =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_nomade_enable&quot;       =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_nomade_local_copy&quot;   =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_email_nomade&quot;        =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_vacation_enable&quot;     =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_vacation_datebegin&quot;  =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_vacation_dateend&quot;    =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_vacation_message&quot;    =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_samba_perms&quot;         =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_samba_home&quot;          =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_samba_home_drive&quot;    =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_samba_logon_script&quot;  =&gt; ,</span>
+                        <span class="co1">// ---- Unused values ? ----</span>
+                        <span class="st0">&quot;userobm_ext_id&quot;</span>                <span class="sy0">=&gt;</span> <span class="st0">&quot;HTTP_OBM_SERIALNUMBER&quot;</span><span class="sy0">,</span>
+                        <span class="co1">//&quot;userobm_system&quot;              =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_nomade_datebegin&quot;    =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_nomade_dateend&quot;      =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_location&quot;            =&gt; ,</span>
+                        <span class="co1">//&quot;userobm_education&quot;           =&gt; ,</span>
+                        <span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+<p>
+Parameters:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>url_logout</strong>: <acronym title="Uniform Resource Locator">URL</acronym> used by OBM to logout, will be caught by <acronym title="LemonLDAP::NG">LL::NG</acronym></div>
+</li>
+<li class="level1"><div class="li"> <strong>headers_map</strong>: map OBM internal field to <acronym title="LemonLDAP::NG">LL::NG</acronym> header</div>
+</li>
+</ul>
+
+<p>
+
+Edit also OBM Apache configuration to enable <acronym title="LemonLDAP::NG">LL::NG</acronym> Handler:
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+    <span class="kw1">ServerName</span> obm.example.com
+&nbsp;
+    <span class="co1"># SSO protection</span>
+    PerlHeaderParserHandler My::Package
+&nbsp;
+    <span class="kw1">DocumentRoot</span> /usr/share/obm/php
+&nbsp;
+    ...
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+<p><div class="noteimportant">OBM Apache configuration must be loaded <strong>after</strong> <acronym title="LemonLDAP::NG">LL::NG</acronym> <a href="../../../documentation/1.4/configlocation.html#apache" class="wikilink1" title="documentation:1.4:configlocation">Apache configuration</a>.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "OBM" [516-6167] -->
+<h3><a name="llng" id="llng">LL::NG</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="attributes_and_macros" id="attributes_and_macros">Attributes and macros</a></h4>
+<div class="level4">
+
+<p>
+
+You will need to collect all attributes needed to create a user in OBM, this includes:
+</p>
+<ul>
+<li class="level1"><div class="li"> First name</div>
+</li>
+<li class="level1"><div class="li"> Last name</div>
+</li>
+<li class="level1"><div class="li"> Login</div>
+</li>
+<li class="level1"><div class="li"> Mail</div>
+</li>
+<li class="level1"><div class="li"> …</div>
+</li>
+</ul>
+
+<p>
+
+To add these attributes, go in Manager, <code>Variables</code> » <code>Exported Variables</code>.
+</p>
+
+<p>
+<p><div class="noteimportant">If you plan to forward user&#039;s password to OBM, then you have to <a href="../../../documentation/1.4/passwordstore.html" class="wikilink1" title="documentation:1.4:passwordstore">keep the password in session</a>.
+</div></p>
+</p>
+
+<p>
+You may also create these macros to manage OBM administrator account (<code>Variables</code> » <code>Macros</code>):
+</p>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0">field </th><th class="col1">value </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0"> uidR </td><td class="col1 leftalign"> ($uid =~ /^admin0/i)[0] ? &quot;admin0\@global.virt&quot; : $uid  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 leftalign"> mailR  </td><td class="col1 leftalign"> ($uid =~ /^admin0/i)[0] ? &quot;&quot; : ($mail =~ /^([^@]+)/)[0] . &quot;\@example.com&quot;   </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="virtual_host" id="virtual_host">Virtual host</a></h4>
+<div class="level4">
+
+<p>
+
+Create OBM virtual host (for example obm.example.com) in <acronym title="LemonLDAP::NG">LL::NG</acronym> configuration: <code>Virtual Hosts</code> » <code>New virtual host</code>.
+</p>
+
+<p>
+Then edit rules and headers.
+</p>
+
+</div>
+
+<h5><a name="rules" id="rules">Rules</a></h5>
+<div class="level5">
+
+<p>
+
+Define at least:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Default rule</strong>: who can access to the application</div>
+</li>
+<li class="level1"><div class="li"> <strong>Logout rule</strong>: catch OBM logout</div>
+</li>
+<li class="level1"><div class="li"> <strong>Exceptions</strong>: allow anonymous access for specific URLs (connectors, etc.)</div>
+</li>
+</ul>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0">field </th><th class="col1">value </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0">^/logout</td><td class="col1">logout_sso</td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0">^/obm-sync</td><td class="col1">unprotect</td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0">^/minig</td><td class="col1">unprotect</td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0">^/Microsoft-Server-ActiveSync</td><td class="col1">unprotect</td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0">^/caldav</td><td class="col1">unprotect</td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0">default</td><td class="col1">accept (or whatever you want)</td>
+	</tr>
+</table>
+
+</div>
+
+<h5><a name="headers" id="headers">Headers</a></h5>
+<div class="level5">
+
+<p>
+
+Define headers used in OBM mapping, for example:
+</p>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0">field </th><th class="col1">valeur </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0">OBM_GIVENNAME</td><td class="col1">$givenName</td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0">OBM_GROUPS</td><td class="col1">$groups</td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0">OBM_UID</td><td class="col1">$uidR</td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0">OBM_MAIL</td><td class="col1">$mailR</td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0">OBM_USERPASSWORD</td><td class="col1">$_password</td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="other" id="other">Other</a></h4>
+<div class="level4">
+
+<p>
+
+Do not forget to add OBM in <a href="../../../documentation/1.4/portalmenu.html#categories_and_applications" class="wikilink1" title="documentation:1.4:portalmenu">applications menu</a>.
+
+</p>
+
+</div>
+<!-- SECTION "LL::NG" [6168-] --></div><!-- closes <div class="dokuwiki export">-->
