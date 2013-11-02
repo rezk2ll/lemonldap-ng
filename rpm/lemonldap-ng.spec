@@ -440,6 +440,7 @@ rm -rf %{buildroot}
 %dir %{lm_sharedir}
 %dir %{lm_sharedir}/bin
 %{lm_sharedir}/bin/convertConfig
+%{lm_sharedir}/bin/lemonldap-ng-cli
 %{lm_sharedir}/bin/lmMigrateConfFiles2ini
 %dir %{lm_examplesdir}
 %dir %{lm_sharedir}/ressources
