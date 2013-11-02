@@ -1,5 +1,89 @@
 lemonldap-ng (1.3.0) stable; urgency=low
 
+    * [LEMONLDAP-471] - Incompatibility with Config::IniFiles 2.72
+    * [LEMONLDAP-499] - purgeLocalCache does not work
+    * [LEMONLDAP-513] - AD password field for userModifyPassword is not
+      userPassword but unicodePwd and must be quoted and unicoded
+    * [LEMONLDAP-520] - Manager requires custom functions to be run with
+      arguments
+    * [LEMONLDAP-590] - Memory Leak in Lemonldap::NG::Common::Conf
+    * [LEMONLDAP-592] - Encoding problems in POD
+    * [LEMONLDAP-593] - Auth Multi getDisplayType error when using # in Multi
+      line configuration
+    * [LEMONLDAP-599] - Missing some dependencies with Debian packaging
+    * [LEMONLDAP-603] - Portal's display broken with MS IE 8
+    * [LEMONLDAP-605] - skin rules are not applied on mail reset page
+    * [LEMONLDAP-611] - Build failure on EL5
+    * [LEMONLDAP-614] - Configuration is broken when adding a form replay node
+      without post data
+    * [LEMONLDAP-616] - logout_sso do not stop on the "you are disconnected"
+      page
+    * [LEMONLDAP-618] - Lasso error with AuthChoice
+    * [LEMONLDAP-625] - remote_ip() not available with some mod_perl and may
+      not be required for LLNG
+    * [LEMONLDAP-626] - Manager's display broken with Internet Explorer 8
+    * [LEMONLDAP-627] - Sessions explorer broken with Browseable backends
+    * [LEMONLDAP-634] - Wrong rights on notifications dir in Debian
+    * [LEMONLDAP-241] - Test for cryptographic functions
+    * [LEMONLDAP-366] - [Notifications] Move Notifications code from Portal to
+      Common
+    * [LEMONLDAP-412] - Passwrd policy expiration warning time not friendly
+      displayed
+    * [LEMONLDAP-493] - Make LL::NG's rpm spec file more portable 
+    * [LEMONLDAP-500] - do not burden config in memory with useless things
+    * [LEMONLDAP-524] - minimize weight of relaystate in SAML session backend
+    * [LEMONLDAP-559] - Refine useXForwardedForIP option by setting trusted
+      proxies
+    * [LEMONLDAP-585] - Split SSO sessions and persistent sessions at
+      installation
+    * [LEMONLDAP-586] - Allow mail reset to be tested with Demo backend
+    * [LEMONLDAP-589] - Debug info always printed in
+      Lemonldap::NG::Common::Conf::LDAP
+    * [LEMONLDAP-594] - Remove debian repository from distribution
+    * [LEMONLDAP-596] - compute macros and local groups in a certain order
+    * [LEMONLDAP-607] - Die and add error information if LDAP server is not
+      reachable
+    * [LEMONLDAP-619] - Add AuthFacebook module
+    * [LEMONLDAP-620] - Centralize LWP::UserAgent in one file
+    * [LEMONLDAP-628] - Optimization of configuration reload in Portal
+    * [LEMONLDAP-61] - FastCGI portal
+    * [LEMONLDAP-217] - Captcha in portal
+    * [LEMONLDAP-291] - Support secondary Apache authentication in a "choice"
+      authentication configuration
+    * [LEMONLDAP-409] - Specific AD authentication module
+    * [LEMONLDAP-457] - [Notifications] LDAP backend to store notifications
+    * [LEMONLDAP-503] - vhost aliases
+    * [LEMONLDAP-558] - Vhost alias
+    * [LEMONLDAP-584] - BrowserID authentication module
+    * [LEMONLDAP-588] - Include lemonldap-ng-cli
+    * [LEMONLDAP-604] - Upgrade jQuery and jQuery UI built-in dependencies
+    * [LEMONLDAP-612] - Hide password in logs when password is stored in
+      session
+    * [LEMONLDAP-613] - Log applied rule in debug mode
+    * [LEMONLDAP-615] - Add AuthGoogle module
+    * [LEMONLDAP-617] - [SAML] Allow to skip the IDP selection 
+    * [LEMONLDAP-621] - Config storage in JSON file
+    * [LEMONLDAP-623] - WebID authentication and user DB modules
+    * [LEMONLDAP-632] - Rename liblemonldap-ng-conf-perl to
+      lemonldap-ng-common-perl
+    * [LEMONLDAP-631] - Minimize jQuery-UI
+
+lemonldap-ng (1.2.5) stable; urgency=low
+
+    * [LEMONLDAP-532] - SOAP not working with SSL
+    * [LEMONLDAP-597] - Wrong evaluation of $ENV{REMOTE_ADDR} in Auth::Multi
+      when safe jail is enabled
+    * [LEMONLDAP-599] - Missing some dependencies with Debian packaging
+    * [LEMONLDAP-603] - Portal's display broken with MS IE 8
+    * [LEMONLDAP-605] - skin rules are not applied on mail reset page
+    * [LEMONLDAP-608] - Could not configure different config file in Portal
+      thru SharedConf
+    * [LEMONLDAP-609] - case insensitive comparison in vhost
+    * [LEMONLDAP-596] - compute macros and local groups in a certain order
+    * [LEMONLDAP-598] - Sessions Explorer should use the browseable indexes
+    * [LEMONLDAP-607] - Die and add error information if LDAP server is not
+      reachable
+
 lemonldap-ng (1.2.4) stable; urgency=low
 
     * [LEMONLDAP-590] - Memory Leak in Lemonldap::NG::Common::Conf
