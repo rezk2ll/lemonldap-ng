@@ -256,3 +256,5 @@ t/65-Lemonldap-NG-Portal-IssuerDBCAS.t
 t/66-Lemonldap-NG-Portal-Captcha.t
 t/67-Lemonldap-NG-Portal-AuthBrowserID.t
 t/99-pod.t
+xt/PE_Constants.t
+xt/test-weaken-portal.t
