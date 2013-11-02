@@ -177,7 +177,7 @@ Menu style preferences are stored in cookies (1 year duration). You can fix defa
 
 </div>
 <!-- SECTION "Manager" [1050-3647] -->
-<h2><a name="command_line_configuration_editor" id="command_line_configuration_editor">Command line configuration editor</a></h2>
+<h2><a name="configuration_text_editor" id="configuration_text_editor">Configuration text editor</a></h2>
 <div class="level2">
 
 <p>
@@ -220,7 +220,34 @@ If a modification is done, the configuration is saved with a new configuration n
 </p>
 
 </div>
-<!-- SECTION "Command line configuration editor" [3648-4880] -->
+<!-- SECTION "Configuration text editor" [3648-4872] -->
+<h2><a name="command_line_interface_cli" id="command_line_interface_cli">Command Line Interface (CLI)</a></h2>
+<div class="level2">
+
+<p>
+
+LemonLDAP::NG provide a script that allows to edit configuration items in non interactive mode. This script is called <code>lemonldap-ng-cli</code> and is stored in the LemonLDAP::NG bin/ directory, for example /usr/share/lemonldap-ng/bin:
+
+</p>
+<pre class="code">
+/usr/share/lemonldap-ng/bin/lemonldap-ng-cli
+</pre>
+
+<p>
+<p><div class="notetip">This script must be run as root, it will then use the Apache user and group to access configuration.
+</div></p>
+</p>
+
+<p>
+To see available actions, do:
+
+</p>
+<pre class="code">
+/usr/share/lemonldap-ng/bin/lemonldap-ng-cli help
+</pre>
+
+</div>
+<!-- SECTION "Command Line Interface (CLI)" [4873-5421] -->
 <h2><a name="apache" id="apache">Apache</a></h2>
 <div class="level2">
 
@@ -253,7 +280,7 @@ These files must be included in Apache configuration, either with <code>Include<
 </p>
 
 </div>
-<!-- SECTION "Apache" [4881-5640] -->
+<!-- SECTION "Apache" [5422-6181] -->
 <h3><a name="portal" id="portal">Portal</a></h3>
 <div class="level3">
 
@@ -352,7 +379,7 @@ In Portal virtual host, you will find several configuration parts:
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- SECTION "Portal" [5641-8074] -->
+<!-- SECTION "Portal" [6182-8615] -->
 <h3><a name="manager1" id="manager1">Manager</a></h3>
 <div class="level3">
 
@@ -382,7 +409,7 @@ Manager virtual host is used to serve configuration interface and local document
     &lt;/<span class="kw3">Directory</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Manager" [8075-8759] -->
+<!-- SECTION "Manager" [8616-9300] -->
 <h3><a name="handler" id="handler">Handler</a></h3>
 <div class="level3">
 <ul>
@@ -437,7 +464,7 @@ Then, to protect a standard virutal host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler My::Package</pre>
 
 </div>
-<!-- SECTION "Handler" [8760-10030] -->
+<!-- SECTION "Handler" [9301-10571] -->
 <h2><a name="configuration_reload" id="configuration_reload">Configuration reload</a></h2>
 <div class="level2">
 
@@ -481,7 +508,7 @@ The <code>reload</code> target is managed in Apache configuration, inside a virt
 </p>
 
 </div>
-<!-- SECTION "Configuration reload" [10031-11387] -->
+<!-- SECTION "Configuration reload" [10572-11928] -->
 <h2><a name="local_file" id="local_file">Local file</a></h2>
 <div class="level2">
 
@@ -521,7 +548,7 @@ For example, to override configured skin for portal:
 </p>
 
 </div>
-<!-- SECTION "Local file" [11388-12245] -->
+<!-- SECTION "Local file" [11929-12786] -->
 <h2><a name="script_files" id="script_files">Script files</a></h2>
 <div class="level2">
 
@@ -536,7 +563,7 @@ LemonLDAP::NG allows to override any configuration parameter directly in script 
 </p>
 
 </div>
-<!-- SECTION "Script files" [12246-12634] -->
+<!-- SECTION "Script files" [12787-13175] -->
 <h3><a name="portal1" id="portal1">Portal</a></h3>
 <div class="level3">
 
@@ -551,7 +578,7 @@ For example, in portal/index.pl:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Portal" [12635-12805] -->
+<!-- SECTION "Portal" [13176-13346] -->
 <h3><a name="handler1" id="handler1">Handler</a></h3>
 <div class="level3">
 
@@ -566,4 +593,4 @@ For example, in handler/MyHandler.pm:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Handler" [12806-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Handler" [13347-] --></div><!-- closes <div class="dokuwiki export">-->
