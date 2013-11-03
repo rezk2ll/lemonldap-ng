@@ -699,5 +699,5 @@ fr-doc: omegat-fr-configuration-file
 	omegat omegat.files/fr --mode=console-translate
 	
 omegat-clean:
-	rm -rf omegat.files/*/omegat.project po-doc/*/*
+	rm -rf omegat.files/*/omegat.project po-doc/*/* omegat.files/*/omegat/project_save*.bak
 
