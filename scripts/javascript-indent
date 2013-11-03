@@ -11,9 +11,20 @@ my $src;
 while (<F>) { $src .= $_; }
 close F;
 
-open F, ">",$ARGV[0] or die($!);
-
-print F js_beautify( $src, {
+my @clean = split /\n/, js_beautify( $src, {
     indent_size => 1, indent_character => "\t", preserve_newlines => 1 }
 );
+
+# Clean long lines for tabs
+foreach(@clean){
+    if(/\[\s*.{70}/ and /\[\s*(?:['"].*['"],\s*)*\]/) {
+        /^(\s*)/;
+        my $tab = $1;
+        s/(['"])([^"']*)\1(,?)\s*/ $1$2$1$3\n$tab /g;
+    }
+    $_.="\n";
+}
+
+open F, ">",$ARGV[0] or die($!);
+print F @clean;
 

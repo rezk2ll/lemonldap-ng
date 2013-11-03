@@ -575,7 +575,7 @@ doxygen:	clean
 
 distclean:	clean
 
-clean:		common_clean handler_clean portal_clean manager_clean
+clean:		common_clean handler_clean portal_clean manager_clean omegat-clean
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf $(EXAMPLEROOT) example/ doc/devel
 	@rm -vf *gz *zip
@@ -688,4 +688,16 @@ tidy: clean
 
 tidy-js: clean
 	find lemon*/ -type f -name '*.js' ! -name 'jq*' -print -exec scripts/javascript-indent {} \;
+
+omegat-fr-configuration-file:
+	perl -pe 'BEGIN{$$p=`pwd`;chomp $$p;}s/__LANG__/FR-FR/;s/__PWD__/$$p/o;' omegat.files/_base.project >omegat.files/fr/omegat.project
+
+fr-translation: omegat-fr-configuration-file
+	omegat omegat.files/fr
+
+fr-doc: omegat-fr-configuration-file
+	omegat omegat.files/fr --mode=console-translate
+	
+omegat-clean:
+	rm -f omegat.files/*/omegat.project
 

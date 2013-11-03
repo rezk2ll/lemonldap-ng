@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <omegat>
   <project version="1.0">
-    <source_dir>/home/xavier/lemonldap/trunk/doc/</source_dir>
-    <target_dir>/home/xavier/lemonldap/trunk/po-doc/fr/</target_dir>
+    <source_dir>__PWD__/doc/</source_dir>
+    <target_dir>__PWD__/po-doc/fr/</target_dir>
     <tm_dir>__DEFAULT__</tm_dir>
     <glossary_dir>__DEFAULT__</glossary_dir>
     <dictionary_dir>__DEFAULT__</dictionary_dir>
     <source_lang>EN-US</source_lang>
-    <target_lang>FR-FR</target_lang>
+    <target_lang>__LANG__</target_lang>
     <sentence_seg>true</sentence_seg>
   </project>
 </omegat>
