@@ -294,8 +294,10 @@ cat << \EOF > %{name}-req
 %{__perl_requires} $* |\
 sed -e '/perl(lasso)/d' |\
 sed -e '/perl(Net::OpenID::Server)/d' |\
-sed -e '/perl(AuthCAS)/d'
+sed -e '/perl(AuthCAS)/d' |\
+sed -e '/perl(feature)/d'
 EOF
+
 
 %define __perl_requires %{_builddir}/%{name}-%{real_version}/%{name}-req
 chmod +x %{__perl_requires}
@@ -440,7 +442,6 @@ rm -rf %{buildroot}
 %dir %{lm_sharedir}
 %dir %{lm_sharedir}/bin
 %{lm_sharedir}/bin/convertConfig
-%{lm_sharedir}/bin/lemonldap-ng-cli
 %{lm_sharedir}/bin/lmMigrateConfFiles2ini
 %dir %{lm_examplesdir}
 %dir %{lm_sharedir}/ressources
@@ -471,6 +472,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %{lm_vardir}/manager
 %{lm_sharedir}/bin/lmConfigEditor
+%{lm_sharedir}/bin/lemonldap-ng-cli
 %{lm_sharedir}/manager-skins
 %{lm_examplesdir}/manager
 
