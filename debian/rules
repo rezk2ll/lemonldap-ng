@@ -69,9 +69,9 @@ override_dh_fixperms:
 		debian/liblemonldap-ng-portal-perl/$(CAPTCHAOUTPUTDIR)
 	chgrp www-data debian/liblemonldap-ng-common-perl/$(LMINIFILE) \
 		debian/liblemonldap-ng-common-perl/$(FIRSTCONFFILE)
-	chmod 770 debian/*/$(SESSIONSDIR) debian/*/$(SESSIONSDIR)/lock
-	chmod 770 debian/*/$(NOTIFICATIONSDIR)
-	chmod 770 debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR) \
+	chmod 770 debian/*/$(SESSIONSDIR) debian/*/$(SESSIONSDIR)/lock \
+		debian/*/$(NOTIFICATIONSDIR) \
+		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR) \
 		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR)/data \
 		debian/liblemonldap-ng-portal-perl/$(CAPTCHAOUTPUTDIR)
 	chmod 750 debian/liblemonldap-ng-common-perl/$(CONFSTORAGEDIR)
