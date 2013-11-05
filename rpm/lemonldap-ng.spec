@@ -358,6 +358,9 @@ chmod 640 %{buildroot}%{lm_storagefile}
 chmod 770 %{buildroot}%{lm_vardir}/sessions
 chmod 770 %{buildroot}%{lm_vardir}/sessions/lock
 chmod 770 %{buildroot}%{lm_vardir}/notifications
+chmod 770 %{buildroot}%{lm_vardir}/captcha
+chmod 770 %{buildroot}%{lm_vardir}/captcha/data
+chmod 770 %{buildroot}%{lm_vardir}/portal/captcha_output
 
 # Touch for ghost
 mkdir -p %buildroot%{apache_confdir}
@@ -484,6 +487,10 @@ rm -rf %{buildroot}
 %{_sysconfdir}/cron.d/lemonldap-ng-portal
 %{lm_examplesdir}/portal
 %{lm_sharedir}/portal-skins
+%defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
+%dir %{lm_vardir}/captcha
+%dir %{lm_vardir}/captcha/data
+%dir %{lm_vardir}/portal/captcha_output
 
 %files -n lemonldap-ng-test
 %defattr(-,root,root,-)
