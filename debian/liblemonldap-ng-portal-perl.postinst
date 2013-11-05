@@ -7,8 +7,6 @@ set -e
 BUILDPORTALWSDL=/usr/share/lemonldap-ng/bin/buildPortalWSDL
 WSDLFILE=/var/lib/lemonldap-ng/portal/portal.wsdl
 
-CAPTCHA_DIR=/var/lib/lemonldap-ng/portal/captcha_output
-
 if [ "$1" == "configure" ]
 then
 	$BUILDPORTALWSDL > $WSDLFILE || true

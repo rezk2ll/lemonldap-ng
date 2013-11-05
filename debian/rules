@@ -13,7 +13,8 @@ NOTIFICATIONSDIR=$(LMVARDIR)/notifications
 CONFSTORAGEDIR=$(LMVARDIR)/conf
 FIRSTCONFFILE=$(CONFSTORAGEDIR)/lmConf-1
 LMINIFILE=$(CONFDIR)/lemonldap-ng.ini
-CAPTCHADIR=$(LMVARDIR)/portal/captcha_output
+CAPTCHADIR=$(LMVARDIR)/captcha
+CAPTCHAOUTPUTDIR=$(LMVARDIR)/portal/captcha_output
 
 %:
 	dh $@
@@ -63,11 +64,16 @@ override_dh_fixperms:
 		debian/*/$(SESSIONSDIR)/lock \
 		debian/*/$(NOTIFICATIONSDIR) \
 		debian/liblemonldap-ng-common-perl/$(CONFSTORAGEDIR) \
-		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR)
+		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR) \
+		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR)/data \
+		debian/liblemonldap-ng-portal-perl/$(CAPTCHAOUTPUTDIR)
 	chgrp www-data debian/liblemonldap-ng-common-perl/$(LMINIFILE) \
 		debian/liblemonldap-ng-common-perl/$(FIRSTCONFFILE)
 	chmod 770 debian/*/$(SESSIONSDIR) debian/*/$(SESSIONSDIR)/lock
 	chmod 770 debian/*/$(NOTIFICATIONSDIR)
+	chmod 770 debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR) \
+		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR)/data \
+		debian/liblemonldap-ng-portal-perl/$(CAPTCHAOUTPUTDIR)
 	chmod 750 debian/liblemonldap-ng-common-perl/$(CONFSTORAGEDIR)
 	chmod 640 debian/liblemonldap-ng-common-perl/$(FIRSTCONFFILE) \
 		debian/liblemonldap-ng-common-perl/$(LMINIFILE)
