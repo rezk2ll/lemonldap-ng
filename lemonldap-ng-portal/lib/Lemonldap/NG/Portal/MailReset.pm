@@ -130,7 +130,11 @@ sub extractMailInfo {
         $self->{mail} = $self->param('mail');
 
         # Captcha for mail form
-        if ( $self->{captcha_mail_enabled} && $self->{mail} ) {
+        # Only if mail session does not already exist
+        if (   $self->{captcha_mail_enabled}
+            && $self->{mail}
+            && !$self->getMailSession( $self->{mail} ) )
+        {
             $self->{captcha_user_code}  = $self->param('captcha_user_code');
             $self->{captcha_check_code} = $self->param('captcha_code');
 
