@@ -83,7 +83,7 @@ var helpCh={
 	'userdbParams':'/pages/documentation/current/start.html#authentication_and_users_database',
 	'vhostOptions':'/pages/documentation/current/configvhost.html#options',
 	'virtualHosts':'/pages/documentation/current/configvhost.html',
-	'zimbra':'/pages/documentation/current/applications/zimbra.html',
+	'zimbra':'/pages/documentation/current/applications/zimbra.html'
 };
 
 /* Init simpleTreeCollection */
@@ -727,7 +727,7 @@ function nameIdFormatParams(id) {
 		'entity=Entity',
 		'persistent=Persistent',
 		'transient=Transient',
-		'encrypted=Encrypted',
+		'encrypted=Encrypted'
 		],lmdata(id));
 	display('select',lmtext(id));
 }
@@ -739,7 +739,7 @@ function bindingParams(id) {
 		'http-redirect=REDIRECT',
 		'http-soap=SOAP',
 		'artifact-get=Artifact GET',
-		'artifact-post=Artifact POST',
+		'artifact-post=Artifact POST'
 		],lmdata(id));
 	display('select',lmtext(id));
 }
@@ -759,7 +759,7 @@ function encryptionModeParams(id) {
 	formateSelect('select',[
 		'none=None',
 		'nameid=Name ID',
-		'assertion=Assertion',
+		'assertion=Assertion'
 		],lmdata(id));
 	display('select',lmtext(id));
 }
@@ -770,7 +770,7 @@ function timeoutActivityParams(id) {
 		'900=15 min',
 		'1800=30 min',
 		'2700=45 min',
-		'3600=60 min',
+		'3600=60 min'
 		],lmdata(id));
 	display('select',lmtext(id));
 }
@@ -780,7 +780,7 @@ function zimbraByParams(id) {
 		'=',
 		'name=User name',
 		'id=User id',
-		'foreignPrincipal=Foreign principal',
+		'foreignPrincipal=Foreign principal'
 		],lmdata(id));
 	display('select',lmtext(id));
 }
@@ -789,7 +789,7 @@ function casAccessControlPolicyParams(id) {
 	formateSelect('select',[
 		'none=None',
 		'error=Display error on portal',
-		'faketicket=Send a fake service ticket',
+		'faketicket=Send a fake service ticket'
 		],lmdata(id));
 	display('select',lmtext(id));
 }
@@ -1505,7 +1505,7 @@ function applicationListApplication(id){
 	formateSelect('applicationListApplicationDisplay',[
 		'auto=Automatic',
 		'on=On',
-		'off=Off',
+		'off=Off'
 		],t[4]);
 	display('applicationListApplication',lmtext(id));
 	$('#delapplication').show();
@@ -1590,8 +1590,8 @@ function popup(html){
 		buttons: {
 			Ok: function() {
 			$( this ).dialog( "close" );
-			},
-		},
+			}
+		}
 	});
 }
 
