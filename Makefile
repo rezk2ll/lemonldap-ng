@@ -689,6 +689,21 @@ tidy: clean
 tidy-js: clean
 	find lemon*/ -type f -name '*.js' ! -name 'jq*' -print -exec scripts/javascript-indent {} \;
 
+# TRANSLATION TARGETS #
+
+# 1. Internal targets
+
+language_code=perl -e ' \
+	print { \
+		fr=> "FR-FR", \
+	}->{$(1)}'
+
+test_omegat_%_dir:
+	 @if [ ! -d omegat.files/$* ]; then \
+	 	echo "omegat.files/$* does not exist"; \
+		exit 1; \
+	fi
+
 omegat-configuration-file:
 	perl -pe 'BEGIN{$$p=`pwd`;chomp $$p;}s/__LANG__/$(OMEGATCODE)/;s/__PWD__/$$p/o;' omegat.files/_base.project >omegat.files/$(LANGCODE)/omegat.project
 
@@ -698,12 +713,21 @@ translation: omegat-configuration-file
 translated-doc: omegat-configuration-file
 	omegat omegat.files/$(LANGCODE) --mode=console-translate
 
-fr-translation:
-	$(MAKE) translation LANGCODE=fr OMEGATCODE=FR-FR
+# 2. Public targets
 
-fr-doc:
-	$(MAKE) translated-doc LANGCODE=fr OMEGATCODE=FR-FR
+%-translation: test_omegat_%_dir
+	$(eval CODE = $(call language_code,$*))
+	$(MAKE) translation LANGCODE=$* OMEGATCODE=$(CODE)
+
+%-doc: test_omegat_%_dir
+	$(eval CODE = $(call language_code,$*))
+	$(MAKE) translated-doc LANGCODE=$* OMEGATCODE=$(CODE)
 	
 omegat-clean:
 	rm -rf omegat.files/*/omegat.project po-doc/*/* omegat.files/*/omegat/project_save*.bak
+
+install_%_doc_site: %-doc test_omegat_%_dir
+	@rm -rf $(RDOCDIR)/$* || true
+	@install -v -d $(RDOCDIR)/$*
+	@cp -dR --remove-destination po-doc/$*/* $(RDOCDIR)/$*
 
