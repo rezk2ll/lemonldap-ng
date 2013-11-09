@@ -689,14 +689,20 @@ tidy: clean
 tidy-js: clean
 	find lemon*/ -type f -name '*.js' ! -name 'jq*' -print -exec scripts/javascript-indent {} \;
 
-omegat-fr-configuration-file:
-	perl -pe 'BEGIN{$$p=`pwd`;chomp $$p;}s/__LANG__/FR-FR/;s/__PWD__/$$p/o;' omegat.files/_base.project >omegat.files/fr/omegat.project
+omegat-configuration-file:
+	perl -pe 'BEGIN{$$p=`pwd`;chomp $$p;}s/__LANG__/$(OMEGATCODE)/;s/__PWD__/$$p/o;' omegat.files/_base.project >omegat.files/$(LANGCODE)/omegat.project
 
-fr-translation: omegat-fr-configuration-file
-	omegat omegat.files/fr
+translation: omegat-configuration-file
+	omegat omegat.files/$(LANGCODE)
 
-fr-doc: omegat-fr-configuration-file
-	omegat omegat.files/fr --mode=console-translate
+translated-doc: omegat-configuration-file
+	omegat omegat.files/$(LANGCODE) --mode=console-translate
+
+fr-translation:
+	$(MAKE) translation LANGCODE=fr OMEGATCODE=FR-FR
+
+fr-doc:
+	$(MAKE) translated-doc LANGCODE=fr OMEGATCODE=FR-FR
 	
 omegat-clean:
 	rm -rf omegat.files/*/omegat.project po-doc/*/* omegat.files/*/omegat/project_save*.bak
