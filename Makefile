@@ -507,7 +507,7 @@ manager_uninstall:	manager
 
 dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
-	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|debian\|omegat.files\)") lemonldap-ng-$(VERSION)
+	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|debian\)") lemonldap-ng-$(VERSION)
 	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
@@ -516,7 +516,7 @@ dist:	clean
 
 debian-dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
-	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|omegat.files\)") lemonldap-ng-$(VERSION)
+	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\)") lemonldap-ng-$(VERSION)
 	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
