@@ -708,10 +708,10 @@ omegat-configuration-file:
 	perl -pe 'BEGIN{$$p=`pwd`;chomp $$p;}s/__LANG__/$(OMEGATCODE)/;s/__PWD__/$$p/o;' omegat.files/_base.project >omegat.files/$(LANGCODE)/omegat.project
 
 translation: omegat-configuration-file
-	omegat omegat.files/$(LANGCODE)
+	omegat omegat.files/$(LANGCODE) --quiet
 
 translated-doc: omegat-configuration-file
-	omegat omegat.files/$(LANGCODE) --mode=console-translate
+	omegat omegat.files/$(LANGCODE) --mode=console-translate --quiet
 
 # 2. Public targets
 
