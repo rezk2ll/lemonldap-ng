@@ -711,7 +711,8 @@ translation: omegat-configuration-file
 	omegat omegat.files/$(LANGCODE) --quiet
 
 translated-doc: omegat-configuration-file
-	omegat omegat.files/$(LANGCODE) --mode=console-translate --quiet
+	omegat omegat.files/$(LANGCODE) --mode=console-translate --quiet 2>/dev/null
+	cd po-doc/$(LANGCODE)/pages/documentation && rm -rf current && ln -s $$(find * -maxdepth 0 -type d) current
 
 # 2. Public targets
 
