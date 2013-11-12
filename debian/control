@@ -86,7 +86,7 @@ Architecture: all
 Section: doc
 Depends: ${misc:Depends}
 Provides: lemonldap-ng-doc
-Description: Lemonldap::NG Web-SSO system documentation
+Description: French documentation of Lemonldap::NG Web-SSO system
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
  OpenID, CAS and SAML systems as identity or service provider. It can also be
