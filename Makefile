@@ -144,6 +144,9 @@ all:	configure common handler manager portal
 	@echo "   - install_doc_site      ($(DOCDIR))"
 	@echo "   - install_examples_site ($(EXAMPLESDIR))"
 	@echo
+	@echo "Other languages documentation (fr only for now)"
+	@echo " - install_fr_doc_site   (needs OmegaT)"
+	@echo
 
 #
 # Perl libraries configuration
