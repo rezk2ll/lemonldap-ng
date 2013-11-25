@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;
 our @ISA = qw(Lemonldap::NG::Portal::_SAML);
 
-our $VERSION = '1.2.3';
+our $VERSION = '1.3.2';
 
 ## @method void issuerDBInit()
 # Load and check SAML configuration
@@ -1127,6 +1127,7 @@ sub issuerForAuthUser {
     my $url            = $self->url( -absolute => 1 );
     my $request_method = $self->request_method();
     my $content_type   = $self->content_type();
+    my $idp_initiated  = $self->param('IDPInitiated');
 
     # 1.1. SSO (SSO URL or Proxy Mode)
     if ( $url =~
@@ -1156,8 +1157,8 @@ sub issuerForAuthUser {
         # Ignore signature verification
         $self->disableSignatureVerification($login);
 
-        # Process the request
-        if ($request) {
+        # Process the request or use IDP initiated mode
+        if ( $request or $idp_initiated ) {
 
             # Load Session and Identity if they exist
             my $session  = $self->{sessionInfo}->{_lassoSessionDump};
@@ -1179,23 +1180,9 @@ sub issuerForAuthUser {
                 $self->lmLog( "Lasso Identity loaded", 'debug' );
             }
 
-            # Process authentication request
-            my $result;
-            if ($artifact) {
-                $result = $self->processArtResponseMsg( $login, $request );
-            }
-            else {
-                $result = $self->processAuthnRequestMsg( $login, $request );
-            }
-
-            unless ($result) {
-                $self->lmLog( "SSO: Fail to process authentication request",
-                    'error' );
-                return PE_SAML_SSO_ERROR;
-            }
-
             # Get SP entityID
-            my $sp = $login->remote_providerID();
+            my $sp =
+              $request ? $login->remote_providerID() : $self->param("sp");
 
             $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
 
@@ -1209,6 +1196,34 @@ sub issuerForAuthUser {
             }
 
             $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
+
+            my $result;
+
+            # Create fake request if IDP initiated mode
+            if ($idp_initiated) {
+                $result = $self->initIdpInitiatedAuthnRequest( $login, $sp );
+                unless ($result) {
+                    $self->lmLog(
+"SSO: Fail to init IDP Initiated authentication request",
+                        'error'
+                    );
+                    return PE_SAML_SSO_ERROR;
+                }
+            }
+
+            # Process authentication request
+            if ($artifact) {
+                $result = $self->processArtResponseMsg( $login, $request );
+            }
+            else {
+                $result = $self->processAuthnRequestMsg( $login, $request );
+            }
+
+            unless ($result) {
+                $self->lmLog( "SSO: Fail to process authentication request",
+                    'error' );
+                return PE_SAML_SSO_ERROR;
+            }
 
             # Do we check signature?
             my $checkSSOMessageSignature =

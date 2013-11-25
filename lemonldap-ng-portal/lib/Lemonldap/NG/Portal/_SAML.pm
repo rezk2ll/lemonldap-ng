@@ -21,7 +21,7 @@ use URI;                   # Get metadata URL path
 #inherits Lemonldap::NG::Common::Conf::SAML::Metadata protected service_metadata
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.3.0';
+our $VERSION = '1.3.2';
 our $samlCache;
 our $initGlibDone;
 
@@ -974,6 +974,19 @@ sub initAuthnRequest {
     my ( $self, $login, $idp, $method ) = splice @_;
 
     eval { Lasso::Login::init_authn_request( $login, $idp, $method ); };
+
+    return $self->checkLassoError($@);
+}
+
+## @method boolean initIdpInitiatedAuthnRequest(Lasso::Login login, string idp)
+# Init authentication request
+# @param login Lasso::Login
+# @param idp entityID
+# @return boolean result
+sub initIdpInitiatedAuthnRequest {
+    my ( $self, $login, $idp ) = splice @_;
+
+    eval { Lasso::Login::init_idp_initiated_authn_request( $login, $idp ); };
 
     return $self->checkLassoError($@);
 }
@@ -3056,6 +3069,10 @@ Create Lasso::Login object
 =head2 initAuthnRequest
 
 Init authentication request
+
+=head2 initIdpInitiatedAuthnRequest
+
+Init authentication request for IDP initiated
 
 =head2 buildAuthnRequestMsg
 
