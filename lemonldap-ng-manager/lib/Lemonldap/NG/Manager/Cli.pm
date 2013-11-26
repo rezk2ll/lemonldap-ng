@@ -41,11 +41,11 @@ sub saveConf {
 }
 
 ## @method string determineMethod ()
-# Determine the method from the arguments 
+# Determine the method from the arguments
 #
 # @return method name
 sub determineMethod {
-    my ($self, $opt) = @_;
+    my ( $self, $opt ) = @_;
     $opt =~ s/-(\w+)/ucfirst($1)/ge;
     return $opt;
 }
@@ -55,7 +55,7 @@ sub determineMethod {
 #
 # @param str Text of the error
 sub setError {
-    my ($self, $msg) = @_;
+    my ( $self, $msg ) = @_;
     $self->{errormsg} = $msg;
 }
 
@@ -73,14 +73,14 @@ sub getError {
 #
 # @return result code of the method
 sub run {
-    my $self = shift;
+    my $self   = shift;
     my $method = shift;
 
     my @args;
-    @args = @_ if (@_ >= 1);
+    @args = @_ if ( @_ >= 1 );
 
-    # perl black magic :) 
-    return (@args >= 1) ? $self->$method(@args) : $self->$method();
+    # perl black magic :)
+    return ( @args >= 1 ) ? $self->$method(@args) : $self->$method();
 }
 
 ## @method void set ( string variable, string value )
@@ -88,7 +88,7 @@ sub run {
 #
 # @return nothing
 sub set {
-    my ($self, $var, $val) = @_;
+    my ( $self, $var, $val ) = @_;
     $self->{conf}->{$var} = $val;
 }
 
@@ -97,9 +97,11 @@ sub set {
 #
 # @return nothing
 sub unset {
-    my ($self, $var) = @_;
-    if (not defined($self->conf->{$var})) {
-        $self->setError("$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no variables named $var" );
+    my ( $self, $var ) = @_;
+    if ( not defined( $self->conf->{$var} ) ) {
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is no variables named $var" );
         return 0;
     }
     delete $self->conf->{$var};
@@ -110,9 +112,11 @@ sub unset {
 #
 # @return nothing
 sub get {
-    my ($self, $var) = @_;
-    if (not defined($self->conf->{$var})) {
-        $self->setError("$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no variables named $var" );
+    my ( $self, $var ) = @_;
+    if ( not defined( $self->conf->{$var} ) ) {
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is no variables named $var" );
         return 0;
     }
     print "$var = " . $self->{conf}->{$var} . "\n";
@@ -123,7 +127,7 @@ sub get {
 #
 # @return nothing
 sub setMacro {
-    my ($self, $macro, $value) = @_;
+    my ( $self, $macro, $value ) = @_;
     $self->{conf}->{macros}->{$macro} = $value;
 }
 
@@ -132,9 +136,11 @@ sub setMacro {
 #
 # return nothing
 sub unsetMacro {
-    my ($self, $macro) = @_;
+    my ( $self, $macro ) = @_;
     if ( not defined( $self->{conf}->{macros}->{$macro} ) ) {
-        $self->setError("$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no macro named $macro" );
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is no macro named $macro" );
         return 0;
     }
     delete $self->{conf}->{macros}->{$macro};
@@ -145,27 +151,29 @@ sub unsetMacro {
 #
 # @return nothing
 sub getMacro {
-    my ($self, $macro) = @_;
+    my ( $self, $macro ) = @_;
     if ( not defined( $self->{conf}->{macros}->{$macro} ) ) {
-        $self->setError("$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no macro named $macro" );
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is no macro named $macro" );
         return 0;
     }
     print "$macro = " . $self->{conf}->{macros}->{$macro} . "\n";
 }
 
 ## @method void appsSetCat ( int id, string name )
-# Set the category name by its id 
+# Set the category name by its id
 #
 # @return nothing
 sub appsSetCat {
-    my ($self, $id, $name) = @_;
+    my ( $self, $id, $name ) = @_;
     if ( defined( $self->{conf}->{applicationList}->{$id} ) ) {
-        $self->{conf}->{applicationList}->{$id}->{catname} = $name;    
+        $self->{conf}->{applicationList}->{$id}->{catname} = $name;
     }
     else {
         $self->{conf}->{applicationList}->{$id} = {
-            type    => "category",
-            name    => $name
+            type => "category",
+            name => $name
         };
     }
 }
@@ -175,7 +183,7 @@ sub appsSetCat {
 #
 # @return nothing
 sub appsGetCat {
-    my ($self, $id) = @_;
+    my ( $self, $id ) = @_;
     if ( not defined( $self->{conf}->{applicationList}->{$id} ) ) {
         $self->setError("$_: There is no category $id");
         return 0;
@@ -188,13 +196,17 @@ sub appsGetCat {
 #
 # @return nothing
 sub appsAdd {
-    my ($self, $appId, $catId) = @_;
+    my ( $self, $appId, $catId ) = @_;
     if ( not defined( $self->{conf}->{applicationList}->{$catId} ) ) {
-        $self->setError("$_" . $ERRORS->{CONFIG_WRITE_ERROR} . ": Category $catId doesn't exist");
+        $self->setError( "$_"
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": Category $catId doesn't exist" );
         return 0;
     }
     if ( defined( $self->{conf}->{applicationList}->{$catId}->{$appId} ) ) {
-        $self->setError("$_" . $ERRORS->{CONFIG_WRITE_ERROR} . ": Application $appId exists");
+        $self->setError( "$_"
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": Application $appId exists" );
     }
     $self->{conf}->{applicationList}->{$catId}->{$appId} = {
         type    => "application",
@@ -213,20 +225,24 @@ sub appsAdd {
 #
 # @return nothing
 sub appsSetUri {
-    my ($self, $id, $uri) = @_;
+    my ( $self, $id, $uri ) = @_;
     my $found = 0;
 
-    while ( my ($catId, $appList) = each %{ $self->{conf}->{applicationList} } and $found != 1 ) {
+    while ( my ( $catId, $appList ) = each %{ $self->{conf}->{applicationList} }
+        and $found != 1 )
+    {
         while ( my ( $_appid, $app ) = each %{$appList} and $found != 1 ) {
             if ( $id eq $_appid ) {
                 $app->{options}->{uri} = $uri;
                 $found = 1;
             }
         }
-    } 
+    }
 
     if ( $found == 0 ) {
-        $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": Application $id not found" );
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": Application $id not found" );
         return 0;
     }
 }
@@ -236,10 +252,12 @@ sub appsSetUri {
 #
 # @return nothing
 sub appsSetName {
-    my ($self, $id, $name) = @_;
+    my ( $self, $id, $name ) = @_;
     my $found = 0;
 
-    while ( my ($catId, $appList) = each %{ $self->{conf}->{applicationList} } and $found != 1 ) {
+    while ( my ( $catId, $appList ) = each %{ $self->{conf}->{applicationList} }
+        and $found != 1 )
+    {
         while ( my ( $_appid, $app ) = each %{$appList} and $found != 1 ) {
             if ( $id eq $_appid ) {
                 $app->{options}->{name} = $name;
@@ -247,7 +265,9 @@ sub appsSetName {
             }
 
             if ( $found == 0 ) {
-                $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": Application $id not found" );
+                $self->setError( "$_: "
+                      . $ERRORS->{CONFIG_WRITE_ERROR}
+                      . ": Application $id not found" );
                 return 0;
             }
         }
@@ -259,10 +279,12 @@ sub appsSetName {
 #
 # @return nothing
 sub appsSetDesc {
-    my ($self, $id, $desc) = @_;
+    my ( $self, $id, $desc ) = @_;
     my $found = 0;
 
-    while ( my ($catId, $appList) = each %{ $self->{conf}->{applicationList} } and $found != 1 ) {
+    while ( my ( $catId, $appList ) = each %{ $self->{conf}->{applicationList} }
+        and $found != 1 )
+    {
         while ( my ( $_appid, $app ) = each %{$appList} and $found != 1 ) {
             if ( $id eq $_appid ) {
                 $app->{options}->{description} = $desc;
@@ -270,7 +292,9 @@ sub appsSetDesc {
             }
 
             if ( $found == 0 ) {
-                $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": Application $id not found" );
+                $self->setError( "$_: "
+                      . $ERRORS->{CONFIG_WRITE_ERROR}
+                      . ": Application $id not found" );
                 return 0;
             }
         }
@@ -282,10 +306,12 @@ sub appsSetDesc {
 #
 # @return nothing
 sub appsSetLogo {
-    my ($self, $id, $logo) = @_;
+    my ( $self, $id, $logo ) = @_;
     my $found = 0;
 
-    while ( my ($catId, $appList) = each %{ $self->{conf}->{applicationList} } and $found != 1 ) {
+    while ( my ( $catId, $appList ) = each %{ $self->{conf}->{applicationList} }
+        and $found != 1 )
+    {
         while ( my ( $_appid, $app ) = each %{$appList} and $found != 1 ) {
             if ( $id eq $_appid ) {
                 $app->{options}->{logo} = $logo;
@@ -293,7 +319,9 @@ sub appsSetLogo {
             }
 
             if ( $found == 0 ) {
-                $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": Application $id not found" );
+                $self->setError( "$_: "
+                      . $ERRORS->{CONFIG_WRITE_ERROR}
+                      . ": Application $id not found" );
                 return 0;
             }
         }
@@ -305,10 +333,12 @@ sub appsSetLogo {
 #
 # @return nothing
 sub appsSetDisplay {
-    my ($self, $id, $display) = @_;
+    my ( $self, $id, $display ) = @_;
     my $found = 0;
 
-    while ( my ($catId, $appList) = each %{ $self->{conf}->{applicationList} } and $found != 1 ) {
+    while ( my ( $catId, $appList ) = each %{ $self->{conf}->{applicationList} }
+        and $found != 1 )
+    {
         while ( my ( $_appid, $app ) = each %{$appList} and $found != 1 ) {
             if ( $id eq $_appid ) {
                 $app->{options}->{display} = $display;
@@ -316,7 +346,9 @@ sub appsSetDisplay {
             }
 
             if ( $found == 0 ) {
-                $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": Application $id not found" );
+                $self->setError( "$_: "
+                      . $ERRORS->{CONFIG_WRITE_ERROR}
+                      . ": Application $id not found" );
                 return 0;
             }
         }
@@ -328,13 +360,17 @@ sub appsSetDisplay {
 #
 # @return nothing
 sub appsGet {
-    my ($self, $id) = @_;
+    my ( $self, $id ) = @_;
     my $found = 0;
-    
-    while ( my ( $catid, $applist ) = each %{ $self->{conf}->{applicationList} } and $found != 1 ) { 
-        while ( my ( $_appid, $app ) = each %{$applist} and $found != 1 ) { 
-            if ( $id eq $_appid ) { 
-                print "Category $catid: " . $self->{conf}->{applicationList}->{$catid}->{catname} . "\n";
+
+    while ( my ( $catid, $applist ) = each %{ $self->{conf}->{applicationList} }
+        and $found != 1 )
+    {
+        while ( my ( $_appid, $app ) = each %{$applist} and $found != 1 ) {
+            if ( $id eq $_appid ) {
+                print "Category $catid: "
+                  . $self->{conf}->{applicationList}->{$catid}->{catname}
+                  . "\n";
                 print "Application $id: " . $app->{options}->{name} . "\n";
                 print "- Description: " . $app->{options}->{description} . "\n";
                 print "- URI: " . $app->{options}->{uri} . "\n";
@@ -356,12 +392,14 @@ sub appsGet {
 #
 # @return nothing
 sub appsRm {
-    my ($self, $id) = @_;
+    my ( $self, $id ) = @_;
     my $found = 0;
-    
-    while ( my ( $catid, $applist ) = each %{ $self->{conf}->{applicationList} } and $found != 1 ) { 
+
+    while ( my ( $catid, $applist ) = each %{ $self->{conf}->{applicationList} }
+        and $found != 1 )
+    {
         while ( my ( $_appid, $app ) = each %{$applist} and $found != 1 ) {
-            if ($id eq $_appid) {
+            if ( $id eq $_appid ) {
                 delete $applist->{$id};
                 $found = 1;
             }
@@ -374,7 +412,7 @@ sub appsRm {
 #
 # @return nothing
 sub rulesSet {
-    my ($self, $uri, $expr, $rule) = @_;
+    my ( $self, $uri, $expr, $rule ) = @_;
 
     if ( not defined( $self->{conf}->{locationRules}->{$uri} ) ) {
         $self->{conf}->{locationRules}->{$uri} = {};
@@ -388,10 +426,12 @@ sub rulesSet {
 #
 # @return nothing
 sub rulesUnset {
-    my ($self, $uri, $expr) = @_;
+    my ( $self, $uri, $expr ) = @_;
 
     if ( not defined( $self->{conf}->{locationRules}->{$uri} ) ) {
-        $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is rule $expr for virtual host $uri" );
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is rule $expr for virtual host $uri" );
         return 0;
     }
 
@@ -403,7 +443,7 @@ sub rulesUnset {
 #
 # @return nothing
 sub rulesGet {
-    my ($self, $uri) = @_;
+    my ( $self, $uri ) = @_;
 
     if ( not defined( $self->{conf}->{locationRules}->{$uri} ) ) {
         $self->setError("$_: There is no virtual host $uri");
@@ -412,7 +452,9 @@ sub rulesGet {
 
     print "Virtual Host : $uri\n";
 
-    while ( my ( $expr, $rule ) = each %{ $self->{conf}->{locationRules}->{$uri} } ) {
+    while ( my ( $expr, $rule ) =
+        each %{ $self->{conf}->{locationRules}->{$uri} } )
+    {
         print "- $expr => $rule\n";
     }
 }
@@ -422,7 +464,7 @@ sub rulesGet {
 #
 # @return nothing
 sub exportVar {
-    my ($self, $key, $val) = @_;
+    my ( $self, $key, $val ) = @_;
     $self->{conf}->{exportedVars}->{$key} = $val;
 }
 
@@ -431,10 +473,10 @@ sub exportVar {
 #
 # @return nothing
 sub unexportVar {
-    my ($self, $key) = @_;
+    my ( $self, $key ) = @_;
 
     if ( not defined( $self->{conf}->{exportedVars}->{$key} ) ) {
-        $self->setError("$_: There is no exported variables named $key" );
+        $self->setError("$_: There is no exported variables named $key");
         return 0;
     }
 
@@ -457,10 +499,12 @@ sub getExportedVars {
 #
 # @return nothing
 sub exportHeader {
-    my ($self, $vhost, $header, $expr) = @_;
+    my ( $self, $vhost, $header, $expr ) = @_;
 
     if ( not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) ) {
-        $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no virtual host $vhost\n" );
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is no virtual host $vhost\n" );
         return 0;
     }
 
@@ -472,15 +516,21 @@ sub exportHeader {
 #
 # @return nothing
 sub unexportHeader {
-    my ($self, $vhost, $header, $expr) = @_;
+    my ( $self, $vhost, $header, $expr ) = @_;
 
     if ( not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) ) {
-        $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no virtual host $vhost\n" );
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is no virtual host $vhost\n" );
         return 0;
     }
 
-    if ( not defined( $self->{conf}->{exportedHeaders}->{$vhost}->{$header} ) ) {
-        $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no header named $header exported for virtual host $vhost\n" );
+    if ( not defined( $self->{conf}->{exportedHeaders}->{$vhost}->{$header} ) )
+    {
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is no header named $header exported for virtual host $vhost\n"
+        );
         return 0;
     }
 
@@ -492,29 +542,36 @@ sub unexportHeader {
 #
 # @return nothing
 sub getExportedHeaders {
-    my ($self, $vhost) = @_;
+    my ( $self, $vhost ) = @_;
 
     if ( not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) ) {
-        $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no virtual host $vhost\n" );
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is no virtual host $vhost\n" );
         return 0;
     }
 
-    while ( my ( $header, $expr ) = each %{ $self->{conf}->{exportedHeaders}->{$vhost} } ) {
+    while ( my ( $header, $expr ) =
+        each %{ $self->{conf}->{exportedHeaders}->{$vhost} } )
+    {
         print "$header : $expr\n";
     }
 }
 
 ## @method void vhostAdd ( string vhost )
-# Add a new vhost 
+# Add a new vhost
 #
 # @return nothing
 sub vhostAdd {
-    my ($self, $vhost) = @_;
-    
-    if ( defined( $self->{conf}->{vhostOptions}->{$vhost} )
-      or defined( $self->{conf}->{locationRules}->{$vhost} )
-      or defined( $self->{conf}->{exportedHeaders}->{$vhost} ) ) {
-        $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": Virtual host $vhost already exist" );
+    my ( $self, $vhost ) = @_;
+
+    if (   defined( $self->{conf}->{vhostOptions}->{$vhost} )
+        or defined( $self->{conf}->{locationRules}->{$vhost} )
+        or defined( $self->{conf}->{exportedHeaders}->{$vhost} ) )
+    {
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": Virtual host $vhost already exist" );
         return 0;
     }
 
@@ -524,17 +581,17 @@ sub vhostAdd {
         vhostHttps       => '-1'
     };
 
-    $self->{conf}->{locationRules}->{$vhost} = { default => "deny" };
+    $self->{conf}->{locationRules}->{$vhost}   = { default     => "deny" };
     $self->{conf}->{exportedHeaders}->{$vhost} = { "Auth-User" => "\$uid" };
 
 }
 
 ## @method void vhostDel ( string vhost )
-# Drop a vhost 
+# Drop a vhost
 #
 # @return nothing
 sub vhostDel {
-    my ($self, $vhost) = @_;
+    my ( $self, $vhost ) = @_;
 
     my $error  = "No virtual host in: ";
     my $nerror = 0;
@@ -579,12 +636,15 @@ sub vhostDel {
 #
 # @return nothing
 sub vhostSetPort {
-    my ($self, $vhost, $port) = @_;
+    my ( $self, $vhost, $port ) = @_;
 
     if ( not defined( $self->{conf}->{vhostOptions}->{$vhost} ) ) {
-        if ( not defined( $self->{conf}->{locationRules}->{$vhost} ) 
-          and not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) ) {
-            $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no virtual host $vhost" );
+        if (    not defined( $self->{conf}->{locationRules}->{$vhost} )
+            and not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) )
+        {
+            $self->setError( "$_: "
+                  . $ERRORS->{CONFIG_WRITE_ERROR}
+                  . ": There is no virtual host $vhost" );
             return 0;
         }
         else {
@@ -605,11 +665,14 @@ sub vhostSetPort {
 #
 # @return nothing
 sub vhostSetHttps {
-    my ($self, $vhost, $https) = @_;
+    my ( $self, $vhost, $https ) = @_;
     if ( not defined( $self->{conf}->{vhostOptions}->{$vhost} ) ) {
-        if ( not defined( $self->{conf}->{locationRules}->{$vhost} ) 
-          and not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) ) {
-            $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no virtual host $vhost" );
+        if (    not defined( $self->{conf}->{locationRules}->{$vhost} )
+            and not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) )
+        {
+            $self->setError( "$_: "
+                  . $ERRORS->{CONFIG_WRITE_ERROR}
+                  . ": There is no virtual host $vhost" );
             return 0;
         }
         else {
@@ -630,12 +693,15 @@ sub vhostSetHttps {
 #
 # @return nothing
 sub vhostSetMaintenance {
-    my ($self, $vhost, $off) = @_;
-    
+    my ( $self, $vhost, $off ) = @_;
+
     if ( not defined( $self->{conf}->{vhostOptions}->{$vhost} ) ) {
-        if ( not defined( $self->{conf}->{locationRules}->{$vhost} ) 
-          and not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) ) {
-            $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no virtual host $vhost" );
+        if (    not defined( $self->{conf}->{locationRules}->{$vhost} )
+            and not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) )
+        {
+            $self->setError( "$_: "
+                  . $ERRORS->{CONFIG_WRITE_ERROR}
+                  . ": There is no virtual host $vhost" );
             return 0;
         }
         else {
@@ -648,7 +714,7 @@ sub vhostSetMaintenance {
     }
     else {
         $self->{conf}->{vhostOptions}->{$vhost}->{vhostMaintenance} = $off;
-    }    
+    }
 }
 
 ## @method void vhostList ( void )
@@ -658,7 +724,9 @@ sub vhostSetMaintenance {
 sub vhostList {
     my ($self) = shift;
 
-    while ( my ( $vhost, $vhostoptions ) = each %{ $self->{conf}->{vhostOptions} } ) {
+    while ( my ( $vhost, $vhostoptions ) =
+        each %{ $self->{conf}->{vhostOptions} } )
+    {
         print "- $vhost => ";
         print "Maintenance: $vhostoptions->{vhostMaintenance} | ";
         print "Port: $vhostoptions->{vhostPort} | ";
@@ -667,11 +735,11 @@ sub vhostList {
 }
 
 ## @method void globalStorageSetDir ( string path )
-# Set the global storage directory 
+# Set the global storage directory
 #
 # @return nothing
 sub globalStorageSetDir {
-    my ($self, $path) = @_;
+    my ( $self, $path ) = @_;
 
     $self->{conf}->{globalStorageOptions}->{Directory} = $path;
 }
@@ -681,7 +749,7 @@ sub globalStorageSetDir {
 #
 # @return nothing
 sub globalStorageSetLockdir {
-    my ($self, $path) = @_;
+    my ( $self, $path ) = @_;
 
     $self->{conf}->{globalStorageOptions}->{LockDirectory} = $path;
 }
@@ -695,7 +763,8 @@ sub globalStorage {
 
     print "Global Storage options :\n";
     print "- Directory: $self->{conf}->{globalStorageOptions}->{Directory}\n";
-    print "- Lock Directory: $self->{conf}->{globalStorageOptions}->{LockDirectory}\n";
+    print
+"- Lock Directory: $self->{conf}->{globalStorageOptions}->{LockDirectory}\n";
 }
 
 ## @method reloadUrls ( void )
@@ -705,7 +774,7 @@ sub globalStorage {
 sub reloadUrls {
     my ($self) = shift;
 
-    while ( my ( $vhost, $url ) =  each %{ $self->{conf}->{reloadUrls} } ) {
+    while ( my ( $vhost, $url ) = each %{ $self->{conf}->{reloadUrls} } ) {
         print "- $vhost => $url\n";
     }
 }
@@ -715,7 +784,7 @@ sub reloadUrls {
 #
 # @return nothing
 sub reloadUrlAdd {
-    my ($self, $vhost, $url) = @_;
+    my ( $self, $vhost, $url ) = @_;
 
     $self->{conf}->{reloadUrls}->{$vhost} = $url;
 }
@@ -725,14 +794,16 @@ sub reloadUrlAdd {
 #
 # @return nothing
 sub reloadUrlDel {
-    my ($self, $vhost) = @_;
+    my ( $self, $vhost ) = @_;
 
     if ( not defined( $self->{conf}->{reloadUrls}->{$vhost} ) ) {
-        $self->setError("$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": There is no reload URLs setted for $vhost" );
+        $self->setError( "$_: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is no reload URLs setted for $vhost" );
         return 0;
     }
 
-    delete $self->{conf}->{reloadUrls}->{$vhost};    
+    delete $self->{conf}->{reloadUrls}->{$vhost};
 }
 
 ## @method void help ( void )
