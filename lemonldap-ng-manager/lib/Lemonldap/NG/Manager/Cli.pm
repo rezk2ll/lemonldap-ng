@@ -13,7 +13,6 @@ my $ERRORS = {
     TOO_FEW_ARGUMENTS  => "Too few arguments",
     UNKNOWN_ACTION     => "Unknown action",
     CONFIG_WRITE_ERROR => "Error while writting the configuration",
-    NOT_IMPLEMENTED    => "Not yet implemented",
 };
 
 ## @cmethod Lemonldap::NG::Manager::Cli new ()
