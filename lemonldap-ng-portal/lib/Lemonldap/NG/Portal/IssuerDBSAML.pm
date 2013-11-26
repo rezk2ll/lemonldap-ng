@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;
 our @ISA = qw(Lemonldap::NG::Portal::_SAML);
 
-our $VERSION = '1.3.2';
+our $VERSION = '1.4.0';
 
 ## @method void issuerDBInit()
 # Load and check SAML configuration
@@ -1180,28 +1180,13 @@ sub issuerForAuthUser {
                 $self->lmLog( "Lasso Identity loaded", 'debug' );
             }
 
-            # Get SP entityID
-            my $sp =
-              $request ? $login->remote_providerID() : $self->param("sp");
-
-            $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
-
-            # SP conf key
-            my $spConfKey = $self->{_spList}->{$sp}->{confKey};
-
-            unless ($spConfKey) {
-                $self->lmLog( "$sp do not match any SP in configuration",
-                    'error' );
-                return PE_SAML_UNKNOWN_ENTITY;
-            }
-
-            $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
-
             my $result;
 
             # Create fake request if IDP initiated mode
             if ($idp_initiated) {
-                $result = $self->initIdpInitiatedAuthnRequest( $login, $sp );
+                $result =
+                  $self->initIdpInitiatedAuthnRequest( $login,
+                    $self->param("sp") );
                 unless ($result) {
                     $self->lmLog(
 "SSO: Fail to init IDP Initiated authentication request",
@@ -1224,6 +1209,23 @@ sub issuerForAuthUser {
                     'error' );
                 return PE_SAML_SSO_ERROR;
             }
+
+            # Get SP entityID
+            my $sp =
+              $request ? $login->remote_providerID() : $self->param("sp");
+
+            $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
+
+            # SP conf key
+            my $spConfKey = $self->{_spList}->{$sp}->{confKey};
+
+            unless ($spConfKey) {
+                $self->lmLog( "$sp do not match any SP in configuration",
+                    'error' );
+                return PE_SAML_UNKNOWN_ENTITY;
+            }
+
+            $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
 
             # Do we check signature?
             my $checkSSOMessageSignature =
