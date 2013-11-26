@@ -754,7 +754,7 @@ sub globalStorageSetLockdir {
     $self->{conf}->{globalStorageOptions}->{LockDirectory} = $path;
 }
 
-## @method void globalStorage ( void )
+## @method void globalStorage ()
 # Get the global storage parameters
 #
 # @return nothing
@@ -767,7 +767,7 @@ sub globalStorage {
 "- Lock Directory: $self->{conf}->{globalStorageOptions}->{LockDirectory}\n";
 }
 
-## @method reloadUrls ( void )
+## @method reloadUrls ()
 # Print reloads urls by vhost
 #
 # @return nothing
@@ -806,7 +806,7 @@ sub reloadUrlDel {
     delete $self->{conf}->{reloadUrls}->{$vhost};
 }
 
-## @method void help ( void )
+## @method void help ()
 # print help message
 #
 # @return nothing
