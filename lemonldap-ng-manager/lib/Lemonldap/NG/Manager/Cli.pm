@@ -717,7 +717,7 @@ sub vhostSetMaintenance {
     }
 }
 
-## @method void vhostList ( void )
+## @method void vhostList ()
 # list all parameters of each vhosts
 #
 # @return nothing
