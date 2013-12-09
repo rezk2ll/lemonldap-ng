@@ -12,7 +12,7 @@ use strict;
 
 our @EXPORT = qw(dbh);
 
-our $VERSION = '1.2.3';
+our $VERSION = '1.3.2';
 
 ## @method protected Lemonldap::NG::Portal::_DBI dbh(string dbiChain, string dbiUser, string dbiPassword)
 # Create connection to database
@@ -65,16 +65,17 @@ sub hash_password {
 
 }
 
-## @method protected Lemonldap::NG::Portal::_DBI check_password(string user, string password)
+## @method protected Lemonldap::NG::Portal::_DBI check_password(ref dbh, string user, string password)
 # Verify user and password with SQL SELECT
+# @param dbh database handle
 # @param user user
 # @param password password
 # @return boolean result
 sub check_password {
     my $self        = shift;
     my $dbh         = shift;
-    my $user        = $self->{user};
-    my $password    = $self->{password};
+    my $user        = shift || $self->{user};
+    my $password    = shift || $self->{password};
     my $table       = $self->{dbiAuthTable};
     my $loginCol    = $self->{dbiAuthLoginCol};
     my $passwordCol = $self->{dbiAuthPasswordCol};
