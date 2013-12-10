@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use Lemonldap::NG::Common::Regexp;
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.3.2';
 
 ## @method protected hashref cstruct(hashref h,string k)
 # Merge $h with the structure produced with $k and return it.
@@ -1691,7 +1691,15 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             msgFail => 'Bad regular expression',
         },
         userDB => {
-            test    => qr/^[a-zA-Z][\w\:]*$/,
+            test => sub {
+                my $e = shift;
+
+                # Do not check syntax for Multi
+                return 1 if ( $e =~ /^multi/i );
+
+                # Else, check the user module is valid
+                return ( $e =~ qr/^[a-zA-Z]+$/ );
+            },
             msgFail => 'Bad module name',
         },
         useRedirectOnError     => $boolean,
