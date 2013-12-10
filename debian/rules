@@ -9,6 +9,7 @@ TMP       = $(CURDIR)/debian/tmp
 
 CONFDIR=/etc/lemonldap-ng
 SESSIONSDIR=$(LMVARDIR)/sessions
+PSESSIONSDIR=$(LMVARDIR)/psessions
 NOTIFICATIONSDIR=$(LMVARDIR)/notifications
 CONFSTORAGEDIR=$(LMVARDIR)/conf
 FIRSTCONFFILE=$(CONFSTORAGEDIR)/lmConf-1
@@ -62,6 +63,8 @@ override_dh_fixperms:
 	chown www-data:www-data \
 		debian/*/$(SESSIONSDIR) \
 		debian/*/$(SESSIONSDIR)/lock \
+		debian/*/$(PSESSIONSDIR) \
+		debian/*/$(PSESSIONSDIR)/lock \
 		debian/*/$(NOTIFICATIONSDIR) \
 		debian/liblemonldap-ng-common-perl/$(CONFSTORAGEDIR) \
 		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR) \
@@ -70,6 +73,7 @@ override_dh_fixperms:
 	chgrp www-data debian/liblemonldap-ng-common-perl/$(LMINIFILE) \
 		debian/liblemonldap-ng-common-perl/$(FIRSTCONFFILE)
 	chmod 770 debian/*/$(SESSIONSDIR) debian/*/$(SESSIONSDIR)/lock \
+	        debian/*/$(PSESSIONSDIR) debian/*/$(PSESSIONSDIR)/lock \
 		debian/*/$(NOTIFICATIONSDIR) \
 		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR) \
 		debian/liblemonldap-ng-portal-perl/$(CAPTCHADIR)/data \
