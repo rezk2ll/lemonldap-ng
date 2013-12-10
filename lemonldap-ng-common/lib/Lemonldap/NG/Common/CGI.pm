@@ -17,7 +17,7 @@ use Net::CIDR::Lite;
 
 #parameter syslog Indicates syslog facility for logging user actions
 
-our $VERSION = '1.2.3';
+our $VERSION = '1.3.2';
 our $_SUPER;
 our @ISA;
 
@@ -283,7 +283,7 @@ sub startSyslog {
     eval {
         require Sys::Syslog;
         Sys::Syslog->import(':standard');
-        openlog( 'lemonldap-ng', 'ndelay', $self->{syslog} );
+        openlog( 'lemonldap-ng', 'ndelay,pid', $self->{syslog} );
     };
     $self->abort( "Unable to use syslog", $@ ) if ($@);
     $self->{_syslog} = 1;
