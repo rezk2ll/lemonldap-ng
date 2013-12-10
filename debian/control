@@ -174,7 +174,8 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libwww-perl,
          libxml-libxml-perl,
-         libxml-libxslt-perl
+         libxml-libxslt-perl,
+         libxml-simple-perl
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libapache-session-browseable-perl,
             liblwp-protocol-https-perl | libwww-perl (<< 6)
