@@ -44,16 +44,16 @@ sub dbh {
 }
 
 ## @method protected Lemonldap::NG::Portal::_DBI hash_password(string password, string hash)
-# Return hashed password for SQL SELECT WHERE clause
+# Return hashed password for use in SQL statement
 # @param password clear password
 # @param hash hash mechanism
-# @return hashed password
+# @return SQL statement string
 sub hash_password {
     my $self     = shift;
     my $password = shift;
     my $hash     = shift;
 
-    if ( $hash =~ /^(md5|sha|sha1)$/i ) {
+    if ( $hash =~ /^(md5|sha|sha1|encrypt)$/i ) {
         $self->lmLog( "Using " . uc($hash) . " to hash password", 'debug' );
         return uc($hash) . "($password)";
     }
@@ -63,6 +63,26 @@ sub hash_password {
         return $password;
     }
 
+}
+
+## @method protected Lemonldap::NG::Portal::_DBI hash_password_for_select(string password, string hash)
+# Return hashed password for use in SQL SELECT statement
+# Call hash_password unless encrypt hash is choosen
+# @param password clear password
+# @param hash hash mechanism
+# @return SQL statement string
+sub hash_password_for_select {
+    my $self        = shift;
+    my $password    = shift;
+    my $hash        = shift;
+    my $passwordCol = $self->{dbiAuthPasswordCol};
+
+    if ( $hash =~ /^encrypt$/i ) {
+        return uc($hash) . "($password,$passwordCol)";
+    }
+    else {
+        return $self->hash_password( $password, $hash );
+    }
 }
 
 ## @method protected Lemonldap::NG::Portal::_DBI check_password(ref dbh, string user, string password)
@@ -81,7 +101,8 @@ sub check_password {
     my $passwordCol = $self->{dbiAuthPasswordCol};
 
     # Password hash
-    my $passwordsql = $self->hash_password( "?", $self->{dbiAuthPasswordHash} );
+    my $passwordsql =
+      $self->hash_password_for_select( "?", $self->{dbiAuthPasswordHash} );
 
     my @rows = ();
     eval {
