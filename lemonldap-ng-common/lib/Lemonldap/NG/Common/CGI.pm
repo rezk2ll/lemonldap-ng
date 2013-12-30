@@ -297,7 +297,7 @@ sub userLog {
     my ( $self, $mess, $level ) = @_;
     if ( $self->{syslog} ) {
         $self->startSyslog();
-        syslog( 'notice', $mess );
+        syslog( $level || 'notice', $mess );
     }
     else {
         $self->lmLog( $mess, $level );
