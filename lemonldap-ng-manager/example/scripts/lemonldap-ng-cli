@@ -39,9 +39,20 @@ $action = shift(@ARGV);
 $method = $cli->determineMethod($action);
 
 @ARGV ? $cli->run($method, @ARGV) : $cli->run($method);
-$ret = $cli->saveConf();
 
-exit($ret);
+# Display error if any
+if ($cli->getError()) {
+print $cli->getError()."\n";
+exit 1;
+}
+
+# Save configuration if modified
+if ( $cli->{confModified} ) {
+$ret = $cli->saveConf();
+print "Configuration $ret saved\n";
+}
+
+exit 0;
 
 __END__
 

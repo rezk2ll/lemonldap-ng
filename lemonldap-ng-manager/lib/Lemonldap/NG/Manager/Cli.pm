@@ -7,12 +7,13 @@ use Lemonldap::NG::Common::Conf;
 
 # Constants
 
-our $VERSION = "1.4.0";
+our $VERSION = "1.3.2";
 
 my $ERRORS = {
     TOO_FEW_ARGUMENTS  => "Too few arguments",
     UNKNOWN_ACTION     => "Unknown action",
     CONFIG_WRITE_ERROR => "Error while writting the configuration",
+    CONFIG_READ_ERROR  => "Error while reading the configuration",
 };
 
 ## @cmethod Lemonldap::NG::Manager::Cli new ()
@@ -89,7 +90,12 @@ sub run {
 # @return nothing
 sub set {
     my ( $self, $var, $val ) = @_;
+    unless ( $var and $val ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     $self->{conf}->{$var} = $val;
+    $self->{confModified} = 1;
 }
 
 ## @method void unset (string variable)
@@ -98,24 +104,33 @@ sub set {
 # @return nothing
 sub unset {
     my ( $self, $var ) = @_;
-    if ( not defined( $self->conf->{$var} ) ) {
-        $self->setError( "$_: "
+    unless ($var) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
+    if ( not defined( $self->{conf}->{$var} ) ) {
+        $self->setError( "$var: "
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": There is no variables named $var" );
         return 0;
     }
-    delete $self->conf->{$var};
+    delete $self->{conf}->{$var};
+    $self->{confModified} = 1;
 }
 
-## @method void get (string variable)
+## @method void get (string variable)
 # Get the value of the requested variable
 #
 # @return nothing
 sub get {
     my ( $self, $var ) = @_;
-    if ( not defined( $self->conf->{$var} ) ) {
-        $self->setError( "$_: "
-              . $ERRORS->{CONFIG_WRITE_ERROR}
+    unless ($var) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
+    if ( not defined( $self->{conf}->{$var} ) ) {
+        $self->setError( "$var: "
+              . $ERRORS->{CONFIG_READ_ERROR}
               . ": There is no variables named $var" );
         return 0;
     }
@@ -128,22 +143,32 @@ sub get {
 # @return nothing
 sub setMacro {
     my ( $self, $macro, $value ) = @_;
+    unless ( $macro and $value ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     $self->{conf}->{macros}->{$macro} = $value;
+    $self->{confModified} = 1;
 }
 
-## @method void unsetMacro (string macro)
+## @method void unsetMacro (string macro)
 # Unset the requested macro
 #
 # return nothing
 sub unsetMacro {
     my ( $self, $macro ) = @_;
+    unless ($macro) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     if ( not defined( $self->{conf}->{macros}->{$macro} ) ) {
-        $self->setError( "$_: "
+        $self->setError( "$macro: "
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": There is no macro named $macro" );
         return 0;
     }
     delete $self->{conf}->{macros}->{$macro};
+    $self->{confModified} = 1;
 }
 
 ## @method void getMacro (string macro)
@@ -152,8 +177,12 @@ sub unsetMacro {
 # @return nothing
 sub getMacro {
     my ( $self, $macro ) = @_;
+    unless ($macro) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     if ( not defined( $self->{conf}->{macros}->{$macro} ) ) {
-        $self->setError( "$_: "
+        $self->setError( "$macro: "
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": There is no macro named $macro" );
         return 0;
@@ -161,12 +190,16 @@ sub getMacro {
     print "$macro = " . $self->{conf}->{macros}->{$macro} . "\n";
 }
 
-## @method void appsSetCat ( int id, string name )
+## @method void appsSetCat ( int id, string name )
 # Set the category name by its id
 #
 # @return nothing
 sub appsSetCat {
     my ( $self, $id, $name ) = @_;
+    unless ( $id and $name ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     if ( defined( $self->{conf}->{applicationList}->{$id} ) ) {
         $self->{conf}->{applicationList}->{$id}->{catname} = $name;
     }
@@ -176,6 +209,7 @@ sub appsSetCat {
             name => $name
         };
     }
+    $self->{confModified} = 1;
 }
 
 ## @method void appsGetCat ( int id )
@@ -184,6 +218,10 @@ sub appsSetCat {
 # @return nothing
 sub appsGetCat {
     my ( $self, $id ) = @_;
+    unless ($id) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     if ( not defined( $self->{conf}->{applicationList}->{$id} ) ) {
         $self->setError("$_: There is no category $id");
         return 0;
@@ -197,14 +235,18 @@ sub appsGetCat {
 # @return nothing
 sub appsAdd {
     my ( $self, $appId, $catId ) = @_;
+    unless ( $appId and $catId ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     if ( not defined( $self->{conf}->{applicationList}->{$catId} ) ) {
-        $self->setError( "$_"
+        $self->setError( "$catId"
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": Category $catId doesn't exist" );
         return 0;
     }
     if ( defined( $self->{conf}->{applicationList}->{$catId}->{$appId} ) ) {
-        $self->setError( "$_"
+        $self->setError( "$catId"
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": Application $appId exists" );
     }
@@ -218,6 +260,7 @@ sub appsAdd {
             uri         => "http://test1.example.com"
         }
     };
+    $self->{confModified} = 1;
 }
 
 ## @cmethod void appsSetUri ( string id, string uri )
@@ -226,6 +269,10 @@ sub appsAdd {
 # @return nothing
 sub appsSetUri {
     my ( $self, $id, $uri ) = @_;
+    unless ( $id and $uri ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     my $found = 0;
 
     while ( my ( $catId, $appList ) = each %{ $self->{conf}->{applicationList} }
@@ -234,25 +281,30 @@ sub appsSetUri {
         while ( my ( $_appid, $app ) = each %{$appList} and $found != 1 ) {
             if ( $id eq $_appid ) {
                 $app->{options}->{uri} = $uri;
-                $found = 1;
+                $found                 = 1;
+                $self->{confModified}  = 1;
             }
         }
     }
 
     if ( $found == 0 ) {
-        $self->setError( "$_: "
+        $self->setError( "$id: "
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": Application $id not found" );
         return 0;
     }
 }
 
-## @method void appsSetName ( string id, string name )
+## @method void appsSetName ( string id, string name )
 # Set the name of the given application
 #
 # @return nothing
 sub appsSetName {
     my ( $self, $id, $name ) = @_;
+    unless ( $id and $name ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     my $found = 0;
 
     while ( my ( $catId, $appList ) = each %{ $self->{conf}->{applicationList} }
@@ -261,11 +313,12 @@ sub appsSetName {
         while ( my ( $_appid, $app ) = each %{$appList} and $found != 1 ) {
             if ( $id eq $_appid ) {
                 $app->{options}->{name} = $name;
-                $found = 1;
+                $found                  = 1;
+                $self->{confModified}   = 1;
             }
 
             if ( $found == 0 ) {
-                $self->setError( "$_: "
+                $self->setError( "$id: "
                       . $ERRORS->{CONFIG_WRITE_ERROR}
                       . ": Application $id not found" );
                 return 0;
@@ -280,6 +333,10 @@ sub appsSetName {
 # @return nothing
 sub appsSetDesc {
     my ( $self, $id, $desc ) = @_;
+    unless ( $id and $desc ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     my $found = 0;
 
     while ( my ( $catId, $appList ) = each %{ $self->{conf}->{applicationList} }
@@ -288,11 +345,12 @@ sub appsSetDesc {
         while ( my ( $_appid, $app ) = each %{$appList} and $found != 1 ) {
             if ( $id eq $_appid ) {
                 $app->{options}->{description} = $desc;
-                $found = 1;
+                $found                         = 1;
+                $self->{confModified}          = 1;
             }
 
             if ( $found == 0 ) {
-                $self->setError( "$_: "
+                $self->setError( "$id: "
                       . $ERRORS->{CONFIG_WRITE_ERROR}
                       . ": Application $id not found" );
                 return 0;
@@ -307,6 +365,10 @@ sub appsSetDesc {
 # @return nothing
 sub appsSetLogo {
     my ( $self, $id, $logo ) = @_;
+    unless ( $id and $logo ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     my $found = 0;
 
     while ( my ( $catId, $appList ) = each %{ $self->{conf}->{applicationList} }
@@ -315,11 +377,12 @@ sub appsSetLogo {
         while ( my ( $_appid, $app ) = each %{$appList} and $found != 1 ) {
             if ( $id eq $_appid ) {
                 $app->{options}->{logo} = $logo;
-                $found = 1;
+                $found                  = 1;
+                $self->{confModified}   = 1;
             }
 
             if ( $found == 0 ) {
-                $self->setError( "$_: "
+                $self->setError( "$id: "
                       . $ERRORS->{CONFIG_WRITE_ERROR}
                       . ": Application $id not found" );
                 return 0;
@@ -334,6 +397,10 @@ sub appsSetLogo {
 # @return nothing
 sub appsSetDisplay {
     my ( $self, $id, $display ) = @_;
+    unless ( $id and $display ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     my $found = 0;
 
     while ( my ( $catId, $appList ) = each %{ $self->{conf}->{applicationList} }
@@ -342,11 +409,12 @@ sub appsSetDisplay {
         while ( my ( $_appid, $app ) = each %{$appList} and $found != 1 ) {
             if ( $id eq $_appid ) {
                 $app->{options}->{display} = $display;
-                $found = 1;
+                $found                     = 1;
+                $self->{confModified}      = 1;
             }
 
             if ( $found == 0 ) {
-                $self->setError( "$_: "
+                $self->setError( "$id: "
                       . $ERRORS->{CONFIG_WRITE_ERROR}
                       . ": Application $id not found" );
                 return 0;
@@ -355,12 +423,16 @@ sub appsSetDisplay {
     }
 }
 
-## @method void appsGet ( string id )
+## @method void appsGet ( string id )
 # Show all the given application's settings
 #
 # @return nothing
 sub appsGet {
     my ( $self, $id ) = @_;
+    unless ($id) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     my $found = 0;
 
     while ( my ( $catid, $applist ) = each %{ $self->{conf}->{applicationList} }
@@ -382,17 +454,21 @@ sub appsGet {
     }
 
     if ( $found == 0 ) {
-        $self->setError("$_: Application $id not found");
+        $self->setError("Application $id not found");
         return 0;
     }
 }
 
-## @method void appsRm ( string id )
+## @method void appsRm ( string id )
 # Delete the given application from the configuration
 #
 # @return nothing
 sub appsRm {
     my ( $self, $id ) = @_;
+    unless ($id) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     my $found = 0;
 
     while ( my ( $catid, $applist ) = each %{ $self->{conf}->{applicationList} }
@@ -402,51 +478,70 @@ sub appsRm {
             if ( $id eq $_appid ) {
                 delete $applist->{$id};
                 $found = 1;
+                $self->{confModified} = 1;
             }
         }
+    }
+    if ( $found == 0 ) {
+        $self->setError("Application $id not found");
+        return 0;
     }
 }
 
 ## @method void rulesSet ( string uri, string expr, string rule )
-# Set a rule for teh given vhost
+# Set a rule for the given vhost
 #
 # @return nothing
 sub rulesSet {
     my ( $self, $uri, $expr, $rule ) = @_;
+    unless ( $uri and $expr and $rule ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     if ( not defined( $self->{conf}->{locationRules}->{$uri} ) ) {
         $self->{conf}->{locationRules}->{$uri} = {};
     }
 
     $self->{conf}->{locationRules}->{$uri}->{$expr} = $rule;
+    $self->{confModified} = 1;
 }
 
-## @method void rulesUnset ( string uri, string expr)
+## @method void rulesUnset ( string uri, string expr)
 # Unset a rule for the given vhost
 #
 # @return nothing
 sub rulesUnset {
     my ( $self, $uri, $expr ) = @_;
+    unless ( $uri and $expr ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     if ( not defined( $self->{conf}->{locationRules}->{$uri} ) ) {
-        $self->setError( "$_: "
+        $self->setError( "$uri: "
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": There is rule $expr for virtual host $uri" );
         return 0;
     }
 
     delete $self->{conf}->{locationRules}->{$uri}->{$expr};
+    $self->{confModified} = 1;
 }
 
-## @method void rulesGet ( string uri )
+## @method void rulesGet ( string uri )
 # Get the rules of the given vhost
 #
 # @return nothing
 sub rulesGet {
     my ( $self, $uri ) = @_;
+    unless ($uri) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     if ( not defined( $self->{conf}->{locationRules}->{$uri} ) ) {
-        $self->setError("$_: There is no virtual host $uri");
+        $self->setError("There is no virtual host $uri");
         return 0;
     }
 
@@ -465,25 +560,35 @@ sub rulesGet {
 # @return nothing
 sub exportVar {
     my ( $self, $key, $val ) = @_;
+    unless ( $key and $val ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     $self->{conf}->{exportedVars}->{$key} = $val;
+    $self->{confModified} = 1;
 }
 
-## @method void unexportVar ( string key )
+## @method void unexportVar ( string key )
 # unexport a variable
 #
 # @return nothing
 sub unexportVar {
     my ( $self, $key ) = @_;
+    unless ($key) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     if ( not defined( $self->{conf}->{exportedVars}->{$key} ) ) {
-        $self->setError("$_: There is no exported variables named $key");
+        $self->setError("There is no exported variables named $key");
         return 0;
     }
 
     delete $self->{conf}->{exportedVars}->{$key};
+    $self->{confModified} = 1;
 }
 
-## @method void getExportedVars ()
+## @method void getExportedVars ()
 # print the exported variables of the configuration
 #
 # @return nothing
@@ -494,32 +599,41 @@ sub getExportedVars {
     }
 }
 
-## @method void exportHeader (string $vhost, string $header, string $expr )
+## @method void exportHeader (string $vhost, string $header, string $expr )
 # Export a header for the given vhost
 #
 # @return nothing
 sub exportHeader {
     my ( $self, $vhost, $header, $expr ) = @_;
+    unless ( $vhost and $header and $expr ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     if ( not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) ) {
-        $self->setError( "$_: "
+        $self->setError( "$vhost: "
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": There is no virtual host $vhost\n" );
         return 0;
     }
 
     $self->{conf}->{exportedHeaders}->{$vhost}->{$header} = $expr;
+    $self->{confModified} = 1;
 }
 
-## @method void unexportHeader ( string $vhost, string $header, string $expr )
+## @method void unexportHeader ( string $vhost, string $header )
 # Unexport the given header
 #
 # @return nothing
 sub unexportHeader {
-    my ( $self, $vhost, $header, $expr ) = @_;
+    my ( $self, $vhost, $header ) = @_;
+    unless ( $vhost and $header ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     if ( not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) ) {
-        $self->setError( "$_: "
+        $self->setError( "$vhost: "
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": There is no virtual host $vhost\n" );
         return 0;
@@ -535,17 +649,22 @@ sub unexportHeader {
     }
 
     delete $self->{conf}->{exportedHeaders}->{$vhost}->{$header};
+    $self->{confModified} = 1;
 }
 
-## @method void getExportedHeaders ( string vhost )
+## @method void getExportedHeaders ( string vhost )
 # Give the exported headers for the given vhost
 #
 # @return nothing
 sub getExportedHeaders {
     my ( $self, $vhost ) = @_;
+    unless ($vhost) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     if ( not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) ) {
-        $self->setError( "$_: "
+        $self->setError( "$vhost: "
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": There is no virtual host $vhost\n" );
         return 0;
@@ -564,12 +683,16 @@ sub getExportedHeaders {
 # @return nothing
 sub vhostAdd {
     my ( $self, $vhost ) = @_;
+    unless ($vhost) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     if (   defined( $self->{conf}->{vhostOptions}->{$vhost} )
         or defined( $self->{conf}->{locationRules}->{$vhost} )
         or defined( $self->{conf}->{exportedHeaders}->{$vhost} ) )
     {
-        $self->setError( "$_: "
+        $self->setError( "$vhost: "
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": Virtual host $vhost already exist" );
         return 0;
@@ -583,6 +706,7 @@ sub vhostAdd {
 
     $self->{conf}->{locationRules}->{$vhost}   = { default     => "deny" };
     $self->{conf}->{exportedHeaders}->{$vhost} = { "Auth-User" => "\$uid" };
+    $self->{confModified}                      = 1;
 
 }
 
@@ -592,6 +716,10 @@ sub vhostAdd {
 # @return nothing
 sub vhostDel {
     my ( $self, $vhost ) = @_;
+    unless ($vhost) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     my $error  = "No virtual host in: ";
     my $nerror = 0;
@@ -621,28 +749,35 @@ sub vhostDel {
     }
 
     if ( $nerror == 3 ) {
-        $error .= ". abortting...";
-        $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": $error" );
+        $error .= ". aborting...";
+        $self->setError(
+            "$vhost: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": $error" );
         return 0;
     }
     elsif ( $nerror != 0 ) {
         $error .= ". ignoring...";
-        $self->setError( "$_: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": $error" );
+        $self->setError(
+            "$vhost: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": $error" );
+        $self->{confModified} = 1;
     }
 }
 
-## @method void vhostSetPort ( string vhost, int port )
+## @method void vhostSetPort ( string vhost, int port )
 # Set given vhost's port
 #
 # @return nothing
 sub vhostSetPort {
     my ( $self, $vhost, $port ) = @_;
+    unless ( $vhost and $port ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     if ( not defined( $self->{conf}->{vhostOptions}->{$vhost} ) ) {
         if (    not defined( $self->{conf}->{locationRules}->{$vhost} )
             and not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) )
         {
-            $self->setError( "$_: "
+            $self->setError( "$vhost: "
                   . $ERRORS->{CONFIG_WRITE_ERROR}
                   . ": There is no virtual host $vhost" );
             return 0;
@@ -658,19 +793,24 @@ sub vhostSetPort {
     else {
         $self->{conf}->{vhostOptions}->{$vhost}->{vhostPort} = $port;
     }
+    $self->{confModified} = 1;
 }
 
-## @method vhostSetHttps ( string vhost, int https )
+## @method vhostSetHttps ( string vhost, int https )
 # Set the https parameter on the given vhost
 #
 # @return nothing
 sub vhostSetHttps {
     my ( $self, $vhost, $https ) = @_;
+    unless ( $vhost and $https ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
     if ( not defined( $self->{conf}->{vhostOptions}->{$vhost} ) ) {
         if (    not defined( $self->{conf}->{locationRules}->{$vhost} )
             and not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) )
         {
-            $self->setError( "$_: "
+            $self->setError( "$vhost: "
                   . $ERRORS->{CONFIG_WRITE_ERROR}
                   . ": There is no virtual host $vhost" );
             return 0;
@@ -686,20 +826,25 @@ sub vhostSetHttps {
     else {
         $self->{conf}->{vhostOptions}->{$vhost}->{vhostHttps} = $https;
     }
+    $self->{confModified} = 1;
 }
 
-## @method vhostSetMaintenance ( string vhost, int off )
+## @method vhostSetMaintenance ( string vhost, int off )
 # Set the maintenance flag on a vhost
 #
 # @return nothing
 sub vhostSetMaintenance {
     my ( $self, $vhost, $off ) = @_;
+    unless ( $vhost and $off ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     if ( not defined( $self->{conf}->{vhostOptions}->{$vhost} ) ) {
         if (    not defined( $self->{conf}->{locationRules}->{$vhost} )
             and not defined( $self->{conf}->{exportedHeaders}->{$vhost} ) )
         {
-            $self->setError( "$_: "
+            $self->setError( "$vhost: "
                   . $ERRORS->{CONFIG_WRITE_ERROR}
                   . ": There is no virtual host $vhost" );
             return 0;
@@ -715,9 +860,10 @@ sub vhostSetMaintenance {
     else {
         $self->{conf}->{vhostOptions}->{$vhost}->{vhostMaintenance} = $off;
     }
+    $self->{confModified} = 1;
 }
 
-## @method void vhostList ()
+## @method void vhostList ()
 # list all parameters of each vhosts
 #
 # @return nothing
@@ -737,24 +883,34 @@ sub vhostList {
 ## @method void globalStorageSetDir ( string path )
 # Set the global storage directory
 #
-# @return nothing
+# @return nothing
 sub globalStorageSetDir {
     my ( $self, $path ) = @_;
+    unless ($path) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     $self->{conf}->{globalStorageOptions}->{Directory} = $path;
+    $self->{confModified} = 1;
 }
 
-## @method void globalStorageSetLockdir ( string path )
+## @method void globalStorageSetLockdir ( string path )
 # Set the global storage lock directory
 #
 # @return nothing
 sub globalStorageSetLockdir {
     my ( $self, $path ) = @_;
+    unless ($path) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     $self->{conf}->{globalStorageOptions}->{LockDirectory} = $path;
+    $self->{confModified} = 1;
 }
 
-## @method void globalStorage ()
+## @method void globalStorage ()
 # Get the global storage parameters
 #
 # @return nothing
@@ -767,7 +923,7 @@ sub globalStorage {
 "- Lock Directory: $self->{conf}->{globalStorageOptions}->{LockDirectory}\n";
 }
 
-## @method reloadUrls ()
+## @method reloadUrls ()
 # Print reloads urls by vhost
 #
 # @return nothing
@@ -779,31 +935,41 @@ sub reloadUrls {
     }
 }
 
-## @method void reloadUrlAdd ( string vhost, string url)
+## @method void reloadUrlAdd ( string vhost, string url)
 # Add a new reload url for the given vhost
 #
 # @return nothing
 sub reloadUrlAdd {
     my ( $self, $vhost, $url ) = @_;
+    unless ( $vhost and $url ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     $self->{conf}->{reloadUrls}->{$vhost} = $url;
+    $self->{confModified} = 1;
 }
 
-## @method void reloadUrlDel ( string vhost )
+## @method void reloadUrlDel ( string vhost )
 # Delete the given vhost's reload url
 #
-# @return nothing
+# @return nothing
 sub reloadUrlDel {
     my ( $self, $vhost ) = @_;
+    unless ($vhost) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
 
     if ( not defined( $self->{conf}->{reloadUrls}->{$vhost} ) ) {
-        $self->setError( "$_: "
+        $self->setError( "$vhost: "
               . $ERRORS->{CONFIG_WRITE_ERROR}
               . ": There is no reload URLs setted for $vhost" );
         return 0;
     }
 
     delete $self->{conf}->{reloadUrls}->{$vhost};
+    $self->{confModified} = 1;
 }
 
 ## @method void help ()
