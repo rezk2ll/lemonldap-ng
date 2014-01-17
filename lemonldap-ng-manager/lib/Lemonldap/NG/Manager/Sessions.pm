@@ -555,7 +555,7 @@ sub session {
         foreach ( keys %session ) {
             next if $_ !~ /^notification_(.+)/;
             $res .=
-                '<li><strong>'
+                '<li><strong>' 
               . $1
               . '</strong>: '
               . $session{$_} . " ("
@@ -688,8 +688,8 @@ sub uid {
     my ( $byIp, $res );
     $res = Lemonldap::NG::Common::Apache::Session->searchOn(
         $self->{globalStorageOptions},
-        $whatToTrace, $uid, '_httpSessionType', $whatToTrace,
-        $self->{ipField}, 'startTime' );
+        $whatToTrace, $uid, '_httpSessionType', $whatToTrace, $self->{ipField},
+        'startTime' );
     while ( my ( $id, $entry ) = each(%$res) ) {
         next if ( $entry->{_httpSessionType} );
         if ( $entry->{$whatToTrace} eq $uid ) {
