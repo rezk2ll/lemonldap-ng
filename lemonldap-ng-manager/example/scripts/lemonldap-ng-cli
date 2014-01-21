@@ -6,7 +6,7 @@ use strict;
 sub giveUpPrivileges {
     my ( $user, $group ) = @_;
 
-    $user = "nobody" unless defined($user);
+    $user  = "nobody" unless defined($user);
     $group = "nobody" unless defined($user);
 
     # become $user:$group and give up root privileges
@@ -15,41 +15,48 @@ sub giveUpPrivileges {
 
     # if we are still root
     if ( $> == 0 ) {
-        print STDERR "$0 must not be launched as root since local cache can be corrupted.\n";
+        print STDERR
+"$0 must not be launched as root since local cache can be corrupted.\n";
         print STDERR "Continue (y/N)? ";
         my $res = <STDIN>;
         exit 1 unless ( $res =~ /^y/i );
     }
 }
 
-## main program
+## main program
 
-if (!@ARGV) {
+if ( !@ARGV ) {
     print STDERR "Usage: $0 <action> <params>\n";
     print STDERR "Enter $0 help to get more information\n";
-    exit 1;     
+    exit 1;
 }
 
 giveUpPrivileges( "www-data", "www-data" );
 
-my ($cli, $action, $method, $ret);
+my ( $cli, $action, $method, $ret );
 
-$cli = new Lemonldap::NG::Manager::Cli;
+$cli    = new Lemonldap::NG::Manager::Cli;
 $action = shift(@ARGV);
 $method = $cli->determineMethod($action);
 
-@ARGV ? $cli->run($method, @ARGV) : $cli->run($method);
+unless ( $cli->can($method) ) {
+    print STDERR "Action $action unknown\n";
+    print STDERR "Enter $0 help to get more information\n";
+    exit 1;
+}
+
+@ARGV ? $cli->run( $method, @ARGV ) : $cli->run($method);
 
 # Display error if any
-if ($cli->getError()) {
-print $cli->getError()."\n";
-exit 1;
+if ( $cli->getError() ) {
+    print $cli->getError() . "\n";
+    exit 1;
 }
 
 # Save configuration if modified
 if ( $cli->{confModified} ) {
-$ret = $cli->saveConf();
-print "Configuration $ret saved\n";
+    $ret = $cli->saveConf();
+    print "Configuration $ret saved\n";
 }
 
 exit 0;
