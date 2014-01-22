@@ -27,11 +27,27 @@
 
 <p>
 
-Lemonldap::NG is designed to be very performant. In particular, it use Apache2 threads capabilities so to optimize performances, prefer using <a href="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime" class="urlextern" title="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime"  rel="nofollow">mpm-worker</a>.
+LemonLDAP::NG is designed to be very performant. In particular, it use Apache2 threads capabilities so to optimize performances, prefer using <a href="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime" class="urlextern" title="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime"  rel="nofollow">mpm-worker</a>.
 </p>
 
 </div>
 <!-- SECTION "Performances" [1-254] -->
+<h2><a name="global_performance" id="global_performance">Global performance</a></h2>
+<div class="level2">
+
+<p>
+
+On linux, by default, there is no <acronym title="Domain Name System">DNS</acronym> cache and LemonLDAP::NG portal request <acronym title="Domain Name System">DNS</acronym> at every connexions on <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> or DB. Under heavy loads, that can generated hundred of <acronym title="Domain Name System">DNS</acronym> queries and many errors on <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> connexions (timed out) from IO::Socket.
+</p>
+
+<p>
+To bypass this, you can:
+* Use <acronym title="Internet Protocol">IP</acronym> in configuration to avoid <acronym title="Domain Name System">DNS</acronym> resolution
+* Install a <acronym title="Domain Name System">DNS</acronym> cache  like nscd, netmask or bind
+</p>
+
+</div>
+<!-- SECTION "Global performance" [255-654] -->
 <h2><a name="handler_performance" id="handler_performance">Handler performance</a></h2>
 <div class="level2">
 
@@ -42,7 +58,7 @@ Handlers check rights and calculate headers for each <acronym title="Hyper Text 
 </p>
 
 </div>
-<!-- SECTION "Handler performance" [255-452] -->
+<!-- SECTION "Handler performance" [655-852] -->
 <h3><a name="macros_and_groups" id="macros_and_groups">Macros and groups</a></h3>
 <div class="level3">
 
@@ -91,7 +107,7 @@ Besides, macros and groups are computed in alphanumeric order, that is, in the o
 </p>
 
 </div>
-<!-- SECTION "Macros and groups" [453-1719] -->
+<!-- SECTION "Macros and groups" [853-2119] -->
 <h3><a name="local_macros" id="local_macros">Local macros</a></h3>
 <div class="level3">
 
@@ -110,12 +126,12 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 </p>
 
 </div>
-<!-- SECTION "Local macros" [1720-2377] -->
+<!-- SECTION "Local macros" [2120-2777] -->
 <h2><a name="portal_performances" id="portal_performances">Portal performances</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Portal performances" [2378-2410] -->
+<!-- SECTION "Portal performances" [2778-2810] -->
 <h3><a name="general_performances" id="general_performances">General performances</a></h3>
 <div class="level3">
 
@@ -134,7 +150,7 @@ You can also use a FastCGI server using index.fcgi given in portal examples.
 </p>
 
 </div>
-<!-- SECTION "General performances" [2411-2832] -->
+<!-- SECTION "General performances" [2811-3232] -->
 <h3><a name="configuration_access" id="configuration_access">Configuration access</a></h3>
 <div class="level3">
 
@@ -144,7 +160,7 @@ If you set <code>useLocalConf</code> to 1 in lemonldap-ng.ini (section [Portal])
 </p>
 
 </div>
-<!-- SECTION "Configuration access" [2833-3135] -->
+<!-- SECTION "Configuration access" [3233-3535] -->
 <h3><a name="starting_performances" id="starting_performances">Starting performances</a></h3>
 <div class="level3">
 
@@ -164,7 +180,7 @@ To make the portal start faster when the server is relaunched, add those lines i
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- SECTION "Starting performances" [3136-3711] -->
+<!-- SECTION "Starting performances" [3536-4111] -->
 <h3><a name="apachesession_performances" id="apachesession_performances">Apache::Session performances</a></h3>
 <div class="level3">
 
@@ -236,7 +252,7 @@ Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </p>
 
 </div>
-<!-- SECTION "Apache::Session performances" [3712-5981] -->
+<!-- SECTION "Apache::Session performances" [4112-6381] -->
 <h3><a name="ldap_performances" id="ldap_performances">LDAP performances</a></h3>
 <div class="level3">
 
@@ -286,4 +302,4 @@ ldapgroups -&gt; memberOf
 </p>
 
 </div>
-<!-- SECTION "LDAP performances" [5982-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "LDAP performances" [6382-] --></div><!-- closes <div class="dokuwiki export">-->
