@@ -16,7 +16,7 @@ use Tie::File;
 my $offline_script_url =
   'http://lemonldap-ng.org/lib/plugins/offline/create.php';
 my $offline_zip_url = 'http://lemonldap-ng.org/lib/plugins/offline/offline.zip';
-my $remove_versions = [ qw/latest 1.0 1.1 1.2 1.3/ ];
+my $remove_versions = [qw/latest 1.0 1.1 1.2 1.3/];
 my $rc;
 
 # Launch remote offline script
@@ -37,13 +37,14 @@ system("rm -rf offline");
 
 # Keep only the latest
 system("rm -rf pages/wiki pages/playground");
-foreach my $version ( @$remove_versions ) {
+foreach my $version (@$remove_versions) {
     system("rm -rf pages/documentation/$version");
 }
 system('find . -name \*.html -exec sed -i "s#/latest/#/current/#g" {} \;');
 
 # Rewrite documentation.html
-tie my @documentation, 'Tie::File', 'pages/documentation.html' or die("Unable to open pages/documentation.html");
+tie my @documentation, 'Tie::File', 'pages/documentation.html'
+  or die("Unable to open pages/documentation.html");
 
 splice @documentation, 61, 20;
 
@@ -63,5 +64,8 @@ splice @index, 22, 1, @links;
 
 # Remove external logos
 system('rm -rf media/applications/ media/logos/');
+
+# Remove Facebook iframe (See http://jira.ow2.org/browse/LEMONLDAP-674)
+system('sed -i "/<iframe/d" pages/contact.html');
 
 exit 0;
