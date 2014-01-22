@@ -40,7 +40,7 @@ Build-Depends-Indep: libapache-session-perl,
                      libxml-simple-perl,
                      omegat,
                      perl
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-perl/packages/lemonldap-ng.git
 Vcs-Git: git://anonscm.debian.org/pkg-perl/packages/lemonldap-ng.git
 Homepage: http://lemonldap-ng.org/
