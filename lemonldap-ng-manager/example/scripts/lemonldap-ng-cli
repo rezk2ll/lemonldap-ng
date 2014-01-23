@@ -8,7 +8,7 @@ sub giveUpPrivileges {
     my ( $user, $group ) = @_;
 
     $user  = "nobody" unless defined($user);
-    $group = "nobody" unless defined($user);
+    $group = "nobody" unless defined($group);
 
     # become $user:$group and give up root privileges
     setgid( ( getgrnam($group) )[2] );
@@ -33,7 +33,7 @@ if ( !@ARGV ) {
     exit 1;
 }
 
-giveUpPrivileges( "www-data", "www-data" );
+giveUpPrivileges( "__APACHEUSER__", "__APACHEGROUP__" );
 
 my ( $cli, $action, $method, $ret );
 
