@@ -37,7 +37,11 @@ giveUpPrivileges( "www-data", "www-data" );
 
 my ( $cli, $action, $method, $ret );
 
-$cli    = new Lemonldap::NG::Manager::Cli;
+$cli = new Lemonldap::NG::Manager::Cli;
+
+# Do not increment configuration by default
+$cli->{confAccess}->{cfgNumFixed} = 1;
+
 $action = shift(@ARGV);
 $method = $cli->determineMethod($action);
 

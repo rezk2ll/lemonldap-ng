@@ -35,7 +35,7 @@ sub new {
 ## @method int saveConf ()
 # Save LemonLDAP::NG configuration
 #
-# @return Configuration identifier.
+# @return Configuration identifier
 sub saveConf {
     my ($self) = @_;
 
@@ -43,11 +43,21 @@ sub saveConf {
     $self->{conf}->{cfgAuthorIP} = "127.0.0.1";
     $self->{conf}->{cfgDate}     = time();
 
-    # Do not increment configuration number
-    $self->{conf}->{cfgNumFixed} = 1;
-
     my $ret = $self->{confAccess}->saveConf( $self->{conf} );
     return $ret;
+}
+
+## @method int increment ()
+# Force increment of configuration number
+#
+# @return nothing
+sub increment {
+    my ($self) = @_;
+
+    $self->{confAccess}->{cfgNumFixed} = 0;
+    $self->{confModified} = 1;
+
+    return;
 }
 
 ## @method string determineMethod ()
@@ -1033,6 +1043,7 @@ Global actions
 
   lemonldap-ng-cli help - display this message
   lemonldap-ng-cli info - show current configuration information
+  lemonldap-ng-cli increment - save current configuration into a new one
 
 Simple parameters (key/value form)
 ==================================
