@@ -54,10 +54,27 @@ sub saveConf {
 sub increment {
     my ($self) = @_;
 
+    # Update cache to save modified data
+    $self->updateCache();
+
     $self->{confAccess}->{cfgNumFixed} = 0;
     $self->{confModified} = 1;
 
     return;
+}
+
+## @method updateCache()
+# Update configuration cache
+#
+# @return nothing
+sub updateCache {
+    my ($self) = @_;
+
+    # Get configuration from DB (update cache)
+    my $cfgNum = $self->{conf}->{cfgNum};
+    $self->{conf} = $self->{confAccess}->getDBConf( { cfgNum => $cfgNum } );
+
+    print "Cache updated with configuration number $cfgNum\n";
 }
 
 ## @method string determineMethod ()
@@ -130,7 +147,7 @@ sub unset {
     if ( not defined( $self->{conf}->{$var} ) ) {
         $self->setError( "$var: "
               . $ERRORS->{CONFIG_WRITE_ERROR}
-              . ": There is no variables named $var" );
+              . ": There is no variable named $var" );
         return 0;
     }
     delete $self->{conf}->{$var};
@@ -150,10 +167,84 @@ sub get {
     if ( not defined( $self->{conf}->{$var} ) ) {
         $self->setError( "$var: "
               . $ERRORS->{CONFIG_READ_ERROR}
-              . ": There is no variables named $var" );
+              . ": There is no variable named $var" );
         return 0;
     }
+
+    if ( ref( $self->{conf}->{$var} ) ) {
+        $self->setError("$var is not a scalar parameter. Try getHash $var");
+        return 0;
+    }
+
     print "$var = " . $self->{conf}->{$var} . "\n";
+}
+
+## @method void setHash ( string variable, string key, string value )
+# Set for the requested variable the key/value pair
+#
+# @return nothing
+sub setHash {
+    my ( $self, $var, $key, $val ) = @_;
+    unless ( $var and $key and $val ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
+
+    $self->{conf}->{$var}->{$key} = $val;
+    $self->{confModified} = 1;
+}
+
+## @method void unsetHash (string variable, string key)
+# Unset the key for the requested variable
+#
+# @return nothing
+sub unsetHash {
+    my ( $self, $var, $key ) = @_;
+    unless ( $var and $key ) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
+    if ( not defined( $self->{conf}->{$var} ) ) {
+        $self->setError( "$var: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is no variable named $var" );
+        return 0;
+    }
+    if ( not defined( $self->{conf}->{$var}->{$key} ) ) {
+        $self->setError( "$var: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": There is no key $key for variable $var" );
+        return 0;
+    }
+
+    delete $self->{conf}->{$var}->{$key};
+    $self->{confModified} = 1;
+}
+
+## @method void getHash (string variable)
+# Get all key/value pair of the requested variable
+#
+# @return nothing
+sub getHash {
+    my ( $self, $var ) = @_;
+    unless ($var) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
+    if ( not defined( $self->{conf}->{$var} ) ) {
+        $self->setError( "$var: "
+              . $ERRORS->{CONFIG_READ_ERROR}
+              . ": There is no variable named $var" );
+        return 0;
+    }
+
+    unless ( ref( $self->{conf}->{$var} ) eq "HASH" ) {
+        $self->setError("$var is not a Hash parameter. Try get $var.");
+        return 0;
+    }
+
+    use Data::Dumper;
+    print Dumper( $self->{conf}->{$var} ) . "\n";
 }
 
 ## @method void setMacro (string macro, string value)
@@ -917,49 +1008,6 @@ sub vhostListOptions {
     }
 }
 
-## @method void globalStorageSetDir ( string path )
-# Set the global storage directory
-#
-# @return nothing
-sub globalStorageSetDir {
-    my ( $self, $path ) = @_;
-    unless ($path) {
-        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
-        return 0;
-    }
-
-    $self->{conf}->{globalStorageOptions}->{Directory} = $path;
-    $self->{confModified} = 1;
-}
-
-## @method void globalStorageSetLockdir ( string path )
-# Set the global storage lock directory
-#
-# @return nothing
-sub globalStorageSetLockdir {
-    my ( $self, $path ) = @_;
-    unless ($path) {
-        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
-        return 0;
-    }
-
-    $self->{conf}->{globalStorageOptions}->{LockDirectory} = $path;
-    $self->{confModified} = 1;
-}
-
-## @method void globalStorage ()
-# Get the global storage parameters
-#
-# @return nothing
-sub globalStorage {
-    my ($self) = shift;
-
-    print "Global Storage options :\n";
-    print "- Directory: $self->{conf}->{globalStorageOptions}->{Directory}\n";
-    print
-"- Lock Directory: $self->{conf}->{globalStorageOptions}->{LockDirectory}\n";
-}
-
 ## @method reloadUrls ()
 # Print reloads urls by vhost
 #
@@ -1043,14 +1091,22 @@ Global actions
 
   lemonldap-ng-cli help - display this message
   lemonldap-ng-cli info - show current configuration information
+  lemonldap-ng-cli update-cache - reload current configuration into cache
   lemonldap-ng-cli increment - save current configuration into a new one
 
-Simple parameters (key/value form)
+Scalar parameters (key/value form)
 ==================================
 
   lemonldap-ng-cli set <variable> <value>
   lemonldap-ng-cli unset <variable>
   lemonldap-ng-cli get <variable>
+
+Hash parameters
+===============
+
+  lemonldap-ng-cli set-hash <variable> <key> <value>
+  lemonldap-ng-cli unset-hash <variable> <key>
+  lemonldap-ng-cli get-hash <variable>
 
 Variables
 =========
@@ -1119,16 +1175,6 @@ Options
   lemonldap-ng-cli vhost-set-https <virtual host> <value>
   lemonldap-ng-cli vhost-set-maintenance  <virtual host> <value>
   lemonldap-ng-cli vhost-list-options <virtual host>
-
-Sessions
-========
-
-Standard sessions storage
--------------------------
-
-  lemonldap-ng-cli global-storage
-  lemonldap-ng-cli global-storage-set-dir <path>
-  lemonldap-ng-cli global-storage-set-lockdir <path>
 
 Reload URLs
 ===========
