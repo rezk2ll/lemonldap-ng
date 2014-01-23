@@ -864,19 +864,37 @@ sub vhostSetMaintenance {
 }
 
 ## @method void vhostList ()
-# list all parameters of each vhosts
+# list all vhosts
 #
 # @return nothing
 sub vhostList {
-    my ($self) = shift;
+    my ($self) = @_;
 
-    while ( my ( $vhost, $vhostoptions ) =
-        each %{ $self->{conf}->{vhostOptions} } )
-    {
-        print "- $vhost => ";
-        print "Maintenance: $vhostoptions->{vhostMaintenance} | ";
-        print "Port: $vhostoptions->{vhostPort} | ";
-        print "HTTPS: $vhostoptions->{vhostHttps}\n";
+    foreach my $vhost ( sort keys %{ $self->{conf}->{locationRules} } ) {
+        print "- $vhost\n";
+    }
+}
+
+## @method void vhostListOptions ( string vhost )
+# list all options of each vhosts
+#
+# @return nothing
+sub vhostListOptions {
+    my ( $self, $vhost ) = @_;
+
+    unless ($vhost) {
+        $self->setError( $ERRORS->{TOO_FEW_ARGUMENTS} );
+        return 0;
+    }
+
+    my $vhostoptions = $self->{conf}->{vhostOptions}->{$vhost};
+    if ($vhostoptions) {
+        print "- Maintenance: $vhostoptions->{vhostMaintenance}\n";
+        print "- Port: $vhostoptions->{vhostPort}\n";
+        print "- HTTPS: $vhostoptions->{vhostHttps}\n";
+    }
+    else {
+        print "No options defined for $vhost\n";
     }
 }
 
@@ -1054,6 +1072,7 @@ Options
   lemonldap-ng-cli vhost-set-port <virtual host> <port>
   lemonldap-ng-cli vhost-set-https <virtual host> <value>
   lemonldap-ng-cli vhost-set-maintenance  <virtual host> <value>
+  lemonldap-ng-cli vhost-list-options <virtual host>
 
 Sessions
 ========
