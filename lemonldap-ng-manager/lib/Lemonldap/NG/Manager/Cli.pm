@@ -980,23 +980,43 @@ sub help {
     my ($self) = @_;
 
     print STDERR "
-Set/get variables in the configuration:
+
+Simple parameters (key/value form)
+==================================
 
   lemonldap-ng-cli set <variable> <value>
   lemonldap-ng-cli unset <variable>
   lemonldap-ng-cli get <variable>
 
-Define macros:
+Variables
+=========
+
+Exported variables
+------------------
+
+  lemonldap-ng-cli export-var <key> <value>
+  lemonldap-ng-cli unexport-var <key>
+  lemonldap-ng-cli get-exported-vars
+
+Macros
+------
 
   lemonldap-ng-cli set-macro <macro name> <perl expression>
   lemonldap-ng-cli unset-macro <macro name>
   lemonldap-ng-cli get-macro <macro name>
 
-Modify application list:
+Application menu
+================
+
+Categories
+----------
 
   lemonldap-ng-cli apps-set-cat <cat id> <cat name>
   lemonldap-ng-cli apps-get-cat <cat id>
   
+Applications
+------------
+
   lemonldap-ng-cli apps-add <app id> <cat id>
   lemonldap-ng-cli apps-set-uri <app id> <app uri>
   lemonldap-ng-cli apps-set-name <app id> <app name>
@@ -1007,40 +1027,46 @@ Modify application list:
   lemonldap-ng-cli apps-get <app id>
   lemonldap-ng-cli apps-rm <app id>
 
-Manage rules:
+Virtual hosts
+=============
 
-  lemonldap-ng-cli rules-set <virtual host> <expr> <rule>
-  lemonldap-ng-cli rules-unset <virtual host> <expr>
-  lemonldap-ng-cli rules-get <virtual host>
+  lemonldap-ng-cli vhost-add <virtual host uri>
+  lemonldap-ng-cli vhost-del <virtual host>
+  lemonldap-ng-cli vhost-list
 
-Manage exported variables:
-
-  lemonldap-ng-cli export-var <key> <value>
-  lemonldap-ng-cli unexport-var <key>
-  lemonldap-ng-cli get-exported-vars
-
-Manage exported headers:
+Exported headers
+----------------
 
   lemonldap-ng-cli export-header <virtual host> <HTTP header> <perl expression>
   lemonldap-ng-cli unexport-header <virtual host> <HTTP header>
   lemonldap-ng-cli get-exported-headers <virtual host>
 
-Manage virtual hosts:
+Rules
+-----
 
-  lemonldap-ng-cli vhost-add <virtual host uri>
-  lemonldap-ng-cli vhost-del <virtual host>
+  lemonldap-ng-cli rules-set <virtual host> <expr> <rule>
+  lemonldap-ng-cli rules-unset <virtual host> <expr>
+  lemonldap-ng-cli rules-get <virtual host>
+
+Options
+-------
+
   lemonldap-ng-cli vhost-set-port <virtual host> <port>
   lemonldap-ng-cli vhost-set-https <virtual host> <value>
   lemonldap-ng-cli vhost-set-maintenance  <virtual host> <value>
-  lemonldap-ng-cli vhost-list
 
-Global Storage:
+Sessions
+========
+
+Standard sessions storage
+-------------------------
 
   lemonldap-ng-cli global-storage
   lemonldap-ng-cli global-storage-set-dir <path>
   lemonldap-ng-cli global-storage-set-lockdir <path>
 
-Reload URLs:
+Reload URLs
+===========
 
   lemonldap-ng-cli reload-urls
   lemonldap-ng-cli reload-url-add <vhost> <url>
