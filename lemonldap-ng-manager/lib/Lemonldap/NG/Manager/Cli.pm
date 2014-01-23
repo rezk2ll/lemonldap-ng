@@ -4,6 +4,7 @@ package Lemonldap::NG::Manager::Cli;
 
 use strict;
 use Lemonldap::NG::Common::Conf;
+use POSIX qw(strftime);
 
 # Constants
 
@@ -37,6 +38,14 @@ sub new {
 # @return Configuration identifier.
 sub saveConf {
     my ($self) = @_;
+
+    $self->{conf}->{cfgAuthor}   = "LemonLDAP::NG CLI";
+    $self->{conf}->{cfgAuthorIP} = "127.0.0.1";
+    $self->{conf}->{cfgDate}     = time();
+
+    # Do not increment configuration number
+    $self->{conf}->{cfgNumFixed} = 1;
+
     my $ret = $self->{confAccess}->saveConf( $self->{conf} );
     return $ret;
 }
@@ -990,6 +999,26 @@ sub reloadUrlDel {
     $self->{confModified} = 1;
 }
 
+## @method info ()
+# print information on configuration
+#
+# @return nothing
+sub info {
+
+    my ($self) = @_;
+
+    print "Information on current configuration:\n";
+    print "Number: " . $self->{conf}->{cfgNum} . "\n";
+    print "Date: "
+      . strftime( "%Y/%m/%d %Hh%M", localtime( $self->{conf}->{cfgDate} ) )
+      . "\n"
+      if defined $self->{conf}->{cfgDate};
+    print "Author: " . $self->{conf}->{cfgAuthor} . "\n"
+      if defined $self->{conf}->{cfgAuthor};
+    print "Author IP: " . $self->{conf}->{cfgAuthorIP} . "\n"
+      if defined $self->{conf}->{cfgAuthorIP};
+}
+
 ## @method void help ()
 # print help message
 #
@@ -998,6 +1027,12 @@ sub help {
     my ($self) = @_;
 
     print STDERR "
+
+Global actions
+==============
+
+  lemonldap-ng-cli help - display this message
+  lemonldap-ng-cli info - show current configuration information
 
 Simple parameters (key/value form)
 ==================================
@@ -1116,7 +1151,7 @@ Lemonldap::NG::Manager::Cli - Command Line Interface to edit LemonLDAP::NG confi
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Manager::Cli allow user to edit the configuration of Lemonldap::NG via the
+Lemonldap::NG::Manager::Cli allow user to edit the configuration of LemonLDAP::NG via the
 command line.
 
 =head1 SEE ALSO

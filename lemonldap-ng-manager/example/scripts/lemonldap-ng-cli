@@ -28,7 +28,8 @@ sub giveUpPrivileges {
 
 if ( !@ARGV ) {
     print STDERR "Usage: $0 <action> <params>\n";
-    print STDERR "Enter $0 help to get more information\n";
+    print STDERR "- help: list available actions\n";
+    print STDERR "- info: view current configuration information\n";
     exit 1;
 }
 
