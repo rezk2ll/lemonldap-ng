@@ -140,7 +140,16 @@
       </TMPL_IF>
 
       <TMPL_IF NAME="ChangePassword">
-        <TMPL_INCLUDE NAME="password.tpl">
+        <div id="password">
+            <div class="panel panel-info">
+              <div class="panel-heading">
+              <h3 class="panel-title"><lang en="Change your password" fr="Changez votre mot de passe" /></h3>
+              </div>
+              <div class="panel-body">
+              <TMPL_INCLUDE NAME="password.tpl">
+              </div>
+            </div>
+        </div>
       </TMPL_IF>
 
       <TMPL_IF NAME="LoginHistory">
@@ -170,11 +179,16 @@
 
       <TMPL_IF NAME="Logout">
         <div id="logout">
-          <h3><lang en="Are you sure ?" fr="&Ecirc;tes vous s&ucirc;r ?" /></h3>
-          <div class="buttons">
-            <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="positive">
-              <span><img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="ok"/> <lang en="I'm sure" fr="Je suis s&ucirc;r" /></span>
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title"><lang en="Are you sure ?" fr="&Ecirc;tes vous s&ucirc;r ?" /></h3>
+            </div>
+            <div class="panel-body buttons">
+            <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-success" role="button">
+              <span class="glyphicon glyphicon-ok"></span>
+              <lang en="I'm sure" fr="Je suis s&ucirc;r" />
             </a>
+            </div>
           </div>
         </div>
       </TMPL_IF>

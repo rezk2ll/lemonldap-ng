@@ -166,7 +166,9 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_PASSWORD">
+    <div id="password">
     <TMPL_INCLUDE NAME="password.tpl">
+    </div>
   </TMPL_IF>
 
   <TMPL_IF NAME="LOGIN_INFO">
@@ -179,7 +181,7 @@
     <div id="logout">
       <div class="buttons">
       <TMPL_IF NAME="MSG"><TMPL_VAR NAME="MSG"></TMPL_IF>
-        <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-lg btn-primary" role="button">
+        <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
           <span class="glyphicon glyphicon-home"></span>
           <lang en="Go to portal" fr="Aller au portail" />
         </a>
@@ -190,7 +192,7 @@
   <TMPL_IF NAME="LOGOUT_URL">
     <div id="logout">
       <div class="buttons">
-        <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-lg btn-danger" role="button">
+        <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-danger" role="button">
           <span class="glyphicon glyphicon-log-out"></span>
           <lang en="Logout" fr="Se d&eacute;connecter"/>
         </a>

@@ -17,7 +17,7 @@
     <h3><lang en="Forgot your password?" fr="Mot de passe oubli&eacute; ?"/></h3>
 
     <div class="form-group">
-      <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control input-lg" placeholder="<lang en="Mail" fr="Adresse mail"/>" required />
+      <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" placeholder="<lang en="Mail" fr="Adresse mail"/>" required />
     </div>
 
     <TMPL_IF NAME=CAPTCHA_IMG>
@@ -25,12 +25,12 @@
       <img src="<TMPL_VAR NAME=CAPTCHA_IMG>" class="img-thumbnail" />
     </div>
     <div class="form-group">
-      <input type="text" name="captcha_user_code" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control input-lg" placeholder="Captcha" required />
+      <input type="text" name="captcha_user_code" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" placeholder="Captcha" required />
       <input type="hidden" name="captcha_code" value="<TMPL_VAR NAME=CAPTCHA_CODE>" />
     </div>
     </TMPL_IF>
 
-    <button type="submit" class="btn btn-block btn-success btn-lg" >
+    <button type="submit" class="btn btn-block btn-success" >
       <span class="glyphicon glyphicon-send"></span>
       <lang en="Send me a new password" fr="Envoyez-moi un nouveau mot de passe" />
     </button>
@@ -66,7 +66,7 @@
       </div>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-block btn-success btn-lg">
+        <button type="submit" class="btn btn-block btn-success">
           <lang en="Submit" fr="Valider" />
         </button>
       </div>
@@ -89,11 +89,11 @@
         <h3><lang en="Change your password" fr="Changez votre mot de passe" /></h3>
 
         <div class="form-group">
-          <input name="newpassword" type="password" class="form-control input-lg" placeholder="<lang en="New password" fr="Nouveau mot de passe" />" />
+          <input name="newpassword" type="password" class="form-control" placeholder="<lang en="New password" fr="Nouveau mot de passe" />" />
         </div>
 
         <div class="form-group">
-          <input name="confirmpassword" type="password" class="form-control input-lg" placeholder="<lang en="Confirm password" fr="Confirmez le mot de passe" />" />
+          <input name="confirmpassword" type="password" class="form-control" placeholder="<lang en="Confirm password" fr="Confirmez le mot de passe" />" />
         </div>
 
         <div class="checkbox">
@@ -104,7 +104,7 @@
         </div>
 
         <div class="form-group">
-          <button type="submit" class="btn btn-block btn-success btn-lg">
+          <button type="submit" class="btn btn-block btn-success">
             <lang en="Submit" fr="Soumettre" />
           </button>
         </div>
