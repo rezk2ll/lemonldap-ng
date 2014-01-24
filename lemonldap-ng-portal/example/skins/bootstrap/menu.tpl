@@ -1,18 +1,40 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-<div id="menucontent">
+<div id="menucontent" class="container">
 
   <TMPL_IF NAME="AUTH_ERROR">
-  <div class="message <TMPL_VAR NAME="AUTH_ERROR_TYPE">"><ul><li><TMPL_VAR NAME="AUTH_ERROR"></li></ul></div>
+  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><TMPL_VAR NAME="AUTH_ERROR"></div>
   </TMPL_IF>
 
   <div id="menu">
 
-    <div class="user"><lang en="Connected as" fr="Connect&eacute; en tant que" /> <TMPL_VAR NAME="AUTH_USER"></div>
+  <div class="nav navbar-default">
+
+    <div class="user navbar-right">
+      <p class="navbar-text"><lang en="Connected as" fr="Connect&eacute; en tant que" /> <TMPL_VAR NAME="AUTH_USER"></p>
+    </div>
+
+    <div class="navbar-header">
+
+    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+        <span class="sr-only">
+            Toggle navigation
+        </span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">
+      <span class="glyphicon glyphicon-home"></span>
+    </a>
+
+    </div>
 
     <TMPL_IF DISPLAY_MODULES>
+
+    <div class="navbar-collapse collapse">
     <!-- Tabs list -->
-      <ul>
+      <ul class="nav navbar-nav">
         <TMPL_LOOP NAME="DISPLAY_MODULES">
 
           <TMPL_IF NAME="Appslist">
@@ -41,9 +63,11 @@
           </TMPL_IF>
         </TMPL_LOOP>
       </ul>
+    </div>
     </TMPL_IF>
 
-    <div class="menulogo"></div>
+    </div>
+
     <!-- Tabs content -->
     <TMPL_LOOP NAME="DISPLAY_MODULES">
 
@@ -56,17 +80,22 @@
             <TMPL_IF NAME="category">
             <!-- Category -->
 
-              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid">" id="sort_<TMPL_VAR NAME="__counter__">">
-                <h3 class="catname"><TMPL_VAR NAME="catname"></h3>
+              <div class="category cat-level-<TMPL_VAR NAME="catlevel"> <TMPL_VAR NAME="catid"> panel panel-info" id="sort_<TMPL_VAR NAME="__counter__">">
+
+                <div class="panel-heading">
+                <h3 class="catname panel-title"><TMPL_VAR NAME="catname"></h3>
+                </div>
 
                   <TMPL_IF applications>
+                  <div class="panel-body">
                     <!-- Applications -->
 
                     <TMPL_LOOP NAME=applications>
 
                       <!-- Application -->
 
-                      <div class="application <TMPL_VAR NAME="appid">">
+                      <div class="application <TMPL_VAR NAME="appid"> panel panel-default pull-left">
+                        <div class="panel-body">
 
                         <!-- Logo (optional) -->
                         <TMPL_IF NAME="applogo">
@@ -82,69 +111,22 @@
                           </a>
                         </h4>
 
-                        <!-- Logo (optional) -->
+                        <!-- Description (optional) -->
                         <TMPL_IF NAME="appdesc">
                           <p class="appdesc <TMPL_VAR NAME="appid">">
                             <TMPL_VAR NAME="appdesc">
                           </p>
                         </TMPL_IF>
 
+                        </div>
+
                         <div class="clearfix"></div>
                       </div>
 
                     <!-- End of applications loop -->
                     </TMPL_LOOP>
-                  </TMPL_IF>
 
-                  <TMPL_IF categories>
-                    <!-- Sub categories -->
-
-                    <TMPL_LOOP NAME=categories>
-                      <div class="category cat-level-<TMPL_VAR NAME="catlevel">">
-                        <h3 class="catname"><TMPL_VAR NAME="catname"></h3>
-
-                        <TMPL_IF applications>
-                          <!-- Applications in sub category -->
-
-                          <TMPL_LOOP NAME=applications>
-
-                            <!-- Application in sub category-->
-
-                            <div class="application <TMPL_VAR NAME="appid">">
-
-                              <!-- Logo (optional) -->
-                              <TMPL_IF NAME="applogo">
-                                <img src="<TMPL_VAR NAME="SKIN_PATH">/common/apps/<TMPL_VAR NAME="applogo">"
-                                  class="applogo <TMPL_VAR NAME="appid">"
-                                  alt="<TMPL_VAR NAME="appname">" />
-                              </TMPL_IF>
-
-                              <!-- Name and link (mandatory) -->
-                              <h4 class="appname <TMPL_VAR NAME="appid">">
-                                <a href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="appname">">
-                                  <TMPL_VAR NAME="appname">
-                                </a>
-                              </h4>
-
-                              <!-- Logo (optional) -->
-                              <TMPL_IF NAME="appdesc">
-                                <p class="appdesc <TMPL_VAR NAME="appid">">
-                                  <TMPL_VAR NAME="appdesc">
-                                </p>
-                              </TMPL_IF>
-
-                              <div class="clearfix"></div>
-                            </div>
-
-                            <!-- End of applications loop -->
-                          </TMPL_LOOP>
-                        </TMPL_IF>
-
-                        <div class="clearfix"></div>
-                      </div>
-
-                    <!-- End of sub categories loop -->
-                    </TMPL_LOOP>
+                  </div>
                   </TMPL_IF>
 
                   <div class="clearfix"></div>

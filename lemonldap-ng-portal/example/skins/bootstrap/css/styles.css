@@ -39,3 +39,33 @@ body {
 .btn {
   white-space: normal;
 }
+
+div#appslist {
+  margin-top: 10px;
+}
+
+div.application {
+  margin:10px;
+  overflow:hidden;
+}
+
+div.application img.applogo {
+  width:32px;
+  height:32px;
+  float:left;
+}
+
+div.application h4.appname {
+  text-align:left;
+  padding:0 5px;
+  margin:0 0 0 40px;
+}
+
+div.application p.appdesc {
+  text-align:left;
+  padding:0 5px;
+  margin:0 0 0 40px;
+  color:#aaa;
+  font-style:italic;
+}
+
