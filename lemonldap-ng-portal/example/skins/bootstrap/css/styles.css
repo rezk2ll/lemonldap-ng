@@ -14,7 +14,7 @@ body {
   /* Negative indent footer by its height */
   margin: 0 auto -60px;
   /* Pad bottom by footer height */
-  padding: 20px 0 60px;
+  padding: 20px 0 80px;
 }
 
 /* Set the fixed height of the footer here */
