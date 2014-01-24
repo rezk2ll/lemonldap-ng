@@ -40,8 +40,8 @@ body {
   white-space: normal;
 }
 
-div#appslist {
-  margin-top: 10px;
+#appslist, #password, #loginHistory, #logout  {
+  margin-top: 20px;
 }
 
 div.application {

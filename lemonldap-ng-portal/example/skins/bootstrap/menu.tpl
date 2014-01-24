@@ -145,16 +145,26 @@
 
       <TMPL_IF NAME="LoginHistory">
         <div id="loginHistory">
-          <div class="form">
             <TMPL_IF NAME="SUCCESS_LOGIN">
-              <h3><lang en="Last logins" fr="Derni&egrave;res connexions" /></h3>
+            <div class="panel panel-info">
+              <div class="panel-heading">
+              <h3 class="panel-title"><lang en="Last logins" fr="Derni&egrave;res connexions" /></h3>
+              </div>
+              <div class="panel-body">
               <TMPL_VAR NAME="SUCCESS_LOGIN">
+              </div>
+            </div>
             </TMPL_IF>
             <TMPL_IF NAME="FAILED_LOGIN">
-              <h3><lang en="Last failed logins" fr="Derni&egrave;res connexions refus&eacute;es" /></h3>
+            <div class="panel panel-info">
+              <div class="panel-heading">
+              <h3 class="panel-title"><lang en="Last failed logins" fr="Derni&egrave;res connexions refus&eacute;es" /></h3>
+              </div>
+              <div class="panel-body">
               <TMPL_VAR NAME="FAILED_LOGIN">
+              </div>
+            </div>
             </TMPL_IF>
-          </div>
         </div>
       </TMPL_IF>
 
