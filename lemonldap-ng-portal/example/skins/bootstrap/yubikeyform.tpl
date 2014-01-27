@@ -1,31 +1,13 @@
-<h3><lang en="Please use your Yubikey" fr="Utilisez votre Yubikey"/></h3>
 
-<table>
-	<tr>
-		<td><input name="yubikeyOTP" type="text" /></td>
-	</tr>
+  <div class="form-group input-group">
+    <span class="input-group-addon glyphicon glyphicon-chevron-right"> </span>
+    <input name="yubikeyOTP" type="text" class="form-control" placeholder="<lang en="Please use your Yubikey" fr="Utilisez votre Yubikey"/>" />
+  </div>
 
-	<TMPL_IF NAME="CHECK_LOGINS">
-		<tr><td colspan="2"><div class="buttons">
-			<label for="checkLogins">
-				<input type="checkbox" id="checkLogins" name="checkLogins" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF>/>
-				<lang en="Check my last logins" fr="Voir mes dernières connexions"/>
-			</label>
-		</div></td></tr>
-	</TMPL_IF>
+  <TMPL_INCLUDE NAME="checklogins.tpl">
 
-	<tr><td>
-		<div class="buttons">
-			<button type="reset" class="negative" tabindex="4">
-				<img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
-				<lang en="Cancel" fr="Annuler" />
-			</button>
-			<button type="submit" class="positive" tabindex="3">
-				<img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
-				<lang en="Connect" fr="Se connecter" />
-			</button>
-		</div>
-	</td></tr>
-
-</table>
+  <button type="submit" class="btn btn-block btn-success" >
+    <span class="glyphicon glyphicon-log-in"></span>
+    <lang en="Connect" fr="Se connecter" />
+  </button>
 

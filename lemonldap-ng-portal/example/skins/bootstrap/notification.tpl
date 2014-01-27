@@ -1,14 +1,8 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-<div id="notifcontent">
+<div id="notifcontent" class="container">
   
-  <div class="message <TMPL_VAR NAME="AUTH_ERROR_TYPE">"><ul><li>
-    <lang en="You have some new messages" fr="Vous avez de nouveaux messages"/>
-  </li></ul></div>
-
-  <div class="loginlogo"></div>
-
-  <form action="#" method="post" class="login">
+  <form action="#" method="post" class="notif" role="form">
     <TMPL_VAR NAME="HIDDEN_INPUTS">
     <TMPL_IF NAME="CHOICE_VALUE">
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
@@ -16,18 +10,22 @@
     <TMPL_IF NAME="AUTH_URL">
       <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
     </TMPL_IF>
-    <h3><lang en="New message(s)" fr="Nouveaux messages"/>&nbsp;:</h3>
-    <table>
-      <tr><td>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title"><lang en="You have some new messages" fr="Vous avez de nouveaux messages"/></h3>
+      </div>
+      <div class="panel-body">
         <TMPL_VAR NAME="NOTIFICATION">
-        <div class="buttons">
-          <button type="submit" class="positive">
-            <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
-            <lang en="Accept" fr="Accepter" />
-          </button>
-        </div>
-      </td></tr>
-    </table>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="submit" class="positive btn btn-success">
+        <span class="glyphicon glyphicon-ok"></span>
+        <lang en="Accept" fr="Accepter" />
+      </button>
+    </div>
+
   </form>
 
 </div>

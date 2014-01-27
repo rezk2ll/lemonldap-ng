@@ -6,6 +6,8 @@
   <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><TMPL_VAR NAME="AUTH_ERROR"></div>
   </TMPL_IF>
 
+  <div class="panel panel-default">
+
   <TMPL_IF NAME="DISPLAY_FORM">
 
     <form action="#" method="post" class="login" role="form">
@@ -16,7 +18,8 @@
 
     <h3><lang en="Forgot your password?" fr="Mot de passe oubli&eacute; ?"/></h3>
 
-    <div class="form-group">
+    <div class="form-group input-group">
+      <span class="input-group-addon glyphicon glyphicon-envelope"> </span>
       <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" placeholder="<lang en="Mail" fr="Adresse mail"/>" required />
     </div>
 
@@ -24,7 +27,8 @@
     <div class="form-group">
       <img src="<TMPL_VAR NAME=CAPTCHA_IMG>" class="img-thumbnail" />
     </div>
-    <div class="form-group">
+    <div class="form-group input-group">
+      <span class="input-group-addon glyphicon glyphicon-eye-open"> </span>
       <input type="text" name="captcha_user_code" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" placeholder="Captcha" required />
       <input type="hidden" name="captcha_code" value="<TMPL_VAR NAME=CAPTCHA_CODE>" />
     </div>
@@ -88,11 +92,13 @@
 
         <h3><lang en="Change your password" fr="Changez votre mot de passe" /></h3>
 
-        <div class="form-group">
+        <div class="form-group input-group">
+          <span class="input-group-addon glyphicon glyphicon-lock"> </span>
           <input name="newpassword" type="password" class="form-control" placeholder="<lang en="New password" fr="Nouveau mot de passe" />" />
         </div>
 
-        <div class="form-group">
+        <div class="form-group input-group">
+          <span class="input-group-addon glyphicon glyphicon-lock"> </span>
           <input name="confirmpassword" type="password" class="form-control" placeholder="<lang en="Confirm password" fr="Confirmez le mot de passe" />" />
         </div>
 
@@ -132,6 +138,8 @@
       </h3>
     </form>
   </TMPL_IF>
+
+  </div>
 
   <div class="buttons">
     <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">

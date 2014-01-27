@@ -10,10 +10,6 @@
 
   <div class="nav navbar-default">
 
-    <div class="user navbar-right">
-      <p class="navbar-text"><lang en="Connected as" fr="Connect&eacute; en tant que" /> <TMPL_VAR NAME="AUTH_USER"></p>
-    </div>
-
     <div class="navbar-header">
 
     <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
@@ -63,6 +59,11 @@
           </TMPL_IF>
         </TMPL_LOOP>
       </ul>
+
+      <div class="user navbar-right">
+        <p class="navbar-text"><lang en="Connected as" fr="Connect&eacute; en tant que" /> <TMPL_VAR NAME="AUTH_USER"></p>
+      </div>
+
     </div>
     </TMPL_IF>
 
