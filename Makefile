@@ -608,7 +608,10 @@ debian-packages: debian-dist
 	rm -rf lemonldap-ng-$$version && \
 	$(UNCOMPRESS) lemonldap-ng_$$version.orig.$(COMPRESSSUFFIX) && \
 	cd lemonldap-ng-$$version && \
-	export LOCALBUILD=1; debuild -e LOCALBUILD -us -uc -b --lintian-opts -i --lintian-opts -v
+	export LOCALBUILD=1; debuild -e LOCALBUILD -us -uc -b --lintian-opts -i \
+		--lintian-opts -v --lintian-opts -I --lintian-opts -E \
+		--lintian-opts --color --lintian-opts auto --lintian-opts -L \
+		--lintian-opts +=pedantic
 
 debian-install: debian-packages
 	cd /tmp/lemonldap-ng-$(VERSION) && \
