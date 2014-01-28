@@ -51,6 +51,10 @@ splice @documentation, 61, 20;
 # Correct some bad media links
 system('find . -name \*.html -exec sed -i "s#/_media#../media#g" {} \;');
 
+# Remove unused pages
+system("rm -rf pages/default_sidebar.html");
+system("rm -rf pages/start.html");
+
 # Rewrite index.html
 tie my @index, 'Tie::File', 'index.html' or die("Unable to open index.html");
 
@@ -60,7 +64,7 @@ my @links = (
 "\t\t<p><a href=\"index/alphabetical.html\" class=\"wikilink1\">All pages</a></p>",
 );
 
-splice @index, 22, 1, @links;
+splice @index, 21, 2, @links;
 
 # Remove external logos
 system('rm -rf media/applications/ media/logos/');
