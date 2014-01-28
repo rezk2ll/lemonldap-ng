@@ -704,7 +704,7 @@ function changeSkinImage(skin) {
 	$('#skinText').val(skin);
 	// Set skin to custom if not a registered skin
 	// Custom field can the be edited
-	if ((skin!='pastel') && (skin!='dark') && (skin!='impact')){
+	if ((skin!='pastel') && (skin!='dark') && (skin!='impact') && (skin!='bootstrap')){
 		skin = 'custom';
 		$('#skinText').removeAttr('readonly');
 	} else {

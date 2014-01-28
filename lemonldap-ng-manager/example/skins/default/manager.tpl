@@ -57,6 +57,7 @@
 
 <!-- Skin picker-->
 <div id="skinImagePicker" title="<lang en="Choose a skin" fr="Choisir un thème" />">
+     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/bootstrap.png" alt="Bootstrap" title="bootstrap" width="200px" height="129px" /></button>
      <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/pastel.png" alt="Pastel" title="pastel" width="200px" height="129px" /></button>
      <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/impact.png" alt="Impact" title="impact" width="200px" height="129px" /></button>
      <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/dark.png" alt="Dark" title="dark" width="200px" height="129px" /></button>
