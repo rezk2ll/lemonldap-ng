@@ -143,6 +143,13 @@ Copyright: 2004, Entr'ouvert <http://www.entrouvert.com/>
  2004, Florent Monnier
 License: GPL-2+
 
+Files: lemonldap-ng-portal/example/skins/bootstrap/*/bootstrap*
+ lemonldap-ng-portal/example/skins/bootstrap/fonts/*
+Copyright: 2013, Twitter Inc.
+License: Apache-2.0
+Comment: version 3.0.3 of bootstrap is released under Apache-2 license
+ earlier versions will be released under MIT license
+
 Files: debian/*
 Copyright: 2004-2013, Xavier Guimard <x.guimard@free.fr>
 License: GPL-2+
@@ -159,6 +166,9 @@ License: Apache-2.0
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
+ .
+ The complete text of the Apache-2 license can be
+ found in http://www.apache.org/licenses/LICENSE-2.0
 
 License: Artistic
  This program is free software; you can redistribute it and/or modify
