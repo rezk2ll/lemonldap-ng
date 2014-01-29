@@ -404,7 +404,7 @@ function setlmgrantsessionrule(id,c,r,v){
 }
 function setlmfile(id,input){
 	var inputname=$(input).attr('id');
-	if($(input).attr('value').length==0){
+	if($(input).val().length==0){
 		alert('No '+inputname);
 		return false;
 	}
