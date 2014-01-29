@@ -435,7 +435,7 @@ sub checkMessage {
             if ( $self->param('SAMLResponse') ) {
 
                 # Response in query string
-                $response = $self->query_string();
+                $response = $self->getQueryString();
                 $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
                     'debug' );
 
@@ -444,7 +444,7 @@ sub checkMessage {
             if ( $self->param('SAMLRequest') ) {
 
                 # Request in query string
-                $request = $self->query_string();
+                $request = $self->getQueryString();
                 $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
 
             }
@@ -452,7 +452,7 @@ sub checkMessage {
             if ( $self->param('SAMLart') ) {
 
                 # Artifact in query string
-                $artifact = $self->query_string();
+                $artifact = $self->getQueryString();
                 $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
                     'debug' );
 
@@ -2989,6 +2989,26 @@ sub sendSLOErrorResponse {
     return $self->sendLogoutResponseToServiceProvider( $logout, $method );
 }
 
+## @method string getQueryString()
+# Return query string with or without CGI query_string() method
+# @return query string
+sub getQueryString {
+    my ($self) = splice @_;
+
+    my $query_string;
+
+    if ( $self->{samlUseQueryStringSpecific} ) {
+        my @pairs = split( /&/, $ENV{'QUERY_STRING'} );
+        $query_string = join( ';', @pairs );
+
+    }
+    else {
+        $query_string = $self->query_string();
+    }
+
+    return $query_string;
+}
+
 1;
 
 __END__
@@ -3345,6 +3365,10 @@ Find and delete SAML sessions bounded to a primary session
 =head2 sendSLOErrorResponse
 
 Send an SLO error response
+
+=head2 getQueryString
+
+Get query string with or without CGI query_string() method
 
 =head1 SEE ALSO
 
