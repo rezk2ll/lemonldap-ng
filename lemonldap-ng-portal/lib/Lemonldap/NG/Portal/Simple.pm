@@ -2456,6 +2456,11 @@ sub store {
     # Main session
     my $h = $self->getApacheSession( $self->{id} )
       or return PE_APACHESESSIONERROR;
+    # Compute unsecure cookie value if needed
+    if ( $self->{securedCookie} == 3 ) {
+        $self->{sessionInfo}->{_httpSession} =
+          $self->{cipher}->encryptHex( $self->{id}, "http" );
+    }
     foreach my $k ( keys %{ $self->{sessionInfo} } ) {
         next unless defined $self->{sessionInfo}->{$k};
         my $displayValue = $self->{sessionInfo}->{$k};
@@ -2508,11 +2513,7 @@ sub buildCookie {
         push @{ $self->{cookie} },
           $self->cookie(
             -name  => $self->{cookieName} . "http",
-            -value => (
-                  $self->{securedCookie} == 2
-                ? $self->{sessionInfo}->{_httpSession}
-                : $self->{cipher}->encryptHex( $self->{id}, "http" )
-            ),
+            -value => $self->{sessionInfo}->{_httpSession},
             -domain   => $self->{domain},
             -path     => "/",
             -secure   => 0,
