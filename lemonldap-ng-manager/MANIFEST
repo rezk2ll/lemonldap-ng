@@ -37,6 +37,7 @@ example/skins/default/images/bullet_green.png
 example/skins/default/images/bullet_orange.png
 example/skins/default/images/bullet_red.png
 example/skins/default/images/logo_lemonldap-ng.png
+example/skins/default/images/portal-skins/bootstrap.png
 example/skins/default/images/portal-skins/custom.png
 example/skins/default/images/portal-skins/dark.png
 example/skins/default/images/portal-skins/impact.png
@@ -45,7 +46,9 @@ example/skins/default/images/spinner.gif
 example/skins/default/images/tree/root.gif
 example/skins/default/images/tree/spacer.gif
 example/skins/default/images/tree/tree.png
+example/skins/default/js/jquery-1.10.2.js
 example/skins/default/js/jquery-1.10.2.min.js
+example/skins/default/js/jquery-ui-1.10.3.custom.js
 example/skins/default/js/jquery-ui-1.10.3.custom.min.js
 example/skins/default/js/jquery.ajaxfileupload.js
 example/skins/default/js/jquery.cookie.js
