@@ -49,6 +49,10 @@ div.application {
   overflow:hidden;
 }
 
+div.application a, div.application a:hover {
+  text-decoration:none;
+}
+
 div.application img.applogo {
   width:32px;
   height:32px;

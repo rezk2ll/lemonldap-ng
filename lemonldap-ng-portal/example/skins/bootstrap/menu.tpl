@@ -96,7 +96,7 @@
                       <!-- Application -->
 
                       <div class="application <TMPL_VAR NAME="appid"> panel panel-default pull-left">
-                        <div class="panel-body">
+                        <a class="btn btn-link" href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="appname">">
 
                         <!-- Logo (optional) -->
                         <TMPL_IF NAME="applogo">
@@ -107,9 +107,7 @@
 
                         <!-- Name and link (mandatory) -->
                         <h4 class="appname <TMPL_VAR NAME="appid">">
-                          <a href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="appname">">
                           <TMPL_VAR NAME="appname">
-                          </a>
                         </h4>
 
                         <!-- Description (optional) -->
@@ -119,7 +117,7 @@
                           </p>
                         </TMPL_IF>
 
-                        </div>
+                        </a>
 
                         <div class="clearfix"></div>
                       </div>
