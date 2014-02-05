@@ -1,5 +1,4 @@
-
-$(document).ready(function(){
+$(document).ready(function() {
 
 	// Adapt some class to fit Bootstrap theme
 	$("div.message-positive").addClass("alert-success");
@@ -9,4 +8,3 @@ $(document).ready(function(){
 	$("table.info").addClass("table");
 
 });
-
