@@ -525,7 +525,7 @@ sub setDefaultValues {
     $self->{whatToTrace} ||= 'uid';
     $self->{whatToTrace} =~ s/^\$//;
     $self->{httpOnly} = 1 unless ( defined( $self->{httpOnly} ) );
-    $self->{portalSkin} ||= 'pastel';
+    $self->{portalSkin} ||= 'bootstrap';
     $self->{portalDisplayLogout} = 1
       unless ( defined( $self->{portalDisplayLogout} ) );
     $self->{portalDisplayResetPassword} = 1

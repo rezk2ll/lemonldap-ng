@@ -2050,7 +2050,7 @@ sub defaultConf {
         openIdSreg_timezone             => '_timezone',
         openIdSreg_email                => 'mail',
         portal                          => 'http://auth.example.com',
-        portalSkin                      => 'pastel',
+        portalSkin                      => 'bootstrap',
         portalUserAttr                  => '_user',
         portalCheckLogins               => '1',
         portalDisplayLoginHistory       => '1',
