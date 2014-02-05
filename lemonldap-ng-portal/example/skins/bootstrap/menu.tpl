@@ -114,7 +114,7 @@
 
                         <!-- Description (optional) -->
                         <TMPL_IF NAME="appdesc">
-                          <p class="appdesc <TMPL_VAR NAME="appid">">
+                          <p class="appdesc <TMPL_VAR NAME="appid"> hidden-xs">
                             <TMPL_VAR NAME="appdesc">
                           </p>
                         </TMPL_IF>
