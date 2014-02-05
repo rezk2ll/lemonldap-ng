@@ -344,7 +344,7 @@ find %{buildroot} -name *.bak -exec rm -f {} \;
 # built as root
 sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{_sysconfdir}/cron.d/*
 sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{lm_sharedir}/bin/lmConfigEditor
-sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{lm_sharedir}/bin/lemonldap-ng-cli
+sed -i 's/nobody/%{lm_apacheuser}/g' %{buildroot}%{lm_sharedir}/bin/lemonldap-ng-cli
 
 # Minify Javascript and CSS
 ./scripts/minifierjs `find %{buildroot} -name '*.js'`
