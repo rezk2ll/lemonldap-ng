@@ -693,7 +693,7 @@ tidy: clean
 	find lemon*/ -name '*.bak' -delete
 
 tidy-js: clean
-	find lemon*/ -type f -name '*.js' ! -name 'jq*' -print -exec scripts/javascript-indent {} \;
+	find lemon*/ -type f -name '*.js' ! -name 'jq*' ! -name 'bootstrap*' -print -exec scripts/javascript-indent {} \;
 
 # TRANSLATION TARGETS #
 
