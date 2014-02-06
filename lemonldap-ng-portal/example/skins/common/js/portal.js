@@ -198,6 +198,11 @@ function isHiddenFormValueSet(option) {
 		return false;
 	}
 }
+
+/* function void ping()
+ * Check if session is alive on server side
+ * @return nothing
+ */
 function ping() {
 	$.ajax({
 		type: "POST",
@@ -214,9 +219,5 @@ function ping() {
 				setTimeout('ping();', 60000);
 			}
 		}
-		/*,
-	error:function(xhr, ajaxOptions, thrownError){
-		alert('Request failed Error code: '+xhr.status+', '+thrownError);
-	}*/
 	});
 }
