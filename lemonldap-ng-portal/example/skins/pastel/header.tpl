@@ -47,6 +47,7 @@
     var antiframe="<TMPL_VAR NAME="ANTIFRAME">";
     var appslistorder="<TMPL_VAR NAME="APPSLIST_ORDER">";
     var scriptname="<TMPL_VAR NAME="SCRIPT_NAME">";
+    var activeTimer="<TMPL_VAR NAME="ACTIVE_TIMER">";
  //]]></script>
  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/portal.js"></script>
  <TMPL_INCLUDE NAME="customhead.tpl">

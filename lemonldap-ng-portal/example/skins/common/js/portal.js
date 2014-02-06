@@ -33,6 +33,13 @@ if (antiframe.match('0')) {
 	antiframe = true;
 }
 
+/* Set activeTimer value (default is true) */
+if (activeTimer.match('0')) {
+	activeTimer = false;
+} else {
+	activeTimer = true;
+}
+
 /* jQuery */
 $(document).ready(function() {
 
