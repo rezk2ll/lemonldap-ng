@@ -30,5 +30,6 @@
     var appslistorder="<TMPL_VAR NAME="APPSLIST_ORDER">";
     var scriptname="<TMPL_VAR NAME="SCRIPT_NAME">";
     var activeTimer="<TMPL_VAR NAME="ACTIVE_TIMER">";
+    var pingInterval=parseInt("<TMPL_VAR NAME="PING">");
  //]]></script>
 

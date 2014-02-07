@@ -223,7 +223,7 @@ function ping() {
 				location.reload(true);
 			}
 			else {
-				setTimeout('ping();', 60000);
+				setTimeout('ping();', pingInterval);
 			}
 		}
 	});

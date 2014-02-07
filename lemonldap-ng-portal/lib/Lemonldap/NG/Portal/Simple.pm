@@ -69,7 +69,7 @@ use Digest::MD5;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.3.2';
+our $VERSION = '1.4.0';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;
@@ -569,6 +569,8 @@ sub setDefaultValues {
     $self->{authChoiceParam}    ||= "lmAuth";
     $self->{hiddenAttributes} = "_password"
       unless defined $self->{hiddenAttributes};
+    $self->{portalPingInterval} = 60000
+      unless defined $self->{portalPingInterval};
 
     # Set default userDB and passwordDB to DBI if authentication is DBI
     if ( $self->{authentication} =~ /DBI/i ) {
@@ -2456,6 +2458,7 @@ sub store {
     # Main session
     my $h = $self->getApacheSession( $self->{id} )
       or return PE_APACHESESSIONERROR;
+
     # Compute unsecure cookie value if needed
     if ( $self->{securedCookie} == 3 ) {
         $self->{sessionInfo}->{_httpSession} =
@@ -2512,8 +2515,8 @@ sub buildCookie {
     if ( $self->{securedCookie} >= 2 ) {
         push @{ $self->{cookie} },
           $self->cookie(
-            -name  => $self->{cookieName} . "http",
-            -value => $self->{sessionInfo}->{_httpSession},
+            -name     => $self->{cookieName} . "http",
+            -value    => $self->{sessionInfo}->{_httpSession},
             -domain   => $self->{domain},
             -path     => "/",
             -secure   => 0,
