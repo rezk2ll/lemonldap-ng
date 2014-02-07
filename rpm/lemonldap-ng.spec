@@ -352,11 +352,14 @@ sed -i 's/nobody/%{lm_apacheuser}/g' %{buildroot}%{lm_sharedir}/bin/lemonldap-ng
 
 # Set UNIX rights
 mkdir -p %{buildroot}%{lm_vardir}/sessions/lock
+mkdir -p %{buildroot}%{lm_vardir}/psessions/lock
 chmod 750 %{buildroot}%{lm_vardir}/conf
 chmod 640 %{buildroot}%{lm_vardir}/conf/*
 chmod 640 %{buildroot}%{lm_storagefile}
 chmod 770 %{buildroot}%{lm_vardir}/sessions
 chmod 770 %{buildroot}%{lm_vardir}/sessions/lock
+chmod 770 %{buildroot}%{lm_vardir}/psessions
+chmod 770 %{buildroot}%{lm_vardir}/psessions/lock
 chmod 770 %{buildroot}%{lm_vardir}/notifications
 chmod 770 %{buildroot}%{lm_vardir}/captcha
 chmod 770 %{buildroot}%{lm_vardir}/captcha/data
@@ -455,6 +458,8 @@ rm -rf %{buildroot}
 %dir %{lm_vardir}/conf
 %dir %{lm_vardir}/sessions
 %dir %{lm_vardir}/sessions/lock
+%dir %{lm_vardir}/psessions
+%dir %{lm_vardir}/psessions/lock
 %dir %{lm_vardir}/notifications
 %defattr(640,%{lm_apacheuser},%{lm_apachegroup},-)
 %config(noreplace) %{lm_vardir}/conf/lmConf-1
