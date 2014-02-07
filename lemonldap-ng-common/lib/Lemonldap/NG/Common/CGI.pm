@@ -297,6 +297,7 @@ sub userLog {
     my ( $self, $mess, $level ) = @_;
     if ( $self->{syslog} ) {
         $self->startSyslog();
+        $level =~ s/^warn$/warning/;
         syslog( $level || 'notice', $mess );
     }
     else {
@@ -315,7 +316,7 @@ sub userInfo {
 
 ##@method void userNotice(string mess)
 # Log user actions like access and logout. Alias for userLog() with facility
-# "warn".
+# "notice".
 # @param $mess string to log
 sub userNotice {
     my ( $self, $mess ) = @_;
@@ -325,7 +326,7 @@ sub userNotice {
 
 ##@method void userError(string mess)
 # Log user errors like "bad password". Alias for userLog() with facility
-# "error".
+# "warn".
 # @param $mess string to log
 sub userError {
     my ( $self, $mess ) = @_;
