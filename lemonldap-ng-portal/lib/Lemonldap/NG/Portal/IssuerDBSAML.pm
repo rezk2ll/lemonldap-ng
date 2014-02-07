@@ -86,9 +86,12 @@ sub issuerForUnAuthUser {
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
-    my $url            = $self->url( -absolute => 1 );
-    my $request_method = $self->request_method();
-    my $content_type   = $self->content_type();
+    my $url                     = $self->url( -absolute => 1 );
+    my $request_method          = $self->request_method();
+    my $content_type            = $self->content_type();
+    my $idp_initiated           = $self->param('IDPInitiated');
+    my $idp_initiated_sp        = $self->param('sp');
+    my $idp_initiated_spConfKey = $self->param('spConfKey');
 
     # 1.1. SSO
     if ( $url =~
@@ -97,6 +100,14 @@ sub issuerForUnAuthUser {
     {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
+
+        # Get hidden params for IDP initiated if needed
+        $idp_initiated = $self->getHiddenFormValue('IDPInitiated')
+          unless defined $idp_initiated;
+        $idp_initiated_sp = $self->getHiddenFormValue('sp')
+          unless defined $idp_initiated_sp;
+        $idp_initiated_spConfKey = $self->getHiddenFormValue('spConfKey')
+          unless defined $idp_initiated_spConfKey;
 
         # Check message
         my ( $request, $response, $method, $relaystate, $artifact ) =
@@ -221,10 +232,29 @@ sub issuerForUnAuthUser {
 
         else {
 
-            # No request or response
-            # This should not happen
-            $self->lmLog( "No request or response found", 'debug' );
+            if ($idp_initiated) {
+
+                # Keep IDP initiated parameters
+                $self->setHiddenFormValue( 'IDPInitiated', $idp_initiated )
+                  if defined $idp_initiated;
+                $self->setHiddenFormValue( 'sp', $idp_initiated_sp )
+                  if defined $idp_initiated_sp;
+                $self->setHiddenFormValue( 'spConfKey',
+                    $idp_initiated_spConfKey )
+                  if defined $idp_initiated_spConfKey;
+
+                $self->lmLog( "Store URL parameters for IDP initiated request",
+                    'debug' );
+
+            }
+            else {
+
+                # No request or response
+                # This should not happen
+                $self->lmLog( "No request or response found", 'debug' );
+            }
             return PE_OK;
+
         }
 
     }
@@ -1124,10 +1154,12 @@ sub issuerForAuthUser {
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
-    my $url            = $self->url( -absolute => 1 );
-    my $request_method = $self->request_method();
-    my $content_type   = $self->content_type();
-    my $idp_initiated  = $self->param('IDPInitiated');
+    my $url                     = $self->url( -absolute => 1 );
+    my $request_method          = $self->request_method();
+    my $content_type            = $self->content_type();
+    my $idp_initiated           = $self->param('IDPInitiated');
+    my $idp_initiated_sp        = $self->param('sp');
+    my $idp_initiated_spConfKey = $self->param('spConfKey');
 
     # 1.1. SSO (SSO URL or Proxy Mode)
     if ( $url =~
@@ -1136,6 +1168,14 @@ sub issuerForAuthUser {
     {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
+
+        # Get hidden params for IDP initiated if needed
+        $idp_initiated = $self->getHiddenFormValue('IDPInitiated')
+          unless defined $idp_initiated;
+        $idp_initiated_sp = $self->getHiddenFormValue('sp')
+          unless defined $idp_initiated_sp;
+        $idp_initiated_spConfKey = $self->getHiddenFormValue('spConfKey')
+          unless defined $idp_initiated_spConfKey;
 
         # Check message
         my ( $request, $response, $method, $relaystate, $artifact );
@@ -1184,9 +1224,22 @@ sub issuerForAuthUser {
 
             # Create fake request if IDP initiated mode
             if ($idp_initiated) {
+
+                unless ($idp_initiated_sp) {
+
+                    # Get SP from spConfKey
+                    foreach ( keys %{ $self->{_spList} } ) {
+                        if ( $self->{_spList}->{$_}->{confKey} eq
+                            $idp_initiated_spConfKey )
+                        {
+                            $idp_initiated_sp = $_;
+                            last;
+                        }
+                    }
+                }
                 $result =
                   $self->initIdpInitiatedAuthnRequest( $login,
-                    $self->param("sp") );
+                    $idp_initiated_sp );
                 unless ($result) {
                     $self->lmLog(
 "SSO: Fail to init IDP Initiated authentication request",
@@ -1211,8 +1264,7 @@ sub issuerForAuthUser {
             }
 
             # Get SP entityID
-            my $sp =
-              $request ? $login->remote_providerID() : $self->param("sp");
+            my $sp = $request ? $login->remote_providerID() : $idp_initiated_sp;
 
             $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
 
@@ -1287,7 +1339,11 @@ sub issuerForAuthUser {
             my $forceAuthn_session;
             my $forceAuthnSessionInfo;
 
-            if ( my @forceAuthn_sessions_keys = keys %$forceAuthn_sessions ) {
+            if (
+                my @forceAuthn_sessions_keys =
+                keys %$forceAuthn_sessions
+              )
+            {
 
                 # Warning if more than one session found
                 if ( $#forceAuthn_sessions_keys > 0 ) {
@@ -1462,7 +1518,8 @@ sub issuerForAuthUser {
             else {
                 my $nameIdentifier = Lasso::Saml2NameID->new();
                 $nameIdentifier->Format($nameIDFormat);
-                $nameIdentifier->content($nameIDContent) if $nameIDContent;
+                $nameIdentifier->content($nameIDContent)
+                  if $nameIDContent;
                 $login->nameIdentifier($nameIdentifier);
             }
 
