@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use Lemonldap::NG::Common::Regexp;
 
-our $VERSION = '1.3.2';
+our $VERSION = '1.4.0';
 
 ## @method protected hashref cstruct(hashref h,string k)
 # Merge $h with the structure produced with $k and return it.
@@ -296,7 +296,7 @@ sub struct {
 
                 portalCustomization => {
                     _nodes => [
-                        qw(portalSkin cn:portalSkinRules portalAutocomplete portalCheckLogins portalUserAttr portalOpenLinkInNewWindow portalAntiFrame passwordManagement)
+                        qw(portalSkin cn:portalSkinRules portalAutocomplete portalCheckLogins portalUserAttr portalOpenLinkInNewWindow portalAntiFrame portalPingInterval passwordManagement)
                     ],
                     _help => 'portalcustom',
 
@@ -311,7 +311,8 @@ sub struct {
                     portalUserAttr     => 'text:/portalUserAttr',
                     portalOpenLinkInNewWindow =>
                       'bool:/portalOpenLinkInNewWindow',
-                    portalAntiFrame => 'bool:/portalAntiFrame',
+                    portalAntiFrame    => 'bool:/portalAntiFrame',
+                    portalPingInterval => 'int:/portalPingInterval',
 
                     passwordManagement => {
                         _nodes => [
@@ -1623,6 +1624,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         portalOpenLinkInNewWindow   => $boolean,
         portalAntiFrame             => $boolean,
         portalParams                => $testNotDefined,
+        portalPingInterval          => $integer,
         portalRequireOldPassword    => $boolean,
         hideOldPassword             => $boolean,
         portalSkin                  => {
@@ -2059,6 +2061,7 @@ sub defaultConf {
         portalDisplayLogout         => '1',
         portalDisplayResetPassword  => '1',
         portalAntiFrame             => '1',
+        portalPingInterval          => '60000',
         protection                  => 'none',
         radiusAuthnLevel            => '3',
         remoteGlobalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',

@@ -9,7 +9,7 @@ package Lemonldap::NG::Manager::_i18n;
 
 use strict;
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '1.3.0';
+our $VERSION = '1.4.0';
 
 ## @method string translate(string text,string lang)
 # Returns $text translated in $lang.
@@ -291,6 +291,7 @@ sub en {
         portalModules               => 'Modules activation',
         portalOpenLinkInNewWindow   => 'New window',
         portalParams                => 'Portal',
+        portalPingInterval          => 'Ping Interval',
         portalRedirection           => 'Portal redirections',
         portalRequireOldPassword    => 'Require old password',
         portalSkin                  => 'Default Skin',
@@ -772,6 +773,7 @@ sub fr {
         portalModules               => 'Modules',
         portalOpenLinkInNewWindow   => 'Nouvelle fenêtre',
         portalParams                => 'Portail',
+        portalPingInterval          => 'Interval du ping',
         portalRedirection           => 'Redirections du portail',
         portalRequireOldPassword    => 'Ancien mot de passe requis',
         portalSkin                  => 'Thème visuel par défaut',
