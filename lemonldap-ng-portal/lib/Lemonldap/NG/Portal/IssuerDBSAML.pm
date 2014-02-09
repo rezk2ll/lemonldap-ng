@@ -1225,6 +1225,15 @@ sub issuerForAuthUser {
             # Create fake request if IDP initiated mode
             if ($idp_initiated) {
 
+                # Need sp or spConfKey parameter
+                unless ( $idp_initiated_sp or $idp_initiated_spConfKey ) {
+                    $self->lmLog(
+"sp or spConfKey parameter needed to make IDP initiated SSO",
+                        'error'
+                    );
+                    return PE_SAML_SSO_ERROR;
+                }
+
                 unless ($idp_initiated_sp) {
 
                     # Get SP from spConfKey
@@ -1237,6 +1246,28 @@ sub issuerForAuthUser {
                         }
                     }
                 }
+                else {
+                    unless ( defined $self->{_spList}->{$idp_initiated_sp} ) {
+                        $self->lmLog( "SP $idp_initiated_sp not known",
+                            'error' );
+                        return PE_SAML_UNKNOWN_ENTITY;
+                    }
+                    $idp_initiated_spConfKey =
+                      $self->{_spList}->{$idp_initiated_sp}->{confKey};
+                }
+
+                # Check if IDP Initiated SSO is allowed
+                unless (
+                    $self->{samlSPMetaDataOptions}->{$idp_initiated_spConfKey}
+                    ->{samlSPMetaDataOptionsEnableIDPInitiatedURL} )
+                {
+                    $self->lmLog(
+"IDP Initiated SSO not allowed for SP $idp_initiated_spConfKey",
+                        'error'
+                    );
+                    return PE_SAML_SSO_ERROR;
+                }
+
                 $result =
                   $self->initIdpInitiatedAuthnRequest( $login,
                     $idp_initiated_sp );

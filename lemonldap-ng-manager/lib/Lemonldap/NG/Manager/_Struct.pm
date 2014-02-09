@@ -227,10 +227,14 @@ sub cstruct {
                         },
                         samlSPMetaDataOptionsSecurity => {
 
-                            _nodes => [qw(samlSPMetaDataOptionsEncryptionMode)],
+                            _nodes => [
+                                qw(samlSPMetaDataOptionsEncryptionMode samlSPMetaDataOptionsEnableIDPInitiatedURL)
+                            ],
 
                             samlSPMetaDataOptionsEncryptionMode =>
 "text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsEncryptionMode:samlSPOptions:encryptionModeParams",
+                            samlSPMetaDataOptionsEnableIDPInitiatedURL =>
+"bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsEnableIDPInitiatedURL",
                         },
                     },
                 }
@@ -2124,6 +2128,7 @@ sub defaultConf {
         samlSPMetaDataOptionsSignSLOMessage            => '1',
         samlSPMetaDataOptionsCheckSLOMessageSignature  => '1',
         samlSPMetaDataOptionsEncryptionMode            => 'none',
+        samlSPMetaDataOptionsEnableIDPInitiatedURL     => '0',
         samlSPSSODescriptorAuthnRequestsSigned         => '1',
         samlSPSSODescriptorWantAssertionsSigned        => '1',
         samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
