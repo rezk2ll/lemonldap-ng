@@ -196,6 +196,8 @@ For each attribute, you can set:
 <ul>
 <li class="level1"><div class="li"> <strong>Default NameID format</strong>: if no NameID format is requested, or the NameID format undefined, this NameID format will be used. If no value, the default NameID format is Email.</div>
 </li>
+<li class="level1"><div class="li"> <strong>Force NameID session key</strong>: if empty, the NameID mapping defined in <a href="../../documentation/1.4/samlservice.html" class="wikilink1" title="documentation:1.4:samlservice">SAML service</a> configuration will be used. You can force here another session key that will be used as NameID content.</div>
+</li>
 <li class="level1"><div class="li"> <strong>One Time Use</strong>: set the OneTimeUse flag in authentication response.</div>
 </li>
 </ul>
@@ -244,7 +246,7 @@ The IDP Initiated <acronym title="Uniform Resource Locator">URL</acronym> is the
 <ul>
 <li class="level2"><div class="li"> sp: SP entity ID</div>
 </li>
-<li class="level2"><div class="li"> spConfiKey: SP configuration key</div>
+<li class="level2"><div class="li"> spConfKey: SP configuration key</div>
 </li>
 </ul>
 </li>
