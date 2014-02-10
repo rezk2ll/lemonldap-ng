@@ -520,6 +520,7 @@ sub en {
         samlCommonDomainCookieReader     => 'Reader URL',
         samlCommonDomainCookieWriter     => 'Writer URL',
         samlRelayStateTimeout            => 'RelayState session timeout',
+        samlUseQueryStringSpecific       => 'Use specific query_string method',
     };
 }
 
@@ -1016,6 +1017,8 @@ sub fr {
         samlCommonDomainCookieReader     => 'URL de lecture',
         samlCommonDomainCookieWriter     => 'URL d\'écriture',
         samlRelayStateTimeout => 'Durée de vie d\'une session RelayState',
+        samlUseQueryStringSpecific =>
+          "Utilisation d'une fonction spécifique pour query_string",
     };
 }
 

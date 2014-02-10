@@ -624,6 +624,8 @@ This is not the case of <a href="../../documentation/1.4/memcachedsessionbackend
 <ul>
 <li class="level1"><div class="li"> <strong>RelayState session timeout</strong>: timeout for RelayState sessions. By default, the RelayState session is deleted when it is read. This timeout allows to purge sessions of lost RelayState.</div>
 </li>
+<li class="level1"><div class="li"> <strong>Use specific query_string method</strong>: the <acronym title="Common Gateway Interface">CGI</acronym> query_string method may break invalid <acronym title="Uniform Resource Locator">URL</acronym> encoded signatures (issued for example by ADFS). This option allows to use a specific method to extract query string, that should be compliant with non standard <acronym title="Uniform Resource Locator">URL</acronym> encoded parameters.</div>
+</li>
 </ul>
 
 </div>

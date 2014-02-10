@@ -1321,7 +1321,7 @@ sub struct {
             # ADVANCED SAML PARAMETERS
             samlAdvanced => {
                 _nodes => [
-                    qw(samlIdPResolveCookie samlMetadataForceUTF8 samlStorage cn:samlStorageOptions samlRelayStateTimeout n:samlCommonDomainCookie)
+                    qw(samlIdPResolveCookie samlMetadataForceUTF8 samlStorage cn:samlStorageOptions samlRelayStateTimeout samlUseQueryStringSpecific n:samlCommonDomainCookie)
                 ],
                 _help => 'samlServiceAdvanced',
 
@@ -1334,7 +1334,9 @@ sub struct {
                     _js   => 'hashRoot',
                     _help => 'samlServiceAdvanced',
                 },
-                samlRelayStateTimeout  => 'int:/samlRelayStateTimeout',
+                samlRelayStateTimeout => 'int:/samlRelayStateTimeout',
+                samlUseQueryStringSpecific =>
+                  'bool:/samlUseQueryStringSpecific',
                 samlCommonDomainCookie => {
                     _nodes => [
                         qw(samlCommonDomainCookieActivation samlCommonDomainCookieDomain samlCommonDomainCookieReader samlCommonDomainCookieWriter)
@@ -1840,7 +1842,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test    => Lemonldap::NG::Common::Regexp::HTTP_URI(),
             msgFail => 'Bad URI',
         },
-        samlRelayStateTimeout => $integer,
+        samlRelayStateTimeout      => $integer,
+        samlUseQueryStringSpecific => $boolean,
 
         # SSL
         SSLAuthnLevel => $integer,
@@ -2219,6 +2222,7 @@ sub defaultConf {
         samlAuthnContextMapKerberos                   => 4,
         samlCommonDomainCookieActivation              => 0,
         samlRelayStateTimeout                         => 600,
+        samlUseQueryStringSpecific                    => 0,
 
         # Authentication levels
         ldapAuthnLevel      => 2,
