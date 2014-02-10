@@ -228,7 +228,33 @@ These options override service signature options (see <a href="../../documentati
 <ul>
 <li class="level1"><div class="li"> <strong>Encryption mode</strong>: set the encryption mode for this IDP (None, NameID or Assertion).</div>
 </li>
+<li class="level1"><div class="li"> <strong>Enable use of IDP initiated <acronym title="Uniform Resource Locator">URL</acronym></strong>: set to <code>On</code> to enable IDP Initiated <acronym title="Uniform Resource Locator">URL</acronym> on this SP.</div>
+</li>
 </ul>
+
+<p>
+
+<p><div class="notetip">
+The IDP Initiated <acronym title="Uniform Resource Locator">URL</acronym> is the <acronym title="Single Sign On">SSO</acronym> <acronym title="Security Assertion Markup Language">SAML</acronym> <acronym title="Uniform Resource Locator">URL</acronym> with GET parameters:
+</p>
+<ul>
+<li class="level1"><div class="li"> IDPInitiated: 1</div>
+</li>
+<li class="level1"><div class="li"> One of:</div>
+<ul>
+<li class="level2"><div class="li"> sp: SP entity ID</div>
+</li>
+<li class="level2"><div class="li"> spConfiKey: SP configuration key</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+For example: <a href="http://auth.example.com/saml/singleSignOn?IDPInitiated=1&amp;spConfKey=simplesamlphp" class="urlextern" title="http://auth.example.com/saml/singleSignOn?IDPInitiated=1&amp;spConfKey=simplesamlphp"  rel="nofollow">http://auth.example.com/saml/singleSignOn?IDPInitiated=1&amp;spConfKey=simplesamlphp</a>
+
+</div></p>
+</p>
 
 </div>
 <!-- SECTION "Register partner Service Provider on LemonLDAP::NG" [1153-] --></div><!-- closes <div class="dokuwiki export">-->
