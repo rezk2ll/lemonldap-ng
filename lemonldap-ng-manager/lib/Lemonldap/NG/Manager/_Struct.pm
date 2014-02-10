@@ -201,12 +201,14 @@ sub cstruct {
 
                         samlSPMetaDataOptionsAuthnResponse => {
                             _nodes => [
-                                qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsOneTimeUse)
+                                qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsNameIDSessionKey samlSPMetaDataOptionsOneTimeUse)
                             ],
 
                             samlSPMetaDataOptionsNameIDFormat =>
 "text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsNameIDFormat"
                               . ":samlSPOptions:nameIdFormatParams",
+                            samlSPMetaDataOptionsNameIDSessionKey =>
+"text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsNameIDSessionKey",
                             samlSPMetaDataOptionsOneTimeUse =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsOneTimeUse",
                         },

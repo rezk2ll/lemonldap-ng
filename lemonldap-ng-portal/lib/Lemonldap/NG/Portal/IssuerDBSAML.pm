@@ -1521,6 +1521,15 @@ sub issuerForAuthUser {
             my $nameIDSessionKey =
               $self->{ $nameIDFormatConfiguration->{$nameIDFormat} };
 
+            # Override default NameID Mapping
+            if ( $self->{samlSPMetaDataOptions}->{$spConfKey}
+                ->{samlSPMetaDataOptionsNameIDSessionKey} )
+            {
+                $nameIDSessionKey =
+                  $self->{samlSPMetaDataOptions}->{$spConfKey}
+                  ->{samlSPMetaDataOptionsNameIDSessionKey};
+            }
+
             my $nameIDContent;
             if ( defined $self->{sessionInfo}->{$nameIDSessionKey} ) {
                 $nameIDContent =

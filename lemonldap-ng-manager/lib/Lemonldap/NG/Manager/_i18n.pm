@@ -454,13 +454,14 @@ sub en {
         samlSPMetaDataOptionsSecurity       => 'Security',
         samlSPMetaDataOptionsEnableIDPInitiatedURL =>
           'Enable use of IDP initiated URL',
-        samlServiceMetaData         => 'SAML 2 Service',
-        samlEntityID                => 'Entity Identifier',
-        samlOrganization            => 'Organization',
-        samlOrganizationDisplayName => 'Display Name',
-        samlOrganizationName        => 'Name',
-        samlOrganizationURL         => 'URL',
-        samlSPSSODescriptor         => 'Service Provider',
+        samlSPMetaDataOptionsNameIDSessionKey => 'Force NameID session key',
+        samlServiceMetaData                   => 'SAML 2 Service',
+        samlEntityID                          => 'Entity Identifier',
+        samlOrganization                      => 'Organization',
+        samlOrganizationDisplayName           => 'Display Name',
+        samlOrganizationName                  => 'Name',
+        samlOrganizationURL                   => 'URL',
+        samlSPSSODescriptor                   => 'Service Provider',
         samlSPSSODescriptorAuthnRequestsSigned =>
           'Signed Authentication Request',
         samlSPSSODescriptorWantAssertionsSigned => 'Want Assertions Signed',
@@ -941,6 +942,8 @@ sub fr {
         samlSPMetaDataOptionsSecurity       => 'Sécurité',
         samlSPMetaDataOptionsEnableIDPInitiatedURL =>
           'Enable use of IDP initiated URL',
+        samlSPMetaDataOptionsNameIDSessionKey =>
+          "Forcer la clé de session NameID",
         samlServiceMetaData         => 'Service SAML 2',
         samlEntityID                => 'Identifiant d\'entité',
         samlOrganization            => 'Organisation',
