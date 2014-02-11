@@ -14,6 +14,7 @@ var helpCh = {
 	'authDBISchema': '/pages/documentation/current/authdbi.html#schema',
 	'authCAS': '/pages/documentation/current/authcas.html',
 	'authChoice': '/pages/documentation/current/authchoice.html',
+	'authDemo': '/pages/documentation/current/authdemo.html',
 	'authFacebook': '/pages/documentation/current/authfacebook.html',
 	'authGoogle': '/pages/documentation/current/authgoogle.html',
 	'authLDAP': '/pages/documentation/current/authldap.html',

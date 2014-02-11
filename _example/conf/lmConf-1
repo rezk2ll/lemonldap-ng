@@ -10,8 +10,11 @@ persistentStorage
 cookieName
 	'lemonldap'
 
-exportedVars
+demoExportedVars
 	'$data1 = {&#39;uid&#39; => &#39;uid&#39;,&#39;cn&#39; => &#39;cn&#39;,&#39;mail&#39; => &#39;mail&#39;};'
+
+exportedVars
+	'$data1 = {&#39;UA&#39; => &#39;HTTP_USER_AGENT&#39;};'
 
 authentication
 	'Demo'

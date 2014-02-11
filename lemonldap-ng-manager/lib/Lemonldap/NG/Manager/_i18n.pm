@@ -105,6 +105,8 @@ sub en {
         dbiUserUser              => 'User',
         deleteNotification       => 'Mark notification as done',
         deleteSession            => 'Delete session',
+        demoExportedVars         => 'Exported variables',
+        demoParams               => 'Demonstration parameters',
         done                     => 'done',
         captcha_data             => 'Directory for data',
         captcha_login_enabled    => 'Activation in login form',
@@ -584,6 +586,8 @@ sub fr {
         dbiUserUser              => 'Utilisateur',
         deleteNotification       => 'Marquer la notification comme validée',
         deleteSession            => 'Effacer la session',
+        demoExportedVars         => 'Variables exportées',
+        demoParams               => 'Paramètres démonstration',
         done                     => 'validée',
         captcha_data             => 'Répertoire des données',
         captcha_login_enabled =>

@@ -391,13 +391,14 @@ sub struct {
                             null     => ['nullParams'],
                             slave    => ['slaveParams'],
                             choice   => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams webIDParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams webIDParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams demoParams)
                             ],
                             multi => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams webIDParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams webIDParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams demoParams)
                             ],
                             yubikey   => ['yubikeyParams'],
                             browserid => ['browserIdParams'],
+                            demo      => ['demoParams'],
                         }->{$mod};
                         if ($tmp) {
                             $res{$_}++ foreach (@$tmp);
@@ -709,6 +710,16 @@ sub struct {
                     browserIdSiteLogo => 'text:/browserIdSiteLogo',
                     browserIdBackgroundColor =>
                       'text:/browserIdBackgroundColor',
+                },
+
+                demoParams => {
+                    _nodes           => [qw(cn:demoExportedVars)],
+                    _help            => 'authDemo',
+                    demoExportedVars => {
+                        _nodes => ['hash:/demoExportedVars:vars:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'authDemo',
+                    },
                 },
 
             },
@@ -1450,8 +1461,14 @@ sub testStruct {
             test    => qr/^[a-zA-Z]\w*$/,
             msgFail => 'Bad cookie name',
         },
-        customFunctions => $testNotDefined,
-        domain          => {
+        customFunctions  => $testNotDefined,
+        demoExportedVars => {
+            keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
+            keyMsgFail => 'Bad variable name',
+            test       => qr/^[a-zA-Z][\w:\-]*$/,
+            msgFail    => 'Bad attribute name',
+        },
+        domain => {
             test    => qr/^\.?[\w\-]+(?:\.[a-zA-Z][\w\-]*)*(?:\.[a-zA-Z]+)$/,
             msgFail => 'Bad domain',
         },
@@ -2245,8 +2262,9 @@ sub defaultConf {
 
 sub subDefaultConf {
     return {
-        exportedHeaders => { 'Auth-User' => '$uid' },
-        exportedVars => { cn => 'cn', mail => 'mail', uid => 'uid', },
+        demoExportedVars => { cn => 'cn', mail => 'mail', uid => 'uid', },
+        exportedHeaders      => { 'Auth-User' => '$uid' },
+        exportedVars         => { 'UA'        => 'HTTP_USER_AGENT' },
         globalStorageOptions => {
             'Directory'     => '/var/lib/lemonldap-ng/sessions/',
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'

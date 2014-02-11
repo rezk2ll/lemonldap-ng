@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Conf::Serializer;
 
 use Data::Dumper;
 
-our $VERSION = '1.2.3';
+our $VERSION = '1.4.0';
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::normalize   = \&normalize;
@@ -106,6 +106,7 @@ sub unserialize {
 	|authChoiceModules
 	|CAS_proxiedServices
 	|casStorageOptions
+	|demoExportedVars
 	|exportedHeaders
 	|exportedVars
 	|globalStorageOptions
