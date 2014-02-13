@@ -9,7 +9,8 @@ package Lemonldap::NG::Common::Conf;
 
 use strict;
 no strict 'refs';
-use Lemonldap::NG::Common::Conf::Constants;    #inherits
+use Lemonldap::NG::Common::Conf::Constants;     #inherits
+use Lemonldap::NG::Common::Conf::Attributes;    #inherits
 use Lemonldap::NG::Common::Crypto
   ;    #link protected cipher Object "cypher" in configuration hash
 use Config::IniFiles;
@@ -19,7 +20,7 @@ use Config::IniFiles;
 #inherits Lemonldap::NG::Common::Conf::SOAP
 #inherits Lemonldap::NG::Common::Conf::LDAP
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.4.0';
 our $msg;
 our $iniObj;
 
@@ -138,6 +139,8 @@ sub saveConf {
 # @return Lemonldap::NG configuration
 sub getConf {
     my ( $self, $args ) = @_;
+
+    # Use only cache to get conf
     if (    $args->{local}
         and ref( $self->{refLocalStorage} )
         and my $res = $self->{refLocalStorage}->get('conf') )
@@ -145,11 +148,13 @@ sub getConf {
         $msg .= "Get configuration from cache without verification.\n";
         return $res;
     }
+
+    # Check cfgNum in conf backend
+    # Get conf in backend only if a newer configuration is available
     else {
         $args->{cfgNum} ||= $self->lastCfg;
         unless ( $args->{cfgNum} ) {
-            $msg .= "No configuration available.\n";
-            return 0;
+            $msg .= "No configuration available in backend.\n";
         }
         my $r;
         unless ( ref( $self->{refLocalStorage} ) ) {
@@ -167,13 +172,19 @@ sub getConf {
                 $r = $self->getDBConf($args);
             }
         }
-        print STDERR "Warning: key is not defined, set it in the manager !\n"
-          unless ( $r->{key} );
-        eval {
-            $r->{cipher} =
-              Lemonldap::NG::Common::Crypto->new( $r->{key}
-                  || 'lemonldap-ng-key' );
-        };
+
+        # Get default values
+        my $confAttributes = Lemonldap::NG::Common::Conf::Attributes->new();
+
+        my @attributes = $confAttributes->meta()->get_attribute_list();
+
+        foreach my $name (@attributes) {
+            unless ( defined $r->{$name} ) {
+                $r->{$name} = $confAttributes->$name;
+            }
+        }
+
+        eval { $r->{cipher} = Lemonldap::NG::Common::Crypto->new( $r->{key} ); };
         if ($@) {
             $msg .= "Bad key: $@. \n";
             return $r;
