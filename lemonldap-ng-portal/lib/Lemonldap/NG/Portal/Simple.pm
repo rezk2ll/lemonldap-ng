@@ -520,135 +520,21 @@ sub getConf {
 # Set default values.
 sub setDefaultValues {
     my $self = shift;
-    $self->{portal} ||=
-      "http" . ( $ENV{HTTPS} ? 's' : '' ) . '://' . $self->server_name();
-    $self->{whatToTrace} ||= 'uid';
-    $self->{whatToTrace} =~ s/^\$//;
-    $self->{httpOnly} = 1 unless ( defined( $self->{httpOnly} ) );
-    $self->{portalSkin} ||= 'bootstrap';
-    $self->{portalDisplayLogout} = 1
-      unless ( defined( $self->{portalDisplayLogout} ) );
-    $self->{portalDisplayResetPassword} = 1
-      unless ( defined( $self->{portalDisplayResetPassword} ) );
-    $self->{portalDisplayChangePassword} = 1
-      unless ( defined( $self->{portalDisplayChangePassword} ) );
-    $self->{portalDisplayAppslist} = 1
-      unless ( defined( $self->{portalDisplayAppslist} ) );
-    $self->{portalDisplayLoginHistory} = 1
-      unless ( defined( $self->{portalDisplayLoginHistory} ) );
-    $self->{jsRedirect} = 0
-      unless ( defined( $self->{jsRedirect} ) );
-    $self->{portalAutocomplete} ||= 0;
-    $self->{portalRequireOldPassword} = 1
-      unless ( defined( $self->{portalRequireOldPassword} ) );
-    $self->{portalOpenLinkInNewWindow} = 0
-      unless ( defined( $self->{portalOpenLinkInNewWindow} ) );
-    $self->{portalForceAuthn} = 0
-      unless ( defined( $self->{portalForceAuthn} ) );
-    $self->{portalForceAuthnInterval} = 5
-      unless ( defined( $self->{portalForceAuthnInterval} ) );
-    $self->{portalUserAttr} ||= "_user";
-    $self->{portalHiddenFormValues} = ();
-    $self->{securedCookie}  ||= 0;
-    $self->{cookieName}     ||= "lemonldap";
-    $self->{authentication} ||= 'LDAP';
-    $self->{authentication} =~ s/^ldap/LDAP/;
-    $self->{SMTPServer}           ||= 'localhost';
-    $self->{randomPasswordRegexp} ||= '[A-Z]{3}[a-z]{5}.\d{2}';
-    $self->{mailFrom}             ||= "noreply@" . $self->{domain};
-    $self->{mailSubject}          ||= "[LemonLDAP::NG] Your new password";
-    $self->{mailConfirmSubject} ||=
-      "[LemonLDAP::NG] Password reset confirmation";
-    $self->{mailSessionKey}       ||= 'mail';
-    $self->{mailUrl}              ||= $self->{portal} . "/mail.pl";
-    $self->{multiValuesSeparator} ||= '; ';
-    $self->{activeTimer} = 1 unless ( defined( $self->{activeTimer} ) );
-    $self->{infoFormMethod}     ||= "get";
-    $self->{confirmFormMethod}  ||= "post";
-    $self->{redirectFormMethod} ||= "get";
-    $self->{authChoiceParam}    ||= "lmAuth";
-    $self->{hiddenAttributes} = "_password"
-      unless defined $self->{hiddenAttributes};
-    $self->{portalPingInterval} = 60000
-      unless defined $self->{portalPingInterval};
 
-    # Set default userDB and passwordDB to DBI if authentication is DBI
-    if ( $self->{authentication} =~ /DBI/i ) {
-        $self->{userDB}     ||= "DBI";
-        $self->{passwordDB} ||= "DBI";
-    }
-
-    # Set default userDB and passwordDB to Null if authentication is Null
-    if ( $self->{authentication} =~ /Null/i ) {
-        $self->{userDB}     ||= "Null";
-        $self->{passwordDB} ||= "Null";
-    }
-
-    # Set userDB and passwordDB to Choice if authentication is Choice
-    if ( $self->{authentication} =~ /Choice/i ) {
-        $self->{userDB}     = "Choice";
-        $self->{passwordDB} = "Choice";
-    }
-
-    # Else default to LDAP
-    else {
-
-        # Default to LDAP
-        $self->{userDB}     ||= "LDAP";
-        $self->{passwordDB} ||= "LDAP";
-    }
-
-    # LDAP
-    $self->{ldapGroupObjectClass}         ||= "groupOfNames";
-    $self->{ldapGroupAttributeName}       ||= "member";
-    $self->{ldapGroupAttributeNameUser}   ||= "dn";
-    $self->{ldapGroupAttributeNameGroup}  ||= "dn";
-    $self->{ldapGroupAttributeNameSearch} ||= ["cn"];
-    $self->{ldapGroupRecursive}           ||= 0;
 
     # SAML
-    $self->{samlIdPResolveCookie} ||= $self->{cookieName} . "idp";
     $self->{samlStorage} ||= $self->{globalStorage};
     if ( !$self->{samlStorageOptions} or !%{ $self->{samlStorageOptions} } ) {
         $self->{samlStorageOptions} = $self->{globalStorageOptions};
     }
-    $self->{samlMetadataForceUTF8} = 1
-      unless ( defined( $self->{samlMetadataForceUTF8} ) );
-    $self->{samlAuthnContextMapPassword} = 2
-      unless defined $self->{samlAuthnContextMapPassword};
-    $self->{samlAuthnContextMapPasswordProtectedTransport} = 3
-      unless defined $self->{samlAuthnContextMapPasswordProtectedTransport};
-    $self->{samlAuthnContextMapTLSClient} = 5
-      unless defined $self->{samlAuthnContextMapTLSClient};
-    $self->{samlAuthnContextMapKerberos} = 4
-      unless defined $self->{samlAuthnContextMapKerberos};
-    $self->{samlRelayStateTimeout} = 600
-      unless defined $self->{samlRelayStateTimeout};
 
     # CAS
     $self->{casStorage} ||= $self->{globalStorage};
     if ( !$self->{casStorageOptions} or !%{ $self->{casStorageOptions} } ) {
         $self->{casStorageOptions} = $self->{globalStorageOptions};
     }
-    $self->{casAccessControlPolicy} ||= "none";
-
-    # Authentication levels
-    $self->{ldapAuthnLevel}   = 2 unless defined $self->{ldapAuthnLevel};
-    $self->{dbiAuthnLevel}    = 2 unless defined $self->{dbiAuthnLevel};
-    $self->{SSLAuthnLevel}    = 5 unless defined $self->{SSLAuthnLevel};
-    $self->{apacheAuthnLevel} = 4 unless defined $self->{apacheAuthnLevel};
-    $self->{nullAuthnLevel}   = 0 unless defined $self->{nullAuthnLevel};
-    $self->{radiusAuthnLevel} = 3 unless defined $self->{radiusAuthnLevel};
-    foreach my $k (
-        qw(CAS_authnLevel openIdAuthnLevel twitterAuthnLevel googleAuthnLevel
-        facebookAuthnLevel)
-      )
-    {
-        $self->{$k} = 1 unless defined $self->{$k};
-    }
 
     # Other
-    $self->{logoutServices} ||= {};
     $self->{useSafeJail} = 1 unless defined $self->{useSafeJail};
     $self->{ldapUsePasswordResetAttribute} = 1
       unless ( defined( $self->{ldapUsePasswordResetAttribute} ) );

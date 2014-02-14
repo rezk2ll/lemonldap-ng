@@ -184,11 +184,14 @@ sub getConf {
             }
         }
 
+        # Create cipher object
         eval { $r->{cipher} = Lemonldap::NG::Common::Crypto->new( $r->{key} ); };
         if ($@) {
             $msg .= "Bad key: $@. \n";
             return $r;
         }
+
+        # Adapt some values
 
         # Convert old option useXForwardedForIP into trustedProxies
         if ( defined $r->{useXForwardedForIP}
@@ -196,6 +199,21 @@ sub getConf {
         {
             $r->{trustedProxies} = '*';
         }
+
+        # Force Choice backend
+        if ( $r->{authentication} eq "Choice" ) {
+            $r->{userDB}     = "Choice";
+            $r->{passwordDB} = "Choice";
+        }
+
+        # Some parameters expect key name (example), not variable ($example)
+        foreach (qw/whatToTrace/) {
+            if ( defined $r->{$_} ) {
+                $r->{$_} =~ s/^\$//;
+            }
+        }
+
+        # Return configuration hash
         return $r;
     }
 }

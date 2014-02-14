@@ -20,8 +20,11 @@ $ENV{REQUEST_METHOD} = "GET";
 ok(
     $p = Lemonldap::NG::Portal::Simple->new(
         {
-            globalStorage => 'Apache::Session::File',
-            domain        => 'example.com',
+            globalStorage  => 'Apache::Session::File',
+            domain         => 'example.com',
+            authentication => 'Null',
+            userDB         => 'Null',
+            passwordDB     => 'Null',
         }
     ),
     'Portal object with Safe jail'

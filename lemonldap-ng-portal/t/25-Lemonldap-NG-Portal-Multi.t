@@ -76,16 +76,22 @@ my ( $test, $testU );
     ok(
         $p = My::Portal->new(
             {
-                globalStorage  => 'Apache::Session::File',
-                domain         => 'example.com',
-                authentication => 'Multi 1;2',
-                userDB         => 'Multi 1;2',
-                getUser        => sub { PE_OK },
-                setSessionInfo => sub { PE_OK },
-                portal         => 'http://abc',
-                sessionInfo    => { uid => 't', },
-                userNotice     => sub { },
-                user           => 'jdoe',
+                globalStorage        => 'Apache::Session::File',
+                domain               => 'example.com',
+                authentication       => 'Multi 1;2',
+                userDB               => 'Multi 1;2',
+                passwordDB           => 'Null',
+                cookieName           => 'lemonldap',
+                whatToTrace          => 'dummy',
+                multiValuesSeparator => '; ',
+                securedCookie        => 0,
+                hiddenAttributes     => '',
+                getUser              => sub { PE_OK },
+                setSessionInfo       => sub { PE_OK },
+                portal               => 'http://abc',
+                sessionInfo          => { uid => 't', },
+                userNotice           => sub { },
+                user                 => 'jdoe',
             }
         ),
         'Portal object'
@@ -104,14 +110,20 @@ my ( $test, $testU );
     ok(
         $p = My::Portal->new(
             {
-                globalStorage  => 'Apache::Session::File',
-                domain         => 'example.com',
-                authentication => 'Multi 1;2',
-                userDB         => 'Multi 1;2',
-                portal         => 'http://abc',
-                sessionInfo    => { uid => 't', },
-                userNotice     => sub { },
-                user           => 'jdoe',
+                globalStorage        => 'Apache::Session::File',
+                domain               => 'example.com',
+                authentication       => 'Multi 1;2',
+                userDB               => 'Multi 1;2',
+                passwordDB           => 'Null',
+                cookieName           => 'lemonldap',
+                whatToTrace          => 'dummy',
+                multiValuesSeparator => '; ',
+                securedCookie        => 0,
+                hiddenAttributes     => '',
+                portal               => 'http://abc',
+                sessionInfo          => { uid => 't', },
+                userNotice           => sub { },
+                user                 => 'jdoe',
             }
         ),
         'Portal object'
@@ -126,14 +138,20 @@ my ( $test, $testU );
     ok(
         $p = My::Portal->new(
             {
-                globalStorage  => 'Apache::Session::File',
-                domain         => 'example.com',
-                authentication => 'Multi 1;2',
-                userDB         => 'Multi 3;4',
-                portal         => 'http://abc',
-                sessionInfo    => { uid => 't', },
-                userNotice     => sub { },
-                user           => 'jdoe',
+                globalStorage        => 'Apache::Session::File',
+                domain               => 'example.com',
+                authentication       => 'Multi 1;2',
+                userDB               => 'Multi 3;4',
+                passwordDB           => 'Null',
+                cookieName           => 'lemonldap',
+                whatToTrace          => 'dummy',
+                multiValuesSeparator => '; ',
+                securedCookie        => 0,
+                hiddenAttributes     => '',
+                portal               => 'http://abc',
+                sessionInfo          => { uid => 't', },
+                userNotice           => sub { },
+                user                 => 'jdoe',
             }
         ),
         'Portal object'
@@ -148,14 +166,20 @@ my ( $test, $testU );
     ok(
         $p = My::Portal->new(
             {
-                globalStorage  => 'Apache::Session::File',
-                domain         => 'example.com',
-                authentication => 'Multi 1 1==0;2 1==0',
-                userDB         => 'Multi 3;4',
-                portal         => 'http://abc',
-                sessionInfo    => { uid => 't', },
-                userNotice     => sub { },
-                user           => 'jdoe',
+                globalStorage        => 'Apache::Session::File',
+                domain               => 'example.com',
+                authentication       => 'Multi 1 1==0;2 1==0',
+                userDB               => 'Multi 3;4',
+                passwordDB           => 'Null',
+                cookieName           => 'lemonldap',
+                whatToTrace          => 'dummy',
+                multiValuesSeparator => '; ',
+                securedCookie        => 0,
+                hiddenAttributes     => '',
+                portal               => 'http://abc',
+                sessionInfo          => { uid => 't', },
+                userNotice           => sub { },
+                user                 => 'jdoe',
             }
         ),
         'Portal object'
@@ -167,14 +191,20 @@ my ( $test, $testU );
     ok(
         $p = My::Portal->new(
             {
-                globalStorage  => 'Apache::Session::File',
-                domain         => 'example.com',
-                authentication => 'Multi 1;2 1==0',
-                userDB         => 'Multi 3;4',
-                portal         => 'http://abc',
-                sessionInfo    => { uid => 't', },
-                userNotice     => sub { },
-                user           => 'jdoe',
+                globalStorage        => 'Apache::Session::File',
+                domain               => 'example.com',
+                authentication       => 'Multi 1;2 1==0',
+                userDB               => 'Multi 3;4',
+                passwordDB           => 'Null',
+                cookieName           => 'lemonldap',
+                whatToTrace          => 'dummy',
+                multiValuesSeparator => '; ',
+                securedCookie        => 0,
+                hiddenAttributes     => '',
+                portal               => 'http://abc',
+                sessionInfo          => { uid => 't', },
+                userNotice           => sub { },
+                user                 => 'jdoe',
             }
         ),
         'Portal object'
@@ -186,14 +216,20 @@ my ( $test, $testU );
     ok(
         $p = My::Portal->new(
             {
-                globalStorage  => 'Apache::Session::File',
-                domain         => 'example.com',
-                authentication => 'Multi 1;2 1==1',
-                userDB         => 'Multi 3;4',
-                portal         => 'http://abc',
-                sessionInfo    => { uid => 't', },
-                userNotice     => sub { },
-                user           => 'jdoe',
+                globalStorage        => 'Apache::Session::File',
+                domain               => 'example.com',
+                authentication       => 'Multi 1;2 1==1',
+                userDB               => 'Multi 3;4',
+                passwordDB           => 'Null',
+                cookieName           => 'lemonldap',
+                whatToTrace          => 'dummy',
+                multiValuesSeparator => '; ',
+                securedCookie        => 0,
+                hiddenAttributes     => '',
+                portal               => 'http://abc',
+                sessionInfo          => { uid => 't', },
+                userNotice           => sub { },
+                user                 => 'jdoe',
             }
         ),
         'Portal object'

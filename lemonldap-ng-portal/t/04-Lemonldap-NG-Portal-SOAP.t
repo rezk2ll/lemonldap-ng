@@ -74,8 +74,11 @@ SKIP: {
                     Directory     => '/tmp/',
                     LockDirectory => '/tmp/',
                 },
-                domain => 'example.com',
-                soap   => 1,
+                domain         => 'example.com',
+                authentication => 'Null',
+                userDB         => 'Null',
+                passwordDB     => 'Null',
+                soap           => 1,
             }
         ),
         'Portal object'
