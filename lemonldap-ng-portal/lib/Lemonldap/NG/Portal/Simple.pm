@@ -271,8 +271,17 @@ sub new {
         $self->{persistentStorageOptions} = $self->{globalStorageOptions};
     }
 
-    # Default values
-    $self->setDefaultValues();
+    # SAML
+    $self->{samlStorage} ||= $self->{globalStorage};
+    if ( !$self->{samlStorageOptions} or !%{ $self->{samlStorageOptions} } ) {
+        $self->{samlStorageOptions} = $self->{globalStorageOptions};
+    }
+
+    # CAS
+    $self->{casStorage} ||= $self->{globalStorage};
+    if ( !$self->{casStorageOptions} or !%{ $self->{casStorageOptions} } ) {
+        $self->{casStorageOptions} = $self->{globalStorageOptions};
+    }
 
     # Load other storages if needed
     foreach my $otherStorage ( $self->{samlStorage}, $self->{casStorage} ) {
@@ -514,55 +523,6 @@ sub getConf {
     }
     %$self = ( %$self, %args );
     1;
-}
-
-##@method protected void setDefaultValues()
-# Set default values.
-sub setDefaultValues {
-    my $self = shift;
-
-
-    # SAML
-    $self->{samlStorage} ||= $self->{globalStorage};
-    if ( !$self->{samlStorageOptions} or !%{ $self->{samlStorageOptions} } ) {
-        $self->{samlStorageOptions} = $self->{globalStorageOptions};
-    }
-
-    # CAS
-    $self->{casStorage} ||= $self->{globalStorage};
-    if ( !$self->{casStorageOptions} or !%{ $self->{casStorageOptions} } ) {
-        $self->{casStorageOptions} = $self->{globalStorageOptions};
-    }
-
-    # Other
-    $self->{useSafeJail} = 1 unless defined $self->{useSafeJail};
-    $self->{ldapUsePasswordResetAttribute} = 1
-      unless ( defined( $self->{ldapUsePasswordResetAttribute} ) );
-    $self->{ldapPasswordResetAttribute}      ||= "pwdReset";
-    $self->{ldapPasswordResetAttributeValue} ||= "TRUE";
-    $self->{mailOnPasswordChange}            ||= 0;
-
-    # Captcha parameters
-    $self->{captcha_login_enabled} = 0
-      unless defined $self->{captcha_login_enabled};
-    $self->{captcha_mail_enabled} = 0
-      unless defined $self->{captcha_mail_enabled};
-    $self->{captcha_size} = 6 unless defined $self->{captcha_size};
-
-    # Notification
-    $self->{notificationWildcard} ||= "allusers";
-
-    # Login History
-    $self->{loginHistoryEnabled} = 1
-      unless defined $self->{loginHistoryEnabled};
-    $self->{successLoginNumber} = 5 unless defined $self->{successLoginNumber};
-    $self->{failedLoginNumber}  = 5 unless defined $self->{failedLoginNumber};
-    $self->{portalCheckLogins}  = 1
-      unless defined $self->{portalCheckLogins};
-
-    # XSS
-    $self->{checkXSS} = 1 unless defined $self->{checkXSS};
-    $self->{userControl} ||= '^[\w\.\-@]+$';
 }
 
 ## @method protected void setHiddenFormValue(string fieldname, string value, string prefix, boolean base64)

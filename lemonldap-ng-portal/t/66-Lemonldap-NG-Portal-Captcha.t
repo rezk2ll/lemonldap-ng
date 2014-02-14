@@ -22,9 +22,9 @@ my $p = Lemonldap::NG::Portal::Simple->new(
                 '^/nok'   => '$uid eq "toto"',
             },
         },
-        cfgNum      => 42,
-        sessionInfo => { uid => "kharec" },
-
+        cfgNum       => 42,
+        sessionInfo  => { uid => "kharec" },
+        captcha_size => 6,
     }
 );
 

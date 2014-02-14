@@ -44,6 +44,27 @@ has 'authentication' => (
 
 ## C
 
+has 'captcha_login_enabled' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Captcha on login page',
+);
+
+has 'captcha_mail_enabled' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Captcha on password reset page',
+);
+
+has 'captcha_size' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '6',
+    documentation => 'Captcha size',
+);
+
 has 'casAccessControlPolicy' => (
     is            => 'rw',
     isa           => 'Str',
@@ -56,6 +77,13 @@ has 'CAS_authnLevel' => (
     isa           => 'Int',
     default       => '1',
     documentation => 'CAS authentication level',
+);
+
+has 'checkXSS' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'Check XSS',
 );
 
 has 'confirmFormMethod' => (
@@ -97,6 +125,13 @@ has 'facebookAuthnLevel' => (
     isa           => 'Int',
     default       => '1',
     documentation => 'Facebook authentication level',
+);
+
+has 'failedLoginNumber' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '5',
+    documentation => 'Number of failures stored in login history',
 );
 
 ## G
@@ -222,6 +257,34 @@ has 'ldapGroupRecursive' => (
     documentation => 'LDAP recursive search in groups',
 );
 
+has 'ldapPasswordResetAttribute' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'pwdReset',
+    documentation => 'LDAP password reset attribute',
+);
+
+has 'ldapPasswordResetAttributeValue' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'TRUE',
+    documentation => 'LDAP password reset value',
+);
+
+has 'ldapUsePasswordResetAttribute' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'LDAP store reset flag in an attribute',
+);
+
+has 'loginHistoryEnabled' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'Enable login history',
+);
+
 has 'logoutServices' => (
     is            => 'rw',
     isa           => 'HashRef',
@@ -256,6 +319,13 @@ has 'mailSessionKey' => (
     documentation => 'Session parameter where mail is stored',
 );
 
+has 'mailOnPasswordChange' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Send a mail when password is changed',
+);
+
 has 'mailSubject' => (
     is            => 'rw',
     isa           => 'Str',
@@ -282,6 +352,13 @@ has 'multiValuesSeparator' => (
 );
 
 ## N
+
+has 'notificationWildcard' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'allusers',
+    documentation => 'Notification string to match all users',
+);
 
 has 'nullAuthnLevel' => (
     is            => 'rw',
@@ -320,6 +397,13 @@ has 'portalAutocomplete' => (
     isa           => 'Bool',
     default       => '0',
     documentation => 'Allow autocompletion of login input in portal',
+);
+
+has 'portalCheckLogins' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'Display login history checkbox in portal',
 );
 
 has 'portalDisplayAppslist' => (
@@ -508,6 +592,13 @@ has 'SSLAuthnLevel' => (
     documentation => 'SSL authentication level',
 );
 
+has 'successLoginNumber' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '5',
+    documentation => 'Number of success stored in login history',
+);
+
 ## T
 
 has 'twitterAuthnLevel' => (
@@ -519,11 +610,25 @@ has 'twitterAuthnLevel' => (
 
 ## U
 
+has 'userControl' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '^[\w\.\-@]+$',
+    documentation => 'Regular expression to validate login',
+);
+
 has 'userDB' => (
     is            => 'rw',
     isa           => 'Str',
     default       => 'Demo',
     documentation => 'User module',
+);
+
+has 'useSafeJail' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'Activate Safe jail',
 );
 
 ## V

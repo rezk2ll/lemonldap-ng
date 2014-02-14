@@ -25,6 +25,7 @@ ok(
             authentication => 'Null',
             userDB         => 'Null',
             passwordDB     => 'Null',
+            useSafeJail    => 1,
         }
     ),
     'Portal object with Safe jail'
