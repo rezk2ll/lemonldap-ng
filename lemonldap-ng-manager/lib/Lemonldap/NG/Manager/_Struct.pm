@@ -7,6 +7,7 @@ package Lemonldap::NG::Manager::_Struct;
 
 use strict;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
+use Lemonldap::NG::Common::Conf::Attributes;
 use Lemonldap::NG::Common::Regexp;
 
 our $VERSION = '1.4.0';
@@ -353,12 +354,9 @@ sub struct {
                # Displayed nodes depend on authentication/userDB modules choosed
                 _nodes => sub {
                     my $self = shift;
-                    my $auth = $self->conf->{authentication}
-                      || $self->defaultConf()->{authentication};
-                    my $udb = $self->conf->{userDB}
-                      || $self->defaultConf()->{userDB};
-                    my $pdb = $self->conf->{passwordDB}
-                      || $self->defaultConf()->{passwordDB};
+                    my $auth = $self->conf->{authentication};
+                    my $udb  = $self->conf->{userDB};
+                    my $pdb  = $self->conf->{passwordDB};
                     $auth = lc($auth);
                     $auth =~ s/\s.*$//;    # For Multi
                     $udb = lc($udb);
@@ -2015,120 +2013,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
     };
 }
 
-## @method protected hashref defaultConf()
 #@return Hashref of default values
 sub defaultConf {
     my $self = shift;
     return {
-        applicationList => {
-            'default' => { catname => 'Default category', type => "category" }
-        },
-        authentication         => 'LDAP',
-        authChoiceParam        => 'lmAuth',
-        captcha_login_enabled  => '0',
-        captcha_mail_enabled   => '0',
-        captcha_size           => '6',
-        captcha_data           => '/var/lib/lemonldap-ng/captcha/data',
-        captcha_output         => '/var/lib/lemonldap-ng/portal/captcha_output',
-        CAS_pgtFile            => '/tmp/pgt.txt',
-        casAccessControlPolicy => 'none',
-        cda                    => '0',
-        checkXSS               => '1',
-        cookieName             => 'lemonldap',
-        domain                 => 'example.com',
-        failedLoginNumber      => '5',
-        globalStorage          => 'Apache::Session::File',
-        hideOldPassword        => '0',
-        httpOnly               => '1',
-        https                  => '0',
-        issuerDBSAMLActivation => '0',
-        issuerDBSAMLPath       => '^/saml/',
-        issuerDBSAMLRule       => '1',
-        issuerDBCASActivation  => '0',
-        issuerDBCASPath        => '^/cas/',
-        issuerDBCASRule        => '1',
-        issuerDBOpenIDActivation => '0',
-        issuerDBOpenIDPath       => '^/openidserver/',
-        issuerDBOpenIDRule       => '1',
-        jsRedirect               => '0',
-        key      => join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) ),
-        ldapBase => 'dc=example,dc=com',
-        ldapPort => '389',
-        ldapPwdEnc                      => 'utf-8',
-        ldapUsePasswordResetAttribute   => '1',
-        ldapPasswordResetAttribute      => 'pwdReset',
-        ldapPasswordResetAttributeValue => 'TRUE',
-        ldapServer                      => 'localhost',
-        ldapTimeout                     => '120',
-        ldapVersion                     => '3',
-        mailCharset                     => 'utf-8',
-        mailOnPasswordChange            => '0',
-        maintenance                     => '0',
-        mailTimeout                     => '0',
-        mailSessionKey                  => 'mail',
-        managerDn                       => '',
-        managerPassword                 => '',
-        notification                    => '0',
-        notificationStorage             => 'File',
-        notificationWildcard            => 'allusers',
-        notifyDeleted                   => '1',
-        notifyOther                     => '0',
-        openIdSreg_fullname             => 'cn',
-        openIdSreg_nickname             => 'uid',
-        openIdSreg_timezone             => '_timezone',
-        openIdSreg_email                => 'mail',
-        portal                          => 'http://auth.example.com',
-        portalSkin                      => 'bootstrap',
-        portalUserAttr                  => '_user',
-        portalCheckLogins               => '1',
-        portalDisplayLoginHistory       => '1',
-        portalDisplayAppslist           => '1',
-        portalDisplayChangePassword => '$_auth eq "LDAP" or $_auth eq "DBI"',
-        portalDisplayLogout         => '1',
-        portalDisplayResetPassword  => '1',
-        portalAntiFrame             => '1',
-        portalPingInterval          => '60000',
-        protection                  => 'none',
-        radiusAuthnLevel            => '3',
-        remoteGlobalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
-        securedCookie       => '0',
-        secureTokenMemcachedServers => '127.0.0.1:11211',
-        secureTokenExpiration       => '60',
-        secureTokenAttribute        => 'uid',
-        secureTokenUrls             => '.*',
-        secureTokenHeader           => 'Auth-Token',
-        secureTokenAllowOnError     => '1',
-        singleSession               => '0',
-        singleIP                    => '0',
-        singleUserByIP              => '0',
-        Soap                        => '1',
-        storePassword               => '0',
-        successLoginNumber          => '5',
-        syslog                      => '',
-        timeout                     => '72000',
-        timeoutActivity             => '0',
-        trustedProxies              => '',
-        userControl                 => '^[\w\.\-@]+$',
-        userDB                      => 'LDAP',
-        passwordDB                  => 'LDAP',
-        useRedirectOnError          => '1',
-        useRedirectOnForbidden      => '0',
-        useSafeJail                 => '1',
-        vhostPort                   => '-1',
-        vhostHttps                  => '-1',
-        vhostMaintenance            => '0',
-        whatToTrace                 => '$_whatToTrace',
-        yubikeyPublicIDSize         => '12',
         ########
         # SAML #
         ########
-        samlEntityID                       => '#PORTAL#' . '/saml/metadata',
-        samlOrganizationDisplayName        => 'Example',
-        samlOrganizationName               => 'Example',
-        samlOrganizationURL                => 'http://www.example.com',
-        samlIDPMetaDataOptionsNameIDFormat => '',
-        samlIDPMetaDataOptionsForceAuthn   => '0',
-        samlIDPMetaDataOptionsIsPassive    => '0',
+        samlIDPMetaDataOptionsNameIDFormat             => '',
+        samlIDPMetaDataOptionsForceAuthn               => '0',
+        samlIDPMetaDataOptionsIsPassive                => '0',
         samlIDPMetaDataOptionsAllowProxiedAuthn        => '1',
         samlIDPMetaDataOptionsSSOBinding               => '',
         samlIDPMetaDataOptionsSLOBinding               => '',
@@ -2151,112 +2045,6 @@ sub defaultConf {
         samlSPMetaDataOptionsCheckSLOMessageSignature  => '1',
         samlSPMetaDataOptionsEncryptionMode            => 'none',
         samlSPMetaDataOptionsEnableIDPInitiatedURL     => '0',
-        samlSPSSODescriptorAuthnRequestsSigned         => '1',
-        samlSPSSODescriptorWantAssertionsSigned        => '1',
-        samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . '#PORTAL#'
-          . '/saml/proxySingleLogout;'
-          . '#PORTAL#'
-          . '/saml/proxySingleLogoutReturn',
-        samlSPSSODescriptorSingleLogoutServiceHTTPPost =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
-          . '#PORTAL#'
-          . '/saml/proxySingleLogout;'
-          . '#PORTAL#'
-          . '/saml/proxySingleLogoutReturn',
-        samlSPSSODescriptorSingleLogoutServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . '#PORTAL#'
-          . '/saml/proxySingleLogoutSOAP;',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
-          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;'
-          . '#PORTAL#'
-          . '/saml/proxySingleSignOnArtifact',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
-          '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
-          . '#PORTAL#'
-          . '/saml/proxySingleSignOnPost',
-        samlSPSSODescriptorArtifactResolutionServiceArtifact =>
-          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . '#PORTAL#'
-          . '/saml/artifact',
-        samlIDPSSODescriptorWantAuthnRequestsSigned => '1',
-        samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . '#PORTAL#'
-          . '/saml/singleSignOn;',
-        samlIDPSSODescriptorSingleSignOnServiceHTTPPost =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
-          . '#PORTAL#'
-          . '/saml/singleSignOn;',
-        samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;'
-          . '#PORTAL#'
-          . '/saml/singleSignOnArtifact;',
-        samlIDPSSODescriptorSingleSignOnServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . '#PORTAL#'
-          . '/saml/singleSignOnSOAP;',
-        samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . '#PORTAL#'
-          . '/saml/singleLogout;'
-          . '#PORTAL#'
-          . '/saml/singleLogoutReturn',
-        samlIDPSSODescriptorSingleLogoutServiceHTTPPost =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
-          . '#PORTAL#'
-          . '/saml/singleLogout;'
-          . '#PORTAL#'
-          . '/saml/singleLogoutReturn',
-        samlIDPSSODescriptorSingleLogoutServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . '#PORTAL#'
-          . '/saml/singleLogoutSOAP;',
-        samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
-          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . '#PORTAL#'
-          . '/saml/artifact',
-        samlNameIDFormatMapEmail    => 'mail',
-        samlNameIDFormatMapX509     => 'mail',
-        samlNameIDFormatMapWindows  => 'uid',
-        samlNameIDFormatMapKerberos => 'uid',
-        samlAttributeAuthorityDescriptorAttributeServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . '#PORTAL#'
-          . '/saml/AA/SOAP;',
-        samlServicePrivateKeySig                      => '',
-        samlServicePrivateKeySigPwd                   => '',
-        samlServicePublicKeySig                       => '',
-        samlServicePrivateKeyEnc                      => '',
-        samlServicePrivateKeyEncPwd                   => '',
-        samlServicePublicKeyEnc                       => '',
-        samlMetadataForceUTF8                         => 1,
-        samlAuthnContextMapPassword                   => 2,
-        samlAuthnContextMapPasswordProtectedTransport => 3,
-        samlAuthnContextMapTLSClient                  => 5,
-        samlAuthnContextMapKerberos                   => 4,
-        samlCommonDomainCookieActivation              => 0,
-        samlRelayStateTimeout                         => 600,
-        samlUseQueryStringSpecific                    => 0,
-
-        # Authentication levels
-        ldapAuthnLevel      => 2,
-        dbiAuthnLevel       => 2,
-        SSLAuthnLevel       => 5,
-        CAS_authnLevel      => 1,
-        googleAuthnLevel    => 1,
-        openIdAuthnLevel    => 1,
-        facebookAuthnLevel  => 1,
-        twitterAuthnLevel   => 1,
-        webIDAuthnLevel     => 1,
-        apacheAuthnLevel    => 4,
-        nullAuthnLevel      => 0,
-        slaveAuthnLevel     => 2,
-        yubikeyAuthnLevel   => 3,
-        browserIdAuthnLevel => 1,
-
     };
 }
 
@@ -2583,7 +2371,9 @@ sub globalTests {
                         )
                       )
                     {
-                        my $v = $self->defaultConf()->{$k};
+                        my $confAttributes =
+                          Lemonldap::NG::Common::Conf::Attributes->new();
+                        my $v = $confAttributes->$k;
                         if ( defined($v) and $conf->{$k} eq $v ) {
                             delete $conf->{$k};
                         }

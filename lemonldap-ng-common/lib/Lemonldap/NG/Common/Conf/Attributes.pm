@@ -26,6 +26,17 @@ has 'apacheAuthnLevel' => (
     documentation => 'Apache authentication level',
 );
 
+has 'applicationList' => (
+    is      => 'rw',
+    isa     => 'HashRef',
+    default => sub {
+        return {
+            'default' => { catname => 'Default category', type => "category" },
+        };
+    },
+    documentation => 'Applications list',
+);
+
 has 'authChoiceParam' => (
     is            => 'rw',
     isa           => 'Str',
@@ -42,7 +53,21 @@ has 'authentication' => (
 
 ## B
 
+has 'browserIdAuthnLevel' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '1',
+    documentation => 'Browser ID authentication level',
+);
+
 ## C
+
+has 'captcha_data' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '/tmp',
+    documentation => 'Captcha data directory',
+);
 
 has 'captcha_login_enabled' => (
     is            => 'rw',
@@ -56,6 +81,13 @@ has 'captcha_mail_enabled' => (
     isa           => 'Bool',
     default       => '0',
     documentation => 'Captcha on password reset page',
+);
+
+has 'captcha_output' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '/tmp',
+    documentation => 'Captcha output directory',
 );
 
 has 'captcha_size' => (
@@ -77,6 +109,20 @@ has 'CAS_authnLevel' => (
     isa           => 'Int',
     default       => '1',
     documentation => 'CAS authentication level',
+);
+
+has 'CAS_pgtFile' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '/tmp/pgt.txt',
+    documentation => 'CAS PGT file',
+);
+
+has 'cda' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Enable Cross Domain Authentication',
 );
 
 has 'checkXSS' => (
@@ -168,11 +214,25 @@ has 'hiddenAttributes' => (
     documentation => 'Name of attributes to hide in logs',
 );
 
+has 'hideOldPassword' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Hide old password in portal',
+);
+
 has 'httpOnly' => (
     is            => 'rw',
     isa           => 'Bool',
     default       => '1',
     documentation => 'Enable httpOnly flag in cookie',
+);
+
+has 'https' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Use HTTPS for redirection from portal',
 );
 
 ## I
@@ -182,6 +242,69 @@ has 'infoFormMethod' => (
     isa           => 'Str',
     default       => 'get',
     documentation => 'HTTP method for info page form',
+);
+
+has 'issuerDBCASActivation' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'CAS server activation',
+);
+
+has 'issuerDBCASPath' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '^/cas/',
+    documentation => 'CAS server request path',
+);
+
+has 'issuerDBCASRule' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '1',
+    documentation => 'CAS server rule',
+);
+
+has 'issuerDBOpenIDActivation' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'OpenID server activation',
+);
+
+has 'issuerDBOpenIDPath' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '^/openidserver/',
+    documentation => 'OpenID server request path',
+);
+
+has 'issuerDBOpenIDRule' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '1',
+    documentation => 'OpenID server rule',
+);
+
+has 'issuerDBSAMLActivation' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'SAML IDP activation',
+);
+
+has 'issuerDBSAMLPath' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '^/saml/',
+    documentation => 'SAML IDP request path',
+);
+
+has 'issuerDBSAMLRule' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '1',
+    documentation => 'SAML IDP rule',
 );
 
 ## J
@@ -211,6 +334,13 @@ has 'ldapAuthnLevel' => (
     isa           => 'Int',
     default       => '2',
     documentation => 'LDAP authentication level',
+);
+
+has 'ldapBase' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'dc=example,dc=com',
+    documentation => 'LDAP search base',
 );
 
 has 'ldapGroupAttributeName' => (
@@ -271,11 +401,46 @@ has 'ldapPasswordResetAttributeValue' => (
     documentation => 'LDAP password reset value',
 );
 
+has 'ldapPwdEnc' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'utf-8',
+    documentation => 'LDAP password encoding',
+);
+
+has 'ldapPort' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '389',
+    documentation => 'LDAP port',
+);
+
+has 'ldapServer' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'ldap://localhost',
+    documentation => 'LDAP server (host or URI)',
+);
+
+has 'ldapTimeout' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '120',
+    documentation => 'LDAP connection timeout',
+);
+
 has 'ldapUsePasswordResetAttribute' => (
     is            => 'rw',
     isa           => 'Bool',
     default       => '1',
     documentation => 'LDAP store reset flag in an attribute',
+);
+
+has 'ldapVersion' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '3',
+    documentation => 'LDAP protocol version',
 );
 
 has 'loginHistoryEnabled' => (
@@ -293,6 +458,13 @@ has 'logoutServices' => (
 );
 
 ## M
+
+has 'mailCharset' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'utf-8',
+    documentation => 'Mail charset',
+);
 
 has 'mailConfirmSubject' => (
     is            => 'rw',
@@ -326,11 +498,25 @@ has 'mailOnPasswordChange' => (
     documentation => 'Send a mail when password is changed',
 );
 
+has 'mailSessionKey' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'mail',
+    documentation => 'Session parameter where mail is stored',
+);
+
 has 'mailSubject' => (
     is            => 'rw',
     isa           => 'Str',
     default       => '[LemonLDAP::NG] Your new password',
     documentation => 'Mail subject for new password email',
+);
+
+has 'mailTimeout' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '0',
+    documentation => 'Mail session timeout',
 );
 
 has 'mailUrl' => (
@@ -344,6 +530,27 @@ has 'mailUrl' => (
     documentation => 'URL of password reset page',
 );
 
+has 'maintenance' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Maintenance mode for all virtual hosts',
+);
+
+has 'managerDn' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '',
+    documentation => 'LDAP manager DN',
+);
+
+has 'managerPassword' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '',
+    documentation => 'LDAP manager Password',
+);
+
 has 'multiValuesSeparator' => (
     is            => 'rw',
     isa           => 'Str',
@@ -353,11 +560,39 @@ has 'multiValuesSeparator' => (
 
 ## N
 
+has 'notification' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Notification activation',
+);
+
+has 'notificationStorage' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'File',
+    documentation => 'Notification backend',
+);
+
 has 'notificationWildcard' => (
     is            => 'rw',
     isa           => 'Str',
     default       => 'allusers',
     documentation => 'Notification string to match all users',
+);
+
+has 'notifyDeleted' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'Show deleted sessions in portal',
+);
+
+has 'notifyOther' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Show other sessions in portal',
 );
 
 has 'nullAuthnLevel' => (
@@ -376,6 +611,34 @@ has 'openIdAuthnLevel' => (
     documentation => 'OpenID authentication level',
 );
 
+has 'openIdSreg_email' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'mail',
+    documentation => 'OpenID SREG email session parameter',
+);
+
+has 'openIdSreg_fullname' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'cn',
+    documentation => 'OpenID SREG fullname session parameter',
+);
+
+has 'openIdSreg_nickname' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'uid',
+    documentation => 'OpenID SREG nickname session parameter',
+);
+
+has 'openIdSreg_timezone' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '_timezone',
+    documentation => 'OpenID SREG timezone session parameter',
+);
+
 ## P
 
 has 'passwordDB' => (
@@ -390,6 +653,13 @@ has 'portal' => (
     isa           => 'Any',
     default       => 'http://auth.example.com',
     documentation => 'Portal URL',
+);
+
+has 'portalAntiframe' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'Avoid portal to be displayed inside frames',
 );
 
 has 'portalAutocomplete' => (
@@ -416,7 +686,7 @@ has 'portalDisplayAppslist' => (
 has 'portalDisplayChangePassword' => (
     is            => 'rw',
     isa           => 'Str',
-    default       => '1',
+    default       => '$_auth =~ /^(LDAP|DBI|Demo)$/',
     documentation => 'Display password tab in portal',
 );
 
@@ -491,6 +761,13 @@ has 'portalUserAttr' => (
     documentation => 'Session parameter to display connected user in portal',
 );
 
+has 'protection' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'none',
+    documentation => 'Manager protection method',
+);
+
 ## Q
 
 ## R
@@ -516,7 +793,22 @@ has 'redirectFormMethod' => (
     documentation => 'HTTP method for redirect page form',
 );
 
+has 'remoteGlobalStorage' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'Lemonldap::NG::Common::Apache::Session::SOAP',
+    documentation => 'Remote session backend',
+);
+
 ## S
+
+has 'samlAttributeAuthorityDescriptorAttributeServiceSOAP' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+      'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
+    documentation => 'SAML Attribute Authority SOAP',
+);
 
 has 'samlAuthnContextMapKerberos' => (
     is            => 'rw',
@@ -546,6 +838,20 @@ has 'samlAuthnContextMapTLSClient' => (
     documentation => 'SAML authn context TLS client level',
 );
 
+has 'samlCommonDomainCookieActivation' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'SAML CDC activation',
+);
+
+has 'samlEntityID' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '#PORTAL#/saml/metadata',
+    documentation => 'SAML service entityID',
+);
+
 has 'samlIdPResolveCookie' => (
     is      => 'rw',
     isa     => 'Str',
@@ -557,11 +863,130 @@ has 'samlIdPResolveCookie' => (
     documentation => 'SAML IDP resolution cookie',
 );
 
+has 'samlIDPSSODescriptorArtifactResolutionServiceArtifact' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+      '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
+    documentation => 'SAML IDP artifact resolution service',
+);
+
+has 'samlIDPSSODescriptorSingleLogoutServiceHTTPPost' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn',
+    documentation => 'SAML IDP SLO HTTP POST',
+);
+
+has 'samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn',
+    documentation => 'SAML IDP SLO HTTP Redirect',
+);
+
+has 'samlIDPSSODescriptorSingleLogoutServiceSOAP' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleLogoutSOAP;',
+    documentation => 'SAML IDP SLO SOAP',
+);
+
+has 'samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/singleSignOnArtifact;',
+    documentation => 'SAML IDP SSO HTTP Artifact',
+);
+
+has 'samlIDPSSODescriptorSingleSignOnServiceHTTPPost' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleSignOn;',
+    documentation => 'SAML IDP SSO HTTP POST',
+);
+
+has 'samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleSignOn;',
+    documentation => 'SAML IDP SSO HTTP Redirect',
+);
+
+has 'samlIDPSSODescriptorSingleSignOnServiceSOAP' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleSignOnSOAP;',
+    documentation => 'SAML IDP SSO SOAP',
+);
+
+has 'samlIDPSSODescriptorWantAuthnRequestsSigned' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'SAML IDP want authn request signed',
+);
+
 has 'samlMetadataForceUTF8' => (
     is            => 'rw',
     isa           => 'Bool',
     default       => '1',
     documentation => 'SAML force metadata UTF8 conversion',
+);
+
+has 'samlNameIDFormatMapEmail' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'mail',
+    documentation => 'SAML session parameter for NameID email',
+);
+
+has 'samlNameIDFormatMapKerberos' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'uid',
+    documentation => 'SAML session parameter for NameID kerberos',
+);
+
+has 'samlNameIDFormatMapWindows' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'uid',
+    documentation => 'SAML session parameter for NameID windows',
+);
+
+has 'samlNameIDFormatMapX509' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'mail',
+    documentation => 'SAML session parameter for NameID x509',
+);
+has 'samlOrganizationDisplayName' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'Example',
+    documentation => 'SAML service organization display name',
+);
+
+has 'samlOrganizationName' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'Example',
+    documentation => 'SAML service organization name',
+);
+
+has 'samlOrganizationURL' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'http://www.example.com',
+    documentation => 'SAML service organization URL',
 );
 
 has 'samlRelayStateTimeout' => (
@@ -571,6 +996,124 @@ has 'samlRelayStateTimeout' => (
     documentation => 'SAML timeout of relay state',
 );
 
+has 'samlSPSSODescriptorArtifactResolutionServiceArtifact' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+      '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
+    documentation => 'SAML SP artifact resolution service ',
+);
+
+has 'samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+'1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact',
+    documentation => 'SAML SP ACS HTTP artifact',
+);
+
+has 'samlSPSSODescriptorAssertionConsumerServiceHTTPPost' => (
+    is  => 'rw',
+    isa => 'Str',
+    default =>
+'0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost',
+    documentation => 'SAML SP ACS HTTP POST',
+);
+
+has 'samlSPSSODescriptorAuthnRequestsSigned' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'SAML SP AuthnRequestsSigned',
+);
+
+has 'samlSPSSODescriptorSingleLogoutServiceHTTPPost' => (
+    is      => 'rw',
+    isa     => 'Str',
+    default => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
+      . '#PORTAL#'
+      . '/saml/proxySingleLogout;'
+      . '#PORTAL#'
+      . '/saml/proxySingleLogoutReturn',
+    documentation => 'SAML SP SLO HTTP POST',
+);
+
+has 'samlSPSSODescriptorSingleLogoutServiceHTTPRedirect' => (
+    is      => 'rw',
+    isa     => 'Str',
+    default => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
+      . '#PORTAL#'
+      . '/saml/proxySingleLogout;'
+      . '#PORTAL#'
+      . '/saml/proxySingleLogoutReturn',
+    documentation => 'SAML SP SLO HTTP Redirect',
+);
+
+has 'samlSPSSODescriptorSingleLogoutServiceSOAP' => (
+    is      => 'rw',
+    isa     => 'Str',
+    default => 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
+      . '#PORTAL#'
+      . '/saml/proxySingleLogoutSOAP;',
+    documentation => 'SAML SP SLO SOAP',
+);
+
+has 'samlSPSSODescriptorWantAssertionsSigned' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'SAML SP WantAssertionsSigned',
+);
+
+has 'samlServicePrivateKeyEnc' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '',
+    documentation => 'SAML encryption private key',
+);
+
+has 'samlServicePrivateKeyEncPwd' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '',
+    documentation => 'SAML encryption private key password',
+);
+
+has 'samlServicePrivateKeySig' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '',
+    documentation => 'SAML signature private key',
+);
+
+has 'samlServicePrivateKeySigPwd' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '',
+    documentation => 'SAML signature private key password',
+);
+
+has 'samlServicePublicKeyEnc' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '',
+    documentation => 'SAML encryption public key',
+);
+
+has 'samlServicePublicKeySig' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '',
+    documentation => 'SAML signature public key',
+);
+
+has 'samlUseQueryStringSpecific' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'SAML use specific method for query_string',
+);
+
 has 'securedCookie' => (
     is            => 'rw',
     isa           => 'Int',
@@ -578,11 +1121,96 @@ has 'securedCookie' => (
     documentation => 'Cookie securisation method',
 );
 
+has 'secureTokenAllowOnError' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'Secure Token Handler allow request on error',
+);
+
+has 'secureTokenAttribute' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'uid',
+    documentation => 'Secure Token Handler attribute to store',
+);
+
+has 'secureTokenExpiration' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '60',
+    documentation => 'Secure Token Handler token expiration',
+);
+
+has 'secureTokenHeader' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'Auth-Token',
+    documentation => 'Secure Token Handler header name',
+);
+
+has 'secureTokenMemcachedServers' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '127.0.0.1:11211',
+    documentation => 'Secure Token Handler memcached servers',
+);
+
+has 'secureTokenUrls' => (
+    is      => 'rw',
+    isa     => 'Str',
+    default => '.*',
+    documentation =>
+      'Secure Token Handler regular expression to match protected URL',
+);
+
+has 'singleIP' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Allow only one session per IP',
+);
+
+has 'singleSession' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Allow only one session per user',
+);
+
+has 'singleSessionUserByIP' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Allow only one session per user on an IP',
+);
+
+has 'slaveAuthnLevel' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '2',
+    documentation => 'Slave authentication level',
+);
+
 has 'SMTPServer' => (
     is            => 'rw',
     isa           => 'Str',
     default       => 'localhost',
     documentation => 'SMTP Server',
+);
+
+has 'Soap' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'Enable SOAP services',
+);
+
+has 'storePassword' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Store password in session',
 );
 
 has 'SSLAuthnLevel' => (
@@ -599,7 +1227,35 @@ has 'successLoginNumber' => (
     documentation => 'Number of success stored in login history',
 );
 
+has 'syslog' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '',
+    documentation => 'Syslog facility',
+);
+
 ## T
+
+has 'timeout' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '72000',
+    documentation => 'Session timeout on server side',
+);
+
+has 'timeoutActivity' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '0',
+    documentation => 'Session activity timeout on server side',
+);
+
+has 'trustedProxies' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '',
+    documentation => 'Trusted proxies',
+);
 
 has 'twitterAuthnLevel' => (
     is            => 'rw',
@@ -624,6 +1280,20 @@ has 'userDB' => (
     documentation => 'User module',
 );
 
+has 'useRedirectOnError' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'Use 302 redirect code for error (500)',
+);
+
+has 'useRedirectOnForbidden' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Use 302 redirect code for forbidden (403)',
+);
+
 has 'useSafeJail' => (
     is            => 'rw',
     isa           => 'Bool',
@@ -633,7 +1303,35 @@ has 'useSafeJail' => (
 
 ## V
 
+has 'vhostHttps' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '-1',
+    documentation => 'HTTPS mode for a virtual host',
+);
+
+has 'vhostMaintenance' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '-1',
+    documentation => 'Maintenance mode for a virtual host',
+);
+
+has 'vhostPort' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '-1',
+    documentation => 'Redirection port for a virtual host',
+);
+
 ## W
+
+has 'webIDAuthnLevel' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '1',
+    documentation => 'WebID authentication level',
+);
 
 has 'whatToTrace' => (
     is            => 'rw',
@@ -645,6 +1343,20 @@ has 'whatToTrace' => (
 ## X
 
 ## Y
+
+has 'yubikeyAuthnLevel' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '3',
+    documentation => 'Yubikey authentication level',
+);
+
+has 'yubikeyPublicIDSize' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '12',
+    documentation => 'Yubikey public ID size',
+);
 
 ## Z
 
