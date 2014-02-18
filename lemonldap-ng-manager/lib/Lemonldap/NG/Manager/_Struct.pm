@@ -423,10 +423,15 @@ sub struct {
                 # LDAP
                 ldapParams => {
                     _nodes => [
-                        qw(ldapAuthnLevel n:ldapConnection n:ldapFilters n:ldapGroups n:ldapPassword)
+                        qw(ldapAuthnLevel cn:ldapExportedVars n:ldapConnection n:ldapFilters n:ldapGroups n:ldapPassword)
                     ],
-                    _help          => 'authLDAP',
-                    ldapAuthnLevel => 'int:/ldapAuthnLevel:authLDAPLevel:int',
+                    _help            => 'authLDAP',
+                    ldapAuthnLevel   => 'int:/ldapAuthnLevel:authLDAPLevel:int',
+                    ldapExportedVars => {
+                        _nodes => ['hash:/ldapExportedVars:vars:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'authLDAP',
+                    },
                     ldapConnection => {
                         _nodes => [
                             qw(ldapServer ldapPort ldapBase managerDn managerPassword ldapTimeout ldapVersion ldapRaw)
@@ -1533,6 +1538,12 @@ sub testStruct {
             test    => qr/^(?:\w+=.*|)$/,
             msgFail => 'Bad LDAP base',
         },
+        ldapExportedVars => {
+            keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
+            keyMsgFail => 'Bad variable name',
+            test       => qr/^[a-zA-Z][\w:\-]*$/,
+            msgFail    => 'Bad attribute name',
+        },
         ldapPort => {
             test    => qr/^\d*$/,
             msgFail => 'Bad port number'
@@ -2021,10 +2032,10 @@ sub subDefaultConf {
     my $h;
 
     my $confSubAttributes = Lemonldap::NG::Common::Conf::SubAttributes->new();
-    my @attributes = $confSubAttributes->meta()->get_attribute_list();
+    my @attributes        = $confSubAttributes->meta()->get_attribute_list();
 
     foreach my $name (@attributes) {
-            $h->{$name} = $confSubAttributes->$name;
+        $h->{$name} = $confSubAttributes->$name;
     }
 
     return $h;

@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 
-our $VERSION = '1.2.2';
+our $VERSION = '1.4.0';
 
 ## @method int userDBInit()
 # Transform ldapGroupAttributeNameSearch in ARRAY ref
@@ -68,8 +68,10 @@ sub search {
     unless ( $self->ldap ) {
         return PE_LDAPCONNECTFAILED;
     }
-    my @attrs =
-      ref( $self->{exportedVars} ) ? values( %{ $self->{exportedVars} } ) : ();
+    my @attrs = (
+        values %{ $self->{exportedVars} },
+        values %{ $self->{ldapExportedVars} }
+    );
     my $mesg = $self->ldap->search(
         base   => $self->{ldapBase},
         scope  => 'sub',
@@ -109,23 +111,21 @@ sub search {
 sub setSessionInfo {
     my $self = shift;
     $self->{sessionInfo}->{dn} = $self->{dn};
-    unless ( $self->{exportedVars} ) {
-        foreach (qw(uid cn mail)) {
-            $self->{sessionInfo}->{$_} =
-              $self->{ldap}->getLdapValue( $self->{entry}, $_ ) || "";
-        }
+
+    foreach ( keys %{ $self->{exportedVars} } ) {
+        $self->{sessionInfo}->{$_} =
+          $self->{ldap}
+          ->getLdapValue( $self->{entry}, $self->{exportedVars}->{$_} )
+          || "";
     }
-    elsif ( ref( $self->{exportedVars} ) eq 'HASH' ) {
-        foreach ( keys %{ $self->{exportedVars} } ) {
-            $self->{sessionInfo}->{$_} =
-              $self->{ldap}
-              ->getLdapValue( $self->{entry}, $self->{exportedVars}->{$_} )
-              || "";
-        }
+
+    foreach ( keys %{ $self->{ldapExportedVars} } ) {
+        $self->{sessionInfo}->{$_} =
+          $self->{ldap}
+          ->getLdapValue( $self->{entry}, $self->{ldapExportedVars}->{$_} )
+          || "";
     }
-    else {
-        $self->abort('Only hash reference are supported now in exportedVars');
-    }
+
     PE_OK;
 }
 

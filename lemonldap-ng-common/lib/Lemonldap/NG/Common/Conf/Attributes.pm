@@ -367,6 +367,13 @@ has 'ldapBase' => (
     documentation => 'LDAP search base',
 );
 
+has 'ldapExportedVars' => (
+    is      => 'rw',
+    isa     => 'HashRef',
+    default => sub { return { cn => 'cn', mail => 'mail', uid => 'uid', }; },
+    documentation => 'LDAP exported variables',
+);
+
 has 'ldapGroupAttributeName' => (
     is            => 'rw',
     isa           => 'Str',

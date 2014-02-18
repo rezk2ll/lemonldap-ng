@@ -112,6 +112,7 @@ sub unserialize {
 	|globalStorageOptions
         |grantSessionRules
 	|groups
+	|ldapExportedVars
 	|locationRules
 	|logoutServices
 	|macros
