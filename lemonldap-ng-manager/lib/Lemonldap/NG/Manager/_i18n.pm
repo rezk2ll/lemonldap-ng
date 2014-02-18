@@ -946,7 +946,7 @@ sub fr {
         samlSPMetaDataOptionsSignature      => 'Signature',
         samlSPMetaDataOptionsSecurity       => 'Sécurité',
         samlSPMetaDataOptionsEnableIDPInitiatedURL =>
-          'Enable use of IDP initiated URL',
+          "Autoriser l'utilisation d'URL SSO initié par l'IDP",
         samlSPMetaDataOptionsNameIDSessionKey =>
           "Forcer la clé de session NameID",
         samlServiceMetaData         => 'Service SAML 2',

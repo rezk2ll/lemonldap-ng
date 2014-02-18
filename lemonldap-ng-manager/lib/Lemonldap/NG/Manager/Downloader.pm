@@ -14,7 +14,7 @@ require Lemonldap::NG::Manager::_Struct;    #inherits
 require Lemonldap::NG::Manager::_i18n;      #inherits
 require Lemonldap::NG::Manager::Request;    #inherits
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.4.0';
 
 ## @method string node(string node)
 # Build the part of the tree that does not depends of the configuration.
@@ -150,12 +150,12 @@ sub confNode {
     elsif ( $target =~ s/^hash:// ) {
         my $h = $self->keyToH( $target, $self->conf );
         unless ($h) {
-            my $tmp;
-            unless ( ($tmp) = ( $target =~ /^\/?([^\/]*)/ )
-                and $h = $self->subDefaultConf()->{$tmp} )
-            {
-                $self->lmLog( "Try to get default conf for $tmp", 'debug' );
-                $self->lmLog( "$target hash is not defined in configuration",
+
+            # This is not a main attribute, try to load a subattribute
+            my ($tmp) = ( $target =~ /^\/?([^\/]*)/ );
+            $self->lmLog( "Try to get default value for Hash $tmp", 'debug' );
+            unless ( $tmp and $h = $self->subDefaultConf->{$tmp} ) {
+                $self->lmLog( "$tmp hash is not defined in configuration",
                     'error' );
                 return;
             }
@@ -235,9 +235,6 @@ sub confNode {
 
         my $h = $self->keyToH( $target, $self->conf );
 
-        # Try to get value from defaultConf
-        $h = $self->keyToH( $target, $self->defaultConf ) unless ( defined $h );
-
         unless ( defined $h ) {
             $self->lmLog( "$target is not defined in configuration", 'error' );
             return;
@@ -316,10 +313,10 @@ sub confNode {
 
         my $h = $self->keyToH( $target, $self->conf );
 
-        # Try to get value from defaultConf
+        # Try to get value from subattribut
         unless ($h) {
-            unless ( $h = $self->subDefaultConf()->{post} ) {
-                $self->lmLog( "Try to get default conf for post", 'debug' );
+            $self->lmLog( "Try to get default conf for post", 'debug' );
+            unless ( $h = $self->subDefaultConf->{"post"} ) {
                 $self->lmLog( "$target hash is not defined in configuration",
                     'error' );
                 return;
@@ -395,14 +392,11 @@ sub confNode {
         $text =~ s/^.*\///;
         my $h = $self->keyToH( $target, $self->conf );
 
-        # Try to get value from defaultConf
-        $h = $self->keyToH( $target, $self->defaultConf ) unless ( defined $h );
-
         # If no value found, try to remove 2 first target components
         # to manage complex hash like samlIDPMetaDataOptions
         unless ( defined $h ) {
             $target =~ /([^\/]*)$/;
-            $h = $self->keyToH( $1, $self->defaultConf );
+            $h = $self->keyToH( $1, $self->subDefaultConf );
         }
 
         # If still no value, set a default value depending on type

@@ -20,7 +20,7 @@ use Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Request;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
-our $VERSION = '1.2.3';
+our $VERSION = '1.4.0';
 our ( $stylesheet, $parser );
 
 ## @method void confUpload(ref rdata)
@@ -346,7 +346,6 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
         foreach my $k ( $self->findAllConfKeys( $self->corresp($node) ) ) {
             $self->lmLog( "Unchanged key $k (node $node)", 'debug' );
             my $v = $self->keyToH( $k, $self->conf );
-            $v = $self->keyToH( $k, $self->defaultConf ) unless ( defined $v );
             if ( defined $v ) {
                 $self->setKeyToH( $newConf, $k, $v );
             }

@@ -8,6 +8,7 @@ package Lemonldap::NG::Manager::_Struct;
 use strict;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use Lemonldap::NG::Common::Conf::Attributes;
+use Lemonldap::NG::Common::Conf::SubAttributes;
 use Lemonldap::NG::Common::Regexp;
 
 our $VERSION = '1.4.0';
@@ -2012,66 +2013,21 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         browserIdBackgroundColor => $testNotDefined,
     };
 }
-
-#@return Hashref of default values
-sub defaultConf {
-    my $self = shift;
-    return {
-        ########
-        # SAML #
-        ########
-        samlIDPMetaDataOptionsNameIDFormat             => '',
-        samlIDPMetaDataOptionsForceAuthn               => '0',
-        samlIDPMetaDataOptionsIsPassive                => '0',
-        samlIDPMetaDataOptionsAllowProxiedAuthn        => '1',
-        samlIDPMetaDataOptionsSSOBinding               => '',
-        samlIDPMetaDataOptionsSLOBinding               => '',
-        samlIDPMetaDataOptionsResolutionRule           => '',
-        samlIDPMetaDataOptionsAllowLoginFromIDP        => '1',
-        samlIDPMetaDataOptionsAdaptSessionUtime        => '1',
-        samlIDPMetaDataOptionsSignSSOMessage           => '1',
-        samlIDPMetaDataOptionsCheckSSOMessageSignature => '1',
-        samlIDPMetaDataOptionsSignSLOMessage           => '1',
-        samlIDPMetaDataOptionsCheckSLOMessageSignature => '1',
-        samlIDPMetaDataOptionsRequestedAuthnContext    => '',
-        samlIDPMetaDataOptionsForceUTF8                => '0',
-        samlIDPMetaDataOptionsEncryptionMode           => 'none',
-        samlIDPMetaDataOptionsCheckConditions          => '1',
-        samlSPMetaDataOptionsNameIDFormat              => '',
-        samlSPMetaDataOptionsOneTimeUse                => '0',
-        samlSPMetaDataOptionsSignSSOMessage            => '1',
-        samlSPMetaDataOptionsCheckSSOMessageSignature  => '1',
-        samlSPMetaDataOptionsSignSLOMessage            => '1',
-        samlSPMetaDataOptionsCheckSLOMessageSignature  => '1',
-        samlSPMetaDataOptionsEncryptionMode            => 'none',
-        samlSPMetaDataOptionsEnableIDPInitiatedURL     => '0',
-    };
-}
-
+## @method hashref subDefaultConf()
+# Return the default values of subattributes
+# @return hash ref { subattribute name => default value }
 sub subDefaultConf {
-    return {
-        demoExportedVars => { cn => 'cn', mail => 'mail', uid => 'uid', },
-        exportedHeaders      => { 'Auth-User' => '$uid' },
-        exportedVars         => { 'UA'        => 'HTTP_USER_AGENT' },
-        globalStorageOptions => {
-            'Directory'     => '/var/lib/lemonldap-ng/sessions/',
-            'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
-        },
-        locationRules => { default => 'deny' },
-        macros        => {
-            '_whatToTrace' =>
-              '$_auth eq "SAML" ? "$_user\\@$_idpConfKey" : "$_user"'
-        },
-        notificationStorageOptions =>
-          { dirName => '/var/lib/lemonldap-ng/notifications', },
-        post                       => { none => { expr => {}, }, },
-        remoteGlobalStorageOptions => {
-            'proxy' => 'https://remote/index.pl/sessions',
-            'ns'    => 'https://remote/Lemonldap/NG/Common/CGI/SOAPService',
-        },
-        samlIDPMetaDataExportedAttributes => { 'uid' => '0;uid;;' },
-        samlSPMetaDataExportedAttributes  => { 'uid' => '0;uid;;' },
-    };
+    my ($self) = splice @_;
+    my $h;
+
+    my $confSubAttributes = Lemonldap::NG::Common::Conf::SubAttributes->new();
+    my @attributes = $confSubAttributes->meta()->get_attribute_list();
+
+    foreach my $name (@attributes) {
+            $h->{$name} = $confSubAttributes->$name;
+    }
+
+    return $h;
 }
 
 ## @method hashref globalTests(hashref conf)

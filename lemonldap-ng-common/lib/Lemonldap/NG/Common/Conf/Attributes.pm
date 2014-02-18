@@ -155,6 +155,13 @@ has 'dbiAuthnLevel' => (
     documentation => 'DBI authentication level',
 );
 
+has 'demoExportedVars' => (
+    is      => 'rw',
+    isa     => 'HashRef',
+    default => sub { return { cn => 'cn', mail => 'mail', uid => 'uid', }; },
+    documentation => 'Demo exported variables',
+);
+
 has 'domain' => (
     is            => 'rw',
     isa           => 'Str',
@@ -163,6 +170,13 @@ has 'domain' => (
 );
 
 ## E
+
+has 'exportedVars' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return { 'UA' => 'HTTP_USER_AGENT' }; },
+    documentation => 'Main exported variables',
+);
 
 ## F
 
@@ -193,7 +207,10 @@ has 'globalStorageOptions' => (
     is      => 'rw',
     isa     => 'HashRef',
     default => sub {
-        return { Directory => "/tmp" };
+        return {
+            'Directory'     => '/var/lib/lemonldap-ng/sessions/',
+            'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/',
+        };
     },
     documentation => 'Session backend module options',
 );
@@ -203,6 +220,13 @@ has 'googleAuthnLevel' => (
     isa           => 'Int',
     default       => '1',
     documentation => 'Google authentication level',
+);
+
+has 'groups' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return {}; },
+    documentation => 'Groups',
 );
 
 ## H
@@ -459,6 +483,13 @@ has 'logoutServices' => (
 
 ## M
 
+has 'macros' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return {}; },
+    documentation => 'Macros',
+);
+
 has 'mailCharset' => (
     is            => 'rw',
     isa           => 'Str',
@@ -572,6 +603,14 @@ has 'notificationStorage' => (
     isa           => 'Str',
     default       => 'File',
     documentation => 'Notification backend',
+);
+
+has 'notificationStorageOptions' => (
+    is  => 'rw',
+    isa => 'HashRef',
+    default =>
+      sub { return { dirName => '/var/lib/lemonldap-ng/notifications', }; },
+    documentation => 'Notification backend options',
 );
 
 has 'notificationWildcard' => (
@@ -798,6 +837,20 @@ has 'remoteGlobalStorage' => (
     isa           => 'Str',
     default       => 'Lemonldap::NG::Common::Apache::Session::SOAP',
     documentation => 'Remote session backend',
+);
+
+has 'remoteGlobalStorageOptions' => (
+    is      => 'rw',
+    isa     => 'HashRef',
+    default => sub {
+        my $self = shift;
+        return {
+            'proxy' => $self->portal . '/index.pl/sessions',
+            'ns'    => $self->portal . '/Lemonldap/NG/Common/CGI/SOAPService',
+        };
+    },
+    lazy          => 1,
+    documentation => 'Demo exported variables',
 );
 
 ## S
