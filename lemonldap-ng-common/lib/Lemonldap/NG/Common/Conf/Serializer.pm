@@ -131,6 +131,7 @@ sub unserialize {
 	|samlSPMetaDataXML
 	|samlStorageOptions
         |sessionDataToRemember
+	|slaveExportedVars
 	|vhostOptions
 	|webIDExportedVars
 	)$/

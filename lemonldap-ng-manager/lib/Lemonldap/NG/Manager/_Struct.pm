@@ -678,10 +678,16 @@ sub struct {
 
                 # Slave
                 slaveParams => {
-                    _nodes =>
-                      [qw(slaveAuthnLevel slaveUserHeader slaveMasterIP)],
-                    _help           => 'authSlave',
-                    slaveAuthnLevel => 'int:/slaveAuthnLevel',
+                    _nodes => [
+                        qw(slaveAuthnLevel cn:slaveExportedVars slaveUserHeader slaveMasterIP)
+                    ],
+                    _help             => 'authSlave',
+                    slaveAuthnLevel   => 'int:/slaveAuthnLevel',
+                    slaveExportedVars => {
+                        _nodes => ['hash:/slaveExportedVars:vars:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'authSlave',
+                    },
                     slaveUserHeader => 'text:/slaveUserHeader',
                     slaveMasterIP   => 'text:/slaveMasterIP',
                 },

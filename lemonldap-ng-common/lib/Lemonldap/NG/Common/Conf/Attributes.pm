@@ -1259,6 +1259,13 @@ has 'slaveAuthnLevel' => (
     documentation => 'Slave authentication level',
 );
 
+has 'slaveExportedVars' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return {}; },
+    documentation => 'Slave exported variables',
+);
+
 has 'SMTPServer' => (
     is            => 'rw',
     isa           => 'Str',
