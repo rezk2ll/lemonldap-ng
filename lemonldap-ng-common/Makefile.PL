@@ -49,6 +49,7 @@ WriteMakefile(
         'Config::IniFiles'     => 0,
         'DBI'                  => 0,
         'File::Basename'       => 0,
+        'Mouse'                => 0,
         'Net::CIDR::Lite'      => 0,
         'SOAP::Lite'           => 0,
         'Storable'             => 0,
