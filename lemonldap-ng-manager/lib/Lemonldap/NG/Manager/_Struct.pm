@@ -608,10 +608,15 @@ sub struct {
                 # DBI
                 dbiParams => {
                     _nodes => [
-                        qw(dbiAuthnLevel n:dbiConnection n:dbiSchema n:dbiPassword)
+                        qw(dbiAuthnLevel cn:dbiExportedVars n:dbiConnection n:dbiSchema n:dbiPassword)
                     ],
-                    _help         => 'authDBI',
-                    dbiAuthnLevel => 'int:/dbiAuthnLevel:authDBILevel:int',
+                    _help           => 'authDBI',
+                    dbiAuthnLevel   => 'int:/dbiAuthnLevel:authDBILevel:int',
+                    dbiExportedVars => {
+                        _nodes => ['hash:/dbiExportedVars:vars:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'authDBI',
+                    },
                     dbiConnection => {
                         _nodes => [qw(n:dbiConnectionAuth n:dbiConnectionUser)],
                         dbiConnectionAuth => {

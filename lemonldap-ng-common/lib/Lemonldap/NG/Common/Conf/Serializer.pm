@@ -106,6 +106,7 @@ sub unserialize {
 	|authChoiceModules
 	|CAS_proxiedServices
 	|casStorageOptions
+	|dbiExportedVars
 	|demoExportedVars
 	|exportedHeaders
 	|exportedVars

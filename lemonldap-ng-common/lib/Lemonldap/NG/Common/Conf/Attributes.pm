@@ -155,6 +155,13 @@ has 'dbiAuthnLevel' => (
     documentation => 'DBI authentication level',
 );
 
+has 'dbiExportedVars' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return {}; },
+    documentation => 'DBI exported variables',
+);
+
 has 'demoExportedVars' => (
     is      => 'rw',
     isa     => 'HashRef',
