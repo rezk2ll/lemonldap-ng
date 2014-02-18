@@ -599,10 +599,16 @@ sub struct {
 
                 # WebID
                 webIDParams => {
-                    _nodes          => [qw(webIDAuthnLevel webIDWhitelist)],
-                    _help           => 'authWebID',
-                    webIDAuthnLevel => 'int:webIDAuthnLevel',
-                    webIDWhitelist  => 'text:/webIDWhitelist',
+                    _nodes =>
+                      [qw(webIDAuthnLevel cn:webIDExportedVars webIDWhitelist)],
+                    _help             => 'authWebID',
+                    webIDAuthnLevel   => 'int:webIDAuthnLevel',
+                    webIDExportedVars => {
+                        _nodes => ['hash:/webIDExportedVars:vars:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'authWebID',
+                    },
+                    webIDWhitelist => 'text:/webIDWhitelist',
                 },
 
                 # DBI

@@ -1400,6 +1400,13 @@ has 'webIDAuthnLevel' => (
     documentation => 'WebID authentication level',
 );
 
+has 'webIDExportedVars' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return {}; },
+    documentation => 'WebID exported variables',
+);
+
 has 'whatToTrace' => (
     is            => 'rw',
     isa           => 'Str',

@@ -45,7 +45,7 @@ sub setSessionInfo {
         return PE_ERROR;
     }
 
-    while ( my ( $k, $v ) = each %{ $self->{exportedVars} } ) {
+    while ( my ( $k, $v ) = each ( %{ $self->{exportedVars} } , %{ $self->{webIDExportedVars} } ) ) {
         my $attr = $k;
         my $req;
         $attr =~ s/^!// and $req = 1;

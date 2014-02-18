@@ -132,6 +132,7 @@ sub unserialize {
 	|samlStorageOptions
         |sessionDataToRemember
 	|vhostOptions
+	|webIDExportedVars
 	)$/
             and $v ||= {} and not ref($v)
           )
