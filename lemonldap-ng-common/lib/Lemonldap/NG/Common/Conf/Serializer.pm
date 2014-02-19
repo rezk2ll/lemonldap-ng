@@ -110,6 +110,7 @@ sub unserialize {
 	|demoExportedVars
 	|exportedHeaders
 	|exportedVars
+	|facebookExportedVars
 	|globalStorageOptions
 	|googleExportedVars
         |grantSessionRules

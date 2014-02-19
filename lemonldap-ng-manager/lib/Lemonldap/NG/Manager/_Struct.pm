@@ -582,12 +582,18 @@ sub struct {
 
                 # Facebook
                 facebookParams => {
-                    _nodes =>
-                      [qw(facebookAuthnLevel facebookAppId facebookAppSecret)],
-                    _help              => 'authFacebook',
-                    facebookAuthnLevel => 'int:/facebookAuthnLevel',
-                    facebookAppId      => 'text:facebookAppId',
-                    facebookAppSecret  => 'text:facebookAppSecret',
+                    _nodes => [
+                        qw(facebookAuthnLevel cn:facebookExportedVars facebookAppId facebookAppSecret)
+                    ],
+                    _help                => 'authFacebook',
+                    facebookAuthnLevel   => 'int:/facebookAuthnLevel',
+                    facebookExportedVars => {
+                        _nodes => ['hash:/facebookExportedVars:vars:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'authFacebook',
+                    },
+                    facebookAppId     => 'text:facebookAppId',
+                    facebookAppSecret => 'text:facebookAppSecret',
                 },
 
                 # Twitter
@@ -1516,6 +1522,12 @@ sub testStruct {
             },
         },
         exportedVars => {
+            keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
+            keyMsgFail => 'Bad variable name',
+            test       => qr/^[a-zA-Z][\w:\-]*$/,
+            msgFail    => 'Bad attribute name',
+        },
+        facebookExportedVars => {
             keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
             keyMsgFail => 'Bad variable name',
             test       => qr/^[a-zA-Z][\w:\-]*$/,

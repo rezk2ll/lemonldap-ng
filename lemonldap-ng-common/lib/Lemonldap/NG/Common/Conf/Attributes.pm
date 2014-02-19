@@ -194,6 +194,13 @@ has 'facebookAuthnLevel' => (
     documentation => 'Facebook authentication level',
 );
 
+has 'facebookExportedVars' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return {}; },
+    documentation => 'Facebook exported variables',
+);
+
 has 'failedLoginNumber' => (
     is            => 'rw',
     isa           => 'Int',
