@@ -228,6 +228,52 @@ has 'samlSPMetaDataOptionsSignSSOMessage' => (
     documentation => 'SAML SP option sign SSO',
 );
 
+## V
+
+has 'vhostAliases' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '',
+    documentation => 'Aliases for a virtual host',
+);
+
+has 'vhostHttps' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '-1',
+    documentation => 'HTTPS mode for a virtual host',
+);
+
+has 'vhostMaintenance' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'Maintenance mode for a virtual host',
+);
+
+has 'vhostOptions' => (
+    is      => 'rw',
+    isa     => 'HashRef',
+    default => sub {
+        my $self = shift;
+        return {
+            vhostPort        => $self->vhostPort,
+            vhostHttps       => $self->vhostHttps,
+            vhostMaintenance => $self->vhostMaintenance,
+            vhostAliases     => $self->vhostAliases,
+        };
+    },
+    lazy          => 1,
+    documentation => 'Options for a virtual host',
+);
+
+has 'vhostPort' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '-1',
+    documentation => 'Redirection port for a virtual host',
+);
+
 no Mouse;
 
 1;

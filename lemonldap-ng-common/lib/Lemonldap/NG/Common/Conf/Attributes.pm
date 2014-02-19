@@ -1398,27 +1398,6 @@ has 'useSafeJail' => (
 
 ## V
 
-has 'vhostHttps' => (
-    is            => 'rw',
-    isa           => 'Int',
-    default       => '-1',
-    documentation => 'HTTPS mode for a virtual host',
-);
-
-has 'vhostMaintenance' => (
-    is            => 'rw',
-    isa           => 'Int',
-    default       => '-1',
-    documentation => 'Maintenance mode for a virtual host',
-);
-
-has 'vhostPort' => (
-    is            => 'rw',
-    isa           => 'Int',
-    default       => '-1',
-    documentation => 'Redirection port for a virtual host',
-);
-
 ## W
 
 has 'webIDAuthnLevel' => (
