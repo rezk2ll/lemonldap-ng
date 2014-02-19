@@ -112,17 +112,10 @@ sub setSessionInfo {
     my $self = shift;
     $self->{sessionInfo}->{dn} = $self->{dn};
 
-    foreach ( keys %{ $self->{exportedVars} } ) {
-        $self->{sessionInfo}->{$_} =
-          $self->{ldap}
-          ->getLdapValue( $self->{entry}, $self->{exportedVars}->{$_} )
-          || "";
-    }
-
-    foreach ( keys %{ $self->{ldapExportedVars} } ) {
-        $self->{sessionInfo}->{$_} =
-          $self->{ldap}
-          ->getLdapValue( $self->{entry}, $self->{ldapExportedVars}->{$_} )
+    my %vars = ( %{ $self->{exportedVars} }, %{ $self->{ldapExportedVars} } );
+    while ( my ( $k, $v ) = each %vars ) {
+        $self->{sessionInfo}->{$k} =
+          $self->{ldap}->getLdapValue( $self->{entry}, $v )
           || "";
     }
 

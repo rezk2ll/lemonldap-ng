@@ -102,12 +102,8 @@ sub setSessionInfo {
     # Set _user unless already defined
     $self->{sessionInfo}->{_user} ||= $self->{user};
 
-    while ( my ( $var, $attr ) = each %{ $self->{exportedVars} } ) {
-        $self->{sessionInfo}->{$var} = $self->{entry}->{$attr}
-          if ( defined $self->{entry}->{$attr} );
-    }
-
-    while ( my ( $var, $attr ) = each %{ $self->{dbiExportedVars} } ) {
+    my %vars = ( %{ $self->{exportedVars} }, %{ $self->{dbiExportedVars} } );
+    while ( my ( $var, $attr ) = each %vars ) {
         $self->{sessionInfo}->{$var} = $self->{entry}->{$attr}
           if ( defined $self->{entry}->{$attr} );
     }

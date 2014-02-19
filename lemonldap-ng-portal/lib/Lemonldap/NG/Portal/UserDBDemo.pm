@@ -62,15 +62,10 @@ sub getUser {
 sub setSessionInfo {
     my $self = shift;
 
-    # Concat global exportedVars and module specific exportedVars
-    my @vars = ();
-    @vars = ( @vars, keys %{ $self->{exportedVars} } ) if $self->{exportedVars};
-    @vars = ( @vars, keys %{ $self->{demoExportedVars} } )
-      if $self->{demoExportedVars};
-
-    foreach (@vars) {
-        $self->{sessionInfo}->{$_} =
-          $self->{_demoAccounts}->{ $self->{user} }->{$_}
+    my %vars = ( %{ $self->{exportedVars} }, %{ $self->{demoExportedVars} } );
+    while ( my ( $k, $v ) = each %vars ) {
+        $self->{sessionInfo}->{$k} =
+          $self->{_demoAccounts}->{ $self->{user} }->{$v}
           || "";
     }
 

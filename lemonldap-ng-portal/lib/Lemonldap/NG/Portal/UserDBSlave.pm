@@ -22,9 +22,8 @@ sub setSessionInfo {
     return PE_FORBIDDENIP
       unless ( $self->checkIP );
 
-    while ( my ( $k, $v ) =
-        each( %{ $self->{exportedVars} }, %{ $self->{slaveExportedVars} } ) )
-    {
+    my %vars = ( %{ $self->{exportedVars} }, %{ $self->{slaveExportedVars} } );
+    while ( my ( $k, $v ) = each %vars ) {
         $v = 'HTTP_' . uc($v);
         $v =~ s/\-/_/g;
         $self->{sessionInfo}->{$k} = $ENV{$v};
