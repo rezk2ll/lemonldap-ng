@@ -59,11 +59,20 @@ Examples for <a href="../../documentation/1.4/authldap.html" class="wikilink1" t
 
 <p>
 
+You can define exported variables for each module in the module configuration itself. Variables defined in the main <code>Exported variables</code> will be used for each backend. Variables defined in the exported variables node of the module will be used only for that module.
+</p>
+
+<p>
+<p><div class="notetip">You can define environment variables in <code>Exported variables</code>, this allows to populate user session with some environment values. Environment variables will not be queried in users database.
+</div></p>
+</p>
+
+<p>
 <a href="/_detail/documentation/exportedvars.png?id=documentation%3A1.4%3Aexportedvars" class="media" title="documentation:exportedvars.png"><img src="../../../media/documentation/exportedvars.png" class="mediacenter" title="Exported variables in the Manager" alt="Exported variables in the Manager" width="500" /></a>
 </p>
 
 </div>
-<!-- SECTION "Presentation" [35-771] -->
+<!-- SECTION "Presentation" [35-1250] -->
 <h2><a name="extend_variables_using_macros_and_groups" id="extend_variables_using_macros_and_groups">Extend variables using macros and groups</a></h2>
 <div class="level2">
 <div class="plugin_include_content" id="plugin_include__documentation:1.4:performances">
@@ -118,4 +127,4 @@ Besides, macros and groups are computed in alphanumeric order, that is, in the o
 <div class="level2">
 
 </div>
-<!-- SECTION "Extend variables using macros and groups" [772-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Extend variables using macros and groups" [1251-] --></div><!-- closes <div class="dokuwiki export">-->
