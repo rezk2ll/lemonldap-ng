@@ -229,6 +229,13 @@ has 'googleAuthnLevel' => (
     documentation => 'Google authentication level',
 );
 
+has 'googleExportedVars' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return {}; },
+    documentation => 'Google exported variables',
+);
+
 has 'groups' => (
     is            => 'rw',
     isa           => 'HashRef',

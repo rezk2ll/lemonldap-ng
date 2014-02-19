@@ -15,7 +15,7 @@ use constant AXSPECURL      => 'http://openid.net/srv/ax/1.0';
 use constant GOOGLEENDPOINT => 'https://www.google.com/accounts/o8/id';
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.3.0';
+our $VERSION = '1.4.0';
 our $googleEndPoint;
 
 BEGIN {
@@ -126,7 +126,8 @@ sub checkGoogleSession {
     }
 
     # Now store datas in session
-    while ( my ( $k, $v ) = each %{ $self->{exportedVars} } ) {
+    my %vars = ( %{ $self->{exportedVars} }, %{ $self->{googleExportedVars} } );
+    while ( my ( $k, $v ) = each %vars ) {
         my $attr = $k;
         $attr =~ s/^!//;
 
@@ -160,9 +161,7 @@ sub checkGoogleSession {
         # If an exported variable is not AX compliant, just warn
         else {
             $self->lmLog(
-                'Ignoring attribute '
-                  . $self->{exportedVars}->{$k}
-                  . ' which is not a valid Google OpenID AX attribute',
+"Ignoring attribute $v which is not a valid Google OpenID AX attribute",
                 'warn'
             );
         }

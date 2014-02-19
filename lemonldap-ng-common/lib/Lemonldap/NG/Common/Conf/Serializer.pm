@@ -111,6 +111,7 @@ sub unserialize {
 	|exportedHeaders
 	|exportedVars
 	|globalStorageOptions
+	|googleExportedVars
         |grantSessionRules
 	|groups
 	|ldapExportedVars

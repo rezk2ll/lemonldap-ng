@@ -570,9 +570,14 @@ sub struct {
 
                 # Google
                 googleParams => {
-                    _nodes           => [qw(googleAuthnLevel)],
-                    _help            => 'authGoogle',
-                    googleAuthnLevel => 'int:/googleAuthnLevel',
+                    _nodes => [qw(googleAuthnLevel cn:googleExportedVars)],
+                    _help  => 'authGoogle',
+                    googleAuthnLevel   => 'int:/googleAuthnLevel',
+                    googleExportedVars => {
+                        _nodes => ['hash:/googleExportedVars:vars:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'authGoogle',
+                    },
                 },
 
                 # Facebook
@@ -733,6 +738,7 @@ sub struct {
                       'text:/browserIdBackgroundColor',
                 },
 
+                # Demo
                 demoParams => {
                     _nodes           => [qw(cn:demoExportedVars)],
                     _help            => 'authDemo',
@@ -1482,7 +1488,13 @@ sub testStruct {
             test    => qr/^[a-zA-Z]\w*$/,
             msgFail => 'Bad cookie name',
         },
-        customFunctions  => $testNotDefined,
+        customFunctions => $testNotDefined,
+        dbiExportedVars => {
+            keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
+            keyMsgFail => 'Bad variable name',
+            test       => qr/^[a-zA-Z][\w:\-]*$/,
+            msgFail    => 'Bad attribute name',
+        },
         demoExportedVars => {
             keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
             keyMsgFail => 'Bad variable name',
@@ -1517,6 +1529,12 @@ sub testStruct {
         globalStorageOptions => {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',
+        },
+        googleExportedVars => {
+            keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
+            keyMsgFail => 'Bad variable name',
+            test       => qr/^[a-zA-Z][\w:\-]*$/,
+            msgFail    => 'Bad attribute name',
         },
         grantSessionRules => {
             keyTest     => $perlExpr,
@@ -1715,10 +1733,16 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             keyTest    => qr/^[\w-]+$/,
             keyMsgFail => 'Invalid session data',
         },
-        singleSession  => $boolean,
-        singleIP       => $boolean,
-        singleUserByIP => $boolean,
-        slaveMasterIP  => {
+        singleSession     => $boolean,
+        singleIP          => $boolean,
+        singleUserByIP    => $boolean,
+        slaveExportedVars => {
+            keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
+            keyMsgFail => 'Bad variable name',
+            test       => qr/^[a-zA-Z][\w:\-]*$/,
+            msgFail    => 'Bad attribute name',
+        },
+        slaveMasterIP => {
             test =>
               qr/^(\s*((\d{1,3}\.){3}\d{1,3}\s+)*(\d{1,3}\.){3}\d{1,3})?\s*$/,
             msgFail => 'Bad parameter "master\'s IP" in Slave',
@@ -1767,6 +1791,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 keyTest    => qr/^vhost(Port|Https|Maintenance|Aliases)$/,
                 keyMsgFail => 'Bad option name',
             },
+        },
+        webIDExportedVars => {
+            keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
+            keyMsgFail => 'Bad variable name',
+            test       => qr/^[a-zA-Z][\w:\-]*$/,
+            msgFail    => 'Bad attribute name',
         },
         whatToTrace => $lmAttrOrMacro,
 
