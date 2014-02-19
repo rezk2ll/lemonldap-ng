@@ -4,11 +4,12 @@ package Lemonldap::NG::Manager::Cli;
 
 use strict;
 use Lemonldap::NG::Common::Conf;
+use Lemonldap::NG::Common::Conf::SubAttributes;
 use POSIX qw(strftime);
 
 # Constants
 
-our $VERSION = "1.3.3";
+our $VERSION = "1.4.0";
 
 my $ERRORS = {
     TOO_FEW_ARGUMENTS  => "Too few arguments",
@@ -24,7 +25,10 @@ my $ERRORS = {
 sub new {
     my ($class) = @_;
 
-    my $self = { "confAccess" => Lemonldap::NG::Common::Conf->new() };
+    my $self = {
+        "confAccess"    => Lemonldap::NG::Common::Conf->new(),
+        "subAttributes" => Lemonldap::NG::Common::Conf::SubAttributes->new(),
+    };
 
     $self->{conf} = $self->{confAccess}->getConf();
 
@@ -806,15 +810,14 @@ sub vhostAdd {
         return 0;
     }
 
-    $self->{conf}->{vhostOptions}->{$vhost} = {
-        vhostMaintenance => '0',
-        vhostPort        => '-1',
-        vhostHttps       => '-1'
-    };
+    $self->{conf}->{vhostOptions}->{$vhost} =
+      $self->{subAttributes}->vhostOptions;
+    $self->{conf}->{locationRules}->{$vhost} =
+      $self->{subAttributes}->locationRules;
+    $self->{conf}->{exportedHeaders}->{$vhost} =
+      $self->{subAttributes}->exportedHeaders;
 
-    $self->{conf}->{locationRules}->{$vhost}   = { default     => "deny" };
-    $self->{conf}->{exportedHeaders}->{$vhost} = { "Auth-User" => "\$uid" };
-    $self->{confModified}                      = 1;
+    $self->{confModified} = 1;
 
 }
 
@@ -893,8 +896,9 @@ sub vhostSetPort {
         else {
             $self->{conf}->{vhostOptions}->{$vhost} = {
                 vhostPort        => $port,
-                vhostHttps       => '-1',
-                vhostMaintenance => '0'
+                vhostHttps       => $self->{subAttributes}->vhostHttps,
+                vhostMaintenance => $self->{subAttributes}->vhostMaintenance,
+                vhostAliases     => $self->{subAttributes}->vhostAliases,
             };
         }
     }
@@ -925,9 +929,10 @@ sub vhostSetHttps {
         }
         else {
             $self->{conf}->{vhostOptions}->{$vhost} = {
-                vhostPort        => '-1',
+                vhostPort        => $self->{subAttributes}->vhostPort,
                 vhostHttps       => $https,
-                vhostMaintenance => '0'
+                vhostMaintenance => $self->{subAttributes}->vhostMaintenance,
+                vhostAliases     => $self->{subAttributes}->vhostAliases,
             };
         }
     }
@@ -959,9 +964,10 @@ sub vhostSetMaintenance {
         }
         else {
             $self->{conf}->{vhostOptions}->{$vhost} = {
-                vhostPort        => '-1',
-                vhostHttps       => '-1',
-                vhostMaintenance => $off
+                vhostPort        => $self->{subAttributes}->vhostPort,
+                vhostHttps       => $self->{subAttributes}->vhostHttps,
+                vhostMaintenance => $off,
+                vhostAliases     => $self->{subAttributes}->vhostAliases,
             };
         }
     }
