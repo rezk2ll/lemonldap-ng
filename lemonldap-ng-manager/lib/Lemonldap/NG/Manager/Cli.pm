@@ -8,7 +8,7 @@ use POSIX qw(strftime);
 
 # Constants
 
-our $VERSION = "1.3.2";
+our $VERSION = "1.3.3";
 
 my $ERRORS = {
     TOO_FEW_ARGUMENTS  => "Too few arguments",
@@ -426,14 +426,13 @@ sub appsSetName {
                 $found                  = 1;
                 $self->{confModified}   = 1;
             }
-
-            if ( $found == 0 ) {
-                $self->setError( "$id: "
-                      . $ERRORS->{CONFIG_WRITE_ERROR}
-                      . ": Application $id not found" );
-                return 0;
-            }
         }
+    }
+    if ( $found == 0 ) {
+        $self->setError( "$id: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": Application $id not found" );
+        return 0;
     }
 }
 
@@ -458,14 +457,13 @@ sub appsSetDesc {
                 $found                         = 1;
                 $self->{confModified}          = 1;
             }
-
-            if ( $found == 0 ) {
-                $self->setError( "$id: "
-                      . $ERRORS->{CONFIG_WRITE_ERROR}
-                      . ": Application $id not found" );
-                return 0;
-            }
         }
+    }
+    if ( $found == 0 ) {
+        $self->setError( "$id: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": Application $id not found" );
+        return 0;
     }
 }
 
@@ -490,14 +488,13 @@ sub appsSetLogo {
                 $found                  = 1;
                 $self->{confModified}   = 1;
             }
-
-            if ( $found == 0 ) {
-                $self->setError( "$id: "
-                      . $ERRORS->{CONFIG_WRITE_ERROR}
-                      . ": Application $id not found" );
-                return 0;
-            }
         }
+    }
+    if ( $found == 0 ) {
+        $self->setError( "$id: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": Application $id not found" );
+        return 0;
     }
 }
 
@@ -522,15 +519,16 @@ sub appsSetDisplay {
                 $found                     = 1;
                 $self->{confModified}      = 1;
             }
-
-            if ( $found == 0 ) {
-                $self->setError( "$id: "
-                      . $ERRORS->{CONFIG_WRITE_ERROR}
-                      . ": Application $id not found" );
-                return 0;
-            }
         }
     }
+
+    if ( $found == 0 ) {
+        $self->setError( "$id: "
+              . $ERRORS->{CONFIG_WRITE_ERROR}
+              . ": Application $id not found" );
+        return 0;
+    }
+
 }
 
 ## @method void appsGet ( string id )
@@ -868,8 +866,8 @@ sub vhostDel {
         $error .= ". ignoring...";
         $self->setError(
             "$vhost: " . $ERRORS->{CONFIG_WRITE_ERROR} . ": $error" );
-        $self->{confModified} = 1;
     }
+    $self->{confModified} = 1;
 }
 
 ## @method void vhostSetPort ( string vhost, int port )
