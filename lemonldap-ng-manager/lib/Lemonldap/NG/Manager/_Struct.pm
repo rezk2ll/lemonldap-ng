@@ -560,10 +560,17 @@ sub struct {
 
                 # OpenID
                 openIdParams => {
-                    _nodes => [qw(openIdAuthnLevel openIdSecret openIdIDPList)],
-                    _help  => 'authOpenID',
-                    openIdAuthnLevel => 'int:/openIdAuthnLevel',
-                    openIdSecret     => 'text:/openIdSecret',
+                    _nodes => [
+                        qw(openIdAuthnLevel cn:openIdExportedVars openIdSecret openIdIDPList)
+                    ],
+                    _help              => 'authOpenID',
+                    openIdAuthnLevel   => 'int:/openIdAuthnLevel',
+                    openIdExportedVars => {
+                        _nodes => ['hash:/openIdExportedVars:vars:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'authOpenID',
+                    },
+                    openIdSecret => 'text:/openIdSecret',
                     openIdIDPList =>
                       'text:/openIdIDPList:authOpenID:openididplist',
                 },
@@ -1681,8 +1688,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',
         },
-        notifyDeleted            => $boolean,
-        notifyOther              => $boolean,
+        notifyDeleted      => $boolean,
+        notifyOther        => $boolean,
+        openIdExportedVars => {
+            keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
+            keyMsgFail => 'Bad variable name',
+            test       => qr/^[a-zA-Z][\w:\-]*$/,
+            msgFail    => 'Bad attribute name',
+        },
         persistentStorageOptions => {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',

@@ -120,6 +120,7 @@ sub unserialize {
 	|logoutServices
 	|macros
 	|notificationStorageOptions
+	|openIdExportedVars
 	|persistentStorageOptions
 	|portalSkinRules
 	|post

@@ -678,6 +678,13 @@ has 'openIdAuthnLevel' => (
     documentation => 'OpenID authentication level',
 );
 
+has 'openIdExportedVars' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return {}; },
+    documentation => 'OpenID exported variables',
+);
+
 has 'openIdSreg_email' => (
     is            => 'rw',
     isa           => 'Str',
