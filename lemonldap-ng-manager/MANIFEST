@@ -48,6 +48,7 @@ example/skins/default/images/tree/spacer.gif
 example/skins/default/images/tree/tree.png
 example/skins/default/js/jquery-1.10.2.js
 example/skins/default/js/jquery-1.10.2.min.js
+example/skins/default/js/jquery-1.10.2.min.map
 example/skins/default/js/jquery-ui-1.10.3.custom.js
 example/skins/default/js/jquery-ui-1.10.3.custom.min.js
 example/skins/default/js/jquery.ajaxfileupload.js

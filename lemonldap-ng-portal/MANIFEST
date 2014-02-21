@@ -87,6 +87,7 @@ example/skins/common/js/confirm.js
 example/skins/common/js/info.js
 example/skins/common/js/jquery-1.10.2.js
 example/skins/common/js/jquery-1.10.2.min.js
+example/skins/common/js/jquery-1.10.2.min.map
 example/skins/common/js/jquery-ui-1.10.3.custom.js
 example/skins/common/js/jquery-ui-1.10.3.custom.min.js
 example/skins/common/js/jquery.base64.js
