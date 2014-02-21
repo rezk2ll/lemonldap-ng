@@ -258,6 +258,10 @@ sub new {
 
     # Use LemonLDAP::NG custom Apache::Session
     $self->{globalStorageOptions}->{backend} = $self->{globalStorage};
+    $self->{globalStorageOptions}->{localStorage} =
+      $self->{localSessionStorage};
+    $self->{globalStorageOptions}->{localStorageOptions} =
+      $self->{localSessionStorageOptions};
     $self->{globalStorage} = 'Lemonldap::NG::Common::Apache::Session';
 
     # Check specific persistent session configuration
