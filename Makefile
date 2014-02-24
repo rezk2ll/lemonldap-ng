@@ -601,7 +601,7 @@ manager_clean:
 	@if test -e ${SRCMANAGERDIR}/Makefile;then $(MAKE) -C ${SRCMANAGERDIR} distclean;fi
 	@rm -vf manager*
 
-debian-packages: debian-dist
+debian-local-packages: debian-dist
 	mv lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) /tmp/
 	version=$(VERSION) && \
 	cd /tmp/ && \
@@ -613,7 +613,19 @@ debian-packages: debian-dist
 		--lintian-opts --color --lintian-opts auto --lintian-opts -L \
 		--lintian-opts +=pedantic
 
-debian-install: debian-packages
+debian-packages: debian-dist
+	mv lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) /tmp/
+	version=$(VERSION) && \
+	cd /tmp/ && \
+	rm -rf lemonldap-ng-$$version && \
+	$(UNCOMPRESS) lemonldap-ng_$$version.orig.$(COMPRESSSUFFIX) && \
+	cd lemonldap-ng-$$version && \
+	debuild -us -uc -b --lintian-opts -i \
+		--lintian-opts -v --lintian-opts -I --lintian-opts -E \
+		--lintian-opts --color --lintian-opts auto --lintian-opts -L \
+		--lintian-opts +=pedantic
+
+debian-install: debian-local-packages
 	cd /tmp/lemonldap-ng-$(VERSION) && \
 	$(SU) debi
 
