@@ -9,8 +9,8 @@
  <TMPL_IF NAME="browserIdEnabled">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
  </TMPL_IF>
- <link href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/bootstrap.min.css" rel="stylesheet">
- <link href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/bootstrap-theme.min.css" rel="stylesheet">
+ <link href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/bootstrap.css" rel="stylesheet">
+ <link href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/bootstrap-theme.css" rel="stylesheet">
  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/styles.css" />
  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,7 +27,7 @@
  <TMPL_INCLUDE NAME="../common/script.tpl">
  <script src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/js/skin.js"></script>
  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/portal.js"></script>
- <script src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/js/bootstrap.min.js"></script>
+ <script src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/js/bootstrap.js"></script>
  <TMPL_INCLUDE NAME="customhead.tpl">
 </head>
 <body>

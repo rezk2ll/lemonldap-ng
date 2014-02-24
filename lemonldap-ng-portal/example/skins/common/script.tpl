@@ -1,6 +1,6 @@
  <!-- Load javascript common to all skins -->
- <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-1.10.2.min.js"></script>
- <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-ui-1.10.3.custom.min.js"></script>
+ <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-1.10.2.js"></script>
+ <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-ui-1.10.3.custom.js"></script>
  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery.base64.js"></script>
  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery.cookie.js"></script>
  <TMPL_IF NAME="browserIdEnabled">

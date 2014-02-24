@@ -3,6 +3,7 @@ lemonldap-ng.ini
 lib/Lemonldap/NG/Common.pm
 lib/Lemonldap/NG/Common/Apache/Session.pm
 lib/Lemonldap/NG/Common/Apache/Session/SOAP.pm
+lib/Lemonldap/NG/Common/Apache/Session/Store.pm
 lib/Lemonldap/NG/Common/CGI.pm
 lib/Lemonldap/NG/Common/CGI/SOAPServer.pm
 lib/Lemonldap/NG/Common/CGI/SOAPService.pm

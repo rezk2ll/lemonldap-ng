@@ -12,8 +12,8 @@
 <link rel="stylesheet" type="text/css" id="csstheme" href="<TMPL_VAR NAME="DIR">/<TMPL_VAR NAME="CSS_THEME">/jquery-ui-1.10.3.custom.min.css" />
 <!-- Manager CSS -->
 <link rel="stylesheet" type="text/css" id="cssmenu" href="<TMPL_VAR NAME="DIR">/css/<TMPL_VAR NAME="CSS">" />
-<script src="<TMPL_VAR NAME="DIR">/js/jquery-1.10.2.min.js" type="text/JavaScript"></script>
-<script src="<TMPL_VAR NAME="DIR">/js/jquery-ui-1.10.3.custom.min.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/js/jquery-1.10.2.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/js/jquery-ui-1.10.3.custom.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/jquery.cookie.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/jquery.ajaxfileupload.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/jquery.elastic.source.js" type="text/JavaScript"></script>

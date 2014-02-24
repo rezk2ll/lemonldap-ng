@@ -14,11 +14,7 @@ example/scripts/purgeCentralCache.cron.d
 example/skins/bootstrap/checklogins.tpl
 example/skins/bootstrap/confirm.tpl
 example/skins/bootstrap/css/bootstrap-theme.css
-example/skins/bootstrap/css/bootstrap-theme.css.map
-example/skins/bootstrap/css/bootstrap-theme.min.css
 example/skins/bootstrap/css/bootstrap.css
-example/skins/bootstrap/css/bootstrap.css.map
-example/skins/bootstrap/css/bootstrap.min.css
 example/skins/bootstrap/css/styles.css
 example/skins/bootstrap/customfooter.tpl
 example/skins/bootstrap/customhead.tpl
@@ -32,7 +28,6 @@ example/skins/bootstrap/footer.tpl
 example/skins/bootstrap/header.tpl
 example/skins/bootstrap/info.tpl
 example/skins/bootstrap/js/bootstrap.js
-example/skins/bootstrap/js/bootstrap.min.js
 example/skins/bootstrap/js/skin.js
 example/skins/bootstrap/login.tpl
 example/skins/bootstrap/mail.tpl
@@ -86,10 +81,7 @@ example/skins/common/js/browseridlogout.js
 example/skins/common/js/confirm.js
 example/skins/common/js/info.js
 example/skins/common/js/jquery-1.10.2.js
-example/skins/common/js/jquery-1.10.2.min.js
-example/skins/common/js/jquery-1.10.2.min.map
 example/skins/common/js/jquery-ui-1.10.3.custom.js
-example/skins/common/js/jquery-ui-1.10.3.custom.min.js
 example/skins/common/js/jquery.base64.js
 example/skins/common/js/jquery.cookie.js
 example/skins/common/js/portal.js
