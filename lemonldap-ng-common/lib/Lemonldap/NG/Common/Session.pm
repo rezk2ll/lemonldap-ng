@@ -13,7 +13,13 @@ use Lemonldap::NG::Common::Apache::Session;
 
 has 'id' => (
     is  => 'rw',
-    isa => 'Str',
+    isa => 'Str|Undef',
+);
+
+has 'force' => (
+    is      => 'rw',
+    isa     => 'Bool',
+    default => 0,
 );
 
 has 'kind' => (
@@ -38,19 +44,18 @@ has 'storageModule' => (
 );
 
 has 'storageModuleOptions' => (
-    is       => 'ro',
-    isa      => 'HashRef',
-    required => 1,
+    is  => 'ro',
+    isa => 'HashRef|Undef',
 );
 
 has 'cacheModule' => (
     is  => 'rw',
-    isa => 'Str',
+    isa => 'Str|Undef',
 );
 
 has 'cacheModuleOptions' => (
     is  => 'rw',
-    isa => 'HashRef',
+    isa => 'HashRef|Undef',
 );
 
 sub BUILD {
@@ -65,7 +70,7 @@ sub BUILD {
     # Register options for common Apache::Session module
     my $moduleOptions = $self->storageModuleOptions || {};
     my %options = (
-        %{ $self->storageModuleOptions },
+        %$moduleOptions,
         backend             => $self->storageModule,
         localStorage        => $self->cacheModule,
         localStorageOptions => $self->cacheModuleOptions
@@ -74,6 +79,16 @@ sub BUILD {
     $self->options( \%options );
 
     my $data = $self->_tie_session;
+
+    # If session id was submitted but session is not found
+    # And we want to force id
+    # Then use setId to create session
+    if ( $self->id and !$data and $self->force ) {
+        $options{setId} = $self->id;
+        $self->options( \%options );
+        $self->id(undef);
+        $data = $self->_tie_session;
+    }
 
     if ($data) {
         $data->{_session_kind} = $self->kind if $self->kind;
