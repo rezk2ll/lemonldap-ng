@@ -251,10 +251,9 @@ sub new {
         "You've to indicate a an Apache::Session storage module !" )
       unless ( $self->{globalStorage} );
 
-    # Use global storage for all backedns by default
+    # Use global storage for all backends by default
 
     # Persistent
-
     $self->{persistentStorage} ||= $self->{globalStorage};
     if (   !$self->{persistentStorageOptions}
         or !%{ $self->{persistentStorageOptions} } )
@@ -2226,8 +2225,8 @@ sub store {
     }
 
     # Main session
-    my $session = $self->getApacheSession( $self->{id} )
-      or return PE_APACHESESSIONERROR;
+    my $session = $self->getApacheSession( $self->{id} );
+    return PE_APACHESESSIONERROR unless ( $session->data );
 
     # Compute unsecure cookie value if needed
     if ( $self->{securedCookie} == 3 ) {
@@ -2235,6 +2234,8 @@ sub store {
           $self->{cipher}->encryptHex( $self->{id}, "http" );
     }
 
+    # Fill session
+    my $infos = {};
     foreach my $k ( keys %{ $self->{sessionInfo} } ) {
         next unless defined $self->{sessionInfo}->{$k};
         my $displayValue = $self->{sessionInfo}->{$k};
@@ -2242,8 +2243,9 @@ sub store {
             $displayValue = '****';
         }
         $self->lmLog( "Store $displayValue in session key $k", 'debug' );
-        $session->update( { $k => $self->{sessionInfo}->{$k} } );
+        $infos->{$k} = $self->{sessionInfo}->{$k};
     }
+    $session->update($infos);
 
     PE_OK;
 }
