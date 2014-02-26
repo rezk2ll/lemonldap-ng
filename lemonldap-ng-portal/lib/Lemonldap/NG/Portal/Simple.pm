@@ -16,6 +16,7 @@ use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
 use POSIX qw(strftime);
 use Lemonldap::NG::Portal::_i18n;    #inherits
+use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Apache::Session
   ;    #link protected session Apache::Session object
 use Lemonldap::NG::Common::Safe;    #link protected safe Safe object
@@ -249,29 +250,15 @@ sub new {
     $self->abort( "Configuration error",
         "You've to indicate a an Apache::Session storage module !" )
       unless ( $self->{globalStorage} );
-    unless ( $self->{globalStorage}->can('populate') ) {
-        eval "require " . $self->{globalStorage};
-        $self->abort( "Configuration error",
-            "Module " . $self->{globalStorage} . " not found in \@INC" )
-          if ($@);
-    }
 
-    # Use LemonLDAP::NG custom Apache::Session
-    $self->{globalStorageOptions}->{backend} = $self->{globalStorage};
-    $self->{globalStorageOptions}->{localStorage} =
-      $self->{localSessionStorage};
-    $self->{globalStorageOptions}->{localStorageOptions} =
-      $self->{localSessionStorageOptions};
-    $self->{globalStorage} = 'Lemonldap::NG::Common::Apache::Session';
+    # Use global storage for all backedns by default
 
-    # Check specific persistent session configuration
-    if ( $self->{persistentStorage} ) {
-        $self->{persistentStorageOptions}->{backend} =
-          $self->{persistentStorage};
-        $self->{persistentStorage} = 'Lemonldap::NG::Common::Apache::Session';
-    }
-    else {
-        $self->{persistentStorage}        = $self->{globalStorage};
+    # Persistent
+
+    $self->{persistentStorage} ||= $self->{globalStorage};
+    if (   !$self->{persistentStorageOptions}
+        or !%{ $self->{persistentStorageOptions} } )
+    {
         $self->{persistentStorageOptions} = $self->{globalStorageOptions};
     }
 
@@ -285,16 +272,6 @@ sub new {
     $self->{casStorage} ||= $self->{globalStorage};
     if ( !$self->{casStorageOptions} or !%{ $self->{casStorageOptions} } ) {
         $self->{casStorageOptions} = $self->{globalStorageOptions};
-    }
-
-    # Load other storages if needed
-    foreach my $otherStorage ( $self->{samlStorage}, $self->{casStorage} ) {
-        if ( $otherStorage ne $self->{globalStorage} ) {
-            eval "require " . $otherStorage;
-            $self->abort( "Configuration error",
-                "Module " . $otherStorage . " not found in \@INC" )
-              if ($@);
-        }
     }
 
     # 2. Domain
@@ -807,61 +784,52 @@ sub redirect {
 # If $id is set to undef, return a new session.
 # @param id session reference
 # @param noInfo do not set Apache REMOTE_USER
-# return session hashref
+# return Lemonldap::NG::Common::Session object
 sub getApacheSession {
     my ( $self, $id, $noInfo ) = @_;
-    my %h;
 
-    # Trying to recover session from global session storage
-    eval { tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions}; };
-    if ( $@ or not tied(%h) ) {
+    my $apacheSession = Lemonldap::NG::Common::Session->new(
+        {
+            storageModule        => $self->{globalStorage},
+            storageModuleOptions => $self->{globalStorageOptions},
+            cacheModule          => $self->{localSessionStorage},
+            cacheModuleOptions   => $self->{localSessionStorageOptions},
+            id                   => $id,
+            kind                 => "SSO",
+        }
+    );
 
-        # Session not available (expired ?)
-        if ($id) {
-            $self->lmLog(
-                "Session $id can't be retrieved (" . $self->ipAddr . ")",
-                'info' )
-              unless $noInfo;
-        }
-        else {
-            $self->lmLog( "Unable to create new session: $@", 'error' );
-        }
-        return 0;
-    }
+    return unless $apacheSession->data;
+
     unless ($noInfo) {
-        $self->setApacheUser( $h{ $self->{whatToTrace} } ) if ($id);
-        $self->{id} = $h{_session_id};
+        $self->setApacheUser( $apacheSession->data->{ $self->{whatToTrace} } )
+          if ($id);
+        $self->{id} = $apacheSession->id;
     }
-    return \%h;
+    return $apacheSession;
 }
 
 ## @method protected hashref getPersistentSession(string id)
 # Try to recover the persitent session corresponding to id and return session datas.
 # If $id is set to undef, return a new session.
 # @param id session reference
-# return session hashref
+# return Lemonldap::NG::Common::Session object
 sub getPersistentSession {
     my ( $self, $id ) = splice @_;
-    my %h;
 
-    # Trying to recover session from persistent session storage
-    eval {
-        tie %h, $self->{persistentStorage}, $id,
-          $self->{persistentStorageOptions};
-    };
-    if ( $@ or not tied(%h) ) {
+    my $persistentSession = Lemonldap::NG::Common::Session->new(
+        {
+            storageModule        => $self->{persistentStorage},
+            storageModuleOptions => $self->{persistentStorageOptions},
+            cacheModule          => $self->{localSessionStorage},
+            cacheModuleOptions   => $self->{localSessionStorageOptions},
+            id                   => $id,
+            force                => 1,
+            kind                 => "Persistent",
+        }
+    );
 
-        # Session not available
-        if ($id) {
-            $self->lmLog( "Persistent session $id not available", 'debug' );
-        }
-        else {
-            $self->lmLog( "Unable to create new persistent session: $@",
-                'error' );
-        }
-        return 0;
-    }
-    return \%h;
+    return $persistentSession;
 }
 
 ## @method protected string _md5hash(string s)
@@ -893,36 +861,10 @@ sub updatePersistentSession {
     $uid ||= $self->{sessionInfo}->{ $self->{whatToTrace} };
     return () unless ($uid);
 
-    my $h = $self->getPersistentSession( $self->_md5hash($uid) );
-    unless ($h) {
-        $h = {};    # reset $h
-        my %opts = %{ $self->{persistentStorageOptions} };
-        $opts{setId} = $self->_md5hash($uid);
-        eval { tie %$h, $self->{persistentStorage}, undef, \%opts; };
-        if ($@) {
-            $self->lmLog( "Unable to create persistent session: $@", 'warn' );
-            return ();
-        }
-        else {
-            $self->lmLog(
-                "Persistent session " . $h->{_session_id} . " created for $uid",
-                'debug'
-            );
-        }
-    }
-    foreach ( keys %$infos ) {
-        if ( defined( $infos->{$_} ) ) {
-            $self->lmLog(
-                "Update persistent session key $_ with " . $infos->{$_},
-                'debug' );
-            $h->{$_} = $infos->{$_};
-        }
-        else {
-            $self->lmLog( "Delete persistent session key $_", 'debug' );
-            delete $h->{$_};
-        }
-    }
-    untie %$h;
+    my $persistentSession =
+      $self->getPersistentSession( $self->_md5hash($uid) );
+
+    $persistentSession->update($infos);
 }
 
 ## @method void updateSession(hashRef infos, string id)
@@ -959,29 +901,14 @@ sub updateSession {
             $self->{sessionInfo}->{$_} = $infos->{$_};
         }
 
-        # Delete session from local storage
-        eval { $self->{lmConf}->{refLocalStorage}->remove($id); };
-
         # Update session in global storage
-        if ( my $h = $self->getApacheSession( $id, 1 ) ) {
-
-            # Store/update session values
-            foreach ( keys %$infos ) {
-                if ( defined( $infos->{$_} ) ) {
-                    $self->lmLog( "Update session key $_ with " . $infos->{$_},
-                        'debug' );
-                    $h->{$_} = $infos->{$_};
-                }
-                else {
-                    $self->lmLog( "Delete session key $_", 'debug' );
-                    delete $h->{$_};
-                }
-            }
+        if ( my $apacheSession = $self->getApacheSession( $id, 1 ) ) {
 
             # Store updateTime
-            $h->{updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
+            $infos->{updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
 
-            untie %$h;
+            # Store/update session values
+            $apacheSession->update($infos);
         }
     }
 }
@@ -1203,34 +1130,22 @@ sub safe {
     return $safe;
 }
 
-##@method private boolean _deleteSession(Apache::Session* h, boolean preserveCookie)
+##@method private boolean _deleteSession(Lemonldap::NG::Common::Session session, boolean preserveCookie)
 # Delete an existing session. If "securedCookie" is set to 2, the http session
 # will also be removed.
 # @param h tied Apache::Session object
 # @param preserveCookie do not delete cookie
 # @return True if session has been deleted
 sub _deleteSession {
-    my ( $self, $h, $preserveCookie ) = @_;
-    my $result = 1;
-
-    # Return false if $h is not a hashref
-    if ( ref $h ne "HASH" ) {
-        $self->lmLog( "_deleteSession: \$h is not a session object", 'error' );
-        return 0;
-    }
+    my ( $self, $session, $preserveCookie ) = @_;
 
     # Invalidate http cookie and session, if set
     if ( $self->{securedCookie} >= 2 ) {
 
         # Try to find a linked http session (securedCookie == 2)
-        if ( my $id2 = $h->{_httpSession} ) {
-            if ( my $h2 = $self->getApacheSession( $id2, 1 ) ) {
-
-                # Try to purge local cache
-                # (if an handler is running on the same server)
-                eval { $self->{lmConf}->{refLocalStorage}->remove($id2); };
-                eval { tied(%$h2)->delete() };
-                $self->lmLog( $@, 'error' ) if ($@);
+        if ( my $id2 = $session->data->{_httpSession} ) {
+            if ( my $session2 = $self->getApacheSession( $id2, 1 ) ) {
+                $session2->remove;
             }
         }
 
@@ -1244,17 +1159,10 @@ sub _deleteSession {
             -secure  => 0,
             -expires => '-1d',
             @_,
-          );
+          ) unless ($preserveCookie);
     }
 
-    # Try to purge local cache
-    # (if an handler is running on the same server)
-    eval { $self->{lmConf}->{refLocalStorage}->remove( $h->{_session_id} ); };
-    eval { tied(%$h)->delete() };
-    if ($@) {
-        $self->lmLog( $@, 'error' );
-        $result = 0;
-    }
+    $session->remove;
 
     # Create an obsolete cookie to remove it
     push @{ $self->{cookie} },
@@ -1269,12 +1177,11 @@ sub _deleteSession {
       ) unless ($preserveCookie);
 
     # Log
-    my $user = $h->{ $self->{whatToTrace} };
+    my $user = $self->{sessionInfo}->{ $self->{whatToTrace} };
     $self->_sub( 'userNotice', "User $user has been disconnected" )
       if $user;
 
-    # Return the result of tied(%$h)->delete()
-    return $result;
+    return 1;
 }
 
 ##@method private void _dump(void* variable)
@@ -1578,16 +1485,16 @@ sub controlExistingSession {
             and $id = $cookies{ $self->{cookieName} }->value )
       )
     {
-        my $h = $self->getApacheSession($id);
+        my $apacheSession = $self->getApacheSession($id);
 
-        if ($h) {
-            %{ $self->{sessionInfo} } = %$h;
+        if ($apacheSession) {
+            %{ $self->{sessionInfo} } = %{ $apacheSession->data };
 
             # Logout if required
             if ( $self->param('logout') ) {
 
                 # Delete session
-                unless ( $self->_deleteSession($h) ) {
+                unless ( $self->_deleteSession($apacheSession) ) {
                     $self->lmLog( "Unable to delete session $id", 'error' );
                     return PE_ERROR;
                 }
@@ -1631,12 +1538,17 @@ sub controlExistingSession {
 
                 # Call logout for the module used to authenticate
                 $self->lmLog(
-                    "Process logout for authentication module " . $h->{_auth},
-                    'debug' );
+                    "Process logout for authentication module "
+                      . $self->{sessionInfo}->{_auth},
+                    'debug'
+                );
 
-                if ( $h->{'_auth'} ne $self->get_module('auth') ) {
-                    my $module_name =
-                      'Lemonldap::NG::Portal::Auth' . $h->{_auth};
+                if (
+                    $self->{sessionInfo}->{'_auth'} ne $self->get_module('auth')
+                  )
+                {
+                    my $module_name = 'Lemonldap::NG::Portal::Auth'
+                      . $self->{sessionInfo}->{_auth};
 
                     unless ( $self->loadModule($module_name) ) {
                         $self->lmLog( "Unable to load $module_name", 'error' );
@@ -1698,8 +1610,6 @@ sub controlExistingSession {
                     }
                 }
 
-                untie %$h;
-
                 # Redirect or Post if asked by authLogout
                 return $self->_subProcess(qw(autoRedirect))
                   if (  $self->{urldc}
@@ -1718,7 +1628,6 @@ sub controlExistingSession {
                 $self->{singleSession} = 1;
                 $self->_sub( 'removeOther', $id );
             }
-            untie %$h;
 
             # Special ajax request "ping" to check if session is available
             if ( $self->param('ping') ) {
@@ -1995,17 +1904,19 @@ sub setPersistentSessionInfo {
 
         return PE_OK unless ( $key and length($key) );
 
-        my $h = $self->getPersistentSession( $self->_md5hash($key) );
-        if ($h) {
-            $self->lmLog( "Persistent session found for $key", 'debug' );
-            foreach my $k ( keys %$h ) {
+        my $persistentSession =
+          $self->getPersistentSession( $self->_md5hash($key) );
 
-                # Do not restore _session_id
+        if ($persistentSession) {
+            $self->lmLog( "Persistent session found for $key", 'debug' );
+            foreach my $k ( keys %{ $persistentSession->data } ) {
+
+                # Do not restore some parameters
                 next if $k =~ /^_session_id$/;
+                next if $k =~ /^_session_kind$/;
                 $self->lmLog( "Restore persistent parameter $k", 'debug' );
-                $self->{sessionInfo}->{$k} = $h->{$k};
+                $self->{sessionInfo}->{$k} = $persistentSession->data->{$k};
             }
-            untie %$h;
         }
     }
 
@@ -2091,43 +2002,50 @@ sub removeOther {
     my ( $self, $current ) = @_;
     $self->{deleted}       = [];
     $self->{otherSessions} = [];
+
+    my $moduleOptions = $self->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $self->{globalStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
     if (   $self->{singleSession}
         or $self->{singleIP}
         or $self->{notifyOther} )
     {
         my $sessions =
-          $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
-            $self->{whatToTrace},
+          $module->searchOn( $moduleOptions, $self->{whatToTrace},
             $self->{sessionInfo}->{ $self->{whatToTrace} } );
         foreach my $id ( keys %$sessions ) {
             next if ( $current and ( $current eq $id ) );
-            my $h = $self->getApacheSession( $id, 1 ) or next;
+            my $session = $self->getApacheSession( $id, 1 ) or next;
             if (
                 $self->{singleSession}
                 or (    $self->{singleIP}
-                    and $self->{sessionInfo}->{ipAddr} ne $h->{ipAddr} )
+                    and $self->{sessionInfo}->{ipAddr} ne
+                    $session->data->{ipAddr} )
               )
             {
-                push @{ $self->{deleted} }, $self->_sumUpSession($h);
-                $self->_deleteSession( $h, 1 );
+                push @{ $self->{deleted} },
+                  $self->_sumUpSession( $session->data );
+                $self->_deleteSession( $session, 1 );
             }
             else {
-                push @{ $self->{otherSessions} }, $self->_sumUpSession($h);
+                push @{ $self->{otherSessions} },
+                  $self->_sumUpSession( $session->data );
             }
         }
     }
     if ( $self->{singleUserByIP} ) {
         my $sessions =
-          $self->{globalStorage}
-          ->searchOn( $self->{globalStorageOptions}, 'ipAddr', $self->ipAddr );
+          $module->searchOn( $moduleOptions, 'ipAddr', $self->ipAddr );
         foreach my $id ( keys %$sessions ) {
             next if ( $current and $current eq $id );
-            my $h = $self->getApacheSession( $id, 1 ) or next;
+            my $session = $self->getApacheSession( $id, 1 ) or next;
             unless ( $self->{sessionInfo}->{ $self->{whatToTrace} } eq
-                $h->{ $self->{whatToTrace} } )
+                $session->data->{ $self->{whatToTrace} } )
             {
-                push @{ $self->{deleted} }, $self->_sumUpSession($h);
-                $self->_deleteSession( $h, 1 );
+                push @{ $self->{deleted} },
+                  $self->_sumUpSession( $session->data );
+                $self->_deleteSession( $session, 1 );
             }
         }
     }
@@ -2166,7 +2084,7 @@ sub removeOther {
     PE_OK;
 }
 
-##@method private hashref _sumUpSession(hashref session)
+##@method private hashref _sumUpSession(Lemonldap::NG::Common::Session session)
 # put main session data into a hash ref
 # @param hashref $session The session to sum up
 # @return hashref
@@ -2297,16 +2215,18 @@ sub store {
 
     # Create second session for unsecure cookie
     if ( $self->{securedCookie} == 2 ) {
-        my $h2 = $self->getApacheSession( undef, 1 );
-        $h2->{$_} = $self->{sessionInfo}->{$_}
-          foreach ( keys %{ $self->{sessionInfo} } );
-        $self->{sessionInfo}->{_httpSession} = $h2->{_session_id};
-        $h2->{_httpSessionType} = 1;
-        untie %$h2;
+        my $session2 = $self->getApacheSession( undef, 1 );
+
+        my %infos = %{ $self->{sessionInfo} };
+        $infos{_httpSessionType} = 1;
+
+        $session2->update( \%infos );
+
+        $self->{sessionInfo}->{_httpSession} = $session2->id;
     }
 
     # Main session
-    my $h = $self->getApacheSession( $self->{id} )
+    my $session = $self->getApacheSession( $self->{id} )
       or return PE_APACHESESSIONERROR;
 
     # Compute unsecure cookie value if needed
@@ -2314,6 +2234,7 @@ sub store {
         $self->{sessionInfo}->{_httpSession} =
           $self->{cipher}->encryptHex( $self->{id}, "http" );
     }
+
     foreach my $k ( keys %{ $self->{sessionInfo} } ) {
         next unless defined $self->{sessionInfo}->{$k};
         my $displayValue = $self->{sessionInfo}->{$k};
@@ -2321,9 +2242,8 @@ sub store {
             $displayValue = '****';
         }
         $self->lmLog( "Store $displayValue in session key $k", 'debug' );
-        $h->{$k} = $self->{sessionInfo}->{$k};
+        $session->update( { $k => $self->{sessionInfo}->{$k} } );
     }
-    untie %$h;
 
     PE_OK;
 }

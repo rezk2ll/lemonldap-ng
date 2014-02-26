@@ -293,9 +293,13 @@ sub extractFormInfo {
             $self->{_samlToken} = $saml_token;
 
             # Restore initial SAML request in case of proxying
+            my $moduleOptions = $self->{samlStorageOptions} || {};
+            $moduleOptions->{backend} = $self->{samlStorage};
+            my $module = "Lemonldap::NG::Common::Apache::Session";
+
             my $saml_sessions =
-              $self->{samlStorage}->searchOn( $self->{samlStorageOptions},
-                "ProxyID", $assertion_responded );
+              $module->searchOn( $moduleOptions, "ProxyID",
+                $assertion_responded );
 
             if ( my @saml_sessions_keys = keys %$saml_sessions ) {
 
@@ -529,9 +533,12 @@ sub extractFormInfo {
             $self->lmLog( "Logout request NameID content: $user", 'debug' );
 
             # Get SAML sessions with the same NameID
+            my $moduleOptions = $self->{samlStorageOptions} || {};
+            $moduleOptions->{backend} = $self->{samlStorage};
+            my $module = "Lemonldap::NG::Common::Apache::Session";
+
             my $local_sessions =
-              $self->{samlStorage}->searchOn( $self->{samlStorageOptions},
-                "_nameID", $name_id->dump );
+              $module->searchOn( $moduleOptions, "_nameID", $name_id->dump );
 
             if ( my @local_sessions_keys = keys %$local_sessions ) {
 
@@ -565,26 +572,25 @@ sub extractFormInfo {
                         # Open real session
                         my $real_session = $sessionInfo->{_saml_id};
 
-                        my $realSessionInfo =
-                          $self->getApacheSession( $sessionInfo->{_saml_id},
-                            1 );
+                        my $ssoSession =
+                          $self->getApacheSession( $real_session, 1 );
 
                   # Get Lasso::Session dump
                   # This value is erased if a next session match the SLO request
-                        if (   $realSessionInfo
-                            && $realSessionInfo->{_lassoSessionDump} )
+                        if (   $ssoSession->data
+                            && $ssoSession->data->{_lassoSessionDump} )
                         {
                             $self->lmLog(
 "Get Lasso::Session dump from session $real_session",
                                 'debug'
                             );
                             $session_dump =
-                              $realSessionInfo->{_lassoSessionDump};
+                              $ssoSession->data->{_lassoSessionDump};
                         }
 
                         # Delete real session
                         my $del_real_result =
-                          $self->_deleteSession($realSessionInfo);
+                          $self->_deleteSession($ssoSession);
 
                         $self->lmLog(
 "Delete real session $real_session result: $del_real_result",
@@ -594,8 +600,11 @@ sub extractFormInfo {
                         $logout_error = 1 unless $del_real_result;
 
                         # Delete SAML session
-                        my $del_saml_result =
-                          $self->_deleteSession($sessionInfo);
+                        my $del_saml_result = 1;
+                        eval { tied(%$sessionInfo)->delete() };
+                        if ($@) {
+                            $del_saml_result = 0;
+                        }
 
                         $self->lmLog(
 "Delete SAML session $local_session result: $del_saml_result",

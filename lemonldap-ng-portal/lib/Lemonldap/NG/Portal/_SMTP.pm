@@ -11,7 +11,7 @@ use MIME::Lite;
 use MIME::Base64;
 use Encode;
 
-our $VERSION = '1.2.3';
+our $VERSION = '1.4.0';
 
 ## @method string gen_password(string regexp)
 # Generate a complex password based on a regular expression
@@ -134,15 +134,18 @@ sub send_mail {
 sub getMailSession {
     my ( $self, $user ) = splice @_;
 
+    my $moduleOptions = $self->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $self->{globalStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
     # Search on mail sessions
-    my $sessions =
-      $self->{globalStorage}
-      ->searchOn( $self->{globalStorageOptions}, "user", $user );
+    my $sessions = $module->searchOn( $moduleOptions, "user", $user );
 
     # Browse found sessions to check if it's a mail session
     foreach my $id ( keys %$sessions ) {
-        my $h = $self->getApacheSession( $id, 1 ) or next;
-        return $id if ( $h->{_type} =~ /^mail$/ );
+        my $mailSession = $self->getApacheSession( $id, 1 );
+        next unless ( $mailSession->data );
+        return $id if ( $mailSession->data->{_type} =~ /^mail$/ );
     }
 
     # No mail session found, return empty string

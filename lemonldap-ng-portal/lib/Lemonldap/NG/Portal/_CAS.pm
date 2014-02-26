@@ -175,9 +175,12 @@ sub deleteCasSecondarySessions {
     my $result = 1;
 
     # Find CAS sessions
+    my $moduleOptions = $self->{casStorageOptions} || {};
+    $moduleOptions->{backend} = $self->{casStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
     my $cas_sessions =
-      $self->{casStorage}
-      ->searchOn( $self->{casStorageOptions}, "_cas_id", $session_id );
+      $module->searchOn( $moduleOptions, "_cas_id", $session_id );
 
     if ( my @cas_sessions_keys = keys %$cas_sessions ) {
 

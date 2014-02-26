@@ -1634,9 +1634,11 @@ sub replayProtection {
         return 0;
     }
 
-    my $sessions =
-      $self->{samlStorage}
-      ->searchOn( $self->{samlStorageOptions}, "_assert_id", $samlID );
+    my $moduleOptions = $self->{samlStorageOptions} || {};
+    $moduleOptions->{backend} = $self->{samlStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
+    my $sessions = $module->searchOn( $moduleOptions, "_assert_id", $samlID );
 
     if ( my @keys = keys %$sessions ) {
 
@@ -1757,9 +1759,11 @@ sub loadArtifact {
         return;
     }
 
-    my $sessions =
-      $self->{samlStorage}
-      ->searchOn( $self->{samlStorageOptions}, "_art_id", $id );
+    my $moduleOptions = $self->{samlStorageOptions} || {};
+    $moduleOptions->{backend} = $self->{samlStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
+    my $sessions = $module->searchOn( $moduleOptions, "_art_id", $id );
 
     if ( my @keys = keys %$sessions ) {
 
@@ -1826,12 +1830,12 @@ sub createArtifactResponse {
             'debug' );
 
         my $session = $self->getApacheSession( $session_id, 1 );
-        unless ( defined $session ) {
+        unless ( $session->data ) {
             $self->lmLog( "Unable to open session $session_id", 'error' );
             return;
         }
 
-        my $lassoSession = $session->{_lassoSessionDump};
+        my $lassoSession = $session->data->{_lassoSessionDump};
 
         if ($lassoSession) {
             unless ( $self->setSessionFromDump( $login, $lassoSession ) ) {
@@ -2933,9 +2937,12 @@ sub deleteSAMLSecondarySessions {
     my $result = 1;
 
     # Find SAML sessions
+    my $moduleOptions = $self->{samlStorageOptions} || {};
+    $moduleOptions->{backend} = $self->{samlStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
     my $saml_sessions =
-      $self->{samlStorage}
-      ->searchOn( $self->{samlStorageOptions}, "_saml_id", $session_id );
+      $module->searchOn( $moduleOptions, "_saml_id", $session_id );
 
     if ( my @saml_sessions_keys = keys %$saml_sessions ) {
 

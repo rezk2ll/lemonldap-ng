@@ -367,14 +367,14 @@ sub issuerForUnAuthUser {
             # Open local session
             my $local_session = $self->getApacheSession( $local_session_id, 1 );
 
-            unless ($local_session) {
+            unless ( $local_session->data ) {
                 $self->lmLog( "No local session found", 'error' );
                 return $self->sendSLOErrorResponse( $logout, $method );
             }
 
             # Load Session and Identity if they exist
-            my $session  = $local_session->{_lassoSessionDump};
-            my $identity = $local_session->{_lassoIdentityDump};
+            my $session  = $local_session->data->{_lassoSessionDump};
+            my $identity = $local_session->data->{_lassoIdentityDump};
 
             if ($session) {
                 unless ( $self->setSessionFromDump( $logout, $session ) ) {
@@ -880,9 +880,12 @@ sub issuerForUnAuthUser {
 
         # Get sessionInfo for the given NameID
         my $sessionInfo;
+        my $moduleOptions = $self->{samlStorageOptions} || {};
+        $moduleOptions->{backend} = $self->{samlStorage};
+        my $module = "Lemonldap::NG::Common::Apache::Session";
+
         my $saml_sessions =
-          $self->{samlStorage}
-          ->searchOn( $self->{samlStorageOptions}, "_nameID", $name_id->dump );
+          $module->searchOn( $moduleOptions, "_nameID", $name_id->dump );
 
         if ( my @saml_sessions_keys = keys %$saml_sessions ) {
 
@@ -909,7 +912,7 @@ sub issuerForUnAuthUser {
 
             $sessionInfo = $self->getApacheSession( $real_session, 1 );
 
-            unless ($sessionInfo) {
+            unless ( $sessionInfo->data ) {
                 $self->lmLog( "Cannot get session $real_session", 'error' );
                 $self->returnSOAPMessage();
             }
@@ -976,10 +979,10 @@ sub issuerForUnAuthUser {
                   if defined $rvalue;
 
                 # Get session value
-                if ( $sessionInfo->{$sp_attr} ) {
+                if ( $sessionInfo->data->{$sp_attr} ) {
 
                     my @values = split $self->{multiValuesSeparator},
-                      $sessionInfo->{$sp_attr};
+                      $sessionInfo->data->{$sp_attr};
                     my @saml2values;
 
                     # SAML2 attribute
@@ -1362,10 +1365,12 @@ sub issuerForAuthUser {
                 'debug' );
 
             # Get ForceAuthn sessions for this session_id
+            my $moduleOptions = $self->{samlStorageOptions} || {};
+            $moduleOptions->{backend} = $self->{samlStorage};
+            my $module = "Lemonldap::NG::Common::Apache::Session";
+
             my $forceAuthn_sessions =
-              $self->{samlStorage}
-              ->searchOn( $self->{samlStorageOptions}, "_saml_id",
-                $session_id );
+              $module->searchOn( $moduleOptions, "_saml_id", $session_id );
 
             my $forceAuthn_session;
             my $forceAuthnSessionInfo;

@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_CAS;
 use base qw(Lemonldap::NG::Portal::_CAS Lemonldap::NG::Portal::_LibAccess);
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.4.0';
 
 ## @method void issuerDBInit()
 # Nothing to do
@@ -170,24 +170,22 @@ sub issuerForUnAuthUser {
         my $localSession =
           $self->getApacheSession( $casServiceSession->{_cas_id}, 1 );
 
-        unless ($localSession) {
+        unless ( $localSession->data ) {
             $self->lmLog(
                 "Local session " . $casServiceSession->{_cas_id} . " notfound",
                 'error'
             );
-            untie %$casServiceSession;
             $self->returnCasValidateError();
         }
 
         # Get username
         my $username =
-          $localSession->{ $self->{casAttr} || $self->{whatToTrace} };
+          $localSession->data->{ $self->{casAttr} || $self->{whatToTrace} };
 
         $self->lmLog( "Get username $username", 'debug' );
 
         # Close sessions
         untie %$casServiceSession;
-        untie %$localSession;
 
         # Return success message
         $self->returnCasValidateSuccess($username);
@@ -383,25 +381,23 @@ sub issuerForUnAuthUser {
         my $localSession =
           $self->getApacheSession( $casServiceSession->{_cas_id}, 1 );
 
-        unless ($localSession) {
+        unless ( $localSession->data ) {
             $self->lmLog(
                 "Local session " . $casServiceSession->{_cas_id} . " notfound",
                 'error'
             );
-            untie %$casServiceSession;
             $self->returnCasServiceValidateError( 'INTERNAL_ERROR',
                 'No session associated to ticket' );
         }
 
         # Get username
         my $username =
-          $localSession->{ $self->{casAttr} || $self->{whatToTrace} };
+          $localSession->data->{ $self->{casAttr} || $self->{whatToTrace} };
 
         $self->lmLog( "Get username $username", 'debug' );
 
         # Close sessions
         untie %$casServiceSession;
-        untie %$localSession;
 
         # Return success message
         $self->returnCasServiceValidateSuccess( $username,
