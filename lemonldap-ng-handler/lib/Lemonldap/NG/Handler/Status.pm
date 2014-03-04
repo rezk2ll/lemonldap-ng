@@ -429,8 +429,8 @@ Lemonldap::NG::Handler::Status - Perl extension to add a mod_status like system 
 Create your own package (example using a central configuration database):
 
   package My::Package;
-  use Lemonldap::NG::Handler::SharedConf;
-  @ISA = qw(Lemonldap::NG::Handler::SharedConf);
+  use Lemonldap::NG::Handler::DefaultHandler;
+  @ISA = qw(Lemonldap::NG::Handler::DefaultHandler);
   
   __PACKAGE__->init ( {
     # Activate status feature

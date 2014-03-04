@@ -7,11 +7,11 @@ package Lemonldap::NG::Handler::CDA;
 
 use strict;
 
-use Lemonldap::NG::Handler::SharedConf qw(:all);
+use Lemonldap::NG::Handler::DefaultHandler qw(:all);
 
 our $VERSION = '1.2.2';
 
-use base qw(Lemonldap::NG::Handler::SharedConf);
+use base qw(Lemonldap::NG::Handler::DefaultHandler);
 
 ## @rmethod int run(Apache2::RequestRec apacheRequest)
 # overload run subroutine to implement cross-domain mechanism.
@@ -20,7 +20,7 @@ use base qw(Lemonldap::NG::Handler::SharedConf);
 sub run ($$) {
     my $class;
     ( $class, $apacheRequest ) = splice @_;
-    $cda = 1;
+    $ntsv->{cda} = 1;
     return $class->SUPER::run($apacheRequest);
 }
 
@@ -80,18 +80,18 @@ configuration reload, so you don't need to restart Apache at each change :
 
 =head1 DESCRIPTION
 
-This library inherit from L<Lemonldap::NG::Handler::SharedConf> and add the
+This library inherit from L<Lemonldap::NG::Handler::DefaultHandler> and add the
 capability to control users that are authenticated with a
 L<Lemonldap::NG::Portal::CDA> CGI in another domain.
 
 =head2 EXPORT
 
-Same as L<Lemonldap::NG::Handler::SharedConf>.
+Same as L<Lemonldap::NG::Handler::DefaultHandler>.
 
 =head1 SEE ALSO
 
 L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Handler>,
-L<Lemonldap::NG::Handler::SharedConf>,
+L<Lemonldap::NG::Handler::DefaultHandler>,
 L<http://lemonldap-ng.org/>
 
 =head1 AUTHOR

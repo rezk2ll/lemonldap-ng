@@ -6,8 +6,10 @@
 package Lemonldap::NG::Handler::UpdateCookie;
 
 use strict;
-use Lemonldap::NG::Handler::SharedConf qw(:all);
-use base qw(Lemonldap::NG::Handler::SharedConf);
+use Lemonldap::NG::Handler::DefaultHandler qw(:all);
+use base qw(Lemonldap::NG::Handler::DefaultHandler);
+use Lemonldap::NG::Handler::Main::Headers;
+use Lemonldap::NG::Handler::Main::Logger;
 
 our $VERSION = '1.0.0';
 
@@ -37,16 +39,17 @@ sub run {
                 $datas->{_session_id} = 0;
                 $clear = 1;
             }
-            elsif ( $refLocalStorage
-                and my $ldatas = $refLocalStorage->get($id) )
+            elsif ( $tsv->{refLocalStorage}
+                and my $ldatas = $tsv->{refLocalStorage}->get($id) )
             {
                 if ( $ldatas->{_utime} lt $utime ) {
                     $clear = 1;
                 }
             }
             if ($clear) {
-                $class->lmLog( "$class: remove $id from local cache", 'debug' );
-                $refLocalStorage->remove($id);
+                Lemonldap::NG::Handler::Main::Logger->lmLog(
+                    "$class: remove $id from local cache", 'debug' );
+                $tsv->{refLocalStorage}->remove($id);
             }
         }
 
@@ -60,8 +63,9 @@ sub run {
 # Get user cookies and search for Lemonldap::NG update cookie.
 # @return Value of the cookie if found, 0 else
 sub fetchUTime {
-    my $t = lmHeaderIn( $apacheRequest, 'Cookie' );
-    my $c = $cookieName . 'update';
+    my $t = Lemonldap::NG::Handler::Main::Headers->lmHeaderIn( $apacheRequest,
+        'Cookie' );
+    my $c = $tsv->{cookieName} . 'update';
     return ( $t =~ /$c=([^,; ]+)/o ) ? $1 : 0;
 }
 
@@ -79,7 +83,7 @@ cookie sent by client, to reload session in local cache.
 
   package My::Package;
   use Lemonldap::NG::Handler::UpdateCookie;
-  @ISA = qw(Lemonldap::NG::Handler::SharedConf);
+  @ISA = qw(Lemonldap::NG::Handler::DefaultHandler);
 
   __PACKAGE__->init ( {
     # See Lemonldap::NG::Handler for more

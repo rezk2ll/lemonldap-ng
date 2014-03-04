@@ -3,8 +3,8 @@
 package My::Zimbra;
 
 # Load Zimbra Handler
-use Lemonldap::NG::Handler::ZimbraPreAuth;
-@ISA = qw(Lemonldap::NG::Handler::ZimbraPreAuth);
+use Lemonldap::NG::Handler::SpecificHandlers::ZimbraPreAuth;
+@ISA = qw(Lemonldap::NG::Handler::SpecificHandlers::ZimbraPreAuth);
 
 __PACKAGE__->init(
     {

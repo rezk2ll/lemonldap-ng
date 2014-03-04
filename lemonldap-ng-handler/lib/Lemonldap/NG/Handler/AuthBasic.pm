@@ -7,13 +7,15 @@ package Lemonldap::NG::Handler::AuthBasic;
 
 use strict;
 
-use Lemonldap::NG::Handler::SharedConf qw(:all);
+use Lemonldap::NG::Handler::DefaultHandler qw(:all);
 use Digest::MD5 qw(md5_base64);
 use MIME::Base64;
 use HTTP::Headers;
 use SOAP::Lite;    # link protected portalRequest
+use Lemonldap::NG::Handler::Main::Headers;
+use Lemonldap::NG::Handler::Main::Logger;
 
-use base qw(Lemonldap::NG::Handler::SharedConf);
+use base qw(Lemonldap::NG::Handler::DefaultHandler);
 use utf8;
 no utf8;
 
@@ -42,7 +44,8 @@ sub run ($$) {
     ( $class, $apacheRequest ) = splice @_;
     if ( time() - $lastReload > $reloadTime ) {
         unless ( my $tmp = $class->testConf(1) == OK ) {
-            $class->lmLog( "$class: No configuration found", 'error' );
+            Lemonldap::NG::Handler::Main::Logger->lmLog(
+                "$class: No configuration found", 'error' );
             return $tmp;
         }
     }
@@ -53,8 +56,14 @@ sub run ($$) {
     # AUTHENTICATION
     # I - recover the WWW-Authentication header
     my ( $id, $user, $pass );
-    unless ( $user = lmHeaderIn( $apacheRequest, 'Authorization' ) ) {
-        lmSetErrHeaderOut( $apacheRequest,
+    unless (
+        $user = Lemonldap::NG::Handler::Main::Headers->lmHeaderIn(
+            $apacheRequest, 'Authorization'
+        )
+      )
+    {
+        Lemonldap::NG::Handler::Main::Headers->lmSetErrHeaderOut(
+            $apacheRequest,
             'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
         return AUTH_REQUIRED;
     }
@@ -69,12 +78,16 @@ sub run ($$) {
     unless ( $id eq $datas->{_cache_id} ) {
 
         # 2.2 search in the local cache if exists
-        unless ( $refLocalStorage and $datas = $refLocalStorage->get($id) ) {
+        unless ($tsv->{refLocalStorage}
+            and $datas = $tsv->{refLocalStorage}->get($id) )
+        {
 
             # 2.3 Authentication by Lemonldap::NG::Portal using SOAP request
 
             # Add client IP as X-Forwarded-For IP in SOAP request
-            my $xheader = lmHeaderIn( $apacheRequest, 'X-Forwarded-For' );
+            my $xheader =
+              Lemonldap::NG::Handler::Main::Headers->lmHeaderIn( $apacheRequest,
+                'X-Forwarded-For' );
             $xheader .= ", " if ($xheader);
             $xheader .= $class->ip();
             my $soapHeaders =
@@ -86,8 +99,8 @@ sub run ($$) {
               ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
             $user = decode_base64($user);
             ( $user, $pass ) = ( $user =~ /^(.*?):(.*)$/ );
-            $class->lmLog( "AuthBasic authentication for user: $user",
-                'debug' );
+            Lemonldap::NG::Handler::Main::Logger->lmLog(
+                "AuthBasic authentication for user: $user", 'debug' );
             my $r = $soap->getCookies( $user, $pass );
             my $cv;
 
@@ -101,26 +114,30 @@ sub run ($$) {
 
                 # If authentication failed, display error
                 if ( $res->{errorCode} ) {
-                    $class->lmLog(
+                    Lemonldap::NG::Handler::Main::Logger->lmLog(
                         "Authentication failed for $user: "
                           . $soap->error( $res->{errorCode}, 'en' )->result(),
                         'notice'
                     );
-                    lmSetErrHeaderOut( $apacheRequest,
+                    Lemonldap::NG::Handler::Main::Headers->lmSetErrHeaderOut(
+                        $apacheRequest,
                         'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
                     return AUTH_REQUIRED;
                 }
-                $cv = $res->{cookies}->{$cookieName};
+                $cv = $res->{cookies}->{ $tsv->{cookieName} };
             }
 
             # Now, normal work to find session
             my %h;
-            eval { tie %h, $globalStorage, $cv, $globalStorageOptions; };
+            eval {
+                tie %h, $tsv->{globalStorage}, $cv,
+                  $tsv->{globalStorageOptions};
+            };
             if ($@) {
 
                 # The cookie isn't yet available
-                $class->lmLog( "The cookie $cv isn't yet available: $@",
-                    'info' );
+                Lemonldap::NG::Handler::Main::Logger->lmLog(
+                    "The cookie $cv isn't yet available: $@", 'info' );
                 $class->updateStatus( $class->ip(), $apacheRequest->uri,
                     'EXPIRED' );
                 return $class->goToPortal($uri);
@@ -129,8 +146,8 @@ sub run ($$) {
             $datas->{_cache_id} = $id;
 
             # Store now the user in the local storage
-            if ($refLocalStorage) {
-                $refLocalStorage->set( $id, $datas, "20 minutes" );
+            if ( $tsv->{refLocalStorage} ) {
+                $tsv->{refLocalStorage}->set( $id, $datas, "20 minutes" );
             }
             untie %h;
         }
@@ -138,11 +155,12 @@ sub run ($$) {
 
     # ACCOUNTING
     # 1 - Inform Apache
-    $class->lmSetApacheUser( $apacheRequest, $datas->{$whatToTrace} );
+    $class->lmSetApacheUser( $apacheRequest, $datas->{ $tsv->{whatToTrace} } );
 
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );
-    $class->updateStatus( $datas->{$whatToTrace}, $apacheRequest->uri, 'OK' );
+    $class->updateStatus( $datas->{ $tsv->{whatToTrace} },
+        $apacheRequest->uri, 'OK' );
     $class->logGranted( $uri, $datas );
 
     # SECURITY
@@ -150,11 +168,12 @@ sub run ($$) {
     $class->hideCookie;
 
     # Hide user password
-    $class->lmUnsetHeaderIn( $apacheRequest, "Authorization" );
+    Lemonldap::NG::Handler::Main::Headers->lmUnsetHeaderIn( $apacheRequest,
+        "Authorization" );
 
     # ACCOUNTING
     # 2 - Inform remote application
-    $class->sendHeaders;
+    Lemonldap::NG::Handler::Main::Headers->sendHeaders;
     OK;
 }
 

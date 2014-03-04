@@ -3,8 +3,8 @@
 package My::SecureToken;
 
 # Load Secure Token Handler
-use Lemonldap::NG::Handler::SecureToken;
-@ISA = qw(Lemonldap::NG::Handler::SecureToken);
+use Lemonldap::NG::Handler::SpecificHandlers::SecureToken;
+@ISA = qw(Lemonldap::NG::Handler::SpecificHandlers::SecureToken);
 
 __PACKAGE__->init(
     {

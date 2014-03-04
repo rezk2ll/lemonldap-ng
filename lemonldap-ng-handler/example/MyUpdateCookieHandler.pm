@@ -1,8 +1,8 @@
 # Handler to manage update cookie
 package My::Package::UpdateCookie;
 
-use Lemonldap::NG::Handler::UpdateCookie;
-@ISA = qw(Lemonldap::NG::Handler::UpdateCookie);
+use Lemonldap::NG::Handler::SpecificHandlers::UpdateCookie;
+@ISA = qw(Lemonldap::NG::Handler::SpecificHandlers::UpdateCookie);
 
 __PACKAGE__->init(
     {

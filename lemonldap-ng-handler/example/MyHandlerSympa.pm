@@ -3,8 +3,8 @@
 package My::Sympa;
 
 # Load Sympa Handler
-use Lemonldap::NG::Handler::SympaAutoLogin;
-@ISA = qw(Lemonldap::NG::Handler::SympaAutoLogin);
+use Lemonldap::NG::Handler::SpecificHandlers::SympaAutoLogin;
+@ISA = qw(Lemonldap::NG::Handler::SpecificHandlers::SympaAutoLogin);
 
 __PACKAGE__->init(
     {

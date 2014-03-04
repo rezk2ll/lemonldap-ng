@@ -3,8 +3,8 @@
 package My::AuthBasic;
 
 # Load Auth Basic Handler
-use Lemonldap::NG::Handler::AuthBasic;
-@ISA = qw(Lemonldap::NG::Handler::AuthBasic);
+use Lemonldap::NG::Handler::SpecificHandlers::AuthBasic;
+@ISA = qw(Lemonldap::NG::Handler::SpecificHandlers::AuthBasic);
 
 __PACKAGE__->init(
     {

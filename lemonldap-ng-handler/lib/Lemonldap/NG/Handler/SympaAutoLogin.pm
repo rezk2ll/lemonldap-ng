@@ -8,9 +8,11 @@
 package Lemonldap::NG::Handler::SympaAutoLogin;
 
 use strict;
-use Lemonldap::NG::Handler::SharedConf qw(:all);
-use base qw(Lemonldap::NG::Handler::SharedConf);
+use Lemonldap::NG::Handler::DefaultHandler qw(:all);
+use base qw(Lemonldap::NG::Handler::DefaultHandler);
 use Digest::MD5;
+use Lemonldap::NG::Handler::Main::Headers;
+use Lemonldap::NG::Handler::Main::Logger;
 
 our $VERSION = '1.1.2';
 
@@ -39,8 +41,10 @@ sub defaultValuesInit {
     $sympaMailKey = $args->{'sympaMailKey'} || $sympaMailKey || "mail";
 
     # Display found values in debug mode
-    $class->lmLog( "sympaSecret: $sympaSecret",   'debug' );
-    $class->lmLog( "sympaMailKey: $sympaMailKey", 'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "sympaSecret: $sympaSecret",
+        'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "sympaMailKey: $sympaMailKey",
+        'debug' );
 
     # Delete Sympa parameters
     delete $args->{'sympaSecret'};
@@ -77,10 +81,11 @@ sub run {
 
     # Get cookie header, removing Sympa cookie if exists (avoid security
     # problems) and set the new value
-    $tmp = lmHeaderIn( $r, 'Cookie' );
+    $tmp = Lemonldap::NG::Handler::Main::Headers->lmHeaderIn( $r, 'Cookie' );
     $tmp =~ s/\bsympauser=[^,;]*[,;]?//;
     $tmp .= $tmp ? ";$str" : $str;
-    $class->lmSetHeaderIn( $r, 'Cookie' => $tmp );
+    Lemonldap::NG::Handler::Main::Headers->lmSetHeaderIn( $r,
+        'Cookie' => $tmp );
 
     # Return SUPER::run() result
     return $ret;
