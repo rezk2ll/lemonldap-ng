@@ -52,7 +52,7 @@ Last-Update: 2013-05-31
 -        Order deny,allow
 -        Allow from all
 +        <IfVersion < 2.4>
-+            Order deny,allow
++            Order allow,deny
 +            Allow from all
 +        </IfVersion>
 +        <IfVersion >= 2.4>
@@ -65,7 +65,7 @@ Last-Update: 2013-05-31
      Alias /doc/ __DOCDIR__
      Alias /lib/ __DOCDIR__lib/
      <Directory __DOCDIR__>
--        Order deny,allow
+-        Order allow,deny
 -        Allow from all
 +        <IfVersion < 2.4>
 +            Order deny,allow
@@ -150,14 +150,3 @@ Last-Update: 2013-05-31
      </Location>
  
      # SAML2 Issuer
---- a/_example/etc/test-apache2.conf
-+++ b/_example/etc/test-apache2.conf
-@@ -16,7 +16,7 @@
-     # DocumentRoot
-     DocumentRoot __TESTDIR__
-     <Directory __TESTDIR__>
--        Order deny,allow
-+        Order allow,deny
-         Allow from all
-         Options +ExecCGI
-     </Directory>
