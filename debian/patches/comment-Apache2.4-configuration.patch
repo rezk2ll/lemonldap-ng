@@ -40,7 +40,7 @@ Last-Update: 2013-05-31
 +    #    <IfVersion >= 2.4>
 +    #        Require ip 127
 +    #    </IfVersion>
-     #    PerlHeaderParserHandler My::Package->status
+     #    PerlHeaderParserHandler Lemonldap::NG::Handler::DefaultHandler->status
      #</Location>
  
 --- a/_example/etc/manager-apache2.conf
