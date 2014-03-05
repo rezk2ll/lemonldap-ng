@@ -1,4 +1,4 @@
-Description: add comments to use with Apache 2.4
+Description: compliance with both Apache 2.4 and 2.2
 Author: Xavier Guimard <x.guimard@free.fr>
 Bug: http://jira.ow2.org/browse/LEMONLDAP-571
 Bug-Debian: http://bugs.debian.org/669808
@@ -7,40 +7,24 @@ Bug-Debian: http://bugs.debian.org/669822
 Forwarded: http://jira.ow2.org/browse/LEMONLDAP-571
 Last-Update: 2013-05-31
 
---- a/_example/etc/test-apache2.conf
-+++ b/_example/etc/test-apache2.conf
-@@ -16,8 +16,12 @@
-     # DocumentRoot
-     DocumentRoot __TESTDIR__
-     <Directory __TESTDIR__>
--        Order deny,allow
--        Allow from all
-+	# For Apache 2.2 use:
-+        #Order deny,allow
-+        #Allow from all
-+	# For Apache 2.4 use:
-+	Require all granted
-+
-         Options +ExecCGI
-     </Directory>
- 
 --- a/_example/etc/handler-apache2.conf
 +++ b/_example/etc/handler-apache2.conf
-@@ -21,17 +21,25 @@
+@@ -21,17 +21,27 @@
      # needed): choose your URL to avoid restarting Apache when
      # configuration change
      <Location /reload>
 -        Order deny,allow
 -        Deny from all
 -        Allow from 127.0.0.0/8
-+	# For Apache 2.2 use:
-+        #Order deny,allow
-+        #Deny from all
-+        #Allow from 127.0.0.0/8
-+	# For Apache 2.4 use:
-+	Require ip 127
-+
-         PerlHeaderParserHandler My::Package->refresh
++        <IfVersion < 2.4>
++            Order deny,allow
++            Deny from all
++            Allow from 127.0.0.0/8
++        </IfVersion>
++        <IfVersion >= 2.4>
++            Require ip 127
++        </IfVersion>
+         PerlHeaderParserHandler Lemonldap::NG::Handler::DefaultHandler->refresh
      </Location>
  
      # Uncomment this to activate status module
@@ -48,109 +32,132 @@ Last-Update: 2013-05-31
 -    #    Order deny,allow
 -    #    Deny from all
 -    #    Allow from 127.0.0.0/8
-+    #    # For Apache 2.2 use:
-+    #    #Order deny,allow
-+    #    #Deny from all
-+    #    #Allow from 127.0.0.0/8
-+    #    # For Apache 2.4 use:
-+    #    Require ip 127
-+    #
++    #    <IfVersion < 2.4>
++    #        Order deny,allow
++    #        Deny from all
++    #        Allow from 127.0.0.0/8
++    #    </IfVersion>
++    #    <IfVersion >= 2.4>
++    #        Require ip 127
++    #    </IfVersion>
      #    PerlHeaderParserHandler My::Package->status
      #</Location>
  
 --- a/_example/etc/manager-apache2.conf
 +++ b/_example/etc/manager-apache2.conf
-@@ -12,8 +12,12 @@
+@@ -12,8 +12,13 @@
      # DocumentRoot
      DocumentRoot __MANAGERDIR__
      <Directory __MANAGERDIR__>
--	Order deny,allow
--	Allow from all
-+	# For Apache 2.2 use:
-+	#Order deny,allow
-+	#Allow from all
-+	# For Apache 2.4 use:
-+	Require all granted
-+
- 	Options +ExecCGI +FollowSymLinks
+-        Order deny,allow
+-        Allow from all
++        <IfVersion < 2.4>
++            Order deny,allow
++            Allow from all
++        </IfVersion>
++        <IfVersion >= 2.4>
++            Require all granted
++        </IfVersion>
+         Options +ExecCGI +FollowSymLinks
      </Directory>
  
-@@ -21,8 +25,12 @@
+@@ -21,8 +26,13 @@
      Alias /doc/ __DOCDIR__
      Alias /lib/ __DOCDIR__lib/
      <Directory __DOCDIR__>
--	Order deny,allow
--	Allow from all
-+	# For Apache 2.2 use:
-+	#Order deny,allow
-+	#Allow from all
-+	# For Apache 2.4 use:
-+	Require all granted
-+
- 	ErrorDocument 404 /notfound.html
- 	Options +FollowSymLinks
+-        Order deny,allow
+-        Allow from all
++        <IfVersion < 2.4>
++            Order deny,allow
++            Allow from all
++        </IfVersion>
++        <IfVersion >= 2.4>
++            Require all granted
++        </IfVersion>
+         ErrorDocument 404 /notfound.html
+         Options +FollowSymLinks
      </Directory>
 --- a/_example/etc/portal-apache2.conf
 +++ b/_example/etc/portal-apache2.conf
-@@ -12,8 +12,12 @@
+@@ -12,8 +12,13 @@
      # DocumentRoot
      DocumentRoot __PORTALDIR__
      <Directory __PORTALDIR__>
--	Order allow,deny
--	Allow from all
-+	# For Apache 2.2 use:
-+	#Order deny,allow
-+	#Allow from all
-+	# For Apache 2.4 use:
-+	Require all granted
-+
- 	Options +ExecCGI +FollowSymLinks
+-        Order allow,deny
+-        Allow from all
++        <IfVersion < 2.4>
++            Order allow,deny
++            Allow from all
++        </IfVersion>
++        <IfVersion >= 2.4>
++            Require all granted
++        </IfVersion>
+         Options +ExecCGI +FollowSymLinks
      </Directory>
  
-@@ -29,26 +33,38 @@
+@@ -29,26 +34,46 @@
  
      # SOAP functions for sessions management (disabled by default)
      <Location /index.pl/adminSessions>
--	Order deny,allow
--	Deny from all
-+	# For Apache 2.2 use:
-+	#Order deny,allow
-+	#Deny from all
-+	# For Apache 2.4 use:
-+	Require all denied
+-        Order deny,allow
+-        Deny from all
++        <IfVersion < 2.4>
++            Order deny,allow
++            Deny from all
++        </IfVersion>
++        <IfVersion >= 2.4>
++            Require all denied
++        </IfVersion>
      </Location>
  
      # SOAP functions for sessions access (disabled by default)
      <Location /index.pl/sessions>
--	Order deny,allow
--	Deny from all
-+	# For Apache 2.2 use:
-+	#Order deny,allow
-+	#Deny from all
-+	# For Apache 2.4 use:
-+	Require all denied
+-        Order deny,allow
+-        Deny from all
++        <IfVersion < 2.4>
++            Order deny,allow
++            Deny from all
++        </IfVersion>
++        <IfVersion >= 2.4>
++            Require all denied
++        </IfVersion>
      </Location>
  
      # SOAP functions for configuration access (disabled by default)
      <Location /index.pl/config>
--	Order deny,allow
--	Deny from all
-+	# For Apache 2.2 use:
-+	#Order deny,allow
-+	#Deny from all
-+	# For Apache 2.4 use:
-+	Require all denied
+-        Order deny,allow
+-        Deny from all
++        <IfVersion < 2.4>
++            Order deny,allow
++            Deny from all
++        </IfVersion>
++        <IfVersion >= 2.4>
++            Require all denied
++        </IfVersion>
      </Location>
  
      # SOAP functions for notification insertion (disabled by default)
      <Location /index.pl/notification>
--	Order deny,allow
--	Deny from all
-+	# For Apache 2.2 use:
-+	#Order deny,allow
-+	#Deny from all
-+	# For Apache 2.4 use:
-+	Require all denied
+-        Order deny,allow
+-        Deny from all
++        <IfVersion < 2.4>
++            Order deny,allow
++            Deny from all
++        </IfVersion>
++        <IfVersion >= 2.4>
++            Require all denied
++        </IfVersion>
      </Location>
  
      # SAML2 Issuer
+--- a/_example/etc/test-apache2.conf
++++ b/_example/etc/test-apache2.conf
+@@ -16,7 +16,7 @@
+     # DocumentRoot
+     DocumentRoot __TESTDIR__
+     <Directory __TESTDIR__>
+-        Order deny,allow
++        Order allow,deny
+         Allow from all
+         Options +ExecCGI
+     </Directory>
