@@ -51,6 +51,10 @@ unless ( $cli->can($method) ) {
     exit 1;
 }
 
+# The config is stored in ASCII
+foreach(@ARGV){ utf8::decode $_; }
+binmode(STDOUT, ':utf8');
+
 @ARGV ? $cli->run( $method, @ARGV ) : $cli->run($method);
 
 # Display error if any
