@@ -3,7 +3,6 @@ package Lemonldap::NG::Handler::Initialization::GlobalInit;
 #use Lemonldap::NG::Handler::Main qw(:all);
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 use Safe;
-use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 use constant UNPROTECT => 1;
 use constant SKIP      => 2;
 
