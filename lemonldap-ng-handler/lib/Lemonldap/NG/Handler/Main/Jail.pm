@@ -117,12 +117,12 @@ sub share_from {
 # Build and return restricted eval command with SAFEWRAP, if activated
 # @return evaluation of $reval or $reval2
 sub jail_reval {
-    my ( $self, $reval, $reval2 ) = splice @_;
+    my ( $self, $reval ) = splice @_;
 
     return (
         SAFEWRAP
-        ? $self->safe->wrap_code_ref( $self->safe->reval($reval) )
-        : $self->safe->reval($reval2)
+        ? $self->safe->wrap_code_ref( $self->safe->reval("sub{$reval}") )
+        : $self->safe->reval("sub{return($reval)}")
     );
 
 }
