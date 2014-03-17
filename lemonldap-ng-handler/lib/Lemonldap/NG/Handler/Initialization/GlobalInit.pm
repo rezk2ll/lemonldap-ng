@@ -277,7 +277,7 @@ sub forgeHeadersInit {
             );
             $self->safe( $jail->build_safe() );
             $forgeHeaders->{$alias} =
-              $jail->jail_reval( $sub );
+              $jail->jail_reval( "sub{$sub}" );
 
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "$self: Unable to forge headers: $@: sub {$sub}", 'error' )
@@ -475,7 +475,7 @@ sub conditionSub {
         'customFunctions' => $self->customFunctions
     );
     $self->safe( $jail->build_safe() );
-    my $sub = $jail->jail_reval( $cond );
+    my $sub = $jail->jail_reval( "sub{return($cond)}" );
 
     # Return sub and protected flag
     return ( $sub, 0 );
