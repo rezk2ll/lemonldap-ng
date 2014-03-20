@@ -5,6 +5,10 @@
 # Sympa autologin
 #
 # Build Sympa cookie and send it to Sympa
+
+# This specific handler is intended to be called by a handler caller
+# old working, kept for compatibility with previous 1.4.0 versions
+
 package Lemonldap::NG::Handler::SympaAutoLogin;
 
 use strict;
@@ -18,6 +22,15 @@ our $VERSION = '1.1.2';
 
 # Shared variables
 our ( $sympaSecret, $sympaMailKey );
+
+## @imethod protected void globalInit(hashRef args)
+# Overload globalInit to launch this class defaultValuesInit
+# @param $args reference to the configuration hash
+sub globalInit {
+    my $class = shift;
+    __PACKAGE__->defaultValuesInit(@_);
+    $class->SUPER::globalInit(@_);
+}
 
 ## @imethod protected void defaultValuesInit(hashRef args)
 # Overload defaultValuesInit

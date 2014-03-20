@@ -3,6 +3,10 @@
 
 ## @class
 # Lemonldap::NG special handler
+
+# This specific handler is intended to be called by a handler caller
+# old working, kept for compatibility with previous 1.4.0 versions
+
 package Lemonldap::NG::Handler::UpdateCookie;
 
 use strict;

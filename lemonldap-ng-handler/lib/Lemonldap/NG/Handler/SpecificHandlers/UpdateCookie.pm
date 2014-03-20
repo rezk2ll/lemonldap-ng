@@ -3,6 +3,9 @@
 
 ## @class
 # Lemonldap::NG special handler
+
+# This specific handler is intended to be called directly by Apache
+
 package Lemonldap::NG::Handler::SpecificHandlers::UpdateCookie;
 
 use strict;

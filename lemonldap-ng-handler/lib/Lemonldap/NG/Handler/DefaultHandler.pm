@@ -41,6 +41,10 @@ our $reloadTime;
 our $lmConf;
 our $localConfig;
 
+my $conf = defined($GLOBAL::testInput)
+                ? $GLOBAL::testInput
+                : {};
+
 BEGIN {
     if ( MP() == 2 ) {
         eval {
@@ -258,7 +262,7 @@ sub refresh($$) {
     return OK;
 }
 
-__PACKAGE__->init( {} );
+__PACKAGE__->init( $conf );
 
 1;
 __END__

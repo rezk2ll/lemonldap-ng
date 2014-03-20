@@ -5,6 +5,9 @@
 # Zimbra preauthentication
 #
 # It will build Zimbra preauth URL
+
+# This specific handler is intended to be called directly by Apache
+
 package Lemonldap::NG::Handler::SpecificHandlers::ZimbraPreAuth;
 
 use strict;

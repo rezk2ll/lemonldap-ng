@@ -5,6 +5,10 @@
 # Zimbra preauthentication
 #
 # It will build Zimbra preauth URL
+
+# This specific handler is intended to be called by a handler caller
+# old working, kept for compatibility with previous 1.4.0 versions
+
 package Lemonldap::NG::Handler::ZimbraPreAuth;
 
 use strict;
@@ -19,6 +23,15 @@ our $VERSION = '1.0.0';
 # Shared variables
 our ( $zimbraPreAuthKey, $zimbraAccountKey, $zimbraBy, $zimbraUrl,
     $zimbraSsoUrl, $timeout );
+
+## @imethod protected void globalInit(hashRef args)
+# Overload globalInit to launch this class defaultValuesInit
+# @param $args reference to the configuration hash
+sub globalInit {
+    my $class = shift;
+    __PACKAGE__->defaultValuesInit(@_);
+    $class->SUPER::globalInit(@_);
+}
 
 ## @imethod protected void defaultValuesInit(hashRef args)
 # Overload defaultValuesInit

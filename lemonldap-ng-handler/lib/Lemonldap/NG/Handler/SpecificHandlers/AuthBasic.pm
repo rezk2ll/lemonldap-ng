@@ -3,6 +3,9 @@
 
 ##@class
 # Auth-basic authentication with Lemonldap::NG rights management
+
+# This specific handler is intended to be called directly by Apache
+
 package Lemonldap::NG::Handler::SpecificHandlers::AuthBasic;
 
 use strict;

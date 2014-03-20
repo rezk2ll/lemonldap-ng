@@ -5,6 +5,10 @@
 # Secure Token
 #
 # Create a secure token used to resolve user identity by a protected application
+
+# This specific handler is intended to be called by a handler caller
+# old working, kept for compatibility with previous 1.4.0 versions
+
 package Lemonldap::NG::Handler::SecureToken;
 
 use strict;
@@ -30,6 +34,15 @@ BEGIN {
         require threads::shared;
         threads::share($secureTokenMemcachedConnection);
     };
+}
+
+## @imethod protected void globalInit(hashRef args)
+# Overload globalInit to launch this class defaultValuesInit
+# @param $args reference to the configuration hash
+sub globalInit {
+    my $class = shift;
+    __PACKAGE__->defaultValuesInit(@_);
+    $class->SUPER::globalInit(@_);
 }
 
 ## @imethod protected void defaultValuesInit(hashRef args)
