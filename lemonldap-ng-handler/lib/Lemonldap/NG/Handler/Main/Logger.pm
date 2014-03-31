@@ -12,7 +12,8 @@ sub lmLog {
     die("Level is required") unless ($level);
     my $call;
     my @tmp = caller();
-    my $module = $tmp[0] =~ s/.+:://gr . "($tmp[2]): ";
+    (my $module = $tmp[0]) =~ s/.+:://g;
+    $module .= "($tmp[2]): ";
     unless ( $level eq 'debug' ) {
         $call = "$tmp[1] $tmp[2]:";
     }
