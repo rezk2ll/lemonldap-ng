@@ -25,6 +25,7 @@ use Lemonldap::NG::Common::Conf;               #link protected lmConf
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Cache::Cache qw($EXPIRES_NEVER);
 use Lemonldap::NG::Handler::Main::Logger;
+use Env qw($lmTestConfig);
 
 use Mouse;
 
@@ -40,10 +41,6 @@ our $lastReload = 0;
 our $reloadTime;
 our $lmConf;
 our $localConfig;
-
-my $conf = defined($GLOBAL::testInput)
-                ? $GLOBAL::testInput
-                : {};
 
 BEGIN {
     if ( MP() == 2 ) {
@@ -262,7 +259,7 @@ sub refresh($$) {
     return OK;
 }
 
-__PACKAGE__->init( $conf );
+__PACKAGE__->init( $lmTestConfig );
 
 1;
 __END__

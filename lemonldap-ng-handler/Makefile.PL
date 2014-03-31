@@ -15,6 +15,8 @@ WriteMakefile(
         'SOAP::Lite'        => 0,
         'Test::MockObject'  => 0,
         'Test::Pod'         => 0,
+        'File::Basename'    => 0,
+        'Cwd'               => 0,
     },
     META_MERGE => {
         'recommends' => {
