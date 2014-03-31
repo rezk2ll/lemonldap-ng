@@ -4,44 +4,37 @@ use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 WriteMakefile(
-    NAME           => 'Lemonldap::NG::Handler',
-    VERSION_FROM   => 'lib/Lemonldap/NG/Handler.pm',
+    NAME           => 'Lemonldap::NG::Manager',
+    VERSION_FROM   => 'lib/Lemonldap/NG/Manager.pm',    # finds $VERSION
     LICENSE        => 'gpl',
-    PMLIBDIRS      => ['lib'],
     BUILD_REQUIRES => {
-        'Digest::HMAC_SHA1' => 0,
-        'HTTP::Message'     => 0,
-        'IO::Pipe'          => 0,
-        'SOAP::Lite'        => 0,
-        'Test::MockObject'  => 0,
-        'Test::Pod'         => 0,
-        'File::Basename'    => 0,
-        'Cwd'               => 0,
+        'IO::String' => 0,
+        'Test::Pod'  => 1.00,
     },
-    META_MERGE => {
-        'recommends' => {
-            'Cache::Memcached'     => 0,
-            'Digest::HMAC_SHA1'    => 0,
-            'HTTP::Message'        => 0,
-            'LWP::Protocol::https' => 0,
-            'SOAP::Lite'           => 0,
-        },
-    },
-    PREREQ_PM => {
-        'Apache::Session::Generate::MD5' => 0,
-        'CGI'                            => 3.08,
-        'Lemonldap::NG::Common'          => '1.3.0',
-        'LWP'                            => 0,
-        'URI'                            => 0,
+    META_MERGE => { 'LWP::Protocol::https' => 0, },
+    PREREQ_PM  => {
+        'Convert::PEM'           => 0,
+        'Crypt::OpenSSL::RSA'    => 0,
+        'HTML::Template'         => 0,
+        'JSON'                   => 0,
+        'Lemonldap::NG::Common'  => '1.3.0',
+        'Lemonldap::NG::Handler' => '1.3.0',
+        'LWP'                    => 0,
+        'URI'                    => 0,
+        'XML::LibXSLT'           => 0,
+        'XML::LibXML'            => 0,
     },    # e.g., Module::Name => 1.1
     (
         $] >= 5.005
         ?    ## Add these new keywords supported since 5.005
           (
             ABSTRACT_FROM =>
-              'lib/Lemonldap/NG/Handler.pm',    # retrieve abstract from module
+              'lib/Lemonldap/NG/Manager.pm',    # retrieve abstract from module
             AUTHOR => 'Xavier Guimard <x.guimard@free.fr>'
+              . ', Clément Oudot <clement@oodo.net>'
+              . ', Thomas Chemineau <thomas.chemineau@gmail.com>'
           )
         : ()
     ),
 );
+
