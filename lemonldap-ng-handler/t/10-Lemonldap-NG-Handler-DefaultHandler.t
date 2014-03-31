@@ -1,0 +1,89 @@
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl Lemonldap-NG-Handler-SharedConf.t'
+
+#########################
+
+# change 'tests => 1' to 'tests => last_test_to_print';
+
+use Test::More;
+use Cwd 'abs_path';
+use File::Basename;
+my $numTests = 3;
+unless ( eval { require Test::MockObject } ) {
+    $numTests = 1;
+    warn "Warning: Test::MockObject is needed to run deeper tests\n";
+}
+
+plan tests => $numTests;
+
+use Env qw($lmTestConfig);
+$lmTestConfig = {
+    configStorage => {
+        type                => 'File',
+        dirName             => dirname( abs_path($0) ),
+        localStorage        => 'Cache::FileCache',
+        localStorageOptions => {
+            'namespace'          => 'lemonldap-ng-config',
+            'default_expires_in' => 600,
+            'directory_umask'    => '007',
+            'cache_root'         => '/tmp',
+            'cache_depth'        => 0,
+        }
+    },
+};
+
+open STDERR, '>/dev/null';
+
+#########################
+
+# Insert your test code below, the Test::More module is use()ed here so read
+# its man page ( perldoc Test::More ) for help writing this test script.
+
+use_ok('Lemonldap::NG::Handler::DefaultHandler');
+
+if ( $numTests == 3 ) {
+
+    # we don't want to use all Apache::* stuff
+    $ENV{MOD_PERL}             = undef;
+    $ENV{MOD_PERL_API_VERSION} = 2;
+
+    # Create a fake Apache2::RequestRec
+    my $mock = Test::MockObject->new();
+    $mock->fake_module(
+        'Apache2::RequestRec' => new =>
+          sub { return bless {}, 'Apache2::RequestRec' },
+        hostname        => sub { 'test.example.com' },
+        is_initial_req  => sub { '1' },
+        args            => sub { undef },
+        unparsed_uri    => sub { '/' },
+        uri             => sub { '/' },
+        get_server_port => sub { '80' },
+        get_server_name => sub { 'test.example.com' },
+        remote_ip       => sub { '127.0.0.1' },
+    );
+    $mock->fake_module(
+        'Apache2::URI' => new => sub { return bless {}, 'Apache2::URI' },
+        unescape_url   => sub { return $_ },
+    );
+    my $ret;
+    $mock->fake_module( 'Lemonldap::NG::Handler::Main::Headers',
+        lmSetHeaderOut => sub { $ret = join( ':', $_[2], $_[3], ); }, );
+
+    our $apacheRequest = Apache2::RequestRec->new();
+
+    my $h = bless {}, 'Lemonldap::NG::Handler::DefaultHandler';
+
+    ok(
+        $h->Lemonldap::NG::Handler::DefaultHandler::run($apacheRequest),
+        'run DefaultHandler with basic configuration and no cookie'
+    );
+
+    ok(
+        "$ret" eq
+'Location:http://auth.example.com/?url=aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20v',
+        'testing redirection URL from previous run'
+    );
+
+}
+
+$lmTestConfig = undef;

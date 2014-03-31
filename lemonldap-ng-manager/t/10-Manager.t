@@ -8,7 +8,20 @@
 use Test::More tests => 1;
 use IO::String;
 use strict;
-BEGIN { use_ok('Lemonldap::NG::Manager') }
+use Cwd 'abs_path';
+use File::Basename;
+
+use Env qw($lmTestConfig);
+$lmTestConfig = {
+    configStorage => {
+        type                => 'File',
+        dirName             => dirname( abs_path($0) ),
+    },
+};
+
+use_ok('Lemonldap::NG::Manager');
+
+$lmTestConfig = undef;
 
 #########################
 

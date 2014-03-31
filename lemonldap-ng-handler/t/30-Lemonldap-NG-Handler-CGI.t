@@ -6,12 +6,22 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test::More tests => 1;
+use Cwd 'abs_path';
+use File::Basename;
 
-BEGIN {
-    use_ok('Lemonldap::NG::Handler::CGI');
+use Env qw($lmTestConfig);
+$lmTestConfig = {
+    configStorage => {
+        type                => 'File',
+        dirName             => dirname( abs_path($0) ),
+    },
+};
 
-    #    sub Lemonldap::NG::Handler::CGI::lmLog { }
-}
+use_ok('Lemonldap::NG::Handler::CGI');
+
+$lmTestConfig = undef;
+
+#    sub Lemonldap::NG::Handler::CGI::lmLog { }
 
 #########################
 

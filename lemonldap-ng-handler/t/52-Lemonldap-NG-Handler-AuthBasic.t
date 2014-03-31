@@ -6,6 +6,16 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test::More tests => 1;
+use Cwd 'abs_path';
+use File::Basename;
+
+use Env qw($lmTestConfig);
+$lmTestConfig = {
+    configStorage => {
+        type                => 'File',
+        dirName             => dirname( abs_path($0) ),
+    },
+};
 
 #########################
 
@@ -13,3 +23,5 @@ use Test::More tests => 1;
 # its man page ( perldoc Test::More ) for help writing this test script.
 use_ok('Lemonldap::NG::Handler::AuthBasic');
 
+
+$lmTestConfig = undef;

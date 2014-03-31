@@ -6,6 +6,16 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test::More tests => 1;
+use Cwd 'abs_path';
+use File::Basename;
+
+use Env qw($lmTestConfig);
+$lmTestConfig = {
+    configStorage => {
+        type                => 'File',
+        dirName             => dirname( abs_path($0) ),
+    },
+};
 
 #########################
 
@@ -19,3 +29,5 @@ SKIP: {
       if ($@);
     use_ok('Lemonldap::NG::Handler::ZimbraPreAuth');
 }
+
+$lmTestConfig = undef;
