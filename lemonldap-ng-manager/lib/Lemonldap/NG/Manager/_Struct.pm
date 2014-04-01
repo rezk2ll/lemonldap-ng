@@ -2288,7 +2288,7 @@ sub globalTests {
         testApacheSession => sub {
             my ( $id, %h );
             return 1
-              if ( $Lemonldap::NG::Handler::CGI::globalStorage eq
+              if ( $Lemonldap::NG::Handler::_CGI::tsv->{globalStorage} eq
                    $conf->{globalStorage}
                 or $conf->{globalStorage} eq
                 'Lemonldap::NG::Common::Apache::Session::SOAP' );
@@ -2312,7 +2312,7 @@ sub globalTests {
               unless ( $h{a} == 1 );
             eval { tied(%h)->delete; };
             return ( -1, "Unable to delete session ($@)" ) if ($@);
-            my $gc = $Lemonldap::NG::Handler::CGI::globalStorage;
+            my $gc = $Lemonldap::NG::Handler::_CGI::tsv->{globalStorage};
             return ( -1,
 'All sessions may be lost and you <b>must</b> restart all your Apache servers'
             ) if ( $conf->{globalStorage} ne $gc );
@@ -2324,7 +2324,7 @@ sub globalTests {
             return (
                 1,
                 (
-                    $Lemonldap::NG::Handler::CGI::cookieName ne
+                    $Lemonldap::NG::Handler::_CGI::tsv->{cookieName} ne
                       $conf->{cookieName}
                     ? 'Cookie name has changed, you <b>must</b> restart all your Apache servers'
                     : ()
