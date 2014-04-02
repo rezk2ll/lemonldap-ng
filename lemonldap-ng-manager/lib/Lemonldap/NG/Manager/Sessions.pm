@@ -13,6 +13,7 @@ package Lemonldap::NG::Manager::Sessions;
 
 use strict;
 use Lemonldap::NG::Handler::CGI qw(:tsv);
+use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Apache::Session;   #inherits
 use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
 use Lemonldap::NG::Common::Conf::Constants;   #inherits
@@ -24,7 +25,7 @@ use utf8;
 #our $whatToTrace;
 #*whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.4.0';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI
@@ -67,12 +68,12 @@ sub new {
     $self->{managerSkin} ||= 'default';
 
     # Now try to load Apache::Session module
-    unless ( $tsv->{globalStorage}->can('populate') ) {
-        eval "require $tsv->{globalStorage}";
-        $class->abort( "Unable to load $tsv->{globalStorage}", $@ ) if ($@);
-    }
-    %{ $self->{globalStorageOptions} } = %{$tsv->{globalStorageOptions}};
-    $self->{globalStorageOptions}->{backend} = $tsv->{globalStorage};
+    #unless ( $tsv->{globalStorage}->can('populate') ) {
+    #    eval "require $tsv->{globalStorage}";
+    #    $class->abort( "Unable to load $tsv->{globalStorage}", $@ ) if ($@);
+    #}
+    #%{ $self->{globalStorageOptions} } = %{$tsv->{globalStorageOptions}};
+    #$self->{globalStorageOptions}->{backend} = $tsv->{globalStorage};
 
     # IP field
     $self->{ipField} = "ipAddr";
@@ -137,12 +138,15 @@ sub list {
     $count = 0;
 
     # Parse all sessions to store first letter
-    $res = Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
-        $self->{globalStorageOptions},
+    my $moduleOptions = $tsv->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+    $res =
+      $module->get_key_from_all_sessions( $moduleOptions,
         [ '_httpSessionType', $tsv->{whatToTrace} ] );
     while ( my ( $id, $entry ) = each %$res ) {
         next if ( $entry->{_httpSessionType} );
-        next unless $entry->{$tsv->{whatToTrace}} =~ /^(\w)/;
+        next unless $entry->{ $tsv->{whatToTrace} } =~ /^(\w)/;
         $byUid->{$1}++;
         $count++;
     }
@@ -187,12 +191,19 @@ sub doubleIp {
     my ( $byUid, $byIp, $res, $count );
 
     # Parse all sessions
-    $res = Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
-        $self->{globalStorageOptions},
-        [ '_httpSessionType', $tsv->{whatToTrace}, $self->{ipField}, 'startTime' ] );
+    my $moduleOptions = $tsv->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+    $res = $module->get_key_from_all_sessions(
+        $moduleOptions,
+        [
+            '_httpSessionType', $tsv->{whatToTrace},
+            $self->{ipField},   'startTime'
+        ]
+    );
     while ( my ( $id, $entry ) = each %$res ) {
         next if ( $entry->{_httpSessionType} );
-        push @{ $byUid->{ $entry->{$tsv->{whatToTrace}} }
+        push @{ $byUid->{ $entry->{ $tsv->{whatToTrace} } }
               ->{ $entry->{ $self->{ipField} } } },
           { id => $id, startTime => $entry->{startTime} };
     }
@@ -248,14 +259,17 @@ sub fullip {
     my ( $byUid, $res );
 
     # Parse sessions and store only if IP match regexp
-    $res = Lemonldap::NG::Common::Apache::Session->searchOnExpr(
-        $self->{globalStorageOptions},
-        $self->{ipField}, $req, $tsv->{whatToTrace}, 'startTime', $self->{ipField},
+    my $moduleOptions = $tsv->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+    $res =
+      $module->searchOnExpr( $moduleOptions, $self->{ipField}, $req,
+        $tsv->{whatToTrace}, 'startTime', $self->{ipField},
         '_httpSessionType' );
     while ( my ( $id, $entry ) = each %$res ) {
         next if ( $entry->{_httpSessionType} );
         push @{ $byUid->{ $entry->{ $self->{ipField} } }
-              ->{ $entry->{$tsv->{whatToTrace}} } },
+              ->{ $entry->{ $tsv->{whatToTrace} } } },
           { id => $id, startTime => $entry->{startTime} };
     }
     $res = '';
@@ -291,12 +305,17 @@ sub fulluid {
     my ( $byUid, $res );
 
     # Parse sessions to find user that match regexp
-    $res = Lemonldap::NG::Common::Apache::Session->searchOnExpr(
-        $self->{globalStorageOptions},
-        $tsv->{whatToTrace}, $req, $tsv->{whatToTrace}, 'startTime', '_httpSessionType' );
+    my $moduleOptions = $tsv->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+    $res = $module->searchOnExpr(
+        $moduleOptions, $tsv->{whatToTrace},
+        $req,           $tsv->{whatToTrace},
+        'startTime',    '_httpSessionType'
+    );
     while ( my ( $id, $entry ) = each %$res ) {
         next if ( $entry->{_httpSessionType} );
-        push @{ $byUid->{ $entry->{$tsv->{whatToTrace}} } },
+        push @{ $byUid->{ $entry->{ $tsv->{whatToTrace} } } },
           { id => $id, startTime => $entry->{startTime} };
     }
     $res = '';
@@ -341,49 +360,60 @@ sub delete {
     my ( %h, $res );
 
     # Try to read session
-    eval { tie %h, $tsv->{globalStorage}, $id, $tsv->{globalStorageOptions}; };
-    if ($@) {
-        if ( $@ =~ /does not exist in the data store/i ) {
-            $self->lmLog( "Apache::Session error: $@", 'error' );
-            $res .= '<h1 class="ui-widget-header ui-corner-all">'
-              . $self->translate('error') . '</h1>';
-            $res .= '<div class="ui-corner-all ui-widget-content">';
-            $res .= "Apache::Session error: $@";
-            $res .= '</div>';
-            return $res;
+    my $apacheSession = Lemonldap::NG::Common::Session->new(
+        {
+            storageModule        => $tsv->{globalStorage},
+            storageModuleOptions => $tsv->{globalStorageOptions},
+            cacheModule          => $tsv->{localSessionStorage},
+            cacheModuleOptions   => $tsv->{localSessionStorageOptions},
+            id                   => $id,
+            kind                 => "SSO",
         }
-        else {
-            $self->abort("Apache::Session error: $@");
-        }
+    );
+
+    unless ( $apacheSession->data ) {
+        $self->lmLog( "Apache::Session error", 'error' );
+        $res .= '<h1 class="ui-widget-header ui-corner-all">'
+          . $self->translate('error') . '</h1>';
+        $res .= '<div class="ui-corner-all ui-widget-content">';
+        $res .= "Apache::Session error";
+        $res .= '</div>';
+        return $res;
     }
+
     else {
-        if ( $h{_httpSession} ) {
-            my %h2;
-            eval {
-                tie %h2, $tsv->{globalStorage}, $h{_httpSession},
-                  $tsv->{globalStorageOptions};
-                tied(%h2)->delete();
-            };
-            if ($@) {
-                $self->lmLog( "Apache::Session error: $@", 'error' );
-                $res .= '<h1 class="ui-widget-header ui-corner-all">'
-                  . $self->translate('error') . '</h1>';
-                $res .= '<div class="ui-corner-all ui-widget-content">';
-                $res .= "Apache::Session error: $@";
-                $res .= '</div>';
-                return $res;
+
+        if ( my $id2 = $apacheSession->data->{_httpSession} ) {
+            my $apacheSession2 = Lemonldap::NG::Common::Session->new(
+                {
+                    storageModule        => $tsv->{globalStorage},
+                    storageModuleOptions => $tsv->{globalStorageOptions},
+                    cacheModule          => $tsv->{localSessionStorage},
+                    cacheModuleOptions   => $tsv->{localSessionStorageOptions},
+                    id                   => $id2,
+                    kind                 => "SSO",
+                }
+            );
+
+            if ( &apacheSession2->data ) {
+                $apacheSession2->remove;
             }
         }
-        eval { tied(%h)->delete(); };
-        if ($@) {
-            $self->abort( 'Apache::Session error', $@ );
-        }
-        else {
+
+        if ( $apacheSession->remove ) {
             $self->lmLog( "Session $id deleted", 'info' );
             $res .= '<h1 class="ui-widget-header ui-corner-all">'
               . $self->translate('sessionDeleted') . '</h1>';
-            return $res;
         }
+        else {
+            $self->lmLog( "Unable to remove session $id", 'error' );
+            $res .= '<h1 class="ui-widget-header ui-corner-all">'
+              . $self->translate('error') . '</h1>';
+            $res .= '<div class="ui-corner-all ui-widget-content">';
+            $res .= "Apache::Session error";
+            $res .= '</div>';
+        }
+        return $res;
     }
 }
 
@@ -395,20 +425,30 @@ sub session {
     my ( %h, $res );
 
     # Try to read session
-    eval { tie %h, $tsv->{globalStorage}, $id, $tsv->{globalStorageOptions}; };
-    if ($@) {
-        $self->lmLog( "Apache::Session error: $@", 'error' );
+    my $apacheSession = Lemonldap::NG::Common::Session->new(
+        {
+            storageModule        => $tsv->{globalStorage},
+            storageModuleOptions => $tsv->{globalStorageOptions},
+            cacheModule          => $tsv->{localSessionStorage},
+            cacheModuleOptions   => $tsv->{localSessionStorageOptions},
+            id                   => $id,
+            kind                 => "SSO",
+        }
+    );
+
+    unless ( $apacheSession->data ) {
+
+        $self->lmLog( "Apache::Session error", 'error' );
         $res .= '<h1 class="ui-widget-header ui-corner-all">'
           . $self->translate('error') . '</h1>';
         $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= "Apache::Session error: $@";
+        $res .= "Apache::Session error";
         $res .= '</div>';
         return $res;
     }
 
-    # Session is avalaible, print content
-    my %session = %h;
-    untie %h;
+    # Session is available, print content
+    my %session = %{ $apacheSession->data };
 
     # General informations
 
@@ -653,14 +693,18 @@ sub session {
 sub uidByIp {
     my ( $self, $ip ) = splice @_;
     my ( $byUser, $res );
-    $res = Lemonldap::NG::Common::Apache::Session->searchOn(
-        $self->{globalStorageOptions},
-        $self->{ipField}, $ip, '_httpSessionType', $tsv->{whatToTrace},
-        $self->{ipField}, 'startTime' );
+
+    my $moduleOptions = $tsv->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+    $res =
+      $module->searchOn( $moduleOptions, $self->{ipField}, $ip,
+        '_httpSessionType', $tsv->{whatToTrace}, $self->{ipField},
+        'startTime' );
     while ( my ( $id, $entry ) = each(%$res) ) {
         next if ( $entry->{_httpSessionType} );
         if ( $entry->{ $self->{ipField} } eq $ip ) {
-            push @{ $byUser->{ $entry->{$tsv->{whatToTrace}} } },
+            push @{ $byUser->{ $entry->{ $tsv->{whatToTrace} } } },
               { id => $id, startTime => $entry->{startTime} };
         }
     }
@@ -686,13 +730,17 @@ sub uidByIp {
 sub uid {
     my ( $self, $uid ) = splice @_;
     my ( $byIp, $res );
-    $res = Lemonldap::NG::Common::Apache::Session->searchOn(
-        $self->{globalStorageOptions},
-        $tsv->{whatToTrace}, $uid, '_httpSessionType', $tsv->{whatToTrace}, $self->{ipField},
+
+    my $moduleOptions = $tsv->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+    $res =
+      $module->searchOn( $moduleOptions, $tsv->{whatToTrace}, $uid,
+        '_httpSessionType', $tsv->{whatToTrace}, $self->{ipField},
         'startTime' );
     while ( my ( $id, $entry ) = each(%$res) ) {
         next if ( $entry->{_httpSessionType} );
-        if ( $entry->{$tsv->{whatToTrace}} eq $uid ) {
+        if ( $entry->{ $tsv->{whatToTrace} } eq $uid ) {
             push @{ $byIp->{ $entry->{ $self->{ipField} } } },
               { id => $id, startTime => $entry->{startTime} };
         }
@@ -722,12 +770,17 @@ sub letter {
     my $letter = $self->param('letter');
     my ( $byUid, $res );
 
-    $res = Lemonldap::NG::Common::Apache::Session->searchOnExpr(
-        $self->{globalStorageOptions},
-        $tsv->{whatToTrace}, "${letter}*", '_httpSessionType', $tsv->{whatToTrace} );
+    my $moduleOptions = $tsv->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+    $res = $module->searchOnExpr(
+        $moduleOptions, $tsv->{whatToTrace},
+        "${letter}*",   '_httpSessionType',
+        $tsv->{whatToTrace}
+    );
     while ( my ( $id, $entry ) = each %$res ) {
         next if ( $entry->{_httpSessionType} );
-        $byUid->{ $entry->{$tsv->{whatToTrace}} }++;
+        $byUid->{ $entry->{ $tsv->{whatToTrace} } }++;
     }
     $res = '';
     foreach my $uid ( sort keys %$byUid ) {
@@ -769,9 +822,15 @@ sub _ipclasses {
     my $repartial = quotemeta($partial);
     my ( $byIp, $count, $res );
 
-    $res = Lemonldap::NG::Common::Apache::Session->searchOnExpr(
-        $self->{globalStorageOptions},
-        $self->{ipField}, "${partial}*", '_httpSessionType', $self->{ipField} );
+    my $moduleOptions = $tsv->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+    $res = $module->searchOnExpr(
+        $moduleOptions, $self->{ipField},
+        "${partial}*",  '_httpSessionType',
+        $self->{ipField}
+    );
+
     while ( my ( $id, $entry ) = each %$res ) {
         next if ( $entry->{_httpSessionType} );
         $entry->{ $self->{ipField} } =~ /^$repartial(\d+)/ or next;

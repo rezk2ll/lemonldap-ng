@@ -637,6 +637,7 @@ sub localInit($$) {
 # - portalInit()
 # - locationRulesInit()
 # - globalStorageInit()
+# - localSessionStorageInit()
 # - headerListInit()
 # - forgeHeadersInit()
 # - postUrlInit()
@@ -702,6 +703,10 @@ sub globalInit {
     @$tsv{qw( globalStorage globalStorageOptions )} =
       $globalinit->globalStorageInit(
         @$tsv{qw( globalStorage globalStorageOptions )}, @_ );
+
+    @$tsv{qw( localSessionStorage localSessionStorageOptions )} =
+      $globalinit->localSessionStorageInit(
+        @$tsv{qw( localSessionStorage localSessionStorageOptions )}, @_ );
 
     $tsv->{headerList} = $globalinit->headerListInit( $tsv->{headerList}, @_ );
 

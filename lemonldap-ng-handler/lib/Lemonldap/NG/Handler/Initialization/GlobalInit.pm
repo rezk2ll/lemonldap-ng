@@ -229,6 +229,17 @@ sub globalStorageInit {
     return ( $globalStorage, $globalStorageOptions );
 }
 
+## @imethod protected void localSessionStorageInit(hashRef args)
+# Initialize the Cache::Cache module choosed to cache sessions.
+# @param $args reference to the configuration hash
+sub localSessionStorageInit {
+    my ( $self, $localSessionStorage, $localSessionStorageOptions, $args ) =
+      splice @_;
+    $localSessionStorage        = $args->{localSessionStorage};
+    $localSessionStorageOptions = $args->{localSessionStorageOptions};
+    return ( $localSessionStorage, $localSessionStorageOptions );
+}
+
 ## @imethod void headerListInit(hashRef args)
 # Lists the exported HTTP headers into $headerList
 # @param $args reference to the configuration hash
@@ -276,8 +287,7 @@ sub forgeHeadersInit {
                 'customFunctions' => $self->customFunctions
             );
             $self->safe( $jail->build_safe() );
-            $forgeHeaders->{$alias} =
-              $jail->jail_reval( "sub{$sub}" );
+            $forgeHeaders->{$alias} = $jail->jail_reval("sub{$sub}");
 
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "$self: Unable to forge headers: $@: sub {$sub}", 'error' )
@@ -475,7 +485,7 @@ sub conditionSub {
         'customFunctions' => $self->customFunctions
     );
     $self->safe( $jail->build_safe() );
-    my $sub = $jail->jail_reval( "sub{return($cond)}" );
+    my $sub = $jail->jail_reval("sub{return($cond)}");
 
     # Return sub and protected flag
     return ( $sub, 0 );
