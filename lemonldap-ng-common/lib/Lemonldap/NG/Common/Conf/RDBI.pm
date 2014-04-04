@@ -11,20 +11,27 @@ sub store {
     my ( $self, $fields ) = @_;
     $self->{noQuotes} = 1;
     $fields = $self->serialize($fields);
-    my $errors = 0;
+
+    my $req = $self->_dbh->prepare(
+      "INSERT INTO $self->{dbiTable} (cfgNum,field,value) VALUES (?,?,?)"
+    );
+    unless ($req) {
+        $self->logError;
+        return UNKNOWN_ERROR;
+    }
+    $self->_dbh->{AutoCommit} = 0;
+
     while ( my ( $k, $v ) = each %$fields ) {
-        my $tmp =
-          $self->_dbh->prepare( "insert into "
-              . $self->{dbiTable}
-              . " (cfgNum,field,value) values (?,?,?)" );
-        unless ( $tmp and $tmp->execute( $fields->{cfgNum}, $k, $v ) ) {
+        unless ( $req->execute( $fields->{cfgNum}, $k, $v ) ) {
             $self->logError;
-            $errors++;
-            last;
+            $self->_dbh->do("ROLLBACK");
+            $self->_dbh->{AutoCommit} = 1;
+            return UNKNOWN_ERROR;
         }
     }
-    eval { $errors ? $self->_dbh->do("ROLLBACK") : $self->_dbh->do("COMMIT"); };
-    return $errors ? UNKNOWN_ERROR : $fields->{cfgNum};
+    $self->_dbh->do("COMMIT");
+    $self->_dbh->{AutoCommit} = 1;
+    return $fields->{cfgNum};
 }
 
 sub load {
