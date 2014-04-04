@@ -122,6 +122,7 @@ sub saveConf {
 
     unless ( $tmp > 0 ) {
         $msg .= "Configuration $conf->{cfgNum} not stored.\n";
+        $self->unlock();
         return ( $tmp ? $tmp : UNKNOWN_ERROR );
     }
 
