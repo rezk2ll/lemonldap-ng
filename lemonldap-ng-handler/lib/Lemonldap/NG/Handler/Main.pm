@@ -20,6 +20,7 @@ use Exporter 'import';
 
 #use AutoLoader 'AUTOLOAD';
 use Lemonldap::NG::Common::Crypto;
+use Lemonldap::NG::Common::Session;
 require POSIX;
 use CGI::Util 'expires';
 use constant UNPROTECT        => 1;
@@ -30,7 +31,7 @@ use constant MAINTENANCE_CODE => 503;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.4.0';
 
 our %EXPORT_TAGS;
 
@@ -346,41 +347,49 @@ sub fetchId {
 sub retrieveSession {
     my ( $class, $id ) = @_;
 
-    # 1. search if the user was the same as previous (very efficient in
-    #      persistent connection).
+    # 1. Search if the user was the same as previous (very efficient in
+    # persistent connection).
     return 1
       if (  defined $datas->{_session_id}
         and $id eq $datas->{_session_id}
         and ( time() - $ntsv->{datasUpdate} < 60 ) );
 
-    # 2. search in the local cache if exists
-    return 1
-      if (  $tsv->{refLocalStorage}
-        and $datas = $tsv->{refLocalStorage}->get($id) );
+    # 2. Get the session from cache or backend
+    my $apacheSession = Lemonldap::NG::Common::Session->new(
+        {
+            storageModule        => $tsv->{globalStorage},
+            storageModuleOptions => $tsv->{globalStorageOptions},
+            cacheModule          => $tsv->{localSessionStorage},
+            cacheModuleOptions   => $tsv->{localSessionStorageOptions},
+            id                   => $id,
+            kind                 => "SSO",
+        }
+    );
 
-    # 3. search in the central cache
-    my %h;
-    eval { tie %h, $tsv->{globalStorage}, $id, $tsv->{globalStorageOptions}; };
-    if ($@) {
+    unless ( $apacheSession->data ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "Session $id can't be retrieved: $@", 'info' );
+            "Session $id can't be retrieved", 'info' );
         return 0;
     }
 
-    # Update the session to notify activity, if necessary
-    $h{_lastSeen} = time() if ( $tsv->{timeoutActivity} );
+    # 3. Check local macros
+    my $local_macros;
+    if (    $tsv->{refLocalStorage}
+        and $local_macros = $tsv->{refLocalStorage}->get($id) )
+    {
+        foreach ( keys %$local_macros ) {
+            $datas->{$_} = $local_macros->{$_} unless defined $datas->{$_};
+        }
+    }
 
-    # Set _session_id key
-    $h{_session_id} = $id;
+    # Update the session to notify activity, if necessary
+    $apacheSession->update( { '_lastSeen' => time() } )
+      if ( $tsv->{timeoutActivity} );
 
     # Store data in current shared variables
-    $datas->{$_} = $h{$_} foreach ( keys %h );
+    $datas->{$_} = $apacheSession->data->{$_}
+      foreach ( keys %{ $apacheSession->data } );
 
-    # Store the session in local storage
-    $tsv->{refLocalStorage}->set( $id, $datas, "10 minutes" )
-      if ( $tsv->{refLocalStorage} );
-
-    untie %h;
     $ntsv->{datasUpdate} = time();
     return 1;
 }
@@ -480,6 +489,7 @@ sub run ($$) {
 
         # AUTHENTICATION done
 
+        # Local macros
         my $kc = keys %$datas;    # in order to detect new local macro
 
         # ACCOUNTING (1. Inform Apache)
