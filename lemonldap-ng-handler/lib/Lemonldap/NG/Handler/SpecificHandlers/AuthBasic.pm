@@ -17,12 +17,13 @@ use HTTP::Headers;
 use SOAP::Lite;    # link protected portalRequest
 use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;
+use Lemonldap::NG::Common::Session;
 
 use base qw(Lemonldap::NG::Handler::DefaultHandler);
 use utf8;
 no utf8;
 
-our $VERSION = '1.2.3';
+our $VERSION = '1.4.0';
 
 # We need just this constant, that's why Portal is 'required' but not 'used'
 *PE_OK = *Lemonldap::NG::Portal::SharedConf::PE_OK;
@@ -72,7 +73,7 @@ sub run ($$) {
     }
     $user =~ s/^Basic\s*//;
 
-    # DEBUG
+    # ID for local cache
     $id = md5_base64($user);
 
     # II - recover the user datas
@@ -81,8 +82,9 @@ sub run ($$) {
     unless ( $id eq $datas->{_cache_id} ) {
 
         # 2.2 search in the local cache if exists
+        my $session_id;
         unless ($tsv->{refLocalStorage}
-            and $datas = $tsv->{refLocalStorage}->get($id) )
+            and $session_id = $tsv->{refLocalStorage}->get($id) )
         {
 
             # 2.3 Authentication by Lemonldap::NG::Portal using SOAP request
@@ -105,7 +107,6 @@ sub run ($$) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "AuthBasic authentication for user: $user", 'debug' );
             my $r = $soap->getCookies( $user, $pass );
-            my $cv;
 
             # Catch SOAP errors
             if ( $r->fault ) {
@@ -127,32 +128,38 @@ sub run ($$) {
                         'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
                     return AUTH_REQUIRED;
                 }
-                $cv = $res->{cookies}->{ $tsv->{cookieName} };
+                $session_id = $res->{cookies}->{ $tsv->{cookieName} };
             }
+        }
 
-            # Now, normal work to find session
-            my %h;
-            eval {
-                tie %h, $tsv->{globalStorage}, $cv,
-                  $tsv->{globalStorageOptions};
-            };
-            if ($@) {
-
-                # The cookie isn't yet available
-                Lemonldap::NG::Handler::Main::Logger->lmLog(
-                    "The cookie $cv isn't yet available: $@", 'info' );
-                $class->updateStatus( $class->ip(), $apacheRequest->uri,
-                    'EXPIRED' );
-                return $class->goToPortal($uri);
+        # Get the session
+        my $apacheSession = Lemonldap::NG::Common::Session->new(
+            {
+                storageModule        => $tsv->{globalStorage},
+                storageModuleOptions => $tsv->{globalStorageOptions},
+                cacheModule          => $tsv->{localSessionStorage},
+                cacheModuleOptions   => $tsv->{localSessionStorageOptions},
+                id                   => $session_id,
+                kind                 => "SSO",
             }
-            $datas->{$_} = $h{$_} foreach ( keys %h );
-            $datas->{_cache_id} = $id;
+        );
 
-            # Store now the user in the local storage
-            if ( $tsv->{refLocalStorage} ) {
-                $tsv->{refLocalStorage}->set( $id, $datas, "20 minutes" );
-            }
-            untie %h;
+        unless ( $apacheSession->data ) {
+            Lemonldap::NG::Handler::Main::Logger->lmLog(
+                "The cookie $session_id isn't yet available", 'info' );
+            $class->updateStatus( $class->ip(), $apacheRequest->uri,
+                'EXPIRED' );
+            return $class->goToPortal($uri);
+        }
+
+        $datas->{$_} = $apacheSession->data->{$_}
+          foreach ( keys %{ $apacheSession->data } );
+        $datas->{_cache_id} = $id;
+
+        # Store now the user in the local storage
+        if ( $tsv->{refLocalStorage} ) {
+            $tsv->{refLocalStorage}
+              ->set( $id, $datas->{_session_id}, "20 minutes" );
         }
     }
 
@@ -176,7 +183,9 @@ sub run ($$) {
 
     # ACCOUNTING
     # 2 - Inform remote application
-    Lemonldap::NG::Handler::Main::Headers->sendHeaders;
+    Lemonldap::NG::Handler::Main::Headers->sendHeaders( $apacheRequest,
+        $tsv->{forgeHeaders} );
+
     OK;
 }
 
