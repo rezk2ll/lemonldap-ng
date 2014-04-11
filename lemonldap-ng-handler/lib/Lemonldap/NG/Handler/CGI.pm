@@ -8,6 +8,7 @@ package Lemonldap::NG::Handler::CGI;
 use strict;
 
 use Lemonldap::NG::Common::CGI;
+use Lemonldap::NG::Common::Session;
 use CGI::Cookie;
 use MIME::Base64;
 
@@ -103,22 +104,26 @@ sub authenticate {
         return $self->goToPortal();
     }
     unless ( $datas and $id eq $datas->{_session_id} ) {
-        unless ($tsv->{refLocalStorage}
-            and $datas = $tsv->{refLocalStorage}->get($id) )
-        {
-            my %h;
-            eval {
-                tie %h, $tsv->{globalStorage}, $id,
-                  $tsv->{globalStorageOptions};
-            };
-            if ($@) {
-                return $self->goToPortal();
+
+        my $apacheSession = Lemonldap::NG::Common::Session->new(
+            {
+                storageModule        => $tsv->{globalStorage},
+                storageModuleOptions => $tsv->{globalStorageOptions},
+                cacheModule          => $tsv->{localSessionStorage},
+                cacheModuleOptions   => $tsv->{localSessionStorageOptions},
+                id                   => $id,
+                kind                 => "SSO",
             }
-            $datas->{$_} = $h{$_} foreach ( keys %h );
-            if ( $tsv->{refLocalStorage} ) {
-                $tsv->{refLocalStorage}->set( $id, $datas, "10 minutes" );
-            }
+        );
+
+        unless ( $apacheSession->data ) {
+            Lemonldap::NG::Handler::Main::Logger->lmLog(
+                "Session $id can't be retrieved", 'info' );
+            return $self->goToPortal();
         }
+
+        $datas->{$_} = $apacheSession->data->{$_}
+          foreach ( keys %{ $apacheSession->data } );
     }
 
     # Accounting : set user in apache logs
