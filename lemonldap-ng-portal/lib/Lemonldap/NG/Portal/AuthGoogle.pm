@@ -77,15 +77,15 @@ sub checkGoogleSession {
     } $self->param();
 
     # Look at persistent database
-    my $id = $self->_md5hash( $self->param('openid.claimed_id') );
-    my $h  = $self->getPersistentSession($id);
+    my $id       = $self->_md5hash( $self->param('openid.claimed_id') );
+    my $pSession = $self->getPersistentSession($id);
     my $gs;
 
     # No AX response, if datas are already shared, store them
     unless ( $self->{_AXNS} ) {
-        if ($h) {
-            $self->{user} = $h->{email};
-            while ( my ( $k, $v ) = each %$h ) {
+        if ( $pSession->data ) {
+            $self->{user} = $pSession->data->{email};
+            while ( my ( $k, $v ) = each %{ $pSession->data } ) {
                 $gs->{$k} = $v;
             }
         }
@@ -96,33 +96,14 @@ sub checkGoogleSession {
         # so if it's empty, request is retried
         $self->{user} = $self->param("openid.$self->{_AXNS}.value.email");
 
-        # If persistent session does not exist, create it
-        unless ($h) {
-            $h = {};
-            my %opts = %{ $self->{persistentStorageOptions} };
-            $opts{setId} = $id;
-            eval { tie %$h, $self->{persistentStorage}, undef, \%opts; };
-            if ($@) {
-                $self->abort(
-"Unable to create persistent session, required to use Google backend: $@"
-                );
-            }
-            else {
-                $self->lmLog(
-                    "Persistent session $h->{_session_id} created to store "
-                      . $self->{user}
-                      . ' Google shared datas',
-                    'debug'
-                );
-            }
-        }
-
         # Retrieve AX datas (and store them in persistent session)
+        my $infos;
         foreach my $k ( $self->param() ) {
             if ( $k =~ /^openid\.$self->{_AXNS}\.value\.(\w+)$/ ) {
-                $gs->{$1} = $h->{$1} = $self->param($k);
+                $gs->{$1} = $infos->{$1} = $self->param($k);
             }
         }
+        $pSession->update($infos);
     }
 
     # Now store datas in session
@@ -143,7 +124,8 @@ sub checkGoogleSession {
                     $self->_sub( 'userInfo',
 "$v required attribute is missing in Google response, storing ''"
                     );
-                    $h->{$v} = $gs->{$v} = '';
+                    $gs->{$v} = '';
+                    $pSession->update( { $v => '' } );
                 }
 
                 # Case 2: value is not stored, probably configuration has
@@ -166,9 +148,6 @@ sub checkGoogleSession {
             );
         }
     }
-
-    # Save persistent session
-    untie %$h if ($h);
 
     # Boolean value: ~false if no $user value
     return $self->{user};
