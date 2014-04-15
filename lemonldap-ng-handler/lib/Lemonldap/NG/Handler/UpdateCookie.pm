@@ -14,8 +14,9 @@ use Lemonldap::NG::Handler::DefaultHandler qw(:all);
 use base qw(Lemonldap::NG::Handler::DefaultHandler);
 use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;
+use Lemonldap::NG::Common::Session;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.4.0';
 
 ## @rmethod int run(Apache2::RequestRec apacheRequest)
 # Main method used to control access.
@@ -39,21 +40,40 @@ sub run {
         my $utime;
         if ( $utime = $class->fetchUTime ) {
             my $clear = 0;
+
+            my $apacheSession = Lemonldap::NG::Common::Session->new(
+                {
+                    storageModule        => $tsv->{globalStorage},
+                    storageModuleOptions => $tsv->{globalStorageOptions},
+                    cacheModule          => $tsv->{localSessionStorage},
+                    cacheModuleOptions   => $tsv->{localSessionStorageOptions},
+                    id                   => $id,
+                    kind                 => "SSO",
+                }
+            );
+
+            # Check process data
             if ( $id eq $datas->{_session_id} and $datas->{_utime} lt $utime ) {
                 $datas->{_session_id} = 0;
                 $clear = 1;
             }
-            elsif ( $tsv->{refLocalStorage}
-                and my $ldatas = $tsv->{refLocalStorage}->get($id) )
-            {
-                if ( $ldatas->{_utime} lt $utime ) {
-                    $clear = 1;
+
+            # Get session
+            else {
+                unless ( $apacheSession->data ) {
+                    Lemonldap::NG::Handler::Main::Logger->lmLog(
+                        "Session $id can't be retrieved", 'info' );
+                }
+                else {
+                    $clear = 1 if ( $apacheSession->data->{_utime} lt $utime );
                 }
             }
+
+            # Clear cache if needed
             if ($clear) {
                 Lemonldap::NG::Handler::Main::Logger->lmLog(
                     "$class: remove $id from local cache", 'debug' );
-                $tsv->{refLocalStorage}->remove($id);
+                $apacheSession->cacheUpdate();
             }
         }
 
