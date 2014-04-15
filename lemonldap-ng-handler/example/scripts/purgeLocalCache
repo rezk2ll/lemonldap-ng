@@ -2,8 +2,8 @@
 #=============================================================================
 # Cleaner for LemonLDAP::NG: purge local handler cache
 #
-# This module is written to be used by cron to clean old sessions from
-# Apache::Session. It does not works with Apache::Session::Memcached
+# This module is written to be used by cron to clean cache objects used 
+# by Handler.
 #
 # This is part of LemonLDAP::NG product, released under GPL
 #=============================================================================
