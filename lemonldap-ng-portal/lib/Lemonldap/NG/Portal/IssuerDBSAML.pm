@@ -519,8 +519,7 @@ sub issuerForUnAuthUser {
             my $sloStatusSessionInfos = $self->getSamlSession($relaystate);
 
             if ($sloStatusSessionInfos) {
-                $sloStatusSessionInfos->{$spConfKey} = 1;
-                untie %$sloStatusSessionInfos;
+                $sloStatusSessionInfos->update( { $spConfKey => 1 } );
                 $self->lmLog(
                     "Store SLO status for $spConfKey in session $relaystate",
                     'debug' );
@@ -580,10 +579,10 @@ sub issuerForUnAuthUser {
         }
 
         # Load Session and Identity if they exist
-        my $session    = $relayInfos->{_lassoSessionDump};
-        my $identity   = $relayInfos->{_lassoIdentityDump};
-        my $providerID = $relayInfos->{_providerID};
-        my $relayState = $relayInfos->{_relayState};
+        my $session    = $relayInfos->data->{_lassoSessionDump};
+        my $identity   = $relayInfos->data->{_lassoIdentityDump};
+        my $providerID = $relayInfos->data->{_providerID};
+        my $relayState = $relayInfos->data->{_relayState};
         my $spConfKey  = $self->{_spList}->{$providerID}->{confKey};
 
         if ($session) {
@@ -616,8 +615,7 @@ sub issuerForUnAuthUser {
         my $sloStatusSessionInfos = $self->getSamlSession($relayState);
 
         if ($sloStatusSessionInfos) {
-            $sloStatusSessionInfos->{$spConfKey} = 1;
-            untie %$sloStatusSessionInfos;
+            $sloStatusSessionInfos->update( { $spConfKey => 1 } );
             $self->lmLog(
                 "Store SLO status for $spConfKey in session $relayState",
                 'debug' );
@@ -630,7 +628,7 @@ sub issuerForUnAuthUser {
         }
 
         # Delete relay session
-        eval { tied(%$relayInfos)->delete(); };
+        $relayInfos->remove();
 
         # SLO response is OK
         $self->lmLog( "Display OK status for SLO on $spConfKey", 'debug' );
@@ -662,12 +660,12 @@ sub issuerForUnAuthUser {
         $self->lmLog( "Found relay session $relayID", 'debug' );
 
         # Get data to build POST form
-        $self->{postUrl}                     = $relayInfos->{url};
-        $self->{postFields}->{'SAMLRequest'} = $relayInfos->{body};
-        $self->{postFields}->{'RelayState'}  = $relayInfos->{relayState};
+        $self->{postUrl}                     = $relayInfos->data->{url};
+        $self->{postFields}->{'SAMLRequest'} = $relayInfos->data->{body};
+        $self->{postFields}->{'RelayState'}  = $relayInfos->data->{relayState};
 
         # Delete relay session
-        eval { tied(%$relayInfos)->delete(); };
+        $relayInfos->remove();
 
         return $self->_subProcess(qw(autoPost));
     }
@@ -697,9 +695,9 @@ sub issuerForUnAuthUser {
         $self->lmLog( "Found relay session $relayID", 'debug' );
 
         # Get data from relay session
-        my $logout_dump  = $relayInfos->{_logout};
-        my $session_dump = $relayInfos->{_session};
-        my $method       = $relayInfos->{_method};
+        my $logout_dump  = $relayInfos->data->{_logout};
+        my $session_dump = $relayInfos->data->{_session};
+        my $method       = $relayInfos->data->{_method};
 
         unless ($logout_dump) {
             $self->lmLog( "Could not get logout dump", 'error' );
@@ -740,7 +738,7 @@ sub issuerForUnAuthUser {
 
             # Try to get SLO status from SLO session
             my $spConfKey = $self->{_spList}->{$sp}->{confKey};
-            my $status    = $relayInfos->{$spConfKey};
+            my $status    = $relayInfos->data->{$spConfKey};
 
             # Remove assertion if status is OK
             if ($status) {
@@ -767,7 +765,7 @@ sub issuerForUnAuthUser {
         }
 
         # Delete relay session
-        eval { tied(%$relayInfos)->delete(); };
+        $relayInfos->remove();
 
         # Send SLO response
         if ( my $tmp =
@@ -905,7 +903,7 @@ sub issuerForUnAuthUser {
             my $samlSessionInfo = $self->getSamlSession($saml_session);
 
             # Get real session
-            my $real_session = $samlSessionInfo->{_saml_id};
+            my $real_session = $samlSessionInfo->data->{_saml_id};
 
             $self->lmLog( "Retrieve real session $real_session for user $user",
                 'debug' );
@@ -1402,7 +1400,7 @@ sub issuerForAuthUser {
                   $self->getSamlSession($forceAuthn_session);
 
                 # Check forceAuthn flag for current SP
-                if ( $forceAuthnSessionInfo->{$spConfKey} ) {
+                if ( $forceAuthnSessionInfo->data->{$spConfKey} ) {
 
                     $self->lmLog(
 "User was already forced to reauthenticate for SP $spConfKey",
@@ -1410,8 +1408,6 @@ sub issuerForAuthUser {
                     );
                     $force_authn = 1;
                 }
-
-                untie %$forceAuthnSessionInfo;
             }
             else {
                 $self->lmLog(
@@ -1425,19 +1421,19 @@ sub issuerForAuthUser {
                 # Store flag for further requests
                 $forceAuthnSessionInfo =
                   $self->getSamlSession($forceAuthn_session);
-                $forceAuthnSessionInfo->{$spConfKey} = 1;
+                $forceAuthnSessionInfo->update( { $spConfKey => 1 } );
 
                 unless ($forceAuthn_session) {
-                    $forceAuthnSessionInfo->{'_type'}    = "forceAuthn";
-                    $forceAuthnSessionInfo->{'_saml_id'} = $session_id;
-                    $forceAuthnSessionInfo->{'_utime'}   = $time;
-                    $forceAuthn_session = $forceAuthnSessionInfo->{_session_id};
+                    my $forceInfos;
+                    $forceInfos->{'_type'}    = "forceAuthn";
+                    $forceInfos->{'_saml_id'} = $session_id;
+                    $forceInfos->{'_utime'}   = $time;
+                    $forceAuthnSessionInfo->update($forceInfos);
+                    $forceAuthn_session = $forceAuthnSessionInfo->id;
                     $self->lmLog(
                         "Create ForceAuthn session $forceAuthn_session",
                         'debug' );
                 }
-
-                untie %$forceAuthnSessionInfo;
 
                 $self->lmLog(
 "Set ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session",
@@ -1459,8 +1455,7 @@ sub issuerForAuthUser {
                 # Else remove flag
                 $forceAuthnSessionInfo =
                   $self->getSamlSession($forceAuthn_session);
-                $forceAuthnSessionInfo->{$spConfKey} = 0;
-                untie %$forceAuthnSessionInfo;
+                $forceAuthnSessionInfo->update( { $spConfKey => 0 } );
 
                 $self->lmLog(
 "Unset ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session",
@@ -1839,16 +1834,17 @@ sub issuerForAuthUser {
 
             return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
 
-            $samlSessionInfo->{type}     = 'saml';           # Session type
-            $samlSessionInfo->{_utime}   = $time;            # Creation time
-            $samlSessionInfo->{_saml_id} = $session_id;      # SSO session id
-            $samlSessionInfo->{_nameID}  = $nameid->dump;    # SAML NameID
-            $samlSessionInfo->{_sessionIndex} =
-              $sessionIndex;                                 # SAML SessionIndex
+            my $infos;
 
-            my $saml_session_id = $samlSessionInfo->{_session_id};
+            $infos->{type}          = 'saml';           # Session type
+            $infos->{_utime}        = $time;            # Creation time
+            $infos->{_saml_id}      = $session_id;      # SSO session id
+            $infos->{_nameID}       = $nameid->dump;    # SAML NameID
+            $infos->{_sessionIndex} = $sessionIndex;    # SAML SessionIndex
 
-            untie %$samlSessionInfo;
+            $samlSessionInfo->update($infos);
+
+            my $saml_session_id = $samlSessionInfo->id;
 
             $self->lmLog(
                 "Link session $session_id to SAML session $saml_session_id",
@@ -2063,14 +2059,16 @@ sub issuerForAuthUser {
 
             # Create SLO status session and get ID
             my $sloStatusSessionInfo = $self->getSamlSession();
-            $sloStatusSessionInfo->{type}    = 'sloStatus';
-            $sloStatusSessionInfo->{_utime}  = time;
-            $sloStatusSessionInfo->{_logout} = $logout->dump;
-            $sloStatusSessionInfo->{_session} =
+
+            my $sloInfos;
+            $sloInfos->{type}    = 'sloStatus';
+            $sloInfos->{_utime}  = time;
+            $sloInfos->{_logout} = $logout->dump;
+            $sloInfos->{_session} =
               $logout->get_session() ? $logout->get_session()->dump : "";
-            $sloStatusSessionInfo->{_method} = $method;
-            my $relayID = $sloStatusSessionInfo->{_session_id};
-            untie %$sloStatusSessionInfo;
+            $sloInfos->{_method} = $method;
+            $sloStatusSessionInfo->update($sloInfos);
+            my $relayID = $sloStatusSessionInfo->id;
 
             # Prepare logout on all others SP
             my $provider_nb =
