@@ -1,5 +1,60 @@
 lemonldap-ng (1.4.0) stable; urgency=low
 
+lemonldap-ng (1.3.3) stable; urgency=low
+
+    * [LEMONLDAP-665] - level parameter not used in userLog with syslog
+    * [LEMONLDAP-684] - syslog: invalid level/facility: warn
+    * [LEMONLDAP-685] - /var/lib/lemonldap-ng/psessions is not created on rpm based install
+    * [LEMONLDAP-687] - 404 error : jquery-1.10.2.min.map is not found
+    * [LEMONLDAP-688] - lemonldap-cli-ng apps-set-* and vhost-del not working properly
+    * [LEMONLDAP-690] - Cannot register more than on POST URL in Manager
+    * [LEMONLDAP-692] - lemonldap-ng-cli config encoding
+    * [LEMONLDAP-689] - Remove compressed js file from Debian distribution
+    * [LEMONLDAP-691] - Manage apache configuration during install
+
+lemonldap-ng (1.3.2) stable; urgency=low
+
+    * [LEMONLDAP-655] - Password change not working for DBI password backend with option "require old password" enabled
+    * [LEMONLDAP-656] - UserDB Multi does not accept any module
+    * [LEMONLDAP-660] - Missing PID in syslog messages
+    * [LEMONLDAP-661] - lemonldap ng dependancy not installed for debian wheezy
+    * [LEMONLDAP-662] - lemonldap ng psession directory not created in package
+    * [LEMONLDAP-665] - level parameter not used in userLog with syslog
+    * [LEMONLDAP-666] - Lemonldap NG (1.2.5) Control XSS problem with logonid have apostrophe
+    * [LEMONLDAP-669] - [LDAP] Authentication process stopped if a user must change its password and expiration warning is displayed
+    * [LEMONLDAP-674] - Remove Facebook script in offline doc
+    * [LEMONLDAP-676] - Privacy break
+    * [LEMONLDAP-677] - Signature Problem using ADFS as SP
+    * [LEMONLDAP-679] - Javascript error in Manager when loading a metadata from URL
+    * [LEMONLDAP-680] - CDA does not work for http with "double cookie for single session"
+    * [LEMONLDAP-682] - Permissions for lemonldap-ng-cli
+    * [LEMONLDAP-647] - Hide message div if no message to display
+    * [LEMONLDAP-650] - logout tab in menu should display by default only if no other tab is present
+    * [LEMONLDAP-654] - DBI authentication not working with Unix passwords in DB
+    * [LEMONLDAP-659] - The user input field in password.tpl should be readonly or hidden
+    * [LEMONLDAP-668] - Performance improvement with DNS cache
+    * [LEMONLDAP-649] - Total rewrite of lemonldap-ng-cli tool
+    * [LEMONLDAP-678] - Provide non minified versions of javascript libraries
+
+lemonldap-ng (1.3.1) stable; urgency=low
+
+    * [LEMONLDAP-635] - Extra tests fails on new install
+    * [LEMONLDAP-637] - Missing XML::Simple dependency in Manager CPAN package
+    * [LEMONLDAP-638] - Lemonldap::NG::Manager::Cli requires perl(feature),
+      which is not available in EL5
+    * [LEMONLDAP-639] - portal/captcha_output directory has 777 permissions
+    * [LEMONLDAP-640] - /var/lib/lemonldap-ng/captcha is not created when
+      installed from RPM
+    * [LEMONLDAP-642] - Captcha directories not installed with DEB packages
+    * [LEMONLDAP-644] - Captcha required in MailReset when asking to resend
+      confirmation mail
+    * [LEMONLDAP-645] - Captcha not displayed in AuthChoice with form based
+      modules
+    * [LEMONLDAP-646] - Manager broken for MSIE-8
+    * [LEMONLDAP-641] - [SAML] Possibility to use IDP Name instead of IDP
+      entityID in URL for IDP selection
+    * [LEMONLDAP-643] - Launch initCaptcha only when needed
+
 lemonldap-ng (1.3.0) stable; urgency=low
 
     * [LEMONLDAP-471] - Incompatibility with Config::IniFiles 2.72
