@@ -105,6 +105,7 @@ Depends: ${misc:Depends},
          ${perl:Depends},
          libapache2-mod-perl2,
          liblemonldap-ng-common-perl (= ${binary:Version}),
+         libmouse-perl,
          libwww-perl
 Recommends: libhttp-message-perl | libwww-perl (<< 6),
             liblwp-protocol-https-perl | libwww-perl (<< 6)
@@ -140,6 +141,7 @@ Depends: ${misc:Depends},
          libcrypt-openssl-x509-perl,
          libcrypt-rijndael-perl,
          libdbi-perl,
+         libmouse-perl,
          libnet-cidr-lite-perl,
          libsoap-lite-perl
 Recommends: libapache-session-browseable-perl,
