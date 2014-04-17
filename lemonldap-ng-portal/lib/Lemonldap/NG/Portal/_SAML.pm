@@ -1611,8 +1611,6 @@ sub storeReplayProtection {
 
     my $session_id = $samlSessionInfo->id;
 
-    untie %$samlSessionInfo;
-
     $self->lmLog( "Keep request ID $samlID in assertion session $session_id",
         'debug' );
 
