@@ -1,12 +1,11 @@
 ## @file
-# Alias for Lemonldap::NG::Handler::DefaultHandler
+# Handler module
 
 ## @class
-# Alias for Lemonldap::NG::Handler::DefaultHandler
+# Handler module
 package Lemonldap::NG::Handler;
 
 our $VERSION = '1.4.0';
-use base qw(Lemonldap::NG::Handler::DefaultHandler);
 
 1;
 
@@ -30,10 +29,10 @@ Call Handler in /apache-dir/conf/httpd.conf:
   # Load your package
   PerlRequire /My/File
   # TOTAL PROTECTION
-  PerlHeaderParserHandler Lemonldap::NG::Handler
+  PerlHeaderParserHandler Lemonldap::NG::Handler::DefaultHandler
   # OR SELECTED AREA
   <Location /protected-area>
-    PerlHeaderParserHandler Lemonldap::NG::Handler
+    PerlHeaderParserHandler Lemonldap::NG::Handler::DefaultHandler
   </Location>
 
 The configuration is loaded only at Apache start. Create an URI to force
@@ -44,7 +43,7 @@ configuration reload, so you don't need to restart Apache at each change:
     Order deny,allow
     Deny from all
     Allow from my.manager.com
-    PerlHeaderParserHandler Lemonldap::NG::Handler->refresh
+    PerlHeaderParserHandler Lemonldap::NG::Handler::DefaultHandler->refresh
   </Location>
   
 To display the status page, add something like this :
@@ -53,7 +52,7 @@ To display the status page, add something like this :
     Order deny,allow
     Allow from 10.1.1.0/24
     Deny from all
-    PerlHeaderParserHandler Lemonldap::NG::Handler->status
+    PerlHeaderParserHandler Lemonldap::NG::Handler::DefaultHandler->status
   </Location>
 
 =head1 DESCRIPTION
