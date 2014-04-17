@@ -32,6 +32,7 @@ WriteMakefile(
         'CGI'                            => 3.08,
         'Lemonldap::NG::Common'          => '1.3.0',
         'LWP'                            => 0,
+        'Mouse'                          => 0,
         'URI'                            => 0,
     },    # e.g., Module::Name => 1.1
     (
