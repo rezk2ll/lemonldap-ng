@@ -42,7 +42,8 @@ override_dh_auto_install:
 			DATADIR=$(LMVARDIR) \
 			APACHEUSER=www-data \
 			APACHEGROUP=www-data \
-			DOCDIR=/usr/share/doc/lemonldap-ng-doc
+			DEFDOCDIR=/usr/share/doc/lemonldap-ng-doc \
+			FRDOCDIR=/usr/share/doc/lemonldap-ng-fr-doc
 	$(MAKE) fr-doc
 	test -n "$$LOCALBUILD" || ./scripts/minifierjs $$(find debian/tmp/ -name '*.js')
 	test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')

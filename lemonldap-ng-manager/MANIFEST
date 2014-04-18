@@ -3,6 +3,7 @@ example/index.pl
 example/mrtg/lmng-mrtg
 example/mrtg/mrtg.cfg.example
 example/notfound.html
+example/notfoundfr.html
 example/notifications.pl
 example/scripts/lemonldap-ng-cli
 example/scripts/lmConfigEditor

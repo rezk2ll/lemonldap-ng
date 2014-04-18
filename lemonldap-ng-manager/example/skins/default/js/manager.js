@@ -1669,7 +1669,11 @@ function loadHelp(ch) {
 	}
 	// Display new help only if not the last help
 	if (ch != lasthelp) {
-		url = '/doc' + helpCh[ch];
+		if (lang == "fr") {
+			url = '/fr-doc' + helpCh[ch];
+		} else {
+			url = '/doc' + helpCh[ch];
+		}
 		var html = '<iframe src="' + url + '" frameborder="0" />';
 		$('#help_content').html(html);
 		lasthelp = ch;

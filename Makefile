@@ -38,8 +38,11 @@ MANAGERSKINSDIR=$(MANAGERDIR)/skins
 RMANAGERSKINSDIR=$(DESTDIR)/$(MANAGERSKINSDIR)
 SESSIONSEXPLORERDIR=$(MANAGERDIR)
 RSESSIONSEXPLORERDIR=$(DESTDIR)/$(SESSIONSEXPLORERDIR)
-DOCDIR=$(DOCUMENTROOT)/doc
+DOCDIR=$(DOCUMENTROOT)
 RDOCDIR=$(DESTDIR)/$(DOCDIR)
+DEFDOCDIR=$(DOCUMENTROOT)/doc
+RDEFDOCDIR=$(DESTDIR)/$(DEFDOCDIR)
+FRDOCDIR=$(DOCUMENTROOT)/fr-doc
 TESTDIR=$(DOCUMENTROOT)/test
 RTESTDIR=$(DESTDIR)/$(TESTDIR)
 EXAMPLESDIR=$(LMPREFIX)/examples
@@ -141,7 +144,7 @@ all:	configure common handler manager portal
 	@echo "   - install_manager_site  ($(MANAGERDIR))"
 	@echo "   - install_handler_site  ($(HANDLERDIR))"
 	@echo " * Documentation install :"
-	@echo "   - install_doc_site      ($(DOCDIR))"
+	@echo "   - install_doc_site      ($(DEFDOCDIR))"
 	@echo "   - install_examples_site ($(EXAMPLESDIR))"
 	@echo
 	@echo "Other languages documentation (fr only for now)"
@@ -280,7 +283,8 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
 			s#__VHOSTLISTEN__#$(VHOSTLISTEN)#g; \
-			s#__DOCDIR__#$(DOCDIR)/#g;' $(RCONFDIR)/*apache*.conf
+			s#__DEFDOCDIR__#$(DEFDOCDIR)/#g; \
+			s#__FRDOCDIR__#$(FRDOCDIR)/#g;' $(RCONFDIR)/*apache*.conf
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	# Fix a lost of rights on the main directory
 	@chmod 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSKINSDIR) $(RMANAGERSKINSDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
@@ -325,7 +329,7 @@ install_manager_site:	install_conf_dir
 		install -v -d $(RMANAGERSKINSDIR)/$$skin; \
 	done
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/index.pl ${RMANAGERDIR}
-	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/notfound.html ${RMANAGERDIR}
+	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/*.html ${RMANAGERDIR}
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/skins/* $(RMANAGERSKINSDIR)
 	@if [ "$(MANAGERDIR)/skins/" != "$(MANAGERSKINSDIR)/" ]; then \
 		for skin in $$(ls lemonldap-ng-manager/example/skins/); do \
@@ -412,9 +416,9 @@ install_examples_site:
 
 install_doc_site:
 	# Offline documentation install
-	@rm -rf $(RDOCDIR)
-	@install -v -d $(RDOCDIR)
-	@cp -dR --remove-destination doc/* $(RDOCDIR)
+	@rm -rf $(RDEFDOCDIR)
+	@install -v -d $(RDEFDOCDIR)
+	@cp -dR --remove-destination doc/* $(RDEFDOCDIR)
 
 install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 	# Configuration files install
@@ -746,7 +750,7 @@ omegat-clean:
 	rm -rf omegat.files/*/omegat.project po-doc/*/* omegat.files/*/omegat/project_save*.bak
 
 install_%_doc_site: %-doc test_omegat_%_dir
-	@rm -rf $(RDOCDIR)/$* || true
-	@install -v -d $(RDOCDIR)/$*
-	@cp -dR --remove-destination po-doc/$*/* $(RDOCDIR)/$*
+	@rm -rf $(RDOCDIR)/$*-doc || true
+	@install -v -d $(RDOCDIR)/$*-doc
+	@cp -dR --remove-destination po-doc/$*/* $(RDOCDIR)/$*-doc
 

@@ -38,13 +38,14 @@
 	var text4securedCookie0='<lang en="Non secured cookie" fr="Cookie non sécurisé"/>';
 	var text4securedCookie1='<lang en="Secured cookie (HTTPS)" fr="Cookie sécurisé (HTTPS)"/>';
 	var text4securedCookie2='<lang en="Double cookie (HTTP and HTTPS)" fr="Double cookie (HTTP et HTTPS)"/>';
-        var text4securedCookie3='<lang en="Double cookie for single session" fr="Double cookie pour une seule session"/>';
+	var text4securedCookie3='<lang en="Double cookie for single session" fr="Double cookie pour une seule session"/>';
 	var text4newGeneratedFile='<lang en="Password (optional)" fr="Mot de passe (optionnel)" />';
 	var text4edit='<lang en="Edit" fr="Éditer" />';
 	var text4protect='<lang en="Protect" fr="Protéger" />';
 	var text4newCategory='<lang en="Category identifier" fr="Identifiant de la catégorie" />';
 	var text4newApplication='<lang en="Application identifier" fr="Identifiant de l\'application" />';
-        var text4newCondition='<lang en="New Condition" fr="Nouvelle Condition" />';
+	var text4newCondition='<lang en="New Condition" fr="Nouvelle Condition" />';
+	var lang='<TMPL_VAR NAME="LANG">';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/js/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
