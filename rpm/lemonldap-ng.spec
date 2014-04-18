@@ -45,6 +45,8 @@
 
 %define lm_dnsdomain example.com
 
+%define build_fr_doc 1
+
 #==============================================================================
 # Main package
 #==============================================================================
@@ -333,6 +335,16 @@ rm -rf %{buildroot}
 	DATADIR=%{lm_vardir} \
 	DNSDOMAIN=%{lm_dnsdomain}
 
+# Build FR doc (requires omegat)
+%if %{build_fr_doc}
+	%{__make} %{?_smp_mflags} install_fr_doc_site \
+	DESTDIR=%{buildroot} \
+	PREFIX=%{lm_prefix} \
+	BINDIR=%{lm_sharedir}/bin \
+	DOCUMENTROOT=%{lm_vardir} \
+	DATADIR=%{lm_vardir}
+%endif
+
 # Remove some unwanted files
 find %{buildroot} -name .packlist -exec rm -f {} \;
 find %{buildroot} -name perllocal.pod -exec rm -f {} \;
@@ -467,6 +479,9 @@ rm -rf %{buildroot}
 %files -n lemonldap-ng-doc
 %defattr(-,root,root,-)
 %doc %{lm_vardir}/doc
+%if %{build_fr_doc}
+%doc %{lm_vardir}/fr-doc
+%endif
 %doc changelog COPYING INSTALL README
 
 %files -n lemonldap-ng-handler
@@ -495,7 +510,6 @@ rm -rf %{buildroot}
 %defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir %{lm_vardir}/captcha
 %dir %{lm_vardir}/captcha/data
-%dir %{lm_vardir}/portal/captcha_output
 
 %files -n lemonldap-ng-test
 %defattr(-,root,root,-)
@@ -513,7 +527,6 @@ rm -rf %{buildroot}
 %doc %{_mandir}/man3/Lemonldap::NG::Handler*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Handler.pm
 %{perl_vendorlib}/Lemonldap/NG/Handler/
-%{perl_vendorlib}/auto/Lemonldap/NG/Handler/
 
 %files -n perl-Lemonldap-NG-Manager
 %defattr(-,root,root,-)
