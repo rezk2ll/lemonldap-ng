@@ -92,8 +92,9 @@ BuildRequires:  perl(Test::MockObject)
 BuildRequires:  perl(Clone)
 BuildRequires:  perl(Net::CIDR::Lite)
 BuildRequires:  perl(Unicode::String)
+BuildRequires:  perl(Mouse)
 %else
-BuildRequires:  perl-Regexp-Assemble, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Net-CIDR-Lite, perl-Unicode-String
+BuildRequires:  perl-Regexp-Assemble, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Net-CIDR-Lite, perl-Unicode-String, perl-Mouse
 %endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
