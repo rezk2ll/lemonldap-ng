@@ -125,6 +125,13 @@ has 'cda' => (
     documentation => 'Enable Cross Domain Authentication',
 );
 
+has 'cfgNum' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '0',
+    documentation => 'Configuration number',
+);
+
 has 'checkXSS' => (
     is            => 'rw',
     isa           => 'Bool',

@@ -357,7 +357,8 @@ sub available {
 # Call lastCfg() from the $self->{type} package.
 # @return Number of the last configuration available
 sub lastCfg {
-    return &{ $_[0]->{type} . '::lastCfg' }(@_);
+    my $result = &{ $_[0]->{type} . '::lastCfg' }(@_) || "0";
+    return $result;
 }
 
 ## @method boolean lock()

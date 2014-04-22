@@ -104,10 +104,8 @@ sub new {
 
     # Else load conf
     require Lemonldap::NG::Manager::Downloader;     #inherits
-    $self->{cfgNum} =
-         $self->param('cfgNum')
-      || $self->confObj->lastCfg()
-      || 'UNAVAILABLE';
+    $self->{cfgNum} = $self->param('cfgNum')
+      || $self->confObj->lastCfg();
 
     if ( my $p = $self->param('node') ) {
 

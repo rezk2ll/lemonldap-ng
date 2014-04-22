@@ -52,11 +52,10 @@ sub confUpload {
       ->documentElement();
 
     # 1.2 Get configuration number
-    unless ( $self->{cfgNum} =
-        $result->getChildrenByTagName('conf')->[0]->getAttribute('value') )
-    {
-        die "No configuration number found";
-    }
+    $self->{cfgNum} =
+      $result->getChildrenByTagName('conf')->[0]->getAttribute('value');
+    die "No configuration number found" unless defined $self->{cfgNum};
+
     my $newConf = { cfgNum => $self->{cfgNum} };
     my $errors = {};
 
@@ -332,7 +331,11 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
             $self->setKeyToH(
                 $newConf, $confKey,
                 $test->{keyTest}
-                ? ( ( $id !~ /\// or $test->{'*'} ) ? {} : ( $name => $value ) )
+                ? (
+                      ( $id !~ /\// or $test->{'*'} )
+                    ? {}
+                    : ( $name => $value )
+                  )
                 : $value
             );
         }
