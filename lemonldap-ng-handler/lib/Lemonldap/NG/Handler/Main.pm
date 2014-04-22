@@ -328,7 +328,7 @@ sub fetchId {
     my $lookForHttpCookie = $tsv->{securedCookie} =~ /^(2|3)$/
       && !(
         defined( $tsv->{https}->{$vhost} )
-        ? $$tsv->{https}->{$vhost}
+        ? $tsv->{https}->{$vhost}
         : $tsv->{https}->{_}
       );
     my $value =
