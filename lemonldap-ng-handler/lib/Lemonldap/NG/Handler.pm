@@ -240,8 +240,8 @@ Lemonldap::NG use 3 levels of cache for authenticated users:
 parameter (completed with C<globalStorageOptions>) and used by
 L<lemonldap::NG::Portal> to store authenticated user parameters,
 
-=item * a L<Cache::Cache> module choosed with the C<sessionLocalStorage> parameter
-(completed with C<sessionLocalStorageOptions>) and used to share authenticated users
+=item * a L<Cache::Cache> module choosed with the C<localSessionStorage> parameter
+(completed with C<localSessionStorageOptions>) and used to share authenticated users
 between Apache's threads or processus and of course between virtual hosts,
 
 =item * Lemonldap::NG::Handler variables: if the same user use the same thread
