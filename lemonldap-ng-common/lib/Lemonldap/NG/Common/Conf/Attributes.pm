@@ -502,6 +502,28 @@ has 'ldapVersion' => (
     documentation => 'LDAP protocol version',
 );
 
+has 'localSessionStorage' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'Cache::FileCache',
+    documentation => 'Sessions cache module',
+);
+
+has 'localSessionStorageOptions' => (
+    is      => 'rw',
+    isa     => 'HashRef',
+    default => sub {
+        return {
+            'namespace'          => 'lemonldap-ng-sessions',
+            'default_expires_in' => 600,
+            'directory_umask'    => '007',
+            'cache_root'         => '/tmp',
+            'cache_depth'        => 5,
+        };
+    },
+    documentation => 'Sessions cache module options',
+);
+
 has 'loginHistoryEnabled' => (
     is            => 'rw',
     isa           => 'Bool',
