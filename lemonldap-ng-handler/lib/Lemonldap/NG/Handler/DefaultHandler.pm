@@ -25,7 +25,6 @@ use Lemonldap::NG::Common::Conf;               #link protected lmConf
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Cache::Cache qw($EXPIRES_NEVER);
 use Lemonldap::NG::Handler::Main::Logger;
-use Env qw($lmTestConfig);
 
 use Mouse;
 
@@ -35,7 +34,7 @@ extends qw(Lemonldap::NG::Handler::Main);      # Lemonldap::NG::Handler::Vhost
 
 #parameter reloadTime Time in second between 2 configuration check (600)
 
-our $VERSION    = '1.1.1';
+our $VERSION    = '1.4.0';
 our $cfgNum     = 0;
 our $lastReload = 0;
 our $reloadTime;
@@ -100,12 +99,12 @@ sub defaultValuesInit {
               https           port               customFunctions
               timeoutActivity useRedirectOnError useRedirectOnForbidden
               useSafeJail     key                maintenance )
-          },
+        },
         @$ntsv{
             qw( cda             httpOnly           cookieExpiration
               cipher
               )
-          }
+        }
       )
       = $globalinit->defaultValuesInit(
         @$tsv{
@@ -113,11 +112,11 @@ sub defaultValuesInit {
               https           port               customFunctions
               timeoutActivity useRedirectOnError useRedirectOnForbidden
               useSafeJail     key                maintenance )
-          },
+        },
         @$ntsv{
             qw( cda             httpOnly           cookieExpiration
               cipher )
-          },
+        },
         \%h
       );
 
@@ -259,7 +258,7 @@ sub refresh($$) {
     return OK;
 }
 
-__PACKAGE__->init( $lmTestConfig );
+__PACKAGE__->init();
 
 1;
 __END__

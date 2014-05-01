@@ -8,6 +8,7 @@
 use Test::More;
 use Cwd 'abs_path';
 use File::Basename;
+use File::Temp;
 my $numTests = 3;
 unless ( eval { require Test::MockObject } ) {
     $numTests = 1;
@@ -16,21 +17,29 @@ unless ( eval { require Test::MockObject } ) {
 
 plan tests => $numTests;
 
-use Env qw($lmTestConfig);
-$lmTestConfig = {
-    configStorage => {
-        type                => 'File',
-        dirName             => dirname( abs_path($0) ),
-        localStorage        => 'Cache::FileCache',
-        localStorageOptions => {
-            'namespace'          => 'lemonldap-ng-config',
-            'default_expires_in' => 600,
-            'directory_umask'    => '007',
-            'cache_root'         => '/tmp',
-            'cache_depth'        => 0,
-        }
-    },
-};
+my $ini = File::Temp->new();
+my $dir = dirname( abs_path($0) );
+
+print $ini "[all]
+
+[configuration]
+type=File
+dirName=$dir
+localStorage=Cache::FileCache
+localStorageOptions={                             \\
+    'namespace'          => 'lemonldap-ng-config',\\
+    'default_expires_in' => 600,                  \\
+    'directory_umask'    => '007',                \\
+    'cache_root'         => '/tmp',               \\
+    'cache_depth'        => 0,                    \\
+}
+
+";
+
+$ini->flush();
+
+use Env qw(LLNG_DEFAULTCONFFILE);
+$LLNG_DEFAULTCONFFILE = $ini;
 
 open STDERR, '>/dev/null';
 
@@ -86,4 +95,4 @@ if ( $numTests == 3 ) {
 
 }
 
-$lmTestConfig = undef;
+$LLNG_DEFAULTCONFFILE = undef;

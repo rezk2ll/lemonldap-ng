@@ -8,14 +8,22 @@
 use Test::More tests => 1;
 use Cwd 'abs_path';
 use File::Basename;
+use File::Temp;
 
-use Env qw($lmTestConfig);
-$lmTestConfig = {
-    configStorage => {
-        type                => 'File',
-        dirName             => dirname( abs_path($0) ),
-    },
-};
+my $ini = File::Temp->new();
+my $dir = dirname( abs_path($0) );
+
+print $ini "[all]
+
+[configuration]
+type=File
+dirName=$dir
+";
+
+$ini->flush();
+
+use Env qw(LLNG_DEFAULTCONFFILE);
+$LLNG_DEFAULTCONFFILE = $ini;
 
 #########################
 
@@ -30,4 +38,4 @@ SKIP: {
     use_ok('Lemonldap::NG::Handler::ZimbraPreAuth');
 }
 
-$lmTestConfig = undef;
+$LLNG_DEFAULTCONFFILE = undef;

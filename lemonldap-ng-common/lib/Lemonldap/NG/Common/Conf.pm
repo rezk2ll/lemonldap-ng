@@ -231,7 +231,10 @@ sub getLocalConf {
     my $r = {};
 
     $section ||= DEFAULTSECTION;
-    $file ||= $self->{confFile} || DEFAULTCONFFILE;
+    $file ||=
+         $self->{confFile}
+      || $ENV{LLNG_DEFAULTCONFFILE}
+      || DEFAULTCONFFILE;
     $loaddefault = 1 unless ( defined $loaddefault );
     my $cfg;
 
