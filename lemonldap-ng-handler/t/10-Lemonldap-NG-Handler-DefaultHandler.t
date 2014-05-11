@@ -19,6 +19,7 @@ plan tests => $numTests;
 
 my $ini = File::Temp->new();
 my $dir = dirname( abs_path($0) );
+my $tmp = File::Temp->newdir();
 
 print $ini "[all]
 
@@ -30,7 +31,7 @@ localStorageOptions={                             \\
     'namespace'          => 'lemonldap-ng-config',\\
     'default_expires_in' => 600,                  \\
     'directory_umask'    => '007',                \\
-    'cache_root'         => '/tmp',               \\
+    'cache_root'         => '$tmp',               \\
     'cache_depth'        => 0,                    \\
 }
 
