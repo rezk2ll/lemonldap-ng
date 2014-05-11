@@ -53,7 +53,7 @@ ok(
                 confFile => 'undefined.xx',
             },
             https         => 0,
-            portal        => 'http://auth.example.com',
+            portal        => 'http://auth.example.com/',
             globalStorage => 'Apache::Session::File',
         }
     ),

@@ -754,7 +754,7 @@ has 'passwordDB' => (
 has 'portal' => (
     is            => 'rw',
     isa           => 'Any',
-    default       => 'http://auth.example.com',
+    default       => 'http://auth.example.com/',
     documentation => 'Portal URL',
 );
 
