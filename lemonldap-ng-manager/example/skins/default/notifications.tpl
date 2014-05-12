@@ -25,6 +25,7 @@
         var themepath='<TMPL_VAR NAME="DIR">/';
 	var treejquerycss='false';
 	var treeautoclose='false';
+        var lang='<TMPL_VAR NAME="LANG">';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/js/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

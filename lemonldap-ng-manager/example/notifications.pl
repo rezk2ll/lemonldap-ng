@@ -48,6 +48,7 @@ $template->param( DIR         => "$skin_dir/$skin" );
 $template->param( CSS         => $css );
 $template->param( CSS_THEME   => $css_theme );
 $template->param( VERSION     => $Lemonldap::NG::Manager::VERSION );
+$template->param( LANG        => shift $cgi->{lang} );
 print $cgi->header('text/html; charset=utf-8');
 print $template->output;
 

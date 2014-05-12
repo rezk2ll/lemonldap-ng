@@ -470,6 +470,9 @@ sub session {
     # -> quote HTML
     foreach ( keys %session ) {
 
+        # Don't touch references
+        next if ref $session{$_};
+
         # Remove empty value
         delete $session{$_} unless ( length $session{$_} );
 
@@ -595,7 +598,7 @@ sub session {
         foreach ( keys %session ) {
             next if $_ !~ /^notification_(.+)/;
             $res .=
-                '<li><strong>' 
+                '<li><strong>'
               . $1
               . '</strong>: '
               . $session{$_} . " ("
