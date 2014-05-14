@@ -15,7 +15,7 @@ use Unicode::String qw(utf8);
 use strict;
 
 our @EXPORT   = qw(ldap);
-our $VERSION  = '1.3.2';
+our $VERSION  = '1.4.0';
 our $ppLoaded = 0;
 
 BEGIN {
@@ -255,7 +255,7 @@ sub userModifyPassword {
 
         # Encode password for AD
         $newpassword = utf8( chr(34) . $newpassword . chr(34) )->utf16le();
-        if ($oldpassword) {
+        if ( $oldpassword and $asUser ) {
             $oldpassword = utf8( chr(34) . $oldpassword . chr(34) )->utf16le();
         }
         $self->{portal}->lmLog( "Active Directory mode enabled", 'debug' );
@@ -301,7 +301,7 @@ sub userModifyPassword {
 
             # AD specific
             # Change password as user with a delete/add modification
-            if ( $ad and $oldpassword ) {
+            if ( $ad and $oldpassword and $asUser ) {
 
                 $mesg = $self->modify(
                     $dn,
