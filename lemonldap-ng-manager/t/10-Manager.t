@@ -25,7 +25,7 @@ dirName=$dir
 $ini->flush();
 
 use Env qw(LLNG_DEFAULTCONFFILE);
-$LLNG_DEFAULTCONFFILE = $ini;
+$LLNG_DEFAULTCONFFILE = $ini->filename;
 
 use_ok('Lemonldap::NG::Manager');
 
