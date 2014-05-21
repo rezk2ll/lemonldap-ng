@@ -302,13 +302,13 @@ sub userModifyPassword {
             # AD specific
             # Change password as user with a delete/add modification
             if ( $ad and $oldpassword and $asUser ) {
-
                 $mesg = $self->modify(
                     $dn,
-                    delete => { $passwordAttribute => $oldpassword },
-                    add    => { $passwordAttribute => $newpassword }
+                    changes => [
+                        delete => [ $passwordAttribute => $oldpassword ],
+                        add    => [ $passwordAttribute => $newpassword ]
+                    ]
                 );
-
             }
 
             else {
@@ -339,6 +339,8 @@ sub userModifyPassword {
           if ( $mesg->code == 50 || $mesg->code == 8 );
         return PE_PP_INSUFFICIENT_PASSWORD_QUALITY
           if ( $mesg->code == 53 && $ad );
+        return PE_PP_PASSWORD_MOD_NOT_ALLOWED
+          if ( $mesg->code == 19 && $ad );
         return PE_LDAPERROR unless ( $mesg->code == 0 );
         $self->{portal}
           ->_sub( 'userNotice', "Password changed $self->{portal}->{user}" );

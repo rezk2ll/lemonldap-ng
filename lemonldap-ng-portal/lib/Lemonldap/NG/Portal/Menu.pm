@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::_LibAccess;
 use base qw(Lemonldap::NG::Portal::_LibAccess);
 use Clone qw(clone);
 
-our $VERSION  = '1.3.0';
+our $VERSION  = '1.4.0';
 our $catlevel = 0;
 
 ## @method void menuInit()
@@ -57,6 +57,7 @@ sub menuInit {
             scalar(
                 grep { $_ == $self->{menuError} } (
                     25,    #PE_PP_CHANGE_AFTER_RESET
+                    26,    #PE_PP_PASSWORD_MOD_NOT_ALLOWED
                     27,    #PE_PP_MUST_SUPPLY_OLD_PASSWORD
                     28,    #PE_PP_INSUFFICIENT_PASSWORD_QUALITY
                     29,    #PE_PP_PASSWORD_TOO_SHORT
