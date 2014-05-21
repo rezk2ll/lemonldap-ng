@@ -15,7 +15,7 @@ package Lemonldap::NG::Handler::Initialization::LocalInit;
 
 use Mouse;
 
-use Lemonldap::NG::Handler; # Needed to get VERSION
+use Lemonldap::NG::Handler::SharedConf; # Needed to get VERSION
 use Lemonldap::NG::Handler::Main::Logger;
 
 our $VERSION = '1.3.0';

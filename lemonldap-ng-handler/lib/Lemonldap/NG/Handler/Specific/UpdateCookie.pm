@@ -9,8 +9,8 @@
 package Lemonldap::NG::Handler::SpecificHandlers::UpdateCookie;
 
 use strict;
-use Lemonldap::NG::Handler::DefaultHandler qw(:all);
-use base qw(Lemonldap::NG::Handler::DefaultHandler);
+use Lemonldap::NG::Handler::SharedConf qw(:all);
+use base qw(Lemonldap::NG::Handler::SharedConf);
 use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Common::Session;
@@ -108,7 +108,7 @@ cookie sent by client, to reload session in local cache.
 
   package My::Package;
   use Lemonldap::NG::Handler::UpdateCookie;
-  @ISA = qw(Lemonldap::NG::Handler::DefaultHandler);
+  @ISA = qw(Lemonldap::NG::Handler::SharedConf);
 
   __PACKAGE__->init ( {
     # See Lemonldap::NG::Handler for more

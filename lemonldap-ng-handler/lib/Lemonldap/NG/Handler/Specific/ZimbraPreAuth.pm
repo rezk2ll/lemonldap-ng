@@ -11,8 +11,8 @@
 package Lemonldap::NG::Handler::SpecificHandlers::ZimbraPreAuth;
 
 use strict;
-use Lemonldap::NG::Handler::DefaultHandler qw(:all);
-use base qw(Lemonldap::NG::Handler::DefaultHandler);
+use Lemonldap::NG::Handler::SharedConf qw(:all);
+use base qw(Lemonldap::NG::Handler::SharedConf);
 use Digest::HMAC_SHA1 qw(hmac_sha1 hmac_sha1_hex);
 use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;

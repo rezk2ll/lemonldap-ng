@@ -24,7 +24,7 @@ Last-Update: 2013-05-31
 +        <IfVersion >= 2.4>
 +            Require ip 127
 +        </IfVersion>
-         PerlHeaderParserHandler Lemonldap::NG::Handler::DefaultHandler->refresh
+         PerlHeaderParserHandler Lemonldap::NG::Handler->refresh
      </Location>
  
      # Uncomment this to activate status module
@@ -40,7 +40,7 @@ Last-Update: 2013-05-31
 +    #    <IfVersion >= 2.4>
 +    #        Require ip 127
 +    #    </IfVersion>
-     #    PerlHeaderParserHandler Lemonldap::NG::Handler::DefaultHandler->status
+     #    PerlHeaderParserHandler Lemonldap::NG::Handler->status
      #</Location>
  
 --- a/_example/etc/manager-apache2.conf

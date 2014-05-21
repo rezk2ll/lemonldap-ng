@@ -13,7 +13,7 @@
 # - init() is launched as Apache startup
 # - globalInit() is launched at each first request received by an Apache child
 # and each time a new configuration is detected
-package Lemonldap::NG::Handler::DefaultHandler;
+package Lemonldap::NG::Handler::SharedConf;
 
 #use strict;
 
@@ -258,8 +258,6 @@ sub refresh($$) {
     return OK;
 }
 
-__PACKAGE__->init();
-
 1;
 __END__
 
@@ -267,14 +265,14 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Handler::DefaultHandler - Perl extension to use dynamic
+Lemonldap::NG::Handler::SharedConf - Perl extension to use dynamic
 configuration provide by Lemonldap::NG::Manager.
 
 =head1 SYNOPSIS
 
   package My::Package;
-  use Lemonldap::NG::Handler::DefaultHandler;
-  @ISA = qw(Lemonldap::NG::Handler::DefaultHandler);
+  use Lemonldap::NG::Handler::SharedConf;
+  @ISA = qw(Lemonldap::NG::Handler::SharedConf);
   __PACKAGE__->init ( {
     localStorage        => "Cache::FileCache",
     localStorageOptions => {
@@ -319,7 +317,7 @@ to the portal that run L<Lemonldap::NG::Portal::SharedConf>. After reading
 configuration from the database and authenticating the user, it stores a key
 word for each application the user is granted to access to.
 Then the user is redirected to the application he wanted to access and the
-Apache handler build with L<Lemonldap::NG::Handler::DefaultHandler::DBI> has just
+Apache handler build with L<Lemonldap::NG::Handler::SharedConf::DBI> has just
 to verify that the keyword corresponding to the protected area is stored in
 the database.
 

@@ -1,6 +1,6 @@
 package My::Package;
-use Lemonldap::NG::Handler::DefaultHandler;
-@ISA = qw(Lemonldap::NG::Handler::DefaultHandler);
+use Lemonldap::NG::Handler::SharedConf;
+@ISA = qw(Lemonldap::NG::Handler::SharedConf);
 
 use Log::Log4perl;
 
@@ -27,7 +27,7 @@ __PACKAGE__->init(
       #configStorage => { confFile => '/path/to/my/file' },
 
         # You can also specify directly the configuration
-        # (see Lemonldap::NG::Handler::DefaultHandler(3))
+        # (see Lemonldap::NG::Handler::SharedConf(3))
         #configStorage => {
         #      type => 'File',
         #      dirName => '/usr/local/lemonldap-ng/data/conf/'

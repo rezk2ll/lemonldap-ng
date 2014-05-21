@@ -8,8 +8,8 @@
 package Lemonldap::NG::Handler::Menu;
 
 use strict;
-use Lemonldap::NG::Handler::DefaultHandler qw(:all);
-use base qw(Lemonldap::NG::Handler::DefaultHandler);
+use Lemonldap::NG::Handler::SharedConf qw(:all);
+use base qw(Lemonldap::NG::Handler::SharedConf);
 use Apache2::Filter ();
 use constant BUFF_LEN => 1024;
 

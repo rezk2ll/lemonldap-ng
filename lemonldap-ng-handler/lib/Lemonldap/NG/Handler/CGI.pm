@@ -14,7 +14,7 @@ use MIME::Base64;
 
 use base qw(Lemonldap::NG::Common::CGI);
 
-use Lemonldap::NG::Handler::DefaultHandler qw(:all);
+use Lemonldap::NG::Handler::SharedConf qw(:all);
 
 #link Lemonldap::NG::Handler::_CGI protected _handler
 
@@ -216,11 +216,11 @@ package Lemonldap::NG::Handler::_CGI;
 
 use strict;
 
-#use Lemonldap::NG::Handler::DefaultHandler qw(:locationRules :localStorage :traces);
-use Lemonldap::NG::Handler::DefaultHandler qw(:tsv :ntsv :jailSharedVars);
+#use Lemonldap::NG::Handler::SharedConf qw(:locationRules :localStorage :traces);
+use Lemonldap::NG::Handler::SharedConf qw(:tsv :ntsv :jailSharedVars);
 use Lemonldap::NG::Handler::Main::Jail;
 
-use base qw(Lemonldap::NG::Handler::DefaultHandler);
+use base qw(Lemonldap::NG::Handler::SharedConf);
 
 our $_cgi;
 

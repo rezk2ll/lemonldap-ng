@@ -7,6 +7,14 @@ package Lemonldap::NG::Handler;
 
 our $VERSION = '1.4.0';
 
+use Lemonldap::NG::Handler::SharedConf;
+@ISA = qw(Lemonldap::NG::Handler::SharedConf);
+
+__PACKAGE__->init();
+
+
+
+
 1;
 
 __END__

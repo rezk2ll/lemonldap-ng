@@ -49,7 +49,7 @@ open STDERR, '>/dev/null';
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-use_ok('Lemonldap::NG::Handler::DefaultHandler');
+use_ok('Lemonldap::NG::Handler');
 
 if ( $numTests == 3 ) {
 
@@ -81,11 +81,11 @@ if ( $numTests == 3 ) {
 
     our $apacheRequest = Apache2::RequestRec->new();
 
-    my $h = bless {}, 'Lemonldap::NG::Handler::DefaultHandler';
+    my $h = bless {}, 'Lemonldap::NG::Handler';
 
     ok(
-        $h->Lemonldap::NG::Handler::DefaultHandler::run($apacheRequest),
-        'run DefaultHandler with basic configuration and no cookie'
+        $h->Lemonldap::NG::Handler::run($apacheRequest),
+        'run Handler with basic configuration and no cookie'
     );
 
     ok(
