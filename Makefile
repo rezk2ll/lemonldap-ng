@@ -277,8 +277,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 		cp --remove-destination _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR); \
 	fi
-	@$(PERL) -i -pe 's#__HANDLER__#${HANDLERDIR}/MyHandler.pm#; \
-			s/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
+	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
 			s#__PORTALDIR__#$(PORTALDIR)/#g; \
 			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
@@ -379,12 +378,6 @@ install_portal_site:	install_conf_dir
 install_handler_site:	install_conf_dir
 	# Handler install
 	@install -v -d ${RHANDLERDIR}
-	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandler.pm ${RHANDLERDIR}
-	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerZimbra.pm ${RHANDLERDIR}
-	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerSympa.pm ${RHANDLERDIR}
-	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerSecureToken.pm ${RHANDLERDIR}
-	@cp --remove-destination ${SRCHANDLERDIR}/example/MyUpdateCookieHandler.pm ${RHANDLERDIR}
-	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerAuthBasic.pm ${RHANDLERDIR}
 	@cp --remove-destination lemonldap-ng-handler/example/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-handler; \
@@ -682,12 +675,6 @@ default-diff:
 	@$(DIFF) lemonldap-ng-portal/example/cdc.pl $(LMPREFIX)/htdocs/portal/cdc.pl ||true
 	@# Handler
 	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Handler ||true
-	@$(DIFF) lemonldap-ng-handler/example/MyHandler.pm $(LMPREFIX)/handler/MyHandler.pm ||true
-	@$(DIFF) lemonldap-ng-handler/example/MyHandlerZimbra.pm $(LMPREFIX)/handler/MyHandlerZimbra.pm ||true
-	@$(DIFF) lemonldap-ng-handler/example/MyHandlerSympa.pm $(LMPREFIX)/handler/MyHandlerSympa.pm ||true
-	@$(DIFF) lemonldap-ng-handler/example/MyHandlerSecureToken.pm $(LMPREFIX)/handler/MyHandlerSecureToken.pm ||true
-	@$(DIFF) lemonldap-ng-handler/example/MyUpdateCookieHandler.pm $(LMPREFIX)/handler/MyUpdateCookieHandler.pm ||true
-	@$(DIFF) lemonldap-ng-handler/example/MyHandlerAuthBasic.pm $(LMPREFIX)/handler/MyHandlerAuthBasic.pm ||true
 	@$(DIFF) lemonldap-ng-handler/example/scripts/purgeLocalCache $(LMPREFIX)/bin/purgeLocalCache ||true
 	@# Common
 	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Common ||true
