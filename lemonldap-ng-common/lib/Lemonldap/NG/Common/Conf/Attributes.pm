@@ -612,7 +612,7 @@ has 'mailUrl' => (
     isa     => 'Str',
     default => sub {
         my $self = shift;
-        return $self->portal . "/mail.pl";
+        return $self->portal . "mail.pl";
     },
     lazy          => 1,
     documentation => 'URL of password reset page',
@@ -909,8 +909,8 @@ has 'remoteGlobalStorageOptions' => (
     default => sub {
         my $self = shift;
         return {
-            'proxy' => $self->portal . '/index.pl/sessions',
-            'ns'    => $self->portal . '/Lemonldap/NG/Common/CGI/SOAPService',
+            'proxy' => $self->portal . 'index.pl/sessions',
+            'ns'    => $self->portal . 'Lemonldap/NG/Common/CGI/SOAPService',
         };
     },
     lazy          => 1,
