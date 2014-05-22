@@ -217,7 +217,7 @@ package Lemonldap::NG::Handler::_CGI;
 use strict;
 
 #use Lemonldap::NG::Handler::SharedConf qw(:locationRules :localStorage :traces);
-use Lemonldap::NG::Handler::SharedConf qw(:tsv :ntsv :jailSharedVars);
+use Lemonldap::NG::Handler::SharedConf qw(:tsv :jailSharedVars);
 use Lemonldap::NG::Handler::Main::Jail;
 
 use base qw(Lemonldap::NG::Handler::SharedConf);
@@ -229,13 +229,13 @@ sub safe_reval {
     my $rule  = shift;
 
     my $jail = Lemonldap::NG::Handler::Main::Jail->new(
-        'safe'            => $ntsv->{safe},
+        'safe'            => $tsv->{safe},
         'useSafeJail'     => $tsv->{useSafeJail},
         'customFunctions' => $tsv->{customFunctions}
     );
-    $ntsv->{safe} = $jail->build_safe();
+    $tsv->{safe} = $jail->build_safe();
 
-    return $ntsv->{safe}->reval($rule);
+    return $tsv->{safe}->reval($rule);
 }
 
 ## @method boolean childInit()

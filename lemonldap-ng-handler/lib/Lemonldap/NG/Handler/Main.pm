@@ -39,33 +39,28 @@ our @EXPORT_OK;
 
 our @EXPORT;
 
-# my @tSharedVar = qw(
-#     cookieName           customFunctions        defaultCondition
-#     defaultProtection    forgeHeaders           globalStorage
-#     globalStorageOptions headerList             https
-#     key                  localStorage           localStorageOptions
-#     locationCondition    locationConditionText  locationCount
-#     locationProtection   locationRegexp         maintenance
-#     port                 refLocalStorage        securedCookie
-#     statusOut            statusPipe             timeoutActivity
-#     useRedirectOnError   useRedirectOnForbidden useSafeJail
-#     whatToTrace
+# my @threadSharedVar = qw(
+#     cda                    childInitDone         cipher
+#     cookieExpiration       cookieName            customFunctions
+#     defaultCondition       defaultProtection     forgeHeaders
+#     globalStorage          globalStorageOptions  headerList
+#     httpOnly               https                 key
+#     localStorage           localStorageOptions   locationCondition
+#     locationConditionText  locationCount         locationProtection
+#     locationRegexp         maintenance           port
+#     refLocalStorage        safe                  securedCookie
+#     statusOut              statusPipe            timeoutActivity
+#     transform              useRedirectOnError    useRedirectOnForbidden
+#     useSafeJail            whatToTrace
 # );
 #
-# my @nontSharedVar = qw(
-#     safe
-#     cipher               datasUpdate            transform
-#     cda                  childInitDone          httpOnly
-#     cookieExpiration
-# );
-#
-# non threaded shared vars non being part of $ntsv hashref
-# (because of share_from in Jail.pm):
+# non thread shared vars
 # $apacheRequest
 # $datas
+# $datasUpdate
 
 # Shared variables
-our ( $apacheRequest, $datas, $tsv, $ntsv, );
+our ( $apacheRequest, $datas, $datasUpdate, $tsv );
 
 ##########################################
 # COMPATIBILITY WITH APACHE AND APACHE 2 #
@@ -79,7 +74,6 @@ BEGIN {
         locationRules  => [qw( )],
         jailSharedVars => [qw( $apacheRequest $datas )],
         tsv            => [qw( $tsv )],
-        ntsv           => [qw( $ntsv )],
         import         => [qw( import @EXPORT_OK @EXPORT %EXPORT_TAGS )],
         headers        => [
             qw(
@@ -336,7 +330,7 @@ sub fetchId {
       ? ( $t =~ /$tsv->{cookieName}http=([^,; ]+)/o ? $1 : 0 )
       : ( $t =~ /$tsv->{cookieName}=([^,; ]+)/o ? $1 : 0 );
 
-    $value = $ntsv->{cipher}->decryptHex( $value, "http" )
+    $value = $tsv->{cipher}->decryptHex( $value, "http" )
       if ( $value && $lookForHttpCookie && $tsv->{securedCookie} == 3 );
     return $value;
 }
@@ -352,7 +346,7 @@ sub retrieveSession {
     return 1
       if (  defined $datas->{_session_id}
         and $id eq $datas->{_session_id}
-        and ( time() - $ntsv->{datasUpdate} < 60 ) );
+        and ( time() - $datasUpdate < 60 ) );
 
     # 2. Get the session from cache or backend
     my $apacheSession = Lemonldap::NG::Common::Session->new(
@@ -390,7 +384,7 @@ sub retrieveSession {
     $datas->{$_} = $apacheSession->data->{$_}
       foreach ( keys %{ $apacheSession->data } );
 
-    $ntsv->{datasUpdate} = time();
+    $datasUpdate = time();
     return 1;
 }
 
@@ -442,7 +436,7 @@ sub run ($$) {
     }
 
     # Cross domain authentication
-    if (    $ntsv->{cda}
+    if (    $tsv->{cda}
         and $args =~ s/[\?&]?($tsv->{cookieName}(http)?=\w+)$//oi )
     {
         my $str = $1;
@@ -457,10 +451,10 @@ sub run ($$) {
             $apacheRequest,
             'Set-Cookie' => "$str; path=/"
               . ( $redirectHttps    ? "; secure"   : "" )
-              . ( $ntsv->{httpOnly} ? "; HttpOnly" : "" )
+              . ( $tsv->{httpOnly} ? "; HttpOnly" : "" )
               . (
-                $ntsv->{cookieExpiration}
-                ? "; expires=" . expires( $ntsv->{cookieExpiration}, 'cookie' )
+                $tsv->{cookieExpiration}
+                ? "; expires=" . expires( $tsv->{cookieExpiration}, 'cookie' )
                 : ""
               )
         );
@@ -632,9 +626,8 @@ sub localInit($$) {
     );
     (
         @$tsv{
-            qw( localStorage refLocalStorage localStorageOptions statusPipe statusOut )
-          },
-        $ntsv->{childInitDone}
+            qw( localStorage refLocalStorage localStorageOptions statusPipe statusOut childInitDone )
+          }
     ) = $localinit->localInit($args);
 
 }
@@ -658,46 +651,40 @@ sub globalInit {
     my $globalinit = Lemonldap::NG::Handler::Initialization::GlobalInit->new(
         customFunctions => $tsv->{customFunctions},
         useSafeJail     => $tsv->{useSafeJail},
-        safe            => $ntsv->{safe},
+        safe            => $tsv->{safe},
     );
 
     (
         @$tsv{
-            qw( cookieName      securedCookie      whatToTrace
+          qw( cookieName      securedCookie      whatToTrace
               https           port               customFunctions
               timeoutActivity useRedirectOnError useRedirectOnForbidden
-              useSafeJail     key                maintenance )
-          },
-        @$ntsv{
-            qw( cda             httpOnly           cookieExpiration
-              cipher
-              )
+              useSafeJail     key                maintenance
+              cda             httpOnly           cookieExpiration
+              cipher )
           }
       )
       = $globalinit->defaultValuesInit(
         @$tsv{
-            qw( cookieName      securedCookie      whatToTrace
+          qw( cookieName      securedCookie      whatToTrace
               https           port               customFunctions
               timeoutActivity useRedirectOnError useRedirectOnForbidden
-              useSafeJail     key                maintenance )
-          },
-        @$ntsv{
-            qw( cda             httpOnly           cookieExpiration
+              useSafeJail     key                maintenance
+              cda             httpOnly           cookieExpiration
               cipher )
           },
         @_
       );
 
-    ( *portal, $ntsv->{safe} ) = $globalinit->portalInit( $class, @_ );
+    ( *portal, $tsv->{safe} ) = $globalinit->portalInit( $class, @_ );
 
     (
         @$tsv{
             qw( locationCount defaultCondition
               defaultProtection locationCondition
               locationProtection locationRegexp
-              locationConditionText )
-          },
-        $ntsv->{safe}
+              locationConditionText safe )
+          }
       )
       = $globalinit->locationRulesInit(
         $class,
@@ -723,7 +710,7 @@ sub globalInit {
     $tsv->{forgeHeaders} =
       $globalinit->forgeHeadersInit( $tsv->{forgeHeaders}, @_ );
 
-    $ntsv->{transform} = $globalinit->postUrlInit( $ntsv->{transform}, @_ );
+    $tsv->{transform} = $globalinit->postUrlInit( $tsv->{transform}, @_ );
 
 }
 

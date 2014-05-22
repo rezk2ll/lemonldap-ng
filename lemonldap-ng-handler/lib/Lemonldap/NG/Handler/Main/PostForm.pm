@@ -2,9 +2,9 @@ package Lemonldap::NG::Handler::Main::PostForm;
 
 use strict;
 
-# For importing MP function, $ntsv->{transform}, $apacheRequest,
-# $ntsv->{safe}, $tsv->{useSafeJail}, $tsv->{customFunctions}
-use Lemonldap::NG::Handler::Main qw( :apache :ntsv :tsv $apacheRequest );
+# For importing MP function, $tsv->{transform}, $apacheRequest,
+# $tsv->{safe}, $tsv->{useSafeJail}, $tsv->{customFunctions}
+use Lemonldap::NG::Handler::Main qw( :apache :tsv $apacheRequest );
 use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Handler::Main::Jail;
 
@@ -34,8 +34,8 @@ sub transformUri {
     my ( $class, $uri ) = splice @_;
     my $vhost = $apacheRequest->hostname;
 
-    if ( defined( $ntsv->{transform}->{$vhost}->{$uri} ) ) {
-        return &{ $ntsv->{transform}->{$vhost}->{$uri} };
+    if ( defined( $tsv->{transform}->{$vhost}->{$uri} ) ) {
+        return &{ $tsv->{transform}->{$vhost}->{$uri} };
     }
 
     OK;
@@ -87,13 +87,13 @@ sub postFilter {
         my $u = URI->new('http:');
 
         my $jail = Lemonldap::NG::Handler::Main::Jail->new(
-            'safe'            => $ntsv->{safe},
+            'safe'            => $tsv->{safe},
             'useSafeJail'     => $tsv->{useSafeJail},
             'customFunctions' => $tsv->{customFunctions}
         );
-        $ntsv->{safe} = $jail->build_safe();
+        $tsv->{safe} = $jail->build_safe();
 
-        $u->query_form( { $ntsv->{safe}->reval($data) } );
+        $u->query_form( { $tsv->{safe}->reval($data) } );
         my $s = $u->query();
 
         # Eat all fake data sent by client
