@@ -95,8 +95,8 @@ Configure Sympa virtual host like other <a href="../../../documentation/1.4/conf
        <span class="kw1">ServerName</span> sympa.example.com
 &nbsp;
        <span class="co1"># Load Sympa Handler</span>
-       PerlRequire __HANDLERDIR__/MyHandlerSympa.pm
-       PerlHeaderParserHandler My::Sympa
+       PerlRequire Lemonldap/NG/Handler/Specific/SympaAutoLogin.pm
+       PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::SympaAutoLogin
 &nbsp;
        ...
 &nbsp;
@@ -133,7 +133,7 @@ Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- SECTION "Auto login" [765-1723] -->
+<!-- SECTION "Auto login" [765-1777] -->
 <h3><a name="magic_authentication" id="magic_authentication">Magic authentication</a></h3>
 <div class="level3">
 
@@ -226,4 +226,4 @@ Configure the <a href="../../../documentation/1.4/writingrulesand_headers.html#r
 </ul>
 
 </div>
-<!-- SECTION "Magic authentication" [1724-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Magic authentication" [1778-] --></div><!-- closes <div class="dokuwiki export">-->

@@ -57,15 +57,15 @@ Configure the virtual host like other <a href="../../documentation/1.4/configvho
        <span class="kw1">ServerName</span> secure.example.com
 &nbsp;
        <span class="co1"># Load SecureToken Handler</span>
-       PerlRequire __HANDLERDIR__/MyHandlerSecureToken.pm
-       PerlHeaderParserHandler My::SecureToken
+       PerlRequire Lemonldap/NG/Handler/Specific/SecureToken.pm
+       PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::SecureToken
 &nbsp;
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Virtual host in Apache" [516-938] -->
+<!-- SECTION "Virtual host in Apache" [516-974] -->
 <h3><a name="handler_parameters" id="handler_parameters">Handler parameters</a></h3>
 <div class="level3">
 
@@ -89,4 +89,4 @@ Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- SECTION "Handler parameters" [939-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Handler parameters" [975-] --></div><!-- closes <div class="dokuwiki export">-->

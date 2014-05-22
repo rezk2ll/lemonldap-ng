@@ -86,12 +86,12 @@ First parameter passed to the custom function is the requested <acronym title="U
 Your module has to be loaded by Apache (for example after Handler load):
 </p>
 <pre class="code file apache"><span class="co1"># Perl environment</span>
-PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
+PerlRequire Lemonldap::NG::Handler
 PerlRequire /root/SSOExtensions.pm
 PerlOptions +GlobalRequest</pre>
 
 </div>
-<!-- SECTION "Declare module in Apache configuration" [894-1176] -->
+<!-- SECTION "Declare module in Apache configuration" [894-1156] -->
 <h3><a name="declare_custom_functions" id="declare_custom_functions">Declare custom functions</a></h3>
 <div class="level3">
 
@@ -110,7 +110,7 @@ SSOExtensions::function1
 </p>
 
 </div>
-<!-- SECTION "Declare custom functions" [1177-1473] -->
+<!-- SECTION "Declare custom functions" [1157-1453] -->
 <h2><a name="use_it" id="use_it">Use it</a></h2>
 <div class="level2">
 
@@ -124,4 +124,4 @@ Custom-Header =&gt; function1($uid)
 </pre>
 
 </div>
-<!-- SECTION "Use it" [1474-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Use it" [1454-] --></div><!-- closes <div class="dokuwiki export">-->

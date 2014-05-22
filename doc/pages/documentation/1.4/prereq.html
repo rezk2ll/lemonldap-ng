@@ -117,10 +117,16 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </li>
 <li class="level1"><div class="li"> Unicode::String</div>
 </li>
+<li class="level1"><div class="li"> Log::Log4perl::Logger</div>
+</li>
+<li class="level1"><div class="li"> Net::CIDR::Lite</div>
+</li>
+<li class="level1"><div class="li"> Cache::Memcached</div>
+</li>
 </ul>
 
 </div>
-<!-- SECTION "Core" [1021-1480] -->
+<!-- SECTION "Core" [1021-1547] -->
 <h3><a name="saml2" id="saml2">SAML2</a></h3>
 <div class="level3">
 <ul>
@@ -131,7 +137,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "SAML2" [1481-1550] -->
+<!-- SECTION "SAML2" [1548-1617] -->
 <h3><a name="cas_authentication_module" id="cas_authentication_module">CAS (authentication module)</a></h3>
 <div class="level3">
 <ul>
@@ -140,7 +146,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "CAS (authentication module)" [1551-1648] -->
+<!-- SECTION "CAS (authentication module)" [1618-1715] -->
 <h3><a name="openid" id="openid">OpenID</a></h3>
 <div class="level3">
 <ul>
@@ -151,7 +157,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "OpenID" [1649-1731] -->
+<!-- SECTION "OpenID" [1716-1798] -->
 <h3><a name="twitter" id="twitter">Twitter</a></h3>
 <div class="level3">
 <ul>
@@ -160,7 +166,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "Twitter" [1732-1768] -->
+<!-- SECTION "Twitter" [1799-1835] -->
 <h3><a name="pod_unit_tests" id="pod_unit_tests">POD unit tests</a></h3>
 <div class="level3">
 <ul>
@@ -171,7 +177,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "POD unit tests" [1769-1830] -->
+<!-- SECTION "POD unit tests" [1836-1897] -->
 <h3><a name="smtp_reset_password_by_mail" id="smtp_reset_password_by_mail">SMTP / Reset password by mail</a></h3>
 <div class="level3">
 <ul>
@@ -190,21 +196,23 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "SMTP / Reset password by mail" [1831-1978] -->
+<!-- SECTION "SMTP / Reset password by mail" [1898-2045] -->
 <h2><a name="other" id="other">Other</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Jquery (javascript framework) is included in tarball and RPMs, but is a dependency on Debian official releases</div>
 </li>
+<li class="level1"><div class="li"> OmegaT is needed to translate offline documentation and build fr-doc packages</div>
+</li>
 </ul>
 
 </div>
-<!-- SECTION "Other" [1979-2113] -->
+<!-- SECTION "Other" [2046-2262] -->
 <h2><a name="install_dependencies_on_your_system" id="install_dependencies_on_your_system">Install dependencies on your system</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install dependencies on your system" [2114-2163] -->
+<!-- SECTION "Install dependencies on your system" [2263-2312] -->
 <h3><a name="apt-get" id="apt-get">APT-GET</a></h3>
 <div class="level3">
 <pre class="code">
@@ -212,7 +220,7 @@ apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-
 </pre>
 
 </div>
-<!-- SECTION "APT-GET" [2164-2946] -->
+<!-- SECTION "APT-GET" [2313-3095] -->
 <h3><a name="yum" id="yum">YUM</a></h3>
 <div class="level3">
 
@@ -233,8 +241,8 @@ Choose a repository which hosted <acronym title="Practical Extraction and Report
 </div></p>
 </p>
 <pre class="code">
-yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Clone perl-Authen-SASL
+yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Clone perl-Authen-SASL perl-Log-Log4perl perl-Unicode-String perl-Net-CIDR-Lite perl-Cache-Memcached perl-Convert-PEM
 </pre>
 
 </div>
-<!-- SECTION "YUM" [2947-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "YUM" [3096-] --></div><!-- closes <div class="dokuwiki export">-->

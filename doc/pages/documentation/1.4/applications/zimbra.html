@@ -106,15 +106,14 @@ You will configure Zimbra virtual host like other <a href="../../../documentatio
         <span class="kw1">ServerName</span> zimbra.example.com
 &nbsp;
        <span class="co1"># Load Zimbra Handler</span>
-       PerlRequire __HANDLERDIR__/MyHandlerZimbra.pm
-       PerlHeaderParserHandler My::Zimbra
-&nbsp;
+       PerlRequire Lemonldap/NG/Handler/Specific/ZimbraPreAuth.pm
+       PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::ZimbraPreAuth
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Zimbra virtual host in Apache" [1724-2153] -->
+<!-- SECTION "Zimbra virtual host in Apache" [1724-2202] -->
 <h3><a name="zimbra_virtual_host_in_manager" id="zimbra_virtual_host_in_manager">Zimbra virtual host in Manager</a></h3>
 <div class="level3">
 
@@ -128,7 +127,7 @@ Just configure the <a href="../../../documentation/1.4/writingrulesand_headers.h
 </p>
 
 </div>
-<!-- SECTION "Zimbra virtual host in Manager" [2154-2370] -->
+<!-- SECTION "Zimbra virtual host in Manager" [2203-2419] -->
 <h3><a name="zimbra_handler_parameters" id="zimbra_handler_parameters">Zimbra Handler parameters</a></h3>
 <div class="level3">
 
@@ -150,4 +149,4 @@ Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- SECTION "Zimbra Handler parameters" [2371-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Zimbra Handler parameters" [2420-] --></div><!-- closes <div class="dokuwiki export">-->

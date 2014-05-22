@@ -39,6 +39,8 @@ LemonLDAP::NG provides these packages:
 </li>
 <li class="level1"><div class="li"> lemonldap-ng-doc: contains <acronym title="HyperText Markup Language">HTML</acronym> documentation and project docs (README, etc.)</div>
 </li>
+<li class="level1"><div class="li"> lemonldap-ng-fr-doc: French translation for <acronym title="HyperText Markup Language">HTML</acronym> documentation</div>
+</li>
 <li class="level1"><div class="li"> liblemonldap-ng-common-perl: configuration and common files</div>
 </li>
 <li class="level1"><div class="li"> liblemonldap-ng-handler-perl: Handler files</div>
@@ -50,12 +52,12 @@ LemonLDAP::NG provides these packages:
 </ul>
 
 </div>
-<!-- SECTION "Organization" [60-497] -->
+<!-- SECTION "Organization" [60-564] -->
 <h2><a name="get_the_packages" id="get_the_packages">Get the packages</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Get the packages" [498-527] -->
+<!-- SECTION "Get the packages" [565-594] -->
 <h3><a name="official_repository" id="official_repository">Official repository</a></h3>
 <div class="level3">
 
@@ -74,7 +76,7 @@ apt-cache search lemonldap-ng
 </p>
 
 </div>
-<!-- SECTION "Official repository" [528-866] -->
+<!-- SECTION "Official repository" [595-933] -->
 <h3><a name="llng_repository" id="llng_repository">LL::NG repository</a></h3>
 <div class="level3">
 
@@ -101,7 +103,7 @@ apt-get update
 </pre>
 
 </div>
-<!-- SECTION "LL::NG repository" [867-1216] -->
+<!-- SECTION "LL::NG repository" [934-1283] -->
 <h3><a name="manual_download" id="manual_download">Manual download</a></h3>
 <div class="level3">
 
@@ -111,7 +113,7 @@ Packages are available on the <a href="../../download.html" class="wikilink1" ti
 </p>
 
 </div>
-<!-- SECTION "Manual download" [1217-1303] -->
+<!-- SECTION "Manual download" [1284-1370] -->
 <h2><a name="package_gpg_signature" id="package_gpg_signature">Package GPG signature</a></h2>
 <div class="level2">
 
@@ -128,12 +130,12 @@ apt-key add rpm-gpg-key-ow2
 </pre>
 
 </div>
-<!-- SECTION "Package GPG signature" [1304-1472] -->
+<!-- SECTION "Package GPG signature" [1371-1539] -->
 <h2><a name="install_packages" id="install_packages">Install packages</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install packages" [1473-1502] -->
+<!-- SECTION "Install packages" [1540-1569] -->
 <h3><a name="with_aptitude" id="with_aptitude">With aptitude</a></h3>
 <div class="level3">
 <pre class="code">
@@ -141,7 +143,7 @@ aptitude install lemonldap-ng
 </pre>
 
 </div>
-<!-- SECTION "With aptitude" [1503-1573] -->
+<!-- SECTION "With aptitude" [1570-1640] -->
 <h3><a name="with_dpkg" id="with_dpkg">With dpkg</a></h3>
 <div class="level3">
 
@@ -159,12 +161,12 @@ dpkg -i liblemonldap-ng-* lemonldap-ng*
 </pre>
 
 </div>
-<!-- SECTION "With dpkg" [1574-1722] -->
+<!-- SECTION "With dpkg" [1641-1789] -->
 <h2><a name="first_configuration_steps" id="first_configuration_steps">First configuration steps</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "First configuration steps" [1723-1761] -->
+<!-- SECTION "First configuration steps" [1790-1828] -->
 <h3><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h3>
 <div class="level3">
 
@@ -175,7 +177,7 @@ By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>ex
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- SECTION "Change default DNS domain" [1762-2076] -->
+<!-- SECTION "Change default DNS domain" [1829-2143] -->
 <h3><a name="enable_llng_sites" id="enable_llng_sites">Enable LL::NG sites</a></h3>
 <div class="level3">
 
@@ -203,7 +205,7 @@ Restart Apache:
 apache2ctl restart</pre>
 
 </div>
-<!-- SECTION "Enable LL::NG sites" [2077-2429] -->
+<!-- SECTION "Enable LL::NG sites" [2144-2496] -->
 <h3><a name="reload_virtual_host" id="reload_virtual_host">Reload virtual host</a></h3>
 <div class="level3">
 
@@ -220,7 +222,7 @@ To allow the manager to reload the configuration, register the reload virtual ho
 </p>
 
 </div>
-<!-- SECTION "Reload virtual host" [2430-2731] -->
+<!-- SECTION "Reload virtual host" [2497-2798] -->
 <h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
 <div class="level3">
 
@@ -242,7 +244,7 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </p>
 
 </div>
-<!-- SECTION "Upgrade" [2732-4890] -->
+<!-- SECTION "Upgrade" [2799-4957] -->
 <h3><a name="dns" id="dns">DNS</a></h3>
 <div class="level3">
 
@@ -269,7 +271,7 @@ Follow the <a href="../../documentation/1.4/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- SECTION "DNS" [4891-5163] -->
+<!-- SECTION "DNS" [4958-5230] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -290,7 +292,7 @@ Follow the <a href="../../documentation/1.4/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- SECTION "File location" [5164-5700] -->
+<!-- SECTION "File location" [5231-5767] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -306,4 +308,4 @@ make debian-packages
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [5701-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [5768-] --></div><!-- closes <div class="dokuwiki export">-->

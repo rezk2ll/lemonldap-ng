@@ -62,15 +62,15 @@ Configure the virtual host like other <a href="../../documentation/1.4/configvho
        <span class="kw1">ServerName</span> basic.example.com
 &nbsp;
        <span class="co1"># Load AuthBasic Handler</span>
-       PerlRequire __HANDLERDIR__/MyHandlerAuthBasic.pm
-       PerlHeaderParserHandler My::AuthBasic
+       PerlRequire Lemonldap/NG/Handler/Specific/AuthBasic.pm
+       PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::AuthBasic
 &nbsp;
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Virtual host in Apache" [662-1074] -->
+<!-- SECTION "Virtual host in Apache" [662-1110] -->
 <h3><a name="handler_parameters" id="handler_parameters">Handler parameters</a></h3>
 <div class="level3">
 
@@ -80,4 +80,4 @@ No parameters needed. But you have to allow sessions web services, see <a href="
 </p>
 
 </div>
-<!-- SECTION "Handler parameters" [1075-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Handler parameters" [1111-] --></div><!-- closes <div class="dokuwiki export">-->
