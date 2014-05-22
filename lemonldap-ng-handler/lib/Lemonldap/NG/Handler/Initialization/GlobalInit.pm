@@ -79,16 +79,14 @@ sub defaultValuesInit {
         }
     }
 
-    # Warning: first start of handler load values from MyHanlder.pm
-    # and lemonldap-ng.ini
-    # These values should be erased by global configuration!
-    $cookieName = $args->{cookieName} || $cookieName || 'lemonldap';
+    # Default values are defined in Common::Conf::Attributes
+    # These values should be erased by global configuration
+    $cookieName = $args->{cookieName} || $cookieName;
     $securedCookie =
-        defined( $args->{securedCookie} ) ? $args->{securedCookie}
-      : defined($securedCookie)           ? $securedCookie
-      :                                     1;
-    $whatToTrace = $args->{whatToTrace} || $whatToTrace || 'uid';
-    $whatToTrace =~ s/\$//g;
+      defined( $args->{securedCookie} )
+      ? $args->{securedCookie}
+      : $securedCookie;
+    $whatToTrace = $args->{whatToTrace} || $whatToTrace;
     $https = defined($https) ? $https : $args->{https};
     $port ||= $args->{port};
     $customFunctions = $args->{customFunctions};
@@ -96,7 +94,7 @@ sub defaultValuesInit {
     $cda      = defined($cda)      ? $cda      : $args->{cda};
     $httpOnly = defined($httpOnly) ? $httpOnly : $args->{httpOnly};
     $cookieExpiration = $args->{cookieExpiration} || $cookieExpiration;
-    $timeoutActivity = $args->{timeoutActivity} || $timeoutActivity || 0;
+    $timeoutActivity  = $args->{timeoutActivity}  || $timeoutActivity;
     $useRedirectOnError =
       defined($useRedirectOnError)
       ? $useRedirectOnError
