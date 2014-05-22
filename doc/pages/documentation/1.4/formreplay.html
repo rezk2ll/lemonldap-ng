@@ -146,7 +146,7 @@ Due to a conflict between <acronym title="LemonLDAP::NG">LL::NG</acronym> form r
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span>&gt;
   <span class="kw1">ServerName</span> test2.example.com
 &nbsp;
-  PerlHeaderParserHandler My::Package
+  PerlHeaderParserHandler Lemonldap::NG::Handler
 &nbsp;
   PerlModule Lemonldap::NG::Handler::Proxy
   <span class="kw1">SetHandler</span> perl-<span class="kw1">script</span>

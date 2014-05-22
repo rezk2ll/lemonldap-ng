@@ -77,7 +77,7 @@ Configure Drupal virtual host like other <a href="../../../documentation/1.4/con
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
        <span class="kw1">ServerName</span> drupal.example.com
 &nbsp;
-       PerlHeaderParserHandler My::Package
+       PerlHeaderParserHandler Lemonldap::NG::Handler
 &nbsp;
        ...
 &nbsp;
@@ -144,7 +144,7 @@ You can create a special virtual host and use <a href="http://httpd.apache.org/d
     <span class="kw1">ServerName</span> admindrupal.example.com
 &nbsp;
     <span class="co1"># SSO protection</span>
-    PerlHeaderParserHandler My::Package
+    PerlHeaderParserHandler Lemonldap::NG::Handler
 &nbsp;
     <span class="co1"># DocumentRoot</span>
     <span class="kw1">DocumentRoot</span> /var/www/html/drupal/

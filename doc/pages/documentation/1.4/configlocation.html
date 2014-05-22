@@ -484,7 +484,7 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</pre>
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
         <span class="kw1">Deny</span> from <span class="kw2">all</span>
         <span class="kw1">Allow</span> from 127.0.0.0/8
-        PerlHeaderParserHandler My::Package-&gt;refresh
+        PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;refresh
     &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
     <span class="co1"># Uncomment this to activate status module</span>
@@ -492,7 +492,7 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</pre>
     <span class="co1">#    Order deny,allow</span>
     <span class="co1">#    Deny from all</span>
     <span class="co1">#    Allow from 127.0.0.0/8</span>
-    <span class="co1">#    PerlHeaderParserHandler My::Package-&gt;status</span>
+    <span class="co1">#    PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;status</span>
     <span class="co1">#&lt;/Location&gt;</span>
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
@@ -500,7 +500,7 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</pre>
 <p>
 Then, to protect a standard virutal host, the only configuration line to add is:
 </p>
-<pre class="code file apache">PerlHeaderParserHandler My::Package</pre>
+<pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
 
 </div>
 <!-- SECTION "Handler" [9898-11168] -->
@@ -536,7 +536,7 @@ The <code>reload</code> target is managed in Apache configuration, inside a virt
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
         <span class="kw1">Deny</span> from <span class="kw2">all</span>
         <span class="kw1">Allow</span> from 127.0.0.0/8
-        PerlHeaderParserHandler My::Package-&gt;refresh
+        PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;refresh
     &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>

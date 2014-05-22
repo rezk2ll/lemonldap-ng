@@ -46,7 +46,7 @@ This can be used to protect applications relying on <code>REMOTE_USER</code> env
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
         <span class="kw1">ServerName</span> application.example.com
 &nbsp;
-        PerlHeaderParserHandler My::Package
+        PerlHeaderParserHandler Lemonldap::NG::Handler
 &nbsp;
         <span class="kw1">ProxyPreserveHost</span> <span class="kw2">on</span>
         <span class="kw1">ProxyPass</span> / http://APPLICATION_IP/

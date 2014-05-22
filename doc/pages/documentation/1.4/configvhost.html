@@ -43,7 +43,7 @@ To protect a virtual host in Apache, the LemonLDAP::NG Handler must be activated
 <p>
 Then you can take any virtual host, and simply add this line to protect it:
 </p>
-<pre class="code file apache">PerlHeaderParserHandler My::Package</pre>
+<pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
 
 </div>
 <!-- SECTION "Apache configuration" [198-510] -->
@@ -57,7 +57,7 @@ Example of a protected virtual host for a local application:
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
         <span class="kw1">ServerName</span> localsite.example.com
 &nbsp;
-        PerlHeaderParserHandler My::Package
+        PerlHeaderParserHandler Lemonldap::NG::Handler
 &nbsp;
         <span class="kw1">DocumentRoot</span> /var/www/localsite
 &nbsp;
@@ -78,7 +78,7 @@ Example of a protected virtual host with LemonLDAP::NG as reverse proxy:
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
         <span class="kw1">ServerName</span> application.example.com
 &nbsp;
-        PerlHeaderParserHandler My::Package
+        PerlHeaderParserHandler Lemonldap::NG::Handler
 &nbsp;
         <span class="co1"># Reverse-Proxy</span>
         <span class="kw1">ProxyPass</span> / http://private-name/
@@ -97,7 +97,7 @@ Same with remote server configured with the same host name:
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
         <span class="kw1">ServerName</span> application.example.com
 &nbsp;
-        PerlHeaderParserHandler My::Package
+        PerlHeaderParserHandler Lemonldap::NG::Handler
 &nbsp;
         <span class="co1"># Reverse-Proxy</span>
         <span class="kw1">ProxyPass</span> / http://APPLICATION_IP/

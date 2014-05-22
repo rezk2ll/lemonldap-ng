@@ -80,7 +80,7 @@ You need to give access to status path in the Handler Apache configuration:
     &lt;<span class="kw3">Location</span> /status&gt;
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
         <span class="kw1">Allow</span> from 127.0.0.0/8
-        PerlHeaderParserHandler My::Package-&gt;status
+        PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;status
     &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 <p>
