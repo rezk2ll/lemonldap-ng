@@ -35,7 +35,7 @@ sub transformUri {
     my $vhost = $apacheRequest->hostname;
 
     if ( defined( $tsv->{transform}->{$vhost}->{$uri} ) ) {
-        return &{ $tsv->{transform}->{$vhost}->{$uri} };
+        return &{ $tsv->{transform}->{$vhost}->{$uri} } ($apacheRequest);
     }
 
     OK;

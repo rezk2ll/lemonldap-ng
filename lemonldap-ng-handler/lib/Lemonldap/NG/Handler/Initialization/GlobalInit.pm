@@ -359,14 +359,12 @@ sub postUrlInit {
                 Lemonldap::NG::Handler::Main::Logger->lmLog(
                     "Compiling POST request for $url", 'debug' );
                 $transform->{$alias}->{ $d->{postUrl} } = sub {
+                    my $apacheRequest = shift;
                     return
                       Lemonldap::NG::Handler::Main::PostForm->buildPostForm(
                         $d->{postUrl} )
-                      if (
-                        $Lemonldap::NG::Handler::Main::apacheRequest->method ne
-                        'POST' );
-                    $Lemonldap::NG::Handler::Main::apacheRequest
-                      ->add_input_filter(
+                      if ( $apacheRequest->method ne 'POST' );
+                    $apacheRequest->add_input_filter(
                         sub {
                             Lemonldap::NG::Handler::Main::PostForm->postFilter(
                                 $tmp, @_ );
