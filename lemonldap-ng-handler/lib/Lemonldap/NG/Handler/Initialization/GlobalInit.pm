@@ -11,6 +11,8 @@ use Mouse;
 use Lemonldap::NG::Handler::Main::Jail;
 use Lemonldap::NG::Handler::Main::Logger;
 
+our $VERSION = '1.4.0';
+
 has customFunctions => ( is => 'rw', isa => 'Maybe[Str]' );
 
 has useSafeJail => ( is => 'rw', isa => 'Maybe[Int]' );
@@ -438,7 +440,8 @@ sub conditionSub {
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
-                $Lemonldap::NG::Handler::Main::apacheRequest->add_output_filter(
+                my $apacheRequest = shift;
+                $apacheRequest->add_output_filter(
                     sub {
                         return $mainClass->redirectFilter( $u, @_ );
                     }
@@ -453,8 +456,9 @@ sub conditionSub {
         my $u = $1 || $self->portal();
         return (
             sub {
+                my $apacheRequest = shift;
                 $mainClass->localUnlog;
-                $Lemonldap::NG::Handler::Main::apacheRequest->add_output_filter(
+                $apacheRequest->add_output_filter(
                     sub {
                         return $mainClass->redirectFilter(
                             $self->portal() . "?url="

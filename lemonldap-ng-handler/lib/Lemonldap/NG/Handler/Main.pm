@@ -728,7 +728,7 @@ sub grant {
                   . '" match',
                 'debug'
             );
-            return &{ $tsv->{locationCondition}->{$vhost}->[$i] }($datas);
+            return &{ $tsv->{locationCondition}->{$vhost}->[$i] }($apacheRequest);
         }
     }
     unless ( $tsv->{defaultCondition}->{$vhost} ) {
@@ -740,7 +740,7 @@ sub grant {
     }
     Lemonldap::NG::Handler::Main::Logger->lmLog( "$vhost: Apply default rule",
         'debug' );
-    return &{ $tsv->{defaultCondition}->{$vhost} }($datas);
+    return &{ $tsv->{defaultCondition}->{$vhost} }($apacheRequest);
 }
 
 ## @cmethod private string _buildUrl(string s)

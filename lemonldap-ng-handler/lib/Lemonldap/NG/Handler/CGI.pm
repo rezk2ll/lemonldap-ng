@@ -18,7 +18,7 @@ use Lemonldap::NG::Handler::SharedConf qw(:all);
 
 #link Lemonldap::NG::Handler::_CGI protected _handler
 
-our $VERSION = '1.2.3';
+our $VERSION = '1.4.0';
 
 ## @cmethod Lemonldap::NG::Handler::CGI new(hashRef args)
 # Constructor.
@@ -282,7 +282,7 @@ sub grant {
     );
     for ( my $i = 0 ; $i < $tsv->{locationCount}->{$vhost} ; $i++ ) {
         if ( $uri =~ $tsv->{locationRegexp}->{$vhost}->[$i] ) {
-            return &{ $tsv->{locationCondition}->{$vhost}->[$i] }($datas);
+            return &{ $tsv->{locationCondition}->{$vhost}->[$i] }($apacheRequest);
         }
     }
     unless ( $tsv->{defaultCondition}->{$vhost} ) {
@@ -292,7 +292,7 @@ sub grant {
         );
         return 0;
     }
-    return &{ $tsv->{defaultCondition}->{$vhost} }($datas);
+    return &{ $tsv->{defaultCondition}->{$vhost} }($apacheRequest);
 }
 
 package Lemonldap::NG::Apache::Request;
