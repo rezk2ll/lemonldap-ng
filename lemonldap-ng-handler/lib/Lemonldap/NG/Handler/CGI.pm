@@ -273,7 +273,7 @@ sub vhostAvailable {
 sub grant {
     my ( $self, $uri, $vhost ) = splice @_;
     $vhost ||= $ENV{SERVER_NAME};
-    $apacheRequest = Lemonldap::NG::Apache::Request->new(
+    my $apacheRequest = Lemonldap::NG::Apache::Request->new(
         {
             uri      => $uri,
             hostname => $vhost,

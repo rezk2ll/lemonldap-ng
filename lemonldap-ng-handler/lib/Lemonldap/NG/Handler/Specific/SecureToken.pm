@@ -8,7 +8,7 @@
 
 # This specific handler is intended to be called directly by Apache
 
-package Lemonldap::NG::Handler::SpecificHandlers::SecureToken;
+package Lemonldap::NG::Handler::Specific::SecureToken;
 
 use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
@@ -18,7 +18,7 @@ use Apache::Session::Generate::MD5;
 use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;
 
-our $VERSION = '1.1.2';
+our $VERSION = '1.4.0';
 
 # Shared variables
 our (
@@ -146,14 +146,14 @@ sub run {
     }
 
     # Exit if no connection
-    return $class->_returnError() unless $class->_isAlive();
+    return $class->_returnError($r) unless $class->_isAlive();
 
     # Value to store
     my $value = $datas->{$secureTokenAttribute};
 
     # Set token
     my $key = $class->_setToken($value);
-    return $class->_returnError() unless $key;
+    return $class->_returnError($r) unless $key;
 
     # Header location
     Lemonldap::NG::Handler::Main::Headers->lmSetHeaderIn( $r,
@@ -276,7 +276,7 @@ sub _isAlive {
 # Give hand back to Apache
 # @return Apache2::Const value
 sub _returnError {
-    my ($class) = splice @_;
+    my ($class, $apacheRequest) = @_;
 
     if ($secureTokenAllowOnError) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
@@ -288,7 +288,7 @@ sub _returnError {
     if ( $tsv->{useRedirectOnError} ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog( "Use redirect for error",
             'debug' );
-        return $class->goToPortal( '/', 'lmError=500' );
+        return $class->goToPortal( $apacheRequest, '/', 'lmError=500' );
     }
 
     else {

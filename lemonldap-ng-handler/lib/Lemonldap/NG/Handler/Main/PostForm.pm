@@ -2,13 +2,13 @@ package Lemonldap::NG::Handler::Main::PostForm;
 
 use strict;
 
-# For importing MP function, $tsv->{transform}, $apacheRequest,
+# For importing MP function, $tsv->{transform},
 # $tsv->{safe}, $tsv->{useSafeJail}, $tsv->{customFunctions}
-use Lemonldap::NG::Handler::Main qw( :apache :tsv $apacheRequest );
+use Lemonldap::NG::Handler::Main qw( :apache :tsv );
 use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Handler::Main::Jail;
 
-our $VERSION = '1.3.1';
+our $VERSION = '1.4.0';
 
 BEGIN {
 
@@ -31,7 +31,7 @@ BEGIN {
 # @param uri URI to catch
 # @return Apache2::Const
 sub transformUri {
-    my ( $class, $uri ) = splice @_;
+    my ( $class, $apacheRequest, $uri ) = splice @_;
     my $vhost = $apacheRequest->hostname;
 
     if ( defined( $tsv->{transform}->{$vhost}->{$uri} ) ) {
@@ -49,9 +49,8 @@ sub transformUri {
 # @param count Fake input size
 # @return Apache2::Const::OK
 sub buildPostForm {
-    my $class = shift;
-    my $url   = shift;
-    my $count = shift || 1000;
+    my ($class, $apacheRequest, $url, $count) = @_;
+    $count ||= 1000;
     $apacheRequest->handler("perl-script");
     $apacheRequest->add_config( ["SetHandler perl-script"] );
     $apacheRequest->set_handlers(

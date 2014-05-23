@@ -330,8 +330,9 @@ sub postUrlInit {
 
                 # Register POST form for POST URL
                 $transform->{$alias}->{$url} = sub {
+                    my $apacheRequest = shift;
                     Lemonldap::NG::Handler::Main::PostForm->buildPostForm(
-                        $d->{postUrl} );
+                        $apacheRequest, $d->{postUrl} );
                   }
                   if ( $url ne $d->{postUrl} );
 
@@ -364,7 +365,7 @@ sub postUrlInit {
                     my $apacheRequest = shift;
                     return
                       Lemonldap::NG::Handler::Main::PostForm->buildPostForm(
-                        $d->{postUrl} )
+                        $apacheRequest, $d->{postUrl} )
                       if ( $apacheRequest->method ne 'POST' );
                     $apacheRequest->add_input_filter(
                         sub {
@@ -460,9 +461,10 @@ sub conditionSub {
                 $mainClass->localUnlog;
                 $apacheRequest->add_output_filter(
                     sub {
+                        my $apacheRequest = shift->r;
                         return $mainClass->redirectFilter(
                             $self->portal() . "?url="
-                              . $mainClass->encodeUrl($u)
+                              . $mainClass->encodeUrl($apacheRequest, $u)
                               . "&logout=1",
                             @_
                         );

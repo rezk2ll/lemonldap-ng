@@ -16,10 +16,10 @@ use strict;
 use warnings;
 
 use Test::More tests => 10;
-BEGIN { use_ok( 'Lemonldap::NG::Handler::Main', qw(:all $apacheRequest) ) }
+BEGIN { use_ok( 'Lemonldap::NG::Handler::Main', qw(:all) ) }
 
 # get a fake apacheRequest to simulate subroutine hostname
-$Lemonldap::NG::Handler::Main::apacheRequest = bless {}, 'FakeApacheRequest';
+my $apacheRequest = bless {}, 'FakeApacheRequest';
 
 # get a standard basic configuration in $args hashref
 use Cwd 'abs_path';
@@ -78,9 +78,9 @@ ok( $h->globalInit($args), 'globalInit' );
 
 ok( $h->portal() eq 'http://auth.example.com/', 'portal' );
 
-ok( $h->grant('/s'),    'basic rule "accept"' );
-ok( !$h->grant('/no'),  'basic rule "deny"' );
-ok( $h->grant('/a/a'),  'bad ordered rule 1/2' );
-ok( $h->grant('/a'),    'bad ordered rule 2/2' );
-ok( !$h->grant('/b/a'), 'good ordered rule 1/2' );
-ok( $h->grant('/b'),    'good ordered rule 2/2' );
+ok(  $h->grant($apacheRequest, '/s'  ), 'basic rule "accept"' );
+ok( !$h->grant($apacheRequest, '/no' ), 'basic rule "deny"' );
+ok(  $h->grant($apacheRequest, '/a/a'), 'bad ordered rule 1/2' );
+ok(  $h->grant($apacheRequest, '/a'  ), 'bad ordered rule 2/2' );
+ok( !$h->grant($apacheRequest, '/b/a'), 'good ordered rule 1/2' );
+ok(  $h->grant($apacheRequest, '/b'  ), 'good ordered rule 2/2' );

@@ -6,7 +6,7 @@
 
 # This specific handler is intended to be called directly by Apache
 
-package Lemonldap::NG::Handler::SpecificHandlers::AuthBasic;
+package Lemonldap::NG::Handler::Specific::AuthBasic;
 
 use strict;
 
@@ -44,8 +44,7 @@ BEGIN {
 # @param $apacheRequest current request
 # @return Apache constant
 sub run ($$) {
-    my $class;
-    ( $class, $apacheRequest ) = splice @_;
+    my ( $class, $apacheRequest ) = @_;
     if ( time() - $lastReload > $reloadTime ) {
         unless ( my $tmp = $class->testConf(1) == OK ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
@@ -94,7 +93,7 @@ sub run ($$) {
               Lemonldap::NG::Handler::Main::Headers->lmHeaderIn( $apacheRequest,
                 'X-Forwarded-For' );
             $xheader .= ", " if ($xheader);
-            $xheader .= $class->ip();
+            $xheader .= $class->ip($apacheRequest);
             my $soapHeaders =
               HTTP::Headers->new( "X-Forwarded-For" => $xheader );
 
@@ -110,7 +109,7 @@ sub run ($$) {
 
             # Catch SOAP errors
             if ( $r->fault ) {
-                return $class->abort( "SOAP request to the portal failed: "
+                return $class->abort($apacheRequest, "SOAP request to the portal failed: "
                       . $r->fault->{faultstring} );
             }
             else {
@@ -147,9 +146,9 @@ sub run ($$) {
         unless ( $apacheSession->data ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "The cookie $session_id isn't yet available", 'info' );
-            $class->updateStatus( $class->ip(), $apacheRequest->uri,
-                'EXPIRED' );
-            return $class->goToPortal($uri);
+            $class->updateStatus( $apacheRequest, $class->ip($apacheRequest),
+                $apacheRequest->uri, 'EXPIRED' );
+            return $class->goToPortal($apacheRequest, $uri);
         }
 
         $datas->{$_} = $apacheSession->data->{$_}
@@ -168,14 +167,15 @@ sub run ($$) {
     $class->lmSetApacheUser( $apacheRequest, $datas->{ $tsv->{whatToTrace} } );
 
     # AUTHORIZATION
-    return $class->forbidden($uri) unless ( $class->grant($uri) );
-    $class->updateStatus( $datas->{ $tsv->{whatToTrace} },
+    return $class->forbidden($apacheRequest, $uri)
+        unless ( $class->grant($apacheRequest, $uri) );
+    $class->updateStatus( $apacheRequest, $datas->{ $tsv->{whatToTrace} },
         $apacheRequest->uri, 'OK' );
     $class->logGranted( $uri, $datas );
 
     # SECURITY
     # Hide Lemonldap::NG cookie
-    $class->hideCookie;
+    $class->hideCookie($apacheRequest);
 
     # Hide user password
     Lemonldap::NG::Handler::Main::Headers->lmUnsetHeaderIn( $apacheRequest,

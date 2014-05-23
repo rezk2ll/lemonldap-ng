@@ -8,7 +8,7 @@
 
 # This specific handler is intended to be called directly by Apache
 
-package Lemonldap::NG::Handler::SpecificHandlers::ZimbraPreAuth;
+package Lemonldap::NG::Handler::Specific::ZimbraPreAuth;
 
 use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
@@ -17,7 +17,7 @@ use Digest::HMAC_SHA1 qw(hmac_sha1 hmac_sha1_hex);
 use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.4.0';
 
 # Shared variables
 our ( $zimbraPreAuthKey, $zimbraAccountKey, $zimbraBy, $zimbraUrl,
@@ -94,7 +94,7 @@ sub run {
     return OK unless ( $uri =~ $zimbraSsoUrl );
 
     # Check mandatory parameters
-    return $class->abort("No Zimbra preauth key configured")
+    return $class->abort($r, "No Zimbra preauth key configured")
       unless ($zimbraPreAuthKey);
 
     # Build URL

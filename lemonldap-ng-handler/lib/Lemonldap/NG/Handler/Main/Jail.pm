@@ -14,9 +14,9 @@ has useSafeJail => ( is => 'rw', isa => 'Maybe[Int]' );
 
 has safe => ( is => 'rw' );
 
-our $VERSION = '1.3.1';
+our $VERSION = '1.4.0';
 
-# for accessing $datas and $apacheRequest
+# for accessing $datas
 use Lemonldap::NG::Handler::Main ':jailSharedVars';
 
 ## @imethod protected build_safe()
@@ -43,9 +43,10 @@ sub build_safe {
         }
         next if ( $self->can($_) );
         eval "sub $_ {
-            my \$uri = \$Lemonldap::NG::Handler::Main::apacheRequest->unparsed_uri();
+            my \$apacheRequest = shift;
+            my \$uri = \$apacheRequest->unparsed_uri();
             Apache2::URI::unescape_url(\$uri);
-            return $sub(\$uri, \@_)
+            return $sub(\$uri, \$apacheRequest, \@_)
             }";
         Lemonldap::NG::Handler::Main::Logger->lmLog( $@, 'error' ) if ($@);
     }
@@ -63,7 +64,7 @@ sub build_safe {
         $Lemonldap::NG::Common::Safelib::functions );
 
     $self->safe->share_from( 'Lemonldap::NG::Handler::Main',
-        [ '$datas', '$apacheRequest', '&ip', '&portal' ] );
+        [ '$datas', '&ip', '&portal' ] );
     $self->safe->share(@t);
     $self->safe->share_from( 'MIME::Base64', ['&encode_base64'] );
 

@@ -8,7 +8,7 @@
 
 # This specific handler is intended to be called directly by Apache
 
-package Lemonldap::NG::Handler::SpecificHandlers::SympaAutoLogin;
+package Lemonldap::NG::Handler::Specific::SympaAutoLogin;
 
 use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
@@ -17,7 +17,7 @@ use Digest::MD5;
 use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;
 
-our $VERSION = '1.1.2';
+our $VERSION = '1.4.0';
 
 # Shared variables
 our ( $sympaSecret, $sympaMailKey );
@@ -79,7 +79,7 @@ sub run {
     return $ret unless ( $ret == OK );
 
     # Fail if no sympaSecret
-    return $class->abort("No Sympa secret configured")
+    return $class->abort($r, "No Sympa secret configured")
       unless ($sympaSecret);
 
     # Mail value
