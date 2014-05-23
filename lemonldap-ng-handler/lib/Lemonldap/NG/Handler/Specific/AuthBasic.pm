@@ -164,7 +164,7 @@ sub run ($$) {
 
     # ACCOUNTING
     # 1 - Inform Apache
-    $class->lmSetApacheUser( $apacheRequest, $datas->{ $tsv->{whatToTrace} } );
+    Lemonldap::NG::Handler::API->set_user( $apacheRequest, $datas->{ $tsv->{whatToTrace} } );
 
     # AUTHORIZATION
     return $class->forbidden($apacheRequest, $uri)

@@ -158,6 +158,7 @@ use Lemonldap::NG::Handler::Main::Jail;
 use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::PostForm;
 use Lemonldap::NG::Handler::Main::Logger;
+use Lemonldap::NG::Handler::API;
 
 ## @rmethod protected int handler_mp2()
 # Launch run() when used under mod_perl version 2
@@ -171,21 +172,6 @@ sub handler_mp2 : method {
 # @return Apache constant
 sub logout_mp2 : method {
     shift->unlog(@_);
-}
-
-## @rmethod protected void lmSetApacheUser(Apache2::RequestRec r,string s)
-# Inform Apache for the data to use as user for logs
-# @param $r current request
-# @param $s string to use
-sub lmSetApacheUser {
-    my ( $class, $r, $s ) = splice @_;
-    return unless ($s);
-    if ( MP() == 2 ) {
-        $r->user($s);
-    }
-    else {
-        $r->connection->user($s);
-    }
 }
 
 ## @rmethod protected void updateStatus(string user,string url,string action)
@@ -497,7 +483,7 @@ sub run ($$) {
         my $kc = keys %$datas;    # in order to detect new local macro
 
         # ACCOUNTING (1. Inform Apache)
-        $class->lmSetApacheUser( $apacheRequest,
+        Lemonldap::NG::Handler::API->set_user( $apacheRequest,
             $datas->{ $tsv->{whatToTrace} } );
 
         # AUTHORIZATION
