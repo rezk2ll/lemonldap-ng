@@ -14,7 +14,6 @@ use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 use base qw(Lemonldap::NG::Handler::SharedConf);
 use Digest::HMAC_SHA1 qw(hmac_sha1 hmac_sha1_hex);
-use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;
 
 our $VERSION = '1.4.0';
@@ -104,8 +103,7 @@ sub run {
     );
 
     # Header location
-    Lemonldap::NG::Handler::Main::Headers->lmSetHeaderOut( $r,
-        'Location' => $zimbra_url );
+    Lemonldap::NG::Handler::API->set_header_out( $r, 'Location' => $zimbra_url );
 
     # Return REDIRECT
     return REDIRECT;

@@ -15,7 +15,6 @@ use Lemonldap::NG::Handler::SharedConf qw(:all);
 use base qw(Lemonldap::NG::Handler::SharedConf);
 use Cache::Memcached;
 use Apache::Session::Generate::MD5;
-use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;
 
 our $VERSION = '1.4.0';
@@ -156,8 +155,7 @@ sub run {
     return $class->_returnError($r) unless $key;
 
     # Header location
-    Lemonldap::NG::Handler::Main::Headers->lmSetHeaderIn( $r,
-        $secureTokenHeader => $key );
+    Lemonldap::NG::Handler::API->set_header_in( $r, $secureTokenHeader => $key );
 
     # Remove token
     eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );

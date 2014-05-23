@@ -7,12 +7,12 @@ package Lemonldap::NG::Handler::Proxy;
 
 use strict;
 
-use Lemonldap::NG::Handler::Main qw(:apache :headers :tsv);
+use Lemonldap::NG::Handler::Main qw(:apache :tsv);
 use LWP::UserAgent;
-use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;
+use Lemonldap::NG::Handler::API;
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.4.0';
 
 ##########################################
 # COMPATIBILITY WITH APACHE AND APACHE 2 #
@@ -150,7 +150,7 @@ sub headers {
                 and $cookieDomain_new
                 and $_[0] =~ /Set-Cookie/i );
 
-            Lemonldap::NG::Handler::Main::Headers->lmSetErrHeaderOut( $r, @_ );
+            Lemonldap::NG::Handler::API->set_err_header_out( $r, @_ );
 
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "$class: header pushed to the client: " . $_[0] . ": " . $_[1],

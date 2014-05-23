@@ -2,6 +2,8 @@ package Lemonldap::NG::Handler::API;
 
 use Exporter 'import';
 
+our $VERSION = '1.4.0';
+
 BEGIN {
     my $mp = $ENV{MOD_PERL_API_VERSION};
     my $mode =

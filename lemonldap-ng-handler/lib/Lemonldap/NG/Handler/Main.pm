@@ -74,12 +74,6 @@ BEGIN {
         jailSharedVars => [qw( $datas )],
         tsv            => [qw( $tsv )],
         import         => [qw( import @EXPORT_OK @EXPORT %EXPORT_TAGS )],
-        headers        => [
-            qw(
-              lmHeaderIn lmSetHeaderIn lmHeaderOut
-              lmSetHeaderOut lmSetErrHeaderOut
-              )
-        ],
         apache => [
             qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR
               )
@@ -261,16 +255,14 @@ sub logGranted {
 sub hideCookie {
     my ($class, $apacheRequest) = @_;
     Lemonldap::NG::Handler::Main::Logger->lmLog( "removing cookie", 'debug' );
-    my $tmp = Lemonldap::NG::Handler::Main::Headers->lmHeaderIn( $apacheRequest,
-        'Cookie' );
+    my $tmp = Lemonldap::NG::Handler::API->header_in( $apacheRequest, 'Cookie' );
     $tmp =~ s/$tsv->{cookieName}(http)?=[^,;]*[,;\s]*//og;
     if ($tmp) {
-        Lemonldap::NG::Handler::Main::Headers->lmSetHeaderIn( $apacheRequest,
+        Lemonldap::NG::Handler::API->set_header_in( $apacheRequest,
             'Cookie' => $tmp );
     }
     else {
-        Lemonldap::NG::Handler::Main::Headers->lmUnsetHeaderIn( $apacheRequest,
-            'Cookie' );
+        Lemonldap::NG::Handler::API->unset_header_in( $apacheRequest, 'Cookie' );
     }
 }
 
@@ -294,7 +286,7 @@ sub goToPortal {
     Lemonldap::NG::Handler::Main::Logger->lmLog(
         "Redirect " . $class->ip($apacheRequest) . " to portal (url was $url)", 'debug' );
     my $urlc_init = $class->encodeUrl($apacheRequest, $url);
-    Lemonldap::NG::Handler::Main::Headers->lmSetHeaderOut( $apacheRequest,
+    Lemonldap::NG::Handler::API->set_header_out( $apacheRequest,
             'Location' => $class->portal()
           . "?url=$urlc_init"
           . ( $arg ? "&$arg" : "" ) );
@@ -307,7 +299,7 @@ sub goToPortal {
 # @return Value of the cookie if found, 0 else
 sub fetchId {
     my ( $class, $apacheRequest) = @_;
-    my $t = Lemonldap::NG::Handler::Main::Headers->lmHeaderIn( $apacheRequest,
+    my $t = Lemonldap::NG::Handler::API->header_in( $apacheRequest,
         'Cookie' );
     my $vhost = $apacheRequest->hostname;
     my $lookForHttpCookie = $tsv->{securedCookie} =~ /^(2|3)$/
@@ -439,11 +431,8 @@ sub run ($$) {
         $apacheRequest->args($args);
         my $redirectUrl = $class->_buildUrl( $apacheRequest, $apacheRequest->uri );
         my $redirectHttps = ( $redirectUrl =~ m/^https/ );
-        Lemonldap::NG::Handler::Main::Headers->lmSetErrHeaderOut(
-            $apacheRequest,
-            'Location' => $redirectUrl . ( $args ? "?" . $args : "" ) );
-        Lemonldap::NG::Handler::Main::Headers->lmSetErrHeaderOut(
-            $apacheRequest,
+        Lemonldap::NG::Handler::API->set_err_header_out( $apacheRequest,
+            'Location'   => $redirectUrl . ( $args ? "?" . $args : "" ),
             'Set-Cookie' => "$str; path=/"
               . ( $redirectHttps    ? "; secure"   : "" )
               . ( $tsv->{httpOnly} ? "; HttpOnly" : "" )
@@ -871,8 +860,8 @@ sub redirectFilter {
     my $f     = shift;
     unless ( $f->ctx ) {
 
-        # Here, we can use Apache2 functions instead of lmSetHeaderOut because
-        # this function is used only with Apache2.
+        # Here, we can use Apache2 functions instead of set_header_out
+        # since this function is used only with Apache2.
         $f->r->status(REDIRECT);
         $f->r->status_line("303 See Other");
         $f->r->headers_out->unset('Location');

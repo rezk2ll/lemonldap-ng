@@ -14,7 +14,6 @@ use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 use base qw(Lemonldap::NG::Handler::SharedConf);
 use Digest::MD5;
-use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;
 
 our $VERSION = '1.4.0';
@@ -93,11 +92,10 @@ sub run {
 
     # Get cookie header, removing Sympa cookie if exists (avoid security
     # problems) and set the new value
-    $tmp = Lemonldap::NG::Handler::Main::Headers->lmHeaderIn( $r, 'Cookie' );
+    $tmp = Lemonldap::NG::Handler::API->header_in( $r, 'Cookie' );
     $tmp =~ s/\bsympauser=[^,;]*[,;]?//;
     $tmp .= $tmp ? ";$str" : $str;
-    Lemonldap::NG::Handler::Main::Headers->lmSetHeaderIn( $r,
-        'Cookie' => $tmp );
+    Lemonldap::NG::Handler::API->set_header_in( $r, 'Cookie' => $tmp );
 
     # Return SUPER::run() result
     return $ret;

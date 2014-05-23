@@ -11,7 +11,6 @@ package Lemonldap::NG::Handler::Specific::UpdateCookie;
 use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 use base qw(Lemonldap::NG::Handler::SharedConf);
-use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Common::Session;
 
@@ -87,8 +86,7 @@ sub run {
 # @return Value of the cookie if found, 0 else
 sub fetchUTime {
     my ( $class, $apacheRequest ) = @_; 
-    my $t = Lemonldap::NG::Handler::Main::Headers->lmHeaderIn( $apacheRequest,
-        'Cookie' );
+    my $t = Lemonldap::NG::Handler::API->header_in( $apacheRequest, 'Cookie' );
     my $c = $tsv->{cookieName} . 'update';
     return ( $t =~ /$c=([^,; ]+)/o ) ? $1 : 0;
 }

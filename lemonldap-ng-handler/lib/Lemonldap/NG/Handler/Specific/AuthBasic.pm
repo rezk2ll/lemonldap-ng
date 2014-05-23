@@ -59,14 +59,9 @@ sub run ($$) {
     # AUTHENTICATION
     # I - recover the WWW-Authentication header
     my ( $id, $user, $pass );
-    unless (
-        $user = Lemonldap::NG::Handler::Main::Headers->lmHeaderIn(
-            $apacheRequest, 'Authorization'
-        )
-      )
+    unless ( $user = Lemonldap::NG::Handler::API->header_in( $apacheRequest, 'Authorization' ) )
     {
-        Lemonldap::NG::Handler::Main::Headers->lmSetErrHeaderOut(
-            $apacheRequest,
+        Lemonldap::NG::Handler::API->set_err_header_out( $apacheRequest,
             'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
         return AUTH_REQUIRED;
     }
@@ -90,7 +85,7 @@ sub run ($$) {
 
             # Add client IP as X-Forwarded-For IP in SOAP request
             my $xheader =
-              Lemonldap::NG::Handler::Main::Headers->lmHeaderIn( $apacheRequest,
+              Lemonldap::NG::Handler::API->header_in( $apacheRequest,
                 'X-Forwarded-For' );
             $xheader .= ", " if ($xheader);
             $xheader .= $class->ip($apacheRequest);
@@ -122,7 +117,7 @@ sub run ($$) {
                           . $soap->error( $res->{errorCode}, 'en' )->result(),
                         'notice'
                     );
-                    Lemonldap::NG::Handler::Main::Headers->lmSetErrHeaderOut(
+                    Lemonldap::NG::Handler::API->set_err_header_out(
                         $apacheRequest,
                         'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
                     return AUTH_REQUIRED;
@@ -178,8 +173,7 @@ sub run ($$) {
     $class->hideCookie($apacheRequest);
 
     # Hide user password
-    Lemonldap::NG::Handler::Main::Headers->lmUnsetHeaderIn( $apacheRequest,
-        "Authorization" );
+    Lemonldap::NG::Handler::API->unset_header_in( $apacheRequest, "Authorization" );
 
     # ACCOUNTING
     # 2 - Inform remote application
