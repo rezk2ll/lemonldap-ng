@@ -176,8 +176,6 @@ sub extractMailInfo {
 
     }
 
-    $self->{userControl} ||= '^[\w\.\-@]+$';
-
     # Check mail
     return PE_MALFORMEDUSER unless ( $self->{mail} =~ /$self->{userControl}/o );
 
