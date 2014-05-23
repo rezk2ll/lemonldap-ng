@@ -152,4 +152,29 @@ sub getMailSession {
     return "";
 }
 
+## @method string getRegisterSession(string mail)
+# Check if a register session exists
+# @param mail the value of the mail key in session
+# @return the first session id found or nothing if no session
+sub getRegisterSession {
+    my ( $self, $mail ) = splice @_;
+
+    my $moduleOptions = $self->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $self->{globalStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
+    # Search on register sessions
+    my $sessions = $module->searchOn( $moduleOptions, "mail", $mail );
+
+    # Browse found sessions to check if it's a register session
+    foreach my $id ( keys %$sessions ) {
+        my $registerSession = $self->getApacheSession( $id, 1 );
+        next unless ( $registerSession->data );
+        return $id if ( $registerSession->data->{_type} =~ /^register$/ );
+    }
+
+    # No register session found, return empty string
+    return "";
+}
+
 1;

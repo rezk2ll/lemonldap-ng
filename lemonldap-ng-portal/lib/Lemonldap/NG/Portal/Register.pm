@@ -1,0 +1,488 @@
+## @file
+# Module for registering a new user
+
+## @class Lemonldap::NG::Portal::Register
+# Module for registering a new user
+package Lemonldap::NG::Portal::Register;
+
+use strict;
+use warnings;
+
+our $VERSION = '1.4.0';
+
+use Lemonldap::NG::Portal::Simple qw(:all);
+use base qw(Lemonldap::NG::Portal::SharedConf Exporter);
+use HTML::Template;
+use Encode;
+use POSIX qw(strftime);
+
+#inherits Lemonldap::NG::Portal::_SMTP
+
+*EXPORT_OK   = *Lemonldap::NG::Portal::Simple::EXPORT_OK;
+*EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
+*EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
+
+## @method boolean process()
+# Call functions for registering user
+# - itself:
+#   - smtpInit
+#   - extractRegisterInfo
+#   - storeRegisterSession
+#   - sendConfirmationMail
+#   - registerUser
+#   - sendRegisterMail
+# @return 1 if all is OK
+sub process {
+    my ($self) = splice @_;
+
+    # Process subroutines
+    $self->{error} = PE_OK;
+
+    $self->{error} = $self->_subProcess(
+        qw(smtpInit extractRegisterInfo getRegisterUser 
+          storeRegisterSession sendConfirmationMail 
+          registerUser sendRegisterMail)
+    );
+
+    return (
+        (
+                 $self->{error} <= 0
+              or $self->{error} == PE_CAPTCHAERROR
+              or $self->{error} == PE_CAPTCHAEMPTY
+              or $self->{error} == PE_MAILCONFIRMOK
+              or $self->{error} == PE_MAILOK
+        ) ? 0 : 1
+    );
+}
+
+## @method int smtpInit()
+# Load SMTP methods
+# @return Lemonldap::NG::Portal constant
+sub smtpInit {
+    my ($self) = splice @_;
+
+    eval { use base qw(Lemonldap::NG::Portal::_SMTP) };
+
+    if ($@) {
+        $self->lmLog( "Unable to load SMTP functions ($@)", 'error' );
+        return PE_ERROR;
+    }
+
+    PE_OK;
+}
+
+## @method int extractRegisterInfo
+# Get info from form or from register_token
+# @return Lemonldap::NG::Portal constant
+sub extractRegisterInfo {
+    my ($self) = splice @_;
+
+    if ( $self->{captcha_register_enabled} ) {
+        eval { $self->initCaptcha(); };
+        $self->lmLog( "Can't init captcha: $@", "error" ) if $@;
+    }
+
+    unless ( $self->param('mail') || $self->param('register_token') ) {
+        return PE_REGISTERFIRSTACCESS if ( $self->request_method =~ /GET/ );
+        return PE_REGISTERFORMEMPTY;
+    }
+
+    $self->{register_token}      = $self->param('register_token');
+
+    # If a register token is present, find the corresponding info
+    if ( $self->{register_token} ) {
+
+        $self->lmLog( "Token given for register: " . $self->{register_token},
+            'debug' );
+
+        # Get the corresponding session
+        my $registerSession = $self->getApacheSession( $self->{register_token} );
+
+        if ( $registerSession->data ) {
+            $self->{mail} = $registerSession->data->{mail};
+            $self->{firstname} = $registerSession->data->{firstname};
+            $self->{lastname} = $registerSession->data->{lastname};
+            $self->lmLog( "User associated to token: " . $self->{mail},
+                'debug' );
+        }
+
+        return PE_BADMAILTOKEN unless ( $self->{mail} );
+    }
+    else {
+
+        # Use submitted value
+        $self->{mail} = $self->param('mail');
+        $self->{firstname} = $self->param('firstname');
+        $self->{lastname} = $self->param('lastname');
+
+        # Captcha for register form
+        # Only if register session does not already exist
+        if (   $self->{captcha_register_enabled}
+            && $self->{mail}
+            && !$self->getRegisterSession( $self->{mail} ) )
+        {
+            $self->{captcha_user_code}  = $self->param('captcha_user_code');
+            $self->{captcha_check_code} = $self->param('captcha_code');
+
+            unless ( $self->{captcha_user_code} && $self->{captcha_check_code} )
+            {
+                $self->lmLog( "Captcha not filled", 'warn' );
+                return PE_CAPTCHAEMPTY;
+            }
+
+            $self->lmLog(
+                "Captcha data received: "
+                  . $self->{captcha_user_code} . " and "
+                  . $self->{captcha_check_code},
+                'debug'
+            );
+
+            # Check captcha
+            my $captcha_result =
+              $self->checkCaptcha( $self->{captcha_user_code},
+                $self->{captcha_check_code} );
+
+            if ( $captcha_result != 1 ) {
+                if (   $captcha_result == -3
+                    or $captcha_result == -2 )
+                {
+                    $self->lmLog( "Captcha failed: wrong code", 'warn' );
+                    return PE_CAPTCHAERROR;
+                }
+                elsif ( $captcha_result == 0 ) {
+                    $self->lmLog(
+                        "Captcha failed: code not checked (file error)",
+                        'warn' );
+                    return PE_CAPTCHAERROR;
+                }
+                elsif ( $captcha_result == -1 ) {
+                    $self->lmLog( "Captcha failed: code has expired", 'warn' );
+                    return PE_CAPTCHAERROR;
+                }
+            }
+            $self->lmLog( "Captcha code verified", 'debug' );
+        }
+
+    }
+
+    # Check mail
+    return PE_MALFORMEDUSER unless ( $self->{mail} =~ /$self->{userControl}/o );
+
+    PE_OK;
+}
+
+## @method int getRegisterUser
+# Search for user using UserDB module and register sessions
+# If the user already exists, register is forbidden
+# @return Lemonldap::NG::Portal constant
+sub getRegisterUser {
+    my ($self) = splice @_;
+
+    if ( $self->getUser() == PE_OK ) {
+       # User already exists
+       $self->lmLog("Register: refuse mail $self->{mail} because already exists in UserDB", 'error');
+       return PE_ERROR;
+    }
+
+    return PE_OK;
+}
+
+## @method int storeRegisterSession
+# Create register session and store token
+# @return Lemonldap::NG::Portal constant
+sub storeRegisterSession {
+    my ($self) = splice @_;
+
+    # Skip this step if confirmation was already sent
+    return PE_OK
+      if ( $self->{register_token} or $self->getRegisterSession( $self->{mail} ) );
+
+    # Create a new session
+    my $registerSession = $self->getApacheSession();
+
+    # Set _utime for session autoremove
+    # Use default session timeout and register session timeout to compute it
+    my $time        = time();
+    my $timeout     = $self->{timeout};
+    my $registerTimeout = $self->{registerTimeout} || $timeout;
+
+    my $infos = {};
+    $infos->{_utime} = $time + ( $registerTimeout - $timeout );
+
+    # Store expiration timestamp for further use
+    $infos->{registerSessionTimeoutTimestamp} = $time + $registerTimeout;
+    $self->{registerSessionTimeoutTimestamp}  = $time + $registerTimeout;
+
+    # Store start timestamp for further use
+    $infos->{registerSessionStartTimestamp} = $time;
+    $self->{registerSessionStartTimestamp}  = $time;
+
+    # Store infos
+    $infos->{mail} = $self->{mail};
+    $infos->{firstname} = $self->{firstname};
+    $infos->{lastname} = $self->{firstname};
+
+    # Store type
+    $infos->{_type} = "register";
+
+    # Update session
+    $registerSession->update($infos);
+
+    PE_OK;
+}
+
+## @method int sendConfirmationMail
+# Send confirmation mail
+# @return Lemonldap::NG::Portal constant
+sub sendConfirmationMail {
+    my ($self) = splice @_;
+
+    # Skip this step if user clicked on the confirmation link
+    return PE_OK if $self->{register_token};
+
+    # Check if confirmation mail has already been sent
+    my $mail_session = $self->getRegisterSession( $self->{mail} );
+    $self->{mail_already_sent} = ( $mail_session and !$self->{id} ) ? 1 : 0;
+
+    # Read mail session to get creation and expiration dates
+    $self->{id} = $mail_session unless $self->{id};
+
+    $self->lmLog( "Mail session found: $mail_session", 'debug' );
+
+    my $mailSession = $self->getApacheSession( $mail_session, 1 );
+    $self->{mailSessionTimeoutTimestamp} =
+      $mailSession->data->{mailSessionTimeoutTimestamp};
+    $self->{mailSessionStartTimestamp} =
+      $mailSession->data->{mailSessionStartTimestamp};
+
+    # Mail session expiration date
+    my $expTimestamp = $self->{mailSessionTimeoutTimestamp};
+
+    $self->lmLog( "Mail expiration timestamp: $expTimestamp", 'debug' );
+
+    $self->{expMailDate} = strftime( "%d/%m/%Y", localtime $expTimestamp );
+    $self->{expMailTime} = strftime( "%H:%M",    localtime $expTimestamp );
+
+    # Mail session start date
+    my $startTimestamp = $self->{mailSessionStartTimestamp};
+
+    $self->lmLog( "Mail start timestamp: $startTimestamp", 'debug' );
+
+    $self->{startMailDate} = strftime( "%d/%m/%Y", localtime $startTimestamp );
+    $self->{startMailTime} = strftime( "%H:%M",    localtime $startTimestamp );
+
+    # Ask if user want another confirmation email
+    if ( $self->{mail_already_sent} and !$self->param('resendconfirmation') ) {
+        return PE_MAILCONFIRMATION_ALREADY_SENT;
+    }
+
+    # Build confirmation url
+    my $url = $self->{portal}  . "register.pl?register_token=" . $self->{id};
+    $url .= '&' . $self->{authChoiceParam} . '=' . $self->{_authChoice}
+      if ( $self->{_authChoice} );
+
+    # Build mail content
+    my $subject = $self->{mailConfirmSubject};
+    my $body;
+    my $html;
+    if ( $self->{mailConfirmBody} ) {
+
+        # We use a specific text message, no html
+        $body = $self->{mailConfirmBody};
+    }
+    else {
+
+        # Use HTML template
+        my $tplfile = $self->getApacheHtdocsPath
+          . "/skins/$self->{portalSkin}/mail_confirm.tpl";
+        $tplfile = $self->getApacheHtdocsPath . "/skins/common/mail_confirm.tpl"
+          unless ( -e $tplfile );
+        my $template = HTML::Template->new(
+            filename => $tplfile,
+            filter   => sub { $self->translate_template(@_) }
+        );
+        $body = $template->output();
+        $html = 1;
+    }
+
+    # Replace variables in body
+    $body =~ s/\$expMailDate/$self->{expMailDate}/g;
+    $body =~ s/\$expMailTime/$self->{expMailTime}/g;
+    $body =~ s/\$url/$url/g;
+    $body =~ s/\$(\w+)/decode("utf8",$self->{sessionInfo}->{$1})/ge;
+
+    # Send mail
+    return PE_MAILERROR
+      unless $self->send_mail( $self->{mail}, $subject, $body, $html );
+
+    PE_MAILCONFIRMOK;
+}
+
+## @method int registerUser
+# Change the password or generate a new password
+# @return Lemonldap::NG::Portal constant
+sub registerUser {
+    my ($self) = splice @_;
+
+        # Generate a complex password
+        my $password = $self->gen_password( $self->{randomPasswordRegexp} );
+
+        $self->lmLog( "Generated password: " . $password, 'debug' );
+
+        $self->{newpassword}     = $password;
+        $self->{forceReset}      = 1;
+
+      my $result;
+
+    # TODO call UserDB createUser
+
+            $self->lmLog( "Create new user $self->{mail}",
+                'debug' );
+
+    # Register token can be used only one time, delete the session if all is ok
+    if ( $result == PE_OK ) {
+
+        # Get the corresponding session
+        my $registerSession = $self->getApacheSession( $self->{register_token} );
+
+        if ( $registerSession->data ) {
+
+            $self->lmLog( "Delete register session " . $self->{register_token},
+                'debug' );
+
+            $registerSession->remove;
+        }
+        else {
+            $self->lmLog( "Register session not found", 'warn' );
+        }
+
+        # Force result to PE_OK to continue the process
+        $result = PE_OK;
+    }
+
+    return $result;
+}
+
+## @method int sendRegisterMail
+# Send mail containing a temporary password
+# @return Lemonldap::NG::Portal constant
+sub sendRegisterMail {
+    my ($self) = splice @_;
+
+    # Build mail content
+    my $subject = $self->{mailSubject};
+    my $body;
+    my $html;
+    if ( $self->{mailBody} ) {
+
+        # We use a specific text message, no html
+        $body = $self->{mailBody};
+    }
+    else {
+
+        # Use HTML template
+        my $tplfile = $self->getApacheHtdocsPath
+          . "/skins/$self->{portalSkin}/mail_password.tpl";
+        $tplfile =
+          $self->getApacheHtdocsPath . "/skins/common/mail_password.tpl"
+          unless ( -e $tplfile );
+        my $template = HTML::Template->new(
+            filename => $tplfile,
+            filter   => sub { $self->translate_template(@_) }
+        );
+        $body = $template->output();
+        $html = 1;
+    }
+
+    # Replace variables in body
+    my $password = $self->{newpassword};
+    $body =~ s/\$password/$password/g;
+    $body =~ s/\$(\w+)/decode("utf8",$self->{sessionInfo}->{$1})/ge;
+
+    # Send mail
+    return PE_MAILERROR
+      unless $self->send_mail( $self->{mail}, $subject, $body, $html );
+
+    PE_MAILOK;
+}
+
+1;
+
+__END__
+
+=head1 NAME
+
+=encoding utf8
+
+Lemonldap::NG::Portal::MailRegister - Regsiter a new user
+
+=head1 SYNOPSIS
+
+  use Lemonldap::NG::Portal::Register;
+  
+  my $portal = new Lemonldap::NG::Portal::Register();
+ 
+  $portal->process();
+
+  # Write here HTML to manage errors and confirmation messages
+
+=head1 DESCRIPTION
+
+Lemonldap::NG::Portal::Register - Register a new user
+
+See L<Lemonldap::NG::Portal::SharedConf> for a complete example of use of
+Lemonldap::Portal::* libraries.
+
+=head1 METHODS
+
+=head3 process
+
+Main method.
+
+=head1 SEE ALSO
+
+L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal::SharedConf>, L<CGI>,
+L<http://lemonldap-ng.org/>
+
+=head1 AUTHOR
+
+=over
+
+=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<http://jira.ow2.org>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+
+=head1 COPYRIGHT AND LICENSE
+
+=over
+
+=item Copyright (C) 2010, 2012 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=item Copyright (C) 2010, 2011, 2012 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
+=back
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut
