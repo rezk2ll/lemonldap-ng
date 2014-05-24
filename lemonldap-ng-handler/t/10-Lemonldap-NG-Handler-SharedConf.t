@@ -76,8 +76,8 @@ if ( $numTests == 3 ) {
         unescape_url   => sub { return $_ },
     );
     my $ret;
-    $mock->fake_module( 'Lemonldap::NG::Handler::Main::Headers',
-        lmSetHeaderOut => sub { $ret = join( ':', $_[2], $_[3], ); }, );
+    $mock->fake_module( 'Lemonldap::NG::Handler::API', 
+          set_header_out => sub { $ret = join( ':', $_[2], $_[3], ); }, );
 
     our $apacheRequest = Apache2::RequestRec->new();
 

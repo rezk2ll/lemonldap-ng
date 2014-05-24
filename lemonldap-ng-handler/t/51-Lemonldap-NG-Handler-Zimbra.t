@@ -25,6 +25,8 @@ $ini->flush();
 use Env qw(LLNG_DEFAULTCONFFILE);
 $LLNG_DEFAULTCONFFILE = $ini->filename;
 
+open STDERR, '>/dev/null';
+
 #########################
 
 # Insert your test code below, the Test::More module is use()ed here so read
@@ -35,7 +37,7 @@ SKIP: {
 "Digest::HMAC_SHA1 is not installed, so Lemonldap::NG::Handler::ZimbraPreAuth will not be useable",
       1
       if ($@);
-    use_ok('Lemonldap::NG::Handler::ZimbraPreAuth');
+    use_ok('Lemonldap::NG::Handler::Specific::ZimbraPreAuth');
 }
 
 $LLNG_DEFAULTCONFFILE = undef;

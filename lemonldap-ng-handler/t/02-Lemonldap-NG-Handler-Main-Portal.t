@@ -4,29 +4,25 @@
 ##########################
 #
 ## change 'tests => 1' to 'tests => last_test_to_print';
-#no warnings;
-#use Test::More;    #qw(no_plan)
-#
-#my $numTests = 2;
-#eval { require Test::MockObject }
-#  or { $numTests = 1
-#      and warn "Warning: Test::MockObject is needed to run deeper tests\n" };
-#
-#plan tests => $numTests;
-#
-## get a standard basic configuration in $args hashref
-#use Cwd 'abs_path';
-#use File::Basename;
-#use lib dirname( abs_path $0 );
-#
-#open STDERR, '>/dev/null';
-#
+no warnings;
+use Test::More;    #qw(no_plan)
+
+my $numTests = 1;
+plan tests => $numTests;
+
+# get a standard basic configuration in $args hashref
+use Cwd 'abs_path';
+use File::Basename;
+use lib dirname( abs_path $0 );
+
+open STDERR, '>/dev/null';
+
 ##########################
 #
 ## Insert your test code below, the Test::More module is use()ed here so read
 ## its man page ( perldoc Test::More ) for help writing this test script.
-#use_ok( 'Lemonldap::NG::Handler::Main', ':all' );
-#
+use_ok( 'Lemonldap::NG::Handler::Main', ':all' );
+
 #if ( $numTests == 2 ) {
 #    my $h;
 #    $h = bless {}, 'Lemonldap::NG::Handler::Main';
