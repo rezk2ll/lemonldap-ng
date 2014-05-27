@@ -31,6 +31,8 @@ use POSIX qw(strftime);
 #   - sendConfirmationMail
 #   - registerUser
 #   - sendRegisterMail
+# - userDB module:
+#   - userDBInit
 # @return 1 if all is OK
 sub process {
     my ($self) = splice @_;
@@ -39,8 +41,8 @@ sub process {
     $self->{error} = PE_OK;
 
     $self->{error} = $self->_subProcess(
-        qw(smtpInit extractRegisterInfo getRegisterUser 
-          storeRegisterSession sendConfirmationMail 
+        qw(smtpInit extractRegisterInfo userDBInit getRegisterUser
+          storeRegisterSession sendConfirmationMail
           registerUser sendRegisterMail)
     );
 
@@ -87,7 +89,7 @@ sub extractRegisterInfo {
         return PE_REGISTERFORMEMPTY;
     }
 
-    $self->{register_token}      = $self->param('register_token');
+    $self->{register_token} = $self->param('register_token');
 
     # If a register token is present, find the corresponding info
     if ( $self->{register_token} ) {
@@ -96,12 +98,13 @@ sub extractRegisterInfo {
             'debug' );
 
         # Get the corresponding session
-        my $registerSession = $self->getApacheSession( $self->{register_token} );
+        my $registerSession =
+          $self->getApacheSession( $self->{register_token} );
 
         if ( $registerSession->data ) {
-            $self->{mail} = $registerSession->data->{mail};
+            $self->{mail}      = $registerSession->data->{mail};
             $self->{firstname} = $registerSession->data->{firstname};
-            $self->{lastname} = $registerSession->data->{lastname};
+            $self->{lastname}  = $registerSession->data->{lastname};
             $self->lmLog( "User associated to token: " . $self->{mail},
                 'debug' );
         }
@@ -111,9 +114,9 @@ sub extractRegisterInfo {
     else {
 
         # Use submitted value
-        $self->{mail} = $self->param('mail');
+        $self->{mail}      = $self->param('mail');
         $self->{firstname} = $self->param('firstname');
-        $self->{lastname} = $self->param('lastname');
+        $self->{lastname}  = $self->param('lastname');
 
         # Captcha for register form
         # Only if register session does not already exist
@@ -172,16 +175,20 @@ sub extractRegisterInfo {
 }
 
 ## @method int getRegisterUser
-# Search for user using UserDB module and register sessions
+# Search for user using UserDB module
 # If the user already exists, register is forbidden
 # @return Lemonldap::NG::Portal constant
 sub getRegisterUser {
     my ($self) = splice @_;
 
     if ( $self->getUser() == PE_OK ) {
-       # User already exists
-       $self->lmLog("Register: refuse mail $self->{mail} because already exists in UserDB", 'error');
-       return PE_REGISTERALREADYEXISTS;
+
+        # User already exists
+        $self->lmLog(
+"Register: refuse mail $self->{mail} because already exists in UserDB",
+            'error'
+        );
+        return PE_REGISTERALREADYEXISTS;
     }
 
     return PE_OK;
@@ -195,15 +202,16 @@ sub storeRegisterSession {
 
     # Skip this step if confirmation was already sent
     return PE_OK
-      if ( $self->{register_token} or $self->getRegisterSession( $self->{mail} ) );
+      if ( $self->{register_token}
+        or $self->getRegisterSession( $self->{mail} ) );
 
     # Create a new session
     my $registerSession = $self->getApacheSession();
 
     # Set _utime for session autoremove
     # Use default session timeout and register session timeout to compute it
-    my $time        = time();
-    my $timeout     = $self->{timeout};
+    my $time            = time();
+    my $timeout         = $self->{timeout};
     my $registerTimeout = $self->{registerTimeout} || $timeout;
 
     my $infos = {};
@@ -218,9 +226,10 @@ sub storeRegisterSession {
     $self->{registerSessionStartTimestamp}  = $time;
 
     # Store infos
-    $infos->{mail} = $self->{mail};
+    $infos->{mail}      = $self->{mail};
     $infos->{firstname} = $self->{firstname};
-    $infos->{lastname} = $self->{firstname};
+    $infos->{lastname}  = $self->{lastname};
+    $infos->{ipAddr}    = $self->ipAddr;
 
     # Store type
     $infos->{_type} = "register";
@@ -241,32 +250,32 @@ sub sendConfirmationMail {
     return PE_OK if $self->{register_token};
 
     # Check if confirmation mail has already been sent
-    my $mail_session = $self->getRegisterSession( $self->{mail} );
-    $self->{mail_already_sent} = ( $mail_session and !$self->{id} ) ? 1 : 0;
+    my $register_session = $self->getRegisterSession( $self->{mail} );
+    $self->{mail_already_sent} = ( $register_session and !$self->{id} ) ? 1 : 0;
 
-    # Read mail session to get creation and expiration dates
-    $self->{id} = $mail_session unless $self->{id};
+    # Read session to get creation and expiration dates
+    $self->{id} = $register_session unless $self->{id};
 
-    $self->lmLog( "Mail session found: $mail_session", 'debug' );
+    $self->lmLog( "Register session found: $register_session", 'debug' );
 
-    my $mailSession = $self->getApacheSession( $mail_session, 1 );
-    $self->{mailSessionTimeoutTimestamp} =
-      $mailSession->data->{mailSessionTimeoutTimestamp};
-    $self->{mailSessionStartTimestamp} =
-      $mailSession->data->{mailSessionStartTimestamp};
+    my $registerSession = $self->getApacheSession( $register_session, 1 );
+    $self->{registerSessionTimeoutTimestamp} =
+      $registerSession->data->{registerSessionTimeoutTimestamp};
+    $self->{registerSessionStartTimestamp} =
+      $registerSession->data->{registerSessionStartTimestamp};
 
     # Mail session expiration date
-    my $expTimestamp = $self->{mailSessionTimeoutTimestamp};
+    my $expTimestamp = $self->{registerSessionTimeoutTimestamp};
 
-    $self->lmLog( "Mail expiration timestamp: $expTimestamp", 'debug' );
+    $self->lmLog( "Register expiration timestamp: $expTimestamp", 'debug' );
 
     $self->{expMailDate} = strftime( "%d/%m/%Y", localtime $expTimestamp );
     $self->{expMailTime} = strftime( "%H:%M",    localtime $expTimestamp );
 
     # Mail session start date
-    my $startTimestamp = $self->{mailSessionStartTimestamp};
+    my $startTimestamp = $self->{registerSessionStartTimestamp};
 
-    $self->lmLog( "Mail start timestamp: $startTimestamp", 'debug' );
+    $self->lmLog( "Register start timestamp: $startTimestamp", 'debug' );
 
     $self->{startMailDate} = strftime( "%d/%m/%Y", localtime $startTimestamp );
     $self->{startMailTime} = strftime( "%H:%M",    localtime $startTimestamp );
@@ -277,39 +286,32 @@ sub sendConfirmationMail {
     }
 
     # Build confirmation url
-    my $url = $self->{portal}  . "register.pl?register_token=" . $self->{id};
+    my $url = $self->{registerUrl} . "?register_token=" . $self->{id};
     $url .= '&' . $self->{authChoiceParam} . '=' . $self->{_authChoice}
       if ( $self->{_authChoice} );
 
     # Build mail content
-    my $subject = $self->{mailConfirmSubject};
+    my $subject = $self->{registerConfirmSubject};
     my $body;
-    my $html;
-    if ( $self->{mailConfirmBody} ) {
+    my $html = 1;
 
-        # We use a specific text message, no html
-        $body = $self->{mailConfirmBody};
-    }
-    else {
-
-        # Use HTML template
-        my $tplfile = $self->getApacheHtdocsPath
-          . "/skins/$self->{portalSkin}/mail_confirm.tpl";
-        $tplfile = $self->getApacheHtdocsPath . "/skins/common/mail_confirm.tpl"
-          unless ( -e $tplfile );
-        my $template = HTML::Template->new(
-            filename => $tplfile,
-            filter   => sub { $self->translate_template(@_) }
-        );
-        $body = $template->output();
-        $html = 1;
-    }
+    # Use HTML template
+    my $tplfile = $self->getApacheHtdocsPath
+      . "/skins/$self->{portalSkin}/mail_register_confirm.tpl";
+    $tplfile =
+      $self->getApacheHtdocsPath . "/skins/common/mail_register_confirm.tpl"
+      unless ( -e $tplfile );
+    my $template = HTML::Template->new(
+        filename => $tplfile,
+        filter   => sub { $self->translate_template(@_) }
+    );
+    $body = $template->output();
 
     # Replace variables in body
     $body =~ s/\$expMailDate/$self->{expMailDate}/g;
     $body =~ s/\$expMailTime/$self->{expMailTime}/g;
     $body =~ s/\$url/$url/g;
-    $body =~ s/\$(\w+)/decode("utf8",$self->{sessionInfo}->{$1})/ge;
+    $body =~ s/\$(\w+)/decode("utf8",$registerSession->data->{$1})/ge;
 
     # Send mail
     return PE_MAILERROR
@@ -324,26 +326,26 @@ sub sendConfirmationMail {
 sub registerUser {
     my ($self) = splice @_;
 
-        # Generate a complex password
-        my $password = $self->gen_password( $self->{randomPasswordRegexp} );
+    # Generate a complex password
+    my $password = $self->gen_password( $self->{randomPasswordRegexp} );
 
-        $self->lmLog( "Generated password: " . $password, 'debug' );
+    $self->lmLog( "Generated password: " . $password, 'debug' );
 
-        $self->{newpassword}     = $password;
-        $self->{forceReset}      = 1;
+    $self->{newpassword} = $password;
+    $self->{forceReset}  = 1;
 
-      my $result;
+    my $result;
 
     # TODO call UserDB createUser
 
-            $self->lmLog( "Create new user $self->{mail}",
-                'debug' );
+    $self->lmLog( "Create new user $self->{mail}", 'debug' );
 
     # Register token can be used only one time, delete the session if all is ok
     if ( $result == PE_OK ) {
 
         # Get the corresponding session
-        my $registerSession = $self->getApacheSession( $self->{register_token} );
+        my $registerSession =
+          $self->getApacheSession( $self->{register_token} );
 
         if ( $registerSession->data ) {
 
@@ -370,34 +372,25 @@ sub sendRegisterMail {
     my ($self) = splice @_;
 
     # Build mail content
-    my $subject = $self->{mailSubject};
+    my $subject = $self->{registerDoneSubject};
     my $body;
-    my $html;
-    if ( $self->{mailBody} ) {
+    my $html = 1;
 
-        # We use a specific text message, no html
-        $body = $self->{mailBody};
-    }
-    else {
-
-        # Use HTML template
-        my $tplfile = $self->getApacheHtdocsPath
-          . "/skins/$self->{portalSkin}/mail_password.tpl";
-        $tplfile =
-          $self->getApacheHtdocsPath . "/skins/common/mail_password.tpl"
-          unless ( -e $tplfile );
-        my $template = HTML::Template->new(
-            filename => $tplfile,
-            filter   => sub { $self->translate_template(@_) }
-        );
-        $body = $template->output();
-        $html = 1;
-    }
+    # Use HTML template
+    my $tplfile = $self->getApacheHtdocsPath
+      . "/skins/$self->{portalSkin}/mail_register_done.tpl";
+    $tplfile =
+      $self->getApacheHtdocsPath . "/skins/common/mail_register_done.tpl"
+      unless ( -e $tplfile );
+    my $template = HTML::Template->new(
+        filename => $tplfile,
+        filter   => sub { $self->translate_template(@_) }
+    );
+    $body = $template->output();
 
     # Replace variables in body
     my $password = $self->{newpassword};
     $body =~ s/\$password/$password/g;
-    $body =~ s/\$(\w+)/decode("utf8",$self->{sessionInfo}->{$1})/ge;
 
     # Send mail
     return PE_MAILERROR
@@ -414,7 +407,7 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::MailRegister - Regsiter a new user
+Lemonldap::NG::Portal::Register - Regsiter a new user
 
 =head1 SYNOPSIS
 
