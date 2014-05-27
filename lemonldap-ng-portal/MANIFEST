@@ -8,6 +8,7 @@ example/index_skin.pl
 example/mail.pl
 example/metadata.pl
 example/PortalStatus.pl
+example/register.pl
 example/scripts/buildPortalWSDL
 example/scripts/purgeCentralCache
 example/scripts/purgeCentralCache.cron.d
@@ -37,6 +38,7 @@ example/skins/bootstrap/openid.tpl
 example/skins/bootstrap/openidform.tpl
 example/skins/bootstrap/password.tpl
 example/skins/bootstrap/redirect.tpl
+example/skins/bootstrap/register.tpl
 example/skins/bootstrap/standardform.tpl
 example/skins/bootstrap/yubikeyform.tpl
 example/skins/common/accept.png
@@ -234,6 +236,7 @@ lib/Lemonldap/NG/Portal/PasswordDBDBI.pm
 lib/Lemonldap/NG/Portal/PasswordDBDemo.pm
 lib/Lemonldap/NG/Portal/PasswordDBLDAP.pm
 lib/Lemonldap/NG/Portal/PasswordDBNull.pm
+lib/Lemonldap/NG/Portal/Register.pm
 lib/Lemonldap/NG/Portal/SharedConf.pm
 lib/Lemonldap/NG/Portal/Simple.pm
 lib/Lemonldap/NG/Portal/UserDBAD.pm
