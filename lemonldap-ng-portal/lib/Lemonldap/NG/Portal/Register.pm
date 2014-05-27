@@ -181,7 +181,7 @@ sub getRegisterUser {
     if ( $self->getUser() == PE_OK ) {
        # User already exists
        $self->lmLog("Register: refuse mail $self->{mail} because already exists in UserDB", 'error');
-       return PE_ERROR;
+       return PE_REGISTERALREADYEXISTS;
     }
 
     return PE_OK;

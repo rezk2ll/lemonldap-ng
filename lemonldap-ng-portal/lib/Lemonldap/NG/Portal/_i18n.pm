@@ -126,6 +126,7 @@ __END__
 # * PE_CAPTCHAEMPTY                      77
 # * PE_REGISTERFIRSTACCESS               78
 # * PE_REGISTERFORMEMPTY                 79
+# * PE_REGISTERALREADYEXISTS             80
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -217,6 +218,7 @@ sub error_fr {
         'Vous devez saisir le captcha',
         'Merci de saisir vos informations',
         'Une information est manquante',
+        'Cette adresse est déjà utilisée',
     ];
 }
 
@@ -305,6 +307,7 @@ sub error_en {
         'You have to type the captcha',
         'Please enter your information',
         'An information is missing',
+        'This address is already used',
     ];
 }
 
@@ -394,6 +397,7 @@ sub error_ro {
         'trebuie să introduceţi CAPTCHA',
         'Please enter your information',
         'An information is missing',
+        'This address is already used',
     ];
 }
 
