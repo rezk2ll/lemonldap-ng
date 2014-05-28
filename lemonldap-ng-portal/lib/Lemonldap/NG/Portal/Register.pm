@@ -102,27 +102,29 @@ sub extractRegisterInfo {
           $self->getApacheSession( $self->{register_token} );
 
         if ( $registerSession->data ) {
-            $self->{mail}      = $registerSession->data->{mail};
-            $self->{firstname} = $registerSession->data->{firstname};
-            $self->{lastname}  = $registerSession->data->{lastname};
-            $self->lmLog( "User associated to token: " . $self->{mail},
+            $self->{registerInfo}->{mail} = $registerSession->data->{mail};
+            $self->{registerInfo}->{firstname} =
+              $registerSession->data->{firstname};
+            $self->{registerInfo}->{lastname} =
+              $registerSession->data->{lastname};
+            $self->lmLog( "User associated to token: " . $self->{registerInfo}->{mail},
                 'debug' );
         }
 
-        return PE_BADMAILTOKEN unless ( $self->{mail} );
+        return PE_BADMAILTOKEN unless ( $self->{registerInfo}->{mail} );
     }
     else {
 
         # Use submitted value
-        $self->{mail}      = $self->param('mail');
-        $self->{firstname} = $self->param('firstname');
-        $self->{lastname}  = $self->param('lastname');
+        $self->{registerInfo}->{mail}      = $self->param('mail');
+        $self->{registerInfo}->{firstname} = $self->param('firstname');
+        $self->{registerInfo}->{lastname}  = $self->param('lastname');
 
         # Captcha for register form
         # Only if register session does not already exist
         if (   $self->{captcha_register_enabled}
-            && $self->{mail}
-            && !$self->getRegisterSession( $self->{mail} ) )
+            && $self->{registerInfo}->{mail}
+            && !$self->getRegisterSession( $self->{registerInfo}->{mail} ) )
         {
             $self->{captcha_user_code}  = $self->param('captcha_user_code');
             $self->{captcha_check_code} = $self->param('captcha_code');
@@ -169,7 +171,8 @@ sub extractRegisterInfo {
     }
 
     # Check mail
-    return PE_MALFORMEDUSER unless ( $self->{mail} =~ /$self->{userControl}/o );
+    return PE_MALFORMEDUSER
+      unless ( $self->{registerInfo}->{mail} =~ /$self->{userControl}/o );
 
     PE_OK;
 }
@@ -180,6 +183,8 @@ sub extractRegisterInfo {
 # @return Lemonldap::NG::Portal constant
 sub getRegisterUser {
     my ($self) = splice @_;
+
+    $self->{mail} = $self->{registerInfo}->{mail};
 
     if ( $self->getUser() == PE_OK ) {
 
@@ -203,7 +208,7 @@ sub storeRegisterSession {
     # Skip this step if confirmation was already sent
     return PE_OK
       if ( $self->{register_token}
-        or $self->getRegisterSession( $self->{mail} ) );
+        or $self->getRegisterSession( $self->{registerInfo}->{mail} ) );
 
     # Create a new session
     my $registerSession = $self->getApacheSession();
@@ -219,16 +224,17 @@ sub storeRegisterSession {
 
     # Store expiration timestamp for further use
     $infos->{registerSessionTimeoutTimestamp} = $time + $registerTimeout;
-    $self->{registerSessionTimeoutTimestamp}  = $time + $registerTimeout;
+    $self->{registerInfo}->{registerSessionTimeoutTimestamp} =
+      $time + $registerTimeout;
 
     # Store start timestamp for further use
     $infos->{registerSessionStartTimestamp} = $time;
-    $self->{registerSessionStartTimestamp}  = $time;
+    $self->{registerInfo}->{registerSessionStartTimestamp} = $time;
 
     # Store infos
-    $infos->{mail}      = $self->{mail};
-    $infos->{firstname} = $self->{firstname};
-    $infos->{lastname}  = $self->{lastname};
+    $infos->{mail}      = $self->{registerInfo}->{mail};
+    $infos->{firstname} = $self->{registerInfo}->{firstname};
+    $infos->{lastname}  = $self->{registerInfo}->{lastname};
     $infos->{ipAddr}    = $self->ipAddr;
 
     # Store type
@@ -250,7 +256,8 @@ sub sendConfirmationMail {
     return PE_OK if $self->{register_token};
 
     # Check if confirmation mail has already been sent
-    my $register_session = $self->getRegisterSession( $self->{mail} );
+    my $register_session =
+      $self->getRegisterSession( $self->{registerInfo}->{mail} );
     $self->{mail_already_sent} = ( $register_session and !$self->{id} ) ? 1 : 0;
 
     # Read session to get creation and expiration dates
@@ -259,13 +266,13 @@ sub sendConfirmationMail {
     $self->lmLog( "Register session found: $register_session", 'debug' );
 
     my $registerSession = $self->getApacheSession( $register_session, 1 );
-    $self->{registerSessionTimeoutTimestamp} =
+    $self->{registerInfo}->{registerSessionTimeoutTimestamp} =
       $registerSession->data->{registerSessionTimeoutTimestamp};
-    $self->{registerSessionStartTimestamp} =
+    $self->{registerInfo}->{registerSessionStartTimestamp} =
       $registerSession->data->{registerSessionStartTimestamp};
 
     # Mail session expiration date
-    my $expTimestamp = $self->{registerSessionTimeoutTimestamp};
+    my $expTimestamp = $self->{registerInfo}->{registerSessionTimeoutTimestamp};
 
     $self->lmLog( "Register expiration timestamp: $expTimestamp", 'debug' );
 
@@ -273,7 +280,7 @@ sub sendConfirmationMail {
     $self->{expMailTime} = strftime( "%H:%M",    localtime $expTimestamp );
 
     # Mail session start date
-    my $startTimestamp = $self->{registerSessionStartTimestamp};
+    my $startTimestamp = $self->{registerInfo}->{registerSessionStartTimestamp};
 
     $self->lmLog( "Register start timestamp: $startTimestamp", 'debug' );
 
@@ -311,17 +318,18 @@ sub sendConfirmationMail {
     $body =~ s/\$expMailDate/$self->{expMailDate}/g;
     $body =~ s/\$expMailTime/$self->{expMailTime}/g;
     $body =~ s/\$url/$url/g;
-    $body =~ s/\$(\w+)/decode("utf8",$registerSession->data->{$1})/ge;
+    $body =~ s/\$(\w+)/decode("utf8",$self->{registerInfo}->{$1})/ge;
 
     # Send mail
     return PE_MAILERROR
-      unless $self->send_mail( $self->{mail}, $subject, $body, $html );
+      unless $self->send_mail( $self->{registerInfo}->{mail}, $subject, $body,
+        $html );
 
     PE_MAILCONFIRMOK;
 }
 
 ## @method int registerUser
-# Change the password or generate a new password
+# Get register session and create the account
 # @return Lemonldap::NG::Portal constant
 sub registerUser {
     my ($self) = splice @_;
@@ -331,14 +339,14 @@ sub registerUser {
 
     $self->lmLog( "Generated password: " . $password, 'debug' );
 
-    $self->{newpassword} = $password;
-    $self->{forceReset}  = 1;
+    $self->{registerInfo}->{password} = $password;
+    $self->{forceReset} = 1;
 
     my $result;
 
     # TODO call UserDB createUser
 
-    $self->lmLog( "Create new user $self->{mail}", 'debug' );
+    $self->lmLog( "Create new user $self->{registerInfo}->{mail}", 'debug' );
 
     # Register token can be used only one time, delete the session if all is ok
     if ( $result == PE_OK ) {
@@ -389,12 +397,12 @@ sub sendRegisterMail {
     $body = $template->output();
 
     # Replace variables in body
-    my $password = $self->{newpassword};
-    $body =~ s/\$password/$password/g;
+    $body =~ s/\$(\w+)/decode("utf8",$self->{registerInfo}->{$1})/ge;
 
     # Send mail
     return PE_MAILERROR
-      unless $self->send_mail( $self->{mail}, $subject, $body, $html );
+      unless $self->send_mail( $self->{registerInfo}->{mail}, $subject, $body,
+        $html );
 
     PE_MAILOK;
 }
