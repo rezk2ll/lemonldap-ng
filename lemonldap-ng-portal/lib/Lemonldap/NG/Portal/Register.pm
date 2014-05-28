@@ -33,6 +33,10 @@ use POSIX qw(strftime);
 #   - sendRegisterMail
 # - userDB module:
 #   - userDBInit
+#   - getUser
+# - registerDB module:
+#  - getLogin
+#  - createUser
 # @return 1 if all is OK
 sub process {
     my ($self) = splice @_;
@@ -101,13 +105,14 @@ sub extractRegisterInfo {
         my $registerSession =
           $self->getApacheSession( $self->{register_token} );
 
-        if ( $registerSession->data ) {
+        if ( $registerSession && $registerSession->data ) {
             $self->{registerInfo}->{mail} = $registerSession->data->{mail};
             $self->{registerInfo}->{firstname} =
               $registerSession->data->{firstname};
             $self->{registerInfo}->{lastname} =
               $registerSession->data->{lastname};
-            $self->lmLog( "User associated to token: " . $self->{registerInfo}->{mail},
+            $self->lmLog(
+                "User associated to token: " . $self->{registerInfo}->{mail},
                 'debug' );
         }
 
@@ -329,10 +334,17 @@ sub sendConfirmationMail {
 }
 
 ## @method int registerUser
-# Get register session and create the account
+# Create the account
 # @return Lemonldap::NG::Portal constant
 sub registerUser {
     my ($self) = splice @_;
+    my $result;
+
+    # Check mail is still unused
+    $result = $self->getRegisterUser;
+    unless ( $result == PE_OK ) {
+        return $result;
+    }
 
     # Generate a complex password
     my $password = $self->gen_password( $self->{randomPasswordRegexp} );
@@ -342,11 +354,23 @@ sub registerUser {
     $self->{registerInfo}->{password} = $password;
     $self->{forceReset} = 1;
 
-    my $result;
+    # Find a login
+    $result = $self->computeLogin;
+    unless ( $result == PE_OK ) {
+        $self->lmLog(
+            "Could not compute login for " . $self->{registerInfo}->{mail},
+            'error' );
+        return $result;
+    }
 
-    # TODO call UserDB createUser
-
-    $self->lmLog( "Create new user $self->{registerInfo}->{mail}", 'debug' );
+    # Create user
+    $self->lmLog( "Create new user $self->{registerInfo}->{login}", 'debug' );
+    $result = $self->createUser;
+    unless ( $result == PE_OK ) {
+        $self->lmLog( "Could not create user " . $self->{registerInfo}->{login},
+            'error' );
+        return $result;
+    }
 
     # Register token can be used only one time, delete the session if all is ok
     if ( $result == PE_OK ) {

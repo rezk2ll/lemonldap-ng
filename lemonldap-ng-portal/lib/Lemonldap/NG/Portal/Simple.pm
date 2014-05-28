@@ -295,7 +295,7 @@ sub new {
       :                          0;
 
     # Push authentication/userDB/passwordDB modules in @ISA
-    foreach my $type (qw(authentication userDB passwordDB)) {
+    foreach my $type (qw(authentication userDB passwordDB registerDB)) {
         my $module_name = 'Lemonldap::NG::Portal::';
         my $db_type     = $type;
         my $db_name     = $self->{$db_type};
@@ -304,6 +304,7 @@ sub new {
         $db_type =~ s/authentication/Auth/;
         $db_type =~ s/userDB/UserDB/;
         $db_type =~ s/passwordDB/PasswordDB/;
+        $db_type =~ s/registerDB/RegisterDB/;
 
         # Full module name
         $module_name .= $db_type . $db_name;
