@@ -896,11 +896,43 @@ has 'redirectFormMethod' => (
     documentation => 'HTTP method for redirect page form',
 );
 
+has 'registerConfirmSubject' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '[LemonLDAP::NG] Account register confirmation',
+    documentation => 'Mail subject for register confirmation',
+);
+
 has 'registerDB' => (
     is            => 'rw',
     isa           => 'Str',
     default       => 'Demo',
     documentation => 'Register module',
+);
+
+has 'registerDoneSubject' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '[LemonLDAP::NG] Your new account',
+    documentation => 'Mail subject when register is done',
+);
+
+has 'registerTimeout' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '0',
+    documentation => 'Register session timeout',
+);
+
+has 'registerUrl' => (
+    is      => 'rw',
+    isa     => 'Str',
+    default => sub {
+        my $self = shift;
+        return $self->portal . "register.pl";
+    },
+    lazy          => 1,
+    documentation => 'URL of register page',
 );
 
 has 'remoteGlobalStorage' => (
