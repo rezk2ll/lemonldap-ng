@@ -19,7 +19,12 @@ sub computeLogin {
       substr( lc $self->{registerInfo}->{firstname}, 0, 1 )
       . lc $self->{registerInfo}->{lastname};
 
-    # TODO check in LDAP for uid unicity
+    # The uid must be unique
+    my $i = 0;
+    while ( $self->isLoginUsed($login) ) {
+        $i++;
+        $login .= $i;
+    }
 
     $self->{registerInfo}->{login} = $login;
 
@@ -54,6 +59,32 @@ sub createUser {
     }
 
     return PE_OK;
+}
+
+## @method bool isLoginUsed
+# Search if login is already in use
+# @result 0 if login is used, 1 else
+sub isLoginUsed {
+    my ( $self, $login ) = splice @_;
+
+    my $mesg = $self->ldap->search(
+        base   => $self->{ldapBase},
+        filter => "(uid=$login)",
+        scope  => "sub",
+        attrs  => ['1.1'],
+    );
+
+    if ( $mesg->code() != 0 ) {
+        $self->lmLog( "LDAP Search error for $login: " . $mesg->error, 'warn' );
+        return 1;
+    }
+
+    if ( $mesg->count() > 0 ) {
+        $self->lmLog( "Login $login already used in LDAP", 'debug' );
+        return 1;
+    }
+
+    return 0;
 }
 
 1;
