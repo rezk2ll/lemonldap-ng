@@ -23,6 +23,7 @@ ok(
             authentication => 'BrowserID',
             userDB         => 'Null',
             passwordDB     => 'Null',
+            registerDB     => 'Null',
         }
     )
 );

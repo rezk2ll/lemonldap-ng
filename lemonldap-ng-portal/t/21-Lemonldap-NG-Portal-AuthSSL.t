@@ -23,6 +23,7 @@ ok(
             authentication => 'SSL',
             userDB         => 'Null',
             passwordDB     => 'Null',
+            registerDB     => 'Null',
         }
     )
 );

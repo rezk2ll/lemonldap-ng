@@ -28,6 +28,7 @@ ok(
             authentication => 'Null',
             userDB         => 'Null',
             passwordDB     => 'Null',
+            registerDB     => 'Null',
             exportedVars   => { uid => "TEST_STRING", },
         }
     )

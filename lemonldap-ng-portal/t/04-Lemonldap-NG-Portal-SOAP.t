@@ -78,6 +78,7 @@ SKIP: {
                 authentication => 'Null',
                 userDB         => 'Null',
                 passwordDB     => 'Null',
+                registerDB     => 'Null',
                 soap           => 1,
             }
         ),

@@ -896,6 +896,13 @@ has 'redirectFormMethod' => (
     documentation => 'HTTP method for redirect page form',
 );
 
+has 'registerDB' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'Demo',
+    documentation => 'Register module',
+);
+
 has 'remoteGlobalStorage' => (
     is            => 'rw',
     isa           => 'Str',

@@ -23,6 +23,7 @@ ok(
             authentication => 'Apache',
             userDB         => 'Null',
             passwordDB     => 'Null',
+            registerDB     => 'Null',
         }
     )
 );

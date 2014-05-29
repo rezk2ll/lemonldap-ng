@@ -58,6 +58,7 @@ ok(
             authentication  => 'Proxy',
             userDB          => 'Null',
             passwordDB      => 'Null',
+            registerDB      => 'Null',
             cookieName      => 'lemonldap',
             portal          => 'http://abc',
             soapAuthService => 'https://lm.com',

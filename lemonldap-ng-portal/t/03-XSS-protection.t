@@ -134,6 +134,7 @@ ok(
             authentication => 'LDAP test=1',
             userDB         => 'Null',
             passwordDB     => 'Null',
+            registerDB     => 'Null',
             domain         => 'example.com',
             trustedDomains => '.example2.com example3.com',
             checkXSS       => 1,

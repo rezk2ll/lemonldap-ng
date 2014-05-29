@@ -58,6 +58,7 @@ ok(
             authentication             => 'Remote',
             userDB                     => 'Null',
             passwordDB                 => 'Null',
+            registerDB                 => 'Null',
             cookieName                 => 'lemonldap',
             portal                     => 'http://abc',
             remotePortal               => 'http://zz/',

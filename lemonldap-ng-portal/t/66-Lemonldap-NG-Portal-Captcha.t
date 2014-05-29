@@ -14,6 +14,7 @@ my $p = Lemonldap::NG::Portal::Simple->new(
         authentication  => 'Demo',
         userDB          => 'Null',
         passwordDB      => 'Null',
+        registerDB      => 'Null',
         applicationList => {},
         locationRules   => {
             'test.example.com' => {

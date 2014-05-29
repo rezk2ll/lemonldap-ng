@@ -32,7 +32,7 @@ ok(
             authentication => 'Null',
             userDB         => 'Null',
             passwordDB     => 'Null',
-
+            registerDB     => 'Null',
         }
     ),
     'Portal object'

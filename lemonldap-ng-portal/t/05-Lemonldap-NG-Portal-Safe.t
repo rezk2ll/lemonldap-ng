@@ -25,6 +25,7 @@ ok(
             authentication => 'Null',
             userDB         => 'Null',
             passwordDB     => 'Null',
+            registerDB     => 'Null',
             useSafeJail    => 1,
         }
     ),
