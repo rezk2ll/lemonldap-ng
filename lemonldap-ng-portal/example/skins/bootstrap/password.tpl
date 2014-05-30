@@ -1,4 +1,5 @@
   <form action="#" method="post" class="password" role="form">
+  <div class="form">
     <TMPL_VAR NAME="HIDDEN_INPUTS">
 
     <TMPL_IF NAME="CHOICE_VALUE">
@@ -42,5 +43,5 @@
     <button type="submit" class="btn btn-block btn-success" >
       <lang en="Submit" fr="Soumettre" />
     </button>
-
+  </div>
   </form>

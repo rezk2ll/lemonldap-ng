@@ -202,7 +202,9 @@ sub display {
             CHECK_LOGINS          => $self->{portalCheckLogins},
             ASK_LOGINS            => $self->{checkLogins},
             DISPLAY_RESETPASSWORD => $self->{portalDisplayResetPassword},
+            DISPLAY_REGISTER      => $self->{portalDisplayRegister},
             MAIL_URL              => $self->{mailUrl},
+            REGISTER_URL          => $self->{registerUrl},
             HIDDEN_INPUTS         => $self->buildHiddenForm(),
             LOGIN_INFO            => $self->loginInfo(),
         );

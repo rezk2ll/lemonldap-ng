@@ -807,6 +807,13 @@ has 'portalDisplayLogout' => (
     documentation => 'Display logout tab in portal',
 );
 
+has 'portalDisplayRegister' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '1',
+    documentation => 'Display register button in portal',
+);
+
 has 'portalDisplayResetPassword' => (
     is            => 'rw',
     isa           => 'Str',

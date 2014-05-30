@@ -103,6 +103,7 @@
       <input type="hidden" name="timezone" />
       <TMPL_INCLUDE NAME="standardform.tpl">
     </form>
+
     </div>
 
   </TMPL_IF>
@@ -151,7 +152,7 @@
       <TMPL_INCLUDE NAME="checklogins.tpl">
 
       <button type="submit" class="btn btn-block btn-success">
-        <span class="glyphicon glyphicon-log-in"></span>
+        <span class="glyphicon glyphicon-log-in"></span>&nbsp;
         <lang en="Connect" fr="Se connecter" />
       </button>
 
@@ -176,7 +177,7 @@
       <div class="buttons">
       <TMPL_IF NAME="MSG"><TMPL_VAR NAME="MSG"></TMPL_IF>
         <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
-          <span class="glyphicon glyphicon-home"></span>
+          <span class="glyphicon glyphicon-home"></span>&nbsp;
           <lang en="Go to portal" fr="Aller au portail" />
         </a>
       </div>
@@ -187,7 +188,7 @@
     <div id="logout">
       <div class="buttons">
         <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-danger" role="button">
-          <span class="glyphicon glyphicon-log-out"></span>
+          <span class="glyphicon glyphicon-log-out"></span>&nbps;
           <lang en="Logout" fr="Se d&eacute;connecter"/>
         </a>
       </div>

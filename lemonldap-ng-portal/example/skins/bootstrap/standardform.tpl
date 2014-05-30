@@ -1,4 +1,4 @@
-
+<div class="form">
   <div class="form-group input-group">
     <span class="input-group-addon glyphicon glyphicon-user"> </span>
     <input name="user" type="text" value="<TMPL_VAR NAME="LOGIN">" class="form-control" placeholder="<lang en="Login" fr="Identifiant"/>" required />
@@ -23,14 +23,23 @@
   <TMPL_INCLUDE NAME="checklogins.tpl">
 
   <button type="submit" class="btn btn-block btn-success" >
-    <span class="glyphicon glyphicon-log-in"></span>
+    <span class="glyphicon glyphicon-log-in"></span>&nbsp;
     <lang en="Connect" fr="Se connecter" />
   </button>
-
+</div>
+<div class="actions">
   <TMPL_IF NAME="DISPLAY_RESETPASSWORD">
-  <a class="btn btn-block btn-info" href="<TMPL_VAR NAME="MAIL_URL"><TMPL_IF NAME="key">?<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
-    <span class="glyphicon glyphicon-info-sign"></span>
+  <a class="btn btn-info" href="<TMPL_VAR NAME="MAIL_URL"><TMPL_IF NAME="key">?<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
+    <span class="glyphicon glyphicon-info-sign"></span>&nbsp;
     <lang en="Reset my password" fr="R&eacute;initialiser mon mot de passe"/>
   </a>
   </TMPL_IF>
+
+  <TMPL_IF NAME="DISPLAY_REGISTER">
+  <a class="btn btn-warning" href="<TMPL_VAR NAME="REGISTER_URL"><TMPL_IF NAME="key">?<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
+    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+    <lang en="Create an account" fr="Cr&eacute;er un compte"/>
+  </a>
+  </TMPL_IF>
+</div>
 
