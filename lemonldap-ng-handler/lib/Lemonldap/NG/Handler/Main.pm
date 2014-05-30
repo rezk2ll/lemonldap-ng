@@ -755,11 +755,7 @@ sub _buildUrl {
         ( $_https  && $portString == 443 ) ? ''
       : ( !$_https && $portString == 80 )  ? ''
       :                                      ':' . $portString;
-    my $url = "http"
-      . ( $_https ? "s" : "" ) . "://"
-      . $apacheRequest->get_server_name()
-      . $portString
-      . $s;
+    my $url = "http" . ( $_https ? "s" : "" ) . "://$vhost$portString$s";
     Lemonldap::NG::Handler::Main::Logger->lmLog( "Build URL $url", 'debug' );
     return $url;
 }

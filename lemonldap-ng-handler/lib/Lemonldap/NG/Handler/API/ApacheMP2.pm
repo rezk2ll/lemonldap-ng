@@ -40,4 +40,36 @@ sub set_err_header_out {
     }
 }
 
+sub hostname {
+    my ($class, $r) = @_;
+}
+
+sub push_handlers {
+    my ($class, $r) = @_;
+}
+
+sub remote_ip {
+    my ($class, $r) = @_;
+}
+
+sub is_initial_req {
+    my ($class, $r) = @_;
+}
+
+sub args  { # (setter et getter)
+    my ($class, $r, $args) = @_;
+}
+
+sub uri {
+    my ($class, $r) = @_;
+}
+
+sub unparsed_uri {
+    my ($class, $r) = @_;
+}
+
+sub get_server_port {
+    my ($class, $r) = @_;
+}
+
 1;

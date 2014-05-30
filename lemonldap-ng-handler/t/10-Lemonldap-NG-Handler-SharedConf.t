@@ -62,6 +62,7 @@ if ( $numTests == 3 ) {
     $mock->fake_module(
         'Apache2::RequestRec' => new =>
           sub { return bless {}, 'Apache2::RequestRec' },
+        headers_in      => sub { "" },
         hostname        => sub { 'test.example.com' },
         is_initial_req  => sub { '1' },
         args            => sub { undef },
@@ -76,8 +77,8 @@ if ( $numTests == 3 ) {
         unescape_url   => sub { return $_ },
     );
     my $ret;
-    $mock->fake_module( 'Lemonldap::NG::Handler::API', 
-          set_header_out => sub { $ret = join( ':', $_[2], $_[3], ); }, );
+    $mock->fake_module( 'Lemonldap::NG::Handler::API',
+        set_header_out => sub { $ret = join( ':', $_[2], $_[3], ); }, );
 
     our $apacheRequest = Apache2::RequestRec->new();
 
