@@ -111,6 +111,7 @@ sub extractRegisterInfo {
               $registerSession->data->{firstname};
             $self->{registerInfo}->{lastname} =
               $registerSession->data->{lastname};
+            $self->{registerInfo}->{ipAddr} = $registerSession->data->{ipAddr};
             $self->lmLog(
                 "User associated to token: " . $self->{registerInfo}->{mail},
                 'debug' );
@@ -124,6 +125,7 @@ sub extractRegisterInfo {
         $self->{registerInfo}->{mail}      = $self->param('mail');
         $self->{registerInfo}->{firstname} = $self->param('firstname');
         $self->{registerInfo}->{lastname}  = $self->param('lastname');
+        $self->{registerInfo}->{ipAddr}    = $self->ipAddr();
 
         # Captcha for register form
         # Only if register session does not already exist
@@ -240,7 +242,7 @@ sub storeRegisterSession {
     $infos->{mail}      = $self->{registerInfo}->{mail};
     $infos->{firstname} = $self->{registerInfo}->{firstname};
     $infos->{lastname}  = $self->{registerInfo}->{lastname};
-    $infos->{ipAddr}    = $self->ipAddr;
+    $infos->{ipAddr}    = $self->{registerInfo}->{ipAddr};
 
     # Store type
     $infos->{_type} = "register";
