@@ -58,6 +58,12 @@
       <TMPL_IF NAME="CHOICE_VALUE">
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
       </TMPL_IF>
+      <TMPL_IF NAME="FIRSTNAME">
+      <input type="hidden" value="<TMPL_VAR NAME="FIRSTNAME">" name="firstname">
+      </TMPL_IF>
+      <TMPL_IF NAME="LASTNAME">
+      <input type="hidden" value="<TMPL_VAR NAME="LASTNAME">" name="lastname">
+      </TMPL_IF>
       <TMPL_IF NAME="MAIL">
       <input type="hidden" value="<TMPL_VAR NAME="MAIL">" name="mail">
       </TMPL_IF>
