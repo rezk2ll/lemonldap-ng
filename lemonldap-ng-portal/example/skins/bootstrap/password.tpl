@@ -40,7 +40,8 @@
       <input name="confirmpassword" type="password" class="form-control" placeholder="<lang en="Confirm password" fr="Confirmez le mot de passe" />" required/>
     </div>
 
-    <button type="submit" class="btn btn-block btn-success" >
+    <button type="submit" class="btn btn-success" >
+      <span class="glyphicon glyphicon-ok"></span>
       <lang en="Submit" fr="Soumettre" />
     </button>
   </div>

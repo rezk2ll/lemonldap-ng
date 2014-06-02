@@ -22,22 +22,23 @@
 
   <TMPL_INCLUDE NAME="checklogins.tpl">
 
-  <button type="submit" class="btn btn-block btn-success" >
-    <span class="glyphicon glyphicon-log-in"></span>&nbsp;
+  <button type="submit" class="btn btn-success" >
+    <span class="glyphicon glyphicon-log-in"></span>
     <lang en="Connect" fr="Se connecter" />
   </button>
 </div>
+
 <div class="actions">
   <TMPL_IF NAME="DISPLAY_RESETPASSWORD">
   <a class="btn btn-info" href="<TMPL_VAR NAME="MAIL_URL"><TMPL_IF NAME="key">?<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
-    <span class="glyphicon glyphicon-info-sign"></span>&nbsp;
+    <span class="glyphicon glyphicon-info-sign"></span>
     <lang en="Reset my password" fr="R&eacute;initialiser mon mot de passe"/>
   </a>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_REGISTER">
   <a class="btn btn-warning" href="<TMPL_VAR NAME="REGISTER_URL"><TMPL_IF NAME="key">?<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
-    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+    <span class="glyphicon glyphicon-plus-sign"></span>
     <lang en="Create an account" fr="Cr&eacute;er un compte"/>
   </a>
   </TMPL_IF>

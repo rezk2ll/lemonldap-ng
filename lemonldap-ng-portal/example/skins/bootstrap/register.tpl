@@ -11,12 +11,11 @@
   <TMPL_IF NAME="DISPLAY_FORM">
 
     <form action="#" method="post" class="login" role="form">
+    <div class="form">
 
     <TMPL_IF NAME="CHOICE_VALUE">
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
     </TMPL_IF>
-
-    <h3><lang en="Please register" fr="Merci de vous enregistrer"/></h3>
 
     <div class="form-group input-group">
       <span class="input-group-addon glyphicon glyphicon-user"> </span>
@@ -44,17 +43,19 @@
     </div>
     </TMPL_IF>
 
-    <button type="submit" class="btn btn-block btn-success" >
+    <button type="submit" class="btn btn-success" >
       <span class="glyphicon glyphicon-ok"></span>
       <lang en="Submit" fr="Envoyer" />
     </button>
 
+    </div>
     </form>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_RESEND_FORM">
 
     <form action="#" method="post" class="login" role="form">
+    <div class="form">
 
       <TMPL_IF NAME="CHOICE_VALUE">
         <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
@@ -80,16 +81,18 @@
       </div>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-block btn-success">
+        <button type="submit" class="btn btn-success">
           <lang en="Submit" fr="Valider" />
         </button>
       </div>
 
+    </div>
     </form>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_CONFIRMMAILSENT">
     <form action="#" method="post" class="login" role="form">
+    <div class="form">
       <h3>
         <lang en="A message has been sent to your mail address." fr="Un message a été envoyé à votre adresse mail." />
       </h3>
@@ -97,14 +100,17 @@
         <lang en="A confirmation link has been sent, this link is valid until " fr="Un lien de confirmation a été envoyé, ce lien est valide jusqu'au " />
         <TMPL_VAR NAME="EXPMAILDATE">.
       </p>
+    </div>
     </form>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_MAILSENT">
     <form action="#" method="post" class="login" role="form">
+    <div class="form">
       <h3>
         <lang en="Your account has been created, your temporary password has been sent to your mail address." fr="Votre compte a été créé, un mot de passe temporaire a été envoyé à votre adresse mail." />
       </h3>
+    </div>
     </form>
   </TMPL_IF>
 

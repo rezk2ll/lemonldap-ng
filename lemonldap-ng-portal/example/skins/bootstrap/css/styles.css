@@ -39,12 +39,20 @@ div.actions {
   margin: 10px 0 0 0;
 }
 
+div.actions a {
+  margin-top: 10px;
+}
+
 .buttons {
   text-align: center;
 }
 /* Override bootstrap btn style */
 .btn {
   white-space: normal;
+}
+
+.btn span.glyphicon {
+  padding-right: 8px;
 }
 
 #appslist, #password, #loginHistory, #logout  {

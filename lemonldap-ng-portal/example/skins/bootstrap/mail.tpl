@@ -11,6 +11,7 @@
   <TMPL_IF NAME="DISPLAY_FORM">
 
     <form action="#" method="post" class="login" role="form">
+    <div class="form">
 
     <TMPL_IF NAME="CHOICE_VALUE">
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
@@ -34,17 +35,19 @@
     </div>
     </TMPL_IF>
 
-    <button type="submit" class="btn btn-block btn-success" >
+    <button type="submit" class="btn btn-success" >
       <span class="glyphicon glyphicon-send"></span>
       <lang en="Send me a new password" fr="Envoyez-moi un nouveau mot de passe" />
     </button>
-
+    
+    </div>
     </form>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_RESEND_FORM">
 
     <form action="#" method="post" class="login" role="form">
+    <div class="form">
 
       <TMPL_IF NAME="CHOICE_VALUE">
         <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
@@ -70,17 +73,19 @@
       </div>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-block btn-success">
+        <button type="submit" class="btn btn-success">
           <lang en="Submit" fr="Valider" />
         </button>
       </div>
 
+    </div>
     </form>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_PASSWORD_FORM">
     <div id="password">
       <form action="#" method="post" class="password" role="form">
+      <div class="form">
 
         <TMPL_IF NAME="CHOICE_VALUE">
           <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
@@ -110,17 +115,19 @@
         </div>
 
         <div class="form-group">
-          <button type="submit" class="btn btn-block btn-success">
+          <button type="submit" class="btn btn-success">
             <lang en="Submit" fr="Soumettre" />
           </button>
         </div>
 
+      </div>
       </form>
     </div>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_CONFIRMMAILSENT">
     <form action="#" method="post" class="login" role="form">
+    <div class="form">
       <h3>
         <lang en="A message has been sent to your mail address." fr="Un message a été envoyé à votre adresse mail." />
       </h3>
@@ -128,14 +135,17 @@
         <lang en="This message contains a link to reset your password, this link is valid until " fr="Ce message contient un lien pour réinitialiser votre mot de passe, ce lien est valide jusqu'au " />
         <TMPL_VAR NAME="EXPMAILDATE">.
       </p>
+    </div>
     </form>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_MAILSENT">
     <form action="#" method="post" class="login" role="form">
+    <div class="form">
       <h3>
         <lang en="Your new password has been sent to your mail address." fr="Votre nouveau mot de passe a été envoyé à votre adresse mail." />
       </h3>
+    </div>
     </form>
   </TMPL_IF>
 

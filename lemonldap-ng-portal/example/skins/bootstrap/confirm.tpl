@@ -30,7 +30,7 @@
       <input type="hidden" id="idp" name="idp"/>
 
       <TMPL_LOOP NAME="LIST">
-          <button type="submit" class="positive btn btn-block btn-success" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
+          <button type="submit" class="positive btn btn-success" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
             <TMPL_VAR NAME="NAME">
           </button>
       </TMPL_LOOP>

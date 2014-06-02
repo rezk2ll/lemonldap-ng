@@ -6,7 +6,7 @@
 
   <TMPL_INCLUDE NAME="checklogins.tpl">
 
-  <button type="submit" class="btn btn-block btn-success" >
+  <button type="submit" class="btn btn-success" >
     <span class="glyphicon glyphicon-log-in"></span>
     <lang en="Connect" fr="Se connecter" />
   </button>
