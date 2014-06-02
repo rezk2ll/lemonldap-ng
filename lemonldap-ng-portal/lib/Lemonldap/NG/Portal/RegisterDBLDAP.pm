@@ -19,14 +19,16 @@ sub computeLogin {
       substr( lc $self->{registerInfo}->{firstname}, 0, 1 )
       . lc $self->{registerInfo}->{lastname};
 
+    my $finalLogin = $login;
+
     # The uid must be unique
     my $i = 0;
-    while ( $self->isLoginUsed($login) ) {
+    while ( $self->isLoginUsed($finalLogin) ) {
         $i++;
-        $login .= $i;
+        $finalLogin = $login . $i;
     }
 
-    $self->{registerInfo}->{login} = $login;
+    $self->{registerInfo}->{login} = $finalLogin;
 
     return PE_OK;
 }
