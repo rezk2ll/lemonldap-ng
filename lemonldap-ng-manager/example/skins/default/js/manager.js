@@ -56,6 +56,7 @@ var helpCh = {
 	'portalRedirections': '/pages/documentation/current/redirections.html#portal_redirections',
 	'post': '/pages/documentation/current/formreplay.html',
 	'redirections': '/pages/documentation/current/redirections.html',
+	'register': '/pages/documentation/current/register.html',
 	'reloadUrls': '/pages/documentation/current/configlocation.html#configuration_reload',
 	'rules': '/pages/documentation/current/writingrulesand_headers.html#rules',
 	'samlIDP': '/pages/documentation/current/authsaml.html#register_partner_identity_provider_on_lemonldapng',
@@ -734,6 +735,15 @@ function formateSelectPassword(id, value) {
 		value = "LDAP";
 	}
 	formateSelect(id, ['AD=Active Directory', 'DBI=Database (DBI)', 'Demo=Demonstration', 'LDAP=LDAP', 'Null=None'], value);
+}
+function registerdbParams(id) {
+	currentId = id;
+	$('#authOptions').hide();
+	formateSelectRegister('authText', lmdata(id));
+	display('authParams', lmtext(id));
+}
+function formateSelectRegister(id, value) {
+	formateSelect(id, ['AD=Active Directory', 'Demo=Demonstration', 'LDAP=LDAP', 'Null=None'], value);
 }
 function skinSelect(id) {
 	currentId = id;

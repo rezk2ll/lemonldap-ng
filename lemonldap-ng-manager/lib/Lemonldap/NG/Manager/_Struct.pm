@@ -304,7 +304,7 @@ sub struct {
 
                 portalCustomization => {
                     _nodes => [
-                        qw(portalSkin cn:portalSkinRules portalAutocomplete portalCheckLogins portalUserAttr portalOpenLinkInNewWindow portalAntiFrame portalPingInterval passwordManagement)
+                        qw(portalSkin cn:portalSkinRules portalButtons passwordManagement portalOther)
                     ],
                     _help => 'portalcustom',
 
@@ -314,38 +314,50 @@ sub struct {
                         _js    => 'hashRoot',
                         _help  => 'portalcustom',
                     },
-                    portalAutocomplete => 'bool:/portalAutocomplete',
-                    portalCheckLogins  => 'bool:/portalCheckLogins',
-                    portalUserAttr     => 'text:/portalUserAttr',
-                    portalOpenLinkInNewWindow =>
-                      'bool:/portalOpenLinkInNewWindow',
-                    portalAntiFrame    => 'bool:/portalAntiFrame',
-                    portalPingInterval => 'int:/portalPingInterval',
-
-                    passwordManagement => {
+                    portalButtons => {
                         _nodes => [
-                            qw(portalDisplayResetPassword portalRequireOldPassword hideOldPassword mailOnPasswordChange)
+                            qw/portalCheckLogins portalDisplayResetPassword portalDisplayRegister/
                         ],
-
+                        portalCheckLogins => 'bool:/portalCheckLogins',
                         portalDisplayResetPassword =>
                           'bool:/portalDisplayResetPassword',
+                        portalDisplayRegister => 'bool:/portalDisplayRegister',
+                    },
+                    passwordManagement => {
+                        _nodes => [
+                            qw(portalRequireOldPassword hideOldPassword mailOnPasswordChange)
+                        ],
+
                         portalRequireOldPassword =>
                           'bool:/portalRequireOldPassword',
                         hideOldPassword      => 'bool:/hideOldPassword',
                         mailOnPasswordChange => 'bool:/mailOnPasswordChange',
                     },
+                    portalOther => {
+                        _nodes => [
+                            qw/portalAutocomplete portalUserAttr portalOpenLinkInNewWindow portalAntiFrame portalPingInterval/
+                        ],
 
+                        portalAutocomplete => 'bool:/portalAutocomplete',
+                        portalUserAttr     => 'text:/portalUserAttr',
+                        portalOpenLinkInNewWindow =>
+                          'bool:/portalOpenLinkInNewWindow',
+                        portalAntiFrame    => 'bool:/portalAntiFrame',
+                        portalPingInterval => 'int:/portalPingInterval',
+                    },
                 },
 
                 portalCaptcha => {
                     _nodes => [
-                        qw(captcha_login_enabled captcha_mail_enabled captcha_size captcha_data captcha_output)
+                        qw(captcha_login_enabled captcha_mail_enabled captcha_register_enabled captcha_size captcha_data captcha_output)
                     ],
                     captcha_login_enabled => 'bool:/captcha_login_enabled',
                     captcha_mail_enabled  => 'bool:/captcha_mail_enabled',
-                    captcha_size          => 'int:/captcha_size',
-                    captcha_data          => 'text:/captcha_data',
-                    captcha_output        => 'text:/captcha_output',
+                    captcha_register_enabled =>
+                      'bool:/captcha_register_enabled',
+                    captcha_size   => 'int:/captcha_size',
+                    captcha_data   => 'text:/captcha_data',
+                    captcha_output => 'text:/captcha_output',
                 },
             },
 
@@ -930,7 +942,7 @@ sub struct {
             # OTHER PARAMETERS
             advancedParams => {
                 _nodes => [
-                    qw(customFunctions n:soap n:loginHistory n:notifications n:passwordManagement n:security n:redirection n:portalRedirection n:specialHandlers cn:logoutServices)
+                    qw(customFunctions n:soap n:loginHistory n:notifications n:passwordManagement n:register n:security n:redirection n:portalRedirection n:specialHandlers cn:logoutServices)
                 ],
                 _help => 'advanced',
 
@@ -1008,6 +1020,18 @@ sub struct {
                         mailTimeout          => 'int:/mailTimeout',
                         mailSessionKey       => 'text:/mailSessionKey',
                     },
+                },
+
+                register => {
+                    _nodes => [
+                        qw/registerDB registerUrl registerTimeout registerConfirmSubject registerDoneSubject/
+                    ],
+                    _help       => 'register',
+                    registerDB  => 'text:/registerDB:register:registerdbParams',
+                    registerUrl => 'text:/registerUrl',
+                    registerTimeout        => 'int:/registerTimeout',
+                    registerConfirmSubject => 'text:/registerConfirmSubject',
+                    registerDoneSubject    => 'text:/registerDoneSubject',
                 },
 
                 security => {
@@ -1490,14 +1514,15 @@ sub testStruct {
             },
             msgFail => 'Bad module name',
         },
-        captcha_login_enabled => $boolean,
-        captcha_mail_enabled  => $boolean,
-        captcha_size          => $integer,
-        captcha_data          => $testNotDefined,
-        captcha_output        => $testNotDefined,
-        cda                   => $boolean,
-        checkXSS              => $boolean,
-        cookieName            => {
+        captcha_login_enabled    => $boolean,
+        captcha_mail_enabled     => $boolean,
+        captcha_register_enabled => $boolean,
+        captcha_size             => $integer,
+        captcha_data             => $testNotDefined,
+        captcha_output           => $testNotDefined,
+        cda                      => $boolean,
+        checkXSS                 => $boolean,
+        cookieName               => {
             test    => qr/^[a-zA-Z]\w*$/,
             msgFail => 'Bad cookie name',
         },
@@ -1714,6 +1739,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         portalDisplayAppslist       => { test => $perlExpr, },
         portalDisplayChangePassword => { test => $perlExpr, },
         portalDisplayLogout         => { test => $perlExpr, },
+        portalDisplayRegister       => $boolean,
         portalDisplayResetPassword  => $boolean,
         portalForceAuthn            => $boolean,
         portalOpenLinkInNewWindow   => $boolean,
@@ -1745,7 +1771,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             keyTest => qr/^(?:none|authentificate|manager|)$/,
             msgFail => 'must be one of none authentificate manager',
         },
-        reloadUrls => {
+        registerConfirmSubject => $testNotDefined,
+        registerDB             => $testNotDefined,
+        registerDoneSubject    => $testNotDefined,
+        registerTimeout        => $integer,
+        registerUrl            => $testNotDefined,
+        reloadUrls             => {
             keyTest => $domainNameOrIp,
             test    => Lemonldap::NG::Common::Regexp::HTTP_URI(),
             msgFail => 'Bad url'
