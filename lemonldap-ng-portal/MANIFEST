@@ -130,6 +130,7 @@ example/skins/dark/openid.tpl
 example/skins/dark/openidform.tpl
 example/skins/dark/password.tpl
 example/skins/dark/redirect.tpl
+example/skins/dark/register.tpl
 example/skins/dark/standardform.tpl
 example/skins/dark/yubikeyform.tpl
 example/skins/impact/authmessage.tpl
@@ -179,6 +180,7 @@ example/skins/pastel/openid.tpl
 example/skins/pastel/openidform.tpl
 example/skins/pastel/password.tpl
 example/skins/pastel/redirect.tpl
+example/skins/pastel/register.tpl
 example/skins/pastel/standardform.tpl
 example/skins/pastel/yubikeyform.tpl
 example/soapconfigtest.pl

@@ -1,0 +1,1 @@
+../pastel/register.tpl

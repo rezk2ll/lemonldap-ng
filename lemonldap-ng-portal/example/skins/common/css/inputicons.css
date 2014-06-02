@@ -1,6 +1,6 @@
 /* Input icons */
 
-form input[name=user] {
+form input[name=user], form input[name=firstname], form input[name=lastname] {
 background:#FFFFFF url("../user_suit.png") 5px 5px no-repeat;
 padding-left:25px;
 }
