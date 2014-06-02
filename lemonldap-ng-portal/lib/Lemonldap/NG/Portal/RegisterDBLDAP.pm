@@ -46,7 +46,8 @@ sub createUser {
               . uc $self->{registerInfo}->{lastname},
             sn           => uc $self->{registerInfo}->{lastname},
             givenName    => ucfirst $self->{registerInfo}->{firstname},
-            userPassword => $self->{registerInfo}->{password}
+            userPassword => $self->{registerInfo}->{password},
+            mail         => $self->{registerInfo}->{mail},
         ]
     );
 
