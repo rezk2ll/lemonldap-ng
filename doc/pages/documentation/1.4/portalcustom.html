@@ -47,6 +47,8 @@ LemonLDAP::NG is shipped with 3 skins:
 </li>
 <li class="level1"><div class="li"> dark</div>
 </li>
+<li class="level1"><div class="li"> bootstrap</div>
+</li>
 </ul>
 
 <p>
@@ -55,7 +57,7 @@ But you can make your own, see Skin customization below.
 </p>
 
 </div>
-<!-- SECTION "Skin" [143-289] -->
+<!-- SECTION "Skin" [143-303] -->
 <h3><a name="default_skin" id="default_skin">Default skin</a></h3>
 <div class="level3">
 
@@ -69,7 +71,7 @@ You can change the default skin in Manager: <code>General Parameters</code> &gt;
 </p>
 
 </div>
-<!-- SECTION "Default skin" [290-480] -->
+<!-- SECTION "Default skin" [304-494] -->
 <h3><a name="skin_rules" id="skin_rules">Skin rules</a></h3>
 <div class="level3">
 
@@ -89,7 +91,7 @@ To achieve this, you can create a rule in the Manager: select <code>General Para
 </ul>
 
 </div>
-<!-- SECTION "Skin rules" [481-1123] -->
+<!-- SECTION "Skin rules" [495-1137] -->
 <h3><a name="skin_files" id="skin_files">Skin files</a></h3>
 <div class="level3">
 
@@ -114,7 +116,7 @@ A skin will often refer to the <code>common</code> skin, which is not a real ski
 </p>
 
 </div>
-<!-- SECTION "Skin files" [1124-1458] -->
+<!-- SECTION "Skin files" [1138-1472] -->
 <h3><a name="skin_customization" id="skin_customization">Skin customization</a></h3>
 <div class="level3">
 
@@ -175,7 +177,7 @@ To configure your new skin in Manager, select the custom skin, and enter your sk
 </p>
 
 </div>
-<!-- SECTION "Skin customization" [1459-2553] -->
+<!-- SECTION "Skin customization" [1473-2567] -->
 <h3><a name="error_messages" id="error_messages">Error messages</a></h3>
 <div class="level3">
 
@@ -189,7 +191,7 @@ Error messages are defined in source code. If they really do not please you, ove
 <span class="re1">error_0</span> <span class="sy0">=</span><span class="re2"> Big brother is watching you, authenticated user</span></pre>
 
 </div>
-<!-- SECTION "Error messages" [2554-2891] -->
+<!-- SECTION "Error messages" [2568-2905] -->
 <h3><a name="template_parameters" id="template_parameters">Template parameters</a></h3>
 <div class="level3">
 
@@ -209,13 +211,42 @@ Then you will be able to use it in your template like this:
 <pre class="code file html4strict">Hello <span class="sc2">&lt;TMPL_VAR <span class="kw3">NAME</span><span class="sy0">=</span><span class="st0">&quot;myparam&quot;</span>&gt;</span>!</pre>
 
 </div>
-<!-- SECTION "Template parameters" [2892-3262] -->
+<!-- SECTION "Template parameters" [2906-3276] -->
+<h2><a name="buttons" id="buttons">Buttons</a></h2>
+<div class="level2">
+
+<p>
+
+This node allows to enable/disable buttons on the login page:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Check last logins</strong>: displays a checkbox on login form, allowing user to check his login history right after opening session</div>
+</li>
+<li class="level1"><div class="li"> <strong>Reset password</strong>: display a link to <a href="../../documentation/1.4/resetpassword.html" class="wikilink1" title="documentation:1.4:resetpassword">reset your password page</a> (for password based authentication backends)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Register</strong>: display a link to <a href="../../documentation/1.4/register.html" class="wikilink1" title="documentation:1.4:register">register page</a> (for password based authentication backends)</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Buttons" [3277-3730] -->
+<h2><a name="password_management" id="password_management">Password management</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <strong>Require old password</strong>: used only in the password changing module of the menu, will check the old password before updating it</div>
+</li>
+<li class="level1"><div class="li"> <strong>Hide old password</strong>: used only if the password need to be reset by the user (<acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password policy), will hide the old password input</div>
+</li>
+<li class="level1"><div class="li"> <strong>Send mail on password change</strong>: send a mail if the password is changed from the Menu, or from forced password reset (<acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password policy)</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Password management" [3731-4181] -->
 <h2><a name="other_parameters" id="other_parameters">Other parameters</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>Auto complete</strong>: allow the browser to remember the password (for password based authentication backends)</div>
-</li>
-<li class="level1"><div class="li"> <strong>Check last logins</strong>: displays a checkbox on login form, allowing user to check his login history right after opening session</div>
 </li>
 <li class="level1"><div class="li"> <strong>User attribute</strong>: which session attribute will be used to display <code>Connected as</code> in the menu</div>
 </li>
@@ -224,18 +255,6 @@ Then you will be able to use it in your template like this:
 <li class="level1"><div class="li"> <strong>Anti iframe protection</strong>: will kill parent frames to avoid some well known attacks</div>
 </li>
 <li class="level1"><div class="li"> <strong>Ping interval</strong>: Number of milliseconds between each ping (Ajax request) on the portal menu. Set to 0 to dismiss checks.</div>
-</li>
-<li class="level1"><div class="li"> <strong>Password Management</strong>:</div>
-<ul>
-<li class="level2"><div class="li"> <strong>Reset password</strong>: display a link to <a href="../../documentation/1.4/resetpassword.html" class="wikilink1" title="documentation:1.4:resetpassword">reset a password</a> (for password based authentication backends)</div>
-</li>
-<li class="level2"><div class="li"> <strong>Require old password</strong>: used only in the password changing module of the menu, will check the old password before updating it</div>
-</li>
-<li class="level2"><div class="li"> <strong>Hide old password</strong>: used only if the password need to be reset by the user (<acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password policy), will hide the old password input</div>
-</li>
-<li class="level2"><div class="li"> <strong>Send mail on password change</strong>: send a mail if the password is changed from the Menu, or from forced password reset (<acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password policy)</div>
-</li>
-</ul>
 </li>
 </ul>
 
@@ -247,4 +266,4 @@ Then you will be able to use it in your template like this:
 </p>
 
 </div>
-<!-- SECTION "Other parameters" [3263-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Other parameters" [4182-] --></div><!-- closes <div class="dokuwiki export">-->
