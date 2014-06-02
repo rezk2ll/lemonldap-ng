@@ -159,6 +159,7 @@ example/skins/impact/openidform.tpl
 example/skins/impact/password.tpl
 example/skins/impact/README
 example/skins/impact/redirect.tpl
+example/skins/impact/register.tpl
 example/skins/impact/standardform.tpl
 example/skins/impact/yubikeyform.tpl
 example/skins/pastel/confirm.tpl
