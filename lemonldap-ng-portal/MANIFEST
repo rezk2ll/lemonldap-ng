@@ -93,6 +93,8 @@ example/skins/common/mail_confirm.tpl
 example/skins/common/mail_footer.tpl
 example/skins/common/mail_header.tpl
 example/skins/common/mail_password.tpl
+example/skins/common/mail_register_confirm.tpl
+example/skins/common/mail_register_done.tpl
 example/skins/common/notification.xsl
 example/skins/common/ok.png
 example/skins/common/openid-16x16.gif
@@ -237,6 +239,10 @@ lib/Lemonldap/NG/Portal/PasswordDBDemo.pm
 lib/Lemonldap/NG/Portal/PasswordDBLDAP.pm
 lib/Lemonldap/NG/Portal/PasswordDBNull.pm
 lib/Lemonldap/NG/Portal/Register.pm
+lib/Lemonldap/NG/Portal/RegisterDBAD.pm
+lib/Lemonldap/NG/Portal/RegisterDBDemo.pm
+lib/Lemonldap/NG/Portal/RegisterDBLDAP.pm
+lib/Lemonldap/NG/Portal/RegisterDBNull.pm
 lib/Lemonldap/NG/Portal/SharedConf.pm
 lib/Lemonldap/NG/Portal/Simple.pm
 lib/Lemonldap/NG/Portal/UserDBAD.pm
