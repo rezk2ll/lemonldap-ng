@@ -430,6 +430,7 @@ sub sendPasswordMail {
             filename => $tplfile,
             filter   => sub { $self->translate_template(@_) }
         );
+        $template->param( RESET => $self->{forceReset} );
         $body = $template->output();
         $html = 1;
     }
