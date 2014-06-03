@@ -12,17 +12,32 @@ sub store {
     $self->{noQuotes} = 1;
     $fields = $self->serialize($fields);
 
-    my $req = $self->_dbh->prepare(
-      "INSERT INTO $self->{dbiTable} (cfgNum,field,value) VALUES (?,?,?)"
-    );
+    my $req;
+    my $lastCfg = $self->lastCfg;
+
+    if ( $lastCfg == $fields->{cfgNum} ) {
+        $req = $self->_dbh->prepare(
+"UPDATE $self->{dbiTable} SET field=?, value=? WHERE cfgNum=? AND field=?"
+        );
+
+    }
+    else {
+        $req = $self->_dbh->prepare(
+            "INSERT INTO $self->{dbiTable} (cfgNum,field,value) VALUES (?,?,?)"
+        );
+    }
     unless ($req) {
         $self->logError;
         return UNKNOWN_ERROR;
     }
     $self->_dbh->{AutoCommit} = 0;
-
     while ( my ( $k, $v ) = each %$fields ) {
-        unless ( $req->execute( $fields->{cfgNum}, $k, $v ) ) {
+        my @execValues;
+        if ( $lastCfg == $fields->{cfgNum} ) {
+            @execValues = ( $k, $v, $fields->{cfgNum}, $k );
+        }
+        else { @execValues = ( $fields->{cfgNum}, $k, $v ); }
+        unless ( $req->execute(@execValues) ) {
             $self->logError;
             $self->_dbh->do("ROLLBACK");
             $self->_dbh->{AutoCommit} = 1;
