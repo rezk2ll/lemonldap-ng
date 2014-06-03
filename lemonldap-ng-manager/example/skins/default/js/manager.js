@@ -738,9 +738,8 @@ function formateSelectPassword(id, value) {
 }
 function registerdbParams(id) {
 	currentId = id;
-	$('#authOptions').hide();
-	formateSelectRegister('authText', lmdata(id));
-	display('authParams', lmtext(id));
+	formateSelectRegister('select', lmdata(id));
+	display('select', lmtext(id));
 }
 function formateSelectRegister(id, value) {
 	formateSelect(id, ['AD=Active Directory', 'Demo=Demonstration', 'LDAP=LDAP', 'Null=None'], value);
