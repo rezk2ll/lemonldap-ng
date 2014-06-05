@@ -68,6 +68,8 @@
 
             <TMPL_IF NAME="logo">
 
+              <div class="form">
+
                 <TMPL_IF NAME="module">
                   <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" alt="<TMPL_VAR NAME="module">" class="img-thumbnail" />
                 </TMPL_IF>
@@ -78,6 +80,8 @@
                     <span class="glyphicon glyphicon-log-in"></span>
                     <lang en="Connect" fr="Se connecter" />
                   </button>
+
+              </div>
 
             </TMPL_IF>
 
@@ -145,6 +149,7 @@
       <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
       <input type="hidden" name="timezone" />
 
+      <div class="form">
       <TMPL_IF NAME="module">
         <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" alt="<TMPL_VAR NAME="module">" class="img-thumbnail" />
       </TMPL_IF>
@@ -155,6 +160,7 @@
         <span class="glyphicon glyphicon-log-in"></span>&nbsp;
         <lang en="Connect" fr="Se connecter" />
       </button>
+      </div>
 
     </form>
     </div>

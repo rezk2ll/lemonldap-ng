@@ -25,7 +25,7 @@ body {
   padding-top: 20px;
 }
 
-.login, .password {
+.login, .password, .confirm {
   text-align: center;
   padding: 20px;
 }

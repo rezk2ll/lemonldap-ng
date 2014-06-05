@@ -19,18 +19,18 @@
       <div class="panel-heading">
         <h3 class="panel-title"><lang en="Confirmation" fr="Confirmation"/></h3>
       </div>
-      <div class="panel-body">
-        <TMPL_VAR NAME="MSG">
-      </div>
-    </div>
+      <div class="panel-body form">
 
-    <TMPL_IF NAME="LIST">
+      <TMPL_VAR NAME="MSG">
+
+      <TMPL_IF NAME="LIST">
 
       <h3><lang en="Select your Identity Provider" fr="Choisissez votre fournisseur d'identité"/></h3>
       <input type="hidden" id="idp" name="idp"/>
 
       <TMPL_LOOP NAME="LIST">
-          <button type="submit" class="positive btn btn-success" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
+          <button type="submit" class="positive btn btn-info" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
+            <span class="glyphicon glyphicon-chevron-right"></span>
             <TMPL_VAR NAME="NAME">
           </button>
       </TMPL_LOOP>
@@ -42,7 +42,7 @@
         </label>
       </div>
 
-    <TMPL_ELSE>
+      <TMPL_ELSE>
 
       <TMPL_IF NAME="ACTIVE_TIMER">
 
@@ -58,15 +58,18 @@
           <span class="glyphicon glyphicon-ok"></span>
           <lang en="Accept" fr="Accepter" />
         </button>
-        <button type="submit" class="negative" onclick="$('#confirm').attr('value','-<TMPL_VAR NAME="CONFIRMKEY">');">
+        <button type="submit" class="negative btn btn-danger" onclick="$('#confirm').attr('value','-<TMPL_VAR NAME="CONFIRMKEY">');">
           <span class="glyphicon glyphicon-stop"></span>
           <lang en="Refuse" fr="Refuser" />
         </button>
       </div>
 
-    </TMPL_IF>
+      </TMPL_IF>
 
-    <TMPL_INCLUDE NAME="checklogins.tpl">
+      <TMPL_INCLUDE NAME="checklogins.tpl">
+
+      </div>
+    </div>
 
   </form>
 

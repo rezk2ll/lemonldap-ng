@@ -1,4 +1,4 @@
-
+<div class="form">
   <div class="form-group input-group">
     <span class="input-group-addon glyphicon glyphicon-link"> </span>
     <input name="openid_identifier" type="text" class="form-control" placeholder="<lang en="Please enter your OpenID login" fr="Entrez votre identifiant OpenID"/>" />
@@ -10,4 +10,4 @@
     <span class="glyphicon glyphicon-log-in"></span>
     <lang en="Connect" fr="Se connecter" />
   </button>
-
+</div>
