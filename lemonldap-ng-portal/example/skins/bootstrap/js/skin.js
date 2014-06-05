@@ -7,4 +7,6 @@ $(document).ready(function() {
 
 	$("table.info").addClass("table");
 
+	$(".notifCheck").addClass("checkbox");
+
 });

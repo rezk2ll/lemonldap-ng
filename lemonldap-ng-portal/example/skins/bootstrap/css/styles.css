@@ -88,3 +88,8 @@ div.application p.appdesc {
   font-style:italic;
 }
 
+p.notifCheck label {
+  margin-left: 5px;
+  margin-top: 3px;
+  display: inline-block;
+}

@@ -15,7 +15,9 @@
         <h3 class="panel-title"><lang en="You have some new messages" fr="Vous avez de nouveaux messages"/></h3>
       </div>
       <div class="panel-body">
+        <div class="form well">
         <TMPL_VAR NAME="NOTIFICATION">
+        </div>
       </div>
     </div>
 
