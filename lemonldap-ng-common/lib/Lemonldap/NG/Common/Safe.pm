@@ -10,7 +10,7 @@ use base qw(Safe);
 use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 use Scalar::Util 'weaken';
 
-our $VERSION = 1.2.2;
+our $VERSION = 1.4.0;
 
 our $self;    # Safe cannot share a variable declared with my
 
