@@ -30,9 +30,9 @@ my $template = HTML::Template->new(
     ],
 );
 
-utf8::decode($portal->{mail});
-utf8::decode($portal->{firstname});
-utf8::decode($portal->{lastname});
+utf8::decode( $portal->{registerInfo}->{mail} );
+utf8::decode( $portal->{registerInfo}->{firstname} );
+utf8::decode( $portal->{registerInfo}->{lastname} );
 
 $template->param(
     PORTAL_URL      => $portal_url,
@@ -47,13 +47,18 @@ $template->param(
     STARTMAILDATE   => $portal->{startMailDate},
     STARTMAILTIME   => $portal->{startMailTime},
     MAILALREADYSENT => $portal->{mail_already_sent},
-    MAIL            => $portal->checkXSSAttack( 'mail', $portal->{mail} ) ? ""
-    : $portal->{mail},
-    FIRSTNAME            => $portal->checkXSSAttack( 'firstname', $portal->{firstname} ) ? ""
-    : $portal->{firstname},
-    LASTNAME            => $portal->checkXSSAttack( 'lastname', $portal->{lastname} ) ? ""
-    : $portal->{lastname},
-    REGISTER_TOKEN => $portal->checkXSSAttack( 'register_token', $portal->{register_token} )
+    MAIL => $portal->checkXSSAttack( 'mail', $portal->{registerInfo}->{mail} )
+    ? ""
+    : $portal->{registerInfo}->{mail},
+    FIRSTNAME => $portal->checkXSSAttack( 'firstname',
+        $portal->{registerInfo}->{firstname} ) ? ""
+    : $portal->{registerInfo}->{firstname},
+    LASTNAME => $portal->checkXSSAttack(
+        'lastname', $portal->{registerInfo}->{lastname}
+      ) ? ""
+    : $portal->{registerInfo}->{lastname},
+    REGISTER_TOKEN =>
+      $portal->checkXSSAttack( 'register_token', $portal->{register_token} )
     ? ""
     : $portal->{register_token},
 );
@@ -61,9 +66,9 @@ $template->param(
 # Display form the first time
 if (
     (
-           $portal->{error} == PE_MAILFORMEMPTY
-        or $portal->{error} == PE_MAILFIRSTACCESS
-        or $portal->{error} == PE_MAILNOTFOUND
+           $portal->{error} == PE_REGISTERFORMEMPTY
+        or $portal->{error} == PE_REGISTERFIRSTACCESS
+        or $portal->{error} == PE_REGISTERALREADYEXISTS
         or $portal->{error} == PE_CAPTCHAERROR
         or $portal->{error} == PE_CAPTCHAEMPTY
     )
