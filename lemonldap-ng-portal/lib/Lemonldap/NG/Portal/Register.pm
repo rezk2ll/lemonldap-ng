@@ -31,6 +31,8 @@ use POSIX qw(strftime);
 #   - sendConfirmationMail
 #   - registerUser
 #   - sendRegisterMail
+# - authentication module:
+#   - authInit
 # - userDB module:
 #   - userDBInit
 #   - getUser
@@ -45,7 +47,7 @@ sub process {
     $self->{error} = PE_OK;
 
     $self->{error} = $self->_subProcess(
-        qw(smtpInit extractRegisterInfo userDBInit getRegisterUser
+        qw(smtpInit authInit extractRegisterInfo userDBInit getRegisterUser
           storeRegisterSession sendConfirmationMail
           registerUser sendRegisterMail)
     );
