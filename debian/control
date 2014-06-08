@@ -142,6 +142,7 @@ Depends: ${misc:Depends},
          libcrypt-openssl-x509-perl,
          libcrypt-rijndael-perl,
          libdbi-perl,
+         libdigest-sha-perl,
          libmouse-perl,
          libnet-cidr-lite-perl,
          libsoap-lite-perl

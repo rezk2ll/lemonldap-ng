@@ -48,6 +48,7 @@ WriteMakefile(
         'Crypt::Rijndael'      => 0,
         'Config::IniFiles'     => 0,
         'DBI'                  => 0,
+        'Digest::SHA'          => 0,
         'File::Basename'       => 0,
         'Mouse'                => 0,
         'Net::CIDR::Lite'      => 0,
