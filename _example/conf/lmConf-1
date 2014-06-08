@@ -44,7 +44,7 @@ exportedHeaders
 	'$data1 = {&#39;test2.__DNSDOMAIN__&#39; => {&#39;Auth-User&#39; => &#39;$uid&#39;},&#39;test1.__DNSDOMAIN__&#39; => {&#39;Auth-User&#39; => &#39;$uid&#39;}};'
 
 globalStorageOptions
-	'$data1 = {&#39;Directory&#39; => &#39;__SESSIONDIR__&#39;};'
+	'$data1 = {&#39;Directory&#39; => &#39;__SESSIONDIR__&#39;,&#39;generateModule&#39; => &#39;Lemonldap::NG::Common::Apache::Session::Generate::SHA256&#39;};'
 
 persistentStorageOptions
 	'$data1 = {&#39;Directory&#39; => &#39;__PSESSIONDIR__&#39;};'

@@ -231,6 +231,8 @@ has 'globalStorageOptions' => (
         return {
             'Directory'     => '/var/lib/lemonldap-ng/sessions/',
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/',
+            'generateModule' =>
+              'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
         };
     },
     documentation => 'Session backend module options',
