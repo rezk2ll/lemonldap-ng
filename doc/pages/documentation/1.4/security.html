@@ -387,8 +387,21 @@ ignoreregex =
 
 <p>
 Restart fail2ban
-
 </p>
 
 </div>
-<!-- SECTION "Fail2ban" [6753-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Fail2ban" [6753-7806] -->
+<h2><a name="sessions_identifier" id="sessions_identifier">Sessions identifier</a></h2>
+<div class="level2">
+
+<p>
+
+You can change the module used for sessions identifier generation. To do, add <code>generateModule</code> key in the configured session backend options.
+</p>
+
+<p>
+We recommend the use of <code>Lemonldap::NG::Common::Apache::Session::Generate::SHA256</code>.
+</p>
+
+</div>
+<!-- SECTION "Sessions identifier" [7807-] --></div><!-- closes <div class="dokuwiki export">-->

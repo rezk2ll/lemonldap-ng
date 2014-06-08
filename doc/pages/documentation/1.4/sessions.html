@@ -49,7 +49,13 @@ To configure sessions, go in Manager, <code>General Parameters</code> » <code>S
 <ul>
 <li class="level1"><div class="li"> <strong>Opening conditions</strong>: rules which are evaluated before granting session. If a user does not comply with any condition, he is prompted a customized message. That message can contain session data as user attributes or macros. The conditions are checked in alphabetical order of comments.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Sessions Storage</strong>: see <a href="../../documentation/1.4/start.html#sessions_database" class="wikilink1" title="documentation:1.4:start">sessions database configuration</a>.</div>
+<li class="level1"><div class="li"> <strong>Sessions Storage</strong>: you can define here which session backend to use, with the backend options. See <a href="../../documentation/1.4/start.html#sessions_database" class="wikilink1" title="documentation:1.4:start">sessions database configuration</a> to know which modules you can use. Here are some global  options that you can use with all sessions backends:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>generateModule</strong>: allows to override the default module that generates sessions identifiers. For security reasons, we recommend to use Lemonldap::NG::Common::Apache::Session::Generate::SHA256</div>
+</li>
+<li class="level2"><div class="li"> <strong>IDLength</strong>: length of sessions identifiers. Max is 32 for MD5 and 64 for SHA256</div>
+</li>
+</ul>
 </li>
 <li class="level1"><div class="li"> <strong>Multiple sessions</strong>, you can restrict the number of open sessions:</div>
 <ul>

@@ -136,8 +136,21 @@ PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::SympaAutoLogin
 <p>
 
 </div></p>
-
 </p>
 
 </div>
-<!-- SECTION "Specific handlers" [853-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Specific handlers" [853-1626] -->
+<h2><a name="security" id="security">Security</a></h2>
+<div class="level2">
+
+<p>
+
+We found that the default session identifier generation may be too simple and can allow to do brute force attack to find a valid session identifier (see <a href="https://jira.ow2.org/browse/LEMONLDAP-695" class="urlextern" title="https://jira.ow2.org/browse/LEMONLDAP-695"  rel="nofollow">https://jira.ow2.org/browse/LEMONLDAP-695</a>).
+</p>
+
+<p>
+We recommend that you use a new generate module. Add <code>generateModule</code> key inside your sessions backend options and use <code>Lemonldap::NG::Common::Apache::Session::Generate::SHA256</code> as value.
+</p>
+
+</div>
+<!-- SECTION "Security" [1627-] --></div><!-- closes <div class="dokuwiki export">-->
