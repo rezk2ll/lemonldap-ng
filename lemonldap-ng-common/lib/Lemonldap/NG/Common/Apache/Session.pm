@@ -32,6 +32,13 @@ sub populate {
         no strict 'refs';
         $self = $self->$backend(@_);
     }
+    if ( $self->{args}->{generateModule} ) {
+      my $generate = $self->{args}->{generateModule};
+      eval "require $generate";
+      die $@ if ($@);
+      $self->{generate} = \&{$generate."::generate"};
+      $self->{validate} = \&{$generate."::validate"};
+    }
     if ( $self->{args}->{setId} ) {
         $self->{generate} = \&setId;
         $self->{validate} = sub { 1 };
