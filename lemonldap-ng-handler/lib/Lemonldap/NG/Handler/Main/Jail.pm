@@ -120,11 +120,11 @@ sub share_from {
 sub jail_reval {
     my ( $self, $reval ) = splice @_;
 
-    # if nothing is returned by reval, add the return statement to 
+    # if nothing is returned by reval, add the return statement to
     # the "no safe wrap" reval
     my $nosw_reval = $reval;
     if ( $reval !~ /^sub\{return\(.*\}$/ ) {
-     $nosw_reval =~ s/^sub{(.*)}$/sub{return($1)}/
+        $nosw_reval =~ s/^sub{(.*)}$/sub{return($1)}/;
     }
 
     return (

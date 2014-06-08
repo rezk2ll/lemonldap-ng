@@ -78,7 +78,7 @@ sub run {
     return $ret unless ( $ret == OK );
 
     # Fail if no sympaSecret
-    return $class->abort($r, "No Sympa secret configured")
+    return $class->abort( $r, "No Sympa secret configured" )
       unless ($sympaSecret);
 
     # Mail value

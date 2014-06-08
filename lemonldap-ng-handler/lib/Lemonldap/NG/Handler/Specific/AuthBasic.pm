@@ -59,7 +59,11 @@ sub run ($$) {
     # AUTHENTICATION
     # I - recover the WWW-Authentication header
     my ( $id, $user, $pass );
-    unless ( $user = Lemonldap::NG::Handler::API->header_in( $apacheRequest, 'Authorization' ) )
+    unless (
+        $user = Lemonldap::NG::Handler::API->header_in(
+            $apacheRequest, 'Authorization'
+        )
+      )
     {
         Lemonldap::NG::Handler::API->set_err_header_out( $apacheRequest,
             'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
@@ -104,7 +108,8 @@ sub run ($$) {
 
             # Catch SOAP errors
             if ( $r->fault ) {
-                return $class->abort($apacheRequest, "SOAP request to the portal failed: "
+                return $class->abort( $apacheRequest,
+                    "SOAP request to the portal failed: "
                       . $r->fault->{faultstring} );
             }
             else {
@@ -143,7 +148,7 @@ sub run ($$) {
                 "The cookie $session_id isn't yet available", 'info' );
             $class->updateStatus( $apacheRequest, $class->ip($apacheRequest),
                 $apacheRequest->uri, 'EXPIRED' );
-            return $class->goToPortal($apacheRequest, $uri);
+            return $class->goToPortal( $apacheRequest, $uri );
         }
 
         $datas->{$_} = $apacheSession->data->{$_}
@@ -159,11 +164,12 @@ sub run ($$) {
 
     # ACCOUNTING
     # 1 - Inform Apache
-    Lemonldap::NG::Handler::API->set_user( $apacheRequest, $datas->{ $tsv->{whatToTrace} } );
+    Lemonldap::NG::Handler::API->set_user( $apacheRequest,
+        $datas->{ $tsv->{whatToTrace} } );
 
     # AUTHORIZATION
-    return $class->forbidden($apacheRequest, $uri)
-        unless ( $class->grant($apacheRequest, $uri) );
+    return $class->forbidden( $apacheRequest, $uri )
+      unless ( $class->grant( $apacheRequest, $uri ) );
     $class->updateStatus( $apacheRequest, $datas->{ $tsv->{whatToTrace} },
         $apacheRequest->uri, 'OK' );
     $class->logGranted( $uri, $datas );
@@ -173,7 +179,8 @@ sub run ($$) {
     $class->hideCookie($apacheRequest);
 
     # Hide user password
-    Lemonldap::NG::Handler::API->unset_header_in( $apacheRequest, "Authorization" );
+    Lemonldap::NG::Handler::API->unset_header_in( $apacheRequest,
+        "Authorization" );
 
     # ACCOUNTING
     # 2 - Inform remote application

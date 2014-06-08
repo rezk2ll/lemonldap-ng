@@ -95,7 +95,7 @@ sub defaultValuesInit {
 
     (
         @$tsv{
-          qw( cookieName      securedCookie      whatToTrace
+            qw( cookieName      securedCookie      whatToTrace
               https           port               customFunctions
               timeoutActivity useRedirectOnError useRedirectOnForbidden
               useSafeJail     key                maintenance
@@ -105,7 +105,7 @@ sub defaultValuesInit {
       )
       = $globalinit->defaultValuesInit(
         @$tsv{
-          qw( cookieName      securedCookie      whatToTrace
+            qw( cookieName      securedCookie      whatToTrace
               https           port               customFunctions
               timeoutActivity useRedirectOnError useRedirectOnForbidden
               useSafeJail     key                maintenance

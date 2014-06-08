@@ -31,7 +31,7 @@ sub getCasSession {
         }
     );
 
-    unless ($casSession->data) {
+    unless ( $casSession->data ) {
         if ($id) {
             $self->_sub( 'userInfo', "CAS session $id isn't yet available" );
         }

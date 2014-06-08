@@ -372,7 +372,7 @@ sub postUrlInit {
                             Lemonldap::NG::Handler::Main::PostForm->postFilter(
                                 $tmp, @_ );
                         }
-                      );
+                    );
                     OK;
                 };
             }
@@ -464,7 +464,7 @@ sub conditionSub {
                         my $apacheRequest = shift->r;
                         return $mainClass->redirectFilter(
                             $self->portal() . "?url="
-                              . $mainClass->encodeUrl($apacheRequest, $u)
+                              . $mainClass->encodeUrl( $apacheRequest, $u )
                               . "&logout=1",
                             @_
                         );

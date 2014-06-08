@@ -42,5 +42,6 @@ ok(
 
 # Test a long value, and replace carriage return by %0A
 my $long = "f5a1f72e7ab2f7712855a068af0066f36bfcf2c87e6feb9cf4200da1868e1dfe";
-my $cryptedlong ="Da6sYxp9NCXv8+8TirqHmPWwTQHyEGmkCBGCLCX/81dPSMwIQVQNV7X9KG3RrKZfyRmzJR6DZYdU%0Ab75+VH3+CA==";
-ok ( $c->decrypt( $cryptedlong ) eq $long, "Test of long value encrypting" );
+my $cryptedlong =
+"Da6sYxp9NCXv8+8TirqHmPWwTQHyEGmkCBGCLCX/81dPSMwIQVQNV7X9KG3RrKZfyRmzJR6DZYdU%0Ab75+VH3+CA==";
+ok( $c->decrypt($cryptedlong) eq $long, "Test of long value encrypting" );

@@ -155,7 +155,8 @@ sub run {
     return $class->_returnError($r) unless $key;
 
     # Header location
-    Lemonldap::NG::Handler::API->set_header_in( $r, $secureTokenHeader => $key );
+    Lemonldap::NG::Handler::API->set_header_in( $r,
+        $secureTokenHeader => $key );
 
     # Remove token
     eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
@@ -274,7 +275,7 @@ sub _isAlive {
 # Give hand back to Apache
 # @return Apache2::Const value
 sub _returnError {
-    my ($class, $apacheRequest) = @_;
+    my ( $class, $apacheRequest ) = @_;
 
     if ($secureTokenAllowOnError) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(

@@ -15,7 +15,7 @@ package Lemonldap::NG::Handler::Initialization::LocalInit;
 
 use Mouse;
 
-use Lemonldap::NG::Handler::SharedConf; # Needed to get VERSION
+use Lemonldap::NG::Handler::SharedConf;    # Needed to get VERSION
 use Lemonldap::NG::Handler::Main::Logger;
 
 our $VERSION = '1.3.0';
@@ -208,8 +208,8 @@ sub childInit {
         $s->push_handlers(
             PerlPostConfigHandler => sub {
                 my ( $c, $l, $t, $s ) = splice @_;
-                $s->add_version_component(
-                    'Lemonldap::NG::Handler/' . $Lemonldap::NG::Handler::VERSION );
+                $s->add_version_component( 'Lemonldap::NG::Handler/'
+                      . $Lemonldap::NG::Handler::VERSION );
             }
         ) unless ( $args->{hideSignature} );
     }

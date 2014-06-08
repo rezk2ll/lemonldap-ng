@@ -44,7 +44,8 @@ sub sendHeaders {
     my ( $class, $apacheRequest, $forgeHeaders ) = splice @_;
     my $vhost = $apacheRequest->hostname;
     if ( defined( $forgeHeaders->{$vhost} ) ) {
-        Lemonldap::NG::Handler::API->set_header_in( $apacheRequest, &{ $forgeHeaders->{$vhost} } );
+        Lemonldap::NG::Handler::API->set_header_in( $apacheRequest,
+            &{ $forgeHeaders->{$vhost} } );
     }
 }
 
@@ -54,7 +55,8 @@ sub cleanHeaders {
     my ( $class, $apacheRequest, $forgeHeaders, $headerList ) = splice @_;
     my $vhost = $apacheRequest->hostname;
     if ( defined( $forgeHeaders->{$vhost} ) ) {
-        Lemonldap::NG::Handler::API->unset_header_in( $apacheRequest, @{ $headerList->{$vhost} } );
+        Lemonldap::NG::Handler::API->unset_header_in( $apacheRequest,
+            @{ $headerList->{$vhost} } );
     }
 }
 

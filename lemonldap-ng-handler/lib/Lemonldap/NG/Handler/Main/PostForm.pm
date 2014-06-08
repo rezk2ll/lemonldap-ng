@@ -35,7 +35,7 @@ sub transformUri {
     my $vhost = $apacheRequest->hostname;
 
     if ( defined( $tsv->{transform}->{$vhost}->{$uri} ) ) {
-        return &{ $tsv->{transform}->{$vhost}->{$uri} } ($apacheRequest);
+        return &{ $tsv->{transform}->{$vhost}->{$uri} }($apacheRequest);
     }
 
     OK;
@@ -49,7 +49,7 @@ sub transformUri {
 # @param count Fake input size
 # @return Apache2::Const::OK
 sub buildPostForm {
-    my ($class, $apacheRequest, $url, $count) = @_;
+    my ( $class, $apacheRequest, $url, $count ) = @_;
     $count ||= 1000;
     $apacheRequest->handler("perl-script");
     $apacheRequest->add_config( ["SetHandler perl-script"] );

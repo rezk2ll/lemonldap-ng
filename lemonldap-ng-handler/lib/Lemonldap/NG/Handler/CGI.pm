@@ -282,7 +282,8 @@ sub grant {
     );
     for ( my $i = 0 ; $i < $tsv->{locationCount}->{$vhost} ; $i++ ) {
         if ( $uri =~ $tsv->{locationRegexp}->{$vhost}->[$i] ) {
-            return &{ $tsv->{locationCondition}->{$vhost}->[$i] }($apacheRequest);
+            return &{ $tsv->{locationCondition}->{$vhost}->[$i] }(
+                $apacheRequest);
         }
     }
     unless ( $tsv->{defaultCondition}->{$vhost} ) {

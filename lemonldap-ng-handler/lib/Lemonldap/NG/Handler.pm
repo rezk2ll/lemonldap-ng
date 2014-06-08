@@ -12,9 +12,6 @@ use Lemonldap::NG::Handler::SharedConf;
 
 __PACKAGE__->init();
 
-
-
-
 1;
 
 __END__

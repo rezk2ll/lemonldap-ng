@@ -17,11 +17,11 @@ sub store {
 
     if ( $lastCfg == $cfgNum ) {
         $req = $self->_dbh->prepare(
-            "UPDATE $self->{dbiTable} SET data=? WHERE cfgNum=?" );
+            "UPDATE $self->{dbiTable} SET data=? WHERE cfgNum=?");
     }
     else {
         $req = $self->_dbh->prepare(
-            "INSERT INTO $self->{dbiTable} (data,cfgNum) VALUES (?,?)" );
+            "INSERT INTO $self->{dbiTable} (data,cfgNum) VALUES (?,?)");
     }
     unless ($req) {
         $self->logError;

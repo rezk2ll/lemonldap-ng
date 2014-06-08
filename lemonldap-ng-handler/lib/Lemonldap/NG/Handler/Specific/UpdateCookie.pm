@@ -85,7 +85,7 @@ sub run {
 # @param $apacheRequest current request
 # @return Value of the cookie if found, 0 else
 sub fetchUTime {
-    my ( $class, $apacheRequest ) = @_; 
+    my ( $class, $apacheRequest ) = @_;
     my $t = Lemonldap::NG::Handler::API->header_in( $apacheRequest, 'Cookie' );
     my $c = $tsv->{cookieName} . 'update';
     return ( $t =~ /$c=([^,; ]+)/o ) ? $1 : 0;

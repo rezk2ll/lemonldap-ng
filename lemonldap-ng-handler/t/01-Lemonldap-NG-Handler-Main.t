@@ -45,11 +45,12 @@ ok(
 );
 
 my $args = {
-     'portal' => 'http://auth.example.com/',
-     'globalStorage' => 'Apache::Session::File',
-     'post' => {},
-     'locationRules' => {
-         'test1.example.com' => {
+    'portal'        => 'http://auth.example.com/',
+    'globalStorage' => 'Apache::Session::File',
+    'post'          => {},
+    'locationRules' => {
+        'test1.example.com' => {
+
             # Basic rules
             'default' => 'accept',
             '^/no'    => 'deny',
@@ -62,8 +63,8 @@ my $args = {
             # Good ordered rules
             '(?#1 first)^/b/a' => 'deny',
             '(?#2 second)^/b'  => 'accept',
-          },
-     },
+        },
+    },
 };
 
 # includes
@@ -78,9 +79,9 @@ ok( $h->globalInit($args), 'globalInit' );
 
 ok( $h->portal() eq 'http://auth.example.com/', 'portal' );
 
-ok(  $h->grant($apacheRequest, '/s'  ), 'basic rule "accept"' );
-ok( !$h->grant($apacheRequest, '/no' ), 'basic rule "deny"' );
-ok(  $h->grant($apacheRequest, '/a/a'), 'bad ordered rule 1/2' );
-ok(  $h->grant($apacheRequest, '/a'  ), 'bad ordered rule 2/2' );
-ok( !$h->grant($apacheRequest, '/b/a'), 'good ordered rule 1/2' );
-ok(  $h->grant($apacheRequest, '/b'  ), 'good ordered rule 2/2' );
+ok( $h->grant( $apacheRequest, '/s' ), 'basic rule "accept"' );
+ok( !$h->grant( $apacheRequest, '/no' ), 'basic rule "deny"' );
+ok( $h->grant( $apacheRequest, '/a/a' ), 'bad ordered rule 1/2' );
+ok( $h->grant( $apacheRequest, '/a' ),   'bad ordered rule 2/2' );
+ok( !$h->grant( $apacheRequest, '/b/a' ), 'good ordered rule 1/2' );
+ok( $h->grant( $apacheRequest, '/b' ), 'good ordered rule 2/2' );

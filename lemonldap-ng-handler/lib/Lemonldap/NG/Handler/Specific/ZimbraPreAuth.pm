@@ -93,7 +93,7 @@ sub run {
     return OK unless ( $uri =~ $zimbraSsoUrl );
 
     # Check mandatory parameters
-    return $class->abort($r, "No Zimbra preauth key configured")
+    return $class->abort( $r, "No Zimbra preauth key configured" )
       unless ($zimbraPreAuthKey);
 
     # Build URL
@@ -103,7 +103,8 @@ sub run {
     );
 
     # Header location
-    Lemonldap::NG::Handler::API->set_header_out( $r, 'Location' => $zimbra_url );
+    Lemonldap::NG::Handler::API->set_header_out( $r,
+        'Location' => $zimbra_url );
 
     # Return REDIRECT
     return REDIRECT;

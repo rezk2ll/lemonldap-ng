@@ -161,10 +161,10 @@ sub remove {
 }
 
 sub cacheUpdate {
-   my $self = shift;
-   
-   # Update a data to force update from cache
-   return $self->update( { '_session_id' => $self->id } );
+    my $self = shift;
+
+    # Update a data to force update from cache
+    return $self->update( { '_session_id' => $self->id } );
 }
 
 no Mouse;

@@ -74,7 +74,7 @@ BEGIN {
         jailSharedVars => [qw( $datas )],
         tsv            => [qw( $tsv )],
         import         => [qw( import @EXPORT_OK @EXPORT %EXPORT_TAGS )],
-        apache => [
+        apache         => [
             qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR
               )
         ],
@@ -189,14 +189,14 @@ sub updateStatus {
 sub forbidden {
     my ( $class, $apacheRequest, $uri ) = splice @_;
     if ( $datas->{_logout} ) {
-        $class->updateStatus( $apacheRequest,
-            $datas->{ $tsv->{whatToTrace} }, $uri, 'LOGOUT' );
+        $class->updateStatus( $apacheRequest, $datas->{ $tsv->{whatToTrace} },
+            $uri, 'LOGOUT' );
         my $u = $datas->{_logout};
         $class->localUnlog;
         return $class->goToPortal( $apacheRequest, $u, 'logout=1' );
     }
-    $class->updateStatus( $apacheRequest,
-        $datas->{ $tsv->{whatToTrace} }, $uri, 'REJECT' );
+    $class->updateStatus( $apacheRequest, $datas->{ $tsv->{whatToTrace} },
+        $uri, 'REJECT' );
     $apacheRequest->push_handlers(
         PerlLogHandler => sub {
             $_[0]->status(FORBIDDEN);
@@ -253,16 +253,18 @@ sub logGranted {
 # Hide Lemonldap::NG cookie to the protected application.
 # @param $apacheRequest current request
 sub hideCookie {
-    my ($class, $apacheRequest) = @_;
+    my ( $class, $apacheRequest ) = @_;
     Lemonldap::NG::Handler::Main::Logger->lmLog( "removing cookie", 'debug' );
-    my $tmp = Lemonldap::NG::Handler::API->header_in( $apacheRequest, 'Cookie' );
+    my $tmp =
+      Lemonldap::NG::Handler::API->header_in( $apacheRequest, 'Cookie' );
     $tmp =~ s/$tsv->{cookieName}(http)?=[^,;]*[,;\s]*//og;
     if ($tmp) {
         Lemonldap::NG::Handler::API->set_header_in( $apacheRequest,
             'Cookie' => $tmp );
     }
     else {
-        Lemonldap::NG::Handler::API->unset_header_in( $apacheRequest, 'Cookie' );
+        Lemonldap::NG::Handler::API->unset_header_in( $apacheRequest,
+            'Cookie' );
     }
 }
 
@@ -271,7 +273,8 @@ sub hideCookie {
 # @return Base64 encoded string
 sub encodeUrl {
     my ( $class, $apacheRequest, $url ) = splice @_;
-    $url = $class->_buildUrl($apacheRequest, $url) if ( $url !~ m#^https?://# );
+    $url = $class->_buildUrl( $apacheRequest, $url )
+      if ( $url !~ m#^https?://# );
     return encode_base64( $url, '' );
 }
 
@@ -284,8 +287,10 @@ sub encodeUrl {
 sub goToPortal {
     my ( $class, $apacheRequest, $url, $arg ) = splice @_;
     Lemonldap::NG::Handler::Main::Logger->lmLog(
-        "Redirect " . $class->ip($apacheRequest) . " to portal (url was $url)", 'debug' );
-    my $urlc_init = $class->encodeUrl($apacheRequest, $url);
+        "Redirect " . $class->ip($apacheRequest) . " to portal (url was $url)",
+        'debug'
+    );
+    my $urlc_init = $class->encodeUrl( $apacheRequest, $url );
     Lemonldap::NG::Handler::API->set_header_out( $apacheRequest,
             'Location' => $class->portal()
           . "?url=$urlc_init"
@@ -298,9 +303,8 @@ sub goToPortal {
 # @param $apacheRequest current request
 # @return Value of the cookie if found, 0 else
 sub fetchId {
-    my ( $class, $apacheRequest) = @_;
-    my $t = Lemonldap::NG::Handler::API->header_in( $apacheRequest,
-        'Cookie' );
+    my ( $class, $apacheRequest ) = @_;
+    my $t = Lemonldap::NG::Handler::API->header_in( $apacheRequest, 'Cookie' );
     my $vhost = $apacheRequest->hostname;
     my $lookForHttpCookie = $tsv->{securedCookie} =~ /^(2|3)$/
       && !(
@@ -375,7 +379,7 @@ sub retrieveSession {
 # @param $apacheRequest current request
 # @return client IP address
 sub ip {
-    my ( $class, $apacheRequest) = @_;
+    my ( $class, $apacheRequest ) = @_;
     my $ip = 'unknownIP';
     eval {
         $ip =
@@ -429,12 +433,14 @@ sub run ($$) {
         my $str = $1;
         Lemonldap::NG::Handler::Main::Logger->lmLog( 'CDA request', 'debug' );
         $apacheRequest->args($args);
-        my $redirectUrl = $class->_buildUrl( $apacheRequest, $apacheRequest->uri );
+        my $redirectUrl =
+          $class->_buildUrl( $apacheRequest, $apacheRequest->uri );
         my $redirectHttps = ( $redirectUrl =~ m/^https/ );
-        Lemonldap::NG::Handler::API->set_err_header_out( $apacheRequest,
-            'Location'   => $redirectUrl . ( $args ? "?" . $args : "" ),
+        Lemonldap::NG::Handler::API->set_err_header_out(
+            $apacheRequest,
+            'Location' => $redirectUrl . ( $args ? "?" . $args : "" ),
             'Set-Cookie' => "$str; path=/"
-              . ( $redirectHttps    ? "; secure"   : "" )
+              . ( $redirectHttps   ? "; secure"   : "" )
               . ( $tsv->{httpOnly} ? "; HttpOnly" : "" )
               . (
                 $tsv->{cookieExpiration}
@@ -448,7 +454,7 @@ sub run ($$) {
     my $uri_orig = $uri;
     Apache2::URI::unescape_url($uri);
 
-    my $protection = $class->isUnprotected($apacheRequest, $uri);
+    my $protection = $class->isUnprotected( $apacheRequest, $uri );
 
     if ( $protection == SKIP ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog( "Access control skipped",
@@ -464,7 +470,9 @@ sub run ($$) {
     my $id;
 
     # Try to recover cookie and user session
-    if ( $id = $class->fetchId($apacheRequest) and $class->retrieveSession($id) ) {
+    if (    $id = $class->fetchId($apacheRequest)
+        and $class->retrieveSession($id) )
+    {
 
         # AUTHENTICATION done
 
@@ -476,8 +484,8 @@ sub run ($$) {
             $datas->{ $tsv->{whatToTrace} } );
 
         # AUTHORIZATION
-        return $class->forbidden($apacheRequest, $uri)
-          unless ( $class->grant($apacheRequest, $uri) );
+        return $class->forbidden( $apacheRequest, $uri )
+          unless ( $class->grant( $apacheRequest, $uri ) );
         $class->updateStatus( $apacheRequest, $datas->{ $tsv->{whatToTrace} },
             $apacheRequest->uri, 'OK' );
 
@@ -500,7 +508,8 @@ sub run ($$) {
               sub { $class->logGranted( $uri, $datas ); DECLINED }, );
 
         #  Catch POST rules
-        Lemonldap::NG::Handler::Main::PostForm->transformUri($apacheRequest, $uri);
+        Lemonldap::NG::Handler::Main::PostForm->transformUri( $apacheRequest,
+            $uri );
 
         return OK;
     }
@@ -526,9 +535,10 @@ sub run ($$) {
           unless ($id);
 
         # if the cookie was fetched, a log is sent by retrieveSession()
-        $class->updateStatus( $apacheRequest, $class->ip($apacheRequest),
-            $apacheRequest->uri,
-            $id ? 'EXPIRED' : 'REDIRECT' );
+        $class->updateStatus(
+            $apacheRequest, $class->ip($apacheRequest),
+            $apacheRequest->uri, $id ? 'EXPIRED' : 'REDIRECT'
+        );
         return $class->goToPortal( $apacheRequest, $uri_orig );
     }
 }
@@ -538,7 +548,7 @@ sub run ($$) {
 # @param $apacheRequest current request
 # @return true if maintenance mode
 sub checkMaintenanceMode {
-    my ( $class, $apacheRequest) = @_;
+    my ( $class, $apacheRequest ) = @_;
     my $vhost = $apacheRequest->hostname;
     my $_maintenance =
       ( defined $tsv->{maintenance}->{$vhost} )
@@ -616,7 +626,7 @@ sub localInit($$) {
     (
         @$tsv{
             qw( localStorage refLocalStorage localStorageOptions statusPipe statusOut childInitDone )
-          }
+        }
     ) = $localinit->localInit($args);
 
 }
@@ -645,23 +655,23 @@ sub globalInit {
 
     (
         @$tsv{
-          qw( cookieName      securedCookie      whatToTrace
+            qw( cookieName      securedCookie      whatToTrace
               https           port               customFunctions
               timeoutActivity useRedirectOnError useRedirectOnForbidden
               useSafeJail     key                maintenance
               cda             httpOnly           cookieExpiration
               cipher )
-          }
+        }
       )
       = $globalinit->defaultValuesInit(
         @$tsv{
-          qw( cookieName      securedCookie      whatToTrace
+            qw( cookieName      securedCookie      whatToTrace
               https           port               customFunctions
               timeoutActivity useRedirectOnError useRedirectOnForbidden
               useSafeJail     key                maintenance
               cda             httpOnly           cookieExpiration
               cipher )
-          },
+        },
         @_
       );
 
@@ -673,7 +683,7 @@ sub globalInit {
               defaultProtection locationCondition
               locationProtection locationRegexp
               locationConditionText safe )
-          }
+        }
       )
       = $globalinit->locationRulesInit(
         $class,
@@ -682,7 +692,7 @@ sub globalInit {
               defaultProtection locationCondition
               locationProtection locationRegexp
               locationConditionText )
-          },
+        },
         @_
       );
 
@@ -719,7 +729,8 @@ sub grant {
                   . '" match',
                 'debug'
             );
-            return &{ $tsv->{locationCondition}->{$vhost}->[$i] }($apacheRequest);
+            return &{ $tsv->{locationCondition}->{$vhost}->[$i] }(
+                $apacheRequest);
         }
     }
     unless ( $tsv->{defaultCondition}->{$vhost} ) {
@@ -809,7 +820,7 @@ sub status($$) {
     my ( $class, $r ) = splice @_;
     Lemonldap::NG::Handler::Main::Logger->lmLog( "$class: request for status",
         'debug' );
-    return $class->abort($r, "$class: status page can not be displayed")
+    return $class->abort( $r, "$class: status page can not be displayed" )
       unless ( $tsv->{statusPipe} and $tsv->{statusOut} );
     $r->handler("perl-script");
     print { $tsv->{statusPipe} } "STATUS"
