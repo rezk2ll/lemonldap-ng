@@ -59,28 +59,20 @@ if ( $numTests == 3 ) {
 
     # Create a fake Apache2::RequestRec
     my $mock = Test::MockObject->new();
-    $mock->fake_module(
-        'Apache2::RequestRec' => new =>
-          sub { return bless {}, 'Apache2::RequestRec' },
-        headers_in      => sub { "" },
-        hostname        => sub { 'test.example.com' },
+    my $ret;
+    $mock->fake_module( 'Lemonldap::NG::Handler::API',
+        header_in      => sub { "" },
+        hostname       => sub { 'test.example.com' },
         is_initial_req  => sub { '1' },
+        remote_ip       => sub { '127.0.0.1' },
         args            => sub { undef },
         unparsed_uri    => sub { '/' },
         uri             => sub { '/' },
+        uri_with_args   => sub { '/' },
         get_server_port => sub { '80' },
-        get_server_name => sub { 'test.example.com' },
-        remote_ip       => sub { '127.0.0.1' },
-    );
-    $mock->fake_module(
-        'Apache2::URI' => new => sub { return bless {}, 'Apache2::URI' },
-        unescape_url   => sub { return $_ },
-    );
-    my $ret;
-    $mock->fake_module( 'Lemonldap::NG::Handler::API',
         set_header_out => sub { $ret = join( ':', $_[2], $_[3], ); }, );
 
-    our $apacheRequest = Apache2::RequestRec->new();
+    our $apacheRequest;
 
     my $h = bless {}, 'Lemonldap::NG::Handler';
 

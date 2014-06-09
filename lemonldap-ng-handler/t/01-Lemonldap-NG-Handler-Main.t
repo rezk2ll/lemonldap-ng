@@ -1,10 +1,3 @@
-
-package FakeApacheRequest;
-
-sub hostname {
-    return "test1.example.com";
-}
-
 # Before `make install' is performed this script should be runnable with
 # `make test'. After `make install' it should work as `perl Lemonldap-NG-Handler.t'
 
@@ -18,9 +11,6 @@ use warnings;
 use Test::More tests => 10;
 BEGIN { use_ok( 'Lemonldap::NG::Handler::Main', qw(:all) ) }
 
-# get a fake apacheRequest to simulate subroutine hostname
-my $apacheRequest = bless {}, 'FakeApacheRequest';
-
 # get a standard basic configuration in $args hashref
 use Cwd 'abs_path';
 use File::Basename;
@@ -32,6 +22,8 @@ use lib dirname( abs_path $0 );
 # its man page ( perldoc Test::More ) for help writing this test script.
 my $h;
 $h = bless {}, 'Lemonldap::NG::Handler::Main';
+my $apacheRequest; 
+$ENV{SERVER_NAME} = "test1.example.com";
 
 open STDERR, '>/dev/null';
 ok(
