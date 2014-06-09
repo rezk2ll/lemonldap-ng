@@ -124,8 +124,7 @@ sub run {
     return $ret unless ( $ret == OK );
 
     # Get current URI
-    my $args = $r->args;
-    my $uri = $r->uri . ( $args ? "?$args" : "" );
+    my $uri = Lemonldap::NG::Handler::API->uri_with_args($r);
 
     # Return if we are not on a secure token URL
     my $checkurl = 0;

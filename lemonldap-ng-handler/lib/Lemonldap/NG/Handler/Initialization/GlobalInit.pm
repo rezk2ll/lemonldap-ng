@@ -479,7 +479,7 @@ sub conditionSub {
     # Replace some strings in condition
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/\$datas->{$1}/g;
-    $cond =~ s/\$datas->{vhost}/\$apacheRequest->hostname/g;
+    $cond =~ s/\$datas->{vhost}/Lemonldap::NG::Handler::API->hostname(\$apacheRequest)/g;
 
     my $jail = Lemonldap::NG::Handler::Main::Jail->new(
         'safe'            => $self->safe,

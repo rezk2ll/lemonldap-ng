@@ -61,8 +61,7 @@ $UA->requests_redirectable( [] );
 # @return Apache constant
 sub run($$) {
     ( $class, $r ) = splice @_;
-    my $url = $r->uri;
-    $url .= "?" . $r->args if ( $r->args );
+    my $url = Lemonldap::NG::Handler::API->uri_with_args($r);
 
     # Uncomment this if you have lost of session problem with SAP.
     # I don't know why cookie value and URL parameter differs but it causes

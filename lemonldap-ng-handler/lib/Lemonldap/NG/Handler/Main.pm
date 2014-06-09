@@ -107,8 +107,6 @@ BEGIN {
         Apache2::RequestIO->import();
         require APR::Table;
         APR::Table->import();
-        require Apache2::URI;
-        Apache2::URI->import();
         require Apache2::Const;
         Apache2::Const->import( '-compile', qw(:common :log) );
         eval '
@@ -174,7 +172,7 @@ sub updateStatus {
     my ( $class, $apacheRequest, $user, $url, $action ) = splice @_;
     eval {
             print { $tsv->{statusPipe} } "$user => "
-          . $apacheRequest->hostname
+          . Lemonldap::NG::Handler::API->hostname($apacheRequest)
           . "$url $action\n"
           if ( $tsv->{statusPipe} );
     };
@@ -287,7 +285,9 @@ sub encodeUrl {
 sub goToPortal {
     my ( $class, $apacheRequest, $url, $arg ) = splice @_;
     Lemonldap::NG::Handler::Main::Logger->lmLog(
-        "Redirect " . $class->ip($apacheRequest) . " to portal (url was $url)",
+        "Redirect "
+          . Lemonldap::NG::Handler::API->remote_ip($apacheRequest)
+          . " to portal (url was $url)",
         'debug'
     );
     my $urlc_init = $class->encodeUrl( $apacheRequest, $url );
@@ -305,7 +305,7 @@ sub goToPortal {
 sub fetchId {
     my ( $class, $apacheRequest ) = @_;
     my $t = Lemonldap::NG::Handler::API->header_in( $apacheRequest, 'Cookie' );
-    my $vhost = $apacheRequest->hostname;
+    my $vhost = Lemonldap::NG::Handler::API->hostname($apacheRequest);
     my $lookForHttpCookie = $tsv->{securedCookie} =~ /^(2|3)$/
       && !(
         defined( $tsv->{https}->{$vhost} )
@@ -375,21 +375,6 @@ sub retrieveSession {
     return 1;
 }
 
-## @rmethod protected string ip(string url)
-# @param $apacheRequest current request
-# @return client IP address
-sub ip {
-    my ( $class, $apacheRequest ) = @_;
-    my $ip = 'unknownIP';
-    eval {
-        $ip =
-          ( MP() == 2 )
-          ? $apacheRequest->connection->remote_ip
-          : $apacheRequest->remote_ip;
-    };
-    return $ip;
-}
-
 # MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
 
 ## @rmethod int run(Apache2::RequestRec apacheRequest)
@@ -407,8 +392,10 @@ sub ip {
 # @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
 sub run ($$) {
     my ( $class, $apacheRequest ) = splice @_;
-    return DECLINED unless ( $apacheRequest->is_initial_req );
-    my $args = $apacheRequest->args;
+    return DECLINED
+      unless ( Lemonldap::NG::Handler::API->is_initial_req($apacheRequest) );
+    my $args = Lemonldap::NG::Handler::API->args($apacheRequest);
+
 
     # Direct return if maintenance mode is active
     if ( $class->checkMaintenanceMode($apacheRequest) ) {
@@ -432,13 +419,13 @@ sub run ($$) {
     {
         my $str = $1;
         Lemonldap::NG::Handler::Main::Logger->lmLog( 'CDA request', 'debug' );
-        $apacheRequest->args($args);
+        Lemonldap::NG::Handler::API->args( $apacheRequest, $args );
         my $redirectUrl =
-          $class->_buildUrl( $apacheRequest, $apacheRequest->uri );
+          $class->_buildUrl( $apacheRequest, Lemonldap::NG::Handler::API->uri_with_args($apacheRequest) );
         my $redirectHttps = ( $redirectUrl =~ m/^https/ );
         Lemonldap::NG::Handler::API->set_err_header_out(
             $apacheRequest,
-            'Location' => $redirectUrl . ( $args ? "?" . $args : "" ),
+            'Location' => $redirectUrl,
             'Set-Cookie' => "$str; path=/"
               . ( $redirectHttps   ? "; secure"   : "" )
               . ( $tsv->{httpOnly} ? "; HttpOnly" : "" )
@@ -450,17 +437,16 @@ sub run ($$) {
         );
         return REDIRECT;
     }
-    my $uri      = $apacheRequest->unparsed_uri();
-    my $uri_orig = $uri;
-    Apache2::URI::unescape_url($uri);
+    my $uri = Lemonldap::NG::Handler::API->uri_with_args($apacheRequest);
 
     my $protection = $class->isUnprotected( $apacheRequest, $uri );
 
     if ( $protection == SKIP ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog( "Access control skipped",
             "debug" );
-        $class->updateStatus( $apacheRequest, $class->ip($apacheRequest),
-            $apacheRequest->uri, 'SKIP' );
+        $class->updateStatus( $apacheRequest,
+            Lemonldap::NG::Handler::API->remote_ip($apacheRequest),
+            Lemonldap::NG::Handler::API->uri($apacheRequest), 'SKIP' );
         $class->hideCookie($apacheRequest);
         Lemonldap::NG::Handler::Main::Headers->cleanHeaders( $apacheRequest,
             $tsv->{forgeHeaders}, $tsv->{headerList} );
@@ -487,7 +473,7 @@ sub run ($$) {
         return $class->forbidden( $apacheRequest, $uri )
           unless ( $class->grant( $apacheRequest, $uri ) );
         $class->updateStatus( $apacheRequest, $datas->{ $tsv->{whatToTrace} },
-            $apacheRequest->uri, 'OK' );
+            Lemonldap::NG::Handler::API->uri($apacheRequest), 'OK' );
 
         # ACCOUNTING (2. Inform remote application)
         Lemonldap::NG::Handler::Main::Headers->sendHeaders( $apacheRequest,
@@ -519,8 +505,9 @@ sub run ($$) {
         # Ignore unprotected URIs
         Lemonldap::NG::Handler::Main::Logger->lmLog(
             "No valid session but unprotected access", "debug" );
-        $class->updateStatus( $apacheRequest, $class->ip($apacheRequest),
-            $apacheRequest->uri, 'UNPROTECT' );
+        $class->updateStatus( $apacheRequest,
+            Lemonldap::NG::Handler::API->remote_ip($apacheRequest),
+            Lemonldap::NG::Handler::API->uri($apacheRequest), 'UNPROTECT' );
         $class->hideCookie($apacheRequest);
         Lemonldap::NG::Handler::Main::Headers->cleanHeaders( $apacheRequest,
             $tsv->{forgeHeaders}, $tsv->{headerList} );
@@ -535,11 +522,10 @@ sub run ($$) {
           unless ($id);
 
         # if the cookie was fetched, a log is sent by retrieveSession()
-        $class->updateStatus(
-            $apacheRequest, $class->ip($apacheRequest),
-            $apacheRequest->uri, $id ? 'EXPIRED' : 'REDIRECT'
-        );
-        return $class->goToPortal( $apacheRequest, $uri_orig );
+        $class->updateStatus( $apacheRequest,
+            Lemonldap::NG::Handler::API->remote_ip($apacheRequest),
+            Lemonldap::NG::Handler::API->uri($apacheRequest), $id ? 'EXPIRED' : 'REDIRECT' );
+        return $class->goToPortal( $apacheRequest, Lemonldap::NG::Handler::API->unparsed_uri($apacheRequest) );
     }
 }
 
@@ -549,7 +535,7 @@ sub run ($$) {
 # @return true if maintenance mode
 sub checkMaintenanceMode {
     my ( $class, $apacheRequest ) = @_;
-    my $vhost = $apacheRequest->hostname;
+    my $vhost = Lemonldap::NG::Handler::API->hostname($apacheRequest);
     my $_maintenance =
       ( defined $tsv->{maintenance}->{$vhost} )
       ? $tsv->{maintenance}->{$vhost}
@@ -575,8 +561,7 @@ sub abort {
 
     # If abort is called without a valid request, fall to die
     eval {
-        my $args = $apacheRequest->args;
-        my $uri  = $apacheRequest->unparsed_uri();
+        my $uri  = Lemonldap::NG::Handler::API->unparsed_uri($apacheRequest);
 
         # Set error 500 in logs even if "useRedirectOnError" is set
         $apacheRequest->push_handlers(
@@ -626,7 +611,7 @@ sub localInit($$) {
     (
         @$tsv{
             qw( localStorage refLocalStorage localStorageOptions statusPipe statusOut childInitDone )
-        }
+          }
     ) = $localinit->localInit($args);
 
 }
@@ -661,7 +646,7 @@ sub globalInit {
               useSafeJail     key                maintenance
               cda             httpOnly           cookieExpiration
               cipher )
-        }
+          }
       )
       = $globalinit->defaultValuesInit(
         @$tsv{
@@ -671,7 +656,7 @@ sub globalInit {
               useSafeJail     key                maintenance
               cda             httpOnly           cookieExpiration
               cipher )
-        },
+          },
         @_
       );
 
@@ -683,7 +668,7 @@ sub globalInit {
               defaultProtection locationCondition
               locationProtection locationRegexp
               locationConditionText safe )
-        }
+          }
       )
       = $globalinit->locationRulesInit(
         $class,
@@ -692,7 +677,7 @@ sub globalInit {
               defaultProtection locationCondition
               locationProtection locationRegexp
               locationConditionText )
-        },
+          },
         @_
       );
 
@@ -720,7 +705,7 @@ sub globalInit {
 # @return True if the user is granted to access to the current URL
 sub grant {
     my ( $class, $apacheRequest, $uri ) = splice @_;
-    my $vhost = $apacheRequest->hostname;
+    my $vhost = Lemonldap::NG::Handler::API->hostname($apacheRequest);
     for ( my $i = 0 ; $i < $tsv->{locationCount}->{$vhost} ; $i++ ) {
         if ( $uri =~ $tsv->{locationRegexp}->{$vhost}->[$i] ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
@@ -752,11 +737,11 @@ sub grant {
 # @return URL
 sub _buildUrl {
     my ( $class, $apacheRequest, $s ) = splice @_;
-    my $vhost = $apacheRequest->hostname;
+    my $vhost = Lemonldap::NG::Handler::API->hostname($apacheRequest);
     my $portString =
          $tsv->{port}->{$vhost}
       || $tsv->{port}->{_}
-      || $apacheRequest->get_server_port();
+      || Lemonldap::NG::Handler::API->get_server_port($apacheRequest);
     my $_https = (
         defined( $tsv->{https}->{$vhost} )
         ? $tsv->{https}->{$vhost}
@@ -806,8 +791,9 @@ sub localUnlog {
 sub unlog ($$) {
     my ( $class, $apacheRequest ) = @_;
     $class->localUnlog;
-    $class->updateStatus( $apacheRequest, $class->ip($apacheRequest),
-        $apacheRequest->uri, 'LOGOUT' );
+    $class->updateStatus( $apacheRequest,
+        Lemonldap::NG::Handler::API->remote_ip($apacheRequest),
+        Lemonldap::NG::Handler::API->uri($apacheRequest), 'LOGOUT' );
     return $class->goToPortal( $apacheRequest, '/', 'logout=1' );
 }
 
@@ -824,7 +810,10 @@ sub status($$) {
       unless ( $tsv->{statusPipe} and $tsv->{statusOut} );
     $r->handler("perl-script");
     print { $tsv->{statusPipe} } "STATUS"
-      . ( $r->args ? " " . $r->args : '' ) . "\n";
+      . ( Lemonldap::NG::Handler::API->args($r)
+        ? " " . Lemonldap::NG::Handler::API->args($r)
+        : '' )
+      . "\n";
     my $buf;
     my $statusOut = $tsv->{statusOut};
     while ($statusOut) {
@@ -898,7 +887,7 @@ sub redirectFilter {
 # SKIP if is is unprotected by "skip"
 sub isUnprotected {
     my ( $class, $apacheRequest, $uri ) = splice @_;
-    my $vhost = $apacheRequest->hostname;
+    my $vhost = Lemonldap::NG::Handler::API->hostname($apacheRequest);
     for ( my $i = 0 ; $i < $tsv->{locationCount}->{$vhost} ; $i++ ) {
         if ( $uri =~ $tsv->{locationRegexp}->{$vhost}->[$i] ) {
             return $tsv->{locationProtection}->{$vhost}->[$i];

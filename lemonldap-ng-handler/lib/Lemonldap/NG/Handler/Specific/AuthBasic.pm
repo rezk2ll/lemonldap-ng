@@ -52,9 +52,8 @@ sub run ($$) {
             return $tmp;
         }
     }
-    return DECLINED unless ( $apacheRequest->is_initial_req );
-    my $uri = $apacheRequest->uri
-      . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
+    return DECLINED unless ( Lemonldap::NG::Handler::API->is_initial_req($apacheRequest) );
+    my $uri = Lemonldap::NG::Handler::API->uri_with_args($apacheRequest);
 
     # AUTHENTICATION
     # I - recover the WWW-Authentication header
@@ -92,7 +91,7 @@ sub run ($$) {
               Lemonldap::NG::Handler::API->header_in( $apacheRequest,
                 'X-Forwarded-For' );
             $xheader .= ", " if ($xheader);
-            $xheader .= $class->ip($apacheRequest);
+            $xheader .= Lemonldap::NG::Handler::API->remote_ip($apacheRequest);
             my $soapHeaders =
               HTTP::Headers->new( "X-Forwarded-For" => $xheader );
 
@@ -146,8 +145,8 @@ sub run ($$) {
         unless ( $apacheSession->data ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "The cookie $session_id isn't yet available", 'info' );
-            $class->updateStatus( $apacheRequest, $class->ip($apacheRequest),
-                $apacheRequest->uri, 'EXPIRED' );
+            $class->updateStatus( $apacheRequest, Lemonldap::NG::Handler::API->remote_ip($apacheRequest),
+                Lemonldap::NG::Handler::API->uri($apacheRequest), 'EXPIRED' );
             return $class->goToPortal( $apacheRequest, $uri );
         }
 
@@ -171,7 +170,7 @@ sub run ($$) {
     return $class->forbidden( $apacheRequest, $uri )
       unless ( $class->grant( $apacheRequest, $uri ) );
     $class->updateStatus( $apacheRequest, $datas->{ $tsv->{whatToTrace} },
-        $apacheRequest->uri, 'OK' );
+        Lemonldap::NG::Handler::API->uri($apacheRequest), 'OK' );
     $class->logGranted( $uri, $datas );
 
     # SECURITY

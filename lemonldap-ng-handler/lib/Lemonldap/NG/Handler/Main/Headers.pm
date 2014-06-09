@@ -23,8 +23,6 @@ BEGIN {
         Apache2::RequestIO->import();
         require APR::Table;
         APR::Table->import();
-        require Apache2::URI;
-        Apache2::URI->import();
         require Apache2::Const;
         Apache2::Const->import( '-compile', qw(:common :log) );
     }
@@ -42,7 +40,7 @@ BEGIN {
 # Launch function compiled by forgeHeadersInit() for the current virtual host
 sub sendHeaders {
     my ( $class, $apacheRequest, $forgeHeaders ) = splice @_;
-    my $vhost = $apacheRequest->hostname;
+    my $vhost = Lemonldap::NG::Handler::API->hostname($apacheRequest);
     if ( defined( $forgeHeaders->{$vhost} ) ) {
         Lemonldap::NG::Handler::API->set_header_in( $apacheRequest,
             &{ $forgeHeaders->{$vhost} } );
@@ -53,7 +51,7 @@ sub sendHeaders {
 # Unset HTTP headers for the current virtual host, when sendHeaders is skipped
 sub cleanHeaders {
     my ( $class, $apacheRequest, $forgeHeaders, $headerList ) = splice @_;
-    my $vhost = $apacheRequest->hostname;
+    my $vhost = Lemonldap::NG::Handler::API->hostname($apacheRequest);
     if ( defined( $forgeHeaders->{$vhost} ) ) {
         Lemonldap::NG::Handler::API->unset_header_in( $apacheRequest,
             @{ $headerList->{$vhost} } );

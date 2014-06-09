@@ -62,8 +62,6 @@ BEGIN {
         Apache2::RequestIO->import();
         require APR::Table;
         APR::Table->import();
-        require Apache2::URI;
-        Apache2::URI->import();
         require Apache2::Const;
         Apache2::Const->import( '-compile', qw(:common :log) );
         eval '

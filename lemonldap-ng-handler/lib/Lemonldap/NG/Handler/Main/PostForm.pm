@@ -12,11 +12,7 @@ our $VERSION = '1.4.0';
 
 BEGIN {
 
-    if ( MP() == 2 ) {
-        require Apache2::URI;
-        Apache2::URI->import();
-    }
-    elsif ( MP() == 1 ) {
+    if ( MP() == 1 ) {
         require Apache;
         require Apache::Log;
         require Apache::Constants;
@@ -32,7 +28,7 @@ BEGIN {
 # @return Apache2::Const
 sub transformUri {
     my ( $class, $apacheRequest, $uri ) = splice @_;
-    my $vhost = $apacheRequest->hostname;
+    my $vhost = Lemonldap::NG::Handler::API->hostname($apacheRequest);
 
     if ( defined( $tsv->{transform}->{$vhost}->{$uri} ) ) {
         return &{ $tsv->{transform}->{$vhost}->{$uri} }($apacheRequest);
