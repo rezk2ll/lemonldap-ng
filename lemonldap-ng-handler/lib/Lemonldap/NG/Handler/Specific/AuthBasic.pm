@@ -145,8 +145,7 @@ sub run ($$) {
         unless ( $apacheSession->data ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "The cookie $session_id isn't yet available", 'info' );
-            $class->updateStatus( $apacheRequest, Lemonldap::NG::Handler::API->remote_ip($apacheRequest),
-                Lemonldap::NG::Handler::API->uri($apacheRequest), 'EXPIRED' );
+            $class->updateStatus( $apacheRequest, 'EXPIRED' );
             return $class->goToPortal( $apacheRequest, $uri );
         }
 
@@ -167,10 +166,9 @@ sub run ($$) {
         $datas->{ $tsv->{whatToTrace} } );
 
     # AUTHORIZATION
-    return $class->forbidden( $apacheRequest, $uri )
+    return $class->forbidden( $apacheRequest )
       unless ( $class->grant( $apacheRequest, $uri ) );
-    $class->updateStatus( $apacheRequest, $datas->{ $tsv->{whatToTrace} },
-        Lemonldap::NG::Handler::API->uri($apacheRequest), 'OK' );
+    $class->updateStatus( $apacheRequest, 'OK', $datas->{ $tsv->{whatToTrace} });
     $class->logGranted( $uri, $datas );
 
     # SECURITY

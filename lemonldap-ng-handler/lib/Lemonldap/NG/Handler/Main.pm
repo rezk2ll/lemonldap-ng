@@ -167,9 +167,15 @@ sub logout_mp2 : method {
 }
 
 ## @rmethod protected void updateStatus(string user,string url,string action)
-# Inform the status process of the result of the request if it is available.
+# Inform the status process of the result of the request if it is available
+# @param request Apache2::RequestRec current request
+# @param action string Result of access control (as OK, SKIP, LOGOUT...)
+# @param optional user string Username to log, if undefined defaults to remote IP
+# @param optional url string URL to log, if undefined defaults to request URI
 sub updateStatus {
-    my ( $class, $apacheRequest, $user, $url, $action ) = splice @_;
+    my ( $class, $apacheRequest, $action, $user, $url ) = @_;
+    $user ||= Lemonldap::NG::Handler::API->remote_ip($apacheRequest);
+    $url  ||= Lemonldap::NG::Handler::API->uri_with_args($apacheRequest);
     eval {
             print { $tsv->{statusPipe} } "$user => "
           . Lemonldap::NG::Handler::API->hostname($apacheRequest)
@@ -185,16 +191,16 @@ sub updateStatus {
 # @param $uri URI
 # @return Apache2::Const::REDIRECT or Apache2::Const::FORBIDDEN
 sub forbidden {
-    my ( $class, $apacheRequest, $uri ) = splice @_;
+    my ( $class, $apacheRequest ) = splice @_;
+    my $uri = Lemonldap::NG::Handler::API->uri_with_args($apacheRequest);
+
     if ( $datas->{_logout} ) {
-        $class->updateStatus( $apacheRequest, $datas->{ $tsv->{whatToTrace} },
-            $uri, 'LOGOUT' );
+        $class->updateStatus( $apacheRequest, 'LOGOUT', $datas->{ $tsv->{whatToTrace} } );
         my $u = $datas->{_logout};
         $class->localUnlog;
         return $class->goToPortal( $apacheRequest, $u, 'logout=1' );
     }
-    $class->updateStatus( $apacheRequest, $datas->{ $tsv->{whatToTrace} },
-        $uri, 'REJECT' );
+    $class->updateStatus( $apacheRequest, 'REJECT', $datas->{ $tsv->{whatToTrace} } );
     $apacheRequest->push_handlers(
         PerlLogHandler => sub {
             $_[0]->status(FORBIDDEN);
@@ -444,9 +450,7 @@ sub run ($$) {
     if ( $protection == SKIP ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog( "Access control skipped",
             "debug" );
-        $class->updateStatus( $apacheRequest,
-            Lemonldap::NG::Handler::API->remote_ip($apacheRequest),
-            Lemonldap::NG::Handler::API->uri($apacheRequest), 'SKIP' );
+        $class->updateStatus( $apacheRequest, 'SKIP' );
         $class->hideCookie($apacheRequest);
         Lemonldap::NG::Handler::Main::Headers->cleanHeaders( $apacheRequest,
             $tsv->{forgeHeaders}, $tsv->{headerList} );
@@ -470,10 +474,9 @@ sub run ($$) {
             $datas->{ $tsv->{whatToTrace} } );
 
         # AUTHORIZATION
-        return $class->forbidden( $apacheRequest, $uri )
+        return $class->forbidden( $apacheRequest )
           unless ( $class->grant( $apacheRequest, $uri ) );
-        $class->updateStatus( $apacheRequest, $datas->{ $tsv->{whatToTrace} },
-            Lemonldap::NG::Handler::API->uri($apacheRequest), 'OK' );
+        $class->updateStatus( $apacheRequest, 'OK', $datas->{ $tsv->{whatToTrace} } );
 
         # ACCOUNTING (2. Inform remote application)
         Lemonldap::NG::Handler::Main::Headers->sendHeaders( $apacheRequest,
@@ -505,9 +508,7 @@ sub run ($$) {
         # Ignore unprotected URIs
         Lemonldap::NG::Handler::Main::Logger->lmLog(
             "No valid session but unprotected access", "debug" );
-        $class->updateStatus( $apacheRequest,
-            Lemonldap::NG::Handler::API->remote_ip($apacheRequest),
-            Lemonldap::NG::Handler::API->uri($apacheRequest), 'UNPROTECT' );
+        $class->updateStatus( $apacheRequest, 'UNPROTECT' );
         $class->hideCookie($apacheRequest);
         Lemonldap::NG::Handler::Main::Headers->cleanHeaders( $apacheRequest,
             $tsv->{forgeHeaders}, $tsv->{headerList} );
@@ -522,9 +523,7 @@ sub run ($$) {
           unless ($id);
 
         # if the cookie was fetched, a log is sent by retrieveSession()
-        $class->updateStatus( $apacheRequest,
-            Lemonldap::NG::Handler::API->remote_ip($apacheRequest),
-            Lemonldap::NG::Handler::API->uri($apacheRequest), $id ? 'EXPIRED' : 'REDIRECT' );
+        $class->updateStatus( $apacheRequest, $id ? 'EXPIRED' : 'REDIRECT' );
         return $class->goToPortal( $apacheRequest, Lemonldap::NG::Handler::API->unparsed_uri($apacheRequest) );
     }
 }
@@ -791,9 +790,7 @@ sub localUnlog {
 sub unlog ($$) {
     my ( $class, $apacheRequest ) = @_;
     $class->localUnlog;
-    $class->updateStatus( $apacheRequest,
-        Lemonldap::NG::Handler::API->remote_ip($apacheRequest),
-        Lemonldap::NG::Handler::API->uri($apacheRequest), 'LOGOUT' );
+    $class->updateStatus( $apacheRequest, 'LOGOUT' );
     return $class->goToPortal( $apacheRequest, '/', 'logout=1' );
 }
 
@@ -866,16 +863,7 @@ sub redirectFilter {
     }
     while ( $f->read( my $buffer, 1024 ) ) {
     }
-    $class->updateStatus(
-        $apacheRequest,
-        (
-              $datas->{ $tsv->{whatToTrace} }
-            ? $datas->{ $tsv->{whatToTrace} }
-            : $f->r->connection->remote_ip
-        ),
-        'filter',
-        'REDIRECT'
-    );
+    $class->updateStatus( $f->r, 'REDIRECT', $datas->{ $tsv->{whatToTrace} }, 'filter' );
     return OK;
 }
 
