@@ -31,8 +31,8 @@
     <div class="form-group input-group">
       <span class="input-group-addon glyphicon glyphicon-eye-open"> </span>
       <input type="text" name="captcha_user_code" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" placeholder="Captcha" required />
-      <input type="hidden" name="captcha_code" value="<TMPL_VAR NAME=CAPTCHA_CODE>" />
     </div>
+    <input type="hidden" name="captcha_code" value="<TMPL_VAR NAME=CAPTCHA_CODE>" />
     </TMPL_IF>
 
     <button type="submit" class="btn btn-success" >
