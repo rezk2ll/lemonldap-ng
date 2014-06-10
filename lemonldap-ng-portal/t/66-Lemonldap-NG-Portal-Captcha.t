@@ -2,7 +2,6 @@ use Test::More tests => 5;
 
 BEGIN {
     use_ok("Lemonldap::NG::Portal::Simple");
-    use_ok("Lemonldap::NG::Portal::_WebForm");
 }
 
 # build Lemonldap::NG::Portal::Simple object
@@ -10,6 +9,7 @@ my $p = Lemonldap::NG::Portal::Simple->new(
     {
         globalStorage   => 'Apache::Session::File',
         domain          => 'example.com',
+        portal => 'http://auth.example.com',
         error           => 0,
         authentication  => 'Demo',
         userDB          => 'Null',
@@ -29,26 +29,16 @@ my $p = Lemonldap::NG::Portal::Simple->new(
     }
 );
 
-## Overload captcha_output and captcha_data
-mkdir "./tmp";
-$p->{captcha_output} = "./tmp/output";
-$p->{captcha_data}   = "./tmp/data";
-
-# create dir
-mkdir $p->{captcha_output};
-mkdir $p->{captcha_data};
-
-ok( ref($p) eq "Lemonldap::NG::Portal::Simple" );
+ok( ref($p) eq "Lemonldap::NG::Portal::Simple", "Portal object with captcha configuration" );
 
 # try to init a captcha
 $p->initCaptcha;
 ok( $p->{captcha_img}, "Generation of captcha image" );
 
 # try a wrong values to check checkCaptcha method
-my $captcha_result = $p->checkCaptcha( "12D3EO", $p->{captcha_code} );
-ok( 1 ne $captcha_result, "Verification of captcha" );
+my $captcha_result = $p->checkCaptcha( $p->{captcha_secret}, $p->{captcha_code} );
+ok( 1 == $captcha_result, "Verification of good captcha" );
+my $captcha_result_2 = $p->checkCaptcha( "wrongcode", $p->{captcha_code} );
+ok ( 1 != $captcha_result_2, "Reject of bad captcha");
 
-END {
-    system("rm -rf ./tmp");
-}
 

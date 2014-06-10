@@ -62,13 +62,6 @@ has 'browserIdAuthnLevel' => (
 
 ## C
 
-has 'captcha_data' => (
-    is            => 'rw',
-    isa           => 'Str',
-    default       => '/tmp',
-    documentation => 'Captcha data directory',
-);
-
 has 'captcha_login_enabled' => (
     is            => 'rw',
     isa           => 'Bool',
@@ -83,11 +76,11 @@ has 'captcha_mail_enabled' => (
     documentation => 'Captcha on password reset page',
 );
 
-has 'captcha_output' => (
+has 'captcha_register_enabled' => (
     is            => 'rw',
-    isa           => 'Str',
-    default       => '/tmp',
-    documentation => 'Captcha output directory',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'Captcha on account creation page',
 );
 
 has 'captcha_size' => (
@@ -95,6 +88,22 @@ has 'captcha_size' => (
     isa           => 'Int',
     default       => '6',
     documentation => 'Captcha size',
+);
+
+has 'captchaStorage' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'Apache::Session::File',
+    documentation => 'Captcha backend module',
+);
+
+has 'captchaStorageOptions' => (
+    is      => 'rw',
+    isa     => 'HashRef',
+    default => sub {
+        return { 'Directory' => '/var/lib/lemonldap-ng/captcha/', };
+    },
+    documentation => 'Captcha backend module options',
 );
 
 has 'casAccessControlPolicy' => (
