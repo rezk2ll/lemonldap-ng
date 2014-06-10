@@ -116,6 +116,7 @@ sub unserialize {
         |grantSessionRules
 	|groups
 	|ldapExportedVars
+	|localSessionStorageOptions
 	|locationRules
 	|logoutServices
 	|macros

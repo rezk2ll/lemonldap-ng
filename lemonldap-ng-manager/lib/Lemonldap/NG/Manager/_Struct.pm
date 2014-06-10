@@ -895,12 +895,21 @@ sub struct {
                 },
 
                 sessionStorage => {
-                    _nodes => [qw(globalStorage cn:globalStorageOptions)],
-                    _help  => 'sessionsdb',
+                    _nodes => [
+                        qw(globalStorage cn:globalStorageOptions localSessionStorage cn:localSessionStorageOptions)
+                    ],
+                    _help                => 'sessionsdb',
                     globalStorage        => 'text:/globalStorage',
                     globalStorageOptions => {
                         _nodes =>
                           ['hash:/globalStorageOptions:sessionsdb:btext'],
+                        _js   => 'hashRoot',
+                        _help => 'sessionsdb',
+                    },
+                    localSessionStorage        => 'text:/localSessionStorage',
+                    localSessionStorageOptions => {
+                        _nodes =>
+                          ['hash:/localSessionStorageOptions:sessionsdb:btext'],
                         _js   => 'hashRoot',
                         _help => 'sessionsdb',
                     },
@@ -1662,7 +1671,15 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         ldapTimeout                     => $testNotDefined,
         ldapVersion                     => $testNotDefined,
         ldapRaw                         => $testNotDefined,
-        locationRules                   => {
+        localSessionStorage             => {
+            test    => qr/^[\w:]+$/,
+            msgFail => 'Bad module name',
+        },
+        localSessionStorageOptions => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad parameter',
+        },
+        locationRules => {
             keyTest => Lemonldap::NG::Common::Regexp::HOSTNAME(),
             msgFail => 'Bad virtual host name',
             '*'     => {
