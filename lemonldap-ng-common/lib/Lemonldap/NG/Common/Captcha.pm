@@ -76,7 +76,7 @@ sub saveSession {
     );
 
     $session->update(
-        { current_time => time, code => $self->code, image => $self->image } );
+        { _utime => time, code => $self->code, image => $self->image } );
 
 }
 
@@ -93,10 +93,28 @@ sub getSession {
     );
 
     if ( $session && $session->data ) {
-
         $self->code( $session->data->{code} );
         $self->image( $session->data->{image} );
     }
+}
+
+sub removeSession {
+    my $self = shift;
+
+    # Get session
+    my $session = Lemonldap::NG::Common::Session->new(
+        {
+            storageModule        => $self->storageModule,
+            storageModuleOptions => $self->storageModuleOptions,
+            id                   => $self->md5,
+        }
+    );
+
+    if ($session) {
+        return $session->remove;
+    }
+
+    return 0;
 }
 
 no Mouse;

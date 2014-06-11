@@ -102,6 +102,23 @@ if ( defined $conf->{casStorage}
     print "CAS backend $module will be used\n" if $debug;
 }
 
+# Captcha
+if ( defined $conf->{captchaStorage}
+    or keys %{ $conf->{captchaStorageOptions} } )
+{
+
+    # Load module
+    $module = $conf->{captchaStorage} || $conf->{globalStorage};
+    eval "use $module";
+    die $@ if ($@);
+    $conf->{captchaStorageOptions}->{backend} = $module;
+
+    # Add module in managed backends
+    push @backends, $conf->{captchaStorageOptions};
+
+    print "Captcha backend $module will be used\n" if $debug;
+}
+
 #=============================================================================
 # Load and purge sessions
 #=============================================================================

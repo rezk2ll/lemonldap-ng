@@ -38,6 +38,9 @@ ok( $p->{captcha_img}, "Generation of captcha image" );
 # try a wrong values to check checkCaptcha method
 my $captcha_result = $p->checkCaptcha( $p->{captcha_secret}, $p->{captcha_code} );
 ok( 1 == $captcha_result, "Verification of good captcha" );
+
+# New captcha
+$p->initCaptcha;
 my $captcha_result_2 = $p->checkCaptcha( "wrongcode", $p->{captcha_code} );
 ok ( 1 != $captcha_result_2, "Reject of bad captcha");
 

@@ -623,7 +623,7 @@ sub initCaptcha {
     );
 
     $self->{captcha_secret} = $captcha->code;
-    $self->{captcha_code} = $captcha->md5;
+    $self->{captcha_code}   = $captcha->md5;
     $self->{captcha_img} = $self->{portal} . "?displayCaptcha=" . $captcha->md5;
 
     $self->lmLog( "Captcha code generated: " . $self->{captcha_code}, 'debug' );
@@ -639,6 +639,7 @@ sub initCaptcha {
 sub checkCaptcha {
     my ( $self, $code, $ccode ) = splice @_;
 
+    # Get captcha object
     my $captcha = Lemonldap::NG::Common::Captcha->new(
         {
             storageModule        => $self->{captchaStorage},
@@ -648,6 +649,15 @@ sub checkCaptcha {
         }
     );
 
+    # Remove captcha session (will not be used anymore)
+    if ( $captcha->removeSession ) {
+        $self->lmLog( "Code $code match captcha $ccode", 'debug' );
+    }
+    else {
+        $self->lmLog( "Unable to remove captcha session $ccode", 'warn' );
+    }
+
+    # Check code
     if ( $captcha && $captcha->code ) {
 
         if ( $code eq $captcha->code ) {
