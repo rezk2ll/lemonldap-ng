@@ -33,6 +33,7 @@ var helpCh = {
 	'authTwitter': '/pages/documentation/current/authtwitter.html',
 	'authWebID': '/pages/documentation/current/authwebid.html',
 	'authYubikey': '/pages/documentation/current/authyubikey.html',
+	'captcha': '/pages/documentation/current/captcha.html',
 	'cookies': '/pages/documentation/current/ssocookie.html',
 	'customfunctions': '/pages/documentation/current/customfunctions.html',
 	'default': '/pages/documentation/current/start.html#configuration',

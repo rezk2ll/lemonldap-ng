@@ -104,6 +104,7 @@ sub unserialize {
             $k =~ /^(?x:
 	applicationList
 	|authChoiceModules
+	|captchaStorageOptions
 	|CAS_proxiedServices
 	|casStorageOptions
 	|dbiExportedVars
@@ -113,7 +114,7 @@ sub unserialize {
 	|facebookExportedVars
 	|globalStorageOptions
 	|googleExportedVars
-        |grantSessionRules
+	|grantSessionRules
 	|groups
 	|ldapExportedVars
 	|localSessionStorageOptions
@@ -125,7 +126,7 @@ sub unserialize {
 	|persistentStorageOptions
 	|portalSkinRules
 	|post
-        |reloadUrls
+	|reloadUrls
 	|remoteGlobalStorageOptions
 	|samlIDPMetaDataExportedAttributes
 	|samlIDPMetaDataOptions
@@ -134,7 +135,7 @@ sub unserialize {
 	|samlSPMetaDataOptions
 	|samlSPMetaDataXML
 	|samlStorageOptions
-        |sessionDataToRemember
+	|sessionDataToRemember
 	|slaveExportedVars
 	|vhostOptions
 	|webIDExportedVars

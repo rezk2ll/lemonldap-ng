@@ -349,15 +349,22 @@ sub struct {
 
                 portalCaptcha => {
                     _nodes => [
-                        qw(captcha_login_enabled captcha_mail_enabled captcha_register_enabled captcha_size captcha_data captcha_output)
+                        qw(captcha_login_enabled captcha_mail_enabled captcha_register_enabled captcha_size captchaStorage captchaStorageOptions)
                     ],
+                    _help => 'captcha',
+
                     captcha_login_enabled => 'bool:/captcha_login_enabled',
                     captcha_mail_enabled  => 'bool:/captcha_mail_enabled',
                     captcha_register_enabled =>
                       'bool:/captcha_register_enabled',
-                    captcha_size   => 'int:/captcha_size',
-                    captcha_data   => 'text:/captcha_data',
-                    captcha_output => 'text:/captcha_output',
+                    captcha_size          => 'int:/captcha_size',
+                    captchaStorage        => 'text:/captchaStorage',
+                    captchaStorageOptions => {
+                        _nodes => ['hash:/captchaStorageOptions:captcha:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'captcha',
+                    },
+
                 },
             },
 
