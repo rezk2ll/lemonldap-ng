@@ -1,0 +1,84 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="captcha" id="captcha">Captcha</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Captcha" [1-23] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+Captcha is a security mechanism aimed to prevent robots to submit forms.
+</p>
+
+<p>
+Captchas are available on the following forms:
+</p>
+<ul>
+<li class="level1"><div class="li"> Login form: where user enters login and password to authenticate</div>
+</li>
+<li class="level1"><div class="li"> Password reset by mail form: where user enters mail to recover a lost password</div>
+</li>
+<li class="level1"><div class="li"> Register form: where user enters information to create a new account</div>
+</li>
+</ul>
+
+<p>
+
+We use the <acronym title="Practical Extraction and Report Language">Perl</acronym> module Authen::Captcha to generate codes and images, which look like this:
+</p>
+
+<p>
+<a href="/_detail/documentation/captcha.png?id=documentation%3A1.4%3Acaptcha" class="media" title="documentation:captcha.png"><img src="../../../media/documentation/captcha.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- SECTION "Presentation" [24-524] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+<p>
+
+Go in <code>General parameters</code> &gt; <code>Portal</code> &gt; <code>Captcha</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Activation in login form</strong>: set to 1 to display captcha in login form</div>
+</li>
+<li class="level1"><div class="li"> <strong>Activation in password reset by mail form</strong>: set to 1 to display captcha in password reset by mail form</div>
+</li>
+<li class="level1"><div class="li"> <strong>Activation in register form</strong>: set to 1 to display captcha in register form</div>
+</li>
+<li class="level1"><div class="li"> <strong>Size</strong>: length of captcha</div>
+</li>
+<li class="level1"><div class="li"> <strong>Captcha module name</strong>: Apache session module used to store generated captchas</div>
+</li>
+<li class="level1"><div class="li"> <strong>Captcha module options</strong>: options for above module</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Configuration" [525-] --></div><!-- closes <div class="dokuwiki export">-->
