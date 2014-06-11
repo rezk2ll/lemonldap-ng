@@ -33,10 +33,10 @@ $LLNG_DEFAULTCONFFILE = $ini->filename;
 SKIP: {
     eval { require Cache::Memcached };
     skip
-"Cache::Memcached is not installed, so Lemonldap::NG::Handler::SecureToken will not be useable",
+"Cache::Memcached is not installed, so Lemonldap::NG::Handler::Specific::SecureToken will not be useable",
       1
       if ($@);
-    use_ok('Lemonldap::NG::Handler::SecureToken');
+    use_ok('Lemonldap::NG::Handler::Specific::SecureToken');
 }
 
 $LLNG_DEFAULTCONFFILE = undef;
