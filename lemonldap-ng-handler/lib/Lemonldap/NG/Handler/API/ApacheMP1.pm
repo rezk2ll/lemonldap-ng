@@ -93,18 +93,18 @@ sub is_initial_req {
 }
 
 ## @method string args(Apache2::RequestRec request, string args)
-# gets or sets the query string
+# gets the query string
 # @param request Apache2::RequestRec current request
-# @param optional args string new query string
 # @return args string Query string
 sub args  {
-    my ($class, $r, $args) = @_;
-    return $r->args($args);
+    my ($class, $r) = @_;
+    return $r->args();
 }
 
 ## @method string uri(Apache2::RequestRec request)
 # returns the path portion of the URI, normalized, i.e. :
-# * URL decoded (characters encoded as %XX are decoded)
+# * URL decoded (characters encoded as %XX are decoded,
+#   except ? in order not to merge path and query string)
 # * references to relative path components "." and ".." are resolved
 # * two or more adjacent slashes are merged into a single slash
 # @param request Apache2::RequestRec current request
@@ -113,6 +113,7 @@ sub uri {
     my ($class, $r) = @_;
     my $uri = $r->uri;
     $uri =~ s#//+#/#g;
+    $uri =~ s#\?#%3F#g;
     return $uri;
 }
 

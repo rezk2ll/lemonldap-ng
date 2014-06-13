@@ -192,7 +192,7 @@ sub updateStatus {
 # @return Apache2::Const::REDIRECT or Apache2::Const::FORBIDDEN
 sub forbidden {
     my ( $class, $apacheRequest ) = splice @_;
-    my $uri = Lemonldap::NG::Handler::API->uri_with_args($apacheRequest);
+    my $uri = Lemonldap::NG::Handler::API->unparsed_uri($apacheRequest);
 
     if ( $datas->{_logout} ) {
         $class->updateStatus( $apacheRequest, 'LOGOUT', $datas->{ $tsv->{whatToTrace} } );
@@ -400,8 +400,6 @@ sub run ($$) {
     my ( $class, $apacheRequest ) = splice @_;
     return DECLINED
       unless ( Lemonldap::NG::Handler::API->is_initial_req($apacheRequest) );
-    my $args = Lemonldap::NG::Handler::API->args($apacheRequest);
-
 
     # Direct return if maintenance mode is active
     if ( $class->checkMaintenanceMode($apacheRequest) ) {
@@ -420,14 +418,13 @@ sub run ($$) {
     }
 
     # Cross domain authentication
+    my $uri = Lemonldap::NG::Handler::API->unparsed_uri($apacheRequest);
     if (    $tsv->{cda}
-        and $args =~ s/[\?&]?($tsv->{cookieName}(http)?=\w+)$//oi )
+        and $uri =~ s/[\?&;]($tsv->{cookieName}(http)?=\w+)$//oi )
     {
         my $str = $1;
         Lemonldap::NG::Handler::Main::Logger->lmLog( 'CDA request', 'debug' );
-        Lemonldap::NG::Handler::API->args( $apacheRequest, $args );
-        my $redirectUrl =
-          $class->_buildUrl( $apacheRequest, Lemonldap::NG::Handler::API->uri_with_args($apacheRequest) );
+        my $redirectUrl = $class->_buildUrl( $apacheRequest, $uri );
         my $redirectHttps = ( $redirectUrl =~ m/^https/ );
         Lemonldap::NG::Handler::API->set_err_header_out(
             $apacheRequest,
@@ -443,8 +440,8 @@ sub run ($$) {
         );
         return REDIRECT;
     }
-    my $uri = Lemonldap::NG::Handler::API->uri_with_args($apacheRequest);
 
+    $uri = Lemonldap::NG::Handler::API->uri_with_args($apacheRequest);
     my $protection = $class->isUnprotected( $apacheRequest, $uri );
 
     if ( $protection == SKIP ) {
