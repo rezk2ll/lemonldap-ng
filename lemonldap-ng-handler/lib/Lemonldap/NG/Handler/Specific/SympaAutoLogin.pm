@@ -12,6 +12,7 @@ package Lemonldap::NG::Handler::Specific::SympaAutoLogin;
 
 use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
+use Lemonldap::NG::Handler::API qw(:webserverCodes);
 use base qw(Lemonldap::NG::Handler::SharedConf);
 use Digest::MD5;
 use Lemonldap::NG::Handler::Main::Logger;

@@ -17,6 +17,7 @@ use Mouse;
 
 use Lemonldap::NG::Handler::SharedConf;    # Needed to get VERSION
 use Lemonldap::NG::Handler::Main::Logger;
+use Lemonldap::NG::Handler::API qw(:webserverCodes); # for importing modules and constants
 
 our $VERSION = '1.3.0';
 
@@ -36,61 +37,6 @@ has childInitDone => ( is => 'rw' );
 # attributes built and returned
 has [ 'statusPipe', 'statusOut' ] => ( is => 'rw' );
 
-BEGIN {
-    if ( exists $ENV{MOD_PERL} ) {
-        if ( $ENV{MOD_PERL_API_VERSION} and $ENV{MOD_PERL_API_VERSION} >= 2 ) {
-            eval 'use constant MP => 2;';
-        }
-        else {
-            eval 'use constant MP => 1;';
-        }
-    }
-    else {
-        eval 'use constant MP => 0;';
-    }
-    if ( MP() == 2 ) {
-        require Apache2::Log;
-        require Apache2::RequestUtil;
-        Apache2::RequestUtil->import();
-        require Apache2::RequestRec;
-        Apache2::RequestRec->import();
-        require Apache2::ServerUtil;
-        Apache2::ServerUtil->import();
-        require Apache2::Connection;
-        Apache2::Connection->import();
-        require Apache2::RequestIO;
-        Apache2::RequestIO->import();
-        require APR::Table;
-        APR::Table->import();
-        require Apache2::Const;
-        Apache2::Const->import( '-compile', qw(:common :log) );
-        eval '
-        use constant FORBIDDEN    => Apache2::Const::FORBIDDEN;
-        use constant REDIRECT     => Apache2::Const::REDIRECT;
-        use constant OK           => Apache2::Const::OK;
-        use constant DECLINED     => Apache2::Const::DECLINED;
-        use constant DONE         => Apache2::Const::DONE;
-        use constant SERVER_ERROR => Apache2::Const::SERVER_ERROR;
-        ';
-    }
-    elsif ( MP() == 1 ) {
-        require Apache;
-        require Apache::Log;
-        require Apache::Constants;
-        Apache::Constants->import(':common');
-        Apache::Constants->import(':response');
-    }
-    else {    # For Test or CGI
-        eval '
-        use constant FORBIDDEN    => 1;
-        use constant REDIRECT     => 1;
-        use constant OK           => 1;
-        use constant DECLINED     => 1;
-        use constant DONE         => 1;
-        use constant SERVER_ERROR => 1;
-        ';
-    }
-}
 
 # Mouse methods
 ###############

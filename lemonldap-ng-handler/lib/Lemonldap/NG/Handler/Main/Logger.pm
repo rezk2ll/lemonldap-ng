@@ -1,7 +1,7 @@
 
 package Lemonldap::NG::Handler::Main::Logger;
 
-use Lemonldap::NG::Handler::Main qw( :apache );
+use Lemonldap::NG::Handler::API qw( :webserverCodes );
 
 ## @rmethod void lmLog(string mess, string level)
 # Wrapper for Apache log system

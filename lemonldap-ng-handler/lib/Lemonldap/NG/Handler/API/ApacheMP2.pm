@@ -1,6 +1,70 @@
 package Lemonldap::NG::Handler::API::ApacheMP2;
 
+use Exporter 'import';
+
 our $VERSION = '1.4.0';
+
+our %EXPORT_TAGS;
+
+our @EXPORT_OK;
+
+our @EXPORT;
+
+
+
+BEGIN{
+
+    %EXPORT_TAGS = (
+        webserverCodes => [
+            qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )
+        ],
+    );
+    push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
+    $EXPORT_TAGS{all} = \@EXPORT_OK;
+
+    # Specific modules and constants for ApacheMP2
+    require Apache2::RequestUtil;
+    Apache2::RequestUtil->import();
+    require Apache2::RequestRec;
+    Apache2::RequestRec->import();
+    require Apache2::Log;
+    require Apache2::ServerUtil;
+    Apache2::ServerUtil->import();
+    require Apache2::Connection;
+    Apache2::Connection->import();
+    require Apache2::RequestIO;
+    Apache2::RequestIO->import();
+    require APR::Table;
+    APR::Table->import();
+    require Apache2::Const;
+    Apache2::Const->import( '-compile', qw(:common :log) );
+    eval '
+        use constant FORBIDDEN    => Apache2::Const::FORBIDDEN;
+        use constant REDIRECT     => Apache2::Const::REDIRECT;
+        use constant OK           => Apache2::Const::OK;
+        use constant DECLINED     => Apache2::Const::DECLINED;
+        use constant DONE         => Apache2::Const::DONE;
+        use constant SERVER_ERROR => Apache2::Const::SERVER_ERROR;
+    ';
+
+}
+
+
+
+## @method void thread_share(string $variable)
+# share or not the variable (if authorized by specific module)
+# @param $variable the name of the variable to share
+sub thread_share {
+    my ($class, $variable) = @_;
+    eval " require threads::shared;
+           require Apache2::RequestUtil;
+           Apache2::RequestUtil->import();
+           threads::shared::share($variable);
+    ";
+    print "eval error: $@" if ($@);
+
+}
+
 
 ## @method void set_user(Apache2::RequestRec request, string user)
 # sets remote_user

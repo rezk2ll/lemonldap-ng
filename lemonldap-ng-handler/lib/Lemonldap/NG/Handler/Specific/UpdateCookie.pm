@@ -10,6 +10,7 @@ package Lemonldap::NG::Handler::Specific::UpdateCookie;
 
 use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
+use Lemonldap::NG::Handler::API qw(:webserverCodes);
 use base qw(Lemonldap::NG::Handler::SharedConf);
 use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Common::Session;

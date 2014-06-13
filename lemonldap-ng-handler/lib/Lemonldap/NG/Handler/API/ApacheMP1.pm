@@ -1,6 +1,46 @@
 package Lemonldap::NG::Handler::API::ApacheMP1;
 
+use Exporter 'import';
+
 our $VERSION = '1.4.0';
+
+our %EXPORT_TAGS;
+
+our @EXPORT_OK;
+
+our @EXPORT;
+
+
+BEGIN{
+
+    # no webserver codes defined for ApacheMP1, but tag kept for compatibility with API
+    %EXPORT_TAGS = (
+        webserverCodes => [
+        ],
+    );
+    push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
+    $EXPORT_TAGS{all} = \@EXPORT_OK;
+
+    # Specific modules and constants for ApacheMP1
+    require Apache;
+    require Apache::Log;
+    require Apache::Constants;
+    Apache::Constants->import(':common');
+    Apache::Constants->import(':response');
+
+}
+
+
+
+
+## @method void thread_share(string $variable)
+# share or not the variable (if authorized by specific module)
+# @param $variable the name of the variable to share
+sub thread_share {
+    my ($class, $variable) = @_;
+    # nothing to do in ApacheMP1
+}
+
 
 ## @method void set_user(Apache2::RequestRec request, string user)
 # sets remote_user

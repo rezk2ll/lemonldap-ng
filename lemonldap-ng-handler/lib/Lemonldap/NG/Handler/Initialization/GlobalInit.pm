@@ -10,6 +10,7 @@ use Mouse;
 
 use Lemonldap::NG::Handler::Main::Jail;
 use Lemonldap::NG::Handler::Main::Logger;
+use Lemonldap::NG::Handler::API qw(:webserverCodes);
 
 our $VERSION = '1.4.0';
 
@@ -19,29 +20,6 @@ has useSafeJail => ( is => 'rw', isa => 'Maybe[Int]' );
 
 has safe => ( is => 'rw' );
 
-BEGIN {
-    if ( exists $ENV{MOD_PERL} ) {
-        if ( $ENV{MOD_PERL_API_VERSION} and $ENV{MOD_PERL_API_VERSION} >= 2 ) {
-            eval 'use constant MP => 2;';
-        }
-        else {
-            eval 'use constant MP => 1;';
-        }
-    }
-    else {
-        eval 'use constant MP => 0;';
-    }
-    if ( MP() == 2 ) {
-        eval '
-        use constant OK           => Apache2::Const::OK;
-        ';
-    }
-    else {    # For Test or CGI
-        eval '
-        use constant OK           => 1;
-        ';
-    }
-}
 
 ## @imethod protected void defaultValuesInit(hashRef args)
 # Set default values for non-customized variables

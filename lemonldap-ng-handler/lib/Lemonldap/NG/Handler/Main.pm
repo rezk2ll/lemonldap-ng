@@ -74,72 +74,14 @@ BEGIN {
         jailSharedVars => [qw( $datas )],
         tsv            => [qw( $tsv )],
         import         => [qw( import @EXPORT_OK @EXPORT %EXPORT_TAGS )],
-        apache         => [
-            qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR
-              )
-        ],
         post => [qw(postFilter)],
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
     $EXPORT_TAGS{all} = \@EXPORT_OK;
-    if ( exists $ENV{MOD_PERL} ) {
-        if ( $ENV{MOD_PERL_API_VERSION} and $ENV{MOD_PERL_API_VERSION} >= 2 ) {
-            eval 'use constant MP => 2;';
-        }
-        else {
-            eval 'use constant MP => 1;';
-        }
-    }
-    else {
-        eval 'use constant MP => 0;';
-    }
-    if ( MP() == 2 ) {
-        require Apache2::Log;
-        require Apache2::RequestUtil;
-        Apache2::RequestUtil->import();
-        require Apache2::RequestRec;
-        Apache2::RequestRec->import();
-        require Apache2::ServerUtil;
-        Apache2::ServerUtil->import();
-        require Apache2::Connection;
-        Apache2::Connection->import();
-        require Apache2::RequestIO;
-        Apache2::RequestIO->import();
-        require APR::Table;
-        APR::Table->import();
-        require Apache2::Const;
-        Apache2::Const->import( '-compile', qw(:common :log) );
-        eval '
-        use constant FORBIDDEN    => Apache2::Const::FORBIDDEN;
-        use constant REDIRECT     => Apache2::Const::REDIRECT;
-        use constant OK           => Apache2::Const::OK;
-        use constant DECLINED     => Apache2::Const::DECLINED;
-        use constant DONE         => Apache2::Const::DONE;
-        use constant SERVER_ERROR => Apache2::Const::SERVER_ERROR;
-        ';
-        eval {
-            require threads::shared;
-            threads::shared::share($tsv);
-        };
-        print "eval error: $@" if ($@);
-    }
-    elsif ( MP() == 1 ) {
-        require Apache;
-        require Apache::Log;
-        require Apache::Constants;
-        Apache::Constants->import(':common');
-        Apache::Constants->import(':response');
-    }
-    else {    # For Test or CGI
-        eval '
-        use constant FORBIDDEN    => 1;
-        use constant REDIRECT     => 1;
-        use constant OK           => 1;
-        use constant DECLINED     => 1;
-        use constant DONE         => 1;
-        use constant SERVER_ERROR => 1;
-        ';
-    }
+
+    # For importing MP(), required modules, and constants
+    use Lemonldap::NG::Handler::API qw(:webserverCodes);
+    Lemonldap::NG::Handler::API->thread_share('$tsv');
     *handler = ( MP() == 2 ) ? \&handler_mp2 : \&handler_mp1;
     *logout  = ( MP() == 2 ) ? \&logout_mp2  : \&logout_mp1;
 }
@@ -150,7 +92,6 @@ use Lemonldap::NG::Handler::Main::Jail;
 use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::PostForm;
 use Lemonldap::NG::Handler::Main::Logger;
-use Lemonldap::NG::Handler::API;
 
 ## @rmethod protected int handler_mp2()
 # Launch run() when used under mod_perl version 2

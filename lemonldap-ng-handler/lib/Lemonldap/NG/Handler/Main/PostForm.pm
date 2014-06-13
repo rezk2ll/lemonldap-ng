@@ -4,23 +4,13 @@ use strict;
 
 # For importing MP function, $tsv->{transform},
 # $tsv->{safe}, $tsv->{useSafeJail}, $tsv->{customFunctions}
-use Lemonldap::NG::Handler::Main qw( :apache :tsv );
+use Lemonldap::NG::Handler::Main qw( :tsv );
+use Lemonldap::NG::Handler::API qw( :webserverCodes );
 use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Handler::Main::Jail;
 
 our $VERSION = '1.4.0';
 
-BEGIN {
-
-    if ( MP() == 1 ) {
-        require Apache;
-        require Apache::Log;
-        require Apache::Constants;
-        Apache::Constants->import(':common');
-        Apache::Constants->import(':response');
-    }
-
-}
 
 ## @rmethod protected transformUri(string uri)
 # Transform URI to replay POST forms
