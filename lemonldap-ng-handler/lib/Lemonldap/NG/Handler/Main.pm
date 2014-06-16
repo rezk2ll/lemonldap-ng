@@ -80,7 +80,7 @@ BEGIN {
     $EXPORT_TAGS{all} = \@EXPORT_OK;
 
     # For importing MP(), required modules, and constants
-    use Lemonldap::NG::Handler::API qw(:webserverCodes);
+    use Lemonldap::NG::Handler::API qw(:httpCodes);
     Lemonldap::NG::Handler::API->thread_share('$tsv');
     *handler = ( MP() == 2 ) ? \&handler_mp2 : \&handler_mp1;
     *logout  = ( MP() == 2 ) ? \&logout_mp2  : \&logout_mp1;

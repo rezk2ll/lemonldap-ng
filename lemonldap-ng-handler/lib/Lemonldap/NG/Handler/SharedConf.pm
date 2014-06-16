@@ -18,7 +18,7 @@ package Lemonldap::NG::Handler::SharedConf;
 #use strict;
 
 use Lemonldap::NG::Handler::Main qw(:all);
-use Lemonldap::NG::Handler::API qw(:webserverCodes);
+use Lemonldap::NG::Handler::API qw(:httpCodes);
 use Lemonldap::NG::Handler::Initialization::GlobalInit;
 
 #use Lemonldap::NG::Handler::Vhost;

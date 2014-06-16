@@ -27,7 +27,7 @@ BEGIN {
 
     # export of MP() (kept for compatibility till MP is completely vanished)
     %EXPORT_TAGS = (
-        webserverCodes => [
+        httpCodes => [
             qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )
         ],
     );
@@ -60,7 +60,7 @@ BEGIN {
       : $main::{'nginx::'} ? "Nginx"
       :                      "CGI";
     # Load constants and make inheritance
-    eval "use Lemonldap::NG::Handler::API::$mode ':webserverCodes';
+    eval "use Lemonldap::NG::Handler::API::$mode ':httpCodes';
           use base Lemonldap::NG::Handler::API::$mode;";
 
 

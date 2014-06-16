@@ -15,7 +15,7 @@ our @EXPORT;
 BEGIN{
 
     %EXPORT_TAGS = (
-        webserverCodes => [
+        httpCodes => [
             qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )
         ],
     );

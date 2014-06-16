@@ -15,7 +15,7 @@ BEGIN{
 
     # no webserver codes defined for ApacheMP1, but tag kept for compatibility with API
     %EXPORT_TAGS = (
-        webserverCodes => [
+        httpCodes => [
         ],
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );

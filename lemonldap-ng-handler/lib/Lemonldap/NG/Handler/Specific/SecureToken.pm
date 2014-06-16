@@ -12,7 +12,7 @@ package Lemonldap::NG::Handler::Specific::SecureToken;
 
 use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
-use Lemonldap::NG::Handler::API qw(:webserverCodes);
+use Lemonldap::NG::Handler::API qw(:httpCodes);
 use base qw(Lemonldap::NG::Handler::SharedConf);
 use Cache::Memcached;
 use Apache::Session::Generate::MD5;

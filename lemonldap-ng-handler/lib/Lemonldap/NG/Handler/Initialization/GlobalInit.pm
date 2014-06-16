@@ -10,7 +10,7 @@ use Mouse;
 
 use Lemonldap::NG::Handler::Main::Jail;
 use Lemonldap::NG::Handler::Main::Logger;
-use Lemonldap::NG::Handler::API qw(:webserverCodes);
+use Lemonldap::NG::Handler::API qw(:httpCodes);
 
 our $VERSION = '1.4.0';
 

@@ -5,7 +5,7 @@ use strict;
 # For importing MP function, $tsv->{transform},
 # $tsv->{safe}, $tsv->{useSafeJail}, $tsv->{customFunctions}
 use Lemonldap::NG::Handler::Main qw( :tsv );
-use Lemonldap::NG::Handler::API qw( :webserverCodes );
+use Lemonldap::NG::Handler::API qw( :httpCodes );
 use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Handler::Main::Jail;
 

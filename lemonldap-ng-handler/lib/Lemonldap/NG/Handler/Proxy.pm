@@ -8,7 +8,7 @@ package Lemonldap::NG::Handler::Proxy;
 use strict;
 
 use Lemonldap::NG::Handler::Main qw(:tsv);
-use Lemonldap::NG::Handler::API qw(:webserverCodes);
+use Lemonldap::NG::Handler::API qw(:httpCodes);
 use LWP::UserAgent;
 use Lemonldap::NG::Handler::Main::Logger;
 

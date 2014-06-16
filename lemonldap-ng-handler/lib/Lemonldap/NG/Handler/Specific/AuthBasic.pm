@@ -11,7 +11,7 @@ package Lemonldap::NG::Handler::Specific::AuthBasic;
 use strict;
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
-use Lemonldap::NG::Handler::API qw(:webserverCodes);
+use Lemonldap::NG::Handler::API qw(:httpCodes);
 use Digest::MD5 qw(md5_base64);
 use MIME::Base64;
 use HTTP::Headers;

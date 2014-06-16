@@ -17,7 +17,7 @@ use Mouse;
 
 use Lemonldap::NG::Handler::SharedConf;    # Needed to get VERSION
 use Lemonldap::NG::Handler::Main::Logger;
-use Lemonldap::NG::Handler::API qw(:webserverCodes); # for importing modules and constants
+use Lemonldap::NG::Handler::API qw(:httpCodes); # for importing modules and constants
 
 our $VERSION = '1.3.0';
 

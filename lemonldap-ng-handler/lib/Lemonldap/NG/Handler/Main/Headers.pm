@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::Main::Headers;
 
 use strict;
 
-use Lemonldap::NG::Handler::API qw( :webserverCodes );    # for importing MP function
+use Lemonldap::NG::Handler::API qw( :httpCodes );    # for importing MP function
 use Lemonldap::NG::Handler::Main::Logger;
 
 our $VERSION = '1.4.0';

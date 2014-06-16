@@ -15,7 +15,7 @@ use MIME::Base64;
 use base qw(Lemonldap::NG::Common::CGI);
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
-use Lemonldap::NG::Handler::API qw(:webserverCodes);
+use Lemonldap::NG::Handler::API qw(:httpCodes);
 
 #link Lemonldap::NG::Handler::_CGI protected _handler
 
