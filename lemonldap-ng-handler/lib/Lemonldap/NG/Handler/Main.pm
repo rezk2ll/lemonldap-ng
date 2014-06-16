@@ -82,8 +82,6 @@ BEGIN {
     # For importing MP(), required modules, and constants
     use Lemonldap::NG::Handler::API qw(:httpCodes);
     Lemonldap::NG::Handler::API->thread_share('$tsv');
-    *handler = ( MP() == 2 ) ? \&handler_mp2 : \&handler_mp1;
-    *logout  = ( MP() == 2 ) ? \&logout_mp2  : \&logout_mp1;
 }
 
 use Lemonldap::NG::Handler::Initialization::LocalInit;
@@ -93,17 +91,12 @@ use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::PostForm;
 use Lemonldap::NG::Handler::Main::Logger;
 
-## @rmethod protected int handler_mp2()
-# Launch run() when used under mod_perl version 2
-# @return Apache constant
-sub handler_mp2 : method {
+
+sub handler ($$) : method {
     shift->run(@_);
 }
 
-## @rmethod protected int logout_mp2()
-# Launch unlog() when used under mod_perl version 2
-# @return Apache constant
-sub logout_mp2 : method {
+sub logout ($$) : method {
     shift->unlog(@_);
 }
 
@@ -517,16 +510,6 @@ sub abort {
     };
     die $mess if ($@);
 }
-
-## @rmethod protected int handler_mp1()
-# Launch run() when used under mod_perl version 1
-# @return Apache constant
-sub handler_mp1 ($$) { shift->run(@_); }
-
-## @rmethod protected int logout_mp1()
-# Launch unlog() when used under mod_perl version 1
-# @return Apache constant
-sub logout_mp1 ($$) { shift->unlog(@_); }
 
 ## @imethod void localInit(hashRef args)
 # instanciate a LocalInit object with variables:
