@@ -287,32 +287,18 @@ sub retrieveSession {
         }
     );
 
-    unless ( $apacheSession->data ) {
+    if ( $datas = $apacheSession->data ) {
+        # Update the session to notify activity, if necessary
+        $apacheSession->update( { '_lastSeen' => time } )
+          if ( $tsv->{timeoutActivity} );
+
+        $datasUpdate = time();
+        return 1;
+    } else {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
             "Session $id can't be retrieved", 'info' );
         return 0;
     }
-
-    # 3. Check local macros
-    my $local_macros;
-    if (    $tsv->{refLocalStorage}
-        and $local_macros = $tsv->{refLocalStorage}->get($id) )
-    {
-        foreach ( keys %$local_macros ) {
-            $datas->{$_} = $local_macros->{$_} unless defined $datas->{$_};
-        }
-    }
-
-    # Update the session to notify activity, if necessary
-    $apacheSession->update( { '_lastSeen' => time() } )
-      if ( $tsv->{timeoutActivity} );
-
-    # Store data in current shared variables
-    $datas->{$_} = $apacheSession->data->{$_}
-      foreach ( keys %{ $apacheSession->data } );
-
-    $datasUpdate = time();
-    return 1;
 }
 
 # MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
