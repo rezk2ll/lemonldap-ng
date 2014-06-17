@@ -21,7 +21,6 @@ use Lemonldap::NG::Handler::Main qw(:all);
 use Lemonldap::NG::Handler::API qw(:httpCodes);
 use Lemonldap::NG::Handler::Initialization::GlobalInit;
 
-#use Lemonldap::NG::Handler::Vhost;
 use Lemonldap::NG::Common::Conf;               #link protected lmConf
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Cache::Cache qw($EXPIRES_NEVER);
@@ -29,7 +28,7 @@ use Lemonldap::NG::Handler::Main::Logger;
 
 use Mouse;
 
-extends qw(Lemonldap::NG::Handler::Main);      # Lemonldap::NG::Handler::Vhost
+extends qw(Lemonldap::NG::Handler::Main);
 
 #parameter reloadTime Time in second between 2 configuration check (600)
 
@@ -41,11 +40,11 @@ our $lmConf;
 our $localConfig;
 
 BEGIN {
-    Lemonldap::NG::Handler::API->thread_share('$cfgNum');
-    Lemonldap::NG::Handler::API->thread_share('$lastReload');
-    Lemonldap::NG::Handler::API->thread_share('$reloadTime');
-    Lemonldap::NG::Handler::API->thread_share('$lmConf');
-    Lemonldap::NG::Handler::API->thread_share('$localConfig');
+    Lemonldap::NG::Handler::API->thread_share($cfgNum);
+    Lemonldap::NG::Handler::API->thread_share($lastReload);
+    Lemonldap::NG::Handler::API->thread_share($reloadTime);
+    Lemonldap::NG::Handler::API->thread_share($lmConf);
+    Lemonldap::NG::Handler::API->thread_share($localConfig);
     *EXPORT_TAGS = *Lemonldap::NG::Handler::Main::EXPORT_TAGS;
     *EXPORT_OK   = *Lemonldap::NG::Handler::Main::EXPORT_OK;
     push(

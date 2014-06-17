@@ -32,12 +32,7 @@ use constant MAINTENANCE_CODE => 503;
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
 our $VERSION = '1.4.0';
-
-our %EXPORT_TAGS;
-
-our @EXPORT_OK;
-
-our @EXPORT;
+our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
 # my @threadSharedVar = qw(
 #     cda                    childInitDone         cipher
@@ -81,7 +76,7 @@ BEGIN {
 
     # For importing MP(), required modules, and constants
     use Lemonldap::NG::Handler::API qw(:httpCodes);
-    Lemonldap::NG::Handler::API->thread_share('$tsv');
+    Lemonldap::NG::Handler::API->thread_share($tsv);
 }
 
 use Lemonldap::NG::Handler::Initialization::LocalInit;

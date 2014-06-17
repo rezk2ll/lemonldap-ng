@@ -1,7 +1,7 @@
 package Lemonldap::NG::Handler::API::Nginx;
 
 our $VERSION = '1.4.0';
-
+our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
 
 

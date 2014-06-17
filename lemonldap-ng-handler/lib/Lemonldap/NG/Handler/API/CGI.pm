@@ -1,19 +1,11 @@
 package Lemonldap::NG::Handler::API::CGI;
 
-
 use Exporter 'import';
 
 our $VERSION = '1.4.0';
-
-our %EXPORT_TAGS;
-
-our @EXPORT_OK;
-
-our @EXPORT;
-
+our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
 BEGIN{
-
     %EXPORT_TAGS = (
         httpCodes => [
             qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )
@@ -21,16 +13,22 @@ BEGIN{
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
     $EXPORT_TAGS{all} = \@EXPORT_OK;
+}
 
-    # Specific modules and constants for Test or CGI
-    eval '
-    use constant FORBIDDEN    => 1;
-    use constant REDIRECT     => 1;
-    use constant OK           => 1;
-    use constant DECLINED     => 1;
-    use constant DONE         => 1;
-    use constant SERVER_ERROR => 1;
-    ';
+# Specific modules and constants for Test or CGI
+use constant FORBIDDEN    => 1;
+use constant REDIRECT     => 1;
+use constant OK           => 1;
+use constant DECLINED     => 1;
+use constant DONE         => 1;
+use constant SERVER_ERROR => 1;
+
+
+## @method void apiInit(hashref $args)
+# nothing do to at startup
+# @param $args the name of the variable to share
+sub apiInit {
+    my ($class, $args) = @_;
 }
 
 ## @method void thread_share(string $variable)

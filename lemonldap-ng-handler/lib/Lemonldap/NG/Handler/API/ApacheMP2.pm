@@ -3,17 +3,9 @@ package Lemonldap::NG::Handler::API::ApacheMP2;
 use Exporter 'import';
 
 our $VERSION = '1.4.0';
-
-our %EXPORT_TAGS;
-
-our @EXPORT_OK;
-
-our @EXPORT;
-
-
+our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
 BEGIN{
-
     %EXPORT_TAGS = (
         httpCodes => [
             qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )
@@ -21,50 +13,52 @@ BEGIN{
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
     $EXPORT_TAGS{all} = \@EXPORT_OK;
-
-    # Specific modules and constants for ApacheMP2
-    require Apache2::RequestUtil;
-    Apache2::RequestUtil->import();
-    require Apache2::RequestRec;
-    Apache2::RequestRec->import();
-    require Apache2::Log;
-    require Apache2::ServerUtil;
-    Apache2::ServerUtil->import();
-    require Apache2::Connection;
-    Apache2::Connection->import();
-    require Apache2::RequestIO;
-    Apache2::RequestIO->import();
-    require APR::Table;
-    APR::Table->import();
-    require Apache2::Const;
-    Apache2::Const->import( '-compile', qw(:common :log) );
-    eval '
-        use constant FORBIDDEN    => Apache2::Const::FORBIDDEN;
-        use constant REDIRECT     => Apache2::Const::REDIRECT;
-        use constant OK           => Apache2::Const::OK;
-        use constant DECLINED     => Apache2::Const::DECLINED;
-        use constant DONE         => Apache2::Const::DONE;
-        use constant SERVER_ERROR => Apache2::Const::SERVER_ERROR;
-    ';
-
 }
 
+# Specific modules and constants for Apache Mod_Perl 2
+use Apache2::RequestUtil;
+use Apache2::RequestRec;
+use Apache2::Log;
+use Apache2::ServerUtil;
+use Apache2::Connection;
+use Apache2::RequestIO;
+use Apache2::Const;
+use APR::Table;
+
+use constant FORBIDDEN    => Apache2::Const::FORBIDDEN;
+use constant REDIRECT     => Apache2::Const::REDIRECT;
+use constant OK           => Apache2::Const::OK;
+use constant DECLINED     => Apache2::Const::DECLINED;
+use constant DONE         => Apache2::Const::DONE;
+use constant SERVER_ERROR => Apache2::Const::SERVER_ERROR;
+
+eval { require threads::shared; };
+print STDERR "You probably would have better perfs by enabling threads::shared\n"
+    if ($@);
 
 
 ## @method void thread_share(string $variable)
-# share or not the variable (if authorized by specific module)
+# try to share $variable between threads
+# note: eval is needed,
+# else it fails to compile if threads::shared is not loaded
 # @param $variable the name of the variable to share
 sub thread_share {
     my ($class, $variable) = @_;
-    eval " require threads::shared;
-           require Apache2::RequestUtil;
-           Apache2::RequestUtil->import();
-           threads::shared::share($variable);
-    ";
-    print "eval error: $@" if ($@);
-
+    eval "threads::shared::share(\$variable);";
 }
 
+## @method void apiInit(hashref $args)
+# modifies web server signature
+# @param $args the name of the variable to share
+sub apiInit {
+    my ($class, $args) = @_;
+    Apache2::ServerUtil->server->push_handlers(
+        PerlPostConfigHandler => sub {
+            my ( $c, $l, $t, $s ) = splice @_;
+            $s->add_version_component( "Lemonldap::NG::Handler/$args->{version}" );
+        }
+    ) unless ( $args->{hideSignature} );
+}
 
 ## @method void set_user(Apache2::RequestRec request, string user)
 # sets remote_user
