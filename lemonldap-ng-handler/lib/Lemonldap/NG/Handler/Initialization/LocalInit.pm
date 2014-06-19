@@ -69,7 +69,7 @@ sub localInit($$) {
 
     Lemonldap::NG::Handler::API->setServerSignature(
         "Lemonldap::NG::Handler/" . $Lemonldap::NG::Handler::VERSION
-    ) unless ( $args->{hideSignature} );
+    ) if ( $Lemonldap::NG::Handler::VERSION and !$args->{hideSignature} );
 
     return (
         $self->{localStorage},        $self->{refLocalStorage},
