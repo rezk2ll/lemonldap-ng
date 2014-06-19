@@ -204,18 +204,18 @@ sub setConf {
 
 # RELOAD SYSTEM
 
-*reload = *refresh;
+*refresh = *reload;
 
-## @rmethod int refresh(Apache::RequestRec r)
+## @rmethod int reload(Apache::RequestRec r)
 # Launch testConf() with $local=0, so remote configuration is tested.
 # Then build a simple HTTP response that just returns "200 OK" or
 # "500 Server Error".
 # @param $r current request
 # @return Apache constant (OK or SERVER_ERROR)
-sub refresh($$) {
+sub reload($$) {
     my ( $class, $r ) = splice @_;
     Lemonldap::NG::Handler::Main::Logger->lmLog(
-        "Request for configuration refresh", 'notice' );
+        "Request for configuration reload", 'notice' );
     if ( $class->testConf(0) == OK ) {
         Lemonldap::NG::Handler::API->set_header_out($r,
             ( "Content-Type" => "text/plain; charset=UTF-8" ) );
