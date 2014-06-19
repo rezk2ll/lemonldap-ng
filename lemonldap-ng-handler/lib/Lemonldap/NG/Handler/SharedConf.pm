@@ -215,34 +215,13 @@ sub setConf {
 sub refresh($$) {
     my ( $class, $r ) = splice @_;
     Lemonldap::NG::Handler::Main::Logger->lmLog(
-        "$class: request for configuration reload", 'notice' );
-    $r->handler("perl-script");
+        "Request for configuration refresh", 'notice' );
     if ( $class->testConf(0) == OK ) {
-        if ( MP() == 2 ) {
-            $r->push_handlers( 'PerlResponseHandler' =>
-                  sub { my $r = shift; $r->content_type('text/plain'); OK } );
-        }
-        elsif ( MP() == 1 ) {
-            $r->push_handlers(
-                'PerlHandler' => sub { my $r = shift; $r->send_http_header; OK }
-            );
-        }
-        else {
-            return 1;
-        }
+        Lemonldap::NG::Handler::API->set_header_out($r,
+            ( "Content-Type" => "text/plain; charset=UTF-8" ) );
+        return DONE;
     }
-    else {
-        if ( MP() == 2 ) {
-            $r->push_handlers( 'PerlResponseHandler' => sub { SERVER_ERROR } );
-        }
-        elsif ( MP() == 1 ) {
-            $r->push_handlers( 'PerlHandler' => sub { SERVER_ERROR } );
-        }
-        else {
-            return 0;
-        }
-    }
-    return OK;
+    return SERVER_ERROR;
 }
 
 1;
