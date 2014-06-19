@@ -35,6 +35,15 @@ sub thread_share {
     # nothing to do in ApacheMP1
 }
 
+## @method void lmLog(string $msg, string $level, Apache::RequestRec $r)
+# logs message $msg to Apache logs with loglevel $level
+# @param $msg string message to log
+# @param $level string loglevel
+# @param $r Apache2::RequestRec optional Current request
+sub lmLog {
+    my ( $class, $msg, $level, $r ) = @_;
+    Apache->server->log->$level($msg);
+}
 
 ## @method void set_user(Apache2::RequestRec request, string user)
 # sets remote_user

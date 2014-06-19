@@ -23,6 +23,17 @@ use constant DECLINED     => 1;
 use constant DONE         => 1;
 use constant SERVER_ERROR => 1;
 
+# Log level converted to integers, to compare them
+$logLevel = {
+    emerg  => 7,
+    alert  => 6,
+    crit   => 5,
+    error  => 4,
+    warn   => 3,
+    notice => 2,
+    info   => 1,
+    debug  => 0,
+};
 
 ## @method void apiInit(hashref $args)
 # nothing do to at startup
@@ -37,6 +48,19 @@ sub apiInit {
 sub thread_share {
     my ($class, $variable) = @_;
     # nothing to do in CGI
+}
+
+## @method void lmLog(string $msg, string $level, Apache::RequestRec $r)
+# logs message $msg to Apache logs with level $level
+# set Env Var lmLogLevel to set loglevel; set to "info" by default
+# @param $msg string message to log
+# @param $level string loglevel
+# @param $r Apache2::RequestRec optional Current request
+sub lmLog {
+    my ( $class, $msg, $level, $r ) = @_;
+    my $lmLogLevel = $ENV{lmLogLevel} || $ENV{LMLOGLEVEL} || "info";
+    print STDERR "[$level] $module $mess\n"
+        if ($logLevel->{$level} > $logLevel->{$lmLogLevel});
 }
 
 ## @method void set_user(Apache2::RequestRec request, string user)

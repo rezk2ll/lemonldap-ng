@@ -60,6 +60,17 @@ sub apiInit {
     ) unless ( $args->{hideSignature} );
 }
 
+## @method void lmLog(string $msg, string $level, Apache2::RequestRec $r)
+# logs message $msg to Apache logs with loglevel $level
+# @param $msg string message to log
+# @param $level string loglevel
+# @param $r Apache2::RequestRec optional Current request
+sub lmLog {
+    my ( $class, $msg, $level, $r ) = @_;
+    # TODO: remove the useless tag 'ApacheMP2.pm(70):' in debug logs
+    Apache2::ServerRec->log->$level($msg);
+}
+
 ## @method void set_user(Apache2::RequestRec request, string user)
 # sets remote_user
 # @param request Apache2::RequestRec current request
@@ -200,10 +211,6 @@ sub unparsed_uri {
 sub get_server_port {
     my ($class, $r) = @_;
     return $r->get_server_port;
-}
-
-sub push_handlers {
-    my ($class, $r) = @_;
 }
 
 1;

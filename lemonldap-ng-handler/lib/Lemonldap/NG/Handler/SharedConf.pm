@@ -177,7 +177,7 @@ sub testConf {
     }
     if ( !$cfgNum or $cfgNum != $conf->{cfgNum} ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
-"$class: get configuration $conf->{cfgNum} ($Lemonldap::NG::Common::Conf::msg)",
+"Get configuration $conf->{cfgNum} ($Lemonldap::NG::Common::Conf::msg)",
             'debug'
         );
         $lastReload = time();

@@ -3,30 +3,22 @@ package Lemonldap::NG::Handler::Main::Logger;
 
 use Lemonldap::NG::Handler::API qw( :httpCodes );
 
-## @rmethod void lmLog(string mess, string level)
+## @rmethod void lmLog(string msg, string level, request r)
 # Wrapper for Apache log system
-# @param $mess message to log
-# @param $level string (debug, info, warning or error)
+# @param $msg message to log
+# @param $level string (emerg|alert|crit|error|warn|notice|info|debug)
+# @param $r optional Current request
 sub lmLog {
-    my ( $class, $mess, $level ) = splice @_;
-    die("Level is required") unless ($level);
-    my $call;
-    my @tmp = caller();
-    ( my $module = $tmp[0] ) =~ s/.+:://g;
-    $module .= "($tmp[2]): ";
-    unless ( $level eq 'debug' ) {
-        $call = "$tmp[1] $tmp[2]:";
-    }
-    if ( MP() == 2 ) {
-        Apache2::ServerRec->log->debug($call) if ($call);
-        Apache2::ServerRec->log->$level( $module . $mess );
-    }
-    elsif ( MP() == 1 ) {
-        Apache->server->log->debug($call) if ($call);
-        Apache->server->log->$level( $module . $mess );
-    }
-    else {
-        print STDERR "[$level] $module $mess\n";
+    my ( $class, $msg, $level, $r ) = @_;
+    my ( $module, $file, $line ) = caller();
+
+    if ( $level eq 'debug' ) {
+        $file =~ s#.+/##;
+        Lemonldap::NG::Handler::API->lmLog( "$file($line): $msg", "debug", $r );
+    } else {
+        Lemonldap::NG::Handler::API->lmLog( "$file($line):", "debug", $r );
+
+        Lemonldap::NG::Handler::API->lmLog( "Lemonldap::NG::Handler: $msg", $level, $r );
     }
 }
 

@@ -129,57 +129,23 @@ sub forbidden {
         $class->localUnlog;
         return $class->goToPortal( $apacheRequest, $u, 'logout=1' );
     }
+
+    # Log forbidding
+    Lemonldap::NG::Handler::Main::Logger->lmLog(
+"User " . $datas->{ $tsv->{whatToTrace} } . " was forbidden to access to $uri",
+        "notice", $apacheRequest );
     $class->updateStatus( $apacheRequest, 'REJECT', $datas->{ $tsv->{whatToTrace} } );
-    $apacheRequest->push_handlers(
-        PerlLogHandler => sub {
-            $_[0]->status(FORBIDDEN);
-            $class->logForbidden( $uri, $datas );
-            DECLINED;
-        }
-    );
 
     # Redirect or Forbidden?
     if ( $tsv->{useRedirectOnForbidden} ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "Use redirect for forbidden access", 'debug' );
+            "Use redirect for forbidden access", 'debug', $apacheRequest );
         return $class->goToPortal( $apacheRequest, $uri, 'lmError=403' );
-    }
-    else {
-        Lemonldap::NG::Handler::Main::Logger->lmLog( "Return forbidden access",
-            'debug' );
+    } else {
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+            "Return forbidden access", 'debug', $apacheRequest );
         return FORBIDDEN;
     }
-}
-
-## @rmethod protected void logForbidden(string uri,hashref datas)
-# Insert a log in Apache errors log system to inform that the user was rejected.
-# This method has to be overloaded to use different logs systems
-# @param $uri uri asked
-# @param $datas hash re to user's datas
-sub logForbidden {
-    my ( $class, $uri, $datas ) = splice @_;
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
-        'User "'
-          . $datas->{ $tsv->{whatToTrace} }
-          . '" was reject when he tried to access to '
-          . $uri,
-        'notice'
-    );
-}
-
-## @rmethod protected void logGranted(string uri)
-# Insert a log in Apache errors log system to inform that the user was
-# authorizated. This method has to be overloaded to use different logs systems
-# @param $uri uri asked
-sub logGranted {
-    my ( $class, $uri, $datas ) = splice @_;
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
-        'User "'
-          . $datas->{ $tsv->{whatToTrace} }
-          . '" was granted to access to '
-          . $uri,
-        'debug'
-    );
 }
 
 ## @rmethod protected void hideCookie()
@@ -187,7 +153,7 @@ sub logGranted {
 # @param $apacheRequest current request
 sub hideCookie {
     my ( $class, $apacheRequest ) = @_;
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "removing cookie", 'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "removing cookie", 'debug', $apacheRequest );
     my $tmp =
       Lemonldap::NG::Handler::API->header_in( $apacheRequest, 'Cookie' );
     $tmp =~ s/$tsv->{cookieName}(http)?=[^,;]*[,;\s]*//og;
@@ -223,7 +189,7 @@ sub goToPortal {
         "Redirect "
           . Lemonldap::NG::Handler::API->remote_ip($apacheRequest)
           . " to portal (url was $url)",
-        'debug'
+        'debug', $apacheRequest
     );
     my $urlc_init = $class->encodeUrl( $apacheRequest, $url );
     Lemonldap::NG::Handler::API->set_header_out( $apacheRequest,
@@ -261,7 +227,7 @@ sub fetchId {
 # Tries to retrieve the session whose index is id
 # @return true if the session was found, false else
 sub retrieveSession {
-    my ( $class, $id ) = @_;
+    my ( $class, $id, $apacheRequest ) = @_;
 
     # 1. Search if the user was the same as previous (very efficient in
     # persistent connection).
@@ -291,7 +257,7 @@ sub retrieveSession {
         return 1;
     } else {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "Session $id can't be retrieved", 'info' );
+            "Session $id can't be retrieved", 'info', $apacheRequest );
         return 0;
     }
 }
@@ -321,13 +287,13 @@ sub run ($$) {
 
         if ( $tsv->{useRedirectOnError} ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
-                "Got to portal with maintenance error code", 'debug' );
+                "Got to portal with maintenance error code", 'debug', $apacheRequest );
             return $class->goToPortal( $apacheRequest, '/',
                 'lmError=' . MAINTENANCE_CODE );
         }
         else {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
-                "Return maintenance error code", 'debug' );
+                "Return maintenance error code", 'debug', $apacheRequest );
             return MAINTENANCE_CODE;
         }
     }
@@ -338,7 +304,7 @@ sub run ($$) {
         and $uri =~ s/[\?&;]($tsv->{cookieName}(http)?=\w+)$//oi )
     {
         my $str = $1;
-        Lemonldap::NG::Handler::Main::Logger->lmLog( 'CDA request', 'debug' );
+        Lemonldap::NG::Handler::Main::Logger->lmLog( 'CDA request', 'debug', $apacheRequest );
         my $redirectUrl = $class->_buildUrl( $apacheRequest, $uri );
         my $redirectHttps = ( $redirectUrl =~ m/^https/ );
         Lemonldap::NG::Handler::API->set_err_header_out(
@@ -360,8 +326,8 @@ sub run ($$) {
     my $protection = $class->isUnprotected( $apacheRequest, $uri );
 
     if ( $protection == SKIP ) {
-        Lemonldap::NG::Handler::Main::Logger->lmLog( "Access control skipped",
-            "debug" );
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+            "Access control skipped", 'debug', $apacheRequest );
         $class->updateStatus( $apacheRequest, 'SKIP' );
         $class->hideCookie($apacheRequest);
         Lemonldap::NG::Handler::Main::Headers->cleanHeaders( $apacheRequest,
@@ -373,7 +339,7 @@ sub run ($$) {
 
     # Try to recover cookie and user session
     if (    $id = $class->fetchId($apacheRequest)
-        and $class->retrieveSession($id) )
+        and $class->retrieveSession( $id, $apacheRequest ) )
     {
 
         # AUTHENTICATION done
@@ -396,17 +362,18 @@ sub run ($$) {
 
         # Store local macros
         if ( keys %$datas > $kc and $tsv->{refLocalStorage} ) {
-            Lemonldap::NG::Handler::Main::Logger->lmLog( "Update local cache",
-                "debug" );
+            Lemonldap::NG::Handler::Main::Logger->lmLog(
+                "Update local cache", 'debug', $apacheRequest );
             $tsv->{refLocalStorage}->set( $id, $datas, "10 minutes" );
         }
 
         # Hide Lemonldap::NG cookie
         $class->hideCookie($apacheRequest);
 
-        # Log
-        $apacheRequest->push_handlers( PerlLogHandler =>
-              sub { $class->logGranted( $uri, $datas ); DECLINED }, );
+        # Log access granted
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+"User " . $datas->{ $tsv->{whatToTrace} } . " was granted to access to $uri",
+            'debug', $apacheRequest );
 
         #  Catch POST rules
         Lemonldap::NG::Handler::Main::PostForm->transformUri( $apacheRequest,
@@ -419,7 +386,7 @@ sub run ($$) {
 
         # Ignore unprotected URIs
         Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "No valid session but unprotected access", "debug" );
+            "No valid session but unprotected access", 'debug', $apacheRequest );
         $class->updateStatus( $apacheRequest, 'UNPROTECT' );
         $class->hideCookie($apacheRequest);
         Lemonldap::NG::Handler::Main::Headers->cleanHeaders( $apacheRequest,
@@ -430,8 +397,8 @@ sub run ($$) {
     else {
 
         # Redirect user to the portal
-        Lemonldap::NG::Handler::Main::Logger->lmLog( "$class: No cookie found",
-            'info' )
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+            "No cookie found", 'info', $apacheRequest )
           unless ($id);
 
         # if the cookie was fetched, a log is sent by retrieveSession()
@@ -454,7 +421,7 @@ sub checkMaintenanceMode {
 
     if ($_maintenance) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "Maintenance mode activated", 'debug' );
+            "Maintenance mode activated", 'debug', $apacheRequest );
         return 1;
     }
 
@@ -474,15 +441,12 @@ sub abort {
     eval {
         my $uri  = Lemonldap::NG::Handler::API->unparsed_uri($apacheRequest);
 
-        # Set error 500 in logs even if "useRedirectOnError" is set
-        $apacheRequest->push_handlers(
-            PerlLogHandler => sub { $_[0]->status(SERVER_ERROR); DECLINED; } );
-        Lemonldap::NG::Handler::Main::Logger->lmLog( $mess, 'error' );
+        Lemonldap::NG::Handler::Main::Logger->lmLog( $mess, 'error', $apacheRequest );
 
         # Redirect or die
         if ( $tsv->{useRedirectOnError} ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
-                "Use redirect for error", 'debug' );
+                "Use redirect for error", 'debug', $apacheRequest );
             return $class->goToPortal( $apacheRequest, $uri, 'lmError=500' );
         }
         else {
@@ -613,7 +577,7 @@ sub grant {
                 'Regexp "'
                   . $tsv->{locationConditionText}->{$vhost}->[$i]
                   . '" match',
-                'debug'
+                'debug', $apacheRequest
             );
             return &{ $tsv->{locationCondition}->{$vhost}->[$i] }(
                 $apacheRequest);
@@ -622,12 +586,12 @@ sub grant {
     unless ( $tsv->{defaultCondition}->{$vhost} ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
             "User rejected because VirtualHost \"$vhost\" has no configuration",
-            'warn'
+            'warn', $apacheRequest
         );
         return 0;
     }
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "$vhost: Apply default rule",
-        'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog(
+        "$vhost: Apply default rule", 'debug', $apacheRequest );
     return &{ $tsv->{defaultCondition}->{$vhost} }($apacheRequest);
 }
 
@@ -653,7 +617,7 @@ sub _buildUrl {
       : ( !$_https && $portString == 80 )  ? ''
       :                                      ':' . $portString;
     my $url = "http" . ( $_https ? "s" : "" ) . "://$vhost$portString$s";
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "Build URL $url", 'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "Build URL $url", 'debug', $apacheRequest );
     return $url;
 }
 
@@ -703,8 +667,7 @@ sub unlog ($$) {
 # @return Apache2::Const::OK
 sub status($$) {
     my ( $class, $r ) = splice @_;
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "$class: request for status",
-        'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "Request for status", 'debug', $r );
     return $class->abort( $r, "$class: status page can not be displayed" )
       unless ( $tsv->{statusPipe} and $tsv->{statusOut} );
     $r->handler("perl-script");
