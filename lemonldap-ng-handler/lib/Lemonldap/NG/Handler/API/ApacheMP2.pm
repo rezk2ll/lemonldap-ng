@@ -213,4 +213,13 @@ sub get_server_port {
     return $r->get_server_port;
 }
 
+## @method void print(string data, Apache2::RequestRec request)
+# write data in HTTP response body
+# @param data Text to add in response body
+# @param request Apache2::RequestRec Current request
+sub print {
+    my ($class, $data, $r) = @_;
+    $r->print($data);
+}
+
 1;

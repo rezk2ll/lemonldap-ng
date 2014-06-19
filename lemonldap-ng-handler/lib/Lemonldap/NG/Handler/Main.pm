@@ -682,27 +682,9 @@ sub status($$) {
         last if (/^END$/);
         $buf .= $_;
     }
-    if ( MP() == 2 ) {
-        $r->push_handlers(
-            'PerlResponseHandler' => sub {
-                my $r = shift;
-                $r->content_type('text/html; charset=UTF-8');
-                $r->print($buf);
-                OK;
-            }
-        );
-    }
-    else {
-        $r->push_handlers(
-            'PerlHandler' => sub {
-                my $r = shift;
-                $r->content_type('text/html; charset=UTF-8');
-                $r->send_http_header;
-                $r->print($buf);
-                OK;
-            }
-        );
-    }
+    Lemonldap::NG::Handler::API->set_header_out($r,
+        ( "Content-Type" => "text/html; charset=UTF-8" ) );
+    Lemonldap::NG::Handler::API->print($buf, $r);
     return OK;
 }
 

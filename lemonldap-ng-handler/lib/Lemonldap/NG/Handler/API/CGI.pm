@@ -209,8 +209,13 @@ sub get_server_port {
     return $ENV{SERVER_PORT};
 }
 
-sub push_handlers {
-    my ($class, $r) = @_;
+## @method void print(string data, Apache2::RequestRec request)
+# write data in HTTP response body
+# @param data Text to add in response body
+# @param request Apache2::RequestRec Current request
+sub print {
+    my ($class, $data, $r) = @_;
+    #TODO
 }
 
 sub cgiName {
