@@ -61,7 +61,7 @@ sub thread_share {
 sub lmLog {
     my ( $class, $msg, $level, $r ) = @_;
     my $lmLogLevel = $ENV{lmLogLevel} || $ENV{LMLOGLEVEL} || "info";
-    print STDERR "[$level] $module $mess\n"
+    print STDERR "[$level] $module $msg\n"
         if ($logLevel->{$level} > $logLevel->{$lmLogLevel});
 }
 

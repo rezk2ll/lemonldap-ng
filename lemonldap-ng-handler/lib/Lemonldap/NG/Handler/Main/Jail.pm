@@ -43,9 +43,9 @@ sub build_safe {
         }
         next if ( $self->can($_) );
         eval "sub $_ {
-            my \$apacheRequest = shift;
-            my \$uri = Lemonldap::NG::Handler::API->uri_with_args(\$apacheRequest);
-            return $sub(\$uri, \$apacheRequest, \@_)
+            my \$r = shift;
+            my \$uri = Lemonldap::NG::Handler::API->uri_with_args(\$r);
+            return $sub(\$uri, \$r, \@_)
             }";
         Lemonldap::NG::Handler::Main::Logger->lmLog( $@, 'error' ) if ($@);
     }

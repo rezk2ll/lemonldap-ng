@@ -308,9 +308,9 @@ sub postUrlInit {
 
                 # Register POST form for POST URL
                 $transform->{$alias}->{$url} = sub {
-                    my $apacheRequest = shift;
+                    my $r = shift;
                     Lemonldap::NG::Handler::Main::PostForm->buildPostForm(
-                        $apacheRequest, $d->{postUrl} );
+                        $r, $d->{postUrl} );
                   }
                   if ( $url ne $d->{postUrl} );
 
@@ -340,12 +340,12 @@ sub postUrlInit {
                 Lemonldap::NG::Handler::Main::Logger->lmLog(
                     "Compiling POST request for $url", 'debug' );
                 $transform->{$alias}->{ $d->{postUrl} } = sub {
-                    my $apacheRequest = shift;
+                    my $r = shift;
                     return
                       Lemonldap::NG::Handler::Main::PostForm->buildPostForm(
-                        $apacheRequest, $d->{postUrl} )
-                      if ( $apacheRequest->method ne 'POST' );
-                    $apacheRequest->add_input_filter(
+                        $r, $d->{postUrl} )
+                      if ( $r->method ne 'POST' );
+                    $r->add_input_filter(
                         sub {
                             Lemonldap::NG::Handler::Main::PostForm->postFilter(
                                 $tmp, @_ );
@@ -419,8 +419,8 @@ sub conditionSub {
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
-                my $apacheRequest = shift;
-                $apacheRequest->add_output_filter(
+                my $r = shift;
+                $r->add_output_filter(
                     sub {
                         return $mainClass->redirectFilter( $u, @_ );
                     }
@@ -435,14 +435,14 @@ sub conditionSub {
         my $u = $1 || $self->portal();
         return (
             sub {
-                my $apacheRequest = shift;
+                my $r = shift;
                 $mainClass->localUnlog;
-                $apacheRequest->add_output_filter(
+                $r->add_output_filter(
                     sub {
-                        my $apacheRequest = shift->r;
+                        my $r = shift->r;
                         return $mainClass->redirectFilter(
                             $self->portal() . "?url="
-                              . $mainClass->encodeUrl( $apacheRequest, $u )
+                              . $mainClass->encodeUrl( $r, $u )
                               . "&logout=1",
                             @_
                         );
@@ -457,7 +457,7 @@ sub conditionSub {
     # Replace some strings in condition
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/\$datas->{$1}/g;
-    $cond =~ s/\$datas->{vhost}/Lemonldap::NG::Handler::API->hostname(\$apacheRequest)/g;
+    $cond =~ s/\$datas->{vhost}/Lemonldap::NG::Handler::API->hostname(\$r)/g;
 
     my $jail = Lemonldap::NG::Handler::Main::Jail->new(
         'safe'            => $self->safe,

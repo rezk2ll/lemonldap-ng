@@ -17,11 +17,11 @@ our $VERSION = '1.4.0';
 # @param uri URI to catch
 # @return Apache2::Const
 sub transformUri {
-    my ( $class, $apacheRequest, $uri ) = splice @_;
-    my $vhost = Lemonldap::NG::Handler::API->hostname($apacheRequest);
+    my ( $class, $r, $uri ) = splice @_;
+    my $vhost = Lemonldap::NG::Handler::API->hostname($r);
 
     if ( defined( $tsv->{transform}->{$vhost}->{$uri} ) ) {
-        return &{ $tsv->{transform}->{$vhost}->{$uri} }($apacheRequest);
+        return &{ $tsv->{transform}->{$vhost}->{$uri} }($r);
     }
 
     OK;
@@ -35,11 +35,11 @@ sub transformUri {
 # @param count Fake input size
 # @return Apache2::Const::OK
 sub buildPostForm {
-    my ( $class, $apacheRequest, $url, $count ) = @_;
+    my ( $class, $r, $url, $count ) = @_;
     $count ||= 1000;
-    $apacheRequest->handler("perl-script");
-    $apacheRequest->add_config( ["SetHandler perl-script"] );
-    $apacheRequest->set_handlers(
+    $r->handler("perl-script");
+    $r->add_config( ["SetHandler perl-script"] );
+    $r->set_handlers(
         'PerlResponseHandler' => sub {
             my $r = shift;
             $r->content_type('text/html; charset=UTF-8');

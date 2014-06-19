@@ -17,26 +17,26 @@ use Lemonldap::NG::Common::Session;
 
 our $VERSION = '1.4.0';
 
-## @rmethod int run(Apache2::RequestRec apacheRequest)
+## @rmethod int run(Apache2::RequestRec r)
 # Main method used to control access.
 # Calls :
 # - fetchId()
 # - fetchUTime()
 # - SUPER::run()
-# @param $apacheRequest Current request
+# @param $r Current request
 # @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
 sub run {
-    my ( $class, $apacheRequest ) = @_;
+    my ( $class, $r ) = @_;
 
     # I - Recover the main cookie.
     #     If not present, then call parent.
     my $id;
-    if ( $id = $class->SUPER::fetchId($apacheRequest) ) {
+    if ( $id = $class->SUPER::fetchId($r) ) {
 
         # II - Found update cookie.
         #      If found, remove session from local cache when utime is recent.
         my $utime;
-        if ( $utime = $class->fetchUTime($apacheRequest) ) {
+        if ( $utime = $class->fetchUTime($r) ) {
             my $clear = 0;
 
             my $apacheSession = Lemonldap::NG::Common::Session->new(
@@ -78,16 +78,16 @@ sub run {
     }
 
     # III - Call parent process.
-    $class->SUPER::run($apacheRequest);
+    $class->SUPER::run($r);
 }
 
 ## @rmethod protected $ fetchUTime()
 # Get user cookies and search for Lemonldap::NG update cookie.
-# @param $apacheRequest current request
+# @param $r current request
 # @return Value of the cookie if found, 0 else
 sub fetchUTime {
-    my ( $class, $apacheRequest ) = @_;
-    my $t = Lemonldap::NG::Handler::API->header_in( $apacheRequest, 'Cookie' );
+    my ( $class, $r ) = @_;
+    my $t = Lemonldap::NG::Handler::API->header_in( $r, 'Cookie' );
     my $c = $tsv->{cookieName} . 'update';
     return ( $t =~ /$c=([^,; ]+)/o ) ? $1 : 0;
 }

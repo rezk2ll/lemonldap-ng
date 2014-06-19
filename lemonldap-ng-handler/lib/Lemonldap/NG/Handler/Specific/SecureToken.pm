@@ -275,7 +275,7 @@ sub _isAlive {
 # Give hand back to Apache
 # @return Apache2::Const value
 sub _returnError {
-    my ( $class, $apacheRequest ) = @_;
+    my ( $class, $r ) = @_;
 
     if ($secureTokenAllowOnError) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
@@ -287,7 +287,7 @@ sub _returnError {
     if ( $tsv->{useRedirectOnError} ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog( "Use redirect for error",
             'debug' );
-        return $class->goToPortal( $apacheRequest, '/', 'lmError=500' );
+        return $class->goToPortal( $r, '/', 'lmError=500' );
     }
 
     else {

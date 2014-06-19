@@ -274,7 +274,7 @@ sub vhostAvailable {
 sub grant {
     my ( $self, $uri, $vhost ) = splice @_;
     $vhost ||= $ENV{SERVER_NAME};
-    my $apacheRequest = Lemonldap::NG::Apache::Request->new(
+    my $r = Lemonldap::NG::Apache::Request->new(
         {
             uri      => $uri,
             hostname => $vhost,
@@ -283,8 +283,7 @@ sub grant {
     );
     for ( my $i = 0 ; $i < $tsv->{locationCount}->{$vhost} ; $i++ ) {
         if ( $uri =~ $tsv->{locationRegexp}->{$vhost}->[$i] ) {
-            return &{ $tsv->{locationCondition}->{$vhost}->[$i] }(
-                $apacheRequest);
+            return &{ $tsv->{locationCondition}->{$vhost}->[$i] }($r);
         }
     }
     unless ( $tsv->{defaultCondition}->{$vhost} ) {
@@ -294,7 +293,7 @@ sub grant {
         );
         return 0;
     }
-    return &{ $tsv->{defaultCondition}->{$vhost} }($apacheRequest);
+    return &{ $tsv->{defaultCondition}->{$vhost} }($r);
 }
 
 package Lemonldap::NG::Apache::Request;

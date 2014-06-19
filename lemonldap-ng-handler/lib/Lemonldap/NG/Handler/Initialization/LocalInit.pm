@@ -168,7 +168,7 @@ sub childInit {
 # Prepare local cache (if not done before by Lemonldap::NG::Common::Conf)
 # @return Apache2::Const::DECLINED
 sub initLocalStorage {
-    my ( $self, $r ) = splice @_;
+    my $self = shift;
     if ( $self->{localStorage} and not $self->{refLocalStorage} ) {
         eval
 "use $self->{localStorage};\$self->{refLocalStorage} = new $self->{localStorage}(\$self->{localStorageOptions});";
