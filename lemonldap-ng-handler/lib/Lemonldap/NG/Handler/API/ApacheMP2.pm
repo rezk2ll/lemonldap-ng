@@ -47,17 +47,17 @@ sub thread_share {
     eval "threads::shared::share(\$variable);";
 }
 
-## @method void apiInit(hashref $args)
+## @method void setServerSignature(string sign)
 # modifies web server signature
-# @param $args the name of the variable to share
-sub apiInit {
-    my ($class, $args) = @_;
+# @param $sign String to add to server signature  
+sub setServerSignature {
+    my ($class, $sign) = @_;
     Apache2::ServerUtil->server->push_handlers(
         PerlPostConfigHandler => sub {
             my ( $c, $l, $t, $s ) = splice @_;
-            $s->add_version_component( "Lemonldap::NG::Handler/$args->{version}" );
+            $s->add_version_component($sign);
         }
-    ) unless ( $args->{hideSignature} );
+    );
 }
 
 ## @method void lmLog(string $msg, string $level, Apache2::RequestRec $r)

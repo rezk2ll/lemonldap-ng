@@ -35,11 +35,13 @@ $logLevel = {
     debug  => 0,
 };
 
-## @method void apiInit(hashref $args)
-# nothing do to at startup
-# @param $args the name of the variable to share
-sub apiInit {
-    my ($class, $args) = @_;
+
+## @method void setServerSignature(string sign)
+# modifies web server signature
+# @param $sign String to add to server signature  
+sub setServerSignature {
+    my ($class, $sign) = @_;
+    $ENV{SERVER_SOFTWARE} .= " $sign";
 }
 
 ## @method void thread_share(string $variable)

@@ -19,7 +19,7 @@ use Lemonldap::NG::Handler::SharedConf;    # Needed to get VERSION
 use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Handler::API qw(:httpCodes); # for importing modules and constants
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.4.0';
 
 # Mouse attributes
 ##################
@@ -66,6 +66,11 @@ sub localInit($$) {
         }
     }
     $self->childInit($args);
+
+    Lemonldap::NG::Handler::API->setServerSignature(
+        "Lemonldap::NG::Handler/" . $Lemonldap::NG::Handler::VERSION
+    ) unless ( $args->{hideSignature} );
+
     return (
         $self->{localStorage},        $self->{refLocalStorage},
         $self->{localStorageOptions}, $self->{statusPipe},
@@ -149,13 +154,6 @@ sub childInit {
         $s = Apache2::ServerUtil->server;
         $s->push_handlers( PerlChildInitHandler =>
               sub { return $self->initLocalStorage( $_[1], $_[0] ); } );
-        $s->push_handlers(
-            PerlPostConfigHandler => sub {
-                my ( $c, $l, $t, $s ) = splice @_;
-                $s->add_version_component( 'Lemonldap::NG::Handler/'
-                      . $Lemonldap::NG::Handler::VERSION );
-            }
-        ) unless ( $args->{hideSignature} );
     }
     elsif ( MP() == 1 ) {
         Apache->push_handlers(

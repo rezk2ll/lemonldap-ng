@@ -20,11 +20,12 @@ use Apache::Log;
 use Apache::Constants qw(:common :response);
 
 
-## @method void apiInit(hashref $args)
-# nothing do to at startup
-# @param $args the name of the variable to share
-sub apiInit {
-    my ($class, $args) = @_;
+## @method void setServerSignature(string sign)
+# modifies web server signature
+# @param $sign String to add to server signature  
+sub setServerSignature {
+    my ($class, $sign) = @_;
+    #TODO
 }
 
 ## @method void thread_share(string $variable)
