@@ -80,24 +80,34 @@ sub BUILD {
 
     my $data = $self->_tie_session;
 
+    # Is it a session creation request?
+    my $creation = 1
+      if ( !$self->id or ( $self->id and !$data and $self->force ) );
+
     # If session id was submitted but session is not found
     # And we want to force id
     # Then use setId to create session
-    if ( $self->id and !$data and $self->force ) {
+    if ( $self->id and $creation ) {
         $options{setId} = $self->id;
         $self->options( \%options );
         $self->id(undef);
         $data = $self->_tie_session;
     }
 
-    if ($data) {
-        $data->{_session_kind} = $self->kind if $self->kind;
-        $self->kind( $data->{_session_kind} );
-        $self->id( $data->{_session_id} );
-        $self->_save_data($data);
-        untie(%$data);
+    # If session is created
+    # Then set session kind in session
+    if ( $creation and $self->kind ) {
+        $data->{_session_kind} = $self->kind;
     }
 
+    # Load session data into object
+    if ($data) {
+        $self->_save_data($data);
+        $self->kind( $data->{_session_kind} );
+        $self->id( $data->{_session_id} );
+
+        untie(%$data);
+    }
 }
 
 sub _tie_session {
