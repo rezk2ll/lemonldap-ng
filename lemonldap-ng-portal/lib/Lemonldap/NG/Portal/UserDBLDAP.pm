@@ -87,16 +87,22 @@ sub search {
     );
     if ( $mesg->code() != 0 ) {
         $self->lmLog( 'LDAP Search error: ' . $mesg->error, 'error' );
+        $self->ldap->unbind;
+        $self->{flags}->{ldapActive} = 0;
         return PE_LDAPERROR;
     }
     if ( $mesg->count() > 1 ) {
         $self->lmLog( 'More than one entry returned by LDAP directory',
             'error' );
+        $self->ldap->unbind;
+        $self->{flags}->{ldapActive} = 0;
         return PE_BADCREDENTIALS;
     }
     unless ( $self->{entry} = $mesg->entry(0) ) {
         my $user = $self->{mail} || $self->{user};
         $self->_sub( 'userError', "$user was not found in LDAP directory" );
+        $self->ldap->unbind;
+        $self->{flags}->{ldapActive} = 0;
         return PE_BADCREDENTIALS;
     }
     $self->{dn} = $self->{entry}->dn();
