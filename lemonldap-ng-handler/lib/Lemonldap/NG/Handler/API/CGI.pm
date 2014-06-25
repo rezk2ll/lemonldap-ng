@@ -8,7 +8,7 @@ our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 BEGIN{
     %EXPORT_TAGS = (
         httpCodes => [
-            qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )
+            qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED )
         ],
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
@@ -22,6 +22,7 @@ use constant OK           => 1;
 use constant DECLINED     => 1;
 use constant DONE         => 1;
 use constant SERVER_ERROR => 1;
+use constant AUTH_REQUIRED => 1;
 
 # Log level converted to integers, to compare them
 $logLevel = {

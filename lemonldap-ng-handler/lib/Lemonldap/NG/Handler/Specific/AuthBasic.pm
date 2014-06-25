@@ -8,187 +8,131 @@
 
 package Lemonldap::NG::Handler::Specific::AuthBasic;
 
-use strict;
-
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 use Lemonldap::NG::Handler::API qw(:httpCodes);
-use Digest::MD5 qw(md5_base64);
+use Digest::MD5;
 use MIME::Base64;
 use HTTP::Headers;
 use SOAP::Lite;    # link protected portalRequest
-use Lemonldap::NG::Handler::Main::Headers;
-use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Common::Session;
 
 use base qw(Lemonldap::NG::Handler::SharedConf);
-use utf8;
-no utf8;
 
 our $VERSION = '1.4.0';
 
-# We need just this constant, that's why Portal is 'required' but not 'used'
-*PE_OK = *Lemonldap::NG::Portal::SharedConf::PE_OK;
-
-# Apache constants
-BEGIN {
-    if ( MP() == 2 ) {
-        *AUTH_REQUIRED = \&Apache2::Const::AUTH_REQUIRED;
-        require Apache2::Access;
-    }
-    elsif ( MP() == 0 ) {
-        eval 'sub AUTH_REQUIRED {1}';
+## @rmethod protected $ fetchId(request $r)
+# Get user session id from Authorization header
+# Unlike usual processing, session id is computed from user creds,
+# so that it remains secret but handler can easily get it.
+# It is still changed from time to time - once a day - to prevent from
+# using indefinitely a session id disclosed accidentally or maliciously.
+# @param $r current request
+# @return session id
+sub fetchId {
+    my ( $class, $r ) = @_;
+    if ( my $creds = Lemonldap::NG::Handler::API->header_in($r, 'Authorization') ) {
+        $creds =~ s/^Basic\s+//;
+        my @date = localtime;
+        my $day = $date[5] * 366 + $date[7];
+        return Digest::MD5::md5_hex($creds . $day);
+    } else {
+        return 0;
     }
 }
 
-## @rmethod int run(Apache2::RequestRec apacheRequest)
-# overload run subroutine to implement Auth-Basic mechanism.
-# @param $apacheRequest current request
-# @return Apache constant
-sub run ($$) {
-    my ( $class, $apacheRequest ) = @_;
-    if ( time() - $lastReload > $reloadTime ) {
-        unless ( my $tmp = $class->testConf(1) == OK ) {
+## @rmethod protected boolean retrieveSession(id)
+# Tries to retrieve the session whose index is id,
+# and if needed, ask portal to create it through a SOAP request
+# @return true if the session was found, false else
+sub retrieveSession {
+    my ( $class, $id, $r ) = @_;
+
+    # First check if session already exists
+    return 1 if ( $class->SUPER::retrieveSession( $id, $r ) );
+
+    # Then ask portal to create it
+    if ( $class->createSession( $id, $r ) ) {
+        return $class->SUPER::retrieveSession( $id, $r );
+    } else {
+        return 0;
+    }
+}
+
+## @rmethod protected boolean retrieveSession(id)
+# Ask portal to create it through a SOAP request
+# @return true if the session is created, else false
+sub createSession {
+    my ( $class, $id, $r ) = @_;
+
+    # Add client IP as X-Forwarded-For IP in SOAP request
+    my $xheader = Lemonldap::NG::Handler::API->header_in( $r, 'X-Forwarded-For' );
+    $xheader .= ", " if ($xheader);
+    $xheader .= Lemonldap::NG::Handler::API->remote_ip($r);
+    my $soapHeaders = HTTP::Headers->new( "X-Forwarded-For" => $xheader );
+
+    my $soapClient = SOAP::Lite->proxy(
+        $class->portal(),
+        default_headers => $soapHeaders
+    )->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
+
+    my $creds = Lemonldap::NG::Handler::API->header_in($r, 'Authorization');
+    $creds =~ s/^Basic\s+//;
+    my ( $user, $pwd ) = ( decode_base64($creds) =~ /^(.*?):(.*)$/ );
+    Lemonldap::NG::Handler::Main::Logger->lmLog(
+        "AuthBasic authentication for user: $user", 'debug', $r );
+    my $soapRequest = $soapClient->getCookies( $user, $pwd, $id );
+
+    # Catch SOAP errors
+    if ( $soapRequest->fault ) {
+        $class->abort( $r,
+            "SOAP request to the portal failed: "
+              . $soapRequest->fault->{faultstring} );
+    }
+    else {
+        my $res = $soapRequest->result();
+        # If authentication failed, display error
+        if ( $res->{errorCode} ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
-                "$class: No configuration found", 'error' );
-            return $tmp;
+                "Authentication failed for $user: "
+                  . $soapClient->error( $res->{errorCode}, 'en' )->result(),
+                'notice'
+            );
+            return 0;
+        } else {
+            return 1;
         }
     }
-    return DECLINED unless ( Lemonldap::NG::Handler::API->is_initial_req($apacheRequest) );
-    my $uri = Lemonldap::NG::Handler::API->uri_with_args($apacheRequest);
+}
 
-    # AUTHENTICATION
-    # I - recover the WWW-Authentication header
-    my ( $id, $user, $pass );
-    unless (
-        $user = Lemonldap::NG::Handler::API->header_in(
-            $apacheRequest, 'Authorization'
-        )
-      )
-    {
-        Lemonldap::NG::Handler::API->set_err_header_out( $apacheRequest,
+## @rmethod protected void hideCookie()
+# Hide user credentials to the protected application
+# @param $r current request
+sub hideCookie {
+    my ( $class, $r ) = @_;
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "removing Authorization header", 'debug', $r );
+    Lemonldap::NG::Handler::API->unset_header_in( $r, 'Authorization' );
+}
+
+## @rmethod protected int goToPortal(string url, string arg)
+# If user is asked to authenticate, return AUTH_REQUIRED,
+# else redirect him to the portal to display some message defined by $arg
+# @param $r current request
+# @param $url Url requested
+# @param $arg optionnal GET parameters
+# @return Apache2::Const::REDIRECT or Apache2::Const::AUTH_REQUIRED
+sub goToPortal {
+    my $class = shift;
+    my ( $r, $url, $arg ) = @_;
+    if ($arg) {
+        return $class->SUPER::goToPortal(@_);
+    } else {
+        Lemonldap::NG::Handler::API->set_err_header_out( $r,
             'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
         return AUTH_REQUIRED;
     }
-    $user =~ s/^Basic\s*//;
-
-    # ID for local cache
-    $id = md5_base64($user);
-
-    # II - recover the user datas
-    #  2.1 search if the user was the same as previous (very efficient in
-    #      persistent connection).
-    unless ( $id eq $datas->{_cache_id} ) {
-
-        # 2.2 search in the local cache if exists
-        my $session_id;
-        unless ($tsv->{refLocalStorage}
-            and $session_id = $tsv->{refLocalStorage}->get($id) )
-        {
-
-            # 2.3 Authentication by Lemonldap::NG::Portal using SOAP request
-
-            # Add client IP as X-Forwarded-For IP in SOAP request
-            my $xheader =
-              Lemonldap::NG::Handler::API->header_in( $apacheRequest,
-                'X-Forwarded-For' );
-            $xheader .= ", " if ($xheader);
-            $xheader .= Lemonldap::NG::Handler::API->remote_ip($apacheRequest);
-            my $soapHeaders =
-              HTTP::Headers->new( "X-Forwarded-For" => $xheader );
-
-            my $soap =
-              SOAP::Lite->proxy( $class->portal(),
-                default_headers => $soapHeaders )
-              ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
-            $user = decode_base64($user);
-            ( $user, $pass ) = ( $user =~ /^(.*?):(.*)$/ );
-            Lemonldap::NG::Handler::Main::Logger->lmLog(
-                "AuthBasic authentication for user: $user", 'debug' );
-            my $r = $soap->getCookies( $user, $pass );
-
-            # Catch SOAP errors
-            if ( $r->fault ) {
-                return $class->abort( $apacheRequest,
-                    "SOAP request to the portal failed: "
-                      . $r->fault->{faultstring} );
-            }
-            else {
-                my $res = $r->result();
-
-                # If authentication failed, display error
-                if ( $res->{errorCode} ) {
-                    Lemonldap::NG::Handler::Main::Logger->lmLog(
-                        "Authentication failed for $user: "
-                          . $soap->error( $res->{errorCode}, 'en' )->result(),
-                        'notice'
-                    );
-                    Lemonldap::NG::Handler::API->set_err_header_out(
-                        $apacheRequest,
-                        'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
-                    return AUTH_REQUIRED;
-                }
-                $session_id = $res->{cookies}->{ $tsv->{cookieName} };
-            }
-        }
-
-        # Get the session
-        my $apacheSession = Lemonldap::NG::Common::Session->new(
-            {
-                storageModule        => $tsv->{globalStorage},
-                storageModuleOptions => $tsv->{globalStorageOptions},
-                cacheModule          => $tsv->{localSessionStorage},
-                cacheModuleOptions   => $tsv->{localSessionStorageOptions},
-                id                   => $session_id,
-                kind                 => "SSO",
-            }
-        );
-
-        unless ( $apacheSession->data ) {
-            Lemonldap::NG::Handler::Main::Logger->lmLog(
-                "The cookie $session_id isn't yet available", 'info' );
-            $class->updateStatus( $apacheRequest, 'EXPIRED' );
-            return $class->goToPortal( $apacheRequest, $uri );
-        }
-
-        $datas->{$_} = $apacheSession->data->{$_}
-          foreach ( keys %{ $apacheSession->data } );
-        $datas->{_cache_id} = $id;
-
-        # Store now the user in the local storage
-        if ( $tsv->{refLocalStorage} ) {
-            $tsv->{refLocalStorage}
-              ->set( $id, $datas->{_session_id}, "20 minutes" );
-        }
-    }
-
-    # ACCOUNTING
-    # 1 - Inform Apache
-    Lemonldap::NG::Handler::API->set_user( $apacheRequest,
-        $datas->{ $tsv->{whatToTrace} } );
-
-    # AUTHORIZATION
-    return $class->forbidden( $apacheRequest )
-      unless ( $class->grant( $apacheRequest, $uri ) );
-    $class->updateStatus( $apacheRequest, 'OK', $datas->{ $tsv->{whatToTrace} });
-    $class->logGranted( $uri, $datas );
-
-    # SECURITY
-    # Hide Lemonldap::NG cookie
-    $class->hideCookie($apacheRequest);
-
-    # Hide user password
-    Lemonldap::NG::Handler::API->unset_header_in( $apacheRequest,
-        "Authorization" );
-
-    # ACCOUNTING
-    # 2 - Inform remote application
-    Lemonldap::NG::Handler::Main::Headers->sendHeaders( $apacheRequest,
-        $tsv->{forgeHeaders} );
-
-    OK;
 }
 
-__PACKAGE__->init( {} );
+__PACKAGE__->init();
 
 1;
 

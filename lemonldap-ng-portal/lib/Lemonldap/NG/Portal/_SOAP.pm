@@ -76,12 +76,16 @@ _RETURN $getCookiesResponse Response
 #@return session => { error => code , cookies => { cookieName1 => value ,... } }
 sub getCookies {
     my ( $self, $user, $password, $sessionid ) = splice @_;
+    $self->lmLog( "SOAP authentication request for $user", 'debug' );
 
     $self->{user}     = $user;
     $self->{password} = $password;
-    $self->{id}       = $sessionid if ( defined($sessionid) && $sessionid );
+    if ( defined($sessionid) && $sessionid ) {
+        $self->{id}    = $sessionid;
+        $self->{force} = 1;
+    }
+
     $self->{error}    = PE_OK;
-    $self->lmLog( "SOAP authentication request for $user", 'debug' );
 
     # Skip extractFormInfo step, as we already get input data
     $self->{skipExtractFormInfo} = 1;

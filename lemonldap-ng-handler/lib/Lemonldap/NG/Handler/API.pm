@@ -8,7 +8,7 @@ our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 # export of MP() (kept for compatibility till MP is completely vanished)
 %EXPORT_TAGS = (
     httpCodes => [
-        qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )
+        qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED )
     ],
 );
 push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );

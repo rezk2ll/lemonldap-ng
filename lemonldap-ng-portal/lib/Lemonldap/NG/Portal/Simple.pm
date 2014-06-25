@@ -830,14 +830,15 @@ sub redirect {
     }
 }
 
-## @method protected hashref getApacheSession(string id, boolean noInfo)
+## @method protected hashref getApacheSession(string id, boolean noInfo, boolean $force)
 # Try to recover the session corresponding to id and return session datas.
-# If $id is set to undef, return a new session.
+# If $id is set to undef or if $force is true, return a new session.
 # @param id session reference
 # @param noInfo do not set Apache REMOTE_USER
+# @param force Force session creation if it does not exist
 # return Lemonldap::NG::Common::Session object
 sub getApacheSession {
-    my ( $self, $id, $noInfo ) = @_;
+    my ( $self, $id, $noInfo, $force ) = @_;
 
     my $apacheSession = Lemonldap::NG::Common::Session->new(
         {
@@ -846,6 +847,7 @@ sub getApacheSession {
             cacheModule          => $self->{localSessionStorage},
             cacheModuleOptions   => $self->{localSessionStorageOptions},
             id                   => $id,
+            force                => $force,
             kind                 => "SSO",
         }
     );
@@ -2301,7 +2303,7 @@ sub store {
     }
 
     # Main session
-    my $session = $self->getApacheSession( $self->{id} );
+    my $session = $self->getApacheSession( $self->{id}, 0, $self->{force} );
     return PE_APACHESESSIONERROR unless ( $session->data );
 
     # Compute unsecure cookie value if needed
