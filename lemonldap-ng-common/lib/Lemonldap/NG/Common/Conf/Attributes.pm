@@ -529,7 +529,7 @@ has 'localSessionStorageOptions' => (
             'default_expires_in' => 600,
             'directory_umask'    => '007',
             'cache_root'         => '/tmp',
-            'cache_depth'        => 5,
+            'cache_depth'        => 3,
         };
     },
     documentation => 'Sessions cache module options',
