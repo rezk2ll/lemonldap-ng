@@ -50,7 +50,13 @@ sub materialize {
     }
 
     # Get session from backend
-    return $self->module->materialize($session);
+    $self->module->materialize($session);
+
+    # Store session in cache
+    my $id = $session->{data}->{_session_id};
+    $self->cache->set( $id, $session->{serialized}, "10 minutes" );
+
+    return;
 }
 
 sub remove {
