@@ -35,7 +35,8 @@ sub menuInit {
 
     # Try to change password
     $self->{menuError} =
-      $self->_subProcess(qw(passwordDBInit modifyPassword sendPasswordMail))
+      $self->_subProcess(
+        qw(passwordDBInit modifyPassword passwordDBFinish sendPasswordMail))
       unless $self->{ignorePasswordChange};
 
     # Default menu error code

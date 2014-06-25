@@ -451,7 +451,8 @@ sub userModifyPassword {
 # @return Lemonldap::NG::Portal::_LDAP object
 sub ldap {
     my $self = shift;
-    return $self->{ldap} if ( ref( $self->{ldap} ) and $self->{flags}->{ldapActive} );
+    return $self->{ldap}
+      if ( ref( $self->{ldap} ) and $self->{flags}->{ldapActive} );
     if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
         and my $mesg = $self->{ldap}->bind )
     {

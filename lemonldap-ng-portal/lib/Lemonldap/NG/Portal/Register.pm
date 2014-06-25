@@ -33,12 +33,15 @@ use POSIX qw(strftime);
 #   - sendRegisterMail
 # - authentication module:
 #   - authInit
+#   - authFinish
 # - userDB module:
 #   - userDBInit
 #   - getUser
+#   - userDBFinish
 # - registerDB module:
 #  - getLogin
 #  - createUser
+#  - registerDBFinish
 # @return 1 if all is OK
 sub process {
     my ($self) = splice @_;
@@ -48,8 +51,8 @@ sub process {
 
     $self->{error} = $self->_subProcess(
         qw(smtpInit authInit extractRegisterInfo userDBInit getRegisterUser
-          storeRegisterSession sendConfirmationMail
-          registerUser sendRegisterMail)
+          userDBFinish storeRegisterSession sendConfirmationMail
+          registerUser registerDBFinish sendRegisterMail authFinish)
     );
 
     return (

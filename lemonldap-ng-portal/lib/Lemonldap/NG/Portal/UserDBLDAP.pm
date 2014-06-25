@@ -195,5 +195,19 @@ sub setUserDBValue {
     return 1;
 }
 
+## @apmethod int userDBFinish()
+# Unbind.
+# @return Lemonldap::NG::Portal constant
+sub userDBFinish {
+    my $self = shift;
+
+    if ( ref( $self->{ldap} ) && $self->{flags}->{ldapActive} ) {
+        $self->ldap->unbind();
+        $self->{flags}->{ldapActive} = 0;
+    }
+
+    PE_OK;
+}
+
 1;
 

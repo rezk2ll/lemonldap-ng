@@ -39,8 +39,10 @@ use POSIX qw(strftime);
 # - userDB module:
 #   - userDBInit
 #   - setSessionInfo
+#   - userDBFinish
 # - passwordDB module:
 #   - passwordDBInit
+#   - passwordDBFinish
 # @return 1 if all is OK
 sub process {
     my ($self) = splice @_;
@@ -49,9 +51,10 @@ sub process {
     $self->{error} = PE_OK;
 
     $self->{error} = $self->_subProcess(
-        qw(smtpInit userDBInit passwordDBInit extractMailInfo
-          getMailUser setSessionInfo setMacros setGroups setPersistentSessionInfo
-          setLocalGroups storeMailSession sendConfirmationMail changePassword sendPasswordMail)
+        qw(smtpInit extractMailInfo userDBInit getMailUser setSessionInfo
+          setMacros setGroups setPersistentSessionInfo setLocalGroups userDBFinish
+          storeMailSession sendConfirmationMail passwordDBInit changePassword passwordDBFinish
+          sendPasswordMail)
     );
 
     return (
@@ -191,6 +194,7 @@ sub getMailUser {
     my $error = $self->getUser();
 
     if ( $error == PE_USERNOTFOUND or $error == PE_BADCREDENTIALS ) {
+        $self->_sub('userDBFinish');
         return PE_MAILNOTFOUND;
     }
 

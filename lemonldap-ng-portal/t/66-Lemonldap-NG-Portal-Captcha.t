@@ -9,7 +9,7 @@ my $p = Lemonldap::NG::Portal::Simple->new(
     {
         globalStorage   => 'Apache::Session::File',
         domain          => 'example.com',
-        portal => 'http://auth.example.com',
+        portal          => 'http://auth.example.com',
         error           => 0,
         authentication  => 'Demo',
         userDB          => 'Null',
@@ -29,19 +29,22 @@ my $p = Lemonldap::NG::Portal::Simple->new(
     }
 );
 
-ok( ref($p) eq "Lemonldap::NG::Portal::Simple", "Portal object with captcha configuration" );
+ok(
+    ref($p) eq "Lemonldap::NG::Portal::Simple",
+    "Portal object with captcha configuration"
+);
 
 # try to init a captcha
 $p->initCaptcha;
 ok( $p->{captcha_img}, "Generation of captcha image" );
 
 # try a wrong values to check checkCaptcha method
-my $captcha_result = $p->checkCaptcha( $p->{captcha_secret}, $p->{captcha_code} );
+my $captcha_result =
+  $p->checkCaptcha( $p->{captcha_secret}, $p->{captcha_code} );
 ok( 1 == $captcha_result, "Verification of good captcha" );
 
 # New captcha
 $p->initCaptcha;
 my $captcha_result_2 = $p->checkCaptcha( "wrongcode", $p->{captcha_code} );
-ok ( 1 != $captcha_result_2, "Reject of bad captcha");
-
+ok( 1 != $captcha_result_2, "Reject of bad captcha" );
 

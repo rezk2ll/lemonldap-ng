@@ -97,9 +97,21 @@ sub modifyPassword {
         );
     }
 
-    $self->ldap->unbind;
-    $self->{flags}->{ldapActive} = 0;
     return $code;
+}
+
+## @apmethod int passwordDBFinish()
+# Unbind.
+# @return Lemonldap::NG::Portal constant
+sub passwordDBFinish {
+    my $self = shift;
+
+    if ( ref( $self->{ldap} ) && $self->{flags}->{ldapActive} ) {
+        $self->ldap->unbind();
+        $self->{flags}->{ldapActive} = 0;
+    }
+
+    PE_OK;
 }
 
 1;

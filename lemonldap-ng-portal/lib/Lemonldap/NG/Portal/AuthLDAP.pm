@@ -66,8 +66,10 @@ sub authenticate {
 sub authFinish {
     my $self = shift;
 
-    $self->ldap->unbind if $self->ldap;
-    $self->{flags}->{ldapActive} = 0;
+    if ( ref( $self->{ldap} ) && $self->{flags}->{ldapActive} ) {
+        $self->ldap->unbind();
+        $self->{flags}->{ldapActive} = 0;
+    }
 
     PE_OK;
 }

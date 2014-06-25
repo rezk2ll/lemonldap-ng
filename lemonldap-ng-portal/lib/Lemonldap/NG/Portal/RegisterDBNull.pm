@@ -20,4 +20,8 @@ sub createUser {
     return PE_OK;
 }
 
+sub registerDBFinish {
+    return PE_OK;
+}
+
 1;

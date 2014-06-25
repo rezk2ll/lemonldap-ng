@@ -1404,8 +1404,9 @@ sub process {
           userDBInit getUser setAuthSessionInfo passwordDBInit
           modifyPassword setSessionInfo setMacros setGroups
           setPersistentSessionInfo setLocalGroups sendPasswordMail
-          authenticate grantSession removeOther store authFinish
-          buildCookie checkNotification issuerForAuthUser autoRedirect)
+          authenticate authFinish userDBFinish passwordDBFinish
+          grantSession removeOther store buildCookie checkNotification
+          issuerForAuthUser autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -1510,7 +1511,8 @@ sub checkNotifBack {
                 'debug'
             );
             $self->{error} = $self->_subProcess(
-                qw(issuerDBInit authInit issuerForAuthUser autoRedirect));
+                qw(issuerDBInit authInit issuerForAuthUser authFinish autoRedirect)
+            );
             return $self->{error} || PE_DONE;
         }
     }
@@ -1725,7 +1727,7 @@ sub controlExistingSession {
             my $r = $self->_sub( 'existingSession', $id, $self->{sessionInfo} );
             if ( $r == PE_DONE ) {
                 $self->{error} = $self->_subProcess(
-                    qw(checkNotification issuerDBInit authInit issuerForAuthUser autoRedirect)
+                    qw(checkNotification issuerDBInit authInit issuerForAuthUser authFinish autoRedirect)
                 );
                 return $self->{error} || PE_DONE;
             }
@@ -1798,7 +1800,7 @@ sub existingSession {
                 qw(issuerDBInit authInit issuerForUnAuthUser extractFormInfo
                   userDBInit getUser setAuthSessionInfo setSessionInfo
                   setMacros setGroups setPersistentSessionInfo
-                  setLocalGroups authenticate store authFinish)
+                  setLocalGroups authenticate authFinish userDBFinish store)
             );
             return $self->{error} || PE_DONE;
         }
@@ -2338,6 +2340,42 @@ sub authFinish {
     if ($@) {
         $self->lmLog(
 "Optional authFinish method not defined in current authentication module: $@",
+            'debug'
+        );
+        return PE_OK;
+    }
+
+    return $self->{error};
+}
+
+## @apmethod int userDBFinish
+# Call userDBFinish method from userDB module
+# @return Lemonldap::NG::Portal constant
+sub userDBFinish {
+    my $self = shift;
+
+    eval { $self->{error} = $self->SUPER::userDBFinish; };
+    if ($@) {
+        $self->lmLog(
+"Optional userDBFinish method not defined in current userDB module: $@",
+            'debug'
+        );
+        return PE_OK;
+    }
+
+    return $self->{error};
+}
+
+## @apmethod int passwordDBFinish
+# Call passwordDBFinish method from passwordDB module
+# @return Lemonldap::NG::Portal constant
+sub passwordDBFinish {
+    my $self = shift;
+
+    eval { $self->{error} = $self->SUPER::passwordDBFinish; };
+    if ($@) {
+        $self->lmLog(
+"Optional passwordDBFinish method not defined in current passwordDB module: $@",
             'debug'
         );
         return PE_OK;

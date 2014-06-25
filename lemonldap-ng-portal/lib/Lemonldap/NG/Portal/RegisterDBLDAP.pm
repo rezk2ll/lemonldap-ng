@@ -58,6 +58,10 @@ sub createUser {
             "Can not create entry for " . $self->{registerInfo}->{login},
             'error' );
         $self->lmLog( "LDAP error " . $mesg->error, 'error' );
+
+        $self->ldap->unbind();
+        $self->{flags}->{ldapActive} = 0;
+
         return PE_LDAPERROR;
     }
 
@@ -88,6 +92,20 @@ sub isLoginUsed {
     }
 
     return 0;
+}
+
+## @apmethod int registerDBFinish()
+# Unbind.
+# @return Lemonldap::NG::Portal constant
+sub registerDBFinish {
+    my $self = shift;
+
+    if ( ref( $self->{ldap} ) && $self->{flags}->{ldapActive} ) {
+        $self->ldap->unbind();
+        $self->{flags}->{ldapActive} = 0;
+    }
+
+    PE_OK;
 }
 
 1;
