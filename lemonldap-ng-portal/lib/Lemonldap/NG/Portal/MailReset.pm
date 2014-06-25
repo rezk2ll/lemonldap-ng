@@ -36,6 +36,9 @@ use POSIX qw(strftime);
 #   - setMacros
 #   - setLocalGroups
 #   - setGroups
+# - authentication module:
+#   - authInit
+#   - authFinish
 # - userDB module:
 #   - userDBInit
 #   - setSessionInfo
@@ -51,10 +54,10 @@ sub process {
     $self->{error} = PE_OK;
 
     $self->{error} = $self->_subProcess(
-        qw(smtpInit extractMailInfo userDBInit getMailUser setSessionInfo
+        qw(smtpInit authInit extractMailInfo userDBInit getMailUser setSessionInfo
           setMacros setGroups setPersistentSessionInfo setLocalGroups userDBFinish
           storeMailSession sendConfirmationMail passwordDBInit changePassword passwordDBFinish
-          sendPasswordMail)
+          sendPasswordMail authFinish)
     );
 
     return (
