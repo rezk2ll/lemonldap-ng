@@ -15,7 +15,7 @@ sub insert {
 
     # Store session in cache
     my $id = $session->{data}->{_session_id};
-    $self->cache->set( $id, $session->{serialized}, "10 minutes" );
+    $self->cache->set( $id, $session->{serialized} );
 
     # Store in session backend
     return $self->module->insert($session);
@@ -30,7 +30,7 @@ sub update {
     my $id = $session->{data}->{_session_id};
     if ( $self->cache->get($id) ) {
         $self->cache->remove($id);
-        $self->cache->set( $id, $session->{serialized}, "10 minutes" );
+        $self->cache->set( $id, $session->{serialized} );
     }
 
     # Update session in backend
@@ -54,7 +54,7 @@ sub materialize {
 
     # Store session in cache
     my $id = $session->{data}->{_session_id};
-    $self->cache->set( $id, $session->{serialized}, "10 minutes" );
+    $self->cache->set( $id, $session->{serialized} );
 
     return;
 }
