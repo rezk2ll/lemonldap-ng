@@ -53,7 +53,6 @@ sub materialize {
     $self->module->materialize($session);
 
     # Store session in cache
-    my $id = $session->{data}->{_session_id};
     $self->cache->set( $id, $session->{serialized} );
 
     return;
