@@ -642,16 +642,6 @@ sub _buildUrl {
     return $url;
 }
 
-## @rmethod int unprotect()
-# Used to unprotect an area.
-# To use it, set "PerlHeaderParserHandler My::Package->unprotect" Apache
-# configuration file.
-# It replace run() by doing nothing.
-# @return Apache2::Const::OK
-sub unprotect {
-    OK;
-}
-
 ## @rmethod protected void localUnlog()
 # Delete current user from local cache entry.
 sub localUnlog {
