@@ -7,7 +7,7 @@
 
 package My::Package;
 
-use Test::More tests => 15;
+use Test::More tests => 12;
 
 BEGIN {
     use_ok('Lemonldap::NG::Handler::Initialization::LocalInit');
@@ -21,17 +21,15 @@ BEGIN {
 ok(
     my $localinit = Lemonldap::NG::Handler::Initialization::LocalInit->new(
         localStorage        => undef,
-        refLocalStorage     => undef,
         localStorageOptions => undef,
-        childInitDone       => undef,
     ),
     'new LocalInit object'
 );
 
 ok(
     my (
-        $localStorage, $refLocalStorage, $localStorageOptions,
-        $statusPipe,   $statusOut,       $childInitDone
+        $localStorage, $localStorageOptions,
+        $statusPipe,   $statusOut
       )
       = $localinit->localInit(
         {
@@ -47,23 +45,11 @@ ok(
     (
               $localStorage eq 'Cache::FileCache'
           and $localStorageOptions->{'namespace'} eq 'lemonldap-ng-sessions'
-          and $childInitDone == 1
     ),
     'LocalInit methods: localInit values'
 );
 
-ok(
-
-    # purgeCache does not return anything but dies if an error occurs
-    !defined( $localinit->purgeCache ),
-    'LocalInit methods: purgeCache'
-);
-
 ok( $localinit->statusProcess == 0, 'LocalInit methods: statusProcess' );
-
-ok( $localinit->childInit, 'LocalInit methods: childInit' );
-
-ok( $localinit->initLocalStorage, 'LocalInit methods: initLocalStorage' );
 
 ok( $statusPipe->isa('IO::Pipe::End'), 'status pipe: In pipe' );
 

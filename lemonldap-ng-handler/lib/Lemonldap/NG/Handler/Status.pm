@@ -112,11 +112,12 @@ eval {
 # - update counts
 # - display results
 sub run {
-    my ( $localStorage, $localStorageOptions ) = ( shift, shift );
     my $refLocalStorage;
-    eval
-"use $localStorage; \$refLocalStorage = new $localStorage(\$localStorageOptions);";
-    die($@) if ($@);
+    if ( my ( $localStorage, $localStorageOptions ) = @_ ) {
+        eval "use $localStorage; \$refLocalStorage = new $localStorage(\$localStorageOptions);";
+        die($@) if ($@);
+    }
+
     $| = 1;
     my ( $lastMn, $mn, $count );
     while (<STDIN>) {
@@ -214,11 +215,12 @@ sub run {
                 print "<div id=\"users\"><p>\nTotal users : $u\n</p></div>\n";
 
                 # Local cache
-                my @t =
-                  $refLocalStorage->get_keys(
-                    $localStorageOptions->{namespace} );
-                print "<div id=\"cache\"><p>\nLocal Cache : " . @t
-                  . " objects\n</p></div>\n";
+                if ($refLocalStorage) {
+                    my @t =
+                      $refLocalStorage->get_keys( $_[1]->{namespace} );
+                    print "<div id=\"cache\"><p>\nLocal Cache : " . @t
+                      . " objects\n</p></div>\n";
+                }
 
                 # Uptime
                 print "<div id=\"up\"><p>\nServer up for : "

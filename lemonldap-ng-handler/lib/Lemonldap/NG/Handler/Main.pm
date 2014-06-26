@@ -35,7 +35,7 @@ our $VERSION = '1.4.0';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
 # my @threadSharedVar = qw(
-#     cda                    childInitDone         cipher
+#     cda                                          cipher
 #     cookieExpiration       cookieName            customFunctions
 #     defaultCondition       defaultProtection     forgeHeaders
 #     globalStorage          globalStorageOptions  headerList
@@ -367,10 +367,10 @@ sub run ($$) {
             $tsv->{forgeHeaders} );
 
         # Store local macros
-        if ( keys %$datas > $kc and $tsv->{refLocalStorage} ) {
+        if ( keys %$datas > $kc and $class->initLocalStorage ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog( "Update local cache",
                 'debug', $r );
-            $tsv->{refLocalStorage}->set( $id, $datas, "10 minutes" );
+            $tsv->{refLocalStorage}->set( $id, $datas );
         }
 
         # Hide Lemonldap::NG cookie
@@ -468,26 +468,35 @@ sub abort {
     die $msg if ($@);
 }
 
+sub initLocalStorage {
+    my $class = shift;
+    return 1 if ($tsv->{refLocalStorage});
+    return 0 unless ($tsv->{localStorage});
+
+    eval "use $tsv->{localStorage}";
+    die("Unable to load $self->{localStorage}: $@") if ($@);
+    eval '$tsv->{refLocalStorage} = new '
+           . $tsv->{localStorage}
+           . '($tsv->{localStorageOptions});';
+    die("Unable to init local cache: $@") if ($@);
+    return 1;
+}
+
 ## @imethod void localInit(hashRef args)
 # instanciate a LocalInit object with variables:
-# localStorage, localStorageOptions, refLocalStorage, childInitDone
-# launch localInit method:
-#  - calls purgeCache() to purge the local cache,
-#  - launch the status processus,
-#  - launch childInit (to init / clean local storage)
+# localStorage, localStorageOptions, refLocalStorage
+# launch localInit method which launch the status processus,
 # @param $args reference to the initialization hash
 sub localInit($$) {
     my ( $class, $args ) = splice @_;
 
     my $localinit = Lemonldap::NG::Handler::Initialization::LocalInit->new(
         localStorage        => $tsv->{localStorage},
-        refLocalStorage     => $tsv->{refLocalStorage},
         localStorageOptions => $tsv->{localStorageOptions},
-        childInitDone       => $tsv->{childInitDone},
     );
     (
         @$tsv{
-            qw( localStorage refLocalStorage localStorageOptions statusPipe statusOut childInitDone )
+            qw( localStorage localStorageOptions statusPipe statusOut )
           }
     ) = $localinit->localInit($args);
 
