@@ -23,7 +23,6 @@ use Lemonldap::NG::Handler::API qw(:httpCodes);
 use Lemonldap::NG::Handler::Initialization::GlobalInit;
 use Lemonldap::NG::Common::Conf;               #link protected lmConf
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
-use Cache::Cache qw($EXPIRES_NEVER);
 use Lemonldap::NG::Handler::Main::Logger;
 
 use base qw(Lemonldap::NG::Handler::Main);
@@ -55,74 +54,74 @@ BEGIN {
 # INIT PROCESS
 
 ## @imethod void init(hashRef args)
-# Load parameters and build the Lemonldap::NG::Common::Conf object.
+# Read parameters and build the Lemonldap::NG::Common::Conf object.
 # @param $args hash containing parameters
 sub init($$) {
-    my ( $class, $args ) = splice @_;
+    my ( $class, $args ) = @_;
+
+    # According to doc, localStorage can be declared in $args root,
+    # but it must be in $args->{configStorage} 
+    foreach (qw(localStorage localStorageOptions)) {
+        $args->{configStorage}->{$_} ||= $args->{$_};
+    }
+
     $lmConf = Lemonldap::NG::Common::Conf->new($args->{configStorage});
     die( "$class : unable to build configuration: "
        . "$Lemonldap::NG::Common::Conf::msg" ) unless ($lmConf);
 
-    # Get local configuration parameters
-    my $localconf = $lmConf->getLocalConf(HANDLERSECTION);
-    if ($localconf) {
-        $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
-    }
+    # Merge local configuration parameters so that params defined in
+    # startup parameters have precedence over lemonldap-ng.ini params
+    $localConfig = {
+        %{ $lmConf->getLocalConf(HANDLERSECTION) },
+        %{ $args }
+    };
 
-    # Store in localConfig global variable
-    $localConfig = $args;
+    $checkTime = $localConfig->{checkTime} || $checkTime;
 
-    # localStorage can be declared in configStorage or at the root or both
-    foreach (qw(localStorage localStorageOptions)) {
-        $args->{$_} ||= $args->{configStorage}->{$_} || $lmConf->{$_};
-        $args->{configStorage}->{$_} ||= $args->{$_};
-    }
-
-    $checkTime = $args->{checkTime} || $checkTime;
-
-    $class->defaultValuesInit($args);
-    $class->localInit($args);
+    # Few actions that must be done at server startup:
+    # * set server signature
+    $class->serverSignatureInit unless ($localConfig->{hideSignature});
+    # * launch status process
+    ( $tsv->{statusPipe}, $tsv->{statusOut} ) = $class->statusInit
+        if ($localConfig->{status});
 }
 
-## @imethod protected void defaultValuesInit(hashRef args)
-# Set default values for non-customized variables
-# @param $args hash containing parameters
-# @return boolean
-sub defaultValuesInit {
-    my ( $class, $args ) = splice @_;
+# @method void serverSignatureInit
+# adapt server signature
+sub serverSignatureInit {
+    my $class = shift;
+    Lemonldap::NG::Handler::API->setServerSignature(
+        "Lemonldap::NG::Handler/" . $Lemonldap::NG::Handler::VERSION
+    ) if ( $Lemonldap::NG::Handler::VERSION );
+}
 
-    # Local configuration overrides global configuration
-    my %h = ( %$args, %$localConfig );
-
-    #return $class->SUPER::defaultValuesInit( \%h );
-
-    my $globalinit = Lemonldap::NG::Handler::Initialization::GlobalInit->new(
-        customFunctions => $tsv->{customFunctions},
-        useSafeJail     => $tsv->{useSafeJail},
-    );
-
-    (
-        @$tsv{
-            qw( cookieName      securedCookie      whatToTrace
-              https           port               customFunctions
-              timeoutActivity useRedirectOnError useRedirectOnForbidden
-              useSafeJail     key                maintenance
-              cda             httpOnly           cookieExpiration
-              cipher )
-        }
-      )
-      = $globalinit->defaultValuesInit(
-        @$tsv{
-            qw( cookieName      securedCookie      whatToTrace
-              https           port               customFunctions
-              timeoutActivity useRedirectOnError useRedirectOnForbidden
-              useSafeJail     key                maintenance
-              cda             httpOnly           cookieExpiration
-              cipher )
-        },
-        \%h
-      );
-
+## @ifn protected void statusInit()
+# Launch the status process
+sub statusInit {
+    my $class = shift;
+    require IO::Pipe;
+    $statusPipe = IO::Pipe->new;
+    $statusOut  = IO::Pipe->new;
+    if ( my $pid = fork() ) {
+        $statusPipe->writer();
+        $statusOut->reader();
+        $statusPipe->autoflush(1);
+        return ( $statusPipe, $statusOut );
+    }
+    else {
+        $statusPipe->reader();
+        $statusOut->writer();
+        my $fdin  = $statusPipe->fileno;
+        my $fdout = $statusOut->fileno;
+        open STDIN,  "<&$fdin";
+        open STDOUT, ">&$fdout";
+        my @tmp = ();
+        push @tmp, "-I$_" foreach (@INC);
+        exec 'perl', '-MLemonldap::NG::Handler::Status',
+          @tmp,
+          '-e',
+          "&Lemonldap::NG::Handler::Status::run()";
+    }
 }
 
 # MAIN

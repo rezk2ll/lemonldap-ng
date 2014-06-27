@@ -222,7 +222,7 @@ sub localSessionStorageInit {
         my $params = "";
         if ($localSessionStorage) {
             require Data::Dumper;
-            $params = " $self->{localStorage},"
+            $params = " $self->{localSessionStorage},"
                 . Data::Dumper->new( [ $localSessionStorageOptions ] )->Terse(1)->Indent(0)->Dump; # To send cache params on one line
         }
         #print { $tsv->{statusPipe} } "RELOADCACHE$params";

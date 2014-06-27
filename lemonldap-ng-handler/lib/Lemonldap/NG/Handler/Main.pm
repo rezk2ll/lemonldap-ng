@@ -1,24 +1,9 @@
-## @file
-# Base file for Lemonldap::NG handlers
-
-## @class
-# Base class for Lemonldap::NG handlers.
-# All methods in handler are class methods: in ModPerl environment, handlers
-# are always launched without object created.
-#
-# The main method is run() who is called by Apache for each requests (using
-# handler() wrapper).
-#
-# The main initialization subroutine is init() who launch localInit() and
-# globalInit().
+# Methods run at request serving
 package Lemonldap::NG::Handler::Main;
-
-#use strict;
 
 use MIME::Base64;
 use Exporter 'import';
 
-#use AutoLoader 'AUTOLOAD';
 use Lemonldap::NG::Common::Crypto;
 use Lemonldap::NG::Common::Session;
 require POSIX;
@@ -79,7 +64,6 @@ BEGIN {
     Lemonldap::NG::Handler::API->thread_share($tsv);
 }
 
-use Lemonldap::NG::Handler::Initialization::LocalInit;
 use Lemonldap::NG::Handler::Initialization::GlobalInit;
 use Lemonldap::NG::Handler::Main::Jail;
 use Lemonldap::NG::Handler::Main::Headers;
@@ -482,14 +466,6 @@ sub initLocalStorage {
     return 1;
 }
 
-## @imethod void localInit(hashRef args)
-# launch localInit method which launch the status process
-# @param $args reference to the initialization hash
-sub localInit($$) {
-    my ( $class, $args ) = splice @_;
-    ( $tsv->{statusPipe}, $tsv->{statusOut} ) = Lemonldap::NG::Handler::Initialization::LocalInit->localInit($args);
-}
-
 ## @imethod void globalInit(hashRef args)
 # instanciate a GlobalInit object with variables:
 # customFunctions, useSafeJail, and safe
@@ -670,7 +646,6 @@ sub status($$) {
         'debug', $r );
     return $class->abort( $r, "$class: status page can not be displayed" )
       unless ( $tsv->{statusPipe} and $tsv->{statusOut} );
-    $r->handler("perl-script");
     print { $tsv->{statusPipe} } "STATUS"
       . (
         Lemonldap::NG::Handler::API->args($r)
