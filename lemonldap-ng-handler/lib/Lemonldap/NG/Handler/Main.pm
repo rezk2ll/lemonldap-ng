@@ -483,23 +483,11 @@ sub initLocalStorage {
 }
 
 ## @imethod void localInit(hashRef args)
-# instanciate a LocalInit object with variables:
-# localStorage, localStorageOptions, refLocalStorage
-# launch localInit method which launch the status processus,
+# launch localInit method which launch the status process
 # @param $args reference to the initialization hash
 sub localInit($$) {
     my ( $class, $args ) = splice @_;
-
-    my $localinit = Lemonldap::NG::Handler::Initialization::LocalInit->new(
-        localStorage        => $tsv->{localStorage},
-        localStorageOptions => $tsv->{localStorageOptions},
-    );
-    (
-        @$tsv{
-            qw( localStorage localStorageOptions statusPipe statusOut )
-          }
-    ) = $localinit->localInit($args);
-
+    ( $tsv->{statusPipe}, $tsv->{statusOut} ) = Lemonldap::NG::Handler::Initialization::LocalInit->localInit($args);
 }
 
 ## @imethod void globalInit(hashRef args)

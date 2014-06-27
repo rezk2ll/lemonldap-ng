@@ -7,8 +7,6 @@ use strict;
 use POSIX qw(setuid setgid);
 use Data::Dumper;
 
-#inherits Cache::Cache
-
 our $VERSION = '1.4.0';
 
 our $status   = {};
@@ -112,14 +110,8 @@ eval {
 # - update counts
 # - display results
 sub run {
-    my $refLocalStorage;
-    if ( my ( $localStorage, $localStorageOptions ) = @_ ) {
-        eval "use $localStorage; \$refLocalStorage = new $localStorage(\$localStorageOptions);";
-        die($@) if ($@);
-    }
-
     $| = 1;
-    my ( $lastMn, $mn, $count );
+    my ( $lastMn, $mn, $count, $cache );
     while (<STDIN>) {
         $mn = int( time / 60 ) - $start + 1;
 
@@ -157,6 +149,17 @@ sub run {
 
             # Last 5 minutes activity
             $activity->[0]->{$code}++;
+        }
+
+        elsif (/^RELOADCACHE(?:\s+(\S+?),(\S+))?$/) {
+            if ( my ($cacheModule, $cacheOptions) = ( $1, $2 ) ) {
+                eval "use $cacheModule;"
+                   . "\$cache = new $cacheModule(\$cacheOptions);";
+                print STDERR "$@\n" if ($@); # TODO: use lmLog instead
+            }
+            else {
+                $cache = undef;
+            }
         }
 
         # Status requests
@@ -215,9 +218,9 @@ sub run {
                 print "<div id=\"users\"><p>\nTotal users : $u\n</p></div>\n";
 
                 # Local cache
-                if ($refLocalStorage) {
+                if ($cache) {
                     my @t =
-                      $refLocalStorage->get_keys( $_[1]->{namespace} );
+                      $cache->get_keys( $_[1]->{namespace} );
                     print "<div id=\"cache\"><p>\nLocal Cache : " . @t
                       . " objects\n</p></div>\n";
                 }

@@ -1,3 +1,4 @@
+# Methods run at configuration reload
 package Lemonldap::NG::Handler::Initialization::GlobalInit;
 
 #use Lemonldap::NG::Handler::Main qw(:all);
@@ -215,6 +216,19 @@ sub localSessionStorageInit {
       splice @_;
     $localSessionStorage        = $args->{localSessionStorage};
     $localSessionStorageOptions = $args->{localSessionStorageOptions};
+    $localSessionStorageOptions->{default_expires_in} ||= 600;
+
+    if ($args->{status}) {
+        my $params = "";
+        if ($localSessionStorage) {
+            require Data::Dumper;
+            $params = " $self->{localStorage},"
+                . Data::Dumper->new( [ $localSessionStorageOptions ] )->Terse(1)->Indent(0)->Dump; # To send cache params on one line
+        }
+        #print { $tsv->{statusPipe} } "RELOADCACHE$params";
+        # TODO: import $statusPipe in that module
+    }
+
     return ( $localSessionStorage, $localSessionStorageOptions );
 }
 

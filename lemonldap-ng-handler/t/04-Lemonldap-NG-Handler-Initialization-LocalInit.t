@@ -7,7 +7,7 @@
 
 package My::Package;
 
-use Test::More tests => 12;
+use Test::More tests => 2;
 
 BEGIN {
     use_ok('Lemonldap::NG::Handler::Initialization::LocalInit');
@@ -19,13 +19,14 @@ BEGIN {
 # its man page ( perldoc Test::More ) for help writing this test script.
 
 ok(
-    my $localinit = Lemonldap::NG::Handler::Initialization::LocalInit->new(
-        localStorage        => undef,
-        localStorageOptions => undef,
-    ),
-    'new LocalInit object'
+    Lemonldap::NG::Handler::Initialization::LocalInit->localInit({
+        status => 1,
+        hideSignature => 0,
+    }),
+    'localInit method'
 );
 
+__END__
 ok(
     my (
         $localStorage, $localStorageOptions,

@@ -1,98 +1,59 @@
-## @file
-# Base file for Lemonldap::NG handlers
+# Methods run at server startup / reload
 
-## @class
-# Base class for Lemonldap::NG handlers.
-# All methods in handler are class methods: in ModPerl environment, handlers
-# are always launched without object created.
-#
-# The main method is run() who is called by Apache for each requests (using
-# handler() wrapper).
-#
-# The main initialization subroutine is init() who launch localInit() and
-# globalInit().
 package Lemonldap::NG::Handler::Initialization::LocalInit;
-
-use Mouse;
 
 use Lemonldap::NG::Handler::SharedConf;    # Needed to get VERSION
 use Lemonldap::NG::Handler::Main::Logger;
-use Lemonldap::NG::Handler::API qw(:httpCodes); # for importing modules and constants
+use Lemonldap::NG::Handler::API qw(:httpCodes);
 
 our $VERSION = '1.4.0';
-
-# Mouse attributes
-##################
-
-# default attributes from constructor
-has localStorage => ( is => 'rw', isa => 'Maybe[Str]', required => 1 );
-
-has localStorageOptions =>
-  ( is => 'rw', isa => 'Maybe[HashRef]', required => 1 );
-
-# attributes built and returned
-has [ 'statusPipe', 'statusOut' ] => ( is => 'rw' );
-
-
-# Mouse methods
-###############
+my ( $statusPipe, $statusOut );
 
 ## @imethod void localInit(hashRef args)
 # Launch the status process (statusProcess()) if wanted
 # @param $args reference to the initialization hash
 sub localInit($$) {
-    my ( $self, $args ) = splice @_;
-    if ( $self->{localStorage} = $args->{localStorage} ) {
-        $self->{localStorageOptions} = $args->{localStorageOptions};
-        $self->{localStorageOptions}->{default_expires_in} ||= 600;
-    }
-    if ( $args->{status} ) {
-        $self->statusProcess();
-    }
+    my ( $class, $args ) = splice @_;
 
-    Lemonldap::NG::Handler::API->setServerSignature(
-        "Lemonldap::NG::Handler/" . $Lemonldap::NG::Handler::VERSION
-    ) if ( $Lemonldap::NG::Handler::VERSION and !$args->{hideSignature} );
+    $class->statusInit if ($args->{status});
+    $class->serverSignatureInit unless ($args->{hideSignature});
 
-    return (
-        $self->{localStorage}, $self->{localStorageOptions},
-        $self->{statusPipe},   $self->{statusOut}
-    );
+    return ( $statusPipe, $statusOut );
 }
 
-# Status daemon creation
+sub serverSignatureInit {
+    my $class = shift;
+    Lemonldap::NG::Handler::API->setServerSignature(
+        "Lemonldap::NG::Handler/" . $Lemonldap::NG::Handler::VERSION
+    ) if ( $Lemonldap::NG::Handler::VERSION );
+}
 
-## @ifn protected void statusProcess()
-# Launch the status processus.
-sub statusProcess {
-    my $self = shift;
+
+## @ifn protected void statusInit()
+# Launch the status process
+sub statusInit {
+    my $class = shift;
     require IO::Pipe;
-    $self->{statusPipe} = IO::Pipe->new;
-    $self->{statusOut}  = IO::Pipe->new;
+    $statusPipe = IO::Pipe->new;
+    $statusOut  = IO::Pipe->new;
     if ( my $pid = fork() ) {
-        $self->{statusPipe}->writer();
-        $self->{statusOut}->reader();
-        $self->{statusPipe}->autoflush(1);
+        $statusPipe->writer();
+        $statusOut->reader();
+        $statusPipe->autoflush(1);
     }
     else {
-        require Data::Dumper;
-        $Data::Dumper::Terse = 1;
-        $self->{statusPipe}->reader();
-        $self->{statusOut}->writer();
-        my $fdin  = $self->{statusPipe}->fileno;
-        my $fdout = $self->{statusOut}->fileno;
+        $statusPipe->reader();
+        $statusOut->writer();
+        my $fdin  = $statusPipe->fileno;
+        my $fdout = $statusOut->fileno;
         open STDIN,  "<&$fdin";
         open STDOUT, ">&$fdout";
         my @tmp = ();
         push @tmp, "-I$_" foreach (@INC);
-        my $params = $self->{localStorage}
-                   ? $self->{localStorage} . ', '
-                     . Data::Dumper::Dumper($self->{localStorageOptions})
-                   : "";
         exec 'perl', '-MLemonldap::NG::Handler::Status',
           @tmp,
           '-e',
-          "&Lemonldap::NG::Handler::Status::run($params)";
+          "&Lemonldap::NG::Handler::Status::run()";
     }
 }
 
