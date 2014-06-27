@@ -19,7 +19,7 @@ plan tests => $numTests;
 
 my $ini = File::Temp->new();
 my $dir = dirname( abs_path($0) );
-my $tmp = File::Temp->newdir();
+my $tmp = File::Temp::tempdir();
 
 print $ini "[all]
 
