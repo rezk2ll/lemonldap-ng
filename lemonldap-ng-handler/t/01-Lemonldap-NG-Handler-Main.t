@@ -8,7 +8,7 @@ package LemonldapNGHandlerMain;
 use strict;
 use warnings;
 
-use Test::More tests => 10;
+use Test::More tests => 9;
 BEGIN { use_ok( 'Lemonldap::NG::Handler::Main', qw(:all) ) }
 
 # get a standard basic configuration in $args hashref
@@ -26,15 +26,6 @@ my $apacheRequest;
 $ENV{SERVER_NAME} = "test1.example.com";
 
 open STDERR, '>/dev/null';
-ok(
-    $h->localInit(
-        {
-            localStorage        => 'Cache::FileCache',
-            localStorageOptions => { 'namespace' => 'lemonldap-ng-sessions', },
-        }
-    ),
-    'localInit'
-);
 
 my $args = {
     'portal'        => 'http://auth.example.com/',
