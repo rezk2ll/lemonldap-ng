@@ -18,53 +18,69 @@ package Lemonldap::NG::Handler::SharedConf;
 #use strict;
 
 use Lemonldap::NG::Handler::Main qw(:all);
+use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Handler::API qw(:httpCodes);
 use Lemonldap::NG::Handler::Initialization::GlobalInit;
-
 use Lemonldap::NG::Common::Conf;               #link protected lmConf
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Cache::Cache qw($EXPIRES_NEVER);
 use Lemonldap::NG::Handler::Main::Logger;
 
-use Mouse;
+use base qw(Lemonldap::NG::Handler::Main);
 
-extends qw(Lemonldap::NG::Handler::Main);
-
-#parameter reloadTime Time in second between 2 configuration check (600)
-
-our $VERSION    = '1.4.0';
-our $cfgNum     = 0;
-our $lastReload = 0;
-our $reloadTime;
-our $lmConf;
-our $localConfig;
+our $VERSION   = '1.4.0';
+our $lmConf;          # Lemonldap::NG::Common::Conf object to get config
+our $localConfig;     # Local configuration parameters, i.e. defined
+                      # in lemonldap-ng.ini or in startup parameters
+our $cfgNum    = 0;   # Number of the loaded remote configuration
+our $lastCheck = 0;   # Date of last configuration check (unix time)
+our $checkTime = 600; # Time between 2 configuration check (in seconds);
+                      # default value is 600, can be reset in local config
 
 BEGIN {
     Lemonldap::NG::Handler::API->thread_share($cfgNum);
-    Lemonldap::NG::Handler::API->thread_share($lastReload);
-    Lemonldap::NG::Handler::API->thread_share($reloadTime);
+    Lemonldap::NG::Handler::API->thread_share($lastCheck);
+    Lemonldap::NG::Handler::API->thread_share($checkTime);
     Lemonldap::NG::Handler::API->thread_share($lmConf);
     Lemonldap::NG::Handler::API->thread_share($localConfig);
     *EXPORT_TAGS = *Lemonldap::NG::Handler::Main::EXPORT_TAGS;
     *EXPORT_OK   = *Lemonldap::NG::Handler::Main::EXPORT_OK;
     push(
         @{ $EXPORT_TAGS{$_} },
-        qw($cfgNum $lastReload $reloadTime $lmConf $localConfig)
+        qw($cfgNum $lastCheck $checkTime $lmConf $localConfig)
     ) foreach (qw(variables localStorage));
-    push @EXPORT_OK, qw($cfgNum $lastReload $reloadTime $lmConf $localConfig);
+    push @EXPORT_OK, qw($cfgNum $lastCheck $checkTime $lmConf $localConfig);
 }
 
 # INIT PROCESS
 
 ## @imethod void init(hashRef args)
-# Constructor.
-# init is overloaded to call only localInit. globalInit is called later.
+# Load parameters and build the Lemonldap::NG::Common::Conf object.
 # @param $args hash containing parameters
 sub init($$) {
     my ( $class, $args ) = splice @_;
+    $lmConf = Lemonldap::NG::Common::Conf->new($args->{configStorage});
+    die( "$class : unable to build configuration: "
+       . "$Lemonldap::NG::Common::Conf::msg" ) unless ($lmConf);
 
-    # TODO reloadTime in defaultValuesInit ?
-    $reloadTime = $args->{reloadTime} || 600;
+    # Get local configuration parameters
+    my $localconf = $lmConf->getLocalConf(HANDLERSECTION);
+    if ($localconf) {
+        $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
+    }
+
+    # Store in localConfig global variable
+    $localConfig = $args;
+
+    # localStorage can be declared in configStorage or at the root or both
+    foreach (qw(localStorage localStorageOptions)) {
+        $args->{$_} ||= $args->{configStorage}->{$_} || $lmConf->{$_};
+        $args->{configStorage}->{$_} ||= $args->{$_};
+    }
+
+    $checkTime = $args->{checkTime} || $checkTime;
+
+    $class->defaultValuesInit($args);
     $class->localInit($args);
 }
 
@@ -109,97 +125,57 @@ sub defaultValuesInit {
 
 }
 
-## @imethod void localInit(hashRef args)
-# Load parameters and build the Lemonldap::NG::Common::Conf object.
-# @return boolean
-sub localInit {
-    my ( $class, $args ) = splice @_;
-    die(
-"$class : unable to build configuration : $Lemonldap::NG::Common::Conf::msg"
-      )
-      unless ( $lmConf =
-        Lemonldap::NG::Common::Conf->new( $args->{configStorage} ) );
-
-    # Get local configuration parameters
-    my $localconf = $lmConf->getLocalConf(HANDLERSECTION);
-    if ($localconf) {
-        $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
-    }
-
-    # Store in localConfig global variable
-    $localConfig = $args;
-
-    # localStorage can be declared in configStorage or at the root or both
-    foreach (qw(localStorage localStorageOptions)) {
-        $args->{$_} ||= $args->{configStorage}->{$_} || $lmConf->{$_};
-        $args->{configStorage}->{$_} ||= $args->{$_};
-    }
-
-    $class->defaultValuesInit($args);
-    $class->SUPER::localInit($args);
-}
-
 # MAIN
 
 ## @rmethod int run(Apache2::RequestRec r)
 # Check configuration and launch Lemonldap::NG::Handler::Main::run().
-# Each $reloadTime, the Apache child verify if its configuration is the same
+# Each $checkTime, the Apache child verify if its configuration is the same
 # as the configuration stored in the local storage.
 # @param $r Apache2::RequestRec object
 # @return Apache constant
 sub run($$) {
     my ( $class, $r ) = splice @_;
-    if ( time() - $lastReload > $reloadTime ) {
+    if ( time() - $lastCheck > $checkTime ) {
         die("$class: No configuration found")
-          unless ( $class->testConf(1) == OK );
+          unless ( $class->checkConf );
     }
     return $class->SUPER::run($r);
 }
 
 # CONFIGURATION UPDATE
 
-## @rmethod protected int testConf(boolean local)
-# Test if configuration has changed and launch setConf() if needed.
-# If the optional boolean $local is true, remote configuration is not tested:
-# only local cached configuration is tested if available. $local is given to
-# Lemonldap::NG::Common::getConf()
-# @param $local boolean
-# @return Apache constant
-sub testConf {
-    my ( $class, $local ) = splice @_;
-    my $conf = $lmConf->getConf( { local => $local } );
+## @rmethod protected int checkConf(boolean force)
+# Check if configuration is up to date, and reload it if needed.
+# If the optional boolean $force is set to true,
+# * cached configuration is ignored
+# * and checkConf returns false if it fails to load remote config
+# @param $force boolean
+# @return true if config is up to date or if reload config succeeded
+sub checkConf {
+    my ( $class, $force ) = @_;
+    my $conf = $lmConf->getConf( { local => !$force } );
+
     unless ( ref($conf) ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
 "$class: Unable to load configuration: $Lemonldap::NG::Common::Conf::msg",
             'error'
         );
-        return $cfgNum ? OK : SERVER_ERROR;
+        return $force ? 0 : $cfgNum ? 1 : 0;
     }
+
     if ( !$cfgNum or $cfgNum != $conf->{cfgNum} ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
 "Get configuration $conf->{cfgNum} ($Lemonldap::NG::Common::Conf::msg)",
             'debug'
         );
-        $lastReload = time();
-        return $class->setConf($conf);
+        $lastCheck  = time();
+        $cfgNum     = $conf->{cfgNum};
+        $conf->{$_} = $localConfig->{$_} foreach ( keys %$localConfig );
+        $class->globalInit($conf);
     }
     Lemonldap::NG::Handler::Main::Logger->lmLog(
         "$class: configuration is up to date", 'debug' );
-    OK;
-}
-
-## @rmethod protected int setConf(hashRef conf)
-# Launch globalInit().
-# Local parameters have best precedence on configuration parameters.
-# @return Apache constant
-sub setConf {
-    my ( $class, $conf ) = splice @_;
-
-    # Local configuration overrides global configuration
-    $cfgNum = $conf->{cfgNum};
-    $conf->{$_} = $localConfig->{$_} foreach ( keys %$localConfig );
-    $class->globalInit($conf);
-    OK;
+    return 1;
 }
 
 # RELOAD SYSTEM
@@ -207,7 +183,7 @@ sub setConf {
 *refresh = *reload;
 
 ## @rmethod int reload(Apache::RequestRec r)
-# Launch testConf() with $local=0, so remote configuration is tested.
+# Launch checkConf() with $local=0, so remote configuration is tested.
 # Then build a simple HTTP response that just returns "200 OK" or
 # "500 Server Error".
 # @param $r current request
@@ -216,12 +192,7 @@ sub reload($$) {
     my ( $class, $r ) = splice @_;
     Lemonldap::NG::Handler::Main::Logger->lmLog(
         "Request for configuration reload", 'notice' );
-    if ( $class->testConf(0) == OK ) {
-        Lemonldap::NG::Handler::API->set_header_out($r,
-            ( "Content-Type" => "text/plain; charset=UTF-8" ) );
-        return DONE;
-    }
-    return SERVER_ERROR;
+    return $class->checkConf(1) ? DONE : SERVER_ERROR;
 }
 
 1;
@@ -293,7 +264,7 @@ the database.
 
 Like L<Lemonldap::NG::Handler::Main>::init() but read only localStorage
 related options. You may change default time between two configuration checks
-with the C<reloadTime> parameter (default 600s).
+with the C<checkTime> parameter (default 600s).
 
 =head1 OPERATION
 
