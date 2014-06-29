@@ -24,7 +24,7 @@ has 'force' => (
 
 has 'kind' => (
     is  => 'rw',
-    isa => 'Str',
+    isa => 'Str|Undef',
 );
 
 has 'data' => (
