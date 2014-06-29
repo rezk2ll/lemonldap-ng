@@ -148,7 +148,8 @@ all:	configure common handler manager portal
 	@echo "   - install_examples_site ($(EXAMPLESDIR))"
 	@echo
 	@echo "Other languages documentation (fr only for now)"
-	@echo " - install_fr_doc_site   (needs OmegaT)"
+	@echo " - fr-doc                  (needs OmegaT)"
+	@echo " - install_fr_doc_site"
 	@echo
 
 #
@@ -508,6 +509,16 @@ manager_uninstall:	manager
 
 dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
+	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|debian\|rpm\)") lemonldap-ng-$(VERSION)
+	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
+	@rm -rf lemonldap-ng-$(VERSION)/po-doc/fr/*
+	@find $$dir -name '*.bak' -delete
+	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
+	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
+	@rm -rf lemonldap-ng-$(VERSION)
+
+rpm-dist:	clean
+	@mkdir -p lemonldap-ng-$(VERSION)
 	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|debian\)") lemonldap-ng-$(VERSION)
 	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
 	@find $$dir -name '*.bak' -delete
@@ -515,9 +526,10 @@ dist:	clean
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
+
 debian-dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
-	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\)") lemonldap-ng-$(VERSION)
+	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|rpm\)") lemonldap-ng-$(VERSION)
 	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
@@ -728,18 +740,21 @@ translated-doc: omegat-configuration-file
 
 # 2. Public targets
 
-%-translation: test_omegat_%_dir
+%-translation: test_omegat_%_dir omegat-%-clean
 	$(eval CODE = $(call language_code,$*))
 	$(MAKE) translation LANGCODE=$* OMEGATCODE=$(CODE)
 
-%-doc: test_omegat_%_dir
+%-doc: test_omegat_%_dir omegat-%-clean
 	$(eval CODE = $(call language_code,$*))
 	$(MAKE) translated-doc LANGCODE=$* OMEGATCODE=$(CODE)
 	
 omegat-clean:
-	rm -rf omegat.files/*/omegat.project po-doc/*/* omegat.files/*/omegat/project_save*.bak
+	rm -rf omegat.files/*/omegat.project omegat.files/*/omegat/project_save*.bak
 
-install_%_doc_site: %-doc test_omegat_%_dir
+omegat-%-clean:
+	rm -rf po-doc/$*/*
+
+install_%_doc_site:
 	@rm -rf $(RDOCDIR)/$*-doc || true
 	@install -v -d $(RDOCDIR)/$*-doc
 	@cp -dR --remove-destination po-doc/$*/* $(RDOCDIR)/$*-doc
