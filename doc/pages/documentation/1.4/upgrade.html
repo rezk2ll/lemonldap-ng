@@ -58,13 +58,49 @@ If you upgrade from older versions, please follow first:
 
 <p>
 
-Handler module has been completely rewritten. You should now call the DefaultHandler module in your virtual host:
+Handler module has been completely rewritten. You should now call the default module in your virtual host:
 
 </p>
-<pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler::DefaultHandler</pre>
+<pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
+
+<p>
+The main Apache handler configuration file has also been modified, check it:
+
+</p>
+<pre class="code file apache"><span class="co1"># Load LemonLDAP::NG Handler</span>
+PerlOptions +GlobalRequest
+PerlRequire Lemonldap/NG/Handler.pm
+&nbsp;
+<span class="co1"># Common error page and security parameters</span>
+<span class="kw1">ErrorDocument</span> 403 http://auth.example.com/?lmError=403
+<span class="kw1">ErrorDocument</span> 500 http://auth.example.com/?lmError=500
+<span class="kw1">ErrorDocument</span> 503 http://auth.example.com/?lmError=503
+&nbsp;
+&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+    <span class="kw1">ServerName</span> reload.example.com
+&nbsp;
+    <span class="co1"># Configuration reload mechanism (only 1 per physical server is</span>
+    <span class="co1"># needed): choose your URL to avoid restarting Apache when</span>
+    <span class="co1"># configuration change</span>
+    &lt;<span class="kw3">Location</span> /reload&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Deny</span> from <span class="kw2">all</span>
+        <span class="kw1">Allow</span> from 127.0.0.0/8
+        PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;refresh
+    &lt;/<span class="kw3">Location</span>&gt;
+&nbsp;
+    <span class="co1"># Uncomment this to activate status module</span>
+    <span class="co1">#&lt;Location /status&gt;</span>
+    <span class="co1">#    Order deny,allow</span>
+    <span class="co1">#    Deny from all</span>
+    <span class="co1">#    Allow from 127.0.0.0/8</span>
+    <span class="co1">#    PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;status</span>
+    <span class="co1">#&lt;/Location&gt;</span>
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Handler" [460-680] -->
+<!-- SECTION "Handler" [460-1703] -->
 <h2><a name="new_portal_skin" id="new_portal_skin">New portal skin</a></h2>
 <div class="level2">
 
@@ -74,7 +110,7 @@ We provide a new skin: bootstrap. This skin uses Twitter Bootstrap framework, an
 </p>
 
 </div>
-<!-- SECTION "New portal skin" [681-852] -->
+<!-- SECTION "New portal skin" [1704-1875] -->
 <h2><a name="specific_handlers" id="specific_handlers">Specific handlers</a></h2>
 <div class="level2">
 
@@ -139,7 +175,7 @@ PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::SympaAutoLogin
 </p>
 
 </div>
-<!-- SECTION "Specific handlers" [853-1626] -->
+<!-- SECTION "Specific handlers" [1876-2649] -->
 <h2><a name="security" id="security">Security</a></h2>
 <div class="level2">
 
@@ -153,4 +189,18 @@ We recommend that you use a new generate module. Add <code>generateModule</code>
 </p>
 
 </div>
-<!-- SECTION "Security" [1627-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Security" [2650-3062] -->
+<h2><a name="captcha" id="captcha">Captcha</a></h2>
+<div class="level2">
+
+<p>
+
+Captcha now use an Apache::Session module as backend, you need to adapt your previous configuration to replace <code>captcha_data</code> and <code>captcha_output</code> by <code>captchaStorage</code> and <code>captchaStorageOptions</code>.
+</p>
+
+<p>
+This allows to use a DB or <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> to share captchas in a cluster.
+</p>
+
+</div>
+<!-- SECTION "Captcha" [3063-] --></div><!-- closes <div class="dokuwiki export">-->
