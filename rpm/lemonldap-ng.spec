@@ -45,8 +45,6 @@
 
 %define lm_dnsdomain example.com
 
-%define build_fr_doc 1
-
 #==============================================================================
 # Main package
 #==============================================================================
@@ -162,6 +160,20 @@ Group:          Monitoring
 
 %description -n lemonldap-ng-doc
 This package contains html documentation.
+
+#==============================================================================
+# Documentation FR
+#==============================================================================
+%package -n lemonldap-ng-fr-doc
+Summary:        LemonLDAP-NG French documentation
+%if 0%{?rhl}%{?rhel}%{?fedora}
+Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
+
+%description -n lemonldap-ng-fr-doc
+This package contains html documentation translated in French.
 
 #==============================================================================
 # Handler
@@ -337,15 +349,12 @@ rm -rf %{buildroot}
 	DATADIR=%{lm_vardir} \
 	DNSDOMAIN=%{lm_dnsdomain}
 
-# Build FR doc (requires omegat)
-%if %{build_fr_doc}
-	%{__make} %{?_smp_mflags} install_fr_doc_site \
+%{__make} %{?_smp_mflags} install_fr_doc_site \
 	DESTDIR=%{buildroot} \
 	PREFIX=%{lm_prefix} \
 	BINDIR=%{lm_sharedir}/bin \
 	DOCUMENTROOT=%{lm_vardir} \
 	DATADIR=%{lm_vardir}
-%endif
 
 # Remove some unwanted files
 find %{buildroot} -name .packlist -exec rm -f {} \;
@@ -481,10 +490,11 @@ rm -rf %{buildroot}
 %files -n lemonldap-ng-doc
 %defattr(-,root,root,-)
 %doc %{lm_vardir}/doc
-%if %{build_fr_doc}
-%doc %{lm_vardir}/fr-doc
-%endif
 %doc changelog COPYING INSTALL README
+
+%files -n lemonldap-ng-fr-doc
+%defattr(-,root,root,-)
+%doc %{lm_vardir}/fr-doc
 
 %files -n lemonldap-ng-handler
 %defattr(-,root,root,-)
