@@ -20,7 +20,7 @@ package Lemonldap::NG::Handler::SharedConf;
 use Lemonldap::NG::Handler::Main qw(:all);
 use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Handler::API qw(:httpCodes);
-use Lemonldap::NG::Handler::Initialization::GlobalInit;
+use Lemonldap::NG::Handler::Reload;
 use Lemonldap::NG::Common::Conf;               #link protected lmConf
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Handler::Main::Logger;

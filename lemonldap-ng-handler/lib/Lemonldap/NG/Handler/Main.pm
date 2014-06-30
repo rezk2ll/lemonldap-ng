@@ -59,7 +59,7 @@ BEGIN {
     Lemonldap::NG::Handler::API->thread_share($tsv);
 }
 
-use Lemonldap::NG::Handler::Initialization::GlobalInit;
+use Lemonldap::NG::Handler::Reload;
 use Lemonldap::NG::Handler::Main::Jail;
 use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::PostForm;
@@ -462,8 +462,6 @@ sub initLocalStorage {
 }
 
 ## @imethod void globalInit(hashRef args)
-# instanciate a GlobalInit object with variables:
-# customFunctions, useSafeJail, and safe
 # Global initialization process launches :
 # - defaultValuesInit()
 # - portalInit()
@@ -477,7 +475,7 @@ sub initLocalStorage {
 sub globalInit {
     my $class = shift;
 
-    my $globalinit = Lemonldap::NG::Handler::Initialization::GlobalInit->new(
+    my $globalinit = Lemonldap::NG::Handler::Reload->new(
         customFunctions => $tsv->{customFunctions},
         useSafeJail     => $tsv->{useSafeJail},
         safe            => $tsv->{safe},

@@ -11,7 +11,7 @@ lib/Lemonldap/NG/Handler/API/ApacheMP2.pm
 lib/Lemonldap/NG/Handler/API/CGI.pm
 lib/Lemonldap/NG/Handler/API/Nginx.pm
 lib/Lemonldap/NG/Handler/CGI.pm
-lib/Lemonldap/NG/Handler/Initialization/GlobalInit.pm
+lib/Lemonldap/NG/Handler/Reload.pm
 lib/Lemonldap/NG/Handler/Main.pm
 lib/Lemonldap/NG/Handler/Main/Headers.pm
 lib/Lemonldap/NG/Handler/Main/Jail.pm
@@ -32,7 +32,7 @@ META.yml
 README
 t/01-Lemonldap-NG-Handler-Main.t
 t/02-Lemonldap-NG-Handler-Main-Portal.t
-t/05-Lemonldap-NG-Handler-Initialization-GlobalInit.t
+t/05-Lemonldap-NG-Handler-Reload.t
 t/10-Lemonldap-NG-Handler-SharedConf.t
 t/12-Lemonldap-NG-Handler-Jail.t
 t/13-Lemonldap-NG-Handler-Fake-Safe.t

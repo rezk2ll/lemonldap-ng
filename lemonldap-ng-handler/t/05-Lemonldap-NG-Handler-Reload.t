@@ -10,7 +10,7 @@ package My::Package;
 use Test::More tests => 5;
 
 BEGIN {
-    use_ok('Lemonldap::NG::Handler::Initialization::GlobalInit');
+    use_ok('Lemonldap::NG::Handler::Reload');
 }
 
 #########################
@@ -23,7 +23,7 @@ my $globalinit;
 open STDERR, '>/dev/null';
 
 ok(
-    $globalinit = Lemonldap::NG::Handler::Initialization::GlobalInit->new(
+    $globalinit = Lemonldap::NG::Handler::Reload->new(
         customFunctions => "",
         useSafeJail     => 1,
     ),

@@ -1,5 +1,5 @@
 # Methods run at configuration reload
-package Lemonldap::NG::Handler::Initialization::GlobalInit;
+package Lemonldap::NG::Handler::Reload;
 
 #use Lemonldap::NG::Handler::Main qw(:all);
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
