@@ -8,8 +8,9 @@ package LemonldapNGHandlerMain;
 use strict;
 use warnings;
 
-use Test::More tests => 9;
+use Test::More tests => 10;
 BEGIN { use_ok( 'Lemonldap::NG::Handler::Main', qw(:all) ) }
+BEGIN { use_ok( 'Lemonldap::NG::Handler::Reload', qw(:all) ) }
 
 # get a standard basic configuration in $args hashref
 use Cwd 'abs_path';
@@ -27,7 +28,7 @@ $ENV{SERVER_NAME} = "test1.example.com";
 
 open STDERR, '>/dev/null';
 
-my $args = {
+my $conf = {
     'portal'        => 'http://auth.example.com/',
     'globalStorage' => 'Apache::Session::File',
     'post'          => {},
@@ -58,9 +59,9 @@ my $args = {
 # - headerListInit
 # - forgeHeadersInit
 # - postUrlInit
-ok( $h->globalInit($args), 'globalInit' );
+ok( Lemonldap::NG::Handler::Reload->configReload( $conf, $Lemonldap::NG::Handler::Main::tsv ) );
 
-ok( $h->portal() eq 'http://auth.example.com/', 'portal' );
+ok( &{ $tsv->{portal} }() eq 'http://auth.example.com/', 'portal' );
 
 ok( $h->grant( $apacheRequest, '/s' ), 'basic rule "accept"' );
 ok( !$h->grant( $apacheRequest, '/no' ), 'basic rule "deny"' );

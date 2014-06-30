@@ -10,6 +10,7 @@ package My::Package;
 use Test::More tests => 5;
 
 BEGIN {
+    use_ok('Lemonldap::NG::Handler::Main');
     use_ok('Lemonldap::NG::Handler::Reload');
 }
 
@@ -22,17 +23,9 @@ my $globalinit;
 
 open STDERR, '>/dev/null';
 
+my $tsv = {};
 ok(
-    $globalinit = Lemonldap::NG::Handler::Reload->new(
-        customFunctions => "",
-        useSafeJail     => 1,
-    ),
-    'constructor'
-);
-
-ok(
-    $globalinit->defaultValuesInit(
-        ( map { undef } 1 .. 16 ),
+    Lemonldap::NG::Handler::Reload->defaultValuesInit(
         {
             https        => 0,
             port         => 0,
@@ -46,14 +39,14 @@ ok(
 
                 }
             },
-        }
+        },
+        $tsv
     ),
     'defaultValuesInit'
 );
 
 ok(
-    $globalinit->locationRulesInit(
-        ( map { undef } 1 .. 8 ),
+    Lemonldap::NG::Handler::Reload->locationRulesInit(
         {
             'locationRules' => {
                 'www1' => {
@@ -62,15 +55,16 @@ ok(
                     'test'    => '$groups =~ /\badmin\b/',
                 }
             }
-        }
+        },
+        $tsv
     ),
     'locationRulesInit'
 );
 
 ok(
-    $globalinit->forgeHeadersInit(
-        ( map { undef } 1 .. 1 ),
-        { exportedHeaders => { www1 => { Auth => '$uid', } } }
+    Lemonldap::NG::Handler::Reload->headersInit(
+        { exportedHeaders => { www1 => { Auth => '$uid', } } },
+        $tsv
     ),
     'forgeHeadersInit'
 );

@@ -4,7 +4,6 @@ package Lemonldap::NG::Handler::Main;
 use MIME::Base64;
 use Exporter 'import';
 
-use Lemonldap::NG::Common::Crypto;
 use Lemonldap::NG::Common::Session;
 require POSIX;
 use CGI::Util 'expires';
@@ -39,6 +38,7 @@ our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 # $datasUpdate
 
 our ( $datas, $datasUpdate, $tsv );
+$tsv = {};
 
 BEGIN {
 
@@ -173,7 +173,7 @@ sub goToPortal {
     );
     my $urlc_init = $class->encodeUrl( $r, $url );
     Lemonldap::NG::Handler::API->set_header_out( $r,
-            'Location' => $class->portal()
+            'Location' => &{ $tsv->{portal} }()
           . "?url=$urlc_init"
           . ( $arg ? "&$arg" : "" ) );
     return REDIRECT;
@@ -219,10 +219,10 @@ sub retrieveSession {
     # 2. Get the session from cache or backend
     my $apacheSession = Lemonldap::NG::Common::Session->new(
         {
-            storageModule        => $tsv->{globalStorage},
-            storageModuleOptions => $tsv->{globalStorageOptions},
-            cacheModule          => $tsv->{localSessionStorage},
-            cacheModuleOptions   => $tsv->{localSessionStorageOptions},
+            storageModule        => $tsv->{sessionStorageModule},
+            storageModuleOptions => $tsv->{sessionStorageOptions},
+            cacheModule          => $tsv->{sessionCacheModule},
+            cacheModuleOptions   => $tsv->{sessionCacheOptions},
             id                   => $id,
             kind                 => "SSO",
         }
@@ -346,10 +346,10 @@ sub run ($$) {
             $tsv->{forgeHeaders} );
 
         # Store local macros
-        if ( keys %$datas > $kc and $class->initLocalStorage ) {
+        if ( keys %$datas > $kc and $tsv->{sessionCache} ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog( "Update local cache",
                 'debug', $r );
-            $tsv->{refLocalStorage}->set( $id, $datas );
+            $tsv->{sessionCache}->set( $id, $datas );
         }
 
         # Hide Lemonldap::NG cookie
@@ -445,100 +445,6 @@ sub abort {
         }
     };
     die $msg if ($@);
-}
-
-sub initLocalStorage {
-    my $class = shift;
-    return 1 if ($tsv->{refLocalStorage});
-    return 0 unless ($tsv->{localStorage});
-
-    eval "use $tsv->{localStorage}";
-    die("Unable to load $self->{localStorage}: $@") if ($@);
-    eval '$tsv->{refLocalStorage} = new '
-           . $tsv->{localStorage}
-           . '($tsv->{localStorageOptions});';
-    die("Unable to init local cache: $@") if ($@);
-    return 1;
-}
-
-## @imethod void globalInit(hashRef args)
-# Global initialization process launches :
-# - defaultValuesInit()
-# - portalInit()
-# - locationRulesInit()
-# - globalStorageInit()
-# - localSessionStorageInit()
-# - headerListInit()
-# - forgeHeadersInit()
-# - postUrlInit()
-# @param $args reference to the configuration hash
-sub globalInit {
-    my $class = shift;
-
-    my $globalinit = Lemonldap::NG::Handler::Reload->new(
-        customFunctions => $tsv->{customFunctions},
-        useSafeJail     => $tsv->{useSafeJail},
-        safe            => $tsv->{safe},
-    );
-
-    (
-        @$tsv{
-            qw( cookieName      securedCookie      whatToTrace
-              https           port               customFunctions
-              timeoutActivity useRedirectOnError useRedirectOnForbidden
-              useSafeJail     key                maintenance
-              cda             httpOnly           cookieExpiration
-              cipher )
-          }
-      )
-      = $globalinit->defaultValuesInit(
-        @$tsv{
-            qw( cookieName      securedCookie      whatToTrace
-              https           port               customFunctions
-              timeoutActivity useRedirectOnError useRedirectOnForbidden
-              useSafeJail     key                maintenance
-              cda             httpOnly           cookieExpiration
-              cipher )
-          },
-        @_
-      );
-
-    ( *portal, $tsv->{safe} ) = $globalinit->portalInit( $class, @_ );
-
-    (
-        @$tsv{
-            qw( locationCount defaultCondition
-              defaultProtection locationCondition
-              locationProtection locationRegexp
-              locationConditionText safe )
-          }
-      )
-      = $globalinit->locationRulesInit(
-        $class,
-        @$tsv{
-            qw( locationCount defaultCondition
-              defaultProtection locationCondition
-              locationProtection locationRegexp
-              locationConditionText )
-          },
-        @_
-      );
-
-    @$tsv{qw( globalStorage globalStorageOptions )} =
-      $globalinit->globalStorageInit(
-        @$tsv{qw( globalStorage globalStorageOptions )}, @_ );
-
-    @$tsv{qw( localSessionStorage localSessionStorageOptions )} =
-      $globalinit->localSessionStorageInit(
-        @$tsv{qw( localSessionStorage localSessionStorageOptions )}, @_ );
-
-    $tsv->{headerList} = $globalinit->headerListInit( $tsv->{headerList}, @_ );
-
-    $tsv->{forgeHeaders} =
-      $globalinit->forgeHeadersInit( $tsv->{forgeHeaders}, @_ );
-
-    $tsv->{transform} = $globalinit->postUrlInit( $tsv->{transform}, @_ );
-
 }
 
 ## @rmethod boolean grant()

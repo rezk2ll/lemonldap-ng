@@ -23,7 +23,6 @@ use Lemonldap::NG::Handler::API qw(:httpCodes);
 use Lemonldap::NG::Handler::Reload;
 use Lemonldap::NG::Common::Conf;               #link protected lmConf
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
-use Lemonldap::NG::Handler::Main::Logger;
 
 use base qw(Lemonldap::NG::Handler::Main);
 
@@ -167,7 +166,7 @@ sub checkConf {
         $lastCheck  = time();
         $cfgNum     = $conf->{cfgNum};
         $conf->{$_} = $localConfig->{$_} foreach ( keys %$localConfig );
-        $class->globalInit($conf);
+        Lemonldap::NG::Handler::Reload->configReload( $conf, $tsv );
     }
     Lemonldap::NG::Handler::Main::Logger->lmLog(
         "$class: configuration is up to date", 'debug' );

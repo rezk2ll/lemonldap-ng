@@ -3,129 +3,136 @@ package Lemonldap::NG::Handler::Reload;
 
 #use Lemonldap::NG::Handler::Main qw(:all);
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
-use Safe;
 use constant UNPROTECT => 1;
 use constant SKIP      => 2;
-
-use Mouse;
 
 use Lemonldap::NG::Handler::Main::Jail;
 use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Handler::API qw(:httpCodes);
+use Lemonldap::NG::Common::Crypto;
 
 our $VERSION = '1.4.0';
 
-has customFunctions => ( is => 'rw', isa => 'Maybe[Str]' );
+## @imethod void configReload(hashRef conf, hashRef tsv)
+# Given a Lemonldap::NG configuration $conf, computes values used to
+# handle requests and store them in a thread shared object called $tsv
+#
+# methods called by configReload, and thread shared values computed, are:
+# * defaultValuesInit():
+#      (scalars for global options)
+#      - cda
+#      - cookieExpiration  # warning: absent from default Conf
+#      - cookieName
+#      - securedCookie,
+#      - httpOnly
+#      - whatToTrace
+#      - customFunctions
+#      - timeoutActivity
+#      - useRedirectOnError
+#      - useRedirectOnForbidden
+#      - useSafeJail
+#      (objects)
+#      - cipher  # Lemonldap::NG::Common::Crypto object
+#      - jail
+#      (hashrefs for vhost options)
+#      - https
+#      - port
+#      - maintenance
+# * portalInit():
+#      - portal (functions that returns portal URL)
+# * locationRulesInit():
+#      - locationCount
+#      - defaultCondition
+#      - defaultProtection
+#      - locationCondition
+#      - locationProtection
+#      - locationRegexp
+#      - locationConditionText
+# * sessionStorageInit():
+#      - sessionStorageModule
+#      - sessionStorageOptions
+#      - sessionCacheModule
+#      - sessionCacheOptions
+#      - sessionCache
+# * headersInit():
+#      - headerList
+#      - forgeHeaders
+# * postUrlInit():
+# * aliasInit():
+#      - vhostAlias
 
-has useSafeJail => ( is => 'rw', isa => 'Maybe[Int]' );
+# @param $conf reference to the configuration hash
+# @param $tsv reference to the thread-shared parameters conf
+sub configReload {
+    my ( $class, $conf, $tsv ) = @_;
 
-has safe => ( is => 'rw' );
+    $class->defaultValuesInit ( $conf, $tsv );
+    $class->portalInit        ( $conf, $tsv );
+    $class->locationRulesInit ( $conf, $tsv );
+    $class->sessionStorageInit( $conf, $tsv );
+    $class->headersInit       ( $conf, $tsv );
+#    $class->postUrlInit       ( $conf, $tsv );
+    $class->aliasInit         ( $conf, $tsv );
+    return 1;
+}
 
 
 ## @imethod protected void defaultValuesInit(hashRef args)
 # Set default values for non-customized variables
 # @param $args reference to the configuration hash
 sub defaultValuesInit {
+    my ( $class, $conf, $tsv ) = @_;
+    
+    $tsv->{$_} = $conf->{$_}
+      foreach (qw(
+        cda              cookieExpiration    cookieName
+        customFunctions  httpOnly            securedCookie
+        timeoutActivity  useRedirectOnError  useRedirectOnForbidden
+        useSafeJail      whatToTrace
+      ));
 
-    my (
-        $self,                   $cookieName,      $securedCookie,
-        $whatToTrace,            $https,           $port,
-        $customFunctions,        $timeoutActivity, $useRedirectOnError,
-        $useRedirectOnForbidden, $useSafeJail,     $key,
-        $maintenance,            $cda,             $httpOnly,
-        $cookieExpiration,       $cipher,          $args,
-    ) = splice @_;
-    foreach my $t (qw(https port maintenance)) {
+    $tsv->{cipher} = Lemonldap::NG::Common::Crypto->new($conf->{key});
+    $tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new(
+        'safe'            => undef,
+        'useSafeJail'     => $conf->{useSafeJail},
+        'customFunctions' => $conf->{customFunctions}
+    );
+    $tsv->{jail}->build_safe();
 
-        # Skip Handler initialization (values not defined)
-        next unless defined $args->{$t};
+    foreach my $opt (qw(https port maintenance)) {
+        next unless defined $conf->{$opt};
 
         # Record default value in key '_'
-        $args->{$t} = { _ => $args->{$t} } unless ( ref( $args->{$t} ) );
+        $tsv->{$opt} = { _ => $conf->{$opt} };
 
         # Override with vhost options
-        if ( defined $args->{vhostOptions} ) {
-            my $n = 'vhost' . ucfirst($t);
-            foreach my $k ( keys %{ $args->{vhostOptions} } ) {
-                foreach my $alias (
-                    @{ $self->getAliases( $k, $args->{vhostOptions} ) } )
-                {
-                    my $v = $args->{vhostOptions}->{$k}->{$n};
-                    Lemonldap::NG::Handler::Main::Logger->lmLog(
-                        "Options $t for vhost $alias: $v", 'debug' );
-                    $args->{$t}->{$alias} = $v
-                      if ( $v >= 0 );    # Keep default value if $v is negative
-                }
+        if ( $conf->{vhostOptions} ) {
+            my $name = 'vhost' . ucfirst($opt);
+            foreach my $vhost ( keys %{ $conf->{vhostOptions} } ) {
+                my $val = $conf->{vhostOptions}->{$vhost}->{$name};
+                Lemonldap::NG::Handler::Main::Logger->lmLog(
+                    "Options $opt for vhost $vhost: $val", 'debug' );
+                $tsv->{$opt}->{$vhost} = $val
+                    if ( $val >= 0 ); # Keep default value if $val is negative
             }
         }
     }
-
-    # Default values are defined in Common::Conf::Attributes
-    # These values should be erased by global configuration
-    $cookieName = $args->{cookieName} || $cookieName;
-    $securedCookie =
-      defined( $args->{securedCookie} )
-      ? $args->{securedCookie}
-      : $securedCookie;
-    $whatToTrace = $args->{whatToTrace} || $whatToTrace;
-    $https = defined($https) ? $https : $args->{https};
-    $port ||= $args->{port};
-    $customFunctions = $args->{customFunctions};
-    $self->customFunctions($customFunctions);
-    $cda      = defined($cda)      ? $cda      : $args->{cda};
-    $httpOnly = defined($httpOnly) ? $httpOnly : $args->{httpOnly};
-    $cookieExpiration = $args->{cookieExpiration} || $cookieExpiration;
-    $timeoutActivity  = $args->{timeoutActivity}  || $timeoutActivity;
-    $useRedirectOnError =
-      defined($useRedirectOnError)
-      ? $useRedirectOnError
-      : $args->{useRedirectOnError};
-    $useRedirectOnForbidden =
-      defined($useRedirectOnForbidden)
-      ? $useRedirectOnForbidden
-      : $args->{useRedirectOnForbidden};
-    $useSafeJail =
-      defined($useSafeJail)
-      ? $useSafeJail
-      : $args->{useSafeJail};
-    $self->useSafeJail($useSafeJail);
-    $key ||= 'lemonldap-ng-key';
-    $cipher ||= Lemonldap::NG::Common::Crypto->new($key);
-
-    if ( $args->{key} && ( $args->{key} ne $key ) ) {
-        $key    = $args->{key};
-        $cipher = Lemonldap::NG::Common::Crypto->new($key);
-    }
-
-    $maintenance = defined($maintenance) ? $maintenance : $args->{maintenance};
-
-    return (
-        $cookieName,      $securedCookie,      $whatToTrace,
-        $https,           $port,               $customFunctions,
-        $timeoutActivity, $useRedirectOnError, $useRedirectOnForbidden,
-        $useSafeJail,     $key,                $maintenance,
-        $cda,             $httpOnly,           $cookieExpiration,
-        $cipher
-    );
-    1;
+    return 1;
 }
 
 ## @imethod protected void portalInit(hashRef args)
 # Verify that portal variable exists. Die unless
 # @param $args reference to the configuration hash
 sub portalInit {
-    my ( $self, $mainClass, $args ) = splice @_;
-    die("portal parameter required") unless ( $args->{portal} );
-    if ( $args->{portal} =~ /[\$\(&\|"']/ ) {
-        my ($portal) = $self->conditionSub( $mainClass, $args->{portal} );
-        eval "sub portal {return &\$portal}";
+    my ( $class, $conf, $tsv ) = @_;
+    die("portal parameter required") unless ( $conf->{portal} );
+    if ( $conf->{portal} =~ /[\$\(&\|"']/ ) {
+        ($tsv->{portal}) = $class->conditionSub( $conf->{portal}, $tsv );
     }
     else {
-        eval "sub portal {return '$args->{portal}'}";
+        $tsv->{portal} = sub { return $conf->{portal} };
     }
-    die("Unable to read portal parameter ($@)") if ($@);
-    return ( \&portal, $self->{safe} );
-    1;
+    return 1;
 }
 
 ## @imethod void locationRulesInit(hashRef args)
@@ -141,154 +148,100 @@ sub portalInit {
 # virtual host
 # @param $args reference to the configuration hash
 sub locationRulesInit {
-    my (
-        $self,               $mainClass,         $locationCount,
-        $defaultCondition,   $defaultProtection, $locationCondition,
-        $locationProtection, $locationRegexp,    $locationConditionText,
-        $args
-    ) = splice @_;
-    foreach my $vhost ( keys %{ $args->{locationRules} } ) {
-        foreach
-          my $alias ( @{ $self->getAliases( $vhost, $args->{vhostOptions} ) } )
-        {
-            $locationCount->{$alias} = 0;
-            foreach ( sort keys %{ $args->{locationRules}->{$vhost} } ) {
-                if ( $_ eq 'default' ) {
-                    (
-                        $defaultCondition->{$alias},
-                        $defaultProtection->{$alias}
-                      )
-                      = $self->conditionSub( $mainClass,
-                        $args->{locationRules}->{$vhost}->{$_} );
-                }
-                else {
-                    (
-                        $locationCondition->{$alias}
-                          ->[ $locationCount->{$alias} ],
-                        $locationProtection->{$alias}
-                          ->[ $locationCount->{$alias} ]
-                      )
-                      = $self->conditionSub( $mainClass,
-                        $args->{locationRules}->{$vhost}->{$_} );
-                    $locationRegexp->{$alias}->[ $locationCount->{$alias} ] =
-                      qr/$_/;
-                    $locationConditionText->{$alias}
-                      ->[ $locationCount->{$alias} ] =
-                      /^\(\?#(.*?)\)/ ? $1 : /^(.*?)##(.+)$/ ? $2 : $_;
-                    $locationCount->{$alias}++;
-                }
+    my ( $class, $conf, $tsv ) = @_;
+
+    foreach my $vhost ( keys %{ $conf->{locationRules} } ) {
+        foreach ( sort keys %{ $conf->{locationRules}->{$vhost} } ) {
+            my ( $cond, $prot )
+              = $class->conditionSub( $conf->{locationRules}->{$vhost}->{$_}, $tsv );
+
+            if ( $_ eq 'default' ) {
+                $tsv->{defaultCondition}->{$vhost} = $cond;
+                $tsv->{defaultProtection}->{$vhost} = $prot;
             }
-
-            # Default police
-            ( $defaultCondition->{$alias}, $defaultProtection->{$alias} ) =
-              $self->conditionSub( $mainClass, 'accept' )
-              unless ( $defaultCondition->{$alias} );
+            else {
+                push @{ $tsv->{locationCondition}->{$vhost} } , $cond;
+                push @{ $tsv->{locationProtection}->{$vhost} }, $prot;
+                push @{ $tsv->{locationRegexp}->{$vhost} }    , qr/$_/;
+                push @{ $tsv->{locationConditionText}->{$vhost} },
+                  /^\(\?#(.*?)\)/ ? $1 : /^(.*?)##(.+)$/ ? $2 : $_;
+                $tsv->{locationCount}->{$vhost}++;
+            }
         }
 
+        # Default policy set to 'accept'
+        unless ( $defaultCondition->{$vhost} ) {
+            $tsv->{defaultCondition}->{$vhost} = sub { 1 };
+            $tsv->{defaultProtection}->{$vhost} = 0;
+        }
     }
-
-    return (
-        $locationCount,         $defaultCondition,   $defaultProtection,
-        $locationCondition,     $locationProtection, $locationRegexp,
-        $locationConditionText, $self->{safe}
-    );
-    1;
+    return 1;
 }
 
-## @imethod protected void globalStorageInit(hashRef args)
-# Initialize the Apache::Session::* module choosed to share user's variables.
+## @imethod protected void sessionStorageInit(hashRef args)
+# Initialize the Apache::Session::* module choosed to share user's variables
+# and the Cache::Cache module choosed to cache sessions
 # @param $args reference to the configuration hash
-sub globalStorageInit {
-    my ( $self, $globalStorage, $globalStorageOptions, $args ) = splice @_;
-    $globalStorage = $args->{globalStorage}
+sub sessionStorageInit {
+    my ( $class, $conf, $tsv ) = @_;
+    $tsv->{sessionStorageModule} = $conf->{globalStorage}
       or die("globalStorage required");
-    eval "use $globalStorage;";
+    eval "use $tsv->{sessionStorageModule}";
     die($@) if ($@);
-    $globalStorageOptions = $args->{globalStorageOptions};
-    return ( $globalStorage, $globalStorageOptions );
-}
+    $tsv->{sessionStorageOptions} = $conf->{globalStorageOptions};
 
-## @imethod protected void localSessionStorageInit(hashRef args)
-# Initialize the Cache::Cache module choosed to cache sessions.
-# @param $args reference to the configuration hash
-sub localSessionStorageInit {
-    my ( $self, $localSessionStorage, $localSessionStorageOptions, $args ) =
-      splice @_;
-    $localSessionStorage        = $args->{localSessionStorage};
-    $localSessionStorageOptions = $args->{localSessionStorageOptions};
-    $localSessionStorageOptions->{default_expires_in} ||= 600;
-
-    if ($args->{status}) {
-        my $params = "";
-        if ($localSessionStorage) {
-            require Data::Dumper;
-            $params = " $self->{localSessionStorage},"
-                . Data::Dumper->new( [ $localSessionStorageOptions ] )->Terse(1)->Indent(0)->Dump; # To send cache params on one line
-        }
-        #print { $tsv->{statusPipe} } "RELOADCACHE$params";
-        # TODO: import $statusPipe in that module
-    }
-
-    return ( $localSessionStorage, $localSessionStorageOptions );
-}
-
-## @imethod void headerListInit(hashRef args)
-# Lists the exported HTTP headers into $headerList
-# @param $args reference to the configuration hash
-sub headerListInit {
-    my ( $self, $headerList, $args ) = splice @_;
-
-    foreach my $vhost ( keys %{ $args->{exportedHeaders} } ) {
-        foreach
-          my $alias ( @{ $self->getAliases( $vhost, $args->{vhostOptions} ) } )
-        {
-            my @tmp = keys %{ $args->{exportedHeaders}->{$vhost} };
-            $headerList->{$alias} = \@tmp;
+    if ($conf->{localSessionStorage}) {
+        $tsv->{sessionCacheModule}  = $conf->{localSessionStorage};
+        $tsv->{sessionCacheOptions} = $conf->{localSessionStorageOptions};
+        $tsv->{sessionCacheOptions}->{default_expires_in} ||= 600;
+    
+        eval "use $tsv->{sessionCacheModule}";
+        die($@) if ($@);
+        eval '$tsv->{sessionCache} = new '
+               . $tsv->{sessionCacheModule}
+               . '($tsv->{sessionCacheOptions});';
+        die("Unable to init local cache: $@") if ($@);
+    
+        if ($conf->{status}) {
+            my $params = "";
+            if ($tsv->{sessionCacheModule}) {
+                require Data::Dumper;
+                $params = " $tsv->{sessionCache},"
+                    . Data::Dumper->new( [ $tsv->{sessionCacheOptions} ] )
+                    ->Terse(1)->Indent(0)->Dump; # To send params on one line
+            }
+            print { $tsv->{statusPipe} } "RELOADCACHE$params";
         }
     }
-    return $headerList;
-    1;
+    return 1;
 }
 
-## @imethod void forgeHeadersInit(hashRef args)
-# Create the &$forgeHeaders->{&lt;virtualhost&gt;} subroutines used to insert
-# headers into the HTTP request.
+## @imethod void headersInit(hashRef args)
+# Create the subroutines used to insert headers into the HTTP request.
 # @param $args reference to the configuration hash
-sub forgeHeadersInit {
-    my ( $self, $forgeHeaders, $args ) = splice @_;
+sub headersInit {
+    my ( $class, $conf, $tsv ) = @_;
 
     # Creation of the subroutine which will generate headers
-    foreach my $vhost ( keys %{ $args->{exportedHeaders} } ) {
-        foreach
-          my $alias ( @{ $self->getAliases( $vhost, $args->{vhostOptions} ) } )
-        {
-            my %tmp = %{ $args->{exportedHeaders}->{$vhost} };
-            foreach ( keys %tmp ) {
-                $tmp{$_} =~ s/\$(\w+)/\$datas->{$1}/g;
-                $tmp{$_} = $self->regRemoteIp( $tmp{$_} );
-            }
-
-            my $sub;
-            foreach ( keys %tmp ) {
-                $sub .= "'$_' => join('',split(/[\\r\\n]+/,$tmp{$_})),";
-            }
-
-            my $jail = Lemonldap::NG::Handler::Main::Jail->new(
-                'safe'            => $self->safe,
-                'useSafeJail'     => $self->useSafeJail,
-                'customFunctions' => $self->customFunctions
-            );
-            $self->safe( $jail->build_safe() );
-            $forgeHeaders->{$alias} = $jail->jail_reval("sub{$sub}");
-
-            Lemonldap::NG::Handler::Main::Logger->lmLog(
-                "$self: Unable to forge headers: $@: sub {$sub}", 'error' )
-              if ($@);
+    foreach my $vhost ( keys %{ $conf->{exportedHeaders} } ) {
+        my %headers = %{ $conf->{exportedHeaders}->{$vhost} };
+        $tsv->{headerList}->{$vhost} = [ keys %headers ];
+        my $sub;
+        foreach ( keys %headers ) {
+            my $val = $headers{$_};
+            $val =~ s/[\r\n]+/ /g;
+            $val =~ s/\$(\w+)/\$datas->{$1}/g;
+            $val = &regRemoteIp( $val );
+            $sub .= "'$_' => $val,";
         }
 
+        $tsv->{forgeHeaders}->{$vhost} = $tsv->{jail}->jail_reval("sub{$sub}");
+
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+            "$self: Unable to forge headers: $@: sub {$sub}", 'error' )
+          if ($@);
     }
-    return $forgeHeaders;
-    1;
+    return 1;
 }
 
 ## @imethod protected void postUrlInit()
@@ -378,9 +331,10 @@ sub postUrlInit {
 # locationRulesInit(). The second value returned is a non null
 # constant if URL is not protected (by "unprotect" or "skip"), 0 else.
 # @param $cond The boolean expression to use
+# @param $mainClass  optional
 # @return array (ref(sub), int)
 sub conditionSub {
-    my ( $self, $mainClass, $cond ) = splice @_;
+    my ( $class, $cond, $tsv ) = @_;
     my ( $OK, $NOK ) = ( sub { 1 }, sub { 0 } );
 
     # Simple cases : accept and deny
@@ -410,7 +364,7 @@ sub conditionSub {
             : (
                 sub {
                     $Lemonldap::NG::Handler::Main::datas->{_logout} =
-                      $self->portal();
+                      &{ $tsv->{portal} }();
                     return 0;
                 },
                 0
@@ -429,14 +383,14 @@ sub conditionSub {
 
     # logout_app
     if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
-        my $u = $1 || $self->portal();
+        my $u = $1 || &{ $tsv->{portal} }();
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
                 my $r = shift;
                 $r->add_output_filter(
                     sub {
-                        return $mainClass->redirectFilter( $u, @_ );
+                        return Lemonldap::NG::Handler::Main->redirectFilter( $u, @_ );
                     }
                 );
                 1;
@@ -446,17 +400,17 @@ sub conditionSub {
     }
     elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
-        my $u = $1 || $self->portal();
+        my $u = $1 || &{ $tsv->{portal} }();
         return (
             sub {
                 my $r = shift;
-                $mainClass->localUnlog;
+                Lemonldap::NG::Handler::Main->localUnlog;
                 $r->add_output_filter(
                     sub {
                         my $r = shift->r;
-                        return $mainClass->redirectFilter(
-                            $self->portal() . "?url="
-                              . $mainClass->encodeUrl( $r, $u )
+                        return Lemonldap::NG::Handler::Main->redirectFilter(
+                            &{ $tsv->{portal} }() . "?url="
+                              . Lemonldap::NG::Handler::Main->encodeUrl( $r, $u )
                               . "&logout=1",
                             @_
                         );
@@ -473,44 +427,37 @@ sub conditionSub {
     $cond =~ s/\$(\w+)/\$datas->{$1}/g;
     $cond =~ s/\$datas->{vhost}/Lemonldap::NG::Handler::API->hostname(\$r)/g;
 
-    my $jail = Lemonldap::NG::Handler::Main::Jail->new(
-        'safe'            => $self->safe,
-        'useSafeJail'     => $self->useSafeJail,
-        'customFunctions' => $self->customFunctions
-    );
-    $self->safe( $jail->build_safe() );
-    my $sub = $jail->jail_reval("sub{return($cond)}");
+    my $sub = $tsv->{jail}->jail_reval("sub{return($cond)}");
 
     # Return sub and protected flag
     return ( $sub, 0 );
 }
 
-## @method arrayref getAliases(scalar vhost, hashref options)
-# Check aliases of a vhost
-# @param vhost vhost name
+## @method arrayref aliasInit
 # @param options vhostOptions configuration item
 # @return arrayref of vhost and aliases
-sub getAliases {
-    my ( $self, $vhost, $options ) = splice @_;
-    my $aliases = [$vhost];
+sub aliasInit {
+    my ( $class, $conf, $tsv ) = @_;
 
-    if ( $options->{$vhost}->{vhostAliases} ) {
-        foreach ( split /\s+/, $options->{$vhost}->{vhostAliases} ) {
-            push @$aliases, $_;
-            Lemonldap::NG::Handler::Main::Logger->lmLog(
-                "$_ is an alias for $vhost", 'debug' );
+    foreach my $vhost ( keys %{ $conf->{options} } ) {
+        if ( my $aliases = $conf->{options}->{$vhost}->{vhostAliases} ) {
+            foreach ( split /\s+/, $aliases ) {
+                $tsv->{vhostAlias}->{$_} = $vhost;
+            }
         }
     }
-
-    return $aliases;
+    return 1;
 }
+# TODO: implement a method "resolveAlias()" and call it in
+# checkMaintenanceMode, isUnprotected, grant, sendHeaders and transformUri
+# TODO: support wildcards in aliases
 
 ## @ifn protected string protected regRemoteIp(string str)
 # Replaces $ip by the client IP address in the string
 # @param $str string
 # @return string
 sub regRemoteIp {
-    my ( $self, $str ) = splice @_;
+    my $str = shift;
     $str =~ s/\$datas->\{ip\}/ip()/g;
     return $str;
 }
