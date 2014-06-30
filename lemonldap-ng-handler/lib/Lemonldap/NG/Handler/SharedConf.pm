@@ -82,8 +82,7 @@ sub init($$) {
     # * set server signature
     $class->serverSignatureInit unless ($localConfig->{hideSignature});
     # * launch status process
-    ( $tsv->{statusPipe}, $tsv->{statusOut} ) = $class->statusInit
-        if ($localConfig->{status});
+    $class->statusInit($tsv) if ($localConfig->{status});
 }
 
 # @method void serverSignatureInit
@@ -91,22 +90,23 @@ sub init($$) {
 sub serverSignatureInit {
     my $class = shift;
     Lemonldap::NG::Handler::API->setServerSignature(
-        "Lemonldap::NG::Handler/" . $Lemonldap::NG::Handler::VERSION
+        "Lemonldap::NG/" . $Lemonldap::NG::Handler::VERSION
     ) if ( $Lemonldap::NG::Handler::VERSION );
 }
 
 ## @ifn protected void statusInit()
 # Launch the status process
 sub statusInit {
-    my $class = shift;
+    my ( $class, $tsv ) = @_;
     require IO::Pipe;
     $statusPipe = IO::Pipe->new;
     $statusOut  = IO::Pipe->new;
     if ( my $pid = fork() ) {
+        # TODO: log new process pid
         $statusPipe->writer();
         $statusOut->reader();
         $statusPipe->autoflush(1);
-        return ( $statusPipe, $statusOut );
+        ( $tsv->{statusPipe}, $tsv->{statusOut} ) = ( $statusPipe, $statusOut );
     }
     else {
         $statusPipe->reader();
@@ -115,12 +115,9 @@ sub statusInit {
         my $fdout = $statusOut->fileno;
         open STDIN,  "<&$fdin";
         open STDOUT, ">&$fdout";
-        my @tmp = ();
-        push @tmp, "-I$_" foreach (@INC);
         exec 'perl', '-MLemonldap::NG::Handler::Status',
-          @tmp,
-          '-e',
-          "&Lemonldap::NG::Handler::Status::run()";
+          map( { "-I$_" } @INC),
+          '-e &Lemonldap::NG::Handler::Status::run()';
     }
 }
 

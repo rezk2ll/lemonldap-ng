@@ -38,12 +38,7 @@ our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 # $datas
 # $datasUpdate
 
-# Shared variables
 our ( $datas, $datasUpdate, $tsv );
-
-##########################################
-# COMPATIBILITY WITH APACHE AND APACHE 2 #
-##########################################
 
 BEGIN {
 
