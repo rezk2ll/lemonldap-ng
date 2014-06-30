@@ -1,5 +1,40 @@
 lemonldap-ng (1.4.0) stable; urgency=low
 
+    * [LEMONLDAP-663] - Connections to auth backends not closed on errors
+    * [LEMONLDAP-664] - Connections to LDAP not closed with the Multi plugin
+    * [LEMONLDAP-670] - Bootstrap theme
+    * [LEMONLDAP-693] - loginHistory and Session Explorer : Error
+    * [LEMONLDAP-694] - Duplicate entry '1-globalStorage' for key 'PRIMARY' when using RDBI configuration
+    * [LEMONLDAP-695] - Vulnerability on the size of session identifiers.
+    * [LEMONLDAP-698] - error at reading last config number with RDBI config storage
+    * [LEMONLDAP-699] - MySQL config storage lock does not work
+    * [LEMONLDAP-700] - Unable to handle SAML session
+    * [LEMONLDAP-701] - missing debian dependency to Mouse
+    * [LEMONLDAP-704] - Unable to change password with Active Directory backend
+    * [LEMONLDAP-708] - Memory leak in portal when notifications are enabled
+    * [LEMONLDAP-709] - The cipher decrypt method breaks carriage returns
+    * [LEMONLDAP-710] - sessionDatas not reinitialized from request to request in a thread
+    * [LEMONLDAP-711] - Read a session in remote session backend causes an update request
+    * [LEMONLDAP-712] - strange behaviour with session cache
+    * [LEMONLDAP-386] - use LL::NG::Handler instead of custom perl module in apache config
+    * [LEMONLDAP-430] - httpSession and updateSession + deleteSessionFromLocalStorage optimization
+    * [LEMONLDAP-591] - Portal should refresh their configuration cache on expiration 
+    * [LEMONLDAP-600] - Rewrite object libs with Moo or Mouse
+    * [LEMONLDAP-636] - Manage exported variables per UserDB module
+    * [LEMONLDAP-648] - Build French documentation in Makefile
+    * [LEMONLDAP-657] - [SAML] NameID format customizable per SP
+    * [LEMONLDAP-658] - Portal keepalive should be desactivable and configurable
+    * [LEMONLDAP-671] - Cache management for configuration and sessions
+    * [LEMONLDAP-675] - Password should not be send trough email
+    * [LEMONLDAP-681] - Add option in SP configuration to specify which query_string method to use.
+    * [LEMONLDAP-683] - Externalize all JS code and use make tidy-js
+    * [LEMONLDAP-686] - Centralize default configuration values
+    * [LEMONLDAP-702] - Possibility to start with empty configuration
+    * [LEMONLDAP-703] - Do not use files for Captcha
+    * [LEMONLDAP-26] - Auto-register page
+    * [LEMONLDAP-208] - Build SAML IDP SSO initiated URL on IDP side for registered SP
+    * [LEMONLDAP-629] - Handler with mpm_event
+
 lemonldap-ng (1.3.3) stable; urgency=low
 
     * [LEMONLDAP-665] - level parameter not used in userLog with syslog
