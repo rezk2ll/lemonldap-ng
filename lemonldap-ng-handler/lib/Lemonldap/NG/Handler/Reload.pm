@@ -442,8 +442,6 @@ sub aliasInit {
     }
     return 1;
 }
-# TODO: implement a method "resolveAlias()" and call it in
-# checkMaintenanceMode, isUnprotected, grant, sendHeaders and transformUri
 # TODO: support wildcards in aliases
 
 

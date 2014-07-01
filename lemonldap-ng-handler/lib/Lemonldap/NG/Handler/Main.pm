@@ -174,7 +174,7 @@ sub goToPortal {
 sub fetchId {
     my $class = shift;
     my $t = Lemonldap::NG::Handler::API->header_in('Cookie');
-    my $vhost = Lemonldap::NG::Handler::API->hostname;
+    my $vhost = $class->resolveAlias;
     my $lookForHttpCookie = $tsv->{securedCookie} =~ /^(2|3)$/
       && !(
         defined( $tsv->{https}->{$vhost} )
@@ -375,7 +375,7 @@ sub run ($$) {
 # @return true if maintenance mode
 sub checkMaintenanceMode {
     my $class = shift;
-    my $vhost = Lemonldap::NG::Handler::API->hostname;
+    my $vhost = $class->resolveAlias;
     my $_maintenance =
       ( defined $tsv->{maintenance}->{$vhost} )
       ? $tsv->{maintenance}->{$vhost}
@@ -423,7 +423,7 @@ sub abort {
 # @return True if the user is granted to access to the current URL
 sub grant {
     my ( $class, $uri ) = splice @_;
-    my $vhost = Lemonldap::NG::Handler::API->hostname;
+    my $vhost = $class->resolveAlias;
     for ( my $i = 0 ; $i < $tsv->{locationCount}->{$vhost} ; $i++ ) {
         if ( $uri =~ $tsv->{locationRegexp}->{$vhost}->[$i] ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
@@ -561,7 +561,7 @@ sub redirectFilter {
 # SKIP if is is unprotected by "skip"
 sub isUnprotected {
     my ( $class, $uri ) = @_;
-    my $vhost = Lemonldap::NG::Handler::API->hostname;
+    my $vhost = $class->resolveAlias;
     for ( my $i = 0 ; $i < $tsv->{locationCount}->{$vhost} ; $i++ ) {
         if ( $uri =~ $tsv->{locationRegexp}->{$vhost}->[$i] ) {
             return $tsv->{locationProtection}->{$vhost}->[$i];
@@ -574,7 +574,7 @@ sub isUnprotected {
 # Launch function compiled by forgeHeadersInit() for the current virtual host
 sub sendHeaders {
     my $class = shift;
-    my $vhost = Lemonldap::NG::Handler::API->hostname;
+    my $vhost = $class->resolveAlias;
     if ( defined( $tsv->{forgeHeaders}->{$vhost} ) ) {
         Lemonldap::NG::Handler::API->set_header_in(
             &{ $tsv->{forgeHeaders}->{$vhost} } );
@@ -585,11 +585,19 @@ sub sendHeaders {
 # Unset HTTP headers, when sendHeaders is skipped
 sub cleanHeaders {
     my $class = shift;
-    my $vhost = Lemonldap::NG::Handler::API->hostname;
+    my $vhost = $class->resolveAlias;
     if ( defined( $tsv->{headerList}->{$vhost} ) ) {
         Lemonldap::NG::Handler::API->unset_header_in(
             @{ $tsv->{headerList}->{$vhost} } );
     }
+}
+
+## @rmethod string resolveAlias
+# returns vhost whose current hostname is an alias
+sub resolveAlias {
+    my $class = shift;
+    my $vhost = Lemonldap::NG::Handler::API->hostname;
+    return $tsv->{vhostAlias}->{$vhost} || $vhost;
 }
 
 1;
