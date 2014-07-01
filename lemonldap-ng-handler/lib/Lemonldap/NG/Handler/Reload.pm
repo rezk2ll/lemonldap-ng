@@ -448,7 +448,7 @@ sub aliasInit {
 
 
 sub substitute {
-    my $expr = shift;
+    my ( $class, $expr ) = @_;
 
     # substitute fake env vars
     # is /e necessary at end of sub ?
