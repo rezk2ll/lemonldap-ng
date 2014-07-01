@@ -23,7 +23,6 @@ use lib dirname( abs_path $0 );
 # its man page ( perldoc Test::More ) for help writing this test script.
 my $h;
 $h = bless {}, 'Lemonldap::NG::Handler::Main';
-my $apacheRequest; 
 $ENV{SERVER_NAME} = "test1.example.com";
 
 open STDERR, '>/dev/null';
@@ -63,9 +62,9 @@ ok( Lemonldap::NG::Handler::Reload->configReload( $conf, $Lemonldap::NG::Handler
 
 ok( &{ $tsv->{portal} }() eq 'http://auth.example.com/', 'portal' );
 
-ok( $h->grant( $apacheRequest, '/s' ), 'basic rule "accept"' );
-ok( !$h->grant( $apacheRequest, '/no' ), 'basic rule "deny"' );
-ok( $h->grant( $apacheRequest, '/a/a' ), 'bad ordered rule 1/2' );
-ok( $h->grant( $apacheRequest, '/a' ),   'bad ordered rule 2/2' );
-ok( !$h->grant( $apacheRequest, '/b/a' ), 'good ordered rule 1/2' );
-ok( $h->grant( $apacheRequest, '/b' ), 'good ordered rule 2/2' );
+ok( $h->grant( '/s' ), 'basic rule "accept"' );
+ok( !$h->grant( '/no' ), 'basic rule "deny"' );
+ok( $h->grant( '/a/a' ), 'bad ordered rule 1/2' );
+ok( $h->grant( '/a' ),   'bad ordered rule 2/2' );
+ok( !$h->grant( '/b/a' ), 'good ordered rule 1/2' );
+ok( $h->grant(  '/b' ), 'good ordered rule 2/2' );

@@ -61,6 +61,7 @@ if ( $numTests == 3 ) {
     my $mock = Test::MockObject->new();
     my $ret;
     $mock->fake_module( 'Lemonldap::NG::Handler::API',
+        newRequest     => sub { print STDERR "newRequest\n" },
         header_in      => sub { "" },
         hostname       => sub { 'test.example.com' },
         is_initial_req  => sub { '1' },
@@ -70,14 +71,14 @@ if ( $numTests == 3 ) {
         uri             => sub { '/' },
         uri_with_args   => sub { '/' },
         get_server_port => sub { '80' },
-        set_header_out => sub { $ret = join( ':', $_[2], $_[3], ); }, );
+        set_header_out => sub { $ret = join( ':', $_[1], $_[2], ); }, );
 
     our $apacheRequest;
 
     my $h = bless {}, 'Lemonldap::NG::Handler';
 
     ok(
-        $h->Lemonldap::NG::Handler::run($apacheRequest),
+        $h->handler($apacheRequest),
         'run Handler with basic configuration and no cookie'
     );
 
