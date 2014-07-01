@@ -17,11 +17,11 @@ our $VERSION = '1.4.0';
 # @param uri URI to catch
 # @return Apache2::Const
 sub transformUri {
-    my ( $class, $r, $uri ) = splice @_;
-    my $vhost = Lemonldap::NG::Handler::API->hostname($r);
+    my ( $class, $uri ) = @_;
+    my $vhost = Lemonldap::NG::Handler::API->hostname;
 
     if ( defined( $tsv->{transform}->{$vhost}->{$uri} ) ) {
-        return &{ $tsv->{transform}->{$vhost}->{$uri} }($r);
+        return &{ $tsv->{transform}->{$vhost}->{$uri} }();
     }
 
     OK;

@@ -126,28 +126,27 @@ sub statusInit {
 sub handler : method {
     my ( $class, $request ) = @_;
     Lemonldap::NG::Handler::API->newRequest($request);
-    $class->run($request);
+    $class->run();
 }
 
 sub logout : method {
     my ( $class, $request ) = @_;
     Lemonldap::NG::Handler::API->newRequest($request);
-    $class->unlog($request);
+    $class->unlog();
 }
 
 ## @rmethod int run(Apache2::RequestRec r)
 # Check configuration and launch Lemonldap::NG::Handler::Main::run().
 # Each $checkTime, the Apache child verify if its configuration is the same
 # as the configuration stored in the local storage.
-# @param $r Apache2::RequestRec object
 # @return Apache constant
-sub run($$) {
-    my ( $class, $r ) = splice @_;
+sub run {
+    my $class = shift;
     if ( time() - $lastCheck > $checkTime ) {
         die("$class: No configuration found")
           unless ( $class->checkConf );
     }
-    return $class->SUPER::run($r);
+    return $class->SUPER::run;
 }
 
 # CONFIGURATION UPDATE
@@ -190,14 +189,13 @@ sub checkConf {
 
 *refresh = *reload;
 
-## @rmethod int reload(Apache::RequestRec r)
+## @rmethod int reload
 # Launch checkConf() with $local=0, so remote configuration is tested.
 # Then build a simple HTTP response that just returns "200 OK" or
 # "500 Server Error".
-# @param $r current request
 # @return Apache constant (OK or SERVER_ERROR)
-sub reload($$) {
-    my ( $class, $r ) = splice @_;
+sub reload {
+    my $class = shift;
     Lemonldap::NG::Handler::Main::Logger->lmLog(
         "Request for configuration reload", 'notice' );
     return $class->checkConf(1) ? DONE : SERVER_ERROR;

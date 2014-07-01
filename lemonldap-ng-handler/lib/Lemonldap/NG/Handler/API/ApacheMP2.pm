@@ -37,7 +37,7 @@ eval { require threads::shared; };
 print STDERR "You probably would have better perfs by enabling threads::shared\n"
     if ($@);
 
-my $request;
+my $request; # Apache2::RequestRec object for current request
 
 ## @method void thread_share(string $variable)
 # try to share $variable between threads
@@ -67,166 +67,151 @@ sub newRequest {
     $request = $r;
 }
 
-## @method void lmLog(string $msg, string $level, Apache2::RequestRec $r)
+## @method void lmLog(string $msg, string $level)
 # logs message $msg to Apache logs with loglevel $level
 # @param $msg string message to log
 # @param $level string loglevel
-# @param $r Apache2::RequestRec optional Current request
 sub lmLog {
-    my ( $class, $msg, $level, $r ) = @_;
+    my ( $class, $msg, $level ) = @_;
     # TODO: remove the useless tag 'ApacheMP2.pm(70):' in debug logs
     Apache2::ServerRec->log->$level($msg);
 }
 
-## @method void set_user(Apache2::RequestRec request, string user)
+## @method void set_user(string user)
 # sets remote_user
-# @param request Apache2::RequestRec current request
 # @param user string username
 sub set_user {
-    my ($class, $r, $user) = @_;
-    $r->user($user);
+    my ($class, $user) = @_;
+    $request->user($user);
 }
 
-## @method string header_in(Apache2::RequestRec request, string header)
+## @method string header_in(string header)
 # returns request header value
-# @param request Apache2::RequestRec current request
 # @param header string request header
 # @return request header value
 sub header_in {
-    my ($class, $r, $header) = @_;
-    return $r->headers_in->{$header};
+    my ($class, $header) = @_;
+    return $request->headers_in->{$header};
 }
 
-## @method void set_header_in(Apache2::RequestRec request, hash headers)
+## @method void set_header_in(hash headers)
 # sets or modifies request headers
-# @param request Apache2::RequestRec current request
 # @param headers hash containing header names => header value
 sub set_header_in {
-    my ($class, $r, %headers) = @_;
+    my ($class, %headers) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        $r->headers_in->set( $h => $v );
+        $request->headers_in->set( $h => $v );
     }
 }
 
-## @method void unset_header_in(Apache2::RequestRec request, array headers)
+## @method void unset_header_in(array headers)
 # removes request headers
-# @param request Apache2::RequestRec current request
 # @param headers array with header names to remove
 sub unset_header_in {
-    my ($class, $r, @headers) = @_;
+    my ($class, @headers) = @_;
     foreach my $h (@headers) {
-        $r->headers_in->unset($h);
+        $request->headers_in->unset($h);
     }
 } 
 
-## @method void set_header_out(Apache2::RequestRec request, hash headers)
+## @method void set_header_out(hash headers)
 # sets response headers, only on 2xx and 3xx responses
-# @param request Apache2::RequestRec current request
 # @param headers hash containing header names => header value
 sub set_header_out {
-    my ($class, $r, %headers) = @_;
+    my ($class, %headers) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        $r->headers_out->set( $h => $v );
+        $request->headers_out->set( $h => $v );
     }
 }
 
-## @method void set_err_header_out(Apache2::RequestRec request, hash headers)
+## @method void set_err_header_out(hash headers)
 # sets response headers, even on 4xx responses
-# @param request Apache2::RequestRec current request
 # @param headers hash containing header names => header value
 sub set_err_header_out {
-    my ($class, $r, %headers) = @_;
+    my ($class, %headers) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        $r->err_headers_out->set( $h => $v );
+        $request->err_headers_out->set( $h => $v );
     }
 }
 
-## @method string hostname(Apache2::RequestRec request)
+## @method string hostname()
 # returns host, as set by full URI or Host header
-# @param request Apache2::RequestRec current request
 # @return host string Host value
 sub hostname {
-    my ($class, $r) = @_;
-    return $r->hostname;
+    my $class = shift;
+    return $request->hostname;
 }
 
-## @method string remote_ip(Apache2::RequestRec request)
+## @method string remote_ip
 # returns client IP address
-# @param request Apache2::RequestRec current request
 # @return IP_Addr string client IP
 sub remote_ip {
-    my ($class, $r) = @_;
-    return $r->connection->remote_ip;
+    my $class = shift;
+    return $request->connection->remote_ip;
 }
 
-## @method boolean is_initial_req(Apache2::RequestRec request)
+## @method boolean is_initial_req
 # returns true unless the current request is a subrequest
-# @param request Apache2::RequestRec current request
 # @return is_initial_req boolean
 sub is_initial_req {
-    my ($class, $r) = @_;
-    return $r->is_initial_req;
+    my $class = shift;
+    return $request->is_initial_req;
 }
 
-## @method string args(Apache2::RequestRec request, string args)
+## @method string args(string args)
 # gets the query string
-# @param request Apache2::RequestRec current request
 # @return args string Query string
 sub args  {
-    my ($class, $r) = @_;
-    return $r->args();
+    my $class = shift;
+    return $request->args();
 }
 
-## @method string uri(Apache2::RequestRec request)
+## @method string uri
 # returns the path portion of the URI, normalized, i.e. :
 # * URL decoded (characters encoded as %XX are decoded,
 #   except ? in order not to merge path and query string)
 # * references to relative path components "." and ".." are resolved
 # * two or more adjacent slashes are merged into a single slash
-# @param request Apache2::RequestRec current request
 # @return path portion of the URI, normalized
 sub uri {
-    my ($class, $r) = @_;
-    my $uri = $r->uri;
+    my $class = shift;
+    my $uri = $request->uri;
     $uri =~ s#//+#/#g;
     $uri =~ s#\?#%3F#g;
     return $uri;
 }
 
-## @method string uri_with_args(Apache2::RequestRec request)
+## @method string uri_with_args
 # returns the URI, with arguments and with path portion normalized
-# @param request Apache2::RequestRec current request
 # @return URI with normalized path portion
 sub uri_with_args {
-    my ($class, $r) = @_;
-    return $class->uri($r) . ( $r->args ? "?" . $r->args : "");
+    my $class = shift;
+    return $class->uri($request)
+        . ( $request->args ? "?" . $request->args : "");
 }
 
-## @method string unparsed_uri(Apache2::RequestRec request)
+## @method string unparsed_uri
 # returns the full original request URI, with arguments
-# @param request Apache2::RequestRec current request
 # @return full original request URI, with arguments
 sub unparsed_uri {
-    my ($class, $r) = @_;
-    return $r->unparsed_uri;
+    my $class = shift;
+    return $request->unparsed_uri;
 }
 
-## @method string get_server_port(Apache2::RequestRec request)
+## @method string get_server_port
 # returns the port the server is receiving the current request on
-# @param request Apache2::RequestRec current request
 # @return port string server port
 sub get_server_port {
-    my ($class, $r) = @_;
-    return $r->get_server_port;
+    my $class = shift;
+    return $request->get_server_port;
 }
 
-## @method void print(string data, Apache2::RequestRec request)
+## @method void print(string data)
 # write data in HTTP response body
 # @param data Text to add in response body
-# @param request Apache2::RequestRec Current request
 sub print {
-    my ($class, $data, $r) = @_;
-    $r->print($data);
+    my ($class, $data) = @_;
+    $request->print($data);
 }
 
 1;

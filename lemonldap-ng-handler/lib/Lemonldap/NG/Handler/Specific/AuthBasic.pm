@@ -20,17 +20,16 @@ use base qw(Lemonldap::NG::Handler::SharedConf);
 
 our $VERSION = '1.4.0';
 
-## @rmethod protected $ fetchId(request $r)
+## @rmethod protected $ fetchId
 # Get user session id from Authorization header
 # Unlike usual processing, session id is computed from user creds,
 # so that it remains secret but handler can easily get it.
 # It is still changed from time to time - once a day - to prevent from
 # using indefinitely a session id disclosed accidentally or maliciously.
-# @param $r current request
 # @return session id
 sub fetchId {
-    my ( $class, $r ) = @_;
-    if ( my $creds = Lemonldap::NG::Handler::API->header_in($r, 'Authorization') ) {
+    my $class = shift;
+    if ( my $creds = Lemonldap::NG::Handler::API->header_in('Authorization') ) {
         $creds =~ s/^Basic\s+//;
         my @date = localtime;
         my $day = $date[5] * 366 + $date[7];
@@ -45,14 +44,14 @@ sub fetchId {
 # and if needed, ask portal to create it through a SOAP request
 # @return true if the session was found, false else
 sub retrieveSession {
-    my ( $class, $id, $r ) = @_;
+    my ( $class, $id ) = @_;
 
     # First check if session already exists
-    return 1 if ( $class->SUPER::retrieveSession( $id, $r ) );
+    return 1 if ( $class->SUPER::retrieveSession($id) );
 
     # Then ask portal to create it
-    if ( $class->createSession( $id, $r ) ) {
-        return $class->SUPER::retrieveSession( $id, $r );
+    if ( $class->createSession($id) ) {
+        return $class->SUPER::retrieveSession($id);
     } else {
         return 0;
     }
@@ -62,12 +61,12 @@ sub retrieveSession {
 # Ask portal to create it through a SOAP request
 # @return true if the session is created, else false
 sub createSession {
-    my ( $class, $id, $r ) = @_;
+    my ( $class, $id ) = @_;
 
     # Add client IP as X-Forwarded-For IP in SOAP request
-    my $xheader = Lemonldap::NG::Handler::API->header_in( $r, 'X-Forwarded-For' );
+    my $xheader = Lemonldap::NG::Handler::API->header_in('X-Forwarded-For');
     $xheader .= ", " if ($xheader);
-    $xheader .= Lemonldap::NG::Handler::API->remote_ip($r);
+    $xheader .= Lemonldap::NG::Handler::API->remote_ip;
     my $soapHeaders = HTTP::Headers->new( "X-Forwarded-For" => $xheader );
 
     my $soapClient = SOAP::Lite->proxy(
@@ -75,16 +74,16 @@ sub createSession {
         default_headers => $soapHeaders
     )->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
 
-    my $creds = Lemonldap::NG::Handler::API->header_in($r, 'Authorization');
+    my $creds = Lemonldap::NG::Handler::API->header_in('Authorization');
     $creds =~ s/^Basic\s+//;
     my ( $user, $pwd ) = ( decode_base64($creds) =~ /^(.*?):(.*)$/ );
     Lemonldap::NG::Handler::Main::Logger->lmLog(
-        "AuthBasic authentication for user: $user", 'debug', $r );
+        "AuthBasic authentication for user: $user", 'debug' );
     my $soapRequest = $soapClient->getCookies( $user, $pwd, $id );
 
     # Catch SOAP errors
     if ( $soapRequest->fault ) {
-        $class->abort( $r,
+        $class->abort(
             "SOAP request to the portal failed: "
               . $soapRequest->fault->{faultstring} );
     }
@@ -106,27 +105,24 @@ sub createSession {
 
 ## @rmethod protected void hideCookie()
 # Hide user credentials to the protected application
-# @param $r current request
 sub hideCookie {
-    my ( $class, $r ) = @_;
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "removing Authorization header", 'debug', $r );
-    Lemonldap::NG::Handler::API->unset_header_in( $r, 'Authorization' );
+    my $class = shift;
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "removing Authorization header", 'debug' );
+    Lemonldap::NG::Handler::API->unset_header_in('Authorization');
 }
 
 ## @rmethod protected int goToPortal(string url, string arg)
 # If user is asked to authenticate, return AUTH_REQUIRED,
 # else redirect him to the portal to display some message defined by $arg
-# @param $r current request
 # @param $url Url requested
 # @param $arg optionnal GET parameters
 # @return Apache2::Const::REDIRECT or Apache2::Const::AUTH_REQUIRED
 sub goToPortal {
-    my $class = shift;
-    my ( $r, $url, $arg ) = @_;
+    my ( $class, $url, $arg ) = @_;
     if ($arg) {
-        return $class->SUPER::goToPortal(@_);
+        return $class->SUPER::goToPortal( $url, $arg );
     } else {
-        Lemonldap::NG::Handler::API->set_err_header_out( $r,
+        Lemonldap::NG::Handler::API->set_err_header_out(
             'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
         return AUTH_REQUIRED;
     }
