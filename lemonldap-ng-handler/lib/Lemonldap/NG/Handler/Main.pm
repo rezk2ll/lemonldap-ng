@@ -61,7 +61,6 @@ BEGIN {
 
 use Lemonldap::NG::Handler::Reload;
 use Lemonldap::NG::Handler::Main::Jail;
-use Lemonldap::NG::Handler::Main::Headers;
 use Lemonldap::NG::Handler::Main::PostForm;
 use Lemonldap::NG::Handler::Main::Logger;
 
@@ -315,8 +314,7 @@ sub run ($$) {
             'debug', $r );
         $class->updateStatus( $r, 'SKIP' );
         $class->hideCookie($r);
-        Lemonldap::NG::Handler::Main::Headers->cleanHeaders( $r,
-            $tsv->{forgeHeaders}, $tsv->{headerList} );
+        $class->cleanHeaders($r);
         return OK;
     }
 
@@ -342,8 +340,7 @@ sub run ($$) {
         $class->updateStatus( $r, 'OK', $datas->{ $tsv->{whatToTrace} } );
 
         # ACCOUNTING (2. Inform remote application)
-        Lemonldap::NG::Handler::Main::Headers->sendHeaders( $r,
-            $tsv->{forgeHeaders} );
+        $class->sendHeaders( $r );
 
         # Store local macros
         if ( keys %$datas > $kc and $tsv->{sessionCache} ) {
@@ -377,8 +374,7 @@ sub run ($$) {
             'debug', $r );
         $class->updateStatus( $r, 'UNPROTECT' );
         $class->hideCookie($r);
-        Lemonldap::NG::Handler::Main::Headers->cleanHeaders( $r,
-            $tsv->{forgeHeaders}, $tsv->{headerList} );
+        $class->cleanHeaders($r);
         return OK;
     }
 
@@ -605,6 +601,28 @@ sub isUnprotected {
         }
     }
     return $tsv->{defaultProtection}->{$vhost};
+}
+
+## @rmethod void sendHeaders()
+# Launch function compiled by forgeHeadersInit() for the current virtual host
+sub sendHeaders {
+    my ( $class, $r ) = @_;
+    my $vhost = Lemonldap::NG::Handler::API->hostname($r);
+    if ( defined( $tsv->{forgeHeaders}->{$vhost} ) ) {
+        Lemonldap::NG::Handler::API->set_header_in( $r,
+            &{ $tsv->{forgeHeaders}->{$vhost} } );
+    }
+}
+
+## @rmethod void cleanHeaders()
+# Unset HTTP headers, when sendHeaders is skipped
+sub cleanHeaders {
+    my ( $class, $r ) = @_;
+    my $vhost = Lemonldap::NG::Handler::API->hostname($r);
+    if ( defined( $tsv->{headerList}->{$vhost} ) ) {
+        Lemonldap::NG::Handler::API->unset_header_in( $r,
+            @{ $tsv->{headerList}->{$vhost} } );
+    }
 }
 
 1;

@@ -13,7 +13,6 @@ lib/Lemonldap/NG/Handler/API/Nginx.pm
 lib/Lemonldap/NG/Handler/CGI.pm
 lib/Lemonldap/NG/Handler/Reload.pm
 lib/Lemonldap/NG/Handler/Main.pm
-lib/Lemonldap/NG/Handler/Main/Headers.pm
 lib/Lemonldap/NG/Handler/Main/Jail.pm
 lib/Lemonldap/NG/Handler/Main/Logger.pm
 lib/Lemonldap/NG/Handler/Main/PostForm.pm
