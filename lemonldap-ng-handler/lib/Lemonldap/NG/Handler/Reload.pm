@@ -228,10 +228,7 @@ sub headersInit {
         $tsv->{headerList}->{$vhost} = [ keys %headers ];
         my $sub;
         foreach ( keys %headers ) {
-            my $val = $headers{$_};
-            $val =~ s/[\r\n]+/ /g;
-            $val =~ s/\$(\w+)/\$datas->{$1}/g;
-            $val = &regRemoteIp( $val );
+            my $val = $class->substitute($headers{$_});
             $sub .= "'$_' => $val,";
         }
 
@@ -423,10 +420,7 @@ sub conditionSub {
     }
 
     # Replace some strings in condition
-    $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
-    $cond =~ s/\$(\w+)/\$datas->{$1}/g;
-    $cond =~ s/\$datas->{vhost}/Lemonldap::NG::Handler::API->hostname(\$r)/g;
-
+    $cond = $class->substitute($cond);
     my $sub = $tsv->{jail}->jail_reval("sub{return($cond)}");
 
     # Return sub and protected flag
@@ -452,14 +446,30 @@ sub aliasInit {
 # checkMaintenanceMode, isUnprotected, grant, sendHeaders and transformUri
 # TODO: support wildcards in aliases
 
-## @ifn protected string protected regRemoteIp(string str)
-# Replaces $ip by the client IP address in the string
-# @param $str string
-# @return string
-sub regRemoteIp {
-    my $str = shift;
-    $str =~ s/\$datas->\{ip\}/ip()/g;
-    return $str;
+
+sub substitute {
+    my $expr = shift;
+
+    # substitute fake env vars
+    # is /e necessary at end of sub ?
+    $expr =~ s/\$ENV{TIME}/time/g;
+    $expr =~ s/\$ENV{DATE}/&POSIX::strftime("%Y%m%d%H%M%S",localtime)/g;
+    $expr =~ s/\$ENV{SERVER_NAME}/Lemonldap::NG::Handler::API->hostname/g;
+    $expr =~ s/\$ENV{(IP|REMOTE_ADDR)}/Lemonldap::NG::Handler::API->remote_addr/g;
+    $expr =~ s/\$ENV{REQUEST_URI}/Lemonldap::NG::Handler::API->uri/g;
+    $expr =~ s/\$ENV{QUERY_STRING}/Lemonldap::NG::Handler::API->args/g;
+    $expr =~ s/\$ENV{REQUEST_METHOD}/Lemonldap::NG::Handler::API->request_method/g;
+    #TODO: substitute $ENV{HTTP_*} with corresponding header
+
+    # substitute fake env vars - kept for retro-compatibility
+    $expr =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime)/g;
+    $expr =~ s/\$vhost/Lemonldap::NG::Handler::API->hostname/g;
+    $expr =~ s/\$ip/Lemonldap::NG::Handler::API->remote_addr/g;
+
+    # substitute vars with session datas, excepts special vars $_ and $\d+
+    $expr =~ s/\$((?!_|\d+)\w+)/\$datas->{$1}/g;
+
+    return $expr;
 }
 
 1;
