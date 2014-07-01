@@ -37,6 +37,7 @@ eval { require threads::shared; };
 print STDERR "You probably would have better perfs by enabling threads::shared\n"
     if ($@);
 
+my $request;
 
 ## @method void thread_share(string $variable)
 # try to share $variable between threads
@@ -59,6 +60,11 @@ sub setServerSignature {
             $s->add_version_component($sign);
         }
     );
+}
+
+sub newRequest {
+    my ( $class, $r ) = @_;
+    $request = $r;
 }
 
 ## @method void lmLog(string $msg, string $level, Apache2::RequestRec $r)

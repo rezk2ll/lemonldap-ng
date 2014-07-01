@@ -64,13 +64,6 @@ use Lemonldap::NG::Handler::Main::Jail;
 use Lemonldap::NG::Handler::Main::PostForm;
 use Lemonldap::NG::Handler::Main::Logger;
 
-sub handler ($$) : method {
-    shift->run(@_);
-}
-
-sub logout ($$) : method {
-    shift->unlog(@_);
-}
 
 ## @rmethod protected void updateStatus(string user,string url,string action)
 # Inform the status process of the result of the request if it is available
