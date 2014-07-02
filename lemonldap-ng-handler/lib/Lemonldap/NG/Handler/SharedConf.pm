@@ -135,10 +135,11 @@ sub logout : method {
     $class->unlog();
 }
 
-## @rmethod int run(Apache2::RequestRec r)
+## @rmethod int run
 # Check configuration and launch Lemonldap::NG::Handler::Main::run().
 # Each $checkTime, the Apache child verify if its configuration is the same
 # as the configuration stored in the local storage.
+# @param $rule optional Perl expression to grant access
 # @return Apache constant
 sub run {
     my $class = shift;
@@ -146,7 +147,12 @@ sub run {
         die("$class: No configuration found")
           unless ( $class->checkConf );
     }
-    return $class->SUPER::run;
+    if ( my $rule = shift ) {
+        my ( $cond, $prot )
+            = Lemonldap::NG::Handler::Reload->conditionSub($rule, $tsv);
+        return $class->SUPER::run( $cond, $prot );
+    }
+    return $class->SUPER::run();
 }
 
 # CONFIGURATION UPDATE

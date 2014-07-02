@@ -245,9 +245,11 @@ sub retrieveSession {
 # - sendHeaders() if user is granted
 # - hideCookie()
 # - updateStatus()
+# @param $cond optional Function granting access
+# @param $protection optional Set to 1 or 2 if access unprotected
 # @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
-sub run ($$) {
-    my $class = shift;
+sub run {
+    my ( $class, $cond, $protection ) = @_;
     return DECLINED
       unless ( Lemonldap::NG::Handler::API->is_initial_req );
 
@@ -290,7 +292,8 @@ sub run ($$) {
     }
 
     $uri = Lemonldap::NG::Handler::API->uri_with_args;
-    my $protection = $class->isUnprotected($uri);
+    $protection = $class->isUnprotected($uri)
+        unless ( defined $protection );
 
     if ( $protection == SKIP ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog( "Access control skipped",
@@ -317,7 +320,7 @@ sub run ($$) {
         Lemonldap::NG::Handler::API->set_user( $datas->{ $tsv->{whatToTrace} } );
 
         # AUTHORIZATION
-        return $class->forbidden unless ( $class->grant($uri) );
+        return $class->forbidden unless ( $class->grant( $uri, $cond ) );
         $class->updateStatus('OK', $datas->{ $tsv->{whatToTrace} } );
 
         # ACCOUNTING (2. Inform remote application)
@@ -420,9 +423,12 @@ sub abort {
 ## @rmethod boolean grant()
 # Grant or refuse client using compiled regexp and functions
 # @param $uri URI
+# @param $cond optional Function granting access
 # @return True if the user is granted to access to the current URL
 sub grant {
-    my ( $class, $uri ) = splice @_;
+    my ( $class, $uri, $cond ) = @_;
+    return &{ $cond }() if ($cond);
+
     my $vhost = $class->resolveAlias;
     for ( my $i = 0 ; $i < $tsv->{locationCount}->{$vhost} ; $i++ ) {
         if ( $uri =~ $tsv->{locationRegexp}->{$vhost}->[$i] ) {
