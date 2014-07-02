@@ -18,7 +18,9 @@ our $VERSION = '1.4.0';
 # handle requests and store them in a thread shared object called $tsv
 #
 # methods called by configReload, and thread shared values computed, are:
-# * defaultValuesInit():
+# - jailInit():
+#      - jail
+# - defaultValuesInit():
 #      (scalars for global options)
 #      - cda
 #      - cookieExpiration  # warning: absent from default Conf
@@ -33,14 +35,13 @@ our $VERSION = '1.4.0';
 #      - useSafeJail
 #      (objects)
 #      - cipher  # Lemonldap::NG::Common::Crypto object
-#      - jail
 #      (hashrefs for vhost options)
 #      - https
 #      - port
 #      - maintenance
-# * portalInit():
+# - portalInit():
 #      - portal (functions that returns portal URL)
-# * locationRulesInit():
+# - locationRulesInit():
 #      - locationCount
 #      - defaultCondition
 #      - defaultProtection
@@ -48,24 +49,29 @@ our $VERSION = '1.4.0';
 #      - locationProtection
 #      - locationRegexp
 #      - locationConditionText
-# * sessionStorageInit():
+# - sessionStorageInit():
 #      - sessionStorageModule
 #      - sessionStorageOptions
 #      - sessionCacheModule
 #      - sessionCacheOptions
 #      - sessionCache
-# * headersInit():
+# - headersInit():
 #      - headerList
 #      - forgeHeaders
-# * postUrlInit():
-# * aliasInit():
+# - postUrlInit():
+# - aliasInit():
 #      - vhostAlias
+#
+# The *Init() methods can be run in any order,
+# but jailInit must be run first because $tsv->{jail}
+# is used by locationRulesInit, headersInit and postUrlInit.
 
 # @param $conf reference to the configuration hash
 # @param $tsv reference to the thread-shared parameters conf
 sub configReload {
     my ( $class, $conf, $tsv ) = @_;
 
+    $class->jailInit          ( $conf, $tsv );
     $class->defaultValuesInit ( $conf, $tsv );
     $class->portalInit        ( $conf, $tsv );
     $class->locationRulesInit ( $conf, $tsv );
@@ -76,6 +82,19 @@ sub configReload {
     return 1;
 }
 
+## @imethod protected void jailInit(hashRef args)
+# Set default values for non-customized variables
+# @param $args reference to the configuration hash
+sub jailInit {
+    my ( $class, $conf, $tsv ) = @_;
+
+    $tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new(
+        'safe'            => undef,
+        'useSafeJail'     => $conf->{useSafeJail},
+        'customFunctions' => $conf->{customFunctions}
+    );
+    $tsv->{jail}->build_safe();
+}
 
 ## @imethod protected void defaultValuesInit(hashRef args)
 # Set default values for non-customized variables
@@ -92,12 +111,6 @@ sub defaultValuesInit {
       ));
 
     $tsv->{cipher} = Lemonldap::NG::Common::Crypto->new($conf->{key});
-    $tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new(
-        'safe'            => undef,
-        'useSafeJail'     => $conf->{useSafeJail},
-        'customFunctions' => $conf->{customFunctions}
-    );
-    $tsv->{jail}->build_safe();
 
     foreach my $opt (qw(https port maintenance)) {
         next unless defined $conf->{$opt};
@@ -150,21 +163,21 @@ sub portalInit {
 sub locationRulesInit {
     my ( $class, $conf, $tsv ) = @_;
 
-    foreach my $vhost ( keys %{ $conf->{locationRules} } ) {
-        foreach ( sort keys %{ $conf->{locationRules}->{$vhost} } ) {
+    while ( my ( $vhost, $rules ) = each( %{ $conf->{locationRules} } ) ) {
+        foreach my $url ( sort keys %{ $rules } ) {
             my ( $cond, $prot )
-              = $class->conditionSub( $conf->{locationRules}->{$vhost}->{$_}, $tsv );
+              = $class->conditionSub( $rules->{$url}, $tsv );
 
-            if ( $_ eq 'default' ) {
+            if ( $url eq 'default' ) {
                 $tsv->{defaultCondition}->{$vhost} = $cond;
                 $tsv->{defaultProtection}->{$vhost} = $prot;
             }
             else {
                 push @{ $tsv->{locationCondition}->{$vhost} } , $cond;
                 push @{ $tsv->{locationProtection}->{$vhost} }, $prot;
-                push @{ $tsv->{locationRegexp}->{$vhost} }    , qr/$_/;
+                push @{ $tsv->{locationRegexp}->{$vhost} }    , qr/$url/;
                 push @{ $tsv->{locationConditionText}->{$vhost} },
-                  /^\(\?#(.*?)\)/ ? $1 : /^(.*?)##(.+)$/ ? $2 : $_;
+                  /^\(\?#(.*?)\)/ ? $1 : /^(.*?)##(.+)$/ ? $2 : $url;
                 $tsv->{locationCount}->{$vhost}++;
             }
         }
