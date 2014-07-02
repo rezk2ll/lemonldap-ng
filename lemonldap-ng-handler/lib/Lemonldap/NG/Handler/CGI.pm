@@ -17,10 +17,9 @@ sub new {
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new() or $class->abort("Unable to build CGI");
     Lemonldap::NG::Handler::SharedConf->init($args);
-    my $conf = $Lemonldap::NG::Handler::SharedConf::localConfig;
 
     # Get access control rule
-    my $rule = $conf->{protection};
+    my $rule = $localConfig->{protection};
     $rule =~ s/^rule\s*:?\s*//;
     $rule = $rule eq "none"         ? "skip"
           : $rule eq "authenticate" ? "accept"
