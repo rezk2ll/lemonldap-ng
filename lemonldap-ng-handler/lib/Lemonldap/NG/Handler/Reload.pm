@@ -170,7 +170,7 @@ sub locationRulesInit {
         }
 
         # Default policy set to 'accept'
-        unless ( $defaultCondition->{$vhost} ) {
+        unless ( $tsv->{defaultCondition}->{$vhost} ) {
             $tsv->{defaultCondition}->{$vhost} = sub { 1 };
             $tsv->{defaultProtection}->{$vhost} = 0;
         }
