@@ -16,16 +16,16 @@ BEGIN{
 }
 
 # Specific modules and constants for Test or CGI
-use constant FORBIDDEN    => 1;
-use constant REDIRECT     => 1;
-use constant OK           => 1;
-use constant DECLINED     => 1;
-use constant DONE         => 1;
-use constant SERVER_ERROR => 1;
-use constant AUTH_REQUIRED => 1;
+use constant FORBIDDEN    => 403;
+use constant REDIRECT     => 302;
+use constant OK           =>   0;
+use constant DECLINED     =>   0;
+use constant DONE         =>   0;
+use constant SERVER_ERROR => 500;
+use constant AUTH_REQUIRED => 401;
 
 # Log level converted to integers, to compare them
-$logLevel = {
+my $logLevel = {
     emerg  => 7,
     alert  => 6,
     crit   => 5,
@@ -36,6 +36,11 @@ $logLevel = {
     debug  => 0,
 };
 
+# Log level, since it can't be set in server config
+# Default value 'info' can be changed in lemonldap-ng.ini or in init args
+my $lmLogLevel = "info";
+
+my $request; # object to store data about current request
 
 ## @method void setServerSignature(string sign)
 # modifies web server signature
@@ -49,173 +54,150 @@ sub setServerSignature {
 # share or not the variable (if authorized by specific module)
 # @param $variable the name of the variable to share
 sub thread_share {
-    my ($class, $variable) = @_;
     # nothing to do in CGI
 }
 
-## @method void lmLog(string $msg, string $level, Apache::RequestRec $r)
-# logs message $msg to Apache logs with level $level
+sub newRequest {
+    my ($class, $r) = @_;
+    $request = $r;
+}
+
+## @method void lmLog(string $msg, string $level)
+# logs message $msg to STDERR with level $level
 # set Env Var lmLogLevel to set loglevel; set to "info" by default
 # @param $msg string message to log
 # @param $level string loglevel
-# @param $r Apache2::RequestRec optional Current request
 sub lmLog {
-    my ( $class, $msg, $level, $r ) = @_;
-    my $lmLogLevel = $ENV{lmLogLevel} || $ENV{LMLOGLEVEL} || "info";
-    print STDERR "[$level] $module $msg\n"
-        if ($logLevel->{$level} > $logLevel->{$lmLogLevel});
+    my ( $class, $msg, $level ) = @_;
+    print STDERR "[$level]$module $msg\n"
+        if ($logLevel->{$level} >= $logLevel->{$lmLogLevel});
 }
 
-## @method void set_user(Apache2::RequestRec request, string user)
+## @method void set_user(string user)
 # sets remote_user
-# @param request Apache2::RequestRec current request
 # @param user string username
 sub set_user {
-    my ( $class, $r, $user ) = @_;
+    my ( $class, $user ) = @_;
     $ENV{REMOTE_USER} = $user;
 }
 
-## @method string header_in(Apache2::RequestRec request, string header)
+## @method string header_in(string header)
 # returns request header value
-# @param request Apache2::RequestRec current request
 # @param header string request header
 # @return request header value
 sub header_in {
-    my ( $class, $r, $header ) = @_;
+    my ( $class, $header ) = @_;
     return $ENV{ cgiName($header) };
 }
 
-## @method void set_header_in(Apache2::RequestRec request, hash headers)
+## @method void set_header_in(hash headers)
 # sets or modifies request headers
-# @param request Apache2::RequestRec current request
 # @param headers hash containing header names => header value
 sub set_header_in {
-    my ( $class, $r, %headers ) = @_;
+    my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
         $ENV{ cgiName($h) } = $v;
     }
 }
 
-## @method void unset_header_in(Apache2::RequestRec request, array headers)
+## @method void unset_header_in(array headers)
 # removes request headers
-# @param request Apache2::RequestRec current request
 # @param headers array with header names to remove
 sub unset_header_in {
-    my ( $class, $r, @headers ) = @_;
+    my ( $class, @headers ) = @_;
     foreach my $h (@headers) {
         $ENV{ cgiName($h) } = undef;
     }
 }
 
-## @method void set_header_out(Apache2::RequestRec request, hash headers)
+## @method void set_header_out(hash headers)
 # sets response headers, only on 2xx and 3xx responses
-# @param request Apache2::RequestRec current request
 # @param headers hash containing header names => header value
 sub set_header_out {
-    my ( $class, $r, %headers ) = @_;
+    my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-
-        # TODO
+        $request->{respHeaders}->{"-$h"} = $v;
     }
 }
 
-## @method void set_err_header_out(Apache2::RequestRec request, hash headers)
+## @method void set_err_header_out(hash headers)
 # sets response headers, even on 4xx responses
-# @param request Apache2::RequestRec current request
 # @param headers hash containing header names => header value
 sub set_err_header_out {
-    my ( $class, $r, %headers ) = @_;
+    my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-
-        # TODO
+        $request->{respHeaders}->{"-$h"} = $v;
     }
 }
 
-## @method string hostname(Apache2::RequestRec request)
+## @method string hostname
 # returns host, as set by full URI or Host header
-# @param request Apache2::RequestRec current request
 # @return host string Host value
 sub hostname {
-    my ($class, $r) = @_;
     return $ENV{SERVER_NAME};
 }
 
-## @method string remote_ip(Apache2::RequestRec request)
+## @method string remote_ip
 # returns client IP address
-# @param request Apache2::RequestRec current request
 # @return IP_Addr string client IP
 sub remote_ip {
-    my ($class, $r) = @_;
     return $ENV{REMOTE_ADDR};
 }
 
-## @method boolean is_initial_req(Apache2::RequestRec request)
+## @method boolean is_initial_req
 # always returns true
-# @param request Apache2::RequestRec current request
 # @return is_initial_req boolean
 sub is_initial_req {
-    my ($class, $r) = @_;
     return 1;
 }
 
-## @method string args(Apache2::RequestRec request, string args)
+## @method string args(string args)
 # gets the query string
-# @param request Apache2::RequestRec current request
 # @return args string Query string
 sub args  {
-    my ($class, $r) = @_;
     return $ENV{QUERY_STRING};
 }
 
-## @method string uri(Apache2::RequestRec request)
+## @method string uri
 # returns the path portion of the URI, normalized, i.e. :
 # * URL decoded (characters encoded as %XX are decoded,
 #   except ? in order not to merge path and query string)
 # * references to relative path components "." and ".." are resolved
 # * two or more adjacent slashes are merged into a single slash
-# @param request Apache2::RequestRec current request
 # @return path portion of the URI, normalized
 sub uri {
-    my ($class, $r) = @_;
     my $uri = $ENV{SCRIPT_NAME};
     $uri =~ s#//+#/#g;
     $uri =~ s#\?#%3F#g;
     return $uri;
 }
 
-## @method string uri_with_args(Apache2::RequestRec request)
+## @method string uri_with_args
 # returns the URI, with arguments and with path portion normalized
-# @param request Apache2::RequestRec current request
 # @return URI with normalized path portion
 sub uri_with_args {
-    my ($class, $r) = @_;
-    return $class->uri($r) . ( $ENV{QUERY_STRING} ? "?$ENV{QUERY_STRING}" : "");
+    return &uri . ( $ENV{QUERY_STRING} ? "?$ENV{QUERY_STRING}" : "");
 }
 
-## @method string unparsed_uri(Apache2::RequestRec request)
+## @method string unparsed_uri
 # returns the full original request URI, with arguments
-# @param request Apache2::RequestRec current request
 # @return full original request URI, with arguments
 sub unparsed_uri {
-    my ($class, $r) = @_;
     return $ENV{REQUEST_URI};
 }
 
-## @method string get_server_port(Apache2::RequestRec request)
+## @method string get_server_port
 # returns the port the server is receiving the current request on
-# @param request Apache2::RequestRec current request
 # @return port string server port
 sub get_server_port {
-    my ($class, $r) = @_;
     return $ENV{SERVER_PORT};
 }
 
-## @method void print(string data, Apache2::RequestRec request)
+## @method void print(string data)
 # write data in HTTP response body
 # @param data Text to add in response body
-# @param request Apache2::RequestRec Current request
 sub print {
-    my ($class, $data, $r) = @_;
+    my ($class, $data) = @_;
     #TODO
 }
 

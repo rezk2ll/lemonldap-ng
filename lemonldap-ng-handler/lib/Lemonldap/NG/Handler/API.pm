@@ -32,9 +32,11 @@ else {
 # - Apache (modperl 2),
 # - Apache (modperl1),
 # - Nginx
+my $cgi = $ENV{GATEWAY_INTERFACE} =~ /^CGI/;
 my $mp = $ENV{MOD_PERL_API_VERSION};
 my $mode =
-    $mp && $mp >= 2    ? "ApacheMP2"
+    $cgi               ? "CGI"
+  : $mp && $mp >= 2    ? "ApacheMP2"
   : $mp                ? "ApacheMP1"
   : $main::{'nginx::'} ? "Nginx"
   :                      "CGI";
