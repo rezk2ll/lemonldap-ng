@@ -25,6 +25,8 @@ $ini->flush();
 use Env qw(LLNG_DEFAULTCONFFILE);
 $LLNG_DEFAULTCONFFILE = $ini->filename;
 
+open STDERR, '>/dev/null';
+
 #########################
 
 # Insert your test code below, the Test::More module is use()ed here so read

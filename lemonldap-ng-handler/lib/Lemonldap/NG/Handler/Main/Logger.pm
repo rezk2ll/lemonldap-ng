@@ -43,7 +43,8 @@ sub lmLog {
         $file =~ s#.+/##;
         Lemonldap::NG::Handler::API->lmLog( "$file($line): $msg", "debug" );
     } else {
-        Lemonldap::NG::Handler::API->lmLog( "$file($line):", "debug" );
+        Lemonldap::NG::Handler::API->lmLog( "$file($line):", "debug" )
+            if ( $logLevel == 0 );
         Lemonldap::NG::Handler::API->lmLog( "Lemonldap::NG::Handler: $msg", $level );
     }
 }

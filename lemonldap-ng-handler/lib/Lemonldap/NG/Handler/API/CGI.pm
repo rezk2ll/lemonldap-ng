@@ -25,8 +25,8 @@ use constant SERVER_ERROR => 500;
 use constant AUTH_REQUIRED => 401;
 
 # Log level, since it can't be set in server config
-# Default value 'info' can be changed in lemonldap-ng.ini or in init args
-our $logLevel = "info";
+# Default value 'notice' can be changed in lemonldap-ng.ini or in init args
+our $logLevel = "notice";
 
 my $request; # object to store data about current request
 
@@ -57,8 +57,7 @@ sub newRequest {
 # @param $level string loglevel
 sub lmLog {
     my ( $class, $msg, $level ) = @_;
-    print STDERR "[$level]$module $msg\n"
-        if ($logLevel->{$level} >= $logLevel->{$lmLogLevel});
+    print STDERR "[$level] $msg\n";
 }
 
 ## @method void set_user(string user)
