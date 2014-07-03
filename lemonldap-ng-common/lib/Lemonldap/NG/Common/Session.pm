@@ -112,12 +112,13 @@ sub BUILD {
 
 sub _tie_session {
     my $self = shift;
+    my $options = shift || {};
 
     my %h;
 
     eval {
         tie %h, 'Lemonldap::NG::Common::Apache::Session', $self->id,
-          $self->options;
+           { %{ $self->options }, %$options };
     };
 
     return undef if ( $@ or not tied(%h) );
@@ -135,10 +136,11 @@ sub _save_data {
 sub update {
     my $self  = shift;
     my $infos = shift;
+    my $tieOptions = shift;
 
     return 0 unless ( ref $infos eq "HASH" );
 
-    my $data = $self->_tie_session;
+    my $data = $self->_tie_session($tieOptions);
 
     if ($data) {
         foreach ( keys %$infos ) {
@@ -161,20 +163,14 @@ sub update {
 
 sub remove {
     my $self = shift;
+    my $tieOptions = shift;
 
-    my $data = $self->_tie_session;
+    my $data = $self->_tie_session($tieOptions);
 
     eval { tied(%$data)->delete(); };
 
     return 0 if $@;
     return 1;
-}
-
-sub cacheUpdate {
-    my $self = shift;
-
-    # Update a data to force update from cache
-    return $self->update( { '_session_id' => $self->id } );
 }
 
 no Mouse;
