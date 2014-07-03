@@ -7,7 +7,7 @@
 
 package My::Package;
 
-use Test::More tests => 5;
+use Test::More tests => 6;
 
 BEGIN {
     use_ok('Lemonldap::NG::Handler::Main');
@@ -24,6 +24,28 @@ my $globalinit;
 open STDERR, '>/dev/null';
 
 my $tsv = {};
+
+ok(
+    Lemonldap::NG::Handler::Reload->jailInit(
+        {
+            https        => 0,
+            port         => 0,
+            maintenance  => 0,
+            vhostOptions => {
+                www1 => {
+                    vhostHttps       => 1,
+                    vhostPort        => 443,
+                    vhostMaintenance => 1,
+                    vhostAliases     => 'www2 www3',
+
+                }
+            },
+        },
+        $tsv
+    ),
+    'defaultValuesInit'
+);
+
 ok(
     Lemonldap::NG::Handler::Reload->defaultValuesInit(
         {
