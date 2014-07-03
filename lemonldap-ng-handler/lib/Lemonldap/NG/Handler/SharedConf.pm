@@ -78,6 +78,8 @@ sub init($$) {
     $checkTime = $localConfig->{checkTime} || $checkTime;
 
     # Few actions that must be done at server startup:
+    # * set log level for Lemonldap::NG logs
+    Lemonldap::NG::Handler::Main::Logger->logLevelInit( $localConfig->{logLevel} );
     # * set server signature
     $class->serverSignatureInit unless ($localConfig->{hideSignature});
     # * launch status process

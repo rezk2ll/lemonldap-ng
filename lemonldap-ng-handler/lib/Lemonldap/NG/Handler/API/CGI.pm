@@ -8,7 +8,7 @@ our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 BEGIN{
     %EXPORT_TAGS = (
         httpCodes => [
-            qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED )
+            qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED $logLevel )
         ],
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
@@ -24,21 +24,9 @@ use constant DONE         =>   0;
 use constant SERVER_ERROR => 500;
 use constant AUTH_REQUIRED => 401;
 
-# Log level converted to integers, to compare them
-my $logLevel = {
-    emerg  => 7,
-    alert  => 6,
-    crit   => 5,
-    error  => 4,
-    warn   => 3,
-    notice => 2,
-    info   => 1,
-    debug  => 0,
-};
-
 # Log level, since it can't be set in server config
 # Default value 'info' can be changed in lemonldap-ng.ini or in init args
-my $lmLogLevel = "info";
+our $logLevel = "info";
 
 my $request; # object to store data about current request
 
