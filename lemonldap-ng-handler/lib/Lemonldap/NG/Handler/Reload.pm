@@ -54,7 +54,6 @@ our $VERSION = '1.4.0';
 #      - sessionStorageOptions
 #      - sessionCacheModule
 #      - sessionCacheOptions
-#      - sessionCache
 # - headersInit():
 #      - headerList
 #      - forgeHeaders
@@ -208,18 +207,11 @@ sub sessionStorageInit {
         $tsv->{sessionCacheOptions} = $conf->{localSessionStorageOptions};
         $tsv->{sessionCacheOptions}->{default_expires_in} ||= 600;
     
-        eval "use $tsv->{sessionCacheModule}";
-        die($@) if ($@);
-        eval '$tsv->{sessionCache} = new '
-               . $tsv->{sessionCacheModule}
-               . '($tsv->{sessionCacheOptions});';
-        die("Unable to init local cache: $@") if ($@);
-    
         if ($conf->{status}) {
             my $params = "";
             if ($tsv->{sessionCacheModule}) {
                 require Data::Dumper;
-                $params = " $tsv->{sessionCache},"
+                $params = " $tsv->{sessionCacheModule},"
                     . Data::Dumper->new( [ $tsv->{sessionCacheOptions} ] )
                     ->Terse(1)->Indent(0)->Dump; # To send params on one line
             }

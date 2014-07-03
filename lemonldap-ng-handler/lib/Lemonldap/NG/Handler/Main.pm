@@ -37,7 +37,7 @@ our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 # $datas
 # $datasUpdate
 
-our ( $datas, $datasUpdate, $tsv );
+our ( $session, $datas, $datasUpdate, $tsv );
 $tsv = {};
 
 BEGIN {
@@ -205,7 +205,7 @@ sub retrieveSession {
         and ( time() - $datasUpdate < 60 ) );
 
     # 2. Get the session from cache or backend
-    my $apacheSession = Lemonldap::NG::Common::Session->new(
+    $session = Lemonldap::NG::Common::Session->new(
         {
             storageModule        => $tsv->{sessionStorageModule},
             storageModuleOptions => $tsv->{sessionStorageOptions},
@@ -216,10 +216,10 @@ sub retrieveSession {
         }
     );
 
-    if ( $datas = $apacheSession->data ) {
+    if ( $datas = $session->data ) {
 
         # Update the session to notify activity, if necessary
-        $apacheSession->update( { '_lastSeen' => time } )
+        $session->update( { '_lastSeen' => time } )
           if ( $tsv->{timeoutActivity} );
 
         $datasUpdate = time();
@@ -327,10 +327,10 @@ sub run {
         $class->sendHeaders;
 
         # Store local macros
-        if ( keys %$datas > $kc and $tsv->{sessionCache} ) {
+        if ( keys %$datas > $kc ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog( "Update local cache",
                 'debug' );
-            $tsv->{sessionCache}->set( $id, $datas );
+            $session->update( $datas, { updateCache => 2 } );
         }
 
         # Hide Lemonldap::NG cookie
