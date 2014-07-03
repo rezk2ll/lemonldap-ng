@@ -69,15 +69,17 @@ our $VERSION = '1.4.0';
 # @param $tsv reference to the thread-shared parameters conf
 sub configReload {
     my ( $class, $conf, $tsv ) = @_;
+    Lemonldap::NG::Handler::Main::Logger->lmLog(
+        "Loading configuration $conf->{cfgNum} for process $$", "info" );
 
-    $class->jailInit          ( $conf, $tsv );
-    $class->defaultValuesInit ( $conf, $tsv );
-    $class->portalInit        ( $conf, $tsv );
-    $class->locationRulesInit ( $conf, $tsv );
-    $class->sessionStorageInit( $conf, $tsv );
-    $class->headersInit       ( $conf, $tsv );
-#    $class->postUrlInit       ( $conf, $tsv );
-    $class->aliasInit         ( $conf, $tsv );
+    #TODO: add postUrlInit
+    foreach my $sub (
+      qw( jailInit defaultValuesInit portalInit locationRulesInit
+          sessionStorageInit headersInit aliasInit ) ) {
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+            "Process $$ calls $sub", "debug" );
+        $class->$sub( $conf, $tsv );
+    }
     return 1;
 }
 
