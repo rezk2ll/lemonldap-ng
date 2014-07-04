@@ -17,27 +17,12 @@ use constant MAINTENANCE_CODE => 503;
 our $VERSION = '1.4.0';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
-# my @threadSharedVar = qw(
-#     cda                                          cipher
-#     cookieExpiration       cookieName            customFunctions
-#     defaultCondition       defaultProtection     forgeHeaders
-#     globalStorage          globalStorageOptions  headerList
-#     httpOnly               https                 key
-#     localStorage           localStorageOptions   locationCondition
-#     locationConditionText  locationCount         locationProtection
-#     locationRegexp         maintenance           port
-#     refLocalStorage        safe                  securedCookie
-#     statusOut              statusPipe            timeoutActivity
-#     transform              useRedirectOnError    useRedirectOnForbidden
-#     useSafeJail            whatToTrace
-# );
-#
-# non thread shared vars
-# $datas
-# $datasUpdate
-
-our ( $session, $datas, $datasUpdate, $tsv );
-$tsv = {};
+our $tsv = {};     # Hash ref containing thread-shared values, filled
+                   # at config reload - see Reload.pm comments to know
+                   # what it contains
+our $session;      # Object for current user session
+our $datas;        # Hash ref containing current user session datas
+our $datasUpdate;  # Last time the current user session was read
 
 BEGIN {
 
