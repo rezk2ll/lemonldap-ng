@@ -451,25 +451,13 @@ sub aliasInit {
 }
 # TODO: support wildcards in aliases
 
-
 sub substitute {
     my ( $class, $expr ) = @_;
 
-    # substitute fake env vars
-    # is /e necessary at end of sub ?
-    $expr =~ s/\$ENV{TIME}/time/g;
-    $expr =~ s/\$ENV{DATE}/&POSIX::strftime("%Y%m%d%H%M%S",localtime)/g;
-    $expr =~ s/\$ENV{SERVER_NAME}/Lemonldap::NG::Handler::API->hostname/g;
-    $expr =~ s/\$ENV{(IP|REMOTE_ADDR)}/Lemonldap::NG::Handler::API->remote_addr/g;
-    $expr =~ s/\$ENV{REQUEST_URI}/Lemonldap::NG::Handler::API->uri/g;
-    $expr =~ s/\$ENV{QUERY_STRING}/Lemonldap::NG::Handler::API->args/g;
-    $expr =~ s/\$ENV{REQUEST_METHOD}/Lemonldap::NG::Handler::API->request_method/g;
-    #TODO: substitute $ENV{HTTP_*} with corresponding header
-
-    # substitute fake env vars - kept for retro-compatibility
-    $expr =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime)/g;
-    $expr =~ s/\$vhost/Lemonldap::NG::Handler::API->hostname/g;
-    $expr =~ s/\$ip/Lemonldap::NG::Handler::API->remote_addr/g;
+    # substitute special vars, just for retro-compatibility
+    $expr =~ s/\$date\b/&date/g;
+    $expr =~ s/\$vhost\b/&hostname/g;
+    $expr =~ s/\$ip\b/&remote_ip/g;
 
     # substitute vars with session datas, excepts special vars $_ and $\d+
     $expr =~ s/\$((?!_|\d+)\w+)/\$datas->{$1}/g;

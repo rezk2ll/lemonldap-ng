@@ -10,6 +10,10 @@ BEGIN{
         httpCodes => [
             qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED )
         ],
+        functions => [
+            qw( &hostname &remote_ip &uri &uri_with_args
+                &unparsed_uri &args &method &header_in )
+        ]
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
     $EXPORT_TAGS{all} = \@EXPORT_OK;
@@ -204,6 +208,14 @@ sub unparsed_uri {
 sub get_server_port {
     my $class = shift;
     return $request->get_server_port;
+}
+
+## @method string method
+# returns the port the server is receiving the current request on
+# @return port string server port
+sub method {
+    my $class = shift;
+    return $request->method;
 }
 
 ## @method void print(string data)

@@ -16,7 +16,7 @@ our $VERSION = '1.0.0';
 # Set here all the names of functions that must be available in Safe objects.
 # Not that only functions, not methods, can be written here
 our $functions =
-  [qw(&checkLogonHours &checkDate &basic &unicode2iso &iso2unicode)];
+  [qw(&checkLogonHours &date &checkDate &basic &unicode2iso &iso2unicode)];
 
 ## @function boolean checkLogonHours(string logon_hours, string syntax, string time_correction, boolean default_access)
 # Function to check logon hours
@@ -69,6 +69,26 @@ sub checkLogonHours {
     return substr( $base2_logon_hours, $hourpos, 1 );
 }
 
+## @function integer date
+# Get current local date
+# @param $gmt optional boolean To return GMT date (default is local date)
+# @return current date on format YYYYMMDDHHMMSS
+sub date {
+    my $gmt = shift;
+    my ( $sec, $min, $hour, $mday, $mon, $year )
+        = $gmt ? gmtime : localtime;
+
+    $year += 1900;
+    $mon  += 1;
+    $mon  = "0" . $mon  if ( $mon < 10 );
+    $mday = "0" . $mday if ( $mday < 10 );
+    $hour = "0" . $hour if ( $hour < 10 );
+    $min  = "0" . $min  if ( $min < 10 );
+    $sec  = "0" . $sec  if ( $sec < 10 );
+
+    return $year . $mon . $mday . $hour . $min . $sec;
+}
+
 ## @function boolean checkDate(string start, string end, boolean default_access)
 # Function to check a date
 # @param $start string Start date (GMT)
@@ -93,17 +113,7 @@ sub checkDate {
     $end ||= 999999999999999;
 
     # Get the present day and hour
-    my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) =
-      gmtime(time);
-    $year += 1900;
-    $mon  += 1;
-    $mon  = "0" . $mon  if ( $mon < 10 );
-    $mday = "0" . $mday if ( $mday < 10 );
-    $hour = "0" . $hour if ( $hour < 10 );
-    $min  = "0" . $min  if ( $min < 10 );
-    $sec  = "0" . $sec  if ( $sec < 10 );
-
-    my $date = $year . $mon . $mday . $hour . $min . $sec;
+    my $date = &date;
 
     return 1 if ( ( $date >= $start ) and ( $date <= $end ) );
     return 0;

@@ -10,6 +10,10 @@ our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
     httpCodes => [
         qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED )
     ],
+    functions => [
+        qw( &hostname &remote_ip &uri &uri_with_args
+            &unparsed_uri &args &method &header_in )
+    ]
 );
 push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
 $EXPORT_TAGS{all} = \@EXPORT_OK;
@@ -42,7 +46,7 @@ my $mode =
   :                      "CGI";
 
 # Load API functions and constants
-eval "use      Lemonldap::NG::Handler::API::$mode ':httpCodes';
+eval "use Lemonldap::NG::Handler::API::$mode (':httpCodes', ':functions');
       use base Lemonldap::NG::Handler::API::$mode;";
 
 1;

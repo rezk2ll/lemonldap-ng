@@ -5,7 +5,6 @@ use MIME::Base64;
 use Exporter 'import';
 
 use Lemonldap::NG::Common::Session;
-require POSIX;
 use CGI::Util 'expires';
 use constant UNPROTECT        => 1;
 use constant SKIP             => 2;

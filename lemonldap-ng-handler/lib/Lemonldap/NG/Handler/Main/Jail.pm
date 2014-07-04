@@ -16,8 +16,8 @@ has safe => ( is => 'rw' );
 
 our $VERSION = '1.4.0';
 
-# for accessing $datas
-use Lemonldap::NG::Handler::Main ':jailSharedVars';
+use Lemonldap::NG::Handler::Main '$datas';
+use Lemonldap::NG::Handler::API ':functions';
 
 ## @imethod protected build_safe()
 # Build and return the security jail used to compile rules and headers.
@@ -62,8 +62,10 @@ sub build_safe {
     $self->safe->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
 
-    $self->safe->share_from( 'Lemonldap::NG::Handler::Main',
-        [ '$datas', '&ip', '&portal' ] );
+    $self->safe->share_from( 'Lemonldap::NG::Handler::Main', ['$datas'] );
+    $self->safe->share_from( 'Lemonldap::NG::Handler::API',
+        [ qw( &hostname &remote_ip &uri &uri_with_args
+              &unparsed_uri &args &method &header_in   ) ] );
     $self->safe->share(@t);
     $self->safe->share_from( 'MIME::Base64', ['&encode_base64'] );
 
