@@ -111,11 +111,21 @@ sub set_header_in {
 
 ## @method void unset_header_in(array headers)
 # removes request headers
+# This function looks a bit heavy: it is to ensure that if a request
+# header 'Auth-User' is removed, 'Auth_User' be removed also
 # @param headers array with header names to remove
 sub unset_header_in {
     my ($class, @headers) = @_;
-    foreach my $h (@headers) {
-        $request->headers_in->unset($h);
+    foreach my $h1 (@headers) {
+        $h1 = lc $h1;
+        $h1 =~ s/-/_/g;
+        $request->headers_in->do( sub {
+            my $h = shift;
+            my $h2 = lc $h;
+            $h2 =~ s/-/_/g;
+            $request->headers_in->unset($h) if ( $h1 eq $h2 );
+            return 1;
+        } );
     }
 } 
 
@@ -191,8 +201,7 @@ sub uri {
 # @return URI with normalized path portion
 sub uri_with_args {
     my $class = shift;
-    return uri($request)
-        . ( $request->args ? "?" . $request->args : "");
+    return uri . ( $request->args ? "?" . $request->args : "");
 }
 
 ## @method string unparsed_uri
