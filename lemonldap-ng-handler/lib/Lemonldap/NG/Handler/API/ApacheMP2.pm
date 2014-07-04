@@ -190,7 +190,7 @@ sub uri {
 # @return URI with normalized path portion
 sub uri_with_args {
     my $class = shift;
-    return $class->uri($request)
+    return uri($request)
         . ( $request->args ? "?" . $request->args : "");
 }
 
