@@ -78,6 +78,7 @@ sub set_user {
 # @return request header value
 sub header_in {
     my ( $class, $header ) = @_;
+    $header ||= $class; # to use header_in as a method or as a function
     return $ENV{ cgiName($header) };
 }
 
