@@ -51,12 +51,4 @@ sub set_header_out {
     }
 }
 
-sub set_err_header_out {
-    my ( $class, $r, %headers ) = @_;
-    while ( my ( $h, $v ) = each %headers ) {
-
-        # TODO
-    }
-}
-
 1;

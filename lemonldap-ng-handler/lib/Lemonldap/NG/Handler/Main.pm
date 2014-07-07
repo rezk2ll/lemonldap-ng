@@ -261,7 +261,7 @@ sub run {
         Lemonldap::NG::Handler::Main::Logger->lmLog( 'CDA request', 'debug' );
         my $redirectUrl = $class->_buildUrl($uri);
         my $redirectHttps = ( $redirectUrl =~ m/^https/ );
-        Lemonldap::NG::Handler::API->set_err_header_out(
+        Lemonldap::NG::Handler::API->set_header_out(
             'Location'   => $redirectUrl,
             'Set-Cookie' => "$str; path=/"
               . ( $redirectHttps   ? "; secure"   : "" )

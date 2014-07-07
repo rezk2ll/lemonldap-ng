@@ -122,7 +122,7 @@ sub goToPortal {
     if ($arg) {
         return $class->SUPER::goToPortal( $url, $arg );
     } else {
-        Lemonldap::NG::Handler::API->set_err_header_out(
+        Lemonldap::NG::Handler::API->set_header_out(
             'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
         return AUTH_REQUIRED;
     }

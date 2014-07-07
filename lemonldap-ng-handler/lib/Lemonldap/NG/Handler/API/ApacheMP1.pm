@@ -88,21 +88,10 @@ sub unset_header_in {
 }
 
 ## @method void set_header_out(Apache2::RequestRec request, hash headers)
-# sets response headers, only on 2xx and 3xx responses
+# sets response headers
 # @param request Apache2::RequestRec current request
 # @param headers hash containing header names => header value
 sub set_header_out {
-    my ( $class, $r, %headers ) = @_;
-    while ( my ( $h, $v ) = each %headers ) {
-        $r->header_out( $h => $v );
-    }
-}
-
-## @method void set_err_header_out(Apache2::RequestRec request, hash headers)
-# sets response headers, even on 4xx responses
-# @param request Apache2::RequestRec current request
-# @param headers hash containing header names => header value
-sub set_err_header_out {
     my ( $class, $r, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
         $r->err_header_out( $h => $v );

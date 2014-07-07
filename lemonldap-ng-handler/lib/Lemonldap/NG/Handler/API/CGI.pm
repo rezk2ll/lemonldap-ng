@@ -103,19 +103,9 @@ sub unset_header_in {
 }
 
 ## @method void set_header_out(hash headers)
-# sets response headers, only on 2xx and 3xx responses
+# sets response headers
 # @param headers hash containing header names => header value
 sub set_header_out {
-    my ( $class, %headers ) = @_;
-    while ( my ( $h, $v ) = each %headers ) {
-        $request->{respHeaders}->{"-$h"} = $v;
-    }
-}
-
-## @method void set_err_header_out(hash headers)
-# sets response headers, even on 4xx responses
-# @param headers hash containing header names => header value
-sub set_err_header_out {
     my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
         $request->{respHeaders}->{"-$h"} = $v;

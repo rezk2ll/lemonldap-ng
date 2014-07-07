@@ -149,7 +149,7 @@ sub headers {
                 and $cookieDomain_new
                 and $_[0] =~ /Set-Cookie/i );
 
-            Lemonldap::NG::Handler::API->set_err_header_out( $r, @_ );
+            Lemonldap::NG::Handler::API->set_header_out( $r, @_ );
 
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "$class: header pushed to the client: " . $_[0] . ": " . $_[1],
