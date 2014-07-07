@@ -15,13 +15,13 @@ BEGIN { use_ok('Lemonldap::NG::Handler::Main::Jail') }
 
 ok(
     my $jail = Lemonldap::NG::Handler::Main::Jail->new(
-        'safe'            => undef,
+        'jail'            => undef,
         'useSafeJail'     => 0,
         'customFunctions' => undef
     ),
     'new fake jail object'
 );
-my $safe = $jail->build_safe();
+$jail->build_jail();
 
 my $sub1  = "sub { return( basic('login','password') ) }";
 my $basic = $jail->jail_reval($sub1);

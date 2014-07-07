@@ -12,23 +12,23 @@ has customFunctions => ( is => 'rw', isa => 'Maybe[Str]' );
 
 has useSafeJail => ( is => 'rw', isa => 'Maybe[Int]' );
 
-has safe => ( is => 'rw' );
+has jail => ( is => 'rw' );
 
 our $VERSION = '1.4.0';
 
 use Lemonldap::NG::Handler::Main '$datas';
 use Lemonldap::NG::Handler::API ':functions';
 
-## @imethod protected build_safe()
+## @imethod protected build_jail()
 # Build and return the security jail used to compile rules and headers.
 # @return Safe object
-sub build_safe {
+sub build_jail {
     my $self = shift;
 
-    return $self->safe
-      if ( $self->safe
-        && $self->safe->useSafeJail == $self->useSafeJail
-        && $self->safe->customFunctions == $self->customFunctions );
+    return $self->jail
+      if ( $self->jail
+        && $self->jail->useSafeJail == $self->useSafeJail
+        && $self->jail->customFunctions == $self->customFunctions );
 
     $self->useSafeJail(1) unless defined $self->useSafeJail;
 
@@ -54,29 +54,29 @@ sub build_safe {
     }
 
     if ( $self->useSafeJail ) {
-        $self->safe( Safe->new );
-        $self->safe->share_from( 'main', ['%ENV'] );
+        $self->jail( Safe->new );
+        $self->jail->share_from( 'main', ['%ENV'] );
     }
     else {
-        $self->safe($self);
+        $self->jail($self);
     }
 
     # Share objects with Safe jail
-    $self->safe->share_from( 'Lemonldap::NG::Common::Safelib',
+    $self->jail->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
 
-    $self->safe->share_from( 'Lemonldap::NG::Handler::Main', ['$datas'] );
-    $self->safe->share_from(
+    $self->jail->share_from( 'Lemonldap::NG::Handler::Main', ['$datas'] );
+    $self->jail->share_from(
         'Lemonldap::NG::Handler::API',
         [
             qw( &hostname &remote_ip &uri &uri_with_args
               &unparsed_uri &args &method &header_in   )
         ]
     );
-    $self->safe->share(@t);
-    $self->safe->share_from( 'MIME::Base64', ['&encode_base64'] );
+    $self->jail->share(@t);
+    $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
 
-    return $self->safe;
+    return $self->jail;
 }
 
 ## @method reval
@@ -137,8 +137,8 @@ sub jail_reval {
 
     return (
         SAFEWRAP
-        ? $self->safe->wrap_code_ref( $self->safe->reval($reval) )
-        : $self->safe->reval($nosw_reval)
+        ? $self->jail->wrap_code_ref( $self->jail->reval($reval) )
+        : $self->jail->reval($nosw_reval)
     );
 
 }

@@ -3,7 +3,7 @@ package Lemonldap::NG::Handler::Main::PostForm;
 use strict;
 
 # For importing MP function, $tsv->{transform},
-# $tsv->{safe}, $tsv->{useSafeJail}, $tsv->{customFunctions}
+# $tsv->{jail}, $tsv->{useSafeJail}, $tsv->{customFunctions}
 use Lemonldap::NG::Handler::Main qw( :tsv );
 use Lemonldap::NG::Handler::API qw( :httpCodes );
 use Lemonldap::NG::Handler::Main::Logger;
@@ -72,13 +72,13 @@ sub postFilter {
         my $u = URI->new('http:');
 
         my $jail = Lemonldap::NG::Handler::Main::Jail->new(
-            'safe'            => $tsv->{safe},
+            'jail'            => $tsv->{jail},
             'useSafeJail'     => $tsv->{useSafeJail},
             'customFunctions' => $tsv->{customFunctions}
         );
-        $tsv->{safe} = $jail->build_safe();
+        $tsv->{jail} = $jail->build_jail();
 
-        $u->query_form( { $tsv->{safe}->reval($data) } );
+        $u->query_form( { $tsv->{jail}->reval($data) } );
         my $s = $u->query();
 
         # Eat all fake data sent by client
