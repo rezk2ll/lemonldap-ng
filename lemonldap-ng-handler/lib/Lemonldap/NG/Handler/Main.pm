@@ -6,6 +6,7 @@ use Exporter 'import';
 
 use Lemonldap::NG::Common::Session;
 use CGI::Util 'expires';
+use URI::Escape;
 use constant UNPROTECT        => 1;
 use constant SKIP             => 2;
 use constant MAINTENANCE_CODE => 503;
@@ -43,9 +44,7 @@ BEGIN {
     Lemonldap::NG::Handler::API->thread_share($tsv);
 }
 
-use Lemonldap::NG::Handler::Reload;
 use Lemonldap::NG::Handler::Main::Jail;
-use Lemonldap::NG::Handler::Main::PostForm;
 use Lemonldap::NG::Handler::Main::Logger;
 
 
@@ -329,7 +328,8 @@ sub run {
         );
 
         #  Catch POST rules
-        Lemonldap::NG::Handler::Main::PostForm->transformUri($uri);
+        $class->postOutputFilter($uri);
+        $class->postInputFilter($uri);
 
         return OK;
     }
@@ -588,6 +588,74 @@ sub resolveAlias {
     my $class = shift;
     my $vhost = Lemonldap::NG::Handler::API->hostname;
     return $tsv->{vhostAlias}->{$vhost} || $vhost;
+}
+
+## @rmethod protected postOutputFilter(string uri)
+# Add a javascript to html page in order to fill html form with fake data
+# @param uri URI to catch
+sub postOutputFilter {
+    my ( $class, $uri ) = @_;
+    my $vhost = $class->resolveAlias;
+
+    if ( defined( $tsv->{outputPostData}->{$vhost}->{$uri} ) ) {
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+            "Filling a html form with fake data" , "debug" );
+
+        Lemonldap::NG::Handler::API->unset_header_in("Accept-Encoding");
+        my %postdata = &{ $tsv->{outputPostData}->{$vhost}->{$uri} };
+        my $js = $class->postJavascript(\%postdata);
+        Lemonldap::NG::Handler::API->addToHtmlHead($js);
+    }
+}
+
+## @rmethod protected postInputFilter(string uri)
+# Replace request body with form datas defined in configuration
+# @param uri URI to catch
+sub postInputFilter {
+    my ( $class, $uri ) = @_;
+    my $vhost = $class->resolveAlias;
+
+    if ( defined( $tsv->{inputPostData}->{$vhost}->{$uri} ) ) {
+        Lemonldap::NG::Handler::Main::Logger->lmLog( 
+            "Replacing fake data with real form data" , "debug" );
+
+        my %data = &{ $tsv->{inputPostData}->{$vhost}->{$uri} };
+        my $body;
+        while ( my ($name, $value) = each ( %data ) ) {
+            $body .= "&$name=" . uri_escape($value);
+        }
+        $body =~ s/^&//;
+        Lemonldap::NG::Handler::API->setRequestBody($body);
+    }
+}
+
+## @rmethod protected postJavascript(hashref data)
+# build a javascript to fill a html form with fake data
+# @param data hashref containing input => value
+sub postJavascript {
+    my ( $class, $data ) = @_;
+    my $form ||= 'form';
+    my $submit ||= 1;
+    my $javascript;
+    while ( my ($name, $value) = each ( %$data ) ) {
+        $value = "xxxx";
+        $javascript .= "form.find('input[name=$name], select[name=$name], textarea[name=$name]').val('$value')\n";
+    }
+    return 
+        "<script type='text/javascript' src='"
+      . &{ $tsv->{portal} }
+      . "skins/common/js/jquery-1.10.2.js'></script>\n"
+      . "<script type='text/javascript'>\n"
+      . "/* script added by Lemonldap::NG */\n"
+      . "jQuery(window).load(function() {\n"
+      . "var form = jQuery('$form')\n"
+      . "form.attr('autocomplete', 'off')\n"
+      . $javascript
+      . ( $submit == 1 ? "form.submit()\n"
+        : $submit      ? "form.find('$submit').click()\n" : "" )
+      . "})\n"
+      . "</script>\n";
+
 }
 
 1;

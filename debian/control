@@ -107,6 +107,7 @@ Depends: ${misc:Depends},
          libapache2-mod-perl2,
          liblemonldap-ng-common-perl (= ${binary:Version}),
          libmouse-perl,
+         liburi-perl,
          libwww-perl
 Recommends: libhttp-message-perl | libwww-perl (<< 6),
             liblwp-protocol-https-perl | libwww-perl (<< 6)
@@ -210,7 +211,8 @@ Depends: ${misc:Depends},
          libnet-ldap-perl,
          libregexp-assemble-perl,
          libstring-random-perl,
-         libunicode-string-perl
+         libunicode-string-perl,
+         liburi-perl
 Recommends: libnet-facebook-oauth2-perl | libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl (>= 2.3.0) | libnet-twitter-perl | libauthcas-perl | libweb-id-perl,
             libwww-perl
 Suggests: libauthcas-perl,
@@ -224,7 +226,6 @@ Suggests: libauthcas-perl,
           libnet-openid-server-perl,
           libnet-twitter-perl,
           libsoap-lite-perl,
-          liburi-perl,
           libweb-id-perl,
           libhttp-message-perl | libwww-perl (<< 6),
           liblwp-protocol-https-perl | libwww-perl (<< 6),

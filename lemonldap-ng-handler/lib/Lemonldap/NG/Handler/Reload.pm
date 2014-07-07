@@ -58,6 +58,8 @@ our $VERSION = '1.4.0';
 #      - headerList
 #      - forgeHeaders
 # - postUrlInit():
+#      - inputPostData
+#      - outputPostData
 # - aliasInit():
 #      - vhostAlias
 #
@@ -72,10 +74,9 @@ sub configReload {
     Lemonldap::NG::Handler::Main::Logger->lmLog(
         "Loading configuration $conf->{cfgNum} for process $$", "info" );
 
-    #TODO: add postUrlInit
     foreach my $sub (
       qw( jailInit defaultValuesInit portalInit locationRulesInit
-          sessionStorageInit headersInit aliasInit ) ) {
+          sessionStorageInit headersInit postUrlInit aliasInit ) ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
             "Process $$ calls $sub", "debug" );
         $class->$sub( $conf, $tsv );
@@ -251,83 +252,31 @@ sub headersInit {
 ## @imethod protected void postUrlInit()
 # Prepare methods to post form attributes
 sub postUrlInit {
-    my ( $self, $transform, $args ) = splice @_;
-
-    # Do nothing if no POST configured
-    return unless ( $args->{post} );
-
-    # Load required modules
-    eval 'use Apache2::Filter;use URI';
-
-    # Prepare transform sub
-    $transform = {};
+    my ( $class, $conf, $tsv ) = @_;
+    return unless ( $conf->{post} );
 
     # Browse all vhost
-    foreach my $vhost ( keys %{ $args->{post} } ) {
+    foreach my $vhost ( keys %{ $conf->{post} } ) {
+        #  Browse all POST URI
+        while ( my ( $url, $d ) = each( %{ $conf->{post}->{$vhost} } ) ) {
+            Lemonldap::NG::Handler::Main::Logger->lmLog(
+                "Compiling POST data for $url", 'debug' );
 
-        foreach
-          my $alias ( @{ $self->getAliases( $vhost, $args->{vhostOptions} ) } )
-        {
+            # Where to POST
+            $d->{postUrl} ||= $url;
 
-            my $mypost = $args->{post}->{$vhost};
-
-            #  Browse all POST URI
-            while ( my ( $url, $d ) = each( %{ $args->{post}->{$vhost} } ) ) {
-
-                # Where to POST
-                $d->{postUrl} ||= $url;
-
-                # Register POST form for POST URL
-                $transform->{$alias}->{$url} = sub {
-                    my $r = shift;
-                    Lemonldap::NG::Handler::Main::PostForm->buildPostForm(
-                        $r, $d->{postUrl} );
-                  }
-                  if ( $url ne $d->{postUrl} );
-
-                # Get datas to POST
-                my $expr = $d->{expr};
-                my %postdata;
-
-                # Manage old and new configuration format
-                # OLD: expr => 'param1 => value1, param2 => value2',
-                # NEW : expr => { param1 => value1, param2 => value2 },
-                if ( ref $expr eq 'HASH' ) {
-                    %postdata = %$expr;
-                }
-                else {
-                    %postdata = split /(?:\s*=>\s*|\s*,\s*)/, $expr;
-                }
-
-                # Build string for URI::query_form
-                my $tmp;
-                foreach ( keys %postdata ) {
-                    $postdata{$_} =~ s/\$(\w+)/\$datas->{$1}/g;
-                    $postdata{$_} = "'$postdata{$_}'"
-                      if ( $postdata{$_} =~ /^\w+$/ );
-                    $tmp .= "'$_'=>$postdata{$_},";
-                }
-
-                Lemonldap::NG::Handler::Main::Logger->lmLog(
-                    "Compiling POST request for $url", 'debug' );
-                $transform->{$alias}->{ $d->{postUrl} } = sub {
-                    my $r = shift;
-                    return
-                      Lemonldap::NG::Handler::Main::PostForm->buildPostForm(
-                        $r, $d->{postUrl} )
-                      if ( $r->method ne 'POST' );
-                    $r->add_input_filter(
-                        sub {
-                            Lemonldap::NG::Handler::Main::PostForm->postFilter(
-                                $tmp, @_ );
-                        }
-                    );
-                    OK;
-                };
+            my $sub;
+            while ( my ( $input, $value ) = each( %{ $d->{expr} } ) ) {
+                my $val = $class->substitute($value);
+                $sub .= "'$input' => $val,";
             }
+
+            $tsv->{inputPostData}->{$vhost}->{$url}
+              = $tsv->{outputPostData}->{$vhost}->{$url}
+              = $tsv->{jail}->jail_reval("sub{$sub}");
         }
     }
-    return $transform;
+    return 1;
 }
 
 ## @imethod protected codeRef conditionSub(string cond)

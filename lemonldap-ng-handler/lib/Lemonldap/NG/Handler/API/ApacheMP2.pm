@@ -27,6 +27,7 @@ use Apache2::ServerUtil;
 use Apache2::Connection;
 use Apache2::RequestIO;
 use Apache2::Const;
+use Apache2::Filter;
 use APR::Table;
 
 use constant FORBIDDEN    => Apache2::Const::FORBIDDEN;
@@ -224,6 +225,47 @@ sub method {
 sub print {
     my ($class, $data) = @_;
     $request->print($data);
+}
+
+## @method void addToHtmlHead(string data)
+# add data at end of html head
+# @param data Text to add in html head
+sub addToHtmlHead {
+    my ($class, $data) = @_;
+    $request->add_output_filter( sub {
+        my $f = shift;
+        my $buffer;
+
+        my $body = $f->ctx || "";
+        $body .= $buffer while ($f->read($buffer));
+        unless ($f->seen_eos) {
+            $f->ctx($body);
+        } else {
+            $body =~ s/(<\/head>)/$data$1/i or $body =~ s/(<body>)/$1$data/i;
+            $f->print($body);
+        }
+        return OK;
+    } );
+}
+
+## @method void setRequestBody(string body)
+# set request body
+# @param body string new request body
+sub setRequestBody {
+    my ($class, $body) = @_;
+    $request->add_input_filter( sub {
+        my $f = shift;
+        my $buffer;
+
+        # Filter only POST request body
+        if ( $f->r->method eq "POST" ) {
+            while ($f->read($buffer)) {}
+            $f->print($body);
+        } else {
+            $f->print($buffer) while ($f->read($buffer));
+        }
+        return OK;
+    } );
 }
 
 1;
