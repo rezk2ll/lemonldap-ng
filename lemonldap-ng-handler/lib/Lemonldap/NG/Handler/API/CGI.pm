@@ -197,7 +197,7 @@ sub method {
 # @param data Text to add in response body
 sub print {
     my ($class, $data) = @_;
-    #TODO
+    $request->{respBody} .= $data;
 }
 
 sub cgiName {
