@@ -25,7 +25,10 @@ use Lemonldap::NG::Handler::API ':functions';
 sub build_safe {
     my $self = shift;
 
-    return $self->safe if ( $self->safe );
+    return $self->safe
+      if ( $self->safe
+        && $self->safe->useSafeJail == $self->useSafeJail
+        && $self->safe->customFunctions == $self->customFunctions );
 
     $self->useSafeJail(1) unless defined $self->useSafeJail;
 
@@ -63,9 +66,13 @@ sub build_safe {
         $Lemonldap::NG::Common::Safelib::functions );
 
     $self->safe->share_from( 'Lemonldap::NG::Handler::Main', ['$datas'] );
-    $self->safe->share_from( 'Lemonldap::NG::Handler::API',
-        [ qw( &hostname &remote_ip &uri &uri_with_args
-              &unparsed_uri &args &method &header_in   ) ] );
+    $self->safe->share_from(
+        'Lemonldap::NG::Handler::API',
+        [
+            qw( &hostname &remote_ip &uri &uri_with_args
+              &unparsed_uri &args &method &header_in   )
+        ]
+    );
     $self->safe->share(@t);
     $self->safe->share_from( 'MIME::Base64', ['&encode_base64'] );
 
