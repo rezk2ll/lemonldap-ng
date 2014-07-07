@@ -13,81 +13,41 @@ use Lemonldap::NG::Handler::SharedConf qw(:all);
 use Lemonldap::NG::Handler::API qw(:httpCodes);
 use base qw(Lemonldap::NG::Handler::SharedConf);
 use Lemonldap::NG::Handler::Main::Logger;
-use Lemonldap::NG::Common::Session;
+use Lemonldap::NG::Handler::Main;
 
 our $VERSION = '1.4.0';
 
-## @rmethod int run(Apache2::RequestRec r)
-# Main method used to control access.
-# Calls :
-# - fetchId()
-# - fetchUTime()
-# - SUPER::run()
-# @param $r Current request
-# @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
-sub run {
-    my ( $class, $r ) = @_;
+## @rmethod protected boolean retrieveSession(id)
+# Tries to retrieve the session whose index is id
+# @return true if the session was found, false else
+sub retrieveSession {
+    my ( $class, $id ) = @_;
+    my $res = $class->SUPER::retrieveSession($id);
 
-    # I - Recover the main cookie.
-    #     If not present, then call parent.
-    my $id;
-    if ( $id = $class->SUPER::fetchId($r) ) {
-
-        # II - Found update cookie.
-        #      If found, remove session from local cache when utime is recent.
-        my $utime;
-        if ( $utime = $class->fetchUTime($r) ) {
-            my $clear = 0;
-
-            my $apacheSession = Lemonldap::NG::Common::Session->new(
-                {
-                    storageModule        => $tsv->{globalStorage},
-                    storageModuleOptions => $tsv->{globalStorageOptions},
-                    cacheModule          => $tsv->{localSessionStorage},
-                    cacheModuleOptions   => $tsv->{localSessionStorageOptions},
-                    id                   => $id,
-                    kind                 => "SSO",
-                }
-            );
-
-            # Check process data
-            if ( $id eq $datas->{_session_id} and $datas->{_utime} lt $utime ) {
-                $datas->{_session_id} = 0;
-                $clear = 1;
-            }
-
-            # Get session
-            else {
-                unless ( $apacheSession->data ) {
-                    Lemonldap::NG::Handler::Main::Logger->lmLog(
-                        "Session $id can't be retrieved", 'info' );
-                }
-                else {
-                    $clear = 1 if ( $apacheSession->data->{_utime} lt $utime );
-                }
-            }
-
-            # Clear cache if needed
-            if ($clear) {
-                Lemonldap::NG::Handler::Main::Logger->lmLog(
-                    "$class: remove $id from local cache", 'debug' );
-                $apacheSession->cacheUpdate();
-            }
+    my $utime = $class->fetchUTime;
+    if ( $res && $Lemonldap::NG::Handler::Main::datas->{_utime} < $utime ) {
+        $Lemonldap::NG::Handler::Main::session->remove( {updateCache => 2} );
+        $Lemonldap::NG::Handler::Main::datasUpdate = 0;
+        $res = $class->SUPER::retrieveSession($id);
+        if ( $Lemonldap::NG::Handler::Main::datas->{_utime} < $utime ) {
+            Lemonldap::NG::Handler::Main::Logger->lmLog(
+                "Session $id datas too old: dated as utime="
+              . $Lemonldap::NG::Handler::Main::datas->{_utime}
+              . ", but requested with utime > $utime",
+            'warn' );
         }
-
     }
 
-    # III - Call parent process.
-    $class->SUPER::run($r);
+    return $res;
 }
+
 
 ## @rmethod protected $ fetchUTime()
 # Get user cookies and search for Lemonldap::NG update cookie.
 # @param $r current request
 # @return Value of the cookie if found, 0 else
 sub fetchUTime {
-    my ( $class, $r ) = @_;
-    my $t = Lemonldap::NG::Handler::API->header_in( $r, 'Cookie' );
+    my $t = Lemonldap::NG::Handler::API->header_in('Cookie');
     my $c = $tsv->{cookieName} . 'update';
     return ( $t =~ /$c=([^,; ]+)/o ) ? $1 : 0;
 }
@@ -118,8 +78,8 @@ cookie sent by client, to reload session in local cache.
 =head1 DESCRIPTION
 
 Lemonldap::NG::Handler::UpdateCookie is a special Lemonldap::NG:: handler that
-allow a session to be removed from local cache of the current handler, if a
-update cookie is sent by the user.
+allow a session to be removed from local cache of the current handler, if an
+update cookie is sent by the user and if session is older than the timestamp.
 
 The update cookie should be name "lemonldapupdate" and only contains a simple
 timestamp.
