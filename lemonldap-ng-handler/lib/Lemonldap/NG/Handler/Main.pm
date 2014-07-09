@@ -621,12 +621,10 @@ sub postInputFilter {
             "Replacing fake data with real form data" , "debug" );
 
         my %data = &{ $tsv->{inputPostData}->{$vhost}->{$uri} };
-        my $body;
-        while ( my ($name, $value) = each ( %data ) ) {
-            $body .= "&$name=" . uri_escape($value);
+        foreach (keys %data) {
+            $data{$_} = uri_escape($data{$_});
         }
-        $body =~ s/^&//;
-        Lemonldap::NG::Handler::API->setRequestBody($body);
+        Lemonldap::NG::Handler::API->setPostParams(\%data);
     }
 }
 
@@ -640,7 +638,7 @@ sub postJavascript {
 
     my $filler;
     while ( my ($name, $value) = each ( %$data ) ) {
-        $value = "xxxx";
+        $value = "x" x length($value);
         $filler .= "form.find('input[name=$name], select[name=$name], textarea[name=$name]').val('$value')\n";
     }
 
@@ -659,7 +657,7 @@ sub postJavascript {
         $jqueryUrl
       . "<script type='text/javascript'>\n"
       . "/* script added by Lemonldap::NG */\n"
-      . "jQuery(window).load(function() {\n"
+      . "jQuery(window).on('load', function() {\n"
       . "var form = jQuery('$form')\n"
       . "form.attr('autocomplete', 'off')\n"
       . $filler

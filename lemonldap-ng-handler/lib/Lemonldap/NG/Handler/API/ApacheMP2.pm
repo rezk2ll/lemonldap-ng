@@ -248,18 +248,24 @@ sub addToHtmlHead {
     } );
 }
 
-## @method void setRequestBody(string body)
-# set request body
-# @param body string new request body
-sub setRequestBody {
-    my ($class, $body) = @_;
+## @method void setPostParams(hashref $params)
+# add or modify parameters in POST request body
+# @param $params hashref containing name => value
+sub setPostParams {
+    my ($class, $params) = @_;
     $request->add_input_filter( sub {
         my $f = shift;
         my $buffer;
 
         # Filter only POST request body
         if ( $f->r->method eq "POST" ) {
-            while ($f->read($buffer)) {}
+            my $body;
+            while ($f->read($buffer)) { $body .= $buffer; }
+            while ( my ($name, $value) = each ( %$params ) ) {
+                $body =~ s/((^|&))$name=[^\&]*/$1$name=$value/
+                    or $body .= "&$name=$value";
+            }
+            $body =~ s/^&//;
             $f->print($body);
         } else {
             $f->print($buffer) while ($f->read($buffer));
