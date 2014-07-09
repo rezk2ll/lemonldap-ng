@@ -9,7 +9,6 @@ use CGI::Util 'expires';
 use URI::Escape;
 use constant UNPROTECT        => 1;
 use constant SKIP             => 2;
-use constant MAINTENANCE_CODE => 503;
 
 #inherits Cache::Cache
 #inherits Apache::Session
@@ -242,12 +241,12 @@ sub run {
         if ( $tsv->{useRedirectOnError} ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "Got to portal with maintenance error code", 'debug' );
-            return $class->goToPortal( '/', 'lmError=' . MAINTENANCE_CODE );
+            return $class->goToPortal( '/', 'lmError=' . MAINTENANCE );
         }
         else {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "Return maintenance error code", 'debug' );
-            return MAINTENANCE_CODE;
+            return MAINTENANCE;
         }
     }
 

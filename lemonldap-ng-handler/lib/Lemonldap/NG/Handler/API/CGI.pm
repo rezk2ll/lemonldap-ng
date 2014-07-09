@@ -8,7 +8,7 @@ our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 BEGIN{
     %EXPORT_TAGS = (
         httpCodes => [
-            qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED $logLevel )
+            qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED MAINTENANCE $logLevel )
         ],
         functions => [
             qw( &hostname &remote_ip &uri &uri_with_args
@@ -27,6 +27,7 @@ use constant DECLINED     =>   0;
 use constant DONE         =>   0;
 use constant SERVER_ERROR => 500;
 use constant AUTH_REQUIRED => 401;
+use constant MAINTENANCE  => 503;
 
 # Log level, since it can't be set in server config
 # Default value 'notice' can be changed in lemonldap-ng.ini or in init args

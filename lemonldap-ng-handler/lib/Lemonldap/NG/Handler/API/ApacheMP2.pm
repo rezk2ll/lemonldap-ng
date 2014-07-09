@@ -8,7 +8,7 @@ our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 BEGIN{
     %EXPORT_TAGS = (
         httpCodes => [
-            qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED )
+            qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED MAINTENANCE )
         ],
         functions => [
             qw( &hostname &remote_ip &uri &uri_with_args
@@ -37,6 +37,7 @@ use constant DECLINED     => Apache2::Const::DECLINED;
 use constant DONE         => Apache2::Const::DONE;
 use constant SERVER_ERROR => Apache2::Const::SERVER_ERROR;
 use constant AUTH_REQUIRED => Apache2::Const::AUTH_REQUIRED;
+use constant MAINTENANCE  => Apache2::Const::HTTP_SERVICE_UNAVAILABLE;
 
 eval { require threads::shared; };
 print STDERR "You probably would have better perfs by enabling threads::shared\n"

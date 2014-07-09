@@ -8,7 +8,7 @@ our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 # export of MP() (kept for compatibility till MP is completely vanished)
 %EXPORT_TAGS = (
     httpCodes => [
-        qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED )
+        qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED MAINTENANCE )
     ],
     functions => [
         qw( &hostname &remote_ip &uri &uri_with_args
