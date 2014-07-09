@@ -205,11 +205,11 @@
     </button>
 
     <button id="newpostr" style="display:none;" onclick="newPostR();return false;" >
-     <lang en="New POST URL" fr="Nouvelle URL POST" />
+     <lang en="New form" fr="Nouveau formulaire" />
     </button>
 
     <button id="delpost" style="display:none;" onclick="delPost();return false;" >
-     <lang en="Delete POST URL" fr="Supprimer l'URL POST" />
+     <lang en="Delete form" fr="Supprimer le formulaire" />
     </button>
 
     <button id="newpostdatar" style="display:none;" onclick="newPostDataR();return false;" >
@@ -643,16 +643,24 @@
     <div id="content_post" class="hidden">
      <table>
       <tr>
-       <td><lang en="POST URL" fr="URL POST"/></td>
-       <td><input type="text" id="postKey" size="40"/></td>
+       <td><lang en="Form URL" fr="URL du formulaire"/></td>
+       <td><input type="text" id="postKey" size="20"/></td>
+       <td><lang en="jQuery form selector (optional)" fr="Sélecteur jQuery du formulaire (optionnel)"/></td>
+       <td><input type="text" id="formSelector" size="20"/></td>
       </tr>
       <tr>
        <td><lang en="Target URL (optional)" fr="URL cible (optionnelle)"/></td>
-       <td><input type="text" id="postUrl" size="40"/></td>
+       <td><input type="text" id="postUrl" size="20"/></td>
+       <td><lang en="jQuery button selector (optional)" fr="Sélecteur jQuery du bouton (optionnel)"/></td>
+       <td><input type="text" id="buttonSelector" size="20"/></td>
+      </tr>
+      <tr>
+       <td><lang en="jQuery URL (optional)" fr="URL de jQuery (optionnelle)"/></td>
+       <td colspan="3"><input type="text" id="jqueryUrl" size="60"/></td>
       </tr>
      </table>
      <br />
-     <button onclick="setlminputtext(currentId,postKey);setlminputdata(currentId,postUrl);return false;" >
+     <button onclick="setlminputtext(currentId,postKey);setlmpostform(currentId);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>

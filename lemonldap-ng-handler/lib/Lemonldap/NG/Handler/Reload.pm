@@ -263,17 +263,24 @@ sub postUrlInit {
                 "Compiling POST data for $url", 'debug' );
 
             # Where to POST
-            $d->{postUrl} ||= $url;
+            my ( $postUrl, $jqueryUrl, $formSelector, $buttonSelector )
+                = split( /\|/, $d->{postUrl} );
+            $postUrl ||= $url;
 
             my $sub;
             while ( my ( $input, $value ) = each( %{ $d->{expr} } ) ) {
                 my $val = $class->substitute($value);
                 $sub .= "'$input' => $val,";
             }
-
-            $tsv->{inputPostData}->{$vhost}->{$url}
+            $tsv->{inputPostData}->{$vhost}->{$postUrl}
               = $tsv->{outputPostData}->{$vhost}->{$url}
               = $tsv->{jail}->jail_reval("sub{$sub}");
+
+            $tsv->{postFormParams}->{$vhost}->{$url} = {
+                jqueryUrl      => $jqueryUrl,
+                formSelector   => $formSelector,
+                buttonSelector => $buttonSelector
+            };
         }
     }
     return 1;

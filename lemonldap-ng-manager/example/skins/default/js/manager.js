@@ -1625,7 +1625,11 @@ function newPostDataR() {
 function post(id) {
 	currentId = id;
 	$('#postKey').val(lmtext(id));
-	$('#postUrl').val(lmdata(id));
+        var t = lmdata(id).split('|');
+        $('#postUrl').val(t[0]);
+        $('#jqueryUrl').val(t[1]);
+        $('#formSelector').val(t[2]);
+        $('#buttonSelector').val(t[3]);
 	display('post', lmtext(lmparent(id)));
 	$('#delpost,#newpostdatar').show();
 }
@@ -1645,6 +1649,16 @@ function delPost() {
 
 function delPostData() {
 	delKey();
+}
+
+function setlmpostform(id) {
+        var postKey = $('#postKey').val();
+        var postUrl = $('#postUrl').val();
+        var jqueryUrl = $('#jqueryUrl').val();
+        var formSelector = $('#formSelector').val();
+        var buttonSelector = $('#buttonSelector').val();
+        setlmtext(id, postKey);
+        setlmdata(id, postUrl + '|' + jqueryUrl + '|' + formSelector + '|' + buttonSelector);
 }
 
 /* Popup */

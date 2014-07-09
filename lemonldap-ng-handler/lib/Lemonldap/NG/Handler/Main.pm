@@ -603,7 +603,8 @@ sub postOutputFilter {
 
         Lemonldap::NG::Handler::API->unset_header_in("Accept-Encoding");
         my %postdata = &{ $tsv->{outputPostData}->{$vhost}->{$uri} };
-        my $js = $class->postJavascript(\%postdata);
+        my $formParams = $tsv->{postFormParams}->{$vhost}->{$uri};
+        my $js = $class->postJavascript(\%postdata, $formParams);
         Lemonldap::NG::Handler::API->addToHtmlHead($js);
     }
 }
@@ -633,29 +634,38 @@ sub postInputFilter {
 # build a javascript to fill a html form with fake data
 # @param data hashref containing input => value
 sub postJavascript {
-    my ( $class, $data ) = @_;
-    my $form ||= 'form';
-    my $submit ||= 1;
-    my $javascript;
+    my ( $class, $data, $formParams ) = @_;
+
+    my $form = $formParams->{formSelector} || "form";
+
+    my $filler;
     while ( my ($name, $value) = each ( %$data ) ) {
         $value = "xxxx";
-        $javascript .= "form.find('input[name=$name], select[name=$name], textarea[name=$name]').val('$value')\n";
+        $filler .= "form.find('input[name=$name], select[name=$name], textarea[name=$name]').val('$value')\n";
     }
+
+    my $submitter =
+        $formParams->{buttonSelector} eq "none" ? ""
+      : $formParams->{buttonSelector} ? "form.find('$formParams->{buttonSelector}').click()\n"
+      : "form.submit()\n";
+
+    my $jqueryUrl = $formParams->{jqueryUrl} || "";
+    $jqueryUrl = &{ $tsv->{portal} } . "skins/common/js/jquery-1.10.2.js"
+        if ( $jqueryUrl eq "default" );
+    $jqueryUrl = "<script type='text/javascript' src='$jqueryUrl'></script>\n"
+        if ($jqueryUrl);
+
     return 
-        "<script type='text/javascript' src='"
-      . &{ $tsv->{portal} }
-      . "skins/common/js/jquery-1.10.2.js'></script>\n"
+        $jqueryUrl
       . "<script type='text/javascript'>\n"
       . "/* script added by Lemonldap::NG */\n"
       . "jQuery(window).load(function() {\n"
       . "var form = jQuery('$form')\n"
       . "form.attr('autocomplete', 'off')\n"
-      . $javascript
-      . ( $submit == 1 ? "form.submit()\n"
-        : $submit      ? "form.find('$submit').click()\n" : "" )
+      . $filler
+      . $submitter
       . "})\n"
       . "</script>\n";
-
 }
 
 1;
