@@ -771,7 +771,7 @@ has 'portal' => (
     documentation => 'Portal URL',
 );
 
-has 'portalAntiframe' => (
+has 'portalAntiFrame' => (
     is            => 'rw',
     isa           => 'Bool',
     default       => '1',
