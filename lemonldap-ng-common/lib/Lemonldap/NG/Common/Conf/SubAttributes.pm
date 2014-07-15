@@ -8,7 +8,7 @@ package Lemonldap::NG::Common::Conf::SubAttributes;
 
 use Mouse;
 
-our $VERSION = 1.4.0;
+our $VERSION = 1.4.1;
 
 ## E
 
@@ -255,12 +255,16 @@ has 'vhostOptions' => (
     is      => 'rw',
     isa     => 'HashRef',
     default => sub {
-        my $self = shift;
+        my $self             = shift;
+        my $vhostPort        = $self ? $self->vhostPort : '-1';
+        my $vhostHttps       = $self ? $self->vhostHttps : '-1';
+        my $vhostMaintenance = $self ? $self->vhostMaintenance : '0';
+        my $vhostAliases     = $self ? $self->vhostAliases : '';
         return {
-            vhostPort        => $self->vhostPort,
-            vhostHttps       => $self->vhostHttps,
-            vhostMaintenance => $self->vhostMaintenance,
-            vhostAliases     => $self->vhostAliases,
+            vhostPort        => $vhostPort,
+            vhostHttps       => $vhostHttps,
+            vhostMaintenance => $vhostMaintenance,
+            vhostAliases     => $vhostAliases,
         };
     },
     lazy          => 1,
