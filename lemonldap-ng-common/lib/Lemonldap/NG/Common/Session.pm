@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Common::Session;
 
-our $VERSION = 1.4.0;
+our $VERSION = 1.4.1;
 
 use Mouse;
 use Lemonldap::NG::Common::Apache::Session;
@@ -117,8 +117,17 @@ sub _tie_session {
     my %h;
 
     eval {
-        tie %h, 'Lemonldap::NG::Common::Apache::Session', $self->id,
-           { %{ $self->options }, %$options };
+        # SOAP session module must be directly tied
+        if ( $self->storageModule =~
+            /Lemonldap::NG::Common::Apache::Session::SOAP/ )
+        {
+            tie %h, $self->storageModule, $self->id,
+              { %{ $self->options }, %$options };
+        }
+        else {
+            tie %h, 'Lemonldap::NG::Common::Apache::Session', $self->id,
+              { %{ $self->options }, %$options };
+        }
     };
 
     return undef if ( $@ or not tied(%h) );
@@ -134,8 +143,8 @@ sub _save_data {
 }
 
 sub update {
-    my $self  = shift;
-    my $infos = shift;
+    my $self       = shift;
+    my $infos      = shift;
     my $tieOptions = shift;
 
     return 0 unless ( ref $infos eq "HASH" );
@@ -162,7 +171,7 @@ sub update {
 }
 
 sub remove {
-    my $self = shift;
+    my $self       = shift;
     my $tieOptions = shift;
 
     my $data = $self->_tie_session($tieOptions);
