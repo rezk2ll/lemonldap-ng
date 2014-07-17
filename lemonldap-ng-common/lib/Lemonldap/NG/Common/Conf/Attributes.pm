@@ -1381,7 +1381,7 @@ has 'slaveExportedVars' => (
 has 'SMTPServer' => (
     is            => 'rw',
     isa           => 'Str',
-    default       => 'localhost',
+    default       => '',
     documentation => 'SMTP Server',
 );
 
