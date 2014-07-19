@@ -112,15 +112,38 @@ $(document).ready(function() {
 	jQuery.event.add(window, "resize", resizeMenu);
 
 	/* Buttons */
-	$('#header a').button({
+	$('#header a.configuration').button({
+		icons: {
+			primary: "ui-icon-document"
+		}
+	});
+	$('#header a.sessions').button({
+		icons: {
+			primary: "ui-icon-key"
+		}
+	});
+	$('#header a.notifications').button({
+		icons: {
+			primary: "ui-icon-calendar"
+		}
+	});
+	$('#header a.portal').button({
 		icons: {
 			primary: "ui-icon-home"
-		}
+		},
+		text: false
+	});
+	$('#header a.logout').button({
+		icons: {
+			primary: "ui-icon-power"
+		},
+		text: false
 	});
 	$('#header span#css-switch-link').button({
 		icons: {
 			primary: "ui-icon-image"
-		}
+		},
+		text: false
 	});
 	$('#css-switch button[alt=tree]').button({
 		icons: {
@@ -1625,11 +1648,11 @@ function newPostDataR() {
 function post(id) {
 	currentId = id;
 	$('#postKey').val(lmtext(id));
-        var t = lmdata(id).split('|');
-        $('#postUrl').val(t[0]);
-        $('#jqueryUrl').val(t[1]);
-        $('#formSelector').val(t[2]);
-        $('#buttonSelector').val(t[3]);
+	var t = lmdata(id).split('|');
+	$('#postUrl').val(t[0]);
+	$('#jqueryUrl').val(t[1]);
+	$('#formSelector').val(t[2]);
+	$('#buttonSelector').val(t[3]);
 	display('post', lmtext(lmparent(id)));
 	$('#delpost,#newpostdatar').show();
 }
@@ -1652,13 +1675,13 @@ function delPostData() {
 }
 
 function setlmpostform(id) {
-        var postKey = $('#postKey').val();
-        var postUrl = $('#postUrl').val();
-        var jqueryUrl = $('#jqueryUrl').val();
-        var formSelector = $('#formSelector').val();
-        var buttonSelector = $('#buttonSelector').val();
-        setlmtext(id, postKey);
-        setlmdata(id, postUrl + '|' + jqueryUrl + '|' + formSelector + '|' + buttonSelector);
+	var postKey = $('#postKey').val();
+	var postUrl = $('#postUrl').val();
+	var jqueryUrl = $('#jqueryUrl').val();
+	var formSelector = $('#formSelector').val();
+	var buttonSelector = $('#buttonSelector').val();
+	setlmtext(id, postKey);
+	setlmdata(id, postUrl + '|' + jqueryUrl + '|' + formSelector + '|' + buttonSelector);
 }
 
 /* Popup */

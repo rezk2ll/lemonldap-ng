@@ -22,7 +22,7 @@ use utf8;
 our $whatToTrace;
 *whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.4.1';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI
@@ -44,14 +44,17 @@ sub new {
       or Lemonldap::NG::Handler::CGI->abort( 'Unable to get configuration',
         $Lemonldap::NG::Common::Conf::msg );
 
+    # Load global configuration
+    if ( my $globalconf = $conf->getConf() ) {
+        $args->{$_} ||= $globalconf->{$_}
+          foreach (
+            qw/portal notification notificationStorage notificationStorageOptions/
+          );
+    }
+
     # Configuration from MANAGER section
     if ( my $localconf = $conf->getLocalConf(MANAGERSECTION) ) {
         $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
-    }
-
-    # Load global configuration
-    if ( my $globalconf = $conf->getConf() ) {
-        $args->{$_} ||= $globalconf->{$_} foreach ( keys %$globalconf );
     }
 
     my $self = $class->SUPER::new($args)

@@ -45,6 +45,7 @@ $template->param( CSS            => $manager->{managerCss} );
 $template->param( CSS_THEME      => $manager->{managerCssTheme} );
 $template->param( VERSION        => $Lemonldap::NG::Manager::VERSION );
 $template->param( LANG           => shift @{ $manager->{lang} } );
+$template->param( PORTAL_URL     => $manager->{portal} );
 print $manager->header('text/html; charset=utf-8');
 print $template->output;
 

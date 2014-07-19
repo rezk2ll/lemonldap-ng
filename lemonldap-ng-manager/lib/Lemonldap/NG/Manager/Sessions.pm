@@ -25,7 +25,7 @@ use utf8;
 #our $whatToTrace;
 #*whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.4.1';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI
@@ -46,6 +46,11 @@ sub new {
     my $conf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
       or Lemonldap::NG::Handler::CGI->abort( 'Unable to get configuration',
         $Lemonldap::NG::Common::Conf::msg );
+
+    if ( my $globalconf = $conf->getConf() ) {
+        $args->{$_} ||= $globalconf->{$_}
+          foreach (qw/portal hiddenAttributes /);
+    }
 
     # Configuration from MANAGER section
     if ( my $localconf = $conf->getLocalConf(MANAGERSECTION) ) {

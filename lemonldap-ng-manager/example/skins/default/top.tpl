@@ -14,10 +14,12 @@
 
 <!-- Header -->
 <div id="header">
-   <a href="index.pl"><lang en="Configuration management" fr="Gestion de la configuration"/></a>
-   <a href="sessions.pl"><lang en="Sessions explorer" fr="Explorateur de sessions"/></a>
-   <a href="notifications.pl"><lang en="Notifications explorer" fr="Explorateur de notifications"/></a>
-   <span id="css-switch-link"><lang en="Menu style" fr="Style de menu" /></span>
+   <a href="index.pl" class="configuration"><lang en="Configuration" fr="Configuration"/></a>
+   <a href="sessions.pl" class="sessions"><lang en="Sessions" fr="Sessions"/></a>
+   <a href="notifications.pl" class="notifications"><lang en="Notifications" fr="Notifications"/></a>
+   <span id="css-switch-link"><lang en="Menu" fr="Menu" /></span>
+   <a href="<TMPL_VAR NAME="PORTAL_URL">" class="portal"><lang en="Portal" fr="Portail" /></a>
+   <a href="<TMPL_VAR NAME="PORTAL_URL">?logout=1" class="logout"><lang en="Logout" fr="Déconnexion" /></a>
 <!-- Header -->
 </div>
 
