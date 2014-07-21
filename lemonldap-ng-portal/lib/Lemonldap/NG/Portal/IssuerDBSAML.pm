@@ -1674,9 +1674,11 @@ sub issuerForAuthUser {
               $self->{samlSPMetaDataOptions}->{$spConfKey}
               ->{samlSPMetaDataOptionsOneTimeUse};
 
+            my $conditionNotOnOrAfter = $notOnOrAfterTimeout || "86400";
             eval {
                 $response_assertions[0]
-                  ->set_basic_conditions( 60, $notOnOrAfterTimeout, $oneTimeUse );
+                  ->set_basic_conditions( 60, $conditionNotOnOrAfter,
+                    $oneTimeUse );
             };
             if ($@) {
                 $self->lmLog( "Basic conditions not set: $@", 'debug' );
