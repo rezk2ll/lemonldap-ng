@@ -198,9 +198,28 @@ For each attribute, you can set:
 </li>
 <li class="level1"><div class="li"> <strong>Force NameID session key</strong>: if empty, the NameID mapping defined in <a href="../../documentation/1.4/samlservice.html" class="wikilink1" title="documentation:1.4:samlservice">SAML service</a> configuration will be used. You can force here another session key that will be used as NameID content.</div>
 </li>
-<li class="level1"><div class="li"> <strong>One Time Use</strong>: set the OneTimeUse flag in authentication response.</div>
+<li class="level1"><div class="li"> <strong>One Time Use</strong>: set the OneTimeUse flag in authentication response (<code>&lt;Condtions&gt;</code>).</div>
+</li>
+<li class="level1"><div class="li"> <strong>sessionNotOnOrAfter duration</strong>: Time in seconds, added to authentication time, to define sessionNotOnOrAfter value in <acronym title="Security Assertion Markup Language">SAML</acronym> response (<code>&lt;AuthnStatement&gt;</code>):</div>
 </li>
 </ul>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;saml:AuthnStatement</span> <span class="re0">AuthnInstant</span>=<span class="st0">&quot;2014-07-21T11:47:08Z&quot;</span></span>
+<span class="sc3">  <span class="re0">SessionIndex</span>=<span class="st0">&quot;loVvqZX+Vja2dtgt/N+AymTmckGyITyVt+UJ6vUFSFkE78S8zg+aomXX7oZ9qX1UxOEHf6Q4DUstewSJh1uK1Q==&quot;</span></span>
+<span class="sc3">  <span class="re0">SessionNotOnOrAfter</span>=<span class="st0">&quot;2014-07-21T15:47:08Z&quot;</span><span class="re2">&gt;</span></span></pre>
+<ul>
+<li class="level1"><div class="li"> <strong>notOnOrAfter duration</strong>: Time in seconds, added to authentication time, to define notOnOrAfter value in <acronym title="Security Assertion Markup Language">SAML</acronym> response (<code>&lt;Condtions&gt;</code> and <code>&lt;SubjectConfirmationData&gt;</code>):</div>
+</li>
+</ul>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;saml:SubjectConfirmationData</span> <span class="re0">NotOnOrAfter</span>=<span class="st0">&quot;2014-07-21T12:47:08Z&quot;</span></span>
+<span class="sc3">  <span class="re0">Recipient</span>=<span class="st0">&quot;http://simplesamlphp.example.com/simplesamlphp/module.php/saml/sp/saml2-acs.php/default-sp&quot;</span></span>
+<span class="sc3">  <span class="re0">InResponseTo</span>=<span class="st0">&quot;_3cfa896ab05730ac81f413e1e13cc42aa529eceea1&quot;</span><span class="re2">/&gt;</span></span></pre>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;saml:Conditions</span> <span class="re0">NotBefore</span>=<span class="st0">&quot;2014-07-21T11:46:08Z&quot;</span></span>
+<span class="sc3">  <span class="re0">NotOnOrAfter</span>=<span class="st0">&quot;2014-07-21T12:48:08Z&quot;</span><span class="re2">&gt;</span></span></pre>
+
+<p>
+<p><div class="noteimportant">There is a time tolerance of 60 seconds in <code>&lt;Conditions&gt;</code>
+</div></p>
+</p>
 
 </div>
 

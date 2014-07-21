@@ -62,9 +62,25 @@ Inside this jail, you can access to:
 </li>
 <li class="level1"><div class="li"> The <a href="http://perldoc.perl.org/MIME/Base64.html" class="urlextern" title="http://perldoc.perl.org/MIME/Base64.html"  rel="nofollow">encode_base64</a> subroutine</div>
 </li>
-<li class="level1"><div class="li"> All environment variables (trough %ENV)</div>
+<li class="level1"><div class="li"> Environment variables, in some cases (through %ENV)</div>
 </li>
-<li class="level1"><div class="li"> <a href="#functions_list" title="documentation:1.4:extendedfunctions &crarr;" class="wikilink1">Extended functions</a></div>
+<li class="level1"><div class="li"> <a href="#request_informations" title="documentation:1.4:extendedfunctions &crarr;" class="wikilink1">Informations about current request</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="#extended_functions_list" title="documentation:1.4:extendedfunctions &crarr;" class="wikilink1">Extended functions</a>:</div>
+<ul>
+<li class="level2"><div class="li"> <a href="#date" title="documentation:1.4:extendedfunctions &crarr;" class="wikilink1">date</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#checklogonhours" title="documentation:1.4:extendedfunctions &crarr;" class="wikilink1">checkLogonHours</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#checkdate" title="documentation:1.4:extendedfunctions &crarr;" class="wikilink1">checkDate</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#basic" title="documentation:1.4:extendedfunctions &crarr;" class="wikilink1">basic</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#unicode2iso" title="documentation:1.4:extendedfunctions &crarr;" class="wikilink1">unicode2iso</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#iso2unicode" title="documentation:1.4:extendedfunctions &crarr;" class="wikilink1">iso2unicode</a></div>
+</li>
+</ul>
 </li>
 </ul>
 
@@ -75,21 +91,57 @@ Inside this jail, you can access to:
 </p>
 
 </div>
-<!-- SECTION "Presentation" [35-800] -->
-<h2><a name="functions_list_available" id="functions_list_available">Functions list available</a></h2>
+<!-- SECTION "Presentation" [35-1075] -->
+<h2><a name="request_informations" id="request_informations">Request informations</a></h2>
+<div class="level2">
+
+<p>
+The following data about the current request are available through functions :
+</p>
+<ul>
+<li class="level1"><div class="li"> hostname</div>
+</li>
+<li class="level1"><div class="li"> remote_ip: the client <acronym title="Internet Protocol">IP</acronym> address</div>
+</li>
+<li class="level1"><div class="li"> uri: <acronym title="Uniform Resource Locator">URL</acronym> path</div>
+</li>
+<li class="level1"><div class="li"> uri_with_args: <acronym title="Uniform Resource Locator">URL</acronym> path with query string</div>
+</li>
+<li class="level1"><div class="li"> unparsed_uri: <acronym title="Uniform Resource Locator">URL</acronym> path, before <acronym title="Uniform Resource Locator">URL</acronym> decoding</div>
+</li>
+<li class="level1"><div class="li"> args: the query string</div>
+</li>
+<li class="level1"><div class="li"> method: the request method (GET, POST etc.)</div>
+</li>
+<li class="level1"><div class="li"> header_in(“Your-Request-Header”): any request header</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Request informations" [1076-1482] -->
+<h2><a name="extended_functions_list" id="extended_functions_list">Extended Functions List</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Functions list available" [801-838] -->
+<!-- SECTION "Extended Functions List" [1483-1519] -->
+<h3><a name="date" id="date">date</a></h3>
+<div class="level3">
+
+<p>
+
+Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT by calling 
+</p>
+<pre class="code">date(1)</pre>
+
+</div>
+<!-- SECTION "date" [1520-1639] -->
 <h3><a name="checklogonhours" id="checklogonhours">checkLogonHours</a></h3>
 <div class="level3">
 
 <p>
 
 This function will check the day and the hour of current request, and compare it to allowed days and hours. It returns 1 if this match, 0 else.
-</p>
-
-<p>
+All e
 By default, the allowed days and hours is an hexadecimal value, representing each hour of the week. A day has 24 hours, and a week 7 days, so the value contains 168 bits, converted into 42 hexadecimal characters. Sunday is the first day.
 </p>
 
@@ -133,7 +185,7 @@ checkLogonHours($ssoLogonHours)
 If you use the binary value (Active Directory), use this:
 
 </p>
-<pre class="code">
+<pre class="code">All e
 checkLogonHours($ssoLogonHours, &#039;octetstring&#039;)
 </pre>
 
@@ -162,7 +214,7 @@ checkLogonHours($ssoLogonHours, &#039;&#039;, &#039;&#039;, &#039;1&#039;)
 </pre>
 
 </div>
-<!-- SECTION "checkLogonHours" [839-2766] -->
+<!-- SECTION "checkLogonHours" [1640-3577] -->
 <h3><a name="checkdate" id="checkdate">checkDate</a></h3>
 <div class="level3">
 
@@ -206,7 +258,7 @@ checkDate($ssoStartDate, $ssoEndDate)
 </pre>
 
 </div>
-<!-- SECTION "checkDate" [2767-3394] -->
+<!-- SECTION "checkDate" [3578-4205] -->
 <h3><a name="basic" id="basic">basic</a></h3>
 <div class="level3">
 
@@ -240,7 +292,7 @@ basic($uid,$_password)
 </pre>
 
 </div>
-<!-- SECTION "basic" [3395-3857] -->
+<!-- SECTION "basic" [4206-4668] -->
 <h3><a name="unicode2iso" id="unicode2iso">unicode2iso</a></h3>
 <div class="level3">
 
@@ -272,7 +324,7 @@ unicode2iso($name)
 </pre>
 
 </div>
-<!-- SECTION "unicode2iso" [3858-4162] -->
+<!-- SECTION "unicode2iso" [4669-4973] -->
 <h3><a name="iso2unicode" id="iso2unicode">iso2unicode</a></h3>
 <div class="level3">
 
@@ -304,4 +356,4 @@ iso2unicode($name)
 </pre>
 
 </div>
-<!-- SECTION "iso2unicode" [4163-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "iso2unicode" [4974-] --></div><!-- closes <div class="dokuwiki export">-->

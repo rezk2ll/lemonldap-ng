@@ -32,7 +32,7 @@
 
 <p>
 
-Form replay allows you to open a session on a protected application by replaying the form POST without asking anything to the user.
+Form replay allows you to open a session on a protected application by filling a <acronym title="HyperText Markup Language">HTML</acronym> POST login form and autosubmitting it, without asking anything to the user.
 </p>
 
 <p>
@@ -47,7 +47,11 @@ Please always try to find another solution to protect your application with <acr
 </p>
 
 <p>
-If you configure form replay with <acronym title="LemonLDAP::NG">LL::NG</acronym>, the Handler will catch configured POST <acronym title="Uniform Resource Locator">URL</acronym> and send a POST query to the target page (which can be different of the caught page). Each field can be filled with static values or data from user&#039;s session.
+If you configure form replay with <acronym title="LemonLDAP::NG">LL::NG</acronym>, the Handler will detect forms to fill, add a javascript in the html page to fill form fields with dummy datas and submit it, then intercept the POST request and add POST data in the request body.
+</p>
+
+<p>
+POST data can be static values or computed from user&#039;s session.
 </p>
 
 <p>
@@ -56,12 +60,8 @@ To post user&#039;s password, you must enable <a href="../../documentation/1.4/p
 </div></p>
 </p>
 
-<p>
-<acronym title="LemonLDAP::NG">LL::NG</acronym> can catch a GET request and transform it internally in a POST request. All this work is transparent for the user, he cannot see what data are posted by <acronym title="LemonLDAP::NG">LL::NG</acronym>.
-</p>
-
 </div>
-<!-- SECTION "Presentation" [28-1147] -->
+<!-- SECTION "Presentation" [28-1068] -->
 <h2><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
@@ -70,22 +70,37 @@ To post user&#039;s password, you must enable <a href="../../documentation/1.4/p
 You should grab some informations:
 </p>
 <ul>
-<li class="level1"><div class="li"> <acronym title="Uniform Resource Identifier">URI</acronym> of the page which contains the form</div>
+<li class="level1"><div class="li"> <acronym title="Uniform Resource Identifier">URI</acronym> of the html page which contains the form</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Uniform Resource Identifier">URI</acronym> of the page which receive POST data (optional if it is the same as the page holding the form)</div>
+<li class="level1"><div class="li"> <acronym title="Uniform Resource Identifier">URI</acronym> the html form is sent to</div>
 </li>
-<li class="level1"><div class="li"> All fields name and values</div>
+<li class="level1"><div class="li"> Does the html page load jQuery ? If not, grab a jQuery <acronym title="Uniform Resource Locator">URL</acronym> reachable by user (any version over jQuery 1.0 is suitable)</div>
+</li>
+<li class="level1"><div class="li"> are there several html forms in the page ? If so, get a jQuery selector for the form you want to post</div>
+</li>
+<li class="level1"><div class="li"> is user required to click on a button, for example in order to perform some script ? If so, get a jQuery selector for that button</div>
+</li>
+<li class="level1"><div class="li"> names and values of the fields you want to control</div>
 </li>
 </ul>
 
 <p>
+If you don&#039;t know jQuery selector, just be aware that they are similar to css selectors: for example, button#foo points to the html button whose id is “foo”, and .bar points to all html elements of css class “bar”.
+</p>
 
+<p>
 For example:
 </p>
 <ul>
 <li class="level1"><div class="li"> Form page <acronym title="Uniform Resource Identifier">URI</acronym>: /login.php</div>
 </li>
-<li class="level1"><div class="li"> POST data <acronym title="Uniform Resource Identifier">URI</acronym>: /process.php</div>
+<li class="level1"><div class="li"> Target <acronym title="Uniform Resource Identifier">URI</acronym>: /process.php (if you let this parameter empty, target <acronym title="Uniform Resource Identifier">URI</acronym> is supposed to be the same as form page <acronym title="Uniform Resource Identifier">URI</acronym>)</div>
+</li>
+<li class="level1"><div class="li"> jQuery <acronym title="Uniform Resource Locator">URL</acronym>: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (if you let this parameter empty, jQuery is supposed to be already loaded; you can also set “default” to point to jQuery <acronym title="Uniform Resource Locator">URL</acronym> of <acronym title="LemonLDAP::NG">LL::NG</acronym> portal)</div>
+</li>
+<li class="level1"><div class="li"> jQuery form selector: #loginForm (if you let this parameter empty, browser will fill and submit any html form)</div>
+</li>
+<li class="level1"><div class="li"> jQuery button selector: button.validate (if you let this parameter empty, the form will be submitted but no button will be clicked; if you set it to “none”, no button will be clicked and the form will be filled but not submitted)</div>
 </li>
 <li class="level1"><div class="li"> Fields:</div>
 <ul>
@@ -103,7 +118,7 @@ For example:
 
 <p>
 
-Then go in Manager, <code>Virtual Hosts</code> » <em>virtualhost</em> » <code>Form replay</code> and click on <code>Add POST <acronym title="Uniform Resource Locator">URL</acronym></code>.
+Then go in Manager, “Virtual Hosts” » <em>virtualhost</em> » “Form replay” and click on “New form”.
 </p>
 
 <p>
@@ -114,9 +129,15 @@ Then go in Manager, <code>Virtual Hosts</code> » <em>virtualhost</em> » <code>
 Fill values here:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>POST <acronym title="Uniform Resource Locator">URL</acronym></strong>: /login.php</div>
+<li class="level1"><div class="li"> <strong>Form <acronym title="Uniform Resource Locator">URL</acronym></strong>: /login.php</div>
 </li>
 <li class="level1"><div class="li"> <strong>Target <acronym title="Uniform Resource Locator">URL</acronym></strong>: /process.php</div>
+</li>
+<li class="level1"><div class="li"> <strong>jQuery <acronym title="Uniform Resource Locator">URL</acronym></strong>: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js</div>
+</li>
+<li class="level1"><div class="li"> <strong>jQuery form selector</strong>: #loginForm</div>
+</li>
+<li class="level1"><div class="li"> <strong>jQuery button selector</strong>: button.validate</div>
 </li>
 </ul>
 
@@ -135,25 +156,4 @@ Then click on <code>New POST data</code> and add all data with their values, for
 </p>
 
 </div>
-<!-- SECTION "Configuration" [1148-2099] -->
-<h2><a name="form_replay_with_apache_mod_proxy" id="form_replay_with_apache_mod_proxy">Form replay with Apache mod_proxy</a></h2>
-<div class="level2">
-
-<p>
-
-Due to a conflict between <acronym title="LemonLDAP::NG">LL::NG</acronym> form replay and Apache mod_proxy (see <a href="http://jira.ow2.org/browse/LEMONLDAP-176" class="urlextern" title="http://jira.ow2.org/browse/LEMONLDAP-176"  rel="nofollow">issue</a>), you cannot use form replay on proxied applications, unless you use <acronym title="LemonLDAP::NG">LL::NG</acronym> <a href="../../documentation/1.4/internalproxy.html" class="wikilink1" title="documentation:1.4:internalproxy">internal proxy</a>:
-</p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span>&gt;
-  <span class="kw1">ServerName</span> test2.example.com
-&nbsp;
-  PerlHeaderParserHandler Lemonldap::NG::Handler
-&nbsp;
-  PerlModule Lemonldap::NG::Handler::Proxy
-  <span class="kw1">SetHandler</span> perl-<span class="kw1">script</span>
-  PerlHandler Lemonldap::NG::Handler::Proxy
-  PerlSetVar LmProxyPass http://APPLICATION/
-  PerlSetVar LmLocationToReplace http://APPLICATION/,http://test2.example.com
-&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-
-</div>
-<!-- SECTION "Form replay with Apache mod_proxy" [2100-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Configuration" [1069-] --></div><!-- closes <div class="dokuwiki export">-->
