@@ -1676,7 +1676,7 @@ sub issuerForAuthUser {
 
             eval {
                 $response_assertions[0]
-                  ->set_basic_conditions( 60, 86400, $oneTimeUse );
+                  ->set_basic_conditions( 60, $notOnOrAfterTimeout, $oneTimeUse );
             };
             if ($@) {
                 $self->lmLog( "Basic conditions not set: $@", 'debug' );
