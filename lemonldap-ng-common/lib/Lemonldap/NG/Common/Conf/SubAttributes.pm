@@ -207,6 +207,13 @@ has 'samlSPMetaDataOptionsNameIDFormat' => (
     documentation => 'SAML SP option NameID format',
 );
 
+has 'samlSPMetaDataOptionsNotOnOrAfterTimeout' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '72000',
+    documentation => 'SAML SP option notOnOrAfter timeout',
+);
+
 has 'samlSPMetaDataOptionsOneTimeUse' => (
     is            => 'rw',
     isa           => 'Bool',

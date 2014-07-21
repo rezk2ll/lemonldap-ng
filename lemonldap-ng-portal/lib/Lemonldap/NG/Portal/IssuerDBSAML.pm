@@ -1478,8 +1478,18 @@ sub issuerForAuthUser {
 
             $self->lmLog( "Authentication context is $authn_context", 'debug' );
 
+            # Get SP options notOnOrAfterTimeout
+            my $notOnOrAfterTimeout =
+              $self->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsNotOnOrAfterTimeout};
+
             # Build Assertion
-            unless ( $self->buildAssertion( $login, $authn_context ) ) {
+            unless (
+                $self->buildAssertion(
+                    $login, $authn_context, $notOnOrAfterTimeout
+                )
+              )
+            {
                 $self->lmLog( "Unable to build assertion", 'error' );
                 return PE_SAML_SSO_ERROR;
             }

@@ -203,7 +203,7 @@ sub cstruct {
 
                         samlSPMetaDataOptionsAuthnResponse => {
                             _nodes => [
-                                qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsNameIDSessionKey samlSPMetaDataOptionsOneTimeUse samlSPMetaDataOptionsSessionNotOnOrAfterTimeout)
+                                qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsNameIDSessionKey samlSPMetaDataOptionsOneTimeUse samlSPMetaDataOptionsSessionNotOnOrAfterTimeout samlSPMetaDataOptionsNotOnOrAfterTimeout)
                             ],
 
                             samlSPMetaDataOptionsNameIDFormat =>
@@ -215,6 +215,8 @@ sub cstruct {
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsOneTimeUse",
                             samlSPMetaDataOptionsSessionNotOnOrAfterTimeout =>
 "int:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSessionNotOnOrAfterTimeout",
+                            samlSPMetaDataOptionsNotOnOrAfterTimeout =>
+"int:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsNotOnOrAfterTimeout",
                         },
 
                         samlSPMetaDataOptionsSignature => {
