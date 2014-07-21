@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;
 our @ISA = qw(Lemonldap::NG::Portal::_SAML);
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.4.1';
 
 ## @method void issuerDBInit()
 # Load and check SAML configuration
@@ -1708,7 +1708,11 @@ sub issuerForAuthUser {
                 'debug' );
 
             # Set SessionNotOnOrAfter
-            my $timeout             = $time + $self->{timeout};
+            my $sessionNotOnOrAfterTimeout =
+              $self->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsSessionNotOnOrAfterTimeout};
+            $sessionNotOnOrAfterTimeout ||= $self->{timeout};
+            my $timeout             = $time + $sessionNotOnOrAfterTimeout;
             my $sessionNotOnOrAfter = $self->timestamp2samldate($timeout);
             $authn_statements[0]->SessionNotOnOrAfter($sessionNotOnOrAfter);
 

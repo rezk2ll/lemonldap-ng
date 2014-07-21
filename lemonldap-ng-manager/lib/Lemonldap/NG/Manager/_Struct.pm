@@ -11,7 +11,7 @@ use Lemonldap::NG::Common::Conf::Attributes;
 use Lemonldap::NG::Common::Conf::SubAttributes;
 use Lemonldap::NG::Common::Regexp;
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.4.1';
 
 ## @method protected hashref cstruct(hashref h,string k)
 # Merge $h with the structure produced with $k and return it.
@@ -203,7 +203,7 @@ sub cstruct {
 
                         samlSPMetaDataOptionsAuthnResponse => {
                             _nodes => [
-                                qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsNameIDSessionKey samlSPMetaDataOptionsOneTimeUse)
+                                qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsNameIDSessionKey samlSPMetaDataOptionsOneTimeUse samlSPMetaDataOptionsSessionNotOnOrAfterTimeout)
                             ],
 
                             samlSPMetaDataOptionsNameIDFormat =>
@@ -213,6 +213,8 @@ sub cstruct {
 "text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsNameIDSessionKey",
                             samlSPMetaDataOptionsOneTimeUse =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsOneTimeUse",
+                            samlSPMetaDataOptionsSessionNotOnOrAfterTimeout =>
+"int:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSessionNotOnOrAfterTimeout",
                         },
 
                         samlSPMetaDataOptionsSignature => {

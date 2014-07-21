@@ -214,6 +214,13 @@ has 'samlSPMetaDataOptionsOneTimeUse' => (
     documentation => 'SAML SP option one time use',
 );
 
+has 'samlSPMetaDataOptionsSessionNotOnOrAfterTimeout' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '72000',
+    documentation => 'SAML SP option sessionNotOnOrAfter timeout',
+);
+
 has 'samlSPMetaDataOptionsSignSLOMessage' => (
     is            => 'rw',
     isa           => 'Bool',

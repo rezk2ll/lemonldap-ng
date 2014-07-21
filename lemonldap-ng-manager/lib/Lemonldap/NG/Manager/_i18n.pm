@@ -476,13 +476,15 @@ sub en {
         samlSPMetaDataOptionsEnableIDPInitiatedURL =>
           'Enable use of IDP initiated URL',
         samlSPMetaDataOptionsNameIDSessionKey => 'Force NameID session key',
-        samlServiceMetaData                   => 'SAML 2 Service',
-        samlEntityID                          => 'Entity Identifier',
-        samlOrganization                      => 'Organization',
-        samlOrganizationDisplayName           => 'Display Name',
-        samlOrganizationName                  => 'Name',
-        samlOrganizationURL                   => 'URL',
-        samlSPSSODescriptor                   => 'Service Provider',
+        samlSPMetaDataOptionsSessionNotOnOrAfterTimeout =>
+          'sessionNotOnOrAfter duration',
+        samlServiceMetaData         => 'SAML 2 Service',
+        samlEntityID                => 'Entity Identifier',
+        samlOrganization            => 'Organization',
+        samlOrganizationDisplayName => 'Display Name',
+        samlOrganizationName        => 'Name',
+        samlOrganizationURL         => 'URL',
+        samlSPSSODescriptor         => 'Service Provider',
         samlSPSSODescriptorAuthnRequestsSigned =>
           'Signed Authentication Request',
         samlSPSSODescriptorWantAssertionsSigned => 'Want Assertions Signed',
@@ -988,6 +990,8 @@ sub fr {
           "Autoriser l'utilisation d'URL SSO initié par l'IDP",
         samlSPMetaDataOptionsNameIDSessionKey =>
           "Forcer la clé de session NameID",
+        samlSPMetaDataOptionsSessionNotOnOrAfterTimeout =>
+          'Durée sessionNotOnOrAfter',
         samlServiceMetaData         => 'Service SAML 2',
         samlEntityID                => 'Identifiant d\'entité',
         samlOrganization            => 'Organisation',
