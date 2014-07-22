@@ -55,13 +55,14 @@ use Lemonldap::NG::Handler::Main::Logger;
 # @param optional url string URL to log, if undefined defaults to request URI
 sub updateStatus {
     my ( $class, $action, $user, $url ) = @_;
+    my $statusPipe = $tsv->{statusPipe};
     $user ||= Lemonldap::NG::Handler::API->remote_ip;
     $url  ||= Lemonldap::NG::Handler::API->uri_with_args;
     eval {
-            print { $tsv->{statusPipe} } "$user => "
+            print $statusPipe "$user => "
           . Lemonldap::NG::Handler::API->hostname
           . "$url $action\n"
-          if ( $tsv->{statusPipe} );
+          if ( $statusPipe );
     };
 }
 
@@ -495,18 +496,19 @@ sub unlog ($$) {
 # @return Apache2::Const::OK
 sub status($$) {
     my $class = shift;
+    my $statusPipe = $tsv->{statusPipe};
+    my $statusOut = $tsv->{statusOut};
     Lemonldap::NG::Handler::Main::Logger->lmLog( "Request for status", 'debug' );
     return $class->abort( "$class: status page can not be displayed" )
-      unless ( $tsv->{statusPipe} and $tsv->{statusOut} );
-    print { $tsv->{statusPipe} } "STATUS"
+      unless ( $statusPipe and $statusOut );
+    print $statusPipe "STATUS"
       . (
         Lemonldap::NG::Handler::API->args
         ? " " . Lemonldap::NG::Handler::API->args
         : ''
       ) . "\n";
     my $buf;
-    my $statusOut = $tsv->{statusOut};
-    while ($statusOut) {
+    while (<$statusOut>) {
         last if (/^END$/);
         $buf .= $_;
     }

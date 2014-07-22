@@ -62,7 +62,7 @@ macros
         '$data1 = {&#39;_whatToTrace&#39; => &#39;$_auth eq \&#39;SAML\&#39; ? "$_user\\@$_idpConfKey" : "$_user"&#39;};'
 
 whatToTrace
-        '$_whatToTrace'
+        '_whatToTrace'
 
 loginHistoryEnabled
 	1
