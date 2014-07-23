@@ -7,7 +7,7 @@ use strict;
 use POSIX qw(setuid setgid);
 use Data::Dumper;
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.4.1';
 
 our $status   = {};
 our $activity = [];
@@ -104,7 +104,7 @@ eval {
     setuid( ( getpwnam( $ENV{APACHE_RUN_USER} ) )[2] );
 };
 
-## @rfn void run(string localStorage, hashRef localStorageOptions)
+## @rfn void run()
 # Main.
 # Reads requests from STDIN to :
 # - update counts
