@@ -152,10 +152,10 @@ sub run {
         }
 
         elsif (/^RELOADCACHE(?:\s+(\S+?),(\S+))?$/) {
-            if ( my ($cacheModule, $cacheOptions) = ( $1, $2 ) ) {
+            if ( my ( $cacheModule, $cacheOptions ) = ( $1, $2 ) ) {
                 eval "use $cacheModule;"
-                   . "\$cache = new $cacheModule(\$cacheOptions);";
-                print STDERR "$@\n" if ($@); # TODO: use lmLog instead
+                  . "\$cache = new $cacheModule(\$cacheOptions);";
+                print STDERR "$@\n" if ($@);    # TODO: use lmLog instead
             }
             else {
                 $cache = undef;
@@ -219,8 +219,7 @@ sub run {
 
                 # Local cache
                 if ($cache) {
-                    my @t =
-                      $cache->get_keys( $_[1]->{namespace} );
+                    my @t = $cache->get_keys( $_[1]->{namespace} );
                     print "<div id=\"cache\"><p>\nLocal Cache : " . @t
                       . " objects\n</p></div>\n";
                 }

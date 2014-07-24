@@ -26,21 +26,21 @@ sub retrieveSession {
 
     my $utime = $class->fetchUTime;
     if ( $res && $Lemonldap::NG::Handler::Main::datas->{_utime} < $utime ) {
-        $Lemonldap::NG::Handler::Main::session->remove( {updateCache => 2} );
+        $Lemonldap::NG::Handler::Main::session->remove( { updateCache => 2 } );
         $Lemonldap::NG::Handler::Main::datasUpdate = 0;
         $res = $class->SUPER::retrieveSession($id);
         if ( $Lemonldap::NG::Handler::Main::datas->{_utime} < $utime ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "Session $id datas too old: dated as utime="
-              . $Lemonldap::NG::Handler::Main::datas->{_utime}
-              . ", but requested with utime > $utime",
-            'warn' );
+                  . $Lemonldap::NG::Handler::Main::datas->{_utime}
+                  . ", but requested with utime > $utime",
+                'warn'
+            );
         }
     }
 
     return $res;
 }
-
 
 ## @rmethod protected $ fetchUTime()
 # Get user cookies and search for Lemonldap::NG update cookie.

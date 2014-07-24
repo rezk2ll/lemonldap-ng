@@ -3,13 +3,12 @@ package Lemonldap::NG::Handler::API::Nginx;
 our $VERSION = '1.4.0';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
-
-
 ## @method void thread_share(string $variable)
 # share or not the variable (if authorized by specific module)
 # @param $variable the name of the variable to share
 sub thread_share {
-    my ($class, $variable) = @_;
+    my ( $class, $variable ) = @_;
+
     # nothing to do in Nginx
 }
 

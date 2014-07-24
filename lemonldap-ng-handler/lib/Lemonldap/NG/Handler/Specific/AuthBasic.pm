@@ -32,9 +32,10 @@ sub fetchId {
     if ( my $creds = Lemonldap::NG::Handler::API->header_in('Authorization') ) {
         $creds =~ s/^Basic\s+//;
         my @date = localtime;
-        my $day = $date[5] * 366 + $date[7];
-        return Digest::MD5::md5_hex($creds . $day);
-    } else {
+        my $day  = $date[5] * 366 + $date[7];
+        return Digest::MD5::md5_hex( $creds . $day );
+    }
+    else {
         return 0;
     }
 }
@@ -52,7 +53,8 @@ sub retrieveSession {
     # Then ask portal to create it
     if ( $class->createSession($id) ) {
         return $class->SUPER::retrieveSession($id);
-    } else {
+    }
+    else {
         return 0;
     }
 }
@@ -69,10 +71,9 @@ sub createSession {
     $xheader .= Lemonldap::NG::Handler::API->remote_ip;
     my $soapHeaders = HTTP::Headers->new( "X-Forwarded-For" => $xheader );
 
-    my $soapClient = SOAP::Lite->proxy(
-        $class->portal(),
-        default_headers => $soapHeaders
-    )->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
+    my $soapClient =
+      SOAP::Lite->proxy( $class->portal(), default_headers => $soapHeaders )
+      ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
 
     my $creds = Lemonldap::NG::Handler::API->header_in('Authorization');
     $creds =~ s/^Basic\s+//;
@@ -83,12 +84,12 @@ sub createSession {
 
     # Catch SOAP errors
     if ( $soapRequest->fault ) {
-        $class->abort(
-            "SOAP request to the portal failed: "
+        $class->abort( "SOAP request to the portal failed: "
               . $soapRequest->fault->{faultstring} );
     }
     else {
         my $res = $soapRequest->result();
+
         # If authentication failed, display error
         if ( $res->{errorCode} ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
@@ -97,7 +98,8 @@ sub createSession {
                 'notice'
             );
             return 0;
-        } else {
+        }
+        else {
             return 1;
         }
     }
@@ -107,7 +109,8 @@ sub createSession {
 # Hide user credentials to the protected application
 sub hideCookie {
     my $class = shift;
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "removing Authorization header", 'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog(
+        "removing Authorization header", 'debug' );
     Lemonldap::NG::Handler::API->unset_header_in('Authorization');
 }
 
@@ -121,7 +124,8 @@ sub goToPortal {
     my ( $class, $url, $arg ) = @_;
     if ($arg) {
         return $class->SUPER::goToPortal( $url, $arg );
-    } else {
+    }
+    else {
         Lemonldap::NG::Handler::API->set_header_out(
             'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
         return AUTH_REQUIRED;

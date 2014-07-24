@@ -9,7 +9,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 10;
-BEGIN { use_ok( 'Lemonldap::NG::Handler::Main', qw(:all) ) }
+BEGIN { use_ok( 'Lemonldap::NG::Handler::Main',   qw(:all) ) }
 BEGIN { use_ok( 'Lemonldap::NG::Handler::Reload', qw(:all) ) }
 
 # get a standard basic configuration in $args hashref
@@ -58,13 +58,17 @@ my $conf = {
 # - headerListInit
 # - forgeHeadersInit
 # - postUrlInit
-ok( Lemonldap::NG::Handler::Reload->configReload( $conf, $Lemonldap::NG::Handler::Main::tsv ) );
+ok(
+    Lemonldap::NG::Handler::Reload->configReload(
+        $conf, $Lemonldap::NG::Handler::Main::tsv
+    )
+);
 
 ok( &{ $tsv->{portal} }() eq 'http://auth.example.com/', 'portal' );
 
-ok( $h->grant( '/s' ), 'basic rule "accept"' );
-ok( !$h->grant( '/no' ), 'basic rule "deny"' );
-ok( $h->grant( '/a/a' ), 'bad ordered rule 1/2' );
-ok( $h->grant( '/a' ),   'bad ordered rule 2/2' );
-ok( !$h->grant( '/b/a' ), 'good ordered rule 1/2' );
-ok( $h->grant(  '/b' ), 'good ordered rule 2/2' );
+ok( $h->grant('/s'),    'basic rule "accept"' );
+ok( !$h->grant('/no'),  'basic rule "deny"' );
+ok( $h->grant('/a/a'),  'bad ordered rule 1/2' );
+ok( $h->grant('/a'),    'bad ordered rule 2/2' );
+ok( !$h->grant('/b/a'), 'good ordered rule 1/2' );
+ok( $h->grant('/b'),    'good ordered rule 2/2' );

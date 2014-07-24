@@ -85,7 +85,7 @@ sub getCookies {
         $self->{force} = 1;
     }
 
-    $self->{error}    = PE_OK;
+    $self->{error} = PE_OK;
 
     # Skip extractFormInfo step, as we already get input data
     $self->{skipExtractFormInfo} = 1;

@@ -5,14 +5,14 @@ use Exporter 'import';
 our $VERSION = '1.4.0';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
-BEGIN{
+BEGIN {
     %EXPORT_TAGS = (
         httpCodes => [
             qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED MAINTENANCE $logLevel )
         ],
         functions => [
             qw( &hostname &remote_ip &uri &uri_with_args
-                &unparsed_uri &args &method &header_in )
+              &unparsed_uri &args &method &header_in )
         ]
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
@@ -20,26 +20,26 @@ BEGIN{
 }
 
 # Specific modules and constants for Test or CGI
-use constant FORBIDDEN    => 403;
-use constant REDIRECT     => 302;
-use constant OK           =>   0;
-use constant DECLINED     =>   0;
-use constant DONE         =>   0;
-use constant SERVER_ERROR => 500;
+use constant FORBIDDEN     => 403;
+use constant REDIRECT      => 302;
+use constant OK            => 0;
+use constant DECLINED      => 0;
+use constant DONE          => 0;
+use constant SERVER_ERROR  => 500;
 use constant AUTH_REQUIRED => 401;
-use constant MAINTENANCE  => 503;
+use constant MAINTENANCE   => 503;
 
 # Log level, since it can't be set in server config
 # Default value 'notice' can be changed in lemonldap-ng.ini or in init args
 our $logLevel = "notice";
 
-my $request; # object to store data about current request
+my $request;    # object to store data about current request
 
 ## @method void setServerSignature(string sign)
 # modifies web server signature
-# @param $sign String to add to server signature  
+# @param $sign String to add to server signature
 sub setServerSignature {
-    my ($class, $sign) = @_;
+    my ( $class, $sign ) = @_;
     $ENV{SERVER_SOFTWARE} .= " $sign";
 }
 
@@ -47,11 +47,12 @@ sub setServerSignature {
 # share or not the variable (if authorized by specific module)
 # @param $variable the name of the variable to share
 sub thread_share {
+
     # nothing to do in CGI
 }
 
 sub newRequest {
-    my ($class, $r) = @_;
+    my ( $class, $r ) = @_;
     $request = $r;
 }
 
@@ -79,7 +80,7 @@ sub set_user {
 # @return request header value
 sub header_in {
     my ( $class, $header ) = @_;
-    $header ||= $class; # to use header_in as a method or as a function
+    $header ||= $class;    # to use header_in as a method or as a function
     return $ENV{ cgiName($header) };
 }
 
@@ -137,7 +138,7 @@ sub is_initial_req {
 ## @method string args(string args)
 # gets the query string
 # @return args string Query string
-sub args  {
+sub args {
     return $ENV{QUERY_STRING};
 }
 
@@ -159,7 +160,7 @@ sub uri {
 # returns the URI, with arguments and with path portion normalized
 # @return URI with normalized path portion
 sub uri_with_args {
-    return &uri . ( $ENV{QUERY_STRING} ? "?$ENV{QUERY_STRING}" : "");
+    return &uri . ( $ENV{QUERY_STRING} ? "?$ENV{QUERY_STRING}" : "" );
 }
 
 ## @method string unparsed_uri
@@ -187,7 +188,7 @@ sub method {
 # write data in HTTP response body
 # @param data Text to add in response body
 sub print {
-    my ($class, $data) = @_;
+    my ( $class, $data ) = @_;
     $request->{respBody} .= $data;
 }
 

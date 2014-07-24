@@ -5,11 +5,9 @@ use Exporter 'import';
 our $VERSION = '1.4.0';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
-BEGIN{
-    # no http codes defined for ApacheMP1, but tag kept for compatibility with API
-    %EXPORT_TAGS = (
-        httpCodes => [],
-    );
+BEGIN {
+  # no http codes defined for ApacheMP1, but tag kept for compatibility with API
+    %EXPORT_TAGS = ( httpCodes => [], );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
     $EXPORT_TAGS{all} = \@EXPORT_OK;
 }
@@ -19,12 +17,12 @@ use Apache;
 use Apache::Log;
 use Apache::Constants qw(:common :response);
 
-
 ## @method void setServerSignature(string sign)
 # modifies web server signature
-# @param $sign String to add to server signature  
+# @param $sign String to add to server signature
 sub setServerSignature {
-    my ($class, $sign) = @_;
+    my ( $class, $sign ) = @_;
+
     #TODO
 }
 
@@ -32,7 +30,8 @@ sub setServerSignature {
 # share or not the variable (if authorized by specific module)
 # @param $variable the name of the variable to share
 sub thread_share {
-    my ($class, $variable) = @_;
+    my ( $class, $variable ) = @_;
+
     # nothing to do in ApacheMP1
 }
 
@@ -103,7 +102,7 @@ sub set_header_out {
 # @param request Apache2::RequestRec current request
 # @return host string Host value
 sub hostname {
-    my ($class, $r) = @_;
+    my ( $class, $r ) = @_;
     return $r->hostname;
 }
 
@@ -112,7 +111,7 @@ sub hostname {
 # @param request Apache2::RequestRec current request
 # @return IP_Addr string client IP
 sub remote_ip {
-    my ($class, $r) = @_;
+    my ( $class, $r ) = @_;
     return $r->remote_ip;
 }
 
@@ -121,7 +120,7 @@ sub remote_ip {
 # @param request Apache2::RequestRec current request
 # @return is_initial_req boolean
 sub is_initial_req {
-    my ($class, $r) = @_;
+    my ( $class, $r ) = @_;
     return 1;
 }
 
@@ -129,8 +128,8 @@ sub is_initial_req {
 # gets the query string
 # @param request Apache2::RequestRec current request
 # @return args string Query string
-sub args  {
-    my ($class, $r) = @_;
+sub args {
+    my ( $class, $r ) = @_;
     return $r->args();
 }
 
@@ -143,7 +142,7 @@ sub args  {
 # @param request Apache2::RequestRec current request
 # @return path portion of the URI, normalized
 sub uri {
-    my ($class, $r) = @_;
+    my ( $class, $r ) = @_;
     my $uri = $r->uri;
     $uri =~ s#//+#/#g;
     $uri =~ s#\?#%3F#g;
@@ -155,8 +154,8 @@ sub uri {
 # @param request Apache2::RequestRec current request
 # @return URI with normalized path portion
 sub uri_with_args {
-    my ($class, $r) = @_;
-    return $class->uri($r) . ( $r->args ? "?" . $r->args : "");
+    my ( $class, $r ) = @_;
+    return $class->uri($r) . ( $r->args ? "?" . $r->args : "" );
 }
 
 ## @method string unparsed_uri(Apache2::RequestRec request)
@@ -164,7 +163,7 @@ sub uri_with_args {
 # @param request Apache2::RequestRec current request
 # @return full original request URI, with arguments
 sub unparsed_uri {
-    my ($class, $r) = @_;
+    my ( $class, $r ) = @_;
     return $r->unparsed_uri;
 }
 
@@ -173,7 +172,7 @@ sub unparsed_uri {
 # @param request Apache2::RequestRec current request
 # @return port string server port
 sub get_server_port {
-    my ($class, $r) = @_;
+    my ( $class, $r ) = @_;
     return $r->get_server_port;
 }
 
@@ -182,7 +181,7 @@ sub get_server_port {
 # @param data Text to add in response body
 # @param request Apache2::RequestRec Current request
 sub print {
-    my ($class, $data, $r) = @_;
+    my ( $class, $data, $r ) = @_;
     $r->print($data);
 }
 

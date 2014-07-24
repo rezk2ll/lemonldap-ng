@@ -26,14 +26,14 @@ use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
 use base qw(Lemonldap::NG::Handler::Main);
 
-our $VERSION   = '1.4.0';
-our $lmConf;          # Lemonldap::NG::Common::Conf object to get config
-our $localConfig;     # Local configuration parameters, i.e. defined
-                      # in lemonldap-ng.ini or in startup parameters
-our $cfgNum    = 0;   # Number of the loaded remote configuration
-our $lastCheck = 0;   # Date of last configuration check (unix time)
-our $checkTime = 600; # Time between 2 configuration check (in seconds);
-                      # default value is 600, can be reset in local config
+our $VERSION = '1.4.0';
+our $lmConf;         # Lemonldap::NG::Common::Conf object to get config
+our $localConfig;    # Local configuration parameters, i.e. defined
+                     # in lemonldap-ng.ini or in startup parameters
+our $cfgNum    = 0;      # Number of the loaded remote configuration
+our $lastCheck = 0;      # Date of last configuration check (unix time)
+our $checkTime = 600;    # Time between 2 configuration check (in seconds);
+                         # default value is 600, can be reset in local config
 
 BEGIN {
     Lemonldap::NG::Handler::API->thread_share($cfgNum);
@@ -59,31 +59,32 @@ sub init($$) {
     my ( $class, $args ) = @_;
 
     # According to doc, localStorage can be declared in $args root,
-    # but it must be in $args->{configStorage} 
+    # but it must be in $args->{configStorage}
     foreach (qw(localStorage localStorageOptions)) {
         $args->{configStorage}->{$_} ||= $args->{$_};
     }
 
-    $lmConf = Lemonldap::NG::Common::Conf->new($args->{configStorage});
-    die( "$class : unable to build configuration: "
-       . "$Lemonldap::NG::Common::Conf::msg" ) unless ($lmConf);
+    $lmConf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} );
+    die(    "$class : unable to build configuration: "
+          . "$Lemonldap::NG::Common::Conf::msg" )
+      unless ($lmConf);
 
     # Merge local configuration parameters so that params defined in
     # startup parameters have precedence over lemonldap-ng.ini params
-    $localConfig = {
-        %{ $lmConf->getLocalConf(HANDLERSECTION) },
-        %{ $args }
-    };
+    $localConfig = { %{ $lmConf->getLocalConf(HANDLERSECTION) }, %{$args} };
 
     $checkTime = $localConfig->{checkTime} || $checkTime;
 
     # Few actions that must be done at server startup:
     # * set log level for Lemonldap::NG logs
-    Lemonldap::NG::Handler::Main::Logger->logLevelInit( $localConfig->{logLevel} );
+    Lemonldap::NG::Handler::Main::Logger->logLevelInit(
+        $localConfig->{logLevel} );
+
     # * set server signature
-    $class->serverSignatureInit unless ($localConfig->{hideSignature});
+    $class->serverSignatureInit unless ( $localConfig->{hideSignature} );
+
     # * launch status process
-    $class->statusInit($tsv) if ($localConfig->{status});
+    $class->statusInit($tsv) if ( $localConfig->{status} );
 }
 
 # @method void serverSignatureInit
@@ -91,8 +92,8 @@ sub init($$) {
 sub serverSignatureInit {
     my $class = shift;
     Lemonldap::NG::Handler::API->setServerSignature(
-        "Lemonldap::NG/" . $Lemonldap::NG::Handler::VERSION
-    ) if ( $Lemonldap::NG::Handler::VERSION );
+        "Lemonldap::NG/" . $Lemonldap::NG::Handler::VERSION )
+      if ($Lemonldap::NG::Handler::VERSION);
 }
 
 ## @ifn protected void statusInit()
@@ -103,6 +104,7 @@ sub statusInit {
     $statusPipe = IO::Pipe->new;
     $statusOut  = IO::Pipe->new;
     if ( my $pid = fork() ) {
+
         # TODO: log new process pid
         $statusPipe->writer();
         $statusOut->reader();
@@ -117,7 +119,7 @@ sub statusInit {
         open STDIN,  "<&$fdin";
         open STDOUT, ">&$fdout";
         exec 'perl', '-MLemonldap::NG::Handler::Status',
-          map( { "-I$_" } @INC),
+          map( {"-I$_"} @INC ),
           '-e &Lemonldap::NG::Handler::Status::run()';
     }
 }
@@ -150,8 +152,8 @@ sub run {
           unless ( $class->checkConf );
     }
     if ( my $rule = shift ) {
-        my ( $cond, $prot )
-            = Lemonldap::NG::Handler::Reload->conditionSub($rule, $tsv);
+        my ( $cond, $prot ) =
+          Lemonldap::NG::Handler::Reload->conditionSub( $rule, $tsv );
         return $class->SUPER::run( $cond, $prot );
     }
     return $class->SUPER::run();
@@ -183,8 +185,8 @@ sub checkConf {
 "Get configuration $conf->{cfgNum} ($Lemonldap::NG::Common::Conf::msg)",
             'debug'
         );
-        $lastCheck  = time();
-        $cfgNum     = $conf->{cfgNum};
+        $lastCheck = time();
+        $cfgNum    = $conf->{cfgNum};
         $conf->{$_} = $localConfig->{$_} foreach ( keys %$localConfig );
         Lemonldap::NG::Handler::Reload->configReload( $conf, $tsv );
     }

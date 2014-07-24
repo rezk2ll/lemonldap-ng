@@ -75,8 +75,7 @@ sub checkLogonHours {
 # @return current date on format YYYYMMDDHHMMSS
 sub date {
     my $gmt = shift;
-    my ( $sec, $min, $hour, $mday, $mon, $year )
-        = $gmt ? gmtime : localtime;
+    my ( $sec, $min, $hour, $mday, $mon, $year ) = $gmt ? gmtime : localtime;
 
     $year += 1900;
     $mon  += 1;

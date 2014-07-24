@@ -2348,7 +2348,7 @@ sub globalTests {
             my ( $id, %h );
             return 1
               if ( $conf->{globalStorage} eq
-                $Lemonldap::NG::Handler::Main::tsv->{sessionStorageModule}
+                   $Lemonldap::NG::Handler::Main::tsv->{sessionStorageModule}
                 or $conf->{globalStorage} eq
                 'Lemonldap::NG::Common::Apache::Session::SOAP' );
             eval "use $conf->{globalStorage}";

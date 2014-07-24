@@ -2,10 +2,10 @@ package Lemonldap::NG::Handler::Main::Logger;
 
 use Lemonldap::NG::Handler::API qw( :httpCodes );
 
-my $logLevel;     # To control Lemonldap::NG logs: allows to overwrite
-                  # log level defined in server config, or to set it
-                  # if it can't be configured elsewhere (e.g. on CGIs)
-my $logLevels = { # To compare log levels
+my $logLevel;    # To control Lemonldap::NG logs: allows to overwrite
+                 # log level defined in server config, or to set it
+                 # if it can't be configured elsewhere (e.g. on CGIs)
+my $logLevels = {    # To compare log levels
     emerg  => 7,
     alert  => 6,
     crit   => 5,
@@ -42,10 +42,12 @@ sub lmLog {
     if ( $level eq 'debug' ) {
         $file =~ s#.+/##;
         Lemonldap::NG::Handler::API->lmLog( "$file($line): $msg", "debug" );
-    } else {
+    }
+    else {
         Lemonldap::NG::Handler::API->lmLog( "$file($line):", "debug" )
-            if ( $logLevel == 0 );
-        Lemonldap::NG::Handler::API->lmLog( "Lemonldap::NG::Handler: $msg", $level );
+          if ( $logLevel == 0 );
+        Lemonldap::NG::Handler::API->lmLog( "Lemonldap::NG::Handler: $msg",
+            $level );
     }
 }
 

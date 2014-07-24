@@ -29,6 +29,7 @@ sub update {
     #TODO: remove cache on all LL::NG instances if updateCache == 1
 
     unless ( $session->{args}->{updateCache} == -1 ) {
+
         # Update session in cache
         my $id = $session->{data}->{_session_id};
         $self->cache->remove($id) if ( $self->cache->get($id) );
@@ -36,6 +37,7 @@ sub update {
     }
 
     unless ( $session->{args}->{updateCache} == 2 ) {
+
         # Update session in backend
         return $self->module->update($session);
     }
@@ -70,12 +72,14 @@ sub remove {
     #TODO: remove cache on all LL::NG instances if updateCache == 1
 
     unless ( $session->{args}->{updateCache} == -1 ) {
+
         # Remove session from cache
         my $id = $session->{data}->{_session_id};
         $self->cache->remove($id) if ( $self->cache->get($id) );
     }
 
     unless ( $session->{args}->{updateCache} == 2 ) {
+
         # Remove session from backend
         return $self->module->remove($session);
     }

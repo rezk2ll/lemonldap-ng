@@ -5,14 +5,14 @@ use Exporter 'import';
 our $VERSION = '1.4.0';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
-BEGIN{
+BEGIN {
     %EXPORT_TAGS = (
         httpCodes => [
             qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED MAINTENANCE )
         ],
         functions => [
             qw( &hostname &remote_ip &uri &uri_with_args
-                &unparsed_uri &args &method &header_in )
+              &unparsed_uri &args &method &header_in )
         ]
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
@@ -30,20 +30,21 @@ use Apache2::Const;
 use Apache2::Filter;
 use APR::Table;
 
-use constant FORBIDDEN    => Apache2::Const::FORBIDDEN;
-use constant REDIRECT     => Apache2::Const::REDIRECT;
-use constant OK           => Apache2::Const::OK;
-use constant DECLINED     => Apache2::Const::DECLINED;
-use constant DONE         => Apache2::Const::DONE;
-use constant SERVER_ERROR => Apache2::Const::SERVER_ERROR;
+use constant FORBIDDEN     => Apache2::Const::FORBIDDEN;
+use constant REDIRECT      => Apache2::Const::REDIRECT;
+use constant OK            => Apache2::Const::OK;
+use constant DECLINED      => Apache2::Const::DECLINED;
+use constant DONE          => Apache2::Const::DONE;
+use constant SERVER_ERROR  => Apache2::Const::SERVER_ERROR;
 use constant AUTH_REQUIRED => Apache2::Const::AUTH_REQUIRED;
-use constant MAINTENANCE  => Apache2::Const::HTTP_SERVICE_UNAVAILABLE;
+use constant MAINTENANCE   => Apache2::Const::HTTP_SERVICE_UNAVAILABLE;
 
 eval { require threads::shared; };
-print STDERR "You probably would have better perfs by enabling threads::shared\n"
-    if ($@);
+print STDERR
+  "You probably would have better perfs by enabling threads::shared\n"
+  if ($@);
 
-my $request; # Apache2::RequestRec object for current request
+my $request;    # Apache2::RequestRec object for current request
 
 ## @method void thread_share(string $variable)
 # try to share $variable between threads
@@ -51,15 +52,15 @@ my $request; # Apache2::RequestRec object for current request
 # else it fails to compile if threads::shared is not loaded
 # @param $variable the name of the variable to share
 sub thread_share {
-    my ($class, $variable) = @_;
+    my ( $class, $variable ) = @_;
     eval "threads::shared::share(\$variable);";
 }
 
 ## @method void setServerSignature(string sign)
 # modifies web server signature
-# @param $sign String to add to server signature  
+# @param $sign String to add to server signature
 sub setServerSignature {
-    my ($class, $sign) = @_;
+    my ( $class, $sign ) = @_;
     Apache2::ServerUtil->server->push_handlers(
         PerlPostConfigHandler => sub {
             my ( $c, $l, $t, $s ) = splice @_;
@@ -79,6 +80,7 @@ sub newRequest {
 # @param $level string loglevel
 sub lmLog {
     my ( $class, $msg, $level ) = @_;
+
     # TODO: remove the useless tag 'ApacheMP2.pm(70):' in debug logs
     Apache2::ServerRec->log->$level($msg);
 }
@@ -87,7 +89,7 @@ sub lmLog {
 # sets remote_user
 # @param user string username
 sub set_user {
-    my ($class, $user) = @_;
+    my ( $class, $user ) = @_;
     $request->user($user);
 }
 
@@ -96,8 +98,8 @@ sub set_user {
 # @param header string request header
 # @return request header value
 sub header_in {
-    my ($class, $header) = @_;
-    $header ||= $class; # to use header_in as a method or as a function
+    my ( $class, $header ) = @_;
+    $header ||= $class;    # to use header_in as a method or as a function
     return $request->headers_in->{$header};
 }
 
@@ -105,7 +107,7 @@ sub header_in {
 # sets or modifies request headers
 # @param headers hash containing header names => header value
 sub set_header_in {
-    my ($class, %headers) = @_;
+    my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
         $request->headers_in->set( $h => $v );
     }
@@ -117,25 +119,27 @@ sub set_header_in {
 # header 'Auth-User' is removed, 'Auth_User' be removed also
 # @param headers array with header names to remove
 sub unset_header_in {
-    my ($class, @headers) = @_;
+    my ( $class, @headers ) = @_;
     foreach my $h1 (@headers) {
         $h1 = lc $h1;
         $h1 =~ s/-/_/g;
-        $request->headers_in->do( sub {
-            my $h = shift;
-            my $h2 = lc $h;
-            $h2 =~ s/-/_/g;
-            $request->headers_in->unset($h) if ( $h1 eq $h2 );
-            return 1;
-        } );
+        $request->headers_in->do(
+            sub {
+                my $h  = shift;
+                my $h2 = lc $h;
+                $h2 =~ s/-/_/g;
+                $request->headers_in->unset($h) if ( $h1 eq $h2 );
+                return 1;
+            }
+        );
     }
-} 
+}
 
 ## @method void set_header_out(hash headers)
 # sets response headers
 # @param headers hash containing header names => header value
 sub set_header_out {
-    my ($class, %headers) = @_;
+    my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
         $request->err_headers_out->set( $h => $v );
     }
@@ -168,7 +172,7 @@ sub is_initial_req {
 ## @method string args(string args)
 # gets the query string
 # @return args string Query string
-sub args  {
+sub args {
     my $class = shift;
     return $request->args();
 }
@@ -182,7 +186,7 @@ sub args  {
 # @return path portion of the URI, normalized
 sub uri {
     my $class = shift;
-    my $uri = $request->uri;
+    my $uri   = $request->uri;
     $uri =~ s#//+#/#g;
     $uri =~ s#\?#%3F#g;
     return $uri;
@@ -193,7 +197,7 @@ sub uri {
 # @return URI with normalized path portion
 sub uri_with_args {
     my $class = shift;
-    return uri . ( $request->args ? "?" . $request->args : "");
+    return uri . ( $request->args ? "?" . $request->args : "" );
 }
 
 ## @method string unparsed_uri
@@ -224,7 +228,7 @@ sub method {
 # write data in HTTP response body
 # @param data Text to add in response body
 sub print {
-    my ($class, $data) = @_;
+    my ( $class, $data ) = @_;
     $request->print($data);
 }
 
@@ -232,47 +236,54 @@ sub print {
 # add data at end of html head
 # @param data Text to add in html head
 sub addToHtmlHead {
-    my ($class, $data) = @_;
-    $request->add_output_filter( sub {
-        my $f = shift;
-        my $buffer;
+    my ( $class, $data ) = @_;
+    $request->add_output_filter(
+        sub {
+            my $f = shift;
+            my $buffer;
 
-        my $body = $f->ctx || "";
-        $body .= $buffer while ($f->read($buffer));
-        unless ($f->seen_eos) {
-            $f->ctx($body);
-        } else {
-            $body =~ s/(<\/head>)/$data$1/i or $body =~ s/(<body>)/$1$data/i;
-            $f->print($body);
+            my $body = $f->ctx || "";
+            $body .= $buffer while ( $f->read($buffer) );
+            unless ( $f->seen_eos ) {
+                $f->ctx($body);
+            }
+            else {
+                $body =~ s/(<\/head>)/$data$1/i
+                  or $body =~ s/(<body>)/$1$data/i;
+                $f->print($body);
+            }
+            return OK;
         }
-        return OK;
-    } );
+    );
 }
 
 ## @method void setPostParams(hashref $params)
 # add or modify parameters in POST request body
 # @param $params hashref containing name => value
 sub setPostParams {
-    my ($class, $params) = @_;
-    $request->add_input_filter( sub {
-        my $f = shift;
-        my $buffer;
+    my ( $class, $params ) = @_;
+    $request->add_input_filter(
+        sub {
+            my $f = shift;
+            my $buffer;
 
-        # Filter only POST request body
-        if ( $f->r->method eq "POST" ) {
-            my $body;
-            while ($f->read($buffer)) { $body .= $buffer; }
-            while ( my ($name, $value) = each ( %$params ) ) {
-                $body =~ s/((^|&))$name=[^\&]*/$1$name=$value/
-                    or $body .= "&$name=$value";
+            # Filter only POST request body
+            if ( $f->r->method eq "POST" ) {
+                my $body;
+                while ( $f->read($buffer) ) { $body .= $buffer; }
+                while ( my ( $name, $value ) = each(%$params) ) {
+                    $body =~ s/((^|&))$name=[^\&]*/$1$name=$value/
+                      or $body .= "&$name=$value";
+                }
+                $body =~ s/^&//;
+                $f->print($body);
             }
-            $body =~ s/^&//;
-            $f->print($body);
-        } else {
-            $f->print($buffer) while ($f->read($buffer));
+            else {
+                $f->print($buffer) while ( $f->read($buffer) );
+            }
+            return OK;
         }
-        return OK;
-    } );
+    );
 }
 
 1;

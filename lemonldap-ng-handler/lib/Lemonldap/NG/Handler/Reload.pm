@@ -75,10 +75,12 @@ sub configReload {
         "Loading configuration $conf->{cfgNum} for process $$", "info" );
 
     foreach my $sub (
-      qw( jailInit defaultValuesInit portalInit locationRulesInit
-          sessionStorageInit headersInit postUrlInit aliasInit ) ) {
-        Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "Process $$ calls $sub", "debug" );
+        qw( jailInit defaultValuesInit portalInit locationRulesInit
+        sessionStorageInit headersInit postUrlInit aliasInit )
+      )
+    {
+        Lemonldap::NG::Handler::Main::Logger->lmLog( "Process $$ calls $sub",
+            "debug" );
         $class->$sub( $conf, $tsv );
     }
     return 1;
@@ -103,16 +105,17 @@ sub jailInit {
 # @param $args reference to the configuration hash
 sub defaultValuesInit {
     my ( $class, $conf, $tsv ) = @_;
-    
-    $tsv->{$_} = $conf->{$_}
-      foreach (qw(
+
+    $tsv->{$_} = $conf->{$_} foreach (
+        qw(
         cda              cookieExpiration    cookieName
         customFunctions  httpOnly            securedCookie
         timeoutActivity  useRedirectOnError  useRedirectOnForbidden
         useSafeJail      whatToTrace
-      ));
+        )
+    );
 
-    $tsv->{cipher} = Lemonldap::NG::Common::Crypto->new($conf->{key});
+    $tsv->{cipher} = Lemonldap::NG::Common::Crypto->new( $conf->{key} );
 
     foreach my $opt (qw(https port maintenance)) {
         next unless defined $conf->{$opt};
@@ -128,7 +131,7 @@ sub defaultValuesInit {
                 Lemonldap::NG::Handler::Main::Logger->lmLog(
                     "Options $opt for vhost $vhost: $val", 'debug' );
                 $tsv->{$opt}->{$vhost} = $val
-                    if ( $val >= 0 ); # Keep default value if $val is negative
+                  if ( $val >= 0 );    # Keep default value if $val is negative
             }
         }
     }
@@ -142,7 +145,7 @@ sub portalInit {
     my ( $class, $conf, $tsv ) = @_;
     die("portal parameter required") unless ( $conf->{portal} );
     if ( $conf->{portal} =~ /[\$\(&\|"']/ ) {
-        ($tsv->{portal}) = $class->conditionSub( $conf->{portal}, $tsv );
+        ( $tsv->{portal} ) = $class->conditionSub( $conf->{portal}, $tsv );
     }
     else {
         $tsv->{portal} = sub { return $conf->{portal} };
@@ -166,18 +169,17 @@ sub locationRulesInit {
     my ( $class, $conf, $tsv ) = @_;
 
     while ( my ( $vhost, $rules ) = each( %{ $conf->{locationRules} } ) ) {
-        foreach my $url ( sort keys %{ $rules } ) {
-            my ( $cond, $prot )
-              = $class->conditionSub( $rules->{$url}, $tsv );
+        foreach my $url ( sort keys %{$rules} ) {
+            my ( $cond, $prot ) = $class->conditionSub( $rules->{$url}, $tsv );
 
             if ( $url eq 'default' ) {
-                $tsv->{defaultCondition}->{$vhost} = $cond;
+                $tsv->{defaultCondition}->{$vhost}  = $cond;
                 $tsv->{defaultProtection}->{$vhost} = $prot;
             }
             else {
-                push @{ $tsv->{locationCondition}->{$vhost} } , $cond;
+                push @{ $tsv->{locationCondition}->{$vhost} },  $cond;
                 push @{ $tsv->{locationProtection}->{$vhost} }, $prot;
-                push @{ $tsv->{locationRegexp}->{$vhost} }    , qr/$url/;
+                push @{ $tsv->{locationRegexp}->{$vhost} },     qr/$url/;
                 push @{ $tsv->{locationConditionText}->{$vhost} },
                   /^\(\?#(.*?)\)/ ? $1 : /^(.*?)##(.+)$/ ? $2 : $url;
                 $tsv->{locationCount}->{$vhost}++;
@@ -205,18 +207,19 @@ sub sessionStorageInit {
     die($@) if ($@);
     $tsv->{sessionStorageOptions} = $conf->{globalStorageOptions};
 
-    if ($conf->{localSessionStorage}) {
+    if ( $conf->{localSessionStorage} ) {
         $tsv->{sessionCacheModule}  = $conf->{localSessionStorage};
         $tsv->{sessionCacheOptions} = $conf->{localSessionStorageOptions};
         $tsv->{sessionCacheOptions}->{default_expires_in} ||= 600;
-    
-        if ($conf->{status}) {
+
+        if ( $conf->{status} ) {
             my $params = "";
-            if ($tsv->{sessionCacheModule}) {
+            if ( $tsv->{sessionCacheModule} ) {
                 require Data::Dumper;
-                $params = " $tsv->{sessionCacheModule},"
-                    . Data::Dumper->new( [ $tsv->{sessionCacheOptions} ] )
-                    ->Terse(1)->Indent(0)->Dump; # To send params on one line
+                $params =
+                  " $tsv->{sessionCacheModule},"
+                  . Data::Dumper->new( [ $tsv->{sessionCacheOptions} ] )
+                  ->Terse(1)->Indent(0)->Dump;    # To send params on one line
             }
             print { $tsv->{statusPipe} } "RELOADCACHE$params";
         }
@@ -236,7 +239,7 @@ sub headersInit {
         $tsv->{headerList}->{$vhost} = [ keys %headers ];
         my $sub;
         foreach ( keys %headers ) {
-            my $val = $class->substitute($headers{$_});
+            my $val = $class->substitute( $headers{$_} );
             $sub .= "'$_' => $val,";
         }
 
@@ -257,14 +260,15 @@ sub postUrlInit {
 
     # Browse all vhost
     foreach my $vhost ( keys %{ $conf->{post} } ) {
+
         #  Browse all POST URI
         while ( my ( $url, $d ) = each( %{ $conf->{post}->{$vhost} } ) ) {
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "Compiling POST data for $url", 'debug' );
 
             # Where to POST
-            my ( $postUrl, $jqueryUrl, $formSelector, $buttonSelector )
-                = split( /\|/, $d->{postUrl} );
+            my ( $postUrl, $jqueryUrl, $formSelector, $buttonSelector ) =
+              split( /\|/, $d->{postUrl} );
             $postUrl ||= $url;
 
             my $sub;
@@ -272,9 +276,9 @@ sub postUrlInit {
                 my $val = $class->substitute($value);
                 $sub .= "'$input' => $val,";
             }
-            $tsv->{inputPostData}->{$vhost}->{$postUrl}
-              = $tsv->{outputPostData}->{$vhost}->{$url}
-              = $tsv->{jail}->jail_reval("sub{$sub}");
+            $tsv->{inputPostData}->{$vhost}->{$postUrl} =
+              $tsv->{outputPostData}->{$vhost}->{$url} =
+              $tsv->{jail}->jail_reval("sub{$sub}");
 
             $tsv->{postFormParams}->{$vhost}->{$url} = {
                 jqueryUrl      => $jqueryUrl,
@@ -350,7 +354,8 @@ sub conditionSub {
                 my $r = shift;
                 $r->add_output_filter(
                     sub {
-                        return Lemonldap::NG::Handler::Main->redirectFilter( $u, @_ );
+                        return Lemonldap::NG::Handler::Main->redirectFilter( $u,
+                            @_ );
                     }
                 );
                 1;
@@ -370,7 +375,8 @@ sub conditionSub {
                         my $r = shift->r;
                         return Lemonldap::NG::Handler::Main->redirectFilter(
                             &{ $tsv->{portal} }() . "?url="
-                              . Lemonldap::NG::Handler::Main->encodeUrl( $r, $u )
+                              . Lemonldap::NG::Handler::Main->encodeUrl( $r,
+                                $u )
                               . "&logout=1",
                             @_
                         );
@@ -405,6 +411,7 @@ sub aliasInit {
     }
     return 1;
 }
+
 # TODO: support wildcards in aliases
 
 sub substitute {

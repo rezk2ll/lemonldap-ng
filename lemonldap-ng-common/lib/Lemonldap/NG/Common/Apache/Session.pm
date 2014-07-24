@@ -51,6 +51,7 @@ sub populate {
         $self->{object_store} =
           Lemonldap::NG::Common::Apache::Session::Store->new($self);
     }
+
     # If cache is configured, use our specific lock_manager object module
     if ( $self->{args}->{localStorage} ) {
         $self->{args}->{lock_manager} = $self->{lock_manager};

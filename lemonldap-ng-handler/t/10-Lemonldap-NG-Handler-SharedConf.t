@@ -60,10 +60,11 @@ if ( $numTests == 3 ) {
     # Create a fake Apache2::RequestRec
     my $mock = Test::MockObject->new();
     my $ret;
-    $mock->fake_module( 'Lemonldap::NG::Handler::API',
-        newRequest     => sub { print STDERR "newRequest\n" },
-        header_in      => sub { "" },
-        hostname       => sub { 'test.example.com' },
+    $mock->fake_module(
+        'Lemonldap::NG::Handler::API',
+        newRequest      => sub { print STDERR "newRequest\n" },
+        header_in       => sub { "" },
+        hostname        => sub { 'test.example.com' },
         is_initial_req  => sub { '1' },
         remote_ip       => sub { '127.0.0.1' },
         args            => sub { undef },
@@ -71,16 +72,15 @@ if ( $numTests == 3 ) {
         uri             => sub { '/' },
         uri_with_args   => sub { '/' },
         get_server_port => sub { '80' },
-        set_header_out => sub { $ret = join( ':', $_[1], $_[2], ); }, );
+        set_header_out  => sub { $ret = join( ':', $_[1], $_[2], ); },
+    );
 
     our $apacheRequest;
 
     my $h = bless {}, 'Lemonldap::NG::Handler';
 
-    ok(
-        $h->handler($apacheRequest),
-        'run Handler with basic configuration and no cookie'
-    );
+    ok( $h->handler($apacheRequest),
+        'run Handler with basic configuration and no cookie' );
 
     ok(
         "$ret" eq

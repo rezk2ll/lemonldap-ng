@@ -21,21 +21,25 @@ sub new {
     # Get access control rule
     my $rule = $localConfig->{protection};
     $rule =~ s/^rule\s*:?\s*//;
-    $rule = $rule eq "none"         ? "skip"
-          : $rule eq "authenticate" ? "accept"
-          : $rule eq "manager"      ? ""
-          : $rule;
+    $rule =
+        $rule eq "none"         ? "skip"
+      : $rule eq "authenticate" ? "accept"
+      : $rule eq "manager"      ? ""
+      :                           $rule;
 
     my $request = {};
     Lemonldap::NG::Handler::API->newRequest($request);
     my $res = $self->run($rule);
 
-    if ($res == 403) {
-        $self->abort('Forbidden', "You don't have rights to access this page");
-    } elsif ($res) {
+    if ( $res == 403 ) {
+        $self->abort( 'Forbidden',
+            "You don't have rights to access this page" );
+    }
+    elsif ($res) {
         print $self->header( -status => $res, %{ $request->{respHeaders} } );
         $self->quit;
-    } else {
+    }
+    else {
         return $self;
     }
 }

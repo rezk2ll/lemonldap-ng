@@ -85,8 +85,7 @@ ok(
 
 ok(
     Lemonldap::NG::Handler::Reload->headersInit(
-        { exportedHeaders => { www1 => { Auth => '$uid', } } },
-        $tsv
+        { exportedHeaders => { www1 => { Auth => '$uid', } } }, $tsv
     ),
     'forgeHeadersInit'
 );
