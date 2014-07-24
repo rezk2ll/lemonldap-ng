@@ -53,28 +53,14 @@ sub acquire_write_lock {
     my $self    = shift;
     my $session = shift;
 
-    # Get session from cache
-    my $id = $session->{data}->{_session_id};
-    if ( $self->cache->get($id) ) { 
-      # got session from cache, no need to ask for locks
-    }
-    else {
-      $self->module->acquire_write_lock($session);
-    }
+    $self->module->acquire_write_lock($session);
 }
 
 sub release_write_lock {
     my $self    = shift;
     my $session = shift;
 
-    # Get session from cache
-    my $id = $session->{data}->{_session_id};
-    if ( $self->cache->get($id) ) { 
-      # got session from cache, no need to ask for locks
-    }
-    else {
-      $self->module->release_write_lock($session);
-    }
+    $self->module->release_write_lock($session);
 }
 
 sub release_all_locks  {
