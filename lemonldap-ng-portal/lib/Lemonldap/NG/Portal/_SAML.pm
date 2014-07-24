@@ -1238,6 +1238,7 @@ sub extractRelayState {
     }
     else {
         $self->lmLog( "Unable to delete relaystate $relaystate", 'error' );
+        $self->lmLog( $samlSessionInfo->error,                   'error' );
     }
 
     return 1;
@@ -1666,6 +1667,7 @@ sub replayProtection {
 "Unable to delete assertion session $session (Message ID $samlID)",
                     'error'
                 );
+                $self->lmLog( $samlSessionInfo->error, 'error' );
                 return 0;
             }
         }
@@ -1800,6 +1802,7 @@ sub loadArtifact {
         else {
             $self->lmLog( "Unable to delete artifact session $session (ID $id)",
                 'error' );
+            $self->lmLog( $samlSessionInfo->error, 'error' );
             return;
         }
     }
@@ -2831,12 +2834,13 @@ sub getSamlSession {
         }
     );
 
-    unless ( $samlSession->data ) {
+    if ( $samlSession->error ) {
         if ($id) {
             $self->_sub( 'userInfo', "SAML session $id isn't yet available" );
         }
         else {
             $self->lmLog( "Unable to create new SAML session", 'error' );
+            $self->lmLog( $samlSession->error,                 'error' );
         }
         return undef;
     }
@@ -2976,6 +2980,7 @@ sub deleteSAMLSecondarySessions {
             else {
                 $self->lmLog( "Unable to delete SAML session $saml_session",
                     'error' );
+                $self->lmLog( $samlSessionInfo->error, "error" );
                 $result = 0;
             }
         }

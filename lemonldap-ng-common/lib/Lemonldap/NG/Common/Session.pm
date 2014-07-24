@@ -58,6 +58,11 @@ has 'cacheModuleOptions' => (
     isa => 'HashRef|Undef',
 );
 
+has 'error' => (
+    is  => 'rw',
+    isa => 'Str|Undef',
+);
+
 sub BUILD {
     my $self = shift;
 
@@ -130,7 +135,12 @@ sub _tie_session {
         }
     };
 
-    return undef if ( $@ or not tied(%h) );
+    if ( $@ or not tied(%h) ) {
+        my $msg = "Session cannot be tied";
+        $msg .= ": $@" if $@;
+        $self->error($msg);
+        return undef;
+    }
 
     return \%h;
 }
@@ -147,7 +157,10 @@ sub update {
     my $infos      = shift;
     my $tieOptions = shift;
 
-    return 0 unless ( ref $infos eq "HASH" );
+    unless ( ref $infos eq "HASH" ) {
+        $self->error("You need to provide a HASHREF");
+        return 0;
+    }
 
     my $data = $self->_tie_session($tieOptions);
 
@@ -167,6 +180,7 @@ sub update {
         return 1;
     }
 
+    $self->error("No data found in session");
     return 0;
 }
 
@@ -178,7 +192,11 @@ sub remove {
 
     eval { tied(%$data)->delete(); };
 
-    return 0 if $@;
+    if ($@) {
+        $self->error("Unable to delete session: $@");
+        return 0;
+    }
+
     return 1;
 }
 

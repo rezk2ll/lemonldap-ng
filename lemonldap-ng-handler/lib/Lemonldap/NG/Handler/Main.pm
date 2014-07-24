@@ -7,22 +7,22 @@ use Exporter 'import';
 use Lemonldap::NG::Common::Session;
 use CGI::Util 'expires';
 use URI::Escape;
-use constant UNPROTECT        => 1;
-use constant SKIP             => 2;
+use constant UNPROTECT => 1;
+use constant SKIP      => 2;
 
 #inherits Cache::Cache
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.4.1';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
-our $tsv = {};     # Hash ref containing thread-shared values, filled
-                   # at config reload - see Reload.pm comments to know
-                   # what it contains
-our $session;      # Object for current user session
-our $datas;        # Hash ref containing current user session datas
-our $datasUpdate;  # Last time the current user session was read
+our $tsv = {};    # Hash ref containing thread-shared values, filled
+                  # at config reload - see Reload.pm comments to know
+                  # what it contains
+our $session;     # Object for current user session
+our $datas;       # Hash ref containing current user session datas
+our $datasUpdate; # Last time the current user session was read
 
 BEGIN {
 
@@ -46,7 +46,6 @@ BEGIN {
 use Lemonldap::NG::Handler::Main::Jail;
 use Lemonldap::NG::Handler::Main::Logger;
 
-
 ## @rmethod protected void updateStatus(string user,string url,string action)
 # Inform the status process of the result of the request if it is available
 # @param request Apache2::RequestRec current request
@@ -62,7 +61,7 @@ sub updateStatus {
             print $statusPipe "$user => "
           . Lemonldap::NG::Handler::API->hostname
           . "$url $action\n"
-          if ( $statusPipe );
+          if ($statusPipe);
     };
 }
 
@@ -73,7 +72,7 @@ sub updateStatus {
 # @return Apache2::Const::REDIRECT or Apache2::Const::FORBIDDEN
 sub forbidden {
     my $class = shift;
-    my $uri = Lemonldap::NG::Handler::API->unparsed_uri;
+    my $uri   = Lemonldap::NG::Handler::API->unparsed_uri;
 
     if ( $datas->{_logout} ) {
         $class->updateStatus( 'LOGOUT', $datas->{ $tsv->{whatToTrace} } );
@@ -94,8 +93,7 @@ sub forbidden {
     # Redirect or Forbidden?
     if ( $tsv->{useRedirectOnForbidden} ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "Use redirect for forbidden access",
-            'debug' );
+            "Use redirect for forbidden access", 'debug' );
         return $class->goToPortal( $uri, 'lmError=403' );
     }
     else {
@@ -109,8 +107,7 @@ sub forbidden {
 # Hide Lemonldap::NG cookie to the protected application.
 sub hideCookie {
     my $class = shift;
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "removing cookie",
-        'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "removing cookie", 'debug' );
     my $cookie = Lemonldap::NG::Handler::API->header_in('Cookie');
     $cookie =~ s/$tsv->{cookieName}(http)?=[^,;]*[,;\s]*//og;
     if ($cookie) {
@@ -126,7 +123,7 @@ sub hideCookie {
 # @return Base64 encoded string
 sub encodeUrl {
     my ( $class, $url ) = splice @_;
-    $url = $class->_buildUrl( $url ) if ( $url !~ m#^https?://# );
+    $url = $class->_buildUrl($url) if ( $url !~ m#^https?://# );
     return encode_base64( $url, '' );
 }
 
@@ -155,9 +152,9 @@ sub goToPortal {
 # Get user cookies and search for Lemonldap::NG cookie.
 # @return Value of the cookie if found, 0 else
 sub fetchId {
-    my $class = shift;
-    my $t = Lemonldap::NG::Handler::API->header_in('Cookie');
-    my $vhost = $class->resolveAlias;
+    my $class             = shift;
+    my $t                 = Lemonldap::NG::Handler::API->header_in('Cookie');
+    my $vhost             = $class->resolveAlias;
     my $lookForHttpCookie = $tsv->{securedCookie} =~ /^(2|3)$/
       && !(
         defined( $tsv->{https}->{$vhost} )
@@ -199,11 +196,21 @@ sub retrieveSession {
         }
     );
 
-    if ( $datas = $session->data ) {
+    unless ( $session->error ) {
+
+        $datas = $session->data;
 
         # Update the session to notify activity, if necessary
-        $session->update( { '_lastSeen' => time } )
-          if ( $tsv->{timeoutActivity} );
+        if ( $tsv->{timeoutActivity} ) {
+            $session->update( { '_lastSeen' => time } );
+
+            if ( $session->error ) {
+                Lemonldap::NG::Handler::Main::Logger->lmLog(
+                    "Cannot update session $id", 'error' );
+                Lemonldap::NG::Handler::Main::Logger->lmLog( $session->error,
+                    'error' );
+            }
+        }
 
         $datasUpdate = time();
         return 1;
@@ -211,6 +218,8 @@ sub retrieveSession {
     else {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
             "Session $id can't be retrieved", 'info' );
+        Lemonldap::NG::Handler::Main::Logger->lmLog( $session->error, 'info' );
+
         return 0;
     }
 }
@@ -274,9 +283,9 @@ sub run {
         return REDIRECT;
     }
 
-    $uri = Lemonldap::NG::Handler::API->uri_with_args;
+    $uri        = Lemonldap::NG::Handler::API->uri_with_args;
     $protection = $class->isUnprotected($uri)
-        unless ( defined $protection );
+      unless ( defined $protection );
 
     if ( $protection == SKIP ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog( "Access control skipped",
@@ -300,11 +309,12 @@ sub run {
         my $kc = keys %$datas;    # in order to detect new local macro
 
         # ACCOUNTING (1. Inform Apache)
-        Lemonldap::NG::Handler::API->set_user( $datas->{ $tsv->{whatToTrace} } );
+        Lemonldap::NG::Handler::API->set_user(
+            $datas->{ $tsv->{whatToTrace} } );
 
         # AUTHORIZATION
         return $class->forbidden unless ( $class->grant( $uri, $cond ) );
-        $class->updateStatus('OK', $datas->{ $tsv->{whatToTrace} } );
+        $class->updateStatus( 'OK', $datas->{ $tsv->{whatToTrace} } );
 
         # ACCOUNTING (2. Inform remote application)
         $class->sendHeaders;
@@ -411,7 +421,7 @@ sub abort {
 # @return True if the user is granted to access to the current URL
 sub grant {
     my ( $class, $uri, $cond ) = @_;
-    return &{ $cond }() if ($cond);
+    return &{$cond}() if ($cond);
 
     my $vhost = $class->resolveAlias;
     for ( my $i = 0 ; $i < $tsv->{locationCount}->{$vhost} ; $i++ ) {
@@ -495,11 +505,12 @@ sub unlog ($$) {
 # display it.
 # @return Apache2::Const::OK
 sub status($$) {
-    my $class = shift;
+    my $class      = shift;
     my $statusPipe = $tsv->{statusPipe};
-    my $statusOut = $tsv->{statusOut};
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "Request for status", 'debug' );
-    return $class->abort( "$class: status page can not be displayed" )
+    my $statusOut  = $tsv->{statusOut};
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "Request for status",
+        'debug' );
+    return $class->abort("$class: status page can not be displayed")
       unless ( $statusPipe and $statusOut );
     print $statusPipe "STATUS"
       . (
@@ -514,7 +525,7 @@ sub status($$) {
     }
     Lemonldap::NG::Handler::API->set_header_out(
         ( "Content-Type" => "text/html; charset=UTF-8" ) );
-    Lemonldap::NG::Handler::API->print( $buf );
+    Lemonldap::NG::Handler::API->print($buf);
     return OK;
 }
 
@@ -600,12 +611,12 @@ sub postOutputFilter {
 
     if ( defined( $tsv->{outputPostData}->{$vhost}->{$uri} ) ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "Filling a html form with fake data" , "debug" );
+            "Filling a html form with fake data", "debug" );
 
         Lemonldap::NG::Handler::API->unset_header_in("Accept-Encoding");
-        my %postdata = &{ $tsv->{outputPostData}->{$vhost}->{$uri} };
+        my %postdata   = &{ $tsv->{outputPostData}->{$vhost}->{$uri} };
         my $formParams = $tsv->{postFormParams}->{$vhost}->{$uri};
-        my $js = $class->postJavascript(\%postdata, $formParams);
+        my $js         = $class->postJavascript( \%postdata, $formParams );
         Lemonldap::NG::Handler::API->addToHtmlHead($js);
     }
 }
@@ -618,14 +629,14 @@ sub postInputFilter {
     my $vhost = $class->resolveAlias;
 
     if ( defined( $tsv->{inputPostData}->{$vhost}->{$uri} ) ) {
-        Lemonldap::NG::Handler::Main::Logger->lmLog( 
-            "Replacing fake data with real form data" , "debug" );
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+            "Replacing fake data with real form data", "debug" );
 
         my %data = &{ $tsv->{inputPostData}->{$vhost}->{$uri} };
-        foreach (keys %data) {
-            $data{$_} = uri_escape($data{$_});
+        foreach ( keys %data ) {
+            $data{$_} = uri_escape( $data{$_} );
         }
-        Lemonldap::NG::Handler::API->setPostParams(\%data);
+        Lemonldap::NG::Handler::API->setPostParams( \%data );
     }
 }
 
@@ -638,23 +649,25 @@ sub postJavascript {
     my $form = $formParams->{formSelector} || "form";
 
     my $filler;
-    while ( my ($name, $value) = each ( %$data ) ) {
+    while ( my ( $name, $value ) = each(%$data) ) {
         $value = "x" x length($value);
-        $filler .= "form.find('input[name=$name], select[name=$name], textarea[name=$name]').val('$value')\n";
+        $filler .=
+"form.find('input[name=$name], select[name=$name], textarea[name=$name]').val('$value')\n";
     }
 
     my $submitter =
         $formParams->{buttonSelector} eq "none" ? ""
-      : $formParams->{buttonSelector} ? "form.find('$formParams->{buttonSelector}').click()\n"
+      : $formParams->{buttonSelector}
+      ? "form.find('$formParams->{buttonSelector}').click()\n"
       : "form.submit()\n";
 
     my $jqueryUrl = $formParams->{jqueryUrl} || "";
     $jqueryUrl = &{ $tsv->{portal} } . "skins/common/js/jquery-1.10.2.js"
-        if ( $jqueryUrl eq "default" );
+      if ( $jqueryUrl eq "default" );
     $jqueryUrl = "<script type='text/javascript' src='$jqueryUrl'></script>\n"
-        if ($jqueryUrl);
+      if ($jqueryUrl);
 
-    return 
+    return
         $jqueryUrl
       . "<script type='text/javascript'>\n"
       . "/* script added by Lemonldap::NG */\n"
@@ -662,8 +675,7 @@ sub postJavascript {
       . "var form = jQuery('$form')\n"
       . "form.attr('autocomplete', 'off')\n"
       . $filler
-      . $submitter
-      . "})\n"
+      . $submitter . "})\n"
       . "</script>\n";
 }
 
