@@ -10,7 +10,7 @@ use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);    #inherits
 use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
 use Lemonldap::NG::Common::Conf::Constants;   #inherits
 
-our $VERSION = '1.4.1';
+our $VERSION = '1.4.2';
 our @ISA     = qw(
   Lemonldap::NG::Handler::CGI
   Lemonldap::NG::Manager::Downloader
@@ -46,6 +46,14 @@ sub new {
     my $self = $class->SUPER::new($args)
       or $class->abort( 'Unable to start ' . __PACKAGE__,
         'See Apache logs for more' );
+
+    # Display an error if only default configuration is available
+    if ( $conf->lastCfg() eq 0 ) {
+        $self->lmLog(
+"Unable to load configuration from backend: $Lemonldap::NG::Common::Conf::msg ",
+            "error"
+        );
+    }
 
     # Default values
     $self->{managerSkin} = "default"       unless defined $self->{managerSkin};
