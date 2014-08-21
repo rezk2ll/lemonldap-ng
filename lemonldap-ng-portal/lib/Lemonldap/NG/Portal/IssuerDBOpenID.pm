@@ -145,7 +145,9 @@ sub restoreOpenIDprm {
 sub openIDServer {
     my $self = shift;
     return $self->{_openidserver} if ( $self->{_openidserver} );
-    $self->{_openidPortal} = $self->{portal} . "/openidserver/";
+    my $path = $self->{issuerDBOpenIDPath};
+    $path =~ s/\^//;
+    $self->{_openidPortal} = $self->{portal} . $path;
     $self->{_openidPortal} =~ s#(?<!:)//#/#g;
 
     my $sub = sub { return $self->param(@_) };
