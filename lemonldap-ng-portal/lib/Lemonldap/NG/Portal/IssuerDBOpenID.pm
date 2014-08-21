@@ -227,11 +227,14 @@ sub openIDServer {
 sub _openIDResponse {
     my ( $self, $type, $data ) = splice @_;
 
-    # TODO: use autoRedirect instead
+    # Redirect
     if ( $type eq 'redirect' ) {
-        $self->lmLog( 'OpenID redirection', 'debug' );
-        print $self->redirect($data);
+        $self->lmLog( "OpenID redirection to $data", 'debug' );
+        $self->{urldc} = $data;
+        print $self->_sub('autoRedirect');
     }
+
+    # Setup
     elsif ( $type eq 'setup' ) {
         if ( $self->{_openIdTrustRequired} or $self->{_openIdTrustExtMsg} ) {
 
