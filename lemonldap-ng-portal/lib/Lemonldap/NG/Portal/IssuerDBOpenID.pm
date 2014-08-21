@@ -13,7 +13,7 @@ use Lemonldap::NG::Common::Regexp;
 #inherits Lemonldap::NG::Portal::OpenID::Server
 #link Lemonldap::NG::Portal::OpenID::SREG protected sreg_extension
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.4.2';
 our $initDone;
 
 BEGIN {
@@ -151,8 +151,7 @@ sub openIDServer {
     my $sub = sub { return $self->param(@_) };
     $self->{_openidserver} = Lemonldap::NG::Portal::OpenID::Server->new(
         server_secret => sub { return $self->{openIdIssuerSecret} },
-        post_args     => $sub,
-        get_args      => $sub,
+        args          => $sub,
         endpoint_url => $self->{_openidPortal},
         setup_url    => $self->{_openidPortal},
         get_user     => sub {
