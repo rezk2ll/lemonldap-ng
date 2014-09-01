@@ -11,7 +11,7 @@ use Lemonldap::NG::Common::Conf::Attributes;
 use Lemonldap::NG::Common::Conf::SubAttributes;
 use Lemonldap::NG::Common::Regexp;
 
-our $VERSION = '1.4.1';
+our $VERSION = '1.4.2';
 
 ## @method protected hashref cstruct(hashref h,string k)
 # Merge $h with the structure produced with $k and return it.
@@ -353,7 +353,7 @@ sub struct {
 
                 portalCaptcha => {
                     _nodes => [
-                        qw(captcha_login_enabled captcha_mail_enabled captcha_register_enabled captcha_size captchaStorage captchaStorageOptions)
+                        qw(captcha_login_enabled captcha_mail_enabled captcha_register_enabled captcha_size captchaStorage cn:captchaStorageOptions)
                     ],
                     _help => 'captcha',
 
@@ -1540,9 +1540,17 @@ sub testStruct {
         captcha_size             => $integer,
         captcha_data             => $testNotDefined,
         captcha_output           => $testNotDefined,
-        cda                      => $boolean,
-        checkXSS                 => $boolean,
-        cookieName               => {
+        captchaStorage           => {
+            test    => qr/^[\w:]+$/,
+            msgFail => 'Bad module name',
+        },
+        captchaStorageOptions => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad parameter',
+        },
+        cda        => $boolean,
+        checkXSS   => $boolean,
+        cookieName => {
             test    => qr/^[a-zA-Z]\w*$/,
             msgFail => 'Bad cookie name',
         },
