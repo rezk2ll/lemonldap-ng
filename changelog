@@ -1,3 +1,46 @@
+lemonldap-ng (2.00) stable; urgency=low
+
+lemonldap-ng (1.4.2) stable; urgency=low
+
+    * [LEMONLDAP-740] - TCP connections never closed on LDAP
+    * [LEMONLDAP-743] - Password reset doesn't work with Apache::Session::MySQL::NoLock
+    * [LEMONLDAP-745] - notifyDeleted ignored with the new bootstrap theme
+    * [LEMONLDAP-747] -  Apache::Session::Postgres.pm
+    * [LEMONLDAP-750] - Exported variable name vs LDAP attr name
+    * [LEMONLDAP-751] - Login page on Bootstrap thème
+    * [LEMONLDAP-752] - Portal URL is treated as Bad URL
+    * [LEMONLDAP-753] - OpenID provider broken
+    * [LEMONLDAP-754] - Error when configuring captcha trough Manager
+    * [LEMONLDAP-758] - SAML metadata are not valid (NameIDFormat not in the rigth place)
+    * [LEMONLDAP-761] - SOAP cannot be used with DBI backend
+    * [LEMONLDAP-762] - Don't call data() on unavailable session
+    * [LEMONLDAP-746] - Doc: update id size for DBI sessions backend
+    * [LEMONLDAP-748] - Possibility to start with empty configuration masks errors loading conf backend
+    * [LEMONLDAP-749] - AuthBasic doesn't support HTTPS with self-signed certificate
+    * [LEMONLDAP-755] - check aliases when computing vhost rules on portal
+    * [LEMONLDAP-760] - Apache2.4-style syntax
+
+lemonldap-ng (1.4.1) stable; urgency=low
+
+    * [LEMONLDAP-719] - AuthBasic handler doesn't check password when using AuthMulti (SSL;LDAP)
+    * [LEMONLDAP-721] - Portal cipher object unavailable with useLocalConf = 1
+    * [LEMONLDAP-722] - Error on session explorer and notification explorer on CentOS
+    * [LEMONLDAP-723] - Error 500 on portal when mpm worker enabled on RHEL6.5
+    * [LEMONLDAP-725] - [Password reset] Reset pwd with pwdReset cause empty $groups
+    * [LEMONLDAP-727] - /status page not working since upgrade
+    * [LEMONLDAP-728] - Skirt header cleaning with unprotect
+    * [LEMONLDAP-730] - lmConfigEditor do not save conf with ldap backend
+    * [LEMONLDAP-731] - convertConfig fail to migrate conf to LDAP from File
+    * [LEMONLDAP-732] - Soap communication broken since upgrade
+    * [LEMONLDAP-734] - lemonldap-ng-cli not working with LDAP conf backend
+    * [LEMONLDAP-735] - IssuerDB modules do not work with Kerberos failback login script
+    * [LEMONLDAP-736] - Do not force default value in SMTPServer
+    * [LEMONLDAP-739] - dpkg error while installing fresh LemonLDAP::NG 1.4.0 on wheezy
+    * [LEMONLDAP-738] - Add a portal button on the Manager
+    * [LEMONLDAP-741] - Store errors in Common session module to display them in logs
+    * [LEMONLDAP-742] - Do not make lock calls when session found in cache
+    * [LEMONLDAP-737] - Possibilty to configure NotOnOrAfter and SessionNotOnOrAfter attributes in SAML messages
+
 lemonldap-ng (1.4.0) stable; urgency=low
 
     * [LEMONLDAP-663] - Connections to auth backends not closed on errors
