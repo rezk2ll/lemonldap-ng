@@ -7,7 +7,6 @@ package Lemonldap::NG::Portal::AuthOpenIDConnect;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
-use JSON;
 use MIME::Base64;
 use base qw(Lemonldap::NG::Portal::_OpenIDConnect);
 
@@ -79,7 +78,7 @@ sub extractFormInfo {
         my $content = $self->getAuthorizationCodeAccessToken($code);
         return PE_ERROR unless $content;
 
-        my $json = decode_json $content;
+        my $json = $self->decodeJSON($content);
 
         if ( $json->{error} ) {
             $self->lmLog( "Error in token response:" . $json->{error},
@@ -99,9 +98,8 @@ sub extractFormInfo {
         my ( $id_token_header, $id_token_payload, $id_token_signature ) =
           split( /\./, $id_token );
 
-        # TODO check signature
         my $id_token_payload_hash =
-          decode_json( decode_base64($id_token_payload) );
+          $self->decodeJSON( decode_base64($id_token_payload) );
 
         my $user_id = $id_token_payload_hash->{sub};
 

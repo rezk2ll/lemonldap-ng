@@ -32,7 +32,7 @@ sub getCallbackUri {
     return $callback_uri;
 }
 
-## @method Strind buildAuthorizationCodeAuthnRequest(String state)
+## @method String buildAuthorizationCodeAuthnRequest(String state)
 # Build Authentication Request URI for Authorization Code Flow
 # @param state State
 # return String Authentication Request URI
@@ -66,7 +66,7 @@ sub buildAuthorizationCodeAuthnRequest {
     return $authn_uri;
 }
 
-## @method Strind getAuthorizationCodeAccessToken(String code)
+## @method String getAuthorizationCodeAccessToken(String code)
 # Get Token response with autorization code
 # @param code Code
 # return String Token response decoded content
@@ -97,6 +97,23 @@ sub getAuthorizationCodeAccessToken {
     }
 
     return $response->decoded_content;
+}
+
+## @method HashRef decodeJSON(String json)
+# Convert JSON to HashRef
+# @param json JSON raw content
+# @return HashRef JSON decoded content
+sub decodeJSON {
+    my ( $self, $json ) = splice @_;
+    my $json_hash;
+
+    eval { $json_hash = decode_json $json; };
+
+    if ($@) {
+        $json_hash->{error} = "parse_error";
+    }
+
+    return $json_hash;
 }
 
 1;
@@ -131,6 +148,10 @@ Build Authentication Request URI for Authorization Code Flow
 =head2 getAuthorizationCodeAccessToken
 
 Get Token response with autorization code
+
+=head2 decodeJSON
+
+Convert JSON to HashRef
 
 =head1 SEE ALSO
 
