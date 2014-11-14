@@ -6,13 +6,11 @@
 package Lemonldap::NG::Portal::AuthOpenIDConnect;
 
 use strict;
-use JSON;
 use Lemonldap::NG::Portal::Simple;
-use Lemonldap::NG::Portal::_Browser;
+use JSON;
 use MIME::Base64;
-use URI::Escape;
+use base qw(Lemonldap::NG::Portal::_OpenIDConnect);
 
-our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
 our $VERSION = '2.00';
 
 ## @apmethod int authInit()
@@ -44,19 +42,9 @@ sub setAuthSessionInfo {
 sub extractFormInfo {
     my $self = shift;
 
-    my $client_id        = $self->{OIDCRPClientID};
-    my $client_secret    = $self->{OIDCRPClientSecret};
-    my $authorize_uri    = $self->{OIDCRPAuthorizeURI};
-    my $access_token_uri = $self->{OIDCRPAccessTokenURI};
-
-    my $scope = $self->{OIDCRPScope};
-
-    my $callback_get_param = $self->{OIDCRPCallbackGetParam};
-
-    my $callback_uri = $self->{portal} . "?$callback_get_param=1";
-
     # Check callback
-    my $callback = $self->param($callback_get_param);
+    my $callback_get_param = $self->{OIDCRPCallbackGetParam};
+    my $callback           = $self->param($callback_get_param);
 
     unless ($callback) {
 
@@ -67,20 +55,11 @@ sub extractFormInfo {
         my $state = "dummy";
 
         # Authorization Code Flow
-        my $response_type = uri_escape("code");
-        my $redirect_uri = uri_escape($callback_uri);
-
-        $scope        = uri_escape($scope);
-        $client_id    = uri_escape($client_id);
-        $state        = uri_escape($state);
-
-        $self->{urldc} = $authorize_uri
-          . "?response_type=$response_type&client_id=$client_id&scope=$scope&redirect_uri=$redirect_uri&state=$state";
+        $self->{urldc} = $self->buildAuthorizationCodeAuthnRequest($state);
 
         $self->lmLog( "Redirect user to " . $self->{urldc}, 'debug' );
 
         return $self->_subProcess(qw(autoRedirect));
-
     }
     else {
 
@@ -96,28 +75,11 @@ sub extractFormInfo {
 
         # TODO Restore state
 
-        # Token Request
-        my $grant_type = "authorization_code";
-        my %form;
-        $form{"code"}          = $code;
-        $form{"client_id"}     = $client_id;
-        $form{"client_secret"} = $client_secret;
-        $form{"redirect_uri"}  = $callback_uri;
-        $form{"grant_type"}    = $grant_type;
-
-        my $response = $self->ua->post( $access_token_uri, \%form,
-            "Content-Type" => 'application/x-www-form-urlencoded' );
-
-        if ( $response->is_error ) {
-            $self->lmLog( "Bad authorization response: " . $response->message,
-                "error" );
-            $self->lmLog( $response->content, 'debug' );
-            return PE_ERROR;
-        }
-
         # Get access_token and id_token
-        my $content = $response->decoded_content;
-        my $json    = decode_json $content;
+        my $content = $self->getAuthorizationCodeAccessToken($code);
+        return PE_ERROR unless $content;
+
+        my $json = decode_json $content;
 
         if ( $json->{error} ) {
             $self->lmLog( "Error in token response:" . $json->{error},
