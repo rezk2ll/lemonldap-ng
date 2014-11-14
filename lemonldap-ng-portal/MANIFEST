@@ -12,6 +12,7 @@ example/register.pl
 example/scripts/buildPortalWSDL
 example/scripts/purgeCentralCache
 example/scripts/purgeCentralCache.cron.d
+example/skins/bootstrap/.checklogins.tpl.swp
 example/skins/bootstrap/checklogins.tpl
 example/skins/bootstrap/confirm.tpl
 example/skins/bootstrap/css/bootstrap-theme.css
@@ -215,6 +216,7 @@ lib/Lemonldap/NG/Portal/AuthLDAP.pm
 lib/Lemonldap/NG/Portal/AuthMulti.pm
 lib/Lemonldap/NG/Portal/AuthNull.pm
 lib/Lemonldap/NG/Portal/AuthOpenID.pm
+lib/Lemonldap/NG/Portal/AuthOpenIDConnect.pm
 lib/Lemonldap/NG/Portal/AuthProxy.pm
 lib/Lemonldap/NG/Portal/AuthRadius.pm
 lib/Lemonldap/NG/Portal/AuthRemote.pm
@@ -258,6 +260,7 @@ lib/Lemonldap/NG/Portal/UserDBLDAP.pm
 lib/Lemonldap/NG/Portal/UserDBMulti.pm
 lib/Lemonldap/NG/Portal/UserDBNull.pm
 lib/Lemonldap/NG/Portal/UserDBOpenID.pm
+lib/Lemonldap/NG/Portal/UserDBOpenIDConnect.pm
 lib/Lemonldap/NG/Portal/UserDBProxy.pm
 lib/Lemonldap/NG/Portal/UserDBRemote.pm
 lib/Lemonldap/NG/Portal/UserDBSAML.pm
@@ -297,6 +300,7 @@ t/64-Lemonldap-NG-Portal-UserDBSAML.t
 t/65-Lemonldap-NG-Portal-IssuerDBCAS.t
 t/66-Lemonldap-NG-Portal-Captcha.t
 t/67-Lemonldap-NG-Portal-AuthBrowserID.t
+t/70-Lemonldap-NG-Portal-AuthOpenIDConnect.t
 t/99-pod.t
 xt/PE_Constants.t
 xt/test-weaken-portal.t
