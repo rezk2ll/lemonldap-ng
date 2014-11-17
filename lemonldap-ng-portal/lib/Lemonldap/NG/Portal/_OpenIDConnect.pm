@@ -116,6 +116,111 @@ sub decodeJSON {
     return $json_hash;
 }
 
+## @method hashref getOpenIDConnectSession(string id)
+# Try to recover the OpenID Connect session corresponding to id and return session
+# If id is set to undef, return a new session
+# @param id session reference
+# @return Lemonldap::NG::Common::Session object
+sub getOpenIDConnectSession {
+    my ( $self, $id ) = splice @_;
+
+    my $oidcSession = Lemonldap::NG::Common::Session->new(
+        {
+            storageModule        => $self->{globalStorage},
+            storageModuleOptions => $self->{globalStorageOptions},
+            cacheModule          => $self->{localSessionStorage},
+            cacheModuleOptions   => $self->{localSessionStorageOptions},
+            id                   => $id,
+            kind                 => "OpenIDConnect",
+        }
+    );
+
+    if ( $oidcSession->error ) {
+        if ($id) {
+            $self->_sub( 'userInfo',
+                "OpenIDConnect session $id isn't yet available" );
+        }
+        else {
+            $self->lmLog( "Unable to create new OpenIDConnect session",
+                'error' );
+            $self->lmLog( $oidcSession->error, 'error' );
+        }
+        return undef;
+    }
+
+    return $oidcSession;
+}
+
+## @method string storeState(array data)
+# Store information in state database and return
+# corresponding session_id
+# @param data Array of information to store
+# @return State Session ID
+sub storeState {
+    my ( $self, @data ) = splice @_;
+
+    # check if there are data to store
+    my $infos;
+    foreach (@data) {
+        $infos->{$_} = $self->{$_} if $self->{$_};
+    }
+    return unless ($infos);
+
+    # Create state session
+    my $stateSession = $self->getOpenIDConnectSession();
+
+    return unless $stateSession;
+
+    # Session type
+    $infos->{_type} = "state";
+
+    # Set _utime for session autoremove
+    # Use default session timeout and relayState session timeout to compute it
+    my $time         = time();
+    my $timeout      = $self->{timeout};
+    my $stateTimeout = $self->{OIDCRPStateTimeout} || $timeout;
+
+    $infos->{_utime} = $time + ( $stateTimeout - $timeout );
+
+    # Store infos in state session
+    $stateSession->update($infos);
+
+    # Return session ID
+    return $stateSession->id;
+}
+
+## @method boolean extractState(string state)
+# Extract state information into $self
+# @param state state value
+# @return result
+sub extractState {
+    my ( $self, $state ) = splice @_;
+
+    return 0 unless $state;
+
+    # Open state session
+    my $stateSession = $self->getOpenIDConnectSession($state);
+
+    return 0 unless $stateSession;
+
+    # Push values in $self
+    foreach ( keys %{ $stateSession->data } ) {
+        next if $_ =~ /(type|_session_id|_utime)/;
+        $self->{$_} = $stateSession->data->{$_};
+    }
+
+    # Delete state session
+    if ( $stateSession->remove ) {
+        $self->lmLog( "State $state was deleted", 'debug' );
+    }
+    else {
+        $self->lmLog( "Unable to delete state $state", 'error' );
+        $self->lmLog( $stateSession->error,            'error' );
+    }
+
+    return 1;
+}
+
 1;
 
 __END__
@@ -152,6 +257,18 @@ Get Token response with autorization code
 =head2 decodeJSON
 
 Convert JSON to HashRef
+
+=head2 getOpenIDConnectSession
+
+Try to recover the OpenID Connect session corresponding to id and return session
+
+=head2 storeState
+
+Store information in state database and return
+
+=head2 extractState
+
+Extract state information into $self
 
 =head1 SEE ALSO
 

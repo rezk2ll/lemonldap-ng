@@ -50,8 +50,12 @@ sub extractFormInfo {
         # AuthN Request
         $self->lmLog( "Build OpenIDConnect AuthN Request", 'debug' );
 
-        # TODO Save state
-        my $state = "dummy";
+        # Save state
+        my $state = $self->storeState( qw/urldc checkLogins/ );
+
+        my $stateSession = $self->storeState();
+
+        # TODO Use AuthChoiceParam in redirect URL
 
         # Authorization Code Flow
         $self->{urldc} = $self->buildAuthorizationCodeAuthnRequest($state);
@@ -72,7 +76,16 @@ sub extractFormInfo {
         my $state = $self->param("state");
         my $code  = $self->param("code");
 
-        # TODO Restore state
+        # Restore state
+        if ($state) {
+            if ( $self->extractState($state) ) {
+                $self->lmLog( "State $state extracted", 'debug' );
+            }
+            else {
+                $self->lmLog( "Unable to extract state $state", 'error' );
+                return PE_ERROR;
+            }
+        }
 
         # Get access_token and id_token
         my $content = $self->getAuthorizationCodeAccessToken($code);
