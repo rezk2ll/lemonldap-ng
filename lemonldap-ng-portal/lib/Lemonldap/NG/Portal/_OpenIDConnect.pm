@@ -9,6 +9,7 @@ use strict;
 use JSON;
 use MIME::Base64;
 use URI::Escape;
+use Digest::SHA qw/hmac_sha256_base64/;
 use base qw(Lemonldap::NG::Portal::_Browser);
 
 our $VERSION = '2.00';
@@ -221,6 +222,81 @@ sub extractState {
     return 1;
 }
 
+## @method arrayref extractJWT(String jwt)
+# Extract parts of a JWT
+# @param jwt JWT raw value
+# @return arrayref JWT parts
+sub extractJWT {
+    my ( $self, $jwt ) = splice @_;
+
+    my @jwt_parts = split( /\./, $jwt );
+
+    return \@jwt_parts;
+}
+
+## @method boolean verifyJWTSignature(String jwt)
+# Check signature of a JWT
+# @param jwt JWT raw value
+# @return boolean 1 if signature is verified, 0 else
+sub verifyJWTSignature {
+    my ( $self, $jwt ) = splice @_;
+
+    $self->lmLog( "Verification of JWT signature: $jwt", 'debug' );
+
+    # Extract JWT parts
+    my $jwt_parts = $self->extractJWT($jwt);
+
+    # Read header
+    my $jwt_header_part = $jwt_parts->[0];
+    my $jwt_header_hash = $self->decodeJSON( decode_base64($jwt_header_part) );
+
+    # Get signature algorithm
+    my $alg = $jwt_header_hash->{alg};
+
+    $self->lmLog( "JWT signature algorithm: $alg", 'debug' );
+
+    if ( $alg eq "none" ) {
+
+        # If none alg, signature should be empty
+        if ( $jwt_parts->[2] ) {
+            $self->lmLog(
+                "Signature "
+                  . $jwt_parts->[2]
+                  . " is present but algorithm is 'none'",
+                'debug'
+            );
+            return 0;
+        }
+        return 1;
+    }
+
+    if ( $alg eq "HS256" ) {
+
+        # Check signature with client secret
+        my $client_secret = $self->{OIDCRPClientSecret};
+        my $digest =
+          hmac_sha256_base64( $jwt_parts->[0] . "." . $jwt_parts->[1],
+            $client_secret );
+
+        # Convert + and / to get Base64 URL valid (RFC 4648)
+        $digest =~ s/\+/-/g;
+        $digest =~ s/\//_/g;
+
+        unless ( $digest eq $jwt_parts->[2] ) {
+            $self->lmLog(
+                "Digest $digest not equal to signature " . $jwt_parts->[2],
+                'debug' );
+            return 0;
+        }
+        return 1;
+    }
+
+    # Other algorithms not managed
+    $self->lmLog( "Algorithm $alg not known", 'debug' );
+
+    return 0;
+}
+
 1;
 
 __END__
@@ -269,6 +345,14 @@ Store information in state database and return
 =head2 extractState
 
 Extract state information into $self
+
+=head2 extractJWT
+
+Extract parts of a JWT
+
+=head2 verifyJWTSignature
+
+Check signature of a JWT
 
 =head1 SEE ALSO
 

@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 2;
+use Test::More tests => 3;
 BEGIN { use_ok('Lemonldap::NG::Portal::Simple') }
 
 #########################
@@ -28,3 +28,7 @@ ok(
     )
 );
 
+# JWT Signature verification
+$p->{OIDCRPClientSecret} = "secret";
+my $jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.eoaDVGTClRdfxUZXiPs3f8FmJDkDE_VCQFXqKxpLsts"; # Sample from http://jwt.io
+ok( $p->verifyJWTSignature($jwt) == 1, 'JWT Signature verification');

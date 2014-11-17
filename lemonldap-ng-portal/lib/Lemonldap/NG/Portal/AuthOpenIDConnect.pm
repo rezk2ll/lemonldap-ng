@@ -51,7 +51,7 @@ sub extractFormInfo {
         $self->lmLog( "Build OpenIDConnect AuthN Request", 'debug' );
 
         # Save state
-        my $state = $self->storeState( qw/urldc checkLogins/ );
+        my $state = $self->storeState(qw/urldc checkLogins/);
 
         my $stateSession = $self->storeState();
 
@@ -105,7 +105,11 @@ sub extractFormInfo {
         $self->lmLog( "Access token: $access_token", 'debug' );
         $self->lmLog( "ID token: $id_token",         'debug' );
 
-        # TODO verify JWT signature
+        # Verify JWT signature
+        unless ( $self->verifyJWTSignature($id_token) ) {
+            $self->lmLog( "JWT signature verification failed", 'error' );
+            return PE_ERROR;
+        }
 
         # Get ID token content
         my ( $id_token_header, $id_token_payload, $id_token_signature ) =
