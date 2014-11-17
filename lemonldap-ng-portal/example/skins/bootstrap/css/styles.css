@@ -60,30 +60,26 @@ div.actions a {
 }
 
 div.application {
-  margin:10px;
+  height:50px;
   overflow:hidden;
 }
 
 div.application a, div.application a:hover {
   text-decoration:none;
+  display: block;
 }
-
+/*
 div.application img.applogo {
   width:32px;
   height:32px;
   float:left;
 }
-
+*/
 div.application h4.appname {
-  text-align:left;
-  padding:0 5px;
-  margin:0 0 0 40px;
+  margin-top:5px;
 }
 
 div.application p.appdesc {
-  text-align:left;
-  padding:0 5px;
-  margin:0 0 0 40px;
   color:#aaa;
   font-style:italic;
 }
@@ -92,4 +88,13 @@ p.notifCheck label {
   margin-left: 5px;
   margin-top: 3px;
   display: inline-block;
+}
+
+@media (min-width: 768px) {
+  div.application {
+    height: 80px;
+  }
+  div.application h4.appname {
+    margin:0;
+  }
 }

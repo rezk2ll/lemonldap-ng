@@ -91,22 +91,29 @@
                   <div class="panel-body">
                     <!-- Applications -->
 
+                    <div class="row">
                     <TMPL_LOOP NAME=applications>
 
                       <!-- Application -->
+                      <div class="col-md-4">
+                      <div class="application <TMPL_VAR NAME="appid"> panel panel-default">
+                        <a class="btn btn-link" href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="appname">" role="button">
 
-                      <div class="application <TMPL_VAR NAME="appid"> panel panel-default pull-left">
-                        <a class="btn btn-link" href="<TMPL_VAR NAME="appuri">" title="<TMPL_VAR NAME="appname">">
-
+                        <div class="row">
                         <!-- Logo (optional) -->
                         <TMPL_IF NAME="applogo">
+                          <div class="col-xs-3">
                           <img src="<TMPL_VAR NAME="SKIN_PATH">/common/apps/<TMPL_VAR NAME="applogo">"
                             class="applogo <TMPL_VAR NAME="appid">"
                             alt="<TMPL_VAR NAME="appname">" />
+                          </div>
+                          <div class="col-xs-9">
+                        <TMPL_ELSE>
+                          <div class="col-xs-12">
                         </TMPL_IF>
-
+                        
                         <!-- Name and link (mandatory) -->
-                        <h4 class="appname <TMPL_VAR NAME="appid">">
+                        <h4 class="appname <TMPL_VAR NAME="appid"> text-center">
                           <TMPL_VAR NAME="appname">
                         </h4>
 
@@ -117,18 +124,21 @@
                           </p>
                         </TMPL_IF>
 
+                          </div>
+                        </div>
                         </a>
 
-                        <div class="clearfix"></div>
                       </div>
+                      </div>
+
 
                     <!-- End of applications loop -->
                     </TMPL_LOOP>
+                    </div>
 
                   </div>
                   </TMPL_IF>
 
-                  <div class="clearfix"></div>
                 </div>
 
               <!-- End of categories loop -->
