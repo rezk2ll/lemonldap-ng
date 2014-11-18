@@ -106,9 +106,11 @@ sub extractFormInfo {
         $self->lmLog( "ID token: $id_token",         'debug' );
 
         # Verify JWT signature
-        unless ( $self->verifyJWTSignature($id_token) ) {
-            $self->lmLog( "JWT signature verification failed", 'error' );
-            return PE_ERROR;
+        if ( $self->{OIDCRPCheckJWTSignature} ) {
+            unless ( $self->verifyJWTSignature($id_token) ) {
+                $self->lmLog( "JWT signature verification failed", 'error' );
+                return PE_ERROR;
+            }
         }
 
         # Get ID token content
