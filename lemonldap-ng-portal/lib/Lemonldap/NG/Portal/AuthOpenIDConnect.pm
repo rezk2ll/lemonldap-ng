@@ -111,6 +111,10 @@ sub extractFormInfo {
                 $self->lmLog( "JWT signature verification failed", 'error' );
                 return PE_ERROR;
             }
+            $self->lmLog( "JWT signature verified", 'debug' );
+        }
+        else {
+            $self->lmLog( "JWT signature check disabled", 'debug' );
         }
 
         # Get ID token content
