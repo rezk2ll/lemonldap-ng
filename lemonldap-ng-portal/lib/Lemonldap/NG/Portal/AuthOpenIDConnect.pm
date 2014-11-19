@@ -18,9 +18,9 @@ our $VERSION = '2.00';
 sub authInit {
     my $self = shift;
 
+    # Retrieve OpenID Connect configuration data
     if ( $self->{OIDCRPConfigurationURI} ) {
 
-        # Retrieve OpenID Connect configuration data
         my $oidcConfData =
           $self->getConfigurationData( $self->{OIDCRPConfigurationURI} );
 
@@ -32,6 +32,12 @@ sub authInit {
             $self->{OIDCRPJwksURI}        = $oidcConfData->{jwks_uri};
         }
 
+    }
+
+    # Retrieve JWKS data
+    if ( $self->{OIDCRPJwksURI} ) {
+        $self->{OIDCRPJwksData} =
+          $self->getConfigurationData( $self->{OIDCRPJwksURI} );
     }
 
     PE_OK;

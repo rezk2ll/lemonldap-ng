@@ -7,9 +7,11 @@ package Lemonldap::NG::Portal::_OpenIDConnect;
 
 use strict;
 use JSON;
-use MIME::Base64;
+use MIME::Base64 qw/decode_base64url/;
 use URI::Escape;
 use Digest::SHA qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64/;
+use Crypt::OpenSSL::RSA;
+use Crypt::OpenSSL::Bignum;
 use base qw(Lemonldap::NG::Portal::_Browser);
 
 our $VERSION = '2.00';
@@ -248,7 +250,8 @@ sub verifyJWTSignature {
 
     # Read header
     my $jwt_header_part = $jwt_parts->[0];
-    my $jwt_header_hash = $self->decodeJSON( decode_base64($jwt_header_part) );
+    my $jwt_header_hash =
+      $self->decodeJSON( decode_base64url($jwt_header_part) );
 
     # Get signature algorithm
     my $alg = $jwt_header_hash->{alg};
@@ -306,6 +309,72 @@ sub verifyJWTSignature {
             return 0;
         }
         return 1;
+    }
+
+    if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
+
+        # The public key is needed
+        unless ( $self->{OIDCRPJwksData} ) {
+            $self->lmLog( "Cannot verify $alg signature: no JWKS data found",
+                'error' );
+            return 0;
+        }
+
+        my $keys = $self->{OIDCRPJwksData}->{keys};
+        my $key_hash;
+
+        # Find Key ID associated with signature
+        my $kid = $jwt_header_hash->{kid};
+
+        if ($kid) {
+            $self->lmLog( "Search key with id $kid", 'debug' );
+            foreach (@$keys) {
+                if ( $_->{kid} eq $kid ) {
+                    $key_hash = $_;
+                    last;
+                }
+            }
+        }
+        else {
+            $key_hash = shift @$keys;
+        }
+
+        unless ($key_hash) {
+            $self->lmLog( "No key found in JKWS data", 'error' );
+            return 0;
+        }
+
+        $self->lmLog( "Found public key parameter n: " . $key_hash->{n},
+            'debug' );
+        $self->lmLog( "Found public key parameter e: " . $key_hash->{e},
+            'debug' );
+
+        # Create public key
+        my $n =
+          Crypt::OpenSSL::Bignum->new_from_bin(
+            decode_base64url( $key_hash->{n} ) );
+        my $e =
+          Crypt::OpenSSL::Bignum->new_from_bin(
+            decode_base64url( $key_hash->{e} ) );
+
+        my $public_key = Crypt::OpenSSL::RSA->new_key_from_parameters( $n, $e );
+
+        if ( $alg eq "RS256" ) {
+            $public_key->use_sha256_hash;
+        }
+
+        if ( $alg eq "RS384" ) {
+            $public_key->use_sha384_hash;
+        }
+
+        if ( $alg eq "RS512" ) {
+            $public_key->use_sha512_hash;
+        }
+
+        return $public_key->verify(
+            $jwt_parts->[0] . "." . $jwt_parts->[1],
+            decode_base64url( $jwt_parts->[2] )
+        );
     }
 
     # Other algorithms not managed

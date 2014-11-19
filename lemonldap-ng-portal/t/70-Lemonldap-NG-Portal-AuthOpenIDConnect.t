@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 5;
+use Test::More tests => 6;
 BEGIN { use_ok('Lemonldap::NG::Portal::Simple') }
 
 #########################
@@ -46,3 +46,11 @@ ok( $p->verifyJWTSignature($jwt) == 1, 'JWT Signature verification - alg: HS256'
 $jwt = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.fSCfxDB4cFVvzd6IqiNTuItTYiv-tAp5u5XplJWRDBGNF1rgGn1gyYK9LuHobWWpwqCzI7pEHDlyrbNHaQJmqg";
 ok( $p->verifyJWTSignature($jwt) == 1, 'JWT Signature verification - alg: HS512');
 
+# Sample from Google
+$p->{OIDCRPJwksData}->{keys}->[0]->{kid} = "3d007677fec656a562826f0191d0f9fcb0e595cf";
+$p->{OIDCRPJwksData}->{keys}->[0]->{n} = "3I_zvpLMNY9UY-SoVm60yh3CRB0LK0CdJ7qqF_Fl07LWNrWSudWSv1q-1QQGwQyxjzuD31eOouqp6gsMgJg6kyECUj9i6zUETCePy3kc-CAPUZE4vj-sJGA0qIcIrI54RdsLL6u27TKAkqqdl-XeO0S5fcUb3AaGW8TpmZoioEU=";
+$p->{OIDCRPJwksData}->{keys}->[0]->{e} = "AQAB";
+
+# alg: RS256
+$jwt ="eyJhbGciOiJSUzI1NiIsImtpZCI6IjNkMDA3Njc3ZmVjNjU2YTU2MjgyNmYwMTkxZDBmOWZjYjBlNTk1Y2YifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwic3ViIjoiMTE1MzYxMjMwMzU3MzA0NzU0ODQ0IiwiYXpwIjoiMjg2MzA1NzI4NjUyLWxjYW5ubWRnMTdxM2VtdDFjYmtqbmZnOTVzZHM4NjJsLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJjbGVtZW50QG9vZG8ubmV0IiwiYXRfaGFzaCI6ImZRc0FaSHdsUUNPZXctNE84QkFWNWciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXVkIjoiMjg2MzA1NzI4NjUyLWxjYW5ubWRnMTdxM2VtdDFjYmtqbmZnOTVzZHM4NjJsLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiaGQiOiJvb2RvLm5ldCIsImlhdCI6MTQxNjQwNjA0MywiZXhwIjoxNDE2NDA5OTQzfQ.NihX-7P1ogpPCmygD-A-hChIwMg9hJQ_4gzu3zmNEyHnY9rWuwXF6E2K9LF_opMQXWJxkUcI7eyo73L3yk9_51CfQLzD5NbfpR6kyctLBXud9A7wyHzJRBCB_rOU12vU4bMWGajgkGUqOmy-PFnz3akvqVgExbqas0Go4Flg7NI";
+ok( $p->verifyJWTSignature($jwt) == 1, 'JWT Signature verification - alg: RS256');
