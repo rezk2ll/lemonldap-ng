@@ -13,9 +13,27 @@ use base qw(Lemonldap::NG::Portal::_OpenIDConnect);
 our $VERSION = '2.00';
 
 ## @apmethod int authInit()
-# Does nothing
+# Get configuration data
 # @return Lemonldap::NG::Portal constant
 sub authInit {
+    my $self = shift;
+
+    if ( $self->{OIDCRPConfigurationURI} ) {
+
+        # Retrieve OpenID Connect configuration data
+        my $oidcConfData =
+          $self->getConfigurationData( $self->{OIDCRPConfigurationURI} );
+
+        if ($oidcConfData) {
+            $self->{OIDCRPAuthorizeURI} =
+              $oidcConfData->{authorization_endpoint};
+            $self->{OIDCRPAccessTokenURI} = $oidcConfData->{token_endpoint};
+            $self->{OIDCRPUserInfoURI}    = $oidcConfData->{userinfo_endpoint};
+            $self->{OIDCRPJwksURI}        = $oidcConfData->{jwks_uri};
+        }
+
+    }
+
     PE_OK;
 }
 

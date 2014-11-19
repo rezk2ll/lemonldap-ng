@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 3;
+use Test::More tests => 5;
 BEGIN { use_ok('Lemonldap::NG::Portal::Simple') }
 
 #########################
@@ -28,7 +28,21 @@ ok(
     )
 );
 
-# JWT Signature verification
+## JWT Signature verification
+# Samples from http://jwt.io
+
 $p->{OIDCRPClientSecret} = "secret";
-my $jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.eoaDVGTClRdfxUZXiPs3f8FmJDkDE_VCQFXqKxpLsts"; # Sample from http://jwt.io
-ok( $p->verifyJWTSignature($jwt) == 1, 'JWT Signature verification');
+my $jwt;
+
+# alg: none
+$jwt = "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.";
+ok( $p->verifyJWTSignature($jwt) == 1, 'JWT Signature verification - alg: none');
+
+# alg: HS256
+$jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.eoaDVGTClRdfxUZXiPs3f8FmJDkDE_VCQFXqKxpLsts";
+ok( $p->verifyJWTSignature($jwt) == 1, 'JWT Signature verification - alg: HS256');
+
+# alg: HS512
+$jwt = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.fSCfxDB4cFVvzd6IqiNTuItTYiv-tAp5u5XplJWRDBGNF1rgGn1gyYK9LuHobWWpwqCzI7pEHDlyrbNHaQJmqg";
+ok( $p->verifyJWTSignature($jwt) == 1, 'JWT Signature verification - alg: HS512');
+

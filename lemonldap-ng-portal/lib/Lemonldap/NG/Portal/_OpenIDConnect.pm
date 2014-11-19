@@ -9,7 +9,7 @@ use strict;
 use JSON;
 use MIME::Base64;
 use URI::Escape;
-use Digest::SHA qw/hmac_sha256_base64/;
+use Digest::SHA qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64/;
 use base qw(Lemonldap::NG::Portal::_Browser);
 
 our $VERSION = '2.00';
@@ -270,13 +270,30 @@ sub verifyJWTSignature {
         return 1;
     }
 
-    if ( $alg eq "HS256" ) {
+    if ( $alg eq "HS256" or $alg eq "HS384" or $alg eq "HS512" ) {
 
         # Check signature with client secret
         my $client_secret = $self->{OIDCRPClientSecret};
-        my $digest =
-          hmac_sha256_base64( $jwt_parts->[0] . "." . $jwt_parts->[1],
-            $client_secret );
+
+        my $digest;
+
+        if ( $alg eq "HS256" ) {
+            $digest =
+              hmac_sha256_base64( $jwt_parts->[0] . "." . $jwt_parts->[1],
+                $client_secret );
+        }
+
+        if ( $alg eq "HS384" ) {
+            $digest =
+              hmac_sha384_base64( $jwt_parts->[0] . "." . $jwt_parts->[1],
+                $client_secret );
+        }
+
+        if ( $alg eq "HS512" ) {
+            $digest =
+              hmac_sha512_base64( $jwt_parts->[0] . "." . $jwt_parts->[1],
+                $client_secret );
+        }
 
         # Convert + and / to get Base64 URL valid (RFC 4648)
         $digest =~ s/\+/-/g;
@@ -295,6 +312,31 @@ sub verifyJWTSignature {
     $self->lmLog( "Algorithm $alg not known", 'debug' );
 
     return 0;
+}
+
+## @method HashRef getConfigurationData(String confUri)
+# Retrieve OpenID Connect configuration data
+# @param confURI Configuration end point
+# @result HashRef data
+sub getConfigurationData {
+    my ( $self, $uri ) = splice @_;
+
+    unless ($uri) {
+        $self->lmLog( "No URI given to retrieve configuration data", 'error' );
+        return;
+    }
+
+    $self->lmLog( "Retrieving configuration from $uri", 'debug' );
+
+    my $response = $self->ua->get($uri);
+
+    if ( $response->is_error ) {
+        $self->lmLog( "Bad response: " . $response->message, "error" );
+        $self->lmLog( $response->content,                    'debug' );
+        return;
+    }
+
+    return $self->decodeJSON( $response->decoded_content );
 }
 
 1;
@@ -353,6 +395,10 @@ Extract parts of a JWT
 =head2 verifyJWTSignature
 
 Check signature of a JWT
+
+=head2 getConfigurationData
+
+Retrieve OpenID Connect configuration data
 
 =head1 SEE ALSO
 
