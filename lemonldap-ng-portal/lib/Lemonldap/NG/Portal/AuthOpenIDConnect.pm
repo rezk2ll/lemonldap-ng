@@ -32,6 +32,7 @@ sub setAuthSessionInfo {
     $self->{sessionInfo}->{'_user'} = $self->{user};
     $self->{sessionInfo}->{authenticationLevel} = $self->{nullAuthnLevel};
 
+    $self->{sessionInfo}->{OpenIDConnect_OP} = $self->{_oidcOPCurrent};
     $self->{sessionInfo}->{OpenIDConnect_access_token} =
       $self->{tmp}->{access_token};
     $self->{sessionInfo}->{OpenIDConnect_IDToken} = $self->{tmp}->{IDToken};

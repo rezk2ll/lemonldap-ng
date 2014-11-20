@@ -6,11 +6,9 @@
 package Lemonldap::NG::Portal::UserDBOpenIDConnect;
 
 use strict;
-use JSON;
 use Lemonldap::NG::Portal::Simple;
-use Lemonldap::NG::Portal::_Browser;
 
-our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
+our @ISA     = (qw(Lemonldap::NG::Portal::_OpenIDConnect));
 our $VERSION = '2.00';
 
 ## @apmethod int userDBInit()
@@ -25,31 +23,21 @@ sub userDBInit {
 # @return Lemonldap::NG::Portal constant
 sub getUser {
     my $self = shift;
+    my $op   = $self->{_oidcOPCurrent};
 
     my $access_token = $self->{tmp}->{access_token};
-    my $userinfo_uri = $self->{OIDCRPUserInfoURI};
 
-    return PE_OK unless $userinfo_uri;
+    my $userinfo_content = $self->getUserInfo( $op, $access_token );
 
-    $self->lmLog(
-        "Request User Info on $userinfo_uri with access token $access_token",
-        'debug' );
-
-    my $userinfo_response = $self->ua->get( $userinfo_uri,
-        "Authorization" => "Bearer $access_token" );
-
-    if ( $userinfo_response->is_error ) {
-        $self->lmLog( "Bad User Info response: " . $userinfo_response->message,
-            'error' );
-        $self->lmLog( $userinfo_response->decoded_content, 'debug' );
-        return PE_ERROR;
+    unless ($userinfo_content) {
+        $self->lmLog( "No User Info content", 'warn' );
+        return PE_OK;
     }
-
-    my $userinfo_content = $userinfo_response->decoded_content;
 
     $self->lmLog( "UserInfo received: $userinfo_content", 'debug' );
 
-    $self->{tmp}->{OpenIDConnect_user_info} = decode_json $userinfo_content;
+    $self->{tmp}->{OpenIDConnect_user_info} =
+      $self->decodeJSON($userinfo_content);
 
     PE_OK;
 }
@@ -59,8 +47,13 @@ sub getUser {
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my $self = shift;
+    my $op   = $self->{_oidcOPCurrent};
 
-    my %vars = ( %{ $self->{exportedVars} }, %{ $self->{OIDCRPExportedVars} } );
+    my %vars = (
+        %{ $self->{exportedVars} },
+        %{ $self->{oidcOPMetaDataExportedVars}->{$op} }
+    );
+
     while ( my ( $k, $v ) = each %vars ) {
         $self->{sessionInfo}->{$k} =
           $self->{tmp}->{OpenIDConnect_user_info}->{$v}

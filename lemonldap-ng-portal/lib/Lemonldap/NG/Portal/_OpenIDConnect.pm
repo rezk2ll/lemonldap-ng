@@ -157,6 +157,37 @@ sub getAuthorizationCodeAccessToken {
     return $response->decoded_content;
 }
 
+## @method String getUserInfo(String op, String access_token)
+# Get UserInfo response
+# @param op OpenIP Provider configuration key
+# @param access_token Access Token
+# return String UserInfo response decoded content
+sub getUserInfo {
+    my ( $self, $op, $access_token ) = splice @_;
+
+    my $userinfo_uri = $self->{_oidcOPList}->{$op}->{conf}->{userinfo_endpoint};
+
+    unless ($userinfo_uri) {
+        $self->lmLog( "UserInfo URI not found in $op configuration", 'error' );
+        return 0;
+    }
+
+    $self->lmLog(
+        "Request User Info on $userinfo_uri with access token $access_token",
+        'debug' );
+
+    my $response = $self->ua->get( $userinfo_uri,
+        "Authorization" => "Bearer $access_token" );
+
+    if ( $response->is_error ) {
+        $self->lmLog( "Bad userinfo response: " . $response->message, "error" );
+        $self->lmLog( $response->content,                             'debug' );
+        return 0;
+    }
+
+    return $response->decoded_content;
+}
+
 ## @method HashRef decodeJSON(String json)
 # Convert JSON to HashRef
 # @param json JSON raw content
@@ -477,6 +508,10 @@ Build Authentication Request URI for Authorization Code Flow
 =head2 getAuthorizationCodeAccessToken
 
 Get Token response with autorization code
+
+=head2 getUserInfo
+
+Get UserInfo response
 
 =head2 decodeJSON
 
