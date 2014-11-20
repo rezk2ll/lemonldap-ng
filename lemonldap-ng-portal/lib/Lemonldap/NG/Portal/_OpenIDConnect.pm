@@ -15,6 +15,52 @@ use Crypt::OpenSSL::Bignum;
 use base qw(Lemonldap::NG::Portal::_Browser);
 
 our $VERSION = '2.00';
+our $oidcCache;
+
+BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($oidcCache);
+    };
+}
+
+## @method boolean loadOPs(boolean no_cache)
+# Load OpenID Connect Providers and JWKS data
+# @param no_cache Disable cache use
+# @return boolean result
+sub loadOPs {
+    my ( $self, $no_cache ) = splice @_;
+
+    # Check cache
+    unless ($no_cache) {
+        if ( $oidcCache->{_oidcOPList} ) {
+            $self->lmLog( "Load OPs from cache", 'debug' );
+            $self->{_oidcOPList} = $oidcCache->{_oidcOPList};
+            return 1;
+        }
+    }
+
+    # Check presence of at least one identity provider in configuration
+    unless ( $self->{oidcOPMetaDataJSON}
+        and keys %{ $self->{oidcOPMetaDataJSON} } )
+    {
+        $self->lmLog( "No OpenID Connect Provider found in configuration",
+            'warn' );
+    }
+
+    # Extract JSON data
+    $self->{_oidcOPList} = {};
+    foreach ( keys %{ $self->{oidcOPMetaDataJSON} } ) {
+        $self->{_oidcOPList}->{$_}->{conf} =
+          $self->decodeJSON( $self->{oidcOPMetaDataJSON}->{$_} );
+        $self->{_oidcOPList}->{$_}->{jwks} =
+          $self->decodeJSON( $self->{oidcOPMetaDataJWKS}->{$_} );
+    }
+
+    $oidcCache->{_oidcOPList} = $self->{_oidcList} unless $no_cache;
+
+    return 1;
+}
 
 ## @method String getCallbackUri()
 # Compute callback URI
@@ -35,16 +81,20 @@ sub getCallbackUri {
     return $callback_uri;
 }
 
-## @method String buildAuthorizationCodeAuthnRequest(String state)
+## @method String buildAuthorizationCodeAuthnRequest(String op, String state)
 # Build Authentication Request URI for Authorization Code Flow
+# @param op OpenIP Provider configuration key
 # @param state State
 # return String Authentication Request URI
 sub buildAuthorizationCodeAuthnRequest {
-    my ( $self, $state ) = splice @_;
+    my ( $self, $op, $state ) = splice @_;
 
-    my $authorize_uri = $self->{OIDCRPAuthorizeURI};
-    my $client_id     = $self->{OIDCRPClientID};
-    my $scope         = $self->{OIDCRPScope};
+    my $authorize_uri =
+      $self->{_oidcOPList}->{$op}->{conf}->{authorization_endpoint};
+    my $client_id =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsClientID};
+    my $scope =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsScope};
     my $response_type = "code";
     my $redirect_uri  = $self->getCallbackUri;
 
@@ -69,18 +119,23 @@ sub buildAuthorizationCodeAuthnRequest {
     return $authn_uri;
 }
 
-## @method String getAuthorizationCodeAccessToken(String code)
+## @method String getAuthorizationCodeAccessToken(String op, String code)
 # Get Token response with autorization code
+# @param op OpenIP Provider configuration key
 # @param code Code
 # return String Token response decoded content
 sub getAuthorizationCodeAccessToken {
-    my ( $self, $code ) = splice @_;
+    my ( $self, $op, $code ) = splice @_;
 
-    my $client_id        = $self->{OIDCRPClientID};
-    my $client_secret    = $self->{OIDCRPClientSecret};
-    my $redirect_uri     = $self->getCallbackUri;
-    my $access_token_uri = $self->{OIDCRPAccessTokenURI};
-    my $grant_type       = "authorization_code";
+    my $client_id =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsClientID};
+    my $client_secret =
+      $self->{oidcOPMetaDataOptions}->{$op}
+      ->{oidcOPMetaDataOptionsClientSecret};
+    my $redirect_uri = $self->getCallbackUri;
+    my $access_token_uri =
+      $self->{_oidcOPList}->{$op}->{conf}->{token_endpoint};
+    my $grant_type = "authorization_code";
     my %form;
 
     $form{"code"}          = $code;
@@ -236,12 +291,13 @@ sub extractJWT {
     return \@jwt_parts;
 }
 
-## @method boolean verifyJWTSignature(String jwt)
+## @method boolean verifyJWTSignature(String op, String jwt)
 # Check signature of a JWT
+# @param op OpenIP Provider configuration key
 # @param jwt JWT raw value
 # @return boolean 1 if signature is verified, 0 else
 sub verifyJWTSignature {
-    my ( $self, $jwt ) = splice @_;
+    my ( $self, $op, $jwt ) = splice @_;
 
     $self->lmLog( "Verification of JWT signature: $jwt", 'debug' );
 
@@ -276,7 +332,9 @@ sub verifyJWTSignature {
     if ( $alg eq "HS256" or $alg eq "HS384" or $alg eq "HS512" ) {
 
         # Check signature with client secret
-        my $client_secret = $self->{OIDCRPClientSecret};
+        my $client_secret =
+          $self->{oidcOPMetaDataOptions}->{$op}
+          ->{oidcOPMetaDataOptionsClientSecret};
 
         my $digest;
 
@@ -314,13 +372,13 @@ sub verifyJWTSignature {
     if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
 
         # The public key is needed
-        unless ( $self->{OIDCRPJwksData} ) {
+        unless ( $self->{_oidcOPList}->{$op}->{jwks} ) {
             $self->lmLog( "Cannot verify $alg signature: no JWKS data found",
                 'error' );
             return 0;
         }
 
-        my $keys = $self->{OIDCRPJwksData}->{keys};
+        my $keys = $self->{_oidcOPList}->{$op}->{jwks}->{keys};
         my $key_hash;
 
         # Find Key ID associated with signature
@@ -383,31 +441,6 @@ sub verifyJWTSignature {
     return 0;
 }
 
-## @method HashRef getConfigurationData(String confUri)
-# Retrieve OpenID Connect configuration data
-# @param confURI Configuration end point
-# @result HashRef data
-sub getConfigurationData {
-    my ( $self, $uri ) = splice @_;
-
-    unless ($uri) {
-        $self->lmLog( "No URI given to retrieve configuration data", 'error' );
-        return;
-    }
-
-    $self->lmLog( "Retrieving configuration from $uri", 'debug' );
-
-    my $response = $self->ua->get($uri);
-
-    if ( $response->is_error ) {
-        $self->lmLog( "Bad response: " . $response->message, "error" );
-        $self->lmLog( $response->content,                    'debug' );
-        return;
-    }
-
-    return $self->decodeJSON( $response->decoded_content );
-}
-
 1;
 
 __END__
@@ -428,6 +461,10 @@ This module contains common methods for OpenIDConnect authentication
 and user information loading
 
 =head1 METHODS
+
+=head2 loadOPs
+
+Load OpenID Connect Providers and JWKS data
 
 =head2 getCallbackUri
 
@@ -464,10 +501,6 @@ Extract parts of a JWT
 =head2 verifyJWTSignature
 
 Check signature of a JWT
-
-=head2 getConfigurationData
-
-Retrieve OpenID Connect configuration data
 
 =head1 SEE ALSO
 

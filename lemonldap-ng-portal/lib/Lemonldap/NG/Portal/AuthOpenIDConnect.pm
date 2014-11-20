@@ -18,27 +18,7 @@ our $VERSION = '2.00';
 sub authInit {
     my $self = shift;
 
-    # Retrieve OpenID Connect configuration data
-    if ( $self->{OIDCRPConfigurationURI} ) {
-
-        my $oidcConfData =
-          $self->getConfigurationData( $self->{OIDCRPConfigurationURI} );
-
-        if ($oidcConfData) {
-            $self->{OIDCRPAuthorizeURI} =
-              $oidcConfData->{authorization_endpoint};
-            $self->{OIDCRPAccessTokenURI} = $oidcConfData->{token_endpoint};
-            $self->{OIDCRPUserInfoURI}    = $oidcConfData->{userinfo_endpoint};
-            $self->{OIDCRPJwksURI}        = $oidcConfData->{jwks_uri};
-        }
-
-    }
-
-    # Retrieve JWKS data
-    if ( $self->{OIDCRPJwksURI} ) {
-        $self->{OIDCRPJwksData} =
-          $self->getConfigurationData( $self->{OIDCRPJwksURI} );
-    }
+    return PE_ERROR unless $self->loadOPs;
 
     PE_OK;
 }
@@ -69,26 +49,7 @@ sub extractFormInfo {
     my $callback_get_param = $self->{OIDCRPCallbackGetParam};
     my $callback           = $self->param($callback_get_param);
 
-    unless ($callback) {
-
-        # AuthN Request
-        $self->lmLog( "Build OpenIDConnect AuthN Request", 'debug' );
-
-        # Save state
-        my $state = $self->storeState(qw/urldc checkLogins/);
-
-        my $stateSession = $self->storeState();
-
-        # TODO Use AuthChoiceParam in redirect URL
-
-        # Authorization Code Flow
-        $self->{urldc} = $self->buildAuthorizationCodeAuthnRequest($state);
-
-        $self->lmLog( "Redirect user to " . $self->{urldc}, 'debug' );
-
-        return $self->_subProcess(qw(autoRedirect));
-    }
-    else {
+    if ($callback) {
 
         $self->lmLog(
             "OpenIDConnect callback URI detected: "
@@ -111,8 +72,18 @@ sub extractFormInfo {
             }
         }
 
+        # Get OpenID Provider
+        my $op = $self->{_oidcOPCurrent};
+
+        unless ($op) {
+            $self->lmLog( "OpenID Provider not found", 'error' );
+            return PE_ERROR;
+        }
+
+        $self->lmLog( "Using OpenID Provider $op", 'debug' );
+
         # Get access_token and id_token
-        my $content = $self->getAuthorizationCodeAccessToken($code);
+        my $content = $self->getAuthorizationCodeAccessToken( $op, $code );
         return PE_ERROR unless $content;
 
         my $json = $self->decodeJSON($content);
@@ -130,8 +101,10 @@ sub extractFormInfo {
         $self->lmLog( "ID token: $id_token",         'debug' );
 
         # Verify JWT signature
-        if ( $self->{OIDCRPCheckJWTSignature} ) {
-            unless ( $self->verifyJWTSignature($id_token) ) {
+        if ( $self->{oidcOPMetaDataOptions}->{$op}
+            ->{oidcOPMetaDataOptionsCheckJWTSignature} )
+        {
+            unless ( $self->verifyJWTSignature( $op, $id_token ) ) {
                 $self->lmLog( "JWT signature verification failed", 'error' );
                 return PE_ERROR;
             }
@@ -158,6 +131,54 @@ sub extractFormInfo {
 
         return PE_OK;
     }
+
+    # No callback, choose Provider and send authn request
+    my $op;
+
+    unless ( $op = $self->param("idp") ) {
+        $self->lmLog( "Redirecting user to OP list", 'debug' );
+
+        # Control url parameter
+        my $urlcheck = $self->controlUrlOrigin();
+        return $urlcheck unless ( $urlcheck == PE_OK );
+
+        # IDP list
+        my @list = ();
+        foreach ( keys %{ $self->{_oidcOPList} } ) {
+            push @list,
+              {
+                val  => $_,
+                name => $self->{oidcOPMetaDataOptions}->{$_}
+                  ->{oidcOPMetaDataOptionsDisplayName},
+              };
+        }
+        $self->{list} = \@list;
+
+        $self->{login} = 1;
+        return PE_CONFIRM;
+    }
+
+    # Provider is choosen
+    $self->lmLog( "OpenID Provider $op choosen", 'debug' );
+
+    $self->{_oidcOPCurrent} = $op;
+
+    # AuthN Request
+    $self->lmLog( "Build OpenIDConnect AuthN Request", 'debug' );
+
+    # Save state
+    my $state = $self->storeState(qw/urldc checkLogins _oidcOPCurrent/);
+
+    my $stateSession = $self->storeState();
+
+    # TODO Use AuthChoiceParam in redirect URL
+
+    # Authorization Code Flow
+    $self->{urldc} = $self->buildAuthorizationCodeAuthnRequest( $op, $state );
+
+    $self->lmLog( "Redirect user to " . $self->{urldc}, 'debug' );
+
+    return $self->_subProcess(qw(autoRedirect));
 
     PE_OK;
 }
