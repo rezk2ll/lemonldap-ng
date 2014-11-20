@@ -142,8 +142,7 @@ sub extractFormInfo {
         }
 
         # Get ID token content
-        my ( $id_token_header, $id_token_payload, $id_token_signature ) =
-          split( /\./, $id_token );
+        my $id_token_payload = $self->extractJWT($id_token)->[1];
 
         my $id_token_payload_hash =
           $self->decodeJSON( decode_base64($id_token_payload) );
