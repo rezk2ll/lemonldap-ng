@@ -98,7 +98,11 @@ sub extractFormInfo {
 
         # Get access_token and id_token
         my $code = $self->param("code");
-        my $content = $self->getAuthorizationCodeAccessToken( $op, $code );
+        my $auth_method =
+          $self->{oidcOPMetaDataOptions}->{$op}
+          ->{oidcOPMetaDataOptionsTokenEndpointAuthMethod};
+        my $content =
+          $self->getAuthorizationCodeAccessToken( $op, $code, $auth_method );
         return PE_ERROR unless $content;
 
         my $json = $self->decodeJSON($content);

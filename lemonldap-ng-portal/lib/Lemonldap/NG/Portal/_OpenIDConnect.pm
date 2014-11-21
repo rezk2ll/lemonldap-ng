@@ -7,7 +7,8 @@ package Lemonldap::NG::Portal::_OpenIDConnect;
 
 use strict;
 use JSON;
-use MIME::Base64 qw/decode_base64url/;
+use MIME::Base64
+  qw/encode_base64url encode_base64 decode_base64url decode_base64/;
 use URI::Escape;
 use Digest::SHA qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64/;
 use Crypt::OpenSSL::RSA;
@@ -119,13 +120,15 @@ sub buildAuthorizationCodeAuthnRequest {
     return $authn_uri;
 }
 
-## @method String getAuthorizationCodeAccessToken(String op, String code)
+## @method String getAuthorizationCodeAccessToken(String op, String code, String auth_method)
 # Get Token response with autorization code
 # @param op OpenIP Provider configuration key
 # @param code Code
+# @param auth_method Authentication Method
 # return String Token response decoded content
 sub getAuthorizationCodeAccessToken {
-    my ( $self, $op, $code ) = splice @_;
+    my ( $self, $op, $code, $auth_method ) = splice @_;
+    $auth_method ||= "client_secret_basic";
 
     my $client_id =
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsClientID};
@@ -136,16 +139,37 @@ sub getAuthorizationCodeAccessToken {
     my $access_token_uri =
       $self->{_oidcOPList}->{$op}->{conf}->{token_endpoint};
     my $grant_type = "authorization_code";
+
+    $self->lmLog(
+        "Using auth method $auth_method to token endpoint $access_token_uri",
+        'debug' );
+
+    my $response;
     my %form;
 
-    $form{"code"}          = $code;
-    $form{"client_id"}     = $client_id;
-    $form{"client_secret"} = $client_secret;
-    $form{"redirect_uri"}  = $redirect_uri;
-    $form{"grant_type"}    = $grant_type;
+    if ( $auth_method eq "client_secret_basic" ) {
+        $form{"code"}         = $code;
+        $form{"redirect_uri"} = $redirect_uri;
+        $form{"grant_type"}   = $grant_type;
 
-    my $response = $self->ua->post( $access_token_uri, \%form,
-        "Content-Type" => 'application/x-www-form-urlencoded' );
+        $response = $self->ua->post(
+            $access_token_uri, \%form,
+            "Authorization" => "Basic "
+              . encode_base64("$client_id:$client_secret"),
+            "Content-Type" => 'application/x-www-form-urlencoded',
+        );
+    }
+
+    if ( $auth_method eq "client_secret_post" ) {
+        $form{"code"}          = $code;
+        $form{"client_id"}     = $client_id;
+        $form{"client_secret"} = $client_secret;
+        $form{"redirect_uri"}  = $redirect_uri;
+        $form{"grant_type"}    = $grant_type;
+
+        $response = $self->ua->post( $access_token_uri, \%form,
+            "Content-Type" => 'application/x-www-form-urlencoded' );
+    }
 
     if ( $response->is_error ) {
         $self->lmLog( "Bad authorization response: " . $response->message,
