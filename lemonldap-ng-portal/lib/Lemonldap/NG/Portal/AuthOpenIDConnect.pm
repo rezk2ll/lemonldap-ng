@@ -60,7 +60,6 @@ sub extractFormInfo {
 
         # AuthN Response
         my $state = $self->param("state");
-        my $code  = $self->param("code");
 
         # Restore state
         if ($state) {
@@ -83,7 +82,22 @@ sub extractFormInfo {
 
         $self->lmLog( "Using OpenID Provider $op", 'debug' );
 
+        # Check error
+        my $error = $self->param("error");
+        if ($error) {
+            my $error_description = $self->param("error_description");
+            my $error_uri         = $self->param("error_uri");
+
+            $self->lmLog( "Error returned by $op Provider: $error", 'error' );
+            $self->lmLog( "Error description: $error_description",  'error' )
+              if $error_description;
+            $self->lmLog( "Error URI: $error_uri", 'error' ) if $error_uri;
+
+            return PE_ERROR;
+        }
+
         # Get access_token and id_token
+        my $code = $self->param("code");
         my $content = $self->getAuthorizationCodeAccessToken( $op, $code );
         return PE_ERROR unless $content;
 
