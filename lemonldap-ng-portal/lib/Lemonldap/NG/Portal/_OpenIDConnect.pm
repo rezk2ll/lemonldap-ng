@@ -58,7 +58,7 @@ sub loadOPs {
           $self->decodeJSON( $self->{oidcOPMetaDataJWKS}->{$_} );
     }
 
-    $oidcCache->{_oidcOPList} = $self->{_oidcList} unless $no_cache;
+    $oidcCache->{_oidcOPList} = $self->{_oidcOPList} unless $no_cache;
 
     return 1;
 }
@@ -201,6 +201,65 @@ sub checkTokenResponseValidity {
         $self->lmLog( "No id_token", 'error' );
         return 0;
     }
+
+    return 1;
+}
+
+## @method boolean checkIDTokenValidity(String op, HashRef id_token)
+# Check validity of ID Token
+# @param op OpenIP Provider configuration key
+# @param id_token ID Token payload as HashRef
+# return boolean 1 if the token is valid, 0 else
+sub checkIDTokenValidity {
+    my ( $self, $op, $id_token ) = splice @_;
+
+    my $client_id =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsClientID};
+
+    # Check issuer
+    unless ( $id_token->{iss} eq $self->{_oidcOPList}->{$op}->{conf}->{issuer} )
+    {
+        $self->lmLog( "Issuer mismatch", 'error' );
+        return 0;
+    }
+
+    # Check audience
+    if ( ref $id_token->{aud} ) {
+        my @audience = @{ $id_token->{aud} };
+        unless ( grep $_ eq $client_id ) {
+            $self->lmLog( "Client ID not found in audience array", 'error' );
+            return 0;
+        }
+
+        if ( $#audience > 1 ) {
+            unless ( $id_token->{azp} eq $client_id ) {
+                $self->lmLog(
+                    "More than one audiance, and azp not equal to client ID",
+                    'error' );
+                return 0;
+            }
+        }
+    }
+    else {
+        unless ( $id_token->{aud} eq $client_id ) {
+            $self->lmLog( "Audience mismatch", 'error' );
+            return 0;
+        }
+    }
+
+    # Check time
+    unless ( time < $id_token->{exp} ) {
+        $self->lmLog( "ID token expired", 'error' );
+        return 0;
+    }
+
+    # TODO check iat
+
+    # TODO check nonce
+
+    # TODO check acr
+
+    # TODO check auth_time
 
     return 1;
 }

@@ -119,6 +119,9 @@ sub extractFormInfo {
             $self->lmLog( "Token response is not valid", 'error' );
             return PE_ERROR;
         }
+        else {
+            $self->lmLog( "Token response is valid", 'debug' );
+        }
 
         my $access_token = $json->{access_token};
         my $id_token     = $json->{id_token};
@@ -140,12 +143,22 @@ sub extractFormInfo {
             $self->lmLog( "JWT signature check disabled", 'debug' );
         }
 
-        # Get ID token content
         my $id_token_payload = $self->extractJWT($id_token)->[1];
 
         my $id_token_payload_hash =
           $self->decodeJSON( decode_base64($id_token_payload) );
 
+        # Check validity of ID Token
+        unless ( $self->checkIDTokenValidity( $op, $id_token_payload_hash ) ) {
+            $self->lmLog( "ID Token not valid", 'error' );
+            return PE_ERROR;
+        }
+        else {
+            $self->lmLog( "ID Token is valid", 'debug' );
+            $self->_dump($id_token_payload_hash);
+        }
+
+        # Get user id defined in 'sub' field
         my $user_id = $id_token_payload_hash->{sub};
 
         # Remember tokens
