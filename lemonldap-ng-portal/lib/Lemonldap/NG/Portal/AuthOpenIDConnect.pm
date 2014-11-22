@@ -101,6 +101,7 @@ sub extractFormInfo {
         my $auth_method =
           $self->{oidcOPMetaDataOptions}->{$op}
           ->{oidcOPMetaDataOptionsTokenEndpointAuthMethod};
+
         my $content =
           $self->getAuthorizationCodeAccessToken( $op, $code, $auth_method );
         return PE_ERROR unless $content;
@@ -110,6 +111,12 @@ sub extractFormInfo {
         if ( $json->{error} ) {
             $self->lmLog( "Error in token response:" . $json->{error},
                 'error' );
+            return PE_ERROR;
+        }
+
+        # Check validity of token response
+        unless ( $self->checkTokenResponseValidity($json) ) {
+            $self->lmLog( "Token response is not valid", 'error' );
             return PE_ERROR;
         }
 

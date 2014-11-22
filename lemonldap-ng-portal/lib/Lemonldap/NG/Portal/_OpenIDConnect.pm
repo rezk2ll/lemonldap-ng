@@ -181,6 +181,30 @@ sub getAuthorizationCodeAccessToken {
     return $response->decoded_content;
 }
 
+## @method boolean checkTokenResponseValidity(HashRef json)
+# Check validity of Token Response
+# @param json JSON HashRef
+# return boolean 1 if the response is valid, 0 else
+sub checkTokenResponseValidity {
+    my ( $self, $json ) = splice @_;
+
+    # token_type MUST be Bearer
+    unless ( $json->{token_type} eq "Bearer" ) {
+        $self->lmLog(
+            "Token type is " . $json->{token_type} . " but must be Bearer",
+            'error' );
+        return 0;
+    }
+
+    # id_token MUST be present
+    unless ( $json->{id_token} ) {
+        $self->lmLog( "No id_token", 'error' );
+        return 0;
+    }
+
+    return 1;
+}
+
 ## @method String getUserInfo(String op, String access_token)
 # Get UserInfo response
 # @param op OpenIP Provider configuration key
@@ -532,6 +556,10 @@ Build Authentication Request URI for Authorization Code Flow
 =head2 getAuthorizationCodeAccessToken
 
 Get Token response with autorization code
+
+=head2 checkTokenResponseValidity
+
+Check validity of Token Response
 
 =head2 getUserInfo
 
