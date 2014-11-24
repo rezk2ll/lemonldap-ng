@@ -226,7 +226,7 @@ sub checkIDTokenValidity {
     # Check audience
     if ( ref $id_token->{aud} ) {
         my @audience = @{ $id_token->{aud} };
-        unless ( grep $_ eq $client_id ) {
+        unless ( grep $_ eq $client_id, @audience ) {
             $self->lmLog( "Client ID not found in audience array", 'error' );
             return 0;
         }
