@@ -19,6 +19,7 @@ sub authInit {
     my $self = shift;
 
     return PE_ERROR unless $self->loadOPs;
+    return PE_ERROR unless $self->refreshJWKSdata;
 
     PE_OK;
 }

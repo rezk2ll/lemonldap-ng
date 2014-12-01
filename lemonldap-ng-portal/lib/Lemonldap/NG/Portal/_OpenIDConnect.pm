@@ -63,6 +63,77 @@ sub loadOPs {
     return 1;
 }
 
+## @method boolean refreshJWKSdata(boolean no_cache)
+# Refresh JWKS data if needed
+# @param no_cache Disable cache update
+# @return boolean result
+sub refreshJWKSdata {
+    my ( $self, $no_cache ) = splice @_;
+
+    unless ( $self->{oidcOPMetaDataJSON}
+        and keys %{ $self->{oidcOPMetaDataJSON} } )
+    {
+        $self->lmLog(
+            "No OpenID Provider configured, JWKS data will not be refreshed",
+            'debug' );
+        return 1;
+    }
+
+    foreach ( keys %{ $self->{oidcOPMetaDataJSON} } ) {
+
+        # Refresh JWKS data if
+        # 1/ oidcOPMetaDataOptionsJWKSTimeout > 0
+        # 2/ jwks_uri defined in metadata
+
+        my $jwksTimeout =
+          $self->{oidcOPMetaDataOptions}->{$_}
+          ->{oidcOPMetaDataOptionsJWKSTimeout};
+        my $jwksUri = $self->{_oidcOPList}->{$_}->{conf}->{jwks_uri};
+
+        unless ($jwksTimeout) {
+            $self->lmLog( "No JWKS refresh timeout defined for $_, skipping...",
+                'debug' );
+            next;
+        }
+
+        unless ($jwksUri) {
+            $self->lmLog( "No JWKS URI defined for $_, skipping...", 'debug' );
+            next;
+        }
+
+        if ( $self->{_oidcOPList}->{$_}->{jwks}->{time} + $jwksTimeout > time )
+        {
+            $self->lmLog( "JWKS data still valid for $_, skipping...",
+                'debug' );
+            next;
+        }
+
+        $self->lmLog( "Refresh JWKS data for $_ from $jwksUri", 'debug' );
+
+        my $response = $self->ua->get($jwksUri);
+
+        if ( $response->is_error ) {
+            $self->lmLog(
+                "Unable to get JWKS data for $_ from $jwksUri: "
+                  . $response->message,
+                "warn"
+            );
+            $self->lmLog( $response->content, 'debug' );
+            next;
+        }
+
+        my $content = $self->decodeJSON( $response->decoded_content );
+
+        $self->{_oidcOPList}->{$_}->{jwks}         = $content;
+        $self->{_oidcOPList}->{$_}->{jwks}->{time} = time;
+        $oidcCache->{_oidcOPList}->{$_}->{jwks}    = $content unless $no_cache;
+        $oidcCache->{_oidcOPList}->{$_}->{jwks}->{time} = time unless $no_cache;
+
+    }
+
+    return 1;
+}
+
 ## @method String getCallbackUri()
 # Compute callback URI
 # @return String Callback URI
@@ -536,7 +607,7 @@ sub verifyJWTSignature {
         }
 
         unless ($key_hash) {
-            $self->lmLog( "No key found in JKWS data", 'error' );
+            $self->lmLog( "No key found in JWKS data", 'error' );
             return 0;
         }
 
@@ -603,6 +674,10 @@ and user information loading
 =head2 loadOPs
 
 Load OpenID Connect Providers and JWKS data
+
+=head2 refreshJWKSdata
+
+Refresh JWKS data if needed
 
 =head2 getCallbackUri
 
