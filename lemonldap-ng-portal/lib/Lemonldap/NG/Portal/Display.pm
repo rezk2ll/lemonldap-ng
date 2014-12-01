@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use utf8;
 
-our $VERSION = '1.4.0';
+our $VERSION = '2.00';
 
 ## @method array display()
 # Call portal process and set template parameters
@@ -152,6 +152,7 @@ sub display {
             ASK_LOGINS      => $self->{checkLogins},
             CONFIRMKEY      => $self->stamp(),
             LIST            => $self->{list} || [],
+            REMEMBER        => $self->{confirmRemember},
         );
     }
 

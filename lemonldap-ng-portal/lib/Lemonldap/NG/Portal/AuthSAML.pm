@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;    #inherits
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 
-our $VERSION = '1.4.2';
+our $VERSION = '2.00';
 our @ISA     = qw(Lemonldap::NG::Portal::_SAML);
 
 ## @apmethod int authInit()
@@ -801,7 +801,8 @@ sub extractFormInfo {
                 name => $self->{_idpList}->{$_}->{name}
               };
         }
-        $self->{list} = \@list;
+        $self->{list}            = \@list;
+        $self->{confirmRemember} = 1;
 
         # Delete existing IDP resolution cookie
         push @{ $self->{cookie} },

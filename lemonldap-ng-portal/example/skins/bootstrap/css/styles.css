@@ -90,6 +90,17 @@ p.notifCheck label {
   display: inline-block;
 }
 
+/* OpenID Connect list */
+div.openidconnect button {
+  height: 60px;
+  width: 160px;
+  margin-bottom: 5px;
+}
+
+div.openidconnect button img {
+  height: 30px;
+}
+
 @media (min-width: 768px) {
   div.application {
     height: 80px;

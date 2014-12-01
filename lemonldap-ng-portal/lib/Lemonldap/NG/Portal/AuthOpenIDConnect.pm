@@ -184,15 +184,19 @@ sub extractFormInfo {
 
         # IDP list
         my @list = ();
-        foreach ( keys %{ $self->{_oidcOPList} } ) {
+        foreach ( sort keys %{ $self->{_oidcOPList} } ) {
             push @list,
               {
                 val  => $_,
                 name => $self->{oidcOPMetaDataOptions}->{$_}
                   ->{oidcOPMetaDataOptionsDisplayName},
+                icon => $self->{oidcOPMetaDataOptions}->{$_}
+                  ->{oidcOPMetaDataOptionsIcon},
+                class => "openidconnect",
               };
         }
-        $self->{list} = \@list;
+        $self->{list}            = \@list;
+        $self->{confirmRemember} = 0;
 
         $self->{login} = 1;
         return PE_CONFIRM;

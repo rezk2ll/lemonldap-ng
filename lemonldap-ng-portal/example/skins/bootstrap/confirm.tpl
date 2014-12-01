@@ -17,7 +17,13 @@
 
     <div class="panel panel-info">
       <div class="panel-heading">
-        <h3 class="panel-title"><lang en="Confirmation" fr="Confirmation"/></h3>
+        <h3 class="panel-title">
+        <TMPL_IF NAME="LIST">
+          <lang en="Select your Identity Provider" fr="Choisissez votre fournisseur d'identité"/>
+        <TMPL_ELSE>
+          <lang en="Confirmation" fr="Confirmation"/>
+        </TMPL_IF>
+        </h3>
       </div>
       <div class="panel-body form">
 
@@ -25,22 +31,31 @@
 
       <TMPL_IF NAME="LIST">
 
-      <h3><lang en="Select your Identity Provider" fr="Choisissez votre fournisseur d'identité"/></h3>
       <input type="hidden" id="idp" name="idp"/>
 
+      <div class="row">
       <TMPL_LOOP NAME="LIST">
-          <button type="submit" class="positive btn btn-info" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
-            <span class="glyphicon glyphicon-chevron-right"></span>
+        <div class="col-sm-6 <TMPL_VAR NAME="class">">
+          <button type="submit" class="btn btn-info" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
+          <TMPL_IF NAME="icon">
+            <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="icon">" class="glyphicon" />
+          <TMPL_ELSE>
+            <i class="glyphicon glyphicon-chevron-right"></i>
+          </TMPL_IF>
             <TMPL_VAR NAME="NAME">
           </button>
+        </div>
       </TMPL_LOOP>
+      </div>
 
+      <TMPL_IF NAME="REMEMBER">
       <div class="checkbox">
         <label for="remember">
           <input type="checkbox" id="remember" name="cookie_type" value="1">
           <lang en="Remember my choice" fr="Se souvenir de mon choix"/>
         </label>
       </div>
+      </TMPL_IF>
 
       <TMPL_ELSE>
 
@@ -65,6 +80,8 @@
       </div>
 
       </TMPL_IF>
+
+      <hr />
 
       <TMPL_INCLUDE NAME="checklogins.tpl">
 
