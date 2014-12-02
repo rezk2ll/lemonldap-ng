@@ -65,6 +65,13 @@ example/skins/common/apps/tools.png
 example/skins/common/apps/tux.png
 example/skins/common/apps/web.png
 example/skins/common/apps/wheels.png
+example/skins/common/background.tpl
+example/skins/common/backgrounds/1280px-Anse_Source_d'Argent_2-La_Digue.jpg
+example/skins/common/backgrounds/1280px-Autumn-clear-water-waterfall-landscape_-_Virginia_-_ForestWander.jpg
+example/skins/common/backgrounds/1280px-BrockenSnowedTrees.jpg
+example/skins/common/backgrounds/1280px-Cedar_Breaks_National_Monument_partially.jpg
+example/skins/common/backgrounds/1280px-Parry_Peak_from_Winter_Park.jpg
+example/skins/common/backgrounds/Aletschgletscher_mit_Pinus_cembra1.jpg
 example/skins/common/BrowserID.png
 example/skins/common/bullet_go.png
 example/skins/common/calendar.png
