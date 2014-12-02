@@ -106,6 +106,7 @@ example/skins/common/mail_register_done.tpl
 example/skins/common/notification.xsl
 example/skins/common/ok.png
 example/skins/common/openid-16x16.gif
+example/skins/common/OpenIDConnect.png
 example/skins/common/redirect.tpl
 example/skins/common/SAML.png
 example/skins/common/saml2-metadata.tpl
