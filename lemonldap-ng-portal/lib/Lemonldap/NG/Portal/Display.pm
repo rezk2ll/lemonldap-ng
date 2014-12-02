@@ -326,6 +326,7 @@ sub display {
         SKIN_PATH => $portalPath . "skins",
         SKIN      => $skin,
         ANTIFRAME => $self->{portalAntiFrame},
+        SKIN_BG   => $self->{portalSkinBackground},
     );
 
     ## Custom template params

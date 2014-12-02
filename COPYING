@@ -63,6 +63,11 @@ Comment: downloaded from
  .
  Author is unknown and license may be W3C or public-domain
 
+Files: lemonldap-ng-portal/example/skins/common/backgrounds/*
+Copyright: Various artists
+Licence: CC-BY, GNU FDL
+Comment: dowloaded from http://commons.wikimedia.org
+
 Files: *tree.js lemonldap-ng-manager/example/skins/default/images/tree/*
 Copyright: 2008, Peter Panov <panov@elcat.kg>
 License: BSD-3-Clause

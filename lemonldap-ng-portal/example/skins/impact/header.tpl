@@ -11,6 +11,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
  </TMPL_IF>
  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/styles.css" />
+ <TMPL_INCLUDE NAME="../common/background.tpl">
  <link href="<TMPL_VAR NAME="SKIN_PATH">/common/favicon.ico" rel="icon" type="image/x-icon" />
  <link href="<TMPL_VAR NAME="SKIN_PATH">/common/favicon.ico" rel="shortcut icon" />
  <TMPL_IF NAME="PROVIDERURI">
