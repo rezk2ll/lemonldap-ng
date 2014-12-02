@@ -3,7 +3,7 @@
 html,
 body {
   height: 100%;
-  background: #eee;
+  background: radial-gradient(circle at 50% 0% ,  #fff 0%, #ddd 100%) no-repeat scroll 0% 0% #ddd;
   /* The html and body elements cannot have any padding or margin. */
 }
 
