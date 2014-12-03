@@ -12,14 +12,14 @@ body {
   min-height: 100%;
   height: auto;
   /* Negative indent footer by its height */
-  margin: 0 auto -60px;
+  margin: 0 auto -80px;
   /* Pad bottom by footer height */
   padding: 20px 0 80px;
 }
 
 /* Set the fixed height of the footer here */
 #footer {
-  height: 60px;
+  height: 80px;
   background-color: rgb(255,255,255);
   background-color: rgba(255,255,255,0.8);
   text-align: center;
@@ -113,5 +113,11 @@ div.openidconnect button img {
   }
   div.application h4.appname {
     margin:0;
+  }
+  #wrap {
+    margin: 0 auto -60px;
+  }
+  #footer {
+    height: 60px;
   }
 }
