@@ -14,150 +14,165 @@ my $name = $cgi->param("name") || "LemonLDAP::NG sample protected application";
 my $color = $cgi->param("color") || "#ddd";
 
 # Local parameters
+my $portal_url  = "http://auth.__DNSDOMAIN__";
 my $manager_url = "http://manager.__DNSDOMAIN__";
 
 # CSS
 my $css = <<EOT;
-body{
-background:$color;
-font-family:sans-serif;
-font-size:11pt;
-padding:0;
-margin:0;
+html,body{
+  height:100%;
+  background:$color;
 }
 #content{
-background:#fff;
-padding:10px;
-margin:0 5%;
-}
-#menu{
-text-align:center;
-margin-top:30px;
-}
-a{
-text-decoration:none;
-font-weight:bold;
-}
-h1{
-font-size:16pt;
-text-align:center;
-margin:5px 100px;
-border:2px solid $color;
-}
-h2{
-border-bottom:2px solid $color;
-}
-p.note{
-border:1px solid #ccc;
-padding:5px;
-background:#eee;
-}
-table{
-border:1px solid #ccc;
-border-collapse:collapse;
-margin:5px 0;
-width:100%;
-font-size:small;
-}
-tr{
-border:1px dotted #ccc;
-}
-tr:hover{
-background:#eee;
-}
-th{
-background:#eee;
-}
-td, th{
-padding:3px 5px;
-}
-td.emphase{
-background-color:#eee;
-font-weight:bold;
-}
-ul {
-list-style-type:none;
+  padding:20px;
 }
 EOT
 
 # Read headers
 my %headers;
-foreach(sort keys %ENV) {
-    if($_ =~ /^HTTP_/) {
-        ($a=$_) =~ s/^HTTP_//i;
-        $a = join '-', map {ucfirst(lc)} split '_',$a;
+foreach ( sort keys %ENV ) {
+    if ( $_ =~ /^HTTP_/ ) {
+        ( $a = $_ ) =~ s/^HTTP_//i;
+        $a = join '-', map { ucfirst(lc) } split '_', $a;
         $headers->{$a} = $_;
     }
 }
 
 # Display page
-print $cgi->header(-charset => 'utf-8');
-print $cgi->start_html( -title => "$name",
-                        -style => { -code => $css } );
+print $cgi->header( -charset => 'utf-8' );
 
-print "<div id=\"content\">\n";
+print "<!DOCTYPE html>\n";
+print
+  "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n";
+print "<head>\n";
+print "<title>$name</title>\n";
+print
+  "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n";
+print
+  "<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\" />\n";
+print "<meta http-equiv=\"cache-control\" content=\"no-cache\" />\n";
+print
+"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n";
+print
+"<link href=\"$portal_url/skins/bootstrap/css/bootstrap.css\" rel=\"stylesheet\">\n";
+print
+"<link href=\"$portal_url/skins/bootstrap/css/bootstrap-theme.css\" rel=\"stylesheet\">\n";
+print "<style>\n";
+print "$css\n";
+print "</style>\n";
+print
+"<script type=\"text/javascript\" src=\"/skins/common/js/jquery-1.10.2.js\"></script>\n";
+print
+"<script type=\"text/javascript\" src=\"/skins/common/js/jquery-ui-1.10.3.custom.js\"></script>\n";
+print "<script src=\"$portal_url/skins/bootstrap/js/bootstrap.js\"></script>\n";
+print "</head>\n";
+print "<body>\n";
 
-print "<h1>$name</h1>\n";
+print "<div id=\"content\" class=\"container\">\n";
+print "<div class=\"panel panel-info panel-body\">\n";
 
-print "<h2>Main informations</h2>\n";
-print "<ul>\n";
-print "<li>Authentication status: SUCCESS</li>\n";
+print "<div class=\"page-header\">\n";
+print "<h1 class=\"text-center\">$name</h1>\n";
+print "</div>\n";
+
+print "<div class=\"panel panel-info\">\n";
+print "<div class=\"panel-heading\">\n";
+print "<h2 class=\"panel-title text-center\">Main informations</h2>\n";
+print "</div>\n";
+print "<div class=\"panel-body\">\n";
+print "<ul class=\"list-unstyled\">\n";
+print
+"<li><strong>Authentication status:</strong> <span class=\"label label-success\">Success</span></li>\n";
 print "<li>Connected user: <ul>\n";
 print "<li><tt>\$ENV{HTTP_AUTH_USER}</tt>: $ENV{HTTP_AUTH_USER}</li>\n";
 print "<li><tt>\$ENV{REMOTE_USER}</tt>: $ENV{REMOTE_USER}</li>\n";
 print "</ul></li>\n";
 print "</ul>\n";
-print "<p class=\"note\">Be carefull, the <tt>\$ENV{REMOTE_USER}</tt> is set only if your script is 
-in the same server than LemonLDAP::NG Handler (<tt>\$whatToTrace</tt> parameter). If you use
-it on a reverse-proxy, <tt>\$ENV{REMOTE_USER}</tt> is not set.</p>\n";
+print
+"<div class=\"alert alert-warning\">Be carefull, the <tt>\$ENV{REMOTE_USER}</tt> is set only if your script is in the same server than LemonLDAP::NG Handler (<tt>\$whatToTrace</tt> parameter). If you use it on a reverse-proxy, <tt>\$ENV{REMOTE_USER}</tt> is not set. See <a href=\"$manager_url/doc/pages/documentation/1.4/header_remote_user_conversion.html\">this documentation page</a> to know how to convert an HTTP header into an environment variable.</div>\n";
+print "</div>\n";
+print "</div>\n";
 
-print "<h2>HTTP headers</h2>\n";
-print "<p>To know who is connected in your applications, you can read HTTP headers:</p>\n";
-print "<table>\n";
-print "<tr><th>Header</th><th>Perl CGI</th><th>PHP script</th><th>Value</th></tr>\n";
-foreach(sort keys %$headers) {
+print "<div class=\"panel panel-info\">\n";
+print "<div class=\"panel-heading\">\n";
+print "<h2 class=\"panel-title text-center\">HTTP headers</h2>\n";
+print "</div>\n";
+print "<div class=\"panel-body\">\n";
+print
+"<p>To know who is connected in your applications, you can read HTTP headers:</p>\n";
+print "<div class=\"table-responsive\">\n";
+print "<table class=\"table table-striped table-hover\">\n";
+print
+"<thead><tr><th>Header</th><th>Perl CGI</th><th>PHP script</th><th>Value</th></tr></thead><tbody>\n";
+
+foreach ( sort keys %$headers ) {
     next if $_ =~ /(Accept|Cache|User-Agent|Connection|Keep-Alive)/i;
-    $style = $_ eq 'Auth-User' ? 'class="emphase"' : '';
     print "<tr>
-    <td $style>$_</td>
-    <td $style><tt>\$ENV{$headers->{$_}}</tt></td>
-    <td $style><tt>\$_SERVER{$headers->{$_}}</tt></td>
-    <td $style><ul>";
-    foreach( split( /;/, $ENV{$headers->{$_}} ) ) {
+    <td>$_</td>
+    <td><tt>\$ENV{$headers->{$_}}</tt></td>
+    <td><tt>\$_SERVER{$headers->{$_}}</tt></td>
+    <td><ul class=\"list-unstyled\">";
+    foreach ( split( /;/, $ENV{ $headers->{$_} } ) ) {
         print "<li>$_</li>" if $_ ne " ";
     }
-    print "☒" unless $ENV{$headers->{$_}};
+    print "☒" unless $ENV{ $headers->{$_} };
     print "</ul></td>
     </tr>\n";
 }
-print "</table>\n";
-print "<p class=\"note\">Note that LemonLDAP::NG cookie is hidden. So that application developpers can
-not spoof sessions.</p>\n";
-print "<p class=\"note\">You can access to any information (IP address or LDAP attribute) by customizing
-exported headers with the <a href=\"$manager_url\">LemonLDAP::NG Management interface</a></p>\n";
+print "</tbody></table>\n";
+print "</div>\n";
+print
+"<div class=\"alert alert-warning\">Note that LemonLDAP::NG cookie is hidden. So that application developpers can not spoof sessions.</div>\n";
+print
+"<div class=\"alert alert-info\">You can access to any information (IP address or LDAP attribute) by customizing exported headers with the <a href=\"$manager_url\">LemonLDAP::NG Management interface</a>.</div>\n";
+print "</div>\n";
+print "</div>\n";
 
-print "<h2>Script parameters</h2>\n";
+print "<div class=\"panel panel-info\">\n";
+print "<div class=\"panel-heading\">\n";
+print "<h2 class=\"panel-title text-center\">Scripts parameters</h2>\n";
+print "</div>\n";
+print "<div class=\"panel-body\">\n";
 print "<p>Find here all GET or POST parameters sent to this page:</p>\n";
-print "<table>\n";
-print "<tr><th>Parameter</th><th>Value</th></tr>\n";
-foreach(sort $cgi->param()) {
+print "<div class=\"table-responsive\">\n";
+print "<table class=\"table table-striped table-hover\">\n";
+print "<thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>\n";
+
+foreach ( sort $cgi->param() ) {
     my $tmp = $cgi->param($_);
     print "<tr><td>$_</td><td><big>☞</big> $tmp</td></tr>\n";
 }
-print "<p class=\"note\">POST parameters can be forged by LemonLDAP::NG to autosubmit forms</p>\n";
-print "</table>\n";
+print "</tbody></table>\n";
+print "</div>\n";
+print
+"<div class=\"alert alert-info\">POST parameters can be forged by LemonLDAP::NG to <a href=\"$manager_url/doc/pages/documentation/1.4/formreplay.html\">autosubmit forms</a>.</div>\n";
+print "</div>\n";
+print "</div>\n";
 
-print "<h2>Environment for Perl CGI</h2>\n";
-print "<table>\n";
-print "<tr><th>Environment variable</th><th>Value</th></tr>\n";
-foreach(sort keys %ENV) {
+print "<div class=\"panel panel-info\">\n";
+print "<div class=\"panel-heading\">\n";
+print "<h2 class=\"panel-title text-center\">Environment for Perl CGI</h2>\n";
+print "</div>\n";
+print "<div class=\"panel-body\">\n";
+print "<div class=\"table-responsive\">\n";
+print "<table class=\"table table-striped table-hover\">\n";
+print
+"<thead><tr><th>Environment variable</th><th>Value</th></tr></thead><tbody>\n";
+
+foreach ( sort keys %ENV ) {
     my $tmp = $ENV{$_};
     $tmp =~ s/&/&amp;/g;
     $tmp =~ s/>/&gt;/g;
     $tmp =~ s/</&lt;/g;
     print "<tr><td>$_</td><td><big>☞</big> $tmp</td></tr>\n";
 }
-print "</table>\n";
+print "</tbody></table>\n";
 print "</div>\n";
+print "</div>\n";
+print "</div>\n";
+
+print "</div>\n";
+print "</div>\n";
+
 print $cgi->end_html;
 
