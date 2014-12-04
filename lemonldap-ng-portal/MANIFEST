@@ -12,7 +12,6 @@ example/register.pl
 example/scripts/buildPortalWSDL
 example/scripts/purgeCentralCache
 example/scripts/purgeCentralCache.cron.d
-example/skins/bootstrap/.checklogins.tpl.swp
 example/skins/bootstrap/checklogins.tpl
 example/skins/bootstrap/confirm.tpl
 example/skins/bootstrap/css/bootstrap-theme.css
