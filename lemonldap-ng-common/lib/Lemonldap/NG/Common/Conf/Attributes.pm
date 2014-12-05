@@ -8,7 +8,7 @@ package Lemonldap::NG::Common::Conf::Attributes;
 
 use Mouse;
 
-our $VERSION = 1.4.1;
+our $VERSION = 2.00;
 
 ## A
 
@@ -868,6 +868,13 @@ has 'portalSkin' => (
     isa           => 'Str',
     default       => 'bootstrap',
     documentation => 'Name of portal skin',
+);
+
+has 'portalSkinBackground' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => 'Skin image background',
 );
 
 has 'portalUserAttr' => (

@@ -11,7 +11,7 @@ use Lemonldap::NG::Common::Conf::Attributes;
 use Lemonldap::NG::Common::Conf::SubAttributes;
 use Lemonldap::NG::Common::Regexp;
 
-our $VERSION = '1.4.2';
+our $VERSION = '2.00';
 
 ## @method protected hashref cstruct(hashref h,string k)
 # Merge $h with the structure produced with $k and return it.
@@ -308,12 +308,13 @@ sub struct {
 
                 portalCustomization => {
                     _nodes => [
-                        qw(portalSkin cn:portalSkinRules portalButtons passwordManagement portalOther)
+                        qw(portalSkin portalSkinBackground cn:portalSkinRules portalButtons passwordManagement portalOther)
                     ],
                     _help => 'portalcustom',
 
                     portalSkin => 'text:/portalSkin:portalcustom:skinSelect',
-                    portalSkinRules => {
+                    portalSkinBackground => 'text:/portalSkinBackground',
+                    portalSkinRules      => {
                         _nodes => ['hash:/portalSkinRules:portalcustom:btext'],
                         _js    => 'hashRoot',
                         _help  => 'portalcustom',
@@ -1788,7 +1789,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test    => qr/\w+$/,
             msgFail => 'Bad skin name',
         },
-        portalSkinRules => {
+        portalSkinBackground => $testNotDefined,
+        portalSkinRules      => {
             keyTest    => $perlExpr,
             keyMsgFail => 'Bad skin rule',
             test       => qr/\w+$/,
@@ -2285,7 +2287,8 @@ sub globalTests {
                     my $v = $conf->{$k};
                     $v =~ s/^$//;
                     next if ( $v =~ /^_/ );
-                    push @tmp, $k
+                    push @tmp,
+                      $k
                       unless (
                         defined(
                             $conf->{exportedVars}->{$v}
@@ -2461,7 +2464,7 @@ sub globalTests {
                         foreach ( keys %{ $conf->{authChoiceModules} } ) {
                             my ( $auth, $userDB, $passwordDB ) =
                               split( '|', $conf->{authChoiceModules}->{$_} );
-                            $authChoice   = 1 if $auth   =~ /$type/i;
+                            $authChoice   = 1 if $auth =~ /$type/i;
                             $userDBChoice = 1 if $userDB =~ /$type/i;
                         }
                     }
@@ -2471,7 +2474,7 @@ sub globalTests {
                                 $k =~ /^$type/i
                             and not( $conf->{"issuerDB${type}Activation"} )
                             and not( $conf->{authentication} =~ /$type/i )
-                            and not( $conf->{userDB}         =~ /$type/i )
+                            and not( $conf->{userDB} =~ /$type/i )
                             and not( defined $authChoice
                                 or defined $userDBChoice )
                         )

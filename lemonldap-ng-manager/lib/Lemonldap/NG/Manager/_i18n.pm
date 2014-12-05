@@ -9,7 +9,7 @@ package Lemonldap::NG::Manager::_i18n;
 
 use strict;
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '1.4.0';
+our $VERSION = '2.00';
 
 ## @method string translate(string text,string lang)
 # Returns $text translated in $lang.
@@ -308,6 +308,7 @@ sub en {
         portalRedirection           => 'Portal redirections',
         portalRequireOldPassword    => 'Require old password',
         portalSkin                  => 'Default Skin',
+        portalSkinBackground        => 'Background image',
         portalSkinRules             => 'Skin display rules',
         portalUserAttr              => 'User attribute',
         post                        => 'Form replay',
@@ -819,6 +820,7 @@ sub fr {
         portalRedirection           => 'Redirections du portail',
         portalRequireOldPassword    => 'Ancien mot de passe requis',
         portalSkin                  => 'Thème visuel par défaut',
+        portalSkinBackground        => 'Image de fond',
         portalSkinRules             => "Règles d'affichage du thème visuel",
         portalUserAttr              => "Attribut de l'utilisateur",
         post                        => 'Rejeu de formulaires',
