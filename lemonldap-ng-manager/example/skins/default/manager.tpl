@@ -402,16 +402,24 @@
 
     <!-- Boolean or Perl Expr -->
     <div id="content_boolOrPerlExpr" class="hidden">
-     <input id="bopeOn" type="radio" name="bope" value="1" onclick="setlmdata(currentId,1);$('#bopeValue').hide();"/><label for="bopeOn"><lang en="On" fr="Activé"/></label>
-     <input id="bopeOff" type="radio" name="bope" value="0" onclick="setlmdata(currentId,0);$('#bopeValue').hide();"/><label for="bopeOff"><lang en="Off" fr="Désactivé"/></label>
-     <input id="bopeExpr" type="radio" name="bope" value="-1" onclick="$('#bopeValue').show();"/><label for="bopeExpr"><lang en="Specific rule" fr="Règle spécifique"/></label>
-     <br />
+     <div class="btn-group buttons" data-toggle="buttons">
+     <label id="bopeOn" class="btn btn-info" onclick="setlmdata(currentId,1);$('#bopeValue').hide();">
+     <input type="radio" name="bope" autocomplete="off" /><lang en="On" fr="Activé"/>
+     </label>
+     <label id="bopeOff" class="btn btn-info" onclick="setlmdata(currentId,0);$('#bopeValue').hide();">
+     <input type="radio" name="bope" autocomplete="off" /><lang en="Off" fr="Désactivé"/>
+     </label>
+     <label id="bopeExpr" class="btn btn-info" onclick="$('#bopeValue').show();">
+     <input type="radio" name="bope" autocomplete="off" /><lang en="Specific rule" fr="Règle spécifique"/>
+     </label>
+     </div>
      <textarea id="bopeValue" cols="30" rows="2" class="form-control"></textarea>
-     <br />
+     <div class="buttons text-center">
      <button onclick="setlmbope(currentId);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
 

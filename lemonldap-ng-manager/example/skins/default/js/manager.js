@@ -684,6 +684,8 @@ function btext(id) {
 }
 function bool(id) {
 	currentId = id;
+	$('#On').removeClass('active');
+	$('#Off').removeClass('active');
 	if (lmdata(id) == 1) {
 		$('#On').addClass('active');
 	} else {
@@ -693,6 +695,9 @@ function bool(id) {
 }
 function trool(id) {
 	currentId = id;
+	$('#TrOn').removeClass('active');
+	$('#TrOff').removeClass('active');
+	$('#TrDefault').removeClass('active');
 	if (lmdata(id) == 1) {
 		$('#TrOn').addClass('active');
 	}
@@ -1598,15 +1603,18 @@ function resizeHelp() {
 /* Boolean or Perl Expression */
 function boolOrPerlExpr(id) {
 	currentId = id;
+	$('#bopeOn').removeClass('active');
+	$('#bopeOff').removeClass('active');
+	$('#bopeExpr').removeClass('active');
 	$('#bopeValue').val('');
 	$('#bopeValue').hide();
 	if (lmdata(id) == 1) {
-		$('#bopeOn').prop('checked', true);
+		$('#bopeOn').addClass('active');
 	} else {
 		if (lmdata(id) == 0) {
-			$('#bopeOff').prop('checked', true);
+			$('#bopeOff').addClass('active');
 		} else {
-			$('#bopeExpr').prop('checked', true);
+			$('#bopeExpr').addClass('active');
 			$('#bopeValue').val(lmdata(id));
 			$('#bopeValue').show();
 		}
