@@ -75,6 +75,11 @@ input#applicationListApplicationLogo
 	height: 56px;
 }
 
+input#skinText
+{
+	height: 153px;
+}
+
 option
 {
 	margin:5px;

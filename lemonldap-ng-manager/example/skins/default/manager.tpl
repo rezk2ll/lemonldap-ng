@@ -489,14 +489,18 @@
 
     <!-- Skin -->
     <div id="content_skin" class="hidden">
-     <button class="current"><img src="" alt="" class="current" /></button>
-     <br /> 
+     <div class="input-group">
+     <span class="input-group-btn">
+     <button class="current btn btn-default" role="button"><img src="" alt="" class="current" /></button>
+     </span>
      <input id="skinText" type="text" readonly="readonly" class="form-control"/>
-     <br />
+     </div>
+     <div class="buttons">
      <button onclick="setlminputdata(currentId,skinText);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- Vhost -->
