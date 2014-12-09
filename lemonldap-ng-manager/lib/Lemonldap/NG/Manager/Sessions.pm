@@ -133,8 +133,6 @@ sub list {
     my $self = shift;
     my ( $byUid, $count, $res );
     $count = 0;
-    use Data::Dumper;
-    print STDERR Dumper($tsv);
 
     # Parse all sessions to store first letter
     my $moduleOptions = $tsv->{sessionStorageOptions} || {};
