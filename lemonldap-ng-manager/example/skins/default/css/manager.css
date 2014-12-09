@@ -70,6 +70,10 @@ input#int
 	text-align:center;
 }
 
+input#applicationListApplicationLogo
+{
+	height: 56px;
+}
 
 option
 {

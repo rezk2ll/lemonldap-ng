@@ -664,53 +664,59 @@
 
     <!-- applicationList Category-->
     <div id="content_applicationListCategory" class="hidden">
-     <table>
+     <table class="table">
       <tr>
-       <td><lang en="Key" fr="Nom de la clef"/></td>
+       <th><lang en="Key" fr="Nom de la clef"/></th>
        <td><input type="text" id="applicationListCategoryKey" class="form-control"/></td>
       </tr>
       <tr>
-       <td><lang en="Display name" fr="Nom à afficher"/></td>
+       <th><lang en="Display name" fr="Nom à afficher"/></th>
        <td><input type="text" id="applicationListCategoryName" class="form-control"/></td>
       </tr>
      </table>
-     <br />
+     <div class="buttons text-center">
      <button onclick="setlminputtext(currentId,'#applicationListCategoryKey');setlminputdata(currentId,'#applicationListCategoryName');return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- applicationList Application-->
     <div id="content_applicationListApplication" class="hidden">
-     <table>
+     <table class="table">
       <tr>
-       <td><lang en="Key" fr="Nom de la clef"/></td>
+       <th><lang en="Key" fr="Nom de la clef"/></th>
        <td><input type="text" id="applicationListApplicationKey" class="form-control"/></td>
-       <td><lang en="Display name" fr="Nom à afficher"/></td>
+       <th><lang en="Display name" fr="Nom à afficher"/></th>
        <td><input type="text" id="applicationListApplicationName" class="form-control"/></td>
       </tr>
       <tr>
-       <td><lang en="Address" fr="Adresse"/></td>
+       <th><lang en="Address" fr="Adresse"/></th>
        <td><input type="text" id="applicationListApplicationURL" class="form-control"/></td>
-       <td><lang en="Display mode" fr="Mode d'affichage"/></td>
+       <th><lang en="Display mode" fr="Mode d'affichage"/></th>
        <td><select id="applicationListApplicationDisplay" class="form-control"></select></td>
       </tr>
       <tr>
-       <td><lang en="Description" fr="Description"/></td>
+       <th><lang en="Description" fr="Description"/></th>
        <td><textarea id="applicationListApplicationDescription" class="form-control"/></textarea></td>
-       <td><lang en="Logo" fr="Logo"/></td>
+       <th><lang en="Logo" fr="Logo"/></th>
        <td>
-         <button class="current"><img src="" alt="" class="current" /></button><br />
+         <div class="input-group">
+         <span class="input-group-btn">
+         <button class="current btn btn-default" role="button"><img src="" alt="" class="current" /></button>
+         </span>
          <input type="text" id="applicationListApplicationLogo" readonly="readonly" class="form-control"/>
+         </div>
        </td>
       </tr>
      </table>
-     <br />
+     <div class="buttons text-center">
      <button onclick="setlmapplication(currentId);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- Post -->
