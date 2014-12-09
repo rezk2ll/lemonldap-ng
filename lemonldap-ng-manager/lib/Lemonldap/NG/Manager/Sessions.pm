@@ -25,7 +25,7 @@ use utf8;
 #our $whatToTrace;
 #*whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '1.4.1';
+our $VERSION = '2.00';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI
@@ -133,10 +133,12 @@ sub list {
     my $self = shift;
     my ( $byUid, $count, $res );
     $count = 0;
+    use Data::Dumper;
+    print STDERR Dumper($tsv);
 
     # Parse all sessions to store first letter
-    my $moduleOptions = $tsv->{globalStorageOptions} || {};
-    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $moduleOptions = $tsv->{sessionStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{sessionStorageModule};
     my $module = "Lemonldap::NG::Common::Apache::Session";
     $res =
       $module->get_key_from_all_sessions( $moduleOptions,
@@ -188,8 +190,8 @@ sub doubleIp {
     my ( $byUid, $byIp, $res, $count );
 
     # Parse all sessions
-    my $moduleOptions = $tsv->{globalStorageOptions} || {};
-    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $moduleOptions = $tsv->{sessionStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{sessionStorageModule};
     my $module = "Lemonldap::NG::Common::Apache::Session";
     $res = $module->get_key_from_all_sessions(
         $moduleOptions,
@@ -256,8 +258,8 @@ sub fullip {
     my ( $byUid, $res );
 
     # Parse sessions and store only if IP match regexp
-    my $moduleOptions = $tsv->{globalStorageOptions} || {};
-    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $moduleOptions = $tsv->{sessionStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{sessionStorageModule};
     my $module = "Lemonldap::NG::Common::Apache::Session";
     $res =
       $module->searchOnExpr( $moduleOptions, $self->{ipField}, $req,
@@ -302,8 +304,8 @@ sub fulluid {
     my ( $byUid, $res );
 
     # Parse sessions to find user that match regexp
-    my $moduleOptions = $tsv->{globalStorageOptions} || {};
-    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $moduleOptions = $tsv->{sessionStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{sessionStorageModule};
     my $module = "Lemonldap::NG::Common::Apache::Session";
     $res = $module->searchOnExpr(
         $moduleOptions, $tsv->{whatToTrace},
@@ -359,10 +361,10 @@ sub delete {
     # Try to read session
     my $apacheSession = Lemonldap::NG::Common::Session->new(
         {
-            storageModule        => $tsv->{globalStorage},
-            storageModuleOptions => $tsv->{globalStorageOptions},
-            cacheModule          => $tsv->{localSessionStorage},
-            cacheModuleOptions   => $tsv->{localSessionStorageOptions},
+            storageModule        => $tsv->{sessionStorageModule},
+            storageModuleOptions => $tsv->{sessionStorageOptions},
+            cacheModule          => $tsv->{sessionCacheModule},
+            cacheModuleOptions   => $tsv->{sessionCacheOptions},
             id                   => $id,
             kind                 => "SSO",
         }
@@ -384,10 +386,10 @@ sub delete {
         if ( my $id2 = $apacheSession->data->{_httpSession} ) {
             my $apacheSession2 = Lemonldap::NG::Common::Session->new(
                 {
-                    storageModule        => $tsv->{globalStorage},
-                    storageModuleOptions => $tsv->{globalStorageOptions},
-                    cacheModule          => $tsv->{localSessionStorage},
-                    cacheModuleOptions   => $tsv->{localSessionStorageOptions},
+                    storageModule        => $tsv->{sessionStorageModule},
+                    storageModuleOptions => $tsv->{sessionStorageOptions},
+                    cacheModule          => $tsv->{sessionCacheModule},
+                    cacheModuleOptions   => $tsv->{sessionCacheOptions},
                     id                   => $id2,
                     kind                 => "SSO",
                 }
@@ -433,10 +435,10 @@ sub session {
     # Try to read session
     my $apacheSession = Lemonldap::NG::Common::Session->new(
         {
-            storageModule        => $tsv->{globalStorage},
-            storageModuleOptions => $tsv->{globalStorageOptions},
-            cacheModule          => $tsv->{localSessionStorage},
-            cacheModuleOptions   => $tsv->{localSessionStorageOptions},
+            storageModule        => $tsv->{sessionStorageModule},
+            storageModuleOptions => $tsv->{sessionStorageOptions},
+            cacheModule          => $tsv->{sessionCacheModule},
+            cacheModuleOptions   => $tsv->{sessionCacheOptions},
             id                   => $id,
             kind                 => "SSO",
         }
@@ -703,8 +705,8 @@ sub uidByIp {
     my ( $self, $ip ) = splice @_;
     my ( $byUser, $res );
 
-    my $moduleOptions = $tsv->{globalStorageOptions} || {};
-    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $moduleOptions = $tsv->{sessionStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{sessionStorageModule};
     my $module = "Lemonldap::NG::Common::Apache::Session";
     $res =
       $module->searchOn( $moduleOptions, $self->{ipField}, $ip,
@@ -740,8 +742,8 @@ sub uid {
     my ( $self, $uid ) = splice @_;
     my ( $byIp, $res );
 
-    my $moduleOptions = $tsv->{globalStorageOptions} || {};
-    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $moduleOptions = $tsv->{sessionStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{sessionStorageModule};
     my $module = "Lemonldap::NG::Common::Apache::Session";
     $res =
       $module->searchOn( $moduleOptions, $tsv->{whatToTrace}, $uid,
@@ -779,8 +781,8 @@ sub letter {
     my $letter = $self->param('letter');
     my ( $byUid, $res );
 
-    my $moduleOptions = $tsv->{globalStorageOptions} || {};
-    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $moduleOptions = $tsv->{sessionStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{sessionStorageModule};
     my $module = "Lemonldap::NG::Common::Apache::Session";
     $res = $module->searchOnExpr(
         $moduleOptions, $tsv->{whatToTrace},
@@ -831,8 +833,8 @@ sub _ipclasses {
     my $repartial = quotemeta($partial);
     my ( $byIp, $count, $res );
 
-    my $moduleOptions = $tsv->{globalStorageOptions} || {};
-    $moduleOptions->{backend} = $tsv->{globalStorage};
+    my $moduleOptions = $tsv->{sessionStorageOptions} || {};
+    $moduleOptions->{backend} = $tsv->{sessionStorageModule};
     my $module = "Lemonldap::NG::Common::Apache::Session";
     $res = $module->searchOnExpr(
         $moduleOptions, $self->{ipField},
