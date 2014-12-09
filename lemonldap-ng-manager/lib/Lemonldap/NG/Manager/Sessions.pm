@@ -354,7 +354,7 @@ sub ipclasses {
 # @return string XML tree
 sub delete {
     my ( $self, $id ) = splice @_;
-    my ( %h, $res );
+    my %h;
 
     # Try to read session
     my $apacheSession = Lemonldap::NG::Common::Session->new(
@@ -371,12 +371,7 @@ sub delete {
     if ( $apacheSession->error ) {
         $self->lmLog( "Unable to open session $id", 'error' );
         $self->lmLog( $apacheSession->error,        'error' );
-        $res .= '<h1 class="ui-widget-header ui-corner-all">'
-          . $self->translate('error') . '</h1>';
-        $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= "Apache::Session error";
-        $res .= '</div>';
-        return $res;
+        return $self->displayError( $apacheSession->error );
     }
 
     else {
@@ -407,19 +402,14 @@ sub delete {
 
         if ( $apacheSession->remove ) {
             $self->lmLog( "Session $id deleted", 'info' );
-            $res .= '<h1 class="ui-widget-header ui-corner-all">'
-              . $self->translate('sessionDeleted') . '</h1>';
+            return $self->displayMessage( $self->translate('sessionDeleted') );
         }
         else {
             $self->lmLog( "Unable to remove session $id", 'error' );
             $self->lmLog( $apacheSession->error,          'error' );
-            $res .= '<h1 class="ui-widget-header ui-corner-all">'
-              . $self->translate('error') . '</h1>';
-            $res .= '<div class="ui-corner-all ui-widget-content">';
-            $res .= "Apache::Session error";
-            $res .= '</div>';
+            return $self->displayError( $apacheSession->error );
         }
-        return $res;
+
     }
 }
 
@@ -445,28 +435,27 @@ sub session {
     if ( $apacheSession->error ) {
         $self->lmLog( "Unable to open session $id", 'error' );
         $self->lmLog( $apacheSession->error,        'error' );
-        $res .= '<h1 class="ui-widget-header ui-corner-all">'
-          . $self->translate('error') . '</h1>';
-        $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= "Apache::Session error";
-        $res .= '</div>';
-        return $res;
+        return $self->displayError( $apacheSession->error );
     }
 
     # Session is available, print content
     my %session = %{ $apacheSession->data };
 
     # General informations
+    $res .= '<div class="panel-heading">';
 
-    $res .= '<h1 class="ui-widget-header ui-corner-all">';
+    $res .= '<h1 class="panel-title text-center">';
     $res .= $self->translate('sessionTitle');
     $res .= '</h1>';
+    $res .= '</div>';
+    $res .= '<div class="panel-body">';
 
     $res .=
-        "<p><strong>"
+        "<div class=\"alert alert-info\"><strong>"
       . $self->translate('sessionStartedAt')
-      . ":</strong> "
-      . $self->_stToStr( $session{startTime} ) . "</p>";
+      . "</strong> "
+      . $self->_stToStr( $session{startTime} )
+      . "</div>";
 
     # Transform values
     # -> split multiple values
@@ -530,7 +519,7 @@ sub session {
     };
 
     # Display categories
-    foreach my $category ( keys %$categories ) {
+    foreach my $category ( sort keys %$categories ) {
 
         # Test if category is not empty
         my $empty = 1;
@@ -540,9 +529,12 @@ sub session {
         next if ($empty);
 
         # Display category
-        $res .= '<div class="ui-corner-all ui-widget-content category">';
-        $res .= '<h2 class="ui-corner-all ui-widget-header">'
+        $res .= '<div class="panel panel-default">';
+        $res .= '<div class="panel-heading">';
+        $res .= '<h2 class="panel-title text-center">'
           . $self->translate($category) . '</h2>';
+        $res .= '</div>';
+        $res .= '<div class="panel-body">';
         $res .= '<ul>';
 
         foreach my $attribute ( @{ $categories->{$category} } ) {
@@ -564,6 +556,7 @@ sub session {
         }
         $res .= '</ul>';
         $res .= '</div>';
+        $res .= '</div>';
     }
 
     # OpenID
@@ -572,9 +565,11 @@ sub session {
         $openidempty = 0 if $_ =~ /^_openid/;
     }
     unless ($openidempty) {
-        $res .= '<div class="ui-corner-all ui-widget-content category">';
-        $res .=
-          '<h2 class="ui-corner-all ui-widget-header">' . 'OpenID' . '</h2>';
+        $res .= '<div class="panel panel-default">';
+        $res .= '<div class="panel-heading">';
+        $res .= '<h2 class="panel-title text-center">' . 'OpenID' . '</h2>';
+        $res .= '</div>';
+        $res .= '<div class="panel-body">';
         $res .= '<ul>';
 
         foreach ( keys %session ) {
@@ -588,6 +583,7 @@ sub session {
 
         $res .= '</ul>';
         $res .= '</div>';
+        $res .= '</div>';
     }
 
     # Notifications
@@ -596,9 +592,12 @@ sub session {
         $notifempty = 0 if $_ =~ /^notification_/;
     }
     unless ($notifempty) {
-        $res .= '<div class="ui-corner-all ui-widget-content category">';
-        $res .= '<h2 class="ui-corner-all ui-widget-header">'
+        $res .= '<div class="panel panel-default">';
+        $res .= '<div class="panel-heading">';
+        $res .= '<h2 class="panel-title text-center">'
           . ucfirst $self->translate('notificationsDone') . '</h2>';
+        $res .= '</div>';
+        $res .= '<div class="panel-body">';
         $res .= '<ul>';
 
         foreach ( keys %session ) {
@@ -616,13 +615,17 @@ sub session {
 
         $res .= '</ul>';
         $res .= '</div>';
+        $res .= '</div>';
     }
 
     # Login history
     if ( defined $session{loginHistory} ) {
-        $res .= '<div class="ui-corner-all ui-widget-content category">';
-        $res .= '<h2 class="ui-corner-all ui-widget-header">'
+        $res .= '<div class="panel panel-default">';
+        $res .= '<div class="panel-heading">';
+        $res .= '<h2 class="panel-title text-center">'
           . ucfirst $self->translate('loginHistory') . '</h2>';
+        $res .= '</div>';
+        $res .= '<div class="panel-body">';
         $res .= '<ul>';
 
         # Get all login records
@@ -655,12 +658,16 @@ sub session {
         delete $session{loginHistory};
         $res .= '</ul>';
         $res .= '</div>';
+        $res .= '</div>';
     }
 
     # Other attributes
-    $res .= '<div class="ui-corner-all ui-widget-content category">';
-    $res .= '<h2 class="ui-corner-all ui-widget-header">'
+    $res .= '<div class="panel panel-default">';
+    $res .= '<div class="panel-heading">';
+    $res .= '<h2 class="panel-title text-center">'
       . $self->translate('attributesAndMacros') . '</h2>';
+    $res .= '</div>';
+    $res .= '<div class="panel-body">';
     $res .= '<ul>';
 
     foreach my $attribute (
@@ -683,16 +690,18 @@ sub session {
 
     $res .= '</ul>';
     $res .= '</div>';
+    $res .= '</div>';
 
     # Delete button
-    $res .= '<div style="text-align:center">';
+    $res .= '<div class="text-center">';
     $res .=
         "<input type=\"button\" onclick=\"del('$id');\""
-      . ' class="ui-state-default ui-corner-all"'
+      . ' class="btn btn-danger"'
       . " value=\""
       . $self->translate('deleteSession') . "\" />";
     $res .= '</div>';
 
+    $res .= '</div>';
     return $res;
 }
 
@@ -905,6 +914,36 @@ sub _stToStr {
     shift;
     return
       sprintf( '%d-%02d-%02d %d:%02d:%02d', unpack( 'a4a2a2a2a2a2', shift ) );
+}
+
+## @method private string displayError(string error)
+# Display HTML error
+# @param error Error message
+# @return HTML data
+sub displayError {
+    my ( $self, $error ) = @_;
+    my $html;
+    $html .= '<div class="panel-body">';
+    $html .= '<div class="alert alert-danger">';
+    $html .= $error;
+    $html .= '</div>';
+    $html .= '</div>';
+    return $html;
+}
+
+## @method private string displayMessage(string message)
+# Display HTML message
+# @param message Message
+# @return HTML data
+sub displayMessage {
+    my ( $self, $message ) = @_;
+    my $html;
+    $html .= '<div class="panel-body">';
+    $html .= '<div class="alert alert-info">';
+    $html .= $message;
+    $html .= '</div>';
+    $html .= '</div>';
+    return $html;
 }
 
 1;

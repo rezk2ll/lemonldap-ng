@@ -16,28 +16,17 @@ html,body
 	padding:0;
 	height:100%;
 	min-height:100%;
-	overflow:hidden;
+	background: rgb(0,0,0);
 }
 
 body
 {
-	font:normal 9pt sans-serif;
-	background:#000 url('../images/logo_lemonldap-ng.png') no-repeat 10px 10px;
+	padding-top: 60px;
 }
 
-.content
+img.brand
 {
-	display:block;
-}
-
-.hidden
-{
-	display:none;
-}
-
-a, a:link, a:visited
-{
-	text-decoration:none;
+	height:25px;
 }
 
 ul
@@ -48,13 +37,14 @@ ul
 }
 
 /* Buttons, Inputs*/
+.buttons
+{
+	margin: 10px 0;
+}
+
 input, select, textarea
 {
 	font-weight:bold;
-	border:1px solid #bbb;
-	padding:5px 10px;
-	margin:5px;
-	vertical-align: middle;
 }
 
 textarea.elastic {
@@ -71,7 +61,6 @@ textarea#filearea
 
 input#text, select
 {
-	width:80%;
 	text-align:center;
 }
 
@@ -88,74 +77,17 @@ option
 }
 
 /* Divs */
-#header {
-	height:40px;
-	padding:5px 5px;
-	margin:5px 10px;
-	text-align: center;
-}
-
-#header img 
+#menu, #data
 {
-	float:left;
-	margin:0 10px
-}
-
-#menu
-{
-	float:left;
-	padding:10px;
-	margin:0 10px;
-	width:300px;
 	overflow-x:hidden;
 	overflow-y:auto;
 }
 
-#version {
-	position: absolute;
-	top: 50px;
-	left: 15px;
-	color: white;
-	font-size:6pt;
-}
-
-#buttons, #edition, #help, #data
+#buttons, #edition, #help
 {
 	text-align:center;
-	margin:0 10px 10px 340px;
 }
 
-
-#help h1, #buttons h1, #edition h1
-{
-	text-align:center;
-	font-size:12pt;
-	padding:5px 10px;
-	margin:5px 10px;
-	cursor:pointer;
-}
-
-#data h1, #data h2
-{
-	text-align:center;
-	font-size:12pt;
-	padding:5px 10px;
-	margin:5px 10px;
-}
-
-#help h1 img, #buttons h1 img, #edition h1 img
-{
-	vertical-align:bottom;
-	margin-bottom:2px;
-	margin-right:5px;
-}
-
-#help_content, #buttons_content, #content, #data
-{
-	padding:5px 10px;
-	margin:5px 10px;
-	overflow:auto;
-}
 
 #help_content
 {
@@ -174,47 +106,6 @@ option
 {
 	padding:0;
 	margin:10px 0;
-}
-
-#css-switch p
-{
-	margin:10px 0;
-	padding:10px;
-}
-
-/* Filearea */
-#content_filearea table tr td
-{
-  text-align:left;
-  vertical-align:middle;
-}
-#content_filearea table
-{
-  margin-left:auto;
-  margin-right:auto;
-  padding-left:20px;
-}
-#content_filearea span.loadimg
-{
-  display:inline-block;
-  width:20px;
-}
-
-/* saml */
-#content_samlAssertion table,
-#content_samlService table
-{
-  margin-left:auto;
-  margin-right:auto;
-}
-
-/* Sessions explorer */
-div.category {
-	margin: 5px 50px;
-}
-
-div.category h2 {
-	margin: 5px 50px;
 }
 
 /* Popup */

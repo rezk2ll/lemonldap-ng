@@ -22,7 +22,7 @@ use utf8;
 our $whatToTrace;
 *whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '1.4.1';
+our $VERSION = '2.00';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI
@@ -265,21 +265,16 @@ sub listDone {
 # @param id Session identifier
 # @return HTML data
 sub delete {
-    my ( $self, $id ) = splice @_;
-    my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
-    my ( $n, $res );
+    my ( $self, $id )  = splice @_;
+    my ( $uid,  $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
+    my ( $n,    $res );
 
     # Try to read notification
     $n = $self->{notifObject}->_get( $uid, $ref );
 
     unless ($n) {
         $self->lmLog( "Notification $ref not found for user $uid", 'error' );
-        $res .= '<h1 class="ui-widget-header ui-corner-all">'
-          . $self->translate('error') . '</h1>';
-        $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= $self->translate('notificationNotFound');
-        $res .= '</div>';
-        return $res;
+        return $self->displayError( $self->translate('notificationNotFound') );
     }
 
     # Delete notifications
@@ -289,22 +284,14 @@ sub delete {
     }
 
     unless ($status) {
-
         $self->lmLog( "Notification $ref for user $uid not deleted", 'error' );
-        $res .= '<h1 class="ui-widget-header ui-corner-all">'
-          . $self->translate('error') . '</h1>';
-        $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= $self->translate('notificationNotDeleted');
-        $res .= '</div>';
-        return $res;
-
+        return $self->displayError(
+            $self->translate('notificationNotDeleted') );
     }
 
     else {
         $self->lmLog( "Notification $ref deleted for user $uid", 'info' );
-        $res .= '<h1 class="ui-widget-header ui-corner-all">'
-          . $self->translate('notificationDeleted') . '</h1>';
-        return $res;
+        return $self->displayMessage( $self->translate('notificationDeleted') );
     }
 
 }
@@ -321,22 +308,13 @@ sub purge {
     my $status = $self->{notifObject}->purge($id);
 
     unless ($status) {
-
         $self->lmLog( "Notification $id not purged", 'error' );
-        $res .= '<h1 class="ui-widget-header ui-corner-all">'
-          . $self->translate('error') . '</h1>';
-        $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= $self->translate('notificationNotPurged');
-        $res .= '</div>';
-        return $res;
-
+        return $self->displayError( $self->translate('notificationNotPurged') );
     }
 
     else {
         $self->lmLog( "Notification $id purged", 'info' );
-        $res .= '<h1 class="ui-widget-header ui-corner-all">'
-          . $self->translate('notificationPurged') . '</h1>';
-        return $res;
+        return $self->displayMessage( $self->translate('notificationPurged') );
     }
 
 }
@@ -345,27 +323,25 @@ sub purge {
 # Build notification dump.
 # @return string XML tree
 sub notification {
-    my ( $self, $id ) = splice @_;
-    my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
-    my ( $n, $res );
+    my ( $self, $id )  = splice @_;
+    my ( $uid,  $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
+    my ( $n,    $res );
 
     # Try to read notification
     $n = $self->{notifObject}->_get( $uid, $ref );
 
     unless ($n) {
         $self->lmLog( "Notification $ref not found for user $uid", 'error' );
-        $res .= '<h1 class="ui-widget-header ui-corner-all">'
-          . $self->translate('error') . '</h1>';
-        $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= $self->translate('notificationNotFound');
-        $res .= '</div>';
-        return $res;
+        return $self->displayError( $self->translate('notificationNotFound') );
     }
 
     # Notification is avalaible, print content
-    $res .= '<h1 class="ui-widget-header ui-corner-all">';
+    $res .= '<div class="panel-heading">';
+    $res .= '<h1 class="panel-title text-center">';
     $res .= "Notification $ref";
     $res .= '</h1>';
+    $res .= '</div>';
+    $res .= '<div class="panel-body">';
 
     foreach ( keys %$n ) {
 
@@ -381,17 +357,18 @@ sub notification {
         $xml =~ s#\n#<br />#g;
 
         # Print XML
-        $res .= "<p style=\"text-align:left;\"><tt>$xml</tt></p>";
+        $res .= "<div class=\"well\"><tt>$xml</tt></div>";
 
     }
 
     # Delete button
-    $res .= '<div style="text-align:center">';
+    $res .= '<div class="text-center">';
     $res .=
         "<input type=\"button\" onclick=\"del('$id');\""
-      . ' class="ui-state-default ui-corner-all"'
+      . ' class="btn btn-warning"'
       . " value=\""
       . $self->translate('deleteNotification') . "\" />";
+    $res .= '</div>';
     $res .= '</div>';
 
     return $res;
@@ -405,18 +382,23 @@ sub notificationDone {
     my ( $n, $res );
 
     # Print content
-    $res .= '<h1 class="ui-widget-header ui-corner-all">';
+    $res .= '<div class="panel-body">';
+    $res .= '<div class="alert alert-success">';
     $res .= "Notification " . $self->translate('done');
-    $res .= '</h1>';
-    $res .= '<p>' . $self->translate('internalReference') . ': ' . $id . '</p>';
+    $res .= '</div>';
+    $res .=
+        '<p class="text-center">'
+      . $self->translate('internalReference') . ': '
+      . $id . '</p>';
 
     # Purge button
-    $res .= '<div style="text-align:center">';
+    $res .= '<div class="text-center">';
     $res .=
         "<input type=\"button\" onclick=\"purge('$id');\""
-      . ' class="ui-state-default ui-corner-all"'
+      . ' class="btn btn-danger"'
       . " value=\""
       . $self->translate('purgeNotification') . "\" />";
+    $res .= '</div>';
     $res .= '</div>';
 
     return $res;
@@ -440,7 +422,7 @@ sub uid {
 
     foreach my $ref ( sort @$byRef ) {
         $res .=
-"<li class=\"open\" id=\"uid$ref\"><span onclick=\"displayNotification('${uid}_$ref');\">$ref</span></li>";
+"<li class=\"open\" id=\"uid_${uid}_$ref\"><span onclick=\"displayNotification('${uid}_$ref');\">$ref</span></li>";
     }
     return $res;
 }
@@ -459,7 +441,7 @@ sub uidDone {
         if ( $n->{$_}->{uid} eq $uid ) {
             my $ref = $n->{$_}->{ref};
             $res .=
-"<li class=\"open\" id=\"uid$ref\"><span onclick=\"displayNotificationDone('$_');\">$ref</span></li>";
+"<li class=\"open\" id=\"uid_$_\"><span onclick=\"displayNotificationDone('$_');\">$ref</span></li>";
         }
     }
 
@@ -568,22 +550,14 @@ sub newNotif {
     my $status = $self->{notifObject}->newNotification($notif);
 
     unless ($status) {
-
         $self->lmLog( "Notification not created", 'error' );
-        $res .= '<h1 class="ui-widget-header ui-corner-all">'
-          . $self->translate('error') . '</h1>';
-        $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= $self->translate('notificationNotCreated');
-        $res .= '</div>';
-        return $res;
-
+        return $self->displayError(
+            $self->translate('notificationNotCreated') );
     }
 
     else {
         $self->lmLog( "Notification created", 'info' );
-        $res .= '<h1 class="ui-widget-header ui-corner-all">'
-          . $self->translate('notificationCreated') . '</h1>';
-        return $res;
+        return $self->displayMessage( $self->translate('notificationCreated') );
     }
 
 }
@@ -618,6 +592,36 @@ sub _stToStr {
     shift;
     return
       sprintf( '%d-%02d-%02d %d:%02d:%02d', unpack( 'a4a2a2a2a2a2', shift ) );
+}
+
+## @method private string displayError(string error)
+# Display HTML error
+# @param error Error message
+# @return HTML data
+sub displayError {
+    my ( $self, $error ) = @_;
+    my $html;
+    $html .= '<div class="panel-body">';
+    $html .= '<div class="alert alert-danger">';
+    $html .= $error;
+    $html .= '</div>';
+    $html .= '</div>';
+    return $html;
+}
+
+## @method private string displayMessage(string message)
+# Display HTML message
+# @param message Message
+# @return HTML data
+sub displayMessage {
+    my ( $self, $message ) = @_;
+    my $html;
+    $html .= '<div class="panel-body">';
+    $html .= '<div class="alert alert-info">';
+    $html .= $message;
+    $html .= '</div>';
+    $html .= '</div>';
+    return $html;
 }
 
 1;

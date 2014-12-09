@@ -1,18 +1,24 @@
-<!DOCTYPE html
-	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>LemonLDAP::NG Manager</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="cache-control" content="no-cache" />
 <link href="<TMPL_VAR NAME="DIR">/lemonldap-ng.ico" rel="icon" type="image/x-icon" />
 <link href="<TMPL_VAR NAME="DIR">/lemonldap-ng.ico" rel="shortcut icon" />
 <!-- Offline doc CSS -->
 <link rel="stylesheet" type="text/css" href="/doc/css/screen.css" />
 <!-- jQuery UI CSS -->
 <link rel="stylesheet" type="text/css" id="csstheme" href="<TMPL_VAR NAME="DIR">/<TMPL_VAR NAME="CSS_THEME">/jquery-ui-1.10.3.custom.min.css" />
+<!-- Bootstrap CSS -->
+<link href="<TMPL_VAR NAME="DIR">/css/bootstrap.css" rel="stylesheet">
+<link href="<TMPL_VAR NAME="DIR">/css/bootstrap-theme.css" rel="stylesheet">
 <!-- Manager CSS -->
 <link rel="stylesheet" type="text/css" id="cssmenu" href="<TMPL_VAR NAME="DIR">/css/<TMPL_VAR NAME="CSS">" />
 <script src="<TMPL_VAR NAME="DIR">/js/jquery-1.10.2.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/js/bootstrap.js"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/jquery-ui-1.10.3.custom.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/jquery.cookie.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/jquery.ajaxfileupload.js" type="text/JavaScript"></script>
@@ -48,7 +54,6 @@
 	var lang='<TMPL_VAR NAME="LANG">';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/js/manager.js" type="text/JavaScript"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
 
@@ -87,136 +92,166 @@
 
 <TMPL_INCLUDE NAME="top.tpl">
 
-<!-- Page -->
-<!-- <div id="page" class="ui-corner-all ui-helper-clearfix ui-widget-content"> -->
+<!-- Container -->
+<div class="container-fluid">
 
-<!-- Menu (tree) -->
-<div id="menu" class="ui-corner-all ui-helper-clearfix ui-widget-content">
-   <TMPL_VAR NAME="MENU">
-</div>
+  <div class="row">
+    <div class="col-sm-3">
 
-<!-- Data -->
-<!-- <div id="data" class="ui-corner-all ui-helper-clearfix ui-widget-content"> -->
+    <!-- Menu (tree) -->
+    <div id="menu" class="panel panel-default panel-body">
+      <TMPL_VAR NAME="MENU">
+    </div>
+
+    </div>
+    <div class="col-sm-9">
 
    <!-- Buttons -->
-   <div id="buttons">
-
-    <h1 class="ui-widget-header ui-corner-all">
-     <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" width="16px" height="16px" />
-     <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" width="16px" height="16px" />
+   <div id="buttons" class="panel panel-default">
+    <div class="panel-heading">
+    <h1 class="panel-title">
      <lang en="Available actions" fr="Actions disponibles" />
     </h1>
+    </div>
 
-    <div id="buttons_content" class="ui-corner-all ui-widget-content">
-    <button id="bsave" onclick="uploadConf()">
+    <div id="buttons_content" class="panel-body">
+    <button id="bsave" onclick="uploadConf()" class="btn btn-info">
+     <i class=" glyphicon glyphicon-floppy-disk"></i>
      <lang en="Save" fr="Sauver" />
     </button>
 
-    <button id="bnewvh" style="display:none;" onclick="newVh();return false;" >
+    <button id="bnewvh" style="display:none;" onclick="newVh();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New virtual host" fr="Nouvel hôte virtuel" />
     </button>
 
-    <button id="bdelvh" style="display:none;" onclick="delvh(currentId);" >
+    <button id="bdelvh" style="display:none;" onclick="delvh(currentId);" class="btn btn-danger">
+     <i class=" glyphicon glyphicon-minus-sign"></i>
      <lang en="Delete virtual host" fr="Supprimer l'hôte virtuel" />
     </button>
 
-    <button id="newkbr" style="display:none;" onclick="newKeyR();return false;" >
+    <button id="newkbr" style="display:none;" onclick="newKeyR();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New key" fr="Nouvelle clef" />
     </button>
 
-    <button id="newrbr" style="display:none;" onclick="newRuleR();return false;" >
+    <button id="newrbr" style="display:none;" onclick="newRuleR();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New rule" fr="Nouvelle règle" />
     </button>
 
-    <button id="newgsrbr" style="display:none;" onclick="newGrantSessionRuleR();return false;" >
+    <button id="newgsrbr" style="display:none;" onclick="newGrantSessionRuleR();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New condition" fr="Nouvelle condition" />
     </button>
 
-    <button id="newkb" style="display:none;" onclick="newKey();return false;" >
+    <button id="newkb" style="display:none;" onclick="newKey();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New key" fr="Nouvelle clef" />
     </button>
 
-    <button id="newrb" style="display:none;" onclick="newRule();return false;" >
+    <button id="newrb" style="display:none;" onclick="newRule();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New rule" fr="Nouvelle règle" />
     </button>
 
-    <button id="newgsrb" style="display:none;" onclick="newGrantSessionRule();return false;" >
+    <button id="newgsrb" style="display:none;" onclick="newGrantSessionRule();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New condition" fr="Nouvelle condition" />
     </button>
 
-    <button id="delkb" style="display:none;" onclick="delKey();return false;" >
+    <button id="delkb" style="display:none;" onclick="delKey();return false;" class="btn btn-danger">
+     <i class=" glyphicon glyphicon-minus-sign"></i>
      <lang en="Delete key" fr="Effacer la clef" />
     </button>
 
-    <button id="newidpsamlmetadatab" style="display:none;" onclick="newIdpSamlMetaData();return false;" >
+    <button id="newidpsamlmetadatab" style="display:none;" onclick="newIdpSamlMetaData();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New identity provider" fr="Nouveau fournisseur d'identité" />
     </button>
 
-    <button id="delidpsamlmetadatab" style="display:none;" onclick="delIdpSamlMetaData(currentId);" >
+    <button id="delidpsamlmetadatab" style="display:none;" onclick="delIdpSamlMetaData(currentId);" class="btn btn-danger">
+     <i class=" glyphicon glyphicon-minus-sign"></i>
      <lang en="Delete identity provider" fr="Supprimer le fournisseur d'identité" />
     </button>
 
-    <button id="newspsamlmetadatab" style="display:none;" onclick="newSpSamlMetaData();return false;" >
+    <button id="newspsamlmetadatab" style="display:none;" onclick="newSpSamlMetaData();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New service provider" fr="Nouveau fournisseur de service" />
     </button>
 
-    <button id="delspsamlmetadatab" style="display:none;" onclick="delSpSamlMetaData(currentId);" >
+    <button id="delspsamlmetadatab" style="display:none;" onclick="delSpSamlMetaData(currentId);" class="btn btn-danger">
+     <i class=" glyphicon glyphicon-minus-sign"></i>
      <lang en="Delete service provider" fr="Supprimer le fournisseur de service" />
     </button>
 
-    <button id="newsamlattributeb" style="display:none;" onclick="newSamlAttribute();return false;" >
+    <button id="newsamlattributeb" style="display:none;" onclick="newSamlAttribute();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New attribute" fr="Nouvel attribut" />
     </button>
 
-    <button id="newsamlattributebr" style="display:none;" onclick="newSamlAttributeR();return false;" >
+    <button id="newsamlattributebr" style="display:none;" onclick="newSamlAttributeR();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New attribute" fr="Nouvel attribut" />
     </button>
 
-    <button id="delsamlattributeb" style="display:none;" onclick="delSamlAttribute();return false;" >
+    <button id="delsamlattributeb" style="display:none;" onclick="delSamlAttribute();return false;" class="btn btn-danger">
+     <i class=" glyphicon glyphicon-minus-sign"></i>
      <lang en="Delete attribute" fr="Supprimer l'attribut" />
     </button>
 
-    <button id="newchoice" style="display:none;" onclick="newChoice();return false;" >
+    <button id="newchoice" style="display:none;" onclick="newChoice();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New choice" fr="Nouveau choix" />
     </button>
 
-    <button id="newchoicer" style="display:none;" onclick="newChoiceR();return false;" >
+    <button id="newchoicer" style="display:none;" onclick="newChoiceR();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New choice" fr="Nouveau choix" />
     </button>
 
-    <button id="delchoice" style="display:none;" onclick="delChoice();return false;" >
+    <button id="delchoice" style="display:none;" onclick="delChoice();return false;" class="btn btn-danger">
+     <i class=" glyphicon glyphicon-minus-sign"></i>
      <lang en="Delete choice" fr="Supprimer le choix" />
     </button>
 
-    <button id="newcategoryr" style="display:none;" onclick="newCategoryR();return false;" >
+    <button id="newcategoryr" style="display:none;" onclick="newCategoryR();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New category" fr="Nouvelle catégorie" />
     </button>
 
-    <button id="delcategory" style="display:none;" onclick="delCategory();return false;" >
+    <button id="delcategory" style="display:none;" onclick="delCategory();return false;" class="btn btn-danger">
+     <i class=" glyphicon glyphicon-minus-sign"></i>
      <lang en="Delete category" fr="Supprimer la catégorie" />
     </button>
 
-    <button id="newapplicationr" style="display:none;" onclick="newApplicationR();return false;" >
+    <button id="newapplicationr" style="display:none;" onclick="newApplicationR();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New application" fr="Nouvelle application" />
     </button>
 
-    <button id="delapplication" style="display:none;" onclick="delApplication();return false;" >
+    <button id="delapplication" style="display:none;" onclick="delApplication();return false;" class="btn btn-danger">
+     <i class=" glyphicon glyphicon-minus-sign"></i>
      <lang en="Delete application" fr="Supprimer l'application" />
     </button>
 
-    <button id="newpostr" style="display:none;" onclick="newPostR();return false;" >
+    <button id="newpostr" style="display:none;" onclick="newPostR();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New form" fr="Nouveau formulaire" />
     </button>
 
-    <button id="delpost" style="display:none;" onclick="delPost();return false;" >
+    <button id="delpost" style="display:none;" onclick="delPost();return false;" class="btn btn-danger">
+     <i class=" glyphicon glyphicon-minus-sign"></i>
      <lang en="Delete form" fr="Supprimer le formulaire" />
     </button>
 
-    <button id="newpostdatar" style="display:none;" onclick="newPostDataR();return false;" >
+    <button id="newpostdatar" style="display:none;" onclick="newPostDataR();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
      <lang en="New POST data" fr="Nouvelle donnée POST" />
     </button>
 
-    <button id="delpostdata" style="display:none;" onclick="delPostData();return false;" >
+    <button id="delpostdata" style="display:none;" onclick="delPostData();return false;" class="btn btn-danger">
+     <i class=" glyphicon glyphicon-minus-sign"></i>
      <lang en="Delete POST data" fr="Supprimer la donnée POST" />
     </button>
 
@@ -227,19 +262,18 @@
 
   
    <!-- Edition -->
-   <div id="edition" class="ui-corner-all">
+   <div id="edition" class="panel panel-default">
 
-   <form action="#" onsubmit="return false">
-
-    <h1 class="ui-widget-header ui-corner-all">
-     <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" width="16px" height="16px" />
-     <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" width="16px" height="16px" />
+    <div class="panel-heading">
+    <h1 class="panel-title">
      <lang en="Edit key " fr="Édition de la clé " /><span id="content_title">&nbsp;</span>
     </h1>
+    </div>
 
+   <form action="#" onsubmit="return false"i role="form">
 
    <!-- Edition content -->
-   <div id="content" class="ui-corner-all ui-widget-content">
+   <div id="content" class="panel-body">
 
     <!-- Default text -->
     <div id="content_default" class="content">
@@ -258,63 +292,64 @@
 
     <!-- Simple text -->
     <div id="content_text" class="hidden">
-     <input type="text" id="text" />
+     <input type="text" id="text" class="form-control" />
      <br />
-     <button onclick="setlminputdata(currentId,text);return false;" >
+     <button onclick="setlminputdata(currentId,text);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
 
     <!-- Simple textarea -->
     <div id="content_textarea" class="hidden">
-     <textarea id="textarea" cols="80" rows="10"></textarea>
+     <textarea id="textarea" cols="80" rows="10" class="form-control"></textarea>
      <br />
-     <button onclick="setlminputdata(currentId,textarea);return false;" >
+     <button onclick="setlminputdata(currentId,textarea);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
 
     <!-- File textarea -->
     <div id="content_filearea" class="hidden">
-     <textarea readonly="readonly" id="filearea" cols="80" rows="10"></textarea>
-     <table>
-      <tr>
-       <td>
-      <button id="downloadfile" onclick="downloadFile(currentId);return false;" >
+     <textarea readonly="readonly" id="filearea" cols="80" rows="10" class="form-control"></textarea>
+     <div class="buttons">
+      <button id="downloadfile" onclick="downloadFile(currentId);return false;" class="btn btn-info">
+       <i class="glyphicon glyphicon-floppy-save"></i>
        <lang en="Download this file" fr="T&eacute;l&eacute;charger ce fichier" />
       </button>
-      <button id="generatefile" onclick="generateFile(currentId);return false;" >
+      <button id="generatefile" onclick="generateFile(currentId);return false;" class="btn btn-info">
+       <i class="glyphicon glyphicon-flash"></i>
        <lang en="Generate" fr="G&eacute;n&eacute;rer" />
       </button>
-      <button id="switchreadonly" onclick="switchReadonly('#filearea');return false;" >
+      <button id="switchreadonly" onclick="switchReadonly('#filearea');return false;" class="btn btn-info">
+       <i class="glyphicon glyphicon-lock"></i>
+       <span></span>
       </button>
-      <button onclick="setlminputdata(currentId,filearea);return false;" >
+      <button onclick="setlminputdata(currentId,filearea);return false;" class="btn btn-info">
+       <i class="glyphicon glyphicon-ok"></i>
        <lang en="Apply" fr="Appliquer" />
       </button>
-       </td>
-       <td>
-        <span class="loadimg"><img class="hidden" id="button-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" width="16px" height="16px" /></span>
-       </td>
-      </tr>
-     </table>
-     <table class="filearea">
+      <span class="loadimg"><img class="hidden" id="button-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" width="16px" height="16px" /></span>
+     </div>
+     <table class="table">
       <tr id="fileinput">
-       <td><lang en="Load from a file" fr="Charger depuis un fichier" /> :</td>
+       <th><lang en="Load from a file" fr="Charger depuis un fichier" /> :</th>
        <td>
-        <input type="file" name="file" id="file" size="30"/>
+        <input type="file" name="file" id="file" size="30" />
        </td>
        <td>
-        <button onclick="setlmfile(currentId,file);return false;" ><lang en="Load" fr="Charger" /></button>
+        <button onclick="setlmfile(currentId,file);return false;" class="btn btn-info"><i class="glyphicon glyphicon-floppy-open"></i> <lang en="Load" fr="Charger" /></button>
         <span class="loadimg"><img class="hidden" id="file-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" width="16px" height="16px" /></span>
        </td>
       </tr>
-      <tr id="urlinput" class="hidden">
-       <td><lang en="Load from a URL" fr="Charger depuis une URL" /> :</td>
+      <tr id="urlinput">
+       <th><lang en="Load from a URL" fr="Charger depuis une URL" /> :</th>
        <td>
-        <input type="text" name="url" id="url" size="40"/>
+        <input type="text" name="url" id="url" size="40" class="form-control"/>
        </td>
        <td>
-        <button onclick="setlmfile(currentId,url);return false;" ><lang en="Load" fr="Charger" /></button>
+        <button onclick="setlmfile(currentId,url);return false;" class="btn btn-info"><i class="glyphicon glyphicon-cloud-upload"></i> <lang en="Load" fr="Charger" /></button>
         <span class="loadimg"><img class="hidden" id="url-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" width="16px" height="16px" /></span>
        </td>
       </tr>
@@ -323,31 +358,46 @@
 
     <!-- Select -->
     <div id="content_select" class="hidden">
-     <select id="select" onchange="setlmdata(currentId,this.value);return false;"></select>
+     <select id="select" onchange="setlmdata(currentId,this.value);return false;" class="form-control"></select>
     </div>
 
     <!-- Integer -->
     <div id="content_int" class="hidden">
-     <button onclick="decrease();return false;" > - </button>
+     <button onclick="decrease();return false;" class="btn btn-warning"><i class="glyphicon glyphicon-minus"></i></button>
      <input type="text" id="int" />
-     <button onclick="increase();return false;" > + </button>
+     <button onclick="increase();return false;" class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i></button>
      <br />
-     <button onclick="setlminputdata(currentId,int);return false;" >
+     <button onclick="setlminputdata(currentId,int);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
 
     <!-- Boolean -->
     <div id="content_bool" class="hidden">
-     <input id="On" type="radio" name="boolean" value="1" onclick="setlmdata(currentId,1)"/><label for="On"><lang en="On" fr="Activé"/></label>
-     <input id="Off" type="radio" name="boolean" value="0" onclick="setlmdata(currentId,0)"/><label for="Off"><lang en="Off" fr="Désactivé"/></label>
+     <div class="btn-group" data-toggle="buttons">
+     <label id="On" class="btn btn-info" onclick="setlmdata(currentId,1)">
+     <input type="radio" name="boolean" autocomplete="off" /><lang en="On" fr="Activé"/>
+     </label>
+     <label id="Off" class="btn btn-info" onclick="setlmdata(currentId,0)">
+     <input type="radio" name="boolean" autocomplete="off" /><lang en="Off" fr="Désactivé"/>
+     </label>
+     </div>
     </div>
 
     <!-- Troolean -->
     <div id="content_trool" class="hidden">
-     <input id="TrOn" type="radio" name="troolean" value="1" onclick="setlmdata(currentId,1)"/><label for="TrOn"><lang en="On" fr="Activé"/></label>
-     <input id="TrOff" type="radio" name="troolean" value="0" onclick="setlmdata(currentId,0)"/><label for="TrOff"><lang en="Off" fr="Désactivé"/></label>
-     <input id="TrDefault" type="radio" name="troolean" value="-1" onclick="setlmdata(currentId,-1)"/><label for="TrDefault"><lang en="Default" fr="Par défaut"/></label>
+     <div class="btn-group" data-toggle="buttons">
+     <label id="TrOn" class="btn btn-info" onclick="setlmdata(currentId,1)">
+     <input type="radio" name="troolean" autocomplete="off" /><lang en="On" fr="Activé"/>
+     </label>
+     <label id="TrOff" class="btn btn-info" onclick="setlmdata(currentId,0)">
+     <input type="radio" name="troolean" autocomplete="off" /><lang en="Off" fr="Désactivé"/>
+     </label>
+     <label id="TrDefault" class="btn btn-info" onclick="setlmdata(currentId,-1)">
+     <input type="radio" name="troolean" autocomplete="off" /><lang en="Default" fr="Par défaut"/>
+     </label>
+     </div>
     </div>
 
     <!-- Boolean or Perl Expr -->
@@ -356,19 +406,21 @@
      <input id="bopeOff" type="radio" name="bope" value="0" onclick="setlmdata(currentId,0);$('#bopeValue').hide();"/><label for="bopeOff"><lang en="Off" fr="Désactivé"/></label>
      <input id="bopeExpr" type="radio" name="bope" value="-1" onclick="$('#bopeValue').show();"/><label for="bopeExpr"><lang en="Specific rule" fr="Règle spécifique"/></label>
      <br />
-     <textarea id="bopeValue" cols="30" rows="2"></textarea>
+     <textarea id="bopeValue" cols="30" rows="2" class="form-control"></textarea>
      <br />
-     <button onclick="setlmbope(currentId);return false;" >
+     <button onclick="setlmbope(currentId);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
 
 
     <div id="content_btext" class="hidden">
-     <textarea class="elastic" id="btextKey" rows="1" cols="25"></textarea>
-     <textarea class="elastic" id="btextValue" rows="1" cols="40"></textarea>
+     <textarea class="elastic" id="btextKey" rows="1" cols="25" class="form-control"></textarea>
+     <textarea class="elastic" id="btextValue" rows="1" cols="40" class="form-control"></textarea>
      <br />
-     <button onclick="setlminputtext(currentId,btextKey);setlminputdata(currentId,btextValue);return false;" >
+     <button onclick="setlminputtext(currentId,btextKey);setlminputdata(currentId,btextValue);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -378,17 +430,18 @@
      <table border="0"><tbody><tr><td>
       <div id="rulCommentDiv">
        <lang en="Comment" fr="Commentaire" /><br/>
-       <textarea class="elastic" id="rulComment" rows="1" cols="30"></textarea>
+       <textarea class="elastic" id="rulComment" rows="1" cols="30" class="form-control"></textarea>
       </div>
       <lang en="Expression" fr="Expression" /><br/>
-      <textarea class="elastic" id="rulKey" rows="1" cols="30"></textarea>
+      <textarea class="elastic" id="rulKey" rows="1" cols="30" class="form-control"></textarea>
      </td>
      <td>
       <lang en="Rule" fr="Règle" /><br/>
-      <textarea class="elastic" id="rulValue" rows="1" cols="50"></textarea>
+      <textarea class="elastic" id="rulValue" rows="1" cols="50" class="form-control"></textarea>
      </td></tr></tbody></table>
      <br />
-     <button onclick="setlmrule(currentId,rulComment,rulKey,rulValue);return false;" >
+     <button onclick="setlmrule(currentId,rulComment,rulKey,rulValue);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -398,28 +451,30 @@
      <table border="0"><tbody><tr><td>
       <div id="grantSessionRulCommentDiv">
        <lang en="Comment" fr="Commentaire" /><br/>
-       <textarea class="elastic" id="grantSessionRulComment" rows="1" cols="30"></textarea>
+       <textarea class="elastic" id="grantSessionRulComment" rows="1" cols="30" class="form-control"></textarea>
       </div>
       <lang en="Condition" fr="Condition" /><br/>
-      <textarea class="elastic" id="grantSessionRulKey" cols="30" rows="1"></textarea>
+      <textarea class="elastic" id="grantSessionRulKey" cols="30" rows="1" class="form-control"></textarea>
      </td>
      <td>
          <lang en="Message" fr="Message" /><br/>
-         <textarea class="elastic" id="grantSessionRulValue" cols="50" rows="1"></textarea>
+         <textarea class="elastic" id="grantSessionRulValue" cols="50" rows="1" class="form-control"></textarea>
      </td></tr></tbody></table>
      <br />
-     <button onclick="setlmgrantsessionrule(currentId,grantSessionRulComment,grantSessionRulKey,grantSessionRulValue);return false;" >
+     <button onclick="setlmgrantsessionrule(currentId,grantSessionRulComment,grantSessionRulKey,grantSessionRulValue);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
 
     <!-- authParams -->
     <div id="content_authParams" class="hidden">
-     <select id="authText"></select>
+     <select id="authText" class="form-control"></select>
      <br/>
-     <input type="text" id="authOptions" class="hidden" size="30"/>
+     <input type="text" id="authOptions" class="hidden" size="30" class="form-control"/>
      <br/>
-     <button onclick="reloadAuthParams();return false;" >
+     <button onclick="reloadAuthParams();return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -428,36 +483,40 @@
     <div id="content_skin" class="hidden">
      <button class="current"><img src="" alt="" class="current" /></button>
      <br /> 
-     <input id="skinText" type="text" readonly="readonly" />
+     <input id="skinText" type="text" readonly="readonly" class="form-control"/>
      <br />
-     <button onclick="setlminputdata(currentId,skinText);return false;" >
+     <button onclick="setlminputdata(currentId,skinText);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
 
     <!-- Vhost -->
     <div id="content_vhost" class="hidden">
-     <input type="text" id="vhost" size="30"/>
+     <input type="text" id="vhost" size="30" class="form-control"/>
      <br />
-     <button onclick="setlminputtext(currentId,vhost);return false;" >
+     <button onclick="setlminputtext(currentId,vhost);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
 
     <!-- samlIdpMetaData -->
     <div id="content_samlIdpMetaData" class="hidden">
-     <input type="text" id="samlIdpMetaData" size="30"/>
+     <input type="text" id="samlIdpMetaData" size="30" class="form-control"/>
      <br />
-     <button onclick="setlminputtext(currentId,samlIdpMetaData);return false;" >
+     <button onclick="setlminputtext(currentId,samlIdpMetaData);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
 
     <!-- samlSpMetaData -->
     <div id="content_samlSpMetaData" class="hidden">
-     <input type="text" id="samlSpMetaData" size="30"/>
+     <input type="text" id="samlSpMetaData" size="30" class="form-control"/>
      <br />
-     <button onclick="setlminputtext(currentId,samlSpMetaData);return false;" >
+     <button onclick="setlminputtext(currentId,samlSpMetaData);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -467,11 +526,11 @@
      <table>
       <tr>
        <td><lang en="Key name" fr="Nom de la clef"/></td>
-       <td><input type="text" id="samlAttributeKey" /></td>
+       <td><input type="text" id="samlAttributeKey" class="form-control"/></td>
       </tr>
       <tr>
        <td><lang en="Name" fr="Nom"/></td>
-       <td><input type="text" id="samlAttributeName" /></td>
+       <td><input type="text" id="samlAttributeName" class="form-control"/></td>
        <td><lang en="Mandatory" fr="Obligatoire"/></td>
        <td><input id="samlAttributeMandatoryOn" type="radio" name="samlAttributeMandatoryBoolean" value="1" /><label for="samlAttributeMandatoryOn"><lang en="On" fr="Activé"/></label>
            <input id="samlAttributeMandatoryOff" type="radio" name="samlAttributeMandatoryBoolean" value="0" /><label for="samlAttributeMandatoryOff"><lang en="Off" fr="Désactivé"/></label>
@@ -479,13 +538,14 @@
       </tr>
       <tr>
        <td><lang en="Friendly name" fr="Nom alternatif"/></td>
-       <td><input type="text" id="samlAttributeFriendlyName" /></td>
+       <td><input type="text" id="samlAttributeFriendlyName" class="form-control"/></td>
        <td><lang en="Format" fr="Format"/></td>
-       <td><select id="samlAttributeFormat"></select></td>
+       <td><select id="samlAttributeFormat" class="form-control"></select></td>
       </tr>
      </table>
      <br />
-     <button onclick="setlmsamlattribute(currentId);return false;" >
+     <button onclick="setlmsamlattribute(currentId);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
    </div>
@@ -501,19 +561,20 @@
       </tr>
       <tr class="hidden">
        <td><lang en="Index" fr="Index"/></td>
-       <td><input type="text" size="50" id="samlAssertionIndex" /></td>
+       <td><input type="text" size="50" id="samlAssertionIndex" class="form-control"/></td>
       </tr>
       <tr>
        <td><lang en="Binding" fr="Binding"/></td>
-       <td><select disabled="disabled" id="samlAssertionBinding"></select></td>
+       <td><select disabled="disabled" id="samlAssertionBinding" class="form-control"></select></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>
-       <td><input type="text" size="50" id="samlAssertionLocation" /></td>
+       <td><input type="text" size="50" id="samlAssertionLocation" class="form-control"/></td>
       </tr>
      </table>
      <br />
-     <button onclick="setlmsamlassertion(currentId);return false;" >
+     <button onclick="setlmsamlassertion(currentId);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -523,19 +584,20 @@
      <table>
       <tr>
        <td><lang en="Binding" fr="Binding"/></td>
-       <td><select disabled="disabled" id="samlServiceBinding"></select></td>
+       <td><select disabled="disabled" id="samlServiceBinding" class="form-control"></select></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>
-       <td><input type="text" size="50" id="samlServiceLocation" /></td>
+       <td><input type="text" size="50" id="samlServiceLocation" class="form-control"/></td>
       </tr>
       <tr>
        <td><lang en="Response Location" fr="URL de retour"/></td>
-       <td><input type="text" size="50" id="samlServiceResponseLocation" /></td>
+       <td><input type="text" size="50" id="samlServiceResponseLocation" class="form-control"/></td>
       </tr>
      </table>
      <br />
-     <button onclick="setlmsamlservice(currentId);return false;" >
+     <button onclick="setlmsamlservice(currentId);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -551,11 +613,12 @@
       </tr>
       <tr>
        <td><lang en="List" fr="Liste"/></td>
-       <td><input type="text" size="50" id="openid_serverlist_text" /></td>
+       <td><input type="text" size="50" id="openid_serverlist_text" class="form-control"/></td>
       </tr>
      </table>
      <br />
-     <button onclick="setopenididplist(currentId);return false;" >
+     <button onclick="setopenididplist(currentId);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -565,27 +628,28 @@
      <table>
       <tr>
        <td><lang en="Key name" fr="Nom de la clef"/></td>
-       <td><input type="text" id="authChoiceKey" /></td>
+       <td><input type="text" id="authChoiceKey" class="form-control"/></td>
       </tr>
       <tr>
        <td><lang en="Authentication module" fr="Module d'authentification"/></td>
-       <td><select id="authChoiceAuth"></select></td>
+       <td><select id="authChoiceAuth" class="form-control"></select></td>
       </tr>
       <tr>
        <td><lang en="User module" fr="Module d'utilisateurs"/></td>
-       <td><select id="authChoiceUser"></select></td>
+       <td><select id="authChoiceUser" class="form-control"></select></td>
       </tr>
       <tr>
        <td><lang en="Password module" fr="Module de mots de passe"/></td>
-       <td><select id="authChoicePassword"></select></td>
+       <td><select id="authChoicePassword" class="form-control"></select></td>
       </tr>
       <tr>
        <td><lang en="URL" fr="URL"/></td>
-       <td><input type="text" id="authChoiceURL" /></td>
+       <td><input type="text" id="authChoiceURL" class="form-control"/></td>
       </tr>
      </table>
      <br />
-     <button onclick="setlmauthchoice(currentId);return false;" >
+     <button onclick="setlmauthchoice(currentId);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
    </div>
@@ -595,15 +659,16 @@
      <table>
       <tr>
        <td><lang en="Key" fr="Nom de la clef"/></td>
-       <td><input type="text" id="applicationListCategoryKey" /></td>
+       <td><input type="text" id="applicationListCategoryKey" class="form-control"/></td>
       </tr>
       <tr>
        <td><lang en="Display name" fr="Nom à afficher"/></td>
-       <td><input type="text" id="applicationListCategoryName" /></td>
+       <td><input type="text" id="applicationListCategoryName" class="form-control"/></td>
       </tr>
      </table>
      <br />
-     <button onclick="setlminputtext(currentId,'#applicationListCategoryKey');setlminputdata(currentId,'#applicationListCategoryName');return false;" >
+     <button onclick="setlminputtext(currentId,'#applicationListCategoryKey');setlminputdata(currentId,'#applicationListCategoryName');return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -613,28 +678,29 @@
      <table>
       <tr>
        <td><lang en="Key" fr="Nom de la clef"/></td>
-       <td><input type="text" id="applicationListApplicationKey" /></td>
+       <td><input type="text" id="applicationListApplicationKey" class="form-control"/></td>
        <td><lang en="Display name" fr="Nom à afficher"/></td>
-       <td><input type="text" id="applicationListApplicationName" /></td>
+       <td><input type="text" id="applicationListApplicationName" class="form-control"/></td>
       </tr>
       <tr>
        <td><lang en="Address" fr="Adresse"/></td>
-       <td><input type="text" id="applicationListApplicationURL" /></td>
+       <td><input type="text" id="applicationListApplicationURL" class="form-control"/></td>
        <td><lang en="Display mode" fr="Mode d'affichage"/></td>
-       <td><select id="applicationListApplicationDisplay"></select></td>
+       <td><select id="applicationListApplicationDisplay" class="form-control"></select></td>
       </tr>
       <tr>
        <td><lang en="Description" fr="Description"/></td>
-       <td><textarea id="applicationListApplicationDescription" /></textarea></td>
+       <td><textarea id="applicationListApplicationDescription" class="form-control"/></textarea></td>
        <td><lang en="Logo" fr="Logo"/></td>
        <td>
          <button class="current"><img src="" alt="" class="current" /></button><br />
-         <input type="text" id="applicationListApplicationLogo" readonly="readonly" />
+         <input type="text" id="applicationListApplicationLogo" readonly="readonly" class="form-control"/>
        </td>
       </tr>
      </table>
      <br />
-     <button onclick="setlmapplication(currentId);return false;" >
+     <button onclick="setlmapplication(currentId);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -644,15 +710,15 @@
      <table>
       <tr>
        <td><lang en="Form URL" fr="URL du formulaire"/></td>
-       <td><input type="text" id="postKey" size="20"/></td>
+       <td><input type="text" id="postKey" size="20" class="form-control"/></td>
        <td><lang en="jQuery form selector (optional)" fr="Sélecteur jQuery du formulaire (optionnel)"/></td>
-       <td><input type="text" id="formSelector" size="20"/></td>
+       <td><input type="text" id="formSelector" size="20" class="form-control"/></td>
       </tr>
       <tr>
        <td><lang en="Target URL (optional)" fr="URL cible (optionnelle)"/></td>
-       <td><input type="text" id="postUrl" size="20"/></td>
+       <td><input type="text" id="postUrl" size="20" class="form-control"/></td>
        <td><lang en="jQuery button selector (optional)" fr="Sélecteur jQuery du bouton (optionnel)"/></td>
-       <td><input type="text" id="buttonSelector" size="20"/></td>
+       <td><input type="text" id="buttonSelector" size="20" class="form-control"/></td>
       </tr>
       <tr>
        <td><lang en="jQuery URL (optional)" fr="URL de jQuery (optionnelle)"/></td>
@@ -660,15 +726,17 @@
       </tr>
      </table>
      <br />
-     <button onclick="setlminputtext(currentId,postKey);setlmpostform(currentId);return false;" >
+     <button onclick="setlminputtext(currentId,postKey);setlmpostform(currentId);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
  
     <div id="content_postdata" class="hidden">
-     <input type="text" id="postDataKey" /> <input type="text" id="postDataValue" />
+     <input type="text" id="postDataKey" class="form-control"/> <input type="text" id="postDataValue" class="form-control"/>
      <br />
-     <button onclick="setlminputtext(currentId,postDataKey,'postdata:');setlminputdata(currentId,postDataValue);return false;" >
+     <button onclick="setlminputtext(currentId,postDataKey,'postdata:');setlminputdata(currentId,postDataValue);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -680,15 +748,17 @@
    <!-- Edition -->
    </div>
 
+
 <!-- Help -->
-<div id="help" class="ui-corner-all">
-  <h1 class="ui-widget-header ui-corner-all">
-    <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" width="16px" height="16px" />
-    <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" width="16px" height="16px" />
+<div id="help" class="panel panel-default">
+
+  <div class="panel-heading">
+  <h1 class="panel-title">
     <lang en="Help" fr="Aide"/>
   </h1>
+  </div>
 
-  <div id="help_content" class="ui-widget-content ui-corner-all">
+  <div id="help_content" class="panel-body">
   <!-- AJAX content -->
      <lang en="Click on the configuration tree to edit parameters" fr="Cliquer sur l'arbre de configuration pour éditer les paramètres" />
   </div>
@@ -696,14 +766,10 @@
 <!-- Help -->
 </div>
 
-<!-- Data -->
-<!-- </div> -->
-
-<!-- Page -->
-<!-- </div> -->
-
 <!-- Container -->
-<!-- </div> -->
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

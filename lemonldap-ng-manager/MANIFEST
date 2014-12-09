@@ -9,8 +9,14 @@ example/scripts/lemonldap-ng-cli
 example/scripts/lmConfigEditor
 example/sessions.pl
 example/skins/default/css/accordion.css
+example/skins/default/css/bootstrap-theme.css
+example/skins/default/css/bootstrap.css
 example/skins/default/css/manager.css
 example/skins/default/css/tree.css
+example/skins/default/fonts/glyphicons-halflings-regular.eot
+example/skins/default/fonts/glyphicons-halflings-regular.svg
+example/skins/default/fonts/glyphicons-halflings-regular.ttf
+example/skins/default/fonts/glyphicons-halflings-regular.woff
 example/skins/default/images/1downarrow_16x16.png
 example/skins/default/images/1rightarrow_16x16.png
 example/skins/default/images/apps-logos/attach.png
@@ -47,6 +53,7 @@ example/skins/default/images/spinner.gif
 example/skins/default/images/tree/root.gif
 example/skins/default/images/tree/spacer.gif
 example/skins/default/images/tree/tree.png
+example/skins/default/js/bootstrap.js
 example/skins/default/js/jquery-1.10.2.js
 example/skins/default/js/jquery-ui-1.10.3.custom.js
 example/skins/default/js/jquery.ajaxfileupload.js

@@ -57,7 +57,7 @@ function del(id) {
 		dataType: 'html',
 		success: function(data) {
 			$('#data').html(data);
-			$('#uid' + id).remove();
+			$('#uid_' + safeSelector(id)).remove();
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			$('#data').html('<h3>Request failed</h3> Error code: ' + xhr.status + ', ' + thrownError);
@@ -80,6 +80,7 @@ function purge(id) {
 		dataType: 'html',
 		success: function(data) {
 			$('#data').html(data);
+			$('#uid_' + safeSelector(id)).remove();
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			$('#data').html('<h3>Request failed</h3> Error code: ' + xhr.status + ', ' + thrownError);

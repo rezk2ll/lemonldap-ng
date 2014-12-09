@@ -111,126 +111,10 @@ $(document).ready(function() {
 	jQuery.event.add(window, "load", resizeMenu);
 	jQuery.event.add(window, "resize", resizeMenu);
 
-	/* Buttons */
-	$('#header a.configuration').button({
-		icons: {
-			primary: "ui-icon-document"
-		}
-	});
-	$('#header a.sessions').button({
-		icons: {
-			primary: "ui-icon-key"
-		}
-	});
-	$('#header a.notifications').button({
-		icons: {
-			primary: "ui-icon-calendar"
-		}
-	});
-	$('#header a.portal').button({
-		icons: {
-			primary: "ui-icon-home"
-		},
-		text: false
-	});
-	$('#header a.logout').button({
-		icons: {
-			primary: "ui-icon-power"
-		},
-		text: false
-	});
-	$('#header span#css-switch-link').button({
-		icons: {
-			primary: "ui-icon-image"
-		},
-		text: false
-	});
-	$('#css-switch button[alt=tree]').button({
-		icons: {
-			primary: "ui-icon-grip-dotted-vertical"
-		}
-	});
-	$('#css-switch button[alt=accordion]').button({
-		icons: {
-			primary: "ui-icon-grip-dotted-horizontal"
-		}
-	});
-	$('#css-switch button[alt=ui-lightness]').button({
-		icons: {
-			primary: "ui-icon-lightbulb"
-		}
-	});
-	$('#css-switch button[alt=ui-darkness]').button({
-		icons: {
-			primary: "ui-icon-star"
-		}
-	});
-	$('#buttons button').button();
-	$('#content button').button();
-	$('button#bsave').button({
-		icons: {
-			primary: "ui-icon-disk"
-		}
-	});
-	$('button[id*=new]').button({
-		icons: {
-			primary: "ui-icon-circle-plus"
-		}
-	});
-	$('button[id*=del]').button({
-		icons: {
-			primary: "ui-icon-circle-minus"
-		}
-	});
-	$('#query-switch a[alt=user]').button({
-		icons: {
-			primary: "ui-icon-person"
-		}
-	});
-	$('#query-switch a[alt=ip]').button({
-		icons: {
-			primary: "ui-icon-gear"
-		}
-	});
-	$('#query-switch a[alt=2ip]').button({
-		icons: {
-			primary: "ui-icon-alert"
-		}
-	});
-	$('#query-switch a[alt=list]').button({
-		icons: {
-			primary: "ui-icon-mail-closed"
-		}
-	});
-	$('#query-switch a[alt=listDone]').button({
-		icons: {
-			primary: "ui-icon-mail-open"
-		}
-	});
-	$('#query-switch a[alt=newNotif]').button({
-		icons: {
-			primary: "ui-icon-circle-plus"
-		}
-	});
-	$('#sendNewNotif').button({
-		icons: {
-			primary: "ui-icon-circle-plus"
-		}
-	});
-
-	/* Display/hide divs */
-	$("#buttons h1").click(function() {
-		$('#buttons h1 img').toggle();
-		$("#buttons_content").slideToggle('fast');
-	});
-	$("#edition h1").click(function() {
-		$('#edition h1 img').toggle();
-		$("#content").slideToggle('fast');
-	});
-	$("#help h1").click(function() {
-		$('#help h1 img').toggle();
-		$("#help_content").slideToggle('fast');
-	});
+	/* Help height */
+	resizeHelp();
+	jQuery.event.add(window, "load", resizeHelp);
+	jQuery.event.add(window, "resize", resizeHelp);
 
 	/* Skin selector dialog */
 	$('#skinImagePicker').dialog({
@@ -272,53 +156,20 @@ $(document).ready(function() {
 
 	/* Load Simple Tree */
 	loadSimpleTree();
-
-	/* Menu CSS switch */
-	$('#css-switch').dialog({
-		autoOpen: false,
-		modal: true
-	});
-	$('span#css-switch-link').click(function() {
-		// Open dialog
-		$('#css-switch').dialog("open");
-		// Fix focus
-		$('#css-switch button').each(function() {
-			$(this).removeClass('ui-state-focus');
-		});
-		if ($.cookie("managermenu")) {
-			css_menu = $.cookie("managermenu");
-		}
-		if ($.cookie("managertheme")) {
-			css_theme = $.cookie("managertheme");
-		}
-		$('#css-switch button[alt=' + css_menu + ']').addClass('ui-state-focus').focus();
-		$('#css-switch button[alt=' + css_theme + ']').addClass('ui-state-focus');
-		return false;
-	});
 	if ($.cookie("managermenu")) {
 		simpleTreeSetMenuStyle($.cookie("managermenu"));
 	}
-	if ($.cookie("managertheme")) {
-		$("link#csstheme").attr("href", themepath + $.cookie("managertheme") + '/jquery-ui-' + jqueryuiversion + '.custom.min.css');
-	}
-	$("#css-switch #organization button").click(function() {
+	$("span.css-switch").click(function() {
 		var style = $(this).attr("alt");
 		$.cookie("managermenu", style, {
 			expires: 365,
 			path: '/'
 		});
 		simpleTreeSetMenuStyle(style);
-		$('#css-switch').dialog("close");
-		return false;
-	});
-	$("#css-switch #theme button").click(function() {
-		var theme = $(this).attr("alt");
-		$.cookie("managertheme", theme, {
-			expires: 365,
-			path: '/'
-		});
-		$("link#csstheme").attr("href", themepath + theme + '/jquery-ui-' + jqueryuiversion + '.custom.min.css');
-		$('#css-switch').dialog("close");
+		$(".dropdown-toggle").trigger("click");
+		if ($('.navbar-toggle').css('display') != 'none') {
+			$(".navbar-toggle").trigger("click");
+		}
 		return false;
 	});
 
@@ -435,6 +286,7 @@ function safeSelector(data) {
 	escaped_data = escaped_data.replace(/\//g, '\\/');
 	escaped_data = escaped_data.replace(/\+/g, '\\+');
 	escaped_data = escaped_data.replace(/=/g, '\\=');
+	escaped_data = escaped_data.replace(/\./g, '\\.');
 	return escaped_data;
 }
 function lmtext(id) {
@@ -613,16 +465,7 @@ function display(div, title) {
 	$('#newpostr,#delpost').hide();
 	$('#newpostdatar,#delpostdata').hide();
 	// Resize (or hide) Help window
-	var height_menu = $('#menu').height();
-	var height_buttons_edition = $('#buttons').height() + $('#edition').height();
-	var help_height = height_menu - height_buttons_edition - 50;
-	if (help_height < 1) {
-		$('#help h1 img').toggle();
-		$('#help_content').toggle();
-	}
-	else {
-		$('#help_content').height(help_height);
-	}
+	resizeHelp();
 }
 function none(id) {
 	currentId = id;
@@ -842,23 +685,23 @@ function btext(id) {
 function bool(id) {
 	currentId = id;
 	if (lmdata(id) == 1) {
-		$('#On').prop('checked', true)
+		$('#On').addClass('active');
 	} else {
-		$('#Off').prop('checked', true)
+		$('#Off').addClass('active');
 	}
 	display('bool', lmtext(id));
 }
 function trool(id) {
 	currentId = id;
 	if (lmdata(id) == 1) {
-		$('#TrOn').prop('checked', true)
+		$('#TrOn').addClass('active');
 	}
 	else {
 		if (lmdata(id) == 0) {
-			$('#TrOff').prop('checked', true)
+			$('#TrOff').addClass('active');
 		}
 		else {
-			$('#TrDefault').prop('checked', true)
+			$('#TrDefault').addClass('active');
 		}
 	}
 	display('trool', lmtext(id));
@@ -903,7 +746,7 @@ function filearea(id) {
 		$('#downloadfile').show();
 	}
 	/* Set switchReadonly text */
-	$('#switchreadonly span').text(text4edit);
+	$('#switchreadonly > span').text(text4edit);
 	display('filearea', lmtext(id));
 }
 function samlAssertion(id) {
@@ -1461,10 +1304,10 @@ function formateSelect(id, values, selectedValue) {
 /* Function to switch readOnly flag */
 function switchReadonly(selector) {
 	if ($(selector).attr("readonly")) {
-		$("#switchreadonly span").text(text4protect);
+		$("#switchreadonly > span").text(text4protect);
 		$(selector).removeAttr("readonly");
 	} else {
-		$("#switchreadonly span").text(text4edit);
+		$("#switchreadonly > span").text(text4edit);
 		$(selector).attr("readonly", "readonly");
 	}
 }
@@ -1732,10 +1575,24 @@ function resizeMenu() {
 	// Window height
 	var wh = $(window).height();
 	// Header height
-	var hh = $('#header').height();
+	var hh = $('nav.navbar').height();
 	// Set menu and data height (include css margins)
-	$('#menu').css('height', wh - hh - 50);
-	$('#data').css('height', wh - hh - 40);
+	$('#menu').css('height', wh - hh - 30);
+	$('#data').css('height', wh - hh - 30);
+}
+
+/* Resize help */
+function resizeHelp() {
+	var height_menu = $('#menu').height();
+	var height_buttons_edition = $('#buttons').height() + $('#edition').height();
+	var help_height = height_menu - height_buttons_edition - 61;
+	if (help_height < 1) {
+		$('#help_content').hide();
+	}
+	else {
+		$('#help_content').show();
+		$('#help_content').height(help_height);
+	}
 }
 
 /* Boolean or Perl Expression */
