@@ -526,112 +526,118 @@
     <!-- Vhost -->
     <div id="content_vhost" class="hidden">
      <input type="text" id="vhost" size="30" class="form-control"/>
-     <br />
+     <div class="buttons">
      <button onclick="setlminputtext(currentId,vhost);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- samlIdpMetaData -->
     <div id="content_samlIdpMetaData" class="hidden">
      <input type="text" id="samlIdpMetaData" size="30" class="form-control"/>
-     <br />
+     <div class="buttons">
      <button onclick="setlminputtext(currentId,samlIdpMetaData);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- samlSpMetaData -->
     <div id="content_samlSpMetaData" class="hidden">
      <input type="text" id="samlSpMetaData" size="30" class="form-control"/>
-     <br />
+     <div class="buttons">
      <button onclick="setlminputtext(currentId,samlSpMetaData);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- samlAttribute -->
     <div id="content_samlAttribute" class="hidden">
-     <table>
+     <table class="table">
       <tr>
-       <td><lang en="Key name" fr="Nom de la clef"/></td>
+       <th><lang en="Key name" fr="Nom de la clef"/></th>
        <td><input type="text" id="samlAttributeKey" class="form-control"/></td>
       </tr>
       <tr>
-       <td><lang en="Name" fr="Nom"/></td>
+       <th><lang en="Name" fr="Nom"/></th>
        <td><input type="text" id="samlAttributeName" class="form-control"/></td>
-       <td><lang en="Mandatory" fr="Obligatoire"/></td>
+       <th><lang en="Mandatory" fr="Obligatoire"/></th>
        <td><input id="samlAttributeMandatoryOn" type="radio" name="samlAttributeMandatoryBoolean" value="1" /><label for="samlAttributeMandatoryOn"><lang en="On" fr="Activé"/></label>
            <input id="samlAttributeMandatoryOff" type="radio" name="samlAttributeMandatoryBoolean" value="0" /><label for="samlAttributeMandatoryOff"><lang en="Off" fr="Désactivé"/></label>
        </td>
       </tr>
       <tr>
-       <td><lang en="Friendly name" fr="Nom alternatif"/></td>
+       <th><lang en="Friendly name" fr="Nom alternatif"/></th>
        <td><input type="text" id="samlAttributeFriendlyName" class="form-control"/></td>
-       <td><lang en="Format" fr="Format"/></td>
+       <th><lang en="Format" fr="Format"/></th>
        <td><select id="samlAttributeFormat" class="form-control"></select></td>
       </tr>
      </table>
-     <br />
+     <div class="buttons">
      <button onclick="setlmsamlattribute(currentId);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
    </div>
 
     <!-- samlAssertion -->
     <div id="content_samlAssertion" class="hidden">
-     <table>
+     <table class="table">
       <tr>
-       <td><lang en="Default" fr="Par défaut"/></td>
+       <th><lang en="Default" fr="Par défaut"/></th>
        <td><input id="samlAssertionDefaultOn" type="radio" name="samlAssertionDefaultBoolean" value="1" /><label for="samlAssertionDefaultOn"><lang en="On" fr="Activé"/></label>
            <input id="samlAssertionDefaultOff" type="radio" name="samlAssertionDefaultBoolean" value="0" /><label for="samlAssertionDefaultOff"><lang en="Off" fr="Désactivé"/></label>
        </td>
       </tr>
       <tr class="hidden">
-       <td><lang en="Index" fr="Index"/></td>
+       <th><lang en="Index" fr="Index"/></th>
        <td><input type="text" size="50" id="samlAssertionIndex" class="form-control"/></td>
       </tr>
       <tr>
-       <td><lang en="Binding" fr="Binding"/></td>
+       <th><lang en="Binding" fr="Binding"/></th>
        <td><select disabled="disabled" id="samlAssertionBinding" class="form-control"></select></td>
       </tr>
       <tr>
-       <td><lang en="Location" fr="URL"/></td>
+       <th><lang en="Location" fr="URL"/></th>
        <td><input type="text" size="50" id="samlAssertionLocation" class="form-control"/></td>
       </tr>
      </table>
-     <br />
+     <div class="buttons">
      <button onclick="setlmsamlassertion(currentId);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- samlService -->
     <div id="content_samlService" class="hidden">
-     <table>
+     <table class="table">
       <tr>
-       <td><lang en="Binding" fr="Binding"/></td>
+       <th><lang en="Binding" fr="Binding"/></th>
        <td><select disabled="disabled" id="samlServiceBinding" class="form-control"></select></td>
       </tr>
       <tr>
-       <td><lang en="Location" fr="URL"/></td>
+       <th><lang en="Location" fr="URL"/></th>
        <td><input type="text" size="50" id="samlServiceLocation" class="form-control"/></td>
       </tr>
       <tr>
-       <td><lang en="Response Location" fr="URL de retour"/></td>
+       <th><lang en="Response Location" fr="URL de retour"/></th>
        <td><input type="text" size="50" id="samlServiceResponseLocation" class="form-control"/></td>
       </tr>
      </table>
-     <br />
+     <div class="buttons">
      <button onclick="setlmsamlservice(currentId);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- OpenID black/white lists -->
