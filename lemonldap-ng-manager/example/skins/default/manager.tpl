@@ -754,38 +754,47 @@
 
     <!-- Post -->
     <div id="content_post" class="hidden">
-     <table>
+     <table class="table">
       <tr>
-       <td><lang en="Form URL" fr="URL du formulaire"/></td>
+       <th><lang en="Form URL" fr="URL du formulaire"/></th>
        <td><input type="text" id="postKey" size="20" class="form-control"/></td>
-       <td><lang en="jQuery form selector (optional)" fr="Sélecteur jQuery du formulaire (optionnel)"/></td>
+       <th><lang en="jQuery form selector (optional)" fr="Sélecteur jQuery du formulaire (optionnel)"/></th>
        <td><input type="text" id="formSelector" size="20" class="form-control"/></td>
       </tr>
       <tr>
-       <td><lang en="Target URL (optional)" fr="URL cible (optionnelle)"/></td>
+       <th><lang en="Target URL (optional)" fr="URL cible (optionnelle)"/></th>
        <td><input type="text" id="postUrl" size="20" class="form-control"/></td>
-       <td><lang en="jQuery button selector (optional)" fr="Sélecteur jQuery du bouton (optionnel)"/></td>
+       <th><lang en="jQuery button selector (optional)" fr="Sélecteur jQuery du bouton (optionnel)"/></th>
        <td><input type="text" id="buttonSelector" size="20" class="form-control"/></td>
       </tr>
       <tr>
-       <td><lang en="jQuery URL (optional)" fr="URL de jQuery (optionnelle)"/></td>
-       <td colspan="3"><input type="text" id="jqueryUrl" size="60"/></td>
+       <th><lang en="jQuery URL (optional)" fr="URL de jQuery (optionnelle)"/></th>
+       <td colspan="3"><input type="text" id="jqueryUrl" size="60" class="form-control"/></td>
       </tr>
      </table>
-     <br />
+     <div class="buttons text-center">
      <button onclick="setlminputtext(currentId,postKey);setlmpostform(currentId);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
  
     <div id="content_postdata" class="hidden">
-     <input type="text" id="postDataKey" class="form-control"/> <input type="text" id="postDataValue" class="form-control"/>
-     <br />
+     <div class="row">
+     <div class="col-sm-4">
+      <input type="text" id="postDataKey" class="form-control"/>
+     </div>
+     <div class="col-sm-8">
+      <input type="text" id="postDataValue" class="form-control"/>
+     </div>
+     </div>
+     <div class="buttons text-center">
      <button onclick="setlminputtext(currentId,postDataKey,'postdata:');setlminputdata(currentId,postDataValue);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
    </div>
