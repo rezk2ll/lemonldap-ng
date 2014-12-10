@@ -636,23 +636,31 @@
 
     <!-- OpenID black/white lists -->
     <div id="content_openid_serverlist" class="hidden">
-     <table>
+     <table class="table">
       <tr>
-       <td><lang en="List type" fr="Type de liste"/></td>
-       <td><input id="openid_serverlist_black" type="radio" name="openIdServerlistBoolean" value="0" /><label for="openid_serverlist_black"><lang en="Black list" fr="Liste noire"/></label>
-           <input id="openid_serverlist_white" type="radio" name="openIdServerlistBoolean" value="1" /><label for="openid_serverlist_white"><lang en="White list" fr="Liste blanche"/></label>
+       <th><lang en="List type" fr="Type de liste"/></th>
+       <td>
+        <div class="btn-group" data-toggle="buttons">
+        <label id="openid_serverlist_black" class="btn btn-info" name="openIdServerlistBoolean">
+         <input type="radio" autocomplete="off" value="0" /><lang en="Black list" fr="Liste noire"/>
+        </label>
+        <label id="openid_serverlist_white" class="btn btn-info" name="openIdServerlistBoolean">
+         <input type="radio" autocomplete="off" value="1" /><lang en="White list" fr="Liste blanche"/>
+        </label>
+        </div>
        </td>
       </tr>
       <tr>
-       <td><lang en="List" fr="Liste"/></td>
+       <th><lang en="List" fr="Liste"/></th>
        <td><input type="text" size="50" id="openid_serverlist_text" class="form-control"/></td>
       </tr>
      </table>
-     <br />
+     <div class="buttons text-center">
      <button onclick="setopenididplist(currentId);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- authChoice -->

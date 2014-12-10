@@ -443,7 +443,7 @@ function setlmsamlservice(id) {
 	setlmdata(id, v);
 }
 function setopenididplist(id) {
-	var type = $('input[type=radio][name=openIdServerlistBoolean]:checked').attr("value");
+	var type = $('label[name=openIdServerlistBoolean].active > input').attr("value");
 	var list = $('#openid_serverlist_text').val();
 	setlmdata(id, type + ';' + list);
 }
@@ -832,11 +832,13 @@ function samlService(id) {
 }
 function openididplist(id) {
 	currentId = id;
+	$('#openid_serverlist_white').removeClass('active');
+	$('#openid_serverlist_black').removeClass('active');
 	var t = lmdata(id).split(';');
 	if (t[0] == 1) {
-		$('#openid_serverlist_white').prop('checked', true);
+		$('#openid_serverlist_white').addClass('active');
 	} else {
-		$('#openid_serverlist_black').prop('checked', true);
+		$('#openid_serverlist_black').addClass('active');
 	}
 	$('#openid_serverlist_text').val(t[1]);
 	display('openid_serverlist', lmtext(id));
