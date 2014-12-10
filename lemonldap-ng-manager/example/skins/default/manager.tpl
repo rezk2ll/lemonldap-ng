@@ -665,33 +665,34 @@
 
     <!-- authChoice -->
     <div id="content_authChoice" class="hidden">
-     <table>
+     <table class="table">
       <tr>
-       <td><lang en="Key name" fr="Nom de la clef"/></td>
+       <th><lang en="Key name" fr="Nom de la clef"/></th>
        <td><input type="text" id="authChoiceKey" class="form-control"/></td>
       </tr>
       <tr>
-       <td><lang en="Authentication module" fr="Module d'authentification"/></td>
+       <th><lang en="Authentication module" fr="Module d'authentification"/></th>
        <td><select id="authChoiceAuth" class="form-control"></select></td>
       </tr>
       <tr>
-       <td><lang en="User module" fr="Module d'utilisateurs"/></td>
+       <th><lang en="User module" fr="Module d'utilisateurs"/></th>
        <td><select id="authChoiceUser" class="form-control"></select></td>
       </tr>
       <tr>
-       <td><lang en="Password module" fr="Module de mots de passe"/></td>
+       <th><lang en="Password module" fr="Module de mots de passe"/></th>
        <td><select id="authChoicePassword" class="form-control"></select></td>
       </tr>
       <tr>
-       <td><lang en="URL" fr="URL"/></td>
+       <th><lang en="URL" fr="URL"/></th>
        <td><input type="text" id="authChoiceURL" class="form-control"/></td>
       </tr>
      </table>
-     <br />
+     <div class="buttons text-center">
      <button onclick="setlmauthchoice(currentId);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
    </div>
 
     <!-- applicationList Category-->
