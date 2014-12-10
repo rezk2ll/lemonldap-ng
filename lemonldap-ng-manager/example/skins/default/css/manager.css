@@ -85,6 +85,11 @@ input#skinText
 	height: 153px;
 }
 
+input#authOptions
+{
+	margin: 10px 0;
+}
+
 option
 {
 	margin:5px;

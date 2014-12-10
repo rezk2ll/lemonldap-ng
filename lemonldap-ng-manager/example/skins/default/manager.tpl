@@ -498,13 +498,13 @@
     <!-- authParams -->
     <div id="content_authParams" class="hidden">
      <select id="authText" class="form-control"></select>
-     <br/>
-     <input type="text" id="authOptions" class="hidden" size="30" class="form-control"/>
-     <br/>
+     <input type="text" id="authOptions" class="form-control" size="30" />
+     <div class="buttons text-center">
      <button onclick="reloadAuthParams();return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- Skin -->
