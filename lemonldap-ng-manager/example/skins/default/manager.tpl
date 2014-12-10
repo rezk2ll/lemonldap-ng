@@ -431,55 +431,68 @@
 
 
     <div id="content_btext" class="hidden">
-     <textarea class="elastic" id="btextKey" rows="1" cols="25" class="form-control"></textarea>
-     <textarea class="elastic" id="btextValue" rows="1" cols="40" class="form-control"></textarea>
-     <br />
+     <div class="row">
+     <div class="col-sm-4">
+     <textarea class="elastic form-control" id="btextKey" rows="1" cols="25"></textarea>
+     </div>
+     <div class="col-sm-8">
+     <textarea class="elastic form-control" id="btextValue" rows="1" cols="40"></textarea>
+     </div>
+     </div>
+     <div class="buttons text-center">
      <button onclick="setlminputtext(currentId,btextKey);setlminputdata(currentId,btextValue);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- Rule -->
     <div id="content_rules" class="hidden">
-     <table border="0"><tbody><tr><td>
-      <div id="rulCommentDiv">
-       <lang en="Comment" fr="Commentaire" /><br/>
-       <textarea class="elastic" id="rulComment" rows="1" cols="30" class="form-control"></textarea>
-      </div>
-      <lang en="Expression" fr="Expression" /><br/>
-      <textarea class="elastic" id="rulKey" rows="1" cols="30" class="form-control"></textarea>
-     </td>
-     <td>
-      <lang en="Rule" fr="Règle" /><br/>
-      <textarea class="elastic" id="rulValue" rows="1" cols="50" class="form-control"></textarea>
-     </td></tr></tbody></table>
-     <br />
+     <table class="table">
+      <tr>
+       <th><lang en="Comment" fr="Commentaire" /></th>
+       <td><textarea class="elastic form-control" id="rulComment" rows="1" cols="30"></textarea></td>
+      </tr>
+      <tr>
+       <th><lang en="Expression" fr="Expression" /></th>
+       <td><textarea class="elastic form-control" id="rulKey" rows="1" cols="30"></textarea></td>
+      </tr>
+      <tr>
+       <th><lang en="Rule" fr="Règle" /></th>
+       <td><textarea class="elastic form-control" id="rulValue" rows="3" cols="50"></textarea></td>
+      </tr>
+     </table>
+     <div class="buttons text-center">
      <button onclick="setlmrule(currentId,rulComment,rulKey,rulValue);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- Grant session rule -->
     <div id="content_grantSessionRules" class="hidden">
-     <table border="0"><tbody><tr><td>
-      <div id="grantSessionRulCommentDiv">
-       <lang en="Comment" fr="Commentaire" /><br/>
-       <textarea class="elastic" id="grantSessionRulComment" rows="1" cols="30" class="form-control"></textarea>
-      </div>
-      <lang en="Condition" fr="Condition" /><br/>
-      <textarea class="elastic" id="grantSessionRulKey" cols="30" rows="1" class="form-control"></textarea>
-     </td>
-     <td>
-         <lang en="Message" fr="Message" /><br/>
-         <textarea class="elastic" id="grantSessionRulValue" cols="50" rows="1" class="form-control"></textarea>
-     </td></tr></tbody></table>
-     <br />
+     <table class="table">
+      <tr>
+       <th><lang en="Comment" fr="Commentaire" /></th>
+       <td><textarea class="elastic form-control" id="grantSessionRulComment" rows="1" cols="30"></textarea></td>
+      </tr>
+      <tr>
+       <th><lang en="Condition" fr="Condition" /></th>
+       <td><textarea class="elastic form-control" id="grantSessionRulKey" cols="30" rows="1"></textarea></td>
+      </tr>
+      <tr>
+       <th><lang en="Message" fr="Message" /></th>
+       <td><textarea class="elastic form-control" id="grantSessionRulValue" cols="50" rows="1"></textarea></td>
+      </tr>
+     </table>
+     <div class="buttons text-center">
      <button onclick="setlmgrantsessionrule(currentId,grantSessionRulComment,grantSessionRulKey,grantSessionRulValue);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- authParams -->
