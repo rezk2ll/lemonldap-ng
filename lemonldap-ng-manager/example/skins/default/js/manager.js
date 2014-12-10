@@ -396,7 +396,7 @@ function setlmsamlassertion(id) {
 	var ind = $('#samlAssertionIndex').val();
 	var bin = $('#samlAssertionBinding').val();
 	var loc = $('#samlAssertionLocation').val();
-	var def = $('input[type=radio][name=samlAssertionDefaultBoolean]:checked').attr("value");
+	var def = $('label[name=samlAssertionDefaultBoolean].active > input').attr("value");
 	// Update default value in other assertions.
 	var parentId = lmparent(id);
 	var t = $('#' + parentId).find('span').get();
@@ -430,7 +430,7 @@ function setlmsamlattribute(id) {
 	var name = $('#samlAttributeName').val();
 	var form = $('#samlAttributeFormat').val();
 	var altr = $('#samlAttributeFriendlyName').val();
-	var mand = $('input[type=radio][name=samlAttributeMandatoryBoolean]:checked').attr("value");
+	var mand = $('label[name=samlAttributeMandatoryBoolean].active > input').attr("value");
 	var v = mand + ';' + name + ';' + form + ';' + altr;
 	setlmtext(id, $('#samlAttributeKey').val());
 	setlmdata(id, v);
@@ -761,12 +761,13 @@ function samlAssertion(id) {
 	// Reset text fields
 	$('#samlAssertionIndex').removeAttr('value');
 	$('#samlAssertionLocation').removeAttr('value');
-
+	$('#samlAssertionDefaultOn').removeClass('active');
+	$('#samlAssertionDefaultOff').removeClass('active');
 	// Fill fields
 	if (t[0] == 1) {
-		$('#samlAssertionDefaultOn').prop('checked', true);
+		$('#samlAssertionDefaultOn').addClass('active');
 	} else {
-		$('#samlAssertionDefaultOff').prop('checked', true);
+		$('#samlAssertionDefaultOff').addClass('active');
 	}
 	$('#samlAssertionIndex').val(t[1]);
 	formateSelect('samlAssertionBinding', ['urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact=Artifact', 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST=HTTP POST', 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect=HTTP Redirect', 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP=SOAP'], t[2]);
@@ -781,12 +782,14 @@ function samlAttribute(id) {
 	$('#samlAttributeKey').removeAttr('value');
 	$('#samlAttributeName').removeAttr('value');
 	$('#samlAttributeFriendlyName').removeAttr('value');
+	$('#samlAttributeMandatoryOn').removeClass('active');
+	$('#samlAttributeMandatoryOff').removeClass('active');
 
 	// Fill fields
 	if (t[0] == 1) {
-		$('#samlAttributeMandatoryOn').prop('checked', true);
+		$('#samlAttributeMandatoryOn').addClass('active');
 	} else {
-		$('#samlAttributeMandatoryOff').prop('checked', true);
+		$('#samlAttributeMandatoryOff').addClass('active');
 	}
 	$('#samlAttributeKey').val(lmtext(id));
 	$('#samlAttributeName').val(t[1]);

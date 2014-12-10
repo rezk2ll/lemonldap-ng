@@ -567,8 +567,15 @@
        <th><lang en="Name" fr="Nom"/></th>
        <td><input type="text" id="samlAttributeName" class="form-control"/></td>
        <th><lang en="Mandatory" fr="Obligatoire"/></th>
-       <td><input id="samlAttributeMandatoryOn" type="radio" name="samlAttributeMandatoryBoolean" value="1" /><label for="samlAttributeMandatoryOn"><lang en="On" fr="Activé"/></label>
-           <input id="samlAttributeMandatoryOff" type="radio" name="samlAttributeMandatoryBoolean" value="0" /><label for="samlAttributeMandatoryOff"><lang en="Off" fr="Désactivé"/></label>
+       <td>
+        <div class="btn-group" data-toggle="buttons">
+        <label id="samlAttributeMandatoryOn" class="btn btn-info" name="samlAttributeMandatoryBoolean">
+         <input type="radio" value="1" /><lang en="On" fr="Activé"/>
+        </label>
+        <label id="samlAttributeMandatoryOff" class="btn btn-info" name="samlAttributeMandatoryBoolean">
+         <input type="radio" value="0" /><lang en="Off" fr="Désactivé"/>
+        </label>
+        </div>
        </td>
       </tr>
       <tr>
@@ -591,8 +598,15 @@
      <table class="table">
       <tr>
        <th><lang en="Default" fr="Par défaut"/></th>
-       <td><input id="samlAssertionDefaultOn" type="radio" name="samlAssertionDefaultBoolean" value="1" /><label for="samlAssertionDefaultOn"><lang en="On" fr="Activé"/></label>
-           <input id="samlAssertionDefaultOff" type="radio" name="samlAssertionDefaultBoolean" value="0" /><label for="samlAssertionDefaultOff"><lang en="Off" fr="Désactivé"/></label>
+       <td>
+        <div class="btn-group" data-toggle="buttons">
+        <label id="samlAssertionDefaultOn" class="btn btn-info" name="samlAssertionDefaultBoolean">
+         <input type="radio" value="1" /><lang en="On" fr="Activé"/>
+        </label>
+        <label id="samlAssertionDefaultOff" class="btn btn-info" name="samlAssertionDefaultBoolean">
+         <input type="radio" value="0" /><lang en="Off" fr="Désactivé"/>
+        </label>
+        </div>
        </td>
       </tr>
       <tr class="hidden">
