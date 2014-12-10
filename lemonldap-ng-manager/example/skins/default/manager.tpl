@@ -363,14 +363,21 @@
 
     <!-- Integer -->
     <div id="content_int" class="hidden">
+     <div class="input-group int">
+     <span class="input-group-btn">
      <button onclick="decrease();return false;" class="btn btn-warning"><i class="glyphicon glyphicon-minus"></i></button>
-     <input type="text" id="int" />
+     </span>
+     <input type="text" id="int" class="form-control" />
+     <span class="input-group-btn">
      <button onclick="increase();return false;" class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i></button>
-     <br />
+     </span>
+     </div>
+     <div class="buttons text-center">
      <button onclick="setlminputdata(currentId,int);return false;" class="btn btn-info">
      <i class="glyphicon glyphicon-ok"></i>
      <lang en="Apply" fr="Appliquer" />
      </button>
+     </div>
     </div>
 
     <!-- Boolean -->
