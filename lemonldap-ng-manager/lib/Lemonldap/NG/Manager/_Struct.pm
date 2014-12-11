@@ -414,14 +414,15 @@ sub struct {
                             null     => ['nullParams'],
                             slave    => ['slaveParams'],
                             choice   => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams webIDParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams demoParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams webIDParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams demoParams oidcParams)
                             ],
                             multi => [
-                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams webIDParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams demoParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams googleParams facebookParams twitterParams webIDParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams browserIdParams demoParams oidcParams)
                             ],
                             yubikey   => ['yubikeyParams'],
                             browserid => ['browserIdParams'],
                             demo      => ['demoParams'],
+                            oidc      => ['oidcParams'],
                         }->{$mod};
                         if ($tmp) {
                             $res{$_}++ foreach (@$tmp);
@@ -785,6 +786,16 @@ sub struct {
                         _help  => 'authDemo',
                     },
                 },
+
+                # OpenIDConnect (OIDC)
+                oidcParams => {
+                    _nodes => [
+                        qw(oidcAuthnLevel oidcRPCallbackGetParam oidcRPStateTimeout)
+                    ],
+                    oidcAuthnLevel         => 'int:/oidcAuthnLevel',
+                    oidcRPCallbackGetParam => 'text:/oidcRPCallbackGetParam',
+                    oidcRPStateTimeout     => 'int:/oidcRPStateTimeout',
+                  }
 
             },
 

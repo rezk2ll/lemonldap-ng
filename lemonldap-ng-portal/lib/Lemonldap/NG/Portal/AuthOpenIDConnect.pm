@@ -31,7 +31,7 @@ sub setAuthSessionInfo {
     my $self = shift;
 
     $self->{sessionInfo}->{'_user'} = $self->{user};
-    $self->{sessionInfo}->{authenticationLevel} = $self->{nullAuthnLevel};
+    $self->{sessionInfo}->{authenticationLevel} = $self->{oidcAuthnLevel};
 
     $self->{sessionInfo}->{OpenIDConnect_OP} = $self->{_oidcOPCurrent};
     $self->{sessionInfo}->{OpenIDConnect_access_token} =
@@ -48,7 +48,7 @@ sub extractFormInfo {
     my $self = shift;
 
     # Check callback
-    my $callback_get_param = $self->{OIDCRPCallbackGetParam};
+    my $callback_get_param = $self->{oidcRPCallbackGetParam};
     my $callback           = $self->param($callback_get_param);
 
     if ($callback) {

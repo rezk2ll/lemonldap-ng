@@ -548,7 +548,7 @@ function formateSelectAuth(id, value) {
 	if (value && value.toLowerCase() == "ldap") {
 		value = "LDAP";
 	}
-	formateSelect(id, ['Apache=Apache', 'AD=Active Directory', 'BrowserID=BrowserID (Mozilla Persona)', 'Choice=Authentication choice', 'CAS=Central Authentication Service (CAS)', 'DBI=Database (DBI)', 'Demo=Demonstration', 'Facebook=Facebook', 'Google=Google', 'LDAP=LDAP', 'Multi=Multiple', 'Null=None', 'OpenID=OpenID', 'Proxy=Proxy', 'Radius=Radius', 'Remote=Remote', 'SAML=SAML v2', 'Slave=Slave', 'SSL=SSL', 'Twitter=Twitter', 'WebID=WebID', 'Yubikey=Yubikey'], value);
+	formateSelect(id, ['Apache=Apache', 'AD=Active Directory', 'BrowserID=BrowserID (Mozilla Persona)', 'Choice=Authentication choice', 'CAS=Central Authentication Service (CAS)', 'DBI=Database (DBI)', 'Demo=Demonstration', 'Facebook=Facebook', 'Google=Google', 'LDAP=LDAP', 'Multi=Multiple', 'Null=None', 'OpenID=OpenID', 'OpenIDConnect=OpenID Connect', 'Proxy=Proxy', 'Radius=Radius', 'Remote=Remote', 'SAML=SAML v2', 'Slave=Slave', 'SSL=SSL', 'Twitter=Twitter', 'WebID=WebID', 'Yubikey=Yubikey'], value);
 }
 function userdbParams(id) {
 	currentId = id;
@@ -588,7 +588,7 @@ function formateSelectUser(id, value) {
 	if (value && value.toLowerCase() == "ldap") {
 		value = "LDAP";
 	}
-	formateSelect(id, ['AD=Active Directory', 'DBI=Database (DBI)', 'Demo=Demonstration', 'Facebook=Facebook', 'Google=Google', 'LDAP=LDAP', 'Multi=Multiple', 'Null=None', 'OpenID=OpenID', 'Proxy=Proxy', 'Remote=Remote', 'SAML=SAML v2', 'Slave=Slave', 'WebID=WebID'], value);
+	formateSelect(id, ['AD=Active Directory', 'DBI=Database (DBI)', 'Demo=Demonstration', 'Facebook=Facebook', 'Google=Google', 'LDAP=LDAP', 'Multi=Multiple', 'Null=None', 'OpenID=OpenID', 'OpenIDConnect=OpenID Connect', 'Proxy=Proxy', 'Remote=Remote', 'SAML=SAML v2', 'Slave=Slave', 'WebID=WebID'], value);
 }
 function passworddbParams(id) {
 	currentId = id;

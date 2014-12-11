@@ -140,7 +140,7 @@ sub refreshJWKSdata {
 sub getCallbackUri {
     my $self = shift;
 
-    my $callback_get_param = $self->{OIDCRPCallbackGetParam};
+    my $callback_get_param = $self->{oidcRPCallbackGetParam};
 
     my $callback_uri = $self->{portal};
     $callback_uri .=
@@ -445,7 +445,7 @@ sub storeState {
     # Use default session timeout and relayState session timeout to compute it
     my $time         = time();
     my $timeout      = $self->{timeout};
-    my $stateTimeout = $self->{OIDCRPStateTimeout} || $timeout;
+    my $stateTimeout = $self->{oidcRPStateTimeout} || $timeout;
 
     $infos->{_utime} = $time + ( $stateTimeout - $timeout );
 

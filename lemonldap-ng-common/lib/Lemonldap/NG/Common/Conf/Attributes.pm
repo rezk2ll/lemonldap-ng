@@ -706,6 +706,27 @@ has 'nullAuthnLevel' => (
 
 ## O
 
+has 'oidcAuthnLevel' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '1',
+    documentation => 'OpenID Connect authentication level',
+);
+
+has 'oidcRPCallbackGetParam' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'openidconnectcallback',
+    documentation => 'OpenID Connect Callback GET URLparameter',
+);
+
+has 'oidcRPStateTimeout' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '600',
+    documentation => 'OpenID Connect Timeout of state sessions',
+);
+
 has 'openIdAuthnLevel' => (
     is            => 'rw',
     isa           => 'Int',
