@@ -215,8 +215,6 @@ sub extractFormInfo {
 
     my $stateSession = $self->storeState();
 
-    # TODO Use AuthChoiceParam in redirect URL
-
     # Authorization Code Flow
     $self->{urldc} = $self->buildAuthorizationCodeAuthnRequest( $op, $state );
 

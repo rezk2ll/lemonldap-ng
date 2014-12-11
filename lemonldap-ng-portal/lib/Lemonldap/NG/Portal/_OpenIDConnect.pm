@@ -148,6 +148,13 @@ sub getCallbackUri {
       ? '&' . $callback_get_param . '=1'
       : '?' . $callback_get_param . '=1';
 
+    # Use authChoiceParam in redirect URL
+    if ( $self->param( $self->{authChoiceParam} ) ) {
+        $callback_uri .= '&'
+          . $self->{authChoiceParam} . '='
+          . uri_escape( $self->param( $self->{authChoiceParam} ) );
+    }
+
     $self->lmLog( "OpenIDConnect Callback URI: $callback_uri", 'debug' );
 
     return $callback_uri;
