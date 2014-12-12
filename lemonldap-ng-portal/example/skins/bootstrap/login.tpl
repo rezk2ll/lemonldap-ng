@@ -76,10 +76,12 @@
 
                 <TMPL_INCLUDE NAME="checklogins.tpl">
 
+                <div class="buttons">
                   <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-log-in"></span>
                     <lang en="Connect" fr="Se connecter" />
                   </button>
+                </div>
 
               </div>
 
@@ -156,10 +158,12 @@
 
       <TMPL_INCLUDE NAME="checklogins.tpl">
 
+      <div class="buttons">
       <button type="submit" class="btn btn-success">
         <span class="glyphicon glyphicon-log-in"></span>&nbsp;
         <lang en="Connect" fr="Se connecter" />
       </button>
+      </div>
       </div>
 
     </form>

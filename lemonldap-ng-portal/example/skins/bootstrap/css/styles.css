@@ -52,6 +52,7 @@ div.actions a {
 
 .buttons {
   text-align: center;
+  margin: 10px 0 0 0;
 }
 /* Override bootstrap btn style */
 .btn {
