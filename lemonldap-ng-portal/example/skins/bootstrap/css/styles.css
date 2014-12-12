@@ -21,14 +21,15 @@ body {
 #footer {
   height: 80px;
   background-color: rgb(255,255,255);
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255,255,255,0.9);
   text-align: center;
   padding-top: 20px;
 }
 
-.panel {
+.panel, .navbar-default {
   background-color: rgb(255,255,255);
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255,255,255,0.9);
+  background-image: none;
 }
 
 .login, .password, .confirm {
