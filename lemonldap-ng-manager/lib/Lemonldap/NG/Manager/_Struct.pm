@@ -283,7 +283,7 @@ sub cstruct {
                             oidcOPMetaDataOptionsClientID =>
 "text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsClientID",
                             oidcOPMetaDataOptionsClientSecret =>
-"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsClientSecret",
+"password:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsClientSecret",
                         },
                         oidcOPMetaDataOptionsProtocol => {
                             _nodes => [
@@ -528,7 +528,7 @@ sub struct {
                         ldapPort        => 'int:/ldapPort',
                         ldapBase        => 'text:/ldapBase',
                         managerDn       => 'text:/managerDn',
-                        managerPassword => 'text:/managerPassword',
+                        managerPassword => 'password:/managerPassword',
                         ldapTimeout     => 'int:/ldapTimeout',
                         ldapVersion     => 'int:/ldapVersion',
                         ldapRaw         => 'text:/ldapRaw',
@@ -615,7 +615,7 @@ sub struct {
                     _nodes => [qw(radiusAuthnLevel radiusSecret radiusServer)],
                     _help  => 'authRadius',
                     radiusAuthnLevel => 'int:/radiusAuthnLevel',
-                    radiusSecret     => 'text:/radiusSecret',
+                    radiusSecret     => 'password:/radiusSecret',
                     radiusServer     => 'text:/radiusServer',
                 },
 
@@ -658,7 +658,7 @@ sub struct {
                         _js    => 'hashRoot',
                         _help  => 'authOpenID',
                     },
-                    openIdSecret => 'text:/openIdSecret',
+                    openIdSecret => 'password:/openIdSecret',
                     openIdIDPList =>
                       'text:/openIdIDPList:authOpenID:openididplist',
                 },
@@ -688,7 +688,7 @@ sub struct {
                         _help  => 'authFacebook',
                     },
                     facebookAppId     => 'text:facebookAppId',
-                    facebookAppSecret => 'text:facebookAppSecret',
+                    facebookAppSecret => 'password:facebookAppSecret',
                 },
 
                 # Twitter
@@ -699,7 +699,7 @@ sub struct {
                     _help             => 'authTwitter',
                     twitterAuthnLevel => 'int:/twitterAuthnLevel',
                     twitterKey        => 'text:/twitterKey',
-                    twitterSecret     => 'text:/twitterSecret',
+                    twitterSecret     => 'password:/twitterSecret',
                     twitterAppName    => 'text:/twitterAppName',
                 },
 
@@ -736,14 +736,14 @@ sub struct {
                               [qw(dbiAuthChain dbiAuthUser dbiAuthPassword)],
                             dbiAuthChain    => 'text:/dbiAuthChain',
                             dbiAuthUser     => 'text:/dbiAuthUser',
-                            dbiAuthPassword => 'text:/dbiAuthPassword',
+                            dbiAuthPassword => 'password:/dbiAuthPassword',
                         },
                         dbiConnectionUser => {
                             _nodes =>
                               [qw(dbiUserChain dbiUserUser dbiUserPassword)],
                             dbiUserChain    => 'text:/dbiUserChain',
                             dbiUserUser     => 'text:/dbiUserUser',
-                            dbiUserPassword => 'text:/dbiUserPassword',
+                            dbiUserPassword => 'password:/dbiUserPassword',
                         },
                         _help => 'authDBIConnection',
                     },
@@ -819,7 +819,7 @@ sub struct {
                     _help               => 'authYubikey',
                     yubikeyAuthnLevel   => 'int:/yubikeyAuthnLevel',
                     yubikeyClientID     => 'text:/yubikeyClientID',
-                    yubikeySecretKey    => 'text:/yubikeySecretKey',
+                    yubikeySecretKey    => 'password:/yubikeySecretKey',
                     yubikeyPublicIDSize => 'int:/yubikeyPublicIDSize',
                 },
 
@@ -915,7 +915,7 @@ sub struct {
                         _nodes => [
                             qw(openIdIssuerSecret openIdAttr openIdSPList n:openIdSreg)
                         ],
-                        openIdIssuerSecret => 'text:/openIdIssuerSecret',
+                        openIdIssuerSecret => 'password:/openIdIssuerSecret',
                         openIdAttr         => 'text:/openIdAttr',
                         openIdSPList =>
                           'text:/openIdSPList:issuerdbOpenID:openididplist',
@@ -1089,7 +1089,7 @@ sub struct {
                         _nodes => [qw(SMTPServer SMTPAuthUser SMTPAuthPass)],
                         SMTPServer   => 'text:/SMTPServer',
                         SMTPAuthUser => 'text:/SMTPAuthUser',
-                        SMTPAuthPass => 'text:/SMTPAuthPass',
+                        SMTPAuthPass => 'password:/SMTPAuthPass',
                     },
                     mailHeaders => {
                         _nodes      => [qw(mailFrom mailReplyTo mailCharset)],
@@ -1136,7 +1136,7 @@ sub struct {
                     _help            => 'security',
                     userControl      => 'text:/userControl',
                     portalForceAuthn => 'bool:/portalForceAuthn',
-                    key              => 'text:/key',
+                    key              => 'password:/key',
                     trustedDomains   => 'text:/trustedDomains',
                     useSafeJail      => 'bool:/useSafeJail',
                     checkXSS         => 'bool:/checkXSS',
@@ -1172,7 +1172,7 @@ sub struct {
                         ],
                         _help            => 'zimbra',
                         zimbraPreAuthKey => 'text:/zimbraPreAuthKey',
-                        zimbraAccountKey => 'text:/zimbraAccountKey',
+                        zimbraAccountKey => 'password:/zimbraAccountKey',
                         zimbraBy     => 'text:/zimbraBy:default:zimbraByParams',
                         zimbraUrl    => 'text:/zimbraUrl',
                         zimbraSsoUrl => 'text:/zimbraSsoUrl',
@@ -1182,7 +1182,7 @@ sub struct {
                     sympaHandler => {
                         _nodes       => [qw(sympaSecret sympaMailKey)],
                         _help        => 'sympa',
-                        sympaSecret  => 'text:/sympaSecret',
+                        sympaSecret  => 'password:/sympaSecret',
                         sympaMailKey => 'text:/sympaMailKey',
                     },
 
@@ -1305,7 +1305,7 @@ sub struct {
                     samlServicePrivateKeySig =>
                       'filearea:/samlServicePrivateKeySig',
                     samlServicePrivateKeySigPwd =>
-                      'text:/samlServicePrivateKeySigPwd',
+                      'password:/samlServicePrivateKeySigPwd',
                     samlServicePublicKeySig =>
                       'filearea:/samlServicePublicKeySig',
                 },
@@ -1318,7 +1318,7 @@ sub struct {
                     samlServicePrivateKeyEnc =>
                       'filearea:/samlServicePrivateKeyEnc',
                     samlServicePrivateKeyEncPwd =>
-                      'text:/samlServicePrivateKeyEncPwd',
+                      'password:/samlServicePrivateKeyEncPwd',
                     samlServicePublicKeyEnc =>
                       'filearea:/samlServicePublicKeyEnc',
                 },

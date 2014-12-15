@@ -727,6 +727,11 @@ function text(id) {
 	$('#text').val(lmdata(id));
 	display('text', lmtext(id));
 }
+function password(id) {
+	currentId = id;
+	$('#password').val(lmdata(id));
+	display('password', lmtext(id));
+}
 function textarea(id) {
 	currentId = id;
 	$('#textarea').val(lmdata(id));

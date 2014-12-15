@@ -59,12 +59,7 @@ textarea#filearea
 	background-color:#ddd;
 }
 
-input#text, select
-{
-	text-align:center;
-}
-
-input#int
+input#text, input#int, input#password, select
 {
 	text-align:center;
 }

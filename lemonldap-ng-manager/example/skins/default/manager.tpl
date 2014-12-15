@@ -311,6 +311,16 @@
      </button>
     </div>
 
+    <!-- Password -->
+    <div id="content_password" class="hidden">
+     <input type="password" id="password" class="form-control" />
+     <br />
+     <button onclick="setlminputdata(currentId,password);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+    </div>
+
     <!-- Simple textarea -->
     <div id="content_textarea" class="hidden">
      <textarea id="textarea" cols="80" rows="10" class="form-control"></textarea>
