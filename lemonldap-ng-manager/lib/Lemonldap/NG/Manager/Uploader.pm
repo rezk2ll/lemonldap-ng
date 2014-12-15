@@ -20,7 +20,7 @@ use Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Request;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
-our $VERSION = '1.4.0';
+our $VERSION = 2.00;
 our ( $stylesheet, $parser );
 
 ## @method void confUpload(ref rdata)
@@ -42,6 +42,7 @@ sub confUpload {
     my $spname;
     my $catid;
     my $postname;
+    my $opname;
 
     # 1. ANALYSE DATAS
 
@@ -110,6 +111,12 @@ s/^text_(NewID_)?li_([\w\/\+\=]+)(\d)(?:_\d+)?$/decode_base64($2.'='x $3)/e;
             $spname = $name;
         }
 
+        # Get OIDC OP name
+        if ( $id =~ /oidcOPMetaDataExportedVars\/([^\/]*)?$/ ) {
+            $self->lmLog( "Entering OP $name", 'debug' );
+            $opname = $name;
+        }
+
         # Set menu category and application flags
         if ( $id =~ /applicationList/ ) {
             if ( $value =~ /^(.*)?\|(.*)?\|(.*)?\|(.*)?\|(.*?)$/ ) {
@@ -132,7 +139,7 @@ s/^text_(NewID_)?li_([\w\/\+\=]+)(\d)(?:_\d+)?$/decode_base64($2.'='x $3)/e;
 
             # Special case: avoid bug with node created from parent node
             if ( $id =~
-/^(virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode|generalParameters\/authParams\/choiceParams)/
+/^(virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode|oidcOPMetaDataNode|generalParameters\/authParams\/choiceParams)/
               )
             {
                 $self->lmLog( "Special trigger for $id (attribute $name)",
@@ -156,6 +163,10 @@ s/^samlIDPMetaDataNode\/([^\/]*)?.*/samlIDPMetaDataExportedAttributes\/$1\/$name
                 # SAML SP attribute
                 $id =~
 s/^samlSPMetaDataNode\/([^\/]*)?.*/samlSPMetaDataExportedAttributes\/$1\/$name/;
+
+                # OIDC OP attribute
+                $id =~
+s/^oidcOPMetaDataNode\/([^\/]*)?.*/oidcOPMetaDataExportedVars\/$1\/$name/;
 
                 # Authentication choice
                 $id =~
@@ -198,13 +209,17 @@ s/^(samlIDPMetaDataXML|samlIDPMetaDataExportedAttributes|samlIDPMetaDataOptions)
         $id =~
 s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/([^\/]*)?\/(.*)$/$1\/$spname\/$3/;
 
+        # Set current OIDC OP name
+        $id =~
+s/^(oidcOPMetaDataJSON|oidcOPMetaDataJWKS|oidcOPMetaDataExportedVars|oidcOPMetaDataOptions)\/([^\/]*)?\/(.*)$/$1\/$opname\/$3/;
+
         # Set current POST URL name
         $id =~ s/^(post)\/([^\/]*)?\/(.*)$/$1\/$vhostname\/$postname/;
 
         $self->lmLog( "id transformed into $id", 'debug' );
 
         if ( $id =~
-/^(generalParameters|variables|virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode)/
+/^(generalParameters|variables|virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode|oidcOPMetaDataNode)/
           )
         {
             $self->lmLog( "Ignoring attribute $name (id $id)", 'debug' );

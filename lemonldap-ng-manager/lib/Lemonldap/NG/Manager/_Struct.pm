@@ -11,7 +11,7 @@ use Lemonldap::NG::Common::Conf::Attributes;
 use Lemonldap::NG::Common::Conf::SubAttributes;
 use Lemonldap::NG::Common::Regexp;
 
-our $VERSION = '2.00';
+our $VERSION = 2.00;
 
 ## @method protected hashref cstruct(hashref h,string k)
 # Merge $h with the structure produced with $k and return it.
@@ -249,6 +249,69 @@ sub cstruct {
             }
         );
     }
+    elsif ( $k1 =~ /^oidcOPMetaDataNode/i ) {
+        %$h = (
+            %$h,
+            oidcOPMetaDataNode => {
+                $k2 => {
+                    _nodes => [
+                        qw(oidcOPMetaDataJSON oidcOPMetaDataJWKS oidcOPMetaDataExportedVars oidcOPMetaDataOptions)
+                    ],
+
+                    oidcOPMetaDataJSON =>
+"oidcmetadatajson:/oidcOPMetaDataJSON/$k2:oidcOPMetaDataJSON:textarea",
+                    oidcOPMetaDataJWKS =>
+"oidcmetadatajwks:/oidcOPMetaDataJWKS/$k2:oidcOPMetaDataJWKS:textarea",
+                    oidcOPMetaDataExportedVars => {
+                        _nodes =>
+                          ["hash:/oidcOPMetaDataExportedVars/$k2:vars:btext"],
+                        _js => 'hashRoot',
+                    },
+                    oidcOPMetaDataOptions => {
+                        _nodes => [
+                            qw(oidcOPMetaDataOptionsConfiguration oidcOPMetaDataOptionsProtocol oidcOPMetaDataOptionsDisplay)
+                        ],
+
+                        oidcOPMetaDataOptionsConfiguration => {
+                            _nodes => [
+                                qw(oidcOPMetaDataOptionsConfigurationURI oidcOPMetaDataOptionsJWKSTimeout oidcOPMetaDataOptionsClientID oidcOPMetaDataOptionsClientSecret)
+                            ],
+                            oidcOPMetaDataOptionsConfigurationURI =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsConfigurationURI",
+                            oidcOPMetaDataOptionsJWKSTimeout =>
+"int:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsJWKSTimeout",
+                            oidcOPMetaDataOptionsClientID =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsClientID",
+                            oidcOPMetaDataOptionsClientSecret =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsClientSecret",
+                        },
+                        oidcOPMetaDataOptionsProtocol => {
+                            _nodes => [
+                                qw(oidcOPMetaDataOptionsScope oidcOPMetaDataOptionsTokenEndpointAuthMethod oidcOPMetaDataOptionsCheckJWTSignature)
+                            ],
+                            oidcOPMetaDataOptionsScope =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsScope",
+                            oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsTokenEndpointAuthMethod",
+                            oidcOPMetaDataOptionsCheckJWTSignature =>
+"bool:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsCheckJWTSignature",
+                        },
+                        oidcOPMetaDataOptionsDisplay => {
+                            _nodes => [
+                                qw(oidcOPMetaDataOptionsDisplayName oidcOPMetaDataOptionsIcon)
+                            ],
+                            oidcOPMetaDataOptionsDisplayName =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsDisplayName",
+                            oidcOPMetaDataOptionsIcon =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsIcon",
+                        },
+                    },
+
+                },
+            },
+        );
+    }
+
     return $h;
 }
 
@@ -259,7 +322,7 @@ sub struct {
     my $self = shift;
     return {
         _nodes => [
-            qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaDataNode n:samlSPMetaDataNode)
+            qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaDataNode n:samlSPMetaDataNode n:oidcOPMetaDataNode)
         ],
         _help => 'default',
 
@@ -1461,6 +1524,22 @@ sub struct {
             },
 
         },
+
+        ########
+        # OIDC #
+        ########
+        oidcOPMetaDataNode => {
+            _nodes => [
+'nhash:/oidcOPMetaDataExportedVars:oidcOPMetaDataNode:oidcOPMetaData'
+            ],
+            _upload => [
+                '/oidcOPMetaDataJSON', '/oidcOPMetaDataJWKS',
+                '/oidcOPMetaDataOptions'
+            ],
+            _help => 'oidcOP',
+            _js   => 'oidcOPRoot',
+        },
+
     };
 }
 
@@ -2174,6 +2253,42 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         browserIdSiteName        => $testNotDefined,
         browserIdSiteLogo        => $testNotDefined,
         browserIdBackgroundColor => $testNotDefined,
+
+        # OIDC OP
+        oidcOPMetaDataExportedVars => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                keyTest    => qr/^\w([\w\-]*\w)?$/,
+                keyMsgFail => 'Bad attribute name',
+                test       => sub { return 1; },
+            },
+        },
+        oidcOPMetaDataJSON => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                test    => sub { return 1; },
+                keyTest => sub { return 1; },
+            },
+        },
+        oidcOPMetaDataJWKS => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                test    => sub { return 1; },
+                keyTest => sub { return 1; },
+            },
+        },
+        oidcOPMetaDataOptions => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                test    => sub { return 1; },
+                keyTest => sub { return 1; },
+            },
+        },
+
     };
 }
 ## @method hashref subDefaultConf()

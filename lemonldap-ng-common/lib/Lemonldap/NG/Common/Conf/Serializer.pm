@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Conf::Serializer;
 
 use Data::Dumper;
 
-our $VERSION = '1.4.0';
+our $VERSION = 2.00;
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::normalize   = \&normalize;
@@ -122,6 +122,10 @@ sub unserialize {
 	|logoutServices
 	|macros
 	|notificationStorageOptions
+	|oidcOPMetaDataExportedVars
+	|oidcOPMetaDataJSON
+	|oidcOPMetaDataJWKS
+	|oidcOPMetaDataOptions
 	|openIdExportedVars
 	|persistentStorageOptions
 	|portalSkinRules

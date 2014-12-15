@@ -52,6 +52,7 @@
 	var text4newApplication='<lang en="Application identifier" fr="Identifiant de l\'application" />';
 	var text4newCondition='<lang en="New Condition" fr="Nouvelle Condition" />';
 	var lang='<TMPL_VAR NAME="LANG">';
+	var text4newOidcOp='<lang en="Provider name" fr="Nom du fournisseur" />';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/js/manager.js" type="text/JavaScript"></script>
 </head>
@@ -253,6 +254,16 @@
     <button id="delpostdata" style="display:none;" onclick="delPostData();return false;" class="btn btn-danger">
      <i class=" glyphicon glyphicon-minus-sign"></i>
      <lang en="Delete POST data" fr="Supprimer la donnée POST" />
+    </button>
+
+    <button id="newoidcopb" style="display:none;" onclick="newOidcOp();return false;" class="btn btn-success">
+     <i class=" glyphicon glyphicon-plus-sign"></i>
+     <lang en="New provider" fr="Nouveau fournisseur" />
+    </button>
+
+    <button id="deloidcopb" style="display:none;" onclick="delOidcOp(currentId);" class="btn btn-danger">
+     <i class=" glyphicon glyphicon-minus-sign"></i>
+     <lang en="Delete provider" fr="Supprimer le fournisseur" />
     </button>
 
     </div>
@@ -816,6 +827,18 @@
      </button>
      </div>
     </div>
+
+    <!-- oidcOPMetaData -->
+    <div id="content_oidcOPMetaData" class="hidden">
+     <input type="text" id="oidcOPMetaData" size="30" class="form-control"/>
+     <div class="buttons">
+     <button onclick="setlminputtext(currentId,oidcOPMetaData);return false;" class="btn btn-info">
+     <i class="glyphicon glyphicon-ok"></i>
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+     </div>
+    </div>
+
 
    </div>
 

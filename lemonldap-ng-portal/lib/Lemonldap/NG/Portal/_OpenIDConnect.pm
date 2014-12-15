@@ -15,7 +15,7 @@ use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::Bignum;
 use base qw(Lemonldap::NG::Portal::_Browser);
 
-our $VERSION = '2.00';
+our $VERSION = 2.00;
 our $oidcCache;
 
 BEGIN {
@@ -53,9 +53,11 @@ sub loadOPs {
     $self->{_oidcOPList} = {};
     foreach ( keys %{ $self->{oidcOPMetaDataJSON} } ) {
         $self->{_oidcOPList}->{$_}->{conf} =
-          $self->decodeJSON( $self->{oidcOPMetaDataJSON}->{$_} );
+          $self->decodeJSON(
+            $self->{oidcOPMetaDataJSON}->{$_}->{oidcOPMetaDataJSON} );
         $self->{_oidcOPList}->{$_}->{jwks} =
-          $self->decodeJSON( $self->{oidcOPMetaDataJWKS}->{$_} );
+          $self->decodeJSON(
+            $self->{oidcOPMetaDataJWKS}->{$_}->{oidcOPMetaDataJWKS} );
     }
 
     $oidcCache->{_oidcOPList} = $self->{_oidcOPList} unless $no_cache;
@@ -206,7 +208,6 @@ sub buildAuthorizationCodeAuthnRequest {
 # return String Token response decoded content
 sub getAuthorizationCodeAccessToken {
     my ( $self, $op, $code, $auth_method ) = splice @_;
-    $auth_method ||= "client_secret_basic";
 
     my $client_id =
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsClientID};

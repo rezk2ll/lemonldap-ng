@@ -8,7 +8,7 @@ package Lemonldap::NG::Common::Conf::SubAttributes;
 
 use Mouse;
 
-our $VERSION = 1.4.1;
+our $VERSION = 2.00;
 
 ## E
 
@@ -26,6 +26,78 @@ has 'locationRules' => (
     isa           => 'HashRef',
     default       => sub { return { default => 'deny' }; },
     documentation => "Rules for a virtual host",
+);
+
+## O
+
+has 'oidcOPMetaDataExportedVars' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return { 'uid' => 'sub' }; },
+    documentation => "Exported vars for an OP",
+);
+
+has 'oidcOPMetaDataOptionsCheckJWTSignature' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => 'OIDC OP JWT signature checking',
+);
+
+has 'oidcOPMetaDataOptionsClientID' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC OP client ID",
+);
+
+has 'oidcOPMetaDataOptionsClientSecret' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC OP client Secret",
+);
+
+has 'oidcOPMetaDataOptionsConfigurationURI' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC OP configuration endpoint",
+);
+
+has 'oidcOPMetaDataOptionsDisplayName' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => "Provider name",
+    documentation => "OIDC OP display name",
+);
+
+has 'oidcOPMetaDataOptionsIcon' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC OP logo file",
+);
+
+has 'oidcOPMetaDataOptionsJWKSTimeout' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => "0",
+    documentation => "OIDC OP JWKS data refresh interval",
+);
+
+has 'oidcOPMetaDataOptionsScope' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => "openid email profile",
+    documentation => "OIDC OP scope",
+);
+
+has 'oidcOPMetaDataOptionsTokenEndpointAuthMethod' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => "client_secret_basic",
+    documentation => "OIDC OP scope",
 );
 
 ## P

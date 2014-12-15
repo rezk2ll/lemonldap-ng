@@ -14,7 +14,7 @@ require Lemonldap::NG::Manager::_Struct;    #inherits
 require Lemonldap::NG::Manager::_i18n;      #inherits
 require Lemonldap::NG::Manager::Request;    #inherits
 
-our $VERSION = '1.4.0';
+our $VERSION = 2.00;
 
 ## @method string node(string node)
 # Build the part of the tree that does not depends of the configuration.
@@ -227,6 +227,41 @@ sub confNode {
             help   => $help,
             target => "samlmetadata",
           ) . "</li>";
+    }
+
+    # OIDC Metadata
+    elsif ( $target =~ s/^oidcmetadatajson:// ) {
+        my $h = $self->keyToH( $target, $self->conf );
+        $h = $h->{oidcOPMetaDataJSON};
+        my $text = $target;
+        $text =~ s/^\/([^\/]+)\/.*$/$1/;
+        $res .= $self->li("$target/")
+          . $self->span(
+            id     => "$target/",
+            text   => $text,
+            data   => $h,
+            js     => $js,
+            help   => $help,
+            target => "oidcmetadatajson",
+          ) . "</li>";
+
+    }
+
+    elsif ( $target =~ s/^oidcmetadatajwks:// ) {
+        my $h = $self->keyToH( $target, $self->conf );
+        $h = $h->{oidcOPMetaDataJWKS};
+        my $text = $target;
+        $text =~ s/^\/([^\/]+)\/.*$/$1/;
+        $res .= $self->li("$target/")
+          . $self->span(
+            id     => "$target/",
+            text   => $text,
+            data   => $h,
+            js     => $js,
+            help   => $help,
+            target => "oidcmetadatajwks",
+          ) . "</li>";
+
     }
 
     # Application list
