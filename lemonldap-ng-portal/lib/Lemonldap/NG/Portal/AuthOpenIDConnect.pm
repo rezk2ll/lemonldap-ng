@@ -182,24 +182,35 @@ sub extractFormInfo {
         my $urlcheck = $self->controlUrlOrigin();
         return $urlcheck unless ( $urlcheck == PE_OK );
 
-        # IDP list
-        my @list = ();
-        foreach ( sort keys %{ $self->{_oidcOPList} } ) {
-            push @list,
-              {
-                val  => $_,
-                name => $self->{oidcOPMetaDataOptions}->{$_}
-                  ->{oidcOPMetaDataOptionsDisplayName},
-                icon => $self->{oidcOPMetaDataOptions}->{$_}
-                  ->{oidcOPMetaDataOptionsIcon},
-                class => "openidconnect",
-              };
-        }
-        $self->{list}            = \@list;
-        $self->{confirmRemember} = 0;
+        # Auto select provider if there is only one
+        my @oplist = sort keys %{ $self->{_oidcOPList} };
 
-        $self->{login} = 1;
-        return PE_CONFIRM;
+        if ( $#oplist == 0 ) {
+            $op = shift @oplist;
+            $self->lmLog( "Selecting the only defined OP: $op", 'debug' );
+        }
+
+        else {
+
+            # IDP list
+            my @list = ();
+            foreach (@oplist) {
+                push @list,
+                  {
+                    val  => $_,
+                    name => $self->{oidcOPMetaDataOptions}->{$_}
+                      ->{oidcOPMetaDataOptionsDisplayName},
+                    icon => $self->{oidcOPMetaDataOptions}->{$_}
+                      ->{oidcOPMetaDataOptionsIcon},
+                    class => "openidconnect",
+                  };
+            }
+            $self->{list}            = \@list;
+            $self->{confirmRemember} = 0;
+
+            $self->{login} = 1;
+            return PE_CONFIRM;
+        }
     }
 
     # Provider is choosen
