@@ -14,7 +14,7 @@
 %define perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
 
 %define real_name lemonldap-ng
-%define real_version 1.4.0
+%define real_version 1.4.2
 %define cpan_common_version  %{real_version}
 %define cpan_handler_version %{real_version}
 %define cpan_manager_version %{real_version}
@@ -41,6 +41,13 @@
 %else
 %define lm_apacheuser wwwrun
 %define lm_apachegroup www
+%endif
+
+# Apache version
+%if 0%{?rhel} >= 7
+%define apache_version 2.4
+%else
+%define apache_version 2
 %endif
 
 %define lm_dnsdomain example.com
@@ -92,8 +99,10 @@ BuildRequires:  perl(Net::CIDR::Lite)
 BuildRequires:  perl(Unicode::String)
 BuildRequires:  perl(Mouse)
 BuildRequires:  perl(Digest::SHA)
+BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(Env)
 %else
-BuildRequires:  perl-Regexp-Assemble, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Net-CIDR-Lite, perl-Unicode-String, perl-Mouse, perl-Digest-SHA
+BuildRequires:  perl-Regexp-Assemble, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Net-CIDR-Lite, perl-Unicode-String, perl-Mouse, perl-Digest-SHA, perl-ExtUtims-MakeMaker, perl-Env
 %endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
@@ -295,15 +304,6 @@ This package installs the authentication portal.
 
 # Remove unwanted provides/requires
 # We remove Lemonldap::NG requires because the requires are set in the header
-cat << \EOF > %{name}-prov
-#!/bin/sh
-%{__perl_provides} $* |\
-sed -e '/perl(My::.*)/d'
-EOF
-
-%define __perl_provides %{_builddir}/%{name}-%{real_version}/%{name}-prov
-chmod +x %{__perl_provides}
-
 
 cat << \EOF > %{name}-req
 #!/bin/sh
@@ -313,9 +313,13 @@ sed -e '/perl(Net::OpenID::Server)/d' |\
 sed -e '/perl(AuthCAS)/d'
 EOF
 
-
 %define __perl_requires %{_builddir}/%{name}-%{real_version}/%{name}-req
 chmod +x %{__perl_requires}
+
+%if 0%{?rhel} >= 7
+%{?perl_default_filter}
+%global __requires_exclude perl\\(lasso|perl\\(Net::OpenID::Server
+%endif
 
 #==============================================================================
 # Building
@@ -347,7 +351,8 @@ rm -rf %{buildroot}
 	CONFDIR=%{lm_confdir} \
 	CRONDIR=%{_sysconfdir}/cron.d \
 	DATADIR=%{lm_vardir} \
-	DNSDOMAIN=%{lm_dnsdomain}
+	DNSDOMAIN=%{lm_dnsdomain} \
+	APACHEVERSION=%{apache_version}
 
 %{__make} %{?_smp_mflags} install_fr_doc_site \
 	DESTDIR=%{buildroot} \
@@ -402,16 +407,16 @@ touch %buildroot%{apache_confdir}/z-lemonldap-ng-test.conf
 # Create symlink in Apache configuration
 # We use "z-lemonldap-ng-*" so that Apache read the files after "perl.conf"
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-handler.conf ] ; then
-	ln -s %{lm_confdir}/handler-apache2.conf %{apache_confdir}/z-lemonldap-ng-handler.conf || :
+	ln -s %{lm_confdir}/handler-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-handler.conf || :
 fi
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-manager.conf ] ; then
-	ln -s %{lm_confdir}/manager-apache2.conf %{apache_confdir}/z-lemonldap-ng-manager.conf || :
+	ln -s %{lm_confdir}/manager-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-manager.conf || :
 fi
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-portal.conf ] ; then
-	ln -s %{lm_confdir}/portal-apache2.conf %{apache_confdir}/z-lemonldap-ng-portal.conf || :
+	ln -s %{lm_confdir}/portal-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-portal.conf || :
 fi
 if [ ! -e %{apache_confdir}/z-lemonldap-ng-test.conf ] ; then
-	ln -s %{lm_confdir}/test-apache2.conf %{apache_confdir}/z-lemonldap-ng-test.conf || :
+	ln -s %{lm_confdir}/test-apache%{apache_version}.conf %{apache_confdir}/z-lemonldap-ng-test.conf || :
 fi
 # Upgrade from previous version
 # See http://lemonldap-ng.org/documentation/1.0/upgrade
@@ -459,10 +464,10 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %dir %{lm_confdir}
 %config %{lm_confdir}/for_etc_hosts
-%config(noreplace) %{lm_confdir}/handler-apache2.conf
-%config(noreplace) %{lm_confdir}/manager-apache2.conf
-%config(noreplace) %{lm_confdir}/portal-apache2.conf
-%config(noreplace) %{lm_confdir}/test-apache2.conf
+%config(noreplace) %{lm_confdir}/handler-apache%{apache_version}.conf
+%config(noreplace) %{lm_confdir}/manager-apache%{apache_version}.conf
+%config(noreplace) %{lm_confdir}/portal-apache%{apache_version}.conf
+%config(noreplace) %{lm_confdir}/test-apache%{apache_version}.conf
 %ghost %{apache_confdir}/z-lemonldap-ng-handler.conf
 %ghost %{apache_confdir}/z-lemonldap-ng-manager.conf
 %ghost %{apache_confdir}/z-lemonldap-ng-portal.conf
@@ -558,6 +563,10 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
+* Fri Oct 31 2014 Clement Oudot <clem.oudot@gmail.com> - 1.4.2-1
+- Update to 1.4.2
+* Fri Jul 25 2014 Clement Oudot <clem.oudot@gmail.com> - 1.4.1-1
+- Update to 1.4.1
 * Fri Apr 18 2014 Clement Oudot <clem.oudot@gmail.com> - 1.4.0-1
 - Update to 1.4.0
 * Fri Mar 07 2014 Clement Oudot <clem.oudot@gmail.com> - 1.3.3-1
