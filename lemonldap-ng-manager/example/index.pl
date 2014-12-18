@@ -35,17 +35,20 @@ my $template = HTML::Template->new(
     cache             => 0,
     filter            => sub { $manager->translate_template(@_) },
 );
-$template->param( SCRIPT_NAME    => $ENV{SCRIPT_NAME} );
-$template->param( MENU           => $manager->menu() );
-$template->param( DIR            => "$skin_dir/$skin" );
-$template->param( CFGNUM         => $manager->{cfgNum} );
-$template->param( TREE_AUTOCLOSE => $manager->{managerTreeAutoClose} );
-$template->param( TREE_JQUERYCSS => $manager->{managerTreeJqueryCss} );
-$template->param( CSS            => $manager->{managerCss} );
-$template->param( CSS_THEME      => $manager->{managerCssTheme} );
-$template->param( VERSION        => $Lemonldap::NG::Manager::VERSION );
-$template->param( LANG           => shift @{ $manager->{lang} } );
-$template->param( PORTAL_URL     => $manager->{portal} );
+$template->param( SCRIPT_NAME            => $ENV{SCRIPT_NAME} );
+$template->param( MENU                   => $manager->menu() );
+$template->param( DIR                    => "$skin_dir/$skin" );
+$template->param( CFGNUM                 => $manager->{cfgNum} );
+$template->param( TREE_AUTOCLOSE         => $manager->{managerTreeAutoClose} );
+$template->param( TREE_JQUERYCSS         => $manager->{managerTreeJqueryCss} );
+$template->param( CSS                    => $manager->{managerCss} );
+$template->param( CSS_THEME              => $manager->{managerCssTheme} );
+$template->param( VERSION                => $Lemonldap::NG::Manager::VERSION );
+$template->param( LANG                   => shift @{ $manager->{lang} } );
+$template->param( PORTAL_URL             => $manager->{portal} );
+$template->param( LI_CLASS_CONFIGURATION => "active" );
+$template->param( LI_CLASS_SESSION       => "" );
+$template->param( LI_CLASS_NOTIFICATION  => "" );
 print $manager->header('text/html; charset=utf-8');
 print $template->output;
 

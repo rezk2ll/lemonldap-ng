@@ -40,14 +40,17 @@ my $template = HTML::Template->new(
     cache             => 0,
     filter            => sub { $cgi->translate_template(@_) },
 );
-$template->param( SCRIPT_NAME => $ENV{SCRIPT_NAME} );
-$template->param( TREE        => $cgi->tree() );
-$template->param( DIR         => "$skin_dir/$skin" );
-$template->param( CSS         => $css );
-$template->param( CSS_THEME   => $css_theme );
-$template->param( VERSION     => $Lemonldap::NG::Manager::VERSION );
-$template->param( LANG        => shift @{ $cgi->{lang} } );
-$template->param( PORTAL_URL  => $cgi->{portal} );
+$template->param( SCRIPT_NAME            => $ENV{SCRIPT_NAME} );
+$template->param( TREE                   => $cgi->tree() );
+$template->param( DIR                    => "$skin_dir/$skin" );
+$template->param( CSS                    => $css );
+$template->param( CSS_THEME              => $css_theme );
+$template->param( VERSION                => $Lemonldap::NG::Manager::VERSION );
+$template->param( LANG                   => shift @{ $cgi->{lang} } );
+$template->param( PORTAL_URL             => $cgi->{portal} );
+$template->param( LI_CLASS_CONFIGURATION => "" );
+$template->param( LI_CLASS_SESSION       => "active" );
+$template->param( LI_CLASS_NOTIFICATION  => "" );
 print $cgi->header('text/html; charset=utf-8');
 print $template->output;
 

@@ -13,9 +13,9 @@
     </div>
     <div class="collapse navbar-collapse" id="manager-menu">
       <ul class="nav navbar-nav">
-        <li><a href="index.pl"><i class="glyphicon glyphicon-cog"></i> <lang en="Configuration" fr="Configuration"/></a></li>
-        <li><a href="sessions.pl"><i class="glyphicon glyphicon-user"></i> <lang en="Sessions" fr="Sessions"/></a></li>
-        <li><a href="notifications.pl"><i class="glyphicon glyphicon-bell"></i> <lang en="Notifications" fr="Notifications"/></a></li>
+        <li class="<TMPL_VAR NAME="LI_CLASS_CONFIGURATION">"><a href="index.pl"><i class="glyphicon glyphicon-cog"></i> <lang en="Configuration" fr="Configuration"/></a></li>
+        <li class="<TMPL_VAR NAME="LI_CLASS_SESSION">"><a href="sessions.pl"><i class="glyphicon glyphicon-user"></i> <lang en="Sessions" fr="Sessions"/></a></li>
+        <li class="<TMPL_VAR NAME="LI_CLASS_NOTIFICATION">"><a href="notifications.pl"><i class="glyphicon glyphicon-bell"></i> <lang en="Notifications" fr="Notifications"/></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
