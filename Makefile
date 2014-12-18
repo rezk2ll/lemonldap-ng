@@ -721,7 +721,8 @@ tidy-js: clean
 
 # 1. Internal targets
 
-language_code=perl -e ' \
+language_code:
+	perl -e ' \
 	print { \
 		fr=> "FR-FR", \
 	}->{$(1)}'
