@@ -56,7 +56,7 @@ This can be useful to allow an third party application to access a virtual host 
 
 <p>
 
-Configure the virtual host like other <a href="../../documentation/1.4/configvhost.html" class="wikilink1" title="documentation:1.4:configvhost">protected virtual host</a> but use AuthBaisc Handler instead of default Handler.
+Configure the virtual host like other <a href="../../documentation/1.4/configvhost.html" class="wikilink1" title="documentation:1.4:configvhost">protected virtual host</a> but use AuthBasic Handler instead of default Handler.
 </p>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
        <span class="kw1">ServerName</span> basic.example.com
@@ -69,8 +69,21 @@ Configure the virtual host like other <a href="../../documentation/1.4/configvho
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
+<p>
+<p><div class="notetip">
+If LemonLDAP::NG portal is protected by <acronym title="Secure Sockets Layer">SSL</acronym> with a self-signed certificate, you can add this line to accept it:
+
+</p>
+<pre class="code file apache">PerlSetEnv PERL_LWP_SSL_VERIFY_HOSTNAME <span class="nu0">0</span></pre>
+
+<p>
+
+
+</div></p>
+</p>
+
 </div>
-<!-- SECTION "Virtual host in Apache" [662-1110] -->
+<!-- SECTION "Virtual host in Apache" [662-1306] -->
 <h3><a name="handler_parameters" id="handler_parameters">Handler parameters</a></h3>
 <div class="level3">
 
@@ -80,4 +93,4 @@ No parameters needed. But you have to allow sessions web services, see <a href="
 </p>
 
 </div>
-<!-- SECTION "Handler parameters" [1111-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Handler parameters" [1307-] --></div><!-- closes <div class="dokuwiki export">-->

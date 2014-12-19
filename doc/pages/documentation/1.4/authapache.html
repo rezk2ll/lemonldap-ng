@@ -291,19 +291,26 @@ You may want to use the <a href="../../documentation/1.4/authmulti.html" class="
 </p>
 
 <p>
-This needs some hacking because the Apache Kerberos authentication module do not work if <code>require valid-user</code> is not set.
+This needs some hacking because the Apache Kerberos authentication module do not work if <code>require valid-user</code> is not set. This requires to create a second virtual host (kerberos.example.com), which should be registered into the <acronym title="Domain Name System">DNS</acronym> system.
+</p>
+
+<p>
+<p><div class="notetip">
+We use here kerberos.example.com as primary portal <acronym title="Uniform Resource Locator">URL</acronym> and auth.example.com as failback portal <acronym title="Uniform Resource Locator">URL</acronym>. You can of course change these names if you need.
+
+</div></p>
 </p>
 
 <p>
 To achieve this, follow these steps:
 </p>
 <ul>
-<li class="level1"><div class="li"> Create a symlink on portal/index.pl to define the kerberos authentication end point:</div>
+<li class="level1"><div class="li"> In Apache portal configuration, copy the default virtualhost (auth.example.com) a paste it as a new one. This new one is standard and don&#039;t need to load the mod_auth_kerb module.</div>
+</li>
+<li class="level1"><div class="li"> Rename the first into kerberos.example.com:</div>
 </li>
 </ul>
-<pre class="code">
-ln -s /var/lib/lemonldap-ng/portal/index.pl /var/lib/lemonldap-ng/portal/kerberos.pl
-</pre>
+<pre class="code file apache">    <span class="kw1">ServerName</span> kerberos.example.com</pre>
 <ul>
 <li class="level1"><div class="li"> Create a redirection script, called login.pl:</div>
 </li>
@@ -314,17 +321,16 @@ vi /var/lib/lemonldap-ng/portal/login.pl
 <pre class="code file perl"><span class="co1">#!/usr/bin/perl</span>
 <span class="kw2">use</span> CGI <span class="st_h">':cgi-lib'</span><span class="sy0">;</span>
 <span class="kw2">use</span> strict<span class="sy0">;</span>
-<span class="kw2">use</span> MIME<span class="sy0">::</span><span class="me2">Base64</span><span class="sy0">;</span>
 <span class="kw2">use</span> CGI<span class="sy0">::</span><span class="me2">Carp</span> <span class="st_h">'fatalsToBrowser'</span><span class="sy0">;</span>
-<span class="kw1">my</span> <span class="re0">$uri</span> <span class="sy0">=</span> <span class="re0">$ENV</span><span class="br0">&#123;</span><span class="st0">&quot;REDIRECT_QUERY_STRING&quot;</span><span class="br0">&#125;</span><span class="sy0">;</span>
-<a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> CGI<span class="sy0">::</span><span class="me2">header</span><span class="br0">&#40;</span><span class="sy0">-</span>Refresh <span class="sy0">=&gt;</span> <span class="st_h">'0; URL=http://auth.example.com/?'</span><span class="sy0">.</span><span class="re0">$uri</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="kw1">my</span> <span class="re0">$uri</span> <span class="sy0">=</span> <span class="re0">$ENV</span><span class="br0">&#123;</span><span class="st0">&quot;REQUEST_URI&quot;</span><span class="br0">&#125;</span><span class="sy0">;</span>
+<a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> CGI<span class="sy0">::</span><span class="me2">header</span><span class="br0">&#40;</span><span class="sy0">-</span>Refresh <span class="sy0">=&gt;</span> <span class="st_h">'0; URL=https://auth.example.com'</span><span class="sy0">.</span><span class="re0">$uri</span><span class="br0">&#41;</span><span class="sy0">;</span>
 <a href="http://perldoc.perl.org/functions/exit.html"><span class="kw3">exit</span></a><span class="br0">&#40;</span>0<span class="br0">&#41;</span><span class="sy0">;</span></pre>
 <ul>
-<li class="level1"><div class="li"> Modify the Apache virtual host to separate the Kerberos Authentication module:</div>
+<li class="level1"><div class="li"> Modify the virtual host to load Kerberos Authentication module on specific page:</div>
 </li>
 </ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *&gt;
-  <span class="kw1">ServerName</span> auth.example.com
+  <span class="kw1">ServerName</span> kerberos.example.com
 &nbsp;
   <span class="kw1">DocumentRoot</span> /var/lib/lemonldap-ng/portal/
 &nbsp;
@@ -335,7 +341,7 @@ vi /var/lib/lemonldap-ng/portal/login.pl
   &lt;/<span class="kw3">Directory</span>&gt;
 &nbsp;
   <span class="kw1">ErrorDocument</span> 401 /login.pl
-  &lt;<span class="kw3">Location</span> /kerberos.pl&gt;
+  &lt;<span class="kw3">LocationMatch</span> /(index.pl|cas/*|saml/*|openidserver/*)&gt;
     &lt;<span class="kw3">IfModule</span> auth_kerb_module&gt;
       <span class="kw1">AuthType</span> Kerberos
       KrbMethodNegotiate <span class="kw2">On</span>
@@ -343,13 +349,17 @@ vi /var/lib/lemonldap-ng/portal/login.pl
       KrbAuthRealms EXAMPLE.COM
       Krb5KeyTab /etc/lemonldap-ng/auth.keytab
       KrbVerifyKDC <span class="kw2">Off</span>
-      KrbServiceName HTTP/auth.example.com
+      KrbServiceName HTTP/kerberos.example.com
+      <span class="kw1">Satisfy</span> any 
+      <span class="kw1">Order</span> <span class="kw1">allow</span>,<span class="kw1">deny</span> 
+      <span class="kw1">allow</span> from APPLICATIONS_IP
+      <span class="kw1">require</span> valid-<span class="kw1">user</span>
     &lt;/<span class="kw3">IfModule</span>&gt;
-  &lt;/<span class="kw3">Location</span>&gt;
+  &lt;/<span class="kw3">LocationMatch</span>&gt;
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 <ul>
-<li class="level1"><div class="li"> Modify LemonLDAP::NG Portal <acronym title="Uniform Resource Locator">URL</acronym> trough Manager to: <a href="http://auth.example.com/kerberos.pl" class="urlextern" title="http://auth.example.com/kerberos.pl"  rel="nofollow">http://auth.example.com/kerberos.pl</a></div>
+<li class="level1"><div class="li"> Modify LemonLDAP::NG Portal <acronym title="Uniform Resource Locator">URL</acronym> trough Manager to: <a href="http://kerberos.example.com/" class="urlextern" title="http://kerberos.example.com/"  rel="nofollow">http://kerberos.example.com/</a></div>
 </li>
 <li class="level1"><div class="li"> Configure Multiple authentication backend (for example: Apache;<acronym title="Lightweight Directory Access Protocol">LDAP</acronym>)</div>
 </li>
@@ -357,16 +367,22 @@ vi /var/lib/lemonldap-ng/portal/login.pl
 </li>
 </ul>
 
+<p>
+
+<p><div class="noteimportant">For <acronym title="Central Authentication Service">CAS</acronym>, <acronym title="Security Assertion Markup Language">SAML</acronym> or OpenID to work, you need to authorize applications <acronym title="Internet Protocol">IP</acronym> to pass trough Kerberos authentication, for ticket validation for example.
+</div></p>
+</p>
+
 </div>
-<!-- SECTION "Use Kerberos with Multiple authentication backend" [4635-6422] -->
+<!-- SECTION "Use Kerberos with Multiple authentication backend" [4635-7092] -->
 <h3><a name="time_to_test" id="time_to_test">Time to test</a></h3>
 <div class="level3">
 
 <p>
 
-Configure <acronym title="Internet Explorer">IE</acronym> or Firefox to trust <code><a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a></code>, and then it should work!
+Configure <acronym title="Internet Explorer">IE</acronym> or Firefox to trust <code><a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a></code> or <code><a href="http://kerberos.example.com" class="urlextern" title="http://kerberos.example.com"  rel="nofollow">http://kerberos.example.com</a></code> , and then it should work!
 
 </p>
 
 </div>
-<!-- SECTION "Time to test" [6423-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Time to test" [7093-] --></div><!-- closes <div class="dokuwiki export">-->

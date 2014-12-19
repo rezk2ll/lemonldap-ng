@@ -95,6 +95,11 @@ deb-src http://lemonldap-ng.org/deb squeeze main
 </pre>
 
 <p>
+<p><div class="notetip">Repository is named squeeze but works for all Debian/Ubuntu versions
+</div></p>
+</p>
+
+<p>
 Run this to update packages cache:
 
 </p>
@@ -103,7 +108,7 @@ apt-get update
 </pre>
 
 </div>
-<!-- SECTION "LL::NG repository" [934-1283] -->
+<!-- SECTION "LL::NG repository" [934-1370] -->
 <h3><a name="manual_download" id="manual_download">Manual download</a></h3>
 <div class="level3">
 
@@ -113,7 +118,7 @@ Packages are available on the <a href="../../download.html" class="wikilink1" ti
 </p>
 
 </div>
-<!-- SECTION "Manual download" [1284-1370] -->
+<!-- SECTION "Manual download" [1371-1457] -->
 <h2><a name="package_gpg_signature" id="package_gpg_signature">Package GPG signature</a></h2>
 <div class="level2">
 
@@ -130,12 +135,12 @@ apt-key add rpm-gpg-key-ow2
 </pre>
 
 </div>
-<!-- SECTION "Package GPG signature" [1371-1539] -->
+<!-- SECTION "Package GPG signature" [1458-1626] -->
 <h2><a name="install_packages" id="install_packages">Install packages</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install packages" [1540-1569] -->
+<!-- SECTION "Install packages" [1627-1656] -->
 <h3><a name="with_aptitude" id="with_aptitude">With aptitude</a></h3>
 <div class="level3">
 <pre class="code">
@@ -143,7 +148,7 @@ aptitude install lemonldap-ng
 </pre>
 
 </div>
-<!-- SECTION "With aptitude" [1570-1640] -->
+<!-- SECTION "With aptitude" [1657-1727] -->
 <h3><a name="with_dpkg" id="with_dpkg">With dpkg</a></h3>
 <div class="level3">
 
@@ -161,12 +166,12 @@ dpkg -i liblemonldap-ng-* lemonldap-ng*
 </pre>
 
 </div>
-<!-- SECTION "With dpkg" [1641-1789] -->
+<!-- SECTION "With dpkg" [1728-1876] -->
 <h2><a name="first_configuration_steps" id="first_configuration_steps">First configuration steps</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "First configuration steps" [1790-1828] -->
+<!-- SECTION "First configuration steps" [1877-1915] -->
 <h3><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h3>
 <div class="level3">
 
@@ -177,7 +182,7 @@ By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>ex
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- SECTION "Change default DNS domain" [1829-2143] -->
+<!-- SECTION "Change default DNS domain" [1916-2230] -->
 <h3><a name="enable_llng_sites" id="enable_llng_sites">Enable LL::NG sites</a></h3>
 <div class="level3">
 
@@ -205,7 +210,7 @@ Restart Apache:
 apache2ctl restart</pre>
 
 </div>
-<!-- SECTION "Enable LL::NG sites" [2144-2496] -->
+<!-- SECTION "Enable LL::NG sites" [2231-2583] -->
 <h3><a name="reload_virtual_host" id="reload_virtual_host">Reload virtual host</a></h3>
 <div class="level3">
 
@@ -222,7 +227,7 @@ To allow the manager to reload the configuration, register the reload virtual ho
 </p>
 
 </div>
-<!-- SECTION "Reload virtual host" [2497-2798] -->
+<!-- SECTION "Reload virtual host" [2584-2885] -->
 <h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
 <div class="level3">
 
@@ -244,7 +249,7 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </p>
 
 </div>
-<!-- SECTION "Upgrade" [2799-4957] -->
+<!-- SECTION "Upgrade" [2886-5044] -->
 <h3><a name="dns" id="dns">DNS</a></h3>
 <div class="level3">
 
@@ -271,7 +276,7 @@ Follow the <a href="../../documentation/1.4/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- SECTION "DNS" [4958-5230] -->
+<!-- SECTION "DNS" [5045-5317] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -292,7 +297,7 @@ Follow the <a href="../../documentation/1.4/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- SECTION "File location" [5231-5767] -->
+<!-- SECTION "File location" [5318-5854] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -308,4 +313,4 @@ make debian-packages
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [5768-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [5855-] --></div><!-- closes <div class="dokuwiki export">-->

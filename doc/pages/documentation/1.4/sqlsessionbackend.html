@@ -82,6 +82,11 @@ Create sessions table:
     a_session blob
     <span class="br0">&#41;</span>;</pre>
 
+<p>
+<p><div class="noteimportant">Change char(32) by char(64) if you use the now recommanded SHA256 hash algorithm. See <a href="../../documentation/current/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
+</div></p>
+</p>
+
 </div>
 
 <h4><a name="postgresql" id="postgresql">PostgreSQL</a></h4>
@@ -126,8 +131,13 @@ lemonldap-ng=&gt; create table sessions ( id char(32) not null primary key, a_se
 lemonldap-ng=&gt; q
 </pre>
 
+<p>
+<p><div class="noteimportant">Change char(32) by char(64) if you use the now recommanded SHA256 hash algorithm. See <a href="../../documentation/current/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
+</div></p>
+</p>
+
 </div>
-<!-- SECTION "Prepare the database" [488-1607] -->
+<!-- SECTION "Prepare the database" [488-1947] -->
 <h3><a name="manager" id="manager">Manager</a></h3>
 <div class="level3">
 
@@ -185,7 +195,7 @@ If you choose to use MySQL, read <a href="../../documentation/1.4/performances.h
 </p>
 
 </div>
-<!-- SECTION "Manager" [1608-2858] -->
+<!-- SECTION "Manager" [1948-3198] -->
 <h2><a name="security" id="security">Security</a></h2>
 <div class="level2">
 
@@ -199,4 +209,4 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- SECTION "Security" [2859-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Security" [3199-] --></div><!-- closes <div class="dokuwiki export">-->

@@ -31,6 +31,18 @@ Browseable session backend (<a href="http://search.cpan.org/perldoc?Apache::Sess
 </p>
 
 <p>
+<p><div class="noteimportant">
+Please use a recent version of Apache::Session::Browseable.
+</p>
+
+<p>
+Current debian wheezy 0.7.1 version is obsolete and not functionnal.
+Last version can be found on CPAN : <a href="http://search.cpan.org/dist/Apache-Session-Browseable/" class="urlextern" title="http://search.cpan.org/dist/Apache-Session-Browseable/"  rel="nofollow">http://search.cpan.org/dist/Apache-Session-Browseable/</a>
+
+</div></p>
+</p>
+
+<p>
 If you use features like <acronym title="Security Assertion Markup Language">SAML</acronym> (authentication and issuer), <acronym title="Central Authentication Service">CAS</acronym> (issuer) and password reset self-service, you also need to index some fields.
 </p>
 
@@ -75,12 +87,12 @@ The following table list fields to index depending on the feature you want to in
 </p>
 
 </div>
-<!-- SECTION "Browseable session backend" [1-1379] -->
+<!-- SECTION "Browseable session backend" [1-1626] -->
 <h2><a name="setup" id="setup">Setup</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Setup" [1380-1398] -->
+<!-- SECTION "Setup" [1627-1645] -->
 <h3><a name="prepare_database" id="prepare_database">Prepare database</a></h3>
 <div class="level3">
 
@@ -105,8 +117,13 @@ Database must be prepared exactly like in <a href="../../documentation/1.4/sqlse
     <span class="kw1">KEY</span> ipAddr <span class="br0">&#40;</span>ipAddr<span class="br0">&#41;</span>
     <span class="br0">&#41;</span>;</pre>
 
+<p>
+<p><div class="noteimportant">Change char(32) by char(64) if you use the now recommanded SHA256 hash algorithm. See <a href="../../documentation/current/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
+</div></p>
+</p>
+
 </div>
-<!-- SECTION "Prepare database" [1399-1946] -->
+<!-- SECTION "Prepare database" [1646-2363] -->
 <h3><a name="manager" id="manager">Manager</a></h3>
 <div class="level3">
 
@@ -171,7 +188,7 @@ For databases like PostgreSQL, don&#039;t forget to add “Commit” with a valu
 </p>
 
 </div>
-<!-- SECTION "Manager" [1947-3124] -->
+<!-- SECTION "Manager" [2364-3541] -->
 <h2><a name="security" id="security">Security</a></h2>
 <div class="level2">
 
@@ -185,4 +202,4 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- SECTION "Security" [3125-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Security" [3542-] --></div><!-- closes <div class="dokuwiki export">-->
