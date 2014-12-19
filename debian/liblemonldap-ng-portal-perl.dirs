@@ -1,5 +1,4 @@
-/var/lib/lemonldap-ng/captcha/data
-/var/lib/lemonldap-ng/portal/captcha_output
+/var/lib/lemonldap-ng/captcha
 /var/lib/lemonldap-ng/sessions/lock
 /var/lib/lemonldap-ng/psessions/lock
 /var/lib/lemonldap-ng/notifications

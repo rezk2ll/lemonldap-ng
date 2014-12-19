@@ -82,9 +82,3 @@ notificationStorage
 notificationStorageOptions
 	'$data1 = {&#39;dirName&#39; => &#39;__NOTIFICATIONDIR__&#39;};'
 
-captcha_data
-	'__CAPTCHADIR__'
-
-captcha_output
-	'__CAPTCHAOUTPUTDIR__'
-
