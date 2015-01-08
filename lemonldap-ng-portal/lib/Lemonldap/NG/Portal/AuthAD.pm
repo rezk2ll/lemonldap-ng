@@ -43,7 +43,7 @@ sub authenticate {
         # Password must be changed if pwdLastSet 0
         if ( $pls == 0 ) {
             $self->lmLog( "[AD] User must change its password", 'debug' );
-            return PE_PP_CHANGE_AFTER_RESET;
+            $res = PE_PP_CHANGE_AFTER_RESET;
         }
 
     }
