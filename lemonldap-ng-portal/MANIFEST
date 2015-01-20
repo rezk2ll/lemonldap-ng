@@ -241,6 +241,7 @@ lib/Lemonldap/NG/Portal/Display.pm
 lib/Lemonldap/NG/Portal/IssuerDBCAS.pm
 lib/Lemonldap/NG/Portal/IssuerDBNull.pm
 lib/Lemonldap/NG/Portal/IssuerDBOpenID.pm
+lib/Lemonldap/NG/Portal/IssuerDBOpenIDConnect.pm
 lib/Lemonldap/NG/Portal/IssuerDBSAML.pm
 lib/Lemonldap/NG/Portal/MailReset.pm
 lib/Lemonldap/NG/Portal/Menu.pm

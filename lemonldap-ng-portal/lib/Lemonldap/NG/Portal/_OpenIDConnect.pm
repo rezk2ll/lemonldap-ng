@@ -658,6 +658,30 @@ sub verifyJWTSignature {
     return 0;
 }
 
+## @method void returnJSONError(String error);
+# Print JSON error
+# @param error Error message
+# @return void
+sub returnJSONError {
+    my ( $self, $error ) = splice @_;
+
+# TODO Send 400 return code
+# CGI always add HTML code to non 200 return code, which is not compatible with JSON response
+    print $self->header('application/json');
+    print encode_json( { "error" => "$error" } );
+}
+
+## @method coid returnJSON(String content);
+# Print JSON content
+# @param content Message
+# @return void
+sub returnJSON {
+    my ( $self, $content ) = splice @_;
+
+    print $self->header('application/json');
+    print encode_json($content);
+}
+
 1;
 
 __END__
@@ -730,6 +754,14 @@ Extract parts of a JWT
 =head2 verifyJWTSignature
 
 Check signature of a JWT
+
+=head2 returnJSONError
+
+Print JSON error
+
+=head2 returnJSON
+
+Print JSON content
 
 =head1 SEE ALSO
 
