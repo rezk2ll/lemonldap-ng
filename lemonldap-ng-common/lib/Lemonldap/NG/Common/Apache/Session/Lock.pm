@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Apache::Session::Lock;
 
 use strict;
 
-my $VERSION = '1.4.1';
+my $VERSION = '1.4.4';
 
 sub new {
     my $class   = shift;
@@ -65,15 +65,7 @@ sub release_all_locks {
     my $self    = shift;
     my $session = shift;
 
-    # Get session from cache
-    my $id = $session->{data}->{_session_id};
-    if ( $self->cache->get($id) ) {
-
-        # got session from cache, no need to ask for locks
-    }
-    else {
-        $self->module->release_all_locks($session);
-    }
+   $self->module->release_all_locks($session);
 }
 
 1;
