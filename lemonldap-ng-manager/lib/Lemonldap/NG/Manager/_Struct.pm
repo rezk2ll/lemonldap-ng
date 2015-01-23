@@ -864,7 +864,9 @@ sub struct {
 
             # ISSUERDB PARAMETERS
             issuerParams => {
-                _nodes       => [qw(issuerDBSAML issuerDBCAS issuerDBOpenID)],
+                _nodes => [
+                    qw(issuerDBSAML issuerDBCAS issuerDBOpenID issuerDBOpenIDConnect)
+                ],
                 _help        => 'issuerdb',
                 issuerDBSAML => {
                     _nodes => [
@@ -934,6 +936,18 @@ sub struct {
                             openIdSreg_dob      => 'text:openIdSreg_dob',
                         },
                     },
+                },
+                issuerDBOpenIDConnect => {
+                    _nodes => [
+                        qw(issuerDBOpenIDConnectActivation issuerDBOpenIDConnectPath issuerDBOpenIDConnectRule)
+                    ],
+                    _help => 'issuerdbOpenIDConnect',
+                    issuerDBOpenIDConnectActivation =>
+                      'bool:/issuerDBOpenIDConnectActivation',
+                    issuerDBOpenIDConnectPath =>
+                      'text:/issuerDBOpenIDConnectPath',
+                    issuerDBOpenIDConnectRule =>
+'text:/issuerDBOpenIDConnectRule:issuerdbOpenIDConnect:boolOrPerlExpr',
                 },
             },
 

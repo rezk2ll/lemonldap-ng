@@ -335,6 +335,27 @@ has 'issuerDBOpenIDActivation' => (
     documentation => 'OpenID server activation',
 );
 
+has 'issuerDBOpenIDConnectActivation' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '0',
+    documentation => 'OpenID Connect server activation',
+);
+
+has 'issuerDBOpenIDConnectPath' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '^/oauth2/',
+    documentation => 'OpenID Connect server request path',
+);
+
+has 'issuerDBOpenIDConnectRule' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => '1',
+    documentation => 'OpenID Connect server rule',
+);
+
 has 'issuerDBOpenIDPath' => (
     is            => 'rw',
     isa           => 'Str',
