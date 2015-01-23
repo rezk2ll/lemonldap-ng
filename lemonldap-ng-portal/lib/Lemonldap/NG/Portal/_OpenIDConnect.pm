@@ -65,6 +65,36 @@ sub loadOPs {
     return 1;
 }
 
+## @method boolean loadRPs(boolean no_cache)
+# Load OpenID Connect Relaying Parties
+# @param no_cache Disable cache use
+# @return boolean result
+sub loadRPs {
+    my ( $self, $no_cache ) = splice @_;
+
+    # Check cache
+    unless ($no_cache) {
+        if ( $oidcCache->{_oidcRPList} ) {
+            $self->lmLog( "Load RPs from cache", 'debug' );
+            $self->{_oidcRPList} = $oidcCache->{_oidcRPList};
+            return 1;
+        }
+    }
+
+    # Check presence of at least one relaying party in configuration
+    unless ( $self->{oidcRPMetaDataOptions}
+        and keys %{ $self->{oidcRPMetaDataOptions} } )
+    {
+        $self->lmLog( "No OpenID Connect Relaying Party found in configuration",
+            'warn' );
+    }
+
+    $self->{_oidcRPList} = $self->{oidcRPMetaDataOptions};
+    $oidcCache->{_oidcRPList} = $self->{_oidcRPList} unless $no_cache;
+
+    return 1;
+}
+
 ## @method boolean refreshJWKSdata(boolean no_cache)
 # Refresh JWKS data if needed
 # @param no_cache Disable cache update
@@ -134,6 +164,26 @@ sub refreshJWKSdata {
     }
 
     return 1;
+}
+
+## @method String getRP(String client_id)
+# Get Relaying Party corresponding to a Client ID
+# @param client_id Client ID
+# @return String result
+sub getRP {
+    my ( $self, $client_id ) = splice @_;
+    my $rp;
+
+    foreach ( keys %{ $self->{_oidcRPList} } ) {
+        if ( $client_id eq
+            $self->{_oidcRPList}->{$_}->{oidcRPMetaDataOptionsClientID} )
+        {
+            $rp = $_;
+            last;
+        }
+    }
+
+    return $rp;
 }
 
 ## @method String getCallbackUri()
@@ -707,9 +757,17 @@ and user information loading
 
 Load OpenID Connect Providers and JWKS data
 
+=head2 loadRPs
+
+Load OpenID Connect Relaying Parties
+
 =head2 refreshJWKSdata
 
 Refresh JWKS data if needed
+
+=head2 getRP
+
+Get Relaying Party corresponding to a Client ID
 
 =head2 getCallbackUri
 

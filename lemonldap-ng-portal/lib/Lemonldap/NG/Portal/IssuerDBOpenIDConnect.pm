@@ -16,9 +16,13 @@ use base qw(Lemonldap::NG::Portal::_OpenIDConnect);
 our $VERSION = '2.00';
 
 ## @method void issuerDBInit()
-# Do nothing
+# Get configuration data
 # @return Lemonldap::NG::Portal error code
 sub issuerDBInit {
+    my $self = shift;
+
+    return PE_ERROR unless $self->loadRPs;
+
     return PE_OK;
 }
 
@@ -218,7 +222,25 @@ sub issuerForAuthUser {
                 "Request from client id " . $oidc_request->{'client_id'},
                 'debug' );
 
-            # TODO verify that client_id is registered in configuration
+            # Verify that client_id is registered in configuration
+            my $rp = $self->getRP( $oidc_request->{'client_id'} );
+
+            unless ($rp) {
+                $self->lmLog(
+                    "No registered Relaying Party found with client_id "
+                      . $oidc_request->{'client_id'},
+                    'error'
+                );
+                return PE_ERROR;
+            }
+            else {
+                $self->lmLog(
+                    "Cient id "
+                      . $oidc_request->{'client_id'}
+                      . " match RP $rp",
+                    'debug'
+                );
+            }
 
             # TODO obtain consent
 
