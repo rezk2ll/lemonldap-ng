@@ -311,6 +311,31 @@ sub cstruct {
             },
         );
     }
+    elsif ( $k1 =~ /^oidcRPMetaDataNode/i ) {
+        %$h = (
+            %$h,
+            oidcRPMetaDataNode => {
+                $k2 => {
+                    _nodes =>
+                      [qw(oidcRPMetaDataExportedVars oidcRPMetaDataOptions)],
+                    oidcRPMetaDataExportedVars => {
+                        _nodes =>
+                          ["hash:/oidcRPMetaDataExportedVars/$k2:vars:btext"],
+                        _js => 'hashRoot',
+                    },
+                    oidcRPMetaDataOptions => {
+                        _nodes => [
+                            qw(oidcRPMetaDataOptionsClientID oidcRPMetaDataOptionsClientSecret)
+                        ],
+                        oidcRPMetaDataOptionsClientID =>
+"text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsClientID",
+                        oidcRPMetaDataOptionsClientSecret =>
+"password:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsClientSecret",
+                    },
+                },
+            },
+        );
+    }
 
     return $h;
 }
@@ -322,7 +347,7 @@ sub struct {
     my $self = shift;
     return {
         _nodes => [
-            qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaDataNode n:samlSPMetaDataNode n:oidcServiceMetaData n:oidcOPMetaDataNode)
+            qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaDataNode n:samlSPMetaDataNode n:oidcServiceMetaData n:oidcOPMetaDataNode n:oidcRPMetaDataNode)
         ],
         _help => 'default',
 
@@ -1573,6 +1598,15 @@ sub struct {
             _js   => 'oidcOPRoot',
         },
 
+        oidcRPMetaDataNode => {
+            _nodes => [
+'nhash:/oidcRPMetaDataExportedVars:oidcRPMetaDataNode:oidcRPMetaData'
+            ],
+            _upload => ['/oidcRPMetaDataOptions'],
+            _help   => 'oidcRP',
+            _js     => 'oidcRPRoot',
+        },
+
     };
 }
 
@@ -2319,6 +2353,25 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
         },
         oidcOPMetaDataOptions => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                test    => sub { return 1; },
+                keyTest => sub { return 1; },
+            },
+        },
+
+        # OIDC RP
+        oidcRPMetaDataExportedVars => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                keyTest    => qr/^\w([\w\-]*\w)?$/,
+                keyMsgFail => 'Bad attribute name',
+                test       => sub { return 1; },
+            },
+        },
+        oidcRPMetaDataOptions => {
             keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
             keyMsgFail => 'Bad metadata name',
             '*'        => {

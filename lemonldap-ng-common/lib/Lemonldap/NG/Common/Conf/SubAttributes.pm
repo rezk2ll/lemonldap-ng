@@ -100,6 +100,27 @@ has 'oidcOPMetaDataOptionsTokenEndpointAuthMethod' => (
     documentation => "OIDC OP scope",
 );
 
+has 'oidcRPMetaDataExportedVars' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return { 'sub' => 'uid' }; },
+    documentation => "Exported vars for a RP",
+);
+
+has 'oidcRPMetaDataOptionsClientID' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC RP client ID",
+);
+
+has 'oidcRPMetaDataOptionsClientSecret' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC RP client Secret",
+);
+
 ## P
 
 has 'post' => (

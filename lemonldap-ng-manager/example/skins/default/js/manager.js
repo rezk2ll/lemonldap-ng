@@ -465,6 +465,7 @@ function display(div, title) {
 	$('#newpostr,#delpost').hide();
 	$('#newpostdatar,#delpostdata').hide();
 	$('#newoidcopb,#deloidcopb').hide();
+	$('#newoidcrpb,#deloidcrpb').hide();
 	// Resize (or hide) Help window
 	resizeHelp();
 }
@@ -496,6 +497,11 @@ function oidcOPRoot(id) {
 	currentId = id;
 	display('default', '');
 	$('#newoidcopb').show();
+}
+function oidcRPRoot(id) {
+	currentId = id;
+	display('default', '');
+	$('#newoidcrpb').show();
 }
 /* @function splitModuleAndOptions(string data)
  * Split module and options from authentication or userDB string
@@ -847,6 +853,17 @@ function oidcOPMetaData(id) {
 	}
 	$('#newoidcopb').show();
 }
+function oidcRPMetaData(id) {
+	currentId = id;
+	$('#oidcRPMetaData').val(lmtext(id));
+	display('oidcRPMetaData', lmtext(id));
+	if ($('#li_' + myB64('/oidcRPMetaDataNode')).find('span').size() == 1) {
+		$('#deloidcrpb').hide();
+	} else {
+		$('#deloidcrpb').show();
+	}
+	$('#newoidcrpb').show();
+}
 function samlService(id) {
 	currentId = id;
 	var t = lmdata(id).split(';');
@@ -1121,6 +1138,24 @@ function delOidcOp(id) {
 	if (confirm('Delete ' + opname + ' ?')) {
 		delKey(id);
 		oidcOPMetaData(id);
+	}
+}
+function newOidcRp() {
+	var name = prompt(text4newOidcRp, 'rp-example');
+	if (!name) {
+		return false;
+	}
+	var rpId = 'li_' + myB64('/oidcRPMetaDataExportedVars/' + name);
+	simpleTreeCollection[0].newAjaxNodeIn($('#li_L29pZGNSUE1ldGFEYXRhTm9kZQ2'), rpId, name, scriptname + '?type=new&node=/oidcRPMetaDataNode/' + name, function(d, s) {
+		$('>span', s).attr('name', name).attr('help', 'default').attr('id', 'text_' + rpId).attr('onclick', 'oidcRPMetaData(\'' + rpId + '\')');
+		oidcRPMetaData(rpId);
+	});
+}
+function delOidcRp(id) {
+	var rpname = lmtext(id);
+	if (confirm('Delete ' + rpname + ' ?')) {
+		delKey(id);
+		oidcRPMetaData(id);
 	}
 }
 var cfgAttrDone = 0;

@@ -43,6 +43,7 @@ sub confUpload {
     my $catid;
     my $postname;
     my $opname;
+    my $rpname;
 
     # 1. ANALYSE DATAS
 
@@ -117,6 +118,12 @@ s/^text_(NewID_)?li_([\w\/\+\=]+)(\d)(?:_\d+)?$/decode_base64($2.'='x $3)/e;
             $opname = $name;
         }
 
+        # Get OIDC RP name
+        if ( $id =~ /oidcRPMetaDataExportedVars\/([^\/]*)?$/ ) {
+            $self->lmLog( "Entering RP $name", 'debug' );
+            $rpname = $name;
+        }
+
         # Set menu category and application flags
         if ( $id =~ /applicationList/ ) {
             if ( $value =~ /^(.*)?\|(.*)?\|(.*)?\|(.*)?\|(.*?)$/ ) {
@@ -139,7 +146,7 @@ s/^text_(NewID_)?li_([\w\/\+\=]+)(\d)(?:_\d+)?$/decode_base64($2.'='x $3)/e;
 
             # Special case: avoid bug with node created from parent node
             if ( $id =~
-/^(virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode|oidcOPMetaDataNode|generalParameters\/authParams\/choiceParams)/
+/^(virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode|oidcOPMetaDataNode|oidcRPMetaDataNode|generalParameters\/authParams\/choiceParams)/
               )
             {
                 $self->lmLog( "Special trigger for $id (attribute $name)",
@@ -167,6 +174,10 @@ s/^samlSPMetaDataNode\/([^\/]*)?.*/samlSPMetaDataExportedAttributes\/$1\/$name/;
                 # OIDC OP attribute
                 $id =~
 s/^oidcOPMetaDataNode\/([^\/]*)?.*/oidcOPMetaDataExportedVars\/$1\/$name/;
+
+                # OIDC RP attribute
+                $id =~
+s/^oidcRPMetaDataNode\/([^\/]*)?.*/oidcRPMetaDataExportedVars\/$1\/$name/;
 
                 # Authentication choice
                 $id =~
@@ -213,13 +224,17 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
         $id =~
 s/^(oidcOPMetaDataJSON|oidcOPMetaDataJWKS|oidcOPMetaDataExportedVars|oidcOPMetaDataOptions)\/([^\/]*)?\/(.*)$/$1\/$opname\/$3/;
 
+        # Set current OIDC RP name
+        $id =~
+s/^(oidcRPMetaDataExportedVars|oidcRPMetaDataOptions)\/([^\/]*)?\/(.*)$/$1\/$rpname\/$3/;
+
         # Set current POST URL name
         $id =~ s/^(post)\/([^\/]*)?\/(.*)$/$1\/$vhostname\/$postname/;
 
         $self->lmLog( "id transformed into $id", 'debug' );
 
         if ( $id =~
-/^(generalParameters|variables|virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode|oidcOPMetaDataNode)/
+/^(generalParameters|variables|virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode|oidcOPMetaDataNode|oidcRPMetaDataNode)/
           )
         {
             $self->lmLog( "Ignoring attribute $name (id $id)", 'debug' );

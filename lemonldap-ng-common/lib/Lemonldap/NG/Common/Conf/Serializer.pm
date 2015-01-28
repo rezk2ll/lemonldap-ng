@@ -126,6 +126,8 @@ sub unserialize {
 	|oidcOPMetaDataJSON
 	|oidcOPMetaDataJWKS
 	|oidcOPMetaDataOptions
+	|oidcRPMetaDataExportedVars
+	|oidcRPMetaDataOptions
 	|openIdExportedVars
 	|persistentStorageOptions
 	|portalSkinRules
