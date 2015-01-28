@@ -748,6 +748,32 @@ has 'oidcRPStateTimeout' => (
     documentation => 'OpenID Connect Timeout of state sessions',
 );
 
+has 'oidcServiceMetaDataAuthorizeURI' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'authorize',
+    documentation => 'OpenID Connect authorizaton endpoint',
+);
+
+has 'oidcServiceMetaDataIssuer' => (
+    is      => 'rw',
+    isa     => 'Str',
+    default => sub {
+        my $self = shift;
+        my $portal = $self ? $self->portal : "http://auth.example.com/";
+        return $portal;
+    },
+    lazy          => 1,
+    documentation => 'URL of OpenID Connect Issuer',
+);
+
+has 'oidcServiceMetaDataTokenURI' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'token',
+    documentation => 'OpenID Connect token endpoint',
+);
+
 has 'openIdAuthnLevel' => (
     is            => 'rw',
     isa           => 'Int',

@@ -34,8 +34,9 @@ sub issuerForUnAuthUser {
     my $self = shift;
 
     my $issuerDBOpenIDConnectPath = $self->{issuerDBOpenIDConnectPath};
-    my $authorize_uri             = $self->{issuerDBOpenIDConnectAuthorizeURI};
-    my $token_uri                 = $self->{issuerDBOpenIDConnectTokenURI};
+    my $authorize_uri             = $self->{oidcServiceMetaDataAuthorizeURI};
+    my $token_uri                 = $self->{oidcServiceMetaDataTokenURI};
+    my $issuer                    = $self->{oidcServiceMetaDataIssuer};
 
     # Called URL
     my $url = $self->url();
@@ -116,15 +117,15 @@ sub issuerForUnAuthUser {
 
         # Create id_token
         my $id_token_payload_hash = {
-            iss       => $self->{portal},    # Issuer Identifier
-            sub       => $user_id,           # Subject Identifier
-            aud       => "dummy",            # client_id TODO
-            exp       => "3600",             # expiration TODO
-            iat       => time,               # Issued time
-            auth_time => time                # Authentication time TODO
-                                             # TODO acr
-                                             # TODO amr
-                                             # TODO azp
+            iss       => $issuer,     # Issuer Identifier
+            sub       => $user_id,    # Subject Identifier
+            aud       => "dummy",     # client_id TODO
+            exp       => "3600",      # expiration TODO
+            iat       => time,        # Issued time
+            auth_time => time         # Authentication time TODO
+                                      # TODO acr
+                                      # TODO amr
+                                      # TODO azp
         };
 
         # JSON and base64

@@ -322,7 +322,7 @@ sub struct {
     my $self = shift;
     return {
         _nodes => [
-            qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaDataNode n:samlSPMetaDataNode n:oidcOPMetaDataNode)
+            qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaDataNode n:samlSPMetaDataNode n:oidcServiceMetaData n:oidcOPMetaDataNode)
         ],
         _help => 'default',
 
@@ -1542,6 +1542,25 @@ sub struct {
         ########
         # OIDC #
         ########
+        oidcServiceMetaData => {
+            _nodes =>
+              [qw(oidcServiceMetaDataIssuer n:oidcServiceMetaDataEndPoints)],
+
+            oidcServiceMetaDataIssuer => 'text:/oidcServiceMetaDataIssuer',
+
+            oidcServiceMetaDataEndPoints => {
+                _nodes => [
+                    qw(oidcServiceMetaDataAuthorizeURI oidcServiceMetaDataTokenURI)
+                ],
+
+                oidcServiceMetaDataAuthorizeURI =>
+                  'text:/oidcServiceMetaDataAuthorizeURI',
+                oidcServiceMetaDataTokenURI =>
+                  'text:/oidcServiceMetaDataTokenURI',
+            },
+
+        },
+
         oidcOPMetaDataNode => {
             _nodes => [
 'nhash:/oidcOPMetaDataExportedVars:oidcOPMetaDataNode:oidcOPMetaData'
@@ -2267,6 +2286,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         browserIdSiteName        => $testNotDefined,
         browserIdSiteLogo        => $testNotDefined,
         browserIdBackgroundColor => $testNotDefined,
+
+        # OIDC Service
+        oidcServiceMetaDataAuthorizeURI => $testNotDefined,
+        oidcServiceMetaDataIssuer       => $testNotDefined,
+        oidcServiceMetaDataTokenURI     => $testNotDefined,
 
         # OIDC OP
         oidcOPMetaDataExportedVars => {
