@@ -88,6 +88,7 @@ sub issuerForUnAuthUser {
                 "error"
             );
             $self->returnJSONError("invalid_request");
+            $codeSession->remove();
             $self->quit;
         }
 
@@ -100,6 +101,7 @@ sub issuerForUnAuthUser {
                 "Unable to find user session linked to OIDC session $code",
                 "error" );
             $self->returnJSONError("invalid_request");
+            $codeSession->remove();
             $self->quit;
         }
 
@@ -114,6 +116,7 @@ sub issuerForUnAuthUser {
             $self->lmLog( "Unable to create OIDC session for access_token",
                 "error" );
             $self->returnJSONError("invalid_request");
+            $codeSession->remove();
             $self->quit;
         }
 
@@ -171,6 +174,7 @@ sub issuerForUnAuthUser {
 
         $self->lmLog( "Token response sent", 'debug' );
 
+        $codeSession->remove();
         $self->quit;
 
     }
