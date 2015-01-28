@@ -68,6 +68,8 @@ sub issuerForUnAuthUser {
         # Get code session
         my $code = $self->param('code');
 
+        $self->lmLog( "OpenID Connect Code: $code", 'debug' );
+
         my $codeSession = $self->getOpenIDConnectSession($code);
 
         unless ($codeSession) {
@@ -91,7 +93,7 @@ sub issuerForUnAuthUser {
 
         # Get user identifier
         my $apacheSession =
-          $self->getApacheSession( $codeSession->data->{user_session_id} );
+          $self->getApacheSession( $codeSession->data->{user_session_id}, 1 );
 
         unless ($apacheSession) {
             $self->lmLog(
@@ -102,6 +104,8 @@ sub issuerForUnAuthUser {
         }
 
         my $user_id = $apacheSession->data->{_user};  # TODO configure attribute
+
+        $self->lmLog( "Found corresponding user: $user_id", 'debug' );
 
         # Generate access_token
         my $accessTokenSession = $self->getOpenIDConnectSession;
@@ -114,6 +118,8 @@ sub issuerForUnAuthUser {
         }
 
         my $access_token = $accessTokenSession->id;
+
+        $self->lmLog( "Generated access token: $access_token", 'debug' );
 
         # Create id_token
         my $id_token_payload_hash = {
@@ -148,17 +154,22 @@ sub issuerForUnAuthUser {
         # TODO configure expiration
         my $expires_in = "3600";
 
+        my $id_token =
+          $id_token_header . "." . $id_token_payload . "." . $digest;
+
+        $self->lmLog( "Generated id token: $id_token", 'debug' );
+
         # Send token response
         my $token_response = {
             access_token => $access_token,
             token_type   => 'Bearer',
             expires_in   => $expires_in,
-            id_token     => $id_token_header . "."
-              . $id_token_payload . "."
-              . $digest,
+            id_token     => $id_token,
         };
 
         $self->returnJSON($token_response);
+
+        $self->lmLog( "Token response sent", 'debug' );
 
         $self->quit;
 
@@ -256,6 +267,8 @@ sub issuerForAuthUser {
             my $code        = $codeSession->id();
             $response_url .= "code=" . uri_escape($code);
 
+            $self->lmLog( "Generated code: $code", 'debug' );
+
             # Store data in session
             $codeSession->update(
                 {
@@ -269,6 +282,7 @@ sub issuerForAuthUser {
                   "&state=" . uri_escape( $oidc_request->{'state'} );
             }
 
+            $self->lmLog( "Redirect user to $response_url", 'debug' );
             $self->{'urldc'} = $response_url;
 
             $self->_sub('autoRedirect');
@@ -282,6 +296,9 @@ sub issuerForAuthUser {
             'debug' );
 
         # This should not happen
+        $self->lmLog(
+            "Token request found on an active SSO session, ignoring it",
+            'error' );
         $self->returnJSONError("invalid_request");
 
         $self->quit;
