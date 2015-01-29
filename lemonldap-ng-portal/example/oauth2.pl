@@ -123,6 +123,10 @@ else {
         print "<div class=\"alert alert-danger\">";
         print "<p>OpenIDConnect callback state $state is invalid</p>";
         print "</div>";
+        print
+"<div class=\"text-center\"><a class=\"btn btn-info\" role=\"button\" href=\""
+          . $cgi->url
+          . "\">Home</a></div>\n";
         print "</div>";
         print "</div>";
         print $cgi->end_html();
@@ -146,6 +150,10 @@ else {
         print "<p>Bad authorization response: " . $response->message . "</p>";
         print "<p>$response->content</p>";
         print "</div>";
+        print
+"<div class=\"text-center\"><a class=\"btn btn-info\" role=\"button\" href=\""
+          . $cgi->url
+          . "\">Home</a></div>\n";
         print "</div>";
         print "</div>";
         print $cgi->end_html();
@@ -162,6 +170,10 @@ else {
         print "<div class=\"alert alert-danger\">";
         print "<p>Wrong JSON content</p>";
         print "</div>";
+        print
+"<div class=\"text-center\"><a class=\"btn btn-info\" role=\"button\" href=\""
+          . $cgi->url
+          . "\">Home</a></div>\n";
         print "</div>";
         print "</div>";
         print $cgi->end_html();
@@ -172,6 +184,10 @@ else {
         print "<div class=\"alert alert-danger\">";
         print "<p>Error in token response:" . $json->{error} . "</p>";
         print "</div>";
+        print
+"<div class=\"text-center\"><a class=\"btn btn-info\" role=\"button\" href=\""
+          . $cgi->url
+          . "\">Home</a></div>\n";
         print "</div>";
         print "</div>";
         print $cgi->end_html();
@@ -207,6 +223,11 @@ else {
     print "<pre>" . Dumper($id_token_payload_hash) . "</pre>";
     print "</div>\n";
     print "</div>\n";
+
+    print
+"<div class=\"text-center\"><a class=\"btn btn-info\" role=\"button\" href=\""
+      . $cgi->url
+      . "\">Home</a></div>\n";
 
 }
 
