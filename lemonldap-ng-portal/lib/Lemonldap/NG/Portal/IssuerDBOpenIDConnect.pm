@@ -52,7 +52,8 @@ sub issuerForUnAuthUser {
         # Save parameters
         foreach my $param (qw/response_type scope client_id state redirect_uri/)
         {
-            $self->setHiddenFormValue( $param, $self->param($param) );
+            $self->setHiddenFormValue( $param,
+                $self->getHiddenFormValue($param) || $self->param($param) );
         }
 
     }

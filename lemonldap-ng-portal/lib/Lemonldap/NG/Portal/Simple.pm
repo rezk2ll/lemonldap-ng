@@ -539,6 +539,7 @@ sub setHiddenFormValue {
         $key = $prefix . $key;
         $val = encode_base64($val) if $base64;
         $self->{portalHiddenFormValues}->{$key} = $val;
+        $self->lmLog( "Store $val in hidden key $key", 'debug' );
     }
 }
 
@@ -561,6 +562,7 @@ sub getHiddenFormValue {
     if ( my $val = $self->param($key) ) {
         $val = decode_base64($val) if $base64;
         return $val;
+        $self->lmLog( "Hidden value $val found for key $key", 'debug' );
     }
 
     # No value found
@@ -577,9 +579,13 @@ sub clearHiddenFormValue {
 
     unless ( defined $keys ) {
         delete $self->{portalHiddenFormValues};
+        $self->lmLog( "Delete all hidden values", 'debug' );
     }
     else {
-        delete $self->{portalHiddenFormValues}->{$_} foreach (@$keys);
+        foreach (@$keys) {
+            delete $self->{portalHiddenFormValues}->{$_};
+            $self->lmLog( "Delete hidden value for key $_", 'debug' );
+        }
     }
 
     return;
@@ -1646,9 +1652,8 @@ sub controlExistingSession {
                     'debug'
                 );
 
-                if (
-                    $self->{sessionInfo}->{'_auth'} ne $self->get_module('auth')
-                  )
+                if ( $self->{sessionInfo}->{'_auth'} ne
+                    $self->get_module('auth') )
                 {
                     my $module_name = 'Lemonldap::NG::Portal::Auth'
                       . $self->{sessionInfo}->{_auth};
