@@ -121,6 +121,9 @@ sub issuerForUnAuthUser {
             $self->quit;
         }
 
+        # Store scope in access token
+        $accessTokenSession->update( { scope => $codeSession->data->{scope} } );
+
         my $access_token = $accessTokenSession->id;
 
         $self->lmLog( "Generated access token: $access_token", 'debug' );
@@ -324,6 +327,7 @@ sub issuerForAuthUser {
             $codeSession->update(
                 {
                     redirect_uri    => $oidc_request->{'redirect_uri'},
+                    scope           => $oidc_request->{'scope'},
                     user_session_id => $session_id,
                 }
             );
