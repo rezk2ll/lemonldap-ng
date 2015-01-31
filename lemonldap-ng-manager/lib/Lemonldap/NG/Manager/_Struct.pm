@@ -325,12 +325,16 @@ sub cstruct {
                     },
                     oidcRPMetaDataOptions => {
                         _nodes => [
-                            qw(oidcRPMetaDataOptionsClientID oidcRPMetaDataOptionsClientSecret)
+                            qw(oidcRPMetaDataOptionsClientID oidcRPMetaDataOptionsClientSecret oidcRPMetaDataOptionsDisplayName oidcRPMetaDataOptionsIcon)
                         ],
                         oidcRPMetaDataOptionsClientID =>
 "text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsClientID",
                         oidcRPMetaDataOptionsClientSecret =>
 "password:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsClientSecret",
+                        oidcRPMetaDataOptionsDisplayName =>
+"text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsDisplayName",
+                        oidcRPMetaDataOptionsIcon =>
+"text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsIcon",
                     },
                 },
             },

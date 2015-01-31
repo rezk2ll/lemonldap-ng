@@ -208,7 +208,7 @@ sub issuerForAuthUser {
         $self->lmLog( "URL $url detected as an OpenID Connect AUTHORIZE URL",
             'debug' );
 
-        # Get parameters
+        # Get and save parameters
         my $oidc_request = {};
         foreach my $param (qw/response_type scope client_id state redirect_uri/)
         {
@@ -217,6 +217,7 @@ sub issuerForAuthUser {
             $self->lmLog(
                 "OIDC request parameter $param: " . $oidc_request->{$param},
                 'debug' );
+            $self->setHiddenFormValue( $param, $oidc_request->{$param} );
         }
 
         # TODO check all required parameters
@@ -259,7 +260,52 @@ sub issuerForAuthUser {
                 );
             }
 
-            # TODO obtain consent
+            # Obtain consent
+            if ( $self->{sessionInfo}->{"_oidc_consent_$rp"} ) {
+                $self->lmLog( "Consent already given for Relaying Party $rp",
+                    'debug' );
+            }
+            else {
+                if ( $self->param('confirm') == 1 ) {
+                    $self->updatePersistentSession(
+                        { "_oidc_consent_$rp" => time } );
+                    $self->lmLog( "Consent given for Relaying Party $rp",
+                        'debug' );
+                }
+                else {
+                    $self->lmLog( "Obtain user consent for Relaying Party $rp",
+                        'debug' );
+
+                    my $display_name = $self->{oidcRPMetaDataOptions}->{$rp}
+                      ->{oidcRPMetaDataOptionsDisplayName};
+                    my $icon = $self->{oidcRPMetaDataOptions}->{$rp}
+                      ->{oidcRPMetaDataOptionsIcon};
+                    my $portalPath = $self->{portal};
+                    $portalPath =~ s#^https?://[^/]+/?#/#;
+                    $portalPath =~ s#[^/]+\.pl$##;
+
+                    $self->info('<div class="oidc_consent_message">');
+                    $self->info( '<img src="'
+                          . $portalPath
+                          . "skins/common/"
+                          . $icon
+                          . '" />' )
+                      if $icon;
+                    $self->info( '<h3>'
+                          . sprintf( $self->msg(PM_OIDC_CONSENT),
+                            $display_name )
+                          . '</h3>' );
+                    $self->info('<ul>');
+
+                    foreach ( split( /\s/, $oidc_request->{'scope'} ) ) {
+                        $self->info("<li>$_</li>");
+                    }
+                    $self->info('</ul>');
+                    $self->info('</div>');
+                    $self->{activeTimer} = 0;
+                    return PE_CONFIRM;
+                }
+            }
 
             # Prepare response
             my $response_url = $oidc_request->{'redirect_uri'};

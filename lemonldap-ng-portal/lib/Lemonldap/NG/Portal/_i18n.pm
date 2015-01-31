@@ -426,6 +426,7 @@ sub error_ro {
 # * PM_ERROR_MSG               21
 # * PM_LAST_LOGINS             22
 # * PM_LAST_FAILED_LOGINS      23
+# * PM_OIDC_CONSENT            24
 
 sub msg_en {
     use utf8;
@@ -454,6 +455,7 @@ sub msg_en {
         'Error Message',
         'Your last logins',
         'Your last failed logins',
+        'Application %s would like to know:',
     ];
 }
 
@@ -484,6 +486,7 @@ sub msg_fr {
         'Message d\'erreur',
         'Vos dernières connexions',
         'Vos dernières connexions refusées',
+        'L\'application %s voudrait connaître :',
     ];
 }
 
