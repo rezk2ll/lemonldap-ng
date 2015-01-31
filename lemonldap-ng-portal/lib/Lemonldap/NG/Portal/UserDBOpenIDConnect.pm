@@ -39,6 +39,12 @@ sub getUser {
     $self->{tmp}->{OpenIDConnect_user_info} =
       $self->decodeJSON($userinfo_content);
 
+    # Check that received sub is the same than current user
+    unless ( $self->{tmp}->{OpenIDConnect_user_info}->{sub} eq $self->{user} ) {
+        $self->lmLog( "Received sub do not match current user", 'error' );
+        return PE_BADCREDENTIALS;
+    }
+
     PE_OK;
 }
 
