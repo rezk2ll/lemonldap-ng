@@ -64,7 +64,42 @@ sub issuerForUnAuthUser {
         $self->lmLog( "URL $url detected as an OpenID Connect TOKEN URL",
             'debug' );
 
-        # TODO check authorization header or other authentication scheme
+        # Check authentication
+        my ( $client_id, $client_secret ) =
+          $self->getEndPointAuthenticationCredentials();
+
+        unless ( $client_id && $client_secret ) {
+            $self->lmLog(
+"No authentication provided to get token, or authentication type not supported",
+                "error"
+            );
+            $self->returnJSONError("unauthorized_client");
+            $self->quit;
+        }
+
+        # Verify that client_id is registered in configuration
+        my $rp = $self->getRP($client_id);
+
+        unless ($rp) {
+            $self->lmLog(
+                "No registered Relaying Party found with client_id $client_id",
+                'error'
+            );
+            $self->returnJSONError("unauthorized_client");
+            $self->quit;
+        }
+        else {
+            $self->lmLog( "Client id $client_id match RP $rp", 'debug' );
+        }
+
+        # Check client_secret
+        unless ( $client_secret eq $self->{oidcRPMetaDataOptions}->{$rp}
+            ->{oidcRPMetaDataOptionsClientSecret} )
+        {
+            $self->lmLog( "Wrong credentials", "error" );
+            $self->returnJSONError("access_denied");
+            $self->quit;
+        }
 
         # Get code session
         my $code = $self->param('code');
@@ -130,15 +165,15 @@ sub issuerForUnAuthUser {
 
         # Create id_token
         my $id_token_payload_hash = {
-            iss       => $issuer,     # Issuer Identifier
-            sub       => $user_id,    # Subject Identifier
-            aud       => "dummy",     # client_id TODO
-            exp       => "3600",      # expiration TODO
-            iat       => time,        # Issued time
-            auth_time => time         # Authentication time TODO
-                                      # TODO acr
-                                      # TODO amr
-                                      # TODO azp
+            iss       => $issuer,       # Issuer Identifier
+            sub       => $user_id,      # Subject Identifier
+            aud       => $client_id,    # Audience
+            exp       => "3600",        # expiration TODO
+            iat       => time,          # Issued time
+            auth_time => time           # Authentication time TODO
+                                        # TODO acr
+                                        # TODO amr
+                                        # TODO azp
         };
 
         # JSON and base64
@@ -256,7 +291,7 @@ sub issuerForAuthUser {
             }
             else {
                 $self->lmLog(
-                    "Cient id "
+                    "Client id "
                       . $oidc_request->{'client_id'}
                       . " match RP $rp",
                     'debug'

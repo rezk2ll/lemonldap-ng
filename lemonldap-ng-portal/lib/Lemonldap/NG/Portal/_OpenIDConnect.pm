@@ -721,7 +721,7 @@ sub returnJSONError {
     print encode_json( { "error" => "$error" } );
 }
 
-## @method coid returnJSON(String content);
+## @method void returnJSON(String content);
 # Print JSON content
 # @param content Message
 # @return void
@@ -730,6 +730,26 @@ sub returnJSON {
 
     print $self->header('application/json');
     print encode_json($content);
+}
+## @method array getEndPointAuthenticationCredentials()
+# Get Client ID and Client Secret
+# @return array (client_id, client_secret)
+sub getEndPointAuthenticationCredentials {
+    my $self = shift;
+    my ( $client_id, $client_secret );
+
+    my $authorization = $ENV{HTTP_AUTHORIZATION};
+    if ( $authorization =~ /^Basic (\w+)/i ) {
+        $self->lmLog( "Method client_secret_basic used", 'debug' );
+        ( $client_id, $client_secret ) = split( /:/, decode_base64($1) );
+    }
+    elsif ( $self->param('client_id') && $self->param('client_secret') ) {
+        $self->lmLog( "Method client_secret_post used", 'debug' );
+        $client_id     = $self->param('client_id');
+        $client_secret = $self->param('client_secret');
+    }
+
+    return ( $client_id, $client_secret );
 }
 
 1;
@@ -820,6 +840,10 @@ Print JSON error
 =head2 returnJSON
 
 Print JSON content
+
+=head2 getEndPointAuthenticationCredentials
+
+Get Client ID and Client Secret
 
 =head1 SEE ALSO
 
