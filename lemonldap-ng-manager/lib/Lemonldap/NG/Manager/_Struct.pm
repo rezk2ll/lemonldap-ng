@@ -1579,13 +1579,15 @@ sub struct {
 
             oidcServiceMetaDataEndPoints => {
                 _nodes => [
-                    qw(oidcServiceMetaDataAuthorizeURI oidcServiceMetaDataTokenURI)
+                    qw(oidcServiceMetaDataAuthorizeURI oidcServiceMetaDataTokenURI oidcServiceMetaDataUserInfoURI)
                 ],
 
                 oidcServiceMetaDataAuthorizeURI =>
                   'text:/oidcServiceMetaDataAuthorizeURI',
                 oidcServiceMetaDataTokenURI =>
                   'text:/oidcServiceMetaDataTokenURI',
+                oidcServiceMetaDataUserInfoURI =>
+                  'text:/oidcServiceMetaDataUserInfoURI',
             },
 
         },
@@ -2329,6 +2331,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcServiceMetaDataAuthorizeURI => $testNotDefined,
         oidcServiceMetaDataIssuer       => $testNotDefined,
         oidcServiceMetaDataTokenURI     => $testNotDefined,
+        oidcServiceMetaDataUserInfoURI  => $testNotDefined,
 
         # OIDC OP
         oidcOPMetaDataExportedVars => {

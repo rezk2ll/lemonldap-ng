@@ -774,6 +774,13 @@ has 'oidcServiceMetaDataTokenURI' => (
     documentation => 'OpenID Connect token endpoint',
 );
 
+has 'oidcServiceMetaDataUserInfoURI' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'userinfo',
+    documentation => 'OpenID Connect user info endpoint',
+);
+
 has 'openIdAuthnLevel' => (
     is            => 'rw',
     isa           => 'Int',

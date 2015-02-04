@@ -36,6 +36,7 @@ sub issuerForUnAuthUser {
     my $issuerDBOpenIDConnectPath = $self->{issuerDBOpenIDConnectPath};
     my $authorize_uri             = $self->{oidcServiceMetaDataAuthorizeURI};
     my $token_uri                 = $self->{oidcServiceMetaDataTokenURI};
+    my $userinfo_uri              = $self->{oidcServiceMetaDataUserInfoURI};
     my $issuer                    = $self->{oidcServiceMetaDataIssuer};
 
     # Called URL
@@ -156,8 +157,14 @@ sub issuerForUnAuthUser {
             $self->quit;
         }
 
-        # Store scope in access token
-        $accessTokenSession->update( { scope => $codeSession->data->{scope} } );
+        # Store data in access token
+        $accessTokenSession->update(
+            {
+                scope           => $codeSession->data->{scope},
+                rp              => $rp,
+                user_session_id => $apacheSession->id
+            }
+        );
 
         my $access_token = $accessTokenSession->id;
 
@@ -218,6 +225,50 @@ sub issuerForUnAuthUser {
 
     }
 
+    # USERINFO
+    if ( $url_path =~ m#${issuerDBOpenIDConnectPath}${userinfo_uri}# ) {
+
+        $self->lmLog( "URL $url detected as an OpenID Connect USERINFO URL",
+            'debug' );
+
+        my $access_token = $self->getEndPointAccessToken();
+
+        unless ($access_token) {
+            $self->lmLog( "Unable to get access_token", "error" );
+            $self->returnBearerError( "invalid_request",
+                "Access token not found in request" );
+            $self->quit;
+        }
+
+        $self->lmLog( "Received Access Token $access_token", 'debug' );
+
+        my $accessTokenSession = $self->getOpenIDConnectSession($access_token);
+
+        unless ($accessTokenSession) {
+            $self->lmLog(
+                "Unable to get access token session for id $access_token",
+                "error" );
+            $self->returnBearerError( "invalid_token",
+                "Access Token not found or expired" );
+            $self->quit;
+        }
+
+        # Get access token session data
+        my $scope           = $accessTokenSession->data->{scope};
+        my $rp              = $accessTokenSession->data->{rp};
+        my $user_session_id = $accessTokenSession->data->{user_session_id};
+
+        my $userinfo_response =
+          $self->buildUserInfoResponse( $scope, $rp, $user_session_id );
+
+        $self->returnJSON($userinfo_response);
+
+        $self->lmLog( "UserInfo response sent", 'debug' );
+
+        $self->quit;
+
+    }
+
     PE_OK;
 }
 
@@ -231,6 +282,7 @@ sub issuerForAuthUser {
     my $issuerDBOpenIDConnectPath = $self->{issuerDBOpenIDConnectPath};
     my $authorize_uri             = $self->{issuerDBOpenIDConnectAuthorizeURI};
     my $token_uri                 = $self->{issuerDBOpenIDConnectTokenURI};
+    my $userinfo_uri              = $self->{issuerDBOpenIDConnectUserInfoURI};
 
     # Session ID
     my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
@@ -388,6 +440,21 @@ sub issuerForAuthUser {
         # This should not happen
         $self->lmLog(
             "Token request found on an active SSO session, ignoring it",
+            'error' );
+        $self->returnJSONError("invalid_request");
+
+        $self->quit;
+    }
+
+    # USERINFO
+    if ( $url_path =~ m#${issuerDBOpenIDConnectPath}${userinfo_uri}# ) {
+
+        $self->lmLog( "URL $url detected as an OpenID Connect USERINFO URL",
+            'debug' );
+
+        # This should not happen
+        $self->lmLog(
+            "UserInfo request found on an active SSO session, ignoring it",
             'error' );
         $self->returnJSONError("invalid_request");
 

@@ -13,6 +13,7 @@ use URI::Escape;
 use Digest::SHA qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64/;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::Bignum;
+use utf8;
 use base qw(Lemonldap::NG::Portal::_Browser);
 
 our $VERSION = 2.00;
@@ -714,11 +715,15 @@ sub verifyJWTSignature {
 # @return void
 sub returnJSONError {
     my ( $self, $error ) = splice @_;
+    my $content = { "error" => "$error" };
+
+    # We use to_json because values are already UTF-8 encoded
+    my $json = to_json($content);
 
 # TODO Send 400 return code
 # CGI always add HTML code to non 200 return code, which is not compatible with JSON response
     print $self->header('application/json');
-    print encode_json( { "error" => "$error" } );
+    print $json;
 }
 
 ## @method void returnJSON(String content);
@@ -728,9 +733,32 @@ sub returnJSONError {
 sub returnJSON {
     my ( $self, $content ) = splice @_;
 
+    # We use to_json because values are already UTF-8 encoded
+    my $json = to_json($content);
+
+    $self->lmLog( "Return JSON: $json", 'debug' );
+
     print $self->header('application/json');
-    print encode_json($content);
+    print $json;
 }
+
+## @method void returnBearerError(String error_code, String error_message);
+# Return Bearer error
+# @param error_code Error code
+# @param error_message Error message
+# @return void
+sub returnBearerError {
+    my ( $self, $error_code, $error_message ) = splice @_;
+
+    my $content = "error=$error_code,error_description=$error_message";
+
+# TODO Send 400/401 return code
+# CGI always add HTML code to non 200 return code, which is not compatible with JSON response
+
+    print $self->header( -www_authenticate => $content );
+
+}
+
 ## @method array getEndPointAuthenticationCredentials()
 # Get Client ID and Client Secret
 # @return array (client_id, client_secret)
@@ -750,6 +778,98 @@ sub getEndPointAuthenticationCredentials {
     }
 
     return ( $client_id, $client_secret );
+}
+
+## @method String getEndPointAccessToken()
+# Get Access Token
+# @return access_token
+sub getEndPointAccessToken {
+    my $self = shift;
+    my $access_token;
+
+    my $authorization = $ENV{HTTP_AUTHORIZATION};
+    if ( $authorization =~ /^Bearer (\w+)/i ) {
+        $self->lmLog( "Bearer access token", 'debug' );
+        $access_token = $1;
+    }
+
+    return $access_token;
+}
+
+## @method arrayref getAttributesListFromClaim(String claim)
+# Return list of attributes authorized for a claim
+# @param claim Claim
+# @return arrayref attributes list
+sub getAttributesListFromClaim {
+    my ( $self, $claim ) = splice @_;
+    my $attributes = {};
+
+    # OpenID Connect standard claims
+    $attributes->{profile} = [
+        qw/name family_name given_name middle_name nickname preferred_username profile picture website gender birthdate zoneinfo locale updated_at/
+    ];
+    $attributes->{email} = [qw/email email_verified/];
+    $attributes->{address} =
+      [qw/formatted street_address locality region postal_code/];
+    $attributes->{phone} = [qw/phone_number phone_number_verified/];
+
+    # Additional claims
+    # TODO
+
+    return $attributes->{$claim};
+}
+
+## @method hashref buildUserInfoResponse(String scope, String rp, String user_session_id)
+# Return Hash of UserInfo data
+# @param scope OIDC scope
+# @param rp Internal Relaying Party identifier
+# @param user_session_id User session identifier
+# @return hashref UserInfo data
+sub buildUserInfoResponse {
+    my ( $self, $scope, $rp, $user_session_id ) = splice @_;
+    my $userinfo_response = {};
+
+    # Get user identifier
+    my $apacheSession = $self->getApacheSession( $user_session_id, 1 );
+
+    unless ($apacheSession) {
+        $self->lmLog( "Unable to find user session", "error" );
+        $self->returnJSONError("invalid_request");
+        $self->quit;
+    }
+
+    my $user_id = $apacheSession->data->{_user};    # TODO configure attribute
+
+    $self->lmLog( "Found corresponding user: $user_id", 'debug' );
+
+    $userinfo_response->{sub} = $user_id;
+
+    # Parse scope and return allowed attributes
+    foreach my $claim ( split( /\s/, $scope ) ) {
+        next if ( $claim eq "openid" );
+        $self->lmLog( "Get attributes linked to claim $claim", 'debug' );
+        my $list = $self->getAttributesListFromClaim($claim);
+        next unless $list;
+        foreach my $attribute (@$list) {
+            my $session_key =
+              $self->{oidcRPMetaDataExportedVars}->{$rp}->{$attribute};
+            if ($session_key) {
+                my $session_value = $apacheSession->data->{$session_key};
+                utf8::decode($session_value);
+
+                # Address is a JSON object
+                if ( $claim eq "address" ) {
+                    $userinfo_response->{address}->{$attribute} =
+                      $session_value;
+                }
+                else {
+                    $userinfo_response->{$attribute} = $session_value;
+                }
+            }
+        }
+    }
+
+    return $userinfo_response;
 }
 
 1;
@@ -841,9 +961,25 @@ Print JSON error
 
 Print JSON content
 
+=head2 returnBearerError
+
+Return Bearer error
+
 =head2 getEndPointAuthenticationCredentials
 
 Get Client ID and Client Secret
+
+=head2 getEndPointAccessToken
+
+Get Access Token
+
+=head2 getAttributesListFromClaim
+
+Return list of attributes authorized for a claim
+
+=head2 buildUserInfoResponse
+
+Return Hash of UserInfo data
 
 =head1 SEE ALSO
 
