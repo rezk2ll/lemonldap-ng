@@ -171,7 +171,7 @@ sub issuerForUnAuthUser {
 
         $self->lmLog( "Generated access token: $access_token", 'debug' );
 
-        # Create id_token
+        # ID token payload
         my $id_token_payload_hash = {
             iss       => $issuer,       # Issuer Identifier
             sub       => $user_id,      # Subject Identifier
@@ -184,30 +184,13 @@ sub issuerForUnAuthUser {
                                         # TODO azp
         };
 
-        # JSON and base64
-        my $id_token_payload =
-          encode_base64( encode_json($id_token_payload_hash), "" );
+        # Create ID Token
+        my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
 
-        # Sign id_token with JWS
-        # TODO Choose alg
-        my $id_token_header_hash = { typ => "JWT", alg => "HS256" };
-        my $id_token_header =
-          encode_base64( encode_json($id_token_header_hash), "" );
-
-        # Signature
-        # TODO shared key
-        my $key = "ABCDEFGHIJKL";
-        my $digest =
-          hmac_sha256_base64( $id_token_header . "." . $id_token_payload,
-            $key );
+        $self->lmLog( "Generated id token: $id_token", 'debug' );
 
         # TODO configure expiration
         my $expires_in = "3600";
-
-        my $id_token =
-          $id_token_header . "." . $id_token_payload . "." . $digest;
-
-        $self->lmLog( "Generated id token: $id_token", 'debug' );
 
         # Send token response
         my $token_response = {

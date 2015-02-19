@@ -872,6 +872,67 @@ sub buildUserInfoResponse {
     return $userinfo_response;
 }
 
+## @method String createIDToken(hashref payload, String rp)
+# Return ID Token
+# @param payload ID Token content
+# @param rp Internal Relaying Party identifier
+# @return String id_token ID Token as JWT
+sub createIDToken {
+    my ( $self, $payload, $rp ) = splice @_;
+
+    # Get signature algorithm
+    my $alg = $self->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsIDTokenSignAlg};
+    $self->lmLog( "JWT signature algorithm: $alg", 'debug' );
+
+    # Payload encoding
+    my $id_token_payload = encode_base64( encode_json($payload), "" );
+
+    # ID Token header
+    my $id_token_header_hash = { typ => "JWT", alg => $alg };
+    my $id_token_header =
+      encode_base64( encode_json($id_token_header_hash), "" );
+
+    if ( $alg eq "none" ) {
+
+        return $id_token_header . "." . $id_token_payload;
+    }
+
+    if ( $alg eq "HS256" or $alg eq "HS384" or $alg eq "HS512" ) {
+
+        # Sign with client secret
+        my $client_secret =
+          $self->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsClientSecret};
+
+        my $digest;
+
+        if ( $alg eq "HS256" ) {
+            $digest =
+              hmac_sha256_base64( $id_token_header . "." . $id_token_payload,
+                $client_secret );
+        }
+
+        if ( $alg eq "HS384" ) {
+            $digest =
+              hmac_sha384_base64( $id_token_header . "." . $id_token_payload,
+                $client_secret );
+        }
+
+        if ( $alg eq "HS512" ) {
+            $digest =
+              hmac_sha512_base64( $id_token_header . "." . $id_token_payload,
+                $client_secret );
+        }
+
+        return $id_token_header . "." . $id_token_payload . "." . $digest;
+    }
+
+    $self->lmLog( "Algorithm $alg not supported to sign ID Token", 'debug' );
+
+    return;
+}
+
 1;
 
 __END__
@@ -980,6 +1041,10 @@ Return list of attributes authorized for a claim
 =head2 buildUserInfoResponse
 
 Return Hash of UserInfo data
+
+=head2 createIDToken
+
+Return ID Token
 
 =head1 SEE ALSO
 

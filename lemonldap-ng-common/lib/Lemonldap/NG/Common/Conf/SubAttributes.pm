@@ -121,6 +121,13 @@ has 'oidcRPMetaDataOptionsClientSecret' => (
     documentation => "OIDC RP client Secret",
 );
 
+has 'oidcRPMetaDataOptionsIDTokenSignAlg' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'HS256',
+    documentation => "OIDC RP ID Token Signature Algorithm",
+);
+
 ## P
 
 has 'post' => (
