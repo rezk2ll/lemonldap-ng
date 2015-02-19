@@ -162,7 +162,8 @@ sub issuerForUnAuthUser {
             {
                 scope           => $codeSession->data->{scope},
                 rp              => $rp,
-                user_session_id => $apacheSession->id
+                user_session_id => $apacheSession->id,
+                _utime          => time,
             }
         );
 
@@ -416,6 +417,7 @@ sub issuerForAuthUser {
                     redirect_uri    => $oidc_request->{'redirect_uri'},
                     scope           => $oidc_request->{'scope'},
                     user_session_id => $session_id,
+                    _utime          => time,
                 }
             );
 
