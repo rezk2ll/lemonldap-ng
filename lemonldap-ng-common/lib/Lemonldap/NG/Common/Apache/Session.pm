@@ -14,7 +14,7 @@ use base qw(Apache::Session);
 use Lemonldap::NG::Common::Apache::Session::Store;
 use Lemonldap::NG::Common::Apache::Session::Lock;
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.4.4';
 
 sub _load {
     my $backend = shift;
@@ -32,6 +32,13 @@ sub populate {
     {
         no strict 'refs';
         $self = $self->$backend(@_);
+    }
+    if ( $self->{args}->{jsonSerialize} ) {
+        require Lemonldap::NG::Common::Apache::Session::Serialize::JSON;
+        $self->{serialize} =
+          \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::serialize;
+        $self->{unserialize} =
+          \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::unserialize;
     }
     if ( $self->{args}->{generateModule} ) {
         my $generate = $self->{args}->{generateModule};
@@ -154,7 +161,8 @@ sub get_key_from_all_sessions {
         return $backend->get_key_from_all_sessions(@_);
     }
     if ( $backend =~
-        /^Apache::Session::(MySQL|MySQL::NoLock|Postgres|Oracle|Sybase|Informix)$/ )
+/^Apache::Session::(MySQL|MySQL::NoLock|Postgres|Oracle|Sybase|Informix)$/
+      )
     {
         return $class->_dbiGKFAS( $1, @_ );
     }
