@@ -87,7 +87,10 @@ sub load {
     my ( $self, $cfgNum, $fields ) = @_;
     my $f;
     local $/ = "";
-    open FILE, $self->{dirName} . "/lmConf-$cfgNum";
+    unless ( open FILE, $self->{dirName} . "/lmConf-$cfgNum" ) {
+        $Lemonldap::NG::Common::Conf::msg .= "Open file failed: $! \n";
+        return undef;
+    }
     while (<FILE>) {
         my ( $k, $v ) = split /\n\s+/;
         chomp $k;
