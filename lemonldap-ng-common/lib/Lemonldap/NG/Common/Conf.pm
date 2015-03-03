@@ -172,17 +172,45 @@ sub getConf {
             }
             else {
                 $r = $self->getDBConf($args);
-            }
-        }
+                return undef unless ( ref($r) );
 
-        # Get default values
-        my $confAttributes = Lemonldap::NG::Common::Conf::Attributes->new();
+                # Adapt some values before storing in local cache
+                # Get default values
+                my $confAttributes =
+                  Lemonldap::NG::Common::Conf::Attributes->attributes();
 
-        my @attributes = $confAttributes->meta()->get_attribute_list();
+                my @attributes =
+                  grep { defined $confAttributes->{$_}->{default} }
+                  keys %$confAttributes;
 
-        foreach my $name (@attributes) {
-            unless ( defined $r->{$name} ) {
-                $r->{$name} = $confAttributes->$name;
+                foreach my $name (@attributes) {
+                    $r->{$name} //= $confAttributes->{$name}->{default};
+                }
+
+                # Convert old option useXForwardedForIP into trustedProxies
+                if ( defined $r->{useXForwardedForIP}
+                    and $r->{useXForwardedForIP} == 1 )
+                {
+                    $r->{trustedProxies} = '*';
+                }
+
+                # Force Choice backend
+                if ( $r->{authentication} eq "Choice" ) {
+                    $r->{userDB}     = "Choice";
+                    $r->{passwordDB} = "Choice";
+                }
+
+            # Some parameters expect key name (example), not variable ($example)
+                foreach (qw/whatToTrace/) {
+                    if ( defined $r->{$_} ) {
+                        $r->{$_} =~ s/^\$//;
+                    }
+                }
+
+                # Store modified configuration in cache
+                $self->setLocalConf($r)
+                  if ( $self->{refLocalStorage} and not( $args->{noCache} ) );
+
             }
         }
 
@@ -190,34 +218,7 @@ sub getConf {
         eval { $r->{cipher} = Lemonldap::NG::Common::Crypto->new( $r->{key} ); };
         if ($@) {
             $msg .= "Bad key: $@. \n";
-            return $r;
         }
-
-        # Adapt some values
-
-        # Convert old option useXForwardedForIP into trustedProxies
-        if ( defined $r->{useXForwardedForIP}
-            and $r->{useXForwardedForIP} == 1 )
-        {
-            $r->{trustedProxies} = '*';
-        }
-
-        # Force Choice backend
-        if ( $r->{authentication} eq "Choice" ) {
-            $r->{userDB}     = "Choice";
-            $r->{passwordDB} = "Choice";
-        }
-
-        # Some parameters expect key name (example), not variable ($example)
-        foreach (qw/whatToTrace/) {
-            if ( defined $r->{$_} ) {
-                $r->{$_} =~ s/^\$//;
-            }
-        }
-
-        # Store modified configuration in cache
-        $self->setLocalConf($r)
-          if ( $self->{refLocalStorage} and not( $args->{noCache} ) );
 
         # Return configuration hash
         return $r;
@@ -343,7 +344,9 @@ sub getDBConf {
     my $conf = $self->load( $args->{cfgNum} );
     $msg .= "Get configuration $conf->{cfgNum}.\n";
     $self->setLocalConf($conf)
-      if ( $self->{refLocalStorage} and not( $args->{noCache} ) );
+      if (  ref($conf)
+        and $self->{refLocalStorage}
+        and not( $args->{noCache} ) );
     return $conf;
 }
 
