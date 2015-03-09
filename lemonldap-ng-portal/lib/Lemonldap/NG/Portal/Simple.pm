@@ -308,7 +308,8 @@ sub new {
     foreach my $type (qw(authentication userDB passwordDB registerDB)) {
         my $module_name = 'Lemonldap::NG::Portal::';
         my $db_type     = $type;
-        my $db_name     = $self->{$db_type};
+        my $db_name     = $self->{$db_type}
+          or $self->abort("'$db_type' is not set");
 
         # Adapt module type to real module name
         $db_type =~ s/authentication/Auth/;
@@ -1653,8 +1654,9 @@ sub controlExistingSession {
                     'debug'
                 );
 
-                if ( $self->{sessionInfo}->{'_auth'} ne
-                    $self->get_module('auth') )
+                if (
+                    $self->{sessionInfo}->{'_auth'} ne $self->get_module('auth')
+                  )
                 {
                     my $module_name = 'Lemonldap::NG::Portal::Auth'
                       . $self->{sessionInfo}->{_auth};
