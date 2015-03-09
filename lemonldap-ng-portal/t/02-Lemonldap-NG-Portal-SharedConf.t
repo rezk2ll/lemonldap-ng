@@ -26,6 +26,10 @@ dirName=$dir
 
 [portal]
 portalSkin = test
+authentication = Demo
+userDB = Demo
+passwordDB = Null
+registerDB = Null
 ";
 
 $ini->flush();
