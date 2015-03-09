@@ -42,7 +42,7 @@ $ini->flush();
 use Env qw(LLNG_DEFAULTCONFFILE);
 $LLNG_DEFAULTCONFFILE = $ini->filename;
 
-open STDERR, '>/dev/null';
+#open STDERR, '>/dev/null';
 
 #########################
 

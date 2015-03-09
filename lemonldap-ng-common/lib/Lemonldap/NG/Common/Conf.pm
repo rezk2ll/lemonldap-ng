@@ -177,14 +177,12 @@ sub getConf {
                 # Adapt some values before storing in local cache
                 # Get default values
                 my $confAttributes =
-                  Lemonldap::NG::Common::Conf::Attributes->attributes();
+                  Lemonldap::NG::Common::Conf::Attributes->new();
 
-                my @attributes =
-                  grep { defined $confAttributes->{$_}->{default} }
-                  keys %$confAttributes;
+                my @attributes = $confAttributes->meta()->get_attribute_list();
 
                 foreach my $name (@attributes) {
-                    $r->{$name} //= $confAttributes->{$name}->{default};
+                    $r->{$name} //= $confAttributes->$name;
                 }
 
                 # Convert old option useXForwardedForIP into trustedProxies
