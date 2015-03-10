@@ -116,7 +116,7 @@ sub share_from {
             $type = $1 if ( $var = $arg ) =~ s/^(\W)//;
             for ( 1 .. 2 ) {    # assign twice to avoid any 'used once' warnings
                 *{$var} =
-                    ( !$type ) ? \&{ $pkg . "::$var" }
+                    ( !$type )       ? \&{ $pkg . "::$var" }
                   : ( $type eq '&' ) ? \&{ $pkg . "::$var" }
                   : ( $type eq '$' ) ? \${ $pkg . "::$var" }
                   : ( $type eq '@' ) ? \@{ $pkg . "::$var" }

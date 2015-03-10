@@ -29,7 +29,7 @@ sub new {
     for ( my $i = 0 ; $i < 2 ; $i++ ) {
         $stack[$i] =~ s/^Multi\s*//;
         foreach my $l ( split /;/, $stack[$i] ) {
-            $l =~ s/^\s+//;                  # Remove first space
+            $l =~ s/^\s+//;    # Remove first space
             $l =~ /^([\w#]+)(?:\s+(.*))?$/
               or $portal->abort( 'Bad configuration', "Unable to read $l" );
             my ( $mod, $cond ) = ( $1, $2 );

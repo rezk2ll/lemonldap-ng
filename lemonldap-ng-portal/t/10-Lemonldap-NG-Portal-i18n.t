@@ -41,8 +41,8 @@ $p3->{error} = 10;
 $p3->{lang} = [ 'fr', 'es', 'en' ];
 
 ok( $p1->error() eq $p2->error(10), 'HTTP_ACCEPT_LANGUAGE mechanism 1' );
-ok( $p1->error() ne $p2->error(), 'HTTP_ACCEPT_LANGUAGE mechanism 2' );
-ok( $p1->error() ne $p3->error(), 'HTTP_ACCEPT_LANGUAGE mechanism 3' );
+ok( $p1->error() ne $p2->error(),   'HTTP_ACCEPT_LANGUAGE mechanism 2' );
+ok( $p1->error() ne $p3->error(),   'HTTP_ACCEPT_LANGUAGE mechanism 3' );
 
 ok( @en = @{&Lemonldap::NG::Portal::_i18n::msg_en},
     'English messages translation' );

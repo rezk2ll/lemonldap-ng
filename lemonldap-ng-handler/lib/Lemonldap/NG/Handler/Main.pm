@@ -267,7 +267,7 @@ sub run {
     {
         my $str = $1;
         Lemonldap::NG::Handler::Main::Logger->lmLog( 'CDA request', 'debug' );
-        my $redirectUrl = $class->_buildUrl($uri);
+        my $redirectUrl   = $class->_buildUrl($uri);
         my $redirectHttps = ( $redirectUrl =~ m/^https/ );
         Lemonldap::NG::Handler::API->set_header_out(
             'Location'   => $redirectUrl,

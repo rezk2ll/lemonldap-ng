@@ -65,7 +65,7 @@ sub release_all_locks {
     my $self    = shift;
     my $session = shift;
 
-   $self->module->release_all_locks($session);
+    $self->module->release_all_locks($session);
 }
 
 1;

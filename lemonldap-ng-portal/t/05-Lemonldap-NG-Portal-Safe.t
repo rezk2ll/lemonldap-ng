@@ -39,7 +39,7 @@ my $envData = "127.0.0.1";
 $ENV{REMOTE_ADDR} = $envData;
 
 # Real Safe jail
-ok( $p->{useSafeJail} == 1, 'Safe jail on' );
+ok( $p->{useSafeJail} == 1,                  'Safe jail on' );
 ok( $p->safe->reval('$uid') eq $sessionData, 'Safe jail on - session data' );
 ok( $p->safe->reval('$ENV{REMOTE_ADDR}') eq $envData,
     'Safe jail on - env data' );
@@ -53,7 +53,7 @@ $Lemonldap::NG::Portal::Simple::safe = undef;
 $p->{useSafeJail} = 0;
 
 # Fake Safe jail
-ok( $p->{useSafeJail} == 0, 'Safe jail off' );
+ok( $p->{useSafeJail} == 0,                  'Safe jail off' );
 ok( $p->safe->reval('$uid') eq $sessionData, 'Safe jail off - session data' );
 ok( $p->safe->reval('$ENV{REMOTE_ADDR}') eq $envData,
     'Safe jail off - env data' );

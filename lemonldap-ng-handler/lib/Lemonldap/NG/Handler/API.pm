@@ -39,7 +39,7 @@ my $gi = $ENV{GATEWAY_INTERFACE};
 my $mp = $ENV{MOD_PERL_API_VERSION};
 my $mode =
     $gi && $gi =~ /^CGI/ ? "CGI"
-  : $mp && $mp >= 2 ? "ApacheMP2"
+  : $mp && $mp >= 2      ? "ApacheMP2"
   : $mp                ? "ApacheMP1"
   : $main::{'nginx::'} ? "Nginx"
   :                      "CGI";

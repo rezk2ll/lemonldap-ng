@@ -1287,7 +1287,7 @@ sub getAttributeValue {
         next if ( $name ne $attr_name );
 
         # Verify format and friendly name if given
-        next if ( $format        and $format        ne $attr_format );
+        next if ( $format        and $format ne $attr_format );
         next if ( $friendly_name and $friendly_name ne $attr_fname );
 
         # Attribute is found, return its content

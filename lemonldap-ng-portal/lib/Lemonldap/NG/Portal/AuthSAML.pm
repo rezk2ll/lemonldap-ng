@@ -1067,8 +1067,8 @@ sub setAuthSessionInfo {
             # Extract fields from exportedAttr value
             my ( $mandatory, $name, $format, $friendly_name ) =
               split( /;/,
-                $self->{samlIDPMetaDataExportedAttributes}->{$idpConfKey}
-                  ->{$_} );
+                $self->{samlIDPMetaDataExportedAttributes}->{$idpConfKey}->{$_}
+              );
 
             # Try to get value
             my $value =

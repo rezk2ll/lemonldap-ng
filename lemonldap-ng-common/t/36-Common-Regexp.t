@@ -29,8 +29,8 @@ ok( 'test..ex.com' !~ HOSTNAME() );
 ok( '10.1.1.1' =~ HOST() );
 ok( '10.1.1.1' !~ HOSTNAME() );
 ok( 'test.ex.com' !~ HTTP_URI() );
-ok( 'https://test.ex.com'   =~ HTTP_URI() );
-ok( 'https://test.ex.com/'  =~ HTTP_URI() );
+ok( 'https://test.ex.com' =~ HTTP_URI() );
+ok( 'https://test.ex.com/' =~ HTTP_URI() );
 ok( 'https://test.ex.com/a' =~ HTTP_URI() );
 ok( 'https://test.ex.com/?<script>' !~ HTTP_URI() );
 

@@ -17,14 +17,14 @@ our $VERSION = '1.5.99';
 
 sub serialize {
     my $session = shift;
-    
-    $session->{serialized} = encode_json($session->{data});
+
+    $session->{serialized} = encode_json( $session->{data} );
 }
 
 sub unserialize {
     my $session = shift;
-    
-    my $data = decode_json($session->{serialized});
+
+    my $data = decode_json( $session->{serialized} );
     die "Session could not be unserialized" unless defined $data;
     $session->{data} = $data;
 }

@@ -44,7 +44,7 @@ sub setSessionInfo {
 
     my %vars = ( %{ $self->{exportedVars} }, %{ $self->{openIdExportedVars} } );
     while ( my ( $k, $v ) = each %vars ) {
-        my $attr = $k;
+        my $attr     = $k;
         my $required = ( $attr =~ s/^!// );
         if ( $v =~ Lemonldap::NG::Common::Regexp::OPENIDSREGATTR() ) {
             $self->{sessionInfo}->{$attr} = $self->param("openid.sreg.$v");

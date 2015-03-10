@@ -1583,8 +1583,8 @@ sub issuerForAuthUser {
             my @attributes;
 
             foreach (
-                keys
-                %{ $self->{samlSPMetaDataExportedAttributes}->{$spConfKey} } )
+                keys %{ $self->{samlSPMetaDataExportedAttributes}->{$spConfKey}
+                } )
             {
 
                 # Extract fields from exportedAttr value
