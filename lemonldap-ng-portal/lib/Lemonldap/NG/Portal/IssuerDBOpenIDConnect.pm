@@ -8,9 +8,6 @@ package Lemonldap::NG::Portal::IssuerDBOpenIDConnect;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 use URI::Escape;
-use JSON;
-use MIME::Base64;
-use Digest::SHA qw/hmac_sha256_base64/;
 use base qw(Lemonldap::NG::Portal::_OpenIDConnect);
 
 our $VERSION = '2.00';
