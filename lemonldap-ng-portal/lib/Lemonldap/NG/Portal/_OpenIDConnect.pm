@@ -452,8 +452,8 @@ sub getOpenIDConnectSession {
 
     my $oidcSession = Lemonldap::NG::Common::Session->new(
         {
-            storageModule        => $self->{globalStorage},
-            storageModuleOptions => $self->{globalStorageOptions},
+            storageModule        => $self->{oidcStorage},
+            storageModuleOptions => $self->{oidcStorageOptions},
             cacheModule          => $self->{localSessionStorage},
             cacheModuleOptions   => $self->{localSessionStorageOptions},
             id                   => $id,

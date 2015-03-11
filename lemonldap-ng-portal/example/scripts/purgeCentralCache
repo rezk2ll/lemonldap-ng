@@ -119,6 +119,23 @@ if ( defined $conf->{captchaStorage}
     print "Captcha backend $module will be used\n" if $debug;
 }
 
+# OpenIDConnect
+if ( defined $conf->{oidcStorage}
+    or keys %{ $conf->{oidcStorageOptions} } )
+{
+
+    # Load module
+    $module = $conf->{oidcStorage} || $conf->{globalStorage};
+    eval "use $module";
+    die $@ if ($@);
+    $conf->{oidcStorageOptions}->{backend} = $module;
+
+    # Add module in managed backends
+    push @backends, $conf->{oidcStorageOptions};
+
+    print "OIDC backend $module will be used\n" if $debug;
+}
+
 #=============================================================================
 # Load and purge sessions
 #=============================================================================

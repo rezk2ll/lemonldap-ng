@@ -287,6 +287,12 @@ sub new {
         $self->{captchaStorageOptions} = $self->{globalStorageOptions};
     }
 
+    # OpenIDConnect
+    $self->{oidcStorage} ||= $self->{globalStorage};
+    if ( !$self->{oidcStorageOptions} or !%{ $self->{oidcStorageOptions} } ) {
+        $self->{oidcStorageOptions} = $self->{oidcStorageOptions};
+    }
+
     # 2. Domain
     $self->abort( "Configuration error",
         "You've to indicate a domain for cookies" )
