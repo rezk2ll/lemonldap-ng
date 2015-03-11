@@ -335,14 +335,49 @@ sub issuerForAuthUser {
             }
 
             # Obtain consent
-            if ( $self->{sessionInfo}->{"_oidc_consent_$rp"} ) {
-                $self->lmLog( "Consent already given for Relaying Party $rp",
-                    'debug' );
+            my $ask_for_consent = 1;
+            if (    $self->{sessionInfo}->{"_oidc_consent_time_$rp"}
+                and $self->{sessionInfo}->{"_oidc_consent_scope_$rp"} )
+            {
+                $ask_for_consent = 0;
+                my $consent_time =
+                  $self->{sessionInfo}->{"_oidc_consent_time_$rp"};
+                my $consent_scope =
+                  $self->{sessionInfo}->{"_oidc_consent_scope_$rp"};
+
+                $self->lmLog(
+"Consent already given for Relaying Party $rp (time: $consent_time, scope: $consent_scope)",
+                    'debug'
+                );
+
+                # Check accepted scope
+                foreach my $requested_scope (
+                    split( /\s+/, $oidc_request->{'scope'} ) )
+                {
+                    if ( $consent_scope =~ /\b$requested_scope\b/ ) {
+                        $self->lmLog( "Scope $requested_scope already accepted",
+                            'debug' );
+                    }
+                    else {
+                        $self->lmLog(
+"Scope $requested_scope was not previously accepted",
+                            'debug'
+                        );
+                        $ask_for_consent = 1;
+                        last;
+                    }
+                }
             }
-            else {
+            if ($ask_for_consent) {
                 if ( $self->param('confirm') == 1 ) {
                     $self->updatePersistentSession(
-                        { "_oidc_consent_$rp" => time } );
+                        { "_oidc_consent_time_$rp" => time } );
+                    $self->updatePersistentSession(
+                        {
+                            "_oidc_consent_scope_$rp" =>
+                              $oidc_request->{'scope'}
+                        }
+                    );
                     $self->lmLog( "Consent given for Relaying Party $rp",
                         'debug' );
                 }
