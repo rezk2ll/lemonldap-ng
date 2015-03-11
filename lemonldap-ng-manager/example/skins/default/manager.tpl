@@ -53,7 +53,7 @@
 	var text4newCondition='<lang en="New Condition" fr="Nouvelle Condition" />';
 	var lang='<TMPL_VAR NAME="LANG">';
 	var text4newOidcOp='<lang en="Provider name" fr="Nom du fournisseur" />';
-	var text4newOidcRp='<lang en="Relaying party name" fr="Nom du relai" />';
+	var text4newOidcRp='<lang en="Relying party name" fr="Nom du relai" />';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/js/manager.js" type="text/JavaScript"></script>
 </head>
@@ -269,12 +269,12 @@
 
     <button id="newoidcrpb" style="display:none;" onclick="newOidcRp();return false;" class="btn btn-success">
      <i class=" glyphicon glyphicon-plus-sign"></i>
-     <lang en="New relaying party" fr="Nouveau relai" />
+     <lang en="New relying party" fr="Nouveau relai" />
     </button>
 
     <button id="deloidcrpb" style="display:none;" onclick="delOidcRp(currentId);" class="btn btn-danger">
      <i class=" glyphicon glyphicon-minus-sign"></i>
-     <lang en="Delete relaying party" fr="Supprimer le relai" />
+     <lang en="Delete relying party" fr="Supprimer le relai" />
     </button>
 
     </div>

@@ -1312,7 +1312,7 @@ sub getAttributeValue {
 ## @method boolean validateConditions(Lasso::Saml2::Assertion assertion, string entityID)
 # Validate conditions
 # @param assertion SAML2 assertion
-# @param entityID relaying party entity ID
+# @param entityID relying party entity ID
 # @return result
 sub validateConditions {
     my ( $self, $assertion, $entityID ) = splice @_;

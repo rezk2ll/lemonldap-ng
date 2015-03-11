@@ -79,9 +79,8 @@ sub issuerForUnAuthUser {
 
         unless ($rp) {
             $self->lmLog(
-                "No registered Relaying Party found with client_id $client_id",
-                'error'
-            );
+                "No registered Relying Party found with client_id $client_id",
+                'error' );
             $self->returnJSONError("unauthorized_client");
             $self->quit;
         }
@@ -317,7 +316,7 @@ sub issuerForAuthUser {
 
             unless ($rp) {
                 $self->lmLog(
-                    "No registered Relaying Party found with client_id "
+                    "No registered Relying Party found with client_id "
                       . $oidc_request->{'client_id'},
                     'error'
                 );
@@ -344,7 +343,7 @@ sub issuerForAuthUser {
                   $self->{sessionInfo}->{"_oidc_consent_scope_$rp"};
 
                 $self->lmLog(
-"Consent already given for Relaying Party $rp (time: $consent_time, scope: $consent_scope)",
+"Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)",
                     'debug'
                 );
 
@@ -376,11 +375,11 @@ sub issuerForAuthUser {
                               $oidc_request->{'scope'}
                         }
                     );
-                    $self->lmLog( "Consent given for Relaying Party $rp",
+                    $self->lmLog( "Consent given for Relying Party $rp",
                         'debug' );
                 }
                 else {
-                    $self->lmLog( "Obtain user consent for Relaying Party $rp",
+                    $self->lmLog( "Obtain user consent for Relying Party $rp",
                         'debug' );
 
                     my $display_name = $self->{oidcRPMetaDataOptions}->{$rp}

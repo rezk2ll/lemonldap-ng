@@ -67,7 +67,7 @@ sub loadOPs {
 }
 
 ## @method boolean loadRPs(boolean no_cache)
-# Load OpenID Connect Relaying Parties
+# Load OpenID Connect Relying Parties
 # @param no_cache Disable cache use
 # @return boolean result
 sub loadRPs {
@@ -82,11 +82,11 @@ sub loadRPs {
         }
     }
 
-    # Check presence of at least one relaying party in configuration
+    # Check presence of at least one relying party in configuration
     unless ( $self->{oidcRPMetaDataOptions}
         and keys %{ $self->{oidcRPMetaDataOptions} } )
     {
-        $self->lmLog( "No OpenID Connect Relaying Party found in configuration",
+        $self->lmLog( "No OpenID Connect Relying Party found in configuration",
             'warn' );
     }
 
@@ -168,7 +168,7 @@ sub refreshJWKSdata {
 }
 
 ## @method String getRP(String client_id)
-# Get Relaying Party corresponding to a Client ID
+# Get Relying Party corresponding to a Client ID
 # @param client_id Client ID
 # @return String result
 sub getRP {
@@ -844,7 +844,7 @@ sub getAttributesListFromClaim {
 ## @method hashref buildUserInfoResponse(String scope, String rp, String user_session_id)
 # Return Hash of UserInfo data
 # @param scope OIDC scope
-# @param rp Internal Relaying Party identifier
+# @param rp Internal Relying Party identifier
 # @param user_session_id User session identifier
 # @return hashref UserInfo data
 sub buildUserInfoResponse {
@@ -899,7 +899,7 @@ sub buildUserInfoResponse {
 ## @method String createIDToken(hashref payload, String rp)
 # Return ID Token
 # @param payload ID Token content
-# @param rp Internal Relaying Party identifier
+# @param rp Internal Relying Party identifier
 # @return String id_token ID Token as JWT
 sub createIDToken {
     my ( $self, $payload, $rp ) = splice @_;
@@ -984,7 +984,7 @@ Load OpenID Connect Providers and JWKS data
 
 =head2 loadRPs
 
-Load OpenID Connect Relaying Parties
+Load OpenID Connect Relying Parties
 
 =head2 refreshJWKSdata
 
@@ -992,7 +992,7 @@ Refresh JWKS data if needed
 
 =head2 getRP
 
-Get Relaying Party corresponding to a Client ID
+Get Relying Party corresponding to a Client ID
 
 =head2 getCallbackUri
 
