@@ -121,6 +121,13 @@ has 'oidcRPMetaDataOptionsClientSecret' => (
     documentation => "OIDC RP client Secret",
 );
 
+has 'oidcRPMetaDataOptionsUserIDAttr' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC RP User ID Attribute",
+);
+
 has 'oidcRPMetaDataOptionsIDTokenSignAlg' => (
     is            => 'rw',
     isa           => 'Str',

@@ -138,7 +138,9 @@ sub issuerForUnAuthUser {
             $self->quit;
         }
 
-        my $user_id = $apacheSession->data->{_user};  # TODO configure attribute
+        my $user_id_attribute = $self->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsUserIDAttr} || $self->{whatToTrace};
+        my $user_id = $apacheSession->data->{$user_id_attribute};
 
         $self->lmLog( "Found corresponding user: $user_id", 'debug' );
 
