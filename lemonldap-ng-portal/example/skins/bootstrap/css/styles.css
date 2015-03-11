@@ -98,7 +98,7 @@ p.notifCheck label {
   display: inline-block;
 }
 
-/* OpenID Connect list */
+/* OpenID Connect */
 div.openidconnect button {
   height: 60px;
   width: 160px;
@@ -109,6 +109,12 @@ div.openidconnect button img {
   height: 30px;
 }
 
+div.oidc_consent_message > ul {
+  text-align: left;
+  list-style: circle;
+}
+
+/* Responsive styles */
 @media (min-width: 768px) {
   div.application {
     height: 80px;
