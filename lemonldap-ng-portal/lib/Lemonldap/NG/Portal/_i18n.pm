@@ -427,6 +427,12 @@ sub error_ro {
 # * PM_LAST_LOGINS             22
 # * PM_LAST_FAILED_LOGINS      23
 # * PM_OIDC_CONSENT            24
+# * PM_OIDC_SCOPE_OPENID       25
+# * PM_OIDC_SCOPE_PROFILE      26
+# * PM_OIDC_SCOPE_EMAIL        27
+# * PM_OIDC_SCOPE_ADDRESS      28
+# * PM_OIDC_SCOPE_PHONE        29
+# * PM_OIDC_SCOPE_OTHER        30
 
 sub msg_en {
     use utf8;
@@ -455,7 +461,13 @@ sub msg_en {
         'Error Message',
         'Your last logins',
         'Your last failed logins',
-        'Application %s would like to know:',
+        'The application %s would like to know:',
+        'Your identity',
+        'Your profile',
+        'Your email',
+        'Your address',
+        'Your phone number',
+        'Another information:',
     ];
 }
 
@@ -487,6 +499,12 @@ sub msg_fr {
         'Vos dernières connexions',
         'Vos dernières connexions refusées',
         'L\'application %s voudrait connaître :',
+        'Votre identité',
+        'Vos informations personnelles',
+        'Votre adresse électronique',
+        'Votre adresse',
+        'Votre numéro de téléphone',
+        'Une autre information :',
     ];
 }
 

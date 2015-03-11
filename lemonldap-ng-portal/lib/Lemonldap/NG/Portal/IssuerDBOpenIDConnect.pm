@@ -406,8 +406,26 @@ sub issuerForAuthUser {
                           . '</h3>' );
                     $self->info('<ul>');
 
-                    foreach ( split( /\s/, $oidc_request->{'scope'} ) ) {
-                        $self->info("<li>$_</li>");
+                    foreach my $requested_scope (
+                        split( /\s/, $oidc_request->{'scope'} ) )
+                    {
+                        my $message;
+                        my $scope_messages = {
+                            openid  => PM_OIDC_SCOPE_OPENID,
+                            profile => PM_OIDC_SCOPE_PROFILE,
+                            email   => PM_OIDC_SCOPE_EMAIL,
+                            address => PM_OIDC_SCOPE_ADDRESS,
+                            phone   => PM_OIDC_SCOPE_PHONE,
+                        };
+                        if ( $scope_messages->{$requested_scope} ) {
+                            $message =
+                              $self->msg( $scope_messages->{$requested_scope} );
+                        }
+                        else {
+                            $message = $self->msg(PM_OIDC_SCOPE_OTHER) . " "
+                              . $requested_scope;
+                        }
+                        $self->info("<li>$message</li>");
                     }
                     $self->info('</ul>');
                     $self->info('</div>');
