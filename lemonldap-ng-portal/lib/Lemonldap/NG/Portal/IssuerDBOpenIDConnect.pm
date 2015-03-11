@@ -7,7 +7,6 @@ package Lemonldap::NG::Portal::IssuerDBOpenIDConnect;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
-use URI::Escape;
 use base qw(Lemonldap::NG::Portal::_OpenIDConnect);
 
 our $VERSION = '2.00';
@@ -431,16 +430,9 @@ sub issuerForAuthUser {
                 }
             }
 
-            # Prepare response
-            my $response_url = $oidc_request->{'redirect_uri'};
-
-            $response_url .=
-              ( $oidc_request->{'redirect_uri'} =~ /\?/ ? '&' : '?' );
-
             # Generate code
             my $codeSession = $self->getOpenIDConnectSession();
             my $code        = $codeSession->id();
-            $response_url .= "code=" . uri_escape($code);
 
             $self->lmLog( "Generated code: $code", 'debug' );
 
@@ -454,10 +446,11 @@ sub issuerForAuthUser {
                 }
             );
 
-            if ( $oidc_request->{state} ) {
-                $response_url .=
-                  "&state=" . uri_escape( $oidc_request->{'state'} );
-            }
+            # Build Response
+            my $response_url =
+              $self->buildAuthorizationCodeAuthnResponse(
+                $oidc_request->{'redirect_uri'},
+                $code, $oidc_request->{'state'} );
 
             $self->lmLog( "Redirect user to $response_url", 'debug' );
             $self->{'urldc'} = $response_url;
