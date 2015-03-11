@@ -14,7 +14,7 @@
 %define perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
 
 %define real_name lemonldap-ng
-%define real_version 1.4.2
+%define real_version 2.00
 %define cpan_common_version  %{real_version}
 %define cpan_handler_version %{real_version}
 %define cpan_manager_version %{real_version}
@@ -560,6 +560,13 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
+* Wed Mar 11 2015 Clement Oudot <clem.oudot@gmail.com> - 2.00-1
+- Update to 2.00
+* Wed Mar 11 2015 Clement Oudot <clem.oudot@gmail.com> - 1.4.4-1
+- Update to 1.4.4
+* Thu Dec 18 2014 Clement Oudot <clem.oudot@gmail.com> - 1.4.3-1
+- Update to 1.4.3
+- Support for CentOS 7
 * Fri Oct 31 2014 Clement Oudot <clem.oudot@gmail.com> - 1.4.2-1
 - Update to 1.4.2
 * Fri Jul 25 2014 Clement Oudot <clem.oudot@gmail.com> - 1.4.1-1

@@ -1,5 +1,23 @@
 lemonldap-ng (2.00) stable; urgency=low
 
+lemonldap-ng (1.4.4) stable; urgency=low
+
+    * [LEMONLDAP-756] - Session Explorer not loading the globalStorage from lemonldap-ng.ini
+    * [LEMONLDAP-763] - purgeCentralCache sometimes hangs
+    * [LEMONLDAP-783] - Test error with SOAP::Lite 1.12
+    * [LEMONLDAP-784] - reset password in AD not working
+    * [LEMONLDAP-788] - Captcha not working using multiple backends...
+    * [LEMONLDAP-791] - attribute duplication in specific module and in general exported variables results in empty variable
+    * [LEMONLDAP-793] - Common/Conf/File must return an error if file can't be opened
+
+lemonldap-ng (1.4.3) stable; urgency=low
+
+    * [LEMONLDAP-775] - Cas Service Ticket should be used only once
+    * [LEMONLDAP-772] - Collapse menu on click in mobile mode in Bootstrap skin
+    * [LEMONLDAP-774] - Use portal bootstrap theme for test pages
+    * [LEMONLDAP-765] - Provide packages for CentOS 7
+    * [LEMONLDAP-780] - Remove old captcha dirs
+
 lemonldap-ng (1.4.2) stable; urgency=low
 
     * [LEMONLDAP-740] - TCP connections never closed on LDAP
