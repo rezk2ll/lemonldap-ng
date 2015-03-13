@@ -107,6 +107,13 @@ has 'oidcRPMetaDataExportedVars' => (
     documentation => "Exported vars for a RP",
 );
 
+has 'oidcRPMetaDataOptionsAccessTokenExpiration' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => '3600',
+    documentation => "OIDC RP Access Token Expiration",
+);
+
 has 'oidcRPMetaDataOptionsClientID' => (
     is            => 'rw',
     isa           => 'Str|Undef',

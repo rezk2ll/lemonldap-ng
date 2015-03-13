@@ -192,10 +192,10 @@ sub issuerForUnAuthUser {
 
         $self->lmLog( "Generated id token: $id_token", 'debug' );
 
-        # TODO configure expiration
-        my $expires_in = "3600";
-
         # Send token response
+        my $expires_in = $self->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsAccessTokenExpiration};
+
         my $token_response = {
             access_token => $access_token,
             token_type   => 'Bearer',

@@ -325,7 +325,7 @@ sub cstruct {
                     },
                     oidcRPMetaDataOptions => {
                         _nodes => [
-                            qw(oidcRPMetaDataOptionsClientID oidcRPMetaDataOptionsClientSecret oidcRPMetaDataOptionsUserIDAttr oidcRPMetaDataOptionsDisplayName oidcRPMetaDataOptionsIcon oidcRPMetaDataOptionsIDTokenSignAlg oidcRPMetaDataOptionsIDTokenExpiration)
+                            qw(oidcRPMetaDataOptionsClientID oidcRPMetaDataOptionsClientSecret oidcRPMetaDataOptionsUserIDAttr oidcRPMetaDataOptionsDisplayName oidcRPMetaDataOptionsIcon oidcRPMetaDataOptionsIDTokenSignAlg oidcRPMetaDataOptionsIDTokenExpiration oidcRPMetaDataOptionsAccessTokenExpiration)
                         ],
                         oidcRPMetaDataOptionsClientID =>
 "text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsClientID",
@@ -341,6 +341,8 @@ sub cstruct {
 "text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsIDTokenSignAlg",
                         oidcRPMetaDataOptionsIDTokenExpiration =>
 "int:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsIDTokenExpiration",
+                        oidcRPMetaDataOptionsAccessTokenExpiration =>
+"int:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsAccessTokenExpiration",
                     },
                 },
             },
