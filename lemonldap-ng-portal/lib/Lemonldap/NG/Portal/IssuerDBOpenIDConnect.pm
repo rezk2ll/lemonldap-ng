@@ -172,19 +172,20 @@ sub issuerForUnAuthUser {
         my $id_token_exp = $self->{oidcRPMetaDataOptions}->{$rp}
           ->{oidcRPMetaDataOptionsIDTokenExpiration};
 
+        my $id_token_acr = "loa-" . $apacheSession->data->{authenticationLevel};
+
         my $id_token_payload_hash = {
             iss => $issuer,          # Issuer Identifier
             sub => $user_id,         # Subject Identifier
-            aud => $client_id,       # Audience
+            aud => [$client_id],     # Audience
             exp => $id_token_exp,    # expiration
             iat => time,             # Issued time
             auth_time =>
               $apacheSession->data->{_lastAuthnUTime},    # Authentication time
-
-            # TODO nonce
-            # TODO acr
-            # TODO amr
-            azp => $client_id,    # Authorized party
+            acr => $id_token_acr,    # Authentication Context Class Reference
+            azp => $client_id,       # Authorized party
+                                     # TODO amr
+                                     # TODO nonce
         };
 
         # Create ID Token
