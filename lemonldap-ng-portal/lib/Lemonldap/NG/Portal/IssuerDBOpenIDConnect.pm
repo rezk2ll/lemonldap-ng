@@ -169,16 +169,22 @@ sub issuerForUnAuthUser {
         $self->lmLog( "Generated access token: $access_token", 'debug' );
 
         # ID token payload
+        my $id_token_exp = $self->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsIDTokenExpiration};
+
         my $id_token_payload_hash = {
-            iss       => $issuer,       # Issuer Identifier
-            sub       => $user_id,      # Subject Identifier
-            aud       => $client_id,    # Audience
-            exp       => "3600",        # expiration TODO
-            iat       => time,          # Issued time
-            auth_time => time           # Authentication time TODO
-                                        # TODO acr
-                                        # TODO amr
-                                        # TODO azp
+            iss => $issuer,          # Issuer Identifier
+            sub => $user_id,         # Subject Identifier
+            aud => $client_id,       # Audience
+            exp => $id_token_exp,    # expiration
+            iat => time,             # Issued time
+            auth_time =>
+              $apacheSession->data->{_lastAuthnUTime},    # Authentication time
+
+            # TODO nonce
+            # TODO acr
+            # TODO amr
+            azp => $client_id,    # Authorized party
         };
 
         # Create ID Token

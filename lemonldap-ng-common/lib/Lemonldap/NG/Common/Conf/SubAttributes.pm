@@ -121,11 +121,11 @@ has 'oidcRPMetaDataOptionsClientSecret' => (
     documentation => "OIDC RP client Secret",
 );
 
-has 'oidcRPMetaDataOptionsUserIDAttr' => (
+has 'oidcRPMetaDataOptionsIDTokenExpiration' => (
     is            => 'rw',
-    isa           => 'Str|Undef',
-    default       => undef,
-    documentation => "OIDC RP User ID Attribute",
+    isa           => 'Int',
+    default       => '3600',
+    documentation => "OIDC RP ID Token Expiration",
 );
 
 has 'oidcRPMetaDataOptionsIDTokenSignAlg' => (
@@ -133,6 +133,13 @@ has 'oidcRPMetaDataOptionsIDTokenSignAlg' => (
     isa           => 'Str',
     default       => 'HS256',
     documentation => "OIDC RP ID Token Signature Algorithm",
+);
+
+has 'oidcRPMetaDataOptionsUserIDAttr' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC RP User ID Attribute",
 );
 
 ## P
