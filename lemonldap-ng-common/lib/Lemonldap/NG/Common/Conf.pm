@@ -21,7 +21,7 @@ use Config::IniFiles;
 #inherits Lemonldap::NG::Common::Conf::LDAP
 
 our $VERSION = '1.4.4';
-our $msg;
+our $msg     = '';
 our $iniObj;
 
 BEGIN {
