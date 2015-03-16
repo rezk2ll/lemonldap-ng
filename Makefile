@@ -235,7 +235,7 @@ example:
 install_bin:	install_conf_dir
 	# Binary install
 	@install -v -d $(RBINDIR)
-	@cp --preserve=mode --remove-destination \
+	@cp -f\
 		${SRCHANDLERDIR}/example/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/example/scripts/purgeCentralCache \
 		${SRCPORTALDIR}/example/scripts/buildPortalWSDL \
@@ -268,11 +268,11 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@install -v -d $(RCONFDIR)
 	# Check if erase is wanted
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
-		cp --remove-destination _example/etc/portal-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp --remove-destination _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp --remove-destination _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp --remove-destination _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR); \
+		cp -f _example/etc/portal-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp -f _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp -f _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp -f _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp -f _example/etc/for_etc_hosts $(RCONFDIR); \
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
 			s#__PORTALDIR__#$(PORTALDIR)/#g; \
@@ -324,9 +324,9 @@ install_manager_site:	install_conf_dir
 		[ -h $(RMANAGERDIR)/skins/$$skin ] && rm -f $(RMANAGERDIR)/skins/$$skin; \
 		install -v -d $(RMANAGERSKINSDIR)/$$skin; \
 	done
-	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/index.pl ${RMANAGERDIR}
-	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/*.html ${RMANAGERDIR}
-	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/skins/* $(RMANAGERSKINSDIR)
+	@cp -pR -f ${SRCMANAGERDIR}/example/index.pl ${RMANAGERDIR}
+	@cp -pR -f ${SRCMANAGERDIR}/example/*.html ${RMANAGERDIR}
+	@cp -pR -f ${SRCMANAGERDIR}/example/skins/* $(RMANAGERSKINSDIR)
 	@if [ "$(MANAGERDIR)/skins/" != "$(MANAGERSKINSDIR)/" ]; then \
 		for skin in $$(ls lemonldap-ng-manager/example/skins/); do \
 			rm -rf $(RMANAGERDIR)/skins/$$skin/; \
@@ -335,8 +335,8 @@ install_manager_site:	install_conf_dir
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
 	# Sessions explorer and notifications explorer install
-	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/sessions.pl $(RSESSIONSEXPLORERDIR)
-	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/notifications.pl $(RSESSIONSEXPLORERDIR)
+	@cp -pR -f ${SRCMANAGERDIR}/example/sessions.pl $(RSESSIONSEXPLORERDIR)
+	@cp -pR -f ${SRCMANAGERDIR}/example/notifications.pl $(RSESSIONSEXPLORERDIR)
 	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSKINSDIR} \
 		${RSESSIONSEXPLORERDIR} \
 		$(RCONFDIR) -type d -name .svn)
@@ -350,11 +350,11 @@ install_portal_site:	install_conf_dir
 		[ -h $(RPORTALDIR)/skins/$$skin ] && rm -f $(RPORTALDIR)/skins/$$skin; \
 		install -v -d $(RPORTALSKINSDIR)/$$skin; \
 	done
-	@cp -pR --remove-destination ${SRCPORTALDIR}/example/index_skin.pl ${RPORTALDIR}/index.pl
-	@cp -pR --remove-destination ${SRCPORTALDIR}/example/mail.pl ${RPORTALDIR}
-	@cp -pR --remove-destination ${SRCPORTALDIR}/example/metadata.pl ${RPORTALDIR}
-	@cp -pR --remove-destination ${SRCPORTALDIR}/example/cdc.pl ${RPORTALDIR}
-	@cp -pR --remove-destination ${SRCPORTALDIR}/example/register.pl ${RPORTALDIR}
+	@cp -pR -f ${SRCPORTALDIR}/example/index_skin.pl ${RPORTALDIR}/index.pl
+	@cp -pR -f ${SRCPORTALDIR}/example/mail.pl ${RPORTALDIR}
+	@cp -pR -f ${SRCPORTALDIR}/example/metadata.pl ${RPORTALDIR}
+	@cp -pR -f ${SRCPORTALDIR}/example/cdc.pl ${RPORTALDIR}
+	@cp -pR -f ${SRCPORTALDIR}/example/register.pl ${RPORTALDIR}
 	@tar -cf - -C ${SRCPORTALDIR}/example/skins/ $$(ls ${SRCPORTALDIR}/example/skins/) |tar -xf - -C $(RPORTALSKINSDIR)
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
 		for skin in $$(ls lemonldap-ng-portal/example/skins/); do \
@@ -363,7 +363,7 @@ install_portal_site:	install_conf_dir
 		done; \
 	fi
 	# Cron files
-	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
+	@cp -f lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	else \
@@ -376,7 +376,7 @@ install_portal_site:	install_conf_dir
 install_handler_site:	install_conf_dir
 	# Handler install
 	@install -v -d ${RHANDLERDIR}
-	@cp --remove-destination lemonldap-ng-handler/example/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
+	@cp -f lemonldap-ng-handler/example/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-handler; \
 	else \
@@ -388,7 +388,7 @@ install_handler_site:	install_conf_dir
 install_test_site:
 	# Test site install
 	@install -v -d $(RTESTDIR)
-	@cp -pR --remove-destination _example/test/* $(RTESTDIR)
+	@cp -pR -f _example/test/* $(RTESTDIR)
 	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RTESTDIR)/index.pl
 	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
@@ -397,7 +397,7 @@ install_examples_site:
 	# Examples install
 	@install -v -d $(REXAMPLESDIR)
 	@for i in manager portal handler; do \
-		cp -dpR --remove-destination lemonldap-ng-$$i/example $(REXAMPLESDIR)/$$i; \
+		cp -a -f lemonldap-ng-$$i/example $(REXAMPLESDIR)/$$i; \
 	done
 	@rm -rf $(REXAMPLESDIR)/portal/skins \
 		$(REXAMPLESDIR)/manager/skins \
@@ -409,13 +409,13 @@ install_doc_site:
 	# Offline documentation install
 	@rm -rf $(RDEFDOCDIR)
 	@install -v -d $(RDEFDOCDIR)
-	@cp -dR --remove-destination doc/* $(RDEFDOCDIR)
+	@cp -a -f doc/* $(RDEFDOCDIR)
 
 install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 	# Configuration files install
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
-		cp --remove-destination $(SRCCOMMONDIR)/$(CONFFILENAME) $(RCONFDIR); \
+		cp -f $(SRCCOMMONDIR)/$(CONFFILENAME) $(RCONFDIR); \
 		$(PERL) -i -pe 's#^dirName\s*=\s*.*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)/$(CONFFILENAME); \
 	fi
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
@@ -756,5 +756,5 @@ omegat-%-clean:
 install_%_doc_site:
 	@rm -rf $(RDOCDIR)/$*-doc || true
 	@install -v -d $(RDOCDIR)/$*-doc
-	@cp -dR --remove-destination po-doc/$*/* $(RDOCDIR)/$*-doc
+	@cp -dR -f po-doc/$*/* $(RDOCDIR)/$*-doc
 
