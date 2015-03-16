@@ -288,7 +288,8 @@ sub issuerForAuthUser {
 
         # Get and save parameters
         my $oidc_request = {};
-        foreach my $param (qw/response_type scope client_id state redirect_uri/)
+        foreach
+          my $param (qw/response_type scope client_id state redirect_uri nonce/)
         {
             $oidc_request->{$param} = $self->getHiddenFormValue($param)
               || $self->param($param);
@@ -298,145 +299,160 @@ sub issuerForAuthUser {
             $self->setHiddenFormValue( $param, $oidc_request->{$param} );
         }
 
+        # Detect requested flow
+        my $response_type = $oidc_request->{'response_type'};
+
+        my $response_types = {
+            "code"                => "authorizationcode",
+            "id_token"            => "implicit",
+            "id_token token"      => "implicit",
+            "code id_token"       => "hybrid",
+            "code token"          => "hybrid",
+            "code id_token token" => "hybrid",
+        };
+
+        my $flow = $response_types->{$response_type};
+
+        unless ($flow) {
+            $self->lmLog( "Unknown response type: $response_type", 'error' );
+            return PE_ERROR;
+        }
+        $self->lmLog(
+            "OIDC $flow flow requested (response type: $response_type)",
+            'debug' );
+
         # TODO check all required parameters
-        # TODO validate parameters against OAuth 2.0 spec
+        if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} ) {
+            $self->lmLog( "Nonce is required for implicit flow", 'error' );
+            return PE_ERROR;
+        }
 
-        # Authorization Code Flow
-        if ( $oidc_request->{'response_type'} eq "code" ) {
-            $self->lmLog( "OIDC auhtorization code flow requested", 'debug' );
+        # Check openid scope
+        unless ( $oidc_request->{'scope'} =~ /\bopenid\b/ ) {
+            $self->lmLog( "No openid scope found", 'debug' );
 
-            # Check openid scope
-            unless ( $oidc_request->{'scope'} =~ /\bopenid\b/ ) {
-                $self->lmLog( "No openid scope found", 'debug' );
+            #TODO manage standard OAuth request
+            return PE_OK;
+        }
 
-                #TODO manage standard OAuth request
-                return PE_OK;
-            }
+        # Check client_id
+        $self->lmLog( "Request from client id " . $oidc_request->{'client_id'},
+            'debug' );
 
-            # Check client_id
+        # Verify that client_id is registered in configuration
+        my $rp = $self->getRP( $oidc_request->{'client_id'} );
+
+        unless ($rp) {
             $self->lmLog(
-                "Request from client id " . $oidc_request->{'client_id'},
+                "No registered Relying Party found with client_id "
+                  . $oidc_request->{'client_id'},
+                'error'
+            );
+            return PE_ERROR;
+        }
+        else {
+            $self->lmLog(
+                "Client id " . $oidc_request->{'client_id'} . " match RP $rp",
                 'debug' );
+        }
 
-            # Verify that client_id is registered in configuration
-            my $rp = $self->getRP( $oidc_request->{'client_id'} );
+        # Obtain consent
+        my $ask_for_consent = 1;
+        if (    $self->{sessionInfo}->{"_oidc_consent_time_$rp"}
+            and $self->{sessionInfo}->{"_oidc_consent_scope_$rp"} )
+        {
+            $ask_for_consent = 0;
+            my $consent_time = $self->{sessionInfo}->{"_oidc_consent_time_$rp"};
+            my $consent_scope =
+              $self->{sessionInfo}->{"_oidc_consent_scope_$rp"};
 
-            unless ($rp) {
-                $self->lmLog(
-                    "No registered Relying Party found with client_id "
-                      . $oidc_request->{'client_id'},
-                    'error'
-                );
-                return PE_ERROR;
-            }
-            else {
-                $self->lmLog(
-                    "Client id "
-                      . $oidc_request->{'client_id'}
-                      . " match RP $rp",
-                    'debug'
-                );
-            }
-
-            # Obtain consent
-            my $ask_for_consent = 1;
-            if (    $self->{sessionInfo}->{"_oidc_consent_time_$rp"}
-                and $self->{sessionInfo}->{"_oidc_consent_scope_$rp"} )
-            {
-                $ask_for_consent = 0;
-                my $consent_time =
-                  $self->{sessionInfo}->{"_oidc_consent_time_$rp"};
-                my $consent_scope =
-                  $self->{sessionInfo}->{"_oidc_consent_scope_$rp"};
-
-                $self->lmLog(
+            $self->lmLog(
 "Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)",
-                    'debug'
-                );
+                'debug'
+            );
 
-                # Check accepted scope
-                foreach my $requested_scope (
-                    split( /\s+/, $oidc_request->{'scope'} ) )
-                {
-                    if ( $consent_scope =~ /\b$requested_scope\b/ ) {
-                        $self->lmLog( "Scope $requested_scope already accepted",
-                            'debug' );
-                    }
-                    else {
-                        $self->lmLog(
-"Scope $requested_scope was not previously accepted",
-                            'debug'
-                        );
-                        $ask_for_consent = 1;
-                        last;
-                    }
-                }
-            }
-            if ($ask_for_consent) {
-                if ( $self->param('confirm') == 1 ) {
-                    $self->updatePersistentSession(
-                        { "_oidc_consent_time_$rp" => time } );
-                    $self->updatePersistentSession(
-                        {
-                            "_oidc_consent_scope_$rp" =>
-                              $oidc_request->{'scope'}
-                        }
-                    );
-                    $self->lmLog( "Consent given for Relying Party $rp",
+            # Check accepted scope
+            foreach
+              my $requested_scope ( split( /\s+/, $oidc_request->{'scope'} ) )
+            {
+                if ( $consent_scope =~ /\b$requested_scope\b/ ) {
+                    $self->lmLog( "Scope $requested_scope already accepted",
                         'debug' );
                 }
                 else {
-                    $self->lmLog( "Obtain user consent for Relying Party $rp",
+                    $self->lmLog(
+                        "Scope $requested_scope was not previously accepted",
                         'debug' );
-
-                    my $display_name = $self->{oidcRPMetaDataOptions}->{$rp}
-                      ->{oidcRPMetaDataOptionsDisplayName};
-                    my $icon = $self->{oidcRPMetaDataOptions}->{$rp}
-                      ->{oidcRPMetaDataOptionsIcon};
-                    my $portalPath = $self->{portal};
-                    $portalPath =~ s#^https?://[^/]+/?#/#;
-                    $portalPath =~ s#[^/]+\.pl$##;
-
-                    $self->info('<div class="oidc_consent_message">');
-                    $self->info( '<img src="'
-                          . $portalPath
-                          . "skins/common/"
-                          . $icon
-                          . '" />' )
-                      if $icon;
-                    $self->info( '<h3>'
-                          . sprintf( $self->msg(PM_OIDC_CONSENT),
-                            $display_name )
-                          . '</h3>' );
-                    $self->info('<ul>');
-
-                    foreach my $requested_scope (
-                        split( /\s/, $oidc_request->{'scope'} ) )
-                    {
-                        my $message;
-                        my $scope_messages = {
-                            openid  => PM_OIDC_SCOPE_OPENID,
-                            profile => PM_OIDC_SCOPE_PROFILE,
-                            email   => PM_OIDC_SCOPE_EMAIL,
-                            address => PM_OIDC_SCOPE_ADDRESS,
-                            phone   => PM_OIDC_SCOPE_PHONE,
-                        };
-                        if ( $scope_messages->{$requested_scope} ) {
-                            $message =
-                              $self->msg( $scope_messages->{$requested_scope} );
-                        }
-                        else {
-                            $message = $self->msg(PM_OIDC_SCOPE_OTHER) . " "
-                              . $requested_scope;
-                        }
-                        $self->info("<li>$message</li>");
-                    }
-                    $self->info('</ul>');
-                    $self->info('</div>');
-                    $self->{activeTimer} = 0;
-                    return PE_CONFIRM;
+                    $ask_for_consent = 1;
+                    last;
                 }
             }
+        }
+        if ($ask_for_consent) {
+            if ( $self->param('confirm') == 1 ) {
+                $self->updatePersistentSession(
+                    { "_oidc_consent_time_$rp" => time } );
+                $self->updatePersistentSession(
+                    {
+                        "_oidc_consent_scope_$rp" => $oidc_request->{'scope'}
+                    }
+                );
+                $self->lmLog( "Consent given for Relying Party $rp", 'debug' );
+            }
+            else {
+                $self->lmLog( "Obtain user consent for Relying Party $rp",
+                    'debug' );
+
+                my $display_name = $self->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsDisplayName};
+                my $icon = $self->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsIcon};
+                my $portalPath = $self->{portal};
+                $portalPath =~ s#^https?://[^/]+/?#/#;
+                $portalPath =~ s#[^/]+\.pl$##;
+
+                $self->info('<div class="oidc_consent_message">');
+                $self->info( '<img src="'
+                      . $portalPath
+                      . "skins/common/"
+                      . $icon
+                      . '" />' )
+                  if $icon;
+                $self->info( '<h3>'
+                      . sprintf( $self->msg(PM_OIDC_CONSENT), $display_name )
+                      . '</h3>' );
+                $self->info('<ul>');
+
+                foreach my $requested_scope (
+                    split( /\s/, $oidc_request->{'scope'} ) )
+                {
+                    my $message;
+                    my $scope_messages = {
+                        openid  => PM_OIDC_SCOPE_OPENID,
+                        profile => PM_OIDC_SCOPE_PROFILE,
+                        email   => PM_OIDC_SCOPE_EMAIL,
+                        address => PM_OIDC_SCOPE_ADDRESS,
+                        phone   => PM_OIDC_SCOPE_PHONE,
+                    };
+                    if ( $scope_messages->{$requested_scope} ) {
+                        $message =
+                          $self->msg( $scope_messages->{$requested_scope} );
+                    }
+                    else {
+                        $message = $self->msg(PM_OIDC_SCOPE_OTHER) . " "
+                          . $requested_scope;
+                    }
+                    $self->info("<li>$message</li>");
+                }
+                $self->info('</ul>');
+                $self->info('</div>');
+                $self->{activeTimer} = 0;
+                return PE_CONFIRM;
+            }
+        }
+
+        # Authorization Code Flow
+        if ( $flow eq "authorizationcode" ) {
 
             # Generate code
             my $codeSession = $self->getOpenIDConnectSession();
@@ -465,6 +481,25 @@ sub issuerForAuthUser {
 
             $self->_sub('autoRedirect');
         }
+
+        # Implicit Flow
+        if ( $flow eq "implicit" ) {
+
+            #TODO
+
+            return PE_ERROR;
+        }
+
+        # Hybrid Flow
+        if ( $flow eq "hybrid" ) {
+
+            #TODO
+
+            return PE_ERROR;
+        }
+
+        $self->lmLog( "No flow has been selected", 'debug' );
+        return PE_OK;
     }
 
     # TOKEN
