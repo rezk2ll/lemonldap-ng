@@ -92,6 +92,9 @@ sub new {
         if ($@) {
             $msg .= "Unable to load $self->{localStorage}: $@.\n";
         }
+
+        # TODO: defer that until $> > 0 (to avoid creating local cache with
+        # root privileges
         else {
             $self->{refLocalStorage} =
               $self->{localStorage}->new( $self->{localStorageOptions} );
@@ -141,8 +144,9 @@ sub saveConf {
 sub getConf {
     my ( $self, $args ) = @_;
 
-    # Use only cache to get conf
-    if (    $args->{local}
+    # Use only cache to get conf if $args->{local} is set
+    if (    $>
+        and $args->{local}
         and ref( $self->{refLocalStorage} )
         and my $res = $self->{refLocalStorage}->get('conf') )
     {
@@ -163,7 +167,7 @@ sub getConf {
             $r = $self->getDBConf($args);
         }
         else {
-            eval { $r = $self->{refLocalStorage}->get('conf') };
+            eval { $r = $self->{refLocalStorage}->get('conf') } if ($>);
             $msg = "Warn: $@" if ($@);
             if ( ref($r) and $r->{cfgNum} == $args->{cfgNum} ) {
                 $msg .=
@@ -319,6 +323,7 @@ sub getLocalConf {
 # @param $conf Lemonldap::NG configuration hashRef
 sub setLocalConf {
     my ( $self, $conf ) = @_;
+    return unless ($>);
     eval { $self->{refLocalStorage}->set( "conf", $conf ) };
     $msg .= "Warn: $@\n" if ($@);
 }
