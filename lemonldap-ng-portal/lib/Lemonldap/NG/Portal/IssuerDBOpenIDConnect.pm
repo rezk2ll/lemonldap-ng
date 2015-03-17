@@ -186,8 +186,10 @@ sub issuerForUnAuthUser {
             acr => $id_token_acr,    # Authentication Context Class Reference
             azp => $client_id,       # Authorized party
                                      # TODO amr
-                                     # TODO nonce
         };
+
+        my $nonce = $codeSession->data->{nonce};
+        $id_token_payload_hash->{nonce} = $nonce if defined $nonce;
 
         # Create ID Token
         my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
@@ -467,6 +469,7 @@ sub issuerForAuthUser {
                     scope           => $oidc_request->{'scope'},
                     user_session_id => $session_id,
                     _utime          => time,
+                    nonce           => $oidc_request->{'nonce'},
                 }
             );
 
