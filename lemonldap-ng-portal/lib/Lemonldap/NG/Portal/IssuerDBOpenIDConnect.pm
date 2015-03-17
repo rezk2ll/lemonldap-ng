@@ -47,7 +47,8 @@ sub issuerForUnAuthUser {
             'debug' );
 
         # Save parameters
-        foreach my $param (qw/response_type scope client_id state redirect_uri/)
+        foreach
+          my $param (qw/response_type scope client_id state redirect_uri nonce/)
         {
             $self->setHiddenFormValue( $param,
                 $self->getHiddenFormValue($param) || $self->param($param) );
@@ -271,6 +272,7 @@ sub issuerForAuthUser {
     my $authorize_uri             = $self->{issuerDBOpenIDConnectAuthorizeURI};
     my $token_uri                 = $self->{issuerDBOpenIDConnectTokenURI};
     my $userinfo_uri              = $self->{issuerDBOpenIDConnectUserInfoURI};
+    my $issuer                    = $self->{oidcServiceMetaDataIssuer};
 
     # Session ID
     my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
@@ -321,6 +323,8 @@ sub issuerForAuthUser {
             "OIDC $flow flow requested (response type: $response_type)",
             'debug' );
 
+        # TODO Send error responses depending on the flow
+
         # TODO check all required parameters
         if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} ) {
             $self->lmLog( "Nonce is required for implicit flow", 'error' );
@@ -336,24 +340,20 @@ sub issuerForAuthUser {
         }
 
         # Check client_id
-        $self->lmLog( "Request from client id " . $oidc_request->{'client_id'},
-            'debug' );
+        my $client_id = $oidc_request->{'client_id'};
+        $self->lmLog( "Request from client id $client_id", 'debug' );
 
         # Verify that client_id is registered in configuration
-        my $rp = $self->getRP( $oidc_request->{'client_id'} );
+        my $rp = $self->getRP($client_id);
 
         unless ($rp) {
             $self->lmLog(
-                "No registered Relying Party found with client_id "
-                  . $oidc_request->{'client_id'},
-                'error'
-            );
+                "No registered Relying Party found with client_id $client_id",
+                'error' );
             return PE_ERROR;
         }
         else {
-            $self->lmLog(
-                "Client id " . $oidc_request->{'client_id'} . " match RP $rp",
-                'debug' );
+            $self->lmLog( "Client id $client_id match RP $rp", 'debug' );
         }
 
         # Obtain consent
@@ -485,9 +485,81 @@ sub issuerForAuthUser {
         # Implicit Flow
         if ( $flow eq "implicit" ) {
 
-            #TODO
+            my $access_token;
 
-            return PE_ERROR;
+            if ( $response_type =~ /\btoken\b/ ) {
+
+                # Generate access_token
+                my $accessTokenSession = $self->getOpenIDConnectSession;
+
+                unless ($accessTokenSession) {
+                    $self->lmLog(
+                        "Unable to create OIDC session for access_token",
+                        "error" );
+                    return PE_ERROR;
+                }
+
+                # Store data in access token
+                $accessTokenSession->update(
+                    {
+                        scope           => $oidc_request->{'scope'},
+                        rp              => $rp,
+                        user_session_id => $session_id,
+                        _utime          => time,
+                    }
+                );
+
+                $access_token = $accessTokenSession->id;
+
+                $self->lmLog( "Generated access token: $access_token",
+                    'debug' );
+            }
+
+            # ID token payload
+            my $id_token_exp = $self->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsIDTokenExpiration};
+
+            my $id_token_acr =
+              "loa-" . $self->{sessionInfo}->{authenticationLevel};
+
+            my $user_id_attribute = $self->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsUserIDAttr} || $self->{whatToTrace};
+            my $user_id = $self->{sessionInfo}->{$user_id_attribute};
+
+            my $id_token_payload_hash = {
+                iss => $issuer,          # Issuer Identifier
+                sub => $user_id,         # Subject Identifier
+                aud => [$client_id],     # Audience
+                exp => $id_token_exp,    # expiration
+                iat => time,             # Issued time
+                auth_time =>
+                  $self->{sessionInfo}->{_lastAuthnUTime}, # Authentication time
+                acr => $id_token_acr,   # Authentication Context Class Reference
+                azp => $client_id,      # Authorized party
+                                        # TODO amr
+                nonce => $oidc_request->{'nonce'}    # Nonce
+            };
+
+            # Create ID Token
+            my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
+
+            $self->lmLog( "Generated id token: $id_token", 'debug' );
+
+            # Send token response
+            my $expires_in = $self->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsAccessTokenExpiration};
+
+            # Build Response
+            my $response_url =
+              $self->buildImplicitAuthnResponse(
+                $oidc_request->{'redirect_uri'},
+                $access_token, $id_token, $expires_in,
+                $oidc_request->{'state'} );
+
+            $self->lmLog( "Redirect user to $response_url", 'debug' );
+            $self->{'urldc'} = $response_url;
+
+            $self->_sub('autoRedirect');
         }
 
         # Hybrid Flow

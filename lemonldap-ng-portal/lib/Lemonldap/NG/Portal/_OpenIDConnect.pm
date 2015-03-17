@@ -273,6 +273,38 @@ sub buildAuthorizationCodeAuthnResponse {
     return $response_url;
 }
 
+## @method String buildImplicitAuthnResponse(String redirect_uri, String access_token, String id_token, String expires_in, String state)
+# Build Authentication Response URI for Implicit Flow
+# @param redirect_uri Redirect URI
+# @param access_token Access token
+# @param id_token ID token
+# @param expires_in Expiration of access token
+# @param state State
+# return String Authentication Response URI
+sub buildImplicitAuthnResponse {
+    my ( $self, $redirect_uri, $access_token, $id_token, $expires_in, $state )
+      = splice @_;
+
+    my $response_url = $redirect_uri;
+
+    $response_url .= "#id_token=" . uri_escape($id_token);
+
+    if ($access_token) {
+        $response_url .= "&access_token=" . uri_escape($access_token);
+        $response_url .= "&token_type=bearer";
+    }
+
+    if ($expires_in) {
+        $response_url .= "&expires_in=" . uri_escape($expires_in);
+    }
+
+    if ($state) {
+        $response_url .= "&state=" . uri_escape($state);
+    }
+
+    return $response_url;
+}
+
 ## @method String getAuthorizationCodeAccessToken(String op, String code, String auth_method)
 # Get Token response with autorization code
 # @param op OpenIP Provider configuration key
@@ -1005,6 +1037,10 @@ Build Authentication Request URI for Authorization Code Flow
 =head2 buildAuthorizationCodeAuthnResponse
 
 Build Authentication Response URI for Authorization Code Flow
+
+=head2 buildImplicitAuthnResponse
+
+Build Authentication Response URI for Implicit Flow
 
 =head2 getAuthorizationCodeAccessToken
 
