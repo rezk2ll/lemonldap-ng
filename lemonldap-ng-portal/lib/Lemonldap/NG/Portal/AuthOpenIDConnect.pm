@@ -149,6 +149,27 @@ sub extractFormInfo {
         my $id_token_payload_hash =
           $self->decodeJSON( decode_base64($id_token_payload) );
 
+        # Check validity of Access Token (optional)
+        my $at_hash = $id_token_payload_hash->{'at_hash'};
+        if ($at_hash) {
+            unless (
+                $self->verifyAccessTokenHash(
+                    $access_token, $at_hash, $id_token
+                )
+              )
+            {
+                $self->lmLog( "Access token hash verification failed",
+                    'error' );
+                return PE_ERROR;
+            }
+            $self->lmLog( "Access token hash verified", 'debug' );
+        }
+        else {
+            $self->lmLog(
+                "No at_hash in ID Token, access token will not be verified",
+                'debug' );
+        }
+
         # Check validity of ID Token
         unless ( $self->checkIDTokenValidity( $op, $id_token_payload_hash ) ) {
             $self->lmLog( "ID Token not valid", 'error' );

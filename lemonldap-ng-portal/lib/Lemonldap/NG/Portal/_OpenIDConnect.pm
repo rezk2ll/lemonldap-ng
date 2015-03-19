@@ -10,7 +10,8 @@ use JSON;
 use MIME::Base64
   qw/encode_base64url encode_base64 decode_base64url decode_base64/;
 use URI::Escape;
-use Digest::SHA qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64/;
+use Digest::SHA
+  qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha256_base64 sha384_base64 sha512_base64/;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::Bignum;
 use utf8;
@@ -763,6 +764,71 @@ sub verifyJWTSignature {
     return 0;
 }
 
+## @method boolean verifyAccessTokenHash(String access_token, String at_hash, String id_token)
+# Check Access Token with ID Token at_hash
+# @param access_token Access Token
+# @param at_hash Access Token Hash
+# @param id_token ID Token
+# @return boolean 1 if hash is verified, 0 else
+sub verifyAccessTokenHash {
+    my ( $self, $access_token, $at_hash, $id_token ) = splice @_;
+
+    $self->lmLog(
+        "Verification of access token $access_token with hash $at_hash",
+        'debug' );
+
+    # Extract ID token parts
+    my $jwt_parts = $self->extractJWT($id_token);
+
+    # Read header
+    my $jwt_header_part = $jwt_parts->[0];
+    my $jwt_header_hash =
+      $self->decodeJSON( decode_base64url($jwt_header_part) );
+
+    # Get signature algorithm
+    my $alg = $jwt_header_hash->{alg};
+
+    $self->lmLog( "ID Token signature algorithm: $alg", 'debug' );
+
+    if ( $alg eq "none" ) {
+
+        # Not supported
+        $self->lmLog(
+            "Cannot check access token hash without signature algorithm",
+            'debug' );
+        return 0;
+    }
+
+    if ( $alg =~ /(R|H)S(\d{3})/ ) {
+
+        # SHA Level
+        my $sha_level = $2;
+
+        $self->lmLog( "Use SHA $sha_level to check Access Token", 'debug' );
+
+        my $hash;
+
+        if ( $sha_level eq "256" ) { $hash = sha256($access_token); }
+        if ( $sha_level eq "384" ) { $hash = sha384($access_token); }
+        if ( $sha_level eq "512" ) { $hash = sha512($access_token); }
+
+        $hash = substr( $hash, 0, length($hash) / 2 );
+        $hash = encode_base64url( $hash, "" );
+
+        # Compare values
+        unless ( $hash eq $at_hash ) {
+            $self->lmLog( "Hash $hash not equal to at_hash $at_hash", 'debug' );
+            return 0;
+        }
+        return 1;
+    }
+
+    # Other algorithms not managed
+    $self->lmLog( "Algorithm $alg not known", 'debug' );
+
+    return 0;
+}
+
 ## @method void returnJSONError(String error);
 # Print JSON error
 # @param error Error message
@@ -1077,6 +1143,10 @@ Extract parts of a JWT
 =head2 verifyJWTSignature
 
 Check signature of a JWT
+
+=head2 verifyAccessTokenHash
+
+Check Access Token with ID Token at_hash
 
 =head2 returnJSONError
 
