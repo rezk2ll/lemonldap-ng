@@ -799,21 +799,14 @@ sub verifyAccessTokenHash {
         return 0;
     }
 
-    if ( $alg =~ /(R|H)S(\d{3})/ ) {
+    if ( $alg =~ /(?:\w{2})(\d{3})/ ) {
 
-        # SHA Level
-        my $sha_level = $2;
+        # Hash Level
+        my $hash_level = $1;
 
-        $self->lmLog( "Use SHA $sha_level to check Access Token", 'debug' );
+        $self->lmLog( "Use SHA $hash_level to check Access Token", 'debug' );
 
-        my $hash;
-
-        if ( $sha_level eq "256" ) { $hash = sha256($access_token); }
-        if ( $sha_level eq "384" ) { $hash = sha384($access_token); }
-        if ( $sha_level eq "512" ) { $hash = sha512($access_token); }
-
-        $hash = substr( $hash, 0, length($hash) / 2 );
-        $hash = encode_base64url( $hash, "" );
+        my $hash = $self->createAccessTokenHash( $access_token, $hash_level );
 
         # Compare values
         unless ( $hash eq $at_hash ) {
@@ -827,6 +820,28 @@ sub verifyAccessTokenHash {
     $self->lmLog( "Algorithm $alg not known", 'debug' );
 
     return 0;
+}
+
+## @method String createAccessTokenHash(String access_token, String hash_level)
+# Create Access Token Hash
+# @param access_token Access Token
+# @param hash_level SHA Hash level
+# @return String at_hash
+sub createAccessTokenHash {
+    my ( $self, $access_token, $hash_level ) = splice @_;
+
+    $self->lmLog( "Use SHA $hash_level to create Access Token Hash", 'debug' );
+
+    my $at_hash;
+
+    if ( $hash_level eq "256" ) { $at_hash = sha256($access_token); }
+    if ( $hash_level eq "384" ) { $at_hash = sha384($access_token); }
+    if ( $hash_level eq "512" ) { $at_hash = sha512($access_token); }
+
+    $at_hash = substr( $at_hash, 0, length($at_hash) / 2 );
+    $at_hash = encode_base64url( $at_hash, "" );
+
+    return $at_hash;
 }
 
 ## @method void returnJSONError(String error);
@@ -1147,6 +1162,10 @@ Check signature of a JWT
 =head2 verifyAccessTokenHash
 
 Check Access Token with ID Token at_hash
+
+=head2 createAccessTokenHash
+
+Create Access Token Hash
 
 =head2 returnJSONError
 

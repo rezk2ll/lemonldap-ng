@@ -489,6 +489,7 @@ sub issuerForAuthUser {
         if ( $flow eq "implicit" ) {
 
             my $access_token;
+            my $at_hash;
 
             if ( $response_type =~ /\btoken\b/ ) {
 
@@ -516,6 +517,13 @@ sub issuerForAuthUser {
 
                 $self->lmLog( "Generated access token: $access_token",
                     'debug' );
+
+                # Compute hash to store in at_hash
+                my $alg = $self->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsIDTokenSignAlg};
+                my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
+                $at_hash =
+                  $self->createAccessTokenHash( $access_token, $hash_level );
             }
 
             # ID token payload
@@ -542,6 +550,8 @@ sub issuerForAuthUser {
                                         # TODO amr
                 nonce => $oidc_request->{'nonce'}    # Nonce
             };
+
+            $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
 
             # Create ID Token
             my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
