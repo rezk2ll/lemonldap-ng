@@ -9,7 +9,7 @@ package Lemonldap::NG::Common::Conf;
 
 use strict;
 no strict 'refs';
-use Lemonldap::NG::Common::Conf::Constants;     #inherits
+use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Conf::Attributes;    #inherits
 use Lemonldap::NG::Common::Crypto
   ;    #link protected cipher Object "cypher" in configuration hash
@@ -418,8 +418,8 @@ sub load {
 sub delete {
     my ( $self, $c ) = @_;
     my @a = $self->available();
-    return 0 unless ( @a + $c > 0 );
-    return &{ $self->{type} . '::delete' }( $self, $a[ $#a + $c ] );
+    return 0 unless ( grep {$_ eq $c} @a );
+    return &{ $self->{type} . '::delete' }( $self, $c );
 }
 
 sub logError {
