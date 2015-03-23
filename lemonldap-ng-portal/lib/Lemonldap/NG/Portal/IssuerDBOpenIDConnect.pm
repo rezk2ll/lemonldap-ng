@@ -522,8 +522,7 @@ sub issuerForAuthUser {
                 my $alg = $self->{oidcRPMetaDataOptions}->{$rp}
                   ->{oidcRPMetaDataOptionsIDTokenSignAlg};
                 my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
-                $at_hash =
-                  $self->createAccessTokenHash( $access_token, $hash_level );
+                $at_hash = $self->createHash( $access_token, $hash_level );
             }
 
             # ID token payload
@@ -578,9 +577,117 @@ sub issuerForAuthUser {
         # Hybrid Flow
         if ( $flow eq "hybrid" ) {
 
-            #TODO
+            my $access_token;
+            my $id_token;
+            my $at_hash;
+            my $c_hash;
 
-            return PE_ERROR;
+            # Hash level
+            my $alg = $self->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsIDTokenSignAlg};
+            my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
+
+            # Generate code
+            my $codeSession = $self->getOpenIDConnectSession();
+            my $code        = $codeSession->id();
+
+            $self->lmLog( "Generated code: $code", 'debug' );
+
+            # Store data in session
+            $codeSession->update(
+                {
+                    redirect_uri    => $oidc_request->{'redirect_uri'},
+                    scope           => $oidc_request->{'scope'},
+                    user_session_id => $session_id,
+                    _utime          => time,
+                    nonce           => $oidc_request->{'nonce'},
+                }
+            );
+
+            # Compute hash to store in c_hash
+            $c_hash = $self->createHash( $code, $hash_level );
+
+            if ( $response_type =~ /\btoken\b/ ) {
+
+                # Generate access_token
+                my $accessTokenSession = $self->getOpenIDConnectSession;
+
+                unless ($accessTokenSession) {
+                    $self->lmLog(
+                        "Unable to create OIDC session for access_token",
+                        "error" );
+                    return PE_ERROR;
+                }
+
+                # Store data in access token
+                $accessTokenSession->update(
+                    {
+                        scope           => $oidc_request->{'scope'},
+                        rp              => $rp,
+                        user_session_id => $session_id,
+                        _utime          => time,
+                    }
+                );
+
+                $access_token = $accessTokenSession->id;
+
+                $self->lmLog( "Generated access token: $access_token",
+                    'debug' );
+
+                # Compute hash to store in at_hash
+                $at_hash = $self->createHash( $access_token, $hash_level );
+            }
+
+            if ( $response_type =~ /\bid_token\b/ ) {
+
+                # ID token payload
+                my $id_token_exp = $self->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsIDTokenExpiration};
+
+                my $id_token_acr =
+                  "loa-" . $self->{sessionInfo}->{authenticationLevel};
+
+                my $user_id_attribute = $self->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsUserIDAttr} || $self->{whatToTrace};
+                my $user_id = $self->{sessionInfo}->{$user_id_attribute};
+
+                my $id_token_payload_hash = {
+                    iss => $issuer,          # Issuer Identifier
+                    sub => $user_id,         # Subject Identifier
+                    aud => [$client_id],     # Audience
+                    exp => $id_token_exp,    # expiration
+                    iat => time,             # Issued time
+                    auth_time => $self->{sessionInfo}->{_lastAuthnUTime}
+                    ,                        # Authentication time
+                    acr =>
+                      $id_token_acr,    # Authentication Context Class Reference
+                    azp   => $client_id,                 # Authorized party
+                                                         # TODO amr
+                    nonce => $oidc_request->{'nonce'}    # Nonce
+                };
+
+                $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
+                $id_token_payload_hash->{'c_hash'}  = $c_hash  if $c_hash;
+
+                # Create ID Token
+                $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
+
+                $self->lmLog( "Generated id token: $id_token", 'debug' );
+            }
+
+            my $expires_in = $self->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsAccessTokenExpiration};
+
+            # Build Response
+            my $response_url =
+              $self->buildHybridAuthnResponse( $oidc_request->{'redirect_uri'},
+                $code, $access_token, $id_token, $expires_in,
+                $oidc_request->{'state'} );
+
+            $self->lmLog( "Redirect user to $response_url", 'debug' );
+            $self->{'urldc'} = $response_url;
+
+            $self->_sub('autoRedirect');
         }
 
         $self->lmLog( "No flow has been selected", 'debug' );

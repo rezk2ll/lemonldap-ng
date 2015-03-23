@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 9;
+use Test::More tests => 11;
 BEGIN { use_ok('Lemonldap::NG::Portal::Simple') }
 
 #########################
@@ -95,9 +95,29 @@ my $id_token =
 my $access_token = "jHkWEdUXMU1BwAsC4vtUsZwnNvTIxEl0z9K3vx5KF0Y";
 my $at_hash      = "77QmUPtjPfzWtF2AnpK9RQ";
 
-ok( $p->createAccessTokenHash( $access_token, "256" ) == $at_hash,
-    'Access Token Hash creation - alg: SHA-256' );
+ok(
+    $p->createHash( $access_token, "256" ) == $at_hash,
+    'Access Token Hash creation - alg: SHA-256'
+);
 
-ok( $p->verifyAccessTokenHash( $access_token, $at_hash, $id_token ) == 1,
-    'Access Token Hash verification - alg: SHA-256' );
+ok(
+    $p->verifyHash( $access_token, $at_hash, $id_token ) == 1,
+    'Access Token Hash verification - alg: SHA-256'
+);
+
+# ID Token and code from §A.6.
+$id_token =
+"eyJraWQiOiIxZTlnZGs3IiwiYWxnIjoiUlMyNTYifQ.ewogImlzcyI6ICJodHRwOi8vc2VydmVyLmV4YW1wbGUuY29tIiwKICJzdWIiOiAiMjQ4Mjg5NzYxMDAxIiwKICJhdWQiOiAiczZCaGRSa3F0MyIsCiAibm9uY2UiOiAibi0wUzZfV3pBMk1qIiwKICJleHAiOiAxMzExMjgxOTcwLAogImlhdCI6IDEzMTEyODA5NzAsCiAiY19oYXNoIjogIkxEa3RLZG9RYWszUGswY25YeENsdEEiCn0.XW6uhdrkBgcGx6zVIrCiROpWURs-4goO1sKA4m9jhJIImiGg5muPUcNegx6sSv43c5DSn37sxCRrDZZm4ZPBKKgtYASMcE20SDgvYJdJS0cyuFw7Ijp_7WnIjcrl6B5cmoM6ylCvsLMwkoQAxVublMwH10oAxjzD6NEFsu9nipkszWhsPePf_rM4eMpkmCbTzume-fzZIi5VjdWGGEmzTg32h3jiex-r5WTHbj-u5HL7u_KP3rmbdYNzlzd1xWRYTUs4E8nOTgzAUwvwXkIQhOh5TPcSMBYy6X3E7-_gr9Ue6n4ND7hTFhtjYs3cjNKIA08qm5cpVYFMFMG6PkhzLQ";
+my $code   = "Qcb0Orv1zh30vL1MPRsbm-diHiMwcLyZvn1arpZv-Jxf_11jnpEX3Tgfvk";
+my $c_hash = "LDktKdoQak3Pk0cnXxCltA";
+
+ok(
+    $p->createHash( $code, "256" ) == $c_hash,
+    'Code Hash creation - alg: SHA-256'
+);
+
+ok(
+    $p->verifyHash( $code, $c_hash, $id_token ) == 1,
+    'Code Hash verification - alg: SHA-256'
+);
 

@@ -306,6 +306,44 @@ sub buildImplicitAuthnResponse {
     return $response_url;
 }
 
+## @method String buildHybridAuthnResponse(String redirect_uri, String code, String access_token, String id_token, String expires_in, String state)
+# Build Authentication Response URI for Hybrid Flow
+# @param redirect_uri Redirect URI
+# @param code Code
+# @param access_token Access token
+# @param id_token ID token
+# @param expires_in Expiration of access token
+# @param state State
+# return String Authentication Response URI
+sub buildHybridAuthnResponse {
+    my ( $self, $redirect_uri, $code, $access_token, $id_token, $expires_in,
+        $state )
+      = splice @_;
+
+    my $response_url = $redirect_uri;
+
+    $response_url .= "#code=" . uri_escape($code);
+
+    if ($access_token) {
+        $response_url .= "&access_token=" . uri_escape($access_token);
+        $response_url .= "&token_type=bearer";
+    }
+
+    if ($id_token) {
+        $response_url .= "&id_token=" . uri_escape($id_token);
+    }
+
+    if ($expires_in) {
+        $response_url .= "&expires_in=" . uri_escape($expires_in);
+    }
+
+    if ($state) {
+        $response_url .= "&state=" . uri_escape($state);
+    }
+
+    return $response_url;
+}
+
 ## @method String getAuthorizationCodeAccessToken(String op, String code, String auth_method)
 # Get Token response with autorization code
 # @param op OpenIP Provider configuration key
@@ -764,18 +802,16 @@ sub verifyJWTSignature {
     return 0;
 }
 
-## @method boolean verifyAccessTokenHash(String access_token, String at_hash, String id_token)
-# Check Access Token with ID Token at_hash
-# @param access_token Access Token
-# @param at_hash Access Token Hash
+## @method boolean verifyHash(String value, String hash, String id_token)
+# Check value hash
+# @param value Value
+# @param hash Hash
 # @param id_token ID Token
 # @return boolean 1 if hash is verified, 0 else
-sub verifyAccessTokenHash {
-    my ( $self, $access_token, $at_hash, $id_token ) = splice @_;
+sub verifyHash {
+    my ( $self, $value, $hash, $id_token ) = splice @_;
 
-    $self->lmLog(
-        "Verification of access token $access_token with hash $at_hash",
-        'debug' );
+    $self->lmLog( "Verification of value $value with hash $hash", 'debug' );
 
     # Extract ID token parts
     my $jwt_parts = $self->extractJWT($id_token);
@@ -793,8 +829,7 @@ sub verifyAccessTokenHash {
     if ( $alg eq "none" ) {
 
         # Not supported
-        $self->lmLog(
-            "Cannot check access token hash without signature algorithm",
+        $self->lmLog( "Cannot check hash without signature algorithm",
             'debug' );
         return 0;
     }
@@ -804,13 +839,13 @@ sub verifyAccessTokenHash {
         # Hash Level
         my $hash_level = $1;
 
-        $self->lmLog( "Use SHA $hash_level to check Access Token", 'debug' );
+        $self->lmLog( "Use SHA $hash_level to check hash", 'debug' );
 
-        my $hash = $self->createAccessTokenHash( $access_token, $hash_level );
+        my $cHash = $self->createHash( $value, $hash_level );
 
         # Compare values
-        unless ( $hash eq $at_hash ) {
-            $self->lmLog( "Hash $hash not equal to at_hash $at_hash", 'debug' );
+        unless ( $cHash eq $hash ) {
+            $self->lmLog( "Hash $hash not equal to hash $cHash", 'debug' );
             return 0;
         }
         return 1;
@@ -822,26 +857,26 @@ sub verifyAccessTokenHash {
     return 0;
 }
 
-## @method String createAccessTokenHash(String access_token, String hash_level)
-# Create Access Token Hash
-# @param access_token Access Token
+## @method String createHash(String value, String hash_level)
+# Create Hash
+# @param value Value to hash
 # @param hash_level SHA Hash level
-# @return String at_hash
-sub createAccessTokenHash {
-    my ( $self, $access_token, $hash_level ) = splice @_;
+# @return String hash
+sub createHash {
+    my ( $self, $value, $hash_level ) = splice @_;
 
-    $self->lmLog( "Use SHA $hash_level to create Access Token Hash", 'debug' );
+    $self->lmLog( "Use SHA $hash_level to hash $value", 'debug' );
 
-    my $at_hash;
+    my $hash;
 
-    if ( $hash_level eq "256" ) { $at_hash = sha256($access_token); }
-    if ( $hash_level eq "384" ) { $at_hash = sha384($access_token); }
-    if ( $hash_level eq "512" ) { $at_hash = sha512($access_token); }
+    if ( $hash_level eq "256" ) { $hash = sha256($value); }
+    if ( $hash_level eq "384" ) { $hash = sha384($value); }
+    if ( $hash_level eq "512" ) { $hash = sha512($value); }
 
-    $at_hash = substr( $at_hash, 0, length($at_hash) / 2 );
-    $at_hash = encode_base64url( $at_hash, "" );
+    $hash = substr( $hash, 0, length($hash) / 2 );
+    $hash = encode_base64url( $hash, "" );
 
-    return $at_hash;
+    return $hash;
 }
 
 ## @method void returnJSONError(String error);
@@ -1123,6 +1158,10 @@ Build Authentication Response URI for Authorization Code Flow
 
 Build Authentication Response URI for Implicit Flow
 
+=head2 buildHybridAuthnResponse
+
+Build Authentication Response URI for Hybrid Flow
+
 =head2 getAuthorizationCodeAccessToken
 
 Get Token response with autorization code
@@ -1159,13 +1198,13 @@ Extract parts of a JWT
 
 Check signature of a JWT
 
-=head2 verifyAccessTokenHash
+=head2 verifyHash
 
-Check Access Token with ID Token at_hash
+Check value hash
 
-=head2 createAccessTokenHash
+=head2 createHash
 
-Create Access Token Hash
+Create Hash
 
 =head2 returnJSONError
 

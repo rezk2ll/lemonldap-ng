@@ -152,12 +152,7 @@ sub extractFormInfo {
         # Check validity of Access Token (optional)
         my $at_hash = $id_token_payload_hash->{'at_hash'};
         if ($at_hash) {
-            unless (
-                $self->verifyAccessTokenHash(
-                    $access_token, $at_hash, $id_token
-                )
-              )
-            {
+            unless ( $self->verifyHash( $access_token, $at_hash, $id_token ) ) {
                 $self->lmLog( "Access token hash verification failed",
                     'error' );
                 return PE_ERROR;
