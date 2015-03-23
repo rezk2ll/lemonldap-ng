@@ -169,6 +169,12 @@ sub issuerForUnAuthUser {
 
         $self->lmLog( "Generated access token: $access_token", 'debug' );
 
+        # Compute hash to store in at_hash
+        my $alg = $self->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsIDTokenSignAlg};
+        my ($hash_level) = ( $alg =~ /(?:\w{2})(\d{3})/ );
+        my $at_hash = $self->createHash( $access_token, $hash_level );
+
         # ID token payload
         my $id_token_exp = $self->{oidcRPMetaDataOptions}->{$rp}
           ->{oidcRPMetaDataOptionsIDTokenExpiration};
@@ -190,6 +196,7 @@ sub issuerForUnAuthUser {
 
         my $nonce = $codeSession->data->{nonce};
         $id_token_payload_hash->{nonce} = $nonce if defined $nonce;
+        $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
 
         # Create ID Token
         my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
