@@ -8,6 +8,7 @@ example/index_skin.pl
 example/mail.pl
 example/metadata.pl
 example/oauth2.pl
+example/openid-configuration.pl
 example/PortalStatus.pl
 example/register.pl
 example/scripts/buildPortalWSDL

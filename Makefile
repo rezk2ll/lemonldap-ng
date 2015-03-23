@@ -353,6 +353,7 @@ install_portal_site:	install_conf_dir
 	@cp -pR -f ${SRCPORTALDIR}/example/index_skin.pl ${RPORTALDIR}/index.pl
 	@cp -pR -f ${SRCPORTALDIR}/example/mail.pl ${RPORTALDIR}
 	@cp -pR -f ${SRCPORTALDIR}/example/metadata.pl ${RPORTALDIR}
+	@cp -pR -f ${SRCPORTALDIR}/example/openid-configuration.pl ${RPORTALDIR}
 	@cp -pR -f ${SRCPORTALDIR}/example/cdc.pl ${RPORTALDIR}
 	@cp -pR -f ${SRCPORTALDIR}/example/register.pl ${RPORTALDIR}
 	@tar -cf - -C ${SRCPORTALDIR}/example/skins/ $$(ls ${SRCPORTALDIR}/example/skins/) |tar -xf - -C $(RPORTALSKINSDIR)
@@ -653,6 +654,7 @@ debian-diff:
 	@$(DIFF) lemonldap-ng-portal/example/index_skin.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/index.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/mail.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/mail.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/metadata.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/metadata.pl ||true
+	@$(DIFF) lemonldap-ng-portal/example/openid-configuration.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/openid-configuration.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/cdc.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/cdc.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/register.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/register.pl ||true
 	@# Handler
@@ -685,6 +687,7 @@ default-diff:
 	@$(DIFF) lemonldap-ng-portal/example/mail.pl $(LMPREFIX)/htdocs/portal/mail.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/register.pl $(LMPREFIX)/htdocs/portal/register.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/metadata.pl $(LMPREFIX)/htdocs/portal/metadata.pl ||true
+	@$(DIFF) lemonldap-ng-portal/example/openid-configuration.pl $(LMPREFIX)/htdocs/portal/openid-configuration.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/cdc.pl $(LMPREFIX)/htdocs/portal/cdc.pl ||true
 	@# Handler
 	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Handler ||true

@@ -1,0 +1,56 @@
+#!/usr/bin/perl
+
+use Lemonldap::NG::Portal::SharedConf;
+use JSON;
+use strict;
+
+my $portal = Lemonldap::NG::Portal::SharedConf->new();
+
+my $issuerDBOpenIDConnectPath = $portal->{issuerDBOpenIDConnectPath};
+my $authorize_uri             = $portal->{oidcServiceMetaDataAuthorizeURI};
+my $token_uri                 = $portal->{oidcServiceMetaDataTokenURI};
+my $userinfo_uri              = $portal->{oidcServiceMetaDataUserInfoURI};
+
+my ($path) = ( $issuerDBOpenIDConnectPath =~ /(\w+)/ );
+my $issuer = $portal->{oidcServiceMetaDataIssuer};
+
+# Create OpenID configuration hash;
+my $configuration = {};
+$configuration->{issuer} = $issuer;
+$configuration->{authorization_endpoint} =
+  $issuer . $path . "/" . $authorize_uri;
+$configuration->{token_endpoint}    = $issuer . $path . "/" . $token_uri;
+$configuration->{userinfo_endpoint} = $issuer . $path . "/" . $userinfo_uri;
+
+# MANDATORY # $configuration->{jwks_uri}
+# RECOMMENDED # $configuration->{registration_endpoint}
+$configuration->{scopes_supported} = [qw/openid profile email address phone/];
+$configuration->{response_types_supported} = [
+    "code",
+    "id_token",
+    "id_token token",
+    "code id_token",
+    "code token",
+    "code id_token token"
+];
+
+# $configuration->{response_modes_supported}
+$configuration->{grant_types_supported} =
+  [qw/authorization_code implicit hybrid/];
+
+# $configuration->{acr_values_supported}
+# REQUIRED # $configuration->{subject_types_supported}
+$configuration->{id_token_signing_alg_values_supported} =
+  [qw/none RS256 RS384 RS512/];
+
+# $configuration->{id_token_encryption_alg_values_supported}
+# $configuration->{id_token_encryption_enc_values_supported}
+# $configuration->{userinfo_encryption_alg_values_supported}
+# $configuration->{userinfo_encryption_enc_values_supported}
+# $configuration->{request_object_signing_alg_values_supported}
+# $configuration->{request_object_encryption_alg_values_supported}
+
+my $json = encode_json $configuration;
+
+print $portal->header('application/json; charset=utf-8');
+print $json;
