@@ -20,6 +20,7 @@ lib/Lemonldap/NG/Common/Conf/DBI.pm
 lib/Lemonldap/NG/Common/Conf/File.pm
 lib/Lemonldap/NG/Common/Conf/JSONFile.pm
 lib/Lemonldap/NG/Common/Conf/LDAP.pm
+lib/Lemonldap/NG/Common/Conf/MongoDB.pm
 lib/Lemonldap/NG/Common/Conf/RDBI.pm
 lib/Lemonldap/NG/Common/Conf/SAML/Metadata.pm
 lib/Lemonldap/NG/Common/Conf/Serializer.pm
