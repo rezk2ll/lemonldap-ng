@@ -332,12 +332,14 @@ sub issuerForAuthUser {
             "OIDC $flow flow requested (response type: $response_type)",
             'debug' );
 
-        # TODO Send error responses depending on the flow
-
         # TODO check all required parameters
         if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} ) {
             $self->lmLog( "Nonce is required for implicit flow", 'error' );
-            return PE_ERROR;
+            $self->returnRedirectError(
+                $oidc_request->{'redirect_uri'},
+                "invalid_request", "nonce required",
+                undef, $oidc_request->{'state'}, 1
+            );
         }
 
         # Check openid scope
@@ -359,7 +361,14 @@ sub issuerForAuthUser {
             $self->lmLog(
                 "No registered Relying Party found with client_id $client_id",
                 'error' );
-            return PE_ERROR;
+            $self->returnRedirectError(
+                $oidc_request->{'redirect_uri'},
+                "invalid_request",
+                "client_id $client_id unknown",
+                undef,
+                $oidc_request->{'state'},
+                ( $flow ne "authorizationcode" )
+            );
         }
         else {
             $self->lmLog( "Client id $client_id match RP $rp", 'debug' );

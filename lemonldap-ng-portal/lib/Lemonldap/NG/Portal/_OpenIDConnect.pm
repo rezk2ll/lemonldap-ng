@@ -879,6 +879,41 @@ sub createHash {
     return $hash;
 }
 
+## @method void returnRedirectError(String redirect_url, String error, String error_description, String error_uri, String state, Boolean fragment)
+# Create error redirection
+# @param redirect_url Redirection URL
+# @param error Error code
+# @param error_description Human-readable ASCII encoded text description of the error
+# @param error_uri URI of a web page that includes additional information about the error
+# @param state OAuth 2.0 state value
+# @param fragment Set to true to return fragment component
+# @return void
+sub returnRedirectError {
+    my ( $self, $redirect_url, $error, $error_description, $error_uri, $state,
+        $fragment )
+      = splice @_;
+
+    my $urldc = $redirect_url;
+
+    if ($fragment) { $urldc .= "#"; }
+    else {
+        $urldc .= ( $redirect_url =~ /\?/ ? '&' : '?' );
+    }
+
+    $urldc .= "error=" . uri_escape($error);
+    $urldc .= "&error_description=" . uri_escape($error_description)
+      if defined $error_description;
+    $urldc .= "&error_uri=" . uri_escape($error_uri) if defined $error_uri;
+    $urldc .= "&state=" . uri_escape($state)         if defined $state;
+
+    $self->lmLog( "Redirect user to $urldc", 'debug' );
+    $self->{'urldc'} = $urldc;
+
+    $self->_sub('autoRedirect');
+
+    $self->quit;
+}
+
 ## @method void returnJSONError(String error);
 # Print JSON error
 # @param error Error message
@@ -1205,6 +1240,10 @@ Check value hash
 =head2 createHash
 
 Create Hash
+
+=head2 returnRedirectError
+
+Create error redirection
 
 =head2 returnJSONError
 
