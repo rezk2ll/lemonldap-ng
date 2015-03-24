@@ -39,7 +39,7 @@ $configuration->{grant_types_supported} =
   [qw/authorization_code implicit hybrid/];
 
 # $configuration->{acr_values_supported}
-# REQUIRED # $configuration->{subject_types_supported}
+$configuration->{subject_types_supported} = ["public"];
 $configuration->{id_token_signing_alg_values_supported} =
   [qw/none RS256 RS384 RS512/];
 
