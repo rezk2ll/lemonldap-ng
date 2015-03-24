@@ -49,6 +49,23 @@ $configuration->{id_token_signing_alg_values_supported} =
 # $configuration->{userinfo_encryption_enc_values_supported}
 # $configuration->{request_object_signing_alg_values_supported}
 # $configuration->{request_object_encryption_alg_values_supported}
+# $configuration->{request_object_encryption_enc_values_supported}
+$configuration->{token_endpoint_auth_methods_supported} =
+  [qw/client_secret_post client_secret_basic/];
+
+# $configuration->{token_endpoint_auth_signing_alg_values_supported}
+# $configuration->{display_values_supported}
+# $configuration->{claim_types_supported}
+# RECOMMENDED # $configuration->{claims_supported}
+# $configuration->{service_documentation}
+# $configuration->{claims_locales_supported}
+# $configuration->{ui_locales_supported}
+# $configuration->{claims_parameter_supported}
+# $configuration->{request_parameter_supported}
+# $configuration->{request_uri_parameter_supported}
+# $configuration->{require_request_uri_registration}
+# $configuration->{op_policy_uri}
+# $configuration->{op_tos_uri}
 
 my $json = encode_json $configuration;
 
