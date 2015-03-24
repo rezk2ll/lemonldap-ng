@@ -47,8 +47,9 @@ sub issuerForUnAuthUser {
             'debug' );
 
         # Save parameters
-        foreach
-          my $param (qw/response_type scope client_id state redirect_uri nonce/)
+        foreach my $param (
+            qw/response_type scope client_id state redirect_uri nonce response_mode display prompt max_age ui_locales id_token_hint login_hint acr_values/
+          )
         {
             $self->setHiddenFormValue( $param,
                 $self->getHiddenFormValue($param) || $self->param($param) );
@@ -299,8 +300,9 @@ sub issuerForAuthUser {
 
         # Get and save parameters
         my $oidc_request = {};
-        foreach
-          my $param (qw/response_type scope client_id state redirect_uri nonce/)
+        foreach my $param (
+            qw/response_type scope client_id state redirect_uri nonce response_mode display prompt max_age ui_locales id_token_hint login_hint acr_values/
+          )
         {
             $oidc_request->{$param} = $self->getHiddenFormValue($param)
               || $self->param($param);
@@ -332,7 +334,33 @@ sub issuerForAuthUser {
             "OIDC $flow flow requested (response type: $response_type)",
             'debug' );
 
-        # TODO check all required parameters
+        # Check all required parameters
+        unless ( $oidc_request->{'redirect_uri'} ) {
+            $self->lmLog( "Redirect URI is required", 'error' );
+            return PE_ERROR;
+        }
+        unless ( $oidc_request->{'scope'} ) {
+            $self->lmLog( "Scope is required", 'error' );
+            $self->returnRedirectError(
+                $oidc_request->{'redirect_uri'},
+                "invalid_request",
+                "scope required",
+                undef,
+                $oidc_request->{'state'},
+                ( $flow ne "authorizationcode" )
+            );
+        }
+        unless ( $oidc_request->{'client_id'} ) {
+            $self->lmLog( "Client ID is required", 'error' );
+            $self->returnRedirectError(
+                $oidc_request->{'redirect_uri'},
+                "invalid_request",
+                "client_id required",
+                undef,
+                $oidc_request->{'state'},
+                ( $flow ne "authorizationcode" )
+            );
+        }
         if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} ) {
             $self->lmLog( "Nonce is required for implicit flow", 'error' );
             $self->returnRedirectError(
