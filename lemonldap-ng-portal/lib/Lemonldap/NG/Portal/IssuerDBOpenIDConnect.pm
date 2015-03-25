@@ -108,6 +108,12 @@ sub issuerForUnAuthUser {
             $self->{lang} = $self->extract_lang($lang);
         }
 
+        # Check login_hint
+        my $login_hint = $self->param("login_hint");
+        if ( defined $login_hint ) {
+            $self->{user} ||= $login_hint;
+        }
+
     }
 
     # TOKEN
