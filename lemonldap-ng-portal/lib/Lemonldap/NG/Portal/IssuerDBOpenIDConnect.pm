@@ -436,7 +436,7 @@ sub issuerForAuthUser {
 
         my $max_age         = $oidc_request->{'max_age'};
         my $_lastAuthnUTime = $self->{sessionInfo}->{_lastAuthnUTime};
-        if ( defined $max_age && time > $_lastAuthnUTime + $max_age ) {
+        if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
             $self->lmLog(
 "Reauthentication forced cause authentication time ($_lastAuthnUTime) is too old (>$max_age s)",
                 'debug'
@@ -493,6 +493,36 @@ sub issuerForAuthUser {
         }
         else {
             $self->lmLog( "Client id $client_id match RP $rp", 'debug' );
+        }
+
+        # Check id_token_hint
+        my $id_token_hint = $oidc_request->{'id_token_hint'};
+        if ($id_token_hint) {
+
+            $self->lmLog( "Check sub of ID Token $id_token_hint", 'debug' );
+
+            # Check that id_token_hint sub match current user
+            my $sub               = $self->getIDTokenSub($id_token_hint);
+            my $user_id_attribute = $self->{oidcRPMetaDataOptions}->{$rp}
+              ->{oidcRPMetaDataOptionsUserIDAttr} || $self->{whatToTrace};
+            my $user_id = $self->{sessionInfo}->{$user_id_attribute};
+            unless ( $sub eq $user_id ) {
+                $self->lmLog(
+                    "ID Token hint sub $sub do not match user $user_id",
+                    'error' );
+                $self->returnRedirectError(
+                    $oidc_request->{'redirect_uri'},
+                    "invalid_request",
+                    "current user do not match id_token_hint sub",
+                    undef,
+                    $oidc_request->{'state'},
+                    ( $flow ne "authorizationcode" )
+                );
+            }
+            else {
+                $self->lmLog( "ID Token hint sub $sub match current user",
+                    'debug' );
+            }
         }
 
         # Obtain consent

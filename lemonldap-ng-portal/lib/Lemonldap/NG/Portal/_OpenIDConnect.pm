@@ -1159,6 +1159,19 @@ sub getFlowType {
     return $response_types->{$response_type};
 }
 
+## @method String getIDTokenSub(String id_token)
+# Return sub field of an ID Token
+# @param id_token ID Token
+# @return String sub
+sub getIDTokenSub {
+    my ( $self, $id_token ) = splice @_;
+
+    my $jwt     = $self->extractJWT($id_token);
+    my $payload = decode_json( decode_base64( $jwt->[1] ) );
+
+    return $payload->{sub};
+}
+
 1;
 
 __END__
@@ -1299,6 +1312,10 @@ Return ID Token
 =head2 getFlowType
 
 Return flow type
+
+=head2 getIDTokenSub
+
+Return sub field of an ID Token
 
 =head1 SEE ALSO
 
