@@ -445,6 +445,18 @@ sub issuerForAuthUser {
                 );
                 $self->lmLog( "Consent given for Relying Party $rp", 'debug' );
             }
+            elsif ( $self->param('confirm') == -1 ) {
+                $self->lmLog( "User refused consent for Relying party $rp",
+                    'debug' );
+                $self->returnRedirectError(
+                    $oidc_request->{'redirect_uri'},
+                    "access_denied",
+                    "consent not given",
+                    undef,
+                    $oidc_request->{'state'},
+                    ( $flow ne "authorizationcode" )
+                );
+            }
             else {
                 $self->lmLog( "Obtain user consent for Relying Party $rp",
                     'debug' );
@@ -544,7 +556,9 @@ sub issuerForAuthUser {
                     $self->lmLog(
                         "Unable to create OIDC session for access_token",
                         "error" );
-                    return PE_ERROR;
+                    $self->returnRedirectError( $oidc_request->{'redirect_uri'},
+                        "server_error", undef,
+                        undef, $oidc_request->{'state'}, 1 );
                 }
 
                 # Store data in access token
@@ -660,7 +674,9 @@ sub issuerForAuthUser {
                     $self->lmLog(
                         "Unable to create OIDC session for access_token",
                         "error" );
-                    return PE_ERROR;
+                    $self->returnRedirectError( $oidc_request->{'redirect_uri'},
+                        "server_error", undef,
+                        undef, $oidc_request->{'state'}, 1 );
                 }
 
                 # Store data in access token
