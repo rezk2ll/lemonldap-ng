@@ -46,17 +46,22 @@ sub issuerForUnAuthUser {
         $self->lmLog( "URL $url detected as an OpenID Connect AUTHORIZE URL",
             'debug' );
 
-        # Save parameters
+        # Get and save parameters
+        my $oidc_request = {};
         foreach my $param (
             qw/response_type scope client_id state redirect_uri nonce response_mode display prompt max_age ui_locales id_token_hint login_hint acr_values/
           )
         {
-            $self->setHiddenFormValue( $param,
-                $self->getHiddenFormValue($param) || $self->param($param) );
+            $oidc_request->{$param} = $self->getHiddenFormValue($param)
+              || $self->param($param);
+            $self->lmLog(
+                "OIDC request parameter $param: " . $oidc_request->{$param},
+                'debug' );
+            $self->setHiddenFormValue( $param, $oidc_request->{$param} );
         }
 
         # Detect requested flow
-        my $response_type = $self->param("response_type");
+        my $response_type = $oidc_request->{'response_type'};
         my $flow          = $self->getFlowType($response_type);
 
         unless ($flow) {
@@ -67,14 +72,18 @@ sub issuerForUnAuthUser {
             "OIDC $flow flow requested (response type: $response_type)",
             'debug' );
 
+        # State
+        my $state = $oidc_request->{'state'};
+
         # Check redirect_uri
-        unless ( $self->param("redirect_uri") ) {
+        my $redirect_uri = $oidc_request->{'redirect_uri'};
+        unless ($redirect_uri) {
             $self->lmLog( "Redirect URI is required", 'error' );
             return PE_ERROR;
         }
 
         # Check display
-        my $display = $self->param("display");
+        my $display = $oidc_request->{'display'};
         if ( $display eq "page" ) {
             $self->lmLog( "Display type page will be used", 'debug' );
         }
@@ -86,30 +95,25 @@ sub issuerForUnAuthUser {
         }
 
         # Check prompt
-        my $prompt = $self->param("prompt");
+        my $prompt = $oidc_request->{'prompt'};
         if ( $prompt eq "none" ) {
             $self->lmLog(
                 "Prompt type none requested, but user needs to authenticate",
                 'error' );
-            $self->returnRedirectError(
-                $self->param("redirect_uri"),
-                "login_required",
+            $self->returnRedirectError( $redirect_uri, "login_required",
                 "Prompt type none requested",
-                undef,
-                $self->param("state"),
-                ( $flow ne "authorizationcode" )
-            );
+                undef, $state, ( $flow ne "authorizationcode" ) );
         }
 
         # Check ui_locales
-        my $ui_locales = $self->param("ui_locales");
+        my $ui_locales = $oidc_request->{'ui_locales'};
         if ( defined $ui_locales ) {
             my $lang = join( ',', split( /\s+/, $ui_locales ) );
             $self->{lang} = $self->extract_lang($lang);
         }
 
         # Check login_hint
-        my $login_hint = $self->param("login_hint");
+        my $login_hint = $oidc_request->{'login_hint'};
         if ( defined $login_hint ) {
             $self->{user} ||= $login_hint;
         }
