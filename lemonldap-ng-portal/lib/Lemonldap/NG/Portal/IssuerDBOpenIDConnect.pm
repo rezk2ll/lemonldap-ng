@@ -423,6 +423,29 @@ sub issuerForAuthUser {
             );
         }
 
+        my $prompt = $oidc_request->{'prompt'};
+        if ( $prompt =~ /\blogin\b/ ) {
+
+            $self->lmLog( "Reauthentication requested by Relying Party",
+                'debug' );
+
+            # Replay authentication process
+            $self->{updateSession} = 1;
+            $self->{error}         = $self->_subProcess(
+                qw(issuerDBInit authInit issuerForUnAuthUser extractFormInfo
+                  userDBInit getUser setAuthSessionInfo setSessionInfo
+                  setMacros setGroups setPersistentSessionInfo
+                  setLocalGroups authenticate store authFinish)
+            );
+
+            # Return error if any
+            return $self->{error} if ( $self->{error} > 0 );
+
+            # Disable further reauthentication
+            $prompt =~ s/\blogin\b//;
+            $self->setHiddenFormValue( 'prompt', $prompt );
+        }
+
         # Check openid scope
         unless ( $oidc_request->{'scope'} =~ /\bopenid\b/ ) {
             $self->lmLog( "No openid scope found", 'debug' );
@@ -486,6 +509,9 @@ sub issuerForAuthUser {
                     last;
                 }
             }
+
+            # Check prompt parameter
+            $ask_for_consent = 1 if ( $prompt =~ /\bconsent\b/ );
         }
         if ($ask_for_consent) {
             if ( $self->param('confirm') == 1 ) {
@@ -503,7 +529,7 @@ sub issuerForAuthUser {
                     'debug' );
                 $self->returnRedirectError(
                     $oidc_request->{'redirect_uri'},
-                    "access_denied",
+                    "consent_required",
                     "consent not given",
                     undef,
                     $oidc_request->{'state'},
