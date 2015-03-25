@@ -423,11 +423,28 @@ sub issuerForAuthUser {
             );
         }
 
-        my $prompt = $oidc_request->{'prompt'};
+        # Check if user needs to be reauthenticated
+        my $reauthentication = 0;
+        my $prompt           = $oidc_request->{'prompt'};
         if ( $prompt =~ /\blogin\b/ ) {
+            $self->lmLog(
+"Reauthentication requested by Relying Party in prompt parameter",
+                'debug'
+            );
+            $reauthentication = 1;
+        }
 
-            $self->lmLog( "Reauthentication requested by Relying Party",
-                'debug' );
+        my $max_age         = $oidc_request->{'max_age'};
+        my $_lastAuthnUTime = $self->{sessionInfo}->{_lastAuthnUTime};
+        if ( defined $max_age && time > $_lastAuthnUTime + $max_age ) {
+            $self->lmLog(
+"Reauthentication forced cause authentication time ($_lastAuthnUTime) is too old (>$max_age s)",
+                'debug'
+            );
+            $reauthentication = 1;
+        }
+
+        if ($reauthentication) {
 
             # Replay authentication process
             $self->{updateSession} = 1;
