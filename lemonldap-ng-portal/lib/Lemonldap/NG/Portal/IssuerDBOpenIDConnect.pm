@@ -96,7 +96,7 @@ sub issuerForUnAuthUser {
 
         # Check prompt
         my $prompt = $oidc_request->{'prompt'};
-        if ( $prompt eq "none" ) {
+        if ( $prompt =~ /\bnone\b/ ) {
             $self->lmLog(
                 "Prompt type none requested, but user needs to authenticate",
                 'error' );
