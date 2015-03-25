@@ -1140,6 +1140,25 @@ sub createIDToken {
     return;
 }
 
+## @method String getFlowType(String response_type)
+# Return flow type
+# @param response_type Response type
+# @return String flow
+sub getFlowType {
+    my ( $self, $response_type ) = splice @_;
+
+    my $response_types = {
+        "code"                => "authorizationcode",
+        "id_token"            => "implicit",
+        "id_token token"      => "implicit",
+        "code id_token"       => "hybrid",
+        "code token"          => "hybrid",
+        "code id_token token" => "hybrid",
+    };
+
+    return $response_types->{$response_type};
+}
+
 1;
 
 __END__
@@ -1276,6 +1295,10 @@ Return Hash of UserInfo data
 =head2 createIDToken
 
 Return ID Token
+
+=head2 getFlowType
+
+Return flow type
 
 =head1 SEE ALSO
 

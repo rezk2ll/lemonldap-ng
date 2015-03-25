@@ -55,6 +55,52 @@ sub issuerForUnAuthUser {
                 $self->getHiddenFormValue($param) || $self->param($param) );
         }
 
+        # Detect requested flow
+        my $response_type = $self->param("response_type");
+        my $flow          = $self->getFlowType($response_type);
+
+        unless ($flow) {
+            $self->lmLog( "Unknown response type: $response_type", 'error' );
+            return PE_ERROR;
+        }
+        $self->lmLog(
+            "OIDC $flow flow requested (response type: $response_type)",
+            'debug' );
+
+        # Check redirect_uri
+        unless ( $self->param("redirect_uri") ) {
+            $self->lmLog( "Redirect URI is required", 'error' );
+            return PE_ERROR;
+        }
+
+        # Check display
+        my $display = $self->param("display");
+        if ( $display eq "page" ) {
+            $self->lmLog( "Display type page will be used", 'debug' );
+        }
+        else {
+            $self->lmLog(
+"Display type $display not supported, display type page will be used",
+                'debug'
+            );
+        }
+
+        # Check prompt
+        my $prompt = $self->param("prompt");
+        if ( $prompt eq "none" ) {
+            $self->lmLog(
+                "Prompt type none requested, but user needs to authenticate",
+                'error' );
+            $self->returnRedirectError(
+                $self->param("redirect_uri"),
+                "login_required",
+                "Prompt type none requested",
+                undef,
+                $self->param("state"),
+                ( $flow ne "authorizationcode" )
+            );
+        }
+
     }
 
     # TOKEN
@@ -314,17 +360,7 @@ sub issuerForAuthUser {
 
         # Detect requested flow
         my $response_type = $oidc_request->{'response_type'};
-
-        my $response_types = {
-            "code"                => "authorizationcode",
-            "id_token"            => "implicit",
-            "id_token token"      => "implicit",
-            "code id_token"       => "hybrid",
-            "code token"          => "hybrid",
-            "code id_token token" => "hybrid",
-        };
-
-        my $flow = $response_types->{$response_type};
+        my $flow          = $self->getFlowType($response_type);
 
         unless ($flow) {
             $self->lmLog( "Unknown response type: $response_type", 'error' );
