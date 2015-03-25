@@ -101,6 +101,13 @@ sub issuerForUnAuthUser {
             );
         }
 
+        # Check ui_locales
+        my $ui_locales = $self->param("ui_locales");
+        if ( defined $ui_locales ) {
+            my $lang = join( ',', split( /\s+/, $ui_locales ) );
+            $self->{lang} = $self->extract_lang($lang);
+        }
+
     }
 
     # TOKEN
