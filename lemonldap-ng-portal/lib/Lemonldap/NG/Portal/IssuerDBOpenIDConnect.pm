@@ -587,6 +587,20 @@ sub issuerForAuthUser {
                 $self->lmLog( "Obtain user consent for Relying Party $rp",
                     'debug' );
 
+                # Return error if prompt is none
+                if ( $prompt =~ /\bnone\b/ ) {
+                    $self->lmLog( "Consent is needed but prompt is none",
+                        'debug' );
+                    $self->returnRedirectError(
+                        $oidc_request->{'redirect_uri'},
+                        "consent_required",
+                        "consent required",
+                        undef,
+                        $oidc_request->{'state'},
+                        ( $flow ne "authorizationcode" )
+                    );
+                }
+
                 my $display_name = $self->{oidcRPMetaDataOptions}->{$rp}
                   ->{oidcRPMetaDataOptionsDisplayName};
                 my $icon = $self->{oidcRPMetaDataOptions}->{$rp}
