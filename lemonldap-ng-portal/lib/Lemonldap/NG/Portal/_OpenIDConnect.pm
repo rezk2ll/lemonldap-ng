@@ -923,7 +923,7 @@ sub returnJSONError {
     my $content = { "error" => "$error" };
 
     # We use to_json because values are already UTF-8 encoded
-    my $json = to_json($content);
+    my $json = to_json( $content, { pretty => 1 } );
 
 # TODO Send 400 return code
 # CGI always add HTML code to non 200 return code, which is not compatible with JSON response
@@ -939,7 +939,7 @@ sub returnJSON {
     my ( $self, $content ) = splice @_;
 
     # We use to_json because values are already UTF-8 encoded
-    my $json = to_json($content);
+    my $json = to_json( $content, { pretty => 1 } );
 
     $self->lmLog( "Return JSON: $json", 'debug' );
 

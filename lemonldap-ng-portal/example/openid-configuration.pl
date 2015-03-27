@@ -68,7 +68,7 @@ $configuration->{token_endpoint_auth_methods_supported} =
 # $configuration->{op_policy_uri}
 # $configuration->{op_tos_uri}
 
-my $json = encode_json $configuration;
+my $json = to_json( $configuration, { pretty => 1 } );
 
 print $portal->header('application/json; charset=utf-8');
 print $json;
