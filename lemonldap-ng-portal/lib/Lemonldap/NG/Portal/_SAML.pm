@@ -22,7 +22,7 @@ use URI;                   # Get metadata URL path
 #inherits Lemonldap::NG::Common::Conf::SAML::Metadata protected service_metadata
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.4.2';
+our $VERSION = '1.4.4';
 our $samlCache;
 our $initGlibDone;
 
@@ -1071,8 +1071,10 @@ sub buildAssertion {
     my $timeout                 = $time + $notOnOrAfterTimeout;
     my $authenticationInstant   = $self->timestamp2samldate($time);
     my $reauthenticateOnOrAfter = $self->timestamp2samldate($timeout);
-    my $notBefore               = $authenticationInstant;
-    my $notOnOrAfter            = $reauthenticateOnOrAfter;
+    my $issued_time             = time;
+    my $notBefore               = $self->timestamp2samldate($issued_time);
+    my $notOnOrAfter =
+      $self->timestamp2samldate( $issued_time + $notOnOrAfterTimeout );
 
     eval {
         Lasso::Login::build_assertion( $login, $authn_context,
