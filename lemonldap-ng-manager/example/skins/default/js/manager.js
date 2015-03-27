@@ -756,11 +756,14 @@ function filearea(id) {
 	if (lmtext(id) == 'samlSPMetaDataXML') {
 		$('#urlinput').show();
 	}
-	/* Only samlServicePrivateKey* elements could generate keys */
+	/* Only *PrivateKey* elements could generate keys */
 	if (lmtext(id) == 'samlServicePrivateKeySig') {
 		$('#generatefile').show();
 	}
 	if (lmtext(id) == 'samlServicePrivateKeyEnc') {
+		$('#generatefile').show();
+	}
+	if (lmtext(id) == 'oidcServicePrivateKeySig') {
 		$('#generatefile').show();
 	}
 	/* If data, then allow to download */
@@ -1328,9 +1331,11 @@ function downloadFile(id) {
 }
 /* Function to generate a file */
 function generateFile(id) {
-	/* If samlServicePrivateKey* elements, then generate keys */
-	if (lmtext(id) == 'samlServicePrivateKeySig' || lmtext(id) == 'samlServicePrivateKeyEnc') {
-		var password = prompt(text4newGeneratedFile, '');
+	/* If *PrivateKey* elements, then generate keys */
+	if (lmtext(id) == 'samlServicePrivateKeySig' || lmtext(id) == 'samlServicePrivateKeyEnc' || lmtext(id) == 'oidcServicePrivateKeySig') {
+		if (lmtext(id) == 'samlServicePrivateKeySig' || lmtext(id) == 'samlServicePrivateKeyEnc') {
+			var password = prompt(text4newGeneratedFile, '');
+		}
 		$('#button-loadimg').ajaxStart(function() {
 			$(this).show();
 		}).ajaxComplete(function() {
@@ -1358,10 +1363,15 @@ function generateFile(id) {
 					if (lmtext(id) == 'samlServicePrivateKeyEnc') {
 						_public = 'samlServicePublicKeyEnc';
 					}
+					if (lmtext(id) == 'oidcServicePrivateKeySig') {
+						_public = 'oidcServicePublicKeySig';
+					}
 					_id = $('#' + lmparent(id) + ' span[name=' + _public + ']').attr('id').replace(/text_/, '');
 					setlmdata(_id, data.content.public);
-					_id = $('#' + lmparent(id) + ' span[name=' + lmtext(id) + 'Pwd]').attr('id').replace(/text_/, '');
-					setlmdata(_id, password);
+					if (lmtext(id) == 'samlServicePrivateKeySig' || lmtext(id) == 'samlServicePrivateKeyEnc') {
+						_id = $('#' + lmparent(id) + ' span[name=' + lmtext(id) + 'Pwd]').attr('id').replace(/text_/, '');
+						setlmdata(_id, password);
+					}
 					filearea(id);
 				}
 			},

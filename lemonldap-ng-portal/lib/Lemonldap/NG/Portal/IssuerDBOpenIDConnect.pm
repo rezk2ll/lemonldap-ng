@@ -33,6 +33,7 @@ sub issuerForUnAuthUser {
     my $authorize_uri             = $self->{oidcServiceMetaDataAuthorizeURI};
     my $token_uri                 = $self->{oidcServiceMetaDataTokenURI};
     my $userinfo_uri              = $self->{oidcServiceMetaDataUserInfoURI};
+    my $jwks_uri                  = $self->{oidcServiceMetaDataJWKSURI};
     my $issuer                    = $self->{oidcServiceMetaDataIssuer};
 
     # Called URL
@@ -331,6 +332,30 @@ sub issuerForUnAuthUser {
 
     }
 
+    # JWKS
+    if ( $url_path =~ m#${issuerDBOpenIDConnectPath}${jwks_uri}# ) {
+
+        $self->lmLog( "URL $url detected as an OpenID Connect JWKS URL",
+            'debug' );
+
+        my $jwks = { keys => [] };
+
+        my $public_key_sig = $self->{oidcServicePublicKeySig};
+        if ($public_key_sig) {
+            my $key = $self->key2jwks($public_key_sig);
+            $key->{kty} = "RSA";
+            $key->{use} = "sig";
+            push @{ $jwks->{keys} }, $key;
+        }
+
+        $self->returnJSON($jwks);
+
+        $self->lmLog( "JWKS response sent", 'debug' );
+
+        $self->quit;
+
+    }
+
     PE_OK;
 }
 
@@ -345,6 +370,7 @@ sub issuerForAuthUser {
     my $authorize_uri             = $self->{issuerDBOpenIDConnectAuthorizeURI};
     my $token_uri                 = $self->{issuerDBOpenIDConnectTokenURI};
     my $userinfo_uri              = $self->{issuerDBOpenIDConnectUserInfoURI};
+    my $jwks_uri                  = $self->{oidcServiceMetaDataJWKSURI};
     my $issuer                    = $self->{oidcServiceMetaDataIssuer};
 
     # Session ID
@@ -918,6 +944,21 @@ sub issuerForAuthUser {
         # This should not happen
         $self->lmLog(
             "UserInfo request found on an active SSO session, ignoring it",
+            'error' );
+        $self->returnJSONError("invalid_request");
+
+        $self->quit;
+    }
+
+    # JWKS
+    if ( $url_path =~ m#${issuerDBOpenIDConnectPath}${jwks_uri}# ) {
+
+        $self->lmLog( "URL $url detected as an OpenID Connect JWKS URL",
+            'debug' );
+
+        # This should not happen
+        $self->lmLog(
+            "JWKS request found on an active SSO session, ignoring it",
             'error' );
         $self->returnJSONError("invalid_request");
 

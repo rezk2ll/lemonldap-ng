@@ -1580,14 +1580,15 @@ sub struct {
         # OIDC #
         ########
         oidcServiceMetaData => {
-            _nodes =>
-              [qw(oidcServiceMetaDataIssuer n:oidcServiceMetaDataEndPoints)],
+            _nodes => [
+                qw(oidcServiceMetaDataIssuer n:oidcServiceMetaDataEndPoints n:oidcServiceMetaDataSecurity)
+            ],
 
             oidcServiceMetaDataIssuer => 'text:/oidcServiceMetaDataIssuer',
 
             oidcServiceMetaDataEndPoints => {
                 _nodes => [
-                    qw(oidcServiceMetaDataAuthorizeURI oidcServiceMetaDataTokenURI oidcServiceMetaDataUserInfoURI)
+                    qw(oidcServiceMetaDataAuthorizeURI oidcServiceMetaDataTokenURI oidcServiceMetaDataUserInfoURI oidcServiceMetaDataJWKSURI)
                 ],
 
                 oidcServiceMetaDataAuthorizeURI =>
@@ -1596,6 +1597,16 @@ sub struct {
                   'text:/oidcServiceMetaDataTokenURI',
                 oidcServiceMetaDataUserInfoURI =>
                   'text:/oidcServiceMetaDataUserInfoURI',
+                oidcServiceMetaDataJWKSURI =>
+                  'text:/oidcServiceMetaDataJWKSURI',
+            },
+
+            oidcServiceMetaDataSecurity => {
+                _nodes =>
+                  [ qw(oidcServicePrivateKeySig oidcServicePublicKeySig) ],
+                oidcServicePrivateKeySig =>
+                  'filearea:/oidcServicePrivateKeySig',
+                oidcServicePublicKeySig => 'filearea:/oidcServicePublicKeySig',
             },
 
         },
@@ -2340,6 +2351,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcServiceMetaDataIssuer       => $testNotDefined,
         oidcServiceMetaDataTokenURI     => $testNotDefined,
         oidcServiceMetaDataUserInfoURI  => $testNotDefined,
+        oidcServiceMetaDataJWKSURI      => $testNotDefined,
+        oidcServicePrivateKeySig        => $testNotDefined,
+        oidcServicePublicKeySig         => $testNotDefined,
 
         # OIDC OP
         oidcOPMetaDataExportedVars => {

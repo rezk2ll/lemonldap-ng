@@ -1172,6 +1172,23 @@ sub getIDTokenSub {
     return $payload->{sub};
 }
 
+## @method HashRef key2jwks(String key)
+# Return JWKS representation of a key
+# @param key Raw key
+# @return HashRef JWKS key
+sub key2jwks {
+    my ( $self, $key ) = splice @_;
+    my $hash = {};
+
+    my $rsa_pub = Crypt::OpenSSL::RSA->new_public_key($key);
+    my @params  = $rsa_pub->get_key_parameters();
+
+    $hash->{n} = encode_base64( $params[0]->to_bin(), "" );
+    $hash->{e} = encode_base64( $params[1]->to_bin(), "" );
+
+    return $hash;
+}
+
 1;
 
 __END__
@@ -1316,6 +1333,10 @@ Return flow type
 =head2 getIDTokenSub
 
 Return sub field of an ID Token
+
+=head2 key2jwks
+
+Return JWKS representation of a key
 
 =head1 SEE ALSO
 

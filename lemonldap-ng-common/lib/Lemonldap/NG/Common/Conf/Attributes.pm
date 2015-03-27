@@ -767,6 +767,13 @@ has 'oidcServiceMetaDataIssuer' => (
     documentation => 'URL of OpenID Connect Issuer',
 );
 
+has 'oidcServiceMetaDataJWKSURI' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'jwks',
+    documentation => 'OpenID Connect JWKS endpoint',
+);
+
 has 'oidcServiceMetaDataTokenURI' => (
     is            => 'rw',
     isa           => 'Str',
