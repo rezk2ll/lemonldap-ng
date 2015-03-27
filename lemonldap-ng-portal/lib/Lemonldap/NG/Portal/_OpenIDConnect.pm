@@ -1135,6 +1135,30 @@ sub createIDToken {
         return $id_token_header . "." . $id_token_payload . "." . $digest;
     }
 
+    if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
+
+        # Get signing private key
+        my $priv_key = $self->{oidcServicePrivateKeySig};
+        my $rsa_priv = Crypt::OpenSSL::RSA->new_private_key($priv_key);
+
+        if ( $alg eq "RS256" ) {
+            $rsa_priv->use_sha256_hash;
+        }
+
+        if ( $alg eq "RS384" ) {
+            $rsa_priv->use_sha384_hash;
+        }
+
+        if ( $alg eq "RS512" ) {
+            $rsa_priv->use_sha512_hash;
+        }
+
+        my $digest = encode_base64url(
+            $rsa_priv->sign( $id_token_header . "." . $id_token_payload ) );
+
+        return $id_token_header . "." . $id_token_payload . "." . $digest;
+    }
+
     $self->lmLog( "Algorithm $alg not supported to sign ID Token", 'debug' );
 
     return;

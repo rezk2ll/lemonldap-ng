@@ -42,7 +42,7 @@ $configuration->{grant_types_supported} =
 # $configuration->{acr_values_supported}
 $configuration->{subject_types_supported} = ["public"];
 $configuration->{id_token_signing_alg_values_supported} =
-  [qw/none RS256 RS384 RS512/];
+  [qw/none HS256 HS384 HS512 RS256 RS384 RS512/];
 
 # $configuration->{id_token_encryption_alg_values_supported}
 # $configuration->{id_token_encryption_enc_values_supported}
