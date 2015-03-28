@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::API::ApacheMP2;
 
 use Exporter 'import';
 
-our $VERSION = '1.4.0';
+our $VERSION = '2.00';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
 BEGIN {
@@ -158,7 +158,11 @@ sub hostname {
 # @return IP_Addr string client IP
 sub remote_ip {
     my $class = shift;
-    return $request->connection->remote_ip;
+    my $remote_ip =
+      (   $request->connection->can('remote_ip')
+        ? $request->connection->remote_ip
+        : $request->connection->client_ip );
+    return $remote_ip;
 }
 
 ## @method boolean is_initial_req
