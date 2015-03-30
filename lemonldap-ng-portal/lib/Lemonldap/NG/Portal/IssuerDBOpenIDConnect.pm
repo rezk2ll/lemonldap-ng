@@ -521,6 +521,30 @@ sub issuerForAuthUser {
             $self->lmLog( "Client id $client_id match RP $rp", 'debug' );
         }
 
+        # Check redirect_uri
+        my $redirect_uri  = $oidc_request->{'redirect_uri'};
+        my $redirect_uris = $self->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsRedirectUris};
+
+        if ($redirect_uris) {
+            my $redirect_uri_allowed = 0;
+            foreach ( split( /\s+/, $redirect_uris ) ) {
+                $redirect_uri_allowed = 1 if $redirect_uri eq $_;
+            }
+            unless ($redirect_uri_allowed) {
+                $self->lmLog( "Redirect URI $redirect_uri not allowed",
+                    'error' );
+                $self->returnRedirectError(
+                    $oidc_request->{'redirect_uri'},
+                    "invalid_request",
+                    "redirect_uri $redirect_uri not allowed",
+                    undef,
+                    $oidc_request->{'state'},
+                    ( $flow ne "authorizationcode" )
+                );
+            }
+        }
+
         # Check id_token_hint
         my $id_token_hint = $oidc_request->{'id_token_hint'};
         if ($id_token_hint) {

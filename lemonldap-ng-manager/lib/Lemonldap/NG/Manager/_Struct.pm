@@ -316,8 +316,9 @@ sub cstruct {
             %$h,
             oidcRPMetaDataNode => {
                 $k2 => {
-                    _nodes =>
-                      [qw(oidcRPMetaDataExportedVars oidcRPMetaDataOptions)],
+                    _nodes => [
+                        qw(oidcRPMetaDataExportedVars oidcRPMetaDataOptions)
+                    ],
                     oidcRPMetaDataExportedVars => {
                         _nodes =>
                           ["hash:/oidcRPMetaDataExportedVars/$k2:vars:btext"],
@@ -325,24 +326,36 @@ sub cstruct {
                     },
                     oidcRPMetaDataOptions => {
                         _nodes => [
-                            qw(oidcRPMetaDataOptionsClientID oidcRPMetaDataOptionsClientSecret oidcRPMetaDataOptionsUserIDAttr oidcRPMetaDataOptionsDisplayName oidcRPMetaDataOptionsIcon oidcRPMetaDataOptionsIDTokenSignAlg oidcRPMetaDataOptionsIDTokenExpiration oidcRPMetaDataOptionsAccessTokenExpiration)
+                            qw(oidcRPMetaDataOptionsAuthentication oidcRPMetaDataOptionsDisplay oidcRPMetaDataOptionsUserIDAttr oidcRPMetaDataOptionsIDTokenSignAlg oidcRPMetaDataOptionsIDTokenExpiration oidcRPMetaDataOptionsAccessTokenExpiration oidcRPMetaDataOptionsRedirectUris)
+                        ],
+oidcRPMetaDataOptionsAuthentication => {
+                        _nodes => [
+                            qw(oidcRPMetaDataOptionsClientID oidcRPMetaDataOptionsClientSecret)
                         ],
                         oidcRPMetaDataOptionsClientID =>
 "text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsClientID",
                         oidcRPMetaDataOptionsClientSecret =>
 "password:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsClientSecret",
-                        oidcRPMetaDataOptionsUserIDAttr =>
-"text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsUserIDAttr",
+                    },
+                    oidcRPMetaDataOptionsDisplay => {
+                        _nodes => [
+                            qw(oidcRPMetaDataOptionsDisplayName oidcRPMetaDataOptionsIcon)
+                        ],
                         oidcRPMetaDataOptionsDisplayName =>
 "text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsDisplayName",
                         oidcRPMetaDataOptionsIcon =>
 "text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsIcon",
+                    },
+                        oidcRPMetaDataOptionsUserIDAttr =>
+"text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsUserIDAttr",
                         oidcRPMetaDataOptionsIDTokenSignAlg =>
 "text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsIDTokenSignAlg",
                         oidcRPMetaDataOptionsIDTokenExpiration =>
 "int:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsIDTokenExpiration",
                         oidcRPMetaDataOptionsAccessTokenExpiration =>
 "int:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsAccessTokenExpiration",
+                        oidcRPMetaDataOptionsRedirectUris =>
+"text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsRedirectUris",
                     },
                 },
             },
@@ -1603,7 +1616,7 @@ sub struct {
 
             oidcServiceMetaDataSecurity => {
                 _nodes =>
-                  [ qw(oidcServicePrivateKeySig oidcServicePublicKeySig) ],
+                  [qw(oidcServicePrivateKeySig oidcServicePublicKeySig)],
                 oidcServicePrivateKeySig =>
                   'filearea:/oidcServicePrivateKeySig',
                 oidcServicePublicKeySig => 'filearea:/oidcServicePublicKeySig',
