@@ -774,6 +774,13 @@ has 'oidcServiceMetaDataJWKSURI' => (
     documentation => 'OpenID Connect JWKS endpoint',
 );
 
+has 'oidcServiceMetaDataRegistrationURI' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'register',
+    documentation => 'OpenID Connect registration endpoint',
+);
+
 has 'oidcServiceMetaDataTokenURI' => (
     is            => 'rw',
     isa           => 'Str',

@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::IssuerDBOpenIDConnect;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+use String::Random qw(random_string);
 use base qw(Lemonldap::NG::Portal::_OpenIDConnect);
 
 our $VERSION = '2.00';
@@ -34,6 +35,7 @@ sub issuerForUnAuthUser {
     my $token_uri                 = $self->{oidcServiceMetaDataTokenURI};
     my $userinfo_uri              = $self->{oidcServiceMetaDataUserInfoURI};
     my $jwks_uri                  = $self->{oidcServiceMetaDataJWKSURI};
+    my $registration_uri          = $self->{oidcServiceMetaDataRegistrationURI};
     my $issuer                    = $self->{oidcServiceMetaDataIssuer};
 
     # Called URL
@@ -356,6 +358,71 @@ sub issuerForUnAuthUser {
 
     }
 
+    # REGISTRATION
+    if ( $url_path =~ m#${issuerDBOpenIDConnectPath}${registration_uri}# ) {
+
+        $self->lmLog( "URL $url detected as an OpenID Connect REGISTRATION URL",
+            'debug' );
+
+        # TODO: check Initial Access Token
+
+        # Specific message to allow DOS detection
+        my $source_ip = $self->ipAddr;
+        $self->lmLog( "OpenID Connect Registration request from $source_ip",
+            'warn' );
+
+        # Get client metadata
+        my $client_metadata_json = $self->param('POSTDATA');
+
+        $self->lmLog( "Client metadata received: $client_metadata_json",
+            'debug' );
+
+        my $client_metadata       = $self->decodeJSON($client_metadata_json);
+        my $registration_response = {};
+
+        # Check redirect_uris
+        unless ( $client_metadata->{redirect_uris} ) {
+            $self->lmLog( "Field redirect_uris is mandatory", 'error' );
+            $self->returnJSONError( 'invalid_client_metadata',
+                'Field redirect_uris is mandatory' );
+            $self->quit;
+        }
+
+        # RP identifier
+        my $registration_time = time;
+        my $rp                = "register-$registration_time";
+
+        # Generate Client ID and Client Password
+        my $client_id     = random_string("...............");
+        my $client_secret = random_string("...............");
+
+        # Register known parameters
+        my $client_name =
+          $client_metadata->{client_name} || "Self registered client";
+        my $logo_uri = $client_metadata->{logo_uri};
+        my $id_token_signed_response_alg =
+          $client_metadata->{id_token_signed_response_alg} || "RS256";
+
+        # TODO: register RP in global configuration
+
+        # Send registration response
+        $registration_response->{'client_id'}            = $client_id;
+        $registration_response->{'client_secret'}        = $client_secret;
+        $registration_response->{'client_id_issued_at'}  = $registration_time;
+        $registration_response->{'client_id_expires_at'} = 0;
+        $registration_response->{'client_name'}          = $client_name;
+        $registration_response->{'logo_uri'}             = $logo_uri;
+        $registration_response->{'id_token_signed_response_alg'} =
+          $id_token_signed_response_alg;
+
+        # TODO: return 201 HTTP code
+        $self->returnJSON($registration_response);
+
+        $self->lmLog( "Registration response sent", 'debug' );
+
+        $self->quit;
+    }
+
     PE_OK;
 }
 
@@ -371,6 +438,7 @@ sub issuerForAuthUser {
     my $token_uri                 = $self->{issuerDBOpenIDConnectTokenURI};
     my $userinfo_uri              = $self->{issuerDBOpenIDConnectUserInfoURI};
     my $jwks_uri                  = $self->{oidcServiceMetaDataJWKSURI};
+    my $registration_uri          = $self->{oidcServiceMetaDataRegistrationURI};
     my $issuer                    = $self->{oidcServiceMetaDataIssuer};
 
     # Session ID
@@ -984,6 +1052,22 @@ sub issuerForAuthUser {
         $self->lmLog(
             "JWKS request found on an active SSO session, ignoring it",
             'error' );
+        $self->returnJSONError("invalid_request");
+
+        $self->quit;
+    }
+
+    # REGISTRATION
+    if ( $url_path =~ m#${issuerDBOpenIDConnectPath}${registration_uri}# ) {
+
+        $self->lmLog( "URL $url detected as an OpenID Connect REGISTRATION URL",
+            'debug' );
+
+        # This should not happen
+        $self->lmLog(
+            "Registration request found on an active SSO session, ignoring it",
+            'error'
+        );
         $self->returnJSONError("invalid_request");
 
         $self->quit;
