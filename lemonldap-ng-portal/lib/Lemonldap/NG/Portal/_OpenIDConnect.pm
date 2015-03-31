@@ -230,12 +230,16 @@ sub buildAuthorizationCodeAuthnRequest {
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsScope};
     my $response_type = "code";
     my $redirect_uri  = $self->getCallbackUri;
+    my $nonceSession  = $self->getOpenIDConnectSession();
+    $nonceSession->update( { '_utime' => time } );
+    my $nonce = $nonceSession->id;
 
     $client_id     = uri_escape($client_id);
     $scope         = uri_escape($scope);
     $response_type = uri_escape($response_type);
     $redirect_uri  = uri_escape($redirect_uri);
     $state         = uri_escape($state) if defined $state;
+    $nonce         = uri_escape($nonce);
 
     my $authn_uri = $authorize_uri;
     $authn_uri .= ( $authorize_uri =~ /\?/ ? '&' : '?' );
@@ -244,6 +248,7 @@ sub buildAuthorizationCodeAuthnRequest {
     $authn_uri .= "&scope=$scope";
     $authn_uri .= "&redirect_uri=$redirect_uri";
     $authn_uri .= "&state=$state" if defined $state;
+    $authn_uri .= "&nonce=$nonce" if defined $nonce;
 
     $self->lmLog(
         "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri",
@@ -478,7 +483,24 @@ sub checkIDTokenValidity {
 
     # TODO check iat
 
-    # TODO check nonce
+    # Check nonce
+    my $nonce = $id_token->{nonce};
+    unless ($nonce) {
+        $self->lmLog( "Nonce was not returned by OP $op", 'debug' );
+    }
+    else {
+        # Get nonce session
+        my $nonceSession = $self->getOpenIDConnectSession($nonce);
+        unless ($nonceSession) {
+            $self->lmLog( "Nonce $nonce verification failed", 'error' );
+            return 0;
+        }
+        else {
+            $nonceSession->remove;
+            $self->lmLog( "Nonce $nonce deleted", 'debug' );
+        }
+
+    }
 
     # TODO check acr
 
