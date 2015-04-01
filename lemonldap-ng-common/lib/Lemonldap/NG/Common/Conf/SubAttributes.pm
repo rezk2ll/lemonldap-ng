@@ -37,6 +37,13 @@ has 'oidcOPMetaDataExportedVars' => (
     documentation => "Exported vars for an OP",
 );
 
+has 'oidcOPMetaDataOptionsAcrValues' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC OP acr_values",
+);
+
 has 'oidcOPMetaDataOptionsCheckJWTSignature' => (
     is            => 'rw',
     isa           => 'Bool',
@@ -93,6 +100,13 @@ has 'oidcOPMetaDataOptionsJWKSTimeout' => (
     documentation => "OIDC OP JWKS data refresh interval",
 );
 
+has 'oidcOPMetaDataOptionsMaxAge' => (
+    is            => 'rw',
+    isa           => 'Int|Undef',
+    default       => undef,
+    documentation => "OIDC OP max_age",
+);
+
 has 'oidcOPMetaDataOptionsPrompt' => (
     is            => 'rw',
     isa           => 'Str|Undef',
@@ -112,6 +126,13 @@ has 'oidcOPMetaDataOptionsTokenEndpointAuthMethod' => (
     isa           => 'Str',
     default       => "client_secret_basic",
     documentation => "OIDC OP scope",
+);
+
+has 'oidcOPMetaDataOptionsUiLocales' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC OP ui_locales",
 );
 
 has 'oidcRPMetaDataExportedVars' => (

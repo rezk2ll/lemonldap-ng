@@ -237,6 +237,12 @@ sub buildAuthorizationCodeAuthnRequest {
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsDisplay};
     my $prompt =
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsPrompt};
+    my $max_age =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsMaxAge};
+    my $ui_locales =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsUiLocales};
+    my $acr_values =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsAcrValues};
 
     $client_id     = uri_escape($client_id);
     $scope         = uri_escape($scope);
@@ -246,6 +252,9 @@ sub buildAuthorizationCodeAuthnRequest {
     $nonce         = uri_escape($nonce);
     $display       = uri_escape($display) if defined $display;
     $prompt        = uri_escape($prompt) if defined $prompt;
+    $max_age       = uri_escape($max_age) if defined $max_age;
+    $ui_locales    = uri_escape($ui_locales) if defined $ui_locales;
+    $acr_values    = uri_escape($acr_values) if defined $acr_values;
 
     my $authn_uri = $authorize_uri;
     $authn_uri .= ( $authorize_uri =~ /\?/ ? '&' : '?' );
@@ -253,10 +262,13 @@ sub buildAuthorizationCodeAuthnRequest {
     $authn_uri .= "&client_id=$client_id";
     $authn_uri .= "&scope=$scope";
     $authn_uri .= "&redirect_uri=$redirect_uri";
-    $authn_uri .= "&state=$state"     if defined $state;
-    $authn_uri .= "&nonce=$nonce"     if defined $nonce;
-    $authn_uri .= "&display=$display" if defined $display;
-    $authn_uri .= "&prompt=$prompt"   if defined $prompt;
+    $authn_uri .= "&state=$state"           if defined $state;
+    $authn_uri .= "&nonce=$nonce"           if defined $nonce;
+    $authn_uri .= "&display=$display"       if defined $display;
+    $authn_uri .= "&prompt=$prompt"         if defined $prompt;
+    $authn_uri .= "&max_age=$max_age"       if defined $max_age;
+    $authn_uri .= "&ui_locales=$ui_locales" if defined $ui_locales;
+    $authn_uri .= "&acr_values=$acr_values" if defined $acr_values;
 
     $self->lmLog(
         "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri",
@@ -451,6 +463,10 @@ sub checkIDTokenValidity {
 
     my $client_id =
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsClientID};
+    my $acr_values =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsAcrValues};
+    my $max_age =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsMaxAge};
 
     # Check issuer
     unless ( $id_token->{iss} eq $self->{_oidcOPList}->{$op}->{conf}->{issuer} )
@@ -470,7 +486,7 @@ sub checkIDTokenValidity {
         if ( $#audience > 1 ) {
             unless ( $id_token->{azp} eq $client_id ) {
                 $self->lmLog(
-                    "More than one audiance, and azp not equal to client ID",
+                    "More than one audience, and azp not equal to client ID",
                     'error' );
                 return 0;
             }
@@ -510,9 +526,36 @@ sub checkIDTokenValidity {
 
     }
 
-    # TODO check acr
+    # Check acr
+    my $acr = $id_token->{acr};
+    if ( defined $acr_values ) {
+        unless ($acr) {
+            $self->lmLog( "ACR was not returned by OP $op", 'error' );
+            return 0;
+        }
+        unless ( $acr_values =~ /\b$acr\b/i ) {
+            $self->lmLog(
+                "ACR $acr not listed in request ACR values ($acr_values)",
+                'error' );
+            return 0;
+        }
+    }
 
-    # TODO check auth_time
+    # Check auth_time
+    my $auth_time = $id_token->{auth_time};
+    if ( defined $max_age ) {
+        unless ($auth_time) {
+            $self->lmLog( "Auth time was not returned by OP $op", 'error' );
+            return 0;
+        }
+        if ( $auth_time + $max_age > time ) {
+            $self->lmLog(
+"Authentication time ($auth_time) is too old (Max age: $max_age)",
+                'error'
+            );
+            return 0;
+        }
+    }
 
     return 1;
 }

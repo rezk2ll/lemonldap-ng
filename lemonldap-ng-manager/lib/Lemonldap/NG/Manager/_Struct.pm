@@ -287,7 +287,7 @@ sub cstruct {
                         },
                         oidcOPMetaDataOptionsProtocol => {
                             _nodes => [
-                                qw(oidcOPMetaDataOptionsScope oidcOPMetaDataOptionsDisplay oidcOPMetaDataOptionsPrompt oidcOPMetaDataOptionsTokenEndpointAuthMethod oidcOPMetaDataOptionsCheckJWTSignature)
+                                qw(oidcOPMetaDataOptionsScope oidcOPMetaDataOptionsDisplay oidcOPMetaDataOptionsPrompt oidcOPMetaDataOptionsMaxAge oidcOPMetaDataOptionsUiLocales oidcOPMetaDataOptionsAcrValues oidcOPMetaDataOptionsTokenEndpointAuthMethod oidcOPMetaDataOptionsCheckJWTSignature)
                             ],
                             oidcOPMetaDataOptionsScope =>
 "text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsScope",
@@ -295,6 +295,12 @@ sub cstruct {
 "text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsDisplay",
                             oidcOPMetaDataOptionsPrompt =>
 "text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsPrompt",
+                            oidcOPMetaDataOptionsMaxAge =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsMaxAge",
+                            oidcOPMetaDataOptionsUiLocales =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsUiLocales",
+                            oidcOPMetaDataOptionsAcrValues =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsAcrValues",
                             oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
 "text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsTokenEndpointAuthMethod",
                             oidcOPMetaDataOptionsCheckJWTSignature =>
