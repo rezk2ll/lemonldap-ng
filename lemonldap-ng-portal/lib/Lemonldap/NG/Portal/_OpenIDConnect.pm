@@ -467,6 +467,9 @@ sub checkIDTokenValidity {
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsAcrValues};
     my $max_age =
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsMaxAge};
+    my $id_token_max_age =
+      $self->{oidcOPMetaDataOptions}->{$op}
+      ->{oidcOPMetaDataOptionsIDTokenMaxAge};
 
     # Check issuer
     unless ( $id_token->{iss} eq $self->{_oidcOPList}->{$op}->{conf}->{issuer} )
@@ -505,7 +508,15 @@ sub checkIDTokenValidity {
         return 0;
     }
 
-    # TODO check iat
+    # Check iat
+    my $iat = $id_token->{iat};
+    if ($id_token_max_age) {
+        unless ( $iat + $id_token_max_age > time ) {
+            $self->lmLog( "ID token too old (Max age: $id_token_max_age)",
+                'error' );
+            return 0;
+        }
+    }
 
     # Check nonce
     my $nonce = $id_token->{nonce};
@@ -543,7 +554,7 @@ sub checkIDTokenValidity {
 
     # Check auth_time
     my $auth_time = $id_token->{auth_time};
-    if ( defined $max_age ) {
+    if ($max_age) {
         unless ($auth_time) {
             $self->lmLog( "Auth time was not returned by OP $op", 'error' );
             return 0;

@@ -93,6 +93,13 @@ has 'oidcOPMetaDataOptionsIcon' => (
     documentation => "OIDC OP logo file",
 );
 
+has 'oidcOPMetaDataOptionsIDTokenMaxAge' => (
+    is            => 'rw',
+    isa           => 'Int',
+    default       => 30,
+    documentation => "OIDC OP ID Token max age",
+);
+
 has 'oidcOPMetaDataOptionsJWKSTimeout' => (
     is            => 'rw',
     isa           => 'Int',
