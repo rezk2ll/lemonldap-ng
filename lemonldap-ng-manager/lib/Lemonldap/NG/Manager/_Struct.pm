@@ -287,12 +287,14 @@ sub cstruct {
                         },
                         oidcOPMetaDataOptionsProtocol => {
                             _nodes => [
-                                qw(oidcOPMetaDataOptionsScope oidcOPMetaDataOptionsDisplay oidcOPMetaDataOptionsTokenEndpointAuthMethod oidcOPMetaDataOptionsCheckJWTSignature)
+                                qw(oidcOPMetaDataOptionsScope oidcOPMetaDataOptionsDisplay oidcOPMetaDataOptionsPrompt oidcOPMetaDataOptionsTokenEndpointAuthMethod oidcOPMetaDataOptionsCheckJWTSignature)
                             ],
                             oidcOPMetaDataOptionsScope =>
 "text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsScope",
                             oidcOPMetaDataOptionsDisplay =>
 "text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsDisplay",
+                            oidcOPMetaDataOptionsPrompt =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsPrompt",
                             oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
 "text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsTokenEndpointAuthMethod",
                             oidcOPMetaDataOptionsCheckJWTSignature =>

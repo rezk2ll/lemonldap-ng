@@ -93,6 +93,13 @@ has 'oidcOPMetaDataOptionsJWKSTimeout' => (
     documentation => "OIDC OP JWKS data refresh interval",
 );
 
+has 'oidcOPMetaDataOptionsPrompt' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC OP prompt",
+);
+
 has 'oidcOPMetaDataOptionsScope' => (
     is            => 'rw',
     isa           => 'Str',

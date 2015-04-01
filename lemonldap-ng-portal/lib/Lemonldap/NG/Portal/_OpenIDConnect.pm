@@ -235,6 +235,8 @@ sub buildAuthorizationCodeAuthnRequest {
     my $nonce = $nonceSession->id;
     my $display =
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsDisplay};
+    my $prompt =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsPrompt};
 
     $client_id     = uri_escape($client_id);
     $scope         = uri_escape($scope);
@@ -243,6 +245,7 @@ sub buildAuthorizationCodeAuthnRequest {
     $state         = uri_escape($state) if defined $state;
     $nonce         = uri_escape($nonce);
     $display       = uri_escape($display) if defined $display;
+    $prompt        = uri_escape($prompt) if defined $prompt;
 
     my $authn_uri = $authorize_uri;
     $authn_uri .= ( $authorize_uri =~ /\?/ ? '&' : '?' );
@@ -253,6 +256,7 @@ sub buildAuthorizationCodeAuthnRequest {
     $authn_uri .= "&state=$state"     if defined $state;
     $authn_uri .= "&nonce=$nonce"     if defined $nonce;
     $authn_uri .= "&display=$display" if defined $display;
+    $authn_uri .= "&prompt=$prompt"   if defined $prompt;
 
     $self->lmLog(
         "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri",

@@ -280,6 +280,7 @@ sub en {
         oidcOPMetaDataOptionsDisplayName       => 'Display name',
         oidcOPMetaDataOptionsIcon              => 'Logo',
         oidcOPMetaDataOptionsJWKSTimeout       => 'JWKS data timeout',
+        oidcOPMetaDataOptionsPrompt            => 'Prompt',
         oidcOPMetaDataOptionsProtocol          => 'Protocol',
         oidcOPMetaDataOptionsScope             => 'Scope',
         oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
@@ -844,6 +845,7 @@ sub fr {
         oidcOPMetaDataOptionsDisplayName      => 'Nom d\'affichage',
         oidcOPMetaDataOptionsIcon             => 'Logo',
         oidcOPMetaDataOptionsJWKSTimeout => 'Durée de vie des données JWKS',
+        oidcOPMetaDataOptionsPrompt      => 'Interaction',
         oidcOPMetaDataOptionsProtocol    => 'Protocole',
         oidcOPMetaDataOptionsScope       => 'Étendue',
         oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
