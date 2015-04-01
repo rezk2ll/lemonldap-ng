@@ -748,6 +748,21 @@ has 'oidcRPStateTimeout' => (
     documentation => 'OpenID Connect Timeout of state sessions',
 );
 
+has 'oidcServiceMetaDataAuthnContext' => (
+    is      => 'rw',
+    isa     => 'HashRef',
+    default => sub {
+        return {
+            'loa-1' => 1,
+            'loa-2' => 2,
+            'loa-3' => 3,
+            'loa-4' => 4,
+            'loa-5' => 5
+        };
+    },
+    documentation => 'WebID exported variables',
+);
+
 has 'oidcServiceMetaDataAuthorizeURI' => (
     is            => 'rw',
     isa           => 'Str',

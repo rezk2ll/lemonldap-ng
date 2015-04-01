@@ -1605,7 +1605,7 @@ sub struct {
         ########
         oidcServiceMetaData => {
             _nodes => [
-                qw(oidcServiceMetaDataIssuer n:oidcServiceMetaDataEndPoints n:oidcServiceMetaDataSecurity)
+                qw(oidcServiceMetaDataIssuer n:oidcServiceMetaDataEndPoints cn:oidcServiceMetaDataAuthnContext n:oidcServiceMetaDataSecurity)
             ],
 
             oidcServiceMetaDataIssuer => 'text:/oidcServiceMetaDataIssuer',
@@ -1625,6 +1625,11 @@ sub struct {
                   'text:/oidcServiceMetaDataJWKSURI',
                 oidcServiceMetaDataRegistrationURI =>
                   'text:/oidcServiceMetaDataRegistrationURI',
+            },
+
+            oidcServiceMetaDataAuthnContext => {
+                _nodes => ['hash:/oidcServiceMetaDataAuthnContext:vars:btext'],
+                _js    => 'hashRoot',
             },
 
             oidcServiceMetaDataSecurity => {

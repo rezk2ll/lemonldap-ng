@@ -845,8 +845,17 @@ sub issuerForAuthUser {
             my $id_token_exp = $self->{oidcRPMetaDataOptions}->{$rp}
               ->{oidcRPMetaDataOptionsIDTokenExpiration};
 
-            my $id_token_acr =
-              "loa-" . $self->{sessionInfo}->{authenticationLevel};
+            my $authenticationLevel =
+              $self->{sessionInfo}->{authenticationLevel};
+            my $id_token_acr;
+            foreach ( keys %{ $self->{oidcServiceMetaDataAuthnContext} } ) {
+                if ( $self->{oidcServiceMetaDataAuthnContext}->{$_} eq
+                    $authenticationLevel )
+                {
+                    $id_token_acr = $_;
+                    last;
+                }
+            }
 
             my $user_id_attribute = $self->{oidcRPMetaDataOptions}->{$rp}
               ->{oidcRPMetaDataOptionsUserIDAttr} || $self->{whatToTrace};
@@ -858,15 +867,16 @@ sub issuerForAuthUser {
                 aud => [$client_id],     # Audience
                 exp => $id_token_exp,    # expiration
                 iat => time,             # Issued time
-                auth_time =>
-                  $self->{sessionInfo}->{_lastAuthnUTime}, # Authentication time
-                acr => $id_token_acr,   # Authentication Context Class Reference
-                azp => $client_id,      # Authorized party
-                                        # TODO amr
+                auth_time => $self->{sessionInfo}->{_lastAuthnUTime}
+                ,                        # Authentication time
+                azp   => $client_id,                 # Authorized party
+                                                     # TODO amr
                 nonce => $oidc_request->{'nonce'}    # Nonce
             };
 
             $id_token_payload_hash->{'at_hash'} = $at_hash if $at_hash;
+            $id_token_payload_hash->{'acr'} = $id_token_acr
+              if $id_token_acr;
 
             # Create ID Token
             my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
@@ -965,8 +975,10 @@ sub issuerForAuthUser {
                 my $id_token_acr =
                   "loa-" . $self->{sessionInfo}->{authenticationLevel};
 
-                my $user_id_attribute = $self->{oidcRPMetaDataOptions}->{$rp}
-                  ->{oidcRPMetaDataOptionsUserIDAttr} || $self->{whatToTrace};
+                my $user_id_attribute =
+                  $self->{oidcRPMetaDataOptions}->{$rp}
+                  ->{oidcRPMetaDataOptionsUserIDAttr}
+                  || $self->{whatToTrace};
                 my $user_id = $self->{sessionInfo}->{$user_id_attribute};
 
                 my $id_token_payload_hash = {

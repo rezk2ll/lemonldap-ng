@@ -128,6 +128,7 @@ sub unserialize {
 	|oidcOPMetaDataOptions
 	|oidcRPMetaDataExportedVars
 	|oidcRPMetaDataOptions
+	|oidcServiceMetaDataAuthnContext
 	|openIdExportedVars
 	|persistentStorageOptions
 	|portalSkinRules
