@@ -287,10 +287,12 @@ sub cstruct {
                         },
                         oidcOPMetaDataOptionsProtocol => {
                             _nodes => [
-                                qw(oidcOPMetaDataOptionsScope oidcOPMetaDataOptionsTokenEndpointAuthMethod oidcOPMetaDataOptionsCheckJWTSignature)
+                                qw(oidcOPMetaDataOptionsScope oidcOPMetaDataOptionsDisplay oidcOPMetaDataOptionsTokenEndpointAuthMethod oidcOPMetaDataOptionsCheckJWTSignature)
                             ],
                             oidcOPMetaDataOptionsScope =>
 "text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsScope",
+                            oidcOPMetaDataOptionsDisplay =>
+"text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsDisplay",
                             oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
 "text:/oidcOPMetaDataOptions/$k2/oidcOPMetaDataOptionsTokenEndpointAuthMethod",
                             oidcOPMetaDataOptionsCheckJWTSignature =>
@@ -317,7 +319,7 @@ sub cstruct {
             oidcRPMetaDataNode => {
                 $k2 => {
                     _nodes =>
-                      [ qw(oidcRPMetaDataExportedVars oidcRPMetaDataOptions) ],
+                      [qw(oidcRPMetaDataExportedVars oidcRPMetaDataOptions)],
                     oidcRPMetaDataExportedVars => {
                         _nodes =>
                           ["hash:/oidcRPMetaDataExportedVars/$k2:vars:btext"],

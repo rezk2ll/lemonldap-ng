@@ -65,6 +65,13 @@ has 'oidcOPMetaDataOptionsConfigurationURI' => (
     documentation => "OIDC OP configuration endpoint",
 );
 
+has 'oidcOPMetaDataOptionsDisplay' => (
+    is            => 'rw',
+    isa           => 'Str|Undef',
+    default       => undef,
+    documentation => "OIDC OP display",
+);
+
 has 'oidcOPMetaDataOptionsDisplayName' => (
     is            => 'rw',
     isa           => 'Str',
