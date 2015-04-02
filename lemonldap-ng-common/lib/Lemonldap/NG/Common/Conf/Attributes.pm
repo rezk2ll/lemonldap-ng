@@ -760,7 +760,7 @@ has 'oidcServiceMetaDataAuthnContext' => (
             'loa-5' => 5
         };
     },
-    documentation => 'WebID exported variables',
+    documentation => 'OpenID Connect Authentication Context Class Ref',
 );
 
 has 'oidcServiceMetaDataAuthorizeURI' => (
@@ -768,6 +768,13 @@ has 'oidcServiceMetaDataAuthorizeURI' => (
     isa           => 'Str',
     default       => 'authorize',
     documentation => 'OpenID Connect authorizaton endpoint',
+);
+
+has 'oidcServiceMetaDataEndSessionURI' => (
+    is            => 'rw',
+    isa           => 'Str',
+    default       => 'logout',
+    documentation => 'OpenID Connect end session endpoint',
 );
 
 has 'oidcServiceMetaDataIssuer' => (

@@ -1612,7 +1612,7 @@ sub struct {
 
             oidcServiceMetaDataEndPoints => {
                 _nodes => [
-                    qw(oidcServiceMetaDataAuthorizeURI oidcServiceMetaDataTokenURI oidcServiceMetaDataUserInfoURI oidcServiceMetaDataJWKSURI oidcServiceMetaDataRegistrationURI)
+                    qw(oidcServiceMetaDataAuthorizeURI oidcServiceMetaDataTokenURI oidcServiceMetaDataUserInfoURI oidcServiceMetaDataJWKSURI oidcServiceMetaDataRegistrationURI oidcServiceMetaDataEndSessionURI)
                 ],
 
                 oidcServiceMetaDataAuthorizeURI =>
@@ -1625,6 +1625,8 @@ sub struct {
                   'text:/oidcServiceMetaDataJWKSURI',
                 oidcServiceMetaDataRegistrationURI =>
                   'text:/oidcServiceMetaDataRegistrationURI',
+                oidcServiceMetaDataEndSessionURI =>
+                  'text:/oidcServiceMetaDataEndSessionURI',
             },
 
             oidcServiceMetaDataAuthnContext => {

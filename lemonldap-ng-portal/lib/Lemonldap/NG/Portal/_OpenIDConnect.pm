@@ -1297,6 +1297,24 @@ sub key2jwks {
     return $hash;
 }
 
+## @method String buildLogoutResponse(String redirect_uri, String state)
+# Build Logout Response URI
+# @param redirect_uri Redirect URI
+# @param state State
+# return String Logout URI
+sub buildLogoutResponse {
+    my ( $self, $redirect_uri, $state ) = splice @_;
+
+    my $response_url = $redirect_uri;
+
+    if ($state) {
+        $response_url .= ( $redirect_uri =~ /\?/ ? '&' : '?' );
+        $response_url .= "state=" . uri_escape($state);
+    }
+
+    return $response_url;
+}
+
 1;
 
 __END__
@@ -1445,6 +1463,10 @@ Return sub field of an ID Token
 =head2 key2jwks
 
 Return JWKS representation of a key
+
+=head2 buildLogoutResponse
+
+Build Logout Response URI 
 
 =head1 SEE ALSO
 

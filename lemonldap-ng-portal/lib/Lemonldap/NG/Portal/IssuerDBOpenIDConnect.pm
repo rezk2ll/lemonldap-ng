@@ -36,6 +36,7 @@ sub issuerForUnAuthUser {
     my $userinfo_uri              = $self->{oidcServiceMetaDataUserInfoURI};
     my $jwks_uri                  = $self->{oidcServiceMetaDataJWKSURI};
     my $registration_uri          = $self->{oidcServiceMetaDataRegistrationURI};
+    my $endsession_uri            = $self->{oidcServiceMetaDataEndSessionURI};
     my $issuer                    = $self->{oidcServiceMetaDataIssuer};
 
     # Called URL
@@ -421,6 +422,40 @@ sub issuerForUnAuthUser {
         $self->lmLog( "Registration response sent", 'debug' );
 
         $self->quit;
+    }
+
+    # END SESSION
+    if ( $url_path =~ m#${issuerDBOpenIDConnectPath}${endsession_uri}# ) {
+
+        $self->lmLog( "URL $url detected as an OpenID Connect END SESSION URL",
+            'debug' );
+
+        # Check that we are in an inactive session
+        unless ( $self->{id} ) {
+
+            $self->lmLog( "User is already logged out", 'debug' );
+
+            my $post_logout_redirect_uri =
+              $self->param('post_logout_redirect_uri');
+            my $state = $self->param('state');
+
+            if ($post_logout_redirect_uri) {
+
+                # Build Response
+                my $response_url =
+                  $self->buildLogoutResponse( $post_logout_redirect_uri,
+                    $state );
+
+                $self->lmLog( "Redirect user to $response_url", 'debug' );
+                $self->{'urldc'} = $response_url;
+
+                $self->_sub('autoRedirect');
+            }
+
+            return PE_LOGOUT_OK;
+        }
+
+        return PE_OK;
     }
 
     PE_OK;
