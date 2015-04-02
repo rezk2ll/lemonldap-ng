@@ -2380,13 +2380,21 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         browserIdBackgroundColor => $testNotDefined,
 
         # OIDC Service
-        oidcServiceMetaDataAuthorizeURI => $testNotDefined,
-        oidcServiceMetaDataIssuer       => $testNotDefined,
-        oidcServiceMetaDataTokenURI     => $testNotDefined,
-        oidcServiceMetaDataUserInfoURI  => $testNotDefined,
-        oidcServiceMetaDataJWKSURI      => $testNotDefined,
-        oidcServicePrivateKeySig        => $testNotDefined,
-        oidcServicePublicKeySig         => $testNotDefined,
+        oidcServiceMetaDataAuthorizeURI    => $testNotDefined,
+        oidcServiceMetaDataIssuer          => $testNotDefined,
+        oidcServiceMetaDataTokenURI        => $testNotDefined,
+        oidcServiceMetaDataUserInfoURI     => $testNotDefined,
+        oidcServiceMetaDataJWKSURI         => $testNotDefined,
+        oidcServiceMetaDataRegistrationURI => $testNotDefined,
+        oidcServiceMetaDataEndSessionURI   => $testNotDefined,
+        oidcServicePrivateKeySig           => $testNotDefined,
+        oidcServicePublicKeySig            => $testNotDefined,
+        oidcServiceMetaDataAuthnContext    => {
+            keyTest    => qr/^\w([\w\-]*\w)?$/,
+            keyMsgFail => 'Bad authn context name',
+            test       => qr/^\d+$/,
+            msgFail    => 'Bad authn context level',
+        },
 
         # OIDC OP
         oidcOPMetaDataExportedVars => {
