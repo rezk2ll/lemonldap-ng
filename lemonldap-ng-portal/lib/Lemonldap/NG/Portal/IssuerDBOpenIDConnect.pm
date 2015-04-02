@@ -430,32 +430,24 @@ sub issuerForUnAuthUser {
         $self->lmLog( "URL $url detected as an OpenID Connect END SESSION URL",
             'debug' );
 
-        # Check that we are in an inactive session
-        unless ( $self->{id} ) {
+        $self->lmLog( "User is already logged out", 'debug' );
 
-            $self->lmLog( "User is already logged out", 'debug' );
+        my $post_logout_redirect_uri = $self->param('post_logout_redirect_uri');
+        my $state                    = $self->param('state');
 
-            my $post_logout_redirect_uri =
-              $self->param('post_logout_redirect_uri');
-            my $state = $self->param('state');
+        if ($post_logout_redirect_uri) {
 
-            if ($post_logout_redirect_uri) {
+            # Build Response
+            my $response_url =
+              $self->buildLogoutResponse( $post_logout_redirect_uri, $state );
 
-                # Build Response
-                my $response_url =
-                  $self->buildLogoutResponse( $post_logout_redirect_uri,
-                    $state );
+            $self->lmLog( "Redirect user to $response_url", 'debug' );
+            $self->{'urldc'} = $response_url;
 
-                $self->lmLog( "Redirect user to $response_url", 'debug' );
-                $self->{'urldc'} = $response_url;
-
-                $self->_sub('autoRedirect');
-            }
-
-            return PE_LOGOUT_OK;
+            $self->_sub('autoRedirect');
         }
 
-        return PE_OK;
+        return PE_LOGOUT_OK;
     }
 
     PE_OK;
@@ -469,11 +461,12 @@ sub issuerForAuthUser {
     my $self = shift;
 
     my $issuerDBOpenIDConnectPath = $self->{issuerDBOpenIDConnectPath};
-    my $authorize_uri             = $self->{issuerDBOpenIDConnectAuthorizeURI};
-    my $token_uri                 = $self->{issuerDBOpenIDConnectTokenURI};
-    my $userinfo_uri              = $self->{issuerDBOpenIDConnectUserInfoURI};
+    my $authorize_uri             = $self->{oidcServiceMetaDataAuthorizeURI};
+    my $token_uri                 = $self->{oidcServiceMetaDataTokenURI};
+    my $userinfo_uri              = $self->{oidcServiceMetaDataUserInfoURI};
     my $jwks_uri                  = $self->{oidcServiceMetaDataJWKSURI};
     my $registration_uri          = $self->{oidcServiceMetaDataRegistrationURI};
+    my $endsession_uri            = $self->{oidcServiceMetaDataEndSessionURI};
     my $issuer                    = $self->{oidcServiceMetaDataIssuer};
 
     # Session ID
@@ -1118,6 +1111,58 @@ sub issuerForAuthUser {
         $self->returnJSONError("invalid_request");
 
         $self->quit;
+    }
+
+    # END SESSION
+    if ( $url_path =~ m#${issuerDBOpenIDConnectPath}${endsession_uri}# ) {
+
+        $self->lmLog( "URL $url detected as an OpenID Connect END SESSION URL",
+            'debug' );
+
+        # Set hidden fields
+        my $oidc_request = {};
+        foreach my $param (qw/id_token_hint post_logout_redirect_uri state/) {
+            $oidc_request->{$param} = $self->getHiddenFormValue($param)
+              || $self->param($param);
+            $self->lmLog(
+                "OIDC request parameter $param: " . $oidc_request->{$param},
+                'debug' );
+            $self->setHiddenFormValue( $param, $oidc_request->{$param} );
+        }
+
+        my $post_logout_redirect_uri =
+          $oidc_request->{'post_logout_redirect_uri'};
+        my $state = $oidc_request->{'state'};
+
+        # Ask consent for logout
+        if ( $self->param('confirm') == 1 or $self->param('confirm') == 1 ) {
+            if ( $self->param('confirm') == 1 ) {
+                my $apacheSession = $self->getApacheSession($session_id);
+                $self->_deleteSession($apacheSession);
+            }
+
+            if ($post_logout_redirect_uri) {
+
+                # Build Response
+                my $response_url =
+                  $self->buildLogoutResponse( $post_logout_redirect_uri,
+                    $state );
+
+                $self->lmLog( "Redirect user to $response_url", 'debug' );
+                $self->{'urldc'} = $response_url;
+
+                $self->_sub('autoRedirect');
+            }
+
+            return PE_LOGOUT_OK if $self->param('confirm') == 1;
+            return PE_OK;
+        }
+
+        $self->info('<div>');
+        $self->info("Logout ?");
+        $self->info('</div>');
+        $self->{activeTimer} = 0;
+        return PE_CONFIRM;
     }
 
     PE_OK;

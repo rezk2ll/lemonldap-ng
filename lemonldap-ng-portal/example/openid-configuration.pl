@@ -12,6 +12,7 @@ my $token_uri                 = $portal->{oidcServiceMetaDataTokenURI};
 my $userinfo_uri              = $portal->{oidcServiceMetaDataUserInfoURI};
 my $jwks_uri                  = $portal->{oidcServiceMetaDataJWKSURI};
 my $registration_uri          = $portal->{oidcServiceMetaDataRegistrationURI};
+my $endsession_uri            = $portal->{oidcServiceMetaDataEndSessionURI};
 
 my ($path) = ( $issuerDBOpenIDConnectPath =~ /(\w+)/ );
 my $issuer = $portal->{oidcServiceMetaDataIssuer};
@@ -27,6 +28,8 @@ $configuration->{userinfo_endpoint} = $issuer . $path . "/" . $userinfo_uri;
 $configuration->{jwks_uri}          = $issuer . $path . "/" . $jwks_uri;
 $configuration->{registration_endpoint} =
   $issuer . $path . "/" . $registration_uri;
+$configuration->{end_session_endpoint} =
+  $issuer . $path . "/" . $endsession_uri;
 $configuration->{scopes_supported} = [qw/openid profile email address phone/];
 $configuration->{response_types_supported} = [
     "code",
