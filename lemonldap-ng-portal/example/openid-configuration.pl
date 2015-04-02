@@ -15,6 +15,7 @@ my $registration_uri          = $portal->{oidcServiceMetaDataRegistrationURI};
 
 my ($path) = ( $issuerDBOpenIDConnectPath =~ /(\w+)/ );
 my $issuer = $portal->{oidcServiceMetaDataIssuer};
+my @acr    = keys $portal->{oidcServiceMetaDataAuthnContext};
 
 # Create OpenID configuration hash;
 my $configuration = {};
@@ -39,8 +40,7 @@ $configuration->{response_types_supported} = [
 # $configuration->{response_modes_supported}
 $configuration->{grant_types_supported} =
   [qw/authorization_code implicit hybrid/];
-
-# $configuration->{acr_values_supported}
+$configuration->{acr_values_supported}    = \@acr;
 $configuration->{subject_types_supported} = ["public"];
 $configuration->{id_token_signing_alg_values_supported} =
   [qw/none HS256 HS384 HS512 RS256 RS384 RS512/];
