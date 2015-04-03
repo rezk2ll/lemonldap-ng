@@ -1135,7 +1135,7 @@ sub issuerForAuthUser {
         my $state = $oidc_request->{'state'};
 
         # Ask consent for logout
-        if ( $self->param('confirm') == 1 or $self->param('confirm') == 1 ) {
+        if ( $self->param('confirm') == 1 or $self->param('confirm') == -1 ) {
             if ( $self->param('confirm') == 1 ) {
                 my $apacheSession = $self->getApacheSession($session_id);
                 $self->_deleteSession($apacheSession);
@@ -1158,8 +1158,8 @@ sub issuerForAuthUser {
             return PE_OK;
         }
 
-        $self->info('<div>');
-        $self->info("Logout ?");
+        $self->info('<div class="oidc_logout_message">');
+        $self->info( '<h3>' . $self->msg(PM_OIDC_CONFIRM_LOGOUT) . '</h3>' );
         $self->info('</div>');
         $self->{activeTimer} = 0;
         return PE_CONFIRM;

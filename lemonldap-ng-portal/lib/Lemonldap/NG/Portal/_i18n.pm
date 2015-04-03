@@ -433,6 +433,7 @@ sub error_ro {
 # * PM_OIDC_SCOPE_ADDRESS      28
 # * PM_OIDC_SCOPE_PHONE        29
 # * PM_OIDC_SCOPE_OTHER        30
+# * PM_OIDC_CONFIRM_LOGOUT     31
 
 sub msg_en {
     use utf8;
@@ -468,6 +469,7 @@ sub msg_en {
         'Your address',
         'Your phone number',
         'Another information:',
+        'Do you want to logout?',
     ];
 }
 
@@ -505,6 +507,7 @@ sub msg_fr {
         'Votre adresse',
         'Votre numéro de téléphone',
         'Une autre information :',
+        'Souhaitez-vous vous déconnecter&nbsp;?',
     ];
 }
 
