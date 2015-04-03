@@ -266,7 +266,7 @@ sub buildAuthorizationCodeAuthnRequest {
     $authn_uri .= "&nonce=$nonce"           if defined $nonce;
     $authn_uri .= "&display=$display"       if defined $display;
     $authn_uri .= "&prompt=$prompt"         if defined $prompt;
-    $authn_uri .= "&max_age=$max_age"       if defined $max_age;
+    $authn_uri .= "&max_age=$max_age"       if $max_age;
     $authn_uri .= "&ui_locales=$ui_locales" if defined $ui_locales;
     $authn_uri .= "&acr_values=$acr_values" if defined $acr_values;
 
