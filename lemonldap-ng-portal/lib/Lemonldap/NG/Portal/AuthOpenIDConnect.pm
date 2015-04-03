@@ -36,7 +36,7 @@ sub setAuthSessionInfo {
     $self->{sessionInfo}->{OpenIDConnect_OP} = $self->{_oidcOPCurrent};
     $self->{sessionInfo}->{OpenIDConnect_access_token} =
       $self->{tmp}->{access_token};
-    $self->{sessionInfo}->{OpenIDConnect_IDToken} = $self->{tmp}->{IDToken};
+    $self->{sessionInfo}->{OpenIDConnect_IDToken} = $self->{tmp}->{id_token};
 
     PE_OK;
 }
@@ -180,7 +180,7 @@ sub extractFormInfo {
 
         # Remember tokens
         $self->{tmp}->{access_token} = $access_token;
-        $self->{tmp}->{id_token}     = $id_token_payload_hash;
+        $self->{tmp}->{id_token}     = $id_token;
 
         $self->lmLog( "Found user_id: " . $user_id, 'debug' );
         $self->{user} = $user_id;
@@ -267,9 +267,33 @@ sub authFinish {
 }
 
 ## @apmethod int authLogout()
-# Does nothing
+# Send request to endsession endpoint
 # @return Lemonldap::NG::Portal constant
 sub authLogout {
+    my $self = shift;
+
+    my $op = $self->{sessionInfo}->{OpenIDConnect_OP};
+
+    # Find endession endpoint
+    my $endsession_endpoint =
+      $self->{_oidcOPList}->{$op}->{conf}->{end_session_endpoint};
+
+    if ($endsession_endpoint) {
+        my $logout_url = $self->{portal} . "/?logout=1";
+        my $logout_request =
+          $self->buildLogoutRequest( $endsession_endpoint,
+            $self->{sessionInfo}->{OpenIDConnect_IDToken}, $logout_url );
+
+        $self->lmLog(
+            "OpenID Connect logout to $op will be done on $logout_request",
+            'debug' );
+
+        $self->{urldc} = $logout_request;
+    }
+    else {
+        $self->lmLog( "No end session endpoint found for $op", 'debug' );
+    }
+
     PE_OK;
 }
 
