@@ -228,11 +228,10 @@ sub buildAuthorizationCodeAuthnRequest {
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsClientID};
     my $scope =
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsScope};
+    my $use_nonce =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsUseNonce};
     my $response_type = "code";
     my $redirect_uri  = $self->getCallbackUri;
-    my $nonceSession  = $self->getOpenIDConnectSession();
-    $nonceSession->update( { '_utime' => time } );
-    my $nonce = $nonceSession->id;
     my $display =
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsDisplay};
     my $prompt =
@@ -244,12 +243,18 @@ sub buildAuthorizationCodeAuthnRequest {
     my $acr_values =
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsAcrValues};
 
+    my $nonce;
+    if ($use_nonce) {
+        my $nonceSession = $self->getOpenIDConnectSession();
+        $nonceSession->update( { '_utime' => time } );
+        $nonce = $nonceSession->id;
+    }
     $client_id     = uri_escape($client_id);
     $scope         = uri_escape($scope);
     $response_type = uri_escape($response_type);
     $redirect_uri  = uri_escape($redirect_uri);
     $state         = uri_escape($state) if defined $state;
-    $nonce         = uri_escape($nonce);
+    $nonce         = uri_escape($nonce) if defined $nonce;
     $display       = uri_escape($display) if defined $display;
     $prompt        = uri_escape($prompt) if defined $prompt;
     $max_age       = uri_escape($max_age) if defined $max_age;
@@ -470,6 +475,8 @@ sub checkIDTokenValidity {
     my $id_token_max_age =
       $self->{oidcOPMetaDataOptions}->{$op}
       ->{oidcOPMetaDataOptionsIDTokenMaxAge};
+    my $use_nonce =
+      $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsUseNonce};
 
     # Check issuer
     unless ( $id_token->{iss} eq $self->{_oidcOPList}->{$op}->{conf}->{issuer} )
@@ -519,22 +526,24 @@ sub checkIDTokenValidity {
     }
 
     # Check nonce
-    my $nonce = $id_token->{nonce};
-    unless ($nonce) {
-        $self->lmLog( "Nonce was not returned by OP $op", 'debug' );
-    }
-    else {
-        # Get nonce session
-        my $nonceSession = $self->getOpenIDConnectSession($nonce);
-        unless ($nonceSession) {
-            $self->lmLog( "Nonce $nonce verification failed", 'error' );
+    if ($use_nonce) {
+        my $nonce = $id_token->{nonce};
+        unless ($nonce) {
+            $self->lmLog( "Nonce was not returned by OP $op", 'error' );
             return 0;
         }
         else {
-            $nonceSession->remove;
-            $self->lmLog( "Nonce $nonce deleted", 'debug' );
+            # Get nonce session
+            my $nonceSession = $self->getOpenIDConnectSession($nonce);
+            unless ($nonceSession) {
+                $self->lmLog( "Nonce $nonce verification failed", 'error' );
+                return 0;
+            }
+            else {
+                $nonceSession->remove;
+                $self->lmLog( "Nonce $nonce deleted", 'debug' );
+            }
         }
-
     }
 
     # Check acr

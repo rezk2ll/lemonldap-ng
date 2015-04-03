@@ -289,6 +289,7 @@ sub en {
         oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
           'Token endpoint authentication method',
         oidcOPMetaDataOptionsUiLocales => 'UI locales',
+        oidcOPMetaDataOptionsUseNonce  => 'Use nonce',
         oidcParams                     => 'OpenID Connect parameters',
         oidcRPCallbackGetParam         => 'Callback GET parameter',
         oidcRPMetaDataExportedVars     => 'Exported attributes',
@@ -860,6 +861,7 @@ sub fr {
         oidcOPMetaDataOptionsTokenEndpointAuthMethod =>
           'Méthode d\'authentification pour l\'accès aux jetons',
         oidcOPMetaDataOptionsUiLocales => 'Locales UI',
+        oidcOPMetaDataOptionsUseNonce  => 'Utilisation du nonce',
         oidcParams                     => 'Paramètres OpenID Connect',
         oidcRPCallbackGetParam         => 'Paramètre GET callback',
         oidcRPMetaDataExportedVars     => 'Attributs exportés',

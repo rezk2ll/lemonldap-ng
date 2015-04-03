@@ -107,6 +107,13 @@ has 'oidcOPMetaDataOptionsJWKSTimeout' => (
     documentation => "OIDC OP JWKS data refresh interval",
 );
 
+has 'oidcOPMetaDataOptionsUseNonce' => (
+    is            => 'rw',
+    isa           => 'Bool',
+    default       => '1',
+    documentation => "OIDC OP Use nonce",
+);
+
 has 'oidcOPMetaDataOptionsMaxAge' => (
     is            => 'rw',
     isa           => 'Int|Undef',
