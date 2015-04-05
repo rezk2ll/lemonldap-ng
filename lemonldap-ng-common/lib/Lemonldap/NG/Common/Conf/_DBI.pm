@@ -87,8 +87,13 @@ sub unlock {
 
 sub delete {
     my ( $self, $cfgNum ) = @_;
-    $self->_dbh->do( "DELETE from " . $self->{dbiTable} . " WHERE cfgNum=?",
-        {}, $cfgNum );
+    my $req =
+      $self->_dbh->prepare("DELETE FROM $self->{dbiTable} WHERE cfgNum=?");
+    my $res = $req->execute($cfgNum);
+    $Lemonldap::NG::Common::Conf::msg .=
+      "Unable to find conf $cfgNum (" . $self->_dbh->errstr . ")"
+      unless ($res);
+    return $res;
 }
 
 sub logError {
