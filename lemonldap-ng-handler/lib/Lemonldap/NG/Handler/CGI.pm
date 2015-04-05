@@ -21,9 +21,9 @@ sub new {
     # Get access control rule
     my $rule = $self->{protection} || $localConfig->{protection};
     $rule =~ s/^rule\s*:?\s*//;
+    return $self if ( $rule eq "none" );
     $rule =
-        $rule eq "none"         ? "skip"
-      : $rule eq "authenticate" ? "accept"
+        $rule eq "authenticate" ? "accept"
       : $rule eq "manager"      ? ""
       :                           $rule;
 
