@@ -19,7 +19,7 @@ sub new {
     Lemonldap::NG::Handler::SharedConf->init($args);
 
     # Get access control rule
-    my $rule = $localConfig->{protection};
+    my $rule = $self->{protection} || $localConfig->{protection};
     $rule =~ s/^rule\s*:?\s*//;
     $rule =
         $rule eq "none"         ? "skip"
