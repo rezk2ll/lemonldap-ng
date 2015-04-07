@@ -583,6 +583,9 @@ sub issuerForAuthUser {
             # Disable further reauthentication
             $prompt =~ s/\blogin\b//;
             $self->setHiddenFormValue( 'prompt', $prompt );
+
+            # Update session_id
+            $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
         }
 
         # Check openid scope
@@ -795,6 +798,10 @@ sub issuerForAuthUser {
             }
         }
 
+        # Create session_state
+        my $session_state =
+          $self->createSessionState( $session_id, $client_id );
+
         # Authorization Code Flow
         if ( $flow eq "authorizationcode" ) {
 
@@ -816,10 +823,11 @@ sub issuerForAuthUser {
             );
 
             # Build Response
-            my $response_url =
-              $self->buildAuthorizationCodeAuthnResponse(
+            my $response_url = $self->buildAuthorizationCodeAuthnResponse(
                 $oidc_request->{'redirect_uri'},
-                $code, $oidc_request->{'state'} );
+                $code, $oidc_request->{'state'},
+                $session_state
+            );
 
             $self->lmLog( "Redirect user to $response_url", 'debug' );
             $self->{'urldc'} = $response_url;
@@ -916,11 +924,11 @@ sub issuerForAuthUser {
               ->{oidcRPMetaDataOptionsAccessTokenExpiration};
 
             # Build Response
-            my $response_url =
-              $self->buildImplicitAuthnResponse(
+            my $response_url = $self->buildImplicitAuthnResponse(
                 $oidc_request->{'redirect_uri'},
-                $access_token, $id_token, $expires_in,
-                $oidc_request->{'state'} );
+                $access_token, $id_token, $expires_in, $oidc_request->{'state'},
+                $session_state
+            );
 
             $self->lmLog( "Redirect user to $response_url", 'debug' );
             $self->{'urldc'} = $response_url;
@@ -1037,10 +1045,12 @@ sub issuerForAuthUser {
               ->{oidcRPMetaDataOptionsAccessTokenExpiration};
 
             # Build Response
-            my $response_url =
-              $self->buildHybridAuthnResponse( $oidc_request->{'redirect_uri'},
+            my $response_url = $self->buildHybridAuthnResponse(
+                $oidc_request->{'redirect_uri'},
                 $code, $access_token, $id_token, $expires_in,
-                $oidc_request->{'state'} );
+                $oidc_request->{'state'},
+                $session_state
+            );
 
             $self->lmLog( "Redirect user to $response_url", 'debug' );
             $self->{'urldc'} = $response_url;

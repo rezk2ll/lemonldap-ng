@@ -282,14 +282,15 @@ sub buildAuthorizationCodeAuthnRequest {
     return $authn_uri;
 }
 
-## @method String buildAuthorizationCodeAuthnResponse(String redirect_uri, String code, String state)
+## @method String buildAuthorizationCodeAuthnResponse(String redirect_uri, String code, String state, String session_state)
 # Build Authentication Response URI for Authorization Code Flow
 # @param redirect_uri Redirect URI
 # @param code Code
 # @param state State
+# @param session_state Session state
 # return String Authentication Response URI
 sub buildAuthorizationCodeAuthnResponse {
-    my ( $self, $redirect_uri, $code, $state ) = splice @_;
+    my ( $self, $redirect_uri, $code, $state, $session_state ) = splice @_;
 
     my $response_url = $redirect_uri;
 
@@ -301,19 +302,25 @@ sub buildAuthorizationCodeAuthnResponse {
         $response_url .= "&state=" . uri_escape($state);
     }
 
+    if ($session_state) {
+        $response_url .= "&session_state=" . uri_escape($session_state);
+    }
+
     return $response_url;
 }
 
-## @method String buildImplicitAuthnResponse(String redirect_uri, String access_token, String id_token, String expires_in, String state)
+## @method String buildImplicitAuthnResponse(String redirect_uri, String access_token, String id_token, String expires_in, String state, String session_state)
 # Build Authentication Response URI for Implicit Flow
 # @param redirect_uri Redirect URI
 # @param access_token Access token
 # @param id_token ID token
 # @param expires_in Expiration of access token
 # @param state State
+# @param session_state Session state
 # return String Authentication Response URI
 sub buildImplicitAuthnResponse {
-    my ( $self, $redirect_uri, $access_token, $id_token, $expires_in, $state )
+    my ( $self, $redirect_uri, $access_token, $id_token, $expires_in, $state,
+        $session_state )
       = splice @_;
 
     my $response_url = $redirect_uri;
@@ -333,10 +340,14 @@ sub buildImplicitAuthnResponse {
         $response_url .= "&state=" . uri_escape($state);
     }
 
+    if ($session_state) {
+        $response_url .= "&session_state=" . uri_escape($session_state);
+    }
+
     return $response_url;
 }
 
-## @method String buildHybridAuthnResponse(String redirect_uri, String code, String access_token, String id_token, String expires_in, String state)
+## @method String buildHybridAuthnResponse(String redirect_uri, String code, String access_token, String id_token, String expires_in, String state, String session_state)
 # Build Authentication Response URI for Hybrid Flow
 # @param redirect_uri Redirect URI
 # @param code Code
@@ -344,11 +355,13 @@ sub buildImplicitAuthnResponse {
 # @param id_token ID token
 # @param expires_in Expiration of access token
 # @param state State
+# @param session_state Session state
 # return String Authentication Response URI
 sub buildHybridAuthnResponse {
-    my ( $self, $redirect_uri, $code, $access_token, $id_token, $expires_in,
-        $state )
-      = splice @_;
+    my (
+        $self,     $redirect_uri, $code,  $access_token,
+        $id_token, $expires_in,   $state, $session_state
+    ) = splice @_;
 
     my $response_url = $redirect_uri;
 
@@ -369,6 +382,10 @@ sub buildHybridAuthnResponse {
 
     if ($state) {
         $response_url .= "&state=" . uri_escape($state);
+    }
+
+    if ($session_state) {
+        $response_url .= "&session_state=" . uri_escape($session_state);
     }
 
     return $response_url;
@@ -1354,6 +1371,22 @@ sub buildLogoutResponse {
     }
 
     return $response_url;
+}
+
+## @method String createSessionState(String session_id, String client_id)
+# Create session_state parameter
+# @param session_id Session ID
+# @param client_id CLient ID
+# return String Session state
+sub createSessionState {
+    my ( $self, $session_id, $client_id ) = splice @_;
+
+    my $salt = encode_base64url( $self->{cipher}->encrypt($client_id) );
+    my $data = $client_id . " " . $session_id . " " . $salt;
+
+    my $session_state = sha256_base64($data) . "." . $salt;
+
+    return $session_state;
 }
 
 1;
