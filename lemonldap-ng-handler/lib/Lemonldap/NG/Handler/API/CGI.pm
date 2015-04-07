@@ -118,7 +118,9 @@ sub set_header_out {
 # returns host, as set by full URI or Host header
 # @return host string Host value
 sub hostname {
-    return $ENV{SERVER_NAME};
+    my $s = $ENV{SERVER_NAME};
+    $s =~ s/:\d+$//;
+    return $s
 }
 
 ## @method string remote_ip
