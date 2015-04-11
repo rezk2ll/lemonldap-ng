@@ -1301,7 +1301,7 @@ sub getIDTokenSub {
     my ( $self, $id_token ) = splice @_;
 
     my $jwt     = $self->extractJWT($id_token);
-    my $payload = decode_json( decode_base64( $jwt->[1] ) );
+    my $payload = decode_json( decode_base64url( $jwt->[1] ) );
 
     return $payload->{sub};
 }
