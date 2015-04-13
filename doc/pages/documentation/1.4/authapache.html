@@ -341,7 +341,7 @@ vi /var/lib/lemonldap-ng/portal/login.pl
   &lt;/<span class="kw3">Directory</span>&gt;
 &nbsp;
   <span class="kw1">ErrorDocument</span> 401 /login.pl
-  &lt;<span class="kw3">LocationMatch</span> /(index.pl|cas/*|saml/*|openidserver/*)&gt;
+  &lt;<span class="kw3">LocationMatch</span> ^/(?!login.pl)&gt;
     &lt;<span class="kw3">IfModule</span> auth_kerb_module&gt;
       <span class="kw1">AuthType</span> Kerberos
       KrbMethodNegotiate <span class="kw2">On</span>
@@ -374,7 +374,7 @@ vi /var/lib/lemonldap-ng/portal/login.pl
 </p>
 
 </div>
-<!-- SECTION "Use Kerberos with Multiple authentication backend" [4635-7092] -->
+<!-- SECTION "Use Kerberos with Multiple authentication backend" [4635-7067] -->
 <h3><a name="time_to_test" id="time_to_test">Time to test</a></h3>
 <div class="level3">
 
@@ -385,4 +385,4 @@ Configure <acronym title="Internet Explorer">IE</acronym> or Firefox to trust <c
 </p>
 
 </div>
-<!-- SECTION "Time to test" [7093-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Time to test" [7068-] --></div><!-- closes <div class="dokuwiki export">-->

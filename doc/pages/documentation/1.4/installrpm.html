@@ -106,6 +106,15 @@ baseurl=http://lemonldap-ng.org/rpm6/
 
 <p>
 
+Change the base <acronym title="Uniform Resource Locator">URL</acronym> for EL7 packages:
+
+</p>
+<pre class="file">
+baseurl=http://lemonldap-ng.org/rpm7/
+</pre>
+
+<p>
+
 
 </div></p>
 </p>
@@ -126,7 +135,7 @@ You must also install the EPEL repository for non-core dependencies. See <a href
 </p>
 
 </div>
-<!-- SECTION "YUM repository" [974-1607] -->
+<!-- SECTION "YUM repository" [974-1698] -->
 <h3><a name="manual_download" id="manual_download">Manual download</a></h3>
 <div class="level3">
 
@@ -136,7 +145,7 @@ RPMs are available on the <a href="../../download.html" class="wikilink1" title=
 </p>
 
 </div>
-<!-- SECTION "Manual download" [1608-1690] -->
+<!-- SECTION "Manual download" [1699-1781] -->
 <h2><a name="package_gpg_signature" id="package_gpg_signature">Package GPG signature</a></h2>
 <div class="level2">
 
@@ -153,12 +162,12 @@ rpm --import rpm-gpg-key-ow2
 </pre>
 
 </div>
-<!-- SECTION "Package GPG signature" [1691-1856] -->
+<!-- SECTION "Package GPG signature" [1782-1947] -->
 <h2><a name="install_packages" id="install_packages">Install packages</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install packages" [1857-1886] -->
+<!-- SECTION "Install packages" [1948-1977] -->
 <h3><a name="with_yum" id="with_yum">With YUM</a></h3>
 <div class="level3">
 
@@ -185,7 +194,7 @@ yum localinstall lemonldap-ng-* perl-Lemonldap-NG-*
 </pre>
 
 </div>
-<!-- SECTION "With YUM" [1887-2304] -->
+<!-- SECTION "With YUM" [1978-2395] -->
 <h3><a name="with_rpm" id="with_rpm">With RPM</a></h3>
 <div class="level3">
 
@@ -231,12 +240,12 @@ ln -s /usr/lib/perl5/vendor_perl/5.8.8/auto/Lemonldap /usr/lib64/perl5/auto/
 </p>
 
 </div>
-<!-- SECTION "With RPM" [2305-3026] -->
+<!-- SECTION "With RPM" [2396-3117] -->
 <h2><a name="first_configuration_steps" id="first_configuration_steps">First configuration steps</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "First configuration steps" [3027-3065] -->
+<!-- SECTION "First configuration steps" [3118-3156] -->
 <h3><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h3>
 <div class="level3">
 
@@ -247,7 +256,7 @@ By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>ex
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- SECTION "Change default DNS domain" [3066-3380] -->
+<!-- SECTION "Change default DNS domain" [3157-3471] -->
 <h3><a name="apache_virtual_host" id="apache_virtual_host">Apache virtual host</a></h3>
 <div class="level3">
 
@@ -269,7 +278,27 @@ Check Apache configuration and restart:
 apachectl restart</pre>
 
 </div>
-<!-- SECTION "Apache virtual host" [3381-3775] -->
+<!-- SECTION "Apache virtual host" [3472-3866] -->
+<h3><a name="default_virtual_host" id="default_virtual_host">Default virtual host</a></h3>
+<div class="level3">
+
+<p>
+
+Apache on RedHat comes with a default virtual host:
+
+</p>
+<pre class="code file apache">&lt;<span class="kw3">LocationMatch</span> <span class="st0">&quot;^/+$&quot;</span>&gt;
+<span class="kw1">Options</span> -<span class="kw2">Indexes</span>
+<span class="kw1">ErrorDocument</span> 403 /.noindex.html
+&lt;/<span class="kw3">LocationMatch</span>&gt;</pre>
+
+<p>
+This conflicts with LemonLDAP::NG ErrorDocument configuration, so you need to comment this part of the vhost.
+If you have an apache fresh install, it can be a good idea to completely disable the welcome vhost.
+</p>
+
+</div>
+<!-- SECTION "Default virtual host" [3867-4274] -->
 <h3><a name="reload_virtual_host" id="reload_virtual_host">Reload virtual host</a></h3>
 <div class="level3">
 
@@ -286,7 +315,7 @@ To allow the manager to reload the configuration, register the reload virtual ho
 </p>
 
 </div>
-<!-- SECTION "Reload virtual host" [3776-4077] -->
+<!-- SECTION "Reload virtual host" [4275-4576] -->
 <h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
 <div class="level3">
 
@@ -320,7 +349,7 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </p>
 
 </div>
-<!-- SECTION "Upgrade" [4078-6587] -->
+<!-- SECTION "Upgrade" [4577-7086] -->
 <h3><a name="dns" id="dns">DNS</a></h3>
 <div class="level3">
 
@@ -347,7 +376,7 @@ Follow the <a href="../../documentation/1.4/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- SECTION "DNS" [6588-6860] -->
+<!-- SECTION "DNS" [7087-7359] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -364,7 +393,7 @@ Follow the <a href="../../documentation/1.4/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- SECTION "File location" [6861-7217] -->
+<!-- SECTION "File location" [7360-7716] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -398,4 +427,4 @@ rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [7218-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [7717-] --></div><!-- closes <div class="dokuwiki export">-->
