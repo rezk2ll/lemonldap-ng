@@ -48,4 +48,5 @@ my $mode =
 eval "use Lemonldap::NG::Handler::API::$mode (':httpCodes', ':functions');
       use base Lemonldap::NG::Handler::API::$mode;";
 
+die $@ if($@);
 1;
