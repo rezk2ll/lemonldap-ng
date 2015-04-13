@@ -181,7 +181,9 @@ sub locationRulesInit {
                 push @{ $tsv->{locationProtection}->{$vhost} }, $prot;
                 push @{ $tsv->{locationRegexp}->{$vhost} },     qr/$url/;
                 push @{ $tsv->{locationConditionText}->{$vhost} },
-                  /^\(\?#(.*?)\)/ ? $1 : /^(.*?)##(.+)$/ ? $2 : $url;
+                    $cond =~ /^\(\?#(.*?)\)/ ? $1
+                  : $cond =~ /^(.*?)##(.+)$/ ? $2
+                  :                            $url;
                 $tsv->{locationCount}->{$vhost}++;
             }
         }
