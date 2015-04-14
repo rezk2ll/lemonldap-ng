@@ -327,7 +327,19 @@ sub issuerForUnAuthUser {
         my $userinfo_response =
           $self->buildUserInfoResponse( $scope, $rp, $user_session_id );
 
-        $self->returnJSON($userinfo_response);
+        my $userinfo_sign_alg = $self->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsUserInfoSignAlg};
+
+        unless ($userinfo_sign_alg) {
+            $self->returnJSON($userinfo_response);
+        }
+        else {
+            my $userinfo_jwt =
+              $self->createJWT( $userinfo_response, $userinfo_sign_alg, $rp );
+            print $self->header('application/jwt');
+            print $userinfo_jwt;
+            $self->lmLog( "Return UserInfo as JWT: $userinfo_jwt", 'debug' );
+        }
 
         $self->lmLog( "UserInfo response sent", 'debug' );
 

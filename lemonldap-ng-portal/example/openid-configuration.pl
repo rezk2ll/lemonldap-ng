@@ -50,6 +50,9 @@ $configuration->{id_token_signing_alg_values_supported} =
 
 # $configuration->{id_token_encryption_alg_values_supported}
 # $configuration->{id_token_encryption_enc_values_supported}
+$configuration->{userinfo_signing_alg_values_supported} =
+  [qw/none HS256 HS384 HS512 RS256 RS384 RS512/];
+
 # $configuration->{userinfo_encryption_alg_values_supported}
 # $configuration->{userinfo_encryption_enc_values_supported}
 # $configuration->{request_object_signing_alg_values_supported}

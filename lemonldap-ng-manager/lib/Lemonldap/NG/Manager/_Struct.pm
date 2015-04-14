@@ -339,7 +339,7 @@ sub cstruct {
                     },
                     oidcRPMetaDataOptions => {
                         _nodes => [
-                            qw(oidcRPMetaDataOptionsAuthentication oidcRPMetaDataOptionsDisplay oidcRPMetaDataOptionsUserIDAttr oidcRPMetaDataOptionsIDTokenSignAlg oidcRPMetaDataOptionsIDTokenExpiration oidcRPMetaDataOptionsAccessTokenExpiration oidcRPMetaDataOptionsRedirectUris)
+                            qw(oidcRPMetaDataOptionsAuthentication oidcRPMetaDataOptionsDisplay oidcRPMetaDataOptionsUserIDAttr oidcRPMetaDataOptionsIDTokenSignAlg oidcRPMetaDataOptionsIDTokenExpiration oidcRPMetaDataOptionsAccessTokenExpiration oidcRPMetaDataOptionsRedirectUris oidcRPMetaDataOptionsUserInfoSignAlg)
                         ],
                         oidcRPMetaDataOptionsAuthentication => {
                             _nodes => [
@@ -369,6 +369,8 @@ sub cstruct {
 "int:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsAccessTokenExpiration",
                         oidcRPMetaDataOptionsRedirectUris =>
 "text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsRedirectUris",
+                        oidcRPMetaDataOptionsUserInfoSignAlg =>
+"text:/oidcRPMetaDataOptions/$k2/oidcRPMetaDataOptionsUserInfoSignAlg",
                     },
                 },
             },

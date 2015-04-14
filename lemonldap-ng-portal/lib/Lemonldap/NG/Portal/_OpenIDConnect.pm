@@ -1189,30 +1189,25 @@ sub buildUserInfoResponse {
     return $userinfo_response;
 }
 
-## @method String createIDToken(hashref payload, String rp)
-# Return ID Token
-# @param payload ID Token content
+## @method String createJWT(hashref payload, String alg, String rp)
+# Return JWT
+# @param payload JWT content
+# @param alg Signature algorithm
 # @param rp Internal Relying Party identifier
-# @return String id_token ID Token as JWT
-sub createIDToken {
-    my ( $self, $payload, $rp ) = splice @_;
-
-    # Get signature algorithm
-    my $alg = $self->{oidcRPMetaDataOptions}->{$rp}
-      ->{oidcRPMetaDataOptionsIDTokenSignAlg};
-    $self->lmLog( "JWT signature algorithm: $alg", 'debug' );
+# @return String jwt JWT
+sub createJWT {
+    my ( $self, $payload, $alg, $rp ) = splice @_;
 
     # Payload encoding
-    my $id_token_payload = encode_base64( encode_json($payload), "" );
+    my $jwt_payload = encode_base64( encode_json($payload), "" );
 
-    # ID Token header
-    my $id_token_header_hash = { typ => "JWT", alg => $alg };
-    my $id_token_header =
-      encode_base64( encode_json($id_token_header_hash), "" );
+    # JWT header
+    my $jwt_header_hash = { typ => "JWT", alg => $alg };
+    my $jwt_header = encode_base64( encode_json($jwt_header_hash), "" );
 
     if ( $alg eq "none" ) {
 
-        return $id_token_header . "." . $id_token_payload;
+        return $jwt_header . "." . $jwt_payload;
     }
 
     if ( $alg eq "HS256" or $alg eq "HS384" or $alg eq "HS512" ) {
@@ -1225,24 +1220,21 @@ sub createIDToken {
         my $digest;
 
         if ( $alg eq "HS256" ) {
-            $digest =
-              hmac_sha256_base64( $id_token_header . "." . $id_token_payload,
+            $digest = hmac_sha256_base64( $jwt_header . "." . $jwt_payload,
                 $client_secret );
         }
 
         if ( $alg eq "HS384" ) {
-            $digest =
-              hmac_sha384_base64( $id_token_header . "." . $id_token_payload,
+            $digest = hmac_sha384_base64( $jwt_header . "." . $jwt_payload,
                 $client_secret );
         }
 
         if ( $alg eq "HS512" ) {
-            $digest =
-              hmac_sha512_base64( $id_token_header . "." . $id_token_payload,
+            $digest = hmac_sha512_base64( $jwt_header . "." . $jwt_payload,
                 $client_secret );
         }
 
-        return $id_token_header . "." . $id_token_payload . "." . $digest;
+        return $jwt_header . "." . $jwt_payload . "." . $digest;
     }
 
     if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
@@ -1264,14 +1256,30 @@ sub createIDToken {
         }
 
         my $digest = encode_base64url(
-            $rsa_priv->sign( $id_token_header . "." . $id_token_payload ) );
+            $rsa_priv->sign( $jwt_header . "." . $jwt_payload ) );
 
-        return $id_token_header . "." . $id_token_payload . "." . $digest;
+        return $jwt_header . "." . $jwt_payload . "." . $digest;
     }
 
-    $self->lmLog( "Algorithm $alg not supported to sign ID Token", 'debug' );
+    $self->lmLog( "Algorithm $alg not supported to sign JWT", 'debug' );
 
     return;
+}
+
+## @method String createIDToken(hashref payload, String rp)
+# Return ID Token
+# @param payload ID Token content
+# @param rp Internal Relying Party identifier
+# @return String id_token ID Token as JWT
+sub createIDToken {
+    my ( $self, $payload, $rp ) = splice @_;
+
+    # Get signature algorithm
+    my $alg = $self->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsIDTokenSignAlg};
+    $self->lmLog( "ID Token signature algorithm: $alg", 'debug' );
+
+    return $self->createJWT( $payload, $alg, $rp );
 }
 
 ## @method String getFlowType(String response_type)
@@ -1521,6 +1529,10 @@ Return list of attributes authorized for a claim
 =head2 buildUserInfoResponse
 
 Return Hash of UserInfo data
+
+=head2 createJWT
+
+Return JWT
 
 =head2 createIDToken
 
