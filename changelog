@@ -2,13 +2,16 @@ lemonldap-ng (2.00) stable; urgency=low
 
 lemonldap-ng (1.4.4) stable; urgency=low
 
-    * [LEMONLDAP-756] - Session Explorer not loading the globalStorage from lemonldap-ng.ini
     * [LEMONLDAP-763] - purgeCentralCache sometimes hangs
     * [LEMONLDAP-783] - Test error with SOAP::Lite 1.12
     * [LEMONLDAP-784] - reset password in AD not working
     * [LEMONLDAP-788] - Captcha not working using multiple backends...
-    * [LEMONLDAP-791] - attribute duplication in specific module and in general exported variables results in empty variable
     * [LEMONLDAP-793] - Common/Conf/File must return an error if file can't be opened
+    * [LEMONLDAP-801] - Multi and Kerberos does not work with a positive LocationMatch
+    * [LEMONLDAP-805] - Update session failure on high load if idle timeout is configured
+    * [LEMONLDAP-806] - ErrorDocument conflicts with CentOS's default apache vhost
+    * [LEMONLDAP-799] - parameter notOnOrAfter should be computed against SAML message emission date
+    * [LEMONLDAP-807] - End of OpenID 2.0 support for Google on April 20, 2015
 
 lemonldap-ng (1.4.3) stable; urgency=low
 
