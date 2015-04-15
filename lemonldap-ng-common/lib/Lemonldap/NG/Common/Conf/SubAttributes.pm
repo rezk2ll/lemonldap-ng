@@ -8,7 +8,7 @@ package Lemonldap::NG::Common::Conf::SubAttributes;
 
 use Mouse;
 
-our $VERSION = 2.00;
+our $VERSION = '2.0.0';
 
 ## E
 

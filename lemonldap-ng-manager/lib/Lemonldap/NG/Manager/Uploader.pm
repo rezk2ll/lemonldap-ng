@@ -20,7 +20,7 @@ use Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Request;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
-our $VERSION = 2.00;
+our $VERSION = '2.0.0';
 our ( $stylesheet, $parser );
 
 ## @method void confUpload(ref rdata)

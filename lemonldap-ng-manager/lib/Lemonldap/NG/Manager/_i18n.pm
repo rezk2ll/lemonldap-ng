@@ -9,7 +9,7 @@ package Lemonldap::NG::Manager::_i18n;
 
 use strict;
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '2.00';
+our $VERSION = '2.0.0';
 
 ## @method string translate(string text,string lang)
 # Returns $text translated in $lang.

@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::API::ApacheMP2;
 
 use Exporter 'import';
 
-our $VERSION = '2.00';
+our $VERSION = '2.0.0';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
 BEGIN {

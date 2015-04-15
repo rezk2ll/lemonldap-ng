@@ -24,10 +24,10 @@ requires:
   HTML::Template: '0'
   JSON: '0'
   LWP: '0'
-  Lemonldap::NG::Common: '2'
-  Lemonldap::NG::Handler: '2'
+  Lemonldap::NG::Common: v2.0.0
+  Lemonldap::NG::Handler: v2.0.0
   URI: '0'
   XML::LibXML: '0'
   XML::LibXSLT: '0'
-version: 2
+version: v2.0.0
 x_LWP::Protocol::https: 0

@@ -11,7 +11,7 @@ use Lemonldap::NG::Common::Conf::Attributes;
 use Lemonldap::NG::Common::Conf::SubAttributes;
 use Lemonldap::NG::Common::Regexp;
 
-our $VERSION = 2.00;
+our $VERSION = '2.0.0';
 
 ## @method protected hashref cstruct(hashref h,string k)
 # Merge $h with the structure produced with $k and return it.
