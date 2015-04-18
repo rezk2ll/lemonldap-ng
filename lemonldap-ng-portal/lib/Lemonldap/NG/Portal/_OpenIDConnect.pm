@@ -625,7 +625,16 @@ sub getUserInfo {
         return 0;
     }
 
-    return $response->decoded_content;
+    my $content_type = $response->header('Content-Type');
+    if ( $content_type =~ /json/ ) {
+        return $response->decoded_content;
+    }
+    elsif ( $content_type =~ /jwt/ ) {
+        my $jwt = $response->decoded_content;
+        return unless $self->verifyJWTSignature( $op, $jwt );
+        my $jwt_parts = $self->extractJWT($jwt);
+        return $jwt_parts->[1];
+    }
 }
 
 ## @method HashRef decodeJSON(String json)
