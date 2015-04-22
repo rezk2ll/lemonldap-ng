@@ -1317,10 +1317,20 @@ sub getFlowType {
 sub getIDTokenSub {
     my ( $self, $id_token ) = splice @_;
 
-    my $jwt     = $self->extractJWT($id_token);
-    my $payload = decode_json( decode_base64url( $jwt->[1] ) );
+    my $payload = $self->getJWTJSONData($id_token);
 
     return $payload->{sub};
+}
+
+## @method HashRef getJWTJSONData(String jwt)
+# Return payload of a JWT as Hash ref
+# @param jwt JWT
+# @return HashRef payload
+sub getJWTJSONData {
+    my ( $self, $jwt ) = splice @_;
+
+    my $jwt_parts = $self->extractJWT($jwt);
+    return decode_json( decode_base64url( $jwt_parts->[1] ) );
 }
 
 ## @method HashRef key2jwks(String key)
@@ -1554,6 +1564,10 @@ Return flow type
 =head2 getIDTokenSub
 
 Return sub field of an ID Token
+
+=head2 getJWTJSONData
+
+Return payload of a JWT as Hash ref
 
 =head2 key2jwks
 

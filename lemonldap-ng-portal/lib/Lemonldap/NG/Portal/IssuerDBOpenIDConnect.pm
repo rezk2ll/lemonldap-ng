@@ -53,7 +53,7 @@ sub issuerForUnAuthUser {
         # Get and save parameters
         my $oidc_request = {};
         foreach my $param (
-            qw/response_type scope client_id state redirect_uri nonce response_mode display prompt max_age ui_locales id_token_hint login_hint acr_values/
+            qw/response_type scope client_id state redirect_uri nonce response_mode display prompt max_age ui_locales id_token_hint login_hint acr_values request/
           )
         {
             $oidc_request->{$param} = $self->getHiddenFormValue($param)
@@ -75,6 +75,21 @@ sub issuerForUnAuthUser {
         $self->lmLog(
             "OIDC $flow flow requested (response type: $response_type)",
             'debug' );
+
+        # Extract request parameter
+        if ( $oidc_request->{'request'} ) {
+            my $request = $self->getJWTJSONData( $oidc_request->{'request'} );
+
+            # Override OIDC parameters by request content
+            foreach ( keys %$request ) {
+                $self->lmLog(
+"Override $_ OIDC param by value present in request parameter",
+                    'debug'
+                );
+                $oidc_request->{$_} = $request->{$_};
+                $self->setHiddenFormValue( $_, $request->{$_} );
+            }
+        }
 
         # State
         my $state = $oidc_request->{'state'};
@@ -498,7 +513,7 @@ sub issuerForAuthUser {
         # Get and save parameters
         my $oidc_request = {};
         foreach my $param (
-            qw/response_type scope client_id state redirect_uri nonce response_mode display prompt max_age ui_locales id_token_hint login_hint acr_values/
+            qw/response_type scope client_id state redirect_uri nonce response_mode display prompt max_age ui_locales id_token_hint login_hint acr_valuesi request/
           )
         {
             $oidc_request->{$param} = $self->getHiddenFormValue($param)
@@ -520,6 +535,21 @@ sub issuerForAuthUser {
         $self->lmLog(
             "OIDC $flow flow requested (response type: $response_type)",
             'debug' );
+
+        # Extract request parameter
+        if ( $oidc_request->{'request'} ) {
+            my $request = $self->getJWTJSONData( $oidc_request->{'request'} );
+
+            # Override OIDC parameters by request content
+            foreach ( keys %$request ) {
+                $self->lmLog(
+"Override $_ OIDC param by value present in request parameter",
+                    'debug'
+                );
+                $oidc_request->{$_} = $request->{$_};
+                $self->setHiddenFormValue( $_, $request->{$_} );
+            }
+        }
 
         # Check all required parameters
         unless ( $oidc_request->{'redirect_uri'} ) {
