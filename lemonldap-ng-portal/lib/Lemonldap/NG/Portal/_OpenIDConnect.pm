@@ -771,13 +771,14 @@ sub extractJWT {
     return \@jwt_parts;
 }
 
-## @method boolean verifyJWTSignature(String op, String jwt)
+## @method boolean verifyJWTSignature(String jwt, String op, String rp)
 # Check signature of a JWT
-# @param op OpenIP Provider configuration key
 # @param jwt JWT raw value
+# @param op OpenIP Provider configuration key
+# @param rp OpenIP Relying Party configuration key
 # @return boolean 1 if signature is verified, 0 else
 sub verifyJWTSignature {
-    my ( $self, $op, $jwt ) = splice @_;
+    my ( $self, $jwt, $op, $rp ) = splice @_;
 
     $self->lmLog( "Verification of JWT signature: $jwt", 'debug' );
 
@@ -812,9 +813,13 @@ sub verifyJWTSignature {
     if ( $alg eq "HS256" or $alg eq "HS384" or $alg eq "HS512" ) {
 
         # Check signature with client secret
-        my $client_secret =
+        my $client_secret;
+	$client_secret = 
           $self->{oidcOPMetaDataOptions}->{$op}
-          ->{oidcOPMetaDataOptionsClientSecret};
+          ->{oidcOPMetaDataOptionsClientSecret} if $op;
+	$client_secret = 
+          $self->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsClientSecret} if $rp;
 
         my $digest;
 
@@ -850,6 +855,11 @@ sub verifyJWTSignature {
     }
 
     if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
+
+	if ($rp) {
+  	  $self->lmLog( "Algorithm $alg not supported", 'debug' );
+  	  return 0;
+	}
 
         # The public key is needed
         unless ( $self->{_oidcOPList}->{$op}->{jwks} ) {

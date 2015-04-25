@@ -134,7 +134,7 @@ sub extractFormInfo {
         if ( $self->{oidcOPMetaDataOptions}->{$op}
             ->{oidcOPMetaDataOptionsCheckJWTSignature} )
         {
-            unless ( $self->verifyJWTSignature( $op, $id_token ) ) {
+            unless ( $self->verifyJWTSignature( $id_token, $op ) ) {
                 $self->lmLog( "JWT signature verification failed", 'error' );
                 return PE_ERROR;
             }

@@ -38,7 +38,7 @@ my $jwt;
 $jwt =
 "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.";
 ok(
-    $p->verifyJWTSignature( "jwtio", $jwt ) == 1,
+    $p->verifyJWTSignature( $jwt, "jwtio" ) == 1,
     'JWT Signature verification - alg: none'
 );
 
@@ -46,7 +46,7 @@ ok(
 $jwt =
 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.eoaDVGTClRdfxUZXiPs3f8FmJDkDE_VCQFXqKxpLsts";
 ok(
-    $p->verifyJWTSignature( "jwtio", $jwt ) == 1,
+    $p->verifyJWTSignature( $jwt, "jwtio" ) == 1,
     'JWT Signature verification - alg: HS256'
 );
 
@@ -54,7 +54,7 @@ ok(
 $jwt =
 "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMzQ1Njc4OTAsIm5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.fSCfxDB4cFVvzd6IqiNTuItTYiv-tAp5u5XplJWRDBGNF1rgGn1gyYK9LuHobWWpwqCzI7pEHDlyrbNHaQJmqg";
 ok(
-    $p->verifyJWTSignature( "jwtio", $jwt ) == 1,
+    $p->verifyJWTSignature( $jwt, "jwtio" ) == 1,
     'JWT Signature verification - alg: HS512'
 );
 
@@ -69,7 +69,7 @@ $p->{_oidcOPList}->{google}->{jwks}->{keys}->[0]->{e} = "AQAB";
 $jwt =
 "eyJhbGciOiJSUzI1NiIsImtpZCI6IjNkMDA3Njc3ZmVjNjU2YTU2MjgyNmYwMTkxZDBmOWZjYjBlNTk1Y2YifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwic3ViIjoiMTE1MzYxMjMwMzU3MzA0NzU0ODQ0IiwiYXpwIjoiMjg2MzA1NzI4NjUyLWxjYW5ubWRnMTdxM2VtdDFjYmtqbmZnOTVzZHM4NjJsLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJjbGVtZW50QG9vZG8ubmV0IiwiYXRfaGFzaCI6ImZRc0FaSHdsUUNPZXctNE84QkFWNWciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXVkIjoiMjg2MzA1NzI4NjUyLWxjYW5ubWRnMTdxM2VtdDFjYmtqbmZnOTVzZHM4NjJsLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiaGQiOiJvb2RvLm5ldCIsImlhdCI6MTQxNjQwNjA0MywiZXhwIjoxNDE2NDA5OTQzfQ.NihX-7P1ogpPCmygD-A-hChIwMg9hJQ_4gzu3zmNEyHnY9rWuwXF6E2K9LF_opMQXWJxkUcI7eyo73L3yk9_51CfQLzD5NbfpR6kyctLBXud9A7wyHzJRBCB_rOU12vU4bMWGajgkGUqOmy-PFnz3akvqVgExbqas0Go4Flg7NI";
 ok(
-    $p->verifyJWTSignature( 'google', $jwt ) == 1,
+    $p->verifyJWTSignature( $jwt, 'google' ) == 1,
     'JWT Signature verification - alg: RS256'
 );
 
@@ -85,7 +85,7 @@ $jwt =
 "eyJraWQiOiIxZTlnZGs3IiwiYWxnIjoiUlMyNTYifQ.ewogImlzcyI6ICJodHRwOi8vc2VydmVyLmV4YW1wbGUuY29tIiwKICJzdWIiOiAiMjQ4Mjg5NzYxMDAxIiwKICJhdWQiOiAiczZCaGRSa3F0MyIsCiAibm9uY2UiOiAibi0wUzZfV3pBMk1qIiwKICJleHAiOiAxMzExMjgxOTcwLAogImlhdCI6IDEzMTEyODA5NzAsCiAibmFtZSI6ICJKYW5lIERvZSIsCiAiZ2l2ZW5fbmFtZSI6ICJKYW5lIiwKICJmYW1pbHlfbmFtZSI6ICJEb2UiLAogImdlbmRlciI6ICJmZW1hbGUiLAogImJpcnRoZGF0ZSI6ICIwMDAwLTEwLTMxIiwKICJlbWFpbCI6ICJqYW5lZG9lQGV4YW1wbGUuY29tIiwKICJwaWN0dXJlIjogImh0dHA6Ly9leGFtcGxlLmNvbS9qYW5lZG9lL21lLmpwZyIKfQ.rHQjEmBqn9Jre0OLykYNnspA10Qql2rvx4FsD00jwlB0Sym4NzpgvPKsDjn_wMkHxcp6CilPcoKrWHcipR2iAjzLvDNAReF97zoJqq880ZD1bwY82JDauCXELVR9O6_B0w3K-E7yM2macAAgNCUwtik6SjoSUZRcf-O5lygIyLENx882p6MtmwaL1hd6qn5RZOQ0TLrOYu0532g9Exxcm-ChymrB4xLykpDj3lUivJt63eEGGN6DH5K6o33TcxkIjNrCD4XB1CKKumZvCedgHHF3IAK4dVEDSUoGlH9z4pP_eWYNXvqQOjGs-rDaQzUHl6cQQWNiDpWOl_lxXjQEvQ";
 
 ok(
-    $p->verifyJWTSignature( 'oidccore', $jwt ) == 1,
+    $p->verifyJWTSignature( $jwt, 'oidccore' ) == 1,
     'JWT Signature verification - alg: RS256'
 );
 

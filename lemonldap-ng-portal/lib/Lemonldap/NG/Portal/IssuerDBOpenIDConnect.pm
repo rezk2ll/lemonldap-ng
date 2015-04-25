@@ -78,6 +78,7 @@ sub issuerForUnAuthUser {
 
         # Extract request parameter
         if ( $oidc_request->{'request'} ) {
+
             my $request = $self->getJWTJSONData( $oidc_request->{'request'} );
 
             # Override OIDC parameters by request content
@@ -660,6 +661,24 @@ sub issuerForAuthUser {
         }
         else {
             $self->lmLog( "Client id $client_id match RP $rp", 'debug' );
+        }
+
+        # Check Request JWT signature
+        if ( $oidc_request->{'request'} ) {
+            unless (
+                $self->verifyJWTSignature(
+                    $oidc_request->{'request'},
+                    undef, $rp
+                )
+              )
+            {
+                $self->lmLog( "Request JWT signature could not be verified",
+                    'error' );
+                return PE_ERROR;
+            }
+            else {
+                $self->lmLog( "Request JWT signature verified", 'debug' );
+            }
         }
 
         # Check redirect_uri
