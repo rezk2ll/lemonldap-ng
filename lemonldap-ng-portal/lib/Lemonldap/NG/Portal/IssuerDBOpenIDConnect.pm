@@ -53,7 +53,7 @@ sub issuerForUnAuthUser {
         # Get and save parameters
         my $oidc_request = {};
         foreach my $param (
-            qw/response_type scope client_id state redirect_uri nonce response_mode display prompt max_age ui_locales id_token_hint login_hint acr_values request/
+            qw/response_type scope client_id state redirect_uri nonce response_mode display prompt max_age ui_locales id_token_hint login_hint acr_values request request_uri/
           )
         {
             $oidc_request->{$param} = $self->getHiddenFormValue($param)
@@ -76,7 +76,20 @@ sub issuerForUnAuthUser {
             "OIDC $flow flow requested (response type: $response_type)",
             'debug' );
 
-        # Extract request parameter
+        # Extract request_uri/request parameter
+        if ( $oidc_request->{'request_uri'} ) {
+            my $request =
+              $self->getRequestJWT( $oidc_request->{'request_uri'} );
+
+            if ($request) {
+                $oidc_request->{'request'} = $request;
+            }
+            else {
+                $self->lmLog( "Error with Request URI resolution", 'error' );
+                return PE_ERROR;
+            }
+        }
+
         if ( $oidc_request->{'request'} ) {
 
             my $request = $self->getJWTJSONData( $oidc_request->{'request'} );
@@ -514,7 +527,7 @@ sub issuerForAuthUser {
         # Get and save parameters
         my $oidc_request = {};
         foreach my $param (
-            qw/response_type scope client_id state redirect_uri nonce response_mode display prompt max_age ui_locales id_token_hint login_hint acr_valuesi request/
+            qw/response_type scope client_id state redirect_uri nonce response_mode display prompt max_age ui_locales id_token_hint login_hint acr_valuesi request request_uri/
           )
         {
             $oidc_request->{$param} = $self->getHiddenFormValue($param)
@@ -537,7 +550,20 @@ sub issuerForAuthUser {
             "OIDC $flow flow requested (response type: $response_type)",
             'debug' );
 
-        # Extract request parameter
+        # Extract request_uri/request parameter
+        if ( $oidc_request->{'request_uri'} ) {
+            my $request =
+              $self->getRequestJWT( $oidc_request->{'request_uri'} );
+
+            if ($request) {
+                $oidc_request->{'request'} = $request;
+            }
+            else {
+                $self->lmLog( "Error with Request URI resolution", 'error' );
+                return PE_ERROR;
+            }
+        }
+
         if ( $oidc_request->{'request'} ) {
             my $request = $self->getJWTJSONData( $oidc_request->{'request'} );
 

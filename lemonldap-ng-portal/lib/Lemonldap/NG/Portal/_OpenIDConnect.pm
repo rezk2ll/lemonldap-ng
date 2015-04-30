@@ -814,12 +814,14 @@ sub verifyJWTSignature {
 
         # Check signature with client secret
         my $client_secret;
-	$client_secret = 
+        $client_secret =
           $self->{oidcOPMetaDataOptions}->{$op}
-          ->{oidcOPMetaDataOptionsClientSecret} if $op;
-	$client_secret = 
+          ->{oidcOPMetaDataOptionsClientSecret}
+          if $op;
+        $client_secret =
           $self->{oidcRPMetaDataOptions}->{$rp}
-          ->{oidcRPMetaDataOptionsClientSecret} if $rp;
+          ->{oidcRPMetaDataOptionsClientSecret}
+          if $rp;
 
         my $digest;
 
@@ -856,10 +858,10 @@ sub verifyJWTSignature {
 
     if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
 
-	if ($rp) {
-  	  $self->lmLog( "Algorithm $alg not supported", 'debug' );
-  	  return 0;
-	}
+        if ($rp) {
+            $self->lmLog( "Algorithm $alg not supported", 'debug' );
+            return 0;
+        }
 
         # The public key is needed
         unless ( $self->{_oidcOPList}->{$op}->{jwks} ) {
@@ -1424,6 +1426,23 @@ sub createSessionState {
     my $session_state = sha256_base64($data) . "." . $salt;
 
     return $session_state;
+}
+
+## @method String getRequestJWT(String request_uri)
+# Get request JWT from request uri
+# @param request_uri request uri
+# return String request JWT
+sub getRequestJWT {
+    my ( $self, $request_uri ) = splice @_;
+
+    my $response = $self->ua->get($request_uri);
+
+    if ( $response->is_error ) {
+        $self->lmLog( "Unable to get request JWT on $request_uri", 'error' );
+        return;
+    }
+
+    return $response->decoded_content;
 }
 
 1;

@@ -69,10 +69,10 @@ $configuration->{token_endpoint_auth_methods_supported} =
 # $configuration->{claims_locales_supported}
 # $configuration->{ui_locales_supported}
 # $configuration->{claims_parameter_supported}
-$configuration->{request_parameter_supported}     = "true";
-$configuration->{request_uri_parameter_supported} = "false";
+$configuration->{request_parameter_supported}      = "true";
+$configuration->{request_uri_parameter_supported}  = "true";
+$configuration->{require_request_uri_registration} = "false";
 
-# $configuration->{require_request_uri_registration}
 # $configuration->{op_policy_uri}
 # $configuration->{op_tos_uri}
 
