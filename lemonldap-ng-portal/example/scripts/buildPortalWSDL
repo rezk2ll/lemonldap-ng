@@ -86,7 +86,7 @@ $attrList
   </wsdl:message>
 
   <wsdl:portType name="authenticationPortType">
-    <wsdl:operation name="error" parameterOrder="lang code">
+    <wsdl:operation name="error" parameterOrder="code lang">
       <wsdl:input message="impl:errorRequest" name="errorRequest" />
       <wsdl:output message="impl:errorResponse" name="errorResponse" />
     </wsdl:operation>
