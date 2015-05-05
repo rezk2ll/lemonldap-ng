@@ -59,7 +59,7 @@ $attrList
       </complexType>
       <complexType name="GetAttributesResponse">
         <sequence>
-          <element name="errorCode" type="xsd:int"></element>
+          <element name="error" type="xsd:int"></element>
           <element name="attributes" type="tns1:AttributesSequence"></element>
         </sequence>
       </complexType>
