@@ -195,6 +195,7 @@ example/skins/pastel/register.tpl
 example/skins/pastel/standardform.tpl
 example/skins/pastel/yubikeyform.tpl
 example/soapconfigtest.pl
+example/soaperrortest.pl
 example/soaptest.pl
 lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/_Browser.pm
