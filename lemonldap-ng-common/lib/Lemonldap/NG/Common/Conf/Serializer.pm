@@ -106,6 +106,7 @@ sub unserialize {
 	|authChoiceModules
 	|captchaStorageOptions
 	|CAS_proxiedServices
+	|casAttributes
 	|casStorageOptions
 	|dbiExportedVars
 	|demoExportedVars

@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::_Browser;
 use Lemonldap::NG::Common::Session;
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.4.1';
+our $VERSION = '2.0.0';
 
 ## @method hashref getCasSession(string id)
 # Try to recover the CAS session corresponding to id and return session datas
@@ -98,14 +98,15 @@ sub returnCasServiceValidateError {
     $self->quit();
 }
 
-## @method void returnCasServiceValidateSuccess(string username, string pgtIou, string proxies)
+## @method void returnCasServiceValidateSuccess(string username, string pgtIou, string proxies, hashref attributes)
 # Return success for CAS SERVICE VALIDATE request
 # @param username User name
 # @param pgtIou Proxy granting ticket IOU
 # @param proxies List of used CAS proxies
+# @param attributes Attributes to return
 # @return nothing
 sub returnCasServiceValidateSuccess {
-    my ( $self, $username, $pgtIou, $proxies ) = splice @_;
+    my ( $self, $username, $pgtIou, $proxies, $attributes ) = splice @_;
 
     $self->lmLog( "Return CAS service validate success with username $username",
         'debug' );
@@ -114,6 +115,21 @@ sub returnCasServiceValidateSuccess {
     print "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>\n";
     print "\t<cas:authenticationSuccess>\n";
     print "\t\t<cas:user>$username</cas:user>\n";
+    if ( defined $attributes ) {
+        print "\t\t<cas:attributes>\n";
+        foreach my $attribute ( keys %$attributes ) {
+            foreach my $value (
+                split(
+                    $self->{multiValuesSeparator},
+                    $attributes->{$attribute}
+                )
+              )
+            {
+                print "\t\t\t<cas:$attribute>$value</cas:$attribute>\n";
+            }
+        }
+        print "\t\t</cas:attributes>\n";
+    }
     if ( defined $pgtIou ) {
         $self->lmLog( "Add proxy granting ticket $pgtIou in response",
             'debug' );

@@ -954,9 +954,14 @@ sub struct {
                       'text:/issuerDBCASRule:issuerdbCAS:boolOrPerlExpr',
                     issuerDBCASOptions => {
                         _nodes => [
-                            qw(casAttr casAccessControlPolicy casStorage cn:casStorageOptions)
+                            qw(casAttr cn:casAttributes casAccessControlPolicy casStorage cn:casStorageOptions)
                         ],
-                        casAttr => 'text:/casAttr',
+                        casAttr       => 'text:/casAttr',
+                        casAttributes => {
+                            _nodes => ['hash:/casAttributes:issuerDBCAS:btext'],
+                            _js    => 'hashRoot',
+                            _help  => 'issuerdbCAS',
+                        },
                         casAccessControlPolicy =>
 'select:/casAccessControlPolicy:issuerdbCAS:casAccessControlPolicyParams',
                         casStorage        => 'text:/casStorage',
@@ -2250,7 +2255,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad CAS proxied service identifier',
         },
-        casAttr                => $testNotDefined,
+        casAttr       => $testNotDefined,
+        casAttributes => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad attribute',
+        },
         casAccessControlPolicy => $testNotDefined,
         casStorage             => {
             test    => qr/^[\w:]*$/,

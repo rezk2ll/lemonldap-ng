@@ -113,6 +113,13 @@ has 'casAccessControlPolicy' => (
     documentation => 'CAS access control policy',
 );
 
+has 'casAttributes' => (
+    is            => 'rw',
+    isa           => 'HashRef',
+    default       => sub { return {}; },
+    documentation => 'CAS Issuer exported attributes',
+);
+
 has 'CAS_authnLevel' => (
     is            => 'rw',
     isa           => 'Int',

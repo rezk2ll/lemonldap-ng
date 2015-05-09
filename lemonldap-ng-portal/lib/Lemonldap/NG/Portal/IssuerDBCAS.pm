@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_CAS;
 use base qw(Lemonldap::NG::Portal::_CAS Lemonldap::NG::Portal::_LibAccess);
 
-our $VERSION = '1.4.3';
+our $VERSION = '2.0.0';
 
 ## @method void issuerDBInit()
 # Nothing to do
@@ -396,10 +396,19 @@ sub issuerForUnAuthUser {
 
         $self->lmLog( "Get username $username", 'debug' );
 
+	# Get attributes [CAS 3.0]
+	my $attributes = {};
+	if (defined $self->{casAttributes} ) {
+        	foreach my $casAttribute (keys %{ $self->{casAttributes} }) {
+			my $localSessionValue =$localSession->data->{ $self->{casAttributes}->{$casAttribute} };
+			$attributes->{$casAttribute} = $localSessionValue if defined $localSessionValue;
+		}
+	}
+
         # Return success message
         $self->deleteCasSession($casServiceSession);
         $self->returnCasServiceValidateSuccess( $username,
-            $casProxyGrantingTicketIOU, $proxies );
+            $casProxyGrantingTicketIOU, $proxies, $attributes );
 
         # We should not be there
         return PE_ERROR;
