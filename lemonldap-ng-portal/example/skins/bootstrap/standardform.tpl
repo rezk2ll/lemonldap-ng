@@ -37,7 +37,7 @@
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_REGISTER">
-  <a class="btn btn-warning" href="<TMPL_VAR NAME="REGISTER_URL"><TMPL_IF NAME="key">?<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
+  <a class="btn btn-warning" href="<TMPL_VAR NAME="REGISTER_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
     <span class="glyphicon glyphicon-plus-sign"></span>
     <lang en="Create an account" fr="Cr&eacute;er un compte"/>
   </a>
