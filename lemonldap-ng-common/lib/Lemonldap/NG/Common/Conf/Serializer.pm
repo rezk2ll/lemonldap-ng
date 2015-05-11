@@ -48,6 +48,9 @@ sub unnormalize {
     $value =~ s/%0D/\r/g;
     $value =~ s/%0A/\n/g;
 
+    # Keep number as numbers
+    $value += 0 if ( $value =~ /^(?:0|(?:\-[0-9]|[1-9])[0-9]*)(?:\.[0-9]+)?$/ );
+
     return $value;
 }
 
@@ -100,56 +103,57 @@ sub unserialize {
         $v =~ s/^'(.*)'$/$1/s;
 
         # Manage hashes
-        if (
-            $k =~ /^(?x:
-	applicationList
-	|authChoiceModules
-	|captchaStorageOptions
-	|CAS_proxiedServices
-	|casAttributes
-	|casStorageOptions
-	|dbiExportedVars
-	|demoExportedVars
-	|exportedHeaders
-	|exportedVars
-	|facebookExportedVars
-	|globalStorageOptions
-	|googleExportedVars
-	|grantSessionRules
-	|groups
-	|ldapExportedVars
-	|localSessionStorageOptions
-	|locationRules
-	|logoutServices
-	|macros
-	|notificationStorageOptions
-	|oidcOPMetaDataExportedVars
-	|oidcOPMetaDataJSON
-	|oidcOPMetaDataJWKS
-	|oidcOPMetaDataOptions
-	|oidcRPMetaDataExportedVars
-	|oidcRPMetaDataOptions
-	|oidcServiceMetaDataAuthnContext
-	|openIdExportedVars
-	|persistentStorageOptions
-	|portalSkinRules
-	|post
-	|reloadUrls
-	|remoteGlobalStorageOptions
-	|samlIDPMetaDataExportedAttributes
-	|samlIDPMetaDataOptions
-	|samlIDPMetaDataXML
-	|samlSPMetaDataExportedAttributes
-	|samlSPMetaDataOptions
-	|samlSPMetaDataXML
-	|samlStorageOptions
-	|sessionDataToRemember
-	|slaveExportedVars
-	|vhostOptions
-	|webIDExportedVars
-	)$/
-            and $v ||= {} and not ref($v)
-          )
+
+        # Regexp::Assemble of:
+	    # applicationList
+	    # authChoiceModules
+	    # captchaStorageOptions
+	    # CAS_proxiedServices
+	    # casAttributes
+	    # casStorageOptions
+	    # dbiExportedVars
+	    # demoExportedVars
+	    # exportedHeaders
+	    # exportedVars
+	    # facebookExportedVars
+	    # globalStorageOptions
+	    # googleExportedVars
+	    # grantSessionRules
+	    # groups
+	    # ldapExportedVars
+	    # localSessionStorageOptions
+	    # locationRules
+	    # logoutServices
+	    # macros
+	    # notificationStorageOptions
+	    # oidcOPMetaDataExportedVars
+	    # oidcOPMetaDataJSON
+	    # oidcOPMetaDataJWKS
+	    # oidcOPMetaDataOptions
+	    # oidcRPMetaDataExportedVars
+	    # oidcRPMetaDataOptions
+	    # oidcServiceMetaDataAuthnContext
+	    # openIdExportedVars
+	    # persistentStorageOptions
+	    # portalSkinRules
+	    # post
+	    # reloadUrls
+	    # remoteGlobalStorageOptions
+	    # samlIDPMetaDataExportedAttributes
+	    # samlIDPMetaDataOptions
+	    # samlIDPMetaDataXML
+	    # samlSPMetaDataExportedAttributes
+	    # samlSPMetaDataOptions
+	    # samlSPMetaDataXML
+	    # samlStorageOptions
+	    # sessionDataToRemember
+	    # slaveExportedVars
+	    # vhostOptions
+	    # webIDExportedVars
+        if ( $k =~
+/^(?:(?:l(?:o(?:ca(?:lSessionStorageOption|tionRule)|goutService)|dapExportedVar)|(?:(?:d(?:emo|bi)|facebook|webID)ExportedVa|exported(?:Heade|Va))r|g(?:r(?:antSessionRule|oup)|lobalStorageOption|oogleExportedVar)|ca(?:s(?:StorageOption|Attribute)|ptchaStorageOption)|re(?:moteGlobalStorageOption|loadUrl)|(?:notificationStorage|vhost)Option|CAS_proxiedService|macro)s|s(?:aml(?:S(?:PMetaData(?:(?:ExportedAttribute|Option)s|XML)|torageOptions)|IDPMetaData(?:(?:ExportedAttribute|Option)s|XML))|essionDataToRemember|laveExportedVars)|o(?:idc(?:OPMetaData(?:(?:ExportedVar|Option)s|J(?:SON|WKS))|RPMetaData(?:ExportedVar|Option)s|ServiceMetaDataAuthnContext)|penIdExportedVars)|p(?:ersistentStorageOptions|o(?:rtalSkinRules|st))|a(?:uthChoiceModules|pplicationList))$/
+            and $v ||= {}
+            and not ref($v) )
         {
             $conf->{$k} = {};
 
