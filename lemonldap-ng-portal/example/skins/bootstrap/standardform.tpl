@@ -30,7 +30,7 @@
 
 <div class="actions">
   <TMPL_IF NAME="DISPLAY_RESETPASSWORD">
-  <a class="btn btn-info" href="<TMPL_VAR NAME="MAIL_URL"><TMPL_IF NAME="key">?<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
+  <a class="btn btn-info" href="<TMPL_VAR NAME="MAIL_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
     <span class="glyphicon glyphicon-info-sign"></span>
     <lang en="Reset my password" fr="R&eacute;initialiser mon mot de passe"/>
   </a>

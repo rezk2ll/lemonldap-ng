@@ -13,6 +13,7 @@
 
       <TMPL_IF NAME="DISPLAY_FORM">
       <form action="#" method="post" class="login">
+      <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
       <TMPL_IF NAME="CHOICE_VALUE">
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
       </TMPL_IF>
@@ -47,6 +48,7 @@
 
       <TMPL_IF NAME="DISPLAY_RESEND_FORM">
       <form action="#" method="post" class="login">
+      <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
       <TMPL_IF NAME="CHOICE_VALUE">
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
       </TMPL_IF>
@@ -80,6 +82,7 @@
 
       <TMPL_IF NAME="DISPLAY_PASSWORD_FORM">
       <form action="#" method="post" class="password">
+      <input type="hidden" name="skin" value="<TMPL_VAR NAME="SKIN">" />
       <TMPL_IF NAME="CHOICE_VALUE">
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
       </TMPL_IF>
@@ -125,7 +128,7 @@
       </TMPL_IF>
 
       <div class="panel-buttons">
-        <button type="button" class="positive" tabindex="1" onclick="location.href='<TMPL_VAR NAME="PORTAL_URL">';return false;">
+        <button type="button" class="positive" tabindex="1" onclick="location.href='<TMPL_VAR NAME="PORTAL_URL">?skin=<TMPL_VAR NAME="SKIN">';return false;">
           <lang en="Go to portal" fr="Aller au portail" />
         </button>
       </div>

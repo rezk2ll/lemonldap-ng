@@ -71,7 +71,7 @@ use Digest::MD5;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.4.4';
+our $VERSION = '1.4.5';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;
@@ -1415,6 +1415,13 @@ sub getSkin {
                 $self->lmLog( "Skin $skin selected from skin rule", 'debug' );
             }
         }
+    }
+
+    # Check skin GET/POST parameter
+    my $skinParam = $self->param('skin');
+    if ( defined $skinParam && !$self->checkXSSAttack( 'skin', $skinParam ) ) {
+        $skin = $skinParam;
+        $self->lmLog( "Skin $skin selected from GET/POST parameter", 'debug' );
     }
 
     return $skin;
