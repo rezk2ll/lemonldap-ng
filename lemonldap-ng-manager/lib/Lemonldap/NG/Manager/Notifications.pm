@@ -12,7 +12,7 @@ use feature 'state';
 
 extends 'Lemonldap::NG::Manager::Lib';
 
-our $VERSION = '1.5.99';
+our $VERSION = '2.0.0';
 
 has _notifAccess => ( is => 'rw' );
 

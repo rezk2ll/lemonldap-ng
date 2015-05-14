@@ -12,7 +12,7 @@ package Lemonldap::NG::Manager;
 
 use 5.10.0;
 use Mouse;
-our $VERSION = '1.5.99';
+our $VERSION = '2.0.0';
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 

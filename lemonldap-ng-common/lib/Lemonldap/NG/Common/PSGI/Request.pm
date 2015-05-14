@@ -5,7 +5,7 @@ use Mouse;
 use JSON;
 use URI::Escape;
 
-our $VERSION = '1.5.99';
+our $VERSION = '2.0.0';
 
 #       http          ://  server   / path      ? query      # fragment
 # m|(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*)(?:\?([^#]*))?(?:#(.*))?|;
