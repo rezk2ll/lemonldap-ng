@@ -1,0 +1,110 @@
+#!/usr/bin/perl -w
+
+use Lemonldap::NG::Manager::Cli;
+use POSIX qw(setuid setgid);
+use strict;
+
+sub giveUpPrivileges {
+    my ( $user, $group ) = @_;
+
+    $user  = "nobody" unless defined($user);
+    $group = "nobody" unless defined($group);
+
+    # become $user:$group and give up root privileges
+    setgid( ( getgrnam($group) )[2] );
+    setuid( ( getpwnam($user) )[2] );
+
+    # if we are still root
+    if ( $> == 0 ) {
+        print STDERR
+"$0 must not be launched as root since local cache can be corrupted.\n";
+        print STDERR "Continue (y/N)? ";
+        my $res = <STDIN>;
+        exit 1 unless ( $res =~ /^y/i );
+    }
+}
+
+## main program
+
+if ( !@ARGV ) {
+    print STDERR "Usage: $0 <action> <params>\n";
+    print STDERR "- help: list available actions\n";
+    print STDERR "- info: view current configuration information\n";
+    exit 1;
+}
+
+giveUpPrivileges( "__APACHEUSER__", "__APACHEGROUP__" );
+
+my ( $cli, $action, $method, $ret );
+
+$cli = new Lemonldap::NG::Manager::Cli;
+
+# Do not increment configuration by default
+$cli->{confAccess}->{cfgNumFixed} = 1;
+
+$action = shift(@ARGV);
+$method = $cli->determineMethod($action);
+
+unless ( $cli->can($method) ) {
+    print STDERR "Action $action unknown\n";
+    print STDERR "Enter $0 help to get more information\n";
+    exit 1;
+}
+
+# The config is stored in ASCII
+foreach(@ARGV){ utf8::decode $_; }
+binmode(STDOUT, ':utf8');
+
+@ARGV ? $cli->run( $method, @ARGV ) : $cli->run($method);
+
+# Display error if any
+if ( $cli->getError() ) {
+    print $cli->getError() . "\n";
+    exit 1;
+}
+
+# Save configuration if modified
+if ( $cli->{confModified} ) {
+    $ret = $cli->saveConf();
+    print "Configuration $ret saved\n";
+}
+
+exit 0;
+
+__END__
+
+=head1 NAME
+
+=encoding utf8
+
+lemonldap-ng-cli - Command Line Interface to edit LemonLDAP::NG configuration.
+
+=head1 SYNOPSIS
+
+Do lemonldap-ng-cli help to get list of all commands
+
+=head1 DESCRIPTION
+
+lemonldap-ng-cli allow user to edit the configuration of LemonLDAP::NG via the
+command line.
+
+=head1 SEE ALSO
+
+L<Lemonldap::NG::Manager::Cli>, L<http://lemonldap-ng.org/>
+
+=head1 AUTHOR
+
+David Delassus E<lt>david.jose.delassus@gmail.comE<gt>
+Sandro Cazzaniga E<lt>cazzaniga.sandro@gmail.comE<gt>
+Clement Oudot E<lt>clem.oudot@gmail.comE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2012, by David Delassus
+Copyright (C) 2013, by Sandro Cazzaniga
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.10.0 or,
+at your option, any later version of Perl 5 you may have available.
+
+=cut
