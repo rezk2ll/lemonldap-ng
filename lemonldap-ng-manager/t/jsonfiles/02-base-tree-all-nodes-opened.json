@@ -1314,7 +1314,7 @@
         "data": "Apache::Session::File"
       }, {
         "default": [{
-          "data": "test/sessions",
+          "data": "t/sessions",
           "id": "globalStorageOptions/Directory",
           "title": "Directory",
           "type": "keyText"
@@ -1333,7 +1333,7 @@
         "title": "globalStorageOptions",
         "type": "keyTextContainer",
         "nodes": [{
-          "data": "test/sessions",
+          "data": "t/sessions",
           "title": "Directory",
           "type": "keyText",
           "id": "globalStorageOptions/Directory"
@@ -1525,7 +1525,7 @@
           "title": "dirName",
           "type": "keyText",
           "id": "notificationStorageOptions/dirName",
-          "data": "test/notifications"
+          "data": "t/notifications"
         }]
       }, {
         "default": "allusers",

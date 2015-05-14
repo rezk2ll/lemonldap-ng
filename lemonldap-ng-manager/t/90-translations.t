@@ -5,7 +5,7 @@ use JSON;
 use strict;
 use 5.10.0;
 
-my $langDir = 'app/languages';
+my $langDir = 'site/static/languages';
 
 my $count = 0;
 use_ok('Lemonldap::NG::Manager::Tree');
@@ -86,7 +86,7 @@ $count += 2;
 
 ok(
     open( F,
-q#perl -ne 'print if(s/.*trspan="(\w+)".*/$1/g)' pl/manager.tpl app/forms/*|sort -u|#
+q#perl -ne 'print if(s/.*trspan="(\w+)".*/$1/g)' site/templates/manager.tpl site/static/forms/*|sort -u|#
     ),
     'Find HTML docs'
 );

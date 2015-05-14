@@ -1,37 +1,47 @@
 [{
-  "_nodes": [{
-    "_nodes": [{
+  "id": "generalParameters",
+  "title": "generalParameters",
+  "nodes": [{
+    "id": "portalParams",
+    "title": "portalParams",
+    "nodes": [{
       "default": "http://auth.example.com/",
       "id": "portal",
-      "title": "portal"
+      "title": "portal",
+      "data": "http://auth2.example.com/"
     }, {
-      "_nodes": [{
-        "_nodes": [{
+      "id": "portalMenu",
+      "title": "portalMenu",
+      "nodes": [{
+        "id": "portalModules",
+        "title": "portalModules",
+        "type": "simpleInputContainer",
+        "nodes": [{
           "default": 1,
           "id": "portalDisplayLogout",
           "title": "portalDisplayLogout",
-          "type": "boolOrExpr"
+          "type": "boolOrExpr",
+          "data": 0
         }, {
           "default": "$_auth =~ /^(LDAP|DBI|Demo)$/",
           "id": "portalDisplayChangePassword",
           "title": "portalDisplayChangePassword",
-          "type": "boolOrExpr"
+          "type": "boolOrExpr",
+          "data": "$_auth =~ /^(LDAP|DBI|Demo)$/"
         }, {
           "default": 1,
           "id": "portalDisplayAppslist",
           "title": "portalDisplayAppslist",
-          "type": "boolOrExpr"
+          "type": "boolOrExpr",
+          "data": 1
         }, {
           "default": 1,
           "id": "portalDisplayLoginHistory",
           "title": "portalDisplayLoginHistory",
-          "type": "boolOrExpr"
-        }],
-        "id": "portalModules",
-        "title": "portalModules",
-        "type": "simpleInputContainer"
+          "type": "boolOrExpr",
+          "data": 1
+        }]
       }, {
-        "cnodes": "applicationList",
         "default": [{
           "data": {
             "catname": "Default category",
@@ -43,12 +53,108 @@
         }],
         "id": "applicationList",
         "title": "applicationList",
-        "type": "catAndAppList"
-      }],
-      "id": "portalMenu",
-      "title": "portalMenu"
+        "type": "catAndAppList",
+        "nodes": [{
+          "title": "Sample applications",
+          "nodes": [{
+            "title": "Application Test 1",
+            "id": "applicationList/0001-cat/0002-app",
+            "type": "menuApp",
+            "data": {
+              "uri": "http://testex.example.com/",
+              "logo": "demo.png",
+              "description": "A simple application displaying authenticated user",
+              "display": "auto"
+            }
+          }, {
+            "data": {
+              "display": "auto",
+              "logo": "thumbnail.png",
+              "description": "The same simple application displaying authenticated user",
+              "uri": "http://test2.example.com/"
+            },
+            "title": "Application Test 2",
+            "id": "applicationList/0001-cat/0003-app",
+            "type": "menuApp"
+          }, {
+            "data": {
+              "display": "auto",
+              "logo": "thumbnail.png",
+              "description": "The same simple application displaying authenticated user",
+              "uri": "http://test3.example.com/"
+            },
+            "title": "Application Test 3",
+            "id": "applicationList/0001-cat/n3",
+            "type": "menuApp"
+          }],
+          "id": "applicationList/0001-cat",
+          "type": "menuCat"
+        }, {
+          "type": "menuCat",
+          "id": "applicationList/0004-cat",
+          "nodes": [{
+            "title": "WebSSO Manager",
+            "id": "applicationList/0004-cat/0005-app",
+            "type": "menuApp",
+            "data": {
+              "display": "auto",
+              "uri": "http://manager.example.com/",
+              "logo": "configure.png",
+              "description": "Configure LemonLDAP::NG WebSSO"
+            }
+          }, {
+            "title": "Notifications explorer",
+            "type": "menuApp",
+            "id": "applicationList/0004-cat/0006-app",
+            "data": {
+              "display": "auto",
+              "uri": "http://manager.example.com/notifications.pl",
+              "description": "Explore WebSSO notifications",
+              "logo": "database.png"
+            }
+          }, {
+            "data": {
+              "display": "auto",
+              "description": "Explore WebSSO sessions",
+              "logo": "database.png",
+              "uri": "http://manager.example.com/sessions.pl"
+            },
+            "title": "Sessions explorer",
+            "type": "menuApp",
+            "id": "applicationList/0004-cat/0007-app"
+          }],
+          "title": "Administration"
+        }, {
+          "nodes": [{
+            "data": {
+              "uri": "http://manager.example.com/doc/",
+              "logo": "help.png",
+              "description": "Documentation supplied with LemonLDAP::NG",
+              "display": "on"
+            },
+            "title": "Local documentation",
+            "id": "applicationList/0008-cat/0009-app",
+            "type": "menuApp"
+          }, {
+            "title": "Offical Website",
+            "type": "menuApp",
+            "id": "applicationList/0008-cat/0010-app",
+            "data": {
+              "display": "on",
+              "description": "Official LemonLDAP::NG Website",
+              "logo": "network.png",
+              "uri": "http://lemonldap-ng.org/"
+            }
+          }],
+          "title": "Documentation",
+          "id": "applicationList/0008-cat",
+          "type": "menuCat"
+        }]
+      }]
     }, {
-      "_nodes": [{
+      "id": "portalCustomization",
+      "title": "portalCustomization",
+      "nodes": [{
         "default": "bootstrap",
         "id": "portalSkin",
         "select": [{
@@ -65,111 +171,127 @@
           "v": "Dark"
         }],
         "title": "portalSkin",
-        "type": "portalskin"
+        "type": "portalskin",
+        "data": "bootstrap"
       }, {
-        "cnodes": "portalSkinRules",
         "id": "portalSkinRules",
         "title": "portalSkinRules",
-        "type": "keyTextContainer"
+        "type": "keyTextContainer",
+        "nodes": []
       }, {
-        "_nodes": [{
+        "id": "portalButtons",
+        "title": "portalButtons",
+        "type": "simpleInputContainer",
+        "nodes": [{
           "default": 1,
           "id": "portalCheckLogins",
           "title": "portalCheckLogins",
-          "type": "bool"
+          "type": "bool",
+          "data": 1
         }, {
           "default": 1,
           "id": "portalDisplayResetPassword",
           "title": "portalDisplayResetPassword",
-          "type": "boolOrExpr"
+          "type": "boolOrExpr",
+          "data": 1
         }, {
           "default": 1,
           "id": "portalDisplayRegister",
           "title": "portalDisplayRegister",
-          "type": "boolOrExpr"
-        }],
-        "id": "portalButtons",
-        "title": "portalButtons",
-        "type": "simpleInputContainer"
+          "type": "boolOrExpr",
+          "data": 1
+        }]
       }, {
-        "_nodes": [{
+        "id": "passwordManagement",
+        "title": "passwordManagement",
+        "type": "simpleInputContainer",
+        "nodes": [{
           "default": 1,
           "id": "portalRequireOldPassword",
           "title": "portalRequireOldPassword",
-          "type": "bool"
+          "type": "bool",
+          "data": 1
         }, {
           "default": 0,
           "id": "hideOldPassword",
           "title": "hideOldPassword",
-          "type": "bool"
+          "type": "bool",
+          "data": 0
         }, {
           "default": 0,
           "id": "mailOnPasswordChange",
           "title": "mailOnPasswordChange",
-          "type": "bool"
-        }],
-        "id": "passwordManagement",
-        "title": "passwordManagement",
-        "type": "simpleInputContainer"
+          "type": "bool",
+          "data": 0
+        }]
       }, {
-        "_nodes": [{
+        "id": "portalOther",
+        "title": "portalOther",
+        "type": "simpleInputContainer",
+        "nodes": [{
           "default": 0,
           "id": "portalAutocomplete",
           "title": "portalAutocomplete",
-          "type": "bool"
+          "type": "bool",
+          "data": 0
         }, {
           "default": "_user",
           "id": "portalUserAttr",
-          "title": "portalUserAttr"
+          "title": "portalUserAttr",
+          "data": "_user"
         }, {
           "default": 0,
           "id": "portalOpenLinkInNewWindow",
           "title": "portalOpenLinkInNewWindow",
-          "type": "bool"
+          "type": "bool",
+          "data": 0
         }, {
           "default": 1,
           "id": "portalAntiFrame",
           "title": "portalAntiFrame",
-          "type": "bool"
+          "type": "bool",
+          "data": 1
         }, {
           "default": 60000,
           "id": "portalPingInterval",
           "title": "portalPingInterval",
-          "type": "int"
-        }],
-        "id": "portalOther",
-        "title": "portalOther",
-        "type": "simpleInputContainer"
-      }],
-      "id": "portalCustomization",
-      "title": "portalCustomization"
+          "type": "int",
+          "data": 60000
+        }]
+      }]
     }, {
-      "_nodes": [{
+      "id": "portalCaptcha",
+      "title": "portalCaptcha",
+      "nodes": [{
         "default": 0,
         "id": "captcha_login_enabled",
         "title": "captcha_login_enabled",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "default": 0,
         "id": "captcha_mail_enabled",
         "title": "captcha_mail_enabled",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "default": 1,
         "id": "captcha_register_enabled",
         "title": "captcha_register_enabled",
-        "type": "bool"
+        "type": "bool",
+        "data": 1
       }, {
         "default": 6,
         "id": "captcha_size",
         "title": "captcha_size",
-        "type": "int"
+        "type": "int",
+        "data": 6
       }, {
         "default": "Apache::Session::File",
         "id": "captchaStorage",
-        "title": "captchaStorage"
+        "title": "captchaStorage",
+        "data": "Apache::Session::File"
       }, {
-        "cnodes": "captchaStorageOptions",
         "default": [{
           "data": "/var/lib/lemonldap-ng/captcha/",
           "id": "captchaStorageOptions/Directory",
@@ -178,16 +300,17 @@
         }],
         "id": "captchaStorageOptions",
         "title": "captchaStorageOptions",
-        "type": "keyTextContainer"
-      }],
-      "id": "portalCaptcha",
-      "title": "portalCaptcha"
-    }],
-    "id": "portalParams",
-    "title": "portalParams"
+        "type": "keyTextContainer",
+        "nodes": []
+      }]
+    }]
   }, {
-    "_nodes": [{
-      "default": "Demo",
+    "_nodes_filter": "authParams",
+    "id": "authParams",
+    "title": "authParams",
+    "type": "authParams",
+    "nodes": [{
+      "default": "LDAP",
       "id": "authentication",
       "select": [{
         "k": "Apache",
@@ -257,7 +380,8 @@
         "v": "Yubikey"
       }],
       "title": "authentication",
-      "type": "select"
+      "type": "select",
+      "data": "Demo"
     }, {
       "default": "Demo",
       "id": "userDB",
@@ -308,7 +432,8 @@
         "v": "WebID"
       }],
       "title": "userDB",
-      "type": "select"
+      "type": "select",
+      "data": "LDAP"
     }, {
       "default": "Demo",
       "id": "passwordDB",
@@ -332,9 +457,10 @@
         "v": "None"
       }],
       "title": "passwordDB",
-      "type": "select"
+      "type": "select",
+      "data": "LDAP"
     }],
-    "_nodes_cond": [{
+    "nodes_cond": [{
       "_nodes": [{
         "default": 4,
         "id": "apacheAuthnLevel",
@@ -498,8 +624,10 @@
       "show": false,
       "title": "dbiParams"
     }, {
-      "_nodes": [{
-        "cnodes": "demoExportedVars",
+      "id": "demoParams",
+      "show": true,
+      "title": "demoParams",
+      "nodes": [{
         "default": [{
           "data": "cn",
           "id": "demoExportedVars/cn",
@@ -518,11 +646,24 @@
         }],
         "id": "demoExportedVars",
         "title": "demoExportedVars",
-        "type": "keyTextContainer"
-      }],
-      "id": "demoParams",
-      "show": false,
-      "title": "demoParams"
+        "type": "keyTextContainer",
+        "nodes": [{
+          "data": "cn",
+          "title": "cn",
+          "id": "demoExportedVars/cn",
+          "type": "keyText"
+        }, {
+          "data": "mail",
+          "title": "mail",
+          "type": "keyText",
+          "id": "demoExportedVars/mail"
+        }, {
+          "type": "keyText",
+          "id": "demoExportedVars/uid",
+          "title": "uid",
+          "data": "uid"
+        }]
+      }]
     }, {
       "_nodes": [{
         "default": 1,
@@ -908,48 +1049,56 @@
       "show": false,
       "title": "yubikeyParams",
       "type": "simpleInputContainer"
-    }],
-    "_nodes_filter": "authParams",
-    "id": "authParams",
-    "title": "authParams",
-    "type": "authParams"
+    }]
   }, {
-    "_nodes": [{
-      "_nodes": [{
+    "id": "issuerParams",
+    "title": "issuerParams",
+    "nodes": [{
+      "id": "issuerDBSAML",
+      "title": "issuerDBSAML",
+      "type": "simpleInputContainer",
+      "nodes": [{
         "default": 0,
         "id": "issuerDBSAMLActivation",
         "title": "issuerDBSAMLActivation",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "default": "^/saml/",
         "id": "issuerDBSAMLPath",
-        "title": "issuerDBSAMLPath"
+        "title": "issuerDBSAMLPath",
+        "data": "^/saml/"
       }, {
         "default": 1,
         "id": "issuerDBSAMLRule",
         "title": "issuerDBSAMLRule",
-        "type": "boolOrExpr"
-      }],
-      "id": "issuerDBSAML",
-      "title": "issuerDBSAML",
-      "type": "simpleInputContainer"
+        "type": "boolOrExpr",
+        "data": 1
+      }]
     }, {
-      "_nodes": [{
+      "id": "issuerDBCAS",
+      "title": "issuerDBCAS",
+      "nodes": [{
         "default": 0,
         "id": "issuerDBCASActivation",
         "title": "issuerDBCASActivation",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "default": "^/cas/",
         "id": "issuerDBCASPath",
-        "title": "issuerDBCASPath"
+        "title": "issuerDBCASPath",
+        "data": "^/cas/"
       }, {
         "default": 1,
         "id": "issuerDBCASRule",
         "title": "issuerDBCASRule",
-        "type": "boolOrExpr"
+        "type": "boolOrExpr",
+        "data": 1
       }, {
-        "_nodes": [{
+        "id": "issuerDBCASOptions",
+        "title": "issuerDBCASOptions",
+        "nodes": [{
           "id": "casAttr",
           "title": "casAttr"
         }, {
@@ -966,38 +1115,42 @@
             "v": "Send a fake service ticket"
           }],
           "title": "casAccessControlPolicy",
-          "type": "select"
+          "type": "select",
+          "data": "none"
         }, {
           "id": "casStorage",
           "title": "casStorage"
         }, {
-          "cnodes": "casStorageOptions",
           "id": "casStorageOptions",
           "title": "casStorageOptions",
-          "type": "keyTextContainer"
-        }],
-        "id": "issuerDBCASOptions",
-        "title": "issuerDBCASOptions"
-      }],
-      "id": "issuerDBCAS",
-      "title": "issuerDBCAS"
+          "type": "keyTextContainer",
+          "nodes": []
+        }]
+      }]
     }, {
-      "_nodes": [{
+      "id": "issuerDBOpenID",
+      "title": "issuerDBOpenID",
+      "nodes": [{
         "default": 0,
         "id": "issuerDBOpenIDActivation",
         "title": "issuerDBOpenIDActivation",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "default": "^/openidserver/",
         "id": "issuerDBOpenIDPath",
-        "title": "issuerDBOpenIDPath"
+        "title": "issuerDBOpenIDPath",
+        "data": "^/openidserver/"
       }, {
         "default": 1,
         "id": "issuerDBOpenIDRule",
         "title": "issuerDBOpenIDRule",
-        "type": "boolOrExpr"
+        "type": "boolOrExpr",
+        "data": 1
       }, {
-        "_nodes": [{
+        "id": "issuerDBOpenIDOptions",
+        "title": "issuerDBOpenIDOptions",
+        "nodes": [{
           "id": "openIdIssuerSecret",
           "title": "openIdIssuerSecret"
         }, {
@@ -1006,16 +1159,22 @@
         }, {
           "id": "openIdSPList",
           "title": "openIdSPList",
-          "type": "openidServerList"
+          "type": "blackWhiteList",
+          "data": ["1","bad.com"]
         }, {
-          "_nodes": [{
+          "id": "openIdSreg",
+          "title": "openIdSreg",
+          "type": "simpleInputContainer",
+          "nodes": [{
             "default": "cn",
             "id": "openIdSreg_fullname",
-            "title": "openIdSreg_fullname"
+            "title": "openIdSreg_fullname",
+            "data": "cn"
           }, {
             "default": "uid",
             "id": "openIdSreg_nickname",
-            "title": "openIdSreg_nickname"
+            "title": "openIdSreg_nickname",
+            "data": "uid"
           }, {
             "id": "openIdSreg_language",
             "title": "openIdSreg_language"
@@ -1025,7 +1184,8 @@
           }, {
             "default": "_timezone",
             "id": "openIdSreg_timezone",
-            "title": "openIdSreg_timezone"
+            "title": "openIdSreg_timezone",
+            "data": "_timezone"
           }, {
             "id": "openIdSreg_country",
             "title": "openIdSreg_country"
@@ -1035,54 +1195,55 @@
           }, {
             "default": "mail",
             "id": "openIdSreg_email",
-            "title": "openIdSreg_email"
+            "title": "openIdSreg_email",
+            "data": "mail"
           }, {
             "id": "openIdSreg_dob",
             "title": "openIdSreg_dob"
-          }],
-          "id": "openIdSreg",
-          "title": "openIdSreg",
-          "type": "simpleInputContainer"
-        }],
-        "id": "issuerDBOpenIDOptions",
-        "title": "issuerDBOpenIDOptions"
-      }],
-      "id": "issuerDBOpenID",
-      "title": "issuerDBOpenID"
-    }],
-    "id": "issuerParams",
-    "title": "issuerParams"
+          }]
+        }]
+      }]
+    }]
   }, {
-    "_nodes": [{
+    "id": "logParams",
+    "title": "logParams",
+    "type": "simpleInputContainer",
+    "nodes": [{
       "default": "",
       "id": "syslog",
-      "title": "syslog"
+      "title": "syslog",
+      "data": ""
     }, {
       "default": "",
       "id": "trustedProxies",
-      "title": "trustedProxies"
+      "title": "trustedProxies",
+      "data": ""
     }, {
       "default": "uid",
       "id": "whatToTrace",
-      "title": "whatToTrace"
-    }],
-    "id": "logParams",
-    "title": "logParams",
-    "type": "simpleInputContainer"
+      "title": "whatToTrace",
+      "data": "_whatToTrace"
+    }]
   }, {
-    "_nodes": [{
+    "id": "cookieParams",
+    "title": "cookieParams",
+    "type": "simpleInputContainer",
+    "nodes": [{
       "default": "lemonldap",
       "id": "cookieName",
-      "title": "cookieName"
+      "title": "cookieName",
+      "data": "lemonldap"
     }, {
       "default": "example.com",
       "id": "domain",
-      "title": "domain"
+      "title": "domain",
+      "data": "example.com"
     }, {
       "default": 0,
       "id": "cda",
       "title": "cda",
-      "type": "bool"
+      "type": "bool",
+      "data": 0
     }, {
       "default": 0,
       "id": "securedCookie",
@@ -1100,30 +1261,33 @@
         "v": "doubleCookieForSingleSession"
       }],
       "title": "securedCookie",
-      "type": "select"
+      "type": "select",
+      "data": 0
     }, {
       "default": 1,
       "id": "httpOnly",
       "title": "httpOnly",
-      "type": "bool"
+      "type": "bool",
+      "data": 1
     }, {
       "id": "cookieExpiration",
       "title": "cookieExpiration"
-    }],
-    "id": "cookieParams",
-    "title": "cookieParams",
-    "type": "simpleInputContainer"
+    }]
   }, {
-    "_nodes": [{
+    "id": "sessionParams",
+    "title": "sessionParams",
+    "nodes": [{
       "default": 0,
       "id": "storePassword",
       "title": "storePassword",
-      "type": "bool"
+      "type": "bool",
+      "data": 0
     }, {
       "default": 72000,
       "id": "timeout",
       "title": "timeout",
-      "type": "int"
+      "type": "int",
+      "data": 72000
     }, {
       "default": 0,
       "id": "timeoutActivity",
@@ -1144,21 +1308,24 @@
         "v": "60 min"
       }],
       "title": "timeoutActivity",
-      "type": "select"
+      "type": "select",
+      "data": 0
     }, {
-      "cnodes": "grantSessionRules",
       "id": "grantSessionRules",
       "title": "grantSessionRules",
-      "type": "keyTextContainer"
+      "type": "keyTextContainer",
+      "nodes": []
     }, {
-      "_nodes": [{
+      "id": "sessionStorage",
+      "title": "sessionStorage",
+      "nodes": [{
         "default": "Apache::Session::File",
         "id": "globalStorage",
-        "title": "globalStorage"
+        "title": "globalStorage",
+        "data": "Apache::Session::File"
       }, {
-        "cnodes": "globalStorageOptions",
         "default": [{
-          "data": "test/sessions",
+          "data": "/var/lib/lemonldap-ng/sessions/",
           "id": "globalStorageOptions/Directory",
           "title": "Directory",
           "type": "keyText"
@@ -1175,13 +1342,24 @@
         }],
         "id": "globalStorageOptions",
         "title": "globalStorageOptions",
-        "type": "keyTextContainer"
+        "type": "keyTextContainer",
+        "nodes": [{
+          "data": "t/sessions",
+          "title": "Directory",
+          "type": "keyText",
+          "id": "globalStorageOptions/Directory"
+        }, {
+          "data": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256",
+          "type": "keyText",
+          "id": "globalStorageOptions/generateModule",
+          "title": "generateModule"
+        }]
       }, {
         "default": "Cache::FileCache",
         "id": "localSessionStorage",
-        "title": "localSessionStorage"
+        "title": "localSessionStorage",
+        "data": "Cache::FileCache"
       }, {
-        "cnodes": "localSessionStorageOptions",
         "default": [{
           "data": 3,
           "id": "localSessionStorageOptions/cache_depth",
@@ -1210,118 +1388,141 @@
         }],
         "id": "localSessionStorageOptions",
         "title": "localSessionStorageOptions",
-        "type": "keyTextContainer"
-      }],
-      "id": "sessionStorage",
-      "title": "sessionStorage"
+        "type": "keyTextContainer",
+        "nodes": []
+      }]
     }, {
-      "_nodes": [{
+      "id": "multipleSessions",
+      "title": "multipleSessions",
+      "type": "simpleInputContainer",
+      "nodes": [{
         "default": 0,
         "id": "singleSession",
         "title": "singleSession",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "default": 0,
         "id": "singleIP",
         "title": "singleIP",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "default": 0,
         "id": "singleUserByIP",
         "title": "singleUserByIP",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "default": 0,
         "id": "singleSessionUserByIP",
         "title": "singleSessionUserByIP",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "default": 1,
         "id": "notifyDeleted",
         "title": "notifyDeleted",
-        "type": "bool"
+        "type": "bool",
+        "data": 1
       }, {
         "default": 0,
         "id": "notifyOther",
         "title": "notifyOther",
-        "type": "bool"
-      }],
-      "id": "multipleSessions",
-      "title": "multipleSessions",
-      "type": "simpleInputContainer"
+        "type": "bool",
+        "data": 0
+      }]
     }, {
-      "_nodes": [{
+      "id": "persistentSessions",
+      "title": "persistentSessions",
+      "nodes": [{
         "id": "persistentStorage",
-        "title": "persistentStorage"
+        "title": "persistentStorage",
+        "data": "Apache::Session::File"
       }, {
-        "cnodes": "persistentStorageOptions",
         "id": "persistentStorageOptions",
         "title": "persistentStorageOptions",
-        "type": "keyTextContainer"
-      }],
-      "id": "persistentSessions",
-      "title": "persistentSessions"
-    }],
-    "id": "sessionParams",
-    "title": "sessionParams"
+        "type": "keyTextContainer",
+        "nodes": [{
+          "title": "Directory",
+          "id": "persistentStorageOptions/Directory",
+          "type": "keyText",
+          "data": "__PSESSIONDIR__"
+        }]
+      }]
+    }]
   }, {
-    "cnodes": "reloadUrls",
     "id": "reloadUrls",
     "title": "reloadUrls",
-    "type": "keyTextContainer"
+    "type": "keyTextContainer",
+    "nodes": [{
+      "data": "http://reload.example.com/reload",
+      "title": "reload.example.com",
+      "id": "reloadUrls/reload.example.com",
+      "type": "keyText"
+    }]
   }, {
-    "_nodes": [{
+    "id": "advancedParams",
+    "title": "advancedParams",
+    "nodes": [{
       "id": "customFunctions",
       "title": "customFunctions"
     }, {
-      "_nodes": [{
+      "id": "soap",
+      "title": "soap",
+      "type": "simpleInputContainer",
+      "nodes": [{
         "default": 0,
         "id": "Soap",
         "title": "Soap",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "id": "exportedAttr",
         "title": "exportedAttr"
-      }],
-      "id": "soap",
-      "title": "soap",
-      "type": "simpleInputContainer"
+      }]
     }, {
-      "_nodes": [{
+      "id": "loginHistory",
+      "title": "loginHistory",
+      "nodes": [{
         "default": 1,
         "id": "loginHistoryEnabled",
         "title": "loginHistoryEnabled",
-        "type": "bool"
+        "type": "bool",
+        "data": 1
       }, {
         "default": 5,
         "id": "successLoginNumber",
         "title": "successLoginNumber",
-        "type": "int"
+        "type": "int",
+        "data": 5
       }, {
         "default": 5,
         "id": "failedLoginNumber",
         "title": "failedLoginNumber",
-        "type": "int"
+        "type": "int",
+        "data": 5
       }, {
-        "cnodes": "sessionDataToRemember",
         "id": "sessionDataToRemember",
         "title": "sessionDataToRemember",
-        "type": "keyTextContainer"
-      }],
-      "id": "loginHistory",
-      "title": "loginHistory"
+        "type": "keyTextContainer",
+        "nodes": []
+      }]
     }, {
-      "_nodes": [{
+      "id": "notifications",
+      "title": "notifications",
+      "nodes": [{
         "default": 0,
         "id": "notification",
         "title": "notification",
-        "type": "bool"
+        "type": "bool",
+        "data": 1
       }, {
         "default": "File",
         "id": "notificationStorage",
-        "title": "notificationStorage"
+        "title": "notificationStorage",
+        "data": "File"
       }, {
-        "cnodes": "notificationStorageOptions",
         "default": [{
           "data": "/var/lib/lemonldap-ng/notifications",
           "id": "notificationStorageOptions/dirName",
@@ -1330,54 +1531,68 @@
         }],
         "id": "notificationStorageOptions",
         "title": "notificationStorageOptions",
-        "type": "keyTextContainer"
+        "type": "keyTextContainer",
+        "nodes": [{
+          "title": "dirName",
+          "type": "keyText",
+          "id": "notificationStorageOptions/dirName",
+          "data": "t/notifications"
+        }]
       }, {
         "default": "allusers",
         "id": "notificationWildcard",
-        "title": "notificationWildcard"
+        "title": "notificationWildcard",
+        "data": "allusers"
       }, {
         "id": "notificationXSLTfile",
         "title": "notificationXSLTfile"
-      }],
-      "id": "notifications",
-      "title": "notifications"
+      }]
     }, {
-      "_nodes": [{
-        "_nodes": [{
+      "id": "passwordManagement",
+      "title": "passwordManagement",
+      "nodes": [{
+        "id": "SMTP",
+        "title": "SMTP",
+        "type": "simpleInputContainer",
+        "nodes": [{
           "default": "",
           "id": "SMTPServer",
-          "title": "SMTPServer"
+          "title": "SMTPServer",
+          "data": ""
         }, {
           "id": "SMTPAuthUser",
           "title": "SMTPAuthUser"
         }, {
           "id": "SMTPAuthPass",
           "title": "SMTPAuthPass"
-        }],
-        "id": "SMTP",
-        "title": "SMTP",
-        "type": "simpleInputContainer"
+        }]
       }, {
-        "_nodes": [{
+        "id": "mailHeaders",
+        "title": "mailHeaders",
+        "type": "simpleInputContainer",
+        "nodes": [{
           "default": "noreply@example.com",
           "id": "mailFrom",
-          "title": "mailFrom"
+          "title": "mailFrom",
+          "data": "noreply@example.com"
         }, {
           "id": "mailReplyTo",
           "title": "mailReplyTo"
         }, {
           "default": "utf-8",
           "id": "mailCharset",
-          "title": "mailCharset"
-        }],
-        "id": "mailHeaders",
-        "title": "mailHeaders",
-        "type": "simpleInputContainer"
+          "title": "mailCharset",
+          "data": "utf-8"
+        }]
       }, {
-        "_nodes": [{
+        "id": "mailContent",
+        "title": "mailContent",
+        "type": "simpleInputContainer",
+        "nodes": [{
           "default": "[LemonLDAP::NG] Your new password",
           "id": "mailSubject",
-          "title": "mailSubject"
+          "title": "mailSubject",
+          "data": "[LemonLDAP::NG] Your new password"
         }, {
           "id": "mailBody",
           "title": "mailBody",
@@ -1385,42 +1600,45 @@
         }, {
           "default": "[LemonLDAP::NG] Password reset confirmation",
           "id": "mailConfirmSubject",
-          "title": "mailConfirmSubject"
+          "title": "mailConfirmSubject",
+          "data": "[LemonLDAP::NG] Password reset confirmation"
         }, {
           "id": "mailConfirmBody",
           "title": "mailConfirmBody",
           "type": "longtext"
-        }],
-        "id": "mailContent",
-        "title": "mailContent",
-        "type": "simpleInputContainer"
+        }]
       }, {
-        "_nodes": [{
+        "id": "mailOther",
+        "title": "mailOther",
+        "type": "simpleInputContainer",
+        "nodes": [{
           "default": "http://auth.example.com/mail.pl",
           "id": "mailUrl",
-          "title": "mailUrl"
+          "title": "mailUrl",
+          "data": "http://auth.example.com/mail.pl"
         }, {
           "default": "[A-Z]{3}[a-z]{5}.\\d{2}",
           "id": "randomPasswordRegexp",
-          "title": "randomPasswordRegexp"
+          "title": "randomPasswordRegexp",
+          "data": "[A-Z]{3}[a-z]{5}.\\d{2}"
         }, {
           "default": 0,
           "id": "mailTimeout",
           "title": "mailTimeout",
-          "type": "int"
+          "type": "int",
+          "data": 0
         }, {
           "default": "mail",
           "id": "mailSessionKey",
-          "title": "mailSessionKey"
-        }],
-        "id": "mailOther",
-        "title": "mailOther",
-        "type": "simpleInputContainer"
-      }],
-      "id": "passwordManagement",
-      "title": "passwordManagement"
+          "title": "mailSessionKey",
+          "data": "mail"
+        }]
+      }]
     }, {
-      "_nodes": [{
+      "id": "register",
+      "title": "register",
+      "type": "simpleInputContainer",
+      "nodes": [{
         "default": "Demo",
         "id": "registerDB",
         "select": [{
@@ -1437,43 +1655,51 @@
           "v": "None"
         }],
         "title": "registerDB",
-        "type": "select"
+        "type": "select",
+        "data": "Demo"
       }, {
         "default": "http://auth.example.com/register.pl",
         "id": "registerUrl",
-        "title": "registerUrl"
+        "title": "registerUrl",
+        "data": "http://auth.example.com/register.pl"
       }, {
         "default": 0,
         "id": "registerTimeout",
         "title": "registerTimeout",
-        "type": "int"
+        "type": "int",
+        "data": 0
       }, {
         "default": "[LemonLDAP::NG] Account register confirmation",
         "id": "registerConfirmSubject",
-        "title": "registerConfirmSubject"
+        "title": "registerConfirmSubject",
+        "data": "[LemonLDAP::NG] Account register confirmation"
       }, {
         "default": "[LemonLDAP::NG] Your new account",
         "id": "registerDoneSubject",
-        "title": "registerDoneSubject"
-      }],
-      "id": "register",
-      "title": "register",
-      "type": "simpleInputContainer"
+        "title": "registerDoneSubject",
+        "data": "[LemonLDAP::NG] Your new account"
+      }]
     }, {
-      "_nodes": [{
+      "id": "security",
+      "title": "security",
+      "type": "simpleInputContainer",
+      "nodes": [{
         "default": "^[\\w\\.\\-@]+$",
         "id": "userControl",
-        "title": "userControl"
+        "title": "userControl",
+        "data": "^[\\w\\.\\-@]+$"
       }, {
         "default": 0,
         "id": "portalForceAuthn",
         "title": "portalForceAuthn",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "default": "p2@Pol9Lo_Ze&j*P",
         "id": "key",
         "title": "key",
-        "type": "password"
+        "type": "password",
+        "data": "qwertyui"
       }, {
         "id": "trustedDomains",
         "title": "trustedDomains"
@@ -1481,58 +1707,68 @@
         "default": 1,
         "id": "useSafeJail",
         "title": "useSafeJail",
-        "type": "bool"
+        "type": "bool",
+        "data": 1
       }, {
         "default": 1,
         "id": "checkXSS",
         "title": "checkXSS",
-        "type": "bool"
-      }],
-      "id": "security",
-      "title": "security",
-      "type": "simpleInputContainer"
+        "type": "bool",
+        "data": 1
+      }]
     }, {
-      "_nodes": [{
+      "id": "redirection",
+      "title": "redirection",
+      "type": "simpleInputContainer",
+      "nodes": [{
         "default": 0,
         "id": "https",
         "title": "https",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "id": "port",
         "title": "port",
-        "type": "int"
+        "type": "int",
+        "data": null
       }, {
         "default": 0,
         "id": "useRedirectOnForbidden",
         "title": "useRedirectOnForbidden",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "default": 1,
         "id": "useRedirectOnError",
         "title": "useRedirectOnError",
-        "type": "bool"
+        "type": "bool",
+        "data": 1
       }, {
         "default": 0,
         "id": "maintenance",
         "title": "maintenance",
-        "type": "bool"
-      }],
-      "id": "redirection",
-      "title": "redirection",
-      "type": "simpleInputContainer"
+        "type": "bool",
+        "data": 0
+      }]
     }, {
-      "_nodes": [{
+      "id": "portalRedirection",
+      "title": "portalRedirection",
+      "type": "simpleInputContainer",
+      "nodes": [{
         "default": 0,
         "id": "jsRedirect",
         "title": "jsRedirect",
-        "type": "boolOrExpr"
-      }],
-      "id": "portalRedirection",
-      "title": "portalRedirection",
-      "type": "simpleInputContainer"
+        "type": "boolOrExpr",
+        "data": 0
+      }]
     }, {
-      "_nodes": [{
-        "_nodes": [{
+      "id": "specialHandlers",
+      "title": "specialHandlers",
+      "nodes": [{
+        "id": "zimbraHandler",
+        "title": "zimbraHandler",
+        "type": "simpleInputContainer",
+        "nodes": [{
           "id": "zimbraPreAuthKey",
           "title": "zimbraPreAuthKey"
         }, {
@@ -1555,77 +1791,76 @@
             "v": "Foreign principal"
           }],
           "title": "zimbraBy",
-          "type": "select"
+          "type": "select",
+          "data": ""
         }, {
           "id": "zimbraUrl",
           "title": "zimbraUrl"
         }, {
           "id": "zimbraSsoUrl",
           "title": "zimbraSsoUrl"
-        }],
-        "id": "zimbraHandler",
-        "title": "zimbraHandler",
-        "type": "simpleInputContainer"
+        }]
       }, {
-        "_nodes": [{
+        "id": "sympaHandler",
+        "title": "sympaHandler",
+        "type": "simpleInputContainer",
+        "nodes": [{
           "id": "sympaSecret",
           "title": "sympaSecret"
         }, {
           "id": "sympaMailKey",
           "title": "sympaMailKey"
-        }],
-        "id": "sympaHandler",
-        "title": "sympaHandler",
-        "type": "simpleInputContainer"
+        }]
       }, {
-        "_nodes": [{
+        "id": "secureTokenHandler",
+        "title": "secureTokenHandler",
+        "type": "simpleInputContainer",
+        "nodes": [{
           "default": "127.0.0.1:11211",
           "id": "secureTokenMemcachedServers",
-          "title": "secureTokenMemcachedServers"
+          "title": "secureTokenMemcachedServers",
+          "data": "127.0.0.1:11211"
         }, {
           "default": 60,
           "id": "secureTokenExpiration",
           "title": "secureTokenExpiration",
-          "type": "int"
+          "type": "int",
+          "data": 60
         }, {
           "default": "uid",
           "id": "secureTokenAttribute",
-          "title": "secureTokenAttribute"
+          "title": "secureTokenAttribute",
+          "data": "uid"
         }, {
           "default": ".*",
           "id": "secureTokenUrls",
-          "title": "secureTokenUrls"
+          "title": "secureTokenUrls",
+          "data": ".*"
         }, {
           "default": "Auth-Token",
           "id": "secureTokenHeader",
-          "title": "secureTokenHeader"
+          "title": "secureTokenHeader",
+          "data": "Auth-Token"
         }, {
           "default": 1,
           "id": "secureTokenAllowOnError",
           "title": "secureTokenAllowOnError",
-          "type": "bool"
-        }],
-        "id": "secureTokenHandler",
-        "title": "secureTokenHandler",
-        "type": "simpleInputContainer"
-      }],
-      "id": "specialHandlers",
-      "title": "specialHandlers"
+          "type": "bool",
+          "data": 1
+        }]
+      }]
     }, {
-      "cnodes": "logoutServices",
       "default": [],
       "id": "logoutServices",
       "title": "logoutServices",
-      "type": "keyTextContainer"
-    }],
-    "id": "advancedParams",
-    "title": "advancedParams"
-  }],
-  "id": "generalParameters",
-  "title": "generalParameters"
+      "type": "keyTextContainer",
+      "nodes": []
+    }]
+  }]
 }, {
-  "_nodes": [{
-    "cnodes": "exportedVars",
+  "id": "variables",
+  "title": "variables",
+  "nodes": [{
     "default": [{
       "data": "HTTP_USER_AGENT",
       "id": "exportedVars/UA",
@@ -1634,58 +1869,370 @@
     }],
     "id": "exportedVars",
     "title": "exportedVars",
-    "type": "keyTextContainer"
+    "type": "keyTextContainer",
+    "nodes": [{
+      "data": "HTTP_USER_AGENT",
+      "type": "keyText",
+      "id": "exportedVars/UA",
+      "title": "User-Agent"
+    }, {
+      "data": "uid",
+      "type": "keyText",
+      "id": "exportedVars/n3",
+      "title": "Uid"
+    }]
   }, {
-    "cnodes": "macros",
     "default": [],
     "id": "macros",
     "title": "macros",
-    "type": "keyTextContainer"
+    "type": "keyTextContainer",
+    "nodes": [{
+      "id": "macros/_whatToTrace",
+      "type": "keyText",
+      "title": "_whatToTrace",
+      "data": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\""
+    }]
   }, {
-    "cnodes": "groups",
     "default": [],
     "id": "groups",
     "title": "groups",
-    "type": "keyTextContainer"
-  }],
-  "id": "variables",
-  "title": "variables"
+    "type": "keyTextContainer",
+    "nodes": []
+  }]
 }, {
-  "cnodes": "virtualHosts",
   "id": "virtualHosts",
   "template": "virtualHost",
   "title": "virtualHosts",
-  "type": "virtualHostContainer"
+  "type": "virtualHostContainer",
+  "nodes": [{
+    "template": "virtualHost",
+    "title": "manager.example.com",
+    "type": "virtualHost",
+    "id": "virtualHosts/manager.example.com",
+    "nodes": [{
+      "default": [{
+        "data": "deny",
+        "id": "virtualHosts/manager.example.com/locationRules/default",
+        "re": "default",
+        "title": "default",
+        "type": "rule"
+      }],
+      "id": "virtualHosts/manager.example.com/locationRules",
+      "title": "locationRules",
+      "type": "ruleContainer",
+      "nodes": [{
+        "comment": "",
+        "title": "default",
+        "type": "rule",
+        "id": "virtualHosts/manager.example.com/locationRules/1",
+        "data": "$uid eq \"dwho\"",
+        "re": "default"
+      }]
+    }, {
+      "id": "virtualHosts/manager.example.com/exportedHeaders",
+      "title": "exportedHeaders",
+      "type": "keyTextContainer",
+      "nodes": []
+    }, {
+      "id": "virtualHosts/manager.example.com/post",
+      "title": "post",
+      "type": "postContainer",
+      "nodes": []
+    }, {
+      "id": "vhostOptions",
+      "title": "vhostOptions",
+      "nodes": [{
+        "default": -1,
+        "get": "virtualHosts/manager.example.com/vhostPort",
+        "id": "virtualHosts/manager.example.com/vhostPort",
+        "title": "vhostPort",
+        "type": "int",
+        "data": -1
+      }, {
+        "default": -1,
+        "get": "virtualHosts/manager.example.com/vhostHttps",
+        "id": "virtualHosts/manager.example.com/vhostHttps",
+        "title": "vhostHttps",
+        "type": "trool",
+        "data": -1
+      }, {
+        "default": 0,
+        "get": "virtualHosts/manager.example.com/vhostMaintenance",
+        "id": "virtualHosts/manager.example.com/vhostMaintenance",
+        "title": "vhostMaintenance",
+        "type": "bool",
+        "data": 0
+      }, {
+        "get": "virtualHosts/manager.example.com/vhostAliases",
+        "id": "virtualHosts/manager.example.com/vhostAliases",
+        "title": "vhostAliases"
+      }]
+    }]
+  }, {
+    "template": "virtualHost",
+    "type": "virtualHost",
+    "id": "virtualHosts/test1.example.com",
+    "title": "test1.example.com",
+    "nodes": [{
+      "default": [{
+        "data": "deny",
+        "id": "virtualHosts/test1.example.com/locationRules/default",
+        "re": "default",
+        "title": "default",
+        "type": "rule"
+      }],
+      "id": "virtualHosts/test1.example.com/locationRules",
+      "title": "locationRules",
+      "type": "ruleContainer",
+      "nodes": [{
+        "data": "logout_sso",
+        "re": "^/logout",
+        "comment": "Logout comment",
+        "title": "logout_comment",
+        "id": "virtualHosts/test1.example.com/locationRules/1",
+        "type": "rule"
+      }, {
+        "title": "default",
+        "comment": "",
+        "type": "rule",
+        "id": "virtualHosts/test1.example.com/locationRules/2",
+        "data": "accept",
+        "re": "default"
+      }]
+    }, {
+      "id": "virtualHosts/test1.example.com/exportedHeaders",
+      "title": "exportedHeaders",
+      "type": "keyTextContainer",
+      "nodes": [{
+        "data": "$uid",
+        "id": "virtualHosts/test1.example.com/exportedHeaders/1",
+        "type": "keyText",
+        "title": "Auth-User"
+      }]
+    }, {
+      "id": "virtualHosts/test1.example.com/post",
+      "title": "post",
+      "type": "postContainer",
+      "nodes": []
+    }, {
+      "id": "vhostOptions",
+      "title": "vhostOptions",
+      "nodes": [{
+        "default": -1,
+        "get": "virtualHosts/test1.example.com/vhostPort",
+        "id": "virtualHosts/test1.example.com/vhostPort",
+        "title": "vhostPort",
+        "type": "int",
+        "data": -1
+      }, {
+        "default": -1,
+        "get": "virtualHosts/test1.example.com/vhostHttps",
+        "id": "virtualHosts/test1.example.com/vhostHttps",
+        "title": "vhostHttps",
+        "type": "trool",
+        "data": -1
+      }, {
+        "default": 0,
+        "get": "virtualHosts/test1.example.com/vhostMaintenance",
+        "id": "virtualHosts/test1.example.com/vhostMaintenance",
+        "title": "vhostMaintenance",
+        "type": "bool",
+        "data": 0
+      }, {
+        "get": "virtualHosts/test1.example.com/vhostAliases",
+        "id": "virtualHosts/test1.example.com/vhostAliases",
+        "title": "vhostAliases"
+      }]
+    }]
+  }, {
+    "id": "virtualHosts/test2.example.com",
+    "type": "virtualHost",
+    "title": "test3.example.com",
+    "template": "virtualHost",
+    "nodes": [{
+      "default": [{
+        "data": "deny",
+        "id": "virtualHosts/test2.example.com/locationRules/default",
+        "re": "default",
+        "title": "default",
+        "type": "rule"
+      }],
+      "id": "virtualHosts/test2.example.com/locationRules",
+      "title": "locationRules",
+      "type": "ruleContainer",
+      "nodes": [{
+        "title": "^/logout",
+        "comment": "",
+        "type": "rule",
+        "id": "virtualHosts/test2.example.com/locationRules/1",
+        "data": "logout_sso",
+        "re": "^/logout"
+      }, {
+        "data": "accept",
+        "re": "default",
+        "title": "default",
+        "comment": "",
+        "id": "virtualHosts/test2.example.com/locationRules/2",
+        "type": "rule"
+      }]
+    }, {
+      "id": "virtualHosts/test2.example.com/exportedHeaders",
+      "title": "exportedHeaders",
+      "type": "keyTextContainer",
+      "nodes": [{
+        "id": "virtualHosts/test2.example.com/exportedHeaders/1",
+        "type": "keyText",
+        "title": "Auth-User",
+        "data": "$uid"
+      }]
+    }, {
+      "id": "virtualHosts/test2.example.com/post",
+      "title": "post",
+      "type": "postContainer",
+      "nodes": []
+    }, {
+      "id": "vhostOptions",
+      "title": "vhostOptions",
+      "nodes": [{
+        "default": -1,
+        "get": "virtualHosts/test2.example.com/vhostPort",
+        "id": "virtualHosts/test2.example.com/vhostPort",
+        "title": "vhostPort",
+        "type": "int",
+        "data": -1
+      }, {
+        "default": -1,
+        "get": "virtualHosts/test2.example.com/vhostHttps",
+        "id": "virtualHosts/test2.example.com/vhostHttps",
+        "title": "vhostHttps",
+        "type": "trool",
+        "data": -1
+      }, {
+        "default": 0,
+        "get": "virtualHosts/test2.example.com/vhostMaintenance",
+        "id": "virtualHosts/test2.example.com/vhostMaintenance",
+        "title": "vhostMaintenance",
+        "type": "bool",
+        "data": 0
+      }, {
+        "get": "virtualHosts/test2.example.com/vhostAliases",
+        "id": "virtualHosts/test2.example.com/vhostAliases",
+        "title": "vhostAliases"
+      }]
+    }]
+  }, {
+    "id": "virtualHosts/new__test.ex.com",
+    "title": "test.ex.com",
+    "type": "virtualHost",
+    "_nodes": [
+      {
+        "default": [
+          {
+            "data": "deny",
+            "id": "virtualHosts/new__test.ex.com/locationRules/default",
+            "re": "default",
+            "title": "default",
+            "type": "rule"
+          }
+        ],
+        "id": "virtualHosts/new__test.ex.com/locationRules",
+        "title": "locationRules",
+        "type": "ruleContainer",
+        "nodes": [{
+          "id": "virtualHosts/new__test.ex.com/locationRules/default",
+          "re": "default",
+          "title": "default",
+          "type": "rule",
+          "data": "deny"
+        }]
+      },
+      {
+        "cnodes": "virtualHosts/new__test.ex.com/exportedHeaders",
+        "id": "virtualHosts/new__test.ex.com/exportedHeaders",
+        "title": "exportedHeaders",
+        "type": "keyTextContainer"
+      },
+      {
+        "cnodes": "virtualHosts/new__test.ex.com/post",
+        "id": "virtualHosts/new__test.ex.com/post",
+        "title": "post",
+        "type": "postContainer"
+      },
+      {
+        "_nodes": [
+          {
+            "default": -1,
+            "get": "virtualHosts/new__test.ex.com/vhostPort",
+            "id": "virtualHosts/new__test.ex.com/vhostPort",
+            "title": "vhostPort",
+            "type": "int"
+          },
+          {
+            "default": -1,
+            "get": "virtualHosts/new__test.ex.com/vhostHttps",
+            "id": "virtualHosts/new__test.ex.com/vhostHttps",
+            "title": "vhostHttps",
+            "type": "trool"
+          },
+          {
+            "default": 0,
+            "get": "virtualHosts/new__test.ex.com/vhostMaintenance",
+            "id": "virtualHosts/new__test.ex.com/vhostMaintenance",
+            "title": "vhostMaintenance",
+            "type": "bool"
+          },
+          {
+            "get": "virtualHosts/new__test.ex.com/vhostAliases",
+            "id": "virtualHosts/new__test.ex.com/vhostAliases",
+            "title": "vhostAliases"
+          }
+        ],
+        "id": "vhostOptions",
+        "title": "vhostOptions"
+      }
+    ]
+  }]
 }, {
-  "_nodes": [{
+  "id": "samlServiceMetaData",
+  "title": "samlServiceMetaData",
+  "nodes": [{
     "default": "#PORTAL#/saml/metadata",
     "id": "samlEntityID",
-    "title": "samlEntityID"
+    "title": "samlEntityID",
+    "data": "#PORTAL#/saml/metadata"
   }, {
-    "_nodes": [{
-      "_nodes": [{
+    "id": "samlServiceSecurity",
+    "title": "samlServiceSecurity",
+    "nodes": [{
+      "id": "samlServiceSecuritySig",
+      "title": "samlServiceSecuritySig",
+      "nodes": [{
         "default": "",
         "id": "samlServicePrivateKeySig",
         "title": "samlServicePrivateKeySig",
-        "type": "file"
+        "type": "file",
+        "data": ""
       }, {
         "default": "",
         "id": "samlServicePrivateKeySigPwd",
-        "title": "samlServicePrivateKeySigPwd"
+        "title": "samlServicePrivateKeySigPwd",
+        "data": ""
       }, {
         "default": "",
         "id": "samlServicePublicKeySig",
         "title": "samlServicePublicKeySig",
-        "type": "file"
-      }],
-      "id": "samlServiceSecuritySig",
-      "title": "samlServiceSecuritySig"
+        "type": "file",
+        "data": ""
+      }]
     }, {
-      "_nodes": [{
+      "id": "samlServiceSecurityEnc",
+      "title": "samlServiceSecurityEnc",
+      "nodes": [{
         "default": "",
         "id": "samlServicePrivateKeyEnc",
         "title": "samlServicePrivateKeyEnc",
-        "type": "file"
+        "type": "file",
+        "data": ""
       }, {
         "id": "samlServicePrivateKeyEncPwd",
         "title": "samlServicePrivateKeyEncPwd"
@@ -1693,240 +2240,276 @@
         "default": "",
         "id": "samlServicePublicKeyEnc",
         "title": "samlServicePublicKeyEnc",
-        "type": "file"
-      }],
-      "id": "samlServiceSecurityEnc",
-      "title": "samlServiceSecurityEnc"
-    }],
-    "id": "samlServiceSecurity",
-    "title": "samlServiceSecurity"
+        "type": "file",
+        "data": ""
+      }]
+    }]
   }, {
-    "_nodes": [{
+    "id": "samlNameIDFormatMap",
+    "title": "samlNameIDFormatMap",
+    "type": "simpleInputContainer",
+    "nodes": [{
       "default": "mail",
       "id": "samlNameIDFormatMapEmail",
-      "title": "samlNameIDFormatMapEmail"
+      "title": "samlNameIDFormatMapEmail",
+      "data": "mail"
     }, {
       "default": "mail",
       "id": "samlNameIDFormatMapX509",
-      "title": "samlNameIDFormatMapX509"
+      "title": "samlNameIDFormatMapX509",
+      "data": "mail"
     }, {
       "default": "uid",
       "id": "samlNameIDFormatMapWindows",
-      "title": "samlNameIDFormatMapWindows"
+      "title": "samlNameIDFormatMapWindows",
+      "data": "uid"
     }, {
       "default": "uid",
       "id": "samlNameIDFormatMapKerberos",
-      "title": "samlNameIDFormatMapKerberos"
-    }],
-    "id": "samlNameIDFormatMap",
-    "title": "samlNameIDFormatMap",
-    "type": "simpleInputContainer"
+      "title": "samlNameIDFormatMapKerberos",
+      "data": "uid"
+    }]
   }, {
-    "_nodes": [{
+    "id": "samlAuthnContextMap",
+    "title": "samlAuthnContextMap",
+    "type": "simpleInputContainer",
+    "nodes": [{
       "default": 2,
       "id": "samlAuthnContextMapPassword",
       "title": "samlAuthnContextMapPassword",
-      "type": "int"
+      "type": "int",
+      "data": 2
     }, {
       "default": 3,
       "id": "samlAuthnContextMapPasswordProtectedTransport",
       "title": "samlAuthnContextMapPasswordProtectedTransport",
-      "type": "int"
+      "type": "int",
+      "data": 3
     }, {
       "default": 5,
       "id": "samlAuthnContextMapTLSClient",
       "title": "samlAuthnContextMapTLSClient",
-      "type": "int"
+      "type": "int",
+      "data": 5
     }, {
       "default": 4,
       "id": "samlAuthnContextMapKerberos",
       "title": "samlAuthnContextMapKerberos",
-      "type": "int"
-    }],
-    "id": "samlAuthnContextMap",
-    "title": "samlAuthnContextMap",
-    "type": "simpleInputContainer"
+      "type": "int",
+      "data": 4
+    }]
   }, {
-    "_nodes": [{
+    "id": "samlOrganization",
+    "title": "samlOrganization",
+    "type": "simpleInputContainer",
+    "nodes": [{
       "default": "Example",
       "id": "samlOrganizationDisplayName",
-      "title": "samlOrganizationDisplayName"
+      "title": "samlOrganizationDisplayName",
+      "data": "Example"
     }, {
       "default": "Example",
       "id": "samlOrganizationName",
-      "title": "samlOrganizationName"
+      "title": "samlOrganizationName",
+      "data": "Example"
     }, {
       "default": "http://www.example.com",
       "id": "samlOrganizationURL",
-      "title": "samlOrganizationURL"
-    }],
-    "id": "samlOrganization",
-    "title": "samlOrganization",
-    "type": "simpleInputContainer"
+      "title": "samlOrganizationURL",
+      "data": "http://www.example.com"
+    }]
   }, {
-    "_nodes": [{
+    "id": "samlSPSSODescriptor",
+    "title": "samlSPSSODescriptor",
+    "nodes": [{
       "default": 1,
       "id": "samlSPSSODescriptorAuthnRequestsSigned",
       "title": "samlSPSSODescriptorAuthnRequestsSigned",
-      "type": "bool"
+      "type": "bool",
+      "data": 1
     }, {
       "default": 1,
       "id": "samlSPSSODescriptorWantAssertionsSigned",
       "title": "samlSPSSODescriptorWantAssertionsSigned",
-      "type": "bool"
+      "type": "bool",
+      "data": 1
     }, {
-      "_nodes": [{
+      "id": "samlSPSSODescriptorSingleLogoutService",
+      "title": "samlSPSSODescriptorSingleLogoutService",
+      "nodes": [{
         "default": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn",
         "id": "samlSPSSODescriptorSingleLogoutServiceHTTPRedirect",
         "title": "samlSPSSODescriptorSingleLogoutServiceHTTPRedirect",
-        "type": "samlService"
+        "type": "samlService",
+        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect", "#PORTAL#/saml/proxySingleLogout", "#PORTAL#/saml/proxySingleLogoutReturn"]
       }, {
         "default": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn",
         "id": "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
         "title": "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
-        "type": "samlService"
+        "type": "samlService",
+        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST", "#PORTAL#/saml/proxySingleLogout", "#PORTAL#/saml/proxySingleLogoutReturn"]
       }, {
         "default": "urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/proxySingleLogoutSOAP;",
         "id": "samlSPSSODescriptorSingleLogoutServiceSOAP",
         "title": "samlSPSSODescriptorSingleLogoutServiceSOAP",
-        "type": "samlService"
-      }],
-      "id": "samlSPSSODescriptorSingleLogoutService",
-      "title": "samlSPSSODescriptorSingleLogoutService"
+        "type": "samlService",
+        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:SOAP", "#PORTAL#/saml/proxySingleLogoutSOAP", ""]
+      }]
     }, {
-      "_nodes": [{
+      "id": "samlSPSSODescriptorAssertionConsumerService",
+      "title": "samlSPSSODescriptorAssertionConsumerService",
+      "nodes": [{
         "default": "1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact",
         "id": "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact",
         "title": "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact",
-        "type": "samlAssertion"
+        "type": "samlAssertion",
+        "data": ["1", "0", "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact", "#PORTAL#/saml/proxySingleSignOnArtifact"]
       }, {
         "default": "0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost",
         "id": "samlSPSSODescriptorAssertionConsumerServiceHTTPPost",
         "title": "samlSPSSODescriptorAssertionConsumerServiceHTTPPost",
-        "type": "samlAssertion"
-      }],
-      "id": "samlSPSSODescriptorAssertionConsumerService",
-      "title": "samlSPSSODescriptorAssertionConsumerService"
+        "type": "samlAssertion",
+        "data": ["0", "1", "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST", "#PORTAL#/saml/proxySingleSignOnPost"]
+      }]
     }, {
-      "_nodes": [{
+      "id": "samlSPSSODescriptorArtifactResolutionService",
+      "title": "samlSPSSODescriptorArtifactResolutionService",
+      "nodes": [{
         "default": "1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact",
         "id": "samlSPSSODescriptorArtifactResolutionServiceArtifact",
         "title": "samlSPSSODescriptorArtifactResolutionServiceArtifact",
-        "type": "samlAssertion"
-      }],
-      "id": "samlSPSSODescriptorArtifactResolutionService",
-      "title": "samlSPSSODescriptorArtifactResolutionService"
-    }],
-    "id": "samlSPSSODescriptor",
-    "title": "samlSPSSODescriptor"
+        "type": "samlAssertion",
+        "data": ["1", "0", "urn:oasis:names:tc:SAML:2.0:bindings:SOAP", "#PORTAL#/saml/artifact"]
+      }]
+    }]
   }, {
-    "_nodes": [{
+    "id": "samlIDPSSODescriptor",
+    "title": "samlIDPSSODescriptor",
+    "nodes": [{
       "default": 1,
       "id": "samlIDPSSODescriptorWantAuthnRequestsSigned",
       "title": "samlIDPSSODescriptorWantAuthnRequestsSigned",
-      "type": "bool"
+      "type": "bool",
+      "data": 1
     }, {
-      "_nodes": [{
+      "id": "samlIDPSSODescriptorSingleSignOnService",
+      "title": "samlIDPSSODescriptorSingleSignOnService",
+      "nodes": [{
         "default": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleSignOn;",
         "id": "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect",
         "title": "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect",
-        "type": "samlService"
+        "type": "samlService",
+        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect", "#PORTAL#/saml/singleSignOn", ""]
       }, {
         "default": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleSignOn;",
         "id": "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
         "title": "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
-        "type": "samlService"
+        "type": "samlService",
+        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST", "#PORTAL#/saml/singleSignOn", ""]
       }, {
         "default": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/singleSignOnArtifact;",
         "id": "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact",
         "title": "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact",
-        "type": "samlService"
+        "type": "samlService",
+        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact", "#PORTAL#/saml/singleSignOnArtifact", ""]
       }, {
         "default": "urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleSignOnSOAP;",
         "id": "samlIDPSSODescriptorSingleSignOnServiceSOAP",
         "title": "samlIDPSSODescriptorSingleSignOnServiceSOAP",
-        "type": "samlService"
-      }],
-      "id": "samlIDPSSODescriptorSingleSignOnService",
-      "title": "samlIDPSSODescriptorSingleSignOnService"
+        "type": "samlService",
+        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:SOAP", "#PORTAL#/saml/singleSignOnSOAP", ""]
+      }]
     }, {
-      "_nodes": [{
+      "id": "samlIDPSSODescriptorSingleLogoutService",
+      "title": "samlIDPSSODescriptorSingleLogoutService",
+      "nodes": [{
         "default": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn",
         "id": "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect",
         "title": "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect",
-        "type": "samlService"
+        "type": "samlService",
+        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect", "#PORTAL#/saml/singleLogout", "#PORTAL#/saml/singleLogoutReturn"]
       }, {
         "default": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn",
         "id": "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
         "title": "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
-        "type": "samlService"
+        "type": "samlService",
+        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST", "#PORTAL#/saml/singleLogout", "#PORTAL#/saml/singleLogoutReturn"]
       }, {
         "default": "urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleLogoutSOAP;",
         "id": "samlIDPSSODescriptorSingleLogoutServiceSOAP",
         "title": "samlIDPSSODescriptorSingleLogoutServiceSOAP",
-        "type": "samlService"
-      }],
-      "id": "samlIDPSSODescriptorSingleLogoutService",
-      "title": "samlIDPSSODescriptorSingleLogoutService"
+        "type": "samlService",
+        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:SOAP", "#PORTAL#/saml/singleLogoutSOAP", ""]
+      }]
     }, {
-      "_nodes": [{
+      "id": "samlIDPSSODescriptorArtifactResolutionService",
+      "title": "samlIDPSSODescriptorArtifactResolutionService",
+      "nodes": [{
         "default": "1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact",
         "id": "samlIDPSSODescriptorArtifactResolutionServiceArtifact",
         "title": "samlIDPSSODescriptorArtifactResolutionServiceArtifact",
-        "type": "samlAssertion"
-      }],
-      "id": "samlIDPSSODescriptorArtifactResolutionService",
-      "title": "samlIDPSSODescriptorArtifactResolutionService"
-    }],
-    "id": "samlIDPSSODescriptor",
-    "title": "samlIDPSSODescriptor"
+        "type": "samlAssertion",
+        "data": ["1", "0", "urn:oasis:names:tc:SAML:2.0:bindings:SOAP", "#PORTAL#/saml/artifact"]
+      }]
+    }]
   }, {
-    "_nodes": [{
-      "_nodes": [{
+    "id": "samlAttributeAuthorityDescriptor",
+    "title": "samlAttributeAuthorityDescriptor",
+    "nodes": [{
+      "id": "samlAttributeAuthorityDescriptorAttributeService",
+      "title": "samlAttributeAuthorityDescriptorAttributeService",
+      "nodes": [{
         "default": "urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;",
         "id": "samlAttributeAuthorityDescriptorAttributeServiceSOAP",
         "title": "samlAttributeAuthorityDescriptorAttributeServiceSOAP",
-        "type": "samlService"
-      }],
-      "id": "samlAttributeAuthorityDescriptorAttributeService",
-      "title": "samlAttributeAuthorityDescriptorAttributeService"
-    }],
-    "id": "samlAttributeAuthorityDescriptor",
-    "title": "samlAttributeAuthorityDescriptor"
+        "type": "samlService",
+        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:SOAP", "#PORTAL#/saml/AA/SOAP", ""]
+      }]
+    }]
   }, {
-    "_nodes": [{
+    "id": "samlAdvanced",
+    "title": "samlAdvanced",
+    "nodes": [{
       "default": "lemonldapidp",
       "id": "samlIdPResolveCookie",
-      "title": "samlIdPResolveCookie"
+      "title": "samlIdPResolveCookie",
+      "data": "lemonldapidp"
     }, {
       "default": 1,
       "id": "samlMetadataForceUTF8",
       "title": "samlMetadataForceUTF8",
-      "type": "bool"
+      "type": "bool",
+      "data": 1
     }, {
       "id": "samlStorage",
       "title": "samlStorage"
     }, {
-      "cnodes": "samlStorageOptions",
       "id": "samlStorageOptions",
       "title": "samlStorageOptions",
-      "type": "keyTextContainer"
+      "type": "keyTextContainer",
+      "nodes": []
     }, {
       "default": 600,
       "id": "samlRelayStateTimeout",
       "title": "samlRelayStateTimeout",
-      "type": "int"
+      "type": "int",
+      "data": 600
     }, {
       "default": 0,
       "id": "samlUseQueryStringSpecific",
       "title": "samlUseQueryStringSpecific",
-      "type": "bool"
+      "type": "bool",
+      "data": 0
     }, {
-      "_nodes": [{
+      "id": "samlCommonDomainCookie",
+      "title": "samlCommonDomainCookie",
+      "type": "simpleInputContainer",
+      "nodes": [{
         "default": 0,
         "id": "samlCommonDomainCookieActivation",
         "title": "samlCommonDomainCookieActivation",
-        "type": "bool"
+        "type": "bool",
+        "data": 0
       }, {
         "id": "samlCommonDomainCookieDomain",
         "title": "samlCommonDomainCookieDomain"
@@ -1936,28 +2519,21 @@
       }, {
         "id": "samlCommonDomainCookieWriter",
         "title": "samlCommonDomainCookieWriter"
-      }],
-      "id": "samlCommonDomainCookie",
-      "title": "samlCommonDomainCookie",
-      "type": "simpleInputContainer"
-    }],
-    "id": "samlAdvanced",
-    "title": "samlAdvanced"
-  }],
-  "id": "samlServiceMetaData",
-  "title": "samlServiceMetaData"
+      }]
+    }]
+  }]
 }, {
-  "cnodes": "samlIDPMetaDataNodes",
   "id": "samlIDPMetaDataNodes",
   "template": "samlIDPMetaDataNode",
   "title": "samlIDPMetaDataNodes",
-  "type": "samlIDPMetaDataNodeContainer"
+  "type": "samlIDPMetaDataNodeContainer",
+  "nodes": []
 }, {
-  "cnodes": "samlSPMetaDataNodes",
   "id": "samlSPMetaDataNodes",
   "template": "samlSPMetaDataNode",
   "title": "samlSPMetaDataNodes",
-  "type": "samlSPMetaDataNodeContainer"
+  "type": "samlSPMetaDataNodeContainer",
+  "nodes": []
 }, {
   "id": "cfgLog",
   "title": "cfgLog",

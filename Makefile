@@ -34,10 +34,8 @@ PORTALSKINSDIR=$(PORTALDIR)/skins
 RPORTALSKINSDIR=$(DESTDIR)/$(PORTALSKINSDIR)
 MANAGERDIR=$(DOCUMENTROOT)/manager
 RMANAGERDIR=$(DESTDIR)/$(MANAGERDIR)
-MANAGERSKINSDIR=$(MANAGERDIR)/skins
-RMANAGERSKINSDIR=$(DESTDIR)/$(MANAGERSKINSDIR)
-SESSIONSEXPLORERDIR=$(MANAGERDIR)
-RSESSIONSEXPLORERDIR=$(DESTDIR)/$(SESSIONSEXPLORERDIR)
+MANAGERSITEDIR=$(MANAGERDIR)/site
+RMANAGERSITEDIR=$(DESTDIR)/$(MANAGERSITEDIR)
 DOCDIR=$(DOCUMENTROOT)
 RDOCDIR=$(DESTDIR)/$(DOCDIR)
 DEFDOCDIR=$(DOCUMENTROOT)/doc
@@ -102,7 +100,6 @@ VHOSTLISTEN=*:80
 # Other
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
 PORTALSKINS=`ls lemonldap-ng-portal/example/skins/`
-MANAGERSKINS=`ls lemonldap-ng-manager/example/skins/`
 DIFF=diff -aurN -x '*.bak' -x .svn -x '*.swp' --ignore-matching-lines='.*jquery.*' --ignore-matching-lines='.*lemonldap-ng\.ini.*'
 
 SRCCOMMONDIR=lemonldap-ng-common
@@ -241,8 +238,8 @@ install_bin:	install_conf_dir
 		${SRCPORTALDIR}/example/scripts/buildPortalWSDL \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
-		${SRCMANAGERDIR}/example/scripts/lmConfigEditor \
-		${SRCMANAGERDIR}/example/scripts/lemonldap-ng-cli \
+		${SRCMANAGERDIR}/scripts/lmConfigEditor \
+		${SRCMANAGERDIR}/scripts/lemonldap-ng-cli \
 			$(RBINDIR)
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RBINDIR)/lmConfigEditor; \
@@ -283,7 +280,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 			s#__FRDOCDIR__#$(FRDOCDIR)/#g;' $(RCONFDIR)/*apache*.conf
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	# Fix a lost of rights on the main directory
-	@chmod 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSKINSDIR) $(RMANAGERSKINSDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
+	@chmod 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSKINSDIR) $(RMANAGERSITEDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
 	@echo
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${CONFDIR}"
@@ -317,28 +314,11 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 
 install_manager_site:	install_conf_dir
 	# Manager install
-	@install -v -d ${RMANAGERDIR} ${RMANAGERSKINSDIR} \
-		${RSESSIONSEXPLORERDIR} \
-		$(RCONFDIR) ${RMANAGERDIR}/skins/
-	@for skin in $$(ls lemonldap-ng-manager/example/skins/); do \
-		[ -h $(RMANAGERDIR)/skins/$$skin ] && rm -f $(RMANAGERDIR)/skins/$$skin; \
-		install -v -d $(RMANAGERSKINSDIR)/$$skin; \
-	done
-	@cp -pR -f ${SRCMANAGERDIR}/example/index.pl ${RMANAGERDIR}
-	@cp -pR -f ${SRCMANAGERDIR}/example/*.html ${RMANAGERDIR}
-	@cp -pR -f ${SRCMANAGERDIR}/example/skins/* $(RMANAGERSKINSDIR)
-	@if [ "$(MANAGERDIR)/skins/" != "$(MANAGERSKINSDIR)/" ]; then \
-		for skin in $$(ls lemonldap-ng-manager/example/skins/); do \
-			rm -rf $(RMANAGERDIR)/skins/$$skin/; \
-			ln -s $(MANAGERSKINSDIR)/$$skin $(RMANAGERDIR)/skins/$$skin; \
-		done; \
-	fi
+	@install -v -d ${RMANAGERDIR} ${RMANAGERSITEDIR} \
+		$(RCONFDIR) ${RMANAGERDIR}
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
 	# Sessions explorer and notifications explorer install
-	@cp -pR -f ${SRCMANAGERDIR}/example/sessions.pl $(RSESSIONSEXPLORERDIR)
-	@cp -pR -f ${SRCMANAGERDIR}/example/notifications.pl $(RSESSIONSEXPLORERDIR)
-	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSKINSDIR} \
-		${RSESSIONSEXPLORERDIR} \
+	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSITEDIR} \
 		$(RCONFDIR) -type d -name .svn)
 
 install_portal_site:	install_conf_dir
@@ -673,9 +653,6 @@ debian-diff:
 	@$(DIFF) lemonldap-ng-manager/example/notifications.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/notifications.pl ||true
 	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' lemonldap-ng-manager/example/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
 	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' lemonldap-ng-manager/example/scripts/lemonldap-ng-cli $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lemonldap-ng-cli ||true
-	@for i in $(MANAGERSKINS); do \
-		$(DIFF) -x 'jquery*' lemonldap-ng-manager/example/skins/$$i $(DIFFPREFIX)/usr/share/lemonldap-ng/manager-skins/$$i; \
-	done ||true
 
 default-diff:
 	@# Portal

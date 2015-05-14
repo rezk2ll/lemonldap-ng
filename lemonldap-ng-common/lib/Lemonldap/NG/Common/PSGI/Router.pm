@@ -77,7 +77,7 @@ sub genRoute {
     }
 }
 
-sub abort {
+sub routerAbort {
     my ( $self, $path, $msg ) = splice @_;
     delete $self->routes->{$path};
     $self->addRoute(

@@ -2,6 +2,7 @@
 
 use JSON;
 use 5.10.0;
+use Data::Dumper;
 
 use_ok('Lemonldap::NG::Manager');
 
@@ -10,14 +11,16 @@ my $app;
 ok(
     $app = Lemonldap::NG::Manager->run(
         {
-            configStorage => { confFile => 'test/lemonldap-ng.ini' },
+            configStorage => { confFile => 't/lemonldap-ng.ini' },
             protection    => 'none',
         }
     ),
     'New app'
 );
 
-our $count = 2;
+ok( ref($app) eq 'CODE', 'app is a subroutine' );
+
+our $count = 3;
 
 sub count {
     my $c = shift;
@@ -149,8 +152,10 @@ sub jsonResponse {
 sub jsonPostResponse {
     my ( $path, $query, $body, $type, $len ) = splice @_;
     my $res;
-    ok( $res = post( $path, $query, $body, $type, $len ),
-        "Succeed to post to $path" . ( $query ? "?$query" : "" ) );
+    ok(
+        $res = post( $path, $query, $body, $type, $len ),
+        "Succeed to post to $path" . ( $query ? "?$query" : "" )
+    );
     ok( $res->[0] == 200, "Return code eq 200" ) or print STDERR Dumper($res);
     my $href;
     ok( $href = decode_json( $res->[2]->[0] ), 'Response is JSON' );
@@ -161,8 +166,10 @@ sub jsonPostResponse {
 sub jsonPutResponse {
     my ( $path, $query, $body, $type, $len ) = splice @_;
     my $res;
-    ok( $res = put( $path, $query, $body, $type, $len ),
-        "Succeed to post to $path" . ( $query ? "?$query" : "" ) );
+    ok(
+        $res = put( $path, $query, $body, $type, $len ),
+        "Succeed to post to $path" . ( $query ? "?$query" : "" )
+    );
     ok( $res->[0] == 200, "Return code eq 200" ) or print STDERR Dumper($res);
     my $href;
     ok( $href = decode_json( $res->[2]->[0] ), 'Response is JSON' );

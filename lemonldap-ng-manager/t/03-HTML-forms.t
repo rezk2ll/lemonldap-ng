@@ -4,7 +4,7 @@ use Test::More;
 use strict;
 use 5.10.0;
 
-my $formDir = 'app/forms';
+my $formDir = 'site/static/forms';
 
 my $count = 0;
 use_ok('Lemonldap::NG::Manager::Tree');

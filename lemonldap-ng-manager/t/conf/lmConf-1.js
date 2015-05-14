@@ -109,7 +109,7 @@
   },
   "globalStorage": "Apache::Session::File",
   "globalStorageOptions": {
-    "Directory": "test/sessions",
+    "Directory": "t/sessions",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
   "groups": {},
@@ -134,7 +134,7 @@
   "notification": 1,
   "notificationStorage": "File",
   "notificationStorageOptions": {
-    "dirName": "test/notifications"
+    "dirName": "t/notifications"
   },
   "passwordDB": "Demo",
   "persistentStorage": "Apache::Session::File",

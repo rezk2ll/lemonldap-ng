@@ -86,7 +86,7 @@ sub getAll {
                 date      => $1,
                 uid       => $2,
                 ref       => decode_base64($3),
-                condition => decode_base64($4)
+                condition => decode_base64( $4 // '' )
             }
           )
           : ()

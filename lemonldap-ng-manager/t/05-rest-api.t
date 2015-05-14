@@ -5,8 +5,8 @@ use JSON;
 use strict;
 use 5.10.0;
 
-require 'test/test-lib.pm';
-my $struct = 'app/struct.json';
+require 't/test-lib.pm';
+my $struct = 'site/static/struct.json';
 
 my @bad = qw(
   /conf/latest

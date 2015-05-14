@@ -5,10 +5,10 @@ use 5.10.0;
 use strict;
 use JSON;
 use Data::Dumper;
-require 'test/test-lib.pm';
+require 't/test-lib.pm';
 
-my $struct = 'test/jsonfiles/12-modified.json';
-my $confFiles = [ 'test/conf/lmConf-1.js', 'test/conf/lmConf-2.js' ];
+my $struct = 't/jsonfiles/12-modified.json';
+my $confFiles = [ 't/conf/lmConf-1.js', 't/conf/lmConf-2.js' ];
 
 sub body {
     return IO::File->new( $struct, 'r' );

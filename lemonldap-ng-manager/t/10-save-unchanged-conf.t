@@ -5,12 +5,12 @@ use 5.10.0;
 use strict;
 use JSON;
 use Data::Dumper;
-require 'test/test-lib.pm';
+require 't/test-lib.pm';
 
 my @struct =
-  qw[test/jsonfiles/01-base-tree.json test/jsonfiles/02-base-tree-all-nodes-opened.json];
+  qw[t/jsonfiles/01-base-tree.json t/jsonfiles/02-base-tree-all-nodes-opened.json];
 my @desc = ( 'Unopened conf', 'Unchanged conf with all nodes opened' );
-my $confFiles = [ 'test/conf/lmConf-1.js', 'test/conf/lmConf-2.js' ];
+my $confFiles = [ 't/conf/lmConf-1.js', 't/conf/lmConf-2.js' ];
 
 sub body {
     return 0 unless (@struct);

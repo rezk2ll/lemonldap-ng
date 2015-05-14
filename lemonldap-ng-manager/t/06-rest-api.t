@@ -5,7 +5,7 @@ use 5.10.0;
 use strict;
 use JSON;
 use IO::String;
-require 'test/test-lib.pm';
+require 't/test-lib.pm';
 
 my $res;
 ok(

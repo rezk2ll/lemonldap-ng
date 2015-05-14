@@ -4,11 +4,10 @@ use Test::More;
 use strict;
 use 5.10.0;
 use Lemonldap::NG::Common::Session;
-use Data::Dumper;
 
-eval { mkdir 'test/sessions' };
-`rm -rf test/sessions/*`;
-require 'test/test-lib.pm';
+eval { mkdir 't/sessions' };
+`rm -rf t/sessions/*`;
+require 't/test-lib.pm';
 
 sub newSession {
     my ( $uid, $ip ) = splice @_;
@@ -18,7 +17,7 @@ sub newSession {
             {
                 storageModule        => 'Apache::Session::File',
                 storageModuleOptions => {
-                    Directory => 'test/sessions',
+                    Directory => 't/sessions',
                     generateModule =>
 'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
                 },
@@ -151,7 +150,7 @@ foreach (@ids) {
     count(3);
 }
 
-opendir D, 'test/sessions' or die 'Unknown dir';
+opendir D, 't/sessions' or die 'Unknown dir';
 my @files = grep { not /^\./ } readdir D;
 ok( @files == 0, "Session directory is empty" );
 count(1);

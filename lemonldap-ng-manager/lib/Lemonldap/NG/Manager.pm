@@ -41,7 +41,7 @@ sub init {
 
     # TODO: manage errors
     unless ( -r $self->{templateDir} ) {
-        $self->error("Unable to read $self->{template}");
+        $self->error("Unable to read $self->{templateDir}");
         return 0;
     }
 

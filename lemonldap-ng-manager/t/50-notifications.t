@@ -4,11 +4,10 @@ use Test::More;
 use strict;
 use 5.10.0;
 use IO::String;
-use Data::Dumper;
 
-eval { mkdir 'test/notifications' };
-`rm -rf test/notifications/*`;
-require 'test/test-lib.pm';
+eval { mkdir 't/notifications' };
+`rm -rf t/notifications/*`;
+require 't/test-lib.pm';
 
 # Try to create a notification
 my $notif =
@@ -50,7 +49,7 @@ count(2);
 
 #print STDERR Dumper($res);
 
-`rm -f test/notifications/*`;
+`rm -f t/notifications/*`;
 
 done_testing( count() );
 
