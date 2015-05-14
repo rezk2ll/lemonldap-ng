@@ -1,0 +1,39 @@
+<script type="text/ng-template" id="cat_render.html">
+  {{cat.title}}
+  <div class="panel" ng-class="{'panel-heading':cat.type=='menuCat','panel-body':cat.type!='menuCat'}" ng-repeat="cat in cat.nodes track by cat.id" ng-include="'cat_render.html'"></div>
+</script>
+
+<div class="panel panel-default">
+  <div class="panel panel-heading">
+    <h3 class="panel-title" trspan="menuCategory"/>
+  </div>
+  <div class="panel panel-body">
+    <div class="input-group">
+      <label for="catTitle" id="catTitleL" class="input-group-addon">
+        <span trspan="categoryName"/>
+      </label>
+      <input id="catTitle" aria-describedby="catTitleL" class="form-control" ng-model="currentNode.title"/>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel panel-heading">
+      <h4 class="panel-title" trspan="appsInThisCat"/>
+    </div>
+    <div class="panel" ng-class="{'panel-heading':cat.type=='menuCat','panel-body':cat.type!='menuCat'}" ng-repeat="cat in currentNode.nodes track by cat.id" ng-include="'cat_render.html'"></div>
+  </div>
+</div>
+
+TODO: order of categories
+<script type="text/javascript">
+buttons=[{
+  "title": "up"
+},{
+  "title": "down"
+},{
+  "title": "deleteEntry"
+},{
+  "title": "newCat"
+},{
+  "title": "newApp"
+}];
+</script>

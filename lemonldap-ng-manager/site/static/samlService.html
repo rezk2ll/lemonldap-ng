@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+  <div class="panel panel-heading">
+    <h3 class="panel-title">{{translateTitle(currentNode)}}</h3>
+  </div>
+  <!-- Format -->
+  <div class="panel panel-body input-group">
+    <label for="sasselect" id="saslbl" class="input-group-addon"><span trspan="format"/> :</label>
+    <select disabled="disabled" class="form-control" id="sasselect" aria-describedby="saslbl" ng-model="currentNode.data[0]">
+      <option value="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect">HTTP Redirect</option>
+      <option value="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST">HTTP POST</option>
+      <option value="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact">HTTP Artifact</option>
+      <option value="urn:oasis:names:tc:SAML:2.0:bindings:SOAP">SOAP</option>
+    </select>
+  </div>
+  <!-- URL -->
+  <div class="panel panel-body input-group">
+    <label for="saninput" id="sanlabel" class="input-group-addon"><span trspan="url"></span> :</label>
+    <input aria-describedby="sanlabel" id="saninput" class="form-control" ng-model="currentNode.data[1]"/>
+  </div>
+  <!-- Return URL -->
+  <div class="panel panel-body input-group">
+    <label for="sasinput" id="saslabel" class="input-group-addon"><span trspan="returnUrl"></span> :</label>
+    <input aria-describedby="saslabel" id="sasinput" class="form-control" ng-model="currentNode.data[2]"/>
+  </div>
+</div>
+<script type="text/javascript">
+buttons=[
+];
+</script>

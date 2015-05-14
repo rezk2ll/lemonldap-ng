@@ -11,10 +11,11 @@ use strict;
 use AutoLoader 'AUTOLOAD';
 use Apache::Session;
 use base qw(Apache::Session);
+use Lemonldap::NG::Common::Apache::Session::Serialize::JSON;
 use Lemonldap::NG::Common::Apache::Session::Store;
 use Lemonldap::NG::Common::Apache::Session::Lock;
 
-our $VERSION = '1.4.4';
+our $VERSION = '1.5.99';
 
 sub _load {
     my $backend = shift;
@@ -34,7 +35,6 @@ sub populate {
         $self = $self->$backend(@_);
     }
     if ( $self->{args}->{jsonSerialize} ) {
-        require Lemonldap::NG::Common::Apache::Session::Serialize::JSON;
         $self->{serialize} =
           \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::serialize;
         $self->{unserialize} =

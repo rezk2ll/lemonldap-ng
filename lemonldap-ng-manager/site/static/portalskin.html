@@ -1,0 +1,56 @@
+<div class="panel panel-default">
+  <div class="panel panel-heading">
+    <h3 class="panel-title" trspan="portalSkin"/>
+  </div>
+  <div class="panel panel-body" style="text-align: center;">
+    <button class="btn btn-info" ng-click="showModal('portalSkinChoice.html')" ng-model="currentNode" style="position:relative;">
+      <span ng-if="inSelect(currentNode.data)">
+        <img ng-src="{{staticPrefix}}logos/{{currentNode.data}}.png" style="margin:auto;" alt="{{currentNode.data}}"  title="{{currentNode.data}}" />
+      </span>
+      <span ng-if="!inSelect(currentNode.data)">
+        <img ng-src="{{staticPrefix}}logos/custom.png" style="margin:auto;" alt="Custom"  title="Custom" />
+      </span>
+      <div class="carousel-caption">
+        <h4>{{currentNode.data}}</h4>
+      </div>
+    </button>
+    <div class="input-group" ng-if="!inSelect(currentNode.data)">
+      <label class="input-group-addon" for="portalSkinInput" trspan="customPortalSkin"/>
+      <input ng-model="currentNode.data" class="form-control"/>
+    </div>
+  </div>
+</div>
+<script type="text/ng-template" id="portalSkinChoice.html">
+  <div class="modal-header">
+    <h3 class="modal-title" trspan="chooseSkin" />
+  </div>
+  <div class="modal-body">
+    <div class="btn-group">
+      <button class="btn" ng-class="{'btn-default':currentNode.data!==b.k,'btn-info':currentNode.data===b.k}" ng-repeat="b in currentNode.select" ng-click="ok(currentNode.data=b.k)" style="position:relative;">
+        <img ng-src="{{staticPrefix}}logos/{{b.k}}.png" style="margin:auto;" alt="{{b.v}}" title="{{b.v}}" />
+        <div class="carousel-caption">
+          <h4>{{b.v}}</h4>
+        </div>
+      </button>
+      <button class="btn" ng-class="{'btn-default':inSelect(currentNode.data),'btn-info':!inSelect(currentNode.data)}" ng-click="currentNode.data='custom'" style="position:relative;">
+        <img ng-src="{{staticPrefix}}logos/custom.png" style="margin:auto;" alt="Custom"  title="Custom" />
+        <div class="carousel-caption">
+          <h4>Custom</h4>
+        </div>
+      </button>
+    </div>
+    <div class="input-group" ng-if="!inSelect(currentNode.data)">
+      <label class="input-group-addon" for="portalSkinInput" trspan="customPortalSkin"/>
+      <input ng-model="currentNode.data" class="form-control"/>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()" trspan="ok"></button>
+    <button class="btn btn-warning" ng-click="cancel()" trspan="cancel"></button>
+  </div>
+</script>
+<script type="text/javascript">
+buttons=[{
+  "title": "cancel"
+}];
+</script>

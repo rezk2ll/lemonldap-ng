@@ -1,0 +1,52 @@
+'use strict';
+
+describe('Manager', function() {
+
+  it('should display other modules', function() {
+    browser.get('/');
+    var links = element.all(by.repeater('link in links'));
+    expect(links.count()).toEqual(3);
+    element(by.xpath("//a[@href='sessions.html']")).click();
+  });
+
+});
+
+describe('Session explorer', function() {
+
+  var session, ip;
+
+  it('Should display at least my session', function() {
+    browser.get('/sessions.html');
+    var t = element.all(by.repeater('node in data track by node.id'));
+    expect(t.count()).toBeGreaterThan(0);
+    element(by.id("a-d")).click();
+    t = element.all(by.repeater('node in node.nodes track by node.id'));
+    expect(t.count()).toBeGreaterThan(0);
+    element(by.id("a-dwho")).click();
+    browser.manage().getCookie('lemonldap').then(function(cookie) {
+      expect(cookie.value).toBeDefined();
+      expect(cookie.value).not.toEqual('');
+      session = cookie.value;
+      element(by.id("s-" + session)).click();
+      var t = element.all(by.repeater('node in currentSession.nodes'));
+      expect(t.count()).toBeGreaterThan(0);
+      ip = element(by.id("v-ipAddr"));
+      expect(ip.getText()).toMatch(/^\d+\.\d+\.\d+\.\d+$/);
+    });
+  });
+
+  it('Should display my IP address', function() {
+    element(by.id('a-ip')).click();
+    var t = element.all(by.repeater('node in data track by node.id'));
+    expect(t.count()).toBeGreaterThan(0);
+    element(by.id("a-127")).click();
+    element(by.id("a-127.0")).click();
+    element(by.id("a-127.0.0")).click();
+    element(by.id("a-127.0.0.1")).click();
+    element(by.id("a-dwho")).click();
+    element(by.id("s-" + session)).click();
+    var t = element.all(by.repeater('node in currentSession.nodes'));
+    expect(t.count()).toBeGreaterThan(0);
+  });
+
+});

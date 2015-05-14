@@ -1,0 +1,19 @@
+<div class="panel panel-default" style="position:relative;">
+  <div class="panel panel-heading">
+    <h3 class="panel-title">{{translateTitle(currentNode)}}</h3>
+  </div>
+  <div class="panel panel-body input-group" style="width:100%;">
+    <label for="filetext" id="lft"><span trspan="editContent"></span> :</label>
+    <textarea id="filetext" aria-describedby="lft" class="form-control" rows="8" ng-model="currentNode.data"></textarea>
+  </div>
+
+  <div class="panel panel-body input-group">
+    <label for="fileinput" id="lfi"><span trspan="replaceByFile"></span> :</label>
+    <input id="fileinput" aria-describedby="lfi" type="file" class="form-control" on-read-file="replaceContent(currentNode,$fileContent)"/>
+  </div>
+</div>
+<script type="text/javascript">
+buttons=[{
+  "title": "cancel"
+}];
+</script>

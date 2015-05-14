@@ -1,729 +1,343 @@
-## @file
-# Notification explorer
-
-## @class
-# Notification explorer.
-# Synopsis:
-#  * build a new Lemonldap::NG::Manager::Notifications object
-#  * insert tree() result in HTML
-#
-# tree() loads on of the tree methods.
-# new() manage ajax requests (inserted in HTML tree)
 package Lemonldap::NG::Manager::Notifications;
 
-use strict;
-use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
+use 5.10.0;
+use Mouse;
+
+use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Common::PSGI::Constants;
+use Lemonldap::NG::Manager::Constants;
 use Lemonldap::NG::Common::Notification;
-use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
-use Lemonldap::NG::Common::Conf::Constants;   #inherits
-require Lemonldap::NG::Manager::_i18n;        #inherits
-use utf8;
 
-our $whatToTrace;
-*whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
+use feature 'state';
 
-our $VERSION = '2.0.0';
+extends 'Lemonldap::NG::Manager::Lib';
 
-our @ISA = qw(
-  Lemonldap::NG::Handler::CGI
-  Lemonldap::NG::Manager::_i18n
-);
+our $VERSION = '1.5.99';
 
-## @cmethod Lemonldap::NG::Manager::Notifications new(hashRef args)
-# Constructor.
-# @param $args Arguments for Lemonldap::NG::Handler::CGI::new()
-# @return New Lemonldap::NG::Manager::Notifications object
-sub new {
-    my ( $class, $args ) = @_;
+has _notifAccess => ( is => 'rw' );
 
-    # Output UTF-8
-    binmode( STDOUT, ':utf8' );
+#############################
+# I. INITIALIZATION METHODS #
+#############################
 
-    # Try to get configuration values from global configuration
-    my $conf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
-      or Lemonldap::NG::Handler::CGI->abort( 'Unable to get configuration',
-        $Lemonldap::NG::Common::Conf::msg );
+use constant defaultRoute => 'notifications.html';
 
-    # Load global configuration
-    if ( my $globalconf = $conf->getConf() ) {
-        $args->{$_} ||= $globalconf->{$_}
-          foreach (
-            qw/portal notification notificationStorage notificationStorageOptions/
-          );
-    }
+sub addRoutes {
+    my $self = shift;
 
-    # Configuration from MANAGER section
-    if ( my $localconf = $conf->getLocalConf(MANAGERSECTION) ) {
-        $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
-    }
-
-    my $self = $class->SUPER::new($args)
-      or $class->abort( 'Unable to start ' . __PACKAGE__,
-        'See Apache logs for more' );
-
-    # Local args prepends global args
-    $self->{$_} = $args->{$_} foreach ( keys %$args );
-
-    # Load default skin if no other specified
-    $self->{managerSkin} ||= 'default';
-
-    # Verify if Notification is enabled
-    $class->abort("Notifications not enabled, please update configuration")
-      unless $self->{notification};
-
-    # Now try to load Notification module
-    my $tmp;
-
-    # Use configuration options
-    if ( $self->{notificationStorage} ) {
-        $tmp->{type} = $self->{notificationStorage};
-        foreach ( keys %{ $self->{notificationStorageOptions} } ) {
-            $tmp->{$_} = $self->{notificationStorageOptions}->{$_};
-        }
-    }
-
-    # Else use the configuration backend
-    else {
-        (%$tmp) = (%$conf);
-        $class->abort( "notificationStorage not defined",
-            "This parameter is required to use notification system" )
-          unless ( ref($tmp) );
-
-        # Get the type
-        $tmp->{type} =~ s/.*:://;
-        $tmp->{type} =~ s/(CBDI|RDBI)/DBI/;    # CDBI/RDBI are DBI
-
-        # If type not File or DBI, abort
-        $class->abort("Only File, DBI or LDAP supported for Notifications")
-          unless $tmp->{type} =~ /^(File|DBI|LDAP)$/;
-
-        # Force table name
-        $tmp->{table} = 'notifications';
-    }
-
-    $tmp->{p}            = $self;
-    $self->{notifObject} = Lemonldap::NG::Common::Notification->new($tmp);
-    $class->abort($Lemonldap::NG::Common::Notification::msg)
-      unless ( $self->{notifObject} );
-
-    # Multi values separator
+    return unless ( $self->notifAccess );
     $self->{multiValuesSeparator} ||= '; ';
 
-    # Now we're ready to display sessions. Choose display type
-    foreach my $k ( $self->param() ) {
+    # HTML template
+    $self->addRoute( 'notifications.html', undef, ['GET'] )
 
-        # Case ajax request: execute corresponding sub and quit
-        if ( grep { $_ eq $k }
-            qw(delete purge notification notificationDone uid uidDone letter letterDone)
-          )
-        {
-            print $self->header( -type => 'text/html;charset=utf-8' );
-            print $self->$k( $self->param($k) );
-            $self->quit();
-        }
+      # READ
+      ->addRoute(
+        'notifications' =>
+          { actives => 'activeNotifications', done => 'doneNotifications' },
+        ['GET']
+      )
 
-        # Case ajax request with complex date type (JSON)
-        if ( $k =~ /^(\w+)\[\w+\]$/ ) {
-            print $self->header( -type => 'text/html;charset=utf-8' );
-            print $self->$1();
-            $self->quit();
-        }
+      # Create new notification
+      ->addRoute(
+        'notifications' => { actives => 'newNotification' },
+        ['POST']
+      )
 
-        # Case else: store tree type choosen to use it later in tree()
-        elsif ( grep { $_ eq $k } qw(listDone) ) {
-            $self->{_tree} = $k;
-            last;
+      # Update a notification (mark as done)
+      ->addRoute(
+        notifications =>
+          { actives => { ':notificationId' => 'updateNotification' } },
+        ['PUT']
+      )
+
+      # Delete a notification
+      ->addRoute(
+        notifications =>
+          { done => { ':notificationId' => 'deleteDoneNotification' } },
+        ['DELETE']
+      );
+
+}
+
+sub notifAccess {
+    my $self = shift;
+    return $self->_notifAccess if ( $self->_notifAccess );
+
+    # 1. Get notificationStorage or build it using globalStorage
+    my $conf = $self->_confAcc->getConf()
+      or die($Lemonldap::NG::Common::Conf::msg);
+    my $args;
+
+    # TODO: refresh system
+    $self->{$_} //= $conf->{$_}
+      foreach (
+        qw/portal notification notificationStorage notificationStorageOptions/);
+
+    unless ( $self->{notification} ) {
+        $self->addRoute( notifications => 'notEnabled' );
+        return 0;
+    }
+
+    # TODO: old parameters (with table)
+    unless ( $self->{notificationStorage} ) {
+        $self->abort( notifications =>
+              'notificationStorage is not defined in configuration' );
+        return 0;
+    }
+    $args->{type} = $self->{notificationStorage};
+    foreach ( keys %{ $self->{notificationStorageOptions} } ) {
+        $args->{$_} = $self->{notificationStorageOptions}->{$_};
+    }
+
+    # Get the type
+    $args->{type} =~ s/.*:://;
+    $args->{type} =~ s/(CBDI|RDBI)/DBI/;    # CDBI/RDBI are DBI
+
+    # If type not File or DBI, abort
+    unless ( $args->{type} =~ /^(File|DBI|LDAP)$/ ) {
+        $self->abort( notifications =>
+              "Only File, DBI or LDAP supported for Notifications" );
+        return 0;
+    }
+
+    # Force table name
+    $args->{p} = $self;
+    unless (
+        $self->_notifAccess( Lemonldap::NG::Common::Notification->new($args) ) )
+    {
+        $self->abort(
+            notifications => $Lemonldap::NG::Common::Notification::msg );
+        return 0;
+    }
+    return $self->_notifAccess();
+}
+
+#######################
+# II. DISPLAY METHODS #
+#######################
+
+sub notEnabled {
+    my ( $self, $req ) = splice @_;
+    return $self->sendError( $req,
+        'Notifications are not enabled in your configuration', 400 );
+}
+
+sub activeNotifications {
+    my ( $self, $req, $notif ) = splice @_;
+    return $self->notifications( $req, $notif, 'actives' );
+}
+
+sub doneNotifications {
+    my ( $self, $req, $notif ) = splice @_;
+    return $self->notifications( $req, $notif, 'done' );
+}
+
+sub notifications {
+    my ( $self, $req, $notif, $type ) = splice @_;
+    my $sub = { actives => 'getAll', done => 'getDone' }->{$type}
+      or die "Unknown type $type";
+
+    # Case 1: a notification is required
+    return $self->notification( $req, $notif, $type ) if ($notif);
+
+    # Case 2: list
+    my $params = $req->params();
+    my ( $notifs, $res );
+
+    $notifs = $self->notifAccess->$sub();
+
+    # Restrict to wanted values
+    if (
+        my %filters =
+        map { /^(?:(?:group|order)By)$/ ? () : ( $_ => $params->{$_} ); }
+        keys %$params
+      )
+    {
+        while ( my ( $field, $value ) = each %filters ) {
+            $value =~ s/\*/\.\*/g;
+            $value = qr/$value/;
+            foreach my $k ( keys %$notifs ) {
+                delete $notifs->{$k}
+                  unless ( $notifs->{$k}->{$field} =~ $value );
+            }
         }
     }
 
-    # default display : list by uid
-    $self->{_tree} ||= 'list';
-    return $self;
-}
-
-## @method string tree()
-# Launch required tree builder. It can be one of :
-#  * listDone()
-#  * list() (default)
-# @return string XML tree
-sub tree {
-    my $self = shift;
-
-    my $sub = $self->{_tree};
-    $self->lmLog( "Building chosen tree: $sub", 'debug' );
-    my ( $r, $legend ) = $self->$sub( $self->param($sub) );
-    return
-qq{<ul class="simpleTree"><li class="root" id="root"><span>$legend</span><ul>$r</ul></li></ul>};
-}
-
-################
-# TREE METHODS #
-################
-
-## @method protected string list()
-# Build default tree (by letter)
-# @return string XML tree
-sub list {
-    my $self = shift;
-    my ( $byUid, $count, $res );
-    $count = 0;
-
-    # Parse all notifications to store first letter
-    my $n = $self->{notifObject}->getAll();
-
-    foreach ( keys %$n ) {
-        $n->{$_}->{uid} =~ /^(\w)/ or next;
-        $byUid->{$1}++;
-        $count++;
-    }
-
-    # Build tree sorted by first letter
-    foreach my $letter ( sort keys %$byUid ) {
-        $res .= $self->ajaxNode(
-
-            # ID
-            "li_$letter",
-
-            # Legend
-            "$letter <i><small>($byUid->{$letter} "
-              . (
-                $byUid->{$letter} == 1
-                ? "notification"
-                : "notifications"
-              )
-              . ")</small></i>",
-
-            # Next request
-            "letter=$letter"
+    if ( my $groupBy = $req->params('groupBy') ) {
+        my ( $length, $start, $r ) = ( 0, 0 );
+        if ( $groupBy =~ /^substr\((\w+)(?:,(\d+)(?:,(\d+))?)?\)$/ ) {
+            ( $groupBy, $length, $start ) = ( $1, $2, $3 );
+            $start ||= 0;
+            $length = 1 if ( $length < 1 );
+        }
+        foreach my $k ( keys %$notifs ) {
+            my $s =
+              $length
+              ? substr( $notifs->{$k}->{$groupBy}, $start, $length )
+              : $notifs->{$k}->{$groupBy};
+            $r->{$s}++;
+        }
+        my $count = 0;
+        $res = [
+            map { $count += $r->{$_}; { value => $_, count => $r->{$_} } }
+            sort keys %$r
+        ];
+        return $self->sendJSONresponse(
+            $req,
+            {
+                result => 1,
+                count  => $count,
+                values => $res,
+            }
         );
     }
-    return (
-        $res,
-        "$count "
-          . (
-            $count == 1
-            ? "notification"
-            : "notifications"
-          )
-    );
+    else {
+        my @r = map {
+            my $r = { notification => $_ };
+            foreach my $k (qw(uid date condition)) {
+                $r->{$k} = $notifs->{$_}->{$k};
+            }
+            $r->{reference} = $notifs->{$_}->{ref};
+            $r;
+        } keys %$notifs;
+
+        if ( my $orderBy = $req->params('orderBy') ) {
+            my @fields = split /,/, $orderBy;
+            while ( my $f = pop @fields ) {
+                @r = sort { $a->{$f} cmp $b->{$f} } @r;
+            }
+        }
+        return $self->sendJSONresponse( $req,
+            { result => 1, count => scalar(@r), values => \@r } );
+    }
 }
 
-## @method protected string listDone()
-# Build tree of done notifications (by letter)
-# @return string XML tree
-sub listDone {
-    my $self = shift;
-    my ( $byUid, $count, $res );
-    $count = 0;
+sub notification {
+    my ( $self, $req, $id, $type ) = splice @_;
 
-    # Parse all notifications to store first letter
-    my $n = $self->{notifObject}->getDone();
+    if ( $type eq 'actives' ) {
+        my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
+        my $n = $self->notifAccess->_get( $uid, $ref );
+        unless ($n) {
+            $self->lmLog( "Notification $ref not found for user $uid",
+                'notice' );
+            return $self->sendJSONresponse(
+                $req,
+                {
+                    result => 0,
+                    error  => "Notification $ref not found for user $uid"
+                }
+            );
+        }
+        return $self->sendJSONresponse( $req,
+            { result => 1, count => 1, notifications => [ values $n ] } );
+    }
+    else {
+        return $self->sendJSONresponse( $req,
+            { result => 1, count => 1, done => $id } );
+    }
+}
 
-    foreach ( keys %$n ) {
-        $n->{$_}->{uid} =~ /^(\w)/ or next;
-        $byUid->{$1}++;
-        $count++;
+sub newNotification {
+    my ( $self, $req, @other ) = splice @_;
+    return $self->sendError( $req,
+        'There is no subkey for "newNotification"', 400 )
+      if (@other);
+
+    my $json = $req->jsonBodyToObj;
+    unless ( defined($json) ) {
+        return $self->sendError( $req, undef, 400 );
     }
 
-    # Build tree sorted by first letter
-    foreach my $letter ( sort keys %$byUid ) {
-        $res .= $self->ajaxNode(
+    foreach my $r (qw(uid date reference xml)) {
+        return $self->sendError( $req, "Missing $r", 400 )
+          unless ( $json->{$r} );
+    }
 
-            # ID
-            "li_$letter",
+    unless ( $json->{date} =~ /^\d{4}-\d{2}-\d{2}$/ ) {
+        return $self->sendError( $req, "Malformed date", 400 );
+    }
+    my $newNotif = qq#<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<root><notification #
+      . join(
+        ' ',
+        map {
+            if ( my $t = $json->{$_} ) { $t =~ s/"/'/g; qq#$_="$t"# }
+            else                       { () }
+        } (qw(uid date reference condition))
+      ) . ">$json->{xml}</notification></root>";
 
-            # Legend
-            "$letter <i><small>($byUid->{$letter} "
-              . (
-                $byUid->{$letter} == 1
-                ? "notification"
-                : "notifications"
-              )
-              . ")</small></i>",
-
-            # Next request
-            "letterDone=$letter"
+    unless ( eval { $self->notifAccess->newNotification($newNotif) } ) {
+        $self->lmLog(
+"Notification not created: $@$Lemonldap::NG::Common::Notification::msg",
+            'error'
         );
+        return $self->sendError( $req, "Notification not created", 400 );
     }
-    return (
-        $res,
-        "$count "
-          . (
-              $count == 1
-            ? $self->translate('notificationDone')
-            : $self->translate('notificationsDone')
-          )
-    );
+    else {
+        return $self->sendJSONresponse( $req, { result => 1 } );
+    }
 }
 
-##################
-# AJAX RESPONSES #
-##################
+sub updateNotification {
+    my ( $self, $req ) = splice @_;
 
-## @method protected string delete(string id)
-# Delete a session
-# @param id Session identifier
-# @return HTML data
-sub delete {
-    my ( $self, $id )  = splice @_;
-    my ( $uid,  $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
-    my ( $n,    $res );
+    my $json = $req->jsonBodyToObj;
+    unless ( defined($json) ) {
+        return $self->sendError( $req, undef, 400 );
+    }
 
-    # Try to read notification
-    $n = $self->{notifObject}->_get( $uid, $ref );
-
-    unless ($n) {
-        $self->lmLog( "Notification $ref not found for user $uid", 'error' );
-        return $self->displayError( $self->translate('notificationNotFound') );
+    # For now, only "mark as done" is proposed
+    unless ( $json->{done} ) {
+        return $self->sendError( $req, 'Only "done=1" is accepted for now',
+            400 );
+    }
+    my $id = $req->params('notificationId') or die;
+    my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
+    my ( $n, $res );
+    unless ( $n = $self->notifAccess->_get( $uid, $ref ) ) {
+        $self->lmLog( "Notification $ref not found for user $uid", 'notice' );
+        return $self->sendError( $req,
+            "Notification $ref not found for user $uid" );
     }
 
     # Delete notifications
     my $status = 1;
     foreach ( keys %$n ) {
-        $status = 0 unless ( $self->{notifObject}->_delete($_) );
+        $status = 0 unless ( $self->notifAccess->_delete($_) );
     }
 
     unless ($status) {
         $self->lmLog( "Notification $ref for user $uid not deleted", 'error' );
-        return $self->displayError(
-            $self->translate('notificationNotDeleted') );
+        return $self->sendError( $req,
+            "Notification $ref for user $uid not deleted" );
     }
 
     else {
         $self->lmLog( "Notification $ref deleted for user $uid", 'info' );
-        return $self->displayMessage( $self->translate('notificationDeleted') );
+        return $self->sendJSONresponse( $req, { result => 1 } );
     }
-
 }
 
-## @method protected string purge(string id)
-# Purge a deleted session
-# @param id Session identifier
-# @return HTML data
-sub purge {
-    my ( $self, $id ) = splice @_;
+sub deleteDoneNotification {
+    my ( $self, $req ) = splice @_;
     my $res;
 
     # Purge notification
-    my $status = $self->{notifObject}->purge($id);
-
-    unless ($status) {
-        $self->lmLog( "Notification $id not purged", 'error' );
-        return $self->displayError( $self->translate('notificationNotPurged') );
+    my $id = $req->params('notificationId') or die;
+    unless ( $self->notifAccess->purge($id) ) {
+        $self->lmLog(
+            "Notification $id not purged ($Lemonldap::NG::Common::Conf::msg)",
+            'warn' );
+        return $self->sendError( $req,
+            "Notification $id not purged ($Lemonldap::NG::Common::Conf::msg)",
+            400 );
     }
 
-    else {
-        $self->lmLog( "Notification $id purged", 'info' );
-        return $self->displayMessage( $self->translate('notificationPurged') );
-    }
-
-}
-
-## @method protected string notification()
-# Build notification dump.
-# @return string XML tree
-sub notification {
-    my ( $self, $id )  = splice @_;
-    my ( $uid,  $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
-    my ( $n,    $res );
-
-    # Try to read notification
-    $n = $self->{notifObject}->_get( $uid, $ref );
-
-    unless ($n) {
-        $self->lmLog( "Notification $ref not found for user $uid", 'error' );
-        return $self->displayError( $self->translate('notificationNotFound') );
-    }
-
-    # Notification is avalaible, print content
-    $res .= '<div class="panel-heading">';
-    $res .= '<h1 class="panel-title text-center">';
-    $res .= "Notification $ref";
-    $res .= '</h1>';
-    $res .= '</div>';
-    $res .= '<div class="panel-body">';
-
-    foreach ( keys %$n ) {
-
-        my $xml = $n->{$_};
-
-        # Quote HTML
-        $xml = htmlquote($xml);
-
-        # UTF-8
-        utf8::decode($xml);
-
-        # Replace line breaks
-        $xml =~ s#\n#<br />#g;
-
-        # Print XML
-        $res .= "<div class=\"well\"><tt>$xml</tt></div>";
-
-    }
-
-    # Delete button
-    $res .= '<div class="text-center">';
-    $res .=
-        "<input type=\"button\" onclick=\"del('$id');\""
-      . ' class="btn btn-warning"'
-      . " value=\""
-      . $self->translate('deleteNotification') . "\" />";
-    $res .= '</div>';
-    $res .= '</div>';
-
-    return $res;
-}
-
-## @method protected string notificationDone()
-# Build notification dump.
-# @return string XML tree
-sub notificationDone {
-    my ( $self, $id ) = splice @_;
-    my ( $n, $res );
-
-    # Print content
-    $res .= '<div class="panel-body">';
-    $res .= '<div class="alert alert-success">';
-    $res .= "Notification " . $self->translate('done');
-    $res .= '</div>';
-    $res .=
-        '<p class="text-center">'
-      . $self->translate('internalReference') . ': '
-      . $id . '</p>';
-
-    # Purge button
-    $res .= '<div class="text-center">';
-    $res .=
-        "<input type=\"button\" onclick=\"purge('$id');\""
-      . ' class="btn btn-danger"'
-      . " value=\""
-      . $self->translate('purgeNotification') . "\" />";
-    $res .= '</div>';
-    $res .= '</div>';
-
-    return $res;
-}
-
-## @method protected string uid()
-# Build single UID tree part
-# @return string XML tree
-sub uid {
-    my ( $self, $uid ) = splice @_;
-    my ( $byRef, $res );
-
-    # Parse all notifications
-    my $n = $self->{notifObject}->getAll();
-
-    foreach ( keys %$n ) {
-        if ( $n->{$_}->{uid} eq $uid ) {
-            push @$byRef, $n->{$_}->{ref};
-        }
-    }
-
-    foreach my $ref ( sort @$byRef ) {
-        $res .=
-"<li class=\"open\" id=\"uid_${uid}_$ref\"><span onclick=\"displayNotification('${uid}_$ref');\">$ref</span></li>";
-    }
-    return $res;
-}
-
-## @method protected string uidDone()
-# Build single UID tree part
-# @return string XML tree
-sub uidDone {
-    my ( $self, $uid ) = splice @_;
-    my ( $byRef, $res );
-
-    # Parse all notifications
-    my $n = $self->{notifObject}->getDone();
-
-    foreach ( keys %$n ) {
-        if ( $n->{$_}->{uid} eq $uid ) {
-            my $ref = $n->{$_}->{ref};
-            $res .=
-"<li class=\"open\" id=\"uid_$_\"><span onclick=\"displayNotificationDone('$_');\">$ref</span></li>";
-        }
-    }
-
-    return $res;
-}
-
-# Ajax request to list users starting by a letter
-## @method protected string letter()
-# Build letter XML part
-# @return string XML tree
-sub letter {
-    my $self   = shift;
-    my $letter = $self->param('letter');
-    my ( $byUid, $res );
-
-    # Parse all notifications
-    my $n = $self->{notifObject}->getAll();
-
-    foreach ( keys %$n ) {
-        $n->{$_}->{uid} =~ /^$letter/ or next;
-        $byUid->{ $n->{$_}->{uid} }++;
-    }
-
-    foreach my $uid ( sort keys %$byUid ) {
-        $res .= $self->ajaxNode(
-            $uid,
-            $uid
-              . (
-                $byUid->{$uid} > 1
-                ? " <i><u><small>($byUid->{$uid} "
-                  . (
-                    $byUid->{$uid} == 1
-                    ? "notification"
-                    : "notifications"
-                  )
-                  . ")</small></u></i>"
-                : ''
-              ),
-            "uid=$uid"
-        );
-    }
-    return $res;
-}
-
-# Ajax request to list users starting by a letter
-## @method protected string letterDone()
-# Build letter XML part
-# @return string XML tree
-sub letterDone {
-    my $self   = shift;
-    my $letter = $self->param('letterDone');
-    my ( $byUid, $res );
-
-    # Parse all notifications
-    my $n = $self->{notifObject}->getDone();
-
-    foreach ( keys %$n ) {
-        $n->{$_}->{uid} =~ /^$letter/ or next;
-        $byUid->{ $n->{$_}->{uid} }++;
-    }
-
-    foreach my $uid ( sort keys %$byUid ) {
-        $res .= $self->ajaxNode(
-            $uid,
-            $uid
-              . (
-                $byUid->{$uid} > 1
-                ? " <i><u><small>($byUid->{$uid} "
-                  . (
-                    $byUid->{$uid} == 1
-                    ? "notification"
-                    : "notifications"
-                  )
-                  . ")</small></u></i>"
-                : ''
-              ),
-            "uidDone=$uid"
-        );
-    }
-    return $res;
-}
-
-# Ajax request to create a new notification
-## @method protected string newNotif()
-# Create new notification
-# @return string HTML
-sub newNotif {
-    my $self      = shift;
-    my $uid       = $self->param('newNotif[uid]');
-    my $date      = $self->param('newNotif[date]');
-    my $ref       = $self->param('newNotif[ref]');
-    my $condition = $self->param('newNotif[condition]');
-    my $xml       = $self->param('newNotif[xml]');
-    my $res;
-
-    # Create complete XML
-    my $notif = "<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n";
-    $notif .= "<root>\n";
-    $notif .=
-"<notification uid='$uid' date='$date' reference='$ref' condition='$condition'>\n";
-    $notif .= $xml;
-    $notif .= "</notification>\n";
-    $notif .= "</root>\n";
-
-    # Add the notification
-    my $status = $self->{notifObject}->newNotification($notif);
-
-    unless ($status) {
-        $self->lmLog( "Notification not created", 'error' );
-        return $self->displayError(
-            $self->translate('notificationNotCreated') );
-    }
-
-    else {
-        $self->lmLog( "Notification created", 'info' );
-        return $self->displayMessage( $self->translate('notificationCreated') );
-    }
-
-}
-
-## @fn protected string htmlquote(string s)
-# Change <, > and & to HTML encoded values in the string
-# @param $s HTML string
-# @return HTML string
-sub htmlquote {
-    my $s = shift;
-    $s =~ s/&/&amp;/g;
-    $s =~ s/</&lt;/g;
-    $s =~ s/>/&gt;/g;
-    return $s;
-}
-
-## @method private void ajaxnode(string id, string text, string param)
-# Display tree node with Ajax functions inside for opening the node.
-# @param $id HTML id of the element.
-# @param $text text to display
-# @param $param Parameters for the Ajax query
-sub ajaxNode {
-    my ( $self, $id, $text, $param ) = @_;
-    return
-"<li id=\"$id\"><span>$text</span>\n<ul class=\"ajax\"><li id=\"sub_$id\">{url:$ENV{SCRIPT_NAME}?$param}</li></ul></li>\n";
-}
-
-## @method private string _stToStr(string)
-# Transform a utime string into readeable string (ex: "2010-08-18 13:03:13")
-# @return Formated string
-sub _stToStr {
-    shift;
-    return
-      sprintf( '%d-%02d-%02d %d:%02d:%02d', unpack( 'a4a2a2a2a2a2', shift ) );
-}
-
-## @method private string displayError(string error)
-# Display HTML error
-# @param error Error message
-# @return HTML data
-sub displayError {
-    my ( $self, $error ) = @_;
-    my $html;
-    $html .= '<div class="panel-body">';
-    $html .= '<div class="alert alert-danger">';
-    $html .= $error;
-    $html .= '</div>';
-    $html .= '</div>';
-    return $html;
-}
-
-## @method private string displayMessage(string message)
-# Display HTML message
-# @param message Message
-# @return HTML data
-sub displayMessage {
-    my ( $self, $message ) = @_;
-    my $html;
-    $html .= '<div class="panel-body">';
-    $html .= '<div class="alert alert-info">';
-    $html .= $message;
-    $html .= '</div>';
-    $html .= '</div>';
-    return $html;
+    $self->lmLog( "Notification $id purged", 'info' );
+    return $self->sendJSONresponse( $req, { result => 1 } );
 }
 
 1;
-__END__
 
-=encoding utf8
-
-=head1 NAME
-
-Lemonldap::NG::Manager::Notifications - Perl extension to manage Lemonldap::NG
-notifications
-
-=head1 SYNOPSIS
-
-  #!/usr/bin/perl
-
-  use strict;
-  use Lemonldap::NG::Manager::Notificationss;
-  our $cgi ||= Lemonldap::NG::Manager::Notifications->new({
-        localStorage        => "Cache::FileCache",
-        localStorageOptions => {
-            'namespace'          => 'lemonldap-ng-config',
-            'default_expires_in' => 600,
-            'directory_umask'    => '007',
-            'cache_root'         => '/tmp',
-            'cache_depth'        => 5,
-        },
-        configStorage => $Lemonldap::NG::Common::configStorage,
-        configStorage=>{
-          type=>'File',
-          dirName=>"/tmp/",
-        },
-        # Optionnal
-        protection    => 'rule: $uid eq "admin"',
-        # Or to use rules from manager
-        protection    => 'manager',
-	# Or just to authenticate without managing authorization
-	protection    => 'authenticate',
-  });
-  $cgi->process();
-
-=head1 DESCRIPTION
-
-Lemonldap::NG::Manager::Notifications provides a web interface to manage
-Lemonldap::NG notifications.
-
-It inherits from L<Lemonldap::NG::Handler::CGI>, so see this manpage to
-understand how arguments passed to the constructor.
-
-=head1 SEE ALSO
-
-L<Lemonldap::NG::Handler::CGI>, L<Lemonldap::NG::Manager>
-
-=head1 AUTHOR
-
-=over
-
-=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Sandro Cazzaniga, E<lt>cazzaniga.sandro@gmail.comE<gt>
-
-=back
-
-=head1 BUG REPORT
-
-Use OW2 system to report bug or ask for features:
-L<http://jira.ow2.org>
-
-=head1 DOWNLOAD
-
-Lemonldap::NG is available at
-L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
-
-=head1 COPYRIGHT AND LICENSE
-
-=over
-
-=item Copyright (C) 2013 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2012 by Sandro Cazzaniga, E<lt>cazzaniga.sandro@gmail.comE<gt>
-
-=item Copyright (C) 2012, 2013 by François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Copyright (C) 2011, 2012 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=back
-
-This library is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see L<http://www.gnu.org/licenses/>.
-
-=cut

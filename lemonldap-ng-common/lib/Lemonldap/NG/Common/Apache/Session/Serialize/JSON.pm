@@ -1,12 +1,3 @@
-#######################################################
-#
-# Lemonldap::NG::Common::Apache::Session::Serialize::JSON
-# Serializes session objects using JSON
-# Copyright(c) 2015 Xavier Guimard (x.guimard@free.fr)
-# Distribute under the GPL2 License
-#
-#######################################################
-
 package Lemonldap::NG::Common::Apache::Session::Serialize::JSON;
 
 use strict;
@@ -35,6 +26,8 @@ sub unserialize {
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Common::Apache::Session::Serialize::JSON - Use JSON to zip up data
 
 =head1 SYNOPSIS
@@ -50,11 +43,54 @@ This module fulfills the serialization interface of Apache::Session.
 It serializes the data in the session object by use of JSON C<encode_json>
 and C<decode_json>. The serialized data is UTF-8 text.
 
-=head1 AUTHOR
-
-This module was written by Xavier Guimard <x.guimard@free.fr> using other
-Apache::Session serializer written by Jeffrey William Baker <jwbaker@acm.org>.
 
 =head1 SEE ALSO
 
 L<JSON>, L<Apache::Session>
+
+=head1 AUTHORS
+
+=over
+
+=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
+=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
+
+=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=item Thomas Chemineau, E<lt>thomas.chemineau@gmail.comE<gt>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<http://jira.ow2.org>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+
+=head1 COPYRIGHT AND LICENSE
+
+=over
+
+=item Copyright (C) 2015 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=back
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut

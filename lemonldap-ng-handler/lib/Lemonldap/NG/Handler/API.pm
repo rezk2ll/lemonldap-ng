@@ -40,9 +40,10 @@ my $mp = $ENV{MOD_PERL_API_VERSION};
 my $mode =
     $gi && $gi =~ /^CGI/ ? "CGI"
   : $mp && $mp >= 2      ? "ApacheMP2"
-  : $mp                ? "ApacheMP1"
-  : $main::{'nginx::'} ? "Nginx"
-  :                      "CGI";
+  : $mp                                                ? "ApacheMP1"
+  : $main::{'nginx::'}                                 ? "Nginx"
+  : ( caller(6) )[0] eq 'Lemonldap::NG::Handler::PSGI' ? "PSGI"
+  :                                                      "CGI";
 
 # Load API functions and constants
 eval "use Lemonldap::NG::Handler::API::$mode (':httpCodes', ':functions');

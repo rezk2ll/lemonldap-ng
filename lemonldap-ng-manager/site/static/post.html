@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+  <div class="panel panel-heading">
+    <h3 class="panel-title" trspan="formReplay"/>
+  </div>
+  <div class="panel panel-body">
+    <!-- key / postUrl jqueryUrl formSelector buttonSelector -->
+    <div class="input-group">
+      <label for="pi1" id="pl1" class="input-group-addon"><span trspan="postUrl"/> :</label>
+      <input id="pi1" ariadescribedby="pl1" class="form-control" ng-model="currentNode.title"/>
+    </div>
+    <div class="input-group">
+      <label for="pi2" id="pl2" class="input-group-addon"><span trspan="postTargetUrl"/> :</label>
+      <input id="pi2" ariadescribedby="pl2" class="form-control" ng-model="currentNode.data[0]"/>
+    </div>
+    <div class="input-group">
+      <label for="pi3" id="pl3" class="input-group-addon"><span trspan="jqueryUrl"/> :</label>
+      <input id="pi3" ariadescribedby="pl3" class="form-control" ng-model="currentNode.data[1]"/>
+    </div>
+    <div class="input-group">
+      <label for="pi4" id="pl4" class="input-group-addon"><span trspan="jqueryFormSelector"/> :</label>
+      <input id="pi4" ariadescribedby="pl4" class="form-control" ng-model="currentNode.data[2]"/>
+    </div>
+    <div class="input-group">
+      <label for="pi5" id="pl5" class="input-group-addon"><span trspan="jqueryButtonSelector"/> :</label>
+      <input id="pi5" ariadescribedby="pl5" class="form-control" ng-model="currentNode.data[3]"/>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+buttons=[{
+  'title': 'newPost'
+},{
+  'title': 'deleteEntry'
+}];
+</script>

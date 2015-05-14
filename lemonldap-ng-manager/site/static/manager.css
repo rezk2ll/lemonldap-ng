@@ -1,0 +1,194 @@
+/* Tree */
+
+.tree-node {
+  border: 1px solid #dae2ea;
+  background: #f8f8f8;
+  border-radius: 4px;
+  color: #666;
+}
+.tree-node-content {
+  margin: 10px;
+}
+.tree-handle {
+  padding: 10px;
+  background: #428bca;
+  color: #FFF;
+  margin-right: 10px;
+}
+.angular-ui-tree-handle {
+  cursor: pointer;
+}
+.angular-ui-tree-placeholder {
+  background: #f0f9ff;
+  border: 2px dashed #bed2db;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.selected {
+  background-color: #AFA;
+}
+.glyphicon {
+  color: #888;
+}
+.btn-node {
+  background-color: #eee;
+  border-color: #aaa;
+}
+/* Modal windows */
+
+.modal-p,
+.main-modal-ui,
+.modal-ui {
+  /* TODO */
+}
+#pleaseWait {
+  background-color: #fff;
+  width: 100%;
+  min-height: 9.9%;
+  height: auto;
+  z-index: 5000;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30% 20%;
+  text-align: center;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  /* For IE8 and earlier */
+}
+/* Main window */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+header.navbar {
+  height: 10vh;
+  margin-bottom: 1vh;
+  padding-bottom: 0vh;
+}
+footer {
+  height: 4vh;
+  margin-top: 1vh;
+  padding-top: 0vh;
+}
+#content {
+  max-height: 84vh;
+  height: 84vh;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
+/* Form elements */
+
+textarea {
+  width: 100%;
+}
+dl,
+.panel {
+  margin-bottom: 8px;
+}
+.panel-body {
+  padding: 5px;
+}
+.input-group-solid {
+  border: 1px solid #CCC;
+  border-radius: 4px;
+  padding: 6px 12px;
+}
+.input-group > .input-group-solid:last-child {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+#cfgnum {
+  position: relative;
+}
+#cfgnum.label-warning:hover:after {
+  content: attr(comment);
+  padding: 4px 8px;
+  color: rgba(0,0,0,0.5);
+  position: absolute;
+  left: 100%;
+  bottom: 100%;
+  white-space: nowrap;
+  z-index: 2;
+  border-radius: 5px ;
+  background: #F0AD4E;
+}
+/* Menu */
+
+.link {
+  cursor: pointer;
+}
+/* Resizable and scrollable elements */
+
+@media (min-width: 768px) {
+  .scrollable-sm {
+    max-height: 80vh !important;
+    overflow: auto;
+  }
+  #right,
+  #left {
+    max-height: 80vh !important;
+    height: 80vh;
+  }
+  #top {
+    height: 45vh;
+    overflow: auto;
+  }
+  #bottom {
+    height: 35vh;
+    overflow: auto;
+  }
+}
+#top,
+#bottom,
+#right,
+#left {
+  position: relative;
+}
+#top,
+#bottom {
+  padding-left: 15px;
+}
+#right {
+  right: 0px;
+  padding-left: 0px;
+}
+#left {
+  padding-right: 0px;
+}
+.scrollable {
+  overflow: auto;
+}
+.container {
+  padding-bottom: 15px;
+}
+.hresizer {
+  position: absolute;
+  width: 6px;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  background-color: #EEE;
+  cursor: e-resize;
+}
+.vresizer {
+  position: absolute;
+  height: 6px;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  background-color: #EEE;
+  cursor: n-resize;
+}
+.angular-ui-tree-empty {
+  min-height: auto;
+  border: none;
+}

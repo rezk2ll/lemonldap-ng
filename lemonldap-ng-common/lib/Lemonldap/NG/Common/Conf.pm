@@ -10,7 +10,9 @@ package Lemonldap::NG::Common::Conf;
 use strict;
 no strict 'refs';
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
-use Lemonldap::NG::Common::Conf::Attributes;    #inherits
+
+# TODO: don't import this big file, use a proxy
+use Lemonldap::NG::Common::Conf::DefaultValues;    #inherits
 use Lemonldap::NG::Common::Crypto
   ;    #link protected cipher Object "cypher" in configuration hash
 use Config::IniFiles;
@@ -20,7 +22,7 @@ use Config::IniFiles;
 #inherits Lemonldap::NG::Common::Conf::SOAP
 #inherits Lemonldap::NG::Common::Conf::LDAP
 
-our $VERSION = '1.4.4';
+our $VERSION = '1.5.99';
 our $msg     = '';
 our $iniObj;
 
@@ -108,12 +110,12 @@ sub new {
 # @param $conf Lemonldap::NG configuration hashRef
 # @return Number of the saved configuration, 0 if case of error.
 sub saveConf {
-    my ( $self, $conf ) = @_;
+    my ( $self, $conf, %args ) = @_;
 
     my $last = $self->lastCfg;
 
     # If configuration was modified, return an error
-    if ( not $self->{force} ) {
+    if ( not $args{force} ) {
         return CONFIG_WAS_CHANGED if ( $conf->{cfgNum} != $last );
         return DATABASE_LOCKED if ( $self->isLocked() or not $self->lock() );
     }
@@ -169,24 +171,31 @@ sub getConf {
         else {
             eval { $r = $self->{refLocalStorage}->get('conf') } if ($>);
             $msg = "Warn: $@" if ($@);
-            if ( ref($r) and $r->{cfgNum} == $args->{cfgNum} ) {
+            if (    ref($r)
+                and $r->{cfgNum}
+                and $args->{cfgNum}
+                and $r->{cfgNum} == $args->{cfgNum} )
+            {
                 $msg .=
                   "Configuration unchanged, get configuration from cache.\n";
                 $args->{noCache} = 1;
             }
             else {
                 $r = $self->getDBConf($args);
-                return undef unless ( ref($r) );
+                return undef unless ( $r->{cfgNum} );
 
-                # Adapt some values before storing in local cache
-                # Get default values
-                my $confAttributes =
-                  Lemonldap::NG::Common::Conf::Attributes->new();
+                # TODO: default values may not be set here
+                unless ( $args->{raw} ) {
 
-                my @attributes = $confAttributes->meta()->get_attribute_list();
+                    # Adapt some values before storing in local cache
+                    # Get default values
+                    my $defaultValues =
+                      Lemonldap::NG::Common::Conf::DefaultValues
+                      ->defaultValues();
 
-                foreach my $name (@attributes) {
-                    $r->{$name} //= $confAttributes->$name;
+                    foreach my $k ( keys %$defaultValues ) {
+                        $r->{$k} //= $defaultValues->{$k};
+                    }
                 }
 
                 # Convert old option useXForwardedForIP into trustedProxies
@@ -211,15 +220,20 @@ sub getConf {
 
                 # Store modified configuration in cache
                 $self->setLocalConf($r)
-                  if ( $self->{refLocalStorage} and not( $args->{noCache} ) );
+                  if ( $self->{refLocalStorage}
+                    and not( $args->{noCache} or $args->{raw} ) );
 
             }
         }
 
         # Create cipher object
-        eval { $r->{cipher} = Lemonldap::NG::Common::Crypto->new( $r->{key} ); };
-        if ($@) {
-            $msg .= "Bad key: $@. \n";
+        unless ( $args->{raw} ) {
+            eval {
+                $r->{cipher} = Lemonldap::NG::Common::Crypto->new( $r->{key} );
+            };
+            if ($@) {
+                $msg .= "Bad key: $@. \n";
+            }
         }
 
         # Return configuration hash
@@ -345,7 +359,8 @@ sub getDBConf {
           : $a[0];
     }
     my $conf = $self->load( $args->{cfgNum} );
-    $msg .= "Get configuration $conf->{cfgNum}.\n";
+    $msg .= "Get configuration $conf->{cfgNum}.\n"
+      if ( defined $conf->{cfgNum} );
     $self->setLocalConf($conf)
       if (  ref($conf)
         and $self->{refLocalStorage}
@@ -418,7 +433,7 @@ sub load {
 sub delete {
     my ( $self, $c ) = @_;
     my @a = $self->available();
-    return 0 unless ( grep {$_ eq $c} @a );
+    return 0 unless ( grep { $_ eq $c } @a );
     return &{ $self->{type} . '::delete' }( $self, $c );
 }
 

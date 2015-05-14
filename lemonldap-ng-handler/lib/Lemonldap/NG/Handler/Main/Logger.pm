@@ -26,7 +26,7 @@ BEGIN {
 sub logLevelInit {
     my ( $class, $level ) = @_;
     $logLevel = $level || $Lemonldap::NG::Handler::API::logLevel || "debug";
-    $logLevel = $logLevels->{$logLevel};
+    $logLevel = $logLevels->{$logLevel} || 0;
 }
 
 ## @rmethod void lmLog(string msg, string level)

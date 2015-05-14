@@ -1,161 +1,69 @@
-## @file
-# Lemonldap::NG manager main file
-
-## @class
-# Lemonldap::NG manager main class
+# Manager main component
+#
+# This package contains these parts:
+#  - Properties and private methods
+#  - Initialization method (launched by Lemonldap::NG::Common::PSGI)
+#    that declares routes
+#  - Upload methods (launched by Lemonldap::NG::Common::PSGI::Router)
+#
+# It inherits from Conf.pm to responds to display methods and from
+# Sessions.pm to manage sessions
 package Lemonldap::NG::Manager;
 
-use strict;
-use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);    #inherits
-use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
-use Lemonldap::NG::Common::Conf::Constants;   #inherits
+use 5.10.0;
+use Mouse;
+our $VERSION = '1.5.99';
+use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Common::PSGI::Constants;
 
-our $VERSION = '2.0.0';
-our @ISA     = qw(
-  Lemonldap::NG::Handler::CGI
-  Lemonldap::NG::Manager::Downloader
-  Lemonldap::NG::Manager::Uploader
-  Lemonldap::NG::Manager::Request
-  Lemonldap::NG::Manager::_Struct
-  Lemonldap::NG::Manager::_i18n
-);
+extends 'Lemonldap::NG::Handler::PSGI', 'Lemonldap::NG::Manager::Lib';
 
-## @cmethod Lemonldap::NG::Manager new(hashRef args)
-# Class constructor.
-#@param args hash reference
-#@return Lemonldap::NG::Manager object
-sub new {
-    my ( $class, $args ) = @_;
+## @method boolean init($args)
+# Launch initialization method
+#
+# @param $args hashref to merge with object
+# @return 0 in case of error, 1 else
+sub init {
+    my ( $self, $args ) = splice @_;
+    $args ||= {};
 
-    # Output UTF-8
-    binmode( STDOUT, ':utf8' );
-
-    # Try to load local configuration parameters
-    my $conf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
-      or Lemonldap::NG::Handler::CGI->abort( 'Unable to get configuration',
-        $Lemonldap::NG::Common::Conf::msg );
-
-    if ( my $globalconf = $conf->getConf() ) {
-        $args->{$_} ||= $globalconf->{$_} foreach (qw/portal/);
+    foreach my $k ( keys %$args ) {
+        $self->{$k} = $args->{$k};
     }
+    my $conf = $self->confAcc;
 
     if ( my $localconf = $conf->getLocalConf(MANAGERSECTION) ) {
-        $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
+        $self->{$_} = $args->{$_} // $localconf->{$_}
+          foreach ( keys %$localconf );
     }
 
-    my $self = $class->SUPER::new($args)
-      or $class->abort( 'Unable to start ' . __PACKAGE__,
-        'See Apache logs for more' );
+    return 0 unless ( $self->SUPER::init($args) );
 
-    # Display an error if only default configuration is available
-    if ( $conf->lastCfg() eq 0 ) {
-        $self->lmLog(
-"Unable to load configuration from backend: $Lemonldap::NG::Common::Conf::msg ",
-            "error"
-        );
+    # TODO: manage errors
+    unless ( -r $self->{templateDir} ) {
+        $self->error("Unable to read $self->{template}");
+        return 0;
     }
 
-    # Default values
-    $self->{managerSkin} = "default"       unless defined $self->{managerSkin};
-    $self->{managerCss}  = "accordion.css" unless defined $self->{managerCss};
-    $self->{managerCssTheme} = "ui-lightness"
-      unless defined $self->{managerCssTheme};
-    $self->{managerTreeAutoClose} = "true"
-      unless defined $self->{managerTreeAutoClose};
-    $self->{managerTreeJqueryCss} = "true"
-      unless defined $self->{managerTreeJqueryCss};
-
-    # Save conf if ?data=
-    if ( my $rdata = $self->rparam('data') ) {
-
-        $self->lmLog( "Manager request: Save data $rdata", 'debug' );
-        require Lemonldap::NG::Manager::Uploader;    #inherits
-        $self->confUpload($rdata);
-        $self->quit();
+    $self->{enabledModules} ||= "conf, sessions, notifications";
+    my @links;
+    my @enabledModules =
+      map { push @links, $_; "Lemonldap::NG::Manager::" . ucfirst($_) }
+      split( /[,\s]+/, $self->{enabledModules} );
+    extends 'Lemonldap::NG::Handler::PSGI', @enabledModules;
+    foreach my $mod (@enabledModules) {
+        no strict 'refs';
+        &{"${mod}::addRoutes"}($self);
     }
 
-    # File upload/download
-    elsif ( my $rfile = $self->rparam('file') ) {
+    $self->defaultRoute( $enabledModules[0]->defaultRoute );
 
-        $self->lmLog( "Manager request: File $rfile", 'debug' );
-        my @params = ('file');
-        if ( my $rfilename = $self->rparam('filename') ) {
-            push @params, ${$rfilename};
-        }
-        require Lemonldap::NG::Manager::Uploader;    #inherits
-        $self->fileUpload(@params);
-        $self->quit();
+    $self->links( [] );
+    for ( my $i = 0 ; $i < @links ; $i++ ) {
+        push @{ $self->links },
+          { target => $enabledModules[$i]->defaultRoute, title => $links[$i] };
     }
-
-    # URL upload/download
-    elsif ( my $rurl = $self->rparam('url') ) {
-
-        $self->lmLog( "Manager request: URL $rurl", 'debug' );
-        require Lemonldap::NG::Manager::Uploader;    #inherits
-        $self->urlUpload('url');
-        $self->quit();
-    }
-
-    # Reload menu
-    elsif ( my $menu = $self->param('menu') ) {
-
-        $self->lmLog( "Manager request: Menu reload for num $menu", 'debug' );
-        $self->{cfgNum} = $menu;
-        print $self->header( -type => 'text/html;charset=utf-8' );
-        print $self->menu();
-        $self->quit();
-    }
-
-    # Ask requests
-    elsif ( my $rreq = $self->rparam('request') ) {
-
-        $self->lmLog( "Manager request: $rreq", 'debug' );
-        require Lemonldap::NG::Manager::Request;    #inherits
-        $self->request($rreq);
-        $self->quit();
-    }
-
-    # Else load conf
-    require Lemonldap::NG::Manager::Downloader;     #inherits
-    $self->{cfgNum} = $self->param('cfgNum')
-      || $self->confObj->lastCfg();
-
-    if ( my $p = $self->param('node') ) {
-
-        $self->lmLog( "Manager request: load node $p", 'debug' );
-        print $self->header( -type => 'text/html; charset=utf8', );
-        print $self->node($p);
-        $self->quit();
-    }
-    if ( $self->param('cfgAttr') ) {
-
-        $self->lmLog( "Manager request: load configuration attributes",
-            'debug' );
-        $self->sendCfgParams( $self->conf );
-    }
-
-    return $self;
-}
-
-## @method string menu()
-# Build the tree menu.
-# @return HTML string
-sub menu {
-    my $self = shift;
-    require Lemonldap::NG::Manager::Downloader;
-    return
-        '<ul class="simpleTree">'
-      . $self->li( 'root', 'root' )
-      . $self->span(
-        id   => 'root',
-        text => "Configuration $self->{cfgNum}",
-        data => $self->{cfgNum},
-        js   => 'cfgDatas',
-        help => 'default'
-      )
-      . '<ul>'
-      . $self->node()
-      . '</ul></li></ul>';
+    1;
 }
 
 1;
@@ -170,19 +78,33 @@ system.
 
 =head1 SYNOPSIS
 
-See example/index.pl
+  #!/usr/bin/env plackup -I pl/lib
+  
+  use Lemonldap::NG::Manager;
+  
+  # This must be the last instruction ! See PSGI for more
+  Lemonldap::NG::Manager->run($opts);
 
 =head1 DESCRIPTION
 
 Lemonldap::NG::Manager provides a web interface to manage Lemonldap::NG Web-SSO
 system.
 
+This interface uses L<Plack> to be compatible with CGI, FastCGI,...
+
+=head1 PARAMETERS
+
+You can use a hash ref to override any LemonLDAP::NG parameter. Currently, you
+can specify where your lemonldap-ng.ini file is:
+
+  Lemonldap::NG::Manager->run( { confFile => '/path/to/lemonldap-ng.ini' } );
+
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>, L<CGI>,
+L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>, L<Plack>, L<PSGI>,
 L<http://lemonldap-ng.org/>
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 =over
 
@@ -210,13 +132,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =over
 
-=item Copyright (C) 2006, 2007, 2008, 2009, 2010, 2012 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2012 by François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Copyright (C) 2006, 2008, 2009, 2010, 2011, 2012 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=item Copyright (C) 2010, 2011 by Thomas Chemineau, E<lt>thomas.chemineau@gmail.comE<gt>
+=item Copyright (C) 2015 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =back
 

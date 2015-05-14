@@ -1,0 +1,20 @@
+'use strict';
+
+/* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
+
+describe('my app', function() {
+
+  describe('Form control, part 2', function() {
+
+    it('should display portal skin choice', function() {
+      browser.get('/#/confs/1');
+      element(by.id('a-generalParameters')).click();
+      element(by.id('a-portalParams')).click();
+      element(by.id('a-portalCustomization')).click();
+      element(by.id('t-portalSkin')).click();
+      element(by.css('[ng-click="showModal(\'portalSkinChoice.html\')"]')).click();
+      var skinChoice = element.all(by.repeater('b in currentNode.select'));
+      expect(skinChoice.count()).toEqual(4);
+    });
+  });
+});

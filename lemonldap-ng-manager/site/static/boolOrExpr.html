@@ -1,0 +1,29 @@
+<div class="panel panel-default" style="position:relative;">
+  <div class="panel panel-heading">
+    <h3 class="panel-title">{{translateTitle(currentNode)}}</h3>
+  </div>
+  <div class="panel panel-body">
+    <div class="input-group-solid">
+      <label class="radio-inline">
+        <input id="bopeOn" type="radio" value="1" name="bope" ng-model="currentNode.data">
+        <span trspan="on"/>
+      </label>
+      <label class="radio-inline">
+        <input id="bopeOff" type="radio" value="0" name="bope" ng-model="currentNode.data">
+        <span trspan="off"/>
+      </label>
+      <label class="radio-inline">
+        <input id="bopeExpr" type="radio" value="-1" name="bope" ng-click="currentNode.data=''" ng-checked="currentNode.data!==0&&currentNode.data!=='0'&&currentNode.data!==1&&currentNode.data!=='1'">
+        <span trspan="specialRule" />
+      </label>
+    </div>
+  </div>
+  <div class="panel panel-body input-group" style="width:100%;" ng-if="currentNode.data!==0&&currentNode.data!=='0'&&currentNode.data!==1&&currentNode.data!=='1'">
+    <textarea id="bopeValue" class="form-control" rows="2" ng-model="currentNode.data"/>
+  </div>
+</div>
+<script type="text/javascript">
+buttons=[{
+  "title": "cancel"
+}];
+</script>

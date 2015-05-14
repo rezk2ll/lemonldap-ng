@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+  <div class="panel panel-heading">
+    <h3 class="panel-title">{{translateTitle(currentNode)}}</h3>
+  </div>
+  <div class="panel panel-body">
+  <table class="table">
+    <tbody>
+      <tr ng-repeat="mod in currentNode.nodes">
+        <th>{{translate(mod)}}</th>
+        <td>
+          <select class="form-control" id="selectform" ng-model="mod.data" ng-change="currentNode.onChange()">
+            <option ng-repeat="item in mod.select" ng-selected="item.k==mod.data" value="{{item.k}}" trspan="{{item.v}}"></option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script type="text/javascript">
+buttons=[
+];
+</script>

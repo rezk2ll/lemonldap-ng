@@ -1,0 +1,88 @@
+#!/usr/bin/env perl -I pl/lib
+
+use Test::More;
+use JSON;
+use strict;
+use 5.10.0;
+
+require 'test/test-lib.pm';
+my $struct = 'app/struct.json';
+
+my @bad = qw(
+  /conf/latest
+  /confs/1567
+  /confs/abc
+  /confs/1/virtualHosts/unknown/locationRules
+  /confs/1/virtualHosts/test1.example.com
+  /confs/1/virtualHosts/test1.example.com/vhostPorts
+  /confs/1/samlIDPMetaDataNodes/unknown
+  /confs/1/samlSPMetaDataNodes/unknown
+  /confs/1/samlSPMetaDataNodes/unknown/key
+  /confs/1/applicationList/unknown
+  /confs/1/portal/unknown
+);
+my @good = qw(
+  /confs/latest
+  /confs/1
+  /confs/1/portal
+  /confs/1/virtualHosts
+  /confs/1/virtualHosts/test1.example.com/locationRules
+  /confs/1/virtualHosts/new__new.example.com/locationRules
+  /confs/1/virtualHosts/test1.example.com/vhostPort
+  /confs/1/samlIDPMetaDataNodes
+  /confs/1/samlSPMetaDataNodes
+  /confs/1/applicationList
+);
+
+foreach my $query (@good) {
+    my $href = jsonResponse($query);
+}
+
+foreach my $query (@bad) {
+    my $res = get( $query, '' );
+    ok( $res->[0] == 400, "Request reject for $query" )
+      or print STDERR "# Receive a $res->[0] code";
+    my $href;
+
+    #print STDERR Dumper($res->[2]);use Data::Dumper;
+    ok( $href = decode_json( $res->[2]->[0] ), 'Response is JSON' );
+    ok( $href->{error}, "Receive an explanation message ($href->{error})" );
+    count(3);
+}
+
+open F, $struct or die "Unable to open $struct";
+my @hkeys;
+my $hstruct = '';
+while (<F>) {
+    push @hkeys, ( $_ =~ /cnodes":"([^"]+)/g );
+    $hstruct .= $_;
+}
+close F;
+
+ok( $hstruct = decode_json($hstruct), 'struct.json is JSON' );
+ok( ref $hstruct eq 'ARRAY', 'struct.json is an array' );
+count(2);
+
+foreach my $query (@hkeys) {
+    my $href = jsonResponse("/confs/1/$query", '' );
+    ok( ref $href eq 'ARRAY', 'Response is an array' );
+    count(1);
+    foreach my $k (@$href) {
+        ok( defined $k->{title}, 'Title defined' );
+        ok( defined $k->{id},    'Id defined' );
+        count(2);
+    }
+}
+
+# Metadatas
+{
+    my $href = jsonResponse('confs/1', '' );
+    foreach (qw(cfgNum cfgAuthor cfgAuthorIP cfgDate)) {
+        ok( exists( $href->{$_} ), "Key $_ exists" );
+    }
+    ok( $href->{cfgNum} == 1, 'cfgNum is set to 1' );
+    count(5);
+}
+
+done_testing(count());
+

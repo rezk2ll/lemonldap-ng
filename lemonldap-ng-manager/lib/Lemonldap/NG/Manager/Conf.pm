@@ -1,0 +1,684 @@
+# This module implements all the methods that responds to '/confs/*' requests
+# It contains 4 sections:
+#  - initialization methods
+#  - private methods (to access required conf)
+#  - display methods
+#  - upload method
+package Lemonldap::NG::Manager::Conf;
+
+use 5.10.0;
+use Mouse;
+use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Common::PSGI::Constants;
+use Lemonldap::NG::Manager::Constants;
+use Crypt::OpenSSL::RSA;
+use Convert::PEM;
+
+use feature 'state';
+
+extends 'Lemonldap::NG::Manager::Lib';
+
+#############################
+# I. INITIALIZATION METHODS #
+#############################
+
+use constant defaultRoute => 'manager.html';
+
+sub addRoutes {
+    my $self = shift;
+
+    # HTML template
+    $self->addRoute( 'manager.html', undef, ['GET'] )
+
+      # READ
+      # Special keys
+      ->addRoute(
+        confs => {
+            ':cfgNum' => [
+                qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes)
+            ]
+        },
+        ['GET']
+      )
+
+      # Other keys
+      ->addRoute( confs => { ':cfgNum' => { '*' => 'getKey' } }, ['GET'] )
+
+      # New key and conf save
+      ->addRoute(
+        confs =>
+          { newRSAKey => 'newRSAKey', raw => 'newRawConf', '*' => 'newConf' },
+        ['POST']
+      );
+}
+
+#######################
+# II. PRIVATE METHODS #
+#######################
+
+## @method scalar getConfKey($req, $key)
+# Return key value
+#
+# Return the value of $key key in current configuration. If cfgNum is set to
+# `latest`, get before last configuration number.
+#
+# Errors: set an error in $req->error and return undef if:
+#  * query does not have a cfgNum parameter (set by Common/PSGI/Router.pm)
+#  * cfgNum is not a number
+#
+#@param $req Lemonldap::NG::Common::PSGI::Request
+#@param $key Key name
+#@return keyvalue (string, int or hashref)
+sub getConfKey {
+    my ( $self, $req, $key ) = splice @_;
+    state $confAcc ||= $self->confAcc;
+    $self->lmLog( "Search for $key in conf", 'debug' );
+
+    # Verify that cfgNum has been asked
+    unless ( $req->params('cfgNum') ) {
+        $req->error("Missing configuration number");
+        return undef;
+    }
+    $self->lmLog( "Cfgnum set to " . $req->params('cfgNum'), 'debug' );
+
+    # when 'latest' => replace by last cfgNum
+    if ( $req->params('cfgNum') eq 'latest' ) {
+        $req->params( 'cfgNum', $self->confAcc->lastCfg );
+    }
+    unless ( $req->params('cfgNum') =~ /^\d+$/ ) {
+        $req->error("cfgNum must be a number");
+        return undef;
+    }
+    unless ( $self->getConfByNum( $req->params('cfgNum') ) ) {
+        $req->error( "Configuration "
+              . $req->params('cfgNum')
+              . " is not available ("
+              . $Lemonldap::NG::Common::Conf::msg
+              . ')' );
+        return undef;
+    }
+
+    # TODO: insert default values
+    # Set an error if key is not defined
+    return $self->currentConf->{$key};
+}
+
+sub getConfByNum {
+    my ( $self, $cfgNum ) = splice @_;
+    unless ( $self->currentConf and $cfgNum == $self->currentConf->{cfgNum} ) {
+        my $tmp = $self->confAcc->getConf( { cfgNum => $cfgNum, raw => 1 } );
+        return undef unless ( $tmp and ref($tmp) and %$tmp );
+        $self->currentConf($tmp);
+    }
+    return $cfgNum;
+}
+
+########################
+# III. Display methods #
+########################
+
+# Special subnodes
+
+## @method PSGI-JSON-response recursiveCnodes($req, $query, $tpl)
+# Respond to root requests for virtual hosts and SAMLmetadatas
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@param $query Configuration root key
+#@param $tpl Javascript template to use (see JS/JSON generator script)
+#@return PSGI JSON response
+sub recursiveCnodes {
+    my ( $self, $req, $query, $tpl ) = splice @_;
+    $self->lmLog( "Query for $query template keys", 'debug' );
+
+    my $tmp = $self->getConfKey( $req, $query );
+    return $self->sendError( $req, undef, 400 ) if ( $req->error );
+
+    my @res;
+    if ( ref($tmp) ) {
+        foreach my $f ( sort keys %$tmp ) {
+            push @res,
+              {
+                id       => "${tpl}s/$f",
+                title    => $f,
+                type     => $tpl,
+                template => $tpl
+              };
+        }
+    }
+    return $self->sendJSONresponse( $req, \@res );
+}
+
+## @method PSGI-JSON-response virtualHosts($req, @path)
+# Respond to virtualhosts sub requests
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@param @path words in path after `virtualhosts`
+#@return PSGI JSON response
+sub virtualHosts {
+    my ( $self, $req, @path ) = splice @_;
+
+    return $self->recursiveCnodes( $req, 'locationRules', 'virtualHost' )
+      unless (@path);
+
+    my $vh = shift @path;
+    my $query;
+    unless ( $query = shift @path ) {
+        return $self->sendError( $req,
+            'Bad request: virtualHost query must ask for a key', 400 );
+    }
+
+    # Send setDefault for new vhosts
+    return $self->sendError( $req, 'setDefault', 200 ) if ( $vh =~ /^new__/ );
+
+    # Reject unknown vhosts
+    return $self->sendError( $req, "Unknown virtualhost ($vh)", 400 )
+      unless ( defined $self->getConfKey( $req, 'locationRules' )->{$vh} );
+
+    if ( $query =~ /^(?:(?:exportedHeader|locationRule)s|post)$/ ) {
+        my ( $id, $resp ) = ( 1, [] );
+        my $vhk = eval { $self->getConfKey( $req, $query )->{$vh} } // {};
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        $self->lmLog( "Query for $vh/$query keys", 'debug' );
+
+        # Keys are ordered except 'default' which must be at the end
+        foreach my $r (
+            sort {
+                $query eq 'locationRules'
+                  ? (
+                    $a eq 'default'
+                    ? 1
+                    : ( $b eq 'default' ? -1 : $a cmp $b )
+                  )
+                  : $a cmp $b
+            } keys %$vhk
+          )
+        {
+            my $res = {
+                id    => "virtualHosts/$vh/$query/" . $id++,
+                title => $r,
+                data  => $vhk->{$r},
+                type  => 'keyText',
+            };
+
+            # If rule contains a comment, split it
+            if ( $query eq 'locationRules' ) {
+                $res->{comment} = '';
+                if ( $r =~ s/\(\?#(.*?)\)// ) {
+                    $res->{title} = $res->{comment} = $1;
+                }
+                $res->{re}   = $r;
+                $res->{type} = 'rule';
+            }
+            elsif ( $query eq 'post' ) {
+                $res->{data} = [ split( /\|/, $vhk->{$r} ) ];
+                $res->{type} = 'post';
+            }
+            push @$resp, $res;
+        }
+        return $self->sendJSONresponse( $req, $resp );
+    }
+    elsif ( $query =~ /^vhost(?:(?:Aliase|Http)s|Maintenance|Port)$/ ) {
+        $self->lmLog( "Query for $vh/$query key", 'debug' );
+
+        # TODO: verify how this is done actually
+        my $k1 = $self->getConfKey( $req, 'vhostOptions' );
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+
+        # Default values are set by JS
+        my $res = eval { $k1->{$vh}->{$query} } // undef;
+        return $self->sendJSONresponse( $req, { value => $res } );
+    }
+    else {
+        return $self->sendError( $req, "Unknown vhost subkey ($query)", 400 );
+    }
+}
+
+## @method PSGI-JSON-response _samlMetaDataNode($type, $req, @path)
+# Respond to SAML metadata subnodes
+#
+#@param $type `SP` or `IDP`
+#@param $req Lemonldap::NG::PSGI::Request
+#@param @path words in path after `saml{IDP|SP}MetaDataNode`
+#@return PSGI JSON response
+sub _samlMetaDataNodes {
+    my ( $self, $type, $req, @path ) = splice @_;
+
+    return $self->recursiveCnodes( $req, "saml${type}MetaDataXML",
+        "saml${type}MetaDataNode" )
+      unless (@path);
+    my $partner = shift @path;
+    my $query   = shift @path;
+    unless ($query) {
+        return $self->sendError( $req,
+            "Bad request: saml${type}MetaDataNode query must ask for a key",
+            400 );
+    }
+
+    # setDefault response for new partners
+    return $self->sendError( $req, 'setDefault', 200 )
+      if ( $partner =~ /^new__/ );
+
+    # Reject unknown partners
+    return $self->sendError( $req, "Unknown SAML partner ($partner)", 400 )
+      unless (
+        defined eval {
+            $self->getConfKey( $req, "saml${type}MetaDataXML" )->{$partner};
+        }
+      );
+
+    my ( $id, $resp ) = ( 1, [] );
+    if ( $query =~ /^(?:saml${type}MetaDataExportedAttributes)$/ ) {
+        my $pk =
+          eval { $self->getConfKey( $req, $query )->{$partner} } // {};
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        foreach my $h ( sort keys %$pk ) {
+            push @$resp,
+              {
+                id    => "saml${type}MetaDataNode/$partner/$query/" . $id++,
+                title => $h,
+                data  => [ split /;/, $pk->{$h} ],
+                type  => 'samlAttribute',
+              };
+        }
+        return $self->sendJSONresponse( $req, $resp );
+    }
+
+    # Simple root keys
+    elsif ( $query =~ /^(?:saml${type}MetaDataXML)$/ ) {
+        my $value = eval {
+            $self->getConfKey( $req, $query )->{$partner}
+              ->{"saml${type}MetaDataXML"};
+        } // undef;
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        return $self->sendJSONresponse( $req, { value => $value } );
+    }
+
+    # These regexps are generated by jsongenerator.pl and stored in
+    # Lemonldap::NG::Manager::Constants
+    elsif (
+        $query =~ {
+            IDP => qr/^$samlIDPMetaDataNodeKeys$/o,
+            SP  => qr/^$samlSPMetaDataNodeKeys$/o
+        }->{$type}
+      )
+    {
+        my $value = eval {
+            $self->getConfKey( $req, "saml${type}MetaDataOptions" )->{$partner}
+              ->{$query};
+        } // undef;
+
+        # Note that types "samlService" and "samlAssertion" will be splitted by
+        # manager.js in an array
+        return $self->sendJSONresponse( $req, { value => $value } );
+    }
+    else {
+        return $self->sendError( $req,
+            "Bad key for saml${type}MetaDataNode ($query)", 400 );
+    }
+}
+
+## @method PSGI-JSON-response samlIDPMetaDataNode($req, @path)
+# Launch _samlMetaDataNode('IDP', @_)
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@param @path words in path after `samlIDPMetaDataNode`
+#@return PSGI JSON response
+sub samlIDPMetaDataNodes {
+    my ( $self, $req, @path ) = splice @_;
+    return $self->_samlMetaDataNodes( 'IDP', $req, @path );
+}
+
+## @method PSGI-JSON-response samlSPMetaDataNode($req, @path)
+# Launch _samlMetaDataNode('SP', @_)
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@param @path words in path after `samlSPMetaDataNode`
+#@return PSGI JSON response
+sub samlSPMetaDataNodes {
+    my ( $self, $req, @path ) = splice @_;
+    return $self->_samlMetaDataNodes( 'SP', $req, @path );
+}
+
+## @method PSGI-JSON-response _oidcMetaDataNodes($type, $req, @path)
+# Respond to OpenID-Connect metadata subnodes
+#
+#@param $type `OP` or `RP`
+#@param $req Lemonldap::NG::PSGI::Request
+#@param @path words in path after `oidc{OP|RP}MetaDataNode`
+#@return PSGI JSON response
+sub _oidcMetaDataNodes {
+    my ( $self, $type, $req, @path ) = splice @_;
+
+    return $self->recursiveCnodes( $req, "oidc${type}MetaDataOptions",
+        "oidc${type}MetaDataNode" )
+      unless (@path);
+    my $partner = shift @path;
+    my $query   = shift @path;
+    unless ($query) {
+        return $self->sendError( $req,
+            "Bad request: oidc${type}MetaDataNode query must ask for a key",
+            400 );
+    }
+
+    # setDefault response for new partners
+    return $self->sendError( $req, 'setDefault', 200 )
+      if ( $partner =~ /^new__/ );
+
+    # Reject unknown partners
+    return $self->sendError( $req, "Unknown OpenID-Connect partner ($partner)",
+        400 )
+      unless (
+        defined eval {
+            $self->getConfKey( $req, "oidc${type}MetaDataOptions" )->{$partner};
+        }
+      );
+
+    return $self->sendJSONresponse( $req,
+        [ { title => 'TODO', id => 'TODO' } ] );
+}
+
+## @method PSGI-JSON-response oidcOPMetaDataNodes($req, @path)
+# Launch _oidcMetaDataNodes('SP', @_)
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@param @path words in path after `oidcOPMetaDataNode`
+#@return PSGI JSON response
+sub oidcOPMetaDataNodes {
+    my ( $self, $req, @path ) = splice @_;
+    return $self->_oidcMetaDataNodes( 'OP', $req, @path );
+}
+
+## @method PSGI-JSON-response oidcRPMetaDataNodes($req, @path)
+# Launch _oidcMetaDataNodes('SP', @_)
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@param @path words in path after `oidcRPMetaDataNode`
+#@return PSGI JSON response
+sub oidcRPMetaDataNodes {
+    my ( $self, $req, @path ) = splice @_;
+    return $self->_oidcMetaDataNodes( 'RP', $req, @path );
+}
+
+## @method PSGI-JSON-response metadatas($req)
+#Respond to `/conf/:cfgNum` requests by sending configuration metadatas
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@return PSGI JSON response
+sub metadatas {
+    my ( $self, $req ) = splice @_;
+    if ( $req->params('full') and $req->params('full') !~ $no ) {
+        my $c = $self->getConfKey( $req, 'cfgNum' );
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        return $self->sendJSONresponse( $req, $self->currentConf,
+            forceJSON => 1 );
+    }
+    else {
+        my $res = {};
+        $res->{cfgNum} = $self->getConfKey( $req, 'cfgNum' );
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        return $self->sendError( $req, "Configuration without cfgNum", 500 )
+          unless ( defined $res->{cfgNum} );
+        foreach my $key (qw(cfgAuthor cfgDate cfgAuthorIP cfgLog)) {
+            $res->{$key} = $self->getConfKey( $req, $key );
+        }
+
+        # Find next and previous conf
+        my @a  = $self->confAcc->available;
+        my $id = -1;
+        my ($ind) = map { $id++; $_ == $res->{cfgNum} ? ($id) : () } @a;
+        if ($ind)         { $res->{prev} = $a[ $ind - 1 ]; }
+        if ( $ind < $#a ) { $res->{next} = $a[ $ind + 1 ]; }
+        return $self->sendJSONresponse( $req, $res );
+    }
+}
+
+## @method PSGI-JSON-response applicationList($req, @other)
+# Return the full menu tree
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@param @other words in path after `applicationList`
+#@return PSGI JSON response
+sub applicationList {
+    my ( $self, $req, @other ) = splice @_;
+    return $self->sendError( $req, 'There is no subkey for applicationList',
+        400 )
+      if (@other);
+    my $apps = $self->getConfKey( $req, 'applicationList' );
+    return $self->sendError( $req, undef, 400 ) if ( $req->error );
+    $apps = {} unless ( ref($apps) eq 'HASH' );
+    my $json = $self->_scanCatsAndApps( $apps, 'applicationList' );
+    return $self->sendJSONresponse( $req, $json );
+}
+
+## @method arrayRef _scanCatsAndApps($apps)
+# Recursive method used to build categories & applications menu
+#
+#@param $apps HashRef pointing to a subnode of catAndApps conf tree
+#@return arrayRef
+sub _scanCatsAndApps {
+    my ( $self, $apps, $baseId ) = splice @_;
+    my @res;
+
+    foreach my $cat ( grep { not /^(?:catname|type)$/ } sort keys %$apps ) {
+        my $item = { id => "$baseId/$cat" };
+        if ( $apps->{$cat}->{type} eq 'category' ) {
+            $item->{title} = $apps->{$cat}->{catname};
+            $item->{type}  = 'menuCat';
+            $item->{nodes} =
+              $self->_scanCatsAndApps( $apps->{$cat}, "$baseId/$cat" );
+        }
+        else {
+            $item->{title} = $apps->{$cat}->{options}->{name};
+            $item->{type} = $apps->{$cat}->{type} = 'menuApp';
+            foreach my $o (
+                grep { not /^name$/ }
+                keys %{ $apps->{$cat}->{options} }
+              )
+            {
+                $item->{data}->{$o} = $apps->{$cat}->{options}->{$o};
+            }
+        }
+        push @res, $item;
+    }
+    return \@res;
+}
+
+## @method scalar getKey($req, $key, $subkey)
+# Return the value of a root key of current configuration
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@param $key Name of key requested
+#@param $subkey Subkey for hash values
+#@return Configuration value (as scalar)
+sub getKey {
+    my ( $self, $req, $key, $subkey ) = splice @_;
+    unless ($key) {
+        $self->lmLog( "Query for conf metadatas", 'debug' );
+        return $self->metadatas($req);
+    }
+    $self->lmLog( "Query for $key", 'debug' );
+    my $value = $self->getConfKey( $req, $key );
+    return $self->sendError( $req, undef, 400 ) if ( $req->error );
+
+    # When "hash"
+    if ( $key =~ qr/^$simpleHashKeys$/o ) {
+        $value //= {};
+
+        # If a hash key is asked return its value
+        if ($subkey) {
+            return $self->sendJSONresponse( $req,
+                { value => $value->{$subkey} // undef, } );
+        }
+
+        # else return the list of keys
+        my @res;
+        foreach my $k ( sort keys %$value ) {
+            push @res,
+              {
+                id    => "$key/$k",
+                title => "$k",
+                data  => $value->{$k},
+                type  => 'keyText'
+              };
+        }
+        return $self->sendJSONresponse( $req, \@res );
+    }
+
+    # When scalar
+    return $self->sendError( $req, "Key $key is not a hash", 400 )
+      if ($subkey);
+    return $self->sendJSONresponse( $req, { value => $value } );
+
+    # TODO authParam key
+}
+
+######################
+# IV. Upload methods #
+######################
+
+## @method PSGI-JSON-response newConf($req)
+# Call Lemonldap::NG::Manager::ConfParser to parse new configuration and store
+# it
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@return PSGI JSON response
+sub newConf {
+    my ( $self, $req, @other ) = splice @_;
+    return $self->sendError( $req, 'There is no subkey for "newConf"', 400 )
+      if (@other);
+
+    # Body must be json
+    my $new = $req->jsonBodyToObj;
+    unless ( defined($new) ) {
+        return $self->sendError( $req, undef, 400 );
+    }
+
+    # Verify that cfgNum has been asked
+    unless ( $req->params('cfgNum') ) {
+        return $self->sendError( $req, "Missing configuration number", 400 );
+    }
+
+    # Set current conf to cfgNum
+    unless ( $self->getConfByNum( $req->params('cfgNum') ) ) {
+        return $self->sendError(
+            $req,
+            "Configuration "
+              . $req->params('cfgNum')
+              . " not available "
+              . $Lemonldap::NG::Common::Conf::msg,
+            400
+        );
+    }
+
+    # Parse new conf
+    require Lemonldap::NG::Manager::ConfParser;
+    my $parser = Lemonldap::NG::Manager::ConfParser->new(
+        { tree => $new, refConf => $self->currentConf, req => $req } );
+    my $res = { result => $parser->check };
+
+# "message" fields: note that words enclosed by "__" (__word__) will be translated
+    $res->{message} = $parser->{message};
+    foreach my $t (qw(errors warnings changes)) {
+        $res->{details}->{$t} = $parser->$t if ( @{ $parser->$t } );
+    }
+    if ( $res->{result} ) {
+        if ( @{ $parser->needConfirm } and not $req->params('force') ) {
+            push @{ $res->{details}->{errors} }, @{ $parser->needConfirm };
+            $res->{result}      = 0;
+            $res->{needConfirm} = 1;
+            $res->{message} .= '__needConfirmation__';
+        }
+        if ( $self->{demoMode} ) {
+            $res->{message} = '__demoModeOn__';
+        }
+        else {
+            my %args;
+            $args{force} = 1 if ( $req->params('force') );
+            my $s = $self->confAcc->saveConf( $parser->newConf, %args );
+            if ( $s > 0 ) {
+                $res->{result} = 1;
+                $res->{cfgNum} = $s;
+            }
+            else {
+                $res->{result} = 0;
+                $res->{needConfirm} = 1 if ( $s == CONFIG_WAS_CHANGED );
+                $res->{message} .= '__needConfirmation__';
+            }
+        }
+    }
+    return $self->sendJSONresponse( $req, $res );
+}
+
+sub newRawConf {
+    my ( $self, $req, @other ) = splice @_;
+    return $self->sendError( $req, 'There is no subkey for "newConf"', 400 )
+      if (@other);
+
+    # Body must be json
+    my $new = $req->jsonBodyToObj;
+    unless ( defined($new) ) {
+        return $self->sendError( $req, undef, 400 );
+    }
+
+    my $res = {};
+    if ( $self->{demoMode} ) {
+        $res->{message} = '__demoModeOn__';
+    }
+    else {
+        my %args;
+        $args{force} = 1 if ( $req->params('force') );
+        my $s = $self->confAcc->saveConf( $new, %args );
+        if ( $s > 0 ) {
+            $res->{result} = 1;
+            $res->{cfgNum} = $s;
+        }
+        else {
+            $res->{result} = 0;
+            $res->{needConfirm} = 1 if ( $s == CONFIG_WAS_CHANGED );
+            $res->{message} .= '__needConfirmation__';
+        }
+    }
+    return $self->sendJSONresponse( $req, $res );
+}
+
+##@method public hashref generateKeys(string password)
+# Return a hashref containing private and public keys
+# @param $password A password to protect the private key
+# @return Hashref
+sub newRSAKey {
+    my ( $self, $req, @others ) = splice @_;
+    return $self->sendError( $req, 'There is no subkey for "newRSAKey"', 400 )
+      if (@others);
+    my $query = $req->jsonBodyToObj;
+    my $rsa   = Crypt::OpenSSL::RSA->generate_key(2048);
+    my $keys  = {
+        'private' => $rsa->get_private_key_string(),
+        'public'  => $rsa->get_public_key_x509_string(),
+    };
+    if ( $query->{password} ) {
+        my $pem = Convert::PEM->new(
+            Name => 'RSA PRIVATE KEY',
+            ASN  => q(
+                RSAPrivateKey SEQUENCE {
+                    version INTEGER,
+                    n INTEGER,
+                    e INTEGER,
+                    d INTEGER,
+                    p INTEGER,
+                    q INTEGER,
+                    dp INTEGER,
+                    dq INTEGER,
+                    iqmp INTEGER
+    }
+               )
+        );
+        $keys->{private} = $pem->encode(
+            Content  => $pem->decode( Content => $keys->{private} ),
+            Password => $query->{password},
+        );
+    }
+    return $self->sendJSONresponse( $req, $keys );
+}
+
+1;
+

@@ -1,0 +1,50 @@
+<div class="panel panel-default">
+  <div class="panel panel-heading">
+    <h3 class="panel-title" trspan="application"/>
+  </div>
+  <div class="panel panel-body input-group">
+    <label for="iname" id="lname" class="input-group-addon"><span trspan="name"/> :</label>
+    <input id="iname" aria-describedby="lname" class="form-control" ng-model="currentNode.title"/>
+  </div>
+  <div class="panel panel-body input-group">
+    <label for="idesc" id="ldesc" class="input-group-addon"><span trspan="description"/> :</label>
+    <input id="idesc" aria-describedby="ldesc" class="form-control" ng-model="currentNode.data.description"/>
+  </div>
+  <div class="panel panel-body input-group">
+    <label for="iuri" id="luri" class="input-group-addon"><span trspan="uri"/> :</label>
+    <input id="iuri" aria-describedby="luri" class="form-control" ng-model="currentNode.data.uri"/>
+  </div>
+  <div class="panel panel-body input-group">
+    <label for="ilogo" id="llogo" class="input-group-addon"><span trspan="logo"/> :</label>
+    <input id="ilogo" aria-describedby="llogo" class="form-control" ng-model="currentNode.data.logo"/>
+  </div>
+  <div class="panel panel-body input-group">
+    <span class="input-group-addon"><span trspan="applicationDisplay"/> :</span>
+    <div class="input-group-solid">
+      <label class="radio-inline">
+        <input id="iOn" type="radio" value="on" ng-model="currentNode.data.display" />
+        <span trspan="enabled"/>
+      </label>
+      <label class="radio-inline">
+        <input id="iOff" type="radio" value="off" ng-model="currentNode.data.display" />
+        <span trspan="disabled">
+      </label>
+      <label class="radio-inline">
+        <input id="iAuto" type="radio" value="auto" ng-model="currentNode.data.display" />
+        <span trspan="auto">
+      </label>
+    </div>
+  </div>
+
+</div>
+<script type="text/javascript">
+buttons=[{
+  "title": "up"
+},{
+  "title": "down"
+},{
+  "title": "deleteEntry"
+},{
+  "title": "newApp"
+}];
+</script>

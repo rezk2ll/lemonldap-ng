@@ -2,12 +2,30 @@ package Lemonldap::NG::Common::Conf::File;
 
 use strict;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
-use Lemonldap::NG::Common::Conf::Serializer;
 
 our $VERSION = '1.4.0';
+our $initDone;
+
+sub Lemonldap::NG::Common::Conf::_lock {
+    my ( $self, $cfgNum ) = splice @_;
+    return "$self->{dirName}/lmConf.lock";
+}
+
+sub Lemonldap::NG::Common::Conf::_file {
+    my ( $self, $cfgNum ) = splice @_;
+    return "$self->{dirName}/lmConf-$cfgNum.js";
+}
 
 sub prereq {
     my $self = shift;
+    unless ($initDone) {
+        eval "use JSON";
+        if ($@) {
+            $Lemonldap::NG::Common::Conf::msg .= "Unable to load JSON: $@\n";
+            return 0;
+        }
+        $initDone++;
+    }
     unless ( $self->{dirName} ) {
         $Lemonldap::NG::Common::Conf::msg .=
           '"dirName" is required in "File" configuration type ! \n';
@@ -26,7 +44,9 @@ sub available {
     opendir D, $self->{dirName};
     my @conf = readdir(D);
     closedir D;
-    @conf = sort { $a <=> $b } map { /lmConf-(\d+)/ ? $1 : () } @conf;
+    @conf =
+      sort { $a <=> $b }
+      map { /lmConf-(\d+)(?:\.js)?/ ? ( $1 + 0 ) : () } @conf;
     return @conf;
 }
 
@@ -42,9 +62,9 @@ sub lock {
         sleep 2;
         return 0 if ( $self->isLocked );
     }
-    unless ( open F, ">" . $self->{dirName} . "/lmConf.lock" ) {
+    unless ( open F, ">" . $self->_lock ) {
         $Lemonldap::NG::Common::Conf::msg .=
-          "Unable to lock (" . $self->{dirName} . "/lmConf.lock) \n";
+          "Unable to lock (" . $self->_lock . ") \n";
         return 0;
     }
     print F $$;
@@ -54,30 +74,25 @@ sub lock {
 
 sub isLocked {
     my $self = shift;
-    -e $self->{dirName} . "/lmConf.lock";
+    -e $self->_lock;
 }
 
 sub unlock {
     my $self = shift;
-    unlink $self->{dirName} . "/lmConf.lock";
+    unlink $self->_lock;
     1;
 }
 
 sub store {
     my ( $self, $fields ) = @_;
-    $fields = $self->serialize($fields);
     my $mask = umask;
     umask( oct('0027') );
-    unless ( open FILE,
-        '>' . $self->{dirName} . "/lmConf-" . $fields->{cfgNum} )
-    {
+    unless ( open FILE, ">" . $self->_file( $fields->{cfgNum} ) ) {
         $Lemonldap::NG::Common::Conf::msg .= "Open file failed: $! \n";
         $self->unlock;
         return UNKNOWN_ERROR;
     }
-    foreach my $k ( sort keys %$fields ) {
-        print FILE "$k\n\t$fields->{$k}\n\n";
-    }
+    print FILE JSON->new->canonical(1)->encode($fields);
     close FILE;
     umask($mask);
     return $fields->{cfgNum};
@@ -86,29 +101,59 @@ sub store {
 sub load {
     my ( $self, $cfgNum, $fields ) = @_;
     my $f;
-    local $/ = "";
-    unless ( open FILE, $self->{dirName} . "/lmConf-$cfgNum" ) {
-        $Lemonldap::NG::Common::Conf::msg .= "Open file failed: $! \n";
+    if ( -e $self->_file($cfgNum) ) {
+        local $/ = '';
+        open FILE, $self->_file($cfgNum) or die "$!$@";
+        $f = join( '', <FILE> );
+        close FILE;
+        my $ret = eval { decode_json($f); };
+        die "Unable to load conf: $@\n" if ($@);
+        return $ret;
+    }
+
+    # Old format
+    elsif ( -e "$self->{dirName}/lmConf-$cfgNum" ) {
+        open FILE, "$self->{dirName}/lmConf-$cfgNum" or die "$!$@";
+        local $/ = "";
+        unless ( open FILE, $self->{dirName} . "/lmConf-$cfgNum" ) {
+            $Lemonldap::NG::Common::Conf::msg .= "Open file failed: $! \n";
+            return undef;
+        }
+        while (<FILE>) {
+            my ( $k, $v ) = split /\n\s+/;
+            chomp $k;
+            $v =~ s/\n*$//;
+            if ($fields) {
+                $f->{$k} = $v if ( grep { $_ eq $k } @$fields );
+            }
+            else {
+                $f->{$k} = $v;
+            }
+        }
+        close FILE;
+        require Lemonldap::NG::Common::Conf::Serializer;
+        return $self->unserialize($f);
+    }
+    else {
+        $Lemonldap::NG::Common::Conf::msg .=
+          "Unable to find configuration file";
         return undef;
     }
-    while (<FILE>) {
-        my ( $k, $v ) = split /\n\s+/;
-        chomp $k;
-        $v =~ s/\n*$//;
-        if ($fields) {
-            $f->{$k} = $v if ( grep { $_ eq $k } @$fields );
-        }
-        else {
-            $f->{$k} = $v;
-        }
-    }
-    close FILE;
-    return $self->unserialize($f);
 }
 
 sub delete {
     my ( $self, $cfgNum ) = @_;
-    unlink( $self->{dirName} . "/lmConf-$cfgNum" );
+    my $file = $self->_file($cfgNum);
+    if ( -e $file ) {
+        my $res = unlink($file);
+        $Lemonldap::NG::Common::Conf::msg .= $! unless ($res);
+        return $res;
+    }
+    else {
+        $Lemonldap::NG::Common::Conf::msg .=
+          "Unable to delete conf $cfgNum, no such file";
+        return 0;
+    }
 }
 
 1;
