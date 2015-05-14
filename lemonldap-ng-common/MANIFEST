@@ -13,10 +13,10 @@ lib/Lemonldap/NG/Common/CGI/SOAPServer.pm
 lib/Lemonldap/NG/Common/CGI/SOAPService.pm
 lib/Lemonldap/NG/Common/Conf.pm
 lib/Lemonldap/NG/Common/Conf/_DBI.pm
-lib/Lemonldap/NG/Common/Conf/Attributes.pm
 lib/Lemonldap/NG/Common/Conf/CDBI.pm
 lib/Lemonldap/NG/Common/Conf/Constants.pm
 lib/Lemonldap/NG/Common/Conf/DBI.pm
+lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
 lib/Lemonldap/NG/Common/Conf/File.pm
 lib/Lemonldap/NG/Common/Conf/JSONFile.pm
 lib/Lemonldap/NG/Common/Conf/LDAP.pm
@@ -31,6 +31,10 @@ lib/Lemonldap/NG/Common/Notification.pm
 lib/Lemonldap/NG/Common/Notification/DBI.pm
 lib/Lemonldap/NG/Common/Notification/File.pm
 lib/Lemonldap/NG/Common/Notification/LDAP.pm
+lib/Lemonldap/NG/Common/PSGI.pm
+lib/Lemonldap/NG/Common/PSGI/Constants.pm
+lib/Lemonldap/NG/Common/PSGI/Request.pm
+lib/Lemonldap/NG/Common/PSGI/Router.pm
 lib/Lemonldap/NG/Common/Regexp.pm
 lib/Lemonldap/NG/Common/Safe.pm
 lib/Lemonldap/NG/Common/Safelib.pm
