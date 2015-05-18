@@ -36,6 +36,12 @@ MANAGERDIR=$(DOCUMENTROOT)/manager
 RMANAGERDIR=$(DESTDIR)/$(MANAGERDIR)
 MANAGERSITEDIR=$(MANAGERDIR)/site
 RMANAGERSITEDIR=$(DESTDIR)/$(MANAGERSITEDIR)
+MANAGERSTATICDIR=$(MANAGERSITEDIR)/static
+RMANAGERSTATICDIR=$(DESTDIR)/$(MANAGERSTATICDIR)
+MANAGERPSGIDIR=$(MANAGERSITEDIR)/psgi
+RMANAGERPSGIDIR=$(DESTDIR)/$(MANAGERPSGIDIR)
+MANAGERTEMPLATESDIR=$(MANAGERSITEDIR)/templates
+RMANAGERTEMPLATESDIR=$(DESTDIR)/$(MANAGERTEMPLATESDIR)
 DOCDIR=$(DOCUMENTROOT)
 RDOCDIR=$(DESTDIR)/$(DOCDIR)
 DEFDOCDIR=$(DOCUMENTROOT)/doc
@@ -314,12 +320,14 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 
 install_manager_site:	install_conf_dir
 	# Manager install
-	@install -v -d ${RMANAGERDIR} ${RMANAGERSITEDIR} \
-		$(RCONFDIR) ${RMANAGERDIR}
-	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
-	# Sessions explorer and notifications explorer install
-	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSITEDIR} \
-		$(RCONFDIR) -type d -name .svn)
+	@install -v -d ${RMANAGERDIR} $(RMANAGERSTATICDIR) $(RMANAGERPSGIDIR) \
+		$(RMANAGERTEMPLATESDIR)
+	@cp -pR $(SRCMANAGERDIR)/site/static/* $(RMANAGERSTATICDIR)
+	@cp -pR $(SRCMANAGERDIR)/site/templates/* $(RMANAGERTEMPLATESDIR)
+	@cp -pR $(SRCMANAGERDIR)/eg/* $(RMANAGERPSGIDIR)
+	# Clean svn files
+	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSTATICDIR} $(RMANAGERPSGIDIR) \
+		$(RMANAGERTEMPLATESDIR) $(RCONFDIR) -type d -name .svn)
 
 install_portal_site:	install_conf_dir
 	# Portal install
@@ -416,6 +424,7 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 	fi
 	@cp lemonldap-ng-common/tools/lmConfig.* lemonldap-ng-common/tools/apache-session-mysql.sql $(RTOOLSDIR)
 	@cp lemonldap-ng-common/tools/sso.schema $(RTOOLSDIR)
+	$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
 	@rm -rf $$(find $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR) -type d -name .svn)
 
 install_sessions_dir:
