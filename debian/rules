@@ -49,7 +49,6 @@ override_dh_auto_install:
 
 	mkdir $(TMP)/$(LMSHAREDIR)/manager $(TMP)/$(LMSHAREDIR)/portal
 	mv $(TMP)/$(LMVARDIR)/portal/*.pl $(TMP)/$(LMSHAREDIR)/portal/
-	mv $(TMP)/$(LMVARDIR)/manager/*pl $(TMP)/$(LMSHAREDIR)/manager/
 
 override_dh_compress:
 	dh_compress -X favicon.ico

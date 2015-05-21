@@ -657,11 +657,8 @@ debian-diff:
 	@# Manager
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager ||true
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager.pm ||true
-	@$(DIFF) lemonldap-ng-manager/example/index.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/index.pl ||true
-	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/sessions.pl ||true
-	@$(DIFF) lemonldap-ng-manager/example/notifications.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/notifications.pl ||true
-	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' lemonldap-ng-manager/example/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
-	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' lemonldap-ng-manager/example/scripts/lemonldap-ng-cli $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lemonldap-ng-cli ||true
+	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' lemonldap-ng-manager/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
+	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' lemonldap-ng-manager/scripts/lemonldap-ng-cli $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lemonldap-ng-cli ||true
 
 default-diff:
 	@# Portal
@@ -687,11 +684,8 @@ default-diff:
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager ||true
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager.pm ||true
 	@$(DIFF) lemonldap-ng-manager/example/skins $(LMPREFIX)/htdocs/manager/skins ||true
-	@$(DIFF) lemonldap-ng-manager/example/index.pl $(LMPREFIX)/htdocs/manager/index.pl ||true
-	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(LMPREFIX)/htdocs/manager/sessions.pl ||true
-	@$(DIFF) lemonldap-ng-manager/example/notifications.pl $(LMPREFIX)/htdocs/manager/notifications.pl ||true
-	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' lemonldap-ng-manager/example/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
-	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' lemonldap-ng-manager/example/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true
+	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' lemonldap-ng-manager/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
+	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' lemonldap-ng-manager/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true
 
 tidy: clean
 	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.t' \) -print -exec perltidy -b {} \;

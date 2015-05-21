@@ -4,14 +4,5 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-if [ "$1" == "configure" ]
-then
-	if [ -f /var/lib/lemonldap-ng/manager/index.pl ]; then
-		diff /var/lib/lemonldap-ng/manager/index.pl \
-			/usr/share/doc/liblemonldap-ng-manager-perl/examples/index.pl && \
-		rm -rf /var/lib/lemonldap-ng/manager/index.pl
-	fi
-fi
-
 #DEBHELPER#
 exit 0
