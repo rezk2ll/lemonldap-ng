@@ -1,0 +1,134 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="openid" id="openid">OpenID</a></h1>
+<div class="level1">
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0">Authentication </th><th class="col1"> Users </th><th class="col2"> Password </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "OpenID" [1-79] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+<acronym title="LemonLDAP::NG">LL::NG</acronym> can delegate authentication to an OpenID server. This requires <a href="http://search.cpan.org/~mart/Net-OpenID-Consumer/" class="urlextern" title="http://search.cpan.org/~mart/Net-OpenID-Consumer/"  rel="nofollow">Perl OpenID consumer module</a> with at least version 1.0.
+</p>
+
+<p>
+<p><div class="notetip"><acronym title="LemonLDAP::NG">LL::NG</acronym> can also act as <a href="../../documentation/2.0/idpopenid.html" class="wikilink1" title="documentation:2.0:idpopenid">OpenID server</a>, that allows to interconnect two <acronym title="LemonLDAP::NG">LL::NG</acronym> systems.
+</div></p>
+</p>
+
+<p>
+<acronym title="LemonLDAP::NG">LL::NG</acronym> will then display a form with an OpenID input, wher users will type their OpenID login.
+</p>
+
+<p>
+<p><div class="notetip">OpenID authentication can proposed as an alternate authentication scheme using the <a href="../../documentation/2.0/authchoice.html" class="wikilink1" title="documentation:2.0:authchoice">authentication choice</a> method.
+</div></p>
+</p>
+
+<p>
+<acronym title="LemonLDAP::NG">LL::NG</acronym> can use a white list or a black list to filter allowed OpenID domains.
+</p>
+
+<p>
+If OpenID is used as users database, attributes will be requested to the server with SREG extention.
+</p>
+
+</div>
+<!-- SECTION "Presentation" [80-826] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+<p>
+
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose OpenID for authentication and/or users.
+</p>
+
+<p>
+Then, go in <code>OpenID parameters</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Authentication level</strong>: authentication level for this module.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Secret token</strong>: used to check integrity of OpenID response.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Authorizated domain</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>List type</strong>: choose white list to define allowed domains or black list to define forbidden domains</div>
+</li>
+<li class="level2"><div class="li"> <strong>List</strong>: domains list (comma separated values)</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+
+To configure requested attributes, edit <strong>Exported variables</strong> and define attributes:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Key</strong>: internal session key, can be prefixed by <code>!</code> to make the attribute required</div>
+</li>
+<li class="level1"><div class="li"> <strong>Value</strong>: SREG attribute name:</div>
+<ul>
+<li class="level2"><div class="li"> fullname</div>
+</li>
+<li class="level2"><div class="li"> nickname</div>
+</li>
+<li class="level2"><div class="li"> language</div>
+</li>
+<li class="level2"><div class="li"> postcode</div>
+</li>
+<li class="level2"><div class="li"> timezone</div>
+</li>
+<li class="level2"><div class="li"> country</div>
+</li>
+<li class="level2"><div class="li"> gender</div>
+</li>
+<li class="level2"><div class="li"> email</div>
+</li>
+<li class="level2"><div class="li"> dob</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+
+See also <a href="../../documentation/2.0/exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables configuration</a>.
+
+</p>
+
+</div>
+<!-- SECTION "Configuration" [827-] --></div><!-- closes <div class="dokuwiki export">-->

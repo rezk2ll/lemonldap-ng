@@ -16,7 +16,7 @@ use Tie::File;
 my $offline_script_url =
   'http://lemonldap-ng.org/lib/plugins/offline/create.php';
 my $offline_zip_url = 'http://lemonldap-ng.org/lib/plugins/offline/offline.zip';
-my $remove_versions = [qw/latest 1.0 1.1 1.2 1.3/];
+my $remove_versions = [qw/latest 1.0 1.1 1.2 1.3 1.4/];
 my $rc;
 
 # Launch remote offline script
@@ -46,7 +46,7 @@ system('find . -name \*.html -exec sed -i "s#/latest/#/current/#g" {} \;');
 tie my @documentation, 'Tie::File', 'pages/documentation.html'
   or die("Unable to open pages/documentation.html");
 
-splice @documentation, 61, 20;
+splice @documentation, 61, 27;
 
 # Correct some bad media links
 system('find . -name \*.html -exec sed -i "s#/_media#../media#g" {} \;');

@@ -1,0 +1,187 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="salesforce" id="salesforce">SalesForce</a></h1>
+<div class="level1">
+
+<p>
+
+<a href="/_detail/applications/salesforce-logo.jpg?id=documentation%3A2.0%3Aapplications%3Asalesforce" class="media" title="applications:salesforce-logo.jpg"><img src="../../../../media/applications/salesforce-logo.jpg" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- SECTION "SalesForce" [1-68] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+<a href="../../../documentation/2.0/applications.html" class="wikilink1" title="documentation:2.0:applications">Salesforce</a> Salesforce Inc. is a cloud computing company. It is best known for their CRM products and social networking applications.
+</p>
+
+<p>
+It allows to use <acronym title="Security Assertion Markup Language">SAML</acronym> to authenticate users. It can deal with both SP and IdP initiated modes.
+</p>
+
+<p>
+This page presents the SP initiated mode.
+</p>
+
+<p>
+To work with <acronym title="LemonLDAP::NG">LL::NG</acronym> it requires:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="LemonLDAP::NG">LL::NG</acronym> configured as <a href="../../../documentation/2.0/idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML Identity Provider</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Presentation" [69-468] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+<p>
+
+You should have configured <acronym title="LemonLDAP::NG">LL::NG</acronym> as a <a href="../../../documentation/2.0/idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML Identity Provider</a>.
+</p>
+
+</div>
+<!-- SECTION "Configuration" [469-574] -->
+<h3><a name="create_salesforce_domain" id="create_salesforce_domain">Create Salesforce domain</a></h3>
+<div class="level3">
+
+<p>
+
+<a href="/_detail/applications/my_domain_salesforce-resize-web.png?id=documentation%3A2.0%3Aapplications%3Asalesforce" class="media" title="applications:my_domain_salesforce-resize-web.png"><img src="../../../../media/applications/my_domain_salesforce-resize-web.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+For using SP-initiated mode, you must create your salesforce domain. Creation can take up to 1 hour. (if it is superior to 1h, then there is a problem. Problems are generally resolved in up to 72 hours)
+</p>
+
+<p>
+Then you must <strong>deploy</strong> this domain in order to go on with the configuration.
+</p>
+
+<p>
+Finally, just ensure that at least:
+</p>
+<ul>
+<li class="level1"><div class="li"> Login policy</div>
+</li>
+<li class="level1"><div class="li"> Redirect policy</div>
+</li>
+<li class="level1"><div class="li"> domain name</div>
+</li>
+<li class="level1"><div class="li"> authentication service</div>
+</li>
+</ul>
+
+<p>
+match with the correct values. (adapt the domain if necessary)
+</p>
+
+<p>
+<p><div class="noteimportant">For now, the authentication service parameter has no domain available. You must come back later to fill this parameter. Once <acronym title="Security Assertion Markup Language">SAML</acronym> cinematics are working, you can then put your domain, and delete the login form, and you&#039;ll have an automatic redirection to your Identity Provider (no need for the user to click). Note that you can always access Salesforce by the general login page: <a href="https://login.salesforce.com" class="urlextern" title="https://login.salesforce.com"  rel="nofollow">https://login.salesforce.com</a>
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Create Salesforce domain" [575-1566] -->
+<h3><a name="saml_settings" id="saml_settings">SAML settings</a></h3>
+<div class="level3">
+
+<p>
+
+Salesforce is not able to read metadata, you must fill the information into a form.
+</p>
+
+<p>
+<a href="/_detail/applications/saml_sso_settings-resize-web.png?id=documentation%3A2.0%3Aapplications%3Asalesforce" class="media" title="applications:saml_sso_settings-resize-web.png"><img src="../../../../media/applications/saml_sso_settings-resize-web.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Go to the <acronym title="Security Assertion Markup Language">SAML</acronym> Single Sign On settings, and fill these information:
+</p>
+<ul>
+<li class="level1"><div class="li"> Name: should be filled automatically with your organization or domain</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Security Assertion Markup Language">SAML</acronym> Version: check that version 2.0 is used</div>
+</li>
+<li class="level1"><div class="li"> Issuer: this is the LemonLDAP::NG (our IdP) Entity Id, which is by default #PORTAL#/saml/metadata</div>
+</li>
+<li class="level1"><div class="li"> Identity Provider Certificate: whereas it is mentionned that this is the authentication certificate, you must give your LemonLDAP::NG (IdP) signing certificate. If you don&#039;t have one, create it with the signing key pair already generated (you could do this with openssl). <acronym title="Secure Sockets Layer">SSL</acronym> authentication (https) does not seem to be checked anyway.</div>
+</li>
+<li class="level1"><div class="li"> Signing Certificate: choose a certificate for SP signature. (create one if none is present)</div>
+</li>
+<li class="level1"><div class="li"> Assertion decryption Certificate: choose a certificate only if you want to cipher your assertion. (default is not to cipher)</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Security Assertion Markup Language">SAML</acronym> Identity Type: choose Federation ID. This means that the user Name ID will be mapped to the Federation ID field. (see next section)</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Security Assertion Markup Language">SAML</acronym> Identity Location: choose if the user Name ID is held in the subject or in some attribute</div>
+</li>
+<li class="level1"><div class="li"> Identity Provider Login <acronym title="Uniform Resource Locator">URL</acronym>: the user/password <acronym title="Security Assertion Markup Language">SAML</acronym> portal location on the IdP</div>
+</li>
+<li class="level1"><div class="li"> Identity Provider Logout <acronym title="Uniform Resource Locator">URL</acronym>: the logout location on the IdP</div>
+</li>
+<li class="level1"><div class="li"> Custom Error <acronym title="Uniform Resource Locator">URL</acronym>: you can redirect the user to a special page when an error is happening</div>
+</li>
+<li class="level1"><div class="li"> SP Initiated Binding: chose any of the supported binding (every one listed there is currently supported on LemonLDAP::NG) <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> POST is a good choice</div>
+</li>
+<li class="level1"><div class="li"> Salesforce Login <acronym title="Uniform Resource Locator">URL</acronym>: generated automatically. This is the entry point of our login cinematic.</div>
+</li>
+<li class="level1"><div class="li"> OAuth 2.0 Token Endpoint: not used here</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Application Programming Interface">API</acronym> Name: filled automatically</div>
+</li>
+<li class="level1"><div class="li"> User Provisioning Enabled: should create automatically the user in Salesforce (not functionnal right now)</div>
+</li>
+<li class="level1"><div class="li"> EntityId: Salesforce (the SP) Entity ID. Fill this field accordingly. It should be the same value as the organization domain url, displayed on the previous section</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "SAML settings" [1567-3679] -->
+<h3><a name="configure_federation_id" id="configure_federation_id">Configure Federation ID</a></h3>
+<div class="level3">
+
+<p>
+
+Finally, configure for each user his Federation ID value. It will be the link between the <acronym title="Security Assertion Markup Language">SAML</acronym> assertion coming from LemonLDAP::NG (the IdP) and a given user in Salesforce. Here, the mail has been chosen as the user Name ID.
+</p>
+
+<p>
+<a href="/_detail/applications/user_federation_id-resize-web.png?id=documentation%3A2.0%3Aapplications%3Asalesforce" class="media" title="applications:user_federation_id-resize-web.png"><img src="../../../../media/applications/user_federation_id-resize-web.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Once this is completed, click to export the Salesforce metadata and import them into LemonLDAP::NG, into the declaration of the Salesforce Service Provider.
+</p>
+
+<p>
+See <a href="../../../documentation/2.0/idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">Register partner Service Provider on LemonLDAP::NG</a> configuration chapter.
+</p>
+
+</div>
+<!-- SECTION "Configure Federation ID" [3680-] --></div><!-- closes <div class="dokuwiki export">-->

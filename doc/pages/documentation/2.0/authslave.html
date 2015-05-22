@@ -1,0 +1,104 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="slave" id="slave">Slave</a></h1>
+<div class="level1">
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0">Authentication </th><th class="col1"> Users </th><th class="col2"> Password </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Slave" [1-78] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+<acronym title="LemonLDAP::NG">LL::NG</acronym> Slave backend relies on <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers to retrieve user login and/or attributes.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Authentication: will check user login in a header and create session without prompting any credentials (but will register client <acronym title="Internet Protocol">IP</acronym> and creation date)</div>
+</li>
+<li class="level1"><div class="li"> Users: collect data transfered in <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers by the “master”.</div>
+</li>
+</ul>
+
+<p>
+
+It allows to put <acronym title="LemonLDAP::NG">LL::NG</acronym>::portal behind another web <acronym title="Single Sign On">SSO</acronym>, or behind a <acronym title="Secure Sockets Layer">SSL</acronym> hardware to delegate <acronym title="Secure Sockets Layer">SSL</acronym> authentication to that hardware.
+</p>
+
+</div>
+<!-- SECTION "Presentation" [79-546] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+<p>
+
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose Slave for authentication or users module.
+</p>
+
+<p>
+Then, go in <code>Slave parameters</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Authentication level</strong>: authentication level for this module.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Header for user login</strong>: header that contains the user main login</div>
+</li>
+<li class="level1"><div class="li"> <strong>Master&#039;s <acronym title="Internet Protocol">IP</acronym> address</strong>: the <acronym title="Internet Protocol">IP</acronym> addresses of servers which are accredited to authenticate user. This is a security point, to prevent someone to create a session by sending custom headers. You can set one or several <acronym title="Internet Protocol">IP</acronym> addresses, separated by spaces, or let this parameter empty to disable the checking.</div>
+</li>
+</ul>
+
+<p>
+
+You have then to declare <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers exported by the main <acronym title="Single Sign On">SSO</acronym> (in <strong>Exported Variables</strong>). Example :
+
+</p>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Key (<acronym title="LemonLDAP::NG">LL::NG</acronym> name)  </th><th class="col1 centeralign">  Value (<acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header name)  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  uid  </td><td class="col1 centeralign">  Auth-User  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  mail  </td><td class="col1 centeralign">  User-Email  </td>
+	</tr>
+</table>
+
+<p>
+
+See also <a href="../../documentation/2.0/exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables configuration</a>.
+
+</p>
+
+</div>
+<!-- SECTION "Configuration" [547-] --></div><!-- closes <div class="dokuwiki export">-->

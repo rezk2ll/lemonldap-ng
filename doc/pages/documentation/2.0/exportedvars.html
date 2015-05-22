@@ -1,0 +1,130 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="exported_variables" id="exported_variables">Exported variables</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Exported variables" [1-34] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+Exported variables are the variables available to <a href="../../documentation/2.0/writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">write rules and headers</a>. They are extracted from the users database by the <a href="../../documentation/2.0/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:2.0:start">users module</a>.
+</p>
+
+<p>
+To create a variable, you&#039;ve just to map a user attributes in <acronym title="LemonLDAP::NG">LL::NG</acronym> using <code>Variables</code> » <code>Exported variables</code>. For each variable, The first field is the name which will be used in rules, macros or headers and the second field is the name of the user database field.
+</p>
+
+<p>
+Examples for <a href="../../documentation/2.0/authldap.html" class="wikilink1" title="documentation:2.0:authldap">LDAP</a>:
+</p>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Variable name  </th><th class="col1 centeralign">  <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> attribute  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  uid  </td><td class="col1 centeralign">  uid  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  number  </td><td class="col1 centeralign">  employeeNumber  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 centeralign">  name  </td><td class="col1 centeralign">  sn  </td>
+	</tr>
+</table>
+
+<p>
+
+You can define exported variables for each module in the module configuration itself. Variables defined in the main <code>Exported variables</code> will be used for each backend. Variables defined in the exported variables node of the module will be used only for that module.
+</p>
+
+<p>
+<p><div class="notetip">You can define environment variables in <code>Exported variables</code>, this allows to populate user session with some environment values. Environment variables will not be queried in users database.
+</div></p>
+</p>
+
+<p>
+<a href="/_detail/documentation/exportedvars.png?id=documentation%3A2.0%3Aexportedvars" class="media" title="documentation:exportedvars.png"><img src="../../../media/documentation/exportedvars.png" class="mediacenter" title="Exported variables in the Manager" alt="Exported variables in the Manager" width="500" /></a>
+</p>
+
+</div>
+<!-- SECTION "Presentation" [35-1250] -->
+<h2><a name="extend_variables_using_macros_and_groups" id="extend_variables_using_macros_and_groups">Extend variables using macros and groups</a></h2>
+<div class="level2">
+<div class="plugin_include_content" id="plugin_include__documentation:2.0:performances">
+<div class="level3">
+
+<p>
+
+Macros and groups are calculated during authentication process by the portal:
+</p>
+<ul>
+<li class="level1"><div class="li"> macros are used to extend (or rewrite) <span class="curid"><a href="../../documentation/2.0/exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables</a></span>. A macro is stored as attributes: it can contain boolean results or any string</div>
+</li>
+<li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute “groups”: it contains the names of groups whose rules were returned true for the current user</div>
+</li>
+</ul>
+
+<p>
+
+Example for macros:
+
+</p>
+<pre class="code perl"><span class="co1"># boolean macro</span>
+isAdmin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span>
+<span class="co1"># other macro </span>
+displayName <span class="sy0">-&gt;</span> <span class="re0">$givenName</span><span class="sy0">.</span><span class="st0">&quot; &quot;</span><span class="sy0">.</span><span class="re0">$surName</span>
+&nbsp;
+<span class="co1"># Use a boolean macro in a rule</span>
+<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$isAdmin</span>
+<span class="co1"># Use a string macro in a HTTP header</span>
+Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class="re0">$displayName</span></pre>
+
+<p>
+Example for groups:
+
+</p>
+<pre class="code perl"><span class="co1"># group</span>
+admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span>
+&nbsp;
+<span class="co1"># Use a group in a rule</span>
+<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="sy0">/</span><span class="re0">\badmin</span><span class="re0">\b</span><span class="sy0">/</span></pre>
+
+<p>
+Note that groups are computed after macros, so a group rule may involve a macro value.
+</p>
+
+<p>
+Besides, macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
+</p>
+
+</div>
+</div>
+<div class="level2">
+
+</div>
+<!-- SECTION "Extend variables using macros and groups" [1251-] --></div><!-- closes <div class="dokuwiki export">-->
