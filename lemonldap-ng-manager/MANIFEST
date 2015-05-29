@@ -21,6 +21,8 @@ README.md
 REST-API.md
 scripts/convertConfig
 scripts/jsongenerator.pl
+scripts/lemonldap-ng-cli
+scripts/lmConfigEditor
 scripts/testConfBackend.pl
 site-test/e2e/00-auth.js
 site-test/e2e/01-tree.js
