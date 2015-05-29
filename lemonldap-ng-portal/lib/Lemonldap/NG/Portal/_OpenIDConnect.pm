@@ -62,7 +62,7 @@ sub loadOPs {
             $self->{oidcOPMetaDataJWKS}->{$_}->{oidcOPMetaDataJWKS} );
     }
 
-    $oidcCache->{_oidcOPList} = $self->{_oidcOPList} unless $no_cache;
+    $oidcCache->{_oidcOPList} = $self->{_oidcOPList};
 
     return 1;
 }
@@ -91,8 +91,8 @@ sub loadRPs {
             'warn' );
     }
 
-    $self->{_oidcRPList} = $self->{oidcRPMetaDataOptions};
-    $oidcCache->{_oidcRPList} = $self->{_oidcRPList} unless $no_cache;
+    $self->{_oidcRPList}      = $self->{oidcRPMetaDataOptions};
+    $oidcCache->{_oidcRPList} = $self->{_oidcRPList};
 
     return 1;
 }

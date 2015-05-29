@@ -435,8 +435,8 @@ sub issuerForUnAuthUser {
         my $rp                = "register-$registration_time";
 
         # Generate Client ID and Client Password
-        my $client_id     = random_string("...............");
-        my $client_secret = random_string("...............");
+        my $client_id     = random_string("ssssssssssssssssssssssssssssss");
+        my $client_secret = random_string("ssssssssssssssssssssssssssssss");
 
         # Register known parameters
         my $client_name =
@@ -444,18 +444,62 @@ sub issuerForUnAuthUser {
         my $logo_uri = $client_metadata->{logo_uri};
         my $id_token_signed_response_alg =
           $client_metadata->{id_token_signed_response_alg} || "RS256";
+        my $userinfo_signed_response_alg =
+          $client_metadata->{userinfo_signed_response_alg};
+        my $redirect_uris = $client_metadata->{redirect_uris};
 
-        # TODO: register RP in global configuration
+        # Register RP in global configuration
+        my $conf = $self->__lmConf->getConf();
 
-        # Send registration response
-        $registration_response->{'client_id'}            = $client_id;
-        $registration_response->{'client_secret'}        = $client_secret;
-        $registration_response->{'client_id_issued_at'}  = $registration_time;
-        $registration_response->{'client_id_expires_at'} = 0;
-        $registration_response->{'client_name'}          = $client_name;
-        $registration_response->{'logo_uri'}             = $logo_uri;
-        $registration_response->{'id_token_signed_response_alg'} =
+        $conf->{cfgAuthor}   = "OpenID Connect Registration ($client_name)";
+        $conf->{cfgAuthorIP} = $source_ip;
+
+        $conf->{oidcRPMetaDataExportedVars}->{$rp} = {};
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsClientID}
+          = $client_id;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsClientSecret} = $client_secret;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsDisplayName} = $client_name;
+        $conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsIcon} =
+          $logo_uri;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsIDTokenSignAlg} =
           $id_token_signed_response_alg;
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsRedirectUris} = join( ' ', @$redirect_uris );
+        $conf->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsUserInfoSignAlg} =
+          $userinfo_signed_response_alg
+          if defined $userinfo_signed_response_alg;
+
+        if ( $self->__lmConf->saveConf($conf) ) {
+
+            # Reload RP list
+            $self->loadRPs(1);
+
+            # Send registration response
+            $registration_response->{'client_id'}     = $client_id;
+            $registration_response->{'client_secret'} = $client_secret;
+            $registration_response->{'client_id_issued_at'} =
+              $registration_time;
+            $registration_response->{'client_id_expires_at'} = 0;
+            $registration_response->{'client_name'}          = $client_name;
+            $registration_response->{'logo_uri'}             = $logo_uri;
+            $registration_response->{'id_token_signed_response_alg'} =
+              $id_token_signed_response_alg;
+            $registration_response->{'redirect_uris'} = $redirect_uris;
+            $registration_response->{'userinfo_signed_response_alg'} =
+              $userinfo_signed_response_alg
+              if defined $userinfo_signed_response_alg;
+        }
+        else {
+            $self->lmLog(
+                "Configuration not saved: $Lemonldap::NG::Common::Conf::msg",
+                'error' );
+            $self->returnJSONError( 'server_error', 'Configuration not saved' );
+            $self->quit;
+        }
 
         # TODO: return 201 HTTP code
         $self->returnJSON($registration_response);
