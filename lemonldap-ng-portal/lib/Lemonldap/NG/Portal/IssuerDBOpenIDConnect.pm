@@ -666,6 +666,35 @@ sub issuerForAuthUser {
             );
         }
 
+        # Check if flow is allowed
+        if ( $flow eq "authorizationcode"
+            and not $self->{oidcServiceAllowAuthorizationCodeFlow} )
+        {
+            $self->lmLog( "Authorization code flow is not allowed", 'error' );
+            $self->returnRedirectError(
+                $oidc_request->{'redirect_uri'},
+                "server_error", "Authorization code flow not allowed",
+                undef, $oidc_request->{'state'}, 0
+            );
+        }
+        if ( $flow eq "implicit" and not $self->{oidcServiceAllowImplicitFlow} )
+        {
+            $self->lmLog( "Implicit flow is not allowed", 'error' );
+            $self->returnRedirectError(
+                $oidc_request->{'redirect_uri'},
+                "server_error", "Implicit flow not allowed",
+                undef, $oidc_request->{'state'}, 1
+            );
+        }
+        if ( $flow eq "hybrid" and not $self->{oidcServiceAllowHybridFlow} ) {
+            $self->lmLog( "Hybrid flow is not allowed", 'error' );
+            $self->returnRedirectError(
+                $oidc_request->{'redirect_uri'},
+                "server_error", "Hybrid flow not allowed",
+                undef, $oidc_request->{'state'}, 1
+            );
+        }
+
         # Check if user needs to be reauthenticated
         my $reauthentication = 0;
         my $prompt           = $oidc_request->{'prompt'};

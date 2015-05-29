@@ -1904,7 +1904,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         browserIdSiteLogo        => { type => 'text', },
         browserIdBackgroundColor => { type => 'text', },
 
-        # OpenID-Connect auth params
+        # OpenID Connect auth params
         oidcAuthnLevel => {
             type          => 'int',
             default       => 1,
@@ -1921,7 +1921,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'OpenID Connect Timeout of state sessions',
         },
 
-        # OpenID-Connect service
+        # OpenID Connect service
         oidcServiceMetaDataIssuer => {
             type          => 'text',
             documentation => 'OpenID Connect end session endpoint',
@@ -1974,14 +1974,29 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => '0',
             documentation => 'OpenID Connect allow dynamic client registration',
         },
+        oidcServiceAllowAuthorizationCodeFlow => {
+            type          => 'bool',
+            default       => '1',
+            documentation => 'OpenID Connect allow authorization code flow',
+        },
+        oidcServiceAllowImplicitFlow => {
+            type          => 'bool',
+            default       => '0',
+            documentation => 'OpenID Connect allow implicit flow',
+        },
+        oidcServiceAllowHybridFlow => {
+            type          => 'bool',
+            default       => '0',
+            documentation => 'OpenID Connect allow hybrid flow',
+        },
 
-        # OpenID-Connect metadata nodes
+        # OpenID Connect metadata nodes
         oidcOPMetaDataNodes =>
           { type => 'oidcOPMetaDataNodeContainer', help => 'oidcop.html', },
         oidcRPMetaDataNodes =>
           { type => 'oidcRPMetaDataNodeContainer', help => 'oidcrp.html', },
 
-        # OpenID-Connect providers
+        # OpenID Connect providers
         oidcOPMetaDataJSON         => { type => 'oidcmetadatajson', },
         oidcOPMetaDataJWKS         => { type => 'oidcmetadatajwks', },
         oidcOPMetaDataExportedVars => { type => 'keyTextContainer', },
@@ -2002,7 +2017,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsDisplayName             => { type => 'text', },
         oidcOPMetaDataOptionsIcon                    => { type => 'text', },
 
-        # OpenID-Connect relays
+        # OpenID Connect relying parties
         oidcRPMetaDataExportedVars          => { type => 'keyTextContainer', },
         oidcRPMetaDataOptionsClientID       => { type => 'text', },
         oidcRPMetaDataOptionsClientSecret   => { type => 'password', },
