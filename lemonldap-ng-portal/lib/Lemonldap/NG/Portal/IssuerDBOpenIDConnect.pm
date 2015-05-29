@@ -413,6 +413,14 @@ sub issuerForUnAuthUser {
         $self->lmLog( "OpenID Connect Registration request from $source_ip",
             'warn' );
 
+        # Check dynamic registration is allowed
+        unless ( $self->{oidcServiceAllowDynamicRegistration} ) {
+            $self->lmLog( "Dynamic registration is not allowed", 'error' );
+            $self->returnJSONError( 'server_error',
+                'Dynamic registration is not allowed' );
+            $self->quit;
+        }
+
         # Get client metadata
         my $client_metadata_json = $self->param('POSTDATA');
 

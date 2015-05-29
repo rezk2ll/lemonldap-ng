@@ -27,7 +27,8 @@ $configuration->{token_endpoint}    = $issuer . $path . "/" . $token_uri;
 $configuration->{userinfo_endpoint} = $issuer . $path . "/" . $userinfo_uri;
 $configuration->{jwks_uri}          = $issuer . $path . "/" . $jwks_uri;
 $configuration->{registration_endpoint} =
-  $issuer . $path . "/" . $registration_uri;
+  $issuer . $path . "/" . $registration_uri
+  if ( $portal->{oidcServiceAllowDynamicRegistration} );
 $configuration->{end_session_endpoint} =
   $issuer . $path . "/" . $endsession_uri;
 $configuration->{scopes_supported} = [qw/openid profile email address phone/];

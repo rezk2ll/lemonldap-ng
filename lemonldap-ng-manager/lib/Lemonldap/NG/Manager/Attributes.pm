@@ -1967,8 +1967,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
         },
-        oidcServicePrivateKeySig => { type => 'RSAPrivateKey', },
-        oidcServicePublicKeySig  => { type => 'RSAPublicKey', },
+        oidcServicePrivateKeySig            => { type => 'RSAPrivateKey', },
+        oidcServicePublicKeySig             => { type => 'RSAPublicKey', },
+        oidcServiceAllowDynamicRegistration => {
+            type          => 'bool',
+            default       => '0',
+            documentation => 'OpenID Connect allow dynamic client registration',
+        },
 
         # OpenID-Connect metadata nodes
         oidcOPMetaDataNodes =>

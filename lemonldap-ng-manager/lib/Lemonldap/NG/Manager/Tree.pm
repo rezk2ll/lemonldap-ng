@@ -823,8 +823,11 @@ sub tree {
                 {
                     title => 'oidcServiceMetaDataSecurity',
                     form  => 'RSAKeyNoPassword',
-                    group =>
-                      [ 'oidcServicePrivateKeySig', 'oidcServicePublicKeySig' ]
+                    group => [
+                        'oidcServicePrivateKeySig',
+                        'oidcServicePublicKeySig',
+                        'oidcServiceAllowDynamicRegistration'
+                    ]
                 },
             ]
         },
