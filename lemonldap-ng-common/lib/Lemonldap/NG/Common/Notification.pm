@@ -7,7 +7,6 @@ package Lemonldap::NG::Common::Notification;
 
 use strict;
 use utf8;
-use Lemonldap::NG::Portal::SharedConf;
 use XML::LibXML;
 use XML::LibXSLT;
 use CGI::Cookie;
