@@ -1423,7 +1423,12 @@ sub createSessionState {
     my $salt = encode_base64url( $self->{cipher}->encrypt($client_id) );
     my $data = $client_id . " " . $session_id . " " . $salt;
 
-    my $session_state = sha256_base64($data) . "." . $salt;
+    my $hash = sha256_base64($data);
+    while ( length($hash) % 4 ) {
+        $hash .= '=';
+    }
+
+    my $session_state = $hash . "." . $salt;
 
     return $session_state;
 }
@@ -1443,6 +1448,37 @@ sub getRequestJWT {
     }
 
     return $response->decoded_content;
+}
+
+## @method String getSessionManagementOPIFrameJS
+# Create JS code needed on OP side to manage session
+# return String JS code
+sub getSessionManagementOPIFrameJS {
+    my ($self) = splice @_;
+
+    my $js;
+
+    $js .= "window.addEventListener(\"message\", receiveMessage, false);\n";
+    $js .= "function receiveMessage(e){ \n";
+    $js .= "var message = e.data; \n";
+    $js .= "client_id = decodeURIComponent(message.split(' ')[0]);\n";
+    $js .= "session_state = decodeURIComponent(message.split(' ')[1]);\n";
+    $js .= "var salt = decodeURIComponent(session_state.split('.')[1]);\n";
+    $js .=
+        'var opbs = document.cookie.replace(/(?:(?:^|.*;\s*)'
+      . $self->{cookieName}
+      . '\s*\=\s*([^;]*).*$)|^.*$/, "$1");' . "\n";
+    $js .= "var hash = CryptoJS.SHA256(client_id + ' ' + opbs + ' ' + salt);\n";
+    $js .= "var ss = hash.toString(CryptoJS.enc.Base64) + '.'  + salt;\n";
+    $js .= "if (session_state == ss) {\n";
+    $js .= "stat = 'unchanged';\n";
+    $js .= "} else {\n";
+    $js .= "stat = 'changed';\n";
+    $js .= "}\n";
+    $js .= "e.source.postMessage(stat,e.origin);\n";
+    $js .= "};\n";
+
+    return $js;
 }
 
 1;

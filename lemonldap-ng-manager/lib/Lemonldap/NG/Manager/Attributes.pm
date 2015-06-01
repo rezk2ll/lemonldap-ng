@@ -1956,6 +1956,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 'logout',
             documentation => 'OpenID Connect end session endpoint',
         },
+        oidcServiceMetaDataCheckSessionURI => {
+            type          => 'text',
+            default       => 'checksession',
+            documentation => 'OpenID Connect check session iframe',
+        },
         oidcServiceMetaDataAuthnContext => {
             type    => 'keyTextContainer',
             default => {

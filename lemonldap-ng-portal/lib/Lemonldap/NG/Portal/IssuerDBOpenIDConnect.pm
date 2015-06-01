@@ -37,6 +37,7 @@ sub issuerForUnAuthUser {
     my $jwks_uri                  = $self->{oidcServiceMetaDataJWKSURI};
     my $registration_uri          = $self->{oidcServiceMetaDataRegistrationURI};
     my $endsession_uri            = $self->{oidcServiceMetaDataEndSessionURI};
+    my $checksession_uri          = $self->{oidcServiceMetaDataCheckSessionURI};
     my $issuer                    = $self->{oidcServiceMetaDataIssuer};
 
     # Called URL
@@ -543,6 +544,37 @@ sub issuerForUnAuthUser {
         return PE_LOGOUT_OK;
     }
 
+    # CHECK SESSION
+    if ( $url_path =~ m#${issuerDBOpenIDConnectPath}${checksession_uri}# ) {
+
+        $self->lmLog(
+            "URL $url detected as an OpenID Connect CHECK SESSION URL",
+            'debug' );
+
+        print $self->header(
+            -type                        => 'text/html',
+            -access_control_allow_origin => '*'
+        );
+        print $self->start_html(
+            -title  => 'Check Session',
+            -script => [
+                {
+                    -type => 'text/javascript',
+                    -src =>
+'http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js'
+                },
+                {
+                    -type => 'text/javascript',
+                    -src =>
+'http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js'
+                },
+                { -code => $self->getSessionManagementOPIFrameJS }
+            ]
+        );
+        print $self->end_html();
+        $self->quit();
+    }
+
     PE_OK;
 }
 
@@ -560,6 +592,7 @@ sub issuerForAuthUser {
     my $jwks_uri                  = $self->{oidcServiceMetaDataJWKSURI};
     my $registration_uri          = $self->{oidcServiceMetaDataRegistrationURI};
     my $endsession_uri            = $self->{oidcServiceMetaDataEndSessionURI};
+    my $checksession_uri          = $self->{oidcServiceMetaDataCheckSessionURI};
     my $issuer                    = $self->{oidcServiceMetaDataIssuer};
 
     # Session ID
@@ -1341,6 +1374,37 @@ sub issuerForAuthUser {
         $self->info('</div>');
         $self->{activeTimer} = 0;
         return PE_CONFIRM;
+    }
+
+    # CHECK SESSION
+    if ( $url_path =~ m#${issuerDBOpenIDConnectPath}${checksession_uri}# ) {
+
+        $self->lmLog(
+            "URL $url detected as an OpenID Connect CHECK SESSION URL",
+            'debug' );
+
+        print $self->header(
+            -type                        => 'text/html',
+            -access_control_allow_origin => '*'
+        );
+        print $self->start_html(
+            -title  => 'Check Session',
+            -script => [
+                {
+                    -type => 'text/javascript',
+                    -src =>
+'http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js'
+                },
+                {
+                    -type => 'text/javascript',
+                    -src =>
+'http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js'
+                },
+                { -code => $self->getSessionManagementOPIFrameJS }
+            ]
+        );
+        print $self->end_html();
+        $self->quit();
     }
 
     PE_OK;

@@ -817,6 +817,7 @@ sub tree {
                         'oidcServiceMetaDataJWKSURI',
                         'oidcServiceMetaDataRegistrationURI',
                         'oidcServiceMetaDataEndSessionURI',
+                        'oidcServiceMetaDataCheckSessionURI',
                     ]
                 },
                 'oidcServiceMetaDataAuthnContext',

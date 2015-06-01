@@ -13,6 +13,7 @@ my $userinfo_uri              = $portal->{oidcServiceMetaDataUserInfoURI};
 my $jwks_uri                  = $portal->{oidcServiceMetaDataJWKSURI};
 my $registration_uri          = $portal->{oidcServiceMetaDataRegistrationURI};
 my $endsession_uri            = $portal->{oidcServiceMetaDataEndSessionURI};
+my $checksession_uri          = $portal->{oidcServiceMetaDataCheckSessionURI};
 
 my ($path) = ( $issuerDBOpenIDConnectPath =~ /(\w+)/ );
 my $issuer = $portal->{oidcServiceMetaDataIssuer};
@@ -31,6 +32,8 @@ $configuration->{registration_endpoint} =
   if ( $portal->{oidcServiceAllowDynamicRegistration} );
 $configuration->{end_session_endpoint} =
   $issuer . $path . "/" . $endsession_uri;
+$configuration->{check_session_iframe} =
+  $issuer . $path . "/" . $checksession_uri;
 $configuration->{scopes_supported} = [qw/openid profile email address phone/];
 $configuration->{response_types_supported} = [
     "code",
