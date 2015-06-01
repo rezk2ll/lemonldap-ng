@@ -25,6 +25,7 @@ my $token_uri         = "$portal_url/oauth2/token";
 my $userinfo_uri      = "$portal_url/oauth2/userinfo";
 my $registration_uri  = "$portal_url/oauth2/register";
 my $endsession_uri    = "$portal_url/oauth2/logout";
+my $checksession_uri  = "$portal_url/oauth2/checksession";
 
 #==============================================================================
 # CSS
@@ -48,6 +49,7 @@ my $redirect_uri            = $cgi->url . "?openidconnectcallback=1";
 my $local_configuration_uri = $cgi->url . "?test=configuration";
 my $local_registration_uri  = $cgi->url . "?test=registration";
 my $local_request_uri       = $cgi->url . "?test=request";
+my $local_checksession_uri  = $cgi->url . "?test=checksession";
 $Data::Dumper::Terse    = 1;
 $Data::Dumper::Sortkeys = 1;
 
@@ -77,6 +79,46 @@ if ( $cgi->param("test") eq "request" ) {
 
     print $cgi->header( -type => 'application/jwt;charset=utf-8' );
     print $request;
+    exit;
+}
+
+# Check Session
+if ( $cgi->param("test") eq "checksession" ) {
+    my $session_state = $cgi->param("session_state");
+    my $js;
+    $js .= 'var stat = "unchanged";' . "\n";
+    $js .=
+        'var mes = "'
+      . uri_escape($client_id)
+      . '" + " " + "'
+      . uri_escape($session_state) . '";' . "\n";
+    $js .= 'function check_session()' . "\n";
+    $js .= '{' . "\n";
+    $js .= 'var targetOrigin = "http://auth.example.com";' . "\n";
+    $js .=
+'var win = window.parent.document.getElementById("opchecksession").contentWindow;'
+      . "\n";
+    $js .= 'win.postMessage( mes, targetOrigin);' . "\n";
+    $js .= '}' . "\n";
+    $js .= 'function setTimer()' . "\n";
+    $js .= '{' . "\n";
+    $js .= 'check_session();' . "\n";
+    $js .= 'timerID = setInterval("check_session()",3*1000);' . "\n";
+    $js .= '}' . "\n";
+    $js .= 'window.addEventListener("message", receiveMessage, false);' . "\n";
+    $js .= 'function receiveMessage(e)' . "\n";
+    $js .= '{' . "\n";
+    $js .= 'var targetOrigin = "http://auth.example.com";' . "\n";
+    $js .= 'if (e.origin !== targetOrigin ) {return;}' . "\n";
+    $js .= 'stat = e.data;' . "\n";
+    $js .= 'document.getElementById("sessionstatus").textContent=stat;' . "\n";
+    $js .= '}' . "\n";
+    $js .= 'setTimer();' . "\n";
+
+    print $cgi->header( -type => 'text/html' );
+    print $cgi->start_html( -title => 'Check Session', -script => $js );
+    print "<p>Session status: <span id=\"sessionstatus\"></span></p>\n";
+    print $cgi->end_html();
     exit;
 }
 
@@ -333,6 +375,15 @@ if ($callback) {
     print "<pre>" . Dumper($ui_json) . "</pre>";
     print "</div>\n";
     print "</div>\n";
+
+    # Session Management RP iFrame
+    print "<iframe src=\""
+      . $local_checksession_uri
+      . "&session_state="
+      . $cgi->param('session_state')
+      . "\" id=\"rpchecksession\" width=\"100%\"></iframe>\n";
+    print
+"<iframe src=\"$checksession_uri\" id=\"opchecksession\" width=\"0\" height=\"0\"></iframe>\n";
 
     my $logout_redirect_uri =
         $endsession_uri
@@ -623,7 +674,7 @@ else {
     $request_digest =~ s/\+/-/g;
     $request_digest =~ s/\//_/g;
     my $request = uri_escape(
-      $request_header . "." . $request_payload . "." . $request_digest);
+        $request_header . "." . $request_payload . "." . $request_digest );
     my $request_uri = uri_escape($local_request_uri);
 
     $client_id    = uri_escape($client_id);
