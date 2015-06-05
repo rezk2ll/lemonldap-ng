@@ -244,6 +244,7 @@ install_bin:	install_conf_dir
 		${SRCPORTALDIR}/example/scripts/buildPortalWSDL \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
+		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
 		${SRCMANAGERDIR}/scripts/lmConfigEditor \
 		${SRCMANAGERDIR}/scripts/lemonldap-ng-cli \
 			$(RBINDIR)
@@ -656,6 +657,7 @@ debian-diff:
 	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Common.pm ||true
 	@$(DIFF) lemonldap-ng-common/scripts/lmMigrateConfFiles2ini $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini ||true
 	@$(DIFF) lemonldap-ng-common/scripts/convertConfig $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/convertConfig ||true
+	@$(DIFF) lemonldap-ng-common/scripts/rotateOidcKeys $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/rotateOidcKeys ||true
 	@# Manager
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager ||true
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager.pm ||true
@@ -682,6 +684,7 @@ default-diff:
 	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Common.pm ||true
 	@$(DIFF) lemonldap-ng-common/scripts/lmMigrateConfFiles2ini $(LMPREFIX)/bin/lmMigrateConfFiles2ini ||true
 	@$(DIFF) lemonldap-ng-common/scripts/convertConfig $(LMPREFIX)/bin/convertConfig ||true
+	@$(DIFF) lemonldap-ng-common/scripts/rotateOidcKeys $(LMPREFIX)/bin/rotateOidcKeys ||true
 	@# Manager
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager ||true
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager.pm ||true

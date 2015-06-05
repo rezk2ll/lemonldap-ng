@@ -475,6 +475,7 @@ rm -rf %{buildroot}
 %dir %{lm_sharedir}/bin
 %{lm_sharedir}/bin/convertConfig
 %{lm_sharedir}/bin/lmMigrateConfFiles2ini
+%{lm_sharedir}/bin/rotateOidcKeys
 %dir %{lm_examplesdir}
 %dir %{lm_sharedir}/ressources
 %{lm_sharedir}/ressources/*
