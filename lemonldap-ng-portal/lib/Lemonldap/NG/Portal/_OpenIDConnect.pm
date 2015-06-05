@@ -1224,6 +1224,8 @@ sub createJWT {
 
     # JWT header
     my $jwt_header_hash = { typ => "JWT", alg => $alg };
+    $jwt_header_hash->{kid} = $self->{oidcServiceKeyIdSig}
+      if $self->{oidcServiceKeyIdSig};
     my $jwt_header = encode_base64( encode_json($jwt_header_hash), "" );
 
     if ( $alg eq "none" ) {

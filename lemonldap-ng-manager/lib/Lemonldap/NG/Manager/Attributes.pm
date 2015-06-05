@@ -1972,8 +1972,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             documentation => 'OpenID Connect Authentication Context Class Ref',
         },
-        oidcServicePrivateKeySig            => { type => 'RSAPrivateKey', },
-        oidcServicePublicKeySig             => { type => 'RSAPublicKey', },
+        oidcServicePrivateKeySig => { type => 'RSAPrivateKey', },
+        oidcServicePublicKeySig  => { type => 'RSAPublicKey', },
+        oidcServiceKeyIdSig      => {
+            type          => 'text',
+            documentation => 'OpenID Connect Signature Key ID',
+        },
         oidcServiceAllowDynamicRegistration => {
             type          => 'bool',
             default       => '0',

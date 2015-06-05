@@ -386,10 +386,12 @@ sub issuerForUnAuthUser {
         my $jwks = { keys => [] };
 
         my $public_key_sig = $self->{oidcServicePublicKeySig};
+        my $key_id_sig     = $self->{oidcServiceKeyIdSig};
         if ($public_key_sig) {
             my $key = $self->key2jwks($public_key_sig);
             $key->{kty} = "RSA";
             $key->{use} = "sig";
+            $key->{kid} = $key_id_sig if $key_id_sig;
             push @{ $jwks->{keys} }, $key;
         }
 

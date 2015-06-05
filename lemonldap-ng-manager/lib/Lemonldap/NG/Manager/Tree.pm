@@ -827,6 +827,7 @@ sub tree {
                     group => [
                         'oidcServicePrivateKeySig',
                         'oidcServicePublicKeySig',
+                        'oidcServiceKeyIdSig',
                         'oidcServiceAllowDynamicRegistration',
                         'oidcServiceAllowAuthorizationCodeFlow',
                         'oidcServiceAllowImplicitFlow',
