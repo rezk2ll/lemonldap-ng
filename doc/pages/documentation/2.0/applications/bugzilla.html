@@ -20,28 +20,24 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="bugzilla" id="bugzilla">Bugzilla</a></h1>
+<h1 class="sectionedit1" id="bugzilla">Bugzilla</h1>
 <div class="level1">
 
 <p>
-
 <a href="/_detail/applications/bugzilla_logo.png?id=documentation%3A2.0%3Aapplications%3Abugzilla" class="media" title="applications:bugzilla_logo.png"><img src="../../../../media/applications/bugzilla_logo.png" class="mediacenter" alt="" /></a>
 </p>
 
 </div>
-<!-- SECTION "Bugzilla" [1-64] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Bugzilla" [1-64] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
 <a href="http://www.bugzilla.org" class="urlextern" title="http://www.bugzilla.org"  rel="nofollow">Bugzilla</a> is server software designed to help you manage software development.
 </p>
 
 <p>
-Bugzilla can authenticate a user with <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers, and auto-create its account with a few information:
+Bugzilla can authenticate a user with HTTP headers, and auto-create its account with a few information:
 </p>
 <ul>
 <li class="level1"><div class="li"> User ID</div>
@@ -53,17 +49,16 @@ Bugzilla can authenticate a user with <acronym title="Hyper Text Transfer Protoc
 </ul>
 
 </div>
-<!-- SECTION "Presentation" [65-338] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [65-338] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [339-365] -->
-<h3><a name="bugzilla_administration" id="bugzilla_administration">Bugzilla administration</a></h3>
+<!-- EDIT3 SECTION "Configuration" [339-365] -->
+<h3 class="sectionedit4" id="bugzilla_administration">Bugzilla administration</h3>
 <div class="level3">
 
 <p>
-
 In Bugzilla administration interface, go in <code>Parameters</code> » <code>User authentication</code>
 </p>
 
@@ -71,26 +66,25 @@ In Bugzilla administration interface, go in <code>Parameters</code> » <code>Use
 Then set:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>auth_env_id</strong>: <acronym title="Hyper Text Transfer Protocol">HTTP</acronym>_AUTH_USER</div>
+<li class="level1"><div class="li"> <strong>auth_env_id</strong>: HTTP_AUTH_USER</div>
 </li>
-<li class="level1"><div class="li"> <strong>auth_env_email</strong>: <acronym title="Hyper Text Transfer Protocol">HTTP</acronym>_AUTH_MAIL</div>
+<li class="level1"><div class="li"> <strong>auth_env_email</strong>: HTTP_AUTH_MAIL</div>
 </li>
-<li class="level1"><div class="li"> <strong>auth_env_realname</strong>: <acronym title="Hyper Text Transfer Protocol">HTTP</acronym>_AUTH_CN</div>
+<li class="level1"><div class="li"> <strong>auth_env_realname</strong>: HTTP_AUTH_CN</div>
 </li>
-<li class="level1"><div class="li"> <strong>user_info_class</strong>: Env or Env,<acronym title="Common Gateway Interface">CGI</acronym></div>
+<li class="level1"><div class="li"> <strong>user_info_class</strong>: Env or Env,CGI</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Bugzilla administration" [366-653] -->
-<h3><a name="bugzilla_virtual_host_in_apache" id="bugzilla_virtual_host_in_apache">Bugzilla virtual host in Apache</a></h3>
+<!-- EDIT4 SECTION "Bugzilla administration" [366-653] -->
+<h3 class="sectionedit5" id="bugzilla_virtual_host_in_apache">Bugzilla virtual host in Apache</h3>
 <div class="level3">
 
 <p>
-
 Configure Bugzilla virtual host like other <a href="../../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a>.
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> bugzilla.example.com
 &nbsp;
        PerlHeaderParserHandler Lemonldap::NG::Handler
@@ -100,12 +94,11 @@ Configure Bugzilla virtual host like other <a href="../../../documentation/2.0/c
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Bugzilla virtual host in Apache" [654-953] -->
-<h3><a name="bugzilla_virtual_host_in_manager" id="bugzilla_virtual_host_in_manager">Bugzilla virtual host in Manager</a></h3>
+<!-- EDIT5 SECTION "Bugzilla virtual host in Apache" [654-953] -->
+<h3 class="sectionedit6" id="bugzilla_virtual_host_in_manager">Bugzilla virtual host in Manager</h3>
 <div class="level3">
 
 <p>
-
 Go to the Manager and <a href="../../../documentation/2.0/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:2.0:configvhost">create a new virtual host</a> for Bugzilla.
 </p>
 
@@ -126,4 +119,4 @@ Configure the following <a href="../../../documentation/2.0/writingrulesand_head
 </ul>
 
 </div>
-<!-- SECTION "Bugzilla virtual host in Manager" [954-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

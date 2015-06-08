@@ -20,23 +20,21 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="cross_domain_authentication" id="cross_domain_authentication">Cross Domain Authentication</a></h1>
+<h1 class="sectionedit1" id="cross_domain_authentication">Cross Domain Authentication</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Cross Domain Authentication" [1-43] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Cross Domain Authentication" [1-43] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
+
+</div>
 <div class="plugin_include_content" id="plugin_include__documentation:presentation">
 <div class="level3">
 
 <p>
-
-<p><div class="noteclassic">For security reason, a cookie provided for a domain cannot be sent to another domain. To extend <acronym title="Single Sign On">SSO</acronym> on several domains, a cross-domain mechanism is implemented in LemonLDAP::NG.
+<p><div class="noteclassic">For security reason, a cookie provided for a domain cannot be sent to another domain. To extend <abbr title="Single Sign On">SSO</abbr> on several domains, a cross-domain mechanism is implemented in LemonLDAP::NG.
 </div></p>
-
 </p>
 <ol>
 <li class="level1"><div class="li"> User owns <a href="../../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on the main domain (see <a href="../../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">Login kinematics</a>)</div>
@@ -47,9 +45,9 @@
 </li>
 <li class="level1"><div class="li"> Portal recognizes the user with its <a href="../../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a>, and see he is coming from a different domain</div>
 </li>
-<li class="level1"><div class="li"> Portal redirects user on protected application with his session ID as <acronym title="Uniform Resource Locator">URL</acronym> parameter</div>
+<li class="level1"><div class="li"> Portal redirects user on protected application with his session ID as <abbr title="Uniform Resource Locator">URL</abbr> parameter</div>
 </li>
-<li class="level1"><div class="li"> Handler detects <acronym title="Uniform Resource Locator">URL</acronym> parameter and create a <a href="../../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on its domain, with session ID as value</div>
+<li class="level1"><div class="li"> Handler detects <abbr title="Uniform Resource Locator">URL</abbr> parameter and create a <a href="../../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on its domain, with session ID as value</div>
 </li>
 </ol>
 
@@ -58,21 +56,19 @@
 <div class="level2">
 
 </div>
-<!-- SECTION "Presentation" [44-138] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [44-138] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
 Go in Manager, <code>General Parameters</code> » <code>Cookies</code> » <code>Multiple domains</code> and set to <code>On</code>.
 </p>
 
 <p>
 To use this feature only locally, edit <code>lemonldap-ng.ini</code> in section [all]:
-
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>all<span class="br0">&#93;</span></span>
 <span class="re1">cda</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
 
 </div>
-<!-- SECTION "Configuration" [139-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

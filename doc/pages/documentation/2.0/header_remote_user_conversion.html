@@ -20,30 +20,26 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="convert_http_header_into_environment_variable" id="convert_http_header_into_environment_variable">Convert HTTP header into environment variable</a></h1>
+<h1 class="sectionedit1" id="convert_http_header_into_environment_variable">Convert HTTP header into environment variable</h1>
 <div class="level1">
 
 <p>
-
-Using <acronym title="LemonLDAP::NG">LL::NG</acronym> in reverse proxy mode, you will not have the <code>REMOTE_USER</code> environment variable set. Indeed, this variable is set by the Handler on the physical server hosting the Handler, and not on other servers where the Handler is not installed.
+Using <abbr title="LemonLDAP::NG">LL::NG</abbr> in reverse proxy mode, you will not have the <code>REMOTE_USER</code> environment variable set. Indeed, this variable is set by the Handler on the physical server hosting the Handler, and not on other servers where the Handler is not installed.
 </p>
 
 <p>
-Apache <a href="http://httpd.apache.org/docs/current/mod/mod_setenvif.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_setenvif.html"  rel="nofollow">SetEnvIf module</a> will let you transform the Auth-User <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header in <code>REMOTE_USER</code> environment variable:
+Apache <a href="http://httpd.apache.org/docs/current/mod/mod_setenvif.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_setenvif.html"  rel="nofollow">SetEnvIf module</a> will let you transform the Auth-User HTTP header in <code>REMOTE_USER</code> environment variable:
 </p>
-<pre class="code file apache"><span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> REMOTE_USER=$<span class="nu0">1</span></pre>
+<pre class="code file apache"><span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> REMOTE_USER=$1</pre>
 
 <p>
 This can be used to protect applications relying on <code>REMOTE_USER</code> environment variable in reverse proxy mode. In this case you will have two Apache configuration files:
-
 </p>
 <ul>
-<li class="level1"><div class="li"> Apache configuration file on <acronym title="LemonLDAP::NG">LL::NG</acronym> reverse proxy (hosting <acronym title="LemonLDAP::NG">LL::NG</acronym> Handler):</div>
+<li class="level1"><div class="li"> Apache configuration file on <abbr title="LemonLDAP::NG">LL::NG</abbr> reverse proxy (hosting <abbr title="LemonLDAP::NG">LL::NG</abbr> Handler):</div>
 </li>
 </ul>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
         <span class="kw1">ServerName</span> application.example.com
 &nbsp;
         PerlHeaderParserHandler Lemonldap::NG::Handler
@@ -57,7 +53,7 @@ This can be used to protect applications relying on <code>REMOTE_USER</code> env
 <li class="level1"><div class="li"> Apache configuration file on application server (hosting the application):</div>
 </li>
 </ul>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
         <span class="kw1">ServerName</span> application.example.com
 &nbsp;
         <span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> REMOTE_USER=$1
@@ -68,18 +64,15 @@ This can be used to protect applications relying on <code>REMOTE_USER</code> env
 
 <p>
 <p><div class="notetip">
-Sometimes, <acronym title="Hypertext Preprocessor">PHP</acronym> applications also check the <acronym title="Hypertext Preprocessor">PHP</acronym>_AUTH_USER and <acronym title="Hypertext Preprocessor">PHP</acronym>_AUHT_PW environment variables. You can set them the same way:
-
+Sometimes, PHP applications also check the PHP_AUTH_USER and PHP_AUHT_PW environment variables. You can set them the same way:
 </p>
 <pre class="code file apache"><span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> PHP_AUTH_USER=$1
-<span class="kw1">SetEnvIfNoCase</span> Auth-Password <span class="st0">&quot;(.*)&quot;</span> PHP_AUTH_PW=$<span class="nu0">1</span></pre>
+<span class="kw1">SetEnvIfNoCase</span> Auth-Password <span class="st0">&quot;(.*)&quot;</span> PHP_AUTH_PW=$1</pre>
 
 <p>
-
-Of course, you need to <a href="../../documentation/2.0/passwordstore.html" class="wikilink1" title="documentation:2.0:passwordstore">store password in session</a> to fill <acronym title="Hypertext Preprocessor">PHP</acronym>_AUTH_PW.
+Of course, you need to <a href="../../documentation/2.0/passwordstore.html" class="wikilink1" title="documentation:2.0:passwordstore">store password in session</a> to fill PHP_AUTH_PW.
 
 </div></p>
-
 </p>
 
 </div>

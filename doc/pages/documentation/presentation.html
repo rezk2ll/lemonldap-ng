@@ -20,35 +20,31 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="presentation" id="presentation">Presentation</a></h1>
+<h1 class="sectionedit1" id="presentation">Presentation</h1>
 <div class="level1">
 
 <p>
-
 LemonLDAP::NG is a modular WebSSO (Single Sign On) based on Apache::Session modules. It simplifies the build of a protected area with a few changes in the application.
 </p>
 
 <p>
-It manages both authentication and authorization and provides headers for accounting. So you can have a full <acronym title="Authentication Authorization Accounting">AAA</acronym> protection for your web space as described below.
+It manages both authentication and authorization and provides headers for accounting. So you can have a full <abbr title="Authentication Authorization Accounting">AAA</abbr> protection for your web space as described below.
 </p>
 
 </div>
-<!-- SECTION "Presentation" [1-361] -->
-<h2><a name="architecture" id="architecture">Architecture</a></h2>
+<!-- EDIT1 SECTION "Presentation" [1-361] -->
+<h2 class="sectionedit2" id="architecture">Architecture</h2>
 <div class="level2">
 
 <p>
-
 <div style="width:600px">
 <a href="/_detail/documentation/lemonldap-ng-architecture.png?id=documentation%3Apresentation" class="media" title="documentation:lemonldap-ng-architecture.png"><img src="../../media/documentation/lemonldap-ng-architecture.png" class="mediacenter" alt="" width="600" /></a>
 </div>
 </p>
 
 </div>
-<!-- SECTION "Architecture" [362-503] -->
-<h3><a name="main_components" id="main_components">Main components</a></h3>
+<!-- EDIT2 SECTION "Architecture" [362-503] -->
+<h3 class="sectionedit3" id="main_components">Main components</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> <strong>Manager</strong>: used to manage LemonLDAP::NG configuration and to explore sessions. Dedicated to administrators</div>
@@ -60,13 +56,12 @@ It manages both authentication and authorization and provides headers for accoun
 </ul>
 
 </div>
-<!-- SECTION "Main components" [504-1098] -->
-<h3><a name="databases" id="databases">Databases</a></h3>
+<!-- EDIT3 SECTION "Main components" [504-1098] -->
+<h3 class="sectionedit4" id="databases">Databases</h3>
 <div class="level3">
 
 <p>
-
-<p><div class="noteclassic">We call “database” a backend where we can read or write a data. This can be a file, an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory, …
+<p><div class="noteclassic">We call “database” a backend where we can read or write a data. This can be a file, an LDAP directory, …
 </div></p>
 </p>
 
@@ -81,7 +76,6 @@ We split databases in two categories:
 </ul>
 
 <p>
-
 Main <a href="../documentation/current/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:latest:start">external databases</a> are:
 </p>
 <ul>
@@ -94,7 +88,6 @@ Main <a href="../documentation/current/start.html#authentication_users_and_passw
 </ul>
 
 <p>
-
 Main internal databases are:
 </p>
 <ul>
@@ -109,19 +102,17 @@ Main internal databases are:
 </ul>
 
 </div>
-<!-- SECTION "Databases" [1099-2117] -->
-<h2><a name="kinematics" id="kinematics">Kinematics</a></h2>
+<!-- EDIT4 SECTION "Databases" [1099-2117] -->
+<h2 class="sectionedit5" id="kinematics">Kinematics</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Kinematics" [2118-2141] -->
-<h3><a name="login" id="login">Login</a></h3>
+<!-- EDIT5 SECTION "Kinematics" [2118-2141] -->
+<h3 class="sectionedit6" id="login">Login</h3>
 <div class="level3">
 
 <p>
-
 <a href="/_detail/documentation/lemonldapng-sso.png?id=documentation%3Apresentation" class="media" title="documentation:lemonldapng-sso.png"><img src="../../media/documentation/lemonldapng-sso.png" class="mediacenter" alt="" width="800" /></a>
-
 </p>
 <ol>
 <li class="level1"><div class="li"> User tries to access protected application, his request is catched by Handler</div>
@@ -155,17 +146,15 @@ Main internal databases are:
 </ol>
 
 <p>
-
-Handler will then check <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> for each <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request.
+Handler will then check <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> for each HTTP request.
 </p>
 
 </div>
-<!-- SECTION "Login" [2142-3147] -->
-<h3><a name="logout" id="logout">Logout</a></h3>
+<!-- EDIT6 SECTION "Login" [2142-3147] -->
+<h3 class="sectionedit7" id="logout">Logout</h3>
 <div class="level3">
 
 <p>
-
 Default use case:
 </p>
 <ol>
@@ -178,30 +167,27 @@ Default use case:
 </ol>
 
 <p>
-
 LemonLDAP::NG is also able to <a href="../documentation/current/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">catch logout request</a> on protected applications, with different behavior:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong><acronym title="Single Sign On">SSO</acronym> logout</strong>: the request is not forwarded to application, only the <acronym title="Single Sign On">SSO</acronym> session is closed</div>
+<li class="level1"><div class="li"> <strong><abbr title="Single Sign On">SSO</abbr> logout</strong>: the request is not forwarded to application, only the <abbr title="Single Sign On">SSO</abbr> session is closed</div>
 </li>
-<li class="level1"><div class="li"> <strong>Application logout</strong>: the request is forwarded to application but <acronym title="Single Sign On">SSO</acronym> session is not closed</div>
+<li class="level1"><div class="li"> <strong>Application logout</strong>: the request is forwarded to application but <abbr title="Single Sign On">SSO</abbr> session is not closed</div>
 </li>
-<li class="level1"><div class="li"> <strong><acronym title="Single Sign On">SSO</acronym> and Application logout</strong>: the request is forwarded to application and <acronym title="Single Sign On">SSO</acronym> session is closed</div>
+<li class="level1"><div class="li"> <strong><abbr title="Single Sign On">SSO</abbr> and Application logout</strong>: the request is forwarded to application and <abbr title="Single Sign On">SSO</abbr> session is closed</div>
 </li>
 </ul>
 
 <p>
-
-After logout process, the user is redirected on portal, or on a configured <acronym title="Uniform Resource Locator">URL</acronym>.
+After logout process, the user is redirected on portal, or on a configured <abbr title="Uniform Resource Locator">URL</abbr>.
 </p>
 
 </div>
-<!-- SECTION "Logout" [3148-3996] -->
-<h3><a name="session_expiration" id="session_expiration">Session expiration</a></h3>
+<!-- EDIT7 SECTION "Logout" [3148-3996] -->
+<h3 class="sectionedit8" id="session_expiration">Session expiration</h3>
 <div class="level3">
 
 <p>
-
 The session expires after 2 hours by default.
 <p><div class="noteimportant">
 </p>
@@ -218,15 +204,13 @@ The session expires after 2 hours by default.
 </p>
 
 </div>
-<!-- SECTION "Session expiration" [3997-4397] -->
-<h3><a name="cross_domain_authentication_cda" id="cross_domain_authentication_cda">Cross Domain Authentication (CDA)</a></h3>
+<!-- EDIT8 SECTION "Session expiration" [3997-4397] -->
+<h3 class="sectionedit9" id="cross_domain_authentication_cda">Cross Domain Authentication (CDA)</h3>
 <div class="level3">
 
 <p>
-
-<p><div class="noteclassic">For security reason, a cookie provided for a domain cannot be sent to another domain. To extend <acronym title="Single Sign On">SSO</acronym> on several domains, a cross-domain mechanism is implemented in LemonLDAP::NG.
+<p><div class="noteclassic">For security reason, a cookie provided for a domain cannot be sent to another domain. To extend <abbr title="Single Sign On">SSO</abbr> on several domains, a cross-domain mechanism is implemented in LemonLDAP::NG.
 </div></p>
-
 </p>
 <ol>
 <li class="level1"><div class="li"> User owns <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on the main domain (see <span class="curid"><a href="../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">Login kinematics</a></span>)</div>
@@ -237,24 +221,23 @@ The session expires after 2 hours by default.
 </li>
 <li class="level1"><div class="li"> Portal recognizes the user with its <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a>, and see he is coming from a different domain</div>
 </li>
-<li class="level1"><div class="li"> Portal redirects user on protected application with his session ID as <acronym title="Uniform Resource Locator">URL</acronym> parameter</div>
+<li class="level1"><div class="li"> Portal redirects user on protected application with his session ID as <abbr title="Uniform Resource Locator">URL</abbr> parameter</div>
 </li>
-<li class="level1"><div class="li"> Handler detects <acronym title="Uniform Resource Locator">URL</acronym> parameter and create a <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on its domain, with session ID as value</div>
+<li class="level1"><div class="li"> Handler detects <abbr title="Uniform Resource Locator">URL</abbr> parameter and create a <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on its domain, with session ID as value</div>
 </li>
 </ol>
 
 </div>
-<!-- SECTION "Cross Domain Authentication (CDA)" [4398-5367] -->
-<h2><a name="authentication_authorization_and_accounting_aaa_mechanisms" id="authentication_authorization_and_accounting_aaa_mechanisms">Authentication, Authorization and Accounting (AAA) mechanisms</a></h2>
+<!-- EDIT9 SECTION "Cross Domain Authentication (CDA)" [4398-5367] -->
+<h2 class="sectionedit10" id="authentication_authorization_and_accounting_aaa_mechanisms">Authentication, Authorization and Accounting (AAA) mechanisms</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Authentication, Authorization and Accounting (AAA) mechanisms" [5368-5442] -->
-<h3><a name="authentication" id="authentication">Authentication</a></h3>
+<!-- EDIT10 SECTION "Authentication, Authorization and Accounting (AAA) mechanisms" [5368-5442] -->
+<h3 class="sectionedit11" id="authentication">Authentication</h3>
 <div class="level3">
 
 <p>
-
 If a user is not authenticated and attempts to connect to an area protected by a LemonLDAP::NG compatible Handler, he is redirected to a portal.
 </p>
 
@@ -262,9 +245,9 @@ If a user is not authenticated and attempts to connect to an area protected by a
 Authentication process main steps are:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Control asked <acronym title="Uniform Resource Locator">URL</acronym></strong>: prevent <acronym title="Cross Site Scripting">XSS</acronym> attacks and bad redirections</div>
+<li class="level1"><div class="li"> <strong>Control asked <abbr title="Uniform Resource Locator">URL</abbr></strong>: prevent <abbr title="Cross Site Scripting">XSS</abbr> attacks and bad redirections</div>
 </li>
-<li class="level1"><div class="li"> <strong>Control existing session</strong>: detect <acronym title="Single Sign On">SSO</acronym> session, apply configured constraints (1 session per user, 1 session per <acronym title="Internet Protocol">IP</acronym>, …)</div>
+<li class="level1"><div class="li"> <strong>Control existing session</strong>: detect <abbr title="Single Sign On">SSO</abbr> session, apply configured constraints (1 session per user, 1 session per <abbr title="Internet Protocol">IP</abbr>, …)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Extract form info</strong>: get login/password, certificate, environment variable (depending on authentication module)</div>
 </li>
@@ -278,7 +261,7 @@ Authentication process main steps are:
 </li>
 <li class="level1"><div class="li"> <strong>Authenticate</strong>: contact authentication database to check credentials</div>
 </li>
-<li class="level1"><div class="li"> <strong>Grant session</strong>: check rights to open <acronym title="Single Sign On">SSO</acronym> session</div>
+<li class="level1"><div class="li"> <strong>Grant session</strong>: check rights to open <abbr title="Single Sign On">SSO</abbr> session</div>
 </li>
 <li class="level1"><div class="li"> <strong>Store</strong>: store user info in session database</div>
 </li>
@@ -289,29 +272,25 @@ Authentication process main steps are:
 </ul>
 
 <p>
-
 LemonLDAP::NG <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> are generated by <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a>, they are as secure as a 128-bit random cookie. You may use the <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">securedCookie</a> options to avoid session hijacking.
-
 </p>
 
 </div>
-<!-- SECTION "Authentication" [5443-6879] -->
-<h3><a name="authorization" id="authorization">Authorization</a></h3>
+<!-- EDIT11 SECTION "Authentication" [5443-6879] -->
+<h3 class="sectionedit12" id="authorization">Authorization</h3>
 <div class="level3">
 
 <p>
-
 Authorization is controlled only by Handlers. An authorization is defined by:
 </p>
 <ul>
-<li class="level1"><div class="li"> An <acronym title="Uniform Resource Locator">URL</acronym> pattern (or <code>default</code> to match other URLs)</div>
+<li class="level1"><div class="li"> An <abbr title="Uniform Resource Locator">URL</abbr> pattern (or <code>default</code> to match other URLs)</div>
 </li>
 <li class="level1"><div class="li"> An access rule</div>
 </li>
 </ul>
 
 <p>
-
 <p><div class="noteclassic">Authorizations are defined inside a virtualhost and takes effect only on it. There are no <em>global</em> authorizations except the right to open a session in the portal.
 </div></p>
 </p>
@@ -330,18 +309,17 @@ Access rules values can be:
 </li>
 <li class="level1"><div class="li"> <code>logout_sso</code>, <code>logout_app</code>, <code>logout_app_sso</code>: catch logout request</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Practical Extraction and Report Language">Perl</acronym> expression: perl code snippet that returns 0 or 1 </div>
+<li class="level1"><div class="li"> Perl expression: perl code snippet that returns 0 or 1 </div>
 </li>
 </ul>
 
 <p>
-
 Some examples:
 </p>
 <ul>
 <li class="level1"><div class="li"> Accept all authenticated users:</div>
 <ul>
-<li class="level2"><div class="li"> <acronym title="Uniform Resource Locator">URL</acronym> pattern: <code>default</code></div>
+<li class="level2"><div class="li"> <abbr title="Uniform Resource Locator">URL</abbr> pattern: <code>default</code></div>
 </li>
 <li class="level2"><div class="li"> Access rule: <code>accept</code></div>
 </li>
@@ -349,7 +327,7 @@ Some examples:
 </li>
 <li class="level1"><div class="li"> Restrict /admin to administrators group</div>
 <ul>
-<li class="level2"><div class="li"> <acronym title="Uniform Resource Locator">URL</acronym> pattern: <code>^/admin/</code></div>
+<li class="level2"><div class="li"> <abbr title="Uniform Resource Locator">URL</abbr> pattern: <code>^/admin/</code></div>
 </li>
 <li class="level2"><div class="li"> Access rule: <code>$groups =~ /\badministrators\b/</code></div>
 </li>
@@ -358,8 +336,7 @@ Some examples:
 </ul>
 
 <p>
-
-<p><div class="notetip"><code>\b</code> means start or end of a word in PCRE (<acronym title="Practical Extraction and Report Language">Perl</acronym> Compatible Regular Expressions)
+<p><div class="notetip"><code>\b</code> means start or end of a word in PCRE (Perl Compatible Regular Expressions)
 </div></p>
 </p>
 
@@ -368,32 +345,30 @@ See <a href="../documentation/current/writingrulesand_headers.html" class="wikil
 </p>
 
 </div>
-<!-- SECTION "Authorization" [6880-8028] -->
-<h3><a name="accounting" id="accounting">Accounting</a></h3>
+<!-- EDIT12 SECTION "Authorization" [6880-8028] -->
+<h3 class="sectionedit13" id="accounting">Accounting</h3>
 <div class="level3">
 
 </div>
 
-<h4><a name="logging_portal_access" id="logging_portal_access">Logging portal access</a></h4>
+<h4 id="logging_portal_access">Logging portal access</h4>
 <div class="level4">
 
 <p>
-
 Portal produce a <code>notice</code> message in <a href="../documentation/current/logs.html" class="wikilink1" title="documentation:latest:logs">Apache logs or syslog</a> when a user authenticates (or fails to authenticate) and logs out.
 </p>
 
 </div>
 
-<h4><a name="logging_application_access" id="logging_application_access">Logging application access</a></h4>
+<h4 id="logging_application_access">Logging application access</h4>
 <div class="level4">
 
 <p>
-
 Handler inform Apache of connected user (parameter <code>whatToTrace</code>), so you can see user login in Apache access logs.
 </p>
 
 <p>
-The real accounting has to be done by the application itself since <acronym title="Single Sign On">SSO</acronym> logs can not understand transactions.
+The real accounting has to be done by the application itself since <abbr title="Single Sign On">SSO</abbr> logs can not understand transactions.
 </p>
 
 <p>
@@ -401,7 +376,7 @@ LemonLDAP::NG can export <a href="../documentation/current/writingrulesand_heade
 </p>
 
 <p>
-An <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header is defined by:
+An HTTP header is defined by:
 </p>
 <ul>
 <li class="level1"><div class="li"> A name</div>
@@ -411,13 +386,12 @@ An <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header is define
 </ul>
 
 <p>
-
 <p><div class="noteclassic">Headers are defined inside a virtualhost and takes effect only on it. There are no <em>global</em> headers.
 </div></p>
 </p>
 
 <p>
-The header value is a <acronym title="Practical Extraction and Report Language">Perl</acronym> expression, returning a string.
+The header value is a Perl expression, returning a string.
 </p>
 
 <p>
@@ -436,17 +410,15 @@ Some examples:
 <ul>
 <li class="level2"><div class="li"> Name: <code>Auth-Name</code></div>
 </li>
-<li class="level2"><div class="li"> Value: <code>$sn + ”, ” + $gn</code></div>
+<li class="level2"><div class="li"> Value: <code>$sn + “, ” + $gn</code></div>
 </li>
 </ul>
 </li>
 </ul>
 
 <p>
-
 See <a href="../documentation/current/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">Writing rules and headers</a> for more.
-
 </p>
 
 </div>
-<!-- SECTION "Accounting" [8029-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

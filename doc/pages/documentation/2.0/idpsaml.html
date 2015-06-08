@@ -20,119 +20,109 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="saml_identity_provider" id="saml_identity_provider">SAML Identity Provider</a></h1>
+<h1 class="sectionedit1" id="saml_identity_provider">SAML Identity Provider</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "SAML Identity Provider" [1-38] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "SAML Identity Provider" [1-38] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<acronym title="LemonLDAP::NG">LL::NG</acronym> can act as an <acronym title="Security Assertion Markup Language">SAML</acronym> 2.0 Identity Provider, that can allow to federate <acronym title="LemonLDAP::NG">LL::NG</acronym> with:
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can act as an <abbr title="Security Assertion Markup Language">SAML</abbr> 2.0 Identity Provider, that can allow to federate <abbr title="LemonLDAP::NG">LL::NG</abbr> with:
 </p>
 <ul>
-<li class="level1"><div class="li"> Another <acronym title="LemonLDAP::NG">LL::NG</acronym> system configured with <a href="../../documentation/2.0/authsaml.html" class="wikilink1" title="documentation:2.0:authsaml">SAML authentication</a></div>
+<li class="level1"><div class="li"> Another <abbr title="LemonLDAP::NG">LL::NG</abbr> system configured with <a href="../../documentation/2.0/authsaml.html" class="wikilink1" title="documentation:2.0:authsaml">SAML authentication</a></div>
 </li>
-<li class="level1"><div class="li"> Any <acronym title="Security Assertion Markup Language">SAML</acronym> Service Provider, for example:</div>
+<li class="level1"><div class="li"> Any <abbr title="Security Assertion Markup Language">SAML</abbr> Service Provider, for example:</div>
 </li>
 </ul>
+
+</div>
 <div class="plugin_include_content" id="plugin_include__documentation:2.0:applications">
 <div class="level2">
 
 <p>
-
-<p><div class="noteclassic">This requires to configure <acronym title="LemonLDAP::NG">LL::NG</acronym> as an <span class="curid"><a href="../../documentation/2.0/idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML Identity Provider</a></span>.
+<p><div class="noteclassic">This requires to configure <abbr title="LemonLDAP::NG">LL::NG</abbr> as an <span class="curid"><a href="../../documentation/2.0/idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML Identity Provider</a></span>.
 </div></p>
-
 </p>
-<table class="inline">
+<div class="table sectionedit3"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Google Apps  </th><th class="col1 centeralign">  Zimbra  </th><th class="col2 centeralign">  SAP  </th><th class="col3 centeralign">  Cornerstone  </th><th class="col4"> SalesForce </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  <a href="../../documentation/2.0/applications/googleapps.html" class="media" title="documentation:2.0:applications:googleapps"><img src="../../../media/applications/googleapps_logo.png" class="media" alt="" /></a>  </td><td class="col1 centeralign">  <a href="http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html" class="media" title="http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html"  rel="nofollow"><img src="../../../media/applications/zimbra_logo.png" class="media" alt="" /></a>  </td><td class="col2 centeralign">  <a href="http://help.sap.com/saphelp_nw04/helpdata/en/94/695b3ebd564644e10000000a114084/content.htm" class="media" title="http://help.sap.com/saphelp_nw04/helpdata/en/94/695b3ebd564644e10000000a114084/content.htm"  rel="nofollow"><img src="../../../media/applications/saplogo.gif" class="media" title="SAP" alt="SAP" /></a>  </td><td class="col3 rightalign">  <a href="../../documentation/2.0/applications/cornerstone.html" class="media" title="documentation:2.0:applications:cornerstone"><img src="../../../media/applications/csod_logo.png" class="media" alt="" /></a> </td><td class="col4 leftalign"> <a href="../../documentation/2.0/applications/salesforce.html" class="media" title="documentation:2.0:applications:salesforce"><img src="../../../media/applications/salesforce-logo.jpg" class="medialeft" align="left" alt="" /></a>  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT3 TABLE [2729-3270] -->
 </div>
 </div>
 <div class="level2">
 
 </div>
-<!-- SECTION "Presentation" [39-323] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [39-323] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [324-350] -->
-<h3><a name="saml_service" id="saml_service">SAML Service</a></h3>
+<!-- EDIT4 SECTION "Configuration" [324-350] -->
+<h3 class="sectionedit5" id="saml_service">SAML Service</h3>
 <div class="level3">
 
 <p>
-
 See <a href="../../documentation/2.0/samlservice.html" class="wikilink1" title="documentation:2.0:samlservice">SAML service</a> configuration chapter.
 </p>
 
 </div>
-<!-- SECTION "SAML Service" [351-431] -->
-<h3><a name="issuerdb" id="issuerdb">IssuerDB</a></h3>
+<!-- EDIT5 SECTION "SAML Service" [351-431] -->
+<h3 class="sectionedit6" id="issuerdb">IssuerDB</h3>
 <div class="level3">
 
 <p>
-
-Go in <code>General Parameters</code> » <code>Issuer modules</code> » <code><acronym title="Security Assertion Markup Language">SAML</acronym></code> and configure:
+Go in <code>General Parameters</code> » <code>Issuer modules</code> » <code><abbr title="Security Assertion Markup Language">SAML</abbr></code> and configure:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Activation</strong>: set to <code>On</code>.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Path</strong>: keep <code>^/saml/</code> unless you have change <acronym title="Security Assertion Markup Language">SAML</acronym> end points suffix in <a href="../../documentation/2.0/samlservice.html" class="wikilink1" title="documentation:2.0:samlservice">SAML service configuration</a>.</div>
+<li class="level1"><div class="li"> <strong>Path</strong>: keep <code>^/saml/</code> unless you have change <abbr title="Security Assertion Markup Language">SAML</abbr> end points suffix in <a href="../../documentation/2.0/samlservice.html" class="wikilink1" title="documentation:2.0:samlservice">SAML service configuration</a>.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Use rule</strong>: a rule to allow user to use this module, set to <code>1</code> to always allow.</div>
 </li>
 </ul>
 
 <p>
-
 <p><div class="notetip">
 For example, to allow only users with a strong authentication level:
-
 </p>
-<pre class="code">
-$authenticationLevel &gt; 2
-</pre>
+<pre class="code">$authenticationLevel &gt; 2</pre>
 
 <p>
-
 
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "IssuerDB" [432-907] -->
-<h3><a name="register_lemonldapng_on_partner_service_provider" id="register_lemonldapng_on_partner_service_provider">Register LemonLDAP::NG on partner Service Provider</a></h3>
+<!-- EDIT6 SECTION "IssuerDB" [432-907] -->
+<h3 class="sectionedit7" id="register_lemonldapng_on_partner_service_provider">Register LemonLDAP::NG on partner Service Provider</h3>
 <div class="level3">
 
 <p>
-
-After configuring <acronym title="Security Assertion Markup Language">SAML</acronym> Service, you can export metadata to your partner Service Provider.
+After configuring <abbr title="Security Assertion Markup Language">SAML</abbr> Service, you can export metadata to your partner Service Provider.
 </p>
 
 <p>
-They are available at the EntityID <acronym title="Uniform Resource Locator">URL</acronym>, by default: <a href="http://auth.example.com/saml/metadata" class="urlextern" title="http://auth.example.com/saml/metadata"  rel="nofollow">http://auth.example.com/saml/metadata</a>.
+They are available at the EntityID <abbr title="Uniform Resource Locator">URL</abbr>, by default: <a href="http://auth.example.com/saml/metadata" class="urlextern" title="http://auth.example.com/saml/metadata"  rel="nofollow">http://auth.example.com/saml/metadata</a>.
 </p>
 
 </div>
-<!-- SECTION "Register LemonLDAP::NG on partner Service Provider" [908-1152] -->
-<h3><a name="register_partner_service_provider_on_lemonldapng" id="register_partner_service_provider_on_lemonldapng">Register partner Service Provider on LemonLDAP::NG</a></h3>
+<!-- EDIT7 SECTION "Register LemonLDAP::NG on partner Service Provider" [908-1152] -->
+<h3 class="sectionedit8" id="register_partner_service_provider_on_lemonldapng">Register partner Service Provider on LemonLDAP::NG</h3>
 <div class="level3">
 
 <p>
-
-In the Manager, select node <acronym title="Security Assertion Markup Language">SAML</acronym> service providers and click on New service provider:
+In the Manager, select node <abbr title="Security Assertion Markup Language">SAML</abbr> service providers and click on New service provider:
 </p>
 
 <p>
@@ -149,12 +139,11 @@ Now you have access to the SP parameters list.
 
 </div>
 
-<h4><a name="metadata" id="metadata">Metadata</a></h4>
+<h4 id="metadata">Metadata</h4>
 <div class="level4">
 
 <p>
-
-You must register SP metadata here. You can do it either by uploading the file, or get it from SP metadata <acronym title="Uniform Resource Locator">URL</acronym> (this require a network link between your server and the SP).
+You must register SP metadata here. You can do it either by uploading the file, or get it from SP metadata <abbr title="Uniform Resource Locator">URL</abbr> (this require a network link between your server and the SP).
 </p>
 
 <p>
@@ -164,11 +153,10 @@ You must register SP metadata here. You can do it either by uploading the file, 
 
 </div>
 
-<h4><a name="exported_attributes" id="exported_attributes">Exported attributes</a></h4>
+<h4 id="exported_attributes">Exported attributes</h4>
 <div class="level4">
 
 <p>
-
 For each attribute, you can set:
 </p>
 <ul>
@@ -176,22 +164,22 @@ For each attribute, you can set:
 </li>
 <li class="level1"><div class="li"> <strong>Mandatory</strong>: if set to “On”, then this attribute will be sent in authentication response. Else it just will be sent trough an attribute response, if explicitly requested in an attribute request.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Name</strong>: <acronym title="Security Assertion Markup Language">SAML</acronym> attribute name.</div>
+<li class="level1"><div class="li"> <strong>Name</strong>: <abbr title="Security Assertion Markup Language">SAML</abbr> attribute name.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Friendly Name</strong>: optional, <acronym title="Security Assertion Markup Language">SAML</acronym> attribute friendly name.</div>
+<li class="level1"><div class="li"> <strong>Friendly Name</strong>: optional, <abbr title="Security Assertion Markup Language">SAML</abbr> attribute friendly name.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Format</strong>: optional, <acronym title="Security Assertion Markup Language">SAML</acronym> attribute format.</div>
+<li class="level1"><div class="li"> <strong>Format</strong>: optional, <abbr title="Security Assertion Markup Language">SAML</abbr> attribute format.</div>
 </li>
 </ul>
 
 </div>
 
-<h4><a name="options" id="options">Options</a></h4>
+<h4 id="options">Options</h4>
 <div class="level4">
 
 </div>
 
-<h5><a name="authentication_response" id="authentication_response">Authentication response</a></h5>
+<h5 id="authentication_response">Authentication response</h5>
 <div class="level5">
 <ul>
 <li class="level1"><div class="li"> <strong>Default NameID format</strong>: if no NameID format is requested, or the NameID format undefined, this NameID format will be used. If no value, the default NameID format is Email.</div>
@@ -200,14 +188,14 @@ For each attribute, you can set:
 </li>
 <li class="level1"><div class="li"> <strong>One Time Use</strong>: set the OneTimeUse flag in authentication response (<code>&lt;Condtions&gt;</code>).</div>
 </li>
-<li class="level1"><div class="li"> <strong>sessionNotOnOrAfter duration</strong>: Time in seconds, added to authentication time, to define sessionNotOnOrAfter value in <acronym title="Security Assertion Markup Language">SAML</acronym> response (<code>&lt;AuthnStatement&gt;</code>):</div>
+<li class="level1"><div class="li"> <strong>sessionNotOnOrAfter duration</strong>: Time in seconds, added to authentication time, to define sessionNotOnOrAfter value in <abbr title="Security Assertion Markup Language">SAML</abbr> response (<code>&lt;AuthnStatement&gt;</code>):</div>
 </li>
 </ul>
 <pre class="code file xml"><span class="sc3"><span class="re1">&lt;saml:AuthnStatement</span> <span class="re0">AuthnInstant</span>=<span class="st0">&quot;2014-07-21T11:47:08Z&quot;</span></span>
 <span class="sc3">  <span class="re0">SessionIndex</span>=<span class="st0">&quot;loVvqZX+Vja2dtgt/N+AymTmckGyITyVt+UJ6vUFSFkE78S8zg+aomXX7oZ9qX1UxOEHf6Q4DUstewSJh1uK1Q==&quot;</span></span>
 <span class="sc3">  <span class="re0">SessionNotOnOrAfter</span>=<span class="st0">&quot;2014-07-21T15:47:08Z&quot;</span><span class="re2">&gt;</span></span></pre>
 <ul>
-<li class="level1"><div class="li"> <strong>notOnOrAfter duration</strong>: Time in seconds, added to authentication time, to define notOnOrAfter value in <acronym title="Security Assertion Markup Language">SAML</acronym> response (<code>&lt;Condtions&gt;</code> and <code>&lt;SubjectConfirmationData&gt;</code>):</div>
+<li class="level1"><div class="li"> <strong>notOnOrAfter duration</strong>: Time in seconds, added to authentication time, to define notOnOrAfter value in <abbr title="Security Assertion Markup Language">SAML</abbr> response (<code>&lt;Condtions&gt;</code> and <code>&lt;SubjectConfirmationData&gt;</code>):</div>
 </li>
 </ul>
 <pre class="code file xml"><span class="sc3"><span class="re1">&lt;saml:SubjectConfirmationData</span> <span class="re0">NotOnOrAfter</span>=<span class="st0">&quot;2014-07-21T12:47:08Z&quot;</span></span>
@@ -223,18 +211,16 @@ For each attribute, you can set:
 
 </div>
 
-<h5><a name="signature" id="signature">Signature</a></h5>
+<h5 id="signature">Signature</h5>
 <div class="level5">
 
 <p>
-
 These options override service signature options (see <a href="../../documentation/2.0/samlservice.html#general_options" class="wikilink1" title="documentation:2.0:samlservice">SAML service configuration</a>).
-
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Sign <acronym title="Single Sign On">SSO</acronym> message</strong>: sign <acronym title="Single Sign On">SSO</acronym> message</div>
+<li class="level1"><div class="li"> <strong>Sign <abbr title="Single Sign On">SSO</abbr> message</strong>: sign <abbr title="Single Sign On">SSO</abbr> message</div>
 </li>
-<li class="level1"><div class="li"> <strong>Check <acronym title="Single Sign On">SSO</acronym> message signature</strong>: check <acronym title="Single Sign On">SSO</acronym> message signature</div>
+<li class="level1"><div class="li"> <strong>Check <abbr title="Single Sign On">SSO</abbr> message signature</strong>: check <abbr title="Single Sign On">SSO</abbr> message signature</div>
 </li>
 <li class="level1"><div class="li"> <strong>Sign SLO message</strong>: sign SLO message</div>
 </li>
@@ -244,19 +230,18 @@ These options override service signature options (see <a href="../../documentati
 
 </div>
 
-<h5><a name="security" id="security">Security</a></h5>
+<h5 id="security">Security</h5>
 <div class="level5">
 <ul>
 <li class="level1"><div class="li"> <strong>Encryption mode</strong>: set the encryption mode for this IDP (None, NameID or Assertion).</div>
 </li>
-<li class="level1"><div class="li"> <strong>Enable use of IDP initiated <acronym title="Uniform Resource Locator">URL</acronym></strong>: set to <code>On</code> to enable IDP Initiated <acronym title="Uniform Resource Locator">URL</acronym> on this SP.</div>
+<li class="level1"><div class="li"> <strong>Enable use of IDP initiated <abbr title="Uniform Resource Locator">URL</abbr></strong>: set to <code>On</code> to enable IDP Initiated <abbr title="Uniform Resource Locator">URL</abbr> on this SP.</div>
 </li>
 </ul>
 
 <p>
-
 <p><div class="notetip">
-The IDP Initiated <acronym title="Uniform Resource Locator">URL</acronym> is the <acronym title="Single Sign On">SSO</acronym> <acronym title="Security Assertion Markup Language">SAML</acronym> <acronym title="Uniform Resource Locator">URL</acronym> with GET parameters:
+The IDP Initiated <abbr title="Uniform Resource Locator">URL</abbr> is the <abbr title="Single Sign On">SSO</abbr> <abbr title="Security Assertion Markup Language">SAML</abbr> <abbr title="Uniform Resource Locator">URL</abbr> with GET parameters:
 </p>
 <ul>
 <li class="level1"><div class="li"> IDPInitiated: 1</div>
@@ -278,4 +263,4 @@ For example: <a href="http://auth.example.com/saml/singleSignOn?IDPInitiated=1&a
 </p>
 
 </div>
-<!-- SECTION "Register partner Service Provider on LemonLDAP::NG" [1153-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

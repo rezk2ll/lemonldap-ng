@@ -20,26 +20,25 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="backend_choice_by_users" id="backend_choice_by_users">Backend choice by users</a></h1>
+<h1 class="sectionedit1" id="backend_choice_by_users">Backend choice by users</h1>
 <div class="level1">
-<table class="inline">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
-		<th class="col0">Authentication </th><th class="col1"> Users </th><th class="col2"> Password </th>
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT2 TABLE [40-109] -->
 </div>
-<!-- SECTION "Backend choice by users" [1-103] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Backend choice by users" [1-110] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
 By default, only the configured authentication backend is available for users.
 </p>
 
@@ -60,7 +59,6 @@ The choice will concern three backends:
 </ul>
 
 <p>
-
 The choosen backends will be registered in session:
 </p>
 <ul>
@@ -73,7 +71,6 @@ The choosen backends will be registered in session:
 </ul>
 
 <p>
-
 Authentication choice will also be registered in session:
 </p>
 <ul>
@@ -82,8 +79,8 @@ Authentication choice will also be registered in session:
 </ul>
 
 </div>
-<!-- SECTION "Presentation" [104-642] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT3 SECTION "Presentation" [111-649] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
@@ -99,14 +96,13 @@ In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modu
 Then, go in <code>Choice Parameters</code>:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong><acronym title="Uniform Resource Locator">URL</acronym> parameter</strong>: parameter name used to set choice value (default: <code>lmAuth</code>)</div>
+<li class="level1"><div class="li"> <strong><abbr title="Uniform Resource Locator">URL</abbr> parameter</strong>: parameter name used to set choice value (default: <code>lmAuth</code>)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Allowed modules</strong>: click on <code>New choice</code> to add a choice.</div>
 </li>
 </ul>
 
 <p>
-
 <a href="/_detail/documentation/manager-authchoice.png?id=documentation%3A2.0%3Aauthchoice" class="media" title="documentation:manager-authchoice.png"><img src="../../../media/documentation/manager-authchoice.png" class="mediacenter" alt="" /></a>
 </p>
 
@@ -122,16 +118,14 @@ Define here:
 </li>
 <li class="level1"><div class="li"> <strong>Password module</strong></div>
 </li>
-<li class="level1"><div class="li"> <strong><acronym title="Uniform Resource Locator">URL</acronym></strong>: optional, can be used to redirect on another <acronym title="Uniform Resource Locator">URL</acronym> (for example <a href="https://authssl.example.com" class="urlextern" title="https://authssl.example.com"  rel="nofollow">https://authssl.example.com</a>). This is mandatory if you want to use an Apache authentication module, which is run by Apache before showing the LemonLDAP::NG portal page.</div>
+<li class="level1"><div class="li"> <strong><abbr title="Uniform Resource Locator">URL</abbr></strong>: optional, can be used to redirect on another <abbr title="Uniform Resource Locator">URL</abbr> (for example <a href="https://authssl.example.com" class="urlextern" title="https://authssl.example.com"  rel="nofollow">https://authssl.example.com</a>). This is mandatory if you want to use an Apache authentication module, which is run by Apache before showing the LemonLDAP::NG portal page.</div>
 </li>
 </ul>
 
 <p>
-
 <p><div class="notetip">You can prefix the key name with a digit to order them. The digit will not be shown on portal page.
 </div></p>
-
 </p>
 
 </div>
-<!-- SECTION "Configuration" [643-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

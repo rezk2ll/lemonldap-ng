@@ -20,62 +20,56 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="zimbra" id="zimbra">Zimbra</a></h1>
+<h1 class="sectionedit1" id="zimbra">Zimbra</h1>
 <div class="level1">
 
 <p>
-
 <a href="/_detail/applications/zimbra_logo.png?id=documentation%3A2.0%3Aapplications%3Azimbra" class="media" title="applications:zimbra_logo.png"><img src="../../../../media/applications/zimbra_logo.png" class="mediacenter" alt="" /></a>
 </p>
 
 </div>
-<!-- SECTION "Zimbra" [1-60] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Zimbra" [1-60] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<a href="http://www.zimbra.com/" class="urlextern" title="http://www.zimbra.com/"  rel="nofollow">Zimbra</a> is open source server software for email and collaboration - email, group calendar, contacts, instant messaging, file storage and web document management. The Zimbra email and calendar server is available for Linux, Mac <acronym title="Operating System">OS</acronym> X and virtualization platforms. Zimbra syncs to smartphones (iPhone, BlackBerry) and desktop clients like Outlook and Thunderbird. Zimbra also features archiving and discovery for compliance. Zimbra can be deployed on-premises or as a hosted email solution.
+<a href="http://www.zimbra.com/" class="urlextern" title="http://www.zimbra.com/"  rel="nofollow">Zimbra</a> is open source server software for email and collaboration - email, group calendar, contacts, instant messaging, file storage and web document management. The Zimbra email and calendar server is available for Linux, Mac <abbr title="Operating System">OS</abbr> X and virtualization platforms. Zimbra syncs to smartphones (iPhone, BlackBerry) and desktop clients like Outlook and Thunderbird. Zimbra also features archiving and discovery for compliance. Zimbra can be deployed on-premises or as a hosted email solution.
 </p>
 
 <p>
-Zimbra use a specific <a href="http://wiki.zimbra.com/index.php?title=Preauth" class="urlextern" title="http://wiki.zimbra.com/index.php?title=Preauth"  rel="nofollow">preauthentication protocol</a> to provide <acronym title="Single Sign On">SSO</acronym> on its application. This protocol is implementated in an <acronym title="LemonLDAP::NG">LL::NG</acronym> specific Handler.
+Zimbra use a specific <a href="http://wiki.zimbra.com/index.php?title=Preauth" class="urlextern" title="http://wiki.zimbra.com/index.php?title=Preauth"  rel="nofollow">preauthentication protocol</a> to provide <abbr title="Single Sign On">SSO</abbr> on its application. This protocol is implementated in an <abbr title="LemonLDAP::NG">LL::NG</abbr> specific Handler.
 </p>
 
 <p>
-<p><div class="notetip">Zimbra can also be connected to <acronym title="LemonLDAP::NG">LL::NG</acronym> via <a href="../../../documentation/2.0/idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML protocol</a> (see <a href="http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html" class="urlextern" title="http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html"  rel="nofollow">Zimbra blog</a>).
+<p><div class="notetip">Zimbra can also be connected to <abbr title="LemonLDAP::NG">LL::NG</abbr> via <a href="../../../documentation/2.0/idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML protocol</a> (see <a href="http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html" class="urlextern" title="http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html"  rel="nofollow">Zimbra blog</a>).
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Presentation" [61-1001] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [61-1001] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
-The integration with <acronym title="LemonLDAP::NG">LL::NG</acronym> is the following:
+The integration with <abbr title="LemonLDAP::NG">LL::NG</abbr> is the following:
 </p>
 <ul>
-<li class="level1"><div class="li"> A special <acronym title="Uniform Resource Locator">URL</acronym> is declared in application menu (like <a href="http://zimbra.example.com/zimbrasso" class="urlextern" title="http://zimbra.example.com/zimbrasso"  rel="nofollow">http://zimbra.example.com/zimbrasso</a>)</div>
+<li class="level1"><div class="li"> A special <abbr title="Uniform Resource Locator">URL</abbr> is declared in application menu (like <a href="http://zimbra.example.com/zimbrasso" class="urlextern" title="http://zimbra.example.com/zimbrasso"  rel="nofollow">http://zimbra.example.com/zimbrasso</a>)</div>
 </li>
 <li class="level1"><div class="li"> A Zimbra Handler is called</div>
 </li>
-<li class="level1"><div class="li"> Handler build the preauth request and redirect user on Zimbra preauth <acronym title="Uniform Resource Locator">URL</acronym></div>
+<li class="level1"><div class="li"> Handler build the preauth request and redirect user on Zimbra preauth <abbr title="Uniform Resource Locator">URL</abbr></div>
 </li>
-<li class="level1"><div class="li"> Then Zimbra do the <acronym title="Single Sign On">SSO</acronym> by setting a cookie in user&#039;s browser</div>
+<li class="level1"><div class="li"> Then Zimbra do the <abbr title="Single Sign On">SSO</abbr> by setting a cookie in user&#039;s browser</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Configuration" [1002-1342] -->
-<h3><a name="zimbra_preauth_key" id="zimbra_preauth_key">Zimbra preauth key</a></h3>
+<!-- EDIT3 SECTION "Configuration" [1002-1342] -->
+<h3 class="sectionedit4" id="zimbra_preauth_key">Zimbra preauth key</h3>
 <div class="level3">
 
 <p>
-
 You need to get a preauth key from Zimbra server.
 </p>
 
@@ -84,22 +78,20 @@ See <a href="http://wiki.zimbra.com/index.php?title=Preauth#Preparing_a_domain_f
 </p>
 
 </div>
-<!-- SECTION "Zimbra preauth key" [1343-1541] -->
-<h3><a name="zimbra_application_in_menu" id="zimbra_application_in_menu">Zimbra application in menu</a></h3>
+<!-- EDIT4 SECTION "Zimbra preauth key" [1343-1541] -->
+<h3 class="sectionedit5" id="zimbra_application_in_menu">Zimbra application in menu</h3>
 <div class="level3">
 
 <p>
-
-Choose for example <a href="http://zimbra.example.com/zimbrasso" class="urlextern" title="http://zimbra.example.com/zimbrasso"  rel="nofollow">http://zimbra.example.com/zimbrasso</a> as <acronym title="Single Sign On">SSO</acronym> <acronym title="Uniform Resource Locator">URL</acronym> and <a href="../../../documentation/2.0/portalmenu.html#categories_and_applications" class="wikilink1" title="documentation:2.0:portalmenu">set it in application menu</a>.
+Choose for example <a href="http://zimbra.example.com/zimbrasso" class="urlextern" title="http://zimbra.example.com/zimbrasso"  rel="nofollow">http://zimbra.example.com/zimbrasso</a> as <abbr title="Single Sign On">SSO</abbr> <abbr title="Uniform Resource Locator">URL</abbr> and <a href="../../../documentation/2.0/portalmenu.html#categories_and_applications" class="wikilink1" title="documentation:2.0:portalmenu">set it in application menu</a>.
 </p>
 
 </div>
-<!-- SECTION "Zimbra application in menu" [1542-1723] -->
-<h3><a name="zimbra_virtual_host_in_apache" id="zimbra_virtual_host_in_apache">Zimbra virtual host in Apache</a></h3>
+<!-- EDIT5 SECTION "Zimbra application in menu" [1542-1723] -->
+<h3 class="sectionedit6" id="zimbra_virtual_host_in_apache">Zimbra virtual host in Apache</h3>
 <div class="level3">
 
 <p>
-
 You will configure Zimbra virtual host like other <a href="../../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a> but you will use Zimbra Handler instead of default Handler.
 </p>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *&gt;
@@ -113,12 +105,11 @@ You will configure Zimbra virtual host like other <a href="../../../documentatio
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Zimbra virtual host in Apache" [1724-2202] -->
-<h3><a name="zimbra_virtual_host_in_manager" id="zimbra_virtual_host_in_manager">Zimbra virtual host in Manager</a></h3>
+<!-- EDIT6 SECTION "Zimbra virtual host in Apache" [1724-2202] -->
+<h3 class="sectionedit7" id="zimbra_virtual_host_in_manager">Zimbra virtual host in Manager</h3>
 <div class="level3">
 
 <p>
-
 Go to the Manager and <a href="../../../documentation/2.0/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:2.0:configvhost">create a new virtual host</a> for Zimbra.
 </p>
 
@@ -127,12 +118,11 @@ Just configure the <a href="../../../documentation/2.0/writingrulesand_headers.h
 </p>
 
 </div>
-<!-- SECTION "Zimbra virtual host in Manager" [2203-2419] -->
-<h3><a name="zimbra_handler_parameters" id="zimbra_handler_parameters">Zimbra Handler parameters</a></h3>
+<!-- EDIT7 SECTION "Zimbra virtual host in Manager" [2203-2419] -->
+<h3 class="sectionedit8" id="zimbra_handler_parameters">Zimbra Handler parameters</h3>
 <div class="level3">
 
 <p>
-
 Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</code> » <code>Special handlers</code> » <code>Zimbra</code>, and edit the different keys:
 </p>
 <ul>
@@ -142,11 +132,11 @@ Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</cod
 </li>
 <li class="level1"><div class="li"> <strong>Account type</strong>: for Zimbra this can be name, id or foreignKey (by default: id)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Preauthentication <acronym title="Uniform Resource Locator">URL</acronym></strong>: Zimbra preauthentication <acronym title="Uniform Resource Locator">URL</acronym>, either with full <acronym title="Uniform Resource Locator">URL</acronym> (ex: <a href="http://zimbra.lan/service/preauth" class="urlextern" title="http://zimbra.lan/service/preauth"  rel="nofollow">http://zimbra.lan/service/preauth</a>), either only with path (ex: /service/preauth) (by default: /service/preauth)</div>
+<li class="level1"><div class="li"> <strong>Preauthentication <abbr title="Uniform Resource Locator">URL</abbr></strong>: Zimbra preauthentication <abbr title="Uniform Resource Locator">URL</abbr>, either with full <abbr title="Uniform Resource Locator">URL</abbr> (ex: <a href="http://zimbra.lan/service/preauth" class="urlextern" title="http://zimbra.lan/service/preauth"  rel="nofollow">http://zimbra.lan/service/preauth</a>), either only with path (ex: /service/preauth) (by default: /service/preauth)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Local <acronym title="Single Sign On">SSO</acronym> <acronym title="Uniform Resource Locator">URL</acronym> pattern</strong>: regular expression to match the <acronym title="Single Sign On">SSO</acronym> <acronym title="Uniform Resource Locator">URL</acronym> (by default: ^/zimbrasso$)</div>
+<li class="level1"><div class="li"> <strong>Local <abbr title="Single Sign On">SSO</abbr> <abbr title="Uniform Resource Locator">URL</abbr> pattern</strong>: regular expression to match the <abbr title="Single Sign On">SSO</abbr> <abbr title="Uniform Resource Locator">URL</abbr> (by default: ^/zimbrasso$)</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Zimbra Handler parameters" [2420-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

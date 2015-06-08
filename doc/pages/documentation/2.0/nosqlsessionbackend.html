@@ -20,9 +20,7 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="redis_session_backend" id="redis_session_backend">Redis session backend</a></h1>
+<h1 class="sectionedit1" id="redis_session_backend">Redis session backend</h1>
 <div class="level1">
 
 <p>
@@ -30,42 +28,40 @@
 </p>
 
 </div>
-<!-- SECTION "Redis session backend" [1-158] -->
-<h2><a name="setup" id="setup">Setup</a></h2>
+<!-- EDIT1 SECTION "Redis session backend" [1-158] -->
+<h2 class="sectionedit2" id="setup">Setup</h2>
 <div class="level2">
 
 <p>
-
 Install and launch a <a href="http://code.google.com/p/redis/" class="urlextern" title="http://code.google.com/p/redis/"  rel="nofollow">Redis server</a>. Install 
-<a href="http://search.cpan.org/perldoc?Apache::Session::Redis" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Redis"  rel="nofollow">Apache::Session::Redis</a> <acronym title="Practical Extraction and Report Language">Perl</acronym> module.
+<a href="http://search.cpan.org/perldoc?Apache::Session::Redis" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Redis"  rel="nofollow">Apache::Session::Redis</a> Perl module.
 </p>
 
 <p>
 In the manager: set <a href="http://search.cpan.org/perldoc?Apache::Session::Redis" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Redis"  rel="nofollow">Apache::Session::Redis</a> in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
-
 </p>
-<table class="inline">
+<div class="table sectionedit3"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign" colspan="3">  Required parameters  </th>
 	</tr>
 	<tr class="row1 rowodd">
 		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Comment  </th><th class="col2 centeralign">  Example  </th>
 	</tr>
+	</thead>
 	<tr class="row2 roweven">
 		<td class="col0 centeralign">  <strong>server</strong>  </td><td class="col1"> Redis server </td><td class="col2"> 127.0.0.1:6379 </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT3 TABLE [601-712] -->
 </div>
-<!-- SECTION "Setup" [159-713] -->
-<h2><a name="security" id="security">Security</a></h2>
+<!-- EDIT2 SECTION "Setup" [159-713] -->
+<h2 class="sectionedit4" id="security">Security</h2>
 <div class="level2">
 
 <p>
-
 Restrict network access to the redis server. For remote servers, you can use <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP session backend</a> in cunjunction to increase security for remote server that access through an unsecure network
-
 </p>
 
 </div>
-<!-- SECTION "Security" [714-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

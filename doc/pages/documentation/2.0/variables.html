@@ -20,24 +20,21 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="variables" id="variables">Variables</a></h1>
+<h1 class="sectionedit1" id="variables">Variables</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Variables" [1-25] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Variables" [1-25] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
 Variables can be used in rules and headers. All rules are concerned:
 </p>
 <ul>
 <li class="level1"><div class="li"> Access rule in virtual host</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Security Assertion Markup Language">SAML</acronym> IDP preselection</div>
+<li class="level1"><div class="li"> <abbr title="Security Assertion Markup Language">SAML</abbr> IDP preselection</div>
 </li>
 <li class="level1"><div class="li"> Session opening</div>
 </li>
@@ -46,7 +43,6 @@ Variables can be used in rules and headers. All rules are concerned:
 </ul>
 
 <p>
-
 Variables are stored in the user session. We can distinguish several kind of variables:
 </p>
 <ul>
@@ -60,11 +56,8 @@ Variables are stored in the user session. We can distinguish several kind of var
 
 <p>
 When you know the key of the variable, you just have to prefix it with the dollar sign to use it, for example to test if  <code>uid</code> variable match <code>coudot</code> :
-
 </p>
-<pre class="code">
-$uid eq &quot;coudot&quot;
-</pre>
+<pre class="code">$uid eq &quot;coudot&quot;</pre>
 
 <p>
 <p><div class="notetip">You can inspect a user session with the sessions explorer (in Manager)
@@ -76,19 +69,19 @@ Below are documented internal variables.
 </p>
 
 </div>
-<!-- SECTION "Presentation" [26-794] -->
-<h2><a name="modules" id="modules">Modules</a></h2>
+<!-- EDIT2 SECTION "Presentation" [26-794] -->
+<h2 class="sectionedit3" id="modules">Modules</h2>
 <div class="level2">
 
 <p>
-
 Register what module was used for authentication, user data, password, …
-
 </p>
-<table class="inline">
+<div class="table sectionedit4"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  _auth  </td><td class="col1 leftalign"> Authentication module  </td>
 	</tr>
@@ -104,47 +97,47 @@ Register what module was used for authentication, user data, password, …
 	<tr class="row5 rowodd">
 		<td class="col0 centeralign">  _authChoice  </td><td class="col1 leftalign"> User choice done if <a href="../../documentation/2.0/authchoice.html" class="wikilink1" title="documentation:2.0:authchoice">authentication choice</a> was used  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT4 TABLE [891-1160] -->
 </div>
-<!-- SECTION "Modules" [795-1161] -->
-<h2><a name="connection" id="connection">Connection</a></h2>
+<!-- EDIT3 SECTION "Modules" [795-1161] -->
+<h2 class="sectionedit5" id="connection">Connection</h2>
 <div class="level2">
 
 <p>
-
 Datas concerning the first connection to the portal
-
 </p>
-<table class="inline">
+<div class="table sectionedit6"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 leftalign"> ipAddr  </td><td class="col1 leftalign"> <acronym title="Internet Protocol">IP</acronym> of the user (can be the X Forwarded For <acronym title="Internet Protocol">IP</acronym> if trusted proxies are configured)  </td>
+		<td class="col0 leftalign"> ipAddr  </td><td class="col1 leftalign"> <abbr title="Internet Protocol">IP</abbr> of the user (can be the X Forwarded For <abbr title="Internet Protocol">IP</abbr> if trusted proxies are configured)  </td>
 	</tr>
 	<tr class="row2 roweven">
 		<td class="col0 leftalign"> _timezone  </td><td class="col1"> Timezone of the user, set with javascript from standard login form (will be empty if other authentication methods are used) </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 leftalign"> _url  </td><td class="col1 leftalign"> <acronym title="Uniform Resource Locator">URL</acronym> used before being redirected to the portal (empty if portal was used as entry point)  </td>
+		<td class="col0 leftalign"> _url  </td><td class="col1 leftalign"> <abbr title="Uniform Resource Locator">URL</abbr> used before being redirected to the portal (empty if portal was used as entry point)  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT6 TABLE [1239-1603] -->
 </div>
-<!-- SECTION "Connection" [1162-1604] -->
-<h2><a name="authentication" id="authentication">Authentication</a></h2>
+<!-- EDIT5 SECTION "Connection" [1162-1604] -->
+<h2 class="sectionedit7" id="authentication">Authentication</h2>
 <div class="level2">
 
 <p>
-
 Datas around the authentication process.
-
 </p>
-<table class="inline">
+<div class="table sectionedit8"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 leftalign"> _session_id  </td><td class="col1 leftalign"> Session identifier (carried in cookie)  </td>
 	</tr>
@@ -157,16 +150,18 @@ Datas around the authentication process.
 	<tr class="row4 roweven">
 		<td class="col0 leftalign"> authenticationLevel  </td><td class="col1 leftalign"> Authentication level  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT8 TABLE [1675-1972] -->
 </div>
-<!-- SECTION "Authentication" [1605-1973] -->
-<h2><a name="dates" id="dates">Dates</a></h2>
+<!-- EDIT7 SECTION "Authentication" [1605-1973] -->
+<h2 class="sectionedit9" id="dates">Dates</h2>
 <div class="level2">
-<table class="inline">
+<div class="table sectionedit10"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 leftalign"> _utime  </td><td class="col1 leftalign"> Timestamp of session creation  </td>
 	</tr>
@@ -179,22 +174,22 @@ Datas around the authentication process.
 	<tr class="row4 roweven">
 		<td class="col0"> _lastAuthnUTime </td><td class="col1 leftalign"> Timestamp of last authentication time  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT10 TABLE [1993-2220] -->
 </div>
-<!-- SECTION "Dates" [1974-2221] -->
-<h2><a name="saml" id="saml">SAML</a></h2>
+<!-- EDIT9 SECTION "Dates" [1974-2221] -->
+<h2 class="sectionedit11" id="saml">SAML</h2>
 <div class="level2">
 
 <p>
-
-Datas related to <acronym title="Security Assertion Markup Language">SAML</acronym> protocol
-
+Datas related to <abbr title="Security Assertion Markup Language">SAML</abbr> protocol
 </p>
-<table class="inline">
+<div class="table sectionedit12"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 leftalign"> _idp  </td><td class="col1 leftalign"> Name of IDP used for authentication  </td>
 	</tr>
@@ -202,7 +197,7 @@ Datas related to <acronym title="Security Assertion Markup Language">SAML</acron
 		<td class="col0 leftalign"> _idpConfKey  </td><td class="col1 leftalign"> Configuration key of IDP used for authentication  </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 leftalign"> _samlToken  </td><td class="col1 leftalign"> <acronym title="Security Assertion Markup Language">SAML</acronym> token  </td>
+		<td class="col0 leftalign"> _samlToken  </td><td class="col1 leftalign"> <abbr title="Security Assertion Markup Language">SAML</abbr> token  </td>
 	</tr>
 	<tr class="row4 roweven">
 		<td class="col0 leftalign"> _lassoSessionDump  </td><td class="col1 leftalign"> Lasso session dump  </td>
@@ -210,78 +205,86 @@ Datas related to <acronym title="Security Assertion Markup Language">SAML</acron
 	<tr class="row5 rowodd">
 		<td class="col0 leftalign"> _lassoIdentityDump  </td><td class="col1 leftalign"> Lasso identity dump  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT12 TABLE [2272-2537] -->
 </div>
-<!-- SECTION "SAML" [2222-2538] -->
-<h2><a name="notifications" id="notifications">Notifications</a></h2>
+<!-- EDIT11 SECTION "SAML" [2222-2538] -->
+<h2 class="sectionedit13" id="notifications">Notifications</h2>
 <div class="level2">
-<table class="inline">
+<div class="table sectionedit14"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 leftalign"> _notification_<em>id</em>  </td><td class="col1 leftalign"> Date of validation of the notification <em>id</em>  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT14 TABLE [2566-2666] -->
 </div>
-<!-- SECTION "Notifications" [2539-2667] -->
-<h2><a name="login_history" id="login_history">Login history</a></h2>
+<!-- EDIT13 SECTION "Notifications" [2539-2667] -->
+<h2 class="sectionedit15" id="login_history">Login history</h2>
 <div class="level2">
-<table class="inline">
+<div class="table sectionedit16"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 leftalign"> loginHistory  </td><td class="col1 leftalign"> HASH of login success and failures  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT16 TABLE [2695-2776] -->
 </div>
-<!-- SECTION "Login history" [2668-2777] -->
-<h2><a name="ldap" id="ldap">LDAP</a></h2>
+<!-- EDIT15 SECTION "Login history" [2668-2777] -->
+<h2 class="sectionedit17" id="ldap">LDAP</h2>
 <div class="level2">
 
 <p>
-
-Only with UserDB <acronym title="Lightweight Directory Access Protocol">LDAP</acronym>.
-
+Only with UserDB LDAP.
 </p>
-<table class="inline">
+<div class="table sectionedit18"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 leftalign"> dn  </td><td class="col1"> Distinguished name </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT18 TABLE [2820-2874] -->
 </div>
-<!-- SECTION "LDAP" [2778-2875] -->
-<h2><a name="openid" id="openid">OpenID</a></h2>
+<!-- EDIT17 SECTION "LDAP" [2778-2875] -->
+<h2 class="sectionedit19" id="openid">OpenID</h2>
 <div class="level2">
-<table class="inline">
+<div class="table sectionedit20"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 leftalign"> _openid_<em>id</em>  </td><td class="col1 leftalign"> Consent to share attribute <em>id</em> trough OpenID  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT20 TABLE [2896-2992] -->
 </div>
-<!-- SECTION "OpenID" [2876-2993] -->
-<h2><a name="other" id="other">Other</a></h2>
+<!-- EDIT19 SECTION "OpenID" [2876-2993] -->
+<h2 class="sectionedit21" id="other">Other</h2>
 <div class="level2">
-<table class="inline">
+<div class="table sectionedit22"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 leftalign"> appsListOrder  </td><td class="col1 leftalign"> Order of categories in the menu  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT22 TABLE [3013-3092] -->
 </div>
-<!-- SECTION "Other" [2994-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

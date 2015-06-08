@@ -20,38 +20,35 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="single_sign_on_cookie_domain_and_portal_url" id="single_sign_on_cookie_domain_and_portal_url">Single Sign On cookie, domain and portal URL</a></h1>
+<h1 class="sectionedit1" id="single_sign_on_cookie_domain_and_portal_url">Single Sign On cookie, domain and portal URL</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Single Sign On cookie, domain and portal URL" [1-58] -->
-<h2><a name="sso_cookie" id="sso_cookie">SSO cookie</a></h2>
+<!-- EDIT1 SECTION "Single Sign On cookie, domain and portal URL" [1-58] -->
+<h2 class="sectionedit2" id="sso_cookie">SSO cookie</h2>
 <div class="level2">
 
 <p>
-
-The <acronym title="Single Sign On">SSO</acronym> cookie is build by the portal (as described in the <a href="../../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">login kinematic</a>), or by the Handler for cross domain authentication (see <a href="../../documentation/presentation.html#cross_domain_authentication_cda" class="wikilink1" title="documentation:presentation">CDA kinematic</a>).
+The <abbr title="Single Sign On">SSO</abbr> cookie is build by the portal (as described in the <a href="../../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">login kinematic</a>), or by the Handler for cross domain authentication (see <a href="../../documentation/presentation.html#cross_domain_authentication_cda" class="wikilink1" title="documentation:presentation">CDA kinematic</a>).
 </p>
 
 <p>
-To edit <acronym title="Single Sign On">SSO</acronym> cookie parameters, go in Manager, <code>General Parameters</code> &gt; <code>Cookies</code>:
+To edit <abbr title="Single Sign On">SSO</abbr> cookie parameters, go in Manager, <code>General Parameters</code> &gt; <code>Cookies</code>:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Cookie name</strong>: name of the cookie, can be changed to avoid conflicts with other LemonLDAP::NG installations</div>
 </li>
 <li class="level1"><div class="li"> <strong>Domain</strong>: validity domain for the cookie (the cookie will not be sent on other domains)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Multiple domains</strong>: enable <a href="../../documentation/2.0/cda.html" class="wikilink1" title="documentation:2.0:cda">cross domain mechanism</a> (without this, you cannot extend <acronym title="Single Sign On">SSO</acronym> to other domains)</div>
+<li class="level1"><div class="li"> <strong>Multiple domains</strong>: enable <a href="../../documentation/2.0/cda.html" class="wikilink1" title="documentation:2.0:cda">cross domain mechanism</a> (without this, you cannot extend <abbr title="Single Sign On">SSO</abbr> to other domains)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Secured cookie</strong>: 4 options:</div>
 <ul>
-<li class="level2"><div class="li"> <strong>Non secured cookie</strong>: the cookie can be sent over <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> and HTTPS connections</div>
+<li class="level2"><div class="li"> <strong>Non secured cookie</strong>: the cookie can be sent over HTTP and HTTPS connections</div>
 </li>
 <li class="level2"><div class="li"> <strong>Secured cookie</strong>: the cookie can only be sent over HTTPS</div>
 </li>
-<li class="level2"><div class="li"> <strong>Double cookie</strong>: two cookies are delivered, one for <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> and HTTPS connections, the other for HTTPS only</div>
+<li class="level2"><div class="li"> <strong>Double cookie</strong>: two cookies are delivered, one for HTTP and HTTPS connections, the other for HTTPS only</div>
 </li>
 <li class="level2"><div class="li"> <strong>Double cookie for single session</strong>: as same, two cookies are delivered, but only one session is written in session database</div>
 </li>
@@ -59,7 +56,7 @@ To edit <acronym title="Single Sign On">SSO</acronym> cookie parameters, go in M
 </li>
 <li class="level1"><div class="li"> <strong>Javascript protection</strong>: set httpOnly flag, to avoid cookie been caught by javascript code</div>
 </li>
-<li class="level1"><div class="li"> <strong>Cookie expiration time</strong>: by default, <acronym title="Single Sign On">SSO</acronym> cookie is a session cookie, which mean it will be destroyed when the browser is closed. You can change this behavior and set a cookie duration, for example:</div>
+<li class="level1"><div class="li"> <strong>Cookie expiration time</strong>: by default, <abbr title="Single Sign On">SSO</abbr> cookie is a session cookie, which mean it will be destroyed when the browser is closed. You can change this behavior and set a cookie duration, for example:</div>
 <ul>
 <li class="level2"><div class="li"> <strong>+30s</strong>: 30 seconds from session creation</div>
 </li>
@@ -78,38 +75,34 @@ To edit <acronym title="Single Sign On">SSO</acronym> cookie parameters, go in M
 </ul>
 
 <p>
-
 <p><div class="notewarning">When you change cookie expiration time, it is written on the user hard disk unlike session cookie
 </div></p>
 </p>
 
 <p>
-<p><div class="noteimportant">Changing the domain value will not update other configuration parameters, like virtual host names, portal <acronym title="Uniform Resource Locator">URL</acronym>, etc. You have to update them by yourself.
+<p><div class="noteimportant">Changing the domain value will not update other configuration parameters, like virtual host names, portal <abbr title="Uniform Resource Locator">URL</abbr>, etc. You have to update them by yourself.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "SSO cookie" [59-2129] -->
-<h2><a name="portal_url" id="portal_url">Portal URL</a></h2>
+<!-- EDIT2 SECTION "SSO cookie" [59-2129] -->
+<h2 class="sectionedit3" id="portal_url">Portal URL</h2>
 <div class="level2">
 
 <p>
-
-Portal <acronym title="Uniform Resource Locator">URL</acronym> is the address used to redirect users on the authentication portal by:
+Portal <abbr title="Uniform Resource Locator">URL</abbr> is the address used to redirect users on the authentication portal by:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Handler</strong>: user is redirected if he has no <acronym title="Single Sign On">SSO</acronym> cookie (or in <a href="../../documentation/2.0/cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a> mode)</div>
+<li class="level1"><div class="li"> <strong>Handler</strong>: user is redirected if he has no <abbr title="Single Sign On">SSO</abbr> cookie (or in <a href="../../documentation/2.0/cda.html" class="wikilink1" title="documentation:2.0:cda">CDA</a> mode)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Portal</strong>: the portal redirect on itself in many cases (credentials POST, <acronym title="Security Assertion Markup Language">SAML</acronym>, etc.)</div>
+<li class="level1"><div class="li"> <strong>Portal</strong>: the portal redirect on itself in many cases (credentials POST, <abbr title="Security Assertion Markup Language">SAML</abbr>, etc.)</div>
 </li>
 </ul>
 
 <p>
-
-<p><div class="notewarning">The portal <acronym title="Uniform Resource Locator">URL</acronym> <strong>must</strong> be inside <acronym title="Single Sign On">SSO</acronym> domain. If secured cookie is enabled, the portal <acronym title="Uniform Resource Locator">URL</acronym> <strong>must</strong> be HTTPS.
+<p><div class="notewarning">The portal <abbr title="Uniform Resource Locator">URL</abbr> <strong>must</strong> be inside <abbr title="Single Sign On">SSO</abbr> domain. If secured cookie is enabled, the portal <abbr title="Uniform Resource Locator">URL</abbr> <strong>must</strong> be HTTPS.
 </div></p>
-
 </p>
 
 </div>
-<!-- SECTION "Portal URL" [2130-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

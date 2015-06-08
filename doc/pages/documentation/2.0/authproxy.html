@@ -20,45 +20,43 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="proxy" id="proxy">Proxy</a></h1>
+<h1 class="sectionedit1" id="proxy">Proxy</h1>
 <div class="level1">
-<table class="inline">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
-		<th class="col0">Authentication </th><th class="col1"> Users </th><th class="col2"> Password </th>
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT2 TABLE [22-85] -->
 </div>
-<!-- SECTION "Proxy" [1-79] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Proxy" [1-86] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<acronym title="LemonLDAP::NG">LL::NG</acronym> is able to transfer (trough <acronym title="Simple Object Access Protocol">SOAP</acronym>) authentication credentials to another <acronym title="LemonLDAP::NG">LL::NG</acronym> portal, like a proxy.
+<abbr title="LemonLDAP::NG">LL::NG</abbr> is able to transfer (trough SOAP) authentication credentials to another <abbr title="LemonLDAP::NG">LL::NG</abbr> portal, like a proxy.
 </p>
 
 <p>
-The difference with <a href="../../documentation/2.0/authremote.html" class="wikilink1" title="documentation:2.0:authremote">remote authentication</a> is that the client will never be redirect to the main <acronym title="LemonLDAP::NG">LL::NG</acronym> portal. This configuration is usable if you want to expose your internal <acronym title="Single Sign On">SSO</acronym> portal to another network (DMZ).
+The difference with <a href="../../documentation/2.0/authremote.html" class="wikilink1" title="documentation:2.0:authremote">remote authentication</a> is that the client will never be redirect to the main <abbr title="LemonLDAP::NG">LL::NG</abbr> portal. This configuration is usable if you want to expose your internal <abbr title="Single Sign On">SSO</abbr> portal to another network (DMZ).
 </p>
 
 </div>
-<!-- SECTION "Presentation" [80-443] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT3 SECTION "Presentation" [87-450] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [444-470] -->
-<h3><a name="external_portal" id="external_portal">External portal</a></h3>
+<!-- EDIT4 SECTION "Configuration" [451-477] -->
+<h3 class="sectionedit5" id="external_portal">External portal</h3>
 <div class="level3">
 
 <p>
-
 In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose Proxy for authentication and users.
 </p>
 
@@ -66,23 +64,22 @@ In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modu
 Then, go in <code>Proxy parameters</code>:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Portal <acronym title="Uniform Resource Locator">URL</acronym></strong>: <acronym title="Uniform Resource Locator">URL</acronym> of internal portal</div>
+<li class="level1"><div class="li"> <strong>Portal <abbr title="Uniform Resource Locator">URL</abbr></strong>: <abbr title="Uniform Resource Locator">URL</abbr> of internal portal</div>
 </li>
 <li class="level1"><div class="li"> <strong>Cookie name</strong> (optional): name of the cookie of internal portal, if different from external portal</div>
 </li>
-<li class="level1"><div class="li"> <strong><acronym title="Simple Object Access Protocol">SOAP</acronym> sessions end point</strong> (optional): <acronym title="Simple Object Access Protocol">SOAP</acronym> end point, if not based on internal portal <acronym title="Uniform Resource Locator">URL</acronym> with <code>index.pl/sessions</code> suffix</div>
+<li class="level1"><div class="li"> <strong>SOAP sessions end point</strong> (optional): SOAP end point, if not based on internal portal <abbr title="Uniform Resource Locator">URL</abbr> with <code>index.pl/sessions</code> suffix</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "External portal" [471-928] -->
-<h3><a name="internal_portal" id="internal_portal">Internal portal</a></h3>
+<!-- EDIT5 SECTION "External portal" [478-935] -->
+<h3 class="sectionedit6" id="internal_portal">Internal portal</h3>
 <div class="level3">
 
 <p>
-
-The portal must be configured to accept <acronym title="Simple Object Access Protocol">SOAP</acronym> authentication requests. See <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP session backend</a> documentation.
+The portal must be configured to accept SOAP authentication requests. See <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP session backend</a> documentation.
 </p>
 
 </div>
-<!-- SECTION "Internal portal" [929-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

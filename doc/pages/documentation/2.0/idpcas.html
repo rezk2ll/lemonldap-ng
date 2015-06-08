@@ -20,40 +20,35 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="cas_server" id="cas_server">CAS server</a></h1>
+<h1 class="sectionedit1" id="cas_server">CAS server</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "CAS server" [1-26] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "CAS server" [1-26] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<acronym title="LemonLDAP::NG">LL::NG</acronym> can act as an <acronym title="Central Authentication Service">CAS</acronym> server, that can allow to federate <acronym title="LemonLDAP::NG">LL::NG</acronym> with:
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can act as an <abbr title="Central Authentication Service">CAS</abbr> server, that can allow to federate <abbr title="LemonLDAP::NG">LL::NG</abbr> with:
 </p>
 <ul>
-<li class="level1"><div class="li"> Another <acronym title="LemonLDAP::NG">LL::NG</acronym> system configured with <a href="../../documentation/2.0/authcas.html" class="wikilink1" title="documentation:2.0:authcas">CAS authentication</a></div>
+<li class="level1"><div class="li"> Another <abbr title="LemonLDAP::NG">LL::NG</abbr> system configured with <a href="../../documentation/2.0/authcas.html" class="wikilink1" title="documentation:2.0:authcas">CAS authentication</a></div>
 </li>
-<li class="level1"><div class="li"> Any <acronym title="Central Authentication Service">CAS</acronym> consumer</div>
+<li class="level1"><div class="li"> Any <abbr title="Central Authentication Service">CAS</abbr> consumer</div>
 </li>
 </ul>
 
 <p>
-
-<acronym title="LemonLDAP::NG">LL::NG</acronym> is compatible with the <acronym title="Central Authentication Service">CAS</acronym> protocol <a href="http://www.jasig.org/cas/protocol" class="urlextern" title="http://www.jasig.org/cas/protocol"  rel="nofollow">versions 1.0 and 2.0</a>. This protocol does not define any attributes exchange mechanism, so only authentication is managed.
+<abbr title="LemonLDAP::NG">LL::NG</abbr> is compatible with the <abbr title="Central Authentication Service">CAS</abbr> protocol <a href="http://www.jasig.org/cas/protocol" class="urlextern" title="http://www.jasig.org/cas/protocol"  rel="nofollow">versions 1.0 and 2.0</a>. This protocol does not define any attributes exchange mechanism, so only authentication is managed.
 </p>
 
 </div>
-<!-- SECTION "Presentation" [27-424] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [27-424] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
-In the Manager, go in <code>General Parameters</code> » <code>Issuer modules</code> » <code><acronym title="Central Authentication Service">CAS</acronym></code> and configure:
+In the Manager, go in <code>General Parameters</code> » <code>Issuer modules</code> » <code><abbr title="Central Authentication Service">CAS</abbr></code> and configure:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Activation</strong>: set to <code>On</code>.</div>
@@ -65,17 +60,12 @@ In the Manager, go in <code>General Parameters</code> » <code>Issuer modules</c
 </ul>
 
 <p>
-
 <p><div class="notetip">
 For example, to allow only users with a strong authentication level:
-
 </p>
-<pre class="code">
-$authenticationLevel &gt; 2
-</pre>
+<pre class="code">$authenticationLevel &gt; 2</pre>
 
 <p>
-
 
 </div></p>
 </p>
@@ -83,7 +73,6 @@ $authenticationLevel &gt; 2
 <p>
 <p><div class="noteimportant">
 Apache rewrite rules must have been activated in <a href="../../documentation/2.0/configlocation.html#portal" class="wikilink1" title="documentation:2.0:configlocation">Apache portal configuration</a>:
-
 </p>
 <pre class="code file apache">    &lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
         <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
@@ -92,7 +81,6 @@ Apache rewrite rules must have been activated in <a href="../../documentation/2.
 
 <p>
 
-
 </div></p>
 </p>
 
@@ -100,28 +88,26 @@ Apache rewrite rules must have been activated in <a href="../../documentation/2.
 Then go in <code>Options</code> to define:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong><acronym title="Central Authentication Service">CAS</acronym> login</strong>: the session key used to fill user login (value will be transmitted to <acronym title="Central Authentication Service">CAS</acronym> clients).</div>
+<li class="level1"><div class="li"> <strong><abbr title="Central Authentication Service">CAS</abbr> login</strong>: the session key used to fill user login (value will be transmitted to <abbr title="Central Authentication Service">CAS</abbr> clients).</div>
 </li>
-<li class="level1"><div class="li"> <strong>Access control policy</strong>: define if access control should be done on <acronym title="Central Authentication Service">CAS</acronym> service. Three options:</div>
+<li class="level1"><div class="li"> <strong>Access control policy</strong>: define if access control should be done on <abbr title="Central Authentication Service">CAS</abbr> service. Three options:</div>
 <ul>
 <li class="level2"><div class="li"> <strong>none</strong>: no access control, the server will answer without checking if the user is authorized for the service (this is the default)</div>
 </li>
-<li class="level2"><div class="li"> <strong>error</strong>: if user has no access, an error is shown on the portal, the user is not redirected to <acronym title="Central Authentication Service">CAS</acronym> service</div>
+<li class="level2"><div class="li"> <strong>error</strong>: if user has no access, an error is shown on the portal, the user is not redirected to <abbr title="Central Authentication Service">CAS</abbr> service</div>
 </li>
-<li class="level2"><div class="li"> <strong>faketicket</strong>: if the user has no access, a fake ticket is built, and the user is redirected to <acronym title="Central Authentication Service">CAS</acronym> service. Then <acronym title="Central Authentication Service">CAS</acronym> service has to show a correct error when service ticket validation will fail.</div>
+<li class="level2"><div class="li"> <strong>faketicket</strong>: if the user has no access, a fake ticket is built, and the user is redirected to <abbr title="Central Authentication Service">CAS</abbr> service. Then <abbr title="Central Authentication Service">CAS</abbr> service has to show a correct error when service ticket validation will fail.</div>
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> <strong><acronym title="Central Authentication Service">CAS</acronym> session module name and options</strong>: choose a specific module if you do not want to mix <acronym title="Central Authentication Service">CAS</acronym> sessions and normal sessions (see <a href="../../documentation/2.0/samlservice.html#saml_sessions_module_name_and_options" class="wikilink1" title="documentation:2.0:samlservice">why</a>).</div>
+<li class="level1"><div class="li"> <strong><abbr title="Central Authentication Service">CAS</abbr> session module name and options</strong>: choose a specific module if you do not want to mix <abbr title="Central Authentication Service">CAS</abbr> sessions and normal sessions (see <a href="../../documentation/2.0/samlservice.html#saml_sessions_module_name_and_options" class="wikilink1" title="documentation:2.0:samlservice">why</a>).</div>
 </li>
 </ul>
 
 <p>
-
-<p><div class="notetip">If <code><acronym title="Central Authentication Service">CAS</acronym> login</code> is not set, it uses <code>General Parameters</code> » <code>Logs</code> » <code>REMOTE_USER</code> data, which is set to <code>uid</code> by default
+<p><div class="notetip">If <code><abbr title="Central Authentication Service">CAS</abbr> login</code> is not set, it uses <code>General Parameters</code> » <code>Logs</code> » <code>REMOTE_USER</code> data, which is set to <code>uid</code> by default
 </div></p>
-
 </p>
 
 </div>
-<!-- SECTION "Configuration" [425-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

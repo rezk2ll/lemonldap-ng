@@ -20,13 +20,10 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="browseable_session_backend" id="browseable_session_backend">Browseable session backend</a></h1>
+<h1 class="sectionedit1" id="browseable_session_backend">Browseable session backend</h1>
 <div class="level1">
 
 <p>
-
 Browseable session backend (<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a>) works exactly like Apache::Session::* corresponding module but add indexes that increase <a href="../../documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">session explorer</a> and <a href="../../documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">session restrictions</a> performances.
 </p>
 
@@ -43,16 +40,18 @@ Last version can be found on CPAN : <a href="http://search.cpan.org/dist/Apache-
 </p>
 
 <p>
-If you use features like <acronym title="Security Assertion Markup Language">SAML</acronym> (authentication and issuer), <acronym title="Central Authentication Service">CAS</acronym> (issuer) and password reset self-service, you also need to index some fields.
+If you use features like <abbr title="Security Assertion Markup Language">SAML</abbr> (authentication and issuer), <abbr title="Central Authentication Service">CAS</abbr> (issuer) and password reset self-service, you also need to index some fields.
 </p>
 
 <p>
 The following table list fields to index depending on the feature you want to increase performance:
 </p>
-<table class="inline">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Feature  </th><th class="col1 centeralign">  Fields to index  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0"> Session explorer </td><td class="col1 centeralign">  ipAddr <em>WHATTOTRACE</em> _httpSessionType ipAddr  </td>
 	</tr>
@@ -60,24 +59,23 @@ The following table list fields to index depending on the feature you want to in
 		<td class="col0"> Session restrictions </td><td class="col1 centeralign">  ipAddr <em>WHATTOTRACE</em>  </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 rightalign">  <acronym title="Security Assertion Markup Language">SAML</acronym> authentication and issuer </td><td class="col1 centeralign">  _saml_id ProxyID _nameID _assert_id _art_id _session_id  </td>
+		<td class="col0"> <abbr title="Security Assertion Markup Language">SAML</abbr> authentication and issuer </td><td class="col1 centeralign">  _saml_id ProxyID _nameID _assert_id _art_id _session_id  </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0 centeralign">  <acronym title="Central Authentication Service">CAS</acronym> issuer  </td><td class="col1 centeralign">  _cas_id  </td>
+		<td class="col0 leftalign"> <abbr title="Central Authentication Service">CAS</abbr> issuer  </td><td class="col1 centeralign">  _cas_id  </td>
 	</tr>
 	<tr class="row5 rowodd">
-		<td class="col0 centeralign">  Password reset  </td><td class="col1 centeralign">  user  </td>
+		<td class="col0 leftalign"> Password reset  </td><td class="col1 centeralign">  user  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT2 TABLE [890-1199] -->
 <p>
-
 <p><div class="noteimportant"><em>WHATTOTRACE</em> must be replaced by the attribute or macro configured in the What To Trace parameter (REMOTE_USER)
 </div></p>
 </p>
 
 <p>
-<p><div class="notetip">It is advised to use separate session backends for standard sessions, <acronym title="Security Assertion Markup Language">SAML</acronym> sessions and <acronym title="Central Authentication Service">CAS</acronym> sessions, in order to manage index separately.
+<p><div class="notetip">It is advised to use separate session backends for standard sessions, <abbr title="Security Assertion Markup Language">SAML</abbr> sessions and <abbr title="Central Authentication Service">CAS</abbr> sessions, in order to manage index separately.
 </div></p>
 </p>
 
@@ -87,17 +85,16 @@ The following table list fields to index depending on the feature you want to in
 </p>
 
 </div>
-<!-- SECTION "Browseable session backend" [1-1626] -->
-<h2><a name="setup" id="setup">Setup</a></h2>
+<!-- EDIT1 SECTION "Browseable session backend" [1-1623] -->
+<h2 class="sectionedit3" id="setup">Setup</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Setup" [1627-1645] -->
-<h3><a name="prepare_database" id="prepare_database">Prepare database</a></h3>
+<!-- EDIT3 SECTION "Setup" [1624-1642] -->
+<h3 class="sectionedit4" id="prepare_database">Prepare database</h3>
 <div class="level3">
 
 <p>
-
 Using Redis, you just have to prepare Redis database. See <a href="../../documentation/2.0/nosqlsessionbackend.html" class="wikilink1" title="documentation:2.0:nosqlsessionbackend">Redis session backend</a>.
 </p>
 
@@ -109,10 +106,10 @@ Using Redis, you just have to prepare Redis database. See <a href="../../documen
 Database must be prepared exactly like in <a href="../../documentation/2.0/sqlsessionbackend.html#prepare_the_database" class="wikilink1" title="documentation:2.0:sqlsessionbackend">SQL session backend</a> except that a field must be added for each data to index.
 </p>
 <pre class="code file sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> sessions <span class="br0">&#40;</span>
-    id char<span class="br0">&#40;</span>32<span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
-    a_session blob<span class="sy0">,</span>
-    _whatToTrace varchar<span class="br0">&#40;</span>255<span class="br0">&#41;</span><span class="sy0">,</span>
-    ipAddr varchar<span class="br0">&#40;</span>15<span class="br0">&#41;</span><span class="sy0">,</span>
+    id <span class="kw1">CHAR</span><span class="br0">&#40;</span><span class="nu0">32</span><span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
+    a_session <span class="kw1">BLOB</span><span class="sy0">,</span>
+    _whatToTrace <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    ipAddr <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="br0">&#41;</span><span class="sy0">,</span>
     <span class="kw1">KEY</span> _whatToTrace <span class="br0">&#40;</span>_whatToTrace<span class="br0">&#41;</span><span class="sy0">,</span>
     <span class="kw1">KEY</span> ipAddr <span class="br0">&#40;</span>ipAddr<span class="br0">&#41;</span>
     <span class="br0">&#41;</span>;</pre>
@@ -123,46 +120,46 @@ Database must be prepared exactly like in <a href="../../documentation/2.0/sqlse
 </p>
 
 </div>
-<!-- SECTION "Prepare database" [1646-2363] -->
-<h3><a name="manager" id="manager">Manager</a></h3>
+<!-- EDIT4 SECTION "Prepare database" [1643-2360] -->
+<h3 class="sectionedit5" id="manager">Manager</h3>
 <div class="level3">
 
 <p>
-
 Using Redis, you just have to add the “Index” parameter  in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> :
-
 </p>
-<table class="inline">
+<div class="table sectionedit6"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign" colspan="3">  Required parameters  </th>
 	</tr>
 	<tr class="row1 rowodd">
 		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Comment  </th><th class="col2 centeralign">  Example  </th>
 	</tr>
+	</thead>
 	<tr class="row2 roweven">
 		<td class="col0 centeralign">  <strong>server</strong>  </td><td class="col1"> Redis server </td><td class="col2"> 127.0.0.1:6379 </td>
 	</tr>
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT6 TABLE [2535-2692] -->
 <p>
-
 <em class="u">Example with MySQL</em>:
 </p>
 
 <p>
 Go in the Manager and set the session module (<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL"  rel="nofollow">Apache::Session::Browseable::MySQL</a> for MySQL) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
-
 </p>
-<table class="inline">
+<div class="table sectionedit7"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign" colspan="3">  Required parameters  </th>
 	</tr>
 	<tr class="row1 rowodd">
 		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Comment  </th><th class="col2 centeralign">  Example  </th>
 	</tr>
+	</thead>
 	<tr class="row2 roweven">
 		<td class="col0 centeralign">  <strong>DataSource</strong>  </td><td class="col1"> The <a href="http://search.cpan.org/perldoc?DBI" class="urlextern" title="http://search.cpan.org/perldoc?DBI"  rel="nofollow">DBI</a> string </td><td class="col2"> dbi:mysql:dbname=sessions </td>
 	</tr>
@@ -175,10 +172,9 @@ Go in the Manager and set the session module (<a href="http://search.cpan.org/pe
 	<tr class="row5 rowodd">
 		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT7 TABLE [3028-3359] -->
 <p>
-
 <p><div class="notetip">Apache::Session::Browseable::MySQL doesn&#039;t use locks so performances are keeped.
 </p>
 
@@ -188,12 +184,11 @@ For databases like PostgreSQL, don&#039;t forget to add “Commit” with a valu
 </p>
 
 </div>
-<!-- SECTION "Manager" [2364-3541] -->
-<h2><a name="security" id="security">Security</a></h2>
+<!-- EDIT5 SECTION "Manager" [2361-3538] -->
+<h2 class="sectionedit8" id="security">Security</h2>
 <div class="level2">
 
 <p>
-
 Restrict network access to the database.
 </p>
 
@@ -202,4 +197,4 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- SECTION "Security" [3542-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

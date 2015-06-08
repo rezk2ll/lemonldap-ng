@@ -20,18 +20,15 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="prerequisites_and_dependencies" id="prerequisites_and_dependencies">Prerequisites and dependencies</a></h1>
+<h1 class="sectionedit1" id="prerequisites_and_dependencies">Prerequisites and dependencies</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Prerequisites and dependencies" [1-47] -->
-<h2><a name="apache" id="apache">Apache</a></h2>
+<!-- EDIT1 SECTION "Prerequisites and dependencies" [1-47] -->
+<h2 class="sectionedit2" id="apache">Apache</h2>
 <div class="level2">
 
 <p>
-
 To use LemonLDAP::NG, you have to run an Apache
 server compiled with mod-perl
 </p>
@@ -42,7 +39,7 @@ server compiled with mod-perl
 </p>
 
 <p>
-For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-worker works faster and LemonLDAP::NG use the thread system for best performance. If you have to use mpm-prefork (for example if you use <acronym title="Hypertext Preprocessor">PHP</acronym>), LemonLDAP::NG will work anyway.
+For Apache2, you can use all workers mpm-worker, mpm-prefork and mpm-event. Mpm-worker works faster and LemonLDAP::NG use the thread system for best performance. If you have to use mpm-prefork (for example if you use PHP), LemonLDAP::NG will work anyway.
 </p>
 
 <p>
@@ -50,52 +47,51 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </p>
 
 </div>
-<!-- SECTION "Apache" [48-806] -->
-<h2><a name="perl" id="perl">Perl</a></h2>
+<!-- EDIT2 SECTION "Apache" [48-806] -->
+<h2 class="sectionedit3" id="perl">Perl</h2>
 <div class="level2">
 
 <p>
-
-<p><div class="noteclassic">Here is the list of <acronym title="Practical Extraction and Report Language">Perl</acronym> modules used in LemonLDAP::NG. Core modules must be installed on the system. Other modules must be installed only if you planned to use the related feature.
+<p><div class="noteclassic">Here is the list of Perl modules used in LemonLDAP::NG. Core modules must be installed on the system. Other modules must be installed only if you planned to use the related feature.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Perl" [807-1020] -->
-<h3><a name="core" id="core">Core</a></h3>
+<!-- EDIT3 SECTION "Perl" [807-1020] -->
+<h3 class="sectionedit4" id="core">Core</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Apache::Session</div>
 </li>
-<li class="level1"><div class="li"> Net::<acronym title="Lightweight Directory Access Protocol">LDAP</acronym></div>
+<li class="level1"><div class="li"> Net::LDAP</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Multipurpose Internet Mail Extension">MIME</acronym>::Base64</div>
+<li class="level1"><div class="li"> MIME::Base64</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Common Gateway Interface">CGI</acronym></div>
+<li class="level1"><div class="li"> CGI</div>
 </li>
 <li class="level1"><div class="li"> LWP::UserAgent</div>
 </li>
 <li class="level1"><div class="li"> Cache::Cache</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Database Interface">DBI</acronym></div>
+<li class="level1"><div class="li"> <abbr title="Database Interface">DBI</abbr></div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Extensible Markup Language">XML</acronym>::Simple</div>
+<li class="level1"><div class="li"> XML::Simple</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Common Gateway Interface">CGI</acronym>::Session</div>
+<li class="level1"><div class="li"> CGI::Session</div>
 </li>
 <li class="level1"><div class="li"> Regexp::Assemble</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Extensible Markup Language">XML</acronym>::LibXML</div>
+<li class="level1"><div class="li"> XML::LibXML</div>
 </li>
 <li class="level1"><div class="li"> Crypt::Rijndael</div>
 </li>
 <li class="level1"><div class="li"> IO::String</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Extensible Markup Language">XML</acronym>::LibXSLT</div>
+<li class="level1"><div class="li"> XML::LibXSLT</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="HyperText Markup Language">HTML</acronym>::Template</div>
+<li class="level1"><div class="li"> <abbr title="HyperText Markup Language">HTML</abbr>::Template</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Simple Object Access Protocol">SOAP</acronym>::Lite</div>
+<li class="level1"><div class="li"> SOAP::Lite</div>
 </li>
 <li class="level1"><div class="li"> Config::IniFiles</div>
 </li>
@@ -128,8 +124,8 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "Core" [1021-1557] -->
-<h3><a name="saml2" id="saml2">SAML2</a></h3>
+<!-- EDIT4 SECTION "Core" [1021-1557] -->
+<h3 class="sectionedit5" id="saml2">SAML2</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> <a href="http://lasso.entrouvert.org/" class="urlextern" title="http://lasso.entrouvert.org/"  rel="nofollow">Lasso</a></div>
@@ -139,8 +135,8 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "SAML2" [1558-1627] -->
-<h3><a name="cas_authentication_module" id="cas_authentication_module">CAS (authentication module)</a></h3>
+<!-- EDIT5 SECTION "SAML2" [1558-1627] -->
+<h3 class="sectionedit6" id="cas_authentication_module">CAS (authentication module)</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> <a href="http://sourcesup.cru.fr/projects/perlcas/" class="urlextern" title="http://sourcesup.cru.fr/projects/perlcas/"  rel="nofollow">AuthCAS</a></div>
@@ -148,8 +144,8 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "CAS (authentication module)" [1628-1725] -->
-<h3><a name="openid" id="openid">OpenID</a></h3>
+<!-- EDIT6 SECTION "CAS (authentication module)" [1628-1725] -->
+<h3 class="sectionedit7" id="openid">OpenID</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Net::OpenID::Consumer &gt; 1.00</div>
@@ -159,8 +155,8 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "OpenID" [1726-1808] -->
-<h3><a name="twitter" id="twitter">Twitter</a></h3>
+<!-- EDIT7 SECTION "OpenID" [1726-1808] -->
+<h3 class="sectionedit8" id="twitter">Twitter</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Net::Twitter</div>
@@ -168,8 +164,8 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "Twitter" [1809-1845] -->
-<h3><a name="pod_unit_tests" id="pod_unit_tests">POD unit tests</a></h3>
+<!-- EDIT8 SECTION "Twitter" [1809-1845] -->
+<h3 class="sectionedit9" id="pod_unit_tests">POD unit tests</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Test::POD</div>
@@ -179,27 +175,27 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "POD unit tests" [1846-1907] -->
-<h3><a name="smtp_reset_password_by_mail" id="smtp_reset_password_by_mail">SMTP / Reset password by mail</a></h3>
+<!-- EDIT9 SECTION "POD unit tests" [1846-1907] -->
+<h3 class="sectionedit10" id="smtpreset_password_by_mail">SMTP / Reset password by mail</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li"> <acronym title="Multipurpose Internet Mail Extension">MIME</acronym>::Lite</div>
+<li class="level1"><div class="li"> MIME::Lite</div>
 </li>
 <li class="level1"><div class="li"> Email::Date::Format</div>
 </li>
 <li class="level1"><div class="li"> String::Random</div>
 </li>
-<li class="level1"><div class="li"> Net::<acronym title="Simple Mail Transfer Protocol">SMTP</acronym></div>
+<li class="level1"><div class="li"> Net::SMTP</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Multipurpose Internet Mail Extension">MIME</acronym>::Base64</div>
+<li class="level1"><div class="li"> MIME::Base64</div>
 </li>
 <li class="level1"><div class="li"> Authen::SASL</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "SMTP / Reset password by mail" [1908-2055] -->
-<h2><a name="other" id="other">Other</a></h2>
+<!-- EDIT10 SECTION "SMTP / Reset password by mail" [1908-2055] -->
+<h2 class="sectionedit11" id="other">Other</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Jquery (javascript framework) is included in tarball and RPMs, but is a dependency on Debian official releases</div>
@@ -209,31 +205,26 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "Other" [2056-2272] -->
-<h2><a name="install_dependencies_on_your_system" id="install_dependencies_on_your_system">Install dependencies on your system</a></h2>
+<!-- EDIT11 SECTION "Other" [2056-2272] -->
+<h2 class="sectionedit12" id="install_dependencies_on_your_system">Install dependencies on your system</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install dependencies on your system" [2273-2322] -->
-<h3><a name="apt-get" id="apt-get">APT-GET</a></h3>
+<!-- EDIT12 SECTION "Install dependencies on your system" [2273-2322] -->
+<h3 class="sectionedit13" id="apt-get">APT-GET</h3>
 <div class="level3">
-<pre class="code">
-apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl libconfig-inifiles-perl libjson-perl libstring-random-perl libemail-date-format-perl libmime-lite-perl libcrypt-openssl-rsa-perl libdigest-hmac-perl libclone-perl libauthen-sasl-perl libnet-cidr-lite-perl libcrypt-openssl-x509-perl libauthcas-perl libtest-pod-perl libtest-mockobject-perl libauthen-captcha-perl libnet-openid-consumer-perl libnet-openid-server-perl libunicode-string-perl libconvert-pem-perl libmouse-perl
-</pre>
+<pre class="code">apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl libconfig-inifiles-perl libjson-perl libstring-random-perl libemail-date-format-perl libmime-lite-perl libcrypt-openssl-rsa-perl libdigest-hmac-perl libclone-perl libauthen-sasl-perl libnet-cidr-lite-perl libcrypt-openssl-x509-perl libauthcas-perl libtest-pod-perl libtest-mockobject-perl libauthen-captcha-perl libnet-openid-consumer-perl libnet-openid-server-perl libunicode-string-perl libconvert-pem-perl libmouse-perl</pre>
 
 </div>
-<!-- SECTION "APT-GET" [2323-3119] -->
-<h3><a name="yum" id="yum">YUM</a></h3>
+<!-- EDIT13 SECTION "APT-GET" [2323-3119] -->
+<h3 class="sectionedit14" id="yum">YUM</h3>
 <div class="level3">
 
 <p>
-
 <p><div class="notetip">You need  <a href="http://fedoraproject.org/wiki/EPEL/" class="urlextern" title="http://fedoraproject.org/wiki/EPEL/"  rel="nofollow">EPEL</a> repository. See how you can activate this repository: <a href="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse" class="urlextern" title="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse"  rel="nofollow">http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</a>
 </div></p>
 </p>
-<pre class="code">
-yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Clone perl-Authen-SASL perl-Log-Log4perl perl-Unicode-String perl-Net-CIDR-Lite perl-Cache-Memcached perl-Convert-PEM perl-Mouse
-</pre>
+<pre class="code">yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Clone perl-Authen-SASL perl-Log-Log4perl perl-Unicode-String perl-Net-CIDR-Lite perl-Cache-Memcached perl-Convert-PEM perl-Mouse</pre>
 
 </div>
-<!-- SECTION "YUM" [3120-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

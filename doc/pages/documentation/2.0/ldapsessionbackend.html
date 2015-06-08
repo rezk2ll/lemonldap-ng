@@ -20,18 +20,15 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="ldap_session_backend" id="ldap_session_backend">LDAP session backend</a></h1>
+<h1 class="sectionedit1" id="ldap_session_backend">LDAP session backend</h1>
 <div class="level1">
 
 <p>
-
-An Apache session module was created by <acronym title="LemonLDAP::NG">LL::NG</acronym> team to store sessions in an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory.
+An Apache session module was created by <abbr title="LemonLDAP::NG">LL::NG</abbr> team to store sessions in an LDAP directory.
 </p>
 
 <p>
-<p><div class="noteimportant">This module is not part of <acronym title="LemonLDAP::NG">LL::NG</acronym> distibution, and can be found on CPAN: <a href="http://search.cpan.org/dist/Apache-Session-LDAP/" class="urlextern" title="http://search.cpan.org/dist/Apache-Session-LDAP/"  rel="nofollow">Apache::Session::LDAP</a>.
+<p><div class="noteimportant">This module is not part of <abbr title="LemonLDAP::NG">LL::NG</abbr> distibution, and can be found on CPAN: <a href="http://search.cpan.org/dist/Apache-Session-LDAP/" class="urlextern" title="http://search.cpan.org/dist/Apache-Session-LDAP/"  rel="nofollow">Apache::Session::LDAP</a>.
 </div></p>
 </p>
 
@@ -41,38 +38,36 @@ An Apache session module was created by <acronym title="LemonLDAP::NG">LL::NG</a
 </p>
 
 <p>
-Sessions will be stored as <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> entries, like this:
+Sessions will be stored as LDAP entries, like this:
 </p>
-<pre class="file">
-dn: cn=6fb7c4a170a04668771f03b0a4747f46,ou=sessions,dc=example,dc=com
+<pre class="file">dn: cn=6fb7c4a170a04668771f03b0a4747f46,ou=sessions,dc=example,dc=com
 objectClass: top
 objectClass: applicationProcess
 cn: 6fb7c4a170a04668771f03b0a4747f46
-description: [serialized data]
-</pre>
+description: [serialized data]</pre>
 
 </div>
-<!-- SECTION "LDAP session backend" [1-667] -->
-<h2><a name="setup" id="setup">Setup</a></h2>
+<!-- EDIT1 SECTION "LDAP session backend" [1-667] -->
+<h2 class="sectionedit2" id="setup">Setup</h2>
 <div class="level2">
 
 <p>
-
-Go in the Manager and set the <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> session module (<a href="http://search.cpan.org/dist/Apache-Session-LDAP/" class="urlextern" title="http://search.cpan.org/dist/Apache-Session-LDAP/"  rel="nofollow">Apache::Session::LDAP</a>) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
-
+Go in the Manager and set the LDAP session module (<a href="http://search.cpan.org/dist/Apache-Session-LDAP/" class="urlextern" title="http://search.cpan.org/dist/Apache-Session-LDAP/"  rel="nofollow">Apache::Session::LDAP</a>) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
 </p>
-<table class="inline">
+<div class="table sectionedit3"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign" colspan="3">  Required parameters  </th>
 	</tr>
 	<tr class="row1 rowodd">
 		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Comment  </th><th class="col2 centeralign">  Example  </th>
 	</tr>
+	</thead>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  <strong>ldapServer</strong>  </td><td class="col1"> <acronym title="Uniform Resource Identifier">URI</acronym> of the server </td><td class="col2"> ldap://localhost </td>
+		<td class="col0 centeralign">  <strong>ldapServer</strong>  </td><td class="col1"> <abbr title="Uniform Resource Identifier">URI</abbr> of the server </td><td class="col2"> ldap://localhost </td>
 	</tr>
 	<tr class="row3 rowodd">
-		<td class="col0 centeralign">  <strong>ldapConfBase</strong>  </td><td class="col1"> <acronym title="Distinguished Name">DN</acronym> of sessions branch </td><td class="col2"> ou=sessions,dc=example,dc=com </td>
+		<td class="col0 centeralign">  <strong>ldapConfBase</strong>  </td><td class="col1"> <abbr title="Distinguished Name">DN</abbr> of sessions branch </td><td class="col2"> ou=sessions,dc=example,dc=com </td>
 	</tr>
 	<tr class="row4 roweven">
 		<td class="col0 centeralign">  <strong>ldapBindDN</strong>  </td><td class="col1"> Connection login </td><td class="col2"> cn=admin,dc=example,dc=password </td>
@@ -80,16 +75,15 @@ Go in the Manager and set the <acronym title="Lightweight Directory Access Proto
 	<tr class="row5 rowodd">
 		<td class="col0 centeralign">  <strong>ldapBindPassword</strong>  </td><td class="col1"> Connection password </td><td class="col2"> secret </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT3 TABLE [961-1298] -->
 </div>
-<!-- SECTION "Setup" [668-1299] -->
-<h2><a name="security" id="security">Security</a></h2>
+<!-- EDIT2 SECTION "Setup" [668-1299] -->
+<h2 class="sectionedit4" id="security">Security</h2>
 <div class="level2">
 
 <p>
-
-Restrict network access to the <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory, and add specific <acronym title="Access Control List">ACL</acronym> to session branch.
+Restrict network access to the LDAP directory, and add specific <abbr title="Access Control List">ACL</abbr> to session branch.
 </p>
 
 <p>
@@ -97,4 +91,4 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- SECTION "Security" [1300-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

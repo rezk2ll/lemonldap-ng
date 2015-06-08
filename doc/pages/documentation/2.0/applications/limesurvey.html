@@ -20,28 +20,24 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="limesurvey" id="limesurvey">LimeSurvey</a></h1>
+<h1 class="sectionedit1" id="limesurvey">LimeSurvey</h1>
 <div class="level1">
 
 <p>
-
 <a href="/_detail/applications/limesurvey_logo.png?id=documentation%3A2.0%3Aapplications%3Alimesurvey" class="media" title="applications:limesurvey_logo.png"><img src="../../../../media/applications/limesurvey_logo.png" class="mediacenter" alt="" /></a>
 </p>
 
 </div>
-<!-- SECTION "LimeSurvey" [1-70] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "LimeSurvey" [1-70] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<a href="http://www.limesurvey.org" class="urlextern" title="http://www.limesurvey.org"  rel="nofollow">LimeSurvey</a> is a web survey software written in <acronym title="Hypertext Preprocessor">PHP</acronym>. LimeSurvey has a webserver authentication mode that allows to integrate it directly into LemonLDAP::NG.
+<a href="http://www.limesurvey.org" class="urlextern" title="http://www.limesurvey.org"  rel="nofollow">LimeSurvey</a> is a web survey software written in PHP. LimeSurvey has a webserver authentication mode that allows to integrate it directly into LemonLDAP::NG.
 </p>
 
 <p>
-To have a stronger integration, we will configure LimeSurvey to autocreate unknown users and use <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers to fill name, mail and roles. For example, we will use 3 roles:
+To have a stronger integration, we will configure LimeSurvey to autocreate unknown users and use HTTP headers to fill name, mail and roles. For example, we will use 3 roles:
 </p>
 <ul>
 <li class="level1"><div class="li"> User: can answer to surveys</div>
@@ -53,29 +49,24 @@ To have a stronger integration, we will configure LimeSurvey to autocreate unkno
 </ul>
 
 </div>
-<!-- SECTION "Presentation" [71-557] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [71-557] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
 <p><div class="noteclassic">We suppose that LimeSurvey is installed in /var/www/html/limesurvey
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Configuration" [558-666] -->
-<h3><a name="limesurvey_configuration" id="limesurvey_configuration">LimeSurvey configuration</a></h3>
+<!-- EDIT3 SECTION "Configuration" [558-666] -->
+<h3 class="sectionedit4" id="limesurvey_configuration">LimeSurvey configuration</h3>
 <div class="level3">
 
 <p>
-
 The configuration is done in config.php:
-
 </p>
-<pre class="code">
-vi /var/www/html/limesurvey/config.php
-</pre>
+<pre class="code">vi /var/www/html/limesurvey/config.php</pre>
 <pre class="code file php"><span class="co1">//==================================</span>
 <span class="co1">// WebSSO</span>
 <span class="co1">//==================================</span>
@@ -98,20 +89,19 @@ vi /var/www/html/limesurvey/config.php
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 <p>
-<p><div class="notetip">We directly use <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers to fill default user profile.
+<p><div class="notetip">We directly use HTTP headers to fill default user profile.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "LimeSurvey configuration" [667-1672] -->
-<h3><a name="limesurvey_virtual_host_in_apache" id="limesurvey_virtual_host_in_apache">LimeSurvey virtual host in Apache</a></h3>
+<!-- EDIT4 SECTION "LimeSurvey configuration" [667-1672] -->
+<h3 class="sectionedit5" id="limesurvey_virtual_host_in_apache">LimeSurvey virtual host in Apache</h3>
 <div class="level3">
 
 <p>
-
 Configure LimeSurvey virtual host like other <a href="../../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a>.
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> limesurvey.example.com
 &nbsp;
        PerlHeaderParserHandler Lemonldap::NG::Handler
@@ -124,28 +114,29 @@ Configure LimeSurvey virtual host like other <a href="../../../documentation/2.0
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 <p>
-<p><div class="noteimportant">You need to set the <acronym title="Hypertext Preprocessor">PHP</acronym>_AUTH_USER variable to have the Webserver authentication mode working.
+<p><div class="noteimportant">You need to set the PHP_AUTH_USER variable to have the Webserver authentication mode working.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "LimeSurvey virtual host in Apache" [1673-2227] -->
-<h3><a name="limesurvey_virtual_host_in_manager" id="limesurvey_virtual_host_in_manager">LimeSurvey virtual host in Manager</a></h3>
+<!-- EDIT5 SECTION "LimeSurvey virtual host in Apache" [1673-2227] -->
+<h3 class="sectionedit6" id="limesurvey_virtual_host_in_manager">LimeSurvey virtual host in Manager</h3>
 <div class="level3">
 
 <p>
-
 Go to the Manager and <a href="../../../documentation/2.0/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:2.0:configvhost">create a new virtual host</a> for LimeSurvey.
 </p>
 
 </div>
 
-<h4><a name="headers" id="headers">Headers</a></h4>
+<h4 id="headers">Headers</h4>
 <div class="level4">
-<table class="inline">
+<div class="table sectionedit7"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Header name  </th><th class="col1 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  Auth-User  </td><td class="col1 centeralign">  user login  </td>
 	</tr>
@@ -161,22 +152,23 @@ Go to the Manager and <a href="../../../documentation/2.0/configvhost.html#lemon
 	<tr class="row5 rowodd">
 		<td class="col0 centeralign">  Auth-SuperAdmin  </td><td class="col1 centeralign">  1 if user is superadmin  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT7 TABLE [2400-2618] -->
 <p>
-
 <p><div class="notetip">You can manage roles with the <a href="../../../documentation/2.0/rbac.html" class="wikilink1" title="documentation:2.0:rbac">RBAC model</a> or by using groups.
 </div></p>
 </p>
 
 </div>
 
-<h4><a name="rules" id="rules">Rules</a></h4>
+<h4 id="rules">Rules</h4>
 <div class="level4">
-<table class="inline">
+<div class="table sectionedit8"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Rule name  </th><th class="col1 centeralign">  Expression  </th><th class="col2 centeralign">  Description  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  Logout  </td><td class="col1 centeralign">  action=logout$  </td><td class="col2 centeralign">  Logout rule (for example logout_app_sso)  </td>
 	</tr>
@@ -186,10 +178,9 @@ Go to the Manager and <a href="../../../documentation/2.0/configvhost.html#lemon
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">  Default  </td><td class="col1 centeralign">  default  </td><td class="col2 centeralign">  Allow only users with a LimeSurvey role  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT8 TABLE [2725-3010] -->
 <p>
-
 <p><div class="notetip">
 You can set the default access to:
 </p>
@@ -203,8 +194,7 @@ You can set the default access to:
 <p>
 
 </div></p>
-
 </p>
 
 </div>
-<!-- SECTION "LimeSurvey virtual host in Manager" [2228-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

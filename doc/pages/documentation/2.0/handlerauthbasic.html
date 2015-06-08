@@ -20,24 +20,21 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="authbasic_handler" id="authbasic_handler">AuthBasic Handler</a></h1>
+<h1 class="sectionedit1" id="authbasic_handler">AuthBasic Handler</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "AuthBasic Handler" [1-33] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "AuthBasic Handler" [1-33] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
 The AuthBasic Handler is a special Handler that will us AuthBasic to authenticate to a virtual host, and then play authorizations rules to allow access to the virtual 
 host.
 </p>
 
 <p>
-The Handler will send a <acronym title="World Wide Web">WWW</acronym>-Authenticate header to the client, to request user and password, and then check the credentials using <acronym title="Simple Object Access Protocol">SOAP</acronym> getCookies web service. When session is granted, the Handler will then check the authorizations like the standard Handler.
+The Handler will send a WWW-Authenticate header to the client, to request user and password, and then check the credentials using SOAP getCookies web service. When session is granted, the Handler will then check the authorizations like the standard Handler.
 </p>
 
 <p>
@@ -45,20 +42,19 @@ This can be useful to allow an third party application to access a virtual host 
 </p>
 
 </div>
-<!-- SECTION "Presentation" [34-634] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [34-634] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [635-661] -->
-<h3><a name="virtual_host_in_apache" id="virtual_host_in_apache">Virtual host in Apache</a></h3>
+<!-- EDIT3 SECTION "Configuration" [635-661] -->
+<h3 class="sectionedit4" id="virtual_host_in_apache">Virtual host in Apache</h3>
 <div class="level3">
 
 <p>
-
 Configure the virtual host like other <a href="../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a> but use AuthBasic Handler instead of default Handler.
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> basic.example.com
 &nbsp;
        <span class="co1"># Load AuthBasic Handler</span>
@@ -71,26 +67,23 @@ Configure the virtual host like other <a href="../../documentation/2.0/configvho
 
 <p>
 <p><div class="notetip">
-If LemonLDAP::NG portal is protected by <acronym title="Secure Sockets Layer">SSL</acronym> with a self-signed certificate, you can add this line to accept it:
-
+If LemonLDAP::NG portal is protected by SSL with a self-signed certificate, you can add this line to accept it:
 </p>
 <pre class="code file apache">PerlSetEnv PERL_LWP_SSL_VERIFY_HOSTNAME <span class="nu0">0</span></pre>
 
 <p>
 
-
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Virtual host in Apache" [662-1306] -->
-<h3><a name="handler_parameters" id="handler_parameters">Handler parameters</a></h3>
+<!-- EDIT4 SECTION "Virtual host in Apache" [662-1306] -->
+<h3 class="sectionedit5" id="handler_parameters">Handler parameters</h3>
 <div class="level3">
 
 <p>
-
 No parameters needed. But you have to allow sessions web services, see <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP sessions backend</a>.
 </p>
 
 </div>
-<!-- SECTION "Handler parameters" [1307-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

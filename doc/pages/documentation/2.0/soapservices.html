@@ -20,14 +20,11 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="soap_services" id="soap_services">SOAP services</a></h1>
+<h1 class="sectionedit1" id="soap_services">SOAP services</h1>
 <div class="level1">
 
 <p>
-
-Lemonldap::NG provides 2 <acronym title="Simple Object Access Protocol">SOAP</acronym> servers :
+Lemonldap::NG provides 2 SOAP servers :
 </p>
 <ul>
 <li class="level1"><div class="li"> the <a href="../../documentation/2.0/portal.html" class="wikilink1" title="documentation:2.0:portal">portal</a></div>
@@ -37,13 +34,12 @@ Lemonldap::NG provides 2 <acronym title="Simple Object Access Protocol">SOAP</ac
 </ul>
 
 </div>
-<!-- SECTION "SOAP services" [1-129] -->
-<h2><a name="portal_soap_services" id="portal_soap_services">Portal SOAP services</a></h2>
+<!-- EDIT1 SECTION "SOAP services" [1-129] -->
+<h2 class="sectionedit2" id="portal_soap_services">Portal SOAP services</h2>
 <div class="level2">
 
 <p>
-
-<acronym title="Simple Object Access Protocol">SOAP</acronym> functions are not accessible by network by default. <acronym title="Simple Object Access Protocol">SOAP</acronym> functions are protected by Apache, you can change this in <a href="../../documentation/2.0/configlocation.html#portal" class="wikilink1" title="documentation:2.0:configlocation">Apache portal configuration</a>:
+SOAP functions are not accessible by network by default. SOAP functions are protected by Apache, you can change this in <a href="../../documentation/2.0/configlocation.html#portal" class="wikilink1" title="documentation:2.0:configlocation">Apache portal configuration</a>:
 </p>
 <pre class="code file apache">    <span class="co1"># SOAP functions for sessions management (disabled by default)</span>
     &lt;<span class="kw3">Location</span> /index.pl/adminSessions&gt;
@@ -70,9 +66,8 @@ Lemonldap::NG provides 2 <acronym title="Simple Object Access Protocol">SOAP</ac
     &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 <p>
-<p><div class="notetip">You can create a <acronym title="Simple Object Access Protocol">SOAP</acronym> only portal by setting “soapOnly = 1” in lemonldap-ng.ini (section PORTAL)
+<p><div class="notetip">You can create a SOAP only portal by setting “soapOnly = 1” in lemonldap-ng.ini (section PORTAL)
 </div></p>
-
 </p>
 <ul>
 <li class="level1"><div class="li"> Read-only functions (index.pl/sessions or index.pl/adminSessions paths):</div>
@@ -114,21 +109,19 @@ Lemonldap::NG provides 2 <acronym title="Simple Object Access Protocol">SOAP</ac
 </ul>
 
 <p>
-
-<p><div class="noteimportant">When you use <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP sessions backend</a>, it is recommended to use read-only <acronym title="Uniform Resource Locator">URL</acronym> (<a href="http://portal/index.pl/sessions" class="urlextern" title="http://portal/index.pl/sessions"  rel="nofollow">http://portal/index.pl/sessions</a>). Write session path is needed only if you use a remote session explorer or a remote portal
+<p><div class="noteimportant">When you use <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP sessions backend</a>, it is recommended to use read-only <abbr title="Uniform Resource Locator">URL</abbr> (<a href="http://portal/index.pl/sessions" class="urlextern" title="http://portal/index.pl/sessions"  rel="nofollow">http://portal/index.pl/sessions</a>). Write session path is needed only if you use a remote session explorer or a remote portal
 
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Portal SOAP services" [130-2479] -->
-<h2><a name="wsdl_file" id="wsdl_file">WSDL file</a></h2>
+<!-- EDIT2 SECTION "Portal SOAP services" [130-2479] -->
+<h2 class="sectionedit3" id="wsdl_file">WSDL file</h2>
 <div class="level2">
 
 <p>
-
 When portal is installed, a file named portal.wsdl is created. It can be upgraded using buildPortalWSDL script.
 </p>
 
 </div>
-<!-- SECTION "WSDL file" [2480-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

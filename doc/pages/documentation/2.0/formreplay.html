@@ -20,34 +20,31 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="form_replay" id="form_replay">Form replay</a></h1>
+<h1 class="sectionedit1" id="form_replay">Form replay</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Form replay" [1-27] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Form replay" [1-27] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-Form replay allows you to open a session on a protected application by filling a <acronym title="HyperText Markup Language">HTML</acronym> POST login form and autosubmitting it, without asking anything to the user.
+Form replay allows you to open a session on a protected application by filling a <abbr title="HyperText Markup Language">HTML</abbr> POST login form and autosubmitting it, without asking anything to the user.
 </p>
 
 <p>
 <p><div class="notewarning">
-This kind of <acronym title="Single Sign On">SSO</acronym> mechanism is not clean, and can lead to problems, like local password blocking, local session not well closed, etc.
+This kind of <abbr title="Single Sign On">SSO</abbr> mechanism is not clean, and can lead to problems, like local password blocking, local session not well closed, etc.
 </p>
 
 <p>
-Please always try to find another solution to protect your application with <acronym title="LemonLDAP::NG">LL::NG</acronym>. At least, check if it is not a <a href="../../documentation/2.0/applications.html" class="wikilink1" title="documentation:2.0:applications">known application</a>, or <a href="../../documentation/2.0/selfmadeapplication.html" class="wikilink1" title="documentation:2.0:selfmadeapplication">try to adapt its source code</a>.
+Please always try to find another solution to protect your application with <abbr title="LemonLDAP::NG">LL::NG</abbr>. At least, check if it is not a <a href="../../documentation/2.0/applications.html" class="wikilink1" title="documentation:2.0:applications">known application</a>, or <a href="../../documentation/2.0/selfmadeapplication.html" class="wikilink1" title="documentation:2.0:selfmadeapplication">try to adapt its source code</a>.
 
 </div></p>
 </p>
 
 <p>
-If you configure form replay with <acronym title="LemonLDAP::NG">LL::NG</acronym>, the Handler will detect forms to fill, add a javascript in the html page to fill form fields with dummy datas and submit it, then intercept the POST request and add POST data in the request body.
+If you configure form replay with <abbr title="LemonLDAP::NG">LL::NG</abbr>, the Handler will detect forms to fill, add a javascript in the html page to fill form fields with dummy datas and submit it, then intercept the POST request and add POST data in the request body.
 </p>
 
 <p>
@@ -61,20 +58,19 @@ To post user&#039;s password, you must enable <a href="../../documentation/2.0/p
 </p>
 
 </div>
-<!-- SECTION "Presentation" [28-1068] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [28-1068] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
 You should grab some informations:
 </p>
 <ul>
-<li class="level1"><div class="li"> <acronym title="Uniform Resource Identifier">URI</acronym> of the html page which contains the form</div>
+<li class="level1"><div class="li"> <abbr title="Uniform Resource Identifier">URI</abbr> of the html page which contains the form</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Uniform Resource Identifier">URI</acronym> the html form is sent to</div>
+<li class="level1"><div class="li"> <abbr title="Uniform Resource Identifier">URI</abbr> the html form is sent to</div>
 </li>
-<li class="level1"><div class="li"> Does the html page load jQuery ? If not, grab a jQuery <acronym title="Uniform Resource Locator">URL</acronym> reachable by user (any version over jQuery 1.0 is suitable)</div>
+<li class="level1"><div class="li"> Does the html page load jQuery ? If not, grab a jQuery <abbr title="Uniform Resource Locator">URL</abbr> reachable by user (any version over jQuery 1.0 is suitable)</div>
 </li>
 <li class="level1"><div class="li"> are there several html forms in the page ? If so, get a jQuery selector for the form you want to post</div>
 </li>
@@ -92,11 +88,11 @@ If you don&#039;t know jQuery selector, just be aware that they are similar to c
 For example:
 </p>
 <ul>
-<li class="level1"><div class="li"> Form page <acronym title="Uniform Resource Identifier">URI</acronym>: /login.php</div>
+<li class="level1"><div class="li"> Form page <abbr title="Uniform Resource Identifier">URI</abbr>: /login.php</div>
 </li>
-<li class="level1"><div class="li"> Target <acronym title="Uniform Resource Identifier">URI</acronym>: /process.php (if you let this parameter empty, target <acronym title="Uniform Resource Identifier">URI</acronym> is supposed to be the same as form page <acronym title="Uniform Resource Identifier">URI</acronym>)</div>
+<li class="level1"><div class="li"> Target <abbr title="Uniform Resource Identifier">URI</abbr>: /process.php (if you let this parameter empty, target <abbr title="Uniform Resource Identifier">URI</abbr> is supposed to be the same as form page <abbr title="Uniform Resource Identifier">URI</abbr>)</div>
 </li>
-<li class="level1"><div class="li"> jQuery <acronym title="Uniform Resource Locator">URL</acronym>: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (if you let this parameter empty, jQuery is supposed to be already loaded; you can also set “default” to point to jQuery <acronym title="Uniform Resource Locator">URL</acronym> of <acronym title="LemonLDAP::NG">LL::NG</acronym> portal)</div>
+<li class="level1"><div class="li"> jQuery <abbr title="Uniform Resource Locator">URL</abbr>: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (if you let this parameter empty, jQuery is supposed to be already loaded; you can also set “default” to point to jQuery <abbr title="Uniform Resource Locator">URL</abbr> of <abbr title="LemonLDAP::NG">LL::NG</abbr> portal)</div>
 </li>
 <li class="level1"><div class="li"> jQuery form selector: #loginForm (if you let this parameter empty, browser will fill and submit any html form)</div>
 </li>
@@ -117,7 +113,6 @@ For example:
 </ul>
 
 <p>
-
 Then go in Manager, “Virtual Hosts” » <em>virtualhost</em> » “Form replay” and click on “New form”.
 </p>
 
@@ -129,11 +124,11 @@ Then go in Manager, “Virtual Hosts” » <em>virtualhost</em> » “Form repla
 Fill values here:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Form <acronym title="Uniform Resource Locator">URL</acronym></strong>: /login.php</div>
+<li class="level1"><div class="li"> <strong>Form <abbr title="Uniform Resource Locator">URL</abbr></strong>: /login.php</div>
 </li>
-<li class="level1"><div class="li"> <strong>Target <acronym title="Uniform Resource Locator">URL</acronym></strong>: /process.php</div>
+<li class="level1"><div class="li"> <strong>Target <abbr title="Uniform Resource Locator">URL</abbr></strong>: /process.php</div>
 </li>
-<li class="level1"><div class="li"> <strong>jQuery <acronym title="Uniform Resource Locator">URL</acronym></strong>: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js</div>
+<li class="level1"><div class="li"> <strong>jQuery <abbr title="Uniform Resource Locator">URL</abbr></strong>: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js</div>
 </li>
 <li class="level1"><div class="li"> <strong>jQuery form selector</strong>: #loginForm</div>
 </li>
@@ -142,7 +137,6 @@ Fill values here:
 </ul>
 
 <p>
-
 Then click on <code>New POST data</code> and add all data with their values, for example:
 </p>
 
@@ -151,9 +145,9 @@ Then click on <code>New POST data</code> and add all data with their values, for
 </p>
 
 <p>
-<p><div class="notetip">You can define more than one form replay <acronym title="Uniform Resource Locator">URL</acronym> per virtual host.
+<p><div class="notetip">You can define more than one form replay <abbr title="Uniform Resource Locator">URL</abbr> per virtual host.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Configuration" [1069-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

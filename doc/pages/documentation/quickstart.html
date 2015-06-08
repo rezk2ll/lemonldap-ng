@@ -20,13 +20,10 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="quick_start_tutorial" id="quick_start_tutorial">Quick start tutorial</a></h1>
+<h1 class="sectionedit1" id="quick_start_tutorial">Quick start tutorial</h1>
 <div class="level1">
 
 <p>
-
 <p><div class="noteimportant">
 This tutorial will guide you into a minimal installation and configuration procedure. You need some prerequisites:
 </p>
@@ -45,17 +42,16 @@ This tutorial will guide you into a minimal installation and configuration proce
 </p>
 
 </div>
-<!-- SECTION "Quick start tutorial" [1-347] -->
-<h2><a name="installation" id="installation">Installation</a></h2>
+<!-- EDIT1 SECTION "Quick start tutorial" [1-347] -->
+<h2 class="sectionedit2" id="installation">Installation</h2>
 <div class="level2">
 
 <p>
-
 You can install Lemonldap::NG using <a href="../download.html" class="wikilink1" title="download">packages</a> (rpm or deb) or by hand as described below.
 </p>
 
 <p>
-LemonLDAP::NG is written in <acronym title="Practical Extraction and Report Language">Perl</acronym> and requires a lot of <acronym title="Practical Extraction and Report Language">Perl</acronym> dependencies. <a href="../documentation/current/prereq.html" class="wikilink1" title="documentation:latest:prereq">You must install them first</a>.
+LemonLDAP::NG is written in Perl and requires a lot of Perl dependencies. <a href="../documentation/current/prereq.html" class="wikilink1" title="documentation:latest:prereq">You must install them first</a>.
 </p>
 
 <p>
@@ -63,57 +59,46 @@ Get the tarball on <a href="../download.html" class="wikilink1" title="download"
 </p>
 
 </div>
-<!-- SECTION "Installation" [348-801] -->
-<h3><a name="extract" id="extract">Extract</a></h3>
+<!-- EDIT2 SECTION "Installation" [348-801] -->
+<h3 class="sectionedit3" id="extract">Extract</h3>
 <div class="level3">
-<pre class="code">
-tar zxvf lemonldap-ng-*.tar.gz
-cd lemonldap-ng-*
-</pre>
+<pre class="code">tar zxvf lemonldap-ng-*.tar.gz
+cd lemonldap-ng-*</pre>
 
 </div>
-<!-- SECTION "Extract" [802-885] -->
-<h3><a name="build" id="build">Build</a></h3>
+<!-- EDIT3 SECTION "Extract" [802-885] -->
+<h3 class="sectionedit4" id="build">Build</h3>
 <div class="level3">
-<pre class="code">
-make
-make test
-</pre>
+<pre class="code">make
+make test</pre>
 
 </div>
-<!-- SECTION "Build" [886-933] -->
-<h3><a name="install" id="install">Install</a></h3>
+<!-- EDIT4 SECTION "Build" [886-933] -->
+<h3 class="sectionedit5" id="install">Install</h3>
 <div class="level3">
-<pre class="code">
-sudo make install
-</pre>
+<pre class="code">sudo make install</pre>
 
 </div>
-<!-- SECTION "Install" [934-986] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT5 SECTION "Install" [934-986] -->
+<h2 class="sectionedit6" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [987-1013] -->
-<h3><a name="system" id="system">System</a></h3>
+<!-- EDIT6 SECTION "Configuration" [987-1013] -->
+<h3 class="sectionedit7" id="system">System</h3>
 <div class="level3">
 
 <p>
-
-Update your /etc/hosts to map <acronym title="Single Sign On">SSO</acronym> URLs to localhost:
-
+Update your /etc/hosts to map <abbr title="Single Sign On">SSO</abbr> URLs to localhost:
 </p>
-<pre class="code">
-sudo make postconf
-</pre>
+<pre class="code">sudo make postconf</pre>
 
 </div>
-<!-- SECTION "System" [1014-1119] -->
-<h3><a name="apache" id="apache">Apache</a></h3>
+<!-- EDIT7 SECTION "System" [1014-1119] -->
+<h3 class="sectionedit8" id="apache">Apache</h3>
 <div class="level3">
 
 <p>
-
 Include LemonLDAP::NG configuration in your main Apache configuration:
 </p>
 <pre class="code file apache"><span class="kw1">include</span> /usr/local/lemonldap-ng/etc/portal-apache2.conf
@@ -123,27 +108,24 @@ Include LemonLDAP::NG configuration in your main Apache configuration:
 
 <p>
 Restart Apache:
-
 </p>
-<pre class="code">
-sudo apachectl configtest
-sudo apachectl restart
-</pre>
+<pre class="code">sudo apachectl configtest
+sudo apachectl restart</pre>
 
 </div>
-<!-- SECTION "Apache" [1120-1537] -->
-<h2><a name="run" id="run">Run</a></h2>
+<!-- EDIT8 SECTION "Apache" [1120-1537] -->
+<h2 class="sectionedit9" id="run">Run</h2>
 <div class="level2">
 
 <p>
-
 Since LemonLDAP::NG 1.2, the <a href="../documentation/current/authdemo.html" class="wikilink1" title="documentation:latest:authdemo">demonstration backend</a> is configured by default. Demonstration backend has hard coded user accounts:
-
 </p>
-<table class="inline">
+<div class="table sectionedit10"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 leftalign"> Login  </th><th class="col1"> Password </th><th class="col2"> Role </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  rtyler  </td><td class="col1 centeralign">  rtyler  </td><td class="col2 centeralign">  user  </td>
 	</tr>
@@ -153,37 +135,34 @@ Since LemonLDAP::NG 1.2, the <a href="../documentation/current/authdemo.html" cl
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">  dwho  </td><td class="col1 centeralign">  dwho  </td><td class="col2 centeralign">  administrator  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT10 TABLE [1720-1852] -->
 </div>
-<!-- SECTION "Run" [1538-1854] -->
-<h3><a name="open_sso_session" id="open_sso_session">Open SSO session</a></h3>
+<!-- EDIT9 SECTION "Run" [1538-1854] -->
+<h3 class="sectionedit11" id="open_sso_session">Open SSO session</h3>
 <div class="level3">
 
 <p>
-
 Go on <a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a> and log with one of the demonstration account.
 </p>
 
 </div>
-<!-- SECTION "Open SSO session" [1855-1960] -->
-<h3><a name="access_protected_application" id="access_protected_application">Access protected application</a></h3>
+<!-- EDIT11 SECTION "Open SSO session" [1855-1960] -->
+<h3 class="sectionedit12" id="access_protected_application">Access protected application</h3>
 <div class="level3">
 
 <p>
-
 Try <a href="http://test1.example.com" class="urlextern" title="http://test1.example.com"  rel="nofollow">http://test1.example.com</a> or <a href="http://test2.example.com" class="urlextern" title="http://test2.example.com"  rel="nofollow">http://test2.example.com</a>
 </p>
 
 </div>
-<!-- SECTION "Access protected application" [1961-2058] -->
-<h3><a name="edit_configuration" id="edit_configuration">Edit configuration</a></h3>
+<!-- EDIT12 SECTION "Access protected application" [1961-2058] -->
+<h3 class="sectionedit13" id="edit_configuration">Edit configuration</h3>
 <div class="level3">
 
 <p>
-
 Log with the dwho account and go on <a href="http://manager.example.com" class="urlextern" title="http://manager.example.com"  rel="nofollow">http://manager.example.com</a>
 </p>
 
 </div>
-<!-- SECTION "Edit configuration" [2059-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

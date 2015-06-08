@@ -20,29 +20,26 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="roundcube" id="roundcube">RoundCube</a></h1>
+<h1 class="sectionedit1" id="roundcube">RoundCube</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "RoundCube" [1-25] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "RoundCube" [1-25] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<a href="http://www.roundcube.net" class="urlextern" title="http://www.roundcube.net"  rel="nofollow">RoundCube</a> webmail is a browser-based multilingual <acronym title="Internet Message Access Protocol">IMAP</acronym> client with an application-like user interface. It provides full functionality you expect from an email client, including <acronym title="Multipurpose Internet Mail Extension">MIME</acronym> support, address book, folder manipulation, message searching and spell checking.
+<a href="http://www.roundcube.net" class="urlextern" title="http://www.roundcube.net"  rel="nofollow">RoundCube</a> webmail is a browser-based multilingual IMAP client with an application-like user interface. It provides full functionality you expect from an email client, including MIME support, address book, folder manipulation, message searching and spell checking.
 </p>
 
 </div>
-<!-- SECTION "Presentation" [26-346] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [26-346] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [347-373] -->
-<h3><a name="lemonldapng" id="lemonldapng">LemonLDAP::NG</a></h3>
+<!-- EDIT3 SECTION "Configuration" [347-373] -->
+<h3 class="sectionedit4" id="lemonldapng">LemonLDAP::NG</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Add a new virtual host webmail.domain.tld</div>
@@ -50,11 +47,9 @@
 <li class="level1"><div class="li"> Add a new rule:</div>
 </li>
 </ul>
-<pre class="code">
-&quot;^/\?_task\=logout&quot; -&gt; &quot;logout_app https://auth.domain.tld&quot;
-</pre>
+<pre class="code">&quot;^/\?_task\=logout&quot; -&gt; &quot;logout_app https://auth.domain.tld&quot;</pre>
 <ul>
-<li class="level1"><div class="li"> in <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers, you need Auth-User ($mail) and Auth-Pw ($_password).</div>
+<li class="level1"><div class="li"> in HTTP headers, you need Auth-User ($mail) and Auth-Pw ($_password).</div>
 </li>
 </ul>
 
@@ -68,13 +63,13 @@
 </ul>
 
 </div>
-<!-- SECTION "LemonLDAP::NG" [374-845] -->
-<h3><a name="roundcube1" id="roundcube1">RoundCube</a></h3>
+<!-- EDIT4 SECTION "LemonLDAP::NG" [374-845] -->
+<h3 class="sectionedit5" id="roundcube1">RoundCube</h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> install http_authentication plugin</div>
 </li>
-<li class="level1"><div class="li"> Patch it to replace <acronym title="Hypertext Preprocessor">PHP</acronym>_AUTH_* by <acronym title="Hyper Text Transfer Protocol">HTTP</acronym>_AUTH_*</div>
+<li class="level1"><div class="li"> Patch it to replace PHP_AUTH_* by HTTP_AUTH_*</div>
 </li>
 <li class="level1"><div class="li"> enable http_authentication plugin in main.inc.php :</div>
 </li>
@@ -82,4 +77,4 @@
 <pre class="code file php"><span class="re0">$rcmail_config</span><span class="br0">&#91;</span><span class="st_h">'plugins'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">&#40;</span><span class="st_h">'http_authentication'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "RoundCube" [846-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

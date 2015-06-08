@@ -20,18 +20,15 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="installation_from_the_tarball" id="installation_from_the_tarball">Installation from the tarball</a></h1>
+<h1 class="sectionedit1" id="installation_from_the_tarball">Installation from the tarball</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Installation from the tarball" [1-45] -->
-<h2><a name="get_the_tarball" id="get_the_tarball">Get the tarball</a></h2>
+<!-- EDIT1 SECTION "Installation from the tarball" [1-45] -->
+<h2 class="sectionedit2" id="get_the_tarball">Get the tarball</h2>
 <div class="level2">
 
 <p>
-
 Get the tarball from <a href="../../download.html" class="wikilink1" title="download">download page</a>. You can also find on this page the SVN tarball if you want to test latest features.
 </p>
 
@@ -41,82 +38,64 @@ Get the tarball from <a href="../../download.html" class="wikilink1" title="down
 </p>
 
 </div>
-<!-- SECTION "Get the tarball" [46-388] -->
-<h2><a name="build_the_tarball_from_svn" id="build_the_tarball_from_svn">Build the tarball from SVN</a></h2>
+<!-- EDIT2 SECTION "Get the tarball" [46-388] -->
+<h2 class="sectionedit3" id="build_the_tarball_from_svn">Build the tarball from SVN</h2>
 <div class="level2">
 
 <p>
-
 Either checkout or export the SVN repository, or extract the SVN tarball to get the SVN files on your disk.
 </p>
 
 <p>
 Then go to trunk directory:
-
 </p>
-<pre class="code">
-cd trunk
-</pre>
+<pre class="code">cd trunk</pre>
 
 <p>
 And run the “dist” target:
-
 </p>
-<pre class="code">
-make dist
-</pre>
+<pre class="code">make dist</pre>
 
 <p>
 The generated tarball is in the current directory.
 </p>
 
 </div>
-<!-- SECTION "Build the tarball from SVN" [389-695] -->
-<h2><a name="extraction" id="extraction">Extraction</a></h2>
+<!-- EDIT3 SECTION "Build the tarball from SVN" [389-695] -->
+<h2 class="sectionedit4" id="extraction">Extraction</h2>
 <div class="level2">
 
 <p>
-
 Just run the tar command:
-
 </p>
-<pre class="code">
-tar zxvf lemonldap-ng-*.tar.gz
-</pre>
+<pre class="code">tar zxvf lemonldap-ng-*.tar.gz</pre>
 
 </div>
-<!-- SECTION "Extraction" [696-792] -->
-<h2><a name="installation" id="installation">Installation</a></h2>
+<!-- EDIT4 SECTION "Extraction" [696-792] -->
+<h2 class="sectionedit5" id="installation">Installation</h2>
 <div class="level2">
 
 <p>
-
 First check and install the <a href="../../documentation/2.0/prereq.html" class="wikilink1" title="documentation:2.0:prereq">prerequisites</a>.
 </p>
 
 <p>
 For full install:
 </p>
-<pre class="code">
-cd lemonldap-ng-*
+<pre class="code">cd lemonldap-ng-*
 make
 make configure
 make test
-sudo make install
-</pre>
+sudo make install</pre>
 
 <p>
 <p><div class="notetip">
 You can also build and install French documentation :
-
 </p>
-<pre class="code">
-make fr-doc
-make install_fr_doc_site
-</pre>
+<pre class="code">make fr-doc
+make install_fr_doc_site</pre>
 
 <p>
-
 Note that you need to have the <a href="http://www.omegat.org/" class="urlextern" title="http://www.omegat.org/"  rel="nofollow">OmegaT</a> tool to generate the doc.
 
 </div></p>
@@ -124,19 +103,16 @@ Note that you need to have the <a href="http://www.omegat.org/" class="urlextern
 
 <p>
 You can modify location of default storage configuration file in configure target:
-
 </p>
-<pre class="code">
-sudo make configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini
-</pre>
+<pre class="code">sudo make configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini</pre>
 
 <p>
 You can choose other Makefile targets:
 </p>
 <ul>
-<li class="level1"><div class="li"> <acronym title="Practical Extraction and Report Language">Perl</acronym> libraries install :</div>
+<li class="level1"><div class="li"> Perl libraries install :</div>
 <ul>
-<li class="level2"><div class="li"> install_libs          (all <acronym title="Practical Extraction and Report Language">Perl</acronym> libraries)</div>
+<li class="level2"><div class="li"> install_libs          (all Perl libraries)</div>
 </li>
 <li class="level2"><div class="li"> install_portal_libs</div>
 </li>
@@ -175,13 +151,9 @@ You can choose other Makefile targets:
 </ul>
 
 <p>
-
 You can also pass parameters to the make install command, with this syntax:
-
 </p>
-<pre class="code">
-sudo make install PARAM=VALUE PARAM=VALUE ...
-</pre>
+<pre class="code">sudo make install PARAM=VALUE PARAM=VALUE ...</pre>
 
 <p>
 Available parameters are:
@@ -189,7 +161,7 @@ Available parameters are:
 <ul>
 <li class="level1"><div class="li"> <strong>ERASECONFIG</strong>: set to 0 if you want to keep your configuration files (default: 1)</div>
 </li>
-<li class="level1"><div class="li"> <strong>DESTDIR</strong>: only for packaging, install the product in a jailroot (default: ””)</div>
+<li class="level1"><div class="li"> <strong>DESTDIR</strong>: only for packaging, install the product in a jailroot (default: “”)</div>
 </li>
 <li class="level1"><div class="li"> <strong>PREFIX</strong>: installation directory (default: /usr/local)</div>
 </li>
@@ -201,7 +173,7 @@ Available parameters are:
 </li>
 <li class="level1"><div class="li"> <strong>APACHEGROUP</strong>: group running Apache</div>
 </li>
-<li class="level1"><div class="li"> <strong>DNSDOMAIN</strong>: Main <acronym title="Domain Name System">DNS</acronym> domain (default: example.com) </div>
+<li class="level1"><div class="li"> <strong>DNSDOMAIN</strong>: Main <abbr title="Domain Name System">DNS</abbr> domain (default: example.com) </div>
 </li>
 <li class="level1"><div class="li"> <strong>APACHEVERSION</strong>: Apache major version (default: 2)</div>
 </li>
@@ -210,38 +182,28 @@ Available parameters are:
 </ul>
 
 <p>
-
 <p><div class="notetip">
 For Debian/Ubuntu, you can use:
-
 </p>
-<pre class="code">
-make debian-install
-</pre>
+<pre class="code">make debian-install</pre>
 
 <p>
-
 or:
-
 </p>
-<pre class="code">
-make ubuntu-install
-</pre>
+<pre class="code">make ubuntu-install</pre>
 
 <p>
-
 See also <a href="../../documentation/2.0/installdeb.html" class="wikilink1" title="documentation:2.0:installdeb">Debian/Ubuntu installation documentation</a>.
 
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Installation" [793-3182] -->
-<h2><a name="link_apache_configuration" id="link_apache_configuration">Link Apache configuration</a></h2>
+<!-- EDIT5 SECTION "Installation" [793-3182] -->
+<h2 class="sectionedit6" id="link_apache_configuration">Link Apache configuration</h2>
 <div class="level2">
 
 <p>
-
 By default, Apache configuration files will be installed in <code>/usr/local/lemonldap-ng/etc/</code>. You have to include them in Apache main configuration, for example:
 </p>
 <pre class="code file apache"><span class="kw1">include</span> /usr/local/lemonldap-ng/etc/portal-apache2.conf
@@ -258,32 +220,28 @@ By default, Apache configuration files will be installed in <code>/usr/local/lem
 <li class="level1"><div class="li"> If you have run the Debian/Ubuntu install command, just use:</div>
 </li>
 </ul>
-<pre class="code">
-a2ensite manager-apache2.conf
+<pre class="code">a2ensite manager-apache2.conf
 a2ensite portal-apache2.conf
 a2ensite handler-apache2.conf
-a2ensite test-apache2.conf
-</pre>
+a2ensite test-apache2.conf</pre>
 
 <p>
-
 
 </div></p>
 </p>
 
 <p>
-<p><div class="notewarning">Mod <acronym title="Practical Extraction and Report Language">Perl</acronym> <strong>must</strong> be loaded before <acronym title="LemonLDAP::NG">LL::NG</acronym> Apache configuration.
+<p><div class="notewarning">Mod Perl <strong>must</strong> be loaded before <abbr title="LemonLDAP::NG">LL::NG</abbr> Apache configuration.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Link Apache configuration" [3183-4001] -->
-<h2><a name="install_cron_jobs" id="install_cron_jobs">Install cron jobs</a></h2>
+<!-- EDIT6 SECTION "Link Apache configuration" [3183-4001] -->
+<h2 class="sectionedit7" id="install_cron_jobs">Install cron jobs</h2>
 <div class="level2">
 
 <p>
-
-<acronym title="LemonLDAP::NG">LL::NG</acronym> use cron jobs to:
+<abbr title="LemonLDAP::NG">LL::NG</abbr> use cron jobs to:
 </p>
 <ul>
 <li class="level1"><div class="li"> purge old sessions</div>
@@ -293,40 +251,33 @@ a2ensite test-apache2.conf
 </ul>
 
 <p>
-
 To install them on system:
 </p>
-<pre class="code">
-sudo ln -s /usr/local/lemonldap-ng/etc/cron.d/* /etc/cron.d/
-</pre>
+<pre class="code">sudo ln -s /usr/local/lemonldap-ng/etc/cron.d/* /etc/cron.d/</pre>
 
 </div>
-<!-- SECTION "Install cron jobs" [4002-4211] -->
-<h2><a name="dns" id="dns">DNS</a></h2>
+<!-- EDIT7 SECTION "Install cron jobs" [4002-4211] -->
+<h2 class="sectionedit8" id="dns">DNS</h2>
 <div class="level2">
 
 <p>
-
-Configure your <acronym title="Domain Name System">DNS</acronym> server to resolve names with your server <acronym title="Internet Protocol">IP</acronym>.
+Configure your <abbr title="Domain Name System">DNS</abbr> server to resolve names with your server <abbr title="Internet Protocol">IP</abbr>.
 </p>
 
 <p>
 <p><div class="notetip">
 For tests with the configured domain, launch the following :
-
 </p>
 <pre class="code shell">cat /usr/local/lemonldap-ng/etc/lemonldap-ng/for_etc_hosts &gt;&gt; /etc/hosts</pre>
 
 <p>
-
 
 </div></p>
 </p>
 
 <p>
 Follow the <a href="../../documentation/2.0/start.html#configuration" class="wikilink1" title="documentation:2.0:start">next steps</a>.
-
 </p>
 
 </div>
-<!-- SECTION "DNS" [4212-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

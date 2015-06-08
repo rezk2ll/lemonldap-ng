@@ -20,45 +20,40 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="sympa" id="sympa">Sympa</a></h1>
+<h1 class="sectionedit1" id="sympa">Sympa</h1>
 <div class="level1">
 
 <p>
-
 <a href="/_detail/applications/sympa_logo.png?id=documentation%3A2.0%3Aapplications%3Asympa" class="media" title="applications:sympa_logo.png"><img src="../../../../media/applications/sympa_logo.png" class="mediacenter" alt="" /></a>
 </p>
 
 </div>
-<!-- SECTION "Sympa" [1-58] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Sympa" [1-58] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
 <a href="http://www.sympa.org" class="urlextern" title="http://www.sympa.org"  rel="nofollow">Sympa</a> is a mailing list manager.
 </p>
 
 <p>
-There are two ways to configure <acronym title="Single Sign On">SSO</acronym> with Sympa:
+There are two ways to configure <abbr title="Single Sign On">SSO</abbr> with Sympa:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Auto login</strong>: a special <acronym title="LemonLDAP::NG">LL::NG</acronym> Handler will generate Sympa cookie (for Sympa 5 only !)</div>
+<li class="level1"><div class="li"> <strong>Auto login</strong>: a special <abbr title="LemonLDAP::NG">LL::NG</abbr> Handler will generate Sympa cookie (for Sympa 5 only !)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Magic authentication</strong>: a special <acronym title="Single Sign On">SSO</acronym> <acronym title="Uniform Resource Locator">URL</acronym> is protected by <acronym title="LemonLDAP::NG">LL::NG</acronym>, Sympa will display a button for users who wants to use this feature.</div>
+<li class="level1"><div class="li"> <strong>Magic authentication</strong>: a special <abbr title="Single Sign On">SSO</abbr> <abbr title="Uniform Resource Locator">URL</abbr> is protected by <abbr title="LemonLDAP::NG">LL::NG</abbr>, Sympa will display a button for users who wants to use this feature.</div>
 </li>
 </ul>
 
 <p>
-
 <p><div class="notetip">
 How to choose? Here are some advices:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Auto login</strong> is very secure for Sympa 5, as Sympa cookie is only exchanged between <acronym title="LemonLDAP::NG">LL::NG</acronym> Handler and Sympa (user cannot see it)</div>
+<li class="level1"><div class="li"> <strong>Auto login</strong> is very secure for Sympa 5, as Sympa cookie is only exchanged between <abbr title="LemonLDAP::NG">LL::NG</abbr> Handler and Sympa (user cannot see it)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Magic authentication</strong> allows to mix standard Sympa authentication and <acronym title="Single Sign On">SSO</acronym></div>
+<li class="level1"><div class="li"> <strong>Magic authentication</strong> allows to mix standard Sympa authentication and <abbr title="Single Sign On">SSO</abbr></div>
 </li>
 </ul>
 
@@ -68,30 +63,28 @@ How to choose? Here are some advices:
 </p>
 
 </div>
-<!-- SECTION "Presentation" [59-700] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [59-700] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
 Choose one of the following method:
 </p>
 
 </div>
-<!-- SECTION "Configuration" [701-764] -->
-<h3><a name="auto_login" id="auto_login">Auto login</a></h3>
+<!-- EDIT3 SECTION "Configuration" [701-764] -->
+<h3 class="sectionedit4" id="auto_login">Auto login</h3>
 <div class="level3">
 
 </div>
 
-<h4><a name="sympa_virtual_host_in_apache" id="sympa_virtual_host_in_apache">Sympa virtual host in Apache</a></h4>
+<h4 id="sympa_virtual_host_in_apache">Sympa virtual host in Apache</h4>
 <div class="level4">
 
 <p>
-
 Configure Sympa virtual host like other <a href="../../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a> but use Sympa Handler instead of default Handler.
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> sympa.example.com
 &nbsp;
        <span class="co1"># Load Sympa Handler</span>
@@ -104,11 +97,10 @@ Configure Sympa virtual host like other <a href="../../../documentation/2.0/conf
 
 </div>
 
-<h4><a name="sympa_virtual_host_in_manager" id="sympa_virtual_host_in_manager">Sympa virtual host in Manager</a></h4>
+<h4 id="sympa_virtual_host_in_manager">Sympa virtual host in Manager</h4>
 <div class="level4">
 
 <p>
-
 Go to the Manager and <a href="../../../documentation/2.0/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:2.0:configvhost">create a new virtual host</a> for Sympa.
 </p>
 
@@ -118,11 +110,10 @@ Just configure the <a href="../../../documentation/2.0/writingrulesand_headers.h
 
 </div>
 
-<h4><a name="sympa_handler_parameters" id="sympa_handler_parameters">Sympa Handler parameters</a></h4>
+<h4 id="sympa_handler_parameters">Sympa Handler parameters</h4>
 <div class="level4">
 
 <p>
-
 Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</code> » <code>Special handlers</code> » <code>Sympa</code>, and edit the different keys:
 </p>
 <ul>
@@ -133,37 +124,30 @@ Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- SECTION "Auto login" [765-1777] -->
-<h3><a name="magic_authentication" id="magic_authentication">Magic authentication</a></h3>
+<!-- EDIT4 SECTION "Auto login" [765-1777] -->
+<h3 class="sectionedit5" id="magic_authentication">Magic authentication</h3>
 <div class="level3">
 
 </div>
 
-<h4><a name="sympa_configuration" id="sympa_configuration">Sympa configuration</a></h4>
+<h4 id="sympa_configuration">Sympa configuration</h4>
 <div class="level4">
 
 <p>
-
 Edit the file “auth.conf”, for example:
-
 </p>
-<pre class="code">
-vi /etc/sympa/auth.conf
-</pre>
+<pre class="code">vi /etc/sympa/auth.conf</pre>
 
 <p>
 And fill it:
-
 </p>
-<pre class="file">
-generic_sso
+<pre class="file">generic_sso
         service_name                   Centralized auth service
         service_id                          lemonldapng
         email_http_header            HTTP_MAIL
         netid_http_header             HTTP_AUTH_USER
         internal_email_by_netid    1
-        logout_url                          http://sympa.example.com/wws/logout
-</pre>
+        logout_url                          http://sympa.example.com/wws/logout</pre>
 
 <p>
 <p><div class="notetip">
@@ -182,14 +166,13 @@ You can also use &lt;portal&gt;?logout=1 as logout_url to remove LemonLDAP::NG s
 
 </div>
 
-<h4><a name="sympa_virtual_host_in_apache1" id="sympa_virtual_host_in_apache1">Sympa virtual host in Apache</a></h4>
+<h4 id="sympa_virtual_host_in_apache1">Sympa virtual host in Apache</h4>
 <div class="level4">
 
 <p>
-
-Configure Sympa virtual host like other <a href="../../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a> but protect only magic authentication <acronym title="Uniform Resource Locator">URL</acronym>.
+Configure Sympa virtual host like other <a href="../../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a> but protect only magic authentication <abbr title="Uniform Resource Locator">URL</abbr>.
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> sympa.example.com
 &nbsp;
        &lt;<span class="kw3">Location</span> /wws/sso_login/lemonldapng&gt;
@@ -201,17 +184,16 @@ Configure Sympa virtual host like other <a href="../../../documentation/2.0/conf
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 <p>
-<p><div class="notetip">The location <acronym title="Uniform Resource Locator">URL</acronym> end is based on the <code>service_id</code> defined in Sympa apache configuration.
+<p><div class="notetip">The location <abbr title="Uniform Resource Locator">URL</abbr> end is based on the <code>service_id</code> defined in Sympa apache configuration.
 </div></p>
 </p>
 
 </div>
 
-<h4><a name="sympa_virtual_host_in_manager1" id="sympa_virtual_host_in_manager1">Sympa virtual host in Manager</a></h4>
+<h4 id="sympa_virtual_host_in_manager1">Sympa virtual host in Manager</h4>
 <div class="level4">
 
 <p>
-
 Go to the Manager and <a href="../../../documentation/2.0/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:2.0:configvhost">create a new virtual host</a> for Sympa.
 </p>
 
@@ -226,4 +208,4 @@ Configure the <a href="../../../documentation/2.0/writingrulesand_headers.html#r
 </ul>
 
 </div>
-<!-- SECTION "Magic authentication" [1778-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

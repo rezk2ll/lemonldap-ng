@@ -20,24 +20,20 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="high_availability" id="high_availability">High availability</a></h1>
+<h1 class="sectionedit1" id="high_availability">High availability</h1>
 <div class="level1">
 
 <p>
-
 LemonLDAP::NG is highly scalable, so easy to insert behind a load-balancer:
 </p>
 <ul>
-<li class="level1"><div class="li"> Portal does not store any data outside the session database, so you can have many portal servers using the same <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> host name</div>
+<li class="level1"><div class="li"> Portal does not store any data outside the session database, so you can have many portal servers using the same HTTP host name</div>
 </li>
 <li class="level1"><div class="li"> All handlers download the whole configuration, so many servers can serve the same virtual hosts</div>
 </li>
 </ul>
 
 <p>
-
 You can for example set up a fail-over cluster with <a href="http://www.linux-ha.org/wiki/Heartbeat" class="urlextern" title="http://www.linux-ha.org/wiki/Heartbeat"  rel="nofollow">Heartbeat</a> and <a href="http://haproxy.1wt.eu/" class="urlextern" title="http://haproxy.1wt.eu/"  rel="nofollow">HAproxy</a>, like this:
 </p>
 

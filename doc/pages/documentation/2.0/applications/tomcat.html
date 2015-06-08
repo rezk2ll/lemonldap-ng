@@ -20,13 +20,10 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="apache_tomcat" id="apache_tomcat">Apache Tomcat</a></h1>
+<h1 class="sectionedit1" id="apache_tomcat">Apache Tomcat</h1>
 <div class="level1">
 
 <p>
-
 <a href="/_detail/applications/tomcat_logo.png?id=documentation%3A2.0%3Aapplications%3Atomcat" class="media" title="applications:tomcat_logo.png"><img src="../../../../media/applications/tomcat_logo.png" class="mediacenter" alt="" /></a>
 </p>
 
@@ -36,12 +33,11 @@
 </p>
 
 </div>
-<!-- SECTION "Apache Tomcat" [1-154] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Apache Tomcat" [1-154] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
 <a href="http://tomcat.apache.org/" class="urlextern" title="http://tomcat.apache.org/"  rel="nofollow">Apache Tomcat</a> is an open source software implementation of the Java Servlet and JavaServer Pages technologies.
 </p>
 
@@ -51,7 +47,6 @@ As J2EE servlet container, Tomcat provides standard security feature, like authe
 
 <p>
 By default, Tomcat provides a file called <code>users.xml</code> to manage authentication:
-
 </p>
 <pre class="code file xml"><span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">'1.0'</span> <span class="re0">encoding</span>=<span class="st0">'utf-8'</span><span class="re2">?&gt;</span></span>
 <span class="sc3"><span class="re1">&lt;tomcat-users<span class="re2">&gt;</span></span></span>
@@ -64,37 +59,31 @@ By default, Tomcat provides a file called <code>users.xml</code> to manage authe
 &nbsp;</pre>
 
 <p>
-<acronym title="LemonLDAP::NG">LL::NG</acronym> provides a valve, available on <a href="../../../download.html#contributions" class="wikilink1" title="download">download page</a>. This valve will check an <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header to set the authenticated user on the J2EE container.
+<abbr title="LemonLDAP::NG">LL::NG</abbr> provides a valve, available on <a href="../../../download.html#contributions" class="wikilink1" title="download">download page</a>. This valve will check an HTTP header to set the authenticated user on the J2EE container.
 </p>
 
 </div>
-<!-- SECTION "Presentation" [155-1077] -->
-<h2><a name="installation" id="installation">Installation</a></h2>
+<!-- EDIT2 SECTION "Presentation" [155-1077] -->
+<h2 class="sectionedit3" id="installation">Installation</h2>
 <div class="level2">
 
 <p>
-
 Copy <code>ValveLemonLDAPNG.jar</code> in <code>&lt;TOMCAT_HOME&gt;/server/lib</code>:
-
 </p>
-<pre class="code">
-cp ValveLemonLDAPNG.jar server/lib/
-</pre>
+<pre class="code">cp ValveLemonLDAPNG.jar server/lib/</pre>
 
 <p>
-<p><div class="notetip">If needed, you can <a href="#compilation" title="documentation:2.0:applications:tomcat &crarr;" class="wikilink1">recompile the valve from the sources</a>.
+<p><div class="notetip">If needed, you can <a href="#compilation" title="documentation:2.0:applications:tomcat ↵" class="wikilink1">recompile the valve from the sources</a>.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Installation" [1078-1310] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT3 SECTION "Installation" [1078-1310] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
 Add on your <code>server.xml</code> file a new valve entry like this (in host section):
-
 </p>
 <pre class="code file xml"><span class="sc3"><span class="re1">&lt;Valve</span> <span class="re0">className</span>=<span class="st0">&quot;org.lemonLDAPNG.SSOValve&quot;</span> <span class="re0">userKey</span>=<span class="st0">&quot;AUTH-USER&quot;</span> <span class="re0">roleKey</span>=<span class="st0">&quot;AUTH-ROLE&quot;</span> <span class="re0">roleSeparator</span>=<span class="st0">&quot;,&quot;</span> <span class="re0">allows</span>=<span class="st0">&quot;127.0.0.1&quot;</span><span class="re2">/&gt;</span></span></pre>
 
@@ -102,31 +91,29 @@ Add on your <code>server.xml</code> file a new valve entry like this (in host se
 Configure attributes:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>userKey</strong>: key in the <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header containing user login.</div>
+<li class="level1"><div class="li"> <strong>userKey</strong>: key in the HTTP header containing user login.</div>
 </li>
-<li class="level1"><div class="li"> <strong>roleKey</strong>: key in the <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header containing roles. If <acronym title="LemonLDAP::NG">LL::NG</acronym> send some roles split by some commas, configure <strong>roleSeparator</strong>.</div>
+<li class="level1"><div class="li"> <strong>roleKey</strong>: key in the HTTP header containing roles. If <abbr title="LemonLDAP::NG">LL::NG</abbr> send some roles split by some commas, configure <strong>roleSeparator</strong>.</div>
 </li>
 <li class="level1"><div class="li"> <strong>roleSeparator</strong> (optional): role values separator.</div>
 </li>
-<li class="level1"><div class="li"> <strong>allows</strong> (optional): Define allowed remote <acronym title="Internet Protocol">IP</acronym> (use ”,” separator for multiple <acronym title="Internet Protocol">IP</acronym>). Just set the <acronym title="LemonLDAP::NG">LL::NG</acronym> Handler <acronym title="Internet Protocol">IP</acronym> on this attribute in order to add more security. If this attribute is missed all hosts are allowed.</div>
+<li class="level1"><div class="li"> <strong>allows</strong> (optional): Define allowed remote <abbr title="Internet Protocol">IP</abbr> (use “,” separator for multiple <abbr title="Internet Protocol">IP</abbr>). Just set the <abbr title="LemonLDAP::NG">LL::NG</abbr> Handler <abbr title="Internet Protocol">IP</abbr> on this attribute in order to add more security. If this attribute is missed all hosts are allowed.</div>
 </li>
-<li class="level1"><div class="li"> <strong>passThrough</strong> (optional): Allow anonymous access or not. When it takes “false”, <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers have to be sent by <acronym title="LemonLDAP::NG">LL::NG</acronym> to make authentication. So, if the user is not recognized or <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers not present, a 403 error is sent.</div>
+<li class="level1"><div class="li"> <strong>passThrough</strong> (optional): Allow anonymous access or not. When it takes “false”, HTTP headers have to be sent by <abbr title="LemonLDAP::NG">LL::NG</abbr> to make authentication. So, if the user is not recognized or HTTP headers not present, a 403 error is sent.</div>
 </li>
 </ul>
 
 <p>
-
 <p><div class="notetip">For debugging, this valve can print some helpful information in debug level. See <a href="http://tomcat.apache.org/tomcat-5.5-doc/logging.html" class="urlextern" title="http://tomcat.apache.org/tomcat-5.5-doc/logging.html"  rel="nofollow">how configure logging in Tomcat</a> . 
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Configuration" [1311-2481] -->
-<h2><a name="compilation" id="compilation">Compilation</a></h2>
+<!-- EDIT4 SECTION "Configuration" [1311-2481] -->
+<h2 class="sectionedit5" id="compilation">Compilation</h2>
 <div class="level2">
 
 <p>
-
 The sources are  available on <a href="../../../download.html#contributions" class="wikilink1" title="download">download page</a>.
 </p>
 
@@ -143,37 +130,28 @@ Required :
 </ul>
 
 <p>
-
 Configure your tomcat home in <code>build.properties</code> files.
 </p>
 
 <p>
 <p><div class="noteimportant">
-Be careful for Windows user, path must contains ”/”. Example:
-
+Be careful for Windows user, path must contains “/”. Example:
 </p>
-<pre class="code">
-c:/my hardisk/tomcat/
-</pre>
+<pre class="code">c:/my hardisk/tomcat/</pre>
 
 <p>
-
 
 </div></p>
 </p>
 
 <p>
 Next run ant command:
-
 </p>
-<pre class="code">
-ant
-</pre>
+<pre class="code">ant</pre>
 
 <p>
 <code>ValveLemonLDAPNG.jar</code> is created under <code>/dist</code> directory. 
-
 </p>
 
 </div>
-<!-- SECTION "Compilation" [2482-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

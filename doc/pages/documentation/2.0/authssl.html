@@ -20,27 +20,26 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="ssl" id="ssl">SSL</a></h1>
+<h1 class="sectionedit1" id="ssl">SSL</h1>
 <div class="level1">
-<table class="inline">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
-		<th class="col0">Authentication </th><th class="col1"> Users </th><th class="col2"> Password </th>
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  ✔  </td><td class="col1"> </td><td class="col2"> </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT2 TABLE [19-76] -->
 </div>
-<!-- SECTION "SSL" [1-70] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "SSL" [1-77] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<acronym title="LemonLDAP::NG">LL::NG</acronym> uses <a href="http://httpd.apache.org/docs/current/mod/mod_ssl.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_ssl.html"  rel="nofollow">Apache SSL module</a>, like any other <a href="../../documentation/2.0/authapache.html" class="wikilink1" title="documentation:2.0:authapache">Apache authentication module</a>, with extra features:
+<abbr title="LemonLDAP::NG">LL::NG</abbr> uses <a href="http://httpd.apache.org/docs/current/mod/mod_ssl.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_ssl.html"  rel="nofollow">Apache SSL module</a>, like any other <a href="../../documentation/2.0/authapache.html" class="wikilink1" title="documentation:2.0:authapache">Apache authentication module</a>, with extra features:
 </p>
 <ul>
 <li class="level1"><div class="li"> Choice of any certificate attribute as user main login</div>
@@ -50,23 +49,21 @@
 </ul>
 
 </div>
-<!-- SECTION "Presentation" [71-394] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT3 SECTION "Presentation" [78-401] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [395-421] -->
-<h3><a name="enable_ssl_in_apache" id="enable_ssl_in_apache">Enable SSL in Apache</a></h3>
+<!-- EDIT4 SECTION "Configuration" [402-428] -->
+<h3 class="sectionedit5" id="enable_ssl_in_apache">Enable SSL in Apache</h3>
 <div class="level3">
 
 <p>
-
 You have to install mod_ssl for Apache.
 </p>
 
 <p>
 For CentOS/RHEL:
-
 </p>
 <pre class="code shell">yum install mod_ssl</pre>
 
@@ -75,18 +72,17 @@ In Debian/Ubuntu mod_ssl is already shipped in <code>apache2.2-common</code> pac
 </p>
 
 <p>
-<p><div class="notetip">For CentOS/RHEL, We advice to disable the default <acronym title="Secure Sockets Layer">SSL</acronym> virtual host configured in /etc/httpd/conf.d/ssl.conf.
+<p><div class="notetip">For CentOS/RHEL, We advice to disable the default SSL virtual host configured in /etc/httpd/conf.d/ssl.conf.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Enable SSL in Apache" [422-758] -->
-<h3><a name="apache_ssl_global_configuration" id="apache_ssl_global_configuration">Apache SSL global configuration</a></h3>
+<!-- EDIT5 SECTION "Enable SSL in Apache" [429-765] -->
+<h3 class="sectionedit6" id="apache_ssl_global_configuration">Apache SSL global configuration</h3>
 <div class="level3">
 
 <p>
-
-You can then use this default <acronym title="Secure Sockets Layer">SSL</acronym> configuration, for example in the head of /etc/lemonldap-ng/portal-apache2.conf:
+You can then use this default SSL configuration, for example in the head of /etc/lemonldap-ng/portal-apache2.conf:
 </p>
 <pre class="code file apache"><span class="kw1">SSLProtocol</span> <span class="kw2">all</span> -SSLv2
 <span class="kw1">SSLCipherSuite</span> HIGH:MEDIUM
@@ -113,60 +109,57 @@ Put your own files instead of <code>ow2.cert</code>, <code>ow2.key</code>, <code
 </p>
 
 <p>
-If you specify port in virtual host, then declare <acronym title="Secure Sockets Layer">SSL</acronym> port:
+If you specify port in virtual host, then declare SSL port:
 </p>
-<pre class="code file apache"><span class="kw1">NameVirtualHost</span> *:80
+<pre class="code file apache"><span class="kw1">NameVirtualHost</span> *:<span class="nu0">80</span>
 <span class="kw1">NameVirtualHost</span> *:<span class="nu0">443</span></pre>
 
 </div>
-<!-- SECTION "Apache SSL global configuration" [759-1524] -->
-<h3><a name="apache_portal_ssl_configuration" id="apache_portal_ssl_configuration">Apache portal SSL configuration</a></h3>
+<!-- EDIT6 SECTION "Apache SSL global configuration" [766-1531] -->
+<h3 class="sectionedit7" id="apache_portal_ssl_configuration">Apache portal SSL configuration</h3>
 <div class="level3">
 
 <p>
-
-Edit the portal virtual host to enable <acronym title="Secure Sockets Layer">SSL</acronym> double authentication:
+Edit the portal virtual host to enable SSL double authentication:
 </p>
 <pre class="code file apache"><span class="kw1">SSLEngine</span> <span class="kw2">On</span>
 <span class="kw1">SSLVerifyClient</span> optional
-<span class="kw1">SSLVerifyDepth</span> 10
+<span class="kw1">SSLVerifyDepth</span> <span class="nu0">10</span>
 <span class="kw1">SSLOptions</span> +StdEnvVars
 <span class="kw1">SSLUserName</span> SSL_CLIENT_S_DN_CN</pre>
 
 <p>
-All <acronym title="Secure Sockets Layer">SSL</acronym> options are documented in <a href="http://httpd.apache.org/docs/current/mod/mod_ssl.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_ssl.html"  rel="nofollow">Apache mod_ssl page</a>.
+All SSL options are documented in <a href="http://httpd.apache.org/docs/current/mod/mod_ssl.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_ssl.html"  rel="nofollow">Apache mod_ssl page</a>.
 </p>
 
 <p>
-Here are the main options used by <acronym title="LemonLDAP::NG">LL::NG</acronym>:
+Here are the main options used by <abbr title="LemonLDAP::NG">LL::NG</abbr>:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>SSLVerifyClient</strong>: set to <code>optional</code> to allow user with a bad certificate to access to <acronym title="LemonLDAP::NG">LL::NG</acronym> portal page. To switch to another authentication backend, use the <a href="../../documentation/2.0/authmulti.html" class="wikilink1" title="documentation:2.0:authmulti">Multi</a> module, for example: <code>Multi <acronym title="Secure Sockets Layer">SSL</acronym>;<acronym title="Lightweight Directory Access Protocol">LDAP</acronym></code></div>
+<li class="level1"><div class="li"> <strong>SSLVerifyClient</strong>: set to <code>optional</code> to allow user with a bad certificate to access to <abbr title="LemonLDAP::NG">LL::NG</abbr> portal page. To switch to another authentication backend, use the <a href="../../documentation/2.0/authmulti.html" class="wikilink1" title="documentation:2.0:authmulti">Multi</a> module, for example: <code>Multi SSL;LDAP</code></div>
 </li>
 <li class="level1"><div class="li"> <strong>SSLOptions</strong>: set to <code>+StdEnvVars</code> to get certificate fields in environment variables</div>
 </li>
-<li class="level1"><div class="li"> <strong>SSLUserName</strong> (optional): certificate field that will be used to identify user in <acronym title="LemonLDAP::NG">LL::NG</acronym> portal virtual host</div>
+<li class="level1"><div class="li"> <strong>SSLUserName</strong> (optional): certificate field that will be used to identify user in <abbr title="LemonLDAP::NG">LL::NG</abbr> portal virtual host</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Apache portal SSL configuration" [1525-2361] -->
-<h3><a name="configuration_of_lemonldapng" id="configuration_of_lemonldapng">Configuration of LemonLDAP::NG</a></h3>
+<!-- EDIT7 SECTION "Apache portal SSL configuration" [1532-2368] -->
+<h3 class="sectionedit8" id="configuration_of_lemonldapng">Configuration of LemonLDAP::NG</h3>
 <div class="level3">
 
 <p>
-
-In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose <acronym title="Secure Sockets Layer">SSL</acronym> for authentication.
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose SSL for authentication.
 </p>
 
 <p>
-
 <p><div class="notetip">You can then choose any other module for users and password.
 </div></p>
 </p>
 
 <p>
-Then, go in <code><acronym title="Secure Sockets Layer">SSL</acronym> parameters</code>:
+Then, go in <code>SSL parameters</code>:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Authentication level</strong>: authentication level for this module</div>
@@ -176,4 +169,4 @@ Then, go in <code><acronym title="Secure Sockets Layer">SSL</acronym> parameters
 </ul>
 
 </div>
-<!-- SECTION "Configuration of LemonLDAP::NG" [2362-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

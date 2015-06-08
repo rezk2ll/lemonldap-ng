@@ -20,32 +20,31 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="exported_variables" id="exported_variables">Exported variables</a></h1>
+<h1 class="sectionedit1" id="exported_variables">Exported variables</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Exported variables" [1-34] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Exported variables" [1-34] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
 Exported variables are the variables available to <a href="../../documentation/2.0/writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">write rules and headers</a>. They are extracted from the users database by the <a href="../../documentation/2.0/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:2.0:start">users module</a>.
 </p>
 
 <p>
-To create a variable, you&#039;ve just to map a user attributes in <acronym title="LemonLDAP::NG">LL::NG</acronym> using <code>Variables</code> » <code>Exported variables</code>. For each variable, The first field is the name which will be used in rules, macros or headers and the second field is the name of the user database field.
+To create a variable, you&#039;ve just to map a user attributes in <abbr title="LemonLDAP::NG">LL::NG</abbr> using <code>Variables</code> » <code>Exported variables</code>. For each variable, The first field is the name which will be used in rules, macros or headers and the second field is the name of the user database field.
 </p>
 
 <p>
 Examples for <a href="../../documentation/2.0/authldap.html" class="wikilink1" title="documentation:2.0:authldap">LDAP</a>:
 </p>
-<table class="inline">
+<div class="table sectionedit3"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
-		<th class="col0 centeralign">  Variable name  </th><th class="col1 centeralign">  <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> attribute  </th>
+		<th class="col0 centeralign">  Variable name  </th><th class="col1 centeralign">  LDAP attribute  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  uid  </td><td class="col1 centeralign">  uid  </td>
 	</tr>
@@ -55,10 +54,9 @@ Examples for <a href="../../documentation/2.0/authldap.html" class="wikilink1" t
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">  name  </td><td class="col1 centeralign">  sn  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT3 TABLE [587-693] -->
 <p>
-
 You can define exported variables for each module in the module configuration itself. Variables defined in the main <code>Exported variables</code> will be used for each backend. Variables defined in the exported variables node of the module will be used only for that module.
 </p>
 
@@ -72,14 +70,15 @@ You can define exported variables for each module in the module configuration it
 </p>
 
 </div>
-<!-- SECTION "Presentation" [35-1250] -->
-<h2><a name="extend_variables_using_macros_and_groups" id="extend_variables_using_macros_and_groups">Extend variables using macros and groups</a></h2>
+<!-- EDIT2 SECTION "Presentation" [35-1250] -->
+<h2 class="sectionedit4" id="extend_variables_using_macros_and_groups">Extend variables using macros and groups</h2>
 <div class="level2">
+
+</div>
 <div class="plugin_include_content" id="plugin_include__documentation:2.0:performances">
 <div class="level3">
 
 <p>
-
 Macros and groups are calculated during authentication process by the portal:
 </p>
 <ul>
@@ -90,9 +89,7 @@ Macros and groups are calculated during authentication process by the portal:
 </ul>
 
 <p>
-
 Example for macros:
-
 </p>
 <pre class="code perl"><span class="co1"># boolean macro</span>
 isAdmin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span>
@@ -106,7 +103,6 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 
 <p>
 Example for groups:
-
 </p>
 <pre class="code perl"><span class="co1"># group</span>
 admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span>
@@ -127,4 +123,4 @@ Besides, macros and groups are computed in alphanumeric order, that is, in the o
 <div class="level2">
 
 </div>
-<!-- SECTION "Extend variables using macros and groups" [1251-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

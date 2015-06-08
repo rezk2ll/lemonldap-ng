@@ -20,41 +20,39 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="google" id="google">Google</a></h1>
+<h1 class="sectionedit1" id="google">Google</h1>
 <div class="level1">
-<table class="inline">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
-		<th class="col0">Authentication </th><th class="col1"> Users </th><th class="col2"> Password </th>
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT2 TABLE [23-86] -->
 </div>
-<!-- SECTION "Google" [1-80] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Google" [1-87] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
 Google proposes to allow applications to reuse its own authentication process using <a href="http://en.wikipedia.org/wiki/OpenID" class="urlextern" title="http://en.wikipedia.org/wiki/OpenID"  rel="nofollow">OpenID</a> protocol (it means, if your are connected to Google, other applications can trust Google and let you in).
 </p>
 
 <p>
-<p><div class="notewarning">OpenID 2.0 support is closed since 20th April 2015. If you still need to use Google login after this date, use either OpenID Connect authentication module available in version 2.00, or see the Google Migration paragraph at the end of this page.
+<p><div class="notewarning">OpenID 2.0 support is closed since 20th April 2015. If you still need to use Google login after this date, use <a href="../../documentation/2.0/authopenidconnect.html" class="wikilink2" title="documentation:2.0:authopenidconnect" rel="nofollow">OpenID Connect authentication module</a>.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Presentation" [81-611] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT3 SECTION "Presentation" [88-544] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
 In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose Google for authentication module. This will use email as login name (for accounting, session explorer,…). If you want to access to other datas, you have to use Google in <code>General Parameters</code> &gt; <code>Authentication modules &gt; User module</code>. Then in exported variables, you can ask only for :
 </p>
 <ul>
@@ -71,18 +69,16 @@ In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modu
 </ul>
 
 <p>
-
-Use the name you want but this values in the value field. If you want to require that a field is set, add ”!” before the key name :
+Use the name you want but this values in the value field. If you want to require that a field is set, add “!” before the key name :
 </p>
 <ul>
-<li class="level1"><div class="li"> “myfield ⇒ firstname” can be ””</div>
+<li class="level1"><div class="li"> “myfield ⇒ firstname” can be “”</div>
 </li>
-<li class="level1"><div class="li"> ”!myfield ⇒ lastname” must be set</div>
+<li class="level1"><div class="li"> “!myfield ⇒ lastname” must be set</div>
 </li>
 </ul>
 
 <p>
-
 See also <a href="../../documentation/2.0/exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables configuration</a>.
 </p>
 
@@ -92,12 +88,11 @@ See also <a href="../../documentation/2.0/exportedvars.html" class="wikilink1" t
 </p>
 
 </div>
-<!-- SECTION "Configuration" [612-1558] -->
-<h2><a name="google_migration" id="google_migration">Google Migration</a></h2>
+<!-- EDIT4 SECTION "Configuration" [545-1491] -->
+<h2 class="sectionedit5" id="google_migration">Google Migration</h2>
 <div class="level2">
 
 <p>
-
 A Google Migration workaround is available since LemonLDAP::NG 1.4.4. It provides a specific and lightweight OpenID Connect module that will replace the current Google module.
 </p>
 
@@ -108,7 +103,6 @@ A Google Migration workaround is available since LemonLDAP::NG 1.4.4. It provide
 
 <p>
 To use it, edit lemonldap-ng.ini (this is not available trough Manager) and configure:
-
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
 <span class="re1">authentication</span> <span class="sy0">=</span><span class="re2"> GoogleMigration</span>
@@ -120,10 +114,9 @@ You need to register your LemonLDAP::NG application to Google in order to obtain
 </p>
 
 <p>
-You also need to register to Google the redirect <acronym title="Uniform Resource Identifier">URI</acronym>. You have to set your portal <acronym title="Uniform Resource Locator">URL</acronym> with the googlecb=1 GET parameter, for example:
-
+You also need to register to Google the redirect <abbr title="Uniform Resource Identifier">URI</abbr>. You have to set your portal <abbr title="Uniform Resource Locator">URL</abbr> with the googlecb=1 GET parameter, for example:
 </p>
 <pre class="code">http://auth.example.com/?googlecb=1</pre>
 
 </div>
-<!-- SECTION "Google Migration" [1559-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

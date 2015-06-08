@@ -20,14 +20,11 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="soap_session_backend" id="soap_session_backend">SOAP session backend</a></h1>
+<h1 class="sectionedit1" id="soap_session_backend">SOAP session backend</h1>
 <div class="level1">
 
 <p>
-
-<acronym title="LemonLDAP::NG">LL::NG</acronym> portal provides <acronym title="Simple Object Access Protocol">SOAP</acronym> end points for sessions management:
+<abbr title="LemonLDAP::NG">LL::NG</abbr> portal provides SOAP end points for sessions management:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>sessions/</strong>: read only access to sessions (enough for distant Handlers)</div>
@@ -37,86 +34,82 @@
 </ul>
 
 <p>
-
-This session backend can be used to share sessions stored in a non-network backend (like <a href="../../documentation/2.0/filesessionbackend.html" class="wikilink1" title="documentation:2.0:filesessionbackend">file session backend</a>) or in a network backend protected with a firewall that only accepts <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> flows.
+This session backend can be used to share sessions stored in a non-network backend (like <a href="../../documentation/2.0/filesessionbackend.html" class="wikilink1" title="documentation:2.0:filesessionbackend">file session backend</a>) or in a network backend protected with a firewall that only accepts HTTP flows.
 </p>
 
 <p>
-Most of the time, <acronym title="Simple Object Access Protocol">SOAP</acronym> session backend is used by Handlers installed on external servers.
+Most of the time, SOAP session backend is used by Handlers installed on external servers.
 </p>
 
 <p>
-To configure it, <acronym title="Simple Object Access Protocol">SOAP</acronym> session backend will be set trough Manager in global configuration (used by all Hanlders), and the real session backend will be configured for local components in lemonldap-ng.ini.
+To configure it, SOAP session backend will be set trough Manager in global configuration (used by all Hanlders), and the real session backend will be configured for local components in lemonldap-ng.ini.
 </p>
 
 </div>
-<!-- SECTION "SOAP session backend" [1-832] -->
-<h2><a name="setup" id="setup">Setup</a></h2>
+<!-- EDIT1 SECTION "SOAP session backend" [1-832] -->
+<h2 class="sectionedit2" id="setup">Setup</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Setup" [833-851] -->
-<h3><a name="manager" id="manager">Manager</a></h3>
+<!-- EDIT2 SECTION "Setup" [833-851] -->
+<h3 class="sectionedit3" id="manager">Manager</h3>
 <div class="level3">
 
 <p>
-
-First, active <acronym title="Simple Object Access Protocol">SOAP</acronym> in <code>General parameters</code> » <code>Advanced parameters</code> » <code><acronym title="Simple Object Access Protocol">SOAP</acronym></code>.
+First, active SOAP in <code>General parameters</code> » <code>Advanced parameters</code> » <code>SOAP</code>.
 </p>
 
 <p>
-Then, set <code>Lemonldap::NG::Common::Apache::Session::<acronym title="Simple Object Access Protocol">SOAP</acronym></code> in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
-
+Then, set <code>Lemonldap::NG::Common::Apache::Session::SOAP</code> in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
 </p>
-<table class="inline">
+<div class="table sectionedit4"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign" colspan="3">  Required parameters  </th>
 	</tr>
 	<tr class="row1 rowodd">
 		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Comment  </th><th class="col2 centeralign">  Example  </th>
 	</tr>
+	</thead>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  <strong>proxy</strong>  </td><td class="col1"> <acronym title="Uniform Resource Locator">URL</acronym> of sessions <acronym title="Simple Object Access Protocol">SOAP</acronym> end point </td><td class="col2"> http://auth.example.com/index.pl/sessions </td>
+		<td class="col0 centeralign">  <strong>proxy</strong>  </td><td class="col1"> <abbr title="Uniform Resource Locator">URL</abbr> of sessions SOAP end point </td><td class="col2"> http://auth.example.com/index.pl/sessions </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT4 TABLE [1163-1322] -->
 <p>
-
 <p><div class="notetip">Use /adminSessions if the Handler need to modify the session, for example if you configured an idle timeout.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Manager" [852-1450] -->
-<h3><a name="apache" id="apache">Apache</a></h3>
+<!-- EDIT3 SECTION "Manager" [852-1450] -->
+<h3 class="sectionedit5" id="apache">Apache</h3>
 <div class="level3">
 
 <p>
-
-Sessions <acronym title="Simple Object Access Protocol">SOAP</acronym> end points access must be allowed in Apache portal configuration (for example, access by <acronym title="Internet Protocol">IP</acronym> range):
+Sessions SOAP end points access must be allowed in Apache portal configuration (for example, access by <abbr title="Internet Protocol">IP</abbr> range):
 </p>
 <pre class="code file apache"><span class="co1"># SOAP functions for sessions management (disabled by default)</span>
 &lt;<span class="kw3">Location</span> /index.pl/adminSessions&gt;
     <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
     <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    <span class="kw1">Allow</span> from 192.168.2.0/24
+    <span class="kw1">Allow</span> from 192.168.2.0/<span class="nu0">24</span>
 &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
 <span class="co1"># SOAP functions for sessions access (disabled by default)</span>
 &lt;<span class="kw3">Location</span> /index.pl/sessions&gt;
     <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
     <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    <span class="kw1">Allow</span> from 192.168.2.0/24
+    <span class="kw1">Allow</span> from 192.168.2.0/<span class="nu0">24</span>
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Apache" [1451-1956] -->
-<h3><a name="real_session_backend" id="real_session_backend">Real session backend</a></h3>
+<!-- EDIT5 SECTION "Apache" [1451-1956] -->
+<h3 class="sectionedit6" id="real_session_backend">Real session backend</h3>
 <div class="level3">
 
 <p>
-
-Real session backend will be configured in <code>lemonldap-ng.ini</code>, in <code>portal</code> section (the portal hosts the <acronym title="Simple Object Access Protocol">SOAP</acronym> service for sessions, and will do the link between <acronym title="Simple Object Access Protocol">SOAP</acronym> requests and real sessions).
+Real session backend will be configured in <code>lemonldap-ng.ini</code>, in <code>portal</code> section (the portal hosts the SOAP service for sessions, and will do the link between SOAP requests and real sessions).
 </p>
 
 <p>
@@ -129,8 +122,7 @@ For example, if real sessions are stored in <a href="../../documentation/2.0/fil
 <p>
 <p><div class="notetip">If your sessions explorer is on the same server that the portal, either use the <strong>adminSessions</strong> end point in Manager configuration, or override the <code>globalStorage</code> and <code>globalStorageOptions</code> parameters in section all (and not portal) of <code>lemonldap-ng.ini</code>. 
 </div></p>
-
 </p>
 
 </div>
-<!-- SECTION "Real session backend" [1957-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

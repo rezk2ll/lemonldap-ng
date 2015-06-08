@@ -20,31 +20,27 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="obm" id="obm">OBM</a></h1>
+<h1 class="sectionedit1" id="obm">OBM</h1>
 <div class="level1">
 
 <p>
-
 <a href="/_detail/applications/obm_logo.png?id=documentation%3A2.0%3Aapplications%3Aobm" class="media" title="applications:obm_logo.png"><img src="../../../../media/applications/obm_logo.png" class="mediacenter" alt="" /></a>
 </p>
 
 </div>
-<!-- SECTION "OBM" [1-54] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "OBM" [1-54] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<a href="http://obm.org" class="urlextern" title="http://obm.org"  rel="nofollow">OBM</a> is enterprise-class messaging and collaboration platform for workgroup or enterprises with many thousands users. OBM includes Groupware, messaging server, CRM, <acronym title="Lightweight Directory Access Protocol">LDAP</acronym>, Windows Domain, smartphone and <acronym title="Personal Digital Assistant">PDA</acronym> synchronization…
+<a href="http://obm.org" class="urlextern" title="http://obm.org"  rel="nofollow">OBM</a> is enterprise-class messaging and collaboration platform for workgroup or enterprises with many thousands users. OBM includes Groupware, messaging server, CRM, LDAP, Windows Domain, smartphone and PDA synchronization…
 </p>
 
 <p>
-OBM is shipped with a <acronym title="LemonLDAP::NG">LL::NG</acronym> plugin with these features:
+OBM is shipped with a <abbr title="LemonLDAP::NG">LL::NG</abbr> plugin with these features:
 </p>
 <ul>
-<li class="level1"><div class="li"> <acronym title="Single Sign On">SSO</acronym> on OBM web interface</div>
+<li class="level1"><div class="li"> <abbr title="Single Sign On">SSO</abbr> on OBM web interface</div>
 </li>
 <li class="level1"><div class="li"> Logout</div>
 </li>
@@ -53,18 +49,17 @@ OBM is shipped with a <acronym title="LemonLDAP::NG">LL::NG</acronym> plugin wit
 </ul>
 
 </div>
-<!-- SECTION "Presentation" [55-488] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [55-488] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [489-515] -->
-<h3><a name="obm1" id="obm1">OBM</a></h3>
+<!-- EDIT3 SECTION "Configuration" [489-515] -->
+<h3 class="sectionedit4" id="obm1">OBM</h3>
 <div class="level3">
 
 <p>
-
-To enable <acronym title="LemonLDAP::NG">LL::NG</acronym> authentication plugin, go in <code>/etc/obm/obm_conf.inc</code>:
+To enable <abbr title="LemonLDAP::NG">LL::NG</abbr> authentication plugin, go in <code>/etc/obm/obm_conf.inc</code>:
 </p>
 <pre class="code file php"><span class="re0">$auth_kind</span> <span class="sy0">=</span> <span class="st_h">'LemonLDAP'</span><span class="sy0">;</span>
 &nbsp;
@@ -151,17 +146,16 @@ To enable <acronym title="LemonLDAP::NG">LL::NG</acronym> authentication plugin,
 Parameters:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>url_logout</strong>: <acronym title="Uniform Resource Locator">URL</acronym> used by OBM to logout, will be caught by <acronym title="LemonLDAP::NG">LL::NG</acronym></div>
+<li class="level1"><div class="li"> <strong>url_logout</strong>: <abbr title="Uniform Resource Locator">URL</abbr> used by OBM to logout, will be caught by <abbr title="LemonLDAP::NG">LL::NG</abbr></div>
 </li>
-<li class="level1"><div class="li"> <strong>headers_map</strong>: map OBM internal field to <acronym title="LemonLDAP::NG">LL::NG</acronym> header</div>
+<li class="level1"><div class="li"> <strong>headers_map</strong>: map OBM internal field to <abbr title="LemonLDAP::NG">LL::NG</abbr> header</div>
 </li>
 </ul>
 
 <p>
-
-Edit also OBM Apache configuration to enable <acronym title="LemonLDAP::NG">LL::NG</acronym> Handler:
+Edit also OBM Apache configuration to enable <abbr title="LemonLDAP::NG">LL::NG</abbr> Handler:
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
     <span class="kw1">ServerName</span> obm.example.com
 &nbsp;
     <span class="co1"># SSO protection</span>
@@ -174,22 +168,21 @@ Edit also OBM Apache configuration to enable <acronym title="LemonLDAP::NG">LL::
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 <p>
-<p><div class="noteimportant">OBM Apache configuration must be loaded <strong>after</strong> <acronym title="LemonLDAP::NG">LL::NG</acronym> <a href="../../../documentation/2.0/configlocation.html#apache" class="wikilink1" title="documentation:2.0:configlocation">Apache configuration</a>.
+<p><div class="noteimportant">OBM Apache configuration must be loaded <strong>after</strong> <abbr title="LemonLDAP::NG">LL::NG</abbr> <a href="../../../documentation/2.0/configlocation.html#apache" class="wikilink1" title="documentation:2.0:configlocation">Apache configuration</a>.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "OBM" [516-6179] -->
-<h3><a name="llng" id="llng">LL::NG</a></h3>
+<!-- EDIT4 SECTION "OBM" [516-6179] -->
+<h3 class="sectionedit5" id="llng">LL::NG</h3>
 <div class="level3">
 
 </div>
 
-<h4><a name="attributes_and_macros" id="attributes_and_macros">Attributes and macros</a></h4>
+<h4 id="attributes_and_macros">Attributes and macros</h4>
 <div class="level4">
 
 <p>
-
 You will need to collect all attributes needed to create a user in OBM, this includes:
 </p>
 <ul>
@@ -206,7 +199,6 @@ You will need to collect all attributes needed to create a user in OBM, this inc
 </ul>
 
 <p>
-
 To add these attributes, go in Manager, <code>Variables</code> » <code>Exported Variables</code>.
 </p>
 
@@ -218,26 +210,27 @@ To add these attributes, go in Manager, <code>Variables</code> » <code>Exported
 <p>
 You may also create these macros to manage OBM administrator account (<code>Variables</code> » <code>Macros</code>):
 </p>
-<table class="inline">
+<div class="table sectionedit6"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0">field </th><th class="col1">value </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0"> uidR </td><td class="col1 leftalign"> ($uid =~ /^admin0/i)[0] ? &quot;admin0\@global.virt&quot; : $uid  </td>
 	</tr>
 	<tr class="row2 roweven">
 		<td class="col0 leftalign"> mailR  </td><td class="col1 leftalign"> ($uid =~ /^admin0/i)[0] ? &quot;&quot; : ($mail =~ /^([^@]+)/)[0] . &quot;\@example.com&quot;   </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT6 TABLE [6693-6872] -->
 </div>
 
-<h4><a name="virtual_host" id="virtual_host">Virtual host</a></h4>
+<h4 id="virtual_host">Virtual host</h4>
 <div class="level4">
 
 <p>
-
-Create OBM virtual host (for example obm.example.com) in <acronym title="LemonLDAP::NG">LL::NG</acronym> configuration: <code>Virtual Hosts</code> » <code>New virtual host</code>.
+Create OBM virtual host (for example obm.example.com) in <abbr title="LemonLDAP::NG">LL::NG</abbr> configuration: <code>Virtual Hosts</code> » <code>New virtual host</code>.
 </p>
 
 <p>
@@ -246,11 +239,10 @@ Then edit rules and headers.
 
 </div>
 
-<h5><a name="rules" id="rules">Rules</a></h5>
+<h5 id="rules">Rules</h5>
 <div class="level5">
 
 <p>
-
 Define at least:
 </p>
 <ul>
@@ -261,10 +253,12 @@ Define at least:
 <li class="level1"><div class="li"> <strong>Exceptions</strong>: allow anonymous access for specific URLs (connectors, etc.)</div>
 </li>
 </ul>
-<table class="inline">
+<div class="table sectionedit7"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0">field </th><th class="col1">value </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0">^/logout</td><td class="col1">logout_sso</td>
 	</tr>
@@ -283,21 +277,22 @@ Define at least:
 	<tr class="row6 roweven">
 		<td class="col0">default</td><td class="col1">accept (or whatever you want)</td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT7 TABLE [7254-7477] -->
 </div>
 
-<h5><a name="headers" id="headers">Headers</a></h5>
+<h5 id="headers">Headers</h5>
 <div class="level5">
 
 <p>
-
 Define headers used in OBM mapping, for example:
 </p>
-<table class="inline">
+<div class="table sectionedit8"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0">field </th><th class="col1">valeur </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0">OBM_GIVENNAME</td><td class="col1">$givenName</td>
 	</tr>
@@ -313,18 +308,16 @@ Define headers used in OBM mapping, for example:
 	<tr class="row5 rowodd">
 		<td class="col0">OBM_USERPASSWORD</td><td class="col1">$_password</td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT8 TABLE [7543-7671] -->
 </div>
 
-<h4><a name="other" id="other">Other</a></h4>
+<h4 id="other">Other</h4>
 <div class="level4">
 
 <p>
-
 Do not forget to add OBM in <a href="../../../documentation/2.0/portalmenu.html#categories_and_applications" class="wikilink1" title="documentation:2.0:portalmenu">applications menu</a>.
-
 </p>
 
 </div>
-<!-- SECTION "LL::NG" [6180-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

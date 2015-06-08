@@ -20,45 +20,42 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="remote" id="remote">Remote</a></h1>
+<h1 class="sectionedit1" id="remote">Remote</h1>
 <div class="level1">
-<table class="inline">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0">Authentication </th><th class="col1"> Users </th><th class="col2"> Password </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT2 TABLE [23-79] -->
 <p>
-
-<p><div class="notetip">This module is a <acronym title="LemonLDAP::NG">LL::NG</acronym> specific identity federation protocol. You may rather use standards protocols like <a href="../../documentation/2.0/idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML</a>, <a href="../../documentation/2.0/idpopenid.html" class="wikilink1" title="documentation:2.0:idpopenid">OpenID</a> or <a href="../../documentation/2.0/idpcas.html" class="wikilink1" title="documentation:2.0:idpcas">CAS</a>.
+<p><div class="notetip">This module is a <abbr title="LemonLDAP::NG">LL::NG</abbr> specific identity federation protocol. You may rather use standards protocols like <a href="../../documentation/2.0/idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML</a>, <a href="../../documentation/2.0/idpopenid.html" class="wikilink1" title="documentation:2.0:idpopenid">OpenID</a> or <a href="../../documentation/2.0/idpcas.html" class="wikilink1" title="documentation:2.0:idpcas">CAS</a>.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Remote" [1-263] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Remote" [1-263] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
 <div class="level2">
 <ul>
-<li class="level1"><div class="li"> The main portal is configured to use <acronym title="Cross Domain Authentication">CDA</acronym>. The secondary portal is declared in the Manager of the main <acronym title="LemonLDAP::NG">LL::NG</acronym> structure (else user will be rejected).</div>
+<li class="level1"><div class="li"> The main portal is configured to use <abbr title="Cross Domain Authentication">CDA</abbr>. The secondary portal is declared in the Manager of the main <abbr title="LemonLDAP::NG">LL::NG</abbr> structure (else user will be rejected).</div>
 </li>
-<li class="level1"><div class="li"> The portal of the secondary <acronym title="LemonLDAP::NG">LL::NG</acronym> structure is configured to delegate authentication to a remote portal. A request to the main session database is done (trough <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP session backend</a>) to be sure that the session exists.</div>
+<li class="level1"><div class="li"> The portal of the secondary <abbr title="LemonLDAP::NG">LL::NG</abbr> structure is configured to delegate authentication to a remote portal. A request to the main session database is done (trough <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP session backend</a>) to be sure that the session exists.</div>
 </li>
-<li class="level1"><div class="li"> If <code>exportedAttr</code> is set, only those attributes are copied in the session database of the secondary <acronym title="LemonLDAP::NG">LL::NG</acronym> structure. Else, all data are copied in the session database.</div>
+<li class="level1"><div class="li"> If <code>exportedAttr</code> is set, only those attributes are copied in the session database of the secondary <abbr title="LemonLDAP::NG">LL::NG</abbr> structure. Else, all data are copied in the session database.</div>
 </li>
 </ul>
 
 <p>
-
 <a href="/_detail/documentation/remote-principle.png?id=documentation%3A2.0%3Aauthremote" class="media" title="documentation:remote-principle.png"><img src="../../../media/documentation/remote-principle.png" class="mediacenter" alt="" /></a>
-
 </p>
 <ol>
-<li class="level1"><div class="li"> User tries to access to an application in the secondary <acronym title="LemonLDAP::NG">LL::NG</acronym> structure without having a session in this area</div>
+<li class="level1"><div class="li"> User tries to access to an application in the secondary <abbr title="LemonLDAP::NG">LL::NG</abbr> structure without having a session in this area</div>
 </li>
 <li class="level1"><div class="li"> Redirection to the portal of the secondary area (transparent)</div>
 </li>
@@ -66,47 +63,44 @@
 </li>
 <li class="level1"><div class="li"> Redirection to the portal of the secondary area (transparent)</div>
 </li>
-<li class="level1"><div class="li"> Secondary portal check if remote session is available. It can be done via direct access to the session database or using <acronym title="Simple Object Access Protocol">SOAP</acronym> access. Then it creates the session (with attribute filter)</div>
+<li class="level1"><div class="li"> Secondary portal check if remote session is available. It can be done via direct access to the session database or using SOAP access. Then it creates the session (with attribute filter)</div>
 </li>
 <li class="level1"><div class="li"> User can now access to the protected application</div>
 </li>
 </ol>
 
 <p>
-
 <p><div class="noteclassic">Note that if the user is already authenticated on the first portal, all redirections are transparent.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Presentation" [264-1609] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT3 SECTION "Presentation" [264-1609] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [1610-1636] -->
-<h3><a name="main_llng_structure" id="main_llng_structure">Main LL::NG structure</a></h3>
+<!-- EDIT4 SECTION "Configuration" [1610-1636] -->
+<h3 class="sectionedit5" id="main_llng_structure">Main LL::NG structure</h3>
 <div class="level3">
 
 <p>
-
 Go in Manager, and:
 </p>
 <ul>
-<li class="level1"><div class="li"> activate <acronym title="Cross Domain Authentication">CDA</acronym> in <code>General Parameters</code> » <code>Cookies</code> » <code>Multiple domains</code></div>
+<li class="level1"><div class="li"> activate <abbr title="Cross Domain Authentication">CDA</abbr> in <code>General Parameters</code> » <code>Cookies</code> » <code>Multiple domains</code></div>
 </li>
 <li class="level1"><div class="li"> declare secondary portal in <code>General Parameters</code> » <code>Advanced Parameters</code> » <code>Security</code> » <code>Trusted domains</code></div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Main LL::NG structure" [1637-1893] -->
-<h3><a name="secondary_llng_structure" id="secondary_llng_structure">Secondary LL::NG structure</a></h3>
+<!-- EDIT5 SECTION "Main LL::NG structure" [1637-1893] -->
+<h3 class="sectionedit6" id="secondary_llng_structure">Secondary LL::NG structure</h3>
 <div class="level3">
 
 <p>
-
-Configure the portal to use the remote <acronym title="LemonLDAP::NG">LL::NG</acronym> structure.
+Configure the portal to use the remote <abbr title="LemonLDAP::NG">LL::NG</abbr> structure.
 </p>
 
 <p>
@@ -114,31 +108,30 @@ In Manager, go in <code>General Parameters</code> » <code>Authentication module
 </p>
 
 <p>
-Then, go in <code>Remote parameters</code>: 
+Then, go in <code>Remote parameters</code>:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Portal <acronym title="Uniform Resource Locator">URL</acronym></strong>: remote portal <acronym title="Uniform Resource Locator">URL</acronym></div>
+<li class="level1"><div class="li"> <strong>Portal <abbr title="Uniform Resource Locator">URL</abbr></strong>: remote portal <abbr title="Uniform Resource Locator">URL</abbr></div>
 </li>
 <li class="level1"><div class="li"> <strong>Cookie name</strong> (optional): name of the cookie of primary portal, if different from secondary portal</div>
 </li>
-<li class="level1"><div class="li"> <strong>Sessions module</strong>: set <code>Lemonldap::NG::Common::Apache::Session::<acronym title="Simple Object Access Protocol">SOAP</acronym></code> for <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP session backend</a>.</div>
+<li class="level1"><div class="li"> <strong>Sessions module</strong>: set <code>Lemonldap::NG::Common::Apache::Session::SOAP</code> for <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP session backend</a>.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Sessions module options</strong>:</div>
 <ul>
-<li class="level2"><div class="li"> <strong>proxy</strong>: <acronym title="Simple Object Access Protocol">SOAP</acronym> sessions end point (see <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP session backend</a> documentation)</div>
+<li class="level2"><div class="li"> <strong>proxy</strong>: SOAP sessions end point (see <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP session backend</a> documentation)</div>
 </li>
 </ul>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Secondary LL::NG structure" [1894-2554] -->
-<h3><a name="exampleinteroperability_between_2_organizations" id="exampleinteroperability_between_2_organizations">Example: interoperability between 2 organizations</a></h3>
+<!-- EDIT6 SECTION "Secondary LL::NG structure" [1894-2554] -->
+<h3 class="sectionedit7" id="exampleinteroperability_between_2_organizations">Example: interoperability between 2 organizations</h3>
 <div class="level3">
 
 <p>
-
-Using this, we can do a very simple interoperability system between 2 organizations using two <acronym title="LemonLDAP::NG">LL::NG</acronym> structures:
+Using this, we can do a very simple interoperability system between 2 organizations using two <abbr title="LemonLDAP::NG">LL::NG</abbr> structures:
 </p>
 <ul>
 <li class="level1"><div class="li"> each area has 2 portals:</div>
@@ -154,13 +147,11 @@ Using this, we can do a very simple interoperability system between 2 organizati
 </ul>
 
 <p>
-
 So on each main portal, internal users can access normally, and users issued from the other organization have just to click on the link:
 </p>
 
 <p>
 <a href="/_detail/documentation/remote-interoperability.png?id=documentation%3A2.0%3Aauthremote" class="media" title="documentation:remote-interoperability.png"><img src="../../../media/documentation/remote-interoperability.png" class="mediacenter" alt="" /></a>
-
 </p>
 <ol>
 <li class="level1"><div class="li"> One user tries to access to the portal</div>
@@ -176,4 +167,4 @@ So on each main portal, internal users can access normally, and users issued fro
 </ol>
 
 </div>
-<!-- SECTION "Example: interoperability between 2 organizations" [2555-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

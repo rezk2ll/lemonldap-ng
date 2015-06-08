@@ -20,18 +20,15 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="logs" id="logs">Logs</a></h1>
+<h1 class="sectionedit1" id="logs">Logs</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Logs" [1-20] -->
-<h2><a name="apache_logging" id="apache_logging">Apache logging</a></h2>
+<!-- EDIT1 SECTION "Logs" [1-20] -->
+<h2 class="sectionedit2" id="apache_logging">Apache logging</h2>
 <div class="level2">
 
 <p>
-
 By default, LemonLDAP::NG uses Apache logs to store user actions and other messages:
 </p>
 <ul>
@@ -42,7 +39,6 @@ By default, LemonLDAP::NG uses Apache logs to store user actions and other messa
 </ul>
 
 <p>
-
 The log level can be set with Apache <code>LogLevel</code> parameter. It can be configured globally, or inside a virtual host.
 </p>
 
@@ -55,12 +51,11 @@ To configure the user identifier in access log, go in Manager, <code>General Par
 </p>
 
 </div>
-<!-- SECTION "Apache logging" [21-607] -->
-<h2><a name="syslog" id="syslog">Syslog</a></h2>
+<!-- EDIT2 SECTION "Apache logging" [21-607] -->
+<h2 class="sectionedit3" id="syslog">Syslog</h2>
 <div class="level2">
 
 <p>
-
 LemonLDAP::NG can also use syslog (only for user actions).
 </p>
 
@@ -74,19 +69,18 @@ The messages are stored with the levels :
 <ul>
 <li class="level1"><div class="li"> <strong>info</strong> for user actions</div>
 </li>
-<li class="level1"><div class="li"> <strong>notice</strong> for good authentications or external exchange (<acronym title="Security Assertion Markup Language">SAML</acronym>, OpenID,…)</div>
+<li class="level1"><div class="li"> <strong>notice</strong> for good authentications or external exchange (<abbr title="Security Assertion Markup Language">SAML</abbr>, OpenID,…)</div>
 </li>
 <li class="level1"><div class="li"> <strong>warn</strong> for failed authentications</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Syslog" [608-976] -->
-<h2><a name="override_logging_functions" id="override_logging_functions">Override logging functions</a></h2>
+<!-- EDIT3 SECTION "Syslog" [608-976] -->
+<h2 class="sectionedit4" id="override_logging_functions">Override logging functions</h2>
 <div class="level2">
 
 <p>
-
 You can customize logs by redefining userNotice() and userError() methods, directly in <code>lemonldap-ng.ini</code>
 </p>
 
@@ -94,8 +88,8 @@ You can customize logs by redefining userNotice() and userError() methods, direc
 Example:
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
-<span class="re1">userError</span> <span class="sy0">=</span><span class="re2"> sub <span class="br0">&#123;</span> my <span class="br0">&#40;</span>$self, $message<span class="br0">&#41;</span> <span class="sy0">=</span> @_</span><span class="co0">; ... }</span>
-<span class="re1">userNotice</span> <span class="sy0">=</span><span class="re2"> sub <span class="br0">&#123;</span> my <span class="br0">&#40;</span>$self, $message<span class="br0">&#41;</span> <span class="sy0">=</span> @_</span><span class="co0">; ... }</span></pre>
+<span class="re1">userError</span> <span class="sy0">=</span><span class="re2"> sub <span class="br0">&#123;</span> my <span class="br0">&#40;</span>$self, $message<span class="br0">&#41;</span> = @_</span><span class="co0">; ... }</span>
+<span class="re1">userNotice</span> <span class="sy0">=</span><span class="re2"> sub <span class="br0">&#123;</span> my <span class="br0">&#40;</span>$self, $message<span class="br0">&#41;</span> = @_</span><span class="co0">; ... }</span></pre>
 
 </div>
-<!-- SECTION "Override logging functions" [977-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

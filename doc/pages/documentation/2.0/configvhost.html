@@ -20,23 +20,19 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="manage_virtual_hosts" id="manage_virtual_hosts">Manage virtual hosts</a></h1>
+<h1 class="sectionedit1" id="manage_virtual_hosts">Manage virtual hosts</h1>
 <div class="level1">
 
 <p>
-
 LemonLDAP::NG configuration is build around Apache virtual hosts. Each virtual host is a protected resource, with access rules, headers, POST data and options.
 </p>
 
 </div>
-<!-- SECTION "Manage virtual hosts" [1-197] -->
-<h2><a name="apache_configuration" id="apache_configuration">Apache configuration</a></h2>
+<!-- EDIT1 SECTION "Manage virtual hosts" [1-197] -->
+<h2 class="sectionedit2" id="apache_configuration">Apache configuration</h2>
 <div class="level2">
 
 <p>
-
 To protect a virtual host in Apache, the LemonLDAP::NG Handler must be activated (see <a href="../../documentation/2.0/configlocation.html#apache" class="wikilink1" title="documentation:2.0:configlocation">Apache global configuration</a>).
 </p>
 
@@ -46,15 +42,14 @@ Then you can take any virtual host, and simply add this line to protect it:
 <pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
 
 </div>
-<!-- SECTION "Apache configuration" [198-521] -->
-<h3><a name="hosted_application" id="hosted_application">Hosted application</a></h3>
+<!-- EDIT2 SECTION "Apache configuration" [198-521] -->
+<h3 class="sectionedit3" id="hosted_application">Hosted application</h3>
 <div class="level3">
 
 <p>
-
 Example of a protected virtual host for a local application:
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
         <span class="kw1">ServerName</span> localsite.example.com
 &nbsp;
         PerlHeaderParserHandler Lemonldap::NG::Handler
@@ -67,15 +62,14 @@ Example of a protected virtual host for a local application:
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Hosted application" [522-929] -->
-<h3><a name="reverse_proxy" id="reverse_proxy">Reverse proxy</a></h3>
+<!-- EDIT3 SECTION "Hosted application" [522-929] -->
+<h3 class="sectionedit4" id="reverse_proxy">Reverse proxy</h3>
 <div class="level3">
 
 <p>
-
 Example of a protected virtual host with LemonLDAP::NG as reverse proxy:
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
         <span class="kw1">ServerName</span> application.example.com
 &nbsp;
         PerlHeaderParserHandler Lemonldap::NG::Handler
@@ -94,7 +88,7 @@ Example of a protected virtual host with LemonLDAP::NG as reverse proxy:
 <p>
 Same with remote server configured with the same host name:
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
         <span class="kw1">ServerName</span> application.example.com
 &nbsp;
         PerlHeaderParserHandler Lemonldap::NG::Handler
@@ -126,32 +120,28 @@ To learn more about using Apache as reverse-proxy, see <a href="http://httpd.apa
 </p>
 
 </div>
-<!-- SECTION "Reverse proxy" [930-2637] -->
-<h3><a name="add_a_floating_menu" id="add_a_floating_menu">Add a floating menu</a></h3>
+<!-- EDIT4 SECTION "Reverse proxy" [930-2637] -->
+<h3 class="sectionedit5" id="add_a_floating_menu">Add a floating menu</h3>
 <div class="level3">
 
 <p>
-
 A little floating menu can be added to application with this simple Apache configuration:
-
 </p>
 <pre class="code file apache">PerlOutputFilterHandler Lemonldap::NG::Handler::Menu</pre>
 
 <p>
 Pages where this menu is displayed can be restricted, for example:
-
 </p>
 <pre class="code file apache">&lt;<span class="kw3">Location</span> /var/www/html/index.php&gt;
 PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Add a floating menu" [2638-3024] -->
-<h2><a name="lemonldapng_configuration" id="lemonldapng_configuration">LemonLDAP::NG configuration</a></h2>
+<!-- EDIT5 SECTION "Add a floating menu" [2638-3024] -->
+<h2 class="sectionedit6" id="lemonldapng_configuration">LemonLDAP::NG configuration</h2>
 <div class="level2">
 
 <p>
-
 An apache virtual host protected by LemonLDAP::NG Handler must be registered in LemonLDAP::NG configuration.
 </p>
 
@@ -163,9 +153,9 @@ To do this, use the Manager, and go in <code>Virtual Hosts</code> branch. You ca
 A virtual host contains:
 </p>
 <ul>
-<li class="level1"><div class="li"> Access rules: check user&#039;s right on <acronym title="Uniform Resource Locator">URL</acronym> patterns</div>
+<li class="level1"><div class="li"> Access rules: check user&#039;s right on <abbr title="Uniform Resource Locator">URL</abbr> patterns</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers: forge information sent to protected applications</div>
+<li class="level1"><div class="li"> HTTP headers: forge information sent to protected applications</div>
 </li>
 <li class="level1"><div class="li"> POST data: use form replay</div>
 </li>
@@ -174,32 +164,29 @@ A virtual host contains:
 </ul>
 
 </div>
-<!-- SECTION "LemonLDAP::NG configuration" [3025-3512] -->
-<h3><a name="access_rules_and_http_headers" id="access_rules_and_http_headers">Access rules and HTTP headers</a></h3>
+<!-- EDIT6 SECTION "LemonLDAP::NG configuration" [3025-3512] -->
+<h3 class="sectionedit7" id="access_rules_and_http_headers">Access rules and HTTP headers</h3>
 <div class="level3">
 
 <p>
-
-See <strong><a href="../../documentation/2.0/writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Writing rules and headers</a></strong> to learn how to configure access control and <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers sent to application by <acronym title="LemonLDAP::NG">LL::NG</acronym>.
+See <strong><a href="../../documentation/2.0/writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Writing rules and headers</a></strong> to learn how to configure access control and HTTP headers sent to application by <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </p>
 
 </div>
-<!-- SECTION "Access rules and HTTP headers" [3513-3705] -->
-<h3><a name="post_data" id="post_data">POST data</a></h3>
+<!-- EDIT7 SECTION "Access rules and HTTP headers" [3513-3705] -->
+<h3 class="sectionedit8" id="post_data">POST data</h3>
 <div class="level3">
 
 <p>
-
 See <strong><a href="../../documentation/2.0/formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">Form replay</a></strong> to learn how to configure form replay to POST data on protected applications.
 </p>
 
 </div>
-<!-- SECTION "POST data" [3706-3840] -->
-<h3><a name="options" id="options">Options</a></h3>
+<!-- EDIT8 SECTION "POST data" [3706-3840] -->
+<h3 class="sectionedit9" id="options">Options</h3>
 <div class="level3">
 
 <p>
-
 Some options are available:
 </p>
 <ul>
@@ -212,9 +199,8 @@ Some options are available:
 </ul>
 
 <p>
-
-These options are used to build redirection <acronym title="Uniform Resource Locator">URL</acronym> (when user is not logged, or for <acronym title="Cross Domain Authentication">CDA</acronym> requests). By default, default values are used. These options are only here to override default values.
+These options are used to build redirection <abbr title="Uniform Resource Locator">URL</abbr> (when user is not logged, or for <abbr title="Cross Domain Authentication">CDA</abbr> requests). By default, default values are used. These options are only here to override default values.
 </p>
 
 </div>
-<!-- SECTION "Options" [3841-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

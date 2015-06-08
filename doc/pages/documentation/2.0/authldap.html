@@ -20,27 +20,26 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="ldap" id="ldap">LDAP</a></h1>
+<h1 class="sectionedit1" id="ldap">LDAP</h1>
 <div class="level1">
-<table class="inline">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
-		<th class="col0">Authentication </th><th class="col1"> Users </th><th class="col2"> Password </th>
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT2 TABLE [21-90] -->
 </div>
-<!-- SECTION "LDAP" [1-84] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "LDAP" [1-91] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<acronym title="LemonLDAP::NG">LL::NG</acronym> can use an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory to:
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can use an LDAP directory to:
 </p>
 <ul>
 <li class="level1"><div class="li"> authenticate user</div>
@@ -54,54 +53,51 @@
 </ul>
 
 <p>
-
-This works with every <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> v2 or v3 server, including <a href="../../documentation/2.0/authad.html" class="wikilink1" title="documentation:2.0:authad">Active Directory</a>.
+This works with every LDAP v2 or v3 server, including <a href="../../documentation/2.0/authad.html" class="wikilink1" title="documentation:2.0:authad">Active Directory</a>.
 </p>
 
 <p>
-<acronym title="LemonLDAP::NG">LL::NG</acronym> is compatible with <a href="https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt" class="urlextern" title="https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt"  rel="nofollow">LDAP password policy</a>:
+<abbr title="LemonLDAP::NG">LL::NG</abbr> is compatible with <a href="https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt" class="urlextern" title="https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt"  rel="nofollow">LDAP password policy</a>:
 </p>
 <ul>
-<li class="level1"><div class="li"> <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> server can check password strength, and <acronym title="LemonLDAP::NG">LL::NG</acronym> portal will display correct errors (password too short, password in history, etc.)</div>
+<li class="level1"><div class="li"> LDAP server can check password strength, and <abbr title="LemonLDAP::NG">LL::NG</abbr> portal will display correct errors (password too short, password in history, etc.)</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> sever can block brute-force attacks, and <acronym title="LemonLDAP::NG">LL::NG</acronym> will display that account is locked</div>
+<li class="level1"><div class="li"> LDAP sever can block brute-force attacks, and <abbr title="LemonLDAP::NG">LL::NG</abbr> will display that account is locked</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> server can force password change on first connection, and <acronym title="LemonLDAP::NG">LL::NG</acronym> portal will display a password change form before opening <acronym title="Single Sign On">SSO</acronym> session</div>
+<li class="level1"><div class="li"> LDAP server can force password change on first connection, and <abbr title="LemonLDAP::NG">LL::NG</abbr> portal will display a password change form before opening <abbr title="Single Sign On">SSO</abbr> session</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Presentation" [85-896] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT3 SECTION "Presentation" [92-903] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
-In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> for authentication, users and/or password modules.
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose LDAP for authentication, users and/or password modules.
 </p>
 
 <p>
 <p><div class="notetip">
-For <a href="../../documentation/2.0/authad.html" class="wikilink1" title="documentation:2.0:authad">Active Directory</a>, choose <code>Active Directory</code> instead of <code><acronym title="Lightweight Directory Access Protocol">LDAP</acronym></code>.
+For <a href="../../documentation/2.0/authad.html" class="wikilink1" title="documentation:2.0:authad">Active Directory</a>, choose <code>Active Directory</code> instead of <code>LDAP</code>.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Configuration" [897-1162] -->
-<h3><a name="authentication_level" id="authentication_level">Authentication level</a></h3>
+<!-- EDIT4 SECTION "Configuration" [904-1169] -->
+<h3 class="sectionedit5" id="authentication_level">Authentication level</h3>
 <div class="level3">
 
 <p>
-
 The authentication level given to users authenticated with this module.
 </p>
 
 <p>
 <p><div class="noteimportant">
-As <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> is a login/password based module, the authentication level can be:
+As LDAP is a login/password based module, the authentication level can be:
 </p>
 <ul>
-<li class="level1"><div class="li"> increased (+1) if portal is protected by <acronym title="Secure Sockets Layer">SSL</acronym> (HTTPS)</div>
+<li class="level1"><div class="li"> increased (+1) if portal is protected by SSL (HTTPS)</div>
 </li>
 <li class="level1"><div class="li"> decreased (-1) if the portal autocompletion is allowed (see <a href="../../documentation/2.0/portalcustom.html" class="wikilink1" title="documentation:2.0:portalcustom">portal customization</a>)</div>
 </li>
@@ -113,21 +109,20 @@ As <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> is a lo
 </p>
 
 </div>
-<!-- SECTION "Authentication level" [1163-1528] -->
-<h3><a name="exported_variables" id="exported_variables">Exported variables</a></h3>
+<!-- EDIT5 SECTION "Authentication level" [1170-1535] -->
+<h3 class="sectionedit6" id="exported_variables">Exported variables</h3>
 <div class="level3">
 
 <p>
-
 List of attributes to query to fill user session. See also <a href="../../documentation/2.0/exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables configuration</a>.
 </p>
 
 </div>
-<!-- SECTION "Exported variables" [1529-1669] -->
-<h3><a name="connection" id="connection">Connection</a></h3>
+<!-- EDIT6 SECTION "Exported variables" [1536-1676] -->
+<h3 class="sectionedit7" id="connection">Connection</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li"> <strong>Server host</strong>: <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> server hostname or <acronym title="Uniform Resource Identifier">URI</acronym> (by default: localhost). Accept some specificities:</div>
+<li class="level1"><div class="li"> <strong>Server host</strong>: LDAP server hostname or <abbr title="Uniform Resource Identifier">URI</abbr> (by default: localhost). Accept some specificities:</div>
 <ul>
 <li class="level2"><div class="li"> More than one server can be set here separated by spaces or commas. They will be tested in the specified order.</div>
 </li>
@@ -137,35 +132,33 @@ List of attributes to query to fill user session. See also <a href="../../docume
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> <strong>Server port</strong>: TCP port used by <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> server. Can be overridden by an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> <acronym title="Uniform Resource Identifier">URI</acronym> in server host.</div>
+<li class="level1"><div class="li"> <strong>Server port</strong>: TCP port used by LDAP server. Can be overridden by an LDAP <abbr title="Uniform Resource Identifier">URI</abbr> in server host.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Users search base</strong>: Base of search in the <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory.</div>
+<li class="level1"><div class="li"> <strong>Users search base</strong>: Base of search in the LDAP directory.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Account</strong>: <acronym title="Distinguished Name">DN</acronym> used to connect to <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> server. By default, anonymous bind is used.</div>
+<li class="level1"><div class="li"> <strong>Account</strong>: <abbr title="Distinguished Name">DN</abbr> used to connect to LDAP server. By default, anonymous bind is used.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Password</strong>: password to used to connect to <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> server. By default, anonymous bind is used.</div>
+<li class="level1"><div class="li"> <strong>Password</strong>: password to used to connect to LDAP server. By default, anonymous bind is used.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Timeout</strong>: server idle timeout.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Version</strong>: <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> protocol version.</div>
+<li class="level1"><div class="li"> <strong>Version</strong>: LDAP protocol version.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Binary attributes</strong>: regular expression matching binary attributes (see <a href="http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod" class="urlextern" title="http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod"  rel="nofollow">Net::LDAP</a> documentation).</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Connection" [1670-2861] -->
-<h3><a name="filters" id="filters">Filters</a></h3>
+<!-- EDIT7 SECTION "Connection" [1677-2868] -->
+<h3 class="sectionedit8" id="filters">Filters</h3>
 <div class="level3">
 
 <p>
-
-<p><div class="notetip">In <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> filters, $user is replaced by user login, and $mail by user email.
+<p><div class="notetip">In LDAP filters, $user is replaced by user login, and $mail by user email.
 </div></p>
-
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Default filter</strong>: default <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> fitler for searches, should not be modified.</div>
+<li class="level1"><div class="li"> <strong>Default filter</strong>: default LDAP fitler for searches, should not be modified.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Authentication filter</strong>: Filter to find user from its login (default: <code>(&amp;(uid=$user)(objectClass=inetOrgPerson))</code>)</div>
 </li>
@@ -174,36 +167,27 @@ List of attributes to query to fill user session. See also <a href="../../docume
 </ul>
 
 <p>
-
 <p><div class="notetip">
 For Active Directory, the default authentication filter is:
-
 </p>
-<pre class="code">
-(&amp;(sAMAccountName=$user)(objectClass=person))
-</pre>
+<pre class="code">(&amp;(sAMAccountName=$user)(objectClass=person))</pre>
 
 <p>
-
 And the mail filter is:
-
 </p>
-<pre class="code">
-(&amp;(mail=$mail)(objectClass=person))
-</pre>
+<pre class="code">(&amp;(mail=$mail)(objectClass=person))</pre>
 
 <p>
-
 
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Filters" [2862-3508] -->
-<h3><a name="groups" id="groups">Groups</a></h3>
+<!-- EDIT8 SECTION "Filters" [2869-3515] -->
+<h3 class="sectionedit9" id="groups">Groups</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li"> <strong>Search base</strong>: <acronym title="Distinguished Name">DN</acronym> of groups branch. If no value, disable group searching.</div>
+<li class="level1"><div class="li"> <strong>Search base</strong>: <abbr title="Distinguished Name">DN</abbr> of groups branch. If no value, disable group searching.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Object class</strong>: objectClass of the groups (default: groupOfNames).</div>
 </li>
@@ -220,17 +204,17 @@ And the mail filter is:
 </ul>
 
 </div>
-<!-- SECTION "Groups" [3509-4343] -->
-<h3><a name="password" id="password">Password</a></h3>
+<!-- EDIT9 SECTION "Groups" [3516-4350] -->
+<h3 class="sectionedit10" id="password">Password</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li"> <strong>Password policy control</strong>: enable to use <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password policy. This requires at least Net::<acronym title="Lightweight Directory Access Protocol">LDAP</acronym> 0.38.</div>
+<li class="level1"><div class="li"> <strong>Password policy control</strong>: enable to use LDAP password policy. This requires at least Net::LDAP 0.38.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Password modify extended operation</strong>: enable to use the <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> extended operation <code>password modify</code> instead of standard modify operation.</div>
+<li class="level1"><div class="li"> <strong>Password modify extended operation</strong>: enable to use the LDAP extended operation <code>password modify</code> instead of standard modify operation.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Change as user</strong>: enable to perform password modification with credentials of connected user. This requires to request user old password (see <a href="../../documentation/2.0/portalcustom.html" class="wikilink1" title="documentation:2.0:portalcustom">portal customization</a>).</div>
 </li>
-<li class="level1"><div class="li"> <strong><acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password encoding</strong>: can allow to manage old <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> servers using specific encoding for passwords (default: utf-8).</div>
+<li class="level1"><div class="li"> <strong>LDAP password encoding</strong>: can allow to manage old LDAP servers using specific encoding for passwords (default: utf-8).</div>
 </li>
 <li class="level1"><div class="li"> <strong>Use reset attribute</strong>: enable to use the password reset attribute. This attribute is set by LemonLDAP::NG when <a href="../../documentation/2.0/resetpassword.html" class="wikilink1" title="documentation:2.0:resetpassword">password was reset by mail</a> and the user choose to generate the password (default: enabled).</div>
 </li>
@@ -241,87 +225,4 @@ And the mail filter is:
 </ul>
 
 </div>
-<!-- SECTION "Password" [4344-5332] -->
-<h2><a name="schema_extension" id="schema_extension">Schema extension</a></h2>
-<div class="level2">
-
-<p>
-
-Standards attributes, like uid, cn or mail, are often enough to configure access rules and headers.
-</p>
-
-<p>
-But sometimes other data are needed (in particular to use <a href="../../documentation/2.0/extendedfunctions.html" class="wikilink1" title="documentation:2.0:extendedfunctions">extended functions</a>):
-</p>
-<ul>
-<li class="level1"><div class="li"> An application name (to allow access by applications and not by group of users)</div>
-</li>
-<li class="level1"><div class="li"> A start date and an end date (to open or close the service even the entry already exists)</div>
-</li>
-<li class="level1"><div class="li"> A time profile (allowed hours and day of the week)</div>
-</li>
-<li class="level1"><div class="li"> One or more roles (to send to the protected applications)</div>
-</li>
-</ul>
-
-<p>
-
-Of course, standard <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> attributes can be used to store these data, but <acronym title="LemonLDAP::NG">LL::NG</acronym> also provides an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> schema extension to manage them.
-</p>
-
-</div>
-<!-- SECTION "Schema extension" [5333-5996] -->
-<h3><a name="oid_prefix" id="oid_prefix">OID prefix</a></h3>
-<div class="level3">
-
-<p>
-Extended attributes and object classes use this prefix: 1.3.6.1.4.1.10943.10.2.
-</p>
-
-<p>
-The prefix 1.3.6.1.4.1.10943 is owned by <a href="http://www.linagora.com" class="urlextern" title="http://www.linagora.com"  rel="nofollow">LINAGORA</a> (See <a href="http://www.iana.org/assignments/enterprise-numbers" class="urlextern" title="http://www.iana.org/assignments/enterprise-numbers"  rel="nofollow">http://www.iana.org/assignments/enterprise-numbers</a>).
-</p>
-
-</div>
-<!-- SECTION "OID prefix" [5997-6241] -->
-<h3><a name="openldap_schema" id="openldap_schema">OpenLDAP schema</a></h3>
-<div class="level3">
-
-<p>
-
-Just add this file to OpenLDAP schemas by including it in <code>slapd.conf</code>:
-
-</p>
-<pre class="file">
-include /usr/share/lemonldap-ng/ressources/sso.schema
-</pre>
-
-<p>
-This will provide the auxiliary object class <code>ssoUser</code> with attributes:
-</p>
-<ul>
-<li class="level1"><div class="li"> ssoName</div>
-</li>
-<li class="level1"><div class="li"> ssoRoles</div>
-</li>
-<li class="level1"><div class="li"> ssoLogonHours</div>
-</li>
-<li class="level1"><div class="li"> ssoStartDate</div>
-</li>
-<li class="level1"><div class="li"> ssoEndDate</div>
-</li>
-</ul>
-
-<p>
-
-You can add this object class to any entry of your directory.
-</p>
-
-<p>
-<p><div class="noteimportant">To get attributes values in session, declare them in <a href="../../documentation/2.0/exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables</a>
-</div></p>
-
-</p>
-
-</div>
-<!-- SECTION "OpenLDAP schema" [6242-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

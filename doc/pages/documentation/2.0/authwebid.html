@@ -20,27 +20,26 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="webid" id="webid">WebID</a></h1>
+<h1 class="sectionedit1" id="webid">WebID</h1>
 <div class="level1">
-<table class="inline">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
-		<th class="col0">Authentication </th><th class="col1"> Users </th><th class="col2"> Password </th>
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT2 TABLE [22-85] -->
 </div>
-<!-- SECTION "WebID" [1-79] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "WebID" [1-86] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<a href="http://www.w3.org/wiki/WebID" class="urlextern" title="http://www.w3.org/wiki/WebID"  rel="nofollow">WebID</a> is a way to uniquely identify a person, company, organisation, or other agent using a <acronym title="Uniform Resource Identifier">URI</acronym> and a certificate.
+<a href="http://www.w3.org/wiki/WebID" class="urlextern" title="http://www.w3.org/wiki/WebID"  rel="nofollow">WebID</a> is a way to uniquely identify a person, company, organisation, or other agent using a <abbr title="Uniform Resource Identifier">URI</abbr> and a certificate.
 </p>
 
 <p>
@@ -48,12 +47,11 @@ You need <a href="https://metacpan.org/release/Web-ID" class="urlextern" title="
 </p>
 
 </div>
-<!-- SECTION "Presentation" [80-321] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT3 SECTION "Presentation" [87-328] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
 In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose WebID for authentication module. You can also use WebID as user database.
 </p>
 
@@ -69,11 +67,10 @@ Then, go in <code>WebID parameters</code>:
 </ul>
 
 <p>
-
 If you use WebID as user database, declare values in <strong>exported variables</strong> :
 </p>
 <ul>
-<li class="level1"><div class="li"> use any key name you want. If you want to refuse access when a data is missing, just add a ”!” before the key name</div>
+<li class="level1"><div class="li"> use any key name you want. If you want to refuse access when a data is missing, just add a “!” before the key name</div>
 </li>
 <li class="level1"><div class="li"> in the value field, set the field name. Take a look at <a href="http://xmlns.com/foaf/spec/#sec-crossref" class="urlextern" title="http://xmlns.com/foaf/spec/#sec-crossref"  rel="nofollow">http://xmlns.com/foaf/spec/#sec-crossref</a>. Example :<pre class="code">name =&gt; foaf:name</pre>
 </div>
@@ -81,38 +78,32 @@ If you use WebID as user database, declare values in <strong>exported variables<
 </ul>
 
 <p>
-
 See also <a href="../../documentation/2.0/exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables configuration</a>.
 </p>
 
 </div>
-<!-- SECTION "Configuration" [322-1161] -->
-<h3><a name="apache_configuration" id="apache_configuration">Apache configuration</a></h3>
+<!-- EDIT4 SECTION "Configuration" [329-1168] -->
+<h3 class="sectionedit5" id="apache_configuration">Apache configuration</h3>
 <div class="level3">
 
 <p>
-
-Portal host must be configured to use <acronym title="Secure Sockets Layer">SSL</acronym> and must ask for client certificate. It is recommended to use optional_no_ca since WebID doesn&#039;t use certificate authorities :
-
+Portal host must be configured to use SSL and must ask for client certificate. It is recommended to use optional_no_ca since WebID doesn&#039;t use certificate authorities :
 </p>
-<pre class="code">
-&lt;VirtualHost _default_:443&gt;
-ServerName auth.example.com
-SSLEngine on
-SSLCertificateFile ...
-SSLCertificateKeyFile ...
-SSLVerifyClient optional_no_ca
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> _default_:<span class="nu0">443</span>&gt;
+<span class="kw1">ServerName</span> auth.example.com
+<span class="kw1">SSLEngine</span> <span class="kw2">on</span>
+<span class="kw1">SSLCertificateFile</span> ...
+<span class="kw1">SSLCertificateKeyFile</span> ...
+<span class="kw1">SSLVerifyClient</span> optional_no_ca
 ...
-&lt;/VirtualHost&gt;
-</pre>
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Apache configuration" [1162-1546] -->
-<h3><a name="tests" id="tests">Tests</a></h3>
+<!-- EDIT5 SECTION "Apache configuration" [1169-1560] -->
+<h3 class="sectionedit6" id="tests">Tests</h3>
 <div class="level3">
 
 <p>
-
 To test this, you can build your own WebID certificate using one of :
 </p>
 <ul>
@@ -125,4 +116,4 @@ To test this, you can build your own WebID certificate using one of :
 </ul>
 
 </div>
-<!-- SECTION "Tests" [1547-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

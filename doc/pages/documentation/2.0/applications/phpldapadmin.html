@@ -20,63 +20,57 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="phpldapadmin" id="phpldapadmin">phpLDAPadmin</a></h1>
+<h1 class="sectionedit1" id="phpldapadmin">phpLDAPadmin</h1>
 <div class="level1">
 
 <p>
-
 <a href="/_detail/applications/phpldapadmin_logo.png?id=documentation%3A2.0%3Aapplications%3Aphpldapadmin" class="media" title="applications:phpldapadmin_logo.png"><img src="../../../../media/applications/phpldapadmin_logo.png" class="mediacenter" alt="" /></a>
 </p>
 
 </div>
-<!-- SECTION "phpLDAPadmin" [1-72] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "phpLDAPadmin" [1-72] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<a href="http://phpldapadmin.sourceforge.net" class="urlextern" title="http://phpldapadmin.sourceforge.net"  rel="nofollow">phpLDAPadmin</a> is an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> administration tool written in <acronym title="Hypertext Preprocessor">PHP</acronym>.
+<a href="http://phpldapadmin.sourceforge.net" class="urlextern" title="http://phpldapadmin.sourceforge.net"  rel="nofollow">phpLDAPadmin</a> is an LDAP administration tool written in PHP.
 </p>
 
 <p>
-phpLDAPadmin will connect to the directory with a static <acronym title="Distinguished Name">DN</acronym> and password, and so will not request authentication anymore. The access to phpLDAPadmin will be protected by LemonLDAP::NG with specific access rules.
+phpLDAPadmin will connect to the directory with a static <abbr title="Distinguished Name">DN</abbr> and password, and so will not request authentication anymore. The access to phpLDAPadmin will be protected by LemonLDAP::NG with specific access rules.
 </p>
 
 <p>
-<p><div class="notewarning">phpLDAPadmin will have no idea of the user connected to the WebSSO. So a simple user can have admin rights on the <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory if your access rules are too lazy.
+<p><div class="notewarning">phpLDAPadmin will have no idea of the user connected to the WebSSO. So a simple user can have admin rights on the LDAP directory if your access rules are too lazy.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Presentation" [73-598] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [73-598] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [599-625] -->
-<h3><a name="phpldapadmin_local_configuration" id="phpldapadmin_local_configuration">phpLDAPadmin local configuration</a></h3>
+<!-- EDIT3 SECTION "Configuration" [599-625] -->
+<h3 class="sectionedit4" id="phpldapadmin_local_configuration">phpLDAPadmin local configuration</h3>
 <div class="level3">
 
 <p>
-
-Just set the authentication type to <code>config</code> and indicate <acronym title="Distinguished Name">DN</acronym> and password inside the file <code>config.php</code>:
+Just set the authentication type to <code>config</code> and indicate <abbr title="Distinguished Name">DN</abbr> and password inside the file <code>config.php</code>:
 </p>
 <pre class="code file php"><span class="re0">$ldapservers</span><span class="sy0">-&gt;</span><span class="me1">SetValue</span><span class="br0">&#40;</span><span class="re0">$i</span><span class="sy0">,</span><span class="st_h">'server'</span><span class="sy0">,</span><span class="st_h">'auth_type'</span><span class="sy0">,</span><span class="st_h">'config'</span><span class="br0">&#41;</span><span class="sy0">;</span>
 <span class="re0">$ldapservers</span><span class="sy0">-&gt;</span><span class="me1">SetValue</span><span class="br0">&#40;</span><span class="re0">$i</span><span class="sy0">,</span><span class="st_h">'login'</span><span class="sy0">,</span><span class="st_h">'dn'</span><span class="sy0">,</span><span class="st_h">'cn=Manager,dc=example,dc=com'</span><span class="br0">&#41;</span><span class="sy0">;</span>
 <span class="re0">$ldapservers</span><span class="sy0">-&gt;</span><span class="me1">SetValue</span><span class="br0">&#40;</span><span class="re0">$i</span><span class="sy0">,</span><span class="st_h">'login'</span><span class="sy0">,</span><span class="st_h">'pass'</span><span class="sy0">,</span><span class="st_h">'secret'</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "phpLDAPadmin local configuration" [626-980] -->
-<h3><a name="phpldapadmin_virtual_host_in_apache" id="phpldapadmin_virtual_host_in_apache">phpLDAPadmin virtual host in Apache</a></h3>
+<!-- EDIT4 SECTION "phpLDAPadmin local configuration" [626-980] -->
+<h3 class="sectionedit5" id="phpldapadmin_virtual_host_in_apache">phpLDAPadmin virtual host in Apache</h3>
 <div class="level3">
 
 <p>
-
 Configure phpLDAPadmin virtual host like other <a href="../../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a>.
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> phpldapadmin.example.com
 &nbsp;
        PerlHeaderParserHandler Lemonldap::NG::Handler
@@ -86,12 +80,11 @@ Configure phpLDAPadmin virtual host like other <a href="../../../documentation/2
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "phpLDAPadmin virtual host in Apache" [981-1292] -->
-<h3><a name="phpldapadmin_virtual_host_in_manager" id="phpldapadmin_virtual_host_in_manager">phpLDAPadmin virtual host in Manager</a></h3>
+<!-- EDIT5 SECTION "phpLDAPadmin virtual host in Apache" [981-1292] -->
+<h3 class="sectionedit6" id="phpldapadmin_virtual_host_in_manager">phpLDAPadmin virtual host in Manager</h3>
 <div class="level3">
 
 <p>
-
 Go to the Manager and <a href="../../../documentation/2.0/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:2.0:configvhost">create a new virtual host</a> for phpLDAPadmin.
 </p>
 
@@ -101,8 +94,7 @@ Just configure the <a href="../../../documentation/2.0/writingrulesand_headers.h
 
 <p>
 No <a href="../../../documentation/2.0/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:2.0:writingrulesand_headers">headers</a> are required.
-
 </p>
 
 </div>
-<!-- SECTION "phpLDAPadmin virtual host in Manager" [1293-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

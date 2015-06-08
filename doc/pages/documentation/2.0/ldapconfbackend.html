@@ -20,19 +20,16 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="ldap_configuration_backend" id="ldap_configuration_backend">LDAP configuration backend</a></h1>
+<h1 class="sectionedit1" id="ldap_configuration_backend">LDAP configuration backend</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "LDAP configuration backend" [1-42] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "LDAP configuration backend" [1-42] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-You can choose to store LemonLDAP::NG configuration in an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory.
+You can choose to store LemonLDAP::NG configuration in an LDAP directory.
 </p>
 
 <p>
@@ -43,11 +40,11 @@ You can choose to store LemonLDAP::NG configuration in an <acronym title="Lightw
 Advantages:
 </p>
 <ul>
-<li class="level1"><div class="li"> Easy to share between servers with remote <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> access</div>
+<li class="level1"><div class="li"> Easy to share between servers with remote LDAP access</div>
 </li>
-<li class="level1"><div class="li"> Easy to duplicate with <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> synchronization services (like SyncRepl in OpenLDAP)</div>
+<li class="level1"><div class="li"> Easy to duplicate with LDAP synchronization services (like SyncRepl in OpenLDAP)</div>
 </li>
-<li class="level1"><div class="li"> Security with <acronym title="Secure Sockets Layer">SSL</acronym>/TLS</div>
+<li class="level1"><div class="li"> Security with SSL/TLS</div>
 </li>
 <li class="level1"><div class="li"> Access control possible by creating one user for Manager (write) and another for portal and handlers (read)</div>
 </li>
@@ -56,7 +53,6 @@ Advantages:
 </ul>
 
 <p>
-
 The configuration will be store under a specific branch, for example <code>ou=conf,ou=applications,dc=example,dc=com</code>.
 </p>
 
@@ -65,7 +61,7 @@ Each configuration will be represented as an entry, which structural objectClass
 </p>
 
 <p>
-The configuration name is the same that files, so lmConf-1, lmConf-2, etc. This name is used in entry <acronym title="Distinguished Name">DN</acronym>, for example <code>cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com</code>.
+The configuration name is the same that files, so lmConf-1, lmConf-2, etc. This name is used in entry <abbr title="Distinguished Name">DN</abbr>, for example <code>cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com</code>.
 </p>
 
 <p>
@@ -75,48 +71,44 @@ Then each parameter is one value of the attribute <code>description</code>, pref
 <p>
 The LDIF view of such entry can be:
 </p>
-<pre class="file">
-dn: cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com
+<pre class="file">dn: cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com
 objectClass: top
 objectClass: applicationProcess
 cn: lmConf-1
 description: {globalStorage}&#039;Apache::Session::File&#039;
 description: {cookieName}&#039;lemonldap&#039;
 description: {whatToTrace}&#039;$uid&#039;
-...
-</pre>
+...</pre>
 
 </div>
-<!-- SECTION "Presentation" [43-1400] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [43-1400] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [1401-1427] -->
-<h3><a name="ldap_server" id="ldap_server">LDAP server</a></h3>
+<!-- EDIT3 SECTION "Configuration" [1401-1427] -->
+<h3 class="sectionedit4" id="ldap_server">LDAP server</h3>
 <div class="level3">
 
 <p>
-
-Configuration objects use standard object class: <code>applicationProcess</code>. This objectClass allow attributes <code>cn</code> and <code>description</code>. If your <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> server do not manage this objectClass, you have to extend your schema.
+Configuration objects use standard object class: <code>applicationProcess</code>. This objectClass allow attributes <code>cn</code> and <code>description</code>. If your LDAP server do not manage this objectClass, you have to extend your schema.
 </p>
 
 <p>
-We advice to create a specific <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> account with write access on configuration branch.
+We advice to create a specific LDAP account with write access on configuration branch.
 </p>
 
 <p>
-Next create the configuration branch where you want. Just remember its <acronym title="Distinguished Name">DN</acronym> for LemonLDAP::NG configuration. 
+Next create the configuration branch where you want. Just remember its <abbr title="Distinguished Name">DN</abbr> for LemonLDAP::NG configuration. 
 </p>
 
 </div>
-<!-- SECTION "LDAP server" [1428-1867] -->
-<h3><a name="lemonldapng" id="lemonldapng">LemonLDAP::NG</a></h3>
+<!-- EDIT4 SECTION "LDAP server" [1428-1867] -->
+<h3 class="sectionedit5" id="lemonldapng">LemonLDAP::NG</h3>
 <div class="level3">
 
 <p>
-
-Configure <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> configuration backend in <code>lemonldap-ng.ini</code>, section <code>[configuration]</code>:
+Configure LDAP configuration backend in <code>lemonldap-ng.ini</code>, section <code>[configuration]</code>:
 </p>
 <pre class="code file ini"><span class="re1">type</span> <span class="sy0">=</span><span class="re2"> LDAP</span>
 <span class="re1">ldapServer</span> <span class="sy0">=</span><span class="re2"> ldap://localhost</span>
@@ -128,15 +120,15 @@ Configure <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> 
 Parameters:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>ldapServer</strong>: <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> <acronym title="Uniform Resource Identifier">URI</acronym> of the server</div>
+<li class="level1"><div class="li"> <strong>ldapServer</strong>: LDAP <abbr title="Uniform Resource Identifier">URI</abbr> of the server</div>
 </li>
-<li class="level1"><div class="li"> <strong>ldapConfBase</strong>: <acronym title="Distinguished Name">DN</acronym> of configuration branch</div>
+<li class="level1"><div class="li"> <strong>ldapConfBase</strong>: <abbr title="Distinguished Name">DN</abbr> of configuration branch</div>
 </li>
-<li class="level1"><div class="li"> <strong>ldapBindDN</strong>: <acronym title="Distinguished Name">DN</acronym> used to bind <acronym title="Lightweight Directory Access Protocol">LDAP</acronym></div>
+<li class="level1"><div class="li"> <strong>ldapBindDN</strong>: <abbr title="Distinguished Name">DN</abbr> used to bind LDAP</div>
 </li>
-<li class="level1"><div class="li"> <strong>ldapBindPassword</strong>: password used to bind <acronym title="Lightweight Directory Access Protocol">LDAP</acronym></div>
+<li class="level1"><div class="li"> <strong>ldapBindPassword</strong>: password used to bind LDAP</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "LemonLDAP::NG" [1868-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

@@ -20,38 +20,34 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="internal_proxy" id="internal_proxy">Internal Proxy</a></h1>
+<h1 class="sectionedit1" id="internal_proxy">Internal Proxy</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Internal Proxy" [1-30] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Internal Proxy" [1-30] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-LemonLDAP::NG provides a proxy that can replace the use of Apache mod_proxy. This proxy use LWP <acronym title="Practical Extraction and Report Language">Perl</acronym> module to relay <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request. It can inspect <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers to replace on the fly the Location and Set-Cookie headers.
+LemonLDAP::NG provides a proxy that can replace the use of Apache mod_proxy. This proxy use LWP Perl module to relay HTTP request. It can inspect HTTP headers to replace on the fly the Location and Set-Cookie headers.
 </p>
 
 <p>
 Main differences with mod_proxy:
 </p>
 <ul>
-<li class="level1"><div class="li"> The whole Location value is replaced, including the scheme (http or https), which can help to manage redirections below <acronym title="Secure Sockets Layer">SSL</acronym> hardware equipments</div>
+<li class="level1"><div class="li"> The whole Location value is replaced, including the scheme (http or https), which can help to manage redirections below SSL hardware equipments</div>
 </li>
 <li class="level1"><div class="li"> It is compliant with the <a href="../../documentation/2.0/formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">form replay</a> feature</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Presentation" [31-521] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [31-521] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
 The configuration is done in Apache, in a virtual host.
 </p>
 
@@ -74,7 +70,7 @@ For example, to proxy <a href="https://www.public.com" class="urlextern" title="
 Parameters:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>LmProxyPass</strong>: <acronym title="Uniform Resource Locator">URL</acronym> to relay <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> requests</div>
+<li class="level1"><div class="li"> <strong>LmProxyPass</strong>: <abbr title="Uniform Resource Locator">URL</abbr> to relay HTTP requests</div>
 </li>
 <li class="level1"><div class="li"> <strong>LmLocationToReplace</strong>: string to replace in <code>Location</code> header</div>
 </li>
@@ -83,4 +79,4 @@ Parameters:
 </ul>
 
 </div>
-<!-- SECTION "Configuration" [522-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

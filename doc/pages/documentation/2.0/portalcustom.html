@@ -20,25 +20,21 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="portal_customization" id="portal_customization">Portal customization</a></h1>
+<h1 class="sectionedit1" id="portal_customization">Portal customization</h1>
 <div class="level1">
 
 <p>
-
 <p><div class="noteclassic">The portal is the visible part of LemonLDAP::NG, all user interactions are displayed on it.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Portal customization" [1-142] -->
-<h2><a name="skin" id="skin">Skin</a></h2>
+<!-- EDIT1 SECTION "Portal customization" [1-142] -->
+<h2 class="sectionedit2" id="skin">Skin</h2>
 <div class="level2">
 
 <p>
-
-LemonLDAP::NG is shipped with 3 skins:
+LemonLDAP::NG is shipped with 4 skins:
 </p>
 <ul>
 <li class="level1"><div class="li"> pastel</div>
@@ -52,17 +48,20 @@ LemonLDAP::NG is shipped with 3 skins:
 </ul>
 
 <p>
+<p><div class="notetip">It is recommended to use <code>bootstrap</code> skin, as other may be deprecated in the future.
+</div></p>
+</p>
 
+<p>
 But you can make your own, see Skin customization below.
 </p>
 
 </div>
-<!-- SECTION "Skin" [143-303] -->
-<h3><a name="default_skin" id="default_skin">Default skin</a></h3>
+<!-- EDIT2 SECTION "Skin" [143-408] -->
+<h3 class="sectionedit3" id="default_skin">Default skin</h3>
 <div class="level3">
 
 <p>
-
 You can change the default skin in Manager: <code>General Parameters</code> &gt; <code>Portal</code> &gt; <code>Customization</code> &gt; <code>Default skin</code>.
 </p>
 
@@ -71,38 +70,36 @@ You can change the default skin in Manager: <code>General Parameters</code> &gt;
 </p>
 
 </div>
-<!-- SECTION "Default skin" [304-494] -->
-<h3><a name="skin_rules" id="skin_rules">Skin rules</a></h3>
+<!-- EDIT3 SECTION "Default skin" [409-599] -->
+<h3 class="sectionedit4" id="skin_rules">Skin rules</h3>
 <div class="level3">
 
 <p>
-
-You might want to display different skin depending on the <acronym title="Uniform Resource Locator">URL</acronym> that was called before being redirected to the portal, or the <acronym title="Internet Protocol">IP</acronym> address of the user.
+You might want to display different skin depending on the <abbr title="Uniform Resource Locator">URL</abbr> that was called before being redirected to the portal, or the <abbr title="Internet Protocol">IP</abbr> address of the user.
 </p>
 
 <p>
 To achieve this, you can create a rule in the Manager: select <code>General Parameters</code> &gt; <code>Portal</code> &gt; <code>Customization</code> &gt; <code>Skin display rules</code> on click on “New key”. Then fill the two fields;
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Rule</strong>: a <acronym title="Practical Extraction and Report Language">Perl</acronym> expression (you can use %ENV hash to get environment variables, or $_url to get <acronym title="Uniform Resource Locator">URL</acronym> called before redirection, or $ipAddr to use user <acronym title="Internet Protocol">IP</acronym> address). If the rule evaluation is true,  the corresponding skin is applied.</div>
+<li class="level1"><div class="li"> <strong>Rule</strong>: a Perl expression (you can use %ENV hash to get environment variables, or $_url to get <abbr title="Uniform Resource Locator">URL</abbr> called before redirection, or $ipAddr to use user <abbr title="Internet Protocol">IP</abbr> address). If the rule evaluation is true,  the corresponding skin is applied.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Skin</strong>: the name of the skin to use.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Skin rules" [495-1137] -->
-<h3><a name="skin_files" id="skin_files">Skin files</a></h3>
+<!-- EDIT4 SECTION "Skin rules" [600-1242] -->
+<h3 class="sectionedit5" id="skin_files">Skin files</h3>
 <div class="level3">
 
 <p>
-
 A skin is composed of different files:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>.tpl</strong>: <acronym title="Practical Extraction and Report Language">Perl</acronym> <acronym title="HyperText Markup Language">HTML</acronym>::Template files, for <acronym title="HyperText Markup Language">HTML</acronym> content</div>
+<li class="level1"><div class="li"> <strong>.tpl</strong>: Perl <abbr title="HyperText Markup Language">HTML</abbr>::Template files, for <abbr title="HyperText Markup Language">HTML</abbr> content</div>
 </li>
-<li class="level1"><div class="li"> <strong>.css</strong>: <acronym title="Cascading Style Sheets">CSS</acronym> (styles)</div>
+<li class="level1"><div class="li"> <strong>.css</strong>: <abbr title="Cascading Style Sheets">CSS</abbr> (styles)</div>
 </li>
 <li class="level1"><div class="li"> <strong>.js</strong>: Javascript</div>
 </li>
@@ -111,65 +108,53 @@ A skin is composed of different files:
 </ul>
 
 <p>
-
-A skin will often refer to the <code>common</code> skin, which is not a real skin, but shared skin objects (like scripts, images and <acronym title="Cascading Style Sheets">CSS</acronym>).
+A skin will often refer to the <code>common</code> skin, which is not a real skin, but shared skin objects (like scripts, images and <abbr title="Cascading Style Sheets">CSS</abbr>).
 </p>
 
 </div>
-<!-- SECTION "Skin files" [1138-1472] -->
-<h3><a name="skin_customization" id="skin_customization">Skin customization</a></h3>
+<!-- EDIT5 SECTION "Skin files" [1243-1577] -->
+<h3 class="sectionedit6" id="skin_customization">Skin customization</h3>
 <div class="level3">
 
 <p>
-
 <p><div class="noteimportant">If you modify directly the skin files, your modifications will certainly be erased on the next upgrade.
 </div></p>
 </p>
 
 <p>
 To customize a skin, the simplest way is to create a new skin folder:
-
 </p>
-<pre class="code">
-cd portal/skins
+<pre class="code">cd portal/skins
 mkdir myskin
 mkdir myskin/css
-mkdir myskin/images
-</pre>
+mkdir myskin/images</pre>
 
 <p>
-Then create symbolic links on template files, as you might not want to rewrite all <acronym title="HyperText Markup Language">HTML</acronym> code (else, do as you want).
-
+Then create symbolic links on template files, as you might not want to rewrite all <abbr title="HyperText Markup Language">HTML</abbr> code (else, do as you want).
 </p>
-<pre class="code">
-cd myskin
-ln -s ../pastel/*.tpl .
-</pre>
+<pre class="code">cd myskin
+ln -s ../pastel/*.tpl .</pre>
 
 <p>
 We include some template files that can be customized:
 </p>
 <ul>
-<li class="level1"><div class="li"> customhead.tpl : <acronym title="HyperText Markup Language">HTML</acronym> header markups (like <acronym title="Cascading Style Sheets">CSS</acronym>, js inclusion)</div>
+<li class="level1"><div class="li"> customhead.tpl : <abbr title="HyperText Markup Language">HTML</abbr> header markups (like <abbr title="Cascading Style Sheets">CSS</abbr>, js inclusion)</div>
 </li>
-<li class="level1"><div class="li"> customheader.tpl : <acronym title="HyperText Markup Language">HTML</acronym> code int the header div</div>
+<li class="level1"><div class="li"> customheader.tpl : <abbr title="HyperText Markup Language">HTML</abbr> code int the header div</div>
 </li>
-<li class="level1"><div class="li"> customfooter.tpm : <acronym title="HyperText Markup Language">HTML</acronym> code in the footer div</div>
+<li class="level1"><div class="li"> customfooter.tpm : <abbr title="HyperText Markup Language">HTML</abbr> code in the footer div</div>
 </li>
 </ul>
 
 <p>
-
 To use custom files, delete links and copy them into your skin folder:
-
 </p>
-<pre class="code">
-rm custom*
-cp ../pastel/custom* .
-</pre>
+<pre class="code">rm custom*
+cp ../pastel/custom* .</pre>
 
 <p>
-Then you <em>only</em> have to write <code>myskin/css/styles.css</code> and add your media to <code>myskin/images</code>. Put all custom <acronym title="HyperText Markup Language">HTML</acronym> code in the custom template files.
+Then you <em>only</em> have to write <code>myskin/css/styles.css</code> and add your media to <code>myskin/images</code>. Put all custom <abbr title="HyperText Markup Language">HTML</abbr> code in the custom template files.
 </p>
 
 <p>
@@ -177,12 +162,11 @@ To configure your new skin in Manager, select the custom skin, and enter your sk
 </p>
 
 </div>
-<!-- SECTION "Skin customization" [1473-2567] -->
-<h3><a name="error_messages" id="error_messages">Error messages</a></h3>
+<!-- EDIT6 SECTION "Skin customization" [1578-2672] -->
+<h3 class="sectionedit7" id="error_messages">Error messages</h3>
 <div class="level3">
 
 <p>
-
 Error messages are defined in source code. If they really do not please you, override them! You just need to know the ID of the error (look at Portal/Simple.pm) and then add to <code>lemonldap-ng.ini</code>:
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
@@ -191,12 +175,11 @@ Error messages are defined in source code. If they really do not please you, ove
 <span class="re1">error_0</span> <span class="sy0">=</span><span class="re2"> Big brother is watching you, authenticated user</span></pre>
 
 </div>
-<!-- SECTION "Error messages" [2568-2905] -->
-<h3><a name="template_parameters" id="template_parameters">Template parameters</a></h3>
+<!-- EDIT7 SECTION "Error messages" [2673-3010] -->
+<h3 class="sectionedit8" id="template_parameters">Template parameters</h3>
 <div class="level3">
 
 <p>
-
 Template parameters are defined in source code. If you need to add a template parameter for your customization, then add to <code>lemonldap-ng.ini</code>:
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
@@ -206,17 +189,15 @@ Template parameters are defined in source code. If you need to add a template pa
 
 <p>
 Then you will be able to use it in your template like this:
-
 </p>
 <pre class="code file html4strict">Hello <span class="sc2">&lt;TMPL_VAR <span class="kw3">NAME</span><span class="sy0">=</span><span class="st0">&quot;myparam&quot;</span>&gt;</span>!</pre>
 
 </div>
-<!-- SECTION "Template parameters" [2906-3276] -->
-<h2><a name="buttons" id="buttons">Buttons</a></h2>
+<!-- EDIT8 SECTION "Template parameters" [3011-3381] -->
+<h2 class="sectionedit9" id="buttons">Buttons</h2>
 <div class="level2">
 
 <p>
-
 This node allows to enable/disable buttons on the login page:
 </p>
 <ul>
@@ -229,21 +210,21 @@ This node allows to enable/disable buttons on the login page:
 </ul>
 
 </div>
-<!-- SECTION "Buttons" [3277-3730] -->
-<h2><a name="password_management" id="password_management">Password management</a></h2>
+<!-- EDIT9 SECTION "Buttons" [3382-3835] -->
+<h2 class="sectionedit10" id="password_management">Password management</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>Require old password</strong>: used only in the password changing module of the menu, will check the old password before updating it</div>
 </li>
-<li class="level1"><div class="li"> <strong>Hide old password</strong>: used only if the password need to be reset by the user (<acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password policy), will hide the old password input</div>
+<li class="level1"><div class="li"> <strong>Hide old password</strong>: used only if the password need to be reset by the user (LDAP password policy), will hide the old password input</div>
 </li>
-<li class="level1"><div class="li"> <strong>Send mail on password change</strong>: send a mail if the password is changed from the Menu, or from forced password reset (<acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password policy)</div>
+<li class="level1"><div class="li"> <strong>Send mail on password change</strong>: send a mail if the password is changed from the Menu, or from forced password reset (LDAP password policy)</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Password management" [3731-4181] -->
-<h2><a name="other_parameters" id="other_parameters">Other parameters</a></h2>
+<!-- EDIT10 SECTION "Password management" [3836-4286] -->
+<h2 class="sectionedit11" id="other_parameters">Other parameters</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong>Auto complete</strong>: allow the browser to remember the password (for password based authentication backends)</div>
@@ -259,11 +240,9 @@ This node allows to enable/disable buttons on the login page:
 </ul>
 
 <p>
-
 <p><div class="noteimportant">If you enable auto completion, authentication level will be decreased (-1) as you do not ask the user to type its password (it could be in browser passwords wallet).
 </div></p>
-
 </p>
 
 </div>
-<!-- SECTION "Other parameters" [4182-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

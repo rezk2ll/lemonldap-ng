@@ -20,13 +20,10 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="notifications_system" id="notifications_system">Notifications system</a></h1>
+<h1 class="sectionedit1" id="notifications_system">Notifications system</h1>
 <div class="level1">
 
 <p>
-
 Since version 0.9.4, LemonLDAP::NG can be used to notify some messages to users: if a user has a message, the message will be displayed when he will access to the portal. If the message contains check boxes, the user has to check all of them else he can not access to the portal and get his session cookie.
 </p>
 
@@ -35,30 +32,27 @@ Since 1.1.0, a notification explorer is available in Manager, and notifications 
 </p>
 
 </div>
-<!-- SECTION "Notifications system" [1-586] -->
-<h2><a name="installation" id="installation">Installation</a></h2>
+<!-- EDIT1 SECTION "Notifications system" [1-586] -->
+<h2 class="sectionedit2" id="installation">Installation</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Installation" [587-612] -->
-<h3><a name="activation" id="activation">Activation</a></h3>
+<!-- EDIT2 SECTION "Installation" [587-612] -->
+<h3 class="sectionedit3" id="activation">Activation</h3>
 <div class="level3">
 
 <p>
-
 You just have to activate Notifications in the Manager (General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Activation) or in lemonldap-ng.ini:
-
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
 <span class="re1">notification</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
 
 </div>
-<!-- SECTION "Activation" [613-831] -->
-<h3><a name="storage" id="storage">Storage</a></h3>
+<!-- EDIT3 SECTION "Activation" [613-831] -->
+<h3 class="sectionedit4" id="storage">Storage</h3>
 <div class="level3">
 
 <p>
-
 By default, notifications will be stored in the same database as configuration:
 </p>
 <ul>
@@ -66,36 +60,30 @@ By default, notifications will be stored in the same database as configuration:
 </li>
 <li class="level1"><div class="li"> if you use “CDBI” or “RDBI” system, the notifications will be stored in the same database as configuration and in a table called “notifications”.</div>
 </li>
-<li class="level1"><div class="li">  if you use “<acronym title="Lightweight Directory Access Protocol">LDAP</acronym>” system, the notifications will be stored in the same directory as configuration and in a branch called “notifications”.</div>
+<li class="level1"><div class="li">  if you use “LDAP” system, the notifications will be stored in the same directory as configuration and in a branch called “notifications”.</div>
 </li>
 </ul>
 
 <p>
-
 You can change default parameters using the “notificationStorage” and “notificationStorageOptions” parameters with the same syntax as configuration storage parameters. To do this in Manager, go in General Parameters &gt; Advanced Parameters &gt; Notifications.
 </p>
 
 </div>
 
-<h4><a name="file" id="file">File</a></h4>
+<h4 id="file">File</h4>
 <div class="level4">
 
 <p>
-
 Parameters for File backend are the same as <a href="../../documentation/2.0/fileconfbackend.html" class="wikilink1" title="documentation:2.0:fileconfbackend">File configuration backend</a>.
 </p>
 
 <p>
 <p><div class="noteimportant">You need to create yourself the directory and set write access to Apache user. For example:
-
 </p>
-<pre class="code">
-mkdir /usr/local/lemonldap-ng/notifications/
-chown www-data /usr/local/lemonldap-ng/notifications/
-</pre>
+<pre class="code">mkdir /usr/local/lemonldap-ng/notifications/
+chown www-data /usr/local/lemonldap-ng/notifications/</pre>
 
 <p>
-
 
 </div></p>
 </p>
@@ -117,30 +105,27 @@ To summary available options:
 
 </div>
 
-<h4><a name="dbi" id="dbi">DBI</a></h4>
+<h4 id="dbi">DBI</h4>
 <div class="level4">
 
 <p>
-
-Parameters for <acronym title="Database Interface">DBI</acronym> backend are the same as <a href="../../documentation/2.0/sqlconfbackend.html" class="wikilink1" title="documentation:2.0:sqlconfbackend">DBI configuration backend</a>.
+Parameters for <abbr title="Database Interface">DBI</abbr> backend are the same as <a href="../../documentation/2.0/sqlconfbackend.html" class="wikilink1" title="documentation:2.0:sqlconfbackend">DBI configuration backend</a>.
 </p>
 
 <p>
 <p><div class="noteimportant">You have to create the table by yourself:
-
 </p>
 <pre class="code sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> notifications <span class="br0">&#40;</span>
-  date datetime <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
-  uid varchar<span class="br0">&#40;</span>255<span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
-  ref varchar<span class="br0">&#40;</span>255<span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
-  cond varchar<span class="br0">&#40;</span>255<span class="br0">&#41;</span> <span class="kw1">DEFAULT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+  <span class="kw1">DATE</span> datetime <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+  uid <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+  <span class="kw1">REF</span> <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+  cond <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span> <span class="kw1">DEFAULT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
   xml longblob <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
   done datetime <span class="kw1">DEFAULT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
-  <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span> <span class="br0">&#40;</span>date<span class="sy0">,</span> uid<span class="sy0">,</span>ref<span class="br0">&#41;</span>
+  <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span> <span class="br0">&#40;</span><span class="kw1">DATE</span><span class="sy0">,</span> uid<span class="sy0">,</span><span class="kw1">REF</span><span class="br0">&#41;</span>
 <span class="br0">&#41;</span></pre>
 
 <p>
-
 
 </div></p>
 </p>
@@ -149,11 +134,11 @@ Parameters for <acronym title="Database Interface">DBI</acronym> backend are the
 To summary available options:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>dbiChain</strong>: <acronym title="Database Interface">DBI</acronym> connection.</div>
+<li class="level1"><div class="li"> <strong>dbiChain</strong>: <abbr title="Database Interface">DBI</abbr> connection.</div>
 </li>
-<li class="level1"><div class="li"> <strong>dbiUser</strong>: <acronym title="Database Interface">DBI</acronym> user.</div>
+<li class="level1"><div class="li"> <strong>dbiUser</strong>: <abbr title="Database Interface">DBI</abbr> user.</div>
 </li>
-<li class="level1"><div class="li"> <strong>dbiPassword</strong>: <acronym title="Database Interface">DBI</acronym> password.</div>
+<li class="level1"><div class="li"> <strong>dbiPassword</strong>: <abbr title="Database Interface">DBI</abbr> password.</div>
 </li>
 <li class="level1"><div class="li"> <strong>table</strong>: Notifications table name.</div>
 </li>
@@ -161,12 +146,11 @@ To summary available options:
 
 </div>
 
-<h4><a name="ldap" id="ldap">LDAP</a></h4>
+<h4 id="ldap">LDAP</h4>
 <div class="level4">
 
 <p>
-
-Parameters for <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> backend are the same as <a href="../../documentation/2.0/ldapconfbackend.html" class="wikilink1" title="documentation:2.0:ldapconfbackend">LDAP configuration backend</a>.
+Parameters for LDAP backend are the same as <a href="../../documentation/2.0/ldapconfbackend.html" class="wikilink1" title="documentation:2.0:ldapconfbackend">LDAP configuration backend</a>.
 </p>
 
 <p>
@@ -178,23 +162,22 @@ Parameters for <acronym title="Lightweight Directory Access Protocol">LDAP</acro
 To summary available options:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>ldapServer</strong>: <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> <acronym title="Uniform Resource Locator">URL</acronym>.</div>
+<li class="level1"><div class="li"> <strong>ldapServer</strong>: LDAP <abbr title="Uniform Resource Locator">URL</abbr>.</div>
 </li>
-<li class="level1"><div class="li"> <strong>ldapBindDN</strong>: <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> user.</div>
+<li class="level1"><div class="li"> <strong>ldapBindDN</strong>: LDAP user.</div>
 </li>
-<li class="level1"><div class="li"> <strong>ldapBindPassword</strong>: <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password.</div>
+<li class="level1"><div class="li"> <strong>ldapBindPassword</strong>: LDAP password.</div>
 </li>
-<li class="level1"><div class="li"> <strong>ldapConfBase</strong>: Notifications branch <acronym title="Distinguished Name">DN</acronym>.</div>
+<li class="level1"><div class="li"> <strong>ldapConfBase</strong>: Notifications branch <abbr title="Distinguished Name">DN</abbr>.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Storage" [832-3326] -->
-<h3><a name="wildcard" id="wildcard">Wildcard</a></h3>
+<!-- EDIT4 SECTION "Storage" [832-3326] -->
+<h3 class="sectionedit5" id="wildcard">Wildcard</h3>
 <div class="level3">
 
 <p>
-
 The notifications module uses a wildcard to manage notifications for all users. The default value of this wilcard is <code>allusers</code>, but you can change it if <code>allusers</code> is a known identifier in your system.
 </p>
 
@@ -207,28 +190,26 @@ Then creating a notification for <code>alluserscustom</code> will display the no
 </p>
 
 </div>
-<!-- SECTION "Wildcard" [3327-3796] -->
-<h3><a name="custom_xslt_file" id="custom_xslt_file">Custom XSLT file</a></h3>
+<!-- EDIT5 SECTION "Wildcard" [3327-3796] -->
+<h3 class="sectionedit6" id="custom_xslt_file">Custom XSLT file</h3>
 <div class="level3">
 
 <p>
-
-The transformation between notification <acronym title="Extensible Markup Language">XML</acronym> content and <acronym title="HyperText Markup Language">HTML</acronym> display is done with <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym>. The default <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym> file is in portal/skins/common/notification.xsl. You can create your own <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym> file and store in another place, for example /etc/lemonldap-ng. Then just configure the new <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym> file path in Manager, go in General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Custom <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym> file and set for example <code>/etc/lemonldap-ng/notification.xsl</code>.
+The transformation between notification XML content and <abbr title="HyperText Markup Language">HTML</abbr> display is done with XSLT. The default XSLT file is in portal/skins/common/notification.xsl. You can create your own XSLT file and store in another place, for example /etc/lemonldap-ng. Then just configure the new XSLT file path in Manager, go in General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Custom XSLT file and set for example <code>/etc/lemonldap-ng/notification.xsl</code>.
 </p>
 
 </div>
-<!-- SECTION "Custom XSLT file" [3797-4269] -->
-<h2><a name="using_notification_system" id="using_notification_system">Using notification system</a></h2>
+<!-- EDIT6 SECTION "Custom XSLT file" [3797-4269] -->
+<h2 class="sectionedit7" id="using_notification_system">Using notification system</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Using notification system" [4270-4308] -->
-<h3><a name="notification_format" id="notification_format">Notification format</a></h3>
+<!-- EDIT7 SECTION "Using notification system" [4270-4308] -->
+<h3 class="sectionedit8" id="notification_format">Notification format</h3>
 <div class="level3">
 
 <p>
-
-Notifications are <acronym title="Extensible Markup Language">XML</acronym> files containing:
+Notifications are XML files containing:
 </p>
 <ul>
 <li class="level1"><div class="li"> &lt;notification&gt; element(s) :</div>
@@ -251,13 +232,13 @@ Notifications are <acronym title="Extensible Markup Language">XML</acronym> file
 </li>
 <li class="level2"><div class="li"> Sub elements:</div>
 <ul>
-<li class="level3"><div class="li"> &lt;title&gt;: title to display: will be inserted in <acronym title="HyperText Markup Language">HTML</acronym> page enclosed in &lt;h2 class=“notifText”&gt;…&lt;/h2&gt;</div>
+<li class="level3"><div class="li"> &lt;title&gt;: title to display: will be inserted in <abbr title="HyperText Markup Language">HTML</abbr> page enclosed in &lt;h2 class=“notifText”&gt;…&lt;/h2&gt;</div>
 </li>
-<li class="level3"><div class="li"> &lt;subtitle&gt;: subtitle to display: will be inserted in <acronym title="HyperText Markup Language">HTML</acronym> page enclosed in &lt;h2 class=“notifText”&gt;…&lt;/h2&gt;</div>
+<li class="level3"><div class="li"> &lt;subtitle&gt;: subtitle to display: will be inserted in <abbr title="HyperText Markup Language">HTML</abbr> page enclosed in &lt;h2 class=“notifText”&gt;…&lt;/h2&gt;</div>
 </li>
-<li class="level3"><div class="li"> &lt;text&gt;: paragraph to display: will be inserted in <acronym title="HyperText Markup Language">HTML</acronym> page enclosed in &lt;p class=“notifText”&gt;…&lt;/p&gt;</div>
+<li class="level3"><div class="li"> &lt;text&gt;: paragraph to display: will be inserted in <abbr title="HyperText Markup Language">HTML</abbr> page enclosed in &lt;p class=“notifText”&gt;…&lt;/p&gt;</div>
 </li>
-<li class="level3"><div class="li"> &lt;check&gt;: paragraph to display with a checkbox: will be inserted in <acronym title="HyperText Markup Language">HTML</acronym> page enclosed in &lt;p class=“notifCheck”&gt;&lt;input type=“checkbox” /&gt;…&lt;/p&gt;</div>
+<li class="level3"><div class="li"> &lt;check&gt;: paragraph to display with a checkbox: will be inserted in <abbr title="HyperText Markup Language">HTML</abbr> page enclosed in &lt;p class=“notifCheck”&gt;&lt;input type=“checkbox” /&gt;…&lt;/p&gt;</div>
 </li>
 </ul>
 </li>
@@ -266,19 +247,17 @@ Notifications are <acronym title="Extensible Markup Language">XML</acronym> file
 </ul>
 
 <p>
-
-<p><div class="noteimportant">All other elements will be removed including <acronym title="HyperText Markup Language">HTML</acronym> elements like &lt;b&gt;.
+<p><div class="noteimportant">All other elements will be removed including <abbr title="HyperText Markup Language">HTML</abbr> elements like &lt;b&gt;.
 </div></p>
 </p>
 
 <p>
-<p><div class="notetip">One notification <acronym title="Extensible Markup Language">XML</acronym> document can contain several notifications messages.
+<p><div class="notetip">One notification XML document can contain several notifications messages.
 </div></p>
 </p>
 
 <p>
 Example :
-
 </p>
 <pre class="code file xml"><span class="sc3"><span class="re1">&lt;?xml</span> <span class="re0">version</span>=<span class="st0">&quot;1.0&quot;</span> <span class="re0">encoding</span>=<span class="st0">&quot;UTF-8&quot;</span> <span class="re0">standalone</span>=<span class="st0">&quot;no&quot;</span><span class="re2">?&gt;</span></span>
 <span class="sc3"><span class="re1">&lt;root<span class="re2">&gt;</span></span></span>
@@ -300,12 +279,11 @@ Example :
 <span class="sc3"><span class="re1">&lt;/root<span class="re2">&gt;</span></span></span></pre>
 
 </div>
-<!-- SECTION "Notification format" [4309-6407] -->
-<h3><a name="create_new_notifications_with_notifications_explorer" id="create_new_notifications_with_notifications_explorer">Create new notifications with notifications explorer</a></h3>
+<!-- EDIT8 SECTION "Notification format" [4309-6407] -->
+<h3 class="sectionedit9" id="create_new_notifications_with_notifications_explorer">Create new notifications with notifications explorer</h3>
 <div class="level3">
 
 <p>
-
 In Manager, click on <code>notifications explorer</code> and then on the <code>Create</code> button.
 </p>
 
@@ -322,30 +300,29 @@ When all is ok, click on <code>Create</code>.
 </p>
 
 </div>
-<!-- SECTION "Create new notifications with notifications explorer" [6408-6753] -->
-<h3><a name="notifications_trough_soap" id="notifications_trough_soap">Notifications trough SOAP</a></h3>
+<!-- EDIT9 SECTION "Create new notifications with notifications explorer" [6408-6753] -->
+<h3 class="sectionedit10" id="notifications_trough_soap">Notifications trough SOAP</h3>
 <div class="level3">
 
 <p>
-
-New notifications can be insert using <acronym title="Simple Object Access Protocol">SOAP</acronym> request (described in the WSDL file generated by buildPortalWSDL tool). To activate <acronym title="Simple Object Access Protocol">SOAP</acronym> on the portal:
+New notifications can be insert using SOAP request (described in the WSDL file generated by buildPortalWSDL tool). To activate SOAP on the portal:
 </p>
 <ul>
-<li class="level1"><div class="li"> Enable <acronym title="Simple Object Access Protocol">SOAP</acronym> in General parameters » Advanced parameters » <acronym title="Simple Object Access Protocol">SOAP</acronym></div>
+<li class="level1"><div class="li"> Enable SOAP in General parameters » Advanced parameters » SOAP</div>
 </li>
-<li class="level1"><div class="li"> Enable Notifications <acronym title="Simple Object Access Protocol">SOAP</acronym> service in Apache configuration:</div>
+<li class="level1"><div class="li"> Enable Notifications SOAP service in Apache configuration:</div>
 </li>
 </ul>
 <pre class="code file apache"><span class="co1"># SOAP functions for notification insertion (disabled by default)</span>
 &lt;<span class="kw3">Location</span> /index.pl/notification&gt;
     <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
     <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    <span class="kw1">Allow</span> from 192.168.2.0/24
+    <span class="kw1">Allow</span> from 192.168.2.0/<span class="nu0">24</span>
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
 
-<h4><a name="insertion_example_in_perl" id="insertion_example_in_perl">Insertion example in Perl</a></h4>
+<h4 id="insertion_example_in_perl">Insertion example in Perl</h4>
 <div class="level4">
 <pre class="code perl"><span class="co1">#!/usr/bin/perl</span>
 &nbsp;
@@ -378,13 +355,12 @@ New notifications can be insert using <acronym title="Simple Object Access Proto
 <span class="br0">&#125;</span></pre>
 
 <p>
-
-You can also delete some notifications with <acronym title="Simple Object Access Protocol">SOAP</acronym>, once <acronym title="Simple Object Access Protocol">SOAP</acronym> is activated:
+You can also delete some notifications with SOAP, once SOAP is activated:
 </p>
 
 </div>
 
-<h4><a name="deletion_example_in_perl" id="deletion_example_in_perl">Deletion example in Perl</a></h4>
+<h4 id="deletion_example_in_perl">Deletion example in Perl</h4>
 <div class="level4">
 <pre class="code perl"><span class="co1">#!/usr/bin/perl</span>
 &nbsp;
@@ -407,12 +383,11 @@ You can also delete some notifications with <acronym title="Simple Object Access
 <span class="br0">&#125;</span></pre>
 
 </div>
-<!-- SECTION "Notifications trough SOAP" [6754-8650] -->
-<h3><a name="test_notification" id="test_notification">Test notification</a></h3>
+<!-- EDIT10 SECTION "Notifications trough SOAP" [6754-8650] -->
+<h3 class="sectionedit11" id="test_notification">Test notification</h3>
 <div class="level3">
 
 <p>
-
 You&#039;ve simply to insert a notification and connect to the portal using the same UID. You will be prompted.
 </p>
 
@@ -425,4 +400,4 @@ Try also to create a global notification (to the uid “allusers”), and connec
 </p>
 
 </div>
-<!-- SECTION "Test notification" [8651-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

@@ -20,40 +20,36 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="secure_token_handler" id="secure_token_handler">Secure Token Handler</a></h1>
+<h1 class="sectionedit1" id="secure_token_handler">Secure Token Handler</h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Secure Token Handler" [1-36] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "Secure Token Handler" [1-36] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
 The Secure Token Handler is a special Handler that create a token for each request and send it to the protected application. The real user identifier is stored in a Memcached server and the protected application can the request the Memcached server to get user identifier.
 </p>
 
 <p>
-This mechanism allow to do <acronym title="Single Sign On">SSO</acronym> on application with an unsafe link between Handler and the application, but with a safe link with the Memcached server.
+This mechanism allow to do <abbr title="Single Sign On">SSO</abbr> on application with an unsafe link between Handler and the application, but with a safe link with the Memcached server.
 </p>
 
 </div>
-<!-- SECTION "Presentation" [37-488] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT2 SECTION "Presentation" [37-488] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [489-515] -->
-<h3><a name="virtual_host_in_apache" id="virtual_host_in_apache">Virtual host in Apache</a></h3>
+<!-- EDIT3 SECTION "Configuration" [489-515] -->
+<h3 class="sectionedit4" id="virtual_host_in_apache">Virtual host in Apache</h3>
 <div class="level3">
 
 <p>
-
 Configure the virtual host like other <a href="../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a> but use Secure Token Handler instead of default Handler.
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> secure.example.com
 &nbsp;
        <span class="co1"># Load SecureToken Handler</span>
@@ -65,12 +61,11 @@ Configure the virtual host like other <a href="../../documentation/2.0/configvho
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Virtual host in Apache" [516-974] -->
-<h3><a name="handler_parameters" id="handler_parameters">Handler parameters</a></h3>
+<!-- EDIT4 SECTION "Virtual host in Apache" [516-974] -->
+<h3 class="sectionedit5" id="handler_parameters">Handler parameters</h3>
 <div class="level3">
 
 <p>
-
 Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</code> » <code>Special handlers</code> » <code>Secure Token</code>, and edit the different keys:
 </p>
 <ul>
@@ -82,11 +77,11 @@ Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</cod
 </li>
 <li class="level1"><div class="li"> <strong>Protected URLs</strong>: Regexp of URLs for which the secure token will be sent, separated by spaces</div>
 </li>
-<li class="level1"><div class="li"> <strong>Header name</strong>: name of the <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header carrying the secure token.</div>
+<li class="level1"><div class="li"> <strong>Header name</strong>: name of the HTTP header carrying the secure token.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Allow requests in error</strong>: allow a request that has generated an error in token generation to be forwarded to the protected application without secure token (default: yes)</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Handler parameters" [975-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

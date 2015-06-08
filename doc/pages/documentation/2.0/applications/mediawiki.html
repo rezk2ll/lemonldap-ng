@@ -20,28 +20,24 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="mediawiki" id="mediawiki">MediaWiki</a></h1>
+<h1 class="sectionedit1" id="mediawiki">MediaWiki</h1>
 <div class="level1">
 
 <p>
-
 <a href="/_detail/applications/mediawiki_logo.png?id=documentation%3A2.0%3Aapplications%3Amediawiki" class="media" title="applications:mediawiki_logo.png"><img src="../../../../media/applications/mediawiki_logo.png" class="mediacenter" alt="" /></a>
 </p>
 
 </div>
-<!-- SECTION "MediaWiki" [1-66] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "MediaWiki" [1-66] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
 <a href="http://www.mediawiki.org" class="urlextern" title="http://www.mediawiki.org"  rel="nofollow">MediaWiki</a> is a wiki software, used by the well known <a href="http://www.wikipedia.org" class="urlextern" title="http://www.wikipedia.org"  rel="nofollow">Wikipedia</a>.
 </p>
 
 <p>
-Several extensions allows to configure <acronym title="Single Sign On">SSO</acronym> on MediaWiki:
+Several extensions allows to configure <abbr title="Single Sign On">SSO</abbr> on MediaWiki:
 </p>
 <ul>
 <li class="level1"><div class="li"> <a href="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER" class="urlextern" title="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER"  rel="nofollow">Automatic REMOTE_USER</a></div>
@@ -53,18 +49,16 @@ Several extensions allows to configure <acronym title="Single Sign On">SSO</acro
 </ul>
 
 <p>
-
 We will explain how to use the latest: <a href="http://www.mediawiki.org/wiki/Extension:HttpAuth" class="urlextern" title="http://www.mediawiki.org/wiki/Extension:HttpAuth"  rel="nofollow">HTTP Auth</a>.
 </p>
 
 </div>
-<!-- SECTION "Presentation" [67-635] -->
-<h2><a name="installation" id="installation">Installation</a></h2>
+<!-- EDIT2 SECTION "Presentation" [67-635] -->
+<h2 class="sectionedit3" id="installation">Installation</h2>
 <div class="level2">
 
 <p>
-
-The <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> Auth extension is presented here: <a href="http://www.mediawiki.org/wiki/Extension:HttpAuth" class="urlextern" title="http://www.mediawiki.org/wiki/Extension:HttpAuth"  rel="nofollow">http://www.mediawiki.org/wiki/Extension:HttpAuth</a>
+The HTTP Auth extension is presented here: <a href="http://www.mediawiki.org/wiki/Extension:HttpAuth" class="urlextern" title="http://www.mediawiki.org/wiki/Extension:HttpAuth"  rel="nofollow">http://www.mediawiki.org/wiki/Extension:HttpAuth</a>
 </p>
 
 <p>
@@ -73,30 +67,23 @@ You can download the code here: <a href="http://github.com/oremj/mediawiki-http-
 
 <p>
 You have to install <code>HttpAuthPlugin.php</code> in the <code>extensions/</code> directory of your MediaWiki installation:
-
 </p>
-<pre class="code">
-cp HttpAuthPlugin.php extenstions/
-</pre>
+<pre class="code">cp HttpAuthPlugin.php extenstions/</pre>
 
 </div>
-<!-- SECTION "Installation" [636-1008] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT3 SECTION "Installation" [636-1008] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [1009-1035] -->
-<h3><a name="mediwiki_local_configuration" id="mediwiki_local_configuration">MediWiki local configuration</a></h3>
+<!-- EDIT4 SECTION "Configuration" [1009-1035] -->
+<h3 class="sectionedit5" id="mediwiki_local_configuration">MediWiki local configuration</h3>
 <div class="level3">
 
 <p>
-
 Then edit MediaWiki local settings
-
 </p>
-<pre class="code">
-vi LocalSettings.php
-</pre>
+<pre class="code">vi LocalSettings.php</pre>
 <pre class="code file php"><a href="http://www.php.net/session_start"><span class="kw3">session_start</span></a><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
 &nbsp;
 <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'PHP_AUTH_USER'</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'REMOTE_USER'</span><span class="br0">&#93;</span><span class="sy0">;</span>
@@ -111,15 +98,14 @@ vi LocalSettings.php
 </span><span class="br0">&#125;</span></pre>
 
 </div>
-<!-- SECTION "MediWiki local configuration" [1036-1672] -->
-<h3><a name="mediawiki_virtual_host_in_apache" id="mediawiki_virtual_host_in_apache">MediaWiki virtual host in Apache</a></h3>
+<!-- EDIT5 SECTION "MediWiki local configuration" [1036-1672] -->
+<h3 class="sectionedit6" id="mediawiki_virtual_host_in_apache">MediaWiki virtual host in Apache</h3>
 <div class="level3">
 
 <p>
-
 Configure MediaWiki virtual host like other <a href="../../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a>.
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> mediawiki.example.com
 &nbsp;
        PerlHeaderParserHandler Lemonldap::NG::Handler
@@ -129,31 +115,27 @@ Configure MediaWiki virtual host like other <a href="../../../documentation/2.0/
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 <p>
-<p><div class="noteimportant">If you are protecting MediaWiki with <acronym title="LemonLDAP::NG">LL::NG</acronym> as reverse proxy, <a href="../../../documentation/2.0/header_remote_user_conversion.html" class="wikilink1" title="documentation:2.0:header_remote_user_conversion">convert header into REMOTE_USER environment variable</a>.
+<p><div class="noteimportant">If you are protecting MediaWiki with <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, <a href="../../../documentation/2.0/header_remote_user_conversion.html" class="wikilink1" title="documentation:2.0:header_remote_user_conversion">convert header into REMOTE_USER environment variable</a>.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "MediaWiki virtual host in Apache" [1673-2151] -->
-<h3><a name="mediawiki_virtual_host_in_manager" id="mediawiki_virtual_host_in_manager">MediaWiki virtual host in Manager</a></h3>
+<!-- EDIT6 SECTION "MediaWiki virtual host in Apache" [1673-2151] -->
+<h3 class="sectionedit7" id="mediawiki_virtual_host_in_manager">MediaWiki virtual host in Manager</h3>
 <div class="level3">
 
 <p>
-
 Go to the Manager and <a href="../../../documentation/2.0/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:2.0:configvhost">create a new virtual host</a> for MediaWiki.
 </p>
 
 <p>
 Just configure the <a href="../../../documentation/2.0/writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">access rules</a>. You can also add a rule for logout:
-
 </p>
-<pre class="code">
-Userlogout =&gt; logout_sso
-</pre>
+<pre class="code">Userlogout =&gt; logout_sso</pre>
 
 <p>
-If using <acronym title="LemonLDAP::NG">LL::NG</acronym> as reverse proxy, configure the <code>Auth-User</code> <a href="../../../documentation/2.0/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:2.0:writingrulesand_headers">header</a>, else no headers are needed.
+If using <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, configure the <code>Auth-User</code> <a href="../../../documentation/2.0/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:2.0:writingrulesand_headers">header</a>, else no headers are needed.
 </p>
 
 </div>
-<!-- SECTION "MediaWiki virtual host in Manager" [2152-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->

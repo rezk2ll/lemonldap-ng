@@ -20,36 +20,35 @@
 <div class="dokuwiki export">
 
 
-
-
-<h1><a name="openid" id="openid">OpenID</a></h1>
+<h1 class="sectionedit1" id="openid">OpenID</h1>
 <div class="level1">
-<table class="inline">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
 	<tr class="row0 roweven">
 		<th class="col0">Authentication </th><th class="col1"> Users </th><th class="col2"> Password </th>
 	</tr>
+	</thead>
 	<tr class="row1 rowodd">
 		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT2 TABLE [22-78] -->
 </div>
-<!-- SECTION "OpenID" [1-79] -->
-<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<!-- EDIT1 SECTION "OpenID" [1-79] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
 <div class="level2">
 
 <p>
-
-<acronym title="LemonLDAP::NG">LL::NG</acronym> can delegate authentication to an OpenID server. This requires <a href="http://search.cpan.org/~mart/Net-OpenID-Consumer/" class="urlextern" title="http://search.cpan.org/~mart/Net-OpenID-Consumer/"  rel="nofollow">Perl OpenID consumer module</a> with at least version 1.0.
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can delegate authentication to an OpenID server. This requires <a href="http://search.cpan.org/~mart/Net-OpenID-Consumer/" class="urlextern" title="http://search.cpan.org/~mart/Net-OpenID-Consumer/"  rel="nofollow">Perl OpenID consumer module</a> with at least version 1.0.
 </p>
 
 <p>
-<p><div class="notetip"><acronym title="LemonLDAP::NG">LL::NG</acronym> can also act as <a href="../../documentation/2.0/idpopenid.html" class="wikilink1" title="documentation:2.0:idpopenid">OpenID server</a>, that allows to interconnect two <acronym title="LemonLDAP::NG">LL::NG</acronym> systems.
+<p><div class="notetip"><abbr title="LemonLDAP::NG">LL::NG</abbr> can also act as <a href="../../documentation/2.0/idpopenid.html" class="wikilink1" title="documentation:2.0:idpopenid">OpenID server</a>, that allows to interconnect two <abbr title="LemonLDAP::NG">LL::NG</abbr> systems.
 </div></p>
 </p>
 
 <p>
-<acronym title="LemonLDAP::NG">LL::NG</acronym> will then display a form with an OpenID input, wher users will type their OpenID login.
+<abbr title="LemonLDAP::NG">LL::NG</abbr> will then display a form with an OpenID input, wher users will type their OpenID login.
 </p>
 
 <p>
@@ -58,7 +57,7 @@
 </p>
 
 <p>
-<acronym title="LemonLDAP::NG">LL::NG</acronym> can use a white list or a black list to filter allowed OpenID domains.
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can use a white list or a black list to filter allowed OpenID domains.
 </p>
 
 <p>
@@ -66,12 +65,11 @@ If OpenID is used as users database, attributes will be requested to the server 
 </p>
 
 </div>
-<!-- SECTION "Presentation" [80-826] -->
-<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT3 SECTION "Presentation" [80-826] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-
 In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose OpenID for authentication and/or users.
 </p>
 
@@ -94,7 +92,6 @@ Then, go in <code>OpenID parameters</code>:
 </ul>
 
 <p>
-
 To configure requested attributes, edit <strong>Exported variables</strong> and define attributes:
 </p>
 <ul>
@@ -125,10 +122,8 @@ To configure requested attributes, edit <strong>Exported variables</strong> and 
 </ul>
 
 <p>
-
 See also <a href="../../documentation/2.0/exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables configuration</a>.
-
 </p>
 
 </div>
-<!-- SECTION "Configuration" [827-] --></div><!-- closes <div class="dokuwiki export">-->
+</div><!-- closes <div class="dokuwiki export">-->
