@@ -329,8 +329,8 @@ install_manager_site:	install_conf_dir
 	# Clean svn files
 	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSTATICDIR} $(RMANAGERPSGIDIR) \
 		$(RMANAGERTEMPLATESDIR) $(RCONFDIR) -type d -name .svn)
-	$(PERL) -i -pe 's/__MANAGERSTATICDIR__/$(MANAGERSTATICDIR)/g' $(RCONFDIR)/$(CONFFILENAME)
-	$(PERL) -i -pe 's/__MANAGERTEMPLATESDIR__/$(MANAGERTEMPLATESDIR)/g' $(RCONFDIR)/$(CONFFILENAME)
+	$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERSTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
+	$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 
 install_portal_site:	install_conf_dir
 	# Portal install
