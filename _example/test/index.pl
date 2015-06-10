@@ -89,7 +89,7 @@ print "<li><tt>\$ENV{REMOTE_USER}</tt>: $ENV{REMOTE_USER}</li>\n";
 print "</ul></li>\n";
 print "</ul>\n";
 print
-"<div class=\"alert alert-warning\">Be carefull, the <tt>\$ENV{REMOTE_USER}</tt> is set only if your script is in the same server than LemonLDAP::NG Handler (<tt>\$whatToTrace</tt> parameter). If you use it on a reverse-proxy, <tt>\$ENV{REMOTE_USER}</tt> is not set. See <a href=\"$manager_url/doc/pages/documentation/1.4/header_remote_user_conversion.html\">this documentation page</a> to know how to convert an HTTP header into an environment variable.</div>\n";
+"<div class=\"alert alert-warning\">Be carefull, the <tt>\$ENV{REMOTE_USER}</tt> is set only if your script is in the same server than LemonLDAP::NG Handler (<tt>\$whatToTrace</tt> parameter). If you use it on a reverse-proxy, <tt>\$ENV{REMOTE_USER}</tt> is not set. See <a href=\"$manager_url/doc/pages/documentation/current/header_remote_user_conversion.html\">this documentation page</a> to know how to convert an HTTP header into an environment variable.</div>\n";
 print "</div>\n";
 print "</div>\n";
 
@@ -145,7 +145,7 @@ foreach ( sort $cgi->param() ) {
 print "</tbody></table>\n";
 print "</div>\n";
 print
-"<div class=\"alert alert-info\">POST parameters can be forged by LemonLDAP::NG to <a href=\"$manager_url/doc/pages/documentation/1.4/formreplay.html\">autosubmit forms</a>.</div>\n";
+"<div class=\"alert alert-info\">POST parameters can be forged by LemonLDAP::NG to <a href=\"$manager_url/doc/pages/documentation/current/formreplay.html\">autosubmit forms</a>.</div>\n";
 print "</div>\n";
 print "</div>\n";
 
