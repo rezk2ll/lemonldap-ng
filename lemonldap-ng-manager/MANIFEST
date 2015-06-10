@@ -33,7 +33,6 @@ site-test/e2e/40-sessions.js
 site-test/e2e/99-logout.js
 site-test/e2e/README.md
 site-test/protractor-conf.js
-site/psgi/manager-server.psgi
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.css
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.js
 site/static/bwr/angular/angular.min.js
