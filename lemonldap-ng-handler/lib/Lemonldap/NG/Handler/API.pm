@@ -42,8 +42,9 @@ my $mode =
   : $mp && $mp >= 2      ? "ApacheMP2"
   : $mp                                                ? "ApacheMP1"
   : $main::{'nginx::'}                                 ? "Nginx"
-  : ( caller(6) )[0] eq 'Lemonldap::NG::Handler::PSGI' ? "PSGI"
   :                                                      "CGI";
+
+$mode = 'PSGI' if(( caller(6) )[0] eq 'Lemonldap::NG::Handler::PSGI');
 
 # Load API functions and constants
 eval "use Lemonldap::NG::Handler::API::$mode (':httpCodes', ':functions');
