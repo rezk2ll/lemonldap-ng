@@ -1,4 +1,4 @@
-#!/usr/bin/env plackup -I pl/lib
+#!/usr/bin/env plackup
 
 use Lemonldap::NG::Manager;
 
