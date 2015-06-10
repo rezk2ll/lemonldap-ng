@@ -9,7 +9,7 @@ our $VERSION = '2.0.0';
 
 around init => sub {
     my ( $method, $self, $args ) = splice @_;
-    Lemonldap::NG::Handler::SharedConf->init( $self );
+    Lemonldap::NG::Handler::SharedConf->init($self);
     return $self->$method($args);
 };
 
@@ -40,8 +40,11 @@ sub _run {
             #            it has to prompt user with the URL
             elsif (
                 ( $res == 302 or $res == 303 )
-                and (  $req->accept =~ m|application/json|
-                    or $req->contentType =~ m|application/json| )
+                and (
+                    $req->accept =~ m|application/json|
+                    or (    $req->contentType
+                        and $req->contentType =~ m|application/json| )
+                )
               )
             {
                 return [
