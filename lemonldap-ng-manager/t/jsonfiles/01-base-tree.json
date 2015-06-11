@@ -113,11 +113,6 @@
         "type": "simpleInputContainer"
       }, {
         "_nodes": [{
-          "default": 0,
-          "id": "portalAutocomplete",
-          "title": "portalAutocomplete",
-          "type": "bool"
-        }, {
           "default": "_user",
           "id": "portalUserAttr",
           "title": "portalUserAttr"

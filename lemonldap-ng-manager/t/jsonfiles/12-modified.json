@@ -229,12 +229,6 @@
         "title": "portalOther",
         "type": "simpleInputContainer",
         "nodes": [{
-          "default": 0,
-          "id": "portalAutocomplete",
-          "title": "portalAutocomplete",
-          "type": "bool",
-          "data": 0
-        }, {
           "default": "_user",
           "id": "portalUserAttr",
           "title": "portalUserAttr",
