@@ -463,7 +463,7 @@ sub defaultValue {
 
 sub testNewConf {
     my $self = shift;
-    return $self->_unitTest( $self->newConf, '' ) and $self->_globalTest();
+    return $self->_unitTest( $self->newConf(), '' ) and $self->_globalTest();
 }
 
 sub _unitTest {
@@ -476,7 +476,7 @@ sub _unitTest {
 
         # Check if key exists
         unless ( $attr = $attrs->{$key} ) {
-            push $self->errors, { message => "__unknownKey__: $key" };
+            push @{ $self->errors }, { message => "__unknownKey__: $key" };
             next;
         }
         if ( $key =~ $simpleHashKeys ) {
@@ -496,19 +496,19 @@ sub _unitTest {
                 if ( $ref eq 'CODE' ) {
                     my ( $r, $w ) = $test->( $conf->{$key}, $conf, $attr );
                     unless ($r) {
-                        push $self->errors,
+                        push @{ $self->errors },
                           { message => "$key: " . ( $w ? $w : $msg ) };
                         $res = 0;
                     }
                     elsif ($w) {
-                        push $self->warnings, { message => "$key: $w" };
+                        push @{ $self->warnings }, { message => "$key: $w" };
                     }
                 }
                 elsif ( $ref eq 'Regexp' ) {
                     die "msgFail undefined for type \"$attr->{type}\""
                       unless ( defined $msg );
                     unless ( $conf->{$key} =~ $test ) {
-                        push $self->errors,
+                        push @{ $self->errors },
                           { message => "$key: $msg ($conf->{$key})" };
                     }
                 }
@@ -536,20 +536,20 @@ sub _globalTest {
         eval {
             ( $res, $msg ) = $sub->();
             if ( $res == -1 ) {
-                push $self->needConfirm, { message => $msg };
+                push @{ $self->needConfirm }, { message => $msg };
             }
             elsif ($res) {
                 if ($msg) {
-                    push $self->warnings, { message => $msg };
+                    push @{ $self->warnings }, { message => $msg };
                 }
             }
             else {
                 $result = 0;
-                push $self->errors, { message => $msg };
+                push @{ $self->errors }, { message => $msg };
             }
         };
         if ($@) {
-            push $self->warnings, "Test $name failed: $@";
+            push @{ $self->warnings }, "Test $name failed: $@";
             $self->lmLog( "Test $name failed: $@", 'error' );
         }
     }

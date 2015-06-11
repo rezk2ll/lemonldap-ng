@@ -231,7 +231,7 @@ sub notification {
             );
         }
         return $self->sendJSONresponse( $req,
-            { result => 1, count => 1, notifications => [ values $n ] } );
+            { result => 1, count => 1, notifications => [ values %$n ] } );
     }
     else {
         return $self->sendJSONresponse( $req,
