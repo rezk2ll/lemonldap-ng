@@ -24,8 +24,8 @@ $run = Lemonldap::NG::Manager->run(
     }
 ) if ( $opts{f} );
 
-my $structFile        = "app/struct.json";
-my $confTreeFile      = "app/js/confTree.js";
+my $structFile        = "site/static/struct.json";
+my $confTreeFile      = "site/static/js/conftree.js";
 my $managerConstants  = "lib/Lemonldap/NG/Manager/Constants.pm";
 my $defaultValuesFile = "../lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm";
 my @simpleHashKeys;
