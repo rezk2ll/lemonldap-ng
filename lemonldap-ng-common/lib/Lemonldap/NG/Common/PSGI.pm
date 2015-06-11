@@ -87,7 +87,7 @@ sub router { _mustBeDefined(@_) }
 sub sendHtml {
     my ( $self, $req, $template ) = splice @_;
     my $htpl;
-    $template = $self->templateDir . "$template.tpl";
+    $template = $self->templateDir . "/$template.tpl";
     return $self->sendError( $req, "Unable to read $template", 500 )
       unless ( -r $template and -f $template );
     eval {
