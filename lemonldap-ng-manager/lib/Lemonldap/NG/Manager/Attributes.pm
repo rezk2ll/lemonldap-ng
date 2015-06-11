@@ -340,11 +340,6 @@ sub attributes {
             type          => 'bool',
             documentation => 'Avoid portal to be displayed inside frames',
         },
-        portalAutocomplete => {
-            default       => 0,
-            type          => 'bool',
-            documentation => 'Allow autocompletion of login input in portal',
-        },
         portalCheckLogins => {
             default       => 1,
             type          => 'bool',

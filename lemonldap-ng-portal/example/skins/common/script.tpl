@@ -23,7 +23,6 @@
  <script type="text/javascript">//<![CDATA[
     var displaytab="<TMPL_VAR NAME="DISPLAY_TAB">";
     var choicetab="<TMPL_VAR NAME="CHOICE_VALUE">";
-    var autocomplete="<TMPL_VAR NAME="AUTOCOMPLETE">";
     var login="<TMPL_VAR NAME="LOGIN">";
     var newwindow="<TMPL_VAR NAME="NEWWINDOW">";
     var antiframe="<TMPL_VAR NAME="ANTIFRAME">";

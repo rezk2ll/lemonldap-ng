@@ -2743,7 +2743,7 @@ Lemonldap::NG::Portal::Simple - Base module for building Lemonldap::NG compatibl
     print '<input type="hidden" name="url" value="'.$portal->param('url').'">';
     # Next, login and password
     print 'Login : <input name="user"><br>';
-    print 'Password : <input name="password" type="password" autocomplete="off">';
+    print 'Password : <input name="password" type="password">';
     print '<input type="submit" value="go" />';
     print '</form>';
   }

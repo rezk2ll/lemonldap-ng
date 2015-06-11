@@ -128,14 +128,18 @@ sub defaultValues {
         'notificationStorageOptions' => {
             'dirName' => '/var/lib/lemonldap-ng/notifications'
         },
-        'notificationWildcard'            => 'allusers',
-        'notifyDeleted'                   => 1,
-        'notifyOther'                     => 0,
-        'nullAuthnLevel'                  => 2,
-        'oidcAuthnLevel'                  => 1,
-        'oidcRPCallbackGetParam'          => 'openidconnectcallback',
-        'oidcRPStateTimeout'              => 600,
-        'oidcServiceMetaDataAuthnContext' => {
+        'notificationWildcard'                  => 'allusers',
+        'notifyDeleted'                         => 1,
+        'notifyOther'                           => 0,
+        'nullAuthnLevel'                        => 2,
+        'oidcAuthnLevel'                        => 1,
+        'oidcRPCallbackGetParam'                => 'openidconnectcallback',
+        'oidcRPStateTimeout'                    => 600,
+        'oidcServiceAllowAuthorizationCodeFlow' => '1',
+        'oidcServiceAllowDynamicRegistration'   => '0',
+        'oidcServiceAllowHybridFlow'            => '0',
+        'oidcServiceAllowImplicitFlow'          => '0',
+        'oidcServiceMetaDataAuthnContext'       => {
             'loa-1' => 1,
             'loa-2' => 2,
             'loa-3' => 3,
@@ -143,6 +147,7 @@ sub defaultValues {
             'loa-5' => 5
         },
         'oidcServiceMetaDataAuthorizeURI'    => 'authorize',
+        'oidcServiceMetaDataCheckSessionURI' => 'checksession',
         'oidcServiceMetaDataEndSessionURI'   => 'logout',
         'oidcServiceMetaDataJWKSURI'         => 'jwks',
         'oidcServiceMetaDataRegistrationURI' => 'register',
@@ -159,7 +164,6 @@ sub defaultValues {
         'passwordDB'                         => 'Demo',
         'portal'                             => 'http://auth.example.com/',
         'portalAntiFrame'                    => 1,
-        'portalAutocomplete'                 => 0,
         'portalCheckLogins'                  => 1,
         'portalDisplayAppslist'              => 1,
         'portalDisplayChangePassword'        => '$_auth =~ /^(LDAP|DBI|Demo)$/',

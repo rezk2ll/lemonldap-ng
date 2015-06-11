@@ -77,7 +77,6 @@ sub tree {
                                     title => 'portalOther',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'portalAutocomplete',
                                         'portalUserAttr',
                                         'portalOpenLinkInNewWindow',
                                         'portalAntiFrame',

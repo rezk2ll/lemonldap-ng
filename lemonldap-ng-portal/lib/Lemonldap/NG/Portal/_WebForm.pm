@@ -110,11 +110,9 @@ sub setAuthSessionInfo {
     my $self = shift;
 
     # authenticationLevel
-    # -1 if password can be remebered
     # +1 for user/password with HTTPS
     $self->{_authnLevel} ||= 0;
     $self->{_authnLevel} += 1 if $self->https();
-    $self->{_authnLevel} -= 1 if $self->{portalAutocomplete};
 
     $self->{sessionInfo}->{authenticationLevel} = $self->{_authnLevel};
 

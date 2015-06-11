@@ -5,19 +5,10 @@
 /* Used variables
  * - displaytab
  * - choicetab
- * - autocomplete
  * - login
  * - newwindow
  * - antiframe
  */
-
-/* Set autocomplete real value */
-if (autocomplete.match('1')) {
-	autocomplete = 'on';
-}
-if (autocomplete.match('0')) {
-	autocomplete = 'off';
-}
 
 /* Set newwindow value (default is false) */
 if (newwindow.match('1')) {
@@ -94,9 +85,6 @@ $(document).ready(function() {
 	if (login) {
 		$("input[type=password]:first").focus();
 	}
-
-	/* Password autocompletion */
-	$("input[type='password']").attr("autocomplete", autocomplete);
 
 	/* Open links in new windows */
 	if (newwindow) {

@@ -98,7 +98,6 @@ sub display {
 
             %templateParams = (
                 AUTH_USER           => $auth_user,
-                AUTOCOMPLETE        => $self->{portalAutocomplete},
                 NEWWINDOW           => $self->{portalOpenLinkInNewWindow},
                 AUTH_ERROR          => $self->error( $self->{menuError} ),
                 AUTH_ERROR_TYPE     => $self->error_type( $self->{menuError} ),
@@ -199,7 +198,6 @@ sub display {
             AUTH_ERROR_TYPE       => $self->error_type,
             AUTH_URL              => $self->get_url,
             LOGIN                 => $self->get_user,
-            AUTOCOMPLETE          => $self->{portalAutocomplete},
             CHECK_LOGINS          => $self->{portalCheckLogins},
             ASK_LOGINS            => $self->{checkLogins},
             DISPLAY_RESETPASSWORD => $self->{portalDisplayResetPassword},
