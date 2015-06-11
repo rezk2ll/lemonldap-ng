@@ -5,6 +5,7 @@ KINEMATIC.md
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/Attributes.pm
 lib/Lemonldap/NG/Manager/Conf.pm
+lib/Lemonldap/NG/Manager/Conf/Tests.pm
 lib/Lemonldap/NG/Manager/ConfParser.pm
 lib/Lemonldap/NG/Manager/Constants.pm
 lib/Lemonldap/NG/Manager/CTrees.pm
