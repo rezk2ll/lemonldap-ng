@@ -40,6 +40,15 @@ groups
 portal
 	'http://auth.__DNSDOMAIN__/'
 
+portalSkinBackground
+	'1280px-Cedar_Breaks_National_Monument_partially.jpg'
+
+mailUrl
+	'http://auth.__DNSDOMAIN__/mail.pl'
+
+registerUrl
+	'http://auth.__DNSDOMAIN__/register.pl'
+
 exportedHeaders
 	'$data1 = {&#39;test2.__DNSDOMAIN__&#39; => {&#39;Auth-User&#39; => &#39;$uid&#39;},&#39;test1.__DNSDOMAIN__&#39; => {&#39;Auth-User&#39; => &#39;$uid&#39;}};'
 
