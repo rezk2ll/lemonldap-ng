@@ -321,18 +321,24 @@ sub _DBFileGKFAS {
 
 sub _LDAPGKFAS {
     my ( $class, $args, $data ) = @_;
+    $args->{ldapObjectClass}      ||= 'applicationProcess';
+    $args->{ldapAttributeId}      ||= 'cn';
+    $args->{ldapAttributeContent} ||= 'description';
 
     my $ldap = Apache::Session::Store::LDAP::ldap( { args => $args } );
     my $msg = $ldap->search(
         base   => $args->{ldapConfBase},
-        filter => '(objectClass=applicationProcess)',
-        attrs  => [ 'cn', 'description' ],
+        filter => '(objectClass=' . $args->{ldapObjectClass} . ')',
+        attrs  => [ $args->{ldapAttributeId}, $args->{ldapAttributeContent} ],
     );
     Apache::Session::Store::LDAP->logError($msg) if ( $msg->code );
     my %res;
+
     foreach my $entry ( $msg->entries ) {
-        my ( $k, $v ) =
-          ( $entry->get_value('cn'), $entry->get_value('description') );
+        my ( $k, $v ) = (
+            $entry->get_value('cn'),
+            $entry->get_value( $args->{ldapAttributeContent} )
+        );
         eval { $v = decodeThaw64($v); };
         next if ($@);
         if ( ref($data) eq 'CODE' ) {
