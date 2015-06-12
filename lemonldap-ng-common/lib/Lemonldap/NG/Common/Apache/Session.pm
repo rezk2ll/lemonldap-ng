@@ -331,7 +331,11 @@ sub _LDAPGKFAS {
         filter => '(objectClass=' . $args->{ldapObjectClass} . ')',
         attrs  => [ $args->{ldapAttributeId}, $args->{ldapAttributeContent} ],
     );
+
+    $ldap->unbind();
+
     Apache::Session::Store::LDAP->logError($msg) if ( $msg->code );
+
     my %res;
 
     foreach my $entry ( $msg->entries ) {
