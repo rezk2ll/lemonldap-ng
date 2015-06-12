@@ -900,6 +900,11 @@ sub getApacheSession {
         return;
     }
 
+    if ( $id and !$force and !$apacheSession->data ) {
+        $self->lmLog( "Session $id not found", 'debug' );
+        return;
+    }
+
     unless ($noInfo) {
         $self->setApacheUser( $apacheSession->data->{ $self->{whatToTrace} } )
           if ($id);
