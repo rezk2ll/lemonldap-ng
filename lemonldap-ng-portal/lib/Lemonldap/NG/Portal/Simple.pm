@@ -299,7 +299,7 @@ sub new {
     # OpenIDConnect
     $self->{oidcStorage} ||= $self->{globalStorage};
     if ( !$self->{oidcStorageOptions} or !%{ $self->{oidcStorageOptions} } ) {
-        $self->{oidcStorageOptions} = $self->{oidcStorageOptions};
+        $self->{oidcStorageOptions} = $self->{globalStorageOptions};
     }
 
     # 2. Domain
