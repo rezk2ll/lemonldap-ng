@@ -67,7 +67,7 @@ body {
   padding: 0;
   height: 100vh;
 }
-header.navbar {
+header#navbar {
   height: 10vh;
   margin-bottom: 1vh;
   padding-bottom: 0vh;
@@ -84,6 +84,17 @@ footer {
   padding: 0px;
   position: relative;
 }
+
+/* Navbar Brand */
+
+header#navbar .navbar-brand {
+  padding: 10px 15px;
+}
+
+header#navbar .navbar-brand img {
+  background: #FFFFFF;
+}
+
 /* Form elements */
 
 textarea {

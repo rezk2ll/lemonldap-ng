@@ -1,6 +1,6 @@
   <!-- Menu bar -->
   <header id="navbar" role="banner">
-    <nav class="navbar container navbar-default">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <!-- XS buttons -->
         <div class="navbar-header">
