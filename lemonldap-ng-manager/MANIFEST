@@ -103,12 +103,11 @@ site/static/logos/bootstrap.png
 site/static/logos/custom.png
 site/static/logos/dark.png
 site/static/logos/en.png
+site/static/logos/favicon.ico
 site/static/logos/fr.png
 site/static/logos/impact.png
 site/static/logos/llng-icon-32.png
-site/static/logos/llng-icon-48.png
-site/static/logos/llng-icon.ico
-site/static/logos/llng.png
+site/static/logos/llng-logo-32.png
 site/static/logos/pastel.png
 site/static/struct.json
 site/templates/footer.tpl

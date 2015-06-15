@@ -5,7 +5,7 @@
         <!-- XS buttons -->
         <div class="navbar-header">
           <span class="navbar-brand">
-            <img ng-click="home()" class="link hidden-xs" height="32px" src="<TMPL_VAR NAME="STATIC_PREFIX">logos/llng.png"/>
+            <img ng-click="home()" class="link hidden-xs" height="32px" src="<TMPL_VAR NAME="STATIC_PREFIX">logos/llng-logo-32.png"/>
             <img ng-click="home()" class="link visible-xs" height="32px" src="<TMPL_VAR NAME="STATIC_PREFIX">logos/llng-icon-32.png"/>
           </span>
           <button type="button" class="navbar-toggle" ng-click="showM=!showM">
