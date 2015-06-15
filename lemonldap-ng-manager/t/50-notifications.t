@@ -93,3 +93,6 @@ sub displayTests {
         count(3);
     }
 }
+
+# Remove notifications directory
+`rm -rf t/notifications`;

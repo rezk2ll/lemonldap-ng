@@ -156,3 +156,6 @@ ok( @files == 0, "Session directory is empty" );
 count(1);
 
 done_testing( count() );
+
+# Remove sessions directory
+`rm -rf t/sessions`;
