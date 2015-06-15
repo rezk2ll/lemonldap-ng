@@ -37,6 +37,7 @@ BEGIN {
 
 sub AUTOLOAD {
     my $func = $AUTOLOAD;
+    $func =~ s/^.*:://;
 
     # Launch appropriate specific API function:
     # - Apache (modperl 2),
@@ -47,14 +48,15 @@ sub AUTOLOAD {
       : ( MP == 2 )        ? 'ApacheMP2'
       : ( MP == 1 )        ? 'ApacheMP1'
       : $main::{'nginx::'} ? 'Nginx'
-      : ( ( caller(6) )[0] eq 'Lemonldap::NG::Handler::PSGI' ) ? 'PSGI'
-      :                                                          'CGI';
+      : ( caller(6) and ( caller(6) )[0] eq 'Lemonldap::NG::Handler::PSGI' )
+      ? 'PSGI'
+      : 'CGI';
     unless ( $INC{"Lemonldap/NG/Handler/API/$mode.pm"} ) {
         eval
 "use Lemonldap::NG::Handler::API::$mode (':httpCodes', ':functions');";
         die $@ if ($@);
     }
-    return &{"Lemonldap::NG::Handler::API::$mode"}(@_);
+    return &{"Lemonldap::NG::Handler::API::$mode::$func"}(@_);
 }
 
 1;
