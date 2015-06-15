@@ -1,23 +1,6 @@
 package Lemonldap::NG::Handler::API::CGI;
 
-use Exporter 'import';
-
 our $VERSION = '1.4.0';
-our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
-
-BEGIN {
-    %EXPORT_TAGS = (
-        httpCodes => [
-            qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED MAINTENANCE $logLevel )
-        ],
-        functions => [
-            qw( &hostname &remote_ip &uri &uri_with_args
-              &unparsed_uri &args &method &header_in )
-        ]
-    );
-    push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
-    $EXPORT_TAGS{all} = \@EXPORT_OK;
-}
 
 # Specific modules and constants for Test or CGI
 use constant FORBIDDEN     => 403;

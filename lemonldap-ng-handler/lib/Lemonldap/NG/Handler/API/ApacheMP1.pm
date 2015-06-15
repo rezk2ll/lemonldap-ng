@@ -1,16 +1,6 @@
 package Lemonldap::NG::Handler::API::ApacheMP1;
 
-use Exporter 'import';
-
 our $VERSION = '1.4.0';
-our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
-
-BEGIN {
-  # no http codes defined for ApacheMP1, but tag kept for compatibility with API
-    %EXPORT_TAGS = ( httpCodes => [], );
-    push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
-    $EXPORT_TAGS{all} = \@EXPORT_OK;
-}
 
 # Specific modules and constants for Apache Mod_Perl 1
 use Apache;

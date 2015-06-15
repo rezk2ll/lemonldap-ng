@@ -1,23 +1,7 @@
 package Lemonldap::NG::Handler::API::ApacheMP2;
 
-use Exporter 'import';
 
 our $VERSION = '2.0.0';
-our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
-
-BEGIN {
-    %EXPORT_TAGS = (
-        httpCodes => [
-            qw( OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED MAINTENANCE )
-        ],
-        functions => [
-            qw( &hostname &remote_ip &uri &uri_with_args
-              &unparsed_uri &args &method &header_in )
-        ]
-    );
-    push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
-    $EXPORT_TAGS{all} = \@EXPORT_OK;
-}
 
 # Specific modules and constants for Apache Mod_Perl 2
 use Apache2::RequestUtil;
