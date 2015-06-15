@@ -44,13 +44,13 @@ sub AUTOLOAD {
     # - Apache (modperl1),
     # - Nginx
     my $mode =
-        GI                 ? 'CGI'
+      ( caller(6) and ( caller(6) )[0] eq 'Lemonldap::NG::Handler::PSGI' )
+      ? 'PSGI'
+      : GI                 ? 'CGI'
       : ( MP == 2 )        ? 'ApacheMP2'
       : ( MP == 1 )        ? 'ApacheMP1'
       : $main::{'nginx::'} ? 'Nginx'
-      : ( caller(6) and ( caller(6) )[0] eq 'Lemonldap::NG::Handler::PSGI' )
-      ? 'PSGI'
-      : 'CGI';
+      :                      'CGI';
     unless ( $INC{"Lemonldap/NG/Handler/API/$mode.pm"} ) {
         eval
 "use Lemonldap::NG::Handler::API::$mode (':httpCodes', ':functions');";
