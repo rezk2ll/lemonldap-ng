@@ -12,8 +12,8 @@
  </TMPL_IF>
  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/styles.css" />
  <TMPL_INCLUDE NAME="../common/background.tpl">
- <link href="<TMPL_VAR NAME="SKIN_PATH">/common/favicon.ico" rel="icon" type="image/x-icon" />
- <link href="<TMPL_VAR NAME="SKIN_PATH">/common/favicon.ico" rel="shortcut icon" />
+ <link href="<TMPL_VAR NAME="SKIN_PATH">/common/favicon.ico" rel="icon" type="image/vnd.microsoft.icon" sizes="16x16 32x32 48x48 64x64 128x128" />
+ <link href="<TMPL_VAR NAME="SKIN_PATH">/common/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" sizes="16x16 32x32 48x48 64x64 128x128" />
  <TMPL_IF NAME="PROVIDERURI">
   <link rel="openid.server" href="<TMPL_VAR NAME="PROVIDERURI">" />
   <link rel="openid2.provider" href="<TMPL_VAR NAME="PROVIDERURI">" />
