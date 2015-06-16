@@ -342,7 +342,7 @@
   "oidcRPMetaDataOptionsDisplay": "Display",
   "oidcRPMetaDataOptionsDisplayName": "Display name",
   "oidcRPMetaDataOptionsIcon": "Logo",
-  "oidcRPMetaDataOptionsIDTokenExpiration": "ID yoken expiration",
+  "oidcRPMetaDataOptionsIDTokenExpiration": "ID Token expiration",
   "oidcRPMetaDataOptionsIDTokenSignAlg": "ID Token signature algorithm",
   "oidcRPMetaDataOptionsUserIDAttr": "User attribute",
   "oidcRPName": "OpenID Connect RP Name",
