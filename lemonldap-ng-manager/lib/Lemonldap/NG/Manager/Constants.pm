@@ -19,7 +19,7 @@ our $specialNodeHash = {
     oidcRPMetaDataNodes  => [qw(oidcRPMetaDataOptions oidcRPMetaDataExportedVars)],
 };
 
-our $simpleHashKeys = '(?:(?:g(?:r(?:antSessionRule|oup)|lobalStorageOption|oogleExportedVar)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar)|(?:(?:d(?:emo|bi)|facebook|webID)E|e)xportedVar|(?:ca(?:ptcha|s)|notification)StorageOption|p(?:ersistentStorageOption|ortalSkinRule)|re(?:moteGlobalStorageOption|loadUrl)|CAS_proxiedService|macro)s|s(?:(?:amlStorageOption|laveExportedVar)s|essionDataToRemember)|o(?:idcServiceMetaDataAuthnContext|penIdExportedVars)|a(?:uthChoiceModules|pplicationList))';
+our $simpleHashKeys = '(?:(?:g(?:r(?:antSessionRule|oup)|lobalStorageOption|oogleExportedVar)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar)|(?:(?:d(?:emo|bi)|facebook|webID)E|e)xportedVar|(?:ca(?:ptcha|s)|notification)StorageOption|p(?:ersistentStorageOption|ortalSkinRule)|re(?:moteGlobalStorageOption|loadUrl)|CAS_proxiedService|macro)s|o(?:idcS(?:erviceMetaDataAuthnContext|torageOptions)|penIdExportedVars)|s(?:(?:amlStorageOption|laveExportedVar)s|essionDataToRemember)|a(?:uthChoiceModules|pplicationList))';
 our $specialNodeKeys = '(?:(?:saml(?:ID|S)|oidc[OR])PMetaDataNode|virtualHost)s';
 our $oidcOPMetaDataNodeKeys = 'oidcOPMetaData(?:Options(?:C(?:lient(?:Secret|ID)|heckJWTSignature|onfigurationURI)|TokenEndpointAuthMethod|(?:JWKSTimeou|Promp)t|I(?:DTokenMaxAge|con)|U(?:iLocales|seNonce)|Display(?:Name)?|(?:MaxAg|Scop)e|AcrValues)|ExportedVars|J(?:SON|WKS))';
 our $oidcRPMetaDataNodeKeys = 'oidcRPMetaData(?:Options(?:I(?:DToken(?:Expiration|SignAlg)|con)|AccessTokenExpiration|Client(?:Secret|ID)|RedirectUris|DisplayName|UserIDAttr)|ExportedVars)';

@@ -1993,6 +1993,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => '0',
             documentation => 'OpenID Connect allow hybrid flow',
         },
+        oidcStorage        => { type => 'PerlModule', },
+        oidcStorageOptions => {
+            type => 'keyTextContainer',
+        },
 
         # OpenID Connect metadata nodes
         oidcOPMetaDataNodes =>

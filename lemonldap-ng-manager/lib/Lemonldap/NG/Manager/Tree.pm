@@ -838,6 +838,10 @@ sub tree {
                         'oidcServiceAllowHybridFlow',
                     ],
                 },
+                {
+                    title => "oidcServiceMetaDataSessions",
+                    nodes => [ 'oidcStorage', 'oidcStorageOptions', ],
+                },
             ]
         },
         'oidcOPMetaDataNodes',
