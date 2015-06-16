@@ -30,10 +30,9 @@ BEGIN {
         eval 'use constant MP => 0;';
     }
 
-    if   ( $ENV{GATEWAY_INTERFACE} ) { eval 'use constant GI => 1;'; }
-    else                             { eval 'use constant GI => 0;'; }
-
 }
+
+our $mode;
 
 sub AUTOLOAD {
     my $func = $AUTOLOAD;
@@ -43,14 +42,14 @@ sub AUTOLOAD {
     # - Apache (modperl 2),
     # - Apache (modperl1),
     # - Nginx
-    my $mode =
+    $mode ||=
       ( caller(6) and ( caller(6) )[0] eq 'Lemonldap::NG::Handler::PSGI' )
       ? 'PSGI'
-      : GI                 ? 'CGI'
-      : ( MP == 2 )        ? 'ApacheMP2'
-      : ( MP == 1 )        ? 'ApacheMP1'
-      : $main::{'nginx::'} ? 'Nginx'
-      :                      'CGI';
+      : $ENV{GATEWAY_INTERFACE} ? 'CGI'
+      : ( MP == 2 )             ? 'ApacheMP2'
+      : ( MP == 1 )             ? 'ApacheMP1'
+      : $main::{'nginx::'}      ? 'Nginx'
+      :                           'CGI';
     unless ( $INC{"Lemonldap/NG/Handler/API/$mode.pm"} ) {
         eval
 "use Lemonldap::NG::Handler::API::$mode (':httpCodes', ':functions');";

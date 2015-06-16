@@ -37,6 +37,7 @@ sub thread_share {
 sub newRequest {
     my ( $class, $r ) = @_;
     $request = $r;
+    $Lemonldap::NG::API::mode = 'CGI';
 }
 
 ## @method void lmLog(string $msg, string $level)

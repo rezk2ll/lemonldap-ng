@@ -56,6 +56,7 @@ sub setServerSignature {
 sub newRequest {
     my ( $class, $r ) = @_;
     $request = $r;
+    $Lemonldap::NG::API::mode = 'ApacheMP2';
 }
 
 ## @method void lmLog(string $msg, string $level)
