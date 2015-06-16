@@ -23,20 +23,13 @@
 <h1 class="sectionedit1" id="browseable_session_backend">Browseable session backend</h1>
 <div class="level1">
 
-<p>
-Browseable session backend (<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a>) works exactly like Apache::Session::* corresponding module but add indexes that increase <a href="../../documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">session explorer</a> and <a href="../../documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">session restrictions</a> performances.
-</p>
+</div>
+<!-- EDIT1 SECTION "Browseable session backend" [1-42] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
+<div class="level2">
 
 <p>
-<p><div class="noteimportant">
-Please use a recent version of Apache::Session::Browseable.
-</p>
-
-<p>
-Current debian wheezy 0.7.1 version is obsolete and not functionnal.
-Last version can be found on CPAN : <a href="http://search.cpan.org/dist/Apache-Session-Browseable/" class="urlextern" title="http://search.cpan.org/dist/Apache-Session-Browseable/"  rel="nofollow">http://search.cpan.org/dist/Apache-Session-Browseable/</a>
-
-</div></p>
+Browseable session backend (<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a>) works exactly like Apache::Session::* corresponding module but add index that increase <a href="../../documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">session explorer</a> and <a href="../../documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">session restrictions</a> performances.
 </p>
 
 <p>
@@ -44,9 +37,14 @@ If you use features like <abbr title="Security Assertion Markup Language">SAML</
 </p>
 
 <p>
+<p><div class="noteclassic">Without index, <abbr title="LemonLDAP::NG">LL::NG</abbr> will have to retrieve all sessions stored in backend and parse them to find the needed sessions. With index, <abbr title="LemonLDAP::NG">LL::NG</abbr> wil be able to get only wanted sessions from the backend.
+</div></p>
+</p>
+
+<p>
 The following table list fields to index depending on the feature you want to increase performance:
 </p>
-<div class="table sectionedit2"><table class="inline">
+<div class="table sectionedit3"><table class="inline">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Feature  </th><th class="col1 centeralign">  Fields to index  </th>
@@ -68,7 +66,7 @@ The following table list fields to index depending on the feature you want to in
 		<td class="col0 leftalign"> Password reset  </td><td class="col1 centeralign">  user  </td>
 	</tr>
 </table></div>
-<!-- EDIT2 TABLE [890-1199] -->
+<!-- EDIT3 TABLE [877-1186] -->
 <p>
 <p><div class="noteimportant"><em>WHATTOTRACE</em> must be replaced by the attribute or macro configured in the What To Trace parameter (REMOTE_USER)
 </div></p>
@@ -80,54 +78,23 @@ The following table list fields to index depending on the feature you want to in
 </p>
 
 <p>
-<p><div class="noteclassic">Documentation below explains how set index on ipAddr and _whatToTrace; Adapt it to configure the index you need.
+<p><div class="noteclassic">Documentation below explains how set index on ipAddr and _whatToTrace. Adapt it to configure the index you need.
 </div></p>
 </p>
 
 </div>
-<!-- EDIT1 SECTION "Browseable session backend" [1-1623] -->
-<h2 class="sectionedit3" id="setup">Setup</h2>
+<!-- EDIT2 SECTION "Presentation" [43-1610] -->
+<h2 class="sectionedit4" id="browseable_nosql">Browseable NoSQL</h2>
 <div class="level2">
 
-</div>
-<!-- EDIT3 SECTION "Setup" [1624-1642] -->
-<h3 class="sectionedit4" id="prepare_database">Prepare database</h3>
-<div class="level3">
-
 <p>
-Using Redis, you just have to prepare Redis database. See <a href="../../documentation/2.0/nosqlsessionbackend.html" class="wikilink1" title="documentation:2.0:nosqlsessionbackend">Redis session backend</a>.
+You can use Redis and set up the database like explained in <a href="../../documentation/2.0/nosqlsessionbackend.html" class="wikilink1" title="documentation:2.0:nosqlsessionbackend">Redis session backend</a>.
 </p>
 
 <p>
-<em class="u">Exemple with MySQL</em>:
+You then just have to add the <code>Index</code> parameter  in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> :
 </p>
-
-<p>
-Database must be prepared exactly like in <a href="../../documentation/2.0/sqlsessionbackend.html#prepare_the_database" class="wikilink1" title="documentation:2.0:sqlsessionbackend">SQL session backend</a> except that a field must be added for each data to index.
-</p>
-<pre class="code file sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> sessions <span class="br0">&#40;</span>
-    id <span class="kw1">CHAR</span><span class="br0">&#40;</span><span class="nu0">32</span><span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
-    a_session <span class="kw1">BLOB</span><span class="sy0">,</span>
-    _whatToTrace <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="sy0">,</span>
-    ipAddr <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="br0">&#41;</span><span class="sy0">,</span>
-    <span class="kw1">KEY</span> _whatToTrace <span class="br0">&#40;</span>_whatToTrace<span class="br0">&#41;</span><span class="sy0">,</span>
-    <span class="kw1">KEY</span> ipAddr <span class="br0">&#40;</span>ipAddr<span class="br0">&#41;</span>
-    <span class="br0">&#41;</span>;</pre>
-
-<p>
-<p><div class="noteimportant">Change char(32) by char(64) if you use the now recommanded SHA256 hash algorithm. See <a href="../../documentation/current/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
-</div></p>
-</p>
-
-</div>
-<!-- EDIT4 SECTION "Prepare database" [1643-2360] -->
-<h3 class="sectionedit5" id="manager">Manager</h3>
-<div class="level3">
-
-<p>
-Using Redis, you just have to add the “Index” parameter  in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> :
-</p>
-<div class="table sectionedit6"><table class="inline">
+<div class="table sectionedit5"><table class="inline">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign" colspan="3">  Required parameters  </th>
@@ -143,15 +110,48 @@ Using Redis, you just have to add the “Index” parameter  in <code>General pa
 		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr </td>
 	</tr>
 </table></div>
-<!-- EDIT6 TABLE [2535-2692] -->
+<!-- EDIT5 TABLE [1898-2055] -->
+</div>
+<!-- EDIT4 SECTION "Browseable NoSQL" [1611-2056] -->
+<h2 class="sectionedit6" id="browseable_sql">Browseable SQL</h2>
+<div class="level2">
+
 <p>
-<em class="u">Example with MySQL</em>:
+<p><div class="noteclassic">This documentation concerns MySQL. Some adaptations are needed with other databases.
+</div></p>
 </p>
+
+</div>
+<!-- EDIT6 SECTION "Browseable SQL" [2057-2183] -->
+<h3 class="sectionedit7" id="prepare_database">Prepare database</h3>
+<div class="level3">
+
+<p>
+Database must be prepared exactly like in <a href="../../documentation/2.0/sqlsessionbackend.html#prepare_the_database" class="wikilink1" title="documentation:2.0:sqlsessionbackend">SQL session backend</a> except that a field must be added for each data to index.
+</p>
+<pre class="code file sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> sessions <span class="br0">&#40;</span>
+    id <span class="kw1">CHAR</span><span class="br0">&#40;</span><span class="nu0">32</span><span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
+    a_session <span class="kw1">BLOB</span><span class="sy0">,</span>
+    _whatToTrace <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    ipAddr <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">15</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="kw1">KEY</span> _whatToTrace <span class="br0">&#40;</span>_whatToTrace<span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="kw1">KEY</span> ipAddr <span class="br0">&#40;</span>ipAddr<span class="br0">&#41;</span>
+    <span class="br0">&#41;</span>;</pre>
+
+<p>
+<p><div class="noteimportant">Change char(32) by char(64) if you use the now recommended SHA256 hash algorithm. See <a href="../../documentation/current/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
+</div></p>
+</p>
+
+</div>
+<!-- EDIT7 SECTION "Prepare database" [2184-2770] -->
+<h3 class="sectionedit8" id="manager">Manager</h3>
+<div class="level3">
 
 <p>
 Go in the Manager and set the session module (<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL"  rel="nofollow">Apache::Session::Browseable::MySQL</a> for MySQL) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
 </p>
-<div class="table sectionedit7"><table class="inline">
+<div class="table sectionedit9"><table class="inline">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign" colspan="3">  Required parameters  </th>
@@ -173,7 +173,7 @@ Go in the Manager and set the session module (<a href="http://search.cpan.org/pe
 		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> _whatToTrace ipAddr </td>
 	</tr>
 </table></div>
-<!-- EDIT7 TABLE [3028-3359] -->
+<!-- EDIT9 TABLE [3099-3430] -->
 <p>
 <p><div class="notetip">Apache::Session::Browseable::MySQL doesn&#039;t use locks so performances are keeped.
 </p>
@@ -184,12 +184,68 @@ For databases like PostgreSQL, don&#039;t forget to add “Commit” with a valu
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Manager" [2361-3538] -->
-<h2 class="sectionedit8" id="security">Security</h2>
+<!-- EDIT8 SECTION "Manager" [2771-3609] -->
+<h2 class="sectionedit10" id="browseable_ldap">Browseable LDAP</h2>
 <div class="level2">
 
 <p>
-Restrict network access to the database.
+Go in the Manager and set the session module to <code>Apache::Session::Browseable::LDAP</code>. Then configure the options like in <a href="../../documentation/2.0/ldapsessionbackend.html" class="wikilink1" title="documentation:2.0:ldapsessionbackend">LDAP session backend</a>.
+</p>
+
+<p>
+You need to add the <code>Index</code> field and can also configure the <code>ldapAttributeIndex</code> field to set the attribute name where index values will be stored.
+</p>
+<div class="table sectionedit11"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign" colspan="3">  Required parameters  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Comment  </th><th class="col2 centeralign">  Example  </th>
+	</tr>
+	</thead>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  <strong>ldapServer</strong>  </td><td class="col1"> <abbr title="Uniform Resource Identifier">URI</abbr> of the server </td><td class="col2"> ldap://localhost </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 centeralign">  <strong>ldapConfBase</strong>  </td><td class="col1"> <abbr title="Distinguished Name">DN</abbr> of sessions branch </td><td class="col2"> ou=sessions,dc=example,dc=com </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0 centeralign">  <strong>ldapBindDN</strong>  </td><td class="col1"> Connection login </td><td class="col2"> cn=admin,dc=example,dc=password </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0 centeralign">  <strong>ldapBindPassword</strong>  </td><td class="col1"> Connection password </td><td class="col2"> secret </td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index list </td><td class="col2"> _whatToTrace ipAddr </td>
+	</tr>
+	<tr class="row7 rowodd">
+		<th class="col0 centeralign" colspan="3">  Optional parameters  </th>
+	</tr>
+	<tr class="row8 roweven">
+		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Comment  </th><th class="col2 centeralign">  Default value  </th>
+	</tr>
+	<tr class="row9 rowodd">
+		<td class="col0 centeralign">  <strong>ldapObjectClass</strong>  </td><td class="col1"> Objectclass of the entry </td><td class="col2"> applicationProcess </td>
+	</tr>
+	<tr class="row10 roweven">
+		<td class="col0 centeralign">  <strong>ldapAttributeId</strong>  </td><td class="col1"> Attribute storing session ID </td><td class="col2"> cn </td>
+	</tr>
+	<tr class="row11 rowodd">
+		<td class="col0 centeralign">  <strong>ldapAttributeContent</strong>  </td><td class="col1"> Attribute storing session content </td><td class="col2"> description </td>
+	</tr>
+	<tr class="row12 roweven">
+		<td class="col0 centeralign">  <strong>ldapAttributeIndex</strong>  </td><td class="col1"> Attribute storing index </td><td class="col2"> ou </td>
+	</tr>
+</table></div>
+<!-- EDIT11 TABLE [3961-4695] -->
+</div>
+<!-- EDIT10 SECTION "Browseable LDAP" [3610-4696] -->
+<h2 class="sectionedit12" id="security">Security</h2>
+<div class="level2">
+
+<p>
+Restrict network access to the backend.
 </p>
 
 <p>
