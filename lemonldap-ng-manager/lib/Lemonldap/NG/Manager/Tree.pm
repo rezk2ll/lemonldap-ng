@@ -822,16 +822,21 @@ sub tree {
                 'oidcServiceMetaDataAuthnContext',
                 {
                     title => 'oidcServiceMetaDataSecurity',
-                    form  => 'RSAKeyNoPassword',
-                    group => [
-                        'oidcServicePrivateKeySig',
-                        'oidcServicePublicKeySig',
+                    nodes => [
+                        {
+                            title => 'oidcServiceMetaDataKeys',
+                            form  => 'RSAKeyNoPassword',
+                            group => [
+                                'oidcServicePrivateKeySig',
+                                'oidcServicePublicKeySig',
+                            ],
+                        },
                         'oidcServiceKeyIdSig',
                         'oidcServiceAllowDynamicRegistration',
                         'oidcServiceAllowAuthorizationCodeFlow',
                         'oidcServiceAllowImplicitFlow',
                         'oidcServiceAllowHybridFlow',
-                    ]
+                    ],
                 },
             ]
         },
