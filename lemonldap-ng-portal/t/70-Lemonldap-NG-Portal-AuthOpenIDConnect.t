@@ -96,7 +96,7 @@ my $access_token = "jHkWEdUXMU1BwAsC4vtUsZwnNvTIxEl0z9K3vx5KF0Y";
 my $at_hash      = "77QmUPtjPfzWtF2AnpK9RQ";
 
 ok(
-    $p->createHash( $access_token, "256" ) == $at_hash,
+    $p->createHash( $access_token, "256" ) eq $at_hash,
     'Access Token Hash creation - alg: SHA-256'
 );
 
@@ -112,7 +112,7 @@ my $code   = "Qcb0Orv1zh30vL1MPRsbm-diHiMwcLyZvn1arpZv-Jxf_11jnpEX3Tgfvk";
 my $c_hash = "LDktKdoQak3Pk0cnXxCltA";
 
 ok(
-    $p->createHash( $code, "256" ) == $c_hash,
+    $p->createHash( $code, "256" ) eq $c_hash,
     'Code Hash creation - alg: SHA-256'
 );
 
