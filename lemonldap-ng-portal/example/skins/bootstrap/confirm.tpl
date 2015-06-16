@@ -38,7 +38,7 @@
         <div class="col-sm-6 <TMPL_VAR NAME="class">">
           <button type="submit" class="btn btn-info" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
           <TMPL_IF NAME="icon">
-            <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="icon">" class="glyphicon" />
+            <img src="<TMPL_VAR NAME="icon">" class="glyphicon" />
           <TMPL_ELSE>
             <i class="glyphicon glyphicon-chevron-right"></i>
           </TMPL_IF>

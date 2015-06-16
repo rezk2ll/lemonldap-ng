@@ -210,14 +210,30 @@ sub extractFormInfo {
 
             # IDP list
             my @list = ();
+
+            my $portalPath = $self->{portal};
+            $portalPath =~ s#^https?://[^/]+/?#/#;
+            $portalPath =~ s#[^/]+\.pl$##;
+
             foreach (@oplist) {
+                my $name = $self->{oidcOPMetaDataOptions}->{$_}
+                  ->{oidcOPMetaDataOptionsDisplayName};
+                my $icon = $self->{oidcOPMetaDataOptions}->{$_}
+                  ->{oidcOPMetaDataOptionsIcon};
+                my $img_src;
+
+                if ($icon) {
+                    $img_src =
+                      ( $icon =~ m#^https?://# )
+                      ? $icon
+                      : $portalPath . "skins/common/" . $icon;
+                }
+
                 push @list,
                   {
-                    val  => $_,
-                    name => $self->{oidcOPMetaDataOptions}->{$_}
-                      ->{oidcOPMetaDataOptionsDisplayName},
-                    icon => $self->{oidcOPMetaDataOptions}->{$_}
-                      ->{oidcOPMetaDataOptionsIcon},
+                    val   => $_,
+                    name  => $name,
+                    icon  => $img_src,
                     class => "openidconnect",
                   };
             }
