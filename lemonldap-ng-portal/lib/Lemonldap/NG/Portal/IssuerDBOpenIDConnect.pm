@@ -957,17 +957,20 @@ sub issuerForAuthUser {
                   ->{oidcRPMetaDataOptionsDisplayName};
                 my $icon = $self->{oidcRPMetaDataOptions}->{$rp}
                   ->{oidcRPMetaDataOptionsIcon};
+                my $img_src;
                 my $portalPath = $self->{portal};
                 $portalPath =~ s#^https?://[^/]+/?#/#;
                 $portalPath =~ s#[^/]+\.pl$##;
 
+                if ($icon) {
+                    $img_src =
+                      ( $icon =~ m#^https?://# )
+                      ? $icon
+                      : $portalPath . "skins/common/" . $icon;
+                }
+
                 $self->info('<div class="oidc_consent_message">');
-                $self->info( '<img src="'
-                      . $portalPath
-                      . "skins/common/"
-                      . $icon
-                      . '" />' )
-                  if $icon;
+                $self->info( '<img src="' . $img_src . '" />' ) if $img_src;
                 $self->info( '<h3>'
                       . sprintf( $self->msg(PM_OIDC_CONSENT), $display_name )
                       . '</h3>' );
