@@ -463,7 +463,7 @@ sub defaultValue {
 
 sub testNewConf {
     my $self = shift;
-    return $self->_unitTest( $self->newConf(), '' ) and $self->_globalTest();
+    return $self->_unitTest( $self->newConf(), '' ) && $self->_globalTest();
 }
 
 sub _unitTest {
@@ -550,7 +550,7 @@ sub _globalTest {
         };
         if ($@) {
             push @{ $self->warnings }, "Test $name failed: $@";
-            $self->lmLog( "Test $name failed: $@", 'error' );
+            print STDERR "Test $name failed: $@\n";
         }
     }
     return $result;
