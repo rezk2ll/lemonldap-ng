@@ -181,15 +181,15 @@ common:		common_conf
 	@$(MAKE) -C ${SRCCOMMONDIR}
 	@touch common
 
-handler:	handler_conf
+handler:	handler_conf common
 	@$(MAKE) -C ${SRCHANDLERDIR}
 	@touch handler
 
-portal:		portal_conf
+portal:		portal_conf common
 	@$(MAKE) -C ${SRCPORTALDIR}
 	@touch portal
 
-manager:	manager_conf
+manager:	manager_conf handler
 	@$(MAKE) -C ${SRCMANAGERDIR}
 	@touch manager
 
@@ -198,13 +198,13 @@ test:		all common_test handler_test portal_test manager_test extra_test
 common_test:	common
 	@$(MAKE) -C ${SRCCOMMONDIR} test
 
-handler_test:	handler common_test
+handler_test:	handler
 	@$(MAKE) -C ${SRCHANDLERDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/"
 
-portal_test:	portal handler_test common_test
+portal_test:	portal
 	@$(MAKE) -C ${SRCPORTALDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/ -I../${SRCHANDLERDIR}/blib/lib/"
 
-manager_test:	manager handler_test common_test
+manager_test:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/ -I../${SRCHANDLERDIR}/blib/lib/"
 
 extra_test:	all
