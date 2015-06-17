@@ -176,10 +176,15 @@ sub tests {
         testApacheSession => sub {
             my ( $id, %h );
             return 1
-              if ( $Lemonldap::NG::Handler::_CGI::tsv->{globalStorage} eq
-                   $conf->{globalStorage}
+              if (
+                (
+                        $Lemonldap::NG::Handler::_CGI::tsv->{globalStorage}
+                    and $Lemonldap::NG::Handler::_CGI::tsv->{globalStorage} eq
+                    $conf->{globalStorage}
+                )
                 or $conf->{globalStorage} eq
-                'Lemonldap::NG::Common::Apache::Session::SOAP' );
+                'Lemonldap::NG::Common::Apache::Session::SOAP'
+              );
             eval "use $conf->{globalStorage}";
             return ( -1, "Unknown package $conf->{globalStorage}" ) if ($@);
             eval {
@@ -212,7 +217,8 @@ sub tests {
             return (
                 1,
                 (
-                    $Lemonldap::NG::Handler::_CGI::tsv->{cookieName} ne
+                    $Lemonldap::NG::Handler::_CGI::tsv->{cookieName}
+                      and $Lemonldap::NG::Handler::_CGI::tsv->{cookieName} ne
                       $conf->{cookieName}
                     ? 'Cookie name has changed, you <b>must</b> restart all your Apache servers'
                     : ()
@@ -298,6 +304,7 @@ sub tests {
                         )
                       )
                     {
+                        require Lemonldap::NG::Common::Conf::Attributes;
                         my $confAttributes =
                           Lemonldap::NG::Common::Conf::Attributes->new();
                         my $v = $confAttributes->$k;
