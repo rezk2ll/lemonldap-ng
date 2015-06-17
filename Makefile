@@ -96,7 +96,7 @@ APACHEUSER=
 APACHEGROUP=
 
 # Apache version
-APACHEVERSION=2
+APACHEVERSION=2.X
 
 # DNS Domain for cookie and virtual hosts
 DNSDOMAIN=example.com
