@@ -267,55 +267,6 @@ sub tests {
             # Return
             return 1;
         },
-
-        # 2. MODIFICATIONS
-
-        # Remove unused and non-customized parameters
-        compactModules => sub {
-            foreach my $k ( keys %$conf ) {
-
-                # No analysis for hash keys
-                next if ( ref $conf->{$k} );
-
-                # Check federation modules
-                foreach my $type (qw(CAS OpenID SAML)) {
-
-                    # Check authChoice values
-                    my ( $authChoice, $userDBChoice ) = ( undef, undef );
-                    if ( $conf->{authentication} eq 'Choice'
-                        and defined $conf->{authChoiceModules} )
-                    {
-                        foreach ( keys %{ $conf->{authChoiceModules} } ) {
-                            my ( $auth, $userDB, $passwordDB ) =
-                              split( '|', $conf->{authChoiceModules}->{$_} );
-                            $authChoice   = 1 if $auth =~ /$type/i;
-                            $userDBChoice = 1 if $userDB =~ /$type/i;
-                        }
-                    }
-
-                    if (
-                        (
-                                $k =~ /^$type/i
-                            and not( $conf->{"issuerDB${type}Activation"} )
-                            and not( $conf->{authentication} =~ /$type/i )
-                            and not( $conf->{userDB} =~ /$type/i )
-                            and not( defined $authChoice
-                                or defined $userDBChoice )
-                        )
-                      )
-                    {
-                        require Lemonldap::NG::Common::Conf::Attributes;
-                        my $confAttributes =
-                          Lemonldap::NG::Common::Conf::Attributes->new();
-                        my $v = $confAttributes->$k;
-                        if ( defined($v) and $conf->{$k} eq $v ) {
-                            delete $conf->{$k};
-                        }
-                    }
-                }
-                return 1;
-            }
-        },
     };
 }
 
