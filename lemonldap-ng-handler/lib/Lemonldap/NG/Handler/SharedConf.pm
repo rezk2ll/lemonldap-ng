@@ -326,7 +326,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =over
 
-=item Copyright (C) 2006, 2007, 2008, 2009, 2010, 2013 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+=item Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2013 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =item Copyright (C) 2012 by François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
 
