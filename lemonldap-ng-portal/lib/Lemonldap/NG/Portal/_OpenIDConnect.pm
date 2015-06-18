@@ -1257,6 +1257,10 @@ sub createJWT {
                 $client_secret );
         }
 
+        # Convert + and / to get Base64 URL valid (RFC 4648)
+        $digest =~ s/\+/-/g;
+        $digest =~ s/\//_/g;
+
         return $jwt_header . "." . $jwt_payload . "." . $digest;
     }
 
