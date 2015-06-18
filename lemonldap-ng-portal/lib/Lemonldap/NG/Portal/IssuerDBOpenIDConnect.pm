@@ -276,6 +276,7 @@ sub issuerForUnAuthUser {
         # ID token payload
         my $id_token_exp = $self->{oidcRPMetaDataOptions}->{$rp}
           ->{oidcRPMetaDataOptionsIDTokenExpiration};
+        $id_token_exp += time;
 
         my $id_token_acr = "loa-" . $apacheSession->data->{authenticationLevel};
 
@@ -1086,6 +1087,7 @@ sub issuerForAuthUser {
             # ID token payload
             my $id_token_exp = $self->{oidcRPMetaDataOptions}->{$rp}
               ->{oidcRPMetaDataOptionsIDTokenExpiration};
+            $id_token_exp += time;
 
             my $authenticationLevel =
               $self->{sessionInfo}->{authenticationLevel};
@@ -1213,6 +1215,7 @@ sub issuerForAuthUser {
                 # ID token payload
                 my $id_token_exp = $self->{oidcRPMetaDataOptions}->{$rp}
                   ->{oidcRPMetaDataOptionsIDTokenExpiration};
+                $id_token_exp += time;
 
                 my $id_token_acr =
                   "loa-" . $self->{sessionInfo}->{authenticationLevel};
