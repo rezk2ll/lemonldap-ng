@@ -1132,12 +1132,13 @@ sub getEndPointAccessToken {
     return $access_token;
 }
 
-## @method arrayref getAttributesListFromClaim(String claim)
+## @method arrayref getAttributesListFromClaim(String rp, String claim)
 # Return list of attributes authorized for a claim
+# @param rp RP name
 # @param claim Claim
 # @return arrayref attributes list
 sub getAttributesListFromClaim {
-    my ( $self, $claim ) = splice @_;
+    my ( $self, $rp, $claim ) = splice @_;
     my $attributes = {};
 
     # OpenID Connect standard claims
@@ -1150,7 +1151,16 @@ sub getAttributesListFromClaim {
     $attributes->{phone} = [qw/phone_number phone_number_verified/];
 
     # Additional claims
-    # TODO
+    my $extraClaims =
+      $self->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsExtraClaims};
+
+    if ($extraClaims) {
+        foreach my $claim ( keys %$extraClaims ) {
+            $self->lmLog( "Using extra claim $claim", 'debug' );
+            my @extraAttributes = split( /\s/, $extraClaims->{$claim} );
+            $attributes->{$claim} = \@extraAttributes;
+        }
+    }
 
     return $attributes->{$claim};
 }
@@ -1186,7 +1196,7 @@ sub buildUserInfoResponse {
     foreach my $claim ( split( /\s/, $scope ) ) {
         next if ( $claim eq "openid" );
         $self->lmLog( "Get attributes linked to claim $claim", 'debug' );
-        my $list = $self->getAttributesListFromClaim($claim);
+        my $list = $self->getAttributesListFromClaim( $rp, $claim );
         next unless $list;
         foreach my $attribute (@$list) {
             my $session_key =
@@ -1302,7 +1312,8 @@ sub createIDToken {
     my ( $self, $payload, $rp ) = splice @_;
 
     # Get signature algorithm
-    my $alg = $self->{oidcRPMetaDataOptions}->{$rp}
+    my $alg =
+      $self->{oidcRPMetaDataOptions}->{$rp}
       ->{oidcRPMetaDataOptionsIDTokenSignAlg};
     $self->lmLog( "ID Token signature algorithm: $alg", 'debug' );
 
