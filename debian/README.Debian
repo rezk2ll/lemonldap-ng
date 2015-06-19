@@ -15,14 +15,14 @@ with a quick sed command. For example, we change it to ow2.org:
 Enable the components you've installed:
 
   # Portal
-  a2ensite portal-apache2.conf
+  a2ensite portal-apache2.X.conf
 
   # Manager
-  a2ensite manager-apache2.conf
+  a2ensite manager-apache2.X.conf
 
   # Handler
-  a2ensite handler-apache2.conf
-  a2ensite test-apache2.conf
+  a2ensite handler-apache2.X.conf
+  a2ensite test-apache2.X.conf
 
 and enable mod_perl if not already loaded:
 
