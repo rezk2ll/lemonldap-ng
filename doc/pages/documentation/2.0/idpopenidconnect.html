@@ -47,6 +47,8 @@ As an OP, <abbr title="LemonLDAP::NG">LL::NG</abbr> supports a lot of OpenID Con
 </li>
 <li class="level1"><div class="li"> <code>prompt</code>, <code>display</code>, <code>ui_locales</code>, <code>max_age</code> parameters</div>
 </li>
+<li class="level1"><div class="li"> Extra claims definition</div>
+</li>
 <li class="level1"><div class="li"> Authentication context Class References (ACR)</div>
 </li>
 <li class="level1"><div class="li"> Nonce</div>
@@ -66,12 +68,12 @@ As an OP, <abbr title="LemonLDAP::NG">LL::NG</abbr> supports a lot of OpenID Con
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Presentation" [40-894] -->
+<!-- EDIT2 SECTION "Presentation" [40-922] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [895-921] -->
+<!-- EDIT3 SECTION "Configuration" [923-949] -->
 <h3 class="sectionedit4" id="openid_connect_service">OpenID Connect Service</h3>
 <div class="level3">
 
@@ -80,7 +82,7 @@ See <a href="../../documentation/2.0/openidconnectservice.html" class="wikilink1
 </p>
 
 </div>
-<!-- EDIT4 SECTION "OpenID Connect Service" [922-1031] -->
+<!-- EDIT4 SECTION "OpenID Connect Service" [950-1059] -->
 <h3 class="sectionedit5" id="issuerdb">IssuerDB</h3>
 <div class="level3">
 
@@ -108,7 +110,7 @@ For example, to allow only users with a strong authentication level:
 </p>
 
 </div>
-<!-- EDIT5 SECTION "IssuerDB" [1032-1517] -->
+<!-- EDIT5 SECTION "IssuerDB" [1060-1545] -->
 <h3 class="sectionedit6" id="configuration_of_llng_in_relying_party">Configuration of LL::NG in Relying Party</h3>
 <div class="level3">
 
@@ -190,7 +192,7 @@ An example of its content:
 <span class="br0">&#125;</span></pre>
 
 </div>
-<!-- EDIT6 SECTION "Configuration of LL::NG in Relying Party" [1518-3496] -->
+<!-- EDIT6 SECTION "Configuration of LL::NG in Relying Party" [1546-3524] -->
 <h3 class="sectionedit7" id="configuration_of_relying_party_in_llng">Configuration of Relying Party in LL::NG</h3>
 <div class="level3">
 
@@ -233,6 +235,16 @@ So you can define for example:
 </div></p>
 </p>
 
+<p>
+You can also define extra claims and link them to attributes (see below). Then you just have to define the mapping of this new attributes, for example:
+</p>
+<ul>
+<li class="level1"><div class="li"> birthplace ⇒ l</div>
+</li>
+<li class="level1"><div class="li"> birthcountry ⇒ co</div>
+</li>
+</ul>
+
 </div>
 
 <h4 id="options">Options</h4>
@@ -263,6 +275,8 @@ So you can define for example:
 <li class="level1"><div class="li"> <strong>Access token expiration</strong>: Expiration time of Access Tokens</div>
 </li>
 <li class="level1"><div class="li"> <strong>Redirection addresses</strong>: Space separated list of redirect addresses allowed for this RP</div>
+</li>
+<li class="level1"><div class="li"> <strong>Extra claims</strong>: Associate attributes to extra claims if the RP request them, for example <code>birth</code> ⇒ <code>birthplace birthcountry</code></div>
 </li>
 </ul>
 
