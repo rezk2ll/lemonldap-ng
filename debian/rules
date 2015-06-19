@@ -49,6 +49,9 @@ override_dh_auto_install:
 
 	mkdir $(TMP)/$(LMSHAREDIR)/manager $(TMP)/$(LMSHAREDIR)/portal
 	mv $(TMP)/$(LMVARDIR)/portal/*.pl $(TMP)/$(LMSHAREDIR)/portal/
+	for i in handler portal manager test; do \
+		mv $(TMP)/etc/lemonldap-ng/$$i-apache2.X.conf $(TMP)/etc/lemonldap-ng/$$i-apache2.conf; \
+	done
 
 override_dh_compress:
 	dh_compress -X favicon.ico

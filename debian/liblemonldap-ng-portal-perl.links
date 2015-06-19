@@ -1,4 +1,4 @@
-/etc/lemonldap-ng/portal-apache2.X.conf /etc/apache2/sites-available/portal-apache2.X.conf
+/etc/lemonldap-ng/portal-apache2.conf /etc/apache2/sites-available/portal-apache2.conf
 /usr/share/lemonldap-ng/portal/cdc.pl /var/lib/lemonldap-ng/portal/cdc.pl
 /usr/share/lemonldap-ng/portal/index.pl /var/lib/lemonldap-ng/portal/index.pl
 /usr/share/lemonldap-ng/portal/mail.pl /var/lib/lemonldap-ng/portal/mail.pl
