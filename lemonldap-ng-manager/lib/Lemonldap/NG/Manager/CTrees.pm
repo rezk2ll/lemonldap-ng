@@ -185,7 +185,8 @@ sub cTrees {
                     'oidcRPMetaDataOptionsIDTokenSignAlg',
                     'oidcRPMetaDataOptionsIDTokenExpiration',
                     'oidcRPMetaDataOptionsAccessTokenExpiration',
-                    'oidcRPMetaDataOptionsRedirectUris'
+                    'oidcRPMetaDataOptionsRedirectUris',
+                    'oidcRPMetaDataOptionsExtraClaims'
                 ]
             },
         ],

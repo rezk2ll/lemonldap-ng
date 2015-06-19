@@ -2036,6 +2036,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsIDTokenExpiration     => { type => 'int', },
         oidcRPMetaDataOptionsAccessTokenExpiration => { type => 'int', },
         oidcRPMetaDataOptionsRedirectUris          => { type => 'text', },
+        oidcRPMetaDataOptionsExtraClaims => { type => 'keyTextContainer', },
 
     };
 }

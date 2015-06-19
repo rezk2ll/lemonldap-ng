@@ -371,6 +371,7 @@
   "oidcOPMetaDataOptionsIDTokenMaxAge": "ID Token max age",
   "oidcOPMetaDataOptionsUseNonce": "Use nonce",
   "oidcRPMetaDataOptionsRedirectUris": "Redirection addresses",
+  "oidcRPMetaDataOptionsExtraClaims": "Extra claims",
   "oidcServiceMetaDataIssuer": "Issuer identifier",
   "oidcServiceMetaDataTokenURI": "Token",
   "oidcServiceMetaDataUserInfoURI": "User Info",
