@@ -1,0 +1,25 @@
+# Following directives must be included in server blocks
+# or location blocks in order to run LL::NG access control
+
+# Vars used by LL::NG handler
+set $lmremote_user "";
+set $lmlocation "";
+
+# Apply status code computed by LL::NG handler
+if ($lmstatus = 302) { return 302 $lmlocation; }
+if ($lmstatus = 401) { return 401; }
+if ($lmstatus = 403) { return 403; }
+if ($lmstatus = 500) { return 500; }
+if ($lmstatus = 503) { return 503; }
+
+# Security: prevent clients from sending custom headers
+# that could interfere with headers added by LL::NG handler
+# For example, if LL::NG handler adds a request header "Auth-User",
+# request header "Auth-User" sent by a malicious client would be
+# overwritten by LL::NG handler, but "Auth_User" and "auth-user" would not,
+# and Nginx does not permit case-sensitive header comparison.
+# If $lmparanoid is set to 1, any suspicious request header would result in a 403 error;
+# if set to 0, a warning will be sent in error logs;
+# default value is 0.
+#set $lmparanoid 1;
+

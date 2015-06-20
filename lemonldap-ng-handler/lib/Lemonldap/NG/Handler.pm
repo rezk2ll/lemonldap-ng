@@ -10,6 +10,18 @@ our $VERSION = '2.0.0';
 use Lemonldap::NG::Handler::SharedConf;
 @ISA = qw(Lemonldap::NG::Handler::SharedConf);
 
+sub handler {
+    my ( $class, $request ) = ( __PACKAGE__, shift );
+    Lemonldap::NG::Handler::API->newRequest($request);
+    $class->run();
+}
+
+sub logout {
+    my ( $class, $request ) = ( __PACKAGE__, shift );
+    Lemonldap::NG::Handler::API->newRequest($request);
+    $class->unlog();
+}
+
 __PACKAGE__->init();
 
 1;

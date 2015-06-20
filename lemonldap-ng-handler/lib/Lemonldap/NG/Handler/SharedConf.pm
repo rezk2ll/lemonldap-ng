@@ -126,19 +126,6 @@ sub statusInit {
 
 # MAIN
 
-# NB: function attribute ': method' requested to get $class
-sub handler : method {
-    my ( $class, $request ) = @_;
-    Lemonldap::NG::Handler::API->newRequest($request);
-    $class->run();
-}
-
-sub logout : method {
-    my ( $class, $request ) = @_;
-    Lemonldap::NG::Handler::API->newRequest($request);
-    $class->unlog();
-}
-
 ## @rmethod int run
 # Check configuration and launch Lemonldap::NG::Handler::Main::run().
 # Each $checkTime, the Apache child verify if its configuration is the same

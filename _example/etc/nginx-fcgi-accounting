@@ -1,0 +1,12 @@
+# Directives to send user data to FastCGI protected apps
+# and hide LL::NG cookie
+
+set $cookie "";
+fastcgi_param COOKIE $cookie;
+
+# Add here HTTP headers defined in LL::NG manager
+# For example, if you set an exported header 'Auth-User',
+set $lm_auth_user "";
+fastcgi_param AUTH_USER $lm_auth_user;
+# That is: variable containing header value is obtained from lowercase
+# header name, - replaced with _, and preceded from $lm_

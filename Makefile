@@ -277,6 +277,11 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 		cp -f _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp -f _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp -f _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp -f _example/etc/handler-nginx.conf $(RCONFDIR); \
+		cp -f _example/etc/test-nginx.conf $(RCONFDIR); \
+		cp -f _example/etc/nginx-access-control $(RCONFDIR); \
+		cp -f _example/etc/nginx-http-accounting $(RCONFDIR); \
+		cp -f _example/etc/nginx-fcgi-accounting $(RCONFDIR); \
 		cp -f _example/etc/for_etc_hosts $(RCONFDIR); \
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
@@ -287,7 +292,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 			s#__TESTDIR__#$(TESTDIR)/#g; \
 			s#__VHOSTLISTEN__#$(VHOSTLISTEN)#g; \
 			s#__DEFDOCDIR__#$(DEFDOCDIR)/#g; \
-			s#__FRDOCDIR__#$(FRDOCDIR)/#g;' $(RCONFDIR)/*apache*.conf
+			s#__FRDOCDIR__#$(FRDOCDIR)/#g;' $(RCONFDIR)/*apache*.conf $(RCONFDIR)/*nginx*.conf
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	# Fix a lost of rights on the main directory
 	@chmod 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSKINSDIR) $(RMANAGERSITEDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
