@@ -1,4 +1,4 @@
-#!/usr/bin/env perl -w
+#!/usr/bin/env perl -Ilib/ -w
 
 use strict;
 
@@ -60,6 +60,7 @@ $jsonEnc->canonical(1);
 # 1. confTree.js
 unless ( $opts{f} ) {
     $mainTree = Lemonldap::NG::Manager::CTrees::cTrees();
+
     my $script =
         'function templates(tpl,key){'
       . 'var ind;'
@@ -69,6 +70,9 @@ unless ( $opts{f} ) {
       . '"title":r,'
       . '"get":tpl+"s/"+key+"/"+r' . '};' . '};'
       . 'switch(tpl){';
+
+    # To build confTree.js, each special node is scanned from
+    # Lemonldap::NG::Manager::CTrees
     foreach my $node ( sort keys $mainTree ) {
         @cnodesKeys = ();
         my $jsonTree = [];
@@ -78,14 +82,17 @@ unless ( $opts{f} ) {
         $tmp =~ s/"(true|false)"/$1/sg;
         $tmp =~ s/:\s*"(\d+)"\s*(["\}])/:$1$2/sg;
         $script .= "case'$node':return$tmp;";
+
+        # Second step, Manager/Constants.pm file will contain datas issued from
+        # this scan
         my $ra = Regexp::Assemble->new;
 
+        # Build $oidcOPMetaDataNodeKeys, $samlSPMetaDataNodeKeys,...
         foreach my $r (@cnodesKeys) {
             $ra->add($r);
         }
         $cnodesRe{$node} = $ra->as_string;
 
-        #print Dumper( $jsonTree);
         push @ignoreKeys, $node;
     }
     $script .= 'default:return [];}}';
