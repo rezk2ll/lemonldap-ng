@@ -835,6 +835,9 @@ sub attributes {
             documentation => 'Virtualhost urls/Datas to post',
         },
 
+        vhostOptions => {
+            type => 'subContainer',
+        },
         vhostPort => {
             type    => 'int',
             default => -1,
@@ -2003,6 +2006,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
           { type => 'oidcOPMetaDataNodeContainer', help => 'oidcop.html', },
         oidcRPMetaDataNodes =>
           { type => 'oidcRPMetaDataNodeContainer', help => 'oidcrp.html', },
+        oidcOPMetaDataOptions => { type => 'subContainer', },
+        oidcRPMetaDataOptions => { type => 'subContainer', },
 
         # OpenID Connect providers
         oidcOPMetaDataJSON         => { type => 'oidcmetadatajson', },

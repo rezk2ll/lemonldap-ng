@@ -474,52 +474,64 @@ sub _unitTest {
     foreach my $key ( keys %$conf ) {
         my ( $attr, $type );
 
-        # Check if key exists
-        unless ( $attr = $attrs->{$key} ) {
-            push @{ $self->errors }, { message => "__unknownKey__: $key" };
-            next;
-        }
-        if ( $key =~ $simpleHashKeys ) {
+        if ( $attr->{type} and $attr->{type} eq 'subContainer' ) {
 
-            #TODO
-        }
-        elsif ( defined $attr->{keyTest} ) {
-
-            #TODO
+            # TODO Recursive
         }
         else {
-            die "Unkown type $attr->{type}"
-              unless ( $type = $types->{ $attr->{type} } );
-            my $test = $attr->{test}    // $type->{test};
-            my $msg  = $attr->{msgFail} // $type->{msgFail};
-            if ( my $ref = ref($test) ) {
-                if ( $ref eq 'CODE' ) {
-                    my ( $r, $w ) = $test->( $conf->{$key}, $conf, $attr );
-                    unless ($r) {
-                        push @{ $self->errors },
-                          { message => "$key: " . ( $w ? $w : $msg ) };
-                        $res = 0;
+
+            # Check if key exists
+            unless ( $attr = $attrs->{$key} ) {
+                push @{ $self->errors }, { message => "__unknownKey__: $key" };
+                next;
+            }
+            if ( $key =~ $simpleHashKeys ) {
+
+                #TODO
+            }
+            elsif ( defined $attr->{keyTest} ) {
+
+                #TODO
+            }
+            elsif ( $attr->{type} =~ /Container$/ ) {
+
+                #TODO
+            }
+            else {
+                die "Unkown type $attr->{type}"
+                  unless ( $type = $types->{ $attr->{type} } );
+                my $test = $attr->{test}    // $type->{test};
+                my $msg  = $attr->{msgFail} // $type->{msgFail};
+                if ( my $ref = ref($test) ) {
+                    if ( $ref eq 'CODE' ) {
+                        my ( $r, $w ) = $test->( $conf->{$key}, $conf, $attr );
+                        unless ($r) {
+                            push @{ $self->errors },
+                              { message => "$key: " . ( $w ? $w : $msg ) };
+                            $res = 0;
+                        }
+                        elsif ($w) {
+                            push @{ $self->warnings },
+                              { message => "$key: $w" };
+                        }
                     }
-                    elsif ($w) {
-                        push @{ $self->warnings }, { message => "$key: $w" };
+                    elsif ( $ref eq 'Regexp' ) {
+                        die "msgFail undefined for type \"$attr->{type}\""
+                          unless ( defined $msg );
+                        unless ( $conf->{$key} =~ $test ) {
+                            push @{ $self->errors },
+                              { message => "$key: $msg ($conf->{$key})" };
+                        }
                     }
-                }
-                elsif ( $ref eq 'Regexp' ) {
-                    die "msgFail undefined for type \"$attr->{type}\""
-                      unless ( defined $msg );
-                    unless ( $conf->{$key} =~ $test ) {
-                        push @{ $self->errors },
-                          { message => "$key: $msg ($conf->{$key})" };
+                    else {
+                        die
+"Malformed test: only regexp ref or sub are accepted (type \"$ref\")";
                     }
                 }
                 else {
                     die
-"Malformed test: only regexp ref or sub are accepted (type \"$ref\")";
-                }
-            }
-            else {
-                die
 "Malformed test: only regexp ref or sub are accepted (\"$test\")";
+                }
             }
         }
     }
