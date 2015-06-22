@@ -188,13 +188,13 @@ Depends: ${misc:Depends},
          liblemonldap-ng-common-perl (= ${binary:Version}),
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          libplack-perl,
-         libwww-perl,
-         libxml-libxml-perl,
-         libxml-libxslt-perl,
-         libxml-simple-perl
+         libwww-perl
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libapache-session-browseable-perl,
-            liblwp-protocol-https-perl | libwww-perl (<< 6)
+            liblwp-protocol-https-perl | libwww-perl (<< 6),
+            libxml-libxml-perl,
+            libxml-libxslt-perl,
+            libxml-simple-perl
 Pre-Depends: debconf
 Provides: liblemonldap-ng-cli-perl
 Conflicts: liblemonldap-ng-cli-perl
