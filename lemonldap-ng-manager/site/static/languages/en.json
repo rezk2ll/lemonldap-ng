@@ -429,6 +429,7 @@
   "portalRedirection": "Portal redirections",
   "portalRequireOldPassword": "Require old password",
   "portalSkin": "Default Skin",
+  "portalSkinBackground": "Skin background",
   "portalSkinRules": "Skin display rules",
   "portalUserAttr": "User attribute",
   "post": "Form replay",

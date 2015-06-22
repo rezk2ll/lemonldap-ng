@@ -429,6 +429,7 @@
   "portalRedirection": "Redirections du portail",
   "portalRequireOldPassword": "Ancien mot de passe requis",
   "portalSkin": "Thème visuel par défaut",
+  "portalSkinBackground": "Image de fond",
   "portalSkinRules": "Règles d'affichage du thème visuel",
   "portalUserAttr": "Attribut de l'utilisateur",
   "post": "Rejeu de formulaires",

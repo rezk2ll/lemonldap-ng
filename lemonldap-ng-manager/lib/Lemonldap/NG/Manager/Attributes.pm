@@ -302,6 +302,10 @@ sub attributes {
                 { k => 'dark',      v => 'Dark' },
             ],
         },
+        portalSkinBackground => {
+            type          => 'text',
+            documentation => 'Background image of portal skin',
+        },
         portalSkinRules => {
             type       => 'keyTextContainer',
             help       => 'portalcustom.html',
