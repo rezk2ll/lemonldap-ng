@@ -587,7 +587,7 @@ doxygen:	clean
 
 distclean:	clean
 
-clean:		common_clean handler_clean portal_clean manager_clean omegat-clean
+clean:		common_clean handler_clean portal_clean manager_clean omegat-clean omegat-fr-clean
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf $(EXAMPLEROOT) example/ doc/devel
 	@rm -vf *gz *zip
@@ -754,7 +754,7 @@ omegat-clean:
 omegat-%-clean:
 	rm -rf po-doc/$*/*
 
-install_%_doc_site:
+install_%_doc_site: %-doc
 	@rm -rf $(RDOCDIR)/$*-doc || true
 	@install -v -d $(RDOCDIR)/$*-doc
 	@cp -dR -f po-doc/$*/* $(RDOCDIR)/$*-doc
