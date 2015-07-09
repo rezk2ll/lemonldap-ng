@@ -22,6 +22,7 @@
   * oidcOpMetadata ?
 
 * import from JSON
+* Order of categories
 
 ### REST API:
 

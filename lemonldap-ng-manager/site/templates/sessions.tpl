@@ -47,10 +47,10 @@
         </div>
       </div>
       <div class="panel panel-default" ng-hide="currentSession===null">
-        <div class="panel panel-heading">
+        <div class="panel-heading">
           <h1 class="panel-title text-center">{{translate("sessionTitle")}}</h1>
         </div>
-        <div class="panel panel-body">
+        <div class="panel-body">
           <div class="alert alert-info">
             <strong>{{translate("sessionStartedAt")}}</strong>
             {{localeDate(currentSession._utime)}}

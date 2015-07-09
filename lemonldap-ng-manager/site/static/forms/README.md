@@ -24,10 +24,10 @@ Form files must contain only HTML that will be included in the manager DOM
 Basic example:
 
     <div class="panel panel-default">
-      <div class="panel panel-heading">
+      <div class="panel-heading">
         <h3 class="panel-title">{{translate(currentNode)}}</h3>
       </div>
-      <div class="panel panel-body">
+      <div class="panel-body">
         <div class="input-group">
           <label class="input-group-addon" for="textinput" trspan="value"/>
           <input id="textinput" class="form-control" ng-model="currentNode.data"/>
@@ -47,10 +47,10 @@ Based on bootstrap CSS, the main div part may look like:
 If configuration item name is read-only:
 
     <div class="panel panel-default">
-      <div class="panel panel-heading">
+      <div class="panel-heading">
         <h3 class="panel-title">{{translate(currentNode)}}</h3>
       </div>
-      <div class="panel panel-body">
+      <div class="panel-body">
       __ FORM INPUTS __
       </div>
     </div>
@@ -58,10 +58,10 @@ If configuration item name is read-only:
 If configuration item name may be modified:
 
     <div class="panel panel-default">
-      <div class="panel panel-heading"> <!-- optional -->
+      <div class="panel-heading"> <!-- optional -->
         <h3 class="panel-title" trspan="OptionalTitle" />
       </div>
-      <div class="panel panel-body">
+      <div class="panel-body">
       __ FORM INPUTS __
       </div>
     </div>

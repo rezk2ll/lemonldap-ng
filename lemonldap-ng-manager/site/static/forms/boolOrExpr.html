@@ -1,8 +1,8 @@
 <div class="panel panel-default" style="position:relative;">
-  <div class="panel panel-heading">
+  <div class="panel-heading">
     <h3 class="panel-title">{{translateTitle(currentNode)}}</h3>
   </div>
-  <div class="panel panel-body">
+  <div class="panel-body">
     <div class="input-group-solid">
       <label class="radio-inline">
         <input id="bopeOn" type="radio" value="1" name="bope" ng-model="currentNode.data">
@@ -18,7 +18,7 @@
       </label>
     </div>
   </div>
-  <div class="panel panel-body input-group" style="width:100%;" ng-if="currentNode.data!==0&&currentNode.data!=='0'&&currentNode.data!==1&&currentNode.data!=='1'">
+  <div class="panel-body input-group" style="width:100%;" ng-if="currentNode.data!==0&&currentNode.data!=='0'&&currentNode.data!==1&&currentNode.data!=='1'">
     <textarea id="bopeValue" class="form-control" rows="2" ng-model="currentNode.data"/>
   </div>
 </div>

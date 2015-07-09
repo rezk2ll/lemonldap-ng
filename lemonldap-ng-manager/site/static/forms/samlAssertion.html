@@ -1,9 +1,9 @@
 <div class="panel panel-default">
-  <div class="panel panel-heading">
+  <div class="panel-heading">
     <h3 class="panel-title">{{translateTitle(currentNode)}}</h3>
   </div>
   <!-- Default -->
-  <div class="panel panel-body">
+  <div class="panel-body">
     <div class="input-group">
       <span class="input-group-addon" trspan="default"/>
       <div class="input-group-solid">
@@ -18,12 +18,12 @@
       </div>
     </div>
   </div>
-  <div class="hidden panel panel-body input-group">
+  <div class="hidden panel-body input-group">
     <label for="sahinput" id="sahlabel" class="input-group-addon"><span trspan="index"></span> :</label>
     <input aria-describedby="sahlabel" id="sahinput" class="form-control" ng-model="currentNode.data[1]"/>
   </div>
   <!-- Binding -->
-  <div class="panel panel-body input-group">
+  <div class="panel-body input-group">
     <label for="saaselect" id="saalbl" class="input-group-addon"><span trspan="format"/> :</label>
     <select disabled="disabled" class="form-control" id="saaselect" aria-describedby="saalbl" ng-model="currentNode.data[2]">
       <option value="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact">HTTP Artifact</option>
@@ -33,7 +33,7 @@
     </select>
   </div>
   <!-- URL -->
-  <div class="panel panel-body input-group">
+  <div class="panel-body input-group">
     <label for="saainput" id="saalabel" class="input-group-addon"><span trspan="url"></span> :</label>
     <input aria-describedby="saalabel" id="saainput" class="form-control" ng-model="currentNode.data[3]"/>
   </div>

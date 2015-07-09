@@ -1,24 +1,24 @@
 <div class="panel panel-default">
-  <div class="panel panel-heading">
+  <div class="panel-heading">
     <h3 class="panel-title" trspan="samlAttribute"></h3>
   </div>
   <!-- Key Name -->
-  <div class="panel panel-body input-group">
+  <div class="panel-body input-group">
     <label for="sakinput" id="saklabel" class="input-group-addon"><span trspan="keyname"></span> :</label>
     <input aria-describedby="saklabel" id="sakinput" class="form-control" ng-model="currentNode.title"/>
   </div>
   <!-- Name -->
-  <div class="panel panel-body input-group">
+  <div class="panel-body input-group">
     <label for="saninput" id="sanlabel" class="input-group-addon"><span trspan="name"></span> :</label>
     <input aria-describedby="sanlabel" id="saninput" class="form-control" ng-model="currentNode.data[1]"/>
   </div>
   <!-- Friendly Name -->
-  <div class="panel panel-body input-group">
+  <div class="panel-body input-group">
     <label for="safinput" id="saflabel" class="input-group-addon"><span trspan="friendlyName"></span> :</label>
     <input aria-describedby="saflabel" id="safinput" class="form-control" ng-model="currentNode.data[3]"/>
   </div>
   <!-- Mandatory -->
-  <div class="panel panel-body">
+  <div class="panel-body">
     <span class="input-group">
       <span class="input-group-addon"><span trspan="mandatory"/> :</span>
       <div class="input-group-solid">
@@ -34,7 +34,7 @@
     </span>
   </div>
   <!-- Format -->
-  <div class="panel panel-body input-group">
+  <div class="panel-body input-group">
     <label for="safselect" id="saflbl" class="input-group-addon"><span trspan="format"/> :</label>
      <select class="form-control" id="safselect" aria-describedby="saflbl" ng-model="currentNode.data[2]">
       <option value="" ng-selected="currentNode.data[2]==null||currentNode.data[2]==''"></option>

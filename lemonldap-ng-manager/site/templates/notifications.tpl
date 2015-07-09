@@ -47,15 +47,15 @@
       </div>
       <!-- Notification content -->
       <div class="panel panel-default" ng-hide="currentNotification===null">
-        <div class="panel panel-heading">
+        <div class="panel-heading">
           <h1 class="panel-title text-center">{{translate('view')}}</h1>
         </div>
         <h2>{{currentNotification.uid}}_{{currentNotification.reference}}</h2>
-        <div ng-if="currentNotification.done" class="panel panel-body">
+        <div ng-if="currentNotification.done" class="panel-body">
           {{translate('internalReference')}}: {{currentNotification.done}}
         </div>
         <div ng-if="currentNotification.notifications">
-          <div ng-repeat="n in currentNotification.notifications" class="panel panel-body">
+          <div ng-repeat="n in currentNotification.notifications" class="panel-body">
             {{n}}
           </div>
         </div>

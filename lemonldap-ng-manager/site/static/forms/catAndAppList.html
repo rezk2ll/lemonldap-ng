@@ -1,14 +1,17 @@
 <script type="text/ng-template" id="cat_renderer.html">
-  {{cat.title}}
-  <div class="panel panel-default" ng-if="cat.type=='menuCat'">
-    <div class="panel" ng-class="{'panel-heading':cat.type=='menuCat','panel-body':cat.type!='menuCat'}" ng-repeat="cat in cat.nodes track by cat.id" ng-include="'cat_renderer.html'"></li>
+  <p ng-class="{'lead text-primary':cat.type=='menuCat'}">{{cat.title}}</p>
+  <hr ng-if="cat.nodes">
+  <ul class="list-group" ng-if="cat.nodes">
+    <li class="list-group-item" ng-repeat="cat in cat.nodes track by cat.id" ng-include="'cat_renderer.html'"></li>
   </ul>
 </script>
 <div class="panel panel-default">
-  <div class="panel panel-heading">
+  <div class="panel-heading">
     <h3 class="panel-title">{{translateTitle(currentNode)}}</h3>
   </div>
-  <div class="panel" ng-class="{'panel-heading':cat.type=='menuCat','panel-body':cat.type!='menuCat'}" ng-repeat="cat in currentNode.nodes track by cat.id" ng-include="'cat_renderer.html'"></div>
+  <ul class="list-group">
+  <li class="list-group-item" ng-repeat="cat in currentNode.nodes track by cat.id" ng-include="'cat_renderer.html'"></li>
+  </ul>
 </div>
 <script type="text/javascript">
 buttons=[{
