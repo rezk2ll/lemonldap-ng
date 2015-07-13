@@ -38,6 +38,13 @@
   /* For IE8 and earlier */
 }
 
+/* Tables */
+
+.panel .table th {
+  width: 20%;
+  vertical-align: middle;
+}
+
 /* Main window */
 
 html,
