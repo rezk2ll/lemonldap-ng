@@ -14,14 +14,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <button type="button" class="navbar-toggle" ng-click="showT=!showT">
-            <span class="link" ng-hide="showT" trspan="browseTree"></span>
-            <span class="link" ng-show="showT" trspan="hideTree"></span>
+          <button type="button" class="btn btn-default navbar-btn visible-xs" ng-click="showT=!showT">
+            <span ng-hide="showT" trspan="browseTree"></span>
+            <span ng-show="showT" trspan="hideTree"></span>
           </button>
           <!-- Last buttons, available languages -->
         </div>
         <ul class="hidden-xs nav navbar-nav">
-          <li ng-repeat="link in links"><a href="{{link.target}}">{{translate(link.title)}}</a></li>
+          <li ng-repeat="link in links"><a href="{{link.target}}"><strong><i class="glyphicon glyphicon-link"></i> {{translate(link.title)}}</strong></a></li>
         </ul>
         <ul class="hidden-xs nav navbar-nav navbar-right">
           <li ng-include="'languages.html'"/>

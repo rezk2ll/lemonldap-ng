@@ -51,7 +51,7 @@
   <!-- HTML recursive templates (used in `ng-repeat... ng-include="'template.html'") -->
   <!-- Tree nested node template -->
   <script type="text/ng-template" id="nodes_renderer.html">
-    <div ui-tree-handle class="tree-node panel-info" ng-class="{'bg-info':this.$modelValue===currentNode}">
+    <div ui-tree-handle class="tree-node panel-info" ng-class="{'bg-info':this.$modelValue===currentNode,'tree-node-default':this.$modelValue!==currentNode}">
       <!-- Glyph icons -->
       <span ng-switch="node.nodes||node.nodes_cond?1:((node._nodes&&node._nodes.length>0)||(node._nodes_cond&&node._nodes_cond.length>0)?3:(node.cnodes&&node.cnodes.length>0?2:0))">
         <!-- Undownloaded nodes (hash data)-->
