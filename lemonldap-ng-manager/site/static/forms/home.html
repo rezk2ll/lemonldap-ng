@@ -5,18 +5,30 @@
       <span ng-if="currentCfg.next" trspan="loadedConfiguration"/>
     </h3>
   </div>
-  <div class="panel-body">
-    <dl class="dl-horizontal">
-     <dt><span trspan="number"></span> :&nbsp;</dt>
-     <dd>
-       <span id="cfgnum" comment="{{translateP('__newCfgAvailable__')}}" ng-class="{'label':currentCfg.next,'label-warning':currentCfg.next}">{{currentCfg.cfgNum}}</span>
-     </dd>
-     <dt><span trspan="author"></span> :&nbsp;</dt><dd>{{currentCfg.cfgAuthor}}</dd>
-     <dt><span trspan="authorIPAddress"></span> :&nbsp;</dt><dd>{{currentCfg.cfgAuthorIP}}</dd>
-     <dt><span trspan="date"></span> :&nbsp;</dt><dd>{{currentCfg.date}}</dd>
-     <dt><span trspan="cfgLog"></span> :&nbsp;</dt><dd>{{currentCfg.cfgLog}}</dd>
-    </dl>
-  </div>
+  <table class="table table-striped">
+    <tr>
+      <th width="20%"><span trspan="number" /></th>
+      <td>
+        <span id="cfgnum" class="label label-success" comment="{{translateP('__newCfgAvailable__')}}" ng-class="{'label-warning':currentCfg.next}">{{currentCfg.cfgNum}}</span>
+      </td>
+    </tr>
+    <tr>
+      <th><span trspan="author" /></th>
+      <td>{{currentCfg.cfgAuthor}}</td>
+    </tr>
+    <tr>
+      <th><span trspan="authorIPAddress" /></th>
+      <td>{{currentCfg.cfgAuthorIP}}</td>
+    </tr>
+    <tr>
+      <th><span trspan="date" /></th>
+      <td>{{currentCfg.date}}</td>
+    </tr>
+    <tr>
+      <th><span trspan="cfgLog" /></th>
+      <td>{{currentCfg.cfgLog}}</td>
+    </tr>
+  </table>
 </div>
 <script type="text/javascript">
 buttons=[{
