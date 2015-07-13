@@ -1,3 +1,4 @@
+.bowerrc
 bower.json
 Changes
 eg/manager-server.psgi
@@ -37,11 +38,13 @@ site-test/protractor-conf.js
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.css
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.js
 site/static/bwr/angular/angular.min.js
+site/static/bwr/bootstrap/dist/css/bootstrap-theme.min.css
 site/static/bwr/bootstrap/dist/css/bootstrap.min.css
 site/static/bwr/bootstrap/dist/fonts/glyphicons-halflings-regular.eot
 site/static/bwr/bootstrap/dist/fonts/glyphicons-halflings-regular.svg
 site/static/bwr/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf
 site/static/bwr/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
+site/static/bwr/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2
 site/static/bwr/bootstrap/dist/js/bootstrap.min.js
 site/static/bwr/es5-shim/es5-shim.min.js
 site/static/bwr/jquery/dist/jquery.min.js
