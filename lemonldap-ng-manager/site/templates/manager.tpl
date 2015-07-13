@@ -51,36 +51,36 @@
   <!-- HTML recursive templates (used in `ng-repeat... ng-include="'template.html'") -->
   <!-- Tree nested node template -->
   <script type="text/ng-template" id="nodes_renderer.html">
-    <div ui-tree-handle class="tree-node tree-node-content" ng-class="{'selected':this.$modelValue===currentNode}">
+    <div ui-tree-handle class="tree-node panel-info" ng-class="{'bg-info':this.$modelValue===currentNode}">
       <!-- Glyph icons -->
       <span ng-switch="node.nodes||node.nodes_cond?1:((node._nodes&&node._nodes.length>0)||(node._nodes_cond&&node._nodes_cond.length>0)?3:(node.cnodes&&node.cnodes.length>0?2:0))">
         <!-- Undownloaded nodes (hash data)-->
-        <a class="btn btn-node btn-xs" id="a-{{node.id}}" ng-switch-when="2" ng-click="openCnode(this)">
+        <a class="btn btn-sm" id="a-{{node.id}}" ng-switch-when="2" ng-click="openCnode(this)">
           <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
         <!-- Javascript nodes not yet bind to DOM -->
-        <a class="btn btn-node btn-xs" id="a-{{node.id}}" ng-switch-when="3" ng-click="stoggle(this)">
+        <a class="btn btn-sm" id="a-{{node.id}}" ng-switch-when="3" ng-click="stoggle(this)">
           <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>
         </a>
         <!-- Nodes already loaded and binded -->
-        <a class="btn btn-node btn-xs" id="a-{{node.id}}" ng-switch-when="1" ng-click="toggle(this)">
+        <a class="btn btn-sm" id="a-{{node.id}}" ng-switch-when="1" ng-click="toggle(this)">
           <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>
         </a>
         <!-- Leaf -->
-        <a class="btn btn-node btn-xs" ng-switch-default ng-click="displayForm(this)">
+        <a class="btn btn-sm" ng-switch-default ng-click="displayForm(this)">
           <span class="glyphicon glyphicon-pencil"></span>
         </a>
       </span>
       <!-- Node text with/without translation -->
-      <span  id="t-{{node.id}}" ng-if="keyWritable(this)" ng-click="displayForm(this)">{{node.title}}</span>
+      <span id="t-{{node.id}}" ng-if="keyWritable(this)" ng-click="displayForm(this)">{{node.title}}</span>
       <span id="t-{{node.id}}" ng-if="!keyWritable(this)" ng-click="displayForm(this)" trspan="{{node.title}}" />
     </div>
     <!-- Subnodes -->
-    <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+    <ol ui-tree-nodes="btn btn-sm" ng-model="node.nodes" ng-class="{hidden: collapsed}">
       <li ng-repeat="node in node.nodes track by node.id" ui-tree-node ng-include="'nodes_renderer.html'" collapsed="true"></li>
     </ol>
     <!-- Filtered subnodes (authParams mechanism) -->
-    <ol ui-tree-nodes="" ng-model="node.nodes_cond" ng-class="{hidden: collapsed}">
+    <ol ui-tree-nodes="btn btn-sm" ng-model="node.nodes_cond" ng-class="{hidden: collapsed}">
       <li ng-repeat="(name,node) in node.nodes_cond track by node.id" ng-if="node.show" ui-tree-node ng-include="'nodes_renderer.html'" collapsed="true"></li>
     </ol>
   </script>
