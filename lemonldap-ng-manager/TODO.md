@@ -3,6 +3,8 @@
 * Check for eval with SAML
 * userInfo && userWarn
 * Help interface
+* Manage cfgAuthor
+* Display input when Multi is choosen in authentication modules
 
 ## Configuration management
 
