@@ -45,6 +45,15 @@
   vertical-align: middle;
 }
 
+/* Category tree */
+ul.cat-tree {
+  list-style-type: square;
+}
+
+p.cat-tree-category {
+  font-weight: bold;
+}
+
 /* Main window */
 
 html,

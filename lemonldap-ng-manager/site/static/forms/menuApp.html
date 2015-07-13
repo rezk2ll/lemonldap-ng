@@ -2,49 +2,56 @@
   <div class="panel-heading">
     <h3 class="panel-title" trspan="application"/>
   </div>
-  <div class="panel-body input-group">
-    <label for="iname" id="lname" class="input-group-addon"><span trspan="name"/> :</label>
-    <input id="iname" aria-describedby="lname" class="form-control" ng-model="currentNode.title"/>
-  </div>
-  <div class="panel-body input-group">
-    <label for="idesc" id="ldesc" class="input-group-addon"><span trspan="description"/> :</label>
-    <input id="idesc" aria-describedby="ldesc" class="form-control" ng-model="currentNode.data.description"/>
-  </div>
-  <div class="panel-body input-group">
-    <label for="iuri" id="luri" class="input-group-addon"><span trspan="uri"/> :</label>
-    <input id="iuri" aria-describedby="luri" class="form-control" ng-model="currentNode.data.uri"/>
-  </div>
-  <div class="panel-body input-group">
-    <label for="ilogo" id="llogo" class="input-group-addon"><span trspan="logo"/> :</label>
-    <input id="ilogo" aria-describedby="llogo" class="form-control" ng-model="currentNode.data.logo"/>
-  </div>
-  <div class="panel-body input-group">
-    <span class="input-group-addon"><span trspan="applicationDisplay"/> :</span>
-    <div class="input-group-solid">
-      <label class="radio-inline">
-        <input id="iOn" type="radio" value="on" ng-model="currentNode.data.display" />
-        <span trspan="enabled"/>
-      </label>
-      <label class="radio-inline">
-        <input id="iOff" type="radio" value="off" ng-model="currentNode.data.display" />
-        <span trspan="disabled">
-      </label>
-      <label class="radio-inline">
-        <input id="iAuto" type="radio" value="auto" ng-model="currentNode.data.display" />
-        <span trspan="auto">
-      </label>
-    </div>
-  </div>
-
+  <table class="table table-striped">
+    <tr>
+      <th><span trspan="name"/></th>
+      <td><input id="iname" class="form-control" ng-model="currentNode.title"/></td>
+    </tr>
+    <tr>
+      <th><span trspan="description"/></th>
+      <td><input id="idesc" class="form-control" ng-model="currentNode.data.description"/></td>
+    </tr>
+    <tr>
+      <th><span trspan="uri"/></th>
+      <td><input id="iuri" class="form-control" ng-model="currentNode.data.uri"/></td>
+    </tr>
+    <tr>
+      <th><span trspan="logo"/></th>
+      <td><input id="ilogo" class="form-control" ng-model="currentNode.data.logo"/></td>
+    </tr>
+    <tr>
+      <th><span trspan="applicationDisplay"/></th>
+      <td>
+        <div class="input-group-solid">
+          <label class="radio-inline">
+            <input id="iOn" type="radio" value="on" ng-model="currentNode.data.display" />
+            <span trspan="enabled"/>
+          </label>
+          <label class="radio-inline">
+            <input id="iOff" type="radio" value="off" ng-model="currentNode.data.display" />
+            <span trspan="disabled">
+          </label>
+          <label class="radio-inline">
+            <input id="iAuto" type="radio" value="auto" ng-model="currentNode.data.display" />
+            <span trspan="auto">
+          </label>
+        </div>
+      </td>
+    </tr>
+  </table>
 </div>
 <script type="text/javascript">
 buttons=[{
-  "title": "up"
+  "title": "up",
+  "icon": "arrow-up"
 },{
-  "title": "down"
+  "title": "down",
+  "icon": "arrow-down"
 },{
-  "title": "deleteEntry"
+  "title": "deleteEntry",
+  "icon": "minus-sign"
 },{
-  "title": "newApp"
+  "title": "newApp",
+  "icon": "plus-sign"
 }];
 </script>

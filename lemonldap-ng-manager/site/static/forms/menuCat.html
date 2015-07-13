@@ -1,43 +1,41 @@
 <script type="text/ng-template" id="cat_render.html">
-  <p ng-class="{'lead text-primary':cat.type=='menuCat'}">{{cat.title}}</p>
-  <hr ng-if="cat.nodes">
-  <ul class="list-group" ng-if="cat.nodes">
-  <li class="list-group-item" ng-repeat="cat in cat.nodes track by cat.id" ng-include="'cat_render.html'"></div>
+  <p ng-class="{'cat-tree-category':cat.type=='menuCat'}">{{cat.title}}</p>
+  <ul class="cat-tree"><li ng-repeat="cat in cat.nodes track by cat.id" ng-include="'cat_render.html'"></li></ul>
 </script>
 
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title" trspan="menuCategory"/>
   </div>
+  <table class="table table-striped">
+    <tr>
+      <th><span trspan="categoryName"/></th>
+      <td><input id="catTitle" aria-describedby="catTitleL" class="form-control" ng-model="currentNode.title"/></td> 
+    </tr>
+  </table>
   <div class="panel-body">
-    <div class="input-group">
-      <label for="catTitle" id="catTitleL" class="input-group-addon">
-        <span trspan="categoryName"/>
-      </label>
-      <input id="catTitle" aria-describedby="catTitleL" class="form-control" ng-model="currentNode.title"/>
-    </div>
-    <br />
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title" trspan="appsInThisCat"/>
-      </div>
-      <ul class="list-group">
-        <li class="list-group-item" ng-repeat="cat in currentNode.nodes track by cat.id" ng-include="'cat_render.html'"></li>
-      </ul>
-    </div>
+    <h4 trspan="appsInThisCat"/>
+    <ul class="cat-tree">
+      <li ng-repeat="cat in currentNode.nodes track by cat.id" ng-include="'cat_render.html'"></li>
+    </ul>
   </div>
 </div>
 
 <script type="text/javascript">
 buttons=[{
-  "title": "up"
+  "title": "up",
+  "icon": "arrow-up"
 },{
-  "title": "down"
+  "title": "down",
+  "icon": "arrow-down"
 },{
-  "title": "deleteEntry"
+  "title": "deleteEntry",
+  "icon": "minus-sign"
 },{
-  "title": "newCat"
+  "title": "newCat",
+  "icon": "plus-sign"
 },{
-  "title": "newApp"
+  "title": "newApp",
+  "icon": "plus-sign"
 }];
 </script>
