@@ -21,15 +21,10 @@
         <div class="navbar navbar-default" ng-class="{'hidden-xs':!showM}">
           <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
             <ul class="nav navbar-nav">
-              <li>
-                <a>
-                  <span class="glyphicon glyphicon-home link" ng-click="home()" title="home">&nbsp;</span>
-                  <span class="glyphicon glyphicon-save link" ng-click="save()" title="save">&nbsp;</span>
-                  <span class="glyphicon glyphicon-arrow-left link" ng-if="currentCfg.prev" ng-click="getCfg(currentCfg.prev)" title="{{currentCfg.prev}}" alt="{{currentCfg.prev}}"/>&nbsp;</span>
-                  <span class="glyphicon glyphicon-arrow-right link" ng-if="currentCfg.next" ng-click="getCfg(currentCfg.next)" title="{{currentCfg.next}}" alt="{{currentCfg.next}}"/>&nbsp;</span>
-                  <span class="glyphicon glyphicon-refresh link" ng-click="getCfg('latest')" title="latest" alt="latest"/>&nbsp;</span>
-                </a>
-              </li>
+               <li><a class="link" ng-click="save()"><i class="glyphicon glyphicon-save"></i> <span trspan="save" /></a></li>
+               <li><a class="link" ng-if="currentCfg.prev" ng-click="getCfg(currentCfg.prev)" title="Configuration {{currentCfg.prev}}"><i class="glyphicon glyphicon-arrow-left"></i> <span trspan="previous" /></a></li>
+               <li><a class="link" ng-if="currentCfg.next" ng-click="getCfg(currentCfg.next)" title="Configuration {{currentCfg.next}}"><i class="glyphicon glyphicon-arrow-right"></i> <span trspan="next" /></a></a></li>
+               <li><a class="link" ng-click="getCfg('latest')" title="Configuration {{currentCfg.cfgNum}}"><i class="glyphicon glyphicon-refresh"></i> <span trspan="latest" /></a></li>
               <li ng-repeat="button in buttons" ng-include="'menubutton.html'"></li>
               <li class="visible-xs" ng-include="'languages.html'"></li>
             </ul>
