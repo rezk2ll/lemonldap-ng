@@ -5,6 +5,7 @@
 * Help interface
 * Manage cfgAuthor
 * Display input when Multi is choosen in authentication modules
+* Icon picker for application logo
 
 ## Configuration management
 
