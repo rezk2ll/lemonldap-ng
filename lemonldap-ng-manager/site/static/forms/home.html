@@ -21,8 +21,10 @@
 <script type="text/javascript">
 buttons=[{
   "title": "downloadIt",
-  "action": function(c,$scope){window.open($scope.confPrefix+$scope.currentCfg.cfgNum+'?full');}
+  "action": function(c,$scope){window.open($scope.confPrefix+$scope.currentCfg.cfgNum+'?full');},
+  "icon": "export"
 },{
-  "title": "restore"
+  "title": "restore",
+  "icon": "import"
 }];
 </script>

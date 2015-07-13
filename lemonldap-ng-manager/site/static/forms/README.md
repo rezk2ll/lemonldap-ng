@@ -166,6 +166,18 @@ You can access to the parent using this:
 * `currentScope.$parentNodeScope` for the parent scope
 * `currentScope.$parentNodeScope.$modelValue` for the parent node
 
+#### 3.1.5 Icons
+
+    <script type="text/javascript">
+    buttons=[{
+      "title": "addVirtualHost",
+      "action": "addVhost",
+      "icon": "plus-sign",
+    }]
+    </script>
+
+The field `icon` can be set to define the Bootstrap glyphicon to use.
+
 ## 4. Modal window
 
 You can use a modal window to display a choice (look at forms/portalSkin.html
