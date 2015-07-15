@@ -24,7 +24,7 @@
                <li><a class="link" ng-click="save()"><i class="glyphicon glyphicon-save"></i> <span trspan="save" /></a></li>
                <li><a class="link" ng-if="currentCfg.prev" ng-click="getCfg(currentCfg.prev)" title="Configuration {{currentCfg.prev}}"><i class="glyphicon glyphicon-arrow-left"></i> <span trspan="previous" /></a></li>
                <li><a class="link" ng-if="currentCfg.next" ng-click="getCfg(currentCfg.next)" title="Configuration {{currentCfg.next}}"><i class="glyphicon glyphicon-arrow-right"></i> <span trspan="next" /></a></a></li>
-               <li><a class="link" ng-click="getCfg('latest')" title="Configuration {{currentCfg.cfgNum}}"><i class="glyphicon glyphicon-refresh"></i> <span trspan="latest" /></a></li>
+               <li><a class="link" ng-click="getCfg('latest')" title="Latest configuration"><i class="glyphicon glyphicon-refresh"></i> <span trspan="latest" /></a></li>
               <li ng-repeat="button in buttons" ng-include="'menubutton.html'"></li>
               <li class="visible-xs" ng-include="'languages.html'"></li>
             </ul>
