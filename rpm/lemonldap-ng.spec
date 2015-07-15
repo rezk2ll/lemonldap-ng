@@ -489,7 +489,7 @@ rm -rf %{buildroot}
 %dir %{lm_vardir}/psessions/lock
 %dir %{lm_vardir}/notifications
 %defattr(640,%{lm_apacheuser},%{lm_apachegroup},-)
-%config(noreplace) %{lm_vardir}/conf/lmConf-1
+%config(noreplace) %{lm_vardir}/conf/lmConf-1.js
 
 %files -n lemonldap-ng-doc
 %defattr(-,root,root,-)
