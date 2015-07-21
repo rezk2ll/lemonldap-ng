@@ -12,19 +12,19 @@
         <span id="cfgnum" class="label label-success" comment="{{translateP('__newCfgAvailable__')}}" ng-class="{'label-warning':currentCfg.next}">{{currentCfg.cfgNum}}</span>
       </td>
     </tr>
-    <tr>
+    <tr ng-if="currentCfg.cfgAuthor">
       <th><span trspan="author" /></th>
       <td>{{currentCfg.cfgAuthor}}</td>
     </tr>
-    <tr>
+    <tr ng-if="currentCfg.cfgAuthorIP">
       <th><span trspan="authorIPAddress" /></th>
       <td>{{currentCfg.cfgAuthorIP}}</td>
     </tr>
-    <tr>
+    <tr ng-if="currentCfg.cfgDate">
       <th><span trspan="date" /></th>
       <td>{{currentCfg.date}}</td>
     </tr>
-    <tr>
+    <tr ng-if="currentCfg.cfgLog">
       <th><span trspan="cfgLog" /></th>
       <td>{{currentCfg.cfgLog}}</td>
     </tr>
