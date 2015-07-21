@@ -1,12 +1,15 @@
-<div class="panel panel-default" style="position:relative;">
+<div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title" trspan="restoreConf"></h3>
   </div>
-
-  <div class="panel-body input-group">
-    <label for="fileinput" id="lfi"><span trspan="fileToUpload"></span> :</label>
-    <input id="fileinput" aria-describedby="lfi" type="file" class="form-control" on-read-file="saveRawConf($fileContent)"/>
-  </div>
+  <table class="table">
+    <tr>
+      <th trspan="fileToUpload" />
+      <td>
+        <input id="fileinput" type="file" class="form-control" on-read-file="saveRawConf($fileContent)" />
+      </td>
+    <tr>
+  </table>
 </div>
 <script type="text/javascript">
 buttons=[
