@@ -712,6 +712,10 @@
           console.log("Starting structure binding");
           $scope.data = tmp;
           tmp = null;
+          $scope.portal = $scope.data[0]._nodes[0]._nodes[0];
+          $scope.domain = $scope.data[0]._nodes[4]._nodes[1];
+          $scope.get($scope.portal);
+          $scope.get($scope.domain);
           $scope.form = 'home';
           $scope.waiting = false;
         }, function(j, e) {
