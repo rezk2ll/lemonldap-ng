@@ -24,10 +24,11 @@ $run = Lemonldap::NG::Manager->run(
     }
 ) if ( $opts{f} );
 
-my $structFile        = "site/static/struct.json";
-my $confTreeFile      = "site/static/js/conftree.js";
-my $managerConstants  = "lib/Lemonldap/NG/Manager/Constants.pm";
-my $defaultValuesFile = "../lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm";
+my $structFile       = "site/static/struct.json";
+my $confTreeFile     = "site/static/js/conftree.js";
+my $managerConstants = "lib/Lemonldap/NG/Manager/Constants.pm";
+my $defaultValuesFile =
+  "../lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm";
 my @simpleHashKeys;
 my @cnodesKeys;
 my %cnodesRe;
@@ -55,6 +56,7 @@ my $mainTree;
 my @ignoreKeys;
 my $ignoreKeys;
 my $reIgnoreKeys = qr/^$/;
+my @angularScopeVars;
 $jsonEnc->canonical(1);
 
 # 1. confTree.js
@@ -68,7 +70,7 @@ unless ( $opts{f} ) {
       . 'return{'
       . '"id":tpl+"s/"+(ind++),'
       . '"title":r,'
-      . '"get":tpl+"s/"+key+"/"+r' . '};' . '};'
+      . '"get":tpl+"s/"+key+"/"+r};};'
       . 'switch(tpl){';
 
     # To build confTree.js, each special node is scanned from
@@ -76,7 +78,7 @@ unless ( $opts{f} ) {
     foreach my $node ( sort keys $mainTree ) {
         @cnodesKeys = ();
         my $jsonTree = [];
-        &scanTree( $mainTree->{$node}, $jsonTree, '__KEY__' );
+        &scanTree( $mainTree->{$node}, $jsonTree, '__KEY__', '' );
         my $tmp = $jsonEnc->encode($jsonTree);
         $tmp =~ s!"__KEY__!tpl+"s/"+key+"/"+"!mg;
         $tmp =~ s/"(true|false)"/$1/sg;
@@ -110,7 +112,15 @@ unless ( $opts{f} ) {
 # 2. struct.json
 $mainTree = Lemonldap::NG::Manager::Tree::tree();
 my $jsonTree = [];
-&scanTree( $mainTree, $jsonTree );
+&scanTree( $mainTree, $jsonTree, '', '' );
+my $script = 'function setScopeVars(scope){';
+foreach my $v (@angularScopeVars) {
+    $script .= "scope.$v->[0]=scope$v->[1];scope.getKey(scope.$v->[0]);";
+}
+$script .= '}';
+open F, ">>$confTreeFile" || die $!;
+print F $script;
+close F;
 open F, ">$structFile" || die $!;
 my $tmp = $jsonEnc->encode($jsonTree);
 $tmp =~ s/"(true|false)"/$1/sg;
@@ -196,12 +206,15 @@ exit;
 #
 
 sub scanTree {
-    my ( $tree, $json, $prefix ) = splice @_;
+    my ( $tree, $json, $prefix, $path ) = splice @_;
     unless ( ref($tree) eq 'ARRAY' ) {
         die 'Not an array';
     }
     $prefix //= '';
+    my $ord = -1;
+    my $nodeName = $path ? '_nodes' : 'data';
     foreach my $leaf (@$tree) {
+        $ord++;
         my $jleaf = {};
 
         # Grouped leaf
@@ -224,7 +237,8 @@ sub scanTree {
             foreach my $n (qw(nodes nodes_cond)) {
                 if ( $leaf->{$n} ) {
                     $jleaf->{"_$n"} = [];
-                    scanTree( $leaf->{$n}, $jleaf->{"_$n"}, $prefix );
+                    scanTree( $leaf->{$n}, $jleaf->{"_$n"}, $prefix,
+                        "$path.$nodeName\[$ord\]" );
                     if ( $n eq 'nodes_cond' ) {
                         foreach my $sn ( @{ $jleaf->{"_$n"} } ) {
                             $sn->{show} = 'false';
@@ -247,6 +261,10 @@ sub scanTree {
             # rulesContainer samlAssertion samlAttributeContainer samlService
             # select text trool url virtualHostContainer word
             # password
+
+            if ( $leaf =~ s/^\*// ) {
+                push @angularScopeVars, [ $leaf, "$path._nodes[$ord]" ];
+            }
             my $attr = $attributes->{$leaf} or die("Missing attribute $leaf");
             $jleaf = { id => "$prefix$leaf", title => $leaf };
             unless ( $attr->{type} ) {

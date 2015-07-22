@@ -31,7 +31,7 @@ sub tree {
                     title => 'portalParams',
                     help  => 'portal.html',
                     nodes => [
-                        'portal',
+                        '*portal',
                         {
                             title => 'portalMenu',
                             help  => 'portalmenu.html',
@@ -445,7 +445,7 @@ sub tree {
                     help  => 'ssocookie.html',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'cookieName', 'domain',
+                        'cookieName', '*domain',
                         'cda',        'securedCookie',
                         'httpOnly',   'cookieExpiration'
                     ]
