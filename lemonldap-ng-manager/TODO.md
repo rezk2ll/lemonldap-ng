@@ -10,7 +10,6 @@
 ## Bugs
 
 * We cannot restore a configuration with a cfgNumber > latest
-* Labels from main Manager action bar (save, next, latest, ...) are not translated when changing language
 * No log in case of bad request
 * After an Apache restart, if Manager is loaded first, portal cannot be loaded
 
