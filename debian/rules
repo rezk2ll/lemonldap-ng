@@ -23,6 +23,9 @@ override_dh_auto_configure:
 	$(MAKE) configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
 		PERLOPTIONS="INSTALLDIRS=vendor"
 
+override_dh_auto_build:
+	$(MAKE) all fr-doc
+
 override_dh_auto_install:
 	$(MAKE) install install_fr_doc_site \
 			DESTDIR=$(CURDIR)/debian/tmp \
