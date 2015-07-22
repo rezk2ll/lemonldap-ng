@@ -71,6 +71,7 @@
     $scope.confPrefix = confPrefix;
     $scope.message = {};
     $scope.result = '';
+    $scope.helpUrl = 'start.html#configuration';
 
     /* Modal launcher */
     $scope.showModal = function(tpl) {
@@ -510,6 +511,13 @@
       });
     }
 
+    var showHelp = function(scope) {
+      while (!scope.$modelValue.help && scope.$parentNodeScope) {
+        scope = scope.$parentNodeScope;
+      }
+      $scope.helpUrl = scope.$modelValue.help || 'start.html#configuration';
+    }
+
     /* Form management
      *
      * `currentNode` contains the last select node
@@ -546,6 +554,7 @@
         });
       }
       $scope.showT = false;
+      showHelp(scope);
     };
 
     $scope.keyWritable = function(scope) {

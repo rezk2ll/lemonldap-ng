@@ -35,10 +35,7 @@
       <!-- Help container -->
       <div id="bottom" class="hidden-xs">
         <div class="vresizer" resizer="horizontal" resizer-top="#top" resizer-bottom="#bottom"></div>
-        <div class="scrollable-sm">
-          <h3>Data binding</h3>
-          <pre class="code">{{ data | json }}</pre>
-        </div>
+	<iframe width="100%" height="100%" ng-src="{{'/doc/pages/documentation/current/'+helpUrl}}" frameborder="0"></iframe>
       </div>
     </div>
   </div>
