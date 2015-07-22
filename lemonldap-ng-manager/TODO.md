@@ -2,7 +2,6 @@
 
 * Check for eval with SAML
 * userInfo && userWarn
-* Help interface
 * Manage cfgAuthor
 * Display input when Multi is choosen in authentication modules
 * Icon picker for application logo
@@ -43,8 +42,6 @@
 
 * JQuery module to add `$._llngAjax`
 * Angular module to add $llngHttp
-
-### Help system
 
 ## Sessions explorer
 
