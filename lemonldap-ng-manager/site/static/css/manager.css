@@ -64,18 +64,13 @@ body {
   background: radial-gradient(circle at 50% 0% ,  #fff 0%, #ddd 100%) no-repeat scroll 0% 0% #ddd;
 }
 header#navbar {
-  height: 10vh;
+  height: 9vh;
   margin-bottom: 1vh;
   padding-bottom: 0vh;
 }
-footer {
-  height: 4vh;
-  margin-top: 1vh;
-  padding-top: 0vh;
-}
 #content {
-  max-height: 84vh;
-  height: 84vh;
+  max-height: 86vh;
+  height: 86vh;
   margin: 0px;
   padding: 0px;
   position: relative;
@@ -149,20 +144,20 @@ dl,
 
 @media (min-width: 768px) {
   .scrollable-sm {
-    max-height: 80vh !important;
+    max-height: 86vh !important;
     overflow: auto;
   }
   #right,
   #left {
-    max-height: 80vh !important;
-    height: 80vh;
+    max-height: 86vh !important;
+    height: 86vh;
   }
   #top {
-    height: 45vh;
+    height: 43vh;
     overflow: auto;
   }
   #bottom {
-    height: 35vh;
+    height: 43vh;
     overflow: hidden;
   }
 }
