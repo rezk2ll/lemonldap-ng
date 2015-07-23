@@ -65,7 +65,9 @@ my @nodes = @{ getNodes($tree) };
 
 my @unTr;
 foreach (@nodes) {
-    push @unTr, $_ unless ( $keys->{$_} );
+    my $node = $_;
+    $node =~ s/^\*//;
+    push @unTr, $node unless ( $keys->{$node} );
 }
 ok( @unTr == 0,
     'All attributes translated for Tree.pm' . ( @unTr ? " (@unTr)" : "" ) );
