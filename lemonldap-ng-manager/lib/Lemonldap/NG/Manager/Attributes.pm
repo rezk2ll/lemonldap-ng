@@ -122,6 +122,9 @@ qr/^(?:\-+\s+BEGIN\s+RSA\s+PRIVATE\s+KEY\-+(?:[a-zA-Z0-9\/\+]|(?:\r?\n|%0A))+={0
         portalskin => {
             test => sub { 1 }
         },
+        portalskinbackground => {
+            test => sub { 1 }
+        },
         post => {
             test => sub { 1 }
         },
@@ -303,7 +306,7 @@ sub attributes {
             ],
         },
         portalSkinBackground => {
-            type          => 'select',
+            type          => 'portalskinbackground',
             documentation => 'Background image of portal skin',
             select => [
                 { k => "", v => 'None' },
