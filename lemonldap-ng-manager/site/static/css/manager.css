@@ -135,6 +135,16 @@ dl,
   cursor: pointer;
 }
 
+/* Documentation */
+#bottom .panel {
+  height: 95%;
+  margin-top: 8px;
+}
+
+#bottom .panel-body {
+  height: 100%;
+}
+
 /* Resizable and scrollable elements */
 
 @media (min-width: 768px) {
@@ -153,7 +163,7 @@ dl,
   }
   #bottom {
     height: 35vh;
-    overflow: auto;
+    overflow: hidden;
   }
 }
 #top,
