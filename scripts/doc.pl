@@ -72,4 +72,7 @@ system('rm -rf media/applications/ media/logos/');
 # Remove Facebook iframe (See http://jira.ow2.org/browse/LEMONLDAP-674)
 system('sed -i "/<iframe/d" pages/contact.html');
 
+# Remove background image
+system('sed -i "s#/lib/tpl/bootstrap3/images/background.jpg##g" css/*');
+
 exit 0;
