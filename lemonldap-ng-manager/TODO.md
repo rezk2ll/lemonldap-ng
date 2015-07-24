@@ -3,7 +3,6 @@
 * Check for eval with SAML
 * userInfo && userWarn
 * Manage cfgAuthor
-* Display input when Multi is choosen in authentication modules
 * Icon picker for application logo
 * Image preview for portal skin background
 
@@ -12,7 +11,10 @@
 * We cannot restore a configuration with a cfgNumber > latest
 * No log in case of bad request
 * After an Apache restart, if Manager is loaded first, portal cannot be loaded
-
+* Authentication parameters:
+  * No input is displayed when Multi is choosen in authentication modules
+  * Specific backend branch do not appear when module is choosen from authParams.html, only when choosen from the child entry
+  * Backends do not appear with AuthChoice and AuthMulti. See also https://jira.ow2.org/browse/LEMONLDAP-833 
 
 ## Configuration management
 
