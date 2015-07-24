@@ -70,6 +70,7 @@ site/static/forms/oidcRPMetaDataNode.html
 site/static/forms/oidcRPMetaDataNodeContainer.html
 site/static/forms/password.html
 site/static/forms/portalskin.html
+site/static/forms/portalskinbackground.html
 site/static/forms/post.html
 site/static/forms/postContainer.html
 site/static/forms/README.md
