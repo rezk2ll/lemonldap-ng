@@ -419,10 +419,9 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 		$(PERL) -i -pe 's#^dirName\s*=\s*.*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)/$(CONFFILENAME); \
 	fi
 	@cp _example/conf/lmConf-1.js $(RFILECONFIGDIR)
-	@$(PERL) -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1.js
-	@$(PERL) -000 -i -pe "s#^(persistentStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHEPSESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHEPSESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1.js
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
 		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;\
+		s#__PSESSIONDIR__#$(APACHEPSESSIONFILEDIR)#g;\
 		s#__NOTIFICATIONDIR__#$(APACHEFILENOTIFDIR)#g;' $(RFILECONFIGDIR)/lmConf-1.js
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		chown $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
