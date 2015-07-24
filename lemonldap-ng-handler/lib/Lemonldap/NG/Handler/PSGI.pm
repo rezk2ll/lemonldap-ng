@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::PSGI;
 
 use 5.10.0;
 use Mouse;
-use Lemonldap::NG::Handler::SharedConf qw(:tsv :variables);
+use Lemonldap::NG::Handler::SharedConf qw(:tsv :variables :jailSharedVars);
 extends 'Lemonldap::NG::Common::PSGI::Router';
 
 our $VERSION = '2.0.0';
@@ -69,6 +69,20 @@ sub _run {
             $self->router( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
         };
     }
+}
+
+## @method hashRef user()
+# @return hash of user datas
+sub user {
+    return $datas;
+}
+
+## @method boolean group(string group)
+# @param $group name of the Lemonldap::NG group to test
+# @return boolean : true if user is in this group
+sub group {
+    my ( $self, $group ) = splice @_;
+    return ( $datas->{groups} =~ /\b$group\b/ );
 }
 
 1;
