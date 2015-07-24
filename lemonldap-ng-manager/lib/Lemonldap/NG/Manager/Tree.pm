@@ -425,7 +425,7 @@ sub tree {
                         },
                         {
                             title => 'issuerDBOpenIDConnect',
-                            help  => 'idpoidc.html',
+                            help  => 'idpopenidconnect.html',
                             nodes => [
                                 'issuerDBOpenIDConnectActivation',
                                 'issuerDBOpenIDConnectPath',
