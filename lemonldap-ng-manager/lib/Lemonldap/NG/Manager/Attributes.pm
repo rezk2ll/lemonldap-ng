@@ -308,13 +308,26 @@ sub attributes {
         portalSkinBackground => {
             type          => 'portalskinbackground',
             documentation => 'Background image of portal skin',
-            select => [
+            select        => [
                 { k => "", v => 'None' },
-                { k => "1280px-Anse_Source_d'Argent_2-La_Digue.jpg", v => 'Anse' },
-                { k => "1280px-Autumn-clear-water-waterfall-landscape_-_Virginia_-_ForestWander.jpg", v => 'Waterfall' },
+                {
+                    k => "1280px-Anse_Source_d'Argent_2-La_Digue.jpg",
+                    v => 'Anse'
+                },
+                {
+                    k =>
+"1280px-Autumn-clear-water-waterfall-landscape_-_Virginia_-_ForestWander.jpg",
+                    v => 'Waterfall'
+                },
                 { k => "1280px-BrockenSnowedTrees.jpg", v => 'Snowed Trees' },
-                { k => "1280px-Cedar_Breaks_National_Monument_partially.jpg", v => 'National Monument' },
-                { k => "1280px-Parry_Peak_from_Winter_Park.jpg", v => 'Winter' },
+                {
+                    k => "1280px-Cedar_Breaks_National_Monument_partially.jpg",
+                    v => 'National Monument'
+                },
+                {
+                    k => "1280px-Parry_Peak_from_Winter_Park.jpg",
+                    v => 'Winter'
+                },
                 { k => "Aletschgletscher_mit_Pinus_cembra1.jpg", v => 'Pinus' },
             ],
         },
@@ -473,13 +486,13 @@ sub attributes {
         },
         portalDisplayRegister => {
             default       => 1,
-            type          => 'boolOrExpr',
+            type          => 'bool',
             documentation => 'Display register button in portal',
         },
         portalDisplayResetPassword => {
             default       => 1,
-            type          => 'boolOrExpr',
-            documentation => 'Force to authenticate when displaying portal',
+            type          => 'bool',
+            documentation => 'Display reset password button in portal',
         },
 
         # Cookies
