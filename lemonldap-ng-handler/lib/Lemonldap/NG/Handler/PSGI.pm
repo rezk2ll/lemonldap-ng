@@ -20,6 +20,7 @@ sub _run {
         $rule =
           $rule eq "authenticate" ? "accept" : $rule eq "manager" ? "" : $rule;
         return sub {
+            $_[0]->{REMOTE_USER} = $self->userId();
             my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
             Lemonldap::NG::Handler::API->newRequest($req);
             my $res = Lemonldap::NG::Handler::SharedConf->run($rule);
@@ -75,6 +76,12 @@ sub _run {
 # @return hash of user datas
 sub user {
     return $datas;
+}
+
+## @method string userId()
+# @return user identifier to log
+sub userId {
+    return $datas->{ $tsv->{whatToTrace} }
 }
 
 ## @method boolean group(string group)
