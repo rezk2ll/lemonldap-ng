@@ -75,21 +75,23 @@ sub _run {
 ## @method hashRef user()
 # @return hash of user datas
 sub user {
-    return $datas;
+    my ( $self, $req ) = splice @_;
+    return $req->userData;
 }
 
 ## @method string userId()
 # @return user identifier to log
 sub userId {
-    return $datas->{ $tsv->{whatToTrace} } // '';
+    my ( $self, $req ) = splice @_;
+    return $req->userData->{_whatToTrace};
 }
 
 ## @method boolean group(string group)
 # @param $group name of the Lemonldap::NG group to test
 # @return boolean : true if user is in this group
 sub group {
-    my ( $self, $group ) = splice @_;
-    return ( $datas->{groups} =~ /\b$group\b/ );
+    my ( $self, $req, $group ) = splice @_;
+    return ( $req->userData->{groups} =~ /\b$group\b/ );
 }
 
 1;
