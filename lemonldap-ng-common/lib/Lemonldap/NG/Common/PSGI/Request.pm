@@ -46,7 +46,6 @@ has 'psgi.errors' => ( is => 'rw', reader => 'stderr' );
 
 has REMOTE_USER => (
     is      => 'ro',
-    isa     => 'Int',
     reader  => 'user',
     trigger => sub {
         $_[0]->{userData} = { _whatToTrace => $_[0]->{REMOTE_USER}, };
