@@ -2,7 +2,6 @@
 
 * Check for eval with SAML
 * userInfo && userWarn
-* Manage cfgAuthor
 * Icon picker for application logo
 * Image preview for portal skin background
 
