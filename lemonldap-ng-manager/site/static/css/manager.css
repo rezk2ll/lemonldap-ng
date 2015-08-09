@@ -167,16 +167,6 @@ dl,
 #left {
   position: relative;
 }
-#top,
-#bottom {
-  padding-left: 15px;
-}
-#right {
-  right: 0px;
-  padding-left: 0px;
-}
-#left {
-}
 .scrollable {
   overflow: auto;
 }
