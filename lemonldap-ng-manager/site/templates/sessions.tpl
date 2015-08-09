@@ -14,9 +14,9 @@
     <aside id="left" class="col-lg-4 col-md-4 col-sm-5 col-xs-12 scrollable " ng-class="{'hidden-xs':!showT}" role="complementary">
       <div class="navbar navbar-default">
         <ul class="nav navbar-nav">
-          <li><a id="a-users" href="#">{{translate('users')}}</a></li>
-          <li><a id="a-ip" href="#/ipAddr">{{translate('ipAddresses')}}</a></li>
-          <li><a id="a-multi" href="#/doubleIp">{{translate('multiIp')}}</a></li>
+          <li><a id="a-users" href="#"><i class="glyphicon glyphicon-user"></i> {{translate('users')}}</a></li>
+          <li><a id="a-ip" href="#/ipAddr"><i class="glyphicon glyphicon-sort-by-order"></i> {{translate('ipAddresses')}}</a></li>
+          <li><a id="a-multi" href="#/doubleIp"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('multiIp')}}</a></li>
         </ul>
       </div>
       <div class="region region-sidebar-first">
