@@ -3,7 +3,7 @@
 * Check for eval with SAML
 * userInfo && userWarn
 * Icon picker for application logo
-* Image preview for portal skin background
+* Change documentation lang when changing language
 
 ## Bugs
 
