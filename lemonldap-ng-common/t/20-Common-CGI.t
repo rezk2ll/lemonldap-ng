@@ -7,7 +7,7 @@
 package My::Portal;
 
 use strict;
-use Test::More tests => 22;
+use Test::More tests => 25;
 use_ok('Lemonldap::NG::Common::CGI');
 
 #our @ISA = qw('Lemonldap::NG::Common::CGI');
@@ -109,6 +109,13 @@ SKIP: {
     ok( $lang->[0] eq 'fr',  'extract_lang Android' );
     ok( $lang->[1] eq 'en',  'extract_lang Android' );
     ok( scalar(@$lang) == 2, 'extract_lang Android' );
+
+    # Extract lang with * value
+    my $cgi4;
+    $ENV{HTTP_ACCEPT_LANGUAGE} = "fr,en,*";
+    ok( ( $cgi4 = Lemonldap::NG::Common::CGI->new() ), 'New CGI' );
+    ok( $lang = $cgi4->extract_lang(), 'extract_lang with * value' );
+    ok( scalar(@$lang) == 2, 'extract_lang with * value' );
 
     # SOAP
     eval { require SOAP::Lite };

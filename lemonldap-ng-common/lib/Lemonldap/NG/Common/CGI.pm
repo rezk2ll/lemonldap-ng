@@ -368,7 +368,7 @@ sub extract_lang {
         $lang = ( split /-/, $lang )[0];
 
         # Go to next if lang was already added
-        next if grep( /$lang/, @res );
+        next if grep( /\Q$lang\E/, @res );
 
         # Store lang only if size is 2 characters
         push @res, $lang if ( length($lang) == 2 );
