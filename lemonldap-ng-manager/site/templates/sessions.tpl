@@ -50,7 +50,7 @@
       </div>
       <div class="panel panel-default" ng-hide="currentSession===null">
         <div class="panel-heading">
-          <h1 class="panel-title text-center">{{translate("sessionTitle")}}</h1>
+          <h1 class="panel-title text-center">{{translate("sessionTitle")}} {{currentSession.id}}</h1>
         </div>
         <div class="panel-body">
           <div class="alert alert-info">
@@ -66,15 +66,18 @@
   </div>
 
   <script type="text/ng-template" id="session_attr.html">
-    <div ng-if="node.nodes">
-      <h2>{{translateP(node.title)}}</h2>
-      <ul ng-model="node.nodes">
-        <li ng-repeat="node in node.nodes" ng-include="'session_attr.html'"></li>
-      </ul>
+    <div class="panel panel-default" ng-if="node.nodes">
+      <div class="panel-heading">
+        <h2 class="panel-title text-center">{{translateP(node.title)}}</h2>
+      </div>
+      <table class="table table-striped" ng-model="node.nodes">
+        <tr ng-repeat="node in node.nodes" ng-include="'session_attr.html'"></tr>
+      </table>
     </div>
     <div ng-if="!node.nodes">
-      <strong>{{translate(node.title)}}</strong>
-      (<tt>${{node.title}}</tt>): <span id="v-{{node.title}}">{{node.value}}</span>
+      <th>{{translate(node.title)}}</th>
+      <td><tt>${{node.title}}</tt></td>
+      <td><span id="v-{{node.title}}">{{node.value}}</td>
     </div>
   </script>
 
@@ -88,7 +91,7 @@
       </span>
       <span ng-if="node.session">
         <a class="btn btn-node btn-sm" ng-click="displaySession(this)">
-          <span class="glyphicon glyphicon-pencil"></span>
+          <span class="glyphicon glyphicon-eye-open"></span>
         </a>
         <span id="s-{{node.session}}" ng-click="displaySession(this)">{{localeDate(node.date)}}</span>
       </span>
