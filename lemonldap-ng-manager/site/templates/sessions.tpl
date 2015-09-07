@@ -79,15 +79,15 @@
   </script>
 
   <script type="text/ng-template" id="nodes_renderer.html">
-    <div ui-tree-handle class="tree-node tree-node-content" ng-class="{'selected':this.$modelValue===currentScope.$modelValue}">
+    <div ui-tree-handle class="tree-node tree-node-content panel-info" ng-class="{'bg-info':this.$modelValue===currentScope.$modelValue,'tree-node-default':this.$modelValue!==currentScope.$modelValue}">
       <span ng-if="node.value">
-        <a id="a-{{node.value}}" class="btn btn-node btn-xs" ng-click="stoggle(this)">
+        <a id="a-{{node.value}}" class="btn btn-node btn-sm" ng-click="stoggle(this)">
           <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}"></span>
         </a>
         <span id="s-{{node.value}}" ng-click="stoggle(this)">{{node.value}} <span class="badge">{{node.count}}</span></span>
       </span>
       <span ng-if="node.session">
-        <a class="btn btn-node btn-xs" ng-click="displaySession(this)">
+        <a class="btn btn-node btn-sm" ng-click="displaySession(this)">
           <span class="glyphicon glyphicon-pencil"></span>
         </a>
         <span id="s-{{node.session}}" ng-click="displaySession(this)">{{localeDate(node.date)}}</span>
