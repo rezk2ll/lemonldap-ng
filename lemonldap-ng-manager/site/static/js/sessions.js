@@ -61,7 +61,8 @@
   ];
   var menu = {
     'session': [{
-      'title': 'deleteSession'
+      'title': 'deleteSession',
+      'icon': 'trash'
     }],
     'home': []
   }
