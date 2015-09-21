@@ -176,13 +176,18 @@ sub fetchId {
 # @return true if the session was found, false else
 sub retrieveSession {
     my ( $class, $id ) = @_;
+    my $now = time();
 
     # 1. Search if the user was the same as previous (very efficient in
     # persistent connection).
-    return 1
-      if (  defined $datas->{_session_id}
+    if (    defined $datas->{_session_id}
         and $id eq $datas->{_session_id}
-        and ( time() - $datasUpdate < 60 ) );
+        and ( $now - $datasUpdate < 60 ) )
+    {
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+            "Get session $id from Handler internal cache", 'debug' );
+        return 1;
+    }
 
     # 2. Get the session from cache or backend
     $session = Lemonldap::NG::Common::Session->new(
@@ -200,10 +205,12 @@ sub retrieveSession {
 
         $datas = $session->data;
 
+        Lemonldap::NG::Handler::Main::Logger->lmLog( "Get session $id",
+            'debug' );
+
         # Update the session to notify activity, if necessary
-        if ( $tsv->{timeoutActivity} and ( time() - $datas->{_lastSeen} < 60 ) )
-        {
-            $session->update( { '_lastSeen' => time } );
+        if ( $tsv->{timeoutActivity} and ( $now - $datas->{_lastSeen} > 60 ) ) {
+            $session->update( { '_lastSeen' => $now } );
 
             if ( $session->error ) {
                 Lemonldap::NG::Handler::Main::Logger->lmLog(
@@ -211,9 +218,13 @@ sub retrieveSession {
                 Lemonldap::NG::Handler::Main::Logger->lmLog( $session->error,
                     'error' );
             }
+            else {
+                Lemonldap::NG::Handler::Main::Logger->lmLog(
+                    "Update _lastSeen with $now", 'debug' );
+            }
         }
 
-        $datasUpdate = time();
+        $datasUpdate = $now;
         return 1;
     }
     else {
