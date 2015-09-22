@@ -141,7 +141,7 @@ of menu items.
     }]
     </script>
 
-Same as bellow except that it will launch `$scope.addVhost()`.
+Same as below except that it will launch `$scope.addVhost()`.
 
 #### 3.1.4. Custom function
 
