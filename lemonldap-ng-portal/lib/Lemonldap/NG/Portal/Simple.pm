@@ -2866,7 +2866,7 @@ used to redirect the user after authentication.
 
 Controls if a previous session is always available. If true, it call the sub
 C<existingSession> with two parameters: id and a scalar tied on Apache::Session
-module choosed to store sessions. See bellow
+module choosed to store sessions. See below
 
 =head3 existingSession
 
