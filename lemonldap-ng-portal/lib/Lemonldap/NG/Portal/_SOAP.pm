@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::_LibAccess;
 require SOAP::Lite;
 use base qw(Lemonldap::NG::Portal::_LibAccess);
 
-our $VERSION = '1.4.2';
+our $VERSION = '1.4.6';
 
 ## @method void startSoapServices()
 # Check the URI requested (PATH_INFO environment variable) and launch the
@@ -353,8 +353,11 @@ sub exportedAttr {
         return split /\s+/, $self->{exportedAttr};
     }
     else {
-        my @attributes =
-          ( 'authenticationLevel', 'groups', 'ipAddr', 'startTime', '_utime' );
+        my @attributes = (
+            'authenticationLevel', 'groups',
+            'ipAddr',              'startTime',
+            '_utime',              '_lastSeen'
+        );
         if ( my $exportedAttr = $self->{exportedAttr} ) {
             $exportedAttr =~ s/^\s*\+\s+//;
             @attributes = ( @attributes, split( /\s+/, $exportedAttr ) );
