@@ -385,8 +385,7 @@ sub _buildSoapHash {
     @keys = keys %$h unless (@keys);
     foreach (@keys) {
         if ( ref( $h->{$_} ) eq 'ARRAY' ) {
-            push @tmp,
-              SOAP::Data->name( $_, \SOAP::Data->value( @{ $h->{$_} } ) );
+            push @tmp, SOAP::Data->name( $_, @{ $h->{$_} } );
         }
         elsif ( ref( $h->{$_} ) ) {
             push @tmp, SOAP::Data->name( $_ => _buildSoapHash( $h->{$_} ) );
