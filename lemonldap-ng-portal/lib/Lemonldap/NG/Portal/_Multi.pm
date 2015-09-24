@@ -13,7 +13,7 @@ package Lemonldap::NG::Portal::_Multi;
 use Lemonldap::NG::Portal::Simple;
 use Scalar::Util 'weaken';
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.4.6';
 
 ## @cmethod Lemonldap::NG::Portal::_Multi new(Lemonldap::NG::Portal::Simple portal)
 # Constructor
@@ -35,6 +35,7 @@ sub new {
             my ( $mod, $cond ) = ( $1, $2 );
             my $name = $mod;
             $mod =~ s/#(.*)$//;
+            my $shortname = $mod;
             $cond = 1 unless ( defined $cond );
             $mod = "Lemonldap::NG::Portal::" . [ 'Auth', 'UserDB' ]->[$i] . $mod
               unless ( $mod =~ /::/ );
@@ -42,7 +43,7 @@ sub new {
             $portal->abort( 'Bad configuration', "Unable to load $mod" )
               unless $self->{p}->loadModule($mod);
             push @{ $self->{stack}->[$i] },
-              { m => $mod, c => $cond, n => $name };
+              { m => $mod, c => $cond, n => $name, s => $shortname };
         }
 
         # Override portal settings

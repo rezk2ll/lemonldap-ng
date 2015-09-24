@@ -71,7 +71,7 @@ use Digest::MD5;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.4.5';
+our $VERSION = '2.0.0';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;
@@ -1159,7 +1159,7 @@ sub get_module {
 
     if ( $type =~ /auth/i ) {
         if ( defined $self->{_multi}->{stack}->[0] ) {
-            return $self->{_multi}->{stack}->[0]->[0]->{n};
+            return $self->{_multi}->{stack}->[0]->[0]->{s};
         }
         if ( defined $self->{_choice}->{modules} ) {
             return $self->{_choice}->{modules}->[0]->{n};
@@ -1171,7 +1171,7 @@ sub get_module {
 
     if ( $type =~ /user/i ) {
         if ( defined $self->{_multi}->{stack}->[1] ) {
-            return $self->{_multi}->{stack}->[1]->[0]->{n};
+            return $self->{_multi}->{stack}->[1]->[0]->{s};
         }
         if ( defined $self->{_choice}->{modules} ) {
             return $self->{_choice}->{modules}->[1]->{n};

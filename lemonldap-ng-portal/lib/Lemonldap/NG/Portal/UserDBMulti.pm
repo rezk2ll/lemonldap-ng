@@ -7,7 +7,7 @@ package Lemonldap::NG::Portal::UserDBMulti;
 
 use Lemonldap::NG::Portal::_Multi;    #inherits
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.4.6';
 
 sub userDBInit {
     my $self = shift;
@@ -21,6 +21,8 @@ sub getUser {
 
 sub setSessionInfo {
     my $self = shift;
+    $self->{sessionInfo}->{_userDBMulti} =
+      $self->{_multi}->{stack}->[1]->[0]->{n};
     return $self->_multi->try( 'setSessionInfo', 1 );
 }
 

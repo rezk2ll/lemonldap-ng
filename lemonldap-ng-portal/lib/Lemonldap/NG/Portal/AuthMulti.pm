@@ -7,7 +7,7 @@ package Lemonldap::NG::Portal::AuthMulti;
 
 use Lemonldap::NG::Portal::_Multi;    #inherits
 
-our $VERSION = '1.2.4';
+our $VERSION = '1.4.6';
 
 sub authInit {
     my $self = shift;
@@ -21,6 +21,8 @@ sub extractFormInfo {
 
 sub setAuthSessionInfo {
     my $self = shift;
+    $self->{sessionInfo}->{_authMulti} =
+      $self->{_multi}->{stack}->[0]->[0]->{n};
     return $self->_multi->try( 'setAuthSessionInfo', 0 );
 }
 
