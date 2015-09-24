@@ -1,6 +1,9 @@
 {
   "_auth": "Authentification",
+  "_authChoice": "Choix d'authentification",
+  "_authMulti": "Authentification (multi)",
   "_userDB": "Utilisateur",
+  "_userDBMulti": "Utilisateur (multi)",
   "_passwordDB": "Mot de passe",
   "_issuerDB": "Fournisseur",
   "_timezone": "Zone horaire",

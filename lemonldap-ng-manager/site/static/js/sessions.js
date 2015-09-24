@@ -53,7 +53,7 @@
     ['dateTitle', ['_utime', 'startTime', 'updateTime', '_lastAuthnUTime']],
     ['connectionTitle', ['ipAddr', '_timezone', '_url']],
     ['authenticationTitle', ['_session_id', '_user', '_password', 'authenticationLevel']],
-    ['modulesTitle', ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice']],
+    ['modulesTitle', ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti']],
     ['saml', ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']],
     ['groups', ['groups']],
     ['ldap', ['dn']],
