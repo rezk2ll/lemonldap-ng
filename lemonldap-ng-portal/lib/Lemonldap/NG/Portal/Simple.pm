@@ -2037,8 +2037,11 @@ sub setMacros {
 sub setLocalGroups {
     my $self = shift;
     foreach ( sort keys %{ $self->{groups} } ) {
-        $self->{sessionInfo}->{groups} .= $self->{multiValuesSeparator} . $_
-          if ( $self->safe->reval( $self->{groups}->{$_} ) );
+        if ( $self->safe->reval( $self->{groups}->{$_} ) ) {
+            $self->{sessionInfo}->{groups} .=
+              $self->{multiValuesSeparator} . $_;
+            $self->{sessionInfo}->{hGroups}->{$_}->{name} = $_;
+        }
     }
 
     # Clear values separator at the beginning

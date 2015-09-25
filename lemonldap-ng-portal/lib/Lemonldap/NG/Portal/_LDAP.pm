@@ -15,7 +15,7 @@ use Unicode::String qw(utf8);
 use strict;
 
 our @EXPORT   = qw(ldap);
-our $VERSION  = '1.4.1';
+our $VERSION  = '1.4.6';
 our $ppLoaded = 0;
 
 BEGIN {
@@ -493,12 +493,12 @@ sub ldap {
 # @param key Attribute name in group containing searched value
 # @param value Searched value
 # @param attributes to get from found groups (array ref)
-# @return string groups separated with multiValuesSeparator
+# @return hashRef groups
 sub searchGroups {
     my ( $self, $base, $key, $value, $attributes ) = splice @_;
 
     my $portal = $self->{portal};
-    my $groups;
+    my $groups = {};
 
     # Creating search filter
     my $searchFilter =
@@ -543,11 +543,15 @@ sub searchGroups {
                       $self->searchGroups( $base, $key, $group_value,
                         $attributes );
 
-                    $groups .=
-                      $recursive_groups . $portal->{multiValuesSeparator}
-                      if ($recursive_groups);
+                    my %allGroups = ( %$groups, %$recursive_groups )
+                      if ( ref $recursive_groups );
+                    $groups = \%allGroups;
                 }
             }
+
+            # Use first attribute as group name
+            my $groupName = $entry->get_value( $attributes->[0] );
+            $groups->{$groupName}->{name} = $groupName;
 
             # Now parse attributes
             foreach (@$attributes) {
@@ -555,18 +559,15 @@ sub searchGroups {
                 # Next if group attribute value
                 next if ( $_ eq $portal->{ldapGroupAttributeValueGroup} );
 
-                my $data = $entry->get_value($_);
+                my $data = $entry->get_value( $_, asref => 1 );
 
                 if ($data) {
-                    $portal->lmLog( "Store $data in groups", 'debug' );
-                    $groups .= $data . "|";
+                    $portal->lmLog( "Store values of $_ in group $groupName",
+                        'debug' );
+                    $groups->{$groupName}->{$_} = $data;
                 }
             }
-            $groups =~ s/\|$//g;
-            $groups .= $portal->{multiValuesSeparator};
         }
-
-        $groups =~ s/\Q$portal->{multiValuesSeparator}\E$//;
     }
 
     return $groups;

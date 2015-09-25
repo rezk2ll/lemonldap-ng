@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.4.6';
 
 ## @method int userDBInit()
 # Transform ldapGroupAttributeNameSearch in ARRAY ref
@@ -132,8 +132,9 @@ sub setSessionInfo {
 # Load all groups in $groups.
 # @return Lemonldap::NG::Portal constant
 sub setGroups {
-    my $self   = shift;
-    my $groups = $self->{sessionInfo}->{groups};
+    my $self    = shift;
+    my $groups  = $self->{sessionInfo}->{groups};
+    my $hGroups = $self->{sessionInfo}->{hGroups};
 
     if ( $self->{ldapGroupBase} ) {
 
@@ -158,13 +159,28 @@ sub setGroups {
         );
 
         # Call searchGroups
-        $groups .= $self->{ldap}->searchGroups(
+        my $ldapGroups = $self->{ldap}->searchGroups(
             $self->{ldapGroupBase}, $self->{ldapGroupAttributeName},
             $group_value,           $self->{ldapGroupAttributeNameSearch}
         );
+
+        foreach ( keys %$ldapGroups ) {
+            my $groupName = $_;
+            $hGroups->{$groupName} = $ldapGroups->{$groupName};
+            my $groupValues = [];
+            foreach ( @{ $self->{ldapGroupAttributeNameSearch} } ) {
+                next if $_ =~ /^name$/;
+                my $firstValue = $ldapGroups->{$groupName}->{$_}->[0];
+                push @$groupValues, $firstValue;
+            }
+            $groups .=
+              $self->{multiValuesSeparator} . join( '|', @$groupValues );
+        }
+
     }
 
-    $self->{sessionInfo}->{groups} = $groups;
+    $self->{sessionInfo}->{groups}  = $groups;
+    $self->{sessionInfo}->{hGroups} = $hGroups;
     PE_OK;
 }
 
