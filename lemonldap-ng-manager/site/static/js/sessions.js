@@ -55,7 +55,7 @@
     ['authenticationTitle', ['_session_id', '_user', '_password', 'authenticationLevel']],
     ['modulesTitle', ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti']],
     ['saml', ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']],
-    ['groups', ['groups']],
+    ['groups', ['groups', 'hGroups']],
     ['ldap', ['dn']],
     ['BrowserID', ['_browserIdAnswer', '_browserIdAnswerRaw']]
   ];

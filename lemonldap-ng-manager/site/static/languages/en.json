@@ -177,6 +177,7 @@
   "groups": "Groups",
   "hashkey": "Key",
   "headers": "HTTP Headers",
+  "hGroups": "Groups (HashRef)",
   "hostname": "Hostname",
   "hideOldPassword": "Hide old password",
   "hideTree": "Hide tree",

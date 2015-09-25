@@ -177,6 +177,7 @@
   "groups": "Groupes",
   "hashkey": "Clef",
   "headers": "En-têtes HTTP",
+  "hGroups": "Groupes (HashRef)",
   "hostname": "Nom d'hôte",
   "hideOldPassword": "Masquer l'ancien mot de passe",
   "hideTree": "Masquer l'arbre",
