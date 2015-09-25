@@ -1319,6 +1319,7 @@ sub _dump {
     my $variable = shift;
 
     require Data::Dumper;
+    $Data::Dumper::Indent = 0;
     $self->lmLog( "Dump: " . Data::Dumper::Dumper($variable), 'debug' );
 
     return;
@@ -2406,6 +2407,7 @@ sub store {
             $displayValue = '****';
         }
         $self->lmLog( "Store $displayValue in session key $k", 'debug' );
+        $self->_dump($displayValue) if ref($displayValue);
         $infos->{$k} = $self->{sessionInfo}->{$k};
     }
     $session->update($infos);
