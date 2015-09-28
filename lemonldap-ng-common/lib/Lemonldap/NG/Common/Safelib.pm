@@ -11,12 +11,14 @@ use MIME::Base64;
 
 #use AutoLoader qw(AUTOLOAD);
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.4.6';
 
 # Set here all the names of functions that must be available in Safe objects.
 # Not that only functions, not methods, can be written here
 our $functions =
-  [qw(&checkLogonHours &date &checkDate &basic &unicode2iso &iso2unicode)];
+  [
+    qw(&checkLogonHours &date &checkDate &basic &unicode2iso &iso2unicode &groupMatch)
+  ];
 
 ## @function boolean checkLogonHours(string logon_hours, string syntax, string time_correction, boolean default_access)
 # Function to check logon hours
@@ -151,6 +153,29 @@ sub iso2unicode {
     my ($string) = splice @_;
 
     return encode( "utf-8", decode( "iso-8859-1", $string ) );
+}
+
+## @function int groupMatch(hashref groups, string attribute, string value)
+# Check in hGroups structure if a group attribute contains a value
+# @param groups The $hGroups variable
+# @param attribute Name of the attribute
+# @param value Value to check
+# @return int Number of values that match
+sub groupMatch {
+    my $groups    = shift;
+    my $attribute = shift;
+    my $value     = shift;
+
+    my $match = 0;
+
+    foreach my $group ( keys %$groups ) {
+        if ( ref( $groups->{$group}->{$attribute} ) eq "ARRAY" ) {
+            foreach ( @{ $groups->{$group}->{$attribute} } ) {
+                $match++ if ( $_ =~ /$value/ );
+            }
+        }
+    }
+    return $match;
 }
 
 1;
