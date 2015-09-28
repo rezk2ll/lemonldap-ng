@@ -174,6 +174,9 @@ sub groupMatch {
                 $match++ if ( $_ =~ /$value/ );
             }
         }
+        else {
+            $match++ if ( $groups->{$group}->{$attribute} =~ /$value/ );
+        }
     }
     return $match;
 }
