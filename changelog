@@ -1,5 +1,29 @@
 lemonldap-ng (2.0.0) stable; urgency=low
 
+lemonldap-ng (1.4.6) stable; urgency=low
+
+    * [LEMONLDAP-705] - SAML with Signature Method rsa-sha256
+    * [LEMONLDAP-715] - Multi with # in the module name: error while calling authLogout
+    * [LEMONLDAP-720] - Error with CPAN tests
+    * [LEMONLDAP-823] - duplicated groups when recursive groups enabled
+    * [LEMONLDAP-841] - Error in extract_lang with a value with *
+    * [LEMONLDAP-843] - localStorage replaced by localSessionStorage
+    * [LEMONLDAP-845] - Session activity not updated
+    * [LEMONLDAP-846] - Session cache not purged
+    * [LEMONLDAP-848] - Do not call 'perl' directly (see RT#107205)
+    * [LEMONLDAP-849] - Syntax checking on domain name is too restrictive
+    * [LEMONLDAP-850] - SOAP data not well formatted
+    * [LEMONLDAP-768] - Fixed with for application boxes in menu in bootstrap skin
+    * [LEMONLDAP-771] - Adapt foot size in mobile mode for Bootstrap skin
+    * [LEMONLDAP-781] - Lasso package
+    * [LEMONLDAP-792] - Support for multivaluated attributes in LDAP for groups
+
+lemonldap-ng (1.4.5) stable; urgency=low
+
+    * [LEMONLDAP-816] - Wrong definition of getAttributes in Portal WSDL
+    * [LEMONLDAP-817] - Wrong parameter order for error SOAP operation in Portal WSDL
+    * [LEMONLDAP-818] - Skin rules on mail reset and register page
+
 lemonldap-ng (1.4.4) stable; urgency=low
 
     * [LEMONLDAP-763] - purgeCentralCache sometimes hangs
