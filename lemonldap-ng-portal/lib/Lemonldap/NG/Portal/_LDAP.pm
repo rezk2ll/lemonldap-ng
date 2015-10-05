@@ -146,6 +146,59 @@ sub loadPP {
 # @return Lemonldap::NG portal error code
 sub userBind {
     my $self = shift;
+
+    # Checking password expired warning
+    if ( $self->{portal}->{authentication} eq 'AD' ) {
+
+        # Getting password max age (delay)
+        my $ADPwdMaxAge = $self->{portal}->{ADPwdMaxAge} || 0;
+        $ADPwdMaxAge *= 10000000; # padding with '0' to obtain 0.1 micro-seconds
+
+        # Getting password expiration warning time (delay)
+        my $ADPwdExpireWarning = $self->{portal}->{ADPwdExpireWarning} || 0;
+        $ADPwdExpireWarning *=
+          10000000;               # padding with '0' to obtain 0.1 micro-seconds
+
+        if ( $ADPwdExpireWarning > $ADPwdMaxAge ) {
+            $ADPwdExpireWarning = $ADPwdMaxAge;
+            $self->{portal}->lmLog(
+"Error: ADPwdExpireWarning > ADPwdMaxAge, this should not happen",
+                'warn'
+            );
+        }
+
+        # Compute current timestamp in AD format (date)
+        my $time = time;          # unix timestamp (seconds since Jan 01 1970)
+        my $a_time =
+          $time + 11644473600;    # adding difference (in s) from Jan 01 1601
+        my $timestamp =
+          $a_time . '0000000';   # padding with '0' to obatin 0.1 micro-seconds
+
+        # Compute password expiration time (date)
+        my $_pwdExpire =
+          $self->{portal}->{sessionInfo}->{_AD_pwdLastSet} || $timestamp;
+        $_pwdExpire += $ADPwdMaxAge;
+
+# computing when the warning message is displayed on portal (date - delay = date)
+        my $_pwdWarning = $_pwdExpire - $ADPwdExpireWarning;
+
+        if ( $timestamp > $_pwdWarning && $timestamp < $_pwdExpire ) {
+
+            # calculating remaining time before password expiration
+            my $remainingTime = $_pwdExpire - $timestamp;
+            $self->{portal}->info(
+                "<h3>"
+                  . sprintf(
+                    $self->{portal}->msg(PM_PP_EXP_WARNING),
+                    $self->{portal}->convertSec(
+                        substr( $remainingTime, 0, length($remainingTime) - 7 )
+                    )
+                  )
+                  . "</h3>"
+            );
+        }
+    }
+
     if ( $self->{portal}->{ldapPpolicyControl} ) {
 
         # Create Control object
@@ -318,9 +371,33 @@ sub userModifyPassword {
 
                     # Check old password with a bind
                     $mesg = $self->bind( $dn, password => $oldpassword );
-                    if ( $mesg->code != 0 ) {
-                        $self->{portal}->lmLog( "Bad old password", 'debug' );
-                        return PE_BADOLDPASSWORD;
+
+                    # For AD password expiration to work:
+                    # ppolicy must be desactivated,
+                    # and "change as user" must be desactivated
+                    if ($ad) {
+                        if ( $mesg->error =~ /LdapErr: .* data ([^,]+),.*/ ) {
+
+# extended data message code:
+# 532: password expired (but provided password is correct)
+# 773: must change password at next connection (but provided password is correct)
+# 52e: password is incorrect
+                            unless ( ( $1 eq '532' ) || ( $1 eq '773' ) ) {
+                                $self->{portal}
+                                  ->lmLog( "Bad old password", 'warn' );
+                                return PE_BADOLDPASSWORD;
+                            }
+                        }
+
+                   # if error message has not been catched, then it IS a success
+                    }
+                    else
+                    {   # this is not AD, a 0 error code means good old password
+                        if ( $mesg->code != 0 ) {
+                            $self->{portal}
+                              ->lmLog( "Bad old password", 'warn' );
+                            return PE_BADOLDPASSWORD;
+                        }
                     }
 
           # Rebind as Manager only if user is not granted to change its password
