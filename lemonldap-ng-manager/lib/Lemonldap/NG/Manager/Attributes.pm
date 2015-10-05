@@ -1540,6 +1540,18 @@ sub attributes {
             documentation => 'Demo exported variables',
         },
 
+        # AD
+        ADPwdExpireWarning => {
+            type          => 'int',
+            default       => 0,
+            documentation => 'AD password expire warning',
+        },
+        ADPwdMaxAge => {
+            type          => 'int',
+            default       => 0,
+            documentation => 'AD password max age',
+        },
+
         # LDAP
         managerDn => {
             type          => 'text',

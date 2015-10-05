@@ -108,6 +108,11 @@ sub tree {
                     nodes => [ 'authentication', 'userDB', 'passwordDB' ],
                     'nodes_cond' => [
                         {
+                            title => 'adParams',
+                            help  => 'authad.html',
+                            nodes => [ 'ADPwdMaxAge', 'ADPwdExpireWarning' ]
+                        },
+                        {
                             title => 'choiceParams',
                             help  => 'authchoice.html',
                             nodes => [ 'authChoiceParam', 'authChoiceModules' ]
