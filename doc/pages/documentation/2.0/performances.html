@@ -64,7 +64,24 @@ Macros and groups are calculated during authentication process by the portal:
 </li>
 <li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute “groups”: it contains the names of groups whose rules were returned true for the current user</div>
 </li>
+<li class="level1"><div class="li"> You can also get groups in <code>$hGroups</code> which is a Hash Reference of this form:</div>
+</li>
 </ul>
+<pre class="code perl"><span class="re0">$hGroups</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+          <span class="st_h">'group3'</span> <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
+                        <span class="st_h">'description'</span> <span class="sy0">=&gt;</span> <span class="br0">&#91;</span>
+                                           <span class="st_h">'Service 3'</span><span class="sy0">,</span>
+                                           <span class="st_h">'Service 3 TEST'</span>
+                                         <span class="br0">&#93;</span><span class="sy0">,</span>
+                        <span class="st_h">'cn'</span> <span class="sy0">=&gt;</span> <span class="br0">&#91;</span>
+                                  <span class="st_h">'group3'</span>
+                                <span class="br0">&#93;</span><span class="sy0">,</span>
+                        <span class="st_h">'name'</span> <span class="sy0">=&gt;</span> <span class="st_h">'group3'</span>
+                      <span class="br0">&#125;</span><span class="sy0">,</span>
+          <span class="st_h">'admin'</span> <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
+                       <span class="st_h">'name'</span> <span class="sy0">=&gt;</span> <span class="st_h">'admin'</span>
+                     <span class="br0">&#125;</span>
+        <span class="br0">&#125;</span></pre>
 
 <p>
 Example for macros:
@@ -86,18 +103,23 @@ Example for groups:
 admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span>
 &nbsp;
 <span class="co1"># Use a group in a rule</span>
-<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="sy0">/</span><span class="re0">\badmin</span><span class="re0">\b</span><span class="sy0">/</span></pre>
+<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="co2">/\badmin\b/</span>
+&nbsp;
+<span class="co1"># Or with hGroups</span>
+<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/defined.html"><span class="kw3">defined</span></a> <span class="re0">$hGroups</span><span class="br0">&#123;</span><span class="st_h">'admin'</span><span class="br0">&#125;</span></pre>
 
 <p>
-Note that groups are computed after macros, so a group rule may involve a macro value.
+<p><div class="noteclassic">Groups are computed after macros, so a group rule may involve a macro value.
+</div></p>
 </p>
 
 <p>
-Besides, macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
+<p><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. For example, macro “macro1” will be computed before macro “macro2”: so, expression of macro2 may involve value of macro1. As same for groups: a group rule may involve another, previously computed group.
+</div></p>
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Macros and groups" [853-2119] -->
+<!-- EDIT4 SECTION "Macros and groups" [853-2813] -->
 <h3 class="sectionedit5" id="local_macros">Local macros</h3>
 <div class="level3">
 
@@ -115,12 +137,12 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Local macros" [2120-2777] -->
+<!-- EDIT5 SECTION "Local macros" [2814-3471] -->
 <h2 class="sectionedit6" id="portal_performances">Portal performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT6 SECTION "Portal performances" [2778-2810] -->
+<!-- EDIT6 SECTION "Portal performances" [3472-3504] -->
 <h3 class="sectionedit7" id="general_performances">General performances</h3>
 <div class="level3">
 
@@ -137,7 +159,7 @@ You can also use a FastCGI server using index.fcgi given in portal examples.
 </p>
 
 </div>
-<!-- EDIT7 SECTION "General performances" [2811-3232] -->
+<!-- EDIT7 SECTION "General performances" [3505-3926] -->
 <h3 class="sectionedit8" id="configuration_access">Configuration access</h3>
 <div class="level3">
 
@@ -146,7 +168,7 @@ If you set <code>useLocalConf</code> to 1 in lemonldap-ng.ini (section [Portal])
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Configuration access" [3233-3535] -->
+<!-- EDIT8 SECTION "Configuration access" [3927-4229] -->
 <h3 class="sectionedit9" id="starting_performances">Starting performances</h3>
 <div class="level3">
 
@@ -164,7 +186,7 @@ To make the portal start faster when the server is relaunched, add those lines i
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- EDIT9 SECTION "Starting performances" [3536-4111] -->
+<!-- EDIT9 SECTION "Starting performances" [4230-4805] -->
 <h3 class="sectionedit10" id="apachesession_performances">Apache::Session performances</h3>
 <div class="level3">
 
@@ -227,7 +249,7 @@ Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Apache::Session performances" [4112-6381] -->
+<!-- EDIT10 SECTION "Apache::Session performances" [4806-7075] -->
 <h3 class="sectionedit11" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
@@ -256,17 +278,18 @@ So instead of using LDAP groups recovery, you just have to store “memberOf” 
 </li>
 </ul>
 <pre class="code">ldapgroups -&gt; memberOf</pre>
-<blockquote><div class="no">
- For now, ldapgroups contains “cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com”</div></blockquote>
+
+<p>
+For now, ldapgroups contains “cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com”
+</p>
 <ul>
 <li class="level1"><div class="li"> A little macro:</div>
 </li>
 </ul>
 <pre class="code perl">ldapgroups <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/join.html"><span class="kw3">join</span></a><span class="br0">&#40;</span><span class="st0">&quot; &quot;</span><span class="sy0">,</span><span class="br0">&#40;</span><span class="re0">$ldapgroups</span> <span class="sy0">=~</span> <span class="co2">/cn=(.*?),/g</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
-<blockquote><div class="no">
- Now ldapgroups contains “admin su”</div></blockquote>
 
 <p>
+Now ldapgroups contains “admin su”
 
 </div></p>
 </p>

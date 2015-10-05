@@ -208,7 +208,7 @@ And the mail filter is:
 <h3 class="sectionedit10" id="password">Password</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li"> <strong>Password policy control</strong>: enable to use LDAP password policy. This requires at least Net::LDAP 0.38.</div>
+<li class="level1"><div class="li"> <strong>Password policy control</strong>: enable to use LDAP password policy. This requires at least Net::LDAP 0.38. (see ppolicy workflow below)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Password modify extended operation</strong>: enable to use the LDAP extended operation <code>password modify</code> instead of standard modify operation.</div>
 </li>
@@ -223,6 +223,17 @@ And the mail filter is:
 <li class="level1"><div class="li"> <strong>Reset value</strong>: value to set in reset attribute to activate password reset (default: TRUE).</div>
 </li>
 </ul>
+
+<p>
+<div class="row"><div class="col-md-6">
+<strong>Password expiration warning workflow</strong>
+<a href="/_detail/documentation/lemonldap-ng-password-expiration-warning.png?id=documentation%3A2.0%3Aauthldap" class="media" title="documentation:lemonldap-ng-password-expiration-warning.png"><img src="../../../media/documentation/lemonldap-ng-password-expiration-warning.png" class="media" alt="" /></a>
+</div>
+<div class="col-md-6">
+<strong>Password expiration workflow</strong>
+<a href="/_detail/documentation/lemonldap-ng-password-expired.png?id=documentation%3A2.0%3Aauthldap" class="media" title="documentation:lemonldap-ng-password-expired.png"><img src="../../../media/documentation/lemonldap-ng-password-expired.png" class="media" alt="" /></a>
+</div></div>
+</p>
 
 </div>
 </div><!-- closes <div class="dokuwiki export">-->

@@ -76,6 +76,8 @@ Inside this jail, you can access to:
 </li>
 <li class="level2"><div class="li"> <a href="#iso2unicode" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">iso2unicode</a></div>
 </li>
+<li class="level2"><div class="li"> <a href="#groupmatch" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">groupMatch</a></div>
+</li>
 </ul>
 </li>
 </ul>
@@ -86,7 +88,7 @@ Inside this jail, you can access to:
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Presentation" [35-1075] -->
+<!-- EDIT2 SECTION "Presentation" [35-1108] -->
 <h2 class="sectionedit3" id="request_informations">Request informations</h2>
 <div class="level2">
 
@@ -113,12 +115,12 @@ The following data about the current request are available through functions :
 </ul>
 
 </div>
-<!-- EDIT3 SECTION "Request informations" [1076-1482] -->
+<!-- EDIT3 SECTION "Request informations" [1109-1515] -->
 <h2 class="sectionedit4" id="extended_functions_list">Extended Functions List</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT4 SECTION "Extended Functions List" [1483-1519] -->
+<!-- EDIT4 SECTION "Extended Functions List" [1516-1552] -->
 <h3 class="sectionedit5" id="date">date</h3>
 <div class="level3">
 
@@ -128,7 +130,7 @@ Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT by callin
 <pre class="code">date(1)</pre>
 
 </div>
-<!-- EDIT5 SECTION "date" [1520-1639] -->
+<!-- EDIT5 SECTION "date" [1553-1672] -->
 <h3 class="sectionedit6" id="checklogonhours">checkLogonHours</h3>
 <div class="level3">
 
@@ -189,7 +191,7 @@ You can modify the default behavior for people without value in ssoLogonHours. I
 <pre class="code">checkLogonHours($ssoLogonHours, &#039;&#039;, &#039;&#039;, &#039;1&#039;)</pre>
 
 </div>
-<!-- EDIT6 SECTION "checkLogonHours" [1640-3577] -->
+<!-- EDIT6 SECTION "checkLogonHours" [1673-3610] -->
 <h3 class="sectionedit7" id="checkdate">checkDate</h3>
 <div class="level3">
 
@@ -225,7 +227,7 @@ Simple usage example:
 <pre class="code">checkDate($ssoStartDate, $ssoEndDate)</pre>
 
 </div>
-<!-- EDIT7 SECTION "checkDate" [3578-4205] -->
+<!-- EDIT7 SECTION "checkDate" [3611-4238] -->
 <h3 class="sectionedit8" id="basic">basic</h3>
 <div class="level3">
 
@@ -254,7 +256,7 @@ Simple usage example:
 <pre class="code">basic($uid,$_password)</pre>
 
 </div>
-<!-- EDIT8 SECTION "basic" [4206-4668] -->
+<!-- EDIT8 SECTION "basic" [4239-4701] -->
 <h3 class="sectionedit9" id="unicode2iso">unicode2iso</h3>
 <div class="level3">
 
@@ -281,7 +283,7 @@ Simple usage example:
 <pre class="code">unicode2iso($name)</pre>
 
 </div>
-<!-- EDIT9 SECTION "unicode2iso" [4669-4973] -->
+<!-- EDIT9 SECTION "unicode2iso" [4702-5006] -->
 <h3 class="sectionedit10" id="iso2unicode">iso2unicode</h3>
 <div class="level3">
 
@@ -306,6 +308,32 @@ Functions parameters:
 Simple usage example:
 </p>
 <pre class="code">iso2unicode($name)</pre>
+
+</div>
+<!-- EDIT10 SECTION "iso2unicode" [5007-5311] -->
+<h3 class="sectionedit11" id="groupmatch">groupMatch</h3>
+<div class="level3">
+
+<p>
+this function allows to parse the <code>$hGroups</code> variable to check if a value is present inside a group attribute.
+</p>
+
+<p>
+Function parameter:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>groups</strong>: <code>$hGroups</code> variable</div>
+</li>
+<li class="level1"><div class="li"> <strong>attribute</strong>: Name of group attribute</div>
+</li>
+<li class="level1"><div class="li"> <strong>value</strong>: Value to check</div>
+</li>
+</ul>
+
+<p>
+Simple usage example:
+</p>
+<pre class="code">groupMatch($hGroups, &#039;description&#039;, &#039;Service 1&#039;)</pre>
 
 </div>
 </div><!-- closes <div class="dokuwiki export">-->
