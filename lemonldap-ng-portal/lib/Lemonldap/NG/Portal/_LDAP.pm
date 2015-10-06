@@ -147,58 +147,6 @@ sub loadPP {
 sub userBind {
     my $self = shift;
 
-    # Checking password expired warning
-    if ( $self->{portal}->{authentication} eq 'AD' ) {
-
-        # Getting password max age (delay)
-        my $ADPwdMaxAge = $self->{portal}->{ADPwdMaxAge} || 0;
-        $ADPwdMaxAge *= 10000000; # padding with '0' to obtain 0.1 micro-seconds
-
-        # Getting password expiration warning time (delay)
-        my $ADPwdExpireWarning = $self->{portal}->{ADPwdExpireWarning} || 0;
-        $ADPwdExpireWarning *=
-          10000000;               # padding with '0' to obtain 0.1 micro-seconds
-
-        if ( $ADPwdExpireWarning > $ADPwdMaxAge ) {
-            $ADPwdExpireWarning = $ADPwdMaxAge;
-            $self->{portal}->lmLog(
-"Error: ADPwdExpireWarning > ADPwdMaxAge, this should not happen",
-                'warn'
-            );
-        }
-
-        # Compute current timestamp in AD format (date)
-        my $time = time;          # unix timestamp (seconds since Jan 01 1970)
-        my $a_time =
-          $time + 11644473600;    # adding difference (in s) from Jan 01 1601
-        my $timestamp =
-          $a_time . '0000000';   # padding with '0' to obatin 0.1 micro-seconds
-
-        # Compute password expiration time (date)
-        my $_pwdExpire =
-          $self->{portal}->{sessionInfo}->{_AD_pwdLastSet} || $timestamp;
-        $_pwdExpire += $ADPwdMaxAge;
-
-# computing when the warning message is displayed on portal (date - delay = date)
-        my $_pwdWarning = $_pwdExpire - $ADPwdExpireWarning;
-
-        if ( $timestamp > $_pwdWarning && $timestamp < $_pwdExpire ) {
-
-            # calculating remaining time before password expiration
-            my $remainingTime = $_pwdExpire - $timestamp;
-            $self->{portal}->info(
-                "<h3>"
-                  . sprintf(
-                    $self->{portal}->msg(PM_PP_EXP_WARNING),
-                    $self->{portal}->convertSec(
-                        substr( $remainingTime, 0, length($remainingTime) - 7 )
-                    )
-                  )
-                  . "</h3>"
-            );
-        }
-    }
-
     if ( $self->{portal}->{ldapPpolicyControl} ) {
 
         # Create Control object
