@@ -15,7 +15,9 @@ lemonldap-ng (1.4.6) stable; urgency=low
     * [LEMONLDAP-850] - SOAP data not well formatted
     * [LEMONLDAP-768] - Fixed with for application boxes in menu in bootstrap skin
     * [LEMONLDAP-771] - Adapt foot size in mobile mode for Bootstrap skin
+    * [LEMONLDAP-822] - checking pwdLastSet in AD is not sufficient
     * [LEMONLDAP-781] - Lasso package
+    * [LEMONLDAP-785] - Display  password expiration management with Active Directory
     * [LEMONLDAP-792] - Support for multivaluated attributes in LDAP for groups
 
 lemonldap-ng (1.4.5) stable; urgency=low
