@@ -41,7 +41,7 @@ sub authenticate {
 
         # Check specific AD attributes
         my $pls      = $self->{sessionInfo}->{_AD_pwdLastSet};
-        my $computed = $self->{sessionInfo}->{_AD_msDS_UACC_AD_msDS_UACC};
+        my $computed = $self->{sessionInfo}->{_AD_msDS_UACC};
         my $mask = 0xf00000;    # mask to get the 8 at 6th position
         my $expired_flag =
           0x800000;   # 8 at 6th position for flag UF_PASSWORD_EXPIRED to be set
