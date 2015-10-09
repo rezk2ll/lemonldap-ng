@@ -169,4 +169,116 @@ Then, go in <code>SSL parameters</code>:
 </ul>
 
 </div>
+<!-- EDIT8 SECTION "Configuration of LemonLDAP::NG" [2369-2794] -->
+<h3 class="sectionedit9" id="auto_reloading_ssl_certificates">Auto reloading SSL Certificates</h3>
+<div class="level3">
+
+<p>
+A known problematic is that many browser (Firefox, Chrome) remembers the fact that the certificate is not available at a certain time.
+It is particularly important for smart cards: when the card is not inserted before the browser starts, the user must restart his browser, or at least refresh (F5) the page.
+</p>
+
+<p>
+It is possible with AJAX code and 3 Apache locations to bypass this limitation.
+</p>
+
+<p>
+1. Modify the portal virtual host to match this example:
+</p>
+<pre class="code file apache">    <span class="kw1">SSLEngine</span> <span class="kw2">On</span>
+    <span class="kw1">SSLCACertificateFile</span> /etc/apache2/ssl/ca.crt
+    <span class="kw1">SSLCertificateKeyFile</span> /etc/apache2/ssl/lemonldap.key
+    <span class="kw1">SSLCertificateFile</span> /etc/apache2/ssl/lemonldap.crt
+&nbsp;
+    <span class="kw1">SSLVerifyDepth</span> <span class="nu0">10</span>
+    <span class="kw1">SSLOptions</span> +StdEnvVars
+    <span class="kw1">SSLUserName</span> SSL_CLIENT_S_DN_CN
+&nbsp;
+    <span class="co1"># DocumentRoot</span>
+    <span class="kw1">DocumentRoot</span> /var/lib/lemonldap-ng/portal/
+    &lt;<span class="kw3">Directory</span> /var/lib/lemonldap-ng/portal/&gt;
+        <span class="kw1">Order</span> <span class="kw1">Deny</span>,<span class="kw1">Allow</span>
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+        <span class="kw1">Options</span> +ExecCGI +<span class="kw2">FollowSymLinks</span>
+        <span class="kw1">SSLVerifyClient</span> <span class="kw2">none</span>
+    &lt;/<span class="kw3">Directory</span>&gt;
+&nbsp;
+    &lt;<span class="kw3">Location</span> /index&gt;
+        <span class="kw1">Order</span> <span class="kw1">Deny</span>,<span class="kw1">Allow</span>
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+        <span class="kw1">SSLVerifyClient</span> <span class="kw2">none</span>
+    &lt;/<span class="kw3">Location</span>&gt;
+&nbsp;
+    &lt;<span class="kw3">Location</span> /testssl&gt;
+        <span class="kw1">Order</span> <span class="kw1">Deny</span>,<span class="kw1">Allow</span>
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+        <span class="kw1">SSLVerifyClient</span> <span class="kw1">require</span>
+    &lt;/<span class="kw3">Location</span>&gt;
+&nbsp;
+    <span class="kw1">Alias</span> /sslok /var/lib/lemonldap-ng/portal
+    &lt;<span class="kw3">Location</span> /sslok&gt;
+        <span class="kw1">Order</span> <span class="kw1">Deny</span>,<span class="kw1">Allow</span>
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+        <span class="kw1">SSLVerifyClient</span> <span class="kw1">require</span>
+    &lt;/<span class="kw3">Location</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li"> /index/ is an unprotected page to display a SSL test button</div>
+</li>
+<li class="level1"><div class="li"> /testssl/ is a SSL protected page to check the certificate</div>
+</li>
+<li class="level1"><div class="li"> /sslok/ is the new LemonLDAP::NG portal. You need to declare the new url in the manager: Portal → <abbr title="Uniform Resource Locator">URL</abbr>: <a href="https://auth.example.com/sslok/" class="urlextern" title="https://auth.example.com/sslok/"  rel="nofollow">https://auth.example.com/sslok/</a></div>
+</li>
+</ul>
+
+<p>
+2. Then you need to construct the Ajax page, for example in /index/bouton.html. It looks like this:
+</p>
+<pre class="code file html4strict"><span class="sc2">&lt;<a href="http://december.com/html/4/element/body.html"><span class="kw2">body</span></a>&gt;</span>
+<span class="sc2">&lt;<a href="http://december.com/html/4/element/script.html"><span class="kw2">script</span></a> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">&quot;./jquery-2.1.4.min.js&quot;</span>             <span class="kw3">type</span><span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span>&gt;</span> <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/script.html"><span class="kw2">script</span></a>&gt;</span>
+<span class="sc-1">&lt;!--&lt;script src=&quot;./jquery-ui-1.8-rass.js&quot;   type=&quot;text/javascript&quot;&gt;  &lt;/script&gt;--&gt;</span>
+&nbsp;
+&nbsp;
+<span class="sc2">&lt;<a href="http://december.com/html/4/element/a.html"><span class="kw2">a</span></a> <span class="kw3">href</span><span class="sy0">=</span><span class="st0">&quot;http://www.google.fr&quot;</span> <span class="kw3">class</span><span class="sy0">=</span><span class="st0">&quot;enteteBouton&quot;</span> <span class="kw3">id</span><span class="sy0">=</span><span class="st0">&quot;continuerButton&quot;</span>&gt;&lt;<a href="http://december.com/html/4/element/img.html"><span class="kw2">img</span></a> <span class="kw3">src</span><span class="sy0">=</span>authent.png&gt;&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/a.html"><span class="kw2">a</span></a>&gt;</span>
+<span class="sc2">&lt;<a href="http://december.com/html/4/element/script.html"><span class="kw2">script</span></a>&gt;</span>
+$('.enteteBouton').click( function (e) {
+  var b=navigator.userAgent.toLowerCase();
+  if(b.indexOf(&quot;msie&quot;)!==-1){
+    document.execCommand(&quot;ClearAuthenticationCache&quot;)
+  }
+  e.preventDefault();
+  $.ajax({
+        url:&quot;https://auth.example.com/testssl&quot;,
+        beforeSend:function(){},
+        type:&quot;GET&quot;,
+        dataType:&quot;html&quot;,
+        success:function(c,a){ 
+          if (c !== &quot;&quot;) {
+                alert(&quot;Carte OK&quot;);
+                window.location.href = &quot;https://auth.example.com/sslok/&quot;;
+          }
+          else {
+              alert('Carte KO');
+          }
+        },
+        error:function (xhr, ajaxOptions, thrownError){
+          if(xhr.status==404) {
+                alert(&quot;Carte OK&quot;);
+                window.location.href = &quot;https://auth.example.com/sslok/&quot;;
+          }
+          else {
+              alert('Carte KO');
+          }
+        },
+        complete:function(c,a){}
+  });
+});
+<span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/script.html"><span class="kw2">script</span></a>&gt;</span>
+<span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/body.html"><span class="kw2">body</span></a>&gt;</span></pre>
+
+<p>
+<p><div class="notewarning">It is incompatible with authentication chaining (see Stack Multiple backends), because of Apache parameter “SSLVerifyClient”, which must have the value “require”
+</div></p>
+</p>
+
+</div>
 </div><!-- closes <div class="dokuwiki export">-->
