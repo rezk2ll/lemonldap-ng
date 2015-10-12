@@ -20,12 +20,12 @@ then
 
     # Run migration script to convert menu format if old version is 0.9.*
     if [ "$2" != "" ]; then
-        if dpkg --compare-versions $2 lt 1.0; then
+        if dpkg --compare-versions "$2" lt 1.0; then
             if [ -e $CONFDIR/storage.conf -o -e $CONFDIR/apply.conf -o -e $CONFDIR/apps-list.xml ] ; then
                 db_get liblemonldap-ng-common-perl/migrate
-                if [ "$RET" ]; then
-                    $MIGRATION 2>&1 > /dev/null || :
-                fi
+                #if [ "$RET" ]; then
+                #    $MIGRATION 2>&1 > /dev/null || :
+                #fi
             fi
         fi
     fi
