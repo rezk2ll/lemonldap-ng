@@ -60,6 +60,7 @@ sub sendError {
     my ( $self, $req, $err, $code ) = splice @_;
     $err  ||= $req->error;
     $code ||= 500;
+    $self->lmLog( "Error $code: $err", $code > 499 ? 'error' : 'notice' );
     return $self->sendJSONresponse( $req, { error => $err }, code => $code );
 }
 

@@ -7,7 +7,6 @@
 
 ## Bugs
 
-* No log in case of bad request
 * After an Apache restart, if Manager is loaded first, portal cannot be loaded
 * Authentication parameters:
   * No input is displayed when Multi is choosen in authentication modules
