@@ -625,9 +625,9 @@ sub newRawConf {
         $res->{message} = '__demoModeOn__';
     }
     else {
-        my %args;
-        $args{force} = 1 if ( $req->params('force') );
-        my $s = $self->confAcc->saveConf( $new, %args );
+        # When uploading a new conf, always force it since cfgNum has a few
+        # chances to be equal to last config cfgNum
+        my $s = $self->confAcc->saveConf( $new, force => 1 );
         if ( $s > 0 ) {
             $res->{result} = 1;
             $res->{cfgNum} = $s;

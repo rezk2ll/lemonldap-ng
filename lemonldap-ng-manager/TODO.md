@@ -7,7 +7,6 @@
 
 ## Bugs
 
-* We cannot restore a configuration with a cfgNumber > latest
 * No log in case of bad request
 * After an Apache restart, if Manager is loaded first, portal cannot be loaded
 * Authentication parameters:
