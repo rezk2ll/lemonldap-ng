@@ -1,5 +1,7 @@
 package Lemonldap::NG::Manager::Conf::Tests;
 
+use Lemonldap::NG::Common::Regexp;
+
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
 # subroutines to execute.
