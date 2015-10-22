@@ -1,6 +1,5 @@
 package Lemonldap::NG::Handler::API::ApacheMP2;
 
-
 our $VERSION = '2.0.0';
 
 # Specific modules and constants for Apache Mod_Perl 2
@@ -55,7 +54,7 @@ sub setServerSignature {
 
 sub newRequest {
     my ( $class, $r ) = @_;
-    $request = $r;
+    $request                  = $r;
     $Lemonldap::NG::API::mode = 'ApacheMP2';
 }
 
@@ -142,11 +141,12 @@ sub hostname {
 # returns client IP address
 # @return IP_Addr string client IP
 sub remote_ip {
-    my $class = shift;
-    my $remote_ip =
-      (   $request->connection->can('remote_ip')
+    my $class     = shift;
+    my $remote_ip = (
+          $request->connection->can('remote_ip')
         ? $request->connection->remote_ip
-        : $request->connection->client_ip );
+        : $request->connection->client_ip
+    );
     return $remote_ip;
 }
 

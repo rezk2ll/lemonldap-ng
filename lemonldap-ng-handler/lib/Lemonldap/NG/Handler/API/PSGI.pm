@@ -24,7 +24,7 @@ sub thread_share {
 
 sub newRequest {
     my ( $class, $r ) = @_;
-    $request = $r;
+    $request                  = $r;
     $Lemonldap::NG::API::mode = 'PSGI';
 }
 

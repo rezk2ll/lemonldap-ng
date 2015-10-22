@@ -1,6 +1,5 @@
 package Lemonldap::NG::Handler::API::Nginx;
 
-
 our $VERSION = '2.0.0';
 
 use constant FORBIDDEN     => 403;
@@ -24,12 +23,13 @@ sub thread_share {
 # @param $sign String to add to server signature
 sub setServerSignature {
     my ( $class, $sign ) = @_;
+
     # TODO
 }
 
 sub newRequest {
     my ( $class, $r ) = @_;
-    $request = $r;
+    $request                  = $r;
     $Lemonldap::NG::API::mode = 'Nginx';
 }
 
@@ -39,6 +39,7 @@ sub newRequest {
 # @param $level string loglevel
 sub lmLog {
     my ( $class, $msg, $level ) = @_;
+
     # TODO
 }
 
@@ -47,7 +48,7 @@ sub lmLog {
 # @param user string username
 sub set_user {
     my ( $class, $user ) = @_;
-    $request->variable('lmremote_user', $user);
+    $request->variable( 'lmremote_user', $user );
 }
 
 ## @method string header_in(string header)
@@ -67,10 +68,12 @@ sub set_header_in {
     my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
         if ( $h =~ /cookie/i ) {
+
             # TODO: check that variable $lmcookie is defined,
             #       else warn that LL::NG cookie will not be removed
             $request->variable( 'lmcookie', $v );
-        } else {
+        }
+        else {
             # TODO: check that header is not yet set, else throw warning
             #       or reject request if mode paranoid is set
             # TODO: check that variable nginxName($h) is defined,
@@ -86,6 +89,7 @@ sub set_header_in {
 sub unset_header_in {
     my ( $class, @headers ) = @_;
     foreach my $h1 (@headers) {
+
         # TODO: check that header is not yet set, else throw warning
         $request->variable( nginxName($h), '' );
     }
@@ -99,7 +103,8 @@ sub set_header_out {
     while ( my ( $h, $v ) = each %headers ) {
         if ( $h =~ /location/i ) {
             $request->variable( 'lmlocation', $v );
-        } else {
+        }
+        else {
             $request->header_out( $h, $v );
         }
     }
@@ -194,6 +199,7 @@ sub print {
 # @param data Text to add in html head
 sub addToHtmlHead {
     my ( $class, $data ) = @_;
+
     # TODO: throw error log
 }
 
@@ -202,9 +208,9 @@ sub addToHtmlHead {
 # @param $params hashref containing name => value
 sub setPostParams {
     my ( $class, $params ) = @_;
+
     # TODO: throw error log
 }
-
 
 sub nginxName {
     my $h = lc(shift);

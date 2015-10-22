@@ -15,7 +15,7 @@ sub prereq {
             $Lemonldap::NG::Common::Conf::msg .= "Unable to load MongoDB: $@\n";
             return 0;
         }
-        $self->{dbName} ||= 'llConfDB';
+        $self->{dbName}         ||= 'llConfDB';
         $self->{collectionName} ||= 'configuration';
         $initDone++;
     }
@@ -31,8 +31,8 @@ sub Lemonldap::NG::Common::Conf::_mongoDB {
         $t =~ s/^db_name$/admin_db/;
         $conn_args->{$t} = $self->{$t} if ( defined $self->{$t} );
     }
-    return $self->{_mongoDB} = MongoDB::MongoClient->new($conn_args)
-      ->get_database( $self->{dbName} );
+    return $self->{_mongoDB} =
+      MongoDB::MongoClient->new($conn_args)->get_database( $self->{dbName} );
 }
 
 sub Lemonldap::NG::Common::Conf::_mongoColl {
@@ -50,8 +50,9 @@ sub Lemonldap::NG::Common::Conf::run_command {
 sub available {
     my $self = shift;
     my $c    = $self->_mongoColl or return 0;
-    my $res  = $self->run_command( [ distinct => $self->{collectionName}, key => '_id' ] );
-    unless(ref($res)){
+    my $res  = $self->run_command(
+        [ distinct => $self->{collectionName}, key => '_id' ] );
+    unless ( ref($res) ) {
         $Lemonldap::NG::Common::Conf::msg .= $res;
         return ();
     }
@@ -71,20 +72,20 @@ sub unlock   { 1 }
 sub store {
     my ( $self, $fields ) = @_;
     my $conf = {};
-    while(my($k,$v)=each(%$fields)){
-        if(ref($v) eq 'HASH'){
-            foreach my $sk (keys %$v){
+    while ( my ( $k, $v ) = each(%$fields) ) {
+        if ( ref($v) eq 'HASH' ) {
+            foreach my $sk ( keys %$v ) {
                 my $sk2 = encode_base64($sk);
                 $conf->{$k}->{$sk2} = $v->{$sk};
             }
         }
-        else{
+        else {
             $conf->{$k} = $v;
         }
     }
     $conf->{_id} = $fields->{cfgNum};
     my $res = eval { $self->_mongoColl->insert($conf) };
-    if($@) {
+    if ($@) {
         $Lemonldap::NG::Common::Conf::msg .= "Unable to store conf: $@\n";
         return 0;
     }
@@ -95,14 +96,14 @@ sub load {
     my ( $self, $cfgNum, $fields ) = @_;
     my $res = $self->_mongoColl->find_one( { _id => $cfgNum } );
     my $conf;
-    while(my($k,$v)=each(%$res)){
-        if(ref($v) eq 'HASH'){
-            foreach my $sk (keys %$v){
+    while ( my ( $k, $v ) = each(%$res) ) {
+        if ( ref($v) eq 'HASH' ) {
+            foreach my $sk ( keys %$v ) {
                 my $sk2 = decode_base64($sk);
                 $conf->{$k}->{$sk2} = $v->{$sk};
             }
         }
-        else{
+        else {
             $conf->{$k} = $v;
         }
     }
@@ -112,7 +113,7 @@ sub load {
 
 sub delete {
     my ( $self, $cfgNum ) = @_;
-    die "cfgNum required" unless($cfgNum);
+    die "cfgNum required" unless ($cfgNum);
     $self->_mongoColl->remove( { _id => $cfgNum } );
 }
 

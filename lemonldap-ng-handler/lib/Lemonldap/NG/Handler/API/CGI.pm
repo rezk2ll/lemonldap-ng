@@ -36,7 +36,7 @@ sub thread_share {
 
 sub newRequest {
     my ( $class, $r ) = @_;
-    $request = $r;
+    $request                  = $r;
     $Lemonldap::NG::API::mode = 'CGI';
 }
 
@@ -104,7 +104,7 @@ sub set_header_out {
 sub hostname {
     my $s = $ENV{SERVER_NAME};
     $s =~ s/:\d+$//;
-    return $s
+    return $s;
 }
 
 ## @method string remote_ip

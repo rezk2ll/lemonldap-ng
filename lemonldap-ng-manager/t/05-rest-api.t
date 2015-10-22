@@ -64,7 +64,7 @@ ok( ref $hstruct eq 'ARRAY', 'struct.json is an array' );
 count(2);
 
 foreach my $query (@hkeys) {
-    my $href = jsonResponse("/confs/1/$query", '' );
+    my $href = jsonResponse( "/confs/1/$query", '' );
     ok( ref $href eq 'ARRAY', 'Response is an array' );
     count(1);
     foreach my $k (@$href) {
@@ -76,7 +76,7 @@ foreach my $query (@hkeys) {
 
 # Metadatas
 {
-    my $href = jsonResponse('confs/1', '' );
+    my $href = jsonResponse( 'confs/1', '' );
     foreach (qw(cfgNum cfgAuthor cfgAuthorIP cfgDate)) {
         ok( exists( $href->{$_} ), "Key $_ exists" );
     }
@@ -84,5 +84,5 @@ foreach my $query (@hkeys) {
     count(5);
 }
 
-done_testing(count());
+done_testing( count() );
 

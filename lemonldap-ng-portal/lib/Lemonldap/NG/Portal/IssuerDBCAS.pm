@@ -396,14 +396,17 @@ sub issuerForUnAuthUser {
 
         $self->lmLog( "Get username $username", 'debug' );
 
-	# Get attributes [CAS 3.0]
-	my $attributes = {};
-	if (defined $self->{casAttributes} ) {
-        	foreach my $casAttribute (keys %{ $self->{casAttributes} }) {
-			my $localSessionValue =$localSession->data->{ $self->{casAttributes}->{$casAttribute} };
-			$attributes->{$casAttribute} = $localSessionValue if defined $localSessionValue;
-		}
-	}
+        # Get attributes [CAS 3.0]
+        my $attributes = {};
+        if ( defined $self->{casAttributes} ) {
+            foreach my $casAttribute ( keys %{ $self->{casAttributes} } ) {
+                my $localSessionValue =
+                  $localSession->data->{ $self->{casAttributes}->{$casAttribute}
+                  };
+                $attributes->{$casAttribute} = $localSessionValue
+                  if defined $localSessionValue;
+            }
+        }
 
         # Return success message
         $self->deleteCasSession($casServiceSession);

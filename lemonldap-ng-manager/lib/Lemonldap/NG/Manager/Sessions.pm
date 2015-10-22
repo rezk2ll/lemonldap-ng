@@ -174,8 +174,8 @@ sub sessions {
         }
     }
 
-# 2.4 Order and group by
-# $res will become an array ref here (except for doubleIp, already done below).
+ # 2.4 Order and group by
+ # $res will become an array ref here (except for doubleIp, already done below).
 
     # If "groupBy" is asked, elements will be like:
     #   { uid => 'foo.bar', count => 3 }
