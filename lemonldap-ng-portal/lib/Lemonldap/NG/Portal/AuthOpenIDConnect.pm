@@ -198,9 +198,15 @@ sub extractFormInfo {
         my $urlcheck = $self->controlUrlOrigin();
         return $urlcheck unless ( $urlcheck == PE_OK );
 
-        # Auto select provider if there is only one
         my @oplist = sort keys %{ $self->{_oidcOPList} };
 
+        # Error if no provider configured
+        if ( $#oplist == -1 ) {
+            $self->lmLog( "No OP configured", 'error' );
+            return PE_ERROR;
+        }
+
+        # Auto select provider if there is only one
         if ( $#oplist == 0 ) {
             $op = shift @oplist;
             $self->lmLog( "Selecting the only defined OP: $op", 'debug' );
