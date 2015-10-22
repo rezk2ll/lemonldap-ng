@@ -288,6 +288,7 @@ sub tree {
                         },
                         {
                             title => 'oidcParams',
+                            help  => 'authopenidconnect.html',
                             nodes => [
                                 'oidcAuthnLevel',
                                 'oidcRPCallbackGetParam',

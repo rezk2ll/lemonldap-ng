@@ -26,6 +26,9 @@ var filterFunctions = {
         if (tmp == 'ad') {
           tmp = 'ldap';
         }
+        if (tmp == 'openidconnect') {
+          tmp = 'oidc';
+        }
         nToShow.push(tmp + 'Params');
       });
       /* 2.2 Display modules */
