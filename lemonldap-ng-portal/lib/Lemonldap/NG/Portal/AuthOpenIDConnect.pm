@@ -295,7 +295,9 @@ sub authLogout {
       $self->{_oidcOPList}->{$op}->{conf}->{end_session_endpoint};
 
     if ($endsession_endpoint) {
-        my $logout_url = $self->{portal} . "/?logout=1";
+        my $logout_url = $self->{portal};
+        $logout_url =~ s#/$##;
+        $logout_url .= "/?logout=1";
         my $logout_request =
           $self->buildLogoutRequest( $endsession_endpoint,
             $self->{sessionInfo}->{OpenIDConnect_IDToken}, $logout_url );
