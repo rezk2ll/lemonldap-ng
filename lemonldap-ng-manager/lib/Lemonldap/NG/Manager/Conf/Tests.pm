@@ -86,7 +86,9 @@ sub tests {
 
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
-            foreach my $type (qw(Facebook Google OpenID OpenIDConnect SAML WebID)) {
+            foreach
+              my $type (qw(Facebook Google OpenID OpenIDConnect SAML WebID))
+            {
                 return ( 0,
 "\"$type\" can not be used as user database without using \"$type\" for authentication"
                   )
@@ -209,7 +211,7 @@ sub tests {
             return ( -1, "Unable to delete session ($@)" ) if ($@);
             my $gc = $Lemonldap::NG::Handler::_CGI::tsv->{globalStorage};
             return ( -1,
-'All sessions may be lost and you <b>must</b> restart all your Apache servers'
+'All sessions may be lost and you must restart all your Apache servers'
             ) if ( $conf->{globalStorage} ne $gc );
             return 1;
         },
@@ -222,7 +224,7 @@ sub tests {
                     $Lemonldap::NG::Handler::_CGI::tsv->{cookieName}
                       and $Lemonldap::NG::Handler::_CGI::tsv->{cookieName} ne
                       $conf->{cookieName}
-                    ? 'Cookie name has changed, you <b>must</b> restart all your Apache servers'
+                    ? 'Cookie name has changed, you must restart all your Apache servers'
                     : ()
                 )
             );
