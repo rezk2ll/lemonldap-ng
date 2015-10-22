@@ -86,7 +86,7 @@ sub tests {
 
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
-            foreach my $type (qw(Facebook Google OpenID SAML WebID)) {
+            foreach my $type (qw(Facebook Google OpenID OpenIDConnect SAML WebID)) {
                 return ( 0,
 "\"$type\" can not be used as user database without using \"$type\" for authentication"
                   )
@@ -132,7 +132,7 @@ sub tests {
         # Test that variables are exported if Google is used as UserDB
         checkUserDBGoogleAXParams => sub {
             my @tmp;
-            if ( $conf->{userDB} =~ /^Google/ ) {
+            if ( $conf->{userDB} =~ /^Google$/ ) {
                 while ( my ( $k, $v ) = each %{ $conf->{exportedVars} } ) {
                     if ( $v !~ Lemonldap::NG::Common::Regexp::GOOGLEAXATTR() ) {
                         push @tmp, $v;
@@ -154,7 +154,7 @@ sub tests {
         # Test that variables are exported if OpenID is used as UserDB
         checkUserDBOpenIDParams => sub {
             my @tmp;
-            if ( $conf->{userDB} =~ /^OpenID/ ) {
+            if ( $conf->{userDB} =~ /^OpenID$/ ) {
                 while ( my ( $k, $v ) = each %{ $conf->{exportedVars} } ) {
                     if ( $v !~ Lemonldap::NG::Common::Regexp::OPENIDSREGATTR() )
                     {
