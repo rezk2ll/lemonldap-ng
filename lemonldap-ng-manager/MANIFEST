@@ -61,8 +61,6 @@ site/static/forms/keyTextContainer.html
 site/static/forms/longtext.html
 site/static/forms/menuApp.html
 site/static/forms/menuCat.html
-site/static/forms/oidcmetadatajson.html
-site/static/forms/oidcmetadatajwks.html
 site/static/forms/oidcOPMetaDataNode.html
 site/static/forms/oidcOPMetaDataNodeContainer.html
 site/static/forms/oidcRPMetaDataNode.html

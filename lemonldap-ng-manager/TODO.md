@@ -33,7 +33,6 @@
   * file: load from URL + download
   * Grant session rule
   * OpenID white/black list
-  * oidcOpMetadata ?
   * POST replay fields
 
 * import from JSON

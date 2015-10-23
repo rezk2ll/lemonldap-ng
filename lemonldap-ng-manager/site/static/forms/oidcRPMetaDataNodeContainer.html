@@ -2,20 +2,20 @@
   <div class="panel-heading">
     <h3 class="panel-title" trspan="oidcRPMetaDataNodes"/>
   </div>
-  <div class="panel-body">
-    <table class="table">
-      <tbody>
-        <tr><th trspan="oidcRPName"></th></tr>
-        <tr ng-repeat="s in currentNode.nodes">
-          <td><input class="form-control" ng-model="s.title"/></td>
-          <td>
-            <span class="link glyphicon glyphicon-minus-sign" ng-click="del(currentNode.nodes,$index)"/>
-            <span ng-if="$last" class="link glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'addOidcRp'})"/>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr><th trspan="oidcRPName"></th></tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="s in currentNode.nodes">
+        <td><input class="form-control" ng-model="s.title"/></td>
+        <td>
+          <span class="link text-danger glyphicon glyphicon-minus-sign" ng-click="del(currentNode.nodes,$index)"/>
+          <span ng-if="$last" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'addOidcRp'})"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <script type="text/javascript">
 buttons=[{
