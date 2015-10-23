@@ -2,35 +2,39 @@
   <div class="panel-heading">
     <h3 class="panel-title">{{translateTitle(currentNode)}}</h3>
   </div>
-  <div class="panel-body">
-    <table class="table">
-      <tbody class="input-group">
-        <tr>
-          <th width="20%" trspan="comment"/>
-          <th width="30%" trspan="regexps"/>
-          <th width="70%" trspan="rules"/>
-        </tr>
-        <tr ng-repeat="s in currentNode.nodes">
-          <td ng-if="s.re!='default'">
-            <input class="form-control" ng-model="s.comment" ng-change="changeRuleTitle(s)"/>
-          </td>
-          <td ng-if="s.re!='default'">
-            <input class="form-control" ng-model="s.re" ng-change="changeRuleTitle(s)"/>
-          </td>
-          <td ng-if="s.re=='default'" colspan=2 style="text-align:right;font-style:italic;">
-            <h4><span trspan="defaultRule"/> :</h4>
-          </td>
-          <td>
-            <input class="form-control" ng-model="s.data"/>
-          </td>
-          <td>
-            <span ng-if="s.re!='default'" class="link glyphicon glyphicon-minus-sign" ng-click="del(currentNode.nodes,$index)"/>
-            <span ng-if="$last" class="link glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"/>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th width="20%" trspan="comment"/>
+        <th width="30%" trspan="regexps"/>
+        <th width="50%" trspan="rules"/>
+        <th />
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="s in currentNode.nodes">
+        <td ng-if="s.re!='default'">
+          <input class="form-control" ng-model="s.comment" ng-change="changeRuleTitle(s)"/>
+        </td>
+        <td ng-if="s.re!='default'">
+          <input class="form-control" ng-model="s.re" ng-change="changeRuleTitle(s)"/>
+        </td>
+        <td ng-if="s.re=='default'">
+          <p><strong><span trspan="defaultRule"/></strong></p>
+        </td>
+        <td ng-if="s.re=='default'">
+          <input class="form-control" placeholder="default" readonly/>
+        </td>
+        <td>
+          <input class="form-control" ng-model="s.data"/>
+        </td>
+        <td>
+          <span ng-if="s.re!='default'" class="link text-danger glyphicon glyphicon-minus-sign" ng-click="del(currentNode.nodes,$index)"/>
+          <span ng-if="$last" class="link text-success glyphicon glyphicon-plus-sign" ng-click="menuClick({title:'newRule'})"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <script type="text/javascript">
 buttons=[{

@@ -1,12 +1,17 @@
 <div class="panel panel-default">
-  <div class="panel-body input-group">
-    <label for="hashkeyinput" id="hklabel" class="input-group-addon"><span trspan="hashkey"></span> :</label>
-    <input aria-describedby="hklabel" id="hashkeyinput" class="form-control" ng-model="currentNode.title"/>
+  <div class="panel-heading">
+    <h3 class="panel-title">{{translateTitle(currentNode)}}</h3>
   </div>
-  <div class="panel-body input-group">
-    <label for="hashvalueinput" id="hvlabel" class="input-group-addon"><span trspan="value"></span> :</label>
-    <input aria-describedby="hklabel" id="hashvalueinput" class="form-control" ng-model="currentNode.data"/>
-  </div>
+  <table class="table">
+    <tr>
+      <th><span trspan="hashkey"/></th>
+      <td><input id="hashkeyinput" class="form-control" ng-model="currentNode.title"/>
+    </tr>
+    <tr>
+      <th><span trspan="value"/></th>
+      <td><input id="hashvalueinput" class="form-control" ng-model="currentNode.data"/>
+    </tr>
+  </table>
 </div>
 <script type="text/javascript">
 buttons=[{

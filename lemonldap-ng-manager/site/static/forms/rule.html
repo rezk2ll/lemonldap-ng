@@ -2,23 +2,22 @@
   <div class="panel-heading">
     <h3 class="panel-title" trspan="rule"/>
   </div>
-  <div class="panel-body">
-    <div class="input-group" ng-if="currentNode.re!='default'">
-      <label for="hashkeycomment" id="hcl" class="input-group-addon"><span trspan="comment"></span> :</label>
-      <input ariadescribedby="hcl" id="hashkeycomment" class="form-control" ng-model="currentNode.comment" ng-change="changeRuleTitle(currentNode)"/>
-    </div>
-    <h4 ng-if="currentNode.re=='default'" trspan="defaultRule"/>
-    &nbsp;
-    <div class="input-group" ng-if="currentNode.re!='default'">
-      <label for="hashkeyinput" id="hkl" class="input-group-addon"><span trspan="regexp"></span> :</label>
-      <input ariadescribedby="hkl" id="hashkeyinput" class="form-control" ng-model="currentNode.re" ng-change="changeRuleTitle(currentNode)"/>
-    </div>
-    &nbsp;
-    <div class="input-group">
-      <label for="hashvalueinput" id="hvl" class="input-group-addon"><span trspan="rule"></span> :</label>
-      <textarea ariadescribedby="hvl" rows=3 id="hashvalueinput" class="form-control" ng-model="currentNode.data"/>
-    </div>
-  </div>
+  <table class="table">
+    <tr>
+      <th><span trspan="comment" /></th>
+      <td ng-if="currentNode.re!='default'"><input id="hashkeycomment" class="form-control" ng-model="currentNode.comment" ng-change="changeRuleTitle(currentNode)"/></td>
+      <td ng-if="currentNode.re=='default'"><p><strong><span trspan="defaultRule" /></strong></p></td>
+    </tr>
+    <tr>
+      <th><span trspan="regexp" /></th>
+      <td ng-if="currentNode.re!='default'"><input id="hashkeyinput" class="form-control"ng-model="currentNode.re" ng-change="changeRuleTitle(currentNode)"/></td>
+      <td ng-if="currentNode.re=='default'"><input class="form-control" placeholder="default" readonly /></td>
+    </tr>
+    <tr>
+      <th><span trspan="rule" /></th>
+      <td><textarea rows="3" id="hashvalueinput" class="form-control" ng-model="currentNode.data"/></td>
+    </tr>
+  </table>
 </div>
 <script type="text/javascript">
 buttons=[{
