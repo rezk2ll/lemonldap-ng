@@ -812,6 +812,7 @@ sub tree {
         'samlSPMetaDataNodes',
         {
             title => 'oidcServiceMetaData',
+            help  => 'openidconnectservice.html#service_configuration',
             nodes => [
                 'oidcServiceMetaDataIssuer',
                 {
