@@ -14,6 +14,8 @@
   * Backends do not appear with AuthChoice and AuthMulti. See also https://jira.ow2.org/browse/LEMONLDAP-833 
 * We always get "All sessions may be lost and you must restart all your Apache servers" error
 * When we get needConfirm: 1 in save response, configuration is already saved. It should only be saved after confirmation. We should have a "cancel" button in confirmation window to refuse the changes.
+* RSA public/private keys: when keys are generated trough Manager, the carriage returns are not well displayed in textarea.
+* RSA public/private keys: the regexp tests RSAPublicKey and RSAPrivateKey always fail (Attributes.pm).
 
 ## Configuration management
 
