@@ -92,7 +92,7 @@ textarea {
   width: 100%;
 }
 
-textarea#privateKey, textarea#publicKey {
+textarea#privateKey, textarea#publicKey, textarea#filetext {
   font-size: 8pt;
 }
 

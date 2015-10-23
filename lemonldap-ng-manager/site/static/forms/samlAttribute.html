@@ -2,25 +2,26 @@
   <div class="panel-heading">
     <h3 class="panel-title" trspan="samlAttribute"></h3>
   </div>
-  <!-- Key Name -->
-  <div class="panel-body input-group">
-    <label for="sakinput" id="saklabel" class="input-group-addon"><span trspan="keyname"></span> :</label>
-    <input aria-describedby="saklabel" id="sakinput" class="form-control" ng-model="currentNode.title"/>
-  </div>
-  <!-- Name -->
-  <div class="panel-body input-group">
-    <label for="saninput" id="sanlabel" class="input-group-addon"><span trspan="name"></span> :</label>
-    <input aria-describedby="sanlabel" id="saninput" class="form-control" ng-model="currentNode.data[1]"/>
-  </div>
-  <!-- Friendly Name -->
-  <div class="panel-body input-group">
-    <label for="safinput" id="saflabel" class="input-group-addon"><span trspan="friendlyName"></span> :</label>
-    <input aria-describedby="saflabel" id="safinput" class="form-control" ng-model="currentNode.data[3]"/>
-  </div>
-  <!-- Mandatory -->
-  <div class="panel-body">
-    <span class="input-group">
-      <span class="input-group-addon"><span trspan="mandatory"/> :</span>
+  <table class="table">
+    <!-- Key Name -->
+    <tr>
+      <th><span trspan="keyname"/></th>
+      <td><input id="sakinput" class="form-control" ng-model="currentNode.title"/></td>
+    </tr>
+    <!-- Name -->
+    <tr>
+      <th><span trspan="name"/></th>
+      <td><input id="saninput" class="form-control" ng-model="currentNode.data[1]"/></td>
+    </tr>
+    <!-- Friendly Name -->
+    <tr>
+      <th><span trspan="friendlyName"/></th>
+      <td><input id="safinput" class="form-control" ng-model="currentNode.data[3]"/></td>
+    </tr>
+    <!-- Mandatory -->
+    <tr>
+      <th><span trspan="mandatory"/></th>
+      <td>
       <div class="input-group-solid">
         <label class="radio-inline">
           <input id="samOn" type="radio" value="1" name="sam" ng-model="currentNode.data[0]"/>
@@ -31,18 +32,21 @@
           <span trspan="off"/>
         </label>
       </div>
-    </span>
-  </div>
-  <!-- Format -->
-  <div class="panel-body input-group">
-    <label for="safselect" id="saflbl" class="input-group-addon"><span trspan="format"/> :</label>
-     <select class="form-control" id="safselect" aria-describedby="saflbl" ng-model="currentNode.data[2]">
-      <option value="" ng-selected="currentNode.data[2]==null||currentNode.data[2]==''"></option>
-      <option value="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified">Unspecified</option>
-      <option value="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">URI</option>
-      <option value="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">Basic</option>
-     </select>
-  </div>
+      </td>
+    </tr>
+    <!-- Format -->
+    <tr>
+      <th><span trspan="format"/></th>
+      <td>
+      <select class="form-control" id="safselect" aria-describedby="saflbl" ng-model="currentNode.data[2]">
+        <option value="" ng-selected="currentNode.data[2]==null||currentNode.data[2]==''"></option>
+        <option value="urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified">Unspecified</option>
+        <option value="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">URI</option>
+        <option value="urn:oasis:names:tc:SAML:2.0:attrname-format:basic">Basic</option>
+       </select>
+       </td>
+     </tr>
+  </table>
 </div>
 <script type="text/javascript">
 buttons=[{
