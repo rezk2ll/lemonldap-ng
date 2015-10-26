@@ -41,8 +41,9 @@ sub scanTree {
 
     # Set cfgNum to ref cfgNum (will be changed when saving), set other
     # metadatas and set a value to the key if empty
-    $self->newConf->{cfgNum}      = $self->refConf->{cfgNum};
-    $self->newConf->{cfgAuthor}   = $self->req->userData->{_whatToTrace};
+    $self->newConf->{cfgNum}    = $self->refConf->{cfgNum};
+    $self->newConf->{cfgAuthor} = $self->req->userData->{_whatToTrace}
+      // "anonymous";
     $self->newConf->{cfgAuthorIP} = $self->req->remote_ip;
     $self->newConf->{cfgDate}     = time;
     $self->newConf->{key} ||=
