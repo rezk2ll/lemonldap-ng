@@ -1,6 +1,7 @@
 package Lemonldap::NG::Manager::Conf::Tests;
 
 use Lemonldap::NG::Common::Regexp;
+use Lemonldap::NG::Handler::SharedConf;
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
@@ -179,16 +180,12 @@ sub tests {
         # Try to use Apache::Session module
         testApacheSession => sub {
             my ( $id, %h );
+            my $gc =
+              $Lemonldap::NG::Handler::SharedConf::tsv->{sessionStorageModule};
             return 1
-              if (
-                (
-                        $Lemonldap::NG::Handler::_CGI::tsv->{globalStorage}
-                    and $Lemonldap::NG::Handler::_CGI::tsv->{globalStorage} eq
-                    $conf->{globalStorage}
-                )
+              if ( ( $gc and $gc eq $conf->{globalStorage} )
                 or $conf->{globalStorage} eq
-                'Lemonldap::NG::Common::Apache::Session::SOAP'
-              );
+                'Lemonldap::NG::Common::Apache::Session::SOAP' );
             eval "use $conf->{globalStorage}";
             return ( -1, "Unknown package $conf->{globalStorage}" ) if ($@);
             eval {
@@ -209,7 +206,6 @@ sub tests {
               unless ( $h{a} == 1 );
             eval { tied(%h)->delete; };
             return ( -1, "Unable to delete session ($@)" ) if ($@);
-            my $gc = $Lemonldap::NG::Handler::_CGI::tsv->{globalStorage};
             return ( -1,
 'All sessions may be lost and you must restart all your Apache servers'
             ) if ( $conf->{globalStorage} ne $gc );
@@ -218,12 +214,12 @@ sub tests {
 
         # Warn if cookie name has changed
         cookieNameChanged => sub {
+            my $cn = $Lemonldap::NG::Handler::SharedConf::tsv->{cookieName};
             return (
                 1,
                 (
-                    $Lemonldap::NG::Handler::_CGI::tsv->{cookieName}
-                      and $Lemonldap::NG::Handler::_CGI::tsv->{cookieName} ne
-                      $conf->{cookieName}
+                    $cn
+                      and $cn ne $conf->{cookieName}
                     ? 'Cookie name has changed, you must restart all your Apache servers'
                     : ()
                 )

@@ -12,7 +12,6 @@
   * No input is displayed when Multi is choosen in authentication modules
   * Specific backend branch do not appear when module is choosen from authParams.html, only when choosen from the child entry
   * Filter displayed backend with Choice/Multi. See also https://jira.ow2.org/browse/LEMONLDAP-833 
-* We always get "All sessions may be lost and you must restart all your Apache servers" error
 * When we get needConfirm: 1 in save response, configuration is already saved. It should only be saved after confirmation. We should have a "cancel" button in confirmation window to refuse the changes.
 * RSA public/private keys: the regexp tests RSAPublicKey and RSAPrivateKey always fail (Attributes.pm).
 * SAML IDP/SP exported attributes not working
