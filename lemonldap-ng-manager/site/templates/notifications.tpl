@@ -52,13 +52,15 @@
         <div class="panel-heading">
           <h1 class="panel-title text-center">{{translate('view')}}</h1>
         </div>
-        <h2>{{currentNotification.uid}}_{{currentNotification.reference}}</h2>
-        <div ng-if="currentNotification.done" class="panel-body">
-          {{translate('internalReference')}}: {{currentNotification.done}}
-        </div>
-        <div ng-if="currentNotification.notifications">
-          <div ng-repeat="n in currentNotification.notifications" class="panel-body">
-            {{n}}
+        <div class="panel-body">
+          <h2>{{currentNotification.uid}}_{{currentNotification.reference}}</h2>
+          <div ng-if="currentNotification.done">
+            {{translate('internalReference')}}: {{currentNotification.done}}
+          </div>
+          <div ng-if="currentNotification.notifications">
+            <pre ng-repeat="n in currentNotification.notifications">
+              {{n}}
+            </pre>
           </div>
         </div>
       </div>
