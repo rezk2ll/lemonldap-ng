@@ -61,9 +61,9 @@ print "<style>\n";
 print "$css\n";
 print "</style>\n";
 print
-"<script type=\"text/javascript\" src=\"/skins/common/js/jquery-1.10.2.js\"></script>\n";
+"<script type=\"text/javascript\" src=\"$portal_url/skins/common/js/jquery-1.10.2.js\"></script>\n";
 print
-"<script type=\"text/javascript\" src=\"/skins/common/js/jquery-ui-1.10.3.custom.js\"></script>\n";
+"<script type=\"text/javascript\" src=\"$portal_url/skins/common/js/jquery-ui-1.10.3.custom.js\"></script>\n";
 print "<script src=\"$portal_url/skins/bootstrap/js/bootstrap.js\"></script>\n";
 print "</head>\n";
 print "<body>\n";
