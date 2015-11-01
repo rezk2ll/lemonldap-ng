@@ -13,11 +13,13 @@
     <!-- Tree -->
     <aside id="left" class="col-lg-4 col-md-4 col-sm-5 col-xs-12 scrollable " ng-class="{'hidden-xs':!showT}" role="complementary">
       <div class="navbar navbar-default">
-        <ul class="nav navbar-nav">
-          <li><a id="a-actives" href="#">{{translate('actives')}}</a></li>
-          <li><a id="a-done" href="#/done">{{translate('dones')}}</a></li>
-          <li><a id="a-new" href="#/new">{{translate('create')}}</a></li>
-        </ul>
+        <div class="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a id="a-actives" href="#"><i class="glyphicon glyphicon-eye-open"></i> {{translate('actives')}}</a></li>
+            <li><a id="a-done" href="#/done"><i class="glyphicon glyphicon-eye-close"></i> {{translate('dones')}}</a></li>
+            <li><a id="a-new" href="#/new"><i class="glyphicon glyphicon-plus-sign"></i> {{translate('create')}}</a></li>
+          </ul>
+        </div>
       </div>
       <div class="region region-sidebar-first">
         <section id="block-superfish-1" class="block block-superfish clearfix">
@@ -62,29 +64,32 @@
       </div>
       <!-- Create form -->
       <div class="panel panel-default" ng-if="showForm">
+        <div class="panel-heading">
+          <h1 class="panel-title text-center">{{translate('create')}}</h1>
+        </div>
         <form>
-          <div class="input-group">
-            <span class="input-group-addon" trspan="uid"></span>
-            <input type="text" class="form-control" ng-model="form.uid">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon" trspan="date"></span>
-            <input type="text" class="form-control" ng-model="form.date">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon" trspan="reference"></span>
-            <input type="text" class="form-control" ng-model="form.reference">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon" trspan="condition"></span>
-            <input type="text" class="form-control" ng-model="form.condition">
-          </div>
-          <div>
-          <h3 trspan="XMLcontent"></h3>
-          <div class="input-group" style="width:100%;">
-            <textarea rows="5" class="form-control" ng-model="form.xml">
-            </textarea>
-          </div>
+        <table class="table">
+          <tr>
+            <th><span trspan="uid" /></th>
+            <td><input type="text" class="form-control" ng-model="form.uid" /></td>
+          </tr>
+          <tr>
+            <th><span trspan="date" /></th>
+            <td><input type="text" class="form-control" ng-model="form.date" /></td>
+          </tr>
+          <tr>
+            <th><span trspan="reference" /></th>
+            <td><input type="text" class="form-control" ng-model="form.reference" /></td>
+          </tr>
+          <tr>
+            <th><span trspan="condition" /></th>
+            <td><input type="text" class="form-control" ng-model="form.condition"/></td>
+          </tr>
+          <tr>
+            <th><span trspan="XMLcontent" /></th>
+            <td><textarea rows=5 class="form-control" ng-model="form.xml"></textarea></td>
+          </tr>
+        </table>
         </form>
       </div>
     </div>

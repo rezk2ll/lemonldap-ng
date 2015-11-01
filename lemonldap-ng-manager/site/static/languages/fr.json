@@ -538,6 +538,7 @@
   "twitterKey": "Clef de l'API",
   "twitterParams": "Paramètres Twitter",
   "twitterSecret": "Secret de l'API",
+  "uid": "Identifiant",
   "unknownError": "Erreur inconnue",
   "unknownKey": "Clef inconnue",
   "unsecuredCookie": "Cookie non sécurisé",

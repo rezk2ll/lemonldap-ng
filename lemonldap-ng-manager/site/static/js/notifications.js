@@ -23,7 +23,8 @@
       'title': 'deleteNotification'
     }],
     'new': [{
-      'title': 'save'
+      'title': 'save',
+      'icon': 'save'
     }],
     'home': []
   }
