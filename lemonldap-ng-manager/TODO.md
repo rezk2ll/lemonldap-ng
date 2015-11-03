@@ -8,7 +8,7 @@
 ## Bugs
 
 * After an Apache restart, if Manager is loaded first, portal cannot be loaded
-  **=>** this is a ModPerl problems. 2 choices :
+  **=>** this is a ModPerl problems. 3 choices :
       - downgrade manager to use it as CGI
       - use a FASTCGI wrapper to avoid using Plack in Apache
       - use PSGI for portal
