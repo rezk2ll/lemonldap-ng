@@ -52,17 +52,24 @@
         <div class="panel-heading">
           <h1 class="panel-title text-center">{{translate('view')}}</h1>
         </div>
-        <div class="panel-body">
-          <h2>{{currentNotification.uid}}_{{currentNotification.reference}}</h2>
-          <div ng-if="currentNotification.done">
-            {{translate('internalReference')}}: {{currentNotification.done}}
-          </div>
-          <div ng-if="currentNotification.notifications">
-            <pre ng-repeat="n in currentNotification.notifications">
-              {{n}}
-            </pre>
-          </div>
-        </div>
+        <table class="table">
+          <tr>
+            <th><span trspan="uid" /></th>
+            <td>{{currentNotification.uid}}</td>
+          </tr>
+          <tr>
+            <th><span trspan="reference" /></th>
+            <td>{{currentNotification.reference}}</td>
+          </tr>
+          <tr ng-if="currentNotification.done">
+            <th><span trspan="internalReference" /></th>
+            <td>{{currentNotification.done}}</td>
+          </tr>
+          <tr ng-if="currentNotification.notifications">
+            <th>Notifications</th>
+            <td><pre ng-repeat="n in currentNotification.notifications">{{n}}</pre></td>
+          </tr>
+        </table> 
       </div>
       <!-- Create form -->
       <div class="panel panel-default" ng-if="showForm">
@@ -98,15 +105,15 @@
   </div>
 
   <script type="text/ng-template" id="nodes_renderer.html">
-    <div ui-tree-handle class="tree-node tree-node-content" ng-class="{'selected':this.$modelValue===currentNotification.$modelValue}">
+    <div ui-tree-handle class="tree-node tree-node-content panel-info" ng-class="{'bg-info':this.$modelValue===currentNotification.$modelValue,'tree-node-default':this.$modelValue!==currentNotification.$modelValue}">
       <span ng-if="node.value">
-        <a id="a-{{node.value}}" class="btn btn-node btn-xs" ng-click="stoggle(this)">
+        <a id="a-{{node.value}}" class="btn btn-node btn-sm" ng-click="stoggle(this)">
           <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}"></span>
         </a>
         <span id="s-{{node.value}}" ng-click="stoggle(this)">{{node.value}} <span class="badge">{{node.count}}</span></span>
       </span>
       <span ng-if="node.notification">
-        <a class="btn btn-node btn-xs" ng-click="displayNotification(this)">
+        <a class="btn btn-node btn-sm" ng-click="displayNotification(this)">
           <span class="glyphicon glyphicon-pencil"></span>
         </a>
         <span id="s-{{node.notification}}" ng-click="displayNotification(this)">{{node.reference}} <i ng-if="node.date">({{notifDate(node.date)}})</i></span>

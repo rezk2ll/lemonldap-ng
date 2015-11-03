@@ -17,10 +17,12 @@
     ];
   var menu = {
     'actives':[{
-      'title': 'markAsDone'
+      'title': 'markAsDone',
+      'icon': 'eye-close'
     }],
     'done': [{
-      'title': 'deleteNotification'
+      'title': 'deleteNotification',
+      'icon': 'trash'
     }],
     'new': [{
       'title': 'save',
