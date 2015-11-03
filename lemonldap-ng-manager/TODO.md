@@ -8,12 +8,22 @@
 ## Bugs
 
 * After an Apache restart, if Manager is loaded first, portal cannot be loaded
+  **=>** this is a ModPerl problems. 2 choices :
+      - downgrade manager to use it as CGI
+      - use a FASTCGI wrapper to avoid using Plack in Apache
+      - use PSGI for portal
+     I prefer the 3rd choice
 * Authentication parameters:
   * No input is displayed when Multi is choosen in authentication modules
-  * Specific backend branch do not appear when module is choosen from authParams.html, only when choosen from the child entry
-  * Filter displayed backend with Choice/Multi. See also https://jira.ow2.org/browse/LEMONLDAP-833 
-* When we get needConfirm: 1 in save response, configuration is already saved. It should only be saved after confirmation. We should have a "cancel" button in confirmation window to refuse the changes.
-* RSA public/private keys: the regexp tests RSAPublicKey and RSAPrivateKey always fail (Attributes.pm).
+  * Specific backend branch do not appear when module is choosen from
+    authParams.html, only when choosen from the child entry
+  * Filter displayed backend with Choice/Multi.
+    See also https://jira.ow2.org/browse/LEMONLDAP-833 
+* When we get needConfirm: 1 in save response, configuration is already saved.
+  It should only be saved after confirmation. We should have a "cancel" button
+  in confirmation window to refuse the changes.
+* RSA public/private keys: the regexp tests RSAPublicKey and RSAPrivateKey
+  always fail (Attributes.pm).
 * SAML IDP/SP exported attributes not working
 
 ## Configuration management
