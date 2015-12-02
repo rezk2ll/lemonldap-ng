@@ -23,7 +23,7 @@ sub _run {
             my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
             Lemonldap::NG::Handler::API->newRequest($req);
             my $res = Lemonldap::NG::Handler::SharedConf->run($rule);
-            $req->userData($datas);
+            $req->userData($datas) if($datas);
 
             # TODO: Userdata
             #print STDERR Dumper( \@_, $res ); use Data::Dumper;
