@@ -7,12 +7,6 @@
 
 ## Bugs
 
-* After an Apache restart, if Manager is loaded first, portal cannot be loaded
-  **=>** this is a ModPerl problems. 3 choices :
-      - downgrade manager to use it as CGI
-      - use a FASTCGI wrapper to avoid using Plack in Apache
-      - use PSGI for portal
-     I prefer the 3rd choice
 * Authentication parameters:
   * No input is displayed when Multi is choosen in authentication modules
   * Specific backend branch do not appear when module is choosen from
