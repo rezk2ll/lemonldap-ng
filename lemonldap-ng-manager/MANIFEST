@@ -25,15 +25,6 @@ scripts/jsongenerator.pl
 scripts/lemonldap-ng-cli
 scripts/lmConfigEditor
 scripts/testConfBackend.pl
-site-test/e2e/00-auth.js
-site-test/e2e/01-tree.js
-site-test/e2e/02-lang.js
-site-test/e2e/05-form.js
-site-test/e2e/06-form.js
-site-test/e2e/40-sessions.js
-site-test/e2e/99-logout.js
-site-test/e2e/README.md
-site-test/protractor-conf.js
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.css
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.js
 site/static/bwr/angular/angular.min.js
