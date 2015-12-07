@@ -211,6 +211,9 @@ extra_test:	all
 	cd ${SRCPORTALDIR} && prove -b -I ../lemonldap-ng-common/blib/lib -I ../lemonldap-ng-handler/blib/lib -I../${SRCPORTALDIR}/blib/lib/ xt
 #	PERL_DL_NONLAZY=1 $(PERL) "-MExtUtils::Command::MM" "-e" "test_harness(0, 'lemonldap-ng-common/blib/lib', 'lemonldap-ng-handler/blib/lib', 'lemonldap-ng-manager/blib/lib', 'lemonldap-ng-portal/blib/lib')" extra-tests/*.t
 
+e2e_test:
+	protractor e2e-tests/protractor-conf.js
+
 #
 # INSTALL
 #
