@@ -16,13 +16,30 @@ has logLevel     => ( is => 'rw', isa     => 'Str' );
 has staticPrefix => ( is => 'rw', isa     => 'Str' );
 has templateDir  => ( is => 'rw', isa     => 'Str' );
 has links        => ( is => 'rw', isa     => 'ArrayRef' );
+has syslog => (
+    is      => 'rw',
+    isa     => 'Str',
+    trigger => sub {
+        if ( $_[0]->{syslog} ) {
+            eval {
+                require Sys::Syslog;
+                Sys::Syslog->import(':standard');
+                openlog( 'lemonldap-ng', 'ndelay,pid', $_[0]->{syslog} );
+            };
+            $_[0]
+              ->error("Unable to use syslog with facility $_[0]->{syslog}: $@")
+              if ($@);
+        }
+    },
+);
 
+## @method void lmLog(string mess, string level)
+# Log subroutine. Print on STDERR messages if it exceeds `logLevel` value
+# @param $mess Text to log
+# @param $level Level (debug|info|notice|warn|error)
 sub lmLog {
     my ( $self, $msg, $level ) = splice @_;
     my $levels = {
-        emerg  => 7,
-        alert  => 6,
-        crit   => 5,
         error  => 4,
         warn   => 3,
         notice => 2,
@@ -32,6 +49,51 @@ sub lmLog {
     my $l = $levels->{$level} || 1;
     return if ( ref($self) and $l < $levels->{ $self->{logLevel} } );
     print STDERR "[$level] " . ( $l ? '' : (caller)[0] . ': ' ) . " $msg\n";
+}
+
+##@method void userLog(string mess, string level)
+# Log user actions on Apache logs or syslog.
+# @param $mess string to log
+# @param $level level of log message
+sub userLog {
+    my ( $self, $mess, $level ) = @_;
+    if ( $self->{syslog} ) {
+        $self->startSyslog();
+        $level =~ s/^warn$/warning/;
+        syslog( $level || 'notice', $mess );
+    }
+    else {
+        $self->lmLog( $mess, $level );
+    }
+}
+
+##@method void userInfo(string mess)
+# Log non important user actions. Alias for userLog() with facility "info".
+# @param $mess string to log
+sub userInfo {
+    my ( $self, $mess ) = @_;
+    $mess = "Lemonldap::NG : $mess (" . $self->ipAddr . ")";
+    $self->userLog( $mess, 'info' );
+}
+
+##@method void userNotice(string mess)
+# Log user actions like access and logout. Alias for userLog() with facility
+# "notice".
+# @param $mess string to log
+sub userNotice {
+    my ( $self, $mess ) = @_;
+    $mess = "Lemonldap::NG : $mess (" . $self->ipAddr . ")";
+    $self->userLog( $mess, 'notice' );
+}
+
+##@method void userError(string mess)
+# Log user errors like "bad password". Alias for userLog() with facility
+# "warn".
+# @param $mess string to log
+sub userError {
+    my ( $self, $mess ) = @_;
+    $mess = "Lemonldap::NG : $mess (" . $self->ipAddr . ")";
+    $self->userLog( $mess, 'warn' );
 }
 
 # Responses methods
