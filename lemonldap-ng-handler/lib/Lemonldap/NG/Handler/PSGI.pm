@@ -23,7 +23,7 @@ sub _run {
             my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
             Lemonldap::NG::Handler::API->newRequest($req);
             my $res = Lemonldap::NG::Handler::SharedConf->run($rule);
-            $req->userData($datas) if($datas);
+            $req->userData($datas) if ($datas);
 
             # TODO: Userdata
             #print STDERR Dumper( \@_, $res ); use Data::Dumper;
@@ -76,14 +76,14 @@ sub _run {
 # @return hash of user datas
 sub user {
     my ( $self, $req ) = splice @_;
-    return $req->userData;
+    return $req->userData || { _whatToTrace => 'anonymous' };
 }
 
 ## @method string userId()
 # @return user identifier to log
 sub userId {
     my ( $self, $req ) = splice @_;
-    return $req->userData->{_whatToTrace};
+    return $req->userData->{_whatToTrace} || 'anonymous';
 }
 
 ## @method boolean group(string group)
@@ -91,7 +91,20 @@ sub userId {
 # @return boolean : true if user is in this group
 sub group {
     my ( $self, $req, $group ) = splice @_;
+    return () unless ( $req->userData->{groups} );
     return ( $req->userData->{groups} =~ /\b$group\b/ );
+}
+
+## @method PSGI::Response sendError($req,$err,$code)
+# Add user di to $err before calling Lemonldap::NG::Common::PSGI::sendError()
+# @param $req Lemonldap::NG::Common::PSGI::Request
+# @param $err String to push
+# @code int HTTP error code (default to 500)
+sub sendError {
+    my ( $self, $req, $err, $code ) = splice @_;
+    $err ||= $req->error;
+    $err = '[' . $self->userId($req) . "] $err";
+    return $self->SUPER::sendError( $req, $err, $code );
 }
 
 1;
