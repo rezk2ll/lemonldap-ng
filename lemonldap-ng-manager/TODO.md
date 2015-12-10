@@ -7,8 +7,6 @@
 ## Bugs
 
 * Authentication parameters:
-  * Specific backend branch do not appear when module is choosen from
-    authParams.html, only when choosen from the child entry
   * Filter displayed backend with Choice/Multi.
     See also https://jira.ow2.org/browse/LEMONLDAP-833 
 * When we get needConfirm: 1 in save response, configuration is already saved.
