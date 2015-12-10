@@ -1,7 +1,6 @@
 # Lemonldap::NG::Manager TODO list
 
 * Check for eval with SAML
-* userInfo && userWarn
 * Icon picker for application logo
 * Change documentation lang when changing language
 
