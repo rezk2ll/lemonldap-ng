@@ -273,6 +273,15 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'multiParams',
+                            help  => 'authmulti.html',
+                            form  => 'simpleInputContainer',
+                            nodes => [
+                                'multiAuthStack', 'multiUserDBStack',
+                                'multiValuesSeparator'
+                            ]
+                        },
+                        {
                             title => 'nullParams',
                             help  => 'authnull.html',
                             form  => 'simpleInputContainer',

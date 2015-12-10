@@ -1913,6 +1913,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         # Multi
+        multiAuthStack => {
+            type => 'text',
+        },
+        multiUserDBStack => {
+            type => 'text',
+        },
         multiValuesSeparator => {
             type          => 'text',
             default       => '; ',

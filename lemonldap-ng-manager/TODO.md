@@ -7,7 +7,6 @@
 ## Bugs
 
 * Authentication parameters:
-  * No input is displayed when Multi is choosen in authentication modules
   * Specific backend branch do not appear when module is choosen from
     authParams.html, only when choosen from the child entry
   * Filter displayed backend with Choice/Multi.

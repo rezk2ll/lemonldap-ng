@@ -25,7 +25,7 @@ sub new {
     weaken $self->{p};
 
     # Browse authentication and userDB configuration
-    my @stack = ( $portal->{authentication}, $portal->{userDB} );
+    my @stack = ( $portal->{multiAuthStack}, $portal->{multiUserDBStack} );
     for ( my $i = 0 ; $i < 2 ; $i++ ) {
         $stack[$i] =~ s/^Multi\s*//;
         foreach my $l ( split /;/, $stack[$i] ) {
