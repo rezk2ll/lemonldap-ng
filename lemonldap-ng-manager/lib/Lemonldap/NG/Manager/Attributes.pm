@@ -81,12 +81,12 @@ sub types {
         },
         RSAPublicKey => {
             test =>
-qr/^(?:\-+\s+BEGIN\s+PUBLIC\s+KEY\-+(?:[a-zA-Z0-9\/\+]|(?:\r?\n|%0A))+={0,2}(?:\r?\n|%0A)\-+\s+END\s+PUBLIC\s+KEY\-+(?:\r?\n|%0A)?)?$/m,
+qr/^(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+PUBLIC\s+KEY\s*\-+)?[\r\n]*$/s,
             msgFail => '__badPemEncoding__',
         },
         RSAPrivateKey => {
             test =>
-qr/^(?:\-+\s+BEGIN\s+RSA\s+PRIVATE\s+KEY\-+(?:[a-zA-Z0-9\/\+]|(?:\r?\n|%0A))+={0,2}(?:\r?\n|%0A)\-+\s+END\s+RSA\s+PRIVATE\s+KEY\-+(?:\r?\n|%0A)?)?$/m,
+qr/^(?:\-+\s*BEGIN\s+RSA\s+PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+RSA\s+PRIVATE\s+KEY\s*\-+)?[\r\n]*$/s,
             msgFail => '__badPemEncoding__',
         },
 
