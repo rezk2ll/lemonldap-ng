@@ -156,6 +156,11 @@ all:	configure common handler manager portal
 # Perl libraries configuration
 #
 
+json:	manager_json
+
+manager_json:
+	@cd lemonldap-ng-manager && ./scripts/jsongenerator.pl && cd -
+
 configure:	common_conf handler_conf portal_conf manager_conf
 
 common_conf:

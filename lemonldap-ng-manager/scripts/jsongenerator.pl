@@ -1,4 +1,4 @@
-#!/usr/bin/env perl -Ilib/ -w
+#!/usr/bin/perl -Ilib/ -w
 
 use strict;
 
