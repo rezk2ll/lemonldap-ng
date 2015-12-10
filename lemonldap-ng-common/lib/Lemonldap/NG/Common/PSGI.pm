@@ -72,7 +72,6 @@ sub userLog {
 # @param $mess string to log
 sub userInfo {
     my ( $self, $mess ) = @_;
-    $mess = "Lemonldap::NG : $mess (" . $self->ipAddr . ")";
     $self->userLog( $mess, 'info' );
 }
 
@@ -82,7 +81,6 @@ sub userInfo {
 # @param $mess string to log
 sub userNotice {
     my ( $self, $mess ) = @_;
-    $mess = "Lemonldap::NG : $mess (" . $self->ipAddr . ")";
     $self->userLog( $mess, 'notice' );
 }
 
@@ -92,7 +90,6 @@ sub userNotice {
 # @param $mess string to log
 sub userError {
     my ( $self, $mess ) = @_;
-    $mess = "Lemonldap::NG : $mess (" . $self->ipAddr . ")";
     $self->userLog( $mess, 'warn' );
 }
 
