@@ -35,7 +35,7 @@ sub addRoutes {
       ->addRoute(
         confs => {
             ':cfgNum' => [
-                qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes)
+                qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes authChoiceModules)
             ]
         },
         ['GET']
@@ -397,6 +397,33 @@ sub oidcOPMetaDataNodes {
 sub oidcRPMetaDataNodes {
     my ( $self, $req, @path ) = splice @_;
     return $self->_oidcMetaDataNodes( 'RP', $req, @path );
+}
+
+## @method PSGI-JSON-response authChoiceModules(key)
+# Returns authChoiceModules keys splitted in arrays
+#
+#@param key optional subkey
+#@return PSGI JSON response
+sub authChoiceModules {
+    my ( $self, $req, $key ) = splice @_;
+    my $value = $self->getConfKey( $req, 'authChoiceModules' );
+    unless ($key) {
+        my @res;
+        foreach my $k ( sort keys %$value ) {
+            push @res,
+              {
+                id    => "authChoiceModules/$k",
+                title => "$k",
+                data  => $value->{$k},
+                type  => 'keyText'
+              };
+        }
+        return $self->sendJSONresponse( $req, \@res );
+    }
+    else {
+        my $r = $value->{$key} ? [ split( /[;\|]/, $value->{$key} ) ] : [];
+        return $self->sendJSONresponse( $req, { value => $r } );
+    }
 }
 
 ## @method PSGI-JSON-response metadatas($req)

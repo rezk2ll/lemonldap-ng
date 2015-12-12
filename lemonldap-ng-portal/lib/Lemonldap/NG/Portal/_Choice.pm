@@ -63,7 +63,7 @@ sub new {
         if ($samlForce) {
             $portal->lmLog( "SAML is a forced choice", 'debug' );
             $portal->{_authChoice} = 'forcedSAML';
-            $portal->{authChoiceModules}->{'forcedSAML'} = 'SAML|SAML|Null';
+            $portal->{authChoiceModules}->{'forcedSAML'} = 'SAML;SAML;Null';
         }
 
     }
@@ -72,7 +72,7 @@ sub new {
 
     # Find modules associated to authChoice
     my ( $auth, $userDB, $passwordDB ) =
-      split( /\|/, $portal->{authChoiceModules}->{ $portal->{_authChoice} } );
+      split( /[;\|]/, $portal->{authChoiceModules}->{ $portal->{_authChoice} } );
 
     if ( $auth and $userDB and $passwordDB ) {
 
@@ -191,7 +191,7 @@ sub _buildAuthLoop {
 
         # Find modules associated to authChoice
         my ( $auth, $userDB, $passwordDB, $url ) =
-          split( /\|/, $self->{authChoiceModules}->{$_} );
+          split( /[;\|]/, $self->{authChoiceModules}->{$_} );
 
         if ( $auth and $userDB and $passwordDB ) {
 

@@ -1910,7 +1910,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Applications list',
         },
         authChoiceModules => {
-            type       => 'keyTextContainer',
+            type       => 'authChoiceContainer',
             keyTest    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
             keyMsgFail => 'Bad choice key',
         },
