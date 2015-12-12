@@ -1904,8 +1904,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         # Choice
-        authChoiceParam =>
-          { 'type' => 'text', documentation => 'Applications list', },
+        authChoiceParam => {
+            type          => 'text',
+            default       => 'lmAuth',
+            documentation => 'Applications list',
+        },
         authChoiceModules => {
             type       => 'keyTextContainer',
             keyTest    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
