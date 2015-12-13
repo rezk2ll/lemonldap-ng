@@ -415,7 +415,7 @@ sub authChoiceModules {
                 id    => "authChoiceModules/$k",
                 title => "$k",
                 data  => $value->{$k},
-                type  => 'keyText'
+                type  => 'authChoice'
               };
         }
         return $self->sendJSONresponse( $req, \@res );

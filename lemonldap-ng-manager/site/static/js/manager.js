@@ -234,6 +234,17 @@
       });
     }
 
+    /* Add auth chain entry to authChoice */
+    $scope.newAuthChoice = function() {
+      var node = $scope._findContainer();
+      node.nodes.push({
+        "id": node.id + '/n' + (id++),
+        "title": "1-key",
+        "data": [],
+        "type": "authChoice"
+      });
+    };
+
     /* Add hash entry */
     $scope.newHashEntry = function() {
       var node = $scope._findContainer();
