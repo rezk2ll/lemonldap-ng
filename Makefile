@@ -217,7 +217,24 @@ extra_test:	all
 #	PERL_DL_NONLAZY=1 $(PERL) "-MExtUtils::Command::MM" "-e" "test_harness(0, 'lemonldap-ng-common/blib/lib', 'lemonldap-ng-handler/blib/lib', 'lemonldap-ng-manager/blib/lib', 'lemonldap-ng-portal/blib/lib')" extra-tests/*.t
 
 e2e_test:
-	protractor e2e-tests/protractor-conf.js
+	@mkdir -p e2e-tests/conf
+	$(MAKE) install_webserver_conf \
+		RCONFDIR=e2e-tests/conf \
+		ERASECONFIG=1 \
+		VHOSTLISTEN='*:19876' \
+		PORTALDIR=`pwd`/lemonldap-ng-portal/example \
+		MANAGERDIR=`pwd`/lemonldap-ng-manager/site \
+		MANAGERPSGIDIR=`pwd`/e2e-tests \
+		DEFDOCDIR=`pwd`/doc \
+		FRDOCDIR=`pwd`/po-doc/fr
+	# Start web server
+	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` && sleep 1
+	@/usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start
+	# Start e2e tests
+	@protractor e2e-tests/protractor-conf.js
+	# Clean
+	@kill `cat e2e-tests/conf/apache2.pid`
+	@rm -rf e2e-tests/conf
 
 #
 # INSTALL
@@ -276,31 +293,13 @@ install_bin:	install_conf_dir
 #
 # SITE INSTALL
 #
-install_site:	install_manager_site install_portal_site install_handler_site install_test_site install_examples_site install_doc_site
+install_site:	install_manager_site install_portal_site install_handler_site install_test_site install_examples_site install_doc_site install_webserver_conf
 	# Site install
 	@install -v -d $(RCONFDIR)
 	# Check if erase is wanted
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
-		cp -f _example/etc/portal-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp -f _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp -f _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp -f _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp -f _example/etc/handler-nginx.conf $(RCONFDIR); \
-		cp -f _example/etc/test-nginx.conf $(RCONFDIR); \
-		cp -f _example/etc/nginx-access-control $(RCONFDIR); \
-		cp -f _example/etc/nginx-http-accounting $(RCONFDIR); \
-		cp -f _example/etc/nginx-fcgi-accounting $(RCONFDIR); \
 		cp -f _example/etc/for_etc_hosts $(RCONFDIR); \
 	fi
-	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
-			s#__PORTALDIR__#$(PORTALDIR)/#g; \
-			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
-			s#__MANAGERSTATICDIR__#$(MANAGERSTATICDIR)/#g; \
-			s#__MANAGERPSGIDIR__#$(MANAGERPSGIDIR)/#g; \
-			s#__TESTDIR__#$(TESTDIR)/#g; \
-			s#__VHOSTLISTEN__#$(VHOSTLISTEN)#g; \
-			s#__DEFDOCDIR__#$(DEFDOCDIR)/#g; \
-			s#__FRDOCDIR__#$(FRDOCDIR)/#g;' $(RCONFDIR)/*apache*.conf $(RCONFDIR)/*nginx*.conf
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	# Fix a lost of rights on the main directory
 	@chmod 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSKINSDIR) $(RMANAGERSITEDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
@@ -334,6 +333,29 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 		echo "    Fix them by yourself to restrict their view to apache process only"; \
 	fi
 	@echo
+
+install_webserver_conf:
+	@install -m 755 -v -d $(RCONFDIR)
+	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
+		cp -f _example/etc/portal-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp -f _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp -f _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp -f _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp -f _example/etc/handler-nginx.conf $(RCONFDIR); \
+		cp -f _example/etc/test-nginx.conf $(RCONFDIR); \
+		cp -f _example/etc/nginx-access-control $(RCONFDIR); \
+		cp -f _example/etc/nginx-http-accounting $(RCONFDIR); \
+		cp -f _example/etc/nginx-fcgi-accounting $(RCONFDIR); \
+	fi
+	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
+			s#__PORTALDIR__#$(PORTALDIR)/#g; \
+			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
+			s#__MANAGERSTATICDIR__#$(MANAGERSTATICDIR)/#g; \
+			s#__MANAGERPSGIDIR__#$(MANAGERPSGIDIR)/#g; \
+			s#__TESTDIR__#$(TESTDIR)/#g; \
+			s#__VHOSTLISTEN__#$(VHOSTLISTEN)#g; \
+			s#__DEFDOCDIR__#$(DEFDOCDIR)/#g; \
+			s#__FRDOCDIR__#$(FRDOCDIR)/#g;' $(RCONFDIR)/*apache*.conf $(RCONFDIR)/*nginx*.conf
 
 install_manager_site:	install_conf_dir
 	# Manager install

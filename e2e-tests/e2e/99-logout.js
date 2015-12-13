@@ -5,7 +5,7 @@
 describe('Auth mechanism', function() {
 
   it('should allow logout', function() {
-    browser.driver.get('http://auth.example.com/?logout=1');
+    browser.driver.get('http://auth.example.com:19876/?logout=1');
   });
 
 });
