@@ -216,8 +216,10 @@ extra_test:	all
 	cd ${SRCPORTALDIR} && prove -b -I ../lemonldap-ng-common/blib/lib -I ../lemonldap-ng-handler/blib/lib -I../${SRCPORTALDIR}/blib/lib/ xt
 #	PERL_DL_NONLAZY=1 $(PERL) "-MExtUtils::Command::MM" "-e" "test_harness(0, 'lemonldap-ng-common/blib/lib', 'lemonldap-ng-handler/blib/lib', 'lemonldap-ng-manager/blib/lib', 'lemonldap-ng-portal/blib/lib')" extra-tests/*.t
 
-e2e_test:
-	@mkdir -p e2e-tests/conf
+e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_server
+
+prepare_test_server:
+	@mkdir -p e2e-tests/conf/lock
 	$(MAKE) install_webserver_conf \
 		RCONFDIR=e2e-tests/conf \
 		ERASECONFIG=1 \
@@ -227,15 +229,24 @@ e2e_test:
 		MANAGERPSGIDIR=`pwd`/e2e-tests \
 		DEFDOCDIR=`pwd`/doc \
 		FRDOCDIR=`pwd`/po-doc/fr
+	cp e2e-tests/lmConf-1.js e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/conf/
+	perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;' e2e-tests/conf/lemonldap-ng.ini e2e-tests/conf/lmConf-1.js e2e-tests/conf/env.conf
+
+start_web_server: prepare_test_server
 	# Start web server (designed for Debian, path may be broken else)
 	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` && sleep 1
-	@/usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start
+	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start
+
+launch_protractor:
 	# Start e2e tests
 	# NB: you must have protractor installed (using npm install -g protractor)
 	# and have run update-webdriver at least once
 	@protractor e2e-tests/protractor-conf.js
-	# Clean
+
+stop_web_server:
+	# Stop web server
 	@kill `cat e2e-tests/conf/apache2.pid`
+	# Clean
 	@rm -rf e2e-tests/conf
 
 #
