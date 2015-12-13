@@ -103,6 +103,7 @@ DNSDOMAIN=example.com
 
 # Virtual Host Listen IP and Port (*, *:80, ...)
 VHOSTLISTEN=*:80
+WEBSERVERPORT=19876
 
 # Other
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
@@ -223,31 +224,34 @@ prepare_test_server:
 	$(MAKE) install_webserver_conf \
 		RCONFDIR=e2e-tests/conf \
 		ERASECONFIG=1 \
-		VHOSTLISTEN='*:19876' \
+		VHOSTLISTEN='*:$(WEBSERVERPORT)' \
 		PORTALDIR=`pwd`/lemonldap-ng-portal/example \
 		MANAGERDIR=`pwd`/lemonldap-ng-manager/site \
 		MANAGERPSGIDIR=`pwd`/e2e-tests \
 		DEFDOCDIR=`pwd`/doc \
 		FRDOCDIR=`pwd`/po-doc/fr
 	cp e2e-tests/lmConf-1.js e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/conf/
-	perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;' e2e-tests/conf/lemonldap-ng.ini e2e-tests/conf/lmConf-1.js e2e-tests/conf/env.conf
+	perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s/__port__/$(WEBSERVERPORT)/' e2e-tests/conf/lemonldap-ng.ini e2e-tests/conf/lmConf-1.js e2e-tests/conf/env.conf
 
 start_web_server: prepare_test_server
-	# Start web server (designed for Debian, path may be broken else)
+	# Clean old server
 	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` && sleep 1
+	# Start web server (designed for Debian, path may be broken else)
 	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start
 
 launch_protractor:
 	# Start e2e tests
 	# NB: you must have protractor installed (using npm install -g protractor)
 	# and have run update-webdriver at least once
-	@protractor e2e-tests/protractor-conf.js
+	@WEBSERVERPORT=$(WEBSERVERPORT) protractor e2e-tests/protractor-conf.js
 
 stop_web_server:
 	# Stop web server
 	@kill `cat e2e-tests/conf/apache2.pid`
 	# Clean
 	@rm -rf e2e-tests/conf
+
+restart_web_server: start_web_server
 
 #
 # INSTALL

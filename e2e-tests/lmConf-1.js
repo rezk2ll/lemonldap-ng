@@ -144,7 +144,7 @@
     "LockDirectory": "__pwd__/e2e-tests/conf/lock",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
-  "portal": "http://auth.example.com:19876/",
+  "portal": "http://auth.example.com:__port__/",
   "registerDB": "Null",
   "reloadUrls": {
     "reload.example.com": "http://reload.example.com/reload"
