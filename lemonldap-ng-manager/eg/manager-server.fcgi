@@ -2,7 +2,6 @@
 
 use Plack::Handler::FCGI;
 use Lemonldap::NG::Manager;
-my $app = sub { ... };
 
 # Roll your own
 my $server = Plack::Handler::FCGI->new();
