@@ -227,10 +227,12 @@ e2e_test:
 		MANAGERPSGIDIR=`pwd`/e2e-tests \
 		DEFDOCDIR=`pwd`/doc \
 		FRDOCDIR=`pwd`/po-doc/fr
-	# Start web server
+	# Start web server (designed for Debian, path may be broken else)
 	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` && sleep 1
 	@/usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start
 	# Start e2e tests
+	# NB: you must have protractor installed (using npm install -g protractor)
+	# and have run update-webdriver at least once
 	@protractor e2e-tests/protractor-conf.js
 	# Clean
 	@kill `cat e2e-tests/conf/apache2.pid`
