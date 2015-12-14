@@ -260,20 +260,22 @@ prepare_test_server:
 	cp e2e-tests/lmConf-1.js e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/conf/
 	perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s/__port__/$(WEBSERVERPORT)/' e2e-tests/conf/lemonldap-ng.ini e2e-tests/conf/lmConf-1.js e2e-tests/conf/env.conf
 
-start_web_server: prepare_test_server
+e2e-tests/conf/apache2.pid: start_web_server
+
+start_web_server:	all prepare_test_server
 	# Clean old server
 	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` && sleep 1
 	# Start web server (designed for Debian, path may be broken else)
 	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start
 
-reload_web_server:
+reload_web_server:	all
 	@if [ -e e2e-tests/conf/apache2.pid ]; then \
 		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k graceful; \
 	else \
 		$(MAKE) start_web_server; \
 	fi
 
-launch_protractor:
+launch_protractor:	all e2e-tests/conf/apache2.pid
 	# Start e2e tests
 	# NB: you must have protractor installed (using npm install -g protractor)
 	# and have run update-webdriver at least once
@@ -281,7 +283,7 @@ launch_protractor:
 
 stop_web_server:
 	# Stop web server
-	-@kill `cat e2e-tests/conf/apache2.pid`
+	-@ [ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid`
 	# Clean
 	@rm -rf e2e-tests/conf
 
@@ -667,7 +669,7 @@ doxygen:	clean
 
 distclean:	clean
 
-clean:		common_clean handler_clean portal_clean manager_clean omegat-clean omegat-fr-clean
+clean:		common_clean handler_clean portal_clean manager_clean omegat-clean omegat-fr-clean stop_web_server
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf $(EXAMPLEROOT) example/ doc/devel
 	@rm -vf *gz *zip
