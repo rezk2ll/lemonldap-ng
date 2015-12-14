@@ -239,6 +239,13 @@ start_web_server: prepare_test_server
 	# Start web server (designed for Debian, path may be broken else)
 	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start
 
+reload_web_server:
+	@if [ -e e2e-tests/conf/apache2.pid ]; then \
+		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k graceful; \
+	else \
+		$(MAKE) start_web_server; \
+	fi
+
 launch_protractor:
 	# Start e2e tests
 	# NB: you must have protractor installed (using npm install -g protractor)
@@ -247,7 +254,7 @@ launch_protractor:
 
 stop_web_server:
 	# Stop web server
-	@kill `cat e2e-tests/conf/apache2.pid`
+	-@kill `cat e2e-tests/conf/apache2.pid`
 	# Clean
 	@rm -rf e2e-tests/conf
 
