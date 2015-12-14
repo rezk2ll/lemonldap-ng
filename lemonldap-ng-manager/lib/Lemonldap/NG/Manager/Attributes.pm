@@ -1913,6 +1913,52 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type       => 'authChoiceContainer',
             keyTest    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
             keyMsgFail => 'Bad choice key',
+            select     => [
+                [
+                    { k => 'Apache',    v => 'Apache' },
+                    { k => 'AD',        v => 'Active Directory' },
+                    { k => 'BrowserID', v => 'BrowserID (Mozilla Persona)' },
+                    { k => 'CAS', v => 'Central Authentication Service (CAS)' },
+                    { k => 'DBI', v => 'Database (DBI)' },
+                    { k => 'Facebook',      v => 'Facebook' },
+                    { k => 'Google',        v => 'Google' },
+                    { k => 'LDAP',          v => 'LDAP' },
+                    { k => 'Null',          v => 'None' },
+                    { k => 'OpenID',        v => 'OpenID' },
+                    { k => 'OpenIDConnect', v => 'OpenID Connect' },
+                    { k => 'Proxy',         v => 'Proxy' },
+                    { k => 'Radius',        v => 'Radius' },
+                    { k => 'Remote',        v => 'Remote' },
+                    { k => 'SAML',          v => 'SAML v2' },
+                    { k => 'Slave',         v => 'Slave' },
+                    { k => 'SSL',           v => 'SSL' },
+                    { k => 'Twitter',       v => 'Twitter' },
+                    { k => 'WebID',         v => 'WebID' },
+                    { k => 'Yubikey',       v => 'Yubikey' }
+                ],
+                [
+                    { k => 'AD',            v => 'Active Directory' },
+                    { k => 'DBI',           v => 'Database (DBI)' },
+                    { k => 'Facebook',      v => 'Facebook' },
+                    { k => 'Google',        v => 'Google' },
+                    { k => 'LDAP',          v => 'LDAP' },
+                    { k => 'Null',          v => 'None' },
+                    { k => 'OpenID',        v => 'OpenID' },
+                    { k => 'OpenIDConnect', v => 'OpenID Connect' },
+                    { k => 'Proxy',         v => 'Proxy' },
+                    { k => 'Remote',        v => 'Remote' },
+                    { k => 'SAML',          v => 'SAML v2' },
+                    { k => 'Slave',         v => 'Slave' },
+                    { k => 'WebID',         v => 'WebID' }
+                ],
+                [
+                    { k => 'AD',     v => 'Active Directory' },
+                    { k => 'Choice', v => 'authChoice' },
+                    { k => 'DBI',    v => 'Database (DBI)' },
+                    { k => 'LDAP',   v => 'LDAP' },
+                    { k => 'Null',   v => 'None' }
+                ]
+            ],
         },
 
         # Multi

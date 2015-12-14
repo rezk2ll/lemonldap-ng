@@ -240,7 +240,7 @@
       node.nodes.push({
         "id": node.id + '/n' + (id++),
         "title": "1-key",
-        "data": [],
+        "data": ['LDAP','LDAP','Null'],
         "type": "authChoice"
       });
     };
@@ -570,7 +570,7 @@
 
     $scope.keyWritable = function(scope) {
       var node = scope.$modelValue;
-      return node.type && node.type.match(/^(keyText|virtualHost|rule|menuCat|menuApp|samlAttribute)$/) ? true : false;
+      return node.type && node.type.match(/^(authChoice|keyText|virtualHost|rule|menuCat|menuApp|samlAttribute)$/) ? true : false;
     }
 
     /* method `newRSAKey`

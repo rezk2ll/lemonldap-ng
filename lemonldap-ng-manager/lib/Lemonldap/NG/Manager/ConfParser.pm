@@ -339,6 +339,9 @@ sub _scanNodes {
                 );
                 $self->newConf->{$name} = {};
                 foreach my $n (@$subNodes) {
+                    if ( ref $n->{data} and ref $n->{data} eq 'ARRAY' ) {
+                        $n->{data} = join ';', @{ $n->{data} };
+                    }
                     $self->newConf->{$name}->{ $n->{title} } = $n->{data};
                     $count++;
                     unless ( defined $self->refConf->{$name}->{ $n->{title} } )

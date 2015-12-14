@@ -2,11 +2,33 @@
   <div class="panel-heading">
     <h3 class="panel-title">{{translateTitle(currentNode)}}</h3>
   </div>
-  {{currentNode | json}}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th trspan="name"></th>
+        <th trspan="authentication"></th>
+        <th trspan="userDB"></th>
+        <th trspan="passwordDB"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="c in currentNode.nodes">
+        <td>
+          <input ng-model="c.title">
+        </td>
+        <td ng-repeat="i in [0,1,2]">
+          <select class="form-control" ng-model="c.data[i]">
+            <option ng-repeat="item in currentNode.select[i]" ng-selected="item.k==c.data[i]" value="{{item.k}}">{{item.v}}</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <script type="text/javascript">
 buttons=[{
-  'title': 'newAuthChoice',
+  'action': 'newAuthChoice',
+  'title': 'newChain',
   'icon': 'plus-sign'
 }];
 </script>
