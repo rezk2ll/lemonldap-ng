@@ -1,11 +1,11 @@
-#!/usr/bin/perl -Ilib/ -w
+#!/usr/bin/perl -Ilib/ -I../lemonldap-ng-common/lib/ -w
 
 use strict;
 
 use Lemonldap::NG::Manager::Attributes;
 use Lemonldap::NG::Manager::Tree;
 use Lemonldap::NG::Manager::CTrees;
-use Lemonldap::NG::Manager;
+#use Lemonldap::NG::Manager;
 use Data::Dumper;
 use Regexp::Assemble;
 use JSON;

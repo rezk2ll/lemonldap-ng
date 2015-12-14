@@ -15,6 +15,7 @@ sub defaultValues {
                 'type'    => 'category'
             }
         },
+        'authChoiceParam'          => 'lmAuth',
         'authentication'           => 'Demo',
         'browserIdAuthnLevel'      => 1,
         'captcha_login_enabled'    => 0,
