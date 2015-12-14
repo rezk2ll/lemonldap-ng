@@ -106,16 +106,33 @@ VHOSTLISTEN=*:80
 WEBSERVERPORT=19876
 
 # Other
-VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
-PORTALSKINS=`ls lemonldap-ng-portal/example/skins/`
-DIFF=diff -aurN -x '*.bak' -x .svn -x '*.swp' --ignore-matching-lines='.*jquery.*' --ignore-matching-lines='.*lemonldap-ng\.ini.*'
-
 SRCCOMMONDIR=lemonldap-ng-common
 SRCHANDLERDIR=lemonldap-ng-handler
 SRCPORTALDIR=lemonldap-ng-portal
 SRCMANAGERDIR=lemonldap-ng-manager
+
+VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
+PORTALSKINS=`ls $(SRCPORTALDIR)/example/skins/`
+DIFF=diff -aurN -x '*.bak' -x .svn -x '*.swp' --ignore-matching-lines='.*jquery.*' --ignore-matching-lines='.*lemonldap-ng\.ini.*'
+
 EXAMPLELANG=en # For static Manager example only
 ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
+
+# GENERATED SRC FILESlemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
+MANAGERJSONSRC=$(SRCMANAGERDIR)/scripts/jsongenerator.pl \
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm
+MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
+		$(SRCMANAGERDIR)/site/static/js/conftree.js \
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Constants.pm \
+		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
+PERLCOMMONSRC:=$(shell find $(SRCCOMMONDIR)/lib -name '*.pm')
+PERLCOMMONDST=$(SRCCOMMONDIR)/blib/lib/Lemonldap/NG/Common.pm
+PERLHANDLERSRC:=$(shell find $(SRCHANDLERDIR)/lib -name '*.pm')
+PERLHANDLERDST=$(SRCHANDLERDIR)/blib/lib/Lemonldap/NG/Handler.pm
+PERLPORTALSRC:=$(shell find $(SRCPORTALDIR)/lib -name '*.pm')
+PERLPORTALDST=$(SRCPORTALDIR)/blib/lib/Lemonldap/NG/Portal.pm
+PERLMANAGERSRC:=$(shell find $(SRCMANAGERDIR)/lib -name '*.pm')
+PERLMANAGERDST=$(SRCMANAGERDIR)/blib/lib/Lemonldap/NG/Manager.pm
 
 DIFFPREFIX=
 
@@ -157,47 +174,57 @@ all:	configure common handler manager portal
 # Perl libraries configuration
 #
 
-json:	manager_json
+json:	$(MANAGERJSONDST)
 
-manager_json:
-	@cd lemonldap-ng-manager && ./scripts/jsongenerator.pl && cd -
+$(MANAGERJSONDST):	$(MANAGERJSONSRC)
+	cd $(SRCMANAGERDIR) && ./scripts/jsongenerator.pl && cd -
 
 configure:	common_conf handler_conf portal_conf manager_conf
 
-common_conf:
+common_conf:	${SRCCOMMONDIR}/Makefile
+
+handler_conf:	${SRCHANDLERDIR}/Makefile
+
+portal_conf:	${SRCPORTALDIR}/Makefile
+
+manager_conf:	${SRCMANAGERDIR}/Makefile
+
+${SRCCOMMONDIR}/Makefile:
 	@cd ${SRCCOMMONDIR}; LMNGCONFFILE=$(STORAGECONFFILE) $(PERL) Makefile.PL $(PERLOPTIONS)
-	@touch common_conf
 
-handler_conf:
+${SRCHANDLERDIR}/Makefile:
 	@cd ${SRCHANDLERDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
-	@touch handler_conf
 
-portal_conf:
+${SRCPORTALDIR}/Makefile:
 	@cd ${SRCPORTALDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
-	@touch portal_conf
 
-manager_conf:
+${SRCMANAGERDIR}/Makefile:
 	@cd ${SRCMANAGERDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
-	@touch manager_conf
 
 #
 # Perl libraries make
 #
-common:		common_conf
+common:		$(PERLCOMMONDST)
+
+handler:	$(PERLHANDLERDST)
+
+portal:		$(PERLPORTALDST)
+
+manager:	$(PERLMANAGERDST)
+
+$(PERLCOMMONDST):	common_conf $(PERLCOMMONSRC)
 	@$(MAKE) -C ${SRCCOMMONDIR}
 	@touch common
 
-handler:	handler_conf common
+$(PERLHANDLERDST):	handler_conf common $(PERLHANDLERSRC)
 	@$(MAKE) -C ${SRCHANDLERDIR}
 	@touch handler
 
-portal:		portal_conf common
+$(PERLPORTALDST):	portal_conf common $(PERLPORTALSRC)
 	@$(MAKE) -C ${SRCPORTALDIR}
-	@touch portal
 
-manager:	manager_conf handler
-	@$(MAKE) -C ${SRCMANAGERDIR}
-	@touch manager
+$(PERLMANAGERDST):	manager_conf handler $(PERLMANAGERSRC)
+	$(MAKE) -C ${SRCMANAGERDIR}
 
 test:		all common_test handler_test portal_test manager_test extra_test
 
@@ -214,7 +241,7 @@ manager_test:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/ -I../${SRCHANDLERDIR}/blib/lib/"
 
 extra_test:	all
-	cd ${SRCPORTALDIR} && prove -b -I ../lemonldap-ng-common/blib/lib -I ../lemonldap-ng-handler/blib/lib -I../${SRCPORTALDIR}/blib/lib/ xt
+	cd ${SRCPORTALDIR} && prove -b -I ../$(SRCCOMMONDIR)/blib/lib -I ../$(SRCHANDLERDIR)/blib/lib -I../${SRCPORTALDIR}/blib/lib/ xt
 #	PERL_DL_NONLAZY=1 $(PERL) "-MExtUtils::Command::MM" "-e" "test_harness(0, 'lemonldap-ng-common/blib/lib', 'lemonldap-ng-handler/blib/lib', 'lemonldap-ng-manager/blib/lib', 'lemonldap-ng-portal/blib/lib')" extra-tests/*.t
 
 e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_server
@@ -225,8 +252,8 @@ prepare_test_server:
 		RCONFDIR=e2e-tests/conf \
 		ERASECONFIG=1 \
 		VHOSTLISTEN='*:$(WEBSERVERPORT)' \
-		PORTALDIR=`pwd`/lemonldap-ng-portal/example \
-		MANAGERDIR=`pwd`/lemonldap-ng-manager/site \
+		PORTALDIR=`pwd`/$(SRCPORTALDIR)/example \
+		MANAGERDIR=`pwd`/$(SRCMANAGERDIR)/site \
 		MANAGERPSGIDIR=`pwd`/e2e-tests \
 		DEFDOCDIR=`pwd`/doc \
 		FRDOCDIR=`pwd`/po-doc/fr
@@ -399,7 +426,7 @@ install_portal_site:	install_conf_dir
 	@install -v -d $(RPORTALDIR) $(RPORTALSKINSDIR) \
 		$(RPORTALDIR)/skins/ \
 		$(RCRONDIR) $(RCONFDIR)
-	@for skin in $$(ls lemonldap-ng-portal/example/skins/); do \
+	@for skin in $$(ls $(SRCPORTALDIR)/example/skins/); do \
 		[ -h $(RPORTALDIR)/skins/$$skin ] && rm -f $(RPORTALDIR)/skins/$$skin; \
 		install -v -d $(RPORTALSKINSDIR)/$$skin; \
 	done
@@ -411,13 +438,13 @@ install_portal_site:	install_conf_dir
 	@cp -pR -f ${SRCPORTALDIR}/example/register.pl ${RPORTALDIR}
 	@tar -cf - -C ${SRCPORTALDIR}/example/skins/ $$(ls ${SRCPORTALDIR}/example/skins/) |tar -xf - -C $(RPORTALSKINSDIR)
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
-		for skin in $$(ls lemonldap-ng-portal/example/skins/); do \
+		for skin in $$(ls $(SRCPORTALDIR)/example/skins/); do \
 			rm -rf $(RPORTALDIR)/skins/$$skin/; \
 			ln -s $(PORTALSKINSDIR)/$$skin $(RPORTALDIR)/skins/$$skin; \
 		done; \
 	fi
 	# Cron files
-	@cp -f lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
+	@cp -f $(SRCPORTALDIR)/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	else \
@@ -430,7 +457,7 @@ install_portal_site:	install_conf_dir
 install_handler_site:	install_conf_dir
 	# Handler install
 	@install -v -d ${RHANDLERDIR}
-	@cp -f lemonldap-ng-handler/example/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
+	@cp -f $(SRCHANDLERDIR)/example/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-handler; \
 	else \
@@ -486,8 +513,8 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 	else \
 		chmod 777 $(RFILECONFIGDIR); \
 	fi
-	@cp lemonldap-ng-common/tools/lmConfig.* lemonldap-ng-common/tools/apache-session-mysql.sql $(RTOOLSDIR)
-	@cp lemonldap-ng-common/tools/sso.schema $(RTOOLSDIR)
+	@cp $(SRCCOMMONDIR)/tools/lmConfig.* $(SRCCOMMONDIR)/tools/apache-session-mysql.sql $(RTOOLSDIR)
+	@cp $(SRCCOMMONDIR)/tools/sso.schema $(RTOOLSDIR)
 	$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
 	@rm -rf $$(find $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR) -type d -name .svn)
 
@@ -698,65 +725,65 @@ diff: debian-diff
 
 debian-diff:
 	@# Portal
-	@$(DIFF) lemonldap-ng-portal/lib/Lemonldap/NG/Portal $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Portal ||true
-	@$(DIFF) lemonldap-ng-portal/example/scripts/purgeCentralCache $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/purgeCentralCache ||true
-	@$(DIFF) lemonldap-ng-portal/example/scripts/buildPortalWSDL $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/buildPortalWSDL ||true
+	@$(DIFF) $(SRCPORTALDIR)/lib/Lemonldap/NG/Portal $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Portal ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/scripts/purgeCentralCache $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/purgeCentralCache ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/scripts/buildPortalWSDL $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/buildPortalWSDL ||true
 	@for i in $(PORTALSKINS); do \
-		$(DIFF) -x 'jquery*' lemonldap-ng-portal/example/skins/$$i $(DIFFPREFIX)/usr/share/lemonldap-ng/portal-skins/$$i; \
+		$(DIFF) -x 'jquery*' $(SRCPORTALDIR)/example/skins/$$i $(DIFFPREFIX)/usr/share/lemonldap-ng/portal-skins/$$i; \
 	done ||true
-	@$(DIFF) lemonldap-ng-portal/example/index_skin.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/index.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/mail.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/mail.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/metadata.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/metadata.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/openid-configuration.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/openid-configuration.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/cdc.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/cdc.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/register.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/register.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/index_skin.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/index.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/mail.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/mail.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/metadata.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/metadata.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/openid-configuration.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/openid-configuration.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/cdc.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/cdc.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/register.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/register.pl ||true
 	@# Handler
-	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Handler ||true
-	@$(DIFF) lemonldap-ng-handler/example/scripts/purgeLocalCache $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/purgeLocalCache ||true
+	@$(DIFF) $(SRCHANDLERDIR)/lib/Lemonldap/NG/Handler $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Handler ||true
+	@$(DIFF) $(SRCHANDLERDIR)/example/scripts/purgeLocalCache $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/purgeLocalCache ||true
 	@# Common
-	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Common ||true
-	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Common.pm ||true
-	@$(DIFF) lemonldap-ng-common/scripts/lmMigrateConfFiles2ini $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini ||true
-	@$(DIFF) lemonldap-ng-common/scripts/convertConfig $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/convertConfig ||true
-	@$(DIFF) lemonldap-ng-common/scripts/rotateOidcKeys $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/rotateOidcKeys ||true
+	@$(DIFF) $(SRCCOMMONDIR)/lib/Lemonldap/NG/Common $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Common ||true
+	@$(DIFF) $(SRCCOMMONDIR)/lib/Lemonldap/NG/Common.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Common.pm ||true
+	@$(DIFF) $(SRCCOMMONDIR)/scripts/lmMigrateConfFiles2ini $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini ||true
+	@$(DIFF) $(SRCCOMMONDIR)/scripts/convertConfig $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/convertConfig ||true
+	@$(DIFF) $(SRCCOMMONDIR)/scripts/rotateOidcKeys $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/rotateOidcKeys ||true
 	@# Manager
-	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager ||true
-	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager.pm ||true
-	@$(DIFF) lemonldap-ng-manager/eg $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/psgi ||true
-	@$(DIFF) lemonldap-ng-manager/site/static $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/static ||true
-	@$(DIFF) lemonldap-ng-manager/site/templates $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/templates ||true
-	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' lemonldap-ng-manager/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
-	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' lemonldap-ng-manager/scripts/lemonldap-ng-cli $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lemonldap-ng-cli ||true
+	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager ||true
+	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager.pm ||true
+	@$(DIFF) $(SRCMANAGERDIR)/eg $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/psgi ||true
+	@$(DIFF) $(SRCMANAGERDIR)/site/static $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/static ||true
+	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/templates ||true
+	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
+	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' $(SRCMANAGERDIR)/scripts/lemonldap-ng-cli $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lemonldap-ng-cli ||true
 
 default-diff:
 	@# Portal
-	@$(DIFF) lemonldap-ng-portal/lib/Lemonldap/NG/Portal /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Portal ||true
-	@$(DIFF) lemonldap-ng-portal/example/scripts/purgeCentralCache $(LMPREFIX)/bin/purgeCentralCache ||true
-	@$(DIFF) lemonldap-ng-portal/example/scripts/buildPortalWSDL $(LMPREFIX)/bin/buildPortalWSDL ||true
-	@$(DIFF) lemonldap-ng-portal/example/skins $(LMPREFIX)/htdocs/portal/skins ||true
-	@$(DIFF) lemonldap-ng-portal/example/index_skin.pl $(LMPREFIX)/htdocs/portal/index.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/mail.pl $(LMPREFIX)/htdocs/portal/mail.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/register.pl $(LMPREFIX)/htdocs/portal/register.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/metadata.pl $(LMPREFIX)/htdocs/portal/metadata.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/openid-configuration.pl $(LMPREFIX)/htdocs/portal/openid-configuration.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/cdc.pl $(LMPREFIX)/htdocs/portal/cdc.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/lib/Lemonldap/NG/Portal /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Portal ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/scripts/purgeCentralCache $(LMPREFIX)/bin/purgeCentralCache ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/scripts/buildPortalWSDL $(LMPREFIX)/bin/buildPortalWSDL ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/skins $(LMPREFIX)/htdocs/portal/skins ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/index_skin.pl $(LMPREFIX)/htdocs/portal/index.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/mail.pl $(LMPREFIX)/htdocs/portal/mail.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/register.pl $(LMPREFIX)/htdocs/portal/register.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/metadata.pl $(LMPREFIX)/htdocs/portal/metadata.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/openid-configuration.pl $(LMPREFIX)/htdocs/portal/openid-configuration.pl ||true
+	@$(DIFF) $(SRCPORTALDIR)/example/cdc.pl $(LMPREFIX)/htdocs/portal/cdc.pl ||true
 	@# Handler
-	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Handler ||true
-	@$(DIFF) lemonldap-ng-handler/example/scripts/purgeLocalCache $(LMPREFIX)/bin/purgeLocalCache ||true
+	@$(DIFF) $(SRCHANDLERDIR)/lib/Lemonldap/NG/Handler /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Handler ||true
+	@$(DIFF) $(SRCHANDLERDIR)/example/scripts/purgeLocalCache $(LMPREFIX)/bin/purgeLocalCache ||true
 	@# Common
-	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Common ||true
-	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Common.pm ||true
-	@$(DIFF) lemonldap-ng-common/scripts/lmMigrateConfFiles2ini $(LMPREFIX)/bin/lmMigrateConfFiles2ini ||true
-	@$(DIFF) lemonldap-ng-common/scripts/convertConfig $(LMPREFIX)/bin/convertConfig ||true
-	@$(DIFF) lemonldap-ng-common/scripts/rotateOidcKeys $(LMPREFIX)/bin/rotateOidcKeys ||true
+	@$(DIFF) $(SRCCOMMONDIR)/lib/Lemonldap/NG/Common /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Common ||true
+	@$(DIFF) $(SRCCOMMONDIR)/lib/Lemonldap/NG/Common.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Common.pm ||true
+	@$(DIFF) $(SRCCOMMONDIR)/scripts/lmMigrateConfFiles2ini $(LMPREFIX)/bin/lmMigrateConfFiles2ini ||true
+	@$(DIFF) $(SRCCOMMONDIR)/scripts/convertConfig $(LMPREFIX)/bin/convertConfig ||true
+	@$(DIFF) $(SRCCOMMONDIR)/scripts/rotateOidcKeys $(LMPREFIX)/bin/rotateOidcKeys ||true
 	@# Manager
-	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager ||true
-	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager.pm ||true
-	@$(DIFF) lemonldap-ng-manager/eg $(LMPREFIX)/htdocs/manager/psgi ||true
-	@$(DIFF) lemonldap-ng-manager/site/static $(LMPREFIX)/htdocs/manager/static ||true
-	@$(DIFF) lemonldap-ng-manager/site/templates $(LMPREFIX)/htdocs/manager/templates ||true
-	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' lemonldap-ng-manager/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
-	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' lemonldap-ng-manager/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true
+	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager ||true
+	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager.pm ||true
+	@$(DIFF) $(SRCMANAGERDIR)/eg $(LMPREFIX)/htdocs/manager/psgi ||true
+	@$(DIFF) $(SRCMANAGERDIR)/site/static $(LMPREFIX)/htdocs/manager/static ||true
+	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(LMPREFIX)/htdocs/manager/templates ||true
+	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
+	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' $(SRCMANAGERDIR)/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true
 
 tidy: clean
 	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.t' \) -print -exec perltidy -b {} \;
