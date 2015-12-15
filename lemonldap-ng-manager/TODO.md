@@ -6,9 +6,6 @@
 
 ## Bugs
 
-* When we get needConfirm: 1 in save response, configuration is already saved.
-  It should only be saved after confirmation. We should have a "cancel" button
-  in confirmation window to refuse the changes.
 * SAML IDP/SP exported attributes not working
 
 ## Configuration management

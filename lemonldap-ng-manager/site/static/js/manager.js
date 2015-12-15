@@ -133,10 +133,11 @@
       $scope.message = {
         'title': '',
         'message': '',
-        'items': []
+        'items': [],
       };
-      if (data.message && data.message == 'needConfirmation') {
-        // TODO
+      console.log(data);
+      if (data.message && data.message == '__needConfirmation__') {
+        $scope.confirmNeeded = true;
       }
       if (data.message) $scope.message.message = data.message;
       if (data.details) {
@@ -166,7 +167,7 @@
           "title": "cfgLog",
           "data": $scope.result
         });
-        $http.post($scope.confPrefix + '?cfgNum=' + $scope.currentCfg.cfgNum, $scope.data).success(function(data) {
+        $http.post($scope.confPrefix + '?cfgNum=' + $scope.currentCfg.cfgNum + ($scope.forceSave ? "&force=1" : ''), $scope.data).success(function(data) {
           $scope.data.pop();
           _checkSaveResponse(data);
         }).error(function(j, e) {
@@ -738,6 +739,8 @@
       var tmp;
       $scope.waiting = true;
       $scope.data = [];
+      $scope.confirmNeeded = false;
+      $scope.forceSave = false;
       $q.all([
       $translator.init($scope.lang), $http.get(staticPrefix + "struct.json").success(function(data) {
         tmp = data;

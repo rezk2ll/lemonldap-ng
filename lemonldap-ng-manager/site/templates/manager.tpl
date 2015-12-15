@@ -21,7 +21,7 @@
         <div class="navbar navbar-default" ng-class="{'hidden-xs':!showM}">
           <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
             <ul class="nav navbar-nav">
-               <li><a class="link" ng-click="save()"><i class="glyphicon glyphicon-save"></i> {{translate('save')}}</a></li>
+               <li><a class="link" ng-click="save()" tabIndex="-1"><i class="glyphicon glyphicon-save"></i> {{translate('save')}}<input type="checkbox" ng-model="forceSave" title="{{translate('forceSave')}}" ng-show="confirmNeeded"></a></li>
                <li ng-class="{'disabled':!currentCfg.prev}"><a class="link" ng-click="currentCfg.prev && getCfg(currentCfg.prev)" title="Configuration {{currentCfg.prev}}"><i class="glyphicon glyphicon-arrow-left"></i> {{translate('previous')}}</a></li>
                <li ng-class="{'disabled':!currentCfg.next}"><a class="link" ng-click="currentCfg.next && getCfg(currentCfg.next)" title="Configuration {{currentCfg.next}}"><i class="glyphicon glyphicon-arrow-right"></i> {{translate('next')}}</a></a></li>
                <li><a class="link" ng-click="getCfg('latest')" title="Latest configuration"><i class="glyphicon glyphicon-refresh"></i> {{translate('latest')}}</a></li>
@@ -94,7 +94,7 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-primary" ng-click="ok()" trspan="ok"></button>
-      <button class="btn btn-warning" ng-click="cancel()" ng-if="message.displayCancel" trspan="cancel"></button>
+      <button class="btn btn-warning" ng-click="cancel()" ng-if="elem('message').displayCancel" trspan="cancel"></button>
     </div>
   </script>
 

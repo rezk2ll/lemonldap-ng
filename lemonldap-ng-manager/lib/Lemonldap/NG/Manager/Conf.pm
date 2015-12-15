@@ -620,12 +620,6 @@ sub newConf {
         $res->{details}->{$t} = $parser->$t if ( @{ $parser->$t } );
     }
     if ( $res->{result} ) {
-        if ( @{ $parser->needConfirm } and not $req->params('force') ) {
-            push @{ $res->{details}->{errors} }, @{ $parser->needConfirm };
-            $res->{result}      = 0;
-            $res->{needConfirm} = 1;
-            $res->{message} .= '__needConfirmation__';
-        }
         if ( $self->{demoMode} ) {
             $res->{message} = '__demoModeOn__';
         }
@@ -640,12 +634,14 @@ sub newConf {
                 $res->{cfgNum} = $s;
             }
             else {
-                $self->userNoticeInfo( $req,
+                $self->userNotice( $req,
                     'Saving attempt rejected, asking for confirmation to '
                       . $self->userId($req) );
                 $res->{result} = 0;
-                $res->{needConfirm} = 1 if ( $s == CONFIG_WAS_CHANGED );
-                $res->{message} .= '__needConfirmation__';
+                if ( $s == CONFIG_WAS_CHANGED ) {
+                    $res->{needConfirm} = 1;
+                    $res->{message} .= '__needConfirmation__';
+                }
             }
         }
     }
@@ -672,13 +668,13 @@ sub newRawConf {
         # chances to be equal to last config cfgNum
         my $s = $self->confAcc->saveConf( $new, force => 1 );
         if ( $s > 0 ) {
-            $self->userNoticeInfo( $req,
+            $self->userNotice( $req,
                 'User ' . $self->userId($req) . " has stored (raw) conf $s" );
             $res->{result} = 1;
             $res->{cfgNum} = $s;
         }
         else {
-            $self->userNoticeInfo( $req,
+            $self->userNotice( $req,
                 'Raw saving attempt rejected, asking for confirmation to '
                   . $self->userId($req) );
             $res->{result} = 0;
