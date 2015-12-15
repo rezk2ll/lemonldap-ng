@@ -206,7 +206,7 @@
           /* TODO: replace this with a popup */
           window.location = url.authorization;
         } else {
-          alert(rejection.statusText);
+          alert(rejection.statusText ? rejection.statusText : 'Network problem');
         }
         return $q.reject(rejection);
       }

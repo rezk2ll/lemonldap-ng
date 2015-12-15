@@ -106,7 +106,6 @@
         window.open(button.popup);
       } else {
         if (!button.action) button.action = button.title;
-        //try {
         switch (typeof button.action) {
         case 'function':
           button.action($scope.currentNode, $scope);
@@ -117,9 +116,6 @@
         default:
           console.log(typeof button.action);
         };
-        //} catch (e) {
-        //  alert("Error: " + e.message);
-        //}
       }
       $scope.showM = false;
     };
