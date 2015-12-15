@@ -267,7 +267,7 @@ start_web_server:	all prepare_test_server
 	# Start web server (designed for Debian, path may be broken else)
 	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start
 
-reload_web_server:	all
+reload_web_server:
 	@if [ -e e2e-tests/conf/apache2.pid ]; then \
 		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k graceful; \
 	else \
