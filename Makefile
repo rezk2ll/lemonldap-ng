@@ -120,7 +120,8 @@ ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
 
 # GENERATED SRC FILESlemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
 MANAGERJSONSRC=$(SRCMANAGERDIR)/scripts/jsongenerator.pl \
-		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm \
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Tree.pm
 MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		$(SRCMANAGERDIR)/site/static/js/conftree.js \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Constants.pm \
