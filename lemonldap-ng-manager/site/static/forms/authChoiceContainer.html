@@ -17,7 +17,7 @@
           <input ng-model="c.title">
         </td>
         <td ng-repeat="i in [0,1,2]">
-          <select class="form-control" ng-model="c.data[i]">
+          <select class="form-control" ng-model="c.data[i]" ng-change="execFilters(_findScopeByKey('authParams'))">
             <option ng-repeat="item in currentNode.select[i]" ng-selected="item.k==c.data[i]" value="{{item.k}}">{{item.v}}</option>
           </select>
         </td>

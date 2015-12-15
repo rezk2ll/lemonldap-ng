@@ -1,5 +1,5 @@
 var filterFunctions = {
-  'authParams': function($scope, $q, node) {
+  'authParams': function(scope, $q, node) {
     /* Here, `node` is the root node (authParams) and `n` points to its
      * conditional subnodes. This subnodes have the property `show` that can
      * be set to true or false depending on what has to be displayed
@@ -8,21 +8,15 @@ var filterFunctions = {
     /* 1. be sure to have all datas in main nodes */
     var wait = [];
     node.nodes.forEach(function(n) {
-      wait.push($scope.getKey(n));
+      wait.push(scope.getKey(n));
     });
     /* 2. then do the job */
     $q.all(wait).then(function() {
       /* 2.1. Get all modules needed */
       var all = false;
       var nToShow = [];
-      if (node.nodes[0].data.match(/^(Choice|Multi)/)) {
-        for (var i = 1; i < 3; i++) {
-          node.nodes[i].data = node.nodes[0].data;
-        }
-        all = true;
-      }
-      node.nodes.forEach(function(n) {
-        var tmp = n.data.toLowerCase();
+      var p = function(s) {
+        var tmp = s.toLowerCase();
         if (tmp == 'ad') {
           tmp = 'ldap';
         }
@@ -30,7 +24,40 @@ var filterFunctions = {
           tmp = 'oidc';
         }
         nToShow.push(tmp + 'Params');
+      }
+      if (node.nodes[0].data.match(/^(Choice|Multi)/)) {
+        for (var i = 1; i < 3; i++) {
+          node.nodes[i].data = node.nodes[0].data;
+        }
+        //all = true;
+      }
+      node.nodes.forEach(function(n) {
+        p(n.data);
       });
+      /* Get choice or multi sub modules */
+      node.nodes_cond.forEach(function(n) {
+        if (node.nodes[0].data == 'Choice' && n.id == 'choiceParams') {
+          var nd = n._nodes ? n._nodes : n.nodes;
+          if (!nd[1].cnodes) {
+            nd = nd[1]._nodes ? nd[1]._nodes : nd[1].nodes;
+            nd.forEach(function(m) {
+              m.data.forEach(function(s) {
+                p(s);
+              });
+            });
+          }
+        }
+        else if (node.nodes[0].data == 'Multi' && n.id == 'multiParams') {
+          var nd = n._nodes ? n._nodes : n.nodes;
+          var sep = nd[2].data || ';';
+          var reg = new RegExp('(?:^|' + sep + ')(\w+)');
+          var s = nd[0].data + sep + nd[1].data;
+          while ((result = reg.exec(s)) !== null) {
+            p(result);
+          }
+        }
+      });
+      console.log(nToShow);
       /* 2.2 Display modules */
       node.nodes_cond.forEach(function(n) {
         if (!all && nToShow.indexOf(n.id) == -1) {

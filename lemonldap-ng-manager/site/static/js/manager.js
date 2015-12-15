@@ -108,14 +108,14 @@
         if (!button.action) button.action = button.title;
         //try {
         switch (typeof button.action) {
-          case 'function':
-            button.action($scope.currentNode, $scope);
-            break;
-          case 'string':
-            $scope[button.action]();
-            break;
-          default:
-            console.log(typeof button.action);
+        case 'function':
+          button.action($scope.currentNode, $scope);
+          break;
+        case 'string':
+          $scope[button.action]();
+          break;
+        default:
+          console.log(typeof button.action);
         };
         //} catch (e) {
         //  alert("Error: " + e.message);
@@ -173,7 +173,8 @@
           $scope.waiting = false;
           $scope.data.pop();
         })
-      }, function() {
+      },
+      function() {
         console.log('Saving canceled');
       });
       $scope.showM = false;
@@ -196,16 +197,27 @@
     $scope.cancel = function() {
       $scope.currentNode.data = null;
       $scope.getKey($scope.currentNode);
-    }
+    };
 
     var id = 1;
 
     $scope._findContainer = function() {
+      return $scope._findScopeContainer().$modelValue;
+    };
+    $scope._findScopeContainer = function() {
       var cs = $scope.currentScope;
       while (!cs.$modelValue.type.match(/Container$/)) {
         cs = cs.$parentNodeScope;
       }
-      return cs.$modelValue;
+      return cs;
+    };
+
+    $scope._findScopeByKey = function(k) {
+      var cs = $scope.currentScope;
+      while (! (cs.$modelValue.title === k)) {
+        cs = cs.$parentNodeScope;
+      }
+      return cs;
     }
 
     /* Add rules entry */
@@ -240,9 +252,10 @@
       node.nodes.push({
         "id": node.id + '/n' + (id++),
         "title": "1-key",
-        "data": ['LDAP','LDAP','Null'],
+        "data": ['Null', 'Null', 'Null'],
         "type": "authChoice"
       });
+      $scope.execFilters($scope._findScopeByKey('authParams'));
     };
 
     /* Add hash entry */
@@ -315,26 +328,22 @@
 
     $scope.addSamlIDP = function() {
       var name = window.prompt($translator.translate('samlPartnerName'));
-      if (name)
-        $scope.addTemplateNode(name, 'samlIDPMetaDataNode');
+      if (name) $scope.addTemplateNode(name, 'samlIDPMetaDataNode');
     };
 
     $scope.addSamlSP = function() {
       var name = window.prompt($translator.translate('samlPartnerName'));
-      if (name)
-        $scope.addTemplateNode(name, 'samlSPMetaDataNode');
+      if (name) $scope.addTemplateNode(name, 'samlSPMetaDataNode');
     };
 
     $scope.addOidcOp = function() {
       var name = window.prompt($translator.translate('oidcOPName'));
-      if (name)
-        $scope.addTemplateNode(name, 'oidcOPMetaDataNode');
+      if (name) $scope.addTemplateNode(name, 'oidcOPMetaDataNode');
     };
 
     $scope.addOidcRp = function() {
       var name = window.prompt($translator.translate('oidcRPName'));
-      if (name)
-        $scope.addTemplateNode(name, 'oidcRPMetaDataNode');
+      if (name) $scope.addTemplateNode(name, 'oidcRPMetaDataNode');
     };
 
     $scope.addTemplateNode = function(name, type) {
@@ -420,10 +429,11 @@
 
     /* authParams mechanism: show used auth modules only (launched by stoggle) */
     $scope.filters = {};
-    $scope.execFilters = function() {
+    $scope.execFilters = function(scope) {
+      scope = scope ? scope : $scope;
       for (var filter in $scope.filters) {
         if ($scope.filters.hasOwnProperty(filter)) {
-          filterFunctions[filter]($scope, $q, $scope.filters[filter]);
+          filterFunctions[filter](scope, $q, $scope.filters[filter]);
         }
       }
     };
@@ -481,8 +491,10 @@
           d.reject('Empty response from server');
         } else if (data.error) {
           if (data.error == 'setDefault') {
-            if (node.default) {
-              node.nodes = node.default.slice(0);
+            if (node.
+          default) {
+              node.nodes = node.
+            default.slice(0);
             } else node.nodes = [];
             delete node.cnodes;
             d.resolve('Set data to default value');
@@ -515,7 +527,8 @@
     $scope.openCnode = function(scope) {
       $scope.download(scope).then(function() {
         scope.toggle();
-      }, function(reason) {
+      },
+      function(reason) {
         if (typeof reason == 'string') {
           alert(reason);
         }
@@ -552,7 +565,8 @@
         f = 'text';
       }
       if (node.nodes || node._nodes || node.cnodes) {
-        $scope.form = f != 'text' ? f : 'home';
+        $scope.form = f != 'text' ? f:
+        'home';
       } else {
         $scope.form = f;
         /* Get datas */
@@ -591,7 +605,8 @@
         }).error(function(j, e) {
           $scope.waiting = false;
         });
-      }, function() {
+      },
+      function() {
         console.log('New key cancelled');
       });
     }
@@ -632,15 +647,18 @@
           };
           $q.all(tmp).then(function() {
             d.resolve(node.data);
-          }, function(j, e) {
+          },
+          function(j, e) {
             d.reject(e);
             $scope.waiting = false;
           });
         } else {
           $http.get($scope.confPrefix + $scope.currentCfg.cfgNum + '/' + (node.get ? node.get : node.title)).success(function(data) {
             /* Set default value if response is null or if asked by server */
-            if ((data.value === null || (data.error && data.error == 'setDefault')) && node.default !== null) {
-              node.data = node.default;
+            if ((data.value === null || (data.error && data.error == 'setDefault')) && node.
+          default !== null) {
+              node.data = node.
+            default;
             } else {
               node.data = data.value;
             }
@@ -663,7 +681,6 @@
       }
       return d.promise;
     };
-
 
     /* function `pathEvent(event, next; current)`:
      * Called when $location.path() change, launch getCfg() with the new
@@ -722,22 +739,20 @@
       $scope.waiting = true;
       $scope.data = [];
       $q.all([
-          $translator.init($scope.lang),
-          $http.get(staticPrefix + "struct.json").success(function(data) {
-            tmp = data;
-            console.log("Structure loaded");
-          })
-        ])
-        .then(function() {
-          console.log("Starting structure binding");
-          $scope.data = tmp;
-          tmp = null;
-          setScopeVars($scope);
-          $scope.form = 'home';
-          $scope.waiting = false;
-        }, function(j, e) {
-          $scope.waiting = false;
-        });
+      $translator.init($scope.lang), $http.get(staticPrefix + "struct.json").success(function(data) {
+        tmp = data;
+        console.log("Structure loaded");
+      })]).then(function() {
+        console.log("Starting structure binding");
+        $scope.data = tmp;
+        tmp = null;
+        setScopeVars($scope);
+        $scope.form = 'home';
+        $scope.waiting = false;
+      },
+      function(j, e) {
+        $scope.waiting = false;
+      });
     };
     var c = $location.path().match(new RegExp('^/confs/(latest|[0-9]+)'));
     if (!c) {
