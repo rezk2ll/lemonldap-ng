@@ -215,11 +215,9 @@ manager:	$(PERLMANAGERDST)
 
 $(PERLCOMMONDST):	common_conf $(PERLCOMMONSRC)
 	@$(MAKE) -C ${SRCCOMMONDIR}
-	@touch common
 
 $(PERLHANDLERDST):	handler_conf common $(PERLHANDLERSRC)
 	@$(MAKE) -C ${SRCHANDLERDIR}
-	@touch handler
 
 $(PERLPORTALDST):	portal_conf common $(PERLPORTALSRC)
 	@$(MAKE) -C ${SRCPORTALDIR}
