@@ -10,11 +10,8 @@
 
 ## Configuration management
 
-* `currentConf` => `$req` instead of `$self`
-* PSGI: improve log system (syslog,...)
 * Forms:
   * issuers resume
-* Possibility to delete a configuration
 
 ### Struct & datas
 
@@ -26,27 +23,17 @@
   * OpenID white/black list
   * POST replay fields
 
-* import from JSON
-* Order of categories
-
 ### REST API:
 
 ### PSGI authentication
 
 * JQuery module to add `$._llngAjax`
-* Angular module to add $llngHttp
 
 ## Sessions explorer
 
 ## Optimization
 
-* Create modules to get needed values for a new conf without using
-  `Common::Conf::Attributes`
-* Then delete essential default values in running modules: they have to be
-  provided by any configuration
 * Use JSON to store datas:
-  * configuration: the new `File` will look at the first character. If not `{`,
-    it will call old `File` functions
   * sessions: new Apache::Session::Serialize::JSON module
 
 ## Doc
@@ -56,7 +43,3 @@
   * adding a configurationkey
   * adding a data type
 
-## Question more
-
-* Phonegap
-* Ionic
