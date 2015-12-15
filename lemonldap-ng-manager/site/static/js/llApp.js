@@ -26,7 +26,7 @@
       var nlangs = [navigator.language];
       if (navigator.languages) nlangs = navigator.languages;
       var langs = [],
-        langs2 = [];
+      langs2 = [];
       nlangs.forEach(function(nl) {
         availableLanguages.forEach(function(al) {
           if (al == nl) {
@@ -204,7 +204,7 @@
         var url = rejection.headers();
         if (rejection.status == 401 && url.authorization && url.authorization.match(/^http/)) {
           /* TODO: replace this with a popup */
-          window.location = url.authorization + '?url=' + window.btoa(window.location).replace(/\//g, '_');
+          window.location = url.authorization;
         } else {
           alert(rejection.statusText);
         }
