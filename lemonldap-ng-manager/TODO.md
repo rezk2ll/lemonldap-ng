@@ -6,9 +6,6 @@
 
 ## Bugs
 
-* Authentication parameters:
-  * Filter displayed backend with Choice/Multi.
-    See also https://jira.ow2.org/browse/LEMONLDAP-833 
 * When we get needConfirm: 1 in save response, configuration is already saved.
   It should only be saved after confirmation. We should have a "cancel" button
   in confirmation window to refuse the changes.
