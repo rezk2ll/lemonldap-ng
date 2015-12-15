@@ -50,14 +50,13 @@ var filterFunctions = {
         else if (node.nodes[0].data == 'Multi' && n.id == 'multiParams') {
           var nd = n._nodes ? n._nodes : n.nodes;
           var sep = nd[2].data || ';';
-          var reg = new RegExp('(?:^|' + sep + ')(\w+)');
-          var s = nd[0].data + sep + nd[1].data;
+          var reg = new RegExp(sep + '\\s*(\\w+)', 'g');
+          var s = '' + (nd[0].data ? sep + nd[0].data : '') + (nd[1].data ? sep + nd[1].data : '');
           while ((result = reg.exec(s)) !== null) {
-            p(result);
+            p(result[1]);
           }
         }
       });
-      console.log(nToShow);
       /* 2.2 Display modules */
       node.nodes_cond.forEach(function(n) {
         if (!all && nToShow.indexOf(n.id) == -1) {

@@ -275,7 +275,7 @@ sub tree {
                         {
                             title => 'multiParams',
                             help  => 'authmulti.html',
-                            form  => 'simpleInputContainer',
+                            form  => 'authParamsTextContainer',
                             nodes => [
                                 'multiAuthStack', 'multiUserDBStack',
                                 'multiValuesSeparator'

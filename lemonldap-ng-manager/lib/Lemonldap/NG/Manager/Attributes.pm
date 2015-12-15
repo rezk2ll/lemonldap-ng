@@ -1963,13 +1963,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
 
         # Multi
         multiAuthStack => {
-            type => 'text',
+            type => 'authParamsText',
         },
         multiUserDBStack => {
-            type => 'text',
+            type => 'authParamsText',
         },
         multiValuesSeparator => {
-            type          => 'text',
+            type          => 'authParamsText',
             default       => '; ',
             documentation => 'Separator for multiple values',
         },
