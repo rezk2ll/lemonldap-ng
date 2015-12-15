@@ -135,7 +135,6 @@
         'message': '',
         'items': [],
       };
-      console.log(data);
       if (data.message && data.message == '__needConfirmation__') {
         $scope.confirmNeeded = true;
       }
