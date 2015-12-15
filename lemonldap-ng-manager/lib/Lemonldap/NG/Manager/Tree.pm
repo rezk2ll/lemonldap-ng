@@ -124,7 +124,7 @@ sub tree {
                             nodes => ['apacheAuthnLevel']
                         },
                         {
-                            title => 'browserIdParams',
+                            title => 'browseridParams',
                             help  => 'authbrowserid.html',
                             form  => 'simpleInputContainer',
                             nodes => [
@@ -288,7 +288,7 @@ sub tree {
                             nodes => ['nullAuthnLevel']
                         },
                         {
-                            title => 'openIdParams',
+                            title => 'openidParams',
                             help  => 'authopenid.html',
                             nodes => [
                                 'openIdAuthnLevel', 'openIdExportedVars',
@@ -356,7 +356,7 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'webIDParams',
+                            title => 'webiDParams',
                             help  => 'authwebid.html',
                             nodes => [
                                 'webIDAuthnLevel', 'webIDExportedVars',
