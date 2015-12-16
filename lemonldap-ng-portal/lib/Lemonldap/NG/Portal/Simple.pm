@@ -259,6 +259,8 @@ sub new {
       or $self->abort( "Configuration error",
         "Unable to get configuration: $Lemonldap::NG::Common::Conf::msg" );
 
+    $self->{multiValuesSeparator} ||= ';';
+
     # Test mandatory elements
 
     # 1. Sessions backend
@@ -1734,7 +1736,7 @@ sub controlExistingSession {
                 return $self->{error} if $self->{error} > 0;
 
                 # Collect logout services and build hidden iFrames
-                if ( %{ $self->{logoutServices} } ) {
+                if ( $self->{logoutServices} and %{ $self->{logoutServices} } ) {
 
                     $self->lmLog(
                         "Create iFrames to forward logout to services",
