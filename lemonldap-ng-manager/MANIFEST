@@ -1,6 +1,7 @@
 .bowerrc
 bower.json
 Changes
+eg/manager-server.fcgi
 eg/manager-server.psgi
 KINEMATIC.md
 lib/Lemonldap/NG/Manager.pm
@@ -39,7 +40,11 @@ site/static/bwr/bootstrap/dist/js/bootstrap.min.js
 site/static/bwr/es5-shim/es5-shim.min.js
 site/static/bwr/jquery/dist/jquery.min.js
 site/static/css/manager.css
+site/static/forms/authChoice.html
+site/static/forms/authChoiceContainer.html
 site/static/forms/authParams.html
+site/static/forms/authParamsText.html
+site/static/forms/authParamsTextContainer.html
 site/static/forms/blackWhiteList.html
 site/static/forms/bool.html
 site/static/forms/boolOrExpr.html
