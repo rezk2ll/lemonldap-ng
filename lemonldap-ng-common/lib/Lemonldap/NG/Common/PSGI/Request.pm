@@ -26,8 +26,9 @@ has PATH_INFO      => (
     lazy    => 1,
     default => '',
     trigger => sub {
-        $_[0]->{REQUEST_URI} = uri_unescape( $_[0]->{REQUEST_URI} );
-        $_[0]->{REQUEST_URI} =~ s|//+|/|;
+        my $tmp = $_[0]->{SCRIPT_NAME};
+        $_[0]->{PATH_INFO} =~ s|^$tmp|/|;
+        $_[0]->{PATH_INFO} =~ s|//+|/|g;
     },
 );
 has REQUEST_URI => (
@@ -36,6 +37,7 @@ has REQUEST_URI => (
     trigger => sub {
         $_[0]->{unparsed_uri} = $_[0]->{REQUEST_URI};
         $_[0]->{REQUEST_URI}  = uri_unescape( $_[0]->{REQUEST_URI} );
+        $_[0]->{REQUEST_URI} =~ s|//+|/|g;
     },
 );
 has unparsed_uri => ( is => 'rw', isa => 'Str' );
