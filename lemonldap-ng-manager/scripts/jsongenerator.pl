@@ -5,12 +5,12 @@ use strict;
 use Lemonldap::NG::Manager::Attributes;
 use Lemonldap::NG::Manager::Tree;
 use Lemonldap::NG::Manager::CTrees;
+
 #use Lemonldap::NG::Manager;
 use Data::Dumper;
 use Regexp::Assemble;
 use JSON;
 use Getopt::Std;
-use Perl::Tidy;
 use IO::String;
 
 my ( $run, %opts );
@@ -192,10 +192,14 @@ $defaultAttr}
 
 my $dst;
 
-Perl::Tidy::perltidy(
-    source      => IO::String->new($defaultAttr),
-    destination => \$dst
-);
+eval {
+    require Perl::Tidy;
+    Perl::Tidy::perltidy(
+        source      => IO::String->new($defaultAttr),
+        destination => \$dst
+    );
+};
+$dst = $defaultAttr if($@);
 
 open( F, "> $defaultValuesFile" ) or die($!);
 print F $dst;
