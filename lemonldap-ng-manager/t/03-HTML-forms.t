@@ -38,7 +38,7 @@ foreach my $type ( keys %types ) {
     delete $types{$type};
     next
       if ( $type =~
-/^(?:url|PerlModule|hostname|pcre|lmAttrOrMacro|subContainer|RSAP(?:ublic|rivate)Key)$/
+/^(?:authParamsText|url|PerlModule|hostname|pcre|lmAttrOrMacro|subContainer|RSAP(?:ublic|rivate)Key)$/
       );
     ok( $forms{$type}, "Found $type" );
     delete $forms{$type};
@@ -75,9 +75,11 @@ sub getTypes {
 
 sub _getTypes {
     my ( $tree, $res ) = splice @_;
+    $tree = [$tree] unless ( ref($tree) );
     foreach my $k (@$tree) {
         if ( ref($k) ) {
-            _getTypes( $k->{nodes}, $res );
+            _getTypes( $k->{nodes},      $res ) if ( $k->{nodes} );
+            _getTypes( $k->{nodes_cond}, $res ) if ( $k->{nodes_cond} );
             $res->{ $k->{form} }++ if ( $k->{form} );
         }
     }
