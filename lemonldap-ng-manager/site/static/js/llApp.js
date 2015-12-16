@@ -203,8 +203,9 @@
         // data / status / config / statusText / headers()
         var url = rejection.headers();
         if (rejection.status == 401 && url.authorization && url.authorization.match(/^http/)) {
-          /* TODO: replace this with a popup */
-          window.location = url.authorization;
+          var u = url.authorization.replace(/url=.*$/g, '');
+          u += 'url=' + window.btoa(window.location).replace(/\//, '_');
+          window.location = u;
         } else {
           alert(rejection.statusText ? rejection.statusText : 'Network problem');
         }
