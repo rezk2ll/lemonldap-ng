@@ -14,6 +14,8 @@ use feature 'state';
 
 extends 'Lemonldap::NG::Manager::Lib';
 
+has conf => ( is => 'rw', isa => 'HashRef', default => sub { {} } );
+
 our $VERSION = '2.0.0';
 
 #############################
@@ -29,15 +31,31 @@ sub addRoutes {
     $self->addRoute( 'sessions.html', undef, ['GET'] )
 
       # READ
-      ->addRoute( 'sessions', undef, ['GET'] )
+      ->addRoute( sessions => { ':sessionType' => 'sessions' }, ['GET'] )
 
       # DELETE
-      ->addRoute( sessions => { ':sessionId' => 'delSession' }, ['DELETE'] );
+      ->addRoute(
+        sessions => { ':sessionType' => { ':sessionId' => 'delSession' } },
+        ['DELETE']
+      );
 
     #TODO: transfer this in Manager.pm ?
     if ( my $localConf = $self->confAcc->getLocalConf(SESSIONSEXPLORERSECTION) )
     {
         $self->{$_} = $localConf->{$_} foreach ( keys %$localConf );
+    }
+
+    my $conf = $self->confAcc->getConf();
+    foreach my $type (@sessionTypes) {
+        if ( my $tmp =
+            $self->{ $type . 'Storage' } || $conf->{ $type . 'Storage' } )
+        {
+            $self->{conf}->{$type}->{module} = $tmp;
+            $self->{conf}->{$type}->{options} =
+                 $self->{ $type . 'StorageOptions' }
+              || $conf->{ $type . 'StorageOptions' }
+              || {};
+        }
     }
 
     $self->{ipField}              ||= 'ipAddr';
@@ -57,12 +75,18 @@ sub sessions {
         return $self->session( $req, $session, $skey );
     }
 
-    # Case 2: list of sessions
+    my $mod = $self->getMod($req)
+      or return $self->sendError( $req, undef, 400 );
     my $params = $req->params();
+    delete $params->{sessionType};
+
     my $res;
 
+    # Case 2: list of sessions
+
     # 2.1 Get fields to require
-    my @fields = ( '_httpSessionType', $self->{ipField}, $tsv->{whatToTrace} );
+    my @fields =
+      ( '_httpSessionType', $self->{ipField}, $tsv->{whatToTrace} );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy = $1
           if ( $groupBy =~ /^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/ );
@@ -83,11 +107,13 @@ sub sessions {
 
     # 2.2 Restrict query if possible: search for filters (any query arg that is
     #     not a keyword)
-    my $moduleOptions = $tsv->{sessionStorageOptions} || {};
-    $moduleOptions->{backend} = $tsv->{sessionStorageModule};
+    my $moduleOptions = $mod->{options};
+    $moduleOptions->{backend} = $mod->{module};
     if (
         my %filters = map {
-            /^(?:(?:group|order)By|doubleIp)$/ ? () : ( $_ => $params->{$_} );
+            /^(?:(?:group|order)By|doubleIp)$/
+              ? ()
+              : ( $_ => $params->{$_} );
         } keys %$params
       )
     {
@@ -276,9 +302,11 @@ sub delSession {
     my ( $self, $req ) = splice @_;
     return $self->sendJSONresponse( $req, { result => 1 } )
       if ( $self->{demoMode} );
+    my $mod = $self->getMod($req)
+      or return $self->sendError( $req, undef, 400 );
     my $id = $req->params('sessionId')
       or return $self->sendError( $req, 'sessionId is missing', 400 );
-    my $session = $self->getApacheSession($id);
+    my $session = $self->getApacheSession( $mod, $id );
     $session->remove;
     if ( $session->error ) {
         return $self->sendError( $req, $session->error, 200 );
@@ -289,10 +317,12 @@ sub delSession {
 sub session {
     my ( $self, $req, $id, $skey ) = splice @_;
     my ( %h, $res );
+    my $mod = $self->getMod($req)
+      or return $self->sendError( $req, undef, 400 );
 
     # Try to read session
     # TODO: conf in PSGI
-    my $apacheSession = $self->getApacheSession($id)
+    my $apacheSession = $self->getApacheSession( $mod, $id )
       or return $self->sendError( $req, undef, 400 );
 
     my %session = %{ $apacheSession->data };
@@ -315,11 +345,11 @@ sub session {
 }
 
 sub getApacheSession {
-    my ( $self, $id ) = splice @_;
+    my ( $self, $mod, $id ) = splice @_;
     my $apacheSession = Lemonldap::NG::Common::Session->new(
         {
-            storageModule        => $tsv->{sessionStorageModule},
-            storageModuleOptions => $tsv->{sessionStorageOptions},
+            storageModule        => $mod->{module},
+            storageModuleOptions => $mod->{options},
             cacheModule          => $tsv->{sessionCacheModule},
             cacheModuleOptions   => $tsv->{sessionCacheOptions},
             id                   => $id,
@@ -331,6 +361,20 @@ sub getApacheSession {
         return undef;
     }
     return $apacheSession;
+}
+
+sub getMod {
+    my ( $self, $req ) = @_;
+    my ( $s, $m );
+    unless ( $s = $req->params('sessionType') ) {
+        $self->error('Session type is required');
+        return ();
+    }
+    unless ( $m = $self->conf->{$s} ) {
+        $self->error('Unknown (or unconfigured) session type');
+        return ();
+    }
+    return $m;
 }
 
 1;

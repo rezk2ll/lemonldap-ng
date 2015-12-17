@@ -33,20 +33,22 @@ Examples:
 
 ## Sessions
 
-* Sessions list: `/sessions`
-* Session: `/sessions/<hash>`
-* **TODO**: Session key: `/sessions/<hash>/<key>`
-* Delete session: `DELETE /sessions/<hash>`
+Note that global can be replaced by persistent to list persistent sessions.
+
+* Sessions list: `/sessions/global`
+* Session: `/sessions/global/<hash>`
+* **TODO**: Session key: `/sessions/global/<hash>/<key>`
+* Delete session: `DELETE /sessions/global/<hash>`
 * Filters:
   * All connected users which username start by a letter:
-    `/sessions?_whatToTrace=<letter>*&groupBy=_whatToTrace`
-  * User's sessions: `/sessions?_whatToTrace=foo.bar`
-  * IP's sessions: `/sessions?ip=1.2.3.4`
-  * Double sessions by IP: `/sessions?doubleIP`
+    `/sessions/global?_whatToTrace=<letter>*&groupBy=_whatToTrace`
+  * User's sessions: `/sessions/global?_whatToTrace=foo.bar`
+  * IP's sessions: `/sessions/global?ip=1.2.3.4`
+  * Double sessions by IP: `/sessions/global?doubleIP`
 * Group by:
-  * First letter of Connected users: `/sessions?groupBy=substr(_whatToTrace,1)`
+  * First letter of Connected users: `/sessions/global?groupBy=substr(_whatToTrace,1)`
 * Order:
-  * Sessions sorted by user: `/sessions?orderBy=_whatToTrace`
+  * Sessions sorted by user: `/sessions/global?orderBy=_whatToTrace`
 
 Note that sessions are grouped automaticaly.
 

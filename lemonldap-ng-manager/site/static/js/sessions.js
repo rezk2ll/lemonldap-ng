@@ -115,7 +115,7 @@
 
     $scope.deleteSession = function() {
       $scope.waiting = true;
-      $http.delete(scriptname + "sessions/" + $scope.currentSession.id).success(function(data) {
+      $http.delete(scriptname + "sessions/global/" + $scope.currentSession.id).success(function(data) {
         $scope.currentSession = null;
         $scope.currentScope.remove();
         $scope.waiting = false;
@@ -259,7 +259,7 @@
 
       $scope.currentScope = scope;
       var sessionId = scope.$modelValue.session;
-      $http.get(scriptname + "sessions/" + sessionId).success(function(data) {
+      $http.get(scriptname + "sessions/global/" + sessionId).success(function(data) {
         $scope.currentSession = transformSession(data);
       });
     }
@@ -306,7 +306,7 @@
       }
       query = scheme[level]($scope.type, value, currentQuery);
 
-      $http.get(scriptname + "sessions?" + query).success(function(data) {
+      $http.get(scriptname + "sessions/global?" + query).success(function(data) {
         if (data.result) {
           data.values.forEach(function(n) {
             autoId++;
