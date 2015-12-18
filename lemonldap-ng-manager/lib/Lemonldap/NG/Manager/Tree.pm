@@ -399,6 +399,7 @@ sub tree {
                                     title => 'issuerDBCASOptions',
                                     nodes => [
                                         'casAttr',
+                                        'casAttributes',
                                         'casAccessControlPolicy',
                                         'casStorage',
                                         'casStorageOptions'

@@ -85,6 +85,7 @@
   "CAS_url": "Server URL",
   "casAccessControlPolicy": "Access control policy",
   "casAttr": "CAS login",
+  "casAttributes": "CAS exported attributes",
   "casParams": "CAS parameters",
   "casStorage": "CAS sessions module name",
   "casStorageOptions": "CAS sessions module options",

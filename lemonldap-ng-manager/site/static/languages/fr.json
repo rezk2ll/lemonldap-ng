@@ -85,6 +85,7 @@
   "CAS_url": "URL du serveur",
   "casAccessControlPolicy": "Politique de contrôle d'accès",
   "casAttr": "Identifiant CAS",
+  "casAttributes": "Attributs CAS",
   "casParams": "Paramètres CAS",
   "casStorage": "Nom du module des session CAS",
   "casStorageOptions": "Options du module des sessions CAS",

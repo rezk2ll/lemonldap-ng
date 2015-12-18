@@ -885,6 +885,7 @@ sub attributes {
 
         # CAS IDP
         casAttr                => { type => 'text', },
+        casAttributes          => { type => 'keyTextContainer', },
         casAccessControlPolicy => {
             type   => 'select',
             select => [
