@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Conf::Serializer;
 
 use Data::Dumper;
 
-our $VERSION = '2.0.0';
+our $VERSION = '1.9.0';
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::normalize   = \&normalize;

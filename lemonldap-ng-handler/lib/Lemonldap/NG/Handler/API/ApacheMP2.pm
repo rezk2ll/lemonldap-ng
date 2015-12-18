@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::API::ApacheMP2;
 
-our $VERSION = '2.0.0';
+our $VERSION = '1.9.0';
 
 # Specific modules and constants for Apache Mod_Perl 2
 use Apache2::RequestUtil;

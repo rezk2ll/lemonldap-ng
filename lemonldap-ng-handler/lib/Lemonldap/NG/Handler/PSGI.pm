@@ -5,7 +5,7 @@ use Mouse;
 use Lemonldap::NG::Handler::SharedConf qw(:tsv :variables :jailSharedVars);
 extends 'Lemonldap::NG::Common::PSGI::Router';
 
-our $VERSION = '2.0.0';
+our $VERSION = '1.9.0';
 
 around init => sub {
     my ( $method, $self, $args ) = splice @_;

@@ -8,7 +8,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: '0'
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.142060'
+generated_by: 'ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.150005'
 license: open_source
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -24,10 +24,11 @@ requires:
   HTML::Template: '0'
   JSON: '0'
   LWP: '0'
-  Lemonldap::NG::Common: v2.0.0
-  Lemonldap::NG::Handler: v2.0.0
+  Lemonldap::NG::Common: v1.9.0
+  Lemonldap::NG::Handler: v1.9.0
   URI: '0'
   XML::LibXML: '0'
   XML::LibXSLT: '0'
-version: v2.0.0
+version: v1.9.0
 x_LWP::Protocol::https: 0
+x_serialization_backend: 'CPAN::Meta::YAML version 0.012'

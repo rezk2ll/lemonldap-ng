@@ -13,7 +13,7 @@ has 'currentConf' =>
   ( is => 'rw', required => 1, default => sub { { cfgNum => 0 } } );
 has 'protection' => ( is => 'rw', isa => 'Str', default => 'manager' );
 
-our $VERSION = '2.0.0';
+our $VERSION = '1.9.0';
 
 ## @method Lemonldap::NG::Common::Conf confAcc()
 # Configuration access object

@@ -22,7 +22,7 @@ use Config::IniFiles;
 #inherits Lemonldap::NG::Common::Conf::SOAP
 #inherits Lemonldap::NG::Common::Conf::LDAP
 
-our $VERSION = '2.0.0';
+our $VERSION = '1.9.0';
 our $msg     = '';
 our $iniObj;
 

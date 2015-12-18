@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::API::Nginx;
 
-our $VERSION = '2.0.0';
+our $VERSION = '1.9.0';
 
 use constant FORBIDDEN     => 403;
 use constant REDIRECT      => 302;
