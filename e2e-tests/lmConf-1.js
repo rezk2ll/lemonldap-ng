@@ -140,8 +140,8 @@
   "passwordDB": "Demo",
   "persistentStorage": "Apache::Session::File",
   "persistentStorageOptions": {
-    "Directory": "__pwd__/e2e-tests/conf",
-    "LockDirectory": "__pwd__/e2e-tests/conf/lock",
+    "Directory": "__pwd__/e2e-tests/conf/persistents",
+    "LockDirectory": "__pwd__/e2e-tests/conf/persistents/lock",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
   "portal": "http://auth.example.com:__port__/",

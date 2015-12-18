@@ -2077,8 +2077,7 @@ sub setPersistentSessionInfo {
             foreach my $k ( keys %{ $persistentSession->data } ) {
 
                 # Do not restore some parameters
-                next if $k =~ /^_session_id$/;
-                next if $k =~ /^_session_kind$/;
+                next if $k =~ /^_session_(?:(?:u)id|kind)$/;
                 $self->lmLog( "Restore persistent parameter $k", 'debug' );
                 $self->{sessionInfo}->{$k} = $persistentSession->data->{$k};
             }

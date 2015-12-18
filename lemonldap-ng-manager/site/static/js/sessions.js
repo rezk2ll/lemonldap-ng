@@ -6,47 +6,44 @@
   'use strict';
   var schemes = {
     "_whatToTrace": [
-      function(t, v) {
-        return "groupBy=substr(" + t + ",1)";
-      },
-      function(t, v) {
-        return t + "=" + v + "*&groupBy=" + t;
-      },
-      function(t, v) {
-        return t + "=" + v;
-      }
-    ],
+    function(t, v) {
+      return "groupBy=substr(" + t + ",1)";
+    },
+    function(t, v) {
+      return t + "=" + v + "*&groupBy=" + t;
+    },
+    function(t, v) {
+      return t + "=" + v;
+    }],
     "ipAddr": [
-      function(t, v) {
-        return "groupBy=net4(" + t + ",1)";
-      },
-      function(t, v) {
-        return "groupBy=net4(" + t + ",2)";
-      },
-      function(t, v) {
-        return "groupBy=net4(" + t + ",3)";
-      },
-      function(t, v) {
-        return "groupBy=net4(" + t + ",4)";
-      },
-      function(t, v) {
-        return t + "=" + v + '&groupBy=_whatToTrace';
-      },
-      function(t, v, q) {
-        return q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=" + v;
-      }
-    ],
+    function(t, v) {
+      return "groupBy=net4(" + t + ",1)";
+    },
+    function(t, v) {
+      return "groupBy=net4(" + t + ",2)";
+    },
+    function(t, v) {
+      return "groupBy=net4(" + t + ",3)";
+    },
+    function(t, v) {
+      return "groupBy=net4(" + t + ",4)";
+    },
+    function(t, v) {
+      return t + "=" + v + '&groupBy=_whatToTrace';
+    },
+    function(t, v, q) {
+      return q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=" + v;
+    }],
     "doubleIp": [
-      function(t, v) {
-        return t;
-      },
-      function(t, v) {
-        return '_whatToTrace=' + v + '&groupBy=ipAddr';
-      },
-      function(t, v, q) {
-        return q.replace(/\&groupBy.*$/, '') + "&ipAddr=" + v;
-      }
-    ]
+    function(t, v) {
+      return t;
+    },
+    function(t, v) {
+      return '_whatToTrace=' + v + '&groupBy=ipAddr';
+    },
+    function(t, v, q) {
+      return q.replace(/\&groupBy.*$/, '') + "&ipAddr=" + v;
+    }]
   };
   var hiddenAttributes = '_password';
   var categories = [
@@ -57,8 +54,7 @@
     ['saml', ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']],
     ['groups', ['groups', 'hGroups']],
     ['ldap', ['dn']],
-    ['BrowserID', ['_browserIdAnswer', '_browserIdAnswerRaw']]
-  ];
+    ['BrowserID', ['_browserIdAnswer', '_browserIdAnswerRaw']]];
   var menu = {
     'session': [{
       'title': 'deleteSession',
@@ -88,6 +84,7 @@
     $scope.translateTitle = function(node) {
       return $translator.translateField(node, 'title');
     };
+    var sessionType = 'global';
 
     /* Manage form menu clicks */
     $scope.menuClick = function(button) {
@@ -97,14 +94,14 @@
         if (!button.action) button.action = button.title;
         //try {
         switch (typeof button.action) {
-          case 'function':
-            button.action($scope.currentNode, $scope);
-            break;
-          case 'string':
-            $scope[button.action]();
-            break;
-          default:
-            console.log(typeof button.action);
+        case 'function':
+          button.action($scope.currentNode, $scope);
+          break;
+        case 'string':
+          $scope[button.action]();
+          break;
+        default:
+          console.log(typeof button.action);
         };
         //} catch (e) {
         //  alert("Error: " + e.message);
@@ -115,7 +112,7 @@
 
     $scope.deleteSession = function() {
       $scope.waiting = true;
-      $http.delete(scriptname + "sessions/global/" + $scope.currentSession.id).success(function(data) {
+      $http.delete(scriptname + "sessions/" + sessionType + "/" + $scope.currentSession.id).success(function(data) {
         $scope.currentSession = null;
         $scope.currentScope.remove();
         $scope.waiting = false;
@@ -188,8 +185,8 @@
         /* 2.1 Classified attributes */
         categories.forEach(function(t) {
           var subres = [],
-            category = t[0],
-            attrs = t[1];
+          category = t[0],
+          attrs = t[1];
           attrs.forEach(function(attr) {
             if (session[attr]) {
               subres.push({
@@ -259,7 +256,7 @@
 
       $scope.currentScope = scope;
       var sessionId = scope.$modelValue.session;
-      $http.get(scriptname + "sessions/global/" + sessionId).success(function(data) {
+      $http.get(scriptname + "sessions/" + sessionType + "/" + sessionId).success(function(data) {
         $scope.currentSession = transformSession(data);
       });
     }
@@ -286,8 +283,12 @@
      */
     var pathEvent = function(event, next, current) {
       var n = next.match(/#\/(\w+)/);
+      sessionType = 'global';
       if (n === null) {
         $scope.type = '_whatToTrace';
+      } else if (n[1].match(/^(persistent)$/)) {
+        sessionType = RegExp.$1;
+        $scope.type = 'decode';
       } else {
         $scope.type = n[1];
       }
@@ -306,7 +307,7 @@
       }
       query = scheme[level]($scope.type, value, currentQuery);
 
-      $http.get(scriptname + "sessions/global?" + query).success(function(data) {
+      $http.get(scriptname + "sessions/" + sessionType + "?" + query).success(function(data) {
         if (data.result) {
           data.values.forEach(function(n) {
             autoId++;
@@ -330,14 +331,12 @@
       $scope.waiting = true;
       $scope.data = [];
       $q.all([
-          $translator.init($scope.lang),
-          $scope.updateTree('', $scope.data, 0)
-        ])
-        .then(function() {
-          $scope.waiting = false;
-        }, function(j, e) {
-          $scope.waiting = false;
-        });
+      $translator.init($scope.lang), $scope.updateTree('', $scope.data, 0)]).then(function() {
+        $scope.waiting = false;
+      },
+      function(j, e) {
+        $scope.waiting = false;
+      });
     };
 
     var c = $location.path().match(/^\/(\w+)/);

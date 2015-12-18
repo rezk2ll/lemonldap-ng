@@ -55,6 +55,8 @@ sub addRoutes {
                  $self->{ $type . 'StorageOptions' }
               || $conf->{ $type . 'StorageOptions' }
               || {};
+            $self->{conf}->{kind} =
+              ( $type eq 'global' ? 'SSO' : ucfirst($type) );
         }
     }
 
@@ -214,7 +216,8 @@ sub sessions {
             $start ||= 0;
             $length = 1 if ( $length < 1 );
             foreach my $k ( keys %$res ) {
-                $r->{ substr $res->{$k}->{$field}, $start, $length }++;
+                $r->{ substr $res->{$k}->{$field}, $start, $length }++
+                  if ( $res->{$k}->{$field} );
             }
             $group = $field;
         }
@@ -353,7 +356,7 @@ sub getApacheSession {
             cacheModule          => $tsv->{sessionCacheModule},
             cacheModuleOptions   => $tsv->{sessionCacheOptions},
             id                   => $id,
-            kind                 => "SSO",
+            kind                 => $mod->{kind},
         }
     );
     if ( $apacheSession->error ) {
