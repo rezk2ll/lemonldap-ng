@@ -1,0 +1,200 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="limesurvey">LimeSurvey</h1>
+<div class="level1">
+
+<p>
+<a href="/_detail/applications/limesurvey_logo.png?id=documentation%3A1.9%3Aapplications%3Alimesurvey" class="media" title="applications:limesurvey_logo.png"><img src="../../../../media/applications/limesurvey_logo.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT1 SECTION "LimeSurvey" [1-70] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+<a href="http://www.limesurvey.org" class="urlextern" title="http://www.limesurvey.org"  rel="nofollow">LimeSurvey</a> is a web survey software written in PHP. LimeSurvey has a webserver authentication mode that allows to integrate it directly into LemonLDAP::NG.
+</p>
+
+<p>
+To have a stronger integration, we will configure LimeSurvey to autocreate unknown users and use HTTP headers to fill name, mail and roles. For example, we will use 3 roles:
+</p>
+<ul>
+<li class="level1"><div class="li"> User: can answer to surveys</div>
+</li>
+<li class="level1"><div class="li"> Admin: can create surveys</div>
+</li>
+<li class="level1"><div class="li"> Superadmin: no one can stop him!</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "Presentation" [71-557] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+<p><div class="noteclassic">We suppose that LimeSurvey is installed in /var/www/html/limesurvey
+</div></p>
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Configuration" [558-666] -->
+<h3 class="sectionedit4" id="limesurvey_configuration">LimeSurvey configuration</h3>
+<div class="level3">
+
+<p>
+The configuration is done in config.php:
+</p>
+<pre class="code">vi /var/www/html/limesurvey/config.php</pre>
+<pre class="code file php"><span class="co1">//==================================</span>
+<span class="co1">// WebSSO</span>
+<span class="co1">//==================================</span>
+&nbsp;
+<span class="re0">$useWebserverAuth</span> <span class="sy0">=</span> <span class="kw4">true</span><span class="sy0">;</span>
+<span class="re0">$WebserverAuth_autocreateUser</span> <span class="sy0">=</span> <span class="kw4">true</span><span class="sy0">;</span>
+<span class="re0">$WebserverAuth_autouserprofile</span> <span class="sy0">=</span> <a href="http://www.php.net/array"><span class="kw3">Array</span></a><span class="br0">&#40;</span>
+ <span class="st_h">'full_name'</span> <span class="sy0">=&gt;</span> <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'HTTP_AUTH_CN'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+ <span class="st_h">'email'</span> <span class="sy0">=&gt;</span> <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'HTTP_AUTH_MAIL'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+ <span class="st_h">'lang'</span> <span class="sy0">=&gt;</span> <span class="st_h">'en'</span><span class="sy0">,</span>
+ <span class="st_h">'htmleditormode'</span> <span class="sy0">=&gt;</span> <span class="st_h">'inline'</span><span class="sy0">,</span>
+ <span class="st_h">'templatelist'</span> <span class="sy0">=&gt;</span> <span class="st_h">'default,basic,MyOrgTemplate'</span><span class="sy0">,</span>
+ <span class="st_h">'create_survey'</span> <span class="sy0">=&gt;</span> <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'HTTP_AUTH_ADMIN'</span><span class="br0">&#93;</span> <span class="sy0">||</span> <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+ <span class="st_h">'create_user'</span> <span class="sy0">=&gt;</span>  <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+ <span class="st_h">'delete_user'</span> <span class="sy0">=&gt;</span>  <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+ <span class="st_h">'superadmin'</span> <span class="sy0">=&gt;</span> <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+ <span class="st_h">'configurator'</span> <span class="sy0">=&gt;</span>  <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+ <span class="st_h">'manage_template'</span> <span class="sy0">=&gt;</span>  <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+ <span class="st_h">'manage_label'</span> <span class="sy0">=&gt;</span>  <span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st_h">'HTTP_AUTH_SUPERADMIN'</span><span class="br0">&#93;</span>
+<span class="br0">&#41;</span><span class="sy0">;</span></pre>
+
+<p>
+<p><div class="notetip">We directly use HTTP headers to fill default user profile.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT4 SECTION "LimeSurvey configuration" [667-1672] -->
+<h3 class="sectionedit5" id="limesurvey_virtual_host_in_apache">LimeSurvey virtual host in Apache</h3>
+<div class="level3">
+
+<p>
+Configure LimeSurvey virtual host like other <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">protected virtual host</a>.
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+       <span class="kw1">ServerName</span> limesurvey.example.com
+&nbsp;
+       PerlHeaderParserHandler Lemonldap::NG::Handler
+&nbsp;
+      <span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> PHP_AUTH_USER=$1
+&nbsp;
+      <span class="kw1">Alias</span> /limesurvey /var/www/html/limesurvey
+      <span class="kw1">DocumentRoot</span> /var/www/html/limesurvey
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+<p><div class="noteimportant">You need to set the PHP_AUTH_USER variable to have the Webserver authentication mode working.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT5 SECTION "LimeSurvey virtual host in Apache" [1673-2227] -->
+<h3 class="sectionedit6" id="limesurvey_virtual_host_in_manager">LimeSurvey virtual host in Manager</h3>
+<div class="level3">
+
+<p>
+Go to the Manager and <a href="../../../documentation/1.9/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:1.9:configvhost">create a new virtual host</a> for LimeSurvey.
+</p>
+
+</div>
+
+<h4 id="headers">Headers</h4>
+<div class="level4">
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Header name  </th><th class="col1 centeralign">  Description  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  Auth-User  </td><td class="col1 centeralign">  user login  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  Auth-Cn  </td><td class="col1 centeralign">  user full name  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 centeralign">  Auth-Mail  </td><td class="col1 centeralign">  user email  </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0 centeralign">  Auth-Admin  </td><td class="col1 centeralign">  1 if user is admin  </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0 centeralign">  Auth-SuperAdmin  </td><td class="col1 centeralign">  1 if user is superadmin  </td>
+	</tr>
+</table></div>
+<!-- EDIT7 TABLE [2400-2618] -->
+<p>
+<p><div class="notetip">You can manage roles with the <a href="../../../documentation/1.9/rbac.html" class="wikilink1" title="documentation:1.9:rbac">RBAC model</a> or by using groups.
+</div></p>
+</p>
+
+</div>
+
+<h4 id="rules">Rules</h4>
+<div class="level4">
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Rule name  </th><th class="col1 centeralign">  Expression  </th><th class="col2 centeralign">  Description  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  Logout  </td><td class="col1 centeralign">  action=logout$  </td><td class="col2 centeralign">  Logout rule (for example logout_app_sso)  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  Admin   </td><td class="col1 centeralign">  ^/limesurvey/admin/  </td><td class="col2 centeralign">  Allow only admin and superadmin roles  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 centeralign">  Default  </td><td class="col1 centeralign">  default  </td><td class="col2 centeralign">  Allow only users with a LimeSurvey role  </td>
+	</tr>
+</table></div>
+<!-- EDIT8 TABLE [2725-3010] -->
+<p>
+<p><div class="notetip">
+You can set the default access to:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>accept</strong>: all authenticated users will access surveys</div>
+</li>
+<li class="level1"><div class="li"> <strong>unprotect</strong>: no authentication will be asked to access surveys </div>
+</li>
+</ul>
+
+<p>
+
+</div></p>
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

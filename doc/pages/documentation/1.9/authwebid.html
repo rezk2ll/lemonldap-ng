@@ -1,0 +1,119 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="webid">WebID</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [22-85] -->
+</div>
+<!-- EDIT1 SECTION "WebID" [1-86] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+<a href="http://www.w3.org/wiki/WebID" class="urlextern" title="http://www.w3.org/wiki/WebID"  rel="nofollow">WebID</a> is a way to uniquely identify a person, company, organisation, or other agent using a <abbr title="Uniform Resource Identifier">URI</abbr> and a certificate.
+</p>
+
+<p>
+You need <a href="https://metacpan.org/release/Web-ID" class="urlextern" title="https://metacpan.org/release/Web-ID"  rel="nofollow">Web::ID</a> package.
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Presentation" [87-328] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose WebID for authentication module. You can also use WebID as user database.
+</p>
+
+<p>
+Then, go in <code>WebID parameters</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Authentication level</strong>: authentication level for this module.</div>
+</li>
+<li class="level1"><div class="li"> <strong>WebID whitelist</strong>: list of space separated hosts granted to host FOAF document. You can use &#039;*&#039; character. Example :<pre class="code">*.partner.com</pre>
+</div>
+</li>
+</ul>
+
+<p>
+If you use WebID as user database, declare values in <strong>exported variables</strong> :
+</p>
+<ul>
+<li class="level1"><div class="li"> use any key name you want. If you want to refuse access when a data is missing, just add a “!” before the key name</div>
+</li>
+<li class="level1"><div class="li"> in the value field, set the field name. Take a look at <a href="http://xmlns.com/foaf/spec/#sec-crossref" class="urlextern" title="http://xmlns.com/foaf/spec/#sec-crossref"  rel="nofollow">http://xmlns.com/foaf/spec/#sec-crossref</a>. Example :<pre class="code">name =&gt; foaf:name</pre>
+</div>
+</li>
+</ul>
+
+<p>
+See also <a href="../../documentation/1.9/exportedvars.html" class="wikilink1" title="documentation:1.9:exportedvars">exported variables configuration</a>.
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Configuration" [329-1168] -->
+<h3 class="sectionedit5" id="apache_configuration">Apache configuration</h3>
+<div class="level3">
+
+<p>
+Portal host must be configured to use SSL and must ask for client certificate. It is recommended to use optional_no_ca since WebID doesn&#039;t use certificate authorities :
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> _default_:<span class="nu0">443</span>&gt;
+<span class="kw1">ServerName</span> auth.example.com
+<span class="kw1">SSLEngine</span> <span class="kw2">on</span>
+<span class="kw1">SSLCertificateFile</span> ...
+<span class="kw1">SSLCertificateKeyFile</span> ...
+<span class="kw1">SSLVerifyClient</span> optional_no_ca
+...
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+</div>
+<!-- EDIT5 SECTION "Apache configuration" [1169-1560] -->
+<h3 class="sectionedit6" id="tests">Tests</h3>
+<div class="level3">
+
+<p>
+To test this, you can build your own WebID certificate using one of :
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://metacpan.org/module/Web::ID::Certificate::Generator" class="urlextern" title="https://metacpan.org/module/Web::ID::Certificate::Generator"  rel="nofollow">Web::ID::Certificate::Generator</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://my-profile.eu/" class="urlextern" title="https://my-profile.eu/"  rel="nofollow">my-profile.eu</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="https://gist.github.com/njh/2432427" class="urlextern" title="https://gist.github.com/njh/2432427"  rel="nofollow">gen-webid-cert.sh</a></div>
+</li>
+</ul>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

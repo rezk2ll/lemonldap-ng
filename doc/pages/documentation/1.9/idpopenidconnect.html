@@ -1,0 +1,284 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="openid_connect_provider">OpenID Connect Provider</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1 SECTION "OpenID Connect Provider" [1-39] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+<p><div class="noteclassic">OpenID Connect is a protocol based on REST, OAuth 2.0 and JOSE stacks. It is described here: <a href="http://openid.net/connect/" class="urlextern" title="http://openid.net/connect/"  rel="nofollow">http://openid.net/connect/</a>.
+</div></p>
+</p>
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can act as an OpenID Connect Provider (OP). It will answer to OpenID Connect requests to give user identity (trough ID Token) and information (trough User Info end point).
+</p>
+
+<p>
+As an OP, <abbr title="LemonLDAP::NG">LL::NG</abbr> supports a lot of OpenID Connect features:
+</p>
+<ul>
+<li class="level1"><div class="li"> Authorization Code, Implicit and Hybrid flows</div>
+</li>
+<li class="level1"><div class="li"> Publication of JSON metadata and JWKS data (Discovery)</div>
+</li>
+<li class="level1"><div class="li"> <code>prompt</code>, <code>display</code>, <code>ui_locales</code>, <code>max_age</code> parameters</div>
+</li>
+<li class="level1"><div class="li"> Extra claims definition</div>
+</li>
+<li class="level1"><div class="li"> Authentication context Class References (ACR)</div>
+</li>
+<li class="level1"><div class="li"> Nonce</div>
+</li>
+<li class="level1"><div class="li"> Dynamic registration</div>
+</li>
+<li class="level1"><div class="li"> Access Token Hash generation</div>
+</li>
+<li class="level1"><div class="li"> ID Token signature (HS256/HS384/HS512/RS256/RS384/RS512)</div>
+</li>
+<li class="level1"><div class="li"> UserInfo end point, as JSON or as JWT</div>
+</li>
+<li class="level1"><div class="li"> Request and Request <abbr title="Uniform Resource Identifier">URI</abbr></div>
+</li>
+<li class="level1"><div class="li"> Session management</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "Presentation" [40-922] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT3 SECTION "Configuration" [923-949] -->
+<h3 class="sectionedit4" id="openid_connect_service">OpenID Connect Service</h3>
+<div class="level3">
+
+<p>
+See <a href="../../documentation/1.9/openidconnectservice.html" class="wikilink1" title="documentation:1.9:openidconnectservice">OpenID Connect service</a> configuration chapter.
+</p>
+
+</div>
+<!-- EDIT4 SECTION "OpenID Connect Service" [950-1059] -->
+<h3 class="sectionedit5" id="issuerdb">IssuerDB</h3>
+<div class="level3">
+
+<p>
+Go in <code>General Parameters</code> » <code>Issuer modules</code> » <code>OpenID Connect</code> and configure:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Activation</strong>: set to <code>On</code>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Path</strong>: keep <code>^/oauth2/</code> unless you need to use another path (in this case, you need to adapt Apache configuration)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Use rule</strong>: a rule to allow user to use this module, set to <code>1</code> to always allow.</div>
+</li>
+</ul>
+
+<p>
+<p><div class="notetip">
+For example, to allow only users with a strong authentication level:
+</p>
+<pre class="code">$authenticationLevel &gt; 2</pre>
+
+<p>
+
+</div></p>
+</p>
+
+</div>
+<!-- EDIT5 SECTION "IssuerDB" [1060-1545] -->
+<h3 class="sectionedit6" id="configuration_of_llng_in_relying_party">Configuration of LL::NG in Relying Party</h3>
+<div class="level3">
+
+<p>
+Each Relying Party has its own configuration way. <abbr title="LemonLDAP::NG">LL::NG</abbr> publish its OpenID Connect metadata to ease the configuration of client.
+</p>
+
+<p>
+The metadata can be found at the standard “Well Known” <abbr title="Uniform Resource Locator">URL</abbr>: <a href="http://auth.example.com/.well-known/openid-configuration" class="urlextern" title="http://auth.example.com/.well-known/openid-configuration"  rel="nofollow">http://auth.example.com/.well-known/openid-configuration</a>
+</p>
+
+<p>
+An example of its content:
+</p>
+<pre class="code file javascript"><span class="br0">&#123;</span>
+   <span class="st0">&quot;end_session_endpoint&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;http://auth.example.com/oauth2/logout&quot;</span><span class="sy0">,</span>
+   <span class="st0">&quot;jwks_uri&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;http://auth.example.com/oauth2/jwks&quot;</span><span class="sy0">,</span>
+   <span class="st0">&quot;token_endpoint_auth_methods_supported&quot;</span> <span class="sy0">:</span> <span class="br0">&#91;</span>
+      <span class="st0">&quot;client_secret_post&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;client_secret_basic&quot;</span>
+   <span class="br0">&#93;</span><span class="sy0">,</span>
+   <span class="st0">&quot;token_endpoint&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;http://auth.example.com/oauth2/token&quot;</span><span class="sy0">,</span>
+   <span class="st0">&quot;response_types_supported&quot;</span> <span class="sy0">:</span> <span class="br0">&#91;</span>
+      <span class="st0">&quot;code&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;id_token&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;id_token token&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;code id_token&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;code token&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;code id_token token&quot;</span>
+   <span class="br0">&#93;</span><span class="sy0">,</span>
+   <span class="st0">&quot;userinfo_signing_alg_values_supported&quot;</span> <span class="sy0">:</span> <span class="br0">&#91;</span>
+      <span class="st0">&quot;none&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;HS256&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;HS384&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;HS512&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;RS256&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;RS384&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;RS512&quot;</span>
+   <span class="br0">&#93;</span><span class="sy0">,</span>
+   <span class="st0">&quot;id_token_signing_alg_values_supported&quot;</span> <span class="sy0">:</span> <span class="br0">&#91;</span>
+      <span class="st0">&quot;none&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;HS256&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;HS384&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;HS512&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;RS256&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;RS384&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;RS512&quot;</span>
+   <span class="br0">&#93;</span><span class="sy0">,</span>
+   <span class="st0">&quot;userinfo_endpoint&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;http://auth.example.com/oauth2/userinfo&quot;</span><span class="sy0">,</span>
+   <span class="st0">&quot;request_uri_parameter_supported&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;true&quot;</span><span class="sy0">,</span>
+   <span class="st0">&quot;acr_values_supported&quot;</span> <span class="sy0">:</span> <span class="br0">&#91;</span>
+      <span class="st0">&quot;loa-4&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;loa-1&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;loa-3&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;loa-5&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;loa-2&quot;</span>
+   <span class="br0">&#93;</span><span class="sy0">,</span>
+   <span class="st0">&quot;request_parameter_supported&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;true&quot;</span><span class="sy0">,</span>
+   <span class="st0">&quot;subject_types_supported&quot;</span> <span class="sy0">:</span> <span class="br0">&#91;</span>
+      <span class="st0">&quot;public&quot;</span>
+   <span class="br0">&#93;</span><span class="sy0">,</span>
+   <span class="st0">&quot;issuer&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;http://auth.example.com/&quot;</span><span class="sy0">,</span>
+   <span class="st0">&quot;grant_types_supported&quot;</span> <span class="sy0">:</span> <span class="br0">&#91;</span>
+      <span class="st0">&quot;authorization_code&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;implicit&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;hybrid&quot;</span>
+   <span class="br0">&#93;</span><span class="sy0">,</span>
+   <span class="st0">&quot;authorization_endpoint&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;http://auth.example.com/oauth2/authorize&quot;</span><span class="sy0">,</span>
+   <span class="st0">&quot;check_session_iframe&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;http://auth.example.com/oauth2/checksession&quot;</span><span class="sy0">,</span>
+   <span class="st0">&quot;scopes_supported&quot;</span> <span class="sy0">:</span> <span class="br0">&#91;</span>
+      <span class="st0">&quot;openid&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;profile&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;email&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;address&quot;</span><span class="sy0">,</span>
+      <span class="st0">&quot;phone&quot;</span>
+   <span class="br0">&#93;</span><span class="sy0">,</span>
+   <span class="st0">&quot;require_request_uri_registration&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;false&quot;</span><span class="sy0">,</span>
+   <span class="st0">&quot;registration_endpoint&quot;</span> <span class="sy0">:</span> <span class="st0">&quot;http://auth.example.com/oauth2/register&quot;</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+<!-- EDIT6 SECTION "Configuration of LL::NG in Relying Party" [1546-3524] -->
+<h3 class="sectionedit7" id="configuration_of_relying_party_in_llng">Configuration of Relying Party in LL::NG</h3>
+<div class="level3">
+
+<p>
+Go in Manager and click on <code>OpenID Connect Relying Parties</code>, then click on <code>Add OpenID Relying Party</code>. Give a technical name (no spaces, no special characters), like “sample-rp”;
+</p>
+
+<p>
+You can then access to the configuration of this RP. 
+</p>
+
+</div>
+
+<h4 id="exported_attributes">Exported attributes</h4>
+<div class="level4">
+
+<p>
+You can map here the attribute names from the <abbr title="LemonLDAP::NG">LL::NG</abbr> session to an OpenID Connect claim. 
+</p>
+
+<p>
+<p><div class="notetip">See <a href="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims" class="urlextern" title="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims"  rel="nofollow">http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims</a> to know the names of standards claims.
+</div></p>
+</p>
+
+<p>
+So you can define for example:
+</p>
+<ul>
+<li class="level1"><div class="li"> name ⇒ cn</div>
+</li>
+<li class="level1"><div class="li"> family_name ⇒ sn</div>
+</li>
+<li class="level1"><div class="li"> email ⇒ mail</div>
+</li>
+</ul>
+
+<p>
+<p><div class="noteimportant">The specific <code>sub</code> attribute is not defined here, but in User attribute parameter (see below).
+</div></p>
+</p>
+
+<p>
+You can also define extra claims and link them to attributes (see below). Then you just have to define the mapping of this new attributes, for example:
+</p>
+<ul>
+<li class="level1"><div class="li"> birthplace ⇒ l</div>
+</li>
+<li class="level1"><div class="li"> birthcountry ⇒ co</div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="options">Options</h4>
+<div class="level4">
+<ul>
+<li class="level1"><div class="li"> <strong>Authentication</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>Client ID</strong>: Client ID for this RP</div>
+</li>
+<li class="level2"><div class="li"> <strong>Client secret</strong>: Client secret for this RP (can be use for symmetric signature)</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Display</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>Display name</strong>: Name of the RP application</div>
+</li>
+<li class="level2"><div class="li"> <strong>Logo</strong>: Logo of the RP application</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>User attribute</strong>: session field that with be used as main identifier (<code>sub</code>)</div>
+</li>
+<li class="level1"><div class="li"> <strong>ID Token signature algorithm</strong>: Select one of <code>none</code>, <code>HS256</code>, <code>HS384</code>, <code>HS512</code>, <code>RS256</code>, <code>RS384</code>, <code>RS512</code></div>
+</li>
+<li class="level1"><div class="li"> <strong>ID Token expiration</strong>: Expiration time of ID Tokens</div>
+</li>
+<li class="level1"><div class="li"> <strong>Access token expiration</strong>: Expiration time of Access Tokens</div>
+</li>
+<li class="level1"><div class="li"> <strong>Redirection addresses</strong>: Space separated list of redirect addresses allowed for this RP</div>
+</li>
+<li class="level1"><div class="li"> <strong>Extra claims</strong>: Associate attributes to extra claims if the RP request them, for example <code>birth</code> ⇒ <code>birthplace birthcountry</code></div>
+</li>
+</ul>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

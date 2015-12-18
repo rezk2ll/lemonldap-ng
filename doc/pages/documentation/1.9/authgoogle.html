@@ -1,0 +1,122 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="google">Google</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [23-86] -->
+</div>
+<!-- EDIT1 SECTION "Google" [1-87] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+Google proposes to allow applications to reuse its own authentication process using <a href="http://en.wikipedia.org/wiki/OpenID" class="urlextern" title="http://en.wikipedia.org/wiki/OpenID"  rel="nofollow">OpenID</a> protocol (it means, if your are connected to Google, other applications can trust Google and let you in).
+</p>
+
+<p>
+<p><div class="notewarning">OpenID 2.0 support is closed since 20th April 2015. If you still need to use Google login after this date, use <a href="../../documentation/1.9/authopenidconnect.html" class="wikilink1" title="documentation:1.9:authopenidconnect">OpenID Connect authentication module</a>.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Presentation" [88-544] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose Google for authentication module. This will use email as login name (for accounting, session explorer,…). If you want to access to other datas, you have to use Google in <code>General Parameters</code> &gt; <code>Authentication modules &gt; User module</code>. Then in exported variables, you can ask only for :
+</p>
+<ul>
+<li class="level1"><div class="li"> country</div>
+</li>
+<li class="level1"><div class="li"> email</div>
+</li>
+<li class="level1"><div class="li"> firstname</div>
+</li>
+<li class="level1"><div class="li"> language</div>
+</li>
+<li class="level1"><div class="li"> lastname</div>
+</li>
+</ul>
+
+<p>
+Use the name you want but this values in the value field. If you want to require that a field is set, add “!” before the key name :
+</p>
+<ul>
+<li class="level1"><div class="li"> “myfield ⇒ firstname” can be “”</div>
+</li>
+<li class="level1"><div class="li"> “!myfield ⇒ lastname” must be set</div>
+</li>
+</ul>
+
+<p>
+See also <a href="../../documentation/1.9/exportedvars.html" class="wikilink1" title="documentation:1.9:exportedvars">exported variables configuration</a>.
+</p>
+
+<p>
+<p><div class="noteimportant">A specific persistent session is created with this module, to store attribute values returned by Google. If this session is lost, Google will ask a confirmation for each requested attribute.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Configuration" [545-1491] -->
+<h2 class="sectionedit5" id="google_migration">Google Migration</h2>
+<div class="level2">
+
+<p>
+A Google Migration workaround is available since LemonLDAP::NG 1.4.4. It provides a specific and lightweight OpenID Connect module that will replace the current Google module.
+</p>
+
+<p>
+<p><div class="noteimportant">This module is not available in version 2.00, you must use instead the OpenID Connect authentication module.
+</div></p>
+</p>
+
+<p>
+To use it, edit lemonldap-ng.ini (this is not available trough Manager) and configure:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">authentication</span> <span class="sy0">=</span><span class="re2"> GoogleMigration</span>
+<span class="re1">googleClientId</span> <span class="sy0">=</span><span class="re2"> XXXX</span>
+<span class="re1">googleClientSecret</span> <span class="sy0">=</span><span class="re2"> XXXX</span></pre>
+
+<p>
+You need to register your LemonLDAP::NG application to Google in order to obtain the Client ID and the Client Secret, see <a href="https://developers.google.com/" class="urlextern" title="https://developers.google.com/"  rel="nofollow">https://developers.google.com/</a>
+</p>
+
+<p>
+You also need to register to Google the redirect <abbr title="Uniform Resource Identifier">URI</abbr>. You have to set your portal <abbr title="Uniform Resource Locator">URL</abbr> with the googlecb=1 GET parameter, for example:
+</p>
+<pre class="code">http://auth.example.com/?googlecb=1</pre>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

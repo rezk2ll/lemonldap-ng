@@ -1,0 +1,269 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="saml">SAML</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [21-84] -->
+</div>
+<!-- EDIT1 SECTION "SAML" [1-85] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can use SAML2 to get user identity and grab some attributes defined in user profile on its Identity Provider (IDP). In this case, <abbr title="LemonLDAP::NG">LL::NG</abbr> acts like an SAML2 Service Provider (SP).
+</p>
+
+<p>
+Several IDPs are allowed, in this case the user will choose the IDP he wants. You can preselect IDP with an IDP resolution rule.
+</p>
+
+<p>
+For each IDP, you can configure attributes that are collected. Some can be mandatory, so if they are not returned by IDP, the session will not open.
+</p>
+
+<p>
+<p><div class="notetip"><abbr title="LemonLDAP::NG">LL::NG</abbr> can also act as <a href="../../documentation/1.9/idpsaml.html" class="wikilink1" title="documentation:1.9:idpsaml">SAML IDP</a>, that allows to interconnect two <abbr title="LemonLDAP::NG">LL::NG</abbr> systems.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Presentation" [86-689] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT4 SECTION "Configuration" [690-716] -->
+<h3 class="sectionedit5" id="saml_service">SAML Service</h3>
+<div class="level3">
+
+<p>
+See <a href="../../documentation/1.9/samlservice.html" class="wikilink1" title="documentation:1.9:samlservice">SAML service</a> configuration chapter.
+</p>
+
+</div>
+<!-- EDIT5 SECTION "SAML Service" [717-797] -->
+<h3 class="sectionedit6" id="authentication_and_userdb">Authentication and UserDB</h3>
+<div class="level3">
+
+<p>
+In <code>General Parameters</code> &gt; <code>Authentication modules</code>, set:
+</p>
+<ul>
+<li class="level1"><div class="li"> Authentication module: <abbr title="Security Assertion Markup Language">SAML</abbr></div>
+</li>
+<li class="level1"><div class="li">  Users module: <abbr title="Security Assertion Markup Language">SAML</abbr></div>
+</li>
+</ul>
+
+<p>
+<p><div class="notetip">As passwords will not be managed by <abbr title="LemonLDAP::NG">LL::NG</abbr>, you can disable <a href="../../documentation/1.9/portalmenu.html#menu_modules" class="wikilink1" title="documentation:1.9:portalmenu">menu password module</a>.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Authentication and UserDB" [798-1081] -->
+<h3 class="sectionedit7" id="register_lemonldapng_on_partner_identity_provider">Register LemonLDAP::NG on partner Identity Provider</h3>
+<div class="level3">
+
+<p>
+After configuring <abbr title="Security Assertion Markup Language">SAML</abbr> Service, you can export metadata to your partner Identity Provider.
+</p>
+
+<p>
+They are available at the EntityID <abbr title="Uniform Resource Locator">URL</abbr>, by default: <a href="http://auth.example.com/saml/metadata" class="urlextern" title="http://auth.example.com/saml/metadata"  rel="nofollow">http://auth.example.com/saml/metadata</a>.
+</p>
+
+</div>
+<!-- EDIT7 SECTION "Register LemonLDAP::NG on partner Identity Provider" [1082-1328] -->
+<h3 class="sectionedit8" id="register_partner_identity_provider_on_lemonldapng">Register partner Identity Provider on LemonLDAP::NG</h3>
+<div class="level3">
+
+<p>
+In the Manager, select node <code><abbr title="Security Assertion Markup Language">SAML</abbr> identity providers</code> and click on <code>New identity provider</code>:
+</p>
+
+<p>
+<a href="/_detail/documentation/manager-saml-idp-new.png?id=documentation%3A1.9%3Aauthsaml" class="media" title="documentation:manager-saml-idp-new.png"><img src="../../../media/documentation/manager-saml-idp-new.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+The IDP name is asked, enter it and click OK.
+</p>
+
+<p>
+Now you have access to the IDP parameters list:
+</p>
+
+<p>
+<a href="/_detail/documentation/manager-saml-idp-list.png?id=documentation%3A1.9%3Aauthsaml" class="media" title="documentation:manager-saml-idp-list.png"><img src="../../../media/documentation/manager-saml-idp-list.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+
+<h4 id="metadata">Metadata</h4>
+<div class="level4">
+
+<p>
+You must register IDP metadata here. You can do it either by uploading the file, or get it from IDP metadata <abbr title="Uniform Resource Locator">URL</abbr> (this require a network link between your server and the IDP):
+</p>
+
+<p>
+<a href="/_detail/documentation/manager-saml-idp-metadata.png?id=documentation%3A1.9%3Aauthsaml" class="media" title="documentation:manager-saml-idp-metadata.png"><img src="../../../media/documentation/manager-saml-idp-metadata.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+<p><div class="notetip">You can also copy/paste the metadata: just click on the Edit button. When the text is pasted, click on the Apply button to keep the value.
+</div></p>
+</p>
+
+</div>
+
+<h4 id="exported_attributes">Exported attributes</h4>
+<div class="level4">
+
+<p>
+For each attribute, you can set:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Key name</strong>: name of the key in LemonLDAP::NG session (for example “uid” will then be used as $uid in access rules)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Mandatory</strong>: if set to On, then session will not open if this attribute is not given by IDP.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Name</strong>: <abbr title="Security Assertion Markup Language">SAML</abbr> attribute name.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Friendly Name</strong>: optional, <abbr title="Security Assertion Markup Language">SAML</abbr> attribute friendly name.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Format</strong> (optional): <abbr title="Security Assertion Markup Language">SAML</abbr> attribute format.</div>
+</li>
+</ul>
+
+<p>
+<a href="/_detail/documentation/manager-saml-idp-attribute.png?id=documentation%3A1.9%3Aauthsaml" class="media" title="documentation:manager-saml-idp-attribute.png"><img src="../../../media/documentation/manager-saml-idp-attribute.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+
+<h4 id="options">Options</h4>
+<div class="level4">
+
+</div>
+
+<h5 id="general_options">General options</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <strong>Resolution Rule</strong>: rule that will be applied to preselect an IDP for a user. You have access to all environment variable, like user <abbr title="Internet Protocol">IP</abbr> address.</div>
+</li>
+</ul>
+
+<p>
+For example, to preselect this IDP for users coming from 129.168.0.0/16 network:
+</p>
+<pre class="code">$ENV{REMOTE_ADDR} =~ /^192\.168/</pre>
+
+</div>
+
+<h5 id="authentication_request">Authentication request</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <strong>NameID format</strong>: force NameID format here (email, persistent, transient, etc.). If no value, will use first NameID Format activated in metadata.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Force authentication</strong>: set ForceAuthn flag in authentication request</div>
+</li>
+<li class="level1"><div class="li"> <strong>Passive authentication</strong>: set IsPassive flag in authentication request</div>
+</li>
+<li class="level1"><div class="li"> <strong>Allow proxied authentication</strong>: allow an authentication response to be issued from another IDP that the one we register (proxy IDP). If you disallow this, you should also disallow direct login form IDP, because proxy restriction is set in authentication requests.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Allow login from IDP</strong>: allow a user to connect directly from an IDP link. In this case, authentication is not a response to an issued authentication request, and we have less control on conditions.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Requested authentication context</strong>: this context is declared in authentication request. When receiving the request, the real authentication context will be mapped ton an internal authentication level (see <a href="../../documentation/1.9/samlservice.html#authentication_contexts" class="wikilink1" title="documentation:1.9:samlservice">how configure the mapping</a>), that you can check to allow or deny session creation.</div>
+</li>
+</ul>
+
+</div>
+
+<h5 id="session">Session</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <strong>Adapt session lifetime</strong>: session lifetime will be adapted from <code>SessionNotOnOrAfter</code> value found in authentication response. It means that if the IDP propose to close session earlier than the default LemonLDAP::NG timeout, the session _utime will be modified so that session is erased at the date indicated by the IDP.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Force UTF-8</strong>: this will force UTF-8 conversion of attributes values collected from IDP.</div>
+</li>
+</ul>
+
+</div>
+
+<h5 id="signature">Signature</h5>
+<div class="level5">
+
+<p>
+These options override service signature options (see <a href="../../documentation/1.9/samlservice.html#general_options" class="wikilink1" title="documentation:1.9:samlservice">SAML service configuration</a>).
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Sign <abbr title="Single Sign On">SSO</abbr> message</strong>: sign <abbr title="Single Sign On">SSO</abbr> message</div>
+</li>
+<li class="level1"><div class="li"> <strong>Check <abbr title="Single Sign On">SSO</abbr> message signature</strong>: check <abbr title="Single Sign On">SSO</abbr> message signature</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sign SLO message</strong>: sign SLO message</div>
+</li>
+<li class="level1"><div class="li"> <strong>Check SLO message signature</strong>: check SLO message signature</div>
+</li>
+</ul>
+
+</div>
+
+<h5 id="binding">Binding</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <strong><abbr title="Single Sign On">SSO</abbr> binding</strong>: force binding to use for <abbr title="Single Sign On">SSO</abbr> (http-redirect, http-post, etc.)</div>
+</li>
+<li class="level1"><div class="li"> <strong>SLO binding</strong>: force binding to use for SLO (http-redirect, http-post, etc.)</div>
+</li>
+</ul>
+
+<p>
+<p><div class="noteclassic">If no binding defined, the default binding in IDP metadata will be used.
+</div></p>
+</p>
+
+</div>
+
+<h5 id="security">Security</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <strong>Encryption mode</strong>: set the encryption mode for this IDP (None, NameID or Assertion).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Check conditions</strong>: set to Off to disable conditions checking on authentication responses. Use with caution.</div>
+</li>
+</ul>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

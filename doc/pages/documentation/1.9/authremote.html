@@ -1,0 +1,170 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="remote">Remote</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [23-86] -->
+<p>
+<p><div class="notewarning">This module is a <abbr title="LemonLDAP::NG">LL::NG</abbr> specific identity federation protocol. You may rather use standards protocols like <a href="../../documentation/1.9/idpsaml.html" class="wikilink1" title="documentation:1.9:idpsaml">SAML</a>, <a href="../../documentation/1.9/idpopenidconnect.html" class="wikilink1" title="documentation:1.9:idpopenidconnect">OpenID Connect</a> or <a href="../../documentation/1.9/idpcas.html" class="wikilink1" title="documentation:1.9:idpcas">CAS</a>.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Remote" [1-289] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> The main portal is configured to use <abbr title="Cross Domain Authentication">CDA</abbr>. The secondary portal is declared in the Manager of the main <abbr title="LemonLDAP::NG">LL::NG</abbr> structure (else user will be rejected).</div>
+</li>
+<li class="level1"><div class="li"> The portal of the secondary <abbr title="LemonLDAP::NG">LL::NG</abbr> structure is configured to delegate authentication to a remote portal. A request to the main session database is done (trough <a href="../../documentation/1.9/soapsessionbackend.html" class="wikilink1" title="documentation:1.9:soapsessionbackend">SOAP session backend</a>) to be sure that the session exists.</div>
+</li>
+<li class="level1"><div class="li"> If <code>exportedAttr</code> is set, only those attributes are copied in the session database of the secondary <abbr title="LemonLDAP::NG">LL::NG</abbr> structure. Else, all data are copied in the session database.</div>
+</li>
+</ul>
+
+<p>
+<a href="/_detail/documentation/remote-principle.png?id=documentation%3A1.9%3Aauthremote" class="media" title="documentation:remote-principle.png"><img src="../../../media/documentation/remote-principle.png" class="mediacenter" alt="" /></a>
+</p>
+<ol>
+<li class="level1"><div class="li"> User tries to access to an application in the secondary <abbr title="LemonLDAP::NG">LL::NG</abbr> structure without having a session in this area</div>
+</li>
+<li class="level1"><div class="li"> Redirection to the portal of the secondary area (transparent)</div>
+</li>
+<li class="level1"><div class="li"> Redirection to the portal of the main area and normal authentication (if not done before)</div>
+</li>
+<li class="level1"><div class="li"> Redirection to the portal of the secondary area (transparent)</div>
+</li>
+<li class="level1"><div class="li"> Secondary portal check if remote session is available. It can be done via direct access to the session database or using SOAP access. Then it creates the session (with attribute filter)</div>
+</li>
+<li class="level1"><div class="li"> User can now access to the protected application</div>
+</li>
+</ol>
+
+<p>
+<p><div class="noteclassic">Note that if the user is already authenticated on the first portal, all redirections are transparent.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Presentation" [290-1635] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT4 SECTION "Configuration" [1636-1662] -->
+<h3 class="sectionedit5" id="main_llng_structure">Main LL::NG structure</h3>
+<div class="level3">
+
+<p>
+Go in Manager, and:
+</p>
+<ul>
+<li class="level1"><div class="li"> activate <abbr title="Cross Domain Authentication">CDA</abbr> in <code>General Parameters</code> » <code>Cookies</code> » <code>Multiple domains</code></div>
+</li>
+<li class="level1"><div class="li"> declare secondary portal in <code>General Parameters</code> » <code>Advanced Parameters</code> » <code>Security</code> » <code>Trusted domains</code></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT5 SECTION "Main LL::NG structure" [1663-1919] -->
+<h3 class="sectionedit6" id="secondary_llng_structure">Secondary LL::NG structure</h3>
+<div class="level3">
+
+<p>
+Configure the portal to use the remote <abbr title="LemonLDAP::NG">LL::NG</abbr> structure.
+</p>
+
+<p>
+In Manager, go in <code>General Parameters</code> » <code>Authentication modules</code> and choose Remote for authentication and users.
+</p>
+
+<p>
+Then, go in <code>Remote parameters</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Portal <abbr title="Uniform Resource Locator">URL</abbr></strong>: remote portal <abbr title="Uniform Resource Locator">URL</abbr></div>
+</li>
+<li class="level1"><div class="li"> <strong>Cookie name</strong> (optional): name of the cookie of primary portal, if different from secondary portal</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sessions module</strong>: set <code>Lemonldap::NG::Common::Apache::Session::SOAP</code> for <a href="../../documentation/1.9/soapsessionbackend.html" class="wikilink1" title="documentation:1.9:soapsessionbackend">SOAP session backend</a>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sessions module options</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>proxy</strong>: SOAP sessions end point (see <a href="../../documentation/1.9/soapsessionbackend.html" class="wikilink1" title="documentation:1.9:soapsessionbackend">SOAP session backend</a> documentation)</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- EDIT6 SECTION "Secondary LL::NG structure" [1920-2580] -->
+<h3 class="sectionedit7" id="exampleinteroperability_between_2_organizations">Example: interoperability between 2 organizations</h3>
+<div class="level3">
+
+<p>
+Using this, we can do a very simple interoperability system between 2 organizations using two <abbr title="LemonLDAP::NG">LL::NG</abbr> structures:
+</p>
+<ul>
+<li class="level1"><div class="li"> each area has 2 portals:</div>
+<ul>
+<li class="level2"><div class="li"> One standard portal</div>
+</li>
+<li class="level2"><div class="li"> One remote portal that delegates authentication to the second organization (just an other file on the same server)</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> The normal portal has a link included in the authentication form pointing to the remote portal for the users of the other organization</div>
+</li>
+</ul>
+
+<p>
+So on each main portal, internal users can access normally, and users issued from the other organization have just to click on the link:
+</p>
+
+<p>
+<a href="/_detail/documentation/remote-interoperability.png?id=documentation%3A1.9%3Aauthremote" class="media" title="documentation:remote-interoperability.png"><img src="../../../media/documentation/remote-interoperability.png" class="mediacenter" alt="" /></a>
+</p>
+<ol>
+<li class="level1"><div class="li"> One user tries to access to the portal</div>
+</li>
+<li class="level1"><div class="li"> External user clicks to be redirected to the remote type portal</div>
+</li>
+<li class="level1"><div class="li"> After redirection, normal authentication in the remote portal</div>
+</li>
+<li class="level1"><div class="li"> Redirection to the remote type portal</div>
+</li>
+<li class="level1"><div class="li"> Validation of the session: external user has now a local session</div>
+</li>
+</ol>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

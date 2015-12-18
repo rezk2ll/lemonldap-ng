@@ -1,0 +1,79 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="convert_http_header_into_environment_variable">Convert HTTP header into environment variable</h1>
+<div class="level1">
+
+<p>
+Using <abbr title="LemonLDAP::NG">LL::NG</abbr> in reverse proxy mode, you will not have the <code>REMOTE_USER</code> environment variable set. Indeed, this variable is set by the Handler on the physical server hosting the Handler, and not on other servers where the Handler is not installed.
+</p>
+
+<p>
+Apache <a href="http://httpd.apache.org/docs/current/mod/mod_setenvif.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_setenvif.html"  rel="nofollow">SetEnvIf module</a> will let you transform the Auth-User HTTP header in <code>REMOTE_USER</code> environment variable:
+</p>
+<pre class="code file apache"><span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> REMOTE_USER=$1</pre>
+
+<p>
+This can be used to protect applications relying on <code>REMOTE_USER</code> environment variable in reverse proxy mode. In this case you will have two Apache configuration files:
+</p>
+<ul>
+<li class="level1"><div class="li"> Apache configuration file on <abbr title="LemonLDAP::NG">LL::NG</abbr> reverse proxy (hosting <abbr title="LemonLDAP::NG">LL::NG</abbr> Handler):</div>
+</li>
+</ul>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+        <span class="kw1">ServerName</span> application.example.com
+&nbsp;
+        PerlHeaderParserHandler Lemonldap::NG::Handler
+&nbsp;
+        <span class="kw1">ProxyPreserveHost</span> <span class="kw2">on</span>
+        <span class="kw1">ProxyPass</span> / http://APPLICATION_IP/
+        <span class="kw1">ProxyPassReverse</span> / http://APPLICATION_IP/
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li"> Apache configuration file on application server (hosting the application):</div>
+</li>
+</ul>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+        <span class="kw1">ServerName</span> application.example.com
+&nbsp;
+        <span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> REMOTE_USER=$1
+&nbsp;
+        <span class="kw1">DocumentRoot</span> /var/www/application
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+<p><div class="notetip">
+Sometimes, PHP applications also check the PHP_AUTH_USER and PHP_AUHT_PW environment variables. You can set them the same way:
+</p>
+<pre class="code file apache"><span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> PHP_AUTH_USER=$1
+<span class="kw1">SetEnvIfNoCase</span> Auth-Password <span class="st0">&quot;(.*)&quot;</span> PHP_AUTH_PW=$1</pre>
+
+<p>
+Of course, you need to <a href="../../documentation/1.9/passwordstore.html" class="wikilink1" title="documentation:1.9:passwordstore">store password in session</a> to fill PHP_AUTH_PW.
+
+</div></p>
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

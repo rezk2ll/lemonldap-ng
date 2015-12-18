@@ -1,0 +1,239 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="ldap">LDAP</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [21-90] -->
+</div>
+<!-- EDIT1 SECTION "LDAP" [1-91] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can use an LDAP directory to:
+</p>
+<ul>
+<li class="level1"><div class="li"> authenticate user</div>
+</li>
+<li class="level1"><div class="li"> get user attributes</div>
+</li>
+<li class="level1"><div class="li"> get groups where user is registered</div>
+</li>
+<li class="level1"><div class="li"> change password (with server side password policy management)</div>
+</li>
+</ul>
+
+<p>
+This works with every LDAP v2 or v3 server, including <a href="../../documentation/1.9/authad.html" class="wikilink1" title="documentation:1.9:authad">Active Directory</a>.
+</p>
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> is compatible with <a href="https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt" class="urlextern" title="https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt"  rel="nofollow">LDAP password policy</a>:
+</p>
+<ul>
+<li class="level1"><div class="li"> LDAP server can check password strength, and <abbr title="LemonLDAP::NG">LL::NG</abbr> portal will display correct errors (password too short, password in history, etc.)</div>
+</li>
+<li class="level1"><div class="li"> LDAP sever can block brute-force attacks, and <abbr title="LemonLDAP::NG">LL::NG</abbr> will display that account is locked</div>
+</li>
+<li class="level1"><div class="li"> LDAP server can force password change on first connection, and <abbr title="LemonLDAP::NG">LL::NG</abbr> portal will display a password change form before opening <abbr title="Single Sign On">SSO</abbr> session</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT3 SECTION "Presentation" [92-903] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose LDAP for authentication, users and/or password modules.
+</p>
+
+<p>
+<p><div class="notetip">
+For <a href="../../documentation/1.9/authad.html" class="wikilink1" title="documentation:1.9:authad">Active Directory</a>, choose <code>Active Directory</code> instead of <code>LDAP</code>.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Configuration" [904-1169] -->
+<h3 class="sectionedit5" id="authentication_level">Authentication level</h3>
+<div class="level3">
+
+<p>
+The authentication level given to users authenticated with this module.
+</p>
+
+<p>
+<p><div class="noteimportant">
+As LDAP is a login/password based module, the authentication level can be:
+</p>
+<ul>
+<li class="level1"><div class="li"> increased (+1) if portal is protected by SSL (HTTPS)</div>
+</li>
+<li class="level1"><div class="li"> decreased (-1) if the portal autocompletion is allowed (see <a href="../../documentation/1.9/portalcustom.html" class="wikilink1" title="documentation:1.9:portalcustom">portal customization</a>)</div>
+</li>
+</ul>
+
+<p>
+
+</div></p>
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Authentication level" [1170-1535] -->
+<h3 class="sectionedit6" id="exported_variables">Exported variables</h3>
+<div class="level3">
+
+<p>
+List of attributes to query to fill user session. See also <a href="../../documentation/1.9/exportedvars.html" class="wikilink1" title="documentation:1.9:exportedvars">exported variables configuration</a>.
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Exported variables" [1536-1676] -->
+<h3 class="sectionedit7" id="connection">Connection</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <strong>Server host</strong>: LDAP server hostname or <abbr title="Uniform Resource Identifier">URI</abbr> (by default: localhost). Accept some specificities:</div>
+<ul>
+<li class="level2"><div class="li"> More than one server can be set here separated by spaces or commas. They will be tested in the specified order.</div>
+</li>
+<li class="level2"><div class="li"> To use TLS, set <code>ldap+tls://server</code> and to use LDAPS, set <code>ldaps://server</code> instead of server name.</div>
+</li>
+<li class="level2"><div class="li"> If you use TLS, you can set any of the <a href="http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod" class="urlextern" title="http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod"  rel="nofollow">Net::LDAP</a> start_tls() sub like <code>ldap+tls://server/verify=none&amp;capath=/etc/ssl</code>. You can also use caFile and caPath parameters.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Server port</strong>: TCP port used by LDAP server. Can be overridden by an LDAP <abbr title="Uniform Resource Identifier">URI</abbr> in server host.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Users search base</strong>: Base of search in the LDAP directory.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Account</strong>: <abbr title="Distinguished Name">DN</abbr> used to connect to LDAP server. By default, anonymous bind is used.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Password</strong>: password to used to connect to LDAP server. By default, anonymous bind is used.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Timeout</strong>: server idle timeout.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Version</strong>: LDAP protocol version.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Binary attributes</strong>: regular expression matching binary attributes (see <a href="http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod" class="urlextern" title="http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod"  rel="nofollow">Net::LDAP</a> documentation).</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT7 SECTION "Connection" [1677-2868] -->
+<h3 class="sectionedit8" id="filters">Filters</h3>
+<div class="level3">
+
+<p>
+<p><div class="notetip">In LDAP filters, $user is replaced by user login, and $mail by user email.
+</div></p>
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Default filter</strong>: default LDAP fitler for searches, should not be modified.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Authentication filter</strong>: Filter to find user from its login (default: <code>(&amp;(uid=$user)(objectClass=inetOrgPerson))</code>)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Mail filter</strong>: Filter to find user from its mail (default: <code>(&amp;(mail=$mail)(objectClass=inetOrgPerson))</code>)</div>
+</li>
+</ul>
+
+<p>
+<p><div class="notetip">
+For Active Directory, the default authentication filter is:
+</p>
+<pre class="code">(&amp;(sAMAccountName=$user)(objectClass=person))</pre>
+
+<p>
+And the mail filter is:
+</p>
+<pre class="code">(&amp;(mail=$mail)(objectClass=person))</pre>
+
+<p>
+
+</div></p>
+</p>
+
+</div>
+<!-- EDIT8 SECTION "Filters" [2869-3515] -->
+<h3 class="sectionedit9" id="groups">Groups</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <strong>Search base</strong>: <abbr title="Distinguished Name">DN</abbr> of groups branch. If no value, disable group searching.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Object class</strong>: objectClass of the groups (default: groupOfNames).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Target attribute</strong>: name of the attribute in the groups storing the link to the user (default: member).</div>
+</li>
+<li class="level1"><div class="li"> <strong>User source attribute</strong>: name of the attribute in users entries used in the link (default: dn).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Searched attributes</strong>: name(s) of the attribute storing the name of the group, spaces separated (default: cn).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Recursive</strong>: activate recursive group functionality (default: 0). If enabled, if the user group is a member of another group (group of groups), all parents groups will be stored as user&#039;s groups.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Group source attribute</strong>: name of the attribute in groups entries used in the link, for recursive group search (default: dn).</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT9 SECTION "Groups" [3516-4350] -->
+<h3 class="sectionedit10" id="password">Password</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <strong>Password policy control</strong>: enable to use LDAP password policy. This requires at least Net::LDAP 0.38. (see ppolicy workflow below)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Password modify extended operation</strong>: enable to use the LDAP extended operation <code>password modify</code> instead of standard modify operation.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Change as user</strong>: enable to perform password modification with credentials of connected user. This requires to request user old password (see <a href="../../documentation/1.9/portalcustom.html" class="wikilink1" title="documentation:1.9:portalcustom">portal customization</a>).</div>
+</li>
+<li class="level1"><div class="li"> <strong>LDAP password encoding</strong>: can allow to manage old LDAP servers using specific encoding for passwords (default: utf-8).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Use reset attribute</strong>: enable to use the password reset attribute. This attribute is set by LemonLDAP::NG when <a href="../../documentation/1.9/resetpassword.html" class="wikilink1" title="documentation:1.9:resetpassword">password was reset by mail</a> and the user choose to generate the password (default: enabled).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Reset attribute</strong>: name of password reset attribute (default: pwdReset).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Reset value</strong>: value to set in reset attribute to activate password reset (default: TRUE).</div>
+</li>
+</ul>
+
+<p>
+<div class="row"><div class="col-md-6">
+<strong>Password expiration warning workflow</strong>
+<a href="/_detail/documentation/lemonldap-ng-password-expiration-warning.png?id=documentation%3A1.9%3Aauthldap" class="media" title="documentation:lemonldap-ng-password-expiration-warning.png"><img src="../../../media/documentation/lemonldap-ng-password-expiration-warning.png" class="media" alt="" /></a>
+</div>
+<div class="col-md-6">
+<strong>Password expiration workflow</strong>
+<a href="/_detail/documentation/lemonldap-ng-password-expired.png?id=documentation%3A1.9%3Aauthldap" class="media" title="documentation:lemonldap-ng-password-expired.png"><img src="../../../media/documentation/lemonldap-ng-password-expired.png" class="media" alt="" /></a>
+</div></div>
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->
