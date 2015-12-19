@@ -799,9 +799,9 @@ tidy-js: clean
 
 language_code:
 	perl -e ' \
-	print { \
-		fr=> "FR-FR", \
-	}->{$(1)}'
+		print { \
+			fr=> "FR-FR", \
+		}->{$(1)}'
 
 test_omegat_%_dir:
 	 @if [ ! -d omegat.files/$* ]; then \
@@ -813,7 +813,7 @@ omegat-configuration-file:
 	perl -pe 'BEGIN{$$p=`pwd`;chomp $$p;}s/__LANG__/$(OMEGATCODE)/;s/__PWD__/$$p/o;' omegat.files/_base.project >omegat.files/$(LANGCODE)/omegat.project
 
 translation: omegat-configuration-file
-	omegat omegat.files/$(LANGCODE) --quiet
+	omegat omegat.files/$(LANGCODE) --no-team --quiet
 
 translated-doc: omegat-configuration-file
 	omegat omegat.files/$(LANGCODE) --mode=console-translate --quiet 2>/dev/null
@@ -823,12 +823,12 @@ translated-doc: omegat-configuration-file
 
 %-translation: test_omegat_%_dir omegat-%-clean
 	$(eval CODE = $(call language_code,$*))
-	$(MAKE) translation LANGCODE=$* OMEGATCODE=$(CODE)
+	$(MAKE) translation LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
 
 %-doc: test_omegat_%_dir omegat-%-clean
 	mkdir -p po-doc/$*
 	$(eval CODE = $(call language_code,$*))
-	$(MAKE) translated-doc LANGCODE=$* OMEGATCODE=$(CODE)
+	$(MAKE) translated-doc LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
 	
 omegat-clean:
 	rm -rf omegat.files/*/omegat.project omegat.files/*/omegat/project_save*.bak
