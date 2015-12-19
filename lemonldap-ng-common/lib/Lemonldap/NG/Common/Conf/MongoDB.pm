@@ -26,10 +26,11 @@ sub Lemonldap::NG::Common::Conf::_mongoDB {
     my $self = shift;
     return $self->{_mongoDB} if ( $self->{_mongoDB} );
     my $conn_args = {};
-    foreach my $w (qw(host username password ssl admin_db)) {
-        my $t = $w;
-        $t =~ s/^db_name$/admin_db/;
-        $conn_args->{$t} = $self->{$t} if ( defined $self->{$t} );
+    foreach my $w (
+        qw(host auth_mechanism auth_mechanism_properties connect_timeout_ms db_name port ssl username password)
+      )
+    {
+        $conn_args->{$w} = $self->{$w} if ( defined $self->{$w} );
     }
     return $self->{_mongoDB} =
       MongoDB::MongoClient->new($conn_args)->get_database( $self->{dbName} );
