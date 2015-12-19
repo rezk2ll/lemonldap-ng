@@ -200,13 +200,15 @@ sub _scanNodes {
                     if ( $leaf->{cnodes} ) {
                         $self->newConf->{$target}->{$key} =
                           $self->refConf->{$target}->{$key} // {};
+                        # TODO: insert change
+                        $self->confChanged(1);
                     }
                     if ($h) {
                         $self->set( $target, $key, $leaf->{title},
                             $leaf->{data} );
                     }
                 }
-                elsif ( $target =~ /^saml(?:S|ID)MetaDataXML$/ ) {
+                elsif ( $target =~ /^saml(?:S|ID)PMetaDataXML$/ ) {
                     $self->set( $target, $key, $target, $leaf->{data} );
                 }
                 elsif ( $target =~
@@ -221,6 +223,8 @@ sub _scanNodes {
                 }
                 next;
             }
+
+            # TODO: OIDC
         }
 
         ####################
