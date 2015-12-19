@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Manager', function() {
+describe('Lemonldap::NG Manager', function() {
 
   it('should display other modules', function() {
     browser.get('/');
@@ -11,7 +11,7 @@ describe('Manager', function() {
 
 });
 
-describe('Session explorer', function() {
+describe('Lemonldap::NG Session explorer', function() {
 
   var session, ip;
 

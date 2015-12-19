@@ -2,7 +2,7 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('Manager', function() {
+describe('Lemonldap::NG Manager', function() {
 
   describe('translation', function() {
 
