@@ -110,6 +110,9 @@ sub _scanNodes {
         push @{ $self->errors }, { message => 'Fatal: node is not an array' };
         return 0;
     }
+    unless (@$tree) {
+        hdebug('  empty tree !?');
+    }
     foreach my $leaf (@$tree) {
         my $name = $leaf->{title};
         hdebug("Looking to $name");
@@ -495,16 +498,19 @@ sub _scanNodes {
         # Check if subnodes
         my $n = 0;
         if ( ref $subNodesCond ) {
-            $subNodesCond = [ grep { $_->{show} } @$subNodesCond ];
+            hdebug('  conditional subnodes detected');
+
+            # Bad idea,subnode unopened are not read
+            #$subNodesCond = [ grep { $_->{show} } @$subNodesCond ];
             $self->_scanNodes($subNodesCond) or return 0;
             $n++;
         }
         if ( ref $subNodes ) {
+            hdebug('  subnodes detected');
             $self->_scanNodes($subNodes) or return 0;
             $n++;
         }
         if ($n) {
-            hdebug('  subnode detected');
             next;
         }
         if ( defined $leaf->{data} and ref( $leaf->{data} ) eq 'ARRAY' ) {
