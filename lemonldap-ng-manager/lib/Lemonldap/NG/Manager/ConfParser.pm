@@ -4,20 +4,64 @@ use Mouse;
 use Lemonldap::NG::Manager::Constants;
 use Lemonldap::NG::Manager::Attributes;
 
-has errors   => ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
-has warnings => ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
-has changes  => ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
+use constant HIGHDEBUG => 0;
+
+has errors => (
+    is      => 'rw',
+    isa     => 'ArrayRef',
+    default => sub { return [] },
+    trigger => sub {
+        hdebug( 'errors contains', $_[0]->{errors} );
+    }
+);
+has warnings => (
+    is      => 'rw',
+    isa     => 'ArrayRef',
+    default => sub { return [] },
+    trigger => sub {
+        hdebug( 'warnings contains', $_[0]->{warnings} );
+    }
+);
+has changes => ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
 has needConfirm =>
   ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
-has message     => ( is => 'rw', isa => 'Str',     default  => '' );
-has confChanged => ( is => 'rw', isa => 'Int',     default  => 0 );
-has refConf     => ( is => 'ro', isa => 'HashRef', required => 1 );
+has message => (
+    is      => 'rw',
+    isa     => 'Str',
+    default => '',
+    trigger => sub {
+        hdebug( "Message becomes " . $_[0]->{message} );
+    }
+);
+has confChanged => (
+    is      => 'rw',
+    isa     => 'Int',
+    default => 0,
+    trigger => sub {
+        hdebug( "condChanged: " . $_[0]->{confChanged} );
+    }
+);
+has refConf => ( is => 'ro', isa => 'HashRef', required => 1 );
 has req     => ( is => 'ro', required => 1 );
 has newConf => ( is => 'rw', isa      => 'HashRef' );
 has tree    => ( is => 'rw', isa      => 'ArrayRef' );
 
+sub hdebug {
+    if (HIGHDEBUG) {
+        foreach my $d (@_) {
+            if ( ref $d ) {
+                require Data::Dumper;
+                print STDERR Data::Dumper::Dumper($d);
+            }
+            else { print STDERR "$d\n" }
+        }
+    }
+    undef;
+}
+
 sub check {
     my $self = shift;
+    hdebug("# check()");
     my $res;
     unless ( $self->newConf ) {
         $res = $self->scanTree;
@@ -25,6 +69,7 @@ sub check {
     }
 
     unless ( $self->testNewConf ) {
+        hdebug("testNewConf() failed");
         return 0;
     }
     $self->message('__confNotChanged__') unless ( $self->confChanged );
@@ -36,6 +81,7 @@ sub check {
 # JSON parser launcher
 sub scanTree {
     my $self = shift;
+    hdebug("# scanTree()");
     $self->newConf( {} );
     $self->_scanNodes( $self->tree ) or return 0;
 
@@ -49,7 +95,6 @@ sub scanTree {
     $self->newConf->{key} ||=
       join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) );
 
-    # TODO: set metadatas
     return 1;
 }
 
@@ -58,6 +103,7 @@ use feature 'state';
 # Recursive JSON parser
 sub _scanNodes {
     my ( $self, $tree, ) = splice @_;
+    hdebug("# _scanNodes()");
     state( $knownCat, %newNames );
     unless ( ref($tree) eq 'ARRAY' ) {
         print STDERR 'Fatal: node is not an array';
@@ -66,6 +112,7 @@ sub _scanNodes {
     }
     foreach my $leaf (@$tree) {
         my $name = $leaf->{title};
+        hdebug("Looking to $name");
 
         # subnode
         my $subNodes     = $leaf->{nodes}      // $leaf->{_nodes};
@@ -77,10 +124,13 @@ sub _scanNodes {
 
         # Root nodes
         if ( $leaf->{id} =~ /^($specialNodeKeys)$/io ) {
+            hdebug("Root special node detected $leaf->{id}");
 
             # If node has not been opened
             if ( $leaf->{cnodes} ) {
+                hdebug("  not opened");
                 foreach my $k ( @{ $specialNodeHash->{ $leaf->{id} } } ) {
+                    hdebug("  copying $k");
                     $self->newConf->{$k} = $self->refConf->{$k};
                 }
                 next;
@@ -94,6 +144,7 @@ sub _scanNodes {
                 @old = grep { $_ ne $k } @old;
             }
             if (@old) {
+                hdebug( "Keys detected as removed:", \@old );
                 $self->confChanged(1);
                 foreach my $deletedHost (@old) {
                     push @{ $self->changes },
@@ -105,6 +156,7 @@ sub _scanNodes {
 
         # 1st sublevel
         elsif ( $leaf->{id} =~ /^($specialNodeKeys)\/([^\/]+)$/io ) {
+            hdebug("Special node chield detected $leaf->{id}");
             my ( $base, $host ) = ( $1, $2 );
 
             # Check hostname/partner name changes (id points to the old name)
@@ -119,23 +171,33 @@ sub _scanNodes {
             /^($specialNodeKeys)\/([^\/]+)\/([^\/]+)(?:\/(.*))?$/io )
         {
             my ( $base, $key, $target, $h ) = ( $1, $newNames{$2}, $3, $4 );
+            hdebug(
+                "Special node chield subnode detected $leaf->{id}",
+                "  base $base, key $key, target $target, h "
+                  . ( $h ? $h : 'undef' )
+            );
 
             # VirtualHosts
             if ( $base eq 'virtualHosts' ) {
+                hdebug("  virtualhost");
                 if ( $target =~ /^(?:locationRules|exportedHeaders|post)$/ ) {
                     if (    $target eq 'post'
                         and defined $leaf->{data}
                         and ref( $leaf->{data} ) eq 'ARRAY' )
                     {
+                        hdebug('    post value');
                         $leaf->{data} = join '|', @{ $leaf->{data} };
                     }
                     if ( $leaf->{cnodes} ) {
+                        hdebug('    unopened subnode');
                         $self->newConf->{$target}->{$key} =
                           $self->refConf->{$target}->{$key} // {};
                     }
 
                     elsif ($h) {
+                        hdebug('    4 levels');
                         if ( $target eq 'locationRules' ) {
+                            hdebug('    locationRules');
                             my $k =
                               $leaf->{comment}
                               ? "(?#$leaf->{comment})$leaf->{re}"
@@ -143,6 +205,7 @@ sub _scanNodes {
                             $self->set( $target, $key, $k, $leaf->{data} );
                         }
                         else {
+                            hdebug('    other than locationrules');
                             $self->set( $target, $key, $leaf->{title},
                                 $leaf->{data} );
                         }
@@ -150,18 +213,22 @@ sub _scanNodes {
 
                     # Unless $h is set, scan subnodes and check changes
                     else {
+                        hdebug('    3 levels only (missing $h)');
                         if ( ref $subNodes ) {
+                            hdebug('    has subnodes');
                             $self->_scanNodes($subNodes)
                               or return 0;
                         }
                         if ( exists $self->refConf->{$target}->{$key}
                             and %{ $self->refConf->{$target}->{$key} } )
                         {
+                            hdebug('    old conf subnode has values');
                             my $c = $self->newConf->{$target};
                             foreach my $k (
                                 keys %{ $self->refConf->{$target}->{$key} } )
                             {
                                 unless ( defined $c->{$key}->{$k} ) {
+                                    hdebug('      missing value in old conf');
                                     $self->confChanged(1);
                                     push @{ $self->changes },
                                       {
@@ -174,6 +241,7 @@ sub _scanNodes {
                         elsif ( exists $self->newConf->{$target}->{$key}
                             and %{ $self->newConf->{$target}->{$key} } )
                         {
+                            hdebug("    '$key' has values");
                             $self->confChanged(1);
                             push @{ $self->changes },
                               { key => "$target", new => $key };
@@ -191,27 +259,36 @@ sub _scanNodes {
                 next;
             }
             if ( defined $leaf->{data} and ref( $leaf->{data} ) eq 'ARRAY' ) {
+                hdebug('Other array detected');
                 $leaf->{data} = join ';', @{ $leaf->{data} };
             }
 
             # SAML
             if ( $base =~ /^saml(?:S|ID)PMetaDataNodes$/ ) {
+                hdebug('SAML');
                 if ( $target =~ /^saml(?:S|ID)PMetaDataExportedAttributes$/ ) {
                     if ( $leaf->{cnodes} ) {
+                        hdebug("  $target: unopened node");
                         $self->newConf->{$target}->{$key} =
                           $self->refConf->{$target}->{$key} // {};
                     }
                     elsif ($h) {
+                        hdebug("  $target: opened node");
                         $self->set( $target, $key, $leaf->{title},
                             $leaf->{data} );
                     }
+                    else {
+                        hdebug("  $target: no sub value");
+                    }
                 }
                 elsif ( $target =~ /^saml(?:S|ID)PMetaDataXML$/ ) {
+                    hdebug("  $target");
                     $self->set( $target, $key, $target, $leaf->{data} );
                 }
                 elsif ( $target =~
                     /^(?:$samlIDPMetaDataNodeKeys|$samlSPMetaDataNodeKeys)/o )
                 {
+                    hdebug("  $target");
                     $self->set( $base, $key, $target, $leaf->{data} );
                 }
                 else {
@@ -224,18 +301,24 @@ sub _scanNodes {
 
             # OIDC
             if ( $base =~ /^oidc(?:O|R)PMetaDataNode$/ ) {
+                hdebug('OIDC');
                 if ( $target =~ /^oidc(?:O|R)PMetaDataOptions$/ ) {
+                    hdebug("  $target");
                     $self->set( $target, $key, $leaf->{title}, $leaf->{data} );
                 }
                 elsif ( $target =~ /^oidcOPMetaData(?:JSON|JWKS)$/ ) {
+                    hdebug("  $target");
                     $self->set( $target, $key, $leaf->{data} );
                 }
                 elsif ( $target =~ /^oidc(?:O|R)PMetaDataExportedVars$/ ) {
+                    hdebug("  $target");
                     if ( $leaf->{cnodes} ) {
+                        hdebug('    unopened');
                         $self->newConf->{$target}->{$key} =
                           $self->refConf->{$target}->{$key} // {};
                     }
                     elsif ($h) {
+                        hdebug('    opened');
                         $self->set( $target, $key, $leaf->{title},
                             $leaf->{data} );
                     }
@@ -253,6 +336,7 @@ sub _scanNodes {
         # Application list #
         ####################
         elsif ( $leaf->{id} =~ /^applicationList\/(.+)$/ ) {
+            hdebug('Application list');
             use feature 'state';
             my @cats = split /\//, $1;
             my $app = pop @cats;
@@ -265,6 +349,7 @@ sub _scanNodes {
 
             # Makes $cn point to the parent
             foreach my $cat (@cats) {
+                hdebug("  looking to cat $cat");
                 unless ( defined $knownCat->{$cat} ) {
                     push @{ $self->{errors} },
                       { message =>
@@ -282,6 +367,7 @@ sub _scanNodes {
             # Note that this works because nodes are ordered so "cat/cat2/app"
             # is looked after "cat" and "cat/cat2"
             if ( $leaf->{type} eq 'menuCat' ) {
+                hdebug('  menu cat');
                 $knownCat->{__id}++;
                 my $s = $knownCat->{$app} = sprintf '%04d-cat',
                   $knownCat->{__id};
@@ -309,6 +395,7 @@ sub _scanNodes {
 
             # Create new apps
             else {
+                hdebug('  new app');
                 $knownCat->{__id}++;
                 my $name = sprintf( '%04d-app', $knownCat->{__id} );
                 $cn->{$name} =
@@ -349,13 +436,15 @@ sub _scanNodes {
         elsif ( $leaf->{title} =~ $simpleHashKeys
             and not $leaf->{title} eq 'applicationList' )
         {
+            hdebug( $leaf->{title} );
 
             # If a `cnodes` key is found, keep old key unchanges
             if ( $leaf->{cnodes} ) {
+                hdebug('  unopened');
                 $self->newConf->{$name} = $self->refConf->{$name} // {};
-
             }
             else {
+                hdebug('  opened');
                 $subNodes //= [];
                 my $count = 0;
                 my @old   = (
@@ -365,6 +454,7 @@ sub _scanNodes {
                 );
                 $self->newConf->{$name} = {};
                 foreach my $n (@$subNodes) {
+                    hdebug("  looking at $n subnode");
                     if ( ref $n->{data} and ref $n->{data} eq 'ARRAY' ) {
                         $n->{data} = join ';', @{ $n->{data} };
                     }
@@ -413,9 +503,13 @@ sub _scanNodes {
             $self->_scanNodes($subNodes) or return 0;
             $n++;
         }
-        next if ($n);
+        if ($n) {
+            hdebug('  subnode detected');
+            next;
+        }
         if ( defined $leaf->{data} and ref( $leaf->{data} ) eq 'ARRAY' ) {
             if ( ref( $leaf->{data}->[0] ) eq 'HASH' ) {
+                hdebug("  array found");
                 $self->_scanNodes( $leaf->{data} ) or return 0;
             }
             else {
@@ -445,10 +539,13 @@ sub set {
         }
     }
     my $target = shift;
+    hdebug( "# set() called:",
+        { data => $data, path => \@path, target => $target } );
     die @path unless ($target);
 
     # Check new value
     if ( defined $data ) {
+        hdebug("  data defined");
 
         # TODO: remove if $data == default value
         $confs[1]->{$target} = $data;
@@ -475,14 +572,20 @@ sub set {
 
     # Set old value if exists
     else {
+        hdebug("  data undefined");
         if ( exists $confs[0]->{$target} ) {
+            hdebug("    old value exists");
             $confs[1]->{$target} = $confs[0]->{$target};
+        }
+        else {
+            hdebug("    no old value, skipping");
         }
     }
 }
 
 sub defaultValue {
     my ( $self, $target ) = splice @_;
+    hdebug("# defautValue($target)");
     die unless ($target);
     my $res = eval {
         &Lemonldap::NG::Manager::Attributes::attributes()->{$target}
@@ -493,11 +596,13 @@ sub defaultValue {
 
 sub testNewConf {
     my $self = shift;
+    hdebug('# testNewConf()');
     return $self->_unitTest( $self->newConf(), '' ) && $self->_globalTest();
 }
 
 sub _unitTest {
     my ( $self, $conf ) = splice @_;
+    hdebug('# _unitTest()');
     my $types = &Lemonldap::NG::Manager::Attributes::types();
     my $attrs = &Lemonldap::NG::Manager::Attributes::attributes();
     my $res   = 1;
@@ -534,7 +639,8 @@ sub _unitTest {
                 my $msg  = $attr->{msgFail} // $type->{msgFail};
                 if ( my $ref = ref($test) ) {
                     if ( $ref eq 'CODE' ) {
-                        my ( $r, $w ) = $test->( $conf->{$key}, $conf, $attr );
+                        my ( $r, $w ) =
+                          $test->( $conf->{$key}, $conf, $attr );
                         unless ($r) {
                             push @{ $self->errors },
                               { message => "$key: " . ( $w ? $w : $msg ) };
@@ -571,6 +677,7 @@ sub _unitTest {
 sub _globalTest {
     my $self = shift;
     require Lemonldap::NG::Manager::Conf::Tests;
+    hdebug('# _globalTest');
     my $result = 1;
     my $tests  = &Lemonldap::NG::Manager::Conf::Tests::tests( $self->newConf );
     while ( my ( $name, $sub ) = each %$tests ) {
