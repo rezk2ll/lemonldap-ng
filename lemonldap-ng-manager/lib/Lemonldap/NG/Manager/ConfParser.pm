@@ -225,6 +225,12 @@ sub _scanNodes {
             # OIDC
             if ( $base =~ /^oidc(?:O|R)PMetaDataNode$/ ) {
                 if ( $target =~ /^oidc(?:O|R)PMetaDataOptions$/ ) {
+                    $self->set( $target, $key, $leaf->{title}, $leaf->{data} );
+                }
+                elsif ( $target =~ /^oidcOPMetaData(?:JSON|JWKS)$/ ) {
+                    $self->set( $target, $key, $leaf->{data} );
+                }
+                elsif ( $target =~ /^oidc(?:O|R)PMetaDataExportedVars$/ ) {
                     if ( $leaf->{cnodes} ) {
                         $self->newConf->{$target}->{$key} =
                           $self->refConf->{$target}->{$key} // {};
