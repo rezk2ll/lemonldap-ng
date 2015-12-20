@@ -267,7 +267,9 @@ sub _samlMetaDataNodes {
       );
 
     my ( $id, $resp ) = ( 1, [] );
-    if ( $query =~ /^(?:saml${type}MetaDataExportedAttributes)$/ ) {
+
+    # Return all exported attributes if asked
+    if ( $query =~ /^saml${type}MetaDataExportedAttributes$/ ) {
         my $pk =
           eval { $self->getConfKey( $req, $query )->{$partner} } // {};
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
@@ -284,11 +286,10 @@ sub _samlMetaDataNodes {
     }
 
     # Simple root keys
-    elsif ( $query =~ /^(?:saml${type}MetaDataXML)$/ ) {
-        my $value = eval {
-            $self->getConfKey( $req, $query )->{$partner}
-              ->{"saml${type}MetaDataXML"};
-        } // undef;
+    elsif ( $query =~ /^saml${type}MetaDataXML$/ ) {
+        my $value =
+          eval { $self->getConfKey( $req, $query )->{$partner}->{$query}; }
+          // undef;
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
         return $self->sendJSONresponse( $req, { value => $value } );
     }
@@ -349,9 +350,11 @@ sub samlSPMetaDataNodes {
 sub _oidcMetaDataNodes {
     my ( $self, $type, $req, @path ) = splice @_;
 
-    return $self->recursiveCnodes( $req, "oidc${type}MetaDataOptions",
-        "oidc${type}MetaDataNode" )
+    my $refKey =
+      ( $type eq 'RP' ? 'oidcRPMetaDataOptions' : 'oidcOPMetaDataJSON' );
+    return $self->recursiveCnodes( $req, $refKey, "oidc${type}MetaDataNode" )
       unless (@path);
+
     my $partner = shift @path;
     my $query   = shift @path;
     unless ($query) {
@@ -367,14 +370,53 @@ sub _oidcMetaDataNodes {
     # Reject unknown partners
     return $self->sendError( $req, "Unknown OpenID-Connect partner ($partner)",
         400 )
-      unless (
-        defined eval {
-            $self->getConfKey( $req, "oidc${type}MetaDataOptions" )->{$partner};
-        }
+      unless ( defined eval { $self->getConfKey( $req, $refKey )->{$partner}; }
       );
 
-    return $self->sendJSONresponse( $req,
-        [ { title => 'TODO', id => 'TODO' } ] );
+    my ( $id, $resp ) = ( 1, [] );
+
+    # Return all exported attributes if asked
+    if ( $query =~ /^oidc${type}MetaDataExportedVars$/ ) {
+        my $pk = eval { $self->getConfKey( $req, $query )->{$partner} } // {};
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        foreach my $h ( sort keys %$pk ) {
+            push @$resp,
+              {
+                id    => "oidc${type}MetaDataNode/$partner/$query/" . $id++,
+                title => $h,
+                data  => $pk->{$h},
+                type  => 'keyText',
+              };
+        }
+        return $self->sendJSONresponse( $req, $resp );
+    }
+
+    # Long text types (OP only)
+    elsif ( $query =~ /^oidcOPMetaData(?:JSON|JWKS)$/ ) {
+        my $value =
+          eval { $self->getConfKey( $req, $query )->{$partner}; } // undef;
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        return $self->sendJSONresponse( $req, { value => $value } );
+    }
+
+    # Options
+    elsif (
+        $query =~ {
+            OP => qr/^$oidcOPMetaDataNodeKeys$/o,
+            RP => qr/^$oidcRPMetaDataNodeKeys$/o
+        }->{$type}
+      )
+    {
+        my $value = eval {
+            $self->getConfKey( $req, "oidc${type}MetaDataOptions" )->{$partner}
+              ->{$query};
+        } // undef;
+        return $self->sendJSONresponse( $req, { value => $value } );
+    }
+    else {
+        return $self->sendError( $req,
+            "Bad key for oidc${type}MetaDataNode ($query)", 400 );
+    }
 }
 
 ## @method PSGI-JSON-response oidcOPMetaDataNodes($req, @path)
@@ -478,8 +520,8 @@ sub metadatas {
 #@return PSGI JSON response
 sub applicationList {
     my ( $self, $req, @other ) = splice @_;
-    return $self->sendError( $req, 'There is no subkey for applicationList',
-        400 )
+    return $self->sendError( $req,
+        'There is no subkey for applicationList', 400 )
       if (@other);
     my $apps = $self->getConfKey( $req, 'applicationList' );
     return $self->sendError( $req, undef, 400 ) if ( $req->error );

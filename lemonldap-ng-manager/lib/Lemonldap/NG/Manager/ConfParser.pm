@@ -196,14 +196,12 @@ sub _scanNodes {
 
             # SAML
             if ( $base =~ /^saml(?:S|ID)PMetaDataNodes$/ ) {
-                if ( $target =~ /^saml(?:S|ID)MetaDataExportedAttributes$/ ) {
+                if ( $target =~ /^saml(?:S|ID)PMetaDataExportedAttributes$/ ) {
                     if ( $leaf->{cnodes} ) {
                         $self->newConf->{$target}->{$key} =
                           $self->refConf->{$target}->{$key} // {};
-                        # TODO: insert change
-                        $self->confChanged(1);
                     }
-                    if ($h) {
+                    elsif ($h) {
                         $self->set( $target, $key, $leaf->{title},
                             $leaf->{data} );
                     }
@@ -224,7 +222,25 @@ sub _scanNodes {
                 next;
             }
 
-            # TODO: OIDC
+            # OIDC
+            if ( $base =~ /^oidc(?:O|R)PMetaDataNode$/ ) {
+                if ( $target =~ /^oidc(?:O|R)PMetaDataOptions$/ ) {
+                    if ( $leaf->{cnodes} ) {
+                        $self->newConf->{$target}->{$key} =
+                          $self->refConf->{$target}->{$key} // {};
+                    }
+                    elsif ($h) {
+                        $self->set( $target, $key, $leaf->{title},
+                            $leaf->{data} );
+                    }
+                }
+                else {
+                    push @{ $self->errors },
+                      { message => "Unknown vhost key $target" };
+                    return 0;
+                }
+                next;
+            }
         }
 
         ####################
