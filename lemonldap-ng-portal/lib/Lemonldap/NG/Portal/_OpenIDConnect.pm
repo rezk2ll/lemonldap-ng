@@ -55,11 +55,9 @@ sub loadOPs {
     $self->{_oidcOPList} = {};
     foreach ( keys %{ $self->{oidcOPMetaDataJSON} } ) {
         $self->{_oidcOPList}->{$_}->{conf} =
-          $self->decodeJSON(
-            $self->{oidcOPMetaDataJSON}->{$_}->{oidcOPMetaDataJSON} );
+          $self->decodeJSON( $self->{oidcOPMetaDataJSON}->{$_} );
         $self->{_oidcOPList}->{$_}->{jwks} =
-          $self->decodeJSON(
-            $self->{oidcOPMetaDataJWKS}->{$_}->{oidcOPMetaDataJWKS} );
+          $self->decodeJSON( $self->{oidcOPMetaDataJWKS}->{$_} );
     }
 
     $oidcCache->{_oidcOPList} = $self->{_oidcOPList};
