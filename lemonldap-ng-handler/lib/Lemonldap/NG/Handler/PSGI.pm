@@ -10,6 +10,7 @@ our $VERSION = '1.9.0';
 around init => sub {
     my ( $method, $self, $args ) = splice @_;
     Lemonldap::NG::Handler::SharedConf->init($self);
+    Lemonldap::NG::Handler::SharedConf->checkConf($self);
     return $self->$method($args);
 };
 
