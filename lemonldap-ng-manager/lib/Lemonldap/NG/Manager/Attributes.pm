@@ -90,6 +90,9 @@ qr/^(?:\-+\s*BEGIN\s+RSA\s+PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(
             msgFail => '__badPemEncoding__',
         },
 
+        authParamsText => {
+            test => sub { 1 }
+        },
         blackWhiteList => {
             test => sub { 1 }
         },
