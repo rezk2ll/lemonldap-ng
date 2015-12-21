@@ -758,7 +758,7 @@ sub attributes {
             documentation => 'SMTP Server',
         },
         SMTPAuthUser => { type => 'text', },
-        SMTPAuthPass => { type => 'text', },
+        SMTPAuthPass => { type => 'password', },
 
         # Registration
         registerConfirmSubject => {
@@ -1072,7 +1072,7 @@ sub attributes {
             documentation => 'SAML signature private key',
         },
         samlServicePrivateKeySigPwd => {
-            type          => 'text',
+            type          => 'password',
             default       => '',
             documentation => 'SAML signature private key password',
         },
@@ -1086,7 +1086,7 @@ sub attributes {
             default       => '',
             documentation => 'SAML encryption private key',
         },
-        samlServicePrivateKeyEncPwd => { type => 'text', },
+        samlServicePrivateKeyEncPwd => { type => 'password', },
         samlServicePublicKeyEnc     => {
             type          => 'RSAPublicKey',
             default       => '',
@@ -1567,7 +1567,7 @@ sub attributes {
             documentation => 'LDAP manager DN',
         },
         managerPassword => {
-            type          => 'text',
+            type          => 'password',
             test          => qr/^\S*$/,
             msgFail       => '__badValue__',
             default       => '',
@@ -1849,10 +1849,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         dbiAuthChain       => { type => 'text', },
         dbiAuthUser        => { type => 'text', },
-        dbiAuthPassword    => { type => 'text', },
+        dbiAuthPassword    => { type => 'password', },
         dbiUserChain       => { type => 'text', },
         dbiUserUser        => { type => 'text', },
-        dbiUserPassword    => { type => 'text', },
+        dbiUserPassword    => { type => 'password', },
         dbiAuthTable       => { type => 'text', },
         dbiUserTable       => { type => 'text', },
         dbiAuthLoginCol    => { type => 'text', },
