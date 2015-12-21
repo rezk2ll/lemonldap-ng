@@ -568,6 +568,7 @@
   "value": "Value",
   "values": "Values",
   "variables": "Variables",
+  "version": "Version",
   "vhostAliases": "Aliases",
   "vhostHttps": "HTTPS",
   "vhostMaintenance": "Maintenance mode",

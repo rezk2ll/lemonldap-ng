@@ -22,6 +22,7 @@
         </div>
         <ul class="hidden-xs nav navbar-nav">
           <li ng-repeat="link in links"><a href="{{link.target}}"><strong><i class="glyphicon glyphicon-link"></i> {{translate(link.title)}}</strong></a></li>
+          <li><a name="version">{{translate('version')}} : <TMPL_VAR NAME="VERSION"></a></li>
         </ul>
         <ul class="hidden-xs nav navbar-nav navbar-right">
           <li ng-include="'languages.html'"/>

@@ -169,7 +169,8 @@ sub sendHtml {
             SCRIPT_NAME         => $req->scriptname,
             STATIC_PREFIX       => $sp,
             AVAILABLE_LANGUAGES => $self->languages,
-            LINKS => $self->links ? encode_json( $self->links ) : '""',
+            LINKS   => $self->links ? encode_json( $self->links ) : '""',
+            VERSION => $VERSION,
         );
     };
     if ($@) {
