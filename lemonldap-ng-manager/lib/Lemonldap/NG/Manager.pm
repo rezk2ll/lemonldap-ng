@@ -63,6 +63,12 @@ sub init {
         push @{ $self->links },
           { target => $enabledModules[$i]->defaultRoute, title => $links[$i] };
     }
+    push @{ $self->links },
+      {
+        target => &{ $Lemonldap::NG::Handler::SharedConf::tsv->{portal} }
+          . '?logout=1',
+        title => 'logout'
+      };
     1;
 }
 

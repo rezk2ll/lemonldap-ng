@@ -258,6 +258,7 @@
   "loginHistory": "Historique des connexions",
   "loginHistoryEnabled": "Activation",
   "logo": "Logo",
+  "logout": "Déconnexion",
   "logoutServices": "Transfert de la déconnexion",
   "logParams": "Journalisation",
   "macros": "Macros",
