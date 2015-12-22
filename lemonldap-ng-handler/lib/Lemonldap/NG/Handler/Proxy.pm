@@ -205,10 +205,10 @@ manage redirections if the remote host use it without the good domain.
 =item * B<LmProxyPass (required)>: Real server to push request to
 
 =item * B<LmLocationToReplace> (optional): substitution to do to avoid bad
-redirections. See synopsys for usage.
+redirections. See synopsis for usage.
 
 =item * B<LmCookieDomainToReplace> (optional): substitution to do to set cookies
-from proxied application. See synopsys for usage.
+from proxied application. See synopsis for usage.
 
 =back
 
