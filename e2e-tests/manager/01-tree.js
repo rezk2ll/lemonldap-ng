@@ -6,7 +6,6 @@ describe('Lemonldap::NG Manager', function() {
 
   describe('Tree display', function() {
 
-
     it('should display 9 main nodes', function() {
       browser.get('/');
       var mainNodes = element.all(by.repeater('node in data track by node.id'));

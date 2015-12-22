@@ -1,9 +1,7 @@
 exports.config = {
   allScriptsTimeout: 11000,
 
-  specs: [
-    'manager/*.js'
-  ],
+  specs: ['manager/*.js'],
 
   capabilities: {
     'browserName': 'chrome'
@@ -11,7 +9,7 @@ exports.config = {
 
   chromeOnly: true,
 
-  baseUrl: 'http://manager.example.com:'+process.env.WEBSERVERPORT+'/',
+  baseUrl: 'http://manager.example.com:' + process.env.WEBSERVERPORT + '/',
 
   framework: 'jasmine',
 
