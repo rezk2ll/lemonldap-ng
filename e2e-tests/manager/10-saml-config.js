@@ -23,10 +23,10 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('a-samlServiceSecurity')).click()
       element(by.id('t-samlServiceSecuritySig')).click()
       element(by.css('.glyphicon-plus-sign')).click();
-      element(by.xpath("//button[@trspan='ok']")).click();
+      element(by.id('passwordok')).click();
       element(by.id('t-samlServiceSecurityEnc')).click()
       element(by.css('.glyphicon-plus-sign')).click();
-      element(by.xpath("//button[@trspan='ok']")).click();
+      element(by.id('passwordok')).click();
       element(by.id('a-samlOrganization')).click();
       element(by.id('t-samlOrganizationDisplayName')).click();
       element(by.id('textinput')).clear().sendKeys('Org1');
@@ -36,7 +36,7 @@ describe('Lemonldap::NG Manager', function() {
     it('should save new configuration', function() {
       element(by.id('save')).click();
       element(by.id('longtextinput')).sendKeys('Activate SAML');
-      element(by.xpath("//button[@trspan='ok']")).click();
+      element(by.id('saveok')).click();
       expect(element(by.id('cfgnum')).getText()).toEqual('2');
     });
   });

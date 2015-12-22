@@ -93,7 +93,7 @@
       </ul>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="ok()" trspan="ok"></button>
+      <button class="btn btn-primary" id="nessageok" ng-click="ok()" trspan="ok"></button>
       <button class="btn btn-warning" ng-click="cancel()" ng-if="elem('message').displayCancel" trspan="cancel"></button>
     </div>
   </script>
@@ -117,7 +117,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="ok()" trspan="ok"></button>
+      <button class="btn btn-primary" id="passwordok" ng-click="ok()" trspan="ok"></button>
       <button class="btn btn-warning" ng-click="cancel()" trspan="cancel"></button>
     </div>
   </script>
@@ -134,7 +134,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" ng-click="ok()" trspan="ok"></button>
+      <button class="btn btn-primary" id="saveok" ng-click="ok()" trspan="ok"></button>
       <button class="btn btn-warning" ng-click="cancel()" trspan="cancel"></button>
     </div>
   </script>
