@@ -3,7 +3,7 @@ Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
 Uploaders: Xavier Guimard <x.guimard@free.fr>
 Section: perl
 Priority: optional
-Build-Depends: debhelper (>= 8),
+Build-Depends: debhelper (>= 9),
                po-debconf
 Build-Depends-Indep: libapache-session-perl,
                      libauthcas-perl,
@@ -43,13 +43,14 @@ Build-Depends-Indep: libapache-session-perl,
                      libxml-simple-perl,
                      omegat,
                      perl
-Standards-Version: 3.9.5
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-perl/packages/lemonldap-ng.git
+Standards-Version: 3.9.6
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-perl/packages/lemonldap-ng.git
 Vcs-Git: git://anonscm.debian.org/pkg-perl/packages/lemonldap-ng.git
 Homepage: http://lemonldap-ng.org/
 
 Package: lemonldap-ng
 Architecture: all
+Provides: saml-identity-provider, saml-service-provider
 Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          liblemonldap-ng-manager-perl (= ${binary:Version}),
@@ -175,7 +176,8 @@ Description: Lemonldap::NG common files
  associating a regular expression and a rule. Regular expression is applied on
  the requested URL and the rule calculates if the user is authorized.
  .
- This package installs common files used by other Lemonldap::NG modules.
+ Lemonldap::NG::Common contains common files used by other Lemonldap::NG
+ modules.
 
 Package: liblemonldap-ng-manager-perl
 Architecture: all
@@ -209,7 +211,7 @@ Description: Lemonldap::NG manager part
  associating a regular expression and a rule. Regular expression is applied on
  the requested URL and the rule calculates if the user is authorized.
  .
- This package installs the administration interface (manager).
+ Lemonldap::NG::Manager provides the administration interface.
 
 Package: liblemonldap-ng-portal-perl
 Architecture: all
@@ -256,5 +258,5 @@ Description: Lemonldap::NG authentication portal part
  associating a regular expression and a rule. Regular expression is applied on
  the requested URL and the rule calculates if the user is authorized.
  .
- This package installs the authentication portal.
+ Lemonldap::NG::Portal provides the authentication portal.
 
