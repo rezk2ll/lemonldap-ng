@@ -674,6 +674,11 @@ sub newConf {
                     'User ' . $self->userId($req) . " has stored conf $s" );
                 $res->{result} = 1;
                 $res->{cfgNum} = $s;
+                if ( my $status = $self->applyConf( $parser->newConf ) ) {
+                    $res->{details}->{applyResult} =
+                      { message => "$_: $status->{$_}" }
+                      foreach ( keys %$status );
+                }
             }
             else {
                 $self->userNotice( $req,
@@ -690,6 +695,11 @@ sub newConf {
     return $self->sendJSONresponse( $req, $res );
 }
 
+## @method PSGI-JSON-response newRawConf($req)
+# Store directly raw configuration
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@return PSGI JSON response
 sub newRawConf {
     my ( $self, $req, @other ) = splice @_;
     return $self->sendError( $req, 'There is no subkey for "newConf"', 400 )
@@ -764,6 +774,55 @@ sub newRSAKey {
         );
     }
     return $self->sendJSONresponse( $req, $keys );
+}
+
+## @method private applyConf()
+# Try to apply configuration by reloading Handlers
+# @return reload status
+sub applyConf {
+    my ( $self, $req, $newConf ) = splice @_;
+    my $status;
+
+    # Get apply section values
+    my %reloadUrls =
+      %{ $self->confAcc->getLocalConf( APPLYSECTION, undef, 0 ) };
+    if ( !%reloadUrls && $newConf->{reloadUrls} ) {
+        %reloadUrls = %{ $newConf->{reloadUrls} };
+    }
+    return {} unless (%reloadUrls);
+
+    # Create user agent
+    require LWP::UserAgent;
+    my $ua = new LWP::UserAgent( requests_redirectable => [] );
+    $ua->timeout(10);
+
+    # Parse apply values
+    while ( my ( $host, $request ) = each %reloadUrls ) {
+        my ( $method, $vhost, $uri ) =
+          ( $request =~ /^(https?):\/\/([^\/]+)(.*)$/ );
+        unless ($vhost) {
+            $vhost = $host;
+            $uri   = $request;
+        }
+        my $r =
+          HTTP::Request->new( 'GET', "$method://$host$uri",
+            HTTP::Headers->new( Host => $vhost ) );
+        my $response = $ua->request($r);
+        if ( $response->code != 200 ) {
+            $status->{$host} =
+              "Error " . $response->code . " (" . $response->message . ")";
+            $self->userError( "Apply configuration for $host: error "
+                  . $response->code . " ("
+                  . $response->message
+                  . ")" );
+        }
+        else {
+            $status->{$host} = "OK";
+            $self->userNotice("Apply configuration for $host: ok");
+        }
+    }
+
+    return $status;
 }
 
 1;
