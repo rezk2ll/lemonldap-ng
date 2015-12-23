@@ -79,6 +79,9 @@
         $scope.message.title = 'forbidden';
         $scope.message.items = [];
       }
+      else if (e == 302 || e == 303) {
+        console.log('redirecting');
+      }
       else if (e > 0) {
         $scope.message.title = 'serverError';
         $scope.message.items = [{
