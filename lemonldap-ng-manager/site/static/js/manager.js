@@ -73,6 +73,25 @@
     $scope.result = '';
     $scope.helpUrl = 'start.html#configuration';
 
+    var readError = function(j, e) {
+      $scope.waiting = false;
+      if (e == 403) {
+        $scope.message.title = 'forbidden';
+        $scope.message.items = [];
+      }
+      else if (e > 0) {
+        $scope.message.title = 'serverError';
+        $scope.message.items = [{
+          message: j
+        }];
+      }
+      else {
+        $scope.message.title = 'networkProblem';
+        $scope.message.items = [];
+      }
+      $scope.showModal('message.html');
+    };
+
     /* Modal launcher */
     $scope.showModal = function(tpl) {
       var modalInstance = $modal.open({
@@ -166,7 +185,7 @@
           $scope.data.pop();
           _checkSaveResponse(data);
         }).error(function(j, e) {
-          $scope.waiting = false;
+          readError(j, e);
           $scope.data.pop();
         })
       },
@@ -180,9 +199,7 @@
       $scope.waiting = true;
       $http.post($scope.confPrefix + '/raw', $fileContent).success(function(data) {
         _checkSaveResponse(data);
-      }).error(function(j, e) {
-        $scope.waiting = false;
-      });
+      }).error(readError);
     };
 
     $scope.restore = function() {
@@ -514,7 +531,7 @@
         }
         $scope.waiting = false;
       }).error(function(j, e) {
-        $scope.waiting = false;
+        readError(j, e);
         d.reject('');
       });
       return d.promise;
@@ -598,9 +615,7 @@
           currentNode.data[1].data = password;
           currentNode.data[2].data = data['public'];
           $scope.waiting = false;
-        }).error(function(j, e) {
-          $scope.waiting = false;
-        });
+        }).error(readError);
       },
       function() {
         console.log('New key cancelled');
@@ -617,9 +632,7 @@
         currentNode.data[0].data = data['private'];
         currentNode.data[1].data = data['public'];
         $scope.waiting = false;
-      }).error(function(j, e) {
-        $scope.waiting = false;
-      });
+      }).error(readError);
     }
 
     /* method `getKey()`:
@@ -669,7 +682,7 @@
             d.resolve(node.data);
           }).error(function(j, e) {
             d.reject(e);
-            $scope.waiting = false;
+            readError(j, e);
           });
         }
       } else {
@@ -705,9 +718,7 @@
           console.log('Metadatas of cfg ' + n + ' loaded');
           $location.path('/confs/' + n);
           $scope.init();
-        }).error(function(j, e) {
-          $scope.waiting = false;
-        });
+        }).error(readError);
       } else {
         $scope.waiting = false;
       }
@@ -748,9 +759,7 @@
         $scope.form = 'home';
         $scope.waiting = false;
       },
-      function(j, e) {
-        $scope.waiting = false;
-      });
+      readError);
     };
     var c = $location.path().match(new RegExp('^/confs/(latest|[0-9]+)'));
     if (!c) {

@@ -206,8 +206,6 @@
           var u = url.authorization.replace(/url=.*$/g, '');
           u += 'url=' + window.btoa(window.location).replace(/\//, '_');
           window.location = u;
-        } else {
-          alert(rejection.statusText ? rejection.statusText : 'Network problem');
         }
         return $q.reject(rejection);
       }
