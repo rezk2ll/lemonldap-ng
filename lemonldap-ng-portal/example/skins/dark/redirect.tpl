@@ -1,1 +1,1 @@
-../pastel/redirect.tpl
+../common/redirect.tpl
