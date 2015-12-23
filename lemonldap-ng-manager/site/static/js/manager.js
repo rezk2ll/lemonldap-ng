@@ -486,7 +486,7 @@
         if (!data) {
           d.reject('Empty response from server');
         } else if (data.error) {
-          if (data.error == 'setDefault') {
+          if (data.error.match(/setDefault$/)) {
             if (node.
           default) {
               node.nodes = node.
@@ -651,7 +651,7 @@
         } else {
           $http.get($scope.confPrefix + $scope.currentCfg.cfgNum + '/' + (node.get ? node.get : node.title)).success(function(data) {
             /* Set default value if response is null or if asked by server */
-            if ((data.value === null || (data.error && data.error == 'setDefault')) && node.
+            if ((data.value === null || (data.error && data.error.match(/setDefault$/))) && node.
           default !== null) {
               node.data = node.
             default;
