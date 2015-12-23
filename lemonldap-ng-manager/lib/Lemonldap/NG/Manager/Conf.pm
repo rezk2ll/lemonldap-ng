@@ -780,7 +780,7 @@ sub newRSAKey {
 # Try to apply configuration by reloading Handlers
 # @return reload status
 sub applyConf {
-    my ( $self, $req, $newConf ) = splice @_;
+    my ( $self, $newConf ) = splice @_;
     my $status;
 
     # Get apply section values
