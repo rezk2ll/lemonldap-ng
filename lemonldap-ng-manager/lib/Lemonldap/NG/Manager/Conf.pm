@@ -675,7 +675,7 @@ sub newConf {
                 $res->{result} = 1;
                 $res->{cfgNum} = $s;
                 if ( my $status = $self->applyConf( $parser->newConf ) ) {
-                    $res->{details}->{applyResult} =
+                    push @{ $res->{details}->{applyResult} },
                       { message => "$_: $status->{$_}" }
                       foreach ( keys %$status );
                 }
