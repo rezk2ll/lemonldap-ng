@@ -146,9 +146,7 @@
   },
   "portal": "http://auth.example.com:__port__/",
   "registerDB": "Null",
-  "reloadUrls": {
-    "reload.example.com": "http://reload.example.com/reload"
-  },
+  "reloadUrls": {},
   "securedCookie": 0,
   "sessionDataToRemember": {},
   "timeout": 72000,
