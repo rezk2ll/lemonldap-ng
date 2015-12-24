@@ -659,7 +659,7 @@ sub newConf {
 # "message" fields: note that words enclosed by "__" (__word__) will be translated
     $res->{message} = $parser->{message};
     foreach my $t (qw(errors warnings changes)) {
-        $res->{details}->{$t} = $parser->$t if ( @{ $parser->$t } );
+        $res->{details}->{'__'.$t.'__'} = $parser->$t if ( @{ $parser->$t } );
     }
     if ( $res->{result} ) {
         if ( $self->{demoMode} ) {
@@ -675,7 +675,7 @@ sub newConf {
                 $res->{result} = 1;
                 $res->{cfgNum} = $s;
                 if ( my $status = $self->applyConf( $parser->newConf ) ) {
-                    push @{ $res->{details}->{applyResult} },
+                    push @{ $res->{details}->{__applyResult__} },
                       { message => "$_: $status->{$_}" }
                       foreach ( keys %$status );
                 }

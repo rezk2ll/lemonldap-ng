@@ -159,7 +159,7 @@
       if (data.message) $scope.message.message = data.message;
       if (data.details) {
         for (var m in data.details) {
-          if (m != 'changes') $scope.message.items.push({
+          if (m != '__changes__') $scope.message.items.push({
             message: m,
             items: data.details[m]
           });
