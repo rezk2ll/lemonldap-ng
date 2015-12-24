@@ -4,14 +4,10 @@
 
 describe('Lemonldap::NG Manager', function() {
 
-  var f = require('fs');
-  f.exists('e2e-tests/conf/lmConf-2.js', function(exists) {
-    if (exists) f.unlink('e2e-tests/conf/lmConf-2.js');
-  });
   describe('SAML configuration', function() {
 
     it('should enable SAML', function() {
-      browser.get('/#/confs/1');
+      browser.get('/#/confs/latest');
       element(by.id('a-generalParameters')).click();
       element(by.id('a-issuerParams')).click();
       element(by.id('a-issuerDBSAML')).click();
@@ -37,7 +33,8 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('save')).click();
       element(by.id('longtextinput')).sendKeys('Activate SAML');
       element(by.id('saveok')).click();
-      expect(element(by.id('cfgnum')).getText()).toEqual('2');
+      element(by.id('messageok')).click();
+      expect(element(by.id('cfgnum')).getText()).toEqual('3');
     });
   });
 });
