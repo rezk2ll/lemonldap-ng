@@ -1,5 +1,11 @@
 /* LemonLDAP::NG base app module
  *
+ *  This file contains:
+ *   - 3 AngularJS directives (HTML attributes):
+ *     * `on-read-file` to get file content
+ *     * `resizer` to resize HTML div
+ *     * `trspan` to set translated message in HTML content
+ *   - a AngularJS factory to handle 401 Ajax responses
  */
 
 (function() {

@@ -5,12 +5,8 @@
  *  - translate.json that contains the keywords translation
  *
  *  This file contains:
+ *   - a modal controller to display messages
  *   - the AngularJS controller
- *   - 3 AngularJS directives (HTML attributes):
- *     * `on-read-file` to get file content
- *     * `resizer` to resize HTML div
- *     * `trspan` to set translated message in HTML content
- *   - a AngularJS factory to handle 401 Ajax responses
  */
 (function() {
   'use strict';
