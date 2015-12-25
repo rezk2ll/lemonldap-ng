@@ -129,7 +129,7 @@ Description: Lemonldap::NG Apache handler part
  associating a regular expression and a rule. Regular expression is applied on
  the requested URL and the rule calculates if the user is authorized.
  .
- This package installs the Apache module part (handler) used to protect web
+ Lemonldap::NG::Handler is the Apache module part (handler) used to protect web
  areas.
 
 Package: liblemonldap-ng-conf-perl
