@@ -28,9 +28,9 @@ ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
 ok( -f $confFiles->[1], 'File is created' );
 
 my @changes = @{&changes};
-my @cmsg    = @{ $resBody->{details}->{changes} };
+my @cmsg    = @{ $resBody->{details}->{__changes__} };
 ok( @changes == @cmsg, 'Same changes count' );
-while ( my $c = shift @{ $resBody->{details}->{changes} } ) {
+while ( my $c = shift @{ $resBody->{details}->{__changes__} } ) {
     @changes = grep { $_->{key} ne $c->{key} } @changes;
     @cmsg    = grep { $_->{key} ne $c->{key} } @cmsg;
 }
