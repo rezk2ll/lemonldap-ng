@@ -279,9 +279,8 @@ Get the content of a JSON POST request as Perl object.
 =head1 SEE ALSO
 
 L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Handler>,
-L<Plack>, L<PSGI>, L<Lemonldap::NG::Common::PSGI::Router>,
-L<Lemonldap::NG::Common::PSGI::Request>, L<Lemonldap::NG::Common::PSGI::Request>,
-L<HTML::Template>, 
+L<Plack>, L<PSGI>, L<Lemonldap::NG::Common::PSGI>,
+L<Lemonldap::NG::Common::PSGI::Router>, L<HTML::Template>, 
 
 =head1 AUTHORS
 
