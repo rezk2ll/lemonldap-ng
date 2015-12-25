@@ -140,6 +140,8 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =item Copyright (C) 2015 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
+=item Copyright (C) 2015 by Clément Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
 =back
 
 This library is free software; you can redistribute it and/or modify
