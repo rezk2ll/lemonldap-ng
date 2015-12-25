@@ -150,3 +150,210 @@ sub followPath {
 }
 
 1;
+__END__
+
+=head1 NAME
+
+=encoding utf8
+
+Lemonldap::NG::Common::PSGI::Router - Base library for REST APIs of Lemonldap::NG.
+
+=head1 SYNOPSIS
+
+  package My::PSGI;
+  
+  use base Lemonldap::NG::Common::PSGI::Router;
+  
+  sub init {
+    my ($self,$args) = splice @_;
+    # Will be called 1 time during startup
+    
+    # Declare REST routes (could be HTML templates or methods)
+    $self->addRoute ( 'index.html', undef, ['GET'] )
+         ->addRoute ( books => { ':book' => 'booksMethod' }, ['GET', 'POST'] )
+         ->addRoute ( properties => { '*' => 'propertiesMethod' }, ['GET', 'POST', 'PUT', 'DELETE']);
+  
+    # Default route (ie: PATH_INFO == '/')
+    $self->defaultRoute('index.html');
+  
+    # See Lemonldap::NG::Common::PSGI for other options
+  
+    # Return a boolean. If false, then error message has to be stored in
+    # $self->error
+    return 1;
+  }
+  
+  sub booksMethod {
+    my ( $self, $req, @otherPathInfo ) = splice @_;
+    my $book = $req->params('book');
+    my $method = $req->method;
+    ...
+    $self->sendJSONresponse(...);
+  }
+  
+  sub propertiesMethod {
+    my ( $self, $property, @otherPathInfo ) = splice @_;
+    my $method = $req->method;
+    ...
+    $self->sendJSONresponse(...);
+  }
+
+This package could then be called as a CGI, using FastCGI,...
+
+  #!/usr/bin/env perl
+  
+  use My::PSGI;
+  use Plack::Handler::FCGI; # or Plack::Handler::CGI
+
+  Plack::Handler::FCGI->new->run( My::PSGI->run() );
+
+=head1 DESCRIPTION
+
+This package provides base class for Lemonldap::NG REST API but could be
+used regardless.
+
+=head1 METHODS
+
+See L<Lemonldap::NG::Common::PSGI> for logging methods, content sending,...
+
+=head2 Initialization methods
+
+=head3 addRoute ( $word, $dest, $methods )
+
+Declare a REST route. Arguments:
+
+=over
+
+=item $word: the first word of /path/info.
+
+=item $dest: string, sub ref or hash ref (see "Route types" bellow)
+
+=item $methods: array ref containing the methods concerned by this route.
+
+=back
+
+=head4 Route types
+
+As seen in "SYNOPSIS", you can declare routes with variable component. $dest
+can be:
+
+=over
+
+=item a word: the name of the method to call
+
+=item undef: $word is used as $dest
+
+=item a ref to code: an anonymous subroutin to call
+
+=item a hash ref: it's a recursive call to `{ $word => $dest }`
+
+=item an array ref: in this case each element of the array will be considered as
+`{ $element => $element }`. So each element must be a word that makes a
+correspondance between a path_info word and a subroutine
+
+=back
+
+Some special $word:
+
+=over
+
+=item ':name': the word in path_info will be stored in GET parameters
+
+=item '*': the subroutine will be called with the word of path_info as second argument
+(after $req)
+
+=item 'something.html': if $word finishes with '.html', then sendHtml() will be called
+with 'something.tpl' as template name. In this case, $dest is not used.
+
+=back
+
+Examples:
+
+=over
+
+=item to manage http://.../books/127 with book() where 127 is the book number, use:
+
+  $self->addRoute( books => { ':bookId' => 'book' }, ['GET'] );
+
+booId parameter will be stored in $req->params('bookId');
+
+=item to manage http://.../books/127/pages/5 with page(), use:
+
+  $self->addRoute( books => { ':bookId' => { pages => { ':pageId' => 'page' } } }, ['GET'] );
+
+=item to manage simultaneously the 2 previous examples 
+
+  $self->addRoute( books => { ':bookId' => { pages => { ':pageId' => 'page' } } }, ['GET'] )
+       ->addRoute( books => { ':bookId' => { '*' => 'book' } }, ['GET'] );
+
+Note that book() will be called for any path_info containing /books/<$bookid>/<$other>
+except if $other == 'pages'.
+
+=item to manage /properties/p1, /properties/p2 with p1() and p2(), use:
+
+  $self->addRoute( properties => [ 'p1', 'p2' ] );
+
+=back
+
+=head3 defaultRoute($path)
+
+This method defined which path_info to use if path_info is '/' or empty.
+
+=head3 Accessors
+
+See L<Lemonldap::NG::Common::PSGI> for inherited accessors (error, languages,
+logLevel, staticPrefix, templateDir, links, syslog).
+
+=head1 SEE ALSO
+
+L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Handler>,
+L<Plack>, L<PSGI>, L<Lemonldap::NG::Common::PSGI::Router>,
+L<Lemonldap::NG::Common::PSGI::Request>, L<Lemonldap::NG::Common::PSGI::Request>,
+L<HTML::Template>, 
+
+=head1 AUTHORS
+
+=over
+
+=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
+=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
+
+=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=item Thomas Chemineau, E<lt>thomas.chemineau@gmail.comE<gt>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<http://jira.ow2.org>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+
+=head1 COPYRIGHT AND LICENSE
+
+=over
+
+=item Copyright (C) 2015 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=back
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut

@@ -210,3 +210,226 @@ sub _run {
 }
 
 1;
+__END__
+
+=head1 NAME
+
+=encoding utf8
+
+Lemonldap::NG::Common::PSGI - Base library for PSGI modules of Lemonldap::NG.
+Use Lemonldap::NG::Common::PSGI::Router for REST API.
+
+=head1 SYNOPSIS
+
+  package My::PSGI;
+  
+  use base Lemonldap::NG::Common::PSGI;
+  
+  sub init {
+    my ($self,$args) = splice @_;
+    # Will be called 1 time during startup
+  
+    # Store debug level
+    $self->logLevel('info');
+    # Can use syslog for user actions
+    $self->syslog('daemon');
+  
+    # Return a boolean. If false, then error message has to be stored in
+    # $self->error
+    return 1;
+  }
+  
+  sub router {
+    my ( $self, $req ) = splice @_;
+    # Do something and return a PSGI response
+    # NB: $req is a Lemonldap::NG::Common::PSGI::Request object
+    
+    return [ 200, [ 'Content-Type' => 'text/plain' ], [ 'Body lines' ] ];
+  }
+
+This package could then be called as a CGI, using FastCGI,...
+
+  #!/usr/bin/env perl
+  
+  use My::PSGI;
+  use Plack::Handler::FCGI; # or Plack::Handler::CGI
+
+  Plack::Handler::FCGI->new->run( My::PSGI->run() );
+
+=head1 DESCRIPTION
+
+This package provides base class for Lemonldap::NG web interfaces but could be
+used regardless.
+
+=head1 METHODS
+
+=head2 Running methods
+
+=head3 run ( $args )
+
+Main method that will manage requests. It can be called using class or already
+created object:
+
+=over
+
+=item Class->run($args): launch new($args), init(), then manage requests (using
+private _run() method
+
+=item $object->run(): manage directly requests. Initialization must have be done
+earlier.
+
+=back
+
+=head2 Logging
+
+=head3 lmLog ( $msg, $level)
+
+Print on STDERR messages if level > $self->{logLevel}. Defined log levels are:
+debug, info, notice, warn, error.
+
+=head3 userLog ($msg, $level)
+
+If $self->syslog is configured, store message with it, else called simply lmLog().
+$self->syslog must be empty or contain syslog facility
+
+=head3 userError() userNotice() userInfo()
+
+Alias for userLog(level).
+
+=head2 Content sending
+
+Note that $req, the first argument of these functions, is a
+L<Lemonldap::NG::Common::PSGI::Request>. See the corresponding documentation.
+
+=head3 sendHtml ( $req, $template )
+
+This method build HTML response using HTML::Template and the template $template.
+$template file must be in $self->templateDir directory.
+HTML template will receive 5 variables:
+
+=over
+
+=item SCRIPT_NAME: the path to the (F)CGI
+
+=item STATIC_PREFIX: content of $self->staticPrefix
+
+=item AVAILABLE_LANGUAGES: content of $self->languages
+
+=item LINKS: JSON stringification of $self->links
+
+=item VERSION: Lemonldap::NG version
+
+=back
+
+The response is always send with a 200 code.
+
+=head3 sendJSONresponse ( $req, $json, %args )
+
+Stringify $json object and send it to the client. $req is the
+Lemonldap::NG::Common::PSGI::Request object; %args can define the HTTP error
+code (200 by default).
+
+If client is not json compatible (`Accept` header), response is send in XML.
+
+Examples:
+
+  $self->sendJSONresponse ( $req, { result => 0 }, code => 400 );
+
+  $self->sendJSONresponse ( $req, { result => 1 } );
+
+=head3 sendError ( $req, $msg, $code )
+
+Call sendJSONresponse with `{ error => $msg }` and code (default to 500) and
+call lmLog() to duplicate error in logs
+
+=head3 abort ( $msg )
+
+When an error is detected during startup (init() sub), you must not call
+sendError() but call abort(). Each request received later will receive the
+error (abort uses sendError() behind the scene).
+
+=head2 Accessors
+
+=head3 error
+
+String error. Used if init() fails or if sendError is called without argument.
+
+=head3 languages
+
+String containing list of languages (ie "fr, en'). Used by sendHtml().
+
+=head3 logLevel
+
+See lmLog().
+
+=head3 staticPrefix
+
+String indicating the path of static content (js, css,...). Used by sendHtml().
+
+=head3 templateDir
+
+Directory containing template files.
+
+=head3 links
+
+Array of links to display by sendHtml(). Each element has the form:
+
+ { target => 'http://target', title => 'string to display' }
+
+=head3 syslog
+
+Syslog facility. If empty, STDERR will be used for logging
+
+=head1 SEE ALSO
+
+L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Handler>,
+L<Plack>, L<PSGI>, L<Lemonldap::NG::Common::PSGI::Router>,
+L<Lemonldap::NG::Common::PSGI::Request>, L<Lemonldap::NG::Common::PSGI::Request>,
+L<HTML::Template>, 
+
+=head1 AUTHORS
+
+=over
+
+=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
+=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
+
+=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=item Thomas Chemineau, E<lt>thomas.chemineau@gmail.comE<gt>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<http://jira.ow2.org>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+
+=head1 COPYRIGHT AND LICENSE
+
+=over
+
+=item Copyright (C) 2015 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=back
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut

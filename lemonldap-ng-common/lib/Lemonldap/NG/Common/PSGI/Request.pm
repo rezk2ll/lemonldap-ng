@@ -139,3 +139,193 @@ sub jsonBodyToObj {
 }
 
 1;
+__END__
+
+=head1 NAME
+
+=encoding utf8
+
+Lemonldap::NG::Common::PSGI::Request - HTTP request object for Lemonldap::NG
+PSGIs
+
+=head1 SYNOPSIS
+
+  package My::PSGI;
+  
+  use base Lemonldap::NG::Common::PSGI;
+  
+  # See Lemonldap::NG::Common::PSGI
+  ...
+  
+  sub router {
+    my ( $self, $req ) = splice @_;
+    # Do something and return a PSGI response
+    # NB: $req is a Lemonldap::NG::Common::PSGI::Request object
+    if ( $req->accept eq 'text/plain' ) { ... }
+    
+    return [ 200, [ 'Content-Type' => 'text/plain' ], [ 'Body lines' ] ];
+  }
+
+=head1 DESCRIPTION
+
+This package provides HTTP request objects used by Lemonldap::NG PSGIs. It
+contains common accessors to work with request
+
+=head1 METHODS
+
+=head2 Accessors
+
+=head3 accept
+
+'Accept' header content.
+
+=head3 encodings
+
+'Accept-Encoding' header content.
+
+=head3 languages
+
+'Accept-Language header content.
+
+=head3 cookies
+
+'Cookie' header content.
+
+=head3 hostname
+
+'Host' header content.
+
+=head3 remote_ip
+
+Client IP address.
+
+=head3 port
+
+Client TCP port.
+
+=head3 method
+
+HTTP method asked by client (GET/POST/PUT/DELETE).
+
+=head3 scriptname
+
+SCRIPT_NAME environment variable provided by HTTP server.
+
+=head3 get_server_port
+
+Server port.
+
+=head3 path
+
+PATH_INFO content which has been substracted `scriptname`. So it's the relative
+path_info for REST calls.
+
+=head3 uri
+
+REQUEST_URI environment variable.
+
+=head3 unparsed_uri
+
+Same as `uri` but without decoding.
+
+=head3 user
+
+REMOTE_USER environment variable. It contains username when a server authentication
+is done.
+
+=head3 userData
+
+Hash reference to be used by Lemonldap::NG::Handler::PSGI. If a server authentication
+is done, it contains:
+
+  { _whatToTrace => `user()` }
+
+=head3 params
+
+GET parameters.
+
+=head3 body
+
+Content of POST requests
+
+=head3 error
+
+Set if an error occurs
+
+=head3 contentType
+
+Content type of posted datas.
+
+=head3 contentLength
+
+Length of posted datas.
+
+=head2 Private accessors
+
+=head3 _psgixBuffered
+
+PSGI psgix.input.buffered variable.
+
+=head3 _psgiInput
+
+PSGI psgix.input variable.
+
+=head2 Methods
+
+=head3 jsonBodyToObj()
+
+Get the content of a JSON POST request as Perl object.
+
+=head1 SEE ALSO
+
+L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Handler>,
+L<Plack>, L<PSGI>, L<Lemonldap::NG::Common::PSGI::Router>,
+L<Lemonldap::NG::Common::PSGI::Request>, L<Lemonldap::NG::Common::PSGI::Request>,
+L<HTML::Template>, 
+
+=head1 AUTHORS
+
+=over
+
+=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
+=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
+
+=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=item Thomas Chemineau, E<lt>thomas.chemineau@gmail.comE<gt>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<http://jira.ow2.org>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+
+=head1 COPYRIGHT AND LICENSE
+
+=over
+
+=item Copyright (C) 2015 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=back
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut
