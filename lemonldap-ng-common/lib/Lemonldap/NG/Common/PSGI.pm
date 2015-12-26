@@ -99,18 +99,7 @@ sub sendJSONresponse {
     $args{code} ||= 200;
     my $type = 'text/json';
     if ( ref $j ) {
-        if ( $args{forceJSON} or $req->accept =~ m|application/json| ) {
-            $j = $_json->encode($j);
-        }
-        else {
-
-            # TODO: escape keys in hash values
-            eval {
-                require XML::Simple;
-                $j    = XML::Simple::XMLout($j);
-                $type = 'text/xml';
-            };
-        }
+        $j = $_json->encode($j);
     }
     return [ $args{code}, [ 'Content-Type', $type ], [$j] ];
 }
