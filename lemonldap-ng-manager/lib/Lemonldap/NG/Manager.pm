@@ -96,7 +96,48 @@ system.
 Lemonldap::NG::Manager provides a web interface to manage Lemonldap::NG Web-SSO
 system.
 
-This interface uses L<Plack> to be compatible with CGI, FastCGI,...
+The Perl part of Lemonldap::NG::Manager is the REST server. Web interface is
+written in Javascript, using AngularJS framework and can be found in `site`
+directory. The REST API is described in REST-API.md file given in source tree.
+
+Lemonldap::NG Manager uses L<Plack> to be compatible with CGI, FastCGI,... It
+inherits of L<Lemonldap::NG::Handler::PSGI>
+
+=head1 ORGANIZATION
+
+Lemonldap::NG Manager contains 4 parts:
+
+=over
+
+=item Configuration management: see L<Lemonldap::NG::Manager::Conf>;
+
+=item Session explorer: see L<Lemonldap::NG::Manager::Sessions>;
+
+=item Notification explorer: see L<Lemonldap::NG::Manager::Notifications>;
+
+=item Some files uses to generate static files: see bellow.
+
+=back
+
+=head2 Generation of static files
+
+The `scripts/jsongenerator.pl` file uses Lemonldap::NG::Manager::Attributes,
+Lemonldap::NG::Manager::Tree and Lemonldap::NG::Manager::CTrees to generate
+
+=over
+
+=item `site/static/struct.json`: the main file that contains the tree view;
+
+=item `site/static/js/conftree.js`: generates sub tree for virtualhosts and
+SAML and OpenID-Connect partners;
+
+=item `Lemonldap::NG::Manager::Constants`: constants used by all Perl manager
+components;
+
+=item `Lemonldap::NG::Common::Conf::DefaultValues`: constants used to read
+configuration.
+
+=back
 
 =head1 PARAMETERS
 
@@ -105,9 +146,40 @@ can specify where your lemonldap-ng.ini file is:
 
   Lemonldap::NG::Manager->run( { confFile => '/path/to/lemonldap-ng.ini' } );
 
+=head2 lemonldap-ng.ini parameters
+
+You can override any configuration parameter in lemonldap-ng.ini, but some are
+required and can't be set to global configuration (as any Lemonldap::NG module,
+you can also fix them in $opts hash ref passed as argument to run() or new()).
+
+  [manager]
+  ;protection:     choose one of none, authenticate, manager as explain in
+  ;                Lemonldap::NG::Handler::PSGI doc.
+  protection     = manager
+  
+  ;enabledModules: Modules to display. Default to `conf, sessions, notifications`
+  enabledModules = conf, sessions, notifications
+  
+  ;logLevel:       choose one of error, warn, notice, info, debug
+  ;                See Lemonldap::NG::Common::PSGI doc for more
+  logLevel       = notice
+  
+  ;staticPrefix:   set here the URI path to static content
+  ;                See Lemonldap::NG::Common::PSGI doc for more
+  staticPrefix   = static/
+  
+  ;languages:      Available interface languages
+  languages      = en, fr
+  
+  ;templateDir:    the path to the directory containing HTML templates
+  ;                See Lemonldap::NG::Common::PSGI doc for more
+  templateDir    = /usr/share/lemonldap-ng/manager/
+
 =head1 SEE ALSO
 
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>, L<Plack>, L<PSGI>,
+L<Lemonldap::NG::Manager::Conf>, L<Lemonldap::NG::Manager::Sessions>,
+L<Lemonldap::NG::Manager::Notifications>
 L<http://lemonldap-ng.org/>
 
 =head1 AUTHORS

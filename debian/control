@@ -50,11 +50,12 @@ Homepage: http://lemonldap-ng.org/
 
 Package: lemonldap-ng
 Architecture: all
-Provides: saml-identity-provider, saml-service-provider
 Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          liblemonldap-ng-manager-perl (= ${binary:Version}),
          liblemonldap-ng-portal-perl (= ${binary:Version})
+Provides: saml-identity-provider,
+          saml-service-provider
 Description: OpenID, CAS and SAML compatible Web-SSO system
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
