@@ -845,7 +845,7 @@ sub attributes {
         locationRules => {
             type    => 'ruleContainer',
             help    => 'writingrulesand_headers.html#rules',
-            keyTest => $Regexp::Common::URI::RFC2396::hostname,
+            keyTest => qr/^$Regexp::Common::URI::RFC2396::hostname$/,
             msgFail => '__badHostname__',
             default => {
                 default => 'deny',
@@ -855,14 +855,14 @@ sub attributes {
         exportedHeaders => {
             type          => 'keyTextContainer',
             help          => 'writingrulesand_headers.html#headers',
-            keyTest       => $Regexp::Common::URI::RFC2396::hostname,
+            keyTest       => qr/^$Regexp::Common::URI::RFC2396::hostname$/,
             keyMsgFail    => '__badHostname__',
             documentation => 'Virtualhost headers',
         },
         post => {
             type          => 'postContainer',
             help          => 'formreplay.html',
-            keyTest       => $Regexp::Common::URI::RFC2396::hostname,
+            keyTest       => qr/^$Regexp::Common::URI::RFC2396::hostname$/,
             keyMsgFail    => '__badHostname__',
             documentation => 'Virtualhost urls/Datas to post',
         },
