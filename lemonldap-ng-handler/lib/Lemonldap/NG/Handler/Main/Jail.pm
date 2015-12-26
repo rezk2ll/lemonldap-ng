@@ -132,7 +132,7 @@ sub jail_reval {
     # the "no safe wrap" reval
     my $nosw_reval = $reval;
     if ( $reval !~ /^sub\{return\(.*\}$/ ) {
-        $nosw_reval =~ s/^sub{(.*)}$/sub{return($1)}/;
+        $nosw_reval =~ s/^sub\{(.*)\}$/sub{return($1)}/;
     }
 
     return (
