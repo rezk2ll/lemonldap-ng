@@ -121,8 +121,8 @@ Lemonldap::NG Manager contains 4 parts:
 
 =head2 Generation of static files
 
-The `scripts/jsongenerator.pl` file uses Lemonldap::NG::Manager::Attributes,
-Lemonldap::NG::Manager::Tree and Lemonldap::NG::Manager::CTrees to generate
+The `scripts/jsongenerator.pl` file uses Lemonldap::NG::Manager::Build::Attributes,
+Lemonldap::NG::Manager::Build::Tree and Lemonldap::NG::Manager::Build::CTrees to generate
 
 =over
 

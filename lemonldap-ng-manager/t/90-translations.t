@@ -8,9 +8,9 @@ use 5.10.0;
 my $langDir = 'site/static/languages';
 
 my $count = 0;
-use_ok('Lemonldap::NG::Manager::Tree');
-use_ok('Lemonldap::NG::Manager::CTrees');
-use_ok('Lemonldap::NG::Manager::Attributes');
+use_ok('Lemonldap::NG::Manager::Build::Tree');
+use_ok('Lemonldap::NG::Manager::Build::CTrees');
+use_ok('Lemonldap::NG::Manager::Build::Attributes');
 $count += 3;
 
 ok( opendir( D, $langDir ), 'Found languages dir' );
@@ -60,7 +60,7 @@ foreach my $lang (@langs) {
 }
 
 my $tree;
-ok( $tree = Lemonldap::NG::Manager::Tree::tree(), 'Get tree' );
+ok( $tree = Lemonldap::NG::Manager::Build::Tree::tree(), 'Get tree' );
 my @nodes = @{ getNodes($tree) };
 
 my @unTr;
@@ -75,7 +75,7 @@ $count += 2;
 
 my ( $type, $ctrees );
 @unTr = ();
-ok( $ctrees = Lemonldap::NG::Manager::CTrees::cTrees(), 'Get cTrees' );
+ok( $ctrees = Lemonldap::NG::Manager::Build::CTrees::cTrees(), 'Get cTrees' );
 while ( ( $type, $tree ) = each %$ctrees ) {
     @nodes = @{ getNodes($tree) };
     foreach (@nodes) {

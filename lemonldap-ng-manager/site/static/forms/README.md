@@ -3,10 +3,10 @@
 This files contains the form used to expose configuration attributes. The form
 is chosen by looking at the *type* property of the current data.
 
-This property is defined in `Lemonldap::NG::Manager::Attributes` package.
+This property is defined in `Lemonldap::NG::Manager::Build::Attributes` package.
 By default, it is set to *text*.
 
-`Lemonldap::NG::Manager::Attributes` is compiled into JSON/JS files by
+`Lemonldap::NG::Manager::Build::Attributes` is compiled into JSON/JS files by
 `jsongenerator.pl`script.
 
 ## 1. Form file architecture

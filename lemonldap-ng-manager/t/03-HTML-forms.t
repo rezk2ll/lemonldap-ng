@@ -7,9 +7,9 @@ use 5.10.0;
 my $formDir = 'site/static/forms';
 
 my $count = 0;
-use_ok('Lemonldap::NG::Manager::Tree');
-use_ok('Lemonldap::NG::Manager::CTrees');
-use_ok('Lemonldap::NG::Manager::Attributes');
+use_ok('Lemonldap::NG::Manager::Build::Tree');
+use_ok('Lemonldap::NG::Manager::Build::CTrees');
+use_ok('Lemonldap::NG::Manager::Build::Attributes');
 $count += 3;
 
 ok( opendir( D, $formDir ), 'Found forms dir' );
@@ -20,9 +20,9 @@ delete $forms{white};
 delete $forms{restore};
 
 my ( @types, $attr, $tree, $ctrees );
-ok( $tree   = Lemonldap::NG::Manager::Tree::tree(),     'Get tree' );
-ok( $ctrees = Lemonldap::NG::Manager::CTrees::cTrees(), 'Get cTrees' );
-ok( $attr   = Lemonldap::NG::Manager::Attributes::attributes(),
+ok( $tree   = Lemonldap::NG::Manager::Build::Tree::tree(),     'Get tree' );
+ok( $ctrees = Lemonldap::NG::Manager::Build::CTrees::cTrees(), 'Get cTrees' );
+ok( $attr   = Lemonldap::NG::Manager::Build::Attributes::attributes(),
     'Get attributes' );
 $count += 4;
 

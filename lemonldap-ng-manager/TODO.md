@@ -2,11 +2,6 @@
 
 * Check for eval with SAML
 * Icon picker for application logo
-* Change documentation lang when changing language
-
-## Bugs
-
-* SAML IDP/SP exported attributes not working
 
 ## Configuration management
 
@@ -15,10 +10,8 @@
 
 ### Struct & datas
 
-* Tests for new confs
 * default values: TODO, deliver a "0" conf when no conf is available
 * Forms:
-  * file: load from URL + download
   * Grant session rule
   * OpenID white/black list
   * POST replay fields
@@ -30,11 +23,6 @@
 * JQuery module to add `$._llngAjax`
 
 ## Sessions explorer
-
-## Optimization
-
-* Use JSON to store datas:
-  * sessions: new Apache::Session::Serialize::JSON module
 
 ## Doc
 

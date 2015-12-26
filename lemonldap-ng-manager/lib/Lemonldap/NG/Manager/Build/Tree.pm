@@ -7,11 +7,11 @@
 #
 # Conf parameters are just strings in the `nodes` array
 #
-# All other ideas have to be set in Common/Conf/Attributes.pm !
+# All other ideas have to be set in Manager/Build/Attributes.pm !
 
 # DON'T FORGET TO RUN jsongenerator.pl AFTER EACH CHANGE
 
-package Lemonldap::NG::Manager::Tree;
+package Lemonldap::NG::Manager::Build::Tree;
 
 our $VERSION = '1.9.0';
 

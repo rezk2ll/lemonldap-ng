@@ -7,15 +7,16 @@ eg/manager-server.psgi
 KINEMATIC.md
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/Attributes.pm
+lib/Lemonldap/NG/Manager/Build/Attributes.pm
+lib/Lemonldap/NG/Manager/Build/CTrees.pm
+lib/Lemonldap/NG/Manager/Build/Tree.pm
 lib/Lemonldap/NG/Manager/Conf.pm
 lib/Lemonldap/NG/Manager/Conf/Tests.pm
 lib/Lemonldap/NG/Manager/ConfParser.pm
 lib/Lemonldap/NG/Manager/Constants.pm
-lib/Lemonldap/NG/Manager/CTrees.pm
 lib/Lemonldap/NG/Manager/Lib.pm
 lib/Lemonldap/NG/Manager/Notifications.pm
 lib/Lemonldap/NG/Manager/Sessions.pm
-lib/Lemonldap/NG/Manager/Tree.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
