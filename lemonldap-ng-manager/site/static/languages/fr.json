@@ -1,5 +1,5 @@
 {
-  "__helpPath__": "/fr-doc/",
+  "/doc/": "/fr-doc/",
   "_auth": "Authentification",
   "_authChoice": "Choix d'authentification",
   "_authMulti": "Authentification (multi)",
