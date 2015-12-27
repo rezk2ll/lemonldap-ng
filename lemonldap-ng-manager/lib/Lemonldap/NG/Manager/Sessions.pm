@@ -324,7 +324,6 @@ sub session {
       or return $self->sendError( $req, undef, 400 );
 
     # Try to read session
-    # TODO: conf in PSGI
     my $apacheSession = $self->getApacheSession( $mod, $id )
       or return $self->sendError( $req, undef, 400 );
 

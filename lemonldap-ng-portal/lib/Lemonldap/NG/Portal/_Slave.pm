@@ -25,4 +25,17 @@ sub checkIP {
     return 0;
 }
 
+## @method Lemonldap::NG::Portal::_Slave checkHeader()
+# @return true if header content matches LL::NG conf
+sub checkHeader {
+    my $self = shift;
+    return 1
+      unless ( $self->{slaveHeaderName} and $self->{slaveHeaderContent} );
+    my $headerContent = $self->http( $self->{slaveHeaderName} );
+    return 1 if ( $self->{slaveHeaderContent} =~ /\b$headerContent\b/ );
+
+    $self->_sub( 'userError', "Matching header not found for Slave module" );
+    return 0;
+}
+
 1;

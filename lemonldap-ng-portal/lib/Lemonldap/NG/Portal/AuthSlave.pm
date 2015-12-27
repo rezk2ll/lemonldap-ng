@@ -20,7 +20,7 @@ sub extractFormInfo {
     my $self = shift;
 
     return PE_FORBIDDENIP
-      unless ( $self->checkIP );
+      unless ( $self->checkIP and $self->checkHeader );
 
     my $user_header = $self->{slaveUserHeader};
     $user_header = 'HTTP_' . uc($user_header);
@@ -91,7 +91,7 @@ compatible portals with Apache authentication.
 
 =head1 DESCRIPTION
 
-This library just overload few methods of Lemonldap::NG::Portal::Simple to 
+This library just overload few methods of Lemonldap::NG::Portal::Simple to
 create sessions for anonymous users.
 
 See L<Lemonldap::NG::Portal::Simple> for usage and other methods.

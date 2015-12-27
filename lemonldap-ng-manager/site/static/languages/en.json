@@ -522,6 +522,8 @@
   "slaveMasterIP": "Master's IP address",
   "slaveParams": "Slave parameters",
   "slaveUserHeader": "Header for user login",
+  "slaveHeaderName": "Control header name",
+  "slaveHeaderContent": "Control header content",
   "SMTP": "SMTP",
   "SMTPAuthPass": "SMTP password",
   "SMTPAuthUser": "SMTP user",

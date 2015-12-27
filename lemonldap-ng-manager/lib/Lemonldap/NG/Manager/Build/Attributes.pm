@@ -1906,6 +1906,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test    => qr/^$Regexp::Common::URI::RFC2396::IPv4address$/,
             msgFail => '__badIPv4Address__',
         },
+        slaveHeaderName    => { type => 'text', },
+        slaveHeaderContent => { type => 'text', },
 
         # Choice
         authChoiceParam => {

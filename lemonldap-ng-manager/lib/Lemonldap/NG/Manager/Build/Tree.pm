@@ -337,7 +337,9 @@ sub tree {
                             help  => 'authslave.html',
                             nodes => [
                                 'slaveAuthnLevel', 'slaveExportedVars',
-                                'slaveUserHeader', 'slaveMasterIP'
+                                'slaveUserHeader', 'slaveMasterIP',
+                                'slaveUserHeader', 'slaveMasterIP',
+                                'slaveHeaderName', 'slaveHeaderContent'
                             ]
                         },
                         {

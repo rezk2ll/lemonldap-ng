@@ -522,6 +522,8 @@
   "slaveMasterIP": "IP accréditées",
   "slaveParams": "Paramètres Slave",
   "slaveUserHeader": "En-tête identifiant l'utilisateur",
+  "slaveHeaderName": "Nom de l'en-tête de contrôle",
+  "slaveHeaderContent": "Contenu de l'en-tête de contrôle",
   "SMTP": "SMTP",
   "SMTPAuthPass": "Mot de passe SMTP",
   "SMTPAuthUser": "Utilisateur SMTP",

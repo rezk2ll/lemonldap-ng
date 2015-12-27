@@ -1563,6 +1563,12 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
             'test'    => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             'type'    => 'keyTextContainer'
         },
+        'slaveHeaderContent' => {
+            'type' => 'text'
+        },
+        'slaveHeaderName' => {
+            'type' => 'text'
+        },
         'slaveMasterIP' => {
             'msgFail' => '__badIPv4Address__',
             'test'    => qr/^(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)$/,
