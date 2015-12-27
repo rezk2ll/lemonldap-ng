@@ -40,7 +40,7 @@ sub _run {
             # Ajax hook: Ajax requests can not understand 30x responses. This
             #            is not really HTTP compliant but nothing in this
             #            protocol can do this. Our javascripts understand that
-            #            it has to prompt user with the URL
+            #            they have to prompt user with the URL
             elsif (
                 $req->accept =~ m|application/json|
                 or (    $req->contentType
