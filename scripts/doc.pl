@@ -75,4 +75,7 @@ system('sed -i "/<iframe/d" pages/contact.html');
 # Remove background image
 system('sed -i "s#/lib/tpl/bootstrap3/images/background.jpg##g" css/*');
 
+# Download missing images
+system('mkdir -p lib/bootstrap3/images && cd lib/bootstrap3/images && wget -l 1 -nd -r http://lemonldap-ng.org/lib/tpl/bootstrap3/images/ && rm -f index* && cd -');
+
 exit 0;
