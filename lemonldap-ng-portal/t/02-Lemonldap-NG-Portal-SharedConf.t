@@ -20,6 +20,8 @@ my $ini = File::Temp->new( DIR => $dir );
 
 print $ini "[all]
 
+portal=http://auth.example.com
+
 [configuration]
 type=File
 dirName=$dir
