@@ -433,8 +433,12 @@ sub load {
 sub delete {
     my ( $self, $c ) = @_;
     my @a = $self->available();
-    return 0 unless ( grep { $_ eq $c } @a );
-    return &{ $self->{type} . '::delete' }( $self, $c );
+    if ( grep( /^$c$/, @a ) ) {
+        return &{ $self->{type} . '::delete' }( $self, $c );
+    }
+    else {
+        return 0;
+    }
 }
 
 sub logError {
