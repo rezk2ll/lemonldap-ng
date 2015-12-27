@@ -124,6 +124,7 @@ MANAGERJSONSRC=$(SRCMANAGERDIR)/scripts/jsongenerator.pl \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm
 MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		$(SRCMANAGERDIR)/site/static/js/conftree.js \
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Constants.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
 PERLCOMMONSRC:=$(shell find $(SRCCOMMONDIR)/lib -name '*.pm')
