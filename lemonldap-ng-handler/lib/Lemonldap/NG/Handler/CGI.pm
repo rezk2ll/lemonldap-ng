@@ -17,16 +17,14 @@ sub new {
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new() or $class->abort("Unable to build CGI");
     Lemonldap::NG::Handler::SharedConf->init($args);
+    Lemonldap::NG::Handler::SharedConf->checkConf($self);
 
     # Get access control rule
     my $rule = $self->{protection} || $localConfig->{protection};
     $rule =~ s/^rule\s*:?\s*//;
     return $self if ( $rule eq "none" );
     $rule =
-        $rule eq "authenticate" ? "accept"
-      : $rule eq "manager"      ? ""
-      :                           $rule;
-
+      $rule eq "authenticate" ? "accept" : $rule eq "manager" ? "" : $rule;
     my $request = {};
     Lemonldap::NG::Handler::API->newRequest($request);
     my $res = $self->run($rule);
