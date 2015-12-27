@@ -18,58 +18,74 @@ around init => sub {
 
 sub _run {
     my $self = shift;
+
+    # Override _run() only if protection != 'none'
     my $rule = $self->{protection} || $localConfig->{protection};
     if ( $rule ne 'none' ) {
         $rule =
           $rule eq "authenticate" ? "accept" : $rule eq "manager" ? "" : $rule;
+
+        # Handle requests
+        # Developers, be careful: Only this part is executed at each request
         return sub {
             my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
             Lemonldap::NG::Handler::API->newRequest($req);
             my $res = Lemonldap::NG::Handler::SharedConf->run($rule);
             $req->userData($datas) if ($datas);
 
-            # TODO: Userdata
-            #print STDERR Dumper( \@_, $res ); use Data::Dumper;
-            if ( $res == 403 ) {
-                return [
-                    403,
-                    [ 'Content-Type' => 'text/plain' ],
-                    ["You don't have rights to access this page"]
-                ];
+            if ( $res < 300 ) {
+                return $self->router($req);
             }
 
             # Ajax hook: Ajax requests can not understand 30x responses. This
             #            is not really HTTP compliant but nothing in this
-            #            protocol can do this. Our javascript understand that
+            #            protocol can do this. Our javascripts understand that
             #            it has to prompt user with the URL
             elsif (
-                ( $res == 302 or $res == 303 )
-                and (
-                    $req->accept =~ m|application/json|
-                    or (    $req->contentType
-                        and $req->contentType =~ m|application/json| )
-                )
+                $req->accept =~ m|application/json|
+                or (    $req->contentType
+                    and $req->contentType =~ m|application/json| )
               )
             {
-                return [
-                    401, [ Authorization => $req->{respHeaders}->{Location} ],
-                    ['']
-                ];
+                if ( $res == 302 or $res == 303 ) {
+                    return [
+                        401,
+                        [ Authorization => $req->{respHeaders}->{Location} ],
+                        ['']
+                    ];
+                }
+                else {
+                    return [
+                        $res, [ 'Content-Type', 'application/json' ],
+                        [qq({"error":"$res"})]
+                    ];
+                }
             }
-            elsif ($res) {
-                return [ $res, [ %{ $req->{respHeaders} } ], [''] ];
-            }
+
+            # Non Ajax requests may be redirected to portal
             else {
-                return $self->router($req);
+                my %h = $req->{respHeaders} ? %{ $req->{respHeaders} } : ();
+                my $s = $tsv->{portal}->() . "?lmError=$res";
+                $s =
+                    '<html><head><title>Redirection</title></head><body>'
+                  . qq{<script type="text/javascript">window.location='$s'</script>}
+                  . '<h1>Please wait</h1>'
+                  . qq{<p>An error occurs, you're going to be redirected to <a href="$s">$s</a>.</p>}
+                  . '</body></html>';
+                $h{'Content-Type'}   = 'text/html';
+                $h{'Content-Length'} = length $s;
+                return [ $res, [%h], [$s] ];
             }
         };
     }
-    else {
-        eval { Lemonldap::NG::Handler::SharedConf->checkConf() } unless (%$tsv);
-        $self->lmLog( $@, 'error' ) if ($@);
-        return sub {
 
-            #print STDERR Dumper(\@_);use Data::Dumper;
+    else {
+        eval { Lemonldap::NG::Handler::SharedConf->checkConf() }
+          unless (%$tsv);
+        $self->lmLog( $@, 'error' ) if ($@);
+
+        # Handle unprotected requests
+        return sub {
             $self->router( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
         };
     }

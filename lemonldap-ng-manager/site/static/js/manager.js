@@ -72,7 +72,7 @@
     var readError = function(j, e) {
       $scope.waiting = false;
       if (e == 403) {
-        $scope.message.title = 'forbidden';
+        $scope.message.title = '__forbidden__';
         $scope.message.items = [];
       }
       else if (e == 401) {
