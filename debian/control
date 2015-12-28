@@ -54,7 +54,9 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl (= ${binary:Version}),
          liblemonldap-ng-manager-perl (= ${binary:Version}),
          liblemonldap-ng-portal-perl (= ${binary:Version})
-Provides: saml-identity-provider,
+Provides: openid-connect-provider,
+          openid-connect-relying-party,
+          saml-identity-provider,
           saml-service-provider
 Description: OpenID, CAS and SAML compatible Web-SSO system
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
