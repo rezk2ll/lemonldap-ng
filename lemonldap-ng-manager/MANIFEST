@@ -7,6 +7,7 @@ eg/manager-server.psgi
 KINEMATIC.md
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/Attributes.pm
+lib/Lemonldap/NG/Manager/Build.pm
 lib/Lemonldap/NG/Manager/Build/Attributes.pm
 lib/Lemonldap/NG/Manager/Build/CTrees.pm
 lib/Lemonldap/NG/Manager/Build/Tree.pm
@@ -24,7 +25,6 @@ README
 README.md
 REST-API.md
 scripts/convertConfig
-scripts/jsongenerator.pl
 scripts/lemonldap-ng-cli
 scripts/lmConfigEditor
 scripts/testConfBackend.pl
