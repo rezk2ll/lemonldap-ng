@@ -182,7 +182,7 @@ json:	$(MANAGERJSONDST)
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)
 	cd $(SRCMANAGERDIR) && ./scripts/jsongenerator.pl && cd -
 
-configure:	common_conf handler_conf portal_conf manager_conf
+configure:	json common_conf handler_conf portal_conf manager_conf
 
 common_conf:	${SRCCOMMONDIR}/Makefile
 
