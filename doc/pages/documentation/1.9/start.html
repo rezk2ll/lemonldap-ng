@@ -284,23 +284,26 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 		<td class="col0 centeralign">  <a href="../../documentation/1.9/ldapsessionbackend.html" class="wikilink1" title="documentation:1.9:ldapsessionbackend">LDAP</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0 centeralign">  <a href="../../documentation/1.9/nosqlsessionbackend.html" class="wikilink1" title="documentation:1.9:nosqlsessionbackend">NoSQL (Redis)</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign"> The faster. Must be secured by network access control.  </td>
+		<td class="col0 centeralign">  <a href="../../documentation/1.9/nosqlsessionbackend.html" class="wikilink1" title="documentation:1.9:nosqlsessionbackend">Redis</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign"> The faster. Must be secured by network access control.  </td>
 	</tr>
 	<tr class="row5 rowodd">
-		<td class="col0 centeralign">  <a href="../../documentation/1.9/browseablesessionbackend.html" class="wikilink1" title="documentation:1.9:browseablesessionbackend">Browseable (SQL, Redis or LDAP)</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign"> <strong>Optimized</strong> for <a href="../../documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">session explorer</a> and <a href="../../documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">single session</a> features.  </td>
+		<td class="col0 centeralign">  <a href="../../documentation/1.9/mongodbsessionbackend.html" class="wikilink1" title="documentation:1.9:mongodbsessionbackend">MongoDB</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign"> Must be secured by network access control.  </td>
 	</tr>
 	<tr class="row6 roweven">
+		<td class="col0 centeralign">  <a href="../../documentation/1.9/browseablesessionbackend.html" class="wikilink1" title="documentation:1.9:browseablesessionbackend">Browseable (SQL, Redis or LDAP)</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign"> <strong>Optimized</strong> for <a href="../../documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">session explorer</a> and <a href="../../documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">single session</a> features.  </td>
+	</tr>
+	<tr class="row7 rowodd">
 		<td class="col0 centeralign">  <a href="../../documentation/1.9/soapsessionbackend.html" class="wikilink1" title="documentation:1.9:soapsessionbackend">SOAP</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td><td class="col5 leftalign"> Proxy backend to be used in conjunction with another session backend. <br/>
 <strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [4353-5697] -->
+<!-- EDIT11 TABLE [4353-5807] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Sessions database" [3968-5725] -->
+<!-- EDIT10 SECTION "Sessions database" [3968-5835] -->
 <h3 class="sectionedit12" id="identity_provider">Identity provider</h3>
 <div class="level3">
 
@@ -340,7 +343,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Identity provider" [5726-6226] -->
+<!-- EDIT12 SECTION "Identity provider" [5836-6336] -->
 <h2 class="sectionedit13" id="applications_protection">Applications protection</h2>
 <div class="level2">
 
@@ -367,7 +370,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Applications protection" [6227-6678] -->
+<!-- EDIT13 SECTION "Applications protection" [6337-6788] -->
 <h2 class="sectionedit14" id="advanced_features">Advanced features</h2>
 <div class="level2">
 
@@ -416,7 +419,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Advanced features" [6679-7570] -->
+<!-- EDIT14 SECTION "Advanced features" [6789-7680] -->
 <h2 class="sectionedit15" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
 
@@ -447,7 +450,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT15 SECTION "Mini howtos" [7571-8240] -->
+<!-- EDIT15 SECTION "Mini howtos" [7681-8350] -->
 <h2 class="sectionedit16" id="exploitation">Exploitation</h2>
 <div class="level2">
 
