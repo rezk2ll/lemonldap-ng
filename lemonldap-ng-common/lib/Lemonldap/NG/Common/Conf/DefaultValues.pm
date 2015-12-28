@@ -95,6 +95,7 @@ sub defaultValues {
         'ldapPort'                        => 389,
         'ldapPpolicyControl'              => 0,
         'ldapPwdEnc'                      => 'utf-8',
+        'ldapSearchDeref'                 => 'find',
         'ldapServer'                      => 'ldap://localhost',
         'ldapSetPassword'                 => 0,
         'ldapTimeout'                     => 120,

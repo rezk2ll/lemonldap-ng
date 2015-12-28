@@ -76,6 +76,7 @@ sub search {
         base   => $self->{ldapBase},
         scope  => 'sub',
         filter => $self->{LDAPFilter},
+        deref  => $self->{ldapSearchDeref} || 'find',
         attrs  => \@attrs,
     );
     $self->lmLog(

@@ -599,6 +599,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'ldapRaw' => {
             'type' => 'text'
         },
+        'ldapSearchDeref' => {
+            'default' => 'find',
+            'type'    => 'select'
+        },
         'ldapServer' => {
             'default' => 'ldap://localhost',
             'test'    => sub { "DUMMY" },

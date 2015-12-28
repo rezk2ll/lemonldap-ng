@@ -249,6 +249,7 @@
   "ldapPort": "Server port",
   "ldapPwdEnc": "LDAP password encoding",
   "ldapRaw": "Binary attributes",
+  "ldapSearchDeref": "Alias dereference",
   "ldapServer": "Server host",
   "ldapSetPassword": "Password modify extended operation",
   "ldapTimeout": "Timeout",

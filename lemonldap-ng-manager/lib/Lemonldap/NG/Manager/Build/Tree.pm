@@ -238,8 +238,8 @@ sub tree {
                                     help  => 'authldap.html#filters',
                                     form  => 'simpleInputContainer',
                                     nodes => [
-                                        'LDAPFilter', 'AuthLDAPFilter',
-                                        'mailLDAPFilter'
+                                        'LDAPFilter',     'AuthLDAPFilter',
+                                        'mailLDAPFilter', 'ldapSearchDeref',
                                     ]
                                 },
                                 {
@@ -269,7 +269,7 @@ sub tree {
                                         'ldapPasswordResetAttribute',
                                         'ldapPasswordResetAttributeValue'
                                     ]
-                                }
+                                },
                             ]
                         },
                         {
