@@ -1659,7 +1659,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 { k => 'always', v => 'always' }
             ],
             default       => 'find',
-            documentation => '"deref" para of Net::LDAP::search()',
+            documentation => '"deref" param of Net::LDAP::search()',
         },
         mailLDAPFilter     => { type => 'text', },
         LDAPFilter         => { type => 'text', },
