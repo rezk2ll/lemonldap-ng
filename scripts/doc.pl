@@ -78,4 +78,7 @@ system('sed -i "s#/lib/tpl/bootstrap3/images/background.jpg##g" css/*');
 # Download missing images
 system('mkdir -p lib/bootstrap3/images && cd lib/bootstrap3/images && wget -l 1 -nd -r http://lemonldap-ng.org/lib/tpl/bootstrap3/images/ && rm -f index* && cd -');
 
+# Link duplicates files
+system(q@find . -type f -printf "%s %p\n"|sort -n|perl -a -ne 'if($F[0]==$lf&&`md5sum $F[1]|cut -f1 -d" "` eq `md5sum $ln|cut -f1 -d" "`){print "ln -srf $ln $F[1]\n"}else{$lf=$F[0];$ln=$F[1]}'|sh@);
+
 exit 0;
