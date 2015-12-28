@@ -15,7 +15,7 @@ package Lemonldap::NG::Manager::Build::Tree;
 
 our $VERSION = '1.9.0';
 
-# Missing:
+# TODO: Missing:
 #  * activeTimer
 #  * confirmFormMethod
 #  * hiddenAttributes
@@ -276,10 +276,7 @@ sub tree {
                             title => 'multiParams',
                             help  => 'authmulti.html',
                             form  => 'authParamsTextContainer',
-                            nodes => [
-                                'multiAuthStack', 'multiUserDBStack',
-                                'multiValuesSeparator'
-                            ]
+                            nodes => [ 'multiAuthStack', 'multiUserDBStack' ]
                         },
                         {
                             title => 'nullParams',
