@@ -119,7 +119,7 @@ EXAMPLELANG=en # For static Manager example only
 ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
 
 # GENERATED SRC FILESlemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
-MANAGERJSONSRC=$(SRCMANAGERDIR)/scripts/jsongenerator.pl \
+MANAGERJSONSRC= scripts/jsongenerator.pl \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Attributes.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm
@@ -180,7 +180,7 @@ all:	configure common handler manager portal
 json:	$(MANAGERJSONDST)
 
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)
-	cd $(SRCMANAGERDIR) && ./scripts/jsongenerator.pl && cd -
+	./scripts/jsongenerator.pl
 
 configure:	json common_conf handler_conf portal_conf manager_conf
 
