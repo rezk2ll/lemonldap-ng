@@ -368,3 +368,80 @@ sub scanTree {
 
 1;
 __END__
+
+=head1 NAME
+
+=encoding utf8
+
+Lemonldap::NG::Manager::Build - Static files generator of Lemonldap::NG Web-SSO
+system.
+
+=head1 SYNOPSIS
+
+  use Lemonldap::NG::Manager::Build;
+  
+  Lemonldap::NG::Manager::Build->run(
+    structFile            => "site/static/struct.json",
+    confTreeFile          => "site/static/js/conftree.js",
+    managerConstantsFile  => "lib/Lemonldap/NG/Manager/Constants.pm",
+    managerAttributesFile => 'lib/Lemonldap/NG/Manager/Attributes.pm',
+    defaultValuesFile     => "lib/Lemonldap/NG/Common/Conf/DefaultValues.pm",
+  );
+
+=head1 DESCRIPTION
+
+Lemonldap::NG::Manager::Build is used only to build javascript files and
+Lemonldap::NG constants Perl files
+
+=head1 SEE ALSO
+
+L<Lemonldap::NG::Manager>, L<http://lemonldap-ng.org/>
+
+=head1 AUTHORS
+
+=over
+
+=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
+=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
+
+=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=item Thomas Chemineau, E<lt>thomas.chemineau@gmail.comE<gt>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<http://jira.ow2.org>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+
+=head1 COPYRIGHT AND LICENSE
+
+=over
+
+=item Copyright (C) 2015 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=item Copyright (C) 2015 by Clément Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
+=back
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut
