@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::PSGI::Request;
 
 use strict;
 use Mouse;
-use JSON;
+use JSON::MaybeXS;
 use URI::Escape;
 
 our $VERSION = '1.9.0';

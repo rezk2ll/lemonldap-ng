@@ -1,6 +1,7 @@
 #!/usr/bin/env perl -I pl/lib
 
 use Test::More;
+use JSON::MaybeXS;
 use strict;
 use 5.10.0;
 use Lemonldap::NG::Common::Session;
@@ -145,7 +146,7 @@ foreach (@ids) {
     my $res;
     ok( $res = del("/sessions/global/$_"), "Delete $_" );
     ok( $res->[0] == 200, 'Result code is 200' );
-    ok( JSON::decode_json( $res->[2]->[0] )->{result} == 1,
+    ok( decode_json( $res->[2]->[0] )->{result} == 1,
         'Body is JSON and result==1' );
     count(3);
 }

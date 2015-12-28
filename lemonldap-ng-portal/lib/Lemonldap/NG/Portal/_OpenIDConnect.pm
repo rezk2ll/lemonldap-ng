@@ -6,7 +6,7 @@
 package Lemonldap::NG::Portal::_OpenIDConnect;
 
 use strict;
-use JSON;
+use JSON::MaybeXS;
 use MIME::Base64
   qw/encode_base64url encode_base64 decode_base64url decode_base64/;
 use URI::Escape;

@@ -3,7 +3,7 @@
 use Test::More;
 use 5.10.0;
 use strict;
-use JSON;
+use JSON::MaybeXS;
 use Data::Dumper;
 require 't/test-lib.pm';
 

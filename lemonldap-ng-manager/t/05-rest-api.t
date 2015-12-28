@@ -1,7 +1,7 @@
 #!/usr/bin/env perl -I pl/lib
 
 use Test::More;
-use JSON;
+use JSON::MaybeXS;
 use strict;
 use 5.10.0;
 

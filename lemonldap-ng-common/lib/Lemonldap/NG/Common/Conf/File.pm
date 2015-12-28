@@ -2,6 +2,7 @@ package Lemonldap::NG::Common::Conf::File;
 
 use strict;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
+use JSON::MaybeXS;
 
 our $VERSION = '1.4.0';
 our $initDone;
@@ -18,14 +19,6 @@ sub Lemonldap::NG::Common::Conf::_file {
 
 sub prereq {
     my $self = shift;
-    unless ($initDone) {
-        eval "use JSON";
-        if ($@) {
-            $Lemonldap::NG::Common::Conf::msg .= "Unable to load JSON: $@\n";
-            return 0;
-        }
-        $initDone++;
-    }
     unless ( $self->{dirName} ) {
         $Lemonldap::NG::Common::Conf::msg .=
           '"dirName" is required in "File" configuration type ! \n';

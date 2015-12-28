@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Apache::Session::Serialize::JSON;
 
 use strict;
 use vars qw($VERSION);
-use JSON;
+use JSON::MaybeXS;
 
 our $VERSION = '1.9.0';
 

@@ -1,7 +1,6 @@
 #!/usr/bin/env perl -I pl/lib
 
 use Test::More;
-use JSON;
 use strict;
 use 5.10.0;
 

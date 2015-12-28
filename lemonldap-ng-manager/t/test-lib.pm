@@ -1,6 +1,6 @@
 # Common tests lib
 
-use JSON;
+use JSON::MaybeXS;
 use 5.10.0;
 use Data::Dumper;
 
