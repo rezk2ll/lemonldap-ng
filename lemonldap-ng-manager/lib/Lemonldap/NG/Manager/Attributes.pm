@@ -90,12 +90,12 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'RSAPrivateKey' => {
             'msgFail' => '__badPemEncoding__',
             'test' =>
-qr/^(?:\-+\s*BEGIN\s+RSA\s+PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+RSA\s+PRIVATE\s+KEY\s*\-+)?[\r\n]*$/s
+qr/^(?:(?:\-+\s*BEGIN\s+RSA\s+PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+RSA\s+PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$/s
         },
         'RSAPublicKey' => {
             'msgFail' => '__badPemEncoding__',
             'test' =>
-qr/^(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+PUBLIC\s+KEY\s*\-+)?[\r\n]*$/s
+qr/^(?:(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+PUBLIC\s+KEY\s*\-+)?[\r\n]*)?$/s
         },
         'rule' => {
             'test' => sub { "DUMMY" }
