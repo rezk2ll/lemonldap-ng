@@ -49,7 +49,8 @@ var filterFunctions = {
         }
         else if (node.nodes[0].data == 'Multi' && n.id == 'multiParams') {
           var nd = n._nodes ? n._nodes : n.nodes;
-          var sep = nd[2].data || ';';
+          /* TODO: Change this with multiValueSeparator when it will be set in tree */
+          var sep = ';';
           var reg = new RegExp(sep + '\\s*(\\w+)', 'g');
           var s = '' + (nd[0].data ? sep + nd[0].data : '') + (nd[1].data ? sep + nd[1].data : '');
           while ((result = reg.exec(s)) !== null) {
