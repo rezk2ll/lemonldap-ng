@@ -8,7 +8,7 @@
           "display": "auto",
           "logo": "demo.png",
           "name": "Application Test 1",
-          "uri": "http://test1.example.com/"
+          "uri": "http://test1.example.com:__port__/"
         },
         "type": "application"
       },
@@ -18,7 +18,7 @@
           "display": "auto",
           "logo": "thumbnail.png",
           "name": "Application Test 2",
-          "uri": "http://test2.example.com/"
+          "uri": "http://test2.example.com:__port__/"
         },
         "type": "application"
       },
@@ -32,7 +32,7 @@
           "display": "auto",
           "logo": "configure.png",
           "name": "WebSSO Manager",
-          "uri": "http://manager.example.com/"
+          "uri": "http://manager.example.com:__port__/manager.html"
         },
         "type": "application"
       },
@@ -42,7 +42,7 @@
           "display": "auto",
           "logo": "database.png",
           "name": "Notifications explorer",
-          "uri": "http://manager.example.com/notifications.pl"
+          "uri": "http://manager.example.com:__port__/notifications.html"
         },
         "type": "application"
       },
@@ -52,7 +52,7 @@
           "display": "auto",
           "logo": "database.png",
           "name": "Sessions explorer",
-          "uri": "http://manager.example.com/sessions.pl"
+          "uri": "http://manager.example.com:__port__/sessions.html"
         },
         "type": "application"
       },
@@ -66,7 +66,7 @@
           "display": "on",
           "logo": "help.png",
           "name": "Local documentation",
-          "uri": "http://manager.example.com/doc/"
+          "uri": "http://manager.example.com:__port__/doc/"
         },
         "type": "application"
       },
