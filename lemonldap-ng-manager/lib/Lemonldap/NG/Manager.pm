@@ -115,7 +115,7 @@ Lemonldap::NG Manager contains 4 parts:
 
 =item Notification explorer: see L<Lemonldap::NG::Manager::Notifications>;
 
-=item Some files uses to generate static files: see bellow.
+=item Some files uses to generate static files: see below.
 
 =back
 
