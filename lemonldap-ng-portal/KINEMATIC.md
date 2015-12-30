@@ -17,7 +17,7 @@ Simple::new():
 Scenarii:
 
 * F: unknown user comes for the first time
-* P: (good) post fo authentication
+* P: (good) post for authentication
 * M: menu display
 * L: simple logout
 
@@ -74,7 +74,7 @@ Notes:
 
 1. Called after issuerForAuthUser
 2. Called after menuInit
-3. called after passwordDBFinish !!!
+3. called after passwordDBFinish
 
 ## Other requests
 
