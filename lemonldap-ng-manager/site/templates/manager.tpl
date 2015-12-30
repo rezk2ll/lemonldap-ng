@@ -33,10 +33,13 @@
         <form class="form-group slide-animate-container" ng-include="formPrefix+form+'.html'" scope="$scope" onload="setButtons()" />
       </div>
       <!-- Help container -->
-      <div id="bottom" class="hidden-xs">
+      <div id="bottom" ng-hide="nohelp" class="hidden-xs" style="position:relative">
         <div class="vresizer" resizer="horizontal" resizer-top="#top" resizer-bottom="#bottom"></div>
+        <div style="position:absolute;top:-3px;right:0;color:red">
+          <span class="glyphicon glyphicon-remove" ng-click="nohelp=true" tabIndex="10"></span>
+        </div>
         <div class="panel panel-default">
-          <div class="panel-body"> 
+          <div class="panel-body">
             <iframe id="helpframe" width="100%" height="100%" ng-src="{{translate('/doc/')+'pages/documentation/current/'+helpUrl}}" frameborder="0"></iframe>
           </div>
         </div> 

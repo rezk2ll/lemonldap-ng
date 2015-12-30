@@ -158,7 +158,7 @@ dl,
     height: 86vh;
   }
   #top {
-    height: 43vh;
+    /*height: 43vh;*/
     overflow-x: hidden;
   }
   #bottom {
