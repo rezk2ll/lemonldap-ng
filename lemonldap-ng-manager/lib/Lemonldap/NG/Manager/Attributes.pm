@@ -6,10 +6,14 @@ our $VERSION = '1.9.0';
 sub types {
     return {
         'authParamsText' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'blackWhiteList' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'bool' => {
             'msgFail' => '__notABoolean__',
@@ -17,13 +21,24 @@ sub types {
         },
         'boolOrExpr' => {
             'msgFail' => '__notAValidPerlExpression__',
-            'test'    => sub { "DUMMY" }
+            'test'    => sub {
+                my $s = eval {
+                    do {
+                        $_[0];
+                      }
+                };
+                return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+              }
         },
         'catAndAppList' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'file' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'hostname' => {
             'form'    => 'text',
@@ -42,28 +57,44 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'lmAttrOrMacro' => {
             'form' => 'text',
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'longtext' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'menuApp' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'menuCat' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'oidcmetadatajson' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'oidcmetadatajwks' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'oidcOPMetaDataNode' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'oidcRPMetaDataNode' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'password' => {
             'msgFail' => '__malformedValue__',
@@ -71,7 +102,14 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'pcre' => {
             'form' => 'text',
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                eval {
+                    do {
+                        qr/$_[0]/;
+                      }
+                };
+                return $@ ? ( 0, "__badRegexp__: $@" ) : 1;
+              }
         },
         'PerlModule' => {
             'form'    => 'text',
@@ -79,13 +117,19 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'test'    => qr/^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/
         },
         'portalskin' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'portalskinbackground' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'post' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'RSAPrivateKey' => {
             'msgFail' => '__badPemEncoding__',
@@ -98,25 +142,42 @@ qr/^(?:(?:\-+\s*BEGIN\s+RSA\s+PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,
 qr/^(?:(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+PUBLIC\s+KEY\s*\-+)?[\r\n]*)?$/s
         },
         'rule' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'samlAssertion' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'samlAttribute' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'samlIDPMetaDataNode' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'samlService' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'samlSPMetaDataNode' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         },
         'select' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                my $test =
+                  grep( { $_ eq $_[0]; }
+                    map( { $$_{'k'}; } @{ $_[2]{'select'}; } ) );
+                return $test ? 1 : 0;
+              }
         },
         'text' => {
             'msgFail' => '__malformedValue__',
@@ -133,7 +194,9 @@ qr/^(?:(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r
 qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)$/
         },
         'virtualHost' => {
-            'test' => sub { "DUMMY" }
+            'test' => sub {
+                1;
+              }
         }
     };
 }
@@ -436,8 +499,15 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'keyTextContainer'
         },
         'grantSessionRules' => {
-            'keyTest' => sub { "DUMMY" },
-            'type'    => 'grantContainer'
+            'keyTest' => sub {
+                my $s = eval {
+                    do {
+                        $_[0];
+                      }
+                };
+                return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+            },
+            'type' => 'grantContainer'
         },
         'groups' => {
             'default' => {},
@@ -481,7 +551,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'bool'
         },
         'issuerDBOpenIDConnectActivation' => {
-            'default' => '0',
+            'default' => 0,
             'type'    => 'bool'
         },
         'issuerDBOpenIDConnectPath' => {
@@ -605,8 +675,17 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'ldapServer' => {
             'default' => 'ldap://localhost',
-            'test'    => sub { "DUMMY" },
-            'type'    => 'text'
+            'test'    => sub {
+                my $l = shift();
+                my (@s) = split( /[\s,]+/, $l, 0 );
+                foreach my $s (@s) {
+                    return 0, qq[Bad ldap uri "$s"]
+                      unless $s =~
+m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?::\d{1,5})?/?.*)$]o;
+                }
+                return 1;
+            },
+            'type' => 'text'
         },
         'ldapSetPassword' => {
             'default' => 0,
@@ -879,19 +958,19 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'int'
         },
         'oidcServiceAllowAuthorizationCodeFlow' => {
-            'default' => '1',
+            'default' => 1,
             'type'    => 'bool'
         },
         'oidcServiceAllowDynamicRegistration' => {
-            'default' => '0',
+            'default' => 0,
             'type'    => 'bool'
         },
         'oidcServiceAllowHybridFlow' => {
-            'default' => '0',
+            'default' => 0,
             'type'    => 'bool'
         },
         'oidcServiceAllowImplicitFlow' => {
-            'default' => '0',
+            'default' => 0,
             'type'    => 'bool'
         },
         'oidcServiceKeyIdSig' => {

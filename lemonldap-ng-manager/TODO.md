@@ -26,7 +26,4 @@
 ## Doc
 
 * Wiki doc
-* Developer corner:
-  * adding a configurationkey
-  * adding a data type
 
