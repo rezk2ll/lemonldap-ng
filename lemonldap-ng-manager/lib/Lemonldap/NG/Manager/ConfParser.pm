@@ -9,10 +9,7 @@ use constant HIGHDEBUG => 0;
 has errors => (
     is      => 'rw',
     isa     => 'ArrayRef',
-    default => sub { return [] },
-    trigger => sub {
-        hdebug( 'errors contains', $_[0]->{errors} );
-    }
+    default => sub { return [] }
 );
 has warnings => (
     is      => 'rw',
