@@ -669,6 +669,7 @@ sub _unitTest {
             # Check if key exists
             unless ( $attr = $attrs->{$key} ) {
                 push @{ $self->errors }, { message => "__unknownKey__: $key" };
+                $res = 0;
                 next;
             }
             if ( $key =~ $simpleHashKeys ) {
@@ -708,6 +709,7 @@ sub _unitTest {
                         unless ( $conf->{$key} =~ $test ) {
                             push @{ $self->errors },
                               { message => "$key: $msg ($conf->{$key})" };
+                            $res = 0;
                         }
                     }
                     else {
