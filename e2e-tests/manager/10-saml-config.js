@@ -14,18 +14,28 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('t-issuerDBSAMLActivation')).click();
       element(by.id('bopeOn')).click();
     });
-    it('should configure SAML service', function() {
+    it('should generate a signature key', function() {
       element(by.id('a-samlServiceMetaData')).click()
       element(by.id('a-samlServiceSecurity')).click()
-      element(by.id('t-samlServiceSecuritySig')).click()
+      var el = element(by.id('t-samlServiceSecuritySig'));
+      el.click()
       element(by.css('.glyphicon-plus-sign')).click();
       element(by.id('passwordok')).click();
-      element(by.id('t-samlServiceSecurityEnc')).click()
+      browser.sleep(500);
+    });
+    it('should generate an encryption key', function() {
+      var el = element(by.id('t-samlServiceSecurityEnc'));
+      el.click()
       element(by.css('.glyphicon-plus-sign')).click();
       element(by.id('passwordok')).click();
+      browser.sleep(500);
+    });
+    it('should configure organization dysplay name', function() {
       element(by.id('a-samlOrganization')).click();
       element(by.id('t-samlOrganizationDisplayName')).click();
       element(by.id('textinput')).clear().sendKeys('Org1');
+    });
+    it('should configure organization name', function() {
       element(by.id('t-samlOrganizationName')).click();
       element(by.id('textinput')).clear().sendKeys('Org1');
     });
