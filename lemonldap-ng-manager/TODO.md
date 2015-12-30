@@ -12,7 +12,6 @@
 
 * default values: TODO, deliver a "0" conf when no conf is available
 * Forms:
-  * Grant session rule
   * OpenID white/black list
   * POST replay fields
 
