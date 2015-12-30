@@ -232,6 +232,21 @@
       return cs;
     }
 
+    /* Add grant rule entry */
+    $scope.newGrantRule = function() {
+      var node = $scope._findContainer();
+      var l = node.nodes.length;
+      var n = l > 0 ? l - 1 : 0;
+      node.nodes.splice(n, 0, {
+        "id": node.id + '/n' + (id++),
+        "title": 'New rule',
+        "re": '1',
+        "comment": 'New rule',
+        "data": 'Message',
+        "type": "grant"
+      });
+    }
+
     /* Add rules entry */
     $scope.newRule = function() {
       var node = $scope._findContainer();

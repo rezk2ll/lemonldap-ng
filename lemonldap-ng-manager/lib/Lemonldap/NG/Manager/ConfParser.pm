@@ -432,6 +432,51 @@ sub _scanNodes {
             }
             next;
         }
+        elsif ( $leaf->{id} eq 'grantSessionRules' ) {
+            hdebug('grantSessionRules');
+            if ( $leaf->{cnodes} ) {
+                hdebug('  unopened');
+                $self->newConf->{$name} = $self->refConf->{$name} // {};
+            }
+            else {
+                hdebug('  opened');
+                $subNodes //= [];
+                my $count = 0;
+                my $ref   = $self->refConf->{grantSessionRules};
+                my $new   = $self->newConf->{grantSessionRules};
+                my @old   = ref $ref ? keys %$ref : ();
+                $self->newConf->{grantSessionRules} = {};
+                foreach my $n (@$subNodes) {
+                    hdebug("  looking at $n subnode");
+                    my $k =
+                      $n->{re} . ( $n->{comment} ? "##$n->{comment}" : '' );
+                    $self->newConf->{grantSessionRules}->{$k} = $n->{data};
+                    $count++;
+                    unless ( defined $ref->{$k} ) {
+                        $self->confChanged(1);
+                        push @{ $self->changes },
+                          { keys => 'grantSessionRules', new => $k };
+                    }
+                    elsif ( $ref->{$k} ne $n->{data} ) {
+                        $self->confChanged(1);
+                        push @{ $self->changes },
+                          {
+                            key => "grantSessionRules, $k",
+                            old => $self->refConf->{grantSessionRules}->{$k},
+                            new => $n->{data}
+                          };
+                    }
+                    @old = grep { $_ ne $k } @old;
+                }
+                if (@old) {
+                    $self->confChanged(1);
+                    push @{ $self->changes },
+                      { key => 'grantSessionRules', old => $_, }
+                      foreach (@old);
+                }
+            }
+            next;
+        }
 
         ####################
         # Other hash nodes #

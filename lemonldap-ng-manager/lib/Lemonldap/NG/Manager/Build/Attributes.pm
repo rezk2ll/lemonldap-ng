@@ -355,7 +355,7 @@ sub attributes {
             documentation => 'Check XSS',
         },
         grantSessionRules => {
-            type    => 'keyTextContainer',
+            type    => 'grantContainer',
             keyTest => $perlExpr,
         },
         hiddenAttributes => {

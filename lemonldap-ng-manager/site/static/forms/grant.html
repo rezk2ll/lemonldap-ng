@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title" trspan="rule"/>
+  </div>
+  <table class="table">
+    <tr>
+      <th><span trspan="comment" /></th>
+      <td ng-if="currentNode.re!='default'"><input id="rulecomment" class="form-control" ng-model="currentNode.comment" ng-change="changeRuleTitle(currentNode)"/></td>
+      <td ng-if="currentNode.re=='default'"><p><strong><span trspan="defaultRule" /></strong></p></td>
+    </tr>
+    <tr>
+      <th><span trspan="rule" /></th>
+      <td><input id="rule" class="form-control"ng-model="currentNode.re" ng-change="changeRuleTitle(currentNode)"/></td>
+    </tr>
+    <tr>
+      <th><span trspan="message" /></th>
+      <td><textarea rows="3" id="rulemessage" class="form-control" ng-model="currentNode.data"/></td>
+    </tr>
+  </table>
+</div>
+<script type="text/javascript">
+buttons=[{
+  'title': 'newGrantRule',
+  'icon': 'plus-sign'
+},{
+  'title': 'deleteEntry',
+  'icon': 'minus-sign'
+}];
+</script>

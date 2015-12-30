@@ -437,7 +437,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'grantSessionRules' => {
             'keyTest' => sub { "DUMMY" },
-            'type'    => 'keyTextContainer'
+            'type'    => 'grantContainer'
         },
         'groups' => {
             'default' => {},

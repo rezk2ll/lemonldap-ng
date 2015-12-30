@@ -35,7 +35,7 @@ sub addRoutes {
       ->addRoute(
         confs => {
             ':cfgNum' => [
-                qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes authChoiceModules)
+                qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes authChoiceModules grantSessionRules)
             ]
         },
         ['GET']
@@ -441,9 +441,10 @@ sub oidcRPMetaDataNodes {
     return $self->_oidcMetaDataNodes( 'RP', $req, @path );
 }
 
-## @method PSGI-JSON-response authChoiceModules(key)
+## @method PSGI-JSON-response authChoiceModules($req,$key)
 # Returns authChoiceModules keys splitted in arrays
 #
+#@param $req Lemonldap::NG::PSGI::Request
 #@param key optional subkey
 #@return PSGI JSON response
 sub authChoiceModules {
@@ -466,6 +467,41 @@ sub authChoiceModules {
         my $r = $value->{$key} ? [ split( /[;\|]/, $value->{$key} ) ] : [];
         return $self->sendJSONresponse( $req, { value => $r } );
     }
+}
+
+## @method PSGI-JSON-response $grantSessionRules($req)
+#Respond to `/conf/:cfgNum` requests by sending configuration metadatas
+#
+#@param $req Lemonldap::NG::PSGI::Request
+#@return PSGI JSON response
+sub grantSessionRules {
+    my ( $self, $req, $key ) = splice @_;
+    return $self->sendError( 'Subkeys forbidden for grantSessionRules', 400 )
+      if ($key);
+    my $value = $self->getConfKey( $req, 'grantSessionRules' );
+    my @res;
+
+    sub _sort {
+        my $A = ( $a =~ /^.*?##(.*)$/ )[0];
+        my $B = ( $b =~ /^.*?##(.*)$/ )[0];
+        return !$A ? 1 : !$B ? -1 : $A cmp $B;
+    }
+    my $id = 0;
+    foreach my $k ( sort _sort keys %$value ) {
+        my $r = $k;
+        my $c = ( $r =~ s/^(.*)?##(.*)$/$1/ ? $2 : '' );
+        $id++;
+        push @res,
+          {
+            id      => "grantSessionRules/$id",
+            title   => $c || $r,
+            re      => $r,
+            comment => $c,
+            data    => $value->{$k},
+            type    => 'grant'
+          };
+    }
+    return $self->sendJSONresponse( $req, \@res );
 }
 
 ## @method PSGI-JSON-response metadatas($req)
@@ -659,7 +695,8 @@ sub newConf {
 # "message" fields: note that words enclosed by "__" (__word__) will be translated
     $res->{message} = $parser->{message};
     foreach my $t (qw(errors warnings changes)) {
-        $res->{details}->{'__'.$t.'__'} = $parser->$t if ( @{ $parser->$t } );
+        $res->{details}->{ '__' . $t . '__' } = $parser->$t
+          if ( @{ $parser->$t } );
     }
     if ( $res->{result} ) {
         if ( $self->{demoMode} ) {
