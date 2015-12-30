@@ -49,7 +49,7 @@
   "author": "Auteur",
   "authorIPAddress": "Adresse IP de l'auteur",
   "authorizedValues": "Valeurs autorisées",
-  "authParams": "Modules d'authentification",
+  "authParams": "Paramètres d'authentification",
   "auto": "Automatique",
   "badCookieName": "Mauvais nom de cookie",
   "badDomainName": "Mauvais nom de domaine",
