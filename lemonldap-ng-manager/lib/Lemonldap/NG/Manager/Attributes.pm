@@ -176,7 +176,9 @@ qr/^(?:(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r
                 my $test =
                   grep( { $_ eq $_[0]; }
                     map( { $$_{'k'}; } @{ $_[2]{'select'}; } ) );
-                return $test ? 1 : 0;
+                return $test
+                  ? 1
+                  : ( 0, "Invalid value '$_[0]' for this select" );
               }
         },
         'text' => {
@@ -230,7 +232,167 @@ sub attributes {
         },
         'authChoiceModules' => {
             'keyTest' => qr/^(\d*)?[a-zA-Z0-9_]+$/,
-            'type'    => 'authChoiceContainer'
+            'select'  => [
+                [
+                    {
+                        'k' => 'Apache',
+                        'v' => 'Apache'
+                    },
+                    {
+                        'k' => 'AD',
+                        'v' => 'Active Directory'
+                    },
+                    {
+                        'k' => 'BrowserID',
+                        'v' => 'BrowserID (Mozilla Persona)'
+                    },
+                    {
+                        'k' => 'CAS',
+                        'v' => 'Central Authentication Service (CAS)'
+                    },
+                    {
+                        'k' => 'DBI',
+                        'v' => 'Database (DBI)'
+                    },
+                    {
+                        'k' => 'Facebook',
+                        'v' => 'Facebook'
+                    },
+                    {
+                        'k' => 'Google',
+                        'v' => 'Google'
+                    },
+                    {
+                        'k' => 'LDAP',
+                        'v' => 'LDAP'
+                    },
+                    {
+                        'k' => 'Null',
+                        'v' => 'None'
+                    },
+                    {
+                        'k' => 'OpenID',
+                        'v' => 'OpenID'
+                    },
+                    {
+                        'k' => 'OpenIDConnect',
+                        'v' => 'OpenID Connect'
+                    },
+                    {
+                        'k' => 'Proxy',
+                        'v' => 'Proxy'
+                    },
+                    {
+                        'k' => 'Radius',
+                        'v' => 'Radius'
+                    },
+                    {
+                        'k' => 'Remote',
+                        'v' => 'Remote'
+                    },
+                    {
+                        'k' => 'SAML',
+                        'v' => 'SAML v2'
+                    },
+                    {
+                        'k' => 'Slave',
+                        'v' => 'Slave'
+                    },
+                    {
+                        'k' => 'SSL',
+                        'v' => 'SSL'
+                    },
+                    {
+                        'k' => 'Twitter',
+                        'v' => 'Twitter'
+                    },
+                    {
+                        'k' => 'WebID',
+                        'v' => 'WebID'
+                    },
+                    {
+                        'k' => 'Yubikey',
+                        'v' => 'Yubikey'
+                    }
+                ],
+                [
+                    {
+                        'k' => 'AD',
+                        'v' => 'Active Directory'
+                    },
+                    {
+                        'k' => 'DBI',
+                        'v' => 'Database (DBI)'
+                    },
+                    {
+                        'k' => 'Facebook',
+                        'v' => 'Facebook'
+                    },
+                    {
+                        'k' => 'Google',
+                        'v' => 'Google'
+                    },
+                    {
+                        'k' => 'LDAP',
+                        'v' => 'LDAP'
+                    },
+                    {
+                        'k' => 'Null',
+                        'v' => 'None'
+                    },
+                    {
+                        'k' => 'OpenID',
+                        'v' => 'OpenID'
+                    },
+                    {
+                        'k' => 'OpenIDConnect',
+                        'v' => 'OpenID Connect'
+                    },
+                    {
+                        'k' => 'Proxy',
+                        'v' => 'Proxy'
+                    },
+                    {
+                        'k' => 'Remote',
+                        'v' => 'Remote'
+                    },
+                    {
+                        'k' => 'SAML',
+                        'v' => 'SAML v2'
+                    },
+                    {
+                        'k' => 'Slave',
+                        'v' => 'Slave'
+                    },
+                    {
+                        'k' => 'WebID',
+                        'v' => 'WebID'
+                    }
+                ],
+                [
+                    {
+                        'k' => 'AD',
+                        'v' => 'Active Directory'
+                    },
+                    {
+                        'k' => 'Choice',
+                        'v' => 'authChoice'
+                    },
+                    {
+                        'k' => 'DBI',
+                        'v' => 'Database (DBI)'
+                    },
+                    {
+                        'k' => 'LDAP',
+                        'v' => 'LDAP'
+                    },
+                    {
+                        'k' => 'Null',
+                        'v' => 'None'
+                    }
+                ]
+            ],
+            'type' => 'authChoiceContainer'
         },
         'authChoiceParam' => {
             'default' => 'lmAuth',
@@ -238,7 +400,101 @@ sub attributes {
         },
         'authentication' => {
             'default' => 'Demo',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 'Apache',
+                    'v' => 'Apache'
+                },
+                {
+                    'k' => 'AD',
+                    'v' => 'Active Directory'
+                },
+                {
+                    'k' => 'BrowserID',
+                    'v' => 'BrowserID (Mozilla Persona)'
+                },
+                {
+                    'k' => 'Choice',
+                    'v' => 'authChoice'
+                },
+                {
+                    'k' => 'CAS',
+                    'v' => 'Central Authentication Service (CAS)'
+                },
+                {
+                    'k' => 'DBI',
+                    'v' => 'Database (DBI)'
+                },
+                {
+                    'k' => 'Demo',
+                    'v' => 'Demonstration'
+                },
+                {
+                    'k' => 'Facebook',
+                    'v' => 'Facebook'
+                },
+                {
+                    'k' => 'Google',
+                    'v' => 'Google'
+                },
+                {
+                    'k' => 'LDAP',
+                    'v' => 'LDAP'
+                },
+                {
+                    'k' => 'Multi',
+                    'v' => 'Multiple'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'OpenID',
+                    'v' => 'OpenID'
+                },
+                {
+                    'k' => 'OpenIDConnect',
+                    'v' => 'OpenID Connect'
+                },
+                {
+                    'k' => 'Proxy',
+                    'v' => 'Proxy'
+                },
+                {
+                    'k' => 'Radius',
+                    'v' => 'Radius'
+                },
+                {
+                    'k' => 'Remote',
+                    'v' => 'Remote'
+                },
+                {
+                    'k' => 'SAML',
+                    'v' => 'SAML v2'
+                },
+                {
+                    'k' => 'Slave',
+                    'v' => 'Slave'
+                },
+                {
+                    'k' => 'SSL',
+                    'v' => 'SSL'
+                },
+                {
+                    'k' => 'Twitter',
+                    'v' => 'Twitter'
+                },
+                {
+                    'k' => 'WebID',
+                    'v' => 'WebID'
+                },
+                {
+                    'k' => 'Yubikey',
+                    'v' => 'Yubikey'
+                }
+            ],
+            'type' => 'select'
         },
         'AuthLDAPFilter' => {
             'type' => 'text'
@@ -317,7 +573,21 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'casAccessControlPolicy' => {
             'default' => 'none',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'error',
+                    'v' => 'Display error on portal'
+                },
+                {
+                    'k' => 'faketicket',
+                    'v' => 'Send a fake service ticket'
+                }
+            ],
+            'type' => 'select'
         },
         'casAttr' => {
             'type' => 'text'
@@ -357,7 +627,17 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'confirmFormMethod' => {
             'default' => 'post',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 'get',
+                    'v' => 'GET'
+                },
+                {
+                    'k' => 'post',
+                    'v' => 'POST'
+                }
+            ],
+            'type' => 'select'
         },
         'cookieExpiration' => {
             'type' => 'text'
@@ -532,7 +812,17 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'infoFormMethod' => {
             'default' => 'get',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 'get',
+                    'v' => 'GET'
+                },
+                {
+                    'k' => 'post',
+                    'v' => 'POST'
+                }
+            ],
+            'type' => 'select'
         },
         'issuerDBCASActivation' => {
             'default' => 0,
@@ -671,7 +961,25 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'ldapSearchDeref' => {
             'default' => 'find',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 'never',
+                    'v' => 'never'
+                },
+                {
+                    'k' => 'search',
+                    'v' => 'search'
+                },
+                {
+                    'k' => 'find',
+                    'v' => 'find'
+                },
+                {
+                    'k' => 'always',
+                    'v' => 'always'
+                }
+            ],
+            'type' => 'select'
         },
         'ldapServer' => {
             'default' => 'ldap://localhost',
@@ -1090,7 +1398,33 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'passwordDB' => {
             'default' => 'Demo',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 'AD',
+                    'v' => 'Active Directory'
+                },
+                {
+                    'k' => 'Choice',
+                    'v' => 'authChoice'
+                },
+                {
+                    'k' => 'DBI',
+                    'v' => 'Database (DBI)'
+                },
+                {
+                    'k' => 'Demo',
+                    'v' => 'Demonstration'
+                },
+                {
+                    'k' => 'LDAP',
+                    'v' => 'LDAP'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
+                }
+            ],
+            'type' => 'select'
         },
         'persistentStorage' => {
             'type' => 'text'
@@ -1159,9 +1493,59 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'portalSkin' => {
             'default' => 'bootstrap',
-            'type'    => 'portalskin'
+            'select'  => [
+                {
+                    'k' => 'bootstrap',
+                    'v' => 'Bootstrap'
+                },
+                {
+                    'k' => 'pastel',
+                    'v' => 'Pastel'
+                },
+                {
+                    'k' => 'impact',
+                    'v' => 'Impact'
+                },
+                {
+                    'k' => 'dark',
+                    'v' => 'Dark'
+                }
+            ],
+            'type' => 'portalskin'
         },
         'portalSkinBackground' => {
+            'select' => [
+                {
+                    'k' => '',
+                    'v' => 'None'
+                },
+                {
+                    'k' => '1280px-Anse_Source_d\'Argent_2-La_Digue.jpg',
+                    'v' => 'Anse'
+                },
+                {
+                    'k' =>
+'1280px-Autumn-clear-water-waterfall-landscape_-_Virginia_-_ForestWander.jpg',
+                    'v' => 'Waterfall'
+                },
+                {
+                    'k' => '1280px-BrockenSnowedTrees.jpg',
+                    'v' => 'Snowed Trees'
+                },
+                {
+                    'k' =>
+                      '1280px-Cedar_Breaks_National_Monument_partially.jpg',
+                    'v' => 'National Monument'
+                },
+                {
+                    'k' => '1280px-Parry_Peak_from_Winter_Park.jpg',
+                    'v' => 'Winter'
+                },
+                {
+                    'k' => 'Aletschgletscher_mit_Pinus_cembra1.jpg',
+                    'v' => 'Pinus'
+                }
+            ],
             'type' => 'portalskinbackground'
         },
         'portalSkinRules' => {
@@ -1201,7 +1585,17 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'redirectFormMethod' => {
             'default' => 'get',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 'get',
+                    'v' => 'GET'
+                },
+                {
+                    'k' => 'post',
+                    'v' => 'POST'
+                }
+            ],
+            'type' => 'select'
         },
         'registerConfirmSubject' => {
             'default' => '[LemonLDAP::NG] Account register confirmation',
@@ -1209,7 +1603,25 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'registerDB' => {
             'default' => 'Demo',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 'AD',
+                    'v' => 'Active Directory'
+                },
+                {
+                    'k' => 'Demo',
+                    'v' => 'Demonstration'
+                },
+                {
+                    'k' => 'LDAP',
+                    'v' => 'LDAP'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
+                }
+            ],
+            'type' => 'select'
         },
         'registerDoneSubject' => {
             'default' => '[LemonLDAP::NG] Your new account',
@@ -1334,7 +1746,21 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'samlIDPMetaDataOptionsEncryptionMode' => {
             'default' => 'none',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'nameid',
+                    'v' => 'Name ID'
+                },
+                {
+                    'k' => 'assertion',
+                    'v' => 'Assertion'
+                }
+            ],
+            'type' => 'select'
         },
         'samlIDPMetaDataOptionsForceAuthn' => {
             'default' => 0,
@@ -1350,11 +1776,75 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'samlIDPMetaDataOptionsNameIDFormat' => {
             'default' => '',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'unspecified',
+                    'v' => 'Unspecified'
+                },
+                {
+                    'k' => 'email',
+                    'v' => 'Email'
+                },
+                {
+                    'k' => 'x509',
+                    'v' => 'X509 certificate'
+                },
+                {
+                    'k' => 'windows',
+                    'v' => 'Windows'
+                },
+                {
+                    'k' => 'kerberos',
+                    'v' => 'Kerberos'
+                },
+                {
+                    'k' => 'entity',
+                    'v' => 'Entity'
+                },
+                {
+                    'k' => 'persistent',
+                    'v' => 'Persistent'
+                },
+                {
+                    'k' => 'transient',
+                    'v' => 'Transient'
+                },
+                {
+                    'k' => 'encrypted',
+                    'v' => 'Encrypted'
+                }
+            ],
+            'type' => 'select'
         },
         'samlIDPMetaDataOptionsRequestedAuthnContext' => {
             'default' => '',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'kerberos',
+                    'v' => 'Kerberos'
+                },
+                {
+                    'k' => 'password-protected-transport',
+                    'v' => 'Password protected transport'
+                },
+                {
+                    'k' => 'password',
+                    'v' => 'Password'
+                },
+                {
+                    'k' => 'tls-client',
+                    'v' => 'TLS client certificate'
+                }
+            ],
+            'type' => 'select'
         },
         'samlIDPMetaDataOptionsSignSLOMessage' => {
             'default' => -1,
@@ -1369,7 +1859,33 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'samlIDPMetaDataOptionsSSOBinding' => {
             'default' => '',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'http-post',
+                    'v' => 'POST'
+                },
+                {
+                    'k' => 'http-redirect',
+                    'v' => 'Redirect'
+                },
+                {
+                    'k' => 'http-soap',
+                    'v' => 'SOAP'
+                },
+                {
+                    'k' => 'artifact-get',
+                    'v' => 'Artifact GET'
+                },
+                {
+                    'k' => 'artifact-post',
+                    'v' => 'Artifact POST'
+                }
+            ],
+            'type' => 'select'
         },
         'samlIDPMetaDataXML' => {
             'type' => 'file'
@@ -1507,11 +2023,67 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'samlSPMetaDataOptionsEncryptionMode' => {
             'default' => 'none',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'nameid',
+                    'v' => 'Name ID'
+                },
+                {
+                    'k' => 'assertion',
+                    'v' => 'Assertion'
+                }
+            ],
+            'type' => 'select'
         },
         'samlSPMetaDataOptionsNameIDFormat' => {
             'default' => '',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'unspecified',
+                    'v' => 'Unspecified'
+                },
+                {
+                    'k' => 'email',
+                    'v' => 'Email'
+                },
+                {
+                    'k' => 'x509',
+                    'v' => 'X509 certificate'
+                },
+                {
+                    'k' => 'windows',
+                    'v' => 'Windows'
+                },
+                {
+                    'k' => 'kerberos',
+                    'v' => 'Kerberos'
+                },
+                {
+                    'k' => 'entity',
+                    'v' => 'Entity'
+                },
+                {
+                    'k' => 'persistent',
+                    'v' => 'Persistent'
+                },
+                {
+                    'k' => 'transient',
+                    'v' => 'Transient'
+                },
+                {
+                    'k' => 'encrypted',
+                    'v' => 'Encrypted'
+                }
+            ],
+            'type' => 'select'
         },
         'samlSPMetaDataOptionsNameIDSessionKey' => {
             'type' => 'text'
@@ -1589,7 +2161,25 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'securedCookie' => {
             'default' => 0,
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 0,
+                    'v' => 'unsecuredCookie'
+                },
+                {
+                    'k' => 1,
+                    'v' => 'securedCookie'
+                },
+                {
+                    'k' => 2,
+                    'v' => 'doubleCookie'
+                },
+                {
+                    'k' => 3,
+                    'v' => 'doubleCookieForSingleSession'
+                }
+            ],
+            'type' => 'select'
         },
         'secureTokenAllowOnError' => {
             'default' => 1,
@@ -1717,7 +2307,29 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'timeoutActivity' => {
             'default' => 0,
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 0,
+                    'v' => 'None'
+                },
+                {
+                    'k' => 900,
+                    'v' => '15 min'
+                },
+                {
+                    'k' => 1800,
+                    'v' => '30 min'
+                },
+                {
+                    'k' => 2700,
+                    'v' => '45 min'
+                },
+                {
+                    'k' => 3600,
+                    'v' => '60 min'
+                }
+            ],
+            'type' => 'select'
         },
         'trustedDomains' => {
             'type' => 'text'
@@ -1745,7 +2357,73 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'userDB' => {
             'default' => 'Demo',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => 'AD',
+                    'v' => 'Active Directory'
+                },
+                {
+                    'k' => 'DBI',
+                    'v' => 'Database (DBI)'
+                },
+                {
+                    'k' => 'Choice',
+                    'v' => 'authChoice'
+                },
+                {
+                    'k' => 'Demo',
+                    'v' => 'Demonstration'
+                },
+                {
+                    'k' => 'Facebook',
+                    'v' => 'Facebook'
+                },
+                {
+                    'k' => 'Google',
+                    'v' => 'Google'
+                },
+                {
+                    'k' => 'LDAP',
+                    'v' => 'LDAP'
+                },
+                {
+                    'k' => 'Multi',
+                    'v' => 'Multiple'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'OpenID',
+                    'v' => 'OpenID'
+                },
+                {
+                    'k' => 'OpenIDConnect',
+                    'v' => 'OpenID Connect'
+                },
+                {
+                    'k' => 'Proxy',
+                    'v' => 'Proxy'
+                },
+                {
+                    'k' => 'Remote',
+                    'v' => 'Remote'
+                },
+                {
+                    'k' => 'SAML',
+                    'v' => 'SAML v2'
+                },
+                {
+                    'k' => 'Slave',
+                    'v' => 'Slave'
+                },
+                {
+                    'k' => 'WebID',
+                    'v' => 'WebID'
+                }
+            ],
+            'type' => 'select'
         },
         'useRedirectOnError' => {
             'default' => 1,
@@ -1820,7 +2498,25 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'zimbraBy' => {
             'default' => '',
-            'type'    => 'select'
+            'select'  => [
+                {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'name',
+                    'v' => 'User name'
+                },
+                {
+                    'k' => 'id',
+                    'v' => 'User id'
+                },
+                {
+                    'k' => 'foreignPrincipal',
+                    'v' => 'Foreign principal'
+                }
+            ],
+            'type' => 'select'
         },
         'zimbraPreAuthKey' => {
             'type' => 'text'

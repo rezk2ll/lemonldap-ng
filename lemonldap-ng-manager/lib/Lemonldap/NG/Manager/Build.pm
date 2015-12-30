@@ -17,7 +17,7 @@ has managerConstantsFile  => ( isa => 'Str', is => 'ro', required => 1 );
 has managerAttributesFile => ( isa => 'Str', is => 'ro', required => 1 );
 has defaultValuesFile     => ( isa => 'Str', is => 'ro', required => 1 );
 
-my @managerAttrKeys = qw(keyTest type test msgFail default);
+my @managerAttrKeys = qw(keyTest select type test msgFail default);
 my $format          = 'Creating %-69s: ';
 my $reIgnoreKeys    = qr/^$/;
 my $module          = __PACKAGE__;

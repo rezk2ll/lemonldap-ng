@@ -153,7 +153,9 @@ qr/^(?:(?:\-+\s*BEGIN\s+RSA\s+PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,
             test => sub {
                 my $test =
                   grep { $_ eq $_[0] } map { $_->{k} } @{ $_[2]->{select} };
-                return $test ? 1 : 0;
+                return $test
+                  ? 1
+                  : ( 0, "Invalid value '$_[0]' for this select" );
             },
         },
         virtualHost => {
