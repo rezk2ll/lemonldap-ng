@@ -1,0 +1,9 @@
+#!/usr/bin/env perl
+
+use warnings;
+use strict;
+use Lemonldap::NG::Manager::Cli;
+
+my $cli = Lemonldap::NG::Manager::Cli->new(iniFile=>'t/lemonldap-ng.ini');
+
+$cli->run(@ARGV);
