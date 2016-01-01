@@ -1,7 +1,6 @@
 #!/usr/bin/env perl -I pl/lib
 
 use Test::More;
-use 5.10.0;
 use strict;
 use JSON::MaybeXS;
 use Data::Dumper;
@@ -25,8 +24,11 @@ eval { unlink $confFiles->[1]; };
 while ( my $body = &body() ) {
     my $desc = shift @desc;
     my ( $res, $resBody );
-    ok( $res = post( '/confs/', 'cfgNum=1', $body, 'application/json' ),
-        "$desc: positive result" );
+    ok(
+        $res =
+          &client->post( '/confs/', 'cfgNum=1', $body, 'application/json' ),
+        "$desc: positive result"
+    );
     ok( $res->[0] == 200, "$desc: result code is 200" );
     ok(
         $resBody = decode_json( $res->[2]->[0] ),

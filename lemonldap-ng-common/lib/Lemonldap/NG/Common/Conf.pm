@@ -203,6 +203,7 @@ sub getConf {
                     and $r->{useXForwardedForIP} == 1 )
                 {
                     $r->{trustedProxies} = '*';
+                    delete $r->{useXForwardedForIP};
                 }
 
                 # Force Choice backend

@@ -3,7 +3,6 @@
 use Test::More;
 use JSON::MaybeXS;
 use strict;
-use 5.10.0;
 
 my $langDir = 'site/static/languages';
 

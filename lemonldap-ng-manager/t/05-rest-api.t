@@ -3,7 +3,6 @@
 use Test::More;
 use JSON::MaybeXS;
 use strict;
-use 5.10.0;
 
 require 't/test-lib.pm';
 my $struct = 'site/static/struct.json';
@@ -35,11 +34,11 @@ my @good = qw(
 );
 
 foreach my $query (@good) {
-    my $href = jsonResponse($query);
+    my $href = &client->jsonResponse($query);
 }
 
 foreach my $query (@bad) {
-    my $res = get( $query, '' );
+    my $res = &client->get( $query, '' );
     ok( $res->[0] == 400, "Request reject for $query" )
       or print STDERR "# Receive a $res->[0] code";
     my $href;
@@ -64,7 +63,7 @@ ok( ref $hstruct eq 'ARRAY', 'struct.json is an array' );
 count(2);
 
 foreach my $query (@hkeys) {
-    my $href = jsonResponse( "/confs/1/$query", '' );
+    my $href = &client->jsonResponse( "/confs/1/$query", '' );
     ok( ref $href eq 'ARRAY', 'Response is an array' );
     count(1);
     foreach my $k (@$href) {
@@ -76,7 +75,7 @@ foreach my $query (@hkeys) {
 
 # Metadatas
 {
-    my $href = jsonResponse( 'confs/1', '' );
+    my $href = &client->jsonResponse( 'confs/1', '' );
     foreach (qw(cfgNum cfgAuthor cfgAuthorIP cfgDate)) {
         ok( exists( $href->{$_} ), "Key $_ exists" );
     }
