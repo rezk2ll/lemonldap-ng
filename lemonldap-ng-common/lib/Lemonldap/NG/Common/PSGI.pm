@@ -186,8 +186,10 @@ sub sendHtml {
 
 sub run {
     my ( $self, $args ) = splice @_;
-    $self = $self->new($args) unless ref($self);
-    return $self->abort( $self->error ) unless ( $self->init($args) );
+    unless ( ref $self ) {
+        $self = $self->new($args);
+        return $self->abort( $self->error ) unless ( $self->init($args) );
+    }
     return $self->_run;
 }
 
