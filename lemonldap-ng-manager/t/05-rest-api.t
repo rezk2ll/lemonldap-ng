@@ -38,7 +38,7 @@ foreach my $query (@good) {
 }
 
 foreach my $query (@bad) {
-    my $res = &client->get( $query, '' );
+    my $res = &client->_get( $query, '' );
     ok( $res->[0] == 400, "Request reject for $query" )
       or print STDERR "# Receive a $res->[0] code";
     my $href;

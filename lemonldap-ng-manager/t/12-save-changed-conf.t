@@ -17,7 +17,7 @@ sub body {
 eval { unlink $confFiles->[1]; };
 
 my ( $res, $resBody );
-ok( $res = &client->post( '/confs/', 'cfgNum=1', &body, 'application/json' ),
+ok( $res = &client->_post( '/confs/', 'cfgNum=1', &body, 'application/json' ),
     "Request succeed" );
 ok( $res->[0] == 200, "Result code is 200" );
 ok( $resBody = decode_json( $res->[2]->[0] ),

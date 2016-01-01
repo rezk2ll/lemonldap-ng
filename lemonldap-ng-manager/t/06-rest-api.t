@@ -8,7 +8,7 @@ require 't/test-lib.pm';
 
 my $res;
 ok(
-    $res = &client->post(
+    $res = &client->_post(
         '/confs/newRSAKey', '', IO::String->new(''), 'application/json', 0,
     ),
     "Request succeed"
@@ -19,7 +19,7 @@ ok( $key = decode_json( $res->[2]->[0] ), 'Response is JSON' );
 count(3);
 
 ok(
-    $res = &client->post(
+    $res = &client->_post(
         '/confs/newRSAKey', '', IO::String->new('{"password":"hello"}'),
         'application/json', 20,
     ),

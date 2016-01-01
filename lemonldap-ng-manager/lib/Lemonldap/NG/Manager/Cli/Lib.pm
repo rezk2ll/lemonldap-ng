@@ -1,7 +1,6 @@
 package Lemonldap::NG::Manager::Cli::Lib;
 
 use JSON::MaybeXS;
-use 5.10.0;
 use Mouse;
 use Lemonldap::NG::Manager;
 
@@ -20,7 +19,7 @@ has app => (
     }
 );
 
-sub get {
+sub _get {
     my ( $self, $path, $query ) = splice @_;
     $query //= '';
     return $self->app->(
@@ -45,7 +44,7 @@ sub get {
     );
 }
 
-sub post {
+sub _post {
     my ( $self, $path, $query, $body, $type, $len ) = splice @_;
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
@@ -75,7 +74,7 @@ sub post {
     );
 }
 
-sub put {
+sub _put {
     my ( $self, $path, $query, $body, $type, $len ) = splice @_;
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
@@ -105,7 +104,7 @@ sub put {
     );
 }
 
-sub del {
+sub _del {
     my ( $self, $path, $query ) = splice @_;
     return $self->app->(
         {
@@ -131,7 +130,7 @@ sub del {
 
 sub jsonResponse {
     my ( $self, $path, $query ) = splice @_;
-    my $res = $self->get( $path, $query )
+    my $res = $self->_get( $path, $query )
       or die "Manager lib has refused my get, aborting";
     die "Manager lib does not return a 200 code, aborting"
       unless ( $res->[0] == 200 );
@@ -141,7 +140,7 @@ sub jsonResponse {
 
 sub jsonPostResponse {
     my ( $self, $path, $query, $body, $type, $len ) = splice @_;
-    my $res = $self->post( $path, $query, $body, $type, $len )
+    my $res = $self->_post( $path, $query, $body, $type, $len )
       or die "Manager lib has refused my post, aborting";
     die "Manager lib does not return a 200 code, aborting"
       unless ( $res->[0] == 200 );
@@ -151,7 +150,7 @@ sub jsonPostResponse {
 
 sub jsonPutResponse {
     my ( $self, $path, $query, $body, $type, $len ) = splice @_;
-    my $res = $self->put( $path, $query, $body, $type, $len )
+    my $res = $self->_put( $path, $query, $body, $type, $len )
       or die "Manager lib has refused my put, aborting";
     die "Manager lib does not return a 200 code, aborting"
       unless ( $res->[0] == 200 );

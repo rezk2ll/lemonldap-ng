@@ -26,7 +26,7 @@ while ( my $body = &body() ) {
     my ( $res, $resBody );
     ok(
         $res =
-          &client->post( '/confs/', 'cfgNum=1', $body, 'application/json' ),
+          &client->_post( '/confs/', 'cfgNum=1', $body, 'application/json' ),
         "$desc: positive result"
     );
     ok( $res->[0] == 200, "$desc: result code is 200" );
