@@ -21,37 +21,20 @@ has sep => ( is => 'rw', isa => 'Str', default => '/' );
 
 has req => ( is => 'ro' );
 
+has format => ( is => 'rw', isa => 'Str', default => "%-25s | %-25s | %-25s" );
+
+has yes => ( is => 'rw', isa => 'Bool', default => 0 );
+
+has force => ( is => 'rw', isa => 'Bool', default => 0 );
+
 sub get {
-    my ( $self, @values ) = @_;
-    $self->cfgNum( $self->lastCfg ) unless ( $self->cfgNum );
-    die 'get requires at least one key' unless (@values);
-    my $sep = $self->sep;
-  L: foreach my $key (@values) {
-        my ($base,@path) = split $sep, $key;
-        unless ( $base =~ /^\w+$/ ) {
-            warn "Malformed key $base";
-            next L;
-        }
-        my $value = $self->mgr->getConfKey( $self->req, $base );
-        if($self->req->error) {
-            die $self->req->error;
-        }
-        if(ref $value eq 'HASH') {
-            while(my $next = shift @path) {
-                unless(exists $value->{$next}) {
-                    warn "Unknown subkey $next for $key";
-                    next L;
-                }
-                $value = $value->{$next};
-            }
-        }
-        elsif(@path) {
-            warn "No subkeys for $base";
-            next L;
-        }
-        if(ref $value eq 'HASH') {
+    my ( $self, @keys ) = @_;
+    die 'get requires at least one key' unless (@keys);
+  L: foreach my $key (@keys) {
+        my $value = $self->_getKey($key);
+        if ( ref $value eq 'HASH' ) {
             print "$key has the following keys:\n";
-            print "   $_\n" foreach(sort keys %$value);
+            print "   $_\n" foreach ( sort keys %$value );
         }
         else {
             $value //= '';
@@ -60,20 +43,113 @@ sub get {
     }
 }
 
+sub set {
+    my ( $self, %pairs ) = @_;
+    my $format = $self->format . "\n";
+    die 'set requires at least one key and one value' unless (%pairs);
+    my @list;
+    foreach my $key ( keys %pairs ) {
+        my $oldValue = $self->_getKey($key);
+        if ( ref $oldValue ) {
+            die "$key seems to be a hash, modification refused";
+        }
+        push @list, [ $key, $oldValue, $pairs{$key} ];
+    }
+    unless ( $self->yes ) {
+        print "Proposed changes:\n";
+        printf $format, 'Key', 'Old value', 'New value';
+        foreach (@list) {
+            printf $format, @$_;
+        }
+        print "Confirm (N/y)? ";
+        my $c = <STDIN>;
+        unless ( $c =~ /^y(?:es)?$/ ) {
+            die "Aborting";
+        }
+    }
+    require Clone;
+    my $new = Clone::clone( $self->mgr->currentConf );
+    foreach my $key ( keys %pairs ) {
+        $self->_setKey( $new, $key, $pairs{$key} );
+    }
+    require Lemonldap::NG::Manager::ConfParser;
+    my $parser = Lemonldap::NG::Manager::ConfParser->new(
+        {
+            newConf => $new,
+            refConf => $self->mgr->currentConf,
+            req     => $self->req
+        }
+    );
+    unless ( $parser->testNewConf() ) {
+        printf STDERR "Modifications rejected: %s:\n", $parser->{message};
+    }
+    my $s = $self->mgr->confAcc->saveConf( $new, { force => $self->force } );
+    if ( $s > 0 ) {
+        print STDERR "Saved under number $s\n";
+    }
+    else {
+        printf STDERR "Modifications rejected: %s:\n", $parser->{message};
+    }
+    foreach (qw(errors warnings)) {
+        printf STDERR "%-8s: %s", ucfirst($_), Dumper( $parser->{$_} )
+          if ( $parser->{$_} and @{ $parser->{$_} } );
+    }
+}
+
 sub lastCfg {
     my ($self) = @_;
     return $self->jsonResponse('/confs/latest')->{cfgNum};
+}
+
+sub _getKey {
+    my ( $self, $key ) = @_;
+    $self->cfgNum( $self->lastCfg ) unless ( $self->cfgNum );
+    my $sep = $self->sep;
+    my ( $base, @path ) = split $sep, $key;
+    unless ( $base =~ /^\w+$/ ) {
+        warn "Malformed key $base";
+        return ();
+    }
+    my $value = $self->mgr->getConfKey( $self->req, $base );
+    if ( $self->req->error ) {
+        die $self->req->error;
+    }
+    if ( ref $value eq 'HASH' ) {
+        while ( my $next = shift @path ) {
+            unless ( exists $value->{$next} ) {
+                warn "Unknown subkey $next for $key";
+                next L;
+            }
+            $value = $value->{$next};
+        }
+    }
+    elsif (@path) {
+        warn "No subkeys for $base";
+        return ();
+    }
+    return $value;
+}
+
+sub _setKey {
+    my ( $self, $conf, $key, $value ) = @_;
+    my $sep = $self->sep;
+    my (@path) = split $sep, $key;
+    my $last = pop @path;
+    while ( my $next = shift @path ) {
+        $conf = $conf->{$next};
+    }
+    $conf->{$last} = $value;
 }
 
 sub run {
     my $self = shift;
 
     # Options simply call corresponding accessor
-    while ($_[0] =~ s/^--?//) {
+    while ( $_[0] =~ s/^--?// ) {
         my $k = shift;
         my $v = shift;
         eval { $self->$k($v) };
-        if($@) {
+        if ($@) {
             die "Unknown option -$k or bad value ($@)";
         }
     }
@@ -82,7 +158,8 @@ sub run {
     }
     my $action = shift;
     unless ( $action =~ /^(?:get|set|addKey|delKey)$/ ) {
-        die "unknown action $action. Only get, set, addKey or delKey are accepted";
+        die
+"unknown action $action. Only get, set, addKey or delKey are accepted";
     }
     $self->$action(@_);
 }
@@ -158,6 +235,20 @@ _whatToTrace using ',', use:
 =head3 cfgNum()
 
 The configuration number. If not set, it will use the latest configuration.
+
+=head3 yes()
+
+If set to 1, no confirmation is asked to save new values:
+
+  llng-manager -yes 1 set portal http://somewhere/
+
+=head3 force()
+
+Set it to 1 to save a configuration earlier than latest
+
+=head3 format()
+
+Confirmation array line format. Default to "%-25s | %-25s | %-25s"
 
 =head2 run()
 
