@@ -144,6 +144,14 @@ sub _setKey {
 sub run {
     my $self = shift;
 
+    if ( $> == 0 ) {
+        print STDERR
+          "$0 must not be launched as root since local cache can be corrupted\n"
+          . "Continue (y/N)? ";
+        my $res = <STDIN>;
+        exit 1 unless ( $res =~ /^y/i );
+    }
+
     # Options simply call corresponding accessor
     while ( $_[0] =~ s/^--?// ) {
         my $k = shift;
