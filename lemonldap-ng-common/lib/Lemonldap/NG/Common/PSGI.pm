@@ -263,11 +263,13 @@ created object:
 
 =over
 
-=item Class->run($args): launch new($args), init(), then manage requests (using
-private _run() method
+=item Class->run($args):
 
-=item $object->run(): manage directly requests. Initialization must have be done
-earlier.
+launch new($args), init(), then manage requests (using private _run() method
+
+=item $object->run():
+
+manage directly requests. Initialization must have be done earlier.
 
 =back
 

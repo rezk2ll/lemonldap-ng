@@ -144,6 +144,8 @@ sub _setKey {
 sub run {
     my $self = shift;
 
+    print STDERR "VERY EXPERIMENTAL FEATURE, prefer web interface\n";
+
     if ( $> == 0 ) {
         print STDERR
           "$0 must not be launched as root since local cache can be corrupted\n"
@@ -192,8 +194,8 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Manager::Cli - Command line manager for Lemonldap::NG web SSO
-system.
+Lemonldap::NG::Manager::Cli - EXPERIMENTAL command line manager for
+Lemonldap::NG web SSO system.
 
 =head1 SYNOPSIS
 
@@ -217,8 +219,8 @@ or use llng-manager-cli provides with this package.
 Lemonldap::NG::Manager provides a web interface to manage Lemonldap::NG Web-SSO
 system.
 
-Lemonldap::NG Manager::Cli provides a command line client to read or modify
-configuration.
+Lemonldap::NG Manager::Cli provides an EXPERIMENTAL command line client to read
+or modify configuration.
 
 =head1 METHODS
 

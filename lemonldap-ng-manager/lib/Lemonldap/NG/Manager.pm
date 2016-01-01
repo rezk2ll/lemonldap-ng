@@ -109,13 +109,21 @@ Lemonldap::NG Manager contains 4 parts:
 
 =over
 
-=item Configuration management: see L<Lemonldap::NG::Manager::Conf>;
+=item Configuration management:
 
-=item Session explorer: see L<Lemonldap::NG::Manager::Sessions>;
+see L<Lemonldap::NG::Manager::Conf>;
 
-=item Notification explorer: see L<Lemonldap::NG::Manager::Notifications>;
+=item Session explorer:
 
-=item Some files uses to generate static files: see below.
+see L<Lemonldap::NG::Manager::Sessions>;
+
+=item Notification explorer:
+
+see L<Lemonldap::NG::Manager::Notifications>;
+
+=item Some files uses to generate static files:
+
+see below.
 
 =back
 
@@ -126,16 +134,21 @@ Lemonldap::NG::Manager::Build::Tree and Lemonldap::NG::Manager::Build::CTrees to
 
 =over
 
-=item `site/static/struct.json`: the main file that contains the tree view;
+=item `site/static/struct.json`:
 
-=item `site/static/js/conftree.js`: generates sub tree for virtualhosts and
-SAML and OpenID-Connect partners;
+the main file that contains the tree view;
 
-=item `Lemonldap::NG::Manager::Constants`: constants used by all Perl manager
-components;
+=item `site/static/js/conftree.js`:
 
-=item `Lemonldap::NG::Common::Conf::DefaultValues`: constants used to read
-configuration.
+generates sub tree for virtualhosts and SAML and OpenID-Connect partners;
+
+=item `Lemonldap::NG::Manager::Constants`:
+
+constants used by all Perl manager components;
+
+=item `Lemonldap::NG::Common::Conf::DefaultValues`:
+
+constants used to read configuration.
 
 =back
 

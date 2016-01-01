@@ -224,11 +224,17 @@ Declare a REST route. Arguments:
 
 =over
 
-=item $word: the first word of /path/info.
+=item $word:
 
-=item $dest: string, sub ref or hash ref (see "Route types" bellow)
+the first word of /path/info.
 
-=item $methods: array ref containing the methods concerned by this route.
+=item $dest:
+
+string, sub ref or hash ref (see "Route types" bellow)
+
+=item $methods:
+
+array ref containing the methods concerned by this route.
 
 =back
 
@@ -239,15 +245,25 @@ can be:
 
 =over
 
-=item a word: the name of the method to call
+=item a word:
 
-=item undef: $word is used as $dest
+the name of the method to call
 
-=item a ref to code: an anonymous subroutin to call
+=item undef:
 
-=item a hash ref: it's a recursive call to `{ $word => $dest }`
+$word is used as $dest
 
-=item an array ref: in this case each element of the array will be considered as
+=item a ref to code:
+
+an anonymous subroutin to call
+
+=item a hash ref:
+
+it's a recursive call to `{ $word => $dest }`
+
+=item an array ref:
+
+in this case each element of the array will be considered as
 `{ $element => $element }`. So each element must be a word that makes a
 correspondance between a path_info word and a subroutine
 
@@ -257,13 +273,19 @@ Some special $word:
 
 =over
 
-=item ':name': the word in path_info will be stored in GET parameters
+=item ':name':
 
-=item '*': the subroutine will be called with the word of path_info as second argument
+the word in path_info will be stored in GET parameters
+
+=item '*':
+
+the subroutine will be called with the word of path_info as second argument
 (after $req)
 
-=item 'something.html': if $word finishes with '.html', then sendHtml() will be called
-with 'something.tpl' as template name. In this case, $dest is not used.
+=item 'something.html':
+
+if $word finishes with '.html', then sendHtml() will be called with
+'something.tpl' as template name. In this case, $dest is not used.
 
 =back
 

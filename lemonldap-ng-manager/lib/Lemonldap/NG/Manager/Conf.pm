@@ -35,7 +35,9 @@ sub addRoutes {
       ->addRoute(
         confs => {
             ':cfgNum' => [
-                qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes authChoiceModules grantSessionRules)
+                qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
+                  applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
+                  authChoiceModules grantSessionRules)
             ]
         },
         ['GET']
@@ -692,7 +694,8 @@ sub newConf {
         { tree => $new, refConf => $self->currentConf, req => $req } );
     my $res = { result => $parser->check };
 
-# "message" fields: note that words enclosed by "__" (__word__) will be translated
+    # "message" fields: note that words enclosed by "__" (__word__) will be
+    # translated
     $res->{message} = $parser->{message};
     foreach my $t (qw(errors warnings changes)) {
         $res->{details}->{ '__' . $t . '__' } = $parser->$t
@@ -893,10 +896,14 @@ Lemonldap::NG::Manager configuration is managed by 2 files:
 
 =over
 
-=item This file to display configuration metadatas and keys content, and to
+=item This file
+
+to display configuration metadatas and keys content, and to
 save new configuration,
 
-=item L<Lemonldap::NG::Manager::ConfParser> used to check proposed configuration.
+=item L<Lemonldap::NG::Manager::ConfParser>
+
+used to check proposed configuration.
 
 =back
 
