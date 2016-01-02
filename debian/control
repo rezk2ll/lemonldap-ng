@@ -58,11 +58,11 @@ Provides: openid-connect-provider,
           openid-connect-relying-party,
           saml-identity-provider,
           saml-service-provider
-Description: OpenID, CAS and SAML compatible Web-SSO system
+Description: OpenID-Connect, CAS and SAML compatible Web-SSO system
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
- OpenID, CAS and SAML systems as identity or service provider. It can also be
- used as proxy between those federation systems.
+ OpenID-Connect, CAS and SAML systems as identity or service provider. It can
+ also be used as proxy between those federation systems.
  .
  It manages both authentication and authorization and provides headers for
  accounting. So you can have a full AAA protection. Authorization are built by
@@ -78,8 +78,8 @@ Depends: ${misc:Depends}
 Description: Lemonldap::NG Web-SSO system documentation
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
- OpenID, CAS and SAML systems as identity or service provider. It can also be
- used as proxy between those federation systems.
+ OpenID-Connect, CAS and SAML systems as identity or service provider. It can
+ also be used as proxy between those federation systems.
  .
  It manages both authentication and authorization and provides headers for
  accounting. So you can have a full AAA protection. Authorization are built by
@@ -96,8 +96,8 @@ Provides: lemonldap-ng-doc
 Description: French documentation of Lemonldap::NG Web-SSO system
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
- OpenID, CAS and SAML systems as identity or service provider. It can also be
- used as proxy between those federation systems.
+ OpenID-Connect, CAS and SAML systems as identity or service provider. It can
+ also be used as proxy between those federation systems.
  .
  It manages both authentication and authorization and provides headers for
  accounting. So you can have a full AAA protection. Authorization are built by
@@ -124,8 +124,8 @@ Suggests: libcache-memcached-perl,
 Description: Lemonldap::NG Apache handler part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
- OpenID, CAS and SAML systems as identity or service provider. It can also be
- used as proxy between those federation systems.
+ OpenID-Connect, CAS and SAML systems as identity or service provider. It can
+ also be used as proxy between those federation systems.
  .
  It manages both authentication and authorization and provides headers for
  accounting. So you can have a full AAA protection. Authorization are built by
@@ -172,8 +172,8 @@ Recommends: libapache-session-browseable-perl,
 Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
- OpenID, CAS and SAML systems as identity or service provider. It can also be
- used as proxy between those federation systems.
+ OpenID-Connect, CAS and SAML systems as identity or service provider. It can
+ also be used as proxy between those federation systems.
  .
  It manages both authentication and authorization and provides headers for
  accounting. So you can have a full AAA protection. Authorization are built by
@@ -208,8 +208,8 @@ Conflicts: liblemonldap-ng-cli-perl
 Description: Lemonldap::NG manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
- OpenID, CAS and SAML systems as identity or service provider. It can also be
- used as proxy between those federation systems.
+ OpenID-Connect, CAS and SAML systems as identity or service provider. It can
+ also be used as proxy between those federation systems.
  .
  It manages both authentication and authorization and provides headers for
  accounting. So you can have a full AAA protection. Authorization are built by
@@ -255,8 +255,8 @@ Pre-Depends: debconf
 Description: Lemonldap::NG authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
- OpenID, CAS and SAML systems as identity or service provider. It can also be
- used as proxy between those federation systems.
+ OpenID-Connect, CAS and SAML systems as identity or service provider. It can
+ also be used as proxy between those federation systems.
  .
  It manages both authentication and authorization and provides headers for
  accounting. So you can have a full AAA protection. Authorization are built by
