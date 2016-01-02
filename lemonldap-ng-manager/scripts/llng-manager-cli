@@ -4,6 +4,5 @@ use warnings;
 use strict;
 use Lemonldap::NG::Manager::Cli;
 
-my $cli = Lemonldap::NG::Manager::Cli->new();
+Lemonldap::NG::Manager::Cli->run(@ARGV);
 
-$cli->run(@ARGV);

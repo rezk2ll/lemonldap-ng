@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use 5.14.0;
 use Data::Dumper;
+use Lemonldap::NG::Manager::Constants;
 
 extends('Lemonldap::NG::Manager::Cli::Lib');
 
@@ -72,29 +73,52 @@ sub set {
     foreach my $key ( keys %pairs ) {
         $self->_setKey( $new, $key, $pairs{$key} );
     }
-    require Lemonldap::NG::Manager::ConfParser;
-    my $parser = Lemonldap::NG::Manager::ConfParser->new(
-        {
-            newConf => $new,
-            refConf => $self->mgr->currentConf,
-            req     => $self->req
+    return $self->_save($new);
+}
+
+sub addKey {
+    my $self = shift;
+    unless ( @_ % 3 == 0 ) {
+        die 'usage: "addKey (?:rootKey newKey newValue)+';
+    }
+    my @list;
+    while (@_) {
+        my $root   = shift;
+        my $newKey = shift;
+        my $value  = shift;
+        unless ( $root =~ /$simpleHashKeys$/o ) {
+            die "$root is not a simple hash. Aborting";
         }
-    );
-    unless ( $parser->testNewConf() ) {
-        printf STDERR "Modifications rejected: %s:\n", $parser->{message};
+        push @list, [ $root, $newKey, $value ];
     }
-    my $s = $self->mgr->confAcc->saveConf( $new, { force => $self->force } );
-    if ( $s > 0 ) {
-        print STDERR "Saved under number $s\n";
-        $parser->{status} = $self->mgr->applyConf($new);
+    require Clone;
+    my $new = Clone::clone( $self->mgr->currentConf );
+    foreach my $el (@list) {
+        $new->{ $el->[0] }->{ $el->[1] } = $el->[2];
     }
-    else {
-        printf STDERR "Modifications rejected: %s:\n", $parser->{message};
+    return $self->_save($new);
+}
+
+sub delKey {
+    my $self = shift;
+    unless ( @_ % 2 == 0 ) {
+        die 'usage: "delKey (?:rootKey key)+';
     }
-    foreach (qw(errors warnings status)) {
-        printf STDERR "%-8s: %s", ucfirst($_), Dumper( $parser->{$_} )
-          if ( $parser->{$_} and @{ $parser->{$_} } );
+    my @list;
+    while (@_) {
+        my $root = shift;
+        my $key  = shift;
+        unless ( $root =~ /$simpleHashKeys$/o ) {
+            die "$root is not a simple hash. Aborting";
+        }
+        push @list, [ $root, $key ];
     }
+    require Clone;
+    my $new = Clone::clone( $self->mgr->currentConf );
+    foreach my $el (@list) {
+        delete $new->{ $el->[0] }->{ $el->[1] };
+    }
+    return $self->_save($new);
 }
 
 sub lastCfg {
@@ -104,7 +128,6 @@ sub lastCfg {
 
 sub _getKey {
     my ( $self, $key ) = @_;
-    $self->cfgNum( $self->lastCfg ) unless ( $self->cfgNum );
     my $sep = $self->sep;
     my ( $base, @path ) = split $sep, $key;
     unless ( $base =~ /^\w+$/ ) {
@@ -142,23 +165,64 @@ sub _setKey {
     $conf->{$last} = $value;
 }
 
+sub _save {
+    my ( $self, $new ) = @_;
+    require Lemonldap::NG::Manager::ConfParser;
+    my $parser = Lemonldap::NG::Manager::ConfParser->new(
+        {
+            newConf => $new,
+            refConf => $self->mgr->currentConf,
+            req     => $self->req
+        }
+    );
+    unless ( $parser->testNewConf() ) {
+        printf STDERR "Modifications rejected: %s:\n", $parser->{message};
+    }
+    my $s = $self->mgr->confAcc->saveConf( $new, { force => $self->force } );
+    if ( $s > 0 ) {
+        print STDERR "Saved under number $s\n";
+        $parser->{status} = [ $self->mgr->applyConf($new) ];
+    }
+    else {
+        printf STDERR "Modifications rejected: %s:\n", $parser->{message};
+        print STDERR Dumper($parser);
+    }
+    foreach (qw(errors warnings status)) {
+        if ( $parser->{$_} and @{ $parser->{$_} } ) {
+            my $s = Dumper( $parser->{$_} );
+            $s =~ s/\$VAR1\s*=\s*//;
+            printf STDERR "%-8s: %s", ucfirst($_), $s;
+        }
+    }
+}
+
 sub run {
     my $self = shift;
 
     print STDERR "VERY EXPERIMENTAL FEATURE, prefer web interface\n";
 
     # Options simply call corresponding accessor
+    my $args;
     while ( $_[0] =~ s/^--?// ) {
         my $k = shift;
         my $v = shift;
-        eval { $self->$k($v) };
-        if ($@) {
-            die "Unknown option -$k or bad value ($@)";
+        if ( ref $self ) {
+            eval { $self->$k($v) };
+            if ($@) {
+                die "Unknown option -$k or bad value ($@)";
+            }
         }
+        else {
+            $args->{$k} = $v;
+        }
+    }
+    unless ( ref $self ) {
+        $self = $self->new($args);
     }
     unless (@_) {
         die 'nothing to do, aborting';
     }
+    $self->cfgNum( $self->lastCfg ) unless ( $self->cfgNum );
     my $action = shift;
     unless ( $action =~ /^(?:get|set|addKey|delKey)$/ ) {
         die
