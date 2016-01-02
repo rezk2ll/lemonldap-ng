@@ -72,7 +72,8 @@ sub new {
 
     # Find modules associated to authChoice
     my ( $auth, $userDB, $passwordDB ) =
-      split( /[;\|]/, $portal->{authChoiceModules}->{ $portal->{_authChoice} } );
+      split( /[;\|]/,
+        $portal->{authChoiceModules}->{ $portal->{_authChoice} } );
 
     if ( $auth and $userDB and $passwordDB ) {
 

@@ -1736,7 +1736,8 @@ sub controlExistingSession {
                 return $self->{error} if $self->{error} > 0;
 
                 # Collect logout services and build hidden iFrames
-                if ( $self->{logoutServices} and %{ $self->{logoutServices} } ) {
+                if ( $self->{logoutServices} and %{ $self->{logoutServices} } )
+                {
 
                     $self->lmLog(
                         "Create iFrames to forward logout to services",

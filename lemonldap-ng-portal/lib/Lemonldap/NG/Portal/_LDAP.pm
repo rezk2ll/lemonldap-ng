@@ -229,8 +229,7 @@ sub userBind {
 # @param $ad Active Directory mode
 # @return Lemonldap::NG::Portal constant
 sub userModifyPassword {
-    my ( $self, $dn, $newpassword, $confirmpassword, $oldpassword, $ad ) =
-      @_;
+    my ( $self, $dn, $newpassword, $confirmpassword, $oldpassword, $ad ) = @_;
     my $ppolicyControl     = $self->{portal}->{ldapPpolicyControl};
     my $setPassword        = $self->{portal}->{ldapSetPassword};
     my $asUser             = $self->{portal}->{ldapChangePasswordAsUser};

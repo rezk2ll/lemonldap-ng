@@ -398,8 +398,7 @@ sub loadSPs {
 # @param profile_type login or logout
 # @return ( $request, $response, $method, $relaystate, $artifact )
 sub checkMessage {
-    my ( $self, $url, $request_method, $content_type, $profile_type ) =
-      @_;
+    my ( $self, $url, $request_method, $content_type, $profile_type ) = @_;
     $profile_type ||= "login";
     my ( $request, $response, $message, $method, $relaystate, $artifact );
 
@@ -674,8 +673,7 @@ sub addAA {
 # @param ca_cert_chain optional ca cert chain
 # @return boolean result
 sub addProvider {
-    my ( $self, $server, $role, $metadata, $public_key, $ca_cert_chain ) =
-      @_;
+    my ( $self, $server, $role, $metadata, $public_key, $ca_cert_chain ) = @_;
 
     return 0
       unless ( $server->isa("Lasso::Server")
@@ -1275,8 +1273,7 @@ sub getAssertion {
 # @param force_utf8 optional flag to force value in UTF-8
 # @return attribute value
 sub getAttributeValue {
-    my ( $self, $name, $format, $friendly_name, $attributes, $force_utf8 ) =
-      @_;
+    my ( $self, $name, $format, $friendly_name, $attributes, $force_utf8 ) = @_;
     my $value;
 
     # Loop on attributes
@@ -2425,8 +2422,7 @@ sub sendLogoutResponseToServiceProvider {
 # @param $relayState Relay State for SLO status
 # @return int Number of concerned providers.
 sub sendLogoutRequestToProvider {
-    my ( $self, $logout, $providerID, $method, $relay, $relayState ) =
-      @_;
+    my ( $self, $logout, $providerID, $method, $relay, $relayState ) = @_;
     my $server = $self->{_lassoServer};
     my $info;
 
