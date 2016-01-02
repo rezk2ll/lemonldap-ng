@@ -70,7 +70,7 @@ sub addRoutes {
 #######################
 
 sub sessions {
-    my ( $self, $req, $session, $skey ) = splice @_;
+    my ( $self, $req, $session, $skey ) = @_;
 
     # Case 1: only one session is required
     if ($session) {
@@ -302,7 +302,7 @@ sub sessions {
 }
 
 sub delSession {
-    my ( $self, $req ) = splice @_;
+    my ( $self, $req ) = @_;
     return $self->sendJSONresponse( $req, { result => 1 } )
       if ( $self->{demoMode} );
     my $mod = $self->getMod($req)
@@ -318,7 +318,7 @@ sub delSession {
 }
 
 sub session {
-    my ( $self, $req, $id, $skey ) = splice @_;
+    my ( $self, $req, $id, $skey ) = @_;
     my ( %h, $res );
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
@@ -347,7 +347,7 @@ sub session {
 }
 
 sub getApacheSession {
-    my ( $self, $mod, $id ) = splice @_;
+    my ( $self, $mod, $id ) = @_;
     my $apacheSession = Lemonldap::NG::Common::Session->new(
         {
             storageModule        => $mod->{module},

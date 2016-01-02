@@ -48,7 +48,7 @@ use POSIX qw(strftime);
 #   - passwordDBFinish
 # @return 1 if all is OK
 sub process {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     # Process subroutines
     $self->{error} = PE_OK;
@@ -76,7 +76,7 @@ sub process {
 # Load SMTP methods
 # @return Lemonldap::NG::Portal constant
 sub smtpInit {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     eval { use base qw(Lemonldap::NG::Portal::_SMTP) };
 
@@ -92,7 +92,7 @@ sub smtpInit {
 # Get mail from form or from mail_token
 # @return Lemonldap::NG::Portal constant
 sub extractMailInfo {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     if ( $self->{captcha_mail_enabled} ) {
         eval { $self->initCaptcha(); };
@@ -192,7 +192,7 @@ sub extractMailInfo {
 # Search for user using UserDB module
 # @return Lemonldap::NG::Portal constant
 sub getMailUser {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     my $error = $self->getUser();
 
@@ -208,7 +208,7 @@ sub getMailUser {
 # Create mail session and store token
 # @return Lemonldap::NG::Portal constant
 sub storeMailSession {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     # Skip this step if confirmation was already sent
     return PE_OK
@@ -254,7 +254,7 @@ sub storeMailSession {
 # Send confirmation mail
 # @return Lemonldap::NG::Portal constant
 sub sendConfirmationMail {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     # Skip this step if user clicked on the confirmation link
     return PE_OK if $self->{mail_token};
@@ -349,7 +349,7 @@ sub sendConfirmationMail {
 # Change the password or generate a new password
 # @return Lemonldap::NG::Portal constant
 sub changePassword {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     # Check if user wants to generate the new password
     if ( $self->param('reset') ) {
@@ -408,7 +408,7 @@ sub changePassword {
 # Send mail containing the new password
 # @return Lemonldap::NG::Portal constant
 sub sendPasswordMail {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     # Get mail address
     unless ( $self->{mailAddress} ) {

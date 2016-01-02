@@ -82,28 +82,28 @@ sub build_jail {
 ## @method reval
 # Fake reval method if useSafeJail is off
 sub reval {
-    my ( $self, $e ) = splice @_;
+    my ( $self, $e ) = @_;
     return eval $e;
 }
 
 ## @method wrap_code_ref
 # Fake wrap_code_ref method if useSafeJail is off
 sub wrap_code_ref {
-    my ( $self, $e ) = splice @_;
+    my ( $self, $e ) = @_;
     return $e;
 }
 
 ## @method share
 # Fake share method if useSafeJail is off
 sub share {
-    my ( $self, @vars ) = splice @_;
+    my ( $self, @vars ) = @_;
     $self->share_from( scalar(caller), \@vars );
 }
 
 ## @method share_from
 # Fake share_from method if useSafeJail is off
 sub share_from {
-    my ( $self, $pkg, $vars ) = splice @_;
+    my ( $self, $pkg, $vars ) = @_;
 
     no strict 'refs';
     foreach my $arg (@$vars) {
@@ -126,7 +126,7 @@ sub share_from {
 # Build and return restricted eval command with SAFEWRAP, if activated
 # @return evaluation of $reval or $reval2
 sub jail_reval {
-    my ( $self, $reval ) = splice @_;
+    my ( $self, $reval ) = @_;
 
     # if nothing is returned by reval, add the return statement to
     # the "no safe wrap" reval

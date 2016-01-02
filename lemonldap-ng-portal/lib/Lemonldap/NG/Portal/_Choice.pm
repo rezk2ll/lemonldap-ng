@@ -16,7 +16,7 @@ our $VERSION = '1.4.0';
 # @param $portal Lemonldap::NG::Portal::Simple object
 # @return new Lemonldap::NG::Portal::_Choice object
 sub new {
-    my ( $class, $portal ) = splice @_;
+    my ( $class, $portal ) = @_;
 
     # Create object with portal parameter
     my $self = bless { p => $portal }, $class;
@@ -114,7 +114,7 @@ sub new {
 # @param type 0 for authentication, 1 for userDB, 2 for passworDB
 # @return Lemonldap::NG::Portal error code returned by method $sub
 sub try {
-    my ( $self, $sub, $type ) = splice @_;
+    my ( $self, $sub, $type ) = @_;
 
     # Default behavior in no choice
     unless ( defined $self->{modules} ) {

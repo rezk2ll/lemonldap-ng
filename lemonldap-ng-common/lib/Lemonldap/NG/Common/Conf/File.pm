@@ -8,12 +8,12 @@ our $VERSION = '1.4.0';
 our $initDone;
 
 sub Lemonldap::NG::Common::Conf::_lock {
-    my ( $self, $cfgNum ) = splice @_;
+    my ( $self, $cfgNum ) = @_;
     return "$self->{dirName}/lmConf.lock";
 }
 
 sub Lemonldap::NG::Common::Conf::_file {
-    my ( $self, $cfgNum ) = splice @_;
+    my ( $self, $cfgNum ) = @_;
     return "$self->{dirName}/lmConf-$cfgNum.js";
 }
 

@@ -35,7 +35,7 @@ sub globalInit {
 # Overload defaultValuesInit
 # @param $args reference to the configuration hash
 sub defaultValuesInit {
-    my ( $class, $args ) = splice @_;
+    my ( $class, $args ) = @_;
 
     # Sympa secret should be in configuration
     $sympaSecret = $args->{'sympaSecret'} || $sympaSecret;

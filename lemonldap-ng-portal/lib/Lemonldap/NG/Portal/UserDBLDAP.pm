@@ -191,7 +191,7 @@ sub setGroups {
 # @param value Value to store
 # @return result
 sub setUserDBValue {
-    my ( $self, $key, $value ) = splice @_;
+    my ( $self, $key, $value ) = @_;
 
     # Mandatory attributes
     return 0 unless defined $key;

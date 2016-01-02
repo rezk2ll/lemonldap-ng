@@ -24,7 +24,7 @@ extends 'Lemonldap::NG::Handler::PSGI', 'Lemonldap::NG::Manager::Lib';
 # @param $args hashref to merge with object
 # @return 0 in case of error, 1 else
 sub init {
-    my ( $self, $args ) = splice @_;
+    my ( $self, $args ) = @_;
     $args ||= {};
 
     foreach my $k ( keys %$args ) {

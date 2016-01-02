@@ -111,7 +111,7 @@ sub initializeFromXML {
 # SAML 2 description.
 # @return string
 sub serviceToXML {
-    my ( $self, $file, $conf ) = splice @_;
+    my ( $self, $file, $conf ) = @_;
 
     my $template = HTML::Template->new(
         filename          => "$file",
@@ -375,7 +375,7 @@ sub _toStruct {
 # @param @files Array of filenames
 # @return array of Metadata objects
 sub load {
-    my @files     = splice @_;
+    my @files     = @_;
     my @metadatas = ();
     foreach (@files) {
         my $metadata = new Lemonldap::NG::Common::Conf::SAML::Metadata();
@@ -408,7 +408,7 @@ sub _loadFile {
 # @param conf Configuration hash ref
 # @return value
 sub getValue {
-    my ( $self, $key, $conf ) = splice @_;
+    my ( $self, $key, $conf ) = @_;
 
     # Get portal value
     my $portal = $conf->{portal} || "http://auth.example.com/";

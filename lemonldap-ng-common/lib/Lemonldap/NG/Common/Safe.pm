@@ -19,7 +19,7 @@ our $self;    # Safe cannot share a variable declared with my
 # @param portal Lemonldap::NG::Portal::Simple object
 # @return Lemonldap::NG::Common::Safe object
 sub new {
-    my ( $class, $portal ) = splice @_;
+    my ( $class, $portal ) = @_;
     my $self = {};
 
     unless ( $portal->{useSafeJail} ) {
@@ -47,7 +47,7 @@ sub new {
 # @param e Expression to evaluate
 sub reval {
     local $self = shift;
-    my ($e) = splice @_;
+    my ($e) = @_;
     my $result;
 
     # Replace $date
@@ -100,7 +100,7 @@ sub reval {
 # @param vars Varibales
 sub share_from {
     local $self = shift;
-    my ( $pkg, $vars ) = splice(@_);
+    my ( $pkg, $vars ) = (@_);
 
     # If Safe jail, call parent
     if ( $self->{p}->{useSafeJail} ) {

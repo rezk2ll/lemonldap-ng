@@ -52,7 +52,7 @@ sub user {
 # @param $group name of the Lemonldap::NG group to test
 # @return boolean : true if user is in this group
 sub group {
-    my ( $self, $group ) = splice @_;
+    my ( $self, $group ) = @_;
     return ( $datas->{groups} =~ /\b$group\b/ );
 }
 

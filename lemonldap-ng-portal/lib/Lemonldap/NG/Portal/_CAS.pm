@@ -18,7 +18,7 @@ our $VERSION = '1.9.0';
 # @param id session reference
 # @return CAS session object
 sub getCasSession {
-    my ( $self, $id ) = splice @_;
+    my ( $self, $id ) = @_;
 
     my $casSession = Lemonldap::NG::Common::Session->new(
         {
@@ -49,7 +49,7 @@ sub getCasSession {
 # Return an error for CAS VALIDATE request
 # @return nothing
 sub returnCasValidateError {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     $self->lmLog( "Return CAS validate error", 'debug' );
 
@@ -64,7 +64,7 @@ sub returnCasValidateError {
 # @param username User name
 # @return nothing
 sub returnCasValidateSuccess {
-    my ( $self, $username ) = splice @_;
+    my ( $self, $username ) = @_;
 
     $self->lmLog( "Return CAS validate success with username $username",
         'debug' );
@@ -81,7 +81,7 @@ sub returnCasValidateSuccess {
 # @param text Error text
 # @return nothing
 sub returnCasServiceValidateError {
-    my ( $self, $code, $text ) = splice @_;
+    my ( $self, $code, $text ) = @_;
 
     $code ||= 'INTERNAL_ERROR';
     $text ||= 'No description provided';
@@ -106,7 +106,7 @@ sub returnCasServiceValidateError {
 # @param attributes Attributes to return
 # @return nothing
 sub returnCasServiceValidateSuccess {
-    my ( $self, $username, $pgtIou, $proxies, $attributes ) = splice @_;
+    my ( $self, $username, $pgtIou, $proxies, $attributes ) = @_;
 
     $self->lmLog( "Return CAS service validate success with username $username",
         'debug' );
@@ -155,7 +155,7 @@ sub returnCasServiceValidateSuccess {
 # @param text Error text
 # @return nothing
 sub returnCasProxyError {
-    my ( $self, $code, $text ) = splice @_;
+    my ( $self, $code, $text ) = @_;
 
     $code ||= 'INTERNAL_ERROR';
     $text ||= 'No description provided';
@@ -177,7 +177,7 @@ sub returnCasProxyError {
 # @param ticket Proxy ticket
 # @return nothing
 sub returnCasProxySuccess {
-    my ( $self, $ticket ) = splice @_;
+    my ( $self, $ticket ) = @_;
 
     $self->lmLog( "Return CAS proxy success with ticket $ticket", 'debug' );
 
@@ -195,7 +195,7 @@ sub returnCasProxySuccess {
 # @param session_id Primary session ID
 # @return result
 sub deleteCasSecondarySessions {
-    my ( $self, $session_id ) = splice @_;
+    my ( $self, $session_id ) = @_;
     my $result = 1;
 
     # Find CAS sessions
@@ -233,7 +233,7 @@ sub deleteCasSecondarySessions {
 # @param session object
 # @return result
 sub deleteCasSession {
-    my ( $self, $session ) = splice @_;
+    my ( $self, $session ) = @_;
 
     # Check session object
     unless ( $session && $session->data ) {
@@ -262,7 +262,7 @@ sub deleteCasSession {
 # @param pgtId Proxy granting ticket
 # @return result
 sub callPgtUrl {
-    my ( $self, $pgtUrl, $pgtIou, $pgtId ) = splice @_;
+    my ( $self, $pgtUrl, $pgtIou, $pgtId ) = @_;
 
     # Build URL
     my $url = $pgtUrl;

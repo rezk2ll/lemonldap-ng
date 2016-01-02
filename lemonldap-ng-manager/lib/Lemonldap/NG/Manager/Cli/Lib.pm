@@ -22,7 +22,7 @@ has app => (
 );
 
 sub _get {
-    my ( $self, $path, $query ) = splice @_;
+    my ( $self, $path, $query ) = @_;
     $query //= '';
     return $self->app->(
         {
@@ -47,7 +47,7 @@ sub _get {
 }
 
 sub _post {
-    my ( $self, $path, $query, $body, $type, $len ) = splice @_;
+    my ( $self, $path, $query, $body, $type, $len ) = @_;
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
     return $self->app->(
@@ -77,7 +77,7 @@ sub _post {
 }
 
 sub _put {
-    my ( $self, $path, $query, $body, $type, $len ) = splice @_;
+    my ( $self, $path, $query, $body, $type, $len ) = @_;
     die "$body must be a IO::Handle"
       unless ( ref($body) and $body->can('read') );
     return $self->app->(
@@ -107,7 +107,7 @@ sub _put {
 }
 
 sub _del {
-    my ( $self, $path, $query ) = splice @_;
+    my ( $self, $path, $query ) = @_;
     return $self->app->(
         {
             'HTTP_ACCEPT'          => 'application/json, text/plain, */*',
@@ -131,7 +131,7 @@ sub _del {
 }
 
 sub jsonResponse {
-    my ( $self, $path, $query ) = splice @_;
+    my ( $self, $path, $query ) = @_;
     my $res = $self->_get( $path, $query )
       or die "Manager lib has refused my get, aborting";
     die "Manager lib does not return a 200 code, aborting"
@@ -141,7 +141,7 @@ sub jsonResponse {
 }
 
 sub jsonPostResponse {
-    my ( $self, $path, $query, $body, $type, $len ) = splice @_;
+    my ( $self, $path, $query, $body, $type, $len ) = @_;
     my $res = $self->_post( $path, $query, $body, $type, $len )
       or die "Manager lib has refused my post, aborting";
     die "Manager lib does not return a 200 code, aborting"
@@ -151,7 +151,7 @@ sub jsonPostResponse {
 }
 
 sub jsonPutResponse {
-    my ( $self, $path, $query, $body, $type, $len ) = splice @_;
+    my ( $self, $path, $query, $body, $type, $len ) = @_;
     my $res = $self->_put( $path, $query, $body, $type, $len )
       or die "Manager lib has refused my put, aborting";
     die "Manager lib does not return a 200 code, aborting"

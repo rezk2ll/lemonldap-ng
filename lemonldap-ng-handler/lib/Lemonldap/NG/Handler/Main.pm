@@ -122,7 +122,7 @@ sub hideCookie {
 # Encode URl in the format used by Lemonldap::NG::Portal for redirections.
 # @return Base64 encoded string
 sub encodeUrl {
-    my ( $class, $url ) = splice @_;
+    my ( $class, $url ) = @_;
     $url = $class->_buildUrl($url) if ( $url !~ m#^https?://# );
     return encode_base64( $url, '' );
 }
@@ -133,7 +133,7 @@ sub encodeUrl {
 # @param $arg optionnal GET parameters
 # @return Apache2::Const::REDIRECT
 sub goToPortal {
-    my ( $class, $url, $arg ) = splice @_;
+    my ( $class, $url, $arg ) = @_;
     Lemonldap::NG::Handler::Main::Logger->lmLog(
         "Redirect "
           . Lemonldap::NG::Handler::API->remote_ip
@@ -464,7 +464,7 @@ sub grant {
 # @param $s path
 # @return URL
 sub _buildUrl {
-    my ( $class, $s ) = splice @_;
+    my ( $class, $s ) = @_;
     my $vhost = Lemonldap::NG::Handler::API->hostname;
     my $portString =
          $tsv->{port}->{$vhost}

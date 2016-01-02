@@ -10,7 +10,7 @@ our $VERSION = '1.9.0';
 has protection => ( is => 'rw', isa => 'Str' );
 
 around init => sub {
-    my ( $method, $self, $args ) = splice @_;
+    my ( $method, $self, $args ) = @_;
     Lemonldap::NG::Handler::SharedConf->init($self);
     Lemonldap::NG::Handler::SharedConf->checkConf($self);
     return $self->$method($args);
@@ -94,14 +94,14 @@ sub _run {
 ## @method hashRef user()
 # @return hash of user datas
 sub user {
-    my ( $self, $req ) = splice @_;
+    my ( $self, $req ) = @_;
     return $req->userData || { _whatToTrace => 'anonymous' };
 }
 
 ## @method string userId()
 # @return user identifier to log
 sub userId {
-    my ( $self, $req ) = splice @_;
+    my ( $self, $req ) = @_;
     return $req->userData->{_whatToTrace} || 'anonymous';
 }
 
@@ -109,7 +109,7 @@ sub userId {
 # @param $group name of the Lemonldap::NG group to test
 # @return boolean : true if user is in this group
 sub group {
-    my ( $self, $req, $group ) = splice @_;
+    my ( $self, $req, $group ) = @_;
     return () unless ( $req->userData->{groups} );
     return ( $req->userData->{groups} =~ /\b$group\b/ );
 }
@@ -120,7 +120,7 @@ sub group {
 # @param $err String to push
 # @code int HTTP error code (default to 500)
 sub sendError {
-    my ( $self, $req, $err, $code ) = splice @_;
+    my ( $self, $req, $err, $code ) = @_;
     $err ||= $req->error;
     $err = '[' . $self->userId($req) . "] $err";
     return $self->SUPER::sendError( $req, $err, $code );
@@ -143,7 +143,7 @@ Lemonldap::NG.
   use base Lemonldap::NG::Handler;
   
   sub init {
-    my ($self,$args) = splice @_;
+    my ($self,$args) = @_;
     $self->protection('manager');
     # See Lemonldap::NG::Common::PSGI for more
     
@@ -160,7 +160,7 @@ Lemonldap::NG.
   }
   
   sub booksMethod {
-    my ( $self, $req, @otherPathInfo ) = splice @_;
+    my ( $self, $req, @otherPathInfo ) = @_;
 
     # Will be called only if authorisated
     my $userId = $self->userId;

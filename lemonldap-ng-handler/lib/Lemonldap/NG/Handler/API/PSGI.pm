@@ -39,7 +39,7 @@ sub newRequest {
 # sets remote_user
 # @param user string username
 sub set_user {
-    my ( $class, $user ) = splice @_;
+    my ( $class, $user ) = @_;
 
     # TODO
 }

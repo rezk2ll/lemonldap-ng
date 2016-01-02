@@ -300,7 +300,7 @@ sub timeUp {
 # @param $cat Category to display
 # @param $max Number of lines to display
 sub topByCat {
-    my ( $cat, $max ) = splice @_;
+    my ( $cat, $max ) = @_;
     my $i = 0;
     print "<pre>\n";
     foreach (

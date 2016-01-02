@@ -252,7 +252,7 @@ $managerAttr}
 }
 
 sub mydump {
-    my ($obj, $subname) = splice @_;
+    my ($obj, $subname) = @_;
     my $t = Dumper($obj);
     $t =~ s/^\s*(?:use strict;|package .*?;|)\n//gm;
     $t =~ s/^\$VAR1\s*=/sub $subname {\n    return/;
@@ -260,7 +260,7 @@ sub mydump {
 }
 
 sub scanTree {
-    my ( $self, $tree, $json, $prefix, $path ) = splice @_;
+    my ( $self, $tree, $json, $prefix, $path ) = @_;
     unless ( ref($tree) eq 'ARRAY' ) {
         die 'Not an array';
     }

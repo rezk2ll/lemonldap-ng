@@ -46,7 +46,7 @@ sub setServerSignature {
     my ( $class, $sign ) = @_;
     Apache2::ServerUtil->server->push_handlers(
         PerlPostConfigHandler => sub {
-            my ( $c, $l, $t, $s ) = splice @_;
+            my ( $c, $l, $t, $s ) = @_;
             $s->add_version_component($sign);
         }
     );

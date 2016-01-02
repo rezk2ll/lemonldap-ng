@@ -75,7 +75,7 @@ _RETURN $getCookiesResponse Response
 #@param sessionid optional session identifier
 #@return session => { error => code , cookies => { cookieName1 => value ,... } }
 sub getCookies {
-    my ( $self, $user, $password, $sessionid ) = splice @_;
+    my ( $self, $user, $password, $sessionid ) = @_;
     $self->lmLog( "SOAP authentication request for $user", 'debug' );
 
     $self->{user}     = $user;
@@ -137,7 +137,7 @@ _RETURN $getAttributesResponse Response
 # @param $id Cookie value
 # @return SOAP::Data sequence
 sub getAttributes {
-    my ( $self, $id ) = splice @_;
+    my ( $self, $id ) = @_;
     die 'id is required' unless ($id);
 
     my $session = $self->getApacheSession( $id, 1 );
@@ -168,7 +168,7 @@ sub getAttributes {
 # @param $args datas to store
 # @return true if succeed
 sub setAttributes {
-    my ( $self, $id, $args ) = splice @_;
+    my ( $self, $id, $args ) = @_;
     die 'id is required' unless ($id);
 
     my $session = $self->getApacheSession($id);
@@ -213,7 +213,7 @@ sub lastCfg {
 # Store a new session.
 # @return Session datas
 sub newSession {
-    my ( $self, $args ) = splice @_;
+    my ( $self, $args ) = @_;
 
     my $session = $self->getApacheSession();
 
@@ -241,7 +241,7 @@ sub newSession {
 ## @method SOAP::Data deleteSession()
 # Deletes an existing session
 sub deleteSession {
-    my ( $self, $id ) = splice @_;
+    my ( $self, $id ) = @_;
     die('id parameter is required') unless ($id);
 
     my $session = $self->getApacheSession($id);
@@ -317,7 +317,7 @@ _RETURN $getMenuApplicationsResponse Response
 # @param $id Id of the session
 #@return SOAP::Data
 sub getMenuApplications {
-    my ( $self, $id ) = splice @_;
+    my ( $self, $id ) = @_;
     die 'id is required' unless ($id);
 
     $self->lmLog( "SOAP getMenuApplications request for id $id", 'debug' );

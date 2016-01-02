@@ -16,7 +16,7 @@ use utf8;
 # @param $lang Array ref for 2-letters languages (e.g. ['es', 'fr'])
 # @return Message string in the first matching language
 sub msg {
-    my ( $msg, $lang ) = splice @_;
+    my ( $msg, $lang ) = @_;
     foreach ( @{$lang} ) {
         if ( __PACKAGE__->can("msg_$_") ) {
             return &{"msg_$_"}->[$msg];
@@ -30,7 +30,7 @@ sub msg {
 # @param $lang Array ref for 2-letters languages (e.g. ['es', 'fr'])
 # @return Error string in the first matching language
 sub error {
-    my ( $error, $lang ) = splice @_;
+    my ( $error, $lang ) = @_;
     $error = 0 if ( $error < 0 );
     foreach ( @{$lang} ) {
         if ( __PACKAGE__->can("error_$_") ) {

@@ -75,7 +75,7 @@ has QUERY_STRING => (
 );
 
 sub params {
-    my ( $self, $key, $value ) = splice @_;
+    my ( $self, $key, $value ) = @_;
     return $self->_params unless ($key);
     $self->_params->{$key} = $value if ($value);
     return $self->_params->{$key};
@@ -158,7 +158,7 @@ PSGIs
   ...
   
   sub router {
-    my ( $self, $req ) = splice @_;
+    my ( $self, $req ) = @_;
     # Do something and return a PSGI response
     # NB: $req is a Lemonldap::NG::Common::PSGI::Request object
     if ( $req->accept eq 'text/plain' ) { ... }

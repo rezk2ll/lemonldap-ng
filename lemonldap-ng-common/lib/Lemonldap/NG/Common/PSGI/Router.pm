@@ -19,7 +19,7 @@ has 'defaultRoute' => ( is => 'rw', default => 'index.html' );
 # Routes initialization
 
 sub addRoute {
-    my ( $self, $word, $dest, $methods ) = splice(@_);
+    my ( $self, $word, $dest, $methods ) = (@_);
     $methods ||= [qw(GET POST PUT DELETE)];
     foreach my $method (@$methods) {
         $self->genRoute( $self->routes->{$method}, $word, $dest );
@@ -28,7 +28,7 @@ sub addRoute {
 }
 
 sub genRoute {
-    my ( $self, $routes, $word, $dest ) = splice @_;
+    my ( $self, $routes, $word, $dest ) = @_;
     if ( ref $word eq 'ARRAY' ) {
         foreach my $w (@$word) {
             $self->genRoute( $routes, $w, $dest );
@@ -78,11 +78,11 @@ sub genRoute {
 }
 
 sub routerAbort {
-    my ( $self, $path, $msg ) = splice @_;
+    my ( $self, $path, $msg ) = @_;
     delete $self->routes->{$path};
     $self->addRoute(
         $path => sub {
-            my ( $self, $req ) = splice @_;
+            my ( $self, $req ) = @_;
             return $self->sendError( $req, $msg, 500 );
         }
     );
@@ -91,7 +91,7 @@ sub routerAbort {
 # Methods that dispatch requests
 
 sub router {
-    my ( $self, $req ) = splice @_;
+    my ( $self, $req ) = @_;
 
     #print STDERR Dumper($self->routes);use Data::Dumper;
 
@@ -124,7 +124,7 @@ sub router {
 }
 
 sub followPath {
-    my ( $self, $req, $routes, $path ) = splice @_;
+    my ( $self, $req, $routes, $path ) = @_;
     if ( $path->[0] and defined $routes->{ $path->[0] } ) {
         my $w = shift @$path;
         if ( ref( $routes->{$w} ) eq 'CODE' ) {
@@ -165,7 +165,7 @@ Lemonldap::NG::Common::PSGI::Router - Base library for REST APIs of Lemonldap::N
   use base Lemonldap::NG::Common::PSGI::Router;
   
   sub init {
-    my ($self,$args) = splice @_;
+    my ($self,$args) = @_;
     # Will be called 1 time during startup
     
     # Declare REST routes (could be HTML templates or methods)
@@ -184,7 +184,7 @@ Lemonldap::NG::Common::PSGI::Router - Base library for REST APIs of Lemonldap::N
   }
   
   sub booksMethod {
-    my ( $self, $req, @otherPathInfo ) = splice @_;
+    my ( $self, $req, @otherPathInfo ) = @_;
     my $book = $req->params('book');
     my $method = $req->method;
     ...
@@ -192,7 +192,7 @@ Lemonldap::NG::Common::PSGI::Router - Base library for REST APIs of Lemonldap::N
   }
   
   sub propertiesMethod {
-    my ( $self, $property, @otherPathInfo ) = splice @_;
+    my ( $self, $property, @otherPathInfo ) = @_;
     my $method = $req->method;
     ...
     $self->sendJSONresponse(...);

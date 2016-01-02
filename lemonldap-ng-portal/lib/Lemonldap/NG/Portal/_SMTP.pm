@@ -33,7 +33,7 @@ sub gen_password {
 # @param html optional set content type to HTML
 # @return boolean result
 sub send_mail {
-    my ( $self, $mail, $subject, $body, $html ) = splice @_;
+    my ( $self, $mail, $subject, $body, $html ) = @_;
 
     # Set charset
     my $charset = $self->{mailCharset} ? $self->{mailCharset} : "utf-8";
@@ -132,7 +132,7 @@ sub send_mail {
 # @param user the value of the user key in session
 # @return the first session id found or nothing if no session
 sub getMailSession {
-    my ( $self, $user ) = splice @_;
+    my ( $self, $user ) = @_;
 
     my $moduleOptions = $self->{globalStorageOptions} || {};
     $moduleOptions->{backend} = $self->{globalStorage};
@@ -157,7 +157,7 @@ sub getMailSession {
 # @param mail the value of the mail key in session
 # @return the first session id found or nothing if no session
 sub getRegisterSession {
-    my ( $self, $mail ) = splice @_;
+    my ( $self, $mail ) = @_;
 
     my $moduleOptions = $self->{globalStorageOptions} || {};
     $moduleOptions->{backend} = $self->{globalStorage};

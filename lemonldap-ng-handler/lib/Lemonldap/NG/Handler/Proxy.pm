@@ -60,7 +60,7 @@ $UA->requests_redirectable( [] );
 # Called for Apache response (PerlResponseHandler).
 # @return Apache constant
 sub run($$) {
-    ( $class, $r ) = splice @_;
+    ( $class, $r ) = @_;
     my $url = Lemonldap::NG::Handler::API->uri_with_args($r);
 
     # Uncomment this if you have lost of session problem with SAP.

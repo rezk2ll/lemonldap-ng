@@ -36,7 +36,7 @@ sub globalInit {
 # Overload defaultValuesInit
 # @param $args reference to the configuration hash
 sub defaultValuesInit {
-    my ( $class, $args ) = splice @_;
+    my ( $class, $args ) = @_;
 
     # Catch Zimbra parameters
     $zimbraPreAuthKey = $args->{'zimbraPreAuthKey'} || $zimbraPreAuthKey;
@@ -118,7 +118,7 @@ sub run {
 # @param by Account type
 # @return Zimbra PreAuth URL
 sub _buildZimbraPreAuthUrl {
-    my ( $class, $key, $url, $account, $by ) = splice @_;
+    my ( $class, $key, $url, $account, $by ) = @_;
 
     # Expiration time is calculated with _utime and timeout
     my $expires = $timeout ? ( $datas->{_utime} + $timeout ) * 1000 : $timeout;

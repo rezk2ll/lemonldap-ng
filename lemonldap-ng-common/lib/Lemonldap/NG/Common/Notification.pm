@@ -23,7 +23,7 @@ our ( $msg, $parser );
 # @param $storage same syntax as Lemonldap::NG::Common::Conf object
 # @return Lemonldap::NG::Common::Notification object
 sub new {
-    my ( $class, $storage ) = splice @_;
+    my ( $class, $storage ) = @_;
     my $self = bless {}, $class;
     (%$self) = (%$storage);
     unless ( $self->{p} ) {
@@ -54,7 +54,7 @@ sub new {
 # @param $mess Text to log
 # @param $level Level (debug|info|notice|error)
 sub lmLog {
-    my ( $self, $mess, $level ) = splice @_;
+    my ( $self, $mess, $level ) = @_;
     $self->{p}->lmLog( "[Notification] $mess", $level );
 }
 
@@ -64,7 +64,7 @@ sub lmLog {
 # @param $portal Lemonldap::NG::Portal object that call
 # @return HTML fragment containing form content
 sub getNotification {
-    my ( $self, $portal ) = splice @_;
+    my ( $self, $portal ) = @_;
     my ( @files, $form );
 
     # Get user datas,
@@ -196,7 +196,7 @@ sub getNotification {
 # @param $portal Lemonldap::NG::Portal object that call
 # @return true if all checkboxes have been checked
 sub checkNotification {
-    my ( $self, $portal ) = splice @_, 0, 2;
+    my ( $self, $portal ) = @_, 0, 2;
     my ( $refs, $checks );
 
     # First, rebuild environment (cookies,...)
@@ -340,7 +340,7 @@ sub checkNotification {
 # @param $xml XML string containing notification
 # @return number of notifications done
 sub newNotification {
-    my ( $self, $xml ) = splice @_;
+    my ( $self, $xml ) = @_;
     eval { $xml = $parser->parse_string($xml); };
     if ($@) {
         $self->lmLog( "Unable to read XML file : $@", 'error' );
@@ -394,7 +394,7 @@ sub newNotification {
 ## @param $myref notification's reference
 ## @return number of deleted notifications
 sub deleteNotification {
-    my ( $self, $uid, $myref ) = splice @_;
+    my ( $self, $uid, $myref ) = @_;
     my @data;
 
     # Check input parameters

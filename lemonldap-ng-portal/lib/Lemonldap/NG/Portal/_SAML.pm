@@ -122,7 +122,7 @@ sub loadLasso {
 # @param no_cache Disable cache use
 # @return boolean result
 sub loadService {
-    my ( $self, $no_cache ) = splice @_;
+    my ( $self, $no_cache ) = @_;
 
     # Load Lasso
     return 0 unless $self->loadLasso();
@@ -200,7 +200,7 @@ sub loadService {
 # @param no_cache Disable cache use
 # @return boolean result
 sub loadIDPs {
-    my ( $self, $no_cache ) = splice @_;
+    my ( $self, $no_cache ) = @_;
 
     # Check if SAML service is loaded
     return 0 unless $self->{_lassoServer};
@@ -298,7 +298,7 @@ sub loadIDPs {
 # @param no_cache Disable cache use
 # @return boolean result
 sub loadSPs {
-    my ( $self, $no_cache ) = splice @_;
+    my ( $self, $no_cache ) = @_;
 
     # Check if SAML service is loaded
     return 0 unless $self->{_lassoServer};
@@ -399,7 +399,7 @@ sub loadSPs {
 # @return ( $request, $response, $method, $relaystate, $artifact )
 sub checkMessage {
     my ( $self, $url, $request_method, $content_type, $profile_type ) =
-      splice @_;
+      @_;
     $profile_type ||= "login";
     my ( $request, $response, $message, $method, $relaystate, $artifact );
 
@@ -561,7 +561,7 @@ sub checkMessage {
 # @param level optional log level (debug by default)
 # @return 1 if no error
 sub checkLassoError {
-    my ( $self, $error, $level ) = splice @_;
+    my ( $self, $error, $level ) = @_;
     $level ||= 'debug';
 
     # If $error is not a Lasso::Error object, display error string
@@ -594,7 +594,7 @@ sub checkLassoError {
 sub createServer {
     my ( $self, $metadata, $private_key, $private_key_password,
         $private_key_enc, $private_key_enc_password, $certificate )
-      = splice @_;
+      = @_;
     my $server;
 
     eval {
@@ -624,7 +624,7 @@ sub createServer {
 # @param ca_cert_chain optional ca cert chain
 # @return boolean result
 sub addIDP {
-    my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = splice @_;
+    my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = @_;
 
     return 0 unless ( $server->isa("Lasso::Server") and defined $metadata );
 
@@ -640,7 +640,7 @@ sub addIDP {
 # @param ca_cert_chain optional ca cert chain
 # @return boolean result
 sub addSP {
-    my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = splice @_;
+    my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = @_;
 
     return 0 unless ( $server->isa("Lasso::Server") and defined $metadata );
 
@@ -656,7 +656,7 @@ sub addSP {
 # @param ca_cert_chain optional ca cert chain
 # @return boolean result
 sub addAA {
-    my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = splice @_;
+    my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = @_;
 
     return 0 unless ( $server->isa("Lasso::Server") and defined $metadata );
 
@@ -675,7 +675,7 @@ sub addAA {
 # @return boolean result
 sub addProvider {
     my ( $self, $server, $role, $metadata, $public_key, $ca_cert_chain ) =
-      splice @_;
+      @_;
 
     return 0
       unless ( $server->isa("Lasso::Server")
@@ -697,7 +697,7 @@ sub addProvider {
 #@param idp entity ID
 #@return string organization name
 sub getOrganizationName {
-    my ( $self, $server, $idp ) = splice @_;
+    my ( $self, $server, $idp ) = @_;
     my ( $provider, $node );
 
     # Get provider from server
@@ -774,7 +774,7 @@ sub createAuthnRequest {
         $method,       $forceAuthn,        $isPassive,
         $nameIDFormat, $allowProxiedAuthn, $signSSOMessage,
         $requestedAuthnContext
-    ) = splice @_;
+    ) = @_;
     my $proxyCount;
     my $proxyRequestedAuthnContext;
 
@@ -947,7 +947,7 @@ sub createAuthnRequest {
 # @param dump optional XML dump
 # @return Lasso::Login object
 sub createLogin {
-    my ( $self, $server, $dump ) = splice @_;
+    my ( $self, $server, $dump ) = @_;
     my $login;
 
     if ($dump) {
@@ -972,7 +972,7 @@ sub createLogin {
 # @param method HTTP method
 # @return boolean result
 sub initAuthnRequest {
-    my ( $self, $login, $idp, $method ) = splice @_;
+    my ( $self, $login, $idp, $method ) = @_;
 
     eval { Lasso::Login::init_authn_request( $login, $idp, $method ); };
 
@@ -985,7 +985,7 @@ sub initAuthnRequest {
 # @param idp entityID
 # @return boolean result
 sub initIdpInitiatedAuthnRequest {
-    my ( $self, $login, $idp ) = splice @_;
+    my ( $self, $login, $idp ) = @_;
 
     eval { Lasso::Login::init_idp_initiated_authn_request( $login, $idp ); };
 
@@ -997,7 +997,7 @@ sub initIdpInitiatedAuthnRequest {
 # @param login Lasso::Login
 # @return boolean result
 sub buildAuthnRequestMsg {
-    my ( $self, $login ) = splice @_;
+    my ( $self, $login ) = @_;
 
     eval { Lasso::Login::build_authn_request_msg($login); };
 
@@ -1010,7 +1010,7 @@ sub buildAuthnRequestMsg {
 # @param request SAML request
 # @return result
 sub processAuthnRequestMsg {
-    my ( $self, $login, $request ) = splice @_;
+    my ( $self, $login, $request ) = @_;
 
     eval { Lasso::Login::process_authn_request_msg( $login, $request ); };
 
@@ -1024,7 +1024,7 @@ sub processAuthnRequestMsg {
 # @param consent is consent obtained?
 # @return result
 sub validateRequestMsg {
-    my ( $self, $login, $auth, $consent ) = splice @_;
+    my ( $self, $login, $auth, $consent ) = @_;
 
     eval { Lasso::Login::validate_request_msg( $login, $auth, $consent ); };
 
@@ -1036,7 +1036,7 @@ sub validateRequestMsg {
 # @param login Lasso::Login object
 # @return boolean result
 sub buildAuthnResponseMsg {
-    my ( $self, $login ) = splice @_;
+    my ( $self, $login ) = @_;
 
     eval { Lasso::Login::build_authn_response_msg($login); };
 
@@ -1049,7 +1049,7 @@ sub buildAuthnResponseMsg {
 # @param method HTTP method
 # @return boolean result
 sub buildArtifactMsg {
-    my ( $self, $login, $method ) = splice @_;
+    my ( $self, $login, $method ) = @_;
 
     eval { Lasso::Login::build_artifact_msg( $login, $method ); };
 
@@ -1063,7 +1063,7 @@ sub buildArtifactMsg {
 # @param notOnOrAfterTimeout Timeout to apply to notOnOrAfter
 # @return boolean result
 sub buildAssertion {
-    my ( $self, $login, $authn_context, $notOnOrAfterTimeout ) = splice @_;
+    my ( $self, $login, $authn_context, $notOnOrAfterTimeout ) = @_;
     $notOnOrAfterTimeout ||= $self->{timeout};
 
     # Dates
@@ -1091,7 +1091,7 @@ sub buildAssertion {
 # @param response SAML response
 # @return result
 sub processAuthnResponseMsg {
-    my ( $self, $login, $response ) = splice @_;
+    my ( $self, $login, $response ) = @_;
 
     eval { Lasso::Login::process_authn_response_msg( $login, $response ); };
 
@@ -1103,7 +1103,7 @@ sub processAuthnResponseMsg {
 # @param profile Lasso::Profile object
 # @return result or NULL if error
 sub getNameIdentifier {
-    my ( $self, $profile ) = splice @_;
+    my ( $self, $profile ) = @_;
     my $nameid;
 
     eval { $nameid = Lasso::Profile::get_nameIdentifier($profile); };
@@ -1121,7 +1121,7 @@ sub getNameIdentifier {
 # @param dump optional Identity dump
 # @return Lasso::Identity object
 sub createIdentity {
-    my ( $self, $dump ) = splice @_;
+    my ( $self, $dump ) = @_;
     my $identity;
 
     if ($dump) {
@@ -1144,7 +1144,7 @@ sub createIdentity {
 # @param dump optional Session dump
 # @return Lasso::Session object
 sub createSession {
-    my ( $self, $dump ) = splice @_;
+    my ( $self, $dump ) = @_;
     my $session;
 
     if ($dump) {
@@ -1167,7 +1167,7 @@ sub createSession {
 # @param login Lasso::Login object
 # @return result
 sub acceptSSO {
-    my ( $self, $login ) = splice @_;
+    my ( $self, $login ) = @_;
 
     eval { Lasso::Login::accept_sso($login); };
 
@@ -1179,7 +1179,7 @@ sub acceptSSO {
 # corresponding session_id
 # @param infos HASH reference of information
 sub storeRelayState {
-    my ( $self, @data ) = splice @_;
+    my ( $self, @data ) = @_;
 
     # check if there are data to store
     my $infos;
@@ -1219,7 +1219,7 @@ sub storeRelayState {
 # @param relaystate Relay state value
 # @return result
 sub extractRelayState {
-    my ( $self, $relaystate ) = splice @_;
+    my ( $self, $relaystate ) = @_;
 
     return 0 unless $relaystate;
 
@@ -1251,7 +1251,7 @@ sub extractRelayState {
 # @param login Lasso::Login object
 # @return assertion Lasso::Node object
 sub getAssertion {
-    my ( $self, $login ) = splice @_;
+    my ( $self, $login ) = @_;
     my $assertion;
 
     eval { $assertion = Lasso::Login::get_assertion($login); };
@@ -1276,7 +1276,7 @@ sub getAssertion {
 # @return attribute value
 sub getAttributeValue {
     my ( $self, $name, $format, $friendly_name, $attributes, $force_utf8 ) =
-      splice @_;
+      @_;
     my $value;
 
     # Loop on attributes
@@ -1317,7 +1317,7 @@ sub getAttributeValue {
 # @param entityID relying party entity ID
 # @return result
 sub validateConditions {
-    my ( $self, $assertion, $entityID ) = splice @_;
+    my ( $self, $assertion, $entityID ) = @_;
     my $tolerance = 10;
     my $status;
 
@@ -1369,7 +1369,7 @@ sub validateConditions {
 # @param signSLOMessage sign request
 # @return Lasso::Login object
 sub createLogoutRequest {
-    my ( $self, $server, $session_dump, $method, $signSLOMessage ) = splice @_;
+    my ( $self, $server, $session_dump, $method, $signSLOMessage ) = @_;
     my $session;
 
     # Create Lasso Logout
@@ -1422,7 +1422,7 @@ sub createLogoutRequest {
 # @param dump optional XML dump
 # @return Lasso::Logout object
 sub createLogout {
-    my ( $self, $server, $dump ) = splice @_;
+    my ( $self, $server, $dump ) = @_;
     my $logout;
 
     if ($dump) {
@@ -1447,7 +1447,7 @@ sub createLogout {
 # @param method HTTP method
 # @return result
 sub initLogoutRequest {
-    my ( $self, $logout, $entityID, $method ) = splice @_;
+    my ( $self, $logout, $entityID, $method ) = @_;
 
     eval { Lasso::Logout::init_request( $logout, $entityID, $method ); };
 
@@ -1459,7 +1459,7 @@ sub initLogoutRequest {
 # @param logout Lasso::Logout object
 # @return result
 sub buildLogoutRequestMsg {
-    my ( $self, $logout ) = splice @_;
+    my ( $self, $logout ) = @_;
 
     eval { Lasso::Logout::build_request_msg($logout); };
 
@@ -1472,7 +1472,7 @@ sub buildLogoutRequestMsg {
 # @param dump Lasso::Session XML dump
 # @return result
 sub setSessionFromDump {
-    my ( $self, $profile, $dump ) = splice @_;
+    my ( $self, $profile, $dump ) = @_;
 
     $self->lmLog( "Loading Session dump: $dump", 'debug' );
 
@@ -1487,7 +1487,7 @@ sub setSessionFromDump {
 # @param dump Lasso::Identity XML dump
 # @return result
 sub setIdentityFromDump {
-    my ( $self, $profile, $dump ) = splice @_;
+    my ( $self, $profile, $dump ) = @_;
 
     eval { Lasso::Profile::set_identity_from_dump( $profile, $dump ); };
 
@@ -1502,7 +1502,7 @@ sub setIdentityFromDump {
 # @param full Return full URL instead of path
 # @return url
 sub getMetaDataURL {
-    my ( $self, $key, $index, $full ) = splice @_;
+    my ( $self, $key, $index, $full ) = @_;
     $index = 3 unless defined $index;
     $full  = 0 unless defined $full;
 
@@ -1531,7 +1531,7 @@ sub getMetaDataURL {
 # @param response SAML response
 # @return result
 sub processLogoutResponseMsg {
-    my ( $self, $logout, $response ) = splice @_;
+    my ( $self, $logout, $response ) = @_;
 
     eval { Lasso::Logout::process_response_msg( $logout, $response ); };
 
@@ -1544,7 +1544,7 @@ sub processLogoutResponseMsg {
 # @param request SAML request
 # @return result
 sub processLogoutRequestMsg {
-    my ( $self, $logout, $request ) = splice @_;
+    my ( $self, $logout, $request ) = @_;
 
     # Process the request
     eval { Lasso::Logout::process_request_msg( $logout, $request ); };
@@ -1571,7 +1571,7 @@ sub processLogoutRequestMsg {
 # @param logout Lasso::Logout object
 # @return result
 sub validateLogoutRequest {
-    my ( $self, $logout ) = splice @_;
+    my ( $self, $logout ) = @_;
 
     eval { Lasso::Logout::validate_request($logout); };
 
@@ -1583,7 +1583,7 @@ sub validateLogoutRequest {
 # @param logout Lasso::Logout object
 # @return boolean result
 sub buildLogoutResponseMsg {
-    my ( $self, $logout ) = splice @_;
+    my ( $self, $logout ) = @_;
 
     eval { Lasso::Logout::build_response_msg($logout); };
 
@@ -1596,7 +1596,7 @@ sub buildLogoutResponseMsg {
 # @param samlData Optional data to store
 # @return result
 sub storeReplayProtection {
-    my ( $self, $samlID, $samlData ) = splice @_;
+    my ( $self, $samlID, $samlData ) = @_;
 
     my $samlSessionInfo = $self->getSamlSession();
 
@@ -1627,7 +1627,7 @@ sub storeReplayProtection {
 # @param samlID ID of initial SAML message
 # @return result
 sub replayProtection {
-    my ( $self, $samlID ) = splice @_;
+    my ( $self, $samlID ) = @_;
 
     unless ($samlID) {
         $self->lmLog( "Cannot verify replay because no SAML ID given",
@@ -1685,7 +1685,7 @@ sub replayProtection {
 # @param method HTTP method
 # @return SAML message
 sub resolveArtifact {
-    my ( $self, $profile, $artifact, $method ) = splice @_;
+    my ( $self, $profile, $artifact, $method ) = @_;
     my $message;
 
     # Login profile
@@ -1730,7 +1730,7 @@ sub resolveArtifact {
 # @param session_id Session ID
 # @return result
 sub storeArtifact {
-    my ( $self, $id, $message, $session_id ) = splice @_;
+    my ( $self, $id, $message, $session_id ) = @_;
 
     my $samlSessionInfo = $self->getSamlSession();
 
@@ -1758,7 +1758,7 @@ sub storeArtifact {
 # @param id Artifact ID
 # @return Artifact session content
 sub loadArtifact {
-    my ( $self, $id ) = splice @_;
+    my ( $self, $id ) = @_;
     my $art_session;
 
     unless ($id) {
@@ -1817,7 +1817,7 @@ sub loadArtifact {
 # @param login Lasso::Login object
 # @return Artifact response
 sub createArtifactResponse {
-    my ( $self, $login ) = splice @_;
+    my ( $self, $login ) = @_;
 
     my $artifact_id = $login->assertionArtifact();
 
@@ -1885,7 +1885,7 @@ sub createArtifactResponse {
 # @param request SAML request
 # @return result
 sub processArtRequestMsg {
-    my ( $self, $profile, $request ) = splice @_;
+    my ( $self, $profile, $request ) = @_;
 
     # Login profile
     if ( $profile->isa("Lasso::Login") ) {
@@ -1904,7 +1904,7 @@ sub processArtRequestMsg {
 # @param response SAML response
 # @return result
 sub processArtResponseMsg {
-    my ( $self, $profile, $response ) = splice @_;
+    my ( $self, $profile, $response ) = @_;
 
     # Login profile
     if ( $profile->isa("Lasso::Login") ) {
@@ -1923,7 +1923,7 @@ sub processArtResponseMsg {
 # @param message SOAP message
 # @return SOAP response
 sub sendSOAPMessage {
-    my ( $self, $endpoint, $message ) = splice @_;
+    my ( $self, $endpoint, $message ) = @_;
     my $response;
 
     my $request = HTTP::Request->new( 'POST' => $endpoint );
@@ -1951,7 +1951,7 @@ sub sendSOAPMessage {
 # @param server Lasso::Server object
 # @return assertion query
 sub createAssertionQuery {
-    my ( $self, $server ) = splice @_;
+    my ( $self, $server ) = @_;
     my $query;
 
     # Create assertion query
@@ -1972,7 +1972,7 @@ sub createAssertionQuery {
 # @param nameid Subject NameID
 # @return attribute request
 sub createAttributeRequest {
-    my ( $self, $server, $idp, $attributes, $nameid ) = splice @_;
+    my ( $self, $server, $idp, $attributes, $nameid ) = @_;
     my $query;
 
     # Create assertion query
@@ -2051,7 +2051,7 @@ sub createAttributeRequest {
 # @param query Lasso::AssertionQuery object
 # @return result
 sub validateAttributeRequest {
-    my ( $self, $query ) = splice @_;
+    my ( $self, $query ) = @_;
 
     eval { Lasso::AssertionQuery::validate_request($query); };
 
@@ -2064,7 +2064,7 @@ sub validateAttributeRequest {
 # @param request Request content
 # @return assertion query
 sub processAttributeRequest {
-    my ( $self, $server, $request ) = splice @_;
+    my ( $self, $server, $request ) = @_;
     my $query;
 
     # Create assertion query
@@ -2089,7 +2089,7 @@ sub processAttributeRequest {
 # @param query Lasso::AssertionQuery object
 # @return attribute response
 sub buildAttributeResponse {
-    my ( $self, $query ) = splice @_;
+    my ( $self, $query ) = @_;
 
     eval { Lasso::AssertionQuery::build_response_msg($query); };
 
@@ -2107,7 +2107,7 @@ sub buildAttributeResponse {
 # @param response Response content
 # @return assertion query
 sub processAttributeResponse {
-    my ( $self, $server, $response ) = splice @_;
+    my ( $self, $server, $response ) = @_;
     my $query;
 
     # Create assertion query
@@ -2132,7 +2132,7 @@ sub processAttributeResponse {
 # @param format configuration string
 # @return SAML2 NameIDFormat string
 sub getNameIDFormat {
-    my ( $self, $format ) = splice @_;
+    my ( $self, $format ) = @_;
 
     return Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_UNSPECIFIED
       if ( $format =~ /unspecified/i );
@@ -2161,7 +2161,7 @@ sub getNameIDFormat {
 # @param method configuration string
 # @return Lasso HTTP Method integer
 sub getHttpMethod {
-    my ( $self, $method ) = splice @_;
+    my ( $self, $method ) = @_;
 
     return Lasso::Constants::HTTP_METHOD_POST
       if ( $method =~ /^(http)?[-_]?post$/i );
@@ -2182,7 +2182,7 @@ sub getHttpMethod {
 # @param method Lasso HTTP Method
 # @return method string
 sub getHttpMethodString {
-    my ( $self, $method ) = splice @_;
+    my ( $self, $method ) = @_;
 
     return "POST" if ( $method == Lasso::Constants::HTTP_METHOD_POST );
     return "REDIRECT"
@@ -2202,7 +2202,7 @@ sub getHttpMethodString {
 # @param protocolType Lasso protocol type
 # @return Lasso HTTP Method
 sub getFirstHttpMethod {
-    my ( $self, $server, $entityID, $protocolType ) = splice @_;
+    my ( $self, $server, $entityID, $protocolType ) = @_;
     my $entity_provider;
     my $method;
 
@@ -2234,7 +2234,7 @@ sub getFirstHttpMethod {
 # @param profile Lasso profile object
 # @return result
 sub disableSignature {
-    my ( $self, $profile ) = splice @_;
+    my ( $self, $profile ) = @_;
 
     eval {
         Lasso::Profile::set_signature_hint( $profile,
@@ -2249,7 +2249,7 @@ sub disableSignature {
 # @param profile Lasso profile object
 # @return result
 sub forceSignature {
-    my ( $self, $profile ) = splice @_;
+    my ( $self, $profile ) = @_;
 
     eval {
         Lasso::Profile::set_signature_hint( $profile,
@@ -2264,7 +2264,7 @@ sub forceSignature {
 # @param profile Lasso profile object
 # @return result
 sub disableSignatureVerification {
-    my ( $self, $profile ) = splice @_;
+    my ( $self, $profile ) = @_;
 
     eval {
         Lasso::Profile::set_signature_verify_hint( $profile,
@@ -2279,7 +2279,7 @@ sub disableSignatureVerification {
 # @param profile Lasso profile object
 # @return result
 sub forceSignatureVerification {
-    my ( $self, $profile ) = splice @_;
+    my ( $self, $profile ) = @_;
 
     eval {
         Lasso::Profile::set_signature_verify_hint( $profile,
@@ -2294,7 +2294,7 @@ sub forceSignatureVerification {
 # @param context configuration string
 # @return SAML2 AuthnContextClassRef string
 sub getAuthnContext {
-    my ( $self, $context ) = splice @_;
+    my ( $self, $context ) = @_;
 
     return Lasso::Constants::SAML2_AUTHN_CONTEXT_KERBEROS
       if ( $context =~ /^kerberos$/i );
@@ -2317,7 +2317,7 @@ sub getAuthnContext {
 # @param timestamp UNIX timestamp
 # @return SAML2 date
 sub timestamp2samldate {
-    my ( $self, $timestamp ) = splice @_;
+    my ( $self, $timestamp ) = @_;
 
     my @t = gmtime($timestamp);
     my $samldate = strftime( "%Y-%m-%dT%TZ", @t );
@@ -2333,7 +2333,7 @@ sub timestamp2samldate {
 # @param samldate SAML2 date format
 # @return UNIX timestamp
 sub samldate2timestamp {
-    my ( $self, $samldate ) = splice @_;
+    my ( $self, $samldate ) = @_;
 
     my ( $year, $mon, $mday, $hour, $min, $sec, $msec, $ztime ) = ( $samldate =~
           /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\.\d+)?(Z)?/ );
@@ -2353,7 +2353,7 @@ sub samldate2timestamp {
 # @param $method Method to use
 # @return boolean False if failed.
 sub sendLogoutResponseToServiceProvider {
-    my ( $self, $logout, $method ) = splice @_;
+    my ( $self, $logout, $method ) = @_;
 
     # Logout response
     unless ( $self->buildLogoutResponseMsg($logout) ) {
@@ -2426,7 +2426,7 @@ sub sendLogoutResponseToServiceProvider {
 # @return int Number of concerned providers.
 sub sendLogoutRequestToProvider {
     my ( $self, $logout, $providerID, $method, $relay, $relayState ) =
-      splice @_;
+      @_;
     my $server = $self->{_lassoServer};
     my $info;
 
@@ -2686,7 +2686,7 @@ sub sendLogoutRequestToProvider {
 # @param relayState Relay State for SLO status
 # @return int Number of concerned providers.
 sub sendLogoutRequestToProviders {
-    my ( $self, $logout, $relayState ) = splice @_;
+    my ( $self, $logout, $relayState ) = @_;
     my $server         = $self->{_lassoServer};
     my $providersCount = 0;
     my $info           = '';
@@ -2734,7 +2734,7 @@ sub sendLogoutRequestToProviders {
 # @param profile Lasso::Profile object
 # @return result
 sub checkSignatureStatus {
-    my ( $self, $profile ) = splice @_;
+    my ( $self, $profile ) = @_;
 
     eval { Lasso::Profile::get_signature_status($profile); };
 
@@ -2746,7 +2746,7 @@ sub checkSignatureStatus {
 # @param authnContext SAML authentication context
 # return authentication level
 sub authnContext2authnLevel {
-    my ( $self, $authnContext ) = splice @_;
+    my ( $self, $authnContext ) = @_;
 
     return $self->{samlAuthnContextMapPassword}
       if ( $authnContext eq $self->getAuthnContext("password") );
@@ -2767,7 +2767,7 @@ sub authnContext2authnLevel {
 # @param authnLevel internal authentication level
 # return SAML authentication context
 sub authnLevel2authnContext {
-    my ( $self, $authnLevel ) = splice @_;
+    my ( $self, $authnLevel ) = @_;
 
     return $self->getAuthnContext("password")
       if ( $authnLevel == $self->{samlAuthnContextMapPassword} );
@@ -2788,7 +2788,7 @@ sub authnLevel2authnContext {
 # @param url Requested URL
 # @return Result
 sub checkDestination {
-    my ( $self, $message, $url ) = splice @_;
+    my ( $self, $message, $url ) = @_;
     my $destination;
 
     # Read Destination
@@ -2823,7 +2823,7 @@ sub checkDestination {
 # @param id session reference
 # @return Lemonldap::NG::Common::Session object
 sub getSamlSession {
-    my ( $self, $id ) = splice @_;
+    my ( $self, $id ) = @_;
 
     my $samlSession = Lemonldap::NG::Common::Session->new(
         {
@@ -2857,7 +2857,7 @@ sub getSamlSession {
 # @param friendly_name optional Attribute friendly name
 # @return SAML attribute
 sub createAttribute {
-    my ( $self, $name, $format, $friendly_name ) = splice @_;
+    my ( $self, $name, $format, $friendly_name ) = @_;
     my $attribute;
 
     # Name is required
@@ -2887,7 +2887,7 @@ sub createAttribute {
 # @param value Value to store
 # @return SAML attribute value
 sub createAttributeValue {
-    my ( $self, $value ) = splice @_;
+    my ( $self, $value ) = @_;
     my $saml2value;
 
     # Value is required
@@ -2925,7 +2925,7 @@ sub createAttributeValue {
 # @param encryption_mode Encryption mode string
 # @return Lasso encryption mode
 sub getEncryptionMode {
-    my ( $self, $encryption_mode ) = splice @_;
+    my ( $self, $encryption_mode ) = @_;
 
     return Lasso::Constants::ENCRYPTION_MODE_NAMEID
       if ( $encryption_mode =~ /^nameid$/i );
@@ -2940,7 +2940,7 @@ sub getEncryptionMode {
 # @param encryption_mode Lasso encryption mode
 # @return result
 sub setProviderEncryptionMode {
-    my ( $self, $provider, $encryption_mode ) = splice @_;
+    my ( $self, $provider, $encryption_mode ) = @_;
 
     eval {
         Lasso::Provider::set_encryption_mode( $provider, $encryption_mode );
@@ -2955,7 +2955,7 @@ sub setProviderEncryptionMode {
 # @param session_id Primary session ID
 # @return result
 sub deleteSAMLSecondarySessions {
-    my ( $self, $session_id ) = splice @_;
+    my ( $self, $session_id ) = @_;
     my $result = 1;
 
     # Find SAML sessions
@@ -3001,7 +3001,7 @@ sub deleteSAMLSecondarySessions {
 # @param method HTTP method
 # @return nothing
 sub sendSLOErrorResponse {
-    my ( $self, $logout, $method ) = splice @_;
+    my ( $self, $logout, $method ) = @_;
 
     # Load empty session
     my $session =
@@ -3020,7 +3020,7 @@ sub sendSLOErrorResponse {
 # Return query string with or without CGI query_string() method
 # @return query string
 sub getQueryString {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     my $query_string;
 

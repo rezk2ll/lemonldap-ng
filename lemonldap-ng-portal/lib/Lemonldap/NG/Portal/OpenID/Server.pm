@@ -30,7 +30,7 @@ my $OPENID2_ID_SELECT = qq!http://specs.openid.net/auth/2.0/identifier_select!;
 sub new {
     my $class = shift;
     my $self  = fields::new($class);
-    my %opts  = splice @_;
+    my %opts  = @_;
     $self->$_( delete $opts{$_} ) foreach (qw(extensions));
     $self->SUPER::new(%opts);
 

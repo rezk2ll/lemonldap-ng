@@ -16,7 +16,7 @@ BEGIN {
 # @param value Input value
 # @return normalized string
 sub normalize {
-    my ( $self, $value ) = splice @_;
+    my ( $self, $value ) = @_;
 
     # trim white spaces
     $value =~ s/^\s*(.*?)\s*$/$1/;
@@ -39,7 +39,7 @@ sub normalize {
 # @param value Input value
 # @return unnormalized string
 sub unnormalize {
-    my ( $self, $value ) = splice @_;
+    my ( $self, $value ) = @_;
 
     # Convert simple quotes
     $value =~ s/&#?39;/'/g;
@@ -59,7 +59,7 @@ sub unnormalize {
 # @param conf Configuration
 # @return fields
 sub serialize {
-    my ( $self, $conf ) = splice @_;
+    my ( $self, $conf ) = @_;
     my $fields;
 
     # Data::Dumper options
@@ -93,7 +93,7 @@ sub serialize {
 # @param fields Fields
 # @return configuration
 sub unserialize {
-    my ( $self, $fields ) = splice @_;
+    my ( $self, $fields ) = @_;
     my $conf;
 
     # Parse fields

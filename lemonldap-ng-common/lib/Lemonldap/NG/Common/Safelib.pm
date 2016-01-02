@@ -28,7 +28,7 @@ our $functions =
 # @param $default_access optional what result to return for users without logons hours
 # @return 1 if access allowed, 0 else
 sub checkLogonHours {
-    my ( $logon_hours, $syntax, $time_correction, $default_access ) = splice @_;
+    my ( $logon_hours, $syntax, $time_correction, $default_access ) = @_;
 
     # Active Directory - logonHours: $attr_src_syntax = octetstring
     # Samba - sambaLogonHours: ???
@@ -97,7 +97,7 @@ sub date {
 # @param $default_access optional what result to return for users without start or end start
 # @return 1 if access allowed, 0 else
 sub checkDate {
-    my ( $start, $end, $default_access ) = splice @_;
+    my ( $start, $end, $default_access ) = @_;
 
     # Get date in string
     $start = substr( $start, 0, 14 );
@@ -126,7 +126,7 @@ sub checkDate {
 # @param password User password
 # @return Authorization header content
 sub basic {
-    my ( $login, $password ) = splice @_;
+    my ( $login, $password ) = @_;
 
     # UTF-8 strings should be ISO encoded
     $login    = &unicode2iso($login);
@@ -140,7 +140,7 @@ sub basic {
 # @param string UTF-8 string
 # @return ISO string
 sub unicode2iso {
-    my ($string) = splice @_;
+    my ($string) = @_;
 
     return encode( "iso-8859-1", decode( "utf-8", $string ) );
 }
@@ -150,7 +150,7 @@ sub unicode2iso {
 # @param string ISO string
 # @return UTF-8 string
 sub iso2unicode {
-    my ($string) = splice @_;
+    my ($string) = @_;
 
     return encode( "utf-8", decode( "iso-8859-1", $string ) );
 }

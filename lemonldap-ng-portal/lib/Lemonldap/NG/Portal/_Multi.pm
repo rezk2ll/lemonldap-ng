@@ -20,7 +20,7 @@ our $VERSION = '1.4.6';
 # @param $portal Lemonldap::NG::Portal::Simple object
 # @return new Lemonldap::NG::Portal::_Multi object
 sub new {
-    my ( $class, $portal ) = splice @_;
+    my ( $class, $portal ) = @_;
     my $self = bless { p => $portal, res => PE_NOSCHEME }, $class;
     weaken $self->{p};
 
@@ -65,7 +65,7 @@ sub new {
 # @param type 0 for authentication, 1 for userDB
 # @return Lemonldap::NG::Portal error code returned by method $sub
 sub try {
-    my ( $self, $sub, $type ) = splice @_;
+    my ( $self, $sub, $type ) = @_;
     my $res;
     my $s   = $self->{stack}->[$type]->[0]->{m} . "::$sub";
     my $old = $self->{stack}->[$type]->[0]->{n};
@@ -110,7 +110,7 @@ sub try {
 # @param type 0 for authentication, 1 for userDB
 # return true if an other module is available
 sub next {
-    my ( $self, $type ) = splice @_;
+    my ( $self, $type ) = @_;
 
     if ( $self->{stack}->[$type]->[0]->{n} eq
             $self->{stack}->[ 1 - $type ]->[0]->{n}
@@ -135,7 +135,7 @@ sub next {
 # @param $sub name of the method who has failed
 # @return Lemonldap::NG::Portal error code
 sub replay {
-    my ( $self, $sub ) = splice @_;
+    my ( $self, $sub ) = @_;
     my @subs = ();
     $self->{p}->lmLog( "Replay all methods until sub $sub", 'debug' );
 

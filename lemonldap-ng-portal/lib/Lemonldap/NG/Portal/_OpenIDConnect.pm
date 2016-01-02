@@ -32,7 +32,7 @@ BEGIN {
 # @param no_cache Disable cache use
 # @return boolean result
 sub loadOPs {
-    my ( $self, $no_cache ) = splice @_;
+    my ( $self, $no_cache ) = @_;
 
     # Check cache
     unless ($no_cache) {
@@ -70,7 +70,7 @@ sub loadOPs {
 # @param no_cache Disable cache use
 # @return boolean result
 sub loadRPs {
-    my ( $self, $no_cache ) = splice @_;
+    my ( $self, $no_cache ) = @_;
 
     # Check cache
     unless ($no_cache) {
@@ -100,7 +100,7 @@ sub loadRPs {
 # @param no_cache Disable cache update
 # @return boolean result
 sub refreshJWKSdata {
-    my ( $self, $no_cache ) = splice @_;
+    my ( $self, $no_cache ) = @_;
 
     unless ( $self->{oidcOPMetaDataJSON}
         and keys %{ $self->{oidcOPMetaDataJSON} } )
@@ -171,7 +171,7 @@ sub refreshJWKSdata {
 # @param client_id Client ID
 # @return String result
 sub getRP {
-    my ( $self, $client_id ) = splice @_;
+    my ( $self, $client_id ) = @_;
     my $rp;
 
     foreach ( keys %{ $self->{_oidcRPList} } ) {
@@ -218,7 +218,7 @@ sub getCallbackUri {
 # @param state State
 # return String Authentication Request URI
 sub buildAuthorizationCodeAuthnRequest {
-    my ( $self, $op, $state ) = splice @_;
+    my ( $self, $op, $state ) = @_;
 
     my $authorize_uri =
       $self->{_oidcOPList}->{$op}->{conf}->{authorization_endpoint};
@@ -288,7 +288,7 @@ sub buildAuthorizationCodeAuthnRequest {
 # @param session_state Session state
 # return String Authentication Response URI
 sub buildAuthorizationCodeAuthnResponse {
-    my ( $self, $redirect_uri, $code, $state, $session_state ) = splice @_;
+    my ( $self, $redirect_uri, $code, $state, $session_state ) = @_;
 
     my $response_url = $redirect_uri;
 
@@ -319,7 +319,7 @@ sub buildAuthorizationCodeAuthnResponse {
 sub buildImplicitAuthnResponse {
     my ( $self, $redirect_uri, $access_token, $id_token, $expires_in, $state,
         $session_state )
-      = splice @_;
+      = @_;
 
     my $response_url = $redirect_uri;
 
@@ -359,7 +359,7 @@ sub buildHybridAuthnResponse {
     my (
         $self,     $redirect_uri, $code,  $access_token,
         $id_token, $expires_in,   $state, $session_state
-    ) = splice @_;
+    ) = @_;
 
     my $response_url = $redirect_uri;
 
@@ -396,7 +396,7 @@ sub buildHybridAuthnResponse {
 # @param auth_method Authentication Method
 # return String Token response decoded content
 sub getAuthorizationCodeAccessToken {
-    my ( $self, $op, $code, $auth_method ) = splice @_;
+    my ( $self, $op, $code, $auth_method ) = @_;
 
     my $client_id =
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsClientID};
@@ -454,7 +454,7 @@ sub getAuthorizationCodeAccessToken {
 # @param json JSON HashRef
 # return boolean 1 if the response is valid, 0 else
 sub checkTokenResponseValidity {
-    my ( $self, $json ) = splice @_;
+    my ( $self, $json ) = @_;
 
     # token_type MUST be Bearer
     unless ( $json->{token_type} eq "Bearer" ) {
@@ -479,7 +479,7 @@ sub checkTokenResponseValidity {
 # @param id_token ID Token payload as HashRef
 # return boolean 1 if the token is valid, 0 else
 sub checkIDTokenValidity {
-    my ( $self, $op, $id_token ) = splice @_;
+    my ( $self, $op, $id_token ) = @_;
 
     my $client_id =
       $self->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsClientID};
@@ -601,7 +601,7 @@ sub checkIDTokenValidity {
 # @param access_token Access Token
 # return String UserInfo response decoded content
 sub getUserInfo {
-    my ( $self, $op, $access_token ) = splice @_;
+    my ( $self, $op, $access_token ) = @_;
 
     my $userinfo_uri = $self->{_oidcOPList}->{$op}->{conf}->{userinfo_endpoint};
 
@@ -640,7 +640,7 @@ sub getUserInfo {
 # @param json JSON raw content
 # @return HashRef JSON decoded content
 sub decodeJSON {
-    my ( $self, $json ) = splice @_;
+    my ( $self, $json ) = @_;
     my $json_hash;
 
     eval { $json_hash = decode_json $json; };
@@ -658,7 +658,7 @@ sub decodeJSON {
 # @param id session reference
 # @return Lemonldap::NG::Common::Session object
 sub getOpenIDConnectSession {
-    my ( $self, $id ) = splice @_;
+    my ( $self, $id ) = @_;
 
     my $oidcSession = Lemonldap::NG::Common::Session->new(
         {
@@ -693,7 +693,7 @@ sub getOpenIDConnectSession {
 # @param data Array of information to store
 # @return State Session ID
 sub storeState {
-    my ( $self, @data ) = splice @_;
+    my ( $self, @data ) = @_;
 
     # check if there are data to store
     my $infos;
@@ -730,7 +730,7 @@ sub storeState {
 # @param state state value
 # @return result
 sub extractState {
-    my ( $self, $state ) = splice @_;
+    my ( $self, $state ) = @_;
 
     return 0 unless $state;
 
@@ -762,7 +762,7 @@ sub extractState {
 # @param jwt JWT raw value
 # @return arrayref JWT parts
 sub extractJWT {
-    my ( $self, $jwt ) = splice @_;
+    my ( $self, $jwt ) = @_;
 
     my @jwt_parts = split( /\./, $jwt );
 
@@ -776,7 +776,7 @@ sub extractJWT {
 # @param rp OpenIP Relying Party configuration key
 # @return boolean 1 if signature is verified, 0 else
 sub verifyJWTSignature {
-    my ( $self, $jwt, $op, $rp ) = splice @_;
+    my ( $self, $jwt, $op, $rp ) = @_;
 
     $self->lmLog( "Verification of JWT signature: $jwt", 'debug' );
 
@@ -938,7 +938,7 @@ sub verifyJWTSignature {
 # @param id_token ID Token
 # @return boolean 1 if hash is verified, 0 else
 sub verifyHash {
-    my ( $self, $value, $hash, $id_token ) = splice @_;
+    my ( $self, $value, $hash, $id_token ) = @_;
 
     $self->lmLog( "Verification of value $value with hash $hash", 'debug' );
 
@@ -992,7 +992,7 @@ sub verifyHash {
 # @param hash_level SHA Hash level
 # @return String hash
 sub createHash {
-    my ( $self, $value, $hash_level ) = splice @_;
+    my ( $self, $value, $hash_level ) = @_;
 
     $self->lmLog( "Use SHA $hash_level to hash $value", 'debug' );
 
@@ -1020,7 +1020,7 @@ sub createHash {
 sub returnRedirectError {
     my ( $self, $redirect_url, $error, $error_description, $error_uri, $state,
         $fragment )
-      = splice @_;
+      = @_;
 
     my $urldc = $redirect_url;
 
@@ -1048,7 +1048,7 @@ sub returnRedirectError {
 # @param error Error message
 # @return void
 sub returnJSONError {
-    my ( $self, $error ) = splice @_;
+    my ( $self, $error ) = @_;
     my $content = { "error" => "$error" };
 
     # We use to_json because values are already UTF-8 encoded
@@ -1065,7 +1065,7 @@ sub returnJSONError {
 # @param content Message
 # @return void
 sub returnJSON {
-    my ( $self, $content ) = splice @_;
+    my ( $self, $content ) = @_;
 
     # We use to_json because values are already UTF-8 encoded
     my $json = to_json( $content, { pretty => 1 } );
@@ -1082,7 +1082,7 @@ sub returnJSON {
 # @param error_message Error message
 # @return void
 sub returnBearerError {
-    my ( $self, $error_code, $error_message ) = splice @_;
+    my ( $self, $error_code, $error_message ) = @_;
 
     my $content = "error=$error_code,error_description=$error_message";
 
@@ -1136,7 +1136,7 @@ sub getEndPointAccessToken {
 # @param claim Claim
 # @return arrayref attributes list
 sub getAttributesListFromClaim {
-    my ( $self, $rp, $claim ) = splice @_;
+    my ( $self, $rp, $claim ) = @_;
     my $attributes = {};
 
     # OpenID Connect standard claims
@@ -1170,7 +1170,7 @@ sub getAttributesListFromClaim {
 # @param user_session_id User session identifier
 # @return hashref UserInfo data
 sub buildUserInfoResponse {
-    my ( $self, $scope, $rp, $user_session_id ) = splice @_;
+    my ( $self, $scope, $rp, $user_session_id ) = @_;
     my $userinfo_response = {};
 
     # Get user identifier
@@ -1225,7 +1225,7 @@ sub buildUserInfoResponse {
 # @param rp Internal Relying Party identifier
 # @return String jwt JWT
 sub createJWT {
-    my ( $self, $payload, $alg, $rp ) = splice @_;
+    my ( $self, $payload, $alg, $rp ) = @_;
 
     # Payload encoding
     my $jwt_payload = encode_base64( encode_json($payload), "" );
@@ -1307,7 +1307,7 @@ sub createJWT {
 # @param rp Internal Relying Party identifier
 # @return String id_token ID Token as JWT
 sub createIDToken {
-    my ( $self, $payload, $rp ) = splice @_;
+    my ( $self, $payload, $rp ) = @_;
 
     # Get signature algorithm
     my $alg =
@@ -1323,7 +1323,7 @@ sub createIDToken {
 # @param response_type Response type
 # @return String flow
 sub getFlowType {
-    my ( $self, $response_type ) = splice @_;
+    my ( $self, $response_type ) = @_;
 
     my $response_types = {
         "code"                => "authorizationcode",
@@ -1342,7 +1342,7 @@ sub getFlowType {
 # @param id_token ID Token
 # @return String sub
 sub getIDTokenSub {
-    my ( $self, $id_token ) = splice @_;
+    my ( $self, $id_token ) = @_;
 
     my $payload = $self->getJWTJSONData($id_token);
 
@@ -1354,7 +1354,7 @@ sub getIDTokenSub {
 # @param jwt JWT
 # @return HashRef payload
 sub getJWTJSONData {
-    my ( $self, $jwt ) = splice @_;
+    my ( $self, $jwt ) = @_;
 
     my $jwt_parts = $self->extractJWT($jwt);
     return decode_json( decode_base64url( $jwt_parts->[1] ) );
@@ -1365,7 +1365,7 @@ sub getJWTJSONData {
 # @param key Raw key
 # @return HashRef JWKS key
 sub key2jwks {
-    my ( $self, $key ) = splice @_;
+    my ( $self, $key ) = @_;
     my $hash = {};
 
     my $rsa_pub = Crypt::OpenSSL::RSA->new_public_key($key);
@@ -1386,7 +1386,7 @@ sub key2jwks {
 sub buildLogoutRequest {
     my ( $self, $redirect_uri, $id_token_hint, $post_logout_redirect_uri,
         $state )
-      = splice @_;
+      = @_;
 
     my $response_url = $redirect_uri;
 
@@ -1415,7 +1415,7 @@ sub buildLogoutRequest {
 # @param state State
 # return String Logout URI
 sub buildLogoutResponse {
-    my ( $self, $redirect_uri, $state ) = splice @_;
+    my ( $self, $redirect_uri, $state ) = @_;
 
     my $response_url = $redirect_uri;
 
@@ -1433,7 +1433,7 @@ sub buildLogoutResponse {
 # @param client_id CLient ID
 # return String Session state
 sub createSessionState {
-    my ( $self, $session_id, $client_id ) = splice @_;
+    my ( $self, $session_id, $client_id ) = @_;
 
     my $salt = encode_base64url( $self->{cipher}->encrypt($client_id) );
     my $data = $client_id . " " . $session_id . " " . $salt;
@@ -1453,7 +1453,7 @@ sub createSessionState {
 # @param request_uri request uri
 # return String request JWT
 sub getRequestJWT {
-    my ( $self, $request_uri ) = splice @_;
+    my ( $self, $request_uri ) = @_;
 
     my $response = $self->ua->get($request_uri);
 
@@ -1469,7 +1469,7 @@ sub getRequestJWT {
 # Create JS code needed on OP side to manage session
 # return String JS code
 sub getSessionManagementOPIFrameJS {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     my $js;
 

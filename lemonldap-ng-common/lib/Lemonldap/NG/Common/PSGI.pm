@@ -38,7 +38,7 @@ has syslog => (
 # @param $mess Text to log
 # @param $level Level (debug|info|notice|warn|error)
 sub lmLog {
-    my ( $self, $msg, $level ) = splice @_;
+    my ( $self, $msg, $level ) = @_;
     my $levels = {
         error  => 4,
         warn   => 3,
@@ -95,7 +95,7 @@ sub userError {
 
 # Responses methods
 sub sendJSONresponse {
-    my ( $self, $req, $j, %args ) = splice @_;
+    my ( $self, $req, $j, %args ) = @_;
     $args{code} ||= 200;
     my $type = 'text/json';
     if ( ref $j ) {
@@ -105,7 +105,7 @@ sub sendJSONresponse {
 }
 
 sub sendError {
-    my ( $self, $req, $err, $code ) = splice @_;
+    my ( $self, $req, $err, $code ) = @_;
     $err  ||= $req->error;
     $code ||= 500;
     $self->lmLog( "Error $code: $err", $code > 499 ? 'error' : 'notice' );
@@ -113,7 +113,7 @@ sub sendError {
 }
 
 sub abort {
-    my ( $self, $err ) = splice @_;
+    my ( $self, $err ) = @_;
     $self->lmLog( $err, 'error' );
     return sub {
         $self->sendError( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ),
@@ -134,7 +134,7 @@ sub init { 1 }
 sub router { _mustBeDefined(@_) }
 
 sub sendHtml {
-    my ( $self, $req, $template ) = splice @_;
+    my ( $self, $req, $template ) = @_;
     my $htpl;
     $template = $self->templateDir . "/$template.tpl";
     return $self->sendError( $req, "Unable to read $template", 500 )
@@ -185,7 +185,7 @@ sub sendHtml {
 ###############
 
 sub run {
-    my ( $self, $args ) = splice @_;
+    my ( $self, $args ) = @_;
     unless ( ref $self ) {
         $self = $self->new($args);
         return $self->abort( $self->error ) unless ( $self->init($args) );
@@ -217,7 +217,7 @@ Use Lemonldap::NG::Common::PSGI::Router for REST API.
   use base Lemonldap::NG::Common::PSGI;
   
   sub init {
-    my ($self,$args) = splice @_;
+    my ($self,$args) = @_;
     # Will be called 1 time during startup
   
     # Store debug level
@@ -231,7 +231,7 @@ Use Lemonldap::NG::Common::PSGI::Router for REST API.
   }
   
   sub router {
-    my ( $self, $req ) = splice @_;
+    my ( $self, $req ) = @_;
     # Do something and return a PSGI response
     # NB: $req is a Lemonldap::NG::Common::PSGI::Request object
     

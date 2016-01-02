@@ -225,7 +225,7 @@ sub openIDServer {
 # Manage Lemonldap::NG::Portal::OpenID::Server responses
 # @return Lemonldap::NG::Portal error code
 sub _openIDResponse {
-    my ( $self, $type, $data ) = splice @_;
+    my ( $self, $type, $data ) = @_;
 
     # Redirect
     if ( $type eq 'redirect' ) {

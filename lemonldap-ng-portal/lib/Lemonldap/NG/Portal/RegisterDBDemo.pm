@@ -14,7 +14,7 @@ our $VERSION = '1.4.0';
 # Compute a login from register infos
 # @result Lemonldap::NG::Portal constant
 sub computeLogin {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     # Get first letter of firstname and lastname
     my $login =
@@ -30,7 +30,7 @@ sub computeLogin {
 # Do nothing
 # @result Lemonldap::NG::Portal constant
 sub createUser {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     return PE_OK;
 }
@@ -39,7 +39,7 @@ sub createUser {
 # Do nothing
 # @result Lemonldap::NG::Portal constant
 sub registerDBFinish {
-    my ($self) = splice @_;
+    my ($self) = @_;
 
     return PE_OK;
 }

@@ -126,7 +126,7 @@ sub displayModules {
 # Returns categories and applications list as HTML::Template loop
 # @return categories and applications list
 sub appslist {
-    my ($self) = splice @_;
+    my ($self) = @_;
     my $appslist = [];
 
     return $appslist unless defined $self->{applicationList};
@@ -151,7 +151,7 @@ sub appslist {
 # @param catlevel Category level
 # @return Category Hash
 sub _buildCategoryHash {
-    my ( $self, $catid, $cathash, $catlevel ) = splice @_;
+    my ( $self, $catid, $cathash, $catlevel ) = @_;
     my $catname = $cathash->{catname} || $catid;
     my $applications;
     my $categories;
@@ -200,7 +200,7 @@ sub _buildCategoryHash {
 # @param $apphash Hash of application elements
 # @return Application Hash
 sub _buildApplicationHash {
-    my ( $self, $appid, $apphash ) = splice @_;
+    my ( $self, $appid, $apphash ) = @_;
     my $applications;
 
     # Get application items
@@ -286,7 +286,7 @@ sub appslistDescription {
 # @param catlevel Category level
 # @return HTML string
 sub _displayConfCategory {
-    my ( $self, $catname, $cathash, $catlevel ) = splice @_;
+    my ( $self, $catname, $cathash, $catlevel ) = @_;
     my $html;
     my $key;
 
@@ -427,7 +427,7 @@ sub _displayConfDescription {
 # @param $apphash Menu elements
 # @return filtered hash
 sub _filter {
-    my ( $self, $apphash ) = splice @_;
+    my ( $self, $apphash ) = @_;
     my $filteredHash;
     my $key;
 

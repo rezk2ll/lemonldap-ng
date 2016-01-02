@@ -90,7 +90,7 @@ sub new {
 sub bind {
     my $self = shift;
     my $mesg;
-    my ( $dn, %args ) = splice @_;
+    my ( $dn, %args ) = @_;
     unless ($dn) {
         $dn = $self->{portal}->{managerDn};
         $args{password} = $self->{portal}->{managerPassword};
@@ -230,7 +230,7 @@ sub userBind {
 # @return Lemonldap::NG::Portal constant
 sub userModifyPassword {
     my ( $self, $dn, $newpassword, $confirmpassword, $oldpassword, $ad ) =
-      splice @_;
+      @_;
     my $ppolicyControl     = $self->{portal}->{ldapPpolicyControl};
     my $setPassword        = $self->{portal}->{ldapSetPassword};
     my $asUser             = $self->{portal}->{ldapChangePasswordAsUser};
@@ -520,7 +520,7 @@ sub ldap {
 # @param attributes to get from found groups (array ref)
 # @return hashRef groups
 sub searchGroups {
-    my ( $self, $base, $key, $value, $attributes ) = splice @_;
+    my ( $self, $base, $key, $value, $attributes ) = @_;
 
     my $portal = $self->{portal};
     my $groups = {};
@@ -604,7 +604,7 @@ sub searchGroups {
 # @param attribute Attribute name
 # @return string value
 sub getLdapValue {
-    my ( $self, $entry, $attribute ) = splice @_;
+    my ( $self, $entry, $attribute ) = @_;
 
     return $entry->dn() if ( $attribute eq "dn" );
 

@@ -48,7 +48,7 @@ sub globalInit {
 # Overload defaultValuesInit
 # @param $args reference to the configuration hash
 sub defaultValuesInit {
-    my ( $class, $args ) = splice @_;
+    my ( $class, $args ) = @_;
 
     # Catch Secure Token parameters
     $secureTokenMemcachedServers =
@@ -182,7 +182,7 @@ sub run {
 # Create Memcached connexion
 # @return Cache::Memcached object
 sub _createMemcachedConnection {
-    my ($class) = splice @_;
+    my ($class) = @_;
 
     # Open memcached connexion
     my $memd = new Cache::Memcached {
@@ -201,7 +201,7 @@ sub _createMemcachedConnection {
 # @param value Value
 # @return Token key
 sub _setToken {
-    my ( $class, $value ) = splice @_;
+    my ( $class, $value ) = @_;
 
     my $key = Apache::Session::Generate::MD5::generate();
 
@@ -226,7 +226,7 @@ sub _setToken {
 # @param key Key
 # @return result
 sub _deleteToken {
-    my ( $class, $key ) = splice @_;
+    my ( $class, $key ) = @_;
 
     my $res = $secureTokenMemcachedConnection->delete($key);
 
@@ -247,7 +247,7 @@ sub _deleteToken {
 # @param connection Cache::Memcached object
 # @return result
 sub _isAlive {
-    my ($class) = splice @_;
+    my ($class) = @_;
 
     return 0 unless defined $secureTokenMemcachedConnection;
 

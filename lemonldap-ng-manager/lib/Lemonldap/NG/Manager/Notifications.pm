@@ -118,23 +118,23 @@ sub notifAccess {
 #######################
 
 sub notEnabled {
-    my ( $self, $req ) = splice @_;
+    my ( $self, $req ) = @_;
     return $self->sendError( $req,
         'Notifications are not enabled in your configuration', 400 );
 }
 
 sub activeNotifications {
-    my ( $self, $req, $notif ) = splice @_;
+    my ( $self, $req, $notif ) = @_;
     return $self->notifications( $req, $notif, 'actives' );
 }
 
 sub doneNotifications {
-    my ( $self, $req, $notif ) = splice @_;
+    my ( $self, $req, $notif ) = @_;
     return $self->notifications( $req, $notif, 'done' );
 }
 
 sub notifications {
-    my ( $self, $req, $notif, $type ) = splice @_;
+    my ( $self, $req, $notif, $type ) = @_;
     my $sub = { actives => 'getAll', done => 'getDone' }->{$type}
       or die "Unknown type $type";
 
@@ -214,7 +214,7 @@ sub notifications {
 }
 
 sub notification {
-    my ( $self, $req, $id, $type ) = splice @_;
+    my ( $self, $req, $id, $type ) = @_;
 
     if ( $type eq 'actives' ) {
         my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
@@ -240,7 +240,7 @@ sub notification {
 }
 
 sub newNotification {
-    my ( $self, $req, @other ) = splice @_;
+    my ( $self, $req, @other ) = @_;
     return $self->sendError( $req,
         'There is no subkey for "newNotification"', 400 )
       if (@other);
@@ -281,7 +281,7 @@ sub newNotification {
 }
 
 sub updateNotification {
-    my ( $self, $req ) = splice @_;
+    my ( $self, $req ) = @_;
 
     my $json = $req->jsonBodyToObj;
     unless ( defined($json) ) {
@@ -321,7 +321,7 @@ sub updateNotification {
 }
 
 sub deleteDoneNotification {
-    my ( $self, $req ) = splice @_;
+    my ( $self, $req ) = @_;
     my $res;
 
     # Purge notification

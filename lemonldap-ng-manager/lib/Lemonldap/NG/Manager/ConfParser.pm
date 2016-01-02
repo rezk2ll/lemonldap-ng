@@ -99,7 +99,7 @@ use feature 'state';
 
 # Recursive JSON parser
 sub _scanNodes {
-    my ( $self, $tree, ) = splice @_;
+    my ( $self, $tree, ) = @_;
     hdebug("# _scanNodes()");
     state( $knownCat, %newNames );
     unless ( ref($tree) eq 'ARRAY' ) {
@@ -632,7 +632,7 @@ sub set {
 }
 
 sub defaultValue {
-    my ( $self, $target ) = splice @_;
+    my ( $self, $target ) = @_;
     hdebug("# defautValue($target)");
     die unless ($target);
     my $res = eval {
@@ -649,7 +649,7 @@ sub testNewConf {
 }
 
 sub _unitTest {
-    my ( $self, $conf ) = splice @_;
+    my ( $self, $conf ) = @_;
     hdebug('# _unitTest()');
     my $types = &Lemonldap::NG::Manager::Attributes::types();
     my $attrs = &Lemonldap::NG::Manager::Attributes::attributes();
