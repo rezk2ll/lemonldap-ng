@@ -72,7 +72,7 @@ sub addRoutes {
 #@param $key Key name
 #@return keyvalue (string, int or hashref)
 sub getConfKey {
-    my ( $self, $req, $key ) = splice @_;
+    my ( $self, $req, $key, @args ) = @_;
     state $confAcc ||= $self->confAcc;
     $self->lmLog( "Search for $key in conf", 'debug' );
 
@@ -91,7 +91,7 @@ sub getConfKey {
         $req->error("cfgNum must be a number");
         return undef;
     }
-    unless ( $self->getConfByNum( $req->params('cfgNum') ) ) {
+    unless ( $self->getConfByNum( $req->params('cfgNum'), @args ) ) {
         $req->error( "Configuration "
               . $req->params('cfgNum')
               . " is not available ("
@@ -106,9 +106,10 @@ sub getConfKey {
 }
 
 sub getConfByNum {
-    my ( $self, $cfgNum ) = splice @_;
+    my ( $self, $cfgNum, @args ) = @_;
     unless ( $self->currentConf and $cfgNum == $self->currentConf->{cfgNum} ) {
-        my $tmp = $self->confAcc->getConf( { cfgNum => $cfgNum, raw => 1 } );
+        my $tmp =
+          $self->confAcc->getConf( { cfgNum => $cfgNum, raw => 1, @args } );
         return undef unless ( $tmp and ref($tmp) and %$tmp );
         $self->currentConf($tmp);
     }
@@ -129,7 +130,7 @@ sub getConfByNum {
 #@param $tpl Javascript template to use (see JS/JSON generator script)
 #@return PSGI JSON response
 sub recursiveCnodes {
-    my ( $self, $req, $query, $tpl ) = splice @_;
+    my ( $self, $req, $query, $tpl ) = @_;
     $self->lmLog( "Query for $query template keys", 'debug' );
 
     my $tmp = $self->getConfKey( $req, $query );
@@ -157,7 +158,7 @@ sub recursiveCnodes {
 #@param @path words in path after `virtualhosts`
 #@return PSGI JSON response
 sub virtualHosts {
-    my ( $self, $req, @path ) = splice @_;
+    my ( $self, $req, @path ) = @_;
 
     return $self->recursiveCnodes( $req, 'locationRules', 'virtualHost' )
       unless (@path);
@@ -243,7 +244,7 @@ sub virtualHosts {
 #@param @path words in path after `saml{IDP|SP}MetaDataNode`
 #@return PSGI JSON response
 sub _samlMetaDataNodes {
-    my ( $self, $type, $req, @path ) = splice @_;
+    my ( $self, $type, $req, @path ) = @_;
 
     return $self->recursiveCnodes( $req, "saml${type}MetaDataXML",
         "saml${type}MetaDataNode" )
@@ -327,7 +328,7 @@ sub _samlMetaDataNodes {
 #@param @path words in path after `samlIDPMetaDataNode`
 #@return PSGI JSON response
 sub samlIDPMetaDataNodes {
-    my ( $self, $req, @path ) = splice @_;
+    my ( $self, $req, @path ) = @_;
     return $self->_samlMetaDataNodes( 'IDP', $req, @path );
 }
 
@@ -338,7 +339,7 @@ sub samlIDPMetaDataNodes {
 #@param @path words in path after `samlSPMetaDataNode`
 #@return PSGI JSON response
 sub samlSPMetaDataNodes {
-    my ( $self, $req, @path ) = splice @_;
+    my ( $self, $req, @path ) = @_;
     return $self->_samlMetaDataNodes( 'SP', $req, @path );
 }
 
@@ -350,7 +351,7 @@ sub samlSPMetaDataNodes {
 #@param @path words in path after `oidc{OP|RP}MetaDataNode`
 #@return PSGI JSON response
 sub _oidcMetaDataNodes {
-    my ( $self, $type, $req, @path ) = splice @_;
+    my ( $self, $type, $req, @path ) = @_;
 
     my $refKey =
       ( $type eq 'RP' ? 'oidcRPMetaDataOptions' : 'oidcOPMetaDataJSON' );
@@ -428,7 +429,7 @@ sub _oidcMetaDataNodes {
 #@param @path words in path after `oidcOPMetaDataNode`
 #@return PSGI JSON response
 sub oidcOPMetaDataNodes {
-    my ( $self, $req, @path ) = splice @_;
+    my ( $self, $req, @path ) = @_;
     return $self->_oidcMetaDataNodes( 'OP', $req, @path );
 }
 
@@ -439,7 +440,7 @@ sub oidcOPMetaDataNodes {
 #@param @path words in path after `oidcRPMetaDataNode`
 #@return PSGI JSON response
 sub oidcRPMetaDataNodes {
-    my ( $self, $req, @path ) = splice @_;
+    my ( $self, $req, @path ) = @_;
     return $self->_oidcMetaDataNodes( 'RP', $req, @path );
 }
 
@@ -450,7 +451,7 @@ sub oidcRPMetaDataNodes {
 #@param key optional subkey
 #@return PSGI JSON response
 sub authChoiceModules {
-    my ( $self, $req, $key ) = splice @_;
+    my ( $self, $req, $key ) = @_;
     my $value = $self->getConfKey( $req, 'authChoiceModules' );
     unless ($key) {
         my @res;
@@ -477,7 +478,7 @@ sub authChoiceModules {
 #@param $req Lemonldap::NG::PSGI::Request
 #@return PSGI JSON response
 sub grantSessionRules {
-    my ( $self, $req, $key ) = splice @_;
+    my ( $self, $req, $key ) = @_;
     return $self->sendError( 'Subkeys forbidden for grantSessionRules', 400 )
       if ($key);
     my $value = $self->getConfKey( $req, 'grantSessionRules' );
@@ -512,7 +513,7 @@ sub grantSessionRules {
 #@param $req Lemonldap::NG::PSGI::Request
 #@return PSGI JSON response
 sub metadatas {
-    my ( $self, $req ) = splice @_;
+    my ( $self, $req ) = @_;
     if ( $req->params('full') and $req->params('full') !~ $no ) {
         my $c = $self->getConfKey( $req, 'cfgNum' );
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
@@ -557,7 +558,7 @@ sub metadatas {
 #@param @other words in path after `applicationList`
 #@return PSGI JSON response
 sub applicationList {
-    my ( $self, $req, @other ) = splice @_;
+    my ( $self, $req, @other ) = @_;
     return $self->sendError( $req,
         'There is no subkey for applicationList', 400 )
       if (@other);
@@ -574,7 +575,7 @@ sub applicationList {
 #@param $apps HashRef pointing to a subnode of catAndApps conf tree
 #@return arrayRef
 sub _scanCatsAndApps {
-    my ( $self, $apps, $baseId ) = splice @_;
+    my ( $self, $apps, $baseId ) = @_;
     my @res;
 
     foreach my $cat ( grep { not /^(?:catname|type)$/ } sort keys %$apps ) {
@@ -609,7 +610,7 @@ sub _scanCatsAndApps {
 #@param $subkey Subkey for hash values
 #@return Configuration value (as scalar)
 sub getKey {
-    my ( $self, $req, $key, $subkey ) = splice @_;
+    my ( $self, $req, $key, $subkey ) = @_;
     unless ($key) {
         return $self->metadatas($req);
     }
@@ -661,7 +662,7 @@ sub getKey {
 #@param $req Lemonldap::NG::PSGI::Request
 #@return PSGI JSON response
 sub newConf {
-    my ( $self, $req, @other ) = splice @_;
+    my ( $self, $req, @other ) = @_;
     return $self->sendError( $req, 'There is no subkey for "newConf"', 400 )
       if (@other);
 
@@ -741,7 +742,7 @@ sub newConf {
 #@param $req Lemonldap::NG::PSGI::Request
 #@return PSGI JSON response
 sub newRawConf {
-    my ( $self, $req, @other ) = splice @_;
+    my ( $self, $req, @other ) = @_;
     return $self->sendError( $req, 'There is no subkey for "newConf"', 400 )
       if (@other);
 
@@ -782,7 +783,7 @@ sub newRawConf {
 # @param $password A password to protect the private key
 # @return Hashref
 sub newRSAKey {
-    my ( $self, $req, @others ) = splice @_;
+    my ( $self, $req, @others ) = @_;
     return $self->sendError( $req, 'There is no subkey for "newRSAKey"', 400 )
       if (@others);
     my $query = $req->jsonBodyToObj;
@@ -820,7 +821,7 @@ sub newRSAKey {
 # Try to apply configuration by reloading Handlers
 # @return reload status
 sub applyConf {
-    my ( $self, $newConf ) = splice @_;
+    my ( $self, $newConf ) = @_;
     my $status;
 
     # Get apply section values

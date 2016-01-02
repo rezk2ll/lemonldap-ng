@@ -86,11 +86,12 @@ sub set {
     my $s = $self->mgr->confAcc->saveConf( $new, { force => $self->force } );
     if ( $s > 0 ) {
         print STDERR "Saved under number $s\n";
+        $parser->{status} = $self->mgr->applyConf($new);
     }
     else {
         printf STDERR "Modifications rejected: %s:\n", $parser->{message};
     }
-    foreach (qw(errors warnings)) {
+    foreach (qw(errors warnings status)) {
         printf STDERR "%-8s: %s", ucfirst($_), Dumper( $parser->{$_} )
           if ( $parser->{$_} and @{ $parser->{$_} } );
     }
@@ -110,7 +111,7 @@ sub _getKey {
         warn "Malformed key $base";
         return ();
     }
-    my $value = $self->mgr->getConfKey( $self->req, $base );
+    my $value = $self->mgr->getConfKey( $self->req, $base, noCache => 1 );
     if ( $self->req->error ) {
         die $self->req->error;
     }
@@ -145,14 +146,6 @@ sub run {
     my $self = shift;
 
     print STDERR "VERY EXPERIMENTAL FEATURE, prefer web interface\n";
-
-    if ( $> == 0 ) {
-        print STDERR
-          "$0 must not be launched as root since local cache can be corrupted\n"
-          . "Continue (y/N)? ";
-        my $res = <STDIN>;
-        exit 1 unless ( $res =~ /^y/i );
-    }
 
     # Options simply call corresponding accessor
     while ( $_[0] =~ s/^--?// ) {
