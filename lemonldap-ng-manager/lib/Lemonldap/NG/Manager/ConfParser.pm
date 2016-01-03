@@ -475,6 +475,24 @@ sub _scanNodes {
             next;
         }
 
+        # openIdIDPList: data is splitted by Conf.pm into a boolean and a
+        # string
+        elsif ( $name eq 'openIdIDPList' ) {
+            hdebug('openIdIDPList');
+            if ( $leaf->{data} ) {
+                unless ( ref $leaf->{data} eq 'ARRAY' ) {
+                    push @{ $self->{errors} },
+                      { message => 'Malformed openIdIDPList ' . $leaf->{data} };
+                    return 0;
+                }
+                $self->set( $name, join( ';', @{ $leaf->{data} } ) );
+            }
+            else {
+                $self->set( $name, undef );
+            }
+            next;
+        }
+
         ####################
         # Other hash nodes #
         ####################

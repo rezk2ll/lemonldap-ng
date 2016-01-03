@@ -472,8 +472,8 @@ sub authChoiceModules {
     }
 }
 
-## @method PSGI-JSON-response $grantSessionRules($req)
-#Respond to `/conf/:cfgNum` requests by sending configuration metadatas
+## @method PSGI-JSON-response grantSessionRules($req)
+# Split grantSessionRules key=>value into 3 elements
 #
 #@param $req Lemonldap::NG::PSGI::Request
 #@return PSGI JSON response
@@ -505,6 +505,19 @@ sub grantSessionRules {
           };
     }
     return $self->sendJSONresponse( $req, \@res );
+}
+
+##method PSGI-JSON-response openIdIDPList($req)
+# Split openIdIDPList parameter into 2 elements
+sub openIdIDPList {
+    my ( $self, $req, $key ) = @_;
+    return $self->sendError( 'Subkeys forbidden for openIdIDPList', 400 )
+      if ($key);
+    my $value = $self->getConfKey( $req, 'openIdIDPList' );
+    $value //= '0;';
+    my ( $type, $v ) = split /;/, $value;
+    $v //= '';
+    return $self->sendJSONresponse( $req, { value => [ $type, $v ] } );
 }
 
 ## @method PSGI-JSON-response metadatas($req)
