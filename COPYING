@@ -88,7 +88,7 @@ License: GPL-2+
 
 Files: *jquery.elastic.source.js
 Copyright: Jan Jarfalk - http://www.unwrongest.com
-License: MIT
+License: Expat
 
 Files: *jquery-ui*.js *jquery-ui*.css */ui-lightness/images/*
 Copyright: 2008 Paul Bakaus (ui.jquery.com)
@@ -115,8 +115,7 @@ Copyright: 2008 Paul Bakaus (ui.jquery.com)
  Maggie Costello Wachs
  Richard D. Worth (rdworth.org)
  Jörn Zaefferer (bassistance.de)
-License: GPL-2 or MIT
-Homepage: http://jqueryui.com/
+License: GPL-2 or Expat
 
 Files: lemonldap-ng-portal/example/skins/common/apps/*
  lemonldap-ng-manager/example/skins/default/images/apps-logos/*
@@ -555,7 +554,7 @@ License: LGPL-3
  The full text of the GNU Lesser General Public License
  version 3 can be found in http://opensource.org/licenses/LGPL-3.0
 
-License: MIT
+License: Expat
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
