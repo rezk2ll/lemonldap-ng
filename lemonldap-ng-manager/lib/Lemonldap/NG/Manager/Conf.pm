@@ -125,7 +125,7 @@ sub getConfByNum {
 
 # This section contains several methods:
 #  - complex nodes:
-#    * recursiveNodes() call for root queries (no subkeys) to display the list
+#    * complexNodesRoot() call for root queries (no subkeys) to display the list
 #    * virtualHosts()
 #    * _samlMetaDataNodes() is called by saml(IDP|RP)MetaDataNode
 #    * _oidcMetaDataNodes() is called by oidc(OP|RP)MetaDataNodes
@@ -144,14 +144,14 @@ sub getConfByNum {
 # 31 - Complex subnodes
 #      ----------------
 
-## @method PSGI-JSON-response recursiveCnodes($req, $query, $tpl)
+## @method PSGI-JSON-response complexNodesRoot($req, $query, $tpl)
 # Respond to root requests for virtual hosts and SAMLmetadatas
 #
 #@param $req Lemonldap::NG::Common::PSGI::Request
 #@param $query Configuration root key
 #@param $tpl Javascript template to use (see JS/JSON generator script)
 #@return PSGI JSON response
-sub recursiveCnodes {
+sub complexNodesRoot {
     my ( $self, $req, $query, $tpl ) = @_;
     $self->lmLog( "Query for $query template keys", 'debug' );
 
@@ -185,7 +185,7 @@ sub recursiveCnodes {
 sub virtualHosts {
     my ( $self, $req, @path ) = @_;
 
-    return $self->recursiveCnodes( $req, 'locationRules', 'virtualHost' )
+    return $self->complexNodesRoot( $req, 'locationRules', 'virtualHost' )
       unless (@path);
 
     my $vh = shift @path;
@@ -274,7 +274,7 @@ sub virtualHosts {
 sub _samlMetaDataNodes {
     my ( $self, $type, $req, @path ) = @_;
 
-    return $self->recursiveCnodes( $req, "saml${type}MetaDataXML",
+    return $self->complexNodesRoot( $req, "saml${type}MetaDataXML",
         "saml${type}MetaDataNode" )
       unless (@path);
     my $partner = shift @path;
@@ -386,7 +386,7 @@ sub _oidcMetaDataNodes {
 
     my $refKey =
       ( $type eq 'RP' ? 'oidcRPMetaDataOptions' : 'oidcOPMetaDataJSON' );
-    return $self->recursiveCnodes( $req, $refKey, "oidc${type}MetaDataNode" )
+    return $self->complexNodesRoot( $req, $refKey, "oidc${type}MetaDataNode" )
       unless (@path);
 
     my $partner = shift @path;
