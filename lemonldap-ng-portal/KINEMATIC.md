@@ -82,9 +82,9 @@ Notes:
 
 Returns the content of Lemonldap::NG::Common::Conf::SAML::Metadata-&gt;serviceToXML()
 
-### /cas.pl
+### /openid-configuration.pl
 
-Deliver CAS tickets
+Display OpenID-Connect JSON configuration
 
 ### /mail.pl
 
