@@ -120,12 +120,34 @@ sub getConfByNum {
 # III. Display methods #
 ########################
 
-# Special subnodes
+# Values are send depending of the /path/info/. For example,
+# /confs/1/portal to get portal value.
+
+# This section contains several methods:
+#  - complex nodes:
+#    * recursiveNodes() call for root queries (no subkeys) to display the list
+#    * virtualHosts()
+#    * _samlMetaDataNodes() is called by saml(IDP|RP)MetaDataNode
+#    * _oidcMetaDataNodes() is called by oidc(OP|RP)MetaDataNodes
+#  - other special nodes:
+#    * authChoiceModules()
+#    * grantSessionRules()
+#    * openIdIDPList() (old OpenID)
+#    * applicationList()
+#  - root:
+#    root query (/confs/latest for example) is redirected to metadatas()
+#  - other requests:
+#    they are managed by getKey()
+#  - newRSAKey() returns a new RSA key pair if /confs/newRSAKey is called in a
+#    POST request
+
+# 31 - Complex subnodes
+#      ----------------
 
 ## @method PSGI-JSON-response recursiveCnodes($req, $query, $tpl)
 # Respond to root requests for virtual hosts and SAMLmetadatas
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@param $query Configuration root key
 #@param $tpl Javascript template to use (see JS/JSON generator script)
 #@return PSGI JSON response
@@ -151,10 +173,13 @@ sub recursiveCnodes {
     return $self->sendJSONresponse( $req, \@res );
 }
 
+# 311 - Virtual hosts
+#       -------------
+
 ## @method PSGI-JSON-response virtualHosts($req, @path)
 # Respond to virtualhosts sub requests
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@param @path words in path after `virtualhosts`
 #@return PSGI JSON response
 sub virtualHosts {
@@ -236,11 +261,14 @@ sub virtualHosts {
     }
 }
 
+# 312 - SAML
+#       ----
+
 ## @method PSGI-JSON-response _samlMetaDataNode($type, $req, @path)
 # Respond to SAML metadata subnodes
 #
 #@param $type `SP` or `IDP`
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@param @path words in path after `saml{IDP|SP}MetaDataNode`
 #@return PSGI JSON response
 sub _samlMetaDataNodes {
@@ -324,7 +352,7 @@ sub _samlMetaDataNodes {
 ## @method PSGI-JSON-response samlIDPMetaDataNode($req, @path)
 # Launch _samlMetaDataNode('IDP', @_)
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@param @path words in path after `samlIDPMetaDataNode`
 #@return PSGI JSON response
 sub samlIDPMetaDataNodes {
@@ -335,7 +363,7 @@ sub samlIDPMetaDataNodes {
 ## @method PSGI-JSON-response samlSPMetaDataNode($req, @path)
 # Launch _samlMetaDataNode('SP', @_)
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@param @path words in path after `samlSPMetaDataNode`
 #@return PSGI JSON response
 sub samlSPMetaDataNodes {
@@ -343,11 +371,14 @@ sub samlSPMetaDataNodes {
     return $self->_samlMetaDataNodes( 'SP', $req, @path );
 }
 
+# 313 - OpenID-Connect
+#       --------------
+
 ## @method PSGI-JSON-response _oidcMetaDataNodes($type, $req, @path)
 # Respond to OpenID-Connect metadata subnodes
 #
 #@param $type `OP` or `RP`
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@param @path words in path after `oidc{OP|RP}MetaDataNode`
 #@return PSGI JSON response
 sub _oidcMetaDataNodes {
@@ -425,7 +456,7 @@ sub _oidcMetaDataNodes {
 ## @method PSGI-JSON-response oidcOPMetaDataNodes($req, @path)
 # Launch _oidcMetaDataNodes('SP', @_)
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@param @path words in path after `oidcOPMetaDataNode`
 #@return PSGI JSON response
 sub oidcOPMetaDataNodes {
@@ -436,7 +467,7 @@ sub oidcOPMetaDataNodes {
 ## @method PSGI-JSON-response oidcRPMetaDataNodes($req, @path)
 # Launch _oidcMetaDataNodes('SP', @_)
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@param @path words in path after `oidcRPMetaDataNode`
 #@return PSGI JSON response
 sub oidcRPMetaDataNodes {
@@ -444,10 +475,15 @@ sub oidcRPMetaDataNodes {
     return $self->_oidcMetaDataNodes( 'RP', $req, @path );
 }
 
+# 32 - Other special nodes
+#      -------------------
+
+# 321 - Choice authentication
+
 ## @method PSGI-JSON-response authChoiceModules($req,$key)
 # Returns authChoiceModules keys splitted in arrays
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@param key optional subkey
 #@return PSGI JSON response
 sub authChoiceModules {
@@ -472,10 +508,12 @@ sub authChoiceModules {
     }
 }
 
+# 322 - Rules to grant sessions
+
 ## @method PSGI-JSON-response grantSessionRules($req)
 # Split grantSessionRules key=>value into 3 elements
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@return PSGI JSON response
 sub grantSessionRules {
     my ( $self, $req, $key ) = @_;
@@ -507,6 +545,8 @@ sub grantSessionRules {
     return $self->sendJSONresponse( $req, \@res );
 }
 
+# 323 - (old)OpenID IDP black/white list
+
 ##method PSGI-JSON-response openIdIDPList($req)
 # Split openIdIDPList parameter into 2 elements
 sub openIdIDPList {
@@ -520,54 +560,13 @@ sub openIdIDPList {
     return $self->sendJSONresponse( $req, { value => [ $type, $v ] } );
 }
 
-## @method PSGI-JSON-response metadatas($req)
-#Respond to `/conf/:cfgNum` requests by sending configuration metadatas
-#
-#@param $req Lemonldap::NG::PSGI::Request
-#@return PSGI JSON response
-sub metadatas {
-    my ( $self, $req ) = @_;
-    if ( $req->params('full') and $req->params('full') !~ $no ) {
-        my $c = $self->getConfKey( $req, 'cfgNum' );
-        return $self->sendError( $req, undef, 400 ) if ( $req->error );
-        $self->userNotice( $req,
-                'User '
-              . $self->userId($req)
-              . ' ask for full configuration '
-              . $c->{cfgNum} );
-        return $self->sendJSONresponse( $req, $self->currentConf,
-            forceJSON => 1 );
-    }
-    else {
-        my $res = {};
-        $res->{cfgNum} = $self->getConfKey( $req, 'cfgNum' );
-        return $self->sendError( $req, undef, 400 ) if ( $req->error );
-        return $self->sendError( $req, "Configuration without cfgNum", 500 )
-          unless ( defined $res->{cfgNum} );
-        foreach my $key (qw(cfgAuthor cfgDate cfgAuthorIP cfgLog)) {
-            $res->{$key} = $self->getConfKey( $req, $key );
-        }
-
-        # Find next and previous conf
-        my @a  = $self->confAcc->available;
-        my $id = -1;
-        my ($ind) = map { $id++; $_ == $res->{cfgNum} ? ($id) : () } @a;
-        if ($ind)         { $res->{prev} = $a[ $ind - 1 ]; }
-        if ( $ind < $#a ) { $res->{next} = $a[ $ind + 1 ]; }
-        $self->userNotice( $req,
-                'User '
-              . $self->userId($req)
-              . ' ask for configuration metadatas ('
-              . $res->{cfgNum}
-              . ')' );
-        return $self->sendJSONresponse( $req, $res );
-    }
-}
+# 324 - Application for menu
+#       --------------------
 
 ## @method PSGI-JSON-response applicationList($req, @other)
 # Return the full menu tree
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@param @other words in path after `applicationList`
 #@return PSGI JSON response
 sub applicationList {
@@ -615,10 +614,63 @@ sub _scanCatsAndApps {
     return \@res;
 }
 
+# 33 - Root queries
+#      -----------
+
+## @method PSGI-JSON-response metadatas($req)
+# Respond to `/conf/:cfgNum` requests by sending configuration metadatas
+# 
+# NB: if `full=1` is set in the query, configuration is returned directly in
+#     JSON
+#
+#@param $req Lemonldap::NG::Common::PSGI::Request
+#@return PSGI JSON response
+sub metadatas {
+    my ( $self, $req ) = @_;
+    if ( $req->params('full') and $req->params('full') !~ $no ) {
+        my $c = $self->getConfKey( $req, 'cfgNum' );
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        $self->userNotice( $req,
+                'User '
+              . $self->userId($req)
+              . ' ask for full configuration '
+              . $c->{cfgNum} );
+        return $self->sendJSONresponse( $req, $self->currentConf,
+            forceJSON => 1 );
+    }
+    else {
+        my $res = {};
+        $res->{cfgNum} = $self->getConfKey( $req, 'cfgNum' );
+        return $self->sendError( $req, undef, 400 ) if ( $req->error );
+        return $self->sendError( $req, "Configuration without cfgNum", 500 )
+          unless ( defined $res->{cfgNum} );
+        foreach my $key (qw(cfgAuthor cfgDate cfgAuthorIP cfgLog)) {
+            $res->{$key} = $self->getConfKey( $req, $key );
+        }
+
+        # Find next and previous conf
+        my @a  = $self->confAcc->available;
+        my $id = -1;
+        my ($ind) = map { $id++; $_ == $res->{cfgNum} ? ($id) : () } @a;
+        if ($ind)         { $res->{prev} = $a[ $ind - 1 ]; }
+        if ( $ind < $#a ) { $res->{next} = $a[ $ind + 1 ]; }
+        $self->userNotice( $req,
+                'User '
+              . $self->userId($req)
+              . ' ask for configuration metadatas ('
+              . $res->{cfgNum}
+              . ')' );
+        return $self->sendJSONresponse( $req, $res );
+    }
+}
+
+# 34 - Other values
+#      ------------
+
 ## @method scalar getKey($req, $key, $subkey)
 # Return the value of a root key of current configuration
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@param $key Name of key requested
 #@param $subkey Subkey for hash values
 #@return Configuration value (as scalar)
@@ -664,15 +716,66 @@ sub getKey {
     # TODO authParam key
 }
 
+# 35 - New RSA key pair on demand
+#      --------------------------
+
+##@method public hashref newRSAKey($req)
+# Return a hashref containing private and public keys
+# The posted datas must contain a JSON object containing
+# {"password":"newpassword"}
+#
+# @param $req Lemonldap::NG::Common::PSGI::Request object
+# @return Hashref
+sub newRSAKey {
+    my ( $self, $req, @others ) = @_;
+    return $self->sendError( $req, 'There is no subkey for "newRSAKey"', 400 )
+      if (@others);
+    my $query = $req->jsonBodyToObj;
+    my $rsa   = Crypt::OpenSSL::RSA->generate_key(2048);
+    my $keys  = {
+        'private' => $rsa->get_private_key_string(),
+        'public'  => $rsa->get_public_key_x509_string(),
+    };
+    if ( $query->{password} ) {
+        my $pem = Convert::PEM->new(
+            Name => 'RSA PRIVATE KEY',
+            ASN  => q(
+                RSAPrivateKey SEQUENCE {
+                    version INTEGER,
+                    n INTEGER,
+                    e INTEGER,
+                    d INTEGER,
+                    p INTEGER,
+                    q INTEGER,
+                    dp INTEGER,
+                    dq INTEGER,
+                    iqmp INTEGER
+    }
+               )
+        );
+        $keys->{private} = $pem->encode(
+            Content  => $pem->decode( Content => $keys->{private} ),
+            Password => $query->{password},
+        );
+    }
+    return $self->sendJSONresponse( $req, $keys );
+}
+
 ######################
 # IV. Upload methods #
 ######################
+
+# In this section, 3 methods:
+#  - newConf()
+#  - newRawConf(): restore a saved conf
+#  - applyConf(): called by the 2 previous to prevent other servers that a new
+#                 configuration is available
 
 ## @method PSGI-JSON-response newConf($req)
 # Call Lemonldap::NG::Manager::ConfParser to parse new configuration and store
 # it
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@return PSGI JSON response
 sub newConf {
     my ( $self, $req, @other ) = @_;
@@ -752,7 +855,7 @@ sub newConf {
 ## @method PSGI-JSON-response newRawConf($req)
 # Store directly raw configuration
 #
-#@param $req Lemonldap::NG::PSGI::Request
+#@param $req Lemonldap::NG::Common::PSGI::Request
 #@return PSGI JSON response
 sub newRawConf {
     my ( $self, $req, @other ) = @_;
@@ -791,48 +894,11 @@ sub newRawConf {
     return $self->sendJSONresponse( $req, $res );
 }
 
-##@method public hashref generateKeys(string password)
-# Return a hashref containing private and public keys
-# @param $password A password to protect the private key
-# @return Hashref
-sub newRSAKey {
-    my ( $self, $req, @others ) = @_;
-    return $self->sendError( $req, 'There is no subkey for "newRSAKey"', 400 )
-      if (@others);
-    my $query = $req->jsonBodyToObj;
-    my $rsa   = Crypt::OpenSSL::RSA->generate_key(2048);
-    my $keys  = {
-        'private' => $rsa->get_private_key_string(),
-        'public'  => $rsa->get_public_key_x509_string(),
-    };
-    if ( $query->{password} ) {
-        my $pem = Convert::PEM->new(
-            Name => 'RSA PRIVATE KEY',
-            ASN  => q(
-                RSAPrivateKey SEQUENCE {
-                    version INTEGER,
-                    n INTEGER,
-                    e INTEGER,
-                    d INTEGER,
-                    p INTEGER,
-                    q INTEGER,
-                    dp INTEGER,
-                    dq INTEGER,
-                    iqmp INTEGER
-    }
-               )
-        );
-        $keys->{private} = $pem->encode(
-            Content  => $pem->decode( Content => $keys->{private} ),
-            Password => $query->{password},
-        );
-    }
-    return $self->sendJSONresponse( $req, $keys );
-}
-
 ## @method private applyConf()
-# Try to apply configuration by reloading Handlers
-# @return reload status
+# Try to prevent other servers declared in `reloadUrls` that a new
+# configuration is available.
+#
+#@return reload status as boolean
 sub applyConf {
     my ( $self, $newConf ) = @_;
     my $status;

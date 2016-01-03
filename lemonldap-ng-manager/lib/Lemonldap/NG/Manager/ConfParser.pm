@@ -1,11 +1,31 @@
 package Lemonldap::NG::Manager::ConfParser;
 
+# This module is called either to parse a new configuration in JSON format (as
+# posted by the web interface) and test a new configuration object.
+#
+# The new object must be build with the following properties:
+#  - refConf: the actual configuration
+#  - req    : the Lemonldap::NG::Common::PSGI::Request
+#  - tree   : the new configuration in JSON format
+#   or
+#  - newConf: the configuration to test
+#
+# The main method is check() which calls:
+#  - scanTree() if configuration is not parsed (JSON string)
+#  - testNewConf()
+#
+# It returns a boolean. Errors, warnings and changes are stored as array
+# containing `{ message => 'Explanation' }. A main message is stored in
+# `message` property.
+
 use Mouse;
 use Lemonldap::NG::Manager::Constants;
 use Lemonldap::NG::Manager::Attributes;
 
+# High debugging for developpers, set this to 1
 use constant HIGHDEBUG => 0;
 
+# Messages storage
 has errors => (
     is      => 'rw',
     isa     => 'ArrayRef',
@@ -20,8 +40,6 @@ has warnings => (
     }
 );
 has changes => ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
-has needConfirm =>
-  ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
 has message => (
     is      => 'rw',
     isa     => 'Str',
@@ -30,19 +48,26 @@ has message => (
         hdebug( "Message becomes " . $_[0]->{message} );
     }
 );
+
+# Booleans
+has needConfirm =>
+  ( is => 'rw', isa => 'ArrayRef', default => sub { return [] } );
 has confChanged => (
     is      => 'rw',
-    isa     => 'Int',
+    isa     => 'Bool',
     default => 0,
     trigger => sub {
         hdebug( "condChanged: " . $_[0]->{confChanged} );
     }
 );
+
+# Properties required during build
 has refConf => ( is => 'ro', isa => 'HashRef', required => 1 );
 has req     => ( is => 'ro', required => 1 );
 has newConf => ( is => 'rw', isa      => 'HashRef' );
 has tree    => ( is => 'rw', isa      => 'ArrayRef' );
 
+# High debug method
 sub hdebug {
     if (HIGHDEBUG) {
         foreach my $d (@_) {
@@ -56,6 +81,9 @@ sub hdebug {
     undef;
 }
 
+##@method boolean check()
+# Main method
+#@return result
 sub check {
     my $self = shift;
     hdebug("# check()");
@@ -73,9 +101,9 @@ sub check {
     return ( $self->confChanged );
 }
 
-# Methods to buid conf from JSON tree
-
-# JSON parser launcher
+##@method boolean scanTree()
+# Methods to build new conf from JSON string
+#@result true if succeed
 sub scanTree {
     my $self = shift;
     hdebug("# scanTree()");
@@ -97,7 +125,9 @@ sub scanTree {
 
 use feature 'state';
 
+##@method private boolean _scanNodes()
 # Recursive JSON parser
+#@result true if succeed
 sub _scanNodes {
     my ( $self, $tree, ) = @_;
     hdebug("# _scanNodes()");
@@ -591,6 +621,8 @@ sub _scanNodes {
     return 1;
 }
 
+##@method private void set($target, @path, $data)
+# Store a value in the $target key (following subkeys if @path is set)
 sub set {
     my $self  = shift;
     my $data  = pop;
@@ -660,12 +692,20 @@ sub defaultValue {
     return $res;
 }
 
+##@method boolean testNewConf()
+# Launch _unitTest() and _globaTest()
+#
+#@return true if tests succeed
 sub testNewConf {
     my $self = shift;
     hdebug('# testNewConf()');
     return $self->_unitTest( $self->newConf(), '' ) && $self->_globalTest();
 }
 
+##@method private boolean _unitTest()
+# Launch unit tests declared in Lemonldap::NG::Manager::Build::Attributes file
+#
+#@return true if tests succeed
 sub _unitTest {
     my ( $self, $conf ) = @_;
     hdebug('# _unitTest()');
@@ -742,6 +782,10 @@ sub _unitTest {
     return $res;
 }
 
+##@method private boolean _globalTest()
+# Launch all tests declared in Lemonldap::NG::Manager::Conf::Tests::tests()
+#
+#@return true if tests succeed
 sub _globalTest {
     my $self = shift;
     require Lemonldap::NG::Manager::Conf::Tests;
