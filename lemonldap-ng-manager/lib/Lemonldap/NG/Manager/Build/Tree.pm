@@ -335,7 +335,6 @@ sub tree {
                             nodes => [
                                 'slaveAuthnLevel', 'slaveExportedVars',
                                 'slaveUserHeader', 'slaveMasterIP',
-                                'slaveUserHeader', 'slaveMasterIP',
                                 'slaveHeaderName', 'slaveHeaderContent'
                             ]
                         },
