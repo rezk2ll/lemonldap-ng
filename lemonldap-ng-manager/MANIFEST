@@ -125,6 +125,7 @@ t/05-rest-api.t
 t/06-rest-api.t
 t/10-save-unchanged-conf.t
 t/12-save-changed-conf.t
+t/20-test-coverage.t
 t/40-sessions.t
 t/50-notifications.t
 t/90-translations.t
