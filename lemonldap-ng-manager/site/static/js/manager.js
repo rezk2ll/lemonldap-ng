@@ -78,6 +78,12 @@
       else if (e == 401) {
         console.log('Authentication needed');
       }
+      else if (e == 400) {
+        $scope.message.title = '__badRequest__';
+        $scope.message.items = [{
+          message: (j.error ? j.error : j)
+        }];
+      }
       else if (e > 0) {
         $scope.message.title = 'serverError';
         $scope.message.items = [{
@@ -180,7 +186,7 @@
           "title": "cfgLog",
           "data": $scope.result
         });
-        $http.post($scope.confPrefix + '?cfgNum=' + $scope.currentCfg.cfgNum + ($scope.forceSave ? "&force=1" : ''), $scope.data).success(function(data) {
+        $http.post(confPrefix + '?cfgNum=' + $scope.currentCfg.cfgNum + ($scope.forceSave ? "&force=1" : ''), $scope.data).success(function(data) {
           $scope.data.pop();
           _checkSaveResponse(data);
         }).error(function(j, e) {
@@ -196,7 +202,7 @@
 
     $scope.saveRawConf = function($fileContent) {
       $scope.waiting = true;
-      $http.post($scope.confPrefix + '/raw', $fileContent).success(function(data) {
+      $http.post(confPrefix + '/raw', $fileContent).success(function(data) {
         _checkSaveResponse(data);
       }).error(readError);
     };
@@ -512,7 +518,7 @@
       var d = $q.defer();
       d.notify('Trying to get datas');
       $scope.waiting = true;
-      $http.get($scope.confPrefix + $scope.currentCfg.cfgNum + '/' + node.cnodes).success(function(data) {
+      $http.get(confPrefix + $scope.currentCfg.cfgNum + '/' + node.cnodes).success(function(data) {
         /* Manage datas errors */
         if (!data) {
           d.reject('Empty response from server');
@@ -622,7 +628,7 @@
         $scope.waiting = true;
         var currentNode = $scope.currentNode;
         var password = $scope.result;
-        $http.post($scope.confPrefix + '/newRSAKey', {
+        $http.post(confPrefix + '/newRSAKey', {
           "password": password
         }).success(function(data) {
           currentNode.data[0].data = data['private'];
@@ -640,7 +646,7 @@
       $scope.waiting = true;
       var currentNode = $scope.currentNode;
       var password = $scope.result;
-      $http.post($scope.confPrefix + '/newRSAKey', {
+      $http.post(confPrefix + '/newRSAKey', {
         "password": ''
       }).success(function(data) {
         currentNode.data[0].data = data['private'];
@@ -676,7 +682,7 @@
             $scope.waiting = false;
           });
         } else {
-          $http.get($scope.confPrefix + $scope.currentCfg.cfgNum + '/' + (node.get ? node.get : node.title)).success(function(data) {
+          $http.get(confPrefix + $scope.currentCfg.cfgNum + '/' + (node.get ? node.get : node.title)).success(function(data) {
             /* Set default value if response is null or if asked by server */
             if ((data.value === null || (data.error && data.error.match(/setDefault$/))) && node.
           default !== null) {
@@ -725,7 +731,7 @@
      */
     $scope.getCfg = function(n) {
       if ($scope.currentCfg.cfgNum != n) {
-        $http.get($scope.confPrefix + n).success(function(data) {
+        $http.get(confPrefix + n).success(function(data) {
           $scope.currentCfg = data;
           var d = new Date($scope.currentCfg.cfgDate * 1000);
           $scope.currentCfg['date'] = d.toLocaleString();
@@ -779,6 +785,17 @@
     if (!c) {
       console.log("Redirecting to /confs/latest");
       $location.path('/confs/latest');
+    }
+
+    $scope.replaceContentByUrl = function(node, url) {
+      $scope.waiting = true;
+      $http.post(scriptname + "prx", {
+        "url":
+        url
+      }).success(function(data) {
+        node.data = data.content;
+        $scope.waiting = false;
+      }).error(readError);
     }
 
     /* Update currentNode.data (used for file form */

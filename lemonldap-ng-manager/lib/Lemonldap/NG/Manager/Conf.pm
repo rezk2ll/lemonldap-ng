@@ -13,6 +13,7 @@ use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Manager::Constants;
 use Crypt::OpenSSL::RSA;
 use Convert::PEM;
+use JSON::MaybeXS;
 
 use feature 'state';
 
@@ -51,7 +52,10 @@ sub addRoutes {
         confs =>
           { newRSAKey => 'newRSAKey', raw => 'newRawConf', '*' => 'newConf' },
         ['POST']
-      );
+      )
+
+      # Url loader
+      ->addRoute( 'prx', undef, ['POST'] );
 }
 
 #######################
@@ -140,6 +144,7 @@ sub getConfByNum {
 #    they are managed by getKey()
 #  - newRSAKey() returns a new RSA key pair if /confs/newRSAKey is called in a
 #    POST request
+#  - prx() load a request and return the content (for SAML/OIDC metadatas)
 
 # 31 - Complex subnodes
 #      ----------------
@@ -619,7 +624,7 @@ sub _scanCatsAndApps {
 
 ## @method PSGI-JSON-response metadatas($req)
 # Respond to `/conf/:cfgNum` requests by sending configuration metadatas
-# 
+#
 # NB: if `full=1` is set in the query, configuration is returned directly in
 #     JSON
 #
@@ -667,13 +672,13 @@ sub metadatas {
 # 34 - Other values
 #      ------------
 
-## @method scalar getKey($req, $key, $subkey)
+## @method PSGI-JSON-response getKey($req, $key, $subkey)
 # Return the value of a root key of current configuration
 #
 #@param $req Lemonldap::NG::Common::PSGI::Request
 #@param $key Name of key requested
 #@param $subkey Subkey for hash values
-#@return Configuration value (as scalar)
+#@return PSGI JSON response
 sub getKey {
     my ( $self, $req, $key, $subkey ) = @_;
     unless ($key) {
@@ -719,13 +724,13 @@ sub getKey {
 # 35 - New RSA key pair on demand
 #      --------------------------
 
-##@method public hashref newRSAKey($req)
+##@method public PSGI-JSON-response newRSAKey($req)
 # Return a hashref containing private and public keys
 # The posted datas must contain a JSON object containing
 # {"password":"newpassword"}
 #
-# @param $req Lemonldap::NG::Common::PSGI::Request object
-# @return Hashref
+#@param $req Lemonldap::NG::Common::PSGI::Request object
+#@return PSGI JSON response
 sub newRSAKey {
     my ( $self, $req, @others ) = @_;
     return $self->sendError( $req, 'There is no subkey for "newRSAKey"', 400 )
@@ -759,6 +764,40 @@ sub newRSAKey {
         );
     }
     return $self->sendJSONresponse( $req, $keys );
+}
+
+# 36 - URL File loader
+#      ---------------
+
+##@method public PSGI-JSON-response prx()
+# Load file using posted URL and return its content
+#
+#@return PSGI JSON response
+sub prx {
+    my ( $self, $req, @others ) = @_;
+    return $self->sendError( $req, 'There is no subkey for "prx"', 400 )
+      if (@others);
+    my $query = $req->jsonBodyToObj;
+    return $self->sendError( $req, 'Missing parameter', 400 )
+      unless ( $query->{url} );
+    return $self->sendError( $req, 'Bad parameter', 400 )
+      unless ( $query->{url} =~ m#^(?:f|ht)tps?://\w# );
+    require LWP::UserAgent;
+    my $ua = new LWP::UserAgent();
+    $ua->timeout(10);
+
+    my $response = $ua->get( $query->{url} );
+    unless ( $response->code == 200 ) {
+        return $self->sendError( $req,
+            $response->code . " (" . $response->message . ")", 400 );
+    }
+    unless ( $response->header('Content-Type') =~
+        m#^(?:application/json|application/.*xml.*)$# )
+    {
+        return $self->sendError( $req,
+            'Content refused for security reason (neither XML or JSON)', 400 );
+    }
+    return $self->sendJSONresponse( $req, { content => $response->content } );
 }
 
 ######################

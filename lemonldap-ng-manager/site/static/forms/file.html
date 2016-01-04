@@ -11,6 +11,13 @@
       <label for="fileinput" id="lfi"><span trspan="replaceByFile"></span> :</label>
       <input id="fileinput" aria-describedby="lfi" type="file" class="form-control" on-read-file="replaceContent(currentNode,$fileContent)"/>
     </div>
+    <div class="form-group">
+      <label for="urlinput" id="lfu"><span trspan="loadFromUrl"></span> :</label>
+      <span class="input-group">
+        <input id="urlinput" aria-describedby="lfu" class="form-control" ng-model="url" />
+        <span class="input-group-addon" trspan="load" ng-click="replaceContentByUrl(currentNode,url)"></span>
+      </span>
+    </div>
   </div>
 </div>
 <script type="text/javascript">
