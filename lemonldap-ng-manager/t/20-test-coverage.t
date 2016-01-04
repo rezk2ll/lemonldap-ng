@@ -14,11 +14,11 @@ ok( $types = Lemonldap::NG::Manager::Build::Attributes::types(), 'Get types' );
 $count += 2;
 
 foreach my $attr ( keys %$attrs ) {
+    next if($attr=~/^virtualHosts|.*MetaDataNodes|applicationList$/);
     ok(
         (
                  ref( $attrs->{$attr}->{test} )
               or ref( $types->{ $attrs->{$attr}->{type} }->{test} )
-              or $attrs->{$attr}->{type} =~ /Container$/
         ),
         "Test exists for $attr"
     );

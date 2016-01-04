@@ -74,6 +74,16 @@ sub types {
             test    => $perlExpr,
             msgFail => '__notAValidPerlExpression__',
         },
+        keyTextContainer => {
+            test       => qr/./,
+            msgFail    => 'Empty value non accorded',
+            keyTest    => qr/^\w[\w\.\-]*$/,
+            keyMsgFail => 'Bad key name',
+        },
+        subContainer => {
+            keyTest => qr/\w/,
+            test    => sub { 1 },
+        },
 
         # Files type (long text)
         file => {
@@ -158,10 +168,6 @@ qr/^(?:(?:\-+\s*BEGIN\s+RSA\s+PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,
                   : ( 0, "Invalid value '$_[0]' for this select" );
             },
         },
-        virtualHost => {
-            test => sub { 1 }
-        },
-
     };
 }
 
@@ -359,6 +365,7 @@ sub attributes {
         grantSessionRules => {
             type    => 'grantContainer',
             keyTest => $perlExpr,
+            test    => sub { 1 },
         },
         hiddenAttributes => {
             type          => 'text',
@@ -534,7 +541,6 @@ sub attributes {
         },
 
         # Notification
-        notificationStorage  => { type => 'PerlModule', },
         notificationWildcard => {
             type          => 'text',
             default       => 'allusers',
@@ -845,11 +851,12 @@ sub attributes {
         },
 
         locationRules => {
-            type    => 'ruleContainer',
-            help    => 'writingrulesand_headers.html#rules',
-            keyTest => qr/^$Regexp::Common::URI::RFC2396::hostname$/,
-            msgFail => '__badHostname__',
-            default => {
+            type       => 'ruleContainer',
+            help       => 'writingrulesand_headers.html#rules',
+            test       => sub { 1 },
+            keyTest    => qr/^$Regexp::Common::URI::RFC2396::hostname$/,
+            keyMsgFail => '__badHostname__',
+            default    => {
                 default => 'deny',
             },
             documentation => 'Virtualhost rules',
@@ -864,6 +871,7 @@ sub attributes {
         post => {
             type          => 'postContainer',
             help          => 'formreplay.html',
+            test          => sub { 1 },
             keyTest       => qr/^$Regexp::Common::URI::RFC2396::hostname$/,
             keyMsgFail    => '__badHostname__',
             documentation => 'Virtualhost urls/Datas to post',
@@ -1234,6 +1242,8 @@ sub attributes {
             help       => 'authsaml.html#exported_attributes',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             keyMsgFail => 'Bad metadata name',
+            test       => qr/\w/,
+            msgFail    => '__badValue__',
             default    => ';;;',
         },
         samlIDPMetaDataXML => {
@@ -1349,6 +1359,8 @@ sub attributes {
             help       => 'idpsaml.html#exported_attributes',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             keyMsgFail => 'Bad metadata name',
+            test       => qr/\w/,
+            msgFail    => '__badValue__',
             default    => ';;;',
         },
         samlSPMetaDataXML => {
@@ -1932,6 +1944,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             type       => 'authChoiceContainer',
             keyTest    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
             keyMsgFail => 'Bad choice key',
+            test       => sub { 1 },
             select     => [
                 [
                     { k => 'Apache',    v => 'Apache' },
