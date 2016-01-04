@@ -8,8 +8,9 @@ WriteMakefile(
     VERSION_FROM   => 'lib/Lemonldap/NG/Manager.pm',    # finds $VERSION
     LICENSE        => 'gpl',
     BUILD_REQUIRES => {
-        'IO::String' => 0,
-        'Test::Pod'  => 1.00,
+        'IO::String'     => 0,
+        'Regexp::Common' => 0,
+        'Test::Pod'      => 1.00,
     },
     META_MERGE => { 'LWP::Protocol::https' => 0, },
     PREREQ_PM  => {
