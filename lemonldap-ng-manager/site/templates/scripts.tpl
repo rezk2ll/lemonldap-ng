@@ -26,6 +26,7 @@
   var confPrefix=scriptname+'confs/';
   var availableLanguages='<TMPL_VAR NAME="AVAILABLE_LANGUAGES">'.split(/[,;] */);
   var links=<TMPL_VAR NAME="LINKS">;
+  var menulinks=<TMPL_VAR NAME="MENULINKS">;
 </script>
 
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.min.js"></script>

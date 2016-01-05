@@ -63,11 +63,20 @@ sub init {
         push @{ $self->links },
           { target => $enabledModules[$i]->defaultRoute, title => $links[$i] };
     }
-    push @{ $self->links },
+    $self->menuLinks( [] );
+    push @{ $self->menuLinks },
+      {
+        target => &{ $Lemonldap::NG::Handler::SharedConf::tsv->{portal} },
+        title  => 'backtoportal',
+        icon   => 'home'
+      }
+      if ( defined $Lemonldap::NG::Handler::SharedConf::tsv->{portal} );
+    push @{ $self->menuLinks },
       {
         target => &{ $Lemonldap::NG::Handler::SharedConf::tsv->{portal} }
           . '?logout=1',
-        title => 'logout'
+        title => 'logout',
+        icon  => 'log-out'
       }
       if ( defined $Lemonldap::NG::Handler::SharedConf::tsv->{portal} );
     1;

@@ -36,6 +36,7 @@
   llapp.controller('NotificationsExplorerCtrl', ['$scope', '$translator', '$location', '$q', '$http', function($scope, $translator, $location, $q, $http) {
 
     $scope.links = links;
+    $scope.menulinks = menulinks;
     $scope.staticPrefix = staticPrefix;
     $scope.scriptname = scriptname;
     $scope.formPrefix = formPrefix;

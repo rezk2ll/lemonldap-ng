@@ -16,10 +16,12 @@ has logLevel     => ( is => 'rw', isa     => 'Str' );
 has staticPrefix => ( is => 'rw', isa     => 'Str' );
 has templateDir  => ( is => 'rw', isa     => 'Str' );
 has links        => ( is => 'rw', isa     => 'ArrayRef' );
+has menuLinks    => ( is => 'rw', isa     => 'ArrayRef' );
 has syslog => (
     is      => 'rw',
     isa     => 'Str',
     trigger => sub {
+
         if ( $_[0]->{syslog} ) {
             eval {
                 require Sys::Syslog;
@@ -109,9 +111,11 @@ sub sendError {
     $err  ||= $req->error;
     $code ||= 500;
     $self->lmLog( "Error $code: $err", $code > 499 ? 'error' : 'notice' );
-    return ( $req->accept =~ /json/
+    return (
+          $req->accept =~ /json/
         ? $self->sendJSONresponse( $req, { error => $err }, code => $code )
-        : [ $code, [ 'Content-Type' => 'text/plain' ], ["Error: $err"] ] );
+        : [ $code, [ 'Content-Type' => 'text/plain' ], ["Error: $err"] ]
+    );
 }
 
 sub abort {
@@ -160,7 +164,10 @@ sub sendHtml {
             SCRIPT_NAME         => $req->scriptname,
             STATIC_PREFIX       => $sp,
             AVAILABLE_LANGUAGES => $self->languages,
-            LINKS   => $self->links ? encode_json( $self->links ) : '""',
+            LINKS     => $self->links ? encode_json( $self->links ) : '""',
+            MENULINKS => $self->menuLinks
+            ? encode_json( $self->menuLinks )
+            : '""',
             VERSION => $VERSION,
         );
     };

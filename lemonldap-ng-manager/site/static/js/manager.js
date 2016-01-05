@@ -56,6 +56,7 @@
   llapp.controller('TreeCtrl', ['$scope', '$http', '$location', '$q', '$modal', '$translator', function($scope, $http, $location, $q, $modal, $translator) {
 
     $scope.links = links;
+    $scope.menulinks = menulinks;
     $scope.staticPrefix = staticPrefix;
     $scope.formPrefix = formPrefix;
     $scope.availableLanguages = availableLanguages;
