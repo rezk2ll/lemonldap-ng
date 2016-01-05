@@ -45,7 +45,14 @@
           <ul class="nav navbar-nav">
             <li ng-if="currentSession" ng-repeat="button in menu.session" ng-include="'menubutton.html'"></li>
             <li ng-if="currentSession===null" ng-repeat="button in menu.home" ng-include="'menubutton.html'"></li>
-            <li class="visible-xs" ng-include="'languages.html'"></li>
+            <li class="dropdown visible-xs">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="link in links"><a href="{{link.target}}"><i ng-if="link.icon" class="glyphicon glyphicon-{{link.icon}}"></i> {{translate(link.title)}}</a></li>
+                <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> {{translate(menulink.title)}}</a></li>
+                <li ng-include="'languages.html'"></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
