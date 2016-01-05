@@ -4,8 +4,8 @@ describe('Lemonldap::NG Manager', function() {
 
   it('should display other modules', function() {
     browser.get('/');
-    var links = element.all(by.repeater('link in links'));
-    expect(links.count()).toEqual(4);
+    var links = element.all(by.repeater('l in links'));
+    expect(links.count()).toEqual(3);
     element(by.xpath("//a[@href='sessions.html']")).click();
   });
 

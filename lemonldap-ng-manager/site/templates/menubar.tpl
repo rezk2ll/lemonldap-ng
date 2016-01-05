@@ -21,7 +21,7 @@
           <!-- Last buttons, available languages -->
         </div>
         <ul class="hidden-xs nav navbar-nav">
-          <li ng-repeat="link in links"><a href="{{link.target}}"><strong><i ng-if="link.icon" class="glyphicon glyphicon-{{link.icon}}"></i> {{translate(link.title)}}</strong></a></li>
+          <li ng-repeat="l in links"><a href="{{l.target}}"><strong><i ng-if="l.icon" class="glyphicon glyphicon-{{l.icon}}"></i> {{translate(l.title)}}</strong></a></li>
         </ul>
         <ul class="hidden-xs nav navbar-nav navbar-right">
           <li class="dropdown">
