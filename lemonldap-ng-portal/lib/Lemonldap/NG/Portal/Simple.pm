@@ -1979,6 +1979,7 @@ sub modifyPassword {
 
 ##@apmethod int setSessionInfo()
 # Set ipAddr, startTime, updateTime, _utime and _userDB
+# Set _lastSeen if activity timeout is configured
 # Call setSessionInfo() in UserDB* module
 #@return Lemonldap::NG::Portal constant
 sub setSessionInfo {
@@ -1999,6 +2000,7 @@ sub setSessionInfo {
         $self->{sessionInfo}->{_utime} ||= time();
         $self->{sessionInfo}->{startTime} =
           strftime( "%Y%m%d%H%M%S", localtime() );
+        $self->{sessionInfo}->{_lastSeen} = time() if $self->{timeoutActivity};
     }
 
     # Get environment variables matching exportedVars
@@ -2560,6 +2562,10 @@ sub issuerForAuthUser {
 
     # Register IssuerDB module in session
     $self->addSessionValue( '_issuerDB', $issuerDBtype, $self->{id} );
+
+    # Update session activity unless for Null IssuerDB
+    $self->updateSession( { '_lastSeen' => time() } )
+      if ( $self->{timeoutActivity} && $issuerDBtype ne 'Null' );
 
     # Call IssuerDB module method
     return $self->SUPER::issuerForAuthUser();
