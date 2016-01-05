@@ -14,6 +14,7 @@
   "_password": "Mot de passe",
   "_utime": "Tampon de la session",
   "_lastAuthnUTime": "Tampon d'authentification ",
+  "_lastSeen": "Tampon de dernière activité",
   "_idp": "Identifiant d'entité de l'IDP",
   "_idpConfKey": "Clef de configuration de l'IDP",
   "_samlToken": " Jeton SAML ",

@@ -14,6 +14,7 @@
   "_password": "Password",
   "_utime": "Session timestamp",
   "_lastAuthnUTime": "Authentication timestamp",
+  "_lastSeen": "Last activity timestamp",
   "_idp": "IDP EntityID",
   "_idpConfKey": "IDP configuration key",
   "_samlToken": "SAML token",

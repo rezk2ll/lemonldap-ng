@@ -47,7 +47,7 @@
   };
   var hiddenAttributes = '_password';
   var categories = [
-    ['dateTitle', ['_utime', 'startTime', 'updateTime', '_lastAuthnUTime']],
+    ['dateTitle', ['_utime', 'startTime', 'updateTime', '_lastAuthnUTime', '_lastSeen']],
     ['connectionTitle', ['ipAddr', '_timezone', '_url']],
     ['authenticationTitle', ['_session_id', '_user', '_password', 'authenticationLevel']],
     ['modulesTitle', ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti']],
@@ -172,7 +172,7 @@
             if (typeof session[key] != 'object') {
               if (hiddenAttributes.match(new RegExp('\b' + key + '\b'))) {
                 session[key] = '********'
-              } else if (key.match(/^(_utime|_lastAuthnUTime)$/)) {
+              } else if (key.match(/^(_utime|_lastAuthnUTime|_lastSeen)$/)) {
                 session[key] = $scope.localeDate(session[key]);
               } else if (key.match(/^(startTime|updateTime)$/)) {
                 session[key] = _stToStr(session[key]);
