@@ -1,7 +1,7 @@
 package Lemonldap::NG::Manager::Conf::Zero;
 
 sub zeroConf {
-    my ($domain, $sessionDir, $notificationDir, $persistentSessionDir) = @_;
+    my ($domain, $sessionDir, $persistentSessionDir, $notificationDir) = @_;
     $domain ||= 'example.com';
     $sessionDir ||= '/var/lib/lemonldap-ng/sessions';
     $persistentSessionDir ||= '/var/lib/lemonldap-ng/psessions';

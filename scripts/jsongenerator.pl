@@ -8,5 +8,6 @@ Lemonldap::NG::Manager::Build->run(
     managerConstantsFile  => "lemonldap-ng-manager/lib/Lemonldap/NG/Manager/Constants.pm",
     managerAttributesFile => 'lemonldap-ng-manager/lib/Lemonldap/NG/Manager/Attributes.pm',
     defaultValuesFile     => "lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm",
+    firstLmConfFile       => "_example/conf/lmConf-1.js",
 );
 

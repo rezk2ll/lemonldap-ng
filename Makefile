@@ -122,12 +122,14 @@ ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
 MANAGERJSONSRC= scripts/jsongenerator.pl \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Attributes.pm \
-		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Tree.pm \
+		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Conf/Zero.pm
 MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		$(SRCMANAGERDIR)/site/static/js/conftree.js \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Constants.pm \
-		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
+		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm \
+		_example/conf/lmConf-1.js
 PERLCOMMONSRC:=$(shell find $(SRCCOMMONDIR)/lib -name '*.pm')
 PERLCOMMONDST=$(SRCCOMMONDIR)/blib/lib/Lemonldap/NG/Common.pm
 PERLHANDLERSRC:=$(shell find $(SRCHANDLERDIR)/lib -name '*.pm')

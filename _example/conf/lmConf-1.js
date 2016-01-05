@@ -1,145 +1,98 @@
 {
-   "portal" : "http://auth.__DNSDOMAIN__/",
-   "persistentStorage" : "Apache::Session::File",
-   "portalSkinBackground" : "1280px-Cedar_Breaks_National_Monument_partially.jpg",
-   "globalStorageOptions" : {
-      "LockDirectory" : "__SESSIONDIR__/lock",
-      "Directory" : "__SESSIONDIR__",
-      "generateModule" : "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
-   },
-   "passwordDB" : "Demo",
-   "locationRules" : {
-      "test2.__DNSDOMAIN__" : {
-         "default" : "accept",
-         "^/logout" : "logout_sso"
-      },
-      "manager.__DNSDOMAIN__" : {
-         "default" : "$uid eq \"dwho\""
-      },
-      "test1.__DNSDOMAIN__" : {
-         "^/logout" : "logout_sso",
-         "default" : "accept"
-      }
-   },
-   "cfgNum" : "1",
-   "exportedVars" : {
-      "UA" : "HTTP_USER_AGENT"
-   },
-   "authentication" : "Demo",
-   "mailUrl" : "http://auth.__DNSDOMAIN__/mail.pl",
    "applicationList" : {
       "1sample" : {
          "catname" : "Sample applications",
-         "test2" : {
+         "test1" : {
             "options" : {
-               "uri" : "http://test2.__DNSDOMAIN__/",
+               "description" : "A simple application displaying authenticated user",
                "display" : "auto",
-               "name" : "Application Test 2",
-               "description" : "The same simple application displaying authenticated user",
-               "logo" : "thumbnail.png"
+               "logo" : "demo.png",
+               "name" : "Application Test 1",
+               "uri" : "http://test1.__DNSDOMAIN__/"
             },
             "type" : "application"
          },
-         "test1" : {
+         "test2" : {
             "options" : {
-               "logo" : "demo.png",
-               "description" : "A simple application displaying authenticated user",
-               "name" : "Application Test 1",
-               "uri" : "http://test1.__DNSDOMAIN__/",
-               "display" : "auto"
+               "description" : "The same simple application displaying authenticated user",
+               "display" : "auto",
+               "logo" : "thumbnail.png",
+               "name" : "Application Test 2",
+               "uri" : "http://test2.__DNSDOMAIN__/"
+            },
+            "type" : "application"
+         },
+         "type" : "category"
+      },
+      "2administration" : {
+         "catname" : "Administration",
+         "manager" : {
+            "options" : {
+               "description" : "Configure LemonLDAP::NG WebSSO",
+               "display" : "auto",
+               "logo" : "configure.png",
+               "name" : "WebSSO Manager",
+               "uri" : "http://manager.__DNSDOMAIN__/manager.html"
+            },
+            "type" : "application"
+         },
+         "notifications" : {
+            "options" : {
+               "description" : "Explore WebSSO notifications",
+               "display" : "auto",
+               "logo" : "database.png",
+               "name" : "Notifications explorer",
+               "uri" : "http://manager.__DNSDOMAIN__/notifications.html"
+            },
+            "type" : "application"
+         },
+         "sessions" : {
+            "options" : {
+               "description" : "Explore WebSSO sessions",
+               "display" : "auto",
+               "logo" : "database.png",
+               "name" : "Sessions explorer",
+               "uri" : "http://manager.__DNSDOMAIN__/sessions.html"
             },
             "type" : "application"
          },
          "type" : "category"
       },
       "3documentation" : {
-         "officialwebsite" : {
-            "type" : "application",
-            "options" : {
-               "logo" : "network.png",
-               "display" : "on",
-               "uri" : "http://lemonldap-ng.org/",
-               "description" : "Official LemonLDAP::NG Website",
-               "name" : "Offical Website"
-            }
-         },
+         "catname" : "Documentation",
          "localdoc" : {
             "options" : {
-               "logo" : "help.png",
-               "uri" : "http://manager.__DNSDOMAIN__/doc/",
+               "description" : "Documentation supplied with LemonLDAP::NG",
                "display" : "on",
+               "logo" : "help.png",
                "name" : "Local documentation",
-               "description" : "Documentation supplied with LemonLDAP::NG"
+               "uri" : "http://manager.__DNSDOMAIN__/doc/"
             },
             "type" : "application"
          },
-         "type" : "category",
-         "catname" : "Documentation"
-      },
-      "2administration" : {
-         "type" : "category",
-         "manager" : {
+         "officialwebsite" : {
             "options" : {
-               "logo" : "configure.png",
-               "uri" : "http://manager.__DNSDOMAIN__/manager.html",
-               "display" : "auto",
-               "name" : "WebSSO Manager",
-               "description" : "Configure LemonLDAP::NG WebSSO"
+               "description" : "Official LemonLDAP::NG Website",
+               "display" : "on",
+               "logo" : "network.png",
+               "name" : "Offical Website",
+               "uri" : "http://lemonldap-ng.org/"
             },
             "type" : "application"
          },
-         "sessions" : {
-            "type" : "application",
-            "options" : {
-               "logo" : "database.png",
-               "uri" : "http://manager.__DNSDOMAIN__/sessions.html",
-               "display" : "auto",
-               "description" : "Explore WebSSO sessions",
-               "name" : "Sessions explorer"
-            }
-         },
-         "catname" : "Administration",
-         "notifications" : {
-            "type" : "application",
-            "options" : {
-               "logo" : "database.png",
-               "uri" : "http://manager.__DNSDOMAIN__/notifications.html",
-               "display" : "auto",
-               "description" : "Explore WebSSO notifications",
-               "name" : "Notifications explorer"
-            }
-         }
+         "type" : "category"
       }
    },
-   "notificationStorage" : "File",
+   "authentication" : "Demo",
    "cfgAuthor" : "The LemonLDAP::NG team",
-   "sessionDataToRemember" : {},
-   "notification" : 1,
-   "persistentStorageOptions" : {
-      "Directory" : "__PSESSIONDIR__",
-      "LockDirectory" : "__PSESSIONDIR__/lock"
+   "cfgNum" : "1",
+   "cookieName" : "lemonldap",
+   "demoExportedVars" : {
+      "cn" : "cn",
+      "mail" : "mail",
+      "uid" : "uid"
    },
    "domain" : "__DNSDOMAIN__",
-   "notificationStorageOptions" : {
-      "dirName" : "__NOTIFICATIONDIR__"
-   },
-   "reloadUrls" : {
-      "reload.__DNSDOMAIN__" : "http://reload.__DNSDOMAIN__/reload"
-   },
-   "cookieName" : "lemonldap",
-   "securedCookie" : 0,
-   "whatToTrace" : "_whatToTrace",
-   "groups" : {},
-   "macros" : {
-      "_whatToTrace" : "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\""
-   },
-   "timeout" : 72000,
-   "demoExportedVars" : {
-      "uid" : "uid",
-      "cn" : "cn",
-      "mail" : "mail"
-   },
-   "userDB" : "Demo",
    "exportedHeaders" : {
       "test1.__DNSDOMAIN__" : {
          "Auth-User" : "$uid"
@@ -148,7 +101,54 @@
          "Auth-User" : "$uid"
       }
    },
+   "exportedVars" : {
+      "UA" : "HTTP_USER_AGENT"
+   },
+   "globalStorage" : "Apache::Session::File",
+   "globalStorageOptions" : {
+      "Directory" : "__SESSIONDIR__",
+      "LockDirectory" : "__SESSIONDIR__/lock",
+      "generateModule" : "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
+   },
+   "groups" : {},
+   "locationRules" : {
+      "manager.__DNSDOMAIN__" : {
+         "default" : "$uid eq \"dwho\""
+      },
+      "test1.__DNSDOMAIN__" : {
+         "^/logout" : "logout_sso",
+         "default" : "accept"
+      },
+      "test2.__DNSDOMAIN__" : {
+         "^/logout" : "logout_sso",
+         "default" : "accept"
+      }
+   },
    "loginHistoryEnabled" : 1,
+   "macros" : {
+      "_whatToTrace" : "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\""
+   },
+   "mailUrl" : "http://auth.__DNSDOMAIN__/mail.pl",
+   "notification" : 1,
+   "notificationStorage" : "File",
+   "notificationStorageOptions" : {
+      "dirName" : "__NOTIFICATIONDIR__"
+   },
+   "passwordDB" : "Demo",
+   "persistentStorage" : "Apache::Session::File",
+   "persistentStorageOptions" : {
+      "Directory" : "__PSESSIONDIR__",
+      "LockDirectory" : "__PSESSIONDIR__/lock"
+   },
+   "portal" : "http://auth.__DNSDOMAIN__/",
+   "portalSkinBackground" : "1280px-Cedar_Breaks_National_Monument_partially.jpg",
    "registerUrl" : "http://auth.__DNSDOMAIN__/register.pl",
-   "globalStorage" : "Apache::Session::File"
+   "reloadUrls" : {
+      "reload.__DNSDOMAIN__" : "http://reload.__DNSDOMAIN__/reload"
+   },
+   "securedCookie" : 0,
+   "sessionDataToRemember" : {},
+   "timeout" : 72000,
+   "userDB" : "Demo",
+   "whatToTrace" : "_whatToTrace"
 }

@@ -5,6 +5,7 @@ use Mouse;
 use Lemonldap::NG::Manager::Build::Attributes;
 use Lemonldap::NG::Manager::Build::Tree;
 use Lemonldap::NG::Manager::Build::CTrees;
+use Lemonldap::NG::Manager::Conf::Zero;
 use Data::Dumper;
 use Regexp::Assemble;
 use JSON::MaybeXS;
@@ -16,6 +17,7 @@ has confTreeFile          => ( isa => 'Str', is => 'ro', required => 1 );
 has managerConstantsFile  => ( isa => 'Str', is => 'ro', required => 1 );
 has managerAttributesFile => ( isa => 'Str', is => 'ro', required => 1 );
 has defaultValuesFile     => ( isa => 'Str', is => 'ro', required => 1 );
+has firstLmConfFile       => ( isa => 'Str', is => 'ro', required => 1 );
 
 my @managerAttrKeys = qw(keyTest select type test msgFail default);
 my $format          = 'Creating %-69s: ';
@@ -249,6 +251,23 @@ $managerAttr}
     print F $dst;
     close F;
     print STDERR "done\n";
+
+    $self->buildZeroConf();
+}
+
+sub buildZeroConf {
+    my $self = shift;
+    $jsonEnc->pretty(1);
+    printf STDERR $format, $self->firstLmConfFile;
+    open( F, '>', $self->firstLmConfFile ) or die($!);
+    print F $jsonEnc->encode(
+        Lemonldap::NG::Manager::Conf::Zero::zeroConf(
+            '__DNSDOMAIN__',   '__SESSIONDIR__',
+            '__PSESSIONDIR__', '__NOTIFICATIONDIR__'
+        )
+    );
+    close F;
+    print STDERR "done\n";
 }
 
 sub mydump {
@@ -393,6 +412,7 @@ system.
     managerConstantsFile  => "lib/Lemonldap/NG/Manager/Constants.pm",
     managerAttributesFile => 'lib/Lemonldap/NG/Manager/Attributes.pm',
     defaultValuesFile     => "lib/Lemonldap/NG/Common/Conf/DefaultValues.pm",
+    firstLmConfFile       => "_example/conf/lmConf-1.js",
   );
 
 =head1 DESCRIPTION
