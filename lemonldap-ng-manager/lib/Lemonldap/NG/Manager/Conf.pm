@@ -81,7 +81,7 @@ sub getConfKey {
     $self->lmLog( "Search for $key in conf", 'debug' );
 
     # Verify that cfgNum has been asked
-    unless ( $req->params('cfgNum') ) {
+    unless ( defined $req->params('cfgNum') ) {
         $req->error("Missing configuration number");
         return undef;
     }
@@ -89,13 +89,18 @@ sub getConfKey {
 
     # when 'latest' => replace by last cfgNum
     if ( $req->params('cfgNum') eq 'latest' ) {
-        $req->params( 'cfgNum', $self->confAcc->lastCfg );
+        my $tmp = $self->confAcc->lastCfg;
+        $req->params( 'cfgNum', $tmp );
+        if ($Lemonldap::NG::Common::Conf::msg) {
+            $req->error($Lemonldap::NG::Common::Conf::msg);
+            return undef;
+        }
     }
-    unless ( $req->params('cfgNum') =~ /^\d+$/ ) {
+    elsif ( $req->params('cfgNum') !~ /^\d+$/ ) {
         $req->error("cfgNum must be a number");
         return undef;
     }
-    unless ( $self->getConfByNum( $req->params('cfgNum'), @args ) ) {
+    unless ( defined $self->getConfByNum( $req->params('cfgNum'), @args ) ) {
         $req->error( "Configuration "
               . $req->params('cfgNum')
               . " is not available ("
@@ -112,9 +117,16 @@ sub getConfKey {
 sub getConfByNum {
     my ( $self, $cfgNum, @args ) = @_;
     unless ( $self->currentConf and $cfgNum == $self->currentConf->{cfgNum} ) {
-        my $tmp =
-          $self->confAcc->getConf( { cfgNum => $cfgNum, raw => 1, @args } );
-        return undef unless ( $tmp and ref($tmp) and %$tmp );
+        my $tmp;
+        if ( $cfgNum == 0 ) {
+            require Lemonldap::NG::Manager::Conf::Zero;
+            $tmp = Lemonldap::NG::Manager::Conf::Zero::zeroConf();
+        }
+        else {
+            $tmp =
+              $self->confAcc->getConf( { cfgNum => $cfgNum, raw => 1, @args } );
+            return undef unless ( $tmp and ref($tmp) and %$tmp );
+        }
         $self->currentConf($tmp);
     }
     return $cfgNum;
@@ -407,8 +419,8 @@ sub _oidcMetaDataNodes {
       if ( $partner =~ /^new__/ );
 
     # Reject unknown partners
-    return $self->sendError( $req, "Unknown OpenID-Connect partner ($partner)",
-        400 )
+    return $self->sendError( $req,
+        "Unknown OpenID-Connect partner ($partner)", 400 )
       unless ( defined eval { $self->getConfKey( $req, $refKey )->{$partner}; }
       );
 

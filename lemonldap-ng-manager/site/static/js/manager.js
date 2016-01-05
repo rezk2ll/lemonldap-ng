@@ -88,7 +88,7 @@
       else if (e > 0) {
         $scope.message.title = '__serverError__';
         $scope.message.items = [{
-          message: j
+          message: (j.error ? j.error : j)
         }];
       }
       else {
@@ -739,7 +739,12 @@
           console.log('Metadatas of cfg ' + n + ' loaded');
           $location.path('/confs/' + n);
           $scope.init();
-        }).error(readError);
+        }).error(function(j, e) {
+          $scope.currentCfg.cfgNum = 0;
+          $scope.init();
+          // TODO: insert conf 0
+          readError(j, e);
+        });
       } else {
         $scope.waiting = false;
       }
@@ -776,7 +781,7 @@
         console.log("Starting structure binding");
         $scope.data = tmp;
         tmp = null;
-        setScopeVars($scope);
+        if ($scope.currentCfg.cfgNum != 0) setScopeVars($scope);
         $scope.form = 'home';
         $scope.waiting = false;
       },
