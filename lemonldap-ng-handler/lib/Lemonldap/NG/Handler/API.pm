@@ -55,7 +55,7 @@ sub AUTOLOAD {
 "use Lemonldap::NG::Handler::API::$mode (':httpCodes', ':functions');";
         die $@ if ($@);
     }
-    return &{"Lemonldap::NG::Handler::API::$mode::$func"}(@_);
+    return &{"Lemonldap::NG::Handler::API::${mode}::${func}"}(@_);
 }
 
 1;
