@@ -85,7 +85,7 @@
         }];
       }
       else if (e > 0) {
-        $scope.message.title = 'serverError';
+        $scope.message.title = '__serverError__';
         $scope.message.items = [{
           message: j
         }];

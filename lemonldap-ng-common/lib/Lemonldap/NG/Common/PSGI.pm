@@ -109,7 +109,9 @@ sub sendError {
     $err  ||= $req->error;
     $code ||= 500;
     $self->lmLog( "Error $code: $err", $code > 499 ? 'error' : 'notice' );
-    return $self->sendJSONresponse( $req, { error => $err }, code => $code );
+    return ( $req->accept =~ /json/
+        ? $self->sendJSONresponse( $req, { error => $err }, code => $code )
+        : [ $code, [ 'Content-Type' => 'text/plain' ], ["Error: $err"] ] );
 }
 
 sub abort {

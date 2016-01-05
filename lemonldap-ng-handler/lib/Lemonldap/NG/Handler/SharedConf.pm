@@ -174,7 +174,11 @@ sub checkConf {
             'debug'
         );
         $lastCheck = time();
-        $cfgNum    = $conf->{cfgNum};
+        unless ( $cfgNum = $conf->{cfgNum} ) {
+            Lemonldap::NG::Handler::Main::Logger->lmLog(
+                'No configuration available', 'error' );
+            return 0;
+        }
         $conf->{$_} = $localConfig->{$_} foreach ( keys %$localConfig );
         Lemonldap::NG::Handler::Reload->configReload( $conf, $tsv );
     }

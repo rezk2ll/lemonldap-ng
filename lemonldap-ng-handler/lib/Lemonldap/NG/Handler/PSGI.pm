@@ -11,8 +11,18 @@ has protection => ( is => 'rw', isa => 'Str' );
 
 around init => sub {
     my ( $method, $self, $args ) = @_;
-    Lemonldap::NG::Handler::SharedConf->init($self);
-    Lemonldap::NG::Handler::SharedConf->checkConf($self);
+    eval { Lemonldap::NG::Handler::SharedConf->init($self) };
+    if($@ and not $self->{protection} eq 'none') {
+        $self->lmLog($@,'error');
+        $self->error($@);
+        $self->$method($args);
+        return 0;
+    }
+    unless(Lemonldap::NG::Handler::SharedConf->checkConf($self) or $self->{protection} eq 'none') {
+        $self->error($Lemonldap::NG::Common::Conf::msg);
+        $self->$method($args);
+        return 0;
+    }
     return $self->$method($args);
 };
 
