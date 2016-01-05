@@ -597,6 +597,7 @@
   "virtualHostName": "Virtual host hostname",
   "virtualHosts": "Virtual Hosts",
   "warning": "Warning",
+  "warnings": "Warnings",
   "waitingForDatas": "Waiting for datas",
   "webIDAuthnLevel": "Authentication level",
   "webIDExportedVars": "Exported variables",

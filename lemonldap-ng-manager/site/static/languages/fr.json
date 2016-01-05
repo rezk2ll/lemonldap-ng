@@ -597,6 +597,7 @@
   "virtualHostName": "Nom de l'hôte virtuel",
   "virtualHosts": "Hôtes virtuels",
   "warning": "Attention",
+  "warning": "Avertissements",
   "waitingForDatas": "En attente de données",
   "webIDAuthnLevel": "Niveau d'authentification",
   "webIDExportedVars": "Variables exportées",

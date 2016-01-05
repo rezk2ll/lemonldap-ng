@@ -652,7 +652,7 @@ sub set {
                 $target eq 'cfgLog'
                 or ( defined $confs[0]->{$target}
                     and $confs[0]->{$target} eq $data )
-                or (   !defined $confs[0]->{target}
+                or (   !defined $confs[0]->{$target}
                     and defined $self->defaultValue($target)
                     and $data eq $self->defaultValue($target) )
               )

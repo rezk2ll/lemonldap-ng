@@ -840,12 +840,12 @@ sub newConf {
     }
 
     # Verify that cfgNum has been asked
-    unless ( $req->params('cfgNum') ) {
+    unless ( defined $req->params('cfgNum') ) {
         return $self->sendError( $req, "Missing configuration number", 400 );
     }
 
     # Set current conf to cfgNum
-    unless ( $self->getConfByNum( $req->params('cfgNum') ) ) {
+    unless ( defined $self->getConfByNum( $req->params('cfgNum') ) ) {
         return $self->sendError(
             $req,
             "Configuration "
