@@ -58,11 +58,19 @@ sub init {
 
     $self->defaultRoute( $enabledModules[0]->defaultRoute );
 
+    my $linksIcons =
+      { 'conf' => 'cog', 'sessions' => 'duplicate', 'notifications' => 'bell' };
+
     $self->links( [] );
     for ( my $i = 0 ; $i < @links ; $i++ ) {
         push @{ $self->links },
-          { target => $enabledModules[$i]->defaultRoute, title => $links[$i] };
+          {
+            target => $enabledModules[$i]->defaultRoute,
+            title  => $links[$i],
+            icon   => $linksIcons->{ $links[$i] }
+          };
     }
+
     $self->menuLinks( [] );
     push @{ $self->menuLinks },
       {
