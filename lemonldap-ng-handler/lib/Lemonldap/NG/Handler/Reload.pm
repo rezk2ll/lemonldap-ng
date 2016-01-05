@@ -143,7 +143,11 @@ sub defaultValuesInit {
 # @param $args reference to the configuration hash
 sub portalInit {
     my ( $class, $conf, $tsv ) = @_;
-    die("portal parameter required") unless ( $conf->{portal} );
+    unless ( $conf->{portal} ) {
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+            "portal parameter required", 'error' );
+        return 0;
+    }
     if ( $conf->{portal} =~ /[\$\(&\|"']/ ) {
         ( $tsv->{portal} ) = $class->conditionSub( $conf->{portal}, $tsv );
     }
@@ -203,8 +207,11 @@ sub locationRulesInit {
 # @param $args reference to the configuration hash
 sub sessionStorageInit {
     my ( $class, $conf, $tsv ) = @_;
-    $tsv->{sessionStorageModule} = $conf->{globalStorage}
-      or die("globalStorage required");
+    unless ( $tsv->{sessionStorageModule} = $conf->{globalStorage} ) {
+        Lemonldap::NG::Handler::Main::Logger->lmLog( "globalStorage required",
+            'error' );
+        return 0;
+    }
     eval "use $tsv->{sessionStorageModule}";
     die($@) if ($@);
     $tsv->{sessionStorageOptions} = $conf->{globalStorageOptions};

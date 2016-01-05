@@ -68,7 +68,8 @@ sub init {
         target => &{ $Lemonldap::NG::Handler::SharedConf::tsv->{portal} }
           . '?logout=1',
         title => 'logout'
-      };
+      }
+      if ( defined $Lemonldap::NG::Handler::SharedConf::tsv->{portal} );
     1;
 }
 
