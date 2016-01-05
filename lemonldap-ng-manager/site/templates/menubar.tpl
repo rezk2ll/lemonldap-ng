@@ -22,10 +22,18 @@
         </div>
         <ul class="hidden-xs nav navbar-nav">
           <li ng-repeat="link in links"><a href="{{link.target}}"><strong><i class="glyphicon glyphicon-link"></i> {{translate(link.title)}}</strong></a></li>
-          <li><a name="version">{{translate('version')}} : <TMPL_VAR NAME="VERSION"></a></li>
         </ul>
         <ul class="hidden-xs nav navbar-nav navbar-right">
-          <li ng-include="'languages.html'"/>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-header">{{translate('languages')}}</li>
+              <li ng-include="'languages.html'"/>
+              <li role="separator" class="divider"></li>
+              <li class="dropdown-header">{{translate('version')}}</li>
+              <li><a name="version"><TMPL_VAR NAME="VERSION"></a></li>
+            </ul>
+          </li>
         </ul>
       </div>
     </nav>

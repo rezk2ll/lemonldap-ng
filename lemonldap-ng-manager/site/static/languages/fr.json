@@ -226,6 +226,7 @@
   "keys": "Clefs",
   "keyname": "Nom de clef",
   "keyPassword": "Mot de passe de la clef",
+  "languages": "Langues",
   "latest": "Dernière",
   "ldap": "LDAP",
   "ldapAuthnLevel": "Niveau d'authentification",

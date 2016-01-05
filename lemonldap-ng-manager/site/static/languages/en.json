@@ -226,6 +226,7 @@
   "keys": "Keys",
   "keyname": "Key name",
   "keyPassword": "Key password",
+  "languages": "Languages",
   "latest": "Latest",
   "ldap": "LDAP",
   "ldapAuthnLevel": "Authentication level",

@@ -9,11 +9,11 @@
 
   <!-- Language choice -->
   <script type="text/ng-template" id="languages.html">
-    <span class="link navbar-brand">
+    <a name="languages" class="link">
       <span ng-repeat="lang in availableLanguages">
         <img ng-src="<TMPL_VAR NAME="STATIC_PREFIX">logos/{{lang}}.png" width="16px" height="11px" ng-click="getLanguage(lang)"/>
       </span>
-    </span>
+    </a>
   </script>
 
 
