@@ -141,8 +141,6 @@ sub cTrees {
                             'oidcOPMetaDataOptionsScope',
                             'oidcOPMetaDataOptionsDisplay',
                             'oidcOPMetaDataOptionsPrompt',
-                            'oidcOPMetaDataOptionsDisplay',
-                            'oidcOPMetaDataOptionsPrompt',
                             'oidcOPMetaDataOptionsMaxAge',
                             'oidcOPMetaDataOptionsUiLocales',
                             'oidcOPMetaDataOptionsAcrValues',
