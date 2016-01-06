@@ -73,20 +73,20 @@
     var readError = function(j, e) {
       $scope.waiting = false;
       if (e == 403) {
-        $scope.message.title = '__forbidden__';
+        $scope.message.title = 'forbidden';
         $scope.message.items = [];
       }
       else if (e == 401) {
         console.log('Authentication needed');
       }
       else if (e == 400) {
-        $scope.message.title = '__badRequest__';
+        $scope.message.title = 'badRequest';
         $scope.message.items = [{
           message: (j.error ? j.error : j)
         }];
       }
       else if (e > 0) {
-        $scope.message.title = '__serverError__';
+        $scope.message.title = 'serverError';
         $scope.message.items = [{
           message: (j.error ? j.error : j)
         }];
@@ -781,7 +781,17 @@
         console.log("Starting structure binding");
         $scope.data = tmp;
         tmp = null;
-        if ($scope.currentCfg.cfgNum != 0) setScopeVars($scope);
+        if ($scope.currentCfg.cfgNum != 0) {
+          setScopeVars($scope);
+        }
+        else {
+          $scope.message.title = 'emptyConf';
+          $scope.message.items = [{
+            message:
+            '__zeroConfExplanations__'
+          }];
+          $scope.showModal('message.html');
+        }
         $scope.form = 'home';
         $scope.waiting = false;
       },
@@ -796,8 +806,7 @@
     $scope.replaceContentByUrl = function(node, url) {
       $scope.waiting = true;
       $http.post(scriptname + "prx", {
-        "url":
-        url
+        "url": url
       }).success(function(data) {
         node.data = data.content;
         $scope.waiting = false;
