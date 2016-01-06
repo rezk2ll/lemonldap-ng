@@ -652,7 +652,8 @@ sub tree {
                                 }
                             ]
                         },
-                        'logoutServices'
+                        'logoutServices',
+                        'multiValuesSeparator'
                     ]
                 }
             ]

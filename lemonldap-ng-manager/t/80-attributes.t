@@ -13,9 +13,9 @@ my @notManagedAttributes = qw(
   samlSPMetaDataOptions samlIDPMetaDataOptions
   oidcRPMetaDataOptions oidcOPMetaDataOptions
   cfgAuthor cfgAuthorIP cfgNum cfgDate cfgLog
-  vhostOptions staticPrefix multiValuesSeparator
-  protection redirectFormMethod infoFormMethod
-  activeTimer confirmFormMethod
+  vhostOptions staticPrefix redirectFormMethod
+  infoFormMethod activeTimer confirmFormMethod
+  protection
 );
 
 ok( open( F, 'lib/Lemonldap/NG/Manager/Build/Attributes.pm' ),
