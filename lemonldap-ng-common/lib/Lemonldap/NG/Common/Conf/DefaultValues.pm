@@ -176,7 +176,7 @@ sub defaultValues {
         'portalDisplayRegister'              => 1,
         'portalDisplayResetPassword'         => 1,
         'portalForceAuthn'                   => 0,
-        'portalForceAuthnInterval'           => 0,
+        'portalForceAuthnInterval'           => 5,
         'portalOpenLinkInNewWindow'          => 0,
         'portalPingInterval'                 => 60000,
         'portalRequireOldPassword'           => 1,

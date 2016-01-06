@@ -395,7 +395,7 @@ sub attributes {
         },
         portalForceAuthnInterval => {
             type    => 'int',
-            default => 0,
+            default => 5,
             documentation =>
 'Minimum number of seconds since last authentifcation to force reauthentication',
         },

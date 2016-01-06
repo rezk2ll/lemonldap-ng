@@ -1491,7 +1491,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'bool'
         },
         'portalForceAuthnInterval' => {
-            'default' => 0,
+            'default' => 5,
             'type'    => 'int'
         },
         'portalOpenLinkInNewWindow' => {
