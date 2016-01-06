@@ -457,6 +457,7 @@
   "portalDisplayRegister": "Création d'un nouveau compte",
   "portalDisplayResetPassword": "Réinitialisation de mot de passe",
   "portalForceAuthn": "Authentication forcée",
+  "portalForceAuthnInterval": "Interval d'authentication forcée",
   "portalMenu": "Menu",
   "portalModules": "Modules",
   "portalOpenLinkInNewWindow": "Nouvelle fenêtre",

@@ -19,7 +19,6 @@ our $VERSION = '1.9.0';
 #  * activeTimer
 #  * confirmFormMethod
 #  * multiValuesSeparator
-#  * portalForceAuthnInterval
 #  * redirectFormMethod
 sub tree {
     return [
@@ -451,7 +450,10 @@ sub tree {
                     title => 'logParams',
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
-                    nodes => [ 'syslog', 'trustedProxies', 'whatToTrace', 'hiddenAttributes' ]
+                    nodes => [
+                        'syslog',      'trustedProxies',
+                        'whatToTrace', 'hiddenAttributes'
+                    ]
                 },
                 {
                     title => 'cookieParams',
@@ -587,9 +589,13 @@ sub tree {
                             help => 'security.html#configure_security_settings',
                             form => 'simpleInputContainer',
                             nodes => [
-                                'userControl', 'portalForceAuthn',
-                                'key',         'trustedDomains',
-                                'useSafeJail', 'checkXSS'
+                                'userControl',
+                                'portalForceAuthn',
+                                'portalForceAuthnInterval',
+                                'key',
+                                'trustedDomains',
+                                'useSafeJail',
+                                'checkXSS'
                             ]
                         },
                         {
