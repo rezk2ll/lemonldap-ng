@@ -13,6 +13,7 @@ lib/Lemonldap/NG/Manager/Cli.pm
 lib/Lemonldap/NG/Manager/Cli/Lib.pm
 lib/Lemonldap/NG/Manager/Conf.pm
 lib/Lemonldap/NG/Manager/Conf/Tests.pm
+lib/Lemonldap/NG/Manager/Conf/Zero.pm
 lib/Lemonldap/NG/Manager/ConfParser.pm
 lib/Lemonldap/NG/Manager/Constants.pm
 lib/Lemonldap/NG/Manager/Lib.pm
@@ -128,6 +129,7 @@ t/12-save-changed-conf.t
 t/20-test-coverage.t
 t/40-sessions.t
 t/50-notifications.t
+t/80-attributes.t
 t/90-translations.t
 t/99-pod.t
 t/conf/lmConf-1.js
