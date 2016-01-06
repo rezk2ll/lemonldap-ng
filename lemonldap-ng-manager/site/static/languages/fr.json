@@ -193,6 +193,7 @@
   "headers": "En-têtes HTTP",
   "hGroups": "Groupes (HashRef)",
   "hostname": "Nom d'hôte",
+  "hiddenAttributes": "Attributs masqués",
   "hideOldPassword": "Masquer l'ancien mot de passe",
   "hideTree": "Masquer l'arbre",
   "httpOnly": "Protection contre javascript",

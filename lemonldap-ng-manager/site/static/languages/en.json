@@ -193,6 +193,7 @@
   "headers": "HTTP Headers",
   "hGroups": "Groups (HashRef)",
   "hostname": "Hostname",
+  "hiddenAttributes": "Hidden attributes",
   "hideOldPassword": "Hide old password",
   "hideTree": "Hide tree",
   "httpOnly": "Javascript protection",

@@ -18,7 +18,6 @@ our $VERSION = '1.9.0';
 # TODO: Missing:
 #  * activeTimer
 #  * confirmFormMethod
-#  * hiddenAttributes
 #  * multiValuesSeparator
 #  * portalForceAuthnInterval
 #  * redirectFormMethod
@@ -452,7 +451,7 @@ sub tree {
                     title => 'logParams',
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
-                    nodes => [ 'syslog', 'trustedProxies', 'whatToTrace' ]
+                    nodes => [ 'syslog', 'trustedProxies', 'whatToTrace', 'hiddenAttributes' ]
                 },
                 {
                     title => 'cookieParams',
