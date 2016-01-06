@@ -84,6 +84,16 @@ sub types {
             keyTest => qr/\w/,
             test    => sub { 1 },
         },
+        select => {
+            test => sub {
+                my $test =
+                  grep (
+                    { $_ eq $_[0] } map ( { $_->{k} } @{ $_[2]->{select} } ) );
+                return $test
+                  ? 1
+                  : ( 0, "Invalid value '$_[0]' for this select" );
+            },
+        },
 
         # Files type (long text)
         file => {
@@ -158,15 +168,6 @@ qr/^(?:(?:\-+\s*BEGIN\s+RSA\s+PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,
         },
         samlService => {
             test => sub { 1 }
-        },
-        select => {
-            test => sub {
-                my $test =
-                  grep { $_ eq $_[0] } map { $_->{k} } @{ $_[2]->{select} };
-                return $test
-                  ? 1
-                  : ( 0, "Invalid value '$_[0]' for this select" );
-            },
         },
     };
 }
@@ -1617,8 +1618,7 @@ sub attributes {
             type => 'text',
             test => sub {
                 my $l = shift;
-                my @s =
-                  split( /[\s,]+/, $l );
+                my (@s) = split( /[\s,]+/, $l );
                 foreach my $s (@s) {
                     $s =~
 m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?::\d{1,5})?/?.*)$}o
