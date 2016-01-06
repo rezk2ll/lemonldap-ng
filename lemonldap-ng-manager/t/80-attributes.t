@@ -1,6 +1,8 @@
 use strict;
 use Test::More;
 
+my $knownExceptions = qr/^(?:remoteCookieName)$/;
+
 ok( open( F, 'lib/Lemonldap/NG/Manager/Build/Attributes.pm' ),
     'open attributes file' );
 my $count = 1;
@@ -48,12 +50,12 @@ sub scanTree {
                     ),
                     "Node $name has leafs"
                 );
-                $count += 3;
+                $count += 4;
                 foreach my $n (qw(nodes nodes_cond group)) {
                     scanTree( $leaf->{$n} ) if ( exists $leaf->{$n} );
                 }
             }
-            else {
+            elsif ( $leaf !~ $knownExceptions ) {
                 ok( $leaf =~ /^\*?\w+/, "Leaf is an attribute name ($leaf)" );
                 $h2{$leaf}++;
                 ok( $h2{$leaf} == 1, "$leaf is uniq" );

@@ -68,7 +68,7 @@ Lemonldap::NG::Portal::AuthProxy - Authentication module for Lemonldap::NG
 that delegates authentication to a remote Lemonldap::NG portal.
 
 The difference with Remote authentication module is that the client will never
-be redirect to the main Lemonldap::NG portal. This configuration is usable if
+be redirected to the main Lemonldap::NG portal. This configuration is usable if
 you want to expose your internal SSO to another network (DMZ).
 
 =head1 SYNOPSIS
