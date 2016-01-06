@@ -1,7 +1,21 @@
+#!/usr/bin/env perl
+#
+# Verify that all attributes are positionned in tree and that all leaf
+# correspond to an attribute. Verify also that attributes and leafs are uniq
+
 use strict;
 use Test::More;
 
 my $knownExceptions = qr/^(?:remoteCookieName)$/;
+
+my @notManagedAttributes = qw(
+  samlSPMetaDataOptions samlIDPMetaDataOptions
+  oidcRPMetaDataOptions oidcOPMetaDataOptions
+  cfgAuthor cfgAuthorIP cfgNum cfgDate cfgLog
+  vhostOptions staticPrefix multiValuesSeparator
+  protection redirectFormMethod infoFormMethod
+  activeTimer confirmFormMethod
+);
 
 ok( open( F, 'lib/Lemonldap/NG/Manager/Build/Attributes.pm' ),
     'open attributes file' );
@@ -9,7 +23,7 @@ my $count = 1;
 
 while ( <F> !~ /sub\s+attributes/ ) { 1 }
 
-my %h;
+my ( %h, %h2 );
 
 while (<F>) {
     next unless /^\s{8}["']?(\w+)/;
@@ -21,15 +35,30 @@ while (<F>) {
 close F;
 
 use_ok('Lemonldap::NG::Manager::Build::Tree');
+use_ok('Lemonldap::NG::Manager::Build::CTrees');
 my $tree;
 ok( $tree = Lemonldap::NG::Manager::Build::Tree::tree(), 'Get tree' );
-$count += 2;
+$count += 3;
 
 scanTree($tree);
+ok( $tree = Lemonldap::NG::Manager::Build::CTrees::cTrees(),
+    'Get conditional tree' );
+$count++;
+foreach my $t ( values %$tree ) {
+    scanTree($t);
+}
+
+foreach ( keys %h2 ) {
+    s/^\*//;
+    ok( delete( $h{$_} ), "Leaf $_ exists in attributes" );
+    $count++;
+}
+foreach (@notManagedAttributes) {
+    ok( delete( $h{$_} ), "Unmanaged attribute '$_' is declared" );
+    $count++;
+}
 
 done_testing($count);
-
-my %h2;
 
 sub scanTree {
     my $tree = shift;
@@ -61,7 +90,9 @@ sub scanTree {
                 ok( $h2{$leaf} == 1, "$leaf is uniq" );
                 $count += 2;
             }
+            else {
+                $h2{$leaf}++;
+            }
         }
     }
-
 }
