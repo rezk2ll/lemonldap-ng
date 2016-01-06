@@ -5,6 +5,7 @@
 
 use strict;
 use Test::More;
+use Data::Dumper;
 
 my $knownExceptions = qr/^(?:remoteCookieName)$/;
 
@@ -50,13 +51,19 @@ foreach my $t ( values %$tree ) {
 
 foreach ( keys %h2 ) {
     s/^\*//;
-    ok( delete( $h{$_} ), "Leaf $_ exists in attributes" );
+    ok( defined( $h{$_} ), "Leaf $_ exists in attributes" );
+    delete $h{$_};
     $count++;
 }
 foreach (@notManagedAttributes) {
-    ok( delete( $h{$_} ), "Unmanaged attribute '$_' is declared" );
+    ok( defined( $h{$_} ), "Unmanaged attribute '$_' is declared" );
+    delete $h{$_};
     $count++;
 }
+
+ok( !%h, "No remaining attributes" )
+  or print STDERR Dumper( { 'Remaining attributes' => [ keys %h ] } );
+$count++;
 
 done_testing($count);
 
