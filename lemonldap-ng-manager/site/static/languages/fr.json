@@ -361,6 +361,7 @@
   "oidcOPMetaDataOptionsConfigurationURI": "URI de la configuration",
   "oidcOPMetaDataOptionsDisplay": "Affichage",
   "oidcOPMetaDataOptionsDisplayName": "Nom d'affichage",
+  "oidcOPMetaDataOptionsDisplayParams": "Affichage",
   "oidcOPMetaDataOptionsIcon": "Logo",
   "oidcOPMetaDataOptionsJWKSTimeout": "Durée de vie des données JWKS",
   "oidcOPMetaDataOptionsProtocol": "Protocole",

@@ -151,7 +151,7 @@ sub cTrees {
                         ]
                     },
                     {
-                        title => 'oidcOPMetaDataOptionsDisplay',
+                        title => 'oidcOPMetaDataOptionsDisplayParams',
                         nodes => [
                             'oidcOPMetaDataOptionsDisplayName',
                             'oidcOPMetaDataOptionsIcon'

@@ -361,6 +361,7 @@
   "oidcOPMetaDataOptionsConfigurationURI": "Configuration endpoint",
   "oidcOPMetaDataOptionsDisplay": "Display",
   "oidcOPMetaDataOptionsDisplayName": "Display name",
+  "oidcOPMetaDataOptionsDisplayParams": "Display",
   "oidcOPMetaDataOptionsIcon": "Logo",
   "oidcOPMetaDataOptionsJWKSTimeout": "JWKS data timeout",
   "oidcOPMetaDataOptionsProtocol": "Protocol",
