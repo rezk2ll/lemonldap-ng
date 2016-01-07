@@ -5,10 +5,12 @@
 use Test::More;
 use JSON::MaybeXS;
 use strict;
+use utf8;
 
 require 't/test-lib.pm';
 
 my $href = &client->jsonResponse('/confs/1/cfgAuthor');
- print STDERR Dumper($href);use Data::Dumper;
+ok( $href->{value} eq "The LemonLDAP::NG team ©", 'Value is well encoded' );
+count(1);
 
 done_testing( count() );
