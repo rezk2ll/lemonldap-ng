@@ -99,7 +99,7 @@ sub userError {
 sub sendJSONresponse {
     my ( $self, $req, $j, %args ) = @_;
     $args{code} ||= 200;
-    my $type = 'text/json';
+    my $type = 'application/json; charset=utf-8';
     if ( ref $j ) {
         $j = $_json->encode($j);
     }

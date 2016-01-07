@@ -96,11 +96,16 @@ sub check {
     }
 
     unless ( $self->testNewConf ) {
-        hdebug("testNewConf() failed");
+        hdebug("  testNewConf() failed");
         return 0;
     }
-    $self->message('__confNotChanged__') unless ( $self->confChanged );
-    return ( $self->confChanged );
+    hdebug("  tests succeed");
+    unless ( $self->confChanged ) {
+        hdebug("  no changes detected");
+        $self->message('__confNotChanged__');
+        return 0;
+    }
+    return 1;
 }
 
 ##@method boolean scanTree()
@@ -791,7 +796,7 @@ sub _unitTest {
 sub _globalTest {
     my $self = shift;
     require Lemonldap::NG::Manager::Conf::Tests;
-    hdebug('# _globalTest');
+    hdebug('# _globalTest()');
     my $result = 1;
     my $tests  = &Lemonldap::NG::Manager::Conf::Tests::tests( $self->newConf );
     while ( my ( $name, $sub ) = each %$tests ) {

@@ -4,6 +4,7 @@ use strict;
 use utf8;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use JSON::MaybeXS;
+use Encode;
 
 our $VERSION = '1.4.0';
 our $initDone;
@@ -81,7 +82,8 @@ sub store {
     my ( $self, $fields ) = @_;
     my $mask = umask;
     umask( oct('0027') );
-    unless ( open FILE, ">" . $self->_file( $fields->{cfgNum} ) ) {
+    unless ( open FILE, ">:encoding(UTF-8)", $self->_file( $fields->{cfgNum} ) )
+    {
         $Lemonldap::NG::Common::Conf::msg .= "Open file failed: $! \n";
         $self->unlock;
         return UNKNOWN_ERROR;
@@ -97,11 +99,20 @@ sub load {
     my $f;
     if ( -e $self->_file($cfgNum) ) {
         local $/ = '';
-        open FILE, $self->_file($cfgNum) or die "$!$@";
+        my $ret;
+        unless ( open FILE, $self->_file($cfgNum) ) {
+            $Lemonldap::NG::Common::Conf::msg .= "Read error: $!$@";
+            return undef;
+        }
+        binmode FILE;
         $f = join( '', <FILE> );
-        close FILE;
-        my $ret = eval { decode_json($f); };
-        die "Unable to load conf: $@\n" if ($@);
+        $f = encode( 'UTF-8', $f );
+        eval { $ret = decode_json($f) };
+        if ($@) {
+            $Lemonldap::NG::Common::Conf::msg .=
+              "JSON fails to read file: $@ \n";
+            return undef;
+        }
         return $ret;
     }
 

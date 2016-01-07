@@ -84,7 +84,7 @@
     }
   },
   "authentication": "Demo",
-  "cfgAuthor": "The LemonLDAP::NG team",
+  "cfgAuthor": "The LemonLDAP::NG team ©",
   "cfgAuthorIP": "127.0.0.1",
   "cfgDate": 1428138808,
   "cfgLog": "Default configuration provided by LemonLDAP::NG team",

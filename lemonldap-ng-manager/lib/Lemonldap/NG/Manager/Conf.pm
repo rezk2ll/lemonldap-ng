@@ -898,6 +898,9 @@ sub newConf {
                     $res->{needConfirm} = 1;
                     $res->{message} .= '__needConfirmation__';
                 }
+                else {
+                    $res->{message} = $Lemonldap::NG::Common::Conf::msg;
+                }
             }
         }
     }

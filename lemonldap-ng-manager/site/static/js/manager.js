@@ -95,7 +95,7 @@
         $scope.message.title = 'networkProblem';
         $scope.message.items = [];
       }
-      $scope.showModal('message.html');
+      return $scope.showModal('message.html');
     };
 
     /* Modal launcher */
@@ -740,10 +740,11 @@
           $location.path('/confs/' + n);
           $scope.init();
         }).error(function(j, e) {
-          $scope.currentCfg.cfgNum = 0;
-          $scope.init();
-          // TODO: insert conf 0
-          readError(j, e);
+          readError(j, e).then(function() {
+            console.log(e);
+            $scope.currentCfg.cfgNum = 0;
+            $scope.init();
+          });
         });
       } else {
         $scope.waiting = false;
