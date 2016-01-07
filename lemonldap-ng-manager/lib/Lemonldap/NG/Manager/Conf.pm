@@ -824,7 +824,7 @@ sub prx {
 #                 configuration is available
 
 ## @method PSGI-JSON-response newConf($req)
-# Call Lemonldap::NG::Manager::ConfParser to parse new configuration and store
+# Call Lemonldap::NG::Manager::Conf::Parser to parse new configuration and store
 # it
 #
 #@param $req Lemonldap::NG::Common::PSGI::Request
@@ -858,8 +858,8 @@ sub newConf {
     }
 
     # Parse new conf
-    require Lemonldap::NG::Manager::ConfParser;
-    my $parser = Lemonldap::NG::Manager::ConfParser->new(
+    require Lemonldap::NG::Manager::Conf::Parser;
+    my $parser = Lemonldap::NG::Manager::Conf::Parser->new(
         { tree => $new, refConf => $self->currentConf, req => $req } );
     my $res = { result => $parser->check };
 
@@ -1033,7 +1033,7 @@ Lemonldap::NG::Manager configuration is managed by 2 files:
 to display configuration metadatas and keys content, and to
 save new configuration,
 
-=item L<Lemonldap::NG::Manager::ConfParser>
+=item L<Lemonldap::NG::Manager::Conf::Parser>
 
 used to check proposed configuration.
 
@@ -1047,7 +1047,7 @@ metadatas (author, data, log,...). Then for each key read by the user, web
 interface launch an Ajax request to get the value.
 
 At the end, when modifications are saved, a POST request is done to `/confs`.
-Then Lemonldap::NG::Manager::Conf calls L<Lemonldap::NG::Manager::ConfParser>
+Then Lemonldap::NG::Manager::Conf calls L<Lemonldap::NG::Manager::Conf::Parser>
 to verify new configuration. If good, it tries to store it. Then it calls
 applyConf() that tries to call other servers to explain them that configuration
 has changed. Then it returns all errors, warnings in a JSON object that is
@@ -1055,7 +1055,7 @@ displayed by web interface.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Manager::ConfParser>, L<Lemonldap::NG::Manager>,
+L<Lemonldap::NG::Manager::Conf::Parser>, L<Lemonldap::NG::Manager>,
 L<http://lemonldap-ng.org/>
 
 =head1 AUTHORS

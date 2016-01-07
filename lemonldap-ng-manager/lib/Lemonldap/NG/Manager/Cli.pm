@@ -168,8 +168,8 @@ sub _setKey {
 
 sub _save {
     my ( $self, $new ) = @_;
-    require Lemonldap::NG::Manager::ConfParser;
-    my $parser = Lemonldap::NG::Manager::ConfParser->new(
+    require Lemonldap::NG::Manager::Conf::Parser;
+    my $parser = Lemonldap::NG::Manager::Conf::Parser->new(
         {
             newConf => $new,
             refConf => $self->mgr->currentConf,

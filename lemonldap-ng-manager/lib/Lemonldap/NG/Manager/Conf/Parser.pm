@@ -1,4 +1,4 @@
-package Lemonldap::NG::Manager::ConfParser;
+package Lemonldap::NG::Manager::Conf::Parser;
 
 # This module is called either to parse a new configuration in JSON format (as
 # posted by the web interface) and test a new configuration object.
@@ -826,13 +826,13 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Manager::ConfParser - Perl extension for parsing new uploaded
+Lemonldap::NG::Manager::Conf::Parser - Perl extension for parsing new uploaded
 configurations.
 
 =head1 SYNOPSIS
 
-  require Lemonldap::NG::Manager::ConfParser;
-  my $parser = Lemonldap::NG::Manager::ConfParser->new(
+  require Lemonldap::NG::Manager::Conf::Parser;
+  my $parser = Lemonldap::NG::Manager::Conf::Parser->new(
       { tree => $new, refConf => $self->currentConf }
   );
   my $res = { result => $parser->check };
@@ -844,7 +844,7 @@ configurations.
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Manager::ConfParser checks new configuration
+Lemonldap::NG::Manager::Conf::Parser checks new configuration
 
 This package is used by Manager to examine uploaded configuration. It is
 currently called using check() which return a boolean.
