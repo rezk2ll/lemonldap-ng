@@ -196,7 +196,7 @@ sub getNotification {
 # @param $portal Lemonldap::NG::Portal object that call
 # @return true if all checkboxes have been checked
 sub checkNotification {
-    my ( $self, $portal ) = @_, 0, 2;
+    my ( $self, $portal ) = ( @_, 0, 2 );
     my ( $refs, $checks );
 
     # First, rebuild environment (cookies,...)
