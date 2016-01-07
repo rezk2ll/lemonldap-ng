@@ -1,4 +1,7 @@
 #!/usr/bin/env perl -I pl/lib
+#
+# Verify that a modified configuration can be saved and that all changes are
+# detected
 
 use Test::More;
 use strict;

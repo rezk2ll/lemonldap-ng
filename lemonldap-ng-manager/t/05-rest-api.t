@@ -1,4 +1,7 @@
 #!/usr/bin/env perl -I pl/lib
+#
+# Test REST API with valid and invalid requests.
+# Check also metadatas request (root of a conf)
 
 use Test::More;
 use JSON::MaybeXS;

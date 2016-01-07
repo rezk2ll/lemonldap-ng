@@ -1,4 +1,6 @@
 #!/usr/bin/env perl -I pl/lib
+#
+# Test sessions explorer API
 
 use Test::More;
 use JSON::MaybeXS;

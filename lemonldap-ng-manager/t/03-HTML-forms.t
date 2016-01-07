@@ -1,4 +1,7 @@
 #!/usr/bin/env perl -I pl/lib
+#
+# Check that HTML forms exists for all types of parameter and that no HTML
+# forms are unused
 
 use Test::More;
 use strict;

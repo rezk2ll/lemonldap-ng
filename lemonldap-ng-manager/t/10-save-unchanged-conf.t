@@ -1,4 +1,6 @@
 #!/usr/bin/env perl -I pl/lib
+#
+# Verify that an unmodified configuration is rejected
 
 use Test::More;
 use strict;

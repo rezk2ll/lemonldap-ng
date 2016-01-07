@@ -1,4 +1,6 @@
 #!/usr/bin/env perl -I pl/lib
+#
+# Verify just that '/' requests returns HTML
 
 use Test::More;
 use strict;
