@@ -7,8 +7,14 @@ use strict;
 use Test::More;
 use Data::Dumper;
 
-my $knownExceptions = qr/^(?:remoteCookieName)$/;
+# CONSTANTS
 
+# Node names used more than one time
+my $usedMoreThanOneTimeInTree = qr/^(?:
+  remoteCookieName
+)$/x;
+
+# Attributes not managed in web interface
 my @notManagedAttributes = (
 
     # Complex nodes
@@ -27,6 +33,17 @@ my @notManagedAttributes = (
     # PSGI/CGI protection (must be set in lemonldap-ng.ini)
     'protection',
 );
+
+# Words used either as attribute name and node title
+my $doubleUsage = qr/^(?:
+  samlSPMetaDataOptions|
+  samlIDPMetaDataOptions|
+  oidcRPMetaDataOptions|
+  oidcOPMetaDataOptions|
+  vhostOptions
+)$/x;
+
+# TESTS
 
 # 1 - Collect attributes
 
@@ -120,6 +137,14 @@ sub scanTree {
                 "Node $name has leafs"
             );
             $count += 4;
+
+            # Nodes must not use attributes name
+            unless ( $name =~ $doubleUsage ) {
+                ok( !exists( $h{$name} ),
+                    "Node title ($name) must not be used as attribute name" );
+                $count++;
+            }
+
             foreach my $n (qw(nodes nodes_cond group)) {
 
                 # Scan subnodes lists
@@ -130,9 +155,9 @@ sub scanTree {
         # Case 2: leaf
 
         # Sub case 21: normal leaf
-        elsif ( $leaf !~ $knownExceptions ) {
+        elsif ( $leaf !~ $usedMoreThanOneTimeInTree ) {
 
-            # Check that leaf corresponds to an attribute name
+            # Check that leaf is a string
             ok( $leaf =~ /^\*?\w+/, "Leaf is an attribute name ($leaf)" );
             $h2{$leaf}++;
 
@@ -141,8 +166,8 @@ sub scanTree {
             $count += 2;
         }
 
-        # Sub case 22: $knownExceptions contains leaf used more than one time
-        #              in tree
+        # Sub case 22: $usedMoreThanOneTimeInTree contains leaf used more than
+        #              one time in tree
         else {
             $h2{$leaf}++;
         }
