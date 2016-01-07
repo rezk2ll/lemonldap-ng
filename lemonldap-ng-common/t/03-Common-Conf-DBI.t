@@ -23,7 +23,7 @@ ok(
             dbiUser  => 'lemonldap-ng',
         }
     )
-);
+) or print STDERR "Error: $Lemonldap::NG::Common::Conf::msg\n";;
 
 ok( $h->can('_dbh') );
 
