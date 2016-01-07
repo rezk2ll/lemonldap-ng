@@ -15,7 +15,7 @@ use constant AXSPECURL      => 'http://openid.net/srv/ax/1.0';
 use constant GOOGLEENDPOINT => 'https://www.google.com/accounts/o8/id';
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.0';
 our $googleEndPoint;
 
 BEGIN {
@@ -77,7 +77,7 @@ sub checkGoogleSession {
     } $self->param();
 
     # Look at persistent database
-    my $id       = $self->_md5hash( $self->param('openid.claimed_id') );
+    my $id       = $self->param('openid.claimed_id');
     my $pSession = $self->getPersistentSession($id);
     my $gs;
 

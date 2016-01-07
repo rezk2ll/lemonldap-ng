@@ -915,13 +915,17 @@ sub getApacheSession {
     return $apacheSession;
 }
 
-## @method protected hashref getPersistentSession(string id)
-# Try to recover the persitent session corresponding to id and return session datas.
-# If $id is set to undef, return a new session.
-# @param id session reference
+## @method protected hashref getPersistentSession(string uid)
+# Try to recover the persistent session corresponding to uid and return session datas.
+# @param uid main user identifier (whatToTrace)
 # return Lemonldap::NG::Common::Session object
 sub getPersistentSession {
-    my ( $self, $id ) = @_;
+    my ( $self, $uid ) = @_;
+
+    return unless defined $uid;
+
+    # Compute persistent identifier
+    my $pid = $self->_md5hash($uid);
 
     my $persistentSession = Lemonldap::NG::Common::Session->new(
         {
@@ -929,7 +933,7 @@ sub getPersistentSession {
             storageModuleOptions => $self->{persistentStorageOptions},
             cacheModule          => $self->{localSessionStorage},
             cacheModuleOptions   => $self->{localSessionStorageOptions},
-            id                   => $id,
+            id                   => $pid,
             force                => 1,
             kind                 => "Persistent",
         }
@@ -937,6 +941,11 @@ sub getPersistentSession {
 
     if ( $persistentSession->error ) {
         $self->lmLog( $persistentSession->error, 'debug' );
+    }
+
+    # Set _session_uid if not already present
+    unless ( defined $persistentSession->data->{_session_uid} ) {
+        $persistentSession->update( { '_session_uid' => $uid } );
     }
 
     return $persistentSession;
@@ -971,8 +980,7 @@ sub updatePersistentSession {
     $uid ||= $self->{sessionInfo}->{ $self->{whatToTrace} };
     return () unless ($uid);
 
-    my $persistentSession =
-      $self->getPersistentSession( $self->_md5hash($uid) );
+    my $persistentSession = $self->getPersistentSession($uid);
 
     $persistentSession->update($infos);
 
@@ -2072,8 +2080,7 @@ sub setPersistentSessionInfo {
 
         return PE_OK unless ( $key and length($key) );
 
-        my $persistentSession =
-          $self->getPersistentSession( $self->_md5hash($key) );
+        my $persistentSession = $self->getPersistentSession($key);
 
         if ($persistentSession) {
             $self->lmLog( "Persistent session found for $key", 'debug' );
