@@ -18,6 +18,8 @@ package Lemonldap::NG::Manager::ConfParser;
 # containing `{ message => 'Explanation' }. A main message is stored in
 # `message` property.
 
+use strict;
+use utf8;
 use Mouse;
 use Lemonldap::NG::Manager::Constants;
 use Lemonldap::NG::Manager::Attributes;

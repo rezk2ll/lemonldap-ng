@@ -1,5 +1,6 @@
 package Lemonldap::NG::Manager::Conf::Tests;
 
+use utf8;
 use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Handler::SharedConf;
 

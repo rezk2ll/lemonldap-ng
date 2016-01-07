@@ -2,6 +2,7 @@ package Lemonldap::NG::Manager::Cli::Lib;
 
 use JSON::MaybeXS;
 use Mouse;
+use utf8;
 use Lemonldap::NG::Manager;
 
 has iniFile => ( is => 'ro', isa => 'Str' );

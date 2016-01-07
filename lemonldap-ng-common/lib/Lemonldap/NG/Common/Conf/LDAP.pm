@@ -6,6 +6,7 @@
 package Lemonldap::NG::Common::Conf::LDAP;
 
 use strict;
+use utf8;
 use Net::LDAP;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Conf::Serializer;

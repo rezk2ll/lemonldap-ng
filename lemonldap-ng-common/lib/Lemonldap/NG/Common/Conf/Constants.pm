@@ -1,6 +1,7 @@
 package Lemonldap::NG::Common::Conf::Constants;
 
 use strict;
+use utf8;
 use Exporter 'import';
 
 use base qw(Exporter);

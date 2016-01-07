@@ -1,6 +1,7 @@
 package Lemonldap::NG::Common::Conf::File;
 
 use strict;
+use utf8;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use JSON::MaybeXS;
 

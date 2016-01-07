@@ -6,6 +6,7 @@
 package Lemonldap::NG::Common::Conf::SAML::Metadata;
 
 use strict;
+use utf8;
 use warnings;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::X509;

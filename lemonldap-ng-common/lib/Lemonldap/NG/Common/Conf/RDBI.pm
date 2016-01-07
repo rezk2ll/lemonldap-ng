@@ -1,6 +1,7 @@
 package Lemonldap::NG::Common::Conf::RDBI;
 
 use strict;
+use utf8;
 use Lemonldap::NG::Common::Conf::Serializer;
 use Lemonldap::NG::Common::Conf::_DBI;
 

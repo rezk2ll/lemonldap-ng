@@ -1,6 +1,7 @@
 package Lemonldap::NG::Common::Conf::SOAP;
 
 use strict;
+use utf8;
 use SOAP::Lite;
 
 our $VERSION = '1.4.0';

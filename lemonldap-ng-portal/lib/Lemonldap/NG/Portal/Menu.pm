@@ -6,6 +6,7 @@
 package Lemonldap::NG::Portal::Menu;
 
 use strict;
+use utf8;
 use warnings;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LibAccess;

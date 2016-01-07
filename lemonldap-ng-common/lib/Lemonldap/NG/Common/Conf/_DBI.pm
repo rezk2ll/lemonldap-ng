@@ -1,6 +1,7 @@
 package Lemonldap::NG::Common::Conf::_DBI;
 
 use strict;
+use utf8;
 use DBI;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 

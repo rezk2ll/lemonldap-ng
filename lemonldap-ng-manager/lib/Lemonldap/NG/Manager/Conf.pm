@@ -7,6 +7,7 @@
 package Lemonldap::NG::Manager::Conf;
 
 use 5.10.0;
+use utf8;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;

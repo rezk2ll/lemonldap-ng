@@ -1,6 +1,7 @@
 package Lemonldap::NG::Manager::Build;
 
 use strict;
+use utf8;
 use Mouse;
 use Lemonldap::NG::Manager::Build::Attributes;
 use Lemonldap::NG::Manager::Build::Tree;

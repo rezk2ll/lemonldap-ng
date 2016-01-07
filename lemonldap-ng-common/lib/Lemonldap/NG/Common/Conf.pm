@@ -8,6 +8,7 @@
 package Lemonldap::NG::Common::Conf;
 
 use strict;
+use utf8;
 no strict 'refs';
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 

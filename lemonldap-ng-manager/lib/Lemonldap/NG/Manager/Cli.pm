@@ -1,6 +1,7 @@
 package Lemonldap::NG::Manager::Cli;
 
 use strict;
+use utf8;
 use Mouse;
 use 5.14.0;
 use Data::Dumper;

@@ -1,6 +1,7 @@
 package Lemonldap::NG::Common::Conf::CDBI;
 
 use strict;
+use utf8;
 require Storable;
 use Lemonldap::NG::Common::Conf::_DBI;
 
