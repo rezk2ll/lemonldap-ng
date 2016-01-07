@@ -1,5 +1,7 @@
 package Lemonldap::NG::Common::Conf::Serializer;
 
+use strict;
+use utf8;
 use Data::Dumper;
 
 our $VERSION = '1.9.0';
@@ -160,12 +162,12 @@ sub unserialize {
             # Value should be a Data::Dumper, else this is an old format
             if ( defined($v) and $v !~ /^\$/ ) {
 
-                $msg .=
+                $Lemonldap::NG::Common::Conf::msg .=
 " Warning: configuration is in old format, you've to migrate!";
 
                 eval { require Storable; require MIME::Base64; };
                 if ($@) {
-                    $msg .= " Error: $@";
+                    $Lemonldap::NG::Common::Conf::msg .= " Error: $@";
                     return 0;
                 }
                 $conf->{$k} = Storable::thaw( MIME::Base64::decode_base64($v) );
@@ -181,7 +183,7 @@ sub unserialize {
                 eval $v;
 
                 if ($@) {
-                    $msg .= " Error: cannot read configuration key $k: $@";
+                    $Lemonldap::NG::Common::Conf::msg .= " Error: cannot read configuration key $k: $@";
                 }
 
                 # Store value in configuration object
