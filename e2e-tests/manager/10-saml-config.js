@@ -44,7 +44,7 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('longtextinput')).sendKeys('Activate SAML');
       element(by.id('saveok')).click();
       element(by.id('messageok')).click();
-      expect(element(by.id('cfgnum')).getText()).toEqual('3');
+      expect(element(by.id('cfgnum')).getText()).toEqual('4');
     });
   });
 });

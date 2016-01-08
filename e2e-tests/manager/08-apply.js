@@ -26,7 +26,7 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('saveok')).click();
       expect(element.all(by.repeater('item in item.items')).count()).toEqual(2);
       element(by.id('messageok')).click();
-      expect(element(by.id('cfgnum')).getText()).toEqual('2');
+      expect(element(by.id('cfgnum')).getText()).toEqual('3');
     });
   });
 });
