@@ -12,7 +12,7 @@ use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Conf::Serializer;
 use Encode;
 
-our $VERSION = '1.4.1';
+our $VERSION = '1.9.0';
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::ldap = \&ldap;
@@ -27,6 +27,9 @@ sub prereq {
             return 0;
         }
     }
+    $self->{ldapObjectClass}      ||= "applicationProcess";
+    $self->{ldapAttributeId}      ||= "cn";
+    $self->{ldapAttributeContent} ||= "description";
     1;
 }
 
@@ -39,9 +42,9 @@ sub available {
 
     my $search = $self->ldap->search(
         base   => $self->{ldapConfBase},
-        filter => '(objectClass=applicationProcess)',
+        filter => '(objectClass=' . $self->{ldapObjectClass} . ')',
         scope  => 'one',
-        attrs  => ['cn'],
+        attrs  => [ $self->{ldapAttributeId} ],
     );
 
     if ( $search->code ) {
@@ -52,7 +55,7 @@ sub available {
     my @entries = $search->entries();
     my @conf;
     foreach (@entries) {
-        my $cn = $_->get_value('cn');
+        my $cn = $_->get_value( $self->{ldapAttributeId} );
         my ($cfgNum) = ( $cn =~ /lmConf-(\d*)/ );
         push @conf, $cfgNum;
     }
@@ -152,7 +155,8 @@ sub store {
     my $lastCfg = $self->lastCfg;
 
     my $confName = "lmConf-" . $fields->{cfgNum};
-    my $confDN   = "cn=$confName," . $self->{ldapConfBase};
+    my $confDN =
+      $self->{ldapAttributeId} . "=$confName," . $self->{ldapConfBase};
 
     # Store values as {key}value
     my @confValues;
@@ -166,15 +170,15 @@ sub store {
     if ( $lastCfg == $fields->{cfgNum} ) {
         $operation =
           $self->ldap->modify( $confDN,
-            replace => { description => \@confValues } );
+            replace => { $self->{ldapAttributeContent} => \@confValues } );
     }
     else {
         $operation = $self->ldap->add(
             $confDN,
             attrs => [
-                objectClass => [ 'top', 'applicationProcess' ],
-                cn          => $confName,
-                description => \@confValues,
+                objectClass => [ 'top', $self->{ldapObjectClass} ],
+                $self->{ldapAttributeId}      => $confName,
+                $self->{ldapAttributeContent} => \@confValues,
             ]
         );
     }
@@ -197,13 +201,14 @@ sub load {
 
     my $f;
     my $confName = "lmConf-" . $cfgNum;
-    my $confDN   = "cn=$confName," . $self->{ldapConfBase};
+    my $confDN =
+      $self->{ldapAttributeId} . "=$confName," . $self->{ldapConfBase};
 
     my $search = $self->ldap->search(
         base   => $confDN,
-        filter => '(objectClass=applicationProcess)',
+        filter => '(objectClass=' . $self->{ldapObjectClass} . ')',
         scope  => 'base',
-        attrs  => ['description'],
+        attrs  => [ $self->{ldapAttributeContent} ],
     );
 
     if ( $search->code ) {
@@ -212,7 +217,7 @@ sub load {
     }
 
     my $entry      = $search->shift_entry();
-    my @confValues = $entry->get_value('description');
+    my @confValues = $entry->get_value( $self->{ldapAttributeContent} );
     foreach (@confValues) {
         my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/ );
         $v = decodeLdapValue($v);
@@ -234,7 +239,11 @@ sub delete {
         return 0;
     }
 
-    my $confDN = "cn=lmConf-" . $cfgNum . "," . $self->{ldapConfBase};
+    my $confDN =
+        $self->{ldapAttributeId}
+      . "=lmConf-"
+      . $cfgNum . ","
+      . $self->{ldapConfBase};
     my $delete = $self->ldap->delete($confDN);
     $self->ldap->unbind() && delete $self->{ldap};
     $self->logError($delete) if ( $delete->code );
