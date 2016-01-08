@@ -24,7 +24,6 @@ MANIFEST			This list of files
 META.yml
 README
 REST-API.md
-scripts/convertConfig
 scripts/lemonldap-ng-cli
 scripts/llng-manager-cli
 scripts/lmConfigEditor
