@@ -106,10 +106,11 @@ sub new {
     return $self;
 }
 
-## @method int saveConf(hashRef conf)
+## @method int saveConf(hashRef conf, hash args)
 # Serialize $conf and call store().
 # @param $conf Lemonldap::NG configuration hashRef
-# @return Number of the saved configuration, 0 if case of error.
+# @param %args Parameters
+# @return Number of the saved configuration, 0 in case of error.
 sub saveConf {
     my ( $self, $conf, %args ) = @_;
 
@@ -120,7 +121,7 @@ sub saveConf {
         return CONFIG_WAS_CHANGED if ( $conf->{cfgNum} != $last );
         return DATABASE_LOCKED if ( $self->isLocked() or not $self->lock() );
     }
-    $conf->{cfgNum} = $last + 1 unless ( $self->{cfgNumFixed} );
+    $conf->{cfgNum} = $last + 1 unless ( $args{cfgNumFixed} );
     delete $conf->{cipher};
 
     # Try to store configuration

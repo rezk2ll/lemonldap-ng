@@ -34,10 +34,10 @@ foreach ( $opts{current}, $opts{new} ) {
         exit 3;
     }
 }
+
 my $old = Lemonldap::NG::Common::Conf->new(
     {
         confFile => $opts{current},
-        noCache  => 1,
     }
 );
 unless ($old) {
@@ -45,12 +45,16 @@ unless ($old) {
       "Failed to get current conf : $Lemonldap::NG::Common::Conf::msg\n";
     exit 4;
 }
+
+my %newargs = (
+    force       => 1,
+    noCache     => 1,
+    cfgNumFixed => 1,
+);
+
 my $new = Lemonldap::NG::Common::Conf->new(
     {
-        confFile    => $opts{new},
-        force       => 1,
-        noCache     => 1,
-        cfgNumFixed => 1,
+        confFile => $opts{new},
     }
 );
 unless ($new) {
@@ -58,6 +62,7 @@ unless ($new) {
       "Failed to create new conf object : $Lemonldap::NG::Common::Conf::msg\n";
     exit 5;
 }
+
 my @available;
 if ( $opts{latest} ) {
     @available = $old->lastCfg();
@@ -65,15 +70,16 @@ if ( $opts{latest} ) {
 else {
     @available = $old->available();
 }
+
 foreach (@available) {
-    my $conf = $old->getConf( { cfgNum => $_ } );
+    my $conf = $old->getConf( { cfgNum => $_, noCache => 1 } );
     unless ($conf) {
         print STDERR
           "\nFailed to get conf $_ : $Lemonldap::NG::Common::Conf::msg\n";
         next if ( $opts{force} );
         exit 6;
     }
-    if ( my $r = $new->saveConf($conf) ) {
+    if ( my $r = $new->saveConf( $conf, %newargs ) ) {
         print "Conf $conf->{cfgNum} stored\n";
         next;
     }
