@@ -68,4 +68,7 @@ WriteMakefile(
           )
         : ()
     ),
+    clean => {
+        FILES => 't/lmConf*'
+    }
 );

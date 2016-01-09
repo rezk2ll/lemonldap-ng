@@ -10,13 +10,16 @@ our @ISA     = qw(Lemonldap::NG::Common::Conf::_DBI);
 
 sub store {
     my ( $self, $fields ) = @_;
+    my $cfgNum = $fields->{cfgNum};
     $self->{noQuotes} = 1;
     $fields = $self->serialize($fields);
 
     my $req;
     my $lastCfg = $self->lastCfg;
 
-    if ( $lastCfg == $fields->{cfgNum} ) {
+    $self->_dbh->begin_work;
+    eval { $self->_dbh->do("BEGIN") };
+    if ( $lastCfg == $cfgNum ) {
         $req = $self->_dbh->prepare(
 "UPDATE $self->{dbiTable} SET field=?, value=? WHERE cfgNum=? AND field=?"
         );
@@ -31,30 +34,28 @@ sub store {
         $self->logError;
         return UNKNOWN_ERROR;
     }
-    $self->_dbh->{AutoCommit} = 0;
     while ( my ( $k, $v ) = each %$fields ) {
         my @execValues;
-        if ( $lastCfg == $fields->{cfgNum} ) {
-            @execValues = ( $k, $v, $fields->{cfgNum}, $k );
+        if ( $lastCfg == $cfgNum ) {
+            @execValues = ( $k, $v, $cfgNum, $k );
         }
-        else { @execValues = ( $fields->{cfgNum}, $k, $v ); }
+        else { @execValues = ( $cfgNum, $k, $v ); }
         unless ( $req->execute(@execValues) ) {
             $self->logError;
             $self->_dbh->do("ROLLBACK");
-            $self->_dbh->{AutoCommit} = 1;
             return UNKNOWN_ERROR;
         }
     }
-    $self->_dbh->do("COMMIT");
-    $self->_dbh->{AutoCommit} = 1;
-    return $fields->{cfgNum};
+    eval { $self->_dbh->do("COMMIT") };
+    return $cfgNum;
 }
 
 sub load {
     my ( $self, $cfgNum, $fields ) = @_;
     $fields = $fields ? join( ",", @$fields ) : '*';
     my $sth =
-      $self->_dbh->prepare( "SELECT cfgNum,field,value from "
+      $self->_dbh
+      ->prepare( "SELECT cfgNum,field,value from "
           . $self->{dbiTable}
           . " WHERE cfgNum=?" );
     $sth->execute($cfgNum);

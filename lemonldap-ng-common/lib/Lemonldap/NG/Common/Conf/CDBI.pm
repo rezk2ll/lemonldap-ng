@@ -32,7 +32,6 @@ sub store {
         $self->logError;
         return UNKNOWN_ERROR;
     }
-    eval { $self->_dbh->do("COMMIT"); };
     return $cfgNum;
 }
 

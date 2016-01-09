@@ -24,7 +24,7 @@ sub prereq {
           '"dbiChain" is required in *DBI configuration type';
         return 0;
     }
-    print STDERR __PACKAGE__ . 'Warning: "dbiUser" parameter is not set'
+    $Lemonldap::NG::Common::Conf::msg .= 'Warning: "dbiUser" parameter is not set'
       unless ( $self->{dbiUser} );
     $self->{dbiTable} ||= "lmConfig";
     1;
