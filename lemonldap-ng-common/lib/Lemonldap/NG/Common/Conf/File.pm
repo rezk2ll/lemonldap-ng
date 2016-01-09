@@ -82,12 +82,13 @@ sub store {
     my ( $self, $fields ) = @_;
     my $mask = umask;
     umask( oct('0027') );
-    unless ( open FILE, ">:encoding(UTF-8)", $self->_file( $fields->{cfgNum} ) )
+    unless ( open FILE, '>', $self->_file( $fields->{cfgNum} ) )
     {
-        $Lemonldap::NG::Common::Conf::msg .= "Open file failed: $! \n";
+        $Lemonldap::NG::Common::Conf::msg = "Open file failed: $! \n";
         $self->unlock;
         return UNKNOWN_ERROR;
     }
+    binmode(FILE);
     print FILE JSON->new->canonical(1)->encode($fields);
     close FILE;
     umask($mask);
@@ -109,6 +110,7 @@ sub load {
         $f = encode( 'UTF-8', $f );
         eval { $ret = decode_json($f) };
         if ($@) {
+            print STDERR "$@\n";
             $Lemonldap::NG::Common::Conf::msg .=
               "JSON fails to read file: $@ \n";
             return undef;
