@@ -2,20 +2,20 @@ package Lemonldap::NG::Common::Apache::Session::Serialize::JSON;
 
 use strict;
 use vars qw($VERSION);
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 
 our $VERSION = '1.9.0';
 
 sub serialize {
     my $session = shift;
 
-    $session->{serialized} = encode_json( $session->{data} );
+    $session->{serialized} = to_json( $session->{data} );
 }
 
 sub unserialize {
     my $session = shift;
 
-    my $data = decode_json( $session->{serialized} );
+    my $data = from_json( $session->{serialized} );
     die "Session could not be unserialized" unless defined $data;
     $session->{data} = $data;
 }
@@ -40,8 +40,8 @@ Lemonldap::NG::Common::Apache::Session::Serialize::JSON - Use JSON to zip up dat
 =head1 DESCRIPTION
 
 This module fulfills the serialization interface of Apache::Session.
-It serializes the data in the session object by use of JSON C<encode_json>
-and C<decode_json>. The serialized data is UTF-8 text.
+It serializes the data in the session object by use of JSON C<to_json>
+and C<from_json>. The serialized data is UTF-8 text.
 
 
 =head1 SEE ALSO

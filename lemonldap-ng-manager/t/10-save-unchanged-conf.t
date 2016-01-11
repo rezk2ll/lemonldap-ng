@@ -4,7 +4,7 @@
 
 use Test::More;
 use strict;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use Data::Dumper;
 require 't/test-lib.pm';
 
@@ -33,7 +33,7 @@ while ( my $body = &body() ) {
     );
     ok( $res->[0] == 200, "$desc: result code is 200" );
     ok(
-        $resBody = decode_json( $res->[2]->[0] ),
+        $resBody = from_json( $res->[2]->[0] ),
         "$desc: result body contains JSON text"
     );
 

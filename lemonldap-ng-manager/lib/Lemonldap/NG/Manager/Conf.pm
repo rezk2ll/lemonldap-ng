@@ -14,7 +14,6 @@ use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Manager::Constants;
 use Crypt::OpenSSL::RSA;
 use Convert::PEM;
-use JSON::MaybeXS;
 
 use feature 'state';
 

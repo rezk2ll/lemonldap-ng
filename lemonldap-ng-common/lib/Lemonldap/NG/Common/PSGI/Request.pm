@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::PSGI::Request;
 
 use strict;
 use Mouse;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use URI::Escape;
 
 our $VERSION = '1.9.0';
@@ -113,6 +113,7 @@ has CONTENT_LENGTH => (
                 $self->_psgiInput->read( $self->{body},
                     $self->{CONTENT_LENGTH}, 0 );
             }
+            utf8::upgrade($self->{body});
         }
     }
 );
@@ -130,7 +131,7 @@ sub jsonBodyToObj {
         return undef;
     }
     return $self->body if ( ref( $self->body ) );
-    my $j = eval { decode_json( $self->body ) };
+    my $j = eval { from_json( $self->body ) };
     if ( $@ or $! ) {
         $self->error("$@$!");
         return undef;

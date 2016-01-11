@@ -6,7 +6,7 @@
 package Lemonldap::NG::Portal::_OpenIDConnect;
 
 use strict;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use MIME::Base64
   qw/encode_base64url encode_base64 decode_base64url decode_base64/;
 use URI::Escape;
@@ -643,7 +643,7 @@ sub decodeJSON {
     my ( $self, $json ) = @_;
     my $json_hash;
 
-    eval { $json_hash = decode_json $json; };
+    eval { $json_hash = from_json $json; };
 
     if ($@) {
         $json_hash->{error} = "parse_error";
@@ -1228,13 +1228,13 @@ sub createJWT {
     my ( $self, $payload, $alg, $rp ) = @_;
 
     # Payload encoding
-    my $jwt_payload = encode_base64( encode_json($payload), "" );
+    my $jwt_payload = encode_base64( to_json($payload), "" );
 
     # JWT header
     my $jwt_header_hash = { typ => "JWT", alg => $alg };
     $jwt_header_hash->{kid} = $self->{oidcServiceKeyIdSig}
       if $self->{oidcServiceKeyIdSig};
-    my $jwt_header = encode_base64( encode_json($jwt_header_hash), "" );
+    my $jwt_header = encode_base64( to_json($jwt_header_hash), "" );
 
     if ( $alg eq "none" ) {
 
@@ -1357,7 +1357,7 @@ sub getJWTJSONData {
     my ( $self, $jwt ) = @_;
 
     my $jwt_parts = $self->extractJWT($jwt);
-    return decode_json( decode_base64url( $jwt_parts->[1] ) );
+    return from_json( decode_base64url( $jwt_parts->[1] ) );
 }
 
 ## @method HashRef key2jwks(String key)

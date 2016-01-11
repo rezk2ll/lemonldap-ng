@@ -1,9 +1,8 @@
 package Lemonldap::NG::Common::Conf::File;
 
 use strict;
-use utf8;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use Encode;
 
 our $VERSION = '1.4.0';
@@ -23,7 +22,7 @@ sub prereq {
     my $self = shift;
     unless ( $self->{dirName} ) {
         $Lemonldap::NG::Common::Conf::msg .=
-          '"dirName" is required in "File" configuration type ! \n';
+          "'dirName' is required in 'File' configuration type ! \n";
         return 0;
     }
     unless ( -d $self->{dirName} ) {
@@ -89,7 +88,8 @@ sub store {
         return UNKNOWN_ERROR;
     }
     binmode(FILE);
-    print FILE JSON->new->canonical(1)->encode($fields);
+    my $f = to_json($fields);
+    print FILE $f;
     close FILE;
     umask($mask);
     return $fields->{cfgNum};
@@ -107,8 +107,7 @@ sub load {
         }
         binmode FILE;
         $f = join( '', <FILE> );
-        $f = encode( 'UTF-8', $f );
-        eval { $ret = decode_json($f) };
+        eval { $ret = from_json($f) };
         if ($@) {
             print STDERR "$@\n";
             $Lemonldap::NG::Common::Conf::msg .=

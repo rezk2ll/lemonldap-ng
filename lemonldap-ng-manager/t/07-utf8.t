@@ -3,14 +3,16 @@
 # Test if an UTF-8 char is well returned
 
 use Test::More;
-use JSON::MaybeXS;
 use strict;
-use utf8;
+
+my $str = "The LemonLDAP::NG team \x{c2}\x{a9}";
 
 require 't/test-lib.pm';
 
 my $href = &client->jsonResponse('/confs/1/cfgAuthor');
-ok( $href->{value} eq "The LemonLDAP::NG team ©", 'Value is well encoded' );
+#binmode STDERR;
+
+ok( $href->{value} eq $str, 'Value is well encoded' ) or print STDERR "Expect '$href->{value}' eq '$str'";
 count(1);
 
 done_testing( count() );

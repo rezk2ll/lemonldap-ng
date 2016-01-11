@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Conf::Serializer;
 use strict;
 use utf8;
 use Encode;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(JSON to_json from_json);
 use Lemonldap::NG::Common::Conf::Constants;
 
 our $VERSION = '1.9.0';
@@ -96,7 +96,7 @@ sub unserialize {
             unless ( utf8::is_utf8($v) ) {
                 $v = encode( 'UTF-8', $v );
             }
-            $conf->{$k} = ( $v =~ /./ ? eval { decode_json($v) } : {} );
+            $conf->{$k} = ( $v =~ /./ ? eval { from_json($v) } : {} );
             if ($@) {
                 $Lemonldap::NG::Common::Conf::msg .=
                   "Unable to decode $k, probably old format. Trying... ($@)";

@@ -3,7 +3,7 @@
 # Test sessions explorer API
 
 use Test::More;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use strict;
 use Lemonldap::NG::Common::Session;
 
@@ -147,7 +147,7 @@ foreach (@ids) {
     my $res;
     ok( $res = &client->_del("/sessions/global/$_"), "Delete $_" );
     ok( $res->[0] == 200, 'Result code is 200' );
-    ok( decode_json( $res->[2]->[0] )->{result} == 1,
+    ok( from_json( $res->[2]->[0] )->{result} == 1,
         'Body is JSON and result==1' );
     count(3);
 }

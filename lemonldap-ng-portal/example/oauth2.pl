@@ -3,7 +3,7 @@
 # Simple OpenID Connect client
 
 use strict;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use LWP::UserAgent;
 use MIME::Base64
   qw/encode_base64url encode_base64 decode_base64url decode_base64/;
@@ -65,9 +65,9 @@ if ( $cgi->param("test") eq "request" ) {
         aud           => [$portal_url]
     };
     my $request_payload =
-      encode_base64( encode_json($request_paylod_hash), "" );
+      encode_base64( to_json($request_paylod_hash), "" );
     my $request_header_hash = { typ => "JWT", alg => "HS256" };
-    my $request_header = encode_base64( encode_json($request_header_hash), "" );
+    my $request_header = encode_base64( to_json($request_header_hash), "" );
 
     my $request_digest =
       hmac_sha256_base64( $request_header . "." . $request_payload,
@@ -283,7 +283,7 @@ if ($callback) {
         my $content = $response->decoded_content;
 
         my $json;
-        eval { $json = decode_json $content; };
+        eval { $json = from_json $content; };
 
         if ($@) {
             print "<div class=\"alert alert-danger\">";
@@ -338,7 +338,7 @@ if ($callback) {
 
     # TODO check signature
 
-    my $id_token_payload_hash = decode_json( decode_base64($id_token_payload) );
+    my $id_token_payload_hash = from_json( decode_base64($id_token_payload) );
 
     print "<div class=\"panel panel-info\">\n";
     print "<div class=\"panel-heading\">\n";
@@ -359,12 +359,12 @@ if ($callback) {
 
     my $content_type = $ui_response->header('Content-Type');
     if ( $content_type =~ /json/ ) {
-        eval { $ui_json = decode_json($ui_content); };
+        eval { $ui_json = from_json($ui_content); };
     }
     elsif ( $content_type =~ /jwt/ ) {
         my ( $ui_header, $ui_payload, $ui_signature ) =
           split( /\./, $ui_content );
-        eval { $ui_json = decode_json( decode_base64($ui_payload) ); };
+        eval { $ui_json = from_json( decode_base64($ui_payload) ); };
     }
 
     print "<div class=\"panel panel-info\">\n";
@@ -436,7 +436,7 @@ elsif ( $cgi->param("test") eq "configuration" ) {
     my $content = $config_response->decoded_content;
 
     my $json;
-    eval { $json = decode_json $content; };
+    eval { $json = from_json $content; };
 
     if ($@) {
         print "<div class=\"alert alert-danger\">";
@@ -496,7 +496,7 @@ elsif ( $cgi->param("test") eq "configuration" ) {
         my $jwks_content = $jwks_response->decoded_content;
 
         my $jwks_json;
-        eval { $jwks_json = decode_json $jwks_content; };
+        eval { $jwks_json = from_json $jwks_content; };
 
         if ($@) {
             print "<div class=\"alert alert-danger\">";
@@ -581,7 +581,7 @@ elsif ( $cgi->param("test") eq "registration" ) {
     print "</div>\n";
 
     # POST client metadata
-    my $fake_metadata_json = encode_json($fake_metadata);
+    my $fake_metadata_json = to_json($fake_metadata);
     my $register_response  = $ua->post(
         $registration_uri,
         "Content-Type" => 'application/json',
@@ -591,7 +591,7 @@ elsif ( $cgi->param("test") eq "registration" ) {
     my $register_content = $register_response->decoded_content;
 
     my $register_json;
-    eval { $register_json = decode_json $register_content; };
+    eval { $register_json = from_json $register_content; };
 
     if ($@) {
         print "<div class=\"alert alert-danger\">";
@@ -664,9 +664,9 @@ else {
         aud           => [$portal_url]
     };
     my $request_payload =
-      encode_base64( encode_json($request_paylod_hash), "" );
+      encode_base64( to_json($request_paylod_hash), "" );
     my $request_header_hash = { typ => "JWT", alg => "HS256" };
-    my $request_header = encode_base64( encode_json($request_header_hash), "" );
+    my $request_header = encode_base64( to_json($request_header_hash), "" );
 
     my $request_digest =
       hmac_sha256_base64( $request_header . "." . $request_payload,

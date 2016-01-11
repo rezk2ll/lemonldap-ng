@@ -3,7 +3,7 @@
 # Verify that languages translation cover all `trspan`
 
 use Test::More;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use strict;
 
 my $langDir = 'site/static/languages';
@@ -23,7 +23,7 @@ ok( $en = join( '', <F> ), 'en.json is not empty' );
 close F;
 ok( @langs, 'Found other languages' );
 my $keys;
-ok( $keys = decode_json($en), 'en.json contains JSON' );
+ok( $keys = from_json($en), 'en.json contains JSON' );
 $en = undef;
 $count += 5;
 
@@ -32,7 +32,7 @@ foreach my $lang (@langs) {
     my $j;
     ok( $j = join( '', <F> ), "$lang is not empty" );
     my $l;
-    ok( $l = decode_json($j), "$lang contains JSON" . ( $@ ? " ($@)" : "" ) );
+    ok( $l = from_json($j), "$lang contains JSON" . ( $@ ? " ($@)" : "" ) );
     $lang =~ s/\.json$//;
     my @l1 = sort keys %$keys;
     my @l2 = sort keys %$l;

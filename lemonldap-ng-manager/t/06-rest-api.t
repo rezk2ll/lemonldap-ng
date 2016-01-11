@@ -4,7 +4,7 @@
 
 use Test::More;
 use strict;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use IO::String;
 require 't/test-lib.pm';
 
@@ -17,7 +17,7 @@ ok(
 );
 ok( $res->[0] == 200, "Result code is 200" );
 my $key;
-ok( $key = decode_json( $res->[2]->[0] ), 'Response is JSON' );
+ok( $key = from_json( $res->[2]->[0] ), 'Response is JSON' );
 count(3);
 
 ok(
@@ -28,7 +28,7 @@ ok(
     "Request succeed"
 );
 ok( $res->[0] == 200, "Result code is 200" );
-ok( $key = decode_json( $res->[2]->[0] ), 'Response is JSON' );
+ok( $key = from_json( $res->[2]->[0] ), 'Response is JSON' );
 count(3);
 
 #print STDERR Dumper($key);use Data::Dumper;

@@ -1,6 +1,6 @@
 package Lemonldap::NG::Manager::Cli::Lib;
 
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use Mouse;
 use utf8;
 use Lemonldap::NG::Manager;
@@ -137,7 +137,7 @@ sub jsonResponse {
       or die "Manager lib has refused my get, aborting";
     die "Manager lib does not return a 200 code, aborting"
       unless ( $res->[0] == 200 );
-    my $href = decode_json( $res->[2]->[0] ) or die 'Response is not JSON';
+    my $href = from_json( $res->[2]->[0] ) or die 'Response is not JSON';
     return $href;
 }
 
@@ -147,7 +147,7 @@ sub jsonPostResponse {
       or die "Manager lib has refused my post, aborting";
     die "Manager lib does not return a 200 code, aborting"
       unless ( $res->[0] == 200 );
-    my $href = decode_json( $res->[2]->[0] ) or die 'Response is not JSON';
+    my $href = from_json( $res->[2]->[0] ) or die 'Response is not JSON';
     return $href;
 }
 
@@ -157,7 +157,7 @@ sub jsonPutResponse {
       or die "Manager lib has refused my put, aborting";
     die "Manager lib does not return a 200 code, aborting"
       unless ( $res->[0] == 200 );
-    my $href = decode_json( $res->[2]->[0] ) or die 'Response is not JSON';
+    my $href = from_json( $res->[2]->[0] ) or die 'Response is not JSON';
     return $href;
 }
 

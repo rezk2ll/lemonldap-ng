@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 use Lemonldap::NG::Portal::SharedConf;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use strict;
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new();

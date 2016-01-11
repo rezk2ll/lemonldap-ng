@@ -4,7 +4,7 @@
 # Check also metadatas request (root of a conf)
 
 use Test::More;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use strict;
 
 require 't/test-lib.pm';
@@ -47,7 +47,7 @@ foreach my $query (@bad) {
     my $href;
 
     #print STDERR Dumper($res->[2]);use Data::Dumper;
-    ok( $href = decode_json( $res->[2]->[0] ), 'Response is JSON' );
+    ok( $href = from_json( $res->[2]->[0] ), 'Response is JSON' );
     ok( $href->{error}, "Receive an explanation message ($href->{error})" );
     count(3);
 }
@@ -61,7 +61,7 @@ while (<F>) {
 }
 close F;
 
-ok( $hstruct = decode_json($hstruct), 'struct.json is JSON' );
+ok( $hstruct = from_json($hstruct), 'struct.json is JSON' );
 ok( ref $hstruct eq 'ARRAY', 'struct.json is an array' );
 count(2);
 

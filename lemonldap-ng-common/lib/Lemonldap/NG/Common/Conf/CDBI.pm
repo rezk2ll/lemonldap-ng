@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Conf::CDBI;
 
 use strict;
 use utf8;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use Lemonldap::NG::Common::Conf::_DBI;
 
 our $VERSION = '1.4.0';
@@ -14,7 +14,7 @@ sub store {
     my $req;
     my $lastCfg = $self->lastCfg;
 
-    $fields = encode_json($fields);
+    $fields = to_json($fields);
 
     if ( $lastCfg == $cfgNum ) {
         $req = $self->_dbh->prepare(
@@ -47,7 +47,7 @@ sub load {
     }
     my $r;
     if ( $row->[0] =~ /^\s*\{/s ) {
-        eval { $r = decode_json( $row->[0] ); };
+        eval { $r = from_json( $row->[0] ); };
     }
     else {    # Old format
         require Storable;

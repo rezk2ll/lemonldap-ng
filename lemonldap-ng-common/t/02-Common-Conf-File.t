@@ -55,10 +55,11 @@ for ( my $i = 0 ; $i < @test ; $i++ ) {
     my $cfg;
     ok( $cfg = $h->load(1), "Test $i can be read" )
       or print STDERR $Lemonldap::NG::Common::Conf::msg;
-    ok( $cfg->{test} eq $test[$i]->{test}, "Test $i is restored" );
+    ok( $cfg->{test} eq $test[$i]->{test}, "Test $i is restored" )
+      or print STDERR "Expect $cfg->{test} eq $test[$i]->{test}\n";
     $count += 2;
 }
 
-unlink 't/lmConf-1.js';
+#unlink 't/lmConf-1.js';
 
 done_testing($count);

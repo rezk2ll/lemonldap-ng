@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::PSGI;
 
 use 5.10.0;
 use Mouse;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(JSON to_json from_json);
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::PSGI::Request;
 
@@ -164,9 +164,9 @@ sub sendHtml {
             SCRIPT_NAME         => $req->scriptname,
             STATIC_PREFIX       => $sp,
             AVAILABLE_LANGUAGES => $self->languages,
-            LINKS     => $self->links ? encode_json( $self->links ) : '""',
+            LINKS     => $self->links ? to_json( $self->links ) : '""',
             MENULINKS => $self->menuLinks
-            ? encode_json( $self->menuLinks )
+            ? to_json( $self->menuLinks )
             : '""',
             VERSION => $VERSION,
         );

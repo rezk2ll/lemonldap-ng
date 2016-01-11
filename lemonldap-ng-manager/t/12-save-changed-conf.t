@@ -5,7 +5,7 @@
 
 use Test::More;
 use strict;
-use JSON::MaybeXS;
+use JSON::MaybeXS qw(to_json from_json);
 use Data::Dumper;
 require 't/test-lib.pm';
 
@@ -23,7 +23,7 @@ my ( $res, $resBody );
 ok( $res = &client->_post( '/confs/', 'cfgNum=1', &body, 'application/json' ),
     "Request succeed" );
 ok( $res->[0] == 200, "Result code is 200" );
-ok( $resBody = decode_json( $res->[2]->[0] ),
+ok( $resBody = from_json( $res->[2]->[0] ),
     "Result body contains JSON text" );
 ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
   or print STDERR Dumper($resBody);
