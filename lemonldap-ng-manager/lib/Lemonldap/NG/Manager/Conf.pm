@@ -804,7 +804,7 @@ sub prx {
             $response->code . " (" . $response->message . ")", 400 );
     }
     unless ( $response->header('Content-Type') =~
-        m#^(?:application/json|application/.*xml.*)$# )
+        m#^(?:application/json|(?:application|text)/.*xml.*)$# )
     {
         return $self->sendError( $req,
             'Content refused for security reason (neither XML or JSON)', 400 );
