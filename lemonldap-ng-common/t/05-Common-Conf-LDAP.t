@@ -28,12 +28,7 @@ SKIP: {
             }
         ),
         "New object"
-          . (
-            $Lemonldap::NG::Common::Conf::msg
-            ? " ($Lemonldap::NG::Common::Conf::msg)"
-            : ''
-          )
-    );
+    ) or print STDERR "Error reported: " . $Lemonldap::NG::Common::Conf::msg;
 
     ok( ref($h) and $h->can('ldap') );
 }

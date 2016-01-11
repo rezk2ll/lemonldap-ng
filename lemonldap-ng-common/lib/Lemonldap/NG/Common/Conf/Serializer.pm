@@ -3,6 +3,7 @@ package Lemonldap::NG::Common::Conf::Serializer;
 use strict;
 use utf8;
 use Data::Dumper;
+use JSON::MaybeXS;
 use Lemonldap::NG::Common::Conf::Constants;
 
 our $VERSION = '1.9.0';
@@ -65,26 +66,15 @@ sub serialize {
     my ( $self, $conf ) = @_;
     my $fields;
 
-    # Data::Dumper options
-    local $Data::Dumper::Indent  = 0;
-    local $Data::Dumper::Varname = "data";
-
     # Parse configuration
     while ( my ( $k, $v ) = each(%$conf) ) {
 
         # 1.Hash ref
         if ( ref($v) ) {
-            $fields->{$k} = $self->normalize( Dumper($v) );
+            $fields->{$k} = JSON->encode($v);
         }
-
-        # 2. Numeric values
-        elsif ( $v =~ /^\d+$/ ) {
-            $fields->{$k} = "$v";
-        }
-
-        # 3. Standard values
         else {
-            $fields->{$k} = $self->normalize($v);
+            $fields->{$k} = $v;
         }
     }
 
@@ -96,6 +86,31 @@ sub serialize {
 # @param fields Fields
 # @return configuration
 sub unserialize {
+    my ( $self, $fields ) = @_;
+    my $conf;
+
+    # Parse fields
+    while ( my ( $k, $v ) = each(%$fields) ) {
+        if ( $k =~ $hashParameters ) {
+            unless ( utf8::is_utf8($v) ) {
+                $v = encode( 'UTF-8', $v );
+            }
+            $conf->{$k} = ( $v =~ /./ ? eval { decode_json($v) } : {} );
+            if ($@) {
+                $Lemonldap::NG::Common::Conf::msg .=
+                  "Unable to decode $k, probably old format. Trying... ($@)";
+                return oldUnserialize($fields);
+            }
+        }
+        else {
+            $conf->{$k} = $v;
+        }
+    }
+}
+
+sub oldUnserialize {
+    use Carp;
+    cluck('coucou');
     my ( $self, $fields ) = @_;
     my $conf;
 
