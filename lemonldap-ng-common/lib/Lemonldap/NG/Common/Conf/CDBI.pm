@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Conf::CDBI;
 
 use strict;
 use utf8;
-require Storable;
+use JSON::MaybeXS;
 use Lemonldap::NG::Common::Conf::_DBI;
 
 our $VERSION = '1.4.0';
@@ -14,7 +14,7 @@ sub store {
     my $req;
     my $lastCfg = $self->lastCfg;
 
-    $fields = Storable::nfreeze($fields);
+    $fields = encode_json($fields);
 
     if ( $lastCfg == $cfgNum ) {
         $req = $self->_dbh->prepare(
@@ -46,7 +46,13 @@ sub load {
         return 0;
     }
     my $r;
-    eval { $r = Storable::thaw( $row->[0] ); };
+    if ( $row->[0] =~ /^\s*\{/s ) {
+        eval { $r = decode_json( $row->[0] ); };
+    }
+    else {    # Old format
+        require Storable;
+        eval { $r = Storable::thaw( $row->[0] ); };
+    }
     if ($@) {
         $Lemonldap::NG::Common::Conf::msg .=
           "Bad stored data in conf database: $@ \n";
