@@ -6,7 +6,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use strict;
-use Test::More;
+use Test::More tests => 14;
 
 BEGIN {
     use_ok('Lemonldap::NG::Common::Conf');
@@ -20,22 +20,11 @@ BEGIN {
 my $h;
 @ARGV = ("help=groups");
 unlink 't/lmConf.sql';
-my $count = 1;
 
-eval { require DBD::SQLite };
-unless ($@) {
-    use_ok('DBI');
-    my $dbh = DBI->connect( "dbi:SQLite:dbname=t/lmConf.sql",
-        '', '', { AutoCommit => 1 } );
-    $dbh->{sqlite_unicode} = 1;
-    ok(
-        $dbh->do(
-" CREATE TABLE lmConfig ( cfgNum int not null, field varchar(255) NOT NULL DEFAULT '', value longblob, PRIMARY KEY (cfgNum,field))"
-        ),
-        'Test database created'
-    );
-    undef $dbh;
-    $count += 2;
+SKIP: {
+    eval { require DBI; };
+    skip( "DBI not installed", 13 ) if ($@);
+    my $skipSQLite = 0;
 
     ok(
         $h = new Lemonldap::NG::Common::Conf(
@@ -50,8 +39,16 @@ unless ($@) {
     );
 
     ok( $h->can('_dbh'), 'Driver is build' );
+    eval { require DBD::SQLite };
+    skip( "DBD::SQLite not installed", 11 ) if ($@);
+    ok( $h->_dbh->{sqlite_unicode} = 1, 'Set unicode' );
+    ok(
+        $h->_dbh->do(
+"CREATE TABLE lmConfig ( cfgNum int not null, field varchar(255) NOT NULL DEFAULT '', value longblob, PRIMARY KEY (cfgNum,field))"
 
-    $count += 2;
+        ),
+        'Test database created'
+    );
 
     my @test = (
 
@@ -68,16 +65,12 @@ unless ($@) {
     for ( my $i = 0 ; $i < @test ; $i++ ) {
         ok( $h->store( $test[$i] ) == $i + 1, "Test $i is stored" )
           or print STDERR "$Lemonldap::NG::Common::Conf::msg $!";
-        $count++;
         my $cfg;
         ok( $cfg = $h->load( $i + 1 ), "Test $i can be read" )
-          or print STDERR $Lemonldap::NG::Common::Conf::msg;
+          or print STDERR "$Lemonldap::NG::Common::Conf::msg $!$@";
         ok( $cfg->{test} eq $test[$i]->{test}, "Test $i is restored" );
-        $count += 2;
     }
+
+    unlink 't/lmConf.sql';
 }
-
-unlink 't/lmConf.sql';
-
-done_testing($count);
 

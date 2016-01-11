@@ -36,19 +36,9 @@ registerDB = Null
 
 $ini->flush();
 
-open( CONF, ">$dir/lmConf-1" ) or die $@;
+open( CONF, ">$dir/lmConf-1.js" ) or die $@;
 
-print CONF "
-cfgNum
-	1
-
-useXForwardedForIP
-	0
-
-key
-	tmp
-
-";
+print CONF '{"cfgNum":1,"useXForwardedForIP":0,"key":"tmp"}';
 
 CONF->flush();
 

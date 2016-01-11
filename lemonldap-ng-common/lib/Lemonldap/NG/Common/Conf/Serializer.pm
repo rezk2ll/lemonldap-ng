@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Conf::Serializer;
 
 use strict;
 use utf8;
-use Data::Dumper;
+use Encode;
 use JSON::MaybeXS;
 use Lemonldap::NG::Common::Conf::Constants;
 
@@ -13,6 +13,7 @@ BEGIN {
     *Lemonldap::NG::Common::Conf::unnormalize = \&unnormalize;
     *Lemonldap::NG::Common::Conf::serialize   = \&serialize;
     *Lemonldap::NG::Common::Conf::unserialize = \&unserialize;
+    *Lemonldap::NG::Common::Conf::oldUnserialize = \&oldUnserialize;
 }
 
 ## @method string normalize(string value)
@@ -99,7 +100,7 @@ sub unserialize {
             if ($@) {
                 $Lemonldap::NG::Common::Conf::msg .=
                   "Unable to decode $k, probably old format. Trying... ($@)";
-                return oldUnserialize($fields);
+                return $self->oldUnserialize($fields);
             }
         }
         else {
@@ -109,8 +110,6 @@ sub unserialize {
 }
 
 sub oldUnserialize {
-    use Carp;
-    cluck('coucou');
     my ( $self, $fields ) = @_;
     my $conf;
 
