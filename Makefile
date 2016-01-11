@@ -129,6 +129,7 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Constants.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm \
+		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/Constants.pm \
 		_example/conf/lmConf-1.js
 PERLCOMMONSRC:=$(shell find $(SRCCOMMONDIR)/lib -name '*.pm')
 PERLCOMMONDST=$(SRCCOMMONDIR)/blib/lib/Lemonldap/NG/Common.pm
