@@ -2138,10 +2138,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         # OpenID Connect metadata nodes
-        oidcOPMetaDataNodes =>
-          { type => 'oidcOPMetaDataNodeContainer', help => 'oidcop.html', },
-        oidcRPMetaDataNodes =>
-          { type => 'oidcRPMetaDataNodeContainer', help => 'oidcrp.html', },
+        oidcOPMetaDataNodes => {
+            type => 'oidcOPMetaDataNodeContainer',
+            help => 'idpopenidconnect.html',
+        },
+        oidcRPMetaDataNodes => {
+            type => 'oidcRPMetaDataNodeContainer',
+            help => 'authopenidconnect.html',
+        },
         oidcOPMetaDataOptions => { type => 'subContainer', },
         oidcRPMetaDataOptions => { type => 'subContainer', },
 
@@ -2149,22 +2153,42 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataJSON         => { type => 'file', },
         oidcOPMetaDataJWKS         => { type => 'file', },
         oidcOPMetaDataExportedVars => { type => 'keyTextContainer', },
-        oidcOPMetaDataOptionsConfigurationURI        => { type => 'text', },
-        oidcOPMetaDataOptionsJWKSTimeout             => { type => 'int', },
-        oidcOPMetaDataOptionsClientID                => { type => 'text', },
-        oidcOPMetaDataOptionsClientSecret            => { type => 'password', },
-        oidcOPMetaDataOptionsScope                   => { type => 'text', },
-        oidcOPMetaDataOptionsDisplay                 => { type => 'text', },
-        oidcOPMetaDataOptionsPrompt                  => { type => 'text', },
-        oidcOPMetaDataOptionsMaxAge                  => { type => 'int', },
-        oidcOPMetaDataOptionsUiLocales               => { type => 'text', },
-        oidcOPMetaDataOptionsAcrValues               => { type => 'text', },
-        oidcOPMetaDataOptionsTokenEndpointAuthMethod => { type => 'text', },
-        oidcOPMetaDataOptionsCheckJWTSignature       => { type => 'bool', },
-        oidcOPMetaDataOptionsIDTokenMaxAge           => { type => 'int', },
-        oidcOPMetaDataOptionsUseNonce                => { type => 'bool', },
-        oidcOPMetaDataOptionsDisplayName             => { type => 'text', },
-        oidcOPMetaDataOptionsIcon                    => { type => 'text', },
+        oidcOPMetaDataOptionsConfigurationURI => { type => 'url', },
+        oidcOPMetaDataOptionsJWKSTimeout  => { type => 'int', default => 0 },
+        oidcOPMetaDataOptionsClientID     => { type => 'text', },
+        oidcOPMetaDataOptionsClientSecret => { type => 'password', },
+        oidcOPMetaDataOptionsScope =>
+          { type => 'text', default => 'openid profile' },
+        oidcOPMetaDataOptionsDisplay => {
+            type   => 'select',
+            select => [
+                { k => '',      v => '' },
+                { k => 'page',  v => 'page' },
+                { k => 'popup', v => 'popup' },
+                { k => 'touch', v => 'touch' },
+                { k => 'wap',   v => 'wap' },
+            ],
+            default => "",
+        },
+        oidcOPMetaDataOptionsPrompt =>
+          { type => 'text', default => 'login consent' },
+        oidcOPMetaDataOptionsMaxAge    => { type => 'int', default => 0 },
+        oidcOPMetaDataOptionsUiLocales => { type => 'text', },
+        oidcOPMetaDataOptionsAcrValues => { type => 'text', },
+        oidcOPMetaDataOptionsTokenEndpointAuthMethod => {
+            type   => 'select',
+            select => [
+                { k => 'client_secret_post',  v => 'client_secret_post' },
+                { k => 'client_secret_basic', v => 'client_secret_basic' },
+            ],
+            default => 'client_secret_post',
+        },
+        oidcOPMetaDataOptionsCheckJWTSignature =>
+          { type => 'bool', default => 1 },
+        oidcOPMetaDataOptionsIDTokenMaxAge => { type => 'int',  default => 30 },
+        oidcOPMetaDataOptionsUseNonce      => { type => 'bool', default => 1 },
+        oidcOPMetaDataOptionsDisplayName => { type => 'text', },
+        oidcOPMetaDataOptionsIcon        => { type => 'text', },
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars          => { type => 'keyTextContainer', },
@@ -2173,11 +2197,25 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcRPMetaDataOptionsDisplayName    => { type => 'text', },
         oidcRPMetaDataOptionsIcon           => { type => 'text', },
         oidcRPMetaDataOptionsUserIDAttr     => { type => 'text', },
-        oidcRPMetaDataOptionsIDTokenSignAlg => { type => 'text', },
-        oidcRPMetaDataOptionsIDTokenExpiration     => { type => 'int', },
-        oidcRPMetaDataOptionsAccessTokenExpiration => { type => 'int', },
-        oidcRPMetaDataOptionsRedirectUris          => { type => 'text', },
-        oidcRPMetaDataOptionsExtraClaims => { type => 'keyTextContainer', },
+        oidcRPMetaDataOptionsIDTokenSignAlg => {
+            type   => 'select',
+            select => [
+                { k => 'none',  v => 'None' },
+                { k => 'HS256', v => 'HS256' },
+                { k => 'HS384', v => 'HS384' },
+                { k => 'HS512', v => 'HS512' },
+                { k => 'RS256', v => 'RS256' },
+                { k => 'RS384', v => 'RS384' },
+                { k => 'RS512', v => 'RS512' },
+            ],
+            default => 'HS512',
+        },
+        oidcRPMetaDataOptionsIDTokenExpiration =>
+          { type => 'int', default => 3600 },
+        oidcRPMetaDataOptionsAccessTokenExpiration =>
+          { type => 'int', default => 3600 },
+        oidcRPMetaDataOptionsRedirectUris => { type => 'text', },
+        oidcRPMetaDataOptionsExtraClaims  => { type => 'keyTextContainer', },
 
     };
 }

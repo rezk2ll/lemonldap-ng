@@ -128,6 +128,7 @@ sub cTrees {
                 nodes => [
                     {
                         title => 'oidcOPMetaDataOptionsConfiguration',
+                        form  => 'simpleInputContainer',
                         nodes => [
                             'oidcOPMetaDataOptionsConfigurationURI',
                             'oidcOPMetaDataOptionsJWKSTimeout',
@@ -137,6 +138,7 @@ sub cTrees {
                     },
                     {
                         title => 'oidcOPMetaDataOptionsProtocol',
+                        form  => 'simpleInputContainer',
                         nodes => [
                             'oidcOPMetaDataOptionsScope',
                             'oidcOPMetaDataOptionsDisplay',
@@ -152,6 +154,7 @@ sub cTrees {
                     },
                     {
                         title => 'oidcOPMetaDataOptionsDisplayParams',
+                        form  => 'simpleInputContainer',
                         nodes => [
                             'oidcOPMetaDataOptionsDisplayName',
                             'oidcOPMetaDataOptionsIcon'
@@ -167,6 +170,7 @@ sub cTrees {
                 nodes => [
                     {
                         title => 'oidcRPMetaDataOptionsAuthentication',
+                        form  => 'simpleInputContainer',
                         nodes => [
                             'oidcRPMetaDataOptionsClientID',
                             'oidcRPMetaDataOptionsClientSecret'
@@ -174,6 +178,7 @@ sub cTrees {
                     },
                     {
                         title => 'oidcRPMetaDataOptionsDisplay',
+                        form  => 'simpleInputContainer',
                         nodes => [
                             'oidcRPMetaDataOptionsDisplayName',
                             'oidcRPMetaDataOptionsIcon'

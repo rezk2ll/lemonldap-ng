@@ -1194,7 +1194,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'text'
         },
         'oidcOPMetaDataOptionsCheckJWTSignature' => {
-            'type' => 'bool'
+            'default' => 1,
+            'type'    => 'bool'
         },
         'oidcOPMetaDataOptionsClientID' => {
             'type' => 'text'
@@ -1206,7 +1207,30 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'text'
         },
         'oidcOPMetaDataOptionsDisplay' => {
-            'type' => 'text'
+            'default' => '',
+            'select'  => [
+                {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'page',
+                    'v' => 'page'
+                },
+                {
+                    'k' => 'popup',
+                    'v' => 'popup'
+                },
+                {
+                    'k' => 'touch',
+                    'v' => 'touch'
+                },
+                {
+                    'k' => 'wap',
+                    'v' => 'wap'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcOPMetaDataOptionsDisplayName' => {
             'type' => 'text'
@@ -1215,28 +1239,45 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'text'
         },
         'oidcOPMetaDataOptionsIDTokenMaxAge' => {
-            'type' => 'int'
+            'default' => 30,
+            'type'    => 'int'
         },
         'oidcOPMetaDataOptionsJWKSTimeout' => {
-            'type' => 'int'
+            'default' => 0,
+            'type'    => 'int'
         },
         'oidcOPMetaDataOptionsMaxAge' => {
-            'type' => 'int'
+            'default' => 0,
+            'type'    => 'int'
         },
         'oidcOPMetaDataOptionsPrompt' => {
-            'type' => 'text'
+            'default' => 'login consent',
+            'type'    => 'text'
         },
         'oidcOPMetaDataOptionsScope' => {
-            'type' => 'text'
+            'default' => 'openid profile',
+            'type'    => 'text'
         },
         'oidcOPMetaDataOptionsTokenEndpointAuthMethod' => {
-            'type' => 'text'
+            'default' => 'client_secret_post',
+            'select'  => [
+                {
+                    'k' => 'client_secret_post',
+                    'v' => 'client_secret_post'
+                },
+                {
+                    'k' => 'client_secret_basic',
+                    'v' => 'client_secret_basic'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcOPMetaDataOptionsUiLocales' => {
             'type' => 'text'
         },
         'oidcOPMetaDataOptionsUseNonce' => {
-            'type' => 'bool'
+            'default' => 1,
+            'type'    => 'bool'
         },
         'oidcRPCallbackGetParam' => {
             'default' => 'openidconnectcallback',
@@ -1252,7 +1293,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'subContainer'
         },
         'oidcRPMetaDataOptionsAccessTokenExpiration' => {
-            'type' => 'int'
+            'default' => 3600,
+            'type'    => 'int'
         },
         'oidcRPMetaDataOptionsClientID' => {
             'type' => 'text'
@@ -1270,10 +1312,42 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'text'
         },
         'oidcRPMetaDataOptionsIDTokenExpiration' => {
-            'type' => 'int'
+            'default' => 3600,
+            'type'    => 'int'
         },
         'oidcRPMetaDataOptionsIDTokenSignAlg' => {
-            'type' => 'text'
+            'default' => 'HS512',
+            'select'  => [
+                {
+                    'k' => 'none',
+                    'v' => 'None'
+                },
+                {
+                    'k' => 'HS256',
+                    'v' => 'HS256'
+                },
+                {
+                    'k' => 'HS384',
+                    'v' => 'HS384'
+                },
+                {
+                    'k' => 'HS512',
+                    'v' => 'HS512'
+                },
+                {
+                    'k' => 'RS256',
+                    'v' => 'RS256'
+                },
+                {
+                    'k' => 'RS384',
+                    'v' => 'RS384'
+                },
+                {
+                    'k' => 'RS512',
+                    'v' => 'RS512'
+                }
+            ],
+            'type' => 'select'
         },
         'oidcRPMetaDataOptionsRedirectUris' => {
             'type' => 'text'
