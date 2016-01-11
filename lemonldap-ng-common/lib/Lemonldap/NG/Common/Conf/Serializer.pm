@@ -3,6 +3,7 @@ package Lemonldap::NG::Common::Conf::Serializer;
 use strict;
 use utf8;
 use Data::Dumper;
+use Lemonldap::NG::Common::Conf::Constants;
 
 our $VERSION = '1.9.0';
 
@@ -106,57 +107,7 @@ sub unserialize {
 
         # Manage hashes
 
-        # Regexp::Assemble of:
-        # applicationList
-        # authChoiceModules
-        # captchaStorageOptions
-        # CAS_proxiedServices
-        # casAttributes
-        # casStorageOptions
-        # dbiExportedVars
-        # demoExportedVars
-        # exportedHeaders
-        # exportedVars
-        # facebookExportedVars
-        # globalStorageOptions
-        # googleExportedVars
-        # grantSessionRules
-        # groups
-        # ldapExportedVars
-        # localSessionStorageOptions
-        # locationRules
-        # logoutServices
-        # macros
-        # notificationStorageOptions
-        # oidcOPMetaDataExportedVars
-        # oidcOPMetaDataJSON
-        # oidcOPMetaDataJWKS
-        # oidcOPMetaDataOptions
-        # oidcRPMetaDataExportedVars
-        # oidcRPMetaDataOptions
-        # oidcServiceMetaDataAuthnContext
-        # openIdExportedVars
-        # persistentStorageOptions
-        # portalSkinRules
-        # post
-        # reloadUrls
-        # remoteGlobalStorageOptions
-        # samlIDPMetaDataExportedAttributes
-        # samlIDPMetaDataOptions
-        # samlIDPMetaDataXML
-        # samlSPMetaDataExportedAttributes
-        # samlSPMetaDataOptions
-        # samlSPMetaDataXML
-        # samlStorageOptions
-        # sessionDataToRemember
-        # slaveExportedVars
-        # vhostOptions
-        # webIDExportedVars
-        if ( $k =~
-/^(?:(?:l(?:o(?:ca(?:lSessionStorageOption|tionRule)|goutService)|dapExportedVar)|(?:(?:d(?:emo|bi)|facebook|webID)ExportedVa|exported(?:Heade|Va))r|g(?:r(?:antSessionRule|oup)|lobalStorageOption|oogleExportedVar)|ca(?:s(?:StorageOption|Attribute)|ptchaStorageOption)|re(?:moteGlobalStorageOption|loadUrl)|(?:notificationStorage|vhost)Option|CAS_proxiedService|macro)s|s(?:aml(?:S(?:PMetaData(?:(?:ExportedAttribute|Option)s|XML)|torageOptions)|IDPMetaData(?:(?:ExportedAttribute|Option)s|XML))|essionDataToRemember|laveExportedVars)|o(?:idc(?:OPMetaData(?:(?:ExportedVar|Option)s|J(?:SON|WKS))|RPMetaData(?:ExportedVar|Option)s|ServiceMetaDataAuthnContext)|penIdExportedVars)|p(?:ersistentStorageOptions|o(?:rtalSkinRules|st))|a(?:uthChoiceModules|pplicationList))$/
-            and $v ||= {}
-            and not ref($v) )
-        {
+        if ( $k =~ $hashParameters and $v ||= {} and not ref($v) ) {
             $conf->{$k} = {};
 
             # Value should be a Data::Dumper, else this is an old format
@@ -183,7 +134,8 @@ sub unserialize {
                 eval $v;
 
                 if ($@) {
-                    $Lemonldap::NG::Common::Conf::msg .= " Error: cannot read configuration key $k: $@";
+                    $Lemonldap::NG::Common::Conf::msg .=
+                      " Error: cannot read configuration key $k: $@";
                 }
 
                 # Store value in configuration object

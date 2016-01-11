@@ -23,7 +23,7 @@ use constant HANDLERSECTION  => "handler";
 use constant MANAGERSECTION  => "manager";
 use constant SESSIONSEXPLORERSECTION => "sessionsExplorer";
 use constant APPLYSECTION            => "apply";
-our $hashParameters = '(?:(?:g(?:r(?:antSessionRule|oup)|lobalStorageOption|oogleExportedVar)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar)|ca(?:s(?:StorageOption|Attribute)|ptchaStorageOption)|(?:(?:d(?:emo|bi)|facebook|webID)E|e)xportedVar|p(?:ersistentStorageOption|ortalSkinRule)|re(?:moteGlobalStorageOption|loadUrl)|notificationStorageOption|CAS_proxiedService|macro)s|s(?:aml(?:S(?:PMetaDataNode|torageOptions)|IDPMetaDataNode)|essionDataToRemember|laveExportedVars)|o(?:idc(?:S(?:erviceMetaDataAuthnContext|torageOptions)|[OR]PMetaDataNode)|penIdExportedVars)|a(?:uthChoiceModules|pplicationList)|virtualHost)';
+our $hashParameters = qr/^(?:(?:g(?:r(?:antSessionRule|oup)|lobalStorageOption|oogleExportedVar)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar)|ca(?:s(?:StorageOption|Attribute)|ptchaStorageOption)|(?:(?:d(?:emo|bi)|facebook|webID)E|e)xportedVar|p(?:ersistentStorageOption|ortalSkinRule)|re(?:moteGlobalStorageOption|loadUrl)|notificationStorageOption|CAS_proxiedService|macro)s|s(?:aml(?:S(?:PMetaDataNode|torageOptions)|IDPMetaDataNode)|essionDataToRemember|laveExportedVars)|o(?:idc(?:S(?:erviceMetaDataAuthnContext|torageOptions)|[OR]PMetaDataNode)|penIdExportedVars)|a(?:uthChoiceModules|pplicationList)|virtualHost)$/;
 
 
 our %EXPORT_TAGS = (
