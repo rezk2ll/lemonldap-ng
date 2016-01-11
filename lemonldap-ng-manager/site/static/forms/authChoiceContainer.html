@@ -9,17 +9,21 @@
         <th trspan="authentication"></th>
         <th trspan="userDB"></th>
         <th trspan="passwordDB"></th>
+        <th trspan="url"></th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="c in currentNode.nodes">
         <td>
-          <input ng-model="c.title">
+          <input class="form-control" ng-model="c.title">
         </td>
         <td ng-repeat="i in [0,1,2]">
           <select class="form-control" ng-model="c.data[i]" ng-change="execFilters(_findScopeByKey('authParams'))">
             <option ng-repeat="item in currentNode.select[i]" ng-selected="item.k==c.data[i]" value="{{item.k}}">{{item.v}}</option>
           </select>
+        </td>
+        <td>
+          <input class="form-control" ng-model="c.data[3]">
         </td>
       </tr>
     </tbody>
