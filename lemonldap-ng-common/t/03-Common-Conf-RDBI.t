@@ -9,7 +9,6 @@ use strict;
 use Test::More;
 
 BEGIN {
-    use_ok('DBI');
     use_ok('Lemonldap::NG::Common::Conf');
 }
 
@@ -21,21 +20,22 @@ BEGIN {
 my $h;
 @ARGV = ("help=groups");
 unlink 't/lmConf.sql';
-my $count = 2;
+my $count = 1;
 
 eval { require DBD::SQLite };
 unless ($@) {
-    require DBI;
-    my $dbh = DBI->connect( "dbi:SQLite:dbname=t/lmConf.sql", '', '', {AutoCommit=>1} );
+    use_ok('DBI');
+    my $dbh = DBI->connect( "dbi:SQLite:dbname=t/lmConf.sql",
+        '', '', { AutoCommit => 1 } );
     $dbh->{sqlite_unicode} = 1;
     ok(
         $dbh->do(
 " CREATE TABLE lmConfig ( cfgNum int not null, field varchar(255) NOT NULL DEFAULT '', value longblob, PRIMARY KEY (cfgNum,field))"
         ),
-        'Database created'
+        'Test database created'
     );
     undef $dbh;
-    $count++;
+    $count += 2;
 
     ok(
         $h = new Lemonldap::NG::Common::Conf(
@@ -66,11 +66,11 @@ unless ($@) {
     );
 
     for ( my $i = 0 ; $i < @test ; $i++ ) {
-        ok( $h->store( $test[$i] ) == $i+1, "Test $i is stored" )
+        ok( $h->store( $test[$i] ) == $i + 1, "Test $i is stored" )
           or print STDERR "$Lemonldap::NG::Common::Conf::msg $!";
         $count++;
         my $cfg;
-        ok( $cfg = $h->load($i+1), "Test $i can be read" )
+        ok( $cfg = $h->load( $i + 1 ), "Test $i can be read" )
           or print STDERR $Lemonldap::NG::Common::Conf::msg;
         ok( $cfg->{test} eq $test[$i]->{test}, "Test $i is restored" );
         $count += 2;
