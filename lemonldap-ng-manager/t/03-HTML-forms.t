@@ -40,7 +40,7 @@ foreach my $type ( keys %types ) {
     delete $types{$type};
     next
       if ( $type =~
-/^(?:authParamsText|url|PerlModule|hostname|pcre|lmAttrOrMacro|subContainer|RSAP(?:ublic|rivate)Key)$/
+/^(?:authParamsText|url|PerlModule|hostname|pcre|lmAttrOrMacro|subContainer|RSAP(?:ublic|rivate)Key(?:OrCertificate)?)$/
       );
     ok( $forms{$type}, "Found $type" );
     delete $forms{$type};
