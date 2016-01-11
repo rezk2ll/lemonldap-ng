@@ -513,7 +513,7 @@ sub authChoiceModules {
               {
                 id    => "authChoiceModules/$k",
                 title => "$k",
-                data  => $value->{$k},
+                data  => [ split /;/, $value->{$k} ],
                 type  => 'authChoice'
               };
         }
