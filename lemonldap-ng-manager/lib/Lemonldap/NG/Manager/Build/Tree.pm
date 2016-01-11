@@ -831,6 +831,7 @@ sub tree {
                 'oidcServiceMetaDataIssuer',
                 {
                     title => 'oidcServiceMetaDataEndPoints',
+                    form  => 'simpleInputContainer',
                     nodes => [
                         'oidcServiceMetaDataAuthorizeURI',
                         'oidcServiceMetaDataTokenURI',
