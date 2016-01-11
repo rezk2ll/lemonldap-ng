@@ -153,6 +153,7 @@ sub defaultValues {
         'oidcServiceMetaDataAuthorizeURI'    => 'authorize',
         'oidcServiceMetaDataCheckSessionURI' => 'checksession',
         'oidcServiceMetaDataEndSessionURI'   => 'logout',
+        'oidcServiceMetaDataIssuer'          => 'http://auth.example.com',
         'oidcServiceMetaDataJWKSURI'         => 'jwks',
         'oidcServiceMetaDataRegistrationURI' => 'register',
         'oidcServiceMetaDataTokenURI'        => 'token',

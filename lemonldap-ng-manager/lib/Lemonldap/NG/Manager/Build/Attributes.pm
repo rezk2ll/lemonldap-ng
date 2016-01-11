@@ -2057,7 +2057,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         # OpenID Connect service
         oidcServiceMetaDataIssuer => {
             type          => 'text',
-            documentation => 'OpenID Connect end session endpoint',
+            default       => 'http://auth.example.com',
+            documentation => 'OpenID Connect issuer',
         },
         oidcServiceMetaDataAuthorizeURI => {
             type          => 'text',
