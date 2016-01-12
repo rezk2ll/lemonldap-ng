@@ -49,6 +49,7 @@ $LLNG_DEFAULTCONFFILE = $ini->filename;
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
+$Lemonldap::NG::Handler::API::logLevel = 'error';
 use_ok('Lemonldap::NG::Handler');
 
 if ( $numTests == 3 ) {
@@ -62,7 +63,7 @@ if ( $numTests == 3 ) {
     my $ret;
     $mock->fake_module(
         'Lemonldap::NG::Handler::API',
-        newRequest      => sub { print STDERR "newRequest\n" },
+        newRequest      => sub { 1 },
         header_in       => sub { "" },
         hostname        => sub { 'test.example.com' },
         is_initial_req  => sub { '1' },

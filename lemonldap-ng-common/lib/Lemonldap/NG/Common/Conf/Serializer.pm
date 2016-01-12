@@ -99,7 +99,7 @@ sub unserialize {
             $conf->{$k} = ( $v =~ /./ ? eval { from_json($v) } : {} );
             if ($@) {
                 $Lemonldap::NG::Common::Conf::msg .=
-                  "Unable to decode $k, probably old format. Trying... ($@)";
+                  "Unable to decode $k, switching to old format.\n";
                 return $self->oldUnserialize($fields);
             }
         }
