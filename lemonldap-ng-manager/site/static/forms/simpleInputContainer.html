@@ -28,11 +28,11 @@
         <td ng-if="n.type=='bool'">
           <div class="input-group-solid">
             <label class="radio-inline">
-              <input id="bopeOn/{{n.title}}" type="radio" value="1" name="bope/{{n.title}}" ng-model="n.data"/>
+              <input id="bopeOn/{{n.title}}" type="radio" value="1" ng-model="n.data"/>
               <span trspan="on"/>
             </label>
             <label class="radio-inline">
-              <input id="bopeOff/{{n.title}}" type="radio" value="0" name="bope/{{n.title}}" ng-model="n.data" ng-checked="n.data!==1&&n.data!=='1'"/>
+              <input id="bopeOff/{{n.title}}" type="radio" value="0" ng-model="n.data" ng-checked="n.data!==1&&n.data!=='1'"/>
               <span trspan="off"/>
             </label>
           </div>
@@ -41,15 +41,15 @@
         <td ng-if="n.type=='trool'">
           <div class="input-group-solid">
             <label class="radio-inline">
-              <input id="trOn/{{n.title}}" type="radio" value="1" name="trope/{{n.title}}" ng-model="n.data">
+              <input id="trOn/{{n.title}}" type="radio" value="1" ng-model="n.data">
               <span trspan="on"/>
             </label>
             <label class="radio-inline">
-              <input id="trOff/{{n.title}}" type="radio" value="0" name="trope/{{n.title}}" ng-model="n.data">
+              <input id="trOff/{{n.title}}" type="radio" value="0" ng-model="n.data">
               <span trspan="off"/>
             </label>
             <label class="radio-inline">
-              <input id="trDefault/{{n.title}}" type="radio" value="-1" name="trope/{{n.title}}" ng-model="n.data" ng-checked="n.data!==1&&n.data!=='1'&&n.data!==0&&n.data!=='0'">
+              <input id="trDefault/{{n.title}}" type="radio" value="-1" ng-model="n.data" ng-checked="n.data!==1&&n.data!=='1'&&n.data!==0&&n.data!=='0'">
               <span trspan="default"/>
             </label>
           </div>
@@ -58,15 +58,15 @@
         <td ng-if="n.type=='boolOrExpr'">
           <div class="input-group-solid">
             <label class="radio-inline">
-              <input id="boeOn/{{n.title}}" type="radio" value="1" name="boe/{{n.title}}" ng-model="n.data">
+              <input id="boeOn/{{n.title}}" type="radio" value="1" ng-model="n.data">
               <span trspan="on"/>
             </label>
             <label class="radio-inline">
-              <input id="boeOff/{{n.title}}" type="radio" value="0" name="boe/{{n.title}}" ng-model="n.data">
+              <input id="boeOff/{{n.title}}" type="radio" value="0" ng-model="n.data">
               <span trspan="off"/>
             </label>
             <label class="radio-inline">
-              <input id="boeExpr/{{n.title}}" type="radio" value="-1" name="boe/{{n.title}}" ng-click="n.data=''" ng-checked="n.data!==0&&n.data!=='0'&&n.data!==1&&n.data!=='1'">
+              <input id="boeExpr/{{n.title}}" type="radio" value="-1" ng-click="n.data=''" ng-checked="n.data!==0&&n.data!=='0'&&n.data!==1&&n.data!=='1'">
               <span trspan="specialRule" />
             </label>
           </div>
