@@ -46,6 +46,15 @@ var filterFunctions = {
               });
             });
           }
+          else {
+            scope.waiting = true;
+            console.log('coucou');
+            scope.download({
+              '$modelValue': nd[1]
+            }).then(function() {
+              filterFunctions.authParams(scope, $q, node)
+            });
+          };
         }
         else if (node.nodes[0].data == 'Multi' && n.id == 'multiParams') {
           var nd = n._nodes ? n._nodes : n.nodes;
