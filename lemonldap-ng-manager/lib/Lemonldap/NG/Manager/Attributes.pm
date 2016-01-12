@@ -267,6 +267,10 @@ sub attributes {
                         'v' => 'Database (DBI)'
                     },
                     {
+                        'k' => 'Demo',
+                        'v' => 'Demo'
+                    },
+                    {
                         'k' => 'Facebook',
                         'v' => 'Facebook'
                     },
@@ -337,6 +341,10 @@ sub attributes {
                         'v' => 'Database (DBI)'
                     },
                     {
+                        'k' => 'Demo',
+                        'v' => 'Demo'
+                    },
+                    {
                         'k' => 'Facebook',
                         'v' => 'Facebook'
                     },
@@ -387,12 +395,12 @@ sub attributes {
                         'v' => 'Active Directory'
                     },
                     {
-                        'k' => 'Choice',
-                        'v' => 'authChoice'
-                    },
-                    {
                         'k' => 'DBI',
                         'v' => 'Database (DBI)'
+                    },
+                    {
+                        'k' => 'Demo',
+                        'v' => 'Demo'
                     },
                     {
                         'k' => 'LDAP',

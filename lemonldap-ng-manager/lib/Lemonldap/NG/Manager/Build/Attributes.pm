@@ -1957,6 +1957,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'BrowserID', v => 'BrowserID (Mozilla Persona)' },
                     { k => 'CAS', v => 'Central Authentication Service (CAS)' },
                     { k => 'DBI', v => 'Database (DBI)' },
+                    { k => 'Demo',          v => 'Demo' },
                     { k => 'Facebook',      v => 'Facebook' },
                     { k => 'Google',        v => 'Google' },
                     { k => 'LDAP',          v => 'LDAP' },
@@ -1976,6 +1977,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 [
                     { k => 'AD',            v => 'Active Directory' },
                     { k => 'DBI',           v => 'Database (DBI)' },
+                    { k => 'Demo',          v => 'Demo' },
                     { k => 'Facebook',      v => 'Facebook' },
                     { k => 'Google',        v => 'Google' },
                     { k => 'LDAP',          v => 'LDAP' },
@@ -1989,11 +1991,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                     { k => 'WebID',         v => 'WebID' }
                 ],
                 [
-                    { k => 'AD',     v => 'Active Directory' },
-                    { k => 'Choice', v => 'authChoice' },
-                    { k => 'DBI',    v => 'Database (DBI)' },
-                    { k => 'LDAP',   v => 'LDAP' },
-                    { k => 'Null',   v => 'None' }
+                    { k => 'AD',   v => 'Active Directory' },
+                    { k => 'DBI',  v => 'Database (DBI)' },
+                    { k => 'Demo', v => 'Demo' },
+                    { k => 'LDAP', v => 'LDAP' },
+                    { k => 'Null', v => 'None' }
                 ]
             ],
         },
