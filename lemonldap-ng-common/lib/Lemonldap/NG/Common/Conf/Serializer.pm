@@ -91,7 +91,8 @@ sub unserialize {
     my $conf;
 
     # Parse fields
-    while ( my ( $k, $v ) = each(%$fields) ) {
+    foreach my $k (keys %$fields) {
+        my $v = $fields->{$k};
         if ( $k =~ $hashParameters ) {
             unless ( utf8::is_utf8($v) ) {
                 $v = encode( 'UTF-8', $v );
