@@ -186,7 +186,7 @@ qr/^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9\/\+\
             'test' => sub {
                 my $test =
                   grep( { $_ eq $_[0]; }
-                    map( { $$_{'k'}; } @{ $_[2]{'select'}; } ) );
+                    map( { $_->{'k'}; } @{ $_[2]{'select'}; } ) );
                 return $test
                   ? 1
                   : ( 0, "Invalid value '$_[0]' for this select" );
@@ -1003,7 +1003,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 'ldap://localhost',
             'test'    => sub {
                 my $l = shift();
-                my (@s) = split( /[\s,]+/, $l, 0 );
+                my @s = split( /[\s,]+/, $l, 0 );
                 foreach my $s (@s) {
                     return 0, qq[Bad ldap uri "$s"]
                       unless $s =~
@@ -1807,7 +1807,7 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
             'type'    => 'text'
         },
         'samlIDPMetaDataExportedAttributes' => {
-            'default' => ';;;',
+            'default' => {},
             'keyTest' => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             'msgFail' => '__badValue__',
             'test'    => qr/\w/,
@@ -2098,7 +2098,7 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
             'type'    => 'RSAPublicKeyOrCertificate'
         },
         'samlSPMetaDataExportedAttributes' => {
-            'default' => ';;;',
+            'default' => {},
             'keyTest' => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
             'msgFail' => '__badValue__',
             'test'    => qr/\w/,

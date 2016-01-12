@@ -16,7 +16,7 @@ ok( $types = Lemonldap::NG::Manager::Build::Attributes::types(), 'Get types' );
 $count += 2;
 
 foreach my $attr ( keys %$attrs ) {
-    next if($attr=~/^virtualHosts|.*MetaDataNodes|applicationList$/);
+    next if ( $attr =~ /^virtualHosts|.*MetaDataNodes|applicationList$/ );
     ok(
         (
                  ref( $attrs->{$attr}->{test} )
@@ -34,6 +34,15 @@ foreach my $attr ( keys %$attrs ) {
             "Key test for $attr"
         );
         $count++;
+    }
+    if ( $attr =~ qr/^$simpleHashKeys$/o or $attrs->{$attr}->{type} =~ /Container$/ ) {
+        if ( $attrs->{$attr}->{default} ) {
+            ok(
+                ref( $attrs->{$attr}->{default} ) eq 'HASH',
+                "$attr default value is a hash ref"
+            );
+            $count++;
+        }
     }
 }
 

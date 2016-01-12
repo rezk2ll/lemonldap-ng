@@ -1250,7 +1250,7 @@ sub attributes {
             keyMsgFail => 'Bad metadata name',
             test       => qr/\w/,
             msgFail    => '__badValue__',
-            default    => ';;;',
+            default    => {},
         },
         samlIDPMetaDataXML => {
             type => 'file',
@@ -1367,7 +1367,7 @@ sub attributes {
             keyMsgFail => 'Bad metadata name',
             test       => qr/\w/,
             msgFail    => '__badValue__',
-            default    => ';;;',
+            default    => {},
         },
         samlSPMetaDataXML => {
             type => 'file',
