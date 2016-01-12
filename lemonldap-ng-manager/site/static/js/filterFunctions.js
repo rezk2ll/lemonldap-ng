@@ -29,6 +29,9 @@ var filterFunctions = {
         for (var i = 1; i < 3; i++) {
           node.nodes[i].data = node.nodes[0].data;
         }
+        if (node.nodes[0].data.match(/^Multi/)) {
+          node.nodes[2].data = 'Null';
+        }
         //all = true;
       }
       node.nodes.forEach(function(n) {
@@ -48,16 +51,22 @@ var filterFunctions = {
           }
           else {
             scope.waiting = true;
-            console.log('coucou');
             scope.download({
               '$modelValue': nd[1]
             }).then(function() {
               filterFunctions.authParams(scope, $q, node)
             });
+            return;
           };
         }
         else if (node.nodes[0].data == 'Multi' && n.id == 'multiParams') {
           var nd = n._nodes ? n._nodes : n.nodes;
+          if (typeof nd[0].data === 'undefined') {
+            $q.all([scope.getKey(nd[0]), scope.getKey(nd[1])]).then(function() {
+              filterFunctions.authParams(scope, $q, node)
+            });
+            return;
+          }
           /* TODO: Change this with multiValueSeparator when it will be set in tree */
           var sep = ';';
           var reg = new RegExp(sep + '\\s*(\\w+)', 'g');
