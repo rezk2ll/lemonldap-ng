@@ -804,6 +804,7 @@
       $location.path('/confs/latest');
     }
 
+    /* File form function */
     $scope.replaceContentByUrl = function(node, url) {
       $scope.waiting = true;
       $http.post(scriptname + "prx", {
@@ -813,10 +814,14 @@
         $scope.waiting = false;
       }).error(readError);
     }
-
-    /* Update currentNode.data (used for file form */
     $scope.replaceContent = function(node, $fileContent) {
       node.data = $fileContent;
+    };
+    $scope.localDownload = function() {
+      var b = new Blob([$scope.currentNode.data], {
+        type: "text/plain"
+      });
+      window.open(URL.createObjectURL(b));
     };
   }]);
 
