@@ -63,6 +63,12 @@ div.actions a {
   padding-right: 8px;
 }
 
+/* Make active tab more visible */
+li.ui-state-active {
+  background-color: rgb(250,250,250);
+  background-color: rgba(250,250,250,0.9);
+}
+
 #appslist, #password, #loginHistory, #logout  {
   margin-top: 20px;
 }
