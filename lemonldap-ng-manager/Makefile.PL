@@ -17,7 +17,7 @@ WriteMakefile(
         'Convert::PEM'           => 0,
         'Crypt::OpenSSL::RSA'    => 0,
         'HTML::Template'         => 0,
-        'JSON::MaybeXS'          => 0,
+        'JSON'                   => 0,
         'Lemonldap::NG::Common'  => '1.9.0',
         'Lemonldap::NG::Handler' => '1.9.0',
         'LWP'                    => 0,

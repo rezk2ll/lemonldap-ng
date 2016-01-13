@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_Browser;
 use HTTP::Request;
-use JSON::MaybeXS qw(JSON to_json from_json);
+use JSON;
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
 our $VERSION = '1.3.0';

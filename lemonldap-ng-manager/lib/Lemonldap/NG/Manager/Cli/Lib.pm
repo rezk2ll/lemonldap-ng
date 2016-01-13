@@ -1,6 +1,6 @@
 package Lemonldap::NG::Manager::Cli::Lib;
 
-use JSON::MaybeXS qw(to_json from_json);
+use JSON;
 use Mouse;
 use utf8;
 use Lemonldap::NG::Manager;

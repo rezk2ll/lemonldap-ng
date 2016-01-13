@@ -3,7 +3,7 @@
 # Test sessions explorer API
 
 use Test::More;
-use JSON::MaybeXS qw(to_json from_json);
+use JSON;
 use strict;
 use Lemonldap::NG::Common::Session;
 

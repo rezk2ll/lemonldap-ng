@@ -4,7 +4,7 @@
 
 use Test::More;
 use strict;
-use JSON::MaybeXS qw(to_json from_json);
+use JSON;
 use IO::String;
 require 't/test-lib.pm';
 

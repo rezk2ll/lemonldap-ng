@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Conf::Serializer;
 use strict;
 use utf8;
 use Encode;
-use JSON::MaybeXS qw(JSON to_json from_json);
+use JSON;
 use Lemonldap::NG::Common::Conf::Constants;
 
 our $VERSION = '1.9.0';

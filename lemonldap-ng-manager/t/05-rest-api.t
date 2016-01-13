@@ -4,7 +4,7 @@
 # Check also metadatas request (root of a conf)
 
 use Test::More;
-use JSON::MaybeXS qw(to_json from_json);
+use JSON;
 use strict;
 
 require 't/test-lib.pm';

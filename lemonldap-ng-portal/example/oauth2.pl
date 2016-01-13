@@ -3,7 +3,7 @@
 # Simple OpenID Connect client
 
 use strict;
-use JSON::MaybeXS qw(to_json from_json);
+use JSON;
 use LWP::UserAgent;
 use MIME::Base64
   qw/encode_base64url encode_base64 decode_base64url decode_base64/;

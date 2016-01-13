@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::PSGI;
 
 use 5.10.0;
 use Mouse;
-use JSON::MaybeXS qw(JSON to_json from_json);
+use JSON;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::PSGI::Request;
 

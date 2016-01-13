@@ -9,7 +9,7 @@ use Lemonldap::NG::Manager::Build::CTrees;
 use Lemonldap::NG::Manager::Conf::Zero;
 use Data::Dumper;
 use Regexp::Assemble;
-use JSON::MaybeXS;
+use JSON;
 use Getopt::Std;
 use IO::String;
 

@@ -3,7 +3,7 @@
 # Verify that languages translation cover all `trspan`
 
 use Test::More;
-use JSON::MaybeXS qw(to_json from_json);
+use JSON;
 use strict;
 
 my $langDir = 'site/static/languages';

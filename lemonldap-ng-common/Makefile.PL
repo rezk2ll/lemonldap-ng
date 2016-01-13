@@ -34,7 +34,7 @@ WriteMakefile(
             'Apache::Session::Browseable' => 0,
             'HTML::Template'              => 0,
             'HTTP::Message'               => 0,
-            'JSON::MaybeXS'               => 0,
+            'JSON'                        => 0,
             'Net::LDAP'                   => 0,
             'XML::Simple'                 => 0,
             'XML::LibXML'                 => 0,

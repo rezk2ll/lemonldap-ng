@@ -13,7 +13,7 @@ WriteMakefile(
             'DBI'                    => 0,
             'Glib'                   => 0,
             'HTTP::Message'          => 0,
-            'JSON::MaybeXS'          => 0,
+            'JSON'                   => 0,
             'Lasso'                  => '2.3.0',
             'Lemonldap::NG::Handler' => '1.9.0',
             'LWP'                    => 0,

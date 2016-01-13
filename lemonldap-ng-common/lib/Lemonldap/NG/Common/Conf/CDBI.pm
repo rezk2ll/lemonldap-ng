@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Conf::CDBI;
 
 use strict;
 use utf8;
-use JSON::MaybeXS qw(to_json from_json);
+use JSON;
 use Lemonldap::NG::Common::Conf::_DBI;
 
 our $VERSION = '1.4.0';

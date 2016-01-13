@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Conf::File;
 
 use strict;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
-use JSON::MaybeXS qw(to_json from_json);
+use JSON;
 use Encode;
 
 our $VERSION = '1.4.0';
