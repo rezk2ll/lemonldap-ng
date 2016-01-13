@@ -390,7 +390,6 @@ sub attributes {
         portalCheckLogins => {
             default       => 1,
             type          => 'bool',
-            default       => 1,
             documentation => 'Display login history checkbox in portal',
         },
         portalForceAuthn => {

@@ -409,7 +409,7 @@
   "oidcOPMetaDataOptionsIDTokenMaxAge": "Âge maximum du jeton ID",
   "oidcOPMetaDataOptionsUseNonce": "Utilisation du nonce",
   "oidcRPMetaDataOptionsRedirectUris": "Adresses de redirection",
-  "oidcRPMetaDataOptionsExtraClaims": "Déclarations supplémentaires",
+  "oidcRPMetaDataOptionsExtraClaims": "Déclarations (scope/claims)",
   "oidcServiceMetaDataIssuer": "Identifiant du fournisseur",
   "oidcServiceMetaDataTokenURI": "Jeton",
   "oidcServiceMetaDataUserInfoURI": "Informations Utilisateur",
