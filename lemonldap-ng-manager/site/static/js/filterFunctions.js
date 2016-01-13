@@ -61,7 +61,7 @@ var filterFunctions = {
         }
         else if (node.nodes[0].data == 'Multi' && n.id == 'multiParams') {
           var nd = n._nodes ? n._nodes : n.nodes;
-          if (typeof nd[0].data === 'undefined') {
+          if (! ('data' in nd[0])) {
             $q.all([scope.getKey(nd[0]), scope.getKey(nd[1])]).then(function() {
               filterFunctions.authParams(scope, $q, node)
             });
