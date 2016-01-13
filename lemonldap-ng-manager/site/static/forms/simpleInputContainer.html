@@ -80,7 +80,7 @@
             <option ng-repeat="item in n.select" ng-selected="item.k==n.data" value="{{item.k}}" trspan="{{item.v}}"></option>
           </select>
         </td>
-        <th ng-if="n.type&&n.type!='text'&&n.type!='longtext'&&n.type!='int'&&n.type!='bool'&&n.type!='trool'&&n.type!='boolOrExpr'&&n.type!='select'">
+        <th ng-if="n.type&&n.type!='text'&&n.type!='longtext'&&n.type!='int'&&n.type!='bool'&&n.type!='trool'&&n.type!='boolOrExpr'&&n.type!='select'&&n.type!='password'">
           ERROR, complex node inside. Don't use simpleInputContainer for {{currentNode.title}}
         </th>
       </tr>
