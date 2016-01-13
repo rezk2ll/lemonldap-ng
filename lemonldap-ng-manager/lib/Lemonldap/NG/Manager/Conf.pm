@@ -844,13 +844,18 @@ sub newConf {
         return $self->sendError( $req, "Missing configuration number", 400 );
     }
 
+    # Configuration must be compared to latest
+    my $cfgNum = $self->confAcc->lastCfg;
+    if ($Lemonldap::NG::Common::Conf::msg) {
+        $req->error($Lemonldap::NG::Common::Conf::msg);
+        return undef;
+    }
+
     # Set current conf to cfgNum
-    unless ( defined $self->getConfByNum( $req->params('cfgNum') ) ) {
+    unless ( defined $self->getConfByNum($cfgNum) ) {
         return $self->sendError(
             $req,
-            "Configuration "
-              . $req->params('cfgNum')
-              . " not available "
+            "Configuration $cfgNum not available "
               . $Lemonldap::NG::Common::Conf::msg,
             400
         );

@@ -21,7 +21,7 @@
         <div class="navbar navbar-default" ng-class="{'hidden-xs':!showM}">
           <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
             <ul class="nav navbar-nav">
-              <li><a id="save" class="link" ng-click="save()" tabIndex="-1"><i class="glyphicon glyphicon-save"></i> {{translate('save')}}<input type="checkbox" ng-model="forceSave" title="{{translate('forceSave')}}" ng-show="confirmNeeded"></a></li>
+              <li><a id="save" class="link" ng-click="save()" tabIndex="-1"><i class="glyphicon glyphicon-save"></i> {{translate('save')}}<input id="forcesave" type="checkbox" ng-model="forceSave" title="{{translate('forceSave')}}" ng-show="confirmNeeded"></a></li>
               <li ng-class="{'disabled':!currentCfg.prev}"><a class="link" ng-click="currentCfg.prev && getCfg(currentCfg.prev)" title="Configuration {{currentCfg.prev}}"><i class="glyphicon glyphicon-arrow-left"></i> {{translate('previous')}}</a></li>
               <li ng-class="{'disabled':!currentCfg.next}"><a class="link" ng-click="currentCfg.next && getCfg(currentCfg.next)" title="Configuration {{currentCfg.next}}"><i class="glyphicon glyphicon-arrow-right"></i> {{translate('next')}}</a></a></li>
               <li><a class="link" ng-click="getCfg('latest')" title="Latest configuration"><i class="glyphicon glyphicon-refresh"></i> {{translate('latest')}}</a></li>
