@@ -285,7 +285,7 @@
       var node = $scope._findContainer();
       node.nodes.push({
         "id": node.id + '/n' + (id++),
-        "title": "1-key",
+        "title": "1_Key",
         "data": ['Null', 'Null', 'Null'],
         "type": "authChoice"
       });
