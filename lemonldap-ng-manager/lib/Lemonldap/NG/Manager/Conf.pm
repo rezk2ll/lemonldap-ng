@@ -844,18 +844,13 @@ sub newConf {
         return $self->sendError( $req, "Missing configuration number", 400 );
     }
 
-    # Configuration must be compared to latest
-    my $cfgNum = $self->confAcc->lastCfg;
-    if ($Lemonldap::NG::Common::Conf::msg) {
-        $req->error($Lemonldap::NG::Common::Conf::msg);
-        return undef;
-    }
-
     # Set current conf to cfgNum
-    unless ( defined $self->getConfByNum($cfgNum) ) {
+    unless ( defined $self->getConfByNum( $req->params('cfgNum') ) ) {
         return $self->sendError(
             $req,
-            "Configuration $cfgNum not available "
+            "Configuration "
+              . $req->params('cfgNum')
+              . " not available "
               . $Lemonldap::NG::Common::Conf::msg,
             400
         );
@@ -865,6 +860,15 @@ sub newConf {
     require Lemonldap::NG::Manager::Conf::Parser;
     my $parser = Lemonldap::NG::Manager::Conf::Parser->new(
         { tree => $new, refConf => $self->currentConf, req => $req } );
+
+    # If ref conf isn't last conf, consider conf changed
+    my $cfgNum = $self->confAcc->lastCfg;
+    if ($Lemonldap::NG::Common::Conf::msg) {
+        $req->error($Lemonldap::NG::Common::Conf::msg);
+        return undef;
+    }
+    if ( $cfgNum ne $req->params('cfgNum') ) { $parser->confChanged(1); }
+
     my $res = { result => $parser->check };
 
     # "message" fields: note that words enclosed by "__" (__word__) will be
