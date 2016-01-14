@@ -315,7 +315,8 @@ sub _scanNodes {
                             $leaf->{data} );
                     }
                     else {
-                        hdebug("  $target: no sub value");
+                        hdebug("  $target: looking for subnodes");
+                        $self->_scanNodes($subNodes);
                     }
                 }
                 elsif ( $target =~ /^saml(?:S|ID)PMetaDataXML$/ ) {
@@ -340,7 +341,8 @@ sub _scanNodes {
             if ( $base =~ /^oidc(?:O|R)PMetaDataNode$/ ) {
                 hdebug('OIDC');
                 if ( $target =~ /^oidc(?:O|R)PMetaDataOptions$/ ) {
-                    hdebug("  $target");
+                    hdebug("  $target: looking for subnodes");
+                    $self->_scanNodes($subNodes);
                     $self->set( $target, $key, $leaf->{title}, $leaf->{data} );
                 }
                 elsif ( $target =~ /^oidcOPMetaData(?:JSON|JWKS)$/ ) {
@@ -358,6 +360,10 @@ sub _scanNodes {
                         hdebug('    opened');
                         $self->set( $target, $key, $leaf->{title},
                             $leaf->{data} );
+                    }
+                    else {
+                        hdebug("  $target: looking for subnodes");
+                        $self->_scanNodes($subNodes);
                     }
                 }
                 else {
