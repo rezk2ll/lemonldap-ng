@@ -17,7 +17,7 @@
    *
    * Used to display choices that can not be shown on #form
    */
-  llapp.controller('ModalInstanceCtrl', function($scope, $modalInstance, elem, set) {
+  llapp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'elem', 'set', function($scope, $modalInstance, elem, set) {
     var oldValue;
     $scope.elem = elem;
     $scope.set = set;
@@ -48,7 +48,7 @@
       return false;
     }
 
-  });
+  }]);
 
   /* Main AngularJS controller
    *
@@ -117,6 +117,17 @@
           }
         }
       });
+      var d = $q.defer();
+      modalInstance.result.then(function(msgok) {
+        $scope.message.title = '';
+        $scope.message.items = [];
+        $d.resolve(msgok);
+      },
+      function(msgnok) {
+        $scope.message.title = '';
+        $scope.message.items = [];
+        $d.reject(msgok);
+      }
       return modalInstance.result;
     }
 
@@ -361,22 +372,22 @@
     };
 
     $scope.addSamlIDP = function() {
-      var name = window.prompt($translator.translate('samlPartnerName'),'idp-example');
+      var name = window.prompt($translator.translate('samlPartnerName'), 'idp-example');
       if (name) $scope.addTemplateNode(name, 'samlIDPMetaDataNode');
     };
 
     $scope.addSamlSP = function() {
-      var name = window.prompt($translator.translate('samlPartnerName'),'sp-example');
+      var name = window.prompt($translator.translate('samlPartnerName'), 'sp-example');
       if (name) $scope.addTemplateNode(name, 'samlSPMetaDataNode');
     };
 
     $scope.addOidcOp = function() {
-      var name = window.prompt($translator.translate('oidcOPName'),'op-example');
+      var name = window.prompt($translator.translate('oidcOPName'), 'op-example');
       if (name) $scope.addTemplateNode(name, 'oidcOPMetaDataNode');
     };
 
     $scope.addOidcRp = function() {
-      var name = window.prompt($translator.translate('oidcRPName'),'rp-example');
+      var name = window.prompt($translator.translate('oidcRPName'), 'rp-example');
       if (name) $scope.addTemplateNode(name, 'oidcRPMetaDataNode');
     };
 
