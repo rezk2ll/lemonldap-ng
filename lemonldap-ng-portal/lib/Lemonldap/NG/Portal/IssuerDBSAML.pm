@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;
 our @ISA = qw(Lemonldap::NG::Portal::_SAML);
 
-our $VERSION = '1.4.2';
+our $VERSION = '1.9.0';
 
 ## @method void issuerDBInit()
 # Load and check SAML configuration
@@ -212,13 +212,6 @@ sub issuerForUnAuthUser {
             $self->{_proxiedMethod}      = $method;
             $self->{_proxiedRelayState}  = $relaystate;
             $self->{_proxiedArtifact}    = $artifact;
-
-            # Create a back link on SP displayed on login page
-            my $html =
-                "<a href=\""
-              . $self->referer() . "\">"
-              . $self->msg(PM_BACKTOSP) . "</a>";
-            $self->loginInfo($html);
 
             return PE_OK;
         }
