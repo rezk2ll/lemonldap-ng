@@ -863,10 +863,11 @@ sub newConf {
 
     # If ref conf isn't last conf, consider conf changed
     my $cfgNum = $self->confAcc->lastCfg;
-    if ($Lemonldap::NG::Common::Conf::msg) {
+    unless(defined $cfgNum) {
         $req->error($Lemonldap::NG::Common::Conf::msg);
-        return undef;
     }
+    return $self->sendError( $req, undef, 400 ) if ( $req->error );
+
     if ( $cfgNum ne $req->params('cfgNum') ) { $parser->confChanged(1); }
 
     my $res = { result => $parser->check };
