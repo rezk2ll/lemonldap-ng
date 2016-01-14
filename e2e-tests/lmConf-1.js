@@ -117,6 +117,9 @@
   "key": "qwertyui",
   "locationRules": {
     "manager.example.com": {
+      "(?#Configuration)^/(manager\\.html|conf/)": "$uid eq \"dwho\"",
+      "(?#Notifications)^/notifications": "$uid eq \"dwho\" or $uid eq \"rtyler\"",
+      "(?#Sessions)^/sessions": "$uid eq \"dwho\" or $uid eq \"rtyler\"",
       "default": "$uid eq \"dwho\""
     },
     "test1.example.com": {

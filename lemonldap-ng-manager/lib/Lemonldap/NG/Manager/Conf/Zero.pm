@@ -1,11 +1,11 @@
 package Lemonldap::NG::Manager::Conf::Zero;
 
 sub zeroConf {
-    my ($domain, $sessionDir, $persistentSessionDir, $notificationDir) = @_;
-    $domain ||= 'example.com';
-    $sessionDir ||= '/var/lib/lemonldap-ng/sessions';
+    my ( $domain, $sessionDir, $persistentSessionDir, $notificationDir ) = @_;
+    $domain               ||= 'example.com';
+    $sessionDir           ||= '/var/lib/lemonldap-ng/sessions';
     $persistentSessionDir ||= '/var/lib/lemonldap-ng/psessions';
-    $notificationDir ||= '/var/lib/lemondap-ng/notifications';
+    $notificationDir      ||= '/var/lib/lemondap-ng/notifications';
     return {
         'timeout'             => 72000,
         'loginHistoryEnabled' => 1,
@@ -14,10 +14,10 @@ sub zeroConf {
             '2administration' => {
                 'manager' => {
                     'options' => {
-                        'logo'    => 'configure.png',
-                        'name'    => 'WebSSO Manager',
-                        'display' => 'auto',
-                        'uri' => "http://manager.$domain/manager.html",
+                        'logo'        => 'configure.png',
+                        'name'        => 'WebSSO Manager',
+                        'display'     => 'auto',
+                        'uri'         => "http://manager.$domain/manager.html",
                         'description' => 'Configure LemonLDAP::NG WebSSO'
                     },
                     'type' => 'application'
@@ -25,8 +25,8 @@ sub zeroConf {
                 'sessions' => {
                     'type'    => 'application',
                     'options' => {
-                        'display' => 'auto',
-                        'uri' => "http://manager.$domain/sessions.html",
+                        'display'     => 'auto',
+                        'uri'         => "http://manager.$domain/sessions.html",
                         'description' => 'Explore WebSSO sessions',
                         'logo'        => 'database.png',
                         'name'        => 'Sessions explorer'
@@ -37,8 +37,7 @@ sub zeroConf {
                     'type'    => 'application',
                     'options' => {
                         'description' => 'Explore WebSSO notifications',
-                        'uri' =>
-                          "http://manager.$domain/notifications.html",
+                        'uri' => "http://manager.$domain/notifications.html",
                         'display' => 'auto',
                         'logo'    => 'database.png',
                         'name'    => 'Notifications explorer'
@@ -153,7 +152,11 @@ sub zeroConf {
                 '^/logout' => 'logout_sso'
             },
             "manager.$domain" => {
-                'default' => '$uid eq "dwho"'
+                'default'                                  => '$uid eq "dwho"',
+                '(?#Configuration)^/(manager\.html|conf/)' => '$uid eq "dwho"',
+                '(?#Sessions)/sessions' => '$uid eq "dwho" or $uid eq "rtyler"',
+                '(?#Notifications)/notifications' =>
+                  '$uid eq "dwho" or $uid eq "rtyler"',
             }
         },
         'whatToTrace'   => '_whatToTrace',
