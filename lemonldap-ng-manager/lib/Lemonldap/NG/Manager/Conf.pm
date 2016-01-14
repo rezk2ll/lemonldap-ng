@@ -651,9 +651,15 @@ sub metadatas {
                 'User '
               . $self->userId($req)
               . ' ask for full configuration '
-              . $c->{cfgNum} );
-        return $self->sendJSONresponse( $req, $self->currentConf,
-            forceJSON => 1 );
+              . $c );
+        return $self->sendJSONresponse(
+            $req,
+            $self->currentConf,
+            forceJSON => 1,
+            headers   => [
+                'Content-Disposition' => "Attachment; filename=lmConf-$c.json"
+            ],
+        );
     }
     else {
         my $res = {};
@@ -863,7 +869,7 @@ sub newConf {
 
     # If ref conf isn't last conf, consider conf changed
     my $cfgNum = $self->confAcc->lastCfg;
-    unless(defined $cfgNum) {
+    unless ( defined $cfgNum ) {
         $req->error($Lemonldap::NG::Common::Conf::msg);
     }
     return $self->sendError( $req, undef, 400 ) if ( $req->error );

@@ -99,11 +99,12 @@ sub userError {
 sub sendJSONresponse {
     my ( $self, $req, $j, %args ) = @_;
     $args{code} ||= 200;
+    $args{headers} ||= [];
     my $type = 'application/json; charset=utf-8';
     if ( ref $j ) {
         $j = $_json->encode($j);
     }
-    return [ $args{code}, [ 'Content-Type', $type ], [$j] ];
+    return [ $args{code}, [ 'Content-Type' => $type, @{$args{headers}} ], [$j] ];
 }
 
 sub sendError {
@@ -329,7 +330,7 @@ The response is always send with a 200 code.
 
 Stringify $json object and send it to the client. $req is the
 Lemonldap::NG::Common::PSGI::Request object; %args can define the HTTP error
-code (200 by default).
+code (200 by default) or headers to add.
 
 If client is not json compatible (`Accept` header), response is send in XML.
 
@@ -338,6 +339,8 @@ Examples:
   $self->sendJSONresponse ( $req, { result => 0 }, code => 400 );
 
   $self->sendJSONresponse ( $req, { result => 1 } );
+
+  $self->sendJSONresponse ( $req, { result => 1 }, headers => [ X => Z ] );
 
 =head3 sendError ( $req, $msg, $code )
 

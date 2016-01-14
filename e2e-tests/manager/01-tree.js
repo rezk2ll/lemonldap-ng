@@ -12,7 +12,7 @@ describe('Lemonldap::NG Manager', function() {
       expect(mainNodes.count()).toEqual(9);
     });
 
-    it('should find a default rule', function() {
+    it('should find a rule', function() {
       browser.get('/#/confs/1');
       var vhs = element(by.id('a-virtualHosts'));
       vhs.click();
@@ -22,7 +22,6 @@ describe('Lemonldap::NG Manager', function() {
       r.click();
       var def = element.all(by.id("t-virtualHosts/manager.example.com/locationRules/1"));
       expect(def.count()).toEqual(1);
-      expect(def.get(0).getText()).toEqual('default');
     });
     it('should find 19 auth/user modules but only Demo visible', function() {
       browser.get('/#/confs/1');
