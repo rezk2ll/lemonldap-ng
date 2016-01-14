@@ -361,22 +361,22 @@
     };
 
     $scope.addSamlIDP = function() {
-      var name = window.prompt($translator.translate('samlPartnerName'));
+      var name = window.prompt($translator.translate('samlPartnerName'),'idp-example');
       if (name) $scope.addTemplateNode(name, 'samlIDPMetaDataNode');
     };
 
     $scope.addSamlSP = function() {
-      var name = window.prompt($translator.translate('samlPartnerName'));
+      var name = window.prompt($translator.translate('samlPartnerName'),'sp-example');
       if (name) $scope.addTemplateNode(name, 'samlSPMetaDataNode');
     };
 
     $scope.addOidcOp = function() {
-      var name = window.prompt($translator.translate('oidcOPName'));
+      var name = window.prompt($translator.translate('oidcOPName'),'op-example');
       if (name) $scope.addTemplateNode(name, 'oidcOPMetaDataNode');
     };
 
     $scope.addOidcRp = function() {
-      var name = window.prompt($translator.translate('oidcRPName'));
+      var name = window.prompt($translator.translate('oidcRPName'),'rp-example');
       if (name) $scope.addTemplateNode(name, 'oidcRPMetaDataNode');
     };
 
