@@ -127,7 +127,7 @@
         $scope.message.title = '';
         $scope.message.items = [];
         $d.reject(msgok);
-      }
+      });
       return modalInstance.result;
     }
 
