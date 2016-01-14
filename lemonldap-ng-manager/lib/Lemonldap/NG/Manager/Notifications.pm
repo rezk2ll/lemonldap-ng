@@ -26,7 +26,10 @@ use constant defaultRoute => 'notifications.html';
 sub addRoutes {
     my $self = shift;
 
-    return unless ( $self->notifAccess );
+    unless ( $self->notifAccess ) {
+        $self->addRoute( notifications => 'notEnabled' );
+        return ( $self->error ? 0 : 1 );
+    }
     $self->{multiValuesSeparator} ||= '; ';
 
     # HTML template
@@ -66,8 +69,11 @@ sub notifAccess {
     return $self->_notifAccess if ( $self->_notifAccess );
 
     # 1. Get notificationStorage or build it using globalStorage
-    my $conf = $self->_confAcc->getConf()
-      or die($Lemonldap::NG::Common::Conf::msg);
+    my $conf = $self->_confAcc->getConf();
+    unless ($conf) {
+        $self->error($Lemonldap::NG::Common::Conf::msg);
+        return 0;
+    }
     my $args;
 
     # TODO: refresh system
@@ -76,7 +82,6 @@ sub notifAccess {
         qw/portal notification notificationStorage notificationStorageOptions/);
 
     unless ( $self->{notification} ) {
-        $self->addRoute( notifications => 'notEnabled' );
         return 0;
     }
 

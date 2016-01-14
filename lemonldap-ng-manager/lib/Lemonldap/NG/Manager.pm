@@ -52,12 +52,21 @@ sub init {
       map { push @links, $_; "Lemonldap::NG::Manager::" . ucfirst($_) }
       split( /[,\s]+/, $self->{enabledModules} );
     extends 'Lemonldap::NG::Handler::PSGI', @enabledModules;
+    my @working;
     foreach my $mod (@enabledModules) {
         no strict 'refs';
-        &{"${mod}::addRoutes"}($self);
+        if ( &{"${mod}::addRoutes"}($self) ) {
+            $self->lmLog( "Module $mod enabled", 'debug' );
+            push @working, $mod;
+        }
+        else {
+            $self->lmLog( "Module $mod can not be enabled: " . $self->error,
+                'error' );
+        }
     }
+    return 0 unless (@working);
 
-    $self->defaultRoute( $enabledModules[0]->defaultRoute );
+    $self->defaultRoute( $working[0]->defaultRoute );
 
     my $linksIcons =
       { 'conf' => 'cog', 'sessions' => 'duplicate', 'notifications' => 'bell' };
