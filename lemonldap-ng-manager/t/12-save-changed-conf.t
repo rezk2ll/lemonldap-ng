@@ -23,20 +23,29 @@ my ( $res, $resBody );
 ok( $res = &client->_post( '/confs/', 'cfgNum=1', &body, 'application/json' ),
     "Request succeed" );
 ok( $res->[0] == 200, "Result code is 200" );
-ok( $resBody = from_json( $res->[2]->[0] ),
-    "Result body contains JSON text" );
+ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
 ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
   or print STDERR Dumper($resBody);
 ok( -f $confFiles->[1], 'File is created' );
 
 my @changes = @{&changes};
 my @cmsg    = @{ $resBody->{details}->{__changes__} };
-ok( @changes == @cmsg, 'Same changes count' );
+my $bug;
+ok( @changes == @cmsg, 'Same changes count' ) or $bug = 1;
 while ( my $c = shift @{ $resBody->{details}->{__changes__} } ) {
+    my $cmp1 = @changes;
+    my $cmp2 = @cmsg;
+
     @changes = grep { $_->{key} ne $c->{key} } @changes;
     @cmsg    = grep { $_->{key} ne $c->{key} } @cmsg;
+    ok( ( $cmp1 - @changes ) == ( $cmp2 - @cmsg ), "$c->{key} found" );
+    count(1);
 }
-ok( !@changes, 'All changes detected' );
+ok( !@changes, 'All changes detected' ) or $bug = 1;
+
+if ($bug) {
+    print STDERR Dumper( \@changes, \@cmsg );
+}
 
 #print STDERR Dumper(\@changes,\@cmsg);
 
@@ -66,6 +75,10 @@ sub changes {
         {
             'new' => 'Application Test 3',
             'key' => 'applicationList, Sample applications'
+        },
+        {
+            'key' => 'applicationList',
+            'new' => 'New cat(s)/app(s)'
         },
         {
             'key' => 'userDB',

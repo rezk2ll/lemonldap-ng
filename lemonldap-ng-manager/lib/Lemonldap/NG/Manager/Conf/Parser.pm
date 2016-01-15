@@ -432,8 +432,18 @@ sub _scanNodes {
                 if ( ref $subNodes ) {
                     $self->_scanNodes($subNodes) or return 0;
                 }
+                my @listCatRef = keys %{ $cmp->{$app} };
+                my @listCatNew = keys %{ $cn->{$s} };
 
-                # TODO: check for deleted
+                # Check for deleted
+                unless ( @listCatRef == @listCatNew ) {
+                    $self->confChanged(1);
+                    push @{ $self->changes },
+                      {
+                        key => join( ', ', 'applicationList', @path ),
+                        new => 'New cat(s)/app(s)',
+                      };
+                }
             }
 
             # Create new apps
