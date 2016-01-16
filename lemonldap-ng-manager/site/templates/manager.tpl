@@ -91,6 +91,23 @@
     </ol>
   </script>
 
+  <!-- Prompt -->
+  <script type="text/ng-template" id="prompt.html">
+    <div class="modal-header">
+      <h3 class="modal-title" trspan="{{elem('message').title}}" />
+    </div>
+    <div class="modal-body">
+      <div class="input-group" style="width:100%;">
+        <label class="input-group-addon" for="promptinput" trspan="{{elem('message').field}}"/>
+        <input id="promptinput" class="form-control" ng-model="result"/>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="saveok" ng-click="ok()" trspan="ok"></button>
+      <button class="btn btn-warning" ng-click="cancel()" trspan="cancel"></button>
+    </div>
+  </script>
+
   <!-- Message display -->
   <script type="text/ng-template" id="message.html">
     <div class="modal-header">

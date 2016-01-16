@@ -17,11 +17,12 @@
    *
    * Used to display choices that can not be shown on #form
    */
-  llapp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'elem', 'set', function($scope, $modalInstance, elem, set) {
+  llapp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'elem', 'set', 'init', function($scope, $modalInstance, elem, set, init) {
     var oldValue;
     $scope.elem = elem;
     $scope.set = set;
-    $scope.result = '';
+    console.log(init);
+    $scope.result = init;
     $scope.staticPrefix = staticPrefix;
     var currentNode = elem('currentNode');
     $scope.translateP = elem('translateP');
@@ -99,7 +100,7 @@
     };
 
     /* Modal launcher */
-    $scope.showModal = function(tpl) {
+    $scope.showModal = function(tpl, init) {
       var modalInstance = $modal.open({
         templateUrl: tpl,
         controller: 'ModalInstanceCtrl',
@@ -114,6 +115,9 @@
             return function(f, s) {
               $scope[f] = s;
             }
+          },
+          init: function() {
+            return init
           }
         }
       });
@@ -126,7 +130,7 @@
       function(msgnok) {
         $scope.message.title = '';
         $scope.message.items = [];
-        d.reject(msgok);
+        d.reject(msgnok);
       });
       return modalInstance.result;
     }
@@ -356,19 +360,26 @@
 
     /* Nodes with template */
     $scope.addVhost = function() {
-      var name = window.prompt($translator.translate('virtualHostName'));
-      if (name) {
-        var node = $scope.addTemplateNode(name, 'virtualHost');
-        delete node._nodes[0].cnodes;
-        node._nodes[0].nodes = [{
-          "id": "virtualHosts/" + 'new__' + name + '/locationRules/default',
-          "type": "rule",
-          "title": "default",
-          "comment": "",
-          "re": "default",
-          "data": "deny"
-        }];
-      }
+      var name = $scope.domain ? ('.' + $scope.domain.data) : '.example.com';
+      $scope.message = {
+        "title": 'virtualHostName',
+        "field": 'hostname'
+      };
+      $scope.showModal('prompt.html', name).then(function() {
+        var name = $scope.result;
+        if (name) {
+          var node = $scope.addTemplateNode(name, 'virtualHost');
+          delete node._nodes[0].cnodes;
+          node._nodes[0].nodes = [{
+            "id": "virtualHosts/" + 'new__' + name + '/locationRules/default',
+            "type": "rule",
+            "title": "default",
+            "comment": "",
+            "re": "default",
+            "data": "deny"
+          }];
+        }
+      });
     };
 
     $scope.addSamlIDP = function() {
