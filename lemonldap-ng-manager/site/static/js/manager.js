@@ -21,7 +21,6 @@
     var oldValue;
     $scope.elem = elem;
     $scope.set = set;
-    console.log(init);
     $scope.result = init;
     $scope.staticPrefix = staticPrefix;
     var currentNode = elem('currentNode');
@@ -383,23 +382,32 @@
     };
 
     $scope.addSamlIDP = function() {
-      var name = window.prompt($translator.translate('samlPartnerName'), 'idp-example');
-      if (name) $scope.addTemplateNode(name, 'samlIDPMetaDataNode');
+      $scope.newTemplateNode('samlIDPMetaDataNode', 'samlPartnerName', 'idp-example');
     };
 
     $scope.addSamlSP = function() {
-      var name = window.prompt($translator.translate('samlPartnerName'), 'sp-example');
-      if (name) $scope.addTemplateNode(name, 'samlSPMetaDataNode');
+      $scope.newTemplateNode('samlSPMetaDataNode', 'samlPartnerName', 'sp-example');
     };
 
     $scope.addOidcOp = function() {
-      var name = window.prompt($translator.translate('oidcOPName'), 'op-example');
-      if (name) $scope.addTemplateNode(name, 'oidcOPMetaDataNode');
+      $scope.newTemplateNode('oidcOPMetaDataNode', 'oidcOPName', 'op-example');
     };
 
     $scope.addOidcRp = function() {
-      var name = window.prompt($translator.translate('oidcRPName'), 'rp-example');
-      if (name) $scope.addTemplateNode(name, 'oidcRPMetaDataNode');
+      $scope.newTemplateNode('oidcRPMetaDataNode', 'oidcRPName', 'rp-example');
+    };
+
+    $scope.newTemplateNode = function(type, title, init) {
+      $scope.message = {
+        "title": title,
+        "field": 'name'
+      };
+      $scope.showModal('prompt.html', init).then(function() {
+        var name = $scope.result;
+        if (name) {
+          return $scope.addTemplateNode(name, type)
+        }
+      });
     };
 
     $scope.addTemplateNode = function(name, type) {
