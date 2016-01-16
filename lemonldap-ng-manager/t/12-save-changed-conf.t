@@ -36,15 +36,27 @@ while ( my $c = shift @{ $resBody->{details}->{__changes__} } ) {
     my $cmp1 = @changes;
     my $cmp2 = @cmsg;
 
+    my @d1 = grep { $_->{key} eq $c->{key} } @changes;
+    my @d2 = grep { $_->{key} eq $c->{key} } @cmsg;
     @changes = grep { $_->{key} ne $c->{key} } @changes;
     @cmsg    = grep { $_->{key} ne $c->{key} } @cmsg;
-    ok( ( $cmp1 - @changes ) == ( $cmp2 - @cmsg ), "$c->{key} found" );
+    ok( ( $cmp1 - @changes ) == ( $cmp2 - @cmsg ), "$c->{key} found" )
+      or print STDERR 'Expect: '
+      . ( $cmp1 - @changes )
+      . ', got: '
+      . ( $cmp2 - @cmsg )
+      . "\nExpect: "
+      . Dumper( \@d1 ) . "Got: "
+      . Dumper( \@d2 );
     count(1);
 }
 ok( !@changes, 'All changes detected' ) or $bug = 1;
 
 if ($bug) {
-    print STDERR Dumper( \@changes, \@cmsg );
+    print STDERR 'Expected not found: '
+      . Dumper( \@changes )
+      . 'Changes announced and not found: '
+      . Dumper( \@cmsg );
 }
 
 #print STDERR Dumper(\@changes,\@cmsg);

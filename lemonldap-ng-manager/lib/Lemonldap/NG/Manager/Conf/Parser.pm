@@ -391,12 +391,18 @@ sub _scanNodes {
                 $self->_scanNodes($subNodes) or return 0;
 
                 # Check for deleted
-                my @listCatRef = keys %{ $self->refConf->{applicationList} };
+                my @listCatRef =
+                  map { $self->refConf->{applicationList}->{$_}->{catname} }
+                  keys %{ $self->refConf->{applicationList} };
                 my @listCatNew =
+                  map { $self->newConf->{applicationList}->{$_}->{catname} }
                   keys(
-                    ref $self->newConf->{applicationList}
-                    ? $self->newConf->{applicationList}
-                    : {} );
+                    %{
+                        ref $self->newConf->{applicationList}
+                        ? $self->newConf->{applicationList}
+                        : {}
+                    }
+                  );
                 foreach my $cat (@listCatNew) {
                     @listCatRef = grep { $_ ne $cat } @listCatRef;
                 }
