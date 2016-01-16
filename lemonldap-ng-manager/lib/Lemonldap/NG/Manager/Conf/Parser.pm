@@ -636,6 +636,14 @@ sub _scanNodes {
             }
         }
 
+        # Grouped nodes not opened
+        elsif ( $leaf->{get} and ref $leaf->{get} eq 'ARRAY' ) {
+            hdebug("  unopened grouped node");
+            foreach my $subkey ( @{ $leaf->{get} } ) {
+                $self->set( $subkey, undef );
+            }
+        }
+
         # Normal leaf
         else {
             $self->set( $name, $leaf->{data} );
