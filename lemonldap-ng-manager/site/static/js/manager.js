@@ -121,12 +121,12 @@
       modalInstance.result.then(function(msgok) {
         $scope.message.title = '';
         $scope.message.items = [];
-        $d.resolve(msgok);
+        d.resolve(msgok);
       },
       function(msgnok) {
         $scope.message.title = '';
         $scope.message.items = [];
-        $d.reject(msgok);
+        d.reject(msgok);
       });
       return modalInstance.result;
     }

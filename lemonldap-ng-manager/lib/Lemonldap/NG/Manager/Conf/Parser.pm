@@ -378,8 +378,42 @@ sub _scanNodes {
         ####################
         # Application list #
         ####################
+
+        # Application list root node
+        elsif ( $leaf->{title} eq 'applicationList' ) {
+            hdebug( $leaf->{title} );
+            if ( $leaf->{cnodes} ) {
+                hdebug('  unopened');
+                $self->newConf->{applicationList} =
+                  $self->refConf->{applicationList} // {};
+            }
+            else {
+                $self->_scanNodes($subNodes) or return 0;
+
+                # Check for deleted
+                my @listCatRef = keys %{ $self->refConf->{applicationList} };
+                my @listCatNew =
+                  keys(
+                    ref $self->newConf->{applicationList}
+                    ? $self->newConf->{applicationList}
+                    : {} );
+                foreach my $cat (@listCatNew) {
+                    @listCatRef = grep { $_ ne $cat } @listCatRef;
+                }
+                if (@listCatRef) {
+                    $self->confChanged(1);
+                    foreach my $cat (@listCatRef) {
+                        push @{ $self->changes },
+                          { key => $leaf->{id}, old => $cat };
+                    }
+                }
+            }
+            next;
+        }
+
+        # Application list sub nodes
         elsif ( $leaf->{id} =~ /^applicationList\/(.+)$/ ) {
-            hdebug('Application list');
+            hdebug('Application list subnode');
             use feature 'state';
             my @cats = split /\//, $1;
             my $app = pop @cats;
@@ -441,7 +475,7 @@ sub _scanNodes {
                     push @{ $self->changes },
                       {
                         key => join( ', ', 'applicationList', @path ),
-                        new => 'New cat(s)/app(s)',
+                        new => 'Changes in cat(s)/app(s)',
                       };
                 }
             }
