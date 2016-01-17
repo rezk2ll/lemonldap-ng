@@ -405,7 +405,7 @@
       $scope.showModal('prompt.html', init).then(function() {
         var name = $scope.result;
         if (name) {
-          return $scope.addTemplateNode(name, type)
+          $scope.addTemplateNode(name, type)
         }
       });
     };
@@ -419,7 +419,7 @@
         "id": type + "s/" + 'new__' + name,
         "title": name,
         "type": type,
-        "_nodes": templates(type, 'new__' + name)
+        "nodes": templates(type, 'new__' + name)
       };
       cs.$modelValue.nodes.push(t);
       return t;
