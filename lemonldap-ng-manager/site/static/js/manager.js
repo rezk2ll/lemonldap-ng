@@ -368,8 +368,8 @@
         var name = $scope.result;
         if (name) {
           var node = $scope.addTemplateNode(name, 'virtualHost');
-          delete node._nodes[0].cnodes;
-          node._nodes[0].nodes = [{
+          delete node.nodes[0].cnodes;
+          node.nodes[0].nodes = [{
             "id": "virtualHosts/" + 'new__' + name + '/locationRules/default',
             "type": "rule",
             "title": "default",
@@ -422,6 +422,7 @@
         "nodes": templates(type, 'new__' + name)
       };
       cs.$modelValue.nodes.push(t);
+      cs.expand();
       return t;
     };
 
