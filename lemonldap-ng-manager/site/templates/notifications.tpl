@@ -133,6 +133,10 @@
 
   <TMPL_INCLUDE NAME="scripts.tpl">
 
+<!-- //if:jsminified
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/notifications.min.js"></script>
+//else -->
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/notifications.js"></script>
+<!-- //endif -->
 
 <TMPL_INCLUDE NAME="footer.tpl">

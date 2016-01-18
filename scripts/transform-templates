@@ -1,0 +1,25 @@
+#!/usr/bin/perl
+
+use strict;
+
+our $cond = 1;
+our %args;
+for ( my $i = 0 ; $i < @ARGV ; $i += 2 ) {
+    $args{ $ARGV[$i] } =
+      ( $ARGV[ $i + 1 ] and $ARGV[ $i + 1 ] ne 'no' ) ? 1 : 0;
+}
+
+while (<STDIN>) {
+    if (m#//endif#) {
+        $cond = 1;
+    }
+    elsif (m#//else#) {
+        $cond = !$cond;
+    }
+    elsif (m#//if:(\w+)#) {
+        $cond = $args{$1};
+    }
+    else {
+        print if ($cond);
+    }
+}

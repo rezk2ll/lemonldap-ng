@@ -230,7 +230,7 @@ the first word of /path/info.
 
 =item $dest:
 
-string, sub ref or hash ref (see "Route types" bellow)
+string, sub ref or hash ref (see "Route types" below)
 
 =item $methods:
 

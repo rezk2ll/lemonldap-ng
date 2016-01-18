@@ -3,6 +3,13 @@
 # Prefix for packaging
 DESTDIR=
 
+# Flag for optimizations
+PROD=no
+
+# Compression
+JSCOMPRESS=$(PROD)
+CSSCOMPRESS=$(PROD)
+
 PERL=$$(which perl)
 PERLVERSION=`perl -e '$$version = $$^V; $$version =~ s/v//; print $$version'`
 SU=su -c
@@ -419,13 +426,32 @@ install_manager_site:	install_conf_dir
 	@install -v -d ${RMANAGERDIR} $(RMANAGERSTATICDIR) $(RMANAGERPSGIDIR) \
 		$(RMANAGERTEMPLATESDIR)
 	@cp -pR $(SRCMANAGERDIR)/site/static/* $(RMANAGERSTATICDIR)
-	@cp -pR $(SRCMANAGERDIR)/site/templates/* $(RMANAGERTEMPLATESDIR)
+	@for f in $(SRCMANAGERDIR)/site/templates/*.tpl; do \
+		./scripts/transform-templates jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f \
+			> $(RMANAGERTEMPLATESDIR)/`basename $$f`; \
+	done
 	@cp -pR $(SRCMANAGERDIR)/eg/* $(RMANAGERPSGIDIR)
 	# Clean svn files
 	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSTATICDIR} $(RMANAGERPSGIDIR) \
 		$(RMANAGERTEMPLATESDIR) $(RCONFDIR) -type d -name .svn)
 	$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
+	@if test "$(CSSCOMPRESS)" = "yes"; then \
+		for f in $(RMANAGERSTATICDIR)/css/*; do \
+			if test "$${f%%.min.css}" = "$$f"; then \
+				echo "Compressing $$f"; \
+				yui-compressor $$f >$${f%%.css}.min.css; \
+			fi; \
+		done; \
+	fi
+	@if test "$(JSCOMPRESS)" = "yes"; then \
+		for f in $(RMANAGERSTATICDIR)/js/*; do \
+			if test "$${f%%.min.js}" = "$$f"; then \
+				echo "Compressing $$f"; \
+				yui-compressor $$f >$${f%%.js}.min.js; \
+			fi; \
+		done; \
+	fi
 
 install_portal_site:	install_conf_dir
 	# Portal install

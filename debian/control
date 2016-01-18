@@ -42,7 +42,8 @@ Build-Depends-Indep: libapache-session-perl,
                      libxml-libxslt-perl,
                      libxml-simple-perl,
                      omegat,
-                     perl
+                     perl,
+                     yui-compressor
 Standards-Version: 3.9.6
 Vcs-Browser: https://anonscm.debian.org/cgit/pkg-perl/packages/lemonldap-ng.git
 Vcs-Git: git://anonscm.debian.org/pkg-perl/packages/lemonldap-ng.git

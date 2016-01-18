@@ -46,10 +46,8 @@ override_dh_auto_install:
 			APACHEUSER=www-data \
 			APACHEGROUP=www-data \
 			DEFDOCDIR=/usr/share/doc/lemonldap-ng-doc \
-			FRDOCDIR=/usr/share/doc/lemonldap-ng-fr-doc
-
-	test -n "$$LOCALBUILD" || ./scripts/minifierjs $$(find debian/tmp/ -name '*.js')
-	test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')
+			FRDOCDIR=/usr/share/doc/lemonldap-ng-fr-doc \
+			PROD=yes
 
 	mkdir $(TMP)/$(LMSHAREDIR)/manager $(TMP)/$(LMSHAREDIR)/portal
 	mv $(TMP)/$(LMVARDIR)/portal/*.pl $(TMP)/$(LMSHAREDIR)/portal/
