@@ -339,8 +339,8 @@
         "type": "menuApp",
         "data": {
           "description": "New app description",
-          "uri": "https://newapp/",
-          "logo": "logo.png",
+          "uri": "https://test.example.com/",
+          "logo": "network.png",
           "display": "auto"
         }
       });
