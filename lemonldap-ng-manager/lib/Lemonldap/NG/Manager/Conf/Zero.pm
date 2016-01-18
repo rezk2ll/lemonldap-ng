@@ -139,6 +139,7 @@ sub zeroConf {
                 'Auth-User' => '$uid'
             }
         },
+        'registerDB'          => 'Demo',
         'registerUrl'         => "http://auth.$domain/register.pl",
         'portal'              => "http://auth.$domain/",
         'notificationStorage' => 'File',
@@ -166,6 +167,7 @@ sub zeroConf {
         'exportedVars'  => {
             'UA' => 'HTTP_USER_AGENT'
         },
+        'portalSkin' => 'bootstrap',
         'portalSkinBackground' =>
           '1280px-Cedar_Breaks_National_Monument_partially.jpg',
         'mailUrl' => "http://auth.$domain/mail.pl"

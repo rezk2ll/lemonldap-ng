@@ -144,7 +144,9 @@
       "LockDirectory" : "__PSESSIONDIR__/lock"
    },
    "portal" : "http://auth.__DNSDOMAIN__/",
+   "portalSkin" : "bootstrap",
    "portalSkinBackground" : "1280px-Cedar_Breaks_National_Monument_partially.jpg",
+   "registerDB" : "Demo",
    "registerUrl" : "http://auth.__DNSDOMAIN__/register.pl",
    "reloadUrls" : {
       "reload.__DNSDOMAIN__" : "http://reload.__DNSDOMAIN__/reload"
