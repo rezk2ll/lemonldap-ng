@@ -116,7 +116,9 @@ sub getConfKey {
 
 sub getConfByNum {
     my ( $self, $cfgNum, @args ) = @_;
-    unless ( $self->currentConf and $cfgNum == $self->currentConf->{cfgNum} ) {
+    unless ( %{ $self->currentConf }
+        and $cfgNum == $self->currentConf->{cfgNum} )
+    {
         my $tmp;
         if ( $cfgNum == 0 ) {
             require Lemonldap::NG::Manager::Conf::Zero;

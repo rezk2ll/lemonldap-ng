@@ -97,7 +97,7 @@ sub zeroConf {
                 }
             }
         },
-        'cfgNum'               => '1',
+        'cfgNum'               => 0,
         'globalStorageOptions' => {
             'Directory' => $sessionDir,
             'generateModule' =>

@@ -108,6 +108,7 @@ sub unserialize {
             $conf->{$k} = $v;
         }
     }
+    return $conf;
 }
 
 sub oldUnserialize {

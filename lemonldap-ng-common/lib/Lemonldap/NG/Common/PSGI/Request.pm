@@ -77,7 +77,7 @@ has QUERY_STRING => (
 sub params {
     my ( $self, $key, $value ) = @_;
     return $self->_params unless ($key);
-    $self->_params->{$key} = $value if ($value);
+    $self->_params->{$key} = $value if ( defined $value );
     return $self->_params->{$key};
 }
 
@@ -113,7 +113,7 @@ has CONTENT_LENGTH => (
                 $self->_psgiInput->read( $self->{body},
                     $self->{CONTENT_LENGTH}, 0 );
             }
-            utf8::upgrade($self->{body});
+            utf8::upgrade( $self->{body} );
         }
     }
 );

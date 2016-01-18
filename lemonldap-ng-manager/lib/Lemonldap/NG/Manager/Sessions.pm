@@ -47,6 +47,9 @@ sub addRoutes {
     }
 
     my $conf = $self->confAcc->getConf();
+    #
+    # Return unless configuration is available
+    return 0 unless ($conf);
     foreach my $type (@sessionTypes) {
         if ( my $tmp =
             $self->{ $type . 'Storage' } || $conf->{ $type . 'Storage' } )

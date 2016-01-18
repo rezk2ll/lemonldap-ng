@@ -340,12 +340,12 @@ sub buildZeroConf {
     $jsonEnc->pretty(1);
     printf STDERR $format, $self->firstLmConfFile;
     open( F, '>', $self->firstLmConfFile ) or die($!);
-    print F $jsonEnc->encode(
-        Lemonldap::NG::Manager::Conf::Zero::zeroConf(
+    my $tmp = Lemonldap::NG::Manager::Conf::Zero::zeroConf(
             '__DNSDOMAIN__',   '__SESSIONDIR__',
             '__PSESSIONDIR__', '__NOTIFICATIONDIR__'
-        )
-    );
+        );
+    $tmp->{cfgNum} = 1;
+    print F $jsonEnc->encode($tmp);
     close F;
     print STDERR "done\n";
 }
