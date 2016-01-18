@@ -65,7 +65,11 @@
           <p id="timer"><lang en="Automatically accept in 5 seconds" fr="Acceptation automatique dans 5 secondes"/></p>
         </div>
 
-        <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/confirm.js"></script>
+        <!-- //if:jsminified
+          <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/confirm.min.js"></script>
+        //else -->
+          <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/confirm.js"></script>
+        <!-- //endif -->
       </TMPL_IF>
 
       <div class="buttons">

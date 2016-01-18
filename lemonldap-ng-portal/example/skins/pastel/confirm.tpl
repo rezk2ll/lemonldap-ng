@@ -41,7 +41,11 @@
 
       <TMPL_IF NAME="ACTIVE_TIMER">
         <p id="timer"><lang en="Automatically accept in 5 seconds" fr="Acceptation automatique dans 5 secondes"/></p>
-        <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.js"></script>
+        <!-- //if:jsminified
+          <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.min.js"></script>
+        //else -->
+          <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.js"></script>
+        <!-- //endif -->
       </TMPL_IF>
 
       <table><tr><td>

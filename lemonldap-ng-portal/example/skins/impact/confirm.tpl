@@ -10,7 +10,11 @@
 
       <TMPL_UNLESS NAME="LIST"><TMPL_IF NAME="ACTIVE_TIMER">
       <p id="timer" class="text-error"><lang en="Automaticaly accept in 5 seconds" fr="Acceptation automatique dans 5 secondes"/></p>
-      <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.js"></script>
+      <!-- //if:jsminified
+        <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.min.js"></script>
+      //else -->
+        <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.js"></script>
+      <!-- //endif -->
       </TMPL_IF></TMPL_UNLESS>
 
       <form id="form" action="#" method="<TMPL_VAR NAME="FORM_METHOD">" class="login">

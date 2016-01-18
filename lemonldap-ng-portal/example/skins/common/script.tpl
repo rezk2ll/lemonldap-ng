@@ -1,10 +1,21 @@
  <!-- Load javascript common to all skins -->
- <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-1.10.2.js"></script>
- <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-ui-1.10.3.custom.js"></script>
- <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery.base64.js"></script>
- <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery.cookie.js"></script>
+ <!-- //if:jsminified
+  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-ui-1.10.3.custom.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery.base64.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery.cookie.min.js"></script>
+ //else -->
+  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-1.10.2.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-ui-1.10.3.custom.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery.base64.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery.cookie.js"></script>
+ <!-- //endif -->
  <TMPL_IF NAME="browserIdEnabled">
-  <script src="https://login.persona.org/include.js"></script>
+  <!-- //if:jsminified
+    <script src="https://login.persona.org/include.min.js"></script>
+  //else -->
+   <script src="https://login.persona.org/include.js"></script>
+  <!-- //endif -->
  </TMPL_IF>
  <TMPL_IF NAME="browserIdLoadLoginScript">
   <script type="text/javascript">//<![CDATA[
@@ -13,12 +24,22 @@
      var browserIdBackgroundColor="<TMPL_VAR NAME="browserIdBackgroundColor">";
      var browserIdAutoLogin="<TMPL_VAR NAME="browserIdAutoLogin">";
   //]]></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browserid.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browseridlogin.js"></script>
+  <!-- //if:jsminified
+    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browserid.min.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browseridlogin.min.js"></script>
+  //else -->
+    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browserid.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browseridlogin.js"></script>
+  <!-- //endif -->
  </TMPL_IF>
  <TMPL_IF NAME="browserIdLoadLogoutScript">
-  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browserid.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browseridlogout.js"></script>
+  <!-- //if:jsminified
+    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browserid.min.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browseridlogout.min.js"></script>
+  //else -->
+    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browserid.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/browseridlogout.js"></script>
+  <!-- //endif -->
  </TMPL_IF>
  <script type="text/javascript">//<![CDATA[
     var displaytab="<TMPL_VAR NAME="DISPLAY_TAB">";

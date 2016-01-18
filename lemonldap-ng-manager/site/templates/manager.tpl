@@ -168,14 +168,14 @@
 
   <TMPL_INCLUDE NAME="scripts.tpl">
 
-<!-- //if:jsminified
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/conftree.min.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/filterFunctions.min.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/manager.min.js"></script>
-//else -->
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/conftree.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/filterFunctions.js"></script>
-  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/manager.js"></script>
-<!-- //endif -->
+  <!-- //if:jsminified
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/conftree.min.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/filterFunctions.min.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/manager.min.js"></script>
+  //else -->
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/conftree.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/filterFunctions.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/manager.js"></script>
+  <!-- //endif -->
 
 <TMPL_INCLUDE NAME="footer.tpl">

@@ -28,7 +28,11 @@
     </div>
   </div>
  
-  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.js"></script>
+  <!-- //if:jsminified
+    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.min.js"></script>
+  //else -->
+    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.js"></script>
+  <!-- //endif -->
 
 <TMPL_INCLUDE NAME="footer.tpl">
 

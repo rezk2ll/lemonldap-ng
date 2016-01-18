@@ -469,6 +469,26 @@ install_portal_site:	install_conf_dir
 	@cp -pR -f ${SRCPORTALDIR}/example/cdc.pl ${RPORTALDIR}
 	@cp -pR -f ${SRCPORTALDIR}/example/register.pl ${RPORTALDIR}
 	@tar -cf - -C ${SRCPORTALDIR}/example/skins/ $$(ls ${SRCPORTALDIR}/example/skins/) |tar -xf - -C $(RPORTALSKINSDIR)
+	@for f in `find $(RPORTALSKINSDIR) -type f -name '*.tpl'`; do \
+		./scripts/transform-templates jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f >$$f.tmp; \
+		mv -f $$f.tmp $$f; \
+	done
+	@if test "$(CSSCOMPRESS)" = "yes"; then \
+		for f in `find $(RPORTALSKINSDIR) -type f -name '*.css'`; do \
+			if test "$${f%%.min.css}" = "$$f"; then \
+				echo "Compressing $$f"; \
+				yui-compressor $$f >$${f%%.css}.min.css; \
+			fi; \
+		done; \
+	fi
+	@if test "$(JSCOMPRESS)" = "yes"; then \
+		for f in `find $(RPORTALSKINSDIR) -type f -name '*.js'`; do \
+			if test "$${f%%.min.js}" = "$$f"; then \
+				echo "Compressing $$f"; \
+				yui-compressor $$f >$${f%%.js}.min.js; \
+			fi; \
+		done; \
+	fi
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
 		for skin in $$(ls $(SRCPORTALDIR)/example/skins/); do \
 			rm -rf $(RPORTALDIR)/skins/$$skin/; \

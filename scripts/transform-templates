@@ -10,14 +10,17 @@ for ( my $i = 0 ; $i < @ARGV ; $i += 2 ) {
 }
 
 while (<STDIN>) {
-    if (m#//endif#) {
-        $cond = 1;
+    if (m#//if:(\w+)#) {
+        $cond = $args{$1};
+    }
+    elsif (m#//elsif:(\w+)# and not $cond) {
+        $cond = $args{$1};
     }
     elsif (m#//else#) {
         $cond = !$cond;
     }
-    elsif (m#//if:(\w+)#) {
-        $cond = $args{$1};
+    elsif (m#//endif#) {
+        $cond = 1;
     }
     else {
         print if ($cond);
