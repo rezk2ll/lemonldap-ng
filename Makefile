@@ -120,7 +120,7 @@ SRCMANAGERDIR=lemonldap-ng-manager
 
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
 PORTALSKINS=`ls $(SRCPORTALDIR)/example/skins/`
-DIFF=diff -aurN -x '*.bak' -x .svn -x '*.swp' --ignore-matching-lines='.*jquery.*' --ignore-matching-lines='.*lemonldap-ng\.ini.*'
+DIFF=diff -aurN -x '*.bak' -x .svn -x '*.map' -x '*.min.js' -x '*.min.css' -x '*.swp' --ignore-matching-lines='.*jquery.*' --ignore-matching-lines='.*lemonldap-ng\.ini.*'
 
 EXAMPLELANG=en # For static Manager example only
 ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
