@@ -5,18 +5,17 @@
 (function() {
   'use strict';
   var scheme = [
-      function(v){
-        return "groupBy=substr(uid,1)";
-      },
-      function(v) {
-        return "uid=" + v + "*&groupBy=uid";
-      },
-      function(v) {
-        return "uid=" + v;
-      }
-    ];
+  function(v) {
+    return "groupBy=substr(uid,1)";
+  },
+  function(v) {
+    return "uid=" + v + "*&groupBy=uid";
+  },
+  function(v) {
+    return "uid=" + v;
+  }];
   var menu = {
-    'actives':[{
+    'actives': [{
       'title': 'markAsDone',
       'icon': 'eye-close'
     }],
@@ -63,14 +62,14 @@
       } else {
         if (!button.action) button.action = button.title;
         switch (typeof button.action) {
-          case 'function':
-            button.action($scope.currentNode, $scope);
-            break;
-          case 'string':
-            $scope[button.action]();
-            break;
-          default:
-            console.log(typeof button.action);
+        case 'function':
+          button.action($scope.currentNode, $scope);
+          break;
+        case 'string':
+          $scope[button.action]();
+          break;
+        default:
+          console.log(typeof button.action);
         };
       }
       $scope.showM = false;
@@ -78,7 +77,9 @@
 
     $scope.markAsDone = function() {
       $scope.waiting = true;
-      $http.put(scriptname + "notifications/"+$scope.type+"/" + $scope.currentNotification.uid+'_'+$scope.currentNotification.reference,{'done':1}).success(function(data) {
+      $http.put(scriptname + "notifications/" + $scope.type + "/" + $scope.currentNotification.uid + '_' + $scope.currentNotification.reference, {
+        'done': 1
+      }).success(function(data) {
         $scope.currentNotification = null;
         $scope.currentScope.remove();
         $scope.waiting = false;
@@ -91,7 +92,7 @@
 
     $scope.deleteNotification = function() {
       $scope.waiting = true;
-      $http.delete(scriptname + "notifications/"+$scope.type+"/" + $scope.currentNotification.done).success(function(data) {
+      $http['delete'](scriptname + "notifications/" + $scope.type + "/" + $scope.currentNotification.done).success(function(data) {
         $scope.currentNotification = null;
         $scope.currentScope.remove();
         $scope.waiting = false;
@@ -110,8 +111,8 @@
     };
 
     $scope.notifDate = function(s) {
-      if(s!==null){
-      var d = new Date(s.substr(0,4),s.substr(4,2)-1,s.substr(6,2));
+      if (s !== null) {
+        var d = new Date(s.substr(0, 4), s.substr(4, 2) - 1, s.substr(6, 2));
         return d.toLocaleDateString();
       }
       return '';
@@ -139,8 +140,8 @@
       } else {
         $scope.type = n[1];
       }
-      if($scope.type == 'new') {
-        $scope.displayCreateForm();        
+      if ($scope.type == 'new') {
+        $scope.displayCreateForm();
       }
       else {
         $scope.showForm = false;
@@ -154,7 +155,7 @@
       $scope.waiting = true;
       var query = scheme[level](value, currentQuery);
 
-      $http.get(scriptname + "notifications/"+$scope.type+"?" + query).success(function(data) {
+      $http.get(scriptname + "notifications/" + $scope.type + "?" + query).success(function(data) {
         if (data.result) {
           data.values.forEach(function(n) {
             autoId++;
@@ -178,14 +179,20 @@
       $scope.currentScope = scope;
       var node = scope.$modelValue;
       var notificationId = node.notification;
-      if($scope.type == 'actives') {
-        notificationId = node.uid+'_'+node.reference;
+      if ($scope.type == 'actives') {
+        notificationId = node.uid + '_' + node.reference;
       }
-      $http.get(scriptname + "notifications/"+$scope.type+"/" + notificationId).success(function(data) {
-        $scope.currentNotification = {'uid':node.uid,'reference':node.reference,'condition':node.condition};
-        if($scope.type=='actives'){$scope.currentNotification.notifications=data.notifications}
-        else{
-          $scope.currentNotification.done=data.done;
+      $http.get(scriptname + "notifications/" + $scope.type + "/" + notificationId).success(function(data) {
+        $scope.currentNotification = {
+          'uid': node.uid,
+          'reference': node.reference,
+          'condition': node.condition
+        };
+        if ($scope.type == 'actives') {
+          $scope.currentNotification.notifications = data.notifications
+        }
+        else {
+          $scope.currentNotification.done = data.done;
         }
         $scope.waiting = false;
       }).error(function(j, e) {
@@ -194,18 +201,18 @@
     }
 
     $scope.save = function() {
-      if($scope.form.uid && $scope.form.reference && $scope.form.xml && $scope.form.date) {
+      if ($scope.form.uid && $scope.form.reference && $scope.form.xml && $scope.form.date) {
         $scope.waiting = true;
-        $http.post('notifications/actives',$scope.form).success(function(data){
+        $http.post('notifications/actives', $scope.form).success(function(data) {
           $scope.form = {};
-          if(data.result==1){
+          if (data.result == 1) {
             alert($translator.translate('notificationCreated'));
           }
           else {
-            alert($translator.translateP('__notificationNotCreated__ ('+data.error+')'));
+            alert($translator.translateP('__notificationNotCreated__ (' + data.error + ')'));
           }
           $scope.waiting = false;
-        }).error(function(j,e){
+        }).error(function(j, e) {
           $scope.waiting = false;
         });
       }
@@ -219,19 +226,17 @@
       $scope.waiting = true;
       $scope.data = [];
       $q.all([
-          $translator.init($scope.lang),
-          $scope.updateTree('', $scope.data, 0)
-        ])
-        .then(function() {
-          $scope.waiting = false;
-        }, function(j, e) {
-          $scope.waiting = false;
-        });
+      $translator.init($scope.lang), $scope.updateTree('', $scope.data, 0)]).then(function() {
+        $scope.waiting = false;
+      },
+      function(j, e) {
+        $scope.waiting = false;
+      });
     };
 
     $scope.displayCreateForm = function() {
       $scope.waiting = true;
-      $translator.init($scope.lang).then(function(){
+      $translator.init($scope.lang).then(function() {
         $scope.currentNotification = null;
         $scope.showForm = true;
         $scope.data = [];

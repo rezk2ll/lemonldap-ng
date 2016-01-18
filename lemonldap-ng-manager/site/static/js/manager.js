@@ -556,10 +556,8 @@
           d.reject('Empty response from server');
         } else if (data.error) {
           if (data.error.match(/setDefault$/)) {
-            if (node.
-          default) {
-              node.nodes = node.
-            default.slice(0);
+            if (node['default']) {
+              node.nodes = node['default'].slice(0);
             } else node.nodes = [];
             delete node.cnodes;
             d.resolve('Set data to default value');
@@ -630,8 +628,7 @@
         f = 'text';
       }
       if (node.nodes || node._nodes || node.cnodes) {
-        $scope.form = f != 'text' ? f:
-        'home';
+        $scope.form = f != 'text' ? f : 'home';
       } else {
         $scope.form = f;
         /* Get datas */
@@ -716,10 +713,8 @@
         } else {
           $http.get(confPrefix + $scope.currentCfg.cfgNum + '/' + (node.get ? node.get : node.title)).success(function(data) {
             /* Set default value if response is null or if asked by server */
-            if ((data.value === null || (data.error && data.error.match(/setDefault$/))) && node.
-          default !== null) {
-              node.data = node.
-            default;
+            if ((data.value === null || (data.error && data.error.match(/setDefault$/))) && node['default'] !== null) {
+              node.data = node['default'];
             } else {
               node.data = data.value;
             }
@@ -819,8 +814,7 @@
         else {
           $scope.message.title = 'emptyConf';
           $scope.message.items = [{
-            message:
-            '__zeroConfExplanations__'
+            message: '__zeroConfExplanations__'
           }];
           $scope.showModal('message.html');
         }

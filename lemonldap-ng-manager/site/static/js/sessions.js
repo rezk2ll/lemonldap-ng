@@ -113,7 +113,7 @@
 
     $scope.deleteSession = function() {
       $scope.waiting = true;
-      $http.delete(scriptname + "sessions/" + sessionType + "/" + $scope.currentSession.id).success(function(data) {
+      $http['delete'](scriptname + "sessions/" + sessionType + "/" + $scope.currentSession.id).success(function(data) {
         $scope.currentSession = null;
         $scope.currentScope.remove();
         $scope.waiting = false;
