@@ -353,7 +353,8 @@ rm -rf %{buildroot}
 	CRONDIR=%{_sysconfdir}/cron.d \
 	DATADIR=%{lm_vardir} \
 	DNSDOMAIN=%{lm_dnsdomain} \
-	APACHEVERSION=%{apache_version}
+	APACHEVERSION=%{apache_version} \
+	PROD=yes
 
 %{__make} %{?_smp_mflags} install_fr_doc_site \
 	DESTDIR=%{buildroot} \
