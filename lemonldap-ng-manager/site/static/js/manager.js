@@ -73,27 +73,32 @@
     var readError = function(j, e) {
       $scope.waiting = false;
       if (e == 403) {
-        $scope.message.title = 'forbidden';
-        $scope.message.items = [];
+        $scope.message = {
+          title: 'forbidden',
+          message: '',
+          items: []
+        };
       }
       else if (e == 401) {
         console.log('Authentication needed');
       }
       else if (e == 400) {
-        $scope.message.title = 'badRequest';
-        $scope.message.items = [{
+        $scope.message = {
+          title: 'badRequest',
           message: (j.error ? j.error : j)
-        }];
+        };
       }
       else if (e > 0) {
-        $scope.message.title = 'serverError';
-        $scope.message.items = [{
+        $scope.message = {
+          title: 'badRequest',
           message: (j.error ? j.error : j)
-        }];
+        };
       }
       else {
-        $scope.message.title = 'networkProblem';
-        $scope.message.items = [];
+        $scope.message = {
+          title: 'networkProblem',
+          message: ''
+        };
       }
       return $scope.showModal('message.html');
     };
@@ -122,13 +127,19 @@
       });
       var d = $q.defer();
       modalInstance.result.then(function(msgok) {
-        $scope.message.title = '';
-        $scope.message.items = [];
+        $scope.message = {
+          title: '',
+          message: '',
+          items: []
+        };
         d.resolve(msgok);
       },
       function(msgnok) {
-        $scope.message.title = '';
-        $scope.message.items = [];
+        $scope.message = {
+          title: '',
+          message: '',
+          items: []
+        };
         d.reject(msgnok);
       });
       return modalInstance.result;
@@ -767,7 +778,6 @@
           $scope.init();
         }).error(function(j, e) {
           readError(j, e).then(function() {
-            console.log(e);
             $scope.currentCfg.cfgNum = 0;
             $scope.init();
           });
@@ -812,10 +822,10 @@
           setScopeVars($scope);
         }
         else {
-          $scope.message.title = 'emptyConf';
-          $scope.message.items = [{
+          $scope.message = {
+            title: 'emptyConf',
             message: '__zeroConfExplanations__'
-          }];
+          };
           $scope.showModal('message.html');
         }
         $scope.form = 'home';
