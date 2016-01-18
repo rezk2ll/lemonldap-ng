@@ -184,6 +184,35 @@ all:	configure common handler manager portal
 	@echo
 
 #
+# Minification
+#
+minify:
+	@for f in $(SRCMANAGERDIR)/site/static/css/*; do \
+		if test "$${f%%.min.css}" = "$$f"; then \
+			echo "Compressing $$f"; \
+			yui-compressor $$f >$${f%%.css}.min.css; \
+		fi; \
+	done
+	@for f in $(SRCMANAGERDIR)/site/static/js/*; do \
+		if test "$${f%%.min.js}" = "$$f"; then \
+			echo "Compressing $$f"; \
+			yui-compressor $$f >$${f%%.js}.min.js; \
+		fi; \
+	done
+	@for f in `find $(SRCPORTALDIR)/example -type f -name '*.css'`; do \
+		if test "$${f%%.min.css}" = "$$f"; then \
+			echo "Compressing $$f"; \
+			yui-compressor $$f >$${f%%.css}.min.css; \
+		fi; \
+	done
+	@for f in `find $(SRCPORTALDIR)/example -type f -name '*.js'`; do \
+		if test "$${f%%.min.js}" = "$$f"; then \
+			echo "Compressing $$f"; \
+			yui-compressor $$f >$${f%%.js}.min.js; \
+		fi; \
+	done
+
+#
 # Perl libraries configuration
 #
 
@@ -436,22 +465,6 @@ install_manager_site:	install_conf_dir
 		$(RMANAGERTEMPLATESDIR) $(RCONFDIR) -type d -name .svn)
 	$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
-	@if test "$(CSSCOMPRESS)" = "yes"; then \
-		for f in $(RMANAGERSTATICDIR)/css/*; do \
-			if test "$${f%%.min.css}" = "$$f"; then \
-				echo "Compressing $$f"; \
-				yui-compressor $$f >$${f%%.css}.min.css; \
-			fi; \
-		done; \
-	fi
-	@if test "$(JSCOMPRESS)" = "yes"; then \
-		for f in $(RMANAGERSTATICDIR)/js/*; do \
-			if test "$${f%%.min.js}" = "$$f"; then \
-				echo "Compressing $$f"; \
-				yui-compressor $$f >$${f%%.js}.min.js; \
-			fi; \
-		done; \
-	fi
 
 install_portal_site:	install_conf_dir
 	# Portal install
@@ -473,22 +486,6 @@ install_portal_site:	install_conf_dir
 		./scripts/transform-templates jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f >$$f.tmp; \
 		mv -f $$f.tmp $$f; \
 	done
-	@if test "$(CSSCOMPRESS)" = "yes"; then \
-		for f in `find $(RPORTALSKINSDIR) -type f -name '*.css'`; do \
-			if test "$${f%%.min.css}" = "$$f"; then \
-				echo "Compressing $$f"; \
-				yui-compressor $$f >$${f%%.css}.min.css; \
-			fi; \
-		done; \
-	fi
-	@if test "$(JSCOMPRESS)" = "yes"; then \
-		for f in `find $(RPORTALSKINSDIR) -type f -name '*.js'`; do \
-			if test "$${f%%.min.js}" = "$$f"; then \
-				echo "Compressing $$f"; \
-				yui-compressor $$f >$${f%%.js}.min.js; \
-			fi; \
-		done; \
-	fi
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
 		for skin in $$(ls $(SRCPORTALDIR)/example/skins/); do \
 			rm -rf $(RPORTALDIR)/skins/$$skin/; \
