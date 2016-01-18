@@ -53,18 +53,21 @@ sub init {
       split( /[,\s]+/, $self->{enabledModules} );
     extends 'Lemonldap::NG::Handler::PSGI', @enabledModules;
     my @working;
-    foreach my $mod (@enabledModules) {
+    for ( my $i = 0; $i < @enabledModules ; $i++ ) {
+        my $mod = $enabledModules[$i];
         no strict 'refs';
         if ( &{"${mod}::addRoutes"}($self) ) {
             $self->lmLog( "Module $mod enabled", 'debug' );
             push @working, $mod;
         }
         else {
+            $links[$i] = undef;
             $self->lmLog( "Module $mod can not be enabled: " . $self->error,
                 'error' );
         }
     }
     return 0 unless (@working);
+    $self->addRoute( links => 'links', ['GET'] );
 
     $self->defaultRoute( $working[0]->defaultRoute );
 
@@ -73,6 +76,7 @@ sub init {
 
     $self->links( [] );
     for ( my $i = 0 ; $i < @links ; $i++ ) {
+        next unless ( defined $links[$i] );
         push @{ $self->links },
           {
             target => $enabledModules[$i]->defaultRoute,
