@@ -27,7 +27,7 @@
               <li><a class="link" ng-click="getCfg('latest')" title="Latest configuration"><i class="glyphicon glyphicon-refresh"></i> {{translate('latest')}}</a></li>
               <li ng-repeat="button in buttons" ng-include="'menubutton.html'"></li>
               <li class="dropdown visible-xs">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{translate('menu')}} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li ng-repeat="link in links"><a href="{{link.target}}"><i ng-if="link.icon" class="glyphicon glyphicon-{{link.icon}}"></i> {{translate(link.title)}}</a></li>
                   <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> {{translate(menulink.title)}}</a></li>
@@ -40,10 +40,10 @@
         <form class="form-group slide-animate-container" ng-include="formPrefix+form+'.html'" scope="$scope" onload="setButtons()" />
       </div>
       <!-- Help container -->
-      <div id="bottom" ng-hide="nohelp" class="hidden-xs" style="position:relative">
+      <div id="bottom" ng-show="showH" class="hidden-xs" style="position:relative">
         <div class="vresizer" resizer="horizontal" resizer-top="#top" resizer-bottom="#bottom"></div>
         <div style="position:absolute;top:-3px;right:0;color:red">
-          <span class="glyphicon glyphicon-remove" ng-click="nohelp=true" tabIndex="10"></span>
+          <span class="glyphicon glyphicon-remove" ng-click="showH=false" tabIndex="10"></span>
         </div>
         <div class="panel panel-default">
           <div class="panel-body">

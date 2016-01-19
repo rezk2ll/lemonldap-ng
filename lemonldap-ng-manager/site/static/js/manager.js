@@ -69,7 +69,7 @@
     $scope.message = {};
     $scope.result = '';
     $scope.helpUrl = 'start.html#configuration';
-
+    $scope.showH = true; // Replace by cookie
     var readError = function(j, e) {
       $scope.waiting = false;
       if (e == 403) {
@@ -148,6 +148,11 @@
     /* Set form menu */
     $scope.setButtons = function() {
       $scope.buttons = buttons;
+      $scope.buttons.unshift({
+        title: "save",
+        icon: "save",
+        action: "save"
+      });
     };
 
     /* Manage form menu clicks */
@@ -609,7 +614,8 @@
       });
     }
 
-    var showHelp = function(scope) {
+    var setHelp = function(scope) {
+      if (!showH) return;
       while (!scope.$modelValue.help && scope.$parentNodeScope) {
         scope = scope.$parentNodeScope;
       }
@@ -652,7 +658,7 @@
         });
       }
       $scope.showT = false;
-      showHelp(scope);
+      setHelp(scope);
     };
 
     $scope.keyWritable = function(scope) {
