@@ -141,16 +141,6 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/Constants.pm \
 		_example/conf/lmConf-1.js
 
-# Other Perl module files
-PERLCOMMONSRC:=$(shell find $(SRCCOMMONDIR)/lib -name '*.pm')
-PERLCOMMONDST=$(SRCCOMMONDIR)/blib/lib/Lemonldap/NG/Common.pm
-PERLHANDLERSRC:=$(shell find $(SRCHANDLERDIR)/lib -name '*.pm')
-PERLHANDLERDST=$(SRCHANDLERDIR)/blib/lib/Lemonldap/NG/Handler.pm
-PERLPORTALSRC:=$(shell find $(SRCPORTALDIR)/lib -name '*.pm')
-PERLPORTALDST=$(SRCPORTALDIR)/blib/lib/Lemonldap/NG/Portal.pm
-PERLMANAGERSRC:=$(shell find $(SRCMANAGERDIR)/lib -name '*.pm')
-PERLMANAGERDST=$(SRCMANAGERDIR)/blib/lib/Lemonldap/NG/Manager.pm
-
 # Javascript and CSS to minify
 JSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/js $(SRCPORTALDIR)/example -type f -name '*.js'|grep -v .min.js)
 CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/css  $(SRCPORTALDIR)/example -type f -name '*.css'|grep -v .min.css)
@@ -241,24 +231,16 @@ ${SRCMANAGERDIR}/Makefile:
 #
 # Perl libraries make
 #
-common:		$(PERLCOMMONDST)
-
-handler:	$(PERLHANDLERDST)
-
-portal:		$(PERLPORTALDST)
-
-manager:	$(PERLMANAGERDST)
-
-$(PERLCOMMONDST):	common_conf $(PERLCOMMONSRC)
+common:		common_conf
 	@$(MAKE) -C ${SRCCOMMONDIR}
 
-$(PERLHANDLERDST):	handler_conf common $(PERLHANDLERSRC)
+handler:	handler_conf
 	@$(MAKE) -C ${SRCHANDLERDIR}
 
-$(PERLPORTALDST):	portal_conf common $(PERLPORTALSRC)
+portal:		portal_conf
 	@$(MAKE) -C ${SRCPORTALDIR}
 
-$(PERLMANAGERDST):	manager_conf handler $(PERLMANAGERSRC)
+manager:	manager_conf
 	$(MAKE) -C ${SRCMANAGERDIR}
 
 test:		all common_test handler_test portal_test manager_test extra_test
