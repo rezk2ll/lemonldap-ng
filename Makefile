@@ -121,6 +121,8 @@ SRCMANAGERDIR=lemonldap-ng-manager
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
 PORTALSKINS=`ls $(SRCPORTALDIR)/example/skins/`
 DIFF=diff -aurN -x '*.bak' -x .svn -x '*.map' -x '*.min.js' -x '*.min.css' -x '*.swp' --ignore-matching-lines='.*jquery.*' --ignore-matching-lines='.*lemonldap-ng\.ini.*'
+DIFFPREFIX=
+
 
 EXAMPLELANG=en # For static Manager example only
 ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
@@ -138,6 +140,8 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/Constants.pm \
 		_example/conf/lmConf-1.js
+
+# Other Perl module files
 PERLCOMMONSRC:=$(shell find $(SRCCOMMONDIR)/lib -name '*.pm')
 PERLCOMMONDST=$(SRCCOMMONDIR)/blib/lib/Lemonldap/NG/Common.pm
 PERLHANDLERSRC:=$(shell find $(SRCHANDLERDIR)/lib -name '*.pm')
@@ -147,7 +151,13 @@ PERLPORTALDST=$(SRCPORTALDIR)/blib/lib/Lemonldap/NG/Portal.pm
 PERLMANAGERSRC:=$(shell find $(SRCMANAGERDIR)/lib -name '*.pm')
 PERLMANAGERDST=$(SRCMANAGERDIR)/blib/lib/Lemonldap/NG/Manager.pm
 
-DIFFPREFIX=
+# Javascript and CSS to minify
+JSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/js $(SRCPORTALDIR)/example -type f -name '*.js'|grep -v .min.js)
+CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/css  $(SRCPORTALDIR)/example -type f -name '*.css'|grep -v .min.css)
+
+# Minified files
+JSDSTFILES=$(JSSRCFILES:.js=.min.js)
+CSSDSTFILES=$(CSSSRCFILES:.css=.min.css)
 
 all:	configure common handler manager portal
 	@echo
@@ -186,31 +196,16 @@ all:	configure common handler manager portal
 #
 # Minification
 #
-minify:
-	@for f in $(SRCMANAGERDIR)/site/static/css/*; do \
-		if test "$${f%%.min.css}" = "$$f"; then \
-			echo "Compressing $$f"; \
-			yui-compressor $$f >$${f%%.css}.min.css; \
-		fi; \
-	done
-	@for f in $(SRCMANAGERDIR)/site/static/js/*; do \
-		if test "$${f%%.min.js}" = "$$f"; then \
-			echo "Compressing $$f"; \
-			yui-compressor $$f >$${f%%.js}.min.js; \
-		fi; \
-	done
-	@for f in `find $(SRCPORTALDIR)/example -type f -name '*.css'`; do \
-		if test "$${f%%.min.css}" = "$$f"; then \
-			echo "Compressing $$f"; \
-			yui-compressor $$f >$${f%%.css}.min.css; \
-		fi; \
-	done
-	@for f in `find $(SRCPORTALDIR)/example -type f -name '*.js'`; do \
-		if test "$${f%%.min.js}" = "$$f"; then \
-			echo "Compressing $$f"; \
-			yui-compressor $$f >$${f%%.js}.min.js; \
-		fi; \
-	done
+minify: $(JSDSTFILES) $(CSSDSTFILES)
+
+%.min.css: %.css
+	echo "Compressing $*.css"; \
+	yui-compressor $*.css > $*.min.css
+
+%.min.js: %.js
+	echo "Compressing $*.js"; \
+	yui-compressor $*.js > $*.min.js
+
 
 #
 # Perl libraries configuration
