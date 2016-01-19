@@ -72,7 +72,7 @@ sub serialize {
 
         # 1.Hash ref
         if ( ref($v) ) {
-            $fields->{$k} = JSON->encode($v);
+            $fields->{$k} = to_json($v);
         }
         else {
             $fields->{$k} = $v;
