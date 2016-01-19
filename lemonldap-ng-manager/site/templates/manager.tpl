@@ -25,6 +25,7 @@
               <li ng-class="{'disabled':!currentCfg.prev}"><a class="link" ng-click="currentCfg.prev && getCfg(currentCfg.prev)" title="Configuration {{currentCfg.prev}}"><i class="glyphicon glyphicon-arrow-left"></i> {{translate('previous')}}</a></li>
               <li ng-class="{'disabled':!currentCfg.next}"><a class="link" ng-click="currentCfg.next && getCfg(currentCfg.next)" title="Configuration {{currentCfg.next}}"><i class="glyphicon glyphicon-arrow-right"></i> {{translate('next')}}</a></a></li>
               <li><a class="link" ng-click="getCfg('latest')" title="Latest configuration"><i class="glyphicon glyphicon-refresh"></i> {{translate('latest')}}</a></li>
+              <li><a class="link hidden-xs" ng-click="showH=!showH"><i class="glyphicon" ng-class="{'glyphicon-eye-close': showH,'glyphicon-eye-open': !showH}" ></i> {{ translate((showH ? 'hideHelp' : 'showHelp')) }}</a></li>
               <li ng-repeat="button in buttons" ng-include="'menubutton.html'"></li>
               <li class="dropdown visible-xs">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{translate('menu')}} <span class="caret"></span></a>
