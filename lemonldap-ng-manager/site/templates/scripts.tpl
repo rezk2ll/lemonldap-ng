@@ -1,7 +1,7 @@
   <!-- Menu dropdown template -->
   <script type="text/ng-template" id="menubutton.html">
     <a class="link" ng-if="!button.buttons" ng-click="menuClick(button)"><i class="glyphicon glyphicon-{{button.icon}}" ng-if="button.icon"></i> {{translateTitle(button)}}</a>
-    <a class="link" ng-if="button.buttons" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{translateTitle(button)}} <span class="caret"></span></a>
+    <a name="menu" ng-if="button.buttons" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span> {{translateTitle(button)}} <span class="caret"></span></a>
     <ul class="dropdown-menu" role="menu">
       <li ng-repeat="button in button.buttons" ng-include="'menubutton.html'" />
     </ul>

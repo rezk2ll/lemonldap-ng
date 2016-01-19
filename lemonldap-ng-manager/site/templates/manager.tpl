@@ -22,9 +22,14 @@
           <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
             <ul class="nav navbar-nav">
               <li><a id="save" class="link" ng-click="save()" tabIndex="-1"><i class="glyphicon glyphicon-save"></i> {{translate('save')}}<input id="forcesave" type="checkbox" ng-model="forceSave" title="{{translate('forceSave')}}" ng-show="confirmNeeded"></a></li>
-              <li ng-class="{'disabled':!currentCfg.prev}"><a class="link" ng-click="currentCfg.prev && getCfg(currentCfg.prev)" title="Configuration {{currentCfg.prev}}"><i class="glyphicon glyphicon-arrow-left"></i> {{translate('previous')}}</a></li>
-              <li ng-class="{'disabled':!currentCfg.next}"><a class="link" ng-click="currentCfg.next && getCfg(currentCfg.next)" title="Configuration {{currentCfg.next}}"><i class="glyphicon glyphicon-arrow-right"></i> {{translate('next')}}</a></a></li>
-              <li><a class="link" ng-click="getCfg('latest')" title="Latest configuration"><i class="glyphicon glyphicon-refresh"></i> {{translate('latest')}}</a></li>
+                <li class="dropdown">
+                  <a name="menu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span> {{translate('browse')}}</a>
+                  <ul class="dropdown-menu">
+                    <li ng-class="{'disabled':!currentCfg.prev}"><a class="link" ng-click="currentCfg.prev && getCfg(currentCfg.prev)" title="Configuration {{currentCfg.prev}}"><i class="glyphicon glyphicon-arrow-left"></i> {{translate('previous')}}</a></li>
+                    <li ng-class="{'disabled':!currentCfg.next}"><a class="link" ng-click="currentCfg.next && getCfg(currentCfg.next)" title="Configuration {{currentCfg.next}}"><i class="glyphicon glyphicon-arrow-right"></i> {{translate('next')}}</a></a></li>
+                    <li><a class="link" ng-click="getCfg('latest')" title="Latest configuration"><i class="glyphicon glyphicon-refresh"></i> {{translate('latest')}}</a></li>
+                  </ul>
+                </li>
               <li><a class="link hidden-xs" ng-click="showH=!showH"><i class="glyphicon" ng-class="{'glyphicon-eye-close': showH,'glyphicon-eye-open': !showH}" ></i> {{ translate((showH ? 'hideHelp' : 'showHelp')) }}</a></li>
               <li ng-repeat="button in buttons" ng-include="'menubutton.html'"></li>
               <li class="dropdown visible-xs">
