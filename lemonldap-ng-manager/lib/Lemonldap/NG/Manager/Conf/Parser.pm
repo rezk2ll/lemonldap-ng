@@ -295,13 +295,15 @@ sub _scanNodes {
                 }
                 next;
             }
-            if ( defined $leaf->{data} and ref( $leaf->{data} ) eq 'ARRAY' ) {
-                hdebug('Other array detected');
-                $leaf->{data} = join ';', @{ $leaf->{data} };
-            }
+
+            # TODO: what is this ?
+            #if ( defined $leaf->{data} and ref( $leaf->{data} ) eq 'ARRAY' ) {
+            #    hdebug('Other array detected');
+            #    $leaf->{data} = join ';', @{ $leaf->{data} };
+            #}
 
             # SAML
-            if ( $base =~ /^saml(?:S|ID)PMetaDataNodes$/ ) {
+            elsif ( $base =~ /^saml(?:S|ID)PMetaDataNodes$/ ) {
                 hdebug('SAML');
                 if ( $target =~ /^saml(?:S|ID)PMetaDataExportedAttributes$/ ) {
                     if ( $leaf->{cnodes} ) {
@@ -338,7 +340,7 @@ sub _scanNodes {
             }
 
             # OIDC
-            if ( $base =~ /^oidc(?:O|R)PMetaDataNode$/ ) {
+            elsif ( $base =~ /^oidc(?:O|R)PMetaDataNodes$/ ) {
                 hdebug('OIDC');
                 if ( $target =~ /^oidc(?:O|R)PMetaDataOptions$/ ) {
                     hdebug("  $target: looking for subnodes");
@@ -366,12 +368,20 @@ sub _scanNodes {
                         $self->_scanNodes($subNodes);
                     }
                 }
+                elsif ( $target =~ /^oidc(?:O|R)PMetaDataOptions/ ) {
+                    hdebug "  $base sub key: $target";
+                    $self->set($base, $key, $target, $leaf->{data});
+                }
                 else {
                     push @{ $self->errors },
-                      { message => "Unknown vhost key $target" };
+                      { message => "Unknown key $target" };
                     return 0;
                 }
                 next;
+            }
+            else {
+                push @{$self->errors},{message=>"Fatal: unknown special sub node $base"};
+                return 0;
             }
         }
 
