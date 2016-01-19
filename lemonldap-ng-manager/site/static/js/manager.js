@@ -615,7 +615,7 @@
     }
 
     var setHelp = function(scope) {
-      if (!showH) return;
+      if (!$scope.showH) return;
       while (!scope.$modelValue.help && scope.$parentNodeScope) {
         scope = scope.$parentNodeScope;
       }

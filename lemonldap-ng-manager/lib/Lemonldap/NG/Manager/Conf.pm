@@ -711,7 +711,8 @@ sub getKey {
 
     # When "hash"
     if ( $key =~ qr/^$simpleHashKeys$/o ) {
-        $value //= {};
+        return $self->sendError( $req, 'setDefault', 200 )
+          unless defined($value);
 
         # If a hash key is asked return its value
         if ($subkey) {
@@ -736,6 +737,7 @@ sub getKey {
     # When scalar
     return $self->sendError( $req, "Key $key is not a hash", 400 )
       if ($subkey);
+    return $self->sendError( $req, 'setDefault', 200 ) unless defined($value);
     return $self->sendJSONresponse( $req, { value => $value } );
 
     # TODO authParam key
