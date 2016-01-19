@@ -289,7 +289,7 @@
         $scope.type = '_whatToTrace';
       } else if (n[1].match(/^(persistent)$/)) {
         sessionType = RegExp.$1;
-        $scope.type = 'decode';
+        $scope.type = '_session_uid';
       } else {
         $scope.type = n[1];
       }
