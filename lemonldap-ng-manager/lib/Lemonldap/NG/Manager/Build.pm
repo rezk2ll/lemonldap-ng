@@ -66,15 +66,15 @@ sub run {
     printf STDERR $format, $self->confTreeFile;
     $mainTree = Lemonldap::NG::Manager::Build::CTrees::cTrees();
 
-    my $script =
-        'function templates(tpl,key){'
-      . 'var ind;'
-      . 'var scalarTemplate=function(r){'
-      . 'return{'
-      . '"id":tpl+"s/"+(ind++),'
-      . '"title":r,'
-      . '"get":tpl+"s/"+key+"/"+r};};'
-      . 'switch(tpl){';
+    my $script = 'function templates(tpl,key){
+var ind;
+var scalarTemplate=function(r){
+return{
+"id":tpl+"s/"+(ind++),
+"title":r,
+"get":tpl+"s/"+key+"/"+r};};
+switch(tpl){
+';
 
     # To build confTree.js, each special node is scanned from
     # Lemonldap::NG::Manager::Build::CTrees
@@ -82,11 +82,14 @@ sub run {
         @cnodesKeys = ();
         my $jsonTree = [];
         $self->scanTree( $mainTree->{$node}, $jsonTree, '__KEY__', '' );
+        $jsonEnc->pretty(1);
         my $tmp = $jsonEnc->encode($jsonTree);
         $tmp =~ s!"__KEY__!tpl+"s/"+key+"/"+"!mg;
         $tmp =~ s/"(true|false)"/$1/sg;
         $tmp =~ s/:\s*"(\d+)"\s*(["\}])/:$1$2/sg;
-        $script .= "case'$node':return$tmp;";
+        $script .= "  case'$node':
+    return$tmp;
+";
 
         # Second step, Manager/Constants.pm file will contain datas issued from
         # this scan
@@ -100,7 +103,10 @@ sub run {
 
         push @ignoreKeys, $node;
     }
-    $script .= 'default:return [];}}';
+    $script .= '
+    default:return [];
+  }
+}';
     open F, ">", $self->confTreeFile or die $!;
     print F $script;
     close F;
@@ -117,15 +123,16 @@ sub run {
     $mainTree = Lemonldap::NG::Manager::Build::Tree::tree();
     my $jsonTree = [];
     $self->scanTree( $mainTree, $jsonTree, '', '' );
-    $script = 'function setScopeVars(scope){';
+    $script = "\nfunction setScopeVars(scope) {\n";
     foreach my $v (@angularScopeVars) {
-        $script .= "scope.$v->[0]=scope$v->[1];scope.getKey(scope.$v->[0]);";
+        $script .= "  scope.$v->[0]=scope$v->[1];scope.getKey(scope.$v->[0]);\n";
     }
-    $script .= '}';
+    $script .= "}\n";
     open F, ">>", $self->confTreeFile || die $!;
     print F $script;
     close F;
     open F, ">", $self->structFile || die $!;
+    $jsonEnc->pretty(0);
     my $tmp = $jsonEnc->encode($jsonTree);
     $tmp =~ s/"(true|false)"/$1/sg;
     $tmp =~ s/:\s*"(\d+)"\s*(["\}])/:$1$2/sg;
