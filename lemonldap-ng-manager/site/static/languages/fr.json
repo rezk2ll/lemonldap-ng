@@ -444,6 +444,7 @@
   "password": "Mot-de-passe",
   "passwordDB": "Module de mot de passe",
   "passwordManagement": "Gestion des mots de passe",
+  "persistent": "Persistantes",
   "persistentSessions": "Sessions persistantes",
   "persistentStorage": "Module Apache::Session",
   "persistentStorageOptions": "Paramètres du module Apache::Session",
