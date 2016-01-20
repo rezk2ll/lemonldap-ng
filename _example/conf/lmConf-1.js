@@ -111,6 +111,14 @@
       "generateModule" : "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
    },
    "groups" : {},
+   "localSessionStorage" : "Cache::FileCache",
+   "localSessionStorageOptions" : {
+      "cache_depth" : 3,
+      "cache_root" : "/tmp",
+      "default_expires_in" : 600,
+      "directory_umask" : "007",
+      "namespace" : "lemonldap-ng-sessions"
+   },
    "locationRules" : {
       "manager.__DNSDOMAIN__" : {
          "(?#Configuration)^/(manager\\.html|conf/)" : "$uid eq \"dwho\"",
