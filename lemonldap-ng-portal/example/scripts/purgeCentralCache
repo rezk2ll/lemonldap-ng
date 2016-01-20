@@ -164,6 +164,9 @@ for my $options (@backends) {
             # Do net check sessions without _utime
             return undef unless $entry->{_utime};
 
+            # Do not expire persistent sessions
+            return undef if ( $entry->{_session_kind} eq "Persistent" );
+
             # Session expired
             if ( $time - $entry->{_utime} > $conf->{timeout} ) {
                 push @t, $id;
