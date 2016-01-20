@@ -170,7 +170,15 @@ sub zeroConf {
         'portalSkin' => 'bootstrap',
         'portalSkinBackground' =>
           '1280px-Cedar_Breaks_National_Monument_partially.jpg',
-        'mailUrl' => "http://auth.$domain/mail.pl"
+        'mailUrl'                    => "http://auth.$domain/mail.pl",
+        'localSessionStorage'        => 'Cache::FileCache',
+        'localSessionStorageOptions' => {
+            'namespace'          => 'lemonldap-ng-sessions',
+            'default_expires_in' => 600,
+            'directory_umask'    => '007',
+            'cache_root'         => '/tmp',
+            'cache_depth'        => 3,
+        },
     };
 }
 
