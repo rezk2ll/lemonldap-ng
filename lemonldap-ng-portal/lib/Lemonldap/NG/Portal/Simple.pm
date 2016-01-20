@@ -948,6 +948,11 @@ sub getPersistentSession {
         $persistentSession->update( { '_session_uid' => $uid } );
     }
 
+    # Set _utime if not already present
+    unless ( defined $persistentSession->data->{_utime} ) {
+        $persistentSession->update( { '_utime' => time } );
+    }
+
     return $persistentSession;
 }
 
@@ -2087,7 +2092,7 @@ sub setPersistentSessionInfo {
             foreach my $k ( keys %{ $persistentSession->data } ) {
 
                 # Do not restore some parameters
-                next if $k =~ /^_session_(?:u?id|kind)$/;
+                next if $k =~ /^_(?:utime|session_(?:u?id|kind))$/;
                 $self->lmLog( "Restore persistent parameter $k", 'debug' );
                 $self->{sessionInfo}->{$k} = $persistentSession->data->{$k};
             }
