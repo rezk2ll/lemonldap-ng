@@ -202,7 +202,7 @@ minify: $(JSDSTFILES) $(CSSDSTFILES)
 #
 
 json:	$(MANAGERJSONDST)
-	$(MAKE) minify
+	-$(MAKE) minify
 
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)
 	./scripts/jsongenerator.pl
