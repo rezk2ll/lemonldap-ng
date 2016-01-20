@@ -11,7 +11,7 @@
 (function() {
   'use strict';
 
-  var llapp = angular.module('llngManager', ['ui.tree', 'ui.bootstrap', 'llApp']);
+  var llapp = angular.module('llngManager', ['ui.tree', 'ui.bootstrap', 'llApp', 'ngCookies']);
 
   /* Modal controller
    *
@@ -53,7 +53,7 @@
   /* Main AngularJS controller
    *
    */
-  llapp.controller('TreeCtrl', ['$scope', '$http', '$location', '$q', '$modal', '$translator', function($scope, $http, $location, $q, $modal, $translator) {
+  llapp.controller('TreeCtrl', ['$scope', '$http', '$location', '$q', '$modal', '$translator', '$cookies', function($scope, $http, $location, $q, $modal, $translator, $cookies) {
 
     $scope.links = links;
     $scope.menulinks = menulinks;
@@ -69,7 +69,15 @@
     $scope.message = {};
     $scope.result = '';
     $scope.helpUrl = 'start.html#configuration';
-    $scope.showH = true; // Replace by cookie
+    /* Help display */
+    $scope.setShowHelp = function(val) {
+      if (typeof val === 'undefined') val = !$scope.showH;
+      $scope.showH = val;
+      $cookies.put('showhelp', (val ? 'true' : 'false'));
+    }
+    $scope.showH = ($cookies.get('showhelp') === 'false' ? false : true);
+    if (typeof $scope.showH === 'undefined') $scope.setShowHelp(true);
+    /* Intercept AJAX errors */
     var readError = function(j, e) {
       $scope.waiting = false;
       if (e == 403) {

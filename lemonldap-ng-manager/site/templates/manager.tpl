@@ -30,7 +30,7 @@
                   <li><a class="link" ng-click="getCfg('latest')" title="Latest configuration"><i class="glyphicon glyphicon-refresh"></i> {{translate('latest')}}</a></li>
                 </ul>
               </li>
-              <li><a class="link hidden-xs" ng-click="showH=!showH"><i class="glyphicon" ng-class="{'glyphicon-eye-close': showH,'glyphicon-eye-open': !showH}" ></i> {{ translate((showH ? 'hideHelp' : 'showHelp')) }}</a></li>
+              <li><a class="link hidden-xs" ng-click="setShowHelp()"><i class="glyphicon" ng-class="{'glyphicon-eye-close': showH,'glyphicon-eye-open': !showH}" ></i> {{ translate((showH ? 'hideHelp' : 'showHelp')) }}</a></li>
               <li ng-repeat="button in buttons" ng-include="'menubutton.html'"></li>
               <li class="dropdown visible-xs">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{translate('menu')}} <span class="caret"></span></a>
@@ -46,10 +46,11 @@
         <form class="form-group slide-animate-container" ng-include="formPrefix+form+'.html'" scope="$scope" onload="setButtons()" />
       </div>
       <!-- Help container -->
-      <div id="bottom" ng-show="showH" class="hidden-xs" style="position:relative">
+      <div id="bottom" ng-if="showH" class="hidden-xs" style="position:relative">
+	{{showH}}
         <div class="vresizer" resizer="horizontal" resizer-top="#top" resizer-bottom="#bottom"></div>
         <div style="position:absolute;top:-3px;right:0;color:red">
-          <span class="glyphicon glyphicon-remove" ng-click="showH=false" tabIndex="10"></span>
+          <span class="glyphicon glyphicon-remove" ng-click="setShowHelp(false)" tabIndex="10"></span>
         </div>
         <div class="panel panel-default">
           <div class="panel-body">

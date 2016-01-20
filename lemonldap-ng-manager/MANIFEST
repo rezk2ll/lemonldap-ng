@@ -30,6 +30,10 @@ scripts/lemonldap-ng-cli
 scripts/llng-manager-cli
 scripts/lmConfigEditor
 scripts/testConfBackend.pl
+site/static/bwr/angular-cookies/angular-cookies.js
+site/static/bwr/angular-cookies/angular-cookies.min.js
+site/static/bwr/angular-cookies/angular-cookies.min.js.map
+site/static/bwr/angular-cookies/README.md
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.js
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.css
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.js
