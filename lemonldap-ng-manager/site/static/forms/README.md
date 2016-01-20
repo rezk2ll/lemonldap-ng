@@ -29,7 +29,7 @@ Basic example:
       </div>
       <div class="panel-body">
         <div class="input-group">
-          <label class="input-group-addon" for="textinput" trspan="value"/>
+          <label class="input-group-addon" for="textinput" trspan="value"></label>
           <input id="textinput" class="form-control" ng-model="currentNode.data"/>
         </div>
       </div>
@@ -59,7 +59,7 @@ If configuration item name may be modified:
 
     <div class="panel panel-default">
       <div class="panel-heading"> <!-- optional -->
-        <h3 class="panel-title" trspan="OptionalTitle" />
+        <h3 class="panel-title" trspan="OptionalTitle"></h3>
       </div>
       <div class="panel-body">
       __ FORM INPUTS __
@@ -190,7 +190,7 @@ template must be declared in the file:
 
     <script type="text/ng-template" id="portalSkinChoice.html">
       <div class="modal-header">
-        <h3 class="modal-title" trspan="chooseSkin" />
+        <h3 class="modal-title" trspan="chooseSkin"></h3>
       </div>
       <div class="modal-body">
         <div class="btn-group">

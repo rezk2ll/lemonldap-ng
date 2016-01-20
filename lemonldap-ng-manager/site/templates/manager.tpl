@@ -47,7 +47,6 @@
       </div>
       <!-- Help container -->
       <div id="bottom" ng-if="showH" class="hidden-xs" style="position:relative">
-	{{showH}}
         <div class="vresizer" resizer="horizontal" resizer-top="#top" resizer-bottom="#bottom"></div>
         <div style="position:absolute;top:-3px;right:0;color:red">
           <span class="glyphicon glyphicon-remove" ng-click="setShowHelp(false)" tabIndex="10"></span>

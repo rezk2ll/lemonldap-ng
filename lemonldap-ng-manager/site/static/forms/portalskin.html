@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title" trspan="portalSkin"/>
+    <h3 class="panel-title" trspan="portalSkin"></h3>
   </div>
   <div class="panel-body text-center">
     <button class="btn btn-info" ng-click="showModal('portalSkinChoice.html')" ng-model="currentNode" style="position:relative;">
@@ -17,14 +17,14 @@
   </div>
   <table class="table" ng-if="!inSelect(currentNode.data)">
     <tr>
-      <th trspan="customPortalSkin" />
+      <th trspan="customPortalSkin"></th>
       <td><input ng-model="currentNode.data" class="form-control"/></td>
     </tr>
   </table>
 </div>
 <script type="text/ng-template" id="portalSkinChoice.html">
   <div class="modal-header">
-    <h3 class="modal-title" trspan="chooseSkin" />
+    <h3 class="modal-title" trspan="chooseSkin"></h3>
   </div>
   <div class="modal-body">
     <div class="row text-center">
@@ -48,13 +48,13 @@
   </div>
   <table class="table" ng-if="!inSelect(currentNode.data)">
     <tr>
-      <th trspan="customPortalSkin" />
+      <th trspan="customPortalSkin"></th>
       <td><input ng-model="currentNode.data" class="form-control"/></td>
     </tr>
   </table>
   <div class="modal-footer">
-    <button class="btn btn-success" ng-click="ok()"><i class="glyphicon glyphicon-ok"></i> <span trspan="ok" /></button>
-    <button class="btn btn-danger" ng-click="cancel()"><i class="glyphicon glyphicon-remove"></i> <span trspan="cancel" /></button>
+    <button class="btn btn-success" ng-click="ok()"><i class="glyphicon glyphicon-ok"></i> <span trspan="ok"></span></button>
+    <button class="btn btn-danger" ng-click="cancel()"><i class="glyphicon glyphicon-remove"></i> <span trspan="cancel"></span></button>
   </div>
 </script>
 <script type="text/javascript">
