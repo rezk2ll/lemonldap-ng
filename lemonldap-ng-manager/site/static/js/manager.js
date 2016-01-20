@@ -148,11 +148,6 @@
     /* Set form menu */
     $scope.setButtons = function() {
       $scope.buttons = buttons;
-      $scope.buttons.unshift({
-        title: "save",
-        icon: "save",
-        action: "save"
-      });
     };
 
     /* Manage form menu clicks */
