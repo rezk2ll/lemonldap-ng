@@ -110,7 +110,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" id="saveok" ng-click="ok()" trspan="ok"></button>
+      <button class="btn btn-primary" id="promptok" ng-click="ok()" trspan="ok"></button>
       <button class="btn btn-warning" ng-click="cancel()" trspan="cancel"></button>
     </div>
   </script>

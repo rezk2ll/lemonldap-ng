@@ -325,15 +325,24 @@ sub _scanNodes {
                     hdebug("  $target");
                     $self->set( $target, $key, $target, $leaf->{data} );
                 }
-                elsif ( $target =~
-                    /^(?:$samlIDPMetaDataNodeKeys|$samlSPMetaDataNodeKeys)/o )
-                {
-                    hdebug("  $target");
-                    $self->set( $base, $key, $target, $leaf->{data} );
+                elsif ( $target =~ /^saml(?:ID|S)PMetaDataOptions/ ) {
+                    my $optKey = $&;
+                    hdebug("  $base sub key: $target");
+                    if ( $target =~
+                        /^(?:$samlIDPMetaDataNodeKeys|$samlSPMetaDataNodeKeys)/o
+                      )
+                    {
+                        $self->set( $optKey, $key, $target, $leaf->{data} );
+                    }
+                    else {
+                        push @{ $self->errors },
+                          { message => "Unknown SAML metadata option $target" };
+                        return 0;
+                    }
                 }
                 else {
                     push @{ $self->errors },
-                      { message => "Unknown vhost key $target" };
+                      { message => "Unknown SAML key $target" };
                     return 0;
                 }
                 next;
@@ -369,18 +378,30 @@ sub _scanNodes {
                     }
                 }
                 elsif ( $target =~ /^oidc(?:O|R)PMetaDataOptions/ ) {
+                    my $optKey = $&;
                     hdebug "  $base sub key: $target";
-                    $self->set($base, $key, $target, $leaf->{data});
+                    if ( $target =~
+                        /^(?:$oidcOPMetaDataNodeKeys|$oidcRPMetaDataNodeKeys)/o
+                      )
+                    {
+                        $self->set( $optKey, $key, $target, $leaf->{data} );
+                    }
+                    else {
+                        push @{ $self->errors },
+                          { message => "Unknown OIDC metadata option $target" };
+                        return 0;
+                    }
                 }
                 else {
                     push @{ $self->errors },
-                      { message => "Unknown key $target" };
+                      { message => "Unknown OIDC key $target" };
                     return 0;
                 }
                 next;
             }
             else {
-                push @{$self->errors},{message=>"Fatal: unknown special sub node $base"};
+                push @{ $self->errors },
+                  { message => "Fatal: unknown special sub node $base" };
                 return 0;
             }
         }

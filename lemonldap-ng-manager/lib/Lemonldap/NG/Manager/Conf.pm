@@ -326,7 +326,7 @@ sub _samlMetaDataNodes {
         foreach my $h ( sort keys %$pk ) {
             push @$resp,
               {
-                id    => "saml${type}MetaDataNode/$partner/$query/" . $id++,
+                id    => "saml${type}MetaDataNodes/$partner/$query/" . $id++,
                 title => $h,
                 data  => [ split /;/, $pk->{$h} ],
                 type  => 'samlAttribute',
@@ -435,7 +435,7 @@ sub _oidcMetaDataNodes {
         foreach my $h ( sort keys %$pk ) {
             push @$resp,
               {
-                id    => "oidc${type}MetaDataNode/$partner/$query/" . $id++,
+                id    => "oidc${type}MetaDataNodes/$partner/$query/" . $id++,
                 title => $h,
                 data  => $pk->{$h},
                 type  => 'keyText',
