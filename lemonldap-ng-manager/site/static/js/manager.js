@@ -73,7 +73,13 @@
     $scope.setShowHelp = function(val) {
       if (typeof val === 'undefined') val = !$scope.showH;
       $scope.showH = val;
-      $cookies.put('showhelp', (val ? 'true' : 'false'));
+      var d = new Date(Date.now());
+      console.log(d);
+      d.setFullYear(d.getFullYear() + 1);
+      console.log(d);
+      $cookies.put('showhelp', (val ? 'true' : 'false'), {
+        "expires": d
+      });
     }
     $scope.showH = ($cookies.get('showhelp') === 'false' ? false : true);
     if (typeof $scope.showH === 'undefined') $scope.setShowHelp(true);
