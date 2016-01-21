@@ -296,15 +296,13 @@ sub _scanNodes {
                 next;
             }
 
-            # TODO: what is this ?
-            #if ( defined $leaf->{data} and ref( $leaf->{data} ) eq 'ARRAY' ) {
-            #    hdebug('Other array detected');
-            #    $leaf->{data} = join ';', @{ $leaf->{data} };
-            #}
-
             # SAML
             elsif ( $base =~ /^saml(?:S|ID)PMetaDataNodes$/ ) {
                 hdebug('SAML');
+                if ( defined $leaf->{data} and ref( $leaf->{data} ) eq 'ARRAY' ) {
+                    hdebug("  SAML data is an array, serializing");
+                    $leaf->{data} = join ';', @{ $leaf->{data} };
+                }
                 if ( $target =~ /^saml(?:S|ID)PMetaDataExportedAttributes$/ ) {
                     if ( $leaf->{cnodes} ) {
                         hdebug("  $target: unopened node");
