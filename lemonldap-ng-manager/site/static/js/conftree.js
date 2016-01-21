@@ -24,6 +24,32 @@ function templates(tpl,key) {
    },
    {
       "cnodes" : tpl+"s/"+key+"/"+"oidcOPMetaDataExportedVars",
+      "default" : [
+         {
+            "data" : "name",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataExportedVars/cn",
+            "title" : "cn",
+            "type" : "keyText"
+         },
+         {
+            "data" : "email",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataExportedVars/mail",
+            "title" : "mail",
+            "type" : "keyText"
+         },
+         {
+            "data" : "family_name",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataExportedVars/sn",
+            "title" : "sn",
+            "type" : "keyText"
+         },
+         {
+            "data" : "sub",
+            "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataExportedVars/uid",
+            "title" : "uid",
+            "type" : "keyText"
+         }
+      ],
       "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataExportedVars",
       "title" : "oidcOPMetaDataExportedVars",
       "type" : "keyTextContainer"

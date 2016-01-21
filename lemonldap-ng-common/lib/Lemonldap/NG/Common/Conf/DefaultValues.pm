@@ -132,11 +132,17 @@ sub defaultValues {
         'notificationStorageOptions' => {
             'dirName' => '/var/lib/lemonldap-ng/notifications'
         },
-        'notificationWildcard'                         => 'allusers',
-        'notifyDeleted'                                => 1,
-        'notifyOther'                                  => 0,
-        'nullAuthnLevel'                               => 2,
-        'oidcAuthnLevel'                               => 1,
+        'notificationWildcard'       => 'allusers',
+        'notifyDeleted'              => 1,
+        'notifyOther'                => 0,
+        'nullAuthnLevel'             => 2,
+        'oidcAuthnLevel'             => 1,
+        'oidcOPMetaDataExportedVars' => {
+            'cn'   => 'name',
+            'mail' => 'email',
+            'sn'   => 'family_name',
+            'uid'  => 'sub'
+        },
         'oidcOPMetaDataOptionsCheckJWTSignature'       => 1,
         'oidcOPMetaDataOptionsDisplay'                 => '',
         'oidcOPMetaDataOptionsIDTokenMaxAge'           => 30,

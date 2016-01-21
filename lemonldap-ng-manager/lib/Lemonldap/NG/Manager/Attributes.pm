@@ -1184,6 +1184,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'int'
         },
         'oidcOPMetaDataExportedVars' => {
+            'default' => {
+                'cn'   => 'name',
+                'mail' => 'email',
+                'sn'   => 'family_name',
+                'uid'  => 'sub'
+            },
             'type' => 'keyTextContainer'
         },
         'oidcOPMetaDataJSON' => {

@@ -2156,7 +2156,15 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         # OpenID Connect providers
         oidcOPMetaDataJSON         => { type => 'file', },
         oidcOPMetaDataJWKS         => { type => 'file', },
-        oidcOPMetaDataExportedVars => { type => 'keyTextContainer', },
+        oidcOPMetaDataExportedVars => {
+            type    => 'keyTextContainer',
+            default => {
+                'cn'   => 'name',
+                'sn'   => 'family_name',
+                'mail' => 'email',
+                'uid'  => 'sub'
+            }
+        },
         oidcOPMetaDataOptionsConfigurationURI => { type => 'url', },
         oidcOPMetaDataOptionsJWKSTimeout  => { type => 'int', default => 0 },
         oidcOPMetaDataOptionsClientID     => { type => 'text', },
