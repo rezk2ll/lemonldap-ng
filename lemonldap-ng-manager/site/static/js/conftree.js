@@ -215,6 +215,26 @@ function templates(tpl,key) {
     return [
    {
       "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars",
+      "default" : [
+         {
+            "data" : "mail",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars/email",
+            "title" : "email",
+            "type" : "keyText"
+         },
+         {
+            "data" : "sn",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars/family_name",
+            "title" : "family_name",
+            "type" : "keyText"
+         },
+         {
+            "data" : "cn",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars/name",
+            "title" : "name",
+            "type" : "keyText"
+         }
+      ],
       "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataExportedVars",
       "title" : "oidcRPMetaDataExportedVars",
       "type" : "keyTextContainer"

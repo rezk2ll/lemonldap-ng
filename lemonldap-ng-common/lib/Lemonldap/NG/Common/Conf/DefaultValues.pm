@@ -151,7 +151,12 @@ sub defaultValues {
         'oidcOPMetaDataOptionsScope'                   => 'openid profile',
         'oidcOPMetaDataOptionsTokenEndpointAuthMethod' => 'client_secret_post',
         'oidcOPMetaDataOptionsUseNonce'                => 1,
-        'oidcRPCallbackGetParam'                     => 'openidconnectcallback',
+        'oidcRPCallbackGetParam'     => 'openidconnectcallback',
+        'oidcRPMetaDataExportedVars' => {
+            'email'       => 'mail',
+            'family_name' => 'sn',
+            'name'        => 'cn'
+        },
         'oidcRPMetaDataOptionsAccessTokenExpiration' => 3600,
         'oidcRPMetaDataOptionsIDTokenExpiration'     => 3600,
         'oidcRPMetaDataOptionsIDTokenSignAlg'        => 'HS512',

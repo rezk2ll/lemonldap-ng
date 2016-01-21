@@ -1297,6 +1297,11 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'text'
         },
         'oidcRPMetaDataExportedVars' => {
+            'default' => {
+                'email'       => 'mail',
+                'family_name' => 'sn',
+                'name'        => 'cn'
+            },
             'type' => 'keyTextContainer'
         },
         'oidcRPMetaDataNodes' => {

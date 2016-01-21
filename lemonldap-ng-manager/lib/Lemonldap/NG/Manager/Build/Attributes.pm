@@ -2202,7 +2202,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         oidcOPMetaDataOptionsIcon        => { type => 'text', },
 
         # OpenID Connect relying parties
-        oidcRPMetaDataExportedVars          => { type => 'keyTextContainer', },
+        oidcRPMetaDataExportedVars => {
+            type    => 'keyTextContainer',
+            default => {
+                'name'        => 'cn',
+                'family_name' => 'sn',
+                'email'       => 'mail'
+            }
+        },
         oidcRPMetaDataOptionsClientID       => { type => 'text', },
         oidcRPMetaDataOptionsClientSecret   => { type => 'password', },
         oidcRPMetaDataOptionsDisplayName    => { type => 'text', },
