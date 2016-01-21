@@ -67,15 +67,15 @@ sub run {
     $mainTree = Lemonldap::NG::Manager::Build::CTrees::cTrees();
 
     my $script = 'function templates(tpl,key) {
-var ind;
-var scalarTemplate = function(r) {
-  return {
-    "id": tpl+"s/"+(ind++),
-    "title": r,
-    "get": tpl+"s/"+key+"/"+r
+    var ind;
+    var scalarTemplate = function(r) {
+    return {
+      "id": tpl+"s/"+(ind++),
+      "title": r,
+      "get": tpl+"s/"+key+"/"+r
+    };
   };
-};
-switch(tpl){
+  switch(tpl){
 ';
 
     # To build confTree.js, each special node is scanned from

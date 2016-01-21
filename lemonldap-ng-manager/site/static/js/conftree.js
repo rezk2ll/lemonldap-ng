@@ -1,13 +1,13 @@
 function templates(tpl,key) {
-var ind;
-var scalarTemplate = function(r) {
-  return {
-    "id": tpl+"s/"+(ind++),
-    "title": r,
-    "get": tpl+"s/"+key+"/"+r
+    var ind;
+    var scalarTemplate = function(r) {
+    return {
+      "id": tpl+"s/"+(ind++),
+      "title": r,
+      "get": tpl+"s/"+key+"/"+r
+    };
   };
-};
-switch(tpl){
+  switch(tpl){
   case 'oidcOPMetaDataNode':
     return [
    {

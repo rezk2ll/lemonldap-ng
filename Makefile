@@ -817,7 +817,15 @@ tidy: clean
 	find lemon*/ -name '*.bak' -delete
 
 tidy-js: clean
-	find $(SRCMANAGERDIR)/site/static/js/ e2e-tests/ $(SRCPORTALDIR)/example -type f -name '*.js' ! -name 'jq*' ! -name 'bootstrap*' ! -name '*.min.js' -print -exec js_beautify -o -s=2 {} \;
+	find $(SRCMANAGERDIR)/site/static/js/ e2e-tests/ $(SRCPORTALDIR)/example \
+		  -type f \
+		  -name '*.js' \
+		! -name 'jq*' \
+		! -name 'bootstrap*' \
+		! -name '*.min.js' \
+		! -name conftree.js \
+		  -print \
+		  -exec js_beautify -o -s=2 {} \;
 
 # TRANSLATION TARGETS #
 
