@@ -34,7 +34,7 @@ sub populate {
         no strict 'refs';
         $self = $self->$backend(@_);
     }
-    if ( $self->{args}->{jsonSerialize} ) {
+    unless ( $self->{args}->{useStorable} ) {
         $self->{serialize} =
           \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::serialize;
         $self->{unserialize} =
@@ -150,11 +150,18 @@ sub searchLt {
 sub get_key_from_all_sessions {
     my $class = shift;
 
-    #my ( $class, $args, $data ) = splice @_;
-    my $backend = $_[0]->{backend};
+    my ( $args, $data ) = @_;
+    my $backend = $args->{backend};
     _load($backend);
+    if ( $args->{useStorable} ) {
+        require Storable;
+        $args->{unserialize} = \&Storable::thaw;
+    }
+    else {
+        $args->{unserialize} = \&JSON::from_json;
+    }
     if ( $backend->can('get_key_from_all_sessions') ) {
-        return $backend->get_key_from_all_sessions(@_);
+        return $backend->get_key_from_all_sessions( $args, $data );
     }
     if ( $backend =~
 /^Apache::Session::(MySQL|MySQL::NoLock|Postgres|Oracle|Sybase|Informix)$/
@@ -176,7 +183,6 @@ sub get_key_from_all_sessions {
 }
 
 sub decodeThaw64 {
-    require Storable;
     require MIME::Base64;
     my $s = shift;
     return Storable::thaw( MIME::Base64::decode_base64($s) );
@@ -184,13 +190,8 @@ sub decodeThaw64 {
 
 sub _dbiGKFAS {
     my ( $class, $type, $args, $data ) = @_;
-    my $unserialize;
-    require Storable;
-    if ( $type =~ /(?:MySQL)/ ) {
-        $unserialize = \&Storable::thaw;
-    }
-    else {
-        $unserialize = \&decodeThaw64;
+    if ( $args->{useStorable} and $type !~ /(?:MySQL)/ ) {
+        $args->{unserialize} = \&decodeThaw64;
     }
 
     my $dbh =
@@ -201,16 +202,16 @@ sub _dbiGKFAS {
     my %res;
     while ( my @row = $sth->fetchrow_array ) {
         if ( ref($data) eq 'CODE' ) {
-            my $tmp = &$data( $unserialize->( $row[1] ), $row[0] );
+            my $tmp = &$data( $args->{unserialize}->( $row[1] ), $row[0] );
             $res{ $row[0] } = $tmp if ( defined($tmp) );
         }
         elsif ($data) {
             $data = [$data] unless ( ref($data) );
-            my $tmp = $unserialize->( $row[1] );
+            my $tmp = $args->{unserialize}->( $row[1] );
             $res{ $row[0] }->{$_} = $tmp->{$_} foreach (@$data);
         }
         else {
-            $res{ $row[0] } = $unserialize->( $row[1] );
+            $res{ $row[0] } = $args->{unserialize}->( $row[1] );
         }
     }
     return \%res;
@@ -219,7 +220,6 @@ sub _dbiGKFAS {
 sub _FileGKFAS {
     my ( $class, $args, $data ) = @_;
     $args->{Directory} ||= '/tmp';
-    require Storable;
 
     unless ( opendir DIR, $args->{Directory} ) {
         die "Cannot open directory $args->{Directory}\n";
@@ -232,7 +232,7 @@ sub _FileGKFAS {
         open F, "$args->{Directory}/$f";
         my $row = join '', <F>;
         if ( ref($data) eq 'CODE' ) {
-            eval { $res{$f} = &$data( Storable::thaw($row), $f ); };
+            eval { $res{$f} = &$data( $args->{unserialize}->($row), $f ); };
             if ($@) {
                 $res{$f} = &$data( undef, $f );
             }
@@ -240,7 +240,7 @@ sub _FileGKFAS {
         elsif ($data) {
             $data = [$data] unless ( ref($data) );
             my $tmp;
-            eval { $tmp = Storable::thaw($row); };
+            eval { $tmp = $args->{unserialize}->($row); };
             if ($@) {
                 $res{$f}->{$_} = undef foreach (@$data);
             }
@@ -249,7 +249,7 @@ sub _FileGKFAS {
             }
         }
         else {
-            eval { $res{$f} = Storable::thaw($row); };
+            eval { $res{$f} = $args->{unserialize}->($row); };
         }
     }
     return \%res;
@@ -289,7 +289,6 @@ sub _PHPGKFAS {
 
 sub _DBFileGKFAS {
     my ( $class, $args, $data ) = @_;
-    require Storable;
 
     if ( !tied %{ $class->{dbm} } ) {
         my $rv = tie %{ $class->{dbm} }, 'DB_File', $args->{FileName};
@@ -301,15 +300,16 @@ sub _DBFileGKFAS {
     my %res;
     foreach my $k ( keys %{ $class->{dbm} } ) {
         if ( ref($data) eq 'CODE' ) {
-            $res{$k} = &$data( Storable::thaw( $class->{dbm}->{$k} ), $k );
+            $res{$k} =
+              &$data( $args->{unserialize}->( $class->{dbm}->{$k} ), $k );
         }
         elsif ($data) {
             $data = [$data] unless ( ref($data) );
-            my $tmp = Storable::thaw( $class->{dbm}->{$k} );
+            my $tmp = $args->{unserialize}->( $class->{dbm}->{$k} );
             $res{$k}->{$_} = $tmp->{$_} foreach (@$data);
         }
         else {
-            $res{$k} = Storable::thaw( $class->{dbm}->{$k} );
+            $res{$k} = $args->{unserialize}->( $class->{dbm}->{$k} );
         }
     }
     return \%res;

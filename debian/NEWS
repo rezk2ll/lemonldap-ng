@@ -1,3 +1,14 @@
+lemonldap-ng (1.9.0-1) unstable; urgency=low
+
+  Lemonldap::NG uses now JSON to store sessions instead of Perl Storable.
+  This permits to have both 32 and 64 bits servers connected.
+  But to migrate, you have to flush all your sessions since they will not be
+  readable.
+  To maintain old encoding, set "useStorable = 1" in [configuration] section
+  of /etc/lemonldap-ng/lemonldap-ng.ini
+
+ -- Xavier Guimard <x.guimard@free.fr>  Thu, 21 Jan 2016 17:13:07 +0100
+
 lemonldap-ng (1.4.6-1) unstable; urgency=medium
 
   Handler files "My::Package" are no longer installed by default as a module
