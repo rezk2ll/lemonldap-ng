@@ -33,7 +33,7 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('longtextinput')).sendKeys('Activate SAML');
       element(by.id('saveok')).click();
       element(by.id('messageok')).click();
-      expect(element(by.id('cfgnum')).getText()).toEqual('6');
+      expect(element(by.id('cfgnum')).getText()).toEqual('5');
     });
     it('should restore configured values', function() {
       element(by.id('a-oidcOPMetaDataNodes')).click();
