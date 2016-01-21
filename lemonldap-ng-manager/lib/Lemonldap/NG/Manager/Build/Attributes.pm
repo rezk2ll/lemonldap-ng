@@ -1237,6 +1237,7 @@ sub attributes {
         # related to a SAML SP partner
         samlSPMetaDataNodes => {
             type     => 'samlSPMetaDataNodeContainer',
+            help       => 'authsaml.html',
             template => 'samlSPMetaDataNode',
         },
 

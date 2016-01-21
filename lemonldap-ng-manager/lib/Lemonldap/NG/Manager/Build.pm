@@ -438,7 +438,7 @@ sub scanTree {
             $attr->{type} =~
               s/^(?:url|word|pcre|lmAttrOrMacro|hostname|PerlModule)$/text/;
             $jleaf->{type} = $attr->{type} if ( $attr->{type} ne 'text' );
-            foreach my $w (qw(default select get template)) {
+            foreach my $w (qw(default help select get template)) {
                 $jleaf->{$w} = $attr->{$w} if ( defined $attr->{$w} );
             }
             if ( $jleaf->{default} and ref( $jleaf->{default} ) ) {

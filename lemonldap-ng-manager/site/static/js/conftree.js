@@ -313,6 +313,7 @@ switch(tpl){
    {
       "cnodes" : tpl+"s/"+key+"/"+"samlIDPMetaDataExportedAttributes",
       "default" : [],
+      "help" : "authsaml.html#exported_attributes",
       "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataExportedAttributes",
       "title" : "samlIDPMetaDataExportedAttributes",
       "type" : "samlAttributeContainer"
@@ -580,6 +581,7 @@ switch(tpl){
    {
       "cnodes" : tpl+"s/"+key+"/"+"samlSPMetaDataExportedAttributes",
       "default" : [],
+      "help" : "idpsaml.html#exported_attributes",
       "id" : tpl+"s/"+key+"/"+"samlSPMetaDataExportedAttributes",
       "title" : "samlSPMetaDataExportedAttributes",
       "type" : "samlAttributeContainer"
@@ -758,18 +760,21 @@ switch(tpl){
             "type" : "rule"
          }
       ],
+      "help" : "writingrulesand_headers.html#rules",
       "id" : tpl+"s/"+key+"/"+"locationRules",
       "title" : "locationRules",
       "type" : "ruleContainer"
    },
    {
       "cnodes" : tpl+"s/"+key+"/"+"exportedHeaders",
+      "help" : "writingrulesand_headers.html#headers",
       "id" : tpl+"s/"+key+"/"+"exportedHeaders",
       "title" : "exportedHeaders",
       "type" : "keyTextContainer"
    },
    {
       "cnodes" : tpl+"s/"+key+"/"+"post",
+      "help" : "formreplay.html",
       "id" : tpl+"s/"+key+"/"+"post",
       "title" : "post",
       "type" : "postContainer"

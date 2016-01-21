@@ -74,9 +74,7 @@
       if (typeof val === 'undefined') val = !$scope.showH;
       $scope.showH = val;
       var d = new Date(Date.now());
-      console.log(d);
       d.setFullYear(d.getFullYear() + 1);
-      console.log(d);
       $cookies.put('showhelp', (val ? 'true' : 'false'), {
         "expires": d
       });
@@ -624,7 +622,6 @@
     }
 
     var setHelp = function(scope) {
-      if (!$scope.showH) return;
       while (!scope.$modelValue.help && scope.$parentNodeScope) {
         scope = scope.$parentNodeScope;
       }
