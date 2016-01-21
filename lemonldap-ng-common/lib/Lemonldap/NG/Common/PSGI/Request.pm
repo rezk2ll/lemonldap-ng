@@ -132,7 +132,7 @@ sub jsonBodyToObj {
     }
     return $self->body if ( ref( $self->body ) );
     my $j = eval { from_json( $self->body ) };
-    if ( $@ or $! ) {
+    if ($@) {
         $self->error("$@$!");
         return undef;
     }
