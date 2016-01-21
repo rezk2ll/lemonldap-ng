@@ -266,7 +266,7 @@ extra_test:	all
 e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_server
 
 prepare_test_server:
-	@mkdir -p e2e-tests/conf/lock e2e-tests/conf/persistents/lock
+	@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
 	@$(MAKE) install_webserver_conf \
 		RCONFDIR=e2e-tests/conf \
 		ERASECONFIG=1 \

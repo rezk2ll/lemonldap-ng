@@ -109,12 +109,19 @@
   },
   "globalStorage": "Apache::Session::File",
   "globalStorageOptions": {
-    "Directory": "__pwd__/e2e-tests/conf",
-    "LockDirectory": "__pwd__/e2e-tests/conf/lock",
+    "Directory": "__pwd__/e2e-tests/conf/sessions",
+    "LockDirectory": "__pwd__/e2e-tests/conf/sessions/lock",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
   "groups": {},
   "key": "qwertyui",
+  "localSessionStorageOptions": {
+    "cache_depth": 3,
+    "cache_root": "__pwd__/e2e-tests/conf",
+    "default_expires_in": 600,
+    "directory_umask": "007",
+    "namespace": "lemonldap-ng-sessions"
+  },
   "locationRules": {
     "manager.example.com": {
       "(?#Configuration)^/(manager\\.html|conf/)": "$uid eq \"dwho\"",
