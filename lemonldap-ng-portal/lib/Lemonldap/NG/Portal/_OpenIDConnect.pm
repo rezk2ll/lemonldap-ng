@@ -11,7 +11,7 @@ use MIME::Base64
   qw/encode_base64url encode_base64 decode_base64url decode_base64/;
 use URI::Escape;
 use Digest::SHA
-  qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha256_base64 sha384_base64 sha512_base64/;
+  qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha384 sha512 sha256_base64 sha384_base64 sha512_base64/;
 use Crypt::OpenSSL::RSA;
 use Crypt::OpenSSL::Bignum;
 use utf8;
