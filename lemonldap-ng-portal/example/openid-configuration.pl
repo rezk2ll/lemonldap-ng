@@ -19,8 +19,8 @@ my ($path) = ( $issuerDBOpenIDConnectPath =~ /(\w+)/ );
 my $issuer = $portal->{oidcServiceMetaDataIssuer};
 my @acr    = keys $portal->{oidcServiceMetaDataAuthnContext};
 
-# Add a trailing slash to issuer value if none
-$issuer = $issuer . "/" unless ( $issuer =~ /\/$/ );
+# Add a slash to path value if issuer has no trailing slash
+$path = "/" . $path unless ( $issuer =~ /\/$/ );
 
 # Create OpenID configuration hash;
 my $configuration = {};
