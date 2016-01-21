@@ -189,11 +189,11 @@ all:	configure common handler manager portal
 minify: $(JSDSTFILES) $(CSSDSTFILES)
 
 %.min.css: %.css
-	@echo "Compressing $*.css"; \
+	@echo "Compressing $*.css"
 	@yui-compressor $*.css > $*.min.css
 
 %.min.js: %.js
-	@echo "Compressing $*.js"; \
+	@echo "Compressing $*.js"
 	@yui-compressor $*.js > $*.min.js
 
 
