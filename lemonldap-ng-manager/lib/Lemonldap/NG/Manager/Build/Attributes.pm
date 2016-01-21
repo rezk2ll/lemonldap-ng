@@ -1237,7 +1237,7 @@ sub attributes {
         # related to a SAML SP partner
         samlSPMetaDataNodes => {
             type     => 'samlSPMetaDataNodeContainer',
-            help       => 'authsaml.html',
+            help     => 'authsaml.html',
             template => 'samlSPMetaDataNode',
         },
 
@@ -2142,11 +2142,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         # OpenID Connect metadata nodes
         oidcOPMetaDataNodes => {
             type => 'oidcOPMetaDataNodeContainer',
-            help => 'idpopenidconnect.html',
+            help =>
+'authopenidconnect.html#declare_the_openid_connect_provider_in_llng',
         },
         oidcRPMetaDataNodes => {
             type => 'oidcRPMetaDataNodeContainer',
-            help => 'authopenidconnect.html',
+            help =>
+              'idpopenidconnect.html#configuration_of_relying_party_in_llng',
         },
         oidcOPMetaDataOptions => { type => 'subContainer', },
         oidcRPMetaDataOptions => { type => 'subContainer', },
