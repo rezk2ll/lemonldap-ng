@@ -47,23 +47,34 @@
       res.lang = 'en';
     }
 
+    /* Private properties */
     res.deferredTr = [];
     res.translationFields = {};
+
+    /* Translation methods */
+
+    /* 1 - word translation */
     res.translate = function(s) {
       if (res.translationFields[s]) {
         s = res.translationFields[s];
       }
       return s;
     };
+
+    /* 2 - object key translation */
     res.translateField = function(node, field) {
       return res.translate(node[field]);
     };
+
+    /* 3 - paragraph translation */
     res.translateP = function(s) {
       if (s && res.translationFields.portal) s = s.replace(/__(\w+)__/g, function(match, w) {
         return res.translate(w);
       });
       return s;
     };
+
+    /* Initialization */
     this.$get = ['$q', '$http', function($q, $http) {
       res.last = '';
       res.init = function(lang) {
@@ -91,6 +102,7 @@
     }];
   }
 
+  /* Translation directive (HTML trspan tag) */
   llapp.directive('trspan', ['$translator', function($translator) {
     return {
       restrict: 'A',
@@ -201,7 +213,7 @@
   /* Authentication system
    *
    * If a 401 code is returned and if "Authorization" header contains an url,
-   * Au
+   * user is redirected to this url (but target is replaced by location.href)
    */
   llapp.factory('$lmhttp', ['$q', '$location', function($q, $location) {
     return {
