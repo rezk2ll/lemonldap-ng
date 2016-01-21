@@ -142,8 +142,8 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		_example/conf/lmConf-1.js
 
 # Javascript and CSS to minify
-JSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/js $(SRCPORTALDIR)/example -type f -name '*.js'|grep -v .min.js)
-CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/css  $(SRCPORTALDIR)/example -type f -name '*.css'|grep -v .min.css)
+JSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/js $(SRCPORTALDIR)/example -type f -name '*.js' ! -name '*.min.js')
+CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/css  $(SRCPORTALDIR)/example -type f -name '*.css' ! -name '*.min.css')
 
 # Minified files
 JSDSTFILES=$(JSSRCFILES:.js=.min.js)
@@ -817,7 +817,7 @@ tidy: clean
 	find lemon*/ -name '*.bak' -delete
 
 tidy-js: clean
-	find lemon*/ -type f -name '*.js' ! -name 'jq*' ! -name 'bootstrap*' -print -exec scripts/javascript-indent {} \;
+	find $(SRCMANAGERDIR)/site/static/js/ e2e-tests/ $(SRCPORTALDIR)/example -type f -name '*.js' ! -name 'jq*' ! -name 'bootstrap*' ! -name '*.min.js' -print -exec js_beautify -o -s=2 {} \;
 
 # TRANSLATION TARGETS #
 
