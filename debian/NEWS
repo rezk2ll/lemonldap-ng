@@ -19,14 +19,10 @@ lemonldap-ng (1.4.6-1) unstable; urgency=medium
 
  -- Xavier Guimard <x.guimard@free.fr>  Mon, 29 Dec 2014 17:10:00 +0100
 
-lemonldap-ng (1.2.2-3) unstable; urgency=low
+lemonldap-ng (1.2.2-1) unstable; urgency=low
 
   Examples files (Apache configuration and default handler files) are now not
   installed in /var/lib/lemonldap-ng/handler but available as examples files
-
- -- Xavier Guimard <x.guimard@free.fr>  Wed, 05 Dec 2012 06:27:45 +0100
-
-lemonldap-ng (1.2.2-2) unstable; urgency=low
 
   Since 1.2.2, LemonLDAP::NG uses 'Demo' authentication backend by default
   and the manager is protected by default by LemonLDAP::NG. So for an
