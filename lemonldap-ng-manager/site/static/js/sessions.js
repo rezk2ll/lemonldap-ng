@@ -54,7 +54,8 @@
     ['saml', ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']],
     ['groups', ['groups', 'hGroups']],
     ['ldap', ['dn']],
-    ['BrowserID', ['_browserIdAnswer', '_browserIdAnswerRaw']]];
+    ['BrowserID', ['_browserIdAnswer', '_browserIdAnswerRaw']],
+    ['OpenIDConnect', ['OpenIDConnect_IDToken', 'OpenIDConnect_OP', 'OpenIDConnect_access_token']]];
   var menu = {
     'session': [{
       'title': 'deleteSession',
