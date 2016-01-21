@@ -2,7 +2,8 @@
 
 use strict;
 
-our $cond = 1;
+our $cond     = 1;
+our $condDone = 0;
 our %args;
 for ( my $i = 0 ; $i < @ARGV ; $i += 2 ) {
     $args{ $ARGV[$i] } =
@@ -11,13 +12,20 @@ for ( my $i = 0 ; $i < @ARGV ; $i += 2 ) {
 
 while (<STDIN>) {
     if (m#//if:(\w+)#) {
-        $cond = $args{$1};
+        $cond     = $args{$1};
+        $condDone = $cond;
     }
-    elsif (m#//elsif:(\w+)# and not $cond) {
-        $cond = $args{$1};
+    elsif (m#//elsif:(\w+)#) {
+        if ($condDone) {
+            $cond = 0;
+        }
+        else {
+            $cond = $args{$1};
+            $condDone ||= $cond;
+        }
     }
     elsif (m#//else#) {
-        $cond = !$cond;
+        $cond = !$condDone;
     }
     elsif (m#//endif#) {
         $cond = 1;

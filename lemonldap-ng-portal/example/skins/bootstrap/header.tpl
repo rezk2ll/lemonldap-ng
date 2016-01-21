@@ -9,7 +9,11 @@
  <TMPL_IF NAME="browserIdEnabled">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
  </TMPL_IF>
-<!-- //if:cssminified
+<!-- //if:usedebianlibs
+ <link href="/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <link href="/javascript/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+ <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/styles.min.css" />
+//elsif:cssminified
  <link href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/bootstrap.min.css" rel="stylesheet">
  <link href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/bootstrap-theme.min.css" rel="stylesheet">
  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/styles.min.css" />
@@ -32,7 +36,11 @@
   <link rel="openid2.provider" href="<TMPL_VAR NAME="PROVIDERURI">" />
  </TMPL_IF>
  <TMPL_INCLUDE NAME="../common/script.tpl">
- <!-- //if:jsminified
+<!-- //if:usedebianlibs
+  <script src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/js/skin.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/portal.min.js"></script>
+  <script type="text/javascript" src="/javascript/bootstrap/js/bootstrap.min.js"></script>
+ //elsif:jsminified
   <script src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/js/skin.min.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/portal.min.js"></script>
   <script src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/js/bootstrap.min.js"></script>

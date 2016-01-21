@@ -1,5 +1,10 @@
  <!-- Load javascript common to all skins -->
- <!-- //if:jsminified
+ <!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery.base64.min.js"></script>
+  <script type="text/javascript" src="/javascript/jquery-cookie/jquery.cookie.min.js"></script>
+ //elsif:jsminified
   <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-1.10.2.min.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery-ui-1.10.3.custom.min.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery.base64.min.js"></script>
@@ -11,9 +16,6 @@
   <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/jquery.cookie.js"></script>
  <!-- //endif -->
  <TMPL_IF NAME="browserIdEnabled">
-  <!-- //if:jsminified
-    <script src="https://login.persona.org/include.min.js"></script>
-  //else -->
    <script src="https://login.persona.org/include.js"></script>
   <!-- //endif -->
  </TMPL_IF>

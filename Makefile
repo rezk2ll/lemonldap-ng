@@ -4,7 +4,8 @@
 DESTDIR=
 
 # Flag for optimizations
-PROD=no
+USEDEBIANLIBS=no
+PROD=$(USEDEBIANLIBS)
 
 # Compression
 JSCOMPRESS=$(PROD)
@@ -434,7 +435,7 @@ install_manager_site:	install_conf_dir
 		$(RMANAGERTEMPLATESDIR)
 	@cp -pR $(SRCMANAGERDIR)/site/static/* $(RMANAGERSTATICDIR)
 	@for f in $(SRCMANAGERDIR)/site/templates/*.tpl; do \
-		./scripts/transform-templates jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f \
+		./scripts/transform-templates usedebianlibs $(USEDEBIANLIBS) jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f \
 			> $(RMANAGERTEMPLATESDIR)/`basename $$f`; \
 	done
 	@cp -pR $(SRCMANAGERDIR)/eg/* $(RMANAGERPSGIDIR)
@@ -461,7 +462,7 @@ install_portal_site:	install_conf_dir
 	@cp -pR -f ${SRCPORTALDIR}/example/register.pl ${RPORTALDIR}
 	@tar -cf - -C ${SRCPORTALDIR}/example/skins/ $$(ls ${SRCPORTALDIR}/example/skins/) |tar -xf - -C $(RPORTALSKINSDIR)
 	@for f in `find $(RPORTALSKINSDIR) -type f -name '*.tpl'`; do \
-		./scripts/transform-templates jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f >$$f.tmp; \
+		./scripts/transform-templates usedebianlibs $(USEDEBIANLIBS) jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f >$$f.tmp; \
 		mv -f $$f.tmp $$f; \
 	done
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
