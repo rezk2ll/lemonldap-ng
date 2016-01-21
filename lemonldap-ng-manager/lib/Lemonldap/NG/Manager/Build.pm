@@ -66,13 +66,15 @@ sub run {
     printf STDERR $format, $self->confTreeFile;
     $mainTree = Lemonldap::NG::Manager::Build::CTrees::cTrees();
 
-    my $script = 'function templates(tpl,key){
+    my $script = 'function templates(tpl,key) {
 var ind;
-var scalarTemplate=function(r){
-return{
-"id":tpl+"s/"+(ind++),
-"title":r,
-"get":tpl+"s/"+key+"/"+r};};
+var scalarTemplate = function(r) {
+  return {
+    "id": tpl+"s/"+(ind++),
+    "title": r,
+    "get": tpl+"s/"+key+"/"+r
+  };
+};
 switch(tpl){
 ';
 
@@ -87,8 +89,8 @@ switch(tpl){
         $tmp =~ s!"__KEY__!tpl+"s/"+key+"/"+"!mg;
         $tmp =~ s/"(true|false)"/$1/sg;
         $tmp =~ s/:\s*"(\d+)"\s*(["\}])/:$1$2/sg;
-        $script .= "  case'$node':
-    return$tmp;
+        $script .= "  case '$node':
+    return $tmp;
 ";
 
         # Second step, Manager/Constants.pm file will contain datas issued from
@@ -103,10 +105,7 @@ switch(tpl){
 
         push @ignoreKeys, $node;
     }
-    $script .= '
-    default:return [];
-  }
-}';
+    $script .= "  default:\n    return [];\n  }\n}";
     open F, ">", $self->confTreeFile or die $!;
     print F $script;
     close F;
@@ -123,11 +122,11 @@ switch(tpl){
     $mainTree = Lemonldap::NG::Manager::Build::Tree::tree();
     my $jsonTree = [];
     $self->scanTree( $mainTree, $jsonTree, '', '' );
-    $script = "\nfunction setScopeVars(scope) {\n";
+    $script = "\n\nfunction setScopeVars(scope) {\n";
     foreach my $v (@angularScopeVars) {
-        $script .= "  scope.$v->[0]=scope$v->[1];scope.getKey(scope.$v->[0]);\n";
+        $script .= "  scope.$v->[0] = scope$v->[1];\n  scope.getKey(scope.$v->[0]);\n";
     }
-    $script .= "}\n";
+    $script .= "}";
     open F, ">>", $self->confTreeFile || die $!;
     print F $script;
     close F;
