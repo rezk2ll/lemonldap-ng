@@ -98,7 +98,6 @@ function templates(tpl,key) {
                   "type" : "select"
                },
                {
-                  "default" : "login consent",
                   "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsPrompt",
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsPrompt",
                   "title" : "oidcOPMetaDataOptionsPrompt"

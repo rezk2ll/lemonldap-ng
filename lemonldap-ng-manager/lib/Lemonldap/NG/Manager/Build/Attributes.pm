@@ -2174,8 +2174,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
             default => "",
         },
-        oidcOPMetaDataOptionsPrompt =>
-          { type => 'text', default => 'login consent' },
+        oidcOPMetaDataOptionsPrompt    => { type => 'text' },
         oidcOPMetaDataOptionsMaxAge    => { type => 'int', default => 0 },
         oidcOPMetaDataOptionsUiLocales => { type => 'text', },
         oidcOPMetaDataOptionsAcrValues => { type => 'text', },

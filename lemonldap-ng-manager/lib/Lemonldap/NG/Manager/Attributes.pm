@@ -1259,8 +1259,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'int'
         },
         'oidcOPMetaDataOptionsPrompt' => {
-            'default' => 'login consent',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'oidcOPMetaDataOptionsScope' => {
             'default' => 'openid profile',

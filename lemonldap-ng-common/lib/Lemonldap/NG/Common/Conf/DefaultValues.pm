@@ -142,7 +142,6 @@ sub defaultValues {
         'oidcOPMetaDataOptionsIDTokenMaxAge'           => 30,
         'oidcOPMetaDataOptionsJWKSTimeout'             => 0,
         'oidcOPMetaDataOptionsMaxAge'                  => 0,
-        'oidcOPMetaDataOptionsPrompt'                  => 'login consent',
         'oidcOPMetaDataOptionsScope'                   => 'openid profile',
         'oidcOPMetaDataOptionsTokenEndpointAuthMethod' => 'client_secret_post',
         'oidcOPMetaDataOptionsUseNonce'                => 1,
