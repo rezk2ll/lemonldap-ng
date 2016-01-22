@@ -119,11 +119,11 @@ License: GPL-2 or Expat
 
 Files: lemonldap-ng-manager/site/static/bwr/angular/* lemonldap-ng-manager/site/static/bwr/angular-cookies/*
 Copyright: 2010-2015, Google, Inc. http://angularjs.org
-License: MIT
+License: Expat
 
 Files: lemonldap-ng-manager/site/static/bwr/angular-ui-tree/*
 Copyright: 2014, unspecified
-License: MIT
+License: Expat
 
 Files: lemonldap-ng-portal/example/skins/common/apps/*
  lemonldap-ng-manager/example/skins/default/images/apps-logos/*
@@ -167,15 +167,15 @@ Files: lemonldap-ng-portal/example/skins/bootstrap/*/bootstrap*
 Copyright: 2013, Twitter Inc.
 License: Apache-2.0
 Comment: version 3.0.3 of bootstrap is released under Apache-2 license
- earlier versions will be released under MIT license
+ earlier versions will be released under Expat license
 
 Files: lemonldap-ng-manager/site/static/bwr/bootstrap/*
 Copyright: 2011-2015, Twitter Inc.
-License: MIT
+License: Expat
 
 Files: lemonldap-ng-manager/site/static/bwr/es5-shim/*
 Copyright: 2009-2015, Kristopher Michael Kowal and contributors
-License: MIT
+License: Expat
 
 Files: debian/*
 Copyright: 2005-2016, Xavier Guimard <x.guimard@free.fr>
@@ -905,22 +905,3 @@ License: W3C
  publicity pertaining to the software without specific, written prior
  permission. Title to copyright in this software and any associated
  documentation will at all times remain with copyright holders.
-
-License: MIT
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- .
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- .
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
