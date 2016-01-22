@@ -9,7 +9,7 @@ package Lemonldap::NG::Portal::_Choice;
 use Lemonldap::NG::Portal::Simple;
 use Scalar::Util 'weaken';
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.0';
 
 ## @cmethod Lemonldap::NG::Portal::_Choice new(Lemonldap::NG::Portal::Simple portal)
 # Constructor
@@ -212,6 +212,14 @@ sub _buildAuthLoop {
             $self->lmLog( "Display type $displayType for module $auth",
                 'debug' );
             $optionsLoop->{$displayType} = 1;
+
+            # If displayType is logo, check if key.png is available
+            if (
+                -e $self->getApacheHtdocsPath . "/skins/common/" . $_ . ".png" )
+            {
+                $optionsLoop->{logoFile} = $_ . ".png";
+            }
+            else { $optionsLoop->{logoFile} = $auth . ".png"; }
 
             # Register item in loop
             push @authLoop, $optionsLoop;

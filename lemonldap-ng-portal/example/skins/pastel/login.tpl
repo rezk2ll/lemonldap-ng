@@ -49,9 +49,9 @@
               <h3><lang en="Please enter your credentials" fr="Merci de vous authentifier"/></h3>
 
               <table>
-                <TMPL_IF NAME="module">
+                <TMPL_IF NAME="logoFile">
                   <tr class="authLogo"><td>
-                  <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" alt="" />
+                  <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="logoFile">" alt="<TMPL_VAR NAME="module">" />
                   </td></tr>
                 </TMPL_IF>
 
@@ -136,7 +136,7 @@
       <table>
         <TMPL_IF NAME="module">
           <tr class="authLogo"><td>
-            <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" alt="" />
+            <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" alt="<TMPL_VAR NAME="module">" />
           </td></tr>
         </TMPL_IF>
 

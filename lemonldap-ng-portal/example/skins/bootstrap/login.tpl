@@ -70,8 +70,8 @@
 
               <div class="form">
 
-                <TMPL_IF NAME="module">
-                  <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" alt="<TMPL_VAR NAME="module">" class="img-thumbnail" />
+                <TMPL_IF NAME="logoFile">
+                  <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="logoFile">" alt="<TMPL_VAR NAME="module">" class="img-thumbnail" />
                 </TMPL_IF>
 
                 <TMPL_INCLUDE NAME="checklogins.tpl">

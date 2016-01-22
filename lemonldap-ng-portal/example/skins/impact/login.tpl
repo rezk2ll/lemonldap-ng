@@ -66,9 +66,9 @@
 
       <TMPL_IF NAME="logo">
 
-        <TMPL_IF NAME="module">
+        <TMPL_IF NAME="logoFile">
         <div class="authLogo">
-        <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" />
+        <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="logoFile">" alt="<TMPL_VAR NAME="module">" />
         </div>
         </TMPL_IF>
 
