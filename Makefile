@@ -128,6 +128,17 @@ DIFFPREFIX=
 EXAMPLELANG=en # For static Manager example only
 ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
 
+MANAGERLIBSTOREMOVEFORDEBIAN=$(RMANAGERSTATICDIR)/bwr/jquery/ \
+			$(RMANAGERSTATICDIR)/bwr/angular/ \
+			$(RMANAGERSTATICDIR)/bwr/angular-cookie/ \
+			$(RMANAGERSTATICDIR)/bwr/bootstrap/ \
+			$(RMANAGERSTATICDIR)/bwr/es5-shim/
+PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSKINSDIR)/bootstrap/fonts \
+			$(RPORTALSKINSDIR)/bootstrap/css/bootstrap* \
+			$(RPORTALSKINSDIR)/bootstrap/js/bootstrap* \
+			$(RPORTALSKINSDIR)/common/js/jquery-* \
+			$(RPORTALSKINSDIR)/common/js/jquery.cookie*
+
 # GENERATED SRC FILESlemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
 MANAGERJSONSRC= scripts/jsongenerator.pl \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build.pm \
@@ -438,6 +449,9 @@ install_manager_site:	install_conf_dir
 		./scripts/transform-templates usedebianlibs $(USEDEBIANLIBS) jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f \
 			> $(RMANAGERTEMPLATESDIR)/`basename $$f`; \
 	done
+	@if test "$(USEDEBIANLIBS)" = "yes"; then \
+		rm -rvf $(MANAGERLIBSTOREMOVEFORDEBIAN); \
+	fi
 	@cp -pR $(SRCMANAGERDIR)/eg/* $(RMANAGERPSGIDIR)
 	# Clean svn files
 	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSTATICDIR} $(RMANAGERPSGIDIR) \
@@ -465,6 +479,9 @@ install_portal_site:	install_conf_dir
 		./scripts/transform-templates usedebianlibs $(USEDEBIANLIBS) jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f >$$f.tmp; \
 		mv -f $$f.tmp $$f; \
 	done
+	@if test "$(USEDEBIANLIBS)" = "yes"; then \
+		rm -rvf $(PORTALLIBSTOREMOVEFORDEBIAN); \
+	fi
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
 		for skin in $$(ls $(SRCPORTALDIR)/example/skins/); do \
 			rm -rf $(RPORTALDIR)/skins/$$skin/; \
