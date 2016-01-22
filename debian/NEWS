@@ -1,7 +1,13 @@
-lemonldap-ng (1.9.0-1) unstable; urgency=low
+lemonldap-ng (1.9.0-1) UNRELEASED; urgency=low
 
-  Lemonldap::NG uses now JSON to store sessions instead of Perl Storable.
-  This permits to have both 32 and 64 bits servers connected.
+  Lemonldap::NG uses now JSON to store sessions and configuration instead of
+  Perl Storable. This permits to have both 32 and 64 bits servers in the same
+  organization. If you have more than one server and don't want to stop the
+  SSO service, start upgrading in the following order:
+   * servers that have only handlers;
+   * portal servers (all together if your load balancer doesn't keep state by
+     user and if users use the menu);
+   * manager server
 
  -- Xavier Guimard <x.guimard@free.fr>  Thu, 21 Jan 2016 17:13:07 +0100
 
