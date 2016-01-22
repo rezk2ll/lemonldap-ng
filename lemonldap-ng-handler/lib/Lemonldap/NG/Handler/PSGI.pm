@@ -35,6 +35,7 @@ sub _run {
     # Override _run() only if protection != 'none'
     my $rule = $self->{protection} || $localConfig->{protection};
     if ( $rule ne 'none' ) {
+        $self->lmLog( 'PSGI app is protected', 'debug' );
         $rule =
           $rule eq "authenticate" ? "accept" : $rule eq "manager" ? "" : $rule;
 
@@ -47,6 +48,7 @@ sub _run {
             $req->userData($datas) if ($datas);
 
             if ( $res < 300 ) {
+                $self->lmLog( 'User authenticated, calling router()', 'debug' );
                 return $self->router($req);
             }
 
@@ -60,7 +62,10 @@ sub _run {
                     and $req->contentType =~ m|application/json| )
               )
             {
+                $self->lmLog( 'Ajax request detected', 'debug' );
                 if ( $res == 302 or $res == 303 ) {
+                    $self->lmLog( 'Rewrite redirection to 401 response',
+                        'debug' );
                     return [
                         401,
                         [ Authorization => $req->{respHeaders}->{Location} ],
@@ -68,6 +73,10 @@ sub _run {
                     ];
                 }
                 else {
+                    $self->lmLog(
+"Lemonldap::NG::Handler::SharedConf::run() returns $res",
+                        'debug'
+                    );
                     return [
                         $res, [ 'Content-Type', 'application/json' ],
                         [qq({"error":"$res"})]
@@ -93,9 +102,12 @@ sub _run {
     }
 
     else {
-        eval { Lemonldap::NG::Handler::SharedConf->checkConf() }
-          unless (%$tsv);
-        $self->lmLog( $@, 'error' ) if ($@);
+        $self->lmLog( 'PSGI app is not protected', 'debug' );
+        unless (%$tsv) {
+            $self->lmLog( 'Checking conf', 'debug' );
+            eval { Lemonldap::NG::Handler::SharedConf->checkConf() };
+            $self->lmLog( $@, 'error' ) if ($@);
+        }
 
         # Handle unprotected requests
         return sub {
