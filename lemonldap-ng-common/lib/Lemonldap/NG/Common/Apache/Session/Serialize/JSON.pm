@@ -15,9 +15,21 @@ sub serialize {
 sub unserialize {
     my $session = shift;
 
-    my $data = from_json( $session->{serialized} );
+    my $data = _unserialize( $session->{serialized} );
     die "Session could not be unserialized" unless defined $data;
     $session->{data} = $data;
+}
+
+sub _unserialize {
+    my ( $serialized, $next ) = @_;
+    my $tmp;
+    eval { $tmp = from_json($serialized) };
+    if ($@) {
+        require Storable;
+        $next ||= \&Storable::thaw;
+        return &$next($serialized);
+    }
+    return $tmp;
 }
 
 1;

@@ -158,7 +158,8 @@ sub get_key_from_all_sessions {
         $args->{unserialize} = \&Storable::thaw;
     }
     else {
-        $args->{unserialize} = \&JSON::from_json;
+        $args->{unserialize} =
+          \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::_unserialize;
     }
     if ( $backend->can('get_key_from_all_sessions') ) {
         return $backend->get_key_from_all_sessions( $args, $data );
@@ -190,8 +191,15 @@ sub decodeThaw64 {
 
 sub _dbiGKFAS {
     my ( $class, $type, $args, $data ) = @_;
-    if ( $args->{useStorable} and $type !~ /(?:MySQL)/ ) {
-        $args->{unserialize} = \&decodeThaw64;
+    my $next;
+    if ( $type !~ /(?:MySQL)/ ) {
+        $next = sub {
+            require MIME::Base64;
+            return thaw( MIME::Base64::decode_base64( $_[0] ) );
+        };
+        if ( $args->{useStorable} ) {
+            $args->{unserialize} = $next;
+        }
     }
 
     my $dbh =
@@ -202,16 +210,17 @@ sub _dbiGKFAS {
     my %res;
     while ( my @row = $sth->fetchrow_array ) {
         if ( ref($data) eq 'CODE' ) {
-            my $tmp = &$data( $args->{unserialize}->( $row[1] ), $row[0] );
+            my $tmp =
+              &$data( $args->{unserialize}->( $row[1], $next ), $row[0] );
             $res{ $row[0] } = $tmp if ( defined($tmp) );
         }
         elsif ($data) {
             $data = [$data] unless ( ref($data) );
-            my $tmp = $args->{unserialize}->( $row[1] );
+            my $tmp = $args->{unserialize}->( $row[1], $next );
             $res{ $row[0] }->{$_} = $tmp->{$_} foreach (@$data);
         }
         else {
-            $res{ $row[0] } = $args->{unserialize}->( $row[1] );
+            $res{ $row[0] } = $args->{unserialize}->( $row[1], $next );
         }
     }
     return \%res;
