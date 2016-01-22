@@ -35,7 +35,9 @@ foreach my $attr ( keys %$attrs ) {
         );
         $count++;
     }
-    if ( $attr =~ qr/^$simpleHashKeys$/o or $attrs->{$attr}->{type} =~ /Container$/ ) {
+    if (   $attr =~ qr/^$simpleHashKeys$/o
+        or $attrs->{$attr}->{type} =~ /Container$/ )
+    {
         if ( $attrs->{$attr}->{default} ) {
             ok(
                 ref( $attrs->{$attr}->{default} ) eq 'HASH',

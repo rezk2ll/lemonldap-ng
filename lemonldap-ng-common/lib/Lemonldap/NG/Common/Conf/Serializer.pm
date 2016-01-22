@@ -9,10 +9,10 @@ use Lemonldap::NG::Common::Conf::Constants;
 our $VERSION = '1.9.0';
 
 BEGIN {
-    *Lemonldap::NG::Common::Conf::normalize   = \&normalize;
-    *Lemonldap::NG::Common::Conf::unnormalize = \&unnormalize;
-    *Lemonldap::NG::Common::Conf::serialize   = \&serialize;
-    *Lemonldap::NG::Common::Conf::unserialize = \&unserialize;
+    *Lemonldap::NG::Common::Conf::normalize      = \&normalize;
+    *Lemonldap::NG::Common::Conf::unnormalize    = \&unnormalize;
+    *Lemonldap::NG::Common::Conf::serialize      = \&serialize;
+    *Lemonldap::NG::Common::Conf::unserialize    = \&unserialize;
     *Lemonldap::NG::Common::Conf::oldUnserialize = \&oldUnserialize;
 }
 
@@ -91,7 +91,7 @@ sub unserialize {
     my $conf;
 
     # Parse fields
-    foreach my $k (keys %$fields) {
+    foreach my $k ( keys %$fields ) {
         my $v = $fields->{$k};
         if ( $k =~ $hashParameters ) {
             unless ( utf8::is_utf8($v) ) {

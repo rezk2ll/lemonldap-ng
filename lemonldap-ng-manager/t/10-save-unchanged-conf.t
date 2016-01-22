@@ -31,7 +31,8 @@ while ( my $body = &body() ) {
           &client->_post( '/confs/', 'cfgNum=1', $body, 'application/json' ),
         "$desc: positive result"
     );
-    ok( $res->[0] == 200, "$desc: result code is 200" ) or print STDERR Dumper($res);
+    ok( $res->[0] == 200, "$desc: result code is 200" )
+      or print STDERR Dumper($res);
     ok(
         $resBody = from_json( $res->[2]->[0] ),
         "$desc: result body contains JSON text"

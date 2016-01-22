@@ -53,7 +53,7 @@ sub init {
       split( /[,\s]+/, $self->{enabledModules} );
     extends 'Lemonldap::NG::Handler::PSGI', @enabledModules;
     my @working;
-    for ( my $i = 0; $i < @enabledModules ; $i++ ) {
+    for ( my $i = 0 ; $i < @enabledModules ; $i++ ) {
         my $mod = $enabledModules[$i];
         no strict 'refs';
         if ( &{"${mod}::addRoutes"}($self) ) {

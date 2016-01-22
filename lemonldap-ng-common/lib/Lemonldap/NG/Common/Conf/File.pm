@@ -81,8 +81,7 @@ sub store {
     my ( $self, $fields ) = @_;
     my $mask = umask;
     umask( oct('0027') );
-    unless ( open FILE, '>', $self->_file( $fields->{cfgNum} ) )
-    {
+    unless ( open FILE, '>', $self->_file( $fields->{cfgNum} ) ) {
         $Lemonldap::NG::Common::Conf::msg = "Open file failed: $! \n";
         $self->unlock;
         return UNKNOWN_ERROR;

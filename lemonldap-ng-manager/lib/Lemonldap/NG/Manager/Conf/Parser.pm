@@ -299,7 +299,8 @@ sub _scanNodes {
             # SAML
             elsif ( $base =~ /^saml(?:S|ID)PMetaDataNodes$/ ) {
                 hdebug('SAML');
-                if ( defined $leaf->{data} and ref( $leaf->{data} ) eq 'ARRAY' ) {
+                if ( defined $leaf->{data} and ref( $leaf->{data} ) eq 'ARRAY' )
+                {
                     hdebug("  SAML data is an array, serializing");
                     $leaf->{data} = join ';', @{ $leaf->{data} };
                 }

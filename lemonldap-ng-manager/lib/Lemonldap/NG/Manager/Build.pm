@@ -124,7 +124,8 @@ sub run {
     $self->scanTree( $mainTree, $jsonTree, '', '' );
     $script = "\n\nfunction setScopeVars(scope) {\n";
     foreach my $v (@angularScopeVars) {
-        $script .= "  scope.$v->[0] = scope$v->[1];\n  scope.getKey(scope.$v->[0]);\n";
+        $script .=
+          "  scope.$v->[0] = scope$v->[1];\n  scope.getKey(scope.$v->[0]);\n";
     }
     $script .= "}";
     open F, ">>", $self->confTreeFile || die $!;
@@ -347,9 +348,9 @@ sub buildZeroConf {
     printf STDERR $format, $self->firstLmConfFile;
     open( F, '>', $self->firstLmConfFile ) or die($!);
     my $tmp = Lemonldap::NG::Manager::Conf::Zero::zeroConf(
-            '__DNSDOMAIN__',   '__SESSIONDIR__',
-            '__PSESSIONDIR__', '__NOTIFICATIONDIR__'
-        );
+        '__DNSDOMAIN__',   '__SESSIONDIR__',
+        '__PSESSIONDIR__', '__NOTIFICATIONDIR__'
+    );
     $tmp->{cfgNum} = 1;
     print F $jsonEnc->encode($tmp);
     close F;

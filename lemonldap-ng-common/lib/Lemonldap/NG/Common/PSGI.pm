@@ -104,7 +104,8 @@ sub sendJSONresponse {
     if ( ref $j ) {
         $j = $_json->encode($j);
     }
-    return [ $args{code}, [ 'Content-Type' => $type, @{$args{headers}} ], [$j] ];
+    return [ $args{code}, [ 'Content-Type' => $type, @{ $args{headers} } ],
+        [$j] ];
 }
 
 sub sendError {

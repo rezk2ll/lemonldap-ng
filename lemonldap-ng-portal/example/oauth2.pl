@@ -64,8 +64,7 @@ if ( $cgi->param("test") eq "request" ) {
         iss           => $client_id,
         aud           => [$portal_url]
     };
-    my $request_payload =
-      encode_base64( to_json($request_paylod_hash), "" );
+    my $request_payload = encode_base64( to_json($request_paylod_hash), "" );
     my $request_header_hash = { typ => "JWT", alg => "HS256" };
     my $request_header = encode_base64( to_json($request_header_hash), "" );
 
@@ -663,8 +662,7 @@ else {
         iss           => $client_id,
         aud           => [$portal_url]
     };
-    my $request_payload =
-      encode_base64( to_json($request_paylod_hash), "" );
+    my $request_payload = encode_base64( to_json($request_paylod_hash), "" );
     my $request_header_hash = { typ => "JWT", alg => "HS256" };
     my $request_header = encode_base64( to_json($request_header_hash), "" );
 
