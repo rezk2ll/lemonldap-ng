@@ -130,6 +130,7 @@ ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
 
 MANAGERLIBSTOREMOVEFORDEBIAN=$(RMANAGERSTATICDIR)/bwr/jquery/ \
 			$(RMANAGERSTATICDIR)/bwr/angular/ \
+			$(RMANAGERSTATICDIR)/bwr/angular-animate/ \
 			$(RMANAGERSTATICDIR)/bwr/angular-cookie/ \
 			$(RMANAGERSTATICDIR)/bwr/bootstrap/ \
 			$(RMANAGERSTATICDIR)/bwr/es5-shim/
@@ -833,6 +834,7 @@ default-diff:
 tidy: clean
 	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.t' \) -print -exec perltidy -b {} \;
 	find lemon*/ -name '*.bak' -delete
+	$(MAKE) json
 
 tidy-js: clean
 	find $(SRCMANAGERDIR)/site/static/js/ e2e-tests/ $(SRCPORTALDIR)/example \
