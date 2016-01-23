@@ -6,6 +6,7 @@ DESTDIR=
 # Flag for optimizations
 USEDEBIANLIBS=no
 PROD=$(USEDEBIANLIBS)
+USEEXTERNALLIBS=no
 
 # Compression
 JSCOMPRESS=$(PROD)
@@ -139,6 +140,8 @@ PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSKINSDIR)/bootstrap/fonts \
 			$(RPORTALSKINSDIR)/bootstrap/js/bootstrap* \
 			$(RPORTALSKINSDIR)/common/js/jquery-* \
 			$(RPORTALSKINSDIR)/common/js/jquery.cookie*
+MANAGEREXTERNALLIBS=$(RMANAGERSTATICDIR)/bwr/
+PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN) $(RPORTALSKINSDIR)/common/js/jquery*
 
 # GENERATED SRC FILESlemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
 MANAGERJSONSRC= scripts/jsongenerator.pl \
@@ -447,10 +450,16 @@ install_manager_site:	install_conf_dir
 		$(RMANAGERTEMPLATESDIR)
 	@cp -pR $(SRCMANAGERDIR)/site/static/* $(RMANAGERSTATICDIR)
 	@for f in $(SRCMANAGERDIR)/site/templates/*.tpl; do \
-		./scripts/transform-templates usedebianlibs $(USEDEBIANLIBS) jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f \
+		./scripts/transform-templates \
+			usedebianlibs $(USEDEBIANLIBS) \
+			useexternallibs $(USEEXTERNALLIBS) \
+			jsminified $(JSCOMPRESS) \
+			cssminified $(CSSCOMPRESS) <$$f \
 			> $(RMANAGERTEMPLATESDIR)/`basename $$f`; \
 	done
-	@if test "$(USEDEBIANLIBS)" = "yes"; then \
+	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
+		rm -rvf $(MANAGEREXTERNALLIBS) \
+	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(MANAGERLIBSTOREMOVEFORDEBIAN); \
 	fi
 	@cp -pR $(SRCMANAGERDIR)/eg/* $(RMANAGERPSGIDIR)
@@ -480,7 +489,9 @@ install_portal_site:	install_conf_dir
 		./scripts/transform-templates usedebianlibs $(USEDEBIANLIBS) jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f >$$f.tmp; \
 		mv -f $$f.tmp $$f; \
 	done
-	@if test "$(USEDEBIANLIBS)" = "yes"; then \
+	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
+		rm -rvf $(PORTALEXTERNALLIBS) \
+	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(PORTALLIBSTOREMOVEFORDEBIAN); \
 	fi
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
