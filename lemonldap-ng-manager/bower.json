@@ -6,11 +6,12 @@
   "license": "GPL2",
   "private": true,
   "dependencies": {
-    "angular": "1.4.8",
-    "angular-bootstrap": "0.12",
-    "angular-cookies": "1.4.8",
+    "angular": "1.4.x",
+    "angular-animate": "1.4.x",
+    "angular-bootstrap": "x",
+    "angular-cookies": "1.4.x",
     "angular-ui-tree": "x",
-    "bootstrap": "3.x",
+    "bootstrap": "x",
     "es5-shim": "x",
     "jquery": "2.x"
   }

@@ -17,7 +17,7 @@
    *
    * Used to display choices that can not be shown on #form
    */
-  llapp.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'elem', 'set', 'init', function($scope, $modalInstance, elem, set, init) {
+  llapp.controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', 'elem', 'set', 'init', function($scope, $uibModalInstance, elem, set, init) {
     var oldValue;
     $scope.elem = elem;
     $scope.set = set;
@@ -32,12 +32,12 @@
 
     $scope.ok = function() {
       set('result', $scope.result);
-      $modalInstance.close(true);
+      $uibModalInstance.close(true);
     };
 
     $scope.cancel = function() {
       if (currentNode) $scope.currentNode.data = oldValue;
-      $modalInstance.dismiss('cancel');
+      $uibModalInstance.dismiss('cancel');
     };
 
     /* test if value is in select */
@@ -53,7 +53,7 @@
   /* Main AngularJS controller
    *
    */
-  llapp.controller('TreeCtrl', ['$scope', '$http', '$location', '$q', '$modal', '$translator', '$cookies', function($scope, $http, $location, $q, $modal, $translator, $cookies) {
+  llapp.controller('TreeCtrl', ['$scope', '$http', '$location', '$q', '$uibModal', '$translator', '$cookies', function($scope, $http, $location, $q, $uibModal, $translator, $cookies) {
 
     $scope.links = links;
     $scope.menulinks = menulinks;
@@ -117,7 +117,7 @@
 
     /* Modal launcher */
     $scope.showModal = function(tpl, init) {
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         templateUrl: tpl,
         controller: 'ModalInstanceCtrl',
         size: 'lg',

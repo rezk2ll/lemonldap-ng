@@ -36,7 +36,8 @@
 <script type="text/javascript" src="/javascript/angular.js/angular.min.js"></script>
 <script type="text/javascript" src="/javascript/angular.js/angular-cookies.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
-<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/ui-bootstrap-tpls-0.12.1.min.js"></script>
+<script type="text/javascript" src="/javascript/angular.js/angular-animate.min.js"></script>
+<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/llApp.min.js"></script>
 //elsif:jsminified
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.min.js"></script>
@@ -45,7 +46,8 @@
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular/angular.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-cookies/angular-cookies.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
-<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/ui-bootstrap-tpls-0.12.1.min.js"></script>
+<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-animate/angular-animate.min.js"></script>
+<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/llApp.min.js"></script>
 //else -->
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.js"></script>
@@ -54,6 +56,7 @@
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular/angular.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-cookies/angular-cookies.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-ui-tree/dist/angular-ui-tree.js"></script>
-<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/ui-bootstrap-tpls-0.12.1.min.js"></script>
+<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-animate/angular-animate.js"></script>
+<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/llApp.js"></script>
 <!-- //endif -->
