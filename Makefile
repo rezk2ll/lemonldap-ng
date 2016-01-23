@@ -214,7 +214,7 @@ minify: $(JSDSTFILES) $(CSSDSTFILES)
 #
 
 json:	$(MANAGERJSONDST)
-	-$(MAKE) minify
+	@if which yui-compressor; then $(MAKE) minify; fi
 
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)
 	./scripts/jsongenerator.pl
