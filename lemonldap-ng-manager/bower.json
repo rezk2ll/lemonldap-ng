@@ -13,6 +13,7 @@
     "angular-ui-tree": "x",
     "bootstrap": "x",
     "es5-shim": "x",
+    "file-saver.js": "x",
     "jquery": "2.x"
   }
 }

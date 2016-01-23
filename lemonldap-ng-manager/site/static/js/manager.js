@@ -864,11 +864,12 @@
     $scope.replaceContent = function(node, $fileContent) {
       node.data = $fileContent;
     };
-    $scope.localDownload = function() {
-      var b = new Blob([$scope.currentNode.data], {
-        type: "text/plain"
-      });
-      window.open(URL.createObjectURL(b));
+
+    /* Import Filesaver.js saveAs() */
+    $scope.saveAs = function(content, type, filename) {
+      saveAs(new Blob([content], {
+        "type": type
+      }), filename);
     };
   }]);
 

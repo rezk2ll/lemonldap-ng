@@ -158,7 +158,8 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		_example/conf/lmConf-1.js
 
 # Javascript and CSS to minify
-JSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/js $(SRCPORTALDIR)/example -type f -name '*.js' ! -name '*.min.js')
+JSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/js $(SRCPORTALDIR)/example -type f -name '*.js' ! -name '*.min.js') \
+		$(SRCMANAGERDIR)/site/static/bwr/file-saver.js/FileSaver.js
 CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/css  $(SRCPORTALDIR)/example -type f -name '*.css' ! -name '*.min.css')
 
 # Minified files
@@ -848,7 +849,7 @@ tidy: clean
 	$(MAKE) json
 
 tidy-js: clean
-	find $(SRCMANAGERDIR)/site/static/js/ e2e-tests/ $(SRCPORTALDIR)/example \
+	@find $(SRCMANAGERDIR)/site/static/js/ e2e-tests/ $(SRCPORTALDIR)/example \
 		  -type f \
 		  -name '*.js' \
 		! -name 'jq*' \

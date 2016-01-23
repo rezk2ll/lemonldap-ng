@@ -38,6 +38,7 @@
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
 <script type="text/javascript" src="/javascript/angular.js/angular-animate.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/file-saver.js/FileSaver.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/llApp.min.js"></script>
 //elsif:useexternallibs
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -48,6 +49,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-tree/2.13.0/angular-ui-tree.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.0/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/eligrey/FileSaver.js/master/FileSaver.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/llApp.min.js"></script>
 //elsif:jsminified
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.min.js"></script>
@@ -58,6 +60,7 @@
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-animate/angular-animate.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/file-saver.js/FileSaver.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/llApp.min.js"></script>
 //else -->
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.js"></script>
@@ -68,5 +71,6 @@
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-ui-tree/dist/angular-ui-tree.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-animate/angular-animate.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/file-saver.js/FileSaver.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">js/llApp.js"></script>
 <!-- //endif -->

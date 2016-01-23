@@ -129,6 +129,10 @@ Files: lemonldap-ng-manager/site/static/bwr/angular-ui-tree/*
 Copyright: 2014, unspecified
 License: Expat
 
+Files: lemonldap-ng-manager/site/static/bwr/file-saver.js/*
+Copyright: 2015, Eli Grey http://eligrey.com
+License: Expat
+
 Files: lemonldap-ng-portal/example/skins/common/apps/*
  lemonldap-ng-manager/example/skins/default/images/apps-logos/*
  lemonldap-ng-manager/example/skins/default/images/*arrow*
