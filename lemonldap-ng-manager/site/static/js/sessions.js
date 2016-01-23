@@ -76,7 +76,7 @@
     $scope.availableLanguages = availableLanguages;
     $scope.waiting = true;
     $scope.showM = false;
-    $scope.showT = false;
+    $scope.showT = true;
     $scope.data = [];
     $scope.currentScope = null;
     $scope.currentSession = null;

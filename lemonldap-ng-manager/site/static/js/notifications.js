@@ -42,7 +42,7 @@
     $scope.availableLanguages = availableLanguages;
     $scope.waiting = true;
     $scope.showM = false;
-    $scope.showT = false;
+    $scope.showT = true;
     $scope.showForm = false;
     $scope.data = [];
     $scope.form = {};
