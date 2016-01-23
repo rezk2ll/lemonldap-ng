@@ -117,8 +117,12 @@ Copyright: 2008 Paul Bakaus (ui.jquery.com)
  Jörn Zaefferer (bassistance.de)
 License: GPL-2 or Expat
 
-Files: lemonldap-ng-manager/site/static/bwr/angular/* lemonldap-ng-manager/site/static/bwr/angular-cookies/*
+Files: lemonldap-ng-manager/site/static/bwr/angular/* lemonldap-ng-manager/site/static/bwr/angular-cookies/* lemonldap-ng-manager/site/static/bwr/angular-animate/*
 Copyright: 2010-2015, Google, Inc. http://angularjs.org
+License: Expat
+
+Files: lemonldap-ng-manager/site/static/bwr/angular-bootstrap/*
+Copyright: 2012-2016, the AngularUI Team, https://github.com/organizations/angular-ui/teams/291112
 License: Expat
 
 Files: lemonldap-ng-manager/site/static/bwr/angular-ui-tree/*
