@@ -196,6 +196,7 @@
 "hGroups": "Groupes (HashRef)",
 "hostname": "Nom d'hôte",
 "hiddenAttributes": "Attributs masqués",
+"hide": "Masquer",
 "hideHelp": "Masquer l'aide",
 "hideOldPassword": "Masquer l'ancien mot de passe",
 "hideTree": "Masquer l'arbre",
