@@ -198,6 +198,7 @@
       }).error(function(j, e) {
         $scope.waiting = false;
       });
+      $scope.showT = false;
     }
 
     $scope.save = function() {

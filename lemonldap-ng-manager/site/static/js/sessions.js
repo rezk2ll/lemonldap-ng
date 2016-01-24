@@ -261,6 +261,7 @@
       $http.get(scriptname + "sessions/" + sessionType + "/" + sessionId).success(function(data) {
         $scope.currentSession = transformSession(data);
       });
+      $scope.showT = false;
     }
 
     $scope.localeDate = function(s) {
