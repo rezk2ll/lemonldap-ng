@@ -252,13 +252,13 @@ ${SRCMANAGERDIR}/Makefile:
 common:		common_conf
 	@$(MAKE) -C ${SRCCOMMONDIR}
 
-handler:	handler_conf
+handler:	handler_conf common
 	@$(MAKE) -C ${SRCHANDLERDIR}
 
-portal:		portal_conf
+portal:		portal_conf common
 	@$(MAKE) -C ${SRCPORTALDIR}
 
-manager:	manager_conf
+manager:	manager_conf handler
 	$(MAKE) -C ${SRCMANAGERDIR}
 
 test:		all common_test handler_test portal_test manager_test extra_test

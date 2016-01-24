@@ -19,6 +19,7 @@ my %forms = map { s/\.html$// ? ( $_ => 1 ) : () } readdir D;
 close D;
 
 delete $forms{white};
+delete $forms{mini};
 delete $forms{restore};
 
 my ( @types, $attr, $tree, $ctrees );
