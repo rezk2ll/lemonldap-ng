@@ -651,7 +651,7 @@
         f = 'text';
       }
       if (node.nodes || node._nodes || node.cnodes) {
-        $scope.form = f != 'text' ? f : 'home';
+        $scope.form = f != 'text' ? f : 'mini';
       } else {
         $scope.form = f;
         /* Get datas */

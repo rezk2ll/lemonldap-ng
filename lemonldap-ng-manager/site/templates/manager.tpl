@@ -21,7 +21,13 @@
         <div class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
           <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
             <ul class="nav navbar-nav">
-              <li><a id="save" class="link" ng-click="save()" tabIndex="-1"><i class="glyphicon glyphicon-cloud-upload"></i> {{translate('save')}}<input id="forcesave" type="checkbox" ng-model="forceSave" title="{{translate('forceSave')}}" ng-show="confirmNeeded"></a></li>
+              <li><a class="link" ng-click="home()"><i class="glyphicon glyphicon-home"></i></a></li>
+              <li>
+                <a id="save" class="link" ng-click="save()" tabIndex="-1">
+                  <i class="glyphicon glyphicon-cloud-upload"></i>
+                  {{translate('save')}}<input id="forcesave" type="checkbox" ng-model="forceSave" title="{{translate('forceSave')}}" ng-show="confirmNeeded">
+                </a>
+              </li>
               <li uib-dropdown>
                 <a id="navmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> {{translate('browse')}} <span class="caret"></span></a>
                 <ul uib-dropdown-menu aria-labelled-by="navmenu">
