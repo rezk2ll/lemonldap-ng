@@ -188,6 +188,9 @@ dl,
     -webkit-box-shadow: none;
             box-shadow: none;
   }
+  #content {
+    position: relative;
+  }
 }
 .scrollable {
   overflow: auto;
