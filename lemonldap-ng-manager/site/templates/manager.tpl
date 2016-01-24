@@ -14,17 +14,17 @@
     <TMPL_INCLUDE NAME="tree.tpl">
 
     <!-- Right(main) div -->
-    <div id="right" class="col-lg-8 col-md-8 col-sm-7 col-xs-12 scrollable" ng-class="{'hidden-xs':showT}">
+    <div id="right" class="col-lg-8 col-md-8 col-sm-7 col-xs-12 scrollable" ng-class="{'hidden-xs':showT&&!showM}">
       <!-- Form container -->
       <div id="top">
         <!-- Menu buttons -->
-        <div class="navbar navbar-default" ng-class="{'hidden-xs':!showM}">
+        <div class="lmmenu navbar navbar-default" ng-class="{'hidden-xs':!showM}">
           <div class="navbar-collapse" ng-class="{'collapse':!showM}" id="formmenu">
             <ul class="nav navbar-nav">
               <li><a id="save" class="link" ng-click="save()" tabIndex="-1"><i class="glyphicon glyphicon-cloud-upload"></i> {{translate('save')}}<input id="forcesave" type="checkbox" ng-model="forceSave" title="{{translate('forceSave')}}" ng-show="confirmNeeded"></a></li>
-              <li class="dropdown">
-                <a name="menu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> {{translate('browse')}} <span class="caret"></span></a>
-                <ul class="dropdown-menu">
+              <li uib-dropdown>
+                <a id="navmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="glyphicon glyphicon-cog"></i> {{translate('browse')}} <span class="caret"></span></a>
+                <ul uib-dropdown-menu aria-labelled-by="navmenu">
                   <li ng-class="{'disabled':!currentCfg.prev}"><a class="link" ng-click="currentCfg.prev && getCfg(currentCfg.prev)" title="Configuration {{currentCfg.prev}}"><i class="glyphicon glyphicon-arrow-left"></i> {{translate('previous')}}</a></li>
                   <li ng-class="{'disabled':!currentCfg.next}"><a class="link" ng-click="currentCfg.next && getCfg(currentCfg.next)" title="Configuration {{currentCfg.next}}"><i class="glyphicon glyphicon-arrow-right"></i> {{translate('next')}}</a></a></li>
                   <li><a class="link" ng-click="getCfg('latest')" title="Latest configuration"><i class="glyphicon glyphicon-refresh"></i> {{translate('latest')}}</a></li>
@@ -32,9 +32,9 @@
               </li>
               <li><a class="link hidden-xs" ng-click="setShowHelp()"><i class="glyphicon" ng-class="{'glyphicon-eye-close': showH,'glyphicon-eye-open': !showH}" ></i> {{ translate((showH ? 'hideHelp' : 'showHelp')) }}</a></li>
               <li ng-repeat="button in buttons" ng-include="'menubutton.html'"></li>
-              <li class="dropdown visible-xs">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{translate('menu')}} <span class="caret"></span></a>
-                <ul class="dropdown-menu">
+              <li uib-dropdown class="visible-xs">
+                <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{translate('menu')}} <span class="caret"></span></a>
+                <ul uib-dropdown-menu aria-labelled-by="langmenu">
                   <li ng-repeat="link in links"><a href="{{link.target}}"><i ng-if="link.icon" class="glyphicon glyphicon-{{link.icon}}"></i> {{translate(link.title)}}</a></li>
                   <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> {{translate(menulink.title)}}</a></li>
                   <li ng-include="'languages.html'"></li>

@@ -1,8 +1,8 @@
   <!-- Menu dropdown template -->
   <script type="text/ng-template" id="menubutton.html">
     <a class="link" ng-if="!button.buttons" ng-click="menuClick(button)"><i class="glyphicon glyphicon-{{button.icon}}" ng-if="button.icon"></i> {{translateTitle(button)}}</a>
-    <a name="menu" ng-if="button.buttons" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span> {{translateTitle(button)}} <span class="caret"></span></a>
-    <ul class="dropdown-menu" role="menu">
+    <a id="dropmenu{{$index}}" name="menu" ng-if="button.buttons" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span> {{translateTitle(button)}} <span class="caret"></span></a>
+    <ul uib-dropdown-menu" role="menu" aria-labelled-by="dropmenu{{$index}}">
       <li ng-repeat="button in button.buttons" ng-include="'menubutton.html'" />
     </ul>
   </script>
@@ -32,7 +32,6 @@
 <!-- //if:usedebianlibs
 <script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="/javascript/es5-shim/es5-shim.min.js"></script>
-<script type="text/javascript" src="/javascript/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/javascript/angular.js/angular.min.js"></script>
 <script type="text/javascript" src="/javascript/angular.js/angular-cookies.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
@@ -43,7 +42,6 @@
 //elsif:useexternallibs
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.4.1/es5-shim.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-tree/2.13.0/angular-ui-tree.min.js"></script>
@@ -54,7 +52,6 @@
 //elsif:jsminified
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/es5-shim/es5-shim.min.js"></script>
-<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular/angular.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-cookies/angular-cookies.min.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
@@ -65,7 +62,6 @@
 //else -->
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/es5-shim/es5-shim.js"></script>
-<script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/js/bootstrap.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular/angular.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-cookies/angular-cookies.js"></script>
 <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/angular-ui-tree/dist/angular-ui-tree.js"></script>

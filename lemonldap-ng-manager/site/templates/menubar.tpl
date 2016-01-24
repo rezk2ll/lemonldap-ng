@@ -24,9 +24,9 @@
           <li ng-repeat="l in links"><a href="{{l.target}}"><strong><i ng-if="l.icon" class="glyphicon glyphicon-{{l.icon}}"></i> {{translate(l.title)}}</strong></a></li>
         </ul>
         <ul class="hidden-xs nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a name="menu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{translate('menu')}} <span class="caret"></span></a>
-            <ul class="dropdown-menu">
+          <li uib-dropdown>
+            <a id="mainlangmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{translate('menu')}} <span class="caret"></span></a>
+            <ul uib-dropdown-menu aria-labelled-by="mainlangmenu">
               <li ng-repeat="menulink in menulinks"><a href="{{menulink.target}}"><i ng-if="menulink.icon" class="glyphicon glyphicon-{{menulink.icon}}"></i> {{translate(menulink.title)}}</a></li>
               <li role="separator" class="divider"></li>
               <li class="dropdown-header">{{translate('languages')}}</li>
