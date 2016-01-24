@@ -30,6 +30,13 @@ scripts/lemonldap-ng-cli
 scripts/llng-manager-cli
 scripts/lmConfigEditor
 scripts/testConfBackend.pl
+site/static/bwr/angular-animate/angular-animate.js
+site/static/bwr/angular-animate/angular-animate.min.js
+site/static/bwr/angular-animate/angular-animate.min.js.map
+site/static/bwr/angular-animate/README.md
+site/static/bwr/angular-bootstrap/README.md
+site/static/bwr/angular-bootstrap/ui-bootstrap-tpls.js
+site/static/bwr/angular-bootstrap/ui-bootstrap-tpls.min.js
 site/static/bwr/angular-cookies/angular-cookies.js
 site/static/bwr/angular-cookies/angular-cookies.min.js
 site/static/bwr/angular-cookies/angular-cookies.min.js.map
@@ -53,13 +60,14 @@ site/static/bwr/bootstrap/dist/fonts/glyphicons-halflings-regular.svg
 site/static/bwr/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf
 site/static/bwr/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
 site/static/bwr/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2
-site/static/bwr/bootstrap/dist/js/bootstrap.js
-site/static/bwr/bootstrap/dist/js/bootstrap.min.js
 site/static/bwr/bootstrap/LICENSE
 site/static/bwr/es5-shim/es5-shim.js
 site/static/bwr/es5-shim/es5-shim.map
 site/static/bwr/es5-shim/es5-shim.min.js
 site/static/bwr/es5-shim/LICENSE
+site/static/bwr/file-saver.js/FileSaver.js
+site/static/bwr/file-saver.js/FileSaver.min.js
+site/static/bwr/file-saver.js/LICENSE.md
 site/static/bwr/jquery/dist/jquery.js
 site/static/bwr/jquery/dist/jquery.min.js
 site/static/bwr/jquery/dist/jquery.min.map
@@ -86,6 +94,7 @@ site/static/forms/keyTextContainer.html
 site/static/forms/longtext.html
 site/static/forms/menuApp.html
 site/static/forms/menuCat.html
+site/static/forms/mini.html
 site/static/forms/oidcOPMetaDataNode.html
 site/static/forms/oidcOPMetaDataNodeContainer.html
 site/static/forms/oidcRPMetaDataNode.html
@@ -128,7 +137,6 @@ site/static/js/notifications.js
 site/static/js/notifications.min.js
 site/static/js/sessions.js
 site/static/js/sessions.min.js
-site/static/js/ui-bootstrap-tpls-0.12.1.min.js
 site/static/languages/en.json
 site/static/languages/fr.json
 site/static/logos/bootstrap.png
