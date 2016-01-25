@@ -9,13 +9,13 @@ our $VERSION = '1.9.0';
 
 has protection => ( is => 'rw', isa => 'Str' );
 
-around init => sub {
-    my ( $method, $self, $args ) = @_;
+sub init {
+    my ( $self, $args ) = @_;
+    my $tmp = $self->SUPER::init($args);
+    return 0 unless($tmp);
     eval { Lemonldap::NG::Handler::SharedConf->init($self) };
     if ( $@ and not $self->{protection} eq 'none' ) {
-        $self->lmLog( $@, 'error' );
         $self->error($@);
-        $self->$method($args);
         return 0;
     }
     unless ( Lemonldap::NG::Handler::SharedConf->checkConf($self)
@@ -23,10 +23,9 @@ around init => sub {
     {
         $self->error(
             "Unable to protect this app ($Lemonldap::NG::Common::Conf::msg)");
-        $self->$method($args);
         return 0;
     }
-    return $self->$method($args);
+    return 1;
 };
 
 sub _run {

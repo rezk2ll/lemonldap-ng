@@ -137,7 +137,17 @@ sub _mustBeDefined {
     die "$name() method must be implemented (probably in $ref)";
 }
 
-sub init { 1 }
+sub init {
+    my($self,$args) = @_;
+    unless(ref $args) {
+        $self->error('init argument must be a hashref');
+        return 0;
+    }
+    foreach my $k ( keys %$args ) {
+        $self->{$k} = $args->{$k};
+    }
+    return 1;
+}
 
 sub router { _mustBeDefined(@_) }
 

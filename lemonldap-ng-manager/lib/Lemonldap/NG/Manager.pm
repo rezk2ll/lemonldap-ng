@@ -28,9 +28,6 @@ sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
 
-    foreach my $k ( keys %$args ) {
-        $self->{$k} = $args->{$k};
-    }
     my $conf = $self->confAcc;
 
     if ( my $localconf = $conf->getLocalConf(MANAGERSECTION) ) {
