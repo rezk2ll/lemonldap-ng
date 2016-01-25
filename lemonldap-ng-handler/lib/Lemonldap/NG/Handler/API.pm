@@ -43,7 +43,7 @@ sub AUTOLOAD {
     # - Apache (modperl1),
     # - Nginx
     $mode ||=
-      ( caller(6) and ( caller(6) )[0] eq 'Lemonldap::NG::Handler::PSGI' )
+      ( caller(6) and ( caller(6) )[0] =~ /Lemonldap::NG::Handler::PSGI/ )
       ? 'PSGI'
       : $ENV{GATEWAY_INTERFACE} ? 'CGI'
       : ( MP == 2 )             ? 'ApacheMP2'

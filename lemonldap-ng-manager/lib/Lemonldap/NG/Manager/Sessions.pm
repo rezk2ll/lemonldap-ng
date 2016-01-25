@@ -2,6 +2,7 @@ package Lemonldap::NG::Manager::Sessions;
 
 use 5.10.0;
 use utf8;
+use strict;
 use Mouse;
 
 use Lemonldap::NG::Common::Session;

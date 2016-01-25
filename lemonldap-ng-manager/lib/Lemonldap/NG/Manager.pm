@@ -17,7 +17,7 @@ our $VERSION = '1.9.0';
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 
-extends 'Lemonldap::NG::Handler::PSGI', 'Lemonldap::NG::Manager::Lib';
+extends 'Lemonldap::NG::Manager::Lib', 'Lemonldap::NG::Handler::PSGI::Router';
 
 ## @method boolean init($args)
 # Launch initialization method
@@ -35,7 +35,7 @@ sub init {
           foreach ( keys %$localconf );
     }
 
-    return 0 unless ( $self->SUPER::init($args) );
+    return 0 unless ( $self->Lemonldap::NG::Handler::PSGI::Router::init($args) );
 
     # TODO: manage errors
     unless ( -r $self->{templateDir} ) {
@@ -48,7 +48,7 @@ sub init {
     my @enabledModules =
       map { push @links, $_; "Lemonldap::NG::Manager::" . ucfirst($_) }
       split( /[,\s]+/, $self->{enabledModules} );
-    extends 'Lemonldap::NG::Handler::PSGI', @enabledModules;
+    extends 'Lemonldap::NG::Handler::PSGI::Router', @enabledModules;
     my @working;
     for ( my $i = 0 ; $i < @enabledModules ; $i++ ) {
         my $mod = $enabledModules[$i];
@@ -130,7 +130,7 @@ written in Javascript, using AngularJS framework and can be found in `site`
 directory. The REST API is described in REST-API.md file given in source tree.
 
 Lemonldap::NG Manager uses L<Plack> to be compatible with CGI, FastCGI,... It
-inherits of L<Lemonldap::NG::Handler::PSGI>
+inherits of L<Lemonldap::NG::Handler::PSGI::Router>
 
 =head1 ORGANIZATION
 
@@ -196,7 +196,7 @@ you can also fix them in $opts hash ref passed as argument to run() or new()).
 
   [manager]
   ;protection:     choose one of none, authenticate, manager as explain in
-  ;                Lemonldap::NG::Handler::PSGI doc.
+  ;                Lemonldap::NG::Handler::PSGI::Router doc.
   protection     = manager
   
   ;enabledModules: Modules to display. Default to `conf, sessions, notifications`
@@ -219,7 +219,7 @@ you can also fix them in $opts hash ref passed as argument to run() or new()).
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>, L<Plack>, L<PSGI>,
+L<Lemonldap::NG::Handler::Router>, L<Lemonldap::NG::Portal>, L<Plack>, L<PSGI>,
 L<Lemonldap::NG::Manager::Conf>, L<Lemonldap::NG::Manager::Sessions>,
 L<Lemonldap::NG::Manager::Notifications>
 L<http://lemonldap-ng.org/>
