@@ -1,6 +1,7 @@
 package Lemonldap::NG::Handler::API::PSGI;
 
-our $VERSION = '1.4.0';
+use strict;
+our $VERSION = '1.9.0';
 
 # Specific modules and constants for Test or CGI
 use constant FORBIDDEN     => 403;
@@ -12,7 +13,7 @@ use constant SERVER_ERROR  => 500;
 use constant AUTH_REQUIRED => 401;
 use constant MAINTENANCE   => 503;
 
-my $request;
+our $request;
 
 ## @method void thread_share(string $variable)
 # share or not the variable (if authorized by specific module)
