@@ -23,7 +23,7 @@ sub init {
         return 0;
     }
     return 1;
-};
+}
 
 sub _run {
     my $self = shift;
@@ -38,62 +38,8 @@ sub _run {
         # Handle requests
         # Developers, be careful: Only this part is executed at each request
         return sub {
-            my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
-            Lemonldap::NG::Handler::API->newRequest($req);
-            my $res = Lemonldap::NG::Handler::SharedConf->run($rule);
-            $req->userData($datas) if ($datas);
-
-            if ( $res < 300 ) {
-                $self->lmLog( 'User authenticated, calling router()', 'debug' );
-                return $self->router($req);
-            }
-
-            # Ajax hook: Ajax requests can not understand 30x responses. This
-            #            is not really HTTP compliant but nothing in this
-            #            protocol can do this. Our javascripts understand that
-            #            they have to prompt user with the URL
-            elsif (
-                $req->accept =~ m|application/json|
-                or (    $req->contentType
-                    and $req->contentType =~ m|application/json| )
-              )
-            {
-                $self->lmLog( 'Ajax request detected', 'debug' );
-                if ( $res == 302 or $res == 303 ) {
-                    $self->lmLog( 'Rewrite redirection to 401 response',
-                        'debug' );
-                    return [
-                        401,
-                        [ Authorization => $req->{respHeaders}->{Location} ],
-                        ['']
-                    ];
-                }
-                else {
-                    $self->lmLog(
-"Lemonldap::NG::Handler::SharedConf::run() returns $res",
-                        'debug'
-                    );
-                    return [
-                        $res, [ 'Content-Type', 'application/json' ],
-                        [qq({"error":"$res"})]
-                    ];
-                }
-            }
-
-            # Non Ajax requests may be redirected to portal
-            else {
-                my %h = $req->{respHeaders} ? %{ $req->{respHeaders} } : ();
-                my $s = $tsv->{portal}->() . "?lmError=$res";
-                $s =
-                    '<html><head><title>Redirection</title></head><body>'
-                  . qq{<script type="text/javascript">window.location='$s'</script>}
-                  . '<h1>Please wait</h1>'
-                  . qq{<p>An error occurs, you're going to be redirected to <a href="$s">$s</a>.</p>}
-                  . '</body></html>';
-                $h{'Content-Type'}   = 'text/html';
-                $h{'Content-Length'} = length $s;
-                return [ $res, [%h], [$s] ];
-            }
+            return $self->_authAndTrace(
+                Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
         };
     }
 
@@ -109,6 +55,62 @@ sub _run {
         return sub {
             $self->router( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
         };
+    }
+}
+
+sub _authAndTrace {
+    my ( $self, $req ) = @_;
+    Lemonldap::NG::Handler::API->newRequest($req);
+    my $res = Lemonldap::NG::Handler::SharedConf->run( $self->{protection}
+          || $localConfig->{protection} );
+    $req->userData($datas) if ($datas);
+
+    if ( $res < 300 ) {
+        $self->lmLog( 'User authenticated, calling router()', 'debug' );
+        return $self->router($req);
+    }
+
+    # Ajax hook: Ajax requests can not understand 30x responses. This
+    #            is not really HTTP compliant but nothing in this
+    #            protocol can do this. Our javascripts understand that
+    #            they have to prompt user with the URL
+    elsif (
+        $req->accept =~ m|application/json|
+        or (    $req->contentType
+            and $req->contentType =~ m|application/json| )
+      )
+    {
+        $self->lmLog( 'Ajax request detected', 'debug' );
+        if ( $res == 302 or $res == 303 ) {
+            $self->lmLog( 'Rewrite redirection to 401 response', 'debug' );
+            return [
+                401, [ Authorization => $req->{respHeaders}->{Location} ], ['']
+            ];
+        }
+        else {
+            $self->lmLog(
+                "Lemonldap::NG::Handler::SharedConf::run() returns $res",
+                'debug' );
+            return [
+                $res, [ 'Content-Type', 'application/json' ],
+                [qq({"error":"$res"})]
+            ];
+        }
+    }
+
+    # Non Ajax requests may be redirected to portal
+    else {
+        my %h = $req->{respHeaders} ? %{ $req->{respHeaders} } : ();
+        my $s = $tsv->{portal}->() . "?lmError=$res";
+        $s =
+            '<html><head><title>Redirection</title></head><body>'
+          . qq{<script type="text/javascript">window.location='$s'</script>}
+          . '<h1>Please wait</h1>'
+          . qq{<p>An error occurs, you're going to be redirected to <a href="$s">$s</a>.</p>}
+          . '</body></html>';
+        $h{'Content-Type'}   = 'text/html';
+        $h{'Content-Length'} = length $s;
+        return [ $res, [%h], [$s] ];
     }
 }
 

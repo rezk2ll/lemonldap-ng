@@ -2,6 +2,7 @@ package Lemonldap::NG::Handler::PSGI::Server;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Handler::SharedConf qw(:tsv);
 
 extends 'Lemonldap::NG::Handler::PSGI';
 
@@ -11,9 +12,14 @@ sub router {
 
 sub _run {
     my $self = shift;
-    my $res = $self->SUPER::_run(@_);
-    # TODO: insert headers
-    return $res;
+    return sub {
+        my $req = $_[0];
+        $self->lmLog( 'New request', 'debug' );
+        my $res = $self->_authAndTrace($req);
+
+        # TODO: transform headers in $res->[1]
+        return $res;
+    };
 }
 
 1;
