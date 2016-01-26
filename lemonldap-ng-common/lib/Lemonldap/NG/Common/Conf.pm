@@ -298,7 +298,6 @@ sub getLocalConf {
             return $r;
         }
     }
-    $self->{_iniObj} = $cfg;
 
     # First load all default section parameters
     if ($loaddefault) {
