@@ -19,6 +19,7 @@ COMPRESS=tar czf
 UNCOMPRESS=tar xzf
 LISTCOMPRESSED=tar tzf
 COMPRESSSUFFIX=tar.gz
+NGINX=/usr/sbin/nginx
 # Perl options
 #PERLOPTIONS="INSTALLDIRS=vendor"
 PERLOPTIONS=
