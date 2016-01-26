@@ -261,6 +261,9 @@ portal:		portal_conf common
 manager:	manager_conf handler
 	$(MAKE) -C ${SRCMANAGERDIR}
 
+################
+# Test targets #
+################
 test:		all common_test handler_test portal_test manager_test extra_test
 
 common_test:	common
@@ -279,6 +282,7 @@ extra_test:	all
 	cd ${SRCPORTALDIR} && prove -b -I ../$(SRCCOMMONDIR)/blib/lib -I ../$(SRCHANDLERDIR)/blib/lib -I../${SRCPORTALDIR}/blib/lib/ xt
 #	PERL_DL_NONLAZY=1 $(PERL) "-MExtUtils::Command::MM" "-e" "test_harness(0, 'lemonldap-ng-common/blib/lib', 'lemonldap-ng-handler/blib/lib', 'lemonldap-ng-manager/blib/lib', 'lemonldap-ng-portal/blib/lib')" extra-tests/*.t
 
+# End-to-end tests
 e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_server
 
 prepare_test_server:
@@ -323,6 +327,18 @@ stop_web_server:
 	@rm -rf e2e-tests/conf
 
 restart_web_server: start_web_server
+
+# Nginx tests
+start_nginx:	all prepare_test_server
+	@$(NGINX) -p `pwd`/e2e-tests \
+		-g 'error_log /home/xavier/dev/lemonldap/e2e-tests/conf/nginx.log;' \
+		-c `pwd`/e2e-tests/nginx.conf
+
+stop_nginx:
+	# Stop web server
+	@kill `cat e2e-tests/conf/nginx.pid`
+	# Clean
+	@rm -rf e2e-tests/conf
 
 #
 # INSTALL
