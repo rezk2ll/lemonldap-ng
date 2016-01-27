@@ -446,11 +446,6 @@ install_webserver_conf:
 		cp -f _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp -f _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp -f _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp -f _example/etc/handler-nginx.conf $(RCONFDIR); \
-		cp -f _example/etc/test-nginx.conf $(RCONFDIR); \
-		cp -f _example/etc/nginx-access-control $(RCONFDIR); \
-		cp -f _example/etc/nginx-http-accounting $(RCONFDIR); \
-		cp -f _example/etc/nginx-fcgi-accounting $(RCONFDIR); \
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
 			s#__PORTALDIR__#$(PORTALDIR)/#g; \
