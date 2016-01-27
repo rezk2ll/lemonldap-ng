@@ -170,8 +170,13 @@ CSSDSTFILES=$(CSSSRCFILES:.css=.min.css)
 all:	configure common handler manager portal
 	@echo
 	@echo "Building succeed. Now run :"
-	@echo " - make test to verify your installation"
-	@echo " - make install to install all"
+	@echo " - `make test` to verify your installation"
+	@echo " - `make install PROD=yes` to install all"
+	@echo
+	@echo "    MAKE INSTALL OPTIONS:"
+	@echo "    - PROD=yes            : use js/css minified files"
+	@echo "    - USEDEBIANLIBS=yes   : use some Debian shared js/css files"
+	@echo "    - USEEXTERNALLIBS=yes : use external links for some js/css files"
 	@echo
 	@echo 'Other targets :'
 	@echo " * Partial build :"
