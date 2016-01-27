@@ -471,7 +471,7 @@ install_manager_site:	install_conf_dir
 			> $(RMANAGERTEMPLATESDIR)/`basename $$f`; \
 	done
 	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
-		rm -rvf $(MANAGEREXTERNALLIBS) \
+		rm -rvf $(MANAGEREXTERNALLIBS); \
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(MANAGERLIBSTOREMOVEFORDEBIAN); \
 	fi
@@ -503,7 +503,7 @@ install_portal_site:	install_conf_dir
 		mv -f $$f.tmp $$f; \
 	done
 	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
-		rm -rvf $(PORTALEXTERNALLIBS) \
+		rm -rvf $(PORTALEXTERNALLIBS); \
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(PORTALLIBSTOREMOVEFORDEBIAN); \
 	fi
