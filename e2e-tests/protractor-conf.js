@@ -9,7 +9,7 @@ exports.config = {
 
   chromeOnly: true,
 
-  baseUrl: 'http://manager.example.com:' + process.env.WEBSERVERPORT + '/',
+  baseUrl: 'http://manager.example.com:' + process.env.TESTWEBSERVERPORT + '/',
 
   framework: 'jasmine',
 

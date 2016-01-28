@@ -112,8 +112,10 @@ APACHEVERSION=2.X
 DNSDOMAIN=example.com
 
 # Virtual Host Listen IP and Port (*, *:80, ...)
-VHOSTLISTEN=*:80
-WEBSERVERPORT=19876
+PORT=80
+VHOSTLISTEN="*:$(PORT)"
+TESTWEBSERVERPORT=19876
+PSGISERVERSOCKET=unix:/run/llng.sock
 
 # Other
 SRCCOMMONDIR=lemonldap-ng-common
@@ -296,14 +298,16 @@ prepare_test_server:
 	@$(MAKE) install_webserver_conf \
 		RCONFDIR=e2e-tests/conf \
 		ERASECONFIG=1 \
-		VHOSTLISTEN='*:$(WEBSERVERPORT)' \
+		VHOSTLISTEN='*:$(TESTWEBSERVERPORT)' \
+		PORT=$(TESTWEBSERVERPORT) \
+		PSGISERVERSOCKET=unix:`pwd`/e2e-tests/conf/llng.sock \
 		PORTALDIR=`pwd`/$(SRCPORTALDIR)/example \
 		MANAGERDIR=`pwd`/$(SRCMANAGERDIR)/site \
 		MANAGERPSGIDIR=`pwd`/e2e-tests \
 		DEFDOCDIR=`pwd`/doc \
 		FRDOCDIR=`pwd`/po-doc/fr
 	@cp e2e-tests/lmConf-1.js e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/conf/
-	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s/__port__/$(WEBSERVERPORT)/' e2e-tests/conf/lemonldap-ng.ini e2e-tests/conf/lmConf-1.js e2e-tests/conf/env.conf
+	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s/__port__/$(TESTWEBSERVERPORT)/' e2e-tests/conf/lemonldap-ng.ini e2e-tests/conf/lmConf-1.js e2e-tests/conf/env.conf
 
 e2e-tests/conf/apache2.pid: start_web_server
 
@@ -324,11 +328,12 @@ launch_protractor:	all e2e-tests/conf/apache2.pid
 	# Start e2e tests
 	# NB: you must have protractor installed (using npm install -g protractor)
 	# and have run update-webdriver at least once and have a node.js > 4.0
-	@WEBSERVERPORT=$(WEBSERVERPORT) protractor e2e-tests/protractor-conf.js
+	@TESTWEBSERVERPORT=$(TESTWEBSERVERPORT) protractor e2e-tests/protractor-conf.js
 
 stop_web_server:
 	# Stop web server
 	-@ [ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid`
+	-@ [ -e e2e-tests/conf/nginx.pid ] && kill `cat e2e-tests/conf/nginx.pid`
 	# Clean
 	@rm -rf e2e-tests/conf
 
@@ -336,15 +341,19 @@ restart_web_server: start_web_server
 
 # Nginx tests
 start_nginx:	all prepare_test_server
+	# Clean old server if launched
+	-@[ -e e2e-tests/conf/nginx.pid ] && kill `cat e2e-tests/conf/nginx.pid` && sleep 1
 	@$(NGINX) -p `pwd`/e2e-tests \
 		-g 'error_log /home/xavier/dev/lemonldap/e2e-tests/conf/nginx.log;' \
-		-c `pwd`/e2e-tests/nginx.conf
+		-c `pwd`/e2e-tests/nginx.conf \
+		2>&1 | grep -v 'Permission denied' || true
 
-stop_nginx:
-	# Stop web server
-	@kill `cat e2e-tests/conf/nginx.pid`
-	# Clean
-	@rm -rf e2e-tests/conf
+reload_nginx:
+	@if [ -e e2e-tests/conf/nginx.pid ]; then \
+		kill -HUP `cat e2e-tests/conf/nginx.pid`; \
+	else \
+		$(MAKE) start_nginx; \
+	fi
 
 #
 # INSTALL
@@ -451,6 +460,7 @@ install_webserver_conf:
 		cp -f _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp -f _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp -f _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp -f _example/etc/handler-nginx.conf $(RCONFDIR); \
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
 			s#__PORTALDIR__#$(PORTALDIR)/#g; \
@@ -458,6 +468,8 @@ install_webserver_conf:
 			s#__MANAGERSTATICDIR__#$(MANAGERSTATICDIR)/#g; \
 			s#__MANAGERPSGIDIR__#$(MANAGERPSGIDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
+			s#__PORT__#$(PORT)#g; \
+			s#__PSGISERVERSOCKET__#$(PSGISERVERSOCKET)#g; \
 			s#__VHOSTLISTEN__#$(VHOSTLISTEN)#g; \
 			s#__DEFDOCDIR__#$(DEFDOCDIR)/#g; \
 			s#__FRDOCDIR__#$(FRDOCDIR)/#g;' $(RCONFDIR)/*apache*.conf $(RCONFDIR)/*nginx*.conf
