@@ -114,6 +114,7 @@ DNSDOMAIN=example.com
 # Virtual Host Listen IP and Port (*, *:80, ...)
 PORT=80
 VHOSTLISTEN="*:$(PORT)"
+TESTWEBSERVER=apache
 TESTWEBSERVERPORT=19876
 PSGISERVERSOCKET=unix:/run/llng.sock
 
@@ -314,12 +315,26 @@ e2e-tests/conf/apache2.pid: start_web_server
 start_web_server:	all prepare_test_server
 	# Clean old server if launched
 	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` && sleep 1
+	-@[ -e e2e-tests/conf/nginx.pid ] && kill `cat e2e-tests/conf/nginx.pid`
 	# Start web server (designed for Debian, path may be broken else)
-	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start
+	@if test "$(TESTWEBSERVER)" = "apache"; then \
+		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start; \
+	elif test "$(TESTWEBSERVER)" = "nginx"; then \
+		@$(NGINX) -p `pwd`/e2e-tests \
+			-g 'error_log /home/xavier/dev/lemonldap/e2e-tests/conf/nginx.log;' \
+			-c `pwd`/e2e-tests/nginx.conf \
+			2>&1 | grep -v 'Permission denied' || true; \
+	else \
+		echo "!!!!! Unknown test server: $(TESTWEBSERVER) !!!!!" >&2; \
+		exit 1; \
+	fi
+		
 
 reload_web_server:
 	@if [ -e e2e-tests/conf/apache2.pid ]; then \
 		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k graceful; \
+	elif [ -e e2e-tests/conf/nginx.pid ]; then \
+		kill -HUP `cat e2e-tests/conf/nginx.pid`; \
 	else \
 		$(MAKE) start_web_server; \
 	fi
@@ -332,28 +347,12 @@ launch_protractor:	all e2e-tests/conf/apache2.pid
 
 stop_web_server:
 	# Stop web server
-	-@ [ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid`
-	-@ [ -e e2e-tests/conf/nginx.pid ] && kill `cat e2e-tests/conf/nginx.pid`
+	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid`
+	-@[ -e e2e-tests/conf/nginx.pid ] && kill `cat e2e-tests/conf/nginx.pid`
 	# Clean
 	@rm -rf e2e-tests/conf
 
 restart_web_server: start_web_server
-
-# Nginx tests
-start_nginx:	all prepare_test_server
-	# Clean old server if launched
-	-@[ -e e2e-tests/conf/nginx.pid ] && kill `cat e2e-tests/conf/nginx.pid` && sleep 1
-	@$(NGINX) -p `pwd`/e2e-tests \
-		-g 'error_log /home/xavier/dev/lemonldap/e2e-tests/conf/nginx.log;' \
-		-c `pwd`/e2e-tests/nginx.conf \
-		2>&1 | grep -v 'Permission denied' || true
-
-reload_nginx:
-	@if [ -e e2e-tests/conf/nginx.pid ]; then \
-		kill -HUP `cat e2e-tests/conf/nginx.pid`; \
-	else \
-		$(MAKE) start_nginx; \
-	fi
 
 #
 # INSTALL
