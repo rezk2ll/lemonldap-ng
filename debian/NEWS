@@ -1,16 +1,25 @@
 lemonldap-ng (1.9.0-1) UNRELEASED; urgency=low
 
-  Lemonldap::NG uses now JSON to store sessions and configuration instead of
-  Perl Storable. This permits one to have both 32 and 64 bits servers in the
-  same organization. If you have more than one server and don't want to stop
-  the SSO service, start upgrading in the following order:
+  From now, Lemonldap::NG uses JSON serialization to store configuration and
+  sessions instead of Storable::nfreeze Perl function. This permits to have
+  heterogenous servers connected to the same LLNG organization (32/64 bits or
+  different Perl versions). Old format still works but:
+   * configuration backends: new format is applied at first configuration
+     save,
+   * sessions storages: new format is applied for each new session or when
+     updating an existing session. You can force LemonLDAP::NG to keep the old
+     serialization method by setting useStorable to 1 in sessions backend
+     options if you have some custom hooks.
+
+  If you have more than one server and don't want to stop the SSO service, start
+  upgrading in the following order:
    * servers that have only handlers;
    * portal servers (all together if your load balancer doesn't keep state by
-     user and if users use the menu);
+     user or client IP and if users use the menu);
    * manager server
 
   To request for authentication, handlers sent a 302 HTTP code even if request
-  was an Ajax one. For now, a 401 code will be send with a WWW-Authenticate
+  was an Ajax one. From now, a 401 code will be send with a WWW-Authenticate
   header containing portal URL. This is a little HTTP protocol hook created
   because browsers follow redirection tranparently.
   If you want to keep old behaviour, set noAjaxHook to 1 (in General Parameters
