@@ -4,16 +4,23 @@ use strict;
 our $VERSION = '1.9.0';
 
 # Specific modules and constants for Test or CGI
-use constant FORBIDDEN     => 403;
-use constant REDIRECT      => 302;
-use constant OK            => 0;
-use constant DECLINED      => 0;
-use constant DONE          => 0;
-use constant SERVER_ERROR  => 500;
-use constant AUTH_REQUIRED => 401;
-use constant MAINTENANCE   => 503;
+use constant FORBIDDEN         => 403;
+use constant HTTP_UNAUTHORIZED => 401;
+use constant REDIRECT          => 302;
+use constant OK                => 0;
+use constant DECLINED          => 0;
+use constant DONE              => 0;
+use constant SERVER_ERROR      => 500;
+use constant AUTH_REQUIRED     => 401;
+use constant MAINTENANCE       => 503;
 
 our $request;
+#
+## @method void setServerSignature(string sign)
+# modifies web server signature
+# @param $sign String to add to server signature
+sub setServerSignature {
+}
 
 ## @method void thread_share(string $variable)
 # share or not the variable (if authorized by specific module)

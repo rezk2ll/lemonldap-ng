@@ -607,7 +607,8 @@ sub tree {
                                 'port',
                                 'useRedirectOnForbidden',
                                 'useRedirectOnError',
-                                'maintenance'
+                                'maintenance',
+                                'noAjaxHook'
                             ]
                         },
                         {

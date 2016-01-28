@@ -3,14 +3,15 @@ package Lemonldap::NG::Handler::API::CGI;
 our $VERSION = '1.4.0';
 
 # Specific modules and constants for Test or CGI
-use constant FORBIDDEN     => 403;
-use constant REDIRECT      => 302;
-use constant OK            => 0;
-use constant DECLINED      => 0;
-use constant DONE          => 0;
-use constant SERVER_ERROR  => 500;
-use constant AUTH_REQUIRED => 401;
-use constant MAINTENANCE   => 503;
+use constant FORBIDDEN         => 403;
+use constant HTTP_UNAUTHORIZED => 401;
+use constant REDIRECT          => 302;
+use constant OK                => 0;
+use constant DECLINED          => 0;
+use constant DONE              => 0;
+use constant SERVER_ERROR      => 500;
+use constant AUTH_REQUIRED     => 401;
+use constant MAINTENANCE       => 503;
 
 # Log level, since it can't be set in server config
 # Default value 'notice' can be changed in lemonldap-ng.ini or in init args

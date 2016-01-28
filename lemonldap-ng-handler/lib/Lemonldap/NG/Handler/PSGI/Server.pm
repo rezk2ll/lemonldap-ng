@@ -15,7 +15,8 @@ sub _run {
     return sub {
         my $req = $_[0];
         $self->lmLog( 'New request', 'debug' );
-        my $res = $self->_authAndTrace($req);
+        my $res = $self->_authAndTrace(
+            Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
 
         # TODO: transform headers in $res->[1]
         return $res;

@@ -2,14 +2,15 @@ package Lemonldap::NG::Handler::API::Nginx;
 
 our $VERSION = '1.9.0';
 
-use constant FORBIDDEN     => 403;
-use constant REDIRECT      => 302;
-use constant OK            => 0;
-use constant DECLINED      => -1;
-use constant DONE          => -2;
-use constant SERVER_ERROR  => 500;
-use constant AUTH_REQUIRED => 401;
-use constant MAINTENANCE   => 503;
+use constant FORBIDDEN         => 403;
+use constant HTTP_UNAUTHORIZED => 401;
+use constant REDIRECT          => 302;
+use constant OK                => 0;
+use constant DECLINED          => -1;
+use constant DONE              => -2;
+use constant SERVER_ERROR      => 500;
+use constant AUTH_REQUIRED     => 401;
+use constant MAINTENANCE       => 503;
 
 my $request;    # Nginx object for current request
 

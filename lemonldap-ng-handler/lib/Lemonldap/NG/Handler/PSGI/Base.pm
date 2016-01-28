@@ -74,29 +74,29 @@ sub _authAndTrace {
     #            is not really HTTP compliant but nothing in this
     #            protocol can do this. Our javascripts understand that
     #            they have to prompt user with the URL
-    elsif (
-        $req->accept =~ m|application/json|
-        or (    $req->contentType
-            and $req->contentType =~ m|application/json| )
-      )
-    {
-        $self->lmLog( 'Ajax request detected', 'debug' );
-        if ( $res == 302 or $res == 303 ) {
-            $self->lmLog( 'Rewrite redirection to 401 response', 'debug' );
-            return [
-                401, [ 'WWW-Authenticate' => $req->{respHeaders}->{Location} ], ['']
-            ];
-        }
-        else {
-            $self->lmLog(
-                "Lemonldap::NG::Handler::SharedConf::run() returns $res",
-                'debug' );
-            return [
-                $res, [ 'Content-Type', 'application/json' ],
-                [qq({"error":"$res"})]
-            ];
-        }
-    }
+    #elsif (
+    #    $req->accept =~ m|application/json|
+    #    or (    $req->contentType
+    #        and $req->contentType =~ m|application/json| )
+    #  )
+    #{
+    #    $self->lmLog( 'Ajax request detected', 'debug' );
+    #    if ( $res == 302 or $res == 303 ) {
+    #        $self->lmLog( 'Rewrite redirection to 401 response', 'debug' );
+    #        return [
+    #            401, [ 'WWW-Authenticate' => $req->{respHeaders}->{Location} ], ['']
+    #        ];
+    #    }
+    #    else {
+    #        $self->lmLog(
+    #            "Lemonldap::NG::Handler::SharedConf::run() returns $res",
+    #            'debug' );
+    #        return [
+    #            $res, [ 'Content-Type', 'application/json' ],
+    #            [qq({"error":"$res"})]
+    #        ];
+    #    }
+    #}
 
     # Non Ajax requests may be redirected to portal
     else {

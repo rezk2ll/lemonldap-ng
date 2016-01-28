@@ -325,6 +325,7 @@
 "newRSAKey": "New keys",
 "newRule": "New rule",
 "next": "Next",
+"noAjaxHook": "Keep redirections for Ajax",
 "noDatas": "No datas to display",
 "notABoolean": "Not a boolean",
 "notAnInteger": "Not an integer",

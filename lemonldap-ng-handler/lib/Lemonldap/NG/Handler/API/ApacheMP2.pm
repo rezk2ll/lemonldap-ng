@@ -13,14 +13,15 @@ use Apache2::Const;
 use Apache2::Filter;
 use APR::Table;
 
-use constant FORBIDDEN     => Apache2::Const::FORBIDDEN;
-use constant REDIRECT      => Apache2::Const::REDIRECT;
-use constant OK            => Apache2::Const::OK;
-use constant DECLINED      => Apache2::Const::DECLINED;
-use constant DONE          => Apache2::Const::DONE;
-use constant SERVER_ERROR  => Apache2::Const::SERVER_ERROR;
-use constant AUTH_REQUIRED => Apache2::Const::AUTH_REQUIRED;
-use constant MAINTENANCE   => Apache2::Const::HTTP_SERVICE_UNAVAILABLE;
+use constant FORBIDDEN         => Apache2::Const::FORBIDDEN;
+use constant HTTP_UNAUTHORIZED => Apache2::Const::HTTP_UNAUTHORIZED;
+use constant REDIRECT          => Apache2::Const::REDIRECT;
+use constant OK                => Apache2::Const::OK;
+use constant DECLINED          => Apache2::Const::DECLINED;
+use constant DONE              => Apache2::Const::DONE;
+use constant SERVER_ERROR      => Apache2::Const::SERVER_ERROR;
+use constant AUTH_REQUIRED     => Apache2::Const::AUTH_REQUIRED;
+use constant MAINTENANCE       => Apache2::Const::HTTP_SERVICE_UNAVAILABLE;
 
 eval { require threads::shared; };
 print STDERR

@@ -127,6 +127,7 @@ sub defaultValues {
         'managerDn'            => '',
         'managerPassword'      => '',
         'multiValuesSeparator' => '; ',
+        'noAjaxHook'           => 0,
         'notification'         => 0,
         'notificationStorage'  => 'File',
         'notificationStorageOptions' => {

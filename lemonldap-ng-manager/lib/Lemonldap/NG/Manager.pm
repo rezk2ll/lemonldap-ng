@@ -35,6 +35,9 @@ sub init {
           foreach ( keys %$localconf );
     }
 
+    # Manager needs to keep new Ajax behaviour
+    $args->{noAjaxHook} = 0;
+
     return 0 unless ( $self->Lemonldap::NG::Handler::PSGI::Router::init($args) );
 
     # TODO: manage errors

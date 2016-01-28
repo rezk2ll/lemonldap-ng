@@ -239,6 +239,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Maintenance mode for all virtual hosts',
         },
+        noAjaxHook => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Avoid replacing 302 by 401 for Ajax responses',
+        },
         portal => {
             type          => 'url',
             default       => 'http://auth.example.com/',

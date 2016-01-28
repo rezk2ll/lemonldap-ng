@@ -69,7 +69,7 @@ sub updateStatus {
 # Used to reject non authorized requests.
 # Inform the status processus and call logForbidden().
 # @param $uri URI
-# @return Apache2::Const::REDIRECT or Apache2::Const::FORBIDDEN
+# @return Apache2::Const::FORBIDDEN
 sub forbidden {
     my $class = shift;
     my $uri   = Lemonldap::NG::Handler::API->unparsed_uri;
@@ -134,18 +134,35 @@ sub encodeUrl {
 # @return Apache2::Const::REDIRECT
 sub goToPortal {
     my ( $class, $url, $arg ) = @_;
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
-        "Redirect "
-          . Lemonldap::NG::Handler::API->remote_ip
-          . " to portal (url was $url)",
-        'debug'
-    );
+    my ( $ret, $msg );
     my $urlc_init = $class->encodeUrl($url);
-    Lemonldap::NG::Handler::API->set_header_out(
-            'Location' => &{ $tsv->{portal} }()
-          . "?url=$urlc_init"
-          . ( $arg ? "&$arg" : "" ) );
-    return REDIRECT;
+    if ( !$tsv->{noAjaxHook}
+        and Lemonldap::NG::Handler::API->header_in('Accept') =~
+        m|application/json| )
+    {
+        $msg =
+            "Ajax request, send 401 instead of 302 "
+          . Lemonldap::NG::Handler::API->remote_ip
+          . " to portal (url was $url)";
+        Lemonldap::NG::Handler::API->set_header_out(
+                'WWW-Authenticate' => &{ $tsv->{portal} }()
+              . "?url=$urlc_init"
+              . ( $arg ? "&$arg" : "" ) );
+        $ret = HTTP_UNAUTHORIZED;
+    }
+    else {
+        $msg =
+            "Redirect "
+          . Lemonldap::NG::Handler::API->remote_ip
+          . " to portal (url was $url)";
+        Lemonldap::NG::Handler::API->set_header_out(
+                'Location' => &{ $tsv->{portal} }()
+              . "?url=$urlc_init"
+              . ( $arg ? "&$arg" : "" ) );
+        $ret = REDIRECT;
+    }
+    Lemonldap::NG::Handler::Main::Logger->lmLog( $msg, 'debug' );
+    return $ret;
 }
 
 ## @rmethod protected $ fetchId()

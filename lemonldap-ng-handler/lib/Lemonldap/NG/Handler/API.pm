@@ -8,7 +8,7 @@ our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 BEGIN {
     %EXPORT_TAGS = (
         httpCodes => [
-            qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED MAINTENANCE )
+            qw( MP OK REDIRECT HTTP_UNAUTHORIZED FORBIDDEN DONE DECLINED SERVER_ERROR AUTH_REQUIRED MAINTENANCE )
         ],
         functions => [
             qw( &hostname &remote_ip &uri &uri_with_args
