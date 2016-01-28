@@ -136,33 +136,17 @@ sub goToPortal {
     my ( $class, $url, $arg ) = @_;
     my ( $ret, $msg );
     my $urlc_init = $class->encodeUrl($url);
-    if ( !$tsv->{noAjaxHook}
-        and Lemonldap::NG::Handler::API->header_in('Accept') =~
-        m|application/json| )
-    {
-        $msg =
-            "Ajax request, send 401 instead of 302 "
+    Lemonldap::NG::Handler::Main::Logger->lmLog(
+        "Redirect "
           . Lemonldap::NG::Handler::API->remote_ip
-          . " to portal (url was $url)";
-        Lemonldap::NG::Handler::API->set_header_out(
-                'WWW-Authenticate' => &{ $tsv->{portal} }()
-              . "?url=$urlc_init"
-              . ( $arg ? "&$arg" : "" ) );
-        $ret = HTTP_UNAUTHORIZED;
-    }
-    else {
-        $msg =
-            "Redirect "
-          . Lemonldap::NG::Handler::API->remote_ip
-          . " to portal (url was $url)";
-        Lemonldap::NG::Handler::API->set_header_out(
-                'Location' => &{ $tsv->{portal} }()
-              . "?url=$urlc_init"
-              . ( $arg ? "&$arg" : "" ) );
-        $ret = REDIRECT;
-    }
-    Lemonldap::NG::Handler::Main::Logger->lmLog( $msg, 'debug' );
-    return $ret;
+          . " to portal (url was $url)",
+        'debug'
+    );
+    Lemonldap::NG::Handler::API->set_header_out(
+            'Location' => &{ $tsv->{portal} }()
+          . "?url=$urlc_init"
+          . ( $arg ? "&$arg" : "" ) );
+    return REDIRECT;
 }
 
 ## @rmethod protected $ fetchId()
@@ -580,8 +564,8 @@ sub redirectFilter {
     }
     while ( $f->read( my $buffer, 1024 ) ) {
     }
-    $class->updateStatus( $f->r, 'REDIRECT', $datas->{ $tsv->{whatToTrace} },
-        'filter' );
+    $class->updateStatus( $f->r, 'REDIRECT',
+        $datas->{ $tsv->{whatToTrace} }, 'filter' );
     return OK;
 }
 

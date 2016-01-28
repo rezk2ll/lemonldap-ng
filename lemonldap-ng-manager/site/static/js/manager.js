@@ -92,7 +92,15 @@
         };
       }
       else if (e == 401) {
+        if ($scope.portal) {
+          window.location = $scope.portal + window.btoa(window.location).replace(/\//, '_');
+        }
         console.log('Authentication needed');
+        $scope.message = {
+          title: 'authenticationNeeded',
+          message: 'waitOrF5',
+          items: []
+        };
       }
       else if (e == 400) {
         $scope.message = {

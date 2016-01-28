@@ -1373,7 +1373,9 @@ sub printImage {
         return;
     }
     print $self->header(
-        $type . '; charset=utf-8; content-length=' . ( stat($file) )[10] );
+        -type             => "$type; charset=utf-8",
+        '-Content-Length' => ( stat($file) )[10]
+    );
     my $buffer = "";
     while ( read( IMAGE, $buffer, 4096 ) ) {
         print $buffer;
@@ -1505,6 +1507,23 @@ sub process {
           issuerForAuthUser autoRedirect)
     );
     $self->updateStatus;
+    if (   !$self->{noAjaxHook}
+        and $self->http('Accept') =~ m#(?:application|text)/json# )
+    {
+        if ( ( my $code = $self->{error} ) > 0 ) {
+            print $self->header(
+                -status                        => '401 Unauthorizated',
+                '-WWW-Authenticate'            => "SSO $self->{portal}",
+                '-Access-Control-Allow-Origin' => '*',
+            );
+            $self->quit;
+        }
+        else {
+            $self->header( -type => 'application/json' );
+            print '{"result":1,"message":"Authenticated"}';
+            $self->quit;
+        }
+    }
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
 }
 
@@ -1643,9 +1662,10 @@ sub controlExistingSession {
 
         if ( $captcha && $captcha->image ) {
             binmode STDOUT;
-            print $self->header( 'image/png'
-                  . '; charset=utf-8; content-length='
-                  . length( $captcha->image ) );
+            print $self->header(
+                -type             => 'image/png; charset=utf-8',
+                '-Content-Length' => length( $captcha->image )
+            );
             print $captcha->image;
         }
         $self->quit();

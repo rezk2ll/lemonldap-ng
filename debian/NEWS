@@ -19,9 +19,9 @@ lemonldap-ng (1.9.0-1) UNRELEASED; urgency=low
    * manager server
 
   To request for authentication, handlers sent a 302 HTTP code even if request
-  was an Ajax one. From now, a 401 code will be send with a WWW-Authenticate
-  header containing portal URL. This is a little HTTP protocol hook created
-  because browsers follow redirection tranparently.
+  was an Ajax one. From now, after redirection, portal will send a 401 code
+  with a WWW-Authenticate header containing "SSO portal-URL". This is a little
+  HTTP protocol hook created because browsers follow redirection tranparently.
   If you want to keep old behaviour, set noAjaxHook to 1 (in General Parameters
   -> Advanced -> Handler redirections -> Keep redirections for Ajax).
 
