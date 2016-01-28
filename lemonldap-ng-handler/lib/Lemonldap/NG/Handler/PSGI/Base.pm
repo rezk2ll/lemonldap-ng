@@ -84,7 +84,7 @@ sub _authAndTrace {
         if ( $res == 302 or $res == 303 ) {
             $self->lmLog( 'Rewrite redirection to 401 response', 'debug' );
             return [
-                401, [ Authorization => $req->{respHeaders}->{Location} ], ['']
+                401, [ 'WWW-Authenticate' => $req->{respHeaders}->{Location} ], ['']
             ];
         }
         else {

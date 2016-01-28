@@ -220,8 +220,8 @@
       'responseError': function(rejection) {
         // data / status / config / statusText / headers()
         var url = rejection.headers();
-        if (rejection.status == 401 && url.authorization && url.authorization.match(/^http/)) {
-          var u = url.authorization.replace(/url=.*$/g, '');
+        if (rejection.status == 401 && url['www-authenticate'] && url['www-authenticate'].match(/^http/)) {
+          var u = url['www-authenticate'].replace(/url=.*$/g, '');
           u += 'url=' + window.btoa(window.location).replace(/\//, '_');
           window.location = u;
         }
