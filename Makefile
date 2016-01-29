@@ -314,16 +314,25 @@ e2e-tests/conf/apache2.pid: start_web_server
 
 start_web_server:	all prepare_test_server
 	# Clean old server if launched
-	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` && sleep 1
-	-@[ -e e2e-tests/conf/nginx.pid ] && kill `cat e2e-tests/conf/nginx.pid`
+	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` || true
+	-@[ -e e2e-tests/conf/nginx.pid ]   && kill `cat e2e-tests/conf/nginx.pid` || true
+	-@[ -e e2e-tests/conf/plackup.pid ] && kill `cat e2e-tests/conf/plackup.pid` && rm -f e2e-tests/conf/plackup.pid || true
 	# Start web server (designed for Debian, path may be broken else)
-	@if test "$(TESTWEBSERVER)" = "apache"; then \
+	if test "$(TESTWEBSERVER)" = "apache"; then \
 		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start; \
 	elif test "$(TESTWEBSERVER)" = "nginx"; then \
-		@$(NGINX) -p `pwd`/e2e-tests \
+		echo "Launching nginx"; \
+		$(NGINX) -p `pwd`/e2e-tests \
 			-g 'error_log /home/xavier/dev/lemonldap/e2e-tests/conf/nginx.log;' \
 			-c `pwd`/e2e-tests/nginx.conf \
 			2>&1 | grep -v 'Permission denied' || true; \
+		echo "Launching plackup"; \
+		/sbin/start-stop-daemon --start \
+			--pidfile e2e-tests/conf/plackup.pid \
+			-d `pwd` -b -m \
+			--exec /usr/bin/plackup -- \
+			-s FCGI --listen e2e-tests/conf/llng.sock \
+			e2e-tests/handler-server.psgi; \
 	else \
 		echo "!!!!! Unknown test server: $(TESTWEBSERVER) !!!!!" >&2; \
 		exit 1; \
@@ -347,8 +356,9 @@ launch_protractor:	all e2e-tests/conf/apache2.pid
 
 stop_web_server:
 	# Stop web server
-	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid`
-	-@[ -e e2e-tests/conf/nginx.pid ] && kill `cat e2e-tests/conf/nginx.pid`
+	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` || true
+	-@[ -e e2e-tests/conf/nginx.pid ]   && kill `cat e2e-tests/conf/nginx.pid` ||true
+	-@[ -e e2e-tests/conf/plackup.pid ] && kill `cat e2e-tests/conf/plackup.pid` && rm -f e2e-tests/conf/plackup.pid || true
 	# Clean
 	@rm -rf e2e-tests/conf
 
