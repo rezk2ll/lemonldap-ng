@@ -1,5 +1,6 @@
 /usr/share/perl5/Lemonldap/NG/Manager*
 /etc/lemonldap-ng/manager-apache2.conf
+/etc/lemonldap-ng/manager-nginx.conf
 /usr/share/lemonldap-ng/manager
 /var/lib/lemonldap-ng/manager
 /usr/share/lemonldap-ng/bin/lmConfigEditor

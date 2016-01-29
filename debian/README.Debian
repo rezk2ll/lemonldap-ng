@@ -9,8 +9,10 @@ with a quick sed command. For example, we change it to ow2.org:
   sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* \
          /var/lib/lemonldap-ng/conf/lmConf-1.js /var/lib/lemonldap-ng/test/index.pl
 
-2 - Enable LL::NG sites in Apache
----------------------------------
+2 - Enable LL::NG sites
+-----------------------
+
+2.1 - Apache
 
 Enable the components you've installed:
 
@@ -24,7 +26,7 @@ Enable the components you've installed:
   a2ensite handler-apache2.conf
   a2ensite test-apache2.conf
 
-and enable mod_perl if not already loaded:
+customize them and enable mod_perl if not already loaded:
 
   a2enmod perl
 
@@ -32,6 +34,25 @@ Then restart Apache:
 
   apache2ctl configtest
   apache2ctl restart
+
+2.2 - Nginx
+
+Enable the components you've installed:
+
+  cd /etc/nginx/sites-enabled
+
+  # Portal
+  ln -s ../sites-available/portal-nginx.conf
+
+  # Manager
+  ln -s ../sites-available/manager-nginx.conf
+
+  # Handler
+  ln -s ../sites-available/handler-nginx.conf
+
+Customize then, then reload nginx
+
+  service nginx reload
 
 3 - Check your DNS
 ------------------

@@ -7,3 +7,4 @@
 /usr/share/lemonldap-ng/portal
 /var/lib/lemonldap-ng/portal
 /etc/lemonldap-ng/portal-apache2.conf
+/etc/lemonldap-ng/portal-nginx.conf
