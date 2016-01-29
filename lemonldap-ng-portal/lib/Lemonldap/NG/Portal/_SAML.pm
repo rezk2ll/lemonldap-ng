@@ -2889,6 +2889,9 @@ sub createAttributeValue {
     # Value is required
     return unless defined $value;
 
+    # Decode UTF-8
+    $value = decode( "utf8", $value );
+
     # SAML2 attribute value
     eval { $saml2value = Lasso::Saml2AttributeValue->new(); };
     if ($@) {
