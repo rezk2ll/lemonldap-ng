@@ -323,7 +323,7 @@ start_web_server:	all prepare_test_server
 	elif test "$(TESTWEBSERVER)" = "nginx"; then \
 		echo "Launching nginx"; \
 		$(NGINX) -p `pwd`/e2e-tests \
-			-g 'error_log /home/xavier/dev/lemonldap/e2e-tests/conf/nginx.log;' \
+			-g 'error_log '`pwd`'/e2e-tests/conf/nginx.log;' \
 			-c `pwd`/e2e-tests/nginx.conf \
 			2>&1 | grep -v 'Permission denied' || true; \
 		echo "Launching plackup"; \
@@ -370,7 +370,7 @@ plackup:
 		--exec /usr/bin/plackup -- \
 		-s FCGI \
 		--listen e2e-tests/conf/llng.sock \
-		e2e-tests/handler-server.psgi
+		e2e-tests/llng.psgi
 
 #
 # INSTALL
@@ -477,7 +477,7 @@ install_webserver_conf:
 		cp -f _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp -f _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp -f _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp -f _example/etc/handler-nginx.conf $(RCONFDIR); \
+		cp -f _example/etc/*-nginx.conf $(RCONFDIR); \
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
 			s#__PORTALDIR__#$(PORTALDIR)/#g; \
