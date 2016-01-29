@@ -18,6 +18,12 @@ sub _run {
         my $res = $self->_authAndTrace(
             Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
 
+        # Transform 302 responses in 401 since Nginx refuse it
+        if($res->[0] == 302 or $res->[0] == 303) {
+            $res->[0] = 401;
+            push @{$res->[1]},'X-Location' => $tsv->{portal}
+        }
+
         # TODO: transform headers in $res->[1]
         return $res;
     };

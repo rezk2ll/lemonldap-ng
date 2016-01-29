@@ -4,6 +4,7 @@ use Exporter 'import';
 
 our $VERSION = '1.4.0';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
+our $mode;
 
 BEGIN {
     %EXPORT_TAGS = (
@@ -40,22 +41,31 @@ sub AUTOLOAD {
     # - Apache (modperl 2),
     # - Apache (modperl1),
     # - Nginx
-    my $mode =
-      ( caller(6)
-          and ( caller(6) )[0] eq 'Lemonldap::NG::Handler::PSGI::Server' )
-      ? 'PSGI/Server'
-      : ( caller(6) and ( caller(6) )[0] =~ /Lemonldap::NG::Handler::PSGI/ )
-      ? 'PSGI'
-      : $ENV{GATEWAY_INTERFACE} ? 'CGI'
-      : ( MP == 2 )             ? 'ApacheMP2'
-      : ( MP == 1 )             ? 'ApacheMP1'
-      : $main::{'nginx::'}      ? 'Nginx'
-      :                           'CGI';
-    unless ( $INC{"Lemonldap/NG/Handler/API/$mode.pm"} ) {
-        $mode =~ s#/#::#g;
-        eval
+    if ( !$mode or $func eq 'newRequest' ) {
+        $mode =
+          ( ( caller(1) )[0] eq 'Lemonldap::NG::Handler::PSGI::Server' )
+          ? 'PSGI/Server'
+          : (
+            ( caller(0) )[0] =~ /^Lemonldap::NG::Handler::PSGI/
+              or (
+                (
+                        ( caller(6) )[0]
+                    and ( ( caller(6) )[0] =~ /^Lemonldap::NG::Handler::PSGI/ )
+                )
+              )
+          )                         ? 'PSGI'
+          : $ENV{GATEWAY_INTERFACE} ? 'CGI'
+          : ( MP == 2 )             ? 'ApacheMP2'
+          : ( MP == 1 )             ? 'ApacheMP1'
+          : $main::{'nginx::'}      ? 'Nginx'
+          :                           'CGI';
+        unless ( $INC{"Lemonldap/NG/Handler/API/$mode.pm"} ) {
+            $mode =~ s#/#::#g;
+            eval
 "use Lemonldap::NG::Handler::API::$mode (':httpCodes', ':functions');";
             die $@ if ($@);
+        }
+        $mode =~ s#/#::#g;
     }
     shift;
     return "Lemonldap::NG::Handler::API::${mode}"->${func}(@_);
