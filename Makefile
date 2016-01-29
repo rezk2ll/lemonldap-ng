@@ -889,6 +889,11 @@ default-diff:
 	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
 	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' $(SRCMANAGERDIR)/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true
 
+test-diff:
+	for file in `find lemonldap-ng-*/lib -type f`; do \
+		$(DIFF) $$file `echo $$file|sed -e s/lib/blib\\\/lib/`; \
+	done
+
 tidy: clean
 	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.t' \) -print -exec perltidy -b {} \;
 	find lemon*/ -name '*.bak' -delete
