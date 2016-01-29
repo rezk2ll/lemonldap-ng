@@ -327,13 +327,7 @@ start_web_server:	all prepare_test_server
 			-c `pwd`/e2e-tests/nginx.conf \
 			2>&1 | grep -v 'Permission denied' || true; \
 		echo "Launching plackup"; \
-		/sbin/start-stop-daemon --start \
-			--pidfile e2e-tests/conf/plackup.pid \
-			-d `pwd` -b -m \
-			--exec /usr/bin/plackup -- \
-			-s FCGI \
-			--listen e2e-tests/conf/llng.sock \
-			e2e-tests/handler-server.psgi; \
+		$(MAKE) plackup; \
 	else \
 		echo "!!!!! Unknown test server: $(TESTWEBSERVER) !!!!!" >&2; \
 		exit 1; \
@@ -345,6 +339,8 @@ reload_web_server:
 		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k graceful; \
 	elif [ -e e2e-tests/conf/nginx.pid ]; then \
 		kill -HUP `cat e2e-tests/conf/nginx.pid`; \
+		kill `cat e2e-tests/conf/plackup.pid` || true; \
+		$(MAKE) plackup; \
 	else \
 		$(MAKE) start_web_server; \
 	fi
@@ -364,6 +360,15 @@ stop_web_server:
 	@rm -rf e2e-tests/conf
 
 restart_web_server: start_web_server
+
+plackup:
+	@/sbin/start-stop-daemon --start \
+		--pidfile e2e-tests/conf/plackup.pid \
+		-d `pwd` -b -m \
+		--exec /usr/bin/plackup -- \
+		-s FCGI \
+		--listen e2e-tests/conf/llng.sock \
+		e2e-tests/handler-server.psgi
 
 #
 # INSTALL
