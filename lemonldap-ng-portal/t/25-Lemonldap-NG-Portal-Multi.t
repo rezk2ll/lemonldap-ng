@@ -63,6 +63,7 @@ $ENV{REQUEST_URI}          = '/';
 $ENV{QUERY_STRING}         = '';
 $ENV{REMOTE_ADDR}          = '127.0.0.1';
 $ENV{HTTP_ACCEPT_LANGUAGE} = 'en';
+$ENV{HTTP_ACCEPT}          = 'text/html';
 
 my ( $test, $testU );
 {
