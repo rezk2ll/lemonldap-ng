@@ -336,7 +336,8 @@ start_web_server:	all prepare_test_server
 
 reload_web_server:
 	@if [ -e e2e-tests/conf/apache2.pid ]; then \
-		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k graceful; \
+		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
+		/usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k graceful; \
 	elif [ -e e2e-tests/conf/nginx.pid ]; then \
 		kill -HUP `cat e2e-tests/conf/nginx.pid`; \
 		kill `cat e2e-tests/conf/plackup.pid` || true; \
@@ -362,7 +363,8 @@ stop_web_server:
 restart_web_server: start_web_server
 
 plackup:
-	@/sbin/start-stop-daemon --start \
+	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
+	/sbin/start-stop-daemon --start \
 		--pidfile e2e-tests/conf/plackup.pid \
 		-d `pwd` -b -m \
 		--exec /usr/bin/plackup -- \
