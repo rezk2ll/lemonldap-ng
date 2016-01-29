@@ -318,7 +318,7 @@ start_web_server:	all prepare_test_server
 	-@[ -e e2e-tests/conf/nginx.pid ]   && kill `cat e2e-tests/conf/nginx.pid` || true
 	-@[ -e e2e-tests/conf/plackup.pid ] && kill `cat e2e-tests/conf/plackup.pid` && rm -f e2e-tests/conf/plackup.pid || true
 	# Start web server (designed for Debian, path may be broken else)
-	if test "$(TESTWEBSERVER)" = "apache"; then \
+	@if test "$(TESTWEBSERVER)" = "apache"; then \
 		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start; \
 	elif test "$(TESTWEBSERVER)" = "nginx"; then \
 		echo "Launching nginx"; \
@@ -331,7 +331,8 @@ start_web_server:	all prepare_test_server
 			--pidfile e2e-tests/conf/plackup.pid \
 			-d `pwd` -b -m \
 			--exec /usr/bin/plackup -- \
-			-s FCGI --listen e2e-tests/conf/llng.sock \
+			-s FCGI \
+			--listen e2e-tests/conf/llng.sock \
 			e2e-tests/handler-server.psgi; \
 	else \
 		echo "!!!!! Unknown test server: $(TESTWEBSERVER) !!!!!" >&2; \
