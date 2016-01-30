@@ -321,6 +321,11 @@ start_web_server:	all prepare_test_server
 	@if test "$(TESTWEBSERVER)" = "apache"; then \
 		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start; \
 	elif test "$(TESTWEBSERVER)" = "nginx"; then \
+		echo "Testing nginx conf"; \
+		$(NGINX) -t -p `pwd`/e2e-tests \
+			-g 'error_log '`pwd`'/e2e-tests/conf/nginx.log;' \
+			-c `pwd`/e2e-tests/nginx.conf \
+			2>&1 | grep -v 'Permission denied' || true; \
 		echo "Launching nginx"; \
 		$(NGINX) -p `pwd`/e2e-tests \
 			-g 'error_log '`pwd`'/e2e-tests/conf/nginx.log;' \
@@ -364,12 +369,10 @@ restart_web_server: start_web_server
 
 plackup:
 	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
-	/sbin/start-stop-daemon --start \
-		--pidfile e2e-tests/conf/plackup.pid \
-		-d `pwd` -b -m \
-		--exec /usr/bin/plackup -- \
-		-s FCGI \
+	plackup -s FCGI \
 		--listen e2e-tests/conf/llng.sock \
+		--daemonize --pid e2e-tests/conf/plackup.pid \
+		--nproc 1 --proc-title llng-fastcgi-server \
 		e2e-tests/llng.psgi
 
 #

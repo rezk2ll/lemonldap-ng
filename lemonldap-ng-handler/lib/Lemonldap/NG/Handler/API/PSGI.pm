@@ -30,6 +30,10 @@ sub thread_share {
     # nothing to do in PSGI
 }
 
+## @method void newRequest($r)
+# Store request in global $request variable
+#
+#@param $r Lemonldap::NG::Common::PSGI::Request
 sub newRequest {
     my ( $class, $r ) = @_;
     $request                  = $r;

@@ -8,6 +8,8 @@ our $VERSION = '1.9.0';
 
 has protection => ( is => 'rw', isa => 'Str' );
 
+## @method boolean init($args)
+# Initalize main handler
 sub init {
     my ( $self, $args ) = @_;
     eval { Lemonldap::NG::Handler::SharedConf->init($self) };
@@ -25,6 +27,9 @@ sub init {
     return 1;
 }
 
+## @methodi CODE-ref _run
+# Check if protecton is activated then return a code ref that will launch
+# _authAndTrace() if protection in on or router() else
 sub _run {
     my $self = shift;
 
@@ -45,6 +50,8 @@ sub _run {
 
     else {
         $self->lmLog( 'PSGI app is not protected', 'debug' );
+
+        # Check if main handler initialization has been done
         unless (%$tsv) {
             $self->lmLog( 'Checking conf', 'debug' );
             eval { Lemonldap::NG::Handler::SharedConf->checkConf() };
@@ -58,6 +65,9 @@ sub _run {
     }
 }
 
+## @method private PSGI-Response _authAndTrace($req)
+# Launch Lemonldap::NG::Handler::SharedConf::run() and then router() if
+# response is 200.
 sub _authAndTrace {
     my ( $self, $req ) = @_;
     Lemonldap::NG::Handler::API->newRequest($req);
@@ -69,36 +79,6 @@ sub _authAndTrace {
         $self->lmLog( 'User authenticated, calling router()', 'debug' );
         return $self->router($req);
     }
-
-    # Ajax hook: Ajax requests can not understand 30x responses. This
-    #            is not really HTTP compliant but nothing in this
-    #            protocol can do this. Our javascripts understand that
-    #            they have to prompt user with the URL
-    #elsif (
-    #    $req->accept =~ m|application/json|
-    #    or (    $req->contentType
-    #        and $req->contentType =~ m|application/json| )
-    #  )
-    #{
-    #    $self->lmLog( 'Ajax request detected', 'debug' );
-    #    if ( $res == 302 or $res == 303 ) {
-    #        $self->lmLog( 'Rewrite redirection to 401 response', 'debug' );
-    #        return [
-    #            401, [ 'WWW-Authenticate' => $req->{respHeaders}->{Location} ], ['']
-    #        ];
-    #    }
-    #    else {
-    #        $self->lmLog(
-    #            "Lemonldap::NG::Handler::SharedConf::run() returns $res",
-    #            'debug' );
-    #        return [
-    #            $res, [ 'Content-Type', 'application/json' ],
-    #            [qq({"error":"$res"})]
-    #        ];
-    #    }
-    #}
-
-    # Non Ajax requests may be redirected to portal
     else {
         my %h = $req->{respHeaders} ? %{ $req->{respHeaders} } : ();
         my $s = $tsv->{portal}->() . "?lmError=$res";
@@ -148,4 +128,5 @@ sub sendError {
     $err = '[' . $self->userId($req) . "] $err";
     return $self->Lemonldap::NG::Common::PSGI::sendError( $req, $err, $code );
 }
+
 1;

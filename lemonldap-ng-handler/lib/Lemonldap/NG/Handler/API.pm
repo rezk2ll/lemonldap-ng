@@ -43,8 +43,8 @@ sub AUTOLOAD {
     # - Nginx
     if ( !$mode or $func eq 'newRequest' ) {
         $mode =
-          ( ( caller(1) )[0] eq 'Lemonldap::NG::Handler::PSGI::Server' )
-          ? 'PSGI/Server'
+          ( ( caller(1) )[0] eq 'Lemonldap::NG::Handler::Nginx' )
+          ? 'Nginx'
           : (
             ( caller(0) )[0] =~ /^Lemonldap::NG::Handler::PSGI/
               or (
@@ -57,7 +57,7 @@ sub AUTOLOAD {
           : $ENV{GATEWAY_INTERFACE} ? 'CGI'
           : ( MP == 2 )             ? 'ApacheMP2'
           : ( MP == 1 )             ? 'ApacheMP1'
-          : $main::{'nginx::'}      ? 'Nginx'
+          : $main::{'nginx::'}      ? 'ExperimentalNginx'
           :                           'CGI';
         unless ( $INC{"Lemonldap/NG/Handler/API/$mode.pm"} ) {
             $mode =~ s#/#::#g;

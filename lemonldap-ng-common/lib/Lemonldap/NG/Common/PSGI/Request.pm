@@ -119,6 +119,8 @@ has CONTENT_LENGTH => (
 );
 has error => ( is => 'rw', isa => 'Str', default => '' );
 
+has respHeaders => ( is => 'rw', isa => 'HashRef' );
+
 # JSON parser
 sub jsonBodyToObj {
     my $self = shift;

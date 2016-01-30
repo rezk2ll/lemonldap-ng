@@ -18,8 +18,8 @@ my %_apps;
 
 my %builder = (
     handler => sub {
-        require Lemonldap::NG::Handler::PSGI::Server;
-        return Lemonldap::NG::Handler::PSGI::Server->run( {} );
+        require Lemonldap::NG::Handler::Nginx;
+        return Lemonldap::NG::Handler::Nginx->run( {} );
     },
     manager => sub {
         require Lemonldap::NG::Manager;

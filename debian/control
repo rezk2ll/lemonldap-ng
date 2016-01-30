@@ -111,7 +111,7 @@ Package: liblemonldap-ng-handler-perl
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
-         libapache2-mod-perl2,
+         libapache2-mod-perl2 | nginx,
          liblemonldap-ng-common-perl (= ${binary:Version}),
          libmouse-perl,
          liburi-perl,
