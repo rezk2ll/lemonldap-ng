@@ -14,6 +14,19 @@ sub init {
     return $tmp;
 }
 
+## @method void _run()
+# Return subroutine that add headers stored in $req->{respHeaders} in
+# response returned by router()
+#
+sub _run {
+    my ($self) = @_;
+    return sub {
+        my $res = $self->router( $_[0] );
+        push @{ $res->[1] }, %{ $_[0]->{respHeaders} };
+        return $res;
+    };
+}
+
 1;
 __END__
 

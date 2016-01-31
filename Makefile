@@ -373,6 +373,7 @@ plackup:
 		--listen e2e-tests/conf/llng.sock \
 		--daemonize --pid e2e-tests/conf/plackup.pid \
 		--nproc 1 --proc-title llng-fastcgi-server \
+		--no-default-middleware \
 		e2e-tests/llng.psgi
 
 #
@@ -480,7 +481,7 @@ install_webserver_conf:
 		cp -f _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp -f _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp -f _example/etc/test-apache$(APACHEVERSION).conf $(RCONFDIR); \
-		cp -f _example/etc/*-nginx.conf $(RCONFDIR); \
+		cp -f _example/etc/*nginx*.conf $(RCONFDIR); \
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
 			s#__PORTALDIR__#$(PORTALDIR)/#g; \
@@ -893,7 +894,7 @@ default-diff:
 	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' $(SRCMANAGERDIR)/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true
 
 test-diff:
-	for file in `find lemonldap-ng-*/lib -type f`; do \
+	@for file in `find lemonldap-ng-*/lib -type f`; do \
 		$(DIFF) $$file `echo $$file|sed -e s/lib/blib\\\/lib/`; \
 	done
 

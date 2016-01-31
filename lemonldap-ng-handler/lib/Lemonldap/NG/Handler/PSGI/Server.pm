@@ -6,18 +6,26 @@ use Lemonldap::NG::Handler::SharedConf qw(:tsv);
 
 extends 'Lemonldap::NG::Handler::PSGI';
 
-## @method PSGI-Response router($res)
+## @method void _run()
+# Return subroutine that add headers stored in $req->{respHeaders} in
+# response returned by router()
+#
+sub _run {
+    my ($self) = @_;
+    return sub {
+        my $res = $self->router( $_[0] );
+        push @{ $res->[1] }, %{ $_[0]->{respHeaders} };
+        return $res;
+    };
+}
+
+## @method PSGI-Response router($req)
 # If PSGI is used as an authentication FastCGI only, this method will be
-# called for authenticated users and will set headers in response without
-# content.
+# called for authenticated users and returns only 200. Headers are set by
+# Lemonldap::NG::Handler::PSGI.
 # @param $req Lemonldap::NG::Common::PSGI::Request
 sub router {
-    my ( $self, $req ) = @_;
-    my $hdrs = $req->{respHeaders} || {};
-    return [
-        200, [ 'Lm-Remote-User', $self->userId, 'Content-Length', 0, %$hdrs ],
-        []
-    ];
+    return [ 200, [ 'Content-Length', 0 ], [] ];
 }
 
 1;

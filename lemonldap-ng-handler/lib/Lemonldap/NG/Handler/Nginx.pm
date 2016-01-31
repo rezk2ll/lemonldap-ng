@@ -8,7 +8,7 @@ use Lemonldap::NG::Handler::SharedConf qw(:tsv);
 
 extends 'Lemonldap::NG::Handler::PSGI';
 
-## @method Code-Ref _run()
+## @method void _run()
 # Return a subroutine that call _authAndTrace() and tranform redirection
 # response code from 302 to 401 (not authenticated) ones. This is required
 # because Nginx "auth_request" parameter does not accept it. The Nginx
@@ -24,7 +24,7 @@ sub _run {
         my $req = $_[0];
         $self->lmLog( 'New request', 'debug' );
         my $res = $self->_authAndTrace(
-            Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
+            Lemonldap::NG::Common::PSGI::Request->new($req) );
 
         # Transform 302 responses in 401 since Nginx refuse it
         if ( $res->[0] == 302 or $res->[0] == 303 ) {
@@ -50,21 +50,28 @@ sub _run {
 #    # OR
 #    #fastcgi_param $fheadername1 $headervalue1;
 #
-# It add also a header called Lm-Remote-User set to whatToTrace value that can
-# be used in Nginx virtualhost configuration to insert user id in logs
+# LLNG::Handler::API::PSGI add also a header called Lm-Remote-User set to
+# whatToTrace value that can be used in Nginx virtualhost configuration to
+# insert user id in logs
 #
 #    auth_request_set $llremoteuser $upstream_http_lm_remote_user
 #
 #@param $req Lemonldap::NG::Common::PSGI::Request
 sub router {
     my ( $self, $req ) = @_;
-    my $hdrs = $req->{respHeaders} || {};
-    my @convertedHdrs =
-      [ 'Lm-Remote-User', $self->userId, 'Content-Length', 0 ];
+    my $hdrs = $req->{respHeaders};
+    $req->{respHeaders} = {};
+    my @convertedHdrs = ( 'Content-Length', 0 );
     my $i = 0;
     foreach my $k ( keys %$hdrs ) {
-        $i++;
-        push @convertedHdrs, "Headername$i", $k, "Headervalue$i", $hdrs->{$k};
+        if ( $k eq 'Lm-Remote-User' ) {
+            push @convertedHdrs, $k, $hdrs->{$k};
+        }
+        else {
+            $i++;
+            push @convertedHdrs, "Headername$i", $k, "Headervalue$i",
+              $hdrs->{$k};
+        }
     }
     return [ 200, \@convertedHdrs, [] ];
 }

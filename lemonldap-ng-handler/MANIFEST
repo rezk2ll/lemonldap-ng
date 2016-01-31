@@ -9,14 +9,15 @@ lib/Lemonldap/NG/Handler/API.pm
 lib/Lemonldap/NG/Handler/API/ApacheMP1.pm
 lib/Lemonldap/NG/Handler/API/ApacheMP2.pm
 lib/Lemonldap/NG/Handler/API/CGI.pm
+lib/Lemonldap/NG/Handler/API/ExperimentalNginx.pm
 lib/Lemonldap/NG/Handler/API/Nginx.pm
 lib/Lemonldap/NG/Handler/API/PSGI.pm
-lib/Lemonldap/NG/Handler/API/PSGI/Server.pm
 lib/Lemonldap/NG/Handler/CGI.pm
 lib/Lemonldap/NG/Handler/Main.pm
 lib/Lemonldap/NG/Handler/Main/Jail.pm
 lib/Lemonldap/NG/Handler/Main/Logger.pm
 lib/Lemonldap/NG/Handler/Menu.pm
+lib/Lemonldap/NG/Handler/Nginx.pm
 lib/Lemonldap/NG/Handler/Proxy.pm
 lib/Lemonldap/NG/Handler/PSGI.pm
 lib/Lemonldap/NG/Handler/PSGI/Base.pm

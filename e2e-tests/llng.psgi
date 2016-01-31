@@ -35,7 +35,6 @@ my %builder = (
 
 sub {
     my $type = $_[0]->{LLTYPE} || 'handler';
-    print STDERR Dumper($_[0]);use Data::Dumper;
     return $_apps{$type}->(@_) if ( defined $_apps{$type} );
     if ( defined $builder{$type} ) {
         $_apps{$type} = $builder{$type}->();

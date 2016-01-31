@@ -3,8 +3,7 @@ package Lemonldap::NG::Handler::PSGI;
 use 5.10.0;
 use Mouse;
 
-extends 'Lemonldap::NG::Handler::PSGI::Base',
-  'Lemonldap::NG::Common::PSGI';
+extends 'Lemonldap::NG::Handler::PSGI::Base', 'Lemonldap::NG::Common::PSGI';
 
 our $VERSION = '1.9.0';
 
@@ -12,6 +11,19 @@ sub init {
     my $tmp = $_[0]->Lemonldap::NG::Common::PSGI::init( $_[1] )
       and $_[0]->Lemonldap::NG::Handler::PSGI::Base::init( $_[1] );
     return $tmp;
+}
+
+## @method void _run()
+# Return subroutine that add headers stored in $req->{respHeaders} in
+# response returned by router()
+#
+sub _run {
+    my ($self) = @_;
+    return sub {
+        my $res = $self->router( $_[0] );
+        push @{ $res->[1] }, %{ $_[0]->{respHeaders} };
+        return $res;
+    };
 }
 
 1;

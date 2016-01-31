@@ -48,12 +48,11 @@ sub newRequest {
 *lmLog = *Lemonldap::NG::Common::PSGI::lmLog;
 
 ## @method void set_user(string user)
-# sets remote_user
+# sets remote_user in response headers
 # @param user string username
 sub set_user {
     my ( $class, $user ) = @_;
-
-    # TODO
+    $request->{respHeaders}->{'Lm-Remote-User'} = $user;
 }
 
 ## @method string header_in(string header)

@@ -27,9 +27,10 @@ sub init {
     return 1;
 }
 
-## @methodi CODE-ref _run
+## @methodi void _run()
 # Check if protecton is activated then return a code ref that will launch
 # _authAndTrace() if protection in on or router() else
+#@return code-ref
 sub _run {
     my $self = shift;
 
