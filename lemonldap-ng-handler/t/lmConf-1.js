@@ -25,8 +25,8 @@
   },
   "globalStorage": "Apache::Session::File",
   "globalStorageOptions": {
-    "Directory": "t/tmp",
-    "LockDirectory": "t/tmp/lock",
+    "Directory": "t/sessions",
+    "LockDirectory": "t/sessions/lock",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
   "groups": {},
@@ -40,6 +40,7 @@
     },
     "test1.example.com": {
       "^/logout": "logout_sso",
+      "^/deny": "deny",
       "default": "accept"
     },
     "test2.example.com": {

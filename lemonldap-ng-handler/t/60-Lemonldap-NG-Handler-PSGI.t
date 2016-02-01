@@ -3,15 +3,16 @@
 use Test::More;
 use JSON;
 use Data::Dumper;
-use MIME::Base64
+use MIME::Base64;
 
-  require 't/test-psgi-lib.pm';
+require 't/test-psgi-lib.pm';
 
 init('Lemonldap::NG::Handler::PSGI');
 
 my $res;
 
-ok( $res = $client->_get('/'), 'Get http://test1.example.com/' );
+# Unauthentified query
+ok( $res = $client->_get('/'), 'Unauthentified query' );
 ok( ref($res) eq 'ARRAY', 'Response is an array' ) or explain( $res, 'array' );
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
 my %h = @{ $res->[1] };
@@ -28,4 +29,58 @@ ok(
 
 count(4);
 
+# Authentified queries
+# --------------------
+
+# Authorizated query
+ok(
+    $res = $client->_get(
+        '/',
+        undef,
+        undef,
+'lemonldap=f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545'
+    ),
+    'Authentified query'
+);
+ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
+
+count(2);
+
+# Denied query
+ok(
+    $res = $client->_get(
+        '/deny',
+        undef,
+        undef,
+'lemonldap=f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545'
+    ),
+    'Denied query'
+);
+ok( $res->[0] == 403, 'Code is 403' ) or explain( $res->[0], 403 );
+
+count(2);
+
+# Bad cookie
+ok(
+    $res = $client->_get(
+        '/deny',
+        undef,
+        'manager.example.com',
+'lemonldap=e5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545'
+    ),
+    'Bad cookie'
+);
+ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
+unlink('t/sessions/lock/Apache-Session-e5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545.lock');
+
+count(2);
+
 done_testing( count() );
+
+sub Lemonldap::NG::Handler::PSGI::router {
+    my ( $self, $req ) = @_;
+    ok( $req->{HTTP_AUTH_USER} eq 'dwho', 'Header is given to app' )
+      or explain( $req->{HTTP_REMOTE_USER}, 'dwho' );
+    count(1);
+    return [ 200, [ 'Content-Type', 'text/plain' ], ['Hello'] ];
+}
