@@ -46,5 +46,7 @@ t/40-Lemonldap-NG-Handler-Proxy.t
 t/50-Lemonldap-NG-Handler-SecureToken.t
 t/51-Lemonldap-NG-Handler-Zimbra.t
 t/52-Lemonldap-NG-Handler-AuthBasic.t
+t/60-Lemonldap-NG-Handler-PSGI.t
 t/99-pod.t
 t/lmConf-1
+t/test-psgi-lib.pm
