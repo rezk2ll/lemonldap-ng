@@ -6,26 +6,62 @@ use 5.10.0;
 use_ok('Lemonldap::NG::Common::PSGI::Cli::Lib');
 
 our $client;
+our $count = 1;
 
-ok(
-    $client = Lemonldap::NG::Common::PSGI::Cli::Lib->new(
-        app => sub {
-            return Lemonldap::NG::Handler::PSGI->run(configStorage => { type => 'File', dirName => 't' });
-        }
-    ),
-    'Client object'
-);
+sub init {
+    my $module = shift;
+    ok(
+        $client = Lemonldap::NG::Handler::PSGI::Cli::Lib->new(
+            app => sub {
+                return $module->run(
+                    configStorage => { type => 'File', dirName => 't' } );
+            }
+        ),
+        'Client object'
+    );
+    count(1);
+}
 
 sub client {
     return $client;
 }
 
-our $count = 2;
-
 sub count {
     my $c = shift;
     $count += $c if ($c);
     return $count;
+}
+
+package Lemonldap::NG::Handler::PSGI::Cli::Lib;
+
+use Mouse;
+
+extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
+
+sub _get {
+    my ( $self, $path, $query, $host, $cookie ) = @_;
+    $query //= '';
+    $host ||= 'test1.example.com';
+    return $self->app->(
+        {
+            'HTTP_ACCEPT'          => 'text/html',
+            'SCRIPT_NAME'          => 'lmAuth',
+            'SERVER_NAME'          => '127.0.0.1',
+            'QUERY_STRING'         => $query,
+            'HTTP_CACHE_CONTROL'   => 'max-age=0',
+            'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+            'PATH_INFO'            => $path,
+            'REQUEST_METHOD'       => 'GET',
+            'REQUEST_URI'          => $path . ( $query ? "?$query" : '' ),
+            'SERVER_PORT'          => '8002',
+            'SERVER_PROTOCOL'      => 'HTTP/1.1',
+            'HTTP_USER_AGENT' =>
+              'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
+            'REMOTE_ADDR' => '127.0.0.1',
+            'HTTP_HOST'   => '127.0.0.1:8002',
+            ( $cookie ? ( HTTP_COOKIE => $cookie ) : () )
+        }
+    );
 }
 
 1;

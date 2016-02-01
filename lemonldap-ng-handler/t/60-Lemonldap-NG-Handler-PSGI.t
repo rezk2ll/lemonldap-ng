@@ -6,4 +6,6 @@ use strict;
 
 require 't/test-psgi-lib.pm';
 
+init('Lemonldap::NG::Handler::PSGI');
+
 done_testing( count() );
