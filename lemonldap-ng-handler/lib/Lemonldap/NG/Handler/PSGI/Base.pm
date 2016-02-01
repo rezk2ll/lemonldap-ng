@@ -35,7 +35,7 @@ sub _run {
     my $self = shift;
 
     # Override _run() only if protection != 'none'
-    my $rule = $self->{protection} || $localConfig->{protection};
+    my $rule = $self->{protection} || $localConfig->{protection} || 'manager';
     if ( $rule ne 'none' ) {
         $self->lmLog( 'PSGI app is protected', 'debug' );
         $rule =

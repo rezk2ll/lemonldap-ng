@@ -20,7 +20,8 @@ has REMOTE_PORT    => ( is => 'ro', isa => 'Int', reader => 'port' );
 has REQUEST_METHOD => ( is => 'ro', isa => 'Str', reader => 'method' );
 has SCRIPT_NAME    => ( is => 'ro', isa => 'Str', reader => 'scriptname' );
 has SERVER_PORT    => ( is => 'ro', isa => 'Int', reader => 'get_server_port' );
-has PATH_INFO      => (
+has X_ORIGINAL_URI => ( is => 'ro', isa => 'Str' );
+has PATH_INFO => (
     is      => 'ro',
     reader  => 'path',
     lazy    => 1,
@@ -34,9 +35,12 @@ has PATH_INFO      => (
 has REQUEST_URI => (
     is      => 'ro',
     reader  => 'uri',
+    lazy    => 1,
+    default => '/',
     trigger => sub {
-        $_[0]->{unparsed_uri} = $_[0]->{REQUEST_URI};
-        $_[0]->{REQUEST_URI}  = uri_unescape( $_[0]->{REQUEST_URI} );
+        my $uri = $_[0]->{X_ORIGINAL_URI} || $_[0]->{REQUEST_URI};
+        $_[0]->{unparsed_uri} = $uri;
+        $_[0]->{REQUEST_URI}  = uri_unescape($uri);
         $_[0]->{REQUEST_URI} =~ s|//+|/|g;
     },
 );

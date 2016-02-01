@@ -10,7 +10,6 @@ lib/Lemonldap/NG/Handler/API/ApacheMP1.pm
 lib/Lemonldap/NG/Handler/API/ApacheMP2.pm
 lib/Lemonldap/NG/Handler/API/CGI.pm
 lib/Lemonldap/NG/Handler/API/ExperimentalNginx.pm
-lib/Lemonldap/NG/Handler/API/Nginx.pm
 lib/Lemonldap/NG/Handler/API/PSGI.pm
 lib/Lemonldap/NG/Handler/CGI.pm
 lib/Lemonldap/NG/Handler/Main.pm

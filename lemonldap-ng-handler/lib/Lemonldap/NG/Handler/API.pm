@@ -44,7 +44,7 @@ sub AUTOLOAD {
     if ( !$mode or $func eq 'newRequest' ) {
         $mode =
           ( ( caller(1) )[0] eq 'Lemonldap::NG::Handler::Nginx' )
-          ? 'Nginx'
+          ? 'PSGI'
           : (
             ( caller(0) )[0] =~ /^Lemonldap::NG::Handler::PSGI/
               or (

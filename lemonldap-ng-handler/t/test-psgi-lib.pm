@@ -7,19 +7,16 @@ use_ok('Lemonldap::NG::Common::PSGI::Cli::Lib');
 
 our $client;
 our $count = 1;
+$Data::Dumper::Deparse = 1;
+
+my $module;
 
 sub init {
-    my $module = shift;
-    ok(
-        $client = Lemonldap::NG::Handler::PSGI::Cli::Lib->new(
-            app => sub {
-                return $module->run(
-                    configStorage => { type => 'File', dirName => 't' } );
-            }
-        ),
-        'Client object'
-    );
-    count(1);
+    $module = shift;
+    use_ok($module);
+    ok( $client = Lemonldap::NG::Handler::PSGI::Cli::Lib->new(),
+        'Client object' );
+    count(2);
 }
 
 sub client {
@@ -32,11 +29,30 @@ sub count {
     return $count;
 }
 
+sub explain {
+    my ( $get, $ref ) = @_;
+    $get = Dumper($get) if ( ref $get );
+    print STDERR "Expect $ref, get $get\n";
+}
+
 package Lemonldap::NG::Handler::PSGI::Cli::Lib;
 
 use Mouse;
 
 extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
+
+has app => (
+    is      => 'ro',
+    isa     => 'CodeRef',
+    builder => sub {
+        return $module->run(
+            {
+                configStorage => { type => 'File', dirName => 't' },
+                logLevel      => 'warn'
+            }
+        );
+    }
+);
 
 sub _get {
     my ( $self, $path, $query, $host, $cookie ) = @_;
@@ -52,13 +68,14 @@ sub _get {
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'PATH_INFO'            => $path,
             'REQUEST_METHOD'       => 'GET',
-            'REQUEST_URI'          => $path . ( $query ? "?$query" : '' ),
-            'SERVER_PORT'          => '8002',
+            'REQUEST_URI'          => '/lmauth',
+            'X_ORIGINAL_URI'       => $path . ( $query ? "?$query" : '' ),
+            'SERVER_PORT'          => '80',
             'SERVER_PROTOCOL'      => 'HTTP/1.1',
             'HTTP_USER_AGENT' =>
               'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
             'REMOTE_ADDR' => '127.0.0.1',
-            'HTTP_HOST'   => '127.0.0.1:8002',
+            'HTTP_HOST'   => $host,
             ( $cookie ? ( HTTP_COOKIE => $cookie ) : () )
         }
     );
