@@ -1112,6 +1112,12 @@ sub attributes {
             default       => '',
             documentation => 'SAML encryption public key',
         },
+        samlServiceUseCertificateInResponse => {
+            type    => 'bool',
+            default => 0,
+            documentation =>
+              'Use certificate instead of public key in SAML responses',
+        },
         samlIdPResolveCookie => {
             type          => 'text',
             default       => 'lemonldapidp',

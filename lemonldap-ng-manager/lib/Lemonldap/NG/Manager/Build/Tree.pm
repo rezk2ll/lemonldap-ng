@@ -689,7 +689,8 @@ sub tree {
                                 'samlServicePrivateKeyEncPwd',
                                 'samlServicePublicKeyEnc'
                             ]
-                        }
+                        },
+			'samlServiceUseCertificateInResponse'
                     ]
                 },
                 {

@@ -22,7 +22,7 @@ use URI;                   # Get metadata URL path
 #inherits Lemonldap::NG::Common::Conf::SAML::Metadata protected service_metadata
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.4.4';
+our $VERSION = '1.9.0';
 our $samlCache;
 our $initGlibDone;
 
@@ -165,6 +165,15 @@ sub loadService {
         $privateKeyEncPwd = $privateKeySigPwd;
     }
 
+    # Check if certificate should be inserted in SAML responses
+    my $serviceCertificate;
+    if (   $self->{samlServiceUseCertificateInResponse}
+        && $publicKeySig =~ /CERTIFICATE/ )
+    {
+        $serviceCertificate = $publicKeySig;
+        $self->lmLog( 'Certificate will be used in SAML responses', 'debug' );
+    }
+
     # Get metadata from configuration
     $self->lmLog( "Get Metadata for this service", 'debug' );
     my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
@@ -179,6 +188,7 @@ sub loadService {
         $privateKeySigPwd,
         $privateKeyEnc,
         $privateKeyEncPwd,
+        $serviceCertificate
     );
 
     # Log
@@ -328,7 +338,8 @@ sub loadSPs {
 
         $self->lmLog( "Get Metadata for SP $_", 'debug' );
 
-        my $sp_metadata = $self->{samlSPMetaDataXML}->{$_}->{samlSPMetaDataXML};
+        my $sp_metadata =
+          $self->{samlSPMetaDataXML}->{$_}->{samlSPMetaDataXML};
 
         # Check metadata format
         if ( ref $sp_metadata eq "HASH" ) {
@@ -2332,7 +2343,8 @@ sub timestamp2samldate {
 sub samldate2timestamp {
     my ( $self, $samldate ) = @_;
 
-    my ( $year, $mon, $mday, $hour, $min, $sec, $msec, $ztime ) = ( $samldate =~
+    my ( $year, $mon, $mday, $hour, $min, $sec, $msec, $ztime ) =
+      ( $samldate =~
           /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\.\d+)?(Z)?/ );
 
     my $timestamp =
@@ -2442,7 +2454,8 @@ sub sendLogoutRequestToProvider {
     # Get Provider Name and Conf Key from EntityID
     my $providerName =
       $self->{ '_' . lc($type) . 'List' }->{$providerID}->{name};
-    my $confKey = $self->{ '_' . lc($type) . 'List' }->{$providerID}->{confKey};
+    my $confKey =
+      $self->{ '_' . lc($type) . 'List' }->{$providerID}->{confKey};
 
     # Get first HTTP method
     my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
@@ -2747,9 +2760,8 @@ sub authnContext2authnLevel {
     return $self->{samlAuthnContextMapPassword}
       if ( $authnContext eq $self->getAuthnContext("password") );
     return $self->{samlAuthnContextMapPasswordProtectedTransport}
-      if (
-        $authnContext eq $self->getAuthnContext("password-protected-transport")
-      );
+      if ( $authnContext eq
+        $self->getAuthnContext("password-protected-transport") );
     return $self->{samlAuthnContextMapKerberos}
       if ( $authnContext eq $self->getAuthnContext("kerberos") );
     return $self->{samlAuthnContextMapTLSClient}
