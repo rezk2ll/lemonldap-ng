@@ -111,7 +111,7 @@ sub defaultValuesInit {
         cda              cookieExpiration    cookieName
         customFunctions  httpOnly            securedCookie
         timeoutActivity  useRedirectOnError  useRedirectOnForbidden
-        useSafeJail      noAjaxHook          whatToTrace
+        useSafeJail      whatToTrace
         )
     );
 

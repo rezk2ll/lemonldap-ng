@@ -607,15 +607,14 @@ sub tree {
                                 'port',
                                 'useRedirectOnForbidden',
                                 'useRedirectOnError',
-                                'maintenance',
-                                'noAjaxHook'
+                                'maintenance'
                             ]
                         },
                         {
                             title => 'portalRedirection',
                             help  => 'redirections.html#portal_redirections',
                             form  => 'simpleInputContainer',
-                            nodes => ['jsRedirect']
+                            nodes => [ 'jsRedirect', 'noAjaxHook' ]
                         },
                         {
                             title => 'specialHandlers',
