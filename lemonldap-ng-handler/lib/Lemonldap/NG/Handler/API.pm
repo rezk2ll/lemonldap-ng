@@ -42,9 +42,18 @@ sub AUTOLOAD {
     # - Apache (modperl1),
     # - Nginx
     if ( !$mode or $func eq 'newRequest' ) {
+
+        #print STDERR "FONCTION $func\n";
+        #for ( my $i = 0 ; $i < 7 ; $i++ ) {
+        #    print STDERR "    $i: " . ( caller($i) )[0] . "\n";
+        #}
         $mode =
-          ( ( caller(1) )[0] eq 'Lemonldap::NG::Handler::Nginx' )
-          ? 'PSGI'
+          (
+            ( caller(1) )[0] =~
+              /^Lemonldap::NG::Handler::(?:Nginx|PSGI::Server)$/
+              or ( caller(6) )[0] =~
+              /^Lemonldap::NG::Handler::(?:Nginx|PSGI::Server)$/
+          ) ? 'PSGI/Server'
           : (
             ( caller(0) )[0] =~ /^Lemonldap::NG::Handler::PSGI/
               or (

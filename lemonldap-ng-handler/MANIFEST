@@ -11,6 +11,7 @@ lib/Lemonldap/NG/Handler/API/ApacheMP2.pm
 lib/Lemonldap/NG/Handler/API/CGI.pm
 lib/Lemonldap/NG/Handler/API/ExperimentalNginx.pm
 lib/Lemonldap/NG/Handler/API/PSGI.pm
+lib/Lemonldap/NG/Handler/API/PSGI/Server.pm
 lib/Lemonldap/NG/Handler/CGI.pm
 lib/Lemonldap/NG/Handler/Main.pm
 lib/Lemonldap/NG/Handler/Main/Jail.pm
@@ -46,6 +47,8 @@ t/50-Lemonldap-NG-Handler-SecureToken.t
 t/51-Lemonldap-NG-Handler-Zimbra.t
 t/52-Lemonldap-NG-Handler-AuthBasic.t
 t/60-Lemonldap-NG-Handler-PSGI.t
+t/61-Lemonldap-NG-Handler-PSGI-Server.t
+t/62-Lemonldap-NG-Handler-Nginx.t
 t/99-pod.t
 t/lmConf-1.js
 t/sessions/f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545
