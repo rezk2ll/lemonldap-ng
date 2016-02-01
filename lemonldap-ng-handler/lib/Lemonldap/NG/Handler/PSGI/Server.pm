@@ -13,8 +13,9 @@ extends 'Lemonldap::NG::Handler::PSGI';
 sub _run {
     my ($self) = @_;
     return sub {
-        my $res = $self->router( $_[0] );
-        push @{ $res->[1] }, %{ $_[0]->{respHeaders} };
+        my $req = Lemonldap::NG::Common::PSGI::Request( $_[0] );
+        my $res = $self->router($req);
+        push @{ $res->[1] }, %{ $req->{respHeaders} };
         return $res;
     };
 }

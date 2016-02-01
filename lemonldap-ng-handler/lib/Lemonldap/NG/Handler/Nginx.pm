@@ -30,8 +30,6 @@ sub _run {
         if ( $res->[0] == 302 or $res->[0] == 303 ) {
             $res->[0] = 401;
         }
-
-        # TODO: transform headers in $res->[1]
         return $res;
     };
 }

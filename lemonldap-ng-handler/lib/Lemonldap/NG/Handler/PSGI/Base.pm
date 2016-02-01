@@ -61,7 +61,10 @@ sub _run {
 
         # Handle unprotected requests
         return sub {
-            $self->router( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
+            my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
+            my $res = $self->router($req);
+            push @{ $res->[1] }, %{ $req->{respHeaders} };
+            return $res;
         };
     }
 }
