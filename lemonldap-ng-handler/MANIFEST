@@ -48,5 +48,5 @@ t/51-Lemonldap-NG-Handler-Zimbra.t
 t/52-Lemonldap-NG-Handler-AuthBasic.t
 t/60-Lemonldap-NG-Handler-PSGI.t
 t/99-pod.t
-t/lmConf-1
+t/lmConf-1.js
 t/test-psgi-lib.pm
