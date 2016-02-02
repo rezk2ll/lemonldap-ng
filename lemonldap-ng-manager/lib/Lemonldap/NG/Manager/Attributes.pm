@@ -2435,29 +2435,7 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'timeoutActivity' => {
             'default' => 0,
-            'select'  => [
-                {
-                    'k' => 0,
-                    'v' => 'None'
-                },
-                {
-                    'k' => 900,
-                    'v' => '15 min'
-                },
-                {
-                    'k' => 1800,
-                    'v' => '30 min'
-                },
-                {
-                    'k' => 2700,
-                    'v' => '45 min'
-                },
-                {
-                    'k' => 3600,
-                    'v' => '60 min'
-                }
-            ],
-            'type' => 'select'
+            'type'    => 'int'
         },
         'trustedDomains' => {
             'type' => 'text'
