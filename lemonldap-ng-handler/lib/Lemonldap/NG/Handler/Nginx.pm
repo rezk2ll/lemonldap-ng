@@ -68,7 +68,7 @@ sub router {
         else {
             $i++;
             push @convertedHdrs, "Headername$i", $k, "Headervalue$i",
-              $hdrs->{$k};
+              $hdrs->{$k}, $k, $hdrs->{$k};
         }
     }
     return [ 200, \@convertedHdrs, [] ];
