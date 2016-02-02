@@ -30,10 +30,19 @@ my %builder = (
         require CGI::Compile;
         return CGI::Emulate::PSGI->handler(
             CGI::Compile->compile('lemonldap-ng-portal/example/index.pl') );
-    }
+    },
+    test => sub {
+        require CGI::Emulate::PSGI;
+        require CGI::Compile;
+        return CGI::Emulate::PSGI->handler(
+            CGI::Compile->compile('e2e-tests/conf/site/index.pl') );
+    },
 );
 
 sub {
+    if($_[0]->{HOST} =~ /^test/) {
+        $type = 'test';
+    }
     my $type = $_[0]->{LLTYPE} || 'handler';
     return $_apps{$type}->(@_) if ( defined $_apps{$type} );
     if ( defined $builder{$type} ) {

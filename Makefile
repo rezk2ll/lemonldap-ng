@@ -296,7 +296,7 @@ e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_se
 
 prepare_test_server:
 	@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
-	@$(MAKE) install_webserver_conf \
+	@$(MAKE) install_webserver_conf install_test_site \
 		RCONFDIR=e2e-tests/conf \
 		ERASECONFIG=1 \
 		VHOSTLISTEN='*:$(TESTWEBSERVERPORT)' \
@@ -304,6 +304,7 @@ prepare_test_server:
 		PSGISERVERSOCKET=unix:`pwd`/e2e-tests/conf/llng.sock \
 		PORTALDIR=`pwd`/$(SRCPORTALDIR)/example \
 		MANAGERDIR=`pwd`/$(SRCMANAGERDIR)/site \
+		TESTDIR=`pwd`/e2e-tests/conf/site \
 		MANAGERPSGIDIR=`pwd`/e2e-tests \
 		DEFDOCDIR=`pwd`/doc \
 		FRDOCDIR=`pwd`/po-doc/fr
