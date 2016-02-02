@@ -1937,7 +1937,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         slaveMasterIP => {
             type    => 'text',
-            test    => qr/^$Regexp::Common::URI::RFC2396::IPv4address$/,
+            test    => qr/^($Regexp::Common::URI::RFC2396::IPv4address\s*)*$/,
             msgFail => '__badIPv4Address__',
         },
         slaveHeaderName    => { type => 'text', },
