@@ -25,6 +25,23 @@ lemonldap-ng (1.9.0-1) UNRELEASED; urgency=low
   If you want to keep old behaviour, set noAjaxHook to 1 (in General Parameters
   -> Advanced -> Handler redirections -> Keep redirections for Ajax).
 
+  The Multi backend configuration has changed. Now the stacks are defined in
+  separate attributes:
+   * multiAuthStack
+   * multiUserDBStack
+
+  So an old configuration like this:
+
+    authentication = Multi LDAP;DBI
+    userDB         = Multi LDAP;DBI
+
+  Must be replaced by:
+
+    authentication   = Multi
+    userDB           = Multi
+    multiAuthStack   = LDAP;DBI
+    multiUserDBStack = LDAP;DBI
+
  -- Xavier Guimard <x.guimard@free.fr>  Thu, 21 Jan 2016 17:13:07 +0100
 
 lemonldap-ng (1.4.6-1) unstable; urgency=medium
