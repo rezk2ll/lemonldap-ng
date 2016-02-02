@@ -308,8 +308,12 @@ prepare_test_server:
 		MANAGERPSGIDIR=`pwd`/e2e-tests \
 		DEFDOCDIR=`pwd`/doc \
 		FRDOCDIR=`pwd`/po-doc/fr
-	@cp e2e-tests/lmConf-1.js e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/conf/
-	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s/__port__/$(TESTWEBSERVERPORT)/' e2e-tests/conf/lemonldap-ng.ini e2e-tests/conf/lmConf-1.js e2e-tests/conf/env.conf
+	@cp e2e-tests/lmConf-1.js e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
+	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s/__port__/$(TESTWEBSERVERPORT)/' \
+		e2e-tests/conf/lemonldap-ng.ini \
+		e2e-tests/conf/lmConf-1.js \
+		e2e-tests/conf/env.conf \
+		e2e-tests/conf/test-nginx.conf
 
 e2e-tests/conf/apache2.pid: start_web_server
 
