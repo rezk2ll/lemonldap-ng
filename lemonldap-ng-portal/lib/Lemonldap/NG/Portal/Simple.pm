@@ -767,7 +767,31 @@ _RETURN $string Error string
 sub msg {
     my $self = shift;
     my $code = shift;
-    return &Lemonldap::NG::Portal::_i18n::msg( $code, $self->{lang} );
+    my $msg;
+
+    # Check for customized message
+    foreach ( @{ $self->{lang} } ) {
+        if ( $self->{ "msg_" . $_ . "_" . $code } ) {
+            $msg = $self->{ "msg_" . $_ . "_" . $code };
+            last;
+        }
+    }
+    $msg ||= $self->{ "msg_" . $code };
+
+    # Use customized message or built-in message
+    if ( defined $msg ) {
+
+        # Manage UTF-8
+        utf8::decode($msg);
+
+        $self->lmLog( "Use customized message $msg for message $code",
+            'debug' );
+    }
+    else {
+        $msg = &Lemonldap::NG::Portal::_i18n::msg( $code, $self->{lang} );
+    }
+
+    return $msg;
 }
 
 ##@method string error(int code)
@@ -803,8 +827,6 @@ sub error {
         $msg = &Lemonldap::NG::Portal::_i18n::error( $code, $self->{lang} );
     }
 
-    # Return message
-    # Manage SOAP
     return $msg;
 }
 
