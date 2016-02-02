@@ -26,11 +26,9 @@ var filterFunctions = {
         nToShow.push(tmp + 'Params');
       }
       if (node.nodes[0].data.match(/^(Choice|Multi)/)) {
-        for (var i = 1; i < 3; i++) {
-          node.nodes[i].data = node.nodes[0].data;
-        }
-        if (node.nodes[0].data.match(/^Multi/)) {
-          node.nodes[2].data = 'Null';
+        node.nodes[1].data = node.nodes[0].data;
+        if (node.nodes[0].data.match(/^Choice/)) {
+          node.nodes[2].data = 'Choice';
         }
         //all = true;
       }
