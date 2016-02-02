@@ -40,9 +40,6 @@ my %builder = (
 );
 
 sub {
-    if($_[0]->{HOST} =~ /^test/) {
-        $type = 'test';
-    }
     my $type = $_[0]->{LLTYPE} || 'handler';
     return $_apps{$type}->(@_) if ( defined $_apps{$type} );
     if ( defined $builder{$type} ) {
