@@ -56,7 +56,8 @@ $Data::Dumper::Sortkeys = sub {
     ];
 };
 
-$Data::Dumper::Deparse = 1;
+$Data::Dumper::Deparse  = 1;
+$Data::Dumper::Deepcopy = 1;
 
 sub run {
     my $self = shift;

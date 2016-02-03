@@ -818,8 +818,15 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'groups' => {
             'default' => {},
-            'test'    => $VAR1->{'grantSessionRules'}{'keyTest'},
-            'type'    => 'keyTextContainer'
+            'test'    => sub {
+                my $s = eval {
+                    do {
+                        $_[0];
+                      }
+                };
+                return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+            },
+            'type' => 'keyTextContainer'
         },
         'hiddenAttributes' => {
             'default' => '_password',
@@ -1074,8 +1081,15 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'macros' => {
             'default' => {},
             'keyTest' => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-            'test'    => $VAR1->{'grantSessionRules'}{'keyTest'},
-            'type'    => 'keyTextContainer'
+            'test'    => sub {
+                my $s = eval {
+                    do {
+                        $_[0];
+                      }
+                };
+                return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+            },
+            'type' => 'keyTextContainer'
         },
         'mailBody' => {
             'type' => 'longtext'
@@ -1668,7 +1682,14 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'portalskinbackground'
         },
         'portalSkinRules' => {
-            'keyTest' => $VAR1->{'grantSessionRules'}{'keyTest'},
+            'keyTest' => sub {
+                my $s = eval {
+                    do {
+                        $_[0];
+                      }
+                };
+                return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+            },
             'msgFail' => '__badValue__',
             'test'    => qr/^\w+$/,
             'type'    => 'keyTextContainer'
