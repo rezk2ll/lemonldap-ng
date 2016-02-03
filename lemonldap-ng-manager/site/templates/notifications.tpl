@@ -91,7 +91,14 @@
           </tr>
           <tr>
             <th><span trspan="date" /></th>
-            <td><input type="text" class="form-control" ng-model="form.date" /></td>
+            <td>
+            <p class="input-group">
+              <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="form.date" is-open="popup.opened" ng-required="true" datepicker-options="{startingDay: 1}"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="popupopen()"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+            </td>
           </tr>
           <tr>
             <th><span trspan="reference" /></th>

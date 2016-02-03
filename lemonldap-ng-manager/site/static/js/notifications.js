@@ -204,6 +204,16 @@
     $scope.save = function() {
       if ($scope.form.uid && $scope.form.reference && $scope.form.xml && $scope.form.date) {
         $scope.waiting = true;
+        var year = $scope.form.date.getFullYear();
+        var month = $scope.form.date.getMonth() + 1;
+        if (month < 10) {
+          month = '0' + month;
+        }
+        var day = $scope.form.date.getDate();
+        if (day < 10) {
+          day = '0' + day;
+        }
+        $scope.form.date = year + "-" + month + "-" + day;
         $http.post('notifications/actives', $scope.form).success(function(data) {
           $scope.form = {};
           if (data.result == 1) {
@@ -242,10 +252,21 @@
         $scope.showForm = true;
         $scope.data = [];
         $scope.waiting = false;
+        $scope.form.date = new Date();
       });
     }
 
     var c = $location.path().match(/^\/(\w+)/);
     $scope.type = c ? c[1] : 'actives';
+
+    /* Datepicker */
+    $scope.popupopen = function() {
+      $scope.popup.opened = true;
+    };
+
+    $scope.popup = {
+      opened: false
+    };
+
   }]);
 })();
