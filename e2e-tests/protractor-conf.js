@@ -1,7 +1,7 @@
 exports.config = {
   allScriptsTimeout: 11000,
 
-  specs: ['manager/*.js'],
+  specs: ['manager/*.js', 'handler/*.js'],
 
   capabilities: {
     'browserName': 'chrome'
