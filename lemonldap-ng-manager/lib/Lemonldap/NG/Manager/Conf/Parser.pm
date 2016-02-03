@@ -814,7 +814,9 @@ sub _unitTest {
     my $attrs = &Lemonldap::NG::Manager::Attributes::attributes();
     my $res   = 1;
     foreach my $key ( keys %$conf ) {
-        my ( $attr, $type );
+        my $attr = $attrs->{$key};
+        my $type = $types->{ $attr->{type} };
+        die "Unkown type $attr->{type}" unless ( $type or $attr->{test} );
 
         if ( $attr->{type} and $attr->{type} eq 'subContainer' ) {
 
@@ -823,7 +825,7 @@ sub _unitTest {
         else {
 
             # Check if key exists
-            unless ( $attr = $attrs->{$key} ) {
+            unless ($attr) {
                 push @{ $self->errors }, { message => "__unknownKey__: $key" };
                 $res = 0;
                 next;
@@ -843,10 +845,18 @@ sub _unitTest {
                 foreach my $k ( keys %{ $conf->{$key} } ) {
                     my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail}
                       // 'Bad hash key';
+                    my $msg = $attr->{msgFail} // $type->{msgFail};
                     $res = 0
-                      unless $self->_execTest( $attr->{keyTest}
-                          // $type->{keyTest} // qr/^\w+$/,
-                        $k, "$key/$k", $attr, $keyMsg, $conf );
+                      unless (
+                        $self->_execTest( $attr->{keyTest} // $type->{keyTest}
+                              // qr/^\w+$/,
+                            $k, "$key/$k", $attr, $keyMsg, $conf )
+                        and $self->_execTest(
+                            $attr->{test} // $type->{test},
+                            $conf->{$key}->{$k},
+                            "$key/$k", $attr, $msg, $conf
+                        )
+                      );
                 }
             }
             elsif ( $attr->{type} =~ /Container$/ ) {
@@ -858,8 +868,6 @@ sub _unitTest {
                 #TODO
             }
             else {
-                die "Unkown type $attr->{type}"
-                  unless ( $type = $types->{ $attr->{type} } );
                 my $msg = $attr->{msgFail} // $type->{msgFail};
                 $res = 0
                   unless (
@@ -881,7 +889,8 @@ sub _unitTest {
 sub _execTest {
     my ( $self, $test, $value, $key, $attr, $msg, $conf ) = @_;
     my $ref;
-    die "Malformed test: only regexp ref or sub are accepted (type \"$ref\")"
+    die
+"Malformed test for $key: only regexp ref or sub are accepted (type \"$ref\")"
       unless ( $ref = ref($test) and $ref =~ /^(CODE|Regexp)$/ );
     if ( $1 eq 'CODE' ) {
         my ( $r, $m ) = ( $test->( $value, $conf, $attr ) );
