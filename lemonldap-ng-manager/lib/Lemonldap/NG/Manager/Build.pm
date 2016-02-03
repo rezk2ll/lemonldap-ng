@@ -175,6 +175,9 @@ our \@sessionTypes = ( '$sessionTypes' );
 
 EOF
 
+    # Reinitialize $attributes
+    $attributes = Lemonldap::NG::Manager::Build::Attributes::attributes();
+
     $ra = Regexp::Assemble->new;
     foreach (@simpleHashKeys) {
         $ra->add($_);

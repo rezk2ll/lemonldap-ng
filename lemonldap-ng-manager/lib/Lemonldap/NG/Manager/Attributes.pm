@@ -186,7 +186,7 @@ qr/^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9\/\+\
             'test' => sub {
                 my $test =
                   grep( { $_ eq $_[0]; }
-                    map( { $$_{'k'}; } @{ $_[2]{'select'}; } ) );
+                    map( { $_->{'k'}; } @{ $_[2]{'select'}; } ) );
                 return $test
                   ? 1
                   : ( 0, "Invalid value '$_[0]' for this select" );
@@ -559,7 +559,7 @@ sub attributes {
         },
         'captchaStorage' => {
             'default' => 'Apache::Session::File',
-            'type'    => 'text'
+            'type'    => 'PerlModule'
         },
         'captchaStorageOptions' => {
             'default' => {
@@ -619,7 +619,7 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
             'type' => 'keyTextContainer'
         },
         'casStorage' => {
-            'type' => 'text'
+            'type' => 'PerlModule'
         },
         'casStorageOptions' => {
             'type' => 'keyTextContainer'
@@ -779,7 +779,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'globalStorage' => {
             'default' => 'Apache::Session::File',
-            'type'    => 'text'
+            'type'    => 'PerlModule'
         },
         'globalStorageOptions' => {
             'default' => {
@@ -856,7 +856,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'issuerDBCASPath' => {
             'default' => '^/cas/',
-            'type'    => 'text'
+            'type'    => 'pcre'
         },
         'issuerDBCASRule' => {
             'default' => 1,
@@ -880,7 +880,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'issuerDBOpenIDPath' => {
             'default' => '^/openidserver/',
-            'type'    => 'text'
+            'type'    => 'pcre'
         },
         'issuerDBOpenIDRule' => {
             'default' => 1,
@@ -892,7 +892,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'issuerDBSAMLPath' => {
             'default' => '^/saml/',
-            'type'    => 'text'
+            'type'    => 'pcre'
         },
         'issuerDBSAMLRule' => {
             'default' => 1,
@@ -1011,7 +1011,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 'ldap://localhost',
             'test'    => sub {
                 my $l = shift();
-                my (@s) = split( /[\s,]+/, $l, 0 );
+                my @s = split( /[\s,]+/, $l, 0 );
                 foreach my $s (@s) {
                     return 0, qq[Bad ldap uri "$s"]
                       unless $s =~
@@ -1039,7 +1039,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'localSessionStorage' => {
             'default' => 'Cache::FileCache',
-            'type'    => 'text'
+            'type'    => 'PerlModule'
         },
         'localSessionStorageOptions' => {
             'default' => {
@@ -1118,7 +1118,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'mailUrl' => {
             'default' => 'http://auth.example.com/mail.pl',
-            'type'    => 'text'
+            'type'    => 'url'
         },
         'maintenance' => {
             'default' => 0,
@@ -1156,7 +1156,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'notificationStorage' => {
             'default' => 'File',
-            'type'    => 'text'
+            'type'    => 'PerlModule'
         },
         'notificationStorageOptions' => {
             'default' => {
@@ -1222,7 +1222,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'password'
         },
         'oidcOPMetaDataOptionsConfigurationURI' => {
-            'type' => 'text'
+            'type' => 'url'
         },
         'oidcOPMetaDataOptionsDisplay' => {
             'default' => '',
@@ -1449,7 +1449,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'RSAPublicKey'
         },
         'oidcStorage' => {
-            'type' => 'text'
+            'type' => 'PerlModule'
         },
         'oidcStorageOptions' => {
             'type' => 'keyTextContainer'
@@ -1483,35 +1483,35 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'blackWhiteList'
         },
         'openIdSreg_country' => {
-            'type' => 'text'
+            'type' => 'lmAttrOrMacro'
         },
         'openIdSreg_dob' => {
-            'type' => 'text'
+            'type' => 'lmAttrOrMacro'
         },
         'openIdSreg_email' => {
             'default' => 'mail',
-            'type'    => 'text'
+            'type'    => 'lmAttrOrMacro'
         },
         'openIdSreg_fullname' => {
             'default' => 'cn',
-            'type'    => 'text'
+            'type'    => 'lmAttrOrMacro'
         },
         'openIdSreg_gender' => {
-            'type' => 'text'
+            'type' => 'lmAttrOrMacro'
         },
         'openIdSreg_language' => {
-            'type' => 'text'
+            'type' => 'lmAttrOrMacro'
         },
         'openIdSreg_nickname' => {
             'default' => 'uid',
-            'type'    => 'text'
+            'type'    => 'lmAttrOrMacro'
         },
         'openIdSreg_postcode' => {
-            'type' => 'text'
+            'type' => 'lmAttrOrMacro'
         },
         'openIdSreg_timezone' => {
             'default' => '_timezone',
-            'type'    => 'text'
+            'type'    => 'lmAttrOrMacro'
         },
         'passwordDB' => {
             'default' => 'Demo',
@@ -1544,7 +1544,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'select'
         },
         'persistentStorage' => {
-            'type' => 'text'
+            'type' => 'PerlModule'
         },
         'persistentStorageOptions' => {
             'type' => 'keyTextContainer'
@@ -1554,7 +1554,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'portal' => {
             'default' => 'http://auth.example.com/',
-            'type'    => 'text'
+            'type'    => 'url'
         },
         'portalAntiFrame' => {
             'default' => 1,
@@ -1701,7 +1701,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'randomPasswordRegexp' => {
             'default' => '[A-Z]{3}[a-z]{5}.\\d{2}',
-            'type'    => 'text'
+            'type'    => 'pcre'
         },
         'redirectFormMethod' => {
             'default' => 'get',
@@ -1768,7 +1768,7 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'remoteGlobalStorage' => {
             'default' => 'Lemonldap::NG::Common::Apache::Session::SOAP',
-            'type'    => 'text'
+            'type'    => 'PerlModule'
         },
         'remoteGlobalStorageOptions' => {
             'default' => {
@@ -2278,7 +2278,7 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
             'type'    => 'bool'
         },
         'samlStorage' => {
-            'type' => 'text'
+            'type' => 'PerlModule'
         },
         'samlStorageOptions' => {
             'type' => 'keyTextContainer'
@@ -2331,7 +2331,7 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'secureTokenUrls' => {
             'default' => '.*',
-            'type'    => 'text'
+            'type'    => 'pcre'
         },
         'sessionDataToRemember' => {
             'keyTest' => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
@@ -2386,7 +2386,7 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'SMTPServer' => {
             'default' => '',
-            'type'    => 'text'
+            'type'    => 'hostname'
         },
         'Soap' => {
             'default' => 0,
@@ -2459,7 +2459,7 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'userControl' => {
             'default' => '^[\\w\\.\\-@]+$',
-            'type'    => 'text'
+            'type'    => 'pcre'
         },
         'userDB' => {
             'default' => 'Demo',
@@ -2583,7 +2583,7 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'whatToTrace' => {
             'default' => 'uid',
-            'type'    => 'text'
+            'type'    => 'lmAttrOrMacro'
         },
         'yubikeyAuthnLevel' => {
             'default' => 3,
@@ -2628,10 +2628,10 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
             'type' => 'text'
         },
         'zimbraSsoUrl' => {
-            'type' => 'text'
+            'type' => 'url'
         },
         'zimbraUrl' => {
-            'type' => 'text'
+            'type' => 'url'
         }
     };
 }
