@@ -107,17 +107,30 @@ print
 
 foreach ( sort keys %$headers ) {
     next if $_ =~ /(Accept|Cache|User-Agent|Connection|Keep-Alive)/i;
-    print "<tr>
-    <td>$_</td>
+    print qq{<tr>
+    <td id="h-$_">$_</td>
     <td><tt>\$ENV{$headers->{$_}}</tt></td>
     <td><tt>\$_SERVER{$headers->{$_}}</tt></td>
-    <td><ul class=\"list-unstyled\">";
-    foreach ( split( /;/, $ENV{ $headers->{$_} } ) ) {
-        print "<li>$_</li>" if $_ ne " ";
+    <td id="v-$_">};
+    my @tmp;
+    if (    $ENV{ $headers->{$_} }
+        and @tmp = grep /\S/, split( /;/, $ENV{ $headers->{$_} } ) )
+    {
+        if ($#tmp) {
+            print '<ul class="list-unstyled">';
+            foreach (@tmp) {
+                print "<li>$_</li>";
+            }
+            print '</ul>';
+        }
+        else {
+            print $ENV{ $headers->{$_} };
+        }
     }
-    print "☒" unless $ENV{ $headers->{$_} };
-    print "</ul></td>
-    </tr>\n";
+    else {
+        print "☒",;
+    }
+    print "</td></tr>\n";
 }
 print "</tbody></table>\n";
 print "</div>\n";
