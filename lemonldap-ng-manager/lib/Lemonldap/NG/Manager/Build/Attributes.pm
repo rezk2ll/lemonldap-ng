@@ -300,6 +300,7 @@ sub attributes {
         },
         applicationList => {
             type    => 'catAndAppList',
+            keyTest => qr/\w/,
             help    => 'portalmenu.html#categories_and_applications',
             default => {
                 default => { catname => 'Default category', type => "category" }
@@ -2103,6 +2104,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcServiceMetaDataAuthnContext => {
             type    => 'keyTextContainer',
+            keyTest => qr/\w/,
             default => {
                 'loa-1' => 1,
                 'loa-2' => 2,

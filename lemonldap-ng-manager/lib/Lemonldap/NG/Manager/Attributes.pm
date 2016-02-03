@@ -240,7 +240,8 @@ sub attributes {
                     'type'    => 'category'
                 }
             },
-            'type' => 'catAndAppList'
+            'keyTest' => qr/\w/,
+            'type'    => 'catAndAppList'
         },
         'authChoiceModules' => {
             'keyTest' => qr/^(\d*)?[a-zA-Z0-9_]+$/,
@@ -1408,7 +1409,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                 'loa-4' => 4,
                 'loa-5' => 5
             },
-            'type' => 'keyTextContainer'
+            'keyTest' => qr/\w/,
+            'type'    => 'keyTextContainer'
         },
         'oidcServiceMetaDataAuthorizeURI' => {
             'default' => 'authorize',

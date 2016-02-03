@@ -828,7 +828,28 @@ sub _unitTest {
                 $res = 0;
                 next;
             }
+
+            # Hash parameters
+            if ( $key =~ $simpleHashKeys or $attr->{type} =~ /Container$/ ) {
+                $conf->{$key} //= {};
+                unless ( ref $conf->{$key} eq 'HASH' ) {
+                    push @{ $self->errors },
+                      { message => "$key is not a hash ref" };
+                    $res = 0;
+                    next;
+                }
+            }
             if ( $key =~ $simpleHashKeys ) {
+                foreach my $k ( keys %{ $conf->{$key} } ) {
+                    my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail}
+                      // 'Bad hash key';
+                    $res = 0
+                      unless $self->_execTest( $attr->{keyTest}
+                          // $type->{keyTest} // qr/^\w+$/,
+                        $k, "$key/$k", $attr, $keyMsg, $conf );
+                }
+            }
+            elsif ( $attr->{type} =~ /Container$/ ) {
 
                 #TODO
             }
@@ -836,51 +857,44 @@ sub _unitTest {
 
                 #TODO
             }
-            elsif ( $attr->{type} =~ /Container$/ ) {
-
-                #TODO
-            }
             else {
                 die "Unkown type $attr->{type}"
                   unless ( $type = $types->{ $attr->{type} } );
-                my $test = $attr->{test}    // $type->{test};
-                my $msg  = $attr->{msgFail} // $type->{msgFail};
-                if ( my $ref = ref($test) ) {
-                    if ( $ref eq 'CODE' ) {
-                        my ( $r, $w ) =
-                          $test->( $conf->{$key}, $conf, $attr );
-                        unless ($r) {
-                            push @{ $self->errors },
-                              { message => "$key: " . ( $w ? $w : $msg ) };
-                            $res = 0;
-                        }
-                        elsif ($w) {
-                            push @{ $self->warnings },
-                              { message => "$key: $w" };
-                        }
-                    }
-                    elsif ( $ref eq 'Regexp' ) {
-                        die "msgFail undefined for type \"$attr->{type}\""
-                          unless ( defined $msg );
-                        unless ( $conf->{$key} =~ $test ) {
-                            push @{ $self->errors },
-                              { message => "$key: $msg ($conf->{$key})" };
-                            $res = 0;
-                        }
-                    }
-                    else {
-                        die
-"Malformed test: only regexp ref or sub are accepted (type \"$ref\")";
-                    }
-                }
-                else {
-                    die
-"Malformed test: only regexp ref or sub are accepted (\"$test\")";
-                }
+                my $msg = $attr->{msgFail} // $type->{msgFail};
+                $res = 0
+                  unless (
+                    $self->_execTest(
+                        $attr->{test} // $type->{test},
+                        $conf->{$key}, $key, $attr, $msg, $conf
+                    )
+                  );
             }
         }
     }
     return $res;
+}
+
+##@method private boolean _execTest($test, $value)
+# Execute the given test with value
+#@param test that can be a code-ref, or a regexp
+#@return result of test
+sub _execTest {
+    my ( $self, $test, $value, $key, $attr, $msg, $conf ) = @_;
+    my $ref;
+    die "Malformed test: only regexp ref or sub are accepted (type \"$ref\")"
+      unless ( $ref = ref($test) and $ref =~ /^(CODE|Regexp)$/ );
+    if ( $1 eq 'CODE' ) {
+        my ( $r, $m ) = ( $test->( $value, $conf, $attr ) );
+        push @{ $self->{ ( $r ? 'warnings' : 'error' ) } },
+          { message => "$key: $m" }
+          if ($m);
+        return $r;
+    }
+    else {
+        my $r = $value =~ $test;
+        push @{ $self->errors }, { message => "$key: $msg" } unless ($r);
+        return $r;
+    }
 }
 
 ##@method private boolean _globalTest()
