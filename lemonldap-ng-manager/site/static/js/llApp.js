@@ -129,6 +129,43 @@
     }
   }]);
 
+  /* Modal controller
+   *
+   * Used to display messages
+   */
+  llapp.controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', 'elem', 'set', 'init', function($scope, $uibModalInstance, elem, set, init) {
+    var oldValue;
+    $scope.elem = elem;
+    $scope.set = set;
+    $scope.result = init;
+    $scope.staticPrefix = staticPrefix;
+    var currentNode = elem('currentNode');
+    $scope.translateP = elem('translateP');
+    if (currentNode) {
+      oldValue = currentNode.data;
+      $scope.currentNode = currentNode;
+    }
+
+    $scope.ok = function() {
+      set('result', $scope.result);
+      $uibModalInstance.close(true);
+    };
+
+    $scope.cancel = function() {
+      if (currentNode) $scope.currentNode.data = oldValue;
+      $uibModalInstance.dismiss('cancel');
+    };
+
+    /* test if value is in select */
+    $scope.inSelect = function(value) {
+      for (var i = 0; i < $scope.currentNode.select.length; i++) {
+        if ($scope.currentNode.select[i].k == value) return true;
+      }
+      return false;
+    }
+
+  }]);
+
   /* File reader directive
    *
    * Add "onReadFile" HTML attribute to be used in a "file" input
