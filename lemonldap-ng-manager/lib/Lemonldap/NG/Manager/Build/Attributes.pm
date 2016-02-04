@@ -265,7 +265,7 @@ sub attributes {
         reloadUrls => {
             type    => 'keyTextContainer',
             help    => 'configlocation.html#configuration_reload',
-            keyTest => qr/^$Regexp::Common::URI::RFC2396::host$/,
+            keyTest => qr/^$Regexp::Common::URI::RFC2396::host(?::\d+)?$/,
             test    => qr/^$RE{URI}{HTTP}{-scheme=>"https?"}$/,
             msgFail => '__badUrl__'
         },
