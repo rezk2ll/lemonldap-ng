@@ -842,22 +842,39 @@ sub _unitTest {
                 }
             }
             if ( $key =~ $simpleHashKeys ) {
-                foreach my $k ( keys %{ $conf->{$key} } ) {
-                    my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail}
-                      // 'Bad hash key';
-                    my $msg = $attr->{msgFail} // $type->{msgFail};
-                    $res = 0
-                      unless (
-                        $self->_execTest( $attr->{keyTest} // $type->{keyTest}
-                              // qr/^\w+$/,
-                            $k, "$key/$k", $attr, $keyMsg, $conf )
-                        and $self->_execTest(
-                            $attr->{test} // $type->{test},
-                            $conf->{$key}->{$k},
-                            "$key/$k", $attr, $msg, $conf
-                        )
-                      );
-                }
+
+                #foreach my $k ( keys %{ $conf->{$key} } ) {
+                #    my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail}
+                #      // 'Bad hash key';
+                #    my $msg = $attr->{msgFail} // $type->{msgFail};
+                #    $res = 0
+                #      unless (
+                #        $self->_execTest( $attr->{keyTest} // $type->{keyTest}
+                #              // qr/^\w+$/,
+                #            $k, "$key/$k", $attr, $keyMsg, $conf )
+                #        and $self->_execTest(
+                #            $attr->{test} // $type->{test},
+                #            $conf->{$key}->{$k},
+                #            "$key/$k", $attr, $msg, $conf
+                #        )
+                #      );
+                #}
+                my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail};
+                my $msg    = $attr->{msgFail}    // $type->{msgFail};
+                $res = 0
+                  unless (
+                    $self->_execTest(
+                        {
+                            keyTest => $attr->{keyTest} // $type->{keyTest},
+                            keyMsgFail => $attr->{keyMsgFail}
+                              // $type->{keyMsgFail},
+                            test    => $attr->{test}    // $type->{test},
+                            msgFail => $attr->{msgFail} // $type->{msgFail},
+                        },
+                        $conf->{$key},
+                        $key, $attr, undef, $conf
+                    )
+                  );
             }
             elsif ( $attr->{type} =~ /Container$/ ) {
 
@@ -891,18 +908,37 @@ sub _execTest {
     my $ref;
     die
 "Malformed test for $key: only regexp ref or sub are accepted (type \"$ref\")"
-      unless ( $ref = ref($test) and $ref =~ /^(CODE|Regexp)$/ );
-    if ( $1 eq 'CODE' ) {
+      unless ( $ref = ref($test) and $ref =~ /^(CODE|Regexp|HASH)$/ );
+    if ( $ref eq 'CODE' ) {
         my ( $r, $m ) = ( $test->( $value, $conf, $attr ) );
         push @{ $self->{ ( $r ? 'warnings' : 'error' ) } },
           { message => "$key: $m" }
           if ($m);
         return $r;
     }
-    else {
+    elsif ( $ref eq 'Regexp' ) {
         my $r = $value =~ $test;
         push @{ $self->errors }, { message => "$key: $msg" } unless ($r);
         return $r;
+    }
+
+    # Recursive test (for locationRules,...)
+    else {
+        my $res = 1;
+        foreach my $k ( keys %$value ) {
+            $res = 0
+              unless (
+                $self->_execTest(
+                    $test->{keyTest}, $k,                  "$key/$k",
+                    $attr,            $test->{keyMsgFail}, $conf
+                )
+                and $self->_execTest(
+                    $test->{test}, $value->{$k},     "$key/$k",
+                    $attr,         $test->{msgFail}, $conf
+                )
+              );
+        }
+        return $res;
     }
 }
 
