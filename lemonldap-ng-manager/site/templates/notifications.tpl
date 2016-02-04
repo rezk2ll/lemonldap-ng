@@ -110,7 +110,18 @@
           </tr>
           <tr>
             <th><span trspan="XMLcontent" /></th>
-            <td><textarea rows=5 class="form-control" ng-model="form.xml"></textarea></td>
+            <td>
+              <div class="alert alert-info">
+                <p><span trspan="allowedMarkups" /></p>
+                <ul>
+                  <li>&lt;title&gt;...&lt;/title&gt;</li>
+                  <li>&lt;subtitle&gt;...&lt;/subtitle&gt;</li>
+                  <li>&lt;text&gt;...&lt;/text&gt;</li>
+                  <li>&lt;check&gt;...&lt;/check&gt;</li>
+                </ul>
+              </div>
+              <textarea rows=5 class="form-control" ng-model="form.xml"></textarea>
+            </td>
           </tr>
         </table>
         </form>
