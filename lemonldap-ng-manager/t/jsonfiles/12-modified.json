@@ -1868,7 +1868,7 @@
       "data": "HTTP_USER_AGENT",
       "type": "keyText",
       "id": "exportedVars/UA",
-      "title": "User-Agent"
+      "title": "UserAgent"
     }, {
       "data": "uid",
       "type": "keyText",
