@@ -31,6 +31,12 @@ RLMPREFIX=$(DESTDIR)/$(LMPREFIX)
 # BIN dirs
 BINDIR=$(LMPREFIX)/bin
 RBINDIR=$(DESTDIR)/$(BINDIR)
+SBINDIR=$(LMPREFIX)/sbin
+RSBINDIR=$(DESTDIR)/$(SBINDIR)
+INITDIR=$(LMPREFIX)/etc/init.d
+RINITDIR=$(DESTDIR)/$(INITDIR)
+ETCDEFAULTDIR=$(LMPREFIX)/etc/default
+RETCDEFAULTDIR=$(DESTDIR)/$(ETCDEFAULTDIR)
 DATADIR=$(LMPREFIX)/data
 RDATADIR=$(DESTDIR)/$(DATADIR)
 
@@ -104,6 +110,8 @@ RCAPTCHADIR=$(DESTDIR)/$(CAPTCHADIR)
 # Apache user/group
 APACHEUSER=
 APACHEGROUP=
+FASTCGIUSER=$(APACHEUSER)
+FASTCGIGROUP=$(APACHEGROUP)
 
 # Apache version
 APACHEVERSION=2.X
@@ -189,20 +197,22 @@ all:	configure common handler manager portal
 	@echo
 	@echo 'Other targets launched by "make install" :'
 	@echo " * Perl libraries install :"
-	@echo "   - install_libs          (all Perl libraries)"
+	@echo "   - install_libs           (all Perl libraries)"
 	@echo "   - install_portal_libs"
 	@echo "   - install_manager_libs"
 	@echo "   - install_handler_libs"
 	@echo " * Binaries install :"
-	@echo "   - install_bin           ($(BINDIR))"
+	@echo "   - install_bin            ($(BINDIR))"
+	@echo " * FastCGI server install   (required for Nginx)"
+	@echo "   - install_fastcgi_server ($(SBINDIR))"
 	@echo " * Web sites install :"
-	@echo "   - install_site          (all sites including install_doc_site)"
-	@echo "   - install_portal_site   ($(PORTALDIR))"
-	@echo "   - install_manager_site  ($(MANAGERDIR))"
-	@echo "   - install_handler_site  ($(HANDLERDIR))"
+	@echo "   - install_site           (all sites including install_doc_site)"
+	@echo "   - install_portal_site    ($(PORTALDIR))"
+	@echo "   - install_manager_site   ($(MANAGERDIR))"
+	@echo "   - install_handler_site   ($(HANDLERDIR))"
 	@echo " * Documentation install :"
-	@echo "   - install_doc_site      ($(DEFDOCDIR))"
-	@echo "   - install_examples_site ($(EXAMPLESDIR))"
+	@echo "   - install_doc_site       ($(DEFDOCDIR))"
+	@echo "   - install_examples_site  ($(EXAMPLESDIR))"
 	@echo
 	@echo "Other languages documentation (fr only for now)"
 	@echo " - fr-doc                  (needs OmegaT)"
@@ -389,7 +399,7 @@ install:	install_libs install_bin install_site
 #
 # Perl libraires install
 #
-install_libs:	common_install_libs install_handler_libs install_portal_libs install_manager_libs
+install_libs:	common_install_libs install_handler_libs install_portal_libs install_manager_libs install_fastcgi_server
 
 common_install_libs:		common
 	@$(MAKE) -C ${SRCCOMMONDIR} install
@@ -434,6 +444,24 @@ install_bin:	install_conf_dir
 		$(PERL) -i -pe 's#__APACHEGROUP__#$(APACHEGROUP)#g;' $(RBINDIR)/lemonldap-ng-cli; \
 	fi
 	@chmod +x $(RBINDIR)/*
+
+install_fastcgi_server:
+	@install -v -d $(RSBINDIR) $(RINITDIR) $(RETCDEFAULTDIR)
+	@cp -f fastcgi-server/sbin/llng-fastcgi-server $(RSBINDIR)
+	@cp -f fastcgi-server/rc/llng-fastcgi-server $(RINITDIR)
+	@cp -f fastcgi-server/default/llng-fastcgi-server $(RETCDEFAULTDIR)
+	$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#' \
+		$(RETCDEFAULTDIR)/llng-fastcgi-server
+	@if [ ! "$(FASTCGIUSER)" ]; then \
+		$(PERL) -pi -e 's#__USER__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+	else \
+		$(PERL) -pi -e 's#__USER__#$(FASTCGIUSER)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+	fi
+	@if [ ! "$(FASTCGIGROUP)" ]; then \
+		$(PERL) -pi -e 's#__USER__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+	else \
+		$(PERL) -pi -e 's#__USER__#$(FASTCGIGROUP)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+	fi
 
 #
 # SITE INSTALL

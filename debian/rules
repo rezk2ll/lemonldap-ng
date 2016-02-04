@@ -32,6 +32,7 @@ override_dh_auto_install:
 			PREFIX=/usr/ \
 			LMPREFIX=/usr/share/lemonldap-ng/ \
 			BINDIR=$(LMSHAREDIR)/bin/ \
+			SBINDIR=/usr/sbin \
 			DOCUMENTROOT=$(LMVARDIR) \
 			EXAMPLESDIR=/examples/ \
 			HANDLERDIR=$(LMVARDIR)/handler/ \

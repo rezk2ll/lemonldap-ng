@@ -1,0 +1,14 @@
+[Unit]
+Description=FastCGI server for Lemonldap::NG websso system
+
+[Service]
+Type=forking
+PIDFile=/run/llng-fasctcgi.pid
+ExecStart=/usr/sbin/llng-fastcgi-server
+ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/llng-fasctcgi.sock
+TimeoutStop=2
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target
+

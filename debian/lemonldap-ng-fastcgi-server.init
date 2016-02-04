@@ -1,33 +1,24 @@
 #!/bin/sh
 
 ### BEGIN INIT INFO
-# Provides:	  nginx
+# Provides:	     llng-fastcgi-server
 # Required-Start:    $local_fs $remote_fs $network $syslog $named
 # Required-Stop:     $local_fs $remote_fs $network $syslog $named
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: starts the nginx web server
-# Description:       starts nginx using start-stop-daemon
+# Short-Description: starts the Lemonldap::NG FastCGI server
+# Description:       starts Lemonldap::NG FastCGI server using start-stop-daemon
 ### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=`which plackup`
-APP=/usr/share/lemonldap-ng/fastcgi-server.psgi
-PID=/run/llng-fastcgi-server.pid
-NPROC=10
-MODE=deployment
+DAEMON=/usr/sbin/llgn-fastcgi-server
 NAME=llng-fastcgi-server
 DESC=llng-fastcgi-server
-SOCKET=/run/llng-fastcgi-server.sock
-USER=www-data
-GROUP=www-data
 
-# Include nginx defaults if available
-if [ -r /etc/default/llng-fastcgi-server ]; then
-	. /etc/default/llng-fastcgi-server
+# Include llng-fastcgi-server defaults if available
+if [ -r /etc/default/lemonldap-ng-fastcgi-server ]; then
+	. /etc/default/lemonldap-ng-fastcgi-server
 fi
-
-DAEMON_OPTS="-s FCGI --listen $SOCKET -a $APP --daemonize --pid $PID -nproc NPROC --proc-title llng-fastcgi-server --no-default-middleware -E $MODE"
 
 STOP_SCHEDULE="${STOP_SCHEDULE:-QUIT/5/TERM/5/KILL/5}"
 
@@ -36,7 +27,7 @@ test -x $DAEMON || exit 0
 . /lib/init/vars.sh
 . /lib/lsb/init-functions
 
-# Try to extract nginx pidfile
+# Try to extract llng-fastcgi-server pidfile
 if [ -z "$PID" ]; then
 	PID=/run/llng-fastcgi-server.pid
 fi
@@ -48,9 +39,9 @@ start_server() {
 	#   0 if daemon has been started
 	#   1 if daemon was already running
 	#   2 if daemon could not be started
-	start-stop-daemon --start -c $USER:$GROUP --quiet --pidfile $PID --exec $DAEMON --test > /dev/null \
+	start-stop-daemon --start --quiet --pidfile $PID --exec $DAEMON --test > /dev/null \
 		|| return 1
-	start-stop-daemon --start -c $USER:$GROUP --quiet --pidfile $PID --exec $DAEMON -- \
+	start-stop-daemon --start --quiet --pidfile $PID --exec $DAEMON -- \
 		$DAEMON_OPTS 2>/dev/null \
 		|| return 2
 }
@@ -67,6 +58,12 @@ stop_server() {
 	RETVAL="$?"
 	sleep 1
 	return "$RETVAL"
+}
+
+reload_server() {
+	# Function that sends a SIGHUP to the daemon/service
+	start-stop-daemon --stop --signal HUP --quiet --pidfile $PID --name $NAME
+	return 0
 }
 
 case "$1" in
@@ -86,10 +83,10 @@ case "$1" in
 			2)   log_end_msg 1 ;;
 		esac
 		;;
-	restart|force-reload)
+	restart)
 		log_daemon_msg "Restarting $DESC" "$NAME"
 
-		# Check configuration before stopping nginx
+		# Check configuration before stopping llng-fastcgi-server
 		if ! test_config; then
 			log_end_msg 1 # Configuration error
 			exit $?
@@ -111,11 +108,16 @@ case "$1" in
 				;;
 		esac
 		;;
+	reload|force-reload)
+		log_daemon_msg "Reloading $DESC configuration" "$NAME"
+		reload_server
+		log_end_msg $?
+		;;
 	status)
 		status_of_proc -p $PID "$DAEMON" "$NAME" && exit 0 || exit $?
 		;;
 	*)
-		echo "Usage: $NAME {start|stop|restart|force-reload|status}" >&2
+		echo "Usage: $NAME {start|stop|restart|reload|force-reload|status}" >&2
 		exit 3
 		;;
 esac

@@ -1,0 +1,75 @@
+#!/usr/bin/env perl
+
+use Plack::Runner;
+use strict;
+use warnings;
+use POSIX;
+use Getopt::Std;
+
+our %opts;
+my %_apps;
+
+getopts( 'n:p:s:u:g:', \%opts );
+
+$opts{n} ||= $ENV{NPROC}       || 7;
+$opts{p} ||= $ENV{PID}         || '/run/llng-fastcgi.pid';
+$opts{s} ||= $ENV{SOCKET}      || '/run/llng-fastcgi.sock';
+$opts{a} ||= $ENV{PORTAL_PATH} || '/var/lib/lemonldap-ng/portal';
+$opts{u} ||= $ENV{USER};
+$opts{g} ||= $ENV{GROUP};
+
+if ( $opts{g} ) {
+    my $grp = getgrnam( $opts{g} ) or warn "Can't change uid to $opts{g}";
+    POSIX::setuid($grp);
+}
+
+if ( $opts{u} ) {
+    my $uid = getpwnam( $opts{u} ) or warn "Can't change uid to $opts{u}";
+    POSIX::setuid($uid);
+}
+
+my %builder = (
+    handler => sub {
+        require Lemonldap::NG::Handler::Nginx;
+        return Lemonldap::NG::Handler::Nginx->run( {} );
+    },
+    manager => sub {
+        require Lemonldap::NG::Manager;
+        return Lemonldap::NG::Manager->run( {} );
+    },
+    auth => sub {
+        require CGI::Emulate::PSGI;
+        require CGI::Compile;
+        return CGI::Emulate::PSGI->handler(
+            CGI::Compile->compile("$opts{a}/index.pl") );
+    },
+);
+
+unless ($>) {
+    die "Refuse to run as root. Aborting";
+}
+
+my $app = sub {
+    my $type = $_[0]->{LLTYPE} || 'handler';
+    return $_apps{$type}->(@_) if ( defined $_apps{$type} );
+    if ( defined $builder{$type} ) {
+        $_apps{$type} = $builder{$type}->();
+        return $_apps{$type}->(@_);
+    }
+    die "Unknown PSGI type $type";
+};
+
+my $server = Plack::Runner->new();
+$server->parse_options(
+    '-s'           => 'FCGI',
+    '-E'           => 'deployment',
+    '--pid'        => $opts{p},
+    '--nproc'      => $opts{n},
+    '--listen'     => [ $opts{s} ],
+    '--proc-title' => 'llng-fastcgi-server',
+    '--daemonize',
+    '--no-default-middleware',
+);
+
+$server->run($app);
+
