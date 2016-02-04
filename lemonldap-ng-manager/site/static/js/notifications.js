@@ -224,6 +224,7 @@
           }
           $scope.waiting = false;
         }).error(function(j, e) {
+          alert($translator.translateP('__notificationNotCreated__ (' + j.error + ')'));
           $scope.waiting = false;
         });
       }
