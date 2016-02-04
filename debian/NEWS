@@ -1,7 +1,7 @@
 lemonldap-ng (1.9.0-1) UNRELEASED; urgency=low
 
   From now, Lemonldap::NG uses JSON serialization to store configuration and
-  sessions instead of Storable::nfreeze Perl function. This permits to have
+  sessions instead of Storable::nfreeze Perl function. This permits one to have
   heterogenous servers connected to the same LLNG organization (32/64 bits or
   different Perl versions). Old format still works but:
    * configuration backends: new format is applied at first configuration
@@ -21,7 +21,7 @@ lemonldap-ng (1.9.0-1) UNRELEASED; urgency=low
   To request for authentication, handlers sent a 302 HTTP code even if request
   was an Ajax one. From now, after redirection, portal will send a 401 code
   with a WWW-Authenticate header containing "SSO portal-URL". This is a little
-  HTTP protocol hook created because browsers follow redirection tranparently.
+  HTTP protocol hook created because browsers follow redirection transparently.
   If you want to keep old behaviour, set noAjaxHook to 1 (in General Parameters
   -> Advanced -> Handler redirections -> Keep redirections for Ajax).
 
