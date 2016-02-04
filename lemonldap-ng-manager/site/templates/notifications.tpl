@@ -149,6 +149,15 @@
     </ol>
   </script>
 
+  <script type="text/ng-template" id="alert.html">
+    <div class="modal-header">
+      <h3 class="modal-title" trspan="{{elem('message').title}}" />
+    </div>
+    <div class="modal-body">
+      <div class="modal-p">{{translateP(elem('message').message)}}</div>
+    </div>
+  </script>
+
   <TMPL_INCLUDE NAME="scripts.tpl">
 
   <!-- //if:jsminified

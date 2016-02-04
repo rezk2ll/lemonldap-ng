@@ -201,6 +201,46 @@
       $scope.showT = false;
     }
 
+    /* Modal launcher */
+    $scope.showModal = function(tpl, init) {
+      var modalInstance = $uibModal.open({
+        templateUrl: tpl,
+        controller: 'ModalInstanceCtrl',
+        size: 'lg',
+        resolve: {
+          elem: function() {
+            return function(s) {
+              return $scope[s];
+            }
+          },
+          set: function() {
+            return function(f, s) {
+              $scope[f] = s;
+            }
+          },
+          init: function() {
+            return init
+          }
+        }
+      });
+      var d = $q.defer();
+      modalInstance.result.then(function(msgok) {
+        $scope.message = {
+          title: '',
+          message: '',
+        };
+        d.resolve(msgok);
+      },
+      function(msgnok) {
+        $scope.message = {
+          title: '',
+          message: '',
+        };
+        d.reject(msgnok);
+      });
+      return modalInstance.result;
+    }
+
     $scope.save = function() {
       if ($scope.form.uid && $scope.form.reference && $scope.form.xml && $scope.form.date) {
         $scope.waiting = true;
@@ -217,19 +257,33 @@
         $http.post('notifications/actives', $scope.form).success(function(data) {
           $scope.form = {};
           if (data.result == 1) {
-            alert($translator.translate('notificationCreated'));
+            $scope.message = {
+              "title": "notificationCreated"
+            };
+            $scope.showmodal("alert.html");
           }
           else {
-            alert($translator.translateP('__notificationNotCreated__ (' + data.error + ')'));
+            $scope.message = {
+              "title": "notificationNotCreated",
+              "message": data.error
+            };
+            $scope.showmodal("alert.html");
           }
           $scope.waiting = false;
         }).error(function(j, e) {
-          alert($translator.translateP('__notificationNotCreated__ (' + j.error + ')'));
+          $scope.message = {
+            "title": "notificationNotCreated",
+            "message": j.error
+          };
+          $scope.showmodal("alert.html");
           $scope.waiting = false;
         });
       }
       else {
-        alert($translator.translate('incompleteForm'));
+        $scope.message = {
+          "title": "incompleteForm"
+        };
+        $scope.showmodal("alert.html");
       }
     }
 

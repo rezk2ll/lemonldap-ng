@@ -5,7 +5,6 @@
  *  - translate.json that contains the keywords translation
  *
  *  This file contains:
- *   - a modal controller to display messages
  *   - the AngularJS controller
  */
 (function() {
