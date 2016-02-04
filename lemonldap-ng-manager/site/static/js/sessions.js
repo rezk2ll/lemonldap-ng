@@ -148,6 +148,7 @@
                 'title': key,
                 'value': session[key]
               });
+              delete session[key];
             }
           }
           if (tmp.length > 0) res.push({
@@ -177,6 +178,8 @@
                 session[key] = $scope.localeDate(session[key]);
               } else if (key.match(/^(startTime|updateTime)$/)) {
                 session[key] = _stToStr(session[key]);
+              } else if (key.match(/^notification/)) {
+                session[key] = $scope.localeDate(session[key]);
               }
             }
           }
