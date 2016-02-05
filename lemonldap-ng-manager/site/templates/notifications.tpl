@@ -156,6 +156,10 @@
     <div class="modal-body">
       <div class="modal-p">{{translateP(elem('message').message)}}</div>
     </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="promptok" ng-click="ok()" trspan="ok"></button>
+      <button class="btn btn-warning" ng-click="cancel()" trspan="cancel"></button>
+    </div>
   </script>
 
   <TMPL_INCLUDE NAME="scripts.tpl">
