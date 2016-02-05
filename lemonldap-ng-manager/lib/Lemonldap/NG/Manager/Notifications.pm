@@ -264,6 +264,9 @@ sub newNotification {
     unless ( $json->{date} =~ /^\d{4}-\d{2}-\d{2}$/ ) {
         return $self->sendError( $req, "Malformed date", 400 );
     }
+
+    utf8::decode( $json->{xml} );
+
     my $newNotif = qq#<?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <root><notification #
       . join(
