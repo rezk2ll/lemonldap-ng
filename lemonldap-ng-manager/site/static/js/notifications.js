@@ -46,6 +46,7 @@
     $scope.showForm = false;
     $scope.data = [];
     $scope.form = {};
+    $scope.formPost = {};
     $scope.currentScope = null;
     $scope.currentNotification = null;
     $scope.menu = menu;
@@ -244,17 +245,12 @@
     $scope.save = function() {
       if ($scope.form.uid && $scope.form.reference && $scope.form.xml && $scope.form.date) {
         $scope.waiting = true;
-        var year = $scope.form.date.getFullYear();
-        var month = $scope.form.date.getMonth() + 1;
-        if (month < 10) {
-          month = '0' + month;
-        }
-        var day = $scope.form.date.getDate();
-        if (day < 10) {
-          day = '0' + day;
-        }
-        $scope.form.date = year + "-" + month + "-" + day;
-        $http.post('notifications/actives', $scope.form).success(function(data) {
+        $scope.formPost.uid = $scope.form.uid;
+        $scope.formPost.date = dateToString($scope.form.date);
+        $scope.formPost.reference = $scope.form.reference;
+        $scope.formPost.condition = $scope.form.condition;
+        $scope.formPost.xml = $scope.form.xml;
+        $http.post('notifications/actives', $scope.formPost).success(function(data) {
           $scope.form = {};
           if (data.result == 1) {
             $scope.message = {
@@ -322,6 +318,20 @@
     $scope.popup = {
       opened: false
     };
+
+    var dateToString = function(dt) {
+        var year = dt.getFullYear();
+        var month = dt.getMonth() + 1;
+        if (month < 10) {
+          month = '0' + month;
+        }
+        var day = dt.getDate();
+        if (day < 10) {
+          day = '0' + day;
+        }
+        var result = year + "-" + month + "-" + day;
+        return result;
+    }
 
   }]);
 })();
