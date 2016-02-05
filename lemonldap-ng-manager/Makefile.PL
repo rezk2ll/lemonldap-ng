@@ -37,5 +37,8 @@ WriteMakefile(
           )
         : ()
     ),
+    clean => {
+        FILES => 't/conf/lmConf-2.js',
+    },
 );
 

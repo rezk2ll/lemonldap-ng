@@ -11,7 +11,7 @@ use strict;
 use Regexp::Common qw/URI/;
 
 my $perlExpr = sub {
-    my $s = eval { $_[0] };
+    my $s = eval $_[0];
     return $@ ? ( 0, "__badExpression__: $@" ) : (1);
 };
 
@@ -855,9 +855,22 @@ sub attributes {
         },
 
         locationRules => {
-            type       => 'ruleContainer',
-            help       => 'writingrulesand_headers.html#rules',
-            test       => sub { 1 },
+            type => 'ruleContainer',
+            help => 'writingrulesand_headers.html#rules',
+            test => {
+                keyTest => sub {
+                    eval { qr/$_[0]/ };
+                    return $@ ? 0 : 1;
+                },
+                keyMsgFail => '__badRegexp__',
+                test       => sub {
+                    my $s = $_[0];
+                    $s =~ s/\b(accept|deny)\b/1/g;
+                    eval $s;
+                    return $@ ? ( 0, "__badExpression__: $@" ) : (1);
+                },
+                msgFail    => '__badExpression__',
+            },
             keyTest    => qr/^$Regexp::Common::URI::RFC2396::hostname$/,
             keyMsgFail => '__badHostname__',
             default    => {

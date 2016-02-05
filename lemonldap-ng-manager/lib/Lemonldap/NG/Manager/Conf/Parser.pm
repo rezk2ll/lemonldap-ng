@@ -832,7 +832,7 @@ sub _unitTest {
             }
 
             # Hash parameters
-            if ( $key =~ $simpleHashKeys or $attr->{type} =~ /Container$/ ) {
+            if ( $key =~ $simpleHashKeys ) {
                 $conf->{$key} //= {};
                 unless ( ref $conf->{$key} eq 'HASH' ) {
                     push @{ $self->errors },
@@ -841,24 +841,11 @@ sub _unitTest {
                     next;
                 }
             }
-            if ( $key =~ $simpleHashKeys ) {
+            elsif ( $attr->{type} =~ /Container$/ ) {
 
-                #foreach my $k ( keys %{ $conf->{$key} } ) {
-                #    my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail}
-                #      // 'Bad hash key';
-                #    my $msg = $attr->{msgFail} // $type->{msgFail};
-                #    $res = 0
-                #      unless (
-                #        $self->_execTest( $attr->{keyTest} // $type->{keyTest}
-                #              // qr/^\w+$/,
-                #            $k, "$key/$k", $attr, $keyMsg, $conf )
-                #        and $self->_execTest(
-                #            $attr->{test} // $type->{test},
-                #            $conf->{$key}->{$k},
-                #            "$key/$k", $attr, $msg, $conf
-                #        )
-                #      );
-                #}
+                #TODO
+            }
+            if ( $key =~ $simpleHashKeys or $attr->{type} =~ /Container$/ ) {
                 my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail};
                 my $msg    = $attr->{msgFail}    // $type->{msgFail};
                 $res = 0
@@ -875,10 +862,6 @@ sub _unitTest {
                         $key, $attr, undef, $conf
                     )
                   );
-            }
-            elsif ( $attr->{type} =~ /Container$/ ) {
-
-                #TODO
             }
             elsif ( defined $attr->{keyTest} ) {
 
@@ -911,9 +894,13 @@ sub _execTest {
       unless ( $ref = ref($test) and $ref =~ /^(CODE|Regexp|HASH)$/ );
     if ( $ref eq 'CODE' ) {
         my ( $r, $m ) = ( $test->( $value, $conf, $attr ) );
-        push @{ $self->{ ( $r ? 'warnings' : 'error' ) } },
-          { message => "$key: $m" }
-          if ($m);
+        if ($m) {
+            push @{ $self->{ ( $r ? 'warnings' : 'errors' ) } },
+              { message => "$key: $m" };
+        }
+        elsif ( !$r ) {
+            push @{ $self->{errors} }, { message => "$key: $msg" };
+        }
         return $r;
     }
     elsif ( $ref eq 'Regexp' ) {

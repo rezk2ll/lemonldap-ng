@@ -165,6 +165,7 @@ t/06-rest-api.t
 t/07-utf8.t
 t/10-save-unchanged-conf.t
 t/12-save-changed-conf.t
+t/14-bad-changes-in-conf.t
 t/20-test-coverage.t
 t/40-sessions.t
 t/50-notifications.t
@@ -175,6 +176,7 @@ t/conf/lmConf-1.js
 t/jsonfiles/01-base-tree.json
 t/jsonfiles/02-base-tree-all-nodes-opened.json
 t/jsonfiles/12-modified.json
+t/jsonfiles/14-bad.json
 t/lemonldap-ng.ini
 t/test-lib.pm
 TODO.md

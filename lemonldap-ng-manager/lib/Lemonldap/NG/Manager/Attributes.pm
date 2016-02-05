@@ -22,11 +22,7 @@ sub types {
         'boolOrExpr' => {
             'msgFail' => '__notAValidPerlExpression__',
             'test'    => sub {
-                my $s = eval {
-                    do {
-                        $_[0];
-                      }
-                };
+                my $s = eval $_[0];
                 return $@ ? ( 0, "__badExpression__: $@" ) : 1;
               }
         },
@@ -804,11 +800,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'grantSessionRules' => {
             'keyTest' => sub {
-                my $s = eval {
-                    do {
-                        $_[0];
-                      }
-                };
+                my $s = eval $_[0];
                 return $@ ? ( 0, "__badExpression__: $@" ) : 1;
             },
             'test' => sub {
@@ -819,11 +811,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'groups' => {
             'default' => {},
             'test'    => sub {
-                my $s = eval {
-                    do {
-                        $_[0];
-                      }
-                };
+                my $s = eval $_[0];
                 return $@ ? ( 0, "__badExpression__: $@" ) : 1;
             },
             'type' => 'keyTextContainer'
@@ -1065,8 +1053,23 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             },
             'keyTest' =>
 qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
-            'test' => sub {
-                1;
+            'test' => {
+                'keyMsgFail' => '__badRegexp__',
+                'keyTest'    => sub {
+                    eval {
+                        do {
+                            qr/$_[0]/;
+                          }
+                    };
+                    return $@ ? 0 : 1;
+                },
+                'msgFail' => '__badExpression__',
+                'test'    => sub {
+                    my $s = $_[0];
+                    $s =~ s/\b(accept|deny)\b/1/g;
+                    eval $s;
+                    return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+                  }
             },
             'type' => 'ruleContainer'
         },
@@ -1082,11 +1085,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => {},
             'keyTest' => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
             'test'    => sub {
-                my $s = eval {
-                    do {
-                        $_[0];
-                      }
-                };
+                my $s = eval $_[0];
                 return $@ ? ( 0, "__badExpression__: $@" ) : 1;
             },
             'type' => 'keyTextContainer'
@@ -1683,11 +1682,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'portalSkinRules' => {
             'keyTest' => sub {
-                my $s = eval {
-                    do {
-                        $_[0];
-                      }
-                };
+                my $s = eval $_[0];
                 return $@ ? ( 0, "__badExpression__: $@" ) : 1;
             },
             'msgFail' => '__badValue__',
