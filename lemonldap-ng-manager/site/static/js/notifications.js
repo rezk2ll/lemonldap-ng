@@ -32,7 +32,7 @@
 
   var llapp = angular.module('llngNotificationsExplorer', ['ui.tree', 'ui.bootstrap', 'llApp']);
 
-  llapp.controller('NotificationsExplorerCtrl', ['$scope', '$translator', '$location', '$q', '$http', function($scope, $translator, $location, $q, $http) {
+  llapp.controller('NotificationsExplorerCtrl', ['$scope', '$translator', '$location', '$q', '$http', '$uibModal', function($scope, $translator, $location, $q, $http, $uibModal) {
 
     $scope.links = links;
     $scope.menulinks = menulinks;
@@ -260,14 +260,14 @@
             $scope.message = {
               "title": "notificationCreated"
             };
-            $scope.showmodal("alert.html");
+            $scope.showModal("alert.html");
           }
           else {
             $scope.message = {
               "title": "notificationNotCreated",
               "message": data.error
             };
-            $scope.showmodal("alert.html");
+            $scope.showModal("alert.html");
           }
           $scope.waiting = false;
         }).error(function(j, e) {
@@ -275,7 +275,7 @@
             "title": "notificationNotCreated",
             "message": j.error
           };
-          $scope.showmodal("alert.html");
+          $scope.showModal("alert.html");
           $scope.waiting = false;
         });
       }
@@ -283,7 +283,7 @@
         $scope.message = {
           "title": "incompleteForm"
         };
-        $scope.showmodal("alert.html");
+        $scope.showModal("alert.html");
       }
     }
 
