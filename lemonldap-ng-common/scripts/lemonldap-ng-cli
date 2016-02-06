@@ -3,14 +3,25 @@
 use warnings;
 use strict;
 
-if ( $ARGV[0] =~ /^(?:[gs]et|(?:add|del)Key)$/ ) {
+my $action;
+
+for ( my $i = 0 ; $i < @ARGV ; $i++ ) {
+    if ( $ARGV[$i] =~ /^-/ ) {
+        $i++;
+        next;
+    }
+    $action = $ARGV[$i];
+    last;
+}
+
+if ( $action =~ /^(?:[gs]et|(?:add|del)Key)$/ ) {
     eval { require Lemonldap::NG::Manager::Cli; };
     die 'Manager libraries not available, aborting' if ($@);
     Lemonldap::NG::Manager::Cli->run(@ARGV);
 }
-elsif ( $ARGV[0] =~ /^(?:info|update-cache)$/ ) {
+elsif ( $action =~ /^(?:info|update-cache)$/ ) {
     eval { require Lemonldap::NG::Common::Cli; };
-    die 'Lemonldap::NG common libraries not available, aborting' if ($@);
+    die "Lemonldap::NG common libraries not available, aborting ($@)" if ($@);
     Lemonldap::NG::Common::Cli->run(@ARGV);
 }
 else {
@@ -29,6 +40,7 @@ Available actions:
  - addKey <key> <subkey> <value> : add or set a subkey in a parameter
  - delKey <key> <subkey>         : delete subkey of a parameter
 
-See Lemonldap::NG::Common::Cli(3) or Lemonldap::NG::Manager::CLi(3) for more};
+See Lemonldap::NG::Common::Cli(3) or Lemonldap::NG::Manager::CLi(3) for more
+};
 }
 

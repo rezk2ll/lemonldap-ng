@@ -26,7 +26,6 @@ ok( $resBody->{result} == 0, "JSON response contains \"result:0\"" )
 ok( @{ $resBody->{details}->{__errors__} } == 1, '1 error detected' );
 
 count(5);
-print STDERR Dumper($resBody);
 
 done_testing( count() );
 

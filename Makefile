@@ -427,21 +427,17 @@ install_bin:	install_conf_dir
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
 		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
 		${SRCMANAGERDIR}/scripts/lmConfigEditor \
-		${SRCMANAGERDIR}/scripts/lemonldap-ng-cli \
+		${SRCCOMMONDIR}/scripts/lemonldap-ng-cli \
 			$(RBINDIR)
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RBINDIR)/lmConfigEditor; \
-		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RBINDIR)/lemonldap-ng-cli; \
 	else \
 		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RBINDIR)/lmConfigEditor; \
-		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RBINDIR)/lemonldap-ng-cli; \
 	fi
 	@if [ ! "$(APACHEGROUP)" ]; then \
 		$(PERL) -i -pe 's#__APACHEGROUP__#nobody#g;' $(RBINDIR)/lmConfigEditor; \
-		$(PERL) -i -pe 's#__APACHEGROUP__#nobody#g;' $(RBINDIR)/lemonldap-ng-cli; \
 	else \
 		$(PERL) -i -pe 's#__APACHEGROUP__#$(APACHEGROUP)#g;' $(RBINDIR)/lmConfigEditor; \
-		$(PERL) -i -pe 's#__APACHEGROUP__#$(APACHEGROUP)#g;' $(RBINDIR)/lemonldap-ng-cli; \
 	fi
 	@chmod +x $(RBINDIR)/*
 
@@ -894,7 +890,7 @@ debian-diff:
 	@$(DIFF) $(SRCMANAGERDIR)/site/static $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/static ||true
 	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/templates ||true
 	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
-	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' $(SRCMANAGERDIR)/scripts/lemonldap-ng-cli $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lemonldap-ng-cli ||true
+	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' $(SRCCOMMONDIR)/scripts/lemonldap-ng-cli $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lemonldap-ng-cli ||true
 
 default-diff:
 	@# Portal
@@ -924,7 +920,7 @@ default-diff:
 	@$(DIFF) $(SRCMANAGERDIR)/site/static $(LMPREFIX)/htdocs/manager/static ||true
 	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(LMPREFIX)/htdocs/manager/templates ||true
 	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
-	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' $(SRCMANAGERDIR)/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true
+	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' $(SRCCOMMONDIR)/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true
 
 test-diff:
 	@for file in `find lemonldap-ng-*/lib -type f`; do \
