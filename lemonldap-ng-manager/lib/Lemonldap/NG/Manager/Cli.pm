@@ -331,7 +331,9 @@ Using get, you can read several keys. Example:
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Manager>, L<http://lemonldap-ng.org/>
+For other features of llng-cli, see L<Lemonldap::NG::Common::Cli>
+
+Other links: L<Lemonldap::NG::Manager>, L<http://lemonldap-ng.org/>
 
 =head1 AUTHORS
 

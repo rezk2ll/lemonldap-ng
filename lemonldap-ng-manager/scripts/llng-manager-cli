@@ -1,8 +1,0 @@
-#!/usr/bin/env perl
-
-use warnings;
-use strict;
-use Lemonldap::NG::Manager::Cli;
-
-Lemonldap::NG::Manager::Cli->run(@ARGV);
-
