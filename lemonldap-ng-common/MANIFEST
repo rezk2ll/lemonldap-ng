@@ -44,6 +44,7 @@ MANIFEST			This list of files
 META.yml
 README
 scripts/convertConfig
+scripts/lemonldap-ng-cli
 scripts/lmMigrateConfFiles2ini
 scripts/rotateOidcKeys
 t/01-Common-Conf.t
