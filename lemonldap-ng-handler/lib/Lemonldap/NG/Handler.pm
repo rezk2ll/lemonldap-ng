@@ -198,7 +198,7 @@ C<groups> parameter. Perl expressions has to be enclosed with C<{}>:
 
 =back
 
-It is also recommended to use Perl expressions to avoid requiering the LDAP
+It is also recommended to use Perl expressions to avoid requiring the LDAP
 server more than 2 times per authentication.
 
 =head3 B<Accounting>

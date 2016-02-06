@@ -2867,7 +2867,7 @@ Lemonldap::Portal::* libraries.
 
 =over
 
-=item * ldapServer: server(s) used to retrive session information and to valid
+=item * ldapServer: server(s) used to retrieve session information and to valid
 credentials (localhost by default). More than one server can be set here
 separated by commas. The servers will be tested in the specifies order.
 To use TLS, set "ldap+tls://server" and to use LDAPS, set "ldaps://server"
@@ -2972,7 +2972,7 @@ if exist. Anonymous bind is provided else.
 
 =head3 search
 
-Retrives the LDAP entry corresponding to the user using $self->{filter}.
+Retrieves the LDAP entry corresponding to the user using $self->{filter}.
 
 =head3 setAuthSessionInfo
 
@@ -2995,7 +2995,7 @@ Does nothing by default.
 =head3 authenticate
 
 Method implemented in Lemonldap::NG::Portal::Auth* modules. By default (ldap),
-authenticates the user by rebinding to the LDAP server using the dn retrived
+authenticates the user by rebinding to the LDAP server using the dn retrieved
 with search() and the password.
 
 =head3 grantSession
