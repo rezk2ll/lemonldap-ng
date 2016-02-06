@@ -70,5 +70,9 @@ WriteMakefile(
     ),
     clean => {
         FILES => 't/lmConf*'
-    }
+    },
+    MAN1PODS => {
+        'scripts/convertConfig'    => 'blib/man1/convertConfig.1',
+        'scripts/lemonldap-ng-cli' => 'blib/man1/lemonldap-ng-cli.1',
+    },
 );

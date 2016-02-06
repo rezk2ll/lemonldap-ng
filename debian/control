@@ -246,7 +246,7 @@ Package: liblemonldap-ng-portal-perl
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
-         httpd,
+         apache2 | nginx | httpd-cgi,
          libcgi-pm-perl,
          libclone-perl,
          libhtml-template-perl,

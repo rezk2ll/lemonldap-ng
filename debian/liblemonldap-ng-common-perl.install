@@ -1,7 +1,7 @@
 /etc/lemonldap-ng/lemonldap-ng.ini
 /etc/lemonldap-ng/for_etc_hosts
-/usr/share/man/man1/convertConfig
-/usr/share/man/man1/lemonldap-ng-cli
+/usr/share/man/man1/convertConfig.1
+/usr/share/man/man1/lemonldap-ng-cli.1
 /usr/share/man/man3/Lemonldap::NG::Common*
 /usr/share/perl5/auto/Lemonldap/NG/Common
 /usr/share/perl5/Lemonldap/NG/Common*
