@@ -237,11 +237,14 @@ minify: $(JSDSTFILES) $(CSSDSTFILES)
 # Perl libraries configuration
 #
 
-json:	$(MANAGERJSONDST)
+json:	$(MANAGERJSONDST) debian/llng-fastcgi-server.1p
 	@if which yui-compressor; then $(MAKE) minify; fi
 
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)
 	./scripts/jsongenerator.pl
+
+fastcgi-server/man/llng-fastcgi-server.1p: fastcgi-server/sbin/llng-fastcgi-server
+	@pod2man -name llng-fastcgi-server fastcgi-server/sbin/llng-fastcgi-server >fastcgi-server/man/llng-fastcgi-server.1p
 
 configure:	json common_conf handler_conf portal_conf manager_conf
 
@@ -394,12 +397,12 @@ plackup:
 #
 # INSTALL
 #
-install:	install_libs install_bin install_site
+install:	install_libs install_bin install_fastcgi_server install_site
 
 #
 # Perl libraires install
 #
-install_libs:	common_install_libs install_handler_libs install_portal_libs install_manager_libs install_fastcgi_server
+install_libs:	common_install_libs install_handler_libs install_portal_libs install_manager_libs
 
 common_install_libs:		common
 	@$(MAKE) -C ${SRCCOMMONDIR} install
@@ -526,7 +529,7 @@ install_webserver_conf:
 
 install_manager_site:	install_conf_dir
 	# Manager install
-	@install -v -d ${RMANAGERDIR} $(RMANAGERSTATICDIR) $(RMANAGERPSGIDIR) \
+	@install -v -d $(RMANAGERSTATICDIR) $(RMANAGERPSGIDIR) \
 		$(RMANAGERTEMPLATESDIR)
 	@cp -pR $(SRCMANAGERDIR)/site/static/* $(RMANAGERSTATICDIR)
 	@for f in $(SRCMANAGERDIR)/site/templates/*.tpl; do \
@@ -544,7 +547,7 @@ install_manager_site:	install_conf_dir
 	fi
 	@cp -pR $(SRCMANAGERDIR)/eg/* $(RMANAGERPSGIDIR)
 	# Clean svn files
-	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSTATICDIR} $(RMANAGERPSGIDIR) \
+	@rm -rf $$(find ${RMANAGERSTATICDIR} $(RMANAGERPSGIDIR) \
 		$(RMANAGERTEMPLATESDIR) $(RCONFDIR) -type d -name .svn)
 	$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 	$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
