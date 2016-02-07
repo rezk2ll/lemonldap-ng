@@ -28,8 +28,13 @@ my %builder = (
     auth => sub {
         require CGI::Emulate::PSGI;
         require CGI::Compile;
-        return CGI::Emulate::PSGI->handler(
-            CGI::Compile->compile('lemonldap-ng-portal/example/index.pl') );
+        return sub {
+            my $script = $_[0]->{SCRIPTNAME};
+            return $_apps{$script}->(@_) if ( $_apps{$script} );
+            $_apps{$script} =
+              CGI::Emulate::PSGI->handler( CGI::Compile->compile($script) );
+            return $_app{$script}->(@_);
+        };
     },
     test => sub {
         require CGI::Emulate::PSGI;

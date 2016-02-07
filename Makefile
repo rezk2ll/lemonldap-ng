@@ -237,7 +237,7 @@ minify: $(JSDSTFILES) $(CSSDSTFILES)
 # Perl libraries configuration
 #
 
-json:	$(MANAGERJSONDST) debian/llng-fastcgi-server.1p
+json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.1p
 	@if which yui-compressor; then $(MAKE) minify; fi
 
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)

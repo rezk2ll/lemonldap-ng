@@ -14,7 +14,6 @@ getopts( 'n:p:s:u:g:', \%opts );
 $opts{n} ||= $ENV{NPROC}       || 7;
 $opts{p} ||= $ENV{PID}         || '/run/llng-fastcgi.pid';
 $opts{s} ||= $ENV{SOCKET}      || '/run/llng-fastcgi.sock';
-$opts{a} ||= $ENV{PORTAL_PATH} || '/var/lib/lemonldap-ng/portal';
 $opts{u} ||= $ENV{USER};
 $opts{g} ||= $ENV{GROUP};
 
@@ -40,8 +39,13 @@ my %builder = (
     auth => sub {
         require CGI::Emulate::PSGI;
         require CGI::Compile;
-        return CGI::Emulate::PSGI->handler(
-            CGI::Compile->compile("$opts{a}/index.pl") );
+        return sub {
+            my $script = $_[0]->{SCRIPTNAME};
+            return $_apps{$script}->(@_) if ( $_apps{$script} );
+            $_apps{$script} =
+              CGI::Emulate::PSGI->handler( CGI::Compile->compile($script) );
+            return $_app{$script}->(@_);
+        };
     },
 );
 
