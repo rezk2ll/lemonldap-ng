@@ -37,7 +37,7 @@ override_dh_auto_install:
 			EXAMPLESDIR=/examples/ \
 			HANDLERDIR=$(LMVARDIR)/handler/ \
 			PORTALSKINSDIR=$(LMSHAREDIR)/portal-skins/ \
-			MANAGERSKINSDIR=$(LMSHAREDIR)/manager-skins/ \
+			MANAGERDIR=$(LMSHAREDIR)/manager/ \
 			SESSIONSEXPLORERDATADIR=$(LMSHAREDIR)/sessions-explorer-imgs/ \
 			STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
 			TOOLSDIR=$(LMSHAREDIR)/ressources/ \
@@ -50,7 +50,7 @@ override_dh_auto_install:
 			FRDOCDIR=/usr/share/doc/lemonldap-ng-fr-doc \
 			PROD=yes
 
-	mkdir $(TMP)/$(LMSHAREDIR)/manager $(TMP)/$(LMSHAREDIR)/portal
+	mkdir $(TMP)/$(LMSHAREDIR)/portal
 	mv $(TMP)/$(LMVARDIR)/portal/*.pl $(TMP)/$(LMSHAREDIR)/portal/
 	for i in handler portal manager test; do \
 		mv $(TMP)/etc/lemonldap-ng/$$i-apache2.X.conf $(TMP)/etc/lemonldap-ng/$$i-apache2.conf; \

@@ -114,6 +114,7 @@ Depends: ${misc:Depends},
          liblemonldap-ng-handler-perl,
          libplack-perl
 Suggests: nginx-extras
+Section: web
 Description: Lemonldap::NG FastCGI server
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with

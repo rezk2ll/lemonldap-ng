@@ -1,4 +1,4 @@
-lemonldap-ng (1.9.0-1) UNRELEASED; urgency=low
+lemonldap-ng (1.9.0-1) unstable; urgency=low
 
   From now, Lemonldap::NG uses JSON serialization to store configuration and
   sessions instead of Storable::nfreeze Perl function. This permits one to have
