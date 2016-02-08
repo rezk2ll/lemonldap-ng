@@ -53,8 +53,7 @@
         <form class="form-group slide-animate-container" ng-include="formPrefix+form+'.html'" scope="$scope" onload="setButtons()" />
       </div>
       <!-- Help container -->
-      <div id="bottom" ng-if="showH" class="hidden-xs" style="position:relative">
-        <div class="vresizer" resizer="horizontal" resizer-top="#top" resizer-bottom="#bottom"></div>
+      <div id="bottom" ng-if="showH" class="hidden-xs">
         <div style="position:absolute;top:-3px;right:0;color:red">
           <span class="glyphicon glyphicon-remove" ng-click="setShowHelp(false)" tabIndex="10"></span>
         </div>
