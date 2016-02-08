@@ -529,7 +529,7 @@ install_webserver_conf:
 
 install_manager_site:	install_conf_dir
 	# Manager install
-	@install -v -d $(RMANAGERSTATICDIR) $(RMANAGERPSGIDIR) \
+	@install -v -d $(RMANAGERDIR) $(RMANAGERSTATICDIR) $(RMANAGERPSGIDIR) \
 		$(RMANAGERTEMPLATESDIR)
 	@cp -pR $(SRCMANAGERDIR)/site/static/* $(RMANAGERSTATICDIR)
 	@for f in $(SRCMANAGERDIR)/site/templates/*.tpl; do \
