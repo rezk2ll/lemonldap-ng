@@ -5,7 +5,7 @@ sub zeroConf {
     $domain               ||= 'example.com';
     $sessionDir           ||= '/var/lib/lemonldap-ng/sessions';
     $persistentSessionDir ||= '/var/lib/lemonldap-ng/psessions';
-    $notificationDir      ||= '/var/lib/lemondap-ng/notifications';
+    $notificationDir      ||= '/var/lib/lemonldap-ng/notifications';
     return {
         'timeout'             => 72000,
         'loginHistoryEnabled' => 1,
