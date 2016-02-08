@@ -11,7 +11,7 @@
 ### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/usr/sbin/llgn-fastcgi-server
+DAEMON=/usr/sbin/llng-fastcgi-server
 NAME=llng-fastcgi-server
 DESC=llng-fastcgi-server
 
@@ -29,8 +29,10 @@ test -x $DAEMON || exit 0
 
 # Try to extract llng-fastcgi-server pidfile
 if [ -z "$PID" ]; then
-	PID=/run/llng-fastcgi-server.pid
+	PID=/var/run/llng-fastcgi-server.pid
 fi
+
+DAEMON_OPTS="-p ${PID} -u ${USER} -g ${GROUP} -s ${SOCKET}"
 
 start_server() {
 	# Start the daemon/service

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+USER="www-data"
+GROUP="www-data"
+CHOWN="/bin/chown"
+ID="/usr/bin/id"
+
+if ! test -d /var/run/llng-fastcgi-server; then
+  rm -rf /var/run/llng-fastcgi-server
+  mkdir /var/run/llng-fastcgi-server
+fi
+$CHOWN $USER:$GROUP /var/run/llng-fastcgi-server
+

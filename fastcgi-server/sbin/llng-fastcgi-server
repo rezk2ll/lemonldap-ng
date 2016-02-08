@@ -44,7 +44,7 @@ my %builder = (
             return $_apps{$script}->(@_) if ( $_apps{$script} );
             $_apps{$script} =
               CGI::Emulate::PSGI->handler( CGI::Compile->compile($script) );
-            return $_app{$script}->(@_);
+            return $_apps{$script}->(@_);
         };
     },
 );
