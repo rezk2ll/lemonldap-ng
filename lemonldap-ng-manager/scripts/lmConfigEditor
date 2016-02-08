@@ -14,14 +14,6 @@ eval {
     print STDERR "Running as uid $EUID and gid $EGID\n";
 };
 
-if ( $EUID == 0 ) {
-    print STDERR
-      "$0 must not be launched as root since local cache can be corrupted\n"
-      . "Continue (y/N)? ";
-    my $res = <STDIN>;
-    exit 1 unless ( $res =~ /^y/i );
-}
-
 my $conf = Lemonldap::NG::Common::Conf->new();
 
 unless ($conf) {
@@ -29,12 +21,13 @@ unless ($conf) {
     exit 1;
 }
 
-my $tmp = $conf->getConf();
+my $tmp = $conf->getConf( { raw => 1, noCache => 1 } );
 delete $tmp->{reVHosts};
 delete $tmp->{cipher};
 delete $tmp->{cfgAuthor};
 delete $tmp->{cfgAuthorIP};
 delete $tmp->{cfgDate};
+$tmp->{cfgLog} = '';
 $tmp = Dumper($tmp);
 my $refFile  = File::Temp->new( UNLINK => 1 );
 my $editFile = File::Temp->new( UNLINK => 1 );
@@ -61,6 +54,7 @@ if (`diff $refFile $editFile`) {
     $VAR1->{cfgAuthor}   = "lmConfigEditor";
     $VAR1->{cfgAuthorIP} = "localhost";
     $VAR1->{cfgDate}     = time();
+    $VAR1->{cfgLog} ||= 'Edited by lmConfigEditor';
 
     # Store new configuration
     my $res = $conf->saveConf($VAR1);
