@@ -25,7 +25,8 @@
               <li>
                 <a id="save" class="link" ng-click="save()" tabIndex="-1">
                   <i class="glyphicon glyphicon-cloud-upload"></i>
-                  {{translate('save')}}<input id="forcesave" type="checkbox" ng-model="forceSave" title="{{translate('forceSave')}}" ng-show="confirmNeeded||currentCfg.next">
+                  {{translate('save')}}
+                  <input id="forcesave" type="checkbox" ng-model="forceSave" uib-tooltip="{{translate('forceSave')}}" tooltip-placement="right" ng-show="confirmNeeded||currentCfg.next">
                 </a>
               </li>
               <li uib-dropdown>
