@@ -191,6 +191,8 @@ Recommends: libapache-session-browseable-perl,
             liblwp-protocol-https-perl | libwww-perl (<< 6),
             libxml-libxml-perl,
             libxml-simple-perl
+Provides: liblemonldap-ng-cli-perl
+Conflicts: liblemonldap-ng-cli-perl
 Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
@@ -228,8 +230,6 @@ Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libxml-simple-perl
 Suggests: libclone-perl
 Pre-Depends: debconf
-Provides: liblemonldap-ng-cli-perl
-Conflicts: liblemonldap-ng-cli-perl
 Description: Lemonldap::NG manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers. It can be used in conjunction with
