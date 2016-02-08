@@ -68,7 +68,7 @@ sub load {
         return 0;
     }
     $res->{cfgNum} = $cfgNum;
-    return $res;
+    return $self->unserialize($res);
 }
 
 1;
