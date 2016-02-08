@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Conf::MongoDB;
 use 5.010;
 use utf8;
 use strict;
-use MIME::Base64;
+use Lemonldap::NG::Common::Conf::Serializer;
 
 our $VERSION = '1.9.0';
 our $initDone;
@@ -73,20 +73,9 @@ sub unlock   { 1 }
 
 sub store {
     my ( $self, $fields ) = @_;
-    my $conf = {};
-    while ( my ( $k, $v ) = each(%$fields) ) {
-        if ( ref($v) eq 'HASH' ) {
-            foreach my $sk ( keys %$v ) {
-                my $sk2 = encode_base64($sk);
-                $conf->{$k}->{$sk2} = $v->{$sk};
-            }
-        }
-        else {
-            $conf->{$k} = $v;
-        }
-    }
-    $conf->{_id} = $fields->{cfgNum};
-    my $res = eval { $self->_mongoColl->insert($conf) };
+    $fields = $self->serialize($fields);
+    $fields->{_id} = $fields->{cfgNum};
+    my $res = eval { $self->_mongoColl->insert($fields) };
     if ($@) {
         $Lemonldap::NG::Common::Conf::msg .= "Unable to store conf: $@\n";
         return 0;
@@ -96,21 +85,9 @@ sub store {
 
 sub load {
     my ( $self, $cfgNum, $fields ) = @_;
-    my $res = $self->_mongoColl->find_one( { _id => $cfgNum } );
-    my $conf;
-    while ( my ( $k, $v ) = each(%$res) ) {
-        if ( ref($v) eq 'HASH' ) {
-            foreach my $sk ( keys %$v ) {
-                my $sk2 = decode_base64($sk);
-                $conf->{$k}->{$sk2} = $v->{$sk};
-            }
-        }
-        else {
-            $conf->{$k} = $v;
-        }
-    }
-    $res = undef;
-    return $conf;
+    my $res =
+      $self->unserialize( $self->_mongoColl->find_one( { _id => $cfgNum } ) );
+    return $res;
 }
 
 sub delete {
