@@ -29,7 +29,10 @@ test -x $DAEMON || exit 0
 
 # Try to extract llng-fastcgi-server pidfile
 if [ -z "$PID" ]; then
-	PID=/var/run/llng-fastcgi-server.pid
+	PID=/var/run/llng-fastcgi-server/llng-fastcgi-server.pid
+fi
+if [ -z "$SOCKET" ]; then
+	SOCKET=/var/run/llng-fastcgi-server/llng-fastcgi.sock
 fi
 
 DAEMON_OPTS="-p ${PID} -u ${USER} -g ${GROUP} -s ${SOCKET}"

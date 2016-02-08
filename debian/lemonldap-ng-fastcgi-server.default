@@ -5,7 +5,7 @@
 SOCKET=/var/run/llng-fastcgi-server/llng-fastcgi.sock
 
 # Pid file
-PID=/var/run/llng-fastcgi.pid
+PID=/var/run/llng-fastcgi-server/llng-fastcgi-server.pid
 
 # User and GROUP
 USER=www-data

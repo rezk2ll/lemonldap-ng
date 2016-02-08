@@ -69,7 +69,7 @@ $server->parse_options(
     '-E'           => 'deployment',
     '--pid'        => $opts{p},
     '--nproc'      => $opts{n},
-    '--listen'     => [ $opts{s} ],
+    '--socket'     => $opts{s},
     '--proc-title' => 'llng-fastcgi-server',
     '--daemonize',
     '--no-default-middleware',
