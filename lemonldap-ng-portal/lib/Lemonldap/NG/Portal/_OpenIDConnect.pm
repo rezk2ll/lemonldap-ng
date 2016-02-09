@@ -7,8 +7,7 @@ package Lemonldap::NG::Portal::_OpenIDConnect;
 
 use strict;
 use JSON;
-use MIME::Base64
-  qw/encode_base64url encode_base64 decode_base64url decode_base64/;
+use MIME::Base64 qw/encode_base64 decode_base64/;
 use URI::Escape;
 use Digest::SHA
   qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha384 sha512 sha256_base64 sha384_base64 sha512_base64/;
@@ -1494,6 +1493,21 @@ sub getSessionManagementOPIFrameJS {
     $js .= "};\n";
 
     return $js;
+}
+
+### Import encode_base64url and decode_base64url from recent MIME::Base64 module:
+sub encode_base64url {
+    my $e = encode_base64( shift, "" );
+    $e =~ s/=+\z//;
+    $e =~ tr[+/][-_];
+    return $e;
+}
+
+sub decode_base64url {
+    my $s = shift;
+    $s =~ tr[-_][+/];
+    $s .= '=' while length($s) % 4;
+    return decode_base64($s);
 }
 
 1;
