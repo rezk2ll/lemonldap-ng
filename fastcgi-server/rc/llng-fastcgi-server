@@ -31,6 +31,11 @@ test -x $DAEMON || exit 0
 if [ -z "$PID" ]; then
 	PID=/run/llng-fastcgi-server.pid
 fi
+if [ -z "$SOCKET" ]; then
+	SOCKET=/var/run/llng-fastcgi-server/llng-fastcgi.sock
+fi
+
+DAEMON_OPTS="-p ${PID} -u ${USER} -g ${GROUP} -s ${SOCKET}"
 
 start_server() {
 	# Start the daemon/service
