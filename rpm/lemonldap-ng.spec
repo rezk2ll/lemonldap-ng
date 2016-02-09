@@ -334,7 +334,7 @@ chmod +x %{__perl_requires}
 
 %if 0%{?rhel} >= 7
 %{?perl_default_filter}
-%global __requires_exclude perl\\(lasso|perl\\(Net::OpenID::Server
+%global __requires_exclude perl\\(lasso|perl\\(Net::OpenID::Server|perl\\(Apache::Log
 %endif
 
 #==============================================================================
