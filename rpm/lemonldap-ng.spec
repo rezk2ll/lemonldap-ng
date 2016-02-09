@@ -110,8 +110,9 @@ BuildRequires:  perl-Regexp-Assemble, perl-Regexp-Common, perl-Authen-Captcha, p
 Requires: perl(Apache::Session)
 Requires: perl(IO::String)
 Requires: mod_perl
+Requires: mod_fcgid
 %else
-Requires: cron, apache2, apache2-mod_perl
+Requires: cron, apache2, apache2-mod_perl, apache2-mod_fcgid
 Requires: perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String
 Requires: perl-ldap, perl-MIME-Base64, perl-CGI, perl-CGI-Session, perl-DBI, perl-HTML-Template, perl-SOAP-Lite, perl-IPC-ShareLite, perl-Convert-ASN1, perl-Error, perl-Unicode-String
 %endif
