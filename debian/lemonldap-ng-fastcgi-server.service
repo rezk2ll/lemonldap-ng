@@ -7,7 +7,6 @@ Type=forking
 PIDFile=/var/run/llng-fastcgi-server/llng-fastcgi.pid
 ExecStart=/usr/sbin/llng-fastcgi-server -u www-data -g www-data -s /var/run/llng-fastcgi-server/llng-fastcgi.sock -p /var/run/llng-fastcgi-server/llng-fastcgi.pid
 ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/llng-fasctcgi.sock
-TimeoutStop=2
 KillMode=mixed
 
 [Install]
