@@ -60,7 +60,15 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'lmAttrOrMacro' => {
             'form' => 'text',
             'test' => sub {
-                1;
+                my ( $val, $conf ) = @_;
+                if (   defined $conf->{'exportedVars'}{$val}
+                    or defined $conf->{'macro'}{$val} )
+                {
+                    return 1;
+                }
+                else {
+                    return 1, '__unknownAttrOrMacro__';
+                }
               }
         },
         'longtext' => {
@@ -100,7 +108,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         },
         'password' => {
             'msgFail' => '__malformedValue__',
-            'test'    => qr/.*/
+            'test'    => sub {
+                1;
+              }
         },
         'pcre' => {
             'form' => 'text',
@@ -196,7 +206,9 @@ qr/^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9\/\+\
         },
         'text' => {
             'msgFail' => '__malformedValue__',
-            'test'    => qr/.*/
+            'test'    => sub {
+                1;
+              }
         },
         'trool' => {
             'msgFail' => '__authorizedValues__: -1, 0, 1',
@@ -2461,11 +2473,17 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
         },
         'timeout' => {
             'default' => 72000,
-            'type'    => 'int'
+            'test'    => sub {
+                $_[0] > 0;
+            },
+            'type' => 'int'
         },
         'timeoutActivity' => {
             'default' => 0,
-            'type'    => 'int'
+            'test'    => sub {
+                $_[0] >= 0;
+            },
+            'type' => 'int'
         },
         'trustedDomains' => {
             'type' => 'text'

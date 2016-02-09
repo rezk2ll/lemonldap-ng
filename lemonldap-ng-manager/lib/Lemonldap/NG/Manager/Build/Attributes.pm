@@ -20,11 +20,11 @@ sub types {
 
         # Simple text types
         text => {
-            test    => qr/.*/,
+            test    => sub { 1 },
             msgFail => '__malformedValue__',
         },
         password => {
-            test    => qr/.*/,
+            test    => sub { 1 },
             msgFail => '__malformedValue__',
         },
         longtext => {
@@ -54,7 +54,17 @@ sub types {
         },
         lmAttrOrMacro => {
             form => 'text',
-            test => sub { 1 },
+            test => sub {
+                my ( $val, $conf ) = @_;
+                if (   defined $conf->{exportedVars}->{$val}
+                    or defined $conf->{macro}->{$val} )
+                {
+                    return 1;
+                }
+                else {
+                    return ( 1, '__unknownAttrOrMacro__' );
+                }
+            },
         },
 
         # Other types
@@ -427,11 +437,13 @@ sub attributes {
         },
         timeout => {
             type          => 'int',
+            test          => sub { $_[0] > 0 },
             default       => 72000,
             documentation => 'Session timeout on server side',
         },
         timeoutActivity => {
             type          => 'int',
+            test          => sub { $_[0] >= 0 },
             default       => 0,
             documentation => 'Session activity timeout on server side',
         },
