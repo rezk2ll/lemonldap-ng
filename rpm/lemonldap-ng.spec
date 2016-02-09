@@ -238,6 +238,20 @@ Group:          Monitoring
 This package deploys small test applications.
 
 #==============================================================================
+# FastCGI Server
+#==============================================================================
+%package -n lemonldap-ng-fastcgi-server
+Summary:        LemonLDAP-NG FastCGI Server
+%if 0%{?rhl}%{?rhel}%{?fedora}
+Group:          Applications/System
+%else
+Group:          Monitoring
+%endif
+
+%description -n lemonldap-ng-fastcgi-server
+This package deploys files needed to start a FastCGI server.
+
+#==============================================================================
 # CPAN modules - Common
 #==============================================================================
 %package -n perl-Lemonldap-NG-Common
@@ -339,6 +353,7 @@ rm -rf %{buildroot}
 	DESTDIR=%{buildroot} \
 	PREFIX=%{lm_prefix} \
 	BINDIR=%{lm_sharedir}/bin \
+	SBINDIR=%{lm_sharedir}/sbin \
 	DOCUMENTROOT=%{lm_vardir} \
 	EXAMPLESDIR=%{lm_examplesdir} \
 	HANDLERDIR=%{lm_vardir}/handler \
@@ -349,6 +364,8 @@ rm -rf %{buildroot}
 	CONFDIR=%{lm_confdir} \
 	CRONDIR=%{_sysconfdir}/cron.d \
 	DATADIR=%{lm_vardir} \
+	INITDIR=/etc/init.d \
+	ETCDEFAULTDIR=/etc/default \
 	DNSDOMAIN=%{lm_dnsdomain} \
 	APACHEVERSION=%{apache_version} \
 	PROD=yes
@@ -469,6 +486,12 @@ rm -rf %{buildroot}
 %config(noreplace) %{lm_confdir}/manager-apache%{apache_version}.conf
 %config(noreplace) %{lm_confdir}/portal-apache%{apache_version}.conf
 %config(noreplace) %{lm_confdir}/test-apache%{apache_version}.conf
+%config(noreplace) %{lm_confdir}/handler-nginx.conf
+%config(noreplace) %{lm_confdir}/manager-nginx.conf
+%config(noreplace) %{lm_confdir}/nginx-lmlog.conf
+%config(noreplace) %{lm_confdir}/nginx-lua-headers.conf
+%config(noreplace) %{lm_confdir}/portal-nginx.conf
+%config(noreplace) %{lm_confdir}/test-nginx.conf
 %ghost %{apache_confdir}/z-lemonldap-ng-handler.conf
 %ghost %{apache_confdir}/z-lemonldap-ng-manager.conf
 %ghost %{apache_confdir}/z-lemonldap-ng-portal.conf
@@ -477,6 +500,7 @@ rm -rf %{buildroot}
 %dir %{lm_sharedir}
 %dir %{lm_sharedir}/bin
 %{lm_sharedir}/bin/convertConfig
+%doc %{_mandir}/man1/convertConfig*
 %{lm_sharedir}/bin/lmMigrateConfFiles2ini
 %{lm_sharedir}/bin/rotateOidcKeys
 %dir %{lm_examplesdir}
@@ -515,6 +539,7 @@ rm -rf %{buildroot}
 %{lm_vardir}/manager
 %{lm_sharedir}/bin/lmConfigEditor
 %{lm_sharedir}/bin/lemonldap-ng-cli
+%doc %{_mandir}/man1/lemonldap-ng-cli*
 
 %files -n lemonldap-ng-portal
 %defattr(-,root,root,-)
@@ -530,6 +555,12 @@ rm -rf %{buildroot}
 %files -n lemonldap-ng-test
 %defattr(-,root,root,-)
 %{lm_vardir}/test
+
+%files -n lemonldap-ng-fastcgi-server
+%defattr(-,root,root,-)
+%{lm_sharedir}/sbin/llng-fastcgi-server
+%config(noreplace) /etc/default/llng-fastcgi-server
+/etc/init.d/llng-fastcgi-server
 
 %files -n perl-Lemonldap-NG-Common
 %defattr(-,root,root,-)
