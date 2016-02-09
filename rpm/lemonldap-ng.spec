@@ -591,7 +591,7 @@ rm -rf %{buildroot}
 - Update to 1.2.3
 * Mon Sep 17 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.2-1
 - Update to 1.2.2
-* Fri Jul 05 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.1-1
+* Thu Jul 05 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.1-1
 - Update to 1.2.1
 * Sun Jun 17 2012 Clement Oudot <clem.oudot@gmail.com> - 1.2.0-1
 - Update to 1.2.0
@@ -601,7 +601,7 @@ rm -rf %{buildroot}
 - Update to 1.1.1
 * Fri Jul 08 2011 Clement Oudot <clem.oudot@gmail.com> - 1.1.0-1
 - Update to 1.1.0
-* Mon Jun 30 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.6-1
+* Thu Jun 30 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.6-1
 - Update to 1.0.6
 * Fri Apr 15 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.5-1
 - Update to 1.0.5
@@ -635,7 +635,7 @@ rm -rf %{buildroot}
 - Include cronjob patch
 - Delete unwanted files (perllocal.pod, .packlist)
 - Follow rpmfusion guidelines
-* Thu Jan 9 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-1
+* Fri Jan 9 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-1
 - Updated to release 0.9.3.2.
 - Use internal version number for perl modules (compatibility with RPMforge packages)
 - Merge with existing .spec file from RPMforge.
