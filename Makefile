@@ -732,7 +732,7 @@ dist:	clean
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
-rpm-dist:	clean
+rpm-dist:	clean fr-doc
 	@mkdir -p lemonldap-ng-$(VERSION)
 	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|debian\)") lemonldap-ng-$(VERSION)
 	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
