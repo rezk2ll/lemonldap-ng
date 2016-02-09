@@ -417,7 +417,7 @@ touch %buildroot%{apache_confdir}/z-lemonldap-ng-test.conf
 %check
 sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' %{buildroot}%{lm_storagefile}
 %{__make} %{?_smp_mflags} test LLNG_DEFAULTCONFFILE=%{buildroot}%{lm_storagefile}
-sed -i 's:^dirName:dirName = %{lm_vardir}/conf:' %{buildroot}%{lm_storagefile}
+sed -i 's:^dirName.*:dirName = %{lm_vardir}/conf:' %{buildroot}%{lm_storagefile}
 
 #==============================================================================
 # Post Installation
