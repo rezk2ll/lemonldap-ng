@@ -62,7 +62,7 @@ sub types {
                     return 1;
                 }
                 else {
-                    return ( 1, '__unknownAttrOrMacro__' );
+                    return ( 1, "__unknownAttrOrMacro__: $val" );
                 }
             },
         },

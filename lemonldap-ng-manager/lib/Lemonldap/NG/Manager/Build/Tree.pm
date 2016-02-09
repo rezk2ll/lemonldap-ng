@@ -18,7 +18,6 @@ our $VERSION = '1.9.0';
 # TODO: Missing:
 #  * activeTimer
 #  * confirmFormMethod
-#  * multiValuesSeparator
 #  * redirectFormMethod
 sub tree {
     return [
@@ -104,7 +103,7 @@ sub tree {
                       'start.html#authentication_users_and_password_databases',
                     form  => 'authParams',
                     nodes => [ 'authentication', 'userDB', 'passwordDB' ],
-                    'nodes_cond' => [
+                    nodes_cond => [
                         {
                             title => 'adParams',
                             help  => 'authad.html',
