@@ -7,6 +7,7 @@ use Lemonldap::NG::Handler::SharedConf qw(:tsv :variables :jailSharedVars);
 our $VERSION = '1.9.0';
 
 has protection => ( is => 'rw', isa => 'Str' );
+has rule       => ( is => 'rw', isa => 'Str' );
 
 ## @method boolean init($args)
 # Initalize main handler
@@ -24,6 +25,9 @@ sub init {
             "Unable to protect this app ($Lemonldap::NG::Common::Conf::msg)");
         return 0;
     }
+    my $rule = $self->{protection} || $localConfig->{protection} || '';
+    $self->rule(
+        $rule eq 'authenticate' ? 1 : $rule eq 'manager' ? '' : $rule );
     return 1;
 }
 
@@ -35,11 +39,8 @@ sub _run {
     my $self = shift;
 
     # Override _run() only if protection != 'none'
-    my $rule = $self->{protection} || $localConfig->{protection} || 'manager';
-    if ( $rule ne 'none' ) {
+    if ( $self->rule ne 'none' ) {
         $self->lmLog( 'PSGI app is protected', 'debug' );
-        $rule =
-          $rule eq "authenticate" ? "accept" : $rule eq "manager" ? "" : $rule;
 
         # Handle requests
         # Developers, be careful: Only this part is executed at each request
@@ -75,8 +76,7 @@ sub _run {
 sub _authAndTrace {
     my ( $self, $req ) = @_;
     Lemonldap::NG::Handler::API->newRequest($req);
-    my $res = Lemonldap::NG::Handler::SharedConf->run( $self->{protection}
-          || $localConfig->{protection} );
+    my $res = Lemonldap::NG::Handler::SharedConf->run( $self->{rule} );
     $req->userData($datas) if ($datas);
 
     if ( $res < 300 ) {
