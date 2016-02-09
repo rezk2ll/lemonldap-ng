@@ -324,6 +324,7 @@ cat << \EOF > %{name}-req
 #!/bin/sh
 %{__perl_requires} $* |\
 sed -e '/perl(lasso)/d' |\
+sed -e '/perl(Apache::Log)/d' |\
 sed -e '/perl(Net::OpenID::Server)/d' |\
 sed -e '/perl(AuthCAS)/d'
 EOF
