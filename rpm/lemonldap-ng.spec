@@ -515,8 +515,6 @@ rm -rf %{buildroot}
 %{lm_vardir}/manager
 %{lm_sharedir}/bin/lmConfigEditor
 %{lm_sharedir}/bin/lemonldap-ng-cli
-%{lm_sharedir}/manager-skins
-%{lm_examplesdir}/manager
 
 %files -n lemonldap-ng-portal
 %defattr(-,root,root,-)
