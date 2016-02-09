@@ -820,7 +820,7 @@ sub _unitTest {
 
         if ( $attr->{type} and $attr->{type} eq 'subContainer' ) {
 
-            # TODO Recursive
+            # TODO Recursive for SAML/OIDC nodes
         }
         else {
 

@@ -62,7 +62,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'test' => sub {
                 my ( $val, $conf ) = @_;
                 if (   defined $conf->{'exportedVars'}{$val}
-                    or defined $conf->{'macro'}{$val} )
+                    or defined $conf->{'macros'}{$val} )
                 {
                     return 1;
                 }
