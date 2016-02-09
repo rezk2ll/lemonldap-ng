@@ -126,7 +126,8 @@ sub getConfByNum {
         }
         else {
             $tmp =
-              $self->confAcc->getConf( { cfgNum => $cfgNum, raw => 1, @args } );
+              $self->confAcc->getConf(
+                { cfgNum => $cfgNum, raw => 1, noCache => 1, @args } );
             return undef unless ( $tmp and ref($tmp) and %$tmp );
         }
         $self->currentConf($tmp);

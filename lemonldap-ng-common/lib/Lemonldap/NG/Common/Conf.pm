@@ -171,7 +171,8 @@ sub getConf {
             $r = $self->getDBConf($args);
         }
         else {
-            eval { $r = $self->{refLocalStorage}->get('conf') } if ($>);
+            eval { $r = $self->{refLocalStorage}->get('conf') }
+              if ( $> and not $args->{noCache} );
             $msg = "Warn: $@" if ($@);
             if (    ref($r)
                 and $r->{cfgNum}
