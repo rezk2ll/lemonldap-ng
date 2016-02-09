@@ -209,8 +209,13 @@ sub attributes {
             default       => 'post',
             documentation => 'HTTP method for confirm page form',
         },
-        customFunctions => { type => 'text', },
-        https           => {
+        customFunctions => {
+            type          => 'text',
+            test          => qr/^(?:\w+(?:\s+\w+)*)?$/,
+            msgFail       => "__badCustomFuncName__",
+            documentation => 'List of custom functions'
+        },
+        https => {
             default       => 0,
             type          => 'bool',
             documentation => 'Use HTTPS for redirection from portal',
@@ -864,12 +869,21 @@ sub attributes {
                 },
                 keyMsgFail => '__badRegexp__',
                 test       => sub {
-                    my $s = $_[0];
+                    my ( $val, $conf ) = @_;
+                    my $s = $val;
                     $s =~ s/\b(accept|deny)\b/1/g;
+                    if ( $conf->{customFunctions} ) {
+                        foreach my $f ( split /\s+/, $conf->{customFunctions} )
+                        {
+                            return ( 0, "__badCustomFuncName__ $f" )
+                              unless ( $f =~ /^\w+$/ );
+                            $s = "sub $f {1} $s";
+                        }
+                    }
                     eval $s;
                     return $@ ? ( 0, "__badExpression__: $@" ) : (1);
                 },
-                msgFail    => '__badExpression__',
+                msgFail => '__badExpression__',
             },
             keyTest    => qr/^$Regexp::Common::URI::RFC2396::hostname$/,
             keyMsgFail => '__badHostname__',

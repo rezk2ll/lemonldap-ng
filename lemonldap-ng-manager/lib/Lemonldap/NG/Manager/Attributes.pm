@@ -669,7 +669,9 @@ qr/^(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.
             'type'    => 'text'
         },
         'customFunctions' => {
-            'type' => 'text'
+            'msgFail' => '__badCustomFuncName__',
+            'test'    => qr/^(?:\w+(?:\s+\w+)*)?$/,
+            'type'    => 'text'
         },
         'dbiAuthChain' => {
             'type' => 'text'
@@ -1065,8 +1067,18 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                 },
                 'msgFail' => '__badExpression__',
                 'test'    => sub {
-                    my $s = $_[0];
+                    my ( $val, $conf ) = @_;
+                    my $s = $val;
                     $s =~ s/\b(accept|deny)\b/1/g;
+                    if ( $conf->{'customFunctions'} ) {
+                        foreach my $f (
+                            split( /\s+/, $conf->{'customFunctions'}, 0 ) )
+                        {
+                            return 0, "__badCustomFuncName__ $f"
+                              unless $f =~ /^\w+$/;
+                            $s = "sub $f {1} $s";
+                        }
+                    }
                     eval $s;
                     return $@ ? ( 0, "__badExpression__: $@" ) : 1;
                   }
