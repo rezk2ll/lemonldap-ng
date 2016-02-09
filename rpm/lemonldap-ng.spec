@@ -329,9 +329,6 @@ chmod +x %{__perl_requires}
 %{__make} %{?_smp_mflags} configure STORAGECONFFILE=%{lm_storagefile} PERLOPTIONS="INSTALLDIRS=vendor"
 %{__make} %{?_smp_mflags}
 
-# Run Tests
-%{__make} %{?_smp_mflags} test
-
 #==============================================================================
 # Installation
 #============================================================================
@@ -376,10 +373,6 @@ sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{_sysconfdir}/cron.d/*
 sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{lm_sharedir}/bin/lmConfigEditor
 sed -i 's/nobody/%{lm_apacheuser}/g' %{buildroot}%{lm_sharedir}/bin/lemonldap-ng-cli
 
-# Minify Javascript and CSS
-./scripts/minifierjs `find %{buildroot} -name '*.js'`
-./scripts/minifiercss `find %{buildroot} -name '*.css'`
-
 # Set UNIX rights
 mkdir -p %{buildroot}%{lm_vardir}/sessions/lock
 mkdir -p %{buildroot}%{lm_vardir}/psessions/lock
@@ -399,6 +392,14 @@ touch %buildroot%{apache_confdir}/z-lemonldap-ng-handler.conf
 touch %buildroot%{apache_confdir}/z-lemonldap-ng-manager.conf
 touch %buildroot%{apache_confdir}/z-lemonldap-ng-portal.conf
 touch %buildroot%{apache_confdir}/z-lemonldap-ng-test.conf
+
+#==============================================================================
+# Run test
+#==============================================================================
+%check
+sed -i 's:^dirName.*:dirName = %{buildroot}%{lm_vardir}/conf:' %{buildroot}%{lm_storagefile}
+%{__make} %{?_smp_mflags} test LLNG_DEFAULTCONFFILE=%{buildroot}%{lm_storagefile}
+sed -i 's:^dirName:dirName = %{lm_vardir}/conf:' %{buildroot}%{lm_storagefile}
 
 #==============================================================================
 # Post Installation
