@@ -884,13 +884,21 @@ sub attributes {
                     my ( $val, $conf ) = @_;
                     my $s = $val;
                     $s =~ s/\b(accept|deny)\b/1/g;
-                    if ( $conf->{customFunctions} ) {
-                        foreach my $f ( split /\s+/, $conf->{customFunctions} )
-                        {
-                            return ( 0, "__badCustomFuncName__ $f" )
-                              unless ( $f =~ /^\w+$/ );
-                            $s = "sub $f {1} $s";
-                        }
+                    foreach my $f (
+                        split(
+                            /\s+/,
+                            (
+                                defined $conf->{customFunctions}
+                                ? "$conf->{customFunctions} "
+                                : ''
+                              )
+                              . 'checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch',
+                        )
+                      )
+                    {
+                        return ( 0, "__badCustomFuncName__ $f" )
+                          unless ( $f =~ /^[a-zA-Z]\w*$/ );
+                        $s = "sub $f {1} $s";
                     }
                     eval $s;
                     return $@ ? ( 0, "__badExpression__: $@" ) : (1);

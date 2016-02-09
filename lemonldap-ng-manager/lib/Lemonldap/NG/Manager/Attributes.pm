@@ -1082,14 +1082,22 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     my ( $val, $conf ) = @_;
                     my $s = $val;
                     $s =~ s/\b(accept|deny)\b/1/g;
-                    if ( $conf->{'customFunctions'} ) {
-                        foreach my $f (
-                            split( /\s+/, $conf->{'customFunctions'}, 0 ) )
-                        {
-                            return 0, "__badCustomFuncName__ $f"
-                              unless $f =~ /^\w+$/;
-                            $s = "sub $f {1} $s";
-                        }
+                    foreach my $f (
+                        split(
+                            /\s+/,
+                            (
+                                defined $conf->{'customFunctions'}
+                                ? "$conf->{'customFunctions'} "
+                                : ''
+                              )
+                              . 'checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch',
+                            0
+                        )
+                      )
+                    {
+                        return 0, "__badCustomFuncName__ $f"
+                          unless $f =~ /^[a-zA-Z]\w*$/;
+                        $s = "sub $f {1} $s";
                     }
                     eval $s;
                     return $@ ? ( 0, "__badExpression__: $@" ) : 1;
