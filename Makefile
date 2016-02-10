@@ -732,7 +732,7 @@ dist:	clean
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
-rpm-dist:	clean fr-doc
+rpm-dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
 	@cp -pRH $$(find * -maxdepth 0|grep -v -e "\(lemonldap-ng-$(VERSION)\|debian\)") lemonldap-ng-$(VERSION)
 	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
@@ -807,7 +807,7 @@ doxygen:	clean
 
 distclean:	clean
 
-clean:		common_clean handler_clean portal_clean manager_clean omegat-clean omegat-fr-clean stop_web_server
+clean:		common_clean handler_clean portal_clean manager_clean omegat-clean stop_web_server
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf $(EXAMPLEROOT) example/ doc/devel
 	@rm -vf *gz *zip
