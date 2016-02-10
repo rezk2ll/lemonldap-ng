@@ -18,11 +18,12 @@ use Lemonldap::NG::Common::Apache::Session::Lock;
 our $VERSION = '1.9.0';
 
 sub _load {
-    my $backend = shift;
+    my ( $backend, $func ) = shift;
     unless ( $backend->can('populate') ) {
         eval "require $backend";
         die $@ if ($@);
     }
+    return $func ? $backend->can($func) : 0;
 }
 
 sub populate {
@@ -34,7 +35,10 @@ sub populate {
         no strict 'refs';
         $self = $self->$backend(@_);
     }
-    unless ( $self->{args}->{useStorable} ) {
+    if ( $backend =~
+/^Apache::Session::(?:(?:Postgre|Redi)s|(?:Oracl|Sybas)e|(?:My|No)SQL|F(?:ile|lex)|Cassandra|LDAP)/
+        and !$self->{args}->{useStorable} )
+    {
         $self->{serialize} =
           \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::serialize;
         $self->{unserialize} =
@@ -73,11 +77,8 @@ sub setId {
 
 sub searchOn {
     my ( $class, $args, $selectField, $value, @fields ) = splice @_;
-    my $backend = $args->{backend};
-    _load($backend);
-    if ( $backend->can('searchOn') ) {
-        return $backend->searchOn( $args, $selectField, $value, @fields );
-    }
+    return $args->{backend}->searchOn( $args, $selectField, $value, @fields )
+      if ( _load( $args->{backend}, 'searchOn' ) );
     my %res = ();
     $class->get_key_from_all_sessions(
         $args,
@@ -99,11 +100,9 @@ sub searchOn {
 
 sub searchOnExpr {
     my ( $class, $args, $selectField, $value, @fields ) = splice @_;
-    my $backend = $args->{backend};
-    _load($backend);
-    if ( $backend->can('searchOnExpr') ) {
-        return $backend->searchOnExpr( $args, $selectField, $value, @fields );
-    }
+    return $args->{backend}
+      ->searchOnExpr( $args, $selectField, $value, @fields )
+      if ( _load( $args->{backend}, 'searchOnExpr' ) );
     $value = quotemeta($value);
     $value =~ s/\\\*/\.\*/g;
     $value = qr/^$value$/;
@@ -128,6 +127,8 @@ sub searchOnExpr {
 
 sub searchLt {
     my ( $class, $args, $selectField, $value, @fields ) = splice @_;
+    return $args->{backend}->searchLt( $args, $selectField, $value, @fields )
+      if ( _load( $args->{backend}, 'searchLt' ) );
     my %res = ();
     $class->get_key_from_all_sessions(
         $args,
@@ -152,7 +153,9 @@ sub get_key_from_all_sessions {
 
     my ( $args, $data ) = @_;
     my $backend = $args->{backend};
-    _load($backend);
+    if ( _load( $backend, 'get_key_from_all_sessions' ) ) {
+        return $backend->get_key_from_all_sessions( $args, $data );
+    }
     if ( $args->{useStorable} ) {
         require Storable;
         $args->{unserialize} = \&Storable::thaw;
@@ -160,9 +163,6 @@ sub get_key_from_all_sessions {
     else {
         $args->{unserialize} =
           \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::_unserialize;
-    }
-    if ( $backend->can('get_key_from_all_sessions') ) {
-        return $backend->get_key_from_all_sessions( $args, $data );
     }
     if ( $backend =~
 /^Apache::Session::(MySQL|MySQL::NoLock|Postgres|Oracle|Sybase|Informix)$/
