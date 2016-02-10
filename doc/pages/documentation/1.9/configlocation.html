@@ -110,11 +110,11 @@ If you can not access the Manager anymore, you can unprotect it by editing <code
 The Manager displays main branches:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>General Parameters</strong>: authentication modules, portal, etc.</div>
+<li class="level1"><div class="li"> <strong>General Parameters</strong>: 1uthentication modules, portal, etc.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Variables</strong>: user information, macros and groups used to fill <abbr title="Single Sign On">SSO</abbr> session</div>
+<li class="level1"><div class="li"> <strong>Variables</strong>: User information, macros and groups used to fill <abbr title="Single Sign On">SSO</abbr> session</div>
 </li>
-<li class="level1"><div class="li"> <strong>Virtual Hosts</strong>: access rules, headers, etc.</div>
+<li class="level1"><div class="li"> <strong>Virtual Hosts</strong>: Access rules, headers, etc.</div>
 </li>
 <li class="level1"><div class="li"> <strong><abbr title="Security Assertion Markup Language">SAML</abbr> 2 Service</strong>: <abbr title="Security Assertion Markup Language">SAML</abbr> metadata administration</div>
 </li>
@@ -122,15 +122,16 @@ The Manager displays main branches:
 </li>
 <li class="level1"><div class="li"> <strong><abbr title="Security Assertion Markup Language">SAML</abbr> service providers</strong>: Registered SP</div>
 </li>
+<li class="level1"><div class="li"> <strong>OpenID Connect Service</strong>: OpenID Connect service configuration</div>
+</li>
+<li class="level1"><div class="li"> <strong>OpenID Connect Providers</strong>: Registered OP</div>
+</li>
+<li class="level1"><div class="li"> <strong>OpenID Connect Relying Parties</strong>: Registered RP</div>
+</li>
 </ul>
 
 <p>
 LemonLDAP::NG configuration is mainly a key/value structure, so Manager will present all keys into a structured tree. A click on a key will display the associated value.
-</p>
-
-<p>
-<p><div class="noteimportant">When modifying a value, always click on the <code>Apply</code> button if available, to be sure the value is saved.
-</div></p>
 </p>
 
 <p>
@@ -142,34 +143,8 @@ When all modifications are done, click on <code>Save</code> to store configurati
 </div></p>
 </p>
 
-<p>
-You can change the graphical aspect of the Manager, by clicking on the <code>Menu style</code> button. It will open a dialog to choose:
-</p>
-<ul>
-<li class="level1"><div class="li"> Menu organization: tree or accordion</div>
-</li>
-<li class="level1"><div class="li"> Theme (<a href="http://jqueryui.com/themeroller/" class="urlextern" title="http://jqueryui.com/themeroller/"  rel="nofollow">jQuery UI theme</a>).</div>
-</li>
-</ul>
-
-<p>
-<p><div class="notetip">
-Menu style preferences are stored in cookies (1 year duration). You can fix default values by editing these values in <code>lemonldap-ng.ini</code>, section <code>manager</code>:
-</p>
-<ul>
-<li class="level1"><div class="li"> managerCss</div>
-</li>
-<li class="level1"><div class="li"> managerCssTheme</div>
-</li>
-</ul>
-
-<p>
-
-</div></p>
-</p>
-
 </div>
-<!-- EDIT3 SECTION "Manager" [1050-3647] -->
+<!-- EDIT3 SECTION "Manager" [1050-3236] -->
 <h2 class="sectionedit4" id="configuration_text_editor">Configuration text editor</h2>
 <div class="level2">
 
@@ -207,7 +182,7 @@ If a modification is done, the configuration is saved with a new configuration n
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Configuration text editor" [3648-4872] -->
+<!-- EDIT4 SECTION "Configuration text editor" [3237-4461] -->
 <h2 class="sectionedit5" id="command_line_interface_cli">Command Line Interface (CLI)</h2>
 <div class="level2">
 
@@ -256,7 +231,7 @@ To get information abour current configuration:
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli info</pre>
 
 </div>
-<!-- EDIT5 SECTION "Command Line Interface (CLI)" [4873-6018] -->
+<!-- EDIT5 SECTION "Command Line Interface (CLI)" [4462-5607] -->
 <h2 class="sectionedit6" id="apache">Apache</h2>
 <div class="level2">
 
@@ -287,7 +262,7 @@ These files must be included in Apache configuration, either with <code>Include<
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Apache" [6019-6778] -->
+<!-- EDIT6 SECTION "Apache" [5608-6367] -->
 <h3 class="sectionedit7" id="portal">Portal</h3>
 <div class="level3">
 
@@ -366,6 +341,13 @@ In Portal virtual host, you will find several configuration parts:
     &lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
         <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
         <span class="kw1">RewriteRule</span> ^/openidserver/.* /index.pl
+    &lt;/<span class="kw3">IfModule</span>&gt;
+&nbsp;
+    <span class="co1"># OpenID Connect Issuer</span>
+    &lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
+        <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
+        <span class="kw1">RewriteRule</span> ^/oauth2/.* /index.pl
+        <span class="kw1">RewriteRule</span> ^/.well-known/openid-configuration$ /openid-configuration.pl
     &lt;/<span class="kw3">IfModule</span>&gt;</pre>
 <ul>
 <li class="level1"><div class="li"> Some Perl optimizations:</div>
@@ -384,35 +366,54 @@ In Portal virtual host, you will find several configuration parts:
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- EDIT7 SECTION "Portal" [6779-9212] -->
+<!-- EDIT7 SECTION "Portal" [6368-9028] -->
 <h3 class="sectionedit8" id="manager1">Manager</h3>
 <div class="level3">
 
 <p>
-Manager virtual host is used to serve configuration interface and local documentation.
+Manager virtual host is used to serve configuration interface and local documentation. It is run as a FastCGI application:
 </p>
-<ul>
-<li class="level1"><div class="li"> Configuration interface access is not protected by Apache but by LemonLDAP::NG itself (see <code>lemonldap-ng.ini</code>):</div>
-</li>
-</ul>
-<pre class="code file apache">    <span class="kw1">DocumentRoot</span> /usr/local/lemonldap-ng/htdocs/manager/
-    &lt;<span class="kw3">Directory</span> /usr/local/lemonldap-ng/htdocs/manager/&gt;
-        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+<pre class="code file apache">    <span class="co1"># FASTCGI CONFIGURATION</span>
+    <span class="co1"># ---------------------</span>
+&nbsp;
+    <span class="co1"># 1) URI management</span>
+    <span class="kw1">RewriteEngine</span> <span class="kw2">on</span>
+&nbsp;
+    <span class="kw1">RewriteRule</span> <span class="st0">&quot;^/$&quot;</span> <span class="st0">&quot;/psgi/manager-server.fcgi&quot;</span> [PT]
+    <span class="co1"># For performances, you can delete the previous RewriteRule line after</span>
+    <span class="co1"># puttings html files: simply put the HTML results of differents modules</span>
+    <span class="co1"># (configuration, sessions, notifications) as manager.html, sessions.html,</span>
+    <span class="co1"># notifications.html and uncomment the 2 following lines:</span>
+    <span class="co1"># DirectoryIndex manager.html</span>
+    <span class="co1"># RewriteCond &quot;%{REQUEST_FILENAME}&quot; &quot;!\.html$&quot;</span>
+&nbsp;
+    <span class="co1"># REST URLs</span>
+    <span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_FILENAME}&quot;</span> <span class="st0">&quot;!^/(?:static|doc|fr-doc|lib).*&quot;</span>
+    <span class="kw1">RewriteRule</span> <span class="st0">&quot;^/(.+)$&quot;</span> <span class="st0">&quot;/psgi/manager-server.fcgi/$1&quot;</span> [PT]
+&nbsp;
+    <span class="kw1">Alias</span> /psgi/ /var/lib/lemonldap-ng/manager/psgi/
+&nbsp;
+    <span class="co1"># 2) FastCGI engine</span>
+&nbsp;
+    <span class="co1"># You can choose any FastCGI system. Here is an example using mod_fcgid</span>
+    <span class="co1"># mod_fcgid configuration</span>
+    &lt;<span class="kw3">Directory</span> /var/lib/lemonldap-ng/manager/psgi/&gt;
+        <span class="kw1">SetHandler</span> fcgid-<span class="kw1">script</span>
         <span class="kw1">Options</span> +ExecCGI
-    &lt;/<span class="kw3">Directory</span>&gt;</pre>
-<ul>
-<li class="level1"><div class="li"> Local documentation is open to all:</div>
-</li>
-</ul>
-<pre class="code file apache">    <span class="kw1">Alias</span> /doc/ /usr/local/lemonldap-ng/htdocs/doc/
-    &lt;<span class="kw3">Directory</span> /usr/local/lemonldap-ng/htdocs/doc/&gt;
-        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-        <span class="kw1">Allow</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Directory</span>&gt;</pre>
+    &lt;/<span class="kw3">Directory</span>&gt;
+&nbsp;
+    <span class="co1"># If you want to use mod_fastcgi, replace lines below by:</span>
+    <span class="co1">#FastCgiServer /var/lib/lemonldap-ng/manager/psgi/manager-server.fcgi</span>
+&nbsp;
+    <span class="co1"># Or if you prefer to use CGI, use /psgi/manager-server.cgi instead of</span>
+    <span class="co1"># /psgi/manager-server.fcgi and adapt the rewrite rules.</span></pre>
+
+<p>
+Configuration interface access is not protected by Apache but by LemonLDAP::NG itself (see <code>lemonldap-ng.ini</code>).
+</p>
 
 </div>
-<!-- EDIT8 SECTION "Manager" [9213-9897] -->
+<!-- EDIT8 SECTION "Manager" [9029-10581] -->
 <h3 class="sectionedit9" id="handler">Handler</h3>
 <div class="level3">
 <ul>
@@ -420,12 +421,7 @@ Manager virtual host is used to serve configuration interface and local document
 </li>
 </ul>
 <pre class="code file apache">PerlOptions +GlobalRequest
-PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</pre>
-
-<p>
-<p><div class="noteimportant">The Handler must be loaded before any protected virtual host.
-</div></p>
-</p>
+PerlRequire Lemonldap/NG/Handler.pm</pre>
 <ul>
 <li class="level1"><div class="li"> Catch error pages:</div>
 </li>
@@ -447,7 +443,7 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</pre>
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
         <span class="kw1">Deny</span> from <span class="kw2">all</span>
         <span class="kw1">Allow</span> from 127.0.0.0/<span class="nu0">8</span>
-        PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;refresh
+        PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;reload
     &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
     <span class="co1"># Uncomment this to activate status module</span>
@@ -466,7 +462,7 @@ Then, to protect a standard virtual host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
 
 </div>
-<!-- EDIT9 SECTION "Handler" [9898-11201] -->
+<!-- EDIT9 SECTION "Handler" [10582-11777] -->
 <h2 class="sectionedit10" id="configuration_reload">Configuration reload</h2>
 <div class="level2">
 
@@ -509,7 +505,7 @@ The <code>reload</code> target is managed in Apache configuration, inside a virt
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Configuration reload" [11202-12569] -->
+<!-- EDIT10 SECTION "Configuration reload" [11778-13145] -->
 <h2 class="sectionedit11" id="local_file">Local file</h2>
 <div class="level2">
 
@@ -545,48 +541,6 @@ For example, to override configured skin for portal:
 <p><div class="notetip">You need to know the technical name of configuration parameter to do this. You can refer to <a href="../../documentation/1.9/parameterlist.html" class="wikilink1" title="documentation:1.9:parameterlist">parameter list</a> to find it.
 </div></p>
 </p>
-
-</div>
-<!-- EDIT11 SECTION "Local file" [12570-13427] -->
-<h2 class="sectionedit12" id="script_files">Script files</h2>
-<div class="level2">
-
-<p>
-LemonLDAP::NG allows to override any configuration parameter directly in script file. However, it is not advised to edit such files, as they are part of the program, and will be erased at next upgrade.
-</p>
-
-<p>
-<p><div class="notetip">You also need to know the technical name of configuration parameter to do this. You can refer to <a href="../../documentation/1.9/parameterlist.html" class="wikilink1" title="documentation:1.9:parameterlist">parameter list</a> to find it.
-</div></p>
-</p>
-
-</div>
-<!-- EDIT12 SECTION "Script files" [13428-13816] -->
-<h3 class="sectionedit13" id="portal1">Portal</h3>
-<div class="level3">
-
-<p>
-For example, in portal/index.pl:
-</p>
-<pre class="code file perl"><span class="kw1">my</span> <span class="re0">$portal</span> <span class="sy0">=</span> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Portal</span><span class="sy0">::</span><span class="me2">SharedConf</span><span class="sy0">-&gt;</span><span class="kw2">new</span><span class="br0">&#40;</span>
-    <span class="br0">&#123;</span>
-        portalSkin <span class="sy0">=&gt;</span> <span class="st_h">'dark'</span><span class="sy0">,</span>
-    <span class="br0">&#125;</span>
-<span class="br0">&#41;</span><span class="sy0">;</span></pre>
-
-</div>
-<!-- EDIT13 SECTION "Portal" [13817-13987] -->
-<h3 class="sectionedit14" id="handler1">Handler</h3>
-<div class="level3">
-
-<p>
-For example, in handler/MyHandler.pm:
-</p>
-<pre class="code file perl">__PACKAGE__<span class="sy0">-&gt;</span><span class="me1">init</span><span class="br0">&#40;</span>
-    <span class="br0">&#123;</span>
-        domain <span class="sy0">=&gt;</span> <span class="st_h">'acme.com'</span><span class="sy0">,</span>
-    <span class="br0">&#125;</span>
-<span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
 </div><!-- closes <div class="dokuwiki export">-->

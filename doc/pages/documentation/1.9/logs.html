@@ -43,15 +43,19 @@ The log level can be set with Apache <code>LogLevel</code> parameter. It can be 
 </p>
 
 <p>
-See <a href="http://httpd.apache.org/docs/2.2/mod/core.html#loglevel" class="urlextern" title="http://httpd.apache.org/docs/2.2/mod/core.html#loglevel"  rel="nofollow">http://httpd.apache.org/docs/2.2/mod/core.html#loglevel</a> for more information.
+See <a href="http://httpd.apache.org/docs/current/mod/core.html#loglevel" class="urlextern" title="http://httpd.apache.org/docs/current/mod/core.html#loglevel"  rel="nofollow">http://httpd.apache.org/docs/current/mod/core.html#loglevel</a> for more information.
 </p>
 
 <p>
 To configure the user identifier in access log, go in Manager, <code>General Parameters</code> &gt; <code>Logging</code> &gt; <code>REMOTE_USER</code>.
 </p>
 
+<p>
+You can also hide sensitive values in logs (session content can be displayed in logs in debug loglevel). Go in Manager, <code>General Parameters</code> &gt; <code>Logging</code> &gt; <code>Hidden attributes</code> and set a list of attributes to hide (space separated). 
+</p>
+
 </div>
-<!-- EDIT2 SECTION "Apache logging" [21-607] -->
+<!-- EDIT2 SECTION "Apache logging" [21-850] -->
 <h2 class="sectionedit3" id="syslog">Syslog</h2>
 <div class="level2">
 
@@ -76,7 +80,7 @@ The messages are stored with the levels :
 </ul>
 
 </div>
-<!-- EDIT3 SECTION "Syslog" [608-976] -->
+<!-- EDIT3 SECTION "Syslog" [851-1219] -->
 <h2 class="sectionedit4" id="override_logging_functions">Override logging functions</h2>
 <div class="level2">
 

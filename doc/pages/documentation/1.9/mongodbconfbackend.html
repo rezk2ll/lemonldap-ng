@@ -24,7 +24,7 @@
 <div class="level1">
 
 <p>
-<a href="https://www.mongodb.org/" class="urlextern" title="https://www.mongodb.org/"  rel="nofollow">MongoDB</a> is a NoSQL database that can be used both for storing configuration and <a href="../../documentation/1.9/mongodbsessionbackend.html" class="wikilink1" title="documentation:1.9:mongodbsessionbackend">sessions</a>.
+<a href="https://www.mongodb.org/" class="urlextern" title="https://www.mongodb.org/"  rel="nofollow">MongoDB</a> is a NoSQL database that can be used both for storing configuration and <a href="../../documentation/1.9/mongodbsessionbackend.html" class="wikilink1" title="documentation:1.9:mongodbsessionbackend">sessions</a>. You need to install Perl MongoDB module to be able to use this backend.
 </p>
 
 <p>
@@ -32,8 +32,8 @@ See <a href="../../documentation/1.9/changeconfbackend.html" class="wikilink1" t
 </p>
 
 </div>
-<!-- EDIT1 SECTION "MongoDB configuration backends" [1-294] -->
-<h2 class="sectionedit2" id="lemonldap-ngini_parameters">Lemonldap-ng.ini parameters</h2>
+<!-- EDIT1 SECTION "MongoDB configuration backends" [1-366] -->
+<h2 class="sectionedit2" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
@@ -44,7 +44,7 @@ To use a MongoDB backend, configure your <code>lemonldap-ng.ini</code> file (sec
 </li>
 <li class="level1"><div class="li"> Set dbName and collectionName parameters if different than default values (llConfDB and configuration)</div>
 </li>
-<li class="level1"><div class="li"> Set host and if needed db_name username, password, ssl and fields as follow.</div>
+<li class="level1"><div class="li"> Set host and if needed db_name username, password and ssl fields as follow.</div>
 </li>
 </ul>
 
@@ -64,7 +64,7 @@ Example :
 <div class="table sectionedit3"><table class="inline">
 	<thead>
 	<tr class="row0 roweven">
-		<th class="col0 centeralign" colspan="3">           Optional parameters (see MongoDB::Client man page)            </th>
+		<th class="col0 centeralign" colspan="3">           Optional parameters (see <a href="http://search.cpan.org/perldoc?MongoDB%3A%3AMongoClient" class="urlextern" title="http://search.cpan.org/perldoc?MongoDB%3A%3AMongoClient"  rel="nofollow">MongoDB::MongoClient</a> man page)            </th>
 	</tr>
 	<tr class="row1 rowodd">
 		<th class="col0 centeralign">           Name            </th><th class="col1 centeralign">             Comment              </th><th class="col2 centeralign">  Example   </th>
@@ -92,6 +92,26 @@ Example :
 		<td class="col0 leftalign"> password                  </td><td class="col1 leftalign"> Password                         </td><td class="col2"> llpassword </td>
 	</tr>
 </table></div>
-<!-- EDIT3 TABLE [865-1566] -->
+<!-- EDIT3 TABLE [922-1688] -->
+</div>
+<!-- EDIT2 SECTION "Configuration" [367-1689] -->
+<h1 class="sectionedit4" id="mini_mongodb_howto">Mini MongoDB howto</h1>
+<div class="level1">
+
+<p>
+Just some commands needed to create collection and user:
+</p>
+<pre class="code">$ mongo
+connecting to: test
+&gt; use configuration
+switched to db configuration
+&gt; db.createCollection(&quot;configuration&quot;)
+...
+&gt; db.addUser({user:&quot;lluser&quot;,pwd:&quot;llpassword&quot;,roles:[&quot;readWrite&quot;]})
+...
+&gt; exit
+bye
+$</pre>
+
 </div>
 </div><!-- closes <div class="dokuwiki export">-->

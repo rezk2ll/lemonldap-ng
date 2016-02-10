@@ -24,20 +24,40 @@
 <div class="level1">
 
 </div>
-<!-- EDIT1 SECTION "Upgrade from 1.4 to 1.9" [1-41] -->
-<h2 class="sectionedit2" id="file_configuration_backend">File configuration backend</h2>
+<!-- EDIT1 SECTION "Upgrade from 1.4 to 1.9" [1-39] -->
+<h2 class="sectionedit2" id="json_serialization">JSON serialization</h2>
 <div class="level2">
 
 <p>
-Configuration is now stored in JSON when using File configuration backend.
+From now, LemonLDAP::NG uses JSON serialization to store configuration and sessions instead of <code>Storable::nfreeze</code> Perl function. This permits to have heterogenous servers connected to the same <abbr title="LemonLDAP::NG">LL::NG</abbr> organization <em>(32/64 bits or different Perl versions)</em>. Old format still works but:
 </p>
+<ul>
+<li class="level1"><div class="li"> configuration backends: new format is applied at first configuration save,</div>
+</li>
+<li class="level1"><div class="li"> sessions storages: new format is applied for each new session or when updating an existing session. You can force LemonLDAP::NG to keep the old serialization method by setting <code>useStorable</code> to 1 in sessions backend options if you have some custom hooks.</div>
+</li>
+</ul>
 
 <p>
-Old format is still working but the new format is applied at first configuration save.
+<p><div class="noteimportant">
+If you have more than one server and don&#039;t want to stop the <abbr title="Single Sign On">SSO</abbr> service, start upgrading in the following order:
+</p>
+<ul>
+<li class="level1"><div class="li"> servers that have only handlers;</div>
+</li>
+<li class="level1"><div class="li"> portal servers (all together if your load balancer doesn&#039;t keep state by user or client <abbr title="Internet Protocol">IP</abbr> and if users use the menu);</div>
+</li>
+<li class="level1"><div class="li"> manager server</div>
+</li>
+</ul>
+
+<p>
+
+</div></p>
 </p>
 
 </div>
-<!-- EDIT2 SECTION "File configuration backend" [42-245] -->
+<!-- EDIT2 SECTION "JSON serialization" [40-1018] -->
 <h2 class="sectionedit3" id="portal_autocomplete_configuration">Portal autocomplete configuration</h2>
 <div class="level2">
 
@@ -48,6 +68,87 @@ Modern browsers do not take into account the autocomplete attribute in password 
 <p>
 As it was not used anymore, this option is now removed. See <a href="https://jira.ow2.org/browse/LEMONLDAP-824" class="urlextern" title="https://jira.ow2.org/browse/LEMONLDAP-824"  rel="nofollow">https://jira.ow2.org/browse/LEMONLDAP-824</a> for more details.
 </p>
+
+</div>
+<!-- EDIT3 SECTION "Portal autocomplete configuration" [1019-1388] -->
+<h2 class="sectionedit4" id="support_for_centosrhel_5_dropped">Support for CentOS/RHEL 5 dropped</h2>
+<div class="level2">
+
+<p>
+Due to a too old Perl version and some missing modules, <abbr title="LemonLDAP::NG">LL::NG</abbr> is no more available for CentOS/RHEL 5.
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Support for CentOS/RHEL 5 dropped" [1389-1539] -->
+<h2 class="sectionedit5" id="manager_components_protection">Manager components protection</h2>
+<div class="level2">
+
+<p>
+You can no more set up a different <code>protection</code> parameter for sessions explorer and configuration management. The <code>protection</code> is used for all components, but can use access rules to manage authorizations between configuration, notifications and sessions:
+</p>
+<pre class="code perl"><span class="sy0">^</span><span class="co2">/(manager\.html|conf/</span><span class="br0">&#41;</span> <span class="sy0">=&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st0">&quot;dwho&quot;</span>
+default <span class="sy0">=&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st0">&quot;dwho&quot;</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st0">&quot;rtyler&quot;</span> </pre>
+
+</div>
+<!-- EDIT5 SECTION "Manager components protection" [1540-1952] -->
+<h2 class="sectionedit6" id="ajax_unauthenticated_requests_in_handler">AJAX unauthenticated requests in handler</h2>
+<div class="level2">
+
+<p>
+To request for authentication, handlers sent a 302 HTTP code, then portal sent the <abbr title="HyperText Markup Language">HTML</abbr> form even if request was an Ajax one. From now, after being redirected by the Handler, a 401 code will be sent by the portal with a <code>WWW-Authenticate</code> header containing “<abbr title="Single Sign On">SSO</abbr> &lt;portal-<abbr title="Uniform Resource Locator">URL</abbr>&gt;”. This is a little HTTP protocol hook created because browsers follow redirection transparently and we have to respond to JSON queries by JSON.
+</p>
+
+<p>
+If you want to keep old behavior, set <code>noAjaxHook</code> to 1 (in General Parameters → Advanced → Portal redirections → Keep redirections for Ajax).
+</p>
+
+</div>
+<!-- EDIT6 SECTION "AJAX unauthenticated requests in handler" [1953-2577] -->
+<h2 class="sectionedit7" id="persistent_sessions">Persistent sessions</h2>
+<div class="level2">
+
+<p>
+Persistent sessions have a new attributes:
+</p>
+<ul>
+<li class="level1"><div class="li"> <code>_session_uid</code>: real user identifier</div>
+</li>
+<li class="level1"><div class="li"> <code>_utime</code>: creation timestamp</div>
+</li>
+</ul>
+
+<p>
+These attributes allow to browse them in the sessions explorer. Old persistent sessions will automatically get these new attributes at user connexion.
+</p>
+
+</div>
+<!-- EDIT7 SECTION "Persistent sessions" [2578-2884] -->
+<h2 class="sectionedit8" id="multi_backend">Multi backend</h2>
+<div class="level2">
+
+<p>
+The <a href="../../documentation/1.9/authmulti.html" class="wikilink1" title="documentation:1.9:authmulti">Multi backend</a> configuration has changed. Now the stacks are defined in separate attributes:
+</p>
+<ul>
+<li class="level1"><div class="li"> multiAuthStack</div>
+</li>
+<li class="level1"><div class="li"> multiUserDBStack</div>
+</li>
+</ul>
+
+<p>
+So an old configuration like this:
+</p>
+<pre class="file">authentication = Multi LDAP;DBI
+userDB = Multi LDAP;DBI</pre>
+
+<p>
+Must be replaced by:
+</p>
+<pre class="file">authentication = Multi
+userDB = Multi
+multiAuthStack = LDAP;DBI
+multiUserDBStack = LDAP;DBI</pre>
 
 </div>
 </div><!-- closes <div class="dokuwiki export">-->

@@ -55,6 +55,13 @@ SQL session backend can be used with many SQL databases such as:
 Your database must have a specific table to host sessions. Here are some examples for main databases servers.
 </p>
 
+<p>
+<p><div class="noteimportant">
+If your database doesn&#039;t accept UTF-8 characters in &#039;text&#039; field, use &#039;blob&#039; instead of &#039;text&#039;.
+
+</div></p>
+</p>
+
 </div>
 
 <h4 id="mysql">MySQL</h4>
@@ -70,7 +77,7 @@ Create sessions table:
 </p>
 <pre class="code file sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> sessions <span class="br0">&#40;</span>
     id <span class="kw1">CHAR</span><span class="br0">&#40;</span><span class="nu0">32</span><span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
-    a_session <span class="kw1">BLOB</span>
+    a_session text
     <span class="br0">&#41;</span>;</pre>
 
 <p>
@@ -114,7 +121,7 @@ lemonldap-ng=&gt; q</pre>
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Prepare the database" [488-1947] -->
+<!-- EDIT3 SECTION "Prepare the database" [488-2069] -->
 <h3 class="sectionedit4" id="manager">Manager</h3>
 <div class="level3">
 
@@ -143,7 +150,7 @@ Go in the Manager and set the session module (for example <a href="http://search
 		<td class="col0 centeralign">  <strong>Commit</strong>  </td><td class="col1"> Required for PostgreSQL </td><td class="col2"> 1 </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [2276-2619] -->
+<!-- EDIT5 TABLE [2398-2741] -->
 <p>
 You must read the man page corresponding to your database (<a href="http://search.cpan.org/perldoc?Apache::Session::MySQL" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::MySQL"  rel="nofollow">Apache::Session::MySQL</a>, …) to learn more about parameters. You must also install the database connector (<a href="http://search.cpan.org/perldoc?DBD::Oracle" class="urlextern" title="http://search.cpan.org/perldoc?DBD::Oracle"  rel="nofollow">DBD::Oracle</a>, <a href="http://search.cpan.org/perldoc?DBD::Pg" class="urlextern" title="http://search.cpan.org/perldoc?DBD::Pg"  rel="nofollow">DBD::Pg</a>,…)
 </p>
@@ -171,7 +178,7 @@ If you choose to use MySQL, read <a href="../../documentation/1.9/performances.h
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Manager" [1948-3198] -->
+<!-- EDIT4 SECTION "Manager" [2070-3320] -->
 <h2 class="sectionedit6" id="security">Security</h2>
 <div class="level2">
 

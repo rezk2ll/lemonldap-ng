@@ -43,7 +43,7 @@ Get the tarball from <a href="../../download.html" class="wikilink1" title="down
 <div class="level2">
 
 <p>
-Either checkout or export the SVN repository, or extract the SVN tarball to get the SVN files on your disk.
+Either checkout or export the <a href="http://forge.ow2.org/plugins/scmsvn/index.php?group_id=274" class="urlextern" title="http://forge.ow2.org/plugins/scmsvn/index.php?group_id=274"  rel="nofollow">SVN repository</a>, or extract the SVN tarball to get the SVN files on your disk.
 </p>
 
 <p>
@@ -61,7 +61,7 @@ The generated tarball is in the current directory.
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Build the tarball from SVN" [389-695] -->
+<!-- EDIT3 SECTION "Build the tarball from SVN" [389-758] -->
 <h2 class="sectionedit4" id="extraction">Extraction</h2>
 <div class="level2">
 
@@ -71,7 +71,7 @@ Just run the tar command:
 <pre class="code">tar zxvf lemonldap-ng-*.tar.gz</pre>
 
 </div>
-<!-- EDIT4 SECTION "Extraction" [696-792] -->
+<!-- EDIT4 SECTION "Extraction" [759-855] -->
 <h2 class="sectionedit5" id="installation">Installation</h2>
 <div class="level2">
 
@@ -86,7 +86,11 @@ For full install:
 make
 make configure
 make test
-sudo make install</pre>
+sudo make install PROD=yes</pre>
+
+<p>
+<code>PROD=yes</code> makes web interface use minified versions of <abbr title="Cascading Style Sheets">CSS</abbr> and JS files.
+</p>
 
 <p>
 <p><div class="notetip">
@@ -199,7 +203,7 @@ See also <a href="../../documentation/1.9/installdeb.html" class="wikilink1" tit
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Installation" [793-3182] -->
+<!-- EDIT5 SECTION "Installation" [856-3331] -->
 <h2 class="sectionedit6" id="link_apache_configuration">Link Apache configuration</h2>
 <div class="level2">
 
@@ -236,7 +240,7 @@ a2ensite test-apache2.conf</pre>
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Link Apache configuration" [3183-4001] -->
+<!-- EDIT6 SECTION "Link Apache configuration" [3332-4150] -->
 <h2 class="sectionedit7" id="install_cron_jobs">Install cron jobs</h2>
 <div class="level2">
 
@@ -256,7 +260,7 @@ To install them on system:
 <pre class="code">sudo ln -s /usr/local/lemonldap-ng/etc/cron.d/* /etc/cron.d/</pre>
 
 </div>
-<!-- EDIT7 SECTION "Install cron jobs" [4002-4211] -->
+<!-- EDIT7 SECTION "Install cron jobs" [4151-4360] -->
 <h2 class="sectionedit8" id="dns">DNS</h2>
 <div class="level2">
 

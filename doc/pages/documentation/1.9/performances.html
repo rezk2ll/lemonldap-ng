@@ -158,8 +158,15 @@ The portal is the biggest component of Lemonldap::NG. It is recommended to use M
 You can also use a FastCGI server using index.fcgi given in portal examples.
 </p>
 
+<p>
+<p><div class="notetip">
+In production environment for network performance, prefer using minified versions of javascript and css libs: use <code>make install <strong>PROD=yes</strong></code>. This is done by default in RPM/DEB packages.
+
+</div></p>
+</p>
+
 </div>
-<!-- EDIT7 SECTION "General performances" [3505-3926] -->
+<!-- EDIT7 SECTION "General performances" [3505-4135] -->
 <h3 class="sectionedit8" id="configuration_access">Configuration access</h3>
 <div class="level3">
 
@@ -168,7 +175,7 @@ If you set <code>useLocalConf</code> to 1 in lemonldap-ng.ini (section [Portal])
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Configuration access" [3927-4229] -->
+<!-- EDIT8 SECTION "Configuration access" [4136-4438] -->
 <h3 class="sectionedit9" id="starting_performances">Starting performances</h3>
 <div class="level3">
 
@@ -186,7 +193,7 @@ To make the portal start faster when the server is relaunched, add those lines i
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- EDIT9 SECTION "Starting performances" [4230-4805] -->
+<!-- EDIT9 SECTION "Starting performances" [4439-5014] -->
 <h3 class="sectionedit10" id="apachesession_performances">Apache::Session performances</h3>
 <div class="level3">
 
@@ -244,12 +251,12 @@ Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </p>
 
 <p>
-<p><div class="noteimportant">Some Apache::Session module are not useable by Lemonldap::NG such as Apache::Session::Memcached since this module does not offer capability to browse sessions
+<p><div class="noteimportant">Some Apache::Session module are not fully usable by Lemonldap::NG such as Apache::Session::Memcached since this modules do not offer capability to browse sessions. They does not allow to use sessions explorer neither manage one-off sessions.
 </div></p>
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Apache::Session performances" [4806-7075] -->
+<!-- EDIT10 SECTION "Apache::Session performances" [5015-7367] -->
 <h3 class="sectionedit11" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
@@ -292,6 +299,49 @@ For now, ldapgroups contains “cn=admin,dmdName=groups,dc=example,dc=com cn=su,
 Now ldapgroups contains “admin su”
 
 </div></p>
+</p>
+
+</div>
+<!-- EDIT11 SECTION "LDAP performances" [7368-8496] -->
+<h2 class="sectionedit12" id="manager_performances">Manager performances</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT12 SECTION "Manager performances" [8497-8530] -->
+<h3 class="sectionedit13" id="disable_unused_modules">Disable unused modules</h3>
+<div class="level3">
+
+<p>
+In lemonldap-ng.ini, set only modules that you will use. By default, configuration, sessions explorer and notifications explorer are enabled. Example:
+</p>
+<pre class="code ini"><span class="re0"><span class="br0">&#91;</span>manager<span class="br0">&#93;</span></span>
+<span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
+
+</div>
+<!-- EDIT13 SECTION "Disable unused modules" [8531-8777] -->
+<h3 class="sectionedit14" id="use_static_html_files">Use static HTML files</h3>
+<div class="level3">
+
+<p>
+Once Manager is installed, browse enabled modules (configuration, sessions, notifications) and save the web pages respectively under <code>manager.html</code>, <code>sessions.html</code> and <code>notifications.html</code> in the <code>DocumentRoot</code> directory. Then replace this in Manager file of Apache configuration:
+</p>
+<pre class="code apache"><span class="kw1">RewriteRule</span> <span class="st0">&quot;^/$&quot;</span> <span class="st0">&quot;/psgi/manager-server.fcgi&quot;</span> [PT]
+<span class="co1"># DirectoryIndex manager.html</span>
+<span class="co1"># RewriteCond &quot;%{REQUEST_FILENAME}&quot; &quot;!\.html$&quot;</span>
+<span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_FILENAME}&quot;</span> <span class="st0">&quot;!^/(?:static|doc|fr-doc|lib).*&quot;</span>
+<span class="kw1">RewriteRule</span> <span class="st0">&quot;^/(.+)$&quot;</span> <span class="st0">&quot;/psgi/manager-server.fcgi/$1&quot;</span> [PT]</pre>
+
+<p>
+by:
+</p>
+<pre class="code apache"><span class="co1"># RewriteRule &quot;^/$&quot; &quot;/psgi/manager-server.fcgi&quot; [PT]</span>
+<span class="kw1">DirectoryIndex</span> manager.html
+<span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_FILENAME}&quot;</span> <span class="st0">&quot;!<span class="es0">\.</span>html$&quot;</span>
+<span class="kw1">RewriteCond</span> <span class="st0">&quot;%{REQUEST_FILENAME}&quot;</span> <span class="st0">&quot;!^/(?:static|doc|fr-doc|lib).*&quot;</span>
+<span class="kw1">RewriteRule</span> <span class="st0">&quot;^/(.+)$&quot;</span> <span class="st0">&quot;/psgi/manager-server.fcgi/$1&quot;</span> [PT]</pre>
+
+<p>
+So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be no more generated by Perl but directly given by the web server.
 </p>
 
 </div>

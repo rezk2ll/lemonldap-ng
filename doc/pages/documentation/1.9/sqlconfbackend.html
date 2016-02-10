@@ -79,24 +79,24 @@ Example for MySQL :
 
 <h4 id="rdbi">RDBI</h4>
 <div class="level4">
-<pre class="code">CREATE TABLE lmConfig (
-    cfgNum int(11) NOT NULL,
-    field varchar(255) NOT NULL DEFAULT &#039;&#039;,
-    value longblob,
-    PRIMARY KEY (cfgNum,field)
-    );</pre>
+<pre class="code sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> lmConfig <span class="br0">&#40;</span>
+    cfgNum <span class="kw1">INT</span><span class="br0">&#40;</span><span class="nu0">11</span><span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
+    <span class="kw1">FIELD</span> <span class="kw1">VARCHAR</span><span class="br0">&#40;</span><span class="nu0">255</span><span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">DEFAULT</span> <span class="st0">''</span><span class="sy0">,</span>
+    <span class="kw1">VALUE</span> longblob<span class="sy0">,</span>
+    <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span> <span class="br0">&#40;</span>cfgNum<span class="sy0">,</span><span class="kw1">FIELD</span><span class="br0">&#41;</span>
+    <span class="br0">&#41;</span>;</pre>
 
 </div>
 
 <h4 id="cdbi">CDBI</h4>
 <div class="level4">
-<pre class="code">CREATE TABLE lmConfig (
-    cfgNum int not null primary key,
-    data longblob
-);</pre>
+<pre class="code sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> lmConfig <span class="br0">&#40;</span>
+    cfgNum <span class="kw1">INT</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
+    <span class="kw1">DATA</span> longblob
+<span class="br0">&#41;</span>;</pre>
 
 </div>
-<!-- EDIT4 SECTION "SQL configuration" [1016-1341] -->
+<!-- EDIT4 SECTION "SQL configuration" [1016-1349] -->
 <h3 class="sectionedit5" id="grant_lemonldapng_access">Grant LemonLDAP::NG access</h3>
 <div class="level3">
 

@@ -42,7 +42,7 @@ A rule associates a <a href="http://en.wikipedia.org/wiki/Perl_Compatible_Regula
 </p>
 
 <p>
-<a href="/_detail/documentation/manager_access_rule.png?id=documentation%3A1.9%3Awritingrulesand_headers" class="media" title="documentation:manager_access_rule.png"><img src="../../../media/documentation/manager_access_rule.png" class="mediacenter" alt="" /></a>
+<a href="/_detail/documentation/manager-rule.png?id=documentation%3A1.9%3Awritingrulesand_headers" class="media" title="documentation:manager-rule.png"><img src="../../../media/documentation/manager-rule.png" class="mediacenter" alt="" /></a>
 </p>
 
 <p>
@@ -73,7 +73,7 @@ Examples:
 		<td class="col0 leftalign"> Restrict access to the whole site to users that have the LDAP description field set to “LDAP administrator” (must be set in exported variables)  </td><td class="col1 centeralign">  default  </td><td class="col2 centeralign">  $description&nbsp;eq&nbsp;"LDAP&nbsp;administrator"  </td>
 	</tr>
 </table></div>
-<!-- EDIT3 TABLE [670-1513] -->
+<!-- EDIT3 TABLE [663-1506] -->
 <p>
 The “<strong>default</strong>” access rule is used if no other access rule match the current <abbr title="Uniform Resource Locator">URL</abbr>.
 </p>
@@ -112,7 +112,7 @@ Rules can also be used to intercept logout <abbr title="Uniform Resource Locator
 		<td class="col0 leftalign"> Logout user from current application and from Lemonldap::NG and redirect it to http://intranet/  </td><td class="col1 centeralign">  ^/index.php\?logout  </td><td class="col2 centeralign">  logout_app_sso&nbsp;http://intranet/  </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [2007-2612] -->
+<!-- EDIT4 TABLE [2000-2605] -->
 <p>
 <p><div class="notetip">By default, user will be redirected on portal if no <abbr title="Uniform Resource Locator">URL</abbr> defined, or on the specified <abbr title="Uniform Resource Locator">URL</abbr> if any.
 </div></p>
@@ -124,7 +124,7 @@ Rules can also be used to intercept logout <abbr title="Uniform Resource Locator
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Rules" [441-3040] -->
+<!-- EDIT2 SECTION "Rules" [441-3033] -->
 <h2 class="sectionedit5" id="headers">Headers</h2>
 <div class="level2">
 
@@ -154,7 +154,7 @@ Examples:
 		<td class="col0 leftalign"> Give a non ascii data  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  encode_base64($givenName."&nbsp;".$surName)  </td>
 	</tr>
 </table></div>
-<!-- EDIT6 TABLE [3224-3557] -->
+<!-- EDIT6 TABLE [3217-3550] -->
 <p>
 As described in <a href="../../documentation/1.9/performances.html#handler_performance" class="wikilink1" title="documentation:1.9:performances">performances chapter</a>, you can use macros, local macros,…
 </p>

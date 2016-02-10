@@ -71,6 +71,10 @@ Then, go in <code>Slave parameters</code>:
 </li>
 <li class="level1"><div class="li"> <strong>Master&#039;s <abbr title="Internet Protocol">IP</abbr> address</strong>: the <abbr title="Internet Protocol">IP</abbr> addresses of servers which are accredited to authenticate user. This is a security point, to prevent someone to create a session by sending custom headers. You can set one or several <abbr title="Internet Protocol">IP</abbr> addresses, separated by spaces, or let this parameter empty to disable the checking.</div>
 </li>
+<li class="level1"><div class="li"> <strong>Control header name</strong>: header that contains a value to control. Let this parameter empty to disable the checking.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Control header content</strong>: value to control. Let this parameter empty to disable the checking.</div>
+</li>
 </ul>
 
 <p>
@@ -89,7 +93,7 @@ You have then to declare HTTP headers exported by the main <abbr title="Single S
 		<td class="col0 centeralign">  mail  </td><td class="col1 centeralign">  User-Email  </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [1290-1392] -->
+<!-- EDIT5 TABLE [1510-1612] -->
 <p>
 See also <a href="../../documentation/1.9/exportedvars.html" class="wikilink1" title="documentation:1.9:exportedvars">exported variables configuration</a>.
 </p>

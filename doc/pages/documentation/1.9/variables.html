@@ -279,7 +279,7 @@ Only with UserDB LDAP.
 <!-- EDIT20 TABLE [3063-3159] -->
 </div>
 <!-- EDIT19 SECTION "OpenID" [3043-3160] -->
-<h2 class="sectionedit21" id="other">Other</h2>
+<h2 class="sectionedit21" id="openid_connect">OpenID Connect</h2>
 <div class="level2">
 <div class="table sectionedit22"><table class="inline">
 	<thead>
@@ -288,9 +288,39 @@ Only with UserDB LDAP.
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
-		<td class="col0 leftalign"> appsListOrder  </td><td class="col1 leftalign"> Order of categories in the menu  </td>
+		<td class="col0 leftalign"> OpenIDConnect_IDToken  </td><td class="col1 leftalign"> ID Token  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 leftalign"> OpenIDConnect_OP  </td><td class="col1 leftalign"> Configuration key of OP used for authentication  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 leftalign"> OpenIDConnect_access_token  </td><td class="col1 leftalign"> OAuth2 Access Token used to get UserInfo data  </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0"> _oidc_consent_scope_<em>rp</em> </td><td class="col1 leftalign"> Scope for which consent was given for RP <em>rp</em>  </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0"> _oidc_consent_time_<em>rp</em> </td><td class="col1 leftalign"> Time when consent was given for RP <em>rp</em>  </td>
 	</tr>
 </table></div>
-<!-- EDIT22 TABLE [3180-3259] -->
+<!-- EDIT22 TABLE [3189-3564] -->
+</div>
+<!-- EDIT21 SECTION "OpenID Connect" [3161-3565] -->
+<h2 class="sectionedit23" id="other">Other</h2>
+<div class="level2">
+<div class="table sectionedit24"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Description  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 leftalign"> appsListOrder  </td><td class="col1 leftalign"> Order of categories in the menu  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 leftalign"> _session_kind  </td><td class="col1 leftalign"> Type of session (<abbr title="Single Sign On">SSO</abbr>, Persistent, …)  </td>
+	</tr>
+</table></div>
+<!-- EDIT24 TABLE [3585-3725] -->
 </div>
 </div><!-- closes <div class="dokuwiki export">-->

@@ -67,14 +67,28 @@ As an RP, <abbr title="LemonLDAP::NG">LL::NG</abbr> supports a lot of OpenID Con
 </li>
 </ul>
 
+<p>
+You can use this authentication module to link your <abbr title="LemonLDAP::NG">LL::NG</abbr> server to any OpenID Connect Provider. Here are some examples, witch their specific documentation:
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Google  </th><th class="col1 centeralign">  France Connect  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  <a href="../../documentation/1.9/authopenidconnect_google.html" class="media" title="documentation:1.9:authopenidconnect_google"><img src="../../../media/applications/google_logo.png" class="mediacenter" alt="" /></a>  </td><td class="col1 centeralign">  <a href="../../documentation/1.9/authopenidconnect_franceconnect.html" class="media" title="documentation:1.9:authopenidconnect_franceconnect"><img src="../../../media/applications/franceconnect_logo.png" class="mediacenter" alt="" /></a>  </td>
+	</tr>
+</table></div>
+<!-- EDIT4 TABLE [905-1106] -->
 </div>
-<!-- EDIT3 SECTION "Presentation" [96-745] -->
-<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<!-- EDIT3 SECTION "Presentation" [96-1106] -->
+<h2 class="sectionedit5" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT4 SECTION "Configuration" [746-772] -->
-<h3 class="sectionedit5" id="openid_connect_service">OpenID Connect Service</h3>
+<!-- EDIT5 SECTION "Configuration" [1107-1133] -->
+<h3 class="sectionedit6" id="openid_connect_service">OpenID Connect Service</h3>
 <div class="level3">
 
 <p>
@@ -82,8 +96,8 @@ See <a href="../../documentation/1.9/openidconnectservice.html" class="wikilink1
 </p>
 
 </div>
-<!-- EDIT5 SECTION "OpenID Connect Service" [773-881] -->
-<h3 class="sectionedit6" id="authentication_and_userdb">Authentication and UserDB</h3>
+<!-- EDIT6 SECTION "OpenID Connect Service" [1134-1242] -->
+<h3 class="sectionedit7" id="authentication_and_userdb">Authentication and UserDB</h3>
 <div class="level3">
 
 <p>
@@ -114,8 +128,8 @@ Then in <code>General Parameters</code> &gt; <code>Authentication modules</code>
 </ul>
 
 </div>
-<!-- EDIT6 SECTION "Authentication and UserDB" [882-1672] -->
-<h3 class="sectionedit7" id="register_llng_to_an_openid_connect_provider">Register LL::NG to an OpenID Connect Provider</h3>
+<!-- EDIT7 SECTION "Authentication and UserDB" [1243-2033] -->
+<h3 class="sectionedit8" id="register_llng_to_an_openid_connect_provider">Register LL::NG to an OpenID Connect Provider</h3>
 <div class="level3">
 
 <p>
@@ -144,8 +158,8 @@ After registration, the OP must give you a client ID and a client secret, that w
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Register LL::NG to an OpenID Connect Provider" [1673-2387] -->
-<h3 class="sectionedit8" id="declare_the_openid_connect_provider_in_llng">Declare the OpenID Connect Provider in LL::NG</h3>
+<!-- EDIT8 SECTION "Register LL::NG to an OpenID Connect Provider" [2034-2748] -->
+<h3 class="sectionedit9" id="declare_the_openid_connect_provider_in_llng">Declare the OpenID Connect Provider in LL::NG</h3>
 <div class="level3">
 
 <p>
@@ -162,7 +176,7 @@ You can then access to the configuration of this OP.
 <div class="level4">
 
 <p>
-The OP should publish its metadata in a JSON file (see for example <a href="https://accounts.google.com/.well-known/openid-configuration[Google metadata" class="urlextern" title="https://accounts.google.com/.well-known/openid-configuration[Google metadata"  rel="nofollow">https://accounts.google.com/.well-known/openid-configuration[Google metadata</a>). Copy the content of this file in the textarea.
+The OP should publish its metadata in a JSON file (see for example <a href="https://accounts.google.com/.well-known/openid-configuration" class="urlextern" title="https://accounts.google.com/.well-known/openid-configuration"  rel="nofollow">Google metadata</a>). Copy the content of this file in the textarea.
 </p>
 
 <p>
@@ -189,6 +203,17 @@ You can also define:
 </li>
 </ul>
 
+<p>
+Example template:
+</p>
+<pre class="code file javascript"><span class="br0">&#123;</span>
+  <span class="st0">&quot;issuer&quot;</span><span class="sy0">:</span> <span class="st0">&quot;https://auth.example.com/&quot;</span><span class="sy0">,</span>
+  <span class="st0">&quot;authorization_endpoint&quot;</span><span class="sy0">:</span> <span class="st0">&quot;https://auth.example.com/oauth2/authorize&quot;</span><span class="sy0">,</span>
+  <span class="st0">&quot;token_endpoint&quot;</span><span class="sy0">:</span> <span class="st0">&quot;https://auth.example.com/oauth2/token&quot;</span><span class="sy0">,</span>
+  <span class="st0">&quot;userinfo_endpoint&quot;</span><span class="sy0">:</span> <span class="st0">&quot;https://auth.example.com/oauth2/userinfo&quot;</span><span class="sy0">,</span>
+  <span class="st0">&quot;end_session_endpoint&quot;</span><span class="sy0">:</span><span class="st0">&quot;https://auth.example.com/oauth2/logout&quot;</span>
+<span class="br0">&#125;</span></pre>
+
 </div>
 
 <h4 id="jwks_data">JWKS data</h4>
@@ -209,13 +234,98 @@ JWKS is a JSON file containing public keys. <abbr title="LemonLDAP::NG">LL::NG</
 <div class="level4">
 
 <p>
-Define here the mapping between the <abbr title="LemonLDAP::NG">LL::NG</abbr> session content and the fields provided in UserInfo response. The fields are defined in OpenID Connect standards, and depends on the scope requested by <abbr title="LemonLDAP::NG">LL::NG</abbr> (see options in next chapter).
+Define here the mapping between the <abbr title="LemonLDAP::NG">LL::NG</abbr> session content and the fields provided in UserInfo response. The fields are defined in <a href="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims" class="urlextern" title="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims"  rel="nofollow">OpenID Connect standard</a>, and depends on the scope requested by <abbr title="LemonLDAP::NG">LL::NG</abbr> (see options in next chapter).
 </p>
 
-<p>
-<p><div class="notetip">See <a href="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims" class="urlextern" title="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims"  rel="nofollow">http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims</a> to know the names of standards claims.
-</div></p>
-</p>
+</div>
+<div class="plugin_include_content" id="plugin_include__documentation:1.9:openidconnectclaims">
+<div class="level1">
+<div class="table sectionedit10"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0"> Claim name </th><th class="col1"> Type </th><th class="col2"> Example of corresponding LDAP attribute </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0"> sub </td><td class="col1"> string </td><td class="col2"> uid </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> name </td><td class="col1"> string </td><td class="col2"> cn </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0"> given_name </td><td class="col1"> string </td><td class="col2"> givenName </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0"> family_name </td><td class="col1"> string </td><td class="col2"> sn </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0"> middle_name </td><td class="col1"> string </td><td class="col2"> </td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0"> nickname </td><td class="col1"> string </td><td class="col2"> </td>
+	</tr>
+	<tr class="row7 rowodd">
+		<td class="col0"> preferred_username </td><td class="col1"> string </td><td class="col2"> displayName </td>
+	</tr>
+	<tr class="row8 roweven">
+		<td class="col0"> profile </td><td class="col1"> string </td><td class="col2"> labeledURI </td>
+	</tr>
+	<tr class="row9 rowodd">
+		<td class="col0"> picture </td><td class="col1"> string </td><td class="col2"> </td>
+	</tr>
+	<tr class="row10 roweven">
+		<td class="col0"> website </td><td class="col1"> string </td><td class="col2"> </td>
+	</tr>
+	<tr class="row11 rowodd">
+		<td class="col0"> email </td><td class="col1"> string </td><td class="col2"> mail </td>
+	</tr>
+	<tr class="row12 roweven">
+		<td class="col0"> email_verified </td><td class="col1"> boolean </td><td class="col2"> </td>
+	</tr>
+	<tr class="row13 rowodd">
+		<td class="col0"> gender </td><td class="col1"> string </td><td class="col2"> </td>
+	</tr>
+	<tr class="row14 roweven">
+		<td class="col0"> birthdate </td><td class="col1"> string </td><td class="col2"> </td>
+	</tr>
+	<tr class="row15 rowodd">
+		<td class="col0"> zoneinfo </td><td class="col1"> string </td><td class="col2"> </td>
+	</tr>
+	<tr class="row16 roweven">
+		<td class="col0"> locale </td><td class="col1"> string </td><td class="col2"> preferredLanguage </td>
+	</tr>
+	<tr class="row17 rowodd">
+		<td class="col0"> phone_number </td><td class="col1"> string </td><td class="col2"> telephoneNumber </td>
+	</tr>
+	<tr class="row18 roweven">
+		<td class="col0"> phone_number_verified </td><td class="col1"> boolean </td><td class="col2"> </td>
+	</tr>
+	<tr class="row19 rowodd">
+		<td class="col0"> updated_at </td><td class="col1"> string </td><td class="col2"> </td>
+	</tr>
+	<tr class="row20 roweven">
+		<td class="col0"> formatted </td><td class="col1"> string </td><td class="col2"> registeredAddress </td>
+	</tr>
+	<tr class="row21 rowodd">
+		<td class="col0"> street_address </td><td class="col1"> string </td><td class="col2"> street </td>
+	</tr>
+	<tr class="row22 roweven">
+		<td class="col0"> locality </td><td class="col1"> string </td><td class="col2"> l </td>
+	</tr>
+	<tr class="row23 rowodd">
+		<td class="col0"> region </td><td class="col1"> string </td><td class="col2"> st </td>
+	</tr>
+	<tr class="row24 roweven">
+		<td class="col0"> postal_code </td><td class="col1"> string </td><td class="col2"> postalCode </td>
+	</tr>
+	<tr class="row25 rowodd">
+		<td class="col0"> country </td><td class="col1"> string </td><td class="col2"> co </td>
+	</tr>
+</table></div>
+<!-- EDIT10 TABLE [38-861] -->
+</div>
+</div>
+<div class="level4">
 
 <p>
 So you can define for example:

@@ -48,14 +48,13 @@ This backend allows to chain authentication method, for example to failback to L
 <div class="level2">
 
 <p>
-You have to use “Multi” as authentication module. This scheme expect a parameter, which is the authentication chain.
+You have to use <code>Multiple</code> as authentication modul (this will also force <code>Multiple</code> for the users module). Then go in <code>Multiple parameters</code> to define the modules to chain for authentication and users. Modules are separated by semi-colons/
 </p>
 
 <p>
 For example:
 </p>
-<pre class="code">Authentication             =&gt; Multi
-Multi authentication stack =&gt; CAS;LDAP</pre>
+<pre class="code">CAS;LDAP</pre>
 
 <p>
 If <abbr title="Central Authentication Service">CAS</abbr> failed, LDAP will be used.
@@ -64,20 +63,20 @@ If <abbr title="Central Authentication Service">CAS</abbr> failed, LDAP will be 
 <p>
 You can also add a condition. Example:
 </p>
-<pre class="code">multiAuthStack =&gt; Remote $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/&#039;</pre>
+<pre class="code">Remote $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/&#039;</pre>
 
 <p>
-<p><div class="notetip">If Multi is used for authentication and user database, it will try to use the same module. Example, if you have “<abbr title="Database Interface">DBI</abbr>;LDAP” and <abbr title="Database Interface">DBI</abbr> failed for authentication, Multi will try first to call LDAP as user database.
+<p><div class="notetip">Multiple will try to use the same module for authentication and users. Example, if you have <code><abbr title="Database Interface">DBI</abbr>;LDAP</code> and <abbr title="Database Interface">DBI</abbr> failed for authentication, it will try first to call LDAP as user database.
 </div></p>
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Configuration" [266-916] -->
+<!-- EDIT4 SECTION "Configuration" [266-934] -->
 <h3 class="sectionedit5" id="advanced_configuration">Advanced configuration</h3>
 <div class="level3">
 
 <p>
-The “Multi” system can :
+The <code>Multiple</code> system can :
 </p>
 <ul>
 <li class="level1"><div class="li"> stack several times the same module with a different name</div>
@@ -87,14 +86,14 @@ The “Multi” system can :
 </ul>
 
 <p>
-<p><div class="notetip">Overloading is not available trough the manager
+<p><div class="notetip">Overloading is not available trough the Manager
 </div></p>
 </p>
 
 <p>
 To stack several times the same module, use “#name” with different names. Example:
 </p>
-<pre class="code">multiAuthStack =&gt;  LDAP#Openldap; LDAP#ActiveDirectory</pre>
+<pre class="code">LDAP#Openldap; LDAP#ActiveDirectory</pre>
 
 <p>
 Then you can have different <a href="../../documentation/1.9/parameterlist.html" class="wikilink1" title="documentation:1.9:parameterlist">parameters</a> for each stored in a Perl hash entry named multi:
@@ -111,38 +110,18 @@ Then you can have different <a href="../../documentation/1.9/parameterlist.html"
 <span class="br0">&#125;</span><span class="sy0">,</span></pre>
 
 <p>
-This key must be stored directly in portal index.pl file or in lemonldap-ng.ini:
+This key must be stored directly in lemonldap-ng.ini:
 </p>
-<ul>
-<li class="level1"><div class="li"> for index.pl, set it in new():</div>
-</li>
-</ul>
-<pre class="code perl"><span class="kw1">my</span> <span class="re0">$portal</span> <span class="sy0">=</span> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Portal</span><span class="sy0">::</span><span class="me2">SharedConf</span><span class="sy0">-&gt;</span><span class="kw2">new</span><span class="br0">&#40;</span><span class="br0">&#123;</span>
-multi <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
-    <span class="st_h">'LDAP#Openldap'</span> <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
-      <span class="st_h">'ldapServer'</span> <span class="sy0">=&gt;</span> <span class="st_h">'ldap1.example.com'</span><span class="sy0">,</span>
-      <span class="st_h">'LDAPFilter'</span> <span class="sy0">=&gt;</span> <span class="st_h">'(uid=$user)'</span><span class="sy0">,</span>
-    <span class="br0">&#125;</span><span class="sy0">,</span>
-    <span class="st_h">'LDAP#ActiveDirectory'</span> <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
-      <span class="st_h">'ldapServer'</span> <span class="sy0">=&gt;</span> <span class="st_h">'ldaps://ad.example.com'</span><span class="sy0">,</span>
-      <span class="st_h">'LDAPFilter'</span> <span class="sy0">=&gt;</span> <span class="st_h">'(&amp;(sAMAccountName=$user)(objectClass=person))'</span><span class="sy0">,</span>
-    <span class="br0">&#125;</span>
-<span class="br0">&#125;</span><span class="sy0">,</span>
-<span class="br0">&#125;</span><span class="br0">&#41;</span></pre>
-<ul>
-<li class="level1"><div class="li"> or to use <code>lemonldap-ng.ini</code>, install it (one line only) in [portal] section:</div>
-</li>
-</ul>
 <pre class="code ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
 <span class="re1">multi</span> <span class="sy0">=</span><span class="re2"> <span class="br0">&#123;</span>'LDAP#Openldap'<span class="sy0">=</span>&gt;<span class="br0">&#123;</span>'ldapServer'<span class="sy0">=</span>&gt;'ldap1.example.com','LDAPFilter'<span class="sy0">=</span>&gt;'<span class="br0">&#40;</span>uid<span class="sy0">=</span>$user<span class="br0">&#41;</span>'<span class="br0">&#125;</span>,'LDAP#ActiveDirectory'<span class="sy0">=</span>&gt;<span class="br0">&#123;</span>'ldapServer'<span class="sy0">=</span>&gt;'ldaps://ad.example.com','LDAPFilter'<span class="sy0">=</span>&gt;'<span class="br0">&#40;</span>&amp;<span class="br0">&#40;</span>sAMAccountName<span class="sy0">=</span>$user<span class="br0">&#41;</span><span class="br0">&#40;</span>objectClass<span class="sy0">=</span>person<span class="br0">&#41;</span><span class="br0">&#41;</span>'<span class="br0">&#125;</span><span class="br0">&#125;</span></span></pre>
 
 </div>
-<!-- EDIT5 SECTION "Advanced configuration" [917-2560] -->
+<!-- EDIT5 SECTION "Advanced configuration" [935-2056] -->
 <h2 class="sectionedit6" id="known_problems">Known problems</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT6 SECTION "Known problems" [2561-2588] -->
+<!-- EDIT6 SECTION "Known problems" [2057-2084] -->
 <h3 class="sectionedit7" id="authapache_authentication">AuthApache authentication</h3>
 <div class="level3">
 
@@ -151,11 +130,11 @@ When using this module, <abbr title="LemonLDAP::NG">LL::NG</abbr> portal will be
 </p>
 
 <p>
-To bypass this, follow the documentation of <a href="../../documentation/1.9/authapache.html#use_kerberos_with_multiple_authentication_backend" class="wikilink1" title="documentation:1.9:authapache">AuthApache module</a>
+To bypass this, follow the documentation of <a href="../../documentation/1.9/authapache.html" class="wikilink1" title="documentation:1.9:authapache">AuthApache module</a>
 </p>
 
 </div>
-<!-- EDIT7 SECTION "AuthApache authentication" [2589-2953] -->
+<!-- EDIT7 SECTION "AuthApache authentication" [2085-2399] -->
 <h3 class="sectionedit8" id="ssl_authentication">SSL authentication</h3>
 <div class="level3">
 

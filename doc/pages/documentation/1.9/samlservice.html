@@ -178,9 +178,9 @@ You can define keys for <abbr title="Security Assertion Markup Language">SAML</a
 To define keys, you can:
 </p>
 <ul>
-<li class="level1"><div class="li"> import your own private and public keys (<code>Load from a file</code> input)</div>
+<li class="level1"><div class="li"> import your own private and public keys (<code>Replace by file</code> input)</div>
 </li>
-<li class="level1"><div class="li"> generate new public and private keys (<code>Generate</code> button)</div>
+<li class="level1"><div class="li"> generate new public and private keys (<code>New keys</code> button)</div>
 </li>
 </ul>
 
@@ -190,22 +190,33 @@ To define keys, you can:
 </p>
 
 <p>
-<a href="/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.9%3Asamlservice" class="media" title="documentation:manager-saml-private-key.png"><img src="../../../media/documentation/manager-saml-private-key.png" class="mediacenter" alt="" /></a>
+<img src="../../../media/documentation/manager-saml-signature.png" class="mediacenter" alt="" />
 </p>
 
 <p>
-<p><div class="notetip">You can import a certificate containing the public key instead the raw public key. However, certificate will not be really validated by other <abbr title="Security Assertion Markup Language">SAML</abbr> components (expiration date, common name, etc.), but will just be a public key wrapper.
+You can import a certificate containing the public key instead the raw public key. However, certificate will not be really validated by other <abbr title="Security Assertion Markup Language">SAML</abbr> components (expiration date, common name, etc.), but will just be a public key wrapper.
+</p>
+
+<p>
+You can force <abbr title="LemonLDAP::NG">LL::NG</abbr> to use this certificate in <abbr title="Security Assertion Markup Language">SAML</abbr> responses by enabling <strong>Use certificate in response</strong> option.
+</p>
+
+<p>
+<p><div class="notetip">
+You can easily generate a certificate to replace your public key by saving the private key in a file, and use <code>openssl</code> commands to issue a self-signed certificate:
+</p>
+<pre class="code">$ openssl req -new -key private.key -out cert.csr
+$ openssl x509 -req -days 3650 -in cert.csr -signkey private.key -out cert.pem</pre>
+
+<p>
+
 </div></p>
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Security parameters" [2393-3221] -->
+<!-- EDIT8 SECTION "Security parameters" [2393-3655] -->
 <h3 class="sectionedit9" id="nameid_formats">NameID formats</h3>
 <div class="level3">
-
-<p>
-<a href="/_detail/documentation/manager-saml-namid-formats.png?id=documentation%3A1.9%3Asamlservice" class="media" title="documentation:manager-saml-namid-formats.png"><img src="../../../media/documentation/manager-saml-namid-formats.png" class="mediacenter" alt="" /></a>
-</p>
 
 <p>
 <abbr title="Security Assertion Markup Language">SAML</abbr> can use different NameID formats. The NameID is the main user identifier, carried in <abbr title="Security Assertion Markup Language">SAML</abbr> messages. You can configure here which field of <abbr title="LemonLDAP::NG">LL::NG</abbr> session will be associated to a NameID format.
@@ -248,13 +259,9 @@ Other NameID formats are automatically managed:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "NameID formats" [3222-4034] -->
+<!-- EDIT9 SECTION "NameID formats" [3656-4414] -->
 <h3 class="sectionedit10" id="authentication_contexts">Authentication contexts</h3>
 <div class="level3">
-
-<p>
-<a href="/_detail/documentation/manager-saml-service-authn-contexts.png?id=documentation%3A1.9%3Asamlservice" class="media" title="documentation:manager-saml-service-authn-contexts.png"><img src="../../../media/documentation/manager-saml-service-authn-contexts.png" class="mediacenter" alt="" /></a>
-</p>
 
 <p>
 Each <abbr title="LemonLDAP::NG">LL::NG</abbr> authentication module has an authentication level, which can be associated to an <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf" class="urlextern" title="http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf"  rel="nofollow">SAML authentication context</a>.
@@ -280,7 +287,7 @@ Customizable NameID formats are:
 </ul>
 
 </div>
-<!-- EDIT10 SECTION "Authentication contexts" [4035-4821] -->
+<!-- EDIT10 SECTION "Authentication contexts" [4415-5138] -->
 <h3 class="sectionedit11" id="organization">Organization</h3>
 <div class="level3">
 
@@ -308,7 +315,7 @@ This concerns all parameters for the Organization metadata section:
 </ul>
 
 </div>
-<!-- EDIT11 SECTION "Organization" [4822-5333] -->
+<!-- EDIT11 SECTION "Organization" [5139-5650] -->
 <h3 class="sectionedit12" id="service_provider">Service Provider</h3>
 <div class="level3">
 
@@ -357,10 +364,6 @@ For each binding you can set:
 </ul>
 
 <p>
-<a href="/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.9%3Asamlservice" class="media" title="documentation:manager-saml-service-sp-slo.png"><img src="../../../media/documentation/manager-saml-service-sp-slo.png" class="mediacenter" alt="" /></a>
-</p>
-
-<p>
 Available bindings are:
 </p>
 <ul>
@@ -388,10 +391,6 @@ For each binding you can set:
 </ul>
 
 <p>
-<a href="/_detail/documentation/manager-saml-service-sp-ac.png?id=documentation%3A1.9%3Asamlservice" class="media" title="documentation:manager-saml-service-sp-ac.png"><img src="../../../media/documentation/manager-saml-service-sp-ac.png" class="mediacenter" alt="" /></a>
-</p>
-
-<p>
 Available bindings are:
 </p>
 <ul>
@@ -411,7 +410,7 @@ The only authorized binding is SOAP. This should be set as Default.
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Service Provider" [5334-6497] -->
+<!-- EDIT12 SECTION "Service Provider" [5651-6705] -->
 <h3 class="sectionedit13" id="identity_provider">Identity Provider</h3>
 <div class="level3">
 
@@ -508,7 +507,7 @@ The only authorized binding is SOAP. This should be set as Default.
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Identity Provider" [6498-7486] -->
+<!-- EDIT13 SECTION "Identity Provider" [6706-7694] -->
 <h3 class="sectionedit14" id="attribute_authority">Attribute Authority</h3>
 <div class="level3">
 
@@ -539,7 +538,7 @@ Response Location should be empty, as SOAP responses are directly returned (sync
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Attribute Authority" [7487-7898] -->
+<!-- EDIT14 SECTION "Attribute Authority" [7695-8106] -->
 <h3 class="sectionedit15" id="advanced">Advanced</h3>
 <div class="level3">
 
@@ -604,25 +603,6 @@ Configuration parameters are:
 <li class="level1"><div class="li"> <strong>Writer <abbr title="Uniform Resource Locator">URL</abbr></strong>: <abbr title="Uniform Resource Locator">URL</abbr> used by <abbr title="Security Assertion Markup Language">SAML</abbr> IDP to write the cookie. Leave blank to deactivate the feature.</div>
 </li>
 </ul>
-
-</div>
-<!-- EDIT15 SECTION "Advanced" [7899-9925] -->
-<h2 class="sectionedit16" id="replace_public_key_by_a_certificate">Replace public key by a certificate</h2>
-<div class="level2">
-
-<p>
-By default, <abbr title="LemonLDAP::NG">LL::NG</abbr> publish the public key in metadata, which may not fit to your partner SP or IDP. Here is a simple method to replace the public key by a certificate.
-</p>
-<ul>
-<li class="level1"><div class="li"> Create the certificate from the private key as explained in <a href="../../documentation/1.9/applications/googleapps.html#certificate" class="wikilink1" title="documentation:1.9:applications:googleapps">Google Apps tutorial</a>.</div>
-</li>
-<li class="level1"><div class="li"> Now you have the certificate file, go in the Manager, go in the public key field and lod the certificate file.</div>
-</li>
-</ul>
-
-<p>
-That&#039;s all! If you look at the metadata, the certificate is now published!
-</p>
 
 </div>
 </div><!-- closes <div class="dokuwiki export">-->

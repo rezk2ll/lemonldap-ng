@@ -122,7 +122,7 @@ The Manager let you define comments in rules, to order them:
 </p>
 
 <p>
-<a href="/_detail/documentation/manager_access_rule.png?id=documentation%3A1.9%3Asecurity" class="media" title="documentation:manager_access_rule.png"><img src="../../../media/documentation/manager_access_rule.png" class="mediacenter" alt="" /></a>
+<a href="/_detail/documentation/manager-rule.png?id=documentation%3A1.9%3Asecurity" class="media" title="documentation:manager-rule.png"><img src="../../../media/documentation/manager-rule.png" class="mediacenter" alt="" /></a>
 </p>
 
 <p>
@@ -141,7 +141,7 @@ For example, if these rules are used without comments:
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT8 TABLE [2551-2661] -->
+<!-- EDIT8 TABLE [2544-2654] -->
 <p>
 Then the second rule will be applied first, so every authenticated user will access to <code>/pub/admin</code> directory.
 </p>
@@ -162,7 +162,7 @@ Use comment to correct this:
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> 2_pub </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [2806-2930] -->
+<!-- EDIT9 TABLE [2799-2923] -->
 <p>
 <p><div class="notetip">
 </p>
@@ -179,7 +179,7 @@ Use comment to correct this:
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Order your rules" [2128-3051] -->
+<!-- EDIT7 SECTION "Order your rules" [2128-3044] -->
 <h3 class="sectionedit10" id="be_careful_with_url_parameters">Be careful with URL parameters</h3>
 <div class="level3">
 
@@ -203,7 +203,7 @@ For example with this rule on the <code>access</code> parameter:
 		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [3288-3422] -->
+<!-- EDIT11 TABLE [3281-3415] -->
 <p>
 Then a user that try to access to one of the following <em class="u">will be granted</em> !
 </p>
@@ -233,7 +233,7 @@ You can use the following rules instead:
 		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT12 TABLE [3620-3823] -->
+<!-- EDIT12 TABLE [3613-3816] -->
 <p>
 <p><div class="notetip"><strong>(?i)</strong> means case no sensitive.
 </div></p>
@@ -245,7 +245,7 @@ You can use the following rules instead:
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Be careful with URL parameters" [3052-3960] -->
+<!-- EDIT10 SECTION "Be careful with URL parameters" [3045-3953] -->
 <h3 class="sectionedit13" id="encoded_characters">Encoded characters</h3>
 <div class="level3">
 
@@ -254,7 +254,7 @@ Some characters are encoded in URLs by the browser (such as space,…). To avoid
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Encoded characters" [3961-4214] -->
+<!-- EDIT13 SECTION "Encoded characters" [3954-4207] -->
 <h2 class="sectionedit14" id="secure_reverse-proxies">Secure reverse-proxies</h2>
 <div class="level2">
 
@@ -300,7 +300,7 @@ It is recommended to secure the channel between reverse-proxies and application 
 </ul>
 
 </div>
-<!-- EDIT14 SECTION "Secure reverse-proxies" [4215-5883] -->
+<!-- EDIT14 SECTION "Secure reverse-proxies" [4208-5876] -->
 <h2 class="sectionedit15" id="configure_security_settings">Configure security settings</h2>
 <div class="level2">
 
@@ -311,6 +311,8 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 <li class="level1"><div class="li"> <strong>Username control</strong>: Regular expression used to check user login syntax.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Force authentication</strong>: set to &#039;On&#039; to force authentication when user connects to portal, even if he has a valid session</div>
+</li>
+<li class="level1"><div class="li"> <strong>Force authentication interval</strong>: time interval (in seconds) when a authentication renewal cannot be forced, used to prevent to loose the current authentication during the main process. If you experience slow network performances, you can increase this value.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Encryption key</strong>: key used to crypt some data, should not be known by other applications</div>
 </li>
@@ -323,7 +325,7 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- EDIT15 SECTION "Configure security settings" [5884-6752] -->
+<!-- EDIT15 SECTION "Configure security settings" [5877-7010] -->
 <h2 class="sectionedit16" id="fail2ban">Fail2ban</h2>
 <div class="level2">
 
@@ -375,7 +377,7 @@ Restart fail2ban
 </p>
 
 </div>
-<!-- EDIT16 SECTION "Fail2ban" [6753-7806] -->
+<!-- EDIT16 SECTION "Fail2ban" [7011-8064] -->
 <h2 class="sectionedit17" id="sessions_identifier">Sessions identifier</h2>
 <div class="level2">
 

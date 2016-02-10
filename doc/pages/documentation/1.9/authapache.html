@@ -64,7 +64,7 @@ In General Parameters &gt; Authentication modules, choose <code>Apache</code> as
 <p>
 You may want to failback to another authentication backend in case of the Apache authentication fails. Use then the <a href="../../documentation/1.9/authmulti.html" class="wikilink1" title="documentation:1.9:authmulti">Multiple authentication module</a>, for example:
 </p>
-<pre class="code">Multi Apache;LDAP</pre>
+<pre class="code">Apache;LDAP</pre>
 
 <p>
 <p><div class="notetip">In this case, the Apache authentication module should not require a valid user and not be authoritative, else Apache server will return an error and not let <abbr title="LemonLDAP::NG">LL::NG</abbr> Portal manage the failback authentication.
@@ -72,7 +72,7 @@ You may want to failback to another authentication backend in case of the Apache
 </p>
 
 </div>
-<!-- EDIT5 SECTION "LL::NG" [491-1036] -->
+<!-- EDIT5 SECTION "LL::NG" [491-1029] -->
 <h3 class="sectionedit6" id="apache1">Apache</h3>
 <div class="level3">
 
@@ -91,12 +91,12 @@ The Apache configuration depends on the module you choose, you need to look at t
 </ul>
 
 </div>
-<!-- EDIT6 SECTION "Apache" [1037-1371] -->
+<!-- EDIT6 SECTION "Apache" [1030-1364] -->
 <h2 class="sectionedit7" id="tips">Tips</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT7 SECTION "Tips" [1372-1389] -->
+<!-- EDIT7 SECTION "Tips" [1365-1382] -->
 <h3 class="sectionedit8" id="kerberos">Kerberos</h3>
 <div class="level3">
 
@@ -105,7 +105,7 @@ The Kerberos configuration is quite complex. You can find some configuration tip
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Kerberos" [1390-1519] -->
+<!-- EDIT8 SECTION "Kerberos" [1383-1512] -->
 <h3 class="sectionedit9" id="compatibility_with_identity_provider_modules">Compatibility with Identity Provider modules</h3>
 <div class="level3">
 

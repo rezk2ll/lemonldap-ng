@@ -103,19 +103,11 @@ Now configure all <abbr title="Security Assertion Markup Language">SAML</abbr> p
 <div class="level3">
 
 <p>
-For the certificate, you can build it from the signing private key registered in Manager. Select the key, and export it (button <code>Download this file</code>):
+For the certificate, you can build it from the signing private key registered in Manager. Select the key, and export it (button <code>Download</code>). This will download the public and the private key.
 </p>
 
 <p>
-<a href="/_detail/documentation/googleapps-export-priv-key.png?id=documentation%3A1.9%3Aapplications%3Agoogleapps" class="media" title="documentation:googleapps-export-priv-key.png"><img src="../../../../media/documentation/googleapps-export-priv-key.png" class="mediacenter" alt="" /></a>
-</p>
-
-<p>
-After choosing the file name (for example lemonldapn-ng-priv.key), download the key on your disk.
-</p>
-
-<p>
-Then use openssl to generate an auto-signed certificate:
+Keep the private key in a file, for example lemonldap-ng-priv.key, then use openssl to generate an auto-signed certificate:
 </p>
 <pre class="code">openssl req -new -key lemonldap-ng-priv.key -out cert.csr
 openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out cert.pem</pre>
@@ -124,8 +116,13 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
 You can now the upload the certificate (<code>cert.pem</code>) on Google Apps.
 </p>
 
+<p>
+<p><div class="notetip">You can also use the certificate instead of public key in <abbr title="Security Assertion Markup Language">SAML</abbr> metadata, see <a href="../../../documentation/1.9/samlservice.html#security_parameters" class="wikilink1" title="documentation:1.9:samlservice">SAML service configuration</a>
+</div></p>
+</p>
+
 </div>
-<!-- EDIT5 SECTION "Certificate" [1672-2290] -->
+<!-- EDIT5 SECTION "Certificate" [1672-2407] -->
 <h3 class="sectionedit6" id="new_service_provider">New Service Provider</h3>
 <div class="level3">
 
@@ -161,16 +158,12 @@ Now we will add Google Apps as a new <abbr title="Security Assertion Markup Lang
 </p>
 
 </div>
-<!-- EDIT6 SECTION "New Service Provider" [2291-3686] -->
+<!-- EDIT6 SECTION "New Service Provider" [2408-3803] -->
 <h3 class="sectionedit7" id="application_menu">Application menu</h3>
 <div class="level3">
 
 <p>
 You can add a link in <a href="../../../documentation/1.9/portalmenu.html#categories_and_applications" class="wikilink1" title="documentation:1.9:portalmenu">application menu</a> to display Google Apps to users.
-</p>
-
-<p>
-<a href="/_detail/documentation/googleapps-manager-application.png?id=documentation%3A1.9%3Aapplications%3Agoogleapps" class="media" title="documentation:googleapps-manager-application.png"><img src="../../../../media/documentation/googleapps-manager-application.png" class="mediacenter" alt="" /></a>
 </p>
 
 <p>
@@ -189,7 +182,7 @@ You need to adapt some parameters:
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Application menu" [3687-4258] -->
+<!-- EDIT7 SECTION "Application menu" [3804-4317] -->
 <h3 class="sectionedit8" id="logout">Logout</h3>
 <div class="level3">
 
