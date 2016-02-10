@@ -1,0 +1,123 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="france_connect">France Connect</h1>
+<div class="level1">
+
+<p>
+<img src="../../../media/applications/franceconnect_logo.png" class="mediacenter" alt="" />
+</p>
+
+</div><!-- EDIT1 SECTION "France Connect" [1-82] -->
+
+<h2 class="sectionedit2" id="presentation">Présentation</h2>
+<div class="level2">
+
+<p>
+<a href="https://doc.integ01.dev-franceconnect.fr/" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/"  rel="nofollow">France Connect</a> is an authentication platform made by French government.
+
+</p>
+
+<p>
+</p><p></p><div class="noteimportant">It is for the moment only in BETA stage. This documentation will explain how to configure <abbr title="LemonLDAP::NG">LL::NG</abbr> with the developer reserved space.
+
+</div></p>
+</p>
+
+</div><!-- EDIT2 SECTION "Presentation" [83-383] -->
+
+<h2 class="sectionedit3" id="register_on_france_connect">Register on France Connect</h2>
+<div class="level2">
+
+<p>
+
+Once <a href="../../documentation/1.9/openidconnectservice.html" class="wikilink1" title="documentation:1.9:openidconnectservice">OpenID Connect service</a> is configured, you need to register to France Connect.
+
+</p>
+
+<p>
+
+Use the following form: <a href="https://doc.integ01.dev-franceconnect.fr/inscription" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/inscription"  rel="nofollow">https://doc.integ01.dev-franceconnect.fr/inscription</a>.
+
+</p>
+
+<p>
+
+You need to provide the callback URLs, for example <a href="https://auth.domain.com/?openidcallback=1" class="urlextern" title="https://auth.domain.com/?openidcallback=1"  rel="nofollow">https://auth.domain.com/?openidcallback=1</a>.
+
+</p>
+
+<p>
+
+You will then get a <code>client_id</code> and a <code>client_secret</code>.
+
+</p>
+
+</div><!-- EDIT3 SECTION "Register on France Connect" [384-770] -->
+
+<h2 class="sectionedit4" id="declare_france_connect_in_your_llng_server">Declare France Connect in your LL::NG server</h2>
+<div class="level2">
+
+<p>
+
+Go in Manager and create a new OpenID Connect provider. You can call it <code>france-connect</code> for example.
+
+</p>
+
+<p>
+Click on <code>Metadata</code> and set manually the metadata of the service, using <a href="https://doc.integ01.dev-franceconnect.fr/fournisseur-service" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/fournisseur-service"  rel="nofollow">France Connect endpoints</a>. Par exemple :
+</p>
+<pre class="code file javascript"><span class="br0">{</span>
+<span class="st0">"issuer"</span><span class="sy0">:</span> <span class="st0">"https://fcp.integ01.dev-franceconnect.fr"</span><span class="sy0">,</span>
+<span class="st0">"authorization_endpoint"</span><span class="sy0">:</span> <span class="st0">"https://fcp.integ01.dev-franceconnect.fr/api/v1/authorize"</span><span class="sy0">,</span>
+<span class="st0">"token_endpoint"</span><span class="sy0">:</span> <span class="st0">"https://fcp.integ01.dev-franceconnect.fr/api/v1/token"</span><span class="sy0">,</span>
+<span class="st0">"userinfo_endpoint"</span><span class="sy0">:</span> <span class="st0">"https://fcp.integ01.dev-franceconnect.fr/api/v1/userinfo"</span><span class="sy0">,</span>
+<span class="st0">"end_session_endpoint"</span><span class="sy0">:</span><span class="st0">"https://fcp.integ01.dev-franceconnect.fr/api/v1/logout"</span>
+<span class="br0">}</span></pre>
+
+<p>
+
+You can skip JWKS data, they are not provided by France Connect. The security relies on the symmetric key <code>client_secret</code>.
+
+</p>
+
+<p>
+
+Go in <code>Exported attributes</code> to choose which attributes from “identité pivot” you want to collect. See <a href="https://doc.integ01.dev-franceconnect.fr/identite-pivot" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/identite-pivot"  rel="nofollow">https://doc.integ01.dev-franceconnect.fr/identite-pivot</a>
+</p>
+
+<p>
+
+Now go in <code>Options</code>:
+
+</p>
+<ul>
+<li class="level1"><div class="li">  In <code>Configuration</code>, register the <code>client_id</code> and <code>client_secret</code> given by France Connect</div>
+</li>
+<li class="level1"><div class="li">  In <code>Protocol</code>, adapt the <code>scope</code> to the exported attributes you want. See <a href="https://doc.integ01.dev-franceconnect.fr/fs-scopes" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/fs-scopes"  rel="nofollow">https://doc.integ01.dev-franceconnect.fr/fs-scopes</a></div>
+</li>
+<li class="level1"><div class="li">  In <code>Display</code>, you can set the name and the logo</div>
+</li>
+</ul>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>

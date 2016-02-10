@@ -1,0 +1,565 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="configuration_overview">Vue d'ensemble de la configuration</h1>
+<div class="level1">
+
+</div><!-- EDIT1 SECTION "Configuration overview" [1-38] -->
+
+<h2 class="sectionedit2" id="backends">Backends</h2>
+<div class="level2">
+
+<p>
+La configuration de LemonLDAP::NG est stockée dans un backend permettant à tous les modules d'y accéder.
+</p>
+
+<p>
+</p><p></p><div class="noteimportant">Tous les composants de <abbr title="LemonLDAP::NG">LL::NG</abbr> doivent avoir accès :
+</p>
+<ul>
+<li class="level1"><div class="li"> au système de stockage de la configuration</div>
+</li>
+<li class="level1"><div class="li"> au système de stockage des sessions</div>
+</li>
+</ul>
+
+<p>
+La configuration détaillée des backends de stockage est disponible <a href="../../documentation/1.9/start.html#configuration_database" class="wikilink1" title="documentation:1.9:start">ici</a>.
+</p></div></p>
+</p>
+
+<p>
+Par défaut, la configuration est stockée dans des <a href="../../documentation/1.9/fileconfbackend.html" class="wikilink1" title="documentation:1.9:fileconfbackend">fichiers</a>, donc l'accès par le réseau n'est en général pas possible. Pour contourner ce problème, utiliser <a href="../../documentation/1.9/soapconfbackend.html" class="wikilink1" title="documentation:1.9:soapconfbackend">SOAP</a> pour l'accès à la configuration ou un service réseau tel une <a href="../../documentation/1.9/sqlconfbackend.html" class="wikilink1" title="documentation:1.9:sqlconfbackend">base de donnée SQL</a> ou un <a href="../../documentation/1.9/ldapconfbackend.html" class="wikilink1" title="documentation:1.9:ldapconfbackend">annuaire LDAP</a>.
+</p>
+
+<p>
+Le backend de configuration peut être indiqué dans le <a href="#local_file" title="documentation:1.9:configlocation ↵" class="wikilink1">fichier local de configuration</a>, dans la section <code>configuration</code>.
+</p>
+
+<p>
+Par exemple, pour configurer le backend de configuration <code>File</code> :
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">[</span>configuration<span class="br0">]</span></span>
+<span class="re1">type</span><span class="sy0">=</span><span class="re2">File</span>
+<span class="re1">dirName</span> <span class="sy0">=</span><span class="re2"> /usr/local/lemonldap-ng/data/conf</span></pre>
+
+<p>
+</p><p></p><div class="notetip">Voir <a href="../../documentation/1.9/changeconfbackend.html" class="wikilink1" title="documentation:1.9:changeconfbackend">Comment changer le backend de configuration</a>.
+</div></p>
+</p>
+
+</div><!-- EDIT2 SECTION "Backends" [39-1049] -->
+
+<h2 class="sectionedit3" id="manager">Manager</h2>
+<div class="level2">
+
+<p>
+La majeure partie de la configuration peut être réalisée via le manager LemonLDAP::NG (par défaut <a href="http://manager.example.com" class="urlextern" title="http://manager.example.com"  rel="nofollow">http://manager.example.com</a>).
+</p>
+
+<p>
+Par défaut, le manager est protégé et n'autorise que l'utilisateur de démonstration “dwho”.
+</p>
+
+<p>
+</p><p></p><div class="noteimportant">Cet utilisateur n'est plus disponible si on change de backend d'authentification ! Ne pas oublier de changer la règle d'accès à l'hôte virtuel du manager pour autoriser les nouveaux administrateurs.
+</div></p>
+</p>
+
+<p>
+SI l'accès au manager est perdu, on peut le déprotéger en éditant <code>lemonldap-ng.in</code> et en changeant le paramètre <code>protection</code> :
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">[</span>manager<span class="br0">]</span></span>
+&nbsp;
+# Manager protection: by default, the manager is protected by a demo account.
+# You can protect it :
+# * by Apache itself,
+# * by the parameter 'protection' which can take one of the following
+# values :
+#   * authenticate : all authenticated users can access
+#   * manager      : manager is protected like other virtual hosts: you
+#                    have to set rules in the corresponding virtual host
+#   * rule: &lt;rule&gt; : you can set here directly the rule to apply
+#   * none         : no protection</pre>
+
+<p>
+</p><p></p><div class="notetip">Voir la <a href="../../documentation/1.9/managerprotection.html" class="wikilink1" title="documentation:1.9:managerprotection">documentation de protection du manager</a> pour savoir comment utiliser les modules d'Apache ou <abbr title="LemonLDAP::NG">LL::NG</abbr> pour gérer l'accès au manager.
+</div></p>
+</p>
+
+<p>
+Le manager affiche des branches principales :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>General Parameters</strong>: 1uthentication modules, portal, etc.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Variables</strong>: User information, macros and groups used to fill <abbr title="Authentification unique (Single Sign On)">SSO</abbr> session</div>
+</li>
+<li class="level1"><div class="li"> <strong>Virtual Hosts</strong>: Access rules, headers, etc.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Service <abbr title="Security Assertion Markup Language">SAML</abbr></strong> : administration des métadonnées <abbr title="Security Assertion Markup Language">SAML</abbr></div>
+</li>
+<li class="level1"><div class="li"> <strong>Fournisseurs d'identité <abbr title="Security Assertion Markup Language">SAML</abbr></strong> : IDP enregistrés</div>
+</li>
+<li class="level1"><div class="li"> <strong>Fournisseurs de service <abbr title="Security Assertion Markup Language">SAML</abbr></strong> : SP enregistrés</div>
+</li>
+<li class="level1"><div class="li"> <strong>OpenID Connect Service</strong>: OpenID Connect service configuration</div>
+</li>
+<li class="level1"><div class="li"> <strong>OpenID Connect Providers</strong>: Registered OP</div>
+</li>
+<li class="level1"><div class="li"> <strong>OpenID Connect Relying Parties</strong>: Registered RP</div>
+</li>
+</ul>
+
+<p>
+La configuration de LemonLDAP::NG est essentiellement une structure clef/valeur, ainsi le manager présente toutes les clefs en un arbre structuré. Un click sur la clef affiche la valeur associée.
+</p>
+
+<p>
+Lorsque toutes les modifications sont effectuées, cliquer sur <code>Sauver</code> pour enregistrer la configuration.
+</p>
+
+<p>
+</p><p></p><div class="notewarning">LemonLDAP::NG effectue ensuite quelques tests sur la configuration et affiche les éventuelles erreurs et avertissements. La configuration <strong>n'est pas sauvée</strong> en cas d'erreur.
+</div></p>
+</p>
+
+</div><!-- EDIT3 SECTION "Manager" [1050-3236] -->
+
+<h2 class="sectionedit4" id="configuration_text_editor">Éditeur de configuration en mode text</h2>
+<div class="level2">
+
+<p>
+LemonLDAP::NG fournit un script qui permet d'éditer la configuration sans interface graphique, ce script se nomme <code>lmConfigEditor</code> et se trouvedans le répertoire bin/ de LemonLDAP::NG, par exemple /usr/share/lemonldap-ng/bin :
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lmConfigEditor</pre>
+
+<p>
+</p><p></p><div class="notetip">Ce script doit être lancé par root, il utilisera ensuite le compte et le groupe d'Apache pour accéder à la configuration.
+</div></p>
+</p>
+
+<p>
+Ce script utilise la commande système <code>editor</code>, qui est liée à l'éditeur favori. Pour le changer :
+</p>
+<pre class="code">update-alternatives --config editor</pre>
+
+<p>
+
+The configuration is displayed as a big Perl Hash, that you can edit:
+
+</p>
+<pre class="code file perl"><span class="re0">$VAR1</span> <span class="sy0">=</span> <span class="br0">{</span>
+          <span class="st_h">'ldapAuthnLevel'</span> <span class="sy0">=&gt;</span> <span class="st_h">'2'</span><span class="sy0">,</span>
+          <span class="st_h">'notificationWildcard'</span> <span class="sy0">=&gt;</span> <span class="st_h">'allusers'</span><span class="sy0">,</span>
+          <span class="st_h">'loginHistoryEnabled'</span> <span class="sy0">=&gt;</span> <span class="st_h">'1'</span><span class="sy0">,</span>
+          <span class="st_h">'key'</span> <span class="sy0">=&gt;</span> <span class="st_h">'q`e)kJE%&lt;&amp;wm&gt;uaA'</span><span class="sy0">,</span>
+          <span class="st_h">'samlIDPSSODescriptorSingleSignOnServiceHTTPPost'</span> <span class="sy0">=&gt;</span> <span class="st_h">'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleSignOn;'</span><span class="sy0">,</span>
+          <span class="st_h">'portalSkin'</span> <span class="sy0">=&gt;</span> <span class="st_h">'pastel'</span><span class="sy0">,</span>
+          <span class="st_h">'failedLoginNumber'</span> <span class="sy0">=&gt;</span> <span class="st_h">'5'</span><span class="sy0">,</span>
+          <span class="sy0">...</span>
+          <span class="br0">}</span><span class="sy0">;</span></pre>
+
+<p>
+Si une modification est effectuée, la configuration est sauvée avec un nouveau numéro. Sinon, la configuration courante est gardée.
+</p>
+
+</div><!-- EDIT4 SECTION "Configuration text editor" [3237-4461] -->
+
+<h2 class="sectionedit5" id="command_line_interface_cli">Interface en ligne de commande (CLI)</h2>
+<div class="level2">
+
+<p>
+LemonLDAP::NG fournit un script qui autorise l'édition d'éléments de configuration en mode non-interactif. Ce script se nomme <code>lemonldap-ng-cli</code> et se trouve dans le répertoire bin/ de LemonLDAP::NG, par exemple /usr/share/lemonldap-ng/bin:
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli</pre>
+
+<p>
+</p><p></p><div class="notetip">Ce script doit être lancé par root, il utilisera ensuite le compte et le groupe d'Apache pour accéder à la configuration.
+</div></p>
+</p>
+
+<p>
+Pour connaître les actions possibles, lancer :
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli help</pre>
+
+<p>
+
+By default, when you change a value, it will be written to configuration backend but:
+
+</p>
+<ul>
+<li class="level1"><div class="li">  Configuration cache is not updated</div>
+</li>
+<li class="level1"><div class="li">  Configuration number is not incremented</div>
+</li>
+</ul>
+
+<p>
+
+This allows to modify configuration without impacting running users.
+
+</p>
+
+<p>
+
+You can force an update of the cache with:
+
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli update-cache</pre>
+
+<p>
+
+And you can save current configuration into a new one:
+
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli increment</pre>
+
+<p>
+
+To get information abour current configuration:
+
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli info</pre>
+
+</div><!-- EDIT5 SECTION "Command Line Interface (CLI)" [4462-5607] -->
+
+<h2 class="sectionedit6" id="apache">Apache</h2>
+<div class="level2">
+
+<p>
+</p><p></p><div class="noteimportant">LemonLDAP::NG ne gère pas la configuration d'Apache
+</div></p>
+</p>
+
+<p>
+LemonLDAP::NG fournit 3 fichiers de configuration Apache :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>portal-apache2.conf</strong>: Portal virtual host, with SOAP and Issuer end points</div>
+</li>
+<li class="level1"><div class="li"> <strong>manager-apache2.conf</strong> : hôte virtuel du manager</div>
+</li>
+<li class="level1"><div class="li"> <strong>handler-apache2.conf</strong> : déclaration du handler, rechargement et exemple d'hôte virtuel</div>
+</li>
+</ul>
+
+<p>
+Ces fichiers doivent être inclus dans la configuration d'Apache, soit par des directives <code>Include</code> dans le fichier <code>httpd.conf</code> (voir <a href="../../documentation/quickstart.html#apache" class="wikilink1" title="documentation:quickstart">démarrage rapide</a>), ou via un lien symbolique dans de répertoire de configuration d'Apache (type <code>/etc/httpd/conf.d</code>).
+</p>
+
+<p>
+</p><p></p><div class="notewarning">Mod Perl must be loaded before LemonLDAP::NG, so include configuration after the mod_perl <code>LoadModule</code> directive.
+
+</div></p>
+</p>
+
+</div><!-- EDIT6 SECTION "Apache" [5608-6367] -->
+
+<h3 class="sectionedit7" id="portal">Portail</h3>
+<div class="level3">
+
+<p>
+Dans l'hôte virtuel du portail se trouve plusieurs éléments de configuration :
+</p>
+<ul>
+<li class="level1"><div class="li"> Directives standard d'hôte virtuel pour servir les pages du portail :</div>
+</li>
+</ul>
+<pre class="code file apache">    <span class="kw1">ServerName</span> auth.example.com
+&nbsp;
+    <span class="co1"># DocumentRoot</span>
+    <span class="kw1">DocumentRoot</span> /usr/local/lemonldap-ng/htdocs/portal/
+    &lt;<span class="kw3">Directory</span> /usr/local/lemonldap-ng/htdocs/portal/&gt;
+        <span class="kw1">Order</span> <span class="kw1">allow</span>,<span class="kw1">deny</span>
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+        <span class="kw1">Options</span> +ExecCGI
+    &lt;/<span class="kw3">Directory</span>&gt;
+&nbsp;
+    <span class="co1"># Perl script</span>
+    &lt;<span class="kw3">Files</span> *.pl&gt;
+        <span class="kw1">SetHandler</span> perl-<span class="kw1">script</span>
+        PerlResponseHandler ModPerl::Registry
+    &lt;/<span class="kw3">Files</span>&gt;
+&nbsp;
+    <span class="co1"># Directory index</span>
+    &lt;<span class="kw3">IfModule</span> mod_dir.c&gt;
+        <span class="kw1">DirectoryIndex</span> index.pl index.html
+    &lt;/<span class="kw3">IfModule</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li">  SOAP end points (inactivated by default):</div>
+</li>
+</ul>
+<pre class="code file apache">    <span class="co1"># Gestion des fonctions SOAP functions pour la gestion des sessions (désactivée par défaut)</span>
+    &lt;<span class="kw3">Location</span> /index.pl/adminSessions&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Deny</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;
+&nbsp;
+    <span class="co1"># Fonctions SOAP pour l'accès aux sessions (désactivées par défaut)</span>
+    &lt;<span class="kw3">Location</span> /index.pl/sessions&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Deny</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;
+&nbsp;
+    <span class="co1"># Fonctions SOAP pour accéder à la configuration (désactivées par défaut)</span>
+    &lt;<span class="kw3">Location</span> /index.pl/config&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Deny</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;
+&nbsp;
+    <span class="co1"># Fonctions SOAP pour insérer des notifications (désactivées par défaut)</span>
+    &lt;<span class="kw3">Location</span> /index.pl/notification&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Deny</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li"> Règles de réécriture pour la fourniture d'identité (requiert <code>mod_rewrite</code>):</div>
+</li>
+</ul>
+<pre class="code file apache">    <span class="co1"># Fournisseur d'identité SAML2</span>
+    &lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
+        <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
+        <span class="kw1">RewriteRule</span> ^/saml/metadata /metadata.pl
+        <span class="kw1">RewriteRule</span> ^/saml/.* /index.pl
+    &lt;/<span class="kw3">IfModule</span>&gt;
+&nbsp;
+    <span class="co1"># Fournisseur d'identité CAS</span>
+    &lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
+        <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
+        <span class="kw1">RewriteRule</span> ^/cas/.* /index.pl
+    &lt;/<span class="kw3">IfModule</span>&gt;
+&nbsp;
+    <span class="co1"># Fournisseur d'identité OpenID</span>
+    &lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
+        <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
+        <span class="kw1">RewriteRule</span> ^/openidserver/.* /index.pl
+    &lt;/<span class="kw3">IfModule</span>&gt;
+&nbsp;
+    <span class="co1"># OpenID Connect Issuer</span>
+    &lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
+        <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
+        <span class="kw1">RewriteRule</span> ^/oauth2/.* /index.pl
+        <span class="kw1">RewriteRule</span> ^/.well-known/openid-configuration$ /openid-configuration.pl
+    &lt;/<span class="kw3">IfModule</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li">  Some Perl optimizations:</div>
+</li>
+</ul>
+<pre class="code file apache"><span class="co1"># Meilleures performances sous ModPerl::Registry</span>
+<span class="co1"># A décommenter pour augmenter les performances du portail</span>
+&lt;Perl&gt;
+    <span class="kw1">require</span> Lemonldap::NG::Portal::SharedConf;
+    Lemonldap::NG::Portal::SharedConf-&gt;compile(
+        qw(delete <span class="kw1">header</span> cache read_from_client cookie <span class="kw1">redirect</span> unescapeHTML));
+    <span class="co1"># Décommenter cette ligne si le menu Lemonldap::NG est utilisé</span>
+    <span class="kw1">require</span> Lemonldap::NG::Portal::Menu;
+    <span class="co1"># Décommenter cette ligne si les fonctions SOAP du portail sont utilisées</span>
+    <span class="kw1">require</span> SOAP::Lite;
+&lt;/Perl&gt;</pre>
+
+</div><!-- EDIT7 SECTION "Portal" [6368-9028] -->
+
+<h3 class="sectionedit8" id="manager1">Manager</h3>
+<div class="level3">
+
+<p>
+L'hôte virtuel du manager est utilisé pour servir l'interface de configuration et la documentation locale. It is run as a FastCGI application:
+</p>
+<pre class="code file apache">    <span class="co1"># FASTCGI CONFIGURATION</span>
+    <span class="co1"># ---------------------</span>
+&nbsp;
+    <span class="co1"># 1) URI management</span>
+    <span class="kw1">RewriteEngine</span> <span class="kw2">on</span>
+&nbsp;
+    <span class="kw1">RewriteRule</span> <span class="st0">"^/$"</span> <span class="st0">"/psgi/manager-server.fcgi"</span> [PT]
+    <span class="co1"># For performances, you can delete the previous RewriteRule line after</span>
+    <span class="co1"># puttings html files: simply put the HTML results of differents modules</span>
+    <span class="co1"># (configuration, sessions, notifications) as manager.html, sessions.html,</span>
+    <span class="co1"># notifications.html and uncomment the 2 following lines:</span>
+    <span class="co1"># DirectoryIndex manager.html</span>
+    <span class="co1"># RewriteCond "%{REQUEST_FILENAME}" "!\.html$"</span>
+&nbsp;
+    <span class="co1"># REST URLs</span>
+    <span class="kw1">RewriteCond</span> <span class="st0">"%{REQUEST_FILENAME}"</span> <span class="st0">"!^/(?:static|doc|fr-doc|lib).*"</span>
+    <span class="kw1">RewriteRule</span> <span class="st0">"^/(.+)$"</span> <span class="st0">"/psgi/manager-server.fcgi/$1"</span> [PT]
+&nbsp;
+    <span class="kw1">Alias</span> /psgi/ /var/lib/lemonldap-ng/manager/psgi/
+&nbsp;
+    <span class="co1"># 2) FastCGI engine</span>
+&nbsp;
+    <span class="co1"># You can choose any FastCGI system. Here is an example using mod_fcgid</span>
+    <span class="co1"># mod_fcgid configuration</span>
+    &lt;<span class="kw3">Directory</span> /var/lib/lemonldap-ng/manager/psgi/&gt;
+        <span class="kw1">SetHandler</span> fcgid-<span class="kw1">script</span>
+        <span class="kw1">Options</span> +ExecCGI
+    &lt;/<span class="kw3">Directory</span>&gt;
+&nbsp;
+    <span class="co1"># If you want to use mod_fastcgi, replace lines below by:</span>
+    <span class="co1">#FastCgiServer /var/lib/lemonldap-ng/manager/psgi/manager-server.fcgi</span>
+&nbsp;
+    <span class="co1"># Or if you prefer to use CGI, use /psgi/manager-server.cgi instead of</span>
+    <span class="co1"># /psgi/manager-server.fcgi and adapt the rewrite rules.</span></pre>
+
+<p>
+
+Configuration interface access is not protected by Apache but by LemonLDAP::NG itself (see <code>lemonldap-ng.ini</code>).
+
+</p>
+
+</div><!-- EDIT8 SECTION "Manager" [9029-10581] -->
+
+<h3 class="sectionedit9" id="handler">Agent (Handler)</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Charger l'agent dans la mémoire d'Apache :</div>
+</li>
+</ul>
+<pre class="code file apache">PerlOptions +GlobalRequest
+PerlRequire Lemonldap/NG/Handler.pm</pre>
+<ul>
+<li class="level1"><div class="li"> Capture des pages d'erreur :</div>
+</li>
+</ul>
+<pre class="code file apache"><span class="kw1">ErrorDocument</span> <span class="nu0">403</span> http://auth.example.com/?lmError=<span class="nu0">403</span>
+<span class="kw1">ErrorDocument</span> <span class="nu0">500</span> http://auth.example.com/?lmError=<span class="nu0">500</span>
+<span class="kw1">ErrorDocument</span> <span class="nu0">503</span> http://auth.example.com/?lmError=<span class="nu0">503</span></pre>
+<ul>
+<li class="level1"><div class="li"> Hôte virtuel pour le rechargement :</div>
+</li>
+</ul>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+    <span class="kw1">ServerName</span> reload.example.com
+&nbsp;
+    <span class="co1"># Configuration reload mechanism (only 1 per physical server is</span>
+    <span class="co1"># needed): choose your URL to avoid restarting Apache when</span>
+    <span class="co1"># configuration change</span>
+    &lt;<span class="kw3">Location</span> /reload&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Deny</span> from <span class="kw2">all</span>
+        <span class="kw1">Allow</span> from 127.0.0.0/<span class="nu0">8</span>
+        PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;reload
+    &lt;/<span class="kw3">Location</span>&gt;
+&nbsp;
+    <span class="co1"># Uncomment this to activate status module</span>
+    <span class="co1">#&lt;Location /status&gt;</span>
+    <span class="co1">#    Order deny,allow</span>
+    <span class="co1">#    Deny from all</span>
+    <span class="co1">#    Allow from 127.0.0.0/8</span>
+    <span class="co1">#    PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;status</span>
+    <span class="co1">#&lt;/Location&gt;</span>
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+
+Then, to protect a standard virtual host, the only configuration line to add is:
+
+</p>
+<pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
+
+</div><!-- EDIT9 SECTION "Handler" [10582-11777] -->
+
+<h2 class="sectionedit10" id="configuration_reload">Rechargement de la configuration</h2>
+<div class="level2">
+
+<p>
+</p><p></p><div class="noteclassic">Comme les agents gardent leur configuration en cache, lorsque la configuration est changée elle doit être mise à jour dans les agents. An Apache restart will work, but LemonLDAP::NG offers the mean to reload them through an HTTP request. Le rechargement de la configuration sera effectif en moins de 10 minutes.
+</div></p>
+</p>
+
+<p>
+
+After configuration is saved by Manager, LemonLDAP::NG will try to reload configuration on distant Handlers by sending an HTTP request to the servers. The servers and URLs can be configured in Manager, <code>General Parameters</code> &gt; <code>reload configuration URLs</code>: keys are server names or <abbr title="Internet Protocol">IP</abbr> the requests will be sent to, and values are the requested URLs.
+
+</p>
+
+<p>
+Ces paramètres peuvent être surchargés dans le fichier ini de LemonLDAP::NG ini file, à la section <code>apply</code>.
+</p>
+
+<p>
+</p><p></p><div class="notetip">Une <abbr title="Uniform Resource Locator">URL</abbr> par serveur physique est nécessaire, car les agents partagent le même cache de configuration pour chaque serveur physique.
+</div></p>
+</p>
+
+<p>
+La cible <code>reload</code> est gérée dans la configuration d'Apache, dans un hôte virtuel protégé par LemonLDAP::NG Handler, par exemple:
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+    <span class="kw1">ServerName</span> reload.example.com
+&nbsp;
+    &lt;<span class="kw3">Location</span> /reload&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Deny</span> from <span class="kw2">all</span>
+        <span class="kw1">Allow</span> from 127.0.0.0/<span class="nu0">8</span>
+        PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;refresh
+    &lt;/<span class="kw3">Location</span>&gt;
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+</p><p></p><div class="noteimportant">Il faut autoriser l'accès à l'adresse <abbr title="Internet Protocol">IP</abbr> du manager.
+</div></p>
+</p>
+
+</div><!-- EDIT10 SECTION "Configuration reload" [11778-13145] -->
+
+<h2 class="sectionedit11" id="local_file">Fichier local</h2>
+<div class="level2">
+
+<p>
+La configuration LemonLDAP::NG peut être gérée par un fichier local au <a href="http://en.wikipedia.org/wiki/INI_file" class="urlextern" title="http://en.wikipedia.org/wiki/INI_file"  rel="nofollow">format INI</a>. Le fichier est nommé <code>lemonldap-ng.ini</code> et dispose des sections suivantes :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>configuration</strong> : où la configuration est stockée</div>
+</li>
+<li class="level1"><div class="li"> <strong>apply</strong> : les <abbr title="Uniform Resource Locator">URL</abbr> de rechargement des agents distants</div>
+</li>
+<li class="level1"><div class="li"> <strong>all</strong> : paramètres pour tous les modules</div>
+</li>
+<li class="level1"><div class="li"> <strong>portal</strong> : paramètres réservés au portail</div>
+</li>
+<li class="level1"><div class="li"> <strong>manager</strong> : paramètres réservés au manager</div>
+</li>
+<li class="level1"><div class="li"> <strong>manager</strong> : paramètres réservés aux agents</div>
+</li>
+</ul>
+
+<p>
+Lorsqu'un paramètre et fixé dans <code>lemonldap-ng.ini</code>, il surcharge le paramètre issu de la configuration globale.
+</p>
+
+<p>
+Par exemple, pour surcharger l'apparence du portail :
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">[</span>portal<span class="br0">]</span></span>
+<span class="re1">portalSkin</span> <span class="sy0">=</span><span class="re2"> dark</span></pre>
+
+<p>
+</p><p></p><div class="notetip">Il est nécessaire de connaître le nom technique du paramètre de configuration pour le faire. Se référer à la <a href="../../documentation/1.9/parameterlist.html" class="wikilink1" title="documentation:1.9:parameterlist">liste des paramètres</a> pour le trouver.
+</div></p>
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>

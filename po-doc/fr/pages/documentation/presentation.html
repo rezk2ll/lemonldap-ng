@@ -1,0 +1,433 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="presentation">Présentation</h1>
+<div class="level1">
+
+<p>
+LemonLDAP::NG est en WebSSO (Single Sign On) modulaire basé sur les modules Apache::Session. Il simplifie la construction d'une aire protégée avec peu d'impact sur les applications.
+</p>
+
+<p>
+Il gère à la fois les authentifications et les autorisations et fournit des en-têtes HTTP pour la traçabilité. Vous vouvez ainsi avoir une protection <abbr title="Authentification Autorisation Traçabilité">AAA</abbr> complète pour votre espace web tel qu'indiqué ci-dessus.
+</p>
+
+</div><!-- EDIT1 SECTION "Presentation" [1-361] -->
+
+<h2 class="sectionedit2" id="architecture">Architecture</h2>
+<div class="level2">
+
+<p>
+</p><div style="width:600px">
+<a href="/_detail/documentation/lemonldap-ng-architecture.png?id=documentation%3Apresentation" class="media" title="documentation:lemonldap-ng-architecture.png"><img src="../../media/documentation/lemonldap-ng-architecture.png" class="mediacenter" alt="" width="600" /></a>
+</div>
+</p>
+
+</div><!-- EDIT2 SECTION "Architecture" [362-503] -->
+
+<h3 class="sectionedit3" id="main_components">Composants principaux</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <strong>Manager</strong>: utilisé pour gérer la configuration LemonLDAP::NG et explorer les sessions. Dédié aux administrateurs</div>
+</li>
+<li class="level1"><div class="li"> <strong><a href="../documentation/1.0/portal.html" class="wikilink1" title="documentation:1.0:portal">Portail</a></strong>: utilisé pour authentifier les utilisateurs, afficher la liste des applications et fournir le service d'identité (<a href="http://fr.wikipedia.org/wiki/SAML" class="urlextern" title="http://fr.wikipedia.org/wiki/SAML"  rel="nofollow">SAML</a>, <a href="http://fr.wikipedia.org/wiki/OpenID" class="urlextern" title="http://fr.wikipedia.org/wiki/OpenID"  rel="nofollow">OpenID</a>, <a href="http://fr.wikipedia.org/wiki/Central_Authentication_Service" class="urlextern" title="http://fr.wikipedia.org/wiki/Central_Authentication_Service"  rel="nofollow">CAS</a>). Le portail fournit également de nombreux autres services (voir <a href="../documentation/1.0/portal.html" class="wikilink1" title="documentation:1.0:portal">portail</a> pour plus d'informations)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Agent</strong> (Handler): module Apache utilisé pour protéger les applications</div>
+</li>
+</ul>
+
+</div><!-- EDIT3 SECTION "Main components" [504-1098] -->
+
+<h3 class="sectionedit4" id="databases">Bases de données</h3>
+<div class="level3">
+
+<p>
+</p><p></p><div class="noteclassic">Nous appelons “base de données” un dispositif dans lequel nous pouvons lire et écrire des données. This can be a file, an LDAP directory, …
+</div></p>
+</p>
+
+<p>
+Nous scindons les bases de données en deux catégories :
+</p>
+<ul>
+<li class="level1"><div class="li"> Les <strong>bases de données externes</strong>: non gérées par LemonLDAP::NG, par exemple la base des utilisateurs</div>
+</li>
+<li class="level1"><div class="li"> Les <strong>bases de données internes</strong>: utilisées seulement par LemonLDAP::NG</div>
+</li>
+</ul>
+
+<p>
+Les principales <a href="../documentation/current/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:latest:start">bases de données externes</a> sont :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Authentification</strong>: comment authentifier les utilisateurs</div>
+</li>
+<li class="level1"><div class="li"> <strong>Utilisateurs</strong>: où trouver les données utilisateurs</div>
+</li>
+<li class="level1"><div class="li"> <strong>Mots-de-passe</strong>: où changer les mots-de-passe</div>
+</li>
+</ul>
+
+<p>
+Les principales bases de données internes sont :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong><a href="../documentation/current/start.html#configuration_database" class="wikilink1" title="documentation:latest:start">Configuration</a></strong>: où est stocké la configuration. Ceci n'inclue pas la configuration propre d'Apache qui n'est pas gérée par LemonLDAP::NG</div>
+</li>
+<li class="level1"><div class="li"> <strong><a href="../documentation/current/start.html#sessions_database" class="wikilink1" title="documentation:latest:start">Sessions</a></strong>: où sont stockées les sessions.</div>
+</li>
+<li class="level1"><div class="li"> <strong><a href="../documentation/current/notifications.html" class="wikilink1" title="documentation:latest:notifications">Notifications</a></strong>: messages à afficher aux utilisateurs connectés</div>
+</li>
+<li class="level1"><div class="li"> <strong>Cache</strong>: cache pour la configuration et les sessions</div>
+</li>
+</ul>
+
+</div><!-- EDIT4 SECTION "Databases" [1099-2117] -->
+
+<h2 class="sectionedit5" id="kinematics">Cinématique</h2>
+<div class="level2">
+
+</div><!-- EDIT5 SECTION "Kinematics" [2118-2141] -->
+
+<h3 class="sectionedit6" id="login">login</h3>
+<div class="level3">
+
+<p>
+<a href="/_detail/documentation/lemonldapng-sso.png?id=documentation%3Apresentation" class="media" title="documentation:lemonldapng-sso.png"><img src="../../media/documentation/lemonldapng-sso.png" class="mediacenter" alt="" width="800" /></a>
+</p>
+<ol>
+<li class="level1"><div class="li"> Lorsqu'un utilisateur tente d'accéder à une application protégée, il est intercepté par l'agent (handler)</div>
+</li>
+<li class="level1"><div class="li"> Si le <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookies SSO</a> n'est pas détecté, l'agent redirige l'utilisateur vers le portail</div>
+</li>
+<li class="level1"><div class="li"> L'utilisateur d'authentifie sur le portail</div>
+</li>
+<li class="level1"><div class="li"> Le portail examine les données d'authentification</div>
+</li>
+<li class="level1"><div class="li"> Si l'authentication est acceptée, le portail récupère les données de l'utilisateur</div>
+</li>
+<li class="level1"><div class="li"> Le portail crée une session et y stocke les données</div>
+</li>
+<li class="level1"><div class="li"> Le portail récupère la clef de session</div>
+</li>
+<li class="level1"><div class="li"> Le portail crée le <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookie SSO</a> avec la clef de la session comme valeur</div>
+</li>
+<li class="level1"><div class="li"> L'utilisateur est redirigé vers l'application demandée avec son nouveau cookie</div>
+</li>
+<li class="level1"><div class="li"> L'agent récupère la session en utilisant la valeur du cookie</div>
+</li>
+<li class="level1"><div class="li"> Il stocke ces données dans son cache</div>
+</li>
+<li class="level1"><div class="li"> L'agent vérifie les droits d'accès à l'application et envoie des en-têtes HTTP à l'application protégée</div>
+</li>
+<li class="level1"><div class="li"> L'application protégée renvoie sa réponse à l'agent</div>
+</li>
+<li class="level1"><div class="li"> Celui-ci la renvoie à l'utilisateur</div>
+</li>
+</ol>
+
+<p>
+
+Handler will then check <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> for each HTTP request.
+
+</p>
+
+</div><!-- EDIT6 SECTION "Login" [2142-3147] -->
+
+<h3 class="sectionedit7" id="logout">Déconnexion</h3>
+<div class="level3">
+
+<p>
+Cas général:
+</p>
+<ol>
+<li class="level1"><div class="li"> L'utilisateur clique sur le bouton déconnexion du portail</div>
+</li>
+<li class="level1"><div class="li"> Le portail détruit la session et redirige l'utilisateur sur lui-même avec un <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookie SSO</a> vide</div>
+</li>
+<li class="level1"><div class="li"> L'utilisateur est redirigé vers le portail et son <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookie SSO</a> est vide</div>
+</li>
+</ol>
+
+<p>
+LemonLDAP::NG peut également <a href="../documentation/current/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">intercepter les requêtes de déconnexion</a> des applications protégées, avec différent comportements :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Déconnexion <abbr title="Authentification unique (Single Sign On)">SSO</abbr></strong>: la requête n'est pas transmise à l'application, seule la session <abbr title="Authentification unique (Single Sign On)">SSO</abbr> est fermée</div>
+</li>
+<li class="level1"><div class="li"> <strong>Déconnexion applicative</strong>: la requête est transmise à l'application mais la session <abbr title="Authentification unique (Single Sign On)">SSO</abbr> n'est pas détruite</div>
+</li>
+<li class="level1"><div class="li"> <strong>Déconnexion <abbr title="Authentification unique (Single Sign On)">SSO</abbr> et applicative</strong>: la requête est transmise à l'application et la session <abbr title="Authentification unique (Single Sign On)">SSO</abbr> est fermée</div>
+</li>
+</ul>
+
+<p>
+Après déconnexion, l'utilisateur est redirigé vers une <abbr title="Uniform Resource Locator">URL</abbr> configurée ou vers le portail.
+</p>
+
+</div><!-- EDIT7 SECTION "Logout" [3148-3996] -->
+
+<h3 class="sectionedit8" id="session_expiration">Expiration des sessions</h3>
+<div class="level3">
+
+<p>
+
+The session expires after 20 hours by default.
+
+</p><p></p><div class="noteimportant">
+</p>
+<ul>
+<li class="level1"><div class="li"> Les agents disposent d'un cache de session d'une durée de vie par défaut de 10 minutes. Ainsi pour les agents installés sur des serveurs physiquement différent de celui hébergeant le portail, un utilisateur dont la session a expiré peut toujours être autorisé jusqu'à expiration du cache.</div>
+</li>
+<li class="level1"><div class="li"> Les sessions sont effacées par des tâches planifiées. N'oubliez pas d'installer les fichiers cron !</div>
+</li>
+</ul>
+
+<p>
+
+</p></div></p>
+</p>
+
+</div><!-- EDIT8 SECTION "Session expiration" [3997-4398] -->
+
+<h3 class="sectionedit9" id="cross_domain_authentication_cda">Authentification inter-domaines (CDA)</h3>
+<div class="level3">
+
+<p>
+</p><p></p><div class="noteclassic">Pour des raisons de sécurité, un cookie fournit par un domaine ne peut être transmit à un autre. Pour étendre le <abbr title="Authentification unique (Single Sign On)">SSO</abbr> sur plusieurs domaines, un mécanisme inter-domaines est intégré à LemonLDAP::NG.
+</div></p>
+</p>
+<ol>
+<li class="level1"><div class="li"> L'utilisateur dispose d'un <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookie SSO</a> dans le domaine principal (voir la <span class="curid"><a href="../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">cinématique de connexion</a></span>)</div>
+</li>
+<li class="level1"><div class="li"> L'utilisateur tente d'accéder à une application protégée d'un autre domaine</div>
+</li>
+<li class="level1"><div class="li"> L'agent n'intercepte pas de <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookie SSO</a> (car il n'est pas dans le même domaine) et redirige l'utilisateur vers le portail</div>
+</li>
+<li class="level1"><div class="li"> Le portail reconnaît l'utilisateur par son <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookie SSO</a> et voit qu'il sollicite une application d'un domaine différent</div>
+</li>
+<li class="level1"><div class="li"> Portal redirige l'utilisateur vers l'application demandée avec son identifiant de session en paramètre de l'<abbr title="Uniform Resource Locator">URL</abbr></div>
+</li>
+<li class="level1"><div class="li"> L'agent détecte le paramètre d'<abbr title="Uniform Resource Locator">URL</abbr> et crée le <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookie SSO</a> dans son domaine, avec la valeur de l'identifiant de session</div>
+</li>
+</ol>
+
+</div><!-- EDIT9 SECTION "Cross Domain Authentication (CDA)" [4399-5368] -->
+
+<h2 class="sectionedit10" id="authentication_authorization_and_accounting_aaa_mechanisms">Mécanismes d'authentification, d'autorisation et de traçabilité (AAA)</h2>
+<div class="level2">
+
+</div><!-- EDIT10 SECTION "Authentication, Authorization and Accounting (AAA) mechanisms" [5369-5443] -->
+
+<h3 class="sectionedit11" id="authentication">Authentification</h3>
+<div class="level3">
+
+<p>
+Si un utilisateur n'est pas authentifié et tente de se connecter à une application protégée par un agent compatible LemonLDAP::NG, il est redirigé vers le portail.
+</p>
+
+<p>
+Les étapes du processus d'authentication sont :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Control asked <abbr title="Uniform Resource Locator">URL</abbr></strong>: prevent <abbr title="Cross Site Scripting">XSS</abbr> attacks and bad redirections</div>
+</li>
+<li class="level1"><div class="li"> <strong>Recherche d'une session valide</strong> : détecte les sessions <abbr title="Authentification unique (Single Sign On)">SSO</abbr>, applique les contraintes configurées (1 session par utilisateur, 1 session par <abbr title="Internet Protocol">IP</abbr>, …)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Extrait les informations du formulaire</strong>: récupère le couple compte/mot-de-passe, le certificat, une variable d'environnement (suivant le module d'authentification)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Récupère les informations utilisateur</strong> : contacte la base de données utilisateurs pour les obtenir</div>
+</li>
+<li class="level1"><div class="li"> <strong>Installe les macros</strong> : calcule les macros demandées</div>
+</li>
+<li class="level1"><div class="li"> <strong>Installe les groupes</strong> : interroge la base de données utilisateurs pour trouver les groupes</div>
+</li>
+<li class="level1"><div class="li"> <strong>Installe les groupes locaux</strong> : calcule les groupes demandés par la configuration</div>
+</li>
+<li class="level1"><div class="li"> <strong>Authentifie</strong> : contacte le dispositif d'authentication pour vérification</div>
+</li>
+<li class="level1"><div class="li"> <strong>Autorise la session</strong> : vérifie le droit d'ouvrir une session <abbr title="Authentification unique (Single Sign On)">SSO</abbr></div>
+</li>
+<li class="level1"><div class="li"> <strong>Stocke</strong>: stocke les données utilisateurs dans la base de données des sessions</div>
+</li>
+<li class="level1"><div class="li"> <strong>Construit les cookies</strong>: construit les <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookies SSO</a> avec l'identifiant de session</div>
+</li>
+<li class="level1"><div class="li"> <strong>Redirect</strong>: redirect user on protected application or on Portal (applications menu)</div>
+</li>
+</ul>
+
+<p>
+Les <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookies SSO</a> de LemonLDAP::NG sont générés par <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a>, ils sont aussi sûrs que tout cookie basé sur un aléa de 128 bits. Vous devriez utilisez les options <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">securedCookie</a> pour éviter le vol de session. (since version 1.4.0 you can use SHA256 for generating safer cookies)
+</p>
+
+</div><!-- EDIT11 SECTION "Authentication" [5444-6950] -->
+
+<h3 class="sectionedit12" id="authorization">Autorisations</h3>
+<div class="level3">
+
+<p>
+Les autorisations sont vérifiées seulement par les agents (handlers). Une autorisation est définie pas :
+</p>
+<ul>
+<li class="level1"><div class="li"> Une expression sur l'<abbr title="Uniform Resource Locator">URL</abbr> (ou <code>default</code> pour les URLs ne correspondant pas aux règles)</div>
+</li>
+<li class="level1"><div class="li"> Une règle d'accès</div>
+</li>
+</ul>
+
+<p>
+</p><p></p><div class="noteclassic">Les autorisations sont définies à l'intérieur d'un hôte virtuel (virtualhost) et n'ont d'effet que sur lui. Il n'y a pas d'autorisation <em>globale</em>, à l'exception de la règle accordant l'ouverture de session dans le portail.
+</div></p>
+</p>
+
+<p>
+Les valeurs des règles d'accès peuvent être :
+</p>
+<ul>
+<li class="level1"><div class="li"> <code>accept</code>: tout utilisateur authentifié est autorisé</div>
+</li>
+<li class="level1"><div class="li"> <code>deny</code>: personne n'est autorisé</div>
+</li>
+<li class="level1"><div class="li"> <code>skip</code> : tout est ouvert !</div>
+</li>
+<li class="level1"><div class="li"> <code>unprotect</code> : tout est ouvert, mais les utilisateurs authentifiés sont vus comme tels</div>
+</li>
+<li class="level1"><div class="li"> <code>logout_sso</code>, <code>logout_app</code>, <code>logout_app_sso</code>: intercepte les requêtes de déconnexion</div>
+</li>
+<li class="level1"><div class="li">  Perl expression: perl code snippet that returns 0 or 1  </div>
+</li>
+</ul>
+
+<p>
+Quelques exemples:
+</p>
+<ul>
+<li class="level1"><div class="li"> Accepte tout utilisateur authentifié :</div>
+<ul>
+<li class="level2"><div class="li"> Expression sur l'<abbr title="Uniform Resource Locator">URL</abbr> : <code>default</code></div>
+</li>
+<li class="level2"><div class="li"> Règle d'accès : <code>accept</code></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Restreint /admin au groupe des administrateurs</div>
+<ul>
+<li class="level2"><div class="li"> Expression sur l'<abbr title="Uniform Resource Locator">URL</abbr> : <code>^/admin/</code></div>
+</li>
+<li class="level2"><div class="li"> Règle d'accès : <code>$groups =~ /\badministrators\b/</code></div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+</p><p></p><div class="notetip"><code>\b</code> means start or end of a word in PCRE (Perl Compatible Regular Expressions)
+
+</div></p>
+</p>
+
+<p>
+Voir le chapître <a href="../documentation/current/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">Écrire les règles et en-têtes</a>.
+</p>
+
+</div><!-- EDIT12 SECTION "Authorization" [6951-8099] -->
+
+<h3 class="sectionedit13" id="accounting">Traçabilité</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="logging_portal_access">Trace des authentification</h4>
+<div class="level4">
+
+<p>
+Le portail génère un message de niveau <code>notice</code> <a href="../documentation/current/logs.html" class="wikilink1" title="documentation:latest:logs">dans les journaux d'Apache ou dans syslog</a> lorsqu'un utilisateur d'authentifie (ou échoue) ou se déconnecte.
+</p>
+
+</div>
+
+<h4 id="logging_application_access">Trace des accès aux applications</h4>
+<div class="level4">
+
+<p>
+L'agent fournit à Apache l'identifiant de l'utilisateur (paramètre <code>whatToTrace</code>), ainsi vous pouvez voir l'identifiant dans les journaux d'accès d'Apache.
+</p>
+
+<p>
+La réelle traçabilité doit être faite par l'application elle-même car les journaux du <abbr title="Authentification unique (Single Sign On)">SSO</abbr> ne peuvent interprêter les transactions.
+</p>
+
+<p>
+LemonLDAP::NG peut exporter des <a href="../documentation/current/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:latest:writingrulesand_headers">en-têtes HTTP</a> qu'on l'utilise sur une reverse-proxy ou directement sur le serveur à protéger
+</p>
+
+<p>
+
+An HTTP header is defined by:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Un nom</div>
+</li>
+<li class="level1"><div class="li"> Une valeur</div>
+</li>
+</ul>
+
+<p>
+</p><p></p><div class="noteclassic">Les en-têtes sont définies à l'intérieur d'un hôte virtuel (virtualhost) et n'ont d'effet que sur lui. Il n'y a pas d'en-tête <em>global</em>.
+</div></p>
+</p>
+
+<p>
+
+The header value is a Perl expression, returning a string.
+
+</p>
+
+<p>
+Quelques exemples:
+</p>
+<ul>
+<li class="level1"><div class="li"> Envoi de l'identifiant dans Auth-User:</div>
+<ul>
+<li class="level2"><div class="li"> Nom : <code>Auth-User</code></div>
+</li>
+<li class="level2"><div class="li"> Valeur : <code>$uid</code></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Envoi de “Lastname, firstname” dans Auth-Name:</div>
+<ul>
+<li class="level2"><div class="li"> Nom: <code>Auth-Name</code></div>
+</li>
+<li class="level2"><div class="li">  Value: <code>$sn + “, ” + $gn</code></div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Voir <a href="../documentation/current/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">Écrire les règles et en-têtes</a> pour plus d'informations.
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>

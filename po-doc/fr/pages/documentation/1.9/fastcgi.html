@@ -1,0 +1,64 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="fastcgi_support">Support FastCGI</h1>
+<div class="level1">
+
+<p>
+</p><p></p><div class="noteimportant">The manager is now natively written for FastCGI. Portal will follow in 2.0
+
+</div></p>
+</p>
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> Portal can be used under a <a href="http://en.wikipedia.org/wiki/FastCGI" class="urlextern" title="http://en.wikipedia.org/wiki/FastCGI"  rel="nofollow">FastCGI system</a> very easily. You just have to load <abbr title="LemonLDAP::NG">LL::NG</abbr> FastCGI support and write a loop in the CGI. Exemple avec le portail :
+
+</p><pre class="code perl"><span class="co1">#!/usr/bin/perl</span>
+<b>use Lemonldap::NG::Common::CGI qw(fastcgi);</b>
+<span class="me2">use Lemonldap::NG::Portal::SharedConf;</span>
+<span class="re0"># ...</span>
+
+<b><span style="color:#500;">LMAUTH:</span> while ( my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new({}) ) </b>{
+    <span class="re0"># ...</span>
+}
+</pre>
+
+</p>
+
+<p>
+Etapes clefs :
+</p>
+<ul>
+<li class="level1"><div class="li">  Load <strong>“Lemonldap::NG::Common::CGI qw(fastcgi)“</strong> before any other <abbr title="LemonLDAP::NG">LL::NG</abbr> library</div>
+</li>
+<li class="level1"><div class="li"> insérer une boucle autour de l'affichage <abbr title="HyperText Markup Language">HTML</abbr>, démarrant avec la création de l'objet <em>(→new)</em></div>
+</li>
+<li class="level1"><div class="li"> insérer le label <strong>“LMAUTH”</strong> en tête de la boucle</div>
+</li>
+</ul>
+
+<p>
+Un exemple est disponible dans l'arborescence des sources : lemonldap-ng-portal/example/index.fcgi
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>

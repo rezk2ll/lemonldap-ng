@@ -1,0 +1,88 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="proxy">Proxy</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentification  </th><th class="col1 centeralign">  Utilisateurs  </th><th class="col2 centeralign">  Mot-de-passe  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">    ✔    </td><td class="col1 centeralign">    ✔    </td><td class="col2"> </td>
+	</tr>
+</table></div><!-- EDIT2 TABLE [22-85] -->
+
+</div><!-- EDIT1 SECTION "Proxy" [1-86] -->
+
+<h2 class="sectionedit3" id="presentation">Présentation</h2>
+<div class="level2">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> is able to transfer (trough SOAP) authentication credentials to another <abbr title="LemonLDAP::NG">LL::NG</abbr> portal, like a proxy.
+
+</p>
+
+<p>
+La différence avec <a href="../../documentation/1.9/authremote.html" class="wikilink1" title="documentation:1.9:authremote">l'authentification "Remote"</a> est que le client n'est jamais redirigé vers le portail <abbr title="LemonLDAP::NG">LL::NG</abbr> principal. Cette configuration est utilisable l'on soujaite exposer un portail <abbr title="Authentification unique (Single Sign On)">SSO</abbr> interne à une autre réseau (DMZ).
+</p>
+
+</div><!-- EDIT3 SECTION "Presentation" [87-450] -->
+
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+</div><!-- EDIT4 SECTION "Configuration" [451-477] -->
+
+<h3 class="sectionedit5" id="external_portal">Portail externe</h3>
+<div class="level3">
+
+<p>
+Dans le manager, aller dans <code>Paramètres généraux</code> &gt; <code>Modules d'authentification</code> et choisir Proxy pour les modules authentification et utilisateurs.
+</p>
+
+<p>
+Ensuite, aller dans les <code>paramètres Proxy</code> :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong><abbr title="Uniform Resource Locator">URL</abbr> du portail</strong> : <abbr title="Uniform Resource Locator">URL</abbr> du portail interne</div>
+</li>
+<li class="level1"><div class="li"> <strong>Nom du cookie</strong> (optionnel) : nom du cookie du portail interne s'il est différent de celui du portail externe</div>
+</li>
+<li class="level1"><div class="li"> <strong>SOAP sessions end point</strong> (optional): SOAP end point, if not based on internal portal <abbr title="Uniform Resource Locator">URL</abbr> with <code>index.pl/sessions</code> suffix</div>
+</li>
+</ul>
+
+</div><!-- EDIT5 SECTION "External portal" [478-935] -->
+
+<h3 class="sectionedit6" id="internal_portal">Portail interne</h3>
+<div class="level3">
+
+<p>
+
+The portal must be configured to accept SOAP authentication requests. See <a href="../../documentation/1.9/soapsessionbackend.html" class="wikilink1" title="documentation:1.9:soapsessionbackend">SOAP session backend</a> documentation.
+
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>

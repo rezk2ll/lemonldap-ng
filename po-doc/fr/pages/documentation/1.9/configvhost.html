@@ -1,0 +1,207 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="manage_virtual_hosts">Gérer les hôtes virtuels</h1>
+<div class="level1">
+
+<p>
+La configuration de LemonLDAP::NG est construite autour des hôtes virtuels Apache. Chaque hôte virtuel est une ressource protégée, avec règles d'accès, en-têtes, options et données POST.
+</p>
+
+</div><!-- EDIT1 SECTION "Manage virtual hosts" [1-197] -->
+
+<h2 class="sectionedit2" id="apache_configuration">Configuration d'Apache</h2>
+<div class="level2">
+
+<p>
+Pour protéger un hôte virtuel dans Apache, l'agent LemonLDAP::NG doit être activé (voir <a href="../../documentation/1.9/configlocation.html#apache" class="wikilink1" title="documentation:1.9:configlocation">configuration globale d'Apache</a>).
+</p>
+
+<p>
+Ainsi n'importe quel hôte virtuel peut être protégé en ajoutant cette ligne :
+</p>
+<pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
+
+</div><!-- EDIT2 SECTION "Apache configuration" [198-521] -->
+
+<h3 class="sectionedit3" id="hosted_application">Application hébergée</h3>
+<div class="level3">
+
+<p>
+Exemple d'hôte virtuel protégé pour une application locale :
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+        <span class="kw1">ServerName</span> localsite.example.com
+&nbsp;
+        PerlHeaderParserHandler Lemonldap::NG::Handler
+&nbsp;
+        <span class="kw1">DocumentRoot</span> /var/www/localsite
+&nbsp;
+        <span class="kw1">ErrorLog</span> /var/log/apache2/localsite_error.log
+        <span class="kw1">CustomLog</span> /var/log/apache2/localsite_access.log combined
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+</div><!-- EDIT3 SECTION "Hosted application" [522-929] -->
+
+<h3 class="sectionedit4" id="reverse_proxy">Proxy inverse</h3>
+<div class="level3">
+
+<p>
+Exemple d'hôte virtuel protégé avec Lemonldap::NG en proxy-inverse :
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+        <span class="kw1">ServerName</span> application.example.com
+&nbsp;
+        PerlHeaderParserHandler Lemonldap::NG::Handler
+&nbsp;
+        <span class="co1"># Reverse-Proxy</span>
+        <span class="kw1">ProxyPass</span> / http://private-name/
+        <span class="co1"># Change "Location" header in redirections</span>
+        <span class="kw1">ProxyPassReverse</span> / http://private-name/
+        <span class="co1"># Change domain cookies</span>
+        <span class="kw1">ProxyPassReverseCookieDomain</span> private-name application.example.com
+&nbsp;
+        <span class="kw1">ErrorLog</span> /var/log/apache2/proxysite_error.log
+        <span class="kw1">CustomLog</span> /var/log/apache2/proxysite_access.log combined
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+La même chose avec le serveur distant configuré avec le même nom d'hôte :
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+        <span class="kw1">ServerName</span> application.example.com
+&nbsp;
+        PerlHeaderParserHandler Lemonldap::NG::Handler
+&nbsp;
+        <span class="co1"># Reverse-Proxy</span>
+        <span class="kw1">ProxyPass</span> / http://APPLICATION_IP/
+&nbsp;
+        <span class="kw1">ProxyPreserveHost</span> <span class="kw2">on</span>
+&nbsp;
+        <span class="kw1">ErrorLog</span> /var/log/apache2/proxysite_error.log
+        <span class="kw1">CustomLog</span> /var/log/apache2/proxysite_access.log combined
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+</p><p></p><div class="noteclassic">La directive <code>ProxyPreserveHost</code> transfère l'en-tête Host à l'application protégée.<br/> Pour en savoir plus sur l'utilisation d' Apache en reverse-proxy, consultez la <a href="http://httpd.apache.org/docs/current/mod/mod_proxy.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_proxy.html"  rel="nofollow">documentation d'Apache</a>.
+
+</div></p>
+</p>
+
+<p>
+</p><p></p><div class="notetip">Certaines applications ont besoin de la variable d'environnement <code>REMOTE_USER</code> pour connaître le nom d'utilisateur connecté, qui n'est pas renseignée en mode reverse-proxy. Dans ce cas, voir <a href="../../documentation/1.9/header_remote_user_conversion.html" class="wikilink1" title="documentation:1.9:header_remote_user_conversion">comment convertir les en-têtes en variable d'environnement</a>.
+</div></p>
+</p>
+
+<p>
+</p><p></p><div class="notetip">On peut aussi utiliser le <a href="../../documentation/1.9/internalproxy.html" class="wikilink1" title="documentation:1.9:internalproxy">proxy interne</a> pour remplacer mod_proxy d'Apache.
+</div></p>
+</p>
+
+</div><!-- EDIT4 SECTION "Reverse proxy" [930-2637] -->
+
+<h3 class="sectionedit5" id="add_a_floating_menu">Ajouter un menu flottant</h3>
+<div class="level3">
+
+<p>
+Un petit menu flottant peut être ajouté aux applications par une seimple configuration Apache :
+</p>
+<pre class="code file apache">PerlOutputFilterHandler Lemonldap::NG::Handler::Menu</pre>
+
+<p>
+Les pages où ce menu est affiché peuvent être restreintes, par exemple :
+</p>
+<pre class="code file apache">&lt;<span class="kw3">Location</span> /var/www/html/index.php&gt;
+PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
+&lt;/<span class="kw3">Location</span>&gt;</pre>
+
+</div><!-- EDIT5 SECTION "Add a floating menu" [2638-3024] -->
+
+<h2 class="sectionedit6" id="lemonldapng_configuration">Configuration de LemonLDAP::NG</h2>
+<div class="level2">
+
+<p>
+Un hôte virtuel apache protégé par un agent LemonLDAP::NG doit être enregistré dans la configuration LemonLDAP::NG.
+</p>
+
+<p>
+Pour ce faire, utiliser le manager, et aller dans la branche <code>Virtual Hosts</code>. Il est possible d'ajouter, effacer ou modifier un hôte virtuel ici.
+</p>
+
+<p>
+Un hôte vituel contient :
+</p>
+<ul>
+<li class="level1"><div class="li"> Des règles d'accès : examine les droits de l'utilisateur via des expressions sur les <abbr title="Uniform Resource Locator">URL</abbr></div>
+</li>
+<li class="level1"><div class="li">  HTTP headers: forge information sent to protected applications</div>
+</li>
+<li class="level1"><div class="li"> Des données POST : à utiliser pour répondre aux formulaires</div>
+</li>
+<li class="level1"><div class="li"> Des options : port de redirection et protocole</div>
+</li>
+</ul>
+
+</div><!-- EDIT6 SECTION "LemonLDAP::NG configuration" [3025-3512] -->
+
+<h3 class="sectionedit7" id="access_rules_and_http_headers">Règles d'accès et en-têtes HTTP</h3>
+<div class="level3">
+
+<p>
+
+See <strong><a href="../../documentation/1.9/writingrulesand_headers.html" class="wikilink1" title="documentation:1.9:writingrulesand_headers">Writing rules and headers</a></strong> to learn how to configure access control and HTTP headers sent to application by <abbr title="LemonLDAP::NG">LL::NG</abbr>.
+
+</p>
+
+</div><!-- EDIT7 SECTION "Access rules and HTTP headers" [3513-3705] -->
+
+<h3 class="sectionedit8" id="post_data">Données POST</h3>
+<div class="level3">
+
+<p>
+Voir <strong><a href="../../documentation/1.9/formreplay.html" class="wikilink1" title="documentation:1.9:formreplay">Rejeu des formulaires</a></strong> pour savoir comment configurer le rejeu des formulaires pour poster des données à une applications protégée.
+</p>
+
+</div><!-- EDIT8 SECTION "POST data" [3706-3840] -->
+
+<h3 class="sectionedit9" id="options">Options</h3>
+<div class="level3">
+
+<p>
+Quelques options sont disponibles :
+</p>
+<ul>
+<li class="level1"><div class="li">  Port</div>
+</li>
+<li class="level1"><div class="li">  HTTPS</div>
+</li>
+<li class="level1"><div class="li"> Mode maintenance</div>
+</li>
+</ul>
+
+<p>
+Ces options sont utilisées dans la construction des <abbr title="Uniform Resource Locator">URL</abbr> de redirection (lorsque l'utilisateur n'est pas connecté ou pour les requêtes <abbr title="Authentification inter-domaines">CDA</abbr>). Sauf modification, les valeurs par défaut sont utilisées. Ces options ne sont à utiliser que pour surcharger les valeurs par défaut.
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>

@@ -1,0 +1,87 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="translations">Traductions</h1>
+<div class="level1">
+
+<p>
+Les traducteurs qui veulent nous aider sont les bienvenus !
+</p>
+
+</div><!-- EDIT1 SECTION "Translations" [1-76] -->
+
+<h2 class="sectionedit2" id="portal_translation">Traduction du portail</h2>
+<div class="level2">
+
+<p>
+2 types de fichiers peuvent être traduits :
+</p>
+<ul>
+<li class="level1"><div class="li"> Les <strong>modèles <abbr title="HyperText Markup Language">HTML</abbr></strong>: dans les balises &lt;lang&gt;, ajoutez vos traductions, elles seront automatiquement utilisées</div>
+</li>
+<li class="level1"><div class="li"> Les <strong>messages du portail</strong>: tous les messages sont regroupés dans lemonldap-ng/lib/Lemonldap/NG/Portal/_i18n.pm. Vous avez simplement à créer les fonctions error_zz et msg_zz <em>(où zz est votre code international, exemple: “fr” pour le français)</em> en copiant error_en et msg_en. Notez que vous devez utiliser des caractères UTF-8</div>
+</li>
+</ul>
+
+</div><!-- EDIT2 SECTION "Portal translation" [77-536] -->
+
+<h2 class="sectionedit3" id="manager_translation">Traduction du manager</h2>
+<div class="level2">
+
+<p>
+2 types de fichiers peuvent être traduits :
+</p>
+<ul>
+<li class="level1"><div class="li"> L'<strong>interface du Manager</strong>: tous les messages sont regroupés dans lemonldap-ng-manager/lib/Lemonldap/NG/Manager/_i18n.pm. Copiez la fonction en en zz <em>(où zz est votre code international, exemple: “fr” pour le français)</em> et traduisez ensuite les messages. Notez que vous devez utiliser des caractères UTF-8</div>
+</li>
+<li class="level1"><div class="li"> <strong>Documentation</strong>: utilisez <a href="http://www.omegat.org/" class="urlextern" title="http://www.omegat.org/"  rel="nofollow">OmegaT</a> pour traduire la dcumentation hors-ligne et configurez le :</div>
+<ul>
+<li class="level2"><div class="li"> Projet = <em>[chemin/vers/trunk/build/lemonldap-ng]</em>/omegat.files/zz <em>(où zz est votre code international, exemple: “fr” pour le français)</em></div>
+</li>
+<li class="level2"><div class="li"> Répertoire des sources = <em>[chemin/vers/trunk/build/lemonldap-ng]</em>/doc/</div>
+</li>
+<li class="level2"><div class="li"> Répertoire de destination = <em>[chemin/vers/trunk/build/lemonldap-ng]</em>/po-doc/zz (où zz est votre code international, exemple: “fr” pour le français)</div>
+</li>
+<li class="level2"><div class="li"> Répertoire des mémoires de traduction = <em>[chemin/vers/trunk/build/lemonldap-ng]</em>/omegat.files/zz/tm/</div>
+</li>
+<li class="level2"><div class="li"> Répertoire des glossaires = <em>[path/to/trunk/build/lemonldap-ng]</em>/omegat.files/zz/glossary/</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div><!-- EDIT3 SECTION "Manager translation" [537-1531] -->
+
+<h2 class="sectionedit4" id="update_translations">Télécharger les traductions</h2>
+<div class="level2">
+
+<p>
+Pour télécharger les traductions, demandez à <a href="mailto:lemonldap-ng-dev@ow2.org" class="mail" title="lemonldap-ng-dev@ow2.org">lemonldap-ng-dev@ow2.org</a> pour les mettres en ligne. SI vous souhaitez devenir membre de l'équipe <abbr title="LemonLDAP::NG">LL::NG</abbr> demandez-le également à <a href="mailto:lemonldap-ng-dev@ow2.org" class="mail" title="lemonldap-ng-dev@ow2.org">lemonldap-ng-dev@ow2.org</a>.
+</p>
+
+<p>
+</p><p></p><div class="noteimportant">Lorsque vous validez les fichiers <a href="http://www.omegat.org/" class="urlextern" title="http://www.omegat.org/"  rel="nofollow">OmegaT</a> dans le dépôt svn, n'y poussez pas les fichiers de sauvegarde.
+</div></p>
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>

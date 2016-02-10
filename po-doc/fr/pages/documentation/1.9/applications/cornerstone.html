@@ -1,0 +1,156 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="cornerstone_on_demand">Cornerstone On Demand</h1>
+<div class="level1">
+
+<p>
+<a href="/_detail/applications/csod_logo.png?id=documentation%3A1.9%3Aapplications%3Acornerstone" class="media" title="applications:csod_logo.png"><img src="../../../../media/applications/csod_logo.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div><!-- EDIT1 SECTION "Cornerstone On Demand" [1-73] -->
+
+<h2 class="sectionedit2" id="presentation">Présentation</h2>
+<div class="level2">
+
+<p>
+<a href="http://www.cornerstoneondemand.com/" class="urlextern" title="http://www.cornerstoneondemand.com/"  rel="nofollow">CornerStone On Demand (CSOD)</a> allows to use <abbr title="Security Assertion Markup Language">SAML</abbr> to authenticate users. It works by default with IDP intiated mechanism, but can works with the standard SP initiated cinematic.
+
+</p>
+
+<p>
+Pour fonctionner avec <abbr title="LemonLDAP::NG">LL::NG</abbr> il faut :
+</p>
+<ul>
+<li class="level1"><div class="li">  An enterprise account</div>
+</li>
+<li class="level1"><div class="li"> <abbr title="LemonLDAP::NG">LL::NG</abbr> configuré comme <a href="../../../documentation/1.9/idpsaml.html" class="wikilink1" title="documentation:1.9:idpsaml">fournisseur d'identité SAML</a></div>
+</li>
+<li class="level1"><div class="li">  Registered users on CSOD with the same email than those used by <abbr title="LemonLDAP::NG">LL::NG</abbr> (email will be the NameID exchanged between CSOD and <abbr title="LemonLDAP::NG">LL::NG</abbr>)</div>
+</li>
+</ul>
+
+</div><!-- EDIT2 SECTION "Presentation" [74-574] -->
+
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
+<div class="level2">
+
+</div><!-- EDIT3 SECTION "Configuration" [575-601] -->
+
+<h3 class="sectionedit4" id="new_service_provider">Nouveau fournisseur de service</h3>
+<div class="level3">
+
+<p>
+Il est nécessaire d'avoir configuré <abbr title="LemonLDAP::NG">LL::NG</abbr> comme <a href="../../../documentation/1.9/idpsaml.html" class="wikilink1" title="documentation:1.9:idpsaml">fournisseur d'identité SAML</a>,
+</p>
+
+<p>
+
+Now we will add CSOD as a new <abbr title="Security Assertion Markup Language">SAML</abbr> Service Provider:
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Dans le manager, cliquer sur fournisseurs de service <abbr title="Security Assertion Markup Language">SAML</abbr> puis sur le bouton <code>Nouveau fournisseur de service</code>.</div>
+</li>
+<li class="level1"><div class="li">  Set csod as Service Provider name.</div>
+</li>
+<li class="level1"><div class="li"> Mettre <code>Email</code> dans <code>Options</code> » <code>Réponse d'authentification</code> » <code>Format NameID par défaut</code></div>
+</li>
+<li class="level1"><div class="li"> Selectionner <code>Metadata</code>, et déprotéger le champ pour y mettre :</div>
+</li>
+</ol>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;md:EntityDescriptor</span> <span class="re0">entityID</span>=<span class="st0">"mycompanyid.csod.com"</span> <span class="re0">xmlns</span>=<span class="st0">"urn:oasis:names:tc:SAML:2.0:metadata"</span> <span class="re0">xmlns:ds</span>=<span class="st0">"http://www.w3.org/2000/09/xmldsig#"</span> <span class="re0">xmlns:md</span>=<span class="st0">"urn:oasis:names:tc:SAML:2.0:metadata"</span><span class="re2">&gt;</span></span>
+  <span class="sc3"><span class="re1">&lt;SPSSODescriptor</span> <span class="re0">protocolSupportEnumeration</span>=<span class="st0">"urn:oasis:names:tc:SAML:2.0:protocol"</span><span class="re2">&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;KeyDescriptor</span> <span class="re0">use</span>=<span class="st0">"signing"</span><span class="re2">&gt;</span></span>
+      <span class="sc3"><span class="re1">&lt;ds:KeyInfo</span> <span class="re0">xmlns:ds</span>=<span class="st0">"http://www.w3.org/2000/09/xmldsig#"</span><span class="re2">&gt;</span></span>
+	 <span class="sc3"><span class="re1">&lt;ds:X509Data<span class="re2">&gt;</span></span></span>
+	  <span class="sc3"><span class="re1">&lt;ds:X509Certificate<span class="re2">&gt;</span></span></span>
+Base64 encoded CSOD certificate
+	    <span class="sc3"><span class="re1">&lt;/ds:X509Certificate<span class="re2">&gt;</span></span></span>
+	  <span class="sc3"><span class="re1">&lt;/ds:X509Data<span class="re2">&gt;</span></span></span>
+      <span class="sc3"><span class="re1">&lt;/ds:KeyInfo<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;/KeyDescriptor<span class="re2">&gt;</span></span></span>
+    <span class="sc3"><span class="re1">&lt;AssertionConsumerService</span> <span class="re0">Binding</span>=<span class="st0">"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"</span> <span class="re0">Location</span>=<span class="st0">"https://mycompanyid.csod.com/samldefault.aspx"</span> <span class="re0">index</span>=<span class="st0">"1"</span> <span class="re2">/&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;NameIDFormat<span class="re2">&gt;</span></span></span>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress<span class="sc3"><span class="re1">&lt;/NameIDFormat<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/SPSSODescriptor<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/md:EntityDescriptor<span class="re2">&gt;</span></span></span></pre>
+
+<p>
+</p><p></p><div class="noteimportant">Change <strong>mycompanyid</strong> (in <code>AssertionConsumerService</code> markup, parameter <code>Location</code>) into your CSOD company ID and put the certificate value inside the ds:X509Certificate markup
+
+</div></p>
+</p>
+
+</div><!-- EDIT4 SECTION "New Service Provider" [602-2116] -->
+
+<h3 class="sectionedit5" id="csod_control_panel">CSOD control panel</h3>
+<div class="level3">
+
+<p>
+
+CSOD needs two things to configure <abbr title="LemonLDAP::NG">LL::NG</abbr> as an IDP:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Certificat</div>
+</li>
+<li class="level1"><div class="li"> <abbr title="Security Assertion Markup Language">SAML</abbr> assertion</div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="certificate">Certificat</h4>
+<div class="level4">
+
+<p>
+Pour le certificate, vous pouvez le construire en signant la clef privée enregistrée dans le Manager. Selectionner la clef, et l'exporter (bouton <code>Download this file</code>):
+</p>
+
+<p>
+<a href="/_detail/documentation/googleapps-export-priv-key.png?id=documentation%3A1.9%3Aapplications%3Acornerstone" class="media" title="documentation:googleapps-export-priv-key.png"><img src="../../../../media/documentation/googleapps-export-priv-key.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Après avoir choisi le nom de fichier (par exemple lemonldapn-ng-priv.key), le télécharger sur le disque.
+</p>
+
+<p>
+Ensuite, utiliser openssl pour générer un certificat auto-signé :
+</p>
+<pre class="code">openssl req -new -key lemonldap-ng-priv.key -out cert.csr
+openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out cert.pem</pre>
+
+</div>
+
+<h4 id="saml_assertion">SAML assertion</h4>
+<div class="level4">
+
+<p>
+
+You need to use the IDP initiated feature of <abbr title="LemonLDAP::NG">LL::NG</abbr>. Just call this <abbr title="Uniform Resource Locator">URL</abbr>:
+
+</p>
+<pre class="code">https://auth.example.com/saml/singleSignOn?IDPInitiated=1&amp;sp=mycompanyid.csod.com</pre>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>
