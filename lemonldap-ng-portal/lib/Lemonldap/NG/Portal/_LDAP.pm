@@ -93,7 +93,7 @@ sub bind {
     my ( $dn, %args ) = @_;
     unless ($dn) {
         $dn = $self->{portal}->{managerDn};
-        $args{password} = $self->{portal}->{managerPassword};
+        $args{password} = decode( 'utf-8', $self->{portal}->{managerPassword} );
     }
     if ( $dn && $args{password} ) {
         if ( $self->{portal}->{ldapPwdEnc} ne 'utf-8' ) {
