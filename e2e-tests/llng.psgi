@@ -34,10 +34,20 @@ my %builder = (
         require CGI::Emulate::PSGI;
         require CGI::Compile;
         return sub {
-            my $script = $_[0]->{SCRIPTNAME};
+            my $script = $_[0]->{SCRIPT_NAME};
             return $_apps{$script}->(@_) if ( $_apps{$script} );
-            $_apps{$script} =
-              CGI::Emulate::PSGI->handler( CGI::Compile->compile($script) );
+            eval {
+                $_apps{$script} =
+                  CGI::Emulate::PSGI->handler( CGI::Compile->compile($script) );
+            };
+            if ($@) {
+                use Data::Dumper;
+                return [
+                    500,
+                    [ 'Content-Type',              'text/plain' ],
+                    [ "Script: $script\n    $@\n". Dumper( \$_[0] ) ]
+                ];
+            }
             return $_apps{$script}->(@_);
         };
     },
