@@ -89,7 +89,7 @@ print "<li><tt>\$ENV{REMOTE_USER}</tt>: $ENV{REMOTE_USER}</li>\n";
 print "</ul></li>\n";
 print "</ul>\n";
 print
-"<div class=\"alert alert-warning\">Be carefull, the <tt>\$ENV{REMOTE_USER}</tt> is set only if your script is in the same server than LemonLDAP::NG Handler (<tt>\$whatToTrace</tt> parameter). If you use it on a reverse-proxy, <tt>\$ENV{REMOTE_USER}</tt> is not set. See <a href=\"$manager_url/doc/pages/documentation/current/header_remote_user_conversion.html\">this documentation page</a> to know how to convert an HTTP header into an environment variable.</div>\n";
+"<div class=\"alert alert-warning\">Be carefull, the <tt>\$ENV{REMOTE_USER}</tt> is set only if your script is in the same server than LemonLDAP::NG Handler (<tt>\$whatToTrace</tt> parameter). If you use it behind a reverse-proxy or in another server than Apache, <tt>REMOTE_USER</tt> is not set. See <a href=\"$manager_url/doc/pages/documentation/current/header_remote_user_conversion.html\">this documentation page</a> to know how to convert an HTTP header into an environment variable.</div>\n";
 print "</div>\n";
 print "</div>\n";
 
@@ -103,13 +103,13 @@ print
 print "<div class=\"table-responsive\">\n";
 print "<table class=\"table table-striped table-hover\">\n";
 print
-"<thead><tr><th>Header</th><th>Perl CGI</th><th>PHP script</th><th>Value</th></tr></thead><tbody>\n";
+"<thead><tr><th>Header</th><th>CGI environment variable</th><th>PHP script</th><th>Value</th></tr></thead><tbody>\n";
 
 foreach ( sort keys %$headers ) {
     next if $_ =~ /(Accept|Cache|User-Agent|Connection|Keep-Alive)/i;
     print qq{<tr>
     <td id="h-$_">$_</td>
-    <td><tt>\$ENV{$headers->{$_}}</tt></td>
+    <td><tt>$headers->{$_}</tt></td>
     <td><tt>\$_SERVER{$headers->{$_}}</tt></td>
     <td id="v-$_">};
     my @tmp;
@@ -133,7 +133,7 @@ foreach ( sort keys %$headers ) {
     print "</td></tr>\n";
 }
 print "</tbody></table>\n";
-print "</div>\n";
+print "</div><p></p>\n";
 print
 "<div class=\"alert alert-warning\">Note that LemonLDAP::NG cookie is hidden. So that application developpers can not spoof sessions.</div>\n";
 print
