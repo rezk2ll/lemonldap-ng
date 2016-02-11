@@ -77,7 +77,7 @@ sub genRoute {
     }
 }
 
-sub routerAbort {
+sub handlerAbort {
     my ( $self, $path, $msg ) = @_;
     delete $self->routes->{$path};
     $self->addRoute(
@@ -90,7 +90,7 @@ sub routerAbort {
 
 # Methods that dispatch requests
 
-sub router {
+sub handler {
     my ( $self, $req ) = @_;
 
     #print STDERR Dumper($self->routes);use Data::Dumper;

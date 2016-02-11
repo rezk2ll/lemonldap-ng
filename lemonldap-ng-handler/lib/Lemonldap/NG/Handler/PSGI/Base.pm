@@ -33,7 +33,7 @@ sub init {
 
 ## @methodi void _run()
 # Check if protecton is activated then return a code ref that will launch
-# _authAndTrace() if protection in on or router() else
+# _authAndTrace() if protection in on or handler() else
 #@return code-ref
 sub _run {
     my $self = shift;
@@ -63,7 +63,7 @@ sub _run {
         # Handle unprotected requests
         return sub {
             my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
-            my $res = $self->router($req);
+            my $res = $self->handler($req);
             push @{ $res->[1] }, %{ $req->{respHeaders} };
             return $res;
         };
@@ -71,7 +71,7 @@ sub _run {
 }
 
 ## @method private PSGI-Response _authAndTrace($req)
-# Launch Lemonldap::NG::Handler::SharedConf::run() and then router() if
+# Launch Lemonldap::NG::Handler::SharedConf::run() and then handler() if
 # response is 200.
 sub _authAndTrace {
     my ( $self, $req ) = @_;
@@ -80,8 +80,8 @@ sub _authAndTrace {
     $req->userData($datas) if ($datas);
 
     if ( $res < 300 ) {
-        $self->lmLog( 'User authenticated, calling router()', 'debug' );
-        return $self->router($req);
+        $self->lmLog( 'User authenticated, calling handler()', 'debug' );
+        return $self->handler($req);
     }
     else {
         my %h = $req->{respHeaders} ? %{ $req->{respHeaders} } : ();

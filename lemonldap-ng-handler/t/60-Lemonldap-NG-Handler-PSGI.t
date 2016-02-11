@@ -77,7 +77,7 @@ count(2);
 
 done_testing( count() );
 
-sub Lemonldap::NG::Handler::PSGI::router {
+sub Lemonldap::NG::Handler::PSGI::handler {
     my ( $self, $req ) = @_;
     ok( $req->{HTTP_AUTH_USER} eq 'dwho', 'Header is given to app' )
       or explain( $req->{HTTP_REMOTE_USER}, 'dwho' );

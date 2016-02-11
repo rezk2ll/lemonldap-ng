@@ -87,7 +87,7 @@ sub notifAccess {
 
     # TODO: old parameters (with table)
     unless ( $self->{notificationStorage} ) {
-        $self->routerAbort( notifications =>
+        $self->handlerAbort( notifications =>
               'notificationStorage is not defined in configuration' );
         return 0;
     }
@@ -102,7 +102,7 @@ sub notifAccess {
 
     # If type not File or DBI, abort
     unless ( $args->{type} =~ /^(File|DBI|LDAP)$/ ) {
-        $self->routerAbort( notifications =>
+        $self->handlerAbort( notifications =>
               "Only File, DBI or LDAP supported for Notifications" );
         return 0;
     }
@@ -112,7 +112,7 @@ sub notifAccess {
     unless (
         $self->_notifAccess( Lemonldap::NG::Common::Notification->new($args) ) )
     {
-        $self->routerAbort(
+        $self->handlerAbort(
             notifications => $Lemonldap::NG::Common::Notification::msg );
         return 0;
     }

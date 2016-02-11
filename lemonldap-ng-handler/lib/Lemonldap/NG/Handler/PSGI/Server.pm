@@ -8,7 +8,7 @@ extends 'Lemonldap::NG::Handler::PSGI';
 
 ## @method void _run()
 # Return subroutine that add headers stored in $req->{respHeaders} in
-# response returned by router()
+# response returned by handler()
 #
 sub _run {
     my ($self) = @_;
@@ -20,12 +20,12 @@ sub _run {
     };
 }
 
-## @method PSGI-Response router($req)
+## @method PSGI-Response handler($req)
 # If PSGI is used as an authentication FastCGI only, this method will be
 # called for authenticated users and returns only 200. Headers are set by
 # Lemonldap::NG::Handler::PSGI.
 # @param $req Lemonldap::NG::Common::PSGI::Request
-sub router {
+sub handler {
     return [ 200, [ 'Content-Length', 0 ], [] ];
 }
 

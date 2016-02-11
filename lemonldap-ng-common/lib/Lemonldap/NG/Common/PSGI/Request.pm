@@ -164,7 +164,7 @@ PSGIs
   # See Lemonldap::NG::Common::PSGI
   ...
   
-  sub router {
+  sub handler {
     my ( $self, $req ) = @_;
     # Do something and return a PSGI response
     # NB: $req is a Lemonldap::NG::Common::PSGI::Request object

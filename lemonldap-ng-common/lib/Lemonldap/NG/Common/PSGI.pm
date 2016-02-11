@@ -149,7 +149,7 @@ sub init {
     return 1;
 }
 
-sub router { _mustBeDefined(@_) }
+sub handler { _mustBeDefined(@_) }
 
 sub sendHtml {
     my ( $self, $req, $template ) = @_;
@@ -217,7 +217,7 @@ sub run {
 sub _run {
     my $self = shift;
     return sub {
-        $self->router( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
+        $self->handler( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
     };
 }
 
@@ -251,7 +251,7 @@ Use Lemonldap::NG::Common::PSGI::Router for REST API.
     return 1;
   }
   
-  sub router {
+  sub handler {
     my ( $self, $req ) = @_;
     # Do something and return a PSGI response
     # NB: $req is a Lemonldap::NG::Common::PSGI::Request object

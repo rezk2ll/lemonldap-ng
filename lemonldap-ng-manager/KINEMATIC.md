@@ -23,7 +23,7 @@ PSGI system launch the previous sub
 
     sub
      |
-     +-> Common::PSGI::Router::router ( Lemonldap::NG::Common::PSGI::Request->new() )
+     +-> Common::PSGI::Router::handler ( Lemonldap::NG::Common::PSGI::Request->new() )
           |
           +-> Common::PSGI::Router::followPath()
                |

@@ -38,7 +38,7 @@ Lemonldap::NG::Handler::PSGI - Base library for protected PSGI applications.
     return 1;
   }
   
-  sub router {
+  sub handler {
     my ( $self, $req ) = @_;
 
     # Will be called only if authorisated

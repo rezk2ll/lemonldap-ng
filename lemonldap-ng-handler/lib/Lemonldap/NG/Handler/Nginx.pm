@@ -34,7 +34,7 @@ sub _run {
     };
 }
 
-## @method PSGI-Response router()
+## @method PSGI-Response handler()
 # Transform headers returned by handler main process:
 # each "Name: value" is transformed to:
 #  - Headername<i>: Name
@@ -55,7 +55,7 @@ sub _run {
 #    auth_request_set $llremoteuser $upstream_http_lm_remote_user
 #
 #@param $req Lemonldap::NG::Common::PSGI::Request
-sub router {
+sub handler {
     my ( $self, $req ) = @_;
     my $hdrs = $req->{respHeaders};
     $req->{respHeaders} = {};
