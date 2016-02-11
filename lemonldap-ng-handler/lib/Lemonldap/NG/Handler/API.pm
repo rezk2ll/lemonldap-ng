@@ -63,10 +63,10 @@ sub AUTOLOAD {
                 )
               )
           )                         ? 'PSGI'
-          : $ENV{GATEWAY_INTERFACE} ? 'CGI'
           : ( MP == 2 )             ? 'ApacheMP2'
           : ( MP == 1 )             ? 'ApacheMP1'
           : $main::{'nginx::'}      ? 'ExperimentalNginx'
+          : $ENV{GATEWAY_INTERFACE} ? 'CGI'
           :                           'CGI';
         unless ( $INC{"Lemonldap/NG/Handler/API/$mode.pm"} ) {
             $mode =~ s#/#::#g;
