@@ -11,6 +11,9 @@
 }
 .angular-ui-tree-handle {
   cursor: pointer;
+  /* Uncomment this if you have many virtualhosts */
+  /*height:1.8em;
+  margin: 0;*/
 }
 
 /* Modal windows */
