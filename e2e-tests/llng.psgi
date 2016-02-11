@@ -10,6 +10,7 @@ BEGIN {
         use lib "$pwd/lemonldap-ng-handler/blib/lib";
         use lib "$pwd/lemonldap-ng-portal/blib/lib";
         use lib "$pwd/lemonldap-ng-manager/blib/lib";
+        use Lemonldap::NG::Handler::SharedConf;
     };
     die $@ if ($@);
 }
@@ -20,6 +21,10 @@ my %builder = (
     handler => sub {
         require Lemonldap::NG::Handler::Nginx;
         return Lemonldap::NG::Handler::Nginx->run( {} );
+    },
+    status => sub {
+        require Lemonldap::NG::Handler::Nginx;
+        return Lemonldap::NG::Handler::Nginx->status();
     },
     manager => sub {
         require Lemonldap::NG::Manager;
@@ -33,7 +38,7 @@ my %builder = (
             return $_apps{$script}->(@_) if ( $_apps{$script} );
             $_apps{$script} =
               CGI::Emulate::PSGI->handler( CGI::Compile->compile($script) );
-            return $_app{$script}->(@_);
+            return $_apps{$script}->(@_);
         };
     },
     test => sub {
@@ -43,6 +48,8 @@ my %builder = (
             CGI::Compile->compile('e2e-tests/conf/site/index.pl') );
     },
 );
+
+Lemonldap::NG::Handler::SharedConf->init();
 
 sub {
     my $type = $_[0]->{LLTYPE} || 'handler';

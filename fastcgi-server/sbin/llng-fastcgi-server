@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use POSIX;
 use Getopt::Std;
+use Lemonldap::NG::Handler::SharedConf;
 
 our %opts;
 my %_apps;
@@ -31,6 +32,10 @@ my %builder = (
     handler => sub {
         require Lemonldap::NG::Handler::Nginx;
         return Lemonldap::NG::Handler::Nginx->run( {} );
+    },
+    status => sub {
+        require Lemonldap::NG::Handler::Nginx;
+        return Lemonldap::NG::Handler::Nginx->status();
     },
     manager => sub {
         require Lemonldap::NG::Manager;
@@ -62,6 +67,8 @@ my $app = sub {
     }
     die "Unknown PSGI type $type";
 };
+
+Lemonldap::NG::Handler::SharedConf->init();
 
 my $server = Plack::Runner->new();
 $server->parse_options(

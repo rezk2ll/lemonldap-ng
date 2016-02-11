@@ -70,6 +70,21 @@ sub _run {
     }
 }
 
+sub status {
+    my $class = shift;
+
+    # Check if main handler initialization has been done
+    unless (%$tsv) {
+        eval { Lemonldap::NG::Handler::SharedConf->checkConf() };
+        $class->lmLog( $@, 'error' ) if ($@);
+    }
+    return sub {
+        Lemonldap::NG::Handler::API->newRequest(
+            Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
+        $class->SUPER::status();
+    };
+}
+
 ## @method private PSGI-Response _authAndTrace($req)
 # Launch Lemonldap::NG::Handler::SharedConf::run() and then handler() if
 # response is 200.
