@@ -22,8 +22,8 @@ sub logout {
     $class->unlog();
 }
 
-sub status {
-    my ( $class, $request ) = ( __PACKAGE__, shift );
+sub status($$) {
+    my ( $class, $request ) = @_;
     Lemonldap::NG::Handler::API->newRequest($request);
     $class->SUPER::status();
 }
