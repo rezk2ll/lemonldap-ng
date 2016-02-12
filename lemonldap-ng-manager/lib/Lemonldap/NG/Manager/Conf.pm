@@ -650,8 +650,7 @@ sub metadatas {
     if ( $req->params('full') and $req->params('full') !~ $no ) {
         my $c = $self->getConfKey( $req, 'cfgNum' );
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
-        $self->userNotice( $req,
-                'User '
+        $self->userNotice( 'User '
               . $self->userId($req)
               . ' ask for full configuration '
               . $c );
@@ -680,8 +679,7 @@ sub metadatas {
         my ($ind) = map { $id++; $_ == $res->{cfgNum} ? ($id) : () } @a;
         if ($ind)         { $res->{prev} = $a[ $ind - 1 ]; }
         if ( $ind < $#a ) { $res->{next} = $a[ $ind + 1 ]; }
-        $self->userNotice( $req,
-                'User '
+        $self->userNotice( 'User '
               . $self->userId($req)
               . ' ask for configuration metadatas ('
               . $res->{cfgNum}
@@ -705,8 +703,7 @@ sub getKey {
     unless ($key) {
         return $self->metadatas($req);
     }
-    $self->userInfo( $req,
-        'User ' . $self->userId($req) . " asks for key $key" );
+    $self->userInfo( 'User ' . $self->userId($req) . " asks for key $key" );
     my $value = $self->getConfKey( $req, $key );
     return $self->sendError( $req, undef, 400 ) if ( $req->error );
 
@@ -899,7 +896,7 @@ sub newConf {
             $args{force} = 1 if ( $req->params('force') );
             my $s = $self->confAcc->saveConf( $parser->newConf, %args );
             if ( $s > 0 ) {
-                $self->userNotice( $req,
+                $self->userNotice(
                     'User ' . $self->userId($req) . " has stored conf $s" );
                 $res->{result} = 1;
                 $res->{cfgNum} = $s;
@@ -910,7 +907,7 @@ sub newConf {
                 }
             }
             else {
-                $self->userNotice( $req,
+                $self->userNotice(
                     'Saving attempt rejected, asking for confirmation to '
                       . $self->userId($req) );
                 $res->{result} = 0;
@@ -952,13 +949,13 @@ sub newRawConf {
         # chances to be equal to last config cfgNum
         my $s = $self->confAcc->saveConf( $new, force => 1 );
         if ( $s > 0 ) {
-            $self->userNotice( $req,
+            $self->userNotice(
                 'User ' . $self->userId($req) . " has stored (raw) conf $s" );
             $res->{result} = 1;
             $res->{cfgNum} = $s;
         }
         else {
-            $self->userNotice( $req,
+            $self->userNotice(
                 'Raw saving attempt rejected, asking for confirmation to '
                   . $self->userId($req) );
             $res->{result} = 0;

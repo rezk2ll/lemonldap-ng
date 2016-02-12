@@ -187,7 +187,7 @@ sub sendHtml {
     }
     $self->lmLog(
         'For more performance, store the result of this as static file',
-        'info' );
+        'debug' );
 
     # Set headers
     my $hdrs = [ 'Content-Type' => 'text/html' ];
