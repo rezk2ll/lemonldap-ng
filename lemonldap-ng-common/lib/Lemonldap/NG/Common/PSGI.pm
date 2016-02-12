@@ -60,7 +60,6 @@ sub lmLog {
 sub userLog {
     my ( $self, $mess, $level ) = @_;
     if ( $self->{syslog} ) {
-        $self->startSyslog();
         $level =~ s/^warn$/warning/;
         syslog( $level || 'notice', $mess );
     }
