@@ -1144,11 +1144,11 @@ sub _subProcess {
 # status module with the result (portal error).
 sub updateStatus {
     my $self = shift;
-    print $Lemonldap::NG::Handler::Simple::statusPipe (
-        $self->{user} ? $self->{user} : $self->ipAddr )
+    my $p    = $Lemonldap::NG::Handler::Main::tsv->{statusPipe};
+    print $p ( $self->{user} ? $self->{user} : $self->{ipAddr} )
       . " => $ENV{SERVER_NAME}$ENV{SCRIPT_NAME} "
       . $self->{error} . "\n"
-      if ($Lemonldap::NG::Handler::Simple::statusPipe);
+      if ($p);
 }
 
 ##@method protected string notification()
