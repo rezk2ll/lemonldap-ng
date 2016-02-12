@@ -389,10 +389,12 @@ plackup:
 	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
 	plackup -s FCGI \
 		--listen e2e-tests/conf/llng.sock \
-		--daemonize --pid e2e-tests/conf/plackup.pid \
+		--pid e2e-tests/conf/plackup.pid \
 		--nproc 1 --proc-title llng-fastcgi-server \
 		--no-default-middleware \
-		e2e-tests/llng.psgi
+		--app e2e-tests/llng.psgi \
+		--keep-stderr 1 \
+		>e2e-tests/conf/fastcgi.log 2>&1 &
 
 #
 # INSTALL
