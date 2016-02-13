@@ -320,17 +320,17 @@
     };
 
     var dateToString = function(dt) {
-        var year = dt.getFullYear();
-        var month = dt.getMonth() + 1;
-        if (month < 10) {
-          month = '0' + month;
-        }
-        var day = dt.getDate();
-        if (day < 10) {
-          day = '0' + day;
-        }
-        var result = year + "-" + month + "-" + day;
-        return result;
+      var year = dt.getFullYear();
+      var month = dt.getMonth() + 1;
+      if (month < 10) {
+        month = '0' + month;
+      }
+      var day = dt.getDate();
+      if (day < 10) {
+        day = '0' + day;
+      }
+      var result = year + "-" + month + "-" + day;
+      return result;
     }
 
   }]);
