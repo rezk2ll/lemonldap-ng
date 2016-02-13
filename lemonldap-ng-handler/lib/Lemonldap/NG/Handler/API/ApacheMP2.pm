@@ -238,8 +238,8 @@ sub addToHtmlHead {
                 $f->ctx($body);
             }
             else {
-                $body =~ s/(<\/head>)/$data$1/i
-                  or $body =~ s/(<body>)/$1$data/i;
+                $body =~ s/(<\/head>)/$data$1/si
+                  or $body =~ s/(<body>)/$1$data/si;
                 $f->print($body);
             }
             return OK;
