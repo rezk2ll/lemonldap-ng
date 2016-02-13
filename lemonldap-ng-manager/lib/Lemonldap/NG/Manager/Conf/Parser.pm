@@ -939,7 +939,8 @@ sub _globalTest {
     hdebug('# _globalTest()');
     my $result = 1;
     my $tests  = &Lemonldap::NG::Manager::Conf::Tests::tests( $self->newConf );
-    while ( my ( $name, $sub ) = each %$tests ) {
+    foreach my $name ( keys %$tests ) {
+        my $sub = $tests->{$name};
         my ( $res, $msg );
         eval {
             ( $res, $msg ) = $sub->();

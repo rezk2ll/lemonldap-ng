@@ -137,7 +137,8 @@ sub tests {
         checkUserDBGoogleAXParams => sub {
             my @tmp;
             if ( $conf->{userDB} =~ /^Google$/ ) {
-                while ( my ( $k, $v ) = each %{ $conf->{exportedVars} } ) {
+                foreach my $k ( keys %{ $conf->{exportedVars} } ) {
+                    my $v = $conf->{exportedVars}->{$k};
                     if ( $v !~ Lemonldap::NG::Common::Regexp::GOOGLEAXATTR() ) {
                         push @tmp, $v;
                     }
@@ -159,7 +160,8 @@ sub tests {
         checkUserDBOpenIDParams => sub {
             my @tmp;
             if ( $conf->{userDB} =~ /^OpenID$/ ) {
-                while ( my ( $k, $v ) = each %{ $conf->{exportedVars} } ) {
+                foreach my $k ( keys %{ $conf->{exportedVars} } ) {
+                    my $v = $conf->{exportedVars}->{$k};
                     if ( $v !~ Lemonldap::NG::Common::Regexp::OPENIDSREGATTR() )
                     {
                         push @tmp, $v;

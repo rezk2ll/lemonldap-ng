@@ -68,7 +68,8 @@ sub serialize {
     my $fields;
 
     # Parse configuration
-    while ( my ( $k, $v ) = each(%$conf) ) {
+    foreach my $k (keys %$conf ) {
+        my $v = $conf->{$k};
 
         # 1.Hash ref
         if ( ref($v) ) {

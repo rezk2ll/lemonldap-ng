@@ -174,7 +174,8 @@ sub run {
             &head;
 
             my ( $c, $m, $u );
-            while ( my ( $user, $v ) = each( %{ $status->{user} } ) ) {
+            foreach my $user ( keys %{ $status->{user} } ) {
+                my $v = $status->{user}->{$user};
                 $u++ unless ( $user =~ /^\d+\.\d+\.\d+\.\d+$/ );
 
                 # Total requests

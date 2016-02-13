@@ -172,7 +172,8 @@ sub portalInit {
 sub locationRulesInit {
     my ( $class, $conf, $tsv ) = @_;
 
-    while ( my ( $vhost, $rules ) = each( %{ $conf->{locationRules} } ) ) {
+    foreach my $vhost ( keys %{ $conf->{locationRules} } ) {
+        my $rules = $conf->{locationRules}->{$vhost};
         foreach my $url ( sort keys %{$rules} ) {
             my ( $cond, $prot ) = $class->conditionSub( $rules->{$url}, $tsv );
 
@@ -271,7 +272,8 @@ sub postUrlInit {
     foreach my $vhost ( keys %{ $conf->{post} } ) {
 
         #  Browse all POST URI
-        while ( my ( $url, $d ) = each( %{ $conf->{post}->{$vhost} } ) ) {
+        foreach my $url ( keys %{ $conf->{post}->{$vhost} } ) {
+            my $d = $conf->{post}->{$vhost}->{$url};
             Lemonldap::NG::Handler::Main::Logger->lmLog(
                 "Compiling POST data for $url", 'debug' );
 
@@ -281,8 +283,8 @@ sub postUrlInit {
             $postUrl ||= $url;
 
             my $sub;
-            while ( my ( $input, $value ) = each( %{ $d->{expr} } ) ) {
-                my $val = $class->substitute($value);
+            foreach my $input ( keys %{ $d->{expr} } ) {
+                my $val = $class->substitute( $d->{expr}->{$input} );
                 $sub .= "'$input' => $val,";
             }
             $tsv->{inputPostData}->{$vhost}->{$postUrl} =

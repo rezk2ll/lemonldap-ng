@@ -662,8 +662,8 @@ sub postJavascript {
     my $form = $formParams->{formSelector} || "form";
 
     my $filler;
-    while ( my ( $name, $value ) = each(%$data) ) {
-        $value = "x" x length($value);
+    foreach my $name ( keys %$data ) {
+        my $value = "x" x length( $data->{$name} );
         $filler .=
 "form.find('input[name=$name], select[name=$name], textarea[name=$name]').val('$value')\n";
     }

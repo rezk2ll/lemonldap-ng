@@ -302,8 +302,8 @@ sub _store {
 
     # Store values as {key}value
     my @notifValues;
-    while ( my ( $k, $v ) = each(%$fields) ) {
-        $v = encodeLdapValue($v);
+    foreach my $k ( keys %$fields ) {
+        my $v = encodeLdapValue( $fields->{$k} );
         push @notifValues, "{$k}$v";
     }
 

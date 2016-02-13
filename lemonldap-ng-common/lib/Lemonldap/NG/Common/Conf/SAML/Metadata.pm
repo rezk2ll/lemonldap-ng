@@ -59,8 +59,8 @@ sub initializeFromConfHash {
 
     return 0 unless $hash;
 
-    while ( my ( $k, $v ) = each(%$hash) ) {
-        $self->{$k} = $v;
+    foreach my $k ( keys %$hash ) {
+        $self->{$k} = $hash->{$k};
     }
 
     return 1;
@@ -98,8 +98,8 @@ sub initializeFromXML {
 
     # Store data in Metadata object
     if ($data) {
-        while ( my ( $k, $v ) = each( %{$data} ) ) {
-            $self->{$k} = $v;
+        foreach my $k ( keys %{$data} ) {
+            $self->{$k} = $data->{$k};
         }
         return 1;
     }

@@ -165,7 +165,8 @@ sub sessions {
         my %r;
 
         # 2.4.1 Store user IP addresses in %r
-        while ( my ( $id, $entry ) = each %$res ) {
+        foreach my $id ( keys %$res ) {
+            my $entry = $res->{$id};
             next if ( $entry->{_httpSessionType} );
             $r{ $entry->{ $tsv->{whatToTrace} } }
               ->{ $entry->{ $self->{ipField} } }++;
