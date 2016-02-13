@@ -259,7 +259,7 @@
         "data": 'Message',
         "type": "grant"
       });
-    }
+    };
 
     /* Add rules entry */
     $scope.newRule = function() {
@@ -274,18 +274,23 @@
         "data": 'accept',
         "type": "rule"
       });
-    }
+    };
 
     /* Add form replay */
     $scope.newPost = function() {
       var node = $scope._findContainer();
       node.nodes.push({
         "id": node.id + '/n' + (id++),
-        "title": "https://my/form",
-        "data": [],
+        "title": "/absolute/path/to/form",
+        "data": {},
         "type": "post"
       });
-    }
+    };
+
+    $scope.newPostVar = function() {
+      if (typeof $scope.currentNode.data.vars === 'undefined') $scope.currentNode.data.vars = [];
+      $scope.currentNode.data.vars.push(['var1', '$uid']);
+    };
 
     /* Add auth chain entry to authChoice */
     $scope.newAuthChoice = function() {

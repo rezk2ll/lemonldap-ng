@@ -218,13 +218,6 @@ sub _scanNodes {
             if ( $base eq 'virtualHosts' ) {
                 hdebug("  virtualhost");
                 if ( $target =~ /^(?:locationRules|exportedHeaders|post)$/ ) {
-                    if (    $target eq 'post'
-                        and defined $leaf->{data}
-                        and ref( $leaf->{data} ) eq 'ARRAY' )
-                    {
-                        hdebug('    post value');
-                        $leaf->{data} = join '|', @{ $leaf->{data} };
-                    }
                     if ( $leaf->{cnodes} ) {
                         hdebug('    unopened subnode');
                         $self->newConf->{$target}->{$key} =

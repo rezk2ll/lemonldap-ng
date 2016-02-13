@@ -14,20 +14,20 @@
     </thead>
     <tbody>
       <tr ng-repeat="s in currentNode.nodes">
-        <td ng-if="s.re!='default'">
+        <td>
           <input class="form-control" ng-model="s.title"/>
         </td>
-        <td ng-if="s.re!='default'">
-          <input class="form-control" ng-model="s.data[0]"/>
+        <td>
+          <input class="form-control" ng-model="s.data.target"/>
         </td>
-        <td ng-if="s.re!='default'">
-          <input class="form-control" ng-model="s.data[1]"/>
+        <td>
+          <input class="form-control" ng-model="s.data.jqueryUrl"/>
         </td>
-        <td ng-if="s.re!='default'">
-          <input class="form-control" ng-model="s.data[2]"/>
+        <td>
+          <input class="form-control" ng-model="s.data.formSelector"/>
         </td>
-        <td ng-if="s.re!='default'">
-          <input class="form-control" ng-model="s.data[3]"/>
+        <td>
+          <input class="form-control" ng-model="s.data.buttonSelector"/>
         </td>
         <td>
           <span class="link text-danger glyphicon glyphicon-minus-sign" ng-click="del(currentNode.nodes,$index)"/>

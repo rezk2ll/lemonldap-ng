@@ -258,7 +258,7 @@ sub virtualHosts {
                 $res->{type} = 'rule';
             }
             elsif ( $query eq 'post' ) {
-                $res->{data} = [ split( /\|/, $vhk->{$r} ) ];
+                $res->{data} = $vhk->{$r};
                 $res->{type} = 'post';
             }
             push @$resp, $res;

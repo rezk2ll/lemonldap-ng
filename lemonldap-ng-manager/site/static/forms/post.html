@@ -9,25 +9,35 @@
     </tr>
     <tr>
       <th><span trspan="postTargetUrl"></span></th>
-      <td><input id="pi2" class="form-control" ng-model="currentNode.data[0]"/></td>
+      <td><input id="pi2" class="form-control" ng-model="currentNode.data.target"/></td>
     </tr>
     <tr>
       <th><span trspan="jqueryUrl"></span></th>
-      <td><input id="pi3" class="form-control" ng-model="currentNode.data[1]"/></td>
+      <td><input id="pi3" class="form-control" ng-model="currentNode.data.jqueryUrl"/></td>
     </tr>
     <tr>
       <th><span trspan="jqueryFormSelector"></span></th>
-      <td><input id="pi4" class="form-control" ng-model="currentNode.data[2]"/></td>
+      <td><input id="pi4" class="form-control" ng-model="currentNode.data.formSelector"/></td>
     </tr>
     <tr>
       <th><span trspan="jqueryButtonSelector"></span></th>
-      <td><input id="pi5" class="form-control" ng-model="currentNode.data[3]"/></td>
+      <td><input id="pi5" class="form-control" ng-model="currentNode.data.buttonSelector"/></td>
+    </tr>
+    <tr>
+      <th colspan="2" trspan="postedVars"></th>
+    </tr>
+    <tr ng-repeat="v in currentNode.data.vars">
+      <td><input class="form-control" ng-model="v[0]"/></td>
+      <td><input class="form-control" ng-model="v[1]"/></td>
     </tr>
   </table>
 </div>
 <script type="text/javascript">
 buttons=[{
   'title': 'newPost',
+  'icon': 'plus-sign'
+},{
+  'title': 'newPostVar',
   'icon': 'plus-sign'
 },{
   'title': 'deleteEntry',
