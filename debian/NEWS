@@ -1,5 +1,7 @@
 lemonldap-ng (1.9.0-1) unstable; urgency=low
 
+  1) Configuration and sessions storage
+
   From now, Lemonldap::NG uses JSON serialization to store configuration and
   sessions instead of Storable::nfreeze Perl function. This permits one to have
   heterogenous servers connected to the same LLNG organization (32/64 bits or
@@ -10,6 +12,8 @@ lemonldap-ng (1.9.0-1) unstable; urgency=low
      updating an existing session. You can force LemonLDAP::NG to keep the old
      serialization method by setting useStorable to 1 in sessions backend
      options if you have some custom hooks.
+     Note that this behaviour only affects modules Apache::Session::File, SQL
+     database and Apache::Session::LDAP
 
   If you have more than one server and don't want to stop the SSO service, start
   upgrading in the following order:
@@ -18,12 +22,16 @@ lemonldap-ng (1.9.0-1) unstable; urgency=low
      user or client IP and if users use the menu);
    * manager server
 
+  2) Manage Ajax requests when sessions expires
+
   To request for authentication, handlers sent a 302 HTTP code even if request
   was an Ajax one. From now, after redirection, portal will send a 401 code
   with a WWW-Authenticate header containing "SSO portal-URL". This is a little
   HTTP protocol hook created because browsers follow redirection transparently.
   If you want to keep old behaviour, set noAjaxHook to 1 (in General Parameters
   -> Advanced -> Handler redirections -> Keep redirections for Ajax).
+
+  3) New "Multi" authentication scheme
 
   The Multi backend configuration has changed. Now the stacks are defined in
   separate attributes:
@@ -41,6 +49,11 @@ lemonldap-ng (1.9.0-1) unstable; urgency=low
     userDB           = Multi
     multiAuthStack   = LDAP;DBI
     multiUserDBStack = LDAP;DBI
+
+  4) Form replay
+
+  Management of form replay has been rewritten. If you uses this experimental
+  feature, you must edit your configuration and rewrite it.
 
  -- Xavier Guimard <x.guimard@free.fr>  Thu, 21 Jan 2016 17:13:07 +0100
 
