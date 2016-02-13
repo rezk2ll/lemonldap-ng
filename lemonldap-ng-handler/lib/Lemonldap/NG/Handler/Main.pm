@@ -671,8 +671,8 @@ sub postJavascript {
     my $submitter =
         $formParams->{buttonSelector} eq "none" ? ""
       : $formParams->{buttonSelector}
-      ? "form.find('$formParams->{buttonSelector}').click()\n"
-      : "form.submit()\n";
+      ? "form.find('$formParams->{buttonSelector}').click();\n"
+      : "form.submit();\n";
 
     my $jqueryUrl = $formParams->{jqueryUrl} || "";
     $jqueryUrl = &{ $tsv->{portal} } . "skins/common/js/jquery-1.10.2.js"
@@ -685,8 +685,8 @@ sub postJavascript {
       . "<script type='text/javascript'>\n"
       . "/* script added by Lemonldap::NG */\n"
       . "jQuery(window).on('load', function() {\n"
-      . "var form = jQuery('$form')\n"
-      . "form.attr('autocomplete', 'off')\n"
+      . "var form = jQuery('$form');\n"
+      . "form.attr('autocomplete', 'off');\n"
       . $filler
       . $submitter . "})\n"
       . "</script>\n";
