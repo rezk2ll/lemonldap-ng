@@ -282,7 +282,8 @@ sub postUrlInit {
             my $sub;
             $d->{vars} ||= [];
             foreach my $input ( @{ delete $d->{vars} } ) {
-                $sub .= "'$input->[0]' => $input->[1],";
+                $sub .=
+                  "'$input->[0]' => " . $class->substitute( $input->[1] ) . ",";
             }
             $tsv->{inputPostData}->{$vhost}->{ delete $d->{target} } =
               $tsv->{outputPostData}->{$vhost}->{$url} =
@@ -422,12 +423,12 @@ sub substitute {
     my ( $class, $expr ) = @_;
 
     # substitute special vars, just for retro-compatibility
-    $expr =~ s/\$date\b/&date/g;
-    $expr =~ s/\$vhost\b/&hostname/g;
-    $expr =~ s/\$ip\b/&remote_ip/g;
+    $expr =~ s/\$date\b/&date/sg;
+    $expr =~ s/\$vhost\b/&hostname/sg;
+    $expr =~ s/\$ip\b/&remote_ip/sg;
 
     # substitute vars with session datas, excepts special vars $_ and $\d+
-    $expr =~ s/\$((?!_|\d+)\w+)/\$datas->{$1}/g;
+    $expr =~ s/\$(_*[a-zA-Z]\w*)/\$datas->{$1}/sg;
 
     return $expr;
 }
