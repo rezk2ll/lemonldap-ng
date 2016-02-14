@@ -79,9 +79,10 @@ sub status {
         $class->lmLog( $@, 'error' ) if ($@);
     }
     return sub {
-        Lemonldap::NG::Handler::API->newRequest(
-            Lemonldap::NG::Common::PSGI::Request->new( $_[0] ) );
-        $class->SUPER::status();
+        my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
+        Lemonldap::NG::Handler::API->newRequest($req);
+        Lemonldap::NG::Handler::SharedConf->status();
+        return [ 200, [ %{ $req->{respHeaders} } ], [ $req->{respBody} ] ];
     };
 }
 
