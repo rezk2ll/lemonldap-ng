@@ -35,7 +35,7 @@ sub run {
     my $marginright = "35%";
     my $height      = "20px";
 
-    my $menudiv = "
+    my $menudiv = qq(
 <style>
 #lemonldap-ng-menu {
     background-color: $background;
@@ -58,11 +58,11 @@ html>body #lemonldap-ng-menu {
     position: fixed;
 }
 </style>
-<div id=\"lemonldap-ng-menu\">
-<a href=\"" . $class->portal() . "\">☖ Home</a>
+<div id="lemonldap-ng-menu">
+<a href=") . $tsv->{portal}->() . qq(">☖ Home</a>
 <span>  </span>
-<a href=\"/logout\">☒ Logout</a>
-</div>";
+<a href=") . $tsv->{portal}->() . qq(?logout=1">☒ Logout</a>
+</div>);
 
     while ( $f->read( my $buffer, BUFF_LEN ) ) {
         $buffer =~ s/<\/body>/$menudiv<\/body>/g;
