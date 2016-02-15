@@ -128,7 +128,6 @@ PORT=80
 VHOSTLISTEN="*:$(PORT)"
 TESTWEBSERVER=apache
 TESTWEBSERVERPORT=19876
-PSGISERVERSOCKET=unix:$(FASTCGISOCKDIR)/llng-fastcgi.sock
 
 # Other
 SRCCOMMONDIR=lemonldap-ng-common
@@ -318,7 +317,7 @@ prepare_test_server:
 		ERASECONFIG=1 \
 		VHOSTLISTEN='*:$(TESTWEBSERVERPORT)' \
 		PORT=$(TESTWEBSERVERPORT) \
-		PSGISERVERSOCKET=unix:`pwd`/e2e-tests/conf/llng.sock \
+		FASTCGISOCKDIR=`pwd`/e2e-tests/conf \
 		PORTALDIR=`pwd`/$(SRCPORTALDIR)/example \
 		MANAGERDIR=`pwd`/$(SRCMANAGERDIR)/site \
 		TESTDIR=`pwd`/e2e-tests/conf/site \
@@ -539,7 +538,7 @@ install_webserver_conf:
 			s#__MANAGERPSGIDIR__#$(MANAGERPSGIDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
 			s#__PORT__#$(PORT)#g; \
-			s#__PSGISERVERSOCKET__#$(PSGISERVERSOCKET)#g; \
+			s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g; \
 			s#__VHOSTLISTEN__#$(VHOSTLISTEN)#g; \
 			s#__DEFDOCDIR__#$(DEFDOCDIR)/#g; \
 			s#__FRDOCDIR__#$(FRDOCDIR)/#g;' $(RCONFDIR)/*apache*.conf $(RCONFDIR)/*nginx*.conf

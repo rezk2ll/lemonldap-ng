@@ -112,7 +112,7 @@ Configure Nginx:
       location = /lmauth {
         internal;
         include /etc/nginx/fastcgi_params;
-        fastcgi_pass __PSGISERVERSOCKET__;
+        fastcgi_pass unix:__FASTCGISOCKDIR__/llng-fastcgi.sock;
         
         # Drop post datas
         fastcgi_pass_request_body  off;
