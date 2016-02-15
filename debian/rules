@@ -38,7 +38,6 @@ override_dh_auto_install:
 			HANDLERDIR=$(LMVARDIR)/handler/ \
 			PORTALSKINSDIR=$(LMSHAREDIR)/portal-skins/ \
 			MANAGERDIR=$(LMSHAREDIR)/manager/ \
-			SESSIONSEXPLORERDATADIR=$(LMSHAREDIR)/sessions-explorer-imgs/ \
 			STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
 			TOOLSDIR=$(LMSHAREDIR)/ressources/ \
 			CONFDIR=/etc/lemonldap-ng/ \

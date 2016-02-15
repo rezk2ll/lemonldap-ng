@@ -64,7 +64,7 @@ Group:          Applications/System
 %else
 Group:          Monitoring
 %endif
-License:        GPL+ or Artistic
+License:        GPL v2
 URL:            http://lemonldap-ng.org
 Source0:        http://lemonldap-ng.org/download/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
@@ -360,7 +360,7 @@ rm -rf %{buildroot}
 	EXAMPLESDIR=%{lm_examplesdir} \
 	HANDLERDIR=%{lm_vardir}/handler \
 	PORTALSKINSDIR=%{lm_sharedir}/portal-skins \
-	MANAGERSKINSDIR=%{lm_sharedir}/manager-skins \
+	MANAGERDIR=%{lm_sharedir}/manager \
 	STORAGECONFFILE=%{lm_storagefile} \
 	TOOLSDIR=%{lm_sharedir}/ressources \
 	CONFDIR=%{lm_confdir} \
