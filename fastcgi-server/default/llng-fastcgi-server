@@ -1,14 +1,11 @@
 # Number of process (default: 7)
 #NPROC = 7
 
-# Portal CGI path
-#PORTAL_PATH = /var/lib/lemonldap-ng/portal
-
 # Unix socket to listen to
-#SOCKET = /run/llng-fastcgi.sock
+#SOCKET = __FASTCGISOCKDIR__/llng-fastcgi.sock
 
 # Pid file
-#PID = /run/llng-fastcgi.pid
+#PID = __FASTCGISOCKDIR__/llng-fastcgi-server.pid
 
 # User and GROUP
 USER  = __USER__

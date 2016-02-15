@@ -110,6 +110,10 @@ RCAPTCHADIR=$(DESTDIR)/$(CAPTCHADIR)
 # Apache user/group
 APACHEUSER=
 APACHEGROUP=
+
+# FastCGI
+FASTCGISOCKDIR=$(PREFIX)/run
+RFASTCGISOCKDIR=$(DESTDIR)/$(FASTCGISOCKDIR)
 FASTCGIUSER=$(APACHEUSER)
 FASTCGIGROUP=$(APACHEGROUP)
 
@@ -447,12 +451,14 @@ install_bin:	install_conf_dir
 	@chmod +x $(RBINDIR)/*
 
 install_fastcgi_server:
-	@install -v -d $(RSBINDIR) $(RINITDIR) $(RETCDEFAULTDIR)
+	@install -v -d $(RSBINDIR) $(RINITDIR) $(RETCDEFAULTDIR) $(RFASTCGISOCKDIR)
 	@cp -f fastcgi-server/sbin/llng-fastcgi-server $(RSBINDIR)
 	@cp -f fastcgi-server/rc/llng-fastcgi-server $(RINITDIR)
 	@cp -f fastcgi-server/default/llng-fastcgi-server $(RETCDEFAULTDIR)
-	$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#' \
-		$(RETCDEFAULTDIR)/llng-fastcgi-server
+	@$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g' \
+		$(RETCDEFAULTDIR)/llng-fastcgi-server \
+		$(RSBINDIR)/llng-fastcgi-server \
+		$(RSBINDIR)/llng-fastcgi-server
 	@if [ ! "$(FASTCGIUSER)" ]; then \
 		$(PERL) -pi -e 's#__USER__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	else \
@@ -462,6 +468,15 @@ install_fastcgi_server:
 		$(PERL) -pi -e 's#__USER__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	else \
 		$(PERL) -pi -e 's#__USER__#$(FASTCGIGROUP)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+	fi
+	if [ "$(FASTCGIUSER)" != "" ]; then \
+		chown $(FASTCGIUSER) $(RFASTCGISOCKDIR) || exit 1; \
+		if [ "$(FASTCGIGROUP)" != "" ]; then \
+			chgrp $(FASTCGIGROUP) $(RFASTCGISOCKDIR) || exit 1; \
+		fi; \
+		chmod 770 $(RFASTCGISOCKDIR); \
+	else \
+		chmod 777 $(RFASTCGISOCKDIR); \
 	fi
 
 #
@@ -619,8 +634,11 @@ install_test_site:
 install_examples_site:
 	# Examples install
 	@install -v -d $(REXAMPLESDIR)
-	@for i in manager portal handler; do \
+	@for i in portal handler; do \
 		cp -a -f lemonldap-ng-$$i/example $(REXAMPLESDIR)/$$i; \
+	done
+	@for i in manager; do \
+		cp -a -f lemonldap-ng-$$i/eg $(REXAMPLESDIR)/$$i; \
 	done
 	@rm -rf $(REXAMPLESDIR)/portal/skins \
 		$(REXAMPLESDIR)/manager/skins \
