@@ -379,6 +379,18 @@
       });
     };
 
+    $scope.duplicateVhost = function() {
+      var name = $scope.domain ? ('.' + $scope.domain.data) : '.example.com';
+      $scope.message = {
+        "title": 'virtualHostName',
+        "field": 'hostname'
+      };
+      $scope.showModal('prompt.html', name).then(function() {
+        var name = $scope.result;
+        return $scope.duplicateNode(name, 'virtualHost');
+      });
+    };
+
     $scope.addSamlIDP = function() {
       $scope.newTemplateNode('samlIDPMetaDataNode', 'samlPartnerName', 'idp-example');
     };
@@ -423,6 +435,18 @@
       cs.expand();
       return t;
     };
+
+    $scope.duplicateNode = function(name, type) {
+      var cs = $scope.currentScope;
+      while (cs.$modelValue.title != type + 's') {
+        cs = cs.$parentNodeScope;
+      }
+      var t = JSON.parse(JSON.stringify($scope.currentNode));
+      t.id = type + "s/" + 'new__' + name;
+      t.title = name;
+      cs.$modelValue.nodes.push(t);
+      return t;
+    }
 
     $scope.del = function(a, i) {
       a.splice(i, 1);
