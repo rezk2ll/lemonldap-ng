@@ -12,7 +12,7 @@ use Lemonldap::NG::Handler::SharedConf qw(:all);
 use Lemonldap::NG::Handler::API qw(:httpCodes);
 use base qw(Lemonldap::NG::Handler::SharedConf);
 use Apache2::Filter ();
-use constant BUFF_LEN => 1024;
+use constant BUFF_LEN => 8192;
 
 ## @rmethod Apache2::Const run(Apache2::Filter f)
 # Overload main run method

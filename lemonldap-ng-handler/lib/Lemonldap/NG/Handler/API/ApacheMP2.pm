@@ -22,6 +22,7 @@ use constant DONE              => Apache2::Const::DONE;
 use constant SERVER_ERROR      => Apache2::Const::SERVER_ERROR;
 use constant AUTH_REQUIRED     => Apache2::Const::AUTH_REQUIRED;
 use constant MAINTENANCE       => Apache2::Const::HTTP_SERVICE_UNAVAILABLE;
+use constant BUFF_LEN          => 8192;
 
 eval { require threads::shared; };
 print STDERR
@@ -230,16 +231,15 @@ sub addToHtmlHead {
     $request->add_output_filter(
         sub {
             my $f = shift;
-            my $buffer;
 
             my $body = $f->ctx || "";
-            $body .= $buffer while ( $f->read($buffer) );
-            unless ( $f->seen_eos ) {
-                $f->ctx($body);
-            }
-            else {
-                $body =~ s/(<\/head>)/$data$1/si
-                  or $body =~ s/(<body>)/$1$data/si;
+            my $done = 0;
+            while ( $f->read( my $buffer, BUFF_LEN ) ) {
+                unless ($done) {
+                    $done = 1
+                      if ( $buffer =~ s/(<\/head>)/$data$1/si
+                        or $buffer =~ s/(<body>)/$1$data/si );
+                }
                 $f->print($body);
             }
             return OK;
