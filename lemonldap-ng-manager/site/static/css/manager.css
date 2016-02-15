@@ -197,7 +197,6 @@ dl,
     min-height: 200px;
     margin-top: 0;
     border: 1px solid #ccc;
-    -webkit-box-shadow: none;
             box-shadow: none;
   }
   #content {
