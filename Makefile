@@ -128,7 +128,7 @@ PORT=80
 VHOSTLISTEN="*:$(PORT)"
 TESTWEBSERVER=apache
 TESTWEBSERVERPORT=19876
-PSGISERVERSOCKET=unix:/run/llng.sock
+PSGISERVERSOCKET=unix:$(FASTCGISOCKDIR)/llng-fastcgi.sock
 
 # Other
 SRCCOMMONDIR=lemonldap-ng-common
@@ -326,7 +326,7 @@ prepare_test_server:
 		DEFDOCDIR=`pwd`/doc \
 		FRDOCDIR=`pwd`/po-doc/fr
 	@cp e2e-tests/lmConf-1.js e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
-	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s/__port__/$(TESTWEBSERVERPORT)/' \
+	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s/__port__/$(TESTWEBSERVERPORT)/;s/__FASTCGISOCKDIR__/$(FASTCGISOCKDIR)/;' \
 		e2e-tests/conf/lemonldap-ng.ini \
 		e2e-tests/conf/lmConf-1.js \
 		e2e-tests/conf/env.conf \
