@@ -9,7 +9,7 @@ use Test::More;
 use Cwd 'abs_path';
 use File::Basename;
 use File::Temp;
-my $numTests = 3;
+my $numTests = 4;
 unless ( eval { require Test::MockObject } ) {
     $numTests = 1;
     warn "Warning: Test::MockObject is needed to run deeper tests\n";
@@ -52,43 +52,40 @@ $LLNG_DEFAULTCONFFILE = $ini->filename;
 $Lemonldap::NG::Handler::API::logLevel = 'error';
 use_ok('Lemonldap::NG::Handler');
 
-if ( $numTests == 3 ) {
+# we don't want to use all Apache::* stuff
+$ENV{MOD_PERL}             = undef;
+$ENV{MOD_PERL_API_VERSION} = 2;
 
-    # we don't want to use all Apache::* stuff
-    $ENV{MOD_PERL}             = undef;
-    $ENV{MOD_PERL_API_VERSION} = 2;
+# Create a fake Apache2::RequestRec
+my $mock = Test::MockObject->new();
+my $ret;
+$mock->fake_module(
+    'Lemonldap::NG::Handler::API',
+    newRequest      => sub { 1 },
+    header_in       => sub { "" },
+    hostname        => sub { 'test.example.com' },
+    is_initial_req  => sub { '1' },
+    remote_ip       => sub { '127.0.0.1' },
+    args            => sub { undef },
+    unparsed_uri    => sub { '/' },
+    uri             => sub { '/' },
+    uri_with_args   => sub { '/' },
+    get_server_port => sub { '80' },
+    set_header_out  => sub { $ret = join( ':', $_[1], $_[2], ); },
+);
 
-    # Create a fake Apache2::RequestRec
-    my $mock = Test::MockObject->new();
-    my $ret;
-    $mock->fake_module(
-        'Lemonldap::NG::Handler::API',
-        newRequest      => sub { 1 },
-        header_in       => sub { "" },
-        hostname        => sub { 'test.example.com' },
-        is_initial_req  => sub { '1' },
-        remote_ip       => sub { '127.0.0.1' },
-        args            => sub { undef },
-        unparsed_uri    => sub { '/' },
-        uri             => sub { '/' },
-        uri_with_args   => sub { '/' },
-        get_server_port => sub { '80' },
-        set_header_out  => sub { $ret = join( ':', $_[1], $_[2], ); },
-    );
+our $apacheRequest;
 
-    our $apacheRequest;
+my $h = bless {}, 'Lemonldap::NG::Handler';
 
-    my $h = bless {}, 'Lemonldap::NG::Handler';
+ok( $h->init() || 1, 'Initialize handler' );
+ok( $h->handler($apacheRequest),
+    'run Handler with basic configuration and no cookie' );
 
-    ok( $h->handler($apacheRequest),
-        'run Handler with basic configuration and no cookie' );
-
-    ok(
-        "$ret" eq
-'Location:http://auth.example.com/?url=aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20v',
-        'testing redirection URL from previous run'
-    );
-
-}
+ok(
+    "$ret" eq
+      'Location:http://auth.example.com/?url=aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20v',
+    'testing redirection URL from previous run'
+);
 
 $LLNG_DEFAULTCONFFILE = undef;
