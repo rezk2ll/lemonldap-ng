@@ -34,7 +34,7 @@ my %builder = (
         require CGI::Emulate::PSGI;
         require CGI::Compile;
         return sub {
-            my $script = $_[0]->{SCRIPT_NAME};
+            my $script = $_[0]->{SCRIPT_FILENAME};
             return $_apps{$script}->(@_) if ( $_apps{$script} );
             eval {
                 $_apps{$script} =

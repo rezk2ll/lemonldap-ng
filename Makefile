@@ -391,7 +391,7 @@ restart_web_server: start_web_server
 plackup:
 	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
 	plackup -s FCGI \
-		--listen e2e-tests/conf/llng.sock \
+		--listen e2e-tests/conf/llng-fastcgi.sock \
 		--pid e2e-tests/conf/plackup.pid \
 		--nproc 1 --proc-title llng-fastcgi-server \
 		--no-default-middleware \
