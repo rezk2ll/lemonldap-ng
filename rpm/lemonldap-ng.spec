@@ -539,7 +539,8 @@ rm -rf %{buildroot}
 
 %files -n lemonldap-ng-manager
 %defattr(-,root,root,-)
-%{lm_vardir}/manager
+%{lm_sharedir}/manager
+%{lm_examplesdir}/manager
 %{lm_sharedir}/bin/lmConfigEditor
 %{lm_sharedir}/bin/lemonldap-ng-cli
 %doc %{_mandir}/man1/lemonldap-ng-cli*
