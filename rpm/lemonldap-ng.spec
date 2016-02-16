@@ -356,6 +356,7 @@ rm -rf %{buildroot}
 	PREFIX=%{lm_prefix} \
 	BINDIR=%{lm_sharedir}/bin \
 	SBINDIR=%{lm_sharedir}/sbin \
+	FASTCGISOCKDIR=/var/run/llng-fastcgi-server \
 	DOCUMENTROOT=%{lm_vardir} \
 	EXAMPLESDIR=%{lm_examplesdir} \
 	HANDLERDIR=%{lm_vardir}/handler \

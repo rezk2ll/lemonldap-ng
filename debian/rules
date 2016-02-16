@@ -33,6 +33,7 @@ override_dh_auto_install:
 			LMPREFIX=/usr/share/lemonldap-ng/ \
 			BINDIR=$(LMSHAREDIR)/bin/ \
 			SBINDIR=/usr/sbin \
+			FASTCGISOCKDIR=/var/run/llng-fastcgi-server \
 			DOCUMENTROOT=$(LMVARDIR) \
 			EXAMPLESDIR=/examples/ \
 			HANDLERDIR=$(LMVARDIR)/handler/ \

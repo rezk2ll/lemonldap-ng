@@ -20,7 +20,7 @@ $opts{g} ||= $ENV{GROUP};
 
 if ( $opts{g} ) {
     my $grp = getgrnam( $opts{g} ) or warn "Can't change uid to $opts{g}";
-    POSIX::setuid($grp);
+    POSIX::setgid($grp);
 }
 
 if ( $opts{u} ) {
