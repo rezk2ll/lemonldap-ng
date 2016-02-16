@@ -18,7 +18,7 @@ Form files must contain only HTML that will be included in the manager DOM
 *(in `#form` div)*. It **must** consist of two blocks:
 
 * a `<div class="panel panel-default">` div that contains the form,
-* a `<script type="text/javascript">` script that defines which item to display
+* a `<script type="text/menu">` script that defines which item to display
   in context menu.
 
 Basic example:
@@ -34,10 +34,10 @@ Basic example:
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-    buttons=[{
+    <script type="text/menu">
+    [{
       "title": "cancel"
-    }];
+    }]
     </script>
 
 ## 2. Form main div
@@ -86,14 +86,14 @@ of the file:
 
 Empty context menu:
 
-    <script type="text/javascript">
-    buttons=[];
+    <script type="text/menu">
+    []
     </script>
 
 Else:
 
-    <script type="text/javascript">
-    buttons=[
+    <script type="text/menu">
+    [
       {<menu item1>},
       {<menu item2>},
       {<menu item3>}
@@ -106,8 +106,8 @@ Else:
 
 Menu item is a javascript object with at least the key `title`.
 
-    <script type="text/javascript">
-    buttons=[
+    <script type="text/menu">
+    [
       { "title": "cancel" }
     ]
     </script>
@@ -122,8 +122,8 @@ access to controller properties and methods.
 You can have sub items simply using `buttons` key which must then be an array
 of menu items.
 
-    <script type="text/javascript">
-    buttons=[{
+    <script type="text/menu">
+    [{
       "title": "textToTranslate",
       "buttons": [
         { "title": "cancel" },
@@ -134,8 +134,8 @@ of menu items.
 
 #### 3.1.3. Specify function to use
 
-    <script type="text/javascript">
-    buttons=[{
+    <script type="text/menu">
+    [{
       "title": "addVirtualHost",
       "action": "addVhost"
     }]
@@ -145,8 +145,8 @@ Same as below except that it will launch `$scope.addVhost()`.
 
 #### 3.1.4. Custom function
 
-    <script type="text/javascript">
-    buttons=[{
+    <script type="text/menu">
+    [{
       "title": "addVirtualHost",
       "action": function(currentNode,currentScope){
         doSomethingWith(currentNode);
@@ -168,8 +168,8 @@ You can access to the parent using this:
 
 #### 3.1.5 Icons
 
-    <script type="text/javascript">
-    buttons=[{
+    <script type="text/menu">
+    [{
       "title": "addVirtualHost",
       "action": "addVhost",
       "icon": "plus-sign",

@@ -31,8 +31,8 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">
-buttons=[{
+<script type="text/menu">
+[{
  "title": "newRSAKey",
  "icon": "plus-sign"
 },{
@@ -41,5 +41,5 @@ buttons=[{
   "action": function(cs,scope) {
     scope.saveAs(cs.data[0].data+"\n"+cs.data[2].data,'application/x-pem-file',cs.title+'.pem');
   }
-}];
+}]
 </script>

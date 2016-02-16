@@ -38,7 +38,7 @@
                 </ul>
               </li>
               <li><a class="link hidden-xs" ng-click="setShowHelp()"><i class="glyphicon" ng-class="{'glyphicon-eye-close': showH,'glyphicon-eye-open': !showH}" ></i> {{ translate((showH ? 'hideHelp' : 'showHelp')) }}</a></li>
-              <li ng-repeat="button in buttons" ng-include="'menubutton.html'"></li>
+              <li ng-repeat="button in menu()" ng-include="'menubutton.html'"></li>
               <li uib-dropdown class="visible-xs">
                 <a id="langmenu" name="menu" uib-dropdown-toggle data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{translate('menu')}} <span class="caret"></span></a>
                 <ul uib-dropdown-menu aria-labelled-by="langmenu">
@@ -50,7 +50,7 @@
             </ul>
           </div>
         </div>
-        <form class="form-group slide-animate-container" ng-include="formPrefix+form+'.html'" scope="$scope" onload="setButtons()" />
+        <form class="form-group slide-animate-container" ng-include="formPrefix+form+'.html'" scope="$scope" />
       </div>
       <!-- Help container -->
       <div id="bottom" ng-if="showH" class="hidden-xs">

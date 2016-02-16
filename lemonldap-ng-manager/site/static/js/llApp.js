@@ -129,6 +129,37 @@
     }
   }]);
 
+  llapp.provider('$htmlParams', $HtmlParamsProvider);
+  function $HtmlParamsProvider() {
+    this.$get = function() {
+      var params = {};
+      return {
+        set: function(key, obj) {
+          params[key] = obj;
+        },
+        menu: function() {
+          return params.menu;
+        },
+        params: function() {
+          return params.params;
+        }
+      };
+    };
+  }
+
+  llapp.directive('script', ['$htmlParams', function($htmlParams) {
+    return {
+      restrict: 'E',
+      terminal: true,
+      compile: function(element, attr) {
+        var t;
+        if (t = attr.type.match(/text\/(menu|parameters)/)) {
+          $htmlParams.set(t[1], eval(element[0].text));
+        }
+      }
+    }
+  }]);
+
   /* Modal controller
    *
    * Used to display messages

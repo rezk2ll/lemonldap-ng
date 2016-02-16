@@ -15,9 +15,10 @@
   /* Main AngularJS controller
    *
    */
-  llapp.controller('TreeCtrl', ['$scope', '$http', '$location', '$q', '$uibModal', '$translator', '$cookies', function($scope, $http, $location, $q, $uibModal, $translator, $cookies) {
+  llapp.controller('TreeCtrl', ['$scope', '$http', '$location', '$q', '$uibModal', '$translator', '$cookies', '$htmlParams', function($scope, $http, $location, $q, $uibModal, $translator, $cookies, $htmlParams) {
 
     $scope.links = links;
+    $scope.menu = $htmlParams.menu;
     $scope.menulinks = menulinks;
     $scope.staticPrefix = staticPrefix;
     $scope.formPrefix = formPrefix;
@@ -126,11 +127,6 @@
       });
       return modalInstance.result;
     }
-
-    /* Set form menu */
-    $scope.setButtons = function() {
-      $scope.buttons = buttons;
-    };
 
     /* Manage form menu clicks */
     $scope.menuClick = function(button) {
