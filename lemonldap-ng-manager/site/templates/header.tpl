@@ -10,11 +10,11 @@
 <!-- //if:usedebianlibs
   <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap-theme.min.css" />
-  <link rel="stylesheet" type="text/css" href="css/manager.min.css" />
+  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">css/manager.min.css" />
 //elsif:useexternallibs
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"></script>
-  <link rel="stylesheet" type="text/css" href="css/manager.min.css" />
+  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">css/manager.min.css" />
 //elsif:cssminified
   <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/css/bootstrap-theme.min.css" />
