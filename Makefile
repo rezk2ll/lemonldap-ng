@@ -588,7 +588,12 @@ install_portal_site:	install_conf_dir
 	@cp -pR -f ${SRCPORTALDIR}/example/register.pl ${RPORTALDIR}
 	@tar -cf - -C ${SRCPORTALDIR}/example/skins/ $$(ls ${SRCPORTALDIR}/example/skins/) |tar -xf - -C $(RPORTALSKINSDIR)
 	@for f in `find $(RPORTALSKINSDIR) -type f -name '*.tpl'`; do \
-		./scripts/transform-templates usedebianlibs $(USEDEBIANLIBS) jsminified $(JSCOMPRESS) cssminified $(CSSCOMPRESS) <$$f >$$f.tmp; \
+		./scripts/transform-templates \
+			usedebianlibs $(USEDEBIANLIBS) \
+			useexternallibs $(USEEXTERNALLIBS) \
+			jsminified $(JSCOMPRESS) \
+			cssminified $(CSSCOMPRESS) <$$f \
+			>$$f.tmp; \
 		mv -f $$f.tmp $$f; \
 	done
 	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
