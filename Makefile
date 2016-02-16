@@ -399,6 +399,9 @@ plackup:
 		--keep-stderr 1 \
 		>e2e-tests/conf/fastcgi.log 2>&1 &
 
+install_test:
+	@TESTWEBSERVERPORT=$(PORT) protractor e2e-tests/protractor-conf.js
+
 #
 # INSTALL
 #
