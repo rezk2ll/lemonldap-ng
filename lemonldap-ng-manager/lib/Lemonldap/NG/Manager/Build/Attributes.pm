@@ -15,6 +15,10 @@ my $perlExpr = sub {
     return $@ ? ( 0, "__badExpression__: $@" ) : (1);
 };
 
+my $url = $RE{URI}{HTTP}{-scheme=>"https?"};
+$url =~ s/(?<=[^\\])\$/\\\$/g;
+$url = qr/$url/;
+
 sub types {
     return {
 
@@ -32,7 +36,7 @@ sub types {
         },
         url => {
             form    => 'text',
-            test    => qr/^$RE{URI}{HTTP}{-scheme=>"https?"}$/,
+            test    => $url,
             msgFail => '__badUrl__',
         },
         PerlModule => {
@@ -281,7 +285,7 @@ sub attributes {
             type    => 'keyTextContainer',
             help    => 'configlocation.html#configuration_reload',
             keyTest => qr/^$Regexp::Common::URI::RFC2396::host(?::\d+)?$/,
-            test    => qr/^$RE{URI}{HTTP}{-scheme=>"https?"}$/,
+            test    => $url,
             msgFail => '__badUrl__'
         },
         staticPrefix => {
@@ -1204,12 +1208,12 @@ sub attributes {
         },
         samlCommonDomainCookieReader => {
             type    => 'text',
-            test    => qr/^$RE{URI}{HTTP}{-scheme=>"https?"}$/,
+            test    => $url,
             msgFail => '__badUrl__',
         },
         samlCommonDomainCookieWriter => {
             type    => 'text',
-            test    => qr/^$RE{URI}{HTTP}{-scheme=>"https?"}$/,
+            test    => $url,
             msgFail => '__badUrl__',
         },
         samlRelayStateTimeout => {
@@ -1796,7 +1800,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         CAS_url => {
             type    => 'text',
-            test    => qr/^$RE{URI}{HTTP}{-scheme=>"https?"}$/,
+            test    => $url,
             msgFail => '__badUrl__',
         },
         CAS_CAFile  => { type => 'text', },
