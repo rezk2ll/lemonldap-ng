@@ -188,7 +188,7 @@
         $scope.data.push({
           "id": "cfgLog",
           "title": "cfgLog",
-          "data": $scope.result
+          "data": $scope.result ? $scope.result : ''
         });
         $http.post(confPrefix + '?cfgNum=' + $scope.currentCfg.cfgNum + ($scope.forceSave ? "&force=1" : ''), $scope.data).success(function(data) {
           $scope.data.pop();
