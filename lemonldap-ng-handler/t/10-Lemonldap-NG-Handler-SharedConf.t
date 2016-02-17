@@ -84,7 +84,7 @@ ok( $h->run($apacheRequest),
 
 ok(
     "$ret" eq
-      'Location:http://auth.example.com/?url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
+'Location:http://auth.example.com/?url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
     'testing redirection URL from previous run'
 ) or print STDERR "Got: $ret\n";
 

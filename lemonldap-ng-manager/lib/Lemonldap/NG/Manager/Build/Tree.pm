@@ -101,8 +101,8 @@ sub tree {
                     title => 'authParams',
                     help =>
                       'start.html#authentication_users_and_password_databases',
-                    form  => 'authParams',
-                    nodes => [ 'authentication', 'userDB', 'passwordDB' ],
+                    form       => 'authParams',
+                    nodes      => [ 'authentication', 'userDB', 'passwordDB' ],
                     nodes_cond => [
                         {
                             title => 'adParams',
@@ -689,7 +689,7 @@ sub tree {
                                 'samlServicePublicKeyEnc'
                             ]
                         },
-			'samlServiceUseCertificateInResponse'
+                        'samlServiceUseCertificateInResponse'
                     ]
                 },
                 {

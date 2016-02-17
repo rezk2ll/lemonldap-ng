@@ -71,7 +71,9 @@ ok(
     'Bad cookie'
 );
 ok( $res->[0] == 302, 'Code is 302' ) or explain( $res->[0], 302 );
-unlink('t/sessions/lock/Apache-Session-e5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545.lock');
+unlink(
+'t/sessions/lock/Apache-Session-e5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545.lock'
+);
 
 count(2);
 
