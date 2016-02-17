@@ -100,6 +100,7 @@ sub serverSignatureInit {
 # Launch the status process
 sub statusInit {
     my ( $class, $tsv ) = @_;
+    return if ( $tsv->{statusPipe} and $tsv->{statusOut} );
     require IO::Pipe;
     $statusPipe = IO::Pipe->new;
     $statusOut  = IO::Pipe->new;

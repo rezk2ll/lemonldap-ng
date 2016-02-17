@@ -137,8 +137,8 @@ sub _mustBeDefined {
 }
 
 sub init {
-    my ( $self, $args ) = @_;
-    unless ( ref $args ) {
+    my($self,$args) = @_;
+    unless(ref $args) {
         $self->error('init argument must be a hashref');
         return 0;
     }
