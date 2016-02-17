@@ -12,7 +12,7 @@ our $_json = JSON->new->allow_nonref;
 
 has error        => ( is => 'rw', default => '' );
 has languages    => ( is => 'rw', isa     => 'Str', default => 'en' );
-has logLevel     => ( is => 'rw', isa     => 'Str' );
+has logLevel     => ( is => 'rw', isa     => 'Str', default => 'info' );
 has staticPrefix => ( is => 'rw', isa     => 'Str' );
 has templateDir  => ( is => 'rw', isa     => 'Str' );
 has links        => ( is => 'rw', isa     => 'ArrayRef' );
@@ -137,8 +137,8 @@ sub _mustBeDefined {
 }
 
 sub init {
-    my($self,$args) = @_;
-    unless(ref $args) {
+    my ( $self, $args ) = @_;
+    unless ( ref $args ) {
         $self->error('init argument must be a hashref');
         return 0;
     }

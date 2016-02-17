@@ -59,7 +59,8 @@ sub handler {
     my ( $self, $req ) = @_;
     my $hdrs = $req->{respHeaders};
     $req->{respHeaders} = {};
-    my @convertedHdrs = ( 'Content-Length' => 0, Cookie => $req->cookies );
+    my @convertedHdrs =
+      ( 'Content-Length' => 0, Cookie => ( $req->cookies // '' ) );
     my $i = 0;
     foreach my $k ( keys %$hdrs ) {
         if ( $k =~ /^(?:Lm-Remote-User|Cookie)$/ ) {
