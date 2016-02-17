@@ -15,7 +15,7 @@ my $perlExpr = sub {
     return $@ ? ( 0, "__badExpression__: $@" ) : (1);
 };
 
-my $url = $RE{URI}{HTTP}{-scheme=>"https?"};
+my $url = $RE{URI}{HTTP}{ -scheme => "https?" };
 $url =~ s/(?<=[^\\])\$/\\\$/g;
 $url = qr/$url/;
 
@@ -887,6 +887,9 @@ sub attributes {
                 test       => sub {
                     my ( $val, $conf ) = @_;
                     my $s = $val;
+                    if ( $s =~ s/^logout(?:_(?:sso|app|app_sso))?\s*// ) {
+                        return $s =~ m{^(?:https?://.*)?$} ? (1) : ( 0, '__badUrl__' );
+                    }
                     $s =~ s/\b(accept|deny)\b/1/g;
                     foreach my $f (
                         split(

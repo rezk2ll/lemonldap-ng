@@ -1081,6 +1081,11 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                 'test'    => sub {
                     my ( $val, $conf ) = @_;
                     my $s = $val;
+                    if ( $s =~ s/^logout(?:_(?:sso|app|app_sso))?\s*// ) {
+                        return $s =~ m[^(?:https?://.*)?$]
+                          ? 1
+                          : ( 0, '__badUrl__' );
+                    }
                     $s =~ s/\b(accept|deny)\b/1/g;
                     foreach my $f (
                         split(
