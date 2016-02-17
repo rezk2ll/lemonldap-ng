@@ -986,7 +986,7 @@ sub applyConf {
     # Create user agent
     require LWP::UserAgent;
     my $ua = new LWP::UserAgent( requests_redirectable => [] );
-    $ua->timeout(10);
+    $ua->timeout(3);
 
     # Parse apply values
     while ( my ( $host, $request ) = each %reloadUrls ) {
