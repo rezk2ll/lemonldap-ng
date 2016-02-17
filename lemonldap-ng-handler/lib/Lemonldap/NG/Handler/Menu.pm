@@ -14,6 +14,11 @@ use base qw(Lemonldap::NG::Handler::SharedConf);
 use Apache2::Filter ();
 use constant BUFF_LEN => 8192;
 
+sub handler {
+    my $r = pop;
+    __PACKAGE__->run($r);
+}
+
 ## @rmethod Apache2::Const run(Apache2::Filter f)
 # Overload main run method
 # @param f Apache2 Filter
