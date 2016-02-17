@@ -11,7 +11,19 @@ use strict;
 use Regexp::Common qw/URI/;
 
 my $perlExpr = sub {
-    my $s = eval $_[0];
+    my ( $val, $conf ) = @_;
+    my $s = '';
+    my @cf =
+      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch);
+    push @cf,
+      defined $conf->{customFunctions}
+      ? map { my $f = $_; $f =~ s/\w+:://g; ( $f, $_ ) }
+      split( /\s+/, $conf->{customFunctions} )
+      : ();
+    foreach my $f (@cf) {
+        $s = "sub $f {1} $s";
+    }
+    eval "$s $val";
     return $@ ? ( 0, "__badExpression__: $@" ) : (1);
 };
 

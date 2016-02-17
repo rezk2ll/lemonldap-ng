@@ -22,7 +22,25 @@ sub types {
         'boolOrExpr' => {
             'msgFail' => '__notAValidPerlExpression__',
             'test'    => sub {
-                my $s = eval $_[0];
+                my ( $val, $conf ) = @_;
+                my $s = '';
+                my (@cf) = (
+                    'encode_base64', 'checkLogonHours',
+                    'date',          'checkDate',
+                    'basic',         'unicode2iso',
+                    'iso2unicode',   'groupMatch'
+                );
+                push @cf, defined $conf->{'customFunctions'}
+                  ? map( {
+                        my $f = $_;
+                          $f =~ s/\w+:://g;
+                          $f, $_;
+                    } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
+                  : ();
+                foreach my $f (@cf) {
+                    $s = "sub $f {1} $s";
+                }
+                eval "$s $val";
                 return $@ ? ( 0, "__badExpression__: $@" ) : 1;
               }
         },
@@ -814,7 +832,25 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'grantSessionRules' => {
             'keyTest' => sub {
-                my $s = eval $_[0];
+                my ( $val, $conf ) = @_;
+                my $s = '';
+                my (@cf) = (
+                    'encode_base64', 'checkLogonHours',
+                    'date',          'checkDate',
+                    'basic',         'unicode2iso',
+                    'iso2unicode',   'groupMatch'
+                );
+                push @cf, defined $conf->{'customFunctions'}
+                  ? map( {
+                        my $f = $_;
+                          $f =~ s/\w+:://g;
+                          $f, $_;
+                    } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
+                  : ();
+                foreach my $f (@cf) {
+                    $s = "sub $f {1} $s";
+                }
+                eval "$s $val";
                 return $@ ? ( 0, "__badExpression__: $@" ) : 1;
             },
             'test' => sub {
@@ -825,7 +861,25 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'groups' => {
             'default' => {},
             'test'    => sub {
-                my $s = eval $_[0];
+                my ( $val, $conf ) = @_;
+                my $s = '';
+                my (@cf) = (
+                    'encode_base64', 'checkLogonHours',
+                    'date',          'checkDate',
+                    'basic',         'unicode2iso',
+                    'iso2unicode',   'groupMatch'
+                );
+                push @cf, defined $conf->{'customFunctions'}
+                  ? map( {
+                        my $f = $_;
+                          $f =~ s/\w+:://g;
+                          $f, $_;
+                    } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
+                  : ();
+                foreach my $f (@cf) {
+                    $s = "sub $f {1} $s";
+                }
+                eval "$s $val";
                 return $@ ? ( 0, "__badExpression__: $@" ) : 1;
             },
             'type' => 'keyTextContainer'
@@ -1121,7 +1175,25 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => {},
             'keyTest' => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
             'test'    => sub {
-                my $s = eval $_[0];
+                my ( $val, $conf ) = @_;
+                my $s = '';
+                my (@cf) = (
+                    'encode_base64', 'checkLogonHours',
+                    'date',          'checkDate',
+                    'basic',         'unicode2iso',
+                    'iso2unicode',   'groupMatch'
+                );
+                push @cf, defined $conf->{'customFunctions'}
+                  ? map( {
+                        my $f = $_;
+                          $f =~ s/\w+:://g;
+                          $f, $_;
+                    } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
+                  : ();
+                foreach my $f (@cf) {
+                    $s = "sub $f {1} $s";
+                }
+                eval "$s $val";
                 return $@ ? ( 0, "__badExpression__: $@" ) : 1;
             },
             'type' => 'keyTextContainer'
@@ -1718,7 +1790,25 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'portalSkinRules' => {
             'keyTest' => sub {
-                my $s = eval $_[0];
+                my ( $val, $conf ) = @_;
+                my $s = '';
+                my (@cf) = (
+                    'encode_base64', 'checkLogonHours',
+                    'date',          'checkDate',
+                    'basic',         'unicode2iso',
+                    'iso2unicode',   'groupMatch'
+                );
+                push @cf, defined $conf->{'customFunctions'}
+                  ? map( {
+                        my $f = $_;
+                          $f =~ s/\w+:://g;
+                          $f, $_;
+                    } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
+                  : ();
+                foreach my $f (@cf) {
+                    $s = "sub $f {1} $s";
+                }
+                eval "$s $val";
                 return $@ ? ( 0, "__badExpression__: $@" ) : 1;
             },
             'msgFail' => '__badValue__',
