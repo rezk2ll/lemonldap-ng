@@ -682,7 +682,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'customFunctions' => {
             'msgFail' => '__badCustomFuncName__',
-            'test'    => qr/^(?:\w+(?:\s+\w+)*)?$/,
+            'test'    => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
             'type'    => 'text'
         },
         'dbiAuthChain' => {
@@ -1095,8 +1095,6 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                         )
                       )
                     {
-                        return 0, "__badCustomFuncName__ $f"
-                          unless $f =~ /^[a-zA-Z]\w*$/;
                         $s = "sub $f {1} $s";
                     }
                     eval $s;

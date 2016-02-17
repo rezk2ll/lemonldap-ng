@@ -225,7 +225,7 @@ sub attributes {
         },
         customFunctions => {
             type          => 'text',
-            test          => qr/^(?:\w+(?:\s+\w+)*)?$/,
+            test          => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,
             msgFail       => "__badCustomFuncName__",
             documentation => 'List of custom functions'
         },
@@ -900,8 +900,6 @@ sub attributes {
                         )
                       )
                     {
-                        return ( 0, "__badCustomFuncName__ $f" )
-                          unless ( $f =~ /^[a-zA-Z]\w*$/ );
                         $s = "sub $f {1} $s";
                     }
                     eval $s;
