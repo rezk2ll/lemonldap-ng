@@ -85,6 +85,7 @@ sub init($$) {
 
     # * launch status process
     $class->statusInit($tsv) if ( $localConfig->{status} );
+    1;
 }
 
 # @method void serverSignatureInit

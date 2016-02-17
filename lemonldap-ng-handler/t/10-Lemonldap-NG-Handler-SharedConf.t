@@ -63,7 +63,7 @@ $mock->fake_module(
     'Lemonldap::NG::Handler::API',
     newRequest      => sub { 1 },
     header_in       => sub { "" },
-    hostname        => sub { 'test.example.com' },
+    hostname        => sub { 'test1.example.com' },
     is_initial_req  => sub { '1' },
     remote_ip       => sub { '127.0.0.1' },
     args            => sub { undef },
@@ -78,14 +78,14 @@ our $apacheRequest;
 
 my $h = bless {}, 'Lemonldap::NG::Handler';
 
-ok( $h->init() || 1, 'Initialize handler' );
-ok( $h->handler($apacheRequest),
+ok( $h->init(), 'Initialize handler' );
+ok( $h->run($apacheRequest),
     'run Handler with basic configuration and no cookie' );
 
 ok(
     "$ret" eq
-      'Location:http://auth.example.com/?url=aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20v',
+      'Location:http://auth.example.com/?url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
     'testing redirection URL from previous run'
-);
+) or print STDERR "Got: $ret\n";
 
 $LLNG_DEFAULTCONFFILE = undef;
