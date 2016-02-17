@@ -48,7 +48,10 @@ has app => (
         return $module->run(
             {
                 configStorage => { type => 'File', dirName => 't' },
-                logLevel      => 'warn'
+                logLevel      => 'warn',
+                cookieName    => 'lemonldap',
+                securedCookie => 0,
+                https         => 0,
             }
         );
     }
@@ -76,7 +79,7 @@ sub _get {
               'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
             'REMOTE_ADDR' => '127.0.0.1',
             'HTTP_HOST'   => $host,
-            ( $cookie ? ( HTTP_COOKIE => $cookie ) : () )
+            ( $cookie ? ( HTTP_COOKIE => $cookie ) : ( HTTP_COOKIE => '' ) )
         }
     );
 }

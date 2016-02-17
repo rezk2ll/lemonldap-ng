@@ -51,8 +51,9 @@ sub AUTOLOAD {
           (
             ( caller(1) )[0] =~
               /^Lemonldap::NG::Handler::(?:Nginx|PSGI::Server)$/
-              or ( caller(6) )[0] =~
-              /^Lemonldap::NG::Handler::(?:Nginx|PSGI::Server)$/
+              or ( caller(6)
+                and ( caller(6) )[0] =~
+                /^Lemonldap::NG::Handler::(?:Nginx|PSGI::Server)$/ )
           ) ? 'PSGI/Server'
           : (
             ( caller(0) )[0] =~ /^Lemonldap::NG::Handler::PSGI/
