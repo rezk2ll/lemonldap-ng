@@ -39,7 +39,7 @@
       var d = new Date(Date.now());
       d.setFullYear(d.getFullYear() + 1);
       $cookies.put('showhelp', (val ? 'true' : 'false'), {
-        "expires": d
+        expires: d
       });
     }
     $scope.showH = ($cookies.get('showhelp') === 'false' ? false : true);
@@ -155,9 +155,9 @@
 
     var _checkSaveResponse = function(data) {
       $scope.message = {
-        'title': '',
-        'message': '',
-        'items': [],
+        title: '',
+        message: '',
+        items: []
       };
       if (data.message && data.message == '__needConfirmation__') {
         $scope.confirmNeeded = true;
@@ -186,9 +186,9 @@
       $scope.showModal('save.html').then(function() {
         $scope.waiting = true;
         $scope.data.push({
-          "id": "cfgLog",
-          "title": "cfgLog",
-          "data": $scope.result ? $scope.result : ''
+          id: "cfgLog",
+          title: "cfgLog",
+          data: $scope.result ? $scope.result : ''
         });
         $http.post(confPrefix + '?cfgNum=' + $scope.currentCfg.cfgNum + ($scope.forceSave ? "&force=1" : ''), $scope.data).success(function(data) {
           $scope.data.pop();
@@ -248,12 +248,12 @@
       var l = node.nodes.length;
       var n = l > 0 ? l - 1 : 0;
       node.nodes.splice(n, 0, {
-        "id": node.id + '/n' + (id++),
-        "title": 'New rule',
-        "re": '1',
-        "comment": 'New rule',
-        "data": 'Message',
-        "type": "grant"
+        id: node.id + '/n' + (id++),
+        title: 'New rule',
+        re: '1',
+        comment: 'New rule',
+        data: 'Message',
+        type: "grant"
       });
     };
 
@@ -263,12 +263,12 @@
       var l = node.nodes.length;
       var n = l > 0 ? l - 1 : 0;
       node.nodes.splice(n, 0, {
-        "id": node.id + '/n' + (id++),
-        "title": 'New rule',
-        "re": '^/new',
-        "comment": 'New rule',
-        "data": 'accept',
-        "type": "rule"
+        id: node.id + '/n' + (id++),
+        title: 'New rule',
+        re: '^/new',
+        comment: 'New rule',
+        data: 'accept',
+        type: "rule"
       });
     };
 
@@ -276,10 +276,10 @@
     $scope.newPost = function() {
       var node = $scope._findContainer();
       node.nodes.push({
-        "id": node.id + '/n' + (id++),
-        "title": "/absolute/path/to/form",
-        "data": {},
-        "type": "post"
+        id: node.id + '/n' + (id++),
+        title: "/absolute/path/to/form",
+        data: {},
+        type: "post"
       });
     };
 
@@ -292,10 +292,10 @@
     $scope.newAuthChoice = function() {
       var node = $scope._findContainer();
       node.nodes.push({
-        "id": node.id + '/n' + (id++),
-        "title": "1_Key",
-        "data": ['Null', 'Null', 'Null'],
-        "type": "authChoice"
+        id: node.id + '/n' + (id++),
+        title: "1_Key",
+        data: ['Null', 'Null', 'Null'],
+        type: "authChoice"
       });
       $scope.execFilters($scope._findScopeByKey('authParams'));
     };
@@ -304,10 +304,10 @@
     $scope.newHashEntry = function() {
       var node = $scope._findContainer();
       node.nodes.push({
-        "id": node.id + '/n' + (id++),
-        "title": 'new',
-        "data": '',
-        "type": "keyText"
+        id: node.id + '/n' + (id++),
+        title: 'new',
+        data: '',
+        type: "keyText"
       });
     }
 
@@ -316,10 +316,10 @@
       var cs = $scope.currentScope;
       if (cs.$modelValue.type == 'menuApp') cs = cs.$parentNodeScope;
       cs.$modelValue.nodes.push({
-        "id": cs.$modelValue.id + '/n' + (id++),
-        "title": "New category",
-        "type": "menuCat",
-        "nodes": []
+        id: cs.$modelValue.id + '/n' + (id++),
+        title: "New category",
+        type: "menuCat",
+        nodes: []
       });
     };
 
@@ -328,14 +328,14 @@
       var cs = $scope.currentScope;
       if (cs.$modelValue.type == 'menuApp') cs = cs.$parentNodeScope;
       cs.$modelValue.nodes.push({
-        "id": cs.$modelValue.id + '/n' + (id++),
-        "title": "New application",
-        "type": "menuApp",
-        "data": {
-          "description": "New app description",
-          "uri": "https://test.example.com/",
-          "logo": "network.png",
-          "display": "auto"
+        id: cs.$modelValue.id + '/n' + (id++),
+        title: "New application",
+        type: "menuApp",
+        data: {
+          description: "New app description",
+          uri: "https://test.example.com/",
+          logo: "network.png",
+          display: "auto"
         }
       });
     };
@@ -344,10 +344,10 @@
     $scope.addSamlAttribute = function() {
       var node = $scope._findContainer();
       node.nodes.push({
-        "id": node.id + '/n' + (id++),
-        "title": 'new',
-        'type': 'samlAttribute',
-        'data': [0, 'New', '', '']
+        id: node.id + '/n' + (id++),
+        title: 'new',
+        type: 'samlAttribute',
+        data: [0, 'New', '', '']
       });
     };
 
@@ -355,8 +355,8 @@
     $scope.addVhost = function() {
       var name = $scope.domain ? ('.' + $scope.domain.data) : '.example.com';
       $scope.message = {
-        "title": 'virtualHostName',
-        "field": 'hostname'
+        title: 'virtualHostName',
+        field: 'hostname'
       };
       $scope.showModal('prompt.html', name).then(function() {
         var name = $scope.result;
@@ -364,12 +364,12 @@
           var node = $scope.addTemplateNode(name, 'virtualHost');
           delete node.nodes[0].cnodes;
           node.nodes[0].nodes = [{
-            "id": "virtualHosts/" + 'new__' + name + '/locationRules/default',
-            "type": "rule",
-            "title": "default",
-            "comment": "",
-            "re": "default",
-            "data": "deny"
+            id: "virtualHosts/" + 'new__' + name + '/locationRules/default',
+            type: "rule",
+            title: "default",
+            comment: "",
+            re: "default",
+            data: "deny"
           }];
         }
       });
@@ -378,8 +378,8 @@
     $scope.duplicateVhost = function() {
       var name = $scope.domain ? ('.' + $scope.domain.data) : '.example.com';
       $scope.message = {
-        "title": 'virtualHostName',
-        "field": 'hostname'
+        title: 'virtualHostName',
+        field: 'hostname'
       };
       $scope.showModal('prompt.html', name).then(function() {
         var name = $scope.result;
@@ -405,8 +405,8 @@
 
     $scope.newTemplateNode = function(type, title, init) {
       $scope.message = {
-        "title": title,
-        "field": 'name'
+        title: title,
+        field: 'name'
       };
       $scope.showModal('prompt.html', init).then(function() {
         var name = $scope.result;
@@ -422,10 +422,10 @@
         cs = cs.$parentNodeScope;
       }
       var t = {
-        "id": type + "s/" + 'new__' + name,
-        "title": name,
-        "type": type,
-        "nodes": templates(type, 'new__' + name)
+        id: type + "s/" + 'new__' + name,
+        title: name,
+        type: type,
+        nodes: templates(type, 'new__' + name)
       };
       cs.$modelValue.nodes.push(t);
       cs.expand();
@@ -608,11 +608,6 @@
     $scope.openCnode = function(scope) {
       $scope.download(scope).then(function() {
         scope.toggle();
-      },
-      function(reason) {
-        if (typeof reason == 'string') {
-          alert(reason);
-        }
       });
     }
 
@@ -676,7 +671,7 @@
         var currentNode = $scope.currentNode;
         var password = $scope.result;
         $http.post(confPrefix + '/newRSAKey', {
-          "password": password
+          password: password
         }).success(function(data) {
           currentNode.data[0].data = data['private'];
           currentNode.data[1].data = password;
@@ -692,9 +687,8 @@
     $scope.newRSAKeyNoPassword = function() {
       $scope.waiting = true;
       var currentNode = $scope.currentNode;
-      var password = $scope.result;
       $http.post(confPrefix + '/newRSAKey', {
-        "password": ''
+        password: ''
       }).success(function(data) {
         currentNode.data[0].data = data['private'];
         currentNode.data[1].data = data['public'];
@@ -850,7 +844,7 @@
     $scope.replaceContentByUrl = function(node, url) {
       $scope.waiting = true;
       $http.post(scriptname + "prx", {
-        "url": url
+        url: url
       }).success(function(data) {
         node.data = data.content;
         $scope.waiting = false;
@@ -863,7 +857,7 @@
     /* Import Filesaver.js saveAs() */
     $scope.saveAs = function(content, type, filename) {
       saveAs(new Blob([content], {
-        "type": type
+        type: type
       }), filename);
     };
   }]);

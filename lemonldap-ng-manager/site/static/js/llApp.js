@@ -118,9 +118,9 @@
         /* Deferred translations will be done after JSON download */
         else {
           $translator.deferredTr.push({
-            "e": elem,
-            "f": 'text',
-            "m": attr.trspan
+            e: elem,
+            f: 'text',
+            m: attr.trspan
           });
         }
         elem.text(attr.trspan);
@@ -285,7 +285,7 @@
    */
   llapp.factory('$lmhttp', ['$q', '$location', function($q, $location) {
     return {
-      'responseError': function(rejection) {
+      responseError: function(rejection) {
         // data / status / config / statusText / headers()
         var url = rejection.headers();
         if (rejection.status == 401 && url['www-authenticate'] && url['www-authenticate'].match(/^http/)) {
