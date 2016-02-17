@@ -1087,19 +1087,20 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                           : ( 0, '__badUrl__' );
                     }
                     $s =~ s/\b(accept|deny)\b/1/g;
-                    foreach my $f (
-                        split(
-                            /\s+/,
-                            (
-                                defined $conf->{'customFunctions'}
-                                ? "$conf->{'customFunctions'} "
-                                : ''
-                              )
-                              . 'checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch',
-                            0
-                        )
-                      )
-                    {
+                    my (@cf) = (
+                        'encode_base64', 'checkLogonHours',
+                        'date',          'checkDate',
+                        'basic',         'unicode2iso',
+                        'iso2unicode',   'groupMatch'
+                    );
+                    push @cf, defined $conf->{'customFunctions'}
+                      ? map( {
+                            my $f = $_;
+                              $f =~ s/\w+:://g;
+                              $f, $_;
+                        } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
+                      : ();
+                    foreach my $f (@cf) {
                         $s = "sub $f {1} $s";
                     }
                     eval $s;

@@ -888,21 +888,19 @@ sub attributes {
                     my ( $val, $conf ) = @_;
                     my $s = $val;
                     if ( $s =~ s/^logout(?:_(?:sso|app|app_sso))?\s*// ) {
-                        return $s =~ m{^(?:https?://.*)?$} ? (1) : ( 0, '__badUrl__' );
+                        return $s =~ m{^(?:https?://.*)?$}
+                          ? (1)
+                          : ( 0, '__badUrl__' );
                     }
                     $s =~ s/\b(accept|deny)\b/1/g;
-                    foreach my $f (
-                        split(
-                            /\s+/,
-                            (
-                                defined $conf->{customFunctions}
-                                ? "$conf->{customFunctions} "
-                                : ''
-                              )
-                              . 'checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch',
-                        )
-                      )
-                    {
+                    my @cf =
+                      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch);
+                    push @cf,
+                      defined $conf->{customFunctions}
+                      ? map { my $f = $_; $f =~ s/\w+:://g; ( $f, $_ ) }
+                      split( /\s+/, $conf->{customFunctions} )
+                      : ();
+                    foreach my $f (@cf) {
                         $s = "sub $f {1} $s";
                     }
                     eval $s;
