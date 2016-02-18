@@ -3,6 +3,8 @@ package Lemonldap::NG::Handler::API::ApacheMP2;
 our $VERSION = '1.9.0';
 
 # Specific modules and constants for Apache Mod_Perl 2
+use strict;
+use AutoLoader 'AUTOLOAD';
 use Apache2::RequestUtil;
 use Apache2::RequestRec;
 use Apache2::Log;
@@ -12,6 +14,8 @@ use Apache2::RequestIO;
 use Apache2::Const;
 use Apache2::Filter;
 use APR::Table;
+use Apache2::Const -compile =>
+  qw(FORBIDDEN HTTP_UNAUTHORIZED REDIRECT OK DECLINED DONE SERVER_ERROR AUTH_REQUIRED HTTP_SERVICE_UNAVAILABLE);
 
 use constant FORBIDDEN         => Apache2::Const::FORBIDDEN;
 use constant HTTP_UNAUTHORIZED => Apache2::Const::HTTP_UNAUTHORIZED;
@@ -29,7 +33,7 @@ print STDERR
   "You probably would have better perfs by enabling threads::shared\n"
   if ($@);
 
-my $request;    # Apache2::RequestRec object for current request
+our $request;    # Apache2::RequestRec object for current request
 
 ## @method void thread_share(string $variable)
 # try to share $variable between threads
@@ -223,28 +227,60 @@ sub print {
     $request->print($data);
 }
 
+1;
+__END__
+
 ## @method void addToHtmlHead(string data)
 # add data at end of html head
 # @param data Text to add in html head
 sub addToHtmlHead {
+    use APR::Bucket  ();
+    use APR::Brigade ();
     my ( $class, $data ) = @_;
     $request->add_output_filter(
         sub {
-            my $f = shift;
+            my $f   = shift;
+            my $bb  = shift;
+            my $ctx = $f->ctx;
 
-            my $body = $f->ctx || "";
+            #unless ($ctx) {
+            #    $f->r->headers_out->unset('Content-Length');
+            #}
             my $done = 0;
-            while ( $f->read( my $buffer, BUFF_LEN ) ) {
-                unless ($done) {
-                    $done = 1
-                      if ( $buffer =~ s/(<\/head>)/$data$1/si
-                        or $buffer =~ s/(<body>)/$1$data/si );
-                }
-                $f->print($body);
+            my $buffer = $ctx->{data} ? $ctx->{data} : '';
+            my ( $bdata, $seen_eos ) = flatten_bb($bb);
+            unless ($done) {
+                $done = 1
+                  if ( $bdata =~ s/(<\/head>)/$data$1/si
+                    or $bdata =~ s/(<body>)/$1$data/si );
+            }
+            $buffer .= $bdata if ($bdata);
+            if ($seen_eos) {
+                my $len = length $buffer;
+                $f->r->headers_out->set( 'Content-Length', $len );
+                $f->print($buffer) if ($buffer);
+            }
+            else {
+                $ctx->{data} = $buffer;
+                $f->ctx($ctx);
             }
             return OK;
         }
     );
+}
+
+sub flatten_bb {
+    my ($bb) = shift;
+
+    my $seen_eos = 0;
+
+    my @data;
+    for ( my $b = $bb->first ; $b ; $b = $bb->next($b) ) {
+        $seen_eos++, last if $b->is_eos;
+        $b->read( my $bdata );
+        push @data, $bdata;
+    }
+    return ( join( '', @data ), $seen_eos );
 }
 
 ## @method void setPostParams(hashref $params)
@@ -276,4 +312,3 @@ sub setPostParams {
     );
 }
 
-1;
