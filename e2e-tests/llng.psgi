@@ -44,18 +44,12 @@ my %builder = (
                 use Data::Dumper;
                 return [
                     500,
-                    [ 'Content-Type',              'text/plain' ],
-                    [ "Script: $script\n    $@\n". Dumper( \$_[0] ) ]
+                    [ 'Content-Type', 'text/plain' ],
+                    [ "Script: $script\n    $@\n" . Dumper( \$_[0] ) ]
                 ];
             }
             return $_apps{$script}->(@_);
         };
-    },
-    test => sub {
-        require CGI::Emulate::PSGI;
-        require CGI::Compile;
-        return CGI::Emulate::PSGI->handler(
-            CGI::Compile->compile('e2e-tests/conf/site/index.pl') );
     },
 );
 
