@@ -1,4 +1,5 @@
 /usr/share/perl5/Lemonldap/NG/Handler*
+/usr/share/perl5/auto/Lemonldap/NG/Handler*
 /usr/share/man/man3/Lemonldap::NG::Handler*
 /var/lib/lemonldap-ng/test
 /usr/share/lemonldap-ng/bin/purgeLocalCache
