@@ -383,7 +383,7 @@
       };
       $scope.showModal('prompt.html', name).then(function() {
         var name = $scope.result;
-        return $scope.duplicateNode(name, 'virtualHost');
+        return $scope.duplicateNode(name, 'virtualHost', $scope.currentNode.title);
       });
     };
 
@@ -432,17 +432,53 @@
       return t;
     };
 
-    $scope.duplicateNode = function(name, type) {
-      var cs = $scope.currentScope;
-      while (cs.$modelValue.title != type + 's') {
-        cs = cs.$parentNodeScope;
+    var _getAll = function(node) {
+      var d = $q.defer();
+      var d2 = $q.defer();
+      if (node._nodes) {
+        _stoggle(node);
+        d.resolve();
       }
-      var t = JSON.parse(JSON.stringify($scope.currentNode));
-      t.id = type + "s/" + 'new__' + name;
-      t.title = name;
-      cs.$modelValue.nodes.push(t);
-      return t;
-    }
+      else if (node.cnodes) {
+        _download(node).then(function() {
+          d.resolve()
+        });
+      }
+      else if (node.nodes || node.data) {
+        d.resolve()
+      }
+      else {
+        $scope.getKey(node).then(function() {
+          d.resolve()
+        });
+      }
+      d.promise.then(function() {
+        var t = [];
+        if (node.nodes) {
+          node.nodes.forEach(function(n) {
+            t.push(_getAll(n));
+          });
+        }
+        $q.all(t).then(function() {
+          d2.resolve()
+        });
+      });
+      return d2.promise;
+    };
+
+    $scope.duplicateNode = function(name, type, idkey) {
+      var cs = $scope.currentScope;
+      _getAll($scope.currentNode).then(function() {
+        while (cs.$modelValue.title != type + 's') {
+          cs = cs.$parentNodeScope;
+        }
+        var t = JSON.parse(JSON.stringify($scope.currentNode).replace(new RegExp(idkey, 'g'), 'new__' + name));
+        t.id = type + "s/" + 'new__' + name;
+        t.title = name;
+        cs.$modelValue.nodes.push(t);
+        return t;
+      })
+    };
 
     $scope.del = function(a, i) {
       a.splice(i, 1);
@@ -524,6 +560,10 @@
     /* To avoid binding all the tree, nodes are pushed in DOM only when opened */
     $scope.stoggle = function(scope) {
       var node = scope.$modelValue;
+      _stoggle(node);
+      scope.toggle();
+    };
+    var _stoggle = function(node) {
       ['nodes', 'nodes_cond'].forEach(function(n) {
         if (node['_' + n]) {
           node[n] = [];
@@ -543,7 +583,6 @@
         $scope.filters[node._nodes_filter] = node;
         $scope.execFilters();
       }
-      scope.toggle();
     };
 
     /* Simple toggle management */
@@ -565,6 +604,9 @@
     /* cnodes management: hash keys/values are loaded when parent node is opened */
     $scope.download = function(scope) {
       var node = scope.$modelValue;
+      return _download(node);
+    };
+    var _download = function(node) {
       var d = $q.defer();
       d.notify('Trying to get datas');
       $scope.waiting = true;
