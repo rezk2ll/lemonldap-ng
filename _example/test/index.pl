@@ -153,7 +153,7 @@ print "<thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>\n";
 
 foreach ( sort $cgi->param() ) {
     my $tmp = $cgi->param($_);
-    print "<tr><td>$_</td><td><big>☞</big> $tmp</td></tr>\n";
+    print qq{<tr><td>$_</td><td><big>☞</big> <span id="field_$_">$tmp</span></td></tr>\n};
 }
 print "</tbody></table>\n";
 print "</div>\n";
