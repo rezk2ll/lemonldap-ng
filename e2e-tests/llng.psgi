@@ -30,7 +30,7 @@ my %builder = (
         require Lemonldap::NG::Manager;
         return Lemonldap::NG::Manager->run( {} );
     },
-    auth => sub {
+    cgi => sub {
         require CGI::Emulate::PSGI;
         require CGI::Compile;
         return sub {
