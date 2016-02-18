@@ -18,7 +18,7 @@ use Lemonldap::NG::Common::Apache::Session::Lock;
 our $VERSION = '1.9.0';
 
 sub _load {
-    my ( $backend, $func ) = shift;
+    my ( $backend, $func ) = @_;
     unless ( $backend->can('populate') ) {
         eval "require $backend";
         die $@ if ($@);
