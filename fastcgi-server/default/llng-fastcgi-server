@@ -2,11 +2,11 @@
 #NPROC = 7
 
 # Unix socket to listen to
-#SOCKET = __FASTCGISOCKDIR__/llng-fastcgi.sock
+#SOCKET=__FASTCGISOCKDIR__/llng-fastcgi.sock
 
 # Pid file
-#PID = __FASTCGISOCKDIR__/llng-fastcgi-server.pid
+#PID=__FASTCGISOCKDIR__/llng-fastcgi-server.pid
 
 # User and GROUP
-USER  = __USER__
-GROUP = __GROUP__
+/bin/bash: q : commande introuvable
+GROUP=__GROUP__

@@ -102,8 +102,9 @@ BuildRequires:  perl(Mouse)
 BuildRequires:  perl(Digest::SHA)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Env)
+BuildRequires:  systemd
 %else
-BuildRequires:  perl-Regexp-Assemble, perl-Regexp-Common, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Net-CIDR-Lite, perl-Unicode-String, perl-Mouse, perl-Digest-SHA, perl-ExtUtims-MakeMaker, perl-Env
+BuildRequires:  perl-Regexp-Assemble, perl-Regexp-Common, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Net-CIDR-Lite, perl-Unicode-String, perl-Mouse, perl-Digest-SHA, perl-ExtUtims-MakeMaker, perl-Env, systemd
 %endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
@@ -385,6 +386,12 @@ find %{buildroot} -name .packlist -exec rm -f {} \;
 find %{buildroot} -name perllocal.pod -exec rm -f {} \;
 find %{buildroot} -name *.bak -exec rm -f {} \;
 
+# Install files for FastCGI Server
+mkdir -p %{buildroot}%{_unitdir}
+install -m644 fastcgi-server/systemd/llng-fastcgi-server.service %{buildroot}%{_unitdir}
+sed -i 's:__FASTCGISOCKDIR__:/var/run/llng-fastcgi-server:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
+sed -i 's:__SBINDIR__:/usr/share/lemonldap-ng/sbin:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
+
 # Set apache user in some files (see Makefile)
 # Note: we do not use the APACHEUSER and APACHEGROUP in make install
 # because it launches a 'chown', which is not permitted if RPM is not
@@ -392,6 +399,7 @@ find %{buildroot} -name *.bak -exec rm -f {} \;
 sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{_sysconfdir}/cron.d/*
 sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{lm_sharedir}/bin/lmConfigEditor
 sed -i 's/nobody/%{lm_apacheuser}/g' %{buildroot}%{lm_sharedir}/bin/lemonldap-ng-cli
+sed -i 's/nobody/%{lm_apacheuser}/g' %{buildroot}/etc/default/llng-fastcgi-server
 
 # Set UNIX rights
 mkdir -p %{buildroot}%{lm_vardir}/sessions/lock
@@ -405,6 +413,7 @@ chmod 770 %{buildroot}%{lm_vardir}/psessions
 chmod 770 %{buildroot}%{lm_vardir}/psessions/lock
 chmod 770 %{buildroot}%{lm_vardir}/notifications
 chmod 770 %{buildroot}%{lm_vardir}/captcha
+chmod 775 %{buildroot}%{lm_sharedir}/sbin/llng-fastcgi-server
 
 # Touch for ghost
 mkdir -p %buildroot%{apache_confdir}
@@ -565,6 +574,7 @@ rm -rf %{buildroot}
 %{lm_sharedir}/sbin/llng-fastcgi-server
 %config(noreplace) /etc/default/llng-fastcgi-server
 /etc/init.d/llng-fastcgi-server
+%{_unitdir}/llng-fastcgi-server.service
 
 %files -n perl-Lemonldap-NG-Common
 %defattr(-,root,root,-)

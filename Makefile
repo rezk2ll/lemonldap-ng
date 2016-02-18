@@ -461,16 +461,16 @@ install_fastcgi_server:
 	@$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g' \
 		$(RETCDEFAULTDIR)/llng-fastcgi-server \
 		$(RSBINDIR)/llng-fastcgi-server \
-		$(RSBINDIR)/llng-fastcgi-server
+		$(RINITDIR)/llng-fastcgi-server
 	@if [ ! "$(FASTCGIUSER)" ]; then \
 		$(PERL) -pi -e 's#__USER__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	else \
 		$(PERL) -pi -e 's#__USER__#$(FASTCGIUSER)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	fi
 	@if [ ! "$(FASTCGIGROUP)" ]; then \
-		$(PERL) -pi -e 's#__USER__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+		$(PERL) -pi -e 's#__GROUP__#nobody#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	else \
-		$(PERL) -pi -e 's#__USER__#$(FASTCGIGROUP)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
+		$(PERL) -pi -e 's#__GROUP__#$(FASTCGIGROUP)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	fi
 	if [ "$(FASTCGIUSER)" != "" ]; then \
 		chown $(FASTCGIUSER) $(RFASTCGISOCKDIR) || exit 1; \
