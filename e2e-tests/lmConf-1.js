@@ -156,6 +156,22 @@
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
   "portal": "http://auth.example.com:__port__/",
+  "post": {
+    "test2.example.com": {},
+    "manager.example.com": {},
+    "test1.example.com": {
+      "/form.html": {
+        "vars": [
+          ["postuid", "$_user"],
+          ["postmail", "'x@x.org'"],
+          ["poststatic", "'static content'"]],
+        "jqueryUrl": "http://manager.example.com:19876/static/bwr/jquery/dist/jquery.js",
+        "buttonSelector": "#bt",
+        "formSelector": "#test",
+        "target": "/index.pl"
+      }
+    }
+  },
   "registerDB": "Null",
   "reloadUrls": {},
   "securedCookie": 0,
