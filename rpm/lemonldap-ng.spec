@@ -578,6 +578,7 @@ rm -rf %{buildroot}
 %doc %{_mandir}/man3/Lemonldap::NG::Handler*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Handler.pm
 %{perl_vendorlib}/Lemonldap/NG/Handler/
+%{perl_vendorlib}/auto/Lemonldap/NG/Handler/
 
 %files -n perl-Lemonldap-NG-Manager
 %defattr(-,root,root,-)
