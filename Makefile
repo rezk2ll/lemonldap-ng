@@ -858,17 +858,7 @@ manager_clean:
 	@if test -e ${SRCMANAGERDIR}/Makefile;then $(MAKE) -C ${SRCMANAGERDIR} distclean;fi
 	@rm -vf manager*
 
-debian-local-packages: debian-dist
-	mv lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) /tmp/
-	version=$(VERSION) && \
-	cd /tmp/ && \
-	rm -rf lemonldap-ng-$$version && \
-	$(UNCOMPRESS) lemonldap-ng_$$version.orig.$(COMPRESSSUFFIX) && \
-	cd lemonldap-ng-$$version && \
-	debuild -us -uc -b --lintian-opts -i \
-		--lintian-opts -v --lintian-opts -I --lintian-opts -E \
-		--lintian-opts --color --lintian-opts auto --lintian-opts -L \
-		--lintian-opts +=pedantic
+debian-local-packages: debian-packages
 
 debian-packages: debian-dist
 	mv lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) /tmp/
@@ -882,12 +872,33 @@ debian-packages: debian-dist
 		--lintian-opts --color --lintian-opts auto --lintian-opts -L \
 		--lintian-opts +=pedantic
 
-debian-install: debian-local-packages
+debian-install:
+	@echo "You have now to choose between:"
+	@echo " - make debian-install-for-apache"
+	@echo " - make ubuntu-install-for-apache"
+	@echo " - make debian-install-for-nginx"
+	@echo " - make ubuntu-install-for-nginx"
+	@echo
+	@echo "All packages will be built in /tmp/ but only those needed by the"
+	@echo "server you will choose will be installed"
+	@exit 1
+
+debian-install-for-apache:
+	perl -i -ne 'next if/fastcgi.*deb$$/;s/lemonldap-ng-fastcgi-server//;print' /tmp/lemonldap-ng_$(VERSION)*.changes
 	cd /tmp/lemonldap-ng-$(VERSION) && \
 	$(SU) debi
 
-ubuntu-install:
-	$(MAKE) debian-install SU=sudo
+debian-install-for-nginx: debian-packages
+	cd /tmp/lemonldap-ng-$(VERSION) && \
+	$(SU) debi
+
+ubuntu-install: debian-install
+
+ubuntu-install-for-apache:
+	$(MAKE) debian-install-for-apache SU=sudo
+
+ubuntu-install-for-nginx:
+	$(MAKE) debian-install-for-nginx SU=sudo
 
 diff: debian-diff
 
