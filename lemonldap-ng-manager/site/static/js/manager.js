@@ -56,7 +56,7 @@
       }
       else if (e == 401) {
         if ($scope.portal) {
-          window.location = $scope.portal + window.btoa(window.location).replace(/\//, '_');
+          window.location = $scope.portal.data + '?url=' + window.btoa(window.location).replace(/\//, '_');
         }
         console.log('Authentication needed');
         $scope.message = {
