@@ -576,7 +576,7 @@ rm -rf %{buildroot}
 %config(noreplace) /etc/default/llng-fastcgi-server
 /etc/init.d/llng-fastcgi-server
 %{_unitdir}/llng-fastcgi-server.service
-%defattr(750,%{lm_apacheuser},%{lm_apachegroup},-)
+%defattr(755,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir /var/run/llng-fastcgi-server
 
 %files -n perl-Lemonldap-NG-Common
