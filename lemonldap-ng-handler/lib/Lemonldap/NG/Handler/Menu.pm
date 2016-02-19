@@ -38,7 +38,6 @@ sub run {
     my $width       = "30%";
     my $marginleft  = "35%";
     my $marginright = "35%";
-    my $height      = "20px";
 
     my $menudiv = qq(
 <style>
@@ -50,7 +49,6 @@ sub run {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     width: $width;
-    height: $height;
     margin-right: $marginright;
     margin-left: $marginleft;
     position: absolute;
