@@ -8,5 +8,5 @@
 #PID=__FASTCGISOCKDIR__/llng-fastcgi-server.pid
 
 # User and GROUP
-/bin/bash: q : commande introuvable
+USER=__USER__
 GROUP=__GROUP__

@@ -249,6 +249,7 @@ Group:          Applications/System
 %else
 Group:          Monitoring
 %endif
+Requires:	perl-FCGI-ProcManager
 
 %description -n lemonldap-ng-fastcgi-server
 This package deploys files needed to start a FastCGI server.
@@ -575,6 +576,7 @@ rm -rf %{buildroot}
 %config(noreplace) /etc/default/llng-fastcgi-server
 /etc/init.d/llng-fastcgi-server
 %{_unitdir}/llng-fastcgi-server.service
+%dir /var/run/llng-fastcgi-server
 
 %files -n perl-Lemonldap-NG-Common
 %defattr(-,root,root,-)
