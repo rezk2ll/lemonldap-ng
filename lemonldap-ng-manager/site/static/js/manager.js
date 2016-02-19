@@ -55,7 +55,6 @@
         };
       }
       else if (e == 401) {
-        console.log(j);
         console.log('Authentication needed');
         $scope.message = {
           title: 'authenticationNeeded',
