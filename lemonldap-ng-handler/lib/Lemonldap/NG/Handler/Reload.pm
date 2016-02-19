@@ -407,10 +407,12 @@ sub conditionSub {
 sub aliasInit {
     my ( $class, $conf, $tsv ) = @_;
 
-    foreach my $vhost ( keys %{ $conf->{options} } ) {
-        if ( my $aliases = $conf->{options}->{$vhost}->{vhostAliases} ) {
+    foreach my $vhost ( keys %{ $conf->{vhostOptions} } ) {
+        if ( my $aliases = $conf->{vhostOptions}->{$vhost}->{vhostAliases} ) {
             foreach ( split /\s+/, $aliases ) {
                 $tsv->{vhostAlias}->{$_} = $vhost;
+                Lemonldap::NG::Handler::Main::Logger->lmLog(
+                    "Registering $_ as alias of $vhost", 'debug' );
             }
         }
     }
