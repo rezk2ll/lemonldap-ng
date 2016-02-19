@@ -1,5 +1,13 @@
 #!/usr/bin/make
 
+# This Makefile contains 2 main sections
+#  - Variables
+#  - targets
+
+# ---------
+# VARIABLES
+# ---------
+
 # Prefix for packaging
 DESTDIR=
 
@@ -8,10 +16,15 @@ USEDEBIANLIBS=no
 PROD=$(USEDEBIANLIBS)
 USEEXTERNALLIBS=no
 
+# Perl options
+#PERLOPTIONS="INSTALLDIRS=vendor"
+PERLOPTIONS=
+
 # Compression
 JSCOMPRESS=$(PROD)
 CSSCOMPRESS=$(PROD)
 
+# External commands
 PERL=$$(which perl)
 PERLVERSION=`perl -e '$$version = $$^V; $$version =~ s/v//; print $$version'`
 SU=su -c
@@ -20,92 +33,62 @@ UNCOMPRESS=tar xzf
 LISTCOMPRESSED=tar tzf
 COMPRESSSUFFIX=tar.gz
 NGINX=/usr/sbin/nginx
-# Perl options
-#PERLOPTIONS="INSTALLDIRS=vendor"
-PERLOPTIONS=
 
 # Default directories install
+# ---------------------------
+
+# Common dirs
 PREFIX=/usr/local
 LMPREFIX=$(PREFIX)/lemonldap-ng
-RLMPREFIX=$(DESTDIR)/$(LMPREFIX)
 # BIN dirs
 BINDIR=$(LMPREFIX)/bin
-RBINDIR=$(DESTDIR)/$(BINDIR)
 SBINDIR=$(LMPREFIX)/sbin
-RSBINDIR=$(DESTDIR)/$(SBINDIR)
 INITDIR=$(LMPREFIX)/etc/init.d
-RINITDIR=$(DESTDIR)/$(INITDIR)
 ETCDEFAULTDIR=$(LMPREFIX)/etc/default
-RETCDEFAULTDIR=$(DESTDIR)/$(ETCDEFAULTDIR)
 DATADIR=$(LMPREFIX)/data
-RDATADIR=$(DESTDIR)/$(DATADIR)
-
-EXAMPLEROOT=`pwd`/example
 
 # Document roots for Apache VirtualHosts
 DOCUMENTROOT=$(LMPREFIX)/htdocs
 PORTALDIR=$(DOCUMENTROOT)/portal
-RPORTALDIR=$(DESTDIR)/$(PORTALDIR)
 PORTALSKINSDIR=$(PORTALDIR)/skins
-RPORTALSKINSDIR=$(DESTDIR)/$(PORTALSKINSDIR)
 MANAGERDIR=$(DOCUMENTROOT)/manager
-RMANAGERDIR=$(DESTDIR)/$(MANAGERDIR)
 MANAGERSITEDIR=$(MANAGERDIR)
-RMANAGERSITEDIR=$(DESTDIR)/$(MANAGERSITEDIR)
 MANAGERSTATICDIR=$(MANAGERSITEDIR)/static
-RMANAGERSTATICDIR=$(DESTDIR)/$(MANAGERSTATICDIR)
 MANAGERRELATIVESTATICDIR=/static
 MANAGERPSGIDIR=$(MANAGERSITEDIR)/psgi
-RMANAGERPSGIDIR=$(DESTDIR)/$(MANAGERPSGIDIR)
 MANAGERTEMPLATESDIR=$(MANAGERSITEDIR)/templates
-RMANAGERTEMPLATESDIR=$(DESTDIR)/$(MANAGERTEMPLATESDIR)
 DOCDIR=$(DOCUMENTROOT)
-RDOCDIR=$(DESTDIR)/$(DOCDIR)
 DEFDOCDIR=$(DOCUMENTROOT)/doc
-RDEFDOCDIR=$(DESTDIR)/$(DEFDOCDIR)
 FRDOCDIR=$(DOCUMENTROOT)/fr-doc
 TESTDIR=$(DOCUMENTROOT)/test
-RTESTDIR=$(DESTDIR)/$(TESTDIR)
 EXAMPLESDIR=$(LMPREFIX)/examples
-REXAMPLESDIR=$(DESTDIR)/$(EXAMPLESDIR)
 TOOLSDIR=$(LMPREFIX)/tools
-RTOOLSDIR=$(DESTDIR)/$(TOOLSDIR)
 
 # Handler dir
 HANDLERDIR=$(LMPREFIX)/handler
-RHANDLERDIR=$(DESTDIR)/$(HANDLERDIR)
 
 # Configuration dir
 CONFDIR=$(LMPREFIX)/etc
-RCONFDIR=$(DESTDIR)/$(CONFDIR)
 CRONDIR=$(LMPREFIX)/etc/cron.d
-RCRONDIR=$(DESTDIR)/$(CRONDIR)
 CONFFILENAME=lemonldap-ng.ini
 STORAGECONFFILE=$(CONFDIR)/$(CONFFILENAME)
 
 # LL::NG configuration storage dir
 FILECONFIGDIR=$(DATADIR)/conf
-RFILECONFIGDIR=$(DESTDIR)/$(FILECONFIGDIR)
 
 # LL::NG sessions storage dir
 APACHESESSIONFILEDIR=$(DATADIR)/sessions
-RAPACHESESSIONFILEDIR=$(DESTDIR)/$(APACHESESSIONFILEDIR)
 APACHESESSIONFILELOCKDIR=$(APACHESESSIONFILEDIR)/lock
-RAPACHESESSIONFILELOCKDIR=$(DESTDIR)/$(APACHESESSIONFILELOCKDIR)
 
 # LL::NG persistent sessions storage dir
 APACHEPSESSIONFILEDIR=$(DATADIR)/psessions
-RAPACHEPSESSIONFILEDIR=$(DESTDIR)/$(APACHEPSESSIONFILEDIR)
 APACHEPSESSIONFILELOCKDIR=$(APACHEPSESSIONFILEDIR)/lock
-RAPACHEPSESSIONFILELOCKDIR=$(DESTDIR)/$(APACHEPSESSIONFILELOCKDIR)
 
 # LL::NG notifications storage dir
 APACHEFILENOTIFDIR=$(DATADIR)/notifications
-RFILENOTIFDIR=$(DESTDIR)/$(APACHEFILENOTIFDIR)
 
 # LL::NG captcha dir
 CAPTCHADIR=$(DATADIR)/captcha
-RCAPTCHADIR=$(DESTDIR)/$(CAPTCHADIR)
 
 # Apache user/group
 APACHEUSER=
@@ -113,7 +96,6 @@ APACHEGROUP=
 
 # FastCGI
 FASTCGISOCKDIR=$(PREFIX)/run
-RFASTCGISOCKDIR=$(DESTDIR)/$(FASTCGISOCKDIR)
 FASTCGIUSER=$(APACHEUSER)
 FASTCGIGROUP=$(APACHEGROUP)
 
@@ -134,15 +116,46 @@ SRCCOMMONDIR=lemonldap-ng-common
 SRCHANDLERDIR=lemonldap-ng-handler
 SRCPORTALDIR=lemonldap-ng-portal
 SRCMANAGERDIR=lemonldap-ng-manager
+ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
+
+# INTERNAL VARIABLES
+
+# Internal variables used to install in $(DESTDIR)
+RLMPREFIX=$(DESTDIR)/$(LMPREFIX)
+RBINDIR=$(DESTDIR)/$(BINDIR)
+RSBINDIR=$(DESTDIR)/$(SBINDIR)
+RINITDIR=$(DESTDIR)/$(INITDIR)
+RETCDEFAULTDIR=$(DESTDIR)/$(ETCDEFAULTDIR)
+RDATADIR=$(DESTDIR)/$(DATADIR)
+RPORTALDIR=$(DESTDIR)/$(PORTALDIR)
+RPORTALSKINSDIR=$(DESTDIR)/$(PORTALSKINSDIR)
+RMANAGERDIR=$(DESTDIR)/$(MANAGERDIR)
+RMANAGERSITEDIR=$(DESTDIR)/$(MANAGERSITEDIR)
+RMANAGERSTATICDIR=$(DESTDIR)/$(MANAGERSTATICDIR)
+RMANAGERPSGIDIR=$(DESTDIR)/$(MANAGERPSGIDIR)
+RMANAGERTEMPLATESDIR=$(DESTDIR)/$(MANAGERTEMPLATESDIR)
+RDOCDIR=$(DESTDIR)/$(DOCDIR)
+RDEFDOCDIR=$(DESTDIR)/$(DEFDOCDIR)
+RTESTDIR=$(DESTDIR)/$(TESTDIR)
+REXAMPLESDIR=$(DESTDIR)/$(EXAMPLESDIR)
+RTOOLSDIR=$(DESTDIR)/$(TOOLSDIR)
+RHANDLERDIR=$(DESTDIR)/$(HANDLERDIR)
+RCONFDIR=$(DESTDIR)/$(CONFDIR)
+RCRONDIR=$(DESTDIR)/$(CRONDIR)
+RFILECONFIGDIR=$(DESTDIR)/$(FILECONFIGDIR)
+RAPACHESESSIONFILEDIR=$(DESTDIR)/$(APACHESESSIONFILEDIR)
+RAPACHESESSIONFILELOCKDIR=$(DESTDIR)/$(APACHESESSIONFILELOCKDIR)
+RAPACHEPSESSIONFILEDIR=$(DESTDIR)/$(APACHEPSESSIONFILEDIR)
+RAPACHEPSESSIONFILELOCKDIR=$(DESTDIR)/$(APACHEPSESSIONFILELOCKDIR)
+RFILENOTIFDIR=$(DESTDIR)/$(APACHEFILENOTIFDIR)
+RCAPTCHADIR=$(DESTDIR)/$(CAPTCHADIR)
+RFASTCGISOCKDIR=$(DESTDIR)/$(FASTCGISOCKDIR)
 
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
 PORTALSKINS=`ls $(SRCPORTALDIR)/example/skins/`
 DIFF=diff -aurN -x '*.tpl' -x '*.bak' -x .svn -x '*.map' -x '*.min.js' -x '*.min.css' -x '*.swp' --ignore-matching-lines='.*jquery.*' --ignore-matching-lines='.*lemonldap-ng\.ini.*'
 DIFFPREFIX=
 
-
-EXAMPLELANG=en # For static Manager example only
-ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
 
 MANAGERLIBSTOREMOVEFORDEBIAN=$(RMANAGERSTATICDIR)/bwr/jquery/ \
 			$(RMANAGERSTATICDIR)/bwr/angular/ \
@@ -158,7 +171,7 @@ PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSKINSDIR)/bootstrap/fonts \
 MANAGEREXTERNALLIBS=$(RMANAGERSTATICDIR)/bwr/
 PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN) $(RPORTALSKINSDIR)/common/js/jquery*
 
-# GENERATED SRC FILESlemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
+# GENERATED SRC FILES
 MANAGERJSONSRC= scripts/jsongenerator.pl \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build.pm \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Build/Attributes.pm \
@@ -180,6 +193,70 @@ CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/css  $(SRCPORTALDIR)/exam
 # Minified files
 JSDSTFILES=$(JSSRCFILES:.js=.min.js)
 CSSDSTFILES=$(CSSSRCFILES:.css=.min.css)
+
+# -------
+# TARGETS
+# -------
+
+# Targets section contains the following subsections:
+#  - configure targets
+#  - make targets
+#  - test targets
+#  - end-to-end tests
+#  - install targets
+#  - cleaning targets
+#  - Perl libraries uninstall targets
+#  - packaging targets
+#  - developper corner
+
+# Configure targets
+# -----------------
+
+configure:	json common_conf handler_conf portal_conf manager_conf
+
+minify: $(JSDSTFILES) $(CSSDSTFILES)
+
+%.min.css: %.css
+	@echo "Compressing $*.css"
+	@yui-compressor $*.css > $*.min.css
+
+%.min.js: %.js
+	@echo "Compressing $*.js"
+	@yui-compressor $*.js > $*.min.js
+
+fastcgi-server/man/llng-fastcgi-server.1p: fastcgi-server/sbin/llng-fastcgi-server
+	@pod2man -name llng-fastcgi-server fastcgi-server/sbin/llng-fastcgi-server >fastcgi-server/man/llng-fastcgi-server.1p
+
+# Perl libraries configuration
+
+json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.1p
+	@if which yui-compressor; then $(MAKE) minify; fi
+
+$(MANAGERJSONDST):	$(MANAGERJSONSRC)
+	./scripts/jsongenerator.pl
+
+common_conf:	${SRCCOMMONDIR}/Makefile
+
+handler_conf:	${SRCHANDLERDIR}/Makefile
+
+portal_conf:	${SRCPORTALDIR}/Makefile
+
+manager_conf:	${SRCMANAGERDIR}/Makefile
+
+${SRCCOMMONDIR}/Makefile:
+	@cd ${SRCCOMMONDIR}; LMNGCONFFILE=$(STORAGECONFFILE) $(PERL) Makefile.PL $(PERLOPTIONS)
+
+${SRCHANDLERDIR}/Makefile:
+	@cd ${SRCHANDLERDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
+
+${SRCPORTALDIR}/Makefile:
+	@cd ${SRCPORTALDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
+
+${SRCMANAGERDIR}/Makefile:
+	@cd ${SRCMANAGERDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
+
+# Make targets
+# ------------
 
 all:	configure common handler manager portal
 	@echo
@@ -222,58 +299,6 @@ all:	configure common handler manager portal
 	@echo " - install_fr_doc_site"
 	@echo
 
-#
-# Minification
-#
-minify: $(JSDSTFILES) $(CSSDSTFILES)
-
-%.min.css: %.css
-	@echo "Compressing $*.css"
-	@yui-compressor $*.css > $*.min.css
-
-%.min.js: %.js
-	@echo "Compressing $*.js"
-	@yui-compressor $*.js > $*.min.js
-
-
-#
-# Perl libraries configuration
-#
-
-json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.1p
-	@if which yui-compressor; then $(MAKE) minify; fi
-
-$(MANAGERJSONDST):	$(MANAGERJSONSRC)
-	./scripts/jsongenerator.pl
-
-fastcgi-server/man/llng-fastcgi-server.1p: fastcgi-server/sbin/llng-fastcgi-server
-	@pod2man -name llng-fastcgi-server fastcgi-server/sbin/llng-fastcgi-server >fastcgi-server/man/llng-fastcgi-server.1p
-
-configure:	json common_conf handler_conf portal_conf manager_conf
-
-common_conf:	${SRCCOMMONDIR}/Makefile
-
-handler_conf:	${SRCHANDLERDIR}/Makefile
-
-portal_conf:	${SRCPORTALDIR}/Makefile
-
-manager_conf:	${SRCMANAGERDIR}/Makefile
-
-${SRCCOMMONDIR}/Makefile:
-	@cd ${SRCCOMMONDIR}; LMNGCONFFILE=$(STORAGECONFFILE) $(PERL) Makefile.PL $(PERLOPTIONS)
-
-${SRCHANDLERDIR}/Makefile:
-	@cd ${SRCHANDLERDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
-
-${SRCPORTALDIR}/Makefile:
-	@cd ${SRCPORTALDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
-
-${SRCMANAGERDIR}/Makefile:
-	@cd ${SRCMANAGERDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
-
-#
-# Perl libraries make
-#
 common:		common_conf
 	@$(MAKE) -C ${SRCCOMMONDIR}
 
@@ -286,9 +311,8 @@ portal:		portal_conf common
 manager:	manager_conf handler
 	$(MAKE) -C ${SRCMANAGERDIR}
 
-################
-# Test targets #
-################
+# Test targets
+# ------------
 test:		all common_test handler_test portal_test manager_test extra_test
 
 common_test:	common
@@ -308,6 +332,8 @@ extra_test:	all
 #	PERL_DL_NONLAZY=1 $(PERL) "-MExtUtils::Command::MM" "-e" "test_harness(0, 'lemonldap-ng-common/blib/lib', 'lemonldap-ng-handler/blib/lib', 'lemonldap-ng-manager/blib/lib', 'lemonldap-ng-portal/blib/lib')" extra-tests/*.t
 
 # End-to-end tests
+# ----------------
+
 e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_server
 
 prepare_test_server:
@@ -403,14 +429,12 @@ plackup:
 install_test:
 	@TESTWEBSERVERPORT=$(PORT) protractor e2e-tests/protractor-conf.js
 
-#
-# INSTALL
-#
+# Install targets
+# ---------------
 install:	install_libs install_bin install_fastcgi_server install_site
 
-#
 # Perl libraires install
-#
+
 install_libs:	common_install_libs install_handler_libs install_portal_libs install_manager_libs
 
 common_install_libs:		common
@@ -424,9 +448,6 @@ install_portal_libs:		portal
 
 install_manager_libs:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} install
-
-example:
-	$(MAKE) install_site install_bin LMPREFIX=$(EXAMPLEROOT)
 
 install_bin:	install_conf_dir
 	# Binary install
@@ -482,9 +503,8 @@ install_fastcgi_server:
 		chmod 777 $(RFASTCGISOCKDIR); \
 	fi
 
-#
-# SITE INSTALL
-#
+# Site install
+
 install_site:	install_manager_site install_portal_site install_handler_site install_test_site install_examples_site install_doc_site install_webserver_conf
 	# Site install
 	@install -v -d $(RCONFDIR)
@@ -732,6 +752,65 @@ postconf_hosts:
 postconf: postconf_hosts
 	@echo "Post configuration done"
 
+debian-install:
+	@echo "You have now to choose between:"
+	@echo " - make debian-install-for-apache"
+	@echo " - make ubuntu-install-for-apache"
+	@echo " - make debian-install-for-nginx"
+	@echo " - make ubuntu-install-for-nginx"
+	@echo
+	@echo "All packages will be built in /tmp/ but only those needed by the"
+	@echo "server you will choose will be installed"
+	@exit 1
+
+debian-install-for-apache: debian-packages
+	perl -i -ne 'next if/fastcgi.*deb$$/;s/lemonldap-ng-fastcgi-server//;print' /tmp/lemonldap-ng_$(VERSION)*.changes
+	cd /tmp/lemonldap-ng-$(VERSION) && \
+	$(SU) debi
+
+debian-install-for-nginx: debian-packages
+	cd /tmp/lemonldap-ng-$(VERSION) && \
+	$(SU) debi
+
+ubuntu-install: debian-install
+
+ubuntu-install-for-apache:
+	$(MAKE) debian-install-for-apache SU=sudo
+
+ubuntu-install-for-nginx:
+	$(MAKE) debian-install-for-nginx SU=sudo
+
+# Cleaning targets
+# ----------------
+
+distclean:	clean
+
+clean:		common_clean handler_clean portal_clean manager_clean omegat-clean stop_web_server
+	@rm -f $$(find */ -name '*bak' -delete)
+	@rm -rf doc/devel
+	@rm -vf *gz *zip
+	@rm -rf lemonldap-ng-$(VERSION)
+	@echo "Cleaned"
+
+common_clean:
+	@if test -e ${SRCCOMMONDIR}/Makefile;then $(MAKE) -C ${SRCCOMMONDIR} distclean;fi
+	@rm -vf common*
+
+handler_clean:
+	@if test -e ${SRCHANDLERDIR}/Makefile;then $(MAKE) -C ${SRCHANDLERDIR} distclean;fi
+	@rm -vf handler*
+
+portal_clean:
+	@if test -e ${SRCPORTALDIR}/Makefile;then $(MAKE) -C ${SRCPORTALDIR} distclean;fi
+	@rm -vf portal*
+
+manager_clean:
+	@if test -e ${SRCMANAGERDIR}/Makefile;then $(MAKE) -C ${SRCMANAGERDIR} distclean;fi
+	@rm -vf manager*
+
+# Perl libraries uninstall targets
+# --------------------------------
+
 uninstall:	configure handler_uninstall portal_uninstall manager_uninstall
 
 common_uninstall:	common
@@ -749,6 +828,9 @@ portal_uninstall:		portal
 manager_uninstall:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} uninstall
 	@rm -vf manager_uninstall
+
+# Packaging target
+# ----------------
 
 dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
@@ -802,6 +884,23 @@ cpan:	clean configure common_cpan handler_cpan portal_cpan manager_cpan
 		rm -rf Lemonldap-NG-$$i*/; \
 		done
 
+debian-local-packages: debian-packages
+
+debian-packages: debian-dist
+	mv lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) /tmp/
+	version=$(VERSION) && \
+	cd /tmp/ && \
+	rm -rf lemonldap-ng-$$version && \
+	$(UNCOMPRESS) lemonldap-ng_$$version.orig.$(COMPRESSSUFFIX) && \
+	cd lemonldap-ng-$$version && \
+	debuild -us -uc -b --lintian-opts -i \
+		--lintian-opts -v --lintian-opts -I --lintian-opts -E \
+		--lintian-opts --color --lintian-opts auto --lintian-opts -L \
+		--lintian-opts +=pedantic
+
+# Developper corner
+# -----------------
+
 common_cpan:	common_conf
 	@$(MAKE) -C ${SRCCOMMONDIR} dist
 	@mv ${SRCCOMMONDIR}/Lemonldap*.gz .
@@ -832,73 +931,6 @@ doxygen:	clean
 	$(PERL) -i -pe 's/Graphical Class Hierarchy/Class Collaboration Graph/' doc/devel/html/inherits.html doc/devel/html/tree.html
 	# Some files are not generated
 	for i in doc/devel/html/*dot; do dot -T png -o $${i/.dot/.png} $$i; rm -f $$i; done
-
-distclean:	clean
-
-clean:		common_clean handler_clean portal_clean manager_clean omegat-clean stop_web_server
-	@rm -f $$(find */ -name '*bak' -delete)
-	@rm -rf $(EXAMPLEROOT) example/ doc/devel
-	@rm -vf *gz *zip
-	@rm -rf lemonldap-ng-$(VERSION)
-	@echo "Cleaned"
-
-common_clean:
-	@if test -e ${SRCCOMMONDIR}/Makefile;then $(MAKE) -C ${SRCCOMMONDIR} distclean;fi
-	@rm -vf common*
-
-handler_clean:
-	@if test -e ${SRCHANDLERDIR}/Makefile;then $(MAKE) -C ${SRCHANDLERDIR} distclean;fi
-	@rm -vf handler*
-
-portal_clean:
-	@if test -e ${SRCPORTALDIR}/Makefile;then $(MAKE) -C ${SRCPORTALDIR} distclean;fi
-	@rm -vf portal*
-
-manager_clean:
-	@if test -e ${SRCMANAGERDIR}/Makefile;then $(MAKE) -C ${SRCMANAGERDIR} distclean;fi
-	@rm -vf manager*
-
-debian-local-packages: debian-packages
-
-debian-packages: debian-dist
-	mv lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) /tmp/
-	version=$(VERSION) && \
-	cd /tmp/ && \
-	rm -rf lemonldap-ng-$$version && \
-	$(UNCOMPRESS) lemonldap-ng_$$version.orig.$(COMPRESSSUFFIX) && \
-	cd lemonldap-ng-$$version && \
-	debuild -us -uc -b --lintian-opts -i \
-		--lintian-opts -v --lintian-opts -I --lintian-opts -E \
-		--lintian-opts --color --lintian-opts auto --lintian-opts -L \
-		--lintian-opts +=pedantic
-
-debian-install:
-	@echo "You have now to choose between:"
-	@echo " - make debian-install-for-apache"
-	@echo " - make ubuntu-install-for-apache"
-	@echo " - make debian-install-for-nginx"
-	@echo " - make ubuntu-install-for-nginx"
-	@echo
-	@echo "All packages will be built in /tmp/ but only those needed by the"
-	@echo "server you will choose will be installed"
-	@exit 1
-
-debian-install-for-apache:
-	perl -i -ne 'next if/fastcgi.*deb$$/;s/lemonldap-ng-fastcgi-server//;print' /tmp/lemonldap-ng_$(VERSION)*.changes
-	cd /tmp/lemonldap-ng-$(VERSION) && \
-	$(SU) debi
-
-debian-install-for-nginx: debian-packages
-	cd /tmp/lemonldap-ng-$(VERSION) && \
-	$(SU) debi
-
-ubuntu-install: debian-install
-
-ubuntu-install-for-apache:
-	$(MAKE) debian-install-for-apache SU=sudo
-
-ubuntu-install-for-nginx:
-	$(MAKE) debian-install-for-nginx SU=sudo
 
 diff: debian-diff
 
@@ -985,9 +1017,8 @@ tidy-js: clean
 		  -print \
 		  -exec js_beautify -o -s=2 {} \;
 
-# TRANSLATION TARGETS #
-
-# 1. Internal targets
+# Translation targets
+# -------------------
 
 language_code:
 	perl -e ' \
