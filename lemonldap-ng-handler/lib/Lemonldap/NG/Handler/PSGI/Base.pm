@@ -25,6 +25,7 @@ sub init {
             "Unable to protect this app ($Lemonldap::NG::Common::Conf::msg)");
         return 0;
     }
+    $self->portal( $tsv->{portal}->() );
     my $rule = $self->{protection} || $localConfig->{protection} || '';
     $self->rule(
         $rule eq 'authenticate' ? 1 : $rule eq 'manager' ? '' : $rule );
@@ -93,6 +94,7 @@ sub _authAndTrace {
     my ( $self, $req ) = @_;
     Lemonldap::NG::Handler::API->newRequest($req);
     my $res = Lemonldap::NG::Handler::SharedConf->run( $self->{rule} );
+    $self->portal( $tsv->{portal}->() );
     $req->userData($datas) if ($datas);
 
     if ( $res < 300 ) {

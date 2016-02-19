@@ -55,13 +55,11 @@
         };
       }
       else if (e == 401) {
-        if ($scope.portal) {
-          window.location = $scope.portal.data + '?url=' + window.btoa(window.location).replace(/\//, '_');
-        }
+        console.log(j);
         console.log('Authentication needed');
         $scope.message = {
           title: 'authenticationNeeded',
-          message: 'waitOrF5',
+          message: '__waitOrF5__',
           items: []
         };
       }

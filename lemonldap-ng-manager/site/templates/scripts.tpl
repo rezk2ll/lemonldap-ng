@@ -27,6 +27,7 @@
   var availableLanguages='<TMPL_VAR NAME="AVAILABLE_LANGUAGES">'.split(/[,;] */);
   var links=<TMPL_VAR NAME="LINKS">;
   var menulinks=<TMPL_VAR NAME="MENULINKS">;
+  var portal   ='<TMPL_VAR NAME="PORTAL">';
 </script>
 
 <!-- //if:usedebianlibs

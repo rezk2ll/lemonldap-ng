@@ -28,7 +28,7 @@ sub tree {
                     title => 'portalParams',
                     help  => 'portal.html',
                     nodes => [
-                        '*portal',
+                        'portal',
                         {
                             title => 'portalMenu',
                             help  => 'portalmenu.html',

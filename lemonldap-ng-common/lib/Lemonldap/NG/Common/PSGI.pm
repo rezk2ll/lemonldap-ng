@@ -13,6 +13,7 @@ our $_json = JSON->new->allow_nonref;
 has error        => ( is => 'rw', default => '' );
 has languages    => ( is => 'rw', isa     => 'Str', default => 'en' );
 has logLevel     => ( is => 'rw', isa     => 'Str', default => 'info' );
+has portal       => ( is => 'rw', isa     => 'Str' );
 has staticPrefix => ( is => 'rw', isa     => 'Str' );
 has templateDir  => ( is => 'rw', isa     => 'Str' );
 has links        => ( is => 'rw', isa     => 'ArrayRef' );
@@ -175,10 +176,9 @@ sub sendHtml {
             SCRIPT_NAME         => $req->scriptname,
             STATIC_PREFIX       => $sp,
             AVAILABLE_LANGUAGES => $self->languages,
-            LINKS     => $self->links ? to_json( $self->links ) : '""',
-            MENULINKS => $self->menuLinks
-            ? to_json( $self->menuLinks )
-            : '""',
+            PORTAL              => $self->portal,
+            LINKS => $self->links ? to_json( $self->links ) : '""',
+            MENULINKS => $self->menuLinks ? to_json( $self->menuLinks ) : '""',
             VERSION => $VERSION,
         );
     };

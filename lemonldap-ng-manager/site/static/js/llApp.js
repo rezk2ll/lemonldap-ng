@@ -277,5 +277,25 @@
       }
     };
   }]);
+  /* Authentication system
+   *
+   * If a 401 code is returned and if "Authorization" header contains an url,
+   * user is redirected to this url (but target is replaced by location.href)
+   */
+  llapp.factory('$lmhttp', ['$q', '$location', function($q, $location) {
+    return {
+      responseError: function(rejection) {
+        // data / status / config / statusText / headers()
+        var url = rejection.headers();
+        if (rejection.status == 401 && window.portal) {
+          window.location = window.portal + '?url=' + window.btoa(window.location).replace(/\//, '_');
+        }
+      }
+    };
+  }]);
+
+  llapp.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.interceptors.push('$lmhttp');
+  }]);
 
 })();
