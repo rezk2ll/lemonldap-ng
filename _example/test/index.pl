@@ -42,9 +42,9 @@ foreach ( sort keys %ENV ) {
 print $cgi->header( -charset => 'utf-8' );
 
 print "<!DOCTYPE html>\n";
-print
-  "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n";
+print qq{<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n};
 print "<head>\n";
+print qq{<meta charset="utf-8">\n};
 print "<title>$name</title>\n";
 print
   "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n";
@@ -153,7 +153,8 @@ print "<thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>\n";
 
 foreach ( sort $cgi->param() ) {
     my $tmp = $cgi->param($_);
-    print qq{<tr><td>$_</td><td><big>☞</big> <span id="field_$_">$tmp</span></td></tr>\n};
+    print
+qq{<tr><td>$_</td><td><big>☞</big> <span id="field_$_">$tmp</span></td></tr>\n};
 }
 print "</tbody></table>\n";
 print "</div>\n";
