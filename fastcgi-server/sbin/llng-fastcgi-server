@@ -10,7 +10,7 @@ use Lemonldap::NG::Handler::SharedConf;
 our %opts;
 my %_apps;
 
-getopts( 'n:p:s:u:g:', \%opts );
+getopts( 'Fn:p:s:u:g:', \%opts );
 
 $opts{n} ||= $ENV{NPROC}  || 7;
 $opts{p} ||= $ENV{PID}    || '__FASTCGISOCKDIR__/llng-fastcgi.pid';
@@ -78,7 +78,7 @@ $server->parse_options(
     '--nproc'      => $opts{n},
     '--socket'     => $opts{s},
     '--proc-title' => 'llng-fastcgi-server',
-    '--daemonize',
+    ( $opts{F} ? () : '--daemonize' ),
     '--no-default-middleware',
 );
 

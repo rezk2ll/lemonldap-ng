@@ -338,7 +338,7 @@ e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_se
 
 prepare_test_server:
 	@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
-	@$(MAKE) install_webserver_conf install_test_site \
+	@$(MAKE) install_webserver_conf install_test_site install_fastcgi_server \
 		RCONFDIR=e2e-tests/conf \
 		ERASECONFIG=1 \
 		VHOSTLISTEN='*:$(TESTWEBSERVERPORT)' \
@@ -349,7 +349,10 @@ prepare_test_server:
 		TESTDIR=`pwd`/e2e-tests/conf/site \
 		MANAGERPSGIDIR=`pwd`/e2e-tests \
 		DEFDOCDIR=`pwd`/doc \
-		FRDOCDIR=`pwd`/po-doc/fr
+		FRDOCDIR=`pwd`/po-doc/fr \
+		SBINDIR=`pwd`/e2e-tests/conf/sbin \
+		INITDIR=`pwd`/e2e-tests/conf/init \
+		ETCDEFAULTDIR=`pwd`/e2e-tests/conf/def
 	@cp e2e-tests/lmConf-1.js e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
 	@cp e2e-tests/form.html e2e-tests/conf/site
 	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s#__port__#$(TESTWEBSERVERPORT)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#;' \
@@ -364,7 +367,7 @@ start_web_server:	all prepare_test_server
 	# Clean old server if launched
 	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` || true
 	-@[ -e e2e-tests/conf/nginx.pid ]   && kill `cat e2e-tests/conf/nginx.pid` || true
-	-@[ -e e2e-tests/conf/plackup.pid ] && kill `cat e2e-tests/conf/plackup.pid` && rm -f e2e-tests/conf/plackup.pid || true
+	-@[ -e e2e-tests/conf/llng-fastcgi.pid ] && kill `cat e2e-tests/conf/llng-fastcgi.pid` && rm -f e2e-tests/conf/llng-fastcgi.pid || true
 	# Start web server (designed for Debian, path may be broken else)
 	@if test "$(TESTWEBSERVER)" = "apache"; then \
 		LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini /usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k start; \
@@ -393,7 +396,7 @@ reload_web_server:
 		/usr/sbin/apache2 -d `pwd`/e2e-tests -f apache2.conf -k graceful; \
 	elif [ -e e2e-tests/conf/nginx.pid ]; then \
 		kill -HUP `cat e2e-tests/conf/nginx.pid`; \
-		kill `cat e2e-tests/conf/plackup.pid` || true; \
+		kill `cat e2e-tests/conf/llng-fastcgi.pid` || true; \
 		$(MAKE) plackup; \
 	else \
 		$(MAKE) start_web_server; \
@@ -409,7 +412,7 @@ stop_web_server:
 	# Stop web server
 	-@[ -e e2e-tests/conf/apache2.pid ] && kill `cat e2e-tests/conf/apache2.pid` || true
 	-@[ -e e2e-tests/conf/nginx.pid ]   && kill `cat e2e-tests/conf/nginx.pid` ||true
-	-@[ -e e2e-tests/conf/plackup.pid ] && kill `cat e2e-tests/conf/plackup.pid` && rm -f e2e-tests/conf/plackup.pid || true
+	-@[ -e e2e-tests/conf/llng-fastcgi.pid ] && kill `cat e2e-tests/conf/llng-fastcgi.pid` && rm -f e2e-tests/conf/llng-fastcgi.pid || true
 	# Clean
 	@rm -rf e2e-tests/conf
 
@@ -417,14 +420,12 @@ restart_web_server: start_web_server
 
 plackup:
 	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
-	plackup -s FCGI \
-		--listen e2e-tests/conf/llng-fastcgi.sock \
-		--pid e2e-tests/conf/plackup.pid \
-		--nproc 1 --proc-title llng-fastcgi-server \
-		--no-default-middleware \
-		--app e2e-tests/llng.psgi \
-		--keep-stderr 1 \
-		>e2e-tests/conf/fastcgi.log 2>&1 &
+	perl -I`pwd`/lemonldap-ng-common/blib/lib/ \
+			-I`pwd`/lemonldap-ng-handler/blib/lib/ \
+			-I`pwd`/lemonldap-ng-portal/blib/lib/ \
+			-I`pwd`/lemonldap-ng-manager/blib/lib/ \
+		e2e-tests/conf/sbin/llng-fastcgi-server \
+			-F >e2e-tests/conf/fastcgi.log 2>&1 &
 
 install_test:
 	@TESTWEBSERVERPORT=$(PORT) protractor e2e-tests/protractor-conf.js
@@ -477,6 +478,7 @@ install_bin:	install_conf_dir
 install_fastcgi_server:
 	@install -v -d $(RSBINDIR) $(RINITDIR) $(RETCDEFAULTDIR) $(RFASTCGISOCKDIR)
 	@cp -f fastcgi-server/sbin/llng-fastcgi-server $(RSBINDIR)
+	@chmod +x $(RSBINDIR)/llng-fastcgi-server
 	@cp -f fastcgi-server/rc/llng-fastcgi-server $(RINITDIR)
 	@cp -f fastcgi-server/default/llng-fastcgi-server $(RETCDEFAULTDIR)
 	@$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g' \
@@ -493,7 +495,7 @@ install_fastcgi_server:
 	else \
 		$(PERL) -pi -e 's#__GROUP__#$(FASTCGIGROUP)#' $(RETCDEFAULTDIR)/llng-fastcgi-server; \
 	fi
-	if [ "$(FASTCGIUSER)" != "" ]; then \
+	@if [ "$(FASTCGIUSER)" != "" ]; then \
 		chown $(FASTCGIUSER) $(RFASTCGISOCKDIR) || exit 1; \
 		if [ "$(FASTCGIGROUP)" != "" ]; then \
 			chgrp $(FASTCGIGROUP) $(RFASTCGISOCKDIR) || exit 1; \
