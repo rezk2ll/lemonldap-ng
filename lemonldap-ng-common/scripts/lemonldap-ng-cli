@@ -14,6 +14,8 @@ for ( my $i = 0 ; $i < @ARGV ; $i++ ) {
     last;
 }
 
+$action ||= "help";
+
 if ( $action =~ /^(?:[gs]et|(?:add|del)Key)$/ ) {
     eval { require Lemonldap::NG::Manager::Cli; };
     die 'Manager libraries not available, aborting' if ($@);
