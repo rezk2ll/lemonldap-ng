@@ -201,6 +201,7 @@
       $scope.showM = false;
     }
 
+    /* Raw save function */
     $scope.saveRawConf = function($fileContent) {
       $scope.waiting = true;
       $http.post(confPrefix + '/raw', $fileContent).success(function(data) {
@@ -208,16 +209,19 @@
       }).error(readError);
     };
 
+    /* Restore raw conf function */
     $scope.restore = function() {
       $scope.currentNode = null;
       $scope.form = 'restore';
     };
 
+    /* Cancel save function */
     $scope.cancel = function() {
       $scope.currentNode.data = null;
       $scope.getKey($scope.currentNode);
     };
 
+    /* Nodes management */
     var id = 1;
 
     $scope._findContainer = function() {
@@ -701,9 +705,7 @@
       return node.type && node.type.match(/^(authChoice|keyText|virtualHost|rule|menuCat|menuApp|samlAttribute)$/) ? true : false;
     }
 
-    /* method `newRSAKey`
-     *
-     */
+    /* RSA keys generation */
     $scope.newRSAKey = function() {
       $scope.showModal('password.html').then(function() {
         $scope.waiting = true;

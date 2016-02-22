@@ -129,6 +129,13 @@
     }
   }]);
 
+  /* Form menu management
+   *
+   * Two parts:
+   *  - $htmlParams: used to store values inserted as <script type="text/menu">.
+   *                 It provides menu() method to get them
+   *  - HTML "script" element handler
+  */
   llapp.provider('$htmlParams', $HtmlParamsProvider);
   function $HtmlParamsProvider() {
     this.$get = function() {
@@ -285,8 +292,6 @@
   llapp.factory('$lmhttp', ['$q', '$location', function($q, $location) {
     return {
       responseError: function(rejection) {
-        // data / status / config / statusText / headers()
-        var url = rejection.headers();
         if (rejection.status == 401 && window.portal) {
           window.location = window.portal + '?url=' + window.btoa(window.location).replace(/\//, '_');
         }
