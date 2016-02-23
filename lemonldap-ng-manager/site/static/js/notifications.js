@@ -113,6 +113,10 @@
 
     $scope.notifDate = function(s) {
       if (s !== null) {
+        /* Manage SQL datetime format */
+        if (s.match(/(\d{4})-(\d{2})-(\d{2})/)) {
+          s = s.substr(0, 4) + s.substr(5, 2) + s.substr(8, 2);
+        }
         var d = new Date(s.substr(0, 4), s.substr(4, 2) - 1, s.substr(6, 2));
         return d.toLocaleDateString();
       }
