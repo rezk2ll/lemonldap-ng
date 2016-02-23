@@ -19,7 +19,7 @@ sub prereq {
     my $self = shift;
     $self->{dbiTable} = $self->{table} if ( $self->{table} );
     unless ( $self->{dbiChain} ) {
-        $Lemonldap::NG::Common::Conf::msg =
+        $Lemonldap::NG::Common::Notification::msg =
           '"dbiChain" is required in DBI notification type';
         return 0;
     }
@@ -93,6 +93,7 @@ sub delete {
     my ( $self, $myref ) = @_;
     my ( $d, $u, $r );
     unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
+        $Lemonldap::NG::Common::Notification::msg = "Bad reference $myref";
         $self->lmLog( "Bad reference $myref", 'warn' );
         return 0;
     }
@@ -119,6 +120,7 @@ sub purge {
     my ( $self, $myref, $force ) = @_;
     my ( $d, $u, $r );
     unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
+        $Lemonldap::NG::Common::Notification::msg = "Bad reference $myref";
         $self->lmLog( "Bad reference $myref", 'warn' );
         return 0;
     }

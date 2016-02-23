@@ -337,11 +337,14 @@ sub deleteDoneNotification {
     my $id = $req->params('notificationId') or die;
     unless ( $self->notifAccess->purge($id) ) {
         $self->lmLog(
-            "Notification $id not purged ($Lemonldap::NG::Common::Conf::msg)",
-            'warn' );
-        return $self->sendError( $req,
-            "Notification $id not purged ($Lemonldap::NG::Common::Conf::msg)",
-            400 );
+"Notification $id not purged ($Lemonldap::NG::Common::Notification::msg)",
+            'warn'
+        );
+        return $self->sendError(
+            $req,
+"Notification $id not purged ($Lemonldap::NG::Common::Notification::msg)",
+            400
+        );
     }
 
     $self->lmLog( "Notification $id purged", 'info' );
