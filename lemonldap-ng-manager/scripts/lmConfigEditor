@@ -28,7 +28,11 @@ delete $tmp->{cfgAuthor};
 delete $tmp->{cfgAuthorIP};
 delete $tmp->{cfgDate};
 $tmp->{cfgLog} = '';
-$tmp = Dumper($tmp);
+
+# Sort keys
+$Data::Dumper::Sortkeys = 1;
+$tmp                    = Dumper($tmp);
+
 my $refFile  = File::Temp->new( UNLINK => 1 );
 my $editFile = File::Temp->new( UNLINK => 1 );
 print $refFile $tmp;
@@ -53,7 +57,7 @@ if (`diff $refFile $editFile`) {
     # Update author and date
     $VAR1->{cfgAuthor} = $ENV{SUDO_USER} || $ENV{LOGNAME} || "lmConfigEditor";
     $VAR1->{cfgAuthorIP} = $ENV{SSH_CONNECTION} || "localhost";
-    $VAR1->{cfgDate}     = time();
+    $VAR1->{cfgDate} = time();
     $VAR1->{cfgLog} ||= 'Edited by lmConfigEditor';
 
     # Store new configuration
