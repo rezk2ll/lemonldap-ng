@@ -51,8 +51,8 @@ if (`diff $refFile $editFile`) {
     die $EVAL_ERROR if $EVAL_ERROR;
 
     # Update author and date
-    $VAR1->{cfgAuthor}   = "lmConfigEditor";
-    $VAR1->{cfgAuthorIP} = "localhost";
+    $VAR1->{cfgAuthor} = $ENV{SUDO_USER} || $ENV{LOGNAME} || "lmConfigEditor";
+    $VAR1->{cfgAuthorIP} = $ENV{SSH_CONNECTION} || "localhost";
     $VAR1->{cfgDate}     = time();
     $VAR1->{cfgLog} ||= 'Edited by lmConfigEditor';
 
