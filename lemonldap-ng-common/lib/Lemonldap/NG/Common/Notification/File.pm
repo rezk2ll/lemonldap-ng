@@ -8,7 +8,7 @@ package Lemonldap::NG::Common::Notification::File;
 use strict;
 use MIME::Base64;
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.9.0';
 
 ## @method boolean prereq()
 # Check if parameters are set and if storage directory exists.
@@ -45,18 +45,13 @@ sub prereq {
 sub get {
     my ( $self, $uid, $ref ) = @_;
     return () unless ($uid);
-    opendir D, $self->{dirName};
-    my @notif;
     my $fns = $self->{fileNameSeparator};
-    unless ($ref) {
-        @notif = grep /^\d{8}${fns}${uid}${fns}\S*\.xml$/, readdir(D);
-    }
-    else {
-        my $tmp = encode_base64( $ref, '' );
-        @notif = grep /^\d{8}${fns}${uid}${fns}${tmp}${fns}?\S*\.xml$/,
-          readdir(D);
-    }
+    my $identifier = &getIdentifier( $self, $uid, $ref );
+
+    opendir D, $self->{dirName};
+    my @notif = grep /^\d{8}${fns}${identifier}\S*\.xml$/, readdir(D);
     closedir D;
+
     my $files;
     foreach my $file (@notif) {
         unless ( open F, $self->{dirName} . "/$file" ) {
@@ -166,6 +161,31 @@ sub getDone {
         };
     }
     return $res;
+}
+
+## @method string getIdentifier(string uid, string ref, string date)
+# Get notification identifier
+# @param $uid uid
+# @param $ref ref
+# @param $date date
+# @return the notification identifier
+sub getIdentifier {
+    my ( $self, $uid, $ref, $date ) = @_;
+    my $result;
+
+    # Special fix to manage purge from notification explorer
+    return $date if $date;
+
+    my $fns = $self->{fileNameSeparator};
+    if ($date) {
+        $result .= $date . $fns;
+    }
+    $result .= $uid;
+    if ($ref) {
+        my $tmp = encode_base64( $ref, '' );
+        $result .= $fns . $tmp;
+    }
+    return $result;
 }
 
 1;

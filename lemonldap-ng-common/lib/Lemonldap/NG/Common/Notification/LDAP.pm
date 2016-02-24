@@ -12,7 +12,7 @@ use MIME::Base64;
 use Net::LDAP;
 use utf8;
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.9.0';
 
 ## @method boolean prereq()
 # Check if LDAP parameters are set.
@@ -62,9 +62,10 @@ sub get {
         }
         my $xml = $f->{xml};
         utf8::encode($xml);
-        $result->{"$f->{date}#$f->{uid}#$f->{ref}"} = "$xml";
-        $self->lmLog( "notification $f->{date}#$f->{uid}#$f->{ref} found",
-            'info' );
+        my $identifier =
+          &getIdentifier( $self, $f->{uid}, $f->{ref}, $f->{date} );
+        $result->{$identifier} = "$xml";
+        $self->lmLog( "notification $identifier found", 'info' );
 
     }
     return $result;
@@ -417,6 +418,17 @@ sub _ldap {
 
     $self->{ldap} = $ldap;
     return $ldap;
+}
+
+## @method string getIdentifier(string uid, string ref, string date)
+# Get notification identifier
+# @param $uid uid
+# @param $ref ref
+# @param $date date
+# @return the notification identifier
+sub getIdentifier {
+    my ( $self, $uid, $ref, $date ) = @_;
+    return $date . "#" . $uid . "#" . $ref;
 }
 
 1;

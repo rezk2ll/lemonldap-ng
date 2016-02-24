@@ -44,7 +44,7 @@ count(3);
 displayTests('done');
 
 # Delete notification
-$res = &client->_del('notifications/done/20150503_dwho_VGVzdA==.done');
+$res = &client->_del('notifications/done/dwho_Test_20150503_dwho_VGVzdA==.done');
 $res = &client->jsonResponse( 'notifications/done', 'groupBy=substr(uid,1)' );
 ok( $res->{result} == 1, 'Result = 1' );
 ok( $res->{count} == 0,  'Count = 0' );

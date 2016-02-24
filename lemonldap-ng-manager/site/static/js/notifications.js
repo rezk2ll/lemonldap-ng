@@ -100,7 +100,7 @@
 
     $scope.deleteNotification = function() {
       $scope.waiting = true;
-      $http['delete'](scriptname + "notifications/" + $scope.type + "/" + $scope.currentNotification.done).success(function(data) {
+      $http['delete'](scriptname + "notifications/" + $scope.type + "/" + $scope.currentNotification.uid + '_' + $scope.currentNotification.reference + '_' + $scope.currentNotification.done).success(function(data) {
         $scope.currentNotification = null;
         $scope.currentScope.remove();
         $scope.message = {

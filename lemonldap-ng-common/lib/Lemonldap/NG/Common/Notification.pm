@@ -15,7 +15,7 @@ use Scalar::Util 'weaken';
 #inherits Lemonldap::NG::Common::Notification::DBI
 #inherits Lemonldap::NG::Common::Notification::File
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.0';
 our ( $msg, $parser );
 
 ## @cmethod Lemonldap::NG::Common::Notification new(hashref storage)
@@ -517,6 +517,17 @@ sub _prereq {
 sub _newNotif {
     no strict 'refs';
     return &{ $_[0]->{type} . '::newNotif' }(@_);
+}
+
+## @method private string _getIdentifier(string uid, string ref, string date)
+# Get notification identifier
+# @param $uid uid
+# @param $ref ref
+# @param $date date
+# @return the notification identifier
+sub _getIdentifier {
+    no strict 'refs';
+    return &{ $_[0]->{type} . '::getIdentifier' }(@_);
 }
 
 1;

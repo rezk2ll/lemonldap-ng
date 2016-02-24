@@ -10,7 +10,7 @@ use Time::Local;
 use DBI;
 use utf8;
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.9.0';
 
 ## @method boolean prereq()
 # Check if DBI parameters are set.
@@ -59,7 +59,9 @@ sub get {
         #utf8::decode($xml);
 
         # Store message in result
-        $result->{"$h->{date}#$h->{uid}#$h->{ref}"} = $xml;
+        my $identifier =
+          &getIdentifier( $self, $h->{uid}, $h->{ref}, $h->{date} );
+        $result->{$identifier} = $xml;
     }
     $self->lmLog( $self->{sth}->err(), 'warn' ) if ( $self->{sth}->err() );
     return $result;
@@ -226,6 +228,17 @@ sub _dbh {
     );
     $self->lmLog( $DBI::errstr, 'error' ) unless ($r);
     return $r;
+}
+
+## @method string getIdentifier(string uid, string ref, string date)
+# Get notification identifier
+# @param $uid uid
+# @param $ref ref
+# @param $date date
+# @return the notification identifier
+sub getIdentifier {
+    my ( $self, $uid, $ref, $date ) = @_;
+    return $date . "#" . $uid . "#" . $ref;
 }
 
 1;
