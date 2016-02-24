@@ -338,7 +338,8 @@ e2e_test:	all prepare_test_server start_web_server launch_protractor stop_web_se
 
 prepare_test_server:
 	@mkdir -p e2e-tests/conf/sessions/lock e2e-tests/conf/persistents/lock
-	@$(MAKE) install_webserver_conf install_test_site install_fastcgi_server \
+	$(MAKE) install_webserver_conf install_test_site install_fastcgi_server \
+		CONFDIR=`pwd`/e2e-tests/conf \
 		RCONFDIR=e2e-tests/conf \
 		ERASECONFIG=1 \
 		VHOSTLISTEN='*:$(TESTWEBSERVERPORT)' \
@@ -564,6 +565,7 @@ install_webserver_conf:
 			s#__MANAGERPSGIDIR__#$(MANAGERPSGIDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
 			s#__PORT__#$(PORT)#g; \
+			s#__CONFDIR__#$(CONFDIR)#g; \
 			s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g; \
 			s#__VHOSTLISTEN__#$(VHOSTLISTEN)#g; \
 			s#__DEFDOCDIR__#$(DEFDOCDIR)/#g; \
