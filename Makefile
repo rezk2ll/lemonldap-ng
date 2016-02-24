@@ -964,9 +964,8 @@ debian-diff:
 	@# Manager
 	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager ||true
 	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager.pm ||true
-	@$(DIFF) $(SRCMANAGERDIR)/eg $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/psgi ||true
-	@$(DIFF) $(SRCMANAGERDIR)/site/static $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/static ||true
-	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/templates ||true
+	@$(DIFF) $(SRCMANAGERDIR)/site/static $(DIFFPREFIX)/usr/share/lemonldap-ng/manager/static ||true
+	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(DIFFPREFIX)/user/share/lemonldap-ng/manager/templates ||true
 	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
 	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' $(SRCCOMMONDIR)/scripts/lemonldap-ng-cli $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lemonldap-ng-cli ||true
 
@@ -994,7 +993,6 @@ default-diff:
 	@# Manager
 	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager ||true
 	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager.pm ||true
-	@$(DIFF) $(SRCMANAGERDIR)/eg $(LMPREFIX)/htdocs/manager/psgi ||true
 	@$(DIFF) $(SRCMANAGERDIR)/site/static $(LMPREFIX)/htdocs/manager/static ||true
 	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(LMPREFIX)/htdocs/manager/templates ||true
 	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
