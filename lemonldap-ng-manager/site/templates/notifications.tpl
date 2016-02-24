@@ -153,7 +153,7 @@
     <div class="modal-header">
       <h3 class="modal-title" trspan="{{elem('message').title}}" />
     </div>
-    <div class="modal-body">
+    <div class="modal-body" ng-if="elem('message').message">
       <div class="modal-p">{{translateP(elem('message').message)}}</div>
     </div>
     <div class="modal-footer">

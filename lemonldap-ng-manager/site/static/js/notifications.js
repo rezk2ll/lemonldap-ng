@@ -83,10 +83,17 @@
       }).success(function(data) {
         $scope.currentNotification = null;
         $scope.currentScope.remove();
+        $scope.message = {
+          "title": "notificationDeleted",
+        };
+        $scope.showModal("alert.html");
         $scope.waiting = false;
       }).error(function(j, e) {
-        $scope.currentNotification = null;
-        $scope.currentScope.remove();
+        $scope.message = {
+          "title": "notificationNotDeleted",
+          "message": j.error
+        };
+        $scope.showModal("alert.html");
         $scope.waiting = false;
       });
     }
@@ -96,10 +103,17 @@
       $http['delete'](scriptname + "notifications/" + $scope.type + "/" + $scope.currentNotification.done).success(function(data) {
         $scope.currentNotification = null;
         $scope.currentScope.remove();
+        $scope.message = {
+          "title": "notificationPurged",
+        };
+        $scope.showModal("alert.html");
         $scope.waiting = false;
       }).error(function(j, e) {
-        $scope.currentNotification = null;
-        $scope.currentScope.remove();
+        $scope.message = {
+          "title": "notificationNotPurged",
+          "message": j.error
+        };
+        $scope.showModal("alert.html");
         $scope.waiting = false;
       });
     }
