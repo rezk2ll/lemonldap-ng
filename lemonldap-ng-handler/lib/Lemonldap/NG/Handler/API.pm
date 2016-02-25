@@ -63,12 +63,13 @@ sub AUTOLOAD {
                     and ( ( caller(6) )[0] =~ /^Lemonldap::NG::Handler::PSGI/ )
                 )
               )
-          )                         ? 'PSGI'
-          : ( MP == 2 )             ? 'ApacheMP2'
-          : ( MP == 1 )             ? 'ApacheMP1'
-          : $main::{'nginx::'}      ? 'ExperimentalNginx'
-          : $ENV{GATEWAY_INTERFACE} ? 'CGI'
-          :                           'CGI';
+          ) ? 'PSGI'
+          : ( $ENV{GATEWAY_INTERFACE}
+              and !( ref $_[1] eq 'Apache2::RequestRec' ) ) ? 'CGI'
+          : ( MP == 2 )        ? 'ApacheMP2'
+          : ( MP == 1 )        ? 'ApacheMP1'
+          : $main::{'nginx::'} ? 'ExperimentalNginx'
+          :                      'CGI';
         unless ( $INC{"Lemonldap/NG/Handler/API/$mode.pm"} ) {
             $mode =~ s#/#::#g;
             eval
