@@ -43,7 +43,7 @@ Log      : $conf->{cfgLog}
 
 sub updateCache {
     my $self = shift;
-    my $conf = $self->confAccess( { noCache => 1, raw => 1 } );
+    my $conf = $self->confAccess->getConf( { noCache => 1, raw => 1 } );
     die "Must not be launched as root" unless ($>);
     print STDERR
       qq{Cache updated to configuration $conf->{cfgNum} for user $>\n};
@@ -78,6 +78,7 @@ sub run {
     unless ( $action =~ /^(?:info|update-cache)$/ ) {
         die "unknown action $action. Only info or update are accepted";
     }
+    $action =~ s/\-([a-z])/uc($1)/e;
     $self->$action(@_);
 }
 
