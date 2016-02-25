@@ -99,7 +99,9 @@ sub _authAndTrace {
 
     if ( $res < 300 ) {
         $self->lmLog( 'User authenticated, calling handler()', 'debug' );
-        return $self->handler($req);
+        $res = $self->handler($req);
+        push @{ $res->[1] }, %{ $req->{respHeaders} };
+        return $res;
     }
     else {
         my %h = $req->{respHeaders} ? %{ $req->{respHeaders} } : ();
