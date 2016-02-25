@@ -52,11 +52,7 @@ sub get {
         my $xml = $h->{xml};
 
         # Decode it to get the correct uncoded string
-        utf8::decode($xml);
-
-        # TODO on some systems, a second decoding is mandatory
-        # need to find out why
-        #utf8::decode($xml);
+        Encode::from_to( $xml, "utf8", "iso-8859-1", Encode::FB_CROAK );
 
         # Store message in result
         my $identifier =
