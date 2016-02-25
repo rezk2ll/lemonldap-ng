@@ -199,6 +199,7 @@ CSSDSTFILES=$(CSSSRCFILES:.css=.min.css)
 # -------
 
 # Targets section contains the following subsections:
+#  - 'all' that must be defined at first
 #  - configure targets
 #  - make targets
 #  - test targets
@@ -208,6 +209,47 @@ CSSDSTFILES=$(CSSSRCFILES:.css=.min.css)
 #  - Perl libraries uninstall targets
 #  - packaging targets
 #  - developper corner
+
+all:	configure common handler manager portal
+	@echo
+	@echo "Building succeed. Now run :"
+	@echo " - 'make test' to verify your installation"
+	@echo " - 'make install PROD=yes' to install all"
+	@echo
+	@echo "    MAKE INSTALL OPTIONS:"
+	@echo "    - PROD=yes            : use js/css minified files"
+	@echo "    - USEDEBIANLIBS=yes   : use some Debian shared js/css files"
+	@echo "    - USEEXTERNALLIBS=yes : use external links for some js/css files"
+	@echo
+	@echo 'Other targets :'
+	@echo " * Partial build :"
+	@echo "   - portal, manager, handler"
+	@echo " * Doxygen documentation"
+	@echo "   - doxygen (to build Doxygen documentation in doc/devel/)"
+	@echo
+	@echo 'Other targets launched by "make install" :'
+	@echo " * Perl libraries install :"
+	@echo "   - install_libs           (all Perl libraries)"
+	@echo "   - install_portal_libs"
+	@echo "   - install_manager_libs"
+	@echo "   - install_handler_libs"
+	@echo " * Binaries install :"
+	@echo "   - install_bin            ($(BINDIR))"
+	@echo " * FastCGI server install   (required for Nginx)"
+	@echo "   - install_fastcgi_server ($(SBINDIR))"
+	@echo " * Web sites install :"
+	@echo "   - install_site           (all sites including install_doc_site)"
+	@echo "   - install_portal_site    ($(PORTALDIR))"
+	@echo "   - install_manager_site   ($(MANAGERDIR))"
+	@echo "   - install_handler_site   ($(HANDLERDIR))"
+	@echo " * Documentation install :"
+	@echo "   - install_doc_site       ($(DEFDOCDIR))"
+	@echo "   - install_examples_site  ($(EXAMPLESDIR))"
+	@echo
+	@echo "Other languages documentation (fr only for now)"
+	@echo " - fr-doc                  (needs OmegaT)"
+	@echo " - install_fr_doc_site"
+	@echo
 
 # Configure targets
 # -----------------
@@ -257,47 +299,6 @@ ${SRCMANAGERDIR}/Makefile:
 
 # Make targets
 # ------------
-
-all:	configure common handler manager portal
-	@echo
-	@echo "Building succeed. Now run :"
-	@echo " - 'make test' to verify your installation"
-	@echo " - 'make install PROD=yes' to install all"
-	@echo
-	@echo "    MAKE INSTALL OPTIONS:"
-	@echo "    - PROD=yes            : use js/css minified files"
-	@echo "    - USEDEBIANLIBS=yes   : use some Debian shared js/css files"
-	@echo "    - USEEXTERNALLIBS=yes : use external links for some js/css files"
-	@echo
-	@echo 'Other targets :'
-	@echo " * Partial build :"
-	@echo "   - portal, manager, handler"
-	@echo " * Doxygen documentation"
-	@echo "   - doxygen (to build Doxygen documentation in doc/devel/)"
-	@echo
-	@echo 'Other targets launched by "make install" :'
-	@echo " * Perl libraries install :"
-	@echo "   - install_libs           (all Perl libraries)"
-	@echo "   - install_portal_libs"
-	@echo "   - install_manager_libs"
-	@echo "   - install_handler_libs"
-	@echo " * Binaries install :"
-	@echo "   - install_bin            ($(BINDIR))"
-	@echo " * FastCGI server install   (required for Nginx)"
-	@echo "   - install_fastcgi_server ($(SBINDIR))"
-	@echo " * Web sites install :"
-	@echo "   - install_site           (all sites including install_doc_site)"
-	@echo "   - install_portal_site    ($(PORTALDIR))"
-	@echo "   - install_manager_site   ($(MANAGERDIR))"
-	@echo "   - install_handler_site   ($(HANDLERDIR))"
-	@echo " * Documentation install :"
-	@echo "   - install_doc_site       ($(DEFDOCDIR))"
-	@echo "   - install_examples_site  ($(EXAMPLESDIR))"
-	@echo
-	@echo "Other languages documentation (fr only for now)"
-	@echo " - fr-doc                  (needs OmegaT)"
-	@echo " - install_fr_doc_site"
-	@echo
 
 common:		common_conf
 	@$(MAKE) -C ${SRCCOMMONDIR}
