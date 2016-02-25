@@ -1054,8 +1054,8 @@ sub attributes {
             ],
             default => '',
         },
-        zimbraUrl    => { type => 'url', },
-        zimbraSsoUrl => { type => 'url', },
+        zimbraUrl    => { type => 'text', },
+        zimbraSsoUrl => { type => 'text', },
 
         # Sympa
         sympaSecret  => { type => 'text', },
