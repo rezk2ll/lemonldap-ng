@@ -201,7 +201,7 @@ sub run {
     print STDERR "VERY EXPERIMENTAL FEATURE, prefer web interface\n";
 
     # Options simply call corresponding accessor
-    my $args;
+    my $args = {};
     while ( $_[0] =~ s/^--?// ) {
         my $k = shift;
         my $v = shift;

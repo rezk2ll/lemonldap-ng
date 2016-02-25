@@ -7,10 +7,16 @@ use Lemonldap::NG::Common::Conf;
 
 has confAccess => (
     is      => 'rw',
-    isa     => 'HashRef',
     builder => sub {
-        my $res =
-          Lemonldap::NG::Common::Conf->new( { confFile => $_[0]->{iniFile} } );
+        my $res = Lemonldap::NG::Common::Conf->new(
+            {
+                (
+                    ref $_[0] && $_[0]->{iniFile}
+                    ? ( confFile => $_[0]->{iniFile} )
+                    : ()
+                )
+            }
+        );
         die $Lemonldap::NG::Common::Conf::msg unless ($res);
         return $res;
     },
@@ -23,13 +29,14 @@ has cfgNum => (
 
 sub info {
     my ($self) = @_;
-    my $conf = $self->confAccess( { cfgNum => $self->cfgNum, raw => 1 } )
+    my $conf =
+      $self->confAccess->getConf( { cfgNum => $self->cfgNum, raw => 1 } )
       or die $Lemonldap::NG::Common::Conf::msg;
     print qq{
 Num      : $conf->{cfgNum}
 Author   : $conf->{cfgAuthor}
 Author IP: $conf->{cfgAuthorIP}
-Date     : $conf->{cfgDate}
+Date     : } . localtime( $conf->{cfgDate} ) . qq{
 Log      : $conf->{cfgLog}
 };
 }
@@ -46,7 +53,7 @@ sub run {
     my $self = shift;
 
     # Options simply call corresponding accessor
-    my $args;
+    my $args = {};
     while ( $_[0] =~ s/^--?// ) {
         my $k = shift;
         my $v = shift;
