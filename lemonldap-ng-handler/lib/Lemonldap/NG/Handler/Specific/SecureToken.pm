@@ -112,6 +112,12 @@ sub defaultValuesInit {
     return $class->SUPER::defaultValuesInit($args);
 }
 
+sub handler {
+    my ( $class, $request ) = ( __PACKAGE__, shift );
+    Lemonldap::NG::Handler::API->newRequest($request);
+    $class->run($request);
+}
+
 ## @rmethod Apache2::Const run(Apache2::RequestRec r)
 # Overload main run method
 # @param r Current request
