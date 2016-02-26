@@ -248,21 +248,21 @@ sub notification {
 sub newNotification {
     my ( $self, $req, @other ) = @_;
     return $self->sendError( $req,
-        'There is no subkey for "newNotification"', 400 )
+        'There is no subkey for "newNotification"', 200 )
       if (@other);
 
     my $json = $req->jsonBodyToObj;
     unless ( defined($json) ) {
-        return $self->sendError( $req, undef, 400 );
+        return $self->sendError( $req, undef, 200 );
     }
 
     foreach my $r (qw(uid date reference xml)) {
-        return $self->sendError( $req, "Missing $r", 400 )
+        return $self->sendError( $req, "Missing $r", 200 )
           unless ( $json->{$r} );
     }
 
     unless ( $json->{date} =~ /^\d{4}-\d{2}-\d{2}$/ ) {
-        return $self->sendError( $req, "Malformed date", 400 );
+        return $self->sendError( $req, "Malformed date", 200 );
     }
 
     utf8::decode( $json->{xml} );
@@ -282,7 +282,7 @@ sub newNotification {
 "Notification not created: $@$Lemonldap::NG::Common::Notification::msg",
             'error'
         );
-        return $self->sendError( $req, "Notification not created", 400 );
+        return $self->sendError( $req, "Notification not created: $@$Lemonldap::NG::Common::Notification::msg", 200 );
     }
     else {
         return $self->sendJSONresponse( $req, { result => 1 } );
@@ -294,13 +294,13 @@ sub updateNotification {
 
     my $json = $req->jsonBodyToObj;
     unless ( defined($json) ) {
-        return $self->sendError( $req, undef, 400 );
+        return $self->sendError( $req, undef, 200 );
     }
 
     # For now, only "mark as done" is proposed
     unless ( $json->{done} ) {
         return $self->sendError( $req, 'Only "done=1" is accepted for now',
-            400 );
+            200 );
     }
     my $id = $req->params('notificationId') or die;
     my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
