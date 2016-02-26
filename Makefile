@@ -466,14 +466,14 @@ install_bin:	install_conf_dir
 		${SRCCOMMONDIR}/scripts/lemonldap-ng-cli \
 			$(RBINDIR)
 	@if [ ! "$(APACHEUSER)" ]; then \
-		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RBINDIR)/lmConfigEditor; \
+		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RBINDIR)/lmConfigEditor $(RBINDIR)/lemonldap-ng-cli; \
 	else \
-		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RBINDIR)/lmConfigEditor; \
+		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RBINDIR)/lmConfigEditor $(RBINDIR)/lemonldap-ng-cli; \
 	fi
 	@if [ ! "$(APACHEGROUP)" ]; then \
-		$(PERL) -i -pe 's#__APACHEGROUP__#nobody#g;' $(RBINDIR)/lmConfigEditor; \
+		$(PERL) -i -pe 's#__APACHEGROUP__#nobody#g;' $(RBINDIR)/lmConfigEditor $(RBINDIR)/lemonldap-ng-cli; \
 	else \
-		$(PERL) -i -pe 's#__APACHEGROUP__#$(APACHEGROUP)#g;' $(RBINDIR)/lmConfigEditor; \
+		$(PERL) -i -pe 's#__APACHEGROUP__#$(APACHEGROUP)#g;' $(RBINDIR)/lmConfigEditor $(RBINDIR)/lemonldap-ng-cli; \
 	fi
 	@chmod +x $(RBINDIR)/*
 

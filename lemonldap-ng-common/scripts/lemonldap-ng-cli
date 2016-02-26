@@ -2,8 +2,14 @@
 
 use warnings;
 use strict;
+use POSIX;
 
 my $action;
+
+eval {
+    POSIX::setgid( scalar( getgrnam('__APACHEGROUP__') ) );
+    POSIX::setuid( scalar( getpwnam('__APACHEUSER__') ) );
+};
 
 for ( my $i = 0 ; $i < @ARGV ; $i++ ) {
     if ( $ARGV[$i] =~ /^-/ ) {
