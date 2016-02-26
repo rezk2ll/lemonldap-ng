@@ -17,62 +17,7 @@ use base qw(Lemonldap::NG::Handler::SharedConf);
 use Digest::HMAC_SHA1 qw(hmac_sha1 hmac_sha1_hex);
 use Lemonldap::NG::Handler::Main::Logger;
 
-our $VERSION = '1.4.0';
-
-# Shared variables
-our ( $zimbraPreAuthKey, $zimbraAccountKey, $zimbraBy, $zimbraUrl,
-    $zimbraSsoUrl, $timeout );
-
-## @imethod protected void globalInit(hashRef args)
-# Overload globalInit to launch this class defaultValuesInit
-# @param $args reference to the configuration hash
-sub globalInit {
-    my $class = shift;
-    __PACKAGE__->defaultValuesInit(@_);
-    $class->SUPER::globalInit(@_);
-}
-
-## @imethod protected void defaultValuesInit(hashRef args)
-# Overload defaultValuesInit
-# @param $args reference to the configuration hash
-sub defaultValuesInit {
-    my ( $class, $args ) = @_;
-
-    # Catch Zimbra parameters
-    $zimbraPreAuthKey = $args->{'zimbraPreAuthKey'} || $zimbraPreAuthKey;
-    $zimbraAccountKey =
-         $args->{'zimbraAccountKey'}
-      || $zimbraAccountKey
-      || 'uid';
-    $zimbraBy  = $args->{'zimbraBy'}  || $zimbraBy  || 'id';
-    $zimbraUrl = $args->{'zimbraUrl'} || $zimbraUrl || '/service/preauth';
-    $zimbraSsoUrl = $args->{'zimbraSsoUrl'} || $zimbraSsoUrl || '^/zimbrasso$';
-    $timeout      = $args->{'timeout'}      || $timeout      || '0';
-
-    # Display found values in debug mode
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
-        "zimbraPreAuthKey: $zimbraPreAuthKey", 'debug' );
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
-        "zimbraAccountKey: $zimbraAccountKey", 'debug' );
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "zimbraBy: $zimbraBy",
-        'debug' );
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "zimbraUrl: $zimbraUrl",
-        'debug' );
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "zimbraSsoUrl: $zimbraSsoUrl",
-        'debug' );
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "timeout: $timeout", 'debug' );
-
-    # Delete Zimbra parameters
-    delete $args->{'zimbraPreAuthKey'};
-    delete $args->{'zimbraAccountKey'};
-    delete $args->{'zimbraBy'};
-    delete $args->{'zimbraUrl'};
-    delete $args->{'zimbraSsoUrl'};
-    delete $args->{'timeout'};
-
-    # Call main subroutine
-    return $class->SUPER::defaultValuesInit($args);
-}
+our $VERSION = '1.9.0';
 
 sub handler {
     my ( $class, $request ) = ( __PACKAGE__, shift );
@@ -87,7 +32,7 @@ sub handler {
 sub run {
     my $class = shift;
     my $r     = $_[0];
-    my $ret   = $class->SUPER::run(@_);
+    my $ret   = $class->SUPER::run();
 
     # Continue only if user is authorized
     return $ret unless ( $ret == OK );
@@ -95,36 +40,61 @@ sub run {
     # Get current URI
     my $uri = Lemonldap::NG::Handler::API->uri_with_args($r);
 
+    # Get Zimbra parameters
+    my $localConfig      = $Lemonldap::NG::Handler::SharedConf::localConfig;
+    my $zimbraPreAuthKey = $localConfig->{zimbraPreAuthKey};
+    my $zimbraAccountKey = $localConfig->{zimbraAccountKey} || 'uid';
+    my $zimbraBy         = $localConfig->{zimbraBy} || 'id';
+    my $zimbraUrl        = $localConfig->{zimbraUrl} || '/service/preauth';
+    my $zimbraSsoUrl     = $localConfig->{zimbraSsoUrl} || '^/zimbrasso$';
+    my $timeout          = $localConfig->{'timeout'} || '0';
+
+    # Display found values in debug mode
+    Lemonldap::NG::Handler::Main::Logger->lmLog(
+        "zimbraPreAuthKey: $zimbraPreAuthKey", 'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog(
+        "zimbraAccountKey: $zimbraAccountKey", 'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "zimbraBy: $zimbraBy",
+        'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "zimbraUrl: $zimbraUrl",
+        'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "zimbraSsoUrl: $zimbraSsoUrl",
+        'debug' );
+    Lemonldap::NG::Handler::Main::Logger->lmLog( "timeout: $timeout", 'debug' );
+
     # Return if we are not on a Zimbra SSO URI
     return OK unless ( $uri =~ $zimbraSsoUrl );
 
     # Check mandatory parameters
-    return $class->abort( $r, "No Zimbra preauth key configured" )
-      unless ($zimbraPreAuthKey);
+    unless ($zimbraPreAuthKey) {
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+            "No Zimbra preauth key configured", 'error' );
+        return SERVER_ERROR;
+    }
 
     # Build URL
-    my $zimbra_url = $class->_buildZimbraPreAuthUrl(
-        $zimbraPreAuthKey,           $zimbraUrl,
-        $datas->{$zimbraAccountKey}, $zimbraBy
-    );
+    my $zimbra_url =
+      $class->_buildZimbraPreAuthUrl( $zimbraPreAuthKey, $zimbraUrl,
+        $datas->{$zimbraAccountKey},
+        $zimbraBy, $timeout );
 
     # Header location
-    Lemonldap::NG::Handler::API->set_header_out( $r,
-        'Location' => $zimbra_url );
+    Lemonldap::NG::Handler::API->set_header_out( 'Location' => $zimbra_url );
 
     # Return REDIRECT
     return REDIRECT;
 }
 
-## @method private string _buildZimbraPreAuthUrl(string key, string url, string account, string by)
+## @method private string _buildZimbraPreAuthUrl(string key, string url, string account, string by, int timeout)
 # Build Zimbra PreAuth URL
 # @param key PreAuthKey
 # @param url URL
 # @param account User account
 # @param by Account type
+# @param timeout Timout
 # @return Zimbra PreAuth URL
 sub _buildZimbraPreAuthUrl {
-    my ( $class, $key, $url, $account, $by ) = @_;
+    my ( $class, $key, $url, $account, $by, $timeout ) = @_;
 
     # Expiration time is calculated with _utime and timeout
     my $expires = $timeout ? ( $datas->{_utime} + $timeout ) * 1000 : $timeout;
@@ -163,39 +133,16 @@ __END__
 Lemonldap::NG::Handler::ZimbraPreAuth - Perl extension to generate Zimbra preauth URL
 for users authenticated by Lemonldap::NG
 
-=head1 SYNOPSIS
-
-  package My::Zimbra;
-  use Lemonldap::NG::Handler::ZimbraPreAuth;
-  @ISA = qw(Lemonldap::NG::Handler::ZimbraPreAuth);
-
-  __PACKAGE__->init ( {
-
-    # Zimbra parameters
-    zimbraPreAuthKey => 'XXXX',
-    zimbraAccountKey => 'uid',
-    zimbraBy         => 'id',
-    zimbraUrl        => '/service/preauth',
-    zimbraSsoUrl     => '^/zimbrasso$',
-
-    # Common parameters
-    timeout          => '72000',
-
-    # See Lemonldap::NG::Handler for more
-
-  } );
-  1;
-
 =head1 DESCRIPTION
 
 Edit you Zimbra vhost configuration like this:
 
+PerlModule Lemonldap::NG::Handler::Specific::ZimbraPreAuth
 <VirtualHost *>
 	ServerName zimbra.example.com
 
 	# Load Zimbra Handler
-	PerlRequire __HANDLERDIR__/MyHandlerZimbra.pm
-		PerlHeaderParserHandler My::Zimbra
+	PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::ZimbraPreAuth
 
 </VirtualHost>
 
