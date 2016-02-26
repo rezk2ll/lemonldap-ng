@@ -14,7 +14,7 @@ use constant SKIP      => 2;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.4.1';
+our $VERSION = '1.9.0';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
 our $tsv = {};    # Hash ref containing thread-shared values, filled
@@ -46,9 +46,8 @@ BEGIN {
 use Lemonldap::NG::Handler::Main::Jail;
 use Lemonldap::NG::Handler::Main::Logger;
 
-## @rmethod protected void updateStatus(string user,string url,string action)
+## @rmethod protected void updateStatus(string action,string user,string url)
 # Inform the status process of the result of the request if it is available
-# @param request Apache2::RequestRec current request
 # @param action string Result of access control (as OK, SKIP, LOGOUT...)
 # @param optional user string Username to log, if undefined defaults to remote IP
 # @param optional url string URL to log, if undefined defaults to request URI
@@ -69,7 +68,7 @@ sub updateStatus {
 # Used to reject non authorized requests.
 # Inform the status processus and call logForbidden().
 # @param $uri URI
-# @return Apache2::Const::FORBIDDEN
+# @return Constant FORBIDDEN
 sub forbidden {
     my $class = shift;
     my $uri   = Lemonldap::NG::Handler::API->unparsed_uri;
@@ -131,7 +130,7 @@ sub encodeUrl {
 # Redirect non-authenticated users to the portal by setting "Location:" header.
 # @param $url Url requested
 # @param $arg optionnal GET parameters
-# @return Apache2::Const::REDIRECT
+# @return Constant REDIRECT
 sub goToPortal {
     my ( $class, $url, $arg ) = @_;
     my ( $ret, $msg );
@@ -149,7 +148,7 @@ sub goToPortal {
     return REDIRECT;
 }
 
-## @rmethod protected $ fetchId()
+## @rmethod protected fetchId()
 # Get user cookies and search for Lemonldap::NG cookie.
 # @return Value of the cookie if found, 0 else
 sub fetchId {
@@ -237,14 +236,13 @@ sub retrieveSession {
     }
 }
 
-# MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
+# MAIN SUBROUTINE
 
-## @rmethod int run(Apache2::RequestRec r)
+## @rmethod int run(string ĉonf, string protection)
 # Main method used to control access.
 # Calls :
 # - fetchId()
 # - retrieveSession()
-# - lmSetApacheUser()
 # - grant()
 # - forbidden() if user is rejected
 # - sendHeaders() if user is granted
@@ -252,7 +250,7 @@ sub retrieveSession {
 # - updateStatus()
 # @param $cond optional Function granting access
 # @param $protection optional Set to 1 or 2 if access unprotected
-# @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
+# @return Constant (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
 sub run {
     my ( $class, $cond, $protection ) = @_;
     return DECLINED
@@ -321,7 +319,7 @@ sub run {
         # Local macros
         my $kc = keys %$datas;    # in order to detect new local macro
 
-        # ACCOUNTING (1. Inform Apache)
+        # ACCOUNTING (1. Inform web server)
         Lemonldap::NG::Handler::API->set_user(
             $datas->{ $tsv->{whatToTrace} } );
 
@@ -400,11 +398,11 @@ sub checkMaintenanceMode {
     return 0;
 }
 
-## @rmethod int abort(string mess)
+## @rmethod int abort(string msg)
 # Logs message and exit or redirect to the portal if "useRedirectOnError" is
 # set to true.
 # @param $msg Message to log
-# @return Apache2::Const::REDIRECT or Apache2::Const::SERVER_ERROR
+# @return Constant (REDIRECT, SERVER_ERROR)
 sub abort {
     my ( $class, $msg ) = @_;
 
@@ -427,7 +425,7 @@ sub abort {
     die $msg if ($@);
 }
 
-## @rmethod boolean grant()
+## @rmethod boolean grant(string uri, string cond)
 # Grant or refuse client using compiled regexp and functions
 # @param $uri URI
 # @param $cond optional Function granting access
@@ -491,12 +489,12 @@ sub localUnlog {
     my $class = shift;
     if ( my $id = $class->fetchId ) {
 
-        # Delete Apache thread datas
+        # Delete thread datas
         if ( $id eq $datas->{_session_id} ) {
             $datas = {};
         }
 
-        # Delete Apache local cache
+        # Delete local cache
         if ( $tsv->{refLocalStorage} and $tsv->{refLocalStorage}->get($id) ) {
             $tsv->{refLocalStorage}->remove($id);
         }
@@ -505,7 +503,7 @@ sub localUnlog {
 
 ## @rmethod protected int unlog()
 # Call localUnlog() then goToPortal() to unlog the current user.
-# @return Apache2::Const value returned by goToPortal()
+# @return Constant value returned by goToPortal()
 sub unlog ($$) {
     my $class = shift;
     $class->localUnlog;
@@ -516,7 +514,7 @@ sub unlog ($$) {
 ## @rmethod int status
 # Get the result from the status process and launch a PerlResponseHandler to
 # display it.
-# @return Apache2::Const::OK
+# @return Constant OK
 sub status($$) {
     my $class      = shift;
     my $statusPipe = $tsv->{statusPipe};
@@ -547,7 +545,7 @@ sub status($$) {
 # Used by logout_app and logout_app_sso targets
 # @param $url URL to redirect the user
 # @param $f Current Apache2::Filter object
-# @return Apache2::Const::OK
+# @return Constant OK
 sub redirectFilter {
     my $class = shift;
     my $url   = shift;
