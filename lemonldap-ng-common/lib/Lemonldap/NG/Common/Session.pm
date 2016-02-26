@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Common::Session;
 
-our $VERSION = 1.4.1;
+our $VERSION = 1.9.0;
 
 use Mouse;
 use Lemonldap::NG::Common::Apache::Session;
@@ -96,6 +96,7 @@ sub BUILD {
         $options{setId} = $self->id;
         $self->options( \%options );
         $self->id(undef);
+        $self->error(undef);
         $data = $self->_tie_session;
     }
 

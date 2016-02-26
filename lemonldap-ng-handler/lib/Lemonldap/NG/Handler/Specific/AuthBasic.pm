@@ -18,9 +18,25 @@ use Lemonldap::NG::Common::Session;
 
 use base qw(Lemonldap::NG::Handler::SharedConf);
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.0';
 
-## @rmethod protected $ fetchId
+sub handler {
+    my ( $class, $request ) = ( __PACKAGE__, shift );
+    Lemonldap::NG::Handler::API->newRequest($request);
+    $class->run($request);
+}
+
+## @rmethod Apache2::Const run(Apache2::RequestRec r)
+# Overload main run method
+# @param r Current request
+# @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
+sub run {
+    my $class = shift;
+    my $r     = $_[0];
+    return $class->SUPER::run();
+}
+
+## @rmethod protected fetchId
 # Get user session id from Authorization header
 # Unlike usual processing, session id is computed from user creds,
 # so that it remains secret but handler can easily get it.
@@ -72,7 +88,7 @@ sub createSession {
     my $soapHeaders = HTTP::Headers->new( "X-Forwarded-For" => $xheader );
 
     my $soapClient =
-      SOAP::Lite->proxy( $class->portal(), default_headers => $soapHeaders )
+      SOAP::Lite->proxy( $tsv->{portal}->(), default_headers => $soapHeaders )
       ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
 
     my $creds = Lemonldap::NG::Handler::API->header_in('Authorization');
