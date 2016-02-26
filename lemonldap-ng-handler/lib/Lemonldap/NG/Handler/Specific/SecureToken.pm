@@ -18,15 +18,10 @@ use Cache::Memcached;
 use Apache::Session::Generate::MD5;
 use Lemonldap::NG::Handler::Main::Logger;
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.0';
 
 # Shared variables
-our (
-    $secureTokenMemcachedServers,    $secureTokenExpiration,
-    $secureTokenAttribute,           $secureTokenUrls,
-    $secureTokenHeader,              $datas,
-    $secureTokenMemcachedConnection, $secureTokenAllowOnError,
-);
+our $secureTokenMemcachedConnection;
 
 BEGIN {
     eval {
@@ -35,45 +30,37 @@ BEGIN {
     };
 }
 
-## @imethod protected void globalInit(hashRef args)
-# Overload globalInit to launch this class defaultValuesInit
-# @param $args reference to the configuration hash
-sub globalInit {
-    my $class = shift;
-    __PACKAGE__->defaultValuesInit(@_);
-    $class->SUPER::globalInit(@_);
+sub handler {
+    my ( $class, $request ) = ( __PACKAGE__, shift );
+    Lemonldap::NG::Handler::API->newRequest($request);
+    $class->run($request);
 }
 
-## @imethod protected void defaultValuesInit(hashRef args)
-# Overload defaultValuesInit
-# @param $args reference to the configuration hash
-sub defaultValuesInit {
-    my ( $class, $args ) = @_;
+## @rmethod Apache2::Const run(Apache2::RequestRec r)
+# Overload main run method
+# @param r Current request
+# @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
+sub run {
+    my $class = shift;
+    my $r     = $_[0];
+    my $ret   = $class->SUPER::run();
+
+    # Continue only if user is authorized
+    return $ret unless ( $ret == OK );
+
+    # Get current URI
+    my $uri = Lemonldap::NG::Handler::API->uri_with_args($r);
 
     # Catch Secure Token parameters
-    $secureTokenMemcachedServers =
-         $args->{'secureTokenMemcachedServers'}
-      || $secureTokenMemcachedServers
-      || ['127.0.0.1:11211'];
-    $secureTokenExpiration =
-         $args->{'secureTokenExpiration'}
-      || $secureTokenExpiration
-      || '60';
-    $secureTokenAttribute =
-         $args->{'secureTokenAttribute'}
-      || $secureTokenAttribute
-      || 'uid';
-    $secureTokenUrls = $args->{'secureTokenUrls'} || $secureTokenUrls || ['.*'];
-    $secureTokenHeader =
-         $args->{'secureTokenHeader'}
-      || $secureTokenHeader
-      || 'Auth-Token';
-    $args->{'secureTokenAllowOnError'} = 1
-      unless defined $args->{'secureTokenAllowOnError'};
-    $secureTokenAllowOnError =
-      defined $secureTokenAllowOnError
-      ? $secureTokenAllowOnError
-      : $args->{'secureTokenAllowOnError'};
+    my $localConfig = $Lemonldap::NG::Handler::SharedConf::localConfig;
+    my $secureTokenMemcachedServers =
+      $localConfig->{secureTokenMemcachedServers} || ['127.0.0.1:11211'];
+    my $secureTokenExpiration = $localConfig->{secureTokenExpiration} || 60;
+    my $secureTokenAttribute  = $localConfig->{secureTokenAttribute}  || 'uid';
+    my $secureTokenUrls       = $localConfig->{'secureTokenUrls'}     || ['.*'];
+    my $secureTokenHeader = $localConfig->{secureTokenHeader} || 'Auth-Token';
+    my $secureTokenAllowOnError = 1
+      unless defined $localConfig->{'secureTokenAllowOnError'};
 
     # Force some parameters to be array references
     foreach (qw/secureTokenMemcachedServers secureTokenUrls/) {
@@ -100,39 +87,6 @@ sub defaultValuesInit {
     Lemonldap::NG::Handler::Main::Logger->lmLog(
         "secureTokenAllowOnError: $secureTokenAllowOnError", 'debug' );
 
-    # Delete Secure Token parameters
-    delete $args->{'secureTokenMemcachedServers'};
-    delete $args->{'secureTokenExpiration'};
-    delete $args->{'secureTokenAttribute'};
-    delete $args->{'secureTokenUrls'};
-    delete $args->{'secureTokenHeader'};
-    delete $args->{'secureTokenAllowOnError'};
-
-    # Call main subroutine
-    return $class->SUPER::defaultValuesInit($args);
-}
-
-sub handler {
-    my ( $class, $request ) = ( __PACKAGE__, shift );
-    Lemonldap::NG::Handler::API->newRequest($request);
-    $class->run($request);
-}
-
-## @rmethod Apache2::Const run(Apache2::RequestRec r)
-# Overload main run method
-# @param r Current request
-# @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
-sub run {
-    my $class = shift;
-    my $r     = $_[0];
-    my $ret   = $class->SUPER::run(@_);
-
-    # Continue only if user is authorized
-    return $ret unless ( $ret == OK );
-
-    # Get current URI
-    my $uri = Lemonldap::NG::Handler::API->uri_with_args($r);
-
     # Return if we are not on a secure token URL
     my $checkurl = 0;
     foreach (@$secureTokenUrls) {
@@ -147,22 +101,23 @@ sub run {
 
     # Test Memcached connection
     unless ( $class->_isAlive() ) {
-        $secureTokenMemcachedConnection = $class->_createMemcachedConnection();
+        $secureTokenMemcachedConnection =
+          $class->_createMemcachedConnection($secureTokenMemcachedServers);
     }
 
     # Exit if no connection
-    return $class->_returnError($r) unless $class->_isAlive();
+    return $class->_returnError( $r, $secureTokenAllowOnError )
+      unless $class->_isAlive();
 
     # Value to store
     my $value = $datas->{$secureTokenAttribute};
 
     # Set token
-    my $key = $class->_setToken($value);
-    return $class->_returnError($r) unless $key;
+    my $key = $class->_setToken( $value, $secureTokenExpiration );
+    return $class->_returnError( $r, $secureTokenAllowOnError ) unless $key;
 
     # Header location
-    Lemonldap::NG::Handler::API->set_header_in( $r,
-        $secureTokenHeader => $key );
+    Lemonldap::NG::Handler::API->set_header_in( $secureTokenHeader => $key );
 
     # Remove token
     eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
@@ -184,11 +139,12 @@ sub run {
     return OK;
 }
 
-## @method private Cache::Memcached _createMemcachedConnection
+## @method private Cache::Memcached _createMemcachedConnection(ArrayRef secureTokenMemcachedServers)
 # Create Memcached connexion
+# @param $secureTokenMemcachedServers Memcached servers
 # @return Cache::Memcached object
 sub _createMemcachedConnection {
-    my ($class) = @_;
+    my ( $class, $secureTokenMemcachedServers ) = @_;
 
     # Open memcached connexion
     my $memd = new Cache::Memcached {
@@ -202,12 +158,13 @@ sub _createMemcachedConnection {
     return $memd;
 }
 
-## @method private string _setToken(string value)
+## @method private string _setToken(string value, int secureTokenExpiration)
 # Set token value
 # @param value Value
+# @param secureTokenExpiration expiration
 # @return Token key
 sub _setToken {
-    my ( $class, $value ) = @_;
+    my ( $class, $value, $secureTokenExpiration ) = @_;
 
     my $key = Apache::Session::Generate::MD5::generate();
 
@@ -277,11 +234,12 @@ sub _isAlive {
     return 0;
 }
 
-## @method private int _returnError()
+## @method private int _returnError(boolean secureTokenAllowOnError)
 # Give hand back to Apache
+# @param secureTokenAllowOnError
 # @return Apache2::Const value
 sub _returnError {
-    my ( $class, $r ) = @_;
+    my ( $class, $r, $secureTokenAllowOnError ) = @_;
 
     if ($secureTokenAllowOnError) {
         Lemonldap::NG::Handler::Main::Logger->lmLog(
@@ -293,7 +251,7 @@ sub _returnError {
     if ( $tsv->{useRedirectOnError} ) {
         Lemonldap::NG::Handler::Main::Logger->lmLog( "Use redirect for error",
             'debug' );
-        return $class->goToPortal( $r, '/', 'lmError=500' );
+        return $class->goToPortal( '/', 'lmError=500' );
     }
 
     else {
