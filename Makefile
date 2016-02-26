@@ -968,7 +968,7 @@ debian-diff:
 	@$(DIFF) $(SRCMANAGERDIR)/site/static $(DIFFPREFIX)/usr/share/lemonldap-ng/manager/static ||true
 	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(DIFFPREFIX)/user/share/lemonldap-ng/manager/templates ||true
 	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
-	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' $(SRCCOMMONDIR)/scripts/lemonldap-ng-cli $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lemonldap-ng-cli ||true
+	@$(DIFF) --ignore-matching-lines='set.*get.*' $(SRCCOMMONDIR)/scripts/lemonldap-ng-cli $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lemonldap-ng-cli ||true
 
 default-diff:
 	@# Portal
@@ -997,7 +997,7 @@ default-diff:
 	@$(DIFF) $(SRCMANAGERDIR)/site/static $(LMPREFIX)/htdocs/manager/static ||true
 	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(LMPREFIX)/htdocs/manager/templates ||true
 	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
-	@$(DIFF) --ignore-matching-lines='giveUpPrivileges' $(SRCCOMMONDIR)/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true
+	@$(DIFF) --ignore-matching-lines='set.*get.*' $(SRCCOMMONDIR)/scripts/lemonldap-ng-cli $(LMPREFIX)/bin/lemonldap-ng-cli ||true
 
 test-diff:
 	@for file in `find lemonldap-ng-*/lib -type f`; do \
