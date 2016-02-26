@@ -162,7 +162,7 @@ sub notifications {
     {
         while ( my ( $field, $value ) = each %filters ) {
             $value =~ s/\*/\.\*/g;
-            $value = qr/$value/;
+            $value = qr/^$value$/;
             foreach my $k ( keys %$notifs ) {
                 delete $notifs->{$k}
                   unless ( $notifs->{$k}->{$field} =~ $value );
