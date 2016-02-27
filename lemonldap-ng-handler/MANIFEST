@@ -18,7 +18,6 @@ lib/Lemonldap/NG/Handler/Main/Jail.pm
 lib/Lemonldap/NG/Handler/Main/Logger.pm
 lib/Lemonldap/NG/Handler/Menu.pm
 lib/Lemonldap/NG/Handler/Nginx.pm
-lib/Lemonldap/NG/Handler/Proxy.pm
 lib/Lemonldap/NG/Handler/PSGI.pm
 lib/Lemonldap/NG/Handler/PSGI/Base.pm
 lib/Lemonldap/NG/Handler/PSGI/Router.pm
@@ -41,7 +40,6 @@ t/10-Lemonldap-NG-Handler-SharedConf.t
 t/12-Lemonldap-NG-Handler-Jail.t
 t/13-Lemonldap-NG-Handler-Fake-Safe.t
 t/30-Lemonldap-NG-Handler-CGI.t
-t/40-Lemonldap-NG-Handler-Proxy.t
 t/50-Lemonldap-NG-Handler-SecureToken.t
 t/51-Lemonldap-NG-Handler-Zimbra.t
 t/52-Lemonldap-NG-Handler-AuthBasic.t
