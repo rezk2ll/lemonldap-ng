@@ -178,4 +178,11 @@ sub cgiName {
     return "HTTP_$h";
 }
 
+sub addToHtmlHead {
+    my $self = shift;
+    $self->lmLog('Features like form replay or logout_app can only be used with Apache','error'),
+}
+
+*setPostParams = *addToHtmlHead;
+
 1;
