@@ -112,8 +112,13 @@ Then install lasso and lasso-perl packages:
 
 </div>
 <!-- EDIT4 SECTION "Lasso" [717-1484] -->
-<h3 class="sectionedit5" id="apache_rewrite_rules">Apache rewrite rules</h3>
+<h3 class="sectionedit5" id="rewrite_rules">Rewrite rules</h3>
 <div class="level3">
+
+</div>
+
+<h4 id="apache">Apache</h4>
+<div class="level4">
 
 <p>
 Be sure that mod_rewrite is installed and that SAML2 rewrite rules are activated in <a href="../../documentation/1.9/configlocation.html#portal" class="wikilink1" title="documentation:1.9:configlocation">Apache portal configuration</a>:
@@ -125,7 +130,19 @@ Be sure that mod_rewrite is installed and that SAML2 rewrite rules are activated
 &lt;/<span class="kw3">IfModule</span>&gt;</pre>
 
 </div>
-<!-- EDIT5 SECTION "Apache rewrite rules" [1485-1830] -->
+
+<h4 id="nginx">Nginx</h4>
+<div class="level4">
+
+<p>
+Be sure that SAML2 rewrite rules are activated in <a href="../../documentation/1.9/configlocation.html#portal1" class="wikilink1" title="documentation:1.9:configlocation">Nginx portal configuration</a>:
+</p>
+<pre class="code file nginx">  # SAML2 Issuer
+  rewrite ^/saml/metadata /metadata.pl last;
+  rewrite ^/saml/.* /index.pl last;</pre>
+
+</div>
+<!-- EDIT5 SECTION "Rewrite rules" [1485-2078] -->
 <h2 class="sectionedit6" id="service_configuration">Service configuration</h2>
 <div class="level2">
 
@@ -139,7 +156,7 @@ Go in Manager and click on <code><abbr title="Security Assertion Markup Language
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Service configuration" [1831-1994] -->
+<!-- EDIT6 SECTION "Service configuration" [2079-2242] -->
 <h3 class="sectionedit7" id="entry_identifier">Entry Identifier</h3>
 <div class="level3">
 
@@ -166,7 +183,7 @@ The value will be use in metadata main markup:
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Entry Identifier" [1995-2392] -->
+<!-- EDIT7 SECTION "Entry Identifier" [2243-2640] -->
 <h3 class="sectionedit8" id="security_parameters">Security parameters</h3>
 <div class="level3">
 
@@ -214,7 +231,7 @@ $ openssl x509 -req -days 3650 -in cert.csr -signkey private.key -out cert.pem</
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Security parameters" [2393-3655] -->
+<!-- EDIT8 SECTION "Security parameters" [2641-3903] -->
 <h3 class="sectionedit9" id="nameid_formats">NameID formats</h3>
 <div class="level3">
 
@@ -259,7 +276,7 @@ Other NameID formats are automatically managed:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "NameID formats" [3656-4414] -->
+<!-- EDIT9 SECTION "NameID formats" [3904-4662] -->
 <h3 class="sectionedit10" id="authentication_contexts">Authentication contexts</h3>
 <div class="level3">
 
@@ -287,7 +304,7 @@ Customizable NameID formats are:
 </ul>
 
 </div>
-<!-- EDIT10 SECTION "Authentication contexts" [4415-5138] -->
+<!-- EDIT10 SECTION "Authentication contexts" [4663-5386] -->
 <h3 class="sectionedit11" id="organization">Organization</h3>
 <div class="level3">
 
@@ -315,7 +332,7 @@ This concerns all parameters for the Organization metadata section:
 </ul>
 
 </div>
-<!-- EDIT11 SECTION "Organization" [5139-5650] -->
+<!-- EDIT11 SECTION "Organization" [5387-5898] -->
 <h3 class="sectionedit12" id="service_provider">Service Provider</h3>
 <div class="level3">
 
@@ -410,7 +427,7 @@ The only authorized binding is SOAP. This should be set as Default.
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Service Provider" [5651-6705] -->
+<!-- EDIT12 SECTION "Service Provider" [5899-6953] -->
 <h3 class="sectionedit13" id="identity_provider">Identity Provider</h3>
 <div class="level3">
 
@@ -507,7 +524,7 @@ The only authorized binding is SOAP. This should be set as Default.
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Identity Provider" [6706-7694] -->
+<!-- EDIT13 SECTION "Identity Provider" [6954-7942] -->
 <h3 class="sectionedit14" id="attribute_authority">Attribute Authority</h3>
 <div class="level3">
 
@@ -538,7 +555,7 @@ Response Location should be empty, as SOAP responses are directly returned (sync
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Attribute Authority" [7695-8106] -->
+<!-- EDIT14 SECTION "Attribute Authority" [7943-8354] -->
 <h3 class="sectionedit15" id="advanced">Advanced</h3>
 <div class="level3">
 

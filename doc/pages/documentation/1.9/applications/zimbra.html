@@ -45,8 +45,13 @@ Zimbra use a specific <a href="http://wiki.zimbra.com/index.php?title=Preauth" c
 </div></p>
 </p>
 
+<p>
+<p><div class="noteimportant">For now, Zimbra isn&#039;t supported by Nginx handler. You have to use Apache.
+</div></p>
+</p>
+
 </div>
-<!-- EDIT2 SECTION "Presentation" [61-1001] -->
+<!-- EDIT2 SECTION "Presentation" [61-1099] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -65,7 +70,7 @@ The integration with <abbr title="LemonLDAP::NG">LL::NG</abbr> is the following:
 </ul>
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [1002-1342] -->
+<!-- EDIT3 SECTION "Configuration" [1100-1440] -->
 <h3 class="sectionedit4" id="zimbra_preauth_key">Zimbra preauth key</h3>
 <div class="level3">
 
@@ -78,7 +83,7 @@ See <a href="http://wiki.zimbra.com/index.php?title=Preauth#Preparing_a_domain_f
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Zimbra preauth key" [1343-1541] -->
+<!-- EDIT4 SECTION "Zimbra preauth key" [1441-1639] -->
 <h3 class="sectionedit5" id="zimbra_application_in_menu">Zimbra application in menu</h3>
 <div class="level3">
 
@@ -87,25 +92,40 @@ Choose for example <a href="http://zimbra.example.com/zimbrasso" class="urlexter
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Zimbra application in menu" [1542-1723] -->
-<h3 class="sectionedit6" id="zimbra_virtual_host_in_apache">Zimbra virtual host in Apache</h3>
+<!-- EDIT5 SECTION "Zimbra application in menu" [1640-1821] -->
+<h3 class="sectionedit6" id="zimbra_virtual_host">Zimbra virtual host</h3>
 <div class="level3">
+
+</div>
+
+<h4 id="apache">Apache</h4>
+<div class="level4">
 
 <p>
 You will configure Zimbra virtual host like other <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">protected virtual host</a> but you will use Zimbra Handler instead of default Handler.
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *&gt;
+<pre class="code file apache">PerlModule Lemonldap::NG::Handler::Specific::ZimbraPreAuth
+&lt;<span class="kw3">VirtualHost</span> *&gt;
         <span class="kw1">ServerName</span> zimbra.example.com
 &nbsp;
        <span class="co1"># Load Zimbra Handler</span>
-       PerlRequire Lemonldap/NG/Handler/Specific/ZimbraPreAuth.pm
        PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::ZimbraPreAuth
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- EDIT6 SECTION "Zimbra virtual host in Apache" [1724-2202] -->
+
+<h4 id="nginx">Nginx</h4>
+<div class="level4">
+
+<p>
+<p><div class="noteclassic">Zimbra Handler cannot be used in Nginx for the moment.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Zimbra virtual host" [1822-2382] -->
 <h3 class="sectionedit7" id="zimbra_virtual_host_in_manager">Zimbra virtual host in Manager</h3>
 <div class="level3">
 
@@ -118,12 +138,12 @@ Just configure the <a href="../../../documentation/1.9/writingrulesand_headers.h
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Zimbra virtual host in Manager" [2203-2419] -->
+<!-- EDIT7 SECTION "Zimbra virtual host in Manager" [2383-2599] -->
 <h3 class="sectionedit8" id="zimbra_handler_parameters">Zimbra Handler parameters</h3>
 <div class="level3">
 
 <p>
-Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</code> » <code>Special handlers</code> » <code>Zimbra</code>, and edit the different keys:
+Zimbra parameters are the following:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Preauthentication key</strong>: the one you grab from zmprov command</div>
@@ -137,6 +157,22 @@ Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</cod
 <li class="level1"><div class="li"> <strong>Local <abbr title="Single Sign On">SSO</abbr> <abbr title="Uniform Resource Locator">URL</abbr> pattern</strong>: regular expression to match the <abbr title="Single Sign On">SSO</abbr> <abbr title="Uniform Resource Locator">URL</abbr> (by default: ^/zimbrasso$)</div>
 </li>
 </ul>
+
+<p>
+<p><div class="noteimportant">
+Due to Handler <abbr title="Application Programming Interface">API</abbr> change in 1.9, you need to set these attributes in <code>lemonldap-ng.ini</code> and not in Manager, for example:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>handler<span class="br0">&#93;</span></span>
+<span class="re1">zimbraPreAuthKey</span> <span class="sy0">=</span><span class="re2"> XXXX</span>
+<span class="re1">zimbraAccountKey</span> <span class="sy0">=</span><span class="re2"> uid</span>
+<span class="re1">zimbraBy</span> <span class="sy0">=</span><span class="re2">id</span>
+<span class="re1">zimbraUrl</span> <span class="sy0">=</span><span class="re2"> /service/preauth</span>
+<span class="re1">zimbraSsoUrl</span> <span class="sy0">=</span><span class="re2"> ^/zimbrasso$</span></pre>
+
+<p>
+
+</div></p>
+</p>
 
 </div>
 </div><!-- closes <div class="dokuwiki export">-->

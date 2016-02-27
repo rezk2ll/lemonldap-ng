@@ -92,7 +92,7 @@ For example:
 </li>
 <li class="level1"><div class="li"> Target <abbr title="Uniform Resource Identifier">URI</abbr>: /process.php (if you let this parameter empty, target <abbr title="Uniform Resource Identifier">URI</abbr> is supposed to be the same as form page <abbr title="Uniform Resource Identifier">URI</abbr>)</div>
 </li>
-<li class="level1"><div class="li"> jQuery <abbr title="Uniform Resource Locator">URL</abbr>: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (if you let this parameter empty, jQuery is supposed to be already loaded; you can also set “default” to point to jQuery <abbr title="Uniform Resource Locator">URL</abbr> of <abbr title="LemonLDAP::NG">LL::NG</abbr> portal)</div>
+<li class="level1"><div class="li"> jQuery <abbr title="Uniform Resource Locator">URL</abbr>: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (if you let this parameter empty, jQuery is supposed to be already loaded; you can also set <code>default</code> to point to jQuery <abbr title="Uniform Resource Locator">URL</abbr> of <abbr title="LemonLDAP::NG">LL::NG</abbr> portal)</div>
 </li>
 <li class="level1"><div class="li"> jQuery form selector: #loginForm (if you let this parameter empty, browser will fill and submit any html form)</div>
 </li>
@@ -100,24 +100,22 @@ For example:
 </li>
 <li class="level1"><div class="li"> Fields:</div>
 <ul>
-<li class="level2"><div class="li"> login: $uid (uid of the user)</div>
+<li class="level2"><div class="li"> postuid: $uid</div>
 </li>
-<li class="level2"><div class="li"> password: $_password (password of the user)</div>
+<li class="level2"><div class="li"> postmail: $mail</div>
 </li>
-<li class="level2"><div class="li"> static: &#039;StaticValue&#039; (a static value)</div>
-</li>
-<li class="level2"><div class="li"> remember: &#039;1&#039; (checked box)</div>
+<li class="level2"><div class="li"> poststatic: &#039;static&#039;</div>
 </li>
 </ul>
 </li>
 </ul>
 
 <p>
-Then go in Manager, “Virtual Hosts” » <em>virtualhost</em> » “Form replay” and click on “New form”.
+Go in Manager, “Virtual Hosts” » <em>virtualhost</em> » “Form replay” and click on “New form replay”.
 </p>
 
 <p>
-<a href="/_detail/documentation/manager-formreplay-newurl.png?id=documentation%3A1.9%3Aformreplay" class="media" title="documentation:manager-formreplay-newurl.png"><img src="../../../media/documentation/manager-formreplay-newurl.png" class="mediacenter" alt="" /></a>
+<img src="../../../media/documentation/manager-form-replay.png" class="mediacenter" alt="" />
 </p>
 
 <p>
@@ -137,11 +135,11 @@ Fill values here:
 </ul>
 
 <p>
-Then click on <code>New POST data</code> and add all data with their values, for example:
+Then click on <code>New variable</code> and add all data with their values, for example:
 </p>
 
 <p>
-<a href="/_detail/documentation/manager-formreplay-newdata.png?id=documentation%3A1.9%3Aformreplay" class="media" title="documentation:manager-formreplay-newdata.png"><img src="../../../media/documentation/manager-formreplay-newdata.png" class="mediacenter" alt="" /></a>
+<img src="../../../media/documentation/manager-form-replay-vars.png" class="mediacenter" alt="" />
 </p>
 
 <p>

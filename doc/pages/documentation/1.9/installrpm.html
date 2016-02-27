@@ -23,13 +23,18 @@
 <h1 class="sectionedit1" id="installation_on_red_hatcentos">Installation on Red Hat/CentOS</h1>
 <div class="level1">
 
+<p>
+<p><div class="noteimportant"><abbr title="LemonLDAP::NG">LL::NG</abbr> requires at least Red Hat/CentOS 7
+</div></p>
+</p>
+
 </div>
-<!-- EDIT1 SECTION "Installation on Red Hat/CentOS" [1-46] -->
+<!-- EDIT1 SECTION "Installation on Red Hat/CentOS" [1-112] -->
 <h2 class="sectionedit2" id="organization">Organization</h2>
 <div class="level2">
 
 <p>
-LemonLDAP::NG provides packages for Red Hat/Centos 6 and 7:
+LemonLDAP::NG provides packages for Red Hat/Centos 7:
 </p>
 <ul>
 <li class="level1"><div class="li"> lemonldap-ng: meta-package, contains no file but dependencies on other packages</div>
@@ -61,12 +66,12 @@ LemonLDAP::NG provides packages for Red Hat/Centos 6 and 7:
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Organization" [47-993] -->
+<!-- EDIT2 SECTION "Organization" [113-1053] -->
 <h2 class="sectionedit3" id="get_the_packages">Get the packages</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Get the packages" [994-1023] -->
+<!-- EDIT3 SECTION "Get the packages" [1054-1083] -->
 <h3 class="sectionedit4" id="yum_repository">YUM repository</h3>
 <div class="level3">
 
@@ -76,21 +81,10 @@ You can add this YUM repository to get recent packages:
 <pre class="code">vi /etc/yum.repos.d/lemonldap-ng.repo</pre>
 <pre class="file">[lemonldap-ng]
 name=LemonLDAP::NG packages
-baseurl=http://lemonldap-ng.org/rpm6/
+baseurl=http://lemonldap-ng.org/rpm7/
 enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</pre>
-
-<p>
-<p><div class="notetip">
-Change the base <abbr title="Uniform Resource Locator">URL</abbr> for EL7 packages:
-</p>
-<pre class="file">baseurl=http://lemonldap-ng.org/rpm7/</pre>
-
-<p>
-
-</div></p>
-</p>
 
 <p>
 Run this to update packages cache:
@@ -105,7 +99,7 @@ You must also install the EPEL repository for non-core dependencies. See <a href
 </p>
 
 </div>
-<!-- EDIT4 SECTION "YUM repository" [1024-1658] -->
+<!-- EDIT4 SECTION "YUM repository" [1084-1607] -->
 <h3 class="sectionedit5" id="manual_download">Manual download</h3>
 <div class="level3">
 
@@ -114,7 +108,7 @@ RPMs are available on the <a href="../../download.html" class="wikilink1" title=
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Manual download" [1659-1741] -->
+<!-- EDIT5 SECTION "Manual download" [1608-1690] -->
 <h2 class="sectionedit6" id="package_gpg_signature">Package GPG signature</h2>
 <div class="level2">
 
@@ -128,12 +122,12 @@ Install it to trust RPMs:
 <pre class="code">rpm --import rpm-gpg-key-ow2</pre>
 
 </div>
-<!-- EDIT6 SECTION "Package GPG signature" [1742-1907] -->
+<!-- EDIT6 SECTION "Package GPG signature" [1691-1856] -->
 <h2 class="sectionedit7" id="install_packages">Install packages</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT7 SECTION "Install packages" [1908-1937] -->
+<!-- EDIT7 SECTION "Install packages" [1857-1886] -->
 <h3 class="sectionedit8" id="with_yum">With YUM</h3>
 <div class="level3">
 
@@ -141,13 +135,6 @@ Install it to trust RPMs:
 If the packages are stored in a yum repository:
 </p>
 <pre class="code shell">yum install lemonldap-ng</pre>
-<pre class="code shell">Transaction Summary
-===================================================
-Install      82 Package(s)
-Upgrade       0 Package(s)
-&nbsp;
-Total download size: 18 M
-Is this ok [y/N]: y</pre>
 
 <p>
 You can also use yum on local RPMs file:
@@ -155,7 +142,7 @@ You can also use yum on local RPMs file:
 <pre class="code">yum localinstall lemonldap-ng-* perl-Lemonldap-NG-*</pre>
 
 </div>
-<!-- EDIT8 SECTION "With YUM" [1938-2355] -->
+<!-- EDIT8 SECTION "With YUM" [1887-2110] -->
 <h3 class="sectionedit9" id="with_rpm">With RPM</h3>
 <div class="level3">
 
@@ -180,12 +167,12 @@ Install the package <code>lemonldap-ng-conf</code> on all server which contains 
 </p>
 
 </div>
-<!-- EDIT9 SECTION "With RPM" [2356-2823] -->
+<!-- EDIT9 SECTION "With RPM" [2111-2578] -->
 <h2 class="sectionedit10" id="first_configuration_steps">First configuration steps</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT10 SECTION "First configuration steps" [2824-2862] -->
+<!-- EDIT10 SECTION "First configuration steps" [2579-2617] -->
 <h3 class="sectionedit11" id="change_default_dns_domain">Change default DNS domain</h3>
 <div class="level3">
 
@@ -195,46 +182,8 @@ By default, <abbr title="Domain Name System">DNS</abbr> domain is <code>example.
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- EDIT11 SECTION "Change default DNS domain" [2863-3177] -->
-<h3 class="sectionedit12" id="apache_virtual_host">Apache virtual host</h3>
-<div class="level3">
-
-<p>
-If <abbr title="LemonLDAP::NG">LL::NG</abbr> is the only software installed in Apache, the virtual host feature may not have already been activated.
-</p>
-
-<p>
-To do it, uncomment the <code>NameVirtualHost</code> line in <code>/etc/httpd/conf.d/z-lemonldap-ng-handler.conf</code>:
-</p>
-<pre class="code file apache"><span class="kw1">NameVirtualHost</span> *:<span class="nu0">80</span></pre>
-
-<p>
-Check Apache configuration and restart:
-</p>
-<pre class="code shell">apachectl configtest
-apachectl restart</pre>
-
-</div>
-<!-- EDIT12 SECTION "Apache virtual host" [3178-3572] -->
-<h3 class="sectionedit13" id="default_virtual_host">Default virtual host</h3>
-<div class="level3">
-
-<p>
-Apache on RedHat comes with a default virtual host:
-</p>
-<pre class="code file apache">&lt;<span class="kw3">LocationMatch</span> <span class="st0">&quot;^/+$&quot;</span>&gt;
-<span class="kw1">Options</span> -<span class="kw2">Indexes</span>
-<span class="kw1">ErrorDocument</span> 403 /.noindex.html
-&lt;/<span class="kw3">LocationMatch</span>&gt;</pre>
-
-<p>
-This conflicts with LemonLDAP::NG ErrorDocument configuration, so you need to comment this part of the vhost.
-If you have an apache fresh install, it can be a good idea to completely disable the welcome vhost.
-</p>
-
-</div>
-<!-- EDIT13 SECTION "Default virtual host" [3573-3980] -->
-<h3 class="sectionedit14" id="reload_virtual_host">Reload virtual host</h3>
+<!-- EDIT11 SECTION "Change default DNS domain" [2618-2932] -->
+<h3 class="sectionedit12" id="reload_virtual_host">Reload virtual host</h3>
 <div class="level3">
 
 <p>
@@ -248,8 +197,8 @@ To allow the manager to reload the configuration, register the reload virtual ho
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Reload virtual host" [3981-4282] -->
-<h3 class="sectionedit15" id="upgrade">Upgrade</h3>
+<!-- EDIT12 SECTION "Reload virtual host" [2933-3234] -->
+<h3 class="sectionedit13" id="upgrade">Upgrade</h3>
 <div class="level3">
 
 <p>
@@ -257,8 +206,8 @@ If you upgraded <abbr title="LemonLDAP::NG">LL::NG</abbr>, check all <a href="..
 </p>
 
 </div>
-<!-- EDIT15 SECTION "Upgrade" [4283-4363] -->
-<h3 class="sectionedit16" id="dns">DNS</h3>
+<!-- EDIT13 SECTION "Upgrade" [3235-3315] -->
+<h3 class="sectionedit14" id="dns">DNS</h3>
 <div class="level3">
 
 <p>
@@ -281,8 +230,8 @@ Follow the <a href="../../documentation/1.9/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- EDIT16 SECTION "DNS" [4364-4636] -->
-<h2 class="sectionedit17" id="file_location">File location</h2>
+<!-- EDIT14 SECTION "DNS" [3316-3588] -->
+<h2 class="sectionedit15" id="file_location">File location</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Configuration is in /etc/lemonldap-ng</div>
@@ -298,8 +247,8 @@ Follow the <a href="../../documentation/1.9/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- EDIT17 SECTION "File location" [4637-4993] -->
-<h2 class="sectionedit18" id="build_your_packages">Build your packages</h2>
+<!-- EDIT15 SECTION "File location" [3589-3945] -->
+<h2 class="sectionedit16" id="build_your_packages">Build your packages</h2>
 <div class="level2">
 
 <p>
@@ -312,12 +261,12 @@ If you need it, you can rebuild RPMs:
 </li>
 <li class="level1"><div class="li"> Put LemonLDAP::NG tarball in %_topdir/SOURCES</div>
 </li>
-<li class="level1"><div class="li"> Edit ~/.rpmmacros and set your build parameters (example for RHEL6):</div>
+<li class="level1"><div class="li"> Edit ~/.rpmmacros and set your build parameters:</div>
 </li>
 </ul>
 <pre class="file">%_topdir /home/user/build
-%dist .el6
-%rhel 6</pre>
+%dist .el7
+%rhel 7</pre>
 <ul>
 <li class="level1"><div class="li"> Go to %_topdir</div>
 </li>

@@ -25,26 +25,45 @@
 
 </div>
 <!-- EDIT1 SECTION "Documentation for LemonLDAP::NG 1.9" [1-51] -->
-<h2 class="sectionedit2" id="installation">Installation</h2>
+<h2 class="sectionedit2" id="main_changes">Main changes</h2>
 <div class="level2">
 
 <p>
+Version 1.9 of <abbr title="LemonLDAP::NG">LL::NG</abbr> brings the following main changes:
+</p>
+<ul>
+<li class="level1"><div class="li"> OpenID Connect support</div>
+</li>
+<li class="level1"><div class="li"> Nginx support</div>
+</li>
+<li class="level1"><div class="li"> New manager interface</div>
+</li>
+</ul>
+
+<p>
+<p><div class="noteimportant">You must read <a href="../../documentation/1.9/upgrade.html" class="wikilink1" title="documentation:1.9:upgrade">upgrade from 1.4 to 1.9</a> documentation page before installing it.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Main changes" [52-340] -->
+<h2 class="sectionedit3" id="installation">Installation</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT3 SECTION "Installation" [341-366] -->
+<h3 class="sectionedit4" id="before_installation">Before installation</h3>
+<div class="level3">
+
+<p>
 <div class="row"><div class="col-md-1">
-<a href="/_detail/icons/warehause.png?id=documentation%3A1.9%3Astart" class="media" title="icons:warehause.png"><img src="../../../media/icons/warehause.png" class="media" alt="" /></a>
+<img src="../../../media/icons/kthememgr.png" class="media" alt="" />
 </div><div class="col-md-11">
 </p>
 <ul>
 <li class="level1"><div class="li"> <a href="../../documentation/1.9/prereq.html" class="wikilink1" title="documentation:1.9:prereq">Prerequisites and dependencies</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.9/installtarball.html" class="wikilink1" title="documentation:1.9:installtarball">Installation from the tarball</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.9/installdeb.html" class="wikilink1" title="documentation:1.9:installdeb">Installation on Debian/Ubuntu with packages</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.9/installrpm.html" class="wikilink1" title="documentation:1.9:installrpm">Installation on RHEL/CentOS with packages</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.9/docker.html" class="wikilink1" title="documentation:1.9:docker">Run in LemonLDAP::NG in Docker</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.9/upgrade.html" class="wikilink1" title="documentation:1.9:upgrade">Upgrade from 1.4</a></div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/upgrade.html" class="wikilink1" title="documentation:1.9:upgrade">Upgrade notes</a></div>
 </li>
 </ul>
 
@@ -53,13 +72,59 @@
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Installation" [52-530] -->
-<h2 class="sectionedit3" id="configuration">Configuration</h2>
+<!-- EDIT4 SECTION "Before installation" [367-631] -->
+<h3 class="sectionedit5" id="installation1">Installation</h3>
+<div class="level3">
+
+<p>
+<div class="row"><div class="col-md-1">
+<img src="../../../media/icons/warehause.png" class="media" alt="" />
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/installtarball.html" class="wikilink1" title="documentation:1.9:installtarball">Installation from the tarball</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/installdeb.html" class="wikilink1" title="documentation:1.9:installdeb">Installation on Debian/Ubuntu with packages</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/installrpm.html" class="wikilink1" title="documentation:1.9:installrpm">Installation on RHEL/CentOS with packages</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/docker.html" class="wikilink1" title="documentation:1.9:docker">Run in LemonLDAP::NG in Docker</a></div>
+</li>
+</ul>
+
+<p>
+</div></div>
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Installation" [632-1036] -->
+<h3 class="sectionedit6" id="after_installation">After installation</h3>
+<div class="level3">
+
+<p>
+<div class="row"><div class="col-md-1">
+<img src="../../../media/icons/clean.png" class="media" alt="" />
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/configapache.html" class="wikilink1" title="documentation:1.9:configapache">Deploy Apache configuration</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/confignginx.html" class="wikilink1" title="documentation:1.9:confignginx">Deploy Nginx configuration</a></div>
+</li>
+</ul>
+
+<p>
+</div></div>
+</p>
+
+</div>
+<!-- EDIT6 SECTION "After installation" [1037-1316] -->
+<h2 class="sectionedit7" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [531-557] -->
-<h3 class="sectionedit4" id="first_steps">First steps</h3>
+<!-- EDIT7 SECTION "Configuration" [1317-1343] -->
+<h3 class="sectionedit8" id="first_steps">First steps</h3>
 <div class="level3">
 
 <p>
@@ -68,7 +133,7 @@
 </div><div class="col-md-11">
 </p>
 <ul>
-<li class="level1"><div class="li"> <a href="../../documentation/1.9/configlocation.html" class="wikilink1" title="documentation:1.9:configlocation">Access to configuration</a></div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/configlocation.html" class="wikilink1" title="documentation:1.9:configlocation">Configuration overview</a></div>
 </li>
 <li class="level1"><div class="li"> <a href="../../documentation/1.9/ssocookie.html" class="wikilink1" title="documentation:1.9:ssocookie">Configure Single Sign On cookie and portal URL</a></div>
 </li>
@@ -87,8 +152,8 @@
 </p>
 
 </div>
-<!-- EDIT4 SECTION "First steps" [558-1018] -->
-<h3 class="sectionedit5" id="portal">Portal</h3>
+<!-- EDIT8 SECTION "First steps" [1344-1803] -->
+<h3 class="sectionedit9" id="portal">Portal</h3>
 <div class="level3">
 
 <p>
@@ -112,8 +177,8 @@
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Portal" [1019-1309] -->
-<h3 class="sectionedit6" id="authentication_users_and_password_databases">Authentication, users and password databases</h3>
+<!-- EDIT9 SECTION "Portal" [1804-2094] -->
+<h3 class="sectionedit10" id="authentication_users_and_password_databases">Authentication, users and password databases</h3>
 <div class="level3">
 
 <p>
@@ -121,7 +186,7 @@
 <a href="/_detail/icons/gpg.png?id=documentation%3A1.9%3Astart" class="media" title="icons:gpg.png"><img src="../../../media/icons/gpg.png" class="media" alt="" /></a>
 </div><div class="col-md-11">
 </p>
-<div class="table sectionedit7"><table class="inline">
+<div class="table sectionedit11"><table class="inline">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0"> Official Backends </th><th class="col1 centeralign">  Authentication  </th><th class="col2 centeralign">  Users  </th><th class="col3 centeralign">  Password  </th>
@@ -203,14 +268,14 @@
 		<td class="col0"> <a href="../../documentation/1.9/authremote.html" class="wikilink1" title="documentation:1.9:authremote">Remote LL::NG</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 leftalign">    </td>
 	</tr>
 </table></div>
-<!-- EDIT7 TABLE [1483-2859] -->
+<!-- EDIT11 TABLE [2268-3644] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Authentication, users and password databases" [1310-2887] -->
-<h3 class="sectionedit8" id="configuration_database">Configuration database</h3>
+<!-- EDIT10 SECTION "Authentication, users and password databases" [2095-3672] -->
+<h3 class="sectionedit12" id="configuration_database">Configuration database</h3>
 <div class="level3">
 
 <p>
@@ -222,7 +287,7 @@
 <p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> needs a storage system to store its own configuration (managed by the manager). Choose one of the following:
 </p>
-<div class="table sectionedit9"><table class="inline">
+<div class="table sectionedit13"><table class="inline">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Backend  </th><th class="col1 centeralign">  Shareable  </th><th class="col2 centeralign">  Comment  </th>
@@ -244,7 +309,7 @@
 		<td class="col0 centeralign">  <a href="../../documentation/1.9/soapconfbackend.html" class="wikilink1" title="documentation:1.9:soapconfbackend">SOAP</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign"> Proxy backend to be used in conjunction with another configuration backend. <br/><strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [3162-3751] -->
+<!-- EDIT13 TABLE [3947-4536] -->
 <p>
 <p><div class="notetip">You can not start with an empty configuration, so read <a href="../../documentation/1.9/changeconfbackend.html" class="wikilink1" title="documentation:1.9:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
 </div></p>
@@ -255,8 +320,8 @@
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Configuration database" [2888-3967] -->
-<h3 class="sectionedit10" id="sessions_database">Sessions database</h3>
+<!-- EDIT12 SECTION "Configuration database" [3673-4752] -->
+<h3 class="sectionedit14" id="sessions_database">Sessions database</h3>
 <div class="level3">
 
 <p>
@@ -268,7 +333,7 @@
 <p>
 Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a> modules family. All <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a> style modules are useable except for some features.
 </p>
-<div class="table sectionedit11"><table class="inline">
+<div class="table sectionedit15"><table class="inline">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Backend  </th><th class="col1 centeralign">  Shareable  </th><th class="col2 centeralign">   <a href="../../documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">Session explorer</a>  </th><th class="col3 centeralign">  <a href="../../documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">Session restrictions</a>  </th><th class="col4 centeralign">  Session expiration  </th><th class="col5 centeralign">  Comment  </th>
@@ -297,14 +362,14 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 <strong>Can be used to secure another backend</strong> for remote servers.  </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [4353-5807] -->
+<!-- EDIT15 TABLE [5138-6592] -->
 <p>
 </div></div>
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Sessions database" [3968-5835] -->
-<h3 class="sectionedit12" id="identity_provider">Identity provider</h3>
+<!-- EDIT14 SECTION "Sessions database" [4753-6620] -->
+<h3 class="sectionedit16" id="identity_provider">Identity provider</h3>
 <div class="level3">
 
 <p>
@@ -343,8 +408,8 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Identity provider" [5836-6336] -->
-<h2 class="sectionedit13" id="applications_protection">Applications protection</h2>
+<!-- EDIT16 SECTION "Identity provider" [6621-7121] -->
+<h2 class="sectionedit17" id="applications_protection">Applications protection</h2>
 <div class="level2">
 
 <p>
@@ -357,11 +422,11 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </li>
 <li class="level1"><div class="li"> <a href="../../documentation/1.9/variables.html" class="wikilink1" title="documentation:1.9:variables">Variables that can be used in rules and headers</a></div>
 </li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/applications.html" class="wikilink1" title="documentation:1.9:applications">Integrate vendor applications</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/selfmadeapplication.html" class="wikilink1" title="documentation:1.9:selfmadeapplication">Integrate self-made applications</a></div>
+</li>
 <li class="level1"><div class="li"> <a href="../../documentation/1.9/formreplay.html" class="wikilink1" title="documentation:1.9:formreplay">Form replay</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.9/applications.html" class="wikilink1" title="documentation:1.9:applications">Integrate existing applications</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.9/selfmadeapplication.html" class="wikilink1" title="documentation:1.9:selfmadeapplication">Integrate your own application</a></div>
 </li>
 </ul>
 
@@ -370,8 +435,74 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Applications protection" [6337-6788] -->
-<h2 class="sectionedit14" id="advanced_features">Advanced features</h2>
+<!-- EDIT17 SECTION "Applications protection" [7122-7573] -->
+<h3 class="sectionedit18" id="well_known_compatible_applications">Well known compatible applications</h3>
+<div class="level3">
+
+<p>
+<p><div class="noteclassic">Here is a list of well known applications that are compatible with <abbr title="LemonLDAP::NG">LL::NG</abbr>. A full list is available on <a href="../../documentation/1.9/applications.html" class="wikilink1" title="documentation:1.9:applications">vendor applications page</a>.
+</div></p>
+</p>
+
+<p>
+<div class="row">
+</p>
+
+<p>
+<div class="col-sm-3">
+<a href="../../documentation/1.9/applications/alfresco.html" class="media" title="documentation:1.9:applications:alfresco"><img src="../../../media/applications/alfresco_logo.png" class="mediacenter" title="Alfresco" alt="Alfresco" /></a>
+</div>
+</p>
+
+<p>
+<div class="col-sm-3">
+<a href="../../documentation/1.9/applications/bugzilla.html" class="media" title="documentation:1.9:applications:bugzilla"><img src="../../../media/applications/bugzilla_logo.png" class="mediacenter" title="Bugzilla" alt="Bugzilla" /></a>
+</div>
+</p>
+
+<p>
+<div class="col-sm-3">
+<a href="../../documentation/1.9/applications/dokuwiki.html" class="media" title="documentation:1.9:applications:dokuwiki"><img src="../../../media/applications/dokuwiki_logo.png" class="mediacenter" title="Dokuwiki" alt="Dokuwiki" /></a>
+</div>
+</p>
+
+<p>
+<div class="col-sm-3">
+<a href="../../documentation/1.9/applications/drupal.html" class="media" title="documentation:1.9:applications:drupal"><img src="../../../media/applications/drupal_logo.png" class="mediacenter" title="Drupal" alt="Drupal" /></a>
+</div>
+</p>
+
+<p>
+<div class="col-sm-3">
+<a href="../../documentation/1.9/applications/glpi.html" class="media" title="documentation:1.9:applications:glpi"><img src="../../../media/applications/glpi_logo.png" class="mediacenter" title="GLPI" alt="GLPI" /></a>
+</div>
+</p>
+
+<p>
+<div class="col-sm-3">
+<a href="../../documentation/1.9/applications/liferay.html" class="media" title="documentation:1.9:applications:liferay"><img src="../../../media/applications/liferay_logo.png" class="mediacenter" title="Liferay" alt="Liferay" /></a>
+</div>
+</p>
+
+<p>
+<div class="col-sm-3">
+<a href="../../documentation/1.9/applications/mediawiki.html" class="media" title="documentation:1.9:applications:mediawiki"><img src="../../../media/applications/mediawiki_logo.png" class="mediacenter" title="Mediawiki" alt="Mediawiki" /></a>
+</div>
+</p>
+
+<p>
+<div class="col-sm-3">
+<a href="../../documentation/1.9/applications/zimbra.html" class="media" title="documentation:1.9:applications:zimbra"><img src="../../../media/applications/zimbra_logo.png" class="mediacenter" title="Zimbra" alt="Zimbra" /></a>
+</div>
+</p>
+
+<p>
+</div>
+</p>
+
+</div>
+<!-- EDIT18 SECTION "Well known compatible applications" [7574-8919] -->
+<h2 class="sectionedit19" id="advanced_features">Advanced features</h2>
 <div class="level2">
 
 <p>
@@ -419,8 +550,8 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Advanced features" [6789-7680] -->
-<h2 class="sectionedit15" id="mini_howtos">Mini howtos</h2>
+<!-- EDIT19 SECTION "Advanced features" [8920-9811] -->
+<h2 class="sectionedit20" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
 
 <p>
@@ -450,8 +581,8 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- EDIT15 SECTION "Mini howtos" [7681-8350] -->
-<h2 class="sectionedit16" id="exploitation">Exploitation</h2>
+<!-- EDIT20 SECTION "Mini howtos" [9812-10481] -->
+<h2 class="sectionedit21" id="exploitation">Exploitation</h2>
 <div class="level2">
 
 <p>

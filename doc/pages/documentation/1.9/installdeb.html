@@ -36,6 +36,8 @@ LemonLDAP::NG provides these packages:
 </li>
 <li class="level1"><div class="li"> lemonldap-ng-doc: contains <abbr title="HyperText Markup Language">HTML</abbr> documentation and project docs (README, etc.)</div>
 </li>
+<li class="level1"><div class="li"> lemonldap-ng-fastcgi-server: <abbr title="LemonLDAP::NG">LL::NG</abbr> FastCGI server (for Nginx)</div>
+</li>
 <li class="level1"><div class="li"> lemonldap-ng-fr-doc: French translation for <abbr title="HyperText Markup Language">HTML</abbr> documentation</div>
 </li>
 <li class="level1"><div class="li"> liblemonldap-ng-common-perl: configuration and common files</div>
@@ -49,12 +51,12 @@ LemonLDAP::NG provides these packages:
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Organization" [60-564] -->
+<!-- EDIT2 SECTION "Organization" [60-631] -->
 <h2 class="sectionedit3" id="get_the_packages">Get the packages</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT3 SECTION "Get the packages" [565-594] -->
+<!-- EDIT3 SECTION "Get the packages" [632-661] -->
 <h3 class="sectionedit4" id="official_repository">Official repository</h3>
 <div class="level3">
 
@@ -69,7 +71,7 @@ If you run Debian testing or unstable, the packages are directly installable:
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Official repository" [595-933] -->
+<!-- EDIT4 SECTION "Official repository" [662-1000] -->
 <h3 class="sectionedit5" id="llng_repository">LL::NG repository</h3>
 <div class="level3">
 
@@ -87,7 +89,7 @@ Run this to update packages cache:
 <pre class="code">apt-get update</pre>
 
 </div>
-<!-- EDIT5 SECTION "LL::NG repository" [934-1281] -->
+<!-- EDIT5 SECTION "LL::NG repository" [1001-1348] -->
 <h3 class="sectionedit6" id="manual_download">Manual download</h3>
 <div class="level3">
 
@@ -96,7 +98,7 @@ Packages are available on the <a href="../../download.html" class="wikilink1" ti
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Manual download" [1282-1368] -->
+<!-- EDIT6 SECTION "Manual download" [1349-1435] -->
 <h2 class="sectionedit7" id="package_gpg_signature">Package GPG signature</h2>
 <div class="level2">
 
@@ -110,18 +112,18 @@ Install it to trust packages:
 <pre class="code">apt-key add rpm-gpg-key-ow2</pre>
 
 </div>
-<!-- EDIT7 SECTION "Package GPG signature" [1369-1537] -->
+<!-- EDIT7 SECTION "Package GPG signature" [1436-1604] -->
 <h2 class="sectionedit8" id="install_packages">Install packages</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT8 SECTION "Install packages" [1538-1567] -->
+<!-- EDIT8 SECTION "Install packages" [1605-1634] -->
 <h3 class="sectionedit9" id="with_aptitude">With aptitude</h3>
 <div class="level3">
 <pre class="code">aptitude install lemonldap-ng</pre>
 
 </div>
-<!-- EDIT9 SECTION "With aptitude" [1568-1638] -->
+<!-- EDIT9 SECTION "With aptitude" [1635-1705] -->
 <h3 class="sectionedit10" id="with_dpkg">With dpkg</h3>
 <div class="level3">
 
@@ -135,12 +137,12 @@ Then:
 <pre class="code">dpkg -i liblemonldap-ng-* lemonldap-ng*</pre>
 
 </div>
-<!-- EDIT10 SECTION "With dpkg" [1639-1787] -->
+<!-- EDIT10 SECTION "With dpkg" [1706-1854] -->
 <h2 class="sectionedit11" id="first_configuration_steps">First configuration steps</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT11 SECTION "First configuration steps" [1788-1826] -->
+<!-- EDIT11 SECTION "First configuration steps" [1855-1893] -->
 <h3 class="sectionedit12" id="change_default_dns_domain">Change default DNS domain</h3>
 <div class="level3">
 
@@ -150,32 +152,8 @@ By default, <abbr title="Domain Name System">DNS</abbr> domain is <code>example.
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- EDIT12 SECTION "Change default DNS domain" [1827-2141] -->
-<h3 class="sectionedit13" id="enable_llng_sites">Enable LL::NG sites</h3>
-<div class="level3">
-
-<p>
-Enable <abbr title="LemonLDAP::NG">LL::NG</abbr> sites in Apache:
-</p>
-<pre class="code shell">a2ensite handler-apache2.conf
-a2ensite portal-apache2.conf
-a2ensite manager-apache2.conf
-a2ensite test-apache2.conf</pre>
-
-<p>
-Enable mod_perl if not already loaded:
-</p>
-<pre class="code shell">a2enmod perl</pre>
-
-<p>
-Restart Apache:
-</p>
-<pre class="code shell">apache2ctl configtest
-apache2ctl restart</pre>
-
-</div>
-<!-- EDIT13 SECTION "Enable LL::NG sites" [2142-2494] -->
-<h3 class="sectionedit14" id="reload_virtual_host">Reload virtual host</h3>
+<!-- EDIT12 SECTION "Change default DNS domain" [1894-2208] -->
+<h3 class="sectionedit13" id="reload_virtual_host">Reload virtual host</h3>
 <div class="level3">
 
 <p>
@@ -189,28 +167,17 @@ To allow the manager to reload the configuration, register the reload virtual ho
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Reload virtual host" [2495-2796] -->
-<h3 class="sectionedit15" id="upgrade">Upgrade</h3>
+<!-- EDIT13 SECTION "Reload virtual host" [2209-2510] -->
+<h3 class="sectionedit14" id="upgrade">Upgrade</h3>
 <div class="level3">
 
 <p>
 If you upgraded <abbr title="LemonLDAP::NG">LL::NG</abbr>, check all <a href="../../documentation/1.9/upgrade.html" class="wikilink1" title="documentation:1.9:upgrade">upgrade notes</a>.
 </p>
 
-<p>
-The upgrade process will also have migrate old configuration files into <code>/etc/lemonldap-ng/lemonldap-ng.ini</code>. This includes the application list which is now set in the <code>applicationList</code> parameter from <code>[portal]</code> section, for example:
-</p>
-<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
-<span class="re1">applicationList</span><span class="sy0">=</span><span class="re2"><span class="br0">&#123;</span> 'Menu' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'Example' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'test1' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Application Test 1', uri <span class="sy0">=</span>&gt; 'http://test1.example.com/', description <span class="sy0">=</span>&gt; 'A simple application displaying authenticated user', logo <span class="sy0">=</span>&gt; 'wheels.png', display <span class="sy0">=</span>&gt; 'auto',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'test2' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Application Test 2', uri <span class="sy0">=</span>&gt; 'http://test2.example.com/', description <span class="sy0">=</span>&gt; 'The same simple application displaying authenticated user', logo <span class="sy0">=</span>&gt; 'wheels.png', display <span class="sy0">=</span>&gt; 'auto',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'Administration' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'manager' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'WebSSO Manager', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/', description <span class="sy0">=</span>&gt; 'Configure LemonLDAP::NG WebSSO', logo <span class="sy0">=</span>&gt; 'tools.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'sessions' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Sessions explorer', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/sessions.pl', description <span class="sy0">=</span>&gt; 'Explore WebSSO sessions', logo <span class="sy0">=</span>&gt; 'tools.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'Documentation' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'localdoc' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Local documentation', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/doc/', description <span class="sy0">=</span>&gt; 'Documentation supplied with LemonLDAP::NG', logo <span class="sy0">=</span>&gt; 'docs.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'officialwebsite' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Offical Website', uri <span class="sy0">=</span>&gt; 'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation', description <span class="sy0">=</span>&gt; 'Official LemonLDAP::NG Website', logo <span class="sy0">=</span>&gt; 'web.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span></span></pre>
-
-<p>
-<p><div class="noteimportant">You should now use the Manager to configure all <a href="../../documentation/1.9/portalmenu.html#categories_and_applications" class="wikilink1" title="documentation:1.9:portalmenu">applications and categories</a>, and then comment or remove the <code>applicationList</code> parameter from <code>/etc/lemonldap-ng/lemonldap-ng.ini</code>.
-</div></p>
-</p>
-
 </div>
-<!-- EDIT15 SECTION "Upgrade" [2797-4955] -->
-<h3 class="sectionedit16" id="dns">DNS</h3>
+<!-- EDIT14 SECTION "Upgrade" [2511-2591] -->
+<h3 class="sectionedit15" id="dns">DNS</h3>
 <div class="level3">
 
 <p>
@@ -233,8 +200,8 @@ Follow the <a href="../../documentation/1.9/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- EDIT16 SECTION "DNS" [4956-5228] -->
-<h2 class="sectionedit17" id="file_location">File location</h2>
+<!-- EDIT15 SECTION "DNS" [2592-2864] -->
+<h2 class="sectionedit16" id="file_location">File location</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Configuration is in /etc/lemonldap-ng</div>
@@ -254,8 +221,8 @@ Follow the <a href="../../documentation/1.9/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- EDIT17 SECTION "File location" [5229-5765] -->
-<h2 class="sectionedit18" id="build_your_packages">Build your packages</h2>
+<!-- EDIT16 SECTION "File location" [2865-3401] -->
+<h2 class="sectionedit17" id="build_your_packages">Build your packages</h2>
 <div class="level2">
 
 <p>

@@ -70,15 +70,19 @@ Handler use the default Apache error code for the following cases:
 </ul>
 
 <p>
-These errors can be catch trough Apache <code>ErrorDocument</code> directive, to redirect user on a specific page:
+These errors can be catch trough Apache <code>ErrorDocument</code> directive or Nginx <code>error_page</code> directive, to redirect user on a specific page:
 </p>
-<pre class="code file apache"><span class="co1"># Common error page and security parameters</span>
+<pre class="code file apache"><span class="co1"># Apache: Common error page and security parameters</span>
 <span class="kw1">ErrorDocument</span> <span class="nu0">403</span> http://auth.example.com/?lmError=<span class="nu0">403</span>
 <span class="kw1">ErrorDocument</span> <span class="nu0">500</span> http://auth.example.com/?lmError=<span class="nu0">500</span>
 <span class="kw1">ErrorDocument</span> <span class="nu0">503</span> http://auth.example.com/?lmError=<span class="nu0">503</span></pre>
+<pre class="code file nginx"># Nginx: Common error page and security parameters
+error_page 403 http://auth.example.com/?lmError=403;
+error_page 500 http://auth.example.com/?lmError=500;
+error_page 503 http://auth.example.com/?lmError=503;</pre>
 
 <p>
-It is also possible to redirect the user without using <code>ErrorDocument</code>: the Handler will not return 403, 500, 503 code, but code 302 (REDIRECT). 
+It is also possible to redirect the user without using <code>ErrorDocument</code>: the Handler will not returnV 403, 500, 503 code, but code 302 (REDIRECT). 
 </p>
 
 <p>
@@ -96,7 +100,7 @@ These parameters can be configured in Manager, in <code>General Parameters</code
 </ul>
 
 </div>
-<!-- EDIT3 SECTION "Forbidden and Server error" [732-1828] -->
+<!-- EDIT3 SECTION "Forbidden and Server error" [732-2103] -->
 <h1 class="sectionedit4" id="portal_redirections">Portal Redirections</h1>
 <div class="level1">
 

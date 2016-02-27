@@ -72,14 +72,7 @@ For example, to allow only users with a strong authentication level:
 
 <p>
 <p><div class="noteimportant">
-Apache rewrite rules must have been activated in <a href="../../documentation/1.9/configlocation.html#portal" class="wikilink1" title="documentation:1.9:configlocation">Apache portal configuration</a>:
-</p>
-<pre class="code file apache">    &lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
-        <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
-        <span class="kw1">RewriteRule</span> ^/cas/.* /index.pl
-    &lt;/<span class="kw3">IfModule</span>&gt;</pre>
-
-<p>
+Rewrite rules must have been activated in <a href="../../documentation/1.9/configlocation.html#portal" class="wikilink1" title="documentation:1.9:configlocation">Apache portal configuration</a> or in <a href="../../documentation/1.9/configlocation.html#portal1" class="wikilink1" title="documentation:1.9:configlocation">Nginx portal configuration</a>.
 
 </div></p>
 </p>

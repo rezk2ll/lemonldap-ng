@@ -33,7 +33,7 @@ LemonLDAP::NG configuration is stored in a backend that allows all modules to ac
 </p>
 
 <p>
-<p><div class="noteimportant">Note that all <abbr title="LemonLDAP::NG">LL::NG</abbr> components must have access :
+<p><div class="noteimportant">Note that all <abbr title="LemonLDAP::NG">LL::NG</abbr> components must have access:
 </p>
 <ul>
 <li class="level1"><div class="li"> to the configuration backend</div>
@@ -43,7 +43,7 @@ LemonLDAP::NG configuration is stored in a backend that allows all modules to ac
 </ul>
 
 <p>
-Detailled configuration backends documentation is available <a href="../../documentation/1.9/start.html#configuration_database" class="wikilink1" title="documentation:1.9:start">here</a>.
+Detailed configuration backends documentation is available <a href="../../documentation/1.9/start.html#configuration_database" class="wikilink1" title="documentation:1.9:start">here</a>.
 </div></p>
 </p>
 
@@ -68,7 +68,7 @@ For example, to configure the <code>File</code> configuration backend:
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Backends" [39-1049] -->
+<!-- EDIT2 SECTION "Backends" [39-1047] -->
 <h2 class="sectionedit3" id="manager">Manager</h2>
 <div class="level2">
 
@@ -86,7 +86,7 @@ By default, Manager is protected to allow only the demonstration user “dwho”
 </p>
 
 <p>
-If you can not access the Manager anymore, you can unprotect it by editing <code>lemonldap-ng.in</code> and changing the <code>protection</code> parameter:
+If you can not access the Manager anymore, you can unprotect it by editing <code>lemonldap-ng.ini</code> and changing the <code>protection</code> parameter:
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>manager<span class="br0">&#93;</span></span>
 &nbsp;
@@ -144,7 +144,7 @@ When all modifications are done, click on <code>Save</code> to store configurati
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Manager" [1050-3236] -->
+<!-- EDIT3 SECTION "Manager" [1048-3236] -->
 <h2 class="sectionedit4" id="configuration_text_editor">Configuration text editor</h2>
 <div class="level2">
 
@@ -187,6 +187,11 @@ If a modification is done, the configuration is saved with a new configuration n
 <div class="level2">
 
 <p>
+<p><div class="notewarning">This an experimental tool that may evolve in next releases.
+</div></p>
+</p>
+
+<p>
 LemonLDAP::NG provide a script that allows to edit configuration items in non interactive mode. This script is called <code>lemonldap-ng-cli</code> and is stored in the LemonLDAP::NG bin/ directory, for example /usr/share/lemonldap-ng/bin:
 </p>
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli</pre>
@@ -202,36 +207,50 @@ To see available actions, do:
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli help</pre>
 
 <p>
-By default, when you change a value, it will be written to configuration backend but:
-</p>
-<ul>
-<li class="level1"><div class="li"> Configuration cache is not updated</div>
-</li>
-<li class="level1"><div class="li"> Configuration number is not incremented</div>
-</li>
-</ul>
-
-<p>
-This allows to modify configuration without impacting running users.
-</p>
-
-<p>
-You can force an update of the cache with:
+You can force an update of configuration cache with:
 </p>
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli update-cache</pre>
 
 <p>
-And you can save current configuration into a new one:
-</p>
-<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli increment</pre>
-
-<p>
-To get information abour current configuration:
+To get information about current configuration:
 </p>
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli info</pre>
 
+<p>
+To view a configuration parameter, for example portal <abbr title="Uniform Resource Locator">URL</abbr>:
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli get portal</pre>
+
+<p>
+To set a parameter, for example domain:
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli set domain example.org</pre>
+
+<p>
+You can use accessors (options) to change the behavior:
+</p>
+<ul>
+<li class="level1"><div class="li"> -sep: separator of hierarchical values (by default: /).</div>
+</li>
+<li class="level1"><div class="li"> -iniFile: the lemonldap-ng.ini file to use if not default value.</div>
+</li>
+<li class="level1"><div class="li"> -yes: do not prompt for confirmation before saving new configuration.</div>
+</li>
+<li class="level1"><div class="li"> -cfgNum: the configuration number. If not set, it will use the latest configuration.</div>
+</li>
+<li class="level1"><div class="li"> -force: set it to 1 to save a configuration earlier than latest.</div>
+</li>
+</ul>
+
+<p>
+Some examples:
+</p>
+<pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -cfgNum 10 get exportedHeaders/test1.example.com
+/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set notification 1
+/usr/share/lemonldap-ng/bin/lemonldap-ng-cli -sep &#039;,&#039; get macros,_whatToTrace</pre>
+
 </div>
-<!-- EDIT5 SECTION "Command Line Interface (CLI)" [4462-5607] -->
+<!-- EDIT5 SECTION "Command Line Interface (CLI)" [4462-6280] -->
 <h2 class="sectionedit6" id="apache">Apache</h2>
 <div class="level2">
 
@@ -253,7 +272,7 @@ LemonLDAP::NG ships 3 Apache configuration files:
 </ul>
 
 <p>
-These files must be included in Apache configuration, either with <code>Include</code> directives in <code>httpd.conf</code> (see <a href="../../documentation/quickstart.html#apache" class="wikilink1" title="documentation:quickstart">quick start example</a>), or with symbolic links in Apache configuration directory (like <code>/etc/httpd/conf.d</code>).
+See <a href="../../documentation/1.9/configapache.html" class="wikilink1" title="documentation:1.9:configapache">how to deploy them</a>.
 </p>
 
 <p>
@@ -262,7 +281,7 @@ These files must be included in Apache configuration, either with <code>Include<
 </p>
 
 </div>
-<!-- EDIT6 SECTION "Apache" [5608-6367] -->
+<!-- EDIT6 SECTION "Apache" [6281-6823] -->
 <h3 class="sectionedit7" id="portal">Portal</h3>
 <div class="level3">
 
@@ -366,7 +385,7 @@ In Portal virtual host, you will find several configuration parts:
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- EDIT7 SECTION "Portal" [6368-9028] -->
+<!-- EDIT7 SECTION "Portal" [6824-9484] -->
 <h3 class="sectionedit8" id="manager1">Manager</h3>
 <div class="level3">
 
@@ -413,7 +432,7 @@ Configuration interface access is not protected by Apache but by LemonLDAP::NG i
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Manager" [9029-10581] -->
+<!-- EDIT8 SECTION "Manager" [9485-11036] -->
 <h3 class="sectionedit9" id="handler">Handler</h3>
 <div class="level3">
 <ul>
@@ -421,7 +440,7 @@ Configuration interface access is not protected by Apache but by LemonLDAP::NG i
 </li>
 </ul>
 <pre class="code file apache">PerlOptions +GlobalRequest
-PerlRequire Lemonldap/NG/Handler.pm</pre>
+PerlModule Lemonldap::NG::Handler</pre>
 <ul>
 <li class="level1"><div class="li"> Catch error pages:</div>
 </li>
@@ -462,8 +481,242 @@ Then, to protect a standard virtual host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
 
 </div>
-<!-- EDIT9 SECTION "Handler" [10582-11777] -->
-<h2 class="sectionedit10" id="configuration_reload">Configuration reload</h2>
+<!-- EDIT9 SECTION "Handler" [11037-12230] -->
+<h2 class="sectionedit10" id="nginx">Nginx</h2>
+<div class="level2">
+
+<p>
+<p><div class="noteimportant">LemonLDAP::NG does not manage Nginx configuration
+</div></p>
+</p>
+
+<p>
+LemonLDAP::NG ships 3 Nginx configuration files:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>portal-nginx.conf</strong>: Portal virtual host, with SOAP and Issuer end points</div>
+</li>
+<li class="level1"><div class="li"> <strong>manager-nginx.conf</strong>: Manager virtual host</div>
+</li>
+<li class="level1"><div class="li"> <strong>handler-nginx.conf</strong> : Handler reload virtual hosts</div>
+</li>
+</ul>
+
+<p>
+See <a href="../../documentation/1.9/confignginx.html" class="wikilink1" title="documentation:1.9:confignginx">how to deploy them</a>.
+</p>
+
+<p>
+<p><div class="notewarning"><a href="../../documentation/1.9/fastcgiserver.html" class="wikilink1" title="documentation:1.9:fastcgiserver">LL::NG FastCGI</a> server must be loaded separately.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT10 SECTION "Nginx" [12231-12690] -->
+<h3 class="sectionedit11" id="portal1">Portal</h3>
+<div class="level3">
+
+<p>
+In Portal virtual host, you will find several configuration parts:
+</p>
+<ul>
+<li class="level1"><div class="li"> Standard virtual host directives, to serve portal pages:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name auth.example.com;
+  root /var/lib/lemonldap-ng/portal/;
+&nbsp;
+  location ~ \.pl(?:$|/) {
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    fastcgi_param LLTYPE cgi;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_split_path_info ^(.*\.pl)(/.+)$;
+  }
+&nbsp;
+  index index.pl;
+&nbsp;
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
+<ul>
+<li class="level1"><div class="li"> SOAP end points (inactivated by default):</div>
+</li>
+</ul>
+<pre class="code file nginx">  # SOAP functions for sessions management (disabled by default)
+  location /index/adminSessions {
+    deny all;
+  }
+&nbsp;
+  # SOAP functions for sessions access (disabled by default)
+  location /index.pl/sessions {
+    deny all;
+  }
+&nbsp;
+  # SOAP functions for configuration access (disabled by default)
+  location /index.pl/config {
+    deny all;
+  }
+&nbsp;
+  # SOAP functions for notification insertion (disabled by default)
+  location /index.pl/notification {
+    deny all;
+  }</pre>
+<ul>
+<li class="level1"><div class="li"> Issuer rewrite rules:</div>
+</li>
+</ul>
+<pre class="code file nginx">    # SAML2 Issuer
+    rewrite ^/saml/metadata /metadata.pl last;
+    rewrite ^/saml/.* /index.pl last;
+&nbsp;
+    # CAS Issuer
+    rewrite ^/cas/.* /index.pl;
+&nbsp;
+    # OpenID Issuer
+    rewrite ^/openidserver/.* /index.pl last;
+&nbsp;
+    # OpenID Connect Issuer
+    rewrite ^/oauth2/.* /index.pl last;
+    rewrite ^/.well-known/openid-configuration$ /openid-configuration.pl last;</pre>
+
+</div>
+<!-- EDIT11 SECTION "Portal" [12691-14269] -->
+<h3 class="sectionedit12" id="manager2">Manager</h3>
+<div class="level3">
+
+<p>
+Manager virtual host is used to serve configuration interface and local documentation.
+</p>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name manager.example.com;
+  root /usr/share/lemonldap-ng/manager/;
+&nbsp;
+  if ($uri !~ ^/(static|doc|fr-doc|lib|javascript)) {
+    rewrite ^/(.*)$ /manager.psgi/$1 break;
+  }
+&nbsp;
+  location /manager.psgi {
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    fastcgi_param LLTYPE manager;
+    fastcgi_param SCRIPT_NAME /manager.psgi;
+  }
+&nbsp;
+  location / {
+    index manager.psgi;
+    try_files $uri $uri/ =404;
+  }
+}</pre>
+
+<p>
+By default, configuration interface access is not protected by Nginx but by LemonLDAP::NG itself (see <code>lemonldap-ng.ini</code>).
+</p>
+
+</div>
+<!-- EDIT12 SECTION "Manager" [14270-15022] -->
+<h3 class="sectionedit13" id="handler1">Handler</h3>
+<div class="level3">
+
+<p>
+Nginx handler is provided by the <a href="../../documentation/1.9/fastcgiserver.html" class="wikilink1" title="documentation:1.9:fastcgiserver">LemonLDAP::NG FastCGI server</a>.
+</p>
+<ul>
+<li class="level1"><div class="li"> Handle errors:</div>
+</li>
+</ul>
+<pre class="code file nginx">error_page 403 http://auth.example.com/?lmError=403;
+error_page 500 http://auth.example.com/?lmError=500;
+error_page 503 http://auth.example.com/?lmError=503;</pre>
+<ul>
+<li class="level1"><div class="li"> Reload virtual host:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {                                                               
+  listen 80;                                                        
+  server_name reload.example.com;                                      
+  root /var/www/html;
+&nbsp;
+  location = /reload {                                                 
+    allow 127.0.0.1; 
+    deny all;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+  } 
+&nbsp;
+  # Other requests                                                    
+  location / {                                                         
+    deny all;
+  } 
+&nbsp;
+  # Uncomment this if status is enabled                                
+  #location = /status {                                              
+  #  allow 127.0.0.1;
+  #  deny all;
+  #  include /etc/nginx/fastcgi_params;                                
+  #  fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+  #  fastcgi_param LLTYPE status;
+  #}
+}</pre>
+
+<p>
+Then, to protect a standard virtual host, you must insert this (or create an included file):
+</p>
+<pre class="code file nginx">  # Insert $_user in logs
+  include /etc/lemonldap-ng/nginx-lmlog.conf;
+  access_log /var/log/nginx/access.log lm_combined;
+&nbsp;
+  # Internal call to FastCGI server
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+    fastcgi_param HOST $http_host;
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  }
+&nbsp;
+  # Client requests
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    # Set REMOTE_USER (for FastCGI apps only)
+    #fastcgi_param REMOTE_USER $lmremote_user
+&nbsp;
+    ##################################
+    # PASSING HEADERS TO APPLICATION #
+    ##################################
+&nbsp;
+    # IF LUA IS SUPPORTED
+    #include /path/to/nginx-lua-headers.conf
+&nbsp;
+    # ELSE
+    # Set manually your headers
+    #auth_request_set $authuser $upstream_http_auth_user;
+    #proxy_set_header Auth-User $authuser;
+    # OR
+    #fastcgi_param HTTP_AUTH_USER $authuser;
+&nbsp;
+    # Then (if LUA not supported), change cookie header to hide LLNG cookie
+    #auth_request_set $lmcookie $upstream_http_cookie;
+    #proxy_set_header Cookie: $lmcookie;
+    # OR
+    #fastcgi_param HTTP_COOKIE $lmcookie;
+&nbsp;
+    # Insert then your configuration (fastcgi_* or proxy_*)</pre>
+
+</div>
+<!-- EDIT13 SECTION "Handler" [15023-17970] -->
+<h2 class="sectionedit14" id="configuration_reload">Configuration reload</h2>
 <div class="level2">
 
 <p>
@@ -485,28 +738,17 @@ These parameters can be overwritten in LemonLDAP::NG ini file, in the section <c
 </p>
 
 <p>
-The <code>reload</code> target is managed in Apache configuration, inside a virtual host protected by LemonLDAP::NG Handler, for example:
+The <code>reload</code> target is managed in Apache or Nginx configuration, inside a virtual host protected by LemonLDAP::NG Handler (see bellow examples in Apache→handler or Nginx→Handler).
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
-    <span class="kw1">ServerName</span> reload.example.com
-&nbsp;
-    &lt;<span class="kw3">Location</span> /reload&gt;
-        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-        <span class="kw1">Deny</span> from <span class="kw2">all</span>
-        <span class="kw1">Allow</span> from 127.0.0.0/<span class="nu0">8</span>
-        PerlHeaderParserHandler Lemonldap::NG::Handler-&gt;refresh
-    &lt;/<span class="kw3">Location</span>&gt;
-&nbsp;
-&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 <p>
-<p><div class="noteimportant">You must allow access to Manager <abbr title="Internet Protocol">IP</abbr>.
+<p><div class="noteimportant">You must allow access to declared URLs to your Manager <abbr title="Internet Protocol">IP</abbr>.
 </div></p>
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Configuration reload" [11778-13145] -->
-<h2 class="sectionedit11" id="local_file">Local file</h2>
+<!-- EDIT14 SECTION "Configuration reload" [17971-19141] -->
+<h2 class="sectionedit15" id="local_file">Local file</h2>
 <div class="level2">
 
 <p>
