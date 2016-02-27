@@ -27,7 +27,6 @@ lib/Lemonldap/NG/Handler/Reload.pm
 lib/Lemonldap/NG/Handler/SharedConf.pm
 lib/Lemonldap/NG/Handler/Specific/AuthBasic.pm
 lib/Lemonldap/NG/Handler/Specific/SecureToken.pm
-lib/Lemonldap/NG/Handler/Specific/SympaAutoLogin.pm
 lib/Lemonldap/NG/Handler/Specific/UpdateCookie.pm
 lib/Lemonldap/NG/Handler/Specific/ZimbraPreAuth.pm
 lib/Lemonldap/NG/Handler/Status.pm
