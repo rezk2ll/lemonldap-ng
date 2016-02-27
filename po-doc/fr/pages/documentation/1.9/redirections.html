@@ -70,15 +70,23 @@ Les agents utilisent le code d'erreur d'Apache dans les cas suivants :
 </ul>
 
 <p>
-Ces erreurs peuvent être interceptées via la directive <code>ErrorDocument</code> d'Apache pour rediriger les utilisateurs vers une page spécifique :
+
+These errors can be catch trough Apache <code>ErrorDocument</code> directive or Nginx <code>error_page</code> directive, to redirect user on a specific page:
+
 </p>
-<pre class="code file apache"><span class="co1"># Common error page and security parameters</span>
+<pre class="code file apache"><span class="co1"># Apache: Common error page and security parameters</span>
 <span class="kw1">ErrorDocument</span> <span class="nu0">403</span> http://auth.example.com/?lmError=<span class="nu0">403</span>
 <span class="kw1">ErrorDocument</span> <span class="nu0">500</span> http://auth.example.com/?lmError=<span class="nu0">500</span>
 <span class="kw1">ErrorDocument</span> <span class="nu0">503</span> http://auth.example.com/?lmError=<span class="nu0">503</span></pre>
+<pre class="code file nginx"># Nginx: Common error page and security parameters
+error_page 403 http://auth.example.com/?lmError=403;
+error_page 500 http://auth.example.com/?lmError=500;
+error_page 503 http://auth.example.com/?lmError=503;</pre>
 
 <p>
-Il est également possible de rediriger les utilisateurs sans utiliser <code>ErrorDocument</code> : l'agent ne retournera pas les codes 403, 500, 503 mais le code 302 (REDIRECT). 
+
+It is also possible to redirect the user without using <code>ErrorDocument</code>: the Handler will not returnV 403, 500, 503 code, but code 302 (REDIRECT). 
+ 
 </p>
 
 <p>
@@ -95,7 +103,7 @@ Ces paramètres peuvent être configurés dans le manager, dans <code>Paramètre
 </li>
 </ul>
 
-</div><!-- EDIT3 SECTION "Forbidden and Server error" [732-1828] -->
+</div><!-- EDIT3 SECTION "Forbidden and Server error" [732-2103] -->
 
 <h1 class="sectionedit4" id="portal_redirections">Redirections du portail</h1>
 <div class="level1">

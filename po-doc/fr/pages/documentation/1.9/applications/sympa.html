@@ -37,101 +37,30 @@
 </p>
 
 <p>
-Il y a deux façons de configurer le <abbr title="Authentification unique (Single Sign On)">SSO</abbr> avec Sympa :
+
+To configure <abbr title="Authentification unique (Single Sign On)">SSO</abbr> with Sympa, use <strong>Magic authentication</strong>: a special <abbr title="Authentification unique (Single Sign On)">SSO</abbr> <abbr title="Uniform Resource Locator">URL</abbr> is protected by <abbr title="LemonLDAP::NG">LL::NG</abbr>, Sympa will display a button for users who wants to use this feature.
+
 </p>
-<ul>
-<li class="level1"><div class="li"> <strong>Auto login</strong>: handler spécial de <abbr title="LemonLDAP::NG">LL::NG</abbr> qui génère le cookie Sympa (pour Symp 5 seulement !)</div>
-</li>
-<li class="level1"><div class="li"> <strong>Magic authentication</strong>: une <abbr title="Uniform Resource Locator">URL</abbr> <abbr title="Authentification unique (Single Sign On)">SSO</abbr> spéciale est protégée pas <abbr title="LemonLDAP::NG">LL::NG</abbr>, Sympa affiche un bouton pour les utilisateurs souhaitant bénéficier de cette fonction.</div>
-</li>
-</ul>
 
 <p>
 </p><p></p><div class="notetip">
-Comment choisir ? Il y a deux avis :
-</p>
-<ul>
-<li class="level1"><div class="li"> <strong>Auto login</strong> est très sécurisé pour Sympa 5 car le cookie Sympa est seulement échangé entre le handler <abbr title="LemonLDAP::NG">LL::NG</abbr> et Sympa (les utilisateurs ne le voient pas)</div>
-</li>
-<li class="level1"><div class="li"> <strong>Magic authentication</strong> autorise l'utilisation de l'authentification Sympa et <abbr title="Authentification unique (Single Sign On)">SSO</abbr></div>
-</li>
-</ul>
 
-<p>
+Since version 1.9 of LLNG, old Auto-Login feature has been removed since it works only with Sympa-5 which has been deprecated
 
-</p></div></p>
+
+
+</div></p>
 </p>
 
-</div><!-- EDIT2 SECTION "Presentation" [59-700] -->
+</div><!-- EDIT2 SECTION "Presentation" [59-460] -->
 
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
-<p>
-Choisir l'une des méthodes suivantes :
-</p>
+</div><!-- EDIT3 SECTION "Configuration" [461-487] -->
 
-</div><!-- EDIT3 SECTION "Configuration" [701-764] -->
-
-<h3 class="sectionedit4" id="auto_login">Auto login</h3>
+<h3 class="sectionedit4" id="sympa_configuration">Configuration Sympa</h3>
 <div class="level3">
-
-</div>
-
-<h4 id="sympa_virtual_host_in_apache">Hôte virtuel Sympa dans le manager</h4>
-<div class="level4">
-
-<p>
-Configurer l'hôte virtuel Sympa comme n'importe quel autre <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">hôte virtuel protégé</a>.
-</p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
-       <span class="kw1">ServerName</span> sympa.example.com
-&nbsp;
-       <span class="co1"># Load Sympa Handler</span>
-       PerlRequire Lemonldap/NG/Handler/Specific/SympaAutoLogin.pm
-       PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::SympaAutoLogin
-&nbsp;
-       ...
-&nbsp;
-&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-
-</div>
-
-<h4 id="sympa_virtual_host_in_manager">Hôte virtuel Sympa dans le manager</h4>
-<div class="level4">
-
-<p>
-Aller dans le manager et <a href="../../../documentation/1.9/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:1.9:configvhost">créer un nouvel hôte virtuel</a> pour Sympa.
-</p>
-
-<p>
-Configurer simplement la <a href="../../../documentation/1.9/writingrulesand_headers.html#rules" class="wikilink1" title="documentation:1.9:writingrulesand_headers">règle d'accès</a>.
-</p>
-
-</div>
-
-<h4 id="sympa_handler_parameters">Paramètres du handler Sympa</h4>
-<div class="level4">
-
-<p>
-Aller dans le manager, <code>Paramètres par défaut</code> » <code>Paramètres avancés</code> » <code>Handlers spéciaux</code> » <code>Sympa</code>, et éditer les clefs suivantes :
-</p>
-<ul>
-<li class="level1"><div class="li"> <strong>Clef prépartagée</strong> : correspond au paramètre du cookie dans sympa.conf</div>
-</li>
-<li class="level1"><div class="li"> <strong>Clef de session mail</strong> : champ de session pour trouver l'adresse mail des utilisateurs (par défaut : mail)</div>
-</li>
-</ul>
-
-</div><!-- EDIT4 SECTION "Auto login" [765-1777] -->
-
-<h3 class="sectionedit5" id="magic_authentication">Authentification magique</h3>
-<div class="level3">
-
-</div>
-
-<h4 id="sympa_configuration">Configuration Sympa</h4>
-<div class="level4">
 
 <p>
 Éditer le fichier “auth.conf” de Sympa, par exemple :
@@ -164,10 +93,10 @@ Noter que si on utilise FastCGI, il faut redémarrer Apache pour activer les cha
 On peut aussi utiliser &lt;portal&gt;?logout=1 comme URL de déconnexion pour supprimer la session LemonLDAP::NG lorsque la déconnexion est demandée.
 </p>
 
-</div>
+</div><!-- EDIT4 SECTION "Sympa configuration" [488-1292] -->
 
-<h4 id="sympa_virtual_host_in_apache1">Hôte virtuel Sympa dans le manager</h4>
-<div class="level4">
+<h3 class="sectionedit5" id="sympa_virtual_host_in_apache">Hôte virtuel Sympa dans le manager</h3>
+<div class="level3">
 
 <p>
 Configurer l'hôte virtuel Sympa comme n'importe quel autre <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">hôte virtuel protégé</a> mais ne protéger que l'authentification magique.
@@ -188,10 +117,10 @@ Configurer l'hôte virtuel Sympa comme n'importe quel autre <a href="../../../do
 </div></p>
 </p>
 
-</div>
+</div><!-- EDIT5 SECTION "Sympa virtual host in Apache" [1293-1805] -->
 
-<h4 id="sympa_virtual_host_in_manager1">Hôte virtuel Sympa dans le manager</h4>
-<div class="level4">
+<h3 class="sectionedit6" id="sympa_virtual_host_in_manager">Hôte virtuel Sympa dans le manager</h3>
+<div class="level3">
 
 <p>
 Aller dans le manager et <a href="../../../documentation/1.9/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:1.9:configvhost">créer un nouvel hôte virtuel</a> pour Sympa.

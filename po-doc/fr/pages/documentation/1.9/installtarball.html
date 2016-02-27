@@ -91,26 +91,12 @@ make test
 sudo make install PROD=yes</pre>
 
 <p>
+</p><p></p><div class="noteclassic">
 <code>PROD=yes</code> makes web interface use minified versions of <abbr title="Cascading Style Sheets">CSS</abbr> and JS files.
 
-</p>
-
-<p>
-</p><p></p><div class="notetip">
-
-You can also build and install French documentation :
-
-</p>
-<pre class="code">make fr-doc
-make install_fr_doc_site</pre>
-
-<p>
-
-Note that you need to have the <a href="http://www.omegat.org/" class="urlextern" title="http://www.omegat.org/"  rel="nofollow">OmegaT</a> tool to generate the doc.
 
 
-
-</p></div></p>
+</div></p>
 </p>
 
 <p>
@@ -140,6 +126,12 @@ On peut choisir d'autres cibles du Makefile :
 </li>
 </ul>
 </li>
+<li class="level1"><div class="li">  FastCGI server install   (required for Nginx)</div>
+<ul>
+<li class="level2"><div class="li">  install_fastcgi_server (/usr/local/lemonldap-ng/sbin)</div>
+</li>
+</ul>
+</li>
 <li class="level1"><div class="li"> Installer les sites web :</div>
 <ul>
 <li class="level2"><div class="li">  install_site          (all sites including install_doc_site)</div>
@@ -155,6 +147,8 @@ On peut choisir d'autres cibles du Makefile :
 <li class="level1"><div class="li"> Installer la documentation :</div>
 <ul>
 <li class="level2"><div class="li">  install_doc_site      (/usr/local/lemonldap-ng/htdocs/doc)</div>
+</li>
+<li class="level2"><div class="li">  install_fr_doc_site   (/usr/local/lemonldap-ng/htdocs/fr-doc)</div>
 </li>
 <li class="level2"><div class="li">  install_examples_site (/usr/local/lemonldap-ng/examples)</div>
 </li>
@@ -191,18 +185,30 @@ Paramètres disponibles :
 </li>
 <li class="level1"><div class="li"> <strong>VHOSTLISTEN</strong> : comment est configuré le paramètre d'écoute des hôtes virtuels dans Apache (défaut : *:80)</div>
 </li>
+<li class="level1"><div class="li"> <strong>PROD</strong>: use minified JS and <abbr title="Cascading Style Sheets">CSS</abbr> files</div>
+</li>
+<li class="level1"><div class="li"> <strong>USEDEBIANLIBS</strong>: use Debian packaged JS and <abbr title="Cascading Style Sheets">CSS</abbr> files <em>(<strong>Note that this options isn't yet usable</strong> since Debian provides a too old AngularJS for now: LLNG manager needs at least version 1.4.0)</em></div>
+</li>
+<li class="level1"><div class="li"> <strong>USEEXTERNALLIBS</strong>: use files from public CDN</div>
+</li>
 </ul>
 
 <p>
 </p><p></p><div class="notetip">
-Pour Debian/Ubuntu, utiliser :
+
+For Debian/Ubuntu with Apache2, you can use:
+
 </p>
-<pre class="code">make debian-install</pre>
+<pre class="code">make debian-install-for-apache
+make ubuntu-install-for-apache</pre>
 
 <p>
-ou :
+
+And with Nginx:
+
 </p>
-<pre class="code">make ubuntu-install</pre>
+<pre class="code">make debian-install-for-nginx
+make ubuntu-install-for-nginx</pre>
 
 <p>
 Voir aussi la <a href="../../documentation/1.9/installdeb.html" class="wikilink1" title="documentation:1.9:installdeb">documentation d'installation Debian/Ubuntu</a>.
@@ -210,47 +216,9 @@ Voir aussi la <a href="../../documentation/1.9/installdeb.html" class="wikilink1
 </p></div></p>
 </p>
 
-</div><!-- EDIT5 SECTION "Installation" [856-3331] -->
+</div><!-- EDIT5 SECTION "Installation" [856-3712] -->
 
-<h2 class="sectionedit6" id="link_apache_configuration">Lier la configuration d'Apache</h2>
-<div class="level2">
-
-<p>
-Par défaut les fichiers de configuration d'Apache seront installés dans <code>/usr/local/lemonldap-ng/etc/</code>. Il faut les inclure dans la configuration d'Apache, par exemple :
-</p>
-<pre class="code file apache"><span class="kw1">include</span> /usr/local/lemonldap-ng/etc/portal-apache2.conf
-<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/handler-apache2.conf
-<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/manager-apache2.conf
-<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/test-apache2.conf</pre>
-
-<p>
-</p><p></p><div class="notetip">
-</p>
-<ul>
-<li class="level1"><div class="li"> On peut aussi utiliser des liens symboliques dans le répertiore <code>conf.d</code> d'Apache.</div>
-</li>
-<li class="level1"><div class="li"> Pour la commande d'installation Debian/Ubuntu, utiliser simplement :</div>
-</li>
-</ul>
-<pre class="code">a2ensite manager-apache2.conf
-a2ensite portal-apache2.conf
-a2ensite handler-apache2.conf
-a2ensite test-apache2.conf</pre>
-
-<p>
-
-</p></div></p>
-</p>
-
-<p>
-</p><p></p><div class="notewarning">Mod Perl <strong>must</strong> be loaded before <abbr title="LemonLDAP::NG">LL::NG</abbr> Apache configuration.
-
-</div></p>
-</p>
-
-</div><!-- EDIT6 SECTION "Link Apache configuration" [3332-4150] -->
-
-<h2 class="sectionedit7" id="install_cron_jobs">Installer les tâches planifiées (cron)</h2>
+<h2 class="sectionedit6" id="install_cron_jobs">Installer les tâches planifiées (cron)</h2>
 <div class="level2">
 
 <p>
@@ -268,9 +236,9 @@ Pour les installer sur le système :
 </p>
 <pre class="code">sudo ln -s /usr/local/lemonldap-ng/etc/cron.d/* /etc/cron.d/</pre>
 
-</div><!-- EDIT7 SECTION "Install cron jobs" [4151-4360] -->
+</div><!-- EDIT6 SECTION "Install cron jobs" [3713-3922] -->
 
-<h2 class="sectionedit8" id="dns">DNS</h2>
+<h2 class="sectionedit7" id="dns">DNS</h2>
 <div class="level2">
 
 <p>

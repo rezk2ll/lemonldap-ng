@@ -33,14 +33,17 @@
 <div class="level2">
 
 <p>
+</p><p></p><div class="noteimportant">Pour l'instant, cette fonctionnalité n'est offerte qu'avec le handler Apache.
+</div></p>
+</p>
+
+<p>
 Extrait de <a href="http://fr.wikipedia.org/wiki/HTTP_Authentification" class="urlextern" title="http://fr.wikipedia.org/wiki/HTTP_Authentification"  rel="nofollow">l'article Wikipedia</a>:
 </p>
 
 <p>
 </p><blockquote>
-
-In the context of an HTTP transaction, the basic access authentication is a method designed to allow a web browser, or other client program, to provide credentials – in the form of a user name and password – when making a request.
-
+Dans le contexte d'une transaction HTTP, l'authentification basique est une méthode qui permet au navigateur ou un autre programme client de fournir des éléments d'authentification – sous la forme d'un nom et d'un mot de passe – à chaque requête.
 </p>
 
 <p>
@@ -49,24 +52,22 @@ Avant la transmission, le nom et le mot de passe sont encodés en base-64. Par e
 </p>
 
 <p>
-
-So HTTP Basic Autentication is managed trough an HTTP header (<code>Authorization</code>), that can be forged by <abbr title="LemonLDAP::NG">LL::NG</abbr>, with this precautions:
-
+Ainsi l'authentification basique HTTP est gérée par des en-têtes HTTP (<code>Autorisation</code>), qui peut être générée par <abbr title="LemonLDAP::NG">LL::NG</abbr>, avec les précautions suivantes :
 </p>
 <ul>
-<li class="level1"><div class="li">  Data should not contains accents or special characters, as HTTP protocol only allow <abbr title="American Standard Code for Information Interchange">ASCII</abbr> values in header (but depending on the HTTP server, you can use ISO encoded values)</div>
+<li class="level1"><div class="li"> Les données ne doivent pas contenir de caractères spéciaux, car le protocole HTTP n'autorise que les caractères <abbr title="American Standard Code for Information Interchange">ASCII</abbr> dans les en-têtes (mais suivant le serveur HTTP, vous pouvez utiliser des valeurs encodées ISO)</div>
 </li>
 <li class="level1"><div class="li"> Il est nécessaire d'exporter le mot-de-passe, qui peut être le mot-de-passe principal de l'utilisateur (si <a href="../../../documentation/1.9/passwordstore.html" class="wikilink1" title="documentation:1.9:passwordstore">le mot-de-passe est stocké dans la session</a>, ou n'importe quel attribut utilisateur (si d'autres mots-de-passe sont stockés dans la base de données des utilisateurs).</div>
 </li>
 </ul>
 
-</div><!-- EDIT2 SECTION "Presentation" [78-1452] -->
+</div><!-- EDIT2 SECTION "Presentation" [78-1535] -->
 
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
-The Basic Authentication relies on a specific HTTP header, as described above. Il suffit donc de déclarer cet en-tête pour l'hôte virtuel dans le manager.
+L'authentification basique est portée par un en-tête HTTP spécifique, tel que décrit ci-dessous. Il suffit donc de déclarer cet en-tête pour l'hôte virtuel dans le manager.
 </p>
 
 <p>
@@ -84,8 +85,7 @@ Ainsi l'exemple ci-dessous peut être écrit simplement :
 <pre class="code">Authorization =&gt; basic($uid,$_password)</pre>
 
 <p>
-</p><p></p><div class="notetip">The <code>basic</code> function will also force conversion from UTF-8 to ISO-8859-1, which should be accepted by most of HTTP servers.
-
+</p><p></p><div class="notetip">La fonction <code>basic</code> force la conversion des caractères UTF-8 en ISO-8859-1, qui peut être accepté par la plupart des serveurs HTTP.
 </div></p>
 </p>
 

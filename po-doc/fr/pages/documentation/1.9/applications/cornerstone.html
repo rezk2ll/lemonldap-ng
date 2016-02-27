@@ -33,19 +33,18 @@
 <div class="level2">
 
 <p>
-<a href="http://www.cornerstoneondemand.com/" class="urlextern" title="http://www.cornerstoneondemand.com/"  rel="nofollow">CornerStone On Demand (CSOD)</a> allows to use <abbr title="Security Assertion Markup Language">SAML</abbr> to authenticate users. It works by default with IDP intiated mechanism, but can works with the standard SP initiated cinematic.
-
+<a href="http://www.cornerstoneondemand.com/" class="urlextern" title="http://www.cornerstoneondemand.com/"  rel="nofollow">CornerStone On Demand (CSOD)</a> permet d'utiliser <abbr title="Security Assertion Markup Language">SAML</abbr> pour authentifier les utilisateurs. Il fonctionne par défaut avec un mécanisme initié par l'IDP mais permet un fonctionnement standard initié par le SP.
 </p>
 
 <p>
 Pour fonctionner avec <abbr title="LemonLDAP::NG">LL::NG</abbr> il faut :
 </p>
 <ul>
-<li class="level1"><div class="li">  An enterprise account</div>
+<li class="level1"><div class="li"> un compte entreprise</div>
 </li>
 <li class="level1"><div class="li"> <abbr title="LemonLDAP::NG">LL::NG</abbr> configuré comme <a href="../../../documentation/1.9/idpsaml.html" class="wikilink1" title="documentation:1.9:idpsaml">fournisseur d'identité SAML</a></div>
 </li>
-<li class="level1"><div class="li">  Registered users on CSOD with the same email than those used by <abbr title="LemonLDAP::NG">LL::NG</abbr> (email will be the NameID exchanged between CSOD and <abbr title="LemonLDAP::NG">LL::NG</abbr>)</div>
+<li class="level1"><div class="li"> Enregistrer les utilisateurs dans CSOD avec la même adresse mail que celle utilisée dans <abbr title="LemonLDAP::NG">LL::NG</abbr> (l'adresse mail sera le NameID échangé entre CSOD et <abbr title="LemonLDAP::NG">LL::NG</abbr>)</div>
 </li>
 </ul>
 
@@ -64,14 +63,12 @@ Il est nécessaire d'avoir configuré <abbr title="LemonLDAP::NG">LL::NG</abbr> 
 </p>
 
 <p>
-
-Now we will add CSOD as a new <abbr title="Security Assertion Markup Language">SAML</abbr> Service Provider:
-
+Ajouter CSOD comme nouveau fournisseur de service <abbr title="Security Assertion Markup Language">SAML</abbr> :
 </p>
 <ol>
 <li class="level1"><div class="li"> Dans le manager, cliquer sur fournisseurs de service <abbr title="Security Assertion Markup Language">SAML</abbr> puis sur le bouton <code>Nouveau fournisseur de service</code>.</div>
 </li>
-<li class="level1"><div class="li">  Set csod as Service Provider name.</div>
+<li class="level1"><div class="li"> Mettre csod comme nom de fournisseur de service.</div>
 </li>
 <li class="level1"><div class="li"> Mettre <code>Email</code> dans <code>Options</code> » <code>Réponse d'authentification</code> » <code>Format NameID par défaut</code></div>
 </li>
@@ -95,25 +92,22 @@ Base64 encoded CSOD certificate
 <span class="sc3"><span class="re1">&lt;/md:EntityDescriptor<span class="re2">&gt;</span></span></span></pre>
 
 <p>
-</p><p></p><div class="noteimportant">Change <strong>mycompanyid</strong> (in <code>AssertionConsumerService</code> markup, parameter <code>Location</code>) into your CSOD company ID and put the certificate value inside the ds:X509Certificate markup
-
+</p><p></p><div class="noteimportant">Changer <strong>mycompanyid</strong> (dans <code>AssertionConsumerService</code> markup, parameter <code>Location</code>) avec l'ID CSOD de l'entreprise et mettre la valeur du certificat dans ds:X509Certificate markup
 </div></p>
 </p>
 
 </div><!-- EDIT4 SECTION "New Service Provider" [602-2116] -->
 
-<h3 class="sectionedit5" id="csod_control_panel">CSOD control panel</h3>
+<h3 class="sectionedit5" id="csod_control_panel">Panneau de configuration CSOD</h3>
 <div class="level3">
 
 <p>
-
-CSOD needs two things to configure <abbr title="LemonLDAP::NG">LL::NG</abbr> as an IDP:
-
+CSOD nécessite 2 éléments pour configurer <abbr title="LemonLDAP::NG">LL::NG</abbr> comme IDP :
 </p>
 <ul>
 <li class="level1"><div class="li"> Certificat</div>
 </li>
-<li class="level1"><div class="li"> <abbr title="Security Assertion Markup Language">SAML</abbr> assertion</div>
+<li class="level1"><div class="li"> Assertion <abbr title="Security Assertion Markup Language">SAML</abbr></div>
 </li>
 </ul>
 
@@ -142,13 +136,11 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
 
 </div>
 
-<h4 id="saml_assertion">SAML assertion</h4>
+<h4 id="saml_assertion">Assertion SAML</h4>
 <div class="level4">
 
 <p>
-
-You need to use the IDP initiated feature of <abbr title="LemonLDAP::NG">LL::NG</abbr>. Just call this <abbr title="Uniform Resource Locator">URL</abbr>:
-
+Il faut utiliser la fonctionnalité initiée par l'IDP de <abbr title="LemonLDAP::NG">LL::NG</abbr>. Lancer simplement cette <abbr title="Uniform Resource Locator">URL</abbr>:
 </p>
 <pre class="code">https://auth.example.com/saml/singleSignOn?IDPInitiated=1&amp;sp=mycompanyid.csod.com</pre>
 

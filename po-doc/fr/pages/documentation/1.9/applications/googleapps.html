@@ -89,7 +89,7 @@ Puis configurer tous les paramètres <abbr title="Security Assertion Markup Lang
 <ul>
 <li class="level1"><div class="li"> <strong>Enable Single Sign-On</strong>: sélectionner. Le désélectionner désactive l'authentification <abbr title="Security Assertion Markup Language">SAML</abbr> (à utiliser, si votre fournisseur d'identité est hors service).</div>
 </li>
-<li class="level1"><div class="li"> <strong>Sign-in page <abbr title="Uniform Resource Locator">URL</abbr></strong>: <abbr title="Authentification unique (Single Sign On)">SSO</abbr> access point (HTTP-Redirect binding). Example: <a href="http://auth.example.com/saml/singleSignOn" class="urlextern" title="http://auth.example.com/saml/singleSignOn"  rel="nofollow">http://auth.example.com/saml/singleSignOn</a></div>
+<li class="level1"><div class="li"> <strong>Sign-in page <abbr title="Uniform Resource Locator">URL</abbr></strong>: point d'accès <abbr title="Authentification unique (Single Sign On)">SSO</abbr> (HTTP-Redirect binding). Exemple : <a href="http://auth.example.com/saml/singleSignOn" class="urlextern" title="http://auth.example.com/saml/singleSignOn"  rel="nofollow">http://auth.example.com/saml/singleSignOn</a></div>
 </li>
 <li class="level1"><div class="li"> <strong>Sign-out page <abbr title="Uniform Resource Locator">URL</abbr></strong>: il ne s'agit pas du point d'accès de déconnexion globale (SLO) (Google Apps ne le supporte pas), mais de la page de déconnexion. Exemple: <a href="http://auth.example.com/?logout=1" class="urlextern" title="http://auth.example.com/?logout=1"  rel="nofollow">http://auth.example.com/?logout=1</a></div>
 </li>
@@ -103,13 +103,11 @@ Puis configurer tous les paramètres <abbr title="Security Assertion Markup Lang
 <div class="level3">
 
 <p>
-Pour le certificate, vous pouvez le construire en signant la clef privée enregistrée dans le Manager. Select the key, and export it (button <code>Download</code>). This will download the public and the private key.
+Pour le certificate, vous pouvez le construire en signant la clef privée enregistrée dans le Manager. Selectionner la clef, et l'exporter (bouton <code>Télécharger</code>): Ceci télécharge les clefs publique et privée.
 </p>
 
 <p>
-
-Keep the private key in a file, for example lemonldap-ng-priv.key, then use openssl to generate an auto-signed certificate:
-
+Garder la clef privée dans un fichier, par exemple lemonldap-ng-priv.key, et utiliser openssl pour générer un certificat auto-signé :
 </p>
 <pre class="code">openssl req -new -key lemonldap-ng-priv.key -out cert.csr
 openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out cert.pem</pre>
@@ -119,7 +117,7 @@ Télécharger ensuite le certificat (<code>cert.pem</code>) dans Google Apps.
 </p>
 
 <p>
-</p><p></p><div class="notetip">You can also use the certificate instead of public key in <abbr title="Security Assertion Markup Language">SAML</abbr> metadata, see <a href="../../../documentation/1.9/samlservice.html#security_parameters" class="wikilink1" title="documentation:1.9:samlservice">SAML service configuration</a>
+</p><p></p><div class="notetip">On peut aussi utiliser le certificat au lieu de la clef publique dans les métadatas <abbr title="Security Assertion Markup Language">SAML</abbr>, voir <a href="../../../documentation/1.9/samlservice.html#security_parameters" class="wikilink1" title="documentation:1.9:samlservice">configuration du service SAML</a>
 </div></p>
 </p>
 
@@ -155,7 +153,7 @@ Ajouter ensuite Google Apps comme nouveau fournisseur de service <abbr title="Se
 <span class="sc3"><span class="re1">&lt;/md:EntityDescriptor<span class="re2">&gt;</span></span></span></pre>
 
 <p>
-</p><p></p><div class="noteimportant">Changer <strong>mydomain.org</strong> (dans <code>AssertionConsumerService</code> markup, parameter <code>Location</code>) en votre domaine Google Apps. Also adapt your entityID to match the Assertion issuer: google.com/a/mydomain.org 
+</p><p></p><div class="noteimportant">Changer <strong>mydomain.org</strong> (dans <code>AssertionConsumerService</code> markup, parameter <code>Location</code>) en votre domaine Google Apps. Adapter également l' "entityID" pour qu'elle corresponde à l'émetteur de l'assertion : google.com/a/mydomain.org 
 </div></p>
 </p>
 

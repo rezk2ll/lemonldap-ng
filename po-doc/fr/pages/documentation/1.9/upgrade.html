@@ -79,16 +79,16 @@ As it was not used anymore, this option is now removed. See <a href="https://jir
 
 </div><!-- EDIT3 SECTION "Portal autocomplete configuration" [1019-1388] -->
 
-<h2 class="sectionedit4" id="support_for_centosrhel_5_dropped">Support for CentOS/RHEL 5 dropped</h2>
+<h2 class="sectionedit4" id="support_for_centosrhel_5_and_centosrhel_6_dropped">Support for CentOS/RHEL 5 and CentOS/RHEL 6 dropped</h2>
 <div class="level2">
 
 <p>
 
-Due to a too old Perl version and some missing modules, <abbr title="LemonLDAP::NG">LL::NG</abbr> is no more available for CentOS/RHEL 5.
+Due to a too old Perl version and some missing modules, <abbr title="LemonLDAP::NG">LL::NG</abbr> is no more available for CentOS/RHEL 5 and 6. You need CentOS/RHEL 7 or a Debian based box to run this version of <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 
 </p>
 
-</div><!-- EDIT4 SECTION "Support for CentOS/RHEL 5 dropped" [1389-1539] -->
+</div><!-- EDIT4 SECTION "Support for CentOS/RHEL 5 and CentOS/RHEL 6 dropped" [1389-1639] -->
 
 <h2 class="sectionedit5" id="manager_components_protection">Manager components protection</h2>
 <div class="level2">
@@ -101,7 +101,7 @@ You can no more set up a different <code>protection</code> parameter for session
 <pre class="code perl"><span class="sy0">^</span><span class="co2">/(manager\.html|conf/</span><span class="br0">)</span> <span class="sy0">=&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st0">"dwho"</span>
 default <span class="sy0">=&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st0">"dwho"</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st0">"rtyler"</span> </pre>
 
-</div><!-- EDIT5 SECTION "Manager components protection" [1540-1952] -->
+</div><!-- EDIT5 SECTION "Manager components protection" [1640-2052] -->
 
 <h2 class="sectionedit6" id="ajax_unauthenticated_requests_in_handler">AJAX unauthenticated requests in handler</h2>
 <div class="level2">
@@ -118,7 +118,7 @@ If you want to keep old behavior, set <code>noAjaxHook</code> to 1 (in General P
 
 </p>
 
-</div><!-- EDIT6 SECTION "AJAX unauthenticated requests in handler" [1953-2577] -->
+</div><!-- EDIT6 SECTION "AJAX unauthenticated requests in handler" [2053-2677] -->
 
 <h2 class="sectionedit7" id="persistent_sessions">Persistent sessions</h2>
 <div class="level2">
@@ -141,7 +141,7 @@ These attributes allow to browse them in the sessions explorer. Old persistent s
 
 </p>
 
-</div><!-- EDIT7 SECTION "Persistent sessions" [2578-2884] -->
+</div><!-- EDIT7 SECTION "Persistent sessions" [2678-2984] -->
 
 <h2 class="sectionedit8" id="multi_backend">Multi backend</h2>
 <div class="level2">
@@ -175,6 +175,31 @@ Must be replaced by:
 userDB = Multi
 multiAuthStack = LDAP;DBI
 multiUserDBStack = LDAP;DBI</pre>
+
+</div><!-- EDIT8 SECTION "Multi backend" [2985-3398] -->
+
+<h2 class="sectionedit9" id="specific_handler">Specific Handler</h2>
+<div class="level2">
+
+<p>
+
+Handler <abbr title="Interface de programmation">API</abbr> has changed and specific Handlers have been rewritten. They still work but their configuration must be set in <code>lemonldap-ng.ini</code> file instead of Manager.
+
+</p>
+
+<p>
+
+More details:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/applications/zimbra.html" class="wikilink1" title="documentation:1.9:applications:zimbra">Zimbra</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/securetoken.html" class="wikilink1" title="documentation:1.9:securetoken">Secure Token</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.9/handlerauthbasic.html" class="wikilink1" title="documentation:1.9:handlerauthbasic">Auth Basic</a></div>
+</li>
+</ul>
 
 </div>
 </div><!-- closes <div class="dokuwiki export">--></body></html>

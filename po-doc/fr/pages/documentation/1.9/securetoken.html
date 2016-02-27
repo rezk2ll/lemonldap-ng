@@ -43,30 +43,48 @@ Ce mécanisme permet de faire du <abbr title="Authentification unique (Single Si
 
 </div><!-- EDIT3 SECTION "Configuration" [489-515] -->
 
-<h3 class="sectionedit4" id="virtual_host_in_apache">Hôte virtuel dans Apache</h3>
+<h3 class="sectionedit4" id="virtual_host">Hôte virtuel</h3>
 <div class="level3">
+
+</div>
+
+<h4 id="apache">Apache</h4>
+<div class="level4">
 
 <p>
 Configurer l'hôte virtuel Sympa comme n'importe quel autre <a href="../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">hôte virtuel protégé</a> mais utiliser l'agent jeton sécurisé au lieu de l'agent par défaut.
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+<pre class="code file apache">PerlModule Lemonldap::NG::Handler::Specific::SecureToken
+&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> secure.example.com
 &nbsp;
        <span class="co1"># Load SecureToken Handler</span>
-       PerlRequire Lemonldap/NG/Handler/Specific/SecureToken.pm
        PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::SecureToken
 &nbsp;
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
-</div><!-- EDIT4 SECTION "Virtual host in Apache" [516-974] -->
+</div>
+
+<h4 id="nginx">Nginx</h4>
+<div class="level4">
+
+<p>
+</p><p></p><div class="noteclassic">This module uses Apache2 Filter and is not compatible with Nginx.
+
+</div></p>
+</p>
+
+</div><!-- EDIT4 SECTION "Virtual host" [516-1068] -->
 
 <h3 class="sectionedit5" id="handler_parameters">Paramètres de l'agent</h3>
 <div class="level3">
 
 <p>
-Aller dans le manager, <code>Paramètres par défaut</code> » <code>Paramètres avancés</code> » <code>Handlers spéciaux</code> » <code>Jeton sécurisé</code>, et éditer les clefs suivantes :
+
+SecureToken parameters are the following:
+
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Serveurs Memcached</strong> : adresses des serveurs Memcached, separés par des espaces.</div>
@@ -82,6 +100,25 @@ Aller dans le manager, <code>Paramètres par défaut</code> » <code>Paramètres
 <li class="level1"><div class="li"> <strong>Autorise les requêtes en cas d'erreur</strong> : autorise la requête qui a généré une erreur dans la génération du jeton à être transféré à l'application protégé sans jeton sécurisé (défaut : oui)</div>
 </li>
 </ul>
+
+<p>
+</p><p></p><div class="noteimportant">
+
+Due to Handler <abbr title="Interface de programmation">API</abbr> change in 1.9, you need to set these attributes in <code>lemonldap-ng.ini</code> and not in Manager, for example:
+
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">[</span>handler<span class="br0">]</span></span>
+<span class="re1">secureTokenMemcachedServers</span> <span class="sy0">=</span><span class="re2"> 127.0.0.1:11211</span>
+<span class="re1">secureTokenExpiration</span> <span class="sy0">=</span><span class="re2"> 60</span>
+<span class="re1">secureTokenAttribute</span> <span class="sy0">=</span><span class="re2"> uid</span>
+<span class="re1">secureTokenUrls</span> <span class="sy0">=</span><span class="re2"> .*</span>
+<span class="re1">secureTokenHeader</span> <span class="sy0">=</span><span class="re2"> Auth-Token</span>
+<span class="re1">secureTokenAllowOnError</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
+
+<p>
+
+</p></div></p>
+</p>
 
 </div>
 </div><!-- closes <div class="dokuwiki export">--></body></html>

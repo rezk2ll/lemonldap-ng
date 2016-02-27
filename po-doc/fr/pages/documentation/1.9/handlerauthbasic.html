@@ -47,19 +47,24 @@ Ce peut être pratique pour autoriser une application cliente à accéder à un 
 
 </div><!-- EDIT3 SECTION "Configuration" [635-661] -->
 
-<h3 class="sectionedit4" id="virtual_host_in_apache">Hôte virtuel dans Apache</h3>
+<h3 class="sectionedit4" id="virtual_host">Hôte virtuel</h3>
 <div class="level3">
+
+</div>
+
+<h4 id="apache">Apache</h4>
+<div class="level4">
 
 <p>
 
 Configure the virtual host like other <a href="../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">protected virtual host</a> but use AuthBasic Handler instead of default Handler.
 
 </p>
-<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+<pre class="code file apache">PerlModule Lemonldap::NG::Handler::Specific::AuthBasic
+&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> basic.example.com
 &nbsp;
        <span class="co1"># Load AuthBasic Handler</span>
-       PerlRequire Lemonldap/NG/Handler/Specific/AuthBasic.pm
        PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::AuthBasic
 &nbsp;
        ...
@@ -79,7 +84,18 @@ If LemonLDAP::NG portal is protected by SSL with a self-signed certificate, you 
 </p></div></p>
 </p>
 
-</div><!-- EDIT4 SECTION "Virtual host in Apache" [662-1306] -->
+</div>
+
+<h4 id="nginx">Nginx</h4>
+<div class="level4">
+
+<p>
+</p><p></p><div class="noteclassic">AuthBasic Handler cannot be used in Nginx for the moment. 
+ 
+</div></p>
+</p>
+
+</div><!-- EDIT4 SECTION "Virtual host" [662-1393] -->
 
 <h3 class="sectionedit5" id="handler_parameters">Paramètres de l'agent</h3>
 <div class="level3">

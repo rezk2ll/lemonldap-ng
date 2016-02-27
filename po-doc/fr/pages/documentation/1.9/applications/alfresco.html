@@ -33,18 +33,15 @@
 <div class="level2">
 
 <p>
-<a href="https://www.alfresco.com/" class="urlextern" title="https://www.alfresco.com/"  rel="nofollow">Alfresco</a> is an ECM/BPM software.
-
+<a href="https://www.alfresco.com/" class="urlextern" title="https://www.alfresco.com/"  rel="nofollow">Alfresco</a> est un logiciel ECM/BPM.
 </p>
 
 <p>
-
-Since 4.0 release, it offers an easy way to configure <abbr title="Authentification unique (Single Sign On)">SSO</abbr> thanks to authentication subsystems.
-
+Depuis la version 4.0, il permet facilement de configurer un <abbr title="Authentification unique (Single Sign On)">SSO</abbr> grace au sous-système d'authentification.
 </p>
 
 <p>
-</p><p></p><div class="noteimportant">If you use an older version, you need to refer to the following documentation: <a href="https://wiki.alfresco.com/wiki/SSO" class="urlextern" title="https://wiki.alfresco.com/wiki/SSO"  rel="nofollow">https://wiki.alfresco.com/wiki/SSO</a>
+</p><p></p><div class="noteimportant">Pour les versions plus anciennes, se référer à cette documentation : <a href="https://wiki.alfresco.com/wiki/SSO" class="urlextern" title="https://wiki.alfresco.com/wiki/SSO"  rel="nofollow">https://wiki.alfresco.com/wiki/SSO</a>
 </div></p>
 </p>
 
@@ -59,14 +56,12 @@ Since 4.0 release, it offers an easy way to configure <abbr title="Authentificat
 <div class="level3">
 
 <p>
-</p><p></p><div class="notetip">The official documentation can be found here: <a href="http://docs.alfresco.com/4.0/tasks/auth-alfrescoexternal-sso.html" class="urlextern" title="http://docs.alfresco.com/4.0/tasks/auth-alfrescoexternal-sso.html"  rel="nofollow">http://docs.alfresco.com/4.0/tasks/auth-alfrescoexternal-sso.html</a>
+</p><p></p><div class="notetip">La documentation officielle se trouve ici : <a href="http://docs.alfresco.com/4.0/tasks/auth-alfrescoexternal-sso.html" class="urlextern" title="http://docs.alfresco.com/4.0/tasks/auth-alfrescoexternal-sso.html"  rel="nofollow">http://docs.alfresco.com/4.0/tasks/auth-alfrescoexternal-sso.html</a>
 </div></p>
 </p>
 
 <p>
-
-You need to find the following files in your Alfresco installation:
-
+Les fichiers suivants sont nécessaires dans l'installation Alfresco :
 </p>
 <ul>
 <li class="level1"><div class="li"> <code>alfresco-global.properties</code> (ex: <code>tomcat/shared/classes/alfresco-global.properties</code>)</div>
@@ -76,15 +71,11 @@ You need to find the following files in your Alfresco installation:
 </ul>
 
 <p>
-
-The first will allow to configure <abbr title="Authentification unique (Single Sign On)">SSO</abbr> for the alfresco webapp, and the other for the share webapp. 
- 
+Le premier autorise la configuration du <abbr title="Authentification unique (Single Sign On)">SSO</abbr> pour la webapp Alfresco et l'autre pour la webapp partagée. 
 </p>
 
 <p>
-
-Edit first <code>alfresco-global.properties</code> and add the following:
-
+Éditer d'abord <code>alfresco-global.properties</code> et ajouter :
 </p>
 <pre class="code file java">### SSO ###
 authentication.<span class="me1">chain</span><span class="sy0">=</span>external1<span class="sy0">:</span>external
@@ -95,9 +86,7 @@ external.<span class="me1">authentication</span>.<span class="me1">proxyHeader</
 external.<span class="me1">authentication</span>.<span class="me1">userIdPattern</span><span class="sy0">=</span></pre>
 
 <p>
-
-Edit then <code>share-config-custom.xml</code> and uncomment the last part. In the <code>&lt;endpoint&gt;</code>, change <code>&lt;connector-id&gt;</code> value to <code>alfrescoHeader</code> and change the <code>&lt;userHeader&gt;</code> value to <code>Auth-User</code>:
-
+Éditer ensuite <code>share-config-custom.xml</code> et décommenter la dernière partie. Dans le "<code>&lt;endpoint&gt;</code>", changer la valeur de <code>&lt;connector-id&gt;</code> en <code>alfrescoHeader</code> et changer la valeur de <code>&lt;userHeader&gt;</code> en <code>Auth-User</code> :
 </p>
 <pre class="code file xml">   <span class="sc3"><span class="re1">&lt;config</span> <span class="re0">evaluator</span>=<span class="st0">"string-compare"</span> <span class="re0">condition</span>=<span class="st0">"Remote"</span><span class="re2">&gt;</span></span>
       <span class="sc3"><span class="re1">&lt;remote<span class="re2">&gt;</span></span></span>
@@ -135,14 +124,11 @@ Edit then <code>share-config-custom.xml</code> and uncomment the last part. In t
    <span class="sc3"><span class="re1">&lt;/config<span class="re2">&gt;</span></span></span></pre>
 
 <p>
-
-You need to restart Tomcat to apply changes.
-
+Un redémarrage de Tomcat est nécessaire pour appliquer les changements.
 </p>
 
 <p>
-</p><p></p><div class="notewarning">Now you can log in with a simple HTTP header. You need to restrict access to Alfresco to <abbr title="LemonLDAP::NG">LL::NG</abbr>.
-
+</p><p></p><div class="notewarning">On peut ensuite se connecter avec un simple en-tête HTTP. Il faut restreindre l'accès à Alfresco à <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </div></p>
 </p>
 
@@ -152,19 +138,16 @@ You need to restart Tomcat to apply changes.
 <div class="level3">
 
 <p>
-
-Just set the <code>Auth-User</code> header with the attribute that carries the user login, for example <code>$uid</code>.
-
+Renseigner simplement l'en-tête <code>Auth-User</code> avec l'attribut qui contient le nom de login, par exemple <code>$uid</code>.
 </p>
 
 <p>
-
-You can intercept the logout with this rule: <code>^/share/page/dologout ⇒ logout_app_sso</code>
+On peut intercepter les déconnexions avec cette règle : <code>^/share/page/dologout ⇒ logout_app_sso</code>
 </p>
 
 </div><!-- EDIT5 SECTION "LL::NG" [3120-3332] -->
 
-<h2 class="sectionedit6" id="other_resources">Other resources</h2>
+<h2 class="sectionedit6" id="other_resources">Autres documents</h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <a href="https://www.youtube.com/watch?v=5tS0XrC_-rw" class="urlextern" title="https://www.youtube.com/watch?v=5tS0XrC_-rw"  rel="nofollow">DevCon 2012: Unlocking the Secrets of Alfresco Authentication, Mehdi Belmekki</a></div>

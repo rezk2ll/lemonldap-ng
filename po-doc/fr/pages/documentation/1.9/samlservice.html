@@ -119,8 +119,13 @@ Then install lasso and lasso-perl packages:
 
 </div><!-- EDIT4 SECTION "Lasso" [717-1484] -->
 
-<h3 class="sectionedit5" id="apache_rewrite_rules">Régles de réécriture d'Apache</h3>
+<h3 class="sectionedit5" id="rewrite_rules">Rewrite rules</h3>
 <div class="level3">
+
+</div>
+
+<h4 id="apache">Apache</h4>
+<div class="level4">
 
 <p>
 Assurez-vous que mod_rewrite est installé et que les règles de réécriture SAML2 sont activées dans la <a href="../../documentation/1.9/configlocation.html#portal" class="wikilink1" title="documentation:1.9:configlocation">configuration Apache du portail</a>:
@@ -131,7 +136,21 @@ Assurez-vous que mod_rewrite est installé et que les règles de réécriture SA
         <span class="kw1">RewriteRule</span> ^/saml/.* /index.pl
 &lt;/<span class="kw3">IfModule</span>&gt;</pre>
 
-</div><!-- EDIT5 SECTION "Apache rewrite rules" [1485-1830] -->
+</div>
+
+<h4 id="nginx">Nginx</h4>
+<div class="level4">
+
+<p>
+
+Be sure that SAML2 rewrite rules are activated in <a href="../../documentation/1.9/configlocation.html#portal1" class="wikilink1" title="documentation:1.9:configlocation">Nginx portal configuration</a>:
+
+</p>
+<pre class="code file nginx">  # SAML2 Issuer
+  rewrite ^/saml/metadata /metadata.pl last;
+  rewrite ^/saml/.* /index.pl last;</pre>
+
+</div><!-- EDIT5 SECTION "Rewrite rules" [1485-2078] -->
 
 <h2 class="sectionedit6" id="service_configuration">Configuration du service</h2>
 <div class="level2">
@@ -145,7 +164,7 @@ Allez dans le Manager et cliquez sur le nœud <code>Service <abbr title="Securit
 </div></p>
 </p>
 
-</div><!-- EDIT6 SECTION "Service configuration" [1831-1994] -->
+</div><!-- EDIT6 SECTION "Service configuration" [2079-2242] -->
 
 <h3 class="sectionedit7" id="entry_identifier">Identifiant d'entrée</h3>
 <div class="level3">
@@ -172,7 +191,7 @@ Cette valeur est utilisé dans les metadatas :
 </div></p>
 </p>
 
-</div><!-- EDIT7 SECTION "Entry Identifier" [1995-2392] -->
+</div><!-- EDIT7 SECTION "Entry Identifier" [2243-2640] -->
 
 <h3 class="sectionedit8" id="security_parameters">Paramètres de sécurité</h3>
 <div class="level3">
@@ -224,7 +243,7 @@ $ openssl x509 -req -days 3650 -in cert.csr -signkey private.key -out cert.pem</
 </p></div></p>
 </p>
 
-</div><!-- EDIT8 SECTION "Security parameters" [2393-3655] -->
+</div><!-- EDIT8 SECTION "Security parameters" [2641-3903] -->
 
 <h3 class="sectionedit9" id="nameid_formats">Formats de NameID</h3>
 <div class="level3">
@@ -269,7 +288,7 @@ Les autres formats de NameID sont automatiquement gérés :
 </li>
 </ul>
 
-</div><!-- EDIT9 SECTION "NameID formats" [3656-4414] -->
+</div><!-- EDIT9 SECTION "NameID formats" [3904-4662] -->
 
 <h3 class="sectionedit10" id="authentication_contexts">Contextes d'authentification</h3>
 <div class="level3">
@@ -297,7 +316,7 @@ Les formats de NameID personnalisables sont :
 </li>
 </ul>
 
-</div><!-- EDIT10 SECTION "Authentication contexts" [4415-5138] -->
+</div><!-- EDIT10 SECTION "Authentication contexts" [4663-5386] -->
 
 <h3 class="sectionedit11" id="organization">Organisation</h3>
 <div class="level3">
@@ -325,7 +344,7 @@ Ceci concerne tous les paramètres de la section "organization" des métadatas :
 </li>
 </ul>
 
-</div><!-- EDIT11 SECTION "Organization" [5139-5650] -->
+</div><!-- EDIT11 SECTION "Organization" [5387-5898] -->
 
 <h3 class="sectionedit12" id="service_provider">Fournisseur de service</h3>
 <div class="level3">
@@ -420,7 +439,7 @@ Les déclarations disponibles sont :
 The only authorized binding is SOAP. Peut être défini par défaut.
 </p>
 
-</div><!-- EDIT12 SECTION "Service Provider" [5651-6705] -->
+</div><!-- EDIT12 SECTION "Service Provider" [5899-6953] -->
 
 <h3 class="sectionedit13" id="identity_provider">Fournisseur d'identité</h3>
 <div class="level3">
@@ -517,7 +536,7 @@ Les déclarations disponibles sont :
 The only authorized binding is SOAP. Peut être défini par défaut.
 </p>
 
-</div><!-- EDIT13 SECTION "Identity Provider" [6706-7694] -->
+</div><!-- EDIT13 SECTION "Identity Provider" [6954-7942] -->
 
 <h3 class="sectionedit14" id="attribute_authority">Autorité d'attributs</h3>
 <div class="level3">
@@ -552,7 +571,7 @@ Response Location should be empty, as SOAP responses are directly returned (sync
 
 </p>
 
-</div><!-- EDIT14 SECTION "Attribute Authority" [7695-8106] -->
+</div><!-- EDIT14 SECTION "Attribute Authority" [7943-8354] -->
 
 <h3 class="sectionedit15" id="advanced">Avancé</h3>
 <div class="level3">

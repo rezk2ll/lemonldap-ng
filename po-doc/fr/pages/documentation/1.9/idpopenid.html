@@ -92,16 +92,12 @@ Par exemple, pour n'autoriser que les utilisateurs authentifiés fortement :
 
 <p>
 </p><p></p><div class="noteimportant">
-Le module Rewrite d'Apache doit être activé dans la <a href="../../documentation/1.9/configlocation.html#portal" class="wikilink1" title="documentation:1.9:configlocation">configuration Apache du portail</a>:
-</p>
-<pre class="code file apache">    &lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
-        <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
-        <span class="kw1">RewriteRule</span> ^/openidserver/.* /index.pl
-    &lt;/<span class="kw3">IfModule</span>&gt;</pre>
 
-<p>
+Rewrite rules must have been activated in <a href="../../documentation/1.9/configlocation.html#portal" class="wikilink1" title="documentation:1.9:configlocation">Apache portal configuration</a> or in <a href="../../documentation/1.9/configlocation.html#portal1" class="wikilink1" title="documentation:1.9:configlocation">Nginx portal configuration</a>.
 
-</p></div></p>
+
+
+</div></p>
 </p>
 
 <p>
@@ -123,7 +119,7 @@ Aller ensuite dans <code>Options</code> pour définir :
 </div></p>
 </p>
 
-</div><!-- EDIT3 SECTION "Configuration" [1122-2506] -->
+</div><!-- EDIT3 SECTION "Configuration" [1122-2419] -->
 
 <h3 class="sectionedit4" id="shared_attributes_sreg">Attributs partagés (SREG)</h3>
 <div class="level3">
@@ -161,7 +157,7 @@ Chaque attribut SREG est associé à une clef de session utilisateur. Une clef d
 </div></p>
 </p>
 
-</div><!-- EDIT4 SECTION "Shared attributes (SREG)" [2507-3014] -->
+</div><!-- EDIT4 SECTION "Shared attributes (SREG)" [2420-2927] -->
 
 <h3 class="sectionedit5" id="security">Sécurité</h3>
 <div class="level3">

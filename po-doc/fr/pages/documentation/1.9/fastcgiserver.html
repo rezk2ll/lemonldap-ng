@@ -1,0 +1,95 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="lemonldapng_fastcgi_server">LemonLDAP::NG FastCGI server</h1>
+<div class="level1">
+
+<p>
+
+Since 1.9, Lemonldap::NG provides a FastCGI server usable to protect applications with Nginx <em>(See <a href="../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">Manage virtual hosts</a> page to configure virtual hosts)</em>.
+
+</p>
+
+<p>
+
+This FastCGI server can be used for all LLNG components. It compiles enabled components on-the-fly.
+
+</p>
+
+</div><!-- EDIT1 SECTION "LemonLDAP::NG FastCGI server" [1-337] -->
+
+<h2 class="sectionedit2" id="start">Commencer</h2>
+<div class="level2">
+
+</div><!-- EDIT2 SECTION "Start" [338-356] -->
+
+<h3 class="sectionedit3" id="using_packages">Using packages</h3>
+<div class="level3">
+
+<p>
+
+You just have to install lemonldap-ng-fastcgi-server package, it will be started automatically.
+
+</p>
+
+</div><!-- EDIT3 SECTION "Using packages" [357-479] -->
+
+<h3 class="sectionedit4" id="using_make_install">Using "make install"</h3>
+<div class="level3">
+
+<p>
+
+To enable the FastCGI server at startup, copy the script <code>llng-fastcgi-server</code> installed in INITDIR (default <code>/usr/local/lemonldap-ng/etc/init.d/</code>) in <code>/etc/init.d</code> and enable it (links to <code>/etc/rc<em>x</em>.d</code>).
+
+</p>
+
+</div><!-- EDIT4 SECTION "Using make install" [480-728] -->
+
+<h2 class="sectionedit5" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+
+FastCGI server has few parameters. They can be set by environment variables (read by startup script) or by command line options. A default configuration file can be found in <code>/usr/local/lemonlda-ng/etc/default/llng-fastcgi-server</code> (or <code>/etc/default/lemonldap-ng-fastcgi-server</code> in Debian package).
+
+</p>
+
+<p>
+
+The FastCGI server reads also <code>LLTYPE</code> parameter in FastCGI requests (see portal-nginx.conf or manager-nginx.conf) to choose which module is called:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <code>auth</code> for the portal</div>
+</li>
+<li class="level1"><div class="li"> <code>manager</code> for the manager</div>
+</li>
+</ul>
+
+<p>
+
+if <code>LLTYPE</code> is set to another value or not set, FastCGI server works as handler.
+
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>

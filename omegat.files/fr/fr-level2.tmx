@@ -22,6 +22,14 @@
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>GLPI<ept i='0'>&lt;/a0&gt;</ept> is the Information Resource-Manager with an additional Administration- Interface.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185748Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>GLPI<ept i='0'>&lt;/a0&gt;</ept> est un gestionnaire d'informations de ressources avec une interface additionnelle d'administration.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Extract and build the module:</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111225T160124Z" changeid="xavier">
@@ -1014,14 +1022,6 @@
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Magic authentication<ept i='0'>&lt;/s0&gt;</ept> allows to mix standard Sympa authentication and <bpt i='1' x='1'>&lt;a1&gt;</bpt>SSO<ept i='1'>&lt;/a1&gt;</ept></seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T080859Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Magic authentication<ept i='0'>&lt;/s0&gt;</ept> autorise l'utilisation de l'authentification Sympa et <bpt i='1' x='1'>&lt;a1&gt;</bpt>SSO<ept i='1'>&lt;/a1&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>DBI<ept i='0'>&lt;/a0&gt;</ept> Authentication table</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T061429Z" changeid="guimard">
@@ -1438,14 +1438,6 @@
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Auto login<ept i='0'>&lt;/s0&gt;</ept>: a special <bpt i='1' x='1'>&lt;a1&gt;</bpt>LL::NG<ept i='1'>&lt;/a1&gt;</ept> Handler will generate Sympa cookie (for Sympa 5 only !)</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20131025T051911Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Auto login<ept i='0'>&lt;/s0&gt;</ept>: handler spécial de <bpt i='1' x='1'>&lt;a1&gt;</bpt>LL::NG<ept i='1'>&lt;/a1&gt;</ept> qui génère le cookie Sympa (pour Symp 5 seulement !)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Session history is always visible in session explorer for administrators.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120418T172408Z" changeid="xavier">
@@ -1784,28 +1776,12 @@
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>http://grr.mutualibre.org/documentation/body.php?id=35</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111225T153625Z" changeid="xavier">
-        <seg>http://grr.mutualibre.org/documentation/body.php?id=35</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='31' x='31'>&lt;s31&gt;</bpt><bpt i='32' x='32'>&lt;s32&gt;</bpt>&lt;/SPSSODescriptor<bpt i='33' x='33'>&lt;s33&gt;</bpt>&gt;<ept i='33'>&lt;/s33&gt;</ept><ept i='32'>&lt;/s32&gt;</ept><ept i='31'>&lt;/s31&gt;</ept>
 <bpt i='34' x='34'>&lt;s34&gt;</bpt><bpt i='35' x='35'>&lt;s35&gt;</bpt>&lt;/md:EntityDescriptor<bpt i='36' x='36'>&lt;s36&gt;</bpt>&gt;<ept i='36'>&lt;/s36&gt;</ept><ept i='35'>&lt;/s35&gt;</ept><ept i='34'>&lt;/s34&gt;</ept></seg>
       </tuv>
       <tuv xml:lang="" changedate="20111203T194857Z" changeid="xavier">
         <seg><bpt i='31' x='31'>&lt;s31&gt;</bpt><bpt i='32' x='32'>&lt;s32&gt;</bpt>&lt;/SPSSODescriptor<bpt i='33' x='33'>&lt;s33&gt;</bpt>&gt;<ept i='33'>&lt;/s33&gt;</ept><ept i='32'>&lt;/s32&gt;</ept><ept i='31'>&lt;/s31&gt;</ept>
 <bpt i='34' x='34'>&lt;s34&gt;</bpt><bpt i='35' x='35'>&lt;s35&gt;</bpt>&lt;/md:EntityDescriptor<bpt i='36' x='36'>&lt;s36&gt;</bpt>&gt;<ept i='36'>&lt;/s36&gt;</ept><ept i='35'>&lt;/s35&gt;</ept><ept i='34'>&lt;/s34&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>It is also possible to redirect the user without using <bpt i='0' x='0'>&lt;c0&gt;</bpt>ErrorDocument<ept i='0'>&lt;/c0&gt;</ept>: the Handler will not return 403, 500, 503 code, but code 302 (REDIRECT).</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120419T144320Z" changeid="guimard">
-        <seg>Il est également possible de rediriger les utilisateurs sans utiliser <bpt i='0' x='0'>&lt;c0&gt;</bpt>ErrorDocument<ept i='0'>&lt;/c0&gt;</ept> : l'agent ne retournera pas les codes 403, 500, 503 mais le code 302 (REDIRECT).</seg>
       </tuv>
     </tu>
     <tu>
@@ -2936,14 +2912,6 @@
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Choose one of the following method:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T080918Z" changeid="xavier">
-        <seg>Choisir l'une des méthodes suivantes :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Check configStorage and configStorageOptionsor file permissions.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120225T113027Z" changeid="xavier">
@@ -3010,14 +2978,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120420T162621Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Une session seulement par utilisateur<ept i='0'>&lt;/s0&gt;</ept> : on ne peut ouvrir 2 sessions avec le même compte.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>NameVirtualHost<ept i='0'>&lt;/s0&gt;</ept> *:<bpt i='1' x='1'>&lt;s1&gt;</bpt>80<ept i='1'>&lt;/s1&gt;</ept></seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T100417Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>NameVirtualHost<ept i='0'>&lt;/s0&gt;</ept> *:<bpt i='1' x='1'>&lt;s1&gt;</bpt>80<ept i='1'>&lt;/s1&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -3592,14 +3552,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>There are two ways to configure <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> with Sympa:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T080457Z" changeid="xavier">
-        <seg>Il y a deux façons de configurer le <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> avec Sympa :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>customfooter.tpm : <bpt i='0' x='0'>&lt;a0&gt;</bpt>HTML<ept i='0'>&lt;/a0&gt;</ept> code in the footer div</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T074850Z" changeid="guimard">
@@ -3692,6 +3644,14 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T205545Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>URLs protégées<ept i='0'>&lt;/s0&gt;</ept> : expressions régulières correspondant aux URLs pour lesquels un jeton sécurisé doit être envoyé, separées par des espaces</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>The official documentation can be found here: <bpt i='0' x='0'>&lt;a0&gt;</bpt>http://docs.alfresco.com/4.0/tasks/auth-alfrescoexternal-sso.html<ept i='0'>&lt;/a0&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183405Z" changeid="xavier">
+        <seg>La documentation officielle se trouve ici : <bpt i='0' x='0'>&lt;a0&gt;</bpt>http://docs.alfresco.com/4.0/tasks/auth-alfrescoexternal-sso.html<ept i='0'>&lt;/a0&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -4010,14 +3970,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>If <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> is the only software installed in Apache, the virtual host feature may not have already been activated.</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T100342Z" changeid="xavier">
-        <seg>Si <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> est le seul logiciel installé sur Apache, la fonctionnalité d'hôte virtuel peut ne pas avoir été activée.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Facebook uses <bpt i='1' x='1'>&lt;a1&gt;</bpt>OAuth2<ept i='1'>&lt;/a1&gt;</ept> protocol to allow applications to reuse its own authentication process (it means, if your are connected to Facebook, other applications can trust Facebook and let you in).</seg>
       </tuv>
       <tuv xml:lang="" changedate="20131025T061125Z" changeid="xavier">
@@ -4030,6 +3982,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T075409Z" changeid="guimard">
         <seg>Paramètres des modèles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>You can use it to build up a database with an inventory for your company (computer, software, printers…).</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185845Z" changeid="xavier">
+        <seg>On peut construire une base de données contenant un inventaire de l'entreprise (ordinateurs, logiciels, imprimantes,…).</seg>
       </tuv>
     </tu>
     <tu>
@@ -4158,14 +4118,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Apache rewrite rules must have been activated in <bpt i='0' x='0'>&lt;a0&gt;</bpt>Apache portal configuration<ept i='0'>&lt;/a0&gt;</ept>:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120301T054209Z" changeid="xavier">
-        <seg>Le module Rewrite d'Apache doit être activé dans la <bpt i='0' x='0'>&lt;a0&gt;</bpt>configuration Apache du portail<ept i='0'>&lt;/a0&gt;</ept>:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Default NameID format<ept i='0'>&lt;/s0&gt;</ept>: if no NameID format is requested, or the NameID format undefined, this NameID format will be used.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120303T092555Z" changeid="xavier">
@@ -4220,6 +4172,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120221T063639Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Mode de chiffrement<ept i='0'>&lt;/s0&gt;</ept> : fixe le mode de chiffrement pour cet IDP (None, NameID ou Assertion).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Just call this <bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept>:</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185450Z" changeid="xavier">
+        <seg>Lancer simplement cette <bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept>:</seg>
       </tuv>
     </tu>
     <tu>
@@ -4850,14 +4810,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Magic authentication</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T081350Z" changeid="xavier">
-        <seg>Authentification magique</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>https://verifier.login.persona.org/verify</seg>
       </tuv>
       <tuv xml:lang="" changedate="20131025T055204Z" changeid="xavier">
@@ -4990,14 +4942,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120420T140813Z" changeid="xavier">
         <seg>PHP</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>https://forge.indepnet.net/projects/glpi/wiki/GLPI-SSO</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111225T153617Z" changeid="xavier">
-        <seg>https://forge.indepnet.net/projects/glpi/wiki/GLPI-SSO</seg>
       </tuv>
     </tu>
     <tu>
@@ -5256,14 +5200,6 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120225T112617Z" changeid="xavier">
         <seg>Can't locate /usr/share/lemonldap-ng/configStorage.pl</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>make debian-install</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120324T161837Z" changeid="xavier">
-        <seg>make debian-install</seg>
       </tuv>
     </tu>
     <tu>
@@ -5794,14 +5730,6 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120121T080745Z" changeid="xavier">
         <seg>Aller ensuite dans les <bpt i='0' x='0'>&lt;c0&gt;</bpt>paramètres Null<ept i='0'>&lt;/c0&gt;</ept>:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>LemonLDAP::NG configuration is build around Apache virtual hosts.</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T072212Z" changeid="xavier">
-        <seg>La configuration de LemonLDAP::NG est construite autour des hôtes virtuels Apache.</seg>
       </tuv>
     </tu>
     <tu>
@@ -6594,14 +6522,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='8' x='8'>&lt;a8&gt;</bpt>filesessionbackend<ept i='8'>&lt;/a8&gt;</ept><ph x='9'>&lt;br9/&gt;</ph></seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20131025T051340Z" changeid="xavier">
-        <seg><bpt i='8' x='8'>&lt;a8&gt;</bpt>filesessionbackend<ept i='8'>&lt;/a8&gt;</ept><ph x='9'>&lt;br9/&gt;</ph></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Access control possible by creating one user for Manager (write) and another for portal and handlers (read)</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120411T041549Z" changeid="xavier">
@@ -7070,6 +6990,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Sign-in page <bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept><ept i='0'>&lt;/s0&gt;</ept>: <bpt i='2' x='2'>&lt;a2&gt;</bpt>SSO<ept i='2'>&lt;/a2&gt;</ept> access point (HTTP-Redirect binding).</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T190919Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Sign-in page <bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept><ept i='0'>&lt;/s0&gt;</ept>: point d'accès <bpt i='2' x='2'>&lt;a2&gt;</bpt>SSO<ept i='2'>&lt;/a2&gt;</ept> (HTTP-Redirect binding).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='21' x='21'>&lt;s21&gt;</bpt>Deny<ept i='21'>&lt;/s21&gt;</ept> from <bpt i='22' x='22'>&lt;s22&gt;</bpt>all<ept i='22'>&lt;/s22&gt;</ept></seg>
       </tuv>
       <tuv xml:lang="" changedate="20120225T064211Z" changeid="xavier">
@@ -7460,6 +7388,22 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>Drupal<ept i='0'>&lt;/a0&gt;</ept> is a <bpt i='1' x='1'>&lt;a1&gt;</bpt>CMS<ept i='1'>&lt;/a1&gt;</ept> written in PHP.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185532Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>Drupal<ept i='0'>&lt;/a0&gt;</ept> est un <bpt i='1' x='1'>&lt;a1&gt;</bpt>CMS<ept i='1'>&lt;/a1&gt;</ept> écrit en PHP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Also adapt your entityID to match the Assertion issuer: google.com/a/mydomain.org</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T191319Z" changeid="xavier">
+        <seg>Adapter également l' &quot;entityID&quot; pour qu'elle corresponde à l'émetteur de l'assertion : google.com/a/mydomain.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>http://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120506T055255Z" changeid="xavier">
@@ -7672,14 +7616,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>These errors can be catch trough Apache <bpt i='0' x='0'>&lt;c0&gt;</bpt>ErrorDocument<ept i='0'>&lt;/c0&gt;</ept> directive, to redirect user on a specific page:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120419T144209Z" changeid="guimard">
-        <seg>Ces erreurs peuvent être interceptées via la directive <bpt i='0' x='0'>&lt;c0&gt;</bpt>ErrorDocument<ept i='0'>&lt;/c0&gt;</ept> d'Apache pour rediriger les utilisateurs vers une page spécifique :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>You can also use a FastCGI server using index.fcgi given in portal examples.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20131025T123056Z" changeid="xavier">
@@ -7878,14 +7814,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv xml:lang="">
         <seg>documentation:latest:logs</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Mail session key<ept i='0'>&lt;/s0&gt;</ept>: session field where to find user mail (by default: mail)</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T081328Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Clef de session mail<ept i='0'>&lt;/s0&gt;</ept> : champ de session pour trouver l'adresse mail des utilisateurs (par défaut : mail)</seg>
       </tuv>
     </tu>
     <tu>
@@ -8310,6 +8238,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>One of this module can be used to delegate authentication server to the web server: <bpt i='2' x='2'>&lt;a2&gt;</bpt>Webserver Auth<ept i='2'>&lt;/a2&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185615Z" changeid="xavier">
+        <seg>L'un de ses modules peut être utilisé pour déléger l'authentification serveur au serveur web : <bpt i='2' x='2'>&lt;a2&gt;</bpt>Webserver Auth<ept i='2'>&lt;/a2&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Check if <bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> asked is valid</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T073502Z" changeid="guimard">
@@ -8394,14 +8330,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111211T112328Z" changeid="xavier">
         <seg><bpt i='153' x='153'>&lt;s153&gt;</bpt>//&quot;userobm_samba_home&quot;          =&gt; ,<ept i='153'>&lt;/s153&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>documentation:manager-formreplay-newurl.png</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T193408Z" changeid="xavier">
-        <seg>documentation:manager-formreplay-newurl.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -8538,6 +8466,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120218T220110Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> peut utiliser SAML2 pour obtenir l'identité et d'autres attributs definis dans le profil utilisateur défini chez son fournisseur d'identité (IDP).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>In the context of an HTTP transaction, the basic access authentication is a method designed to allow a web browser, or other client program, to provide credentials – in the form of a user name and password – when making a request.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184239Z" changeid="xavier">
+        <seg>Dans le contexte d'une transaction HTTP, l'authentification basique est une méthode qui permet au navigateur ou un autre programme client de fournir des éléments d'authentification – sous la forme d'un nom et d'un mot de passe – à chaque requête.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8758,14 +8694,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>By default, Apache configuration files will be installed in <bpt i='0' x='0'>&lt;c0&gt;</bpt>/usr/local/lemonldap-ng/etc/<ept i='0'>&lt;/c0&gt;</ept>.</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120324T161952Z" changeid="xavier">
-        <seg>Par défaut les fichiers de configuration d'Apache seront installés dans <bpt i='0' x='0'>&lt;c0&gt;</bpt>/usr/local/lemonldap-ng/etc/<ept i='0'>&lt;/c0&gt;</ept>.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>LDAP server</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120411T042102Z" changeid="xavier">
@@ -8912,18 +8840,18 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Thomas CHEMINEAU</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111226T195440Z" changeid="xavier">
-        <seg>Thomas CHEMINEAU</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><it pos='begin' x='9'>&lt;&lt;s9&gt;</it>Location<ept i='9'>&lt;/s9&gt;</ept> /index.pl/sessions&gt;</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120225T064139Z" changeid="xavier">
         <seg><it pos='begin' x='9'>&lt;&lt;s9&gt;</it>Location<ept i='9'>&lt;/s9&gt;</ept> /index.pl/sessions&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Thomas CHEMINEAU</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20111226T195440Z" changeid="xavier">
+        <seg>Thomas CHEMINEAU</seg>
       </tuv>
     </tu>
     <tu>
@@ -9242,10 +9170,10 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='10' x='10'>&lt;a10&gt;</bpt>formreplay<ept i='10'>&lt;/a10&gt;</ept><ph x='11'>&lt;br11/&gt;</ph></seg>
+        <seg>So HTTP Basic Autentication is managed trough an HTTP header (<bpt i='0' x='0'>&lt;c0&gt;</bpt>Authorization<ept i='0'>&lt;/c0&gt;</ept>), that can be forged by <bpt i='1' x='1'>&lt;a1&gt;</bpt>LL::NG<ept i='1'>&lt;/a1&gt;</ept>, with this precautions:</seg>
       </tuv>
-      <tuv xml:lang="" changedate="20131025T051341Z" changeid="xavier">
-        <seg><bpt i='10' x='10'>&lt;a10&gt;</bpt>formreplay<ept i='10'>&lt;/a10&gt;</ept><ph x='11'>&lt;br11/&gt;</ph></seg>
+      <tuv xml:lang="" changedate="20160227T184427Z" changeid="xavier">
+        <seg>Ainsi l'authentification basique HTTP est gérée par des en-têtes HTTP (<bpt i='0' x='0'>&lt;c0&gt;</bpt>Autorisation<ept i='0'>&lt;/c0&gt;</ept>), qui peut être générée par <bpt i='1' x='1'>&lt;a1&gt;</bpt>LL::NG<ept i='1'>&lt;/a1&gt;</ept>, avec les précautions suivantes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -10170,14 +10098,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>../../documentation/quickstart.html#apache</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120223T144443Z" changeid="xavier">
-        <seg>../../documentation/quickstart.html#apache</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>Facebook<ept i='0'>&lt;/a0&gt;</ept> is a famous social network service.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20131025T060920Z" changeid="xavier">
@@ -10298,18 +10218,18 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='16' x='16'>&lt;a16&gt;</bpt>prereq<ept i='16'>&lt;/a16&gt;</ept><ph x='17'>&lt;br17/&gt;</ph></seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111119T111608Z" changeid="xavier">
-        <seg><bpt i='16' x='16'>&lt;a16&gt;</bpt>prereq<ept i='16'>&lt;/a16&gt;</ept><ph x='17'>&lt;br17/&gt;</ph></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Configure local cache first.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120225T112917Z" changeid="xavier">
         <seg>Configurer d'abord le cache local.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='16' x='16'>&lt;a16&gt;</bpt>prereq<ept i='16'>&lt;/a16&gt;</ept><ph x='17'>&lt;br17/&gt;</ph></seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20111119T111608Z" changeid="xavier">
+        <seg><bpt i='16' x='16'>&lt;a16&gt;</bpt>prereq<ept i='16'>&lt;/a16&gt;</ept><ph x='17'>&lt;br17/&gt;</ph></seg>
       </tuv>
     </tu>
     <tu>
@@ -10822,14 +10742,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Access to configuration</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120505T080930Z" changeid="xavier">
-        <seg>Accès à la configuration</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>http://mb-c.pro/en/archives/7657</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120507T035405Z" changeid="xavier">
@@ -11060,14 +10972,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="" changedate="20111211T171958Z" changeid="xavier">
         <seg>^/obm-sync</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Here are some advices:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T080721Z" changeid="xavier">
-        <seg>Il y a deux avis :</seg>
       </tuv>
     </tu>
     <tu>
@@ -11304,14 +11208,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>This includes the application list which is now set in the <bpt i='1' x='1'>&lt;c1&gt;</bpt>applicationList<ept i='1'>&lt;/c1&gt;</ept> parameter from <bpt i='2' x='2'>&lt;c2&gt;</bpt>[portal]<ept i='2'>&lt;/c2&gt;</ept> section, for example:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T094126Z" changeid="xavier">
-        <seg>Ceci inclut la liste des applications qui se trouve désormais dans le paramètre <bpt i='1' x='1'>&lt;c1&gt;</bpt>applicationList<ept i='1'>&lt;/c1&gt;</ept> de la section <bpt i='2' x='2'>&lt;c2&gt;</bpt>[portal]<ept i='2'>&lt;/c2&gt;</ept>, par exemple:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>http://search.cpan.org/perldoc?Apache2::URI#unescape_url</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120420T134307Z" changeid="xavier">
@@ -11388,22 +11284,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="" changedate="20120226T162410Z" changeid="xavier">
         <seg>Ensuite, aller dans les <bpt i='0' x='0'>&lt;c0&gt;</bpt>paramètres Yubikey<ept i='0'>&lt;/c0&gt;</ept>:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>googleapps</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111119T111526Z" changeid="xavier">
-        <seg>googleapps</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Then click on <bpt i='0' x='0'>&lt;c0&gt;</bpt>New POST data<ept i='0'>&lt;/c0&gt;</ept> and add all data with their values, for example:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T193642Z" changeid="xavier">
-        <seg>Cliquer ensuite sur <bpt i='0' x='0'>&lt;c0&gt;</bpt>Nouvelle donnée POST<ept i='0'>&lt;/c0&gt;</ept> et ajouter chaque donnée avec sa valeur, par exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -11556,14 +11436,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="" changedate="20120419T064048Z" changeid="guimard">
         <seg>SMTPServer</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>a2enmod perl</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120620T042201Z" changeid="xavier">
-        <seg>a2enmod perl</seg>
       </tuv>
     </tu>
     <tu>
@@ -11838,6 +11710,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="" changedate="20111226T195806Z" changeid="xavier">
         <seg>Changement de mot-de-passe : met à jour le champ mot-de-passe de la table d'authentification correspondant à l'utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>You can also use the certificate instead of public key in <bpt i='0' x='0'>&lt;a0&gt;</bpt>SAML<ept i='0'>&lt;/a0&gt;</ept> metadata, see <bpt i='1' x='1'>&lt;a1&gt;</bpt>SAML service configuration<ept i='1'>&lt;/a1&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T191229Z" changeid="xavier">
+        <seg>On peut aussi utiliser le certificat au lieu de la clef publique dans les métadatas <bpt i='0' x='0'>&lt;a0&gt;</bpt>SAML<ept i='0'>&lt;/a0&gt;</ept>, voir <bpt i='1' x='1'>&lt;a1&gt;</bpt>configuration du service SAML<ept i='1'>&lt;/a1&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -12178,26 +12058,10 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>PerlOutputFilterHandler Lemonldap::NG::Handler::Menu</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120324T155825Z" changeid="xavier">
-        <seg>PerlOutputFilterHandler Lemonldap::NG::Handler::Menu</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>A little floating menu can be added to application with this simple Apache configuration:</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120324T155823Z" changeid="xavier">
         <seg>Un petit menu flottant peut être ajouté aux applications par une seimple configuration Apache :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Apache virtual host</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T100258Z" changeid="xavier">
-        <seg>Hôte virtuel Apache :</seg>
       </tuv>
     </tu>
     <tu>
@@ -12630,14 +12494,6 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>You must allow access to Manager <bpt i='0' x='0'>&lt;a0&gt;</bpt>IP<ept i='0'>&lt;/a0&gt;</ept>.</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T071100Z" changeid="xavier">
-        <seg>Il faut autoriser l'accès à l'adresse <bpt i='0' x='0'>&lt;a0&gt;</bpt>IP<ept i='0'>&lt;/a0&gt;</ept> du manager.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>documentation:conferences</seg>
       </tuv>
       <tuv xml:lang="">
@@ -12670,18 +12526,18 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Browseable session backend</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120221T071614Z" changeid="xavier">
-        <seg>Backend de session explorable</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Configure the <bpt i='0' x='0'>&lt;c0&gt;</bpt>Auth-User<ept i='0'>&lt;/c0&gt;</ept> <bpt i='1' x='1'>&lt;a1&gt;</bpt>header<ept i='1'>&lt;/a1&gt;</ept>.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111211T074411Z" changeid="xavier">
         <seg>Configurer l'<bpt i='1' x='1'>&lt;a1&gt;</bpt>en-tête<ept i='1'>&lt;/a1&gt;</ept> <bpt i='0' x='0'>&lt;c0&gt;</bpt>Auth-User<ept i='0'>&lt;/c0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Browseable session backend</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20120221T071614Z" changeid="xavier">
+        <seg>Backend de session explorable</seg>
       </tuv>
     </tu>
     <tu>
@@ -12892,6 +12748,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>To use Active Directory as LDAP backend, you must change few things in the manager :</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183059Z" changeid="xavier">
+        <seg>Pour utiliser Active Directory comme serveur LDAP, vous devez effectuer quelques modifications dans le manager :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>To see available actions, do:</seg>
       </tuv>
       <tuv xml:lang="" changedate="20131103T202808Z" changeid="xavier">
@@ -12976,6 +12840,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111225T160040Z" changeid="xavier">
         <seg>L'authentification <bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept> ajoute automatiquement une <bpt i='1' x='1'>&lt;a1&gt;</bpt>règle de renvoi après déconnexion<ept i='1'>&lt;/a1&gt;</ept> sur l'<bpt i='3' x='3'>&lt;a3&gt;</bpt>URL<ept i='3'>&lt;/a3&gt;</ept> de déconnexion du serveur <bpt i='2' x='2'>&lt;a2&gt;</bpt>CAS<ept i='2'>&lt;/a2&gt;</ept> afin de clore la session <bpt i='4' x='4'>&lt;a4&gt;</bpt>CAS<ept i='4'>&lt;/a4&gt;</ept> lors de la déconnexion <bpt i='5' x='5'>&lt;a5&gt;</bpt>LL::NG<ept i='5'>&lt;/a5&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>The first will allow to configure <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> for the alfresco webapp, and the other for the share webapp.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183546Z" changeid="xavier">
+        <seg>Le premier autorise la configuration du <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> pour la webapp Alfresco et l'autre pour la webapp partagée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13264,14 +13136,6 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Three options:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T081033Z" changeid="xavier">
-        <seg>Trois options :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><it pos='begin' x='14'>&lt;&lt;s14&gt;</it>IfModule<ept i='14'>&lt;/s14&gt;</ept> auth_kerb_module&gt;</seg>
       </tuv>
       <tuv xml:lang="" changedate="20131025T053731Z" changeid="xavier">
@@ -13284,6 +13148,14 @@ maxretry = 3</seg>
       </tuv>
       <tuv xml:lang="">
         <seg>Comme MySQL ne dispose pas toujours de dispositif de transaction, Apache::Session::MySQL a été conçu en utilisant les verrous MySQL.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Three options:</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20120303T081033Z" changeid="xavier">
+        <seg>Trois options :</seg>
       </tuv>
     </tu>
     <tu>
@@ -14188,6 +14060,14 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>You need to restart Tomcat to apply changes.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183903Z" changeid="xavier">
+        <seg>Un redémarrage de Tomcat est nécessaire pour appliquer les changements.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>You can then set the access rule.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120418T203138Z" changeid="guimard">
@@ -15018,18 +14898,18 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Modify password if asked</seg>
+        <seg>If you use an older version, you need to refer to the following documentation: <bpt i='0' x='0'>&lt;a0&gt;</bpt>https://wiki.alfresco.com/wiki/SSO<ept i='0'>&lt;/a0&gt;</ept></seg>
       </tuv>
-      <tuv xml:lang="" changedate="20120419T073741Z" changeid="guimard">
-        <seg>Modifie le mot-de-passe si demandé</seg>
+      <tuv xml:lang="" changedate="20160227T183340Z" changeid="xavier">
+        <seg>Pour les versions plus anciennes, se référer à cette documentation : <bpt i='0' x='0'>&lt;a0&gt;</bpt>https://wiki.alfresco.com/wiki/SSO<ept i='0'>&lt;/a0&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>The upgrade process will also have migrate old configuration files into <bpt i='0' x='0'>&lt;c0&gt;</bpt>/etc/lemonldap-ng/lemonldap-ng.ini<ept i='0'>&lt;/c0&gt;</ept>.</seg>
+        <seg>Modify password if asked</seg>
       </tuv>
-      <tuv xml:lang="" changedate="20120303T094037Z" changeid="xavier">
-        <seg>Le processus de mise-à-jour va également migrer les anciens fichiers de configuration dans <bpt i='0' x='0'>&lt;c0&gt;</bpt>/etc/lemonldap-ng/lemonldap-ng.ini<ept i='0'>&lt;/c0&gt;</ept>.</seg>
+      <tuv xml:lang="" changedate="20120419T073741Z" changeid="guimard">
+        <seg>Modifie le mot-de-passe si demandé</seg>
       </tuv>
     </tu>
     <tu>
@@ -15138,14 +15018,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>How to choose?</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T080702Z" changeid="xavier">
-        <seg>Comment choisir ?</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Internal Proxy</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120418T111236Z" changeid="xavier">
@@ -15182,26 +15054,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T063331Z" changeid="guimard">
         <seg>mailConfirmSubject</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Transaction Summary
-===================================================
-Install      82 Package(s)
-Upgrade       0 Package(s)
- 
-Total download size: 18 M
-Is this ok [y/N]: y</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T095859Z" changeid="xavier">
-        <seg>Transaction Summary
-===================================================
-Install      82 Package(s)
-Upgrade       0 Package(s)
- 
-Total download size: 18 M
-Is this ok [y/N]: y</seg>
       </tuv>
     </tu>
     <tu>
@@ -15490,14 +15342,6 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>To do it, uncomment the <bpt i='0' x='0'>&lt;c0&gt;</bpt>NameVirtualHost<ept i='0'>&lt;/c0&gt;</ept> line in <bpt i='1' x='1'>&lt;c1&gt;</bpt>/etc/httpd/conf.d/z-lemonldap-ng-handler.conf<ept i='1'>&lt;/c1&gt;</ept>:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T100410Z" changeid="xavier">
-        <seg>Pour ce faire, décommenter la ligne <bpt i='0' x='0'>&lt;c0&gt;</bpt>NameVirtualHost<ept i='0'>&lt;/c0&gt;</ept> dans <bpt i='1' x='1'>&lt;c1&gt;</bpt>/etc/httpd/conf.d/z-lemonldap-ng-handler.conf<ept i='1'>&lt;/c1&gt;</ept> :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>http://www.cpantesters.org/distro/L/Lemonldap-NG-Portal.html</seg>
       </tuv>
       <tuv xml:lang="">
@@ -15554,18 +15398,18 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Authentication table<ept i='0'>&lt;/s0&gt;</ept>: authentication table name</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111226T200820Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Table d'authentification<ept i='0'>&lt;/s0&gt;</ept> : nom de la table d'authentification</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Configure user and password</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120422T100018Z" changeid="xavier">
         <seg>Configurer le nom de compte et le mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Authentication table<ept i='0'>&lt;/s0&gt;</ept>: authentication table name</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20111226T200820Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Table d'authentification<ept i='0'>&lt;/s0&gt;</ept> : nom de la table d'authentification</seg>
       </tuv>
     </tu>
     <tu>
@@ -15700,14 +15544,6 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>login: $uid (uid of the user)</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T193208Z" changeid="xavier">
-        <seg>login: $uid (uid de l'utilisateur)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>A value</seg>
       </tuv>
       <tuv xml:lang="">
@@ -15828,14 +15664,6 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Virtual host in Apache</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120419T205106Z" changeid="xavier">
-        <seg>Hôte virtuel dans Apache</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Create OBM virtual host (for example obm.example.com) in <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> configuration: <bpt i='1' x='1'>&lt;c1&gt;</bpt>Virtual Hosts<ept i='1'>&lt;/c1&gt;</ept> » <bpt i='2' x='2'>&lt;c2&gt;</bpt>New virtual host<ept i='2'>&lt;/c2&gt;</ept>.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111211T171726Z" changeid="xavier">
@@ -15864,6 +15692,14 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120506T103739Z" changeid="xavier">
         <seg>http://www.slideshare.net/xguimard/lemonldapng-opensource-websso-of-the-french-administrations-1394404</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>CSOD needs two things to configure <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> as an IDP:</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185317Z" changeid="xavier">
+        <seg>CSOD nécessite 2 éléments pour configurer <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> comme IDP :</seg>
       </tuv>
     </tu>
     <tu>
@@ -16312,18 +16148,6 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><it pos='begin' x='0'>&lt;&lt;s0&gt;</it>Location<ept i='0'>&lt;/s0&gt;</ept> /var/www/html/index.php&gt;
-PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
-&lt;/<bpt i='1' x='1'>&lt;s1&gt;</bpt>Location<ept i='1'>&lt;/s1&gt;</ept>&gt;</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120324T155903Z" changeid="xavier">
-        <seg><it pos='begin' x='0'>&lt;&lt;s0&gt;</it>Location<ept i='0'>&lt;/s0&gt;</ept> /var/www/html/index.php&gt;
-PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
-&lt;/<bpt i='1' x='1'>&lt;s1&gt;</bpt>Location<ept i='1'>&lt;/s1&gt;</ept>&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Disabling Safe jail</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T203937Z" changeid="xavier">
@@ -16412,18 +16236,18 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>../../../media/documentation/lasso.png</seg>
-      </tuv>
-      <tuv xml:lang="">
-        <seg>../../../media/documentation/lasso.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept> server <bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept></seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T061139Z" changeid="guimard">
         <seg><bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept> du serveur <bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>../../../media/documentation/lasso.png</seg>
+      </tuv>
+      <tuv xml:lang="">
+        <seg>../../../media/documentation/lasso.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -16838,14 +16662,6 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>The <bpt i='0' x='0'>&lt;c0&gt;</bpt>reload<ept i='0'>&lt;/c0&gt;</ept> target is managed in Apache configuration, inside a virtual host protected by LemonLDAP::NG Handler, for example:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T071004Z" changeid="xavier">
-        <seg>La cible <bpt i='0' x='0'>&lt;c0&gt;</bpt>reload<ept i='0'>&lt;/c0&gt;</ept> est gérée dans la configuration d'Apache, dans un hôte virtuel protégé par LemonLDAP::NG Handler, par exemple:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>AbulEdu</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120507T035437Z" changeid="xavier">
@@ -16894,26 +16710,10 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Enable LL::NG sites</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T093908Z" changeid="xavier">
-        <seg>Activer les sites LL::NG</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>loginHistory</seg>
       </tuv>
       <tuv xml:lang="" changedate="20131025T131424Z" changeid="xavier">
         <seg>loginHistory</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Zimbra virtual host in Apache</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111222T180621Z" changeid="xavier">
-        <seg>Hôte virtuel Zimbra dans le manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -16962,6 +16762,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv xml:lang="" changedate="20111211T073634Z" changeid="xavier">
         <seg>../../../../media/documentation/liferay_1.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Start</seg>
+      </tuv>
+      <tuv xml:lang="">
+        <seg>Commencer</seg>
       </tuv>
     </tu>
     <tu>
@@ -17018,14 +16826,6 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv xml:lang="" changedate="20111211T075017Z" changeid="xavier">
         <seg>Hôte virtuel Mediawiki dans le manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>remember: '1' (checked box)</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T193242Z" changeid="xavier">
-        <seg>remember: '1' (une case à cocher)</seg>
       </tuv>
     </tu>
     <tu>
@@ -17862,6 +17662,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Keep the private key in a file, for example lemonldap-ng-priv.key, then use openssl to generate an auto-signed certificate:</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T191130Z" changeid="xavier">
+        <seg>Garder la clef privée dans un fichier, par exemple lemonldap-ng-priv.key, et utiliser openssl pour générer un certificat auto-signé :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>AuthApache authentication</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120107T150224Z" changeid="xavier">
@@ -18056,6 +17864,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Data should not contains accents or special characters, as HTTP protocol only allow <bpt i='0' x='0'>&lt;a0&gt;</bpt>ASCII<ept i='0'>&lt;/a0&gt;</ept> values in header (but depending on the HTTP server, you can use ISO encoded values)</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184504Z" changeid="xavier">
+        <seg>Les données ne doivent pas contenir de caractères spéciaux, car le protocole HTTP n'autorise que les caractères <bpt i='0' x='0'>&lt;a0&gt;</bpt>ASCII<ept i='0'>&lt;/a0&gt;</ept> dans les en-têtes (mais suivant le serveur HTTP, vous pouvez utiliser des valeurs encodées ISO)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Main features</seg>
       </tuv>
       <tuv xml:lang="">
@@ -18192,14 +18008,6 @@ ln -s ../pastel/*.tpl .</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120226T101433Z" changeid="xavier">
         <seg>Faire ceci dans le panneau de contrôle ou dans le fichier de configuration :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>icons:warehause.png</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120505T080838Z" changeid="xavier">
-        <seg>icons:warehause.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -18372,14 +18180,6 @@ Display<bpt i='21' x='21'>&lt;s21&gt;</bpt>-<ept i='21'>&lt;/s21&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Sympa Handler parameters</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T081041Z" changeid="xavier">
-        <seg>Paramètres du handler Sympa</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>mailOnPasswordChange</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T065853Z" changeid="guimard">
@@ -18542,6 +18342,14 @@ Display<bpt i='21' x='21'>&lt;s21&gt;</bpt>-<ept i='21'>&lt;/s21&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Bugzilla can authenticate a user with HTTP headers, and auto-create its account with a few information:</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184643Z" changeid="xavier">
+        <seg>Bugzilla peut authentifier un utilisateur par en-tête HTTP et auto-générer son compte avec quelques informations :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>http://search.cpan.org/perldoc?DBD::Oracle</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120423T205028Z" changeid="xavier">
@@ -18634,6 +18442,22 @@ Display<bpt i='21' x='21'>&lt;s21&gt;</bpt>-<ept i='21'>&lt;/s21&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="" changedate="20120223T125402Z" changeid="xavier">
         <seg>documentation:1.0:ldapconfbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Other resources</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184142Z" changeid="xavier">
+        <seg>Autres documents</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>This will download the public and the private key.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T191034Z" changeid="xavier">
+        <seg>Ceci télécharge les clefs publique et privée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18830,14 +18654,6 @@ Display<bpt i='21' x='21'>&lt;s21&gt;</bpt>-<ept i='21'>&lt;/s21&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='3' x='3'>&lt;s3&gt;</bpt>RewriteRule<ept i='3'>&lt;/s3&gt;</ept> ^/openidserver/.* /index.pl</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T082528Z" changeid="xavier">
-        <seg><bpt i='3' x='3'>&lt;s3&gt;</bpt>RewriteRule<ept i='3'>&lt;/s3&gt;</ept> ^/openidserver/.* /index.pl</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>To do this, go in Manager &gt; General Parameters &gt; Advanced Parameters &gt; Security &gt; Use Safe Jail and disable it.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T204210Z" changeid="xavier">
@@ -18994,14 +18810,6 @@ Display<bpt i='21' x='21'>&lt;s21&gt;</bpt>-<ept i='21'>&lt;/s21&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="" changedate="20120303T093857Z" changeid="xavier">
         <seg>sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>documentation:manager-formreplay-newdata.png</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T193644Z" changeid="xavier">
-        <seg>documentation:manager-formreplay-newdata.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -19250,14 +19058,6 @@ Display<bpt i='21' x='21'>&lt;s21&gt;</bpt>-<ept i='21'>&lt;/s21&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Enable <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> sites in Apache:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T093920Z" changeid="xavier">
-        <seg>Activer les sites <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> dans Apache :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt><bpt i='1' x='1'>&lt;s1&gt;</bpt>[<ept i='1'>&lt;/s1&gt;</ept>configuration<bpt i='2' x='2'>&lt;s2&gt;</bpt>]<ept i='2'>&lt;/s2&gt;</ept><ept i='0'>&lt;/s0&gt;</ept>
 <bpt i='3' x='3'>&lt;s3&gt;</bpt>type<ept i='3'>&lt;/s3&gt;</ept>  <bpt i='4' x='4'>&lt;s4&gt;</bpt>=<ept i='4'>&lt;/s4&gt;</ept><bpt i='5' x='5'>&lt;s5&gt;</bpt> File<ept i='5'>&lt;/s5&gt;</ept>
 <bpt i='6' x='6'>&lt;s6&gt;</bpt>dirName<ept i='6'>&lt;/s6&gt;</ept> <bpt i='7' x='7'>&lt;s7&gt;</bpt>=<ept i='7'>&lt;/s7&gt;</ept><bpt i='8' x='8'>&lt;s8&gt;</bpt> /var/lib/lemonldap-ng/conf<ept i='8'>&lt;/s8&gt;</ept></seg>
@@ -19290,6 +19090,22 @@ Display<bpt i='21' x='21'>&lt;s21&gt;</bpt>-<ept i='21'>&lt;/s21&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="" changedate="20131025T084339Z" changeid="xavier">
         <seg>startTime</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>SAML assertion</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185356Z" changeid="xavier">
+        <seg>Assertion SAML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>Alfresco<ept i='0'>&lt;/a0&gt;</ept> is an ECM/BPM software.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183124Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>Alfresco<ept i='0'>&lt;/a0&gt;</ept> est un logiciel ECM/BPM.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19514,14 +19330,6 @@ Display<bpt i='21' x='21'>&lt;s21&gt;</bpt>-<ept i='21'>&lt;/s21&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="" changedate="20111225T160843Z" changeid="xavier">
         <seg>Si aucun service proxifié n'est défini, l'authentification <bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept> n'activera pas le mode proxy <bpt i='1' x='1'>&lt;a1&gt;</bpt>CAS<ept i='1'>&lt;/a1&gt;</ept>.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>../../../media/documentation/manager-formreplay-newdata.png</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T193645Z" changeid="xavier">
-        <seg>../../../media/documentation/manager-formreplay-newdata.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -20442,14 +20250,6 @@ Display<bpt i='21' x='21'>&lt;s21&gt;</bpt>-<ept i='21'>&lt;/s21&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>You should now use the Manager to configure all <bpt i='0' x='0'>&lt;a0&gt;</bpt>applications and categories<ept i='0'>&lt;/a0&gt;</ept>, and then comment or remove the <bpt i='1' x='1'>&lt;c1&gt;</bpt>applicationList<ept i='1'>&lt;/c1&gt;</ept> parameter from <bpt i='2' x='2'>&lt;c2&gt;</bpt>/etc/lemonldap-ng/lemonldap-ng.ini<ept i='2'>&lt;/c2&gt;</ept>.</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T094257Z" changeid="xavier">
-        <seg>Il est désormais possible d'utiliser le manager pour configurer toutes les <bpt i='0' x='0'>&lt;a0&gt;</bpt>applications et catégories<ept i='0'>&lt;/a0&gt;</ept>, ensuite commenter ou supprimer le paramètre <bpt i='1' x='1'>&lt;c1&gt;</bpt>applicationList<ept i='1'>&lt;/c1&gt;</ept> de <bpt i='2' x='2'>&lt;c2&gt;</bpt>/etc/lemonldap-ng/lemonldap-ng.ini<ept i='2'>&lt;/c2&gt;</ept>.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='3' x='3'>&lt;a3&gt;</bpt>XSS<ept i='3'>&lt;/a3&gt;</ept> checks will still be done with warning in logs, but this will not prevent the process to continue.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120420T140057Z" changeid="xavier">
@@ -20566,14 +20366,6 @@ Display<bpt i='21' x='21'>&lt;s21&gt;</bpt>-<ept i='21'>&lt;/s21&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="">
         <seg>X509</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Integrate existing applications</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120505T082727Z" changeid="xavier">
-        <seg>Integrer des applications existantes</seg>
       </tuv>
     </tu>
     <tu>
@@ -21004,14 +20796,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>&lt;/<bpt i='4' x='4'>&lt;s4&gt;</bpt>IfModule<ept i='4'>&lt;/s4&gt;</ept>&gt;</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120301T054216Z" changeid="xavier">
-        <seg>&lt;/<bpt i='4' x='4'>&lt;s4&gt;</bpt>IfModule<ept i='4'>&lt;/s4&gt;</ept>&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Do not restrict /public/</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120506T055530Z" changeid="xavier">
@@ -21208,6 +20992,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120505T082833Z" changeid="xavier">
         <seg>Utiliser les fonctions personnalisées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Change <bpt i='0' x='0'>&lt;s0&gt;</bpt>mycompanyid<ept i='0'>&lt;/s0&gt;</ept> (in <bpt i='1' x='1'>&lt;c1&gt;</bpt>AssertionConsumerService<ept i='1'>&lt;/c1&gt;</ept> markup, parameter <bpt i='2' x='2'>&lt;c2&gt;</bpt>Location<ept i='2'>&lt;/c2&gt;</ept>) into your CSOD company ID and put the certificate value inside the ds:X509Certificate markup</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185239Z" changeid="xavier">
+        <seg>Changer <bpt i='0' x='0'>&lt;s0&gt;</bpt>mycompanyid<ept i='0'>&lt;/s0&gt;</ept> (dans <bpt i='1' x='1'>&lt;c1&gt;</bpt>AssertionConsumerService<ept i='1'>&lt;/c1&gt;</ept> markup, parameter <bpt i='2' x='2'>&lt;c2&gt;</bpt>Location<ept i='2'>&lt;/c2&gt;</ept>) avec l'ID CSOD de l'entreprise et mettre la valeur du certificat dans ds:X509Certificate markup</seg>
       </tuv>
     </tu>
     <tu>
@@ -21910,18 +21702,18 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>It is recommended to secure the channel between reverse-proxies and application to be sure that only request coming from the <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> protected reverse-proxies are allowed.</seg>
+        <seg>The <bpt i='0' x='0'>&lt;c0&gt;</bpt>basic<ept i='0'>&lt;/c0&gt;</ept> function will also force conversion from UTF-8 to ISO-8859-1, which should be accepted by most of HTTP servers.</seg>
       </tuv>
-      <tuv xml:lang="" changedate="20120420T135055Z" changeid="xavier">
-        <seg>Il est donc recommandé de sécurisé le canal entre le proxy inverse et l'application pour être sûr que seules les requêtes issues des proxies inverses protégés par <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> sont autorisées.</seg>
+      <tuv xml:lang="" changedate="20160227T184553Z" changeid="xavier">
+        <seg>La fonction <bpt i='0' x='0'>&lt;c0&gt;</bpt>basic<ept i='0'>&lt;/c0&gt;</ept> force la conversion des caractères UTF-8 en ISO-8859-1, qui peut être accepté par la plupart des serveurs HTTP.</seg>
       </tuv>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>These files must be included in Apache configuration, either with <bpt i='0' x='0'>&lt;c0&gt;</bpt>Include<ept i='0'>&lt;/c0&gt;</ept> directives in <bpt i='1' x='1'>&lt;c1&gt;</bpt>httpd.conf<ept i='1'>&lt;/c1&gt;</ept> (see <bpt i='2' x='2'>&lt;a2&gt;</bpt>quick start example<ept i='2'>&lt;/a2&gt;</ept>), or with symbolic links in Apache configuration directory (like <bpt i='3' x='3'>&lt;c3&gt;</bpt>/etc/httpd/conf.d<ept i='3'>&lt;/c3&gt;</ept>).</seg>
+        <seg>It is recommended to secure the channel between reverse-proxies and application to be sure that only request coming from the <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> protected reverse-proxies are allowed.</seg>
       </tuv>
-      <tuv xml:lang="" changedate="20120223T144644Z" changeid="xavier">
-        <seg>Ces fichiers doivent être inclus dans la configuration d'Apache, soit par des directives <bpt i='0' x='0'>&lt;c0&gt;</bpt>Include<ept i='0'>&lt;/c0&gt;</ept> dans le fichier <bpt i='1' x='1'>&lt;c1&gt;</bpt>httpd.conf<ept i='1'>&lt;/c1&gt;</ept> (voir <bpt i='2' x='2'>&lt;a2&gt;</bpt>démarrage rapide<ept i='2'>&lt;/a2&gt;</ept>), ou via un lien symbolique dans de répertoire de configuration d'Apache (type <bpt i='3' x='3'>&lt;c3&gt;</bpt>/etc/httpd/conf.d<ept i='3'>&lt;/c3&gt;</ept>).</seg>
+      <tuv xml:lang="" changedate="20120420T135055Z" changeid="xavier">
+        <seg>Il est donc recommandé de sécurisé le canal entre le proxy inverse et l'application pour être sûr que seules les requêtes issues des proxies inverses protégés par <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> sont autorisées.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22130,14 +21922,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>static: 'StaticValue' (a static value)</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T193234Z" changeid="xavier">
-        <seg>static: 'StaticValue' (une valeur statique)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>lemonldap-ng-doc: contains <bpt i='0' x='0'>&lt;a0&gt;</bpt>HTML<ept i='0'>&lt;/a0&gt;</ept> documentation and project docs (README, etc.)</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120303T092958Z" changeid="xavier">
@@ -22330,6 +22114,14 @@ ignoreregex =</seg>
       </tuv>
       <tuv xml:lang="">
         <seg><bpt i='1' x='1'>&lt;s1&gt;</bpt>SetHandler<ept i='1'>&lt;/s1&gt;</ept> perl-<bpt i='2' x='2'>&lt;s2&gt;</bpt>script<ept i='2'>&lt;/s2&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Since 4.0 release, it offers an easy way to configure <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> thanks to authentication subsystems.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183258Z" changeid="xavier">
+        <seg>Depuis la version 4.0, il permet facilement de configurer un <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> grace au sous-système d'authentification.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22786,14 +22578,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Check Apache configuration and restart:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T100432Z" changeid="xavier">
-        <seg>Vérifier la configuration d'Apache et redémarrer :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='2' x='2'>&lt;a2&gt;</bpt>idpopenid<ept i='2'>&lt;/a2&gt;</ept><ph x='3'>&lt;br3/&gt;</ph></seg>
       </tuv>
       <tuv xml:lang="" changedate="20111119T111535Z" changeid="xavier">
@@ -23150,18 +22934,18 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>ldapConfBase<ept i='0'>&lt;/s0&gt;</ept>: <bpt i='1' x='1'>&lt;a1&gt;</bpt>DN<ept i='1'>&lt;/a1&gt;</ept> of configuration branch</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120411T042635Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>ldapConfBase<ept i='0'>&lt;/s0&gt;</ept> : <bpt i='1' x='1'>&lt;a1&gt;</bpt>DN<ept i='1'>&lt;/a1&gt;</ept> de la branche des configurations</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Configure sessions specificities</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120505T081151Z" changeid="xavier">
         <seg>Configurer les spécificités des sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>ldapConfBase<ept i='0'>&lt;/s0&gt;</ept>: <bpt i='1' x='1'>&lt;a1&gt;</bpt>DN<ept i='1'>&lt;/a1&gt;</ept> of configuration branch</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20120411T042635Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>ldapConfBase<ept i='0'>&lt;/s0&gt;</ept> : <bpt i='1' x='1'>&lt;a1&gt;</bpt>DN<ept i='1'>&lt;/a1&gt;</ept> de la branche des configurations</seg>
       </tuv>
     </tu>
     <tu>
@@ -23478,14 +23262,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Go in Manager, <bpt i='0' x='0'>&lt;c0&gt;</bpt>Default parameters<ept i='0'>&lt;/c0&gt;</ept> » <bpt i='1' x='1'>&lt;c1&gt;</bpt>Advanced parameters<ept i='1'>&lt;/c1&gt;</ept> » <bpt i='2' x='2'>&lt;c2&gt;</bpt>Special handlers<ept i='2'>&lt;/c2&gt;</ept> » <bpt i='3' x='3'>&lt;c3&gt;</bpt>Zimbra<ept i='3'>&lt;/c3&gt;</ept>, and edit the different keys:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111222T180932Z" changeid="xavier">
-        <seg>Aller dans le manager, <bpt i='0' x='0'>&lt;c0&gt;</bpt>Paramètres par défaut<ept i='0'>&lt;/c0&gt;</ept> » <bpt i='1' x='1'>&lt;c1&gt;</bpt>Paramètres avancés<ept i='1'>&lt;/c1&gt;</ept> » <bpt i='2' x='2'>&lt;c2&gt;</bpt>Handlers spéciaux<ept i='2'>&lt;/c2&gt;</ept> » <bpt i='3' x='3'>&lt;c3&gt;</bpt>Zimbra<ept i='3'>&lt;/c3&gt;</ept>, et éditer les clefs suivantes :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='161' x='161'>&lt;s161&gt;</bpt>//&quot;userobm_system&quot;              =&gt; ,<ept i='161'>&lt;/s161&gt;</ept></seg>
       </tuv>
       <tuv xml:lang="" changedate="20111211T112333Z" changeid="xavier">
@@ -23538,6 +23314,14 @@ ignoreregex =</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120107T143351Z" changeid="xavier">
         <seg>Nécessite de requérir l'ancien mot-de-passe (voir <bpt i='1' x='1'>&lt;a1&gt;</bpt>personnalisation du portail<ept i='1'>&lt;/a1&gt;</ept>).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Edit first <bpt i='0' x='0'>&lt;c0&gt;</bpt>alfresco-global.properties<ept i='0'>&lt;/c0&gt;</ept> and add the following:</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183612Z" changeid="xavier">
+        <seg>Éditer d'abord <bpt i='0' x='0'>&lt;c0&gt;</bpt>alfresco-global.properties<ept i='0'>&lt;/c0&gt;</ept> et ajouter :</seg>
       </tuv>
     </tu>
     <tu>
@@ -23726,6 +23510,14 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>If you need a professional service or support, please contact one of the companies listed on <bpt i='0' x='0'>&lt;a0&gt;</bpt>the following page<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183008Z" changeid="xavier">
+        <seg>Pour obtenir un support ou un service professionnel, contacter l'unde des entreprises citées à <bpt i='0' x='0'>&lt;a0&gt;</bpt>la page suivante<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>After redirection, normal authentication in the remote portal</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120217T045501Z" changeid="xavier">
@@ -23810,14 +23602,6 @@ ignoreregex =</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120506T103631Z" changeid="xavier">
         <seg>http://lanyrd.com/2011/solutions-linux-open-source/sddcx/</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Shared key<ept i='0'>&lt;/s0&gt;</ept>: correspond to the cookie parameter of sympa.conf</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T081210Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Clef prépartagée<ept i='0'>&lt;/s0&gt;</ept> : correspond au paramètre du cookie dans sympa.conf</seg>
       </tuv>
     </tu>
     <tu>
@@ -24054,6 +23838,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111119T114202Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Auth-Mail<ept i='0'>&lt;/s0&gt;</ept>: $mail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Set csod as Service Provider name.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185109Z" changeid="xavier">
+        <seg>Mettre csod comme nom de fournisseur de service.</seg>
       </tuv>
     </tu>
     <tu>
@@ -24326,20 +24118,6 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>a2ensite handler-apache2.conf
-a2ensite portal-apache2.conf
-a2ensite manager-apache2.conf
-a2ensite test-apache2.conf</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20130105T115750Z" changeid="xavier">
-        <seg>a2ensite handler-apache2.conf
-a2ensite portal-apache2.conf
-a2ensite manager-apache2.conf
-a2ensite test-apache2.conf</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>In other words, take the time to configure this part before sharing metadata.</seg>
       </tuv>
       <tuv xml:lang="">
@@ -24516,14 +24294,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Configure Sympa virtual host like other <bpt i='0' x='0'>&lt;a0&gt;</bpt>protected virtual host<ept i='0'>&lt;/a0&gt;</ept> but use Sympa Handler instead of default Handler.</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T080945Z" changeid="xavier">
-        <seg>Configurer l'hôte virtuel Sympa comme n'importe quel autre <bpt i='0' x='0'>&lt;a0&gt;</bpt>hôte virtuel protégé<ept i='0'>&lt;/a0&gt;</ept>.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>https://metacpan.org/module/Apache::Session::Browseable::LDAP</seg>
       </tuv>
       <tuv xml:lang="" changedate="20131025T082005Z" changeid="xavier">
@@ -24576,6 +24346,14 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="">
         <seg>Performances d'Apache::Session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>In “External authentications” click “Others” and in “Field holding the login in the _SERVER array” select “REMOTE_USER”</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T190148Z" changeid="xavier">
+        <seg>Dans “External authentications” cliquer sur “Others” et dans “Field holding the login in the _SERVER array” choisir “REMOTE_USER”</seg>
       </tuv>
     </tu>
     <tu>
@@ -24652,14 +24430,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>If you can not access the Manager anymore, you can unprotect it by editing <bpt i='0' x='0'>&lt;c0&gt;</bpt>lemonldap-ng.in<ept i='0'>&lt;/c0&gt;</ept> and changing the <bpt i='1' x='1'>&lt;c1&gt;</bpt>protection<ept i='1'>&lt;/c1&gt;</ept> parameter:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120226T163521Z" changeid="xavier">
-        <seg>SI l'accès au manager est perdu, on peut le déprotéger en éditant <bpt i='0' x='0'>&lt;c0&gt;</bpt>lemonldap-ng.in<ept i='0'>&lt;/c0&gt;</ept> et en changeant le paramètre <bpt i='1' x='1'>&lt;c1&gt;</bpt>protection<ept i='1'>&lt;/c1&gt;</ept> :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>The NameID is the main user identifier, carried in <bpt i='1' x='1'>&lt;a1&gt;</bpt>SAML<ept i='1'>&lt;/a1&gt;</ept> messages.</seg>
       </tuv>
       <tuv xml:lang="">
@@ -24680,6 +24450,14 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120225T182351Z" changeid="xavier">
         <seg>checkDate</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Registered users on CSOD with the same email than those used by <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> (email will be the NameID exchanged between CSOD and <bpt i='1' x='1'>&lt;a1&gt;</bpt>LL::NG<ept i='1'>&lt;/a1&gt;</ept>)</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185008Z" changeid="xavier">
+        <seg>Enregistrer les utilisateurs dans CSOD avec la même adresse mail que celle utilisée dans <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> (l'adresse mail sera le NameID échangé entre CSOD et <bpt i='1' x='1'>&lt;a1&gt;</bpt>LL::NG<ept i='1'>&lt;/a1&gt;</ept>)</seg>
       </tuv>
     </tu>
     <tu>
@@ -25296,18 +25074,18 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>For each binding you can set:</seg>
+        <seg>Open Source Guide</seg>
       </tuv>
-      <tuv xml:lang="">
-        <seg>Pour chaque déclaration, vous pouvez indiquer :</seg>
+      <tuv xml:lang="" changedate="20160227T183027Z" changeid="xavier">
+        <seg>Guide Open Source</seg>
       </tuv>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Integrate your own application</seg>
+        <seg>For each binding you can set:</seg>
       </tuv>
-      <tuv xml:lang="" changedate="20120505T082743Z" changeid="xavier">
-        <seg>Integrer ses propres applications</seg>
+      <tuv xml:lang="">
+        <seg>Pour chaque déclaration, vous pouvez indiquer :</seg>
       </tuv>
     </tu>
     <tu>
@@ -25474,6 +25252,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Example: <bpt i='3' x='3'>&lt;a3&gt;</bpt>http://auth.example.com/saml/singleSignOn<ept i='3'>&lt;/a3&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T190928Z" changeid="xavier">
+        <seg>Exemple : <bpt i='3' x='3'>&lt;a3&gt;</bpt>http://auth.example.com/saml/singleSignOn<ept i='3'>&lt;/a3&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>icons:flags:de.png</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120507T035359Z" changeid="xavier">
@@ -25510,6 +25296,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120506T103752Z" changeid="xavier">
         <seg>../documentation/current/ssocookie.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Edit then <bpt i='0' x='0'>&lt;c0&gt;</bpt>share-config-custom.xml<ept i='0'>&lt;/c0&gt;</ept> and uncomment the last part.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183645Z" changeid="xavier">
+        <seg>Éditer ensuite <bpt i='0' x='0'>&lt;c0&gt;</bpt>share-config-custom.xml<ept i='0'>&lt;/c0&gt;</ept> et décommenter la dernière partie.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25634,6 +25428,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>You need to use the IDP initiated feature of <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185431Z" changeid="xavier">
+        <seg>Il faut utiliser la fonctionnalité initiée par l'IDP de <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>any files sharing system (NFS, NAS, SAN,…)</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120225T185052Z" changeid="xavier">
@@ -25694,6 +25496,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv xml:lang="">
         <seg>../media/icons/bug.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>You need to restrict access to Alfresco to <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184000Z" changeid="xavier">
+        <seg>Il faut restreindre l'accès à Alfresco à <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept>.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25930,14 +25740,6 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>or:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120324T161840Z" changeid="xavier">
-        <seg>ou :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept>_CAFile</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T060848Z" changeid="guimard">
@@ -25962,14 +25764,6 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Internal databases<ept i='0'>&lt;/s0&gt;</ept>: only used by LemonLDAP::NG</seg>
-      </tuv>
-      <tuv xml:lang="">
-        <seg>Les <bpt i='0' x='0'>&lt;s0&gt;</bpt>bases de données internes<ept i='0'>&lt;/s0&gt;</ept>: utilisées seulement par LemonLDAP::NG</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>1.2</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120707T080426Z" changeid="xavier">
@@ -25982,6 +25776,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv xml:lang="">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt><bpt i='1' x='1'>&lt;s1&gt;</bpt><it pos='begin' x='2'>&lt;IDPSSODescriptor&lt;s2&gt;</it>&gt;<ept i='2'>&lt;/s2&gt;</ept><ept i='1'>&lt;/s1&gt;</ept><ept i='0'>&lt;/s0&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Internal databases<ept i='0'>&lt;/s0&gt;</ept>: only used by LemonLDAP::NG</seg>
+      </tuv>
+      <tuv xml:lang="">
+        <seg>Les <bpt i='0' x='0'>&lt;s0&gt;</bpt>bases de données internes<ept i='0'>&lt;/s0&gt;</ept>: utilisées seulement par LemonLDAP::NG</seg>
       </tuv>
     </tu>
     <tu>
@@ -26298,6 +26100,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>For older version, check <bpt i='0' x='0'>&lt;a0&gt;</bpt>http://wiki.glpi-project.org/doku.php?id=en:authautoad<ept i='0'>&lt;/a0&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T190203Z" changeid="xavier">
+        <seg>Pour les versions plus anciennes, voir <bpt i='0' x='0'>&lt;a0&gt;</bpt>http://wiki.glpi-project.org/doku.php?id=en:authautoad<ept i='0'>&lt;/a0&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Write custom functions library</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120225T111737Z" changeid="xavier">
@@ -26488,14 +26298,6 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120217T045230Z" changeid="xavier">
         <seg>documentation:remote-interoperability.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='3' x='3'>&lt;s3&gt;</bpt>RewriteRule<ept i='3'>&lt;/s3&gt;</ept> ^/cas/.* /index.pl</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120301T054211Z" changeid="xavier">
-        <seg><bpt i='3' x='3'>&lt;s3&gt;</bpt>RewriteRule<ept i='3'>&lt;/s3&gt;</ept> ^/cas/.* /index.pl</seg>
       </tuv>
     </tu>
     <tu>
@@ -26780,10 +26582,10 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='6' x='6'>&lt;a6&gt;</bpt>fileconfbackend<ept i='6'>&lt;/a6&gt;</ept><ph x='7'>&lt;br7/&gt;</ph></seg>
+        <seg>It has enhanced functions to make the daily life for the administrators easier, like a job-tracking-system with mail-notification and methods to build a database with basic information about your network-topology.</seg>
       </tuv>
-      <tuv xml:lang="" changedate="20131025T051337Z" changeid="xavier">
-        <seg><bpt i='6' x='6'>&lt;a6&gt;</bpt>fileconfbackend<ept i='6'>&lt;/a6&gt;</ept><ph x='7'>&lt;br7/&gt;</ph></seg>
+      <tuv xml:lang="" changedate="20160227T190038Z" changeid="xavier">
+        <seg>Il dispose de functions avancées pour faciliter la vie des administrateurs, telle un détecteur de tâches avec notification par mail et des méthodes pour construire la base de données avec des informations minimales sur la topologie du réseau.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27490,6 +27292,14 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>SAML<ept i='0'>&lt;/a0&gt;</ept> assertion</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185345Z" changeid="xavier">
+        <seg>Assertion <bpt i='0' x='0'>&lt;a0&gt;</bpt>SAML<ept i='0'>&lt;/a0&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>LDAP configuration backend</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120324T162538Z" changeid="xavier">
@@ -27606,6 +27416,14 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120420T095434Z" changeid="xavier">
         <seg>Écrire de bonnes règles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>For now, this feature is only supported by Apache handler.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184217Z" changeid="xavier">
+        <seg>Pour l'instant, cette fonctionnalité n'est offerte qu'avec le handler Apache.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28212,6 +28030,14 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Now you can log in with a simple HTTP header.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183934Z" changeid="xavier">
+        <seg>On peut ensuite se connecter avec un simple en-tête HTTP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Some examples:</seg>
       </tuv>
       <tuv xml:lang="">
@@ -28486,6 +28312,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Just set the <bpt i='0' x='0'>&lt;c0&gt;</bpt>Auth-User<ept i='0'>&lt;/c0&gt;</ept> header with the attribute that carries the user login, for example <bpt i='1' x='1'>&lt;c1&gt;</bpt>$uid<ept i='1'>&lt;/c1&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184106Z" changeid="xavier">
+        <seg>Renseigner simplement l'en-tête <bpt i='0' x='0'>&lt;c0&gt;</bpt>Auth-User<ept i='0'>&lt;/c0&gt;</ept> avec l'attribut qui contient le nom de login, par exemple <bpt i='1' x='1'>&lt;c1&gt;</bpt>$uid<ept i='1'>&lt;/c1&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Extract from the <bpt i='0' x='0'>&lt;a0&gt;</bpt>Wikipedia article<ept i='0'>&lt;/a0&gt;</ept>:</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111119T100043Z" changeid="xavier">
@@ -28506,14 +28340,6 @@ make test</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T145450Z" changeid="guimard">
         <seg>Cinématique :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>make ubuntu-install</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120324T161843Z" changeid="xavier">
-        <seg>make ubuntu-install</seg>
       </tuv>
     </tu>
     <tu>
@@ -28610,14 +28436,6 @@ make test</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120410T042215Z" changeid="xavier">
         <seg>Ce script doit être lancé par root, il utilisera ensuite le compte et le groupe d'Apache pour accéder à la configuration.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Auto login</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T080921Z" changeid="xavier">
-        <seg>Auto login</seg>
       </tuv>
     </tu>
     <tu>
@@ -29022,6 +28840,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>CornerStone On Demand (CSOD)<ept i='0'>&lt;/a0&gt;</ept> allows to use <bpt i='1' x='1'>&lt;a1&gt;</bpt>SAML<ept i='1'>&lt;/a1&gt;</ept> to authenticate users.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184748Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>CornerStone On Demand (CSOD)<ept i='0'>&lt;/a0&gt;</ept> permet d'utiliser <bpt i='1' x='1'>&lt;a1&gt;</bpt>SAML<ept i='1'>&lt;/a1&gt;</ept> pour authentifier les utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='30' x='30'>&lt;s30&gt;</bpt>'lang'<ept i='30'>&lt;/s30&gt;</ept> <bpt i='31' x='31'>&lt;s31&gt;</bpt>=&gt;<ept i='31'>&lt;/s31&gt;</ept> <bpt i='32' x='32'>&lt;s32&gt;</bpt>'en'<ept i='32'>&lt;/s32&gt;</ept><bpt i='33' x='33'>&lt;s33&gt;</bpt>,<ept i='33'>&lt;/s33&gt;</ept></seg>
       </tuv>
       <tuv xml:lang="" changedate="20120226T101917Z" changeid="xavier">
@@ -29114,6 +28940,14 @@ make test</seg>
       </tuv>
       <tuv xml:lang="" changedate="20131025T052934Z" changeid="xavier">
         <seg>Réinitialisation du mot-de-passe à la connexion suivante</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>It works by default with IDP intiated mechanism, but can works with the standard SP initiated cinematic.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184903Z" changeid="xavier">
+        <seg>Il fonctionne par défaut avec un mécanisme initié par l'IDP mais permet un fonctionnement standard initié par le SP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29356,6 +29190,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>You need to find the following files in your Alfresco installation:</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183443Z" changeid="xavier">
+        <seg>Les fichiers suivants sont nécessaires dans l'installation Alfresco :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>1f777a6581e478499f4284e54fe2d4a4e513dfff</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111226T195415Z" changeid="xavier">
@@ -29520,6 +29362,14 @@ make test</seg>
       </tuv>
       <tuv xml:lang="">
         <seg>Feuille de route</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Select the key, and export it (button <bpt i='0' x='0'>&lt;c0&gt;</bpt>Download<ept i='0'>&lt;/c0&gt;</ept>).</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T190953Z" changeid="xavier">
+        <seg>Selectionner la clef, et l'exporter (bouton <bpt i='0' x='0'>&lt;c0&gt;</bpt>Télécharger<ept i='0'>&lt;/c0&gt;</ept>):</seg>
       </tuv>
     </tu>
     <tu>
@@ -30334,18 +30184,18 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>This works like <bpt i='0' x='0'>&lt;a0&gt;</bpt>File backend<ept i='0'>&lt;/a0&gt;</ept>, except that data are serialized in JSON.</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20131103T203016Z" changeid="xavier">
-        <seg>Il fonctionne comme le <bpt i='0' x='0'>&lt;a0&gt;</bpt>backend File<ept i='0'>&lt;/a0&gt;</ept>, si ce n'est que les données sont sérialisées au format JSON.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept> <bpt i='1' x='1'>&lt;a1&gt;</bpt>PGT<ept i='1'>&lt;/a1&gt;</ept> temporary file</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T061027Z" changeid="guimard">
         <seg>Fichier temporaire <bpt i='1' x='1'>&lt;a1&gt;</bpt>PGT<ept i='1'>&lt;/a1&gt;</ept> de <bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>This works like <bpt i='0' x='0'>&lt;a0&gt;</bpt>File backend<ept i='0'>&lt;/a0&gt;</ept>, except that data are serialized in JSON.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20131103T203016Z" changeid="xavier">
+        <seg>Il fonctionne comme le <bpt i='0' x='0'>&lt;a0&gt;</bpt>backend File<ept i='0'>&lt;/a0&gt;</ept>, si ce n'est que les données sont sérialisées au format JSON.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30506,20 +30356,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv xml:lang="">
         <seg>Outlook Web Access, …</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='18' x='18'>&lt;a18&gt;</bpt><bpt i='19' x='19'>&lt;s19&gt;</bpt>return<ept i='19'>&lt;/s19&gt;</ept><ept i='18'>&lt;/a18&gt;</ept> <bpt i='20' x='20'>&lt;s20&gt;</bpt>$param<ept i='20'>&lt;/s20&gt;</ept>
-<bpt i='21' x='21'>&lt;s21&gt;</bpt>}<ept i='21'>&lt;/s21&gt;</ept>
- 
-<bpt i='22' x='22'>&lt;s22&gt;</bpt>1<ept i='22'>&lt;/s22&gt;</ept><bpt i='23' x='23'>&lt;s23&gt;</bpt>;<ept i='23'>&lt;/s23&gt;</ept></seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T111924Z" changeid="xavier">
-        <seg><bpt i='18' x='18'>&lt;a18&gt;</bpt><bpt i='19' x='19'>&lt;s19&gt;</bpt>return<ept i='19'>&lt;/s19&gt;</ept><ept i='18'>&lt;/a18&gt;</ept> <bpt i='20' x='20'>&lt;s20&gt;</bpt>$param<ept i='20'>&lt;/s20&gt;</ept>
-<bpt i='21' x='21'>&lt;s21&gt;</bpt>}<ept i='21'>&lt;/s21&gt;</ept>
- 
-<bpt i='22' x='22'>&lt;s22&gt;</bpt>1<ept i='22'>&lt;/s22&gt;</ept><bpt i='23' x='23'>&lt;s23&gt;</bpt>;<ept i='23'>&lt;/s23&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -30906,6 +30742,14 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>CSOD control panel</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185253Z" changeid="xavier">
+        <seg>Panneau de configuration CSOD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>status</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T064416Z" changeid="guimard">
@@ -31082,14 +30926,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Enable mod_perl if not already loaded:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120620T042200Z" changeid="xavier">
-        <seg>Activer mod_perl si ce n'est déjà fait :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Preauthentication <bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept><ept i='0'>&lt;/s0&gt;</ept>: Zimbra preauthentication <bpt i='2' x='2'>&lt;a2&gt;</bpt>URL<ept i='2'>&lt;/a2&gt;</ept>, either with full <bpt i='3' x='3'>&lt;a3&gt;</bpt>URL<ept i='3'>&lt;/a3&gt;</ept> (ex: <bpt i='4' x='4'>&lt;a4&gt;</bpt>http://zimbra.lan/service/preauth<ept i='4'>&lt;/a4&gt;</ept>), either only with path (ex: /service/preauth) (by default: /service/preauth)</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111222T181549Z" changeid="xavier">
@@ -31158,14 +30994,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv xml:lang="" changedate="20120303T094413Z" changeid="xavier">
         <seg>Suivre les <bpt i='0' x='0'>&lt;a0&gt;</bpt>étapes suivantes<ept i='0'>&lt;/a0&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>You can also use symbolic links in <bpt i='0' x='0'>&lt;c0&gt;</bpt>conf.d<ept i='0'>&lt;/c0&gt;</ept> Apache directory.</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120324T162100Z" changeid="xavier">
-        <seg>On peut aussi utiliser des liens symboliques dans le répertiore <bpt i='0' x='0'>&lt;c0&gt;</bpt>conf.d<ept i='0'>&lt;/c0&gt;</ept> d'Apache.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31438,14 +31266,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='2' x='2'>&lt;a2&gt;</bpt>features<ept i='2'>&lt;/a2&gt;</ept><ph x='3'>&lt;br3/&gt;</ph></seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20131025T051333Z" changeid="xavier">
-        <seg><bpt i='2' x='2'>&lt;a2&gt;</bpt>features<ept i='2'>&lt;/a2&gt;</ept><ph x='3'>&lt;br3/&gt;</ph></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>You can also disable internal Sympa authentication to keep only LemonLDAP::NG by removing user_table paragraph</seg>
       </tuv>
       <tuv xml:lang="" changedate="20131025T052115Z" changeid="xavier">
@@ -31470,14 +31290,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Note that all <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> components must have access :</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120223T141802Z" changeid="xavier">
-        <seg>Tous les composants de <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> doivent avoir accès :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Safe module is used to eval expressions in headers, rules, etc.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120420T135807Z" changeid="xavier">
@@ -31498,14 +31310,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv xml:lang="" changedate="20120225T194929Z" changeid="xavier">
         <seg>http://httpd.apache.org/docs/current/mod/mod_setenvif.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>password: $_password (password of the user)</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T193219Z" changeid="xavier">
-        <seg>password: $_password (mot-de-passe de l'utilisateur)</seg>
       </tuv>
     </tu>
     <tu>
@@ -32318,6 +32122,14 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Professional Services</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T182906Z" changeid="xavier">
+        <seg>Services professionnel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>../../../../media/documentation/liferay_2.png</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111211T073654Z" changeid="xavier">
@@ -32738,14 +32550,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Apache rewrite rules</seg>
-      </tuv>
-      <tuv xml:lang="">
-        <seg>Régles de réécriture d'Apache</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><it pos='begin' x='0'>&lt;&lt;s0&gt;</it>Directory<ept i='0'>&lt;/s0&gt;</ept> /usr/local/lemonldap-ng/htdocs/manager/&gt;</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120223T142938Z" changeid="xavier">
@@ -32934,6 +32738,14 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="" changedate="20131025T061457Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>ID de l'application Facebook<ept i='0'>&lt;/s0&gt;</ept> : l'identifiant d'application obtenu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>The Basic Authentication relies on a specific HTTP header, as described above.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184521Z" changeid="xavier">
+        <seg>L'authentification basique est portée par un en-tête HTTP spécifique, tel que décrit ci-dessous.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33374,14 +33186,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='4' x='4'>&lt;a4&gt;</bpt>federationproxy<ept i='4'>&lt;/a4&gt;</ept><ph x='5'>&lt;br5/&gt;</ph></seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20131025T051335Z" changeid="xavier">
-        <seg><bpt i='4' x='4'>&lt;a4&gt;</bpt>federationproxy<ept i='4'>&lt;/a4&gt;</ept><ph x='5'>&lt;br5/&gt;</ph></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>sudo make configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120324T160718Z" changeid="xavier">
@@ -33602,14 +33406,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="" changedate="20120419T065903Z" changeid="guimard">
         <seg>radiusAuthnLevel</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Go in Manager, <bpt i='0' x='0'>&lt;c0&gt;</bpt>Default parameters<ept i='0'>&lt;/c0&gt;</ept> » <bpt i='1' x='1'>&lt;c1&gt;</bpt>Advanced parameters<ept i='1'>&lt;/c1&gt;</ept> » <bpt i='2' x='2'>&lt;c2&gt;</bpt>Special handlers<ept i='2'>&lt;/c2&gt;</ept> » <bpt i='3' x='3'>&lt;c3&gt;</bpt>Sympa<ept i='3'>&lt;/c3&gt;</ept>, and edit the different keys:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T081138Z" changeid="xavier">
-        <seg>Aller dans le manager, <bpt i='0' x='0'>&lt;c0&gt;</bpt>Paramètres par défaut<ept i='0'>&lt;/c0&gt;</ept> » <bpt i='1' x='1'>&lt;c1&gt;</bpt>Paramètres avancés<ept i='1'>&lt;/c1&gt;</ept> » <bpt i='2' x='2'>&lt;c2&gt;</bpt>Handlers spéciaux<ept i='2'>&lt;/c2&gt;</ept> » <bpt i='3' x='3'>&lt;c3&gt;</bpt>Sympa<ept i='3'>&lt;/c3&gt;</ept>, et éditer les clefs suivantes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -34146,14 +33942,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>../../../media/documentation/manager-formreplay-newurl.png</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120225T193409Z" changeid="xavier">
-        <seg>../../../media/documentation/manager-formreplay-newurl.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>http://openid.net/specs/openid-simple-registration-extension-1_0.html</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120303T082015Z" changeid="xavier">
@@ -34174,14 +33962,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="" changedate="20120220T204104Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Nom de clef<ept i='0'>&lt;/s0&gt;</ept> : nom de la clef dans la session LemonLDAP::NG (par exemple “uid” équivaut à $uid dans les règles d'accès)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Detailled configuration backends documentation is available <bpt i='0' x='0'>&lt;a0&gt;</bpt>here<ept i='0'>&lt;/a0&gt;</ept>.</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120223T141920Z" changeid="xavier">
-        <seg>La configuration détaillée des backends de stockage est disponible <bpt i='0' x='0'>&lt;a0&gt;</bpt>ici<ept i='0'>&lt;/a0&gt;</ept>.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34238,6 +34018,14 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="" changedate="20120303T083112Z" changeid="xavier">
         <seg>Gender</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>For GLPI &gt;= 0.71, it is a simple configuration in GLPI: Setup → Authentication.</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T190112Z" changeid="xavier">
+        <seg>Pour GLPI &gt;= 0.71, une simple configuration de GLPI suffit : Setup → Authentication.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34414,6 +34202,14 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="" changedate="20111119T101135Z" changeid="xavier">
         <seg>(&amp;(sAMAccountName=$user)(objectClass=person))</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>An enterprise account</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184914Z" changeid="xavier">
+        <seg>un compte entreprise</seg>
       </tuv>
     </tu>
     <tu>
@@ -34706,14 +34502,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Link Apache configuration</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120324T161925Z" changeid="xavier">
-        <seg>Lier la configuration d'Apache</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>HTTP Basic Authentication</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111119T100013Z" changeid="xavier">
@@ -34770,14 +34558,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Those capabilities can be used simultaneously or separately.</seg>
-      </tuv>
-      <tuv xml:lang="">
-        <seg>Ces capacités peuvent être utilisées simultanément ou séparemment.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Nb protected applications</seg>
       </tuv>
       <tuv xml:lang="">
@@ -34790,6 +34570,14 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="">
         <seg>Ces options peuvent être surchargées pour chaque fournisseur d'identité.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Those capabilities can be used simultaneously or separately.</seg>
+      </tuv>
+      <tuv xml:lang="">
+        <seg>Ces capacités peuvent être utilisées simultanément ou séparemment.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34896,14 +34684,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="" changedate="20120420T172425Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>newNotification(xmlString)<ept i='0'>&lt;/s0&gt;</ept> : insert une notification pour un utilisateur (voir le <bpt i='1' x='1'>&lt;a1&gt;</bpt>système de notifications<ept i='1'>&lt;/a1&gt;</ept> pour plus d'information)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Magic authentication<ept i='0'>&lt;/s0&gt;</ept>: a special <bpt i='1' x='1'>&lt;a1&gt;</bpt>SSO<ept i='1'>&lt;/a1&gt;</ept> <bpt i='2' x='2'>&lt;a2&gt;</bpt>URL<ept i='2'>&lt;/a2&gt;</ept> is protected by <bpt i='3' x='3'>&lt;a3&gt;</bpt>LL::NG<ept i='3'>&lt;/a3&gt;</ept>, Sympa will display a button for users who wants to use this feature.</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20111217T080654Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Magic authentication<ept i='0'>&lt;/s0&gt;</ept>: une <bpt i='2' x='2'>&lt;a2&gt;</bpt>URL<ept i='2'>&lt;/a2&gt;</ept> <bpt i='1' x='1'>&lt;a1&gt;</bpt>SSO<ept i='1'>&lt;/a1&gt;</ept> spéciale est protégée pas <bpt i='3' x='3'>&lt;a3&gt;</bpt>LL::NG<ept i='3'>&lt;/a3&gt;</ept>, Sympa affiche un bouton pour les utilisateurs souhaitant bénéficier de cette fonction.</seg>
       </tuv>
     </tu>
     <tu>
@@ -35190,6 +34970,14 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>You can intercept the logout with this rule: <bpt i='0' x='0'>&lt;c0&gt;</bpt>^/share/page/dologout ⇒ logout_app_sso<ept i='0'>&lt;/c0&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T184131Z" changeid="xavier">
+        <seg>On peut intercepter les déconnexions avec cette règle : <bpt i='0' x='0'>&lt;c0&gt;</bpt>^/share/page/dologout ⇒ logout_app_sso<ept i='0'>&lt;/c0&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>User table<ept i='0'>&lt;/s0&gt;</ept>: user table name</seg>
       </tuv>
       <tuv xml:lang="" changedate="20111226T200837Z" changeid="xavier">
@@ -35258,14 +35046,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="" changedate="20120419T050122Z" changeid="guimard">
         <seg>Il faut alors désactiver la protection du manager dans lemonldap-ng.ini pour la confier à Apache :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Go in Manager, <bpt i='0' x='0'>&lt;c0&gt;</bpt>Default parameters<ept i='0'>&lt;/c0&gt;</ept> » <bpt i='1' x='1'>&lt;c1&gt;</bpt>Advanced parameters<ept i='1'>&lt;/c1&gt;</ept> » <bpt i='2' x='2'>&lt;c2&gt;</bpt>Special handlers<ept i='2'>&lt;/c2&gt;</ept> » <bpt i='3' x='3'>&lt;c3&gt;</bpt>Secure Token<ept i='3'>&lt;/c3&gt;</ept>, and edit the different keys:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120419T205253Z" changeid="xavier">
-        <seg>Aller dans le manager, <bpt i='0' x='0'>&lt;c0&gt;</bpt>Paramètres par défaut<ept i='0'>&lt;/c0&gt;</ept> » <bpt i='1' x='1'>&lt;c1&gt;</bpt>Paramètres avancés<ept i='1'>&lt;/c1&gt;</ept> » <bpt i='2' x='2'>&lt;c2&gt;</bpt>Handlers spéciaux<ept i='2'>&lt;/c2&gt;</ept> » <bpt i='3' x='3'>&lt;c3&gt;</bpt>Jeton sécurisé<ept i='3'>&lt;/c3&gt;</ept>, et éditer les clefs suivantes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -35454,18 +35234,18 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Auto login<ept i='0'>&lt;/s0&gt;</ept> is very secure for Sympa 5, as Sympa cookie is only exchanged between <bpt i='1' x='1'>&lt;a1&gt;</bpt>LL::NG<ept i='1'>&lt;/a1&gt;</ept> Handler and Sympa (user cannot see it)</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20131025T051943Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Auto login<ept i='0'>&lt;/s0&gt;</ept> est très sécurisé pour Sympa 5 car le cookie Sympa est seulement échangé entre le handler <bpt i='1' x='1'>&lt;a1&gt;</bpt>LL::NG<ept i='1'>&lt;/a1&gt;</ept> et Sympa (les utilisateurs ne le voient pas)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>If you run Debian testing or unstable, the packages are directly installable:</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120303T093240Z" changeid="xavier">
         <seg>Pour les utilisateurs de Debian testing ou unstable, les paquets sont directement installables :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>In the <bpt i='1' x='1'>&lt;c1&gt;</bpt>&lt;endpoint&gt;<ept i='1'>&lt;/c1&gt;</ept>, change <bpt i='2' x='2'>&lt;c2&gt;</bpt>&lt;connector-id&gt;<ept i='2'>&lt;/c2&gt;</ept> value to <bpt i='3' x='3'>&lt;c3&gt;</bpt>alfrescoHeader<ept i='3'>&lt;/c3&gt;</ept> and change the <bpt i='4' x='4'>&lt;c4&gt;</bpt>&lt;userHeader&gt;<ept i='4'>&lt;/c4&gt;</ept> value to <bpt i='5' x='5'>&lt;c5&gt;</bpt>Auth-User<ept i='5'>&lt;/c5&gt;</ept>:</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T183755Z" changeid="xavier">
+        <seg>Dans le &quot;<bpt i='1' x='1'>&lt;c1&gt;</bpt>&lt;endpoint&gt;<ept i='1'>&lt;/c1&gt;</ept>&quot;, changer la valeur de <bpt i='2' x='2'>&lt;c2&gt;</bpt>&lt;connector-id&gt;<ept i='2'>&lt;/c2&gt;</ept> en <bpt i='3' x='3'>&lt;c3&gt;</bpt>alfrescoHeader<ept i='3'>&lt;/c3&gt;</ept> et changer la valeur de <bpt i='4' x='4'>&lt;c4&gt;</bpt>&lt;userHeader&gt;<ept i='4'>&lt;/c4&gt;</ept> en <bpt i='5' x='5'>&lt;c5&gt;</bpt>Auth-User<ept i='5'>&lt;/c5&gt;</ept> :</seg>
       </tuv>
     </tu>
     <tu>
@@ -35512,16 +35292,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>apache2ctl configtest
-apache2ctl restart</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T093925Z" changeid="xavier">
-        <seg>apache2ctl configtest
-apache2ctl restart</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>The Secure Token Handler is a special Handler that create a token for each request and send it to the protected application.</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T204800Z" changeid="xavier">
@@ -35554,6 +35324,14 @@ apache2ctl restart</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Now we will add CSOD as a new <bpt i='0' x='0'>&lt;a0&gt;</bpt>SAML<ept i='0'>&lt;/a0&gt;</ept> Service Provider:</seg>
+      </tuv>
+      <tuv xml:lang="" changedate="20160227T185049Z" changeid="xavier">
+        <seg>Ajouter CSOD comme nouveau fournisseur de service <bpt i='0' x='0'>&lt;a0&gt;</bpt>SAML<ept i='0'>&lt;/a0&gt;</ept> :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>How to change configuration backend</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120222T130207Z" changeid="xavier">
@@ -35572,14 +35350,6 @@ apache2ctl restart</seg>
 <bpt i='16' x='16'>&lt;s16&gt;</bpt>$cgi<ept i='16'>&lt;/s16&gt;</ept><bpt i='17' x='17'>&lt;s17&gt;</bpt>-&gt;<ept i='17'>&lt;/s17&gt;</ept><bpt i='18' x='18'>&lt;s18&gt;</bpt>authenticate<ept i='18'>&lt;/s18&gt;</ept><bpt i='19' x='19'>&lt;s19&gt;</bpt>(<ept i='19'>&lt;/s19&gt;</ept><bpt i='20' x='20'>&lt;s20&gt;</bpt>)<ept i='20'>&lt;/s20&gt;</ept><bpt i='21' x='21'>&lt;s21&gt;</bpt>;<ept i='21'>&lt;/s21&gt;</ept>
 <bpt i='22' x='22'>&lt;s22&gt;</bpt>$cgi<ept i='22'>&lt;/s22&gt;</ept><bpt i='23' x='23'>&lt;s23&gt;</bpt>-&gt;<ept i='23'>&lt;/s23&gt;</ept><bpt i='24' x='24'>&lt;s24&gt;</bpt>authorize<ept i='24'>&lt;/s24&gt;</ept><bpt i='25' x='25'>&lt;s25&gt;</bpt>(<ept i='25'>&lt;/s25&gt;</ept><bpt i='26' x='26'>&lt;s26&gt;</bpt>)<ept i='26'>&lt;/s26&gt;</ept><bpt i='27' x='27'>&lt;s27&gt;</bpt>;<ept i='27'>&lt;/s27&gt;</ept>
 <bpt i='28' x='28'>&lt;s28&gt;</bpt>...<ept i='28'>&lt;/s28&gt;</ept></seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>For Debian/Ubuntu, you can use:</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120324T161834Z" changeid="xavier">
-        <seg>Pour Debian/Ubuntu, utiliser :</seg>
       </tuv>
     </tu>
     <tu>
@@ -35668,16 +35438,6 @@ apache2ctl restart</seg>
       </tuv>
       <tuv xml:lang="" changedate="20120419T140852Z" changeid="guimard">
         <seg>SAML2</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>apachectl configtest
-apachectl restart</seg>
-      </tuv>
-      <tuv xml:lang="" changedate="20120303T100433Z" changeid="xavier">
-        <seg>apachectl configtest
-apachectl restart</seg>
       </tuv>
     </tu>
     <tu>
