@@ -12658,6 +12658,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;GRR&lt;/a0&gt; is a room booking software.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T164913Z" changeid="xavier">
+        <seg>&lt;a0&gt;GRR&lt;/a0&gt; est un logiciel de réservation de chambres.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Google Apps&lt;/a0&gt; can use &lt;a1&gt;SAML&lt;/a1&gt; to authenticate users, behaving as an &lt;a2&gt;SAML&lt;/a2&gt; service provider, as explained &lt;a3&gt;here&lt;/a3&gt;.</seg>
       </tuv>
       <tuv lang="" changedate="20111203T182402Z" changeid="xavier">
@@ -13502,6 +13510,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="" changedate="20120226T101522Z" changeid="xavier">
         <seg>&lt;a0&gt;LimeSurvey&lt;/a0&gt; est un logiciel de surveillance écrit en &lt;a1&gt;PHP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LimeSurvey&lt;/a0&gt; is a web survey software written in PHP.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165355Z" changeid="xavier">
+        <seg>&lt;a0&gt;LimeSurvey&lt;/a0&gt; est un logiciel de sondage écrit en PHP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18594,6 +18610,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="" changedate="20111211T074202Z" changeid="xavier">
         <seg>&lt;s0&gt;Import from &lt;a1&gt;LDAP&lt;/a1&gt;&lt;/s0&gt;: Yes (voir &lt;a2&gt;présentation&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Import from LDAP&lt;/s0&gt;: Yes (see &lt;a1&gt;presentation&lt;/a1&gt;)</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165249Z" changeid="xavier">
+        <seg>&lt;s0&gt;Import from LDAP&lt;/s0&gt;: Yes (voir &lt;a1&gt;présentation&lt;/a1&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -24334,6 +24358,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="" changedate="20111218T190600Z" changeid="xavier">
         <seg>Ajouter dans le fichier &lt;c0&gt;server.xml&lt;/c0&gt; une nouvelle valve comme ci-dessous (dans la section host):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Add then extension configuration, for example:</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165757Z" changeid="xavier">
+        <seg>Puis, configuration de l'extension, par exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -30406,6 +30438,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>GRR has a &lt;a0&gt;SSO&lt;/a0&gt; configuration page in its administration panel.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T164943Z" changeid="xavier">
+        <seg>GRR dispose d'une page de configuration du &lt;a0&gt;SSO&lt;/a0&gt; dans son panneau de configuration.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Gaultier HUBERT</seg>
       </tuv>
       <tuv lang="" changedate="20111225T153307Z" changeid="xavier">
@@ -31726,6 +31766,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If the user is not created, or can not be created via LDAP import, the connection to Liferay will be refused.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165129Z" changeid="xavier">
+        <seg>Si le compte n'est pas créé ou ne peut être créé par un import LDAP, la connexion à Liferay sera refusée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If they really do not please you, override them!</seg>
       </tuv>
       <tuv lang="" changedate="20120419T075245Z" changeid="guimard">
@@ -31754,6 +31802,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="" changedate="20131025T063117Z" changeid="xavier">
         <seg>Si cette session est perdue, Google redemandera confirmation pour chaque attribut demandé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If using &lt;a0&gt;LL::NG&lt;/a0&gt; as reverse proxy, configure also the &lt;c1&gt;Auth-User&lt;/c1&gt; &lt;a2&gt;header&lt;/a2&gt;,</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T170037Z" changeid="xavier">
+        <seg>Si &lt;a0&gt;LL::NG&lt;/a0&gt; est utilisé par reverse-proxy, configurer l'&lt;a2&gt;en-tête&lt;/a2&gt; &lt;c1&gt;Auth-User&lt;/c1&gt;,</seg>
       </tuv>
     </tu>
     <tu>
@@ -32146,6 +32202,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="" changedate="20111210T073926Z" changeid="xavier">
         <seg>Importés d'un serveur &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Imported from an LDAP directory</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165053Z" changeid="xavier">
+        <seg>Importés d'un serveur LDAP</seg>
       </tuv>
     </tu>
     <tu>
@@ -33082,6 +33146,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="">
         <seg>Il peut être utilisé pour effacer une session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can be used to host the portal or the manager through its FastCGI support and can be used to protect applications using the auth_request module (dialing with a FastCGI authorization server).</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T170309Z" changeid="xavier">
+        <seg>Il peut être utilisé pour héberger le portail ou le manager au travers de son support FastCGI et peut être utilisé pour protéger des applications en utilisant le module auth_request (qui dialogue avec un serveur d'autorisations FastCGI).</seg>
       </tuv>
     </tu>
     <tu>
@@ -35714,6 +35786,22 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Nginx is a very fast web server.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T170135Z" changeid="xavier">
+        <seg>Nginx est un serveur web particulièrement performant.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Nginx is fully supported by LemonLDAP::NG since version 1.9.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T170108Z" changeid="xavier">
+        <seg>Nginx est pleinement supporté par LemonLDAP::NG depuis la version 1.9.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Nick name</seg>
       </tuv>
       <tuv lang="" changedate="20120303T083111Z" changeid="xavier">
@@ -36206,6 +36294,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="" changedate="20111210T074154Z" changeid="xavier">
         <seg>Bien sûr, l'integration est complète si le serveur &lt;a0&gt;LDAP&lt;/a0&gt; est utilisé comme base de données des utilisateurs dans &lt;a1&gt;LL::NG&lt;/a1&gt; et Liferay.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Of course, integration will be full if you use the LDAP directory as users backend for &lt;a0&gt;LL::NG&lt;/a0&gt; and Liferay.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165116Z" changeid="xavier">
+        <seg>Bien sûr, l'integration est complète si le serveur LDAP est utilisé comme base de données des utilisateurs dans &lt;a0&gt;LL::NG&lt;/a0&gt; et Liferay.</seg>
       </tuv>
     </tu>
     <tu>
@@ -37238,6 +37334,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="" changedate="20111211T073600Z" changeid="xavier">
         <seg>Se reporter à la documentation Liferay pour activer l'alimentation &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Please refer to Liferay documentation to enable LDAP provisionning.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165149Z" changeid="xavier">
+        <seg>Se reporter à la documentation Liferay pour activer l'alimentation LDAP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -39334,6 +39438,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;installation pages&lt;/a0&gt; to know how install and use it.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T170346Z" changeid="xavier">
+        <seg>Voir les &lt;a0&gt;pages d'installation&lt;/a0&gt; pour apprendre à l'installer et l'utiliser.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;mod_proxy&lt;/a0&gt; and &lt;a1&gt;mod_rewrite&lt;/a1&gt; documentation for more about configuring Apache reverse-proxies.</seg>
       </tuv>
       <tuv lang="" changedate="20120420T134648Z" changeid="xavier">
@@ -41380,6 +41492,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="" changedate="20111226T194738Z" changeid="xavier">
         <seg>Le chiffre ne sera pas affiché sur la page portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The extension is presented here: &lt;a0&gt;http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165629Z" changeid="xavier">
+        <seg>L'extension est présentée ici : &lt;a0&gt;http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -43666,6 +43786,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To have a stronger integration, we will configure LimeSurvey to autocreate unknown users and use HTTP headers to fill name, mail and roles.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165413Z" changeid="xavier">
+        <seg>Pour une meilleure integration, LimeSurvey doit être configuré pour créer automatiquement les utilisateurs inconnus et utiliser les en-têtes HTTP pour remplir le nom, le mail et les rôles.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To install them on system:</seg>
       </tuv>
       <tuv lang="" changedate="20120324T162354Z" changeid="xavier">
@@ -45058,6 +45186,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>We directly use HTTP headers to fill default user profile.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165429Z" changeid="xavier">
+        <seg>On utilise les en-têtes HTTP pour trouver le profil utilisateur par défaut.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>We include some template files that can be customized:</seg>
       </tuv>
       <tuv lang="" changedate="20120419T074653Z" changeid="guimard">
@@ -45102,6 +45238,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="">
         <seg>Nous utilisons &lt;a0&gt;OW2 JIRA&lt;/a0&gt; pour tous les bogues et fonctionnalités.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>We will explain how to use &lt;a0&gt;Automatic REMOTE_USER&lt;/a0&gt; extension.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165555Z" changeid="xavier">
+        <seg>Nous expliquons ici comment utiliser l'extension &lt;a0&gt;REMOTE_USER automatique&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -45390,6 +45534,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="" changedate="20111211T073439Z" changeid="xavier">
         <seg>Avec &lt;a1&gt;LDAP&lt;/a1&gt;, login, mail, nom et prénom dont des attributs exigés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>With LDAP, login, mail, first name and last name are required attributes.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165140Z" changeid="xavier">
+        <seg>Avec LDAP, login, mail, nom et prénom dont des attributs exigés.</seg>
       </tuv>
     </tu>
     <tu>
@@ -45978,6 +46130,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can create these two headers to fill user name and mail (see extension configuration):</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165945Z" changeid="xavier">
+        <seg>On peut créer ces 2 en-têtes pour qu'ils corresponde au nom d'utilisateur et a son adresse mail (voir la configuration de l'extension) :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can create your own &lt;a4&gt;XSLT&lt;/a4&gt; file and store in another place, for example /etc/lemonldap-ng.</seg>
       </tuv>
       <tuv lang="" changedate="20120419T053950Z" changeid="guimard">
@@ -46038,6 +46198,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="" changedate="20111211T074747Z" changeid="xavier">
         <seg>Il est possible de télécharger le code ici : &lt;a0&gt;http://github.com/oremj/mediawiki-http-auth/downloads&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can download the code here: &lt;a0&gt;https://www.mediawiki.org/wiki/Special:ExtensionDistributor/Auth_remoteuser&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165649Z" changeid="xavier">
+        <seg>Il est possible de télécharger le code source ici : &lt;a0&gt;https://www.mediawiki.org/wiki/Special:ExtensionDistributor/Auth_remoteuser&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -46522,6 +46690,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You have to install &lt;c0&gt; Auth_remoteuser&lt;/c0&gt; in the &lt;c1&gt;extensions/&lt;/c1&gt; directory of your MediaWiki installation:</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165720Z" changeid="xavier">
+        <seg>Il faut installer &lt;c0&gt; Auth_remoteuser&lt;/c0&gt; dans le répertoire des &lt;c1&gt;extensions/&lt;/c1&gt; ve votre serveur MediaWiki :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You have to install &lt;c0&gt;HttpAuthPlugin.php&lt;/c0&gt; in the &lt;c1&gt;extensions/&lt;/c1&gt; directory of your MediaWiki installation:</seg>
       </tuv>
       <tuv lang="" changedate="20111211T074824Z" changeid="xavier">
@@ -46630,6 +46806,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="" changedate="20120227T192956Z" changeid="xavier">
         <seg>Il faut juste partager les bases de données de configuration et des sessions entre ces serveurs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You just need to choose if the authenticated user will be a “user” or a “guest”.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165038Z" changeid="xavier">
+        <seg>Il suffit de choisir si l'utilisateur authentifié sera un &quot;utilisateur&quot; ou un &quot;invité&quot;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -46786,6 +46970,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need to activate LDAP authentication, else &lt;a0&gt;SSO&lt;/a0&gt; authentication will not work.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165214Z" changeid="xavier">
+        <seg>Il faut activer l'authentification LDAP sinon l'authentification &lt;a0&gt;SSO&lt;/a0&gt; ne marchera pas.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You need to adapt some parameters:</seg>
       </tuv>
       <tuv lang="" changedate="20111207T051745Z" changeid="xavier">
@@ -46902,6 +47094,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="" changedate="20120226T102120Z" changeid="xavier">
         <seg>Il faut renseigner la variable &lt;a0&gt;PHP&lt;/a0&gt;_AUTH_USER pour faire fonctionner le mode d'authentification par serveur web.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need to set the PHP_AUTH_USER variable to have the Webserver authentication mode working.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T165505Z" changeid="xavier">
+        <seg>Il faut renseigner la variable PHP_AUTH_USER pour faire fonctionner le mode d'authentification par serveur web.</seg>
       </tuv>
     </tu>
     <tu>

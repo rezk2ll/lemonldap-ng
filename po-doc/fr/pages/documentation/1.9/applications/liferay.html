@@ -42,23 +42,21 @@ Liferay peut utiliser <abbr title="LemonLDAP::NG">LL::NG</abbr> comme fournisseu
 <ul>
 <li class="level1"><div class="li"> À la main dans les écrans d'administration de Liferay</div>
 </li>
-<li class="level1"><div class="li">  Imported from an LDAP directory</div>
+<li class="level1"><div class="li"> Importés d'un serveur LDAP</div>
 </li>
 </ul>
 
 <p>
-
-Of course, integration will be full if you use the LDAP directory as users backend for <abbr title="LemonLDAP::NG">LL::NG</abbr> and Liferay.
-
+Bien sûr, l'integration est complète si le serveur LDAP est utilisé comme base de données des utilisateurs dans <abbr title="LemonLDAP::NG">LL::NG</abbr> et Liferay.
 </p>
 
 <p>
-</p><p></p><div class="noteimportant">If the user is not created, or can not be created via LDAP import, the connection to Liferay will be refused. With LDAP, login, mail, first name and last name are required attributes. Si l'un est manquant, le compte ne sera pas créé.
+</p><p></p><div class="noteimportant">Si le compte n'est pas créé ou ne peut être créé par un import LDAP, la connexion à Liferay sera refusée. Avec LDAP, login, mail, nom et prénom dont des attributs exigés. Si l'un est manquant, le compte ne sera pas créé.
 </div></p>
 </p>
 
 <p>
-Cette documentation explique seulement comment activer la partie <abbr title="Authentification unique (Single Sign On)">SSO</abbr>. Please refer to Liferay documentation to enable LDAP provisionning.
+Cette documentation explique seulement comment activer la partie <abbr title="Authentification unique (Single Sign On)">SSO</abbr>. Se reporter à la documentation Liferay pour activer l'alimentation LDAP.
 </p>
 
 </div><!-- EDIT2 SECTION "Presentation" [63-811] -->
@@ -130,7 +128,7 @@ Dans <code>General</code>, remplir au moins les informations suivantes :
 
 <p>
 </p><p></p><div class="noteimportant">
-You need to activate LDAP authentication, else <abbr title="Authentification unique (Single Sign On)">SSO</abbr> authentication will not work. Faire ceci dans le panneau de contrôle ou dans le fichier de configuration :
+Il faut activer l'authentification LDAP sinon l'authentification <abbr title="Authentification unique (Single Sign On)">SSO</abbr> ne marchera pas. Faire ceci dans le panneau de contrôle ou dans le fichier de configuration :
 </p>
 <pre class="file">ldap.auth.enabled=true</pre>
 
@@ -145,7 +143,7 @@ Utiliser ensuite le paragraphe <code>SiteMinder</code> pour configurer le <abbr 
 <ul>
 <li class="level1"><div class="li"> <strong>Enabled</strong>: Yes</div>
 </li>
-<li class="level1"><div class="li"> <strong>Import from LDAP</strong>: Yes (see <a href="#presentation" title="documentation:1.9:applications:liferay ↵" class="wikilink1">presentation</a>)</div>
+<li class="level1"><div class="li"> <strong>Import from LDAP</strong>: Yes (voir <a href="#presentation" title="documentation:1.9:applications:liferay ↵" class="wikilink1">présentation</a>)</div>
 </li>
 <li class="level1"><div class="li"> <strong>User Header</strong>: Auth-User (case sensitive)</div>
 </li>

@@ -47,9 +47,7 @@ Plusieurs extensions permettent de configurer le <abbr title="Authentification u
 </ul>
 
 <p>
-
-We will explain how to use <a href="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER" class="urlextern" title="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER"  rel="nofollow">Automatic REMOTE_USER</a> extension.
-
+Nous expliquons ici comment utiliser l'extension <a href="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER" class="urlextern" title="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER"  rel="nofollow">REMOTE_USER automatique</a>.
 </p>
 
 </div><!-- EDIT2 SECTION "Presentation" [67-590] -->
@@ -58,19 +56,15 @@ We will explain how to use <a href="http://www.mediawiki.org/wiki/Extension:Auto
 <div class="level2">
 
 <p>
-
-The extension is presented here: <a href="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER" class="urlextern" title="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER"  rel="nofollow">http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER</a>
+L'extension est présentée ici : <a href="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER" class="urlextern" title="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER"  rel="nofollow">http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER</a>
 </p>
 
 <p>
-
-You can download the code here: <a href="https://www.mediawiki.org/wiki/Special:ExtensionDistributor/Auth_remoteuser" class="urlextern" title="https://www.mediawiki.org/wiki/Special:ExtensionDistributor/Auth_remoteuser"  rel="nofollow">https://www.mediawiki.org/wiki/Special:ExtensionDistributor/Auth_remoteuser</a>
+Il est possible de télécharger le code source ici : <a href="https://www.mediawiki.org/wiki/Special:ExtensionDistributor/Auth_remoteuser" class="urlextern" title="https://www.mediawiki.org/wiki/Special:ExtensionDistributor/Auth_remoteuser"  rel="nofollow">https://www.mediawiki.org/wiki/Special:ExtensionDistributor/Auth_remoteuser</a>
 </p>
 
 <p>
-
-You have to install <code> Auth_remoteuser</code> in the <code>extensions/</code> directory of your MediaWiki installation:
-
+Il faut installer <code> Auth_remoteuser</code> dans le répertoire des <code>extensions/</code> ve votre serveur MediaWiki :
 </p>
 <pre class="code">cp -a Auth_remoteuser/ extensions/</pre>
 
@@ -92,9 +86,7 @@ You have to install <code> Auth_remoteuser</code> in the <code>extensions/</code
 <span class="re0">$wgAuth</span> <span class="sy0">=</span> <span class="kw2">new</span> Auth_remoteuser<span class="br0">(</span><span class="br0">)</span><span class="sy0">;</span></pre>
 
 <p>
-
-Add then extension configuration, for example:
-
+Puis, configuration de l'extension, par exemple :
 </p>
 <pre class="code file php"><span class="re0">$wgAuthRemoteuserAuthz</span> <span class="sy0">=</span> <span class="kw4">true</span><span class="sy0">;</span> <span class="coMULTI">/* Your own authorization test */</span>
 <span class="re0">$wgAuthRemoteuserName</span> <span class="sy0">=</span> <span class="re0">$_SERVER</span><span class="br0">[</span><span class="st0">"HTTP_AUTH_CN"</span><span class="br0">]</span><span class="sy0">;</span> <span class="coMULTI">/* User's name */</span>
@@ -162,17 +154,13 @@ Configurer simplement la <a href="../../../documentation/1.9/writingrulesand_hea
 <pre class="code">Userlogout =&gt; logout_sso</pre>
 
 <p>
-
-You can create these two headers to fill user name and mail (see extension configuration):
-
+On peut créer ces 2 en-têtes pour qu'ils corresponde au nom d'utilisateur et a son adresse mail (voir la configuration de l'extension) :
 </p>
 <pre class="code">Auth-Cn =&gt; $cn
 Auth-Mail =&gt; $mail</pre>
 
 <p>
-
-If using <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, configure also the <code>Auth-User</code> <a href="../../../documentation/1.9/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:1.9:writingrulesand_headers">header</a>,
-
+Si <abbr title="LemonLDAP::NG">LL::NG</abbr> est utilisé par reverse-proxy, configurer l'<a href="../../../documentation/1.9/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:1.9:writingrulesand_headers">en-tête</a> <code>Auth-User</code>,
 </p>
 
 </div>

@@ -33,11 +33,11 @@
 <div class="level2">
 
 <p>
-<a href="http://www.limesurvey.org" class="urlextern" title="http://www.limesurvey.org"  rel="nofollow">LimeSurvey</a> is a web survey software written in PHP. LimeSurvey dispose d'un mode d'authentification par serveur web qui permet de l'integrer directement dans LemonLDAP::NG.
+<a href="http://www.limesurvey.org" class="urlextern" title="http://www.limesurvey.org"  rel="nofollow">LimeSurvey</a> est un logiciel de sondage écrit en PHP. LimeSurvey dispose d'un mode d'authentification par serveur web qui permet de l'integrer directement dans LemonLDAP::NG.
 </p>
 
 <p>
-To have a stronger integration, we will configure LimeSurvey to autocreate unknown users and use HTTP headers to fill name, mail and roles. Par exemple, en utilisant 3 rôles :
+Pour une meilleure integration, LimeSurvey doit être configuré pour créer automatiquement les utilisateurs inconnus et utiliser les en-têtes HTTP pour remplir le nom, le mail et les rôles. Par exemple, en utilisant 3 rôles :
 </p>
 <ul>
 <li class="level1"><div class="li"> User : peut répondre aux surveillances</div>
@@ -89,8 +89,7 @@ La configuration est effectuée via config.php:
 <span class="br0">)</span><span class="sy0">;</span></pre>
 
 <p>
-</p><p></p><div class="notetip">We directly use HTTP headers to fill default user profile.
-
+</p><p></p><div class="notetip">On utilise les en-têtes HTTP pour trouver le profil utilisateur par défaut.
 </div></p>
 </p>
 
@@ -115,8 +114,7 @@ Configurer l'hôte virtuel LimeSurvey comme n'importe quel autre <a href="../../
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 <p>
-</p><p></p><div class="noteimportant">You need to set the PHP_AUTH_USER variable to have the Webserver authentication mode working.
-
+</p><p></p><div class="noteimportant">Il faut renseigner la variable PHP_AUTH_USER pour faire fonctionner le mode d'authentification par serveur web.
 </div></p>
 </p>
 
