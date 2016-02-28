@@ -90,6 +90,7 @@
   "cfgLog": "Default configuration provided by LemonLDAP::NG team",
   "cfgNum": "1",
   "cookieName": "lemonldap",
+  "customFunctions": "My::hello My::get_uri My::get_additional_arg",
   "demoExportedVars": {
     "cn": "cn",
     "mail": "mail",
@@ -99,7 +100,10 @@
   "exportedHeaders": {
     "test1.example.com": {
       "Auth-User": "$uid",
-      "Ip-Addr": "$ipAddr"
+      "Ip-Addr": "$ipAddr",
+      "Hello": "hello()",
+      "Uri": "get_uri()",
+      "Additional-Arg": "get_additional_arg('header-added')"
     },
     "test2.example.com": {
       "Auth-User": "$uid"
