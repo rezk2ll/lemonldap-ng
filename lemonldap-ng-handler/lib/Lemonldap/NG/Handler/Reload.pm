@@ -253,7 +253,7 @@ sub headersInit {
             $sub .= "'$_' => $val,";
         }
 
-        $tsv->{forgeHeaders}->{$vhost} = $tsv->{jail}->jail_reval("sub{$sub}");
+        $tsv->{forgeHeaders}->{$vhost} = $tsv->{jail}->jail_reval("sub{return($sub)}");
 
         Lemonldap::NG::Handler::Main::Logger->lmLog(
             "$self: Unable to forge headers: $@: sub {$sub}", 'error' )

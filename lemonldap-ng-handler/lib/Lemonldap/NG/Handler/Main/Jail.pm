@@ -46,11 +46,11 @@ sub build_jail {
         }
         next if ( $self->can($_) );
         eval "sub $_ {
-            my \$r = shift;
-            my \$uri = Lemonldap::NG::Handler::API->uri_with_args(\$r);
-            return $sub(\$uri, \$r, \@_)
-            }";
+            my \$uri = Lemonldap::NG::Handler::API::${Lemonldap::NG::Handler::API::mode}::uri_with_args();
+            return $sub(\$uri,\@_)
+        }";
         Lemonldap::NG::Handler::Main::Logger->lmLog( $@, 'error' ) if ($@);
+        $_ = "&$_";
     }
 
     if ( $self->useSafeJail ) {
@@ -73,7 +73,7 @@ sub build_jail {
               &unparsed_uri &args &method &header_in   )
         ]
     );
-    $self->jail->share(@t);
+    $self->jail->share_from(__PACKAGE__,[@t]);
     $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
 
     return $self->jail;
