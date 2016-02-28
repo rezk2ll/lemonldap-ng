@@ -5,6 +5,7 @@ use strict;
 use base 'Lemonldap::NG::Handler::API::PSGI';
 
 *cgiName = *Lemonldap::NG::Handler::API::PSGI::cgiName;
+*uri_with_args = *Lemonldap::NG::Handler::API::PSGI::uri_with_args;
 
 # In server mode, headers are not passed to a PSGI application but returned
 # to the server

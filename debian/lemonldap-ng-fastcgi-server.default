@@ -10,3 +10,6 @@ PID=/var/run/llng-fastcgi-server/llng-fastcgi-server.pid
 # User and GROUP
 USER=www-data
 GROUP=www-data
+
+# Custom functions file
+#CUSTOM_FUNCTIONS_FILE=/var/lib/lemonldap-ng/myfile.pm

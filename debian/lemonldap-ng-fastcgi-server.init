@@ -37,6 +37,10 @@ fi
 
 DAEMON_OPTS="-p ${PID} -u ${USER} -g ${GROUP} -s ${SOCKET}"
 
+if [ -z "$CUSTOM_FUNCTIONS_FILE" ]; then
+	DAEMON_OPTS="$DAEMON_OPTS -f ${CUSTOM_FUNCTIONS_FILE}"
+fi
+
 start_server() {
 	# Start the daemon/service
 	#

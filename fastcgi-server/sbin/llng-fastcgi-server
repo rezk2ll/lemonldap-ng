@@ -10,13 +10,14 @@ use Lemonldap::NG::Handler::SharedConf;
 our %opts;
 my %_apps;
 
-getopts( 'Fn:p:s:u:g:', \%opts );
+getopts( 'Fn:p:s:u:g:f:', \%opts );
 
 $opts{n} ||= $ENV{NPROC}  || 7;
 $opts{p} ||= $ENV{PID}    || '__FASTCGISOCKDIR__/llng-fastcgi.pid';
 $opts{s} ||= $ENV{SOCKET} || '__FASTCGISOCKDIR__/llng-fastcgi.sock';
 $opts{u} ||= $ENV{USER};
 $opts{g} ||= $ENV{GROUP};
+$opts{f} ||= $ENV{CUSTOM_FUNCTIONS_FILE};
 
 if ( $opts{g} ) {
     my $grp = getgrnam( $opts{g} ) or warn "Can't change uid to $opts{g}";
@@ -26,6 +27,11 @@ if ( $opts{g} ) {
 if ( $opts{u} ) {
     my $uid = getpwnam( $opts{u} ) or warn "Can't change uid to $opts{u}";
     POSIX::setuid($uid);
+}
+
+if($opts{f}) {
+    eval {require $opts{f}};
+    die $@ if($@);
 }
 
 my %builder = (
@@ -68,6 +74,9 @@ my $app = sub {
     die "Unknown PSGI type $type";
 };
 
+# Hook for customFunctions initialization
+use Lemonldap::NG::Handler::API::PSGI::Server;
+$Lemonldap::NG::Handler::API::mode = 'PSGI::Server';
 Lemonldap::NG::Handler::SharedConf->init();
 
 my $server = Plack::Runner->new();

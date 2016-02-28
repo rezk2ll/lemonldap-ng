@@ -10,3 +10,6 @@ PID=__FASTCGISOCKDIR__/llng-fastcgi-server.pid
 # User and GROUP
 USER=__USER__
 GROUP=__GROUP__
+
+# Custom functions file
+#CUSTOM_FUNCTIONS_FILE=/var/lib/lemonldap-ng/myfile.pm
