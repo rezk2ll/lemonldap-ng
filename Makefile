@@ -1056,6 +1056,7 @@ translated-doc: omegat-configuration-file
 	mkdir -p po-doc/$*
 	$(eval CODE = $(call language_code,$*))
 	$(MAKE) translated-doc LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
+	cd po-doc/$*/pages/documentation/ && rm -rf current && ln -s 1.9 current && cd -
 	
 omegat-clean:
 	rm -rf omegat.files/*/omegat.project omegat.files/*/omegat/project_save*.bak
