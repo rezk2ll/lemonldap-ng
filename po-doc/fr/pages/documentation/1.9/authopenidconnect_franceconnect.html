@@ -33,58 +33,46 @@
 <div class="level2">
 
 <p>
-<a href="https://doc.integ01.dev-franceconnect.fr/" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/"  rel="nofollow">France Connect</a> is an authentication platform made by French government.
-
+<a href="https://doc.integ01.dev-franceconnect.fr/" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/"  rel="nofollow">France Connect</a> est une plateforme d'authentification créée par le gouvernement français.
 </p>
 
 <p>
-</p><p></p><div class="noteimportant">It is for the moment only in BETA stage. This documentation will explain how to configure <abbr title="LemonLDAP::NG">LL::NG</abbr> with the developer reserved space.
-
+</p><p></p><div class="noteimportant">Elle n'est pour le moment disponible qu'à titre de test. Cette documentation présente la configuration de <abbr title="LemonLDAP::NG">LL::NG</abbr> avec l'environnement de développement.
 </div></p>
 </p>
 
 </div><!-- EDIT2 SECTION "Presentation" [83-383] -->
 
-<h2 class="sectionedit3" id="register_on_france_connect">Register on France Connect</h2>
+<h2 class="sectionedit3" id="register_on_france_connect">S'enregistrer dans France Connect</h2>
 <div class="level2">
 
 <p>
-
-Once <a href="../../documentation/1.9/openidconnectservice.html" class="wikilink1" title="documentation:1.9:openidconnectservice">OpenID Connect service</a> is configured, you need to register to France Connect.
-
+Une fois le <a href="../../documentation/1.9/openidconnectservice.html" class="wikilink1" title="documentation:1.9:openidconnectservice">service OpenID-Connect</a> configuré, on peut s'enregistrer dans France Connect.
 </p>
 
 <p>
-
-Use the following form: <a href="https://doc.integ01.dev-franceconnect.fr/inscription" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/inscription"  rel="nofollow">https://doc.integ01.dev-franceconnect.fr/inscription</a>.
-
+Utiliser le formulaire suivant : <a href="https://doc.integ01.dev-franceconnect.fr/inscription" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/inscription"  rel="nofollow">https://doc.integ01.dev-franceconnect.fr/inscription</a>.
 </p>
 
 <p>
-
-You need to provide the callback URLs, for example <a href="https://auth.domain.com/?openidcallback=1" class="urlextern" title="https://auth.domain.com/?openidcallback=1"  rel="nofollow">https://auth.domain.com/?openidcallback=1</a>.
-
+Il faut fournir les URLs de rappel, par exemple <a href="https://auth.domain.com/?openidcallback=1" class="urlextern" title="https://auth.domain.com/?openidcallback=1"  rel="nofollow">https://auth.domain.com/?openidcallback=1</a>.
 </p>
 
 <p>
-
-You will then get a <code>client_id</code> and a <code>client_secret</code>.
-
+On obtient ainsi les <code>client_id</code> et <code>client_secret</code>.
 </p>
 
 </div><!-- EDIT3 SECTION "Register on France Connect" [384-770] -->
 
-<h2 class="sectionedit4" id="declare_france_connect_in_your_llng_server">Declare France Connect in your LL::NG server</h2>
+<h2 class="sectionedit4" id="declare_france_connect_in_your_llng_server">Déclarer France Connect dans le serveur LL::NG</h2>
 <div class="level2">
 
 <p>
-
-Go in Manager and create a new OpenID Connect provider. You can call it <code>france-connect</code> for example.
-
+Aller dans le Manager et créer un fournisseur OpenID-Connect. On peut l'appeler <code>france-connect</code> par exemple.
 </p>
 
 <p>
-Click on <code>Metadata</code> and set manually the metadata of the service, using <a href="https://doc.integ01.dev-franceconnect.fr/fournisseur-service" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/fournisseur-service"  rel="nofollow">France Connect endpoints</a>. Par exemple :
+Cliquer sur <code>Métadonnées</code> et définir manuellement les métadonnées du service, en utilisant les <a href="https://doc.integ01.dev-franceconnect.fr/fournisseur-service" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/fournisseur-service"  rel="nofollow">points terminaux France Connect</a>. Par exemple :
 </p>
 <pre class="code file javascript"><span class="br0">{</span>
 <span class="st0">"issuer"</span><span class="sy0">:</span> <span class="st0">"https://fcp.integ01.dev-franceconnect.fr"</span><span class="sy0">,</span>
@@ -95,27 +83,22 @@ Click on <code>Metadata</code> and set manually the metadata of the service, usi
 <span class="br0">}</span></pre>
 
 <p>
-
-You can skip JWKS data, they are not provided by France Connect. The security relies on the symmetric key <code>client_secret</code>.
-
+Inutile de renseigner les données JWKS, elles ne sont pas fournies par France Connect. La sécurité repose sur la clef symétrique <code>client_secret</code>.
 </p>
 
 <p>
-
-Go in <code>Exported attributes</code> to choose which attributes from “identité pivot” you want to collect. See <a href="https://doc.integ01.dev-franceconnect.fr/identite-pivot" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/identite-pivot"  rel="nofollow">https://doc.integ01.dev-franceconnect.fr/identite-pivot</a>
+Aller dans les <code>Attributs exportés</code> pour choisir quels attributs de l'« identité pivot » on souhaite collecter. Voir <a href="https://doc.integ01.dev-franceconnect.fr/identite-pivot" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/identite-pivot"  rel="nofollow">https://doc.integ01.dev-franceconnect.fr/identite-pivot</a>
 </p>
 
 <p>
-
-Now go in <code>Options</code>:
-
+Aller ensuite dans <code>Options</code>:
 </p>
 <ul>
-<li class="level1"><div class="li">  In <code>Configuration</code>, register the <code>client_id</code> and <code>client_secret</code> given by France Connect</div>
+<li class="level1"><div class="li"> Dans <code>Configuration</code>, enregistrer les <code>client_id</code> et <code>client_secret</code> donnés par France Connect</div>
 </li>
-<li class="level1"><div class="li">  In <code>Protocol</code>, adapt the <code>scope</code> to the exported attributes you want. See <a href="https://doc.integ01.dev-franceconnect.fr/fs-scopes" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/fs-scopes"  rel="nofollow">https://doc.integ01.dev-franceconnect.fr/fs-scopes</a></div>
+<li class="level1"><div class="li"> Dans <code>Protocole</code>, adapter le <code>scope</code> à l'attribut exporté voulu. Voir <a href="https://doc.integ01.dev-franceconnect.fr/fs-scopes" class="urlextern" title="https://doc.integ01.dev-franceconnect.fr/fs-scopes"  rel="nofollow">https://doc.integ01.dev-franceconnect.fr/fs-scopes</a></div>
 </li>
-<li class="level1"><div class="li">  In <code>Display</code>, you can set the name and the logo</div>
+<li class="level1"><div class="li"> Dans <code>Affichage</code>, on peut indiquer le nom et le logo</div>
 </li>
 </ul>
 

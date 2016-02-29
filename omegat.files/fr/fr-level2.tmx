@@ -304,6 +304,14 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Default filter<ept i='0'>&lt;/s0&gt;</ept>: default LDAP fitler for searches, should not be modified.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165352Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Filtre par défaut<ept i='0'>&lt;/s0&gt;</ept> : filtre LDAP par défaut pour les recherches, ne devrait pas être modifié.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>http://en.wikipedia.org/wiki/Model%E2%80%93View%E2%80%93Controller</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -702,6 +710,14 @@ make test</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120506T103622Z" changeid="xavier">
         <seg>Lyon</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>OpenID protocol is deprecated.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171956Z" changeid="xavier">
+        <seg>Le protocole OpenID est obsolète.</seg>
       </tuv>
     </tu>
     <tu>
@@ -1592,6 +1608,14 @@ ln -s ../pastel/*.tpl .</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Click on <bpt i='0' x='0'>&lt;c0&gt;</bpt>Metadata<ept i='0'>&lt;/c0&gt;</ept> and set manually the metadata of the service, using <bpt i='1' x='1'>&lt;a1&gt;</bpt>France Connect endpoints<ept i='1'>&lt;/a1&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T174156Z" changeid="xavier">
+        <seg>Cliquer sur <bpt i='0' x='0'>&lt;c0&gt;</bpt>Métadonnées<ept i='0'>&lt;/c0&gt;</ept> et définir manuellement les métadonnées du service, en utilisant les <bpt i='1' x='1'>&lt;a1&gt;</bpt>points terminaux France Connect<ept i='1'>&lt;/a1&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>It can be seen in system processes, for example:</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120505T083912Z" changeid="xavier">
@@ -2004,6 +2028,14 @@ ln -s ../pastel/*.tpl .</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T185504Z" changeid="xavier">
         <seg>Les fichiers verrous sont stockés dans un autre répertoire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Go in <bpt i='0' x='0'>&lt;c0&gt;</bpt>Exported attributes<ept i='0'>&lt;/c0&gt;</ept> to choose which attributes from “identité pivot” you want to collect.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T175011Z" changeid="xavier">
+        <seg>Aller dans les <bpt i='0' x='0'>&lt;c0&gt;</bpt>Attributs exportés<ept i='0'>&lt;/c0&gt;</ept> pour choisir quels attributs de l'« identité pivot » on souhaite collecter.</seg>
       </tuv>
     </tu>
     <tu>
@@ -3686,6 +3718,14 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>You should now use <bpt i='0' x='0'>&lt;a0&gt;</bpt>OpenID Connect<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T172022Z" changeid="xavier">
+        <seg>Il faut maintenant utiliser <bpt i='0' x='0'>&lt;a0&gt;</bpt>OpenID-Connect<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>http://obm.org</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111211T111715Z" changeid="xavier">
@@ -4604,6 +4644,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>To configure requested attributes, edit <bpt i='0' x='0'>&lt;s0&gt;</bpt>Exported variables<ept i='0'>&lt;/s0&gt;</ept> and define attributes:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T172309Z" changeid="xavier">
+        <seg>Pour configurer les attributs à récupérer, éditer les <bpt i='0' x='0'>&lt;s0&gt;</bpt>Variables exportées<ept i='0'>&lt;/s0&gt;</ept> et definir les attributs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>/_detail/logos/logo_linagora.png?id=references</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -4768,6 +4816,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
         <seg>L'agent n'intercepte pas de <bpt i='0' x='0'>&lt;a0&gt;</bpt>cookie SSO<ept i='0'>&lt;/a0&gt;</ept> (car il n'est pas dans le même domaine) et redirige l'utilisateur vers le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>You have to use <bpt i='0' x='0'>&lt;c0&gt;</bpt>Multiple<ept i='0'>&lt;/c0&gt;</ept> as authentication modul (this will also force <bpt i='1' x='1'>&lt;c1&gt;</bpt>Multiple<ept i='1'>&lt;/c1&gt;</ept> for the users module).</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171312Z" changeid="xavier">
+        <seg>Il faut utiliser <bpt i='0' x='0'>&lt;c0&gt;</bpt>Multiple<ept i='0'>&lt;/c0&gt;</ept> comme module d'authentification (celà force <bpt i='1' x='1'>&lt;c1&gt;</bpt>Multiple<ept i='1'>&lt;/c1&gt;</ept> pour le module utilisateur).</seg>
       </tuv>
     </tu>
     <tu>
@@ -5048,6 +5104,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
         <seg>documentation:latest:start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>This documentation will explain how to configure <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> with the developer reserved space.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T173408Z" changeid="xavier">
+        <seg>Cette documentation présente la configuration de <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> avec l'environnement de développement.</seg>
       </tuv>
     </tu>
     <tu>
@@ -5508,6 +5572,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>France Connect<ept i='0'>&lt;/a0&gt;</ept> is an authentication platform made by French government.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T173035Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>France Connect<ept i='0'>&lt;/a0&gt;</ept> est une plateforme d'authentification créée par le gouvernement français.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>#s</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -5884,6 +5956,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>List of attributes to query to fill user session.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165031Z" changeid="xavier">
+        <seg>Liste d'attributs à interroger pour trouver la session utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>FOSDEM</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120506T103551Z" changeid="xavier">
@@ -6008,6 +6088,14 @@ make test</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120221T070756Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Niveau d'authentification<ept i='0'>&lt;/s0&gt;</ept> : niveau d'authentification pour ce module</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Password expiration workflow</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T170129Z" changeid="xavier">
+        <seg>Procédé d'expiration du mot-de-passe</seg>
       </tuv>
     </tu>
     <tu>
@@ -6414,6 +6502,14 @@ make test</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T063511Z" changeid="guimard">
         <seg>La clef de session contient l'adresse mail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Account<ept i='0'>&lt;/s0&gt;</ept>: <bpt i='1' x='1'>&lt;a1&gt;</bpt>DN<ept i='1'>&lt;/a1&gt;</ept> used to connect to LDAP server.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165223Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Compte<ept i='0'>&lt;/s0&gt;</ept> : <bpt i='1' x='1'>&lt;a1&gt;</bpt>DN<ept i='1'>&lt;/a1&gt;</ept> à utiliser pour se connecter au serveur LDAP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7376,6 +7472,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Now go in <bpt i='0' x='0'>&lt;c0&gt;</bpt>Options<ept i='0'>&lt;/c0&gt;</ept>:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T191048Z" changeid="xavier">
+        <seg>Aller ensuite dans <bpt i='0' x='0'>&lt;c0&gt;</bpt>Options<ept i='0'>&lt;/c0&gt;</ept>:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>SAML sessions module name and options</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -7680,6 +7784,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Go in Manager and create a new OpenID Connect provider.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T174012Z" changeid="xavier">
+        <seg>Aller dans le Manager et créer un fournisseur OpenID-Connect.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Mot de passe pour l'utilisateur lemonldap-ng :
 [...]
 lemonldap-ng=&gt; create table sessions ( id char(32) not null primary key, a_session text );
@@ -7734,6 +7846,14 @@ lemonldap-ng=&gt; q</seg>
         <seg><bpt i='41' x='41'>&lt;a41&gt;</bpt><bpt i='42' x='42'>&lt;s42&gt;</bpt>print<ept i='42'>&lt;/s42&gt;</ept><ept i='41'>&lt;/a41&gt;</ept> <bpt i='43' x='43'>&lt;s43&gt;</bpt>STDERR<ept i='43'>&lt;/s43&gt;</ept> <bpt i='44' x='44'>&lt;s44&gt;</bpt>&quot;SOAP Error: &quot;<ept i='44'>&lt;/s44&gt;</ept> <bpt i='45' x='45'>&lt;s45&gt;</bpt>.<ept i='45'>&lt;/s45&gt;</ept> <bpt i='46' x='46'>&lt;s46&gt;</bpt>$r<ept i='46'>&lt;/s46&gt;</ept><bpt i='47' x='47'>&lt;s47&gt;</bpt>-&gt;<ept i='47'>&lt;/s47&gt;</ept><bpt i='48' x='48'>&lt;s48&gt;</bpt>fault<ept i='48'>&lt;/s48&gt;</ept><bpt i='49' x='49'>&lt;s49&gt;</bpt>-&gt;<ept i='49'>&lt;/s49&gt;</ept><bpt i='50' x='50'>&lt;s50&gt;</bpt>{<ept i='50'>&lt;/s50&gt;</ept>faultstring<bpt i='51' x='51'>&lt;s51&gt;</bpt>}<ept i='51'>&lt;/s51&gt;</ept><bpt i='52' x='52'>&lt;s52&gt;</bpt>;<ept i='52'>&lt;/s52&gt;</ept>
 <bpt i='53' x='53'>&lt;s53&gt;</bpt>}<ept i='53'>&lt;/s53&gt;</ept>
 <bpt i='54' x='54'>&lt;s54&gt;</bpt>else<ept i='54'>&lt;/s54&gt;</ept> <bpt i='55' x='55'>&lt;s55&gt;</bpt>{<ept i='55'>&lt;/s55&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>You can call it <bpt i='0' x='0'>&lt;c0&gt;</bpt>france-connect<ept i='0'>&lt;/c0&gt;</ept> for example.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T174033Z" changeid="xavier">
+        <seg>On peut l'appeler <bpt i='0' x='0'>&lt;c0&gt;</bpt>france-connect<ept i='0'>&lt;/c0&gt;</ept> par exemple.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8566,6 +8686,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Password<ept i='0'>&lt;/s0&gt;</ept>: password to used to connect to LDAP server.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165235Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Mot-de-passe<ept i='0'>&lt;/s0&gt;</ept> : mot-de-passe à utiliser pour se connecter au serveur LDAP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>It returns 1 if this match, 0 else.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T121730Z" changeid="xavier">
@@ -8984,6 +9112,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120301T053643Z" changeid="xavier">
         <seg>Un autre système <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> configuré avec <bpt i='1' x='1'>&lt;a1&gt;</bpt>authentification CAS<ept i='1'>&lt;/a1&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Alias dereference<ept i='0'>&lt;/s0&gt;</ept>: How to manage LDAP aliases.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165433Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Déréférence d'alias<ept i='0'>&lt;/s0&gt;</ept> : comment gérer les alias LDAP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9448,6 +9584,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120226T162241Z" changeid="xavier">
         <seg>https://upgrade.yubico.com/getapikey/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>As LDAP is a login/password based module, the authentication level can be:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165002Z" changeid="xavier">
+        <seg>Comme LDAP est un module de type login/mot-de-passe, le niveau d'authentification peut être :</seg>
       </tuv>
     </tu>
     <tu>
@@ -10502,6 +10646,14 @@ description: {whatToTrace}'$uid'
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120221T070217Z" changeid="xavier">
         <seg>Configuration SSL du portail dans Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>LDAP sever can block brute-force attacks, and <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> will display that account is locked</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T164819Z" changeid="xavier">
+        <seg>Le serveur LDAP peut bloquer les attaques par force brute et <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> affichera que le compte est bloqué</seg>
       </tuv>
     </tu>
     <tu>
@@ -12712,6 +12864,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Password expiration warning workflow</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165959Z" changeid="xavier">
+        <seg>Procédé d'avertissement avant expiration du mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>YUM repository</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120303T095518Z" changeid="xavier">
@@ -13064,6 +13224,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120420T161838Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> utilise un mécanisme de session basé sur un identifiant de session secret partagé entre l'utilisateur (dans un <bpt i='1' x='1'>&lt;a1&gt;</bpt>cookie SSO<ept i='1'>&lt;/a1&gt;</ept>) et la <bpt i='2' x='2'>&lt;a2&gt;</bpt>base des sessions<ept i='2'>&lt;/a2&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Password policy control<ept i='0'>&lt;/s0&gt;</ept>: enable to use LDAP password policy.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165501Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Contrôle de politique de mot-de-passe<ept i='0'>&lt;/s0&gt;</ept> : active l'utilisation de la politique de mots-de-passe LDAP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13722,6 +13890,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Once <bpt i='0' x='0'>&lt;a0&gt;</bpt>OpenID Connect service<ept i='0'>&lt;/a0&gt;</ept> is configured, you need to register to France Connect.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T173728Z" changeid="xavier">
+        <seg>Une fois le <bpt i='0' x='0'>&lt;a0&gt;</bpt>service OpenID-Connect<ept i='0'>&lt;/a0&gt;</ept> configuré, on peut s'enregistrer dans France Connect.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Renew authentication<ept i='0'>&lt;/s0&gt;</ept>: force authentication renewal on <bpt i='1' x='1'>&lt;a1&gt;</bpt>CAS<ept i='1'>&lt;/a1&gt;</ept> server</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111225T160449Z" changeid="xavier">
@@ -13806,6 +13982,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120506T103644Z" changeid="xavier">
         <seg>Strasbourg</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> can use an LDAP directory to:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T163902Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> peut utiliser un annuaire LDAP pour :</seg>
       </tuv>
     </tu>
     <tu>
@@ -13946,10 +14130,26 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Version<ept i='0'>&lt;/s0&gt;</ept>: LDAP protocol version.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165251Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Version<ept i='0'>&lt;/s0&gt;</ept> :  version du protocole LDAP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Entry Identifier</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
         <seg>Identifiant d'entrée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>See <bpt i='1' x='1'>&lt;a1&gt;</bpt>https://doc.integ01.dev-franceconnect.fr/identite-pivot<ept i='1'>&lt;/a1&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T191040Z" changeid="xavier">
+        <seg>Voir <bpt i='1' x='1'>&lt;a1&gt;</bpt>https://doc.integ01.dev-franceconnect.fr/identite-pivot<ept i='1'>&lt;/a1&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -14572,6 +14772,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>In LDAP filters, $user is replaced by user login, and $mail by user email.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165335Z" changeid="xavier">
+        <seg>Dans les filtres LDAP, $user est remplacé par le nom du compte et $mail par l'adresse email.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>touch /tmp/pgt.txt</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111225T160925Z" changeid="xavier">
@@ -14732,6 +14940,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>This backend allows to chain authentication method, for example to failback to LDAP authentication if Remote authentication failed…</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171203Z" changeid="xavier">
+        <seg>Ce backend permet de chaîner des méthodes d'authentification, par exemple pour basculer sur une authentification LDAP si l'authentification amont a échouée…</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Internal databases<ept i='0'>&lt;/s0&gt;</ept>: only used by LemonLDAP::NG</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -14820,6 +15036,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Register on France Connect</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T173418Z" changeid="xavier">
+        <seg>S'enregistrer dans France Connect</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>/_detail/screenshots/1.0/manager/accordeon_dark.png?id=screenshots</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -14892,6 +15116,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>You need to provide the callback URLs, for example <bpt i='0' x='0'>&lt;a0&gt;</bpt>https://auth.domain.com/?openidcallback=1<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T173833Z" changeid="xavier">
+        <seg>Il faut fournir les URLs de rappel, par exemple <bpt i='0' x='0'>&lt;a0&gt;</bpt>https://auth.domain.com/?openidcallback=1<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Advanced configuration</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120107T145545Z" changeid="xavier">
@@ -14912,6 +15144,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120418T203342Z" changeid="guimard">
         <seg>Sauver la configuration et quitter le manager.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>LDAP server can check password strength, and <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> portal will display correct errors (password too short, password in history, etc.)</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T164121Z" changeid="xavier">
+        <seg>Le server LDAP server peut vérifier la solidité du mot de passe et le portail <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> affichera les erreurs correctes (mot-de-passe trop court, dans l'historique, etc…)</seg>
       </tuv>
     </tu>
     <tu>
@@ -15636,6 +15876,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Overloading is not available trough the Manager</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171757Z" changeid="xavier">
+        <seg>La surcharge n'est pas paramètrable dans le manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Clément “KPTN” OUDOT<ept i='0'>&lt;/s0&gt;</ept>: project leader, lead developer, graphics, documentation, community management</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20131025T051435Z" changeid="xavier">
@@ -15888,6 +16136,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120303T095831Z" changeid="xavier">
         <seg>Avec YUM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Declare France Connect in your LL::NG server</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T173919Z" changeid="xavier">
+        <seg>Déclarer France Connect dans le serveur LL::NG</seg>
       </tuv>
     </tu>
     <tu>
@@ -16784,6 +17040,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120226T162359Z" changeid="xavier">
         <seg>Dans le manager, allez dans <bpt i='0' x='0'>&lt;c0&gt;</bpt>Paramètres generaux<ept i='0'>&lt;/c0&gt;</ept> &gt; <bpt i='1' x='1'>&lt;c1&gt;</bpt>Modules d'authentification<ept i='1'>&lt;/c1&gt;</ept> et choisissez Yubikey comme module d'authentication.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Can be overridden by an LDAP <bpt i='1' x='1'>&lt;a1&gt;</bpt>URI<ept i='1'>&lt;/a1&gt;</ept> in server host.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165153Z" changeid="xavier">
+        <seg>Peut être surchargé par une <bpt i='3' x='3'>&lt;a3&gt;</bpt>URI<ept i='3'>&lt;/a3&gt;</ept> LDAP dans le nom du serveur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18676,6 +18940,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>The <bpt i='0' x='0'>&lt;c0&gt;</bpt>Multiple<ept i='0'>&lt;/c0&gt;</ept> system can :</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171732Z" changeid="xavier">
+        <seg>Le système <bpt i='0' x='0'>&lt;c0&gt;</bpt>Multiple<ept i='0'>&lt;/c0&gt;</ept> peut :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -19972,10 +20244,26 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>You will then get a <bpt i='0' x='0'>&lt;c0&gt;</bpt>client_id<ept i='0'>&lt;/c0&gt;</ept> and a <bpt i='1' x='1'>&lt;c1&gt;</bpt>client_secret<ept i='1'>&lt;/c1&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T173857Z" changeid="xavier">
+        <seg>On obtient ainsi les <bpt i='0' x='0'>&lt;c0&gt;</bpt>client_id<ept i='0'>&lt;/c0&gt;</ept> et <bpt i='1' x='1'>&lt;c1&gt;</bpt>client_secret<ept i='1'>&lt;/c1&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>First check and install the <bpt i='0' x='0'>&lt;a0&gt;</bpt>prerequisites<ept i='0'>&lt;/a0&gt;</ept>.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120324T160614Z" changeid="xavier">
         <seg>D'abord vérifier et installer les <bpt i='0' x='0'>&lt;a0&gt;</bpt>pré-requis<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>In <bpt i='0' x='0'>&lt;c0&gt;</bpt>Display<ept i='0'>&lt;/c0&gt;</ept>, you can set the name and the logo</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T191224Z" changeid="xavier">
+        <seg>Dans <bpt i='0' x='0'>&lt;c0&gt;</bpt>Affichage<ept i='0'>&lt;/c0&gt;</ept>, on peut indiquer le nom et le logo</seg>
       </tuv>
     </tu>
     <tu>
@@ -20156,6 +20444,14 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120217T045517Z" changeid="xavier">
         <seg>Redirection vers le portail de type remote</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Example, if you have <bpt i='0' x='0'>&lt;c0&gt;</bpt><bpt i='1' x='1'>&lt;a1&gt;</bpt>DBI<ept i='1'>&lt;/a1&gt;</ept>;LDAP<ept i='0'>&lt;/c0&gt;</ept> and <bpt i='2' x='2'>&lt;a2&gt;</bpt>DBI<ept i='2'>&lt;/a2&gt;</ept> failed for authentication, it will try first to call LDAP as user database.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171710Z" changeid="xavier">
+        <seg>Exemple, en utilisant “<bpt i='0' x='0'>&lt;c0&gt;</bpt><bpt i='1' x='1'>&lt;a1&gt;</bpt>DBI<ept i='1'>&lt;/a1&gt;</ept>;LDAP<ept i='0'>&lt;/c0&gt;</ept>”, si <bpt i='2' x='2'>&lt;a2&gt;</bpt>DBI<ept i='2'>&lt;/a2&gt;</ept> échoue pour l'authentification, Multi essaie d'utiliser LDAP comme base d'utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21100,6 +21396,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>You can skip JWKS data, they are not provided by France Connect.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T174227Z" changeid="xavier">
+        <seg>Inutile de renseigner les données JWKS, elles ne sont pas fournies par France Connect.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>File configuration backend</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T183726Z" changeid="xavier">
@@ -21910,6 +22214,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Modules are separated by semi-colons/</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171458Z" changeid="xavier">
+        <seg>Les modules doivent être séparés par point-virgules/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>documentation:googleapps-ssoconfig.png</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111203T182857Z" changeid="xavier">
@@ -22526,6 +22838,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Users search base<ept i='0'>&lt;/s0&gt;</ept>: Base of search in the LDAP directory.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165213Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Base de recherche des utilisateurs<ept i='0'>&lt;/s0&gt;</ept> : base de recherche de l'annuaire LDAP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Menu modules activation rules</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T121034Z" changeid="xavier">
@@ -22910,6 +23230,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111226T201551Z" changeid="xavier">
         <seg>https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Multiple backends stack</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T170157Z" changeid="xavier">
+        <seg>Empiler de multiples backends</seg>
       </tuv>
     </tu>
     <tu>
@@ -24184,6 +24512,14 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Server host<ept i='0'>&lt;/s0&gt;</ept>: LDAP server hostname or <bpt i='1' x='1'>&lt;a1&gt;</bpt>URI<ept i='1'>&lt;/a1&gt;</ept> (by default: localhost).</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165106Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Nom de serveur<ept i='0'>&lt;/s0&gt;</ept> : nom du serveur LDAP ou <bpt i='1' x='1'>&lt;a1&gt;</bpt>URI<ept i='1'>&lt;/a1&gt;</ept> (par défaut : localhost).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>The logout request will be sent even if the user did not use the application.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120418T200206Z" changeid="guimard">
@@ -24554,6 +24890,14 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>LDAP password encoding<ept i='0'>&lt;/s0&gt;</ept>: can allow to manage old LDAP servers using specific encoding for passwords (default: utf-8).</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165855Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Encodage des mots-de-passe LDAP<ept i='0'>&lt;/s0&gt;</ept> : peut permettre de gérer les anciens servers LDAP en utilisant un encodage spécifique pour les mots-de-passe (défaut: utf-8).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt><bpt i='1' x='1'>&lt;a1&gt;</bpt>SAML<ept i='1'>&lt;/a1&gt;</ept> service providers<ept i='0'>&lt;/s0&gt;</ept>: Registered SP</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120223T143417Z" changeid="xavier">
@@ -24746,6 +25090,14 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>This requires at least Net::LDAP 0.38.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165515Z" changeid="xavier">
+        <seg>Nécessite une version de Net::LDAP égale ou supérieure à 0.38.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>User name session field</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -24862,6 +25214,14 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120424T040233Z" changeid="xavier">
         <seg>Cookie SSO</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>This key must be stored directly in lemonldap-ng.ini:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171911Z" changeid="xavier">
+        <seg>Cette clef doit être stockée directement dans lemonldap-ng.ini :</seg>
       </tuv>
     </tu>
     <tu>
@@ -25076,6 +25436,14 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Use the following form: <bpt i='0' x='0'>&lt;a0&gt;</bpt>https://doc.integ01.dev-franceconnect.fr/inscription<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T173747Z" changeid="xavier">
+        <seg>Utiliser le formulaire suivant : <bpt i='0' x='0'>&lt;a0&gt;</bpt>https://doc.integ01.dev-franceconnect.fr/inscription<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='4' x='4'>&lt;a4&gt;</bpt>memcachedsessionbackend<ept i='4'>&lt;/a4&gt;</ept><ph x='5'>&lt;br5/&gt;</ph></seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111119T111552Z" changeid="xavier">
@@ -25194,6 +25562,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
         <seg>Lorsque vous validez les fichiers <bpt i='0' x='0'>&lt;a0&gt;</bpt>OmegaT<ept i='0'>&lt;/a0&gt;</ept> dans le dépôt svn, n'y poussez pas les fichiers de sauvegarde.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Server port<ept i='0'>&lt;/s0&gt;</ept>: TCP port used by LDAP server.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165119Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Port du serveur<ept i='0'>&lt;/s0&gt;</ept> : port TCP du serveur LDAP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25440,6 +25816,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20131025T082422Z" changeid="xavier">
         <seg>Variables qui peuvent être utilisées dans les règles et en-têtes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>If <bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept> failed, LDAP will be used.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171529Z" changeid="xavier">
+        <seg>Si <bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept> échoue, LDAP est utilisé.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26340,6 +26724,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>In <bpt i='0' x='0'>&lt;c0&gt;</bpt>Configuration<ept i='0'>&lt;/c0&gt;</ept>, register the <bpt i='1' x='1'>&lt;c1&gt;</bpt>client_id<ept i='1'>&lt;/c1&gt;</ept> and <bpt i='2' x='2'>&lt;c2&gt;</bpt>client_secret<ept i='2'>&lt;/c2&gt;</ept> given by France Connect</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T191117Z" changeid="xavier">
+        <seg>Dans <bpt i='0' x='0'>&lt;c0&gt;</bpt>Configuration<ept i='0'>&lt;/c0&gt;</ept>, enregistrer les <bpt i='1' x='1'>&lt;c1&gt;</bpt>client_id<ept i='1'>&lt;/c1&gt;</ept> et <bpt i='2' x='2'>&lt;c2&gt;</bpt>client_secret<ept i='2'>&lt;/c2&gt;</ept> donnés par France Connect</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt><bpt i='1' x='1'>&lt;s1&gt;</bpt>[<ept i='1'>&lt;/s1&gt;</ept>portal<bpt i='2' x='2'>&lt;s2&gt;</bpt>]<ept i='2'>&lt;/s2&gt;</ept><ept i='0'>&lt;/s0&gt;</ept>
 <bpt i='3' x='3'>&lt;s3&gt;</bpt>globalStorage<ept i='3'>&lt;/s3&gt;</ept> <bpt i='4' x='4'>&lt;s4&gt;</bpt>=<ept i='4'>&lt;/s4&gt;</ept><bpt i='5' x='5'>&lt;s5&gt;</bpt> Apache::Session::File<ept i='5'>&lt;/s5&gt;</ept>
 <bpt i='6' x='6'>&lt;s6&gt;</bpt>globalStorageOptions<ept i='6'>&lt;/s6&gt;</ept> <bpt i='7' x='7'>&lt;s7&gt;</bpt>=<ept i='7'>&lt;/s7&gt;</ept><bpt i='8' x='8'>&lt;s8&gt;</bpt> <bpt i='9' x='9'>&lt;s9&gt;</bpt>{<ept i='9'>&lt;/s9&gt;</ept> 'Directory' <bpt i='10' x='10'>&lt;s10&gt;</bpt>=<ept i='10'>&lt;/s10&gt;</ept>&gt; '/var/lib/lemonldap-ng/sessions/', 'LockDirectory' <bpt i='11' x='11'>&lt;s11&gt;</bpt>=<ept i='11'>&lt;/s11&gt;</ept>&gt; '/var/lib/lemonldap-ng/sessions/lock/', <bpt i='12' x='12'>&lt;s12&gt;</bpt>}<ept i='12'>&lt;/s12&gt;</ept><ept i='8'>&lt;/s8&gt;</ept></seg>
@@ -26396,6 +26788,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120506T061002Z" changeid="xavier">
         <seg>Les en-têtes sont des associations entre un nom d'en-tête et une expression perl qui retourne une chaîne.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>(see ppolicy workflow below)</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T170137Z" changeid="xavier">
+        <seg>(voir le procédé de politique de mots-de-passe ci-dessous)</seg>
       </tuv>
     </tu>
     <tu>
@@ -26576,6 +26976,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>LDAP server can force password change on first connection, and <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> portal will display a password change form before opening <bpt i='1' x='1'>&lt;a1&gt;</bpt>SSO<ept i='1'>&lt;/a1&gt;</ept> session</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T164902Z" changeid="xavier">
+        <seg>Le serveur LDAP peut imposer le changement de mot-de-passe à la première connexion et le portail <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> affichera le formulaire de changement de mot-de-passe avant d'ouvrir la session <bpt i='1' x='1'>&lt;a1&gt;</bpt>SSO<ept i='1'>&lt;/a1&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>User owns <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO cookies<ept i='0'>&lt;/a0&gt;</ept> on the main domain (see <bpt i='1' x='1'>&lt;a1&gt;</bpt>Login kinematics<ept i='1'>&lt;/a1&gt;</ept>)</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120222T125811Z" changeid="xavier">
@@ -26644,6 +27052,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120221T063024Z" changeid="xavier">
         <seg>Ces options surchargent les options de signature du service (voir la <bpt i='0' x='0'>&lt;a0&gt;</bpt>configuration du service SAML<ept i='0'>&lt;/a0&gt;</ept>).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>To stack several times the same module, use “#name” with different names.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171816Z" changeid="xavier">
+        <seg>Pour empiler plusieurs fois le même module, utiliser ”#nom” avec différents noms.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27132,6 +27548,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T065911Z" changeid="guimard">
         <seg>radiusServer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Multiple will try to use the same module for authentication and users.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171617Z" changeid="xavier">
+        <seg>Multiple essaiera d'utiliser le même module pour l'authentification et les utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28612,6 +29036,14 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>The security relies on the symmetric key <bpt i='0' x='0'>&lt;c0&gt;</bpt>client_secret<ept i='0'>&lt;/c0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T174259Z" changeid="xavier">
+        <seg>La sécurité repose sur la clef symétrique <bpt i='0' x='0'>&lt;c0&gt;</bpt>client_secret<ept i='0'>&lt;/c0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>caFile</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T070218Z" changeid="guimard">
@@ -29962,6 +30394,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>In Manager, go in <bpt i='0' x='0'>&lt;c0&gt;</bpt>General Parameters<ept i='0'>&lt;/c0&gt;</ept> &gt; <bpt i='1' x='1'>&lt;c1&gt;</bpt>Authentication modules<ept i='1'>&lt;/c1&gt;</ept> and choose LDAP for authentication, users and/or password modules.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T164919Z" changeid="xavier">
+        <seg>Dans le manager, aller dans <bpt i='0' x='0'>&lt;c0&gt;</bpt>Paramètres généraux<ept i='0'>&lt;/c0&gt;</ept> &gt; <bpt i='1' x='1'>&lt;c1&gt;</bpt>Modules d'authentification<ept i='1'>&lt;/c1&gt;</ept> et choisir LDAP) pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Single Logout</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -31072,6 +31512,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>This works with every LDAP v2 or v3 server, including <bpt i='0' x='0'>&lt;a0&gt;</bpt>Active Directory<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T163942Z" changeid="xavier">
+        <seg>Ceci fonctionne avec tout serveur LDAP v2 ou v3, dont <bpt i='0' x='0'>&lt;a0&gt;</bpt>Active Directory<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>grantSessionRule</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T061621Z" changeid="guimard">
@@ -32008,6 +32456,14 @@ Display<bpt i='21' x='21'>&lt;s21&gt;</bpt>-<ept i='21'>&lt;/s21&gt;</ept>Name <
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Then you can have different <bpt i='0' x='0'>&lt;a0&gt;</bpt>parameters<ept i='0'>&lt;/a0&gt;</ept> for each stored in a Perl hash entry named multi:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171842Z" changeid="xavier">
+        <seg>Ensuite on peut avoir différents <bpt i='0' x='0'>&lt;a0&gt;</bpt>paramètres<ept i='0'>&lt;/a0&gt;</ept> pour chacun, stockés dans une table de hachage <bpt i='1' x='1'>&lt;a1&gt;</bpt>Perl<ept i='1'>&lt;/a1&gt;</ept> nommée multi :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Redirect on forbidden<ept i='0'>&lt;/s0&gt;</ept>: use 302 instead 403</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T144619Z" changeid="guimard">
@@ -32318,6 +32774,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>To chain SSL, you have to set “SSLRequire optional” in Apache configuration, else users will be authenticated by SSL only.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171934Z" changeid="xavier">
+        <seg>Pour chaîner SSL, il est nécessaire de mettre “SSLRequire optional” dans le fichier de configuration Apache, sinon les utilisateurs ne seront authentifiés que par SSL.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>rtyler@badwolf.org</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20131025T060846Z" changeid="xavier">
@@ -32378,6 +32842,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111211T172106Z" changeid="xavier">
         <seg>$_password</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>It is for the moment only in BETA stage.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T173311Z" changeid="xavier">
+        <seg>Elle n'est pour le moment disponible qu'à titre de test.</seg>
       </tuv>
     </tu>
     <tu>
@@ -32620,6 +33092,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111119T111634Z" changeid="xavier">
         <seg>IRC</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>For <bpt i='0' x='0'>&lt;a0&gt;</bpt>Active Directory<ept i='0'>&lt;/a0&gt;</ept>, choose <bpt i='1' x='1'>&lt;c1&gt;</bpt>Active Directory<ept i='1'>&lt;/c1&gt;</ept> instead of <bpt i='2' x='2'>&lt;c2&gt;</bpt>LDAP<ept i='2'>&lt;/c2&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T164944Z" changeid="xavier">
+        <seg>Pour <bpt i='0' x='0'>&lt;a0&gt;</bpt>Active Directory<ept i='0'>&lt;/a0&gt;</ept>, choisir <bpt i='1' x='1'>&lt;c1&gt;</bpt>Active Directory<ept i='1'>&lt;/c1&gt;</ept> au lieu de <bpt i='2' x='2'>&lt;c2&gt;</bpt>LDAP<ept i='2'>&lt;/c2&gt;</ept>.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34226,6 +34706,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Password modify extended operation<ept i='0'>&lt;/s0&gt;</ept>: enable to use the LDAP extended operation <bpt i='1' x='1'>&lt;c1&gt;</bpt>password modify<ept i='1'>&lt;/c1&gt;</ept> instead of standard modify operation.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165623Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Opération étendue de modification de mot-de-passe<ept i='0'>&lt;/s0&gt;</ept> : active l'utilisation de l'opération étendue de <bpt i='1' x='1'>&lt;c1&gt;</bpt>modification de mot-de-passe<ept i='1'>&lt;/c1&gt;</ept> LDAP au lieu de l'opération standard.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>all<ept i='0'>&lt;/s0&gt;</ept>: parameters for all modules</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T071357Z" changeid="xavier">
@@ -34740,6 +35228,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T064448Z" changeid="guimard">
         <seg>syslog</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>In <bpt i='0' x='0'>&lt;c0&gt;</bpt>Protocol<ept i='0'>&lt;/c0&gt;</ept>, adapt the <bpt i='1' x='1'>&lt;c1&gt;</bpt>scope<ept i='1'>&lt;/c1&gt;</ept> to the exported attributes you want.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T191158Z" changeid="xavier">
+        <seg>Dans <bpt i='0' x='0'>&lt;c0&gt;</bpt>Protocole<ept i='0'>&lt;/c0&gt;</ept>, adapter le <bpt i='1' x='1'>&lt;c1&gt;</bpt>scope<ept i='1'>&lt;/c1&gt;</ept> à l'attribut exporté voulu.</seg>
       </tuv>
     </tu>
     <tu>
@@ -36450,6 +36946,14 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>(default: <bpt i='1' x='1'>&lt;c1&gt;</bpt>find<ept i='1'>&lt;/c1&gt;</ept>)</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T165443Z" changeid="xavier">
+        <seg>(défaut: <bpt i='1' x='1'>&lt;c1&gt;</bpt>find<ept i='1'>&lt;/c1&gt;</ept>)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Liferay virtual host in Manager</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111211T074303Z" changeid="xavier">
@@ -36650,6 +37154,14 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Then go in <bpt i='2' x='2'>&lt;c2&gt;</bpt>Multiple parameters<ept i='2'>&lt;/c2&gt;</ept> to define the modules to chain for authentication and users.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T171427Z" changeid="xavier">
+        <seg>Aller ensuite dans les <bpt i='2' x='2'>&lt;c2&gt;</bpt>paramètres Multiple<ept i='2'>&lt;/c2&gt;</ept> pour définir les modules à chaîner pour l'authentification et les utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Then use the <bpt i='0' x='0'>&lt;c0&gt;</bpt>SiteMinder<ept i='0'>&lt;/c0&gt;</ept> tab to configure <bpt i='1' x='1'>&lt;a1&gt;</bpt>SSO<ept i='1'>&lt;/a1&gt;</ept>:</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111211T074140Z" changeid="xavier">
@@ -36744,6 +37256,14 @@ maxretry = 3</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120221T061756Z" changeid="xavier">
         <seg>Dans ce cas, l'authentification n'est pas une réponse à une requête d'authentification ce qui diminue les capacités de contrôle.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>See <bpt i='2' x='2'>&lt;a2&gt;</bpt>https://doc.integ01.dev-franceconnect.fr/fs-scopes<ept i='2'>&lt;/a2&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T191203Z" changeid="xavier">
+        <seg>Voir <bpt i='2' x='2'>&lt;a2&gt;</bpt>https://doc.integ01.dev-franceconnect.fr/fs-scopes<ept i='2'>&lt;/a2&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>

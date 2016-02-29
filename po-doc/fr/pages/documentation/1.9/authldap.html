@@ -39,8 +39,7 @@
 <div class="level2">
 
 <p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> can use an LDAP directory to:
-
+<abbr title="LemonLDAP::NG">LL::NG</abbr> peut utiliser un annuaire LDAP pour :
 </p>
 <ul>
 <li class="level1"><div class="li"> authentifier les utilisateurs</div>
@@ -54,20 +53,18 @@
 </ul>
 
 <p>
-
-This works with every LDAP v2 or v3 server, including <a href="../../documentation/1.9/authad.html" class="wikilink1" title="documentation:1.9:authad">Active Directory</a>.
-
+Ceci fonctionne avec tout serveur LDAP v2 ou v3, dont <a href="../../documentation/1.9/authad.html" class="wikilink1" title="documentation:1.9:authad">Active Directory</a>.
 </p>
 
 <p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> est compatible avec <a href="https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt" class="urlextern" title="https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt"  rel="nofollow">la politique de mots-de-passe LDAP</a> :
 </p>
 <ul>
-<li class="level1"><div class="li">  LDAP server can check password strength, and <abbr title="LemonLDAP::NG">LL::NG</abbr> portal will display correct errors (password too short, password in history, etc.)</div>
+<li class="level1"><div class="li"> Le server LDAP server peut vérifier la solidité du mot de passe et le portail <abbr title="LemonLDAP::NG">LL::NG</abbr> affichera les erreurs correctes (mot-de-passe trop court, dans l'historique, etc…)</div>
 </li>
-<li class="level1"><div class="li">  LDAP sever can block brute-force attacks, and <abbr title="LemonLDAP::NG">LL::NG</abbr> will display that account is locked</div>
+<li class="level1"><div class="li"> Le serveur LDAP peut bloquer les attaques par force brute et <abbr title="LemonLDAP::NG">LL::NG</abbr> affichera que le compte est bloqué</div>
 </li>
-<li class="level1"><div class="li">  LDAP server can force password change on first connection, and <abbr title="LemonLDAP::NG">LL::NG</abbr> portal will display a password change form before opening <abbr title="Authentification unique (Single Sign On)">SSO</abbr> session</div>
+<li class="level1"><div class="li"> Le serveur LDAP peut imposer le changement de mot-de-passe à la première connexion et le portail <abbr title="LemonLDAP::NG">LL::NG</abbr> affichera le formulaire de changement de mot-de-passe avant d'ouvrir la session <abbr title="Authentification unique (Single Sign On)">SSO</abbr></div>
 </li>
 </ul>
 
@@ -77,16 +74,12 @@ This works with every LDAP v2 or v3 server, including <a href="../../documentati
 <div class="level2">
 
 <p>
-
-In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose LDAP for authentication, users and/or password modules.
-
+Dans le manager, aller dans <code>Paramètres généraux</code> &gt; <code>Modules d'authentification</code> et choisir LDAP) pour les modules authentification, utilisateurs et/ou mots-de-passe.
 </p>
 
 <p>
 </p><p></p><div class="notetip">
-
-For <a href="../../documentation/1.9/authad.html" class="wikilink1" title="documentation:1.9:authad">Active Directory</a>, choose <code>Active Directory</code> instead of <code>LDAP</code>.
-
+Pour <a href="../../documentation/1.9/authad.html" class="wikilink1" title="documentation:1.9:authad">Active Directory</a>, choisir <code>Active Directory</code> au lieu de <code>LDAP</code>.
 </div></p>
 </p>
 
@@ -101,9 +94,7 @@ Le niveau d'authentification accordé aux utilisateurs authentifiés par ce modu
 
 <p>
 </p><p></p><div class="noteimportant">
-
-As LDAP is a login/password based module, the authentication level can be:
-
+Comme LDAP est un module de type login/mot-de-passe, le niveau d'authentification peut être :
 </p>
 <ul>
 <li class="level1"><div class="li"> augmenté (+1) si le portail est protégé par SSL (HTTPS)</div>
@@ -123,7 +114,7 @@ As LDAP is a login/password based module, the authentication level can be:
 <div class="level3">
 
 <p>
-List of attributes to query to fill user session. Voir aussi la <a href="../../documentation/1.9/exportedvars.html" class="wikilink1" title="documentation:1.9:exportedvars">configuration des variables exportées</a>.
+Liste d'attributs à interroger pour trouver la session utilisateur. Voir aussi la <a href="../../documentation/1.9/exportedvars.html" class="wikilink1" title="documentation:1.9:exportedvars">configuration des variables exportées</a>.
 </p>
 
 </div><!-- EDIT6 SECTION "Exported variables" [1536-1676] -->
@@ -131,7 +122,7 @@ List of attributes to query to fill user session. Voir aussi la <a href="../../d
 <h3 class="sectionedit7" id="connection">Connexion</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li"> <strong>Server host</strong>: LDAP server hostname or <abbr title="Uniform Resource Identifier">URI</abbr> (by default: localhost). Autres possibilités :</div>
+<li class="level1"><div class="li"> <strong>Nom de serveur</strong> : nom du serveur LDAP ou <abbr title="Uniform Resource Identifier">URI</abbr> (par défaut : localhost). Autres possibilités :</div>
 <ul>
 <li class="level2"><div class="li"> Plusieurs serveurs peuvent être renseignés séparés par des virgules ou espaces. Ils seront testés dans l'ordre indiqué.</div>
 </li>
@@ -141,17 +132,17 @@ List of attributes to query to fill user session. Voir aussi la <a href="../../d
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> <strong>Server port</strong>: TCP port used by LDAP server. Can be overridden by an LDAP <abbr title="Uniform Resource Identifier">URI</abbr> in server host.</div>
+<li class="level1"><div class="li"> <strong>Port du serveur</strong> : port TCP du serveur LDAP. Peut être surchargé par une &lt;a3&gt;URI&lt;/a3&gt; LDAP dans le nom du serveur.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Users search base</strong>: Base of search in the LDAP directory.</div>
+<li class="level1"><div class="li"> <strong>Base de recherche des utilisateurs</strong> : base de recherche de l'annuaire LDAP.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Account</strong>: <abbr title="Distinguished Name">DN</abbr> used to connect to LDAP server. Par défaut, une connexion anonyme est utilisée.</div>
+<li class="level1"><div class="li"> <strong>Compte</strong> : <abbr title="Distinguished Name">DN</abbr> à utiliser pour se connecter au serveur LDAP. Par défaut, une connexion anonyme est utilisée.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Password</strong>: password to used to connect to LDAP server. Par défaut, une connexion anonyme est utilisée.</div>
+<li class="level1"><div class="li"> <strong>Mot-de-passe</strong> : mot-de-passe à utiliser pour se connecter au serveur LDAP. Par défaut, une connexion anonyme est utilisée.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Timeout</strong> : délai maximum de connexion.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Version</strong>: LDAP protocol version.</div>
+<li class="level1"><div class="li"> <strong>Version</strong> :  version du protocole LDAP.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Attributs binaires</strong> : expression régulière correspondant aux attributs binaires (voir la documentation <a href="http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod" class="urlextern" title="http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod"  rel="nofollow">Net::LDAP</a>).</div>
 </li>
@@ -163,18 +154,17 @@ List of attributes to query to fill user session. Voir aussi la <a href="../../d
 <div class="level3">
 
 <p>
-</p><p></p><div class="notetip">In LDAP filters, $user is replaced by user login, and $mail by user email.
-
+</p><p></p><div class="notetip">Dans les filtres LDAP, $user est remplacé par le nom du compte et $mail par l'adresse email.
 </div></p>
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Default filter</strong>: default LDAP fitler for searches, should not be modified.</div>
+<li class="level1"><div class="li"> <strong>Filtre par défaut</strong> : filtre LDAP par défaut pour les recherches, ne devrait pas être modifié.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Filtre d'authentication</strong> : filtre pour trouver l'utilisateur à partir de son login (défaut : <code>(&amp;(uid=$user)(objectClass=inetOrgPerson))</code>)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Filtre mail</strong> : filtre pour trouver l'utilisateur à partir de son mail (défaut: <code>(&amp;(mail=$mail)(objectClass=inetOrgPerson))</code>)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Alias dereference</strong>: How to manage LDAP aliases. (default: <code>find</code>)</div>
+<li class="level1"><div class="li"> <strong>Déréférence d'alias</strong> : comment gérer les alias LDAP. (défaut: <code>find</code>)</div>
 </li>
 </ul>
 
@@ -220,13 +210,13 @@ Et le filtre d'adresse mail est :
 <h3 class="sectionedit10" id="password">Mot-de-passe</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li"> <strong>Password policy control</strong>: enable to use LDAP password policy. This requires at least Net::LDAP 0.38. (see ppolicy workflow below)</div>
+<li class="level1"><div class="li"> <strong>Contrôle de politique de mot-de-passe</strong> : active l'utilisation de la politique de mots-de-passe LDAP. Nécessite une version de Net::LDAP égale ou supérieure à 0.38. (voir le procédé de politique de mots-de-passe ci-dessous)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Password modify extended operation</strong>: enable to use the LDAP extended operation <code>password modify</code> instead of standard modify operation.</div>
+<li class="level1"><div class="li"> <strong>Opération étendue de modification de mot-de-passe</strong> : active l'utilisation de l'opération étendue de <code>modification de mot-de-passe</code> LDAP au lieu de l'opération standard.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Change comme utilisateur</strong> : active la modification du mot-de-passe avec les éléments d'authentification de l'utilisateur connecté. Nécessite de requérir l'ancien mot-de-passe (voir <a href="../../documentation/1.9/portalcustom.html" class="wikilink1" title="documentation:1.9:portalcustom">personnalisation du portail</a>).</div>
 </li>
-<li class="level1"><div class="li"> <strong>LDAP password encoding</strong>: can allow to manage old LDAP servers using specific encoding for passwords (default: utf-8).</div>
+<li class="level1"><div class="li"> <strong>Encodage des mots-de-passe LDAP</strong> : peut permettre de gérer les anciens servers LDAP en utilisant un encodage spécifique pour les mots-de-passe (défaut: utf-8).</div>
 </li>
 <li class="level1"><div class="li"> <strong>Utiliser l'attribut reset</strong> : activé pour utiliser l'attribut reset du mot-de-passe. Cet attribut est activé par LemonLDAP::NG lorsque <a href="../../documentation/1.9/resetpassword.html" class="wikilink1" title="documentation:1.9:resetpassword">le mot-de-passe a été réinitialisé par mail</a> et que l'utilisateur a choisi de générer le mot-de-passe (défaut : activé).</div>
 </li>
@@ -238,11 +228,11 @@ Et le filtre d'adresse mail est :
 
 <p>
 </p><div class="row"><div class="col-md-6">
-<strong>Password expiration warning workflow</strong>
+<strong>Procédé d'avertissement avant expiration du mot-de-passe</strong>
 <a href="/_detail/documentation/lemonldap-ng-password-expiration-warning.png?id=documentation%3A1.9%3Aauthldap" class="media" title="documentation:lemonldap-ng-password-expiration-warning.png"><img src="../../../media/documentation/lemonldap-ng-password-expiration-warning.png" class="media" alt="" /></a>
 </div>
 <div class="col-md-6">
-<strong>Password expiration workflow</strong>
+<strong>Procédé d'expiration du mot-de-passe</strong>
 <a href="/_detail/documentation/lemonldap-ng-password-expired.png?id=documentation%3A1.9%3Aauthldap" class="media" title="documentation:lemonldap-ng-password-expired.png"><img src="../../../media/documentation/lemonldap-ng-password-expired.png" class="media" alt="" /></a>
 </div></div>
 </p>

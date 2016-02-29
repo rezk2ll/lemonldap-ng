@@ -60,9 +60,7 @@ Here you can go in <abbr title="Interface de programmation">API</abbr> Manager a
 </p>
 
 <p>
-
-You need to provide the callback URLs, for example <a href="https://auth.domain.com/?openidcallback=1" class="urlextern" title="https://auth.domain.com/?openidcallback=1"  rel="nofollow">https://auth.domain.com/?openidcallback=1</a>.
-
+Il faut fournir les URLs de rappel, par exemple <a href="https://auth.domain.com/?openidcallback=1" class="urlextern" title="https://auth.domain.com/?openidcallback=1"  rel="nofollow">https://auth.domain.com/?openidcallback=1</a>.
 </p>
 
 </div><!-- EDIT3 SECTION "Register on Google" [508-818] -->
@@ -71,9 +69,7 @@ You need to provide the callback URLs, for example <a href="https://auth.domain.
 <div class="level2">
 
 <p>
-
-Go in Manager and create a new OpenID Connect provider. You can call it <code>google</code> for example.
-
+Aller dans le Manager et créer un fournisseur OpenID-Connect. You can call it <code>google</code> for example.
 </p>
 
 <p>
@@ -113,16 +109,14 @@ Go in <code>Exported attributes</code> to choose which attributes you want to co
 </ul>
 
 <p>
-
-Now go in <code>Options</code>:
-
+Aller ensuite dans <code>Options</code>:
 </p>
 <ul>
 <li class="level1"><div class="li">  In <code>Configuration</code>, register the <code>client_id</code> and <code>client_secret</code> given by Google. Set also the configuration <abbr title="Uniform Resource Identifier">URI</abbr> with <a href="https://accounts.google.com/.well-known/openid-configuration" class="urlextern" title="https://accounts.google.com/.well-known/openid-configuration"  rel="nofollow">https://accounts.google.com/.well-known/openid-configuration</a>, and JWKS refresh, for example every day: 86400.</div>
 </li>
-<li class="level1"><div class="li">  In <code>Protocol</code>, adapt the <code>scope</code> to the exported attributes you want. You can for example use <code>openid profile email</code>.</div>
+<li class="level1"><div class="li"> Dans <code>Protocole</code>, adapter le <code>scope</code> à l'attribut exporté voulu. You can for example use <code>openid profile email</code>.</div>
 </li>
-<li class="level1"><div class="li">  In <code>Display</code>, you can set the name and the logo</div>
+<li class="level1"><div class="li"> Dans <code>Affichage</code>, on peut indiquer le nom et le logo</div>
 </li>
 </ul>
 

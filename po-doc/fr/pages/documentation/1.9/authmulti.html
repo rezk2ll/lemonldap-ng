@@ -20,7 +20,7 @@
 <div class="dokuwiki export">
 
 
-<h1 class="sectionedit1" id="multiple_backends_stack">Multiple backends stack</h1>
+<h1 class="sectionedit1" id="multiple_backends_stack">Empiler de multiples backends</h1>
 <div class="level1">
 <div class="table sectionedit2"><table class="inline">
 	<thead>
@@ -39,9 +39,7 @@
 <div class="level2">
 
 <p>
-
-This backend allows to chain authentication method, for example to failback to LDAP authentication if Remote authentication failed…
-
+Ce backend permet de chaîner des méthodes d'authentification, par exemple pour basculer sur une authentification LDAP si l'authentification amont a échouée…
 </p>
 
 </div><!-- EDIT3 SECTION "Presentation" [105-265] -->
@@ -50,9 +48,7 @@ This backend allows to chain authentication method, for example to failback to L
 <div class="level2">
 
 <p>
-
-You have to use <code>Multiple</code> as authentication modul (this will also force <code>Multiple</code> for the users module). Then go in <code>Multiple parameters</code> to define the modules to chain for authentication and users. Modules are separated by semi-colons/
-
+Il faut utiliser <code>Multiple</code> comme module d'authentification (celà force <code>Multiple</code> pour le module utilisateur). Aller ensuite dans les <code>paramètres Multiple</code> pour définir les modules à chaîner pour l'authentification et les utilisateurs. Les modules doivent être séparés par point-virgules/
 </p>
 
 <p>
@@ -61,9 +57,7 @@ Par exemple :
 <pre class="code">CAS;LDAP</pre>
 
 <p>
-
-If <abbr title="Central Authentication Service">CAS</abbr> failed, LDAP will be used.
-
+Si <abbr title="Central Authentication Service">CAS</abbr> échoue, LDAP est utilisé.
 </p>
 
 <p>
@@ -72,8 +66,7 @@ Il est possibe d'ajouter une condition. Exemple :
 <pre class="code">Remote $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/'</pre>
 
 <p>
-</p><p></p><div class="notetip">Multiple will try to use the same module for authentication and users. Example, if you have <code><abbr title="Database Interface">DBI</abbr>;LDAP</code> and <abbr title="Database Interface">DBI</abbr> failed for authentication, it will try first to call LDAP as user database.
-
+</p><p></p><div class="notetip">Multiple essaiera d'utiliser le même module pour l'authentification et les utilisateurs. Exemple, en utilisant “<code><abbr title="Database Interface">DBI</abbr>;LDAP</code>”, si <abbr title="Database Interface">DBI</abbr> échoue pour l'authentification, Multi essaie d'utiliser LDAP comme base d'utilisateurs.
 </div></p>
 </p>
 
@@ -83,9 +76,7 @@ Il est possibe d'ajouter une condition. Exemple :
 <div class="level3">
 
 <p>
-
-The <code>Multiple</code> system can :
-
+Le système <code>Multiple</code> peut :
 </p>
 <ul>
 <li class="level1"><div class="li"> empiler plusieurs fois le même module avec un nom différent</div>
@@ -95,20 +86,17 @@ The <code>Multiple</code> system can :
 </ul>
 
 <p>
-</p><p></p><div class="notetip">Overloading is not available trough the Manager
-
+</p><p></p><div class="notetip">La surcharge n'est pas paramètrable dans le manager
 </div></p>
 </p>
 
 <p>
-To stack several times the same module, use “#name” with different names. Exemple :
+Pour empiler plusieurs fois le même module, utiliser ”#nom” avec différents noms. Exemple :
 </p>
 <pre class="code">LDAP#Openldap; LDAP#ActiveDirectory</pre>
 
 <p>
-
-Then you can have different <a href="../../documentation/1.9/parameterlist.html" class="wikilink1" title="documentation:1.9:parameterlist">parameters</a> for each stored in a Perl hash entry named multi:
-
+Ensuite on peut avoir différents <a href="../../documentation/1.9/parameterlist.html" class="wikilink1" title="documentation:1.9:parameterlist">paramètres</a> pour chacun, stockés dans une table de hachage &lt;a1&gt;Perl&lt;/a1&gt; nommée multi :
 </p>
 <pre class="code perl">multi <span class="sy0">=&gt;</span> <span class="br0">{</span>
     <span class="st_h">'LDAP#Openldap'</span> <span class="sy0">=&gt;</span> <span class="br0">{</span>
@@ -122,9 +110,7 @@ Then you can have different <a href="../../documentation/1.9/parameterlist.html"
 <span class="br0">}</span><span class="sy0">,</span></pre>
 
 <p>
-
-This key must be stored directly in lemonldap-ng.ini:
-
+Cette clef doit être stockée directement dans lemonldap-ng.ini :
 </p>
 <pre class="code ini"><span class="re0"><span class="br0">[</span>portal<span class="br0">]</span></span>
 <span class="re1">multi</span> <span class="sy0">=</span><span class="re2"> <span class="br0">{</span>'LDAP#Openldap'<span class="sy0">=</span>&gt;<span class="br0">{</span>'ldapServer'<span class="sy0">=</span>&gt;'ldap1.example.com','LDAPFilter'<span class="sy0">=</span>&gt;'<span class="br0">(</span>uid<span class="sy0">=</span>$user<span class="br0">)</span>'<span class="br0">}</span>,'LDAP#ActiveDirectory'<span class="sy0">=</span>&gt;<span class="br0">{</span>'ldapServer'<span class="sy0">=</span>&gt;'ldaps://ad.example.com','LDAPFilter'<span class="sy0">=</span>&gt;'<span class="br0">(</span>&amp;<span class="br0">(</span>sAMAccountName<span class="sy0">=</span>$user<span class="br0">)</span><span class="br0">(</span>objectClass<span class="sy0">=</span>person<span class="br0">)</span><span class="br0">)</span>'<span class="br0">}</span><span class="br0">}</span></span></pre>
@@ -153,9 +139,7 @@ Pour outrepasser ceci, suivre la documentation du <a href="../../documentation/1
 <div class="level3">
 
 <p>
-
-To chain SSL, you have to set “SSLRequire optional” in Apache configuration, else users will be authenticated by SSL only. 
- 
+Pour chaîner SSL, il est nécessaire de mettre “SSLRequire optional” dans le fichier de configuration Apache, sinon les utilisateurs ne seront authentifiés que par SSL. 
 </p>
 
 </div>
