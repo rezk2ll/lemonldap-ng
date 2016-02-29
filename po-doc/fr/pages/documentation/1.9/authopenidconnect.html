@@ -39,42 +39,36 @@
 <div class="level2">
 
 <p>
-</p><p></p><div class="noteclassic">OpenID Connect is a protocol based on REST, OAuth 2.0 and JOSE stacks. It is described here: <a href="http://openid.net/connect/" class="urlextern" title="http://openid.net/connect/"  rel="nofollow">http://openid.net/connect/</a>.
-
+</p><p></p><div class="noteclassic">OpenID Connect est un protocole basé sur les piles REST, OAuth 2.0 et JOSE. Il est décrit ici : <a href="http://openid.net/connect/" class="urlextern" title="http://openid.net/connect/"  rel="nofollow">http://openid.net/connect/</a>.
 </div></p>
 </p>
 
 <p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> can act as an OpenID Connect Relying Party (RP) towards multiple OpenID Connect Providers (OP). It will get the user identity trough an ID Token, and grab user attributes trough UserInfo endpoint.
-
+<abbr title="LemonLDAP::NG">LL::NG</abbr> peut agir comme un serveur « OpenID-Connect Relying Party » (RP), ce qui permet de fédérer &lt;a1&gt;LL::NG&lt;/a1&gt; avec : L'identité utilisateur sera récupérée via in jeton d'identification, et les attributs utilisateurs via le point d'accès UserInfo.
 </p>
 
 <p>
-
-As an RP, <abbr title="LemonLDAP::NG">LL::NG</abbr> supports a lot of OpenID Connect features:
-
+Comme RP, <abbr title="LemonLDAP::NG">LL::NG</abbr> supporte de nombreuses fonctionnalités OpenID-Connect :
 </p>
 <ul>
-<li class="level1"><div class="li">  Authorization Code flow</div>
+<li class="level1"><div class="li"> Débit de code d'autorisation</div>
 </li>
-<li class="level1"><div class="li">  Automatic download of JWKS</div>
+<li class="level1"><div class="li"> Téléchargement automatique de JWKS</div>
 </li>
-<li class="level1"><div class="li">  JWT signature verification</div>
+<li class="level1"><div class="li"> Vérification de signature JWT</div>
 </li>
-<li class="level1"><div class="li">  Access Token Hash verification</div>
+<li class="level1"><div class="li"> Vérification de hashage des jetons d'accès</div>
 </li>
-<li class="level1"><div class="li">  ID Token validation</div>
+<li class="level1"><div class="li"> Validation de jeton d'identité</div>
 </li>
-<li class="level1"><div class="li">  Get UserInfo as JSON or as JWT</div>
+<li class="level1"><div class="li"> Récupérer UserInfo au format JSON ou JWT</div>
 </li>
-<li class="level1"><div class="li">  Logout on EndSession end point</div>
+<li class="level1"><div class="li"> Déconnexion via point d'accès EndSession</div>
 </li>
 </ul>
 
 <p>
-
-You can use this authentication module to link your <abbr title="LemonLDAP::NG">LL::NG</abbr> server to any OpenID Connect Provider. Here are some examples, witch their specific documentation:
-
+On peut utiliser ce module d'authentification pour lier un serveur <abbr title="LemonLDAP::NG">LL::NG</abbr> à n'importe quel fournisseur OpenID-Connect. Quelques exemples, avec leur documentation :
 </p>
 <div class="table sectionedit4"><table class="inline">
 	<thead>
@@ -94,13 +88,11 @@ You can use this authentication module to link your <abbr title="LemonLDAP::NG">
 
 </div><!-- EDIT5 SECTION "Configuration" [1107-1133] -->
 
-<h3 class="sectionedit6" id="openid_connect_service">OpenID Connect Service</h3>
+<h3 class="sectionedit6" id="openid_connect_service">Service OpenID-Connect</h3>
 <div class="level3">
 
 <p>
-
-See <a href="../../documentation/1.9/openidconnectservice.html" class="wikilink1" title="documentation:1.9:openidconnectservice">OpenIDConnect service</a> configuration chapter.
-
+Voir le chapître de configuration du <a href="../../documentation/1.9/openidconnectservice.html" class="wikilink1" title="documentation:1.9:openidconnectservice">service OpenID-Connect</a>.
 </p>
 
 </div><!-- EDIT6 SECTION "OpenID Connect Service" [1134-1242] -->
@@ -112,9 +104,9 @@ See <a href="../../documentation/1.9/openidconnectservice.html" class="wikilink1
 Dans <code>Paramètres généraux</code> &gt; <code>Modules d'authentification</code>, choisir :
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Authentication module</strong>: OpenID Connect</div>
+<li class="level1"><div class="li"> <strong>Module d'authentication</strong> : OpenID-Connect</div>
 </li>
-<li class="level1"><div class="li"> <strong>Users module</strong>: OpenID Connect</div>
+<li class="level1"><div class="li"> <strong>Module utilisateurs</strong> : OpenID-Connect</div>
 </li>
 </ul>
 
@@ -124,34 +116,28 @@ Dans <code>Paramètres généraux</code> &gt; <code>Modules d'authentification</
 </p>
 
 <p>
-
-Then in <code>General Parameters</code> &gt; <code>Authentication modules</code> &gt; <code>OpenID Connect parameters</code>, you can set:
-
+Ensuite dans <code>Paramètres généraux</code> &gt; <code>Paramètres d'authentification</code> &gt; <code>Paramètres OpenID-Connect </code>, on peut indiquer :
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Authentication level</strong>: level of authentication to associate to this module</div>
+<li class="level1"><div class="li"> <strong>Niveau d'authentification</strong> : niveau d'authentification associé à ce module</div>
 </li>
-<li class="level1"><div class="li"> <strong>Callback GET parameter</strong>: name of GET parameter used to intercept callback (default: openidconnectcallback)</div>
+<li class="level1"><div class="li"> <strong>Paramètres GET de rappel</strong> : nom du paramètre GET utilisé pour intercepter le rappel (défaut: openidconnectcallback)</div>
 </li>
-<li class="level1"><div class="li"> <strong>State session timeout</strong>: duration of a state session (used to keep  state information between autentication request and authentication response) in seconds (default: 600)</div>
+<li class="level1"><div class="li"> <strong>Durée de vie de la session d'état</strong> : délai durant lequel la session d'état (utilisée pour conserver l'état entre la requête d'authentification et la réponse) en secondes (défaut : 600)</div>
 </li>
 </ul>
 
 </div><!-- EDIT7 SECTION "Authentication and UserDB" [1243-2033] -->
 
-<h3 class="sectionedit8" id="register_llng_to_an_openid_connect_provider">Register LL::NG to an OpenID Connect Provider</h3>
+<h3 class="sectionedit8" id="register_llng_to_an_openid_connect_provider">Enregistrer LL::NG dans un fournisseur d'identité OpenID-Connect</h3>
 <div class="level3">
 
 <p>
-
-To register <abbr title="LemonLDAP::NG">LL::NG</abbr>, you will need to give some information like application name or logo. One of mandatory information is the redirect <abbr title="Uniform Resource Locator">URL</abbr> (one or many). 
- 
+Pour enregistrer <abbr title="LemonLDAP::NG">LL::NG</abbr>, il faut renseigner quelques informations telles le nom d'application ou le logo. Une des informations exigées est l'<abbr title="Uniform Resource Locator">URL</abbr> de redirection (une ou plusieurs). 
 </p>
 
 <p>
-
-To know this information, just take the portal <abbr title="Uniform Resource Locator">URL</abbr> and the Callback GET parameter, for example:
-
+Pour connaître cette information, prendre simplement l'<abbr title="Uniform Resource Locator">URL</abbr> et le paramètre GET de rappel, par exemple :
 </p>
 <ul>
 <li class="level1"><div class="li"> <a href="http://auth.example.com/?openidcallback=1" class="urlextern" title="http://auth.example.com/?openidcallback=1"  rel="nofollow">http://auth.example.com/?openidcallback=1</a></div>
@@ -163,48 +149,38 @@ To know this information, just take the portal <abbr title="Uniform Resource Loc
 </ul>
 
 <p>
-</p><p></p><div class="noteimportant">If you use the <a href="../../documentation/1.9/authchoice.html" class="wikilink1" title="documentation:1.9:authchoice">choice backend</a>, you need to add the choice parameter in redirect <abbr title="Uniform Resource Locator">URL</abbr>
+</p><p></p><div class="noteimportant">Si le <a href="../../documentation/1.9/authchoice.html" class="wikilink1" title="documentation:1.9:authchoice">backend choix</a> est utilisé, il faut ajouter le paramètre choix dans l'<abbr title="Uniform Resource Locator">URL</abbr> de redirection
 </div></p>
 </p>
 
 <p>
-
-After registration, the OP must give you a client ID and a client secret, that will be used to configure the OP in <abbr title="LemonLDAP::NG">LL::NG</abbr>.
-
+Après enregistrement, l'OP doit donner un identifiant et un secret clients, qui seront utilisé pour configurer l'OP dans <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </p>
 
 </div><!-- EDIT8 SECTION "Register LL::NG to an OpenID Connect Provider" [2034-2748] -->
 
-<h3 class="sectionedit9" id="declare_the_openid_connect_provider_in_llng">Declare the OpenID Connect Provider in LL::NG</h3>
+<h3 class="sectionedit9" id="declare_the_openid_connect_provider_in_llng">Déclarer le fournisseur OpenID Connect dans LL::NG</h3>
 <div class="level3">
 
 <p>
-
-In the Manager, select node <code>OpenID Connect Providers</code> and click on <code>Add OpenID Connect Provider</code>. Give a technical name (no spaces, no special characters), like “sample-op”;
-
+Dans le manager, choisir <code>Fournisseurs OpenID-Connect</code> et cliquer sur <code>Ajouter un fournisseur OpenID-Connect</code>. Donner un nom technique (sans espaces ni caratères speciaux), tel “sample-op” ;
 </p>
 
 <p>
-
-You can then access to the configuration of this OP.
-
+On peut ensuite accéder à la configuration de cet OP.
 </p>
 
 </div>
 
-<h4 id="metadata">Métadata</h4>
+<h4 id="metadata">Métadonnée</h4>
 <div class="level4">
 
 <p>
-
-The OP should publish its metadata in a JSON file (see for example <a href="https://accounts.google.com/.well-known/openid-configuration" class="urlextern" title="https://accounts.google.com/.well-known/openid-configuration"  rel="nofollow">Google metadata</a>). Copy the content of this file in the textarea.
-
+L'OP peut publier sa métadonnée dans un fichier JSON (voir par exemple la <a href="https://accounts.google.com/.well-known/openid-configuration" class="urlextern" title="https://accounts.google.com/.well-known/openid-configuration"  rel="nofollow">métadonnée Google</a>). Copier le contenu de ce fichie dans l'emplacement dédié.
 </p>
 
 <p>
-
-If no metadata is available, you need to write them in the textarea. Mandatory fields are:
-
+À défaut de métadonnée, il faut les écrire. Les champs obligatoires sont :
 </p>
 <ul>
 <li class="level1"><div class="li">  issuer</div>
@@ -218,9 +194,7 @@ If no metadata is available, you need to write them in the textarea. Mandatory f
 </ul>
 
 <p>
-
-You can also define:
-
+On peut aussi définir :
 </p>
 <ul>
 <li class="level1"><div class="li">  jwks_uri</div>
@@ -230,9 +204,7 @@ You can also define:
 </ul>
 
 <p>
-
-Example template:
-
+Modèle exemple :
 </p>
 <pre class="code file javascript"><span class="br0">{</span>
   <span class="st0">"issuer"</span><span class="sy0">:</span> <span class="st0">"https://auth.example.com/"</span><span class="sy0">,</span>
@@ -244,18 +216,15 @@ Example template:
 
 </div>
 
-<h4 id="jwks_data">JWKS data</h4>
+<h4 id="jwks_data">Donnée JWKS</h4>
 <div class="level4">
 
 <p>
-
-JWKS is a JSON file containing public keys. <abbr title="LemonLDAP::NG">LL::NG</abbr> can grab them automatically if jwks_uri is defined in metadata. Else you can paste the content of the JSON file in the textarea.
-
+JWKS est un fichier JSON contenant des clefs publiques. <abbr title="LemonLDAP::NG">LL::NG</abbr> peut les récupérer autoatiquement si jwks_uri est défini dans la métadonnée. Sinon copier le contenu du fichier JSON dans l'emplacement dédié.
 </p>
 
 <p>
-</p><p></p><div class="notetip">If the OpenID Connect provider only uses symmetric encryption, JWKS data is not useful.
-
+</p><p></p><div class="notetip">Si le fournisseur OpenID-Connect n'utilise qu'une clef symétrique de chiffrement, la donnée JWKS n'est pas nécessaire.
 </div></p>
 </p>
 
@@ -265,9 +234,7 @@ JWKS is a JSON file containing public keys. <abbr title="LemonLDAP::NG">LL::NG</
 <div class="level4">
 
 <p>
-
-Define here the mapping between the <abbr title="LemonLDAP::NG">LL::NG</abbr> session content and the fields provided in UserInfo response. The fields are defined in <a href="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims" class="urlextern" title="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims"  rel="nofollow">OpenID Connect standard</a>, and depends on the scope requested by <abbr title="LemonLDAP::NG">LL::NG</abbr> (see options in next chapter).
-
+Définir ici la correspondance entre le contenu de la sessions <abbr title="LemonLDAP::NG">LL::NG</abbr> et les champs fournis dans la réponse UserInfo. Les champs sont définis dans le <a href="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims" class="urlextern" title="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims"  rel="nofollow">standard OpenID-Connect</a>, et dépendent de la portée requise par <abbr title="LemonLDAP::NG">LL::NG</abbr> (voir les options dans le prochain chapitre).
 </p>
 
 </div>
@@ -276,7 +243,7 @@ Define here the mapping between the <abbr title="LemonLDAP::NG">LL::NG</abbr> se
 <div class="table sectionedit10"><table class="inline">
 	<thead>
 	<tr class="row0 roweven">
-		<th class="col0">  Claim name  </th><th class="col1">  Type  </th><th class="col2">  Example of corresponding LDAP attribute  </th>
+		<th class="col0"> Nom affiché </th><th class="col1">  Type  </th><th class="col2"> Exemple de correspondance d'attributs LDAP </th>
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">
@@ -361,9 +328,7 @@ Define here the mapping between the <abbr title="LemonLDAP::NG">LL::NG</abbr> se
 <div class="level4">
 
 <p>
-
-So you can define for example:
-
+Ainsi on peut définir par exemple:
 </p>
 <ul>
 <li class="level1"><div class="li">  cn ⇒ name</div>
@@ -381,47 +346,47 @@ So you can define for example:
 <h4 id="options">Options</h4>
 <div class="level4">
 <ul>
-<li class="level1"><div class="li"> <strong>Configuration</strong>:</div>
+<li class="level1"><div class="li"> <strong>Configuration</strong> :</div>
 <ul>
-<li class="level2"><div class="li"> <strong>Configuration endpoint</strong>: <abbr title="Uniform Resource Locator">URL</abbr> of OP configuration endpoint</div>
+<li class="level2"><div class="li"> <strong>Configuration endpoint</strong>: <abbr title="Uniform Resource Locator">URL</abbr> de point d'accès de configuration de l'OP</div>
 </li>
-<li class="level2"><div class="li"> <strong>JWKS data timeout</strong>: After this time, <abbr title="LemonLDAP::NG">LL::NG</abbr> will do a request to get a fresh version of JWKS data. Set to 0 to disable it.</div>
+<li class="level2"><div class="li"> <strong>Durée de vie de la donnée JWKS</strong> : au delà de ce délai, <abbr title="LemonLDAP::NG">LL::NG</abbr> effectuera une requête pour rafraîchir la donnée JWKS. Mettre à 0 pour désactiver.</div>
 </li>
-<li class="level2"><div class="li"> <strong>Client ID</strong>: Client ID given by OP</div>
+<li class="level2"><div class="li"> <strong>Identifiant client</strong> : identifiant client donné par l'OP</div>
 </li>
-<li class="level2"><div class="li"> <strong>Client secret</strong>: Client secret given by OP</div>
+<li class="level2"><div class="li"> <strong>Secret client</strong> : secret client donné par l'OP</div>
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> <strong>Protocol</strong>:</div>
+<li class="level1"><div class="li"> <strong>Protocole</strong> :</div>
 <ul>
-<li class="level2"><div class="li"> <strong>Scope</strong>: Value of scope parameter (example: openid profile). The <code>openid</code> scope is mandatory.</div>
+<li class="level2"><div class="li"> <strong>Portée</strong> : valeur du paramètre de portée (exemple : profil openid). La portée <code>openid</code> est exigée.</div>
 </li>
-<li class="level2"><div class="li"> <strong>Display</strong>: Value of display parameter (example: page)</div>
+<li class="level2"><div class="li"> <strong>Affichage</strong> : valeur du paramètre d'affichage (exemple : page)</div>
 </li>
-<li class="level2"><div class="li"> <strong>Prompt</strong>: Value of prompt parameter (example: consent)</div>
+<li class="level2"><div class="li"> <strong>Prompt</strong> : valeur du paramètre prompt (exemple : consent)</div>
 </li>
-<li class="level2"><div class="li"> <strong>Max age</strong>: Value of max_age parameter (example: 3600)</div>
+<li class="level2"><div class="li"> <strong>Âge max</strong> : valeur du paramètre max_age (exemple : 3600)</div>
 </li>
-<li class="level2"><div class="li"> <strong>UI locales</strong>: Value of ui_locales parameter (example: en-<abbr title="Gigabyte">GB</abbr> en fr-FR fr)</div>
+<li class="level2"><div class="li"> <strong>UI locales</strong> : valeur du paramètre ui_locales (exemple : en-<abbr title="Gigaoctet">GB</abbr> en fr-FR fr)</div>
 </li>
-<li class="level2"><div class="li"> <strong>ACR values</strong>: Value acr_values parameters (example: loa-1)</div>
+<li class="level2"><div class="li"> <strong>Valeurs ACR</strong> : valeur des paramètres acr_values (exemple : loa-1)</div>
 </li>
-<li class="level2"><div class="li"> <strong>Token endpoint authentication method</strong>: Choice between <code>client_secret_post</code> and <code>client_secret_basic</code></div>
+<li class="level2"><div class="li"> <strong>Méthode d'authentification du point d'accès du jeton</strong> : choisir entre <code>client_secret_post</code> et <code>client_secret_basic</code></div>
 </li>
-<li class="level2"><div class="li"> <strong>Check JWT signature</strong>: Set to 0 to disable JWT signature checking</div>
+<li class="level2"><div class="li"> <strong>Vérifier la signature JWT</strong> : mettre à 0 pour désactiver la signature JWT</div>
 </li>
-<li class="level2"><div class="li"> <strong>ID Token max age</strong>: If defined, <abbr title="LemonLDAP::NG">LL::NG</abbr> will check the date of ID token and refuse it if it is too old</div>
+<li class="level2"><div class="li"> <strong>Durée de vie max des jetons</strong> : si défini, <abbr title="LemonLDAP::NG">LL::NG</abbr> examinera la date du jeton d'identification et refusera les jetons trop anciens</div>
 </li>
-<li class="level2"><div class="li"> <strong>Use Nonce</strong>: If enabled, a nonce will be sent, and verified from the ID Token</div>
+<li class="level2"><div class="li"> <strong>Utiliser Nonce</strong> : si activé, un nonce sera envoyé, et vérifié depuis le jeton d'identité</div>
 </li>
 </ul>
 </li>
 <li class="level1"><div class="li"> <strong>Affichage</strong> :</div>
 <ul>
-<li class="level2"><div class="li"> <strong>Display name</strong>: Name of the application</div>
+<li class="level2"><div class="li"> <strong>Nom affiché</strong> : nom de l'application</div>
 </li>
-<li class="level2"><div class="li"> <strong>Logo</strong>: Logo of the application</div>
+<li class="level2"><div class="li"> <strong>Logo</strong> : logo de l'application</div>
 </li>
 </ul>
 </li>

@@ -552,6 +552,14 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can then access to the configuration of this OP.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200954Z" changeid="xavier">
+        <seg>On peut ensuite accéder à la configuration de cet OP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>S</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1170,6 +1178,14 @@ make test</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/screenshots/1.0/sessionsexplorer/accordeon_dark.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ID Token validation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195301Z" changeid="xavier">
+        <seg>Validation de jeton d'identité</seg>
       </tuv>
     </tu>
     <tu>
@@ -1964,6 +1980,14 @@ ln -s ../pastel/*.tpl .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T131258Z" changeid="xavier">
         <seg>_samlToken</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Display name&lt;/s0&gt;: Name of the application</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T203543Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom affiché&lt;/s0&gt; : nom de l'application</seg>
       </tuv>
     </tu>
     <tu>
@@ -3206,6 +3230,14 @@ make debian-packages</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Automatic download of JWKS</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195151Z" changeid="xavier">
+        <seg>Téléchargement automatique de JWKS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This will bypass the authentication module for request from APPLICATIONS_&lt;a0&gt;IP&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T130617Z" changeid="xavier">
@@ -3268,6 +3300,14 @@ make debian-packages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T062232Z" changeid="xavier">
         <seg>Google propose d'autoriser les applications à réutiliser son propre processus d'authentification en utilisant le protocole &lt;a0&gt;OpenID&lt;/a0&gt; (ce qui signifie que si on est connecté à Google, d'autres applications peuvent agréer Google et accepter l'utilisateur).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Claim name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202013Z" changeid="xavier">
+        <seg>Nom affiché</seg>
       </tuv>
     </tu>
     <tu>
@@ -3466,6 +3506,14 @@ make debian-packages</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can call it &lt;c0&gt;google&lt;/c0&gt; for example.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T192213Z" changeid="xavier">
+        <seg>On peut l'appeler &lt;c0&gt;google&lt;/c0&gt; par exemple.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;The status page&lt;/a0&gt; can be read by &lt;a1&gt;MRTG&lt;/a1&gt; using the script &lt;s2&gt;lmng-mrtg&lt;/s2&gt; that can be found in manager example directory.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051151Z" changeid="guimard">
@@ -3626,6 +3674,14 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T203818Z" changeid="xavier">
         <seg>Conditions :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Prompt&lt;/s0&gt;: Value of prompt parameter (example: consent)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202802Z" changeid="xavier">
+        <seg>&lt;s0&gt;Prompt&lt;/s0&gt; : valeur du paramètre prompt (exemple : consent)</seg>
       </tuv>
     </tu>
     <tu>
@@ -4278,6 +4334,14 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Register on Google</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T191839Z" changeid="xavier">
+        <seg>S'enregistrer chez Google</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Set '*' to accept all.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T135659Z" changeid="xavier">
@@ -4668,6 +4732,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in &lt;c0&gt;Exported attributes&lt;/c0&gt; to choose which attributes you want to collect.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T192711Z" changeid="xavier">
+        <seg>Aller dans les &lt;c0&gt;attributs exportés&lt;/c0&gt; pour choisir les attributs à collecter.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LL::NG repository</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093528Z" changeid="xavier">
@@ -4720,6 +4792,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>tree_dark.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;State session timeout&lt;/s0&gt;: duration of a state session (used to keep state information between autentication request and authentication response) in seconds (default: 600)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200200Z" changeid="xavier">
+        <seg>&lt;s0&gt;Durée de vie de la session d'état&lt;/s0&gt; : délai durant lequel la session d'état (utilisée pour conserver l'état entre la requête d'authentification et la réponse) en secondes (défaut : 600)</seg>
       </tuv>
     </tu>
     <tu>
@@ -4896,6 +4976,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093323Z" changeid="xavier">
         <seg>Les paquets du &lt;a0&gt;dépôt Debian&lt;/a0&gt; peuvent ne pas être à jour.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To know this information, just take the portal &lt;a0&gt;URL&lt;/a0&gt; and the Callback GET parameter, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200456Z" changeid="xavier">
+        <seg>Pour connaître cette information, prendre simplement l'&lt;a0&gt;URL&lt;/a0&gt; et le paramètre GET de rappel, par exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -5200,6 +5288,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../../css/all.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Configuration endpoint&lt;/s0&gt;: &lt;a1&gt;URL&lt;/a1&gt; of OP configuration endpoint</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202225Z" changeid="xavier">
+        <seg>&lt;s0&gt;Configuration endpoint&lt;/s0&gt;: &lt;a1&gt;URL&lt;/a1&gt; de point d'accès de configuration de l'OP</seg>
       </tuv>
     </tu>
     <tu>
@@ -6330,6 +6426,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The fields are defined in &lt;a1&gt;OpenID Connect standard&lt;/a1&gt;, and depends on the scope requested by &lt;a2&gt;LL::NG&lt;/a2&gt; (see options in next chapter).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201955Z" changeid="xavier">
+        <seg>Les champs sont définis dans le &lt;a1&gt;standard OpenID-Connect&lt;/a1&gt;, et dépendent de la portée requise par &lt;a2&gt;LL::NG&lt;/a2&gt; (voir les options dans le prochain chapitre).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>server</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7334,6 +7438,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>So you can define for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202126Z" changeid="xavier">
+        <seg>Ainsi on peut définir par exemple:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Those macros are calculated only at the first usage and stored in the local session cache (only for this server) and only if the user access to the related applications.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7572,6 +7684,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171553Z" changeid="xavier">
         <seg>uidR</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authorization Code flow</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195117Z" changeid="xavier">
+        <seg>Débit de code d'autorisation</seg>
       </tuv>
     </tu>
     <tu>
@@ -8694,6 +8814,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you close your session on &lt;a0&gt;LL::NG&lt;/a0&gt; side, your Google session will still be open.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T191824Z" changeid="xavier">
+        <seg>Si on ferme la session &lt;a0&gt;LL::NG&lt;/a0&gt;, celle de Google reste ouverte.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It returns 1 if this match, 0 else.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121730Z" changeid="xavier">
@@ -8912,6 +9040,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T060628Z" changeid="guimard">
         <seg>Essayer alors de créer une notification globale (à l'utilisateur “allusers”), et se connecter avec n'importe quel compte, le message sera affiché.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Gigabyte</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202843Z" changeid="xavier">
+        <seg>Gigaoctet</seg>
       </tuv>
     </tu>
     <tu>
@@ -9692,6 +9828,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you use the &lt;a0&gt;choice backend&lt;/a0&gt;, you need to add the choice parameter in redirect &lt;a1&gt;URL&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200620Z" changeid="xavier">
+        <seg>Si le &lt;a0&gt;backend choix&lt;/a0&gt; est utilisé, il faut ajouter le paramètre choix dans l'&lt;a1&gt;URL&lt;/a1&gt; de redirection</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Restrict network access to the database.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072504Z" changeid="xavier">
@@ -10012,6 +10156,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Define here the mapping between the &lt;a0&gt;LL::NG&lt;/a0&gt; session content and the fields provided in UserInfo response.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201741Z" changeid="xavier">
+        <seg>Définir ici la correspondance entre le contenu de la sessions &lt;a0&gt;LL::NG&lt;/a0&gt; et les champs fournis dans la réponse UserInfo.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>a warning before password expiration is possible in AD, but only in GPO (Computer Configuration\Windows Settings\Local Policies\Security Options under Interactive Logon: Prompt user to change password before expiration) However it as no reality in LDAP referential.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T111419Z" changeid="xavier">
@@ -10176,6 +10328,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195417Z" changeid="xavier">
         <seg>tchemineau</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OpenID Connect is a protocol based on REST, OAuth 2.0 and JOSE stacks.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T193016Z" changeid="xavier">
+        <seg>OpenID Connect est un protocole basé sur les piles REST, OAuth 2.0 et JOSE.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11274,6 +11434,14 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Display&lt;/s0&gt;: Value of display parameter (example: page)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202653Z" changeid="xavier">
+        <seg>&lt;s0&gt;Affichage&lt;/s0&gt; : valeur du paramètre d'affichage (exemple : page)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s18&gt;DirectoryIndex&lt;/s18&gt; index.pl index.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T063925Z" changeid="xavier">
@@ -12172,6 +12340,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Client secret&lt;/s0&gt;: Client secret given by OP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202500Z" changeid="xavier">
+        <seg>&lt;s0&gt;Secret client&lt;/s0&gt; : secret client donné par l'OP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Secondary portal check if remote session is available.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050354Z" changeid="xavier">
@@ -12444,6 +12620,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>OpenID Connect Service</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195554Z" changeid="xavier">
+        <seg>Service OpenID-Connect</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A session key can be associated to more than one SREG attribute.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083210Z" changeid="xavier">
@@ -12696,6 +12880,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR">
         <seg>Système</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Do you we have to present &lt;a0&gt;Google&lt;/a0&gt;?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T191455Z" changeid="xavier">
+        <seg>Devons-nous présenter &lt;a0&gt;Google&lt;/a0&gt; ?</seg>
       </tuv>
     </tu>
     <tu>
@@ -13340,6 +13532,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Click on &lt;c0&gt;Metadata&lt;/c0&gt;, and use the OpenID Connect configuration &lt;a1&gt;URL&lt;/a1&gt; to load them: &lt;a2&gt;https://accounts.google.com/.well-known/openid-configuration&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T192402Z" changeid="xavier">
+        <seg>Cliquer sur &lt;c0&gt;Métadonnées&lt;/c0&gt;, et utiliser l'&lt;a1&gt;URL&lt;/a1&gt; de configuration OpenID-Connect pour les charger : &lt;a2&gt;https://accounts.google.com/.well-known/openid-configuration&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;&lt;s1&gt;IfModule&lt;/s1&gt; mod_rewrite.c&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064349Z" changeid="xavier">
@@ -13452,6 +13652,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Get UserInfo as JSON or as JWT</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195332Z" changeid="xavier">
+        <seg>Récupérer UserInfo au format JSON ou JWT</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Create database:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T204910Z" changeid="xavier">
@@ -13490,6 +13698,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR">
         <seg>Activation du &lt;a0&gt;CDA&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The OP should publish its metadata in a JSON file (see for example &lt;a0&gt;Google metadata&lt;/a0&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201128Z" changeid="xavier">
+        <seg>L'OP peut publier sa métadonnée dans un fichier JSON (voir par exemple la &lt;a0&gt;métadonnée Google&lt;/a0&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -13554,6 +13770,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20130203T114330Z" changeid="xavier">
         <seg>Thème par défaut</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If the OpenID Connect provider only uses symmetric encryption, JWKS data is not useful.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201622Z" changeid="xavier">
+        <seg>Si le fournisseur OpenID-Connect n'utilise qu'une clef symétrique de chiffrement, la donnée JWKS n'est pas nécessaire.</seg>
       </tuv>
     </tu>
     <tu>
@@ -14436,6 +14660,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Scope&lt;/s0&gt;: Value of scope parameter (example: openid profile).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202557Z" changeid="xavier">
+        <seg>&lt;s0&gt;Portée&lt;/s0&gt; : valeur du paramètre de portée (exemple : profil openid).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This mechanism allow to do &lt;a0&gt;SSO&lt;/a0&gt; on application with an unsafe link between Handler and the application, but with a safe link with the Memcached server.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T205046Z" changeid="xavier">
@@ -15200,6 +15432,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082845Z" changeid="xavier">
         <seg>Utiliser les fonctions étendues</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Protocol&lt;/s0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202521Z" changeid="xavier">
+        <seg>&lt;s0&gt;Protocole&lt;/s0&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -16994,6 +17234,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Authentication level&lt;/s0&gt;: level of authentication to associate to this module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195904Z" changeid="xavier">
+        <seg>&lt;s0&gt;Niveau d'authentification&lt;/s0&gt; : niveau d'authentification associé à ce module</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../media/icons/tux.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17534,6 +17782,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Here you can go in &lt;a0&gt;API&lt;/a0&gt; Manager and get new credentials (&lt;c1&gt;client_id&lt;/c1&gt; and &lt;c2&gt;client_secret&lt;/c2&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T192138Z" changeid="xavier">
+        <seg>Aller ensuite dans « &lt;a0&gt;API&lt;/a0&gt; Manager » et récupérer les nouveaux éléments (&lt;c1&gt;client_id&lt;/c1&gt; and &lt;c2&gt;client_secret&lt;/c2&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?id=screenshots</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17606,6 +17862,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ACR values&lt;/s0&gt;: Value acr_values parameters (example: loa-1)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202950Z" changeid="xavier">
+        <seg>&lt;s0&gt;Valeurs ACR&lt;/s0&gt; : valeur des paramètres acr_values (exemple : loa-1)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Install Authen::Radius</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T120425Z" changeid="xavier">
@@ -17618,6 +17882,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065005Z" changeid="guimard">
         <seg>Masquer l'ancien mot-de-passe dans le formulaire de réinitialisation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It will get the user identity trough an ID Token, and grab user attributes trough UserInfo endpoint.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T193223Z" changeid="xavier">
+        <seg>L'identité utilisateur sera récupérée via in jeton d'identification, et les attributs utilisateurs via le point d'accès UserInfo.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17706,6 +17978,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080620Z" changeid="xavier">
         <seg>Le backend Null peut être utilisé pour sauter des étapes du processus d'authentication.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can grab them automatically if jwks_uri is defined in metadata.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201459Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut les récupérer autoatiquement si jwks_uri est défini dans la métadonnée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17850,6 +18130,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173628Z" changeid="xavier">
         <seg>Configuration locale phpLDAPadmin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Register LL::NG to an OpenID Connect Provider</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200237Z" changeid="xavier">
+        <seg>Enregistrer LL::NG dans un fournisseur d'identité OpenID-Connect</seg>
       </tuv>
     </tu>
     <tu>
@@ -19030,6 +19318,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Else you can paste the content of the JSON file in the textarea.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201530Z" changeid="xavier">
+        <seg>Sinon copier le contenu du fichier JSON dans l'emplacement dédié.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This mechanism can be used to secure access for remote servers that cross an unsecured network to access to &lt;a0&gt;LL::NG&lt;/a0&gt; databases.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T170951Z" changeid="xavier">
@@ -19290,6 +19586,14 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T054856Z" changeid="guimard">
         <seg>&lt;check&gt; : paragraphe à afficher avec une case à cocher : sera inséré dans la page &lt;a0&gt;HTML&lt;/a0&gt; encadré dans &lt;p class=“notifCheck”&gt;&lt;input type=“checkbox” /&gt;…&lt;/p&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If no metadata is available, you need to write them in the textarea.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201237Z" changeid="xavier">
+        <seg>À défaut de métadonnée, il faut les écrire.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19980,6 +20284,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;UI locales&lt;/s0&gt;: Value of ui_locales parameter (example: en-&lt;a1&gt;GB&lt;/a1&gt; en fr-FR fr)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202911Z" changeid="xavier">
+        <seg>&lt;s0&gt;UI locales&lt;/s0&gt; : valeur du paramètre ui_locales (exemple : en-&lt;a1&gt;GB&lt;/a1&gt; en fr-FR fr)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;User&lt;/s0&gt;: where collect user data</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20088,6 +20400,14 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T091739Z" changeid="xavier">
         <seg>&lt;s0&gt;Chemin&lt;/s0&gt; : laisser &lt;c1&gt;^/saml/&lt;/c1&gt; sauf si les suffixes des points d'accès &lt;a2&gt;SAML&lt;/a2&gt; ont été modifiés sans la &lt;a3&gt;configuration du service SAML&lt;/a3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In the Manager, select node &lt;c0&gt;OpenID Connect Providers&lt;/c0&gt; and click on &lt;c1&gt;Add OpenID Connect Provider&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200839Z" changeid="xavier">
+        <seg>Dans le manager, choisir &lt;c0&gt;Fournisseurs OpenID-Connect&lt;/c0&gt; et cliquer sur &lt;c1&gt;Ajouter un fournisseur OpenID-Connect&lt;/c1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20348,6 +20668,14 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113430Z" changeid="xavier">
         <seg>Authorization =&gt; basic($uid,$_password)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Callback GET parameter&lt;/s0&gt;: name of GET parameter used to intercept callback (default: openidconnectcallback)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200024Z" changeid="xavier">
+        <seg>&lt;s0&gt;Paramètres GET de rappel&lt;/s0&gt; : nom du paramètre GET utilisé pour intercepter le rappel (défaut: openidconnectcallback)</seg>
       </tuv>
     </tu>
     <tu>
@@ -21620,6 +21948,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can for example use &lt;c2&gt;openid profile email&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T192928Z" changeid="xavier">
+        <seg>On peut par exemple utiliser &lt;c2&gt;openid profile email&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>An access rule</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22166,6 +22502,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ID Token max age&lt;/s0&gt;: If defined, &lt;a1&gt;LL::NG&lt;/a1&gt; will check the date of ID token and refuse it if it is too old</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T203233Z" changeid="xavier">
+        <seg>&lt;s0&gt;Durée de vie max des jetons&lt;/s0&gt; : si défini, &lt;a1&gt;LL::NG&lt;/a1&gt; examinera la date du jeton d'identification et refusera les jetons trop anciens</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then it creates the session (with attribute filter)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050525Z" changeid="xavier">
@@ -22234,6 +22578,14 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112259Z" changeid="xavier">
         <seg>&lt;s39&gt;&quot;headers_map&quot;&lt;/s39&gt;           &lt;s40&gt;=&gt;&lt;/s40&gt; &lt;a41&gt;&lt;s42&gt;Array&lt;/s42&gt;&lt;/a41&gt;&lt;s43&gt;(&lt;/s43&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also load the JWKS data from the &lt;a0&gt;URL&lt;/a0&gt; &lt;a1&gt;https://www.googleapis.com/oauth2/v3/certs&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T192532Z" changeid="xavier">
+        <seg>On peut aussi charger les données JWKS depuis l'&lt;a0&gt;URL&lt;/a0&gt; &lt;a1&gt;https://www.googleapis.com/oauth2/v3/certs&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23154,6 +23506,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In &lt;c0&gt;Configuration&lt;/c0&gt;, register the &lt;c1&gt;client_id&lt;/c1&gt; and &lt;c2&gt;client_secret&lt;/c2&gt; given by Google.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T192806Z" changeid="xavier">
+        <seg>Dans &lt;c0&gt;Configuration&lt;/c0&gt;, enregistrer les &lt;c1&gt;client_id&lt;/c1&gt; et &lt;c2&gt;client_secret&lt;/c2&gt; donnés par Google.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>lemonldap-ng-portal-auth.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23424,6 +23784,14 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Use Nonce&lt;/s0&gt;: If enabled, a nonce will be sent, and verified from the ID Token</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T203508Z" changeid="xavier">
+        <seg>&lt;s0&gt;Utiliser Nonce&lt;/s0&gt; : si activé, un nonce sera envoyé, et vérifié depuis le jeton d'identité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;installation pages&lt;/a0&gt; to know how install and use it.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T170346Z" changeid="xavier">
@@ -23574,6 +23942,14 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T140120Z" changeid="xavier">
         <seg>pour bloquer les attaques en force brute avec fail2ban</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Declare Google in your LL::NG server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T192158Z" changeid="xavier">
+        <seg>Déclarer Google dans le serveur LL::NG</seg>
       </tuv>
     </tu>
     <tu>
@@ -23762,10 +24138,26 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Copy the content of this file in the textarea.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201204Z" changeid="xavier">
+        <seg>Copier le contenu de ce fichie dans l'emplacement dédié.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Often the redirection takes some time because it is user's first access to the protected app, so a new app session has to be created : JavaScript redirection improves user experience by informing that authentication is performed, and by preventing from clicking again on the button because it is too slow.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145217Z" changeid="guimard">
         <seg>Souvent la redirection prend du temps car c'est le premier accès de l'utilisateur à l'application protégée et il faut créer la session applicative ; la redirection JavaScript améliore le ressenti utilisateur en l'informant que l'authentification est réussie et en évitant qu'il clique de nouveau sur le bouton.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is described here: &lt;a0&gt;http://openid.net/connect/&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T193025Z" changeid="xavier">
+        <seg>Il est décrit ici : &lt;a0&gt;http://openid.net/connect/&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23950,6 +24342,14 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T081012Z" changeid="xavier">
         <seg>Quelques options sont disponibles :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Google supports these claims:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T192728Z" changeid="xavier">
+        <seg>Google supporte ces champs :</seg>
       </tuv>
     </tu>
     <tu>
@@ -24142,6 +24542,14 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T061113Z" changeid="xavier">
         <seg>Valeur d'en-tête</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Here are some examples, witch their specific documentation:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195532Z" changeid="xavier">
+        <seg>Quelques exemples, avec leur documentation :</seg>
       </tuv>
     </tu>
     <tu>
@@ -24392,6 +24800,14 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The &lt;c1&gt;openid&lt;/c1&gt; scope is mandatory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202614Z" changeid="xavier">
+        <seg>La portée &lt;c1&gt;openid&lt;/c1&gt; est exigée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>CPAN test reports:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24412,6 +24828,14 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115132Z" changeid="xavier">
         <seg>Ce plugin utilise la variable d'environnement &lt;c1&gt;REMOTE_USER&lt;/c1&gt; pour récupérer le nom d'utilisateur connecté.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>But as Google rotate their keys, we will also configure a refresh interval on JKWS data.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T192636Z" changeid="xavier">
+        <seg>Mais comme Google change régulièrement ses clefs, il faut configurer un intervalle de rafraîchissement des données JKWS.</seg>
       </tuv>
     </tu>
     <tu>
@@ -24818,6 +25242,14 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Mandatory fields are:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201309Z" changeid="xavier">
+        <seg>Les champs obligatoires sont :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s32&gt;}&lt;/s32&gt;&lt;s33&gt;;&lt;/s33&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042624Z" changeid="xavier">
@@ -24894,6 +25326,14 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T165855Z" changeid="xavier">
         <seg>&lt;s0&gt;Encodage des mots-de-passe LDAP&lt;/s0&gt; : peut permettre de gérer les anciens servers LDAP en utilisant un encodage spécifique pour les mots-de-passe (défaut: utf-8).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Max age&lt;/s0&gt;: Value of max_age parameter (example: 3600)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202831Z" changeid="xavier">
+        <seg>&lt;s0&gt;Âge max&lt;/s0&gt; : valeur du paramètre max_age (exemple : 3600)</seg>
       </tuv>
     </tu>
     <tu>
@@ -25118,6 +25558,14 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../pages/wiki/syntax.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>JWKS data</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201350Z" changeid="xavier">
+        <seg>Donnée JWKS</seg>
       </tuv>
     </tu>
     <tu>
@@ -25700,6 +26148,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Declare the OpenID Connect Provider in LL::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200740Z" changeid="xavier">
+        <seg>Déclarer le fournisseur OpenID Connect dans LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Send mail on password change</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065852Z" changeid="guimard">
@@ -25900,6 +26356,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can act as an OpenID Connect Relying Party (RP) towards multiple OpenID Connect Providers (OP).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T193113Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut agir comme un serveur « OpenID-Connect Relying Party » (RP), ce qui permet de fédérer &lt;a1&gt;LL::NG&lt;/a1&gt; avec :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>RMLL/LSM</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103643Z" changeid="xavier">
@@ -25992,6 +26456,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063803Z" changeid="guimard">
         <seg>openIdAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; &gt; &lt;c2&gt;OpenID Connect parameters&lt;/c2&gt;, you can set:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195843Z" changeid="xavier">
+        <seg>Ensuite dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Paramètres d'authentification&lt;/c1&gt; &gt; &lt;c2&gt;Paramètres OpenID-Connect &lt;/c2&gt;, on peut indiquer :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26156,6 +26628,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Example of corresponding LDAP attribute</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202039Z" changeid="xavier">
+        <seg>Exemple de correspondance d'attributs LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The &lt;c0&gt;ProxyPreserveHost&lt;/c0&gt; directive will forward the Host header to the protected application.&lt;br1/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T073044Z" changeid="xavier">
@@ -26272,6 +26752,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114202Z" changeid="xavier">
         <seg>&lt;s0&gt;Auth-Mail&lt;/s0&gt;: $mail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need a Google developer account to access to &lt;a0&gt;https://console.developers.google.com/&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T191919Z" changeid="xavier">
+        <seg>Il faut un compte développer Google pour accéder à &lt;a0&gt;https://console.developers.google.com/&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -26486,8 +26974,8 @@ sudo apachectl restart</seg>
       <tuv lang="EN-US">
         <seg>Metadata</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120220T203408Z" changeid="xavier">
-        <seg>Métadata</seg>
+      <tuv lang="FR-FR" changedate="20160229T201011Z" changeid="xavier">
+        <seg>Métadonnée</seg>
       </tuv>
     </tu>
     <tu>
@@ -27240,6 +27728,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Google does not support logout trough OpenID Connect.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T191713Z" changeid="xavier">
+        <seg>Google ne supporte pas la déconnexion via OpenID-Connect.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;SREG&lt;/a0&gt; permit the share of 8 attributes:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083040Z" changeid="xavier">
@@ -27588,6 +28084,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102201Z" changeid="xavier">
         <seg>Description</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can use this authentication module to link your &lt;a0&gt;LL::NG&lt;/a0&gt; server to any OpenID Connect Provider.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195504Z" changeid="xavier">
+        <seg>On peut utiliser ce module d'authentification pour lier un serveur &lt;a0&gt;LL::NG&lt;/a0&gt; à n'importe quel fournisseur OpenID-Connect.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28996,6 +29500,14 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Access Token Hash verification</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195243Z" changeid="xavier">
+        <seg>Vérification de hashage des jetons d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configuration is in /etc/lemonldap-ng</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094451Z" changeid="xavier">
@@ -29074,6 +29586,14 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160625Z" changeid="xavier">
         <seg>Pour une installation complète :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Logout on EndSession end point</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195358Z" changeid="xavier">
+        <seg>Déconnexion via point d'accès EndSession</seg>
       </tuv>
     </tu>
     <tu>
@@ -29432,6 +29952,14 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T220750Z" changeid="xavier">
         <seg>Dans les en-têtes HTTP, ajouter Auth-User ($mail) and Auth-Pw ($_password).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Check JWT signature&lt;/s0&gt;: Set to 0 to disable JWT signature checking</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T203125Z" changeid="xavier">
+        <seg>&lt;s0&gt;Vérifier la signature JWT&lt;/s0&gt; : mettre à 0 pour désactiver la signature JWT</seg>
       </tuv>
     </tu>
     <tu>
@@ -29872,6 +30400,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>../css/all.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Client ID&lt;/s0&gt;: Client ID given by OP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202444Z" changeid="xavier">
+        <seg>&lt;s0&gt;Identifiant client&lt;/s0&gt; : identifiant client donné par l'OP</seg>
       </tuv>
     </tu>
     <tu>
@@ -30684,6 +31220,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;OpenIDConnect service&lt;/a0&gt; configuration chapter.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195653Z" changeid="xavier">
+        <seg>Voir le chapître de configuration du &lt;a0&gt;service OpenID-Connect&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>UCANSS</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20130203T115003Z" changeid="xavier">
@@ -30696,6 +31240,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113428Z" changeid="xavier">
         <seg>Ainsi l'exemple ci-dessous peut être écrit simplement :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>JWT signature verification</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195213Z" changeid="xavier">
+        <seg>Vérification de signature JWT</seg>
       </tuv>
     </tu>
     <tu>
@@ -31352,6 +31904,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To register &lt;a0&gt;LL::NG&lt;/a0&gt;, you will need to give some information like application name or logo.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200324Z" changeid="xavier">
+        <seg>Pour enregistrer &lt;a0&gt;LL::NG&lt;/a0&gt;, il faut renseigner quelques informations telles le nom d'application ou le logo.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Some applications need the &lt;c0&gt;REMOTE_USER&lt;/c0&gt; environment variable to get the connected user, which is not set in reverse-proxy mode.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T073220Z" changeid="xavier">
@@ -31920,6 +32480,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;JWKS data timeout&lt;/s0&gt;: After this time, &lt;a1&gt;LL::NG&lt;/a1&gt; will do a request to get a fresh version of JWKS data.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202329Z" changeid="xavier">
+        <seg>&lt;s0&gt;Durée de vie de la donnée JWKS&lt;/s0&gt; : au delà de ce délai, &lt;a1&gt;LL::NG&lt;/a1&gt; effectuera une requête pour rafraîchir la donnée JWKS.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.zimbra.com/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T112611Z" changeid="xavier">
@@ -32208,6 +32776,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Logo&lt;/s0&gt;: Logo of the application</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T203555Z" changeid="xavier">
+        <seg>&lt;s0&gt;Logo&lt;/s0&gt; : logo de l'application</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A value</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -32396,6 +32972,14 @@ Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181340Z" changeid="xavier">
         <seg>&lt;s0&gt;clef de session compte&lt;/s0&gt; : champ de session utilisé comme compte utilisateur Zimbra (par défaut : uid)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>After registration, the OP must give you a client ID and a client secret, that will be used to configure the OP in &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200720Z" changeid="xavier">
+        <seg>Après enregistrement, l'OP doit donner un identifiant et un secret clients, qui seront utilisé pour configurer l'OP dans &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -32952,6 +33536,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also define:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201324Z" changeid="xavier">
+        <seg>On peut aussi définir :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;DBI&lt;/a0&gt; Connection user</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061446Z" changeid="guimard">
@@ -33004,6 +33596,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120217T045318Z" changeid="xavier">
         <seg>Un utilisateur tente d'accéder au portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example template:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201336Z" changeid="xavier">
+        <seg>Modèle exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -33464,6 +34064,22 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Authentication module&lt;/s0&gt;: OpenID Connect</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195716Z" changeid="xavier">
+        <seg>&lt;s0&gt;Module d'authentication&lt;/s0&gt; : OpenID-Connect</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>As an RP, &lt;a0&gt;LL::NG&lt;/a0&gt; supports a lot of OpenID Connect features:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T193253Z" changeid="xavier">
+        <seg>Comme RP, &lt;a0&gt;LL::NG&lt;/a0&gt; supporte de nombreuses fonctionnalités OpenID-Connect :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Variables are stored in the user session.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T082814Z" changeid="xavier">
@@ -33632,6 +34248,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>One of mandatory information is the redirect &lt;a1&gt;URL&lt;/a1&gt; (one or many).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200408Z" changeid="xavier">
+        <seg>Une des informations exigées est l'&lt;a1&gt;URL&lt;/a1&gt; de redirection (une ou plusieurs).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Documentation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -33724,6 +34348,22 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR">
         <seg>icons:knewsticker.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Users module&lt;/s0&gt;: OpenID Connect</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T195734Z" changeid="xavier">
+        <seg>&lt;s0&gt;Module utilisateurs&lt;/s0&gt; : OpenID-Connect</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Configuration&lt;/s0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202137Z" changeid="xavier">
+        <seg>&lt;s0&gt;Configuration&lt;/s0&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -34116,6 +34756,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Token endpoint authentication method&lt;/s0&gt;: Choice between &lt;c1&gt;client_secret_post&lt;/c1&gt; and &lt;c2&gt;client_secret_basic&lt;/c2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T203042Z" changeid="xavier">
+        <seg>&lt;s0&gt;Méthode d'authentification du point d'accès du jeton&lt;/s0&gt; : choisir entre &lt;c1&gt;client_secret_post&lt;/c1&gt; et &lt;c2&gt;client_secret_basic&lt;/c2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>secureTokenMemcachedServers</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065746Z" changeid="guimard">
@@ -34394,6 +35042,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The good news is that Google is a standard OpenID Provider, and so you can easily delegate the authentication of &lt;a1&gt;LL::NG&lt;/a1&gt; to Google: &lt;a2&gt;https://developers.google.com/identity/protocols/OpenIDConnect&lt;/a2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T191625Z" changeid="xavier">
+        <seg>La bonne nouvelle est que Google est un fournisseur OpenID-Connect standard, on peut ainsi aisément déléguer l'authentification de &lt;a1&gt;LL::NG&lt;/a1&gt; à Google : &lt;a2&gt;https://developers.google.com/identity/protocols/OpenIDConnect&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Enabled&lt;/s0&gt;: Yes</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074141Z" changeid="xavier">
@@ -34574,6 +35230,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101838Z" changeid="xavier">
         <seg>Un petit effort est requis pour décoder ces chaînes et de nombreux outils de sécurité les décodent à la volée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Give a technical name (no spaces, no special characters), like “sample-op”;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T200929Z" changeid="xavier">
+        <seg>Donner un nom technique (sans espaces ni caratères speciaux), tel “sample-op” ;</seg>
       </tuv>
     </tu>
     <tu>
@@ -34802,6 +35466,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>JWKS is a JSON file containing public keys.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T201416Z" changeid="xavier">
+        <seg>JWKS est un fichier JSON contenant des clefs publiques.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://wiki.sbay.org/</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -34870,6 +35542,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T222240Z" changeid="xavier">
         <seg>Noter que l'on peut toujours accéder à Salesforce par la page générale de connexion : &lt;a1&gt;https://login.salesforce.com&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Set to 0 to disable it.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T202349Z" changeid="xavier">
+        <seg>Mettre à 0 pour désactiver.</seg>
       </tuv>
     </tu>
     <tu>
@@ -36382,6 +37062,14 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T052222Z" changeid="xavier">
         <seg>Configurer le portail pour qu'il utilise le système &lt;a0&gt;LL::NG&lt;/a0&gt; distant.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Set also the configuration &lt;a3&gt;URI&lt;/a3&gt; with &lt;a4&gt;https://accounts.google.com/.well-known/openid-configuration&lt;/a4&gt;, and JWKS refresh, for example every day: 86400.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T192913Z" changeid="xavier">
+        <seg>Préciser alors l'&lt;a3&gt;URI&lt;/a3&gt; de configuration avec &lt;a4&gt;https://accounts.google.com/.well-known/openid-configuration&lt;/a4&gt;, et le rafraîchissement JWKS, par exemple pour chaque jour : 86400.</seg>
       </tuv>
     </tu>
     <tu>

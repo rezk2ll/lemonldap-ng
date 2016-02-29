@@ -33,30 +33,25 @@
 <div class="level2">
 
 <p>
-
-Do you we have to present <a href="http://www.google.com" class="urlextern" title="http://www.google.com"  rel="nofollow">Google</a>? The good news is that Google is a standard OpenID Provider, and so you can easily delegate the authentication of <abbr title="LemonLDAP::NG">LL::NG</abbr> to Google: <a href="https://developers.google.com/identity/protocols/OpenIDConnect" class="urlextern" title="https://developers.google.com/identity/protocols/OpenIDConnect"  rel="nofollow">https://developers.google.com/identity/protocols/OpenIDConnect</a>
+Devons-nous présenter <a href="http://www.google.com" class="urlextern" title="http://www.google.com"  rel="nofollow">Google</a> ? La bonne nouvelle est que Google est un fournisseur OpenID-Connect standard, on peut ainsi aisément déléguer l'authentification de <abbr title="LemonLDAP::NG">LL::NG</abbr> à Google : <a href="https://developers.google.com/identity/protocols/OpenIDConnect" class="urlextern" title="https://developers.google.com/identity/protocols/OpenIDConnect"  rel="nofollow">https://developers.google.com/identity/protocols/OpenIDConnect</a>
 </p>
 
 <p>
-</p><p></p><div class="noteimportant">Google does not support logout trough OpenID Connect. If you close your session on <abbr title="LemonLDAP::NG">LL::NG</abbr> side, your Google session will still be open.
-
+</p><p></p><div class="noteimportant">Google ne supporte pas la déconnexion via OpenID-Connect. Si on ferme la session <abbr title="LemonLDAP::NG">LL::NG</abbr>, celle de Google reste ouverte.
 </div></p>
 </p>
 
 </div><!-- EDIT2 SECTION "Presentation" [68-507] -->
 
-<h2 class="sectionedit3" id="register_on_google">Register on Google</h2>
+<h2 class="sectionedit3" id="register_on_google">S'enregistrer chez Google</h2>
 <div class="level2">
 
 <p>
-
-You need a Google developer account to access to <a href="https://console.developers.google.com/" class="urlextern" title="https://console.developers.google.com/"  rel="nofollow">https://console.developers.google.com/</a>
+Il faut un compte développer Google pour accéder à <a href="https://console.developers.google.com/" class="urlextern" title="https://console.developers.google.com/"  rel="nofollow">https://console.developers.google.com/</a>
 </p>
 
 <p>
-
-Here you can go in <abbr title="Interface de programmation">API</abbr> Manager and get new credentials (<code>client_id</code> and <code>client_secret</code>).
-
+Aller ensuite dans « <abbr title="Interface de programmation">API</abbr> Manager » et récupérer les nouveaux éléments (<code>client_id</code> and <code>client_secret</code>).
 </p>
 
 <p>
@@ -65,29 +60,23 @@ Il faut fournir les URLs de rappel, par exemple <a href="https://auth.domain.com
 
 </div><!-- EDIT3 SECTION "Register on Google" [508-818] -->
 
-<h2 class="sectionedit4" id="declare_google_in_your_llng_server">Declare Google in your LL::NG server</h2>
+<h2 class="sectionedit4" id="declare_google_in_your_llng_server">Déclarer Google dans le serveur LL::NG</h2>
 <div class="level2">
 
 <p>
-Aller dans le Manager et créer un fournisseur OpenID-Connect. You can call it <code>google</code> for example.
+Aller dans le Manager et créer un fournisseur OpenID-Connect. On peut l'appeler <code>google</code> par exemple.
 </p>
 
 <p>
-
-Click on <code>Metadata</code>, and use the OpenID Connect configuration <abbr title="Uniform Resource Locator">URL</abbr> to load them: <a href="https://accounts.google.com/.well-known/openid-configuration" class="urlextern" title="https://accounts.google.com/.well-known/openid-configuration"  rel="nofollow">https://accounts.google.com/.well-known/openid-configuration</a>.
-
+Cliquer sur <code>Métadonnées</code>, et utiliser l'<abbr title="Uniform Resource Locator">URL</abbr> de configuration OpenID-Connect pour les charger : <a href="https://accounts.google.com/.well-known/openid-configuration" class="urlextern" title="https://accounts.google.com/.well-known/openid-configuration"  rel="nofollow">https://accounts.google.com/.well-known/openid-configuration</a>.
 </p>
 
 <p>
-
-You can also load the JWKS data from the <abbr title="Uniform Resource Locator">URL</abbr> <a href="https://www.googleapis.com/oauth2/v3/certs" class="urlextern" title="https://www.googleapis.com/oauth2/v3/certs"  rel="nofollow">https://www.googleapis.com/oauth2/v3/certs</a>. But as Google rotate their keys, we will also configure a refresh interval on JKWS data.
-
+On peut aussi charger les données JWKS depuis l'<abbr title="Uniform Resource Locator">URL</abbr> <a href="https://www.googleapis.com/oauth2/v3/certs" class="urlextern" title="https://www.googleapis.com/oauth2/v3/certs"  rel="nofollow">https://www.googleapis.com/oauth2/v3/certs</a>. Mais comme Google change régulièrement ses clefs, il faut configurer un intervalle de rafraîchissement des données JKWS.
 </p>
 
 <p>
-
-Go in <code>Exported attributes</code> to choose which attributes you want to collect. Google supports these claims:
-
+Aller dans les <code>attributs exportés</code> pour choisir les attributs à collecter. Google supporte ces champs :
 </p>
 <ul>
 <li class="level1"><div class="li">  email</div>
@@ -112,9 +101,9 @@ Go in <code>Exported attributes</code> to choose which attributes you want to co
 Aller ensuite dans <code>Options</code>:
 </p>
 <ul>
-<li class="level1"><div class="li">  In <code>Configuration</code>, register the <code>client_id</code> and <code>client_secret</code> given by Google. Set also the configuration <abbr title="Uniform Resource Identifier">URI</abbr> with <a href="https://accounts.google.com/.well-known/openid-configuration" class="urlextern" title="https://accounts.google.com/.well-known/openid-configuration"  rel="nofollow">https://accounts.google.com/.well-known/openid-configuration</a>, and JWKS refresh, for example every day: 86400.</div>
+<li class="level1"><div class="li"> Dans <code>Configuration</code>, enregistrer les <code>client_id</code> et <code>client_secret</code> donnés par Google. Préciser alors l'<abbr title="Uniform Resource Identifier">URI</abbr> de configuration avec <a href="https://accounts.google.com/.well-known/openid-configuration" class="urlextern" title="https://accounts.google.com/.well-known/openid-configuration"  rel="nofollow">https://accounts.google.com/.well-known/openid-configuration</a>, et le rafraîchissement JWKS, par exemple pour chaque jour : 86400.</div>
 </li>
-<li class="level1"><div class="li"> Dans <code>Protocole</code>, adapter le <code>scope</code> à l'attribut exporté voulu. You can for example use <code>openid profile email</code>.</div>
+<li class="level1"><div class="li"> Dans <code>Protocole</code>, adapter le <code>scope</code> à l'attribut exporté voulu. On peut par exemple utiliser <code>openid profile email</code>.</div>
 </li>
 <li class="level1"><div class="li"> Dans <code>Affichage</code>, on peut indiquer le nom et le logo</div>
 </li>
