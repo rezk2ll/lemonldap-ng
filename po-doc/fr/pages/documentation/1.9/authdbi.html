@@ -82,9 +82,7 @@ Ainsi, tout <a href="http://search.cpan.org/search?query=DBD%3A%3A&amp;mode=modu
 </p>
 
 <p>
-
-The password can be in plain text, or encoded with a standard SQL method:
-
+Le mot-de-passe peut être stocké en clair ou encodé avec une méthode SQL standard :
 </p>
 <ul>
 <li class="level1"><div class="li">  SHA</div>
@@ -169,8 +167,7 @@ The password can be in plain text, or encoded with a standard SQL method:
 <div class="level3">
 
 <p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> will operate some SQL queries:
-
+<abbr title="LemonLDAP::NG">LL::NG</abbr> exécutera quelques requêtes SQL :
 </p>
 <ul>
 <li class="level1"><div class="li"> Authentification : selectionne la ligne de la table d'authentification contenant l'utilisateur et le mot-de-passe</div>
@@ -204,7 +201,7 @@ Le niveau d'authentification accordé aux utilisateurs authentifiés par ce modu
 Comme <abbr title="Database Interface">DBI</abbr> est un module de type login/mot-de-passe, le niveau d'authentification peut être :
 </p>
 <ul>
-<li class="level1"><div class="li">  increased (+1) if portal is protected by SSL (HTTPS)</div>
+<li class="level1"><div class="li"> augmenté (+1) si le portail est protégé par SSL (HTTPS)</div>
 </li>
 <li class="level1"><div class="li"> diminué (-1) si l'autocompletion est autorisée sur le portail (voir <a href="../../documentation/1.9/portalcustom.html" class="wikilink1" title="documentation:1.9:portalcustom">Personnalisation du portail</a>)</div>
 </li>
@@ -221,9 +218,7 @@ Comme <abbr title="Database Interface">DBI</abbr> est un module de type login/mo
 <div class="level3">
 
 <p>
-
-List of columns to query to fill user session. See also <a href="../../documentation/1.9/exportedvars.html" class="wikilink1" title="documentation:1.9:exportedvars">exported variables configuration</a>.
-
+Liste de colonnes à interroger pour trouver la session utilisateur. Voir aussi la <a href="../../documentation/1.9/exportedvars.html" class="wikilink1" title="documentation:1.9:exportedvars">configuration des variables exportées</a>.
 </p>
 
 </div><!-- EDIT12 SECTION "Exported variables" [2388-2525] -->
@@ -268,7 +263,7 @@ List of columns to query to fill user session. See also <a href="../../documenta
 <h3 class="sectionedit15" id="password">Mot-de-passe</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li"> <strong>Hash schema</strong>: SQL method for hashing password. Peut être vide pour le stockage des mots-de-passe en clair.</div>
+<li class="level1"><div class="li"> <strong>Schéma de hachage</strong> : méthode SQL pour hacher les mots-de-passe. Peut être vide pour le stockage des mots-de-passe en clair.</div>
 </li>
 </ul>
 

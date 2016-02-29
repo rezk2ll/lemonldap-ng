@@ -78,6 +78,14 @@
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>To use it, edit lemonldap-ng.ini (this is not available trough Manager) and configure:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T140844Z" changeid="xavier">
+        <seg>Pour l'utiliser, éditer lemonldap-ng.ini (ce n'est pas disponible dans le Manager) et configurer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>If you use TLS, you can set any of the <bpt i='0' x='0'>&lt;a0&gt;</bpt>Net::LDAP<ept i='0'>&lt;/a0&gt;</ept> start_tls() sub like <bpt i='1' x='1'>&lt;c1&gt;</bpt>ldap+tls://server/verify=none&amp;capath=/etc/ssl<ept i='1'>&lt;/c1&gt;</ept>.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120101T184710Z" changeid="xavier">
@@ -764,6 +772,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>If you still need to use Google login after this date, use <bpt i='0' x='0'>&lt;a0&gt;</bpt>OpenID Connect authentication module<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135553Z" changeid="xavier">
+        <seg>S'il est nécessaire d'utiliser la connexion Google après cette date, utiliser le <bpt i='0' x='0'>&lt;a0&gt;</bpt>module d'authentification OpenID-Connect<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>$uid eq &quot;coudot&quot;</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20131025T123105Z" changeid="xavier">
@@ -918,6 +934,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>increased (+1) if portal is protected by SSL (HTTPS)</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135043Z" changeid="xavier">
+        <seg>augmenté (+1) si le portail est protégé par SSL (HTTPS)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>You just have to configure a directory writable by Apache user and set it in [configuration] section in your lemonldap-ng.ini file:</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T185148Z" changeid="xavier">
@@ -1066,6 +1090,14 @@ make test</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120303T095434Z" changeid="xavier">
         <seg>perl-Lemonldap-NG-Handler : CPAN - modules agent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Name<ept i='0'>&lt;/s0&gt;</ept>: Text displayed on choice tab.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T134829Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Nom<ept i='0'>&lt;/s0&gt;</ept> : Texte à afficher sur l'onglet.</seg>
       </tuv>
     </tu>
     <tu>
@@ -1712,6 +1744,14 @@ ln -s ../pastel/*.tpl .</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>You need to register your LemonLDAP::NG application to Google in order to obtain the Client ID and the Client Secret, see <bpt i='0' x='0'>&lt;a0&gt;</bpt>https://developers.google.com/<ept i='0'>&lt;/a0&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T140932Z" changeid="xavier">
+        <seg>Il faut enregistrer l'application LemonLDAP::NG chez Google pour obtenir le couple identifiant mot-de-passe, voir <bpt i='0' x='0'>&lt;a0&gt;</bpt>https://developers.google.com/<ept i='0'>&lt;/a0&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>If the rule evaluation is true, the corresponding skin is applied.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20130203T114944Z" changeid="xavier">
@@ -2022,6 +2062,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160228T223119Z" changeid="xavier">
         <seg>Ceci signifie que l'identifiant utilisateur correspondra avec le champ  Federation ID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>The password can be in plain text, or encoded with a standard SQL method:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T134946Z" changeid="xavier">
+        <seg>Le mot-de-passe peut être stocké en clair ou encodé avec une méthode SQL standard :</seg>
       </tuv>
     </tu>
     <tu>
@@ -2670,6 +2718,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>When <bpt i='0' x='0'>&lt;c0&gt;</bpt>Choice<ept i='0'>&lt;/c0&gt;</ept> is selected for authentication, values for Users and Password modules are also forced to <bpt i='1' x='1'>&lt;c1&gt;</bpt>Choice<ept i='1'>&lt;/c1&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T134737Z" changeid="xavier">
+        <seg>Lorsque <bpt i='0' x='0'>&lt;c0&gt;</bpt>Choice<ept i='0'>&lt;/c0&gt;</ept> est selectionné pour l'authentification, les valeurs pour les modules utilisateur et mots-de-passe sont forcées à <bpt i='1' x='1'>&lt;c1&gt;</bpt>Choice<ept i='1'>&lt;/c1&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>SOAP configuration backend</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120420T170231Z" changeid="xavier">
@@ -3220,6 +3276,14 @@ make debian-packages</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T053747Z" changeid="guimard">
         <seg>Ainsi, créer une notification pour <bpt i='0' x='0'>&lt;c0&gt;</bpt>alluserscustom<ept i='0'>&lt;/c0&gt;</ept> affichera la notification à tous les utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>This module is not available in version 1.9 and superior, you must use instead the <bpt i='0' x='0'>&lt;a0&gt;</bpt>OpenID Connect authentication module<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T140136Z" changeid="xavier">
+        <seg>Ce module n'est plus disponible dans les versions 1.9 et supérieures, il faut utiliser le <bpt i='0' x='0'>&lt;a0&gt;</bpt>module d'authentification OpenID-Connect<ept i='0'>&lt;/a0&gt;</ept>.</seg>
       </tuv>
     </tu>
     <tu>
@@ -5560,6 +5624,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20131103T202934Z" changeid="xavier">
         <seg>Backend de configuration en fichier JSON</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Users module</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T134842Z" changeid="xavier">
+        <seg>Module utilisateurs</seg>
       </tuv>
     </tu>
     <tu>
@@ -8068,6 +8140,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>You also need to register to Google the redirect <bpt i='0' x='0'>&lt;a0&gt;</bpt>URI<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T141006Z" changeid="xavier">
+        <seg>Il faut également enregistrer chez Google l'<bpt i='0' x='0'>&lt;a0&gt;</bpt>URI<ept i='0'>&lt;/a0&gt;</ept> de redirection.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Applications listed below are known to be easy to integrate in <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept>.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160229T060457Z" changeid="xavier">
@@ -9584,6 +9664,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120222T125713Z" changeid="xavier">
         <seg>../../documentation/presentation.html#login</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Hash schema<ept i='0'>&lt;/s0&gt;</ept>: SQL method for hashing password.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135215Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Schéma de hachage<ept i='0'>&lt;/s0&gt;</ept> : méthode SQL pour hacher les mots-de-passe.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11900,6 +11988,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>OpenID 2.0 support is closed since 20th April 2015.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135452Z" changeid="xavier">
+        <seg>Le support OpenID-2.0 esl clos depuis le 20 avril 2015.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>/_detail/screenshots/1.0/sessionsexplorer/tree_light.png?id=screenshots</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -11928,6 +12024,22 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120216T050354Z" changeid="xavier">
         <seg>Le portail secondaire vérifie que la session distante est valable.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>You can also modify list of exported variables.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135341Z" changeid="xavier">
+        <seg>On peut également modifier la liste des variables exportées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>If you want to require that a field is set, add “!” before the key name :</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135607Z" changeid="xavier">
+        <seg>Pour imposer qu'une valeur soit renseignée, ajouter un ”!” devant le nom de clef :</seg>
       </tuv>
     </tu>
     <tu>
@@ -12488,6 +12600,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Allowed modules<ept i='0'>&lt;/s0&gt;</ept>: click on <bpt i='1' x='1'>&lt;c1&gt;</bpt>New chain<ept i='1'>&lt;/c1&gt;</ept> to add a choice.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T134751Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Modules autorisés<ept i='0'>&lt;/s0&gt;</ept> : cliquer sur <bpt i='1' x='1'>&lt;c1&gt;</bpt>Nouveau choix<ept i='1'>&lt;/c1&gt;</ept> pour ajouter un choix.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>idpcas<ept i='0'>&lt;/a0&gt;</ept><ph x='1'>&lt;br1/&gt;</ph></seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111119T111534Z" changeid="xavier">
@@ -12748,6 +12868,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T051407Z" changeid="guimard">
         <seg>Preparer la base de donnée et le fichier de configuration LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Underscore characters are also replaced by spaces.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T134928Z" changeid="xavier">
+        <seg>Les caractères « _ » sont alors remplacés par des espaces.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13730,6 +13858,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>It provides a specific and lightweight OpenID Connect module that will replace the current Google module.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T140023Z" changeid="xavier">
+        <seg>Il fournit un module OpenID-Connect spécifique et facile qui remplace l'actuel module Google.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>In Manager, go in <bpt i='0' x='0'>&lt;c0&gt;</bpt>General Parameters<ept i='0'>&lt;/c0&gt;</ept> &gt; <bpt i='1' x='1'>&lt;c1&gt;</bpt>Authentication modules<ept i='1'>&lt;/c1&gt;</ept> and choose Google for authentication module.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20131025T062257Z" changeid="xavier">
@@ -13782,6 +13918,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120107T114524Z" changeid="xavier">
         <seg>La recherche des groupes est désactivé si cette valeur est vide.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Only uid, cn and mail attributes are available.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135401Z" changeid="xavier">
+        <seg>Seuls les attributs uid, cn et mail sont disponibles.</seg>
       </tuv>
     </tu>
     <tu>
@@ -14184,6 +14328,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120420T171643Z" changeid="xavier">
         <seg><bpt i='29' x='29'>&lt;s29&gt;</bpt>Allow<ept i='29'>&lt;/s29&gt;</ept> from <bpt i='30' x='30'>&lt;s30&gt;</bpt>all<ept i='30'>&lt;/s30&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>You have to set your portal <bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept> with the googlecb=1 GET parameter, for example:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T141052Z" changeid="xavier">
+        <seg>Il faut indiquer l'<bpt i='1' x='1'>&lt;a1&gt;</bpt>URL<ept i='1'>&lt;/a1&gt;</ept> du portail avec le paramètre GET « googlecb=1 », par exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -16612,6 +16764,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>“myfield ⇒ firstname” can be “”</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135815Z" changeid="xavier">
+        <seg>“myfield ⇒ prénom”, peut être “”</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Form replay</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T193806Z" changeid="xavier">
@@ -17138,6 +17298,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T063838Z" changeid="guimard">
         <seg>portalDisplayAppslist</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>If you want to refuse access when a data is missing, just add a “!” before the key name</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135423Z" changeid="xavier">
+        <seg>Pour imposer qu'une valeur soit renseignée, ajouter un ”!” devant le nom de clef</seg>
       </tuv>
     </tu>
     <tu>
@@ -18036,6 +18204,14 @@ mkdir myskin/images</seg>
  
 <bpt i='10' x='10'>&lt;s10&gt;</bpt># Tester si l'utilisateur est membre d'un groupe Lemonldap::NG (ou d'un groupe LDAP translaté)<ept i='10'>&lt;/s10&gt;</ept>
 <bpt i='11' x='11'>&lt;s11&gt;</bpt>if<ept i='11'>&lt;/s11&gt;</ept><bpt i='12' x='12'>&lt;s12&gt;</bpt>(<ept i='12'>&lt;/s12&gt;</ept> <bpt i='13' x='13'>&lt;s13&gt;</bpt>$cgi<ept i='13'>&lt;/s13&gt;</ept><bpt i='14' x='14'>&lt;s14&gt;</bpt>-&gt;<ept i='14'>&lt;/s14&gt;</ept><bpt i='15' x='15'>&lt;s15&gt;</bpt>group<ept i='15'>&lt;/s15&gt;</ept><bpt i='16' x='16'>&lt;s16&gt;</bpt>(<ept i='16'>&lt;/s16&gt;</ept><bpt i='17' x='17'>&lt;s17&gt;</bpt>'admin'<ept i='17'>&lt;/s17&gt;</ept><bpt i='18' x='18'>&lt;s18&gt;</bpt>)<ept i='18'>&lt;/s18&gt;</ept> <bpt i='19' x='19'>&lt;s19&gt;</bpt>)<ept i='19'>&lt;/s19&gt;</ept> <bpt i='20' x='20'>&lt;s20&gt;</bpt>{<ept i='20'>&lt;/s20&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>List of columns to query to fill user session.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135138Z" changeid="xavier">
+        <seg>Liste de colonnes à interroger pour trouver la session utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19584,6 +19760,14 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
         <seg>Installation et configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Google Migration</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135839Z" changeid="xavier">
+        <seg>Migration Google</seg>
       </tuv>
     </tu>
     <tu>
@@ -21256,6 +21440,14 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T184955Z" changeid="xavier">
         <seg>Ce type de stockage de configuration peut être partagé entre différents serveurs en utilisant :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>A Google Migration workaround is available since LemonLDAP::NG 1.4.4.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135927Z" changeid="xavier">
+        <seg>Un contournement à la migration Google est disponible depuis la version 1.4.4 de LemonLDAP::NG.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26184,6 +26376,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>See also <bpt i='0' x='0'>&lt;a0&gt;</bpt>exported variables configuration<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135203Z" changeid="xavier">
+        <seg>Voir aussi la <bpt i='0' x='0'>&lt;a0&gt;</bpt>configuration des variables exportées<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Using <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> in reverse proxy mode, you will not have the <bpt i='1' x='1'>&lt;c1&gt;</bpt>REMOTE_USER<ept i='1'>&lt;/c1&gt;</ept> environment variable set.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T194816Z" changeid="xavier">
@@ -30664,6 +30864,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> will operate some SQL queries:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T134959Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> exécutera quelques requêtes SQL :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>http://memcached.org/</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T050301Z" changeid="guimard">
@@ -33308,6 +33516,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Select Demonstration for authentication, user and password backend.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135315Z" changeid="xavier">
+        <seg>Selectionner Démonstration pour les backends authentification, utilisateurs et mots-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>The access to phpLDAPadmin will be protected by LemonLDAP::NG with specific access rules.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111211T173315Z" changeid="xavier">
@@ -35186,6 +35402,14 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20131025T061249Z" changeid="xavier">
         <seg>Voir <bpt i='0' x='0'>&lt;a0&gt;</bpt>https://developers.facebook.com/apps<ept i='0'>&lt;/a0&gt;</ept> pour en savoir plus.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>“!myfield ⇒ lastname” must be set</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160229T135830Z" changeid="xavier">
+        <seg>“!myfield ⇒ nom” doit être renseigné</seg>
       </tuv>
     </tu>
     <tu>

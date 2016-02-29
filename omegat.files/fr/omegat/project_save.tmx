@@ -13530,6 +13530,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; will operate some SQL queries:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T134959Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; exécutera quelques requêtes SQL :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; will then display a form with an OpenID input, wher users will type their OpenID login.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T045618Z" changeid="xavier">
@@ -17792,6 +17800,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Allowed modules&lt;/s0&gt;: click on &lt;c1&gt;New chain&lt;/c1&gt; to add a choice.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T134751Z" changeid="xavier">
+        <seg>&lt;s0&gt;Modules autorisés&lt;/s0&gt; : cliquer sur &lt;c1&gt;Nouveau choix&lt;/c1&gt; pour ajouter un choix.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Allowed modules&lt;/s0&gt;: click on &lt;c1&gt;New choice&lt;/c1&gt; to add a choice.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194523Z" changeid="xavier">
@@ -18662,6 +18678,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Hash schema&lt;/s0&gt;: SQL method for hashing password.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135215Z" changeid="xavier">
+        <seg>&lt;s0&gt;Schéma de hachage&lt;/s0&gt; : méthode SQL pour hacher les mots-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Header for user login&lt;/s0&gt;: header that contains the user main login</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T161024Z" changeid="xavier">
@@ -19098,6 +19122,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T055859Z" changeid="xavier">
         <seg>&lt;s0&gt;Nom&lt;/s0&gt;: Nom de l'attribut &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Name&lt;/s0&gt;: Text displayed on choice tab.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T134829Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom&lt;/s0&gt; : Texte à afficher sur l'onglet.</seg>
       </tuv>
     </tu>
     <tu>
@@ -24094,6 +24126,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Un module Apache::Session::Browseable::Redis est en préparation, il sera le plus rapide</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A Google Migration workaround is available since LemonLDAP::NG 1.4.4.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135927Z" changeid="xavier">
+        <seg>Un contournement à la migration Google est disponible depuis la version 1.4.4 de LemonLDAP::NG.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31238,6 +31278,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Google Migration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135839Z" changeid="xavier">
+        <seg>Migration Google</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Google proposes to allow applications to reuse its own authentication process using &lt;a0&gt;OpenID&lt;/a0&gt; protocol (it means, if your are connected to Google, other applications can trust Google and let you in).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T062232Z" changeid="xavier">
@@ -32414,6 +32462,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you still need to use Google login after this date, use &lt;a0&gt;OpenID Connect authentication module&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135553Z" changeid="xavier">
+        <seg>S'il est nécessaire d'utiliser la connexion Google après cette date, utiliser le &lt;a0&gt;module d'authentification OpenID-Connect&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you upgrade from older versions, please follow first:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T093757Z" changeid="xavier">
@@ -32494,10 +32550,26 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you want to refuse access when a data is missing, just add a “!” before the key name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135423Z" changeid="xavier">
+        <seg>Pour imposer qu'une valeur soit renseignée, ajouter un ”!” devant le nom de clef</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you want to refuse access when a data is missing, just add a ”!” before the key name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T061757Z" changeid="xavier">
         <seg>Pour imposer qu'une valeur soit renseignée, ajouter un ”!” devant le nom de clef</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you want to require that a field is set, add “!” before the key name :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135607Z" changeid="xavier">
+        <seg>Pour imposer qu'une valeur soit renseignée, ajouter un ”!” devant le nom de clef :</seg>
       </tuv>
     </tu>
     <tu>
@@ -33822,6 +33894,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It provides a specific and lightweight OpenID Connect module that will replace the current Google module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T140023Z" changeid="xavier">
+        <seg>Il fournit un module OpenID-Connect spécifique et facile qui remplace l'actuel module Google.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It provides full functionality you expect from an email client, including MIME support, address book, folder manipulation, message searching and spell checking.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T220643Z" changeid="xavier">
@@ -35128,6 +35208,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T035345Z" changeid="xavier">
         <seg>LinuxFR</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>List of columns to query to fill user session.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135138Z" changeid="xavier">
+        <seg>Liste de colonnes à interroger pour trouver la session utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -37066,6 +37154,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Only uid, cn and mail attributes are available.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135401Z" changeid="xavier">
+        <seg>Seuls les attributs uid, cn et mail sont disponibles.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Only with UserDB &lt;a0&gt;LDAP&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T131519Z" changeid="xavier">
@@ -37102,6 +37198,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>OpenID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OpenID 2.0 support is closed since 20th April 2015.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135452Z" changeid="xavier">
+        <seg>Le support OpenID-2.0 esl clos depuis le 20 avril 2015.</seg>
       </tuv>
     </tu>
     <tu>
@@ -40174,6 +40278,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See also &lt;a0&gt;exported variables configuration&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135203Z" changeid="xavier">
+        <seg>Voir aussi la &lt;a0&gt;configuration des variables exportées&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See also &lt;a0&gt;general kinematics presentation&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T073910Z" changeid="guimard">
@@ -40218,6 +40330,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T194844Z" changeid="xavier">
         <seg>Selectionner &lt;c0&gt;Metadata&lt;/c0&gt;, et déprotéger le champ pour y mettre :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Select Demonstration for authentication, user and password backend.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135315Z" changeid="xavier">
+        <seg>Selectionner Démonstration pour les backends authentification, utilisateurs et mots-de-passe.</seg>
       </tuv>
     </tu>
     <tu>
@@ -42416,6 +42536,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The password can be in plain text, or encoded with a standard SQL method:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T134946Z" changeid="xavier">
+        <seg>Le mot-de-passe peut être stocké en clair ou encodé avec une méthode SQL standard :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The path to the lock directory</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192019Z" changeid="xavier">
@@ -43834,6 +43962,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This module is not available in version 1.9 and superior, you must use instead the &lt;a0&gt;OpenID Connect authentication module&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T140136Z" changeid="xavier">
+        <seg>Ce module n'est plus disponible dans les versions 1.9 et supérieures, il faut utiliser le &lt;a0&gt;module d'authentification OpenID-Connect&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This module is not part of &lt;a0&gt;LL::NG&lt;/a0&gt; distibution, and can be found on CPAN: &lt;a1&gt;Apache::Session::LDAP&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T114029Z" changeid="xavier">
@@ -44818,6 +44954,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To use it, edit lemonldap-ng.ini (this is not available trough Manager) and configure:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T140844Z" changeid="xavier">
+        <seg>Pour l'utiliser, éditer lemonldap-ng.ini (ce n'est pas disponible dans le Manager) et configurer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To use this feature only locally, edit &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt; in section [all]:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120222T125946Z" changeid="xavier">
@@ -45034,6 +45178,14 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183018Z" changeid="xavier">
         <seg>Le désélectionner désactive l'authentification &lt;a1&gt;SAML&lt;/a1&gt; (à utiliser, si votre fournisseur d'identité est hors service).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Underscore characters are also replaced by spaces.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T134928Z" changeid="xavier">
+        <seg>Les caractères « _ » sont alors remplacés par des espaces.</seg>
       </tuv>
     </tu>
     <tu>
@@ -45714,6 +45866,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Users module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T134842Z" changeid="xavier">
+        <seg>Module utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Users module: &lt;a0&gt;SAML&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220722Z" changeid="xavier">
@@ -46126,6 +46286,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120940Z" changeid="xavier">
         <seg>En &lt;a0&gt;écrivant des règles et en-têtes&lt;/a0&gt;, on peut utiliser des expressions &lt;a1&gt;Perl&lt;/a1&gt; qui seront évaluées dans une cage pour prévenir les codes malveillants.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>When &lt;c0&gt;Choice&lt;/c0&gt; is selected for authentication, values for Users and Password modules are also forced to &lt;c1&gt;Choice&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T134737Z" changeid="xavier">
+        <seg>Lorsque &lt;c0&gt;Choice&lt;/c0&gt; est selectionné pour l'authentification, les valeurs pour les modules utilisateur et mots-de-passe sont forcées à &lt;c1&gt;Choice&lt;/c1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -46562,6 +46730,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You also need to register to Google the redirect &lt;a0&gt;URI&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T141006Z" changeid="xavier">
+        <seg>Il faut également enregistrer chez Google l'&lt;a0&gt;URI&lt;/a0&gt; de redirection.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can add a link in &lt;a0&gt;application menu&lt;/a0&gt; to display Google Apps to users.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T051719Z" changeid="xavier">
@@ -46726,6 +46902,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095051Z" changeid="xavier">
         <seg>On peut également construire les paquets à partir de l'&lt;a0&gt;archive LemonLDAP::NG&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also modify list of exported variables.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135341Z" changeid="xavier">
+        <seg>On peut également modifier la liste des variables exportées.</seg>
       </tuv>
     </tu>
     <tu>
@@ -47578,6 +47762,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You have to set your portal &lt;a1&gt;URL&lt;/a1&gt; with the googlecb=1 GET parameter, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T141052Z" changeid="xavier">
+        <seg>Il faut indiquer l'&lt;a1&gt;URL&lt;/a1&gt; du portail avec le paramètre GET « googlecb=1 », par exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You have to update them by yourself.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T080342Z" changeid="xavier">
@@ -47926,6 +48118,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous devez enregistrer votre nouvelle application dans Twitter pour obtenir la clef de l'&lt;a0&gt;API&lt;/a0&gt; et son secret&lt;a1&gt;&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need to register your LemonLDAP::NG application to Google in order to obtain the Client ID and the Client Secret, see &lt;a0&gt;https://developers.google.com/&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T140932Z" changeid="xavier">
+        <seg>Il faut enregistrer l'application LemonLDAP::NG chez Google pour obtenir le couple identifiant mot-de-passe, voir &lt;a0&gt;https://developers.google.com/&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -57804,6 +58004,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>increased (+1) if portal is protected by SSL (HTTPS)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135043Z" changeid="xavier">
+        <seg>augmenté (+1) si le portail est protégé par SSL (HTTPS)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>index/alphabetical.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -61366,6 +61574,22 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120707T080405Z" changeid="xavier">
         <seg>~7500</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>“!myfield ⇒ lastname” must be set</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135830Z" changeid="xavier">
+        <seg>“!myfield ⇒ nom” doit être renseigné</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>“myfield ⇒ firstname” can be “”</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T135815Z" changeid="xavier">
+        <seg>“myfield ⇒ prénom”, peut être “”</seg>
       </tuv>
     </tu>
     <tu>

@@ -43,8 +43,7 @@ Google propose d'autoriser les applications à réutiliser son propre processus 
 </p>
 
 <p>
-</p><p></p><div class="notewarning">OpenID 2.0 support is closed since 20th April 2015. If you still need to use Google login after this date, use <a href="../../documentation/1.9/authopenidconnect.html" class="wikilink1" title="documentation:1.9:authopenidconnect">OpenID Connect authentication module</a>.
-
+</p><p></p><div class="notewarning">Le support OpenID-2.0 esl clos depuis le 20 avril 2015. S'il est nécessaire d'utiliser la connexion Google après cette date, utiliser le <a href="../../documentation/1.9/authopenidconnect.html" class="wikilink1" title="documentation:1.9:authopenidconnect">module d'authentification OpenID-Connect</a>.
 </div></p>
 </p>
 
@@ -70,19 +69,17 @@ Dans le manager, allez dans <code>Paramètres generaux</code> &gt; <code>Modules
 </ul>
 
 <p>
-Utiliser n'importe quel nom de clef mais ces valeurs dans le champ «&nbsp;valeur&nbsp;». If you want to require that a field is set, add “!” before the key name :
+Utiliser n'importe quel nom de clef mais ces valeurs dans le champ «&nbsp;valeur&nbsp;». Pour imposer qu'une valeur soit renseignée, ajouter un ”!” devant le nom de clef :
 </p>
 <ul>
-<li class="level1"><div class="li">  “myfield ⇒ firstname” can be “”</div>
+<li class="level1"><div class="li"> “myfield ⇒ prénom”, peut être “”</div>
 </li>
-<li class="level1"><div class="li">  “!myfield ⇒ lastname” must be set</div>
+<li class="level1"><div class="li"> “!myfield ⇒ nom” doit être renseigné</div>
 </li>
 </ul>
 
 <p>
-
-See also <a href="../../documentation/1.9/exportedvars.html" class="wikilink1" title="documentation:1.9:exportedvars">exported variables configuration</a>.
-
+Voir aussi la <a href="../../documentation/1.9/exportedvars.html" class="wikilink1" title="documentation:1.9:exportedvars">configuration des variables exportées</a>.
 </p>
 
 <p>
@@ -92,25 +89,20 @@ See also <a href="../../documentation/1.9/exportedvars.html" class="wikilink1" t
 
 </div><!-- EDIT4 SECTION "Configuration" [545-1491] -->
 
-<h2 class="sectionedit5" id="google_migration">Google Migration</h2>
+<h2 class="sectionedit5" id="google_migration">Migration Google</h2>
 <div class="level2">
 
 <p>
-
-A Google Migration workaround is available since LemonLDAP::NG 1.4.4. It provides a specific and lightweight OpenID Connect module that will replace the current Google module.
-
+Un contournement à la migration Google est disponible depuis la version 1.4.4 de LemonLDAP::NG. Il fournit un module OpenID-Connect spécifique et facile qui remplace l'actuel module Google.
 </p>
 
 <p>
-</p><p></p><div class="noteimportant">This module is not available in version 1.9 and superior, you must use instead the <a href="../../documentation/1.9/authopenidconnect.html" class="wikilink1" title="documentation:1.9:authopenidconnect">OpenID Connect authentication module</a>.
-
+</p><p></p><div class="noteimportant">Ce module n'est plus disponible dans les versions 1.9 et supérieures, il faut utiliser le <a href="../../documentation/1.9/authopenidconnect.html" class="wikilink1" title="documentation:1.9:authopenidconnect">module d'authentification OpenID-Connect</a>.
 </div></p>
 </p>
 
 <p>
-
-To use it, edit lemonldap-ng.ini (this is not available trough Manager) and configure:
-
+Pour l'utiliser, éditer lemonldap-ng.ini (ce n'est pas disponible dans le Manager) et configurer :
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">[</span>portal<span class="br0">]</span></span>
 <span class="re1">authentication</span> <span class="sy0">=</span><span class="re2"> GoogleMigration</span>
@@ -118,14 +110,11 @@ To use it, edit lemonldap-ng.ini (this is not available trough Manager) and conf
 <span class="re1">googleClientSecret</span> <span class="sy0">=</span><span class="re2"> XXXX</span></pre>
 
 <p>
-
-You need to register your LemonLDAP::NG application to Google in order to obtain the Client ID and the Client Secret, see <a href="https://developers.google.com/" class="urlextern" title="https://developers.google.com/"  rel="nofollow">https://developers.google.com/</a>
+Il faut enregistrer l'application LemonLDAP::NG chez Google pour obtenir le couple identifiant mot-de-passe, voir <a href="https://developers.google.com/" class="urlextern" title="https://developers.google.com/"  rel="nofollow">https://developers.google.com/</a>
 </p>
 
 <p>
-
-You also need to register to Google the redirect <abbr title="Uniform Resource Identifier">URI</abbr>. You have to set your portal <abbr title="Uniform Resource Locator">URL</abbr> with the googlecb=1 GET parameter, for example:
-
+Il faut également enregistrer chez Google l'<abbr title="Uniform Resource Identifier">URI</abbr> de redirection. Il faut indiquer l'<abbr title="Uniform Resource Locator">URL</abbr> du portail avec le paramètre GET « googlecb=1 », par exemple :
 </p>
 <pre class="code">http://auth.example.com/?googlecb=1</pre>
 
