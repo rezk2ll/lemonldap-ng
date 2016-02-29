@@ -39,8 +39,7 @@
 <div class="level2">
 
 <p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> can delegate authentication to Apache, so it is possible to use any <a href="http://httpd.apache.org/docs/current/howto/auth.html" class="urlextern" title="http://httpd.apache.org/docs/current/howto/auth.html"  rel="nofollow">Apache authentication module</a>, for example Kerberos, Radius, OTP, etc.
-
+<abbr title="LemonLDAP::NG">LL::NG</abbr> peut déléguer l'authentification à Apache, ainsi il est possible d'utiliser tous les <a href="http://httpd.apache.org/docs/current/howto/auth.html" class="urlextern" title="http://httpd.apache.org/docs/current/howto/auth.html"  rel="nofollow">modules d'authentification Apache</a>, par exemple Kerberos, Radius, OTP, etc.
 </p>
 
 <p>
@@ -59,21 +58,16 @@
 <div class="level3">
 
 <p>
-
-In General Parameters &gt; Authentication modules, choose <code>Apache</code> as authentication backend.
-
+Dans <code>Paramètres généraux</code> &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; choisir Apache pour l'authentification.
 </p>
 
 <p>
-
-You may want to failback to another authentication backend in case of the Apache authentication fails. Use then the <a href="../../documentation/1.9/authmulti.html" class="wikilink1" title="documentation:1.9:authmulti">Multiple authentication module</a>, for example:
-
+On peut choisir de basculer sur un autre backend d'authentification en cas d'échec de l'authentification Apache. Utiliser alors le <a href="../../documentation/1.9/authmulti.html" class="wikilink1" title="documentation:1.9:authmulti">module d'authentification multiple</a>, exemple:
 </p>
 <pre class="code">Apache;LDAP</pre>
 
 <p>
-</p><p></p><div class="notetip">In this case, the Apache authentication module should not require a valid user and not be authoritative, else Apache server will return an error and not let <abbr title="LemonLDAP::NG">LL::NG</abbr> Portal manage the failback authentication.
-
+</p><p></p><div class="notetip">Dans ce cas, la module d'authentification Apache ne doit pas exiger un utilisateur valide et ne dois pas être impératif, sinon le serveur Apache va retourner une erreur sans passer la main au portail <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </div></p>
 </p>
 
@@ -83,9 +77,7 @@ You may want to failback to another authentication backend in case of the Apache
 <div class="level3">
 
 <p>
-
-The Apache configuration depends on the module you choose, you need to look at the module documentation, for example:
-
+La configuration Apache dépend du module choisi, se référer à sa documentation. Exemple :
 </p>
 <ul>
 <li class="level1"><div class="li"> <a href="http://modauthkerb.sourceforge.net/" class="urlextern" title="http://modauthkerb.sourceforge.net/"  rel="nofollow">Kerberos</a></div>
@@ -100,7 +92,7 @@ The Apache configuration depends on the module you choose, you need to look at t
 
 </div><!-- EDIT6 SECTION "Apache" [1030-1364] -->
 
-<h2 class="sectionedit7" id="tips">Tips</h2>
+<h2 class="sectionedit7" id="tips">Astuces</h2>
 <div class="level2">
 
 </div><!-- EDIT7 SECTION "Tips" [1365-1382] -->
@@ -109,35 +101,27 @@ The Apache configuration depends on the module you choose, you need to look at t
 <div class="level3">
 
 <p>
-
-The Kerberos configuration is quite complex. You can find some configuration tips <a href="../../documentation/1.9/kerberos.html" class="wikilink1" title="documentation:1.9:kerberos">on this page</a>.
-
+La configuration Kerberos est assez complexe. On peut trouver quelques éléments de configuration <a href="../../documentation/1.9/kerberos.html" class="wikilink1" title="documentation:1.9:kerberos">dans cette page</a>.
 </p>
 
 </div><!-- EDIT8 SECTION "Kerberos" [1383-1512] -->
 
-<h3 class="sectionedit9" id="compatibility_with_identity_provider_modules">Compatibility with Identity Provider modules</h3>
+<h3 class="sectionedit9" id="compatibility_with_identity_provider_modules">Compatibilité avec les modules fournisseurs d'identité</h3>
 <div class="level3">
 
 <p>
-
-When using IDP modules (like <abbr title="Central Authentication Service">CAS</abbr> or <abbr title="Security Assertion Markup Language">SAML</abbr>), the activation of Apache authentication can alter the operation. This is because the client often need to request directly the IDP, and the Apache authentication will block the request.
-
+Lorsqu'on utilise des modules IDP (tels <abbr title="Central Authentication Service">CAS</abbr> ou <abbr title="Security Assertion Markup Language">SAML</abbr>), l'activation de 'authentification Apache peut altérer l'operation. En effet, le client doit souvent interroger directement l'IDP et l'authentification Apache va bloquer la requête.
 </p>
 
 <p>
-
-In this case, you can add in the Apache authentication module:
-
+Dans ce cas, il faut ajouter dans la configuratio du module Apache :
 </p>
 <pre class="code file apache">      <span class="kw1">Satisfy</span> any 
       <span class="kw1">Order</span> <span class="kw1">allow</span>,<span class="kw1">deny</span> 
       <span class="kw1">allow</span> from APPLICATIONS_IP</pre>
 
 <p>
-
-This will bypass the authentication module for request from APPLICATIONS_<abbr title="Internet Protocol">IP</abbr>.
-
+Ceci évite l'authentification des requêtes issues des adresses listées dans APPLICATIONS_<abbr title="Internet Protocol">IP</abbr>.
 </p>
 
 </div>

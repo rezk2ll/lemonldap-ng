@@ -68,29 +68,26 @@ La configuration est la même que mour le <a href="../../documentation/1.9/authl
 La politique de mots-de-passe AD ne respecte pas les <abbr title="Request for Comments">RFC</abbr> LDAP, mais Microsoft a implementé sa propore politique. LemonLDAP::NG implémente partiellement cette politique :
 </p>
 <ul>
-<li class="level1"><div class="li">  when pwdLastSet = 0 in the user entry, it means that password has been reset, and a form is presented to the user for him to change his password.</div>
+<li class="level1"><div class="li"> Lorsque le paramètre pwdLastSet est positionné à 0 dans l'entrée utilisateur, ça signifie que le mot de passe a été réinitialisé et qu'un formulaire est présenté à l'utilisateur pour qu'il change son mot de passe.</div>
 </li>
-<li class="level1"><div class="li">  when computed virtual attribute 'msDS-User-Account-Control-Computed' as 6th flag set to 8, the password is considered expired. (support from Windows Server 2003) It is too late for the user to do anything. He must contact his administrator.</div>
+<li class="level1"><div class="li"> lorsque l'attribut virtuel compilé 'msDS-User-Account-Control-Computed' a le drapeau 6th positionné à 8, le mot de passe est considéré comme expiré. (support depuis la version Windows Server 2003) Il est trop tard pour l'utilisateur pour faire quoi que ce soit. Il doit contacter son administrateur.</div>
 </li>
-<li class="level1"><div class="li">  a warning before password expiration is possible in AD, but only in GPO (Computer Configuration\Windows Settings\Local Policies\Security Options under Interactive Logon: Prompt user to change password before expiration) However it as no reality in LDAP referential. A “password warning time before password expiration” variable can be specified in LemonLDAP::NG to do so.</div>
+<li class="level1"><div class="li"> un avertissement avant expiration du mot de passe est possible dans AD, mais seuleent dans une GPO (Configuration de l'ordinateur\Paramètres Windows\Politiques locales\Options de sécurité pour le logon interactif: Demander à l'utilisateur de changer son mot de passe avant expiration). Toutefois, ça n'a pas de matérialisation dans le référentiel LDAP. Une variable “délai d'avertissement pour mot de passe avant expiration de celui-ci” peut être indiquée dans LemonLDAP::NG pour le faire.</div>
 </li>
 </ul>
 
 <p>
-</p><p></p><div class="noteimportant">Note: since AD 2012, each user can have a specific password expiration policy. Then, the “maximum password age” can have different values. This is currently unsupported in LemonLDAP::NG because every policy must be computed with their precedence to know which maximum password age to apply.
-
+</p><p></p><div class="noteimportant">Note : depuis AD 2012, chaque utilisateur peut disposer d'une politique 'expiration de mot-de-passe différente. Alors, la « durée de vie maximum du mot-de-passe » peut avoir des valeurs différentes. Ce n'est actuellement pas supporté par LemonLDAP::NG car toute politique doit etre calculée avec sa priorité pour connaître l'âge maximum à appliquer.
 </div></p>
 </p>
 
 <p>
-
-To configure warning before password expiration, you must set two variables in Active Directory parameters in Manager:
-
+Pour configurer l'avertissement vant expiration, il faut indiquer deux variables des paramètres Active Directory dans le Manager:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Password expire warning</strong> : number of seconds between password expiration and the date from which user is warned his password will expire.</div>
+<li class="level1"><div class="li"> <strong>Délai d'avertissement d'expiration du mot-de-passe</strong> : nombre de secondes entre la date d'avertissement et l'expiration effective.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Password max age</strong> : number of seconds after the last password change, before it expires. It must match AD policy</div>
+<li class="level1"><div class="li"> <strong>Âge macimum du mot-de-passe</strong> : nombre de secondes entre le changement de mot-de-passe et son expiration. Ça doit correspondre avec la politique de l'AD</div>
 </li>
 </ul>
 
