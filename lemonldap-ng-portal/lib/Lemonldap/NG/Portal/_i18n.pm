@@ -35,7 +35,6 @@ sub error {
     foreach ( @{$lang} ) {
         if ( __PACKAGE__->can("error_$_") ) {
             my $tmp = &{"error_$_"}->[$error];
-            utf8::encode($tmp) if ( $ENV{FCGI_ROLE} );
             return $tmp;
         }
     }
