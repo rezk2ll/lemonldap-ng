@@ -44,14 +44,9 @@ describe('Lemonldap::NG Manager', function() {
       ['exportedVars', 'macros', 'groups'].forEach(function(type) {
         element(by.id('a-' + type)).click();
         element(by.id('t-' + type)).click();
-        element.all(by.css('[ng-click="menuClick(button)"]')).each(function(el) {
-          el.getText().then(function(text) {
-            if (text == 'New entry') {
-              el.click();
-            }
-          });
-        });
+        element(by.css('.glyphicon-plus-sign')).click();
         expect(element(by.id('t-' + type + '/n' + id)).getText()).toEqual('new');
+        browser.sleep(3000);
         id++;
       });
       /* Virtual hosts */
