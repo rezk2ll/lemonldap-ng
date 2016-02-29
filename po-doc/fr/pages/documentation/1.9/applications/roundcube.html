@@ -29,8 +29,7 @@
 <div class="level2">
 
 <p>
-<a href="http://www.roundcube.net" class="urlextern" title="http://www.roundcube.net"  rel="nofollow">RoundCube</a> webmail is a browser-based multilingual IMAP client with an application-like user interface. It provides full functionality you expect from an email client, including MIME support, address book, folder manipulation, message searching and spell checking.
-
+Le webmail <a href="http://www.roundcube.net" class="urlextern" title="http://www.roundcube.net"  rel="nofollow">RoundCube</a> est un client IMAP web multilingue une interface riche type application. Il fournit toutes les fonctionnalités attendues d'un client email, y compris support MIME, carnet d'adresses, manipulation des dossiers, recherche de messages et correcteur d'orthographe.
 </p>
 
 </div><!-- EDIT2 SECTION "Presentation" [26-346] -->
@@ -43,23 +42,23 @@
 <h3 class="sectionedit4" id="lemonldapng">LemonLDAP::NG</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li">  Add a new virtual host webmail.domain.tld</div>
+<li class="level1"><div class="li"> Ajouter un nouvel hôte virtuel webmail.domain.tld</div>
 </li>
-<li class="level1"><div class="li">  Add a new rule:</div>
+<li class="level1"><div class="li"> Ajouter une nouvelle règle :</div>
 </li>
 </ul>
 <pre class="code">"^/\?_task\=logout" -&gt; "logout_app https://auth.domain.tld"</pre>
 <ul>
-<li class="level1"><div class="li">  in HTTP headers, you need Auth-User ($mail) and Auth-Pw ($_password).</div>
+<li class="level1"><div class="li"> Dans les en-têtes HTTP, ajouter Auth-User ($mail) and Auth-Pw ($_password).</div>
 </li>
 </ul>
 
 <p>
-</p><p></p><div class="noteclassic">To be able to forward password to RoundCube, see <a href="../../../documentation/1.9/passwordstore.html" class="wikilink1" title="documentation:1.9:passwordstore">how to store password in session</a>
+</p><p></p><div class="noteclassic">Pour savoir comment transmettre les mots de passe à RoundCube, voir <a href="../../../documentation/1.9/passwordstore.html" class="wikilink1" title="documentation:1.9:passwordstore">comment stocker le mot de passe dans la session</a>
 </div></p>
 </p>
 <ul>
-<li class="level1"><div class="li">  In Apache configuration, add the PerlHeaderParserHandler Lemonldap::NG::Handler on the webmail.domain.tls vhost</div>
+<li class="level1"><div class="li"> Dans la configuration Apache, ajouter "PerlHeaderParserHandler Lemonldap::NG::Handler" dans l'hôte virtuel webmail.domain.tls</div>
 </li>
 </ul>
 
@@ -68,11 +67,11 @@
 <h3 class="sectionedit5" id="roundcube1">RoundCube</h3>
 <div class="level3">
 <ul>
-<li class="level1"><div class="li">  install http_authentication plugin</div>
+<li class="level1"><div class="li"> installer le plugin http_authentication</div>
 </li>
-<li class="level1"><div class="li">  Patch it to replace PHP_AUTH_* by HTTP_AUTH_*</div>
+<li class="level1"><div class="li"> Le modifier pour remplacer PHP_AUTH_* par HTTP_AUTH_*</div>
 </li>
-<li class="level1"><div class="li">  enable http_authentication plugin in main.inc.php :</div>
+<li class="level1"><div class="li"> activer le plugin http_authentication dans main.inc.php :</div>
 </li>
 </ul>
 <pre class="code file php"><span class="re0">$rcmail_config</span><span class="br0">[</span><span class="st_h">'plugins'</span><span class="br0">]</span> <span class="sy0">=</span> <a href="http://www.php.net/array"><span class="kw3">array</span></a><span class="br0">(</span><span class="st_h">'http_authentication'</span><span class="br0">)</span><span class="sy0">;</span></pre>

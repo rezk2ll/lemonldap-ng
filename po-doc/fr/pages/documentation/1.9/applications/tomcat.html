@@ -59,7 +59,7 @@ Par défaut, Tomcat fournit un fichier nommé <code>users.xml</code> pour gérer
 &nbsp;</pre>
 
 <p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> fournit une valve, disponible sur <a href="../../../download.html#contributions" class="wikilink1" title="Téléchargement">page de téléchargement</a>. This valve will check an HTTP header to set the authenticated user on the J2EE container.
+<abbr title="LemonLDAP::NG">LL::NG</abbr> fournit une valve, disponible sur <a href="../../../download.html#contributions" class="wikilink1" title="Téléchargement">page de téléchargement</a>. Cette valve examine les en-têtes HTTP pour désigner l'utilisateur authentifié au conteneur J2EE.
 </p>
 
 </div><!-- EDIT2 SECTION "Presentation" [155-1077] -->
@@ -91,15 +91,15 @@ Ajouter dans le fichier <code>server.xml</code> une nouvelle valve comme ci-dess
 Configurer les attributs :
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>userKey</strong>: key in the HTTP header containing user login.</div>
+<li class="level1"><div class="li"> <strong>userKey</strong> : nom de l'en-tête HTTP contenant le nom d'utilisateur.</div>
 </li>
-<li class="level1"><div class="li"> <strong>roleKey</strong>: key in the HTTP header containing roles. If <abbr title="LemonLDAP::NG">LL::NG</abbr> send some roles split by some commas, configure <strong>roleSeparator</strong>.</div>
+<li class="level1"><div class="li"> <strong>roleKey</strong> : nom de l'en-tête HTTP contenant les rôles. Si <abbr title="LemonLDAP::NG">LL::NG</abbr> envoie les rôles séparés par des caractères (virgule,...), configurer <strong>roleSeparator</strong>.</div>
 </li>
 <li class="level1"><div class="li"> <strong>roleSeparator</strong> (optionnel) : séparateur des valeurs de rôle.</div>
 </li>
-<li class="level1"><div class="li"> <strong>allows</strong> (optional): Define allowed remote <abbr title="Internet Protocol">IP</abbr> (use “,” separator for multiple <abbr title="Internet Protocol">IP</abbr>). Indiquer seulement l'adresse <abbr title="Internet Protocol">IP</abbr> du handler <abbr title="LemonLDAP::NG">LL::NG</abbr> dans cet attribut pour ajouter plus de sécurité. Si cet attribut est manquant, toutes les adresses seront autorisées.</div>
+<li class="level1"><div class="li"> <strong>allows</strong> (optionnel) : Definit les adresses <abbr title="Internet Protocol">IP</abbr> autorisées (ustiliser le séparateur ”,” pour de multiples <abbr title="Internet Protocol">IP</abbr>). Indiquer seulement l'adresse <abbr title="Internet Protocol">IP</abbr> du handler <abbr title="LemonLDAP::NG">LL::NG</abbr> dans cet attribut pour ajouter plus de sécurité. Si cet attribut est manquant, toutes les adresses seront autorisées.</div>
 </li>
-<li class="level1"><div class="li"> <strong>passThrough</strong> (optionnel) : Autorise ou non l'accès anonyme. When it takes “false”, HTTP headers have to be sent by <abbr title="LemonLDAP::NG">LL::NG</abbr> to make authentication. So, if the user is not recognized or HTTP headers not present, a 403 error is sent.</div>
+<li class="level1"><div class="li"> <strong>passThrough</strong> (optionnel) : Autorise ou non l'accès anonyme. Lorsqu'il est à “false”, les en-têtes HTTP doivent être renseignés par &lt;a2&gt;LL::NG&lt;/a2&gt; pour valider l'authentification. Donc, si l'utilisateur n'est pas reconnu ou si l'en-tête HTTP n'est pas présent, une erreur 403 est retournée.</div>
 </li>
 </ul>
 
@@ -135,7 +135,7 @@ Configurer votre tomcat home dans le fichier <code>build.properties</code>.
 
 <p>
 </p><p></p><div class="noteimportant">
-Be careful for Windows user, path must contains “/”. Exemple :
+Attention avec les systèmes Windows, le séparateur de répertoire est le ”/”. Exemple :
 </p>
 <pre class="code">c:/my hardisk/tomcat/</pre>
 

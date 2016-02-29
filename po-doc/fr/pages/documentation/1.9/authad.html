@@ -61,14 +61,11 @@ La configuration est la même que mour le <a href="../../documentation/1.9/authl
 
 </div><!-- EDIT4 SECTION "Configuration" [360-451] -->
 
-<h2 class="sectionedit5" id="ad_password_policy">AD password policy</h2>
+<h2 class="sectionedit5" id="ad_password_policy">Politique de mots-de-passe AD</h2>
 <div class="level2">
 
 <p>
-
-AD password policy does not follow the LDAP <abbr title="Request for Comments">RFC</abbr>, but Microsoft has implemented its own policy.
-LemonLDAP::NG implements partially the policy:
-
+La politique de mots-de-passe AD ne respecte pas les <abbr title="Request for Comments">RFC</abbr> LDAP, mais Microsoft a implementé sa propore politique. LemonLDAP::NG implémente partiellement cette politique :
 </p>
 <ul>
 <li class="level1"><div class="li">  when pwdLastSet = 0 in the user entry, it means that password has been reset, and a form is presented to the user for him to change his password.</div>

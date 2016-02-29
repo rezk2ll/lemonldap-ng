@@ -1024,8 +1024,7 @@ tidy-js: clean
 # Translation targets
 # -------------------
 
-language_code:
-	perl -e ' \
+language_code = perl -e ' \
 		print { \
 			fr=> "FR-FR", \
 		}->{$(1)}'
@@ -1049,12 +1048,10 @@ translated-doc: omegat-configuration-file
 # 2. Public targets
 
 %-translation: test_omegat_%_dir omegat-%-clean
-	$(eval CODE = $(call language_code,$*))
 	$(MAKE) translation LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
 
 %-doc: test_omegat_%_dir omegat-%-clean
 	mkdir -p po-doc/$*
-	$(eval CODE = $(call language_code,$*))
 	$(MAKE) translated-doc LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
 	cd po-doc/$*/pages/documentation/ && rm -rf current && ln -s 1.9 current && cd -
 	

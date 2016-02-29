@@ -46,8 +46,7 @@ Zimbra utilise un <a href="http://wiki.zimbra.com/index.php?title=Preauth" class
 </p>
 
 <p>
-</p><p></p><div class="noteimportant">For now, Zimbra isn't supported by Nginx handler. You have to use Apache.
-
+</p><p></p><div class="noteimportant">Pour l'instant, Zimbra n'est pas supporté par le handler Nginx. Il faut utiliser Apache.
 </div></p>
 </p>
 
@@ -94,7 +93,7 @@ Choisir par exemple <a href="http://zimbra.example.com/zimbrasso" class="urlexte
 
 </div><!-- EDIT5 SECTION "Zimbra application in menu" [1640-1821] -->
 
-<h3 class="sectionedit6" id="zimbra_virtual_host">Zimbra virtual host</h3>
+<h3 class="sectionedit6" id="zimbra_virtual_host">Hôte virtuel Zimbra</h3>
 <div class="level3">
 
 </div>
@@ -121,8 +120,7 @@ Configurer l'hôte virtuel Zimbra comme n'importe quel autre <a href="../../../d
 <div class="level4">
 
 <p>
-</p><p></p><div class="noteclassic">Zimbra Handler cannot be used in Nginx for the moment.
-
+</p><p></p><div class="noteclassic">Le handler Zimbra ne peut être utilisé avec in Nginx pour l'instant.
 </div></p>
 </p>
 
@@ -145,9 +143,7 @@ Configurer simplement la <a href="../../../documentation/1.9/writingrulesand_hea
 <div class="level3">
 
 <p>
-
-Zimbra parameters are the following:
-
+Les paramètres Zimbra sont les suivants :
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Clef de pré-authentification key</strong> : celle récupérée de la commande zmprov</div>
@@ -164,9 +160,7 @@ Zimbra parameters are the following:
 
 <p>
 </p><p></p><div class="noteimportant">
-
-Due to Handler <abbr title="Interface de programmation">API</abbr> change in 1.9, you need to set these attributes in <code>lemonldap-ng.ini</code> and not in Manager, for example:
-
+Suite au changement de l'<abbr title="Interface de programmation">API</abbr> du handler dans la version 1.9, il est nécessaire de définir ces attributs dans le fichier <code>lemonldap-ng.ini</code> et non dans le Manager, par exemple:
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">[</span>handler<span class="br0">]</span></span>
 <span class="re1">zimbraPreAuthKey</span> <span class="sy0">=</span><span class="re2"> XXXX</span>

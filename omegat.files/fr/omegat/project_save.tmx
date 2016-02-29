@@ -680,6 +680,38 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>(adapt the domain if necessary)</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221834Z" changeid="xavier">
+        <seg>(adapter le domaine si nécessaire)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>(create one if none is present)</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222933Z" changeid="xavier">
+        <seg>(en créer un à défaut)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>(default is not to cipher)</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223013Z" changeid="xavier">
+        <seg>(aucun par défaut)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>(if it is superior to 1h, then there is a problem.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221531Z" changeid="xavier">
+        <seg>(au-dessus d'1h, il y a un problème.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>(o/n) n</seg>
       </tuv>
       <tuv lang="" changedate="20120423T204900Z" changeid="xavier">
@@ -704,6 +736,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="" changedate="20120423T204857Z" changeid="xavier">
         <seg>(o/n) n
 Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>(see next section)</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223130Z" changeid="xavier">
+        <seg>(voir section suivante)</seg>
       </tuv>
     </tu>
     <tu>
@@ -12074,6 +12114,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;API&lt;/a0&gt; Name: filled automatically</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223909Z" changeid="xavier">
+        <seg>&lt;a0&gt;API&lt;/a0&gt; Name : renseigné automatiquement</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Add &quot;eval&quot; to avoid problems when other datas are stored ...&lt;/a0&gt; by guimard (2010/12/09 21:18)</seg>
       </tuv>
       <tuv lang="">
@@ -14114,6 +14162,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;RoundCube&lt;/a0&gt; webmail is a browser-based multilingual IMAP client with an application-like user interface.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220448Z" changeid="xavier">
+        <seg>Le webmail &lt;a0&gt;RoundCube&lt;/a0&gt; est un client IMAP web multilingue une interface riche type application.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Rules&lt;/a0&gt; are applied in alphabetical order (comment and regular expression).</seg>
       </tuv>
       <tuv lang="" changedate="20120420T095523Z" changeid="xavier">
@@ -14138,6 +14194,22 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; Identity Location: choose if the user Name ID is held in the subject or in some attribute</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223514Z" changeid="xavier">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; Identity Location : choisir si l'identifiant utilisateur est maintenu dans le sujet ou dans un autre attribut</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; Identity Type: choose Federation ID.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223026Z" changeid="xavier">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; Identity Type : choisir &quot;Federation ID&quot;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;SAML&lt;/a0&gt; Session backend</seg>
       </tuv>
       <tuv lang="">
@@ -14150,6 +14222,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="">
         <seg>Options du module de stockage &lt;a0&gt;SAML&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; Version: check that version 2.0 is used</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222502Z" changeid="xavier">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; Version : vérifier que la version 2.0 est utilisée</seg>
       </tuv>
     </tu>
     <tu>
@@ -14742,6 +14822,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="" changedate="20111211T173144Z" changeid="xavier">
         <seg>&lt;a0&gt;phpLDAPadmin&lt;/a0&gt; est un outil d'administration de serveur &lt;a1&gt;LDAP&lt;/a1&gt; écrit en &lt;a2&gt;PHP&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;phpLDAPadmin&lt;/a0&gt; is an LDAP administration tool written in PHP.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220242Z" changeid="xavier">
+        <seg>&lt;a0&gt;phpLDAPadmin&lt;/a0&gt; est un outil d'administration LDAP écrit en PHP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20338,6 +20426,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;allows&lt;/s0&gt; (optional): Define allowed remote &lt;a1&gt;IP&lt;/a1&gt; (use “,” separator for multiple &lt;a2&gt;IP&lt;/a2&gt;).</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T055932Z" changeid="xavier">
+        <seg>&lt;s0&gt;allows&lt;/s0&gt; (optionnel) : Definit les adresses &lt;a1&gt;IP&lt;/a1&gt; autorisées (ustiliser le séparateur ”,” pour de multiples &lt;a2&gt;IP&lt;/a2&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;allows&lt;/s0&gt; (optional): Define allowed remote &lt;a1&gt;IP&lt;/a1&gt; (use ”,” separator for multiple &lt;a2&gt;IP&lt;/a2&gt;).</seg>
       </tuv>
       <tuv lang="" changedate="20111218T191013Z" changeid="xavier">
@@ -20878,6 +20974,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;roleKey&lt;/s0&gt;: key in the HTTP header containing roles.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T055500Z" changeid="xavier">
+        <seg>&lt;s0&gt;roleKey&lt;/s0&gt; : nom de l'en-tête HTTP contenant les rôles.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;roleSeparator&lt;/s0&gt; (optional): role values separator.</seg>
       </tuv>
       <tuv lang="" changedate="20111218T190923Z" changeid="xavier">
@@ -20988,6 +21092,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="" changedate="20111218T190741Z" changeid="xavier">
         <seg>&lt;s0&gt;userKey&lt;/s0&gt; : nom de l'en-tête &lt;a1&gt;HTTP&lt;/a1&gt; contenant le nom d'utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;userKey&lt;/s0&gt;: key in the HTTP header containing user login.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T055438Z" changeid="xavier">
+        <seg>&lt;s0&gt;userKey&lt;/s0&gt; : nom de l'en-tête HTTP contenant le nom d'utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22738,6 +22850,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s3&gt;# SSO protection&lt;/s3&gt;</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220156Z" changeid="xavier">
+        <seg>&lt;s3&gt;# Protection SSO&lt;/s3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s3&gt;# Uncomment this line if you use Lemonldap::NG menu&lt;/s3&gt;</seg>
       </tuv>
       <tuv lang="">
@@ -24122,6 +24242,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>AD password policy</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T060618Z" changeid="xavier">
+        <seg>Politique de mots-de-passe AD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>AD password policy does not follow the LDAP &lt;a0&gt;RFC&lt;/a0&gt;, but Microsoft has implemented its own policy.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T060721Z" changeid="xavier">
+        <seg>La politique de mots-de-passe AD ne respecte pas les &lt;a0&gt;RFC&lt;/a0&gt; LDAP, mais Microsoft a implementé sa propore politique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>API documentation</seg>
       </tuv>
       <tuv lang="">
@@ -24334,6 +24470,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="" changedate="20120324T155743Z" changeid="xavier">
         <seg>Ajouter un menu flottant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Add a new rule:</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220724Z" changeid="xavier">
+        <seg>Ajouter une nouvelle règle :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Add a new virtual host webmail.domain.tld</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220711Z" changeid="xavier">
+        <seg>Ajouter un nouvel hôte virtuel webmail.domain.tld</seg>
       </tuv>
     </tu>
     <tu>
@@ -25202,6 +25354,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Applications listed below are known to be easy to integrate in &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T060457Z" changeid="xavier">
+        <seg>Les applications listées ci-dessous sont connues pour être faciles à intégrer à &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Applications protection</seg>
       </tuv>
       <tuv lang="" changedate="20120505T082655Z" changeid="xavier">
@@ -25318,6 +25478,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="">
         <seg>Consommateur d'assertions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Assertion decryption Certificate: choose a certificate only if you want to cipher your assertion.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223002Z" changeid="xavier">
+        <seg>Assertion decryption Certificate : choisir un certificat seulement si on veut chiffrer les assertions.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25790,6 +25958,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="" changedate="20120223T141653Z" changeid="xavier">
         <seg>Backends</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Be careful for Windows user, path must contains “/”.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T060020Z" changeid="xavier">
+        <seg>Attention avec les systèmes Windows, le séparateur de répertoire est le ”/”.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27210,6 +27386,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure Federation ID</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224206Z" changeid="xavier">
+        <seg>Configurer l'identifiant de fédération</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure LemonLDAP::NG to use LDAP as main database</seg>
       </tuv>
       <tuv lang="" changedate="20120418T113549Z" changeid="xavier">
@@ -27674,6 +27858,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Create Salesforce domain</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221350Z" changeid="xavier">
+        <seg>Créer le domaine Salesforce</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Create a database if necessary:</seg>
       </tuv>
       <tuv lang="" changedate="20120423T204812Z" changeid="xavier">
@@ -27770,6 +27962,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Creation can take up to 1 hour.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221458Z" changeid="xavier">
+        <seg>Cette création prend jusqu'à 1 heure.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Cross Domain Authentication</seg>
       </tuv>
       <tuv lang="" changedate="20120216T045510Z" changeid="xavier">
@@ -27854,6 +28054,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="" changedate="20120419T061245Z" changeid="guimard">
         <seg>Services &lt;a0&gt;SOAP&lt;/a0&gt; personnalisés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Custom Error &lt;a0&gt;URL&lt;/a0&gt;: you can redirect the user to a special page when an error is happening</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223652Z" changeid="xavier">
+        <seg>Custom Error &lt;a0&gt;URL&lt;/a0&gt; : on peut rediriger l'utilisateur sur une page particulière en cas d'erreur</seg>
       </tuv>
     </tu>
     <tu>
@@ -28698,6 +28906,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Due to Handler &lt;a0&gt;API&lt;/a0&gt; change in 1.9, you need to set these attributes in &lt;c1&gt;lemonldap-ng.ini&lt;/c1&gt; and not in Manager, for example:</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T060438Z" changeid="xavier">
+        <seg>Suite au changement de l'&lt;a0&gt;API&lt;/a0&gt; du handler dans la version 1.9, il est nécessaire de définir ces attributs dans le fichier &lt;c1&gt;lemonldap-ng.ini&lt;/c1&gt; et non dans le Manager, par exemple:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Due to a conflict between &lt;a0&gt;LL::NG&lt;/a0&gt; form replay and Apache mod_proxy (see &lt;a1&gt;issue&lt;/a1&gt;), you cannot use form replay on proxied applications, unless you use &lt;a2&gt;LL::NG&lt;/a2&gt; &lt;a3&gt;internal proxy&lt;/a3&gt;:</seg>
       </tuv>
       <tuv lang="" changedate="20120411T041123Z" changeid="xavier">
@@ -29070,6 +29286,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="" changedate="20120420T134302Z" changeid="xavier">
         <seg>Caractères encodés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>EntityId: Salesforce (the SP) Entity ID.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224013Z" changeid="xavier">
+        <seg>EntityId : identifiant d'entité Salesforce (le SP).</seg>
       </tuv>
     </tu>
     <tu>
@@ -29646,6 +29870,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Fill this field accordingly.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224059Z" changeid="xavier">
+        <seg>Remplir ce champ en conséquence.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Fill values here:</seg>
       </tuv>
       <tuv lang="" changedate="20120225T193421Z" changeid="xavier">
@@ -29658,6 +29890,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="" changedate="20120107T114121Z" changeid="xavier">
         <seg>Filters</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Finally, configure for each user his Federation ID value.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224240Z" changeid="xavier">
+        <seg>Finalement, configurer pour chaque utilisateur son identifiant de fédération.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Finally, just ensure that at least:</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221804Z" changeid="xavier">
+        <seg>Finalement, vérifier que :</seg>
       </tuv>
     </tu>
     <tu>
@@ -30166,10 +30414,26 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For now, Zimbra isn't supported by Nginx handler.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T060118Z" changeid="xavier">
+        <seg>Pour l'instant, Zimbra n'est pas supporté par le handler Nginx.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For now, ldapgroups contains “cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com”</seg>
       </tuv>
       <tuv lang="">
         <seg>Pour l'instant, ldapgroups contient “cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com”</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For now, the authentication service parameter has no domain available.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221934Z" changeid="xavier">
+        <seg>Pour l'instant, le paramètre du service d'authentification ne dispose pas d'un domaine disponible.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30234,6 +30498,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="" changedate="20111203T183322Z" changeid="xavier">
         <seg>Pour le certificate, vous pouvez le construire en signant la clef privée enregistrée dans le Manager.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For using SP-initiated mode, you must create your salesforce domain.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221435Z" changeid="xavier">
+        <seg>Pour utiliser le mode initié par le SP, il faut créer le domaine salesforce.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30782,6 +31054,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go to the &lt;a0&gt;SAML&lt;/a0&gt; Single Sign On settings, and fill these information:</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222405Z" changeid="xavier">
+        <seg>Aller dans les paramètres SSO de &lt;a0&gt;SAML&lt;/a0&gt; et y indiquer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go to the Manager and &lt;a0&gt;create a new virtual host&lt;/a0&gt; for Bugzilla.</seg>
       </tuv>
       <tuv lang="" changedate="20111119T114111Z" changeid="xavier">
@@ -31278,6 +31558,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Here, the mail has been chosen as the user Name ID.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224353Z" changeid="xavier">
+        <seg>Ici, le mail a été choisi comme identifiant utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Hide old password in reset form</seg>
       </tuv>
       <tuv lang="" changedate="20120419T065005Z" changeid="guimard">
@@ -31430,6 +31718,30 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Identity Provider Certificate: whereas it is mentionned that this is the authentication certificate, you must give your LemonLDAP::NG (IdP) signing certificate.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222708Z" changeid="xavier">
+        <seg>Identity Provider Certificate : bien qu'il semble devoir être renseigné ici le certificat d'authentification, c'est celui de signature de l'IdP Lemonldap::NG qu'il faut renseigner.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Identity Provider Login &lt;a0&gt;URL&lt;/a0&gt;: the user/password &lt;a1&gt;SAML&lt;/a1&gt; portal location on the IdP</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223557Z" changeid="xavier">
+        <seg>Identity Provider Login &lt;a0&gt;URL&lt;/a0&gt; : l'emplacement du portail utilisateur/mot-de-passe &lt;a1&gt;SAML&lt;/a1&gt; dans l'IdP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Identity Provider Logout &lt;a0&gt;URL&lt;/a0&gt;: the logout location on the IdP</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223623Z" changeid="xavier">
+        <seg>Identity Provider Logout &lt;a0&gt;URL&lt;/a0&gt; : l'URL de déconnexion de l'IdP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Identity provider</seg>
       </tuv>
       <tuv lang="">
@@ -31458,6 +31770,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="" changedate="20120303T100342Z" changeid="xavier">
         <seg>Si &lt;a0&gt;LL::NG&lt;/a0&gt; est le seul logiciel installé sur Apache, la fonctionnalité d'hôte virtuel peut ne pas avoir été activée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If &lt;a1&gt;LL::NG&lt;/a1&gt; send some roles split by some commas, configure &lt;s2&gt;roleSeparator&lt;/s2&gt;.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T055537Z" changeid="xavier">
+        <seg>Si &lt;a1&gt;LL::NG&lt;/a1&gt; envoie les rôles séparés par des caractères (virgule,...), configurer &lt;s2&gt;roleSeparator&lt;/s2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31902,6 +32222,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you don't have one, create it with the signing key pair already generated (you could do this with openssl).</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222815Z" changeid="xavier">
+        <seg>S'il n'en dispose pas, en créer un avec la paire de clef déjà générée (on peut le faire avec openssl).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you enable auto completion, authentication level will be decreased (-1) as you do not ask the user to type its password (it could be in browser passwords wallet).</seg>
       </tuv>
       <tuv lang="" changedate="20120419T080632Z" changeid="guimard">
@@ -32242,6 +32570,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="" changedate="20111211T073845Z" changeid="xavier">
         <seg>Dans &lt;c0&gt;General&lt;/c0&gt;, remplir au moins les informations suivantes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Apache configuration, add the PerlHeaderParserHandler Lemonldap::NG::Handler on the webmail.domain.tls vhost</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220923Z" changeid="xavier">
+        <seg>Dans la configuration Apache, ajouter &quot;PerlHeaderParserHandler Lemonldap::NG::Handler&quot; dans l'hôte virtuel webmail.domain.tls</seg>
       </tuv>
     </tu>
     <tu>
@@ -33054,6 +33390,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Issuer: this is the LemonLDAP::NG (our IdP) Entity Id, which is by default #PORTAL#/saml/metadata</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222549Z" changeid="xavier">
+        <seg>Issuer : c'est l'identifiant d'entité de LemonLDAP::NG, qui est par défaut #PORTAL#/saml/metadata</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>IssuerDB</seg>
       </tuv>
       <tuv lang="" changedate="20120303T091526Z" changeid="xavier">
@@ -33082,6 +33426,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="" changedate="20120226T160808Z" changeid="xavier">
         <seg>Ceci permet de metre un portail &lt;a0&gt;LL::NG&lt;/a0&gt; derrière un autre web &lt;a1&gt;SSO&lt;/a1&gt;, ou derrière un matériel &lt;a2&gt;SSL&lt;/a2&gt; pour déléguer à ce matériel l'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It allows to use &lt;a0&gt;SAML&lt;/a0&gt; to authenticate users.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221216Z" changeid="xavier">
+        <seg>SalesForce permet l'emploi de &lt;a0&gt;SAML&lt;/a0&gt; pour authentifier les utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33154,6 +33506,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="" changedate="20160228T170309Z" changeid="xavier">
         <seg>Il peut être utilisé pour héberger le portail ou le manager au travers de son support FastCGI et peut être utilisé pour protéger des applications en utilisant le module auth_request (qui dialogue avec un serveur d'autorisations FastCGI).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can deal with both SP and IdP initiated modes.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221251Z" changeid="xavier">
+        <seg>Il peut utiliser les modes initiés par le SP ou l'IdP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33242,6 +33602,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="">
         <seg>Il est également utilisé par le &lt;a2&gt;SP SAML&lt;/a2&gt; pour définir le niveau d'authentification dans la session de l'utilisateur en se basant sur la réponse d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is best known for their CRM products and social networking applications.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221138Z" changeid="xavier">
+        <seg>Elle est connue pour ses CRM et applications de réseaux sociaux.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33358,6 +33726,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It provides full functionality you expect from an email client, including MIME support, address book, folder manipulation, message searching and spell checking.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220643Z" changeid="xavier">
+        <seg>Il fournit toutes les fonctionnalités attendues d'un client email, y compris support MIME, carnet d'adresses, manipulation des dossiers, recherche de messages et correcteur d'orthographe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It provides many features:</seg>
       </tuv>
       <tuv lang="" changedate="20120419T071718Z" changeid="guimard">
@@ -33390,6 +33766,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It should be the same value as the organization domain url, displayed on the previous section</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224146Z" changeid="xavier">
+        <seg>Ce devrait être la même valeur que l'URL du domaine indiqué dans la section précédente</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It should works on every browser:</seg>
       </tuv>
       <tuv lang="" changedate="20120225T182015Z" changeid="xavier">
@@ -33410,6 +33794,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="">
         <seg>Il vous sera demandé à la génération de la clef ou vous pouvez l'entrer dans le champ &lt;c0&gt;Mot-de-passe de la clef privée&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It will be the link between the &lt;a0&gt;SAML&lt;/a0&gt; assertion coming from LemonLDAP::NG (the IdP) and a given user in Salesforce.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224321Z" changeid="xavier">
+        <seg>Ce sera le lien entre l'assertion &lt;a0&gt;SAML&lt;/a0&gt; provenant de LemonLDAP::NG (l'IdP) et l'identifiant Salesforce.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34198,6 +34590,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG implements partially the policy:</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T060749Z" changeid="xavier">
+        <seg>LemonLDAP::NG implémente partiellement cette politique :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG is a free software, released under &lt;a0&gt;GPL&lt;/a0&gt; license.</seg>
       </tuv>
       <tuv lang="">
@@ -34824,6 +35224,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="" changedate="20120505T082942Z" changeid="xavier">
         <seg>Historique de connexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Login policy</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221713Z" changeid="xavier">
+        <seg>La politique de connexion</seg>
       </tuv>
     </tu>
     <tu>
@@ -35658,6 +36066,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Name: should be filled automatically with your organization or domain</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222442Z" changeid="xavier">
+        <seg>Name : devrait être automatiquement renseigné avec votre domaine</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>NameID formats</seg>
       </tuv>
       <tuv lang="">
@@ -35954,6 +36370,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Note that you can always access Salesforce by the general login page: &lt;a1&gt;https://login.salesforce.com&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222240Z" changeid="xavier">
+        <seg>Noter que l'on peut toujours accéder à Salesforce par la page générale de connexion : &lt;a1&gt;https://login.salesforce.com&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Note that you have to use UTF-8 characters</seg>
       </tuv>
       <tuv lang="">
@@ -36186,6 +36610,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>OAuth 2.0 Token Endpoint: not used here</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223853Z" changeid="xavier">
+        <seg>OAuth 2.0 Token Endpoint : pas utilisé ici</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>OBM</seg>
       </tuv>
       <tuv lang="" changedate="20111211T075047Z" changeid="xavier">
@@ -36206,6 +36638,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="" changedate="20111211T112008Z" changeid="xavier">
         <seg>OBM inclut un groupware, un serveur de messagerie, un CRM, un annuaire &lt;a1&gt;LDAP&lt;/a1&gt;, un domaine Windows, un dispositif de synchronisation pour smartphone et &lt;a2&gt;PDA&lt;/a2&gt;…</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OBM includes Groupware, messaging server, CRM, LDAP, Windows Domain, smartphone and PDA synchronization…</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220119Z" changeid="xavier">
+        <seg>OBM inclut un groupware, un serveur de messagerie, un CRM, un annuaire LDAP, un domaine Windows, un dispositif de synchronisation pour smartphone et PDA…</seg>
       </tuv>
     </tu>
     <tu>
@@ -36414,6 +36854,22 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="" changedate="20120420T170436Z" changeid="xavier">
         <seg>Sur le serveur principal, configurer un backend &lt;a0&gt;File&lt;/a0&gt;, &lt;a1&gt;SQL&lt;/a1&gt; or &lt;a2&gt;LDAP&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Once &lt;a0&gt;SAML&lt;/a0&gt; cinematics are working, you can then put your domain, and delete the login form, and you'll have an automatic redirection to your Identity Provider (no need for the user to click).</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222203Z" changeid="xavier">
+        <seg>Une fois que la cinématique &lt;a0&gt;SAML&lt;/a0&gt; fonctionne, mettre le domaine, et supprimer le formulaire de connexion, la redirection se fera alors automatiquement vers le fournisseur d'identité (plus besoin de cliquer pour l'utilisateur).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Once this is completed, click to export the Salesforce metadata and import them into LemonLDAP::NG, into the declaration of the Salesforce Service Provider.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224506Z" changeid="xavier">
+        <seg>Une fois ceci terminé, cliquer pour exporter les métadatas Salesforce et les importer dans LemonLDAP::NG, dans la déclaration du fournisseur de service Salesforce.</seg>
       </tuv>
     </tu>
     <tu>
@@ -37030,6 +37486,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="">
         <seg>Contributeurs passé et présent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Patch it to replace PHP_AUTH_* by HTTP_AUTH_*</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221005Z" changeid="xavier">
+        <seg>Le modifier pour remplacer PHP_AUTH_* par HTTP_AUTH_*</seg>
       </tuv>
     </tu>
     <tu>
@@ -37682,6 +38146,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Problems are generally resolved in up to 72 hours)</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221607Z" changeid="xavier">
+        <seg>Ces problèmes sont généralement résolus en moins de 72 heures)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Professional Services</seg>
       </tuv>
       <tuv lang="" changedate="20160227T182906Z" changeid="xavier">
@@ -38118,6 +38590,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="">
         <seg>Groupes récursif</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Redirect policy</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221728Z" changeid="xavier">
+        <seg>La politique de redirection</seg>
       </tuv>
     </tu>
     <tu>
@@ -38810,6 +39290,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SAML settings</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222247Z" changeid="xavier">
+        <seg>Paramètres SAML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SAML2</seg>
       </tuv>
       <tuv lang="" changedate="20120419T140852Z" changeid="guimard">
@@ -38938,6 +39426,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SP Initiated Binding: chose any of the supported binding (every one listed there is currently supported on LemonLDAP::NG) HTTP POST is a good choice</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223806Z" changeid="xavier">
+        <seg>SP Initiated Binding : choisir n'importe quel protocole supporté (ils le sont actuellement tous par LemonLDAP::NG), HTTP POST est un bon choix</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SQL</seg>
       </tuv>
       <tuv lang="" changedate="20111226T195453Z" changeid="xavier">
@@ -38990,6 +39486,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="" changedate="20120107T150452Z" changeid="xavier">
         <seg>Authentification SSL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SSL authentication (https) does not seem to be checked anyway.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222847Z" changeid="xavier">
+        <seg>&quot;SSL authentication (https)&quot; ne semble pas devoir être sélectionné.</seg>
       </tuv>
     </tu>
     <tu>
@@ -39114,6 +39618,22 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="" changedate="20120420T135807Z" changeid="xavier">
         <seg>Le module Safe est utilisé pour évaluer les expressions dans les en-têtes, règles, etc...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Salesforce Login &lt;a0&gt;URL&lt;/a0&gt;: generated automatically.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223819Z" changeid="xavier">
+        <seg>Salesforce Login &lt;a0&gt;URL&lt;/a0&gt; : générée automatiquement.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Salesforce is not able to read metadata, you must fill the information into a form.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222326Z" changeid="xavier">
+        <seg>Salesforce ne peut pas lire les métadatas, il faut les indiquer dans un formulaire.</seg>
       </tuv>
     </tu>
     <tu>
@@ -39370,6 +39890,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="" changedate="20120410T041343Z" changeid="xavier">
         <seg>Voir &lt;a0&gt;backend de session Redis&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;Register partner Service Provider on LemonLDAP::NG&lt;/a0&gt; configuration chapter.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224547Z" changeid="xavier">
+        <seg>Voir &lt;a0&gt;Enregistrer un fournisseur de service dans LemonLDAP::NG&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -39958,6 +40486,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Signing Certificate: choose a certificate for SP signature.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222916Z" changeid="xavier">
+        <seg>Signing Certificate : choisir un certificat pour la signature du SP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Simple Mail Transfer Protocol</seg>
       </tuv>
       <tuv lang="" changedate="20120419T064047Z" changeid="guimard">
@@ -40034,6 +40570,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="" changedate="20120419T051837Z" changeid="guimard">
         <seg>Depuis la version 0.9.4, LemonLDAP::NG peut être utilisé pour notifier des messages aux utilisateurs : si un utilisateur a un message, celui-ci est affiché lorsqu'il accède au portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Since version 1.9 of LLNG, old Auto-Login feature has been removed since it works only with Sympa-5 which has been deprecated</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224925Z" changeid="xavier">
+        <seg>Depuis la version 1.9 of LLNG, la fonctionnalité de connexion automatique a été supprimée car elle ne fonctionnait qu'avec la version 5 de Sympa, elle-même dépréciée</seg>
       </tuv>
     </tu>
     <tu>
@@ -40174,6 +40718,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>So a simple user can have admin rights on the LDAP directory if your access rules are too lazy.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220300Z" changeid="xavier">
+        <seg>Ainsi un simple utilisateur aura un accès administrateur au serveur LDAP si votre règle d'accès est trop permisive.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>So for Handler on different physical servers than the Portal, a user with an expired session can still be authorized still the cache expires.</seg>
       </tuv>
       <tuv lang="">
@@ -40266,6 +40818,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="" changedate="20111218T191331Z" changeid="xavier">
         <seg>Donc, si l'utilisateur n'est pas reconnu ou si l'en-tête &lt;a3&gt;HTTP&lt;/a3&gt; n'est pas présent, une erreur 403 est retournée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>So, if the user is not recognized or HTTP headers not present, a 403 error is sent.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T055958Z" changeid="xavier">
+        <seg>Donc, si l'utilisateur n'est pas reconnu ou si l'en-tête HTTP n'est pas présent, une erreur 403 est retournée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -42306,6 +42866,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then you must &lt;s0&gt;deploy&lt;/s0&gt; this domain in order to go on with the configuration.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221637Z" changeid="xavier">
+        <seg>Ensuite &lt;s0&gt;deployer&lt;/s0&gt; ce domaine pour accéder à sa configuration.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then you will be able to use it in your template like this:</seg>
       </tuv>
       <tuv lang="" changedate="20120419T075545Z" changeid="guimard">
@@ -42970,6 +43538,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This is the entry point of our login cinematic.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223842Z" changeid="xavier">
+        <seg>C'est le point d'entrée de la cinématique de connexion.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This is the only service to configure, and it accept only the &lt;a0&gt;SOAP&lt;/a0&gt; binding.</seg>
       </tuv>
       <tuv lang="">
@@ -42998,6 +43574,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="" changedate="20120505T083623Z" changeid="xavier">
         <seg>Donc si plusieurs agents sont déployés, chacun gère ses propres statistiques.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This means that the user Name ID will be mapped to the Federation ID field.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223119Z" changeid="xavier">
+        <seg>Ceci signifie que l'identifiant utilisateur correspondra avec le champ  Federation ID.</seg>
       </tuv>
     </tu>
     <tu>
@@ -43166,6 +43750,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="" changedate="20120225T112441Z" changeid="xavier">
         <seg>Cette page ne référence pas tous les messages d'erreur, mais simplement les plus fréquents</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This page presents the SP initiated mode.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221309Z" changeid="xavier">
+        <seg>Cette page présente le mode initié par le SP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -43358,6 +43950,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="" changedate="20111218T190444Z" changeid="xavier">
         <seg>Cette valve examine les en-têtes &lt;a2&gt;HTTP&lt;/a2&gt; pour désigner l'utilisateur authentifié au conteneur J2EE.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This valve will check an HTTP header to set the authenticated user on the J2EE container.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T055420Z" changeid="xavier">
+        <seg>Cette valve examine les en-têtes HTTP pour désigner l'utilisateur authentifié au conteneur J2EE.</seg>
       </tuv>
     </tu>
     <tu>
@@ -43570,6 +44170,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To be able to forward password to RoundCube, see &lt;a0&gt;how to store password in session&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220843Z" changeid="xavier">
+        <seg>Pour savoir comment transmettre les mots de passe à RoundCube, voir &lt;a0&gt;comment stocker le mot de passe dans la session&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To bypass this, &lt;a0&gt;LL::NG&lt;/a0&gt; can remember what password was given by user on authentication phase.</seg>
       </tuv>
       <tuv lang="" changedate="20120419T070751Z" changeid="guimard">
@@ -43614,6 +44222,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="" changedate="20120420T090315Z" changeid="xavier">
         <seg>Pour changer ce comportement, on peut choisir l'une des options suivantes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To configure &lt;a0&gt;SSO&lt;/a0&gt; with Sympa, use &lt;s1&gt;Magic authentication&lt;/s1&gt;: a special &lt;a2&gt;SSO&lt;/a2&gt; &lt;a3&gt;URL&lt;/a3&gt; is protected by &lt;a4&gt;LL::NG&lt;/a4&gt;, Sympa will display a button for users who wants to use this feature.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224827Z" changeid="xavier">
+        <seg>Pour configurer le &lt;a0&gt;SSO&lt;/a0&gt; avec Sympa, utiliser l'&lt;s1&gt;authentification magique&lt;/s1&gt; : une &lt;a3&gt;URL&lt;/a3&gt; spéciale &lt;a2&gt;SSO&lt;/a2&gt; est protégée par &lt;a4&gt;LL::NG&lt;/a4&gt;, Sympa affichera un bouton pour les utilisateurs souhaitant utiliser cette fonctionnalité.</seg>
       </tuv>
     </tu>
     <tu>
@@ -43910,6 +44526,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="" changedate="20111217T080202Z" changeid="xavier">
         <seg>En résumé, pour connecter les utilisateurs vie l'entête &lt;a1&gt;HTTP&lt;/a1&gt; &lt;c0&gt;Auth-User&lt;/c0&gt;, utiliser cette configuration de Spring Security :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To summarize, to get the user connected trough the &lt;c0&gt;Auth-User&lt;/c0&gt; HTTP Header, use this Sping Security configuration:</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T224624Z" changeid="xavier">
+        <seg>En résumé, pour connecter les utilisateurs vie l'entête HTTP &lt;c0&gt;Auth-User&lt;/c0&gt;, utiliser cette configuration de Spring Security :</seg>
       </tuv>
     </tu>
     <tu>
@@ -44618,6 +45242,14 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="" changedate="20111119T113754Z" changeid="xavier">
         <seg>User ID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User Provisioning Enabled: should create automatically the user in Salesforce (not functionnal right now)</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T223953Z" changeid="xavier">
+        <seg>User Provisioning Enabled : création automatique des utilisateurs dans Salesforce (pas fonctionnel à l'heure actuelle)</seg>
       </tuv>
     </tu>
     <tu>
@@ -45374,6 +46006,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="" changedate="20111218T191247Z" changeid="xavier">
         <seg>Lorsqu'il est à “false”, les en-têtes &lt;a1&gt;HTTP&lt;/a1&gt; doivent être renseignés par &lt;a2&gt;LL::NG&lt;/a2&gt; pour valider l'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>When it takes “false”, HTTP headers have to be sent by &lt;a1&gt;LL::NG&lt;/a1&gt; to make authentication.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T055949Z" changeid="xavier">
+        <seg>Lorsqu'il est à “false”, les en-têtes HTTP doivent être renseignés par &lt;a2&gt;LL::NG&lt;/a2&gt; pour valider l'authentification.</seg>
       </tuv>
     </tu>
     <tu>
@@ -46754,6 +47394,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You have to use Apache.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T060133Z" changeid="xavier">
+        <seg>Il faut utiliser Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You have to use “Multi” as authentication module.</seg>
       </tuv>
       <tuv lang="" changedate="20120107T145224Z" changeid="xavier">
@@ -46894,6 +47542,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="" changedate="20120423T205137Z" changeid="xavier">
         <seg>Il faut également installer le connecteur à la base de données (&lt;a1&gt;DBD::Oracle&lt;/a1&gt;, &lt;a2&gt;DBD::Pg&lt;/a2&gt;,…)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You must come back later to fill this parameter.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T222000Z" changeid="xavier">
+        <seg>Il faudra revenir plus tard pour adapter ce paramètre.</seg>
       </tuv>
     </tu>
     <tu>
@@ -47162,6 +47818,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You should have configured &lt;a0&gt;LL::NG&lt;/a0&gt; as a &lt;a1&gt;SAML Identity Provider&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221333Z" changeid="xavier">
+        <seg>Il est nécessaire d'avoir configuré &lt;a0&gt;LL::NG&lt;/a0&gt; comme &lt;a1&gt;fournisseur d'identité SAML&lt;/a1&gt;,</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You should have configured &lt;a0&gt;LL::NG&lt;/a0&gt; as an &lt;a1&gt;SAML Identity Provider&lt;/a1&gt;,</seg>
       </tuv>
       <tuv lang="" changedate="20111203T192657Z" changeid="xavier">
@@ -47354,6 +48018,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Zimbra Handler cannot be used in Nginx for the moment.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T060242Z" changeid="xavier">
+        <seg>Le handler Zimbra ne peut être utilisé avec in Nginx pour l'instant.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Zimbra Handler parameters</seg>
       </tuv>
       <tuv lang="" changedate="20111222T180851Z" changeid="xavier">
@@ -47418,6 +48090,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Zimbra parameters are the following:</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T060304Z" changeid="xavier">
+        <seg>Les paramètres Zimbra sont les suivants :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Zimbra preauth key</seg>
       </tuv>
       <tuv lang="" changedate="20111220T162939Z" changeid="xavier">
@@ -47454,6 +48134,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="" changedate="20111220T155137Z" changeid="xavier">
         <seg>Zimbra utilise un &lt;a0&gt;protocole de pré-authentification&lt;/a0&gt; pour s'intégrer à un &lt;a1&gt;SSO&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Zimbra virtual host</seg>
+      </tuv>
+      <tuv lang="" changedate="20160229T060153Z" changeid="xavier">
+        <seg>Hôte virtuel Zimbra</seg>
       </tuv>
     </tu>
     <tu>
@@ -48206,14 +48894,6 @@ apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>applications:tomcat_logo.png</seg>
-      </tuv>
-      <tuv lang="" changedate="20111218T185910Z" changeid="xavier">
-        <seg>applications:tomcat_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>applications:zimbra_logo.png</seg>
       </tuv>
       <tuv lang="" changedate="20111220T112608Z" changeid="xavier">
@@ -48338,6 +49018,14 @@ apachectl restart</seg>
       </tuv>
       <tuv lang="">
         <seg>authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>authentication service</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221750Z" changeid="xavier">
+        <seg>le service d'authentification</seg>
       </tuv>
     </tu>
     <tu>
@@ -53020,6 +53708,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>domain name</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221737Z" changeid="xavier">
+        <seg>le nom de domaine</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>done datetime &lt;s24&gt;DEFAULT&lt;/s24&gt; &lt;s25&gt;NULL&lt;/s25&gt;&lt;s26&gt;,&lt;/s26&gt;</seg>
       </tuv>
       <tuv lang="" changedate="20120419T053330Z" changeid="guimard">
@@ -53112,6 +53808,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="">
         <seg>fr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>enable http_authentication plugin in main.inc.php :</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221021Z" changeid="xavier">
+        <seg>activer le plugin http_authentication dans main.inc.php :</seg>
       </tuv>
     </tu>
     <tu>
@@ -56860,6 +57564,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>in HTTP headers, you need Auth-User ($mail) and Auth-Pw ($_password).</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220750Z" changeid="xavier">
+        <seg>Dans les en-têtes HTTP, ajouter Auth-User ($mail) and Auth-Pw ($_password).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>in the value field, set the field name.</seg>
       </tuv>
       <tuv lang="" changedate="20131025T061820Z" changeid="xavier">
@@ -56904,6 +57616,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="" changedate="20131025T075720Z" changeid="xavier">
         <seg>insérer une boucle autour de l'affichage &lt;a0&gt;HTML&lt;/a0&gt;, démarrant avec la création de l'objet &lt;e1&gt;(→new)&lt;/e1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>install http_authentication plugin</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T220943Z" changeid="xavier">
+        <seg>installer le plugin http_authentication</seg>
       </tuv>
     </tu>
     <tu>
@@ -57040,6 +57760,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="" changedate="20120221T072039Z" changeid="xavier">
         <seg>ipAddr varchar&lt;s14&gt;(&lt;/s14&gt;15&lt;s15&gt;)&lt;/s15&gt;&lt;s16&gt;,&lt;/s16&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>is a cloud computing company.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221057Z" changeid="xavier">
+        <seg>est une entreprise d'infonuagique (cloud).</seg>
       </tuv>
     </tu>
     <tu>
@@ -58090,6 +58818,14 @@ make test</seg>
       </tuv>
       <tuv lang="" changedate="20120419T063643Z" changeid="guimard">
         <seg>managerTreeJqueryCss</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>match with the correct values.</seg>
+      </tuv>
+      <tuv lang="" changedate="20160228T221822Z" changeid="xavier">
+        <seg>correspondent aux bonnes valeurs.</seg>
       </tuv>
     </tu>
     <tu>
