@@ -80,7 +80,7 @@
       $scope.waiting = true;
       $http.put(scriptname + "notifications/" + $scope.type + "/" + $scope.currentNotification.uid + '_' + $scope.currentNotification.reference, {
         'done': 1
-      }).success(function(data) {
+      }).then(function(response) {
         $scope.currentNotification = null;
         $scope.currentScope.remove();
         $scope.message = {
@@ -88,10 +88,11 @@
         };
         $scope.showModal("alert.html");
         $scope.waiting = false;
-      }).error(function(j, e) {
+      },
+      function(response) {
         $scope.message = {
           "title": "notificationNotDeleted",
-          "message": j.error
+          "message": response.statusText
         };
         $scope.showModal("alert.html");
         $scope.waiting = false;
@@ -100,7 +101,7 @@
 
     $scope.deleteNotification = function() {
       $scope.waiting = true;
-      $http['delete'](scriptname + "notifications/" + $scope.type + "/" + $scope.currentNotification.uid + '_' + $scope.currentNotification.reference + '_' + $scope.currentNotification.done).success(function(data) {
+      $http['delete'](scriptname + "notifications/" + $scope.type + "/" + $scope.currentNotification.uid + '_' + $scope.currentNotification.reference + '_' + $scope.currentNotification.done).then(function(response) {
         $scope.currentNotification = null;
         $scope.currentScope.remove();
         $scope.message = {
@@ -108,10 +109,11 @@
         };
         $scope.showModal("alert.html");
         $scope.waiting = false;
-      }).error(function(j, e) {
+      },
+      function(response) {
         $scope.message = {
           "title": "notificationNotPurged",
-          "message": j.error
+          "message": response.statusText
         };
         $scope.showModal("alert.html");
         $scope.waiting = false;
@@ -174,7 +176,8 @@
       $scope.waiting = true;
       var query = scheme[level](value, currentQuery);
 
-      $http.get(scriptname + "notifications/" + $scope.type + "?" + query).success(function(data) {
+      $http.get(scriptname + "notifications/" + $scope.type + "?" + query).then(function(response) {
+        var data = response.data;
         if (data.result) {
           data.values.forEach(function(n) {
             autoId++;
@@ -188,7 +191,8 @@
           });
         }
         $scope.waiting = false;
-      }).error(function(j, e) {
+      },
+      function(resp) {
         $scope.waiting = false;
       });
     };
@@ -201,20 +205,21 @@
       if ($scope.type == 'actives') {
         notificationId = node.uid + '_' + node.reference;
       }
-      $http.get(scriptname + "notifications/" + $scope.type + "/" + notificationId).success(function(data) {
+      $http.get(scriptname + "notifications/" + $scope.type + "/" + notificationId).then(function(response) {
         $scope.currentNotification = {
           'uid': node.uid,
           'reference': node.reference,
           'condition': node.condition
         };
         if ($scope.type == 'actives') {
-          $scope.currentNotification.notifications = data.notifications
+          $scope.currentNotification.notifications = response.data.notifications
         }
         else {
-          $scope.currentNotification.done = data.done;
+          $scope.currentNotification.done = response.data.done;
         }
         $scope.waiting = false;
-      }).error(function(j, e) {
+      },
+      function(resp) {
         $scope.waiting = false;
       });
       $scope.showT = false;
@@ -268,7 +273,8 @@
         $scope.formPost.reference = $scope.form.reference;
         $scope.formPost.condition = $scope.form.condition;
         $scope.formPost.xml = $scope.form.xml;
-        $http.post('notifications/actives', $scope.formPost).success(function(data) {
+        $http.post('notifications/actives', $scope.formPost).then(function(response) {
+          var data = response.data;
           $scope.form = {};
           if (data.result == 1) {
             $scope.message = {
@@ -284,10 +290,11 @@
             $scope.showModal("alert.html");
           }
           $scope.waiting = false;
-        }).error(function(j, e) {
+        },
+        function(response) {
           $scope.message = {
             "title": "notificationNotCreated",
-            "message": j.error
+            "message": response.statusText
           };
           $scope.showModal("alert.html");
           $scope.waiting = false;

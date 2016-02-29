@@ -45,7 +45,9 @@
     $scope.showH = ($cookies.get('showhelp') === 'false' ? false : true);
     if (typeof $scope.showH === 'undefined') $scope.setShowHelp(true);
     /* Intercept AJAX errors */
-    var readError = function(j, e) {
+    var readError = function(response) {
+      var e = response.status;
+      var j = response.statusText;
       $scope.waiting = false;
       if (e == 403) {
         $scope.message = {
@@ -65,13 +67,13 @@
       else if (e == 400) {
         $scope.message = {
           title: 'badRequest',
-          message: (j.error ? j.error : j)
+          message: j
         };
       }
       else if (e > 0) {
         $scope.message = {
           title: 'badRequest',
-          message: (j.error ? j.error : j)
+          message: j
         };
       }
       else {
@@ -187,13 +189,14 @@
           title: "cfgLog",
           data: $scope.result ? $scope.result : ''
         });
-        $http.post(confPrefix + '?cfgNum=' + $scope.currentCfg.cfgNum + ($scope.forceSave ? "&force=1" : ''), $scope.data).success(function(data) {
+        $http.post(confPrefix + '?cfgNum=' + $scope.currentCfg.cfgNum + ($scope.forceSave ? "&force=1" : ''), $scope.data).then(function(response) {
           $scope.data.pop();
-          _checkSaveResponse(data);
-        }).error(function(j, e) {
-          readError(j, e);
+          _checkSaveResponse(response.data);
+        },
+        function(response) {
+          readError(response);
           $scope.data.pop();
-        })
+        });
       },
       function() {
         console.log('Saving canceled');
@@ -204,9 +207,10 @@
     /* Raw save function */
     $scope.saveRawConf = function($fileContent) {
       $scope.waiting = true;
-      $http.post(confPrefix + '/raw', $fileContent).success(function(data) {
-        _checkSaveResponse(data);
-      }).error(readError);
+      $http.post(confPrefix + '/raw', $fileContent).then(function(response) {
+        _checkSaveResponse(response.data);
+      },
+      readError);
     };
 
     /* Restore raw conf function */
@@ -611,7 +615,8 @@
       var d = $q.defer();
       d.notify('Trying to get datas');
       $scope.waiting = true;
-      $http.get(confPrefix + $scope.currentCfg.cfgNum + '/' + node.cnodes).success(function(data) {
+      $http.get(confPrefix + $scope.currentCfg.cfgNum + '/' + node.cnodes).then(function(response) {
+        var data = response.data;
         /* Manage datas errors */
         if (!data) {
           d.reject('Empty response from server');
@@ -641,8 +646,9 @@
           d.resolve('OK');
         }
         $scope.waiting = false;
-      }).error(function(j, e) {
-        readError(j, e);
+      },
+      function(response) {
+        readError(response);
         d.reject('');
       });
       return d.promise;
@@ -713,12 +719,14 @@
         var password = $scope.result;
         $http.post(confPrefix + '/newRSAKey', {
           password: password
-        }).success(function(data) {
+        }).then(function(response) {
+          var data = response.data;
           currentNode.data[0].data = data['private'];
           currentNode.data[1].data = password;
           currentNode.data[2].data = data['public'];
           $scope.waiting = false;
-        }).error(readError);
+        },
+        readError);
       },
       function() {
         console.log('New key cancelled');
@@ -730,11 +738,13 @@
       var currentNode = $scope.currentNode;
       $http.post(confPrefix + '/newRSAKey', {
         password: ''
-      }).success(function(data) {
+      }).then(function(response) {
+        var data = response.data;
         currentNode.data[0].data = data['private'];
         currentNode.data[1].data = data['public'];
         $scope.waiting = false;
-      }).error(readError);
+      },
+      readError);
     }
 
     /* method `getKey()`:
@@ -759,13 +769,14 @@
           $q.all(tmp).then(function() {
             d.resolve(node.data);
           },
-          function(j, e) {
+          function(response) {
             d.reject(e);
             $scope.waiting = false;
           });
         } else {
-          $http.get(confPrefix + $scope.currentCfg.cfgNum + '/' + (node.get ? node.get : node.title)).success(function(data) {
+          $http.get(confPrefix + $scope.currentCfg.cfgNum + '/' + (node.get ? node.get : node.title)).then(function(response) {
             /* Set default value if response is null or if asked by server */
+            var data = response.data;
             if ((data.value === null || (data.error && data.error.match(/setDefault$/))) && node['default'] !== null) {
               node.data = node['default'];
             } else {
@@ -780,9 +791,10 @@
             }
             $scope.waiting = false;
             d.resolve(node.data);
-          }).error(function(j, e) {
+          },
+          function(response) {
             d.reject(e);
-            readError(j, e);
+            readError(response);
           });
         }
       } else {
@@ -811,15 +823,17 @@
      */
     $scope.getCfg = function(n) {
       if ($scope.currentCfg.cfgNum != n) {
-        $http.get(confPrefix + n).success(function(data) {
+        $http.get(confPrefix + n).then(function(response) {
+          var data = response.data;
           $scope.currentCfg = data;
           var d = new Date($scope.currentCfg.cfgDate * 1000);
           $scope.currentCfg['date'] = d.toLocaleString();
           console.log('Metadatas of cfg ' + n + ' loaded');
           $location.path('/confs/' + n);
           $scope.init();
-        }).error(function(j, e) {
-          readError(j, e).then(function() {
+        },
+        function(response) {
+          readError(response).then(function() {
             $scope.currentCfg.cfgNum = 0;
             $scope.init();
           });
@@ -853,8 +867,8 @@
       $scope.confirmNeeded = false;
       $scope.forceSave = false;
       $q.all([
-      $translator.init($scope.lang), $http.get(staticPrefix + "struct.json").success(function(data) {
-        tmp = data;
+      $translator.init($scope.lang), $http.get(staticPrefix + "struct.json").then(function(response) {
+        tmp = response.data;
         console.log("Structure loaded");
       })]).then(function() {
         console.log("Starting structure binding");
@@ -886,10 +900,11 @@
       $scope.waiting = true;
       $http.post(scriptname + "prx", {
         url: url
-      }).success(function(data) {
-        node.data = data.content;
+      }).then(function(response) {
+        node.data = response.data.content;
         $scope.waiting = false;
-      }).error(readError);
+      },
+      readError);
     }
     $scope.replaceContent = function(node, $fileContent) {
       node.data = $fileContent;

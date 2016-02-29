@@ -82,15 +82,15 @@
         var d = $q.defer();
         if (res.last != lang) {
           res.last = lang;
-          $http.get(staticPrefix + 'languages/' + lang + '.json').success(function(data) {
-            res.translationFields = data;
+          $http.get(staticPrefix + 'languages/' + lang + '.json').then(function(response) {
+            res.translationFields = response.data;
             res.deferredTr.forEach(function(h) {
               h.e[h.f](res.translationFields[h.m]);
             });
             res.deferredTr = [];
             d.resolve("Translation files loaded");
-          }).error(function(j, e) {
-            serrors(j, e);
+          },
+          function(resp) {
             d.reject('');
           });
         } else {

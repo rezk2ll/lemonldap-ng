@@ -114,11 +114,12 @@
 
     $scope.deleteSession = function() {
       $scope.waiting = true;
-      $http['delete'](scriptname + "sessions/" + sessionType + "/" + $scope.currentSession.id).success(function(data) {
+      $http['delete'](scriptname + "sessions/" + sessionType + "/" + $scope.currentSession.id).then(function(response) {
         $scope.currentSession = null;
         $scope.currentScope.remove();
         $scope.waiting = false;
-      }).error(function(j, e) {
+      },
+      function(resp) {
         $scope.currentSession = null;
         $scope.currentScope.remove();
         $scope.waiting = false;
@@ -261,8 +262,8 @@
 
       $scope.currentScope = scope;
       var sessionId = scope.$modelValue.session;
-      $http.get(scriptname + "sessions/" + sessionType + "/" + sessionId).success(function(data) {
-        $scope.currentSession = transformSession(data);
+      $http.get(scriptname + "sessions/" + sessionType + "/" + sessionId).then(function(response) {
+        $scope.currentSession = transformSession(response.data);
       });
       $scope.showT = false;
     }
@@ -313,7 +314,8 @@
       }
       query = scheme[level]($scope.type, value, currentQuery);
 
-      $http.get(scriptname + "sessions/" + sessionType + "?" + query).success(function(data) {
+      $http.get(scriptname + "sessions/" + sessionType + "?" + query).then(function(response) {
+        var data = response.data;
         if (data.result) {
           data.values.forEach(function(n) {
             autoId++;
@@ -327,7 +329,8 @@
           });
         }
         $scope.waiting = false;
-      }).error(function(j, e) {
+      },
+      function(resp) {
         $scope.waiting = false;
       });
     };
