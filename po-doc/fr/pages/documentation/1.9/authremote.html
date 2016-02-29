@@ -34,7 +34,7 @@
 </table></div><!-- EDIT2 TABLE [23-86] -->
 
 <p>
-</p><p></p><div class="notewarning">Ce module fournit un protocole de fédération d'identité spécifique à <abbr title="LemonLDAP::NG">LL::NG</abbr>. You may rather use standards protocols like <a href="../../documentation/1.9/idpsaml.html" class="wikilink1" title="documentation:1.9:idpsaml">SAML</a>, <a href="../../documentation/1.9/idpopenidconnect.html" class="wikilink1" title="documentation:1.9:idpopenidconnect">OpenID Connect</a> or <a href="../../documentation/1.9/idpcas.html" class="wikilink1" title="documentation:1.9:idpcas">CAS</a>.
+</p><p></p><div class="notewarning">Ce module fournit un protocole de fédération d'identité spécifique à <abbr title="LemonLDAP::NG">LL::NG</abbr>. Il est préférable d'utiliser des protocoles standards tels <a href="../../documentation/1.9/idpsaml.html" class="wikilink1" title="documentation:1.9:idpsaml">SAML</a>, <a href="../../documentation/1.9/idpopenidconnect.html" class="wikilink1" title="documentation:1.9:idpopenidconnect">OpenID</a> ou <a href="../../documentation/1.9/idpcas.html" class="wikilink1" title="documentation:1.9:idpcas">CAS</a>.
 </div></p>
 </p>
 
@@ -63,7 +63,7 @@
 </li>
 <li class="level1"><div class="li"> Redirection vers le portail secondaire (transparent)</div>
 </li>
-<li class="level1"><div class="li"> Le portail secondaire vérifie que la session distante est valable. It can be done via direct access to the session database or using SOAP access. Il crée la sessions (avec le filtre d'attributs)</div>
+<li class="level1"><div class="li"> Le portail secondaire vérifie que la session distante est valable. Ce peut être fait par accès direct à la base des sessions principale ou en utilisant une requête SOAP. Il crée la sessions (avec le filtre d'attributs)</div>
 </li>
 <li class="level1"><div class="li"> L'utilisateur peut maintenant accéder aux applications</div>
 </li>
@@ -115,11 +115,11 @@ Ensuite, aller dans les <code>paramètres Remote</code> :
 </li>
 <li class="level1"><div class="li"> <strong>Nom du cookie</strong> (optionnel) : nom du cookie du portail primaire, s'il est différent de celui du portail secondaire</div>
 </li>
-<li class="level1"><div class="li"> <strong>Sessions module</strong>: set <code>Lemonldap::NG::Common::Apache::Session::SOAP</code> for <a href="../../documentation/1.9/soapsessionbackend.html" class="wikilink1" title="documentation:1.9:soapsessionbackend">SOAP session backend</a>.</div>
+<li class="level1"><div class="li"> <strong>Module de sessions</strong> : mettre <code>Lemonldap::NG::Common::Apache::Session::SOAP</code> pour le <a href="../../documentation/1.9/soapsessionbackend.html" class="wikilink1" title="documentation:1.9:soapsessionbackend">backend de session SOAP</a>.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Options du module de sessions</strong> :</div>
 <ul>
-<li class="level2"><div class="li"> <strong>proxy</strong>: SOAP sessions end point (see <a href="../../documentation/1.9/soapsessionbackend.html" class="wikilink1" title="documentation:1.9:soapsessionbackend">SOAP session backend</a> documentation)</div>
+<li class="level2"><div class="li"> <strong>proxy</strong>: point d'accès SOAP (voir la documentation du <a href="../../documentation/1.9/soapsessionbackend.html" class="wikilink1" title="documentation:1.9:soapsessionbackend">backend de session SOAP</a>)</div>
 </li>
 </ul>
 </li>

@@ -39,20 +39,17 @@
 <div class="level2">
 
 <p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> Slave backend relies on HTTP headers to retrieve user login and/or attributes.
-
+Le backend Slave de <abbr title="LemonLDAP::NG">LL::NG</abbr> utilise les en-têtes &lt;a1&gt;HTTP&lt;/a1&gt; pour récupérer le nom d'utilisateur et/ou les attributs.
 </p>
 <ul>
 <li class="level1"><div class="li"> Authentification : recherche le nom d'utilisateur dans un en-tête et crée la session sans exiger de mot-de-passe (mais enregistre l'adresse <abbr title="Internet Protocol">IP</abbr> cliente et la date)</div>
 </li>
-<li class="level1"><div class="li">  Users: collect data transfered in HTTP headers by the “master”.</div>
+<li class="level1"><div class="li"> Utilisateurs : collecte les données transférées par en-tête HTTP par le “maître”.</div>
 </li>
 </ul>
 
 <p>
-
-It allows to put <abbr title="LemonLDAP::NG">LL::NG</abbr>::portal behind another web <abbr title="Authentification unique (Single Sign On)">SSO</abbr>, or behind a SSL hardware to delegate SSL authentication to that hardware.
-
+Ceci permet de metre un portail <abbr title="LemonLDAP::NG">LL::NG</abbr> derrière un autre web <abbr title="Authentification unique (Single Sign On)">SSO</abbr>, ou derrière un matériel SSL pour déléguer à ce matériel l'authentification.
 </p>
 
 </div><!-- EDIT3 SECTION "Presentation" [86-553] -->
@@ -74,19 +71,19 @@ Ensuite, aller dans les <code>paramètres Slave</code>:
 </li>
 <li class="level1"><div class="li"> <strong>Adresse <abbr title="Internet Protocol">IP</abbr> du maître</strong> : les adresses <abbr title="Internet Protocol">IP</abbr> des serveurs autorisés à authentifier les utilisateurs. Il s'agit d'un élément de sécurité pour éviter à quelqu'un de créer une session en envoyant des en-têtes personnalisés. Plusieurs adresses <abbr title="Internet Protocol">IP</abbr> separées par des espaces peuvent être entrées, ou ce paramètre peut rester vide pour désactiver ce contrôle.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Control header name</strong>: header that contains a value to control. Let this parameter empty to disable the checking.</div>
+<li class="level1"><div class="li"> <strong>Nom de l'en-tête de contrôle</strong> : en-tête qui contient la valeur à contrôler. Laisser ce paramètre vide pour désactiver ce contrôle.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Control header content</strong>: value to control. Let this parameter empty to disable the checking.</div>
+<li class="level1"><div class="li"> <strong>Contenu de l'en-tête de contrôle</strong> : valeur à contrôler. Laisser ce paramètre vide pour désactiver ce contrôle.</div>
 </li>
 </ul>
 
 <p>
-You have then to declare HTTP headers exported by the main <abbr title="Authentification unique (Single Sign On)">SSO</abbr> (in <strong>Exported Variables</strong>). Exemple :
+Déclarer ensuite les en-têtes HTTP exportés par le <abbr title="Authentification unique (Single Sign On)">SSO</abbr> principal dans “Variables » Variables exportées”. Exemple :
 </p>
 <div class="table sectionedit5"><table class="inline">
 	<thead>
 	<tr class="row0 roweven">
-		<th class="col0 centeralign">  Clef (nom <abbr title="LemonLDAP::NG">LL::NG</abbr>)  </th><th class="col1 centeralign">    Value (HTTP header name)    </th>
+		<th class="col0 centeralign">  Clef (nom <abbr title="LemonLDAP::NG">LL::NG</abbr>)  </th><th class="col1 centeralign">  Valeur (nom d'en-tête HTTP)  </th>
 	</tr>
 	</thead>
 	<tr class="row1 rowodd">

@@ -72,8 +72,7 @@ Dans Debian/Ubuntu mod_ssl est installé avec le paquet <code>apache2.2-common</
 </p>
 
 <p>
-</p><p></p><div class="notetip">For CentOS/RHEL, We advice to disable the default SSL virtual host configured in /etc/httpd/conf.d/ssl.conf.
-
+</p><p></p><div class="notetip">Pour CentOS/RHEL, il est recommandé de désactiver l'hôte virtuel SSL par défaut configuré dans /etc/httpd/conf.d/ssl.conf.
 </div></p>
 </p>
 
@@ -83,9 +82,7 @@ Dans Debian/Ubuntu mod_ssl est installé avec le paquet <code>apache2.2-common</
 <div class="level3">
 
 <p>
-
-You can then use this default SSL configuration, for example in the head of /etc/lemonldap-ng/portal-apache2.conf:
-
+Il est possible d'utiliser cette configuration SSL par défaut, par exemple en tête de /etc/lemonldap-ng/portal-apache2.conf :
 </p>
 <pre class="code file apache"><span class="kw1">SSLProtocol</span> <span class="kw2">all</span> -SSLv2
 <span class="kw1">SSLCipherSuite</span> HIGH:MEDIUM
@@ -112,9 +109,7 @@ Placer vos propres fichiers au lieu de <code>ow2.cert</code>, <code>ow2.key</cod
 </p>
 
 <p>
-
-If you specify port in virtual host, then declare SSL port:
-
+SI le port est spécifié, déclarer le port SSL :
 </p>
 <pre class="code file apache"><span class="kw1">NameVirtualHost</span> *:<span class="nu0">80</span>
 <span class="kw1">NameVirtualHost</span> *:<span class="nu0">443</span></pre>
@@ -125,9 +120,7 @@ If you specify port in virtual host, then declare SSL port:
 <div class="level3">
 
 <p>
-
-Edit the portal virtual host to enable SSL double authentication:
-
+Éditer l'hôte virtuel du portail pour activer la double authentification SSL :
 </p>
 <pre class="code file apache"><span class="kw1">SSLEngine</span> <span class="kw2">On</span>
 <span class="kw1">SSLVerifyClient</span> optional
@@ -136,16 +129,14 @@ Edit the portal virtual host to enable SSL double authentication:
 <span class="kw1">SSLUserName</span> SSL_CLIENT_S_DN_CN</pre>
 
 <p>
-
-All SSL options are documented in <a href="http://httpd.apache.org/docs/current/mod/mod_ssl.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_ssl.html"  rel="nofollow">Apache mod_ssl page</a>.
-
+Toutes les options SSL sont documentées dans la <a href="http://httpd.apache.org/docs/current/mod/mod_ssl.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_ssl.html"  rel="nofollow">page mod_ssl d'Apache</a>.
 </p>
 
 <p>
 Ci-dessous les principales options utilisées par <abbr title="LemonLDAP::NG">LL::NG</abbr> :
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>SSLVerifyClient</strong> : mettre à <code>optional</code> pour autoriser les utilisateurs ne disposant pas d'un certificat valide à accéder à la page du portail <abbr title="LemonLDAP::NG">LL::NG</abbr> To switch to another authentication backend, use the <a href="../../documentation/1.9/authmulti.html" class="wikilink1" title="documentation:1.9:authmulti">Multi</a> module, for example: <code>Multi SSL;LDAP</code></div>
+<li class="level1"><div class="li"> <strong>SSLVerifyClient</strong> : mettre à <code>optional</code> pour autoriser les utilisateurs ne disposant pas d'un certificat valide à accéder à la page du portail <abbr title="LemonLDAP::NG">LL::NG</abbr> Pour basculer vers un autre backend d'authentification, utiliser le module <a href="../../documentation/1.9/authmulti.html" class="wikilink1" title="documentation:1.9:authmulti">Multi</a>, par exemple : <code>Multi SSL;LDAP</code></div>
 </li>
 <li class="level1"><div class="li"> <strong>SSLOptions</strong> : mettre à <code>+StdEnvVars</code> pour obtenir les champs du certificat dans les variables d'environnement</div>
 </li>
@@ -159,9 +150,7 @@ Ci-dessous les principales options utilisées par <abbr title="LemonLDAP::NG">LL
 <div class="level3">
 
 <p>
-
-In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose SSL for authentication.
-
+Dans le manager, aller dans <code>Paramètres généraux</code> &gt; <code>Modules d'authentification</code> et choisir SSL pour l'authentification.
 </p>
 
 <p>
@@ -170,9 +159,7 @@ In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modu
 </p>
 
 <p>
-
-Then, go in <code>SSL parameters</code>:
-
+Aller ensuite dans <code>Paramètres SSL</code> :
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Niveau d'authentification</strong> : niveau d'authentification pour ce module</div>
@@ -183,26 +170,19 @@ Then, go in <code>SSL parameters</code>:
 
 </div><!-- EDIT8 SECTION "Configuration of LemonLDAP::NG" [2369-2794] -->
 
-<h3 class="sectionedit9" id="auto_reloading_ssl_certificates">Auto reloading SSL Certificates</h3>
+<h3 class="sectionedit9" id="auto_reloading_ssl_certificates">Rechargement automatique des certificats SSL</h3>
 <div class="level3">
 
 <p>
-
-A known problematic is that many browser (Firefox, Chrome) remembers the fact that the certificate is not available at a certain time.
-It is particularly important for smart cards: when the card is not inserted before the browser starts, the user must restart his browser, or at least refresh (F5) the page.
-
+Problème connu : de nombreux navigateurs (Firefox, Chrome) enregistrent le fait qu'un certificat n'est pas disponible un certain temps. C'est particulièrement important pour les cartes à puce : lorsqu'elle n'est pas insérée avant que le navigateur ne démarre, l'utilisateur doit redémarrer ce dernier, ou au moins recharger la page (F5).
 </p>
 
 <p>
-
-It is possible with AJAX code and 3 Apache locations to bypass this limitation.
-
+Il est possible d'éviter ceci avec un code AJAX et 3 "locations" Apache.
 </p>
 
 <p>
-
-1. Modify the portal virtual host to match this example:
-
+1. Modifier l'hôte virtuel du portail comme suit :
 </p>
 <pre class="code file apache">    <span class="kw1">SSLEngine</span> <span class="kw2">On</span>
     <span class="kw1">SSLCACertificateFile</span> /etc/apache2/ssl/ca.crt
@@ -241,18 +221,16 @@ It is possible with AJAX code and 3 Apache locations to bypass this limitation.
         <span class="kw1">SSLVerifyClient</span> <span class="kw1">require</span>
     &lt;/<span class="kw3">Location</span>&gt;</pre>
 <ul>
-<li class="level1"><div class="li">  /index/ is an unprotected page to display a SSL test button</div>
+<li class="level1"><div class="li"> /index/ est une page non protégée pour afficher un bouton de test SSL</div>
 </li>
-<li class="level1"><div class="li">  /testssl/ is a SSL protected page to check the certificate</div>
+<li class="level1"><div class="li"> /testssl/ est une page protégée par SSL qui vérifie le certificat</div>
 </li>
-<li class="level1"><div class="li">  /sslok/ is the new LemonLDAP::NG portal. You need to declare the new url in the manager: Portal → <abbr title="Uniform Resource Locator">URL</abbr>: <a href="https://auth.example.com/sslok/" class="urlextern" title="https://auth.example.com/sslok/"  rel="nofollow">https://auth.example.com/sslok/</a></div>
+<li class="level1"><div class="li"> /sslok/ est le nouveau portail LemonLDAP::NG. Il faut declarer la nouvelle url dans le manager : Portail → <abbr title="Uniform Resource Locator">URL</abbr>: <a href="https://auth.example.com/sslok/" class="urlextern" title="https://auth.example.com/sslok/"  rel="nofollow">https://auth.example.com/sslok/</a></div>
 </li>
 </ul>
 
 <p>
-
-2. Then you need to construct the Ajax page, for example in /index/bouton.html. It looks like this:
-
+2. Il faut ensuite construire la page Ajax, par exemple dans /index/bouton.html. Ça ressemble à :
 </p>
 <pre class="code file html4strict"><span class="sc2">&lt;<a href="http://december.com/html/4/element/body.html"><span class="kw2">body</span></a>&gt;</span>
 <span class="sc2">&lt;<a href="http://december.com/html/4/element/script.html"><span class="kw2">script</span></a> <span class="kw3">src</span><span class="sy0">=</span><span class="st0">"./jquery-2.1.4.min.js"</span>             <span class="kw3">type</span><span class="sy0">=</span><span class="st0">"text/javascript"</span>&gt;</span> <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/script.html"><span class="kw2">script</span></a>&gt;</span>
@@ -297,8 +275,7 @@ $('.enteteBouton').click( function (e) {
 <span class="sc2">&lt;<span class="sy0">/</span><a href="http://december.com/html/4/element/body.html"><span class="kw2">body</span></a>&gt;</span></pre>
 
 <p>
-</p><p></p><div class="notewarning">It is incompatible with authentication chaining (see Stack Multiple backends), because of Apache parameter “SSLVerifyClient”, which must have the value “require”
-
+</p><p></p><div class="notewarning">Ce n'est pas compatible avec une chaîne d'authentification (voir Empiler plusieurs backends), en raison du paramètre Apache “SSLVerifyClient”, qui doit être mis à la valeur “require”
 </div></p>
 </p>
 

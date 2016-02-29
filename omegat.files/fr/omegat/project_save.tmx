@@ -11240,10 +11240,34 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/index/ is an unprotected page to display a SSL test button</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213654Z" changeid="xavier">
+        <seg>/index/ est une page non protégée pour afficher un bouton de test SSL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/lib/images/smileys/fixme.gif</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T094116Z" changeid="xavier">
         <seg>/lib/images/smileys/fixme.gif</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/sslok/ is the new LemonLDAP::NG portal.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213741Z" changeid="xavier">
+        <seg>/sslok/ est le nouveau portail LemonLDAP::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/testssl/ is a SSL protected page to check the certificate</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213719Z" changeid="xavier">
+        <seg>/testssl/ est une page protégée par SSL qui vérifie le certificat</seg>
       </tuv>
     </tu>
     <tu>
@@ -13194,6 +13218,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; Slave backend relies on HTTP headers to retrieve user login and/or attributes.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212554Z" changeid="xavier">
+        <seg>Le backend Slave de &lt;a0&gt;LL::NG&lt;/a0&gt; utilise les en-têtes &lt;a1&gt;HTTP&lt;/a1&gt; pour récupérer le nom d'utilisateur et/ou les attributs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can act as an &lt;a1&gt;CAS&lt;/a1&gt; server, that can allow to federate &lt;a2&gt;LL::NG&lt;/a2&gt; with:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053613Z" changeid="xavier">
@@ -13438,6 +13470,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T045313Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut transferer (en utilisant &lt;a1&gt;SOAP&lt;/a1&gt;) les éléments d'authentification à un autre portail &lt;a2&gt;LL::NG&lt;/a2&gt;, comme un proxy.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is able to transfer (trough SOAP) authentication credentials to another &lt;a1&gt;LL::NG&lt;/a1&gt; portal, like a proxy.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T211938Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut transferer (en utilisant SOAP) les éléments d'authentification à un autre portail &lt;a1&gt;LL::NG&lt;/a1&gt;, comme un proxy.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18360,6 +18400,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Control header content&lt;/s0&gt;: value to control.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212754Z" changeid="xavier">
+        <seg>&lt;s0&gt;Contenu de l'en-tête de contrôle&lt;/s0&gt; : valeur à contrôler.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Control header name&lt;/s0&gt;: header that contains a value to control.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212703Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom de l'en-tête de contrôle&lt;/s0&gt; : en-tête qui contient la valeur à contrôler.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Cookie expiration time&lt;/s0&gt;: by default, &lt;a1&gt;SSO&lt;/a1&gt; cookie is a session cookie, which mean it will be destroyed when the browser is closed.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120502T041722Z" changeid="xavier">
@@ -19912,6 +19968,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SOAP sessions end point&lt;/s0&gt; (optional): SOAP end point, if not based on internal portal &lt;a1&gt;URL&lt;/a1&gt; with &lt;c2&gt;index.pl/sessions&lt;/c2&gt; suffix</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212050Z" changeid="xavier">
+        <seg>&lt;s0&gt;Point terminal des sessions SOAP&lt;/s0&gt; (optionnel): URL du service SOAP si elle n'est pas basée sur celle du portail interne avec le suffixe &lt;c2&gt;index.pl/sessions&lt;/c2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;SREG mapping&lt;/s0&gt;: link between SREG attributes and session keys (&lt;s1&gt;&lt;a2&gt;see below&lt;/a2&gt;&lt;/s1&gt;).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082859Z" changeid="xavier">
@@ -20198,6 +20262,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200104Z" changeid="xavier">
         <seg>&lt;s0&gt;Module de sessions&lt;/s0&gt; : mettre &lt;c1&gt;Lemonldap::NG::Common::Apache::Session::&lt;a2&gt;SOAP&lt;/a2&gt;&lt;/c1&gt; pour le &lt;a3&gt;backend de session SOAP&lt;/a3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Sessions module&lt;/s0&gt;: set &lt;c1&gt;Lemonldap::NG::Common::Apache::Session::SOAP&lt;/c1&gt; for &lt;a2&gt;SOAP session backend&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212316Z" changeid="xavier">
+        <seg>&lt;s0&gt;Module de sessions&lt;/s0&gt; : mettre &lt;c1&gt;Lemonldap::NG::Common::Apache::Session::SOAP&lt;/c1&gt; pour le &lt;a2&gt;backend de session SOAP&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21338,6 +21410,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200203Z" changeid="xavier">
         <seg>&lt;s0&gt;proxy&lt;/s0&gt;: point d'accès &lt;a1&gt;SOAP&lt;/a1&gt; (voir la documentation du &lt;a2&gt;backend de session SOAP&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;proxy&lt;/s0&gt;: SOAP sessions end point (see &lt;a1&gt;SOAP session backend&lt;/a1&gt; documentation)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212342Z" changeid="xavier">
+        <seg>&lt;s0&gt;proxy&lt;/s0&gt;: point d'accès SOAP (voir la documentation du &lt;a1&gt;backend de session SOAP&lt;/a1&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -24498,6 +24578,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A known problematic is that many browser (Firefox, Chrome) remembers the fact that the certificate is not available at a certain time.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213253Z" changeid="xavier">
+        <seg>Problème connu : de nombreux navigateurs (Firefox, Chrome) enregistrent le fait qu'un certificat n'est pas disponible un certain temps.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A little floating menu can be added to application with this simple Apache configuration:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T155823Z" changeid="xavier">
@@ -25102,6 +25190,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082051Z" changeid="xavier">
         <seg>Tous les modules de type &lt;a1&gt;Apache::Session&lt;/a1&gt; sont utilisables excepté pour quelques fonctionnalités.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All SSL options are documented in &lt;a0&gt;Apache mod_ssl page&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213011Z" changeid="xavier">
+        <seg>Toutes les options SSL sont documentées dans la &lt;a0&gt;page mod_ssl d'Apache&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26342,6 +26438,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080921Z" changeid="xavier">
         <seg>Auto login</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Auto reloading SSL Certificates</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213128Z" changeid="xavier">
+        <seg>Rechargement automatique des certificats SSL</seg>
       </tuv>
     </tu>
     <tu>
@@ -29690,6 +29794,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Edit the portal virtual host to enable SSL double authentication:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212952Z" changeid="xavier">
+        <seg>Éditer l'hôte virtuel du portail pour activer la double authentification SSL :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Edit then &lt;c0&gt;share-config-custom.xml&lt;/c0&gt; and uncomment the last part.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160227T183645Z" changeid="xavier">
@@ -30666,6 +30778,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T065737Z" changeid="xavier">
         <seg>Pour CentOS/RHEL, il est recommandé de désactiver l'hôte virtuel &lt;a0&gt;SSL&lt;/a0&gt; par défaut configuré dans /etc/httpd/conf.d/ssl.conf.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For CentOS/RHEL, We advice to disable the default SSL virtual host configured in /etc/httpd/conf.d/ssl.conf.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212913Z" changeid="xavier">
+        <seg>Pour CentOS/RHEL, il est recommandé de désactiver l'hôte virtuel SSL par défaut configuré dans /etc/httpd/conf.d/ssl.conf.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33078,6 +33198,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you specify port in virtual host, then declare SSL port:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212939Z" changeid="xavier">
+        <seg>SI le port est spécifié, déclarer le port SSL :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you still need to use Google login after this date, use &lt;a0&gt;OpenID Connect authentication module&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T135553Z" changeid="xavier">
@@ -33542,6 +33670,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose SSL for authentication.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213054Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir SSL pour l'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Slave for authentication or users module.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T160845Z" changeid="xavier">
@@ -33666,6 +33802,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092026Z" changeid="xavier">
         <seg>Dans le manager, selectionner le noeud fournisseurs de service &lt;a0&gt;SAML&lt;/a0&gt; et cliquer sur Nouveau fournisseur de service :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In the Manager, select node &lt;c0&gt;&lt;a1&gt;SAML&lt;/a1&gt; identity providers&lt;/c0&gt; and click on &lt;c2&gt;Add &lt;a3&gt;SAML&lt;/a3&gt; IDP&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212444Z" changeid="xavier">
+        <seg>Dans le Manager, selectionner le noeud &lt;c0&gt;Fournisseurs d'identité &lt;a1&gt;SAML&lt;/a1&gt;&lt;/c0&gt; et cliquer sur &lt;c2&gt;Ajouter un IdP &lt;a3&gt;SAML&lt;/a3&gt;&lt;/c2&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -34270,6 +34414,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It allows to put &lt;a0&gt;LL::NG&lt;/a0&gt;::portal behind another web &lt;a1&gt;SSO&lt;/a1&gt;, or behind a SSL hardware to delegate SSL authentication to that hardware.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212622Z" changeid="xavier">
+        <seg>Ceci permet de metre un portail &lt;a0&gt;LL::NG&lt;/a0&gt; derrière un autre web &lt;a1&gt;SSO&lt;/a1&gt;, ou derrière un matériel SSL pour déléguer à ce matériel l'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It allows to use &lt;a0&gt;SAML&lt;/a0&gt; to authenticate users.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T221216Z" changeid="xavier">
@@ -34306,6 +34458,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050456Z" changeid="xavier">
         <seg>Ce peut être fait par accès direct à la base des sessions principale ou en utilisant une requête &lt;a0&gt;SOAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can be done via direct access to the session database or using SOAP access.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212240Z" changeid="xavier">
+        <seg>Ce peut être fait par accès direct à la base des sessions principale ou en utilisant une requête SOAP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34486,10 +34646,34 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It is incompatible with authentication chaining (see Stack Multiple backends), because of Apache parameter “SSLVerifyClient”, which must have the value “require”</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T214047Z" changeid="xavier">
+        <seg>Ce n'est pas compatible avec une chaîne d'authentification (voir Empiler plusieurs backends), en raison du paramètre Apache “SSLVerifyClient”, qui doit être mis à la valeur “require”</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is particularly important for smart cards: when the card is not inserted before the browser starts, the user must restart his browser, or at least refresh (F5) the page.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213429Z" changeid="xavier">
+        <seg>C'est particulièrement important pour les cartes à puce : lorsqu'elle n'est pas insérée avant que le navigateur ne démarre, l'utilisateur doit redémarrer ce dernier, ou au moins recharger la page (F5).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It is possible to store any additional session data.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T172918Z" changeid="xavier">
         <seg>Il est possible de stocker d'autres données de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is possible with AJAX code and 3 Apache locations to bypass this limitation.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213522Z" changeid="xavier">
+        <seg>Il est possible d'éviter ceci avec un code AJAX et 3 &quot;locations&quot; Apache.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34538,6 +34722,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114803Z" changeid="xavier">
         <seg>Il est destiné aux équipes de développeurs, groupes de travail ou petites entreprises.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It looks like this:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213855Z" changeid="xavier">
+        <seg>Ça ressemble à :</seg>
       </tuv>
     </tu>
     <tu>
@@ -35820,6 +36012,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Let this parameter empty to disable the checking.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212732Z" changeid="xavier">
+        <seg>Laisser ce paramètre vide pour désactiver ce contrôle.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Let's go</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T123835Z" changeid="xavier">
@@ -36784,6 +36984,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T053713Z" changeid="xavier">
         <seg>Modifier l'hôte virtuel Apache pour séparer le module d'authentification Kerberos :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Modify the portal virtual host to match this example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213603Z" changeid="xavier">
+        <seg>Modifier l'hôte virtuel du portail comme suit :</seg>
       </tuv>
     </tu>
     <tu>
@@ -41022,6 +41230,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;SOAP session backend&lt;/a0&gt; documentation.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212143Z" changeid="xavier">
+        <seg>Voir la documentation du &lt;a0&gt;backend de sessions SOAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;Writing rules and headers&lt;/a0&gt; chapter.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -43600,6 +43816,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The portal must be configured to accept SOAP authentication requests.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212104Z" changeid="xavier">
+        <seg>Ce portail doit être configuré pour accepter les requêtes d'authentification SOAP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The portal of the secondary &lt;a0&gt;LL::NG&lt;/a0&gt; structure is configured to delegate authentication to a remote portal.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T045745Z" changeid="xavier">
@@ -44138,6 +44362,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then you need to construct the Ajax page, for example in /index/bouton.html.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213845Z" changeid="xavier">
+        <seg>Il faut ensuite construire la page Ajax, par exemple dans /index/bouton.html.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then you will be able to use it in your template like this:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T075545Z" changeid="guimard">
@@ -44222,6 +44454,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T195859Z" changeid="xavier">
         <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Remote&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;SSL parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213104Z" changeid="xavier">
+        <seg>Aller ensuite dans &lt;c0&gt;Paramètres SSL&lt;/c0&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -45954,6 +46194,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To switch to another authentication backend, use the &lt;a3&gt;Multi&lt;/a3&gt; module, for example: &lt;c4&gt;Multi SSL;LDAP&lt;/c4&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213039Z" changeid="xavier">
+        <seg>Pour basculer vers un autre backend d'authentification, utiliser le module &lt;a3&gt;Multi&lt;/a3&gt;, par exemple : &lt;c4&gt;Multi SSL;LDAP&lt;/c4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To test this, you can build your own WebID certificate using one of :</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T064409Z" changeid="xavier">
@@ -46994,6 +47242,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Users: collect data transfered in HTTP headers by the “master”.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212604Z" changeid="xavier">
+        <seg>Utilisateurs : collecte les données transférées par en-tête HTTP par le “maître”.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Users: will not collect any data (but you can still register environment variables in session)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080500Z" changeid="xavier">
@@ -47102,6 +47358,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162010Z" changeid="xavier">
         <seg>Valeur (nom d'en-tête &lt;a0&gt;HTTP&lt;/a0&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Value (HTTP header name)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212846Z" changeid="xavier">
+        <seg>Valeur (nom d'en-tête HTTP)</seg>
       </tuv>
     </tu>
     <tu>
@@ -48002,6 +48266,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also edit the metadata directly in the textarea</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212527Z" changeid="xavier">
+        <seg>On peut aussi éditer la métadonnée directement dans le champ textarea</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also find on this page the SVN tarball if you want to test latest features.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160118Z" changeid="xavier">
@@ -48666,6 +48938,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can then use this default SSL configuration, for example in the head of /etc/lemonldap-ng/portal-apache2.conf:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212925Z" changeid="xavier">
+        <seg>Il est possible d'utiliser cette configuration SSL par défaut, par exemple en tête de /etc/lemonldap-ng/portal-apache2.conf :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can use #PORTAL# in values to replace the portal &lt;a0&gt;URL&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -48826,6 +49106,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You have then to declare HTTP headers exported by the main &lt;a0&gt;SSO&lt;/a0&gt; (in &lt;s1&gt;Exported Variables&lt;/s1&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212834Z" changeid="xavier">
+        <seg>Déclarer ensuite les en-têtes HTTP exportés par le &lt;a0&gt;SSO&lt;/a0&gt; principal dans “Variables » Variables exportées”.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You have then to install all the downloaded packages:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100015Z" changeid="xavier">
@@ -48902,6 +49190,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T120446Z" changeid="xavier">
         <seg>Il faut installer le module &lt;a0&gt;Perl&lt;/a0&gt; correspondant.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have to install the corresponding Perl module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212157Z" changeid="xavier">
+        <seg>Il faut installer le module Perl correspondant.</seg>
       </tuv>
     </tu>
     <tu>
@@ -49038,6 +49334,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171538Z" changeid="xavier">
         <seg>Il est également possible de créer ces macros pour gérer le compte administrateur OBM (&lt;c0&gt;Variables&lt;/c0&gt; » &lt;c1&gt;Macros&lt;/c1&gt;):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You may rather use standards protocols like &lt;a1&gt;SAML&lt;/a1&gt;, &lt;a2&gt;OpenID Connect&lt;/a2&gt; or &lt;a3&gt;CAS&lt;/a3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T212224Z" changeid="xavier">
+        <seg>Il est préférable d'utiliser des protocoles standards tels &lt;a1&gt;SAML&lt;/a1&gt;, &lt;a2&gt;OpenID&lt;/a2&gt; ou &lt;a3&gt;CAS&lt;/a3&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -49222,6 +49526,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T052836Z" changeid="guimard">
         <seg>Il faut créer soi-même le répertoire et y donner un accès en écriture pour l'utilisateur Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need to declare the new url in the manager: Portal → &lt;a0&gt;URL&lt;/a0&gt;: &lt;a1&gt;https://auth.example.com/sslok/&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T213812Z" changeid="xavier">
+        <seg>Il faut declarer la nouvelle url dans le manager : Portail → &lt;a0&gt;URL&lt;/a0&gt;: &lt;a1&gt;https://auth.example.com/sslok/&lt;/a1&gt;</seg>
       </tuv>
     </tu>
     <tu>
