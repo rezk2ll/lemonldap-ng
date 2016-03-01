@@ -23,10 +23,10 @@
   <div id="error">
 
     <TMPL_IF URL>
-      <h3>
+      <div class="message message-warning alert">
         <lang en="You were redirect from " fr="Vous avez &eacute;t&eacute; redirig&eacute; depuis " />
         <a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="URL"></a>
-      </h3>
+      </div>
     </TMPL_IF>
 
     <div class="buttons">
