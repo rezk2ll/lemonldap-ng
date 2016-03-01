@@ -117,22 +117,8 @@ CSOD needs two things to configure <abbr title="LemonLDAP::NG">LL::NG</abbr> as 
 <div class="level4">
 
 <p>
-For the certificate, you can build it from the signing private key registered in Manager. Select the key, and export it (button <code>Download this file</code>):
+See <a href="../../../documentation/1.9/samlservice.html#security_parameters" class="wikilink1" title="documentation:1.9:samlservice">SAML security parameters</a> to know how generate a certificate from you <abbr title="Security Assertion Markup Language">SAML</abbr> private key.
 </p>
-
-<p>
-<a href="/_detail/documentation/googleapps-export-priv-key.png?id=documentation%3A1.9%3Aapplications%3Acornerstone" class="media" title="documentation:googleapps-export-priv-key.png"><img src="../../../../media/documentation/googleapps-export-priv-key.png" class="mediacenter" alt="" /></a>
-</p>
-
-<p>
-After choosing the file name (for example lemonldapn-ng-priv.key), download the key on your disk.
-</p>
-
-<p>
-Then use openssl to generate an auto-signed certificate:
-</p>
-<pre class="code">openssl req -new -key lemonldap-ng-priv.key -out cert.csr
-openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out cert.pem</pre>
 
 </div>
 

@@ -61,12 +61,21 @@ Go on Drupal administration interface and enable the Webserver Auth module.
 
 </div>
 <!-- EDIT5 SECTION "Drupal module activation" [554-666] -->
-<h3 class="sectionedit6" id="drupal_virtual_host_in_apache">Drupal virtual host in Apache</h3>
+<h3 class="sectionedit6" id="drupal_virtual_host">Drupal virtual host</h3>
 <div class="level3">
 
 <p>
 Configure Drupal virtual host like other <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">protected virtual host</a>.
 </p>
+
+<p>
+<p><div class="noteimportant">If you are protecting Drupal with <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, <a href="../../../documentation/1.9/header_remote_user_conversion.html" class="wikilink1" title="documentation:1.9:header_remote_user_conversion">convert header into REMOTE_USER environment variable</a>.
+</div></p>
+</p>
+<ul>
+<li class="level1"><div class="li"> For Apache:</div>
+</li>
+</ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> drupal.example.com
 &nbsp;
@@ -75,14 +84,47 @@ Configure Drupal virtual host like other <a href="../../../documentation/1.9/con
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-
-<p>
-<p><div class="noteimportant">If you are protecting Drupal with <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, <a href="../../../documentation/1.9/header_remote_user_conversion.html" class="wikilink1" title="documentation:1.9:header_remote_user_conversion">convert header into REMOTE_USER environment variable</a>.
-</div></p>
-</p>
+<ul>
+<li class="level1"><div class="li"> For Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name drupal.example.com;
+  root /path/to/application;
+  # Internal authentication request
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Drop post datas
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+    # Keep original hostname
+    fastcgi_param HOST $http_host;
+    # Keep original request (LLNG server will received /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Client requests
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
 
 </div>
-<!-- EDIT6 SECTION "Drupal virtual host in Apache" [667-1133] -->
+<!-- EDIT6 SECTION "Drupal virtual host" [667-2092] -->
 <h3 class="sectionedit7" id="drupal_virtual_host_in_manager">Drupal virtual host in Manager</h3>
 <div class="level3">
 
@@ -99,7 +141,7 @@ If using <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, configure t
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Drupal virtual host in Manager" [1134-1487] -->
+<!-- EDIT7 SECTION "Drupal virtual host in Manager" [2093-2446] -->
 <h3 class="sectionedit8" id="protect_only_the_administration_pages">Protect only the administration pages</h3>
 <div class="level3">
 

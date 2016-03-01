@@ -119,12 +119,21 @@ Add then extension configuration, for example:
 
 </div>
 <!-- EDIT5 SECTION "MediWiki local configuration" [1013-2635] -->
-<h3 class="sectionedit6" id="mediawiki_virtual_host_in_apache">MediaWiki virtual host in Apache</h3>
+<h3 class="sectionedit6" id="mediawiki_virtual_host">MediaWiki virtual host</h3>
 <div class="level3">
 
 <p>
 Configure MediaWiki virtual host like other <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">protected virtual host</a>.
 </p>
+
+<p>
+<p><div class="noteimportant">If you are protecting MediaWiki with <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, <a href="../../../documentation/1.9/header_remote_user_conversion.html" class="wikilink1" title="documentation:1.9:header_remote_user_conversion">convert header into REMOTE_USER environment variable</a>.
+</div></p>
+</p>
+<ul>
+<li class="level1"><div class="li"> For Apache:</div>
+</li>
+</ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> mediawiki.example.com
 &nbsp;
@@ -133,14 +142,47 @@ Configure MediaWiki virtual host like other <a href="../../../documentation/1.9/
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-
-<p>
-<p><div class="noteimportant">If you are protecting MediaWiki with <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, <a href="../../../documentation/1.9/header_remote_user_conversion.html" class="wikilink1" title="documentation:1.9:header_remote_user_conversion">convert header into REMOTE_USER environment variable</a>.
-</div></p>
-</p>
+<ul>
+<li class="level1"><div class="li"> For Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name mediawiki.example.com;
+  root /path/to/application;
+  # Internal authentication request
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Drop post datas
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+    # Keep original hostname
+    fastcgi_param HOST $http_host;
+    # Keep original request (LLNG server will received /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Client requests
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
 
 </div>
-<!-- EDIT6 SECTION "MediaWiki virtual host in Apache" [2636-3114] -->
+<!-- EDIT6 SECTION "MediaWiki virtual host" [2636-4075] -->
 <h3 class="sectionedit7" id="mediawiki_virtual_host_in_manager">MediaWiki virtual host in Manager</h3>
 <div class="level3">
 

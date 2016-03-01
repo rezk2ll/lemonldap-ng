@@ -153,8 +153,12 @@ Parameters:
 </ul>
 
 <p>
-Edit also OBM Apache configuration to enable <abbr title="LemonLDAP::NG">LL::NG</abbr> Handler:
+Edit also OBM configuration to enable <abbr title="LemonLDAP::NG">LL::NG</abbr> Handler:
 </p>
+<ul>
+<li class="level1"><div class="li"> For Apache:</div>
+</li>
+</ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
     <span class="kw1">ServerName</span> obm.example.com
 &nbsp;
@@ -166,14 +170,47 @@ Edit also OBM Apache configuration to enable <abbr title="LemonLDAP::NG">LL::NG<
     ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-
-<p>
-<p><div class="noteimportant">OBM Apache configuration must be loaded <strong>after</strong> <abbr title="LemonLDAP::NG">LL::NG</abbr> <a href="../../../documentation/1.9/configlocation.html#apache" class="wikilink1" title="documentation:1.9:configlocation">Apache configuration</a>.
-</div></p>
-</p>
+<ul>
+<li class="level1"><div class="li"> For Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name obm.example.com;
+  root /usr/share/obm/php;
+  # Internal authentication request
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Drop post datas
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+    # Keep original hostname
+    fastcgi_param HOST $http_host;
+    # Keep original request (LLNG server will received /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Client requests
+  location ~ \.php$ {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
 
 </div>
-<!-- EDIT4 SECTION "OBM" [516-6179] -->
+<!-- EDIT4 SECTION "OBM" [516-7008] -->
 <h3 class="sectionedit5" id="llng">LL::NG</h3>
 <div class="level3">
 
@@ -223,7 +260,7 @@ You may also create these macros to manage OBM administrator account (<code>Vari
 		<td class="col0 leftalign"> mailR  </td><td class="col1 leftalign"> ($uid =~ /^admin0/i)[0] ? &quot;&quot; : ($mail =~ /^([^@]+)/)[0] . &quot;\@example.com&quot;   </td>
 	</tr>
 </table></div>
-<!-- EDIT6 TABLE [6693-6872] -->
+<!-- EDIT6 TABLE [7522-7701] -->
 </div>
 
 <h4 id="virtual_host">Virtual host</h4>
@@ -278,7 +315,7 @@ Define at least:
 		<td class="col0">default</td><td class="col1">accept (or whatever you want)</td>
 	</tr>
 </table></div>
-<!-- EDIT7 TABLE [7254-7477] -->
+<!-- EDIT7 TABLE [8083-8306] -->
 </div>
 
 <h5 id="headers">Headers</h5>
@@ -309,7 +346,7 @@ Define headers used in OBM mapping, for example:
 		<td class="col0">OBM_USERPASSWORD</td><td class="col1">$_password</td>
 	</tr>
 </table></div>
-<!-- EDIT8 TABLE [7543-7671] -->
+<!-- EDIT8 TABLE [8372-8500] -->
 </div>
 
 <h4 id="other">Other</h4>

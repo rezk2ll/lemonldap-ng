@@ -110,7 +110,7 @@ If you can not access the Manager anymore, you can unprotect it by editing <code
 The Manager displays main branches:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>General Parameters</strong>: 1uthentication modules, portal, etc.</div>
+<li class="level1"><div class="li"> <strong>General Parameters</strong>: Authentication modules, portal, etc.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Variables</strong>: User information, macros and groups used to fill <abbr title="Single Sign On">SSO</abbr> session</div>
 </li>
@@ -533,6 +533,11 @@ In Portal virtual host, you will find several configuration parts:
     fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
     fastcgi_param LLTYPE cgi;
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    set $sn $request_uri;
+    if ($sn ~ &quot;^(.*)\?&quot;) {
+        set $sn $1;
+    }
+    fastcgi_param SCRIPT_NAME $sn;
     fastcgi_split_path_info ^(.*\.pl)(/.+)$;
   }
 &nbsp;
@@ -584,7 +589,7 @@ In Portal virtual host, you will find several configuration parts:
     rewrite ^/.well-known/openid-configuration$ /openid-configuration.pl last;</pre>
 
 </div>
-<!-- EDIT11 SECTION "Portal" [12691-14269] -->
+<!-- EDIT11 SECTION "Portal" [12691-14383] -->
 <h3 class="sectionedit12" id="manager2">Manager</h3>
 <div class="level3">
 
@@ -618,7 +623,7 @@ By default, configuration interface access is not protected by Nginx but by Lemo
 </p>
 
 </div>
-<!-- EDIT12 SECTION "Manager" [14270-15022] -->
+<!-- EDIT12 SECTION "Manager" [14384-15136] -->
 <h3 class="sectionedit13" id="handler1">Handler</h3>
 <div class="level3">
 
@@ -715,7 +720,7 @@ Then, to protect a standard virtual host, you must insert this (or create an inc
     # Insert then your configuration (fastcgi_* or proxy_*)</pre>
 
 </div>
-<!-- EDIT13 SECTION "Handler" [15023-17970] -->
+<!-- EDIT13 SECTION "Handler" [15137-18084] -->
 <h2 class="sectionedit14" id="configuration_reload">Configuration reload</h2>
 <div class="level2">
 
@@ -747,7 +752,7 @@ The <code>reload</code> target is managed in Apache or Nginx configuration, insi
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Configuration reload" [17971-19141] -->
+<!-- EDIT14 SECTION "Configuration reload" [18085-19255] -->
 <h2 class="sectionedit15" id="local_file">Local file</h2>
 <div class="level2">
 

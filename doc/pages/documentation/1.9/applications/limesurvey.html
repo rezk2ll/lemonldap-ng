@@ -95,20 +95,24 @@ The configuration is done in config.php:
 
 </div>
 <!-- EDIT4 SECTION "LimeSurvey configuration" [667-1672] -->
-<h3 class="sectionedit5" id="limesurvey_virtual_host_in_apache">LimeSurvey virtual host in Apache</h3>
+<h3 class="sectionedit5" id="limesurvey_virtual_host">LimeSurvey virtual host</h3>
 <div class="level3">
 
 <p>
 Configure LimeSurvey virtual host like other <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">protected virtual host</a>.
 </p>
+<ul>
+<li class="level1"><div class="li"> For Apache:</div>
+</li>
+</ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> limesurvey.example.com
 &nbsp;
        PerlHeaderParserHandler Lemonldap::NG::Handler
 &nbsp;
-      <span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> PHP_AUTH_USER=$1
+       <span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> PHP_AUTH_USER=$1
 &nbsp;
-      <span class="kw1">Alias</span> /limesurvey /var/www/html/limesurvey
+       <span class="kw1">Alias</span> /limesurvey /var/www/html/limesurvey
       <span class="kw1">DocumentRoot</span> /var/www/html/limesurvey
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
@@ -117,9 +121,47 @@ Configure LimeSurvey virtual host like other <a href="../../../documentation/1.9
 <p><div class="noteimportant">You need to set the PHP_AUTH_USER variable to have the Webserver authentication mode working.
 </div></p>
 </p>
+<ul>
+<li class="level1"><div class="li"> For Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name limesurvey.example.com;
+  root /path/to/application;
+  # Internal authentication request
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Drop post datas
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+    # Keep original hostname
+    fastcgi_param HOST $http_host;
+    # Keep original request (LLNG server will received /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Client requests
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
 
 </div>
-<!-- EDIT5 SECTION "LimeSurvey virtual host in Apache" [1673-2227] -->
+<!-- EDIT5 SECTION "LimeSurvey virtual host" [1673-3192] -->
 <h3 class="sectionedit6" id="limesurvey_virtual_host_in_manager">LimeSurvey virtual host in Manager</h3>
 <div class="level3">
 
@@ -153,7 +195,7 @@ Go to the Manager and <a href="../../../documentation/1.9/configvhost.html#lemon
 		<td class="col0 centeralign">  Auth-SuperAdmin  </td><td class="col1 centeralign">  1 if user is superadmin  </td>
 	</tr>
 </table></div>
-<!-- EDIT7 TABLE [2400-2618] -->
+<!-- EDIT7 TABLE [3365-3583] -->
 <p>
 <p><div class="notetip">You can manage roles with the <a href="../../../documentation/1.9/rbac.html" class="wikilink1" title="documentation:1.9:rbac">RBAC model</a> or by using groups.
 </div></p>
@@ -179,7 +221,7 @@ Go to the Manager and <a href="../../../documentation/1.9/configvhost.html#lemon
 		<td class="col0 centeralign">  Default  </td><td class="col1 centeralign">  default  </td><td class="col2 centeralign">  Allow only users with a LimeSurvey role  </td>
 	</tr>
 </table></div>
-<!-- EDIT8 TABLE [2725-3010] -->
+<!-- EDIT8 TABLE [3690-3975] -->
 <p>
 <p><div class="notetip">
 You can set the default access to:

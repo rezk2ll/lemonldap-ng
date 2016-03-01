@@ -90,12 +90,21 @@ You can also use &lt;portal&gt;?logout=1 as logout_url to remove LemonLDAP::NG s
 
 </div>
 <!-- EDIT4 SECTION "Sympa configuration" [488-1292] -->
-<h3 class="sectionedit5" id="sympa_virtual_host_in_apache">Sympa virtual host in Apache</h3>
+<h3 class="sectionedit5" id="sympa_virtual_host">Sympa virtual host</h3>
 <div class="level3">
 
 <p>
 Configure Sympa virtual host like other <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">protected virtual host</a> but protect only magic authentication <abbr title="Uniform Resource Locator">URL</abbr>.
 </p>
+
+<p>
+<p><div class="notetip">The location <abbr title="Uniform Resource Locator">URL</abbr> end is based on the <code>service_id</code> defined in Sympa apache configuration.
+</div></p>
+</p>
+<ul>
+<li class="level1"><div class="li"> For Apache:</div>
+</li>
+</ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> sympa.example.com
 &nbsp;
@@ -106,14 +115,47 @@ Configure Sympa virtual host like other <a href="../../../documentation/1.9/conf
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
-
-<p>
-<p><div class="notetip">The location <abbr title="Uniform Resource Locator">URL</abbr> end is based on the <code>service_id</code> defined in Sympa apache configuration.
-</div></p>
-</p>
+<ul>
+<li class="level1"><div class="li"> For Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name sympa.example.com;
+  root /path/to/application;
+  # Internal authentication request
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Drop post datas
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+    # Keep original hostname
+    fastcgi_param HOST $http_host;
+    # Keep original request (LLNG server will received /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Client requests
+  location /wws/sso_login/lemonldapng {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
 
 </div>
-<!-- EDIT5 SECTION "Sympa virtual host in Apache" [1293-1805] -->
+<!-- EDIT5 SECTION "Sympa virtual host" [1293-2795] -->
 <h3 class="sectionedit6" id="sympa_virtual_host_in_manager">Sympa virtual host in Manager</h3>
 <div class="level3">
 

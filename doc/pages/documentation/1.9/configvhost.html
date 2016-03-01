@@ -147,37 +147,50 @@ To protect a virtual host in Nginx, the LemonLDAP::NG FastCGI server must be lau
 </p>
 
 <p>
-Then you can take any virtual host, and simply add this lines to protect it:
+Then you can take any virtual host and modify it:
 </p>
-<pre class="code file nginx"># Log format
-include /path/to/lemonldap-ng/nginx-lmlog.conf;
-server {
-  ...
-  location = /lmauth {
+<ul>
+<li class="level1"><div class="li"> Declare the /lmauth endpoint</div>
+</li>
+</ul>
+<pre class="code file nginx">  location = /lmauth {
     internal;
     include /etc/nginx/fastcgi_params;
-    fastcgi_pass /path/to/llng/fastcgi/server/socket;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+&nbsp;
     # Drop post datas
     fastcgi_pass_request_body  off;
     fastcgi_param CONTENT_LENGTH &quot;&quot;;
+&nbsp;
     # Keep original hostname
     fastcgi_param HOST $http_host;
+&nbsp;
     # Keep original request (LLNG server will received /llauth)
     fastcgi_param X_ORIGINAL_URI  $request_uri;
-  }
-  location /path/to/protect {
+  }</pre>
+<ul>
+<li class="level1"><div class="li"> Protect the application (/ or /path/to/protect):</div>
+</li>
+</ul>
+<pre class="code file nginx">  location /path/to/protect {
     auth_request /lmauth;
     auth_request_set $lmremote_user $upstream_http_lm_remote_user;
     auth_request_set $lmlocation $upstream_http_location;
     error_page 401 $lmlocation;
     try_files $uri $uri/ =404;
 &nbsp;
-    ##################################
-    # PASSING HEADERS TO APPLICATION #
-    ##################################
+    ...
+  }</pre>
+<ul>
+<li class="level1"><div class="li"> Use LUA or set manually the headers:</div>
+</li>
+</ul>
+<pre class="code file nginx">  location /path/to/protect {
+&nbsp;
+    ...
 &nbsp;
     # IF LUA IS SUPPORTED
-    #include /path/to/lemonldap-ng/nginx-lua-headers.conf
+    #include /etc/lemonldap-ng/nginx-lua-headers.conf;
 &nbsp;
     # ELSE
     # Set manually your headers
@@ -186,10 +199,18 @@ server {
     # OR
     #fastcgi_param HTTP_AUTH_USER $authuser;
 &nbsp;
+    # Then (if LUA not supported), change cookie header to hide LLNG cookie
+    #auth_request_set $lmcookie $upstream_http_cookie;
+    #proxy_set_header Cookie: $lmcookie;
+    # OR in the corresponding block
+    #fastcgi_param HTTP_COOKIE $lmcookie;
+&nbsp;
+    # Set REMOTE_USER (for FastCGI apps only)
+    #fastcgi_param REMOTE_USER $lmremote_user;
   }</pre>
 
 </div>
-<!-- EDIT6 SECTION "Nginx configuration" [3049-4454] -->
+<!-- EDIT6 SECTION "Nginx configuration" [3049-4833] -->
 <h3 class="sectionedit7" id="hosted_application1">Hosted application</h3>
 <div class="level3">
 
@@ -248,7 +269,7 @@ server {
 }</pre>
 
 </div>
-<!-- EDIT7 SECTION "Hosted application" [4455-6084] -->
+<!-- EDIT7 SECTION "Hosted application" [4834-6463] -->
 <h3 class="sectionedit8" id="reverse_proxy1">Reverse proxy</h3>
 <div class="level3">
 
@@ -299,7 +320,7 @@ server {
 }</pre>
 
 </div>
-<!-- EDIT8 SECTION "Reverse proxy" [6085-7379] -->
+<!-- EDIT8 SECTION "Reverse proxy" [6464-7758] -->
 <h2 class="sectionedit9" id="lemonldapng_configuration">LemonLDAP::NG configuration</h2>
 <div class="level2">
 
@@ -326,7 +347,7 @@ A virtual host contains:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7380-7867] -->
+<!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7759-8246] -->
 <h3 class="sectionedit10" id="access_rules_and_http_headers">Access rules and HTTP headers</h3>
 <div class="level3">
 
@@ -335,7 +356,7 @@ See <strong><a href="../../documentation/1.9/writingrulesand_headers.html" class
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Access rules and HTTP headers" [7868-8060] -->
+<!-- EDIT10 SECTION "Access rules and HTTP headers" [8247-8439] -->
 <h3 class="sectionedit11" id="post_data">POST data</h3>
 <div class="level3">
 
@@ -344,7 +365,7 @@ See <strong><a href="../../documentation/1.9/formreplay.html" class="wikilink1" 
 </p>
 
 </div>
-<!-- EDIT11 SECTION "POST data" [8061-8195] -->
+<!-- EDIT11 SECTION "POST data" [8440-8574] -->
 <h3 class="sectionedit12" id="options">Options</h3>
 <div class="level3">
 
