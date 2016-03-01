@@ -29,9 +29,7 @@
 <div class="level2">
 
 <p>
-
-When <a href="../../documentation/1.9/writingrulesand_headers.html" class="wikilink1" title="documentation:1.9:writingrulesand_headers">writing rules and headers</a>, you can use Perl expressions that will be evaluated in a jail, to prevent bad code execution.
-
+En <a href="../../documentation/1.9/writingrulesand_headers.html" class="wikilink1" title="documentation:1.9:writingrulesand_headers">écrivant des règles et en-têtes</a>, on peut utiliser des expressions Perl qui seront évaluées dans une cage pour prévenir les codes malveillants.
 </p>
 
 <p>
@@ -54,17 +52,17 @@ C'est disponible pour :
 Dans cette cage, on peut accéder aux éléments suivants :
 </p>
 <ul>
-<li class="level1"><div class="li">  Core Perl subroutines (split, pop, map, etc.)</div>
+<li class="level1"><div class="li"> Fonctions standards de Perl (split, pop, map, etc...)</div>
 </li>
 <li class="level1"><div class="li"> <a href="../../documentation/1.9/customfunctions.html" class="wikilink1" title="documentation:1.9:customfunctions">Fonctions personnalisées</a></div>
 </li>
 <li class="level1"><div class="li"> Fonction <a href="http://perldoc.perl.org/MIME/Base64.html" class="urlextern" title="http://perldoc.perl.org/MIME/Base64.html"  rel="nofollow">encode_base64</a></div>
 </li>
-<li class="level1"><div class="li">  Environment variables, in some cases (through %ENV)</div>
+<li class="level1"><div class="li"> Variables d'environnement, dans certains cas (via %ENV)</div>
 </li>
-<li class="level1"><div class="li"> <a href="#request_informations" title="documentation:1.9:extendedfunctions ↵" class="wikilink1">Informations about current request</a></div>
+<li class="level1"><div class="li"> <a href="#request_informations" title="documentation:1.9:extendedfunctions ↵" class="wikilink1">Informations sur la requête courante</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="#extended_functions_list" title="documentation:1.9:extendedfunctions ↵" class="wikilink1">Extended functions</a>:</div>
+<li class="level1"><div class="li"> <a href="#extended_functions_list" title="documentation:1.9:extendedfunctions ↵" class="wikilink1">Fonctions étendues</a></div>
 <ul>
 <li class="level2"><div class="li"> <a href="#date" title="documentation:1.9:extendedfunctions ↵" class="wikilink1">date</a></div>
 </li>
@@ -91,36 +89,34 @@ Dans cette cage, on peut accéder aux éléments suivants :
 
 </div><!-- EDIT2 SECTION "Presentation" [35-1108] -->
 
-<h2 class="sectionedit3" id="request_informations">Request informations</h2>
+<h2 class="sectionedit3" id="request_informations">Informations sur la requête</h2>
 <div class="level2">
 
 <p>
-
-The following data about the current request are available through functions :
-
+Les données suivantes concernant la requête courante sont disponibles via les fonctions :
 </p>
 <ul>
 <li class="level1"><div class="li">  hostname</div>
 </li>
-<li class="level1"><div class="li">  remote_ip: the client <abbr title="Internet Protocol">IP</abbr> address</div>
+<li class="level1"><div class="li"> remote_ip : l'adresse <abbr title="Internet Protocol">IP</abbr> cliente</div>
 </li>
-<li class="level1"><div class="li">  uri: <abbr title="Uniform Resource Locator">URL</abbr> path</div>
+<li class="level1"><div class="li"> uri : l'<abbr title="Uniform Resource Locator">URL</abbr></div>
 </li>
-<li class="level1"><div class="li">  uri_with_args: <abbr title="Uniform Resource Locator">URL</abbr> path with query string</div>
+<li class="level1"><div class="li"> uri_with_args : l'<abbr title="Uniform Resource Locator">URL</abbr> complète (y compris les arguments GET)</div>
 </li>
-<li class="level1"><div class="li">  unparsed_uri: <abbr title="Uniform Resource Locator">URL</abbr> path, before <abbr title="Uniform Resource Locator">URL</abbr> decoding</div>
+<li class="level1"><div class="li"> unparsed_uri : l'<abbr title="Uniform Resource Locator">URL</abbr> avant décodage</div>
 </li>
-<li class="level1"><div class="li">  args: the query string</div>
+<li class="level1"><div class="li"> args : la chaîne de requête</div>
 </li>
-<li class="level1"><div class="li">  method: the request method (GET, POST etc.)</div>
+<li class="level1"><div class="li"> method : la méthode de la requête (GET, POST, etc…)</div>
 </li>
-<li class="level1"><div class="li">  header_in(“Your-Request-Header”): any request header</div>
+<li class="level1"><div class="li"> header_in(“Your-Request-Header”) : n'importe quel en-tête de la requête</div>
 </li>
 </ul>
 
 </div><!-- EDIT3 SECTION "Request informations" [1109-1515] -->
 
-<h2 class="sectionedit4" id="extended_functions_list">Extended Functions List</h2>
+<h2 class="sectionedit4" id="extended_functions_list">Liste des fonctions étendues</h2>
 <div class="level2">
 
 </div><!-- EDIT4 SECTION "Extended Functions List" [1516-1552] -->
@@ -129,9 +125,7 @@ The following data about the current request are available through functions :
 <div class="level3">
 
 <p>
-
-Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT by calling 
- 
+Retourne la date au format AAAAMMJJHHMMSS, heure locale par défaut, GMT si demandé 
 </p>
 <pre class="code">date(1)</pre>
 
@@ -141,7 +135,7 @@ Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT by callin
 <div class="level3">
 
 <p>
-Cette fonction examine le jour et l'heure de la requête courante et la compare aux jours et heures autorisés. Elle retourne 1 si c'est bon, 0 sinon. All e By default, the allowed days and hours is an hexadecimal value, representing each hour of the week. Un jour a 24 heures et une semaine 7 jours, donc la valeur contient 168 bits, convertie en 42 caractères hexadécimaux. Dimanche est le premier jour.
+Cette fonction examine le jour et l'heure de la requête courante et la compare aux jours et heures autorisés. Elle retourne 1 si c'est bon, 0 sinon. Par défaut, les jours et heures autorisés sont des valeurs hexadécimales, représentant chaque heure de la semaine. Un jour a 24 heures et une semaine 7 jours, donc la valeur contient 168 bits, convertie en 42 caractères hexadécimaux. Dimanche est le premier jour.
 </p>
 
 <p>
@@ -209,9 +203,7 @@ Cette fonction examine la date de la requête en cours et la compare avec une da
 </p>
 
 <p>
-
-The date format is the LDAP date syntax, for example for the 1st March 2009:
-
+Le format de date est celui de la syntaxe des dates LDAP, par exemple pour le 1er Mars 2009 :
 </p>
 <pre class="code">20090301000000Z</pre>
 
@@ -243,9 +235,7 @@ Exemple d'usage simple :
 </p>
 
 <p>
-
-This function builds the <code>Authorization</code> HTTP header used in <a href="../../documentation/1.9/applications/authbasic.html" class="wikilink1" title="documentation:1.9:applications:authbasic">HTTP Basic authentication scheme</a>. It will force conversion from UTF-8 to ISO-8859-1 of user and password data.
-
+Cette fonction contruit l'en-tête HTTP <code>Authorization</code> utiisée dans le <a href="../../documentation/1.9/applications/authbasic.html" class="wikilink1" title="documentation:1.9:applications:authbasic">schéma d'authentification basique HTTP</a>. Elle force la conversion de UTF-8 en ISO-8859-1 du nom de compte et du mot-de-passe.
 </p>
 
 <p>
@@ -274,9 +264,7 @@ Exemple d'usage simple :
 </p>
 
 <p>
-
-This function convert a string from UTF-8 to ISO-8859-1.
-
+Cette fonction convertit une chaine UTF-8 en ISO-8859-1.
 </p>
 
 <p>
@@ -303,9 +291,7 @@ Exemple d'usage simple :
 </p>
 
 <p>
-
-This function convert a string from ISO-8859-1 to UTF-8.
-
+Cette fonction convertit une chaîne ISO-8859-1 en UTF-8.
 </p>
 
 <p>
@@ -327,22 +313,18 @@ Exemple d'usage simple :
 <div class="level3">
 
 <p>
-
-this function allows to parse the <code>$hGroups</code> variable to check if a value is present inside a group attribute.
-
+cette fonction permet de parcourir la variable <code>$hGroups</code> pour vérifier si une valeur y présente. dans un attribut de groupe
 </p>
 
 <p>
-
-Function parameter:
-
+Paramètres de la fonction :
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>groups</strong>: <code>$hGroups</code> variable</div>
+<li class="level1"><div class="li"> <strong>groups</strong> : variable <code>$hGroups</code></div>
 </li>
-<li class="level1"><div class="li"> <strong>attribute</strong>: Name of group attribute</div>
+<li class="level1"><div class="li"> <strong>attribute</strong> : Nom de l'attribut du groupe</div>
 </li>
-<li class="level1"><div class="li"> <strong>value</strong>: Value to check</div>
+<li class="level1"><div class="li"> <strong>value</strong> : Valeur à chercher</div>
 </li>
 </ul>
 

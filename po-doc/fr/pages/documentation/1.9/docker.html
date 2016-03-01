@@ -20,7 +20,7 @@
 <div class="dokuwiki export">
 
 
-<h1 class="sectionedit1" id="lemonldapng_in_docker">LemonLDAP::NG in Docker</h1>
+<h1 class="sectionedit1" id="lemonldapng_in_docker">LemonLDAP::NG dans Docker</h1>
 <div class="level1">
 
 <p>
@@ -33,18 +33,15 @@
 <div class="level2">
 
 <p>
-<a href="https://www.docker.com/" class="urlextern" title="https://www.docker.com/"  rel="nofollow">Docker</a> allows do run application into containers.
-
+<a href="https://www.docker.com/" class="urlextern" title="https://www.docker.com/"  rel="nofollow">Docker</a> permet de lancer une application dans un conteneur.
 </p>
 
 <p>
-
-You can find a Docker image for LemonLDAP::NG in this repository: <a href="https://hub.docker.com/r/coudot/lemonldap-ng/" class="urlextern" title="https://hub.docker.com/r/coudot/lemonldap-ng/"  rel="nofollow">https://hub.docker.com/r/coudot/lemonldap-ng/</a>
+On peut trouver des images Docker pour LemonLDAP::NG dans ce dépôt : <a href="https://hub.docker.com/r/coudot/lemonldap-ng/" class="urlextern" title="https://hub.docker.com/r/coudot/lemonldap-ng/"  rel="nofollow">https://hub.docker.com/r/coudot/lemonldap-ng/</a>
 </p>
 
 <p>
-
-See also this github project: <a href="https://github.com/coudot/lemonldap-ng-docker" class="urlextern" title="https://github.com/coudot/lemonldap-ng-docker"  rel="nofollow">https://github.com/coudot/lemonldap-ng-docker</a>
+Voir aussi le projet Github : <a href="https://github.com/coudot/lemonldap-ng-docker" class="urlextern" title="https://github.com/coudot/lemonldap-ng-docker"  rel="nofollow">https://github.com/coudot/lemonldap-ng-docker</a>
 </p>
 
 </div><!-- EDIT2 SECTION "Presentation" [94-388] -->
@@ -53,27 +50,23 @@ See also this github project: <a href="https://github.com/coudot/lemonldap-ng-do
 <div class="level2">
 
 <p>
-
-Prerequisites:
-
+Pré-requis
 </p>
 <ul>
-<li class="level1"><div class="li">  Add auth.example.com/manager.example.com/test1.example.com/test2.example.com to /etc/hosts on the host</div>
+<li class="level1"><div class="li"> Ajouter auth.example.com/manager.example.com/test1.example.com/test2.example.com dans /etc/hosts de la machine hôte</div>
 </li>
 </ul>
 <pre class="code">echo "127.0.0.1 auth.example.com manager.example.com test1.example.com test2.example.com" | sudo tee -a /etc/hosts</pre>
 <ul>
-<li class="level1"><div class="li">  Map the container port 80 to host port 80 (option -p)</div>
+<li class="level1"><div class="li"> Faire correspondre le port 80 du conteneur avec le port 80 de la machine (option -p)</div>
 </li>
-<li class="level1"><div class="li">  Add reload.example.com to /etc/hosts in the container (option –add-host)</div>
+<li class="level1"><div class="li"> Ajouter reload.example.com dans /etc/hosts du container (option –add-host)</div>
 </li>
 </ul>
 <pre class="code">docker run -d --add-host reload.example.com:127.0.0.1 -p 80:80 coudot/lemonldap-ng</pre>
 
 <p>
-
-Then connect to <a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a> with your browser and log in with dwho/dwho.
-
+Se connecter ensuite à l'adresse <a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a> avec un navigateur et se connecter avec dwho/dwho.
 </p>
 
 </div>

@@ -20,19 +20,15 @@
 <div class="dokuwiki export">
 
 
-<h1 class="sectionedit1" id="lemonldapng_fastcgi_server">LemonLDAP::NG FastCGI server</h1>
+<h1 class="sectionedit1" id="lemonldapng_fastcgi_server">Serveur FastCGI LemonLDAP::NG</h1>
 <div class="level1">
 
 <p>
-
-Since 1.9, Lemonldap::NG provides a FastCGI server usable to protect applications with Nginx <em>(See <a href="../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">Manage virtual hosts</a> page to configure virtual hosts)</em>.
-
+Depuis la version 1.9, Lemonldap::NG fournit un serveur FastCGI utilisable pour protéger les applications avec Nginx <em>(Voir la page <a href="../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">Gérer les hôtes virtuels</a>)</em>.
 </p>
 
 <p>
-
-This FastCGI server can be used for all LLNG components. It compiles enabled components on-the-fly.
-
+Le serveur FastCGI peut être utilisé pour tous les composants de LLNG. Il compile les composants activés à la volée.
 </p>
 
 </div><!-- EDIT1 SECTION "LemonLDAP::NG FastCGI server" [1-337] -->
@@ -42,24 +38,20 @@ This FastCGI server can be used for all LLNG components. It compiles enabled com
 
 </div><!-- EDIT2 SECTION "Start" [338-356] -->
 
-<h3 class="sectionedit3" id="using_packages">Using packages</h3>
+<h3 class="sectionedit3" id="using_packages">Utiliser le packages</h3>
 <div class="level3">
 
 <p>
-
-You just have to install lemonldap-ng-fastcgi-server package, it will be started automatically.
-
+Il suffit d'installer le package lemonldap-ng-fastcgi-server, il démarre automatiquement.
 </p>
 
 </div><!-- EDIT3 SECTION "Using packages" [357-479] -->
 
-<h3 class="sectionedit4" id="using_make_install">Using "make install"</h3>
+<h3 class="sectionedit4" id="using_make_install">En utilisant "make install"</h3>
 <div class="level3">
 
 <p>
-
-To enable the FastCGI server at startup, copy the script <code>llng-fastcgi-server</code> installed in INITDIR (default <code>/usr/local/lemonldap-ng/etc/init.d/</code>) in <code>/etc/init.d</code> and enable it (links to <code>/etc/rc<em>x</em>.d</code>).
-
+Pour activer le serveur FastCGI au démarrage, copie le script <code>llng-fastcgi-server</code> installé dans INITDIR (défaut <code>/usr/local/lemonldap-ng/etc/init.d/</code>) dans <code>/etc/init.d</code> et l'activer (liens vers <code>/etc/rc<em>x</em>.d</code>).
 </p>
 
 </div><!-- EDIT4 SECTION "Using make install" [480-728] -->
@@ -68,27 +60,21 @@ To enable the FastCGI server at startup, copy the script <code>llng-fastcgi-serv
 <div class="level2">
 
 <p>
-
-FastCGI server has few parameters. They can be set by environment variables (read by startup script) or by command line options. A default configuration file can be found in <code>/usr/local/lemonlda-ng/etc/default/llng-fastcgi-server</code> (or <code>/etc/default/lemonldap-ng-fastcgi-server</code> in Debian package).
-
+Le serveur FastCGI a peu de paramètres. Il peuvent être définis par variables d'environnement (lues par le script de démarrage) ou ar des options de la ligne de commande. Un fichier de configuratio par défaut se trouve dans <code>/usr/local/lemonlda-ng/etc/default/llng-fastcgi-server</code> (ou <code>/etc/default/lemonldap-ng-fastcgi-server</code> dans le package Debian).
 </p>
 
 <p>
-
-The FastCGI server reads also <code>LLTYPE</code> parameter in FastCGI requests (see portal-nginx.conf or manager-nginx.conf) to choose which module is called:
-
+Le serveur FastCGI lit également le paramètre <code>LLTYPE</code> dans les requêtes FastCGI (voir portal-nginx.conf ou manager-nginx.conf) pour connaître le module sollicité :
 </p>
 <ul>
-<li class="level1"><div class="li"> <code>auth</code> for the portal</div>
+<li class="level1"><div class="li"> <code>auth</code> pour le portail</div>
 </li>
-<li class="level1"><div class="li"> <code>manager</code> for the manager</div>
+<li class="level1"><div class="li"> <code>manager</code> pour le manager</div>
 </li>
 </ul>
 
 <p>
-
-if <code>LLTYPE</code> is set to another value or not set, FastCGI server works as handler.
-
+Si <code>LLTYPE</code> est mis à une autre valeur ou pas défini, le serveur FastCGI fonctionne en « handler ».
 </p>
 
 </div>

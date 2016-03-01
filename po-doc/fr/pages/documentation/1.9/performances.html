@@ -68,7 +68,7 @@ Les macros et les groupes sont calculées pendant le processus d'authentificatio
 </li>
 <li class="level1"><div class="li"> les groupes sont stockées en chaîne de caractères séparées par des espaces dans l'attribut spécial “groups” : il contient les noms des groupes dont la règle à retournée une valeur non nulle pour l'utilisateur courant</div>
 </li>
-<li class="level1"><div class="li">  You can also get groups in <code>$hGroups</code> which is a Hash Reference of this form:</div>
+<li class="level1"><div class="li"> On peut également définir des groupes dans <code>$hGroups</code> qui est une référence à une table de hashage de la forme :</div>
 </li>
 </ul>
 <pre class="code perl"><span class="re0">$hGroups</span> <span class="sy0">=</span> <span class="br0">{</span>
@@ -103,23 +103,22 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 <p>
 Exemples de groupes:
 </p>
-<pre class="code perl"><span class="co1"># group</span>
+<pre class="code perl"><span class="co1"># groupe</span>
 admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span>
 &nbsp;
-<span class="co1"># Use a group in a rule</span>
+<span class="co1"># Utiliser un groupe dans une règle</span>
 <span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="co2">/\badmin\b/</span>
 &nbsp;
-<span class="co1"># Or with hGroups</span>
+<span class="co1"># Ou avec hGroups</span>
 <span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/defined.html"><span class="kw3">defined</span></a> <span class="re0">$hGroups</span><span class="br0">{</span><span class="st_h">'admin'</span><span class="br0">}</span></pre>
 
 <p>
-</p><p></p><div class="noteclassic">Groups are computed after macros, so a group rule may involve a macro value.
-
+</p><p></p><div class="noteclassic">Noter que les groupes sont calculés après les macros, donc une règle de groupe peut utiliser une valeur issue d'une macro.
 </div></p>
 </p>
 
 <p>
-</p><p></p><div class="noteimportant">Macros and groups are computed in alphanumeric order, that is, in the order they are displayed in the manager. Par exemple, la macro “macro1” sear calculée avant la macro “macro2” : donc l'expression de macro2 peut utiliser la valeur $macro1. De même pour les groupes : une règle de groupe peut en utiliser une autre calculée précédemment.
+</p><p></p><div class="noteimportant">Les macros et groupes sont calculés dans l'ordre alpha-numerique, c'est à dire dans l'ordre d'affichage dans le manager. Par exemple, la macro “macro1” sear calculée avant la macro “macro2” : donc l'expression de macro2 peut utiliser la valeur $macro1. De même pour les groupes : une règle de groupe peut en utiliser une autre calculée précédemment.
 </div></p>
 </p>
 

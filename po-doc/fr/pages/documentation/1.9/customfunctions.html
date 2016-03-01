@@ -33,9 +33,7 @@ Les fonctions personnalisées permettent d'étendre <abbr title="LemonLDAP::NG">
 <div class="level2">
 
 <p>
-
-Create your Perl module with custom functions. You can name your module as you want, for example <code>SSOExtensions.pm</code>:
-
+Créer un module Perl avec des fonctions personnalisées. Le module peut être appelé à la diligence du rédacteur, par exemple <code>SSOExtensions.pm</code> :
 </p>
 <pre class="code">vi /root/SSOExtensions.pm</pre>
 <pre class="code file perl"><a href="http://perldoc.perl.org/functions/package.html"><span class="kw3">package</span></a> SSOExtensions<span class="sy0">;</span>
@@ -74,7 +72,7 @@ Le premier paramètre passé à la fonction personnalisée est l'<abbr title="Un
 
 </div><!-- EDIT3 SECTION "Import custom functions in LemonLDAP::NG" [841-894] -->
 
-<h3 class="sectionedit4" id="declare_module_in_handler_server">Declare module in handler server</h3>
+<h3 class="sectionedit4" id="declare_module_in_handler_server">Declarer le module dans le serveur « handler »</h3>
 <div class="level3">
 
 </div>
@@ -92,28 +90,26 @@ PerlOptions +GlobalRequest</pre>
 
 </div>
 
-<h4 id="fastcgi_server_nginx">FastCGI server (Nginx)</h4>
+<h4 id="fastcgi_server_nginx">Serveur FastCGI (Nginx)</h4>
 <div class="level4">
 
 <p>
-
-You've just to incicate to <a href="../../documentation/1.9/fastcgiserver.html" class="wikilink1" title="documentation:1.9:fastcgiserver">LLNG FastCGI server</a> the file to read using either <code>-f</code> option or <code>CUSTOM_FUNCTIONS_FILE</code> environment variable. Using packages, you just have to modify your <code>/etc/default/llng-fastcgi-server</code> (or <code>/etc/default/lemonldap-ng-fastcgi-server</code>) file:
-
+Il faut indiquer au <a href="../../documentation/1.9/fastcgiserver.html" class="wikilink1" title="documentation:1.9:fastcgiserver">serveur FastCGI de LLNG</a> le fichier à lire en utilisant l'option <code>-f</code> ou la variable d'environnement <code>CUSTOM_FUNCTIONS_FILE</code>. En utilisant les packages, il suffit de modifier le fichier <code>/etc/default/llng-fastcgi-server</code> (ou <code>/etc/default/lemonldap-ng-fastcgi-server</code>) :
 </p>
-<pre class="code file sh"># Number of process (default: 7)
+<pre class="code file sh"># Nombre de processus (défaut : 7)
 #NPROC = 7
 &nbsp;
-# Unix socket to listen to
+# Socket Unix d'écoute
 SOCKET=/var/run/llng-fastcgi-server/llng-fastcgi.sock
 &nbsp;
-# Pid file
+# Fichier identifiant de processus (PID)
 PID=/var/run/llng-fastcgi-server/llng-fastcgi-server.pid
 &nbsp;
-# User and GROUP
+# Utilisateur et groupe
 USER=www-data
 GROUP=www-data
 &nbsp;
-# Custom functions file
+# Fichier éventuel de fonctions personnalisées
 CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</pre>
 
 </div><!-- EDIT4 SECTION "Declare module in handler server" [895-1829] -->
