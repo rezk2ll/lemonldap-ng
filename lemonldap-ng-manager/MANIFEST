@@ -167,4 +167,3 @@ t/jsonfiles/12-modified.json
 t/jsonfiles/14-bad.json
 t/lemonldap-ng.ini
 t/test-lib.pm
-TODO.md
