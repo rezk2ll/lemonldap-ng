@@ -164,7 +164,7 @@
               <TMPL_VAR NAME="SUCCESS_LOGIN">
               </TMPL_IF>
               <TMPL_IF NAME="FAILED_LOGIN">
-              <h3><lang en="Last failed logins" fr="Derni&egrave;res connexions refusées" /></h3>
+              <h3><lang en="Last failed logins" fr="Derni&egrave;res connexions refus&eacute;es" /></h3>
               <TMPL_VAR NAME="FAILED_LOGIN">
               </TMPL_IF>
             </div>

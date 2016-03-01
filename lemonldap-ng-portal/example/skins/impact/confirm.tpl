@@ -37,7 +37,7 @@
 
         <TMPL_IF NAME="LIST">
 
-        <h3><lang en="Select your Identity Provider" fr="Choisissez votre fournisseur d'identité"/></h3>
+        <h3><lang en="Select your Identity Provider" fr="Choisissez votre fournisseur d'identit&eacute;"/></h3>
         <input type="hidden" id="idp" name="idp"/>
         <table style="margin: 0px auto">
         <TMPL_LOOP NAME="LIST">
@@ -72,7 +72,7 @@
         <tr><td>
           <input type="checkbox" id="checkLogins" name="checkLogins" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF>/>
           <label for="checkLogins">
-            <lang en="Check my last logins" fr="Voir mes dernières connexions"/>
+            <lang en="Check my last logins" fr="Voir mes derni&egrave;res connexions"/>
           </label>
         </td></tr>
         </TMPL_IF>

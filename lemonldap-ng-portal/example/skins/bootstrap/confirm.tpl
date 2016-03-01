@@ -19,7 +19,7 @@
       <div class="panel-heading">
         <h3 class="panel-title">
         <TMPL_IF NAME="LIST">
-          <lang en="Select your Identity Provider" fr="Choisissez votre fournisseur d'identité"/>
+          <lang en="Select your Identity Provider" fr="Choisissez votre fournisseur d'identit&eacute;"/>
         <TMPL_ELSE>
           <lang en="Confirmation" fr="Confirmation"/>
         </TMPL_IF>
