@@ -26,6 +26,9 @@ $ make documentation
 - Translate documentation
 $ make fr-doc
 
+- Update debian/changelog
+  launch just `dch -r` and force save (":w" and ot ":x")
+
 For minor release
 -----------------
 
@@ -116,4 +119,11 @@ Spread the word
 - IRC channel subject
 - User mailing list
 - Optional: blogs and news sites (LinuxFR, etc.)
+
+After release
+-------------
+
+- Update debian/changelog
+$ dch -v <New number>-1 (and write "New release")
+- Update $VERSION anywhere
 
