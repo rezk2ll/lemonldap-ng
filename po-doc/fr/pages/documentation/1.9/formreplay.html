@@ -29,9 +29,7 @@
 <div class="level2">
 
 <p>
-
-Form replay allows you to open a session on a protected application by filling a <abbr title="HyperText Markup Language">HTML</abbr> POST login form and autosubmitting it, without asking anything to the user.
-
+Le rejeu de formulaire permet d'ouvrir une session dans une application protégée par un formulaire POST sans rien demander à l'utilisateur.
 </p>
 
 <p>
@@ -46,15 +44,11 @@ Il est en général préférable de trouver une autre solution pour protéger le
 </p>
 
 <p>
-
-If you configure form replay with <abbr title="LemonLDAP::NG">LL::NG</abbr>, the Handler will detect forms to fill, add a javascript in the html page to fill form fields with dummy datas and submit it, then intercept the POST request and add POST data in the request body.
-
+En configurant le rejeu de formulaire avec <abbr title="LemonLDAP::NG">LL::NG</abbr>, le handler détecte les formulaires à remplir, ajoute un petit javascript dans la page HTML pour préparer les champs avec de fausses données et les soumettre, le handler intercepte la requête POST et insère les bonnes données dans le corps de la requête.
 </p>
 
 <p>
-
-POST data can be static values or computed from user's session.
-
+Les données postées peuvent être des valeurs statiques ou calculées à partir des données de session de l'utilisateur.
 </p>
 
 <p>
@@ -72,24 +66,22 @@ Pour envoyer le mot-de-passe utilisateur, il faut activer le <a href="../../docu
 Il faut récolter quelques informations:
 </p>
 <ul>
-<li class="level1"><div class="li"> <abbr title="Uniform Resource Identifier">URI</abbr> of the html page which contains the form</div>
+<li class="level1"><div class="li"> L'<abbr title="Uniform Resource Identifier">URI</abbr> de la page qui contient le formulaire</div>
 </li>
-<li class="level1"><div class="li"> <abbr title="Uniform Resource Identifier">URI</abbr> the html form is sent to</div>
+<li class="level1"><div class="li"> L'<abbr title="Uniform Resource Identifier">URI</abbr> vers laquelle le formulaire est envoyé</div>
 </li>
-<li class="level1"><div class="li">  Does the html page load jQuery ? If not, grab a jQuery <abbr title="Uniform Resource Locator">URL</abbr> reachable by user (any version over jQuery 1.0 is suitable)</div>
+<li class="level1"><div class="li"> La page charge-elle jQuery ? Sinon, indiquer une <abbr title="Uniform Resource Locator">URL</abbr> jQuery joignable par l'utilisateur (toute version supérieure à 1.0)</div>
 </li>
-<li class="level1"><div class="li">  are there several html forms in the page ? If so, get a jQuery selector for the form you want to post</div>
+<li class="level1"><div class="li"> y-a-t-il pluseurs formulaires HTML dans la page ? Si oui, donner un sélecteur à jQuery identifiant le bon formulaire</div>
 </li>
-<li class="level1"><div class="li">  is user required to click on a button, for example in order to perform some script ? If so, get a jQuery selector for that button</div>
+<li class="level1"><div class="li"> l'utilsiateur doit-il cliquer sur un bouton, par exemple pour déclencher un script ? Si oui, donner un sélecteur à jQuery pour identifier ce bouton</div>
 </li>
-<li class="level1"><div class="li">  names and values of the fields you want to control</div>
+<li class="level1"><div class="li"> noms and valeurs des champs à contrôler</div>
 </li>
 </ul>
 
 <p>
-
-If you don't know jQuery selector, just be aware that they are similar to css selectors: for example, button#foo points to the html button whose id is “foo”, and .bar points to all html elements of css class “bar”.
-
+Si vous ne connaissez pas les sélecteurs jQuery, sachez juste qu'ils sont similaires aux sélecteurs CSS : par exemple, button#foo pointe sur le bouton dont l'« id » est « foo », and « .bar » identifie tous les éléments HTML de la classe “bar”.
 </p>
 
 <p>
@@ -98,13 +90,13 @@ Par exemple :
 <ul>
 <li class="level1"><div class="li"> <abbr title="Uniform Resource Identifier">URI</abbr> de la page de formulaire : /login.php</div>
 </li>
-<li class="level1"><div class="li">  Target <abbr title="Uniform Resource Identifier">URI</abbr>: /process.php (if you let this parameter empty, target <abbr title="Uniform Resource Identifier">URI</abbr> is supposed to be the same as form page <abbr title="Uniform Resource Identifier">URI</abbr>)</div>
+<li class="level1"><div class="li"> <abbr title="Uniform Resource Identifier">URI</abbr> cible : /process.php (en laissant ce paramètre vide, l'<abbr title="Uniform Resource Identifier">URI</abbr> cible est supposée être la même que celle du formulaire)</div>
 </li>
-<li class="level1"><div class="li">  jQuery <abbr title="Uniform Resource Locator">URL</abbr>: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (if you let this parameter empty, jQuery is supposed to be already loaded; you can also set <code>default</code> to point to jQuery <abbr title="Uniform Resource Locator">URL</abbr> of <abbr title="LemonLDAP::NG">LL::NG</abbr> portal)</div>
+<li class="level1"><div class="li"> <abbr title="Uniform Resource Locator">URL</abbr> jQuery : http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (si ce paramètre est vide, jQuery est supposé être déjà chargé ; on peut aussi mettre <code>default</code> pour pointer vers l'<abbr title="Uniform Resource Locator">URL</abbr> jQuery du portail <abbr title="LemonLDAP::NG">LL::NG</abbr>)</div>
 </li>
-<li class="level1"><div class="li">  jQuery form selector: #loginForm (if you let this parameter empty, browser will fill and submit any html form)</div>
+<li class="level1"><div class="li"> Sélecteur de formulaire jQuery : #loginForm (si vide, le navigateur prendra un formulaire de la page)</div>
 </li>
-<li class="level1"><div class="li">  jQuery button selector: button.validate (if you let this parameter empty, the form will be submitted but no button will be clicked; if you set it to “none”, no button will be clicked and the form will be filled but not submitted)</div>
+<li class="level1"><div class="li"> Sélecteur du bouton jQuery : button.validate (si vide, le formulaire sera soumis sans éulation d'un clic de bouton ; si mis à “none”, aucun clic ne sera émulé et le formulaire sera renseigné mais pas soumis)</div>
 </li>
 <li class="level1"><div class="li"> Champs :</div>
 <ul>
@@ -119,9 +111,7 @@ Par exemple :
 </ul>
 
 <p>
-
-Go in Manager, “Virtual Hosts” » <em>virtualhost</em> » “Form replay” and click on “New form replay”.
-
+Aller dans le manager, “Hôtes virtuels” » <em>virtualhost</em> » “Rejeu de formulaires” et cliquer sur “Nouveau rejeu”.
 </p>
 
 <p>
@@ -132,22 +122,20 @@ Go in Manager, “Virtual Hosts” » <em>virtualhost</em> » “Form replay” 
 Renseigner les valeurs ici :
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Form <abbr title="Uniform Resource Locator">URL</abbr></strong>: /login.php</div>
+<li class="level1"><div class="li"> <strong><abbr title="Uniform Resource Locator">URL</abbr> du formulaire</strong>: /login.php</div>
 </li>
 <li class="level1"><div class="li"> <strong><abbr title="Uniform Resource Locator">URL</abbr> cible</strong> : /process.php</div>
 </li>
-<li class="level1"><div class="li"> <strong>jQuery <abbr title="Uniform Resource Locator">URL</abbr></strong>: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js</div>
+<li class="level1"><div class="li"> <strong><abbr title="Uniform Resource Locator">URL</abbr> jQuery</strong> : http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js</div>
 </li>
-<li class="level1"><div class="li"> <strong>jQuery form selector</strong>: #loginForm</div>
+<li class="level1"><div class="li"> <strong>Sélecteur de formulaire jQuery</strong> : #loginForm</div>
 </li>
-<li class="level1"><div class="li"> <strong>jQuery button selector</strong>: button.validate</div>
+<li class="level1"><div class="li"> <strong>Sélecteur de bouton jQuery</strong> : button.validate</div>
 </li>
 </ul>
 
 <p>
-
-Then click on <code>New variable</code> and add all data with their values, for example:
-
+Cliquer ensuite sur <code>Nouvelle variable</code> et ajouter toutes les noms de champ et leurs valeurs, par exemple:
 </p>
 
 <p>

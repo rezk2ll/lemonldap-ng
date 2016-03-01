@@ -33,7 +33,7 @@ L'agent AuthBasic est un agent spécial qui utilise l'authentification web basiq
 </p>
 
 <p>
-The Handler will send a WWW-Authenticate header to the client, to request user and password, and then check the credentials using SOAP getCookies web service. Lorsque la session est validée, l'agent examine les autorisations comme un agent standard.
+L'agent envoie un en-tête WWW-Authenticate au client pour demander le couple compte-mot-de-passe et ensuite le vérifie en utilisant le service web &lt;a1&gt;SOAP&lt;/a1&gt; getCookies. Lorsque la session est validée, l'agent examine les autorisations comme un agent standard.
 </p>
 
 <p>
@@ -56,9 +56,7 @@ Ce peut être pratique pour autoriser une application cliente à accéder à un 
 <div class="level4">
 
 <p>
-
-Configure the virtual host like other <a href="../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">protected virtual host</a> but use AuthBasic Handler instead of default Handler.
-
+Configurer l'hôte virtuel comme n'importe quel autre <a href="../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">hôte virtuel protégé</a> mais utiliser l'agent AuthBasic au lieu de l'agent par défaut.
 </p>
 <pre class="code file apache">PerlModule Lemonldap::NG::Handler::Specific::AuthBasic
 &lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
@@ -73,9 +71,7 @@ Configure the virtual host like other <a href="../../documentation/1.9/configvho
 
 <p>
 </p><p></p><div class="notetip">
-
-If LemonLDAP::NG portal is protected by SSL with a self-signed certificate, you can add this line to accept it:
-
+Si le portail LemonLDAP::NG est protégé par SSL avec un certificat auto-signé, on peut ajouter cette ligne pour l'accepter :
 </p>
 <pre class="code file apache">PerlSetEnv PERL_LWP_SSL_VERIFY_HOSTNAME <span class="nu0">0</span></pre>
 
@@ -90,8 +86,7 @@ If LemonLDAP::NG portal is protected by SSL with a self-signed certificate, you 
 <div class="level4">
 
 <p>
-</p><p></p><div class="noteclassic">AuthBasic Handler cannot be used in Nginx for the moment. 
- 
+</p><p></p><div class="noteclassic">Le handler AuthBasic ne peut être utilisé avec in Nginx pour l'instant. 
 </div></p>
 </p>
 

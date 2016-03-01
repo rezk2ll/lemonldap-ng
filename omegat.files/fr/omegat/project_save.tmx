@@ -14964,6 +14964,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;URI&lt;/a0&gt; of the html page which contains the form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172152Z" changeid="xavier">
+        <seg>L'&lt;a0&gt;URI&lt;/a0&gt; de la page qui contient le formulaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;URI&lt;/a0&gt; of the page which contains the form</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193033Z" changeid="xavier">
@@ -14984,6 +14992,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T171807Z" changeid="xavier">
         <seg>&lt;a0&gt;URI&lt;/a0&gt; du serveur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;URI&lt;/a0&gt; the html form is sent to</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172240Z" changeid="xavier">
+        <seg>L'&lt;a0&gt;URI&lt;/a0&gt; vers laquelle le formulaire est envoyé</seg>
       </tuv>
     </tu>
     <tu>
@@ -19230,6 +19246,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Form &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: /login.php</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173429Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; du formulaire&lt;/s0&gt;: /login.php</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Format&lt;/s0&gt; (optional): &lt;a1&gt;SAML&lt;/a1&gt; attribute format.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060005Z" changeid="xavier">
@@ -21704,6 +21728,30 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T172041Z" changeid="xavier">
         <seg>&lt;s0&gt;isAuthorizedURI(cookieValue,url)&lt;/s0&gt; : vérifie si l'utilisateur est autorisé à accéder à la fonction</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;jQuery &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173450Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; jQuery&lt;/s0&gt; : http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;jQuery button selector&lt;/s0&gt;: button.validate</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173518Z" changeid="xavier">
+        <seg>&lt;s0&gt;Sélecteur de bouton jQuery&lt;/s0&gt; : button.validate</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;jQuery form selector&lt;/s0&gt;: #loginForm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173506Z" changeid="xavier">
+        <seg>&lt;s0&gt;Sélecteur de formulaire jQuery&lt;/s0&gt; : #loginForm</seg>
       </tuv>
     </tu>
     <tu>
@@ -26956,6 +27004,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>AuthBasic Handler cannot be used in Nginx for the moment.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173827Z" changeid="xavier">
+        <seg>Le handler AuthBasic ne peut être utilisé avec in Nginx pour l'instant.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>AuthCAS</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140916Z" changeid="guimard">
@@ -29060,6 +29116,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure the virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt; but use AuthBasic Handler instead of default Handler.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173703Z" changeid="xavier">
+        <seg>Configurer l'hôte virtuel comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt; mais utiliser l'agent AuthBasic au lieu de l'agent par défaut.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure the virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt; but use Secure Token Handler instead of default Handler.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T205151Z" changeid="xavier">
@@ -30352,6 +30416,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125356Z" changeid="xavier">
         <seg>Cette documentation est valable pour les backends de configuration :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Does the html page load jQuery ?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172323Z" changeid="xavier">
+        <seg>La page charge-elle jQuery ?</seg>
       </tuv>
     </tu>
     <tu>
@@ -32312,6 +32384,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Form replay allows you to open a session on a protected application by filling a &lt;a0&gt;HTML&lt;/a0&gt; POST login form and autosubmitting it, without asking anything to the user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T171808Z" changeid="xavier">
+        <seg>Le rejeu de formulaire permet d'ouvrir une session dans une application protégée par un formulaire POST sans rien demander à l'utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Form replay allows you to open a session on a protected application by replaying the form POST without asking anything to the user.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192257Z" changeid="xavier">
@@ -32772,6 +32852,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T052000Z" changeid="xavier">
         <seg>Aller dans le manager et :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go in Manager, “Virtual Hosts” » &lt;e0&gt;virtualhost&lt;/e0&gt; » “Form replay” and click on “New form replay”.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173414Z" changeid="xavier">
+        <seg>Aller dans le manager, “Hôtes virtuels” » &lt;e0&gt;virtualhost&lt;/e0&gt; » “Rejeu de formulaires” et cliquer sur “Nouveau rejeu”.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33736,6 +33824,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If LemonLDAP::NG portal is protected by SSL with a self-signed certificate, you can add this line to accept it:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173806Z" changeid="xavier">
+        <seg>Si le portail LemonLDAP::NG est protégé par SSL avec un certificat auto-signé, on peut ajouter cette ligne pour l'accepter :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If Multi is used for authentication and user database, it will try to use the same module.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145435Z" changeid="xavier">
@@ -33936,6 +34032,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If not, grab a jQuery &lt;a0&gt;URL&lt;/a0&gt; reachable by user (any version over jQuery 1.0 is suitable)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172433Z" changeid="xavier">
+        <seg>Sinon, indiquer une &lt;a0&gt;URL&lt;/a0&gt; jQuery joignable par l'utilisateur (toute version supérieure à 1.0)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If one is missing, the user is not created.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073458Z" changeid="xavier">
@@ -33948,6 +34052,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T080753Z" changeid="xavier">
         <seg>Si le cookie sécurisé est activé, l'&lt;a3&gt;URL&lt;/a3&gt; du portail &lt;s4&gt;doit&lt;/s4&gt; être en HTTPS.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If so, get a jQuery selector for that button</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172625Z" changeid="xavier">
+        <seg>Si oui, donner un sélecteur à jQuery pour identifier ce bouton</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If so, get a jQuery selector for the form you want to post</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172526Z" changeid="xavier">
+        <seg>Si oui, donner un sélecteur à jQuery identifiant le bon formulaire</seg>
       </tuv>
     </tu>
     <tu>
@@ -34168,6 +34288,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you configure form replay with &lt;a0&gt;LL::NG&lt;/a0&gt;, the Handler will detect forms to fill, add a javascript in the html page to fill form fields with dummy datas and submit it, then intercept the POST request and add POST data in the request body.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172056Z" changeid="xavier">
+        <seg>En configurant le rejeu de formulaire avec &lt;a0&gt;LL::NG&lt;/a0&gt;, le handler détecte les formulaires à remplir, ajoute un petit javascript dans la page HTML pour préparer les champs avec de fausses données et les soumettre, le handler intercepte la requête POST et insère les bonnes données dans le corps de la requête.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you define mail contents in Manager, &lt;a0&gt;HTML&lt;/a0&gt; templates will not be used.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T151420Z" changeid="guimard">
@@ -34188,6 +34316,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T222815Z" changeid="xavier">
         <seg>S'il n'en dispose pas, en créer un avec la paire de clef déjà générée (on peut le faire avec openssl).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you don't know jQuery selector, just be aware that they are similar to css selectors: for example, button#foo points to the html button whose id is “foo”, and .bar points to all html elements of css class “bar”.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172838Z" changeid="xavier">
+        <seg>Si vous ne connaissez pas les sélecteurs jQuery, sachez juste qu'ils sont similaires aux sélecteurs CSS : par exemple, button#foo pointe sur le bouton dont l'« id » est « foo », and « .bar » identifie tous les éléments HTML de la classe “bar”.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34980,6 +35116,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Dans le manager : indiquez &lt;a0&gt;Apache::Session::Redis&lt;/a0&gt; dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; et ajoutez les paramètres suivant (sensibles à la casse):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In the manager: set “&lt;a0&gt;Apache::Session::File&lt;/a0&gt;” in “General parameters » Sessions » Session storage » Apache::Session module” and add the following parameters (case sensitive):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T171741Z" changeid="xavier">
+        <seg>Dans le manager : indiquez &lt;a0&gt;Apache::Session::File&lt;/a0&gt; dans Paramètres généraux » Sessions » Stockage des sessions » Module Apache::Session et ajoutez les paramètres suivant (sensibles à la casse):</seg>
       </tuv>
     </tu>
     <tu>
@@ -39860,6 +40004,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>POST data can be static values or computed from user's session.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172141Z" changeid="xavier">
+        <seg>Les données postées peuvent être des valeurs statiques ou calculées à partir des données de session de l'utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>POST data: use form replay</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T073709Z" changeid="xavier">
@@ -44344,6 +44496,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Target &lt;a0&gt;URI&lt;/a0&gt;: /process.php (if you let this parameter empty, target &lt;a1&gt;URI&lt;/a1&gt; is supposed to be the same as form page &lt;a2&gt;URI&lt;/a2&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172932Z" changeid="xavier">
+        <seg>&lt;a0&gt;URI&lt;/a0&gt; cible : /process.php (en laissant ce paramètre vide, l'&lt;a1&gt;URI&lt;/a1&gt; cible est supposée être la même que celle du formulaire)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Template parameters</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T075409Z" changeid="guimard">
@@ -44654,6 +44814,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121005T041048Z" changeid="xavier">
         <seg>L'agent envoie un en-tête &lt;a0&gt;WWW&lt;/a0&gt;-Authenticate au client pour demander le couple compte-mot-de-passe et ensuite le vérifie en utilisant le service web &lt;a1&gt;SOAP&lt;/a1&gt; getCookies.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The Handler will send a WWW-Authenticate header to the client, to request user and password, and then check the credentials using SOAP getCookies web service.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173651Z" changeid="xavier">
+        <seg>L'agent envoie un en-tête WWW-Authenticate au client pour demander le couple compte-mot-de-passe et ensuite le vérifie en utilisant le service web &lt;a1&gt;SOAP&lt;/a1&gt; getCookies.</seg>
       </tuv>
     </tu>
     <tu>
@@ -45640,6 +45808,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193642Z" changeid="xavier">
         <seg>Cliquer ensuite sur &lt;c0&gt;Nouvelle donnée POST&lt;/c0&gt; et ajouter chaque donnée avec sa valeur, par exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then click on &lt;c0&gt;New variable&lt;/c0&gt; and add all data with their values, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173612Z" changeid="xavier">
+        <seg>Cliquer ensuite sur &lt;c0&gt;Nouvelle variable&lt;/c0&gt; et ajouter toutes les noms de champ et leurs valeurs, par exemple:</seg>
       </tuv>
     </tu>
     <tu>
@@ -52836,6 +53012,14 @@ apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T155910Z" changeid="xavier">
         <seg>aptitude install lemonldap-ng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>are there several html forms in the page ?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172500Z" changeid="xavier">
+        <seg>y-a-t-il pluseurs formulaires HTML dans la page ?</seg>
       </tuv>
     </tu>
     <tu>
@@ -61670,6 +61854,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>is user required to click on a button, for example in order to perform some script ?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172601Z" changeid="xavier">
+        <seg>l'utilsiateur doit-il cliquer sur un bouton, par exemple pour déclencher un script ?</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>iso2unicode</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183106Z" changeid="xavier">
@@ -61690,6 +61882,30 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>il peut être le &lt;e3&gt;pivot&lt;/e3&gt; d'une architecture hétérogène.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>jQuery &lt;a0&gt;URL&lt;/a0&gt;: http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (if you let this parameter empty, jQuery is supposed to be already loaded; you can also set &lt;c1&gt;default&lt;/c1&gt; to point to jQuery &lt;a2&gt;URL&lt;/a2&gt; of &lt;a3&gt;LL::NG&lt;/a3&gt; portal)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173056Z" changeid="xavier">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; jQuery : http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js (si ce paramètre est vide, jQuery est supposé être déjà chargé ; on peut aussi mettre &lt;c1&gt;default&lt;/c1&gt; pour pointer vers l'&lt;a2&gt;URL&lt;/a2&gt; jQuery du portail &lt;a3&gt;LL::NG&lt;/a3&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>jQuery button selector: button.validate (if you let this parameter empty, the form will be submitted but no button will be clicked; if you set it to “none”, no button will be clicked and the form will be filled but not submitted)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173321Z" changeid="xavier">
+        <seg>Sélecteur du bouton jQuery : button.validate (si vide, le formulaire sera soumis sans éulation d'un clic de bouton ; si mis à “none”, aucun clic ne sera émulé et le formulaire sera renseigné mais pas soumis)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>jQuery form selector: #loginForm (if you let this parameter empty, browser will fill and submit any html form)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T173143Z" changeid="xavier">
+        <seg>Sélecteur de formulaire jQuery : #loginForm (si vide, le navigateur prendra un formulaire de la page)</seg>
       </tuv>
     </tu>
     <tu>
@@ -62838,6 +63054,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T064103Z" changeid="xavier">
         <seg>nom =&gt; foaf:name</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>names and values of the fields you want to control</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T172647Z" changeid="xavier">
+        <seg>noms and valeurs des champs à contrôler</seg>
       </tuv>
     </tu>
     <tu>
