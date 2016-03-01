@@ -54,6 +54,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg># Drop post datas</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143615Z" changeid="xavier">
+        <seg># Ignorer les données postées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg># ELSE</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T082440Z" changeid="xavier">
@@ -114,10 +122,34 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg># Internal authentication request</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143736Z" changeid="xavier">
+        <seg># Requête interne d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg># Internal call to FastCGI server</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T082249Z" changeid="xavier">
         <seg># Appe interne au serveur FastCGI</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg># Keep original hostname</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143633Z" changeid="xavier">
+        <seg># Conserver le nom d'hôte original</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg># Keep original request (LLNG server will received /llauth)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143701Z" changeid="xavier">
+        <seg># Conserver la requête originale (le serveur LLNG va recevoir /llauth)</seg>
       </tuv>
     </tu>
     <tu>
@@ -130,6 +162,18 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
         <seg># LemonLDAP::NG repository
 deb     http://lemonldap-ng.org/deb squeeze main
 deb-src http://lemonldap-ng.org/deb squeeze main</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg># Log format
+include /path/to/lemonldap-ng/nginx-lmlog.conf;
+server {</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143833Z" changeid="xavier">
+        <seg># Format des journaux
+include /path/to/lemonldap-ng/nginx-lmlog.conf;
+server {</seg>
       </tuv>
     </tu>
     <tu>
@@ -30746,6 +30790,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Example of a protected reverse-proxy:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143811Z" changeid="xavier">
+        <seg>Exemple de reverse-proxy protégé :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Example of a protected virtual host for a local application:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T155617Z" changeid="xavier">
@@ -32718,6 +32770,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T100013Z" changeid="xavier">
         <seg>Authentification basique HTTP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>HTTP headers: forge information sent to protected applications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143918Z" changeid="xavier">
+        <seg>En-têtes HTTP : construit l'information à envoyer aux applications protégées</seg>
       </tuv>
     </tu>
     <tu>
@@ -36410,6 +36470,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG configuration is build around Apache or Nginx virtual hosts.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T142859Z" changeid="xavier">
+        <seg>La configuration de LemonLDAP::NG est construite autour des hôtes virtuels Apache ou Nginx.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG configuration is build around Apache virtual hosts.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072212Z" changeid="xavier">
@@ -38178,6 +38246,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T085721Z" changeid="xavier">
         <seg>Ensuite, il faut configure l'accès &lt;a0&gt;SOAP&lt;/a0&gt; tel que décrit &lt;a1&gt;ici&lt;/a1&gt; car l'accès &lt;a2&gt;SOAP&lt;/a2&gt; est refusé par défaut.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Nginx configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143007Z" changeid="xavier">
+        <seg>Configuration de Nginx</seg>
       </tuv>
     </tu>
     <tu>
@@ -42266,6 +42342,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;s0&gt;&lt;a1&gt;Writing rules and headers&lt;/a1&gt;&lt;/s0&gt; to learn how to configure access control and HTTP headers sent to application by &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143952Z" changeid="xavier">
+        <seg>Voir &lt;s0&gt;&lt;a1&gt;Écrire des règles et des en-têtes&lt;/a1&gt;&lt;/s0&gt; pour savoir comment configurer le contrôle d'accès et les en-têtes HTTP transmis à l'application par &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;s0&gt;&lt;a1&gt;security chapter&lt;/a1&gt;&lt;/s0&gt; to learn more about writing good rules.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T060130Z" changeid="xavier">
@@ -45270,6 +45354,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then you can take any virtual host, and simply add this lines to protect it:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143528Z" changeid="xavier">
+        <seg>Ainsi n'importe quel hôte virtuel peut être protégé en ajoutant ces lignes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then you got this value inside the Auth-Roles header:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T142042Z" changeid="guimard">
@@ -47066,6 +47158,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072419Z" changeid="xavier">
         <seg>Pour protéger un hôte virtuel dans Apache, l'agent LemonLDAP::NG doit être activé (voir &lt;a0&gt;configuration globale d'Apache&lt;/a0&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To protect a virtual host in Nginx, the LemonLDAP::NG FastCGI server must be launched (see &lt;a0&gt;LemonLDAP::NG FastCGI server&lt;/a0&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143511Z" changeid="xavier">
+        <seg>Pour protéger un hôte virtuel dans Nginx, le serveur FastCGI de LemonLDAP::NG doit être lancé (voir &lt;a0&gt;Serveur FastCGI de LemonLDAP::NG&lt;/a0&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -50650,6 +50750,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T202631Z" changeid="guimard">
         <seg>Il faut alors désactiver la protection du manager pour la confier à Apache :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need to disable mod_deflate to use the floating menu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T142956Z" changeid="xavier">
+        <seg>Il faut désactiver mod_deflate pour utiliser le menu flottant</seg>
       </tuv>
     </tu>
     <tu>

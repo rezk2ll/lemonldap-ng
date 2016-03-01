@@ -24,7 +24,7 @@
 <div class="level1">
 
 <p>
-LemonLDAP::NG configuration is build around Apache or Nginx virtual hosts. Chaque hôte virtuel est une ressource protégée, avec règles d'accès, en-têtes, options et données POST.
+La configuration de LemonLDAP::NG est construite autour des hôtes virtuels Apache ou Nginx. Chaque hôte virtuel est une ressource protégée, avec règles d'accès, en-têtes, options et données POST.
 </p>
 
 </div><!-- EDIT1 SECTION "Manage virtual hosts" [1-206] -->
@@ -132,28 +132,23 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu-&gt;run
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 <p>
-</p><p></p><div class="noteimportant">You need to disable mod_deflate to use the floating menu
-
+</p><p></p><div class="noteimportant">Il faut désactiver mod_deflate pour utiliser le menu flottant
 </div></p>
 </p>
 
 </div><!-- EDIT5 SECTION "Add a floating menu" [2532-3048] -->
 
-<h2 class="sectionedit6" id="nginx_configuration">Nginx configuration</h2>
+<h2 class="sectionedit6" id="nginx_configuration">Configuration de Nginx</h2>
 <div class="level2">
 
 <p>
-
-To protect a virtual host in Nginx, the LemonLDAP::NG FastCGI server must be launched (see <a href="../../documentation/1.9/fastcgiserver.html" class="wikilink1" title="documentation:1.9:fastcgiserver">LemonLDAP::NG FastCGI server</a>).
-
+Pour protéger un hôte virtuel dans Nginx, le serveur FastCGI de LemonLDAP::NG doit être lancé (voir <a href="../../documentation/1.9/fastcgiserver.html" class="wikilink1" title="documentation:1.9:fastcgiserver">Serveur FastCGI de LemonLDAP::NG</a>).
 </p>
 
 <p>
-
-Then you can take any virtual host, and simply add this lines to protect it:
-
+Ainsi n'importe quel hôte virtuel peut être protégé en ajoutant ces lignes :
 </p>
-<pre class="code file nginx"># Log format
+<pre class="code file nginx"># Format des journaux
 include /path/to/lemonldap-ng/nginx-lmlog.conf;
 server {
   ...
@@ -161,12 +156,12 @@ server {
     internal;
     include /etc/nginx/fastcgi_params;
     fastcgi_pass /path/to/llng/fastcgi/server/socket;
-    # Drop post datas
+    # Ignorer les données postées
     fastcgi_pass_request_body  off;
     fastcgi_param CONTENT_LENGTH "";
-    # Keep original hostname
+    # Conserver le nom d'hôte original
     fastcgi_param HOST $http_host;
-    # Keep original request (LLNG server will received /llauth)
+    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
     fastcgi_param X_ORIGINAL_URI  $request_uri;
   }
   location /path/to/protect {
@@ -200,23 +195,23 @@ server {
 <p>
 Exemple d'hôte virtuel protégé pour une application locale :
 </p>
-<pre class="code file nginx"># Log format
+<pre class="code file nginx"># Format des journaux
 include /path/to/lemonldap-ng/nginx-lmlog.conf;
 server {
   listen 80;
   server_name myserver;
   root /var/www/html;
-  # Internal authentication request
+  # Requête interne d'authentification
   location = /lmauth {
     internal;
     include /etc/nginx/fastcgi_params;
     fastcgi_pass /path/to/llng-fastcgi-server.sock;
-    # Drop post datas
+    # Ignorer les données postées
     fastcgi_pass_request_body  off;
     fastcgi_param CONTENT_LENGTH "";
-    # Keep original hostname
+    # Conserver le nom d'hôte original
     fastcgi_param HOST $http_host;
-    # Keep original request (LLNG server will received /llauth)
+    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
     fastcgi_param X_ORIGINAL_URI  $request_uri;
   } 
 &nbsp;
@@ -257,27 +252,25 @@ server {
 <div class="level3">
 
 <p>
-
-Example of a protected reverse-proxy:
-
+Exemple de reverse-proxy protégé :
 </p>
-<pre class="code file nginx"># Log format
+<pre class="code file nginx"># Format des journaux
 include /path/to/lemonldap-ng/nginx-lmlog.conf;
 server {
   listen 80;
   server_name myserver;
   root /var/www/html;
-  # Internal authentication request
+  # Requête interne d'authentification
   location = /lmauth {
     internal;
     include /etc/nginx/fastcgi_params;
     fastcgi_pass /path/to/llng-fastcgi-server.sock;
-    # Drop post datas
+    # Ignorer les données postées
     fastcgi_pass_request_body  off;
     fastcgi_param CONTENT_LENGTH "";
-    # Keep original hostname
+    # Conserver le nom d'hôte original
     fastcgi_param HOST $http_host;
-    # Keep original request (LLNG server will received /llauth)
+    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
     fastcgi_param X_ORIGINAL_URI  $request_uri;
   } 
 &nbsp;
@@ -323,7 +316,7 @@ Un hôte vituel contient :
 <ul>
 <li class="level1"><div class="li"> Des règles d'accès : examine les droits de l'utilisateur via des expressions sur les <abbr title="Uniform Resource Locator">URL</abbr></div>
 </li>
-<li class="level1"><div class="li">  HTTP headers: forge information sent to protected applications</div>
+<li class="level1"><div class="li"> En-têtes HTTP : construit l'information à envoyer aux applications protégées</div>
 </li>
 <li class="level1"><div class="li"> Des données POST : à utiliser pour répondre aux formulaires</div>
 </li>
@@ -337,9 +330,7 @@ Un hôte vituel contient :
 <div class="level3">
 
 <p>
-
-See <strong><a href="../../documentation/1.9/writingrulesand_headers.html" class="wikilink1" title="documentation:1.9:writingrulesand_headers">Writing rules and headers</a></strong> to learn how to configure access control and HTTP headers sent to application by <abbr title="LemonLDAP::NG">LL::NG</abbr>.
-
+Voir <strong><a href="../../documentation/1.9/writingrulesand_headers.html" class="wikilink1" title="documentation:1.9:writingrulesand_headers">Écrire des règles et des en-têtes</a></strong> pour savoir comment configurer le contrôle d'accès et les en-têtes HTTP transmis à l'application par <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </p>
 
 </div><!-- EDIT10 SECTION "Access rules and HTTP headers" [7868-8060] -->

@@ -1174,6 +1174,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;s0&gt;&lt;a1&gt;Writing rules and headers&lt;/a1&gt;&lt;/s0&gt; to learn how to configure access control and HTTP headers sent to application by &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143952Z" changeid="xavier">
+        <seg>Voir &lt;s0&gt;&lt;a1&gt;Écrire des règles et des en-têtes&lt;/a1&gt;&lt;/s0&gt; pour savoir comment configurer le contrôle d'accès et les en-têtes HTTP transmis à l'application par &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>APT-GET</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141136Z" changeid="guimard">
@@ -3884,6 +3892,14 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181428Z" changeid="xavier">
         <seg>http://zimbra.lan/service/preauth</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg># Internal authentication request</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143736Z" changeid="xavier">
+        <seg># Requête interne d'authentification</seg>
       </tuv>
     </tu>
     <tu>
@@ -9348,6 +9364,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101453Z" changeid="xavier">
         <seg>http://www.limesurvey.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg># Keep original hostname</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143633Z" changeid="xavier">
+        <seg># Conserver le nom d'hôte original</seg>
       </tuv>
     </tu>
     <tu>
@@ -14884,6 +14908,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg># Drop post datas</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143615Z" changeid="xavier">
+        <seg># Ignorer les données postées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can create a special virtual host and use &lt;a0&gt;Apache rewrite module&lt;/a0&gt; to switch between open and protected hosts:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182123Z" changeid="xavier">
@@ -17952,6 +17984,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Nginx configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143007Z" changeid="xavier">
+        <seg>Configuration de Nginx</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>“myfield ⇒ firstname” can be “”</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T135815Z" changeid="xavier">
@@ -17980,6 +18020,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T165153Z" changeid="xavier">
         <seg>Peut être surchargé par une &lt;a3&gt;URI&lt;/a3&gt; LDAP dans le nom du serveur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To protect a virtual host in Nginx, the LemonLDAP::NG FastCGI server must be launched (see &lt;a0&gt;LemonLDAP::NG FastCGI server&lt;/a0&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143511Z" changeid="xavier">
+        <seg>Pour protéger un hôte virtuel dans Nginx, le serveur FastCGI de LemonLDAP::NG doit être lancé (voir &lt;a0&gt;Serveur FastCGI de LemonLDAP::NG&lt;/a0&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -18052,6 +18100,18 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/documentation/lemonldapng-sso.png?id=documentation%3Apresentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg># Log format
+include /path/to/lemonldap-ng/nginx-lmlog.conf;
+server {</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143833Z" changeid="xavier">
+        <seg># Format des journaux
+include /path/to/lemonldap-ng/nginx-lmlog.conf;
+server {</seg>
       </tuv>
     </tu>
     <tu>
@@ -22102,6 +22162,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then you can take any virtual host, and simply add this lines to protect it:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143528Z" changeid="xavier">
+        <seg>Ainsi n'importe quel hôte virtuel peut être protégé en ajoutant ces lignes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Import or generate security keys</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -25542,6 +25610,14 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need to disable mod_deflate to use the floating menu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T142956Z" changeid="xavier">
+        <seg>Il faut désactiver mod_deflate pour utiliser le menu flottant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlModule Lemonldap::NG::Handler::Proxy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T194035Z" changeid="xavier">
@@ -27212,6 +27288,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121005T040839Z" changeid="xavier">
         <seg>L'agent AuthBasic est un agent spécial qui utilise l'authentification web basique pour authentifier dans un hôte virtuel et qui utilise ensuite les règles d'autorisation pour valider les accès à l'hôte virtuel.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example of a protected reverse-proxy:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143811Z" changeid="xavier">
+        <seg>Exemple de reverse-proxy protégé :</seg>
       </tuv>
     </tu>
     <tu>
@@ -30632,6 +30716,14 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg># Keep original request (LLNG server will received /llauth)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143701Z" changeid="xavier">
+        <seg># Conserver la requête originale (le serveur LLNG va recevoir /llauth)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s17&gt;# Your nice code here&lt;/s17&gt;
  </seg>
       </tuv>
@@ -32732,6 +32824,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065402Z" changeid="guimard">
         <seg>Le jeton sécurisé autorise les requêtes en cas d'erreur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG configuration is build around Apache or Nginx virtual hosts.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T142859Z" changeid="xavier">
+        <seg>La configuration de LemonLDAP::NG est construite autour des hôtes virtuels Apache ou Nginx.</seg>
       </tuv>
     </tu>
     <tu>
@@ -39066,6 +39166,14 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T112033Z" changeid="xavier">
         <seg>Pour configurer l'avertissement vant expiration, il faut indiquer deux variables des paramètres Active Directory dans le Manager:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>HTTP headers: forge information sent to protected applications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T143918Z" changeid="xavier">
+        <seg>En-têtes HTTP : construit l'information à envoyer aux applications protégées</seg>
       </tuv>
     </tu>
     <tu>
