@@ -13596,6 +13596,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can act as an OpenID Connect Provider (OP).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201027Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut agir comme fournisseur OpenID-Connect (OP).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can act as an OpenID Connect Relying Party (RP) towards multiple OpenID Connect Providers (OP).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T193113Z" changeid="xavier">
@@ -13836,6 +13844,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is compatible with the &lt;a1&gt;CAS protocol&lt;/a1&gt; versions 1.0, 2.0 and part of 3.0 (attributes exchange).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T200417Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; est compatible avec le &lt;a1&gt;protocole CAS&lt;/a1&gt; versions 1.0, 2.0 et en partie 3.0 (echange d'attributs).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is compatible with the &lt;a1&gt;CAS&lt;/a1&gt; protocol &lt;a2&gt;versions 1.0 and 2.0&lt;/a2&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053720Z" changeid="xavier">
@@ -13896,6 +13912,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190332Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; fournit une valve, disponible sur &lt;a1&gt;page de téléchargement&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; publish its OpenID Connect metadata to ease the configuration of client.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202003Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; publie ses métadonnées OpenID-Connect pour faciliter la configuration du client.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17082,6 +17106,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;c0&gt;prompt&lt;/c0&gt;, &lt;c1&gt;display&lt;/c1&gt;, &lt;c2&gt;ui_locales&lt;/c2&gt;, &lt;c3&gt;max_age&lt;/c3&gt; parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201343Z" changeid="xavier">
+        <seg>paramètres &lt;c0&gt;prompt&lt;/c0&gt;, &lt;c1&gt;display&lt;/c1&gt;, &lt;c2&gt;ui_locales&lt;/c2&gt; et &lt;c3&gt;max_age&lt;/c3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;c0&gt;skip&lt;/c0&gt;: all is open!</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103810Z" changeid="xavier">
@@ -17610,6 +17642,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T073012Z" changeid="guimard">
         <seg>&lt;s0&gt;&lt;a1&gt;Menu des applications&lt;/a1&gt;&lt;/s0&gt; : affiche les applications autorisées dans les catégories</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;CAS&lt;/a1&gt; attributes&lt;/s0&gt;: list of attributes that will be transmitted in validate response.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T200730Z" changeid="xavier">
+        <seg>&lt;s0&gt;Attributs &lt;a1&gt;CAS&lt;/a1&gt;&lt;/s0&gt; : liste des attributs qui seront transmis dans les réponses validées.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18216,6 +18256,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Access token expiration&lt;/s0&gt;: Expiration time of Access Tokens</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T203259Z" changeid="xavier">
+        <seg>&lt;s0&gt;Expiration des jetons d'accès&lt;/s0&gt;: Délai d'expiration des jetons d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Account session key&lt;/s0&gt;: session field used as Zimbra user account (by default: uid)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181340Z" changeid="xavier">
@@ -18512,6 +18560,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Authentication&lt;/s0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202800Z" changeid="xavier">
+        <seg>&lt;s0&gt;Authentification&lt;/s0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Authentication&lt;/s0&gt;: how authenticate users</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -18768,10 +18824,26 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Client ID&lt;/s0&gt;: Client ID for this RP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202921Z" changeid="xavier">
+        <seg>&lt;s0&gt;Identifiant&lt;/s0&gt; : identifiant client de ce RP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Client ID&lt;/s0&gt;: Client ID given by OP</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T202444Z" changeid="xavier">
         <seg>&lt;s0&gt;Identifiant client&lt;/s0&gt; : identifiant client donné par l'OP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Client secret&lt;/s0&gt;: Client secret for this RP (can be use for symmetric signature)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202954Z" changeid="xavier">
+        <seg>&lt;s0&gt;Mot-de-passe&lt;/s0&gt; : secret partagé avec ce RP (peut être utilisé pour la signature symétrique)</seg>
       </tuv>
     </tu>
     <tu>
@@ -19016,6 +19088,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Display name&lt;/s0&gt;: Name of the RP application</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T203018Z" changeid="xavier">
+        <seg>&lt;s0&gt;Affichage&lt;/s0&gt; : Nom de l'application RP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Display name&lt;/s0&gt;: Name of the application</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T203543Z" changeid="xavier">
@@ -19178,6 +19258,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les &lt;s0&gt;bases de données externes&lt;/s0&gt;: non gérées par LemonLDAP::NG, par exemple la base des utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Extra claims&lt;/s0&gt;: Associate attributes to extra claims if the RP request them, for example &lt;c1&gt;birth&lt;/c1&gt; ⇒ &lt;c2&gt;birthplace birthcountry&lt;/c2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T203459Z" changeid="xavier">
+        <seg>&lt;s0&gt;Déclaration (scopes/claims)&lt;/s0&gt; : attributs associés à des &quot;claims&quot; supplémentaires si le RP les demande, par exemple &lt;c1&gt;birth&lt;/c1&gt; ⇒ &lt;c2&gt;birthplace birthcountry&lt;/c2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -19422,10 +19510,26 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ID Token expiration&lt;/s0&gt;: Expiration time of ID Tokens</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T203222Z" changeid="xavier">
+        <seg>&lt;s0&gt;Expiration des jetons d'identité&lt;/s0&gt;: Délai d'expiration des jetons d'identité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;ID Token max age&lt;/s0&gt;: If defined, &lt;a1&gt;LL::NG&lt;/a1&gt; will check the date of ID token and refuse it if it is too old</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T203233Z" changeid="xavier">
         <seg>&lt;s0&gt;Durée de vie max des jetons&lt;/s0&gt; : si défini, &lt;a1&gt;LL::NG&lt;/a1&gt; examinera la date du jeton d'identification et refusera les jetons trop anciens</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ID Token signature algorithm&lt;/s0&gt;: Select one of &lt;c1&gt;none&lt;/c1&gt;, &lt;c2&gt;HS256&lt;/c2&gt;, &lt;c3&gt;HS384&lt;/c3&gt;, &lt;c4&gt;HS512&lt;/c4&gt;, &lt;c5&gt;RS256&lt;/c5&gt;, &lt;c6&gt;RS384&lt;/c6&gt;, &lt;c7&gt;RS512&lt;/c7&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T203147Z" changeid="xavier">
+        <seg>&lt;s0&gt;Algorithme de signature des jetons d'identité&lt;/s0&gt; : Choisir entre &lt;c1&gt;none&lt;/c1&gt;, &lt;c2&gt;HS256&lt;/c2&gt;, &lt;c3&gt;HS384&lt;/c3&gt;, &lt;c4&gt;HS512&lt;/c4&gt;, &lt;c5&gt;RS256&lt;/c5&gt;, &lt;c6&gt;RS384&lt;/c6&gt;, &lt;c7&gt;RS512&lt;/c7&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -19682,6 +19786,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T134531Z" changeid="guimard">
         <seg>&lt;s0&gt;Historique de connexion&lt;/s0&gt; : affiche les derniers succès et échecs de connexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Logo&lt;/s0&gt;: Logo of the RP application</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T203027Z" changeid="xavier">
+        <seg>&lt;s0&gt;Logo&lt;/s0&gt;: Logo l'application RP</seg>
       </tuv>
     </tu>
     <tu>
@@ -20200,6 +20312,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Path&lt;/s0&gt;: keep &lt;c1&gt;^/oauth2/&lt;/c1&gt; unless you need to use another path (in this case, you need to adapt Apache configuration)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201802Z" changeid="xavier">
+        <seg>&lt;s0&gt;Path&lt;/s0&gt; : conserver &lt;c1&gt;^/oauth2/&lt;/c1&gt; sauf s'il faut un autre chemin (dans ce cas, adapter la configuration Apache)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Path&lt;/s0&gt;: keep &lt;c1&gt;^/openidserver/&lt;/c1&gt; unless you have change &lt;a2&gt;Apache portal configuration&lt;/a2&gt; file.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082522Z" changeid="xavier">
@@ -20364,6 +20484,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Redirect&lt;/s0&gt;: redirect user on protected application or on Portal (applications menu)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Redirection addresses&lt;/s0&gt;: Space separated list of redirect addresses allowed for this RP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T203349Z" changeid="xavier">
+        <seg>&lt;s0&gt;Adresses de redirection&lt;/s0&gt; : liste d'adresses de redirection autorisées pour ce RP, séparées par des espaces</seg>
       </tuv>
     </tu>
     <tu>
@@ -21112,6 +21240,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074204Z" changeid="xavier">
         <seg>&lt;s0&gt;User Header&lt;/s0&gt;: Auth-User (case sensitive)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;User attribute&lt;/s0&gt;: session field that with be used as main identifier (&lt;c1&gt;sub&lt;/c1&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T203109Z" changeid="xavier">
+        <seg>&lt;s0&gt;Attribut utilisateur&lt;/s0&gt; : attribut de session à utiliser comme identifiant principal (&lt;c1&gt;sub&lt;/c1&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -25580,6 +25716,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Access Token Hash generation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201520Z" changeid="xavier">
+        <seg>Génération de hash de jeton d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Access Token Hash verification</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T195243Z" changeid="xavier">
@@ -26340,6 +26484,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>An example of its content:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202100Z" changeid="xavier">
+        <seg>Un exemple de son contenu :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>And a protected virtual host with LemonLDAP::NG as reverse proxy:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072639Z" changeid="xavier">
@@ -26464,6 +26616,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T195024Z" changeid="xavier">
         <seg>Le &lt;a0&gt;module SetEnvIf&lt;/a0&gt; d'Apache peut transformer l'en-tête &lt;a1&gt;HTTP&lt;/a1&gt; Auth-User en variable d'environnement &lt;c2&gt;REMOTE_USER&lt;/c2&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache &lt;a0&gt;SetEnvIf module&lt;/a0&gt; will let you transform the Auth-User HTTP header in &lt;c1&gt;REMOTE_USER&lt;/c1&gt; environment variable:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T200126Z" changeid="xavier">
+        <seg>Le &lt;a0&gt;module SetEnvIf&lt;/a0&gt; d'Apache peut transformer l'en-tête HTTP Auth-User en variable d'environnement &lt;c1&gt;REMOTE_USER&lt;/c1&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26780,6 +26940,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>As an OP, &lt;a0&gt;LL::NG&lt;/a0&gt; supports a lot of OpenID Connect features:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201223Z" changeid="xavier">
+        <seg>Comme OP, &lt;a0&gt;LL::NG&lt;/a0&gt; supporte de nombreuses fonctionnalités OpenID-Connect :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>As an RP, &lt;a0&gt;LL::NG&lt;/a0&gt; supports a lot of OpenID Connect features:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T193253Z" changeid="xavier">
@@ -27076,6 +27244,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Authentication context Class References (ACR)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201451Z" changeid="xavier">
+        <seg>Références de classe de contexte d'authentification (ACR)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authentication contexts</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27264,6 +27440,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T195117Z" changeid="xavier">
         <seg>Débit de code d'autorisation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authorization Code, Implicit and Hybrid flows</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201305Z" changeid="xavier">
+        <seg>Flux de codes d'authorisation, implicites et hybrides</seg>
       </tuv>
     </tu>
     <tu>
@@ -28812,10 +28996,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configuration of LL::NG in Relying Party</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201836Z" changeid="xavier">
+        <seg>Configuration de LL::NG en &quot;Relying Party&quot; (client)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configuration of LemonLDAP::NG</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154702Z" changeid="xavier">
         <seg>Configuration de LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configuration of Relying Party in LL::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202158Z" changeid="xavier">
+        <seg>Configuration du client (Relying Party) dans LL::NG</seg>
       </tuv>
     </tu>
     <tu>
@@ -30620,6 +30820,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Dynamic registration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201505Z" changeid="xavier">
+        <seg>Enregistrement dynamique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>E</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111514Z" changeid="xavier">
@@ -30640,6 +30848,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Chaque module d'authentification de &lt;a0&gt;LL::NG&lt;/a0&gt; dispose d'un niveau d'authentification qui peut être associé à un &lt;a1&gt;contexte d'authentification SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Each Relying Party has its own configuration way.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201933Z" changeid="xavier">
+        <seg>Chaque client (Relying Party) a sa propre forme de configuration.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31436,6 +31652,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120217T045421Z" changeid="xavier">
         <seg>L'utilisateur externe clique pour être redirigé vers le second portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Extra claims definition</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201407Z" changeid="xavier">
+        <seg>Définitions réclamées supplémentaires</seg>
       </tuv>
     </tu>
     <tu>
@@ -32712,6 +32936,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Give a technical name (no spaces, no special characters), like “sample-rp”;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202328Z" changeid="xavier">
+        <seg>Donner un nom technique (sans espaces ni caratères speciaux), tel “sample-rp” ;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Give display name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T061219Z" changeid="xavier">
@@ -32760,6 +32992,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Issuer modules&lt;/c1&gt; » &lt;c2&gt;OpenID Connect&lt;/c2&gt; and configure:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201718Z" changeid="xavier">
+        <seg>Aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules fournisseurs&lt;/c1&gt; » &lt;c2&gt;OpenID-Connect&lt;/c2&gt; et configurer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go in &lt;c0&gt;General parameters&lt;/c0&gt; &gt; &lt;c1&gt;Portal&lt;/c1&gt; &gt; &lt;c2&gt;Captcha&lt;/c2&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T060604Z" changeid="xavier">
@@ -32772,6 +33012,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Allez dans le Manager et cliquez sur le nœud &lt;c0&gt;Service &lt;a1&gt;SAML&lt;/a1&gt; 2&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go in Manager and click on &lt;c0&gt;OpenID Connect Relying Parties&lt;/c0&gt;, then click on &lt;c1&gt;Add OpenID Relying Party&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202317Z" changeid="xavier">
+        <seg>Aller dans le Manager et choisir &lt;c0&gt;Clients OpenID-Connect&lt;/c0&gt;, cliquer ensuite sur &lt;c1&gt;Ajouter un client OpenID&lt;/c1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33684,6 +33932,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111530Z" changeid="xavier">
         <seg>I</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ID Token signature (HS256/HS384/HS512/RS256/RS384/RS512)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201535Z" changeid="xavier">
+        <seg>Signature du jeton identifiant (HS256/HS384/HS512/RS256/RS384/RS512)</seg>
       </tuv>
     </tu>
     <tu>
@@ -36160,6 +36416,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It will answer to OpenID Connect requests to give user identity (trough ID Token) and information (trough User Info end point).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201204Z" changeid="xavier">
+        <seg>Il répond aux requêtes OpenID-Connect pour délivrer l'identité de l'utilisateur (via un jeton identifiant) et des informations (via le point d'accès &quot;User Info&quot;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It will be prompted if you generate keys, else you can set it in the &lt;c0&gt;Private key password&lt;/c0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -36460,6 +36724,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T075604Z" changeid="xavier">
         <seg>Etapes clefs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Keys are the name of attribute in the &lt;a2&gt;CAS&lt;/a2&gt; response, values are the name of session key.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T200820Z" changeid="xavier">
+        <seg>Les clefs sont les noms des attributs de la réponse &lt;a2&gt;CAS&lt;/a2&gt;, et les valeurs les noms des clefs de session.</seg>
       </tuv>
     </tu>
     <tu>
@@ -39444,6 +39716,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Of course, you need to &lt;a0&gt;store password in session&lt;/a0&gt; to fill PHP_AUTH_PW.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T200303Z" changeid="xavier">
+        <seg>Bien sûr, il faut &lt;a0&gt;stocker le mot-de-passe dans la session&lt;/a0&gt; pour renseigner PHP_AUTH_PW.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Official repository</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093207Z" changeid="xavier">
@@ -39716,6 +39996,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>OpenID Connect Provider</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T200959Z" changeid="xavier">
+        <seg>Fournisseur OpenID-Connect</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>OpenID Connect Service</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T195554Z" changeid="xavier">
@@ -39760,6 +40048,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082527Z" changeid="xavier">
         <seg>Fournisseur d'identité OpenID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OpenID protocol is deprecated, you should now use &lt;a0&gt;OpenID Connect&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T200925Z" changeid="xavier">
+        <seg>Le protocole OpenID est obsolète, il faut maintenant utiliser &lt;a0&gt;OpenID-Connect&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -40748,6 +41044,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Portal does not store any data outside the session database, so you can have many portal servers using the same HTTP host name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T200315Z" changeid="xavier">
+        <seg>Le portail ne stocke aucune donnée en dehors de la base de données des sessions, ainsi on peut avoir plusieurs serveurs utilisant le même nom d'hôte HTTP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Portal gets the session key</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -41144,6 +41448,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155832Z" changeid="xavier">
         <seg>Les tickets de proxy seront collectés lors de la phase d'authentification et stockés dans la session utilisateur sous la forme :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Publication of JSON metadata and JWKS data (Discovery)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201325Z" changeid="xavier">
+        <seg>Publication de métadonnée JSON et JWKS (Discovery)</seg>
       </tuv>
     </tu>
     <tu>
@@ -41724,6 +42036,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Request and Request &lt;a0&gt;URI&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201618Z" changeid="xavier">
+        <seg>Requête et &lt;a0&gt;URI&lt;/a0&gt; de requête</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Request informations</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T161939Z" changeid="xavier">
@@ -41952,6 +42272,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T155628Z" changeid="xavier">
         <seg>Proxy inverse</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Rewrite rules must have been activated in &lt;a0&gt;Apache portal configuration&lt;/a0&gt; or in &lt;a1&gt;Nginx portal configuration&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T200541Z" changeid="xavier">
+        <seg>Le module Rewrite d'Apache doit être activé dans la &lt;a0&gt;configuration Apache du portail&lt;/a0&gt; ou dans la &lt;a1&gt;configuration du portail Nginx&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -42760,6 +43088,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;OpenID Connect service&lt;/a0&gt; configuration chapter.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201640Z" changeid="xavier">
+        <seg>Voir le chapître de configuration du &lt;a0&gt;service OpenID-Connect&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;OpenIDConnect service&lt;/a0&gt; configuration chapter.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T195653Z" changeid="xavier">
@@ -43252,6 +43588,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Durée de vie des sessions pour la tâche planifiée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Session management</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201627Z" changeid="xavier">
+        <seg>Gestion de session</seg>
       </tuv>
     </tu>
     <tu>
@@ -43972,6 +44316,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T195349Z" changeid="xavier">
         <seg>Parfois, des applications &lt;a0&gt;PHP&lt;/a0&gt; examinent également les variables d'environnement &lt;a1&gt;PHP&lt;/a1&gt;_AUTH_USER et &lt;a2&gt;PHP&lt;/a2&gt;_AUHT_PW.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sometimes, PHP applications also check the PHP_AUTH_USER and PHP_AUHT_PW environment variables.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T200242Z" changeid="xavier">
+        <seg>Parfois, des applications PHP examinent également les variables d'environnement PHP_AUTH_USER et PHP_AUHT_PW.</seg>
       </tuv>
     </tu>
     <tu>
@@ -45362,6 +45714,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The metadata can be found at the standard “Well Known” &lt;a0&gt;URL&lt;/a0&gt;: &lt;a1&gt;http://auth.example.com/.well-known/openid-configuration&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202043Z" changeid="xavier">
+        <seg>La métadonnée se trouve dans l'&lt;a0&gt;URL&lt;/a0&gt; standard “Well Known” : &lt;a1&gt;http://auth.example.com/.well-known/openid-configuration&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The module can be found &lt;a0&gt;here&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154425Z" changeid="xavier">
@@ -45646,6 +46006,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191451Z" changeid="xavier">
         <seg>Les sources sont disponibles sur la &lt;a0&gt;page de téléchargement&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The specific &lt;c0&gt;sub&lt;/c0&gt; attribute is not defined here, but in User attribute parameter (see below).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202632Z" changeid="xavier">
+        <seg>L'attribut spécifique &lt;c0&gt;sub&lt;/c0&gt; n'est pas défini ici, mais dans le paramètre d'attribut &quot;User&quot; (voir ci-dessous).</seg>
       </tuv>
     </tu>
     <tu>
@@ -46088,6 +46456,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T142042Z" changeid="guimard">
         <seg>On les obtient dans l'en-tête Auth-Roles :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then you just have to define the mapping of this new attributes, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202751Z" changeid="xavier">
+        <seg>Il faut ensuite définir la correspondance de ces nouveaux attributs, par exemple:</seg>
       </tuv>
     </tu>
     <tu>
@@ -49024,6 +49400,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>UserInfo end point, as JSON or as JWT</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T201558Z" changeid="xavier">
+        <seg>Point d'accès UserInfo, en JSON ou JWT</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>UserName</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072314Z" changeid="xavier">
@@ -50196,6 +50580,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also define extra claims and link them to attributes (see below).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202721Z" changeid="xavier">
+        <seg>On peut également définir des &quot;claims&quot; supplémentaires et les lier aux attributs (voir ci-dessous).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also define:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T201324Z" changeid="xavier">
@@ -50748,6 +51140,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can map here the attribute names from the &lt;a0&gt;LL::NG&lt;/a0&gt; session to an &lt;a1&gt;OpenID Connect claim&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202511Z" changeid="xavier">
+        <seg>On peut faire correspondre les noms d'attributs de session &lt;a0&gt;LL::NG&lt;/a0&gt; à des &lt;a1&gt;&quot;claim&quot; OpenID-Connect&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can modify location of default storage configuration file in configure target:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161443Z" changeid="xavier">
@@ -50912,6 +51312,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T200954Z" changeid="xavier">
         <seg>On peut ensuite accéder à la configuration de cet OP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can then access to the configuration of this RP.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T202341Z" changeid="xavier">
+        <seg>On peut ensuite accéder à la configuration de ce RP.</seg>
       </tuv>
     </tu>
     <tu>

@@ -20,7 +20,7 @@
 <div class="dokuwiki export">
 
 
-<h1 class="sectionedit1" id="openid_connect_provider">OpenID Connect Provider</h1>
+<h1 class="sectionedit1" id="openid_connect_provider">Fournisseur OpenID-Connect</h1>
 <div class="level1">
 
 </div><!-- EDIT1 SECTION "OpenID Connect Provider" [1-39] -->
@@ -34,39 +34,36 @@
 </p>
 
 <p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> can act as an OpenID Connect Provider (OP). It will answer to OpenID Connect requests to give user identity (trough ID Token) and information (trough User Info end point).
-
+<abbr title="LemonLDAP::NG">LL::NG</abbr> peut agir comme fournisseur OpenID-Connect (OP). Il répond aux requêtes OpenID-Connect pour délivrer l'identité de l'utilisateur (via un jeton identifiant) et des informations (via le point d'accès "User Info").
 </p>
 
 <p>
-
-As an OP, <abbr title="LemonLDAP::NG">LL::NG</abbr> supports a lot of OpenID Connect features:
-
+Comme OP, <abbr title="LemonLDAP::NG">LL::NG</abbr> supporte de nombreuses fonctionnalités OpenID-Connect :
 </p>
 <ul>
-<li class="level1"><div class="li">  Authorization Code, Implicit and Hybrid flows</div>
+<li class="level1"><div class="li"> Flux de codes d'authorisation, implicites et hybrides</div>
 </li>
-<li class="level1"><div class="li">  Publication of JSON metadata and JWKS data (Discovery)</div>
+<li class="level1"><div class="li"> Publication de métadonnée JSON et JWKS (Discovery)</div>
 </li>
-<li class="level1"><div class="li"> <code>prompt</code>, <code>display</code>, <code>ui_locales</code>, <code>max_age</code> parameters</div>
+<li class="level1"><div class="li"> paramètres <code>prompt</code>, <code>display</code>, <code>ui_locales</code> et <code>max_age</code></div>
 </li>
-<li class="level1"><div class="li">  Extra claims definition</div>
+<li class="level1"><div class="li"> Définitions réclamées supplémentaires</div>
 </li>
-<li class="level1"><div class="li">  Authentication context Class References (ACR)</div>
+<li class="level1"><div class="li"> Références de classe de contexte d'authentification (ACR)</div>
 </li>
 <li class="level1"><div class="li">  Nonce</div>
 </li>
-<li class="level1"><div class="li">  Dynamic registration</div>
+<li class="level1"><div class="li"> Enregistrement dynamique</div>
 </li>
-<li class="level1"><div class="li">  Access Token Hash generation</div>
+<li class="level1"><div class="li"> Génération de hash de jeton d'accès</div>
 </li>
-<li class="level1"><div class="li">  ID Token signature (HS256/HS384/HS512/RS256/RS384/RS512)</div>
+<li class="level1"><div class="li"> Signature du jeton identifiant (HS256/HS384/HS512/RS256/RS384/RS512)</div>
 </li>
-<li class="level1"><div class="li">  UserInfo end point, as JSON or as JWT</div>
+<li class="level1"><div class="li"> Point d'accès UserInfo, en JSON ou JWT</div>
 </li>
-<li class="level1"><div class="li">  Request and Request <abbr title="Uniform Resource Identifier">URI</abbr></div>
+<li class="level1"><div class="li"> Requête et <abbr title="Uniform Resource Identifier">URI</abbr> de requête</div>
 </li>
-<li class="level1"><div class="li">  Session management</div>
+<li class="level1"><div class="li"> Gestion de session</div>
 </li>
 </ul>
 
@@ -81,9 +78,7 @@ As an OP, <abbr title="LemonLDAP::NG">LL::NG</abbr> supports a lot of OpenID Con
 <div class="level3">
 
 <p>
-
-See <a href="../../documentation/1.9/openidconnectservice.html" class="wikilink1" title="documentation:1.9:openidconnectservice">OpenID Connect service</a> configuration chapter.
-
+Voir le chapître de configuration du <a href="../../documentation/1.9/openidconnectservice.html" class="wikilink1" title="documentation:1.9:openidconnectservice">service OpenID-Connect</a>.
 </p>
 
 </div><!-- EDIT4 SECTION "OpenID Connect Service" [950-1059] -->
@@ -92,14 +87,12 @@ See <a href="../../documentation/1.9/openidconnectservice.html" class="wikilink1
 <div class="level3">
 
 <p>
-
-Go in <code>General Parameters</code> » <code>Issuer modules</code> » <code>OpenID Connect</code> and configure:
-
+Aller dans <code>Paramètres généraux</code> &gt; <code>Modules fournisseurs</code> » <code>OpenID-Connect</code> et configurer :
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Activation</strong> : mettre à <code>Activé</code>.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Path</strong>: keep <code>^/oauth2/</code> unless you need to use another path (in this case, you need to adapt Apache configuration)</div>
+<li class="level1"><div class="li"> <strong>Path</strong> : conserver <code>^/oauth2/</code> sauf s'il faut un autre chemin (dans ce cas, adapter la configuration Apache)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Règle d'utilisation</strong> : une règle pour autoriser l'usage de ce module, mettre 1 pour toujours l'autoriser.</div>
 </li>
@@ -118,24 +111,19 @@ Par exemple, pour n'autoriser que les utilisateurs authentifiés fortement :
 
 </div><!-- EDIT5 SECTION "IssuerDB" [1060-1545] -->
 
-<h3 class="sectionedit6" id="configuration_of_llng_in_relying_party">Configuration of LL::NG in Relying Party</h3>
+<h3 class="sectionedit6" id="configuration_of_llng_in_relying_party">Configuration de LL::NG en "Relying Party" (client)</h3>
 <div class="level3">
 
 <p>
-
-Each Relying Party has its own configuration way. <abbr title="LemonLDAP::NG">LL::NG</abbr> publish its OpenID Connect metadata to ease the configuration of client.
-
+Chaque client (Relying Party) a sa propre forme de configuration. <abbr title="LemonLDAP::NG">LL::NG</abbr> publie ses métadonnées OpenID-Connect pour faciliter la configuration du client.
 </p>
 
 <p>
-
-The metadata can be found at the standard “Well Known” <abbr title="Uniform Resource Locator">URL</abbr>: <a href="http://auth.example.com/.well-known/openid-configuration" class="urlextern" title="http://auth.example.com/.well-known/openid-configuration"  rel="nofollow">http://auth.example.com/.well-known/openid-configuration</a>
+La métadonnée se trouve dans l'<abbr title="Uniform Resource Locator">URL</abbr> standard “Well Known” : <a href="http://auth.example.com/.well-known/openid-configuration" class="urlextern" title="http://auth.example.com/.well-known/openid-configuration"  rel="nofollow">http://auth.example.com/.well-known/openid-configuration</a>
 </p>
 
 <p>
-
-An example of its content:
-
+Un exemple de son contenu :
 </p>
 <pre class="code file javascript"><span class="br0">{</span>
    <span class="st0">"end_session_endpoint"</span> <span class="sy0">:</span> <span class="st0">"http://auth.example.com/oauth2/logout"</span><span class="sy0">,</span>
@@ -205,19 +193,15 @@ An example of its content:
 
 </div><!-- EDIT6 SECTION "Configuration of LL::NG in Relying Party" [1546-3524] -->
 
-<h3 class="sectionedit7" id="configuration_of_relying_party_in_llng">Configuration of Relying Party in LL::NG</h3>
+<h3 class="sectionedit7" id="configuration_of_relying_party_in_llng">Configuration du client (Relying Party) dans LL::NG</h3>
 <div class="level3">
 
 <p>
-
-Go in Manager and click on <code>OpenID Connect Relying Parties</code>, then click on <code>Add OpenID Relying Party</code>. Give a technical name (no spaces, no special characters), like “sample-rp”;
-
+Aller dans le Manager et choisir <code>Clients OpenID-Connect</code>, cliquer ensuite sur <code>Ajouter un client OpenID</code>. Donner un nom technique (sans espaces ni caratères speciaux), tel “sample-rp” ;
 </p>
 
 <p>
-
-You can then access to the configuration of this RP. 
- 
+On peut ensuite accéder à la configuration de ce RP. 
 </p>
 
 </div>
@@ -226,9 +210,7 @@ You can then access to the configuration of this RP.
 <div class="level4">
 
 <p>
-
-You can map here the attribute names from the <abbr title="LemonLDAP::NG">LL::NG</abbr> session to an <a href="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims" class="urlextern" title="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims"  rel="nofollow">OpenID Connect claim</a>. 
- 
+On peut faire correspondre les noms d'attributs de session <abbr title="LemonLDAP::NG">LL::NG</abbr> à des <a href="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims" class="urlextern" title="http://openid.net/specs/openid-connect-core-1_0.html#StandardClaims"  rel="nofollow">"claim" OpenID-Connect</a>. 
 </p>
 
 </div>
@@ -334,15 +316,12 @@ Ainsi on peut définir par exemple:
 </ul>
 
 <p>
-</p><p></p><div class="noteimportant">The specific <code>sub</code> attribute is not defined here, but in User attribute parameter (see below).
-
+</p><p></p><div class="noteimportant">L'attribut spécifique <code>sub</code> n'est pas défini ici, mais dans le paramètre d'attribut "User" (voir ci-dessous).
 </div></p>
 </p>
 
 <p>
-
-You can also define extra claims and link them to attributes (see below). Then you just have to define the mapping of this new attributes, for example:
-
+On peut également définir des "claims" supplémentaires et les lier aux attributs (voir ci-dessous). Il faut ensuite définir la correspondance de ces nouveaux attributs, par exemple:
 </p>
 <ul>
 <li class="level1"><div class="li">  birthplace ⇒ l</div>
@@ -356,33 +335,33 @@ You can also define extra claims and link them to attributes (see below). Then y
 <h4 id="options">Options</h4>
 <div class="level4">
 <ul>
-<li class="level1"><div class="li"> <strong>Authentication</strong>:</div>
+<li class="level1"><div class="li"> <strong>Authentification</strong>:</div>
 <ul>
-<li class="level2"><div class="li"> <strong>Client ID</strong>: Client ID for this RP</div>
+<li class="level2"><div class="li"> <strong>Identifiant</strong> : identifiant client de ce RP</div>
 </li>
-<li class="level2"><div class="li"> <strong>Client secret</strong>: Client secret for this RP (can be use for symmetric signature)</div>
+<li class="level2"><div class="li"> <strong>Mot-de-passe</strong> : secret partagé avec ce RP (peut être utilisé pour la signature symétrique)</div>
 </li>
 </ul>
 </li>
 <li class="level1"><div class="li"> <strong>Affichage</strong> :</div>
 <ul>
-<li class="level2"><div class="li"> <strong>Display name</strong>: Name of the RP application</div>
+<li class="level2"><div class="li"> <strong>Affichage</strong> : Nom de l'application RP</div>
 </li>
-<li class="level2"><div class="li"> <strong>Logo</strong>: Logo of the RP application</div>
+<li class="level2"><div class="li"> <strong>Logo</strong>: Logo l'application RP</div>
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> <strong>User attribute</strong>: session field that with be used as main identifier (<code>sub</code>)</div>
+<li class="level1"><div class="li"> <strong>Attribut utilisateur</strong> : attribut de session à utiliser comme identifiant principal (<code>sub</code>)</div>
 </li>
-<li class="level1"><div class="li"> <strong>ID Token signature algorithm</strong>: Select one of <code>none</code>, <code>HS256</code>, <code>HS384</code>, <code>HS512</code>, <code>RS256</code>, <code>RS384</code>, <code>RS512</code></div>
+<li class="level1"><div class="li"> <strong>Algorithme de signature des jetons d'identité</strong> : Choisir entre <code>none</code>, <code>HS256</code>, <code>HS384</code>, <code>HS512</code>, <code>RS256</code>, <code>RS384</code>, <code>RS512</code></div>
 </li>
-<li class="level1"><div class="li"> <strong>ID Token expiration</strong>: Expiration time of ID Tokens</div>
+<li class="level1"><div class="li"> <strong>Expiration des jetons d'identité</strong>: Délai d'expiration des jetons d'identité</div>
 </li>
-<li class="level1"><div class="li"> <strong>Access token expiration</strong>: Expiration time of Access Tokens</div>
+<li class="level1"><div class="li"> <strong>Expiration des jetons d'accès</strong>: Délai d'expiration des jetons d'accès</div>
 </li>
-<li class="level1"><div class="li"> <strong>Redirection addresses</strong>: Space separated list of redirect addresses allowed for this RP</div>
+<li class="level1"><div class="li"> <strong>Adresses de redirection</strong> : liste d'adresses de redirection autorisées pour ce RP, séparées par des espaces</div>
 </li>
-<li class="level1"><div class="li"> <strong>Extra claims</strong>: Associate attributes to extra claims if the RP request them, for example <code>birth</code> ⇒ <code>birthplace birthcountry</code></div>
+<li class="level1"><div class="li"> <strong>Déclaration (scopes/claims)</strong> : attributs associés à des "claims" supplémentaires si le RP les demande, par exemple <code>birth</code> ⇒ <code>birthplace birthcountry</code></div>
 </li>
 </ul>
 

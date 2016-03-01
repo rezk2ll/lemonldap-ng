@@ -39,8 +39,7 @@
 </ul>
 
 <p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> is compatible with the <a href="https://jasig.github.io/cas/development/protocol/CAS-Protocol-Specification.html" class="urlextern" title="https://jasig.github.io/cas/development/protocol/CAS-Protocol-Specification.html"  rel="nofollow">CAS protocol</a> versions 1.0, 2.0 and part of 3.0 (attributes exchange).
-
+<abbr title="LemonLDAP::NG">LL::NG</abbr> est compatible avec le <a href="https://jasig.github.io/cas/development/protocol/CAS-Protocol-Specification.html" class="urlextern" title="https://jasig.github.io/cas/development/protocol/CAS-Protocol-Specification.html"  rel="nofollow">protocole CAS</a> versions 1.0, 2.0 et en partie 3.0 (echange d'attributs).
 </p>
 
 </div><!-- EDIT2 SECTION "Presentation" [27-406] -->
@@ -73,10 +72,7 @@ Par exemple, pour n'autoriser que les utilisateurs authentifiés fortement :
 
 <p>
 </p><p></p><div class="noteimportant">
-
-Rewrite rules must have been activated in <a href="../../documentation/1.9/configlocation.html#portal" class="wikilink1" title="documentation:1.9:configlocation">Apache portal configuration</a> or in <a href="../../documentation/1.9/configlocation.html#portal1" class="wikilink1" title="documentation:1.9:configlocation">Nginx portal configuration</a>.
-
-
+Le module Rewrite d'Apache doit être activé dans la <a href="../../documentation/1.9/configlocation.html#portal" class="wikilink1" title="documentation:1.9:configlocation">configuration Apache du portail</a> ou dans la <a href="../../documentation/1.9/configlocation.html#portal1" class="wikilink1" title="documentation:1.9:configlocation">configuration du portail Nginx</a>.
 
 </div></p>
 </p>
@@ -87,7 +83,7 @@ Aller ensuite dans <code>Options</code> pour définir :
 <ul>
 <li class="level1"><div class="li"> <strong>Identifiant <abbr title="Central Authentication Service">CAS</abbr></strong> : la clef de session à utiliser pour compléter le login (valeur transmise au clients <abbr title="Central Authentication Service">CAS</abbr>).</div>
 </li>
-<li class="level1"><div class="li"> <strong><abbr title="Central Authentication Service">CAS</abbr> attributes</strong>: list of attributes that will be transmitted in validate response. Keys are the name of attribute in the <abbr title="Central Authentication Service">CAS</abbr> response, values are the name of session key.</div>
+<li class="level1"><div class="li"> <strong>Attributs <abbr title="Central Authentication Service">CAS</abbr></strong> : liste des attributs qui seront transmis dans les réponses validées. Les clefs sont les noms des attributs de la réponse <abbr title="Central Authentication Service">CAS</abbr>, et les valeurs les noms des clefs de session.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Politique de contrôle d'accès</strong> : definit si le contrôle d'accès doit être fait sur le service <abbr title="Central Authentication Service">CAS</abbr>. Trois options :</div>
 <ul>

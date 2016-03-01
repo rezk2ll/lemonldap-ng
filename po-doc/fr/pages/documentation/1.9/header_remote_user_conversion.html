@@ -28,9 +28,7 @@ Lorsque <abbr title="LemonLDAP::NG">LL::NG</abbr> est utilisé en mode reverse-p
 </p>
 
 <p>
-
-Apache <a href="http://httpd.apache.org/docs/current/mod/mod_setenvif.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_setenvif.html"  rel="nofollow">SetEnvIf module</a> will let you transform the Auth-User HTTP header in <code>REMOTE_USER</code> environment variable:
-
+Le <a href="http://httpd.apache.org/docs/current/mod/mod_setenvif.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_setenvif.html"  rel="nofollow">module SetEnvIf</a> d'Apache peut transformer l'en-tête HTTP Auth-User en variable d'environnement <code>REMOTE_USER</code> :
 </p>
 <pre class="code file apache"><span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">"(.*)"</span> REMOTE_USER=$1</pre>
 
@@ -66,16 +64,13 @@ Ceci permet de protéger des applications nécessitant la variable d'environneme
 
 <p>
 </p><p></p><div class="notetip">
-Sometimes, PHP applications also check the PHP_AUTH_USER and PHP_AUHT_PW environment variables. On peut les renseigner par la même voie :
+Parfois, des applications PHP examinent également les variables d'environnement PHP_AUTH_USER et PHP_AUHT_PW. On peut les renseigner par la même voie :
 </p>
 <pre class="code file apache"><span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">"(.*)"</span> PHP_AUTH_USER=$1
 <span class="kw1">SetEnvIfNoCase</span> Auth-Password <span class="st0">"(.*)"</span> PHP_AUTH_PW=$1</pre>
 
 <p>
-
-Of course, you need to <a href="../../documentation/1.9/passwordstore.html" class="wikilink1" title="documentation:1.9:passwordstore">store password in session</a> to fill PHP_AUTH_PW.
-
-
+Bien sûr, il faut <a href="../../documentation/1.9/passwordstore.html" class="wikilink1" title="documentation:1.9:passwordstore">stocker le mot-de-passe dans la session</a> pour renseigner PHP_AUTH_PW.
 
 </p></div></p>
 </p>
