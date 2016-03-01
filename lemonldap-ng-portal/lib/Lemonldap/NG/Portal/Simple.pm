@@ -1145,7 +1145,7 @@ sub _subProcess {
 sub updateStatus {
     my $self = shift;
     my $p    = $Lemonldap::NG::Handler::Main::tsv->{statusPipe};
-    print $p ( $self->{user} ? $self->{user} : $self->{ipAddr} )
+    print $p ( $self->{user} ? $self->{user} : $self->ipAddr )
       . " => $ENV{SERVER_NAME}$ENV{SCRIPT_NAME} "
       . $self->{error} . "\n"
       if ($p);
@@ -1865,6 +1865,7 @@ sub controlExistingSession {
             # A session has been found => call existingSession
             my $r = $self->_sub( 'existingSession', $id, $self->{sessionInfo} );
             if ( $r == PE_DONE ) {
+                $self->{user}  = $self->{sessionInfo}->{_whatToTrace};
                 $self->{error} = $self->_subProcess(
                     qw(checkNotification issuerDBInit authInit issuerForAuthUser authFinish autoRedirect)
                 );
