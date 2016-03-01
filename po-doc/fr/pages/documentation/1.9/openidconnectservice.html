@@ -63,7 +63,7 @@ Be sure that mod_rewrite is installed and that OpenID Connect rewrite rules are 
 Be sure that OpenID Connect rewrite rules are activated <a href="../../documentation/1.9/configlocation.html#portal1" class="wikilink1" title="documentation:1.9:configlocation">Nginx portal configuration</a>:
 
 </p>
-<pre class="code file nginx">  # OpenID Connect Issuer
+<pre class="code file nginx">  # Fournisseur d'identité OpenID-Connect
   rewrite ^/oauth2/.* /index.pl last;
   rewrite ^/.well-known/openid-configuration$ /openid-configuration.pl last;</pre>
 

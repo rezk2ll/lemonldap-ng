@@ -176,18 +176,18 @@ server {
     error_page 401 $lmlocation;
     try_files $uri $uri/ =404;
 &nbsp;
-    ##################################
-    # PASSING HEADERS TO APPLICATION #
-    ##################################
+    ######################################
+    # PASSER LES ENTÊTES À L'APPLICATION #
+    ######################################
 &nbsp;
-    # IF LUA IS SUPPORTED
+    # SI LUA EST SUPPORTÉ
     #include /path/to/lemonldap-ng/nginx-lua-headers.conf
 &nbsp;
-    # ELSE
-    # Set manually your headers
+    # SINON
+    # Définir manuellement les en-têtes
     #auth_request_set $authuser $upstream_http_auth_user;
     #proxy_set_header Auth-User $authuser;
-    # OR
+    # OU
     #fastcgi_param HTTP_AUTH_USER $authuser;
 &nbsp;
   }</pre>
@@ -220,7 +220,7 @@ server {
     fastcgi_param X_ORIGINAL_URI  $request_uri;
   } 
 &nbsp;
-  # Client requests
+  # Requêtes clients
   location ~ \.php$ {
     auth_request /lmauth;
     auth_request_set $lmremote_user $upstream_http_lm_remote_user;
@@ -235,14 +235,14 @@ server {
     fastcgi_split_path_info ^(.+\.php)(/.+)$;
     fastcgi_hide_header X-Powered-By;
 &nbsp;
-    ##################################
-    # PASSING HEADERS TO APPLICATION #
-    ##################################
-    # IF LUA IS SUPPORTED
+    ######################################
+    # PASSER LES ENTÊTES À L'APPLICATION #
+    ######################################
+    # SI LUA EST SUPPORTÉ
     #include /path/to/nginx-lua-headers.conf
 &nbsp;
-    # ELSE
-    # Set manually your headers
+    # SINON
+    # Définir manuellement les en-têtes
     #auth_request_set $authuser $upstream_http_auth_user;
     #fastcgi_param HTTP_AUTH_USER $authuser;
   }
@@ -281,7 +281,7 @@ server {
     fastcgi_param X_ORIGINAL_URI  $request_uri;
   } 
 &nbsp;
-  # Client requests
+  # Requêtes clients
   location / {
     auth_request /lmauth;
     auth_request_set $lmremote_user $upstream_http_lm_remote_user;
@@ -291,14 +291,14 @@ server {
     proxy_pass http://remote.server/;
     include /etc/nginx/proxy_params;
 &nbsp;
-    ##################################
-    # PASSING HEADERS TO APPLICATION #
-    ##################################
-    # IF LUA IS SUPPORTED
+    ######################################
+    # PASSER LES ENTÊTES À L'APPLICATION #
+    ######################################
+    # SI LUA EST SUPPORTÉ
     #include /path/to/nginx-lua-headers.conf
 &nbsp;
-    # ELSE
-    # Set manually your headers
+    # SINON
+    # Définir manuellement les en-têtes
     #auth_request_set $authuser $upstream_http_auth_user;
     #proxy_set_header HTTP_AUTH_USER $authuser;
   }

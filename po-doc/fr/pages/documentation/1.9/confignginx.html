@@ -20,7 +20,7 @@
 <div class="dokuwiki export">
 
 
-<h1 class="sectionedit1" id="deploy_nginx_configuration">Deploy Nginx configuration</h1>
+<h1 class="sectionedit1" id="deploy_nginx_configuration">Deployer la configuration Nginx</h1>
 <div class="level1">
 
 </div><!-- EDIT1 SECTION "Deploy Nginx configuration" [1-42] -->
@@ -29,15 +29,11 @@
 <div class="level2">
 
 <p>
-
-With tarball installation, Nginx configuration files will be installed in <code>/usr/local/lemonldap-ng/etc/</code>, else they are in <code>/etc/lemonldap-ng</code>.
-
+Depuis une installation par les sources, les fichiers de configuration de Nginx se trouvent dans <code>/usr/local/lemonldap-ng/etc/</code>, sinon, ils sont dans <code>/etc/lemonldap-ng</code>.
 </p>
 
 <p>
-
-You have to include them in Nginx main configuration.
-
+Il faut les inclure dans la configuration de Nginx, par exemple :
 </p>
 
 </div><!-- EDIT2 SECTION "Files" [43-265] -->
@@ -46,9 +42,7 @@ You have to include them in Nginx main configuration.
 <div class="level3">
 
 <p>
-
-Link files into <code>sites-available</code> directory (should already have been done if you used packages):
-
+Créer les lliens symboliques dans le dossier <code>sites-available</code> (devrait être effectué automatiquement avec les packages):
 </p>
 <pre class="code">ln -s /etc/lemonldap-ng/handler-nginx.conf /etc/nginx/sites-available/
 ln -s /etc/lemonldap-ng/manager-nginx.conf /etc/nginx/sites-available/
@@ -56,9 +50,7 @@ ln -s /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/sites-available/
 ln -s /etc/lemonldap-ng/test-nginx.conf /etc/nginx/sites-available/</pre>
 
 <p>
-
-Enable sites:
-
+Activer les sites :
 </p>
 <pre class="code">ln -s /etc/nginx/sites-available/handler-nginx.conf /etc/nginx/sites-enabled/
 ln -s /etc/nginx/sites-available/manager-nginx.conf /etc/nginx/sites-enabled/
@@ -71,9 +63,7 @@ ln -s /etc/nginx/sites-available/test-nginx.conf /etc/nginx/sites-enabled/</pre>
 <div class="level3">
 
 <p>
-
-Link files directly in <code>conf.d</code> directory:
-
+Lier les fichiers directement dans le dossier <code>conf.d</code> :
 </p>
 <pre class="code">ln -s /etc/lemonldap-ng/handler-nginx.conf /etc/nginx/conf.d/
 ln -s /etc/lemonldap-ng/manager-nginx.conf /etc/nginx/conf.d/

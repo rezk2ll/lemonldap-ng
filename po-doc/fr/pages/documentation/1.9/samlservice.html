@@ -146,7 +146,7 @@ Assurez-vous que mod_rewrite est installé et que les règles de réécriture SA
 Be sure that SAML2 rewrite rules are activated in <a href="../../documentation/1.9/configlocation.html#portal1" class="wikilink1" title="documentation:1.9:configlocation">Nginx portal configuration</a>:
 
 </p>
-<pre class="code file nginx">  # SAML2 Issuer
+<pre class="code file nginx">  # Fournisseur d'identité SAML2
   rewrite ^/saml/metadata /metadata.pl last;
   rewrite ^/saml/.* /index.pl last;</pre>
 
