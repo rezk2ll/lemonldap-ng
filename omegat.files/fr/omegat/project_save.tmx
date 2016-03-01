@@ -166,6 +166,18 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg># LemonLDAP::NG repository
+deb     http://lemonldap-ng.org/deb stable main
+deb-src http://lemonldap-ng.org/deb stable main</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205552Z" changeid="xavier">
+        <seg># Dépôt LemonLDAP::NG
+deb     http://lemonldap-ng.org/deb stable main
+deb-src http://lemonldap-ng.org/deb stable main</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg># Log format
 include /path/to/lemonldap-ng/nginx-lmlog.conf;
 server {</seg>
@@ -13606,8 +13618,8 @@ SSLCertificateFile ...</seg>
       <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can act as an OpenID Connect Relying Party (RP) towards multiple OpenID Connect Providers (OP).</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20160229T193113Z" changeid="xavier">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut agir comme un serveur « OpenID-Connect Relying Party » (RP), ce qui permet de fédérer &lt;a1&gt;LL::NG&lt;/a1&gt; avec :</seg>
+      <tuv lang="FR-FR" changedate="20160301T204428Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut agir comme un client OpenID-Connect (« Relying Party » RP), ce qui permet de fédérer &lt;a1&gt;LL::NG&lt;/a1&gt; avec :</seg>
       </tuv>
     </tu>
     <tu>
@@ -13796,6 +13808,22 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; cluster linked to one AD domain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211038Z" changeid="xavier">
+        <seg>Un cluster &lt;a0&gt;LL::NG&lt;/a0&gt; lié à un seul domaine AD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; cluster linked to two AD domains</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211054Z" changeid="xavier">
+        <seg>Un cluster &lt;a0&gt;LL::NG&lt;/a0&gt; lié à 2 domaines AD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; configured as &lt;a1&gt;SAML Identity Provider&lt;/a1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182515Z" changeid="xavier">
@@ -13928,6 +13956,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T161838Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; utilise un mécanisme de session basé sur un identifiant de session secret partagé entre l'utilisateur (dans un &lt;a1&gt;cookie SSO&lt;/a1&gt;) et la &lt;a2&gt;base des sessions&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; requires at least Red Hat/CentOS 7</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205712Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; nécessite Red Hat/CentOS 7</seg>
       </tuv>
     </tu>
     <tu>
@@ -17034,6 +17070,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;c0&gt;PROD=yes&lt;/c0&gt; makes web interface use minified versions of &lt;a1&gt;CSS&lt;/a1&gt; and JS files.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210125Z" changeid="xavier">
+        <seg>&lt;c0&gt;PROD=yes&lt;/c0&gt; impose aux interfaces web d'utiliser les versions compactées des fichiers &lt;a1&gt;CSS&lt;/a1&gt; et JS.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;c0&gt;ValveLemonLDAPNG.jar&lt;/c0&gt; is created under &lt;c1&gt;/dist&lt;/c1&gt; directory.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T111143Z" changeid="xavier">
@@ -18216,6 +18260,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ACME.COM&lt;/s0&gt;: Second AD domain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211207Z" changeid="xavier">
+        <seg>&lt;s0&gt;ACME.COM&lt;/s0&gt; : second domaine AD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;ACR values&lt;/s0&gt;: Value acr_values parameters (example: loa-1)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T202950Z" changeid="xavier">
@@ -18992,6 +19044,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;DESTDIR&lt;/s0&gt;: only for packaging, install the product in a jailroot (default: “”)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210302Z" changeid="xavier">
+        <seg>&lt;s0&gt;DESTDIR&lt;/s0&gt; : seulement pour la création de paquets, installe le produit dans une cage (default: “”)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;DESTDIR&lt;/s0&gt;: only for packaging, install the product in a jailroot (default: ””)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161234Z" changeid="xavier">
@@ -19184,6 +19244,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;EXAMPLE.COM&lt;/s0&gt;: First AD domain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211212Z" changeid="xavier">
+        <seg>&lt;s0&gt;EXAMPLE.COM&lt;/s0&gt; : premier domaine AD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;EXAMPLE.COM&lt;/s0&gt;: Kerberos realm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154236Z" changeid="xavier">
@@ -19196,6 +19264,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182917Z" changeid="xavier">
         <seg>&lt;s0&gt;Enable Single Sign-On&lt;/s0&gt;: sélectionner.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Enable use of IDP initiated &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: set to &lt;c2&gt;On&lt;/c2&gt; to enable IDP Initiated &lt;a3&gt;URL&lt;/a3&gt; on this SP.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205308Z" changeid="xavier">
+        <seg>&lt;s0&gt;Activer l'&lt;a1&gt;URL&lt;/a1&gt; initiée par l'IdP&lt;/s0&gt; : mettre à &lt;c2&gt;On&lt;/c2&gt; pour activer l'&lt;a3&gt;URL&lt;/a3&gt; initiée par l'IdP sur ce SP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19306,6 +19382,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T061538Z" changeid="xavier">
         <seg>&lt;s0&gt;Secret de l'application Facebook&lt;/s0&gt; : le secret correspondant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Force NameID session key&lt;/s0&gt;: if empty, the NameID mapping defined in &lt;a1&gt;SAML service&lt;/a1&gt; configuration will be used.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T204749Z" changeid="xavier">
+        <seg>&lt;s0&gt;Forcer la clef de session NameID&lt;/s0&gt; : si vide, la correspondance NameID définie dans la configuration du &lt;a1&gt;service SAML&lt;/a1&gt; sera utilisée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19594,6 +19678,30 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120502T041623Z" changeid="xavier">
         <seg>&lt;s0&gt;Protection Javascript&lt;/s0&gt; : active le drapeau httpOnly pour éviter que le cookie ne soit accessible par code javascript</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;KERB_AUTH&lt;/s0&gt;: AD account to generate the keytab for &lt;a1&gt;LL::NG&lt;/a1&gt; server (in single mode)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211602Z" changeid="xavier">
+        <seg>&lt;s0&gt;KERB_AUTH&lt;/s0&gt; : compte AD pour générer la table de clefs du serveur &lt;a1&gt;LL::NG&lt;/a1&gt; (en mode serveur seul)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;KERB_NODE1&lt;/s0&gt;: AD account to generate the keytab for the first &lt;a1&gt;LL::NG&lt;/a1&gt; server (in cluster mode)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211643Z" changeid="xavier">
+        <seg>&lt;s0&gt;KERB_NODE1&lt;/s0&gt; : compte AD pour générer la table de clefs du premier serveur &lt;a1&gt;LL::NG&lt;/a1&gt; (en mode cluster)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;KERB_NODE2&lt;/s0&gt;: AD account to generate the keytab for the second &lt;a1&gt;LL::NG&lt;/a1&gt; server (in cluster mode)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211724Z" changeid="xavier">
+        <seg>&lt;s0&gt;KERB_NODE2&lt;/s0&gt; : compte AD pour générer la table de clef du second serveur &lt;a1&gt;LL::NG&lt;/a1&gt; (en mode cluster)</seg>
       </tuv>
     </tu>
     <tu>
@@ -20088,6 +20196,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;One Time Use&lt;/s0&gt;: set the OneTimeUse flag in authentication response (&lt;c1&gt;&lt;Condtions&gt;&lt;/c1&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T204855Z" changeid="xavier">
+        <seg>&lt;s0&gt;Usage unique&lt;/s0&gt; : active le drapeau OneTimeUse dans les réponses d'authentification (&lt;c1&gt;&lt;Condtions&gt;&lt;/c1&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;One Time Use&lt;/s0&gt;: set the OneTimeUse flag in authentication response.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092702Z" changeid="xavier">
@@ -20180,6 +20296,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161254Z" changeid="xavier">
         <seg>&lt;s0&gt;PREFIX&lt;/s0&gt; : répertoire d'installation (défaut : /usr/local)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;PROD&lt;/s0&gt;: use minified JS and &lt;a1&gt;CSS&lt;/a1&gt; files</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210327Z" changeid="xavier">
+        <seg>&lt;s0&gt;PROD&lt;/s0&gt; : utiliser les fichiers JS et &lt;a1&gt;CSS&lt;/a1&gt; compactés</seg>
       </tuv>
     </tu>
     <tu>
@@ -21180,6 +21304,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;USEDEBIANLIBS&lt;/s0&gt;: use Debian packaged JS and &lt;a1&gt;CSS&lt;/a1&gt; files &lt;e2&gt;(&lt;s3&gt;Note that this options isn't yet usable&lt;/s3&gt; since Debian provides a too old AngularJS for now: LLNG manager needs at least version 1.4.0)&lt;/e2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210515Z" changeid="xavier">
+        <seg>&lt;s0&gt;USEDEBIANLIBS&lt;/s0&gt; : utiliser les fichiers JS et &lt;a1&gt;CSS&lt;/a1&gt; des paquets Debian &lt;e2&gt;(&lt;s3&gt;Noter que cette options n'est pas encore utilisable&lt;/s3&gt; car Debian fournit une version trop ancienne de AngularJS pour l'instant : le manager LLNG nécessite à minima la version 1.4.0)&lt;/e2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;USEEXTERNALLIBS&lt;/s0&gt;: use files from public CDN</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210535Z" changeid="xavier">
+        <seg>&lt;s0&gt;USEEXTERNALLIBS&lt;/s0&gt; : utiliser les fichiers des CDN publics</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;UTF8 metadata conversion&lt;/s0&gt;: set to On to force partner's metadata conversion.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21522,10 +21662,26 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ad.acme.com&lt;/s0&gt;: &lt;a1&gt;DNS&lt;/a1&gt; of Second Active Directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211440Z" changeid="xavier">
+        <seg>&lt;s0&gt;ad.acme.com&lt;/s0&gt; : &lt;a1&gt;DNS&lt;/a1&gt; du second Active Directory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;ad.example.com&lt;/s0&gt;: &lt;a1&gt;DNS&lt;/a1&gt; of Active Directory</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154328Z" changeid="xavier">
         <seg>&lt;s0&gt;ad.example.com&lt;/s0&gt; : nom &lt;a1&gt;DNS&lt;/a1&gt; du serveur Active Directory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ad.example.com&lt;/s0&gt;: &lt;a1&gt;DNS&lt;/a1&gt; of First Active Directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211444Z" changeid="xavier">
+        <seg>&lt;s0&gt;ad.example.com&lt;/s0&gt; : &lt;a1&gt;DNS&lt;/a1&gt; du premier Active Directory</seg>
       </tuv>
     </tu>
     <tu>
@@ -21586,6 +21742,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;auth.example.com&lt;/s0&gt;: &lt;a1&gt;DNS&lt;/a1&gt; of the &lt;a2&gt;LL::NG&lt;/a2&gt; portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211231Z" changeid="xavier">
+        <seg>&lt;s0&gt;auth.example.com&lt;/s0&gt; : &lt;a1&gt;DNS&lt;/a1&gt; du portail &lt;a2&gt;LL::NG&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;auth.example.com&lt;/s0&gt;: &lt;a1&gt;DNS&lt;/a1&gt; of the portal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154302Z" changeid="xavier">
@@ -21614,6 +21778,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113846Z" changeid="xavier">
         <seg>&lt;s0&gt;auth_env_realname&lt;/s0&gt;: &lt;a1&gt;HTTP&lt;/a1&gt;_AUTH_CN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;authpwd.example.com&lt;/s0&gt;: &lt;a1&gt;DNS&lt;/a1&gt; of the &lt;a2&gt;LL::NG&lt;/a2&gt; portal (to failback to a form based authentication)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211324Z" changeid="xavier">
+        <seg>&lt;s0&gt;authpwd.example.com&lt;/s0&gt; : &lt;a1&gt;DNS&lt;/a1&gt; du portail &lt;a2&gt;LL::NG&lt;/a2&gt; (pour retomber sur un formulaire d'authentification)</seg>
       </tuv>
     </tu>
     <tu>
@@ -22054,10 +22226,34 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;node1.example.com&lt;/s0&gt;: &lt;a1&gt;DNS&lt;/a1&gt; of the first &lt;a2&gt;LL::NG&lt;/a2&gt; portal server (in cluster mode)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211351Z" changeid="xavier">
+        <seg>&lt;s0&gt;node1.example.com&lt;/s0&gt; : &lt;a1&gt;DNS&lt;/a1&gt; du second portail &lt;a2&gt;LL::NG&lt;/a2&gt; (en mode cluster)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;node2.example.com&lt;/s0&gt;: &lt;a1&gt;DNS&lt;/a1&gt; of the second &lt;a2&gt;LL::NG&lt;/a2&gt; portal server (in cluster mode)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211415Z" changeid="xavier">
+        <seg>&lt;s0&gt;node2.example.com&lt;/s0&gt; : &lt;a1&gt;DNS&lt;/a1&gt; du second portail &lt;a2&gt;LL::NG&lt;/a2&gt; (en mode cluster)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;none&lt;/s0&gt;: no access control, the server will answer without checking if the user is authorized for the service (this is the default)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T081135Z" changeid="xavier">
         <seg>&lt;s0&gt;none&lt;/s0&gt; : pas de contrôle d'accès, le serveur répond sans contrôler si l'utilisateur est autorisé à accéder au service (c'est la valeur par défaut)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;notOnOrAfter duration&lt;/s0&gt;: Time in seconds, added to authentication time, to define notOnOrAfter value in &lt;a1&gt;SAML&lt;/a1&gt; response (&lt;c2&gt;&lt;Condtions&gt;&lt;/c2&gt; and &lt;c3&gt;&lt;SubjectConfirmationData&gt;&lt;/c3&gt;):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205134Z" changeid="xavier">
+        <seg>&lt;s0&gt;Durée notOnOrAfter&lt;/s0&gt; : durée en secondes, ajoutée à la durée d'authentification, pour définir la valeur notOnOrAfter dans les réponses &lt;a1&gt;SAML&lt;/a1&gt; (&lt;c2&gt;&lt;Conditions&gt;&lt;/c2&gt; et &lt;c3&gt;&lt;SubjectConfirmationData&gt;&lt;/c3&gt;) :</seg>
       </tuv>
     </tu>
     <tu>
@@ -22194,6 +22390,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190923Z" changeid="xavier">
         <seg>&lt;s0&gt;roleSeparator&lt;/s0&gt; (optionnel) : séparateur des valeurs de rôle.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;sessionNotOnOrAfter duration&lt;/s0&gt;: Time in seconds, added to authentication time, to define sessionNotOnOrAfter value in &lt;a1&gt;SAML&lt;/a1&gt; response (&lt;c2&gt;&lt;AuthnStatement&gt;&lt;/c2&gt;):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205003Z" changeid="xavier">
+        <seg>&lt;s0&gt;Durée sessionNotOnOrAfter&lt;/s0&gt; : durée en secondes, ajoutée à la durée d'authentification, pour définir la valeur sessionNotOnOrAfter dans les réponses &lt;a1&gt;SAML&lt;/a1&gt; (&lt;c2&gt;&lt;AuthnStatement&gt;&lt;/c2&gt;):</seg>
       </tuv>
     </tu>
     <tu>
@@ -25644,6 +25848,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>AD accounts</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212007Z" changeid="xavier">
+        <seg>Comptes AD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>AD password policy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T060618Z" changeid="xavier">
@@ -25888,6 +26100,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T042432Z" changeid="xavier">
         <seg>Adapter le nom d'hôte virtuel de rechargement au domaine configuré.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Add &lt;c0&gt;&lt;a1&gt;https://auth.example.com&lt;/a1&gt;&lt;/c0&gt; as trusted site.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212345Z" changeid="xavier">
+        <seg>Ajouter &lt;c0&gt;&lt;a1&gt;https://auth.example.com&lt;/a1&gt;&lt;/c0&gt; comme site approuvé.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26140,6 +26360,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>All Perl modules are in the VENDOR perl directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205930Z" changeid="xavier">
+        <seg>Tous les modules Perl se trouvent dans le répertoire VENDOR de Perl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All Perl modules are in the VENDOR perl directory (/usr/share/perl5/)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205615Z" changeid="xavier">
+        <seg>Tous les modules Perl se trouvent dans le répertoire VENDOR de Perl (/usr/share/perl5/)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All Perl scripts/pages are in /var/lib/lemonldap-ng/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205629Z" changeid="xavier">
+        <seg>Tous les scripts/pages Perl se trouvent dans /var/lib/lemonldap-ng/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>All SSL options are documented in &lt;a0&gt;Apache mod_ssl page&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T213011Z" changeid="xavier">
@@ -26200,6 +26444,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094811Z" changeid="xavier">
         <seg>Tous les outils lemonldap-ng se trouvent dans /usr/share/lemonldap-ng/bin/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All names must be registered in the &lt;a0&gt;DNS&lt;/a0&gt; server (which is Active Directory).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211916Z" changeid="xavier">
+        <seg>Tous les noms doivent être enregistrés dans le serveur &lt;a0&gt;DNS&lt;/a0&gt; (qui est Active Directory).</seg>
       </tuv>
     </tu>
     <tu>
@@ -26532,6 +26784,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>And with Nginx:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210600Z" changeid="xavier">
+        <seg>Et avec Nginx:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Anonymous access</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26632,6 +26892,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154410Z" changeid="xavier">
         <seg>Module Kerberos d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache Kerberos module installation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212438Z" changeid="xavier">
+        <seg>Installation du module Kerberos d'Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -28540,6 +28808,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Check into security parameters that Kerberos authentication is allowed.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212418Z" changeid="xavier">
+        <seg>Vérifier dans les paramètres de sécurité que l'authentification Kerberos est autorisée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Choice &lt;a0&gt;URL&lt;/a0&gt; parameter</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28668,6 +28944,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Client Kerberos configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212514Z" changeid="xavier">
+        <seg>Configuration du client Kerberos</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Clone</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140851Z" changeid="guimard">
@@ -28728,6 +29012,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T041751Z" changeid="xavier">
         <seg>Editeur de configuration en ligne de commande</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Commands on Active Directory will be:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214402Z" changeid="xavier">
+        <seg>Les commandes sur Active Directory :</seg>
       </tuv>
     </tu>
     <tu>
@@ -29016,6 +29308,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T202158Z" changeid="xavier">
         <seg>Configuration du client (Relying Party) dans LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configuration of portal virtual host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213703Z" changeid="xavier">
+        <seg>Configuration de l'hôte virtuel du portail</seg>
       </tuv>
     </tu>
     <tu>
@@ -29560,6 +29860,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T201204Z" changeid="xavier">
         <seg>Copier le contenu de ce fichie dans l'emplacement dédié.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Copy the generated keytab on each node (rename it as auth.keytab to have the same Apache configuration on each node).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214509Z" changeid="xavier">
+        <seg>Copier les tables de clefs générés sur chaque nœud (en la renommant en auth.keytab pour avoir la même configuration Apache sur chaque nœud).</seg>
       </tuv>
     </tu>
     <tu>
@@ -30868,6 +31176,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Each account will hold the Service Principal Name (SPN) of the &lt;a1&gt;LL::NG&lt;/a1&gt; server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212134Z" changeid="xavier">
+        <seg>Chaque compte tiendra le nom principal de service (SPN) du serveur &lt;a1&gt;LL::NG&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Each configuration will be represented as an entry, which structural objectClass is &lt;c0&gt;applicationProcess&lt;/c0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120411T041750Z" changeid="xavier">
@@ -31060,6 +31376,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Edit ~/.rpmmacros and set your build parameters:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205942Z" changeid="xavier">
+        <seg>Editer ~/.rpmmacros et mettre les paramètres de construction :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Either checkout or export the &lt;a0&gt;SVN repository&lt;/a0&gt;, or extract the SVN tarball to get the SVN files on your disk.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210031Z" changeid="xavier">
+        <seg>Au choix, importer le &lt;a0&gt;dépôt SVN&lt;/a0&gt; ou extraire l'archive SVN pour importer les fichiers.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Either checkout or export the SVN repository, or extract the SVN tarball to get the SVN files on your disk.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160429Z" changeid="xavier">
@@ -31208,6 +31540,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T134302Z" changeid="xavier">
         <seg>Caractères encodés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Encryption types must be the same</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213603Z" changeid="xavier">
+        <seg>Encryption types doit être identique</seg>
       </tuv>
     </tu>
     <tu>
@@ -31412,6 +31752,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T201336Z" changeid="xavier">
         <seg>Modèle exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example values</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211107Z" changeid="xavier">
+        <seg>Valeurs d'exemple</seg>
       </tuv>
     </tu>
     <tu>
@@ -31784,6 +32132,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>FastCGI server install (required for Nginx)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210205Z" changeid="xavier">
+        <seg>Installation du serveur FastCGI (requis pour Nginx)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>FastCGI support</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T122941Z" changeid="xavier">
@@ -32008,6 +32364,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>First, copy the current portal virtual host definition into a new one.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213756Z" changeid="xavier">
+        <seg>Premièrement, copier l'actuelle définition de l'hôte virtuel du portail dans une nouvelle.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Follow &lt;a0&gt;LDAP session backend&lt;/a0&gt; doc</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113805Z" changeid="xavier">
@@ -32124,6 +32488,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour les systèmes de type Debian/Ubuntu : vous pouvez utiliser ceux proposés par Debian (&lt;a0&gt;paquets lemonldap-ng&lt;/a0&gt;) ou &lt;a1&gt;installer les paquets pré-requis&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For Debian/Ubuntu with Apache2, you can use:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210554Z" changeid="xavier">
+        <seg>Pour Debian/Ubuntu avec Apache2, utiliser :</seg>
       </tuv>
     </tu>
     <tu>
@@ -32452,6 +32824,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145310Z" changeid="xavier">
         <seg>Par exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example: &lt;a0&gt;http://auth.example.com/saml/singleSignOn?IDPInitiated=1&amp;spConfKey=simplesamlphp&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205446Z" changeid="xavier">
+        <seg>Par exemple: &lt;a0&gt;http://auth.example.com/saml/singleSignOn?IDPInitiated=1&amp;spConfKey=simplesamlphp&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -34296,6 +34676,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If not, you can just keep a single virtual host (the authentication will fail if Kerberos negociation do not succeed).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214211Z" changeid="xavier">
+        <seg>Sinon, on peut ne conserver qu'un hôte virtuel (l'authentification sera refusée si la négociation Kerberos échoue).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If one is missing, the user is not created.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073458Z" changeid="xavier">
@@ -35312,6 +35700,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In the Manager, select node &lt;a0&gt;SAML&lt;/a0&gt; service providers and click on &lt;c1&gt;Add &lt;a2&gt;SAML&lt;/a2&gt; SP&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T204638Z" changeid="xavier">
+        <seg>Dans le Manager, selectionner le noeud Fournisseurs d'identité &lt;a0&gt;SAML&lt;/a0&gt; et cliquer sur &lt;c1&gt;Ajouter un IdP &lt;a2&gt;SAML&lt;/a2&gt;&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In the Manager, select node &lt;a0&gt;SAML&lt;/a0&gt; service providers and click on New service provider:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092026Z" changeid="xavier">
@@ -35792,6 +36188,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Installation on Red Hat/CentOS</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205642Z" changeid="xavier">
+        <seg>Installation sur Red Hat/CentOS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Installation on RedHat/CentOS</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095102Z" changeid="xavier">
@@ -36208,6 +36612,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It is mandatory that &lt;a0&gt;LL::NG&lt;/a0&gt; servers and AD servers have the same time.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211820Z" changeid="xavier">
+        <seg>Il est impératif que les serveurs &lt;a0&gt;LL::NG&lt;/a0&gt; et AD soient à la même heure.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It is particularly important for smart cards: when the card is not inserted before the browser starts, the user must restart his browser, or at least refresh (F5) the page.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T213429Z" changeid="xavier">
@@ -36232,6 +36644,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It is recommended to create an AD account for each &lt;a0&gt;LL::NG&lt;/a0&gt; server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212037Z" changeid="xavier">
+        <seg>Il est recommandé de créer un compte AD pour chaque serveur &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It is recommended to secure the channel between reverse-proxies and application to be sure that only request coming from the &lt;a0&gt;LL::NG&lt;/a0&gt; protected reverse-proxies are allowed.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T135055Z" changeid="xavier">
@@ -36244,6 +36664,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Il est recommendé d'utiliser ModPerl::Registry au lieu d'utiliser le dispositif &quot;cgi-script&quot; tel qu'indiqué dans les fichiers de configuration d'Apache proposés en exemple (portal-apache2.conf):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is recommended to use NTP to do this.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211840Z" changeid="xavier">
+        <seg>Il est recommandé d'utilisé NTP à cet effet.</seg>
       </tuv>
     </tu>
     <tu>
@@ -36388,6 +36816,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162226Z" changeid="xavier">
         <seg>Il envoie un mot-de-passe à valeur unique (OTP) qui est validé par un serveur Yubico.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It should be possible to have the same account for all SPN, but this may require some manipulations on AD (command setspn) that are not documented here.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212224Z" changeid="xavier">
+        <seg>Il devrait être possible d'avoir le même compte pour tous les SPN, mais ça nécessite certaines manipulations de l'AD (commande setspn) non documentées ici.</seg>
       </tuv>
     </tu>
     <tu>
@@ -36668,6 +37104,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173725Z" changeid="xavier">
         <seg>Mettre juste le type d'authentification à &lt;c0&gt;config&lt;/c0&gt; et indiquer le &lt;a1&gt;DN&lt;/a1&gt; et le mot-de-passe dans le fichier &lt;c2&gt;config.php&lt;/c2&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Just use node1.example.com and node2.example.com instead of auth.example.com.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214605Z" changeid="xavier">
+        <seg>Utiliser simplement node1.example.com et node2.example.com au lieu de auth.example.com.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>KVNO must be the same</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213611Z" changeid="xavier">
+        <seg>KVNO doit être identique</seg>
       </tuv>
     </tu>
     <tu>
@@ -36996,6 +37448,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112735Z" changeid="xavier">
         <seg>LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LL::NG Cluster / Single AD domain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214229Z" changeid="xavier">
+        <seg>Cluster LL::NG / domaine AD unique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LL::NG Cluster / Two AD domains</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214716Z" changeid="xavier">
+        <seg>Cluster LL::NG / Deux domaines AD</seg>
       </tuv>
     </tu>
     <tu>
@@ -37460,6 +37928,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T123538Z" changeid="xavier">
         <seg>LemonLDAP::NG fournit un script pour changer aisément de backend de configuration en conservant l'historique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG provides packages for Red Hat/Centos 7:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205730Z" changeid="xavier">
+        <seg>LemonLDAP::NG fournit des packages pour Red Hat/Centos 7:</seg>
       </tuv>
     </tu>
     <tu>
@@ -39500,6 +39976,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Now you can compare the above result with the same request done trough the keytab file:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213440Z" changeid="xavier">
+        <seg>Comparer maintenant le résultat ci-dessus avec la même requête effectuée au travers de la table de clefs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Now you can log in with a simple HTTP header.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160227T183934Z" changeid="xavier">
@@ -39684,6 +40168,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Obtain keytab file</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212825Z" changeid="xavier">
+        <seg>Obtenir un fichier table de clef</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Of course, integration will be full if you use the &lt;a0&gt;LDAP&lt;/a0&gt; directory as users backend for &lt;a1&gt;LL::NG&lt;/a1&gt; and Liferay.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111210T074154Z" changeid="xavier">
@@ -39796,6 +40288,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>On &lt;a0&gt;LL::NG&lt;/a0&gt; server, edit &lt;c1&gt;/etc/krb5.conf&lt;/c1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212535Z" changeid="xavier">
+        <seg>Sur le serveur &lt;a0&gt;LL::NG&lt;/a0&gt;, éditer &lt;c1&gt;/etc/krb5.conf&lt;/c1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>On CentOS/RHEL:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154434Z" changeid="xavier">
@@ -39884,6 +40384,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>One of:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205408Z" changeid="xavier">
+        <seg>Un parmi :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>One or more roles (to send to the protected applications)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T143938Z" changeid="xavier">
@@ -39968,6 +40476,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160227T183027Z" changeid="xavier">
         <seg>Guide Open Source</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Open a Kerberos session (like done in the previous step):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213227Z" changeid="xavier">
+        <seg>Ouvrir une session Kerberos (comme effectué dans l'étape précédente) :</seg>
       </tuv>
     </tu>
     <tu>
@@ -40224,6 +40740,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160227T184142Z" changeid="xavier">
         <seg>Autres documents</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Other ressources</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T215156Z" changeid="xavier">
+        <seg>Autres documentations</seg>
       </tuv>
     </tu>
     <tu>
@@ -40600,6 +41124,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T140827Z" changeid="xavier">
         <seg>CGI aito-protégée Perl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Perl libraries install :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210135Z" changeid="xavier">
+        <seg>Installer les librairies Perl :</seg>
       </tuv>
     </tu>
     <tu>
@@ -41260,6 +41792,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Principal names must be the same</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213618Z" changeid="xavier">
+        <seg>Principal names doit identique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Problems are generally resolved in up to 72 hours)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T221607Z" changeid="xavier">
@@ -41668,6 +42208,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Read the service ticket:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213316Z" changeid="xavier">
+        <seg>Lire le ticket de service :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Read-only functions (index.pl/sessions or index.pl/adminSessions paths):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T171800Z" changeid="xavier">
@@ -41728,6 +42276,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T073847Z" changeid="guimard">
         <seg>Redirige l'utilisateur vers l'&lt;a0&gt;URL&lt;/a0&gt; demandée ou affiche le menu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Redirection script</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214035Z" changeid="xavier">
+        <seg>Script de redirection</seg>
       </tuv>
     </tu>
     <tu>
@@ -42032,6 +42588,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Rapporter un bogue</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Request a service ticket:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213240Z" changeid="xavier">
+        <seg>Demander un ticket de service :</seg>
       </tuv>
     </tu>
     <tu>
@@ -43056,6 +43620,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;Apache authentication module configuration&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213647Z" changeid="xavier">
+        <seg>Voir la &lt;a0&gt;configuration du module d'authentification Apache&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;Apache::Session::Memcached&lt;/a0&gt; for optional parameters.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T050801Z" changeid="guimard">
@@ -43468,6 +44040,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Envoi de “Lastname, firstname” dans Auth-Name:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Server time</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211755Z" changeid="xavier">
+        <seg>Horloge des serveurs</seg>
       </tuv>
     </tu>
     <tu>
@@ -43916,6 +44496,22 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20130203T114241Z" changeid="xavier">
         <seg>Depuis la version 1.90 d'Apache::Session, on peut utiliser Apache::Session::MySQL::NoLock à la place</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Single &lt;a0&gt;LL::NG&lt;/a0&gt; server linked to one AD domain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211017Z" changeid="xavier">
+        <seg>Un seul serveur &lt;a0&gt;LL::NG&lt;/a0&gt; lié à un seul domaine AD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Single LL::NG Server / Single AD domain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212503Z" changeid="xavier">
+        <seg>Serveur LL::NG unique / Domaine AD unique</seg>
       </tuv>
     </tu>
     <tu>
@@ -45178,6 +45774,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The IDP Initiated &lt;a0&gt;URL&lt;/a0&gt; is the &lt;a1&gt;SSO&lt;/a1&gt; &lt;a2&gt;SAML&lt;/a2&gt; &lt;a3&gt;URL&lt;/a3&gt; with GET parameters:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205359Z" changeid="xavier">
+        <seg>L'&lt;a0&gt;URL&lt;/a0&gt; initiée par l'IdP est l'&lt;a3&gt;URL&lt;/a3&gt; &lt;a2&gt;SAML&lt;/a2&gt; du &lt;a1&gt;SSO&lt;/a1&gt; avec les paramètres GET :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The IDP name is asked, enter it and click OK.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T221317Z" changeid="xavier">
@@ -45330,6 +45934,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The client Kerberos configuration is the same as a single &lt;a0&gt;LL::NG&lt;/a0&gt; server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214306Z" changeid="xavier">
+        <seg>La configuration du client Kerberos est la même qie pour un serveur &lt;a0&gt;LL::NG&lt;/a0&gt; unique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The common domain is used by &lt;a0&gt;SAML SP&lt;/a0&gt; to find an Identity Provider for the user, and by &lt;a1&gt;SAML IDP&lt;/a1&gt; to register itself in user's IDP list.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -45394,10 +46006,26 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The configuration is the same as a single &lt;a0&gt;LL::NG&lt;/a0&gt; server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214624Z" changeid="xavier">
+        <seg>La configuration est la même qie pour un serveur &lt;a0&gt;LL::NG&lt;/a0&gt; unique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The configuration is the same as the &lt;a0&gt;LDAP module&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T052958Z" changeid="xavier">
         <seg>La configuration est la même que mour le &lt;a0&gt;module LDAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The configuration is the same as with a single AD domain.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T215144Z" changeid="xavier">
+        <seg>La configuration est la même que pour un domaine AD unique.</seg>
       </tuv>
     </tu>
     <tu>
@@ -45634,6 +46262,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The important things to check are:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213506Z" changeid="xavier">
+        <seg>Les points importants à vérifier sont :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The integration with &lt;a0&gt;LL::NG&lt;/a0&gt; is the following:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155302Z" changeid="xavier">
@@ -45786,6 +46422,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The only change in Apache configuration is in the &lt;c0&gt;KrbServiceName&lt;/c0&gt;, it should be set to Any:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214656Z" changeid="xavier">
+        <seg>Le seul chagement dans la configuration d'Apache est le the &lt;c0&gt;KrbServiceName&lt;/c0&gt; qui doit être mis à Any:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The password can be in plain text, or encoded with a standard &lt;a0&gt;SQL&lt;/a0&gt; method:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195341Z" changeid="xavier">
@@ -45922,6 +46566,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The redirection script is needed if you use a failaback authentication.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214109Z" changeid="xavier">
+        <seg>Le script de redirection est nécessaire si l'authentification de secours est utilisée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The request on logout &lt;a0&gt;URL&lt;/a0&gt; will be sent after user is disconnected, so you should unprotect this &lt;a1&gt;URL&lt;/a1&gt; if it is protected by an &lt;a2&gt;LL::NG&lt;/a2&gt; Handler.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T200645Z" changeid="guimard">
@@ -45942,6 +46594,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T150331Z" changeid="guimard">
         <seg>Le lien de réinitialisation de mot-de-passe doit être activé, voir &lt;a0&gt;la personnalisation du portail&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The result of the command should be:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213305Z" changeid="xavier">
+        <seg>Le résultat de la commande doit être :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The reverse &lt;a1&gt;DNS&lt;/a1&gt; should also work for all the names.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212002Z" changeid="xavier">
+        <seg>Il est préférable que le &lt;a1&gt;DNS&lt;/a1&gt; inverse soit capable de résoudre tous les noms.</seg>
       </tuv>
     </tu>
     <tu>
@@ -46060,6 +46728,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The two domains must be defined in &lt;c0&gt;/etc/krb5.conf&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214741Z" changeid="xavier">
+        <seg>Les deux domaines doivent être définis dans &lt;c0&gt;/etc/krb5.conf&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The upgrade process will also have migrate old configuration files into &lt;c0&gt;/etc/lemonldap-ng/lemonldap-ng.ini&lt;/c0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094037Z" changeid="xavier">
@@ -46104,6 +46780,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T173110Z" changeid="xavier">
         <seg>Cette valeur sera utilisée pour afficher les données.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The values passed in -crypto and -ptype depend on the Active Directory version and the windows version of the workstations.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212915Z" changeid="xavier">
+        <seg>Les valeurs passées dans -crypto et -ptype dépendent de la version d'Active Directory et de celle des stations de travail.</seg>
       </tuv>
     </tu>
     <tu>
@@ -46252,6 +46936,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then edit the property &lt;c2&gt;network.negotiate-auth.trusted-uris&lt;/c2&gt; and set value &lt;c3&gt;example.com&lt;/c3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212327Z" changeid="xavier">
+        <seg>Éditer la propriété &lt;c2&gt;network.negotiate-auth.trusted-uris&lt;/c2&gt; et la mettre à la valeur &lt;c3&gt;example.com&lt;/c3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then fill all inputs to create the notification.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T055520Z" changeid="guimard">
@@ -46344,6 +47036,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T054103Z" changeid="guimard">
         <seg>Configure ensuite le nouveau fichier &lt;a5&gt;XSLT&lt;/a5&gt; dans le manager, aller dans Paramètres généraux &gt; Paramètres avancés &gt; Notifications &gt; Fichier &lt;a6&gt;XSLT&lt;/a6&gt; personnalisé et mettre par exemple &lt;c7&gt;/etc/lemonldap-ng/notification.xsl&lt;/c7&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then list the tickets:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212724Z" changeid="xavier">
+        <seg>Lister ensuite les tickets :</seg>
       </tuv>
     </tu>
     <tu>
@@ -46492,6 +47192,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then you will have 2 keytab files for each node, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T215000Z" changeid="xavier">
+        <seg>On a donc 2 tables de clefs pour chaque nœud, par exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then, go in &lt;c0&gt;&lt;a1&gt;CAS&lt;/a1&gt; parameters&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160247Z" changeid="xavier">
@@ -46612,6 +47320,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then, modify the main portal virtual host to load the Apache Kerberos authentication module :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214014Z" changeid="xavier">
+        <seg>Modifier ensuite l'hôte virtuel du portail principal pour charger le module d'authentification Kerberos d'Apache :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then, set &lt;c0&gt;Lemonldap::NG::Common::Apache::Session::&lt;a1&gt;SOAP&lt;/a1&gt;&lt;/c0&gt; in &lt;c2&gt;General parameters&lt;/c2&gt; » &lt;c3&gt;Sessions&lt;/c3&gt; » &lt;c4&gt;Session storage&lt;/c4&gt; » &lt;c5&gt;Apache::Session module&lt;/c5&gt; and add the following parameters (case sensitive):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T201009Z" changeid="xavier">
@@ -46704,6 +47420,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120421T174434Z" changeid="xavier">
         <seg>Il y a 3 types de backends de configuration &lt;a0&gt;SQL&lt;/a0&gt; pour LemonLDAP::NG :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>There is a time tolerance of 60 seconds in &lt;c0&gt;&lt;Conditions&gt;&lt;/c0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205201Z" changeid="xavier">
+        <seg>Il y a une tolérance de 60 seconds dans les &lt;c0&gt;&lt;Conditions&gt;&lt;/c0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -47076,6 +47800,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This documentation will explain how to use Active Directory as Kerberos server, and provide transparent authentication to AD domain users to &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210935Z" changeid="xavier">
+        <seg>Cette documentation explique comment utiliser Active Directory comme serveur Kerberos, et fournir une authentification transparente aux utilisateurs du domaine AD à &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This documentation will focus on Kerberos authentication module, that can allow for example to set transparent authentication for Active Directory users (as Active Directory is a Kerberos server).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154205Z" changeid="xavier">
@@ -47320,6 +48052,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T223119Z" changeid="xavier">
         <seg>Ceci signifie que l'identifiant utilisateur correspondra avec le champ  Federation ID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This means the ktpass commands should be run on both AD.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214927Z" changeid="xavier">
+        <seg>Ce qui signifie que la commande ktpass doit être lancée dans les deux AD.</seg>
       </tuv>
     </tu>
     <tu>
@@ -47720,6 +48460,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T055420Z" changeid="xavier">
         <seg>Cette valve examine les en-têtes HTTP pour désigner l'utilisateur authentifié au conteneur J2EE.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This virtual host will be used by clients that fail to use the Kerberos protocol.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213922Z" changeid="xavier">
+        <seg>Cet hôte virtuel sera utilisé par les clients qui ne réussiront pas à utiliser le protocole Kerberos.</seg>
       </tuv>
     </tu>
     <tu>
@@ -48720,6 +49468,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Type &lt;c0&gt;about:config&lt;/c0&gt; in a tab and search for &lt;c1&gt;trusted&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212305Z" changeid="xavier">
+        <seg>Aller à &lt;c0&gt;about:config&lt;/c0&gt; dans un onglet et chercher &lt;c1&gt;trusted&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>U</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -48956,6 +49712,14 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Utiliser les &lt;a0&gt;paquets fournis par Debian&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use &lt;c0&gt;authpwd&lt;/c0&gt; server name for this virtual host:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213822Z" changeid="xavier">
+        <seg>Utiliser le nom de serveur &lt;c0&gt;authpwd&lt;/c0&gt; pour cet hôte virtuel :</seg>
       </tuv>
     </tu>
     <tu>
@@ -49884,6 +50648,22 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>We will present several architectures:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210953Z" changeid="xavier">
+        <seg>On présente ici plusieurs architectures:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>We will use the following values in our examples</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T211139Z" changeid="xavier">
+        <seg>Nous utilisons les valeurs suivantes dans nos exemples</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>We will use the macros to do that.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T142757Z" changeid="guimard">
@@ -49904,6 +50684,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T071845Z" changeid="guimard">
         <seg>Basé sur du web pour les utilisateurs normaux :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Web browser configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212238Z" changeid="xavier">
+        <seg>Configuration du navigateur web</seg>
       </tuv>
     </tu>
     <tu>
@@ -50868,6 +51656,30 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can check that Kerberos is working by trying to get a ticket for a user of the domain (for example coudot):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212647Z" changeid="xavier">
+        <seg>On peut vérifier que Kerberos fonctionne en essayant d'obtenir un ticket pour un utilisateur du domaine (par exemple coudot) :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can check the validity of the keytab file by trying to request a service ticket, and compare the result with the keytab content.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213141Z" changeid="xavier">
+        <seg>On peut vérifier la validité du fichier table de clefs en essayant de demander un ticket de service, et en le comparant au contenu de la table de clefs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can check these documentations to get more information:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T215214Z" changeid="xavier">
+        <seg>Pour en savoir plus :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can choose other Makefile targets:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160751Z" changeid="xavier">
@@ -50888,6 +51700,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120411T041230Z" changeid="xavier">
         <seg>On peut choisir de stocker la configuration de LemonLDAP::NG dans un annuaire &lt;a0&gt;LDAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can close the Kerberos session:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213357Z" changeid="xavier">
+        <seg>La session Kerberos peut être fermée :</seg>
       </tuv>
     </tu>
     <tu>
@@ -50996,6 +51816,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can do the same check for the keytab as with the single &lt;a0&gt;LL::NG&lt;/a0&gt; server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214546Z" changeid="xavier">
+        <seg>On peut faire le même contrôle que pour un serveur &lt;a0&gt;LL::NG&lt;/a0&gt; isolé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can download the code here: &lt;a0&gt;http://github.com/oremj/mediawiki-http-auth/downloads&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074747Z" changeid="xavier">
@@ -51084,10 +51912,26 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can for example use RC4-HMAC-NT as crypto protocol if DES is not supported by workstations (this the case by default for Window 8 for example).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213020Z" changeid="xavier">
+        <seg>On peut par exemple utiliser RC4-HMAC-NT comme protocole de chiffrement si DES n'est pas supporté par les stations de travail (c'est le cas par défaut sur Window 8 par exemple).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can force an update of configuration cache with:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T075812Z" changeid="xavier">
         <seg>On peut forcer la mise à jour du cache de la configuration :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can force here another session key that will be used as NameID content.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T204829Z" changeid="xavier">
+        <seg>On peut forcer ici une autre clef de session qui sera utilisée comme contenu sde NameID.</seg>
       </tuv>
     </tu>
     <tu>
@@ -51344,6 +52188,22 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouvez ensuite choisir vos modules d'utilisateurs et de mots-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can then close the Kerberos session:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212805Z" changeid="xavier">
+        <seg>On peut alors fermer la sessions Kerberos :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can then remove the original keytab files and protect the final keytab file:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T215118Z" changeid="xavier">
+        <seg>On peut ensuite effacer les tables de clefs originales et protéger la table de clefs finale :</seg>
       </tuv>
     </tu>
     <tu>
@@ -51892,6 +52752,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You must also install the EPEL repository for non-core dependencies.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205914Z" changeid="xavier">
+        <seg>Il faut également installer le dépôt EPEL pour les dépendances ne faisant pas partie du core.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You must also install the database connector (&lt;a1&gt;DBD::Oracle&lt;/a1&gt;, &lt;a2&gt;DBD::Pg&lt;/a2&gt;,…)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T205137Z" changeid="xavier">
@@ -52012,6 +52880,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need to concatenate the keytab files, thanks to &lt;c0&gt;ktutil&lt;/c0&gt; command:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T215034Z" changeid="xavier">
+        <seg>Il faut concaténer les 2 fichiers, merci à la commande &lt;c0&gt;ktutil&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You need to create yourself the directory and set write access to Apache user.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T052836Z" changeid="guimard">
@@ -52068,6 +52944,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need to get a keytab for each &lt;a0&gt;LL::NG&lt;/a0&gt; node.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214337Z" changeid="xavier">
+        <seg>Il faut obtenir une table de clef pour chaque nœud &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You need to get a preauth key from Zimbra server.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T173631Z" changeid="xavier">
@@ -52096,6 +52980,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071630Z" changeid="xavier">
         <seg>Il est nécessaire de connaître le nom technique du paramètre de configuration pour le faire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need to obtain a keytab for each node on each domain.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214856Z" changeid="xavier">
+        <seg>Il faut obtenir une table de clefs pour chaque nœud dans chaque domaine.</seg>
       </tuv>
     </tu>
     <tu>
@@ -52196,6 +53088,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You should be prompted to enter password.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212709Z" changeid="xavier">
+        <seg>Un mot-de-passe peut être demandé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You should be redirected to &lt;a0&gt;LL::NG&lt;/a0&gt; Portal.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203647Z" changeid="guimard">
@@ -52248,6 +53148,30 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094257Z" changeid="xavier">
         <seg>Il est désormais possible d'utiliser le manager pour configurer toutes les &lt;a0&gt;applications et catégories&lt;/a0&gt;, ensuite commenter ou supprimer le paramètre &lt;c1&gt;applicationList&lt;/c1&gt; de &lt;c2&gt;/etc/lemonldap-ng/lemonldap-ng.ini&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You should see a krbtgt ticket:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T212743Z" changeid="xavier">
+        <seg>On doit trouver un ticket krbtgt :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You should see this kind of ticket:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T213336Z" changeid="xavier">
+        <seg>On doit trouver un ticket de ce genre :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You should then be able to open a Kerberos session on each domain:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T214823Z" changeid="xavier">
+        <seg>On doit pouvoir ouvrir une session Kerberos dans chaque domaine :</seg>
       </tuv>
     </tu>
     <tu>
@@ -62166,6 +63090,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>install_libs (all Perl libraries)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T210142Z" changeid="xavier">
+        <seg>install_libs (toutes les librairies Perl)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>install_manager_libs</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160831Z" changeid="xavier">
@@ -62684,6 +63616,38 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>lemonldap-ng-fastcgi-server: &lt;a0&gt;LL::NG&lt;/a0&gt; FastCGI server (for Nginx)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205509Z" changeid="xavier">
+        <seg>lemonldap-ng-fastcgi-server : serveur FastCGI &lt;a0&gt;LL::NG&lt;/a0&gt; (pour Nginx)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-fastcgi-server: FastCGI server needed to use Nginx</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205840Z" changeid="xavier">
+        <seg>lemonldap-ng-fastcgi-server : le serveur FastCGI nécessaire pour utiliser Nginx</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-fr-doc: French translation for &lt;a0&gt;HTML&lt;/a0&gt; documentation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205540Z" changeid="xavier">
+        <seg>lemonldap-ng-fr-doc : traduction en français de la documentation &lt;a0&gt;HTML&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-fr-doc: French translation for documentation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205754Z" changeid="xavier">
+        <seg>lemonldap-ng-fr-doc : traduction en français de la documentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>lemonldap-ng-handler: contains Apache Handler implementation (agent)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095320Z" changeid="xavier">
@@ -62736,6 +63700,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095251Z" changeid="xavier">
         <seg>lemonldap-ng-test : contient une simple page &lt;a0&gt;CGI&lt;/a0&gt; de test</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-test: contains sample CGI test page</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205821Z" changeid="xavier">
+        <seg>lemonldap-ng-test : contient une simple page CGI de test</seg>
       </tuv>
     </tu>
     <tu>
@@ -64598,6 +65570,22 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064202Z" changeid="guimard">
         <seg>soapSessionService</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>sp: SP entity ID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205419Z" changeid="xavier">
+        <seg>sp: identifiant du SP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>spConfKey: SP configuration key</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T205437Z" changeid="xavier">
+        <seg>spConfKey : clef de configuration du SP</seg>
       </tuv>
     </tu>
     <tu>

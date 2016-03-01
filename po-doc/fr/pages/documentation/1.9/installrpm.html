@@ -20,12 +20,11 @@
 <div class="dokuwiki export">
 
 
-<h1 class="sectionedit1" id="installation_on_red_hatcentos">Installation on Red Hat/CentOS</h1>
+<h1 class="sectionedit1" id="installation_on_red_hatcentos">Installation sur Red Hat/CentOS</h1>
 <div class="level1">
 
 <p>
-</p><p></p><div class="noteimportant"><abbr title="LemonLDAP::NG">LL::NG</abbr> requires at least Red Hat/CentOS 7
-
+</p><p></p><div class="noteimportant"><abbr title="LemonLDAP::NG">LL::NG</abbr> nécessite Red Hat/CentOS 7
 </div></p>
 </p>
 
@@ -35,20 +34,18 @@
 <div class="level2">
 
 <p>
-
-LemonLDAP::NG provides packages for Red Hat/Centos 7:
-
+LemonLDAP::NG fournit des packages pour Red Hat/Centos 7:
 </p>
 <ul>
 <li class="level1"><div class="li"> lemonldap-ng : meta-paquet qui ne contient aucun fichier mais des dépendances vers les autres paquets</div>
 </li>
 <li class="level1"><div class="li"> lemonldap-ng-doc : contient la documentation <abbr title="HyperText Markup Language">HTML</abbr> et celle du projet (README, etc...)</div>
 </li>
-<li class="level1"><div class="li">  lemonldap-ng-fr-doc: French translation for documentation</div>
+<li class="level1"><div class="li"> lemonldap-ng-fr-doc : traduction en français de la documentation</div>
 </li>
 <li class="level1"><div class="li"> lemonldap-ng-conf : contient la configuration par défaut (domaine <abbr title="Domain Name System">DNS</abbr> : example.com)</div>
 </li>
-<li class="level1"><div class="li">  lemonldap-ng-test: contains sample CGI test page</div>
+<li class="level1"><div class="li"> lemonldap-ng-test : contient une simple page CGI de test</div>
 </li>
 <li class="level1"><div class="li"> lemonldap-ng-handler : contient l'implémentation de l'agent pour Apache (handler)</div>
 </li>
@@ -56,7 +53,7 @@ LemonLDAP::NG provides packages for Red Hat/Centos 7:
 </li>
 <li class="level1"><div class="li"> lemonldap-ng-portal : contient le portail d'authentification et le menu</div>
 </li>
-<li class="level1"><div class="li">  lemonldap-ng-fastcgi-server: FastCGI server needed to use Nginx</div>
+<li class="level1"><div class="li"> lemonldap-ng-fastcgi-server : le serveur FastCGI nécessaire pour utiliser Nginx</div>
 </li>
 <li class="level1"><div class="li"> perl-Lemonldap-NG-Common : CPAN - modules partagés</div>
 </li>
@@ -96,7 +93,7 @@ Lancer ceci pour rafraîchir le cache :
 
 <p>
 </p><p></p><div class="notewarning">
-You must also install the EPEL repository for non-core dependencies. Voir le chapître <a href="../../documentation/1.9/prereq.html#yum" class="wikilink1" title="documentation:1.9:prereq">pré-requis et dépendances</a>.
+Il faut également installer le dépôt EPEL pour les dépendances ne faisant pas partie du core. Voir le chapître <a href="../../documentation/1.9/prereq.html#yum" class="wikilink1" title="documentation:1.9:prereq">pré-requis et dépendances</a>.
 
 </div></p>
 </p>
@@ -241,9 +238,9 @@ Suivre les <a href="../../documentation/1.9/start.html#configuration" class="wik
 </li>
 <li class="level1"><div class="li"> La configuration LemonLDAP::NG (editée par le manager) se trouve dans /var/lib/lemonldap-ng/conf/</div>
 </li>
-<li class="level1"><div class="li">  All Perl modules are in the VENDOR perl directory  </div>
+<li class="level1"><div class="li"> Tous les modules Perl se trouvent dans le répertoire VENDOR de Perl </div>
 </li>
-<li class="level1"><div class="li">  All Perl scripts/pages are in /var/lib/lemonldap-ng/</div>
+<li class="level1"><div class="li"> Tous les scripts/pages Perl se trouvent dans /var/lib/lemonldap-ng/</div>
 </li>
 <li class="level1"><div class="li"> Tous le contenu statique (exemples, <abbr title="Cascading Style Sheets">CSS</abbr>, images, etc...) se trouve dans /usr/share/lemonldap-ng/</div>
 </li>
@@ -264,7 +261,7 @@ Si besoin, on peut reconstruire les RPMs :
 </li>
 <li class="level1"><div class="li"> Mettre l'archive LemonLDAP::NG dans %_topdir/SOURCES</div>
 </li>
-<li class="level1"><div class="li">  Edit ~/.rpmmacros and set your build parameters:</div>
+<li class="level1"><div class="li"> Editer ~/.rpmmacros et mettre les paramètres de construction :</div>
 </li>
 </ul>
 <pre class="file">%_topdir /home/user/build

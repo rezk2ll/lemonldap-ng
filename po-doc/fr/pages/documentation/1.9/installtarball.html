@@ -43,9 +43,7 @@ Récupérer l'archive depuis la <a href="../../download.html" class="wikilink1" 
 <div class="level2">
 
 <p>
-
-Either checkout or export the <a href="http://forge.ow2.org/plugins/scmsvn/index.php?group_id=274" class="urlextern" title="http://forge.ow2.org/plugins/scmsvn/index.php?group_id=274"  rel="nofollow">SVN repository</a>, or extract the SVN tarball to get the SVN files on your disk.
-
+Au choix, importer le <a href="http://forge.ow2.org/plugins/scmsvn/index.php?group_id=274" class="urlextern" title="http://forge.ow2.org/plugins/scmsvn/index.php?group_id=274"  rel="nofollow">dépôt SVN</a> ou extraire l'archive SVN pour importer les fichiers.
 </p>
 
 <p>
@@ -92,9 +90,7 @@ sudo make install PROD=yes</pre>
 
 <p>
 </p><p></p><div class="noteclassic">
-<code>PROD=yes</code> makes web interface use minified versions of <abbr title="Cascading Style Sheets">CSS</abbr> and JS files.
-
-
+<code>PROD=yes</code> impose aux interfaces web d'utiliser les versions compactées des fichiers <abbr title="Cascading Style Sheets">CSS</abbr> et JS.
 
 </div></p>
 </p>
@@ -108,9 +104,9 @@ On peut modifier l'emplacement du fichier de configuration du stockage par défa
 On peut choisir d'autres cibles du Makefile :
 </p>
 <ul>
-<li class="level1"><div class="li">  Perl libraries install :</div>
+<li class="level1"><div class="li"> Installer les librairies Perl :</div>
 <ul>
-<li class="level2"><div class="li">  install_libs          (all Perl libraries)</div>
+<li class="level2"><div class="li"> install_libs (toutes les librairies Perl)</div>
 </li>
 <li class="level2"><div class="li">  install_portal_libs</div>
 </li>
@@ -126,7 +122,7 @@ On peut choisir d'autres cibles du Makefile :
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li">  FastCGI server install   (required for Nginx)</div>
+<li class="level1"><div class="li"> Installation du serveur FastCGI (requis pour Nginx)</div>
 <ul>
 <li class="level2"><div class="li">  install_fastcgi_server (/usr/local/lemonldap-ng/sbin)</div>
 </li>
@@ -167,7 +163,7 @@ Paramètres disponibles :
 <ul>
 <li class="level1"><div class="li"> <strong>ERASECONFIG</strong> : mettre à 0 pour conserver les fichiers de configuration (défaut : 1)</div>
 </li>
-<li class="level1"><div class="li"> <strong>DESTDIR</strong>: only for packaging, install the product in a jailroot (default: “”)</div>
+<li class="level1"><div class="li"> <strong>DESTDIR</strong> : seulement pour la création de paquets, installe le produit dans une cage (default: “”)</div>
 </li>
 <li class="level1"><div class="li"> <strong>PREFIX</strong> : répertoire d'installation (défaut : /usr/local)</div>
 </li>
@@ -185,27 +181,23 @@ Paramètres disponibles :
 </li>
 <li class="level1"><div class="li"> <strong>VHOSTLISTEN</strong> : comment est configuré le paramètre d'écoute des hôtes virtuels dans Apache (défaut : *:80)</div>
 </li>
-<li class="level1"><div class="li"> <strong>PROD</strong>: use minified JS and <abbr title="Cascading Style Sheets">CSS</abbr> files</div>
+<li class="level1"><div class="li"> <strong>PROD</strong> : utiliser les fichiers JS et <abbr title="Cascading Style Sheets">CSS</abbr> compactés</div>
 </li>
-<li class="level1"><div class="li"> <strong>USEDEBIANLIBS</strong>: use Debian packaged JS and <abbr title="Cascading Style Sheets">CSS</abbr> files <em>(<strong>Note that this options isn't yet usable</strong> since Debian provides a too old AngularJS for now: LLNG manager needs at least version 1.4.0)</em></div>
+<li class="level1"><div class="li"> <strong>USEDEBIANLIBS</strong> : utiliser les fichiers JS et <abbr title="Cascading Style Sheets">CSS</abbr> des paquets Debian <em>(<strong>Noter que cette options n'est pas encore utilisable</strong> car Debian fournit une version trop ancienne de AngularJS pour l'instant : le manager LLNG nécessite à minima la version 1.4.0)</em></div>
 </li>
-<li class="level1"><div class="li"> <strong>USEEXTERNALLIBS</strong>: use files from public CDN</div>
+<li class="level1"><div class="li"> <strong>USEEXTERNALLIBS</strong> : utiliser les fichiers des CDN publics</div>
 </li>
 </ul>
 
 <p>
 </p><p></p><div class="notetip">
-
-For Debian/Ubuntu with Apache2, you can use:
-
+Pour Debian/Ubuntu avec Apache2, utiliser :
 </p>
 <pre class="code">make debian-install-for-apache
 make ubuntu-install-for-apache</pre>
 
 <p>
-
-And with Nginx:
-
+Et avec Nginx:
 </p>
 <pre class="code">make debian-install-for-nginx
 make ubuntu-install-for-nginx</pre>
