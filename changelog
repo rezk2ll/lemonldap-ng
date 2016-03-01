@@ -1,5 +1,131 @@
 lemonldap-ng (1.9.0) stable; urgency=low
 
+    * [LEMONLDAP-176] - POST Handler feature does not work with mod_proxy
+    * [LEMONLDAP-395] - LL::NG::Handler::CGI ignores some config parameters
+    * [LEMONLDAP-729] - Handler Jail may be inconsistent with its attributes
+    * [LEMONLDAP-759] - Cannot store Conf or Sessions in AD (was Storable appears to not work on 64-bit OS)
+    * [LEMONLDAP-767] - future deprecated dependency
+    * [LEMONLDAP-777] - Password fiedls in Manager
+    * [LEMONLDAP-802] - Apache2::Connection remote_ip not supported in Apache 2.4
+    * [LEMONLDAP-825] - Error when session is not in backend but only in cookie
+    * [LEMONLDAP-827] - Error encoding of passwords when using special characters in file lmconf.
+    * [LEMONLDAP-828] - wrong Makefile target for translation
+    * [LEMONLDAP-835] - Interface with unicode
+    * [LEMONLDAP-840] - Auth-User HTTP Header appears even if no HTTP Headers defined on VHost
+    * [LEMONLDAP-854] - Manager returns "Not authorized" with Apache 2.4 and fr-doc not installed
+    * [LEMONLDAP-858] - Error 500 at Save (on virtualHost Rules), when the displayName of one Category Portal Menu contains accentuated Character
+    * [LEMONLDAP-866] - Configuration deletion does not work
+    * [LEMONLDAP-867] - 404 errors in documentation
+    * [LEMONLDAP-870] - _lastSeen should be updated when a issuer module (ex: CAS) is called
+    * [LEMONLDAP-872] - Omegat does not end
+    * [LEMONLDAP-914] - Password expiration interception in Multi mode
+    * [LEMONLDAP-922] - SAML Error on update session
+    * [LEMONLDAP-923] - Error save conf SlaveMasterIp
+    * [LEMONLDAP-948] - openid userinfo endpoints need Authorization header
+    * [LEMONLDAP-954] - GLPI link is broken
+    * [LEMONLDAP-955] - GRR link is broken
+    * [LEMONLDAP-958] - Infinite redirection loop when redirected from Handler for an error (403/500/503)
+    * [LEMONLDAP-428] - Ergonomic items
+    * [LEMONLDAP-534] - splice not necessary to parse @_ in subroutines
+    * [LEMONLDAP-633] - unify var substitution in locationRules and exportedHeaders
+    * [LEMONLDAP-717] - Handler init management
+    * [LEMONLDAP-733] - Form replay refactoring
+    * [LEMONLDAP-776] - Use Bootstrap for Manager
+    * [LEMONLDAP-787] - [UserDB][LDAP] Allow alias dereferencing in search
+    * [LEMONLDAP-790] - Portal should not return HTML for AJAX requests
+    * [LEMONLDAP-794] - Default values must be set before storing in local cache
+    * [LEMONLDAP-795] - Propose JSON serialization in Apache::Session to be able to access to sessions with other languages
+    * [LEMONLDAP-796] - Replace our own serializer by JSON in Conf/File.pm
+    * [LEMONLDAP-798] - Avoid opening local cache when root
+    * [LEMONLDAP-815] - Improve the cookie name regexp
+    * [LEMONLDAP-821] - JSON File as new default configuration backend
+    * [LEMONLDAP-824] - autocomplete=off does not prevent anymore password manager use
+    * [LEMONLDAP-833] - Manager - Multi : display only the selected modules
+    * [LEMONLDAP-865] - Check conditions in AuthSlave and UserDBSlave
+    * [LEMONLDAP-877] - Replace Storable by JSON to be arch independant
+    * [LEMONLDAP-908] - Replace own minifier by external
+    * [LEMONLDAP-911] - Possibility to set a specific logo for a choice module
+    * [LEMONLDAP-917] - Possibility to define finely sessions timeout activity
+    * [LEMONLDAP-924] - Manager not checking regex before saving
+    * [LEMONLDAP-930] - Scripts must have POD
+    * [LEMONLDAP-946] - Set cfgAuthor to lmConfigEditor
+    * [LEMONLDAP-24] - Browse configuration versions and apply them
+    * [LEMONLDAP-183] - OAuth 2.0 / OpenID Connect authentication module
+    * [LEMONLDAP-184] - OAuth 2.0 / OpenID Connect provider module
+    * [LEMONLDAP-227] - VirtualHost Copy/paste functions in Manager
+    * [LEMONLDAP-287] - Implement HTTP Strict Transport Security
+    * [LEMONLDAP-495] - Persistent sessions Explorer
+    * [LEMONLDAP-583] - Nginx handler
+    * [LEMONLDAP-630] - Modularization of Handler code
+    * [LEMONLDAP-770] - Configuration of portal background
+    * [LEMONLDAP-773] - Implement CAS 3.0 Protocol (attributes exchange)
+    * [LEMONLDAP-800] - MongoDB configuration and session backend
+    * [LEMONLDAP-820] - New Manager interface with AngularJS
+    * [LEMONLDAP-836] - Add Choice to included X509 certificate in Signature of SAML Messages, when LL::NG acts as IDP
+    * [LEMONLDAP-915] - Portal message customization
+    * [LEMONLDAP-925] - New Notification Explorer
+    * [LEMONLDAP-935] - Capability to duplicate virtualhost
+    * [LEMONLDAP-864] - SAML and manager translations(utf8)
+    * [LEMONLDAP-859] - Perl-Digest-SHA is not listed at dependencies documentation
+    * [LEMONLDAP-873] - Change screenshots in doc
+    * [LEMONLDAP-891] - Remove "return to SP link"
+    * [LEMONLDAP-909] - Push French translation into sources
+    * [LEMONLDAP-932] - Packages for RHEL / CentOS
+    * [LEMONLDAP-871] - Manager protection
+    * [LEMONLDAP-874] - Add portal and logout links, add current version
+    * [LEMONLDAP-878] - Button to download file
+    * [LEMONLDAP-879] - Possibility to have a certificate instead of a public key
+    * [LEMONLDAP-880] - Bug in Logs node
+    * [LEMONLDAP-881] - Load metadata from file
+    * [LEMONLDAP-882] - Problem with radio buttons in samlAttributeContainer component
+    * [LEMONLDAP-883] - Bug with choices modules confguration
+    * [LEMONLDAP-884] - Optional URL in AuthChoices module
+    * [LEMONLDAP-885] - Unable to register OpenID Connect metadata
+    * [LEMONLDAP-886] - favicon disappear when using configuration tab
+    * [LEMONLDAP-888] - SAML attributes and other options not saved
+    * [LEMONLDAP-889] - Saving an old configuration leads to "No such file or directory"
+    * [LEMONLDAP-892] - Set OpenID Connect standard attributes in default values
+    * [LEMONLDAP-893] - Unable to download configuration
+    * [LEMONLDAP-894] - Get another default component for nodes
+    * [LEMONLDAP-895] - Associated help is not displayed in SAML SP/IDP
+    * [LEMONLDAP-896] - Labels for samlSP and samlSPName not displayed
+    * [LEMONLDAP-897] - Handler Status does not work
+    * [LEMONLDAP-898] - Handler Menu does not work
+    * [LEMONLDAP-899] - Button to show/hide documentation panel
+    * [LEMONLDAP-900] - Fill the domain when creating a new virtual host
+    * [LEMONLDAP-901] - Propose default names for IDP/SP/OP/RP
+    * [LEMONLDAP-902] - Replace javascript prompts by dialogs/modals
+    * [LEMONLDAP-903] - ZeroConf
+    * [LEMONLDAP-904] - Open IDP/SP node after its creation
+    * [LEMONLDAP-905] - Login is displayed in errors
+    * [LEMONLDAP-906] - Hide inaccessible modules in manager interface
+    * [LEMONLDAP-907] - Deleting a menu entry isn't detected
+    * [LEMONLDAP-913] - XS mode: menu never visible when tree is displayed
+    * [LEMONLDAP-916] - missing semicolons in Makefile
+    * [LEMONLDAP-919] - Choosing Multi module should not lock passwordDB configuration
+    * [LEMONLDAP-920] - Clear cfgLog when using lmConfigEditor
+    * [LEMONLDAP-921] - Implement lemonldap-ng-cli wth new configuration code
+    * [LEMONLDAP-926] - Error is not displayed to user
+    * [LEMONLDAP-927] - Use modal instead of alert
+    * [LEMONLDAP-928] - Bad notification encoding
+    * [LEMONLDAP-929] - Manage other portal CGIs
+    * [LEMONLDAP-934] - LLNG status for Nginx
+    * [LEMONLDAP-936] - Extra headers sent to protected applications
+    * [LEMONLDAP-938] - Can't save conf due to bad custom function name
+    * [LEMONLDAP-940] - Timout for reloadUrls
+    * [LEMONLDAP-941] - Aliases not taken into account
+    * [LEMONLDAP-942] - Session explorer not usable with Apache::Session::Browseable::MySQL
+    * [LEMONLDAP-943] - Zimbra Handler
+    * [LEMONLDAP-944] - Notifications - invalid date
+    * [LEMONLDAP-945] - Auto-protected CGI not working
+    * [LEMONLDAP-947] - Notifications cannot be purged for DBI and LDAP
+    * [LEMONLDAP-949] - Handler PSGI should set LMREMOTE_USER
+    * [LEMONLDAP-950] - spelling
+    * [LEMONLDAP-952] - Errors not displayed in Notifications Explorer
+    * [LEMONLDAP-953] - Notifications are mixed under the same letter
+    * [LEMONLDAP-956] - Custom functions don't work with useSafeJail
+    * [LEMONLDAP-957] - Replace $http.success() by .then()
+
 lemonldap-ng (1.4.6) stable; urgency=low
 
     * [LEMONLDAP-705] - SAML with Signature Method rsa-sha256
