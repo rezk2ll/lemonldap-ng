@@ -4,6 +4,7 @@ author:
   - 'Xavier Guimard <x.guimard@free.fr>, Clément Oudot <clement@oodo.net>, Thomas Chemineau <thomas.chemineau@gmail.com>'
 build_requires:
   IO::String: '0'
+  Regexp::Common: '0'
   Test::Pod: '1'
 configure_requires:
   ExtUtils::MakeMaker: '0'
