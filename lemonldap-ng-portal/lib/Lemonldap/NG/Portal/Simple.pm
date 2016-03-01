@@ -2658,7 +2658,8 @@ sub autoRedirect {
 
     # Redirection should be made if
     #  - urldc defined
-    if ( $self->{urldc} ) {
+    #  - lmError parameter is not defined
+    if ( $self->{urldc} and !$self->param("lmError") ) {
 
         # Cross-domain mechanism
         if (    $self->{cda}
