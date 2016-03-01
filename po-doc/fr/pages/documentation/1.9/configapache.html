@@ -20,24 +20,21 @@
 <div class="dokuwiki export">
 
 
-<h1 class="sectionedit1" id="deploy_apache_configuration">Deploy Apache configuration</h1>
+<h1 class="sectionedit1" id="deploy_apache_configuration">Deployer la configuration Apache</h1>
 <div class="level1">
 
 <p>
-</p><p></p><div class="noteclassic">This step should already have been if you installed <abbr title="LemonLDAP::NG">LL::NG</abbr> with packages.
-
+</p><p></p><div class="noteclassic">Cette étape est effectuée automatiquement lorsqu'on installe <abbr title="LemonLDAP::NG">LL::NG</abbr> avec les packages.
 </div></p>
 </p>
 
 </div><!-- EDIT1 SECTION "Deploy Apache configuration" [1-130] -->
 
-<h2 class="sectionedit2" id="files">Files</h2>
+<h2 class="sectionedit2" id="files">Fichiers</h2>
 <div class="level2">
 
 <p>
-
-With tarball installation, Apache configuration files will be installed in <code>/usr/local/lemonldap-ng/etc/</code>, else they are in <code>/etc/lemonldap-ng</code>.
-
+Depuis une installation par les sources, les fichiers de configuration d'Apache se trouvent dans <code>/usr/local/lemonldap-ng/etc/</code>, sinon, ils sont dans <code>/etc/lemonldap-ng</code>.
 </p>
 
 <p>
@@ -52,7 +49,7 @@ Il faut les inclure dans la configuration d'Apache, par exemple :
 </p><p></p><div class="notetip">
 </p>
 <ul>
-<li class="level1"><div class="li">  You can also use symbolic links in <code>conf.d</code> or <code>sites-available</code> Apache directory.</div>
+<li class="level1"><div class="li"> On peut aussi utiliser des liens symboliques dans le répertiore <code>conf.d</code> ou <code>sites-available</code> d'Apache.</div>
 </li>
 <li class="level1"><div class="li"> Pour la commande d'installation Debian/Ubuntu, utiliser simplement :</div>
 </li>
@@ -73,9 +70,7 @@ a2ensite test-apache2.conf</pre>
 <div class="level2">
 
 <p>
-
-You will also need to load some Apache modules:
-
+Il faut également charger quelques modules Apache :
 </p>
 <ul>
 <li class="level1"><div class="li">  mod_rewrite</div>
@@ -90,9 +85,7 @@ You will also need to load some Apache modules:
 
 <p>
 </p><p></p><div class="notetip">
-
-With Debian/Ubuntu:
-
+Avec Debian/Ubuntu:
 </p>
 <pre class="code">a2enmod fcgid perl alias rewrite</pre>
 

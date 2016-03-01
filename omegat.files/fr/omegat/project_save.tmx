@@ -17824,6 +17824,30 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Activation in login form&lt;/s0&gt;: set to 1 to display captcha in login form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060655Z" changeid="xavier">
+        <seg>&lt;s0&gt;Activation dans le formulaire de connexion&lt;/s0&gt; : mettre à 1 pour activer le captcha dans ce formulaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Activation in password reset by mail form&lt;/s0&gt;: set to 1 to display captcha in password reset by mail form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060732Z" changeid="xavier">
+        <seg>&lt;s0&gt;Activation dans le formulaire de réinitialisation de mot-de-passe&lt;/s0&gt; : mettre à 1 pour activer le captcha dans ce formulaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Activation in register form&lt;/s0&gt;: set to 1 to display captcha in register form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060752Z" changeid="xavier">
+        <seg>&lt;s0&gt;Activation dans le formulaire d'enregistrement&lt;/s0&gt; : mettre à 1 pour activer le captcha dans ce formulaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Activation&lt;/s0&gt;: Set to On to enable Common Domain Cookie support.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -18212,6 +18236,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T200024Z" changeid="xavier">
         <seg>&lt;s0&gt;Paramètres GET de rappel&lt;/s0&gt; : nom du paramètre GET utilisé pour intercepter le rappel (défaut: openidconnectcallback)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Captcha module name&lt;/s0&gt;: Apache session module used to store generated captchas</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060859Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom du module Captcha&lt;/s0&gt; : module Apache::Session utilisé pour stocker les captchas générés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Captcha module options&lt;/s0&gt;: options for above module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060916Z" changeid="xavier">
+        <seg>&lt;s0&gt;Options du module Captcha&lt;/s0&gt; : options pour ce module</seg>
       </tuv>
     </tu>
     <tu>
@@ -20400,6 +20440,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T055434Z" changeid="xavier">
         <seg>&lt;s0&gt;Nom du site&lt;/s0&gt; : Nom qui sera affiché dans la fenêtre d'authentification BrowserID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Size&lt;/s0&gt;: length of captcha</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060822Z" changeid="xavier">
+        <seg>&lt;s0&gt;Taille&lt;/s0&gt; : longueur du captcha</seg>
       </tuv>
     </tu>
     <tu>
@@ -24962,6 +25010,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Adapt it to configure the index you need.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055204Z" changeid="xavier">
+        <seg>À adapter pour configurer les index voulus.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Adapt the reload virtual host name to the domain you configured.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120620T042432Z" changeid="xavier">
@@ -26050,6 +26106,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Attribute storing index</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060111Z" changeid="xavier">
+        <seg>Attribut où stocker les index</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Attribute storing session ID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060033Z" changeid="xavier">
+        <seg>Attribut où stocker l'idetifiant de session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Attribute storing session content</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060055Z" changeid="xavier">
+        <seg>Attribut où stocker le contenu de la session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Attributes and macros</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112746Z" changeid="xavier">
@@ -26698,6 +26778,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Browseable session backend (&lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt;) works exactly like Apache::Session::* corresponding module but add index that increase &lt;a1&gt;session explorer&lt;/a1&gt; and &lt;a2&gt;session restrictions&lt;/a2&gt; performances.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T054939Z" changeid="xavier">
+        <seg>Le backend de session explorable (&lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt;) fonctionne exactement comme le module Apache::Session::* correspondant mais ajoute des index qui améliore les performances de l'&lt;a1&gt;explorateur de session&lt;/a1&gt; et les &lt;a2&gt;restrictions de sessions&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Browseable session backend (&lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt;) works exactly like Apache::Session::* corresponding module but add indexes that increase &lt;a1&gt;session explorer&lt;/a1&gt; and &lt;a2&gt;session restrictions&lt;/a2&gt; performances.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T071814Z" changeid="xavier">
@@ -27242,6 +27330,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Captcha is a security mechanism aimed to prevent robots to submit forms.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060223Z" changeid="xavier">
+        <seg>Captcha est un mécanisme de sécurité utilisé pour éviter des des robots ne soumettent des formulaires.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Captchas are available on the following forms:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060252Z" changeid="xavier">
+        <seg>Les captchas sont disponibles sur les formulaires suivants :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Cascading Style Sheets</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094815Z" changeid="xavier">
@@ -27342,6 +27446,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T052055Z" changeid="xavier">
         <seg>Mettre &lt;s0&gt;mydomain.org&lt;/s0&gt; dans le domaine Google Apps</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Change char(32) by char(64) if you use the now recommended SHA256 hash algorithm.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055611Z" changeid="xavier">
+        <seg>Changer char(32) en char(64) pour utiliser l'algorithme de hashage SHA256 (recommandé).</seg>
       </tuv>
     </tu>
     <tu>
@@ -28234,6 +28346,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure your new backend (create SQL database,…)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060927Z" changeid="xavier">
+        <seg>Configurer le nouveau backend (creer la base de données SQL,…)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure your tomcat home in &lt;c0&gt;build.properties&lt;/c0&gt; files.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191532Z" changeid="xavier">
@@ -29058,6 +29178,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Default value</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055959Z" changeid="xavier">
+        <seg>Valeur par défaut</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Define at least:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171803Z" changeid="xavier">
@@ -29142,6 +29270,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T055520Z" changeid="xavier">
         <seg>Interdire l'accès au répertoire /config/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Deploy Apache configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060958Z" changeid="xavier">
+        <seg>Deployer la configuration Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -29366,6 +29502,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Documentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Documentation below explains how set index on ipAddr and _whatToTrace.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055124Z" changeid="xavier">
+        <seg>La documentation ci-dessous explique comment fixer les index à ipAddr et _whatToTrace.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30558,6 +30702,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Files</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061052Z" changeid="xavier">
+        <seg>Fichiers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Fill $releasever and $basearch with the correct values to get packages for your environment, for example &lt;a0&gt;http://repo.cyrus-project.org/centos5-i386/RPMS.cyrus-extras/&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T204410Z" changeid="xavier">
@@ -30930,6 +31082,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163045Z" changeid="xavier">
         <seg>Par exemple il peut être stocké comme seconde valeur de l'attibut uid dans un annuaire &lt;a2&gt;LDAP&lt;/a2&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example it can be stored as a second value of the uid attribute in the LDAP directory:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T054824Z" changeid="xavier">
+        <seg>Par exemple il peut être stocké comme seconde valeur de l'attibut uid dans un annuaire LDAP :</seg>
       </tuv>
     </tu>
     <tu>
@@ -31630,6 +31790,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in &lt;c0&gt;General parameters&lt;/c0&gt; &gt; &lt;c1&gt;Portal&lt;/c1&gt; &gt; &lt;c2&gt;Captcha&lt;/c2&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060604Z" changeid="xavier">
+        <seg>Aller à &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Portail&lt;/c1&gt; » &lt;c2&gt;Captcha&lt;/c2&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go in Manager and click on &lt;c0&gt;&lt;a1&gt;SAML&lt;/a1&gt; 2 Service&lt;/c0&gt; node.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -31746,6 +31914,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T205013Z" changeid="xavier">
         <seg>Aller dans le Manager et choisir le module de session (par exemple &lt;a0&gt;Apache::Session::Browseable::Postgres&lt;/a0&gt; pour PostgreSQL) dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; et ajouter les paramètres suivants (sensible à la casse):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go in the Manager and set the session module to &lt;c0&gt;Apache::Session::Browseable::LDAP&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055713Z" changeid="xavier">
+        <seg>Aller dans le manager et mettre le module de session à &lt;c0&gt;Apache::Session::Browseable::LDAP&lt;/c0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -33246,6 +33422,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you use WebID as user database, declare values in &lt;s0&gt;exported variables&lt;/s0&gt; :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T054738Z" changeid="xavier">
+        <seg>Si on utilise WebID comme base de données utilisateurs, déclarer les valeurs dans les &lt;s0&gt;variables exportées&lt;/s0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you use WebID as user database, declare values in exported variables :</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T064017Z" changeid="xavier">
@@ -34026,6 +34210,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072415Z" changeid="xavier">
         <seg>Index</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Index list</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055931Z" changeid="xavier">
+        <seg>Liste d'index</seg>
       </tuv>
     </tu>
     <tu>
@@ -36364,6 +36556,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Login form: where user enters login and password to authenticate</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060330Z" changeid="xavier">
+        <seg>formulaire de connexion : où les utilisateurs entrent leurs login/mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Login history</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082942Z" changeid="xavier">
@@ -37938,6 +38138,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Objectclass of the entry</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060009Z" changeid="xavier">
+        <seg>Objectclass de l'entrée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Of course, integration will be full if you use the &lt;a0&gt;LDAP&lt;/a0&gt; directory as users backend for &lt;a1&gt;LL::NG&lt;/a1&gt; and Liferay.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111210T074154Z" changeid="xavier">
@@ -38354,6 +38562,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Optional parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055941Z" changeid="xavier">
+        <seg>Paramètres optionnels</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Options</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060014Z" changeid="xavier">
@@ -38758,6 +38974,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Réinitialisation de mots-de-passe par courriel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password reset by mail form: where user enters mail to recover a lost password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060411Z" changeid="xavier">
+        <seg>Formulaire de réinitialisation de mot-de-passe par courriel</seg>
       </tuv>
     </tu>
     <tu>
@@ -39262,6 +39486,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T064158Z" changeid="xavier">
         <seg>L'hôte du portail doit être configuré pour utiliser &lt;a0&gt;SSL&lt;/a0&gt; et doit demander un certificat client.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal host must be configured to use SSL and must ask for client certificate.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T054751Z" changeid="xavier">
+        <seg>L'hôte du portail doit être configuré pour utiliser SSL et doit demander un certificat client.</seg>
       </tuv>
     </tu>
     <tu>
@@ -39986,6 +40218,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Register form: where user enters information to create a new account</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060448Z" changeid="xavier">
+        <seg>Formulaire d'enregistrement : où les utilisateurs entrent les informations nécessaires à la création de compte</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Register on France Connect</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T173418Z" changeid="xavier">
@@ -40366,6 +40606,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T172044Z" changeid="xavier">
         <seg>Restreindre l'accès réseau à l'annuaire &lt;a0&gt;LDAP&lt;/a0&gt; et ajouter une &lt;a1&gt;ACL&lt;/a1&gt; spécifique à la branche des sessions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Restrict network access to the backend.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060135Z" changeid="xavier">
+        <seg>Restreindre l'accès réseau au backend.</seg>
       </tuv>
     </tu>
     <tu>
@@ -41234,6 +41482,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T212143Z" changeid="xavier">
         <seg>Voir la documentation du &lt;a0&gt;backend de sessions SOAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;Sessions&lt;/a0&gt; for more details</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055627Z" changeid="xavier">
+        <seg>Voir &lt;a0&gt;Sessions&lt;/a0&gt; pour plus de détails</seg>
       </tuv>
     </tu>
     <tu>
@@ -42274,6 +42530,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Certains modules Apache::Session ne sont pas utilisables par Lemonldap::NG tel Apache::Session::Memcached, car ce module n'offre pas de dispositif de parcours des sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Some adaptations are needed with other databases.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055522Z" changeid="xavier">
+        <seg>Quelques adaptations sont nécessaires pour les autres bases de données.</seg>
       </tuv>
     </tu>
     <tu>
@@ -44106,6 +44370,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then configure the options like in &lt;a1&gt;LDAP session backend&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055744Z" changeid="xavier">
+        <seg>Configurer ensuite les options comme dans le &lt;a1&gt;backend de sessions LDAP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then create symbolic links on template files, as you might not want to rewrite all &lt;a0&gt;HTML&lt;/a0&gt; code (else, do as you want).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T074625Z" changeid="guimard">
@@ -44890,6 +45162,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This documentation concerns MySQL.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055501Z" changeid="xavier">
+        <seg>Cette documentation est construite autour de MySQL.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This documentation explains how configure &lt;a0&gt;SAML&lt;/a0&gt; service in &lt;a1&gt;LL::NG&lt;/a1&gt;, in particular:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -45478,6 +45758,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR">
         <seg>Peut être défini par défaut.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This step should already have been if you installed &lt;a0&gt;LL::NG&lt;/a0&gt; with packages.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061046Z" changeid="xavier">
+        <seg>Cette étape est effectuée automatiquement lorsqu'on installe &lt;a0&gt;LL::NG&lt;/a0&gt; avec les packages.</seg>
       </tuv>
     </tu>
     <tu>
@@ -47578,6 +47866,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>We use the Perl module Authen::Captcha to generate codes and images, which look like this:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060528Z" changeid="xavier">
+        <seg>Nous utilisons le module Perl Authen::Captcha pour générer les codes et images, ce qui ressemble à :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>We will explain how to use &lt;a0&gt;Automatic REMOTE_USER&lt;/a0&gt; extension.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T165555Z" changeid="xavier">
@@ -47898,6 +48194,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>With Debian/Ubuntu:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061249Z" changeid="xavier">
+        <seg>Avec Debian/Ubuntu:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>With LDAP, login, mail, first name and last name are required attributes.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T165140Z" changeid="xavier">
@@ -47954,6 +48258,22 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>With index, &lt;a1&gt;LL::NG&lt;/a1&gt; wil be able to get only wanted sessions from the backend.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055106Z" changeid="xavier">
+        <seg>Avec index, &lt;a1&gt;LL::NG&lt;/a1&gt; ne récupère que les sessions demandées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>With tarball installation, Apache configuration files will be installed in &lt;c0&gt;/usr/local/lemonldap-ng/etc/&lt;/c0&gt;, else they are in &lt;c1&gt;/etc/lemonldap-ng&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061136Z" changeid="xavier">
+        <seg>Depuis une installation par les sources, les fichiers de configuration d'Apache se trouvent dans &lt;c0&gt;/usr/local/lemonldap-ng/etc/&lt;/c0&gt;, sinon, ils sont dans &lt;c1&gt;/etc/lemonldap-ng&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>With the above solution, all the Drupal site will be protected, so no anonymous access will be allowed.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T181825Z" changeid="xavier">
@@ -47966,6 +48286,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T142415Z" changeid="guimard">
         <seg>Avec cette organisation, on peut définir les rôles de l'utilisateur au sein de chaque application.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Without index, &lt;a0&gt;LL::NG&lt;/a0&gt; will have to retrieve all sessions stored in backend and parse them to find the needed sessions.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055040Z" changeid="xavier">
+        <seg>Sans index, &lt;a0&gt;LL::NG&lt;/a0&gt; doit récupérer toutes les sessions stockées dans le backend et les examiner pour trouver les sessions demandées.</seg>
       </tuv>
     </tu>
     <tu>
@@ -48374,6 +48702,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T162100Z" changeid="xavier">
         <seg>On peut aussi utiliser des liens symboliques dans le répertiore &lt;c0&gt;conf.d&lt;/c0&gt; d'Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also use symbolic links in &lt;c0&gt;conf.d&lt;/c0&gt; or &lt;c1&gt;sites-available&lt;/c1&gt; Apache directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061208Z" changeid="xavier">
+        <seg>On peut aussi utiliser des liens symboliques dans le répertiore &lt;c0&gt;conf.d&lt;/c0&gt; ou &lt;c1&gt;sites-available&lt;/c1&gt; d'Apache.</seg>
       </tuv>
     </tu>
     <tu>
@@ -48994,6 +49330,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can use Redis and set up the database like explained in &lt;a0&gt;Redis session backend&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055301Z" changeid="xavier">
+        <seg>Il est possible d'utiliser Redis comme expliqué dans &lt;a0&gt;Backend de sessions Redis&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can use any of the mechanisms proposed by Apache: &lt;a0&gt;SSL&lt;/a0&gt;, Auth-Basic, Kerberos,… Example</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T094946Z" changeid="xavier">
@@ -49206,6 +49550,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163002Z" changeid="xavier">
         <seg>Il faut enregistrer le matériel dans le backend utilisateurs (&lt;a0&gt;LDAP&lt;/a0&gt; ou &lt;a1&gt;SQL&lt;/a1&gt;) pour le faire correspondre à un utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have to register the media identifer in your user backend (LDAP or SQL) to match the yubikey with a real user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T054810Z" changeid="xavier">
+        <seg>Il faut enregistrer le matériel dans le backend utilisateurs (LDAP ou SQL) pour le faire correspondre à un utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -49522,6 +49874,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need to add the &lt;c0&gt;Index&lt;/c0&gt; field and can also configure the &lt;c1&gt;ldapAttributeIndex&lt;/c1&gt; field to set the attribute name where index values will be stored.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055906Z" changeid="xavier">
+        <seg>Il faut ajouter le champ &lt;c0&gt;Index&lt;/c0&gt;, on peut aussi configurer le champ &lt;c1&gt;ldapAttributeIndex&lt;/c1&gt; pour indiquer le nom d'attribut dans lequel les index doivent être stockés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You need to create yourself the directory and set write access to Apache user.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T052836Z" changeid="guimard">
@@ -49758,6 +50118,22 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141712Z" changeid="guimard">
         <seg>Il est préférable d'utiliser un &lt;a0&gt;schéma LDAP étendu&lt;/a0&gt; (ou toute extension de base de données utilisateur), mais ça peut fonctionner avec les attributs standard.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You then just have to add the &lt;c0&gt;Index&lt;/c0&gt; parameter in &lt;c1&gt;General parameters&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Session storage&lt;/c3&gt; » &lt;c4&gt;Apache::Session module&lt;/c4&gt; :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055400Z" changeid="xavier">
+        <seg>Il suffira juste d'ajouter le paramètre &lt;c0&gt;Index&lt;/c0&gt; dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You will also need to load some Apache modules:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061243Z" changeid="xavier">
+        <seg>Il faut également charger quelques modules Apache :</seg>
       </tuv>
     </tu>
     <tu>

@@ -102,6 +102,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Change char(32) by char(64) if you use the now recommended SHA256 hash algorithm.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055611Z" changeid="xavier">
+        <seg>Changer char(32) en char(64) pour utiliser l'algorithme de hashage SHA256 (recommandé).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then configure the options like in &lt;a1&gt;LDAP session backend&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055744Z" changeid="xavier">
+        <seg>Configurer ensuite les options comme dans le &lt;a1&gt;backend de sessions LDAP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Login field name in user table&lt;/s0&gt;: name of user table column hosting login</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201139Z" changeid="xavier">
@@ -1038,6 +1054,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Portal host must be configured to use SSL and must ask for client certificate.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T054751Z" changeid="xavier">
+        <seg>L'hôte du portail doit être configuré pour utiliser SSL et doit demander un certificat client.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The file &lt;c0&gt;auth.keytab&lt;/c0&gt; should then be copied (with a secure media) to the Linux server (for example in &lt;c1&gt;/etc/lemonldap-ng&lt;/c1&gt;).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154644Z" changeid="xavier">
@@ -1366,6 +1390,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Captcha module options&lt;/s0&gt;: options for above module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060916Z" changeid="xavier">
+        <seg>&lt;s0&gt;Options du module Captcha&lt;/s0&gt; : options pour ce module</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Mandatory&lt;/s0&gt;: if set to “On”, then this attribute will be sent in authentication response.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092237Z" changeid="xavier">
@@ -1402,6 +1434,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092441Z" changeid="xavier">
         <seg>&lt;s0&gt;Format&lt;/s0&gt; (optionnel) : format de l'attribut &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Captchas are available on the following forms:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060252Z" changeid="xavier">
+        <seg>Les captchas sont disponibles sur les formulaires suivants :</seg>
       </tuv>
     </tu>
     <tu>
@@ -2776,6 +2816,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Attribute storing session ID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060033Z" changeid="xavier">
+        <seg>Attribut où stocker l'idetifiant de session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For example, a &lt;a0&gt;LL::NG&lt;/a0&gt; server can be:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183527Z" changeid="xavier">
@@ -2860,6 +2908,22 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064445Z" changeid="guimard">
         <seg>Secret partagé de Sympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you use WebID as user database, declare values in &lt;s0&gt;exported variables&lt;/s0&gt; :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T054738Z" changeid="xavier">
+        <seg>Si on utilise WebID comme base de données utilisateurs, déclarer les valeurs dans les &lt;s0&gt;variables exportées&lt;/s0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You will also need to load some Apache modules:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061243Z" changeid="xavier">
+        <seg>Il faut également charger quelques modules Apache :</seg>
       </tuv>
     </tu>
     <tu>
@@ -4134,6 +4198,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160804Z" changeid="xavier">
         <seg>&lt;s0&gt;Value&lt;/s0&gt; Service &lt;a1&gt;URL&lt;/a1&gt; (identifiant de service &lt;a2&gt;CAS&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Optional parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055941Z" changeid="xavier">
+        <seg>Paramètres optionnels</seg>
       </tuv>
     </tu>
     <tu>
@@ -5684,6 +5756,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Documentation below explains how set index on ipAddr and _whatToTrace.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055124Z" changeid="xavier">
+        <seg>La documentation ci-dessous explique comment fixer les index à ipAddr et _whatToTrace.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Reporting a bug</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5704,6 +5784,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121710Z" changeid="xavier">
         <seg>Cette fonction examine le jour et l'heure de la requête courante et la compare aux jours et heures autorisés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>With Debian/Ubuntu:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061249Z" changeid="xavier">
+        <seg>Avec Debian/Ubuntu:</seg>
       </tuv>
     </tu>
     <tu>
@@ -6150,6 +6238,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Files</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061052Z" changeid="xavier">
+        <seg>Fichiers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Install</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6586,6 +6682,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191206Z" changeid="xavier">
         <seg>&lt;s0&gt;passThrough&lt;/s0&gt; (optionnel) : Autorise ou non l'accès anonyme.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>With index, &lt;a1&gt;LL::NG&lt;/a1&gt; wil be able to get only wanted sessions from the backend.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055106Z" changeid="xavier">
+        <seg>Avec index, &lt;a1&gt;LL::NG&lt;/a1&gt; ne récupère que les sessions demandées.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9584,6 +9688,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>With tarball installation, Apache configuration files will be installed in &lt;c0&gt;/usr/local/lemonldap-ng/etc/&lt;/c0&gt;, else they are in &lt;c1&gt;/etc/lemonldap-ng&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061136Z" changeid="xavier">
+        <seg>Depuis une installation par les sources, les fichiers de configuration d'Apache se trouvent dans &lt;c0&gt;/usr/local/lemonldap-ng/etc/&lt;/c0&gt;, sinon, ils sont dans &lt;c1&gt;/etc/lemonldap-ng&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>applications:zimbra_logo.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T112608Z" changeid="xavier">
@@ -10202,6 +10314,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in &lt;c0&gt;General parameters&lt;/c0&gt; &gt; &lt;c1&gt;Portal&lt;/c1&gt; &gt; &lt;c2&gt;Captcha&lt;/c2&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060604Z" changeid="xavier">
+        <seg>Aller à &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Portail&lt;/c1&gt; » &lt;c2&gt;Captcha&lt;/c2&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;HTML&lt;/a1&gt; templates&lt;/s0&gt;: in &lt;lang&gt; tags, add your translation, they will be automaticaly used</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10626,6 +10746,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You have to register the media identifer in your user backend (LDAP or SQL) to match the yubikey with a real user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T054810Z" changeid="xavier">
+        <seg>Il faut enregistrer le matériel dans le backend utilisateurs (LDAP ou SQL) pour le faire correspondre à un utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>protect the manager by Apache configuration</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T094842Z" changeid="xavier">
@@ -10774,6 +10902,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051325Z" changeid="guimard">
         <seg>Configurer LemonLDAP::NG pour utiliser MySQL comme base de données principale</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure your new backend (create SQL database,…)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060927Z" changeid="xavier">
+        <seg>Configurer le nouveau backend (creer la base de données SQL,…)</seg>
       </tuv>
     </tu>
     <tu>
@@ -11338,6 +11474,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Attribute storing index</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060111Z" changeid="xavier">
+        <seg>Attribut où stocker les index</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.wikipedia.org</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074442Z" changeid="xavier">
@@ -11800,18 +11944,18 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s16&gt;# SOAP functions for configuration access (disabled by default)&lt;/s16&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T064209Z" changeid="xavier">
-        <seg>&lt;s16&gt;# Fonctions SOAP pour accéder à la configuration (désactivées par défaut)&lt;/s16&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>So you have just to declare this header for the virtual host in Manager.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113203Z" changeid="xavier">
         <seg>Il suffit donc de déclarer cet en-tête pour l'hôte virtuel dans le manager.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s16&gt;# SOAP functions for configuration access (disabled by default)&lt;/s16&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T064209Z" changeid="xavier">
+        <seg>&lt;s16&gt;# Fonctions SOAP pour accéder à la configuration (désactivées par défaut)&lt;/s16&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12204,6 +12348,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T131613Z" changeid="xavier">
         <seg>Nom distinct (distinguished name)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also use symbolic links in &lt;c0&gt;conf.d&lt;/c0&gt; or &lt;c1&gt;sites-available&lt;/c1&gt; Apache directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061208Z" changeid="xavier">
+        <seg>On peut aussi utiliser des liens symboliques dans le répertiore &lt;c0&gt;conf.d&lt;/c0&gt; ou &lt;c1&gt;sites-available&lt;/c1&gt; d'Apache.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12690,6 +12842,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Deploy Apache configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060958Z" changeid="xavier">
+        <seg>Deployer la configuration Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Inside this jail, you can access to:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121308Z" changeid="xavier">
@@ -12910,6 +13070,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051949Z" changeid="guimard">
         <seg>Si le message contient des cases à cocher, l'utilisateur doit toutes les cocher, sinon il ne peut obtenir de cookie de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Activation in login form&lt;/s0&gt;: set to 1 to display captcha in login form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060655Z" changeid="xavier">
+        <seg>&lt;s0&gt;Activation dans le formulaire de connexion&lt;/s0&gt; : mettre à 1 pour activer le captcha dans ce formulaire</seg>
       </tuv>
     </tu>
     <tu>
@@ -14474,18 +14642,18 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Go in Manager and create a new OpenID Connect provider.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T174012Z" changeid="xavier">
-        <seg>Aller dans le Manager et créer un fournisseur OpenID-Connect.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>So you can define for example:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T202126Z" changeid="xavier">
         <seg>Ainsi on peut définir par exemple:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go in Manager and create a new OpenID Connect provider.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160229T174012Z" changeid="xavier">
+        <seg>Aller dans le Manager et créer un fournisseur OpenID-Connect.</seg>
       </tuv>
     </tu>
     <tu>
@@ -14602,18 +14770,18 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>In Debian/Ubuntu, install the library through apt-get command</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T120507Z" changeid="xavier">
-        <seg>Pour Debian/Ubuntu, installer la librairie via la commande apt-get</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Sources are currently available on OW2.</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les sources sont disponibles sur OW2.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Debian/Ubuntu, install the library through apt-get command</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120507Z" changeid="xavier">
+        <seg>Pour Debian/Ubuntu, installer la librairie via la commande apt-get</seg>
       </tuv>
     </tu>
     <tu>
@@ -19208,6 +19376,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Captcha is a security mechanism aimed to prevent robots to submit forms.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060223Z" changeid="xavier">
+        <seg>Captcha est un mécanisme de sécurité utilisé pour éviter des des robots ne soumettent des formulaires.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Data should not contains accents or special characters, as HTTP protocol only allow &lt;a0&gt;ASCII&lt;/a0&gt; values in header (but depending on the HTTP server, you can use ISO encoded values)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160227T184504Z" changeid="xavier">
@@ -20214,6 +20390,14 @@ Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Adapt it to configure the index you need.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055204Z" changeid="xavier">
+        <seg>À adapter pour configurer les index voulus.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>https://auth.example.com/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20121005T040334Z" changeid="xavier">
@@ -20318,6 +20502,14 @@ Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T134946Z" changeid="xavier">
         <seg>Le mot-de-passe peut être stocké en clair ou encodé avec une méthode SQL standard :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example it can be stored as a second value of the uid attribute in the LDAP directory:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T054824Z" changeid="xavier">
+        <seg>Par exemple il peut être stocké comme seconde valeur de l'attibut uid dans un annuaire LDAP :</seg>
       </tuv>
     </tu>
     <tu>
@@ -20554,6 +20746,14 @@ Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163415Z" changeid="xavier">
         <seg>Ne pas oublier de changer la règle d'accès à l'hôte virtuel du manager pour autoriser les nouveaux administrateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Default value</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055959Z" changeid="xavier">
+        <seg>Valeur par défaut</seg>
       </tuv>
     </tu>
     <tu>
@@ -21050,6 +21250,14 @@ Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145342Z" changeid="xavier">
         <seg>Il est possibe d'ajouter une condition.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Index list</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055931Z" changeid="xavier">
+        <seg>Liste d'index</seg>
       </tuv>
     </tu>
     <tu>
@@ -21552,6 +21760,14 @@ Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>We use the Perl module Authen::Captcha to generate codes and images, which look like this:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060528Z" changeid="xavier">
+        <seg>Nous utilisons le module Perl Authen::Captcha pour générer les codes et images, ce qui ressemble à :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>CAS (authentication module)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140913Z" changeid="guimard">
@@ -21572,6 +21788,14 @@ Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051038Z" changeid="guimard">
         <seg>Supervision MRTG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Register form: where user enters information to create a new account</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060448Z" changeid="xavier">
+        <seg>Formulaire d'enregistrement : où les utilisateurs entrent les informations nécessaires à la création de compte</seg>
       </tuv>
     </tu>
     <tu>
@@ -22624,6 +22848,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183221Z" changeid="xavier">
         <seg>&lt;s0&gt;Change password &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: où les utilisateurs peuvent changer leur mot-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Some adaptations are needed with other databases.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055522Z" changeid="xavier">
+        <seg>Quelques adaptations sont nécessaires pour les autres bases de données.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23734,6 +23966,14 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Browseable session backend (&lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt;) works exactly like Apache::Session::* corresponding module but add index that increase &lt;a1&gt;session explorer&lt;/a1&gt; and &lt;a2&gt;session restrictions&lt;/a2&gt; performances.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T054939Z" changeid="xavier">
+        <seg>Le backend de session explorable (&lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt;) fonctionne exactement comme le module Apache::Session::* correspondant mais ajoute des index qui améliore les performances de l'&lt;a1&gt;explorateur de session&lt;/a1&gt; et les &lt;a2&gt;restrictions de sessions&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>WebID</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T063456Z" changeid="xavier">
@@ -23802,6 +24042,14 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/screenshots/0.9.4/0.9.4_password_reset.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Restrict network access to the backend.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060135Z" changeid="xavier">
+        <seg>Restreindre l'accès réseau au backend.</seg>
       </tuv>
     </tu>
     <tu>
@@ -24014,6 +24262,14 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T050727Z" changeid="guimard">
         <seg>Servers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Objectclass of the entry</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060009Z" changeid="xavier">
+        <seg>Objectclass de l'entrée</seg>
       </tuv>
     </tu>
     <tu>
@@ -24470,6 +24726,14 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Login form: where user enters login and password to authenticate</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060330Z" changeid="xavier">
+        <seg>formulaire de connexion : où les utilisateurs entrent leurs login/mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then fill all inputs to create the notification.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T055520Z" changeid="guimard">
@@ -24694,6 +24958,14 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Attribute storing session content</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060055Z" changeid="xavier">
+        <seg>Attribut où stocker le contenu de la session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Can be left blank for plain text passwords.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201239Z" changeid="xavier">
@@ -24710,14 +24982,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>CDBI</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120422T100121Z" changeid="xavier">
-        <seg>CDBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Bruxelles</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103552Z" changeid="xavier">
@@ -24730,6 +24994,14 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T073012Z" changeid="guimard">
         <seg>&lt;s0&gt;&lt;a1&gt;Menu des applications&lt;/a1&gt;&lt;/s0&gt; : affiche les applications autorisées dans les catégories</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>CDBI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100121Z" changeid="xavier">
+        <seg>CDBI</seg>
       </tuv>
     </tu>
     <tu>
@@ -25096,18 +25368,18 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s16&gt;# Directory index&lt;/s16&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T063924Z" changeid="xavier">
-        <seg>&lt;s16&gt;# Directory index&lt;/s16&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Some articles published somewhere in the world wide web.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T035242Z" changeid="xavier">
         <seg>Quelques articles publiés quelque part sur le web.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s16&gt;# Directory index&lt;/s16&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T063924Z" changeid="xavier">
+        <seg>&lt;s16&gt;# Directory index&lt;/s16&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -25242,6 +25514,14 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160227T183008Z" changeid="xavier">
         <seg>Pour obtenir un support ou un service professionnel, contacter l'unde des entreprises citées à &lt;a0&gt;la page suivante&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This step should already have been if you installed &lt;a0&gt;LL::NG&lt;/a0&gt; with packages.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T061046Z" changeid="xavier">
+        <seg>Cette étape est effectuée automatiquement lorsqu'on installe &lt;a0&gt;LL::NG&lt;/a0&gt; avec les packages.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25770,6 +26050,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195113Z" changeid="xavier">
         <seg>La table utilisateurs : où les données utilisateurs sont stockées (mail, nom, etc.)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Size&lt;/s0&gt;: length of captcha</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060822Z" changeid="xavier">
+        <seg>&lt;s0&gt;Taille&lt;/s0&gt; : longueur du captcha</seg>
       </tuv>
     </tu>
     <tu>
@@ -26480,6 +26768,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;Sessions&lt;/a0&gt; for more details</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055627Z" changeid="xavier">
+        <seg>Voir &lt;a0&gt;Sessions&lt;/a0&gt; pour plus de détails</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://lanyrd.com/2011/jcos/sdrbd/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103625Z" changeid="xavier">
@@ -26768,18 +27064,18 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>If a user is not authenticated and attempts to connect to an area protected by a LemonLDAP::NG compatible Handler, he is redirected to a portal.</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Si un utilisateur n'est pas authentifié et tente de se connecter à une application protégée par un agent compatible LemonLDAP::NG, il est redirigé vers le portail.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Social Networks and News</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Réseaux sociaux et nouvelles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If a user is not authenticated and attempts to connect to an area protected by a LemonLDAP::NG compatible Handler, he is redirected to a portal.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Si un utilisateur n'est pas authentifié et tente de se connecter à une application protégée par un agent compatible LemonLDAP::NG, il est redirigé vers le portail.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28214,18 +28510,18 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Session opening</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T203908Z" changeid="xavier">
-        <seg>Ouverture de session</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Some can be mandatory, so if they are not returned by IDP, the session will not open.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220423Z" changeid="xavier">
         <seg>Certains peuvent être obligatoires, et s'ils ne sont pas retournés par l'IDP, la session n'est pas ouverte.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Session opening</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203908Z" changeid="xavier">
+        <seg>Ouverture de session</seg>
       </tuv>
     </tu>
     <tu>
@@ -28534,6 +28830,14 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in the Manager and set the session module to &lt;c0&gt;Apache::Session::Browseable::LDAP&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055713Z" changeid="xavier">
+        <seg>Aller dans le manager et mettre le module de session à &lt;c0&gt;Apache::Session::Browseable::LDAP&lt;/c0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SMTPAuthUser</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064058Z" changeid="guimard">
@@ -28658,6 +28962,14 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ceci peut être utilisé pour notifier des changements de droits,... Consultez la page &lt;a1&gt;notifications&lt;/a1&gt; pour plus d'information.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password reset by mail form: where user enters mail to recover a lost password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060411Z" changeid="xavier">
+        <seg>Formulaire de réinitialisation de mot-de-passe par courriel</seg>
       </tuv>
     </tu>
     <tu>
@@ -28934,6 +29246,14 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T202735Z" changeid="guimard">
         <seg>Protection basée sur LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need to add the &lt;c0&gt;Index&lt;/c0&gt; field and can also configure the &lt;c1&gt;ldapAttributeIndex&lt;/c1&gt; field to set the attribute name where index values will be stored.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055906Z" changeid="xavier">
+        <seg>Il faut ajouter le champ &lt;c0&gt;Index&lt;/c0&gt;, on peut aussi configurer le champ &lt;c1&gt;ldapAttributeIndex&lt;/c1&gt; pour indiquer le nom d'attribut dans lequel les index doivent être stockés.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29640,6 +29960,14 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T195301Z" changeid="xavier">
         <seg>Validation de jeton d'identité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You then just have to add the &lt;c0&gt;Index&lt;/c0&gt; parameter in &lt;c1&gt;General parameters&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Session storage&lt;/c3&gt; » &lt;c4&gt;Apache::Session module&lt;/c4&gt; :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055400Z" changeid="xavier">
+        <seg>Il suffira juste d'ajouter le paramètre &lt;c0&gt;Index&lt;/c0&gt; dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -31360,6 +31688,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Captcha module name&lt;/s0&gt;: Apache session module used to store generated captchas</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060859Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom du module Captcha&lt;/s0&gt; : module Apache::Session utilisé pour stocker les captchas générés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you don't have one, create it with the signing key pair already generated (you could do this with openssl).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T222815Z" changeid="xavier">
@@ -32048,6 +32384,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Without index, &lt;a0&gt;LL::NG&lt;/a0&gt; will have to retrieve all sessions stored in backend and parse them to find the needed sessions.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055040Z" changeid="xavier">
+        <seg>Sans index, &lt;a0&gt;LL::NG&lt;/a0&gt; doit récupérer toutes les sessions stockées dans le backend et les examiner pour trouver les sessions demandées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://dev.twitter.com/pages/api_faq</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -32648,6 +32992,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can use Redis and set up the database like explained in &lt;a0&gt;Redis session backend&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055301Z" changeid="xavier">
+        <seg>Il est possible d'utiliser Redis comme expliqué dans &lt;a0&gt;Backend de sessions Redis&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Net::OpenID::Consumer &gt; 1.00</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140919Z" changeid="guimard">
@@ -32720,18 +33072,18 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Access rule: &lt;c0&gt;accept&lt;/c0&gt;</seg>
+        <seg>South Bay Community Network</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Règle d'accès : &lt;c0&gt;accept&lt;/c0&gt;</seg>
+        <seg>South Bay Community Network</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>South Bay Community Network</seg>
+        <seg>Access rule: &lt;c0&gt;accept&lt;/c0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>South Bay Community Network</seg>
+        <seg>Règle d'accès : &lt;c0&gt;accept&lt;/c0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -33906,6 +34258,14 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This documentation concerns MySQL.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T055501Z" changeid="xavier">
+        <seg>Cette documentation est construite autour de MySQL.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Password expiration warning workflow</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T165959Z" changeid="xavier">
@@ -34180,6 +34540,14 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063357Z" changeid="guimard">
         <seg>Table de caractères des mails</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Activation in register form&lt;/s0&gt;: set to 1 to display captcha in register form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060752Z" changeid="xavier">
+        <seg>&lt;s0&gt;Activation dans le formulaire d'enregistrement&lt;/s0&gt; : mettre à 1 pour activer le captcha dans ce formulaire</seg>
       </tuv>
     </tu>
     <tu>
@@ -35024,18 +35392,18 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Cache backend options</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Options du module du cache local</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Object class&lt;/s0&gt;: objectClass of the groups (default: groupOfNames).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114552Z" changeid="xavier">
         <seg>&lt;s0&gt;Classe d'object&lt;/s0&gt;: objectClass du groupe (défaut: groupOfNames).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Cache backend options</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Options du module du cache local</seg>
       </tuv>
     </tu>
     <tu>
@@ -36914,6 +37282,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203448Z" changeid="guimard">
         <seg>Activer la protection du manager, en éditant &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Activation in password reset by mail form&lt;/s0&gt;: set to 1 to display captcha in password reset by mail form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T060732Z" changeid="xavier">
+        <seg>&lt;s0&gt;Activation dans le formulaire de réinitialisation de mot-de-passe&lt;/s0&gt; : mettre à 1 pour activer le captcha dans ce formulaire</seg>
       </tuv>
     </tu>
     <tu>

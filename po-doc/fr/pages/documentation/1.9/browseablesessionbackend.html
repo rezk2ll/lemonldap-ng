@@ -29,9 +29,7 @@
 <div class="level2">
 
 <p>
-
-Browseable session backend (<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a>) works exactly like Apache::Session::* corresponding module but add index that increase <a href="../../documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">session explorer</a> and <a href="../../documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">session restrictions</a> performances.
-
+Le backend de session explorable (<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a>) fonctionne exactement comme le module Apache::Session::* correspondant mais ajoute des index qui améliore les performances de l'<a href="../../documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">explorateur de session</a> et les <a href="../../documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">restrictions de sessions</a>.
 </p>
 
 <p>
@@ -39,8 +37,7 @@ Lorsqu'on utilise des fonctionnalités telles <abbr title="Security Assertion Ma
 </p>
 
 <p>
-</p><p></p><div class="noteclassic">Without index, <abbr title="LemonLDAP::NG">LL::NG</abbr> will have to retrieve all sessions stored in backend and parse them to find the needed sessions. With index, <abbr title="LemonLDAP::NG">LL::NG</abbr> wil be able to get only wanted sessions from the backend.
-
+</p><p></p><div class="noteclassic">Sans index, <abbr title="LemonLDAP::NG">LL::NG</abbr> doit récupérer toutes les sessions stockées dans le backend et les examiner pour trouver les sessions demandées. Avec index, <abbr title="LemonLDAP::NG">LL::NG</abbr> ne récupère que les sessions demandées.
 </div></p>
 </p>
 
@@ -81,8 +78,7 @@ Le tableau suivant liste les champs à indexer suivant les fonctionnalités dont
 </p>
 
 <p>
-</p><p></p><div class="noteclassic">Documentation below explains how set index on ipAddr and _whatToTrace. Adapt it to configure the index you need.
-
+</p><p></p><div class="noteclassic">La documentation ci-dessous explique comment fixer les index à ipAddr et _whatToTrace. À adapter pour configurer les index voulus.
 </div></p>
 </p>
 
@@ -92,15 +88,11 @@ Le tableau suivant liste les champs à indexer suivant les fonctionnalités dont
 <div class="level2">
 
 <p>
-
-You can use Redis and set up the database like explained in <a href="../../documentation/1.9/nosqlsessionbackend.html" class="wikilink1" title="documentation:1.9:nosqlsessionbackend">Redis session backend</a>.
-
+Il est possible d'utiliser Redis comme expliqué dans <a href="../../documentation/1.9/nosqlsessionbackend.html" class="wikilink1" title="documentation:1.9:nosqlsessionbackend">Backend de sessions Redis</a>.
 </p>
 
 <p>
-
-You then just have to add the <code>Index</code> parameter  in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> :
-
+Il suffira juste d'ajouter le paramètre <code>Index</code> dans <code>Paramètres généraux</code> » <code>Sessions</code> » <code>Stockage des sessions</code> » <code>Module Apache::Session</code> :
 </p>
 <div class="table sectionedit5"><table class="inline">
 	<thead>
@@ -125,8 +117,7 @@ You then just have to add the <code>Index</code> parameter  in <code>General par
 <div class="level2">
 
 <p>
-</p><p></p><div class="noteclassic">This documentation concerns MySQL. Some adaptations are needed with other databases.
-
+</p><p></p><div class="noteclassic">Cette documentation est construite autour de MySQL. Quelques adaptations sont nécessaires pour les autres bases de données.
 </div></p>
 </p>
 
@@ -148,8 +139,7 @@ La base de donnée doit être préparée exactement comme celle du <a href="../.
     <span class="br0">)</span>;</pre>
 
 <p>
-</p><p></p><div class="noteimportant">Change char(32) by char(64) if you use the now recommended SHA256 hash algorithm. See <a href="../../documentation/current/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> for more details
-
+</p><p></p><div class="noteimportant">Changer char(32) en char(64) pour utiliser l'algorithme de hashage SHA256 (recommandé). Voir <a href="../../documentation/current/sessions.html" class="wikilink1" title="documentation:latest:sessions">Sessions</a> pour plus de détails
 </div></p>
 </p>
 
@@ -199,15 +189,11 @@ Pour les bases de données telles PostgreSQL, ne pas oublier d'ajouter “Commit
 <div class="level2">
 
 <p>
-
-Go in the Manager and set the session module to <code>Apache::Session::Browseable::LDAP</code>. Then configure the options like in <a href="../../documentation/1.9/ldapsessionbackend.html" class="wikilink1" title="documentation:1.9:ldapsessionbackend">LDAP session backend</a>.
-
+Aller dans le manager et mettre le module de session à <code>Apache::Session::Browseable::LDAP</code> Configurer ensuite les options comme dans le <a href="../../documentation/1.9/ldapsessionbackend.html" class="wikilink1" title="documentation:1.9:ldapsessionbackend">backend de sessions LDAP</a>.
 </p>
 
 <p>
-
-You need to add the <code>Index</code> field and can also configure the <code>ldapAttributeIndex</code> field to set the attribute name where index values will be stored.
-
+Il faut ajouter le champ <code>Index</code>, on peut aussi configurer le champ <code>ldapAttributeIndex</code> pour indiquer le nom d'attribut dans lequel les index doivent être stockés.
 </p>
 <div class="table sectionedit11"><table class="inline">
 	<thead>
@@ -231,25 +217,25 @@ You need to add the <code>Index</code> field and can also configure the <code>ld
 		<td class="col0 centeralign">  <strong>ldapBindPassword</strong>  </td><td class="col1"> Mot-de-passe de connexion </td><td class="col2">  secret  </td>
 	</tr>
 	<tr class="row6 roweven">
-		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1">  Index list  </td><td class="col2">  _whatToTrace ipAddr  </td>
+		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Liste d'index </td><td class="col2">  _whatToTrace ipAddr  </td>
 	</tr>
 	<tr class="row7 rowodd">
-		<th class="col0 centeralign" colspan="3">    Optional parameters    </th>
+		<th class="col0 centeralign" colspan="3">  Paramètres optionnels  </th>
 	</tr>
 	<tr class="row8 roweven">
-		<th class="col0 centeralign">  Nom  </th><th class="col1 centeralign">  Commentaire  </th><th class="col2 centeralign">    Default value    </th>
+		<th class="col0 centeralign">  Nom  </th><th class="col1 centeralign">  Commentaire  </th><th class="col2 centeralign">  Valeur par défaut  </th>
 	</tr>
 	<tr class="row9 rowodd">
-		<td class="col0 centeralign">  <strong>ldapObjectClass</strong>  </td><td class="col1">  Objectclass of the entry  </td><td class="col2">  applicationProcess  </td>
+		<td class="col0 centeralign">  <strong>ldapObjectClass</strong>  </td><td class="col1"> Objectclass de l'entrée </td><td class="col2">  applicationProcess  </td>
 	</tr>
 	<tr class="row10 roweven">
-		<td class="col0 centeralign">  <strong>ldapAttributeId</strong>  </td><td class="col1">  Attribute storing session ID  </td><td class="col2">  cn  </td>
+		<td class="col0 centeralign">  <strong>ldapAttributeId</strong>  </td><td class="col1"> Attribut où stocker l'idetifiant de session </td><td class="col2">  cn  </td>
 	</tr>
 	<tr class="row11 rowodd">
-		<td class="col0 centeralign">  <strong>ldapAttributeContent</strong>  </td><td class="col1">  Attribute storing session content  </td><td class="col2">  description  </td>
+		<td class="col0 centeralign">  <strong>ldapAttributeContent</strong>  </td><td class="col1"> Attribut où stocker le contenu de la session </td><td class="col2">  description  </td>
 	</tr>
 	<tr class="row12 roweven">
-		<td class="col0 centeralign">  <strong>ldapAttributeIndex</strong>  </td><td class="col1">  Attribute storing index  </td><td class="col2">  ou  </td>
+		<td class="col0 centeralign">  <strong>ldapAttributeIndex</strong>  </td><td class="col1"> Attribut où stocker les index </td><td class="col2">  ou  </td>
 	</tr>
 </table></div><!-- EDIT11 TABLE [3961-4695] -->
 
@@ -259,9 +245,7 @@ You need to add the <code>Index</code> field and can also configure the <code>ld
 <div class="level2">
 
 <p>
-
-Restrict network access to the backend.
-
+Restreindre l'accès réseau au backend.
 </p>
 
 <p>

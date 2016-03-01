@@ -67,9 +67,7 @@ Ensuite, aller dans les <code>paramètres WebID</code>:
 </ul>
 
 <p>
-
-If you use WebID as user database, declare values in <strong>exported variables</strong> :
-
+Si on utilise WebID comme base de données utilisateurs, déclarer les valeurs dans les <strong>variables exportées</strong> :
 </p>
 <ul>
 <li class="level1"><div class="li"> utiliser n'importe quel nom de clef. Pour imposer qu'une valeur soit renseignée, ajouter un ”!” devant le nom de clef</div>
@@ -89,7 +87,7 @@ Voir aussi la <a href="../../documentation/1.9/exportedvars.html" class="wikilin
 <div class="level3">
 
 <p>
-Portal host must be configured to use SSL and must ask for client certificate. Il est recommandé d'utiliser «&nbsp;optional_no_ca » car WebID n'utilise pas d'autorité de certification :
+L'hôte du portail doit être configuré pour utiliser SSL et doit demander un certificat client. Il est recommandé d'utiliser «&nbsp;optional_no_ca » car WebID n'utilise pas d'autorité de certification :
 </p>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> _default_:<span class="nu0">443</span>&gt;
 <span class="kw1">ServerName</span> auth.example.com

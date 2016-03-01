@@ -29,29 +29,23 @@
 <div class="level2">
 
 <p>
-
-Captcha is a security mechanism aimed to prevent robots to submit forms.
-
+Captcha est un mécanisme de sécurité utilisé pour éviter des des robots ne soumettent des formulaires.
 </p>
 
 <p>
-
-Captchas are available on the following forms:
-
+Les captchas sont disponibles sur les formulaires suivants :
 </p>
 <ul>
-<li class="level1"><div class="li">  Login form: where user enters login and password to authenticate</div>
+<li class="level1"><div class="li"> formulaire de connexion : où les utilisateurs entrent leurs login/mot-de-passe</div>
 </li>
-<li class="level1"><div class="li">  Password reset by mail form: where user enters mail to recover a lost password</div>
+<li class="level1"><div class="li"> Formulaire de réinitialisation de mot-de-passe par courriel</div>
 </li>
-<li class="level1"><div class="li">  Register form: where user enters information to create a new account</div>
+<li class="level1"><div class="li"> Formulaire d'enregistrement : où les utilisateurs entrent les informations nécessaires à la création de compte</div>
 </li>
 </ul>
 
 <p>
-
-We use the Perl module Authen::Captcha to generate codes and images, which look like this:
-
+Nous utilisons le module Perl Authen::Captcha pour générer les codes et images, ce qui ressemble à :
 </p>
 
 <p>
@@ -64,22 +58,20 @@ We use the Perl module Authen::Captcha to generate codes and images, which look 
 <div class="level2">
 
 <p>
-
-Go in <code>General parameters</code> &gt; <code>Portal</code> &gt; <code>Captcha</code>:
-
+Aller à <code>Paramètres généraux</code> » <code>Portail</code> » <code>Captcha</code> :
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Activation in login form</strong>: set to 1 to display captcha in login form</div>
+<li class="level1"><div class="li"> <strong>Activation dans le formulaire de connexion</strong> : mettre à 1 pour activer le captcha dans ce formulaire</div>
 </li>
-<li class="level1"><div class="li"> <strong>Activation in password reset by mail form</strong>: set to 1 to display captcha in password reset by mail form</div>
+<li class="level1"><div class="li"> <strong>Activation dans le formulaire de réinitialisation de mot-de-passe</strong> : mettre à 1 pour activer le captcha dans ce formulaire</div>
 </li>
-<li class="level1"><div class="li"> <strong>Activation in register form</strong>: set to 1 to display captcha in register form</div>
+<li class="level1"><div class="li"> <strong>Activation dans le formulaire d'enregistrement</strong> : mettre à 1 pour activer le captcha dans ce formulaire</div>
 </li>
-<li class="level1"><div class="li"> <strong>Size</strong>: length of captcha</div>
+<li class="level1"><div class="li"> <strong>Taille</strong> : longueur du captcha</div>
 </li>
-<li class="level1"><div class="li"> <strong>Captcha module name</strong>: Apache session module used to store generated captchas</div>
+<li class="level1"><div class="li"> <strong>Nom du module Captcha</strong> : module Apache::Session utilisé pour stocker les captchas générés</div>
 </li>
-<li class="level1"><div class="li"> <strong>Captcha module options</strong>: options for above module</div>
+<li class="level1"><div class="li"> <strong>Options du module Captcha</strong> : options pour ce module</div>
 </li>
 </ul>
 
