@@ -222,6 +222,14 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg># OR in the corresponding block</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T170332Z" changeid="xavier">
+        <seg># OU dans le bloc correspondant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg># OpenID Connect Issuer</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T081840Z" changeid="xavier">
@@ -17026,6 +17034,14 @@ SSLCertificateFile ...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;c0&gt;cgi&lt;/c0&gt; for the portal (or any CGI: it works like PHP-FPM for Perl !)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T170429Z" changeid="xavier">
+        <seg>&lt;c0&gt;cgi&lt;/c0&gt; pour le portail (ou n'importe quelle CGI : ça fonctionne comme PHP-FPM pour Perl !)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;c0&gt;deny&lt;/c0&gt;: nobody is welcomed</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17054,6 +17070,14 @@ SSLCertificateFile ...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103810Z" changeid="xavier">
         <seg>&lt;c0&gt;skip&lt;/c0&gt; : tout est ouvert !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;c0&gt;status&lt;/c0&gt; to see statistics (if enabled)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T170445Z" changeid="xavier">
+        <seg>&lt;c0&gt;status&lt;/c0&gt; pour voir les statistiques (si activé)</seg>
       </tuv>
     </tu>
     <tu>
@@ -17136,6 +17160,14 @@ SSLCertificateFile ...</seg>
 &lt;s1&gt;ErrorDocument&lt;/s1&gt; 403 http://auth.example.com/?lmError=403
 &lt;s2&gt;ErrorDocument&lt;/s2&gt; 500 http://auth.example.com/?lmError=500
 &lt;s3&gt;ErrorDocument&lt;/s3&gt; &lt;s4&gt;503&lt;/s4&gt; http://auth.example.com/?lmError=&lt;s5&gt;503&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;# FASTCGI CONFIGURATION&lt;/s0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T170154Z" changeid="xavier">
+        <seg>&lt;s0&gt;# CONFIGURATION FASTCGI&lt;/s0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -19250,6 +19282,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T075418Z" changeid="xavier">
         <seg>&lt;s0&gt;Paramètres généraux&lt;/s0&gt; : modules d'authentification, portail, etc…</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;General Parameters&lt;/s0&gt;: Authentication modules, portal, etc.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T170052Z" changeid="xavier">
+        <seg>&lt;s0&gt;Paramètres généraux&lt;/s0&gt; : modules d'authentification, portail, etc...</seg>
       </tuv>
     </tu>
     <tu>
@@ -24364,6 +24404,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s5&gt;# Change &quot;Location&quot; header in redirections&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T170221Z" changeid="xavier">
+        <seg>&lt;s5&gt;# Changer l'en-tête &quot;Location&quot; dans les redirections&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s5&gt;# Redirect admin pages&lt;/s5&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182155Z" changeid="xavier">
@@ -24742,6 +24790,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064402Z" changeid="xavier">
         <seg>&lt;s7&gt;# Fournisseur d'identité CAS&lt;/s7&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s7&gt;# Change domain cookies&lt;/s7&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T170239Z" changeid="xavier">
+        <seg>&lt;s7&gt;# Changer le domaine des cookies&lt;/s7&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -27524,6 +27580,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Bugzilla virtual host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165141Z" changeid="xavier">
+        <seg>Hôte virtuel Bugzilla</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Bugzilla virtual host in Apache</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113925Z" changeid="xavier">
@@ -28660,6 +28724,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configuration is stored as JSON.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T170522Z" changeid="xavier">
+        <seg>La configuration est stockée au format JSON.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configuration key of IDP used for authentication</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T131256Z" changeid="xavier">
@@ -28728,6 +28800,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131103T202555Z" changeid="xavier">
         <seg>Éditeur de configuration en mode text</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure &lt;a0&gt;Apache or Nginx virtual host&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165942Z" changeid="xavier">
+        <seg>Configurer l'&lt;a0&gt;hôte virtuel Apache ou Nginx&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -30404,6 +30484,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Drupal virtual host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165424Z" changeid="xavier">
+        <seg>Hôte virtuel Drupal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Drupal virtual host in Apache</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111201T124833Z" changeid="xavier">
@@ -30616,6 +30704,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112557Z" changeid="xavier">
         <seg>Éditer également la configuration du serveur Apache d'OBM pour activer les en-têtes &lt;a0&gt;LL::NG&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Edit also OBM configuration to enable &lt;a0&gt;LL::NG&lt;/a0&gt; Handler:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165836Z" changeid="xavier">
+        <seg>Éditer également la configuration d'OBM pour activer le « handler » &lt;a0&gt;LL::NG&lt;/a0&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -31696,6 +31792,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For Apache:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165146Z" changeid="xavier">
+        <seg>Pour Apache:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For CentOS/RHEL, We advice to disable the default &lt;a0&gt;SSL&lt;/a0&gt; virtual host configured in /etc/httpd/conf.d/ssl.conf.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T065737Z" changeid="xavier">
@@ -31748,6 +31852,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T205156Z" changeid="xavier">
         <seg>Pour MySQL, il faut ajouter quelques paramètres :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For Nginx:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165154Z" changeid="xavier">
+        <seg>Pour Nginx:</seg>
       </tuv>
     </tu>
     <tu>
@@ -37158,6 +37270,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Liferay virtual host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165552Z" changeid="xavier">
+        <seg>Hôte virtuel Liferay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Liferay virtual host in Apache</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074236Z" changeid="xavier">
@@ -37202,6 +37322,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101601Z" changeid="xavier">
         <seg>LimeSurvey dispose d'un mode d'authentification par serveur web qui permet de l'integrer directement dans LemonLDAP::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LimeSurvey virtual host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165623Z" changeid="xavier">
+        <seg>Hôte virtuel LimeSurvey</seg>
       </tuv>
     </tu>
     <tu>
@@ -37978,6 +38106,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074419Z" changeid="xavier">
         <seg>MediaWiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>MediaWiki virtual host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165719Z" changeid="xavier">
+        <seg>Hôte virtuel MediaWiki</seg>
       </tuv>
     </tu>
     <tu>
@@ -42496,6 +42632,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;SAML security parameters&lt;/a0&gt; to know how generate a certificate from you &lt;a1&gt;SAML&lt;/a1&gt; private key.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165337Z" changeid="xavier">
+        <seg>Voir les &lt;a0&gt;paramètres de sécurité SAML&lt;/a0&gt; pour générer un certificat avec une clef privée &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;SAML service&lt;/a0&gt; configuration chapter.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220601Z" changeid="xavier">
@@ -44108,6 +44252,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064445Z" changeid="guimard">
         <seg>Secret partagé de Sympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sympa virtual host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165958Z" changeid="xavier">
+        <seg>Hôte virtuel Sympa</seg>
       </tuv>
     </tu>
     <tu>
@@ -63032,6 +63184,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173628Z" changeid="xavier">
         <seg>Configuration locale phpLDAPadmin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>phpLDAPadmin virtual host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160301T165858Z" changeid="xavier">
+        <seg>Hôte virtuel phpLDAPadmin</seg>
       </tuv>
     </tu>
     <tu>

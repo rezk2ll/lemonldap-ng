@@ -61,12 +61,21 @@ Aller dans l'interface administration et activer le module Webserver Auth.
 
 </div><!-- EDIT5 SECTION "Drupal module activation" [554-666] -->
 
-<h3 class="sectionedit6" id="drupal_virtual_host_in_apache">Hôte virtuel Apache hébergeant Drupal</h3>
+<h3 class="sectionedit6" id="drupal_virtual_host">Hôte virtuel Drupal</h3>
 <div class="level3">
 
 <p>
 Configurer l'hôte virtuel Drupal comme n'importe quel autre <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">hôte virtuel protégé</a>.
 </p>
+
+<p>
+</p><p></p><div class="noteimportant">Si Drupal est protégé par un reverse-proxy <abbr title="LemonLDAP::NG">LL::NG</abbr>, <a href="../../../documentation/1.9/header_remote_user_conversion.html" class="wikilink1" title="documentation:1.9:header_remote_user_conversion">convertir l'en-tête en variable d'environnement REMOTE_USER</a>.
+</div></p>
+</p>
+<ul>
+<li class="level1"><div class="li"> Pour Apache:</div>
+</li>
+</ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> drupal.example.com
 &nbsp;
@@ -75,13 +84,46 @@ Configurer l'hôte virtuel Drupal comme n'importe quel autre <a href="../../../d
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li"> Pour Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name drupal.example.com;
+  root /path/to/application;
+  # Requête interne d'authentification
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Ignorer les données postées
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH "";
+    # Conserver le nom d'hôte original
+    fastcgi_param HOST $http_host;
+    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Requêtes clients
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
 
-<p>
-</p><p></p><div class="noteimportant">Si Drupal est protégé par un reverse-proxy <abbr title="LemonLDAP::NG">LL::NG</abbr>, <a href="../../../documentation/1.9/header_remote_user_conversion.html" class="wikilink1" title="documentation:1.9:header_remote_user_conversion">convertir l'en-tête en variable d'environnement REMOTE_USER</a>.
-</div></p>
-</p>
-
-</div><!-- EDIT6 SECTION "Drupal virtual host in Apache" [667-1133] -->
+</div><!-- EDIT6 SECTION "Drupal virtual host" [667-2092] -->
 
 <h3 class="sectionedit7" id="drupal_virtual_host_in_manager">Hôte virtuel Drupal dans le manager</h3>
 <div class="level3">
@@ -98,7 +140,7 @@ Configurer simplement la <a href="../../../documentation/1.9/writingrulesand_hea
 Si <abbr title="LemonLDAP::NG">LL::NG</abbr> est utilisé par reverse-proxy, configurer l'<a href="../../../documentation/1.9/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:1.9:writingrulesand_headers">en-tête</a> <code>Auth-User</code>, aucun autre en-tête n'est utile.
 </p>
 
-</div><!-- EDIT7 SECTION "Drupal virtual host in Manager" [1134-1487] -->
+</div><!-- EDIT7 SECTION "Drupal virtual host in Manager" [2093-2446] -->
 
 <h3 class="sectionedit8" id="protect_only_the_administration_pages">Protéger seulement la page d'administration</h3>
 <div class="level3">

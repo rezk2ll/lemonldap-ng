@@ -90,12 +90,21 @@ On peut aussi utiliser &lt;portal&gt;?logout=1 comme URL de déconnexion pour su
 
 </div><!-- EDIT4 SECTION "Sympa configuration" [488-1292] -->
 
-<h3 class="sectionedit5" id="sympa_virtual_host_in_apache">Hôte virtuel Sympa dans le manager</h3>
+<h3 class="sectionedit5" id="sympa_virtual_host">Hôte virtuel Sympa</h3>
 <div class="level3">
 
 <p>
 Configurer l'hôte virtuel Sympa comme n'importe quel autre <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">hôte virtuel protégé</a> mais ne protéger que l'authentification magique.
 </p>
+
+<p>
+</p><p></p><div class="notetip">La fin de l'<abbr title="Uniform Resource Locator">URL</abbr> est construite à partir du <code>service_id</code> defini dans la configuration Apache de Sympa.
+</div></p>
+</p>
+<ul>
+<li class="level1"><div class="li"> Pour Apache:</div>
+</li>
+</ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> sympa.example.com
 &nbsp;
@@ -106,13 +115,46 @@ Configurer l'hôte virtuel Sympa comme n'importe quel autre <a href="../../../do
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li"> Pour Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name sympa.example.com;
+  root /path/to/application;
+  # Requête interne d'authentification
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Ignorer les données postées
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH "";
+    # Conserver le nom d'hôte original
+    fastcgi_param HOST $http_host;
+    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Requêtes clients
+  location /wws/sso_login/lemonldapng {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
 
-<p>
-</p><p></p><div class="notetip">La fin de l'<abbr title="Uniform Resource Locator">URL</abbr> est construite à partir du <code>service_id</code> defini dans la configuration Apache de Sympa.
-</div></p>
-</p>
-
-</div><!-- EDIT5 SECTION "Sympa virtual host in Apache" [1293-1805] -->
+</div><!-- EDIT5 SECTION "Sympa virtual host" [1293-2795] -->
 
 <h3 class="sectionedit6" id="sympa_virtual_host_in_manager">Hôte virtuel Sympa dans le manager</h3>
 <div class="level3">

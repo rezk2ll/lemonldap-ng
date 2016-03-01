@@ -160,12 +160,16 @@ Utiliser ensuite le paragraphe <code>SiteMinder</code> pour configurer le <abbr 
 
 </div><!-- EDIT4 SECTION "Liferay administration" [839-2004] -->
 
-<h3 class="sectionedit5" id="liferay_virtual_host_in_apache">Hôte virtuel Liferay dans le manager</h3>
+<h3 class="sectionedit5" id="liferay_virtual_host">Hôte virtuel Liferay</h3>
 <div class="level3">
 
 <p>
 Configurer l'hôte virtuel Liferay comme n'importe quel autre <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">hôte virtuel protégé</a>.
 </p>
+<ul>
+<li class="level1"><div class="li"> Pour Apache:</div>
+</li>
+</ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> liferay.example.com
 &nbsp;
@@ -174,8 +178,46 @@ Configurer l'hôte virtuel Liferay comme n'importe quel autre <a href="../../../
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li"> Pour Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name liferay.example.com;
+  root /path/to/application;
+  # Requête interne d'authentification
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Ignorer les données postées
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH "";
+    # Conserver le nom d'hôte original
+    fastcgi_param HOST $http_host;
+    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Requêtes clients
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
 
-</div><!-- EDIT5 SECTION "Liferay virtual host in Apache" [2005-2301] -->
+</div><!-- EDIT5 SECTION "Liferay virtual host" [2005-3261] -->
 
 <h3 class="sectionedit6" id="liferay_virtual_host_in_manager">Hôte virtuel Liferay dans le manager</h3>
 <div class="level3">

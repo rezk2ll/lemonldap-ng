@@ -852,6 +852,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;c0&gt;</bpt>status<ept i='0'>&lt;/c0&gt;</ept> to see statistics (if enabled)</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T170445Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;c0&gt;</bpt>status<ept i='0'>&lt;/c0&gt;</ept> pour voir les statistiques (si activé)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>/_detail/screenshots/1.0/impact/password.png?id=screenshots</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -1138,6 +1146,14 @@ make test</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111217T080321Z" changeid="xavier">
         <seg>http://www.sympa.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt># FASTCGI CONFIGURATION<ept i='0'>&lt;/s0&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T170154Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt># CONFIGURATION FASTCGI<ept i='0'>&lt;/s0&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -1848,14 +1864,6 @@ ln -s ../pastel/*.tpl .</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>LimeSurvey virtual host in Apache</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120226T102007Z" changeid="xavier">
-        <seg>Hôte virtuel LimeSurvey dans Apache</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>documentation/features.html</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -2254,6 +2262,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120303T092555Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Format de NameID par défaut<ept i='0'>&lt;/s0&gt;</ept> : si aucun fiormat de NameID n'est demandé, ou si le format n'est pas défini, ce format de NameID sera utilisé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='7' x='7'>&lt;s7&gt;</bpt># Change domain cookies<ept i='7'>&lt;/s7&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T170239Z" changeid="xavier">
+        <seg><bpt i='7' x='7'>&lt;s7&gt;</bpt># Changer le domaine des cookies<ept i='7'>&lt;/s7&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -4882,14 +4898,6 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Sympa virtual host in Apache</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111217T080936Z" changeid="xavier">
-        <seg>Hôte virtuel Sympa dans le manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Remote Session backend options</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T064022Z" changeid="guimard">
@@ -7172,6 +7180,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>phpLDAPadmin virtual host</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T165858Z" changeid="xavier">
+        <seg>Hôte virtuel phpLDAPadmin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Service configuration will be used to generate <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> <bpt i='1' x='1'>&lt;a1&gt;</bpt>SAML<ept i='1'>&lt;/a1&gt;</ept> metadata, that will be shared with other providers.</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -8798,18 +8814,18 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>localStorage</seg>
+        <seg>Liferay virtual host</seg>
       </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120419T063307Z" changeid="guimard">
-        <seg>localStorage</seg>
+      <tuv xml:lang="FR-FR" changedate="20160301T165552Z" changeid="xavier">
+        <seg>Hôte virtuel Liferay</seg>
       </tuv>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>../../../../media/documentation/googleapps-export-priv-key.png</seg>
+        <seg>localStorage</seg>
       </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111203T183351Z" changeid="xavier">
-        <seg>../../../../media/documentation/googleapps-export-priv-key.png</seg>
+      <tuv xml:lang="FR-FR" changedate="20120419T063307Z" changeid="guimard">
+        <seg>localStorage</seg>
       </tuv>
     </tu>
     <tu>
@@ -8906,14 +8922,6 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T064215Z" changeid="guimard">
         <seg>SSLAuthnLevel</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>OBM Apache configuration must be loaded <bpt i='0' x='0'>&lt;s0&gt;</bpt>after<ept i='0'>&lt;/s0&gt;</ept> <bpt i='1' x='1'>&lt;a1&gt;</bpt>LL::NG<ept i='1'>&lt;/a1&gt;</ept> <bpt i='2' x='2'>&lt;a2&gt;</bpt>Apache configuration<ept i='2'>&lt;/a2&gt;</ept>.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111211T112730Z" changeid="xavier">
-        <seg>La configuration du serveur Apache d'OBM doit être chargée <bpt i='0' x='0'>&lt;s0&gt;</bpt>après<ept i='0'>&lt;/s0&gt;</ept> <bpt i='2' x='2'>&lt;a2&gt;</bpt>celle<ept i='2'>&lt;/a2&gt;</ept> de <bpt i='1' x='1'>&lt;a1&gt;</bpt>LL::NG<ept i='1'>&lt;/a1&gt;</ept>.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12172,6 +12180,14 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Bugzilla virtual host</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T165141Z" changeid="xavier">
+        <seg>Hôte virtuel Bugzilla</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>unprotect</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111211T172000Z" changeid="xavier">
@@ -13306,14 +13322,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160229T195554Z" changeid="xavier">
         <seg>Service OpenID-Connect</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>General Parameters<ept i='0'>&lt;/s0&gt;</ept>: 1uthentication modules, portal, etc.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T075418Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Paramètres généraux<ept i='0'>&lt;/s0&gt;</ept> : modules d'authentification, portail, etc…</seg>
       </tuv>
     </tu>
     <tu>
@@ -16318,6 +16326,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Sympa virtual host</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T165958Z" changeid="xavier">
+        <seg>Hôte virtuel Sympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Use extended functions</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120505T082845Z" changeid="xavier">
@@ -16354,6 +16370,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv xml:lang="FR-FR">
         <seg>http://auth.example.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Configuration is stored as JSON.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T170522Z" changeid="xavier">
+        <seg>La configuration est stockée au format JSON.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16958,14 +16982,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Dokuwiki virtual host in Apache</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111119T115343Z" changeid="xavier">
-        <seg>Hôte virtuel Dokuwiki dans le manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>echo &quot;127.0.0.1 reload.example.com&quot; &gt;&gt; /etc/hosts</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120620T042402Z" changeid="xavier">
@@ -17432,14 +17448,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Then use openssl to generate an auto-signed certificate:</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111203T192532Z" changeid="xavier">
-        <seg>Ensuite, utiliser openssl pour générer un certificat auto-signé :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>logout_app https://auth.example.com/</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120506T060505Z" changeid="xavier">
@@ -17832,14 +17840,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T074119Z" changeid="xavier">
         <seg>Ces options sont utilisées dans la construction des <bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> de redirection (lorsque l'utilisateur n'est pas connecté ou pour les requêtes <bpt i='1' x='1'>&lt;a1&gt;</bpt>CDA<ept i='1'>&lt;/a1&gt;</ept>).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>documentation:googleapps-export-priv-key.png</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111203T183350Z" changeid="xavier">
-        <seg>documentation:googleapps-export-priv-key.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -19454,14 +19454,6 @@ server {</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg><bpt i='0' x='0'>&lt;c0&gt;</bpt>auth<ept i='0'>&lt;/c0&gt;</ept> for the portal</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T163830Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;c0&gt;</bpt>auth<ept i='0'>&lt;/c0&gt;</ept> pour le portail</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='26' x='26'>&lt;s26&gt;</bpt>Order<ept i='26'>&lt;/s26&gt;</ept> <bpt i='27' x='27'>&lt;s27&gt;</bpt>deny<ept i='27'>&lt;/s27&gt;</ept>,<bpt i='28' x='28'>&lt;s28&gt;</bpt>allow<ept i='28'>&lt;/s28&gt;</ept></seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T064240Z" changeid="xavier">
@@ -19884,14 +19876,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120324T160457Z" changeid="xavier">
         <seg>Lancer la cible “dist” :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Select the key, and export it (button <bpt i='0' x='0'>&lt;c0&gt;</bpt>Download this file<ept i='0'>&lt;/c0&gt;</ept>):</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111203T183346Z" changeid="xavier">
-        <seg>Selectionner la clef, et l'exporter (bouton <bpt i='0' x='0'>&lt;c0&gt;</bpt>Download this file<ept i='0'>&lt;/c0&gt;</ept>):</seg>
       </tuv>
     </tu>
     <tu>
@@ -21218,6 +21202,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>For Nginx:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T165154Z" changeid="xavier">
+        <seg>Pour Nginx:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Warning: key is not defined, set it in the manager !</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T112446Z" changeid="xavier">
@@ -21464,14 +21456,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Utilisateurs<ept i='0'>&lt;/s0&gt;</ept>: où trouver les données utilisateurs</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>After choosing the file name (for example lemonldapn-ng-priv.key), download the key on your disk.</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111203T192500Z" changeid="xavier">
-        <seg>Après avoir choisi le nom de fichier (par exemple lemonldapn-ng-priv.key), le télécharger sur le disque.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21984,14 +21968,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Bugzilla virtual host in Apache</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111119T113925Z" changeid="xavier">
-        <seg>Hôte virtuel Apache hébergeant Bugzilla</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Redirection to the remote type portal</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120217T045517Z" changeid="xavier">
@@ -22486,14 +22462,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120303T092441Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Format<ept i='0'>&lt;/s0&gt;</ept> (optionnel) : format de l'attribut <bpt i='1' x='1'>&lt;a1&gt;</bpt>SAML<ept i='1'>&lt;/a1&gt;</ept>.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Then you can take any virtual host, and simply add this lines to protect it:</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160301T143528Z" changeid="xavier">
-        <seg>Ainsi n'importe quel hôte virtuel peut être protégé en ajoutant ces lignes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -23556,14 +23524,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>Liferay virtual host in Apache</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111211T074236Z" changeid="xavier">
-        <seg>Hôte virtuel Liferay dans le manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='1' x='1'>&lt;s1&gt;</bpt>ServerName<ept i='1'>&lt;/s1&gt;</ept> zimbra.example.com
  </seg>
       </tuv>
@@ -24038,6 +23998,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>MediaWiki virtual host</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T165719Z" changeid="xavier">
+        <seg>Hôte virtuel MediaWiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>This can be used to protect applications relying on <bpt i='0' x='0'>&lt;c0&gt;</bpt>REMOTE_USER<ept i='0'>&lt;/c0&gt;</ept> environment variable in reverse proxy mode.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120225T195111Z" changeid="xavier">
@@ -24506,6 +24474,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120506T103624Z" changeid="xavier">
         <seg>http://www.slideshare.net/coudot/lemonldapng-un-websso-libre</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='5' x='5'>&lt;s5&gt;</bpt># Change &quot;Location&quot; header in redirections<ept i='5'>&lt;/s5&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T170221Z" changeid="xavier">
+        <seg><bpt i='5' x='5'>&lt;s5&gt;</bpt># Changer l'en-tête &quot;Location&quot; dans les redirections<ept i='5'>&lt;/s5&gt;</ept></seg>
       </tuv>
     </tu>
     <tu>
@@ -25012,14 +24988,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111201T124858Z" changeid="xavier">
         <seg>Configurer l'hôte virtuel Drupal comme n'importe quel autre <bpt i='0' x='0'>&lt;a0&gt;</bpt>hôte virtuel protégé<ept i='0'>&lt;/a0&gt;</ept>.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>MediaWiki virtual host in Apache</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111211T074936Z" changeid="xavier">
-        <seg>Hôte virtuel Mediawiki dans le manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -26570,14 +26538,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>In Apache configuration, add the PerlHeaderParserHandler Lemonldap::NG::Handler on the webmail.domain.tls vhost</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20160228T220923Z" changeid="xavier">
-        <seg>Dans la configuration Apache, ajouter &quot;PerlHeaderParserHandler Lemonldap::NG::Handler&quot; dans l'hôte virtuel webmail.domain.tls</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>0.9.4_logout_menu.png</seg>
       </tuv>
       <tuv xml:lang="FR-FR">
@@ -27940,6 +27900,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg># OR in the corresponding block</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T170332Z" changeid="xavier">
+        <seg># OU dans le bloc correspondant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='6' x='6'>&lt;a6&gt;</bpt>liferay<ept i='6'>&lt;/a6&gt;</ept><ph x='7'>&lt;br7/&gt;</ph></seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111119T111542Z" changeid="xavier">
@@ -28504,14 +28472,6 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20160301T151904Z" changeid="xavier">
         <seg>Ajouter reload.example.com dans /etc/hosts du container (option –add-host)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Drupal virtual host in Apache</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111201T124833Z" changeid="xavier">
-        <seg>Hôte virtuel Apache hébergeant Drupal</seg>
       </tuv>
     </tu>
     <tu>
@@ -31400,6 +31360,14 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>See <bpt i='0' x='0'>&lt;a0&gt;</bpt>SAML security parameters<ept i='0'>&lt;/a0&gt;</ept> to know how generate a certificate from you <bpt i='1' x='1'>&lt;a1&gt;</bpt>SAML<ept i='1'>&lt;/a1&gt;</ept> private key.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T165337Z" changeid="xavier">
+        <seg>Voir les <bpt i='0' x='0'>&lt;a0&gt;</bpt>paramètres de sécurité SAML<ept i='0'>&lt;/a0&gt;</ept> pour générer un certificat avec une clef privée <bpt i='1' x='1'>&lt;a1&gt;</bpt>SAML<ept i='1'>&lt;/a1&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Crypt::OpenSSL::Bignum</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T140850Z" changeid="guimard">
@@ -31636,6 +31604,14 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>General Parameters<ept i='0'>&lt;/s0&gt;</ept>: Authentication modules, portal, etc.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T170052Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Paramètres généraux<ept i='0'>&lt;/s0&gt;</ept> : modules d'authentification, portail, etc...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>CAS<ept i='0'>&lt;/a0&gt;</ept> <bpt i='1' x='1'>&lt;a1&gt;</bpt>PGT<ept i='1'>&lt;/a1&gt;</ept> temporary file</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T061027Z" changeid="guimard">
@@ -31854,14 +31830,6 @@ Display<bpt i='14' x='14'>&lt;s14&gt;</bpt>-<ept i='14'>&lt;/s14&gt;</ept>Name <
       </tuv>
       <tuv xml:lang="FR-FR">
         <seg>http://deb.entrouvert.org/</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>Edit also OBM Apache configuration to enable <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> Handler:</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111211T112557Z" changeid="xavier">
-        <seg>Éditer également la configuration du serveur Apache d'OBM pour activer les en-têtes <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> :</seg>
       </tuv>
     </tu>
     <tu>
@@ -32434,6 +32402,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>LimeSurvey virtual host</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T165623Z" changeid="xavier">
+        <seg>Hôte virtuel LimeSurvey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>Restart Apache and try to log on Manager.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120418T203622Z" changeid="guimard">
@@ -33002,6 +32978,14 @@ admin <bpt i='1' x='1'>&lt;s1&gt;</bpt>-&gt;<ept i='1'>&lt;/s1&gt;</ept> <bpt i=
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Drupal virtual host</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T165424Z" changeid="xavier">
+        <seg>Hôte virtuel Drupal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>So the above example can also be written like this:</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111119T113428Z" changeid="xavier">
@@ -33328,14 +33312,6 @@ admin <bpt i='1' x='1'>&lt;s1&gt;</bpt>-&gt;<ept i='1'>&lt;/s1&gt;</ept> <bpt i=
       <tuv xml:lang="FR-FR" changedate="20120419T060342Z" changeid="guimard">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt># SOAP functions for notification insertion (disabled by default)<ept i='0'>&lt;/s0&gt;</ept>
 <it pos='begin' x='1'>&lt;&lt;s1&gt;</it>Location<ept i='1'>&lt;/s1&gt;</ept> /index.pl/notification&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>LinShare</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111225T153622Z" changeid="xavier">
-        <seg>LinShare</seg>
       </tuv>
     </tu>
     <tu>
@@ -34574,14 +34550,6 @@ admin <bpt i='1' x='1'>&lt;s1&gt;</bpt>-&gt;<ept i='1'>&lt;/s1&gt;</ept> <bpt i=
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>../../../media/applications/linshare_logo.png</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111225T153631Z" changeid="xavier">
-        <seg>../../../media/applications/linshare_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg>Authentication choice will also be registered in session:</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111225T185101Z" changeid="xavier">
@@ -35256,6 +35224,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111226T201022Z" changeid="xavier">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Nom du champ mot-de-passe<ept i='0'>&lt;/s0&gt;</ept> : nom de la colonne de la table d'authentification contenant le mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>For Apache:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T165146Z" changeid="xavier">
+        <seg>Pour Apache:</seg>
       </tuv>
     </tu>
     <tu>
@@ -36498,6 +36474,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Edit also OBM configuration to enable <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> Handler:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T165836Z" changeid="xavier">
+        <seg>Éditer également la configuration d'OBM pour activer le « handler » <bpt i='0' x='0'>&lt;a0&gt;</bpt>LL::NG<ept i='0'>&lt;/a0&gt;</ept> :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>For security reasons, the password is not shown in sessions explorer.</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T071143Z" changeid="guimard">
@@ -37690,6 +37674,14 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg>Configure <bpt i='0' x='0'>&lt;a0&gt;</bpt>Apache or Nginx virtual host<ept i='0'>&lt;/a0&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T165942Z" changeid="xavier">
+        <seg>Configurer l'<bpt i='0' x='0'>&lt;a0&gt;</bpt>hôte virtuel Apache ou Nginx<ept i='0'>&lt;/a0&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>documentation:liferay_7.png</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20111211T074206Z" changeid="xavier">
@@ -38696,6 +38688,14 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;c0&gt;</bpt>cgi<ept i='0'>&lt;/c0&gt;</ept> for the portal (or any CGI: it works like PHP-FPM for Perl !)</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR" changedate="20160301T170429Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;c0&gt;</bpt>cgi<ept i='0'>&lt;/c0&gt;</ept> pour le portail (ou n'importe quelle CGI : ça fonctionne comme PHP-FPM pour Perl !)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
         <seg>[lemonldap-ng]
 enabled = true
 port    = http,https
@@ -39650,14 +39650,6 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv xml:lang="EN-US">
-        <seg>phpLDAPadmin virtual host in Apache</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111211T173743Z" changeid="xavier">
-        <seg>Hôte virtuel phpLDAPadmin dans le manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Port<ept i='0'>&lt;/s0&gt;</ept>: port of the application (by default, 80 for http, 443 for https)</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120419T143817Z" changeid="guimard">
@@ -39704,14 +39696,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv xml:lang="FR-FR" changedate="20120507T035658Z" changeid="xavier">
         <seg>mailreset_step3.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv xml:lang="EN-US">
-        <seg>http://www.linpki.org/projects/linshare/wiki/HttpHeaderSSOEN</seg>
-      </tuv>
-      <tuv xml:lang="FR-FR" changedate="20111225T153630Z" changeid="xavier">
-        <seg>http://www.linpki.org/projects/linshare/wiki/HttpHeaderSSOEN</seg>
       </tuv>
     </tu>
     <tu>

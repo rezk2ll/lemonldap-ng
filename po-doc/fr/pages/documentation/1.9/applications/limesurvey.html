@@ -95,20 +95,24 @@ La configuration est effectuée via config.php:
 
 </div><!-- EDIT4 SECTION "LimeSurvey configuration" [667-1672] -->
 
-<h3 class="sectionedit5" id="limesurvey_virtual_host_in_apache">Hôte virtuel LimeSurvey dans Apache</h3>
+<h3 class="sectionedit5" id="limesurvey_virtual_host">Hôte virtuel LimeSurvey</h3>
 <div class="level3">
 
 <p>
 Configurer l'hôte virtuel LimeSurvey comme n'importe quel autre <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">hôte virtuel protégé</a>.
 </p>
+<ul>
+<li class="level1"><div class="li"> Pour Apache:</div>
+</li>
+</ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> limesurvey.example.com
 &nbsp;
        PerlHeaderParserHandler Lemonldap::NG::Handler
 &nbsp;
-      <span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">"(.*)"</span> PHP_AUTH_USER=$1
+       <span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">"(.*)"</span> PHP_AUTH_USER=$1
 &nbsp;
-      <span class="kw1">Alias</span> /limesurvey /var/www/html/limesurvey
+       <span class="kw1">Alias</span> /limesurvey /var/www/html/limesurvey
       <span class="kw1">DocumentRoot</span> /var/www/html/limesurvey
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
@@ -117,8 +121,46 @@ Configurer l'hôte virtuel LimeSurvey comme n'importe quel autre <a href="../../
 </p><p></p><div class="noteimportant">Il faut renseigner la variable PHP_AUTH_USER pour faire fonctionner le mode d'authentification par serveur web.
 </div></p>
 </p>
+<ul>
+<li class="level1"><div class="li"> Pour Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name limesurvey.example.com;
+  root /path/to/application;
+  # Requête interne d'authentification
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Ignorer les données postées
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH "";
+    # Conserver le nom d'hôte original
+    fastcgi_param HOST $http_host;
+    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Requêtes clients
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
 
-</div><!-- EDIT5 SECTION "LimeSurvey virtual host in Apache" [1673-2227] -->
+</div><!-- EDIT5 SECTION "LimeSurvey virtual host" [1673-3192] -->
 
 <h3 class="sectionedit6" id="limesurvey_virtual_host_in_manager">Hôte virtuel LimeSurvey dans le manager</h3>
 <div class="level3">
@@ -152,7 +194,7 @@ Aller dans le manager et <a href="../../../documentation/1.9/configvhost.html#le
 	<tr class="row5 rowodd">
 		<td class="col0 centeralign">    Auth-SuperAdmin    </td><td class="col1 centeralign">  1 si l'utilisateur est super-administrateur  </td>
 	</tr>
-</table></div><!-- EDIT7 TABLE [2400-2618] -->
+</table></div><!-- EDIT7 TABLE [3365-3583] -->
 
 <p>
 </p><p></p><div class="notetip">On peut gérer les rôles avec le <a href="../../../documentation/1.9/rbac.html" class="wikilink1" title="documentation:1.9:rbac">modèle RBAC</a> ou en utilisant les groupes.
@@ -178,7 +220,7 @@ Aller dans le manager et <a href="../../../documentation/1.9/configvhost.html#le
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">  Défaut  </td><td class="col1 centeralign">    default    </td><td class="col2 centeralign">  Autorise seulement les utilisateurs avec un rôle LimeSurvey  </td>
 	</tr>
-</table></div><!-- EDIT8 TABLE [2725-3010] -->
+</table></div><!-- EDIT8 TABLE [3690-3975] -->
 
 <p>
 </p><p></p><div class="notetip">

@@ -67,9 +67,11 @@ Le serveur FastCGI a peu de paramètres. Il peuvent être définis par variables
 Le serveur FastCGI lit également le paramètre <code>LLTYPE</code> dans les requêtes FastCGI (voir portal-nginx.conf ou manager-nginx.conf) pour connaître le module sollicité :
 </p>
 <ul>
-<li class="level1"><div class="li"> <code>auth</code> pour le portail</div>
+<li class="level1"><div class="li"> <code>cgi</code> pour le portail (ou n'importe quelle CGI : ça fonctionne comme PHP-FPM pour Perl !)</div>
 </li>
 <li class="level1"><div class="li"> <code>manager</code> pour le manager</div>
+</li>
+<li class="level1"><div class="li"> <code>status</code> pour voir les statistiques (si activé)</div>
 </li>
 </ul>
 

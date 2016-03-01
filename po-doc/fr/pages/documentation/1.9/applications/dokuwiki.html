@@ -73,12 +73,21 @@ cp lemonldapuserdatabackend.class.php inc/auth/</pre>
 
 </div><!-- EDIT5 SECTION "Dokuwiki local configuration" [1005-1194] -->
 
-<h3 class="sectionedit6" id="dokuwiki_virtual_host_in_apache">Hôte virtuel Dokuwiki dans le manager</h3>
+<h3 class="sectionedit6" id="dokuwiki_virtual_host">Dokuwiki virtual host</h3>
 <div class="level3">
 
 <p>
 Configurer l'hôte virtuel Dokuwiki comme n'importe quel autre <a href="../../../documentation/1.9/configvhost.html" class="wikilink1" title="documentation:1.9:configvhost">hôte virtuel protégé</a>.
 </p>
+
+<p>
+</p><p></p><div class="noteimportant">Si Dokuwiki est protégé par un reverse-proxy <abbr title="LemonLDAP::NG">LL::NG</abbr>, <a href="../../../documentation/1.9/header_remote_user_conversion.html" class="wikilink1" title="documentation:1.9:header_remote_user_conversion">convertir l'en-tête en variable d'environnement REMOTE_USER</a>.
+</div></p>
+</p>
+<ul>
+<li class="level1"><div class="li"> Pour Apache:</div>
+</li>
+</ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
        <span class="kw1">ServerName</span> dokuwiki.example.com
 &nbsp;
@@ -87,13 +96,46 @@ Configurer l'hôte virtuel Dokuwiki comme n'importe quel autre <a href="../../..
        ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li"> Pour Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name dokuwiki.example.com;
+  root /path/to/application;
+  # Requête interne d'authentification
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Ignorer les données postées
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH "";
+    # Conserver le nom d'hôte original
+    fastcgi_param HOST $http_host;
+    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Requêtes clients
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
 
-<p>
-</p><p></p><div class="noteimportant">Si Dokuwiki est protégé par un reverse-proxy <abbr title="LemonLDAP::NG">LL::NG</abbr>, <a href="../../../documentation/1.9/header_remote_user_conversion.html" class="wikilink1" title="documentation:1.9:header_remote_user_conversion">convertir l'en-tête en variable d'environnement REMOTE_USER</a>.
-</div></p>
-</p>
-
-</div><!-- EDIT6 SECTION "Dokuwiki virtual host in Apache" [1195-1669] -->
+</div><!-- EDIT6 SECTION "Dokuwiki virtual host" [1195-2630] -->
 
 <h3 class="sectionedit7" id="dokuwiki_virtual_host_in_manager">Hôte virtuel Dokuwiki dans le manager</h3>
 <div class="level3">

@@ -110,7 +110,7 @@ SI l'accès au manager est perdu, on peut le déprotéger en éditant <code>lemo
 Le manager affiche des branches principales :
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Paramètres généraux</strong> : modules d'authentification, portail, etc…</div>
+<li class="level1"><div class="li"> <strong>Paramètres généraux</strong> : modules d'authentification, portail, etc...</div>
 </li>
 <li class="level1"><div class="li"> <strong>Variables</strong> : informations utilisateur, macros et groupes utilisés pour renseigner la session <abbr title="Authentification unique (Single Sign On)">SSO</abbr></div>
 </li>
@@ -392,7 +392,7 @@ Dans l'hôte virtuel du portail se trouve plusieurs éléments de configuration 
 <p>
 L'hôte virtuel du manager est utilisé pour servir l'interface de configuration et la documentation locale. S'il est lancé comme application FastCGI :
 </p>
-<pre class="code file apache">    <span class="co1"># FASTCGI CONFIGURATION</span>
+<pre class="code file apache">    <span class="co1"># CONFIGURATION FASTCGI</span>
     <span class="co1"># ---------------------</span>
 &nbsp;
     <span class="co1"># 1) Gestion de l'URI</span>
@@ -533,6 +533,11 @@ Dans l'hôte virtuel du portail se trouve plusieurs éléments de configuration 
     fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
     fastcgi_param LLTYPE cgi;
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    set $sn $request_uri;
+    if ($sn ~ "^(.*)\?") {
+        set $sn $1;
+    }
+    fastcgi_param SCRIPT_NAME $sn;
     fastcgi_split_path_info ^(.*\.pl)(/.+)$;
   }
 &nbsp;
@@ -583,7 +588,7 @@ Dans l'hôte virtuel du portail se trouve plusieurs éléments de configuration 
     rewrite ^/oauth2/.* /index.pl last;
     rewrite ^/.well-known/openid-configuration$ /openid-configuration.pl last;</pre>
 
-</div><!-- EDIT11 SECTION "Portal" [12691-14269] -->
+</div><!-- EDIT11 SECTION "Portal" [12691-14383] -->
 
 <h3 class="sectionedit12" id="manager2">Manager</h3>
 <div class="level3">
@@ -617,7 +622,7 @@ L'hôte virtuel du manager est utilisé pour servir l'interface de configuration
 L'accès à l'interface de configuration n'est pas protégée par Nginx mais par LemonLDAP::NG lui-même (voir <code>lemonldap-ng.ini</code>) :
 </p>
 
-</div><!-- EDIT12 SECTION "Manager" [14270-15022] -->
+</div><!-- EDIT12 SECTION "Manager" [14384-15136] -->
 
 <h3 class="sectionedit13" id="handler1">Agent (Handler)</h3>
 <div class="level3">
@@ -714,7 +719,7 @@ Pour protéger ensuite un hôte virtuel, il faut insérer ceci (ou créer un fic
 &nbsp;
     # Insérer ensuite la configuration (fastcgi_* ou proxy_*)</pre>
 
-</div><!-- EDIT13 SECTION "Handler" [15023-17970] -->
+</div><!-- EDIT13 SECTION "Handler" [15137-18084] -->
 
 <h2 class="sectionedit14" id="configuration_reload">Rechargement de la configuration</h2>
 <div class="level2">
@@ -746,7 +751,7 @@ La cible <code>reload</code> est gérée dans la configuration d'Apache, dans un
 </div></p>
 </p>
 
-</div><!-- EDIT14 SECTION "Configuration reload" [17971-19141] -->
+</div><!-- EDIT14 SECTION "Configuration reload" [18085-19255] -->
 
 <h2 class="sectionedit15" id="local_file">Fichier local</h2>
 <div class="level2">

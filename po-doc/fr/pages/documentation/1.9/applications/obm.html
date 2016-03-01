@@ -153,8 +153,12 @@ Paramètres:
 </ul>
 
 <p>
-Éditer également la configuration du serveur Apache d'OBM pour activer les en-têtes <abbr title="LemonLDAP::NG">LL::NG</abbr> :
+Éditer également la configuration d'OBM pour activer le « handler » <abbr title="LemonLDAP::NG">LL::NG</abbr> :
 </p>
+<ul>
+<li class="level1"><div class="li"> Pour Apache:</div>
+</li>
+</ul>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
     <span class="kw1">ServerName</span> obm.example.com
 &nbsp;
@@ -166,13 +170,46 @@ Paramètres:
     ...
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li"> Pour Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name obm.example.com;
+  root /usr/share/obm/php;
+  # Requête interne d'authentification
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Ignorer les données postées
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH "";
+    # Conserver le nom d'hôte original
+    fastcgi_param HOST $http_host;
+    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Requêtes clients
+  location ~ \.php$ {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
 
-<p>
-</p><p></p><div class="noteimportant">La configuration du serveur Apache d'OBM doit être chargée <strong>après</strong> <a href="../../../documentation/1.9/configlocation.html#apache" class="wikilink1" title="documentation:1.9:configlocation">celle</a> de <abbr title="LemonLDAP::NG">LL::NG</abbr>.
-</div></p>
-</p>
-
-</div><!-- EDIT4 SECTION "OBM" [516-6179] -->
+</div><!-- EDIT4 SECTION "OBM" [516-7008] -->
 
 <h3 class="sectionedit5" id="llng">LL::NG</h3>
 <div class="level3">
@@ -222,7 +259,7 @@ Il est également possible de créer ces macros pour gérer le compte administra
 	<tr class="row2 roweven">
 		<td class="col0 leftalign">  mailR    </td><td class="col1 leftalign">  ($uid =~ /^admin0/i)[0] ? "" : ($mail =~ /^([^@]+)/)[0] . "\@example.com"      </td>
 	</tr>
-</table></div><!-- EDIT6 TABLE [6693-6872] -->
+</table></div><!-- EDIT6 TABLE [7522-7701] -->
 
 </div>
 
@@ -277,7 +314,7 @@ Definir au moins :
 	<tr class="row6 roweven">
 		<td class="col0">default</td><td class="col1">accept (ou la valeur désirée)</td>
 	</tr>
-</table></div><!-- EDIT7 TABLE [7254-7477] -->
+</table></div><!-- EDIT7 TABLE [8083-8306] -->
 
 </div>
 
@@ -308,7 +345,7 @@ Definir les en-têtes utilisés pour les correspondances OBM, par exemple :
 	<tr class="row5 rowodd">
 		<td class="col0">OBM_USERPASSWORD</td><td class="col1">$_password</td>
 	</tr>
-</table></div><!-- EDIT8 TABLE [7543-7671] -->
+</table></div><!-- EDIT8 TABLE [8372-8500] -->
 
 </div>
 

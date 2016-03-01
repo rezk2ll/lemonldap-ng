@@ -76,9 +76,9 @@ Exemple d'hôte virtuel protégé avec Lemonldap::NG en proxy-inverse :
 &nbsp;
         <span class="co1"># Reverse-Proxy</span>
         <span class="kw1">ProxyPass</span> / http://private-name/
-        <span class="co1"># Change "Location" header in redirections</span>
+        <span class="co1"># Changer l'en-tête "Location" dans les redirections</span>
         <span class="kw1">ProxyPassReverse</span> / http://private-name/
-        <span class="co1"># Change domain cookies</span>
+        <span class="co1"># Changer le domaine des cookies</span>
         <span class="kw1">ProxyPassReverseCookieDomain</span> private-name application.example.com
 &nbsp;
         <span class="kw1">ErrorLog</span> /var/log/apache2/proxysite_error.log
@@ -146,37 +146,52 @@ Pour protéger un hôte virtuel dans Nginx, le serveur FastCGI de LemonLDAP::NG 
 </p>
 
 <p>
-Ainsi n'importe quel hôte virtuel peut être protégé en ajoutant ces lignes :
+
+Then you can take any virtual host and modify it:
+
 </p>
-<pre class="code file nginx"># Format des journaux
-include /path/to/lemonldap-ng/nginx-lmlog.conf;
-server {
-  ...
-  location = /lmauth {
+<ul>
+<li class="level1"><div class="li">  Declare the /lmauth endpoint</div>
+</li>
+</ul>
+<pre class="code file nginx">  location = /lmauth {
     internal;
     include /etc/nginx/fastcgi_params;
-    fastcgi_pass /path/to/llng/fastcgi/server/socket;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+&nbsp;
     # Ignorer les données postées
     fastcgi_pass_request_body  off;
     fastcgi_param CONTENT_LENGTH "";
+&nbsp;
     # Conserver le nom d'hôte original
     fastcgi_param HOST $http_host;
+&nbsp;
     # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
     fastcgi_param X_ORIGINAL_URI  $request_uri;
-  }
-  location /path/to/protect {
+  }</pre>
+<ul>
+<li class="level1"><div class="li">  Protect the application (/ or /path/to/protect):</div>
+</li>
+</ul>
+<pre class="code file nginx">  location /path/to/protect {
     auth_request /lmauth;
     auth_request_set $lmremote_user $upstream_http_lm_remote_user;
     auth_request_set $lmlocation $upstream_http_location;
     error_page 401 $lmlocation;
     try_files $uri $uri/ =404;
 &nbsp;
-    ######################################
-    # PASSER LES ENTÊTES À L'APPLICATION #
-    ######################################
+    ...
+  }</pre>
+<ul>
+<li class="level1"><div class="li">  Use LUA or set manually the headers:</div>
+</li>
+</ul>
+<pre class="code file nginx">  location /path/to/protect {
+&nbsp;
+    ...
 &nbsp;
     # SI LUA EST SUPPORTÉ
-    #include /path/to/lemonldap-ng/nginx-lua-headers.conf
+    #include /etc/lemonldap-ng/nginx-lua-headers.conf;
 &nbsp;
     # SINON
     # Définir manuellement les en-têtes
@@ -185,9 +200,17 @@ server {
     # OU
     #fastcgi_param HTTP_AUTH_USER $authuser;
 &nbsp;
+    # Ensuite (si LUA n'est pas supporté), changer l'en-tête Cookie pour masquer celui de LLNG
+    #auth_request_set $lmcookie $upstream_http_cookie;
+    #proxy_set_header Cookie: $lmcookie;
+    # OU dans le bloc correspondant
+    #fastcgi_param HTTP_COOKIE $lmcookie;
+&nbsp;
+    # Définir REMOTE_USER (pour les applications FastCGI seulement)
+    #fastcgi_param REMOTE_USER $lmremote_user;
   }</pre>
 
-</div><!-- EDIT6 SECTION "Nginx configuration" [3049-4454] -->
+</div><!-- EDIT6 SECTION "Nginx configuration" [3049-4833] -->
 
 <h3 class="sectionedit7" id="hosted_application1">Application hébergée</h3>
 <div class="level3">
@@ -246,7 +269,7 @@ server {
   }
 }</pre>
 
-</div><!-- EDIT7 SECTION "Hosted application" [4455-6084] -->
+</div><!-- EDIT7 SECTION "Hosted application" [4834-6463] -->
 
 <h3 class="sectionedit8" id="reverse_proxy1">Proxy inverse</h3>
 <div class="level3">
@@ -297,7 +320,7 @@ server {
   }
 }</pre>
 
-</div><!-- EDIT8 SECTION "Reverse proxy" [6085-7379] -->
+</div><!-- EDIT8 SECTION "Reverse proxy" [6464-7758] -->
 
 <h2 class="sectionedit9" id="lemonldapng_configuration">Configuration de LemonLDAP::NG</h2>
 <div class="level2">
@@ -324,7 +347,7 @@ Un hôte vituel contient :
 </li>
 </ul>
 
-</div><!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7380-7867] -->
+</div><!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7759-8246] -->
 
 <h3 class="sectionedit10" id="access_rules_and_http_headers">Règles d'accès et en-têtes HTTP</h3>
 <div class="level3">
@@ -333,7 +356,7 @@ Un hôte vituel contient :
 Voir <strong><a href="../../documentation/1.9/writingrulesand_headers.html" class="wikilink1" title="documentation:1.9:writingrulesand_headers">Écrire des règles et des en-têtes</a></strong> pour savoir comment configurer le contrôle d'accès et les en-têtes HTTP transmis à l'application par <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </p>
 
-</div><!-- EDIT10 SECTION "Access rules and HTTP headers" [7868-8060] -->
+</div><!-- EDIT10 SECTION "Access rules and HTTP headers" [8247-8439] -->
 
 <h3 class="sectionedit11" id="post_data">Données POST</h3>
 <div class="level3">
@@ -342,7 +365,7 @@ Voir <strong><a href="../../documentation/1.9/writingrulesand_headers.html" clas
 Voir <strong><a href="../../documentation/1.9/formreplay.html" class="wikilink1" title="documentation:1.9:formreplay">Rejeu des formulaires</a></strong> pour savoir comment configurer le rejeu des formulaires pour poster des données à une applications protégée.
 </p>
 
-</div><!-- EDIT11 SECTION "POST data" [8061-8195] -->
+</div><!-- EDIT11 SECTION "POST data" [8440-8574] -->
 
 <h3 class="sectionedit12" id="options">Options</h3>
 <div class="level3">
