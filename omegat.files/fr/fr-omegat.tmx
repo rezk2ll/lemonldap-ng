@@ -352,6 +352,14 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapServer&lt;/s0&gt;: LDAP &lt;a1&gt;URL&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061740Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapServer&lt;/s0&gt; : &lt;a1&gt;URL&lt;/a1&gt; du serveur LDAP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Each &lt;a0&gt;LL::NG&lt;/a0&gt; authentication module has an authentication level, which can be associated to an &lt;a1&gt;SAML authentication context&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1218,6 +1226,14 @@ make test</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T194856Z" changeid="xavier">
         <seg>&lt;s25&gt;&lt;s26&gt;&lt;NameIDFormat&lt;s27&gt;&gt;&lt;/s27&gt;&lt;/s26&gt;&lt;/s25&gt;urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress&lt;s28&gt;&lt;s29&gt;&lt;/NameIDFormat&lt;s30&gt;&gt;&lt;/s30&gt;&lt;/s29&gt;&lt;/s28&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Manager performances</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T063036Z" changeid="xavier">
+        <seg>Performances du Manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -3352,6 +3368,14 @@ make debian-packages</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapBindDN&lt;/s0&gt;: LDAP user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061747Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapBindDN&lt;/s0&gt; : utilisateur LDAP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://phpldapadmin.sourceforge.net</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173120Z" changeid="xavier">
@@ -3486,6 +3510,14 @@ make debian-packages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160227T183755Z" changeid="xavier">
         <seg>Dans le &quot;&lt;c1&gt;&lt;endpoint&gt;&lt;/c1&gt;&quot;, changer la valeur de &lt;c2&gt;&lt;connector-id&gt;&lt;/c2&gt; en &lt;c3&gt;alfrescoHeader&lt;/c3&gt; et changer la valeur de &lt;c4&gt;&lt;userHeader&gt;&lt;/c4&gt; en &lt;c5&gt;Auth-User&lt;/c5&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Each configuration will be represented as an entry, which structural objectClass is by default &lt;c0&gt;applicationProcess&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060715Z" changeid="xavier">
+        <seg>Chaque configuration est représentée par une entrée, dont l'objectClass structurel est &lt;c0&gt;applicationProcess&lt;/c0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -4500,6 +4532,14 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can choose to store LemonLDAP::NG configuration in an LDAP directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060632Z" changeid="xavier">
+        <seg>On peut choisir de stocker la configuration de LemonLDAP::NG dans un annuaire LDAP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a2&gt;passwordstore&lt;/a2&gt;&lt;br3/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111605Z" changeid="xavier">
@@ -4624,6 +4664,14 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140938Z" changeid="guimard">
         <seg>Test::POD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In “Apache::Session module” field, set “&lt;a0&gt;Apache::Session::Flex&lt;/a0&gt;” and use the following parameters:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062835Z" changeid="xavier">
+        <seg>Dans le champ “Module Apache::Session”, indiquez ”&lt;a0&gt;Apache::Session::Flex&lt;/a0&gt;” et utilisez les paramètres suivants :</seg>
       </tuv>
     </tu>
     <tu>
@@ -5246,6 +5294,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T171336Z" changeid="xavier">
         <seg>le &lt;a0&gt;portail&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>So instead of using LDAP groups recovery, you just have to store “memberOf” field in your exported variables.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T063004Z" changeid="xavier">
+        <seg>Ainsi au lieu d'utiliser la récupération des groupes LDAP, vous avez juste à stocker le champ “memberOf” dans vos variables exportées.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7240,6 +7296,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This name is used in entry &lt;a1&gt;DN&lt;/a1&gt;, for example &lt;c2&gt;cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060736Z" changeid="xavier">
+        <seg>Ce nom est utilisé dans l'entrée &lt;a1&gt;DN&lt;/a1&gt;, par exemple &lt;c2&gt;cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Account&lt;/s0&gt;: &lt;a1&gt;DN&lt;/a1&gt; used to connect to LDAP server.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T165223Z" changeid="xavier">
@@ -7884,6 +7948,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure LDAP configuration backend in &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;, section &lt;c1&gt;[configuration]&lt;/c1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060825Z" changeid="xavier">
+        <seg>Configurer la backend de configuration LDAP dans &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;, section &lt;c1&gt;[configuration]&lt;/c1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You have to install the corresponding Perl module.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T212157Z" changeid="xavier">
@@ -8144,6 +8216,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070041Z" changeid="guimard">
         <seg>Utilisateur &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Disable unused modules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T063053Z" changeid="xavier">
+        <seg>Désactiver les modules inutilisés</seg>
       </tuv>
     </tu>
     <tu>
@@ -8724,6 +8804,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapBindPassword&lt;/s0&gt;: LDAP password.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061754Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapBindPassword&lt;/s0&gt; : mot-de-passe LDAP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;c0&gt;ValveLemonLDAPNG.jar&lt;/c0&gt; is created under &lt;c1&gt;/dist&lt;/c1&gt; directory.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T111143Z" changeid="xavier">
@@ -8844,6 +8932,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Déconnexion applicative&lt;/s0&gt;: la requête est transmise à l'application mais la session &lt;a1&gt;SSO&lt;/a1&gt; n'est pas détruite</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Enable SOAP in General parameters » Advanced parameters » SOAP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062023Z" changeid="xavier">
+        <seg>Activer SOAP dans Paramètres généraux » Paramètres avancés » SOAP</seg>
       </tuv>
     </tu>
     <tu>
@@ -10290,6 +10386,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then just configure the new XSLT file path in Manager, go in General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Custom XSLT file and set for example &lt;c1&gt;/etc/lemonldap-ng/notification.xsl&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061903Z" changeid="xavier">
+        <seg>Configure ensuite le nouveau fichier XSLT dans le manager, aller dans Paramètres généraux &gt; Paramètres avancés &gt; Notifications &gt; Fichier XSLT personnalisé et mettre par exemple &lt;c1&gt;/etc/lemonldap-ng/notification.xsl&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;&lt;s0&gt;IfModule&lt;/s0&gt; mod_rewrite.c&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10594,6 +10698,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To activate SOAP on the portal:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062009Z" changeid="xavier">
+        <seg>Pour activer SOAP sur le portal :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>No configuration found</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112919Z" changeid="xavier">
@@ -10846,6 +10958,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111509Z" changeid="xavier">
         <seg>../pages/download.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To bypass this, you can: * Use &lt;a0&gt;IP&lt;/a0&gt; in configuration to avoid &lt;a1&gt;DNS&lt;/a1&gt; resolution * Install a &lt;a2&gt;DNS&lt;/a2&gt; cache like nscd, netmask or bind</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062515Z" changeid="xavier">
+        <seg>Pour éviter ceci, on peut : * Utiliser &lt;a0&gt;IP&lt;/a0&gt; dans la configuration pour éviter la résolution &lt;a1&gt;DNS&lt;/a1&gt; * Installer un cache &lt;a2&gt;DNS&lt;/a2&gt; tel nscd, netmask ou bind</seg>
       </tuv>
     </tu>
     <tu>
@@ -11118,6 +11238,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T202545Z" changeid="guimard">
         <seg>&lt;s1&gt;AuthzLDAPAuthoritative&lt;/s1&gt; &lt;s2&gt;On&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can avoid this by setting “memberOf” fields in your LDAP scheme:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062951Z" changeid="xavier">
+        <seg>Vous pouvez contourner cette dificulté en utilisant les champs “memberOf” dans votre schéma LDAP :</seg>
       </tuv>
     </tu>
     <tu>
@@ -12698,6 +12826,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>When all is ok, click on &lt;c0&gt;Save&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061945Z" changeid="xavier">
+        <seg>Lorsque tout est bon, cliquer sur &lt;c0&gt;Sauver&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;start&lt;/s0&gt;: Start date (GMT)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T182732Z" changeid="xavier">
@@ -14202,6 +14338,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113549Z" changeid="xavier">
         <seg>Configurer LemonLDAP::NG pour utiliser LDAP comme base de données principale</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Easy to share between servers with remote LDAP access</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060646Z" changeid="xavier">
+        <seg>Facilité de partage entre serveurs avec un accès LDAP distant</seg>
       </tuv>
     </tu>
     <tu>
@@ -15762,6 +15906,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapAttributeId&lt;/s0&gt;: RDN attribute of configuration entry (optional)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061017Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapAttributeId&lt;/s0&gt; : attribut RDN de l'entrée de configuration (optionnel)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>logos:logo_gn.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16018,6 +16170,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Enable Notifications SOAP service in Apache configuration:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062032Z" changeid="xavier">
+        <seg>Activer le service SOAP de notifications dans la configuration Apache :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>nickname</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050449Z" changeid="xavier">
@@ -16078,6 +16238,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120502T041956Z" changeid="xavier">
         <seg>&lt;s0&gt;Thursday, 25-Apr-1999 00:40:33 GMT&lt;/s0&gt; : jusqu'à la date indiquée (généralement une mauvaise idée)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also hide sensitive values in logs (session content can be displayed in logs in debug loglevel).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061415Z" changeid="xavier">
+        <seg>On peut aussi masque les sonnées sensibles dans les journaux (le contenu de la session est affiché dans les journaux lorsque logLevel est positionné à debug).</seg>
       </tuv>
     </tu>
     <tu>
@@ -17972,6 +18140,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>New notifications can be insert using SOAP request (described in the WSDL file generated by buildPortalWSDL tool).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061958Z" changeid="xavier">
+        <seg>Les nouvelles notifications peuvent être insérées en utilisant des requêtes SOAP (décrites dans le fichier WSDL généré par l'utilitaire buildPortalWSDL).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you need it, you can rebuild RPMs:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100729Z" changeid="xavier">
@@ -18208,6 +18384,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063340Z" changeid="guimard">
         <seg>mailReplyTo</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Global performance</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062157Z" changeid="xavier">
+        <seg>Performance globale</seg>
       </tuv>
     </tu>
     <tu>
@@ -19584,6 +19768,14 @@ server {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also delete some notifications with SOAP, once SOAP is activated:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062046Z" changeid="xavier">
+        <seg>On peut également effacer certaines notifications avec SOAP, si SOAP est activé :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>So, to keep user password in session, you cannot just export the password variable in session.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070715Z" changeid="guimard">
@@ -20380,6 +20572,14 @@ server {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T075523Z" changeid="guimard">
         <seg>Pour ajouter un paramètre de modèle, l'ajouter dans &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LDAP server can be a brake when you use LDAP groups recovery.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062942Z" changeid="xavier">
+        <seg>Le serveur LDAP peut être un frein lorsque vous utilisez la récupération des groupes LDAP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22310,6 +22510,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Indeed, in most of the cases, it is not stored in clear text in the backend (LDAP or database).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062135Z" changeid="xavier">
+        <seg>Donc dans la plupart des cas, il n'est pas stocké en clair dans le backend (LDAP ou base de données).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;handler-nginx.conf&lt;/s0&gt; : Handler reload virtual hosts</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T081444Z" changeid="xavier">
@@ -23314,6 +23522,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Restrict network access to the LDAP directory, and add specific &lt;a0&gt;ACL&lt;/a0&gt; to session branch.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061235Z" changeid="xavier">
+        <seg>Restreindre l'accès réseau à l'annuaire LDAP et ajouter une &lt;a0&gt;ACL&lt;/a0&gt; spécifique à la branche des sessions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;accept&lt;/s0&gt;: all authenticated users will access surveys</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102950Z" changeid="xavier">
@@ -23520,6 +23736,22 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140852Z" changeid="guimard">
         <seg>SAML2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;http://httpd.apache.org/docs/current/mod/core.html#loglevel&lt;/a0&gt; for more information.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061305Z" changeid="xavier">
+        <seg>Voir &lt;a0&gt;http://httpd.apache.org/docs/current/mod/core.html#loglevel&lt;/a0&gt; pour plus d'informations.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapObjectClass&lt;/s0&gt;: structural objectclass of configuration entry (optional)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060955Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapObjectClass&lt;/s0&gt; : objectclass structurel de l'entrée de configuration entry (optionnel)</seg>
       </tuv>
     </tu>
     <tu>
@@ -24614,6 +24846,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The transformation between notification XML content and &lt;a0&gt;HTML&lt;/a0&gt; display is done with XSLT.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061815Z" changeid="xavier">
+        <seg>La transformation entre le texte XML d'une notification et l'affichage HTML est faite par XSLT.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:googleapps-ssoconfig.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182857Z" changeid="xavier">
@@ -25226,6 +25466,14 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>They does not allow to use sessions explorer neither manage one-off sessions.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062926Z" changeid="xavier">
+        <seg>Ils ne permettent pas d'utiliser l'explorateur de sessions ne de gérer l'unicité des sessions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Example: &lt;a2&gt;http://auth.example.com/?logout=1&lt;/a2&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183152Z" changeid="xavier">
@@ -25770,6 +26018,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is designed to be very performant.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062143Z" changeid="xavier">
+        <seg>Lemonldap::NG a été conçu pour être très performant.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;info&lt;/s0&gt; for user actions</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T201540Z" changeid="guimard">
@@ -25810,6 +26066,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>if you use “LDAP” system, the notifications will be stored in the same directory as configuration and in a branch called “notifications”.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061659Z" changeid="xavier">
+        <seg>si “LDAP” est utilisé, les notifications sont stockées dans la même arborescence que la configuration et la branche est nommée “notifications”.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure LimeSurvey virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102027Z" changeid="xavier">
@@ -25822,6 +26086,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>~500</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Some Apache::Session module are not fully usable by Lemonldap::NG such as Apache::Session::Memcached since this modules do not offer capability to browse sessions.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062842Z" changeid="xavier">
+        <seg>Certains modules Apache::Session ne sont pas utilisables par Lemonldap::NG tel Apache::Session::Memcached, car ce module n'offre pas de dispositif de parcours des sessions</seg>
       </tuv>
     </tu>
     <tu>
@@ -25884,6 +26156,14 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201520Z" changeid="xavier">
         <seg>changer les mots-de-passe (avec la gestion de la politique de mot-de-passe côté serveur)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapAttributeContent&lt;/s0&gt;: attribute used to store configuration values, must be multivalued (optional)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061056Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapAttributeContent&lt;/s0&gt; : attribut utilisé pour stocker la valeur des configurations, doit être multivalué (optionnel)</seg>
       </tuv>
     </tu>
     <tu>
@@ -26936,6 +27216,14 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In production environment for network performance, prefer using minified versions of javascript and css libs: use &lt;c0&gt;make install &lt;s1&gt;PROD=yes&lt;/s1&gt;&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062804Z" changeid="xavier">
+        <seg>En environnement de production et pour de meilleures performances réseau, utiliser les versions compactées des librairies javascript et css : utiliser &lt;c0&gt;make install &lt;s1&gt;PROD=yes&lt;/s1&gt;&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>#google_apps_control_panel</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T052113Z" changeid="xavier">
@@ -27658,6 +27946,14 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Handlers check rights and calculate headers for each HTTP hit.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062648Z" changeid="xavier">
+        <seg>Les agents vérifient les droits et calculent les en-têtes pour chaque requête HTTP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Password backend</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28366,6 +28662,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in Manager, &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Logging&lt;/c1&gt; &gt; &lt;c2&gt;Hidden attributes&lt;/c2&gt; and set a list of attributes to hide (space separated).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061525Z" changeid="xavier">
+        <seg>Aller dans le manager, &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Journaux&lt;/c1&gt; » &lt;c2&gt;Attributs masqués&lt;/c2&gt; et indiquer la liste des attributs à masquer (séparés par des espaces).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Attributes from user backend</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28442,6 +28746,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T110958Z" changeid="xavier">
         <seg>lorsque l'attribut virtuel compilé 'msDS-User-Account-Control-Computed' a le drapeau 6th positionné à 8, le mot de passe est considéré comme expiré.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If your LDAP server do not manage this objectClass, configure other objectclass and attributes (see below).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060748Z" changeid="xavier">
+        <seg>Si le serveur LDAP ne gère pas cette classe d'objet, il faut étendre le schéma.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29640,6 +29952,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063327Z" changeid="guimard">
         <seg>locationRules</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>With OpenLDAP, you can use the &lt;a0&gt;memberof overlay&lt;/a0&gt; to do it automaticaly.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T063017Z" changeid="xavier">
+        <seg>Avec OpenLDAP, vous pouvez utiliser &lt;a0&gt;memberof overlay&lt;/a0&gt; qui le fera automatiquement.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31098,6 +31418,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in the Manager and set the LDAP session module (&lt;a0&gt;Apache::Session::LDAP&lt;/a0&gt;) in &lt;c1&gt;General parameters&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Session storage&lt;/c3&gt; » &lt;c4&gt;Apache::Session module&lt;/c4&gt; and add the following parameters (case sensitive):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061213Z" changeid="xavier">
+        <seg>Aller dans le manager et mettre le module de session (&lt;a0&gt;Apache::Session::LDAP&lt;/a0&gt;) dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; et ajouter les paramètres suivant (sensible à la casse) :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Three options:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T081033Z" changeid="xavier">
@@ -31782,6 +32110,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>icons:wizard.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapBindDN&lt;/s0&gt;: &lt;a1&gt;DN&lt;/a1&gt; used to bind LDAP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060902Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapBindDN&lt;/s0&gt; : &lt;a1&gt;DN&lt;/a1&gt; utilisé pour se connecter au serveur LDAP</seg>
       </tuv>
     </tu>
     <tu>
@@ -32680,6 +33016,14 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T220750Z" changeid="xavier">
         <seg>Dans les en-têtes HTTP, ajouter Auth-User ($mail) and Auth-Pw ($_password).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Notifications are XML files containing:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061910Z" changeid="xavier">
+        <seg>Les notifications sont des fichiers XML contenant :</seg>
       </tuv>
     </tu>
     <tu>
@@ -35166,6 +35510,14 @@ admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$uid&lt;/s2&gt; &lt;s3&gt;eq&lt;/s3&g
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Install &lt;a1&gt;Apache::Session::Redis&lt;/a1&gt; Perl module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061644Z" changeid="xavier">
+        <seg>Installez le module Perl &lt;a1&gt;Apache::Session::Redis&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;DESTDIR&lt;/s0&gt;: only for packaging, install the product in a jailroot (default: “”)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T210302Z" changeid="xavier">
@@ -35394,6 +35746,14 @@ admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$uid&lt;/s2&gt; &lt;s3&gt;eq&lt;/s3&g
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064500Z" changeid="guimard">
         <seg>twitterAppName</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Under heavy loads, that can generated hundred of &lt;a2&gt;DNS&lt;/a2&gt; queries and many errors on LDAP connexions (timed out) from IO::Socket.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062412Z" changeid="xavier">
+        <seg>Sous forte charge, ça peut générer des centaines de requêtes &lt;a2&gt;DNS&lt;/a2&gt; et des erreurs sur les connexions LDAP (timed out).</seg>
       </tuv>
     </tu>
     <tu>
@@ -35694,6 +36054,14 @@ admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$uid&lt;/s2&gt; &lt;s3&gt;eq&lt;/s3&g
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapServer&lt;/s0&gt;: LDAP &lt;a1&gt;URI&lt;/a1&gt; of the server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060848Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapServer&lt;/s0&gt;: &lt;a1&gt;URI&lt;/a1&gt; LDAP  du serveur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s166&gt;)&lt;/s166&gt;&lt;s167&gt;,&lt;/s167&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112335Z" changeid="xavier">
@@ -35814,6 +36182,14 @@ admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$uid&lt;/s2&gt; &lt;s3&gt;eq&lt;/s3&g
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>One notification XML document can contain several notifications messages.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061920Z" changeid="xavier">
+        <seg>Un document XML de notification peut contenir plusieurs messages de notification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Use SOAP for Lemonldap::NG configuration</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T171007Z" changeid="xavier">
@@ -35898,6 +36274,14 @@ admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$uid&lt;/s2&gt; &lt;s3&gt;eq&lt;/s3&g
       </tuv>
       <tuv lang="FR-FR">
         <seg>Équipe prinicpale</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>We advice to create a specific LDAP account with write access on configuration branch.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060800Z" changeid="xavier">
+        <seg>Il est recommandé de créer un compte LDAP spécifique qui peut écrire dans la branche de configuration.</seg>
       </tuv>
     </tu>
     <tu>
@@ -36782,6 +37166,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapBindPassword&lt;/s0&gt;: password used to bind LDAP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060910Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapBindPassword&lt;/s0&gt; : mot-de-passe à utiliser pour se connecter au serveur LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Mpm-worker works faster and LemonLDAP::NG use the thread system for best performance.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140135Z" changeid="guimard">
@@ -37022,6 +37414,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This is done by default in RPM/DEB packages.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062825Z" changeid="xavier">
+        <seg>Ceci est fait par défaut avec les paquets RPM/DEB.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.mediawiki.org</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074440Z" changeid="xavier">
@@ -37058,6 +37458,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour des raisons de sécurité, un cookie fournit par un domaine ne peut être transmit à un autre.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The default XSLT file is in portal/skins/common/notification.xsl.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061825Z" changeid="xavier">
+        <seg>Le fichier XSLT par défaut est portal/skins/common/notification.xsl.</seg>
       </tuv>
     </tu>
     <tu>
@@ -37334,6 +37742,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can create your own XSLT file and store in another place, for example /etc/lemonldap-ng.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061836Z" changeid="xavier">
+        <seg>On peut créer son propre fichier XSLT et le stocker à un autre endroit, par exemple /etc/lemonldap-ng.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Documentation is available for configuration backends :</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125356Z" changeid="xavier">
@@ -37534,6 +37950,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Easy to duplicate with LDAP synchronization services (like SyncRepl in OpenLDAP)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060656Z" changeid="xavier">
+        <seg>Facilité de duplication avec les services de synchronisation LDAP (tel SyncRepl de OpenLDAP)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Extracted certificate field&lt;/s0&gt;: field of the certificate affected to $user internal variable</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T070912Z" changeid="xavier">
@@ -37628,6 +38052,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061000Z" changeid="guimard">
         <seg>&lt;a0&gt;CAS&lt;/a0&gt;_gateway</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Security with SSL/TLS</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T060704Z" changeid="xavier">
+        <seg>Securité avec SSL/TLS</seg>
       </tuv>
     </tu>
     <tu>
@@ -38290,6 +38722,14 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Sessions will be stored as LDAP entries, like this:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061154Z" changeid="xavier">
+        <seg>Les sessions sont stockées dans des entrées LDAP comme suit :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a9&gt;&lt;s10&gt;print&lt;/s10&gt;&lt;/a9&gt; &lt;s11&gt;'&lt;a href=&quot;http://test3.example.com/&quot;&gt;click here&lt;/a&gt;'&lt;/s11&gt;&lt;s12&gt;;&lt;/s12&gt;
 &lt;s13&gt;}&lt;/s13&gt;</seg>
       </tuv>
@@ -38440,6 +38880,14 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Téléchargement</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, click on &lt;c0&gt;Notifications&lt;/c0&gt; and then on the &lt;c1&gt;Create&lt;/c1&gt; button.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061932Z" changeid="xavier">
+        <seg>Dans le manager, cliquer sur l'&lt;c0&gt;explorateur des notifications&lt;/c0&gt; et ensuite sur le bouton &lt;c1&gt;Créer&lt;/c1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -39302,6 +39750,14 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T191158Z" changeid="xavier">
         <seg>Dans &lt;c0&gt;Protocole&lt;/c0&gt;, adapter le &lt;c1&gt;scope&lt;/c1&gt; à l'attribut exporté voulu.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Parameters for LDAP backend are the same as &lt;a0&gt;LDAP configuration backend&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061726Z" changeid="xavier">
+        <seg>Les paramètres pour le backend LDAP sont les mêmes que ceux du &lt;a0&gt;backend de configuration LDAP&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -40816,6 +41272,14 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>An Apache session module was created by &lt;a0&gt;LL::NG&lt;/a0&gt; team to store sessions in an LDAP directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T061115Z" changeid="xavier">
+        <seg>Un module Apache::Session a été créé par l'équipe de développement de &lt;a0&gt;LL::NG&lt;/a0&gt; pour stocker les sessions dans un annuaire LDAP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Fill values here:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193421Z" changeid="xavier">
@@ -40852,6 +41316,14 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081457Z" changeid="xavier">
         <seg>netid_http_header             HTTP_AUTH_USER</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>On linux, by default, there is no &lt;a0&gt;DNS&lt;/a0&gt; cache and LemonLDAP::NG portal request &lt;a1&gt;DNS&lt;/a1&gt; at every connexions on LDAP or DB.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20160302T062312Z" changeid="xavier">
+        <seg>Avec linux, par défaut, il n'y a pas de cache &lt;a0&gt;DNS&lt;/a0&gt; et le portail LemonLDAP::NG questionne le &lt;a1&gt;DNS&lt;/a1&gt; à chaque connexion au serveur LDAP ou DB.</seg>
       </tuv>
     </tu>
     <tu>

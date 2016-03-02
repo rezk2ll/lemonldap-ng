@@ -24,26 +24,20 @@
 <div class="level1">
 
 <p>
-LemonLDAP::NG is designed to be very performant. En particulier, il utilise les capacités multi-threads d'Apache-2, donc pour optimiser les performances, utilisez de préférence <a href="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime" class="urlextern" title="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime"  rel="nofollow">mpm-worker</a>.
+Lemonldap::NG a été conçu pour être très performant. En particulier, il utilise les capacités multi-threads d'Apache-2, donc pour optimiser les performances, utilisez de préférence <a href="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime" class="urlextern" title="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime"  rel="nofollow">mpm-worker</a>.
 </p>
 
 </div><!-- EDIT1 SECTION "Performances" [1-254] -->
 
-<h2 class="sectionedit2" id="global_performance">Global performance</h2>
+<h2 class="sectionedit2" id="global_performance">Performance globale</h2>
 <div class="level2">
 
 <p>
-
-On linux, by default, there is no <abbr title="Domain Name System">DNS</abbr> cache and LemonLDAP::NG portal request <abbr title="Domain Name System">DNS</abbr> at every connexions on LDAP or DB. Under heavy loads, that can generated hundred of <abbr title="Domain Name System">DNS</abbr> queries and many errors on LDAP connexions (timed out) from IO::Socket.
-
+Avec linux, par défaut, il n'y a pas de cache <abbr title="Domain Name System">DNS</abbr> et le portail LemonLDAP::NG questionne le <abbr title="Domain Name System">DNS</abbr> à chaque connexion au serveur LDAP ou DB. Sous forte charge, ça peut générer des centaines de requêtes <abbr title="Domain Name System">DNS</abbr> et des erreurs sur les connexions LDAP (timed out).
 </p>
 
 <p>
-
-To bypass this, you can:
-* Use <abbr title="Internet Protocol">IP</abbr> in configuration to avoid <abbr title="Domain Name System">DNS</abbr> resolution
-* Install a <abbr title="Domain Name System">DNS</abbr> cache  like nscd, netmask or bind
-
+Pour éviter ceci, on peut : * Utiliser <abbr title="Internet Protocol">IP</abbr> dans la configuration pour éviter la résolution <abbr title="Domain Name System">DNS</abbr> * Installer un cache <abbr title="Domain Name System">DNS</abbr> tel nscd, netmask ou bind
 </p>
 
 </div><!-- EDIT2 SECTION "Global performance" [255-654] -->
@@ -52,7 +46,7 @@ To bypass this, you can:
 <div class="level2">
 
 <p>
-Handlers check rights and calculate headers for each HTTP hit. Donc pour augmenter les performances, évitez les règles trop complexes en utilisant les macros, groupes ou macros locales.
+Les agents vérifient les droits et calculent les en-têtes pour chaque requête HTTP. Donc pour augmenter les performances, évitez les règles trop complexes en utilisant les macros, groupes ou macros locales.
 </p>
 
 </div><!-- EDIT3 SECTION "Handler performance" [655-852] -->
@@ -164,10 +158,7 @@ On peut utiliser un serveur FastCGI en utilisant le fichier index.fcgi disponibl
 
 <p>
 </p><p></p><div class="notetip">
-
-In production environment for network performance, prefer using minified versions of javascript and css libs: use <code>make install <strong>PROD=yes</strong></code>. This is done by default in RPM/DEB packages.
-
-
+En environnement de production et pour de meilleures performances réseau, utiliser les versions compactées des librairies javascript et css : utiliser <code>make install <strong>PROD=yes</strong></code>. Ceci est fait par défaut avec les paquets RPM/DEB.
 
 </div></p>
 </p>
@@ -220,9 +211,7 @@ Les agents (handlers) Lemonldap::NG utilisent un cache local pour stocker les se
 <div class="level4">
 
 <p>
-
-In “Apache::Session module” field, set “<a href="https://metacpan.org/module/Apache::Session::Flex" class="urlextern" title="https://metacpan.org/module/Apache::Session::Flex"  rel="nofollow">Apache::Session::Flex</a>” and use the following parameters:
-
+Dans le champ “Module Apache::Session”, indiquez ”<a href="https://metacpan.org/module/Apache::Session::Flex" class="urlextern" title="https://metacpan.org/module/Apache::Session::Flex"  rel="nofollow">Apache::Session::Flex</a>” et utilisez les paramètres suivants :
 </p>
 <pre class="code">Store      -&gt; MySQL
 Lock       -&gt; Null
@@ -260,8 +249,7 @@ Notez que Apache::Session::Browseable::MySQL n'utilise pas les verrous MySQL.
 </p>
 
 <p>
-</p><p></p><div class="noteimportant">Some Apache::Session module are not fully usable by Lemonldap::NG such as Apache::Session::Memcached since this modules do not offer capability to browse sessions. They does not allow to use sessions explorer neither manage one-off sessions.
-
+</p><p></p><div class="noteimportant">Certains modules Apache::Session ne sont pas utilisables par Lemonldap::NG tel Apache::Session::Memcached, car ce module n'offre pas de dispositif de parcours des sessions Ils ne permettent pas d'utiliser l'explorateur de sessions ne de gérer l'unicité des sessions.
 </div></p>
 </p>
 
@@ -271,9 +259,7 @@ Notez que Apache::Session::Browseable::MySQL n'utilise pas les verrous MySQL.
 <div class="level3">
 
 <p>
-
-LDAP server can be a brake when you use LDAP groups recovery. You can avoid this by setting “memberOf” fields in your LDAP scheme:
-
+Le serveur LDAP peut être un frein lorsque vous utilisez la récupération des groupes LDAP. Vous pouvez contourner cette dificulté en utilisant les champs “memberOf” dans votre schéma LDAP :
 </p>
 <pre class="code ldif"><span class="re0">dn</span>:<span class="re1"> uid=foo,dmdName=people,dc=example,dc=com</span>
 ...
@@ -281,9 +267,7 @@ LDAP server can be a brake when you use LDAP groups recovery. You can avoid this
 <span class="re0">memberOf</span>:<span class="re1"> cn=su,dmdName=groups,dc=example,dc=com</span></pre>
 
 <p>
-
-So instead of using LDAP groups recovery, you just have to store “memberOf” field in your exported variables. With OpenLDAP, you can use the <a href="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance" class="urlextern" title="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance"  rel="nofollow">memberof overlay</a> to do it automaticaly.
-
+Ainsi au lieu d'utiliser la récupération des groupes LDAP, vous avez juste à stocker le champ “memberOf” dans vos variables exportées. Avec OpenLDAP, vous pouvez utiliser <a href="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance" class="urlextern" title="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance"  rel="nofollow">memberof overlay</a> qui le fera automatiquement.
 </p>
 
 <p>
@@ -317,12 +301,12 @@ Maintenant, ldapgroups contient “admin su”
 
 </div><!-- EDIT11 SECTION "LDAP performances" [7368-8496] -->
 
-<h2 class="sectionedit12" id="manager_performances">Manager performances</h2>
+<h2 class="sectionedit12" id="manager_performances">Performances du Manager</h2>
 <div class="level2">
 
 </div><!-- EDIT12 SECTION "Manager performances" [8497-8530] -->
 
-<h3 class="sectionedit13" id="disable_unused_modules">Disable unused modules</h3>
+<h3 class="sectionedit13" id="disable_unused_modules">Désactiver les modules inutilisés</h3>
 <div class="level3">
 
 <p>

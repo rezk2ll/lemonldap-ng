@@ -24,9 +24,7 @@
 <div class="level1">
 
 <p>
-
-An Apache session module was created by <abbr title="LemonLDAP::NG">LL::NG</abbr> team to store sessions in an LDAP directory.
-
+Un module Apache::Session a été créé par l'équipe de développement de <abbr title="LemonLDAP::NG">LL::NG</abbr> pour stocker les sessions dans un annuaire LDAP.
 </p>
 
 <p>
@@ -40,9 +38,7 @@ An Apache session module was created by <abbr title="LemonLDAP::NG">LL::NG</abbr
 </p>
 
 <p>
-
-Sessions will be stored as LDAP entries, like this:
-
+Les sessions sont stockées dans des entrées LDAP comme suit :
 </p>
 <pre class="file">dn: cn=6fb7c4a170a04668771f03b0a4747f46,ou=sessions,dc=example,dc=com
 objectClass: applicationProcess
@@ -55,9 +51,7 @@ description: [Base64 serialized data]</pre>
 <div class="level2">
 
 <p>
-
-Go in the Manager and set the LDAP session module (<a href="http://search.cpan.org/dist/Apache-Session-LDAP/" class="urlextern" title="http://search.cpan.org/dist/Apache-Session-LDAP/"  rel="nofollow">Apache::Session::LDAP</a>) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
-
+Aller dans le manager et mettre le module de session (<a href="http://search.cpan.org/dist/Apache-Session-LDAP/" class="urlextern" title="http://search.cpan.org/dist/Apache-Session-LDAP/"  rel="nofollow">Apache::Session::LDAP</a>) dans <code>Paramètres généraux</code> » <code>Sessions</code> » <code>Stockage des sessions</code> » <code>Module Apache::Session</code> et ajouter les paramètres suivant (sensible à la casse) :
 </p>
 <div class="table sectionedit3"><table class="inline">
 	<thead>
@@ -103,9 +97,7 @@ Go in the Manager and set the LDAP session module (<a href="http://search.cpan.o
 <div class="level2">
 
 <p>
-
-Restrict network access to the LDAP directory, and add specific <abbr title="Liste de contrôle d'accès">ACL</abbr> to session branch.
-
+Restreindre l'accès réseau à l'annuaire LDAP et ajouter une <abbr title="Liste de contrôle d'accès">ACL</abbr> spécifique à la branche des sessions.
 </p>
 
 <p>

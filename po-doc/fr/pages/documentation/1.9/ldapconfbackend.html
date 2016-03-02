@@ -29,9 +29,7 @@
 <div class="level2">
 
 <p>
-
-You can choose to store LemonLDAP::NG configuration in an LDAP directory.
-
+On peut choisir de stocker la configuration de LemonLDAP::NG dans un annuaire LDAP.
 </p>
 
 <p>
@@ -42,11 +40,11 @@ You can choose to store LemonLDAP::NG configuration in an LDAP directory.
 Avantages :
 </p>
 <ul>
-<li class="level1"><div class="li">  Easy to share between servers with remote LDAP access</div>
+<li class="level1"><div class="li"> Facilité de partage entre serveurs avec un accès LDAP distant</div>
 </li>
-<li class="level1"><div class="li">  Easy to duplicate with LDAP synchronization services (like SyncRepl in OpenLDAP)</div>
+<li class="level1"><div class="li"> Facilité de duplication avec les services de synchronisation LDAP (tel SyncRepl de OpenLDAP)</div>
 </li>
-<li class="level1"><div class="li">  Security with SSL/TLS</div>
+<li class="level1"><div class="li"> Securité avec SSL/TLS</div>
 </li>
 <li class="level1"><div class="li"> Contrôle d'accès possible en créant un compte pour le manager (écriture) et un autre pour le portail et les agents (lecture)</div>
 </li>
@@ -59,7 +57,7 @@ La configuration est stockée dans une branche spécifique, par exemple <code>ou
 </p>
 
 <p>
-Each configuration will be represented as an entry, which structural objectClass is by default <code>applicationProcess</code>. Le nom de la configuration est le même que pour File : lmConf-1, lmConf-2, etc... This name is used in entry <abbr title="Distinguished Name">DN</abbr>, for example <code>cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com</code>.
+Chaque configuration est représentée par une entrée, dont l'objectClass structurel est <code>applicationProcess</code>. Le nom de la configuration est le même que pour File : lmConf-1, lmConf-2, etc... Ce nom est utilisé dans l'entrée <abbr title="Distinguished Name">DN</abbr>, par exemple <code>cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com</code>.
 </p>
 
 <p>
@@ -89,13 +87,11 @@ description: {whatToTrace}'$uid'
 <div class="level3">
 
 <p>
-Les objets de configuration utilisent une classe d'objet standard : <code>applicationProcess</code>. Cet classe d'objet autorise les attributs <code>cn</code> et <code>description</code>. If your LDAP server do not manage this objectClass, configure other objectclass and attributes (see below).
+Les objets de configuration utilisent une classe d'objet standard : <code>applicationProcess</code>. Cet classe d'objet autorise les attributs <code>cn</code> et <code>description</code>. Si le serveur LDAP ne gère pas cette classe d'objet, il faut étendre le schéma.
 </p>
 
 <p>
-
-We advice to create a specific LDAP account with write access on configuration branch.
-
+Il est recommandé de créer un compte LDAP spécifique qui peut écrire dans la branche de configuration.
 </p>
 
 <p>
@@ -108,9 +104,7 @@ Créer ensuite la branche des configurations n'importe où. Il faut juste reteni
 <div class="level3">
 
 <p>
-
-Configure LDAP configuration backend in <code>lemonldap-ng.ini</code>, section <code>[configuration]</code>:
-
+Configurer la backend de configuration LDAP dans <code>lemonldap-ng.ini</code>, section <code>[configuration]</code> :
 </p>
 <pre class="code file ini"><span class="re1">type</span> <span class="sy0">=</span><span class="re2"> LDAP</span>
 <span class="re1">ldapServer</span> <span class="sy0">=</span><span class="re2"> ldap://localhost</span>
@@ -125,19 +119,19 @@ Configure LDAP configuration backend in <code>lemonldap-ng.ini</code>, section <
 Paramètres:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>ldapServer</strong>: LDAP <abbr title="Uniform Resource Identifier">URI</abbr> of the server</div>
+<li class="level1"><div class="li"> <strong>ldapServer</strong>: <abbr title="Uniform Resource Identifier">URI</abbr> LDAP  du serveur</div>
 </li>
 <li class="level1"><div class="li"> <strong>ldapConfBase</strong> : <abbr title="Distinguished Name">DN</abbr> de la branche des configurations</div>
 </li>
-<li class="level1"><div class="li"> <strong>ldapBindDN</strong>: <abbr title="Distinguished Name">DN</abbr> used to bind LDAP</div>
+<li class="level1"><div class="li"> <strong>ldapBindDN</strong> : <abbr title="Distinguished Name">DN</abbr> utilisé pour se connecter au serveur LDAP</div>
 </li>
-<li class="level1"><div class="li"> <strong>ldapBindPassword</strong>: password used to bind LDAP</div>
+<li class="level1"><div class="li"> <strong>ldapBindPassword</strong> : mot-de-passe à utiliser pour se connecter au serveur LDAP</div>
 </li>
-<li class="level1"><div class="li"> <strong>ldapObjectClass</strong>: structural objectclass of configuration entry (optional)</div>
+<li class="level1"><div class="li"> <strong>ldapObjectClass</strong> : objectclass structurel de l'entrée de configuration entry (optionnel)</div>
 </li>
-<li class="level1"><div class="li"> <strong>ldapAttributeId</strong>: RDN attribute of configuration entry (optional)</div>
+<li class="level1"><div class="li"> <strong>ldapAttributeId</strong> : attribut RDN de l'entrée de configuration (optionnel)</div>
 </li>
-<li class="level1"><div class="li"> <strong>ldapAttributeContent</strong>: attribute used to store configuration values, must be multivalued (optional)</div>
+<li class="level1"><div class="li"> <strong>ldapAttributeContent</strong> : attribut utilisé pour stocker la valeur des configurations, doit être multivalué (optionnel)</div>
 </li>
 </ul>
 
