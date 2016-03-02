@@ -1,3 +1,5 @@
+lemonldap-ng (2.0.0) stable; urgency=low
+
 lemonldap-ng (1.9.0) stable; urgency=low
 
     * [LEMONLDAP-176] - POST Handler feature does not work with mod_proxy
