@@ -38,12 +38,16 @@ On linux, by default, there is no <abbr title="Domain Name System">DNS</abbr> ca
 
 <p>
 To bypass this, you can:
-* Use <abbr title="Internet Protocol">IP</abbr> in configuration to avoid <abbr title="Domain Name System">DNS</abbr> resolution
-* Install a <abbr title="Domain Name System">DNS</abbr> cache  like nscd, netmask or bind
 </p>
+<ul>
+<li class="level1"><div class="li"> Use <abbr title="Internet Protocol">IP</abbr> in configuration to avoid <abbr title="Domain Name System">DNS</abbr> resolution</div>
+</li>
+<li class="level1"><div class="li"> Install a <abbr title="Domain Name System">DNS</abbr> cache  like nscd, netmask or bind</div>
+</li>
+</ul>
 
 </div>
-<!-- EDIT2 SECTION "Global performance" [255-654] -->
+<!-- EDIT2 SECTION "Global performance" [255-658] -->
 <h2 class="sectionedit3" id="handler_performance">Handler performance</h2>
 <div class="level2">
 
@@ -52,7 +56,7 @@ Handlers check rights and calculate headers for each HTTP hit. So to improve per
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Handler performance" [655-852] -->
+<!-- EDIT3 SECTION "Handler performance" [659-856] -->
 <h3 class="sectionedit4" id="macros_and_groups">Macros and groups</h3>
 <div class="level3">
 
@@ -119,7 +123,7 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Macros and groups" [853-2813] -->
+<!-- EDIT4 SECTION "Macros and groups" [857-2817] -->
 <h3 class="sectionedit5" id="local_macros">Local macros</h3>
 <div class="level3">
 
@@ -137,12 +141,12 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Local macros" [2814-3471] -->
+<!-- EDIT5 SECTION "Local macros" [2818-3475] -->
 <h2 class="sectionedit6" id="portal_performances">Portal performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT6 SECTION "Portal performances" [3472-3504] -->
+<!-- EDIT6 SECTION "Portal performances" [3476-3508] -->
 <h3 class="sectionedit7" id="general_performances">General performances</h3>
 <div class="level3">
 
@@ -166,7 +170,7 @@ In production environment for network performance, prefer using minified version
 </p>
 
 </div>
-<!-- EDIT7 SECTION "General performances" [3505-4135] -->
+<!-- EDIT7 SECTION "General performances" [3509-4139] -->
 <h3 class="sectionedit8" id="configuration_access">Configuration access</h3>
 <div class="level3">
 
@@ -175,7 +179,7 @@ If you set <code>useLocalConf</code> to 1 in lemonldap-ng.ini (section [Portal])
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Configuration access" [4136-4438] -->
+<!-- EDIT8 SECTION "Configuration access" [4140-4442] -->
 <h3 class="sectionedit9" id="starting_performances">Starting performances</h3>
 <div class="level3">
 
@@ -193,7 +197,7 @@ To make the portal start faster when the server is relaunched, add those lines i
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- EDIT9 SECTION "Starting performances" [4439-5014] -->
+<!-- EDIT9 SECTION "Starting performances" [4443-5018] -->
 <h3 class="sectionedit10" id="apachesession_performances">Apache::Session performances</h3>
 <div class="level3">
 
@@ -256,7 +260,7 @@ Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </p>
 
 </div>
-<!-- EDIT10 SECTION "Apache::Session performances" [5015-7367] -->
+<!-- EDIT10 SECTION "Apache::Session performances" [5019-7371] -->
 <h3 class="sectionedit11" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
@@ -302,12 +306,12 @@ Now ldapgroups contains “admin su”
 </p>
 
 </div>
-<!-- EDIT11 SECTION "LDAP performances" [7368-8496] -->
+<!-- EDIT11 SECTION "LDAP performances" [7372-8500] -->
 <h2 class="sectionedit12" id="manager_performances">Manager performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT12 SECTION "Manager performances" [8497-8530] -->
+<!-- EDIT12 SECTION "Manager performances" [8501-8534] -->
 <h3 class="sectionedit13" id="disable_unused_modules">Disable unused modules</h3>
 <div class="level3">
 
@@ -318,7 +322,7 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT13 SECTION "Disable unused modules" [8531-8777] -->
+<!-- EDIT13 SECTION "Disable unused modules" [8535-8781] -->
 <h3 class="sectionedit14" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
