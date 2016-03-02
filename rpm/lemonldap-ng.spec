@@ -610,7 +610,7 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
-* Tue Feb 09 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.0-1
+* Wed Mar 02 2016 Clement Oudot <clem.oudot@gmail.com> - 1.9.0-1
 - Update to 1.9.0
 * Wed Apr 15 2015 Clement Oudot <clem.oudot@gmail.com> - 1.4.4-1
 - Update to 1.4.4
