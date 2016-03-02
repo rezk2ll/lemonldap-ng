@@ -904,7 +904,7 @@ sub attributes {
                           ? (1)
                           : ( 0, '__badUrl__' );
                     }
-                    $s =~ s/\b(accept|deny)\b/1/g;
+                    $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
                     my @cf =
                       qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch);
                     push @cf,
