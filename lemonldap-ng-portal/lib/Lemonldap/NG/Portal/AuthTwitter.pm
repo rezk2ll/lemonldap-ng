@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::AuthTwitter;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.9.1';
 our $initDone;
 
 BEGIN {

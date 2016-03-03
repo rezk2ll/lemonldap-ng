@@ -6,7 +6,7 @@ use JSON;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::PSGI::Request;
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 our $_json = JSON->new->allow_nonref;
 

@@ -17,7 +17,7 @@ use XML::Simple;
 use Safe;
 use Encode;
 
-our $VERSION = '1.2.1';
+our $VERSION = '1.9.1';
 
 ## @cmethod Lemonldap::NG::Common::Conf::SAML::Metadata new(hashRef args)
 # Class constructor.

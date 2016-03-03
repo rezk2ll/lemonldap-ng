@@ -5,7 +5,7 @@ use utf8;
 use strict;
 use Lemonldap::NG::Common::Conf::Serializer;
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 our $initDone;
 
 sub prereq {

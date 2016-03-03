@@ -18,7 +18,7 @@ use Cache::Memcached;
 use Apache::Session::Generate::MD5;
 use Lemonldap::NG::Handler::Main::Logger;
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 # Shared variables
 our $secureTokenMemcachedConnection;

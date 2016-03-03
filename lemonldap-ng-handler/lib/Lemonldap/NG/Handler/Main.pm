@@ -14,7 +14,7 @@ use constant SKIP      => 2;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 our ( %EXPORT_TAGS, @EXPORT_OK, @EXPORT );
 
 our $tsv = {};    # Hash ref containing thread-shared values, filled

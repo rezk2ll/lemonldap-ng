@@ -1,7 +1,7 @@
 package Lemonldap::NG::Handler::API::PSGI;
 
 use strict;
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 # Specific modules and constants for Test or CGI
 use constant FORBIDDEN         => 403;

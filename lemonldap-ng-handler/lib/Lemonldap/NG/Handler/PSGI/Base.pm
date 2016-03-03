@@ -4,7 +4,7 @@ use 5.10.0;
 use Mouse;
 use Lemonldap::NG::Handler::SharedConf qw(:tsv :variables :jailSharedVars);
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 has protection => ( is => 'rw', isa => 'Str' );
 has rule       => ( is => 'rw', isa => 'Str' );

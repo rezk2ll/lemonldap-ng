@@ -1,7 +1,7 @@
 
 package Lemonldap::NG::Common::Apache::Session::Store;
 
-our $VERSION = 1.4.0;
+our $VERSION = '1.9.1';
 
 sub new {
     my $class = shift;

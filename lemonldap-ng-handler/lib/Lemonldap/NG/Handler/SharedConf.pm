@@ -26,7 +26,7 @@ use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
 use base qw(Lemonldap::NG::Handler::Main);
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 our $lmConf;         # Lemonldap::NG::Common::Conf object to get config
 our $localConfig;    # Local configuration parameters, i.e. defined
                      # in lemonldap-ng.ini or in startup parameters

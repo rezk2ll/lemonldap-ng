@@ -4,7 +4,7 @@ use strict;
 use utf8;
 use SOAP::Lite;
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.1';
 
 #parameter proxy Url of SOAP service
 #parameter proxyOptions SOAP::Lite parameters

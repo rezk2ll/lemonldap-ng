@@ -15,7 +15,7 @@ use constant AXSPECURL      => 'http://openid.net/srv/ax/1.0';
 use constant GOOGLEENDPOINT => 'https://www.google.com/accounts/o8/id';
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 our $googleEndPoint;
 
 BEGIN {

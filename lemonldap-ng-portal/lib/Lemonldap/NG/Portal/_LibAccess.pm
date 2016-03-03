@@ -7,7 +7,7 @@ package Lemonldap::NG::Portal::_LibAccess;
 
 use strict;
 
-our $VERSION = '1.4.2';
+our $VERSION = '1.9.1';
 
 # Global variables
 our ( $defaultCondition, $locationCondition, $locationRegexp, $cfgNum ) =

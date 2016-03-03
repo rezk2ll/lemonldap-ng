@@ -18,7 +18,7 @@ extends 'Lemonldap::NG::Manager::Lib';
 
 has conf => ( is => 'rw', isa => 'HashRef', default => sub { {} } );
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 #############################
 # I. INITIALIZATION METHODS #

@@ -5,7 +5,7 @@ use Mouse;
 
 extends 'Lemonldap::NG::Handler::PSGI::Base', 'Lemonldap::NG::Common::PSGI';
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 sub init {
     my $tmp = $_[0]->Lemonldap::NG::Common::PSGI::init( $_[1] )

@@ -14,7 +14,7 @@ has useSafeJail => ( is => 'rw', isa => 'Maybe[Int]' );
 
 has jail => ( is => 'rw' );
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.1';
 
 use Lemonldap::NG::Handler::Main '$datas';
 use Lemonldap::NG::Handler::API ':functions';

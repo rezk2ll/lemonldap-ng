@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::API::ApacheMP1;
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.1';
 
 # Specific modules and constants for Apache Mod_Perl 1
 use Apache;

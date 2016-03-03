@@ -13,7 +13,7 @@ package Lemonldap::NG::Portal::_Multi;
 use Lemonldap::NG::Portal::Simple;
 use Scalar::Util 'weaken';
 
-our $VERSION = '1.4.6';
+our $VERSION = '1.9.1';
 
 ## @cmethod Lemonldap::NG::Portal::_Multi new(Lemonldap::NG::Portal::Simple portal)
 # Constructor

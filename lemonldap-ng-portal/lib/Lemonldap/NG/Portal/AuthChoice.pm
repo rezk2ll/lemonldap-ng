@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 
 #inherits Lemonldap::NG::Portal::_Choice
 
-our $VERSION = '1.0.2';
+our $VERSION = '1.9.1';
 
 ## @apmethod int authInit()
 # Build authentication loop

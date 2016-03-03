@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::Register;
 use strict;
 use warnings;
 
-our $VERSION = '1.4.5';
+our $VERSION = '1.9.1';
 
 use Lemonldap::NG::Portal::Simple qw(:all);
 use base qw(Lemonldap::NG::Portal::SharedConf Exporter);

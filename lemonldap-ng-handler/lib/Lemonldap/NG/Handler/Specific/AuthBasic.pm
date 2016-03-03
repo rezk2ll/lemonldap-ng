@@ -18,7 +18,7 @@ use Lemonldap::NG::Common::Session;
 
 use base qw(Lemonldap::NG::Handler::SharedConf);
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 sub handler {
     my ( $class, $request ) = ( __PACKAGE__, shift );

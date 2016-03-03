@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::_Browser;
 use Lemonldap::NG::Common::Session;
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 ## @method hashref getCasSession(string id)
 # Try to recover the CAS session corresponding to id and return session datas

@@ -7,7 +7,7 @@ use strict;
 use POSIX qw(setuid setgid);
 use Data::Dumper;
 
-our $VERSION = '1.4.1';
+our $VERSION = '1.9.1';
 
 our $status   = {};
 our $activity = [];

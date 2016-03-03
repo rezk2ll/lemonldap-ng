@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::API::Nginx;
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 use constant FORBIDDEN         => 403;
 use constant HTTP_UNAUTHORIZED => 401;

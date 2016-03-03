@@ -11,7 +11,7 @@ use Lemonldap::NG::Handler::Main::Logger;
 use Lemonldap::NG::Handler::API qw(:httpCodes);
 use Lemonldap::NG::Common::Crypto;
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.1';
 
 ## @imethod void configReload(hashRef conf, hashRef tsv)
 # Given a Lemonldap::NG configuration $conf, computes values used to

@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_OpenIDConnect));
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 ## @apmethod int userDBInit()
 # Do nothing

@@ -4,7 +4,7 @@ use strict;
 use vars qw($VERSION);
 use JSON;
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 sub serialize {
     my $session = shift;

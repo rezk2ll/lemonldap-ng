@@ -22,7 +22,7 @@ use URI;                   # Get metadata URL path
 #inherits Lemonldap::NG::Common::Conf::SAML::Metadata protected service_metadata
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 our $samlCache;
 our $initGlibDone;
 

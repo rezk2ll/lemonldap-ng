@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Common::Captcha;
 
-our $VERSION = 1.4.0;
+our $VERSION = '1.9.1';
 
 use strict;
 use Lemonldap::NG::Common::Session;

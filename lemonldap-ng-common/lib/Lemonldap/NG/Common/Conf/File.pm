@@ -5,7 +5,7 @@ use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use JSON;
 use Encode;
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.1';
 our $initDone;
 
 sub Lemonldap::NG::Common::Conf::_lock {

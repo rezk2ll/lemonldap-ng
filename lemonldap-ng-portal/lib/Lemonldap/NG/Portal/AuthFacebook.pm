@@ -15,7 +15,7 @@ use Lemonldap::NG::Portal::_Browser;
 use URI::Escape;
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.1';
 our $initDone;
 
 BEGIN {

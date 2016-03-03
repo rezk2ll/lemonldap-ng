@@ -16,7 +16,7 @@ use URI::Split qw(uri_split);
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
 
-our $VERSION = '1.4.2';
+our $VERSION = '1.9.1';
 use base qw(Lemonldap::NG::Portal::Simple);
 our $confCached;
 

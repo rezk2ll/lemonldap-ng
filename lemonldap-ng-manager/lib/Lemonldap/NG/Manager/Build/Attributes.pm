@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Manager::Build::Attributes;
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 use strict;
 use Regexp::Common qw/URI/;
 

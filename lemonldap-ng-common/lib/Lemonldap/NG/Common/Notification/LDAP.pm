@@ -12,7 +12,7 @@ use MIME::Base64;
 use Net::LDAP;
 use utf8;
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 ## @method boolean prereq()
 # Check if LDAP parameters are set.

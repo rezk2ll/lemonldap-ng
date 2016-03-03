@@ -12,7 +12,7 @@ use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Conf::Serializer;
 use Encode;
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::ldap = \&ldap;

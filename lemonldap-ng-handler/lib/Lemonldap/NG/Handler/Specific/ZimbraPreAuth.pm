@@ -17,7 +17,7 @@ use base qw(Lemonldap::NG::Handler::SharedConf);
 use Digest::HMAC_SHA1 qw(hmac_sha1 hmac_sha1_hex);
 use Lemonldap::NG::Handler::Main::Logger;
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 sub handler {
     my ( $class, $request ) = ( __PACKAGE__, shift );

@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::AuthNull;
 
-our $VERSION = '1.4.1';
+our $VERSION = '1.9.1';
 our @ISA     = qw(Lemonldap::NG::Portal::AuthNull);
 
 ## @apmethod int authInit()

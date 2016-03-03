@@ -7,7 +7,7 @@ use Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 use base qw(Lemonldap::NG::Common::CGI Lemonldap::NG::Handler::SharedConf);
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.9.1';
 
 ## @cmethod Lemonldap::NG::Handler::CGI new(hashRef args)
 # Constructor.

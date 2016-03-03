@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;
 our @ISA = qw(Lemonldap::NG::Portal::_SAML);
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 ## @method void issuerDBInit()
 # Load and check SAML configuration

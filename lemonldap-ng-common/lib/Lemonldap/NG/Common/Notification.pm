@@ -15,7 +15,7 @@ use Scalar::Util 'weaken';
 #inherits Lemonldap::NG::Common::Notification::DBI
 #inherits Lemonldap::NG::Common::Notification::File
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 our ( $msg, $parser );
 
 ## @cmethod Lemonldap::NG::Common::Notification new(hashref storage)

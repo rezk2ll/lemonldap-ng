@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Simple;
 use MIME::Base64;
 use base qw(Lemonldap::NG::Portal::_OpenIDConnect);
 
-our $VERSION = '1.9.0';
+our $VERSION = '1.9.1';
 
 ## @apmethod int authInit()
 # Get configuration data
