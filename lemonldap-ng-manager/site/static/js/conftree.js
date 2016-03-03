@@ -867,6 +867,8 @@ function templates(tpl,key) {
 }
 
 function setScopeVars(scope) {
+  scope.portal = scope.data[0]._nodes[0]._nodes[0];
+  scope.getKey(scope.portal);
   scope.domain = scope.data[0]._nodes[4]._nodes[1];
   scope.getKey(scope.domain);
 }
