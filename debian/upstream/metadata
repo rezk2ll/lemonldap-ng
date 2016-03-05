@@ -1,0 +1,9 @@
+---
+Archive: OW2
+Bug-Database: https://jira.ow2.org/browse/LEMONLDAP/
+Bug-Submit: https://jira.ow2.org/browse/LEMONLDAP/
+Changelog: https://jira.ow2.org/browse/LEMONLDAP/
+Contact: lemonldap-ng-users@ow2.org
+Name: LemonLDAP::NG
+Repository: svn://svn.forge.objectweb.org/svnroot/lemonldap
+Repository-Browse: http://websvn.ow2.org/listing.php?repname=lemonldap
