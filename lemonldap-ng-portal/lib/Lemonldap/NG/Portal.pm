@@ -135,7 +135,7 @@ worth case, a user is authorized 10 minutes after he lost his rights.
 
 =head3 B<Authorization>
 
-Authorization is controled only by handlers because the portal knows nothing
+Authorization is controlled only by handlers because the portal knows nothing
 about the way the user will choose. When configuring your Web-SSO, you have to:
 
 =over

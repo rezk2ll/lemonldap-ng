@@ -265,7 +265,7 @@ it's a recursive call to `{ $word => $dest }`
 
 in this case each element of the array will be considered as
 `{ $element => $element }`. So each element must be a word that makes a
-correspondance between a path_info word and a subroutine
+correspondence between a path_info word and a subroutine
 
 =back
 
