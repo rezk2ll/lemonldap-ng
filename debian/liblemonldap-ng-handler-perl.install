@@ -1,9 +1,9 @@
-/usr/share/perl5/Lemonldap/NG/Handler*
-/usr/share/perl5/auto/Lemonldap/NG/Handler*
-/usr/share/man/man3/Lemonldap::NG::Handler*
-/var/lib/lemonldap-ng/test
-/usr/share/lemonldap-ng/bin/purgeLocalCache
 /etc/lemonldap-ng/handler-apache2.conf
 /etc/lemonldap-ng/handler-nginx.conf
 /etc/lemonldap-ng/test-apache2.conf
 /etc/lemonldap-ng/test-nginx.conf
+/usr/share/perl5/Lemonldap/NG/Handler*
+/usr/share/perl5/auto/Lemonldap/NG/Handler*
+/usr/share/man/man3/Lemonldap::NG::Handler*
+/usr/share/lemonldap-ng/bin/purgeLocalCache
+/var/lib/lemonldap-ng/test
