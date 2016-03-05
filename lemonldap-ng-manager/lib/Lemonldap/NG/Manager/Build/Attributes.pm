@@ -126,19 +126,28 @@ sub types {
             test => sub { 1 }
         },
         RSAPublicKey => {
-            test =>
-qr/^(?:(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+PUBLIC\s+KEY\s*\-+)?[\r\n]*)?$/s,
-            msgFail => '__badPemEncoding__',
+            test => sub {
+                return ( $_[0] =~
+/^(?:(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+PUBLIC\s+KEY\s*\-+)?[\r\n]*)?$/s
+                    ? (1)
+                    : ( 1, '__badPemEncoding__' ) );
+            },
         },
         'RSAPublicKeyOrCertificate' => {
-            'test' =>
-qr/^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+)?[\r\n]*)?$/s,
-            'msgFail' => '__badPemEncoding__',
+            'test' => sub {
+                return ( $_[0] =~
+/^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+)?[\r\n]*)?$/s
+                    ? (1)
+                    : ( 1, '__badPemEncoding__' ) );
+            },
         },
         RSAPrivateKey => {
-            test =>
-qr/^(?:(?:\-+\s*BEGIN\s+RSA\s+PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+RSA\s+PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$/s,
-            msgFail => '__badPemEncoding__',
+            test => sub {
+                return ( $_[0] =~
+/^(?:(?:\-+\s*BEGIN\s+(?:RSA\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:RSA\s+)PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$/s
+                    ? (1)
+                    : ( 1, '__badPemEncoding__' ) );
+            },
         },
 
         authParamsText => {

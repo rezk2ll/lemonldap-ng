@@ -162,19 +162,28 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
               }
         },
         'RSAPrivateKey' => {
-            'msgFail' => '__badPemEncoding__',
-            'test' =>
-qr/^(?:(?:\-+\s*BEGIN\s+RSA\s+PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+RSA\s+PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$/s
+            'test' => sub {
+                return $_[0] =~
+m[^(?:(?:\-+\s*BEGIN\s+(?:RSA\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:RSA\s+)PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$]s
+                  ? 1
+                  : ( 1, '__badPemEncoding__' );
+              }
         },
         'RSAPublicKey' => {
-            'msgFail' => '__badPemEncoding__',
-            'test' =>
-qr/^(?:(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+PUBLIC\s+KEY\s*\-+)?[\r\n]*)?$/s
+            'test' => sub {
+                return $_[0] =~
+m[^(?:(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+PUBLIC\s+KEY\s*\-+)?[\r\n]*)?$]s
+                  ? 1
+                  : ( 1, '__badPemEncoding__' );
+              }
         },
         'RSAPublicKeyOrCertificate' => {
-            'msgFail' => '__badPemEncoding__',
-            'test' =>
-qr/^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+)?[\r\n]*)?$/s
+            'test' => sub {
+                return $_[0] =~
+m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+)?[\r\n]*)?$]s
+                  ? 1
+                  : ( 1, '__badPemEncoding__' );
+              }
         },
         'rule' => {
             'test' => sub {
