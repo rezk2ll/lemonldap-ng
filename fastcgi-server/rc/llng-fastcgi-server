@@ -35,6 +35,19 @@ if [ -z "$SOCKET" ]; then
 	SOCKET=__FASTCGISOCKDIR__/llng-fastcgi.sock
 fi
 
+for f in "$PID" "$SOCKET"; do
+	DIR=`dirname "$f"`
+	if [ ! -d "$DIR" ]; then
+		mkdir -p "$DIR"
+		if [ -n "$USER" ]; then
+			chown "$USER" "$DIR"
+		fi
+		if [ -n "$GROUP" ]; then
+			chgrp "$GROUP" "$DIR"
+		fi
+	fi
+done
+
 DAEMON_OPTS="-p ${PID} -u ${USER} -g ${GROUP} -s ${SOCKET}"
 
 if [ -z "$CUSTOM_FUNCTIONS_FILE" ]; then

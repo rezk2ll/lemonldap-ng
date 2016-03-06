@@ -484,7 +484,7 @@ install_fastcgi_server:
 	@chmod +x $(RSBINDIR)/llng-fastcgi-server
 	@cp -f fastcgi-server/rc/llng-fastcgi-server $(RINITDIR)
 	@cp -f fastcgi-server/default/llng-fastcgi-server $(RETCDEFAULTDIR)
-	@$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g' \
+	@$(PERL) -pi -e 's#__SBINDIR__#$(SBINDIR)#;s#__DEFAULTDIR__#$(ETCDEFAULTDIR)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#g;s#__USER__#$(FASTCGIUSER)#;s#__GROUP__#$(FASTCGIGROUP)#;' \
 		$(RETCDEFAULTDIR)/llng-fastcgi-server \
 		$(RSBINDIR)/llng-fastcgi-server \
 		$(RINITDIR)/llng-fastcgi-server
