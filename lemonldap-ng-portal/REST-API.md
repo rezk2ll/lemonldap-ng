@@ -15,19 +15,24 @@
     
         # REST paths for unauthenticated users
         $self->addUnauthRoute( 'auth.html', undef, ['GET'] )
-             ->addUnauthRoute( 'auth' => 'authenticate', ['POST'] );
+             ->addUnauthRoute( 'menu.html', 'auth.html', ['GET'] )
+             ->addUnauthRoute( 'menu.html', 'auth.html', ['GET'] )
+             ->addUnauthRoute( '*' => 'authenticate', ['POST'] );
         $self->defaultUnauthRoute( 'auth.html' );
 
         # Part of API protected by web server
         $self->addUnauthRoute( 'sessions' => { ':sessionId' => 'session' }, ['GET', 'POST', 'PUT'] )
              ->addUnauthRoute( 'sessions' => { '*' => 'sessions', ['GET', 'POST'] );
 
+Note that alias `menu.html => auth.html` is only for normal install. If for
+performances, `menu.html` is stored as file, Ajax will do the redirection to '/auth.html'.
+
 ## Authentication
 
 ### Authentication with web form
 
 Depending on the request:
-* case classic POST: `POST /auth`, datas : `user=xx&password=yy`, HTML
+* case classic POST: `POST /`, datas : `user=xx&password=yy`, HTML
   response
 * case Ajax request: same but response is JSON (menu entries ?). The idea is
   that a full Ajax portal could be written with some HTML fragment storable in
@@ -74,4 +79,4 @@ Examples:
 ## Other
 
 * Ping (session already available): `GET or POST /?ping`, response `{result: true}`
-* 
+
