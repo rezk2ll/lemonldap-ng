@@ -1,3 +1,0 @@
-# Custom jquery-ui are really wanted here
-lemonldap-ng source: source-contains-prebuilt-javascript-object lemonldap-ng-manager/example/skins/default/js/jquery-ui-1.10.3.custom.min.js
-lemonldap-ng source: source-contains-prebuilt-javascript-object lemonldap-ng-portal/example/skins/common/jquery-ui-1.10.3.custom.min.js

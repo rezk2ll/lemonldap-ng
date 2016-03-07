@@ -10,6 +10,7 @@ Build-Depends-Indep: libapache-session-perl,
                      libauthcas-perl,
                      libauthen-captcha-perl,
                      libcache-cache-perl,
+                     libcgi-pm-perl,
                      libclone-perl,
                      libconfig-inifiles-perl,
                      libconvert-pem-perl,
@@ -109,6 +110,7 @@ Description: French documentation of Lemonldap::NG Web-SSO system
 Package: lemonldap-ng-fastcgi-server
 Architecture: all
 Depends: ${misc:Depends},
+         ${perl:Depends},
          nginx-extras | nginx,
          liblemonldap-ng-handler-perl,
          libplack-perl
@@ -189,7 +191,6 @@ Recommends: libapache-session-browseable-perl,
             liblwp-protocol-https-perl | libwww-perl (<< 6),
             libxml-libxml-perl,
             libxml-simple-perl
-Provides: liblemonldap-ng-cli-perl
 Conflicts: liblemonldap-ng-cli-perl
 Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies

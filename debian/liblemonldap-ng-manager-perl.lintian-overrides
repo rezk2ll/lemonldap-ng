@@ -1,0 +1,2 @@
+# False positive: link is in doc as example
+liblemonldap-ng-manager-perl: privacy-breach-generic usr/share/lemonldap-ng/manager/static/bwr/angular/angular.js (http://www.gravatar.com/avatar/{{hash}})
