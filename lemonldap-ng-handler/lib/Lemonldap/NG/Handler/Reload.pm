@@ -177,6 +177,15 @@ sub locationRulesInit {
         my $rules = $conf->{locationRules}->{$vhost};
         foreach my $url ( sort keys %{$rules} ) {
             my ( $cond, $prot ) = $class->conditionSub( $rules->{$url}, $tsv );
+            unless ($cond) {
+                $tsv->{maintenance}->{$vhost} = 1;
+                Lemonldap::NG::Handler::Main::Logger->lmLog(
+                    "Unable to build rule '$rules->{$url}': "
+                      . $tsv->{jail}->error,
+                    'error'
+                );
+                next;
+            }
 
             if ( $url eq 'default' ) {
                 $tsv->{defaultCondition}->{$vhost}  = $cond;
@@ -408,7 +417,6 @@ sub conditionSub {
     $cond = $class->substitute($cond);
     my $sub;
     unless ( $sub = $tsv->{jail}->jail_reval("sub{return($cond)}") ) {
-        $tsv->{maintenance}->{$vhost} = 1;
         Lemonldap::NG::Handler::Main::Logger->lmLog(
             "$self: Unable to build condition ($cond): " . $tsv->{jail}->error,
             'error'
