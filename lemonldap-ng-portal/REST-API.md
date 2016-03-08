@@ -20,7 +20,7 @@
              ->addUnauthRoute( '*' => 'authenticate', ['POST'] );
         $self->defaultUnauthRoute( 'auth.html' );
 
-        # Part of API protected by web server
+        # Part of API protected by web server (or perhaps using tickets
         $self->addUnauthRoute( 'sessions' => { ':sessionId' => 'session' }, ['GET', 'POST', 'PUT'] )
              ->addUnauthRoute( 'sessions' => { '*' => 'sessions', ['GET', 'POST'] );
 
@@ -32,12 +32,18 @@ performances, `menu.html` is stored as file, Ajax will do the redirection to '/a
 ### Authentication with web form
 
 Depending on the request:
-* case classic POST: `POST /`, datas : `user=xx&password=yy`, HTML
-  response
+* case classic POST: `POST /`, datas : `user=xx&password=yy&scheme=webform`,
+  HTML response (if scheme isn't set, default to webform)
 * case Ajax request: same but response is JSON (menu entries ?). The idea is
   that a full Ajax portal could be written with some HTML fragment storable in
   cache (like manager forms). So only a few Ajax requests will be sent through
   the network
+
+Forms could be static files with HTML parts (like Manager forms). JS could know
+which forms can be displayed with:
+* get list of authentication scheme available `GET /schemes`
+
+So AuthChoice will just populate `/schemes`.
 
 ## Menu
 
@@ -49,6 +55,10 @@ Menu will be full Ajax:
   for current user
 
 ## Sessions
+
+This is already developed (in Manager::Sessions). Just have to move part of it
+to Handler::Sessions (and not to Common::Sessions since it needs some handler
+methods). This will replace the SOAP server.
 
 * Session content: `GET /sessions/<sessionId>`
 * New session: `POST /sessions`
