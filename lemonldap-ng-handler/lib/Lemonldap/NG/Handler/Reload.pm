@@ -118,10 +118,11 @@ sub defaultValuesInit {
     $tsv->{cipher} = Lemonldap::NG::Common::Crypto->new( $conf->{key} );
 
     foreach my $opt (qw(https port maintenance)) {
-        next unless defined $conf->{$opt};
+        if ( defined $conf->{$opt} ) {
 
-        # Record default value in key '_'
-        $tsv->{$opt} = { _ => $conf->{$opt} };
+            # Record default value in key '_'
+            $tsv->{$opt} = { _ => $conf->{$opt} };
+        }
 
         # Override with vhost options
         if ( $conf->{vhostOptions} ) {
@@ -253,11 +254,14 @@ sub headersInit {
             $sub .= "'$_' => $val,";
         }
 
-        $tsv->{forgeHeaders}->{$vhost} = $tsv->{jail}->jail_reval("sub{return($sub)}");
-
-        Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "$self: Unable to forge headers: $@: sub {$sub}", 'error' )
-          if ($@);
+        unless ( $tsv->{forgeHeaders}->{$vhost} =
+            $tsv->{jail}->jail_reval("sub{return($sub)}") )
+        {
+            $tsv->{maintenance}->{$vhost} = 1;
+            Lemonldap::NG::Handler::Main::Logger->lmLog(
+                "$self: Unable to forge headers: " . $tsv->{jail}->error,
+                'error' );
+        }
     }
     return 1;
 }
@@ -285,9 +289,16 @@ sub postUrlInit {
                 $sub .=
                   "'$input->[0]' => " . $class->substitute( $input->[1] ) . ",";
             }
-            $tsv->{inputPostData}->{$vhost}->{ delete $d->{target} } =
-              $tsv->{outputPostData}->{$vhost}->{$url} =
-              $tsv->{jail}->jail_reval("sub{$sub}");
+            unless ( $tsv->{inputPostData}->{$vhost}->{ delete $d->{target} } =
+                $tsv->{outputPostData}->{$vhost}->{$url} =
+                $tsv->{jail}->jail_reval("sub{$sub}") )
+            {
+                $tsv->{maintenance}->{$vhost} = 1;
+                Lemonldap::NG::Handler::Main::Logger->lmLog(
+                    "$self: Unable to build post datas: " . $tsv->{jail}->error,
+                    'error'
+                );
+            }
 
             $tsv->{postFormParams}->{$vhost}->{$url} = $d;
         }
@@ -395,7 +406,14 @@ sub conditionSub {
 
     # Replace some strings in condition
     $cond = $class->substitute($cond);
-    my $sub = $tsv->{jail}->jail_reval("sub{return($cond)}");
+    my $sub;
+    unless ( $sub = $tsv->{jail}->jail_reval("sub{return($cond)}") ) {
+        $tsv->{maintenance}->{$vhost} = 1;
+        Lemonldap::NG::Handler::Main::Logger->lmLog(
+            "$self: Unable to build condition ($cond): " . $tsv->{jail}->error,
+            'error'
+        );
+    }
 
     # Return sub and protected flag
     return ( $sub, 0 );

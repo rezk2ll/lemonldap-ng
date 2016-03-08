@@ -14,6 +14,8 @@ has useSafeJail => ( is => 'rw', isa => 'Maybe[Int]' );
 
 has jail => ( is => 'rw' );
 
+has error => ( is => 'rw' );
+
 our $VERSION = '1.9.1';
 
 use Lemonldap::NG::Handler::Main '$datas';
@@ -73,7 +75,7 @@ sub build_jail {
               &unparsed_uri &args &method &header_in   )
         ]
     );
-    $self->jail->share_from(__PACKAGE__,[@t]);
+    $self->jail->share_from( __PACKAGE__, [@t] );
     $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
 
     return $self->jail;
@@ -83,7 +85,12 @@ sub build_jail {
 # Fake reval method if useSafeJail is off
 sub reval {
     my ( $self, $e ) = @_;
-    return eval $e;
+    my $res = eval $e;
+    if ($@) {
+        $self->error($@);
+        return undef;
+    }
+    return $res;
 }
 
 ## @method wrap_code_ref
@@ -135,12 +142,19 @@ sub jail_reval {
         $nosw_reval =~ s/^sub\{(.*)\}$/sub{return($1)}/;
     }
 
-    return (
-        SAFEWRAP
-        ? $self->jail->wrap_code_ref( $self->jail->reval($reval) )
-        : $self->jail->reval($nosw_reval)
-    );
-
+    my $res;
+    eval {
+        $res = (
+            SAFEWRAP
+            ? $self->jail->wrap_code_ref( $self->jail->reval($reval) )
+            : $self->jail->reval($nosw_reval)
+        );
+    };
+    if ($@) {
+        $self->error($@);
+        return undef;
+    }
+    return $res;
 }
 
 1;
