@@ -73,7 +73,8 @@ sub types {
             test => sub {
                 my ( $val, $conf ) = @_;
                 if (   defined $conf->{exportedVars}->{$val}
-                    or defined $conf->{macros}->{$val} )
+                    or defined $conf->{macros}->{$val}
+                    or $val eq '_timezone' )
                 {
                     return 1;
                 }
