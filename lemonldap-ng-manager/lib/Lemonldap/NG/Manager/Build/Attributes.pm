@@ -127,26 +127,32 @@ sub types {
         },
         RSAPublicKey => {
             test => sub {
-                return ( $_[0] =~
+                return (
+                    $_[0] =~
 /^(?:(?:\-+\s*BEGIN\s+PUBLIC\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+PUBLIC\s+KEY\s*\-+)?[\r\n]*)?$/s
                     ? (1)
-                    : ( 1, '__badPemEncoding__' ) );
+                    : ( 1, '__badPemEncoding__' )
+                );
             },
         },
         'RSAPublicKeyOrCertificate' => {
             'test' => sub {
-                return ( $_[0] =~
+                return (
+                    $_[0] =~
 /^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+)?[\r\n]*)?$/s
                     ? (1)
-                    : ( 1, '__badPemEncoding__' ) );
+                    : ( 1, '__badPemEncoding__' )
+                );
             },
         },
         RSAPrivateKey => {
             test => sub {
-                return ( $_[0] =~
+                return (
+                    $_[0] =~
 /^(?:(?:\-+\s*BEGIN\s+(?:RSA\s+)?PRIVATE\s+KEY\s*\-+\r?\n)?[a-zA-Z0-9\/\+\r\n]+={0,2}(?:\r?\n\-+\s*END\s+(?:RSA\s+)PRIVATE\s+KEY\s*\-+)?[\r\n]*)?$/s
                     ? (1)
-                    : ( 1, '__badPemEncoding__' ) );
+                    : ( 1, '__badPemEncoding__' )
+                );
             },
         },
 
@@ -937,10 +943,30 @@ sub attributes {
             documentation => 'Virtualhost rules',
         },
         exportedHeaders => {
-            type          => 'keyTextContainer',
-            help          => 'writingrulesand_headers.html#headers',
-            keyTest       => qr/^$Regexp::Common::URI::RFC2396::hostname$/,
-            keyMsgFail    => '__badHostname__',
+            type       => 'keyTextContainer',
+            help       => 'writingrulesand_headers.html#headers',
+            keyTest    => qr/^$Regexp::Common::URI::RFC2396::hostname$/,
+            keyMsgFail => '__badHostname__',
+            test       => {
+                keyTest    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
+                keyMsgFail => '__badHeaderName__',
+                test       => sub {
+                    my ( $val, $conf ) = @_;
+                    my $s = $val;
+                    my @cf =
+                      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch);
+                    push @cf,
+                      defined $conf->{customFunctions}
+                      ? map { my $f = $_; $f =~ s/\w+:://g; ( $f, $_ ) }
+                      split( /\s+/, $conf->{customFunctions} )
+                      : ();
+                    foreach my $f (@cf) {
+                        $s = "sub $f {1} $s";
+                    }
+                    eval $s;
+                    return $@ ? ( 0, "__badExpression__: $@" ) : (1);
+                  }
+            },
             documentation => 'Virtualhost headers',
         },
         post => {

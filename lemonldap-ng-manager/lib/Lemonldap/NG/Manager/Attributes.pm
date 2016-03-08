@@ -783,6 +783,32 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
         'exportedHeaders' => {
             'keyTest' =>
 qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
+            'test' => {
+                'keyMsgFail' => '__badHeaderName__',
+                'keyTest'    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
+                'test'       => sub {
+                    my ( $val, $conf ) = @_;
+                    my $s = $val;
+                    my (@cf) = (
+                        'encode_base64', 'checkLogonHours',
+                        'date',          'checkDate',
+                        'basic',         'unicode2iso',
+                        'iso2unicode',   'groupMatch'
+                    );
+                    push @cf, defined $conf->{'customFunctions'}
+                      ? map( {
+                            my $f = $_;
+                              $f =~ s/\w+:://g;
+                              $f, $_;
+                        } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
+                      : ();
+                    foreach my $f (@cf) {
+                        $s = "sub $f {1} $s";
+                    }
+                    eval $s;
+                    return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+                  }
+            },
             'type' => 'keyTextContainer'
         },
         'exportedVars' => {
