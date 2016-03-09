@@ -70,9 +70,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'test'    => qr/^.*$/
         },
         'keyTextContainer' => {
-            'keyMsgFail' => 'Bad key name',
+            'keyMsgFail' => '__badKeyName__',
             'keyTest'    => qr/^\w[\w\.\-]*$/,
-            'msgFail'    => 'Empty value non accorded',
+            'msgFail'    => '__emptyValueNotAllowed__',
             'test'       => qr/./
         },
         'lmAttrOrMacro' => {
@@ -280,8 +280,9 @@ sub attributes {
             'type'    => 'catAndAppList'
         },
         'authChoiceModules' => {
-            'keyTest' => qr/^(\d*)?[a-zA-Z0-9_]+$/,
-            'select'  => [
+            'keyMsgFail' => '__badChoiceKey__',
+            'keyTest'    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
+            'select'     => [
                 [
                     {
                         'k' => 'Apache',
@@ -619,8 +620,9 @@ sub attributes {
             'type'    => 'text'
         },
         'CAS_proxiedServices' => {
-            'keyTest' => qr/^\w+$/,
-            'type'    => 'keyTextContainer'
+            'keyMsgFail' => '__badCasProxyId__',
+            'keyTest'    => qr/^\w+$/,
+            'type'       => 'keyTextContainer'
         },
         'CAS_renew' => {
             'type' => 'bool'
@@ -739,11 +741,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'dbiExportedVars' => {
-            'default' => {},
-            'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail' => '__badValue__',
-            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'    => 'keyTextContainer'
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'dbiPasswordMailCol' => {
             'type' => 'text'
@@ -766,10 +769,11 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 'mail' => 'mail',
                 'uid'  => 'uid'
             },
-            'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail' => '__badValue__',
-            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'    => 'keyTextContainer'
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'domain' => {
             'default' => 'example.com',
@@ -782,6 +786,7 @@ qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-
             'type' => 'text'
         },
         'exportedHeaders' => {
+            'keyMsgFail' => '__badHostname__',
             'keyTest' =>
 qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
             'test' => {
@@ -816,10 +821,11 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => {
                 'UA' => 'HTTP_USER_AGENT'
             },
-            'keyTest' => qr/^!?[_a-zA-Z][a-zA-Z0-9_]*$/,
-            'msgFail' => '__badValue__',
-            'test'    => qr/^[_a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'    => 'keyTextContainer'
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[_a-zA-Z][a-zA-Z0-9_]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[_a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'facebookAppId' => {
             'type' => 'text'
@@ -832,11 +838,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'int'
         },
         'facebookExportedVars' => {
-            'default' => {},
-            'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail' => '__badValue__',
-            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'    => 'keyTextContainer'
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'failedLoginNumber' => {
             'default' => 5,
@@ -860,11 +867,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'int'
         },
         'googleExportedVars' => {
-            'default' => {},
-            'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail' => '__badValue__',
-            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'    => 'keyTextContainer'
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'grantSessionRules' => {
             'keyTest' => sub {
@@ -1025,10 +1033,11 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                 'mail' => 'mail',
                 'uid'  => 'uid'
             },
-            'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail' => '__badValue__',
-            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'    => 'keyTextContainer'
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'LDAPFilter' => {
             'type' => 'text'
@@ -1113,7 +1122,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                 my $l = shift();
                 my @s = split( /[\s,]+/, $l, 0 );
                 foreach my $s (@s) {
-                    return 0, qq[Bad ldap uri "$s"]
+                    return 0, qq[__badLdapUri__: "$s"]
                       unless $s =~
 m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?::\d{1,5})?/?.*)$]o;
                 }
@@ -1155,6 +1164,7 @@ m[^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             'default' => {
                 'default' => 'deny'
             },
+            'keyMsgFail' => '__badHostname__',
             'keyTest' =>
 qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
             'test' => {
@@ -1208,9 +1218,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'keyTextContainer'
         },
         'macros' => {
-            'default' => {},
-            'keyTest' => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-            'test'    => sub {
+            'default'    => {},
+            'keyMsgFail' => '__badMacroName__',
+            'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+            'test'       => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
                 my (@cf) = (
@@ -1621,11 +1632,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'int'
         },
         'openIdExportedVars' => {
-            'default' => {},
-            'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail' => '__badValue__',
-            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'    => 'keyTextContainer'
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'openIdIDPList' => {
             'default' => '0;',
@@ -1825,7 +1837,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'portalskinbackground'
         },
         'portalSkinRules' => {
-            'keyTest' => sub {
+            'keyMsgFail' => '__badSkinRule__',
+            'keyTest'    => sub {
                 my ( $val, $conf ) = @_;
                 my $s = '';
                 my (@cf) = (
@@ -1856,6 +1869,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'text'
         },
         'post' => {
+            'keyMsgFail' => '__badHostname__',
             'keyTest' =>
 qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
             'test' => sub {
@@ -2009,18 +2023,20 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'text'
         },
         'samlIDPMetaDataExportedAttributes' => {
-            'default' => {},
-            'keyTest' => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-            'msgFail' => '__badValue__',
-            'test'    => qr/\w/,
-            'type'    => 'samlAttributeContainer'
+            'default'    => {},
+            'keyMsgFail' => '__badMetadataName__',
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/\w/,
+            'type'       => 'samlAttributeContainer'
         },
         'samlIDPMetaDataNodes' => {
             'type' => 'samlIDPMetaDataNodeContainer'
         },
         'samlIDPMetaDataOptions' => {
-            'keyTest' => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-            'type'    => 'keyTextContainer'
+            'keyMsgFail' => '__badMetadataName__',
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
+            'type'       => 'keyTextContainer'
         },
         'samlIDPMetaDataOptionsAdaptSessionUtime' => {
             'default' => 0,
@@ -2304,18 +2320,20 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'samlSPMetaDataExportedAttributes' => {
-            'default' => {},
-            'keyTest' => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-            'msgFail' => '__badValue__',
-            'test'    => qr/\w/,
-            'type'    => 'samlAttributeContainer'
+            'default'    => {},
+            'keyMsgFail' => '__badMetadataName__',
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/\w/,
+            'type'       => 'samlAttributeContainer'
         },
         'samlSPMetaDataNodes' => {
             'type' => 'samlSPMetaDataNodeContainer'
         },
         'samlSPMetaDataOptions' => {
-            'keyTest' => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-            'type'    => 'keyTextContainer'
+            'keyMsgFail' => '__badMetadataName__',
+            'keyTest'    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
+            'type'       => 'keyTextContainer'
         },
         'samlSPMetaDataOptionsCheckSLOMessageSignature' => {
             'default' => 0,
@@ -2514,8 +2532,9 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'pcre'
         },
         'sessionDataToRemember' => {
-            'keyTest' => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-            'type'    => 'keyTextContainer'
+            'keyMsgFail' => '__invalidSessionData__',
+            'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
+            'type'       => 'keyTextContainer'
         },
         'singleIP' => {
             'default' => 0,
@@ -2538,11 +2557,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'int'
         },
         'slaveExportedVars' => {
-            'default' => {},
-            'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail' => '__badValue__',
-            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'    => 'keyTextContainer'
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'slaveHeaderContent' => {
             'type' => 'text'
@@ -2758,11 +2778,12 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'int'
         },
         'webIDExportedVars' => {
-            'default' => {},
-            'keyTest' => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail' => '__badValue__',
-            'test'    => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'    => 'keyTextContainer'
+            'default'    => {},
+            'keyMsgFail' => '__badVariableName__',
+            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
+            'msgFail'    => '__badValue__',
+            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
+            'type'       => 'keyTextContainer'
         },
         'webIDWhitelist' => {
             'type' => 'text'

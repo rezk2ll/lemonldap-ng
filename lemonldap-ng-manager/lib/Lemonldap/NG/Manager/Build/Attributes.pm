@@ -103,9 +103,9 @@ sub types {
         },
         keyTextContainer => {
             test       => qr/./,
-            msgFail    => 'Empty value non accorded',
+            msgFail    => '__emptyValueNotAllowed__',
             keyTest    => qr/^\w[\w\.\-]*$/,
-            keyMsgFail => 'Bad key name',
+            keyMsgFail => '__badKeyName__',
         },
         subContainer => {
             keyTest => qr/\w/,
@@ -405,7 +405,7 @@ sub attributes {
             type       => 'keyTextContainer',
             help       => 'portalcustom.html',
             keyTest    => $perlExpr,
-            keyMsgFail => 'Bad skin rule',
+            keyMsgFail => '__badSkinRule__',
             test       => qr/^\w+$/,
             msgFail    => '__badValue__',
         },
@@ -656,7 +656,7 @@ sub attributes {
             type          => 'keyTextContainer',
             help          => 'exportedvars.html',
             keyTest       => qr/^!?[_a-zA-Z][a-zA-Z0-9_]*$/,
-            keyMsgFail    => 'Bad variable name',
+            keyMsgFail    => '__badVariableName__',
             test          => qr/^[_a-zA-Z][a-zA-Z0-9_:\-]*$/,
             msgFail       => '__badValue__',
             default       => { 'UA' => 'HTTP_USER_AGENT' },
@@ -675,7 +675,7 @@ sub attributes {
             help =>
               'exportedvars.html#extend_variables_using_macros_and_groups',
             keyTest       => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-            keyMsgFail    => 'Bad macro name',
+            keyMsgFail    => '__badMacroName__',
             test          => $perlExpr,
             default       => {},
             documentation => 'Macros',
@@ -720,7 +720,7 @@ sub attributes {
         sessionDataToRemember    => {
             type       => 'keyTextContainer',
             keyTest    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
-            keyMsgFail => 'Invalid session data',
+            keyMsgFail => '__invalidSessionData__',
         },
 
         # SAML issuer
@@ -1350,7 +1350,7 @@ sub attributes {
             type       => 'samlAttributeContainer',
             help       => 'authsaml.html#exported_attributes',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-            keyMsgFail => 'Bad metadata name',
+            keyMsgFail => '__badMetadataName__',
             test       => qr/\w/,
             msgFail    => '__badValue__',
             default    => {},
@@ -1361,7 +1361,7 @@ sub attributes {
         samlIDPMetaDataOptions => {
             type       => 'keyTextContainer',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-            keyMsgFail => 'Bad metadata name',
+            keyMsgFail => '__badMetadataName__',
         },
         samlIDPMetaDataOptionsNameIDFormat => {
             type   => 'select',
@@ -1467,7 +1467,7 @@ sub attributes {
             type       => 'samlAttributeContainer',
             help       => 'idpsaml.html#exported_attributes',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-            keyMsgFail => 'Bad metadata name',
+            keyMsgFail => '__badMetadataName__',
             test       => qr/\w/,
             msgFail    => '__badValue__',
             default    => {},
@@ -1478,7 +1478,7 @@ sub attributes {
         samlSPMetaDataOptions => {
             type       => 'keyTextContainer',
             keyTest    => qr/^[a-zA-Z](?:[a-zA-Z0-9_\-\.]*\w)?$/,
-            keyMsgFail => 'Bad metadata name',
+            keyMsgFail => '__badMetadataName__',
         },
         samlSPSSODescriptorAuthnRequestsSigned => {
             default       => 1,
@@ -1662,7 +1662,7 @@ sub attributes {
         demoExportedVars => {
             type          => 'keyTextContainer',
             keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => 'Bad variable name',
+            keyMsgFail    => '__badVariableName__',
             test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             msgFail       => '__badValue__',
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
@@ -1711,7 +1711,7 @@ sub attributes {
         ldapExportedVars => {
             type          => 'keyTextContainer',
             keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => 'Bad variable name',
+            keyMsgFail    => '__badVariableName__',
             test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             msgFail       => '__badValue__',
             default       => { cn => 'cn', mail => 'mail', uid => 'uid', },
@@ -1730,7 +1730,7 @@ sub attributes {
                 foreach my $s (@s) {
                     $s =~
 m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?::\d{1,5})?/?.*)$}o
-                      or return ( 0, "Bad ldap uri \"$s\"" );
+                      or return ( 0, "__badLdapUri__: \"$s\"" );
                 }
                 return 1;
             },
@@ -1861,7 +1861,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         CAS_proxiedServices => {
             type       => 'keyTextContainer',
             keyTest    => qr/^\w+$/,
-            keyMsgFail => 'Bad CAS proxied service identifier',
+            keyMsgFail => '__badCasProxyId__',
         },
 
         # Radius
@@ -1905,7 +1905,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         openIdExportedVars => {
             type          => 'keyTextContainer',
             keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => 'Bad variable name',
+            keyMsgFail    => '__badVariableName__',
             test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             msgFail       => '__badValue__',
             default       => {},
@@ -1922,7 +1922,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         googleExportedVars => {
             type          => 'keyTextContainer',
             keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => 'Bad variable name',
+            keyMsgFail    => '__badVariableName__',
             test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             msgFail       => '__badValue__',
             default       => {},
@@ -1940,7 +1940,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         facebookExportedVars => {
             type          => 'keyTextContainer',
             keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => 'Bad variable name',
+            keyMsgFail    => '__badVariableName__',
             test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             msgFail       => '__badValue__',
             default       => {},
@@ -1967,7 +1967,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         webIDExportedVars => {
             type          => 'keyTextContainer',
             keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => 'Bad variable name',
+            keyMsgFail    => '__badVariableName__',
             test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             msgFail       => '__badValue__',
             default       => {},
@@ -1997,7 +1997,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         dbiExportedVars => {
             type          => 'keyTextContainer',
             keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => 'Bad variable name',
+            keyMsgFail    => '__badVariableName__',
             test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             msgFail       => '__badValue__',
             default       => {},
@@ -2028,7 +2028,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         slaveExportedVars => {
             type          => 'keyTextContainer',
             keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => 'Bad variable name',
+            keyMsgFail    => '__badVariableName__',
             test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
             msgFail       => '__badValue__',
             default       => {},
@@ -2051,7 +2051,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         authChoiceModules => {
             type       => 'authChoiceContainer',
             keyTest    => qr/^(\d*)?[a-zA-Z0-9_]+$/,
-            keyMsgFail => 'Bad choice key',
+            keyMsgFail => '__badChoiceKey__',
             test       => sub { 1 },
             select     => [
                 [
