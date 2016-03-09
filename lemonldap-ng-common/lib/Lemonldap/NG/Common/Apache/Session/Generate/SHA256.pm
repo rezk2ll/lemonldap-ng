@@ -9,10 +9,9 @@
 package Lemonldap::NG::Common::Apache::Session::Generate::SHA256;
 
 use strict;
-use vars qw($VERSION);
 use Digest::SHA qw(sha256 sha256_hex sha256_base64);
 
-$VERSION = '1.4.0';
+our $VERSION = '1.9.1';
 
 sub generate {
     my $session = shift;
