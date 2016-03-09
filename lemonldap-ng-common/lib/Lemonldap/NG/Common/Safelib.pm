@@ -132,7 +132,7 @@ sub basic {
     $login    = &unicode2iso($login);
     $password = &unicode2iso($password);
 
-    return "Basic " . encode_base64( $login . ":" . $password );
+    return "Basic " . encode_base64( $login . ":" . $password, '' );
 }
 
 ## @function string unicode2iso(string string)
