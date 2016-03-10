@@ -16,7 +16,6 @@
         # REST paths for unauthenticated users
         $self->addUnauthRoute( 'auth.html', undef, ['GET'] )
              ->addUnauthRoute( 'menu.html', 'auth.html', ['GET'] )
-             ->addUnauthRoute( 'menu.html', 'auth.html', ['GET'] )
              ->addUnauthRoute( '*' => 'authenticate', ['POST'] );
         $self->defaultUnauthRoute( 'auth.html' );
 
