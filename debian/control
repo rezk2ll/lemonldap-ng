@@ -23,7 +23,7 @@ Build-Depends-Indep: libapache-session-perl,
                      libhtml-template-perl,
                      libio-string-perl,
                      libjson-perl,
-                     liblasso-perl (>= 2.3.0),
+                     liblasso-perl,
                      libmime-lite-perl,
                      libmouse-perl,
                      libnet-cidr-lite-perl,
@@ -114,6 +114,7 @@ Depends: ${misc:Depends},
          nginx-extras | nginx,
          liblemonldap-ng-handler-perl,
          libplack-perl
+Recommends: libhttp-parser-xs-perl,
 Suggests: nginx-extras
 Section: web
 Description: Lemonldap::NG FastCGI server
@@ -139,7 +140,6 @@ Depends: ${misc:Depends},
          liburi-perl,
          libwww-perl
 Recommends: libhttp-message-perl | libwww-perl (<< 6),
-            libhttp-parser-xs-perl,
             liblwp-protocol-https-perl | libwww-perl (<< 6)
 Suggests: libcache-memcached-perl,
           libdigest-hmac-perl,
@@ -259,13 +259,13 @@ Depends: ${misc:Depends},
          libstring-random-perl,
          libunicode-string-perl,
          liburi-perl
-Recommends: libnet-facebook-oauth2-perl | libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl (>= 2.3.0) | libnet-twitter-perl | libauthcas-perl | libweb-id-perl,
+Recommends: libnet-facebook-oauth2-perl | libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso-perl | libnet-twitter-perl | libauthcas-perl | libweb-id-perl,
             libwww-perl
 Suggests: libauthcas-perl,
           libauthen-captcha-perl,
           libdbi-perl,
           libglib-perl,
-          liblasso-perl (>= 2.3.0),
+          liblasso-perl,
           liblemonldap-ng-handler-perl (= ${binary:Version}),
           libnet-facebook-oauth2-perl,
           libnet-openid-consumer-perl,
