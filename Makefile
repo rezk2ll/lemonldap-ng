@@ -190,6 +190,10 @@ JSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/js $(SRCPORTALDIR)/example
 		$(SRCMANAGERDIR)/site/static/bwr/file-saver.js/FileSaver.js
 CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/css  $(SRCPORTALDIR)/example -type f -name '*.css' ! -name '*.min.css')
 
+# Coffee files
+COFFEESRCFILES:=$(shell find $(SRCMANAGERDIR)/site/coffee/ -type f)
+COFFEEDSTFILES:=$(subst coffee/,static/js/,$(COFFEESRCFILES:.coffee=.js))
+
 # Minified files
 JSDSTFILES=$(JSSRCFILES:.js=.min.js)
 CSSDSTFILES=$(CSSSRCFILES:.css=.min.css)
@@ -258,6 +262,12 @@ configure:	json common_conf handler_conf portal_conf manager_conf
 
 minify: $(JSDSTFILES) $(CSSDSTFILES)
 
+$(SRCMANAGERDIR)/site/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee
+	@if which coffee >/dev/null; then \
+		echo "Compiling $(SRCMANAGERDIR)/site/coffee/$*.coffee"; \
+		coffee -c -o $(SRCMANAGERDIR)/site/static/js/ $(SRCMANAGERDIR)/site/coffee/$*.coffee; \
+	fi
+
 %.min.css: %.css
 	@echo "Compressing $*.css"
 	@yui-compressor $*.css > $*.min.css
@@ -272,7 +282,7 @@ fastcgi-server/man/llng-fastcgi-server.1p: fastcgi-server/sbin/llng-fastcgi-serv
 # Perl libraries configuration
 
 json:	$(MANAGERJSONDST) fastcgi-server/man/llng-fastcgi-server.1p
-	@if which yui-compressor; then $(MAKE) minify; fi
+	@if which yui-compressor >/dev/null; then $(MAKE) minify; fi
 
 $(MANAGERJSONDST):	$(MANAGERJSONSRC)
 	./scripts/jsongenerator.pl
@@ -1010,7 +1020,7 @@ tidy: clean
 	$(MAKE) json
 
 tidy-js: clean
-	@find $(SRCMANAGERDIR)/site/static/js/ e2e-tests/ $(SRCPORTALDIR)/example \
+	@find e2e-tests/ $(SRCPORTALDIR)/example \
 		  -type f \
 		  -name '*.js' \
 		! -name 'jq*' \
