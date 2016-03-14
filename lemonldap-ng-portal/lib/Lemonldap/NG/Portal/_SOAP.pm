@@ -356,7 +356,8 @@ sub exportedAttr {
         my @attributes = (
             'authenticationLevel', 'groups',
             'ipAddr',              'startTime',
-            '_utime',              '_lastSeen'
+            '_utime',              '_lastSeen',
+            '_session_id',
         );
         if ( my $exportedAttr = $self->{exportedAttr} ) {
             $exportedAttr =~ s/^\s*\+\s+//;
