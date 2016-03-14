@@ -14,6 +14,7 @@ use Apache2::RequestIO;
 use Apache2::Const;
 use Apache2::Filter;
 use APR::Table;
+eval 'use APR::SockAddr';
 use Apache2::Const -compile =>
   qw(FORBIDDEN HTTP_UNAUTHORIZED REDIRECT OK DECLINED DONE SERVER_ERROR AUTH_REQUIRED HTTP_SERVICE_UNAVAILABLE);
 
@@ -151,7 +152,7 @@ sub remote_ip {
     my $remote_ip = (
           $request->connection->can('remote_ip')
         ? $request->connection->remote_ip
-        : $request->connection->client_ip
+        : $request->connection->client_ip->ip_get
     );
     return $remote_ip;
 }
