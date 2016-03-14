@@ -708,7 +708,7 @@
 
     $scope.keyWritable = function(scope) {
       var node = scope.$modelValue;
-      return node.type && node.type.match(/^(authChoice|keyText|virtualHost|rule|menuCat|menuApp|samlAttribute)$/) ? true : false;
+      return node.type && node.type.match(/^(authChoice|keyText|virtualHost|rule|menuCat|menuApp|saml(Attribute|(IDP|SP)MetaDataNode))$/) ? true : false;
     }
 
     /* RSA keys generation */
