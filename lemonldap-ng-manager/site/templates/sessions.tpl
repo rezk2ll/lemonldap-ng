@@ -19,6 +19,8 @@
             <li><a id="a-ip" href="#/ipAddr"><i class="glyphicon glyphicon-sort-by-order"></i> {{translate('ipAddresses')}}</a></li>
             <li><a id="a-multi" href="#/doubleIp"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('multiIp')}}</a></li>
             <li><a id="a-multi" href="#/persistent"><i class="glyphicon glyphicon-exclamation-sign"></i> {{translate('persistent')}}</a></li>
+            <li><a id="a-starttime" href="#/startTime"><i class="glyphicon glyphicon-hourglass"></i> {{translate('startTime')}}</a></li>
+            <li><a id="a-updatetime" href="#/updateTime"><i class="glyphicon glyphicon-hourglass"></i> {{translate('updateTime')}}</a></li>
           </ul>
         </div>
       </div>
@@ -95,7 +97,7 @@
         <a id="a-{{node.value}}" class="btn btn-node btn-sm" ng-click="stoggle(this)">
           <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}"></span>
         </a>
-        <span id="s-{{node.value}}" ng-click="stoggle(this)">{{node.value}} <span class="badge">{{node.count}}</span></span>
+        <span id="s-{{node.value}}" ng-click="stoggle(this)">{{node.title || node.value}} <span class="badge">{{node.count}}</span></span>
       </span>
       <span ng-if="node.session">
         <a class="btn btn-node btn-sm" ng-click="displaySession(this)">

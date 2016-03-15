@@ -32,6 +32,21 @@
         return q.replace(/\&groupBy.*$/, '') + ("&_whatToTrace=" + v);
       }
     ],
+    startTime: [
+      function(t, v) {
+        return "groupBy=substr(" + t + ",8)";
+      }, function(t, v) {
+        return "groupBy=substr(" + t + ",10)";
+      }, function(t, v) {
+        return "groupBy=substr(" + t + ",11)";
+      }, function(t, v) {
+        return "groupBy=substr(" + t + ",12)";
+      }, function(t, v) {
+        return t + "=" + v + "*&groupBy=_whatToTrace";
+      }, function(t, v, q) {
+        return q.replace(/\&groupBy.*$/, '') + ("&_whatToTrace=" + v);
+      }
+    ],
     doubleIp: [
       function(t, v) {
         return t;
@@ -305,7 +320,7 @@
       $scope.updateTree = function(value, node, level, currentQuery) {
         var query, scheme;
         $scope.waiting = true;
-        scheme = schemes[$scope.type] ? schemes[$scope.type] : schemes._whatToTrace;
+        scheme = schemes[$scope.type] ? schemes[$scope.type] : $scope.type === 'updateTime' ? schemes.startTime : schemes._whatToTrace;
         query = scheme[level]($scope.type, value, currentQuery);
         return $http.get(scriptname + "sessions/" + sessionType + "?" + query).then(function(response) {
           var data, i, len, n, ref;
@@ -320,6 +335,9 @@
                 n.nodes = [];
                 n.level = level + 1;
                 n.query = query;
+                if ($scope.type.match(/^(?:start|update)Time$/)) {
+                  n.title = n.value.replace(/^(\d{8})(\d{2})(\d{2})$/, '$2:$3').replace(/^(\d{8})(\d{2})(\d)$/, '$2:$30').replace(/^(\d{8})(\d{2})$/, '$2h').replace(/^(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+                }
               }
               node.push(n);
             }

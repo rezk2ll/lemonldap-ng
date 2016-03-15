@@ -27,6 +27,20 @@ schemes =
 		(t,v,q) ->
 			q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=#{v}"
 	]
+	startTime: [
+		(t,v) ->
+			"groupBy=substr(#{t},8)"
+		(t,v) ->
+			"groupBy=substr(#{t},10)"
+		(t,v) ->
+			"groupBy=substr(#{t},11)"
+		(t,v) ->
+			"groupBy=substr(#{t},12)"
+		(t,v) ->
+			"#{t}=#{v}*&groupBy=_whatToTrace"
+		(t,v,q) ->
+			q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=#{v}"
+	]
 	doubleIp: [
 		(t,v) ->
 			t
@@ -249,19 +263,33 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 			$scope.type = '_session_uid'
 		else
 			$scope.type = n[1]
-		$scope.init();
+		$scope.init()
 
 	$scope.$on '$locationChangeSuccess', pathEvent
 
-	# Function to update tree
+	# Function to update tree: download value of opened subkey
 	autoId = 0
 	$scope.updateTree = (value, node, level, currentQuery) ->
 		$scope.waiting = true
+
+		# Query scheme selection:
+
+		#  - if defined above
 		scheme = if schemes[$scope.type]
 			schemes[$scope.type]
+
+		#  - updateTime must be displayed as startDate
+		else if $scope.type == 'updateTime'
+			schemes.startTime
+
+		#  - default to _whatToTrace scheme
 		else
 			schemes._whatToTrace
+
+		# Build query using schemes
 		query = scheme[level] $scope.type, value, currentQuery
+
+		# Launch HTTP query
 		$http.get("#{scriptname}sessions/#{sessionType}?#{query}").then (response) ->
 			data = response.data
 			if data.result
@@ -272,12 +300,26 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 						n.nodes = []
 						n.level = level + 1
 						n.query = query
+
+						# Date display in tree
+						if $scope.type.match /^(?:start|update)Time$/
+							n.title = n.value
+							# 12 digits -> 12:34
+							.replace(/^(\d{8})(\d{2})(\d{2})$/,'$2:$3')
+							# 11 digits -> 12:30
+							.replace(/^(\d{8})(\d{2})(\d)$/,'$2:$30')
+							# 10 digits -> 12h
+							.replace(/^(\d{8})(\d{2})$/,'$2h')
+							#  8 digits -> 2016-03-15
+							.replace(/^(\d{4})(\d{2})(\d{2})/,'$1-$2-$3')
 					node.push n
 			$scope.waiting = false
 		, (resp) ->
 			$scope.waiting = false
 
 	# Intialization function
+	# Simply set $scope.waiting to false during $translator and tree root
+	# initialization
 	$scope.init = ->
 		$scope.waiting = true
 		$scope.data = []
@@ -290,6 +332,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 		, (resp) ->
 			$scope.waiting = false
 
+	# Query scheme initialization
+	# Default to '_whatToTrace'
 	c = $location.path().match /^\/(\w+)/
 	$scope.type = if c then c[1] else '_whatToTrace'
 ]
