@@ -28,6 +28,10 @@ README
 REST-API.md
 scripts/lmConfigEditor
 scripts/testConfBackend.pl
+site/coffee/llApp.coffee
+site/coffee/manager.coffee
+site/coffee/notifications.coffee
+site/coffee/sessions.coffee
 site/static/bwr/angular-animate/angular-animate.js
 site/static/bwr/angular-animate/angular-animate.min.js
 site/static/bwr/angular-animate/angular-animate.min.js.map
