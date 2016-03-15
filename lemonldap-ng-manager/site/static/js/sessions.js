@@ -10,7 +10,7 @@
   schemes = {
     _whatToTrace: [
       function(t, v) {
-        return "groupBy=substr(" + t + ",1";
+        return "groupBy=substr(" + t + ",1)";
       }, function(t, v) {
         return t + "=" + v + "*&groupBy=" + t;
       }, function(t, v) {
@@ -139,8 +139,8 @@
       $scope.displaySession = function(scope) {
         var sessionId, transformSession;
         transformSession = function(session) {
-          var _insert, attr, attrs, category, i, id, j, k, key, l, len, len1, len2, ref, ref1, res, stToStr, subres, time, tmp, value;
-          stToStr = function(s) {
+          var _insert, _stToStr, attr, attrs, category, i, id, j, k, key, l, len, len1, len2, ref, ref1, res, subres, time, tmp, value;
+          _stToStr = function(s) {
             return s;
           };
           _insert = function(re, title) {

@@ -7,7 +7,7 @@
 schemes =
 	_whatToTrace: [
 		(t,v) ->
-			"groupBy=substr(#{t},1"
+			"groupBy=substr(#{t},1)"
 		(t,v) ->
 			"#{t}=#{v}*&groupBy=#{t}"
 		(t,v) ->
@@ -127,7 +127,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 		# Session preparation
 		transformSession = (session) ->
-			stToStr = (s) ->
+			_stToStr = (s) ->
 				s
 			_insert = (re, title) ->
 				tmp = []
