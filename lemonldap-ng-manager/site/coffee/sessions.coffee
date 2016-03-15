@@ -1,0 +1,295 @@
+###
+# Session explorer
+###
+
+# Queries to do each type of display: each array item corresponds to the depth
+# of opened nodes in the tree
+schemes =
+	_whatToTrace: [
+		(t,v) ->
+			"groupBy=substr(#{t},1"
+		(t,v) ->
+			"#{t}=#{v}*&groupBy=#{t}"
+		(t,v) ->
+			"#{t}=#{v}"
+	]
+	ipAddr: [
+		(t,v) ->
+			"groupBy=net4(#{t},1)"
+		(t,v) ->
+			"groupBy=net4(#{t},2)"
+		(t,v) ->
+			"groupBy=net4(#{t},3)"
+		(t,v) ->
+			"groupBy=net4(#{t},4)"
+		(t,v) ->
+			"#{t}=#{v}&groupBy=_whatToTrace"
+		(t,v,q) ->
+			q.replace(/\&groupBy.*$/, '') + "&_whatToTrace=#{v}"
+	]
+	doubleIp: [
+		(t,v) ->
+			t
+		(t,v) ->
+			"_whatToTrace=#{v}&groupBy=ipAddr"
+		(t,v,q) ->
+			q.replace(/\&groupBy.*$/, '') + "&ipAddr=#{v}"
+	]
+
+hiddenAttributes = '_password'
+
+# Attributes to group in session display
+categories =
+    dateTitle:          ['_utime', 'startTime', 'updateTime', '_lastAuthnUTime', '_lastSeen']
+    connectionTitle:    ['ipAddr', '_timezone', '_url']
+    authenticationTitle:['_session_id', '_user', '_password', 'authenticationLevel']
+    modulesTitle:       ['_auth', '_userDB', '_passwordDB', '_issuerDB', '_authChoice', '_authMulti', '_userDBMulti']
+    saml:               ['_idp', '_idpConfKey', '_samlToken', '_lassoSessionDump', '_lassoIdentityDump']
+    groups:             ['groups', 'hGroups']
+    ldap:               ['dn']
+    BrowserID:          ['_browserIdAnswer', '_browserIdAnswerRaw']
+    OpenIDConnect:      ['OpenIDConnect_IDToken', 'OpenIDConnect_OP', 'OpenIDConnect_access_token']
+
+# Menu entries
+menu =
+	session: [
+		title: 'deleteSession'
+		icon:  'trash'
+	]
+	home: []
+
+###
+# AngularJS application
+###
+llapp = angular.module 'llngSessionsExplorer', ['ui.tree', 'ui.bootstrap', 'llApp']
+
+# Main controller
+llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', '$q', '$http', ($scope, $translator, $location, $q, $http) ->
+	$scope.links = links
+	$scope.menulinks = menulinks
+	$scope.staticPrefix = staticPrefix
+	$scope.scriptname = scriptname
+	$scope.formPrefix = formPrefix
+	$scope.availableLanguages = availableLanguages
+	$scope.waiting = true
+	$scope.showM = false
+	$scope.showT = true
+	$scope.data = []
+	$scope.currentScope = null
+	$scope.currentSession = null
+	$scope.menu = menu
+	$scope.translateP = $translator.translateP
+	$scope.translate = $translator.translate
+	$scope.translateTitle = (node) ->
+		$translator.translateField node, 'title'
+	sessionType = 'global'
+
+	# Handle menu items
+	$scope.menuClick = (button) ->
+		if button.popup
+			window.open button.popup
+		else
+			button.action = button.title unless button.action
+			switch typeof button.action
+				when 'function'
+					button.action $scope.currentNode, $scope
+				when 'string'
+					$scope[button.action]()
+				else
+					console.log typeof button.action
+		$scope.showM = false
+
+	# SESSION MANAGEMENT
+
+	# Delete 
+	$scope.deleteSession = ->
+		$scope.waiting = true
+		$http['delete']("#{scriptname}sessions/#{sessionType}/#{$scope.currentSession.id}").then (response) ->
+			$scope.currentSession = null
+			$scope.currentScope.remove()
+			$scope.waiting = false
+		, (resp) ->
+			$scope.currentSession = null
+			$scope.currentScope.remove()
+			$scope.waiting = false
+
+	# Open node
+	$scope.stoggle = (scope) ->
+		node = scope.$modelValue
+		if node.nodes.length == 0
+			$scope.updateTree node.value, node.nodes, node.level, node.query
+		scope.toggle()
+
+	# Display selected session
+	$scope.displaySession = (scope) ->
+
+		# Private functions
+
+		# Session preparation
+		transformSession = (session) ->
+			stToStr = (s) ->
+				s
+			_insert = (re, title) ->
+				tmp = []
+				reg = new RegExp(re)
+				for key,value of session
+					if key.match(reg) and value
+						tmp.push
+							title: key
+							value: value
+						delete session[key]
+				if tmp.length > 0
+					res.push
+						title: title
+						nodes: tmp
+			time = session._utime
+			id = session._session_id
+
+			# 1. Replace values if needed
+			for key, value of session
+				unless value
+					delete session[key]
+				else
+					if typeof session == 'string' and value.match(/; /)
+						session[key] = value.split '; '
+					if typeof session[key] != 'object'
+						if hiddenAttributes.match(new RegExp('\b' + key + '\b'))
+							session[key] = '********'
+						else if key.match /^(_utime|_lastAuthnUTime|_lastSeen|notification)$/
+							session[key] = $scope.localeDate value
+						else if key.match /^(startTime|updateTime)$/
+							session[key] = _stToStr value
+			res = []
+
+			# 2. Push session keys in reuslt, grouped by categories
+			for category, attrs of categories
+				subres = []
+				for attr in attrs
+					if session[attr]
+						subres.push
+							title: attr
+							value: session[attr]
+						delete session[attr]
+				if subres.length >0
+					res.push
+						title: "__#{category}__"
+						nodes: subres
+
+			# 3. Add OpenID and notifications already notified
+			_insert '^openid', 'OpenID'
+			_insert '^notification_(.+)', '__notificationsDone__'
+
+			# 4. Add session history if exists
+			if session.loginHistory
+				tmp = []
+				if session.loginHistory.successLogin
+					for l in session.loginHistory.successLogin
+						tmp.push
+							t: l._utime
+							title: $scope.localeDate l._utime
+							value: "Success (IP #{l.ipAddr})"
+				if session.loginHistory.failedLogin
+					for l in session.loginHistory.failedLogin
+						tmp.push
+							t: l._utime
+							title: $scope.localeDate l._utime
+							value: "#{l.error} (IP #{l.ipAddr})"
+				delete session.loginHistory
+				tmp.sort (a,b) ->
+					a.t - b.t
+				res.push
+					title: '__loginHistory__'
+					nodes: tmp
+
+			# 5. Other keys (attributes and macros)
+			tmp = []
+			for key, value of session
+				tmp.push
+					title: key
+					value: value
+			tmp.sort (a,b) ->
+				if a.title > b.title then 1
+				else if a.title < b.title then -1
+				else 0
+
+			res.push
+				title: '__attributesAndMacros__'
+				nodes: tmp
+			return {
+				_utime: time
+				id: id
+				nodes: res
+			}
+
+		$scope.currentScope = scope
+		sessionId = scope.$modelValue.session
+		$http.get("#{scriptname}sessions/#{sessionType}/#{sessionId}").then (response) ->
+			$scope.currentSession = transformSession response.data
+		$scope.showT = false
+
+	$scope.localeDate = (s) ->
+		d = new Date(s * 1000)
+		return d.toLocaleString()
+
+	# Function to change interface language
+	$scope.getLanguage = (lang) ->
+		$scope.lang = lang
+		$scope.form = 'white'
+		$scope.init()
+		$scope.showM = false
+
+	# URI local path management
+	pathEvent = (event, next, current) ->
+		n = next.match /#\/(\w+)/
+		sessionType = 'global'
+		if n == null
+			$scope.type = '_whatToTrace'
+		else if n[1].match /^(persistent)$/
+			sessionType = RegExp.$1
+			$scope.type = '_session_uid'
+		else
+			$scope.type = n[1]
+		$scope.init();
+
+	$scope.$on '$locationChangeSuccess', pathEvent
+
+	# Function to update tree
+	autoId = 0
+	$scope.updateTree = (value, node, level, currentQuery) ->
+		$scope.waiting = true
+		scheme = if schemes[$scope.type]
+			schemes[$scope.type]
+		else
+			schemes._whatToTrace
+		query = scheme[level] $scope.type, value, currentQuery
+		$http.get("#{scriptname}sessions/#{sessionType}?#{query}").then (response) ->
+			data = response.data
+			if data.result
+				for n in data.values
+					autoId++
+					n.id = "node#{autoId}"
+					if level < scheme.length - 1
+						n.nodes = []
+						n.level = level + 1
+						n.query = query
+					node.push n
+			$scope.waiting = false
+		, (resp) ->
+			$scope.waiting = false
+
+	# Intialization function
+	$scope.init = ->
+		$scope.waiting = true
+		$scope.data = []
+		$q.all [
+			$translator.init $scope.lang
+			$scope.updateTree '', $scope.data, 0
+		]
+		.then ->
+			$scope.waiting = false
+		, (resp) ->
+			$scope.waiting = false
+
+	c = $location.path().match /^\/(\w+)/
+	$scope.type = if c then c[1] else '_whatToTrace'
+]
