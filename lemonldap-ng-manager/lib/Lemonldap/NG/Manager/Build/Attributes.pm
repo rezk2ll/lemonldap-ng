@@ -72,15 +72,14 @@ sub types {
             form => 'text',
             test => sub {
                 my ( $val, $conf ) = @_;
-                if (   defined $conf->{exportedVars}->{$val}
-                    or defined $conf->{macros}->{$val}
-                    or $val eq '_timezone' )
-                {
-                    return 1;
+                return 1
+                  if ( defined $conf->{macros}->{$val} or $val eq '_timezone' );
+                foreach ( keys %$conf ) {
+                    return 1
+                      if ( $_ =~ /exportedvars$/i
+                        and defined $conf->{$_}->{$val} );
                 }
-                else {
-                    return ( 1, "__unknownAttrOrMacro__: $val" );
-                }
+                return ( 1, "__unknownAttrOrMacro__: $val" );
             },
         },
 
