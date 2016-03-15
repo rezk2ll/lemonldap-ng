@@ -51,6 +51,7 @@ WriteMakefile(
         'DBI'                  => 0,
         'Digest::SHA'          => 0,
         'File::Basename'       => 0,
+        'JSON'                 => 0,
         'Mouse'                => 0,
         'Net::CIDR::Lite'      => 0,
         'SOAP::Lite'           => 0,
