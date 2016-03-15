@@ -60,5 +60,5 @@ requires:
   Net::LDAP: '0.38'
   Regexp::Assemble: '0'
   Unicode::String: '0'
-version: v1.9.0
+version: v1.9.1
 x_serialization_backend: 'CPAN::Meta::YAML version 0.012'
