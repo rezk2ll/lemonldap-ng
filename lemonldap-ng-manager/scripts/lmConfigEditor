@@ -41,7 +41,9 @@ print $editFile $tmp;
 close $refFile;
 close $editFile;
 
-system "editor $editFile";
+my $editor = $ENV{EDITOR} || 'editor';
+
+system "$editor $editFile";
 
 if (`diff $refFile $editFile`) {
     my $VAR1;
