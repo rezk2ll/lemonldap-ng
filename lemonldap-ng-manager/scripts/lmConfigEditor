@@ -2,6 +2,7 @@
 
 use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Manager::Conf::Parser;
 use Data::Dumper;
 use English qw(-no_match_vars);
 use File::Temp;
@@ -21,17 +22,17 @@ unless ($conf) {
     exit 1;
 }
 
-my $tmp = $conf->getConf( { raw => 1, noCache => 1 } );
-delete $tmp->{reVHosts};
-delete $tmp->{cipher};
-delete $tmp->{cfgAuthor};
-delete $tmp->{cfgAuthorIP};
-delete $tmp->{cfgDate};
-$tmp->{cfgLog} = '';
+my $refConf = $conf->getConf( { raw => 1, noCache => 1 } );
+delete $refConf->{reVHosts};
+delete $refConf->{cipher};
+delete $refConf->{cfgAuthor};
+delete $refConf->{cfgAuthorIP};
+delete $refConf->{cfgDate};
+$refConf->{cfgLog} = '';
 
 # Sort keys
 $Data::Dumper::Sortkeys = 1;
-$tmp                    = Dumper($tmp);
+my $tmp                = Dumper($refConf);
 
 my $refFile  = File::Temp->new( UNLINK => 1 );
 my $editFile = File::Temp->new( UNLINK => 1 );
@@ -59,6 +60,23 @@ if (`diff $refFile $editFile`) {
     $VAR1->{cfgAuthorIP} = $ENV{SSH_CONNECTION} || "localhost";
     $VAR1->{cfgDate} = time();
     $VAR1->{cfgLog} ||= 'Edited by lmConfigEditor';
+
+    # Test new configuration
+    my $parser = Lemonldap::NG::Manager::Conf::Parser->new(
+        {
+            refConf => $refConf,
+            newConf => $VAR1,
+            req => 1,
+        }
+    );
+    unless($parser->testNewConf) {
+        print STDERR "Configuration seems to have some errors:\n ";
+        print STDERR Dumper({errors => $parser->errors,warnings => $parser->warnings});
+        print STDERR "Are you sure you want to write it ? (yes/no) ";
+        my $resp = <STDIN>;
+        die "Aborted" unless $resp =~ /^yes$/i;
+    }
+    undef $parser;
 
     # Store new configuration
     my $res = $conf->saveConf($VAR1);
