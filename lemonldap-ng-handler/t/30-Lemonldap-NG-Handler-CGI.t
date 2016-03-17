@@ -27,8 +27,6 @@ $LLNG_DEFAULTCONFFILE = $ini->filename;
 
 use_ok('Lemonldap::NG::Handler::CGI');
 
-$LLNG_DEFAULTCONFFILE = undef;
-
 #    sub Lemonldap::NG::Handler::CGI::lmLog { }
 
 #########################

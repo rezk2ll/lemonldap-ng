@@ -13,7 +13,7 @@ use Lemonldap::NG::Portal::_Browser;
 use Cache::FileCache;
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 our $initDone;
 
 BEGIN {

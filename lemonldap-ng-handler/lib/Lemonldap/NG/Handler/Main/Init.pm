@@ -1,0 +1,95 @@
+package Lemonldap::NG::Handler::Main::Init;
+
+use strict;
+use Lemonldap::NG::Common::Conf;
+
+our $VERSION = '2.0.0';
+
+## @imethod void init(hashRef args)
+# Read parameters and build the Lemonldap::NG::Common::Conf object.
+# @param $args hash containing parameters
+sub init($$) {
+    my ( $class, $args ) = @_;
+
+    # According to doc, localStorage can be declared in $args root,
+    # but it must be in $args->{configStorage}
+    foreach (qw(localStorage localStorageOptions)) {
+        $args->{configStorage}->{$_} ||= $args->{$_};
+    }
+
+    my $tmp = Lemonldap::NG::Common::Conf->new( $args->{configStorage} );
+    unless ( $class->lmConf($tmp) ) {
+        die(    "$class : unable to build configuration: "
+              . "$Lemonldap::NG::Common::Conf::msg" );
+    }
+
+    # Merge local configuration parameters so that params defined in
+    # startup parameters have precedence over lemonldap-ng.ini params
+    $class->localConfig(
+        { %{ $class->lmConf->getLocalConf('handler') }, %{$args} } );
+
+    $class->checkTime( $class->localConfig->{checkTime} || $class->checkTime );
+
+    # Few actions that must be done at server startup:
+    # * set log level for Lemonldap::NG logs
+    $class->logLevelInit( $class->localConfig->{logLevel} );
+
+    # * set server signature
+    $class->serverSignatureInit unless ( $class->localConfig->{hideSignature} );
+
+    # * launch status process
+    $class->statusInit() if ( $class->localConfig->{status} );
+    1;
+}
+
+# @method void logLevelInit
+# Set log level for Lemonldap::NG logs
+sub logLevelInit {
+    my ( $class, $level ) = @_;
+    if ( $level and not defined $class->logLevels->{$level} ) {
+        $class->lmLog( "Undefined log level: $level", 'error' );
+    }
+    else {
+        $class->_logLevel( $class->logLevels->{$level || 'notice'} );
+    }
+}
+
+# @method void serverSignatureInit
+# adapt server signature
+sub serverSignatureInit {
+    my $class = shift;
+    $class->setServerSignature("Lemonldap::NG/$VERSION");
+}
+
+## @ifn protected void statusInit()
+# Launch the status process
+sub statusInit {
+    my ($class) = @_;
+    return if ( $class->tsv->{statusPipe} and $class->tsv->{statusOut} );
+    require IO::Pipe;
+    my $statusPipe = IO::Pipe->new;
+    my $statusOut  = IO::Pipe->new;
+    if ( my $pid = fork() ) {
+
+        # TODO: log new process pid
+        $statusPipe->writer();
+        $statusOut->reader();
+        $statusPipe->autoflush(1);
+        ( $class->tsv->{statusPipe}, $class->tsv->{statusOut} ) =
+          ( $statusPipe, $statusOut );
+    }
+    else {
+        $statusPipe->reader();
+        $statusOut->writer();
+        my $fdin  = $statusPipe->fileno;
+        my $fdout = $statusOut->fileno;
+        open STDIN,  "<&$fdin";
+        open STDOUT, ">&$fdout";
+        my $perl_exec = ( $^X =~ /perl/ ) ? $^X : 'perl';
+        exec $perl_exec, '-MLemonldap::NG::Handler::Status',
+          map( {"-I$_"} @INC ),
+          '-e &Lemonldap::NG::Handler::Status::run()';
+    }
+}
+
+1;

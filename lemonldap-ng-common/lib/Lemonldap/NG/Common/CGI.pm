@@ -17,7 +17,7 @@ use Net::CIDR::Lite;
 
 #parameter syslog Indicates syslog facility for logging user actions
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 our $_SUPER;
 our @ISA;
 

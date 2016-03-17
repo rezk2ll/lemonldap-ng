@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::AuthYubikey;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 our $yubikeyInitDone;
 
 BEGIN {

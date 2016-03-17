@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::_WebForm;
 use Lemonldap::NG::Portal::Simple;
 use base qw(Lemonldap::NG::Portal::_WebForm Lemonldap::NG::Portal::_Proxy);
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 ## @apmethod int authInit()
 # Call Lemonldap::NG::Portal::_Proxy::proxyInit();

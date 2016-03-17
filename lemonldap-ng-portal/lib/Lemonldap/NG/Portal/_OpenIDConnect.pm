@@ -16,7 +16,7 @@ use Crypt::OpenSSL::Bignum;
 use utf8;
 use base qw(Lemonldap::NG::Portal::_Browser);
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 our $oidcCache;
 
 BEGIN {

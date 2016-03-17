@@ -8,9 +8,8 @@
 package Lemonldap::NG::Handler::Menu;
 
 use strict;
-use Lemonldap::NG::Handler::SharedConf qw(:all);
-use Lemonldap::NG::Handler::API qw(:httpCodes);
-use base qw(Lemonldap::NG::Handler::SharedConf);
+use Lemonldap::NG::Handler::ApacheMP2 qw(:all);
+use base qw(Lemonldap::NG::Handler::ApacheMP2);
 use Apache2::Filter ();
 use constant BUFF_LEN => 8192;
 
@@ -62,9 +61,9 @@ html>body #lemonldap-ng-menu {
 }
 </style>
 <div id="lemonldap-ng-menu">
-<a href=") . $tsv->{portal}->() . qq(">☖ Home</a>
+<a href=") . $class->tsv->{portal}->() . qq(">☖ Home</a>
 <span>  </span>
-<a href=") . $tsv->{portal}->() . qq(?logout=1">☒ Logout</a>
+<a href=") . $class->tsv->{portal}->() . qq(?logout=1">☒ Logout</a>
 </div>);
 
     while ( $f->read( my $buffer, BUFF_LEN ) ) {
@@ -72,7 +71,7 @@ html>body #lemonldap-ng-menu {
         $f->print($buffer);
     }
 
-    return OK;
+    return $class->OK;
 
 }
 

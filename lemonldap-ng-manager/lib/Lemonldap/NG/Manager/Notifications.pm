@@ -13,7 +13,7 @@ use feature 'state';
 
 extends 'Lemonldap::NG::Manager::Lib';
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 has _notifAccess => ( is => 'rw' );
 
@@ -282,7 +282,11 @@ sub newNotification {
 "Notification not created: $@$Lemonldap::NG::Common::Notification::msg",
             'error'
         );
-        return $self->sendError( $req, "Notification not created: $@$Lemonldap::NG::Common::Notification::msg", 200 );
+        return $self->sendError(
+            $req,
+"Notification not created: $@$Lemonldap::NG::Common::Notification::msg",
+            200
+        );
     }
     else {
         return $self->sendJSONresponse( $req, { result => 1 } );

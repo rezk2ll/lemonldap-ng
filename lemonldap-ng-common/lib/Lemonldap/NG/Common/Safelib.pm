@@ -11,7 +11,7 @@ use MIME::Base64;
 
 #use AutoLoader qw(AUTOLOAD);
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 # Set here all the names of functions that must be available in Safe objects.
 # Not that only functions, not methods, can be written here

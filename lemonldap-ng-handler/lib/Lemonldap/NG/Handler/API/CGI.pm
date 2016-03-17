@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::API::CGI;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 # Specific modules and constants for Test or CGI
 use constant FORBIDDEN         => 403;
@@ -41,12 +41,12 @@ sub newRequest {
     $Lemonldap::NG::API::mode = 'CGI';
 }
 
-## @method void lmLog(string $msg, string $level)
+## @method void _lmLog(string $msg, string $level)
 # logs message $msg to STDERR with level $level
 # set Env Var lmLogLevel to set loglevel; set to "info" by default
 # @param $msg string message to log
 # @param $level string loglevel
-sub lmLog {
+sub _lmLog {
     my ( $class, $msg, $level ) = @_;
     print STDERR "[$level] $msg\n";
 }

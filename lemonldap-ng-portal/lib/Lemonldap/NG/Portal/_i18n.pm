@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::_i18n;
 # Developpers warning : this file must stay UTF-8 encoded
 
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 use utf8;
 
 ## @fn string msg(int msg, array ref lang)

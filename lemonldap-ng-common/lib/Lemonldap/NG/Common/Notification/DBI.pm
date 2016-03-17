@@ -10,7 +10,7 @@ use Time::Local;
 use DBI;
 use utf8;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 ## @method boolean prereq()
 # Check if DBI parameters are set.

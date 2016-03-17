@@ -6,7 +6,7 @@
 
 package Lemonldap::NG::Common::Session;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 use Mouse;
 use Lemonldap::NG::Common::Apache::Session;

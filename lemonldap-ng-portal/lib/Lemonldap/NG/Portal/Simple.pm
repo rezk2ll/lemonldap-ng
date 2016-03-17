@@ -71,7 +71,7 @@ use Digest::MD5;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;
@@ -1144,7 +1144,7 @@ sub _subProcess {
 # status module with the result (portal error).
 sub updateStatus {
     my $self = shift;
-    my $p    = $Lemonldap::NG::Handler::Main::tsv->{statusPipe};
+    my $p    = $Lemonldap::NG::Handler::Main::SharedVariables::_tshv->{tsv}->{statusPipe};
     print $p ( $self->{user} ? $self->{user} : $self->ipAddr )
       . " => $ENV{SERVER_NAME}$ENV{SCRIPT_NAME} "
       . $self->{error} . "\n"

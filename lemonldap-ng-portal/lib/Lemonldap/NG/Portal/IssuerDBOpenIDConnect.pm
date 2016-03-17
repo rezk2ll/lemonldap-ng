@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Simple;
 use String::Random qw(random_string);
 use base qw(Lemonldap::NG::Portal::_OpenIDConnect);
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 ## @method void issuerDBInit()
 # Get configuration data

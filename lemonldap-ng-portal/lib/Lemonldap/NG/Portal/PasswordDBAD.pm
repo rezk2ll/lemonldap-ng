@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Simple;
 
 #inherits Lemonldap::NG::Portal::_SMTP
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 use base qw(Lemonldap::NG::Portal::PasswordDBLDAP);
 

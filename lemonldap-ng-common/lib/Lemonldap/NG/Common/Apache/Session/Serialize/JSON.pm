@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Apache::Session::Serialize::JSON;
 use strict;
 use JSON;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 sub serialize {
     my $session = shift;

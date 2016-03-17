@@ -12,7 +12,7 @@ use HTTP::Request;
 use JSON;
 
 our @ISA     = (qw(Lemonldap::NG::Portal::_Browser));
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 ## @apmethod int authInit()
 # Enables Browser ID (required for templates)

@@ -7,7 +7,7 @@ package Lemonldap::NG::Portal::_Browser;
 
 use strict;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 our $_ua;
 
 ## @method LWP::UserAgent ua()

@@ -10,7 +10,7 @@ use base qw(Exporter);
 use strict;
 
 our @EXPORT  = qw(checkIP);
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 ## @method Lemonldap::NG::Portal::_Slave checkIP()
 # @return true if remote IP is accredited in LL::NG conf

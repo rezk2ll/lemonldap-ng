@@ -5,7 +5,6 @@ use strict;
 use warnings;
 use POSIX;
 use Getopt::Std;
-use Lemonldap::NG::Handler::SharedConf;
 
 our %opts;
 my %_apps;
@@ -75,9 +74,8 @@ my $app = sub {
 };
 
 # Hook for customFunctions initialization
-use Lemonldap::NG::Handler::API::PSGI::Server;
-$Lemonldap::NG::Handler::API::mode = 'PSGI::Server';
-Lemonldap::NG::Handler::SharedConf->init();
+use Lemonldap::NG::Handler::PSGI::API;
+Lemonldap::NG::Handler::PSGI::API->init();
 
 my $server = Plack::Runner->new();
 $server->parse_options(

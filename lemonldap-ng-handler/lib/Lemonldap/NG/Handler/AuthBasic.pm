@@ -8,33 +8,16 @@
 
 package Lemonldap::NG::Handler::Specific::AuthBasic;
 
-use Lemonldap::NG::Handler::SharedConf qw(:all);
-use Lemonldap::NG::Handler::API qw(:httpCodes);
+use Lemonldap::NG::Handler::ApacheMP2;
 use Digest::MD5;
 use MIME::Base64;
 use HTTP::Headers;
 use SOAP::Lite;    # link protected portalRequest
 use Lemonldap::NG::Common::Session;
 
-use base qw(Lemonldap::NG::Handler::SharedConf);
+use base qw(Lemonldap::NG::Handler::ApacheMP2);
 
-our $VERSION = '1.9.1';
-
-sub handler {
-    my ( $class, $request ) = ( __PACKAGE__, shift );
-    Lemonldap::NG::Handler::API->newRequest($request);
-    $class->run($request);
-}
-
-## @rmethod Apache2::Const run(Apache2::RequestRec r)
-# Overload main run method
-# @param r Current request
-# @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
-sub run {
-    my $class = shift;
-    my $r     = $_[0];
-    return $class->SUPER::run();
-}
+our $VERSION = '2.0.0';
 
 ## @rmethod protected fetchId
 # Get user session id from Authorization header
@@ -45,7 +28,7 @@ sub run {
 # @return session id
 sub fetchId {
     my $class = shift;
-    if ( my $creds = Lemonldap::NG::Handler::API->header_in('Authorization') ) {
+    if ( my $creds = $class->header_in('Authorization') ) {
         $creds =~ s/^Basic\s+//;
         my @date = localtime;
         my $day  = $date[5] * 366 + $date[7];
@@ -82,20 +65,19 @@ sub createSession {
     my ( $class, $id ) = @_;
 
     # Add client IP as X-Forwarded-For IP in SOAP request
-    my $xheader = Lemonldap::NG::Handler::API->header_in('X-Forwarded-For');
+    my $xheader = $class->header_in('X-Forwarded-For');
     $xheader .= ", " if ($xheader);
-    $xheader .= Lemonldap::NG::Handler::API->remote_ip;
+    $xheader .= $class->remote_ip;
     my $soapHeaders = HTTP::Headers->new( "X-Forwarded-For" => $xheader );
 
     my $soapClient =
       SOAP::Lite->proxy( $tsv->{portal}->(), default_headers => $soapHeaders )
       ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
 
-    my $creds = Lemonldap::NG::Handler::API->header_in('Authorization');
+    my $creds = $class->header_in('Authorization');
     $creds =~ s/^Basic\s+//;
     my ( $user, $pwd ) = ( decode_base64($creds) =~ /^(.*?):(.*)$/ );
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
-        "AuthBasic authentication for user: $user", 'debug' );
+    $class->lmLog( "AuthBasic authentication for user: $user", 'debug' );
     my $soapRequest = $soapClient->getCookies( $user, $pwd, $id );
 
     # Catch SOAP errors
@@ -108,7 +90,7 @@ sub createSession {
 
         # If authentication failed, display error
         if ( $res->{errorCode} ) {
-            Lemonldap::NG::Handler::Main::Logger->lmLog(
+            $class->lmLog(
                 "Authentication failed for $user: "
                   . $soapClient->error( $res->{errorCode}, 'en' )->result(),
                 'notice'
@@ -125,13 +107,12 @@ sub createSession {
 # Hide user credentials to the protected application
 sub hideCookie {
     my $class = shift;
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
-        "removing Authorization header", 'debug' );
-    Lemonldap::NG::Handler::API->unset_header_in('Authorization');
+    $class->lmLog( "removing Authorization header", 'debug' );
+    $class->unset_header_in('Authorization');
 }
 
 ## @rmethod protected int goToPortal(string url, string arg)
-# If user is asked to authenticate, return AUTH_REQUIRED,
+# If user is asked to authenticate, return $class->AUTH_REQUIRED,
 # else redirect him to the portal to display some message defined by $arg
 # @param $url Url requested
 # @param $arg optionnal GET parameters
@@ -142,9 +123,9 @@ sub goToPortal {
         return $class->SUPER::goToPortal( $url, $arg );
     }
     else {
-        Lemonldap::NG::Handler::API->set_header_out(
+        $class->set_header_out(
             'WWW-Authenticate' => 'Basic realm="LemonLDAP::NG"' );
-        return AUTH_REQUIRED;
+        return $class->AUTH_REQUIRED;
     }
 }
 

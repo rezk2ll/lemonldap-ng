@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Common::Session;
 use MIME::Base64;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 our $initDone;
 
 BEGIN {

@@ -10,7 +10,6 @@ use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Manager::Constants;
-use Lemonldap::NG::Handler::Main qw(:tsv);
 
 use feature 'state';
 
@@ -18,7 +17,7 @@ extends 'Lemonldap::NG::Manager::Lib';
 
 has conf => ( is => 'rw', isa => 'HashRef', default => sub { {} } );
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 #############################
 # I. INITIALIZATION METHODS #
@@ -92,8 +91,10 @@ sub sessions {
     # Case 2: list of sessions
 
     # 2.1 Get fields to require
-    my @fields =
-      ( '_httpSessionType', $self->{ipField}, $tsv->{whatToTrace} );
+    my @fields = (
+        '_httpSessionType', $self->{ipField},
+        Lemonldap::NG::Handler::PSGI::API->tsv->{whatToTrace}
+    );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy = $1
           if ( $groupBy =~ /^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/ );
@@ -168,17 +169,29 @@ sub sessions {
         foreach my $id ( keys %$res ) {
             my $entry = $res->{$id};
             next if ( $entry->{_httpSessionType} );
-            $r{ $entry->{ $tsv->{whatToTrace} } }
-              ->{ $entry->{ $self->{ipField} } }++;
+            $r{ $entry->{ Lemonldap::NG::Handler::PSGI::API->tsv->{whatToTrace}
+            } }->{ $entry->{ $self->{ipField} } }++;
         }
 
    # 2.4.2 Store sessions owned by users that has more than one IP address in $r
         my $r;
         foreach my $k ( keys %$res ) {
-            my @tmp = keys %{ $r{ $res->{$k}->{ $tsv->{whatToTrace} } } };
+            my @tmp = keys %{
+                $r{
+                    $res->{$k}
+                      ->{ Lemonldap::NG::Handler::PSGI::API->tsv->{whatToTrace}
+                      }
+                }
+            };
             if ( @tmp > 1 ) {
                 $res->{$k}->{_sessionId} = $k;
-                push @{ $r->{ $res->{$k}->{ $tsv->{whatToTrace} } } },
+                push @{
+                    $r->{
+                        $res->{$k}->{ Lemonldap::NG::Handler::PSGI::API->tsv
+                              ->{whatToTrace}
+                        }
+                    }
+                  },
                   $res->{$k};
             }
         }
@@ -358,10 +371,12 @@ sub getApacheSession {
         {
             storageModule        => $mod->{module},
             storageModuleOptions => $mod->{options},
-            cacheModule          => $tsv->{sessionCacheModule},
-            cacheModuleOptions   => $tsv->{sessionCacheOptions},
-            id                   => $id,
-            kind                 => $mod->{kind},
+            cacheModule =>
+              Lemonldap::NG::Handler::PSGI::API->tsv->{sessionCacheModule},
+            cacheModuleOptions =>
+              Lemonldap::NG::Handler::PSGI::API->tsv->{sessionCacheOptions},
+            id   => $id,
+            kind => $mod->{kind},
         }
     );
     if ( $apacheSession->error ) {

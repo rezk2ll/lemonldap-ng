@@ -2,12 +2,14 @@ package Lemonldap::NG::Handler::PSGI;
 
 use 5.10.0;
 use Mouse;
+use Lemonldap::NG::Handler::PSGI::API;
 
 extends 'Lemonldap::NG::Handler::PSGI::Base', 'Lemonldap::NG::Common::PSGI';
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 sub init {
+    $_[0]->api('Lemonldap::NG::Handler::PSGI::API') unless ( $_[0]->api );
     my $tmp = $_[0]->Lemonldap::NG::Common::PSGI::init( $_[1] )
       and $_[0]->Lemonldap::NG::Handler::PSGI::Base::init( $_[1] );
     return $tmp;

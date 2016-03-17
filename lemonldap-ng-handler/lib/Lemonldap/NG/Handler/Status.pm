@@ -7,7 +7,7 @@ use strict;
 use POSIX qw(setuid setgid);
 use Data::Dumper;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 our $status   = {};
 our $activity = [];
@@ -151,7 +151,7 @@ sub run {
             $activity->[0]->{$code}++;
         }
 
-        elsif (/^RELOADCACHE(?:\s+(\S+?),(\S+))?$/) {
+        elsif (/^RELOADCACHE(?:\s+(\S+?),(.+))?$/) {
             if ( my ( $cacheModule, $cacheOptions ) = ( $1, $2 ) ) {
                 eval "use $cacheModule;"
                   . "\$cache = new $cacheModule(\$cacheOptions);";
@@ -279,6 +279,9 @@ sub run {
 
                 &end;
             }
+        }
+        else {
+            print STDERR "Status: Unknown command line : $_";
         }
     }
 }
@@ -437,8 +440,8 @@ Lemonldap::NG::Handler::Status - Perl extension to add a mod_status like system 
 Create your own package (example using a central configuration database):
 
   package My::Package;
-  use Lemonldap::NG::Handler::SharedConf;
-  @ISA = qw(Lemonldap::NG::Handler::SharedConf);
+  use Lemonldap::NG::Handler::ApacheMP2;
+  @ISA = qw(Lemonldap::NG::Handler::ApacheMP2);
   
   __PACKAGE__->init ( {
     # Activate status feature

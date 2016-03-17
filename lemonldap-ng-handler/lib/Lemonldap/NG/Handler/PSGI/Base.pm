@@ -2,31 +2,33 @@ package Lemonldap::NG::Handler::PSGI::Base;
 
 use 5.10.0;
 use Mouse;
-use Lemonldap::NG::Handler::SharedConf qw(:tsv :variables :jailSharedVars);
 
-our $VERSION = '1.9.1';
+#use Lemonldap::NG::Handler::Main qw(:jailSharedVars);
+
+our $VERSION = '2.0.0';
 
 has protection => ( is => 'rw', isa => 'Str' );
 has rule       => ( is => 'rw', isa => 'Str' );
+has api        => ( is => 'rw', isa => 'Str' );
 
 ## @method boolean init($args)
 # Initalize main handler
 sub init {
     my ( $self, $args ) = @_;
-    eval { Lemonldap::NG::Handler::SharedConf->init($self) };
+    eval { $self->api->init($self) };
     if ( $@ and not $self->{protection} eq 'none' ) {
         $self->error($@);
         return 0;
     }
-    unless ( Lemonldap::NG::Handler::SharedConf->checkConf($self)
+    unless ( $self->api->checkConf($self)
         or $self->{protection} eq 'none' )
     {
         $self->error(
             "Unable to protect this app ($Lemonldap::NG::Common::Conf::msg)");
         return 0;
     }
-    $self->portal( $tsv->{portal}->() );
-    my $rule = $self->{protection} || $localConfig->{protection} || '';
+    $self->portal( $self->api->tsv->{portal}->() );
+    my $rule = $self->{protection} || $self->api->localConfig->{protection} || '';
     $self->rule(
         $rule eq 'authenticate' ? 1 : $rule eq 'manager' ? '' : $rule );
     return 1;
@@ -40,7 +42,7 @@ sub _run {
     my $self = shift;
 
     # Override _run() only if protection != 'none'
-    if ( $self->rule ne 'none' ) {
+    if ( !$self->rule or $self->rule ne 'none' ) {
         $self->lmLog( 'PSGI app is protected', 'debug' );
 
         # Handle requests
@@ -55,9 +57,9 @@ sub _run {
         $self->lmLog( 'PSGI app is not protected', 'debug' );
 
         # Check if main handler initialization has been done
-        unless (%$tsv) {
+        unless ( $self->api->tsv ) {
             $self->lmLog( 'Checking conf', 'debug' );
-            eval { Lemonldap::NG::Handler::SharedConf->checkConf() };
+            eval { $self->api->checkConf() };
             $self->lmLog( $@, 'error' ) if ($@);
         }
 
@@ -72,30 +74,28 @@ sub _run {
 }
 
 sub status {
-    my $class = shift;
+    my $self = shift;
 
     # Check if main handler initialization has been done
-    unless (%$tsv) {
-        eval { Lemonldap::NG::Handler::SharedConf->checkConf() };
-        $class->lmLog( $@, 'error' ) if ($@);
+    unless ( %$self->api->tsv ) {
+        eval { $self->api->checkConf() };
+        $self->lmLog( $@, 'error' ) if ($@);
     }
     return sub {
         my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
-        Lemonldap::NG::Handler::API->newRequest($req);
-        Lemonldap::NG::Handler::SharedConf->status();
+        $self->api->status($req);
         return [ 200, [ %{ $req->{respHeaders} } ], [ $req->{respBody} ] ];
     };
 }
 
 ## @method private PSGI-Response _authAndTrace($req)
-# Launch Lemonldap::NG::Handler::SharedConf::run() and then handler() if
+# Launch $self->api::run() and then handler() if
 # response is 200.
 sub _authAndTrace {
     my ( $self, $req ) = @_;
-    Lemonldap::NG::Handler::API->newRequest($req);
-    my $res = Lemonldap::NG::Handler::SharedConf->run( $self->{rule} );
-    $self->portal( $tsv->{portal}->() );
-    $req->userData($datas) if ($datas);
+    my $res = $self->api->run( $req, $self->{rule} );
+    $self->portal( $self->api->tsv->{portal}->() );
+    $req->userData( $self->api->datas ) if ( $self->api->datas );
 
     if ( $res < 300 ) {
         $self->lmLog( 'User authenticated, calling handler()', 'debug' );
@@ -105,7 +105,7 @@ sub _authAndTrace {
     }
     else {
         my %h = $req->{respHeaders} ? %{ $req->{respHeaders} } : ();
-        my $s = $tsv->{portal}->() . "?lmError=$res";
+        my $s = $self->api->tsv->{portal}->() . "?lmError=$res";
         $s =
             '<html><head><title>Redirection</title></head><body>'
           . qq{<script type="text/javascript">window.location='$s'</script>}

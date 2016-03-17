@@ -1,17 +1,71 @@
-# Methods run at configuration reload
-package Lemonldap::NG::Handler::Reload;
+package Lemonldap::NG::Handler::Main::Reload;
 
-#use Lemonldap::NG::Handler::Main qw(:all);
-use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
+use strict;
+use Lemonldap::NG::Common::Conf::Constants;    #inherits
+use Lemonldap::NG::Common::Crypto;
+use Lemonldap::NG::Common::Safelib;            #link protected safe Safe object
+use Lemonldap::NG::Handler::Main::Jail;
+
 use constant UNPROTECT => 1;
 use constant SKIP      => 2;
 
-use Lemonldap::NG::Handler::Main::Jail;
-use Lemonldap::NG::Handler::Main::Logger;
-use Lemonldap::NG::Handler::API qw(:httpCodes);
-use Lemonldap::NG::Common::Crypto;
+our $VERSION = '2.0.0';
 
-our $VERSION = '1.9.1';
+# CONFIGURATION UPDATE
+
+## @rmethod protected int checkConf(boolean force)
+# Check if configuration is up to date, and reload it if needed.
+# If the optional boolean $force is set to true,
+# * cached configuration is ignored
+# * and checkConf returns false if it fails to load remote config
+# @param $force boolean
+# @return true if config is up to date or if reload config succeeded
+sub checkConf {
+    my ( $class, $force ) = @_;
+    my $conf = $class->lmConf->getConf( { local => !$force } );
+
+    unless ( ref($conf) ) {
+        $class->lmLog(
+"$class: Unable to load configuration: $Lemonldap::NG::Common::Conf::msg",
+            'error'
+        );
+        return $force ? 0 : $class->cfgNum ? 1 : 0;
+    }
+
+    if ( !$class->cfgNum or $class->cfgNum != $conf->{cfgNum} ) {
+        $class->lmLog(
+"Get configuration $conf->{cfgNum} ($Lemonldap::NG::Common::Conf::msg)",
+            'debug'
+        );
+        $class->lastCheck( time() );
+        unless ( $class->cfgNum( $conf->{cfgNum} ) ) {
+            $class->lmLog( 'No configuration available', 'error' );
+            return 0;
+        }
+        $conf->{$_} = $class->localConfig->{$_}
+          foreach ( keys %{ $class->localConfig } );
+        $class->configReload($conf);
+    }
+    $class->lmLog( "$class: configuration is up to date", 'debug' );
+    return 1;
+}
+
+# RELOAD SYSTEM
+
+## @rmethod int reload
+# Launch checkConf() with $local=0, so remote configuration is tested.
+# Then build a simple HTTP response that just returns "200 OK" or
+# "500 Server Error".
+# @return Apache constant ($class->OK or $class->SERVER_ERROR)
+sub reload {
+    my $class = shift;
+    $class->lmLog( "Request for configuration reload", 'notice' );
+    return $class->checkConf(1) ? $class->DONE : $class->SERVER_ERROR;
+}
+
+*refresh = *reload;
+
+# INTERNAL METHODS
 
 ## @imethod void configReload(hashRef conf, hashRef tsv)
 # Given a Lemonldap::NG configuration $conf, computes values used to
@@ -70,18 +124,17 @@ our $VERSION = '1.9.1';
 # @param $conf reference to the configuration hash
 # @param $tsv reference to the thread-shared parameters conf
 sub configReload {
-    my ( $class, $conf, $tsv ) = @_;
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
-        "Loading configuration $conf->{cfgNum} for process $$", "info" );
+    my ( $class, $conf ) = @_;
+    $class->lmLog( "Loading configuration $conf->{cfgNum} for process $$",
+        "info" );
 
     foreach my $sub (
         qw( jailInit defaultValuesInit portalInit locationRulesInit
         sessionStorageInit headersInit postUrlInit aliasInit )
       )
     {
-        Lemonldap::NG::Handler::Main::Logger->lmLog( "Process $$ calls $sub",
-            "debug" );
-        $class->$sub( $conf, $tsv );
+        $class->lmLog( "Process $$ calls $sub", "debug" );
+        $class->$sub($conf);
     }
     return 1;
 }
@@ -90,23 +143,23 @@ sub configReload {
 # Set default values for non-customized variables
 # @param $args reference to the configuration hash
 sub jailInit {
-    my ( $class, $conf, $tsv ) = @_;
+    my ( $class, $conf ) = @_;
 
-    $tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new(
-        'jail'            => $tsv->{jail},
+    $class->tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new(
+        'jail'            => $class->tsv->{jail},
         'useSafeJail'     => $conf->{useSafeJail},
         'customFunctions' => $conf->{customFunctions}
     );
-    $tsv->{jail}->build_jail();
+    $class->tsv->{jail}->build_jail($class);
 }
 
 ## @imethod protected void defaultValuesInit(hashRef args)
 # Set default values for non-customized variables
 # @param $args reference to the configuration hash
 sub defaultValuesInit {
-    my ( $class, $conf, $tsv ) = @_;
+    my ( $class, $conf ) = @_;
 
-    $tsv->{$_} = $conf->{$_} foreach (
+    $class->tsv->{$_} = $conf->{$_} foreach (
         qw(
         cda              cookieExpiration    cookieName
         customFunctions  httpOnly            securedCookie
@@ -115,23 +168,21 @@ sub defaultValuesInit {
         )
     );
 
-    $tsv->{cipher} = Lemonldap::NG::Common::Crypto->new( $conf->{key} );
+    $class->tsv->{cipher} = Lemonldap::NG::Common::Crypto->new( $conf->{key} );
 
     foreach my $opt (qw(https port maintenance)) {
-        if ( defined $conf->{$opt} ) {
+        next unless defined $conf->{$opt};
 
-            # Record default value in key '_'
-            $tsv->{$opt} = { _ => $conf->{$opt} };
-        }
+        # Record default value in key '_'
+        $class->tsv->{$opt} = { _ => $conf->{$opt} };
 
         # Override with vhost options
         if ( $conf->{vhostOptions} ) {
             my $name = 'vhost' . ucfirst($opt);
             foreach my $vhost ( keys %{ $conf->{vhostOptions} } ) {
                 my $val = $conf->{vhostOptions}->{$vhost}->{$name};
-                Lemonldap::NG::Handler::Main::Logger->lmLog(
-                    "Options $opt for vhost $vhost: $val", 'debug' );
-                $tsv->{$opt}->{$vhost} = $val
+                $class->lmLog( "Options $opt for vhost $vhost: $val", 'debug' );
+                $class->tsv->{$opt}->{$vhost} = $val
                   if ( $val >= 0 );    # Keep default value if $val is negative
             }
         }
@@ -143,17 +194,17 @@ sub defaultValuesInit {
 # Verify that portal variable exists. Die unless
 # @param $args reference to the configuration hash
 sub portalInit {
-    my ( $class, $conf, $tsv ) = @_;
+    my ( $class, $conf ) = @_;
     unless ( $conf->{portal} ) {
-        Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "portal parameter required", 'error' );
+        $class->lmLog( "portal parameter required", 'error' );
         return 0;
     }
     if ( $conf->{portal} =~ /[\$\(&\|"']/ ) {
-        ( $tsv->{portal} ) = $class->conditionSub( $conf->{portal}, $tsv );
+        ( $class->tsv->{portal} ) =
+          $class->conditionSub( $conf->{portal} );
     }
     else {
-        $tsv->{portal} = sub { return $conf->{portal} };
+        $class->tsv->{portal} = sub { return $conf->{portal} };
     }
     return 1;
 }
@@ -171,42 +222,42 @@ sub portalInit {
 # virtual host
 # @param $args reference to the configuration hash
 sub locationRulesInit {
-    my ( $class, $conf, $tsv ) = @_;
+    my ( $class, $conf ) = @_;
 
     foreach my $vhost ( keys %{ $conf->{locationRules} } ) {
         my $rules = $conf->{locationRules}->{$vhost};
         foreach my $url ( sort keys %{$rules} ) {
-            my ( $cond, $prot ) = $class->conditionSub( $rules->{$url}, $tsv );
+            my ( $cond, $prot ) = $class->conditionSub( $rules->{$url} );
             unless ($cond) {
-                $tsv->{maintenance}->{$vhost} = 1;
-                Lemonldap::NG::Handler::Main::Logger->lmLog(
+                $class->tsv->{maintenance}->{$vhost} = 1;
+                $class->lmLog(
                     "Unable to build rule '$rules->{$url}': "
-                      . $tsv->{jail}->error,
+                      . $class->tsv->{jail}->error,
                     'error'
                 );
                 next;
             }
 
             if ( $url eq 'default' ) {
-                $tsv->{defaultCondition}->{$vhost}  = $cond;
-                $tsv->{defaultProtection}->{$vhost} = $prot;
+                $class->tsv->{defaultCondition}->{$vhost}  = $cond;
+                $class->tsv->{defaultProtection}->{$vhost} = $prot;
             }
             else {
-                push @{ $tsv->{locationCondition}->{$vhost} },  $cond;
-                push @{ $tsv->{locationProtection}->{$vhost} }, $prot;
-                push @{ $tsv->{locationRegexp}->{$vhost} },     qr/$url/;
-                push @{ $tsv->{locationConditionText}->{$vhost} },
+                push @{ $class->tsv->{locationCondition}->{$vhost} },  $cond;
+                push @{ $class->tsv->{locationProtection}->{$vhost} }, $prot;
+                push @{ $class->tsv->{locationRegexp}->{$vhost} },     qr/$url/;
+                push @{ $class->tsv->{locationConditionText}->{$vhost} },
                     $cond =~ /^\(\?#(.*?)\)/ ? $1
                   : $cond =~ /^(.*?)##(.+)$/ ? $2
                   :                            $url;
-                $tsv->{locationCount}->{$vhost}++;
+                $class->tsv->{locationCount}->{$vhost}++;
             }
         }
 
         # Default policy set to 'accept'
-        unless ( $tsv->{defaultCondition}->{$vhost} ) {
-            $tsv->{defaultCondition}->{$vhost} = sub { 1 };
-            $tsv->{defaultProtection}->{$vhost} = 0;
+        unless ( $class->tsv->{defaultCondition}->{$vhost} ) {
+            $class->tsv->{defaultCondition}->{$vhost} = sub { 1 };
+            $class->tsv->{defaultProtection}->{$vhost} = 0;
         }
     }
     return 1;
@@ -217,31 +268,31 @@ sub locationRulesInit {
 # and the Cache::Cache module choosed to cache sessions
 # @param $args reference to the configuration hash
 sub sessionStorageInit {
-    my ( $class, $conf, $tsv ) = @_;
-    unless ( $tsv->{sessionStorageModule} = $conf->{globalStorage} ) {
-        Lemonldap::NG::Handler::Main::Logger->lmLog( "globalStorage required",
-            'error' );
+    my ( $class, $conf ) = @_;
+    unless ( $class->tsv->{sessionStorageModule} = $conf->{globalStorage} ) {
+        $class->lmLog( "globalStorage required", 'error' );
         return 0;
     }
-    eval "use $tsv->{sessionStorageModule}";
+    eval "use " . $class->tsv->{sessionStorageModule};
     die($@) if ($@);
-    $tsv->{sessionStorageOptions} = $conf->{globalStorageOptions};
+    $class->tsv->{sessionStorageOptions} = $conf->{globalStorageOptions};
 
     if ( $conf->{localSessionStorage} ) {
-        $tsv->{sessionCacheModule}  = $conf->{localSessionStorage};
-        $tsv->{sessionCacheOptions} = $conf->{localSessionStorageOptions};
-        $tsv->{sessionCacheOptions}->{default_expires_in} ||= 600;
+        $class->tsv->{sessionCacheModule} = $conf->{localSessionStorage};
+        $class->tsv->{sessionCacheOptions} =
+          $conf->{localSessionStorageOptions};
+        $class->tsv->{sessionCacheOptions}->{default_expires_in} ||= 600;
 
         if ( $conf->{status} ) {
             my $params = "";
-            if ( $tsv->{sessionCacheModule} ) {
+            if ( $class->tsv->{sessionCacheModule} ) {
                 require Data::Dumper;
-                $params =
-                  " $tsv->{sessionCacheModule},"
-                  . Data::Dumper->new( [ $tsv->{sessionCacheOptions} ] )
+                $params = ' '
+                  . $class->tsv->{sessionCacheModule} . ','
+                  . Data::Dumper->new( [ $class->tsv->{sessionCacheOptions} ] )
                   ->Terse(1)->Indent(0)->Dump;    # To send params on one line
             }
-            print { $tsv->{statusPipe} } "RELOADCACHE$params";
+            print { $class->tsv->{statusPipe} } "RELOADCACHE $params\n";
         }
     }
     return 1;
@@ -251,25 +302,26 @@ sub sessionStorageInit {
 # Create the subroutines used to insert headers into the HTTP request.
 # @param $args reference to the configuration hash
 sub headersInit {
-    my ( $class, $conf, $tsv ) = @_;
+    my ( $class, $conf ) = @_;
 
     # Creation of the subroutine which will generate headers
     foreach my $vhost ( keys %{ $conf->{exportedHeaders} } ) {
         my %headers = %{ $conf->{exportedHeaders}->{$vhost} };
-        $tsv->{headerList}->{$vhost} = [ keys %headers ];
+        $class->tsv->{headerList}->{$vhost} = [ keys %headers ];
         my $sub;
         foreach ( keys %headers ) {
             my $val = $class->substitute( $headers{$_} );
             $sub .= "'$_' => $val,";
         }
 
-        unless ( $tsv->{forgeHeaders}->{$vhost} =
-            $tsv->{jail}->jail_reval("sub{return($sub)}") )
+        unless ( $class->tsv->{forgeHeaders}->{$vhost} =
+            $class->tsv->{jail}->jail_reval("sub{return($sub)}") )
         {
-            $tsv->{maintenance}->{$vhost} = 1;
-            Lemonldap::NG::Handler::Main::Logger->lmLog(
-                "$self: Unable to forge headers: " . $tsv->{jail}->error,
-                'error' );
+            $class->tsv->{maintenance}->{$vhost} = 1;
+            $class->lmLog(
+                "$class Unable to forge headers: " . $class->tsv->{jail}->error,
+                'error'
+            );
         }
     }
     return 1;
@@ -278,7 +330,7 @@ sub headersInit {
 ## @imethod protected void postUrlInit()
 # Prepare methods to post form attributes
 sub postUrlInit {
-    my ( $class, $conf, $tsv ) = @_;
+    my ( $class, $conf ) = @_;
     return unless ( $conf->{post} );
 
     # Browse all vhost
@@ -287,8 +339,7 @@ sub postUrlInit {
         #  Browse all POST URI
         foreach my $url ( keys %{ $conf->{post}->{$vhost} } ) {
             my $d = $conf->{post}->{$vhost}->{$url};
-            Lemonldap::NG::Handler::Main::Logger->lmLog(
-                "Compiling POST data for $url", 'debug' );
+            $class->lmLog( "Compiling POST data for $url", 'debug' );
 
             # Where to POST
             $d->{target} ||= $url;
@@ -298,18 +349,20 @@ sub postUrlInit {
                 $sub .=
                   "'$input->[0]' => " . $class->substitute( $input->[1] ) . ",";
             }
-            unless ( $tsv->{inputPostData}->{$vhost}->{ delete $d->{target} } =
-                $tsv->{outputPostData}->{$vhost}->{$url} =
-                $tsv->{jail}->jail_reval("sub{$sub}") )
+            unless (
+                $class->tsv->{inputPostData}->{$vhost}->{ delete $d->{target} }
+                = $class->tsv->{outputPostData}->{$vhost}->{$url} =
+                $class->tsv->{jail}->jail_reval("sub{$sub}") )
             {
-                $tsv->{maintenance}->{$vhost} = 1;
-                Lemonldap::NG::Handler::Main::Logger->lmLog(
-                    "$self: Unable to build post datas: " . $tsv->{jail}->error,
+                $class->tsv->{maintenance}->{$vhost} = 1;
+                $class->lmLog(
+                    "$class: Unable to build post datas: "
+                      . $class->tsv->{jail}->error,
                     'error'
                 );
             }
 
-            $tsv->{postFormParams}->{$vhost}->{$url} = $d;
+            $class->tsv->{postFormParams}->{$vhost}->{$url} = $d;
         }
     }
     return 1;
@@ -323,7 +376,7 @@ sub postUrlInit {
 # @param $mainClass  optional
 # @return array (ref(sub), int)
 sub conditionSub {
-    my ( $class, $cond, $tsv ) = @_;
+    my ( $class, $cond ) = @_;
     my ( $OK, $NOK ) = ( sub { 1 }, sub { 0 } );
 
     # Simple cases : accept and deny
@@ -353,7 +406,7 @@ sub conditionSub {
             : (
                 sub {
                     $Lemonldap::NG::Handler::Main::datas->{_logout} =
-                      &{ $tsv->{portal} }();
+                      &{ $class->tsv->{portal} }();
                     return 0;
                 },
                 0
@@ -364,15 +417,15 @@ sub conditionSub {
     # Since filter exists only with Apache>=2, logout_app and logout_app_sso
     # targets are available only for it.
     # This error can also appear with Manager configured as CGI script
-    if ( $cond =~ /^logout_app/i and MP() < 2 ) {
-        Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "Rules logout_app and logout_app_sso require Apache>=2", 'warn' );
+    if ( $cond =~ /^logout_app/i and $class->MP() < 2 ) {
+        $class->lmLog( "Rules logout_app and logout_app_sso require Apache>=2",
+            'warn' );
         return ( sub { 1 }, 0 );
     }
 
     # logout_app
     if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
-        my $u = $1 || &{ $tsv->{portal} }();
+        my $u = $1 || &{ $class->tsv->{portal} }();
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
@@ -390,7 +443,7 @@ sub conditionSub {
     }
     elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
-        my $u = $1 || &{ $tsv->{portal} }();
+        my $u = $1 || &{ $class->tsv->{portal} }();
         return (
             sub {
                 my $r = shift;
@@ -399,7 +452,7 @@ sub conditionSub {
                     sub {
                         my $r = shift->r;
                         return Lemonldap::NG::Handler::Main->redirectFilter(
-                            &{ $tsv->{portal} }() . "?url="
+                            &{ $class->tsv->{portal} }() . "?url="
                               . Lemonldap::NG::Handler::Main->encodeUrl( $r,
                                 $u )
                               . "&logout=1",
@@ -416,9 +469,10 @@ sub conditionSub {
     # Replace some strings in condition
     $cond = $class->substitute($cond);
     my $sub;
-    unless ( $sub = $tsv->{jail}->jail_reval("sub{return($cond)}") ) {
-        Lemonldap::NG::Handler::Main::Logger->lmLog(
-            "$self: Unable to build condition ($cond): " . $tsv->{jail}->error,
+    unless ( $sub = $class->tsv->{jail}->jail_reval("sub{return($cond)}") ) {
+        $class->lmLog(
+            "$class: Unable to build condition ($cond): "
+              . $class->tsv->{jail}->error,
             'error'
         );
     }
@@ -431,14 +485,13 @@ sub conditionSub {
 # @param options vhostOptions configuration item
 # @return arrayref of vhost and aliases
 sub aliasInit {
-    my ( $class, $conf, $tsv ) = @_;
+    my ( $class, $conf ) = @_;
 
     foreach my $vhost ( keys %{ $conf->{vhostOptions} } ) {
         if ( my $aliases = $conf->{vhostOptions}->{$vhost}->{vhostAliases} ) {
             foreach ( split /\s+/, $aliases ) {
-                $tsv->{vhostAlias}->{$_} = $vhost;
-                Lemonldap::NG::Handler::Main::Logger->lmLog(
-                    "Registering $_ as alias of $vhost", 'debug' );
+                $class->tsv->{vhostAlias}->{$_} = $vhost;
+                $class->lmLog( "Registering $_ as alias of $vhost", 'debug' );
             }
         }
     }
@@ -456,7 +509,7 @@ sub substitute {
     $expr =~ s/\$ip\b/&remote_ip/sg;
 
     # substitute vars with session datas, excepts special vars $_ and $\d+
-    $expr =~ s/\$(?!ENV)(_*[a-zA-Z]\w*)/\$datas->{$1}/sg;
+    $expr =~ s/\$(?!ENV)(_*[a-zA-Z]\w*)/datas->{$1}/sg;
 
     return $expr;
 }

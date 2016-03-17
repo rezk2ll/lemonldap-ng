@@ -2,9 +2,17 @@ package Lemonldap::NG::Handler::PSGI::Server;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Handler::SharedConf qw(:tsv);
+use Lemonldap::NG::Handler::PSGI::API::Server;
+
+our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Handler::PSGI';
+
+sub init {
+    my $self = shift;
+    $self->api('Lemonldap::NG::Handler::PSGI::API::Server');
+    my $tmp = $self->SUPER::init(@_);
+}
 
 ## @method void _run()
 # Return subroutine that add headers stored in $req->{respHeaders} in

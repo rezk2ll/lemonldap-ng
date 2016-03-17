@@ -11,7 +11,7 @@ package Lemonldap::NG::Portal::UserDBFacebook;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 ## @apmethod int userDBInit()
 # Check if authentication module is Facebook

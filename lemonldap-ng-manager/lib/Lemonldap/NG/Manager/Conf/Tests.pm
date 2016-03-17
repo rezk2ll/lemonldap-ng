@@ -2,7 +2,6 @@ package Lemonldap::NG::Manager::Conf::Tests;
 
 use utf8;
 use Lemonldap::NG::Common::Regexp;
-use Lemonldap::NG::Handler::SharedConf;
 
 ## @method hashref tests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
@@ -184,7 +183,7 @@ sub tests {
         testApacheSession => sub {
             my ( $id, %h );
             my $gc =
-              $Lemonldap::NG::Handler::SharedConf::tsv->{sessionStorageModule};
+              $Lemonldap::NG::Handler::PSGI::API::tsv->{sessionStorageModule};
             return 1
               if ( ( $gc and $gc eq $conf->{globalStorage} )
                 or $conf->{globalStorage} eq
@@ -217,7 +216,7 @@ sub tests {
 
         # Warn if cookie name has changed
         cookieNameChanged => sub {
-            my $cn = $Lemonldap::NG::Handler::SharedConf::tsv->{cookieName};
+            my $cn = $Lemonldap::NG::Handler::PSGI::API::tsv->{cookieName};
             return (
                 1,
                 (

@@ -6,7 +6,7 @@ use Encode;
 use JSON;
 use Lemonldap::NG::Common::Conf::Constants;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::normalize      = \&normalize;

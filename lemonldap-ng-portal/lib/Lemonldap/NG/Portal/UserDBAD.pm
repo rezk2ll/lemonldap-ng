@@ -7,7 +7,7 @@ package Lemonldap::NG::Portal::UserDBAD;
 
 use strict;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 use base qw(Lemonldap::NG::Portal::UserDBLDAP);
 

@@ -6,7 +6,6 @@ use Safe;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 use Mouse;
-use Lemonldap::NG::Handler::Main::Logger;
 
 has customFunctions => ( is => 'rw', isa => 'Maybe[Str]' );
 
@@ -14,18 +13,16 @@ has useSafeJail => ( is => 'rw', isa => 'Maybe[Int]' );
 
 has jail => ( is => 'rw' );
 
-has error => ( is => 'rw' );
+our $VERSION = '2.0.0';
 
-our $VERSION = '1.9.1';
-
-use Lemonldap::NG::Handler::Main '$datas';
-use Lemonldap::NG::Handler::API ':functions';
+our $datas;
+*datas = *Lemonldap::NG::Handler::Main::SharedVariables::datas;
 
 ## @imethod protected build_jail()
 # Build and return the security jail used to compile rules and headers.
 # @return Safe object
 sub build_jail {
-    my $self = shift;
+    my ( $self, $api ) = @_;
 
     return $self->jail
       if ( $self->jail
@@ -37,8 +34,7 @@ sub build_jail {
     my @t =
       $self->customFunctions ? split( /\s+/, $self->customFunctions ) : ();
     foreach (@t) {
-        Lemonldap::NG::Handler::Main::Logger->lmLog( "Custom function : $_",
-            'debug' );
+        $api->lmLog( "Custom function : $_", 'debug' );
         my $sub = $_;
         unless (/::/) {
             $sub = "$self\::$_";
@@ -48,10 +44,10 @@ sub build_jail {
         }
         next if ( $self->can($_) );
         eval "sub $_ {
-            my \$uri = Lemonldap::NG::Handler::API::${Lemonldap::NG::Handler::API::mode}::uri_with_args();
+            my \$uri = $api\::uri_with_args();
             return $sub(\$uri,\@_)
         }";
-        Lemonldap::NG::Handler::Main::Logger->lmLog( $@, 'error' ) if ($@);
+        $api->lmLog( $@, 'error' ) if ($@);
         $_ = "&$_";
     }
 
@@ -67,15 +63,14 @@ sub build_jail {
     $self->jail->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
 
-    $self->jail->share_from( 'Lemonldap::NG::Handler::Main', ['$datas'] );
     $self->jail->share_from(
-        'Lemonldap::NG::Handler::API',
+        $api,
         [
             qw( &hostname &remote_ip &uri &uri_with_args
               &unparsed_uri &args &method &header_in   )
         ]
     );
-    $self->jail->share_from( __PACKAGE__, [@t] );
+    $self->jail->share_from( __PACKAGE__, [ @t, '&datas' ] );
     $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
 
     return $self->jail;

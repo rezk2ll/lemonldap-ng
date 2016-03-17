@@ -11,7 +11,7 @@ use MIME::Lite;
 use MIME::Base64;
 use Encode;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 ## @method string gen_password(string regexp)
 # Generate a complex password based on a regular expression

@@ -4,9 +4,15 @@ package Lemonldap::NG::Handler::Nginx;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Handler::SharedConf qw(:tsv);
+use Lemonldap::NG::Handler::PSGI::API::Server;
 
 extends 'Lemonldap::NG::Handler::PSGI';
+
+sub init {
+    my $self = shift;
+    $self->api('Lemonldap::NG::Handler::PSGI::API::Server');
+    my $tmp  = $self->SUPER::init(@_);
+}
 
 ## @method void _run()
 # Return a subroutine that call _authAndTrace() and tranform redirection
@@ -48,7 +54,7 @@ sub _run {
 #    # OR
 #    #fastcgi_param $fheadername1 $headervalue1;
 #
-# LLNG::Handler::API::PSGI add also a header called Lm-Remote-User set to
+# LLNG::Handler::PSGI::API add also a header called Lm-Remote-User set to
 # whatToTrace value that can be used in Nginx virtualhost configuration to
 # insert user id in logs
 #

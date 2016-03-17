@@ -15,7 +15,7 @@ use Unicode::String qw(utf8);
 use strict;
 
 our @EXPORT   = qw(ldap);
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 our $ppLoaded = 0;
 
 BEGIN {

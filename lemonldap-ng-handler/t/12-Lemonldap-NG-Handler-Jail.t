@@ -6,6 +6,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test::More tests => 6;
+require 't/test.pm';
 BEGIN { use_ok('Lemonldap::NG::Handler::Main::Jail') }
 
 #########################
@@ -17,11 +18,10 @@ ok(
     my $jail = Lemonldap::NG::Handler::Main::Jail->new(
         'jail'            => undef,
         'useSafeJail'     => 1,
-        'customFunctions' => undef
     ),
     'new jail object'
 );
-$jail->build_jail();
+$jail->build_jail('Lemonldap::NG::Handler::Test');
 
 my $sub1  = "sub { return( basic('login','password') ) }";
 my $basic = $jail->jail_reval($sub1);

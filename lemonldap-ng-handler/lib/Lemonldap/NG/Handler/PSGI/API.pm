@@ -1,7 +1,8 @@
-package Lemonldap::NG::Handler::API::PSGI;
+package Lemonldap::NG::Handler::PSGI::API;
 
 use strict;
-our $VERSION = '1.9.1';
+use base 'Lemonldap::NG::Handler::Main';
+our $VERSION = '2.0.0';
 
 # Specific modules and constants for Test or CGI
 use constant FORBIDDEN         => 403;
@@ -36,16 +37,15 @@ sub thread_share {
 #@param $r Lemonldap::NG::Common::PSGI::Request
 sub newRequest {
     my ( $class, $r ) = @_;
-    $request                  = $r;
-    $Lemonldap::NG::API::mode = 'PSGI';
+    $request = $r;
 }
 
-## @method void lmLog(string $msg, string $level)
+## @method void _lmLog(string $msg, string $level)
 # logs message $msg to STDERR with level $level
 # set Env Var lmLogLevel to set loglevel; set to "info" by default
 # @param $msg string message to log
 # @param $level string loglevel
-*lmLog = *Lemonldap::NG::Common::PSGI::lmLog;
+*_lmLog = *Lemonldap::NG::Common::PSGI::lmLog;
 
 ## @method void set_user(string user)
 # sets remote_user in response headers
@@ -180,7 +180,11 @@ sub cgiName {
 
 sub addToHtmlHead {
     my $self = shift;
-    $self->lmLog('Features like form replay or logout_app can only be used with Apache','error'),
+    $self->lmLog(
+        'Features like form replay or logout_app can only be used with Apache',
+        'error'
+      ),
+      ;
 }
 
 *setPostParams = *addToHtmlHead;

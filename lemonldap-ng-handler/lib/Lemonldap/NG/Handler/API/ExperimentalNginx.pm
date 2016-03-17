@@ -1,6 +1,6 @@
 package Lemonldap::NG::Handler::API::Nginx;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 use constant FORBIDDEN         => 403;
 use constant HTTP_UNAUTHORIZED => 401;
@@ -34,11 +34,11 @@ sub newRequest {
     $Lemonldap::NG::API::mode = 'Nginx';
 }
 
-## @method void lmLog(string $msg, string $level)
+## @method void _lmLog(string $msg, string $level)
 # logs message $msg to Apache logs with loglevel $level
 # @param $msg string message to log
 # @param $level string loglevel
-sub lmLog {
+sub _lmLog {
     my ( $class, $msg, $level ) = @_;
 
     # TODO

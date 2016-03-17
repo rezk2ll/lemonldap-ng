@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::AuthSSL;
 use Lemonldap::NG::Common::Regexp;
 use Regexp::Assemble;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 our @ISA     = qw(Lemonldap::NG::Portal::AuthSSL);
 our $initDone;
 our $reWebIDWhitelist;

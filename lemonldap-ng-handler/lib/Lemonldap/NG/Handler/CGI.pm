@@ -4,10 +4,10 @@ package Lemonldap::NG::Handler::CGI;
 use strict;
 
 use Lemonldap::NG::Common::CGI;
-use Lemonldap::NG::Handler::SharedConf qw(:all);
-use base qw(Lemonldap::NG::Common::CGI Lemonldap::NG::Handler::SharedConf);
+use Lemonldap::NG::Handler::Main;
+use base qw(Lemonldap::NG::Common::CGI Lemonldap::NG::Handler::Main);
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 ## @cmethod Lemonldap::NG::Handler::CGI new(hashRef args)
 # Constructor.
@@ -16,17 +16,16 @@ our $VERSION = '1.9.1';
 sub new {
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new() or $class->abort("Unable to build CGI");
-    Lemonldap::NG::Handler::SharedConf->init($args);
-    Lemonldap::NG::Handler::SharedConf->checkConf($self);
+    Lemonldap::NG::Handler::Main->init($args);
+    Lemonldap::NG::Handler::Main->checkConf($self);
 
     # Get access control rule
-    my $rule = $self->{protection} || $localConfig->{protection};
+    my $rule = $self->{protection} || Lemonldap::NG::Handler::Main->localConfig->{protection};
     $rule =~ s/^rule\s*:?\s*//;
     return $self if ( $rule eq "none" );
     $rule =
       $rule eq "authenticate" ? "accept" : $rule eq "manager" ? "" : $rule;
     my $request = {};
-    Lemonldap::NG::Handler::API->newRequest($request);
     my $res = $self->run($rule);
 
     if ( $res == 403 ) {
@@ -45,7 +44,7 @@ sub new {
 ## @method hashRef user()
 # @return hash of user datas
 sub user {
-    return $datas;
+    return Lemonldap::NG::Handler::Main->datas;
 }
 
 ## @method boolean group(string group)
@@ -53,7 +52,7 @@ sub user {
 # @return boolean : true if user is in this group
 sub group {
     my ( $self, $group ) = @_;
-    return ( $datas->{groups} =~ /\b$group\b/ );
+    return ( Lemonldap::NG::Handler::Main->datas->{groups} =~ /\b$group\b/ );
 }
 
 1;

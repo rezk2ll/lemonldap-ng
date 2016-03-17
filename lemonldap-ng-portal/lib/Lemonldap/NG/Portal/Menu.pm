@@ -13,7 +13,7 @@ use Lemonldap::NG::Portal::_LibAccess;
 use base qw(Lemonldap::NG::Portal::_LibAccess);
 use Clone qw(clone);
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 our $catlevel = 0;
 
 ## @method void menuInit()

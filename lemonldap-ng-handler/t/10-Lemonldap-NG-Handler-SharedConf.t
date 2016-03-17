@@ -5,23 +5,19 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More;
+use Test::More tests => 5;
 use Cwd 'abs_path';
 use File::Basename;
 use File::Temp;
-my $numTests = 4;
-unless ( eval { require Test::MockObject } ) {
-    $numTests = 1;
-    warn "Warning: Test::MockObject is needed to run deeper tests\n";
-}
-
-plan tests => $numTests;
+require 't/test.pm';
 
 my $ini = File::Temp->new();
 my $dir = dirname( abs_path($0) );
 my $tmp = File::Temp::tempdir();
 
 print $ini "[all]
+
+logLevel = warn
 
 [configuration]
 type=File
@@ -49,43 +45,24 @@ $LLNG_DEFAULTCONFFILE = $ini->filename;
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-$Lemonldap::NG::Handler::API::logLevel = 'error';
-use_ok('Lemonldap::NG::Handler');
+use_ok('Lemonldap::NG::Handler::Main');
 
-# we don't want to use all Apache::* stuff
-$ENV{MOD_PERL}             = undef;
-$ENV{MOD_PERL_API_VERSION} = 2;
-
-# Create a fake Apache2::RequestRec
-my $mock = Test::MockObject->new();
 my $ret;
-$mock->fake_module(
-    'Lemonldap::NG::Handler::API',
-    newRequest      => sub { 1 },
-    header_in       => sub { "" },
-    hostname        => sub { 'test1.example.com' },
-    is_initial_req  => sub { '1' },
-    remote_ip       => sub { '127.0.0.1' },
-    args            => sub { undef },
-    unparsed_uri    => sub { '/' },
-    uri             => sub { '/' },
-    uri_with_args   => sub { '/' },
-    get_server_port => sub { '80' },
-    set_header_out  => sub { $ret = join( ':', $_[1], $_[2], ); },
-);
 
 our $apacheRequest;
 
-my $h = bless {}, 'Lemonldap::NG::Handler';
+my $h = 'Lemonldap::NG::Handler::Test';
 
 ok( $h->init(), 'Initialize handler' );
-ok( $h->run($apacheRequest),
+
+ok( $ret = $h->run($apacheRequest),
     'run Handler with basic configuration and no cookie' );
 
+ok( $ret = 302, 'Return code is 302' );
+
 ok(
-    "$ret" eq
+    $Lemonldap::NG::Handler::Test::header eq
 'Location:http://auth.example.com/?url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
     'testing redirection URL from previous run'
-) or print STDERR "Got: $ret\n";
+) or print STDERR "Got: $Lemonldap::NG::Handler::Test::header\n";
 
-$LLNG_DEFAULTCONFFILE = undef;

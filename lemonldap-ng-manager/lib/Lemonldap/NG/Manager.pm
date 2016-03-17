@@ -13,7 +13,7 @@ package Lemonldap::NG::Manager;
 use 5.10.0;
 use utf8;
 use Mouse;
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 
@@ -89,19 +89,19 @@ sub init {
     $self->menuLinks( [] );
     push @{ $self->menuLinks },
       {
-        target => &{ $Lemonldap::NG::Handler::SharedConf::tsv->{portal} },
+        target => &{ $Lemonldap::NG::Handler::PSGI::API::tsv->{portal} },
         title  => 'backtoportal',
         icon   => 'home'
       }
-      if ( defined $Lemonldap::NG::Handler::SharedConf::tsv->{portal} );
+      if ( defined $Lemonldap::NG::Handler::PSGI::API::tsv->{portal} );
     push @{ $self->menuLinks },
       {
-        target => &{ $Lemonldap::NG::Handler::SharedConf::tsv->{portal} }
+        target => &{ $Lemonldap::NG::Handler::PSGI::API::tsv->{portal} }
           . '?logout=1',
         title => 'logout',
         icon  => 'log-out'
       }
-      if ( defined $Lemonldap::NG::Handler::SharedConf::tsv->{portal} );
+      if ( defined $Lemonldap::NG::Handler::PSGI::API::tsv->{portal} );
     1;
 }
 

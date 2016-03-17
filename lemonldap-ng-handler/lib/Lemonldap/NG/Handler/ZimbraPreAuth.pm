@@ -11,37 +11,34 @@
 package Lemonldap::NG::Handler::Specific::ZimbraPreAuth;
 
 use strict;
-use Lemonldap::NG::Handler::SharedConf qw(:all);
-use Lemonldap::NG::Handler::API qw(:httpCodes);
-use base qw(Lemonldap::NG::Handler::SharedConf);
+use Lemonldap::NG::Handler::ApacheMP2 qw(:all);
+use base qw(Lemonldap::NG::Handler::ApacheMP2);
 use Digest::HMAC_SHA1 qw(hmac_sha1 hmac_sha1_hex);
-use Lemonldap::NG::Handler::Main::Logger;
 
-our $VERSION = '1.9.1';
+our $VERSION = '2.0.0';
 
 sub handler {
     my ( $class, $request ) = ( __PACKAGE__, shift );
-    Lemonldap::NG::Handler::API->newRequest($request);
     $class->run($request);
 }
 
 ## @rmethod Apache2::Const run(Apache2::RequestRec r)
 # Overload main run method
 # @param r Current request
-# @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
+# @return Apache2::Const value ($class->OK, $class->FORBIDDEN, $class->REDIRECT or $class->SERVER_ERROR)
 sub run {
     my $class = shift;
     my $r     = $_[0];
     my $ret   = $class->SUPER::run();
 
     # Continue only if user is authorized
-    return $ret unless ( $ret == OK );
+    return $ret unless ( $ret == $class->OK );
 
     # Get current URI
-    my $uri = Lemonldap::NG::Handler::API->uri_with_args($r);
+    my $uri = $class->uri_with_args($r);
 
     # Get Zimbra parameters
-    my $localConfig      = $Lemonldap::NG::Handler::SharedConf::localConfig;
+    my $localConfig      = $class->localConfig;
     my $zimbraPreAuthKey = $localConfig->{zimbraPreAuthKey};
     my $zimbraAccountKey = $localConfig->{zimbraAccountKey} || 'uid';
     my $zimbraBy         = $localConfig->{zimbraBy} || 'id';
@@ -50,39 +47,39 @@ sub run {
     my $timeout          = $localConfig->{'timeout'} || '0';
 
     # Display found values in debug mode
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
+    $class->lmLog(
         "zimbraPreAuthKey: $zimbraPreAuthKey", 'debug' );
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
+    $class->lmLog(
         "zimbraAccountKey: $zimbraAccountKey", 'debug' );
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "zimbraBy: $zimbraBy",
+    $class->lmLog( "zimbraBy: $zimbraBy",
         'debug' );
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "zimbraUrl: $zimbraUrl",
+    $class->lmLog( "zimbraUrl: $zimbraUrl",
         'debug' );
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "zimbraSsoUrl: $zimbraSsoUrl",
+    $class->lmLog( "zimbraSsoUrl: $zimbraSsoUrl",
         'debug' );
-    Lemonldap::NG::Handler::Main::Logger->lmLog( "timeout: $timeout", 'debug' );
+    $class->lmLog( "timeout: $timeout", 'debug' );
 
     # Return if we are not on a Zimbra SSO URI
-    return OK unless ( $uri =~ $zimbraSsoUrl );
+    return $class->OK unless ( $uri =~ $zimbraSsoUrl );
 
     # Check mandatory parameters
     unless ($zimbraPreAuthKey) {
-        Lemonldap::NG::Handler::Main::Logger->lmLog(
+        $class->lmLog(
             "No Zimbra preauth key configured", 'error' );
-        return SERVER_ERROR;
+        return $class->SERVER_ERROR;
     }
 
     # Build URL
     my $zimbra_url =
       $class->_buildZimbraPreAuthUrl( $zimbraPreAuthKey, $zimbraUrl,
-        $datas->{$zimbraAccountKey},
+        $class->datas->{$zimbraAccountKey},
         $zimbraBy, $timeout );
 
     # Header location
     Lemonldap::NG::Handler::API->set_header_out( 'Location' => $zimbra_url );
 
-    # Return REDIRECT
-    return REDIRECT;
+    # Return $class->REDIRECT
+    return $class->REDIRECT;
 }
 
 ## @method private string _buildZimbraPreAuthUrl(string key, string url, string account, string by, int timeout)
@@ -97,7 +94,7 @@ sub _buildZimbraPreAuthUrl {
     my ( $class, $key, $url, $account, $by, $timeout ) = @_;
 
     # Expiration time is calculated with _utime and timeout
-    my $expires = $timeout ? ( $datas->{_utime} + $timeout ) * 1000 : $timeout;
+    my $expires = $timeout ? ( $class->datas->{_utime} + $timeout ) * 1000 : $timeout;
 
     # Timestamp
     my $timestamp = time() * 1000;
@@ -106,7 +103,7 @@ sub _buildZimbraPreAuthUrl {
     my $computed_value =
       hmac_sha1_hex( "$account|$by|$expires|$timestamp", $key );
 
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
+    $class->lmLog(
         "Compute value $account|$by|$expires|$timestamp into $computed_value",
         'debug' );
 
@@ -114,7 +111,7 @@ sub _buildZimbraPreAuthUrl {
     my $zimbra_url =
 "$url?account=$account&by=$by&timestamp=$timestamp&expires=$expires&preauth=$computed_value";
 
-    Lemonldap::NG::Handler::Main::Logger->lmLog(
+    $class->lmLog(
         "Build Zimbra URL: $zimbra_url", 'debug' );
 
     return $zimbra_url;
