@@ -66,8 +66,10 @@ my @links = (
 
 splice @index, 21, 2, @links;
 
-# Remove external logos
+# Remove external logos and replace them by a default image
 system('rm -rf media/applications/ media/logos/');
+system('find . -name \*.html -exec sed -i "s#/media/applications/[^\.]*\.\(png\|jpg\|gif\)#/media/icons/kmultiple.png#g" {} \;');
+system('find . -name \*.html -exec sed -i "s#/media/logos/[^\.]*\.\(png\|jpg\|gif\)#/media/icons/kmultiple.png#g" {} \;');
 
 # Remove Facebook iframe (See http://jira.ow2.org/browse/LEMONLDAP-674)
 system('sed -i "/<iframe/d" pages/contact.html');
