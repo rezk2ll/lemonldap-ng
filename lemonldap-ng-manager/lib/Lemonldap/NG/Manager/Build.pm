@@ -35,6 +35,9 @@ my $mainTree;
 my @sessionTypes;
 my @simpleHashKeys;
 my $authParams;
+my $issuerParams;
+my $samlServiceParams;
+my $oidcServiceParams;
 
 my $attributes = Lemonldap::NG::Manager::Build::Attributes::attributes();
 my $jsonEnc    = JSON->new()->allow_nonref;
@@ -190,9 +193,12 @@ EOF
         print F "our \$${_}Keys = '$cnodesRe{$_}';\n";
     }
 
-    $tmp = Dumper($authParams);
-    $tmp =~ s/VAR1/authParameters/s;
-    print F "\nour $tmp\n";
+    $tmp = "our \$authParameters = {\n";
+    while(my($k,$v) = each %$authParams) {
+        $tmp .= "  $k => [qw(".join(' ',@$v).")],\n";
+    }
+
+    print F "\n$tmp};\n";
 
     print F "\n1;\n";
     close F;
@@ -413,7 +419,6 @@ sub scanTree {
                             my @cn = $self->scanLeaf( $sn->{nodes} );
                             $authParams->{$sn->{title}} = \@cn;
                         }
-                        print STDERR Dumper($authParams);
                         foreach my $sn ( @{ $jleaf->{"_$n"} } ) {
                             $sn->{show} = 'false';
                         }

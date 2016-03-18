@@ -30,158 +30,28 @@ our $samlSPMetaDataNodeKeys = 'samlSPMetaData(?:Options(?:N(?:ameID(?:SessionKey
 our $virtualHostKeys = '(?:vhost(?:(?:Aliase|Http)s|Maintenance|Port)|(?:exportedHeader|locationRule)s|post)';
 
 our $authParameters = {
-          'adParams' => [
-                          'ADPwdMaxAge',
-                          'ADPwdExpireWarning'
-                        ],
-          'apacheParams' => [
-                              'apacheAuthnLevel'
-                            ],
-          'browseridParams' => [
-                                 'browserIdAuthnLevel',
-                                 'browserIdAutoLogin',
-                                 'browserIdVerificationURL',
-                                 'browserIdSiteName',
-                                 'browserIdSiteLogo',
-                                 'browserIdBackgroundColor'
-                               ],
-          'casParams' => [
-                           'CAS_authnLevel',
-                           'CAS_url',
-                           'CAS_CAFile',
-                           'CAS_renew',
-                           'CAS_gateway',
-                           'CAS_pgtFile',
-                           'CAS_proxiedServices'
-                         ],
-          'choiceParams' => [
-                              'authChoiceParam',
-                              'authChoiceModules'
-                            ],
-          'dbiParams' => [
-                           'dbiAuthnLevel',
-                           'dbiExportedVars',
-                           'dbiAuthChain',
-                           'dbiAuthUser',
-                           'dbiAuthPassword',
-                           'dbiUserChain',
-                           'dbiUserUser',
-                           'dbiUserPassword',
-                           'dbiAuthTable',
-                           'dbiUserTable',
-                           'dbiAuthLoginCol',
-                           'dbiAuthPasswordCol',
-                           'dbiPasswordMailCol',
-                           'userPivot',
-                           'dbiAuthPasswordHash'
-                         ],
-          'demoParams' => [
-                            'demoExportedVars'
-                          ],
-          'facebookParams' => [
-                                'facebookAuthnLevel',
-                                'facebookExportedVars',
-                                'facebookAppId',
-                                'facebookAppSecret'
-                              ],
-          'googleParams' => [
-                              'googleAuthnLevel',
-                              'googleExportedVars'
-                            ],
-          'ldapParams' => [
-                            'ldapAuthnLevel',
-                            'ldapExportedVars',
-                            'ldapServer',
-                            'ldapPort',
-                            'ldapBase',
-                            'managerDn',
-                            'managerPassword',
-                            'ldapTimeout',
-                            'ldapVersion',
-                            'ldapRaw',
-                            'LDAPFilter',
-                            'AuthLDAPFilter',
-                            'mailLDAPFilter',
-                            'ldapSearchDeref',
-                            'ldapGroupBase',
-                            'ldapGroupObjectClass',
-                            'ldapGroupAttributeName',
-                            'ldapGroupAttributeNameUser',
-                            'ldapGroupAttributeNameSearch',
-                            'ldapGroupRecursive',
-                            'ldapGroupAttributeNameGroup',
-                            'ldapPpolicyControl',
-                            'ldapSetPassword',
-                            'ldapChangePasswordAsUser',
-                            'ldapPwdEnc',
-                            'ldapUsePasswordResetAttribute',
-                            'ldapPasswordResetAttribute',
-                            'ldapPasswordResetAttributeValue'
-                          ],
-          'multiParams' => [
-                             'multiAuthStack',
-                             'multiUserDBStack'
-                           ],
-          'nullParams' => [
-                            'nullAuthnLevel'
-                          ],
-          'oidcParams' => [
-                            'oidcAuthnLevel',
-                            'oidcRPCallbackGetParam',
-                            'oidcRPStateTimeout'
-                          ],
-          'openidParams' => [
-                              'openIdAuthnLevel',
-                              'openIdExportedVars',
-                              'openIdSecret',
-                              'openIdIDPList'
-                            ],
-          'proxyParams' => [
-                             'soapAuthService',
-                             'remoteCookieName',
-                             'soapSessionService'
-                           ],
-          'radiusParams' => [
-                              'radiusAuthnLevel',
-                              'radiusSecret',
-                              'radiusServer'
-                            ],
-          'remoteParams' => [
-                              'remotePortal',
-                              'remoteCookieName',
-                              'remoteGlobalStorage',
-                              'remoteGlobalStorageOptions'
-                            ],
-          'slaveParams' => [
-                             'slaveAuthnLevel',
-                             'slaveExportedVars',
-                             'slaveUserHeader',
-                             'slaveMasterIP',
-                             'slaveHeaderName',
-                             'slaveHeaderContent'
-                           ],
-          'sslParams' => [
-                           'SSLAuthnLevel',
-                           'SSLVar'
-                         ],
-          'twitterParams' => [
-                               'twitterAuthnLevel',
-                               'twitterKey',
-                               'twitterSecret',
-                               'twitterAppName'
-                             ],
-          'webiDParams' => [
-                             'webIDAuthnLevel',
-                             'webIDExportedVars',
-                             'webIDWhitelist'
-                           ],
-          'yubikeyParams' => [
-                               'yubikeyAuthnLevel',
-                               'yubikeyClientID',
-                               'yubikeySecretKey',
-                               'yubikeyPublicIDSize'
-                             ]
-        };
-
+  apacheParams => [qw(apacheAuthnLevel)],
+  adParams => [qw(ADPwdMaxAge ADPwdExpireWarning)],
+  yubikeyParams => [qw(yubikeyAuthnLevel yubikeyClientID yubikeySecretKey yubikeyPublicIDSize)],
+  openidParams => [qw(openIdAuthnLevel openIdExportedVars openIdSecret openIdIDPList)],
+  dbiParams => [qw(dbiAuthnLevel dbiExportedVars dbiAuthChain dbiAuthUser dbiAuthPassword dbiUserChain dbiUserUser dbiUserPassword dbiAuthTable dbiUserTable dbiAuthLoginCol dbiAuthPasswordCol dbiPasswordMailCol userPivot dbiAuthPasswordHash)],
+  multiParams => [qw(multiAuthStack multiUserDBStack)],
+  choiceParams => [qw(authChoiceParam authChoiceModules)],
+  browseridParams => [qw(browserIdAuthnLevel browserIdAutoLogin browserIdVerificationURL browserIdSiteName browserIdSiteLogo browserIdBackgroundColor)],
+  radiusParams => [qw(radiusAuthnLevel radiusSecret radiusServer)],
+  proxyParams => [qw(soapAuthService remoteCookieName soapSessionService)],
+  twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName)],
+  webiDParams => [qw(webIDAuthnLevel webIDExportedVars webIDWhitelist)],
+  casParams => [qw(CAS_authnLevel CAS_url CAS_CAFile CAS_renew CAS_gateway CAS_pgtFile CAS_proxiedServices)],
+  demoParams => [qw(demoExportedVars)],
+  facebookParams => [qw(facebookAuthnLevel facebookExportedVars facebookAppId facebookAppSecret)],
+  nullParams => [qw(nullAuthnLevel)],
+  remoteParams => [qw(remotePortal remoteCookieName remoteGlobalStorage remoteGlobalStorageOptions)],
+  googleParams => [qw(googleAuthnLevel googleExportedVars)],
+  slaveParams => [qw(slaveAuthnLevel slaveExportedVars slaveUserHeader slaveMasterIP slaveHeaderName slaveHeaderContent)],
+  sslParams => [qw(SSLAuthnLevel SSLVar)],
+  oidcParams => [qw(oidcAuthnLevel oidcRPCallbackGetParam oidcRPStateTimeout)],
+  ldapParams => [qw(ldapAuthnLevel ldapExportedVars ldapServer ldapPort ldapBase managerDn managerPassword ldapTimeout ldapVersion ldapRaw LDAPFilter AuthLDAPFilter mailLDAPFilter ldapSearchDeref ldapGroupBase ldapGroupObjectClass ldapGroupAttributeName ldapGroupAttributeNameUser ldapGroupAttributeNameSearch ldapGroupRecursive ldapGroupAttributeNameGroup ldapPpolicyControl ldapSetPassword ldapChangePasswordAsUser ldapPwdEnc ldapUsePasswordResetAttribute ldapPasswordResetAttribute ldapPasswordResetAttributeValue)],
+};
 
 1;
