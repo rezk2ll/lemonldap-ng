@@ -7,7 +7,7 @@ use base qw(Exporter);
 
 our $VERSION = '2.0.0';
 
-our %EXPORT_TAGS = ( 'all' => [qw($simpleHashKeys $specialNodeKeys $oidcOPMetaDataNodeKeys $oidcRPMetaDataNodeKeys $samlIDPMetaDataNodeKeys $samlSPMetaDataNodeKeys $virtualHostKeys $specialNodeHash @sessionTypes)] );
+our %EXPORT_TAGS = ( 'all' => [qw($simpleHashKeys $specialNodeKeys $oidcOPMetaDataNodeKeys $oidcRPMetaDataNodeKeys $samlIDPMetaDataNodeKeys $samlSPMetaDataNodeKeys $virtualHostKeys $specialNodeHash @sessionTypes $authParameters)] );
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT      = ( @{ $EXPORT_TAGS{'all'} } );
 
@@ -28,5 +28,160 @@ our $oidcRPMetaDataNodeKeys = 'oidcRPMetaData(?:Options(?:I(?:DToken(?:Expiratio
 our $samlIDPMetaDataNodeKeys = 'samlIDPMetaData(?:Options(?:A(?:llow(?:LoginFromIDP|ProxiedAuthn)|daptSessionUtime)|Check(?:S[LS]OMessageSignature|Conditions)|(?:RequestedAuthnContex|NameIDForma)t|S(?:ignS[LS]OMessage|[LS]OBinding)|(?:EncryptionMod|IsPassiv)e|Force(?:Authn|UTF8))|ExportedAttributes|XML)';
 our $samlSPMetaDataNodeKeys = 'samlSPMetaData(?:Options(?:N(?:ameID(?:SessionKey|Format)|otOnOrAfterTimeout)|S(?:essionNotOnOrAfterTimeout|ignS[LS]OMessage)|(?:CheckS[LS]OMessageSignatur|OneTimeUs)e|En(?:ableIDPInitiatedURL|cryptionMode))|ExportedAttributes|XML)';
 our $virtualHostKeys = '(?:vhost(?:(?:Aliase|Http)s|Maintenance|Port)|(?:exportedHeader|locationRule)s|post)';
+
+our $authParameters = {
+          'adParams' => [
+                          'ADPwdMaxAge',
+                          'ADPwdExpireWarning'
+                        ],
+          'apacheParams' => [
+                              'apacheAuthnLevel'
+                            ],
+          'browseridParams' => [
+                                 'browserIdAuthnLevel',
+                                 'browserIdAutoLogin',
+                                 'browserIdVerificationURL',
+                                 'browserIdSiteName',
+                                 'browserIdSiteLogo',
+                                 'browserIdBackgroundColor'
+                               ],
+          'casParams' => [
+                           'CAS_authnLevel',
+                           'CAS_url',
+                           'CAS_CAFile',
+                           'CAS_renew',
+                           'CAS_gateway',
+                           'CAS_pgtFile',
+                           'CAS_proxiedServices'
+                         ],
+          'choiceParams' => [
+                              'authChoiceParam',
+                              'authChoiceModules'
+                            ],
+          'dbiParams' => [
+                           'dbiAuthnLevel',
+                           'dbiExportedVars',
+                           'dbiAuthChain',
+                           'dbiAuthUser',
+                           'dbiAuthPassword',
+                           'dbiUserChain',
+                           'dbiUserUser',
+                           'dbiUserPassword',
+                           'dbiAuthTable',
+                           'dbiUserTable',
+                           'dbiAuthLoginCol',
+                           'dbiAuthPasswordCol',
+                           'dbiPasswordMailCol',
+                           'userPivot',
+                           'dbiAuthPasswordHash'
+                         ],
+          'demoParams' => [
+                            'demoExportedVars'
+                          ],
+          'facebookParams' => [
+                                'facebookAuthnLevel',
+                                'facebookExportedVars',
+                                'facebookAppId',
+                                'facebookAppSecret'
+                              ],
+          'googleParams' => [
+                              'googleAuthnLevel',
+                              'googleExportedVars'
+                            ],
+          'ldapParams' => [
+                            'ldapAuthnLevel',
+                            'ldapExportedVars',
+                            'ldapServer',
+                            'ldapPort',
+                            'ldapBase',
+                            'managerDn',
+                            'managerPassword',
+                            'ldapTimeout',
+                            'ldapVersion',
+                            'ldapRaw',
+                            'LDAPFilter',
+                            'AuthLDAPFilter',
+                            'mailLDAPFilter',
+                            'ldapSearchDeref',
+                            'ldapGroupBase',
+                            'ldapGroupObjectClass',
+                            'ldapGroupAttributeName',
+                            'ldapGroupAttributeNameUser',
+                            'ldapGroupAttributeNameSearch',
+                            'ldapGroupRecursive',
+                            'ldapGroupAttributeNameGroup',
+                            'ldapPpolicyControl',
+                            'ldapSetPassword',
+                            'ldapChangePasswordAsUser',
+                            'ldapPwdEnc',
+                            'ldapUsePasswordResetAttribute',
+                            'ldapPasswordResetAttribute',
+                            'ldapPasswordResetAttributeValue'
+                          ],
+          'multiParams' => [
+                             'multiAuthStack',
+                             'multiUserDBStack'
+                           ],
+          'nullParams' => [
+                            'nullAuthnLevel'
+                          ],
+          'oidcParams' => [
+                            'oidcAuthnLevel',
+                            'oidcRPCallbackGetParam',
+                            'oidcRPStateTimeout'
+                          ],
+          'openidParams' => [
+                              'openIdAuthnLevel',
+                              'openIdExportedVars',
+                              'openIdSecret',
+                              'openIdIDPList'
+                            ],
+          'proxyParams' => [
+                             'soapAuthService',
+                             'remoteCookieName',
+                             'soapSessionService'
+                           ],
+          'radiusParams' => [
+                              'radiusAuthnLevel',
+                              'radiusSecret',
+                              'radiusServer'
+                            ],
+          'remoteParams' => [
+                              'remotePortal',
+                              'remoteCookieName',
+                              'remoteGlobalStorage',
+                              'remoteGlobalStorageOptions'
+                            ],
+          'slaveParams' => [
+                             'slaveAuthnLevel',
+                             'slaveExportedVars',
+                             'slaveUserHeader',
+                             'slaveMasterIP',
+                             'slaveHeaderName',
+                             'slaveHeaderContent'
+                           ],
+          'sslParams' => [
+                           'SSLAuthnLevel',
+                           'SSLVar'
+                         ],
+          'twitterParams' => [
+                               'twitterAuthnLevel',
+                               'twitterKey',
+                               'twitterSecret',
+                               'twitterAppName'
+                             ],
+          'webiDParams' => [
+                             'webIDAuthnLevel',
+                             'webIDExportedVars',
+                             'webIDWhitelist'
+                           ],
+          'yubikeyParams' => [
+                               'yubikeyAuthnLevel',
+                               'yubikeyClientID',
+                               'yubikeySecretKey',
+                               'yubikeyPublicIDSize'
+                             ]
+        };
+
 
 1;
