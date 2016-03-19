@@ -960,13 +960,6 @@ sub compactConf {
     my $self = shift;
     my $conf = $self->newConf or die("No new conf");
 
-    # Remove unused issuerDB parameters
-    foreach my $k ( keys %$issuerParameters ) {
-        unless ( $conf->{ $k . "Activation" } ) {
-            delete $conf->{$_} foreach ( @{ $issuerParameters->{$k} } );
-        }
-    }
-
     # Remove unused auth parameters
     my %keep;
     foreach my $type (qw(authentication userDB passwordDB)) {
@@ -1003,15 +996,24 @@ sub compactConf {
         }
     }
 
-    # Remove SAML service unless used
-    unless ( $keep{saml} or $conf->{issuerDBSAMLActivation} ) {
-        delete $conf->{$_} foreach (@$samlServiceParameters);
-    }
+    # Disabled for now:
 
-    # Remove OpenIF-Connect service unless used
-    unless ( $keep{oidc} or $conf->{issuerDBOpenIDConnectActivation} ) {
-        delete $conf->{$_} foreach (@$oidcServiceParameters);
-    }
+    ## Remove unused issuerDB parameters
+    #foreach my $k ( keys %$issuerParameters ) {
+    #    unless ( $conf->{ $k . "Activation" } ) {
+    #        delete $conf->{$_} foreach ( @{ $issuerParameters->{$k} } );
+    #    }
+    #}
+
+    ## Remove SAML service unless used
+    #unless ( $keep{saml} or $conf->{issuerDBSAMLActivation} ) {
+    #    delete $conf->{$_} foreach (@$samlServiceParameters);
+    #}
+
+    ## Remove OpenIF-Connect service unless used
+    #unless ( $keep{oidc} or $conf->{issuerDBOpenIDConnectActivation} ) {
+    #    delete $conf->{$_} foreach (@$oidcServiceParameters);
+    #}
 }
 
 1;
