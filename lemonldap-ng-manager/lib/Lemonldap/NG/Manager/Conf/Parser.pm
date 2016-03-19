@@ -89,12 +89,10 @@ sub hdebug {
 sub check {
     my $self = shift;
     hdebug("# check()");
-    my $res;
     unless ( $self->newConf ) {
-        $res = $self->scanTree;
-        return 0 unless ($res);
+        return 0 unless ( $self->scanTree );
     }
-
+    $self->compactConf;
     unless ( $self->testNewConf ) {
         hdebug("  testNewConf() failed");
         return 0;
@@ -956,6 +954,64 @@ sub _globalTest {
         }
     }
     return $result;
+}
+
+sub compactConf {
+    my $self = shift;
+    my $conf = $self->newConf or die("No new conf");
+
+    # Remove unused issuerDB parameters
+    foreach my $k ( keys %$issuerParameters ) {
+        unless ( $conf->{ $k . "Activation" } ) {
+            delete $conf->{$_} foreach ( @{ $issuerParameters->{$k} } );
+        }
+    }
+
+    # Remove unused auth parameters
+    my %keep;
+    foreach my $type (qw(authentication userDB passwordDB)) {
+        my $mod = $conf->{$type};
+        $mod =~ s/OpenIDConnect/oidc/i;
+        $mod = lc($mod);
+        $keep{$mod} = 1;
+    }
+    if ( $keep{multi} ) {
+        foreach my $prm (qw(multiAuthStack multiUserDBStack)) {
+            my @tmp = split /;\s*/, $conf->{$prm};
+            foreach (@tmp) {
+                s/^(\w+).*$/lc($1)/e;
+                s/OpenIDConnect/oidc/i;
+                $keep{$_} = 1;
+            }
+        }
+    }
+    if ( $keep{choice} ) {
+        foreach my $key ( values %{ $conf->{authChoiceModules} } ) {
+            my @tmp = split /[;|\|]/, $key;
+            foreach (@tmp) {
+                s/^(\w+).*$/lc($1)/e;
+                s/OpenIDConnect/oidc/i;
+                $keep{$_} = 1;
+            }
+        }
+    }
+    foreach my $key (%$authParameters) {
+        my $mod = $key;
+        $mod =~ s/Params$//;
+        unless ( $keep{$mod} ) {
+            delete $conf->{$_} foreach ( @{ $authParameters->{$key} } );
+        }
+    }
+
+    # Remove SAML service unless used
+    unless ( $keep{saml} or $conf->{issuerDBSAMLActivation} ) {
+        delete $conf->{$_} foreach (@$samlServiceParameters);
+    }
+
+    # Remove OpenIF-Connect service unless used
+    unless ( $keep{oidc} or $conf->{issuerDBOpenIDConnectActivation} ) {
+        delete $conf->{$_} foreach (@$oidcServiceParameters);
+    }
 }
 
 1;
