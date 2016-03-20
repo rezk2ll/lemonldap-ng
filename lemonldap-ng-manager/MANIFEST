@@ -14,6 +14,7 @@ lib/Lemonldap/NG/Manager/Build/Tree.pm
 lib/Lemonldap/NG/Manager/Cli.pm
 lib/Lemonldap/NG/Manager/Cli/Lib.pm
 lib/Lemonldap/NG/Manager/Conf.pm
+lib/Lemonldap/NG/Manager/Conf/Diff.pm
 lib/Lemonldap/NG/Manager/Conf/Parser.pm
 lib/Lemonldap/NG/Manager/Conf/Tests.pm
 lib/Lemonldap/NG/Manager/Conf/Zero.pm

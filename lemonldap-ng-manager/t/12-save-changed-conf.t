@@ -63,6 +63,11 @@ if ($bug) {
 
 count(7);
 
+# TODO: check result of this
+ok(&client->jsonResponse('/diff/1/2'), 'Diff called');
+
+count(1);
+
 unlink $confFiles->[1];
 done_testing( count() );
 

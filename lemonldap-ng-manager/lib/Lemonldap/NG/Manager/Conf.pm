@@ -54,6 +54,9 @@ sub addRoutes {
         ['POST']
       )
 
+      # Difference between confs
+      ->addRoute( diff => { ':conf1' => { ':conf2' => 'diff' } } )
+
       # Url loader
       ->addRoute( 'prx', undef, ['POST'] );
 }
@@ -1015,6 +1018,35 @@ sub applyConf {
     }
 
     return $status;
+}
+
+sub diff {
+    my ( $self, $req, @path ) = @_;
+    return $self->sendError( $req, 'to many arguments in path info', 400 )
+      if (@path);
+    my @cfgNum = ( $req->params('conf1'), $req->params('conf2') );
+    my @conf;
+
+    # Load the 2 configurations
+    for ( my $i = 0 ; $i < 2 ; $i++ ) {
+        if ( %{ $self->currentConf }
+            and $cfgNum[$i] == $self->currentConf->{cfgNum} )
+        {
+            $conf[$i] = $self->currentConf;
+        }
+        else {
+            $conf[$i] = $self->confAcc->getConf(
+                { cfgNum => $cfgNum[$i], raw => 1, noCache => 1 } );
+            return $self->sendError(
+                $req,
+"Configuration $cfgNum[$i] not available $Lemonldap::NG::Common::Conf::msg",
+                400
+            ) unless ( $conf[$i] );
+        }
+    }
+    require Lemonldap::NG::Manager::Conf::Diff;
+    return $self->sendJSONresponse( $req,
+        [ Lemonldap::NG::Manager::Conf::Diff->diff( $conf[0], $conf[1] ) ] );
 }
 
 1;
