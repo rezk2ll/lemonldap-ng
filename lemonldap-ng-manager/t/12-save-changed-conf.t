@@ -40,7 +40,7 @@ while ( my $c = shift @{ $resBody->{details}->{__changes__} } ) {
     my @d2 = grep { $_->{key} eq $c->{key} } @cmsg;
     @changes = grep { $_->{key} ne $c->{key} } @changes;
     @cmsg    = grep { $_->{key} ne $c->{key} } @cmsg;
-    ok( ( $cmp1 - @changes ) == ( $cmp2 - @cmsg ), "$c->{key} found" )
+    ok( ( $cmp1 - @changes ) == ( $cmp2 - @cmsg ), qq("$c->{key}" found) )
       or print STDERR 'Expect: '
       . ( $cmp1 - @changes )
       . ', got: '
@@ -64,9 +64,16 @@ if ($bug) {
 count(7);
 
 # TODO: check result of this
-ok(&client->jsonResponse('/diff/1/2'), 'Diff called');
+ok( $res = &client->jsonResponse('/diff/1/2'), 'Diff called' );
+my ( @c1, @c2 );
+ok( @c1 = sort ( keys %{ $res->[0] } ), 'diff() detects changes in conf 1' );
+ok( @c2 = sort ( keys %{ $res->[1] } ), 'diff() detects changes in conf 2' );
+ok( @c1 == 10, '10 keys changed in conf 1' )
+  or print STDERR "Expect: 10, get: " . $#c1 . "\n";
+ok( @c2 == 13, '13 keys changed or created in conf 2' )
+  or print STDERR "Expect: 13, get: " . @c2 . "\n";
 
-count(1);
+count(5);
 
 unlink $confFiles->[1];
 done_testing( count() );
