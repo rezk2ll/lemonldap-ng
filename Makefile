@@ -191,7 +191,7 @@ JSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/js $(SRCPORTALDIR)/example
 CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/css  $(SRCPORTALDIR)/example -type f -name '*.css' ! -name '*.min.css')
 
 # Coffee files
-COFFEESRCFILES:=$(shell find $(SRCMANAGERDIR)/site/coffee/ -type f)
+COFFEESRCFILES:=$(shell find $(SRCMANAGERDIR)/site/coffee/ -type f -name '*.coffee')
 COFFEEDSTFILES:=$(subst coffee/,static/js/,$(COFFEESRCFILES:.coffee=.js))
 
 # Minified files
