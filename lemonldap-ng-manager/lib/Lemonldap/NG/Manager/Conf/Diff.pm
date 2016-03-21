@@ -11,9 +11,12 @@ sub diff {
     my @res;
     my @keys = ( [ keys %{ $conf[0] } ], [ keys %{ $conf[1] } ] );
     while ( my $key = shift @{ $keys[0] } ) {
-
-        # TODO
-        next if ( $key eq 'applicationList' );
+        if ( $key eq 'applicationList' ) {
+            my @tmp = $self->appListDiff( $conf[0]->{$key}, $conf[1]->{$key} );
+            for ( my $i = 0 ; $i < @tmp ; $i++ ) {
+                $res[$i]->{$key} = $tmp[$i] if ( $tmp[$i] );
+            }
+        }
         if ( ref $conf[0]->{$key} eq 'HASH' ) {
             if ( ref $conf[1]->{$key} ) {
                 my @tmp = $self->diff( $conf[0]->{$key}, $conf[1]->{$key}, 1 );
@@ -40,8 +43,6 @@ sub diff {
         $keys[1] = [ grep { $_ ne $key } @{ $keys[1] } ];
     }
     while ( my $key = shift @{ $keys[1] } ) {
-
-        # TODO
         next if ( $key eq 'applicationList' );
         if (
             (
@@ -56,6 +57,96 @@ sub diff {
         }
     }
     return @res;
+}
+
+sub appListDiff {
+    my ( $self, @conf ) = @_;
+    my @res;
+    my @keys = ( [ sort keys %{ $conf[0] } ], [ sort keys %{ $conf[1] } ] );
+    my @catname = (
+        [ map { $conf[0]->{$_}->{catname} } sort keys %{ $conf[0] } ],
+        [ map { $conf[1]->{$_}->{catname} } sort keys %{ $conf[1] } ]
+    );
+    while ( my $key = shift @{ $keys[0] } ) {
+        my $cat = shift @{ $catname[0] };
+
+        # Checking for categories
+        if ( defined $cat ) {
+            my $found = undef;
+            my ( @newK, @newC );
+            for ( my $i = 0 ; $i < @{ $keys[1] } ; $i++ ) {
+                if ( $catname[0]->[$i] eq $cat ) {
+                    $found = $i;
+                }
+                else {
+                    push @newK, $keys[1]->[$i];
+                    push @newC, $catname[1]->[$i];
+                }
+            }
+
+            # Same category found, checking for subnodes
+            if ( defined $found ) {
+                my @tmp = $self->appListDiff( $conf[0]->{$key},
+                    $conf[1]->{ $keys[1]->[$found] } );
+                for ( my $i = 0 ; $i < @tmp ; $i++ ) {
+                    $res[$i]->{$cat} = $tmp[$i] if ( $tmp[$i] );
+                }
+
+                $keys[1]    = \@newK;
+                $catname[1] = \@newC;
+            }
+
+            # Category doesn't exists in new conf
+            else {
+                $res[0]->{$cat} = $conf[0]->{$key};
+            }
+        }
+
+        # Checking for applications
+        else {
+            my $name = $conf[0]->{$key}->{options}->{name};
+
+            # Searching for the same name in new conf
+            my $found = undef;
+            my ( @newK, @newC );
+            for ( my $i = 0 ; $i < @{ $keys[1] } ; $i++ ) {
+                if ( $conf[1]->{ $keys[1]->[$i] }->{options}->{name} eq $name )
+                {
+                    # Same name found, checking for diff in options
+                    my $diff = 0;
+                    foreach my $k (
+                        keys %{ $conf[1]->{ $keys[1]->[$i] }->{options} } )
+                    {
+                        unless (
+                            $conf[1]->{ $keys[1]->[$i] }->{options}->{$k} eq
+                            $conf[0]->{$key}->{options}->{$k} )
+                        {
+                            $res[0]->{$name}->{options}->{$k} =
+                              $conf[0]->{$key}->{options}->{$k};
+                            $res[1]->{$name}->{options}->{$k} =
+                              $conf[1]->{$key}->{options}->{$k};
+                        }
+                    }
+                    $found = $i unless ($diff);
+                }
+                else {
+                    push @newK, $keys[1]->[$i];
+                    push @newC, $catname[1]->[$i];
+                }
+            }
+            if ( defined $found ) {
+                $keys[1]    = \@newK;
+                $catname[1] = \@newC;
+            }
+
+            # Not found
+            else {
+                $res[0]->{$name} = $conf[0]->{$key};
+            }
+        }
+    }
+
+    # TODO: storing all remaining keys in $keys[1]
 }
 
 1;
