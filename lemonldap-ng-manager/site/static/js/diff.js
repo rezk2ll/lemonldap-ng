@@ -74,7 +74,7 @@ diff.html script
         var d;
         $scope.message = null;
         d = $q.defer();
-        return $http.get(scriptname + "/diff/" + $scope.cfg[0].cfgNum + "/" + $scope.cfg[1].cfgNum).then(function(response) {
+        return $http.get(scriptname + "diff/" + $scope.cfg[0].cfgNum + "/" + $scope.cfg[1].cfgNum).then(function(response) {
           $scope.data = response.data;
           return $scope.waiting = false;
         }, function(response) {
@@ -93,7 +93,8 @@ diff.html script
               return init();
             } else {
               if ($scope.cfg[0].prev) {
-                return getCfg(1, $scope.cfg[0].prev).then(function() {
+                $scope.cfg[1] = $scope.cfg[0];
+                return getCfg(0, $scope.cfg[0].prev).then(function() {
                   return init();
                 });
               } else {

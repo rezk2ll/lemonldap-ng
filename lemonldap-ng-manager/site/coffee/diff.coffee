@@ -69,7 +69,7 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 	init = ->
 		$scope.message = null
 		d = $q.defer()
-		$http.get("#{scriptname}/diff/#{$scope.cfg[0].cfgNum}/#{$scope.cfg[1].cfgNum}").then (response) ->
+		$http.get("#{scriptname}diff/#{$scope.cfg[0].cfgNum}/#{$scope.cfg[1].cfgNum}").then (response) ->
 			$scope.data = response.data
 			$scope.waiting = false
 		, (response) ->
@@ -91,7 +91,8 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 					init()
 				else
 					if $scope.cfg[0].prev
-						getCfg 1, $scope.cfg[0].prev
+						$scope.cfg[1] = $scope.cfg[0]
+						getCfg 0, $scope.cfg[0].prev
 						.then ->
 							init()
 					else

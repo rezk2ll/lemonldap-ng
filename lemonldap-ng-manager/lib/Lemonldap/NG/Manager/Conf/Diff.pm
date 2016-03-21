@@ -82,8 +82,12 @@ sub diff {
         if (
             (
                 not ref( $conf[1]->{$key} )
-                and
-                ( $conf[2] or $conf[1]->{$key} ne $self->defaultValue($key) )
+                and (
+                    $conf[2]
+                    or (    defined $self->defaultValue($key)
+                        and defined $conf[1]->{$key}
+                        and $conf[1]->{$key} ne $self->defaultValue($key) )
+                )
             )
             or ( ref( $conf[1]->{$key} ) eq 'HASH' and %{ $conf[1]->{$key} } )
           )
