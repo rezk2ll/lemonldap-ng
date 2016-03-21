@@ -56,6 +56,7 @@ sub addRoutes {
 
       # Difference between confs
       ->addRoute( diff => { ':conf1' => { ':conf2' => 'diff' } } )
+      ->addRoute( 'diff.html', undef, ['GET'] )
 
       # Url loader
       ->addRoute( 'prx', undef, ['POST'] );
