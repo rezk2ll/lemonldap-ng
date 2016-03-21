@@ -643,7 +643,7 @@ llapp.controller 'TreeCtrl', [
 				$scope.getCfg n[1]
 		$scope.$on '$locationChangeSuccess', pathEvent
 
-		# function `getCfg(n)
+		# function `getCfg(n)`:
 		# Download configuration metadatas
 		$scope.getCfg = (n) ->
 			if $scope.currentCfg.cfgNum != n

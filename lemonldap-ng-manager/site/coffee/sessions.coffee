@@ -92,6 +92,8 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 	$scope.currentScope = null
 	$scope.currentSession = null
 	$scope.menu = menu
+
+	# Import translations functions
 	$scope.translateP = $translator.translateP
 	$scope.translate = $translator.translate
 	$scope.translateTitle = (node) ->
