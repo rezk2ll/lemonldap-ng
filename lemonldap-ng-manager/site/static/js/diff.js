@@ -71,11 +71,14 @@ diff.html script
         return d.promise;
       };
       init = function() {
-        $scope.waiting = true;
-        return $q.all([$translator.init($scope.lang)]).then(function() {
+        var d;
+        $scope.message = null;
+        d = $q.defer();
+        return $http.get(scriptname + "/diff/" + $scope.cfg[0].cfgNum + "/" + $scope.cfg[1].cfgNum).then(function(response) {
+          $scope.data = response.data;
           return $scope.waiting = false;
-        }, function(resp) {
-          return $scope.waiting = false;
+        }, function(response) {
+          return $scope.message = ($scope.translate('error')) + " : " + response.statusLine;
         });
       };
       pathEvent = function(event, next, current) {
@@ -84,8 +87,8 @@ diff.html script
         if (n === null) {
           $location.path('/latest');
         } else {
-          console.log(n);
-          $q.all([getCfg(0, n[1]), n[2] != null ? getCfg(1, n[2]) : void 0]).then(function() {
+          $scope.waiting = true;
+          $q.all([$translator.init($scope.lang), getCfg(0, n[1]), n[2] != null ? getCfg(1, n[2]) : void 0]).then(function() {
             if (n[2] != null) {
               return init();
             } else {
@@ -94,7 +97,8 @@ diff.html script
                   return init();
                 });
               } else {
-                return console.log('TODO');
+                $scope.message = $scope.translate('noDatas');
+                return $scope.waiting = false;
               }
             }
           });

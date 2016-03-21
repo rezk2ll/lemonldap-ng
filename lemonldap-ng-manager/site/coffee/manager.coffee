@@ -111,7 +111,7 @@ llapp.controller 'TreeCtrl', [
 					message: ''
 					items: []
 				d.reject msgnok
-			return modalInstance.result
+			return d.promise
 
 		# FORM DISPLAY FUNCTIONS
 

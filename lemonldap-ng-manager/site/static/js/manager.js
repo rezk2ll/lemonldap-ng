@@ -137,7 +137,7 @@ This file contains:
           };
           return d.reject(msgnok);
         });
-        return modalInstance.result;
+        return d.promise;
       };
       $scope.menuClick = function(button) {
         if (button.popup) {

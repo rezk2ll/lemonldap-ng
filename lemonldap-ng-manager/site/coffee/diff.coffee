@@ -61,29 +61,28 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 				d.reject 'NOK'
 		else
 			d.resolve()
-		d.promise
+		return d.promise
 
 	# Intialization function
 	# Simply set $scope.waiting to false during $translator and tree root
 	# initialization
 	init = ->
-		$scope.waiting = true
-		$q.all [
-			$translator.init $scope.lang
-		]
-		.then ->
+		$scope.message = null
+		d = $q.defer()
+		$http.get("#{scriptname}/diff/#{$scope.cfg[0].cfgNum}/#{$scope.cfg[1].cfgNum}").then (response) ->
+			$scope.data = response.data
 			$scope.waiting = false
-		, (resp) ->
-			$scope.waiting = false
+		, (response) ->
+			$scope.message = "#{$scope.translate('error')} : #{response.statusLine}"
 
-	#TODO: pathEvent
 	pathEvent = (event, next, current) ->
 		n = next.match(new RegExp('#/(latest|[0-9]+)(?:/(latest|[0-9]+))?$'))
 		if n == null
 			$location.path '/latest'
 		else
-			console.log n
+			$scope.waiting = true
 			$q.all [
+				$translator.init $scope.lang
 				getCfg 0, n[1]
 				getCfg 1, n[2] if n[2]?
 			]
@@ -96,7 +95,8 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 						.then ->
 							init()
 					else
-						console.log 'TODO'
+						$scope.message = $scope.translate 'noDatas'
+						$scope.waiting = false
 		true
 
 	$scope.$on '$locationChangeSuccess', pathEvent

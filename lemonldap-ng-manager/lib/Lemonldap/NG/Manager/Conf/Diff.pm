@@ -24,12 +24,41 @@ sub diff {
                     $res[$i]->{$key} = $tmp[$i] if ( $tmp[$i] );
                 }
             }
-            else {
+            elsif ( %{ $conf[0]->{$key} } ) {
                 $res[0]->{$key} = $conf[0]->{$key};
             }
         }
         elsif ( ref $conf[0]->{$key} eq 'ARRAY' ) {
-            die 'TODO';
+            unless ( defined( $conf[1]->{$key} ) ) {
+                $res[0]->{$key} = $conf[0]->{$key};
+            }
+            else {
+                for ( my $i = 0 ; $i < @{ $conf[0]->{$key} } ; $i++ ) {
+                    if ( defined $conf[1]->{$key}->[$i] ) {
+                        if ( ref $conf[0]->{$key}->[$i] ) {
+
+                            # TODO: array comp
+                        }
+                        elsif (
+                            $conf[0]->{$key}->[$i] ne $conf[1]->{$key}->[$i] )
+                        {
+                            push @{ $res[0]->{$key} }, $conf[0]->{$key}->[$i];
+                            push @{ $res[1]->{$key} }, $conf[1]->{$key}->[$i];
+                        }
+                    }
+                    else {
+                        push @{ $res[0]->{$key} }, $conf[0]->{$key}->[$i];
+                    }
+                }
+                for (
+                    my $i = @{ $conf[0]->{$key} } ;
+                    $i < @{ $conf[1]->{$key} } ;
+                    $i++
+                  )
+                {
+                    push @{ $res[1]->{$key} }, $conf[1]->{$key}->[$i];
+                }
+            }
         }
         elsif ( exists $conf[1]->{$key} ) {
             if ( $conf[0]->{$key} ne $conf[1]->{$key} ) {
@@ -37,7 +66,13 @@ sub diff {
                 $res[1]->{$key} = $conf[1]->{$key};
             }
         }
-        elsif ( $conf[2] or $conf[0]->{$key} ne $self->defaultValue($key) ) {
+        elsif (
+            $conf[2]
+            or (    defined( $conf[0]->{$key} )
+                and defined( $self->defaultValue($key) )
+                and $conf[0]->{$key} ne $self->defaultValue($key) )
+          )
+        {
             $res[0]->{$key} = $conf[0]->{$key};
         }
         $keys[1] = [ grep { $_ ne $key } @{ $keys[1] } ];
