@@ -17,7 +17,7 @@ sub diff {
                 $res[$i]->{$key} = $tmp[$i] if ( $tmp[$i] );
             }
         }
-        if ( ref $conf[0]->{$key} eq 'HASH' ) {
+        elsif ( ref $conf[0]->{$key} eq 'HASH' ) {
             if ( ref $conf[1]->{$key} ) {
                 my @tmp = $self->diff( $conf[0]->{$key}, $conf[1]->{$key}, 1 );
                 for ( my $i = 0 ; $i < @tmp ; $i++ ) {
@@ -62,25 +62,23 @@ sub diff {
 sub appListDiff {
     my ( $self, @conf ) = @_;
     my @res;
-    my @keys = ( [ sort keys %{ $conf[0] } ], [ sort keys %{ $conf[1] } ] );
-    my @catname = (
-        [ map { $conf[0]->{$_}->{catname} } sort keys %{ $conf[0] } ],
-        [ map { $conf[1]->{$_}->{catname} } sort keys %{ $conf[1] } ]
+    my @keys = (
+        [ sort grep { $_ !~ /^(?:catname|type)$/ } keys %{ $conf[0] } ],
+        [ sort grep { $_ !~ /^(?:catname|type)$/ } keys %{ $conf[1] } ]
     );
     while ( my $key = shift @{ $keys[0] } ) {
-        my $cat = shift @{ $catname[0] };
 
         # Checking for categories
-        if ( defined $cat ) {
+        if ( $conf[0]->{$key}->{type} eq 'category' ) {
+            my $cat   = $conf[0]->{$key}->{catname};
             my $found = undef;
             my ( @newK, @newC );
             for ( my $i = 0 ; $i < @{ $keys[1] } ; $i++ ) {
-                if ( $catname[0]->[$i] eq $cat ) {
+                if ( $conf[1]->{ $keys[1]->[$i] }->{catname} eq $cat ) {
                     $found = $i;
                 }
                 else {
                     push @newK, $keys[1]->[$i];
-                    push @newC, $catname[1]->[$i];
                 }
             }
 
@@ -92,8 +90,7 @@ sub appListDiff {
                     $res[$i]->{$cat} = $tmp[$i] if ( $tmp[$i] );
                 }
 
-                $keys[1]    = \@newK;
-                $catname[1] = \@newC;
+                $keys[1] = \@newK;
             }
 
             # Category doesn't exists in new conf
@@ -131,12 +128,10 @@ sub appListDiff {
                 }
                 else {
                     push @newK, $keys[1]->[$i];
-                    push @newC, $catname[1]->[$i];
                 }
             }
             if ( defined $found ) {
-                $keys[1]    = \@newK;
-                $catname[1] = \@newC;
+                $keys[1] = \@newK;
             }
 
             # Not found
@@ -146,7 +141,28 @@ sub appListDiff {
         }
     }
 
-    # TODO: storing all remaining keys in $keys[1]
+    while ( my $key = shift @{ $keys[1] } ) {
+        my @tmp = $self->_copyAppList( $conf[1]->{$key} );
+        $res[1]->{ $tmp[0] } = $tmp[1];
+    }
+    return @res;
+}
+
+sub _copyAppList {
+    my ( $self, $conf ) = @_;
+    my %res;
+    if ( $conf->{type} eq 'category' ) {
+        foreach ( grep { $_ !~ /^(?:catname|type)$/ } keys %$conf ) {
+            my @tmp = $self->( $conf->{$_} );
+            $res{ $tmp[0] } = $tmp[1];
+        }
+        $res{type}    = 'category';
+        $res{catname} = $conf->{catname};
+        return $conf->{catname} => \%res;
+    }
+    else {
+        return $conf->{options}->{name} => $conf;
+    }
 }
 
 1;
