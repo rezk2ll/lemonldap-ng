@@ -260,7 +260,9 @@ all:	configure common handler manager portal
 
 configure:	json common_conf handler_conf portal_conf manager_conf
 
-minify: $(JSDSTFILES) $(CSSDSTFILES)
+js: $(COFFEEDSTFILES)
+
+minify: js $(JSDSTFILES) $(CSSDSTFILES)
 
 $(SRCMANAGERDIR)/site/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee
 	@if which coffee >/dev/null; then \
