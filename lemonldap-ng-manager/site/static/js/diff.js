@@ -20,6 +20,7 @@ diff.html script
       $scope.waiting = true;
       $scope.showM = false;
       $scope.cfg = [];
+      $scope.data = {};
       $scope.translateTitle = function(node) {
         return $translator.translateField(node, 'title');
       };
@@ -75,12 +76,27 @@ diff.html script
         $scope.message = null;
         d = $q.defer();
         return $http.get(scriptname + "diff/" + $scope.cfg[0].cfgNum + "/" + $scope.cfg[1].cfgNum).then(function(response) {
-          $scope.data = response.data;
+          $scope.data = [];
+          readDiff($scope.data, response.data[0], response.data[1]);
           return $scope.waiting = false;
         }, function(response) {
           return $scope.message = ($scope.translate('error')) + " : " + response.statusLine;
         });
       };
+      readDiff(function(scope, c1, c2) {
+        var k, results, v;
+        results = [];
+        for (k in c1) {
+          v = c1[k];
+          if (!k.match(/^cfg/)) {
+            console.log(k, typeof v);
+            results.push($scope.data[k] = v);
+          } else {
+            results.push(void 0);
+          }
+        }
+        return results;
+      });
       pathEvent = function(event, next, current) {
         var n;
         n = next.match(new RegExp('#/(latest|[0-9]+)(?:/(latest|[0-9]+))?$'));

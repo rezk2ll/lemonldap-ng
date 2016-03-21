@@ -29,6 +29,7 @@ README
 REST-API.md
 scripts/lmConfigEditor
 scripts/testConfBackend.pl
+site/coffee/diff.coffee
 site/coffee/llApp.coffee
 site/coffee/manager.coffee
 site/coffee/notifications.coffee
@@ -120,6 +121,8 @@ site/static/forms/virtualHostContainer.html
 site/static/forms/white.html
 site/static/js/conftree.js
 site/static/js/conftree.min.js
+site/static/js/diff.js
+site/static/js/diff.min.js
 site/static/js/filterFunctions.js
 site/static/js/filterFunctions.min.js
 site/static/js/llApp.js
@@ -143,6 +146,7 @@ site/static/logos/llng-icon-32.png
 site/static/logos/llng-logo-32.png
 site/static/logos/pastel.png
 site/static/struct.json
+site/templates/diff.tpl
 site/templates/footer.tpl
 site/templates/header.tpl
 site/templates/manager.tpl

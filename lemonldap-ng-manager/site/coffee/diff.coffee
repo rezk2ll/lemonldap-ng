@@ -14,6 +14,7 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 	$scope.waiting = true
 	$scope.showM = false
 	$scope.cfg = []
+	$scope.data = {}
 
 	# Import translations functions
 	$scope.translateTitle = (node) ->
@@ -70,10 +71,17 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 		$scope.message = null
 		d = $q.defer()
 		$http.get("#{scriptname}diff/#{$scope.cfg[0].cfgNum}/#{$scope.cfg[1].cfgNum}").then (response) ->
-			$scope.data = response.data
+			$scope.data = []
+			readDiff($scope.data,response.data[0],response.data[1])
 			$scope.waiting = false
 		, (response) ->
 			$scope.message = "#{$scope.translate('error')} : #{response.statusLine}"
+
+	readDiff (scope,c1,c2) ->
+		for k,v of c1
+			unless k.match /^cfg/
+				console.log k,typeof v
+				$scope.data[k] = v
 
 	pathEvent = (event, next, current) ->
 		n = next.match(new RegExp('#/(latest|[0-9]+)(?:/(latest|[0-9]+))?$'))
