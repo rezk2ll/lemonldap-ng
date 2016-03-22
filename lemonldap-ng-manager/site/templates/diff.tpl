@@ -37,61 +37,46 @@
 
   <script type="text/ng-template" id="nodes_renderer.html">
     <div ui-tree-handle class="tree-node tree-node-content panel-info">
-      <span ng-if="node.nodes||node.newnodes||node.oldnodes">
-        <a class="btn btn-node btn-sm" ng-click="toggle(this)">
-          <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}"></span>
-        </a>
-      </span>
-      <span ng-if="node.newvalue||node.oldvalue||node.value">
-        <a class="btn btn-node btn-sm" ng-click="toggle(this)">
-          <span class="glyphicon glyphicon-eye-open"></span>
-        </a>
-      </span>
+      <span ng-include="'arrow.html'"></span>
       <span ng-click="toggle(this)">{{node.title}}</span>
     </div>
-    <ol ui-tree-nodes="" ng-model="node" ng-class="{hidden: collapsed}">
-      <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'" collapsed="true"></li>
-      <li ng-repeat="node in node.newnodes" ui-tree-node ng-include="'newnodes_renderer.html'" collapsed="true"></li>
-      <li ng-repeat="node in node.oldnodes" ui-tree-node ng-include="'oldnodes_renderer.html'" collapsed="true"></li>
+    <ol ui-tree-nodes="" ng-model="node" ng-class="{hidden: collapsed}" ng-include="'subnodes.html'">
     </ol>
   </script>
   <script type="text/ng-template" id="newnodes_renderer.html">
     <div ui-tree-handle class="tree-node tree-node-content panel-info">
-      <span ng-if="node.nodes||node.newnodes||node.oldnodes">
-        <a class="btn btn-node btn-sm" ng-click="toggle(this)">
-          <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}"></span>
-        </a>
-      </span>
-      <span ng-if="node.newvalue||node.oldvalue||node.value">
-        <a class="btn btn-node btn-sm" ng-click="toggle(this)">
-          <span class="glyphicon glyphicon-eye-open"></span>
-        </a>
-      </span>
+      <span ng-include="'arrow.html'"></span>
       <span ng-click="toggle(this)" style="color:#0A0">{{node.title}}</span>
     </div>
-    <ol ui-tree-nodes="" ng-model="node" ng-class="{hidden: collapsed}">
-      <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'" collapsed="true"></li>
-      <li ng-repeat="node in node.newnodes" ui-tree-node ng-include="'newnodes_renderer.html'" collapsed="true"></li>
+    <ol ui-tree-nodes="" ng-model="node" ng-class="{hidden: collapsed}" ng-include="'subnodes.html'">
     </ol>
   </script>
   <script type="text/ng-template" id="oldnodes_renderer.html">
     <div ui-tree-handle class="tree-node tree-node-content panel-info">
-      <span>
-        <a class="btn btn-node btn-sm" ng-click="toggle(this)">
-          <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}"></span>
-        </a>
-      </span>
-      <span ng-if="node.newvalue||node.oldvalue||node.value">
-        <a class="btn btn-node btn-sm" ng-click="toggle(this)">
-          <span class="glyphicon glyphicon-eye-open"></span>
-        </a>
-      </span>
+      <span ng-include="'arrow.html'"></span>
       <span ng-click="toggle(this)" style="color:#A00">{{node.title}}</span>
     </div>
-    <ol ui-tree-nodes="" ng-model="node" ng-class="{hidden: collapsed}">
-      <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'" collapsed="true"></li>
-      <li ng-repeat="node in node.oldnodes" ui-tree-node ng-include="'oldnodes_renderer.html'" collapsed="true"></li>
+    <ol ui-tree-nodes="" ng-model="node" ng-class="{hidden: collapsed}" ng-include="'subnodes.html'">
     </ol>
+  </script>
+
+  <script type="text/ng-template" id="arrow.html">
+    <span ng-if="node.nodes||node.newnodes||node.oldnodes">
+      <a class="btn btn-node btn-sm" ng-click="toggle(this)">
+        <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}"></span>
+      </a>
+    </span>
+    <span ng-if="node.newvalue||node.oldvalue||node.value">
+      <a class="btn btn-node btn-sm" ng-click="toggle(this)">
+        <span class="glyphicon glyphicon-eye-open"></span>
+      </a>
+    </span>
+  </script>
+
+  <script type="text/ng-template" id="subnodes.html">
+    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'" collapsed="true"></li>
+    <li ng-repeat="node in node.newnodes" ui-tree-node ng-include="'newnodes_renderer.html'" collapsed="true"></li>
+    <li ng-repeat="node in node.oldnodes" ui-tree-node ng-include="'oldnodes_renderer.html'" collapsed="true"></li>
   </script>
 
   <TMPL_INCLUDE NAME="scripts.tpl">

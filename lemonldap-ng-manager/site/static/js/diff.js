@@ -80,21 +80,6 @@ diff.html script
         d = $q.defer();
         return $http.get(scriptname + "diff/" + $scope.cfg[0].cfgNum + "/" + $scope.cfg[1].cfgNum).then(function(response) {
           $scope.data = [];
-          $scope.data = [
-            {
-              title: "p",
-              newnodes: [
-                {
-                  title: "d",
-                  newvalue: "d"
-                }
-              ]
-            }, {
-              title: "r"
-            }, {
-              title: "s"
-            }
-          ];
           $scope.data = readDiff(response.data[0], response.data[1]);
           return $scope.waiting = false;
         }, function(response) {
