@@ -76,24 +76,28 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 		$http.get("#{scriptname}diff/#{$scope.cfg[0].cfgNum}/#{$scope.cfg[1].cfgNum}").then (response) ->
 			data = []
 			data = readDiff(response.data[0],response.data[1])
-			$scope.data = buildTree(data);
+			$scope.data = buildTree(data)
 			$scope.message = ''
 			$scope.waiting = false
 		, (response) ->
 			$scope.message = "#{$scope.translate('error')} : #{response.statusLine}"
 
-	readDiff = (c1,c2) ->
+	readDiff = (c1,c2,tr=true) ->
 		res = []
 		for k,v of c1
-			tmp =
-				title: k
+			if tr
+				tmp =
+					title: $scope.translate(k)
+					id: k
+			else
+				tmp = title: k
 			unless k.match /^cfg(?:Num|Log|Author(?:IP)?|Date)$/
 				if typeof v == 'object'
 					if v.constructor == 'array'
 						tmp.oldvalue = v
 						tmp.newvalue = c2[k]
 					else if typeof c2[k] == 'object'
-						tmp.nodes = readDiff c1[k],c2[k]
+						tmp.nodes = readDiff c1[k],c2[k], false
 					else
 						tmp.oldnodes = toNodes v, 'old'
 				else
@@ -102,8 +106,12 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 				res.push tmp
 		for k,v of c2
 			unless (k.match /^cfg(?:Num|Log|Author(?:IP)?|Date)$/) or c1[k]?
-				tmp =
-					title: k
+				if tr
+					tmp =
+						title: $scope.translate(k)
+						id: k
+				else
+					tmp = title: k
 				if typeof v == 'object'
 					if v.constructor == 'array'
 						tmp.newvalue = v
@@ -117,8 +125,7 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 	toNodes = (c,s) ->
 		res = []
 		for k,v of c
-			tmp =
-				title:k
+			tmp = title:k
 			if typeof v == 'object'
 				if v.constructor == 'array'
 					tmp["#{s}value"] = v
@@ -135,7 +142,7 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 		res = []
 		for elem in data
 			offset = res
-			path = if reverseTree[elem.title]? then reverseTree[elem.title].split '/' else ''
+			path = if reverseTree[elem.id]? then reverseTree[elem.id].split '/' else ''
 			for node in path
 				if node.length > 0
 					if offset.length
@@ -146,12 +153,12 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 								found = true
 						unless found
 							offset.push
-								title: node
+								title: $scope.translate node
 								nodes: []
 							offset = offset[offset.length-1].nodes
 					else
 						offset.push
-							title: node
+							title: $scope.translate node
 							nodes: []
 						offset = offset[0].nodes
 			offset.push elem

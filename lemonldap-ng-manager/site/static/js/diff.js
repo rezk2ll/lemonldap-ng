@@ -89,21 +89,31 @@ diff.html script
           return $scope.message = ($scope.translate('error')) + " : " + response.statusLine;
         });
       };
-      readDiff = function(c1, c2) {
+      readDiff = function(c1, c2, tr) {
         var k, res, tmp, v;
+        if (tr == null) {
+          tr = true;
+        }
         res = [];
         for (k in c1) {
           v = c1[k];
-          tmp = {
-            title: k
-          };
+          if (tr) {
+            tmp = {
+              title: $scope.translate(k),
+              id: k
+            };
+          } else {
+            tmp = {
+              title: k
+            };
+          }
           if (!k.match(/^cfg(?:Num|Log|Author(?:IP)?|Date)$/)) {
             if (typeof v === 'object') {
               if (v.constructor === 'array') {
                 tmp.oldvalue = v;
                 tmp.newvalue = c2[k];
               } else if (typeof c2[k] === 'object') {
-                tmp.nodes = readDiff(c1[k], c2[k]);
+                tmp.nodes = readDiff(c1[k], c2[k], false);
               } else {
                 tmp.oldnodes = toNodes(v, 'old');
               }
@@ -117,9 +127,16 @@ diff.html script
         for (k in c2) {
           v = c2[k];
           if (!((k.match(/^cfg(?:Num|Log|Author(?:IP)?|Date)$/)) || (c1[k] != null))) {
-            tmp = {
-              title: k
-            };
+            if (tr) {
+              tmp = {
+                title: $scope.translate(k),
+                id: k
+              };
+            } else {
+              tmp = {
+                title: k
+              };
+            }
             if (typeof v === 'object') {
               if (v.constructor === 'array') {
                 tmp.newvalue = v;
@@ -165,7 +182,7 @@ diff.html script
         for (i = 0, len = data.length; i < len; i++) {
           elem = data[i];
           offset = res;
-          path = reverseTree[elem.title] != null ? reverseTree[elem.title].split('/') : '';
+          path = reverseTree[elem.id] != null ? reverseTree[elem.id].split('/') : '';
           for (j = 0, len1 = path.length; j < len1; j++) {
             node = path[j];
             if (node.length > 0) {
@@ -180,14 +197,14 @@ diff.html script
                 }
                 if (!found) {
                   offset.push({
-                    title: node,
+                    title: $scope.translate(node),
                     nodes: []
                   });
                   offset = offset[offset.length - 1].nodes;
                 }
               } else {
                 offset.push({
-                  title: node,
+                  title: $scope.translate(node),
                   nodes: []
                 });
                 offset = offset[0].nodes;
