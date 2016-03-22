@@ -21,12 +21,17 @@ diff.html script
       $scope.showM = false;
       $scope.cfg = [];
       $scope.data = {};
+      $scope.currentNode = null;
       $scope.translateTitle = function(node) {
         return $translator.translateField(node, 'title');
       };
       $scope.translateP = $translator.translateP;
       $scope.translate = $translator.translate;
       $scope.toggle = function(scope) {
+        return scope.toggle();
+      };
+      $scope.stoggle = function(scope, node) {
+        $scope.currentNode = node;
         return scope.toggle();
       };
       $scope.menuClick = function(button) {
@@ -60,11 +65,15 @@ diff.html script
         if (($scope.cfg[b] == null) || $scope.cfg[b] !== n) {
           $http.get("" + confPrefix + n).then(function(response) {
             var date;
-            $scope.cfg[b] = response.data;
-            date = new Date(response.data.cfgDate * 1000);
-            $scope.cfg[b].date = date.toLocaleString();
-            console.log("Metadatas of cfg " + n + " loaded");
-            return d.resolve('OK');
+            if (response && response.data) {
+              $scope.cfg[b] = response.data;
+              date = new Date(response.data.cfgDate * 1000);
+              $scope.cfg[b].date = date.toLocaleString();
+              console.log("Metadatas of cfg " + n + " loaded");
+              return d.resolve('OK');
+            } else {
+              return d.reject(response);
+            }
           }, function(response) {
             console.log(response);
             return d.reject('NOK');
@@ -244,6 +253,9 @@ diff.html script
                 return $scope.waiting = false;
               }
             }
+          }, function() {
+            $scope.message = $scope.translate('error');
+            return $scope.waiting = false;
           });
         }
         return true;

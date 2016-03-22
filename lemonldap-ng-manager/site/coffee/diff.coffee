@@ -15,6 +15,7 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 	$scope.showM = false
 	$scope.cfg = []
 	$scope.data = {}
+	$scope.currentNode = null
 
 	# Import translations functions
 	$scope.translateTitle = (node) ->
@@ -23,6 +24,10 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 	$scope.translate = $translator.translate
 
 	$scope.toggle = (scope) ->
+		scope.toggle()
+
+	$scope.stoggle = (scope,node) ->
+		$scope.currentNode = node
 		scope.toggle()
 
 	# Handle menu items
@@ -55,11 +60,14 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 		d = $q.defer()
 		if not $scope.cfg[b]? or $scope.cfg[b] != n
 			$http.get("#{confPrefix}#{n}").then (response) ->
-				$scope.cfg[b] = response.data
-				date = new Date response.data.cfgDate * 1000
-				$scope.cfg[b].date = date.toLocaleString()
-				console.log "Metadatas of cfg #{n} loaded"
-				d.resolve 'OK'
+				if response and response.data
+					$scope.cfg[b] = response.data
+					date = new Date response.data.cfgDate * 1000
+					$scope.cfg[b].date = date.toLocaleString()
+					console.log "Metadatas of cfg #{n} loaded"
+					d.resolve 'OK'
+				else
+					d.reject response
 			, (response) ->
 				console.log response
 				d.reject 'NOK'
@@ -181,7 +189,7 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 				getCfg 0, n[1]
 				getCfg 1, n[2] if n[2]?
 			]
-			.then () ->
+			.then ->
 				if n[2]?
 					init()
 				else
@@ -193,6 +201,9 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 					else
 						$scope.data = []
 						$scope.waiting = false
+			, ->
+				$scope.message = $scope.translate('error')
+				$scope.waiting = false
 		true
 
 	$scope.$on '$locationChangeSuccess', pathEvent

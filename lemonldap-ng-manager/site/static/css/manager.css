@@ -231,3 +231,9 @@ dl,
   min-height: auto;
   border: none;
 }
+.old {
+  color: #A00;
+}
+.new {
+  color: #0A0;
+}
