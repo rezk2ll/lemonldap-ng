@@ -1,6 +1,13 @@
 Label: LemonLDAP::NG
-Suite: unstable
-Codename: squeeze
+Suite: oldstable
+Codename: oldstable
+Architectures: i386 amd64 powerpc sparc armel source
+Components: main
+SignWith: yes
+
+Label: LemonLDAP::NG
+Suite: stable
+Codename: stable
 Architectures: i386 amd64 powerpc sparc armel source
 Components: main
 SignWith: yes
