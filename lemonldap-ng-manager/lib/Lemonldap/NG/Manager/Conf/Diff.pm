@@ -25,7 +25,7 @@ sub diff {
                 }
             }
             elsif ( %{ $conf[0]->{$key} } ) {
-                $res[0]->{$key} = $conf[0]->{$key};
+                $res[0]->{$key} = $conf[0]->{$key} if ( %{ $conf[0]->{$key} } );
             }
         }
         elsif ( ref $conf[0]->{$key} eq 'ARRAY' ) {
@@ -73,12 +73,11 @@ sub diff {
                 and $conf[0]->{$key} ne $self->defaultValue($key) )
           )
         {
-            $res[0]->{$key} = $conf[0]->{$key};
+            $res[0]->{$key} = $conf[0]->{$key} if ( defined $conf[0]->{$key} );
         }
         $keys[1] = [ grep { $_ ne $key } @{ $keys[1] } ];
     }
     while ( my $key = shift @{ $keys[1] } ) {
-        next if ( $key eq 'applicationList' );
         if (
             (
                 not ref( $conf[1]->{$key} )

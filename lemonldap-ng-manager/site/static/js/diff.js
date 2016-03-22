@@ -11,7 +11,7 @@ diff.html script
 
   llapp.controller('DiffCtrl', [
     '$scope', '$http', '$q', '$translator', '$location', function($scope, $http, $q, $translator, $location) {
-      var getCfg, init, pathEvent;
+      var getCfg, init, pathEvent, readDiff, toNodes;
       $scope.links = links;
       $scope.menulinks = menulinks;
       $scope.staticPrefix = staticPrefix;
@@ -26,6 +26,9 @@ diff.html script
       };
       $scope.translateP = $translator.translateP;
       $scope.translate = $translator.translate;
+      $scope.toggle = function(scope) {
+        return scope.toggle();
+      };
       $scope.menuClick = function(button) {
         if (button.popup) {
           window.open(button.popup);
@@ -77,26 +80,93 @@ diff.html script
         d = $q.defer();
         return $http.get(scriptname + "diff/" + $scope.cfg[0].cfgNum + "/" + $scope.cfg[1].cfgNum).then(function(response) {
           $scope.data = [];
-          readDiff($scope.data, response.data[0], response.data[1]);
+          $scope.data = [
+            {
+              title: "p",
+              newnodes: [
+                {
+                  title: "d",
+                  newvalue: "d"
+                }
+              ]
+            }, {
+              title: "r"
+            }, {
+              title: "s"
+            }
+          ];
+          $scope.data = readDiff(response.data[0], response.data[1]);
           return $scope.waiting = false;
         }, function(response) {
           return $scope.message = ($scope.translate('error')) + " : " + response.statusLine;
         });
       };
-      readDiff(function(scope, c1, c2) {
-        var k, results, v;
-        results = [];
+      readDiff = function(c1, c2) {
+        var k, res, tmp, v;
+        res = [];
         for (k in c1) {
           v = c1[k];
-          if (!k.match(/^cfg/)) {
-            console.log(k, typeof v);
-            results.push($scope.data[k] = v);
-          } else {
-            results.push(void 0);
+          tmp = {
+            title: k
+          };
+          if (!k.match(/^cfg(?:Num|Log|Author(?:IP)?|Date)$/)) {
+            if (typeof v === 'object') {
+              if (v.constructor === 'array') {
+                tmp.oldvalue = v;
+                tmp.newvalue = c2[k];
+              } else if (typeof c2[k] === 'object') {
+                tmp.nodes = readDiff(c1[k], c2[k]);
+              } else {
+                tmp.oldnodes = toNodes(v, 'old');
+              }
+            } else {
+              tmp.oldvalue = v;
+              tmp.newvalue = c2[k];
+            }
+            res.push(tmp);
           }
         }
-        return results;
-      });
+        for (k in c2) {
+          v = c2[k];
+          if (!((k.match(/^cfg(?:Num|Log|Author(?:IP)?|Date)$/)) || (c1[k] != null))) {
+            tmp = {
+              title: k
+            };
+            if (typeof v === 'object') {
+              if (v.constructor === 'array') {
+                tmp.newvalue = v;
+              } else {
+                tmp.newnodes = toNodes(v, 'new');
+              }
+            } else {
+              tmp.newvalue = v;
+            }
+            res.push(tmp);
+          }
+        }
+        return res;
+      };
+      toNodes = function(c, s) {
+        var k, res, tmp, v;
+        res = [];
+        for (k in c) {
+          v = c[k];
+          tmp = {
+            title: k
+          };
+          if (typeof v === 'object') {
+            if (v.constructor === 'array') {
+              tmp[s + "value"] = v;
+            } else {
+              tmp[s + "nodes"] = toNodes(c[k], s);
+            }
+          } else {
+            tmp[s + "value"] = v;
+          }
+          res.push(tmp);
+        }
+        return res;
+      };
       pathEvent = function(event, next, current) {
         var n;
         n = next.match(new RegExp('#/(latest|[0-9]+)(?:/(latest|[0-9]+))?$'));

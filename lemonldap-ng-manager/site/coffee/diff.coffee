@@ -22,6 +22,9 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 	$scope.translateP = $translator.translateP
 	$scope.translate = $translator.translate
 
+	$scope.toggle = (scope) ->
+		scope.toggle()
+
 	# Handle menu items
 	$scope.menuClick = (button) ->
 		if button.popup
@@ -72,16 +75,57 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 		d = $q.defer()
 		$http.get("#{scriptname}diff/#{$scope.cfg[0].cfgNum}/#{$scope.cfg[1].cfgNum}").then (response) ->
 			$scope.data = []
-			readDiff($scope.data,response.data[0],response.data[1])
+			$scope.data = readDiff(response.data[0],response.data[1])
 			$scope.waiting = false
 		, (response) ->
 			$scope.message = "#{$scope.translate('error')} : #{response.statusLine}"
 
-	readDiff (scope,c1,c2) ->
+	readDiff = (c1,c2) ->
+		res = []
 		for k,v of c1
-			unless k.match /^cfg/
-				console.log k,typeof v
-				$scope.data[k] = v
+			tmp =
+				title: k
+			unless k.match /^cfg(?:Num|Log|Author(?:IP)?|Date)$/
+				if typeof v == 'object'
+					if v.constructor == 'array'
+						tmp.oldvalue = v
+						tmp.newvalue = c2[k]
+					else if typeof c2[k] == 'object'
+						tmp.nodes = readDiff c1[k],c2[k]
+					else
+						tmp.oldnodes = toNodes v, 'old'
+				else
+					tmp.oldvalue = v
+					tmp.newvalue = c2[k]
+				res.push tmp
+		for k,v of c2
+			unless (k.match /^cfg(?:Num|Log|Author(?:IP)?|Date)$/) or c1[k]?
+				tmp =
+					title: k
+				if typeof v == 'object'
+					if v.constructor == 'array'
+						tmp.newvalue = v
+					else
+						tmp.newnodes = toNodes v, 'new'
+				else
+					tmp.newvalue = v
+				res.push tmp
+		return res
+
+	toNodes = (c,s) ->
+		res = []
+		for k,v of c
+			tmp =
+				title:k
+			if typeof v == 'object'
+				if v.constructor == 'array'
+					tmp["#{s}value"] = v
+				else
+					tmp["#{s}nodes"] = toNodes c[k], s
+			else
+				tmp["#{s}value"] = v
+			res.push tmp
+		return res
 
 	pathEvent = (event, next, current) ->
 		n = next.match(new RegExp('#/(latest|[0-9]+)(?:/(latest|[0-9]+))?$'))
