@@ -11,7 +11,7 @@ diff.html script
 
   llapp.controller('DiffCtrl', [
     '$scope', '$http', '$q', '$translator', '$location', function($scope, $http, $q, $translator, $location) {
-      var getCfg, init, pathEvent, readDiff, toNodes;
+      var buildTree, getCfg, init, pathEvent, readDiff, reverseTree, toNodes;
       $scope.links = links;
       $scope.menulinks = menulinks;
       $scope.staticPrefix = staticPrefix;
@@ -79,8 +79,11 @@ diff.html script
         $scope.message = null;
         d = $q.defer();
         return $http.get(scriptname + "diff/" + $scope.cfg[0].cfgNum + "/" + $scope.cfg[1].cfgNum).then(function(response) {
-          $scope.data = [];
-          $scope.data = readDiff(response.data[0], response.data[1]);
+          var data;
+          data = [];
+          data = readDiff(response.data[0], response.data[1]);
+          $scope.data = buildTree(data);
+          $scope.message = '';
           return $scope.waiting = false;
         }, function(response) {
           return $scope.message = ($scope.translate('error')) + " : " + response.statusLine;
@@ -152,6 +155,52 @@ diff.html script
         }
         return res;
       };
+      reverseTree = [];
+      buildTree = function(data) {
+        var elem, found, i, j, l, len, len1, len2, n, node, offset, path, res;
+        if (reverseTree == null) {
+          return data;
+        }
+        res = [];
+        for (i = 0, len = data.length; i < len; i++) {
+          elem = data[i];
+          offset = res;
+          path = reverseTree[elem.title] != null ? reverseTree[elem.title].split('/') : '';
+          for (j = 0, len1 = path.length; j < len1; j++) {
+            node = path[j];
+            if (node.length > 0) {
+              if (offset.length) {
+                found = false;
+                for (l = 0, len2 = offset.length; l < len2; l++) {
+                  n = offset[l];
+                  if (n.title === node) {
+                    offset = n.nodes;
+                    found = true;
+                  }
+                }
+                if (!found) {
+                  offset.push({
+                    title: node,
+                    nodes: []
+                  });
+                  offset = offset[offset.length - 1].nodes;
+                }
+              } else {
+                offset.push({
+                  title: node,
+                  nodes: []
+                });
+                offset = offset[0].nodes;
+              }
+            }
+          }
+          offset.push(elem);
+        }
+        return res;
+      };
+      $scope.newDiff = function() {
+        return $location.path("/" + $scope.cfg[0].cfgNum + "/" + $scope.cfg[1].cfgNum);
+      };
       pathEvent = function(event, next, current) {
         var n;
         n = next.match(new RegExp('#/(latest|[0-9]+)(?:/(latest|[0-9]+))?$'));
@@ -159,17 +208,22 @@ diff.html script
           $location.path('/latest');
         } else {
           $scope.waiting = true;
-          $q.all([$translator.init($scope.lang), getCfg(0, n[1]), n[2] != null ? getCfg(1, n[2]) : void 0]).then(function() {
+          $q.all([
+            $translator.init($scope.lang), $http.get(staticPrefix + "reverseTree.json").then(function(response) {
+              reverseTree = response.data;
+              return console.log("Structure loaded");
+            }), getCfg(0, n[1]), n[2] != null ? getCfg(1, n[2]) : void 0
+          ]).then(function() {
             if (n[2] != null) {
               return init();
             } else {
               if ($scope.cfg[0].prev) {
                 $scope.cfg[1] = $scope.cfg[0];
-                return getCfg(0, $scope.cfg[0].prev).then(function() {
+                return getCfg(0, $scope.cfg[1].prev).then(function() {
                   return init();
                 });
               } else {
-                $scope.message = $scope.translate('noDatas');
+                $scope.data = [];
                 return $scope.waiting = false;
               }
             }

@@ -74,8 +74,10 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 		$scope.message = null
 		d = $q.defer()
 		$http.get("#{scriptname}diff/#{$scope.cfg[0].cfgNum}/#{$scope.cfg[1].cfgNum}").then (response) ->
-			$scope.data = []
-			$scope.data = readDiff(response.data[0],response.data[1])
+			data = []
+			data = readDiff(response.data[0],response.data[1])
+			$scope.data = buildTree(data);
+			$scope.message = ''
 			$scope.waiting = false
 		, (response) ->
 			$scope.message = "#{$scope.translate('error')} : #{response.statusLine}"
@@ -127,6 +129,37 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 			res.push tmp
 		return res
 
+	reverseTree = []
+	buildTree = (data) ->
+		return data unless reverseTree?
+		res = []
+		for elem in data
+			offset = res
+			path = if reverseTree[elem.title]? then reverseTree[elem.title].split '/' else ''
+			for node in path
+				if node.length > 0
+					if offset.length
+						found = false
+						for n in offset
+							if n.title == node
+								offset = n.nodes
+								found = true
+						unless found
+							offset.push
+								title: node
+								nodes: []
+							offset = offset[offset.length-1].nodes
+					else
+						offset.push
+							title: node
+							nodes: []
+						offset = offset[0].nodes
+			offset.push elem
+		return res
+
+	$scope.newDiff = ->
+		$location.path("/#{$scope.cfg[0].cfgNum}/#{$scope.cfg[1].cfgNum}")
+
 	pathEvent = (event, next, current) ->
 		n = next.match(new RegExp('#/(latest|[0-9]+)(?:/(latest|[0-9]+))?$'))
 		if n == null
@@ -135,6 +168,9 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 			$scope.waiting = true
 			$q.all [
 				$translator.init $scope.lang
+				$http.get("#{staticPrefix}reverseTree.json").then (response) ->
+					reverseTree = response.data
+					console.log "Structure loaded"
 				getCfg 0, n[1]
 				getCfg 1, n[2] if n[2]?
 			]
@@ -144,11 +180,11 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 				else
 					if $scope.cfg[0].prev
 						$scope.cfg[1] = $scope.cfg[0]
-						getCfg 0, $scope.cfg[0].prev
+						getCfg 0, $scope.cfg[1].prev
 						.then ->
 							init()
 					else
-						$scope.message = $scope.translate 'noDatas'
+						$scope.data = []
 						$scope.waiting = false
 		true
 

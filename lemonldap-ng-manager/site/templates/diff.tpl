@@ -11,7 +11,18 @@
 
   <div id="content" class="row container-fluid">
     <div id="pleaseWait" ng-show="waiting"><span trspan="waitingForDatas"></span></div>
+
+    <!-- Tree -->
     <aside id="left" class="col-lg-4 col-md-4 col-sm-5 col-xs-12 scrollable " ng-class="{'hidden-xs':!showT}" role="complementary">
+      <div class="panel panel-default">
+        <div class="input-group input-group-sm">
+          <span class="input-group-addon">1</span>
+          <input class="form-control" size="2" type="integer" ng-model="cfg[0].cfgNum"/>
+          <span class="input-group-addon">2</span>
+          <input class="form-control" size="2" type="integer" ng-model="cfg[1].cfgNum"/>
+          <span class="input-group-addon link glyphicon glyphicon-refresh" ng-click="newDiff()"></span>
+        </div>
+      </div>
       <div class="region region-sidebar-first">
         <section id="block-superfish-1" class="block block-superfish clearfix">
           <div ui-tree data-drag-enabled="false" id="tree-root">
@@ -24,6 +35,7 @@
           </div>
         </section>
       </div>
+      <div class="hresizer hidden-xs" resizer="vertical" resizer-left="#left" resizer-right="#right"></div>
     </aside>
 
     <!-- Right div -->
@@ -36,7 +48,7 @@
   </div>
 
   <script type="text/ng-template" id="nodes_renderer.html">
-    <div ui-tree-handle class="tree-node tree-node-content panel-info">
+    <div ui-tree-handle class="tree-node tree-node-content panel-info tree-node-default">
       <span ng-include="'arrow.html'"></span>
       <span ng-click="toggle(this)">{{node.title}}</span>
     </div>
@@ -44,7 +56,7 @@
     </ol>
   </script>
   <script type="text/ng-template" id="newnodes_renderer.html">
-    <div ui-tree-handle class="tree-node tree-node-content panel-info">
+    <div ui-tree-handle class="tree-node tree-node-content panel-info tree-node-default">
       <span ng-include="'arrow.html'"></span>
       <span ng-click="toggle(this)" style="color:#0A0">{{node.title}}</span>
     </div>
@@ -52,7 +64,7 @@
     </ol>
   </script>
   <script type="text/ng-template" id="oldnodes_renderer.html">
-    <div ui-tree-handle class="tree-node tree-node-content panel-info">
+    <div ui-tree-handle class="tree-node tree-node-content panel-info tree-node-default">
       <span ng-include="'arrow.html'"></span>
       <span ng-click="toggle(this)" style="color:#A00">{{node.title}}</span>
     </div>
@@ -61,16 +73,12 @@
   </script>
 
   <script type="text/ng-template" id="arrow.html">
-    <span ng-if="node.nodes||node.newnodes||node.oldnodes">
-      <a class="btn btn-node btn-sm" ng-click="toggle(this)">
-        <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}"></span>
-      </a>
-    </span>
-    <span ng-if="node.newvalue||node.oldvalue||node.value">
-      <a class="btn btn-node btn-sm" ng-click="toggle(this)">
-        <span class="glyphicon glyphicon-eye-open"></span>
-      </a>
-    </span>
+    <a class="btn btn-node btn-sm" ng-click="toggle(this)" ng-if="node.nodes||node.newnodes||node.oldnodes">
+      <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}"></span>
+    </a>
+    <a class="btn btn-node btn-sm" ng-click="toggle(this)" ng-if="node.newvalue||node.oldvalue||node.value">
+      <span class="glyphicon glyphicon-eye-open"></span>
+    </a>
   </script>
 
   <script type="text/ng-template" id="subnodes.html">
