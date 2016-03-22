@@ -389,7 +389,7 @@ llapp.controller 'TreeCtrl', [
 					d2.resolve()
 			return d2.promise
 
-		$scope.duplicateNode = (name, type) ->
+		$scope.duplicateNode = (name, type, idkey) ->
 			cs = $scope.currentScope
 			_getAll($scope.currentNode).then ->
 				while cs.$modelValue.title != "#{type}s"

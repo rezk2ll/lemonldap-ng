@@ -469,7 +469,7 @@ This file contains:
         });
         return d2.promise;
       };
-      $scope.duplicateNode = function(name, type) {
+      $scope.duplicateNode = function(name, type, idkey) {
         var cs;
         cs = $scope.currentScope;
         return _getAll($scope.currentNode).then(function() {
