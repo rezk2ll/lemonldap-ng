@@ -20,6 +20,7 @@ has managerAttributesFile => ( isa => 'Str', is => 'ro', required => 1 );
 has defaultValuesFile     => ( isa => 'Str', is => 'ro', required => 1 );
 has confConstantsFile     => ( isa => 'Str', is => 'ro', required => 1 );
 has firstLmConfFile       => ( isa => 'Str', is => 'ro', required => 1 );
+has reverseTreeFile       => ( isa => 'Str', is => 'ro', required => 1 );
 
 my @managerAttrKeys = qw(keyTest keyMsgFail select type test msgFail default);
 my $format          = 'Creating %-69s: ';
@@ -364,6 +365,13 @@ $managerAttr}
     print STDERR "done\n";
 
     $self->buildZeroConf();
+
+    printf STDERR $format, $self->reverseTreeFile;
+    open( F, ">", $self->reverseTreeFile ) or die($!);
+    $jsonEnc->pretty(0);
+    print F $jsonEnc->encode($self->reverseScan(Lemonldap::NG::Manager::Build::Tree::tree(),'',{}));
+    close F;
+    print STDERR "done\n";
 }
 
 sub buildZeroConf {
@@ -554,6 +562,24 @@ sub scanLeaf1 {
     return @res;
 }
 
+sub reverseScan {
+    my ( $self, $tree, $path, $res ) = @_;
+    foreach my $elem ( @$tree ) {
+        $elem =~ s/^\*//;
+        if ( ref($elem) eq 'HASH' ) {
+            foreach (qw(nodes nodes_cond group)) {
+                $self->reverseScan($elem->{$_}, "$path$elem->{title}/", $res) if($elem->{$_});
+            }
+        }
+        else {
+            my $tmp = $path;
+            $tmp =~ s#/$##;
+            $res->{$elem} = $tmp;
+        }
+    }
+    return $res;
+}
+
 1;
 __END__
 
@@ -575,6 +601,7 @@ system.
     managerAttributesFile => 'lib/Lemonldap/NG/Manager/Attributes.pm',
     defaultValuesFile     => "lib/Lemonldap/NG/Common/Conf/DefaultValues.pm",
     firstLmConfFile       => "_example/conf/lmConf-1.js",
+    reverseTreeFile       => "site/static/reverseTree.json",
   );
 
 =head1 DESCRIPTION
