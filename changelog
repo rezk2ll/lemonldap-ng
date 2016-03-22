@@ -128,6 +128,17 @@ lemonldap-ng (1.9.0) stable; urgency=low
     * [LEMONLDAP-956] - Custom functions don't work with useSafeJail
     * [LEMONLDAP-957] - Replace $http.success() by .then()
 
+lemonldap-ng (1.4.7) stable; urgency=low
+
+    * [LEMONLDAP-802] - Apache2::Connection remote_ip not supported in Apache 2.4
+    * [LEMONLDAP-842] - manager configuration tree does not display correctly
+    * [LEMONLDAP-866] - Configuration deletion does not work
+    * [LEMONLDAP-958] - Infinite redirection loop when redirected from Handler for an error (403/500/503)
+    * [LEMONLDAP-964] - Links to change
+    * [LEMONLDAP-968] - Headers corrupted when authenticating with HTTP basic authentication on a protected application
+    * [LEMONLDAP-976] - $ENV is replaced by $datas->{ENV}
+    * [LEMONLDAP-980] - Error "password must be changed" when user not found in AD
+
 lemonldap-ng (1.4.6) stable; urgency=low
 
     * [LEMONLDAP-705] - SAML with Signature Method rsa-sha256
