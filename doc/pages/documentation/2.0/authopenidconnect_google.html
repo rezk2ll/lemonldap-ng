@@ -1,0 +1,113 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="google">Google</h1>
+<div class="level1">
+
+<p>
+<img src="../../../media/icons/kmultiple.png" class="mediacenter" alt="" />
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Google" [1-67] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+Do you we have to present <a href="http://www.google.com" class="urlextern" title="http://www.google.com"  rel="nofollow">Google</a>? The good news is that Google is a standard OpenID Provider, and so you can easily delegate the authentication of <abbr title="LemonLDAP::NG">LL::NG</abbr> to Google: <a href="https://developers.google.com/identity/protocols/OpenIDConnect" class="urlextern" title="https://developers.google.com/identity/protocols/OpenIDConnect"  rel="nofollow">https://developers.google.com/identity/protocols/OpenIDConnect</a>
+</p>
+
+<p>
+<p><div class="noteimportant">Google does not support logout trough OpenID Connect. If you close your session on <abbr title="LemonLDAP::NG">LL::NG</abbr> side, your Google session will still be open.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Presentation" [68-507] -->
+<h2 class="sectionedit3" id="register_on_google">Register on Google</h2>
+<div class="level2">
+
+<p>
+You need a Google developer account to access to <a href="https://console.developers.google.com/" class="urlextern" title="https://console.developers.google.com/"  rel="nofollow">https://console.developers.google.com/</a>
+</p>
+
+<p>
+Here you can go in <abbr title="Application Programming Interface">API</abbr> Manager and get new credentials (<code>client_id</code> and <code>client_secret</code>).
+</p>
+
+<p>
+You need to provide the callback URLs, for example <a href="https://auth.domain.com/?openidcallback=1" class="urlextern" title="https://auth.domain.com/?openidcallback=1"  rel="nofollow">https://auth.domain.com/?openidcallback=1</a>.
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Register on Google" [508-818] -->
+<h2 class="sectionedit4" id="declare_google_in_your_llng_server">Declare Google in your LL::NG server</h2>
+<div class="level2">
+
+<p>
+Go in Manager and create a new OpenID Connect provider. You can call it <code>google</code> for example.
+</p>
+
+<p>
+Click on <code>Metadata</code>, and use the OpenID Connect configuration <abbr title="Uniform Resource Locator">URL</abbr> to load them: <a href="https://accounts.google.com/.well-known/openid-configuration" class="urlextern" title="https://accounts.google.com/.well-known/openid-configuration"  rel="nofollow">https://accounts.google.com/.well-known/openid-configuration</a>.
+</p>
+
+<p>
+You can also load the JWKS data from the <abbr title="Uniform Resource Locator">URL</abbr> <a href="https://www.googleapis.com/oauth2/v3/certs" class="urlextern" title="https://www.googleapis.com/oauth2/v3/certs"  rel="nofollow">https://www.googleapis.com/oauth2/v3/certs</a>. But as Google rotate their keys, we will also configure a refresh interval on JKWS data.
+</p>
+
+<p>
+Go in <code>Exported attributes</code> to choose which attributes you want to collect. Google supports these claims:
+</p>
+<ul>
+<li class="level1"><div class="li"> email</div>
+</li>
+<li class="level1"><div class="li"> email_verified</div>
+</li>
+<li class="level1"><div class="li"> family_name</div>
+</li>
+<li class="level1"><div class="li"> given_name</div>
+</li>
+<li class="level1"><div class="li"> locale</div>
+</li>
+<li class="level1"><div class="li"> name</div>
+</li>
+<li class="level1"><div class="li"> picture</div>
+</li>
+<li class="level1"><div class="li"> sub</div>
+</li>
+</ul>
+
+<p>
+Now go in <code>Options</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> In <code>Configuration</code>, register the <code>client_id</code> and <code>client_secret</code> given by Google. Set also the configuration <abbr title="Uniform Resource Identifier">URI</abbr> with <a href="https://accounts.google.com/.well-known/openid-configuration" class="urlextern" title="https://accounts.google.com/.well-known/openid-configuration"  rel="nofollow">https://accounts.google.com/.well-known/openid-configuration</a>, and JWKS refresh, for example every day: 86400.</div>
+</li>
+<li class="level1"><div class="li"> In <code>Protocol</code>, adapt the <code>scope</code> to the exported attributes you want. You can for example use <code>openid profile email</code>.</div>
+</li>
+<li class="level1"><div class="li"> In <code>Display</code>, you can set the name and the logo</div>
+</li>
+</ul>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

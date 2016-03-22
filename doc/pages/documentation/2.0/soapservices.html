@@ -1,0 +1,127 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="soap_services">SOAP services</h1>
+<div class="level1">
+
+<p>
+Lemonldap::NG provides 2 SOAP servers :
+</p>
+<ul>
+<li class="level1"><div class="li"> the <a href="../../documentation/2.0/portal.html" class="wikilink1" title="documentation:2.0:portal">portal</a></div>
+</li>
+<li class="level1"><div class="li"> the manager (for internal use only)</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1 SECTION "SOAP services" [1-129] -->
+<h2 class="sectionedit2" id="portal_soap_services">Portal SOAP services</h2>
+<div class="level2">
+
+<p>
+SOAP functions are not accessible by network by default. SOAP functions are protected by Apache, you can change this in <a href="../../documentation/2.0/configlocation.html#portal" class="wikilink1" title="documentation:2.0:configlocation">Apache portal configuration</a>:
+</p>
+<pre class="code file apache">    <span class="co1"># SOAP functions for sessions management (disabled by default)</span>
+    &lt;<span class="kw3">Location</span> /index.pl/adminSessions&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;
+&nbsp;
+    <span class="co1"># SOAP functions for sessions access (disabled by default)</span>
+    &lt;<span class="kw3">Location</span> /index.pl/sessions&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;
+&nbsp;
+    <span class="co1"># SOAP functions for configuration access (disabled by default)</span>
+    &lt;<span class="kw3">Location</span> /index.pl/config&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;
+&nbsp;
+    <span class="co1"># SOAP functions for notification insertion (disabled by default)</span>
+    &lt;<span class="kw3">Location</span> /index.pl/notification&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;</pre>
+
+<p>
+<p><div class="notetip">You can create a SOAP only portal by setting “soapOnly = 1” in lemonldap-ng.ini (section PORTAL)
+</div></p>
+</p>
+<ul>
+<li class="level1"><div class="li"> Read-only functions (index.pl/sessions or index.pl/adminSessions paths):</div>
+<ul>
+<li class="level2"><div class="li"> <strong>getCookies(user,password)</strong>: authentication system. Returns cookie(s) name and values</div>
+</li>
+<li class="level2"><div class="li"> <strong>getAttributes(cookieValue)</strong>: get elements stored in session</div>
+</li>
+<li class="level2"><div class="li"> <strong>isAuthorizedURI(cookieValue,url)</strong>: check if user is granted to access to the function</div>
+</li>
+<li class="level2"><div class="li"> <strong>getMenuApplications(cookieValue)</strong>: return a list of authorizated applications (based on menu calculation)</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Read/Write functions (index.pl/adminSessions paths):</div>
+<ul>
+<li class="level2"><div class="li"> <strong>setAttributes(cookieValue,hashtable)</strong>: update a session</div>
+</li>
+<li class="level2"><div class="li"> <strong>newSession</strong>: create a session (return attributes)</div>
+</li>
+<li class="level2"><div class="li"> <strong>deleteSession</strong>: delete a session</div>
+</li>
+<li class="level2"><div class="li"> <strong>get_key_from_all_sessions</strong>: list all sessions and return asked keys</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Notification send function (index.pl/notification):</div>
+<ul>
+<li class="level2"><div class="li"> <strong>newNotification(xmlString)</strong>: insert a notification for a user (see <a href="../../documentation/2.0/notifications.html" class="wikilink1" title="documentation:2.0:notifications">Notifications system</a> for more)</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Notification delete function:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>deleteNotification</strong>: delete notification(s) for a user (see <a href="../../documentation/2.0/notifications.html" class="wikilink1" title="documentation:2.0:notifications">Notifications system</a> for more)</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+<p><div class="noteimportant">When you use <a href="../../documentation/2.0/soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP sessions backend</a>, it is recommended to use read-only <abbr title="Uniform Resource Locator">URL</abbr> (<a href="http://portal/index.pl/sessions" class="urlextern" title="http://portal/index.pl/sessions"  rel="nofollow">http://portal/index.pl/sessions</a>). Write session path is needed only if you use a remote session explorer or a remote portal
+
+</div></p>
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Portal SOAP services" [130-2479] -->
+<h2 class="sectionedit3" id="wsdl_file">WSDL file</h2>
+<div class="level2">
+
+<p>
+When portal is installed, a file named portal.wsdl is created. It can be upgraded using buildPortalWSDL script.
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

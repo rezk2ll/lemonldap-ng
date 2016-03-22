@@ -1,0 +1,389 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="manage_virtual_hosts">Manage virtual hosts</h1>
+<div class="level1">
+
+<p>
+LemonLDAP::NG configuration is build around Apache or Nginx virtual hosts. Each virtual host is a protected resource, with access rules, headers, POST data and options.
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Manage virtual hosts" [1-206] -->
+<h2 class="sectionedit2" id="apache_configuration">Apache configuration</h2>
+<div class="level2">
+
+<p>
+To protect a virtual host in Apache, the LemonLDAP::NG Handler must be activated (see <a href="../../documentation/2.0/configlocation.html#apache" class="wikilink1" title="documentation:2.0:configlocation">Apache global configuration</a>).
+</p>
+
+<p>
+Then you can take any virtual host, and simply add this line to protect it:
+</p>
+<pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
+
+</div>
+<!-- EDIT2 SECTION "Apache configuration" [207-530] -->
+<h3 class="sectionedit3" id="hosted_application">Hosted application</h3>
+<div class="level3">
+
+<p>
+Example of a protected virtual host for a local application:
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+        <span class="kw1">ServerName</span> localsite.example.com
+&nbsp;
+        PerlHeaderParserHandler Lemonldap::NG::Handler
+&nbsp;
+        <span class="kw1">DocumentRoot</span> /var/www/localsite
+&nbsp;
+        <span class="kw1">ErrorLog</span> /var/log/apache2/localsite_error.log
+        <span class="kw1">CustomLog</span> /var/log/apache2/localsite_access.log combined
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+</div>
+<!-- EDIT3 SECTION "Hosted application" [531-938] -->
+<h3 class="sectionedit4" id="reverse_proxy">Reverse proxy</h3>
+<div class="level3">
+
+<p>
+Example of a protected virtual host with LemonLDAP::NG as reverse proxy:
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+        <span class="kw1">ServerName</span> application.example.com
+&nbsp;
+        PerlHeaderParserHandler Lemonldap::NG::Handler
+&nbsp;
+        <span class="co1"># Reverse-Proxy</span>
+        <span class="kw1">ProxyPass</span> / http://private-name/
+        <span class="co1"># Change &quot;Location&quot; header in redirections</span>
+        <span class="kw1">ProxyPassReverse</span> / http://private-name/
+        <span class="co1"># Change domain cookies</span>
+        <span class="kw1">ProxyPassReverseCookieDomain</span> private-name application.example.com
+&nbsp;
+        <span class="kw1">ErrorLog</span> /var/log/apache2/proxysite_error.log
+        <span class="kw1">CustomLog</span> /var/log/apache2/proxysite_access.log combined
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+Same with remote server configured with the same host name:
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+        <span class="kw1">ServerName</span> application.example.com
+&nbsp;
+        PerlHeaderParserHandler Lemonldap::NG::Handler
+&nbsp;
+        <span class="co1"># Reverse-Proxy</span>
+        <span class="kw1">ProxyPass</span> / http://APPLICATION_IP/
+&nbsp;
+        <span class="kw1">ProxyPreserveHost</span> <span class="kw2">on</span>
+&nbsp;
+        <span class="kw1">ErrorLog</span> /var/log/apache2/proxysite_error.log
+        <span class="kw1">CustomLog</span> /var/log/apache2/proxysite_access.log combined
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+<p><div class="noteclassic">The <code>ProxyPreserveHost</code> directive will forward the Host header to the protected application.<br/>
+To learn more about using Apache as reverse-proxy, see <a href="http://httpd.apache.org/docs/current/mod/mod_proxy.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_proxy.html"  rel="nofollow">Apache documentation</a>.
+
+</div></p>
+</p>
+
+<p>
+<p><div class="notetip">Some applications need the <code>REMOTE_USER</code> environment variable to get the connected user, which is not set in reverse-proxy mode. In this case, see <a href="../../documentation/2.0/header_remote_user_conversion.html" class="wikilink1" title="documentation:2.0:header_remote_user_conversion">how convert header into environment variable</a>.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Reverse proxy" [939-2531] -->
+<h3 class="sectionedit5" id="add_a_floating_menu">Add a floating menu</h3>
+<div class="level3">
+
+<p>
+A little floating menu can be added to application with this simple Apache configuration:
+</p>
+<pre class="code file apache">PerlModule Lemonldap::NG::Handler::Menu
+PerlOutputFilterHandler Lemonldap::NG::Handler::Menu-&gt;run</pre>
+
+<p>
+Pages where this menu is displayed can be restricted, for example:
+</p>
+<pre class="code file apache">&lt;<span class="kw3">Location</span> /var/www/html/index.php&gt;
+PerlOutputFilterHandler Lemonldap::NG::Handler::Menu-&gt;run
+&lt;/<span class="kw3">Location</span>&gt;</pre>
+
+<p>
+<p><div class="noteimportant">You need to disable mod_deflate to use the floating menu
+</div></p>
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Add a floating menu" [2532-3048] -->
+<h2 class="sectionedit6" id="nginx_configuration">Nginx configuration</h2>
+<div class="level2">
+
+<p>
+To protect a virtual host in Nginx, the LemonLDAP::NG FastCGI server must be launched (see <a href="../../documentation/2.0/fastcgiserver.html" class="wikilink1" title="documentation:2.0:fastcgiserver">LemonLDAP::NG FastCGI server</a>).
+</p>
+
+<p>
+Then you can take any virtual host and modify it:
+</p>
+<ul>
+<li class="level1"><div class="li"> Declare the /lmauth endpoint</div>
+</li>
+</ul>
+<pre class="code file nginx">  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+&nbsp;
+    # Drop post datas
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+&nbsp;
+    # Keep original hostname
+    fastcgi_param HOST $http_host;
+&nbsp;
+    # Keep original request (LLNG server will received /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  }</pre>
+<ul>
+<li class="level1"><div class="li"> Protect the application (/ or /path/to/protect):</div>
+</li>
+</ul>
+<pre class="code file nginx">  location /path/to/protect {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+  }</pre>
+<ul>
+<li class="level1"><div class="li"> Use LUA or set manually the headers:</div>
+</li>
+</ul>
+<pre class="code file nginx">  location /path/to/protect {
+&nbsp;
+    ...
+&nbsp;
+    # IF LUA IS SUPPORTED
+    #include /etc/lemonldap-ng/nginx-lua-headers.conf;
+&nbsp;
+    # ELSE
+    # Set manually your headers
+    #auth_request_set $authuser $upstream_http_auth_user;
+    #proxy_set_header Auth-User $authuser;
+    # OR
+    #fastcgi_param HTTP_AUTH_USER $authuser;
+&nbsp;
+    # Then (if LUA not supported), change cookie header to hide LLNG cookie
+    #auth_request_set $lmcookie $upstream_http_cookie;
+    #proxy_set_header Cookie: $lmcookie;
+    # OR in the corresponding block
+    #fastcgi_param HTTP_COOKIE $lmcookie;
+&nbsp;
+    # Set REMOTE_USER (for FastCGI apps only)
+    #fastcgi_param REMOTE_USER $lmremote_user;
+  }</pre>
+
+</div>
+<!-- EDIT6 SECTION "Nginx configuration" [3049-4833] -->
+<h3 class="sectionedit7" id="hosted_application1">Hosted application</h3>
+<div class="level3">
+
+<p>
+Example of a protected virtual host for a local application:
+</p>
+<pre class="code file nginx"># Log format
+include /path/to/lemonldap-ng/nginx-lmlog.conf;
+server {
+  listen 80;
+  server_name myserver;
+  root /var/www/html;
+  # Internal authentication request
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass /path/to/llng-fastcgi-server.sock;
+    # Drop post datas
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+    # Keep original hostname
+    fastcgi_param HOST $http_host;
+    # Keep original request (LLNG server will received /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Client requests
+  location ~ \.php$ {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+    include fastcgi_params;
+    try_files $fastcgi_script_name =404;
+    fastcgi_pass /path/to/php-fpm/socket;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_intercept_errors on;
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    fastcgi_hide_header X-Powered-By;
+&nbsp;
+    ##################################
+    # PASSING HEADERS TO APPLICATION #
+    ##################################
+    # IF LUA IS SUPPORTED
+    #include /path/to/nginx-lua-headers.conf
+&nbsp;
+    # ELSE
+    # Set manually your headers
+    #auth_request_set $authuser $upstream_http_auth_user;
+    #fastcgi_param HTTP_AUTH_USER $authuser;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
+
+</div>
+<!-- EDIT7 SECTION "Hosted application" [4834-6463] -->
+<h3 class="sectionedit8" id="reverse_proxy1">Reverse proxy</h3>
+<div class="level3">
+
+<p>
+Example of a protected reverse-proxy:
+</p>
+<pre class="code file nginx"># Log format
+include /path/to/lemonldap-ng/nginx-lmlog.conf;
+server {
+  listen 80;
+  server_name myserver;
+  root /var/www/html;
+  # Internal authentication request
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass /path/to/llng-fastcgi-server.sock;
+    # Drop post datas
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+    # Keep original hostname
+    fastcgi_param HOST $http_host;
+    # Keep original request (LLNG server will received /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Client requests
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+&nbsp;
+    proxy_pass http://remote.server/;
+    include /etc/nginx/proxy_params;
+&nbsp;
+    ##################################
+    # PASSING HEADERS TO APPLICATION #
+    ##################################
+    # IF LUA IS SUPPORTED
+    #include /path/to/nginx-lua-headers.conf
+&nbsp;
+    # ELSE
+    # Set manually your headers
+    #auth_request_set $authuser $upstream_http_auth_user;
+    #proxy_set_header HTTP_AUTH_USER $authuser;
+  }
+}</pre>
+
+</div>
+<!-- EDIT8 SECTION "Reverse proxy" [6464-7758] -->
+<h2 class="sectionedit9" id="lemonldapng_configuration">LemonLDAP::NG configuration</h2>
+<div class="level2">
+
+<p>
+An apache virtual host protected by LemonLDAP::NG Handler must be registered in LemonLDAP::NG configuration.
+</p>
+
+<p>
+To do this, use the Manager, and go in <code>Virtual Hosts</code> branch. You can add, delete or modify a virtual host here.
+</p>
+
+<p>
+A virtual host contains:
+</p>
+<ul>
+<li class="level1"><div class="li"> Access rules: check user&#039;s right on <abbr title="Uniform Resource Locator">URL</abbr> patterns</div>
+</li>
+<li class="level1"><div class="li"> HTTP headers: forge information sent to protected applications</div>
+</li>
+<li class="level1"><div class="li"> POST data: use form replay</div>
+</li>
+<li class="level1"><div class="li"> Options: redirection port and protocol</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT9 SECTION "LemonLDAP::NG configuration" [7759-8246] -->
+<h3 class="sectionedit10" id="access_rules_and_http_headers">Access rules and HTTP headers</h3>
+<div class="level3">
+
+<p>
+See <strong><a href="../../documentation/2.0/writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Writing rules and headers</a></strong> to learn how to configure access control and HTTP headers sent to application by <abbr title="LemonLDAP::NG">LL::NG</abbr>.
+</p>
+
+</div>
+<!-- EDIT10 SECTION "Access rules and HTTP headers" [8247-8439] -->
+<h3 class="sectionedit11" id="post_data">POST data</h3>
+<div class="level3">
+
+<p>
+See <strong><a href="../../documentation/2.0/formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">Form replay</a></strong> to learn how to configure form replay to POST data on protected applications.
+</p>
+
+</div>
+<!-- EDIT11 SECTION "POST data" [8440-8574] -->
+<h3 class="sectionedit12" id="options">Options</h3>
+<div class="level3">
+
+<p>
+Some options are available:
+</p>
+<ul>
+<li class="level1"><div class="li"> Port</div>
+</li>
+<li class="level1"><div class="li"> HTTPS</div>
+</li>
+<li class="level1"><div class="li"> Maintenance mode</div>
+</li>
+</ul>
+
+<p>
+These options are used to build redirection <abbr title="Uniform Resource Locator">URL</abbr> (when user is not logged, or for <abbr title="Cross Domain Authentication">CDA</abbr> requests). By default, default values are used. These options are only here to override default values.
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

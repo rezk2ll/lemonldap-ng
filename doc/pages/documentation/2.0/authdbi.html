@@ -1,0 +1,271 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="databases">Databases</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [26-95] -->
+</div>
+<!-- EDIT1 SECTION "Databases" [1-96] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT3 SECTION "Presentation" [97-122] -->
+<h3 class="sectionedit4" id="drivers">Drivers</h3>
+<div class="level3">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can use a lot of databases as authentication, users and password backend:
+</p>
+<ul>
+<li class="level1"><div class="li"> MySQL</div>
+</li>
+<li class="level1"><div class="li"> PostGreSQL</div>
+</li>
+<li class="level1"><div class="li"> Oracle</div>
+</li>
+<li class="level1"><div class="li"> …</div>
+</li>
+</ul>
+
+<p>
+Indeed, any <a href="http://search.cpan.org/search?query=DBD%3A%3A&amp;mode=module" class="urlextern" title="http://search.cpan.org/search?query=DBD%3A%3A&amp;mode=module"  rel="nofollow">Perl DBD driver</a> can be used.
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Drivers" [123-371] -->
+<h3 class="sectionedit5" id="schema">Schema</h3>
+<div class="level3">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can use two tables:
+</p>
+<ul>
+<li class="level1"><div class="li"> Authentication table: where login and password are stored</div>
+</li>
+<li class="level1"><div class="li"> User table: where user data are stored (mail, name, etc.)</div>
+</li>
+</ul>
+
+<p>
+<p><div class="notetip">Authentication table and user table can be the same.
+</div></p>
+</p>
+
+<p>
+The password can be in plain text, or encoded with a standard SQL method:
+</p>
+<ul>
+<li class="level1"><div class="li"> SHA</div>
+</li>
+<li class="level1"><div class="li"> SHA1</div>
+</li>
+<li class="level1"><div class="li"> MD5</div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="example_1two_tables">Example 1: two tables</h4>
+<div class="level4">
+
+</div>
+
+<h5 id="authentication_table">Authentication table</h5>
+<div class="level5">
+<div class="table sectionedit6"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0"> id </th><th class="col1"> login </th><th class="col2"> password </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0"> 0 </td><td class="col1"> coudot </td><td class="col2"> 1f777a6581e478499f4284e54fe2d4a4e513dfff </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> 1 </td><td class="col1"> xguimard </td><td class="col2"> a15a18c8bb17e6f67886a9af1898c018b9f5a072 </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0"> 2 </td><td class="col1"> tchemineau </td><td class="col2"> 1f777a6581e478499f4284e54fe2d4a4e513dfff </td>
+	</tr>
+</table></div>
+<!-- EDIT6 TABLE [772-977] -->
+</div>
+
+<h5 id="user_table">User table</h5>
+<div class="level5">
+<div class="table sectionedit7"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0"> id </th><th class="col1"> user </th><th class="col2"> name </th><th class="col3"> mail </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0"> 0 </td><td class="col1"> coudot </td><td class="col2"> Clément OUDOT </td><td class="col3"> coudot@example.com </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> 1 </td><td class="col1"> tchemineau </td><td class="col2"> Thomas CHEMINEAU </td><td class="col3"> tchemineau@example.com </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0"> 2 </td><td class="col1"> xguimard </td><td class="col2"> Xavier GUIMARD </td><td class="col3"> xguimard@example.com </td>
+	</tr>
+</table></div>
+<!-- EDIT7 TABLE [997-1197] -->
+</div>
+
+<h4 id="example_2single_table">Example 2: single table</h4>
+<div class="level4">
+<div class="table sectionedit8"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0"> id </th><th class="col1"> user </th><th class="col2"> password </th><th class="col3"> name </th><th class="col4"> mail </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0"> 0 </td><td class="col1"> coudot </td><td class="col2"> 1f777a6581e478499f4284e54fe2d4a4e513dfff </td><td class="col3"> Clément OUDOT </td><td class="col4"> coudot@example.com </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> 1 </td><td class="col1"> tchemineau </td><td class="col2"> 1f777a6581e478499f4284e54fe2d4a4e513dfff </td><td class="col3"> Thomas CHEMINEAU </td><td class="col4"> tchemineau@example.com </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0"> 2 </td><td class="col1"> xguimard </td><td class="col2"> a15a18c8bb17e6f67886a9af1898c018b9f5a072 </td><td class="col3"> Xavier GUIMARD </td><td class="col4"> xguimard@example.com </td>
+	</tr>
+</table></div>
+<!-- EDIT8 TABLE [1232-1572] -->
+</div>
+<!-- EDIT5 SECTION "Schema" [372-1573] -->
+<h3 class="sectionedit9" id="sql">SQL</h3>
+<div class="level3">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> will operate some SQL queries:
+</p>
+<ul>
+<li class="level1"><div class="li"> Authentication: select row in authentication table matching user and password</div>
+</li>
+<li class="level1"><div class="li"> Search user: select row in user table matching user</div>
+</li>
+<li class="level1"><div class="li"> Change password: update password column in authentication table matching user</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT9 SECTION "SQL" [1574-1847] -->
+<h2 class="sectionedit10" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose Database (<abbr title="Database Interface">DBI</abbr>) for authentication, users and/or password modules.
+</p>
+
+</div>
+<!-- EDIT10 SECTION "Configuration" [1848-2022] -->
+<h3 class="sectionedit11" id="authentication_level">Authentication level</h3>
+<div class="level3">
+
+<p>
+The authentication level given to users authenticated with this module.
+</p>
+
+<p>
+<p><div class="noteimportant">
+As <abbr title="Database Interface">DBI</abbr> is a login/password based module, the authentication level can be:
+</p>
+<ul>
+<li class="level1"><div class="li"> increased (+1) if portal is protected by SSL (HTTPS)</div>
+</li>
+<li class="level1"><div class="li"> decreased (-1) if the portal autocompletion is allowed (see <a href="../../documentation/2.0/portalcustom.html" class="wikilink1" title="documentation:2.0:portalcustom">portal customization</a>)</div>
+</li>
+</ul>
+
+<p>
+
+</div></p>
+</p>
+
+</div>
+<!-- EDIT11 SECTION "Authentication level" [2023-2387] -->
+<h3 class="sectionedit12" id="exported_variables">Exported variables</h3>
+<div class="level3">
+
+<p>
+List of columns to query to fill user session. See also <a href="../../documentation/2.0/exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables configuration</a>.
+</p>
+
+</div>
+<!-- EDIT12 SECTION "Exported variables" [2388-2525] -->
+<h3 class="sectionedit13" id="connection">Connection</h3>
+<div class="level3">
+
+<p>
+<p><div class="notetip">Connection settings can be configured differently for authentication process and user process. This allows to use different databases for these process. By default, if user process connection settings are empty, authentication process connection settings will be used.
+</div></p>
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Chain</strong>: <abbr title="Database Interface">DBI</abbr> chain, including database driver name and database name (for example: dbi:mysql:database=lemonldapng;host=localhost).</div>
+</li>
+<li class="level1"><div class="li"> <strong>User</strong>: Connection user</div>
+</li>
+<li class="level1"><div class="li"> <strong>Password</strong>: Connection password</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT13 SECTION "Connection" [2526-3040] -->
+<h3 class="sectionedit14" id="schema1">Schema</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <strong>Authentication table</strong>: authentication table name</div>
+</li>
+<li class="level1"><div class="li"> <strong>User table</strong>: user table name</div>
+</li>
+<li class="level1"><div class="li"> <strong>Login field name</strong>: name of authentication table column hosting login</div>
+</li>
+<li class="level1"><div class="li"> <strong>Password field name</strong>: name of authentication table column hosting password</div>
+</li>
+<li class="level1"><div class="li"> <strong>Mail field name</strong>: name of authentication table column hosting mail (for password reset)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Login field name in user table</strong>: name of user table column hosting login</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT14 SECTION "Schema" [3041-3484] -->
+<h3 class="sectionedit15" id="password">Password</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <strong>Hash schema</strong>: SQL method for hashing password. Can be left blank for plain text passwords.</div>
+</li>
+</ul>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->
