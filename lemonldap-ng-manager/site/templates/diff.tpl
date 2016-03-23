@@ -16,7 +16,7 @@
     <aside id="left" class="col-lg-4 col-md-4 col-sm-5 col-xs-12 scrollable " ng-class="{'hidden-xs':!showT}" role="complementary">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class=panel-title" trspan="diffViewer"></h3>
+          <p class="panel-title text-center" trspan="diffViewer"></p>
         </div>
         <div class="panel-body">
           <div class="input-group input-group-sm">
