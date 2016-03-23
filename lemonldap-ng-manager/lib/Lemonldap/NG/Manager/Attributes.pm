@@ -28,7 +28,8 @@ sub types {
                     'encode_base64', 'checkLogonHours',
                     'date',          'checkDate',
                     'basic',         'unicode2iso',
-                    'iso2unicode',   'groupMatch'
+                    'iso2unicode',   'groupMatch',
+                    'encrypt'
                 );
                 push @cf, defined $conf->{'customFunctions'}
                   ? map( {
@@ -41,7 +42,7 @@ sub types {
                     $s = "sub $f {1} $s";
                 }
                 eval "$s $val";
-                return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+                return $@ ? ( 1, "__badExpression__: $@" ) : 1;
               }
         },
         'catAndAppList' => {
@@ -797,7 +798,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                         'encode_base64', 'checkLogonHours',
                         'date',          'checkDate',
                         'basic',         'unicode2iso',
-                        'iso2unicode',   'groupMatch'
+                        'iso2unicode',   'groupMatch',
+                        'encrypt'
                     );
                     push @cf, defined $conf->{'customFunctions'}
                       ? map( {
@@ -810,7 +812,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                         $s = "sub $f {1} $s";
                     }
                     eval $s;
-                    return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+                    return $@ ? ( 1, "__badExpression__: $@" ) : 1;
                   }
             },
             'type' => 'keyTextContainer'
@@ -880,7 +882,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     'encode_base64', 'checkLogonHours',
                     'date',          'checkDate',
                     'basic',         'unicode2iso',
-                    'iso2unicode',   'groupMatch'
+                    'iso2unicode',   'groupMatch',
+                    'encrypt'
                 );
                 push @cf, defined $conf->{'customFunctions'}
                   ? map( {
@@ -893,7 +896,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     $s = "sub $f {1} $s";
                 }
                 eval "$s $val";
-                return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+                return $@ ? ( 1, "__badExpression__: $@" ) : 1;
             },
             'test' => sub {
                 1;
@@ -909,7 +912,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     'encode_base64', 'checkLogonHours',
                     'date',          'checkDate',
                     'basic',         'unicode2iso',
-                    'iso2unicode',   'groupMatch'
+                    'iso2unicode',   'groupMatch',
+                    'encrypt'
                 );
                 push @cf, defined $conf->{'customFunctions'}
                   ? map( {
@@ -922,7 +926,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     $s = "sub $f {1} $s";
                 }
                 eval "$s $val";
-                return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+                return $@ ? ( 1, "__badExpression__: $@" ) : 1;
             },
             'type' => 'keyTextContainer'
         },
@@ -1189,7 +1193,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                         'encode_base64', 'checkLogonHours',
                         'date',          'checkDate',
                         'basic',         'unicode2iso',
-                        'iso2unicode',   'groupMatch'
+                        'iso2unicode',   'groupMatch',
+                        'encrypt'
                     );
                     push @cf, defined $conf->{'customFunctions'}
                       ? map( {
@@ -1202,7 +1207,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                         $s = "sub $f {1} $s";
                     }
                     eval $s;
-                    return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+                    return $@ ? ( 1, "__badExpression__: $@" ) : 1;
                   }
             },
             'type' => 'ruleContainer'
@@ -1226,7 +1231,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     'encode_base64', 'checkLogonHours',
                     'date',          'checkDate',
                     'basic',         'unicode2iso',
-                    'iso2unicode',   'groupMatch'
+                    'iso2unicode',   'groupMatch',
+                    'encrypt'
                 );
                 push @cf, defined $conf->{'customFunctions'}
                   ? map( {
@@ -1239,7 +1245,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     $s = "sub $f {1} $s";
                 }
                 eval "$s $val";
-                return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+                return $@ ? ( 1, "__badExpression__: $@" ) : 1;
             },
             'type' => 'keyTextContainer'
         },
@@ -1843,7 +1849,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     'encode_base64', 'checkLogonHours',
                     'date',          'checkDate',
                     'basic',         'unicode2iso',
-                    'iso2unicode',   'groupMatch'
+                    'iso2unicode',   'groupMatch',
+                    'encrypt'
                 );
                 push @cf, defined $conf->{'customFunctions'}
                   ? map( {
@@ -1856,7 +1863,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     $s = "sub $f {1} $s";
                 }
                 eval "$s $val";
-                return $@ ? ( 0, "__badExpression__: $@" ) : 1;
+                return $@ ? ( 1, "__badExpression__: $@" ) : 1;
             },
             'msgFail' => '__badValue__',
             'test'    => qr/^\w+$/,

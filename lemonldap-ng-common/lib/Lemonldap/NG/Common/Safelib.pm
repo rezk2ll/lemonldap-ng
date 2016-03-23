@@ -162,9 +162,7 @@ sub iso2unicode {
 # @param value Value to check
 # @return int Number of values that match
 sub groupMatch {
-    my $groups    = shift;
-    my $attribute = shift;
-    my $value     = shift;
+    my ( $groups, $attribute, $value ) = @_;
 
     my $match = 0;
 

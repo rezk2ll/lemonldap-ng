@@ -12,9 +12,11 @@ use Regexp::Common qw/URI/;
 
 my $perlExpr = sub {
     my ( $val, $conf ) = @_;
-    my $s = '';
-    my @cf =
-      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch);
+    my $s  = '';
+    my @cf = qw(
+      encode_base64 checkLogonHours date checkDate basic unicode2iso
+      iso2unicode groupMatch encrypt
+    );
     push @cf,
       defined $conf->{customFunctions}
       ? map { my $f = $_; $f =~ s/\w+:://g; ( $f, $_ ) }
@@ -24,7 +26,7 @@ my $perlExpr = sub {
         $s = "sub $f {1} $s";
     }
     eval "$s $val";
-    return $@ ? ( 0, "__badExpression__: $@" ) : (1);
+    return $@ ? ( 1, "__badExpression__: $@" ) : (1);
 };
 
 my $url = $RE{URI}{HTTP}{ -scheme => "https?" };
@@ -921,7 +923,7 @@ sub attributes {
                     }
                     $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
                     my @cf =
-                      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch);
+                      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch encrypt);
                     push @cf,
                       defined $conf->{customFunctions}
                       ? map { my $f = $_; $f =~ s/\w+:://g; ( $f, $_ ) }
@@ -931,7 +933,7 @@ sub attributes {
                         $s = "sub $f {1} $s";
                     }
                     eval $s;
-                    return $@ ? ( 0, "__badExpression__: $@" ) : (1);
+                    return $@ ? ( 1, "__badExpression__: $@" ) : (1);
                 },
                 msgFail => '__badExpression__',
             },
@@ -954,7 +956,7 @@ sub attributes {
                     my ( $val, $conf ) = @_;
                     my $s = $val;
                     my @cf =
-                      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch);
+                      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch encrypt);
                     push @cf,
                       defined $conf->{customFunctions}
                       ? map { my $f = $_; $f =~ s/\w+:://g; ( $f, $_ ) }
@@ -964,7 +966,7 @@ sub attributes {
                         $s = "sub $f {1} $s";
                     }
                     eval $s;
-                    return $@ ? ( 0, "__badExpression__: $@" ) : (1);
+                    return $@ ? ( 1, "__badExpression__: $@" ) : (1);
                   }
             },
             documentation => 'Virtualhost headers',

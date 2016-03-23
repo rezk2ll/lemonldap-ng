@@ -15,8 +15,8 @@ has jail => ( is => 'rw' );
 
 our $VERSION = '2.0.0';
 
-our $datas;
 *datas = *Lemonldap::NG::Handler::Main::SharedVariables::datas;
+*tsv   = *Lemonldap::NG::Handler::Main::SharedVariables::tsv;
 
 ## @imethod protected build_jail()
 # Build and return the security jail used to compile rules and headers.
@@ -70,10 +70,16 @@ sub build_jail {
               &unparsed_uri &args &method &header_in   )
         ]
     );
-    $self->jail->share_from( __PACKAGE__, [ @t, '&datas' ] );
+    $self->jail->share_from( __PACKAGE__,
+        [ @t, '&tsv', '&datas', '&encrypt' ] );
     $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
 
     return $self->jail;
+}
+
+# Import crypto methods for jail
+sub encrypt {
+    return &tsv->{cipher}->encrypt(@_);
 }
 
 ## @method reval
