@@ -16,11 +16,13 @@
     <aside id="left" class="col-lg-4 col-md-4 col-sm-5 col-xs-12 scrollable " ng-class="{'hidden-xs':!showT}" role="complementary">
       <div class="panel panel-default">
         <div class="input-group input-group-sm">
+          <a ng-show="cfg[0].prev" class="input-group-addon link glyphicon glyphicon-arrow-left" href="#/{{cfg[0].prev}}/{{cfg[1].prev}}"></a>
           <span class="input-group-addon">1</span>
           <input class="form-control" size="2" type="integer" ng-model="cfg[0].cfgNum"/>
           <span class="input-group-addon">2</span>
           <input class="form-control" size="2" type="integer" ng-model="cfg[1].cfgNum"/>
           <span class="input-group-addon link glyphicon glyphicon-refresh" ng-click="newDiff()"></span>
+          <a ng-show="cfg[1].next" class="input-group-addon link glyphicon glyphicon-arrow-right" href="#/{{cfg[0].next}}/{{cfg[1].next}}"></a>
         </div>
       </div>
       <div class="region region-sidebar-first">
