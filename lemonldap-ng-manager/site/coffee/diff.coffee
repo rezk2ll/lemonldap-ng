@@ -80,6 +80,7 @@ llapp.controller 'DiffCtrl', [ '$scope', '$http', '$q', '$translator', '$locatio
 	# initialization
 	init = ->
 		$scope.message = null
+		$scope.currentNode = null
 		d = $q.defer()
 		$http.get("#{scriptname}diff/#{$scope.cfg[0].cfgNum}/#{$scope.cfg[1].cfgNum}").then (response) ->
 			data = []

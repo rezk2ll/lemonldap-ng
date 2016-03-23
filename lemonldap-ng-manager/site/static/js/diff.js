@@ -86,6 +86,7 @@ diff.html script
       init = function() {
         var d;
         $scope.message = null;
+        $scope.currentNode = null;
         d = $q.defer();
         return $http.get(scriptname + "diff/" + $scope.cfg[0].cfgNum + "/" + $scope.cfg[1].cfgNum).then(function(response) {
           var data;
