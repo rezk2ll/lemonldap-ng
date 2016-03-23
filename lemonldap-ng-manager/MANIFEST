@@ -145,6 +145,7 @@ site/static/logos/impact.png
 site/static/logos/llng-icon-32.png
 site/static/logos/llng-logo-32.png
 site/static/logos/pastel.png
+site/static/reverseTree.json
 site/static/struct.json
 site/templates/diff.tpl
 site/templates/footer.tpl
