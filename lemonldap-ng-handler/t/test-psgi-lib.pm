@@ -12,8 +12,11 @@ $Data::Dumper::Deparse = 1;
 my $module;
 
 sub init {
-    $module = shift;
-    use_ok($module);
+    my $arg = shift;
+    if($arg) {
+        $module = $arg;
+        use_ok($module);
+    }
     ok( $client = Lemonldap::NG::Handler::PSGI::Cli::Lib->new(),
         'Client object' );
     count(2);
@@ -21,6 +24,13 @@ sub init {
 
 sub client {
     return $client;
+}
+
+sub module {
+    if(my $arg = shift) {
+        $module = $arg;
+    }
+    return $module;
 }
 
 sub count {

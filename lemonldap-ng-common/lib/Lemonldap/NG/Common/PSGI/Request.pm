@@ -51,7 +51,7 @@ has 'psgi.errors' => ( is => 'rw', reader => 'stderr' );
 # Authentication
 
 has REMOTE_USER => (
-    is      => 'ro',
+    is      => 'rw',
     reader  => 'user',
     trigger => sub {
         $_[0]->{userData} = { _whatToTrace => $_[0]->{REMOTE_USER}, };
