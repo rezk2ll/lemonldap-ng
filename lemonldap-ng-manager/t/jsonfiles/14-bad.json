@@ -5,7 +5,7 @@
     "id": "portalParams",
     "title": "portalParams",
     "nodes": [{
-      "default": "http://auth.example.com/",
+      "default": "ftp://auth.example.com/",
       "id": "portal",
       "title": "portal",
       "data": "http://auth.example.com/"
@@ -1903,7 +1903,7 @@
         "title": "default",
         "type": "rule",
         "id": "virtualHosts/manager.example.com/locationRules/1",
-        "data": "$uid =~ /dwho/rtyler/",
+        "data": "$uid eq \"dwho\"",
         "re": "default"
       }]
     }, {
