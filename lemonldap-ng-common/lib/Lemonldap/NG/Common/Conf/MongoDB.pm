@@ -28,7 +28,7 @@ sub Lemonldap::NG::Common::Conf::_mongoDB {
     return $self->{_mongoDB} if ( $self->{_mongoDB} );
     my $conn_args = {};
     foreach my $w (
-        qw(host auth_mechanism auth_mechanism_properties connect_timeout_ms db_name port ssl username password)
+        qw(host auth_mechanism auth_mechanism_properties connect_timeout_ms db_name port ssl username password replica_set_name)
       )
     {
         $conn_args->{$w} = $self->{$w} if ( defined $self->{$w} );
