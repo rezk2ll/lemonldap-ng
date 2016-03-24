@@ -13,6 +13,8 @@ has useSafeJail => ( is => 'rw', isa => 'Maybe[Int]' );
 
 has jail => ( is => 'rw' );
 
+has error => ( is => 'rw' );
+
 our $VERSION = '2.0.0';
 
 *datas = *Lemonldap::NG::Handler::Main::SharedVariables::datas;
