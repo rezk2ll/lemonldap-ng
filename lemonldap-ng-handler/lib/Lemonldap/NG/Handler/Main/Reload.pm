@@ -11,6 +11,14 @@ use constant SKIP      => 2;
 
 our $VERSION = '2.0.0';
 
+our $keepConf = 0;
+
+sub import {
+    if($_[1] eq 'keepConf') {
+        $keepConf = 1;
+    }
+}
+
 # CONFIGURATION UPDATE
 
 ## @rmethod protected int checkConf(boolean force)
@@ -47,6 +55,9 @@ sub checkConf {
         $class->configReload($conf);
     }
     $class->lmLog( "$class: configuration is up to date", 'debug' );
+    if($keepConf){
+        $class->lmConf($conf);
+    }
     return 1;
 }
 

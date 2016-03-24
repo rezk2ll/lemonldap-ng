@@ -14,6 +14,7 @@ our $_tshv = {
     lastCheck   => 0,
     checkTime   => 600,
     confAcc     => {},
+    lmConf      => {},
     localConfig => {},
     logLevel    => 'notice',
     _logLevel   => 2,
