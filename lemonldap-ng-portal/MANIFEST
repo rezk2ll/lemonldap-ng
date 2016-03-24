@@ -276,6 +276,7 @@ lib/Lemonldap/NG/Portal/PasswordDBDBI.pm
 lib/Lemonldap/NG/Portal/PasswordDBDemo.pm
 lib/Lemonldap/NG/Portal/PasswordDBLDAP.pm
 lib/Lemonldap/NG/Portal/PasswordDBNull.pm
+lib/Lemonldap/NG/Portal/PSGI.pm
 lib/Lemonldap/NG/Portal/Register.pm
 lib/Lemonldap/NG/Portal/RegisterDBAD.pm
 lib/Lemonldap/NG/Portal/RegisterDBDemo.pm
