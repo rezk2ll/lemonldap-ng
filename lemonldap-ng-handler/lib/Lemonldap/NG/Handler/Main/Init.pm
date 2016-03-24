@@ -18,7 +18,7 @@ sub init($$) {
     }
 
     my $tmp = Lemonldap::NG::Common::Conf->new( $args->{configStorage} );
-    unless ( $class->lmConf($tmp) ) {
+    unless ( $class->confAcc($tmp) ) {
         die(    "$class : unable to build configuration: "
               . "$Lemonldap::NG::Common::Conf::msg" );
     }
@@ -26,7 +26,7 @@ sub init($$) {
     # Merge local configuration parameters so that params defined in
     # startup parameters have precedence over lemonldap-ng.ini params
     $class->localConfig(
-        { %{ $class->lmConf->getLocalConf('handler') }, %{$args} } );
+        { %{ $class->confAcc->getLocalConf('handler') }, %{$args} } );
 
     $class->checkTime( $class->localConfig->{checkTime} || $class->checkTime );
 

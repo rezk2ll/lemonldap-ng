@@ -22,7 +22,7 @@ our $VERSION = '2.0.0';
 # @return true if config is up to date or if reload config succeeded
 sub checkConf {
     my ( $class, $force ) = @_;
-    my $conf = $class->lmConf->getConf( { local => !$force } );
+    my $conf = $class->confAcc->getConf( { local => !$force } );
 
     unless ( ref($conf) ) {
         $class->lmLog(
