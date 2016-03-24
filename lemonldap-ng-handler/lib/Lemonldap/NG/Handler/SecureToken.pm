@@ -104,7 +104,7 @@ sub run {
       unless $class->_isAlive();
 
     # Value to store
-    my $value = $datas->{$secureTokenAttribute};
+    my $value = $class->datas->{$secureTokenAttribute};
 
     # Set token
     my $key = $class->_setToken( $value, $secureTokenExpiration );
@@ -235,7 +235,7 @@ sub _returnError {
     }
 
     # Redirect or Forbidden?
-    if ( $tsv->{useRedirectOnError} ) {
+    if ( $class->tsv->{useRedirectOnError} ) {
         $class->lmLog( "Use redirect for error", 'debug' );
         return $class->goToPortal( '/', 'lmError=500' );
     }
