@@ -6,7 +6,7 @@
 
 # This specific handler is intended to be called directly by Apache
 
-package Lemonldap::NG::Handler::Specific::AuthBasic;
+package Lemonldap::NG::Handler::AuthBasic;
 
 use Lemonldap::NG::Handler::ApacheMP2;
 use Digest::MD5;
