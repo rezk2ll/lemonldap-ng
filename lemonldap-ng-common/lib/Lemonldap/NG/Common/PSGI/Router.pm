@@ -40,6 +40,10 @@ sub genRoute {
             die "Target required for $word" unless ($dest);
             $word = ':';
         }
+        elsif ( $word =~ m#/# ) {
+            $word =~ s#^(.*?)/##;
+            return $self->genRoute( $routes->{$1}, $word, $dest );
+        }
         else {
             $dest ||= $word;
         }

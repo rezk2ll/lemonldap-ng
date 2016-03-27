@@ -16,7 +16,8 @@ use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::API';
 
 extends 'Lemonldap::NG::Handler::PSGI::Try';
 
-has localConfig => ( is => 'rw' default => sub { {} } );
+has localConfig => ( is => 'rw', default => sub { {} } );
+has conf        => ( is => 'rw', default => sub { {} } );
 
 sub init {
     my ( $self, $args ) = @_;
@@ -31,8 +32,8 @@ sub checkConf {
     my ( $self, $args ) = @_;
 
     # If handler configuration has changed, apply it
-    if (  !$self->{cfgNum}
-        or $self->{cfgNum} ne ( my $conf = HANDLER->lmConf->{cfgNum} ) )
+    if (  !$self->conf->{cfgNum}
+        or $self->conf->{cfgNum} ne ( my $conf = HANDLER->lmConf->{cfgNum} ) )
     {
 
         # Delete keys that will be generated
@@ -40,16 +41,16 @@ sub checkConf {
             qw(persistentStorage samlStorage casStorage captchaStorage oidcStorage)
           )
         {
-            delete $self->{$key};
+            delete $self->conf->{$key};
         }
 
         # Load conf in portal object
         foreach my $key ( keys %$conf ) {
-            $self->{$key} = $localConfig->{$key} // $conf->{$key};
+            $self->conf->{$key} = $localConfig->{$key} // $conf->{$key};
         }
 
         # Initialize session DBs
-        unless ( $self->{globalStorage} ) {
+        unless ( $self->conf->{globalStorage} ) {
             $self->error(
 'globalStorage not defined (perhaps configuration can not be read)'
             );
@@ -59,26 +60,27 @@ sub checkConf {
             qw(persistentStorage samlStorage casStorage captchaStorage oidcStorage)
           )
         {
-            unless ( $self->{$key} ) {
-                $self->{$key} = $self->{globalStorage};
-                $self->{ $key . 'Options' } = $self->{globalStorageOptions};
+            unless ( $self->conf->{$key} ) {
+                $self->conf->{$key} = $self->conf->{globalStorage};
+                $self->conf->{ $key . 'Options' } =
+                  $self->conf->{globalStorageOptions};
             }
         }
 
         # Initialize cookie domain
-        unless ( $self->{domain} ) {
+        unless ( $self->conf->{domain} ) {
             $self->error('Configuration error: no domain');
             return 0;
         }
-        $self->{domain} =~ s/^([^\.])/.$1/;
+        $self->conf->{domain} =~ s/^([^\.])/.$1/;
 
         # Load authentication/userDB/passwordDB modules
         for my $type (qw(authentication userDB passwordDB registerDB)) {
-            unless ( $self->{$type} ) {
+            unless ( $self->conf->{$type} ) {
                 $self->error("$type is not set");
                 return 0;
             }
-            my $module = ucfirst($type) . $self->{$db_type};
+            my $module = ucfirst($type) . $self->conf->{$db_type};
             $module =~ s/\s.*$//;
             $module =~ s/^Authentication/Auth/;
             $module = "Lemonldap::NG::Portal::$module";
@@ -87,24 +89,48 @@ sub checkConf {
                 return 0;
             }
 
-            # $self->{authentication} and $self->{userDB} can contains arguments
-            # (key1 = scalar_value; key2 = ...)
-            my ( $tmp, %h ) = split( /\s*[=;]\s*/, $self->{$db_type} );
-            %$self = ( %h, %$self ) if (%h);
+# $self->conf->{authentication} and $self->conf->{userDB} can contains arguments
+# (key1 = scalar_value; key2 = ...)
+            my ( $tmp, %h ) = split( /\s*[=;]\s*/, $self->conf->{$db_type} );
+            %{ $self->{conf} } = ( %h, %{ $self->{conf} } ) if (%h);
         }
         foreach my $issuerDBtype (qw(SAML OpenID CAS OpenIDConnect)) {
             my $module = 'Lemonldap::NG::Portal::IssuerDB' . $issuerDBtype;
             $self->lmLog(
                 "[IssuerDB activation] Try issuerDB module $issuerDBtype",
                 'debug' );
-            unless ( $self->{ "issuerDB" . $issuerDBtype . "Activation" } ) {
+            unless ( $self->conf->{"issuerDB${issuerDBtype}Activation"} ) {
                 $self->lmLog(
 "[IssuerDB activation] Activation flag set to off, trying next",
                     'debug'
                 );
                 next;
             }
+
+            #TODO: regexp ?
+            my $path = $self->conf->{"issuerDB${issuerDBtype}Path"};
+            unless ($path) {
+                $self->lmLog(
+"[IssuerDB activation] no path found for ${issuerDBtype}. Skipping",
+                    'notice'
+                );
+                next;
+            }
+            $self->addRoute( $path, $issuerDBtype, [qw(GET POST PUT DELETE)] );
+
             # TODO "check the path"
+        }
+        $self->conf->{trustedDomains} ||= "";
+        $self->conf->{trustedDomains} = "*"
+          if ( $self->conf->{trustedDomains} =~ /(^|\s)\*(\s|$)/ );
+        if (    $self->conf->{trustedDomains}
+            and $self->conf->{trustedDomains} ne "*" )
+        {
+            $self->conf->{trustedDomains} =~ s#(^|\s+)\.#${1}[^/]+.#g;
+            $self->conf->{trustedDomains} = '('
+              . join( '|', split( /\s+/, $self->conf->{trustedDomains} ) )
+              . ')';
+            $self->conf->{trustedDomains} =~ s/\./\\./g;
         }
     }
     1;
@@ -126,14 +152,23 @@ sub loadModule {
         $self->lmLog( "$module load error: $@", 'error' ) unless $ignoreError;
         return 0;
     }
+    push @{ $self->{ISA}, $module; }
 
-    $self->lmLog( "Module $module loaded", 'debug' );
+      $self->lmLog( "Module $module loaded", 'debug' );
 
     return 1;
 }
 
-sub addRoutes {
+sub SAML {
+}
 
+sub OpenID {
+}
+
+sub CAS {
+}
+
+sub OpenIDConnect {
 }
 
 # TODO in run
