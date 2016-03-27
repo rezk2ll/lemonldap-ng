@@ -116,7 +116,10 @@ sub checkConf {
                 );
                 next;
             }
-            $self->addRoute( $path, $issuerDBtype, [qw(GET POST PUT DELETE)] );
+            $self->addAuthRoute( $path, "${issuerDBtype}ForAuthUser",
+                [qw(GET POST PUT DELETE)] );
+            $self->addUnauthRoute( $path, "${issuerDBtype}ForUnauthUser",
+                [qw(GET POST PUT DELETE)] );
 
             # TODO "check the path"
         }
@@ -159,16 +162,28 @@ sub loadModule {
     return 1;
 }
 
-sub SAML {
+sub SAMLForAuthUser {
 }
 
-sub OpenID {
+sub SAMLForUnauthUser {
 }
 
-sub CAS {
+sub OpenIDForAuthUser {
 }
 
-sub OpenIDConnect {
+sub OpenIDForUnauthUser {
+}
+
+sub CASForAuthUser {
+}
+
+sub CASForUnauthUser {
+}
+
+sub OpenIDConnectForAuthUser {
+}
+
+sub OpenIDConnectForUnauthUser {
 }
 
 # TODO in run
