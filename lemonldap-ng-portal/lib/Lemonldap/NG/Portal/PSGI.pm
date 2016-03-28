@@ -16,8 +16,17 @@ use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::API';
 
 extends 'Lemonldap::NG::Handler::PSGI::Try';
 
+# Configuration storage
 has localConfig => ( is => 'rw', default => sub { {} } );
 has conf        => ( is => 'rw', default => sub { {} } );
+
+# Sub modules
+has _authentication => ( is => 'rw' );
+has _userDB         => ( is => 'rw' );
+has _passwordDB     => ( is => 'rw' );
+has _registerDB     => ( is => 'rw' );
+
+has _issuers => ( is => 'rw' );
 
 sub init {
     my ( $self, $args ) = @_;
@@ -46,7 +55,7 @@ sub checkConf {
 
         # Load conf in portal object
         foreach my $key ( keys %$conf ) {
-            $self->conf->{$key} = $localConfig->{$key} // $conf->{$key};
+            $self->conf->{$key} = $self->localConfig->{$key} // $conf->{$key};
         }
 
         # Initialize session DBs
@@ -75,25 +84,26 @@ sub checkConf {
         $self->conf->{domain} =~ s/^([^\.])/.$1/;
 
         # Load authentication/userDB/passwordDB modules
+        # ---------------------------------------------
         for my $type (qw(authentication userDB passwordDB registerDB)) {
             unless ( $self->conf->{$type} ) {
                 $self->error("$type is not set");
                 return 0;
             }
-            my $module = ucfirst($type) . $self->conf->{$db_type};
+            my $module = ucfirst($type) . $self->conf->{$type};
             $module =~ s/\s.*$//;
             $module =~ s/^Authentication/Auth/;
             $module = "Lemonldap::NG::Portal::$module";
-            unless ( $self->loadModule($module) ) {
-                $self->error("Unable to load $module_name");
-                return 0;
-            }
 
-# $self->conf->{authentication} and $self->conf->{userDB} can contains arguments
-# (key1 = scalar_value; key2 = ...)
-            my ( $tmp, %h ) = split( /\s*[=;]\s*/, $self->conf->{$db_type} );
+            # $self->conf->{authentication} and $self->conf->{userDB} can
+            # contains arguments (key1 = scalar_value; key2 = ...)
+            my ( $tmp, %h ) = split( /\s*[=;]\s*/, $self->conf->{$type} );
             %{ $self->{conf} } = ( %h, %{ $self->{conf} } ) if (%h);
+            return 0 unless ( $self->loadModule( $module, "_$type" ) );
         }
+
+        # Load issuer modules
+        # -------------------
         foreach my $issuerDBtype (qw(SAML OpenID CAS OpenIDConnect)) {
             my $module = 'Lemonldap::NG::Portal::IssuerDB' . $issuerDBtype;
             $self->lmLog(
@@ -116,10 +126,26 @@ sub checkConf {
                 );
                 next;
             }
-            $self->addAuthRoute( $path, "${issuerDBtype}ForAuthUser",
-                [qw(GET POST PUT DELETE)] );
-            $self->addUnauthRoute( $path, "${issuerDBtype}ForUnauthUser",
-                [qw(GET POST PUT DELETE)] );
+
+            return 0 unless ( $self->loadModule( $module, 'tmp' ) );
+            $self->{issuers}->{$issuerDBtype} = $self->{tmp};
+            delete $self->{tmp};
+            $self->addAuthRoute(
+                $path,
+                sub {
+                    my $self = shift;
+                    return $self->issuerForAuthUser( $issuerDBtype, @_ );
+                },
+                [qw(GET POST PUT DELETE)]
+            );
+            $self->addUnauthRoute(
+                $path,
+                sub {
+                    my $self = shift;
+                    return $self->issuerForUnauthUser( $issuerDBtype, @_ );
+                },
+                [qw(GET POST PUT DELETE)]
+            );
 
             # TODO "check the path"
         }
@@ -145,45 +171,33 @@ sub checkConf {
 # @param ignoreError set to 1 if error should not appear in logs
 # @return boolean
 sub loadModule {
-    my ( $self, $module, $ignoreError ) = @_;
-
-    return 1 unless $module;
+    my ( $self, $module, $keyname ) = @_;
 
     # Load module test
     eval "require $module";
     if ($@) {
-        $self->lmLog( "$module load error: $@", 'error' ) unless $ignoreError;
+        $self->error("$module load error: $@");
         return 0;
     }
-    push @{ $self->{ISA}, $module; }
-
-      $self->lmLog( "Module $module loaded", 'debug' );
+    eval {
+        $self->{$keyname} = $module->new( { p => $self, conf => $self->conf } );
+    };
+    if ($@) {
+        $self->error("Unable to build $module object: $@");
+        return 0;
+    }
+    return 0 unless ( $self->{$keyname} );
+    $self->lmLog( "Module $module loaded", 'debug' );
 
     return 1;
 }
 
-sub SAMLForAuthUser {
+sub issuerForAuthUser {
+    my ( $self, $type, $req ) = @_;
 }
 
-sub SAMLForUnauthUser {
-}
-
-sub OpenIDForAuthUser {
-}
-
-sub OpenIDForUnauthUser {
-}
-
-sub CASForAuthUser {
-}
-
-sub CASForUnauthUser {
-}
-
-sub OpenIDConnectForAuthUser {
-}
-
-sub OpenIDConnectForUnauthUser {
+sub issuerForUnauthUser {
+    my ( $self, $type, $req ) = @_;
 }
 
 # TODO in run
