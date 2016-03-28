@@ -1,9 +1,9 @@
 ##@file
 # FastCGI package for Lemonldap::NG portal
 #
-##@class Lemonldap::NG::Portal::PSGI
+##@class Lemonldap::NG::Portal::Main::Init
 # FastCGI class for Lemonldap::NG portal
-package Lemonldap::NG::Portal::PSGI;
+package Lemonldap::NG::Portal::Main::Init;
 
 use strict;
 use Mouse;
@@ -13,8 +13,6 @@ use Lemonldap::NG::Handler::Main::Reload qw/keepConf/;
 our $VERSION = '2.0.0';
 
 use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::API';
-
-extends 'Lemonldap::NG::Handler::PSGI::Try';
 
 # Configuration storage
 has localConfig => ( is => 'rw', default => sub { {} } );
@@ -191,16 +189,5 @@ sub loadModule {
 
     return 1;
 }
-
-sub issuerForAuthUser {
-    my ( $self, $type, $req ) = @_;
-}
-
-sub issuerForUnauthUser {
-    my ( $self, $type, $req ) = @_;
-}
-
-# TODO in run
-#  - mustRedirect
 
 1;
