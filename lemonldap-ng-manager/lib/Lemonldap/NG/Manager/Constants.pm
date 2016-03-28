@@ -50,7 +50,7 @@ our $authParameters = {
   slaveParams => [qw(slaveAuthnLevel slaveExportedVars slaveUserHeader slaveMasterIP slaveHeaderName slaveHeaderContent)],
   sslParams => [qw(SSLAuthnLevel SSLVar)],
   twitterParams => [qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName)],
-  webiDParams => [qw(webIDAuthnLevel webIDExportedVars webIDWhitelist)],
+  webidParams => [qw(webIDAuthnLevel webIDExportedVars webIDWhitelist)],
   yubikeyParams => [qw(yubikeyAuthnLevel yubikeyClientID yubikeySecretKey yubikeyPublicIDSize)],
 };
 our $issuerParameters = {

@@ -351,7 +351,7 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'webiDParams',
+                            title => 'webidParams',
                             help  => 'authwebid.html',
                             nodes => [
                                 'webIDAuthnLevel', 'webIDExportedVars',
