@@ -1,0 +1,142 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="phpldapadmin">phpLDAPadmin</h1>
+<div class="level1">
+
+<p>
+<a href="/_detail/applications/phpldapadmin_logo.png?id=documentation%3A2.0%3Aapplications%3Aphpldapadmin" class="media" title="applications:phpldapadmin_logo.png"><img src="../../../../media/icons/kmultiple.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div><!-- EDIT1 SECTION "phpLDAPadmin" [1-72] -->
+
+<h2 class="sectionedit2" id="presentation">Présentation</h2>
+<div class="level2">
+
+<p>
+<a href="http://phpldapadmin.sourceforge.net" class="urlextern" title="http://phpldapadmin.sourceforge.net"  rel="nofollow">phpLDAPadmin</a> est un outil d'administration LDAP écrit en PHP.
+</p>
+
+<p>
+phpLDAPadmin se connecte au serveur avec un <abbr title="Distinguished Name">DN</abbr> et un mot-de-passe statique et ne requiert ainsi aucune authentification. L'accès à phpLDAPadmin sera protégé par LemonLDAP::NG avec une règle particulière d'accès.
+</p>
+
+<p>
+</p><p></p><div class="notewarning">phpLDAPadmin ne connaît donc pas le nom du l'utilisateur connecté au WebSSO. Ainsi un simple utilisateur aura un accès administrateur au serveur LDAP si votre règle d'accès est trop permisive.
+</div></p>
+</p>
+
+</div><!-- EDIT2 SECTION "Presentation" [73-598] -->
+
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
+<div class="level2">
+
+</div><!-- EDIT3 SECTION "Configuration" [599-625] -->
+
+<h3 class="sectionedit4" id="phpldapadmin_local_configuration">Configuration locale phpLDAPadmin</h3>
+<div class="level3">
+
+<p>
+Mettre juste le type d'authentification à <code>config</code> et indiquer le <abbr title="Distinguished Name">DN</abbr> et le mot-de-passe dans le fichier <code>config.php</code>:
+</p>
+<pre class="code file php"><span class="re0">$ldapservers</span><span class="sy0">-&gt;</span><span class="me1">SetValue</span><span class="br0">(</span><span class="re0">$i</span><span class="sy0">,</span><span class="st_h">'server'</span><span class="sy0">,</span><span class="st_h">'auth_type'</span><span class="sy0">,</span><span class="st_h">'config'</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$ldapservers</span><span class="sy0">-&gt;</span><span class="me1">SetValue</span><span class="br0">(</span><span class="re0">$i</span><span class="sy0">,</span><span class="st_h">'login'</span><span class="sy0">,</span><span class="st_h">'dn'</span><span class="sy0">,</span><span class="st_h">'cn=Manager,dc=example,dc=com'</span><span class="br0">)</span><span class="sy0">;</span>
+<span class="re0">$ldapservers</span><span class="sy0">-&gt;</span><span class="me1">SetValue</span><span class="br0">(</span><span class="re0">$i</span><span class="sy0">,</span><span class="st_h">'login'</span><span class="sy0">,</span><span class="st_h">'pass'</span><span class="sy0">,</span><span class="st_h">'secret'</span><span class="br0">)</span><span class="sy0">;</span></pre>
+
+</div><!-- EDIT4 SECTION "phpLDAPadmin local configuration" [626-980] -->
+
+<h3 class="sectionedit5" id="phpldapadmin_virtual_host">Hôte virtuel phpLDAPadmin</h3>
+<div class="level3">
+
+<p>
+Configurer l'hôte virtuel phpLDAPadmin comme n'importe quel autre <a href="../../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">hôte virtuel protégé</a>.
+</p>
+<ul>
+<li class="level1"><div class="li"> Pour Apache:</div>
+</li>
+</ul>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+       <span class="kw1">ServerName</span> phpldapadmin.example.com
+&nbsp;
+       PerlHeaderParserHandler Lemonldap::NG::Handler
+&nbsp;
+       ...
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li"> Pour Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name phpldapadmin.example.com;
+  root /path/to/application;
+  # Requête interne d'authentification
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Ignorer les données postées
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH "";
+    # Conserver le nom d'hôte original
+    fastcgi_param HOST $http_host;
+    # Conserver la requête originale (le serveur LLNG va recevoir /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Requêtes clients
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
+
+</div><!-- EDIT5 SECTION "phpLDAPadmin virtual host" [981-2256] -->
+
+<h3 class="sectionedit6" id="phpldapadmin_virtual_host_in_manager">Hôte virtuel phpLDAPadmin dans le manager</h3>
+<div class="level3">
+
+<p>
+Aller dans le manager et <a href="../../../documentation/2.0/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:2.0:configvhost">créer un nouvel hôte virtuel</a> pour phpLDAPadmin.
+</p>
+
+<p>
+Configurer simplement la <a href="../../../documentation/2.0/writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">règle d'accès</a>.
+</p>
+
+<p>
+Aucun <a href="../../../documentation/2.0/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:2.0:writingrulesand_headers">en-tête</a> n'est nécessaire.
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>

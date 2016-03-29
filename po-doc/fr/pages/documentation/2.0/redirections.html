@@ -1,0 +1,123 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="handler_redirections">Redirections des agents</h1>
+<div class="level1">
+
+<p>
+</p><p></p><div class="noteclassic">Lorsqu'un utilisateur accède à un agent sans cookie, il est redirigé vers le portail, et l'<abbr title="Uniform Resource Locator">URL</abbr> cible est encodée dans l'<abbr title="Uniform Resource Locator">URL</abbr> de redirection (pour rediriger l'utilisateur après authentification).
+</div></p>
+</p>
+
+</div><!-- EDIT1 SECTION "Handler Redirections" [1-223] -->
+
+<h2 class="sectionedit2" id="protocol_and_port">Protocole et port</h2>
+<div class="level2">
+
+<p>
+Pour encoder l'<abbr title="Uniform Resource Locator">URL</abbr> de redirection, l'agent utilise des variables d'environnement Apache et des paramètres de configuration :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>HTTPS</strong> : utilise https comme protocole</div>
+</li>
+<li class="level1"><div class="li"> <strong>Port</strong> : port de l'application (par défaut, 80 pour http, 443 pour https)</div>
+</li>
+</ul>
+
+<p>
+Cesparamètres peuvent être configurés dans le manager, dans <code>Paramètres généraux</code> &gt; <code>Paramètres avancés</code> &gt; <code>Redirections des agents</code>.
+</p>
+
+<p>
+</p><p></p><div class="notetip">Ces paramètres peuvent être surchargés dans chaque hôte virtuel, voir la <a href="../../documentation/2.0/configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">gestion des hôtes virtuels</a>.
+</div></p>
+</p>
+
+</div><!-- EDIT2 SECTION "Protocol and port" [224-731] -->
+
+<h2 class="sectionedit3" id="forbidden_and_server_error">Accès interdits et erreurs du serveur</h2>
+<div class="level2">
+
+<p>
+Les agents utilisent le code d'erreur d'Apache dans les cas suivants :
+</p>
+<ul>
+<li class="level1"><div class="li"> L'utilisateur ne dispose pas de droits d'accès : FORBIDDEN (403)</div>
+</li>
+<li class="level1"><div class="li"> Une erreur est survenue côté serveur : SERVER_ERROR (500)</div>
+</li>
+<li class="level1"><div class="li">  The application is in maintenance: HTTP_SERVICE_UNAVAILABLE (503)</div>
+</li>
+</ul>
+
+<p>
+
+These errors can be catch trough Apache <code>ErrorDocument</code> directive or Nginx <code>error_page</code> directive, to redirect user on a specific page:
+
+</p>
+<pre class="code file apache"><span class="co1"># Apache: Common error page and security parameters</span>
+<span class="kw1">ErrorDocument</span> <span class="nu0">403</span> http://auth.example.com/?lmError=<span class="nu0">403</span>
+<span class="kw1">ErrorDocument</span> <span class="nu0">500</span> http://auth.example.com/?lmError=<span class="nu0">500</span>
+<span class="kw1">ErrorDocument</span> <span class="nu0">503</span> http://auth.example.com/?lmError=<span class="nu0">503</span></pre>
+<pre class="code file nginx"># Nginx: Common error page and security parameters
+error_page 403 http://auth.example.com/?lmError=403;
+error_page 500 http://auth.example.com/?lmError=500;
+error_page 503 http://auth.example.com/?lmError=503;</pre>
+
+<p>
+
+It is also possible to redirect the user without using <code>ErrorDocument</code>: the Handler will not returnV 403, 500, 503 code, but code 302 (REDIRECT). 
+ 
+</p>
+
+<p>
+L'utilisateur sera redirigé vers l'<abbr title="Uniform Resource Locator">URL</abbr> du portail avec une erreur dans le paramètre <code>lmError</code> de l'<abbr title="Uniform Resource Locator">URL</abbr>.
+</p>
+
+<p>
+Ces paramètres peuvent être configurés dans le manager, dans <code>Paramètres généraux</code> &gt; <code>Paramètres avancés</code> &gt; <code>Redirections des agents</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Redirections pour les accès interdits</strong> : utilise 302 au lieu de 403</div>
+</li>
+<li class="level1"><div class="li"> <strong>Redirection pour les erreurs</strong> : utilise 302 au lieu de 500 ou 503</div>
+</li>
+</ul>
+
+</div><!-- EDIT3 SECTION "Forbidden and Server error" [732-2103] -->
+
+<h1 class="sectionedit4" id="portal_redirections">Redirections du portail</h1>
+<div class="level1">
+
+<p>
+</p><p></p><div class="noteclassic">Si un utilisateur est redirigé depuis un agent vers le portail pour s'authentifier et s'il est déjà authentifié, le portail le redirige vers l'<abbr title="Uniform Resource Locator">URL</abbr> de redirection.
+</div></p>
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Redirection message</strong>: The redirection from portal can be done either with code 303 (See Other), or with a JavaScript redirection. Souvent la redirection prend du temps car c'est le premier accès de l'utilisateur à l'application protégée et il faut créer la session applicative ; la redirection JavaScript améliore le ressenti utilisateur en l'informant que l'authentification est réussie et en évitant qu'il clique de nouveau sur le bouton.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Keep redirections for Ajax</strong>: By default, when an Ajax request is done on the portal for an unauthenticated user (after a redirection done by the handler), a 401 code will be sentwith a <code>WWW-Authenticate</code> header containing “<abbr title="Authentification unique (Single Sign On)">SSO</abbr> &lt;portal-<abbr title="Uniform Resource Locator">URL</abbr>&gt;”. Set this option to 1 to keep the old behavior (return of <abbr title="HyperText Markup Language">HTML</abbr> code).</div>
+</li>
+</ul>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>

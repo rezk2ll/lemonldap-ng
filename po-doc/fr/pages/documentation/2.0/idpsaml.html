@@ -1,0 +1,270 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+ lang="fr" dir="ltr">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title></title><!-- metadata --><!-- style sheet links -->
+
+<meta name="generator" content="Hors ligne" />
+<meta name="version" content="Hors-ligne 0.1" />
+
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+<h1 class="sectionedit1" id="saml_identity_provider">Fournisseur d'identité SAML</h1>
+<div class="level1">
+
+</div><!-- EDIT1 SECTION "SAML Identity Provider" [1-38] -->
+
+<h2 class="sectionedit2" id="presentation">Présentation</h2>
+<div class="level2">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> peut agir en fournisseur d'identité <abbr title="Security Assertion Markup Language">SAML</abbr> 2.0, ce qui permet de fédérer <abbr title="LemonLDAP::NG">LL::NG</abbr> avec :
+</p>
+<ul>
+<li class="level1"><div class="li"> Un autre système <abbr title="LemonLDAP::NG">LL::NG</abbr> configuré avec <a href="../../documentation/2.0/authsaml.html" class="wikilink1" title="documentation:2.0:authsaml">authentification SAML</a></div>
+</li>
+<li class="level1"><div class="li"> Tout fournisseur de service <abbr title="Security Assertion Markup Language">SAML</abbr>, par exemple:</div>
+</li>
+</ul>
+
+</div>
+<div class="plugin_include_content" id="plugin_include__documentation:2.0:applications">
+<div class="level2">
+
+<p>
+</p><p></p><div class="noteclassic">Ceci nécessite de configurer <abbr title="LemonLDAP::NG">LL::NG</abbr> comme <span class="curid"><a href="../../documentation/2.0/idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">fournisseur d'identité SAML</a></span>.
+</div></p>
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">    Google Apps    </th><th class="col1 centeralign">    Cornerstone    </th><th class="col2 centeralign">    SalesForce    </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  <a href="../../documentation/2.0/applications/googleapps.html" class="media" title="documentation:2.0:applications:googleapps"><img src="../../../media/icons/kmultiple.png" class="mediacenter" alt="" /></a>  </td><td class="col1 centeralign">  <a href="../../documentation/2.0/applications/cornerstone.html" class="media" title="documentation:2.0:applications:cornerstone"><img src="../../../media/icons/kmultiple.png" class="mediacenter" alt="" /></a>  </td><td class="col2 centeralign">  <a href="../../documentation/2.0/applications/salesforce.html" class="media" title="documentation:2.0:applications:salesforce"><img src="../../../media/icons/kmultiple.png" class="mediacenter" alt="" /></a>  </td>
+	</tr>
+</table></div><!-- EDIT3 TABLE [2482-2753] -->
+
+</div>
+</div>
+<div class="level2">
+
+</div><!-- EDIT2 SECTION "Presentation" [39-323] -->
+
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+</div><!-- EDIT4 SECTION "Configuration" [324-350] -->
+
+<h3 class="sectionedit5" id="saml_service">Service SAML</h3>
+<div class="level3">
+
+<p>
+Voir le chapître de configuration du <a href="../../documentation/2.0/samlservice.html" class="wikilink1" title="documentation:2.0:samlservice">service SAML</a>.
+</p>
+
+</div><!-- EDIT5 SECTION "SAML Service" [351-431] -->
+
+<h3 class="sectionedit6" id="issuerdb">IssuerDB</h3>
+<div class="level3">
+
+<p>
+Dans le manager, aller dans <code>Paramètres généraux</code> &gt; <code>Modules fournisseurs</code> » <code><abbr title="Security Assertion Markup Language">SAML</abbr> et configurer :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Activation</strong> : mettre à <code>Activé</code>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Chemin</strong> : laisser <code>^/saml/</code> sauf si les suffixes des points d'accès <abbr title="Security Assertion Markup Language">SAML</abbr> ont été modifiés sans la <a href="../../documentation/2.0/samlservice.html" class="wikilink1" title="documentation:2.0:samlservice">configuration du service SAML</a>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Règle d'utilisation</strong> : une règle pour autoriser l'usage de ce module, mettre 1 pour toujours l'autoriser.</div>
+</li>
+</ul>
+
+<p>
+</p><p></p><div class="notetip">
+Par exemple, pour n'autoriser que les utilisateurs authentifiés fortement :
+</p>
+<pre class="code">$authenticationLevel &gt; 2</pre>
+
+<p>
+
+</p></div></p>
+</p>
+
+</div><!-- EDIT6 SECTION "IssuerDB" [432-907] -->
+
+<h3 class="sectionedit7" id="register_lemonldapng_on_partner_service_provider">Enregistrer LemonLDAP::NG sur le fournisseur de service partenaire</h3>
+<div class="level3">
+
+<p>
+Après avoir configuré le service <abbr title="Security Assertion Markup Language">SAML</abbr>, exporter les métadonnéesvers le fournisseur de service partenaire.
+</p>
+
+<p>
+Elles sont disponibles à l'<abbr title="Uniform Resource Locator">URL</abbr> EntityID, par défaut : <a href="http://auth.example.com/saml/metadata" class="urlextern" title="http://auth.example.com/saml/metadata"  rel="nofollow">http://auth.example.com/saml/metadata</a>.
+</p>
+
+</div><!-- EDIT7 SECTION "Register LemonLDAP::NG on partner Service Provider" [908-1152] -->
+
+<h3 class="sectionedit8" id="register_partner_service_provider_on_lemonldapng">Enregistrer le fournisseur de service dans LemonLDAP::NG</h3>
+<div class="level3">
+
+<p>
+Dans le Manager, selectionner le noeud Fournisseurs d'identité <abbr title="Security Assertion Markup Language">SAML</abbr> et cliquer sur <code>Ajouter un IdP <abbr title="Security Assertion Markup Language">SAML</abbr></code>.
+</p>
+
+<p>
+Le nom de SP est demandé, entrer-le et cliquer sur OK.
+</p>
+
+<p>
+Il est ensuite possible d'accéder à la liste des paramètre du SP :
+</p>
+
+</div>
+
+<h4 id="metadata">Métadonnée</h4>
+<div class="level4">
+
+<p>
+Il faut enregistrer les métadatas du SP ici. Ceci peut être fait soit en téléchargeant le fichier, soit en l'obtenant par l'<abbr title="Uniform Resource Locator">URL</abbr> de métadatas du SP (à condition d'avoir un lien réseau entre le serveur et le SP):
+</p>
+
+<p>
+<img src="../../../media/documentation/manager-saml-metadata.png" class="mediacenter" alt="" />
+</p>
+
+<p>
+</p><p></p><div class="notetip">On peut aussi éditer la métadonnée directement dans le champ textarea
+</div></p>
+</p>
+
+</div>
+
+<h4 id="exported_attributes">Attributs exportés</h4>
+<div class="level4">
+
+<p>
+<img src="../../../media/documentation/manager-saml-attributes.png" class="mediacenter" alt="" />
+</p>
+
+<p>
+Pour chaque attribut, on peut indiquer :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Nom de clef</strong> : nom de la clef dans la session LemonLDAP::NG</div>
+</li>
+<li class="level1"><div class="li"> <strong>Nom</strong>: Nom de l'attribut <abbr title="Security Assertion Markup Language">SAML</abbr>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Nom alternatif</strong>: optionnel, nom alternatif de l'attribut <abbr title="Security Assertion Markup Language">SAML</abbr>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Obligatoire</strong> : si activé, cet attribut sera envoyé dans les réponses d'authentification. Sinon, il ne sera envoyé dans les réponses que s'il est explicitement demandé dans les requêtes d'attributs.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Format</strong> (optionnel) : format de l'attribut <abbr title="Security Assertion Markup Language">SAML</abbr>.</div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="options">Options</h4>
+<div class="level4">
+
+</div>
+
+<h5 id="authentication_response">Réponse d'authentification</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <strong>Format de NameID par défaut</strong> : si aucun fiormat de NameID n'est demandé, ou si le format n'est pas défini, ce format de NameID sera utilisé. Si aucune valeur n'est indiquée, le format de NameID par défaut est Email.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Forcer la clef de session NameID</strong> : si vide, la correspondance NameID définie dans la configuration du <a href="../../documentation/2.0/samlservice.html" class="wikilink1" title="documentation:2.0:samlservice">service SAML</a> sera utilisée. On peut forcer ici une autre clef de session qui sera utilisée comme contenu sde NameID.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Usage unique</strong> : active le drapeau OneTimeUse dans les réponses d'authentification (<code>&lt;Condtions&gt;</code>).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Durée sessionNotOnOrAfter</strong> : durée en secondes, ajoutée à la durée d'authentification, pour définir la valeur sessionNotOnOrAfter dans les réponses <abbr title="Security Assertion Markup Language">SAML</abbr> (<code>&lt;AuthnStatement&gt;</code>):</div>
+</li>
+</ul>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;saml:AuthnStatement</span> <span class="re0">AuthnInstant</span>=<span class="st0">"2014-07-21T11:47:08Z"</span></span>
+<span class="sc3">  <span class="re0">SessionIndex</span>=<span class="st0">"loVvqZX+Vja2dtgt/N+AymTmckGyITyVt+UJ6vUFSFkE78S8zg+aomXX7oZ9qX1UxOEHf6Q4DUstewSJh1uK1Q=="</span></span>
+<span class="sc3">  <span class="re0">SessionNotOnOrAfter</span>=<span class="st0">"2014-07-21T15:47:08Z"</span><span class="re2">&gt;</span></span></pre>
+<ul>
+<li class="level1"><div class="li"> <strong>Durée notOnOrAfter</strong> : durée en secondes, ajoutée à la durée d'authentification, pour définir la valeur notOnOrAfter dans les réponses <abbr title="Security Assertion Markup Language">SAML</abbr> (<code>&lt;Conditions&gt;</code> et <code>&lt;SubjectConfirmationData&gt;</code>) :</div>
+</li>
+</ul>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;saml:SubjectConfirmationData</span> <span class="re0">NotOnOrAfter</span>=<span class="st0">"2014-07-21T12:47:08Z"</span></span>
+<span class="sc3">  <span class="re0">Recipient</span>=<span class="st0">"http://simplesamlphp.example.com/simplesamlphp/module.php/saml/sp/saml2-acs.php/default-sp"</span></span>
+<span class="sc3">  <span class="re0">InResponseTo</span>=<span class="st0">"_3cfa896ab05730ac81f413e1e13cc42aa529eceea1"</span><span class="re2">/&gt;</span></span></pre>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;saml:Conditions</span> <span class="re0">NotBefore</span>=<span class="st0">"2014-07-21T11:46:08Z"</span></span>
+<span class="sc3">  <span class="re0">NotOnOrAfter</span>=<span class="st0">"2014-07-21T12:48:08Z"</span><span class="re2">&gt;</span></span></pre>
+
+<p>
+</p><p></p><div class="noteimportant">Il y a une tolérance de 60 seconds dans les <code>&lt;Conditions&gt;</code>
+</div></p>
+</p>
+
+</div>
+
+<h5 id="signature">Signature</h5>
+<div class="level5">
+
+<p>
+Ces options surchargent les options de signature du service (voir la <a href="../../documentation/2.0/samlservice.html#general_options" class="wikilink1" title="documentation:2.0:samlservice">configuration du service SAML</a>).
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Signature des messages <abbr title="Authentification unique (Single Sign On)">SSO</abbr></strong> : signe les messages <abbr title="Authentification unique (Single Sign On)">SSO</abbr></div>
+</li>
+<li class="level1"><div class="li"> <strong>Vérification de la signature des messages <abbr title="Authentification unique (Single Sign On)">SSO</abbr></strong> : vérifie la signature des messages <abbr title="Authentification unique (Single Sign On)">SSO</abbr></div>
+</li>
+<li class="level1"><div class="li"> <strong>Signature des messages SLO</strong> : signe les messages de déconnexion SLO (single logout)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Vérifie la signature des messages SLO</strong> : vérifie la signature des messages SLO</div>
+</li>
+</ul>
+
+</div>
+
+<h5 id="security">Sécurité</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> <strong>Mode de chiffrement</strong> : fixe le mode de chiffrement pour cet IDP (None, NameID ou Assertion).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Activer l'<abbr title="Uniform Resource Locator">URL</abbr> initiée par l'IdP</strong> : mettre à <code>On</code> pour activer l'<abbr title="Uniform Resource Locator">URL</abbr> initiée par l'IdP sur ce SP.</div>
+</li>
+</ul>
+
+<p>
+</p><p></p><div class="notetip">
+L'<abbr title="Uniform Resource Locator">URL</abbr> initiée par l'IdP est l'<abbr title="Uniform Resource Locator">URL</abbr> <abbr title="Security Assertion Markup Language">SAML</abbr> du <abbr title="Authentification unique (Single Sign On)">SSO</abbr> avec les paramètres GET :
+</p>
+<ul>
+<li class="level1"><div class="li">  IDPInitiated: 1</div>
+</li>
+<li class="level1"><div class="li"> Un parmi :</div>
+<ul>
+<li class="level2"><div class="li"> sp: identifiant du SP</div>
+</li>
+<li class="level2"><div class="li"> spConfKey : clef de configuration du SP</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Par exemple: <a href="http://auth.example.com/saml/singleSignOn?IDPInitiated=1&amp;spConfKey=simplesamlphp" class="urlextern" title="http://auth.example.com/saml/singleSignOn?IDPInitiated=1&amp;spConfKey=simplesamlphp"  rel="nofollow">http://auth.example.com/saml/singleSignOn?IDPInitiated=1&amp;spConfKey=simplesamlphp</a>
+
+</p></div></p>
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">--></body></html>

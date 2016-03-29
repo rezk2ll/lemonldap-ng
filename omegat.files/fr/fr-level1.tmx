@@ -512,14 +512,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../media/logos/logo-ul.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120707T080409Z" changeid="xavier">
-        <seg>../media/logos/logo-ul.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>mailSessionKey</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063513Z" changeid="guimard">
@@ -1318,14 +1310,6 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../media/applications/django_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120507T182730Z" changeid="xavier">
-        <seg>../../../media/applications/django_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>/_detail/screenshots/1.0/sessionsexplorer/accordeon_dark.png?id=screenshots</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -2048,14 +2032,6 @@ deb-src http://lemonldap-ng.org/deb stable main</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140850Z" changeid="guimard">
         <seg>Convert::PEM</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../../media/applications/liferay_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111210T073652Z" changeid="xavier">
-        <seg>../../../../media/applications/liferay_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -3078,14 +3054,6 @@ dirName = /usr/local/lemonldap-ng/data/conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220722Z" changeid="xavier">
         <seg>Module utilisateurs : SAML</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../media/logos/logo_rbn.png</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../media/logos/logo_rbn.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -5234,14 +5202,6 @@ $WebserverAuth_autouserprofile = Array(</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../media/logos/logo_linagora.png</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../media/logos/logo_linagora.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>To configure requested attributes, edit Exported variables and define attributes:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T172309Z" changeid="xavier">
@@ -5422,14 +5382,6 @@ $WebserverAuth_autouserprofile = Array(</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T055959Z" changeid="xavier">
         <seg>Valeur par défaut</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../media/logos/logo_bpi.png</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../media/logos/logo_bpi.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -5870,6 +5822,14 @@ $WebserverAuth_autouserprofile = Array(</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155348Z" changeid="xavier">
         <seg>Un handler Zimbra est appelé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LmLocationToReplace: string to replace in Location header</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113342Z" changeid="xavier">
+        <seg>LmLocationToReplace : chaîne à remplacer dans l'en-tête Location</seg>
       </tuv>
     </tu>
     <tu>
@@ -7778,14 +7738,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../../media/applications/mediawiki_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111211T074439Z" changeid="xavier">
-        <seg>../../../../media/applications/mediawiki_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Browseable session backend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T071614Z" changeid="xavier">
@@ -8112,14 +8064,6 @@ include /usr/local/lemonldap-ng/etc/test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ces capacités peuvent être utilisées simultanément ou séparemment.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../../media/applications/tomcat_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111218T185911Z" changeid="xavier">
-        <seg>../../../../media/applications/tomcat_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -8908,6 +8852,14 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T131615Z" changeid="xavier">
         <seg>_openid_id</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.private.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113157Z" changeid="xavier">
+        <seg>http://www.private.com</seg>
       </tuv>
     </tu>
     <tu>
@@ -10090,6 +10042,14 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlSetVar LmLocationToReplace http://www.private.com/,https://www.public.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113219Z" changeid="xavier">
+        <seg>PerlSetVar LmLocationToReplace http://www.private.com/,https://www.public.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>OBM_USERPASSWORD</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172106Z" changeid="xavier">
@@ -10674,14 +10634,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../media/applications/bugzilla_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153617Z" changeid="xavier">
-        <seg>../../../media/applications/bugzilla_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Apache (Kerberos, NTLM, OTP, ...)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T081247Z" changeid="xavier">
@@ -10958,14 +10910,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111509Z" changeid="xavier">
         <seg>../pages/download.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>To bypass this, you can: * Use IP in configuration to avoid DNS resolution * Install a DNS cache like nscd, netmask or bind</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T062515Z" changeid="xavier">
-        <seg>Pour éviter ceci, on peut : * Utiliser IP dans la configuration pour éviter la résolution DNS * Installer un cache DNS tel nscd, netmask ou bind</seg>
       </tuv>
     </tu>
     <tu>
@@ -12672,14 +12616,6 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../media/applications/obm_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153528Z" changeid="xavier">
-        <seg>../../../media/applications/obm_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>logos:logo_ucanss.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20130203T115005Z" changeid="xavier">
@@ -13586,14 +13522,6 @@ dirName = /var/lib/lemonldap-ng/conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../../media/applications/dokuwiki_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T114554Z" changeid="xavier">
-        <seg>../../../../media/applications/dokuwiki_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Protection scheme</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14414,14 +14342,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../../media/applications/limesurvey_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101451Z" changeid="xavier">
-        <seg>../../../../media/applications/limesurvey_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Password expiration warning workflow</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T165959Z" changeid="xavier">
@@ -14998,6 +14918,14 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>accordeon_light.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Main differences with mod_proxy:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T112941Z" changeid="xavier">
+        <seg>Principales différences avec mod_proxy :</seg>
       </tuv>
     </tu>
     <tu>
@@ -18470,14 +18398,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../media/applications/tomcat_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153655Z" changeid="xavier">
-        <seg>../../../media/applications/tomcat_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Be careful with URL parameters</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T100039Z" changeid="xavier">
@@ -18506,14 +18426,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103630Z" changeid="xavier">
         <seg>Paris</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../../media/applications/spring_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111211T174302Z" changeid="xavier">
-        <seg>../../../../media/applications/spring_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -18584,14 +18496,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145743Z" changeid="guimard">
         <seg>screenshots:1.1:mailreset:mailreset_step4.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../media/applications/mediawiki_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153540Z" changeid="xavier">
-        <seg>../../../media/applications/mediawiki_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -18708,6 +18612,16 @@ sub function1 {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T181528Z" changeid="xavier">
         <seg>syntax (optionnel) : hexadecimal (défaut) ou octetstring</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ServerName www.public.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113215Z" changeid="xavier">
+        <seg>ServerName www.public.com
+ </seg>
       </tuv>
     </tu>
     <tu>
@@ -19832,6 +19746,14 @@ server {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LmCookieDomainToReplace: string to replace in Set-Cookie header</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113403Z" changeid="xavier">
+        <seg>LmCookieDomainToReplace : chaîne à remplacer dans l'en-tête Set-Cookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Update translations</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20850,14 +20772,6 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T204210Z" changeid="xavier">
         <seg>Pour ce faire, aller dans le manager &gt; Paramètres généraux &gt; Paramètres avancés &gt; Sécurité &gt; Utiliser la cage sécurisée et la désactiver.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../../media/applications/googleapps_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111203T182236Z" changeid="xavier">
-        <seg>../../../../media/applications/googleapps_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -22766,14 +22680,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../../media/applications/bugzilla_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T113604Z" changeid="xavier">
-        <seg>../../../../media/applications/bugzilla_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>lemonldap-ng-portal-appslist.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23074,14 +22980,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../media/applications/drupal_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153551Z" changeid="xavier">
-        <seg>../../../media/applications/drupal_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Database Interface</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200100Z" changeid="xavier">
@@ -23298,14 +23196,6 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>ipAddr WHATTOTRACE _httpSessionType ipAddr</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T064523Z" changeid="xavier">
-        <seg>ipAddr WHATTOTRACE _httpSessionType ipAddr</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Eric GERMAN</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23326,6 +23216,16 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073527Z" changeid="xavier">
         <seg>Cette documentation explique seulement comment activer la partie SSO.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlSetVar LmCookieDomainToReplace private.com,public.com
+&lt;/VirtualHost&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113224Z" changeid="xavier">
+        <seg>PerlSetVar LmCookieDomainToReplace private.com,public.com
+&lt;/VirtualHost&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -23358,6 +23258,14 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T134148Z" changeid="xavier">
         <seg>On peut utiliser les règles suivantes à la place :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;VirtualHost&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194034Z" changeid="xavier">
+        <seg>&lt;VirtualHost&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -23478,14 +23386,6 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112314Z" changeid="xavier">
         <seg>//&quot;userobm_direction&quot;           =&gt; ,</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../media/applications/dokuwiki_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153538Z" changeid="xavier">
-        <seg>../../../media/applications/dokuwiki_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -23892,18 +23792,18 @@ dbiTable    = mytablename</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../media/applications/spring_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153653Z" changeid="xavier">
-        <seg>../../../media/applications/spring_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Null authentication level</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063751Z" changeid="guimard">
         <seg>Niveau d'authentification de Null</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The configuration is done in Apache, in a virtual host.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113154Z" changeid="xavier">
+        <seg>La configuration est effectuée dans Apache, dans les hôtes virtuels.</seg>
       </tuv>
     </tu>
     <tu>
@@ -24770,14 +24670,6 @@ dbiTable    = mytablename</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155201Z" changeid="xavier">
         <seg>Ce protocole est implementé dans un handler spécifique de LL::NG.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../media/logos/logo_ucanss.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20130203T115006Z" changeid="xavier">
-        <seg>../media/logos/logo_ucanss.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -25854,14 +25746,6 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../media/logos/logo_abuledu.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T154658Z" changeid="xavier">
-        <seg>../media/logos/logo_abuledu.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Note that all LL::NG components must have access:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T075144Z" changeid="xavier">
@@ -26634,14 +26518,6 @@ notification = 1</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../media/applications/zimbra_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153533Z" changeid="xavier">
-        <seg>../../../media/applications/zimbra_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Regular expression for random password</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26694,14 +26570,6 @@ notification = 1</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120707T080403Z" changeid="xavier">
         <seg>LemonLDAP::NG est utilisé pour protéger l'accès à l'Intranet.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../media/applications/limesurvey_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T103137Z" changeid="xavier">
-        <seg>../../../media/applications/limesurvey_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -27142,6 +27010,14 @@ notification = 1</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T142956Z" changeid="xavier">
         <seg>Il faut désactiver mod_deflate pour utiliser le menu flottant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlModule Lemonldap::NG::Handler::Proxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194035Z" changeid="xavier">
+        <seg>PerlModule Lemonldap::NG::Handler::Proxy</seg>
       </tuv>
     </tu>
     <tu>
@@ -27898,6 +27774,14 @@ $lemonldap_config = Array(</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For example, to proxy https://www.public.com to http://www.private.com:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113214Z" changeid="xavier">
+        <seg>Par exemple, pour relayer https://www.public.com en http://www.private.com:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If no proxied services defined, CAS authentication will not activate the CAS proxy mode.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160843Z" changeid="xavier">
@@ -28110,14 +27994,6 @@ $lemonldap_config = Array(</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Résolution des artifacts</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../media/logos/sgs_white_small.jpg</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../media/logos/sgs_white_small.jpg</seg>
       </tuv>
     </tu>
     <tu>
@@ -29028,14 +28904,6 @@ tpl_myparam = world</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../media/applications/http_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153651Z" changeid="xavier">
-        <seg>../../../media/applications/http_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>→ Your browser loops between portal and handler, it is probably a cookie problem.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T113908Z" changeid="xavier">
@@ -29620,14 +29488,6 @@ tpl_myparam = world</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../media/applications/glpi_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153619Z" changeid="xavier">
-        <seg>../../../media/applications/glpi_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Then you just have to define the mapping of this new attributes, for example:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T202751Z" changeid="xavier">
@@ -29736,14 +29596,6 @@ tpl_myparam = world</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072442Z" changeid="xavier">
         <seg>Apache::Session::Browseable::MySQL n'utilise pas les locks pour conserver les performances.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../media/applications/grr_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153626Z" changeid="xavier">
-        <seg>../../../media/applications/grr_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -29912,14 +29764,6 @@ tpl_myparam = world</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T173048Z" changeid="xavier">
         <seg>Par exemple pour stocker le mode d'authentification, on peut créer une nouvelle clef dans données de session à stocker nommée $_auth avec comme valeur mode d'authentification.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../media/applications/liferay_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153554Z" changeid="xavier">
-        <seg>../../../media/applications/liferay_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -31000,14 +30844,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../media/applications/phpldapadmin_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153629Z" changeid="xavier">
-        <seg>../../../media/applications/phpldapadmin_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>/_detail/screenshots/1.0/impact/portal.png?id=screenshots</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -31036,14 +30872,6 @@ globalStorageOptions = { 'Directory' =&gt; '/var/lib/lemonldap-ng/sessions/', 'L
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063836Z" changeid="guimard">
         <seg>portalAntiFrame</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../../media/applications/obm_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111211T111714Z" changeid="xavier">
-        <seg>../../../../media/applications/obm_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -31442,6 +31270,14 @@ GRANT SELECT ON lmConfig.*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It is compliant with the form replay feature</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113124Z" changeid="xavier">
+        <seg>Il est compatible avec le rejeu de formulaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../documentation/1.0/portal.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103755Z" changeid="xavier">
@@ -31454,14 +31290,6 @@ GRANT SELECT ON lmConfig.*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T171810Z" changeid="xavier">
         <seg>ldapConfBase</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../media/logos/logo_gn.png</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../media/logos/logo_gn.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -31662,14 +31490,6 @@ GRANT SELECT ON lmConfig.*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>URL: URL de votre organisation</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../../media/applications/zimbra_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111220T112609Z" changeid="xavier">
-        <seg>../../../../media/applications/zimbra_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -31954,6 +31774,14 @@ GRANT SELECT ON lmConfig.*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG provides a proxy that can replace the use of Apache mod_proxy.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T111311Z" changeid="xavier">
+        <seg>LemonLDAP::NG fournit un proxy qui peut remplacer l'utilisation de mod_proxy d'Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>applications:zimbra_logo.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T112608Z" changeid="xavier">
@@ -32150,6 +31978,14 @@ GRANT SELECT ON lmConfig.*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://mail.ow2.org/wws/arc/lemonldap-ng-changes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlSetVar LmProxyPass http://www.private.com/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113217Z" changeid="xavier">
+        <seg>PerlSetVar LmProxyPass http://www.private.com/</seg>
       </tuv>
     </tu>
     <tu>
@@ -33626,14 +33462,6 @@ Display-Name -&gt; $displayName ||= $givenName.&quot; &quot;.$surName</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../../media/applications/drupal_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111129T061401Z" changeid="xavier">
-        <seg>../../../../media/applications/drupal_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Full name</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -33926,28 +33754,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T055040Z" changeid="xavier">
         <seg>Sans index, LL::NG doit récupérer toutes les sessions stockées dans le backend et les examiner pour trouver les sessions demandées.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg># group
-admin -&gt; $uid eq 'foo' or $uid eq 'bar'
- 
-# Use a group in a rule
-^/admin -&gt; $groups =~ /\badmin\b/
- 
-# Or with hGroups
-^/admin -&gt; defined $hGroups{'admin'}</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T161658Z" changeid="xavier">
-        <seg># groupe
-admin -&gt; $uid eq 'foo' or $uid eq 'bar'
- 
-# Utiliser un groupe dans une règle
-^/admin -&gt; $groups =~ /\badmin\b/
- 
-# Ou avec hGroups
-^/admin -&gt; defined $hGroups{'admin'}</seg>
       </tuv>
     </tu>
     <tu>
@@ -34754,6 +34560,14 @@ protection = manager</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SetHandler perl-script</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194036Z" changeid="xavier">
+        <seg>SetHandler perl-script</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.youtube.com/watch?v=OJGB6jdN34Q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103653Z" changeid="xavier">
@@ -35068,6 +34882,14 @@ protection = manager</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>https://www.public.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113156Z" changeid="xavier">
+        <seg>https://www.public.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>decreased (-1) if the portal autocompletion is allowed (see portal customization)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200316Z" changeid="xavier">
@@ -35202,14 +35024,6 @@ protection = manager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T073220Z" changeid="xavier">
         <seg>Certaines applications ont besoin de la variable d'environnement REMOTE_USER pour connaître le nom d'utilisateur connecté, qui n'est pas renseignée en mode reverse-proxy.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../media/logos/logo_ministere_justice.jpg</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120707T080336Z" changeid="xavier">
-        <seg>../media/logos/logo_ministere_justice.jpg</seg>
       </tuv>
     </tu>
     <tu>
@@ -35530,14 +35344,6 @@ protection = manager</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112836Z" changeid="xavier">
         <seg>→ Le cache local ne peut être effacé, regarder les options localStorage and localStorageOptions ou les droits associés à ces fichiers</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../../media/applications/phpldapadmin_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111211T173118Z" changeid="xavier">
-        <seg>../../../../media/applications/phpldapadmin_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -36558,26 +36364,10 @@ Display-Name -&gt; $displayName</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>RHEL/CentOS 5</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120617T065629Z" changeid="xavier">
-        <seg>RHEL/CentOS 5</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Use packages provided by Debian.</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Utiliser les paquets fournis par Debian.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>RHEL/CentOS 6</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120617T065630Z" changeid="xavier">
-        <seg>RHEL/CentOS 6</seg>
       </tuv>
     </tu>
     <tu>
@@ -36824,14 +36614,6 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103749Z" changeid="xavier">
         <seg>../documentation/1.0/applications.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../../media/applications/http_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T101157Z" changeid="xavier">
-        <seg>../../../../media/applications/http_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -37546,14 +37328,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120422T100121Z" changeid="xavier">
         <seg>CDBI</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../media/applications/saplogo.gif</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153634Z" changeid="xavier">
-        <seg>../../../media/applications/saplogo.gif</seg>
       </tuv>
     </tu>
     <tu>
@@ -38706,14 +38480,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../../media/applications/sympa_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111217T080317Z" changeid="xavier">
-        <seg>../../../../media/applications/sympa_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Django</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T182526Z" changeid="xavier">
@@ -39570,22 +39336,6 @@ else {</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120303T093857Z" changeid="xavier">
-        <seg>sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../media/applications/googleapps_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153812Z" changeid="xavier">
-        <seg>../../../media/applications/googleapps_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>LDAP performances</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -39702,14 +39452,6 @@ else {</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172135Z" changeid="xavier">
         <seg>Ne pas oblier d'ajouter OBM dans le menu des applications.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../media/applications/sympa_logo.png</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153530Z" changeid="xavier">
-        <seg>../../../media/applications/sympa_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -41088,6 +40830,16 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T221013Z" changeid="xavier">
         <seg>http://auth.example.com/saml/metadata</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlHandler Lemonldap::NG::Handler::Proxy
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113216Z" changeid="xavier">
+        <seg>PerlHandler Lemonldap::NG::Handler::Proxy
+ </seg>
       </tuv>
     </tu>
     <tu>
