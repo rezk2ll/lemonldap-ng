@@ -1,14 +1,12 @@
-##@file
-# FastCGI package for Lemonldap::NG portal
-#
 ##@class Lemonldap::NG::Portal::Main::Init
-# FastCGI class for Lemonldap::NG portal
+# Initialization part of Lemonldap::NG portal
 package Lemonldap::NG::Portal::Main::Init;
 
 use strict;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Handler::Main::Reload qw/keepConf/;
+use Lemonldap::NG::Portal::Main::Plugins;
 
 our $VERSION = '2.0.0';
 
@@ -21,15 +19,33 @@ has conf        => ( is => 'rw', default => sub { {} } );
 # Sub modules
 has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
-has _passwordDB     => ( is => 'rw' );
-has _registerDB     => ( is => 'rw' );
 
-has _issuers => ( is => 'rw' );
+# Lists to store plugins entry-points
+has beforeAuthProcess => (
+    is      => 'rw',
+    isa     => 'ArrayRef',
+    default => sub { [] }
+);
+has addSessionData => (
+    is      => 'rw',
+    isa     => 'ArrayRef',
+    default => sub { [] }
+);
+has afterAuthProcess => (
+    is      => 'rw',
+    isa     => 'ArrayRef',
+    default => sub { [] }
+);
+has forAuthUser => (
+    is      => 'rw',
+    isa     => 'ArrayRef',
+    default => sub { [] }
+);
 
 sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
-    return 0 unless ( $self->SUPER::init($args) );
+    return 0 unless ( $self->SUPER::init( { conf => $args } ) );
     $self->localConfig(
         { %{ HANDLER->confAcc->getLocalConf('portal') }, %$args } );
     return $self->checkConf($args);
@@ -63,16 +79,6 @@ sub checkConf {
             );
             return 0;
         }
-        foreach my $key (
-            qw(persistentStorage samlStorage casStorage captchaStorage oidcStorage)
-          )
-        {
-            unless ( $self->conf->{$key} ) {
-                $self->conf->{$key} = $self->conf->{globalStorage};
-                $self->conf->{ $key . 'Options' } =
-                  $self->conf->{globalStorageOptions};
-            }
-        }
 
         # Initialize cookie domain
         unless ( $self->conf->{domain} ) {
@@ -81,9 +87,9 @@ sub checkConf {
         }
         $self->conf->{domain} =~ s/^([^\.])/.$1/;
 
-        # Load authentication/userDB/passwordDB modules
-        # ---------------------------------------------
-        for my $type (qw(authentication userDB passwordDB registerDB)) {
+        # Load authentication/userDB
+        # --------------------------
+        for my $type (qw(authentication userDB)) {
             unless ( $self->conf->{$type} ) {
                 $self->error("$type is not set");
                 return 0;
@@ -97,56 +103,14 @@ sub checkConf {
             # contains arguments (key1 = scalar_value; key2 = ...)
             my ( $tmp, %h ) = split( /\s*[=;]\s*/, $self->conf->{$type} );
             %{ $self->{conf} } = ( %h, %{ $self->{conf} } ) if (%h);
-            return 0 unless ( $self->loadModule( $module, "_$type" ) );
+
+            # Launch and initialize module
+            return 0
+              unless ( $self->{"_$type"} = $self->loadModule($module)
+                and $self->{"_$type"}->init );
         }
 
-        # Load issuer modules
-        # -------------------
-        foreach my $issuerDBtype (qw(SAML OpenID CAS OpenIDConnect)) {
-            my $module = 'Lemonldap::NG::Portal::IssuerDB' . $issuerDBtype;
-            $self->lmLog(
-                "[IssuerDB activation] Try issuerDB module $issuerDBtype",
-                'debug' );
-            unless ( $self->conf->{"issuerDB${issuerDBtype}Activation"} ) {
-                $self->lmLog(
-"[IssuerDB activation] Activation flag set to off, trying next",
-                    'debug'
-                );
-                next;
-            }
-
-            #TODO: regexp ?
-            my $path = $self->conf->{"issuerDB${issuerDBtype}Path"};
-            unless ($path) {
-                $self->lmLog(
-"[IssuerDB activation] no path found for ${issuerDBtype}. Skipping",
-                    'notice'
-                );
-                next;
-            }
-
-            return 0 unless ( $self->loadModule( $module, 'tmp' ) );
-            $self->{issuers}->{$issuerDBtype} = $self->{tmp};
-            delete $self->{tmp};
-            $self->addAuthRoute(
-                $path,
-                sub {
-                    my $self = shift;
-                    return $self->issuerForAuthUser( $issuerDBtype, @_ );
-                },
-                [qw(GET POST PUT DELETE)]
-            );
-            $self->addUnauthRoute(
-                $path,
-                sub {
-                    my $self = shift;
-                    return $self->issuerForUnauthUser( $issuerDBtype, @_ );
-                },
-                [qw(GET POST PUT DELETE)]
-            );
-
-            # TODO "check the path"
-        }
+        # Initialize trusted domain list
         $self->conf->{trustedDomains} ||= "";
         $self->conf->{trustedDomains} = "*"
           if ( $self->conf->{trustedDomains} =~ /(^|\s)\*(\s|$)/ );
@@ -159,35 +123,49 @@ sub checkConf {
               . ')';
             $self->conf->{trustedDomains} =~ s/\./\\./g;
         }
+
+        # Load plugins
+        foreach my $plugin ( $self->enabledPlugins ) {
+            $self->loadPlugin($plugin) or return 0;
+        }
     }
     1;
 }
 
-##@method boolean loadModule(string module, boolean ignoreError)
-# Load a module into portal namespace
-# @param module module name
-# @param ignoreError set to 1 if error should not appear in logs
-# @return boolean
-sub loadModule {
-    my ( $self, $module, $keyname ) = @_;
+sub loadPlugin {
+    my ( $self, $plugin ) = @_;
+    my $obj;
+    return 0
+      unless ( $obj =
+        $self->loadModule("Lemonldap::NG::Portal::Plugins::$plugin") );
+    foreach my $sub (
+        qw(beforeAuthProcess addSessionData afterAuthProcess forAuthUser))
+    {
+        if ( $obj->can($sub) ) {
+            push @{ $self->{$sub} }, $obj->$sub;
+        }
+    }
+    return $obj->init;
+}
 
-    # Load module test
+sub loadModule {
+    my ( $self, $module ) = @_;
+    my $obj;
+
     eval "require $module";
     if ($@) {
         $self->error("$module load error: $@");
         return 0;
     }
     eval {
-        $self->{$keyname} = $module->new( { p => $self, conf => $self->conf } );
+        $obj = $module->new( { p => $self, conf => $self->conf } );
+        $self->lmLog( "Module $module loaded", 'debug' );
     };
     if ($@) {
         $self->error("Unable to build $module object: $@");
         return 0;
     }
-    return 0 unless ( $self->{$keyname} );
-    $self->lmLog( "Module $module loaded", 'debug' );
-
-    return 1;
+    return $obj;
 }
 
 1;
