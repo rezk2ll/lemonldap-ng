@@ -258,7 +258,6 @@ lib/Lemonldap/NG/Portal/AuthSSL.pm
 lib/Lemonldap/NG/Portal/AuthTwitter.pm
 lib/Lemonldap/NG/Portal/AuthWebID.pm
 lib/Lemonldap/NG/Portal/AuthYubikey.pm
-lib/Lemonldap/NG/Portal/CDA.pm
 lib/Lemonldap/NG/Portal/CDC.pm
 lib/Lemonldap/NG/Portal/Display.pm
 lib/Lemonldap/NG/Portal/IssuerDBCAS.pm
