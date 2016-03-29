@@ -56,6 +56,11 @@ override_dh_auto_install:
 		mv $(TMP)/etc/lemonldap-ng/$$i-apache2.X.conf $(TMP)/etc/lemonldap-ng/$$i-apache2.conf; \
 	done
 
+override_dh_link:
+	rm -rf debian/lemonldap-ng-fr-doc/usr/share/doc/lemonldap-ng-fr-doc/media \
+		debian/lemonldap-ng-fr-doc/usr/share/doc/lemonldap-ng-fr-doc/lib
+	dh_link
+
 override_dh_compress:
 	dh_compress -X favicon.ico
 
