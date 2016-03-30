@@ -10,6 +10,7 @@ package Lemonldap::NG::Portal::Main::Run;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Portal::Main::Request;
 
 our $VERSION = '2.0.0';
 
@@ -18,7 +19,7 @@ sub handler {
     unless ( $self->conf->{cfgNum} and $self->conf->{cfgNum} eq HANDLER->lmConf->{cfgNum} ) {
         $self->reloadConf()
     }
-    bless $req, Lemonldap::NG::Portal::Main::Request;
+    bless $req, 'Lemonldap::NG::Portal::Main::Request';
     return $self->SUPER::handler($req);
 }
 
