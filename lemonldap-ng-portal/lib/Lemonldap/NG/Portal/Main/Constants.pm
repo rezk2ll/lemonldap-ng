@@ -1,0 +1,158 @@
+package Lemonldap::NG::Portal::Main::Constants;
+
+use strict;
+use Exporter 'import';
+
+use constant {
+
+    # Portal errors
+    # Developers warning, do not use PE_INFO, it's reserved to autoRedirect.
+    # If you want to send an information, use $self->info('text').
+    PE_IMG_NOK                          => -5,
+    PE_IMG_OK                           => -4,
+    PE_INFO                             => -3,
+    PE_REDIRECT                         => -2,
+    PE_DONE                             => -1,
+    PE_OK                               => 0,
+    PE_SESSIONEXPIRED                   => 1,
+    PE_FORMEMPTY                        => 2,
+    PE_WRONGMANAGERACCOUNT              => 3,
+    PE_USERNOTFOUND                     => 4,
+    PE_BADCREDENTIALS                   => 5,
+    PE_LDAPCONNECTFAILED                => 6,
+    PE_LDAPERROR                        => 7,
+    PE_APACHESESSIONERROR               => 8,
+    PE_FIRSTACCESS                      => 9,
+    PE_BADCERTIFICATE                   => 10,
+    PE_PP_ACCOUNT_LOCKED                => 21,
+    PE_PP_PASSWORD_EXPIRED              => 22,
+    PE_CERTIFICATEREQUIRED              => 23,
+    PE_ERROR                            => 24,
+    PE_PP_CHANGE_AFTER_RESET            => 25,
+    PE_PP_PASSWORD_MOD_NOT_ALLOWED      => 26,
+    PE_PP_MUST_SUPPLY_OLD_PASSWORD      => 27,
+    PE_PP_INSUFFICIENT_PASSWORD_QUALITY => 28,
+    PE_PP_PASSWORD_TOO_SHORT            => 29,
+    PE_PP_PASSWORD_TOO_YOUNG            => 30,
+    PE_PP_PASSWORD_IN_HISTORY           => 31,
+    PE_PP_GRACE                         => 32,
+    PE_PP_EXP_WARNING                   => 33,
+    PE_PASSWORD_MISMATCH                => 34,
+    PE_PASSWORD_OK                      => 35,
+    PE_NOTIFICATION                     => 36,
+    PE_BADURL                           => 37,
+    PE_NOSCHEME                         => 38,
+    PE_BADOLDPASSWORD                   => 39,
+    PE_MALFORMEDUSER                    => 40,
+    PE_SESSIONNOTGRANTED                => 41,
+    PE_CONFIRM                          => 42,
+    PE_MAILFORMEMPTY                    => 43,
+    PE_BADMAILTOKEN                     => 44,
+    PE_MAILERROR                        => 45,
+    PE_MAILOK                           => 46,
+    PE_LOGOUT_OK                        => 47,
+    PE_SAML_ERROR                       => 48,
+    PE_SAML_LOAD_SERVICE_ERROR          => 49,
+    PE_SAML_LOAD_IDP_ERROR              => 50,
+    PE_SAML_SSO_ERROR                   => 51,
+    PE_SAML_UNKNOWN_ENTITY              => 52,
+    PE_SAML_DESTINATION_ERROR           => 53,
+    PE_SAML_CONDITIONS_ERROR            => 54,
+    PE_SAML_IDPSSOINITIATED_NOTALLOWED  => 55,
+    PE_SAML_SLO_ERROR                   => 56,
+    PE_SAML_SIGNATURE_ERROR             => 57,
+    PE_SAML_ART_ERROR                   => 58,
+    PE_SAML_SESSION_ERROR               => 59,
+    PE_SAML_LOAD_SP_ERROR               => 60,
+    PE_SAML_ATTR_ERROR                  => 61,
+    PE_OPENID_EMPTY                     => 62,
+    PE_OPENID_BADID                     => 63,
+    PE_MISSINGREQATTR                   => 64,
+    PE_BADPARTNER                       => 65,
+    PE_MAILCONFIRMATION_ALREADY_SENT    => 66,
+    PE_PASSWORDFORMEMPTY                => 67,
+    PE_CAS_SERVICE_NOT_ALLOWED          => 68,
+    PE_MAILFIRSTACCESS                  => 69,
+    PE_MAILNOTFOUND                     => 70,
+    PE_PASSWORDFIRSTACCESS              => 71,
+    PE_MAILCONFIRMOK                    => 72,
+    PE_RADIUSCONNECTFAILED              => 73,
+    PE_MUST_SUPPLY_OLD_PASSWORD         => 74,
+    PE_FORBIDDENIP                      => 75,
+    PE_CAPTCHAERROR                     => 76,
+    PE_CAPTCHAEMPTY                     => 77,
+    PE_REGISTERFIRSTACCESS              => 78,
+    PE_REGISTERFORMEMPTY                => 79,
+    PE_REGISTERALREADYEXISTS            => 80,
+
+    # Portal messages
+    PM_USER                  => 0,
+    PM_DATE                  => 1,
+    PM_IP                    => 2,
+    PM_SESSIONS_DELETED      => 3,
+    PM_OTHER_SESSIONS        => 4,
+    PM_REMOVE_OTHER_SESSIONS => 5,
+    PM_PP_GRACE              => 6,
+    PM_PP_EXP_WARNING        => 7,
+    PM_SAML_IDPSELECT        => 8,
+    PM_SAML_IDPCHOOSEN       => 9,
+    PM_REMEMBERCHOICE        => 10,
+    PM_SAML_SPLOGOUT         => 11,
+    PM_REDIRECTION           => 12,
+    PM_BACKTOSP              => 13,
+    PM_BACKTOCASURL          => 14,
+    PM_LOGOUT                => 15,
+    PM_OPENID_EXCHANGE       => 16,
+    PM_CDC_WRITER            => 17,
+    PM_OPENID_RPNS           => 18,    # OpenID "requested parameter is not set"
+    PM_OPENID_PA             => 19,    # "OpenID policy available at"
+    PM_OPENID_AP             => 20,    # OpenID "Asked parameter"
+    PM_ERROR_MSG             => 21,
+    PM_LAST_LOGINS           => 22,
+    PM_LAST_FAILED_LOGINS    => 23,
+    PM_OIDC_CONSENT          => 24,
+    PM_OIDC_SCOPE_OPENID     => 25,
+    PM_OIDC_SCOPE_PROFILE    => 26,
+    PM_OIDC_SCOPE_EMAIL      => 27,
+    PM_OIDC_SCOPE_ADDRESS    => 28,
+    PM_OIDC_SCOPE_PHONE      => 29,
+    PM_OIDC_SCOPE_OTHER      => 30,
+    PM_OIDC_CONFIRM_LOGOUT   => 31,
+};
+
+# EXPORTER PARAMETERS
+our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
+  PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND
+  PE_BADCREDENTIALS PE_LDAPCONNECTFAILED PE_LDAPERROR PE_APACHESESSIONERROR
+  PE_FIRSTACCESS PE_BADCERTIFICATE PE_PP_ACCOUNT_LOCKED PE_PP_PASSWORD_EXPIRED
+  PE_CERTIFICATEREQUIRED PE_ERROR PE_PP_CHANGE_AFTER_RESET
+  PE_PP_PASSWORD_MOD_NOT_ALLOWED PE_PP_MUST_SUPPLY_OLD_PASSWORD
+  PE_PP_INSUFFICIENT_PASSWORD_QUALITY PE_PP_PASSWORD_TOO_SHORT
+  PE_PP_PASSWORD_TOO_YOUNG PE_PP_PASSWORD_IN_HISTORY PE_PP_GRACE
+  PE_PP_EXP_WARNING PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION
+  PE_BADURL PE_NOSCHEME PE_BADOLDPASSWORD PE_MALFORMEDUSER PE_SESSIONNOTGRANTED
+  PE_CONFIRM PE_MAILFORMEMPTY PE_BADMAILTOKEN PE_MAILERROR PE_MAILOK
+  PE_LOGOUT_OK PE_SAML_ERROR PE_SAML_LOAD_SERVICE_ERROR PE_SAML_LOAD_IDP_ERROR
+  PE_SAML_SSO_ERROR PE_SAML_UNKNOWN_ENTITY PE_SAML_DESTINATION_ERROR
+  PE_SAML_CONDITIONS_ERROR PE_SAML_IDPSSOINITIATED_NOTALLOWED PE_SAML_SLO_ERROR
+  PE_SAML_SIGNATURE_ERROR PE_SAML_ART_ERROR PE_SAML_SESSION_ERROR
+  PE_SAML_LOAD_SP_ERROR PE_SAML_ATTR_ERROR PE_OPENID_EMPTY PE_OPENID_BADID
+  PE_MISSINGREQATTR PE_BADPARTNER PE_MAILCONFIRMATION_ALREADY_SENT
+  PE_PASSWORDFORMEMPTY PE_CAS_SERVICE_NOT_ALLOWED PE_MAILFIRSTACCESS
+  PE_MAILNOTFOUND PE_PASSWORDFIRSTACCESS PE_MAILCONFIRMOK
+  PE_MUST_SUPPLY_OLD_PASSWORD PE_FORBIDDENIP PE_CAPTCHAERROR PE_CAPTCHAEMPTY
+  PE_REGISTERFIRSTACCESS PE_REGISTERFORMEMPTY PE_REGISTERALREADYEXISTS
+  PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
+  PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
+  PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
+  PM_REDIRECTION PM_BACKTOSP PM_BACKTOCASURL PM_LOGOUT PM_OPENID_EXCHANGE
+  PM_CDC_WRITER PM_OPENID_RPNS PM_OPENID_PA PM_OPENID_AP PM_ERROR_MSG
+  PM_LAST_LOGINS PM_LAST_FAILED_LOGINS PM_OIDC_CONSENT PM_OIDC_SCOPE_OPENID
+  PM_OIDC_SCOPE_PROFILE PM_OIDC_SCOPE_EMAIL PM_OIDC_SCOPE_ADDRESS
+  PM_OIDC_SCOPE_PHONE PM_OIDC_SCOPE_OTHER PM_OIDC_CONFIRM_LOGOUT
+);
+our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
+
+our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
+
+1;

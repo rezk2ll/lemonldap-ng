@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::Auth::Demo;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends qw(Lemonldap::NG::Portal::Auth::_WebForm);
 
@@ -19,25 +20,6 @@ use constant AuthnLevel => 0;
 # @return Lemonldap::NG::Portal constant
 sub init {
     my $self = shift;
-
-    # Sample accounts from Doctor Who characters
-    $self->{_demoAccounts} = {
-        'rtyler' => {
-            'uid'  => 'rtyler',
-            'cn'   => 'Rose Tyler',
-            'mail' => 'rtyler@badwolf.org',
-        },
-        'msmith' => {
-            'uid'  => 'msmith',
-            'cn'   => 'Mickey Smith',
-            'mail' => 'msmith@badwolf.org',
-        },
-        'dwho' => {
-            'uid'  => 'dwho',
-            'cn'   => 'Doctor Who',
-            'mail' => 'dwho@badwolf.org',
-        },
-    };
 
     # Add warning in log
     $self->lmLog(

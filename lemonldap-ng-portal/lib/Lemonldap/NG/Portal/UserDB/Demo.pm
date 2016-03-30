@@ -6,14 +6,14 @@
 package Lemonldap::NG::Portal::UserDB::Demo;
 
 use strict;
-use Lemonldap::NG::Portal::Simple;
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.0';
 
 ## @apmethod int userDBInit()
 # Check AuthDemo use
 # @return Lemonldap::NG::Portal constant
-sub userDBInit {
+sub init {
     my $self = shift;
 
     unless ( $self->get_module('auth') =~ /^Demo/ ) {
