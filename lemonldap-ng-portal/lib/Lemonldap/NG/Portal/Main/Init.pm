@@ -1,5 +1,11 @@
 ##@class Lemonldap::NG::Portal::Main::Init
 # Initialization part of Lemonldap::NG portal
+#
+# 2 methods:
+#  - init():       launch at startup. Load 'portal' section of lemonldap-ng.ini,
+#                  initialize default route and launch reloadConf()
+#  - reloadConf(): (re)load configuration using localConf (ie 'portal' section
+#                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
 use strict;
@@ -48,21 +54,19 @@ sub init {
     return 0 unless ( $self->SUPER::init( { conf => $args } ) );
     $self->localConfig(
         { %{ HANDLER->confAcc->getLocalConf('portal') }, %$args } );
+
+    # Handle default requests (other path may be declared in enabled plugins)
+    $self->addAuthRoute('*'=>'menu');
+    $self->addUnauthRoute('*'=>'login');
+
+    # Default routes must point to routines declared above
+    $self->defaultAuthRoute('');
+    $self->defaultUnauthRoute('');
     return $self->reloadConf($args);
 }
 
-sub checkConf {
-    my $self = shift;
-    return (
-        $self->conf->{cfgNum}
-          and $self->conf->{cfgNum} eq HANDLER->lmConf->{cfgNum}
-        ? 1
-        : $self->reloadConf(@_)
-    );
-}
-
 sub reloadConf {
-    my ( $self, $args ) = @_;
+    my ( $self ) = @_;
 
     my $conf = HANDLER->lmConf->{cfgNum};
 

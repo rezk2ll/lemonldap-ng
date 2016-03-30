@@ -111,18 +111,8 @@ sub handler {
     my @path = grep { $_ =~ /^[\.\w]+/ } split /\//, $req->path();
     $self->lmLog( "Start routing " . ( $path[0] // 'default route' ), 'debug' );
 
-    unless (@path) {
-        push @path, $self->defaultRoute;
-
-        # TODO: E-Tag, Expires,...
-        #
-        ## NB: this is not HTTP compliant: host and protocol are required !
-        #my $url = '/' . $self->defaultRoute;
-        #return [
-        #    302,
-        #    [ 'Content-Type' => 'text/plain', 'Location' => $url ],
-        #    ['Document has moved here: $url']
-        #];
+    if ( !@path and $self->defaultRoute ) {
+        @path = ( $self->defaultRoute );
     }
     return $self->followPath( $req, $self->routes->{ $req->method }, \@path );
 }
