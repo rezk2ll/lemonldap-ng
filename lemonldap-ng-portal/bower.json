@@ -1,6 +1,6 @@
 {
   "name": "lemonldap-ng-portal",
-  "description": "Lemonldap::NG portal with AngularJS",
+  "description": "Lemonldap::NG portal",
   "version": "1.9.0",
   "homepage": "https://lemonldap-ng.org",
   "license": "GPL2",
