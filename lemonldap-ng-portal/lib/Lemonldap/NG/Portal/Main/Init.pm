@@ -48,86 +48,92 @@ sub init {
     return 0 unless ( $self->SUPER::init( { conf => $args } ) );
     $self->localConfig(
         { %{ HANDLER->confAcc->getLocalConf('portal') }, %$args } );
-    return $self->checkConf($args);
+    return $self->reloadConf($args);
 }
 
 sub checkConf {
+    my $self = shift;
+    return (
+        $self->conf->{cfgNum}
+          and $self->conf->{cfgNum} eq HANDLER->lmConf->{cfgNum}
+        ? 1
+        : $self->reloadConf(@_)
+    );
+}
+
+sub reloadConf {
     my ( $self, $args ) = @_;
 
-    # If handler configuration has changed, apply it
-    if (  !$self->conf->{cfgNum}
-        or $self->conf->{cfgNum} ne ( my $conf = HANDLER->lmConf->{cfgNum} ) )
+    my $conf = HANDLER->lmConf->{cfgNum};
+
+    # Delete keys that will be generated
+    foreach my $key (
+        qw(persistentStorage samlStorage casStorage captchaStorage oidcStorage)
+      )
     {
+        delete $self->conf->{$key};
+    }
 
-        # Delete keys that will be generated
-        foreach my $key (
-            qw(persistentStorage samlStorage casStorage captchaStorage oidcStorage)
-          )
-        {
-            delete $self->conf->{$key};
-        }
+    # Load conf in portal object
+    foreach my $key ( keys %$conf ) {
+        $self->conf->{$key} =
+          $self->localConfig->{$key} // $conf->{$key};
+    }
 
-        # Load conf in portal object
-        foreach my $key ( keys %$conf ) {
-            $self->conf->{$key} = $self->localConfig->{$key} // $conf->{$key};
-        }
+    # Initialize session DBs
+    unless ( $self->conf->{globalStorage} ) {
+        $self->error(
+            'globalStorage not defined (perhaps configuration can not be read)'
+        );
+        return 0;
+    }
 
-        # Initialize session DBs
-        unless ( $self->conf->{globalStorage} ) {
-            $self->error(
-'globalStorage not defined (perhaps configuration can not be read)'
-            );
+    # Initialize cookie domain
+    unless ( $self->conf->{domain} ) {
+        $self->error('Configuration error: no domain');
+        return 0;
+    }
+    $self->conf->{domain} =~ s/^([^\.])/.$1/;
+
+    # Load authentication/userDB
+    # --------------------------
+    for my $type (qw(authentication userDB)) {
+        unless ( $self->conf->{$type} ) {
+            $self->error("$type is not set");
             return 0;
         }
+        my $module = ucfirst($type) . $self->conf->{$type};
+        $module =~ s/\s.*$//;
+        $module =~ s/^Authentication/Auth/;
+        $module = "Lemonldap::NG::Portal::$module";
 
-        # Initialize cookie domain
-        unless ( $self->conf->{domain} ) {
-            $self->error('Configuration error: no domain');
-            return 0;
-        }
-        $self->conf->{domain} =~ s/^([^\.])/.$1/;
+        # $self->conf->{authentication} and $self->conf->{userDB} can
+        # contains arguments (key1 = scalar_value; key2 = ...)
+        my ( $tmp, %h ) = split( /\s*[=;]\s*/, $self->conf->{$type} );
+        %{ $self->{conf} } = ( %h, %{ $self->{conf} } ) if (%h);
 
-        # Load authentication/userDB
-        # --------------------------
-        for my $type (qw(authentication userDB)) {
-            unless ( $self->conf->{$type} ) {
-                $self->error("$type is not set");
-                return 0;
-            }
-            my $module = ucfirst($type) . $self->conf->{$type};
-            $module =~ s/\s.*$//;
-            $module =~ s/^Authentication/Auth/;
-            $module = "Lemonldap::NG::Portal::$module";
+        # Launch and initialize module
+        return 0
+          unless ( $self->{"_$type"} = $self->loadModule($module)
+            and $self->{"_$type"}->init );
+    }
 
-            # $self->conf->{authentication} and $self->conf->{userDB} can
-            # contains arguments (key1 = scalar_value; key2 = ...)
-            my ( $tmp, %h ) = split( /\s*[=;]\s*/, $self->conf->{$type} );
-            %{ $self->{conf} } = ( %h, %{ $self->{conf} } ) if (%h);
+    # Initialize trusted domain list
+    $self->conf->{trustedDomains} ||= "";
+    $self->conf->{trustedDomains} = "*"
+      if ( $self->conf->{trustedDomains} =~ /(^|\s)\*(\s|$)/ );
+    if (    $self->conf->{trustedDomains}
+        and $self->conf->{trustedDomains} ne "*" )
+    {
+        $self->conf->{trustedDomains} =~ s#(^|\s+)\.#${1}[^/]+.#g;
+        $self->conf->{trustedDomains} = '('
+          . join( '|', split( /\s+/, $self->conf->{trustedDomains} ) ) . ')';
+        $self->conf->{trustedDomains} =~ s/\./\\./g;
+    }
 
-            # Launch and initialize module
-            return 0
-              unless ( $self->{"_$type"} = $self->loadModule($module)
-                and $self->{"_$type"}->init );
-        }
-
-        # Initialize trusted domain list
-        $self->conf->{trustedDomains} ||= "";
-        $self->conf->{trustedDomains} = "*"
-          if ( $self->conf->{trustedDomains} =~ /(^|\s)\*(\s|$)/ );
-        if (    $self->conf->{trustedDomains}
-            and $self->conf->{trustedDomains} ne "*" )
-        {
-            $self->conf->{trustedDomains} =~ s#(^|\s+)\.#${1}[^/]+.#g;
-            $self->conf->{trustedDomains} = '('
-              . join( '|', split( /\s+/, $self->conf->{trustedDomains} ) )
-              . ')';
-            $self->conf->{trustedDomains} =~ s/\./\\./g;
-        }
-
-        # Load plugins
-        foreach my $plugin ( $self->enabledPlugins ) {
-            $self->loadPlugin($plugin) or return 0;
-        }
+    # Load plugins
+    foreach my $plugin ( $self->enabledPlugins ) {
+        $self->loadPlugin($plugin) or return 0;
     }
     1;
 }

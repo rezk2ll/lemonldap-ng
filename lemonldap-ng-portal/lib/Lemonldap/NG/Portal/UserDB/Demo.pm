@@ -1,0 +1,96 @@
+## @file
+# Demo userDB mechanism
+
+## @class
+# Demo userDB mechanism class
+package Lemonldap::NG::Portal::UserDB::Demo;
+
+use strict;
+use Lemonldap::NG::Portal::Simple;
+
+our $VERSION = '2.0.0';
+
+## @apmethod int userDBInit()
+# Check AuthDemo use
+# @return Lemonldap::NG::Portal constant
+sub userDBInit {
+    my $self = shift;
+
+    unless ( $self->get_module('auth') =~ /^Demo/ ) {
+        $self->lmLog( "Use UserDBDemo only with AuthDemo", 'error' );
+        return PE_ERROR;
+    }
+
+    # Sample accounts from Doctor Who characters
+    $self->{_demoAccounts} = {
+        'rtyler' => {
+            'uid'  => 'rtyler',
+            'cn'   => 'Rose Tyler',
+            'mail' => 'rtyler@badwolf.org',
+        },
+        'msmith' => {
+            'uid'  => 'msmith',
+            'cn'   => 'Mickey Smith',
+            'mail' => 'msmith@badwolf.org',
+        },
+        'dwho' => {
+            'uid'  => 'dwho',
+            'cn'   => 'Doctor Who',
+            'mail' => 'dwho@badwolf.org',
+        },
+    };
+
+    PE_OK;
+}
+
+## @apmethod int getUser()
+# Check known accounts
+# @return Lemonldap::NG::Portal constant
+sub getUser {
+    my ( $self, $req ) = @_;
+
+    # Search by login
+    if ( $req->{user} ) {
+        return PE_OK
+          if ( defined $self->{_demoAccounts}->{ $req->{user} } );
+    }
+
+    # Search by mail
+    if ( $req->{mail} ) {
+        return PE_OK
+          if (
+            my $req->{user} =
+            grep { $self->{_demoAccounts}->{$_}->{mail} eq $req->{mail} }
+            keys %{ $self->{_demoAccounts} }
+          );
+    }
+
+    PE_USERNOTFOUND;
+}
+
+## @apmethod int setSessionInfo()
+# Get sample data
+# @return Lemonldap::NG::Portal constant
+sub setSessionInfo {
+    my ( $self, $req ) = @_;
+
+    my %vars = ( %{ $self->conf->{exportedVars} },
+        %{ $self->conf->{demoExportedVars} } );
+    while ( my ( $k, $v ) = each %vars ) {
+        $req->{sessionInfo}->{$k} =
+          $self->{_demoAccounts}->{ $req->{user} }->{$v}
+          || "";
+    }
+
+    PE_OK;
+}
+
+## @apmethod int setGroups()
+# Do nothing
+# @return Lemonldap::NG::Portal constant
+sub setGroups {
+    PE_OK;
+}
+
+1;
+
