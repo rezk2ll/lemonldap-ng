@@ -235,6 +235,8 @@ lib/Lemonldap/NG/Portal/_Slave.pm
 lib/Lemonldap/NG/Portal/_SMTP.pm
 lib/Lemonldap/NG/Portal/_SOAP.pm
 lib/Lemonldap/NG/Portal/_WebForm.pm
+lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
+lib/Lemonldap/NG/Portal/Auth/Demo.pm
 lib/Lemonldap/NG/Portal/AuthAD.pm
 lib/Lemonldap/NG/Portal/AuthApache.pm
 lib/Lemonldap/NG/Portal/AuthBrowserID.pm
@@ -266,6 +268,11 @@ lib/Lemonldap/NG/Portal/IssuerDBOpenID.pm
 lib/Lemonldap/NG/Portal/IssuerDBOpenIDConnect.pm
 lib/Lemonldap/NG/Portal/IssuerDBSAML.pm
 lib/Lemonldap/NG/Portal/MailReset.pm
+lib/Lemonldap/NG/Portal/Main.pm
+lib/Lemonldap/NG/Portal/Main/Init.pm
+lib/Lemonldap/NG/Portal/Main/Module.pm
+lib/Lemonldap/NG/Portal/Main/Plugins.pm
+lib/Lemonldap/NG/Portal/Main/Run.pm
 lib/Lemonldap/NG/Portal/Menu.pm
 lib/Lemonldap/NG/Portal/OpenID/Server.pm
 lib/Lemonldap/NG/Portal/OpenID/SREG.pm
@@ -275,7 +282,6 @@ lib/Lemonldap/NG/Portal/PasswordDBDBI.pm
 lib/Lemonldap/NG/Portal/PasswordDBDemo.pm
 lib/Lemonldap/NG/Portal/PasswordDBLDAP.pm
 lib/Lemonldap/NG/Portal/PasswordDBNull.pm
-lib/Lemonldap/NG/Portal/PSGI.pm
 lib/Lemonldap/NG/Portal/Register.pm
 lib/Lemonldap/NG/Portal/RegisterDBAD.pm
 lib/Lemonldap/NG/Portal/RegisterDBDemo.pm
@@ -283,6 +289,7 @@ lib/Lemonldap/NG/Portal/RegisterDBLDAP.pm
 lib/Lemonldap/NG/Portal/RegisterDBNull.pm
 lib/Lemonldap/NG/Portal/SharedConf.pm
 lib/Lemonldap/NG/Portal/Simple.pm
+lib/Lemonldap/NG/Portal/UserDB/Demo.pm
 lib/Lemonldap/NG/Portal/UserDBAD.pm
 lib/Lemonldap/NG/Portal/UserDBChoice.pm
 lib/Lemonldap/NG/Portal/UserDBDBI.pm
@@ -325,7 +332,6 @@ t/27-Lemonldap-NG-Portal-UserDBFacebook.t
 t/27-Lemonldap-NG-Portal-UserDBGoogle.t
 t/27-Lemonldap-NG-Portal-UserDBOpenID.t
 t/30-Lemonldap-NG-Portal-UserDBNull.t
-t/40-Lemonldap-NG-Portal-CDA.t
 t/50-Lemonldap-NG-Portal-Menu.t
 t/60-Lemonldap-NG-Portal-IssuerDBSAML.t
 t/61-Lemonldap-NG-Portal-SAML.t
