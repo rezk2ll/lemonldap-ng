@@ -186,12 +186,12 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		_example/conf/lmConf-1.js
 
 # Javascript and CSS to minify
-JSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/js $(SRCPORTALDIR)/example -type f -name '*.js' ! -name '*.min.js') \
+JSSRCFILES:=$(shell find */site/static/js $(SRCPORTALDIR)/example -type f -name '*.js' ! -name '*.min.js') \
 		$(SRCMANAGERDIR)/site/static/bwr/file-saver.js/FileSaver.js
-CSSSRCFILES:=$(shell find $(SRCMANAGERDIR)/site/static/css  $(SRCPORTALDIR)/example -type f -name '*.css' ! -name '*.min.css')
+CSSSRCFILES:=$(shell find */site/static/css  $(SRCPORTALDIR)/example -type f -name '*.css' ! -name '*.min.css')
 
 # Coffee files
-COFFEESRCFILES:=$(shell find $(SRCMANAGERDIR)/site/coffee/ -type f -name '*.coffee')
+COFFEESRCFILES:=$(shell find */site/coffee/ -type f -name '*.coffee')
 COFFEEDSTFILES:=$(subst coffee/,static/js/,$(COFFEESRCFILES:.coffee=.js))
 
 # Minified files
@@ -263,6 +263,12 @@ configure:	json common_conf handler_conf portal_conf manager_conf
 js: $(COFFEEDSTFILES)
 
 minify: js $(JSDSTFILES) $(CSSDSTFILES)
+
+$(SRCPORTALDIR)/site/static/js/%.js: $(SRCPORTALDIR)/site/coffee/%.coffee
+	@if which coffee >/dev/null; then \
+		echo "Compiling $(SRCPORTALDIR)/site/coffee/$*.coffee"; \
+		coffee -c -o $(SRCPORTALDIR)/site/static/js/ $(SRCPORTALDIR)/site/coffee/$*.coffee; \
+	fi
 
 $(SRCMANAGERDIR)/site/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee
 	@if which coffee >/dev/null; then \
