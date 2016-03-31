@@ -14,6 +14,7 @@ package Lemonldap::NG::Portal::Main::Run;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Portal::Main::Constants;
 use Lemonldap::NG::Portal::Main::Request;
 
 our $VERSION = '2.0.0';
@@ -44,30 +45,76 @@ sub pleaseAuth {
 
 # MAIN ENTRY POINTS
 
+# List constants
+sub authProcess { qw(extractFormInfo getUser authenticate) }
+
+sub sessionDatas {
+    qw(setAuthSessionInfo setSessionInfo setMacros setGroups
+      setPersistentSessionInfo setLocalGroups grantSession store
+      buildCookie);
+}
+
 sub login {
     my ( $self, $req ) = @_;
-    return $self->process(
-        'rememberArgs', @{ $self->beforeAuthProcess },
-        @authProcess,   @{ $self->addSessionData },
-        @sessionDatas,  @{ $self->afterAuthProcess }
+    return $req->do($req,
+        [
+            'rememberArgs', @{ $self->beforeAuth },
+            &authProcess,   @{ $self->betweenAuthAndDatas },
+            &sessionDatas,  @{ $self->afterdatas },
+        ]
     );
 }
 
 sub postLogin {
     my ( $self, $req ) = @_;
-    return $self->process(
-        @{ $self->beforeAuthProcess },
-        @authProcess, @{ $self->addSessionData },
-        @sessionDatas, @{ $self->afterAuthProcess }
+    return $req->do($req,
+        [
+            'restoreArgs', @{ $self->beforeAuth },
+            &authProcess,  @{ $self->betweenAuthAndDatas },
+            &sessionDatas, @{ $self->afterdatas },
+        ]
     );
 }
 
 sub authenticatedRequest {
+    my ( $self, $req ) = @_;
+    return $req->do($req, $self->forAuthUser );
+}
+
+sub do {
+    my ($self,$req,$steps) = @_;
+    $req->steps($steps);
+    my $err = $self->process($req);
+    # TODO: updateStatus
+    if (   !$self->conf->{noAjaxHook} and $req->wantJSON ) {
+        if ( $err > 0 ) {
+            return [ 401, ['WWW-Authenticate' => "SSO ".$self->conf->{portal},'Access-Control-Allow-Origin' => '*'],[]];
+        }
+        else {
+            return $self->senfJSONresponse({result=>1,message=>'Authenticated'});
+        }
+    }
+    else {
+        if($err) {
+            return $self->sendHtml($req,'login.tpl');
+        }
+        else {
+            return $self->autoRedirect($req);
+        }
+    }
+}
+
+sub process {
+    my ( $self, $req ) = @_;
+    #$req->error(PE_OK);
+    my $err = PE_OK;
+    while(my $sub = shift @{$req->steps}) {
+        last if($err = $self->$sub($req);
+    }
+    return $err;
 }
 
 # TODO in run
 #  - mustRedirect
-#  - store AuthnLevel in session (setSessionInfo)
-#    $self->{sessionInfo}->{authenticationLevel} = $self->_authentication->AuthnLevel
 
 1;

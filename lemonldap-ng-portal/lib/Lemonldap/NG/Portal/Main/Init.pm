@@ -27,17 +27,17 @@ has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
 
 # Lists to store plugins entry-points
-has beforeAuthProcess => (
+has beforeAuth => (
     is      => 'rw',
     isa     => 'ArrayRef',
     default => sub { [] }
 );
-has addSessionData => (
+has betweenAuthAndDatas => (
     is      => 'rw',
     isa     => 'ArrayRef',
     default => sub { [] }
 );
-has afterAuthProcess => (
+has afterDatas => (
     is      => 'rw',
     isa     => 'ArrayRef',
     default => sub { [] }
@@ -129,6 +129,8 @@ sub reloadConf {
           unless ( $self->{"_$type"} = $self->loadModule($module)
             and $self->{"_$type"}->init );
     }
+    $self->_authentication->authnLevel(
+        $self->conf->{ $self->conf->authentication . "AuthnLevel" } );
 
     # Initialize trusted domain list
     $self->conf->{trustedDomains} ||= "";

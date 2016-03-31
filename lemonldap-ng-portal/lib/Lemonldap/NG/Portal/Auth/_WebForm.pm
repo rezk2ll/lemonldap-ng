@@ -10,9 +10,7 @@ use Mouse;
 
 our $VERSION = '2.0.0';
 
-sub AuthnLevel {
-    return $_[0]->https ? 1 : 0;
-}
+extends Lemonldap::NG::Portal::Main::Auth;
 
 ## @apmethod int authInit()
 # Does nothing.

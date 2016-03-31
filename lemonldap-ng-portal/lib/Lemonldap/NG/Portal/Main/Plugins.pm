@@ -49,6 +49,8 @@ sub enabledPlugins {
         }
     }
 
+    # TODO: Password
+
     # Check if custom plugins are required
     if ( $self->conf->{plugins} ) {
         $self->lmLog( 'Custom plugins: ' . $self->conf->{plugins}, 'debug' );

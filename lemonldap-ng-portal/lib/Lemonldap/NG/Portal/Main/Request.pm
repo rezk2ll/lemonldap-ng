@@ -5,4 +5,11 @@ use Mouse;
 
 extends 'Lemonldap::NG::Common::PSGI::Request';
 
+has steps => ( is => 'rw' );
+has error => ( is => 'rw' );
+
+sub wantJSON {
+    return $_[0]->accept =~ m#(?:application|text)/json# ? 1 : 0;
+}
+
 1;
