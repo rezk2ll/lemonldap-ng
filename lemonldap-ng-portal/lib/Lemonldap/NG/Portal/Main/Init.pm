@@ -55,18 +55,26 @@ sub init {
     $self->localConfig(
         { %{ HANDLER->confAcc->getLocalConf('portal') }, %$args } );
 
-    # Handle default requests (other path may be declared in enabled plugins)
-    $self->addAuthRoute('*'=>'menu');
-    $self->addUnauthRoute('*'=>'login');
+    # Handle requests (other path may be declared in enabled plugins)
+    $self
 
-    # Default routes must point to routines declared above
-    $self->defaultAuthRoute('');
+      # "/"
+      ->addUnauthRoute( '*', 'login',     ['GET'] )
+      ->addUnauthRoute( '*', 'postLogin', ['POST'] )
+      ->addAuthRoute( '*', 'authenticatedRequest', ['GET'] )
+
+      # Core REST API
+      ->addUnauthRoute( 'test', 'pleaseAuth', ['GET'] )
+      ->addAuthRoute( 'test', 'authenticated', ['GET'] )
+
+      # Default routes must point to routines declared above
+      $self->defaultAuthRoute('');
     $self->defaultUnauthRoute('');
     return $self->reloadConf($args);
 }
 
 sub reloadConf {
-    my ( $self ) = @_;
+    my ($self) = @_;
 
     my $conf = HANDLER->lmConf->{cfgNum};
 
@@ -152,7 +160,9 @@ sub loadPlugin {
         qw(beforeAuthProcess addSessionData afterAuthProcess forAuthUser))
     {
         if ( $obj->can($sub) ) {
-            push @{ $self->{$sub} }, $obj->$sub;
+            if ( my $callback = $obj->$sub ) {
+                push @{ $self->{$sub} }, sub { $obj->$callback( $_[1] ) };
+            }
         }
     }
     return $obj->init;
