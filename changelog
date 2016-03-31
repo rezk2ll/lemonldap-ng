@@ -1,5 +1,23 @@
 lemonldap-ng (2.0.0) stable; urgency=low
 
+lemonldap-ng (1.9.1) stable; urgency=low
+
+    * [LEMONLDAP-961] - PAUSE indexer report
+    * [LEMONLDAP-962] - Applications logos and portal background not displayed in Manager
+    * [LEMONLDAP-964] - Links to change
+    * [LEMONLDAP-965] - Syntax checking on certificate must be more tolerant
+    * [LEMONLDAP-968] - Headers corrupted when authenticating with HTTP basic authentication on a protected application
+    * [LEMONLDAP-969] - /var/run is a tmpfs so FastCGI pid can't be written after reboot
+    * [LEMONLDAP-972] - Missing test for exportedHeaders
+    * [LEMONLDAP-974] - keyMsgFail are missing in Manager/Attributes.pm
+    * [LEMONLDAP-976] - $ENV is replaced by $datas->{ENV}
+    * [LEMONLDAP-978] - CPAN Tests fails for Lemonldap-NG-Common
+    * [LEMONLDAP-980] - Error "password must be changed" when user not found in AD
+    * [LEMONLDAP-984] - Allow to set replica for MongoDB configuration backend
+    * [LEMONLDAP-985] - authForce is not well called trough AuthMulti
+    * [LEMONLDAP-973] - Activate maintenance mode if reval() fails
+    * [LEMONLDAP-185] - Check configuration uploaded by lmConfigEditor
+
 lemonldap-ng (1.9.0) stable; urgency=low
 
     * [LEMONLDAP-176] - POST Handler feature does not work with mod_proxy
