@@ -137,10 +137,10 @@ sub tree {
                             title => 'casParams',
                             help  => 'authcas.html',
                             nodes => [
-                                'CAS_authnLevel', 'CAS_url',
-                                'CAS_CAFile',     'CAS_renew',
-                                'CAS_gateway',    'CAS_pgtFile',
-                                'CAS_proxiedServices'
+                                'CASAuthnLevel', 'CASurl',
+                                'CASCAFile',     'CASrenew',
+                                'CASgateway',    'CASpgtFile',
+                                'CASproxiedServices'
                             ]
                         },
                         {

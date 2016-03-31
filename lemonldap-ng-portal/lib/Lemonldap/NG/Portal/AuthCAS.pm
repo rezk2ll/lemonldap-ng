@@ -45,8 +45,8 @@ sub extractFormInfo {
     my $self = shift;
 
     my $cas = new AuthCAS(
-        casUrl => $self->{CAS_url},
-        CAFile => $self->{CAS_CAFile},
+        casUrl => $self->{CASurl},
+        CAFile => $self->{CASCAFile},
     );
 
     # Local URL
@@ -79,8 +79,8 @@ sub extractFormInfo {
 
     # Act as a proxy if proxied services configured
     my $proxy =
-      ref( $self->{CAS_proxiedServices} ) eq 'HASH'
-      ? ( %{ $self->{CAS_proxiedServices} } ? 1 : 0 )
+      ref( $self->{CASproxiedServices} ) eq 'HASH'
+      ? ( %{ $self->{CASproxiedServices} } ? 1 : 0 )
       : 0;
 
     if ($proxy) {
@@ -96,7 +96,7 @@ sub extractFormInfo {
         $self->lmLog( "CAS Proxy URL: $proxy_url", 'debug' );
 
         $cas->proxyMode(
-            pgtFile        => $self->{CAS_pgtFile},
+            pgtFile        => $self->{CASpgtFile},
             pgtCallbackUrl => $proxy_url
         );
     }
@@ -127,8 +127,8 @@ sub extractFormInfo {
 
     # Build login URL
     my $login_url = $cas->getServerLoginURL($local_url);
-    $login_url .= '&renew=true'   if $self->{CAS_renew};
-    $login_url .= '&gateway=true' if $self->{CAS_gateway};
+    $login_url .= '&renew=true'   if $self->{CASrenew};
+    $login_url .= '&gateway=true' if $self->{CASgateway};
 
     # Check Service Ticket
     my $ticket = $self->param('ticket');
@@ -164,8 +164,8 @@ sub extractFormInfo {
         }
 
         # Get a proxy ticket for each proxied service
-        foreach ( keys %{ $self->{CAS_proxiedServices} } ) {
-            my $service = $self->{CAS_proxiedServices}->{$_};
+        foreach ( keys %{ $self->{CASproxiedServices} } ) {
+            my $service = $self->{CASproxiedServices}->{$_};
             my $pt      = $cas->retrievePT($service);
 
             unless ($pt) {
@@ -196,7 +196,7 @@ sub setAuthSessionInfo {
     # Store user submitted login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};
 
-    $self->{sessionInfo}->{authenticationLevel} = $self->{CAS_authnLevel};
+    $self->{sessionInfo}->{authenticationLevel} = $self->{CASauthnLevel};
 
     PE_OK;
 }
@@ -222,8 +222,8 @@ sub authLogout {
     my $self = shift;
 
     my $cas = new AuthCAS(
-        casUrl => $self->{CAS_url},
-        CAFile => $self->{CAS_CAFile},
+        casUrl => $self->{CASurl},
+        CAFile => $self->{CASCAFile},
     );
 
     # Build CAS logout URL
@@ -267,8 +267,8 @@ compatible portals with CAS authentication.
   my $portal = new Lemonldap::NG::Portal::Simple(
          configStorage     => {...}, # See Lemonldap::NG::Portal
          authentication    => 'CAS',
-         CAS_url           => 'https://cas.myserver',
-         CAS_CAFile        => '/etc/httpd/conf/ssl.crt/ca-bundle.crt',
+         CASurl           => 'https://cas.myserver',
+         CASCAFile        => '/etc/httpd/conf/ssl.crt/ca-bundle.crt',
     );
 
   if($portal->process()) {

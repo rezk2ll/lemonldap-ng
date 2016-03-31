@@ -425,7 +425,7 @@ CAS authentication options :
 
 =over
 
-=item * CAS_url, CAS_CAFile, CAS_loginUrl, CAS_validationUrl : see
+=item * CASurl, CASCAFile, CASloginUrl, CASvalidationUrl : see
 L<Lemonldap::NG::Portal::AuthCAS> for more
 
 =back

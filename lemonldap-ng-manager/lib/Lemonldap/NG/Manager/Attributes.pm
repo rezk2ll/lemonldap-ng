@@ -604,34 +604,6 @@ sub attributes {
             },
             'type' => 'keyTextContainer'
         },
-        'CAS_authnLevel' => {
-            'default' => 1,
-            'type'    => 'int'
-        },
-        'CAS_CAFile' => {
-            'type' => 'text'
-        },
-        'CAS_gateway' => {
-            'type' => 'bool'
-        },
-        'CAS_pgtFile' => {
-            'default' => '/tmp/pgt.txt',
-            'type'    => 'text'
-        },
-        'CAS_proxiedServices' => {
-            'keyMsgFail' => '__badCasProxyId__',
-            'keyTest'    => qr/^\w+$/,
-            'type'       => 'keyTextContainer'
-        },
-        'CAS_renew' => {
-            'type' => 'bool'
-        },
-        'CAS_url' => {
-            'msgFail' => '__badUrl__',
-            'test' =>
-qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
-            'type' => 'text'
-        },
         'casAccessControlPolicy' => {
             'default' => 'none',
             'select'  => [
@@ -656,11 +628,39 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'casAttributes' => {
             'type' => 'keyTextContainer'
         },
+        'CASAuthnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'CASCAFile' => {
+            'type' => 'text'
+        },
+        'CASgateway' => {
+            'type' => 'bool'
+        },
+        'CASpgtFile' => {
+            'default' => '/tmp/pgt.txt',
+            'type'    => 'text'
+        },
+        'CASproxiedServices' => {
+            'keyMsgFail' => '__badCasProxyId__',
+            'keyTest'    => qr/^\w+$/,
+            'type'       => 'keyTextContainer'
+        },
+        'CASrenew' => {
+            'type' => 'bool'
+        },
         'casStorage' => {
             'type' => 'PerlModule'
         },
         'casStorageOptions' => {
             'type' => 'keyTextContainer'
+        },
+        'CASurl' => {
+            'msgFail' => '__badUrl__',
+            'test' =>
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
+            'type' => 'text'
         },
         'cda' => {
             'default' => 0,

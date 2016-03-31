@@ -21,7 +21,7 @@ our $specialNodeHash = {
 
 our @sessionTypes = ( 'captcha', 'remoteGlobal', 'cas', 'global', 'localSession', 'persistent', 'saml', 'oidc' );
 
-our $simpleHashKeys = '(?:(?:g(?:r(?:antSessionRule|oup)|lobalStorageOption|oogleExportedVar)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar)|ca(?:s(?:StorageOption|Attribute)|ptchaStorageOption)|(?:(?:d(?:emo|bi)|facebook|webID)E|e)xportedVar|p(?:ersistentStorageOption|ortalSkinRule)|re(?:moteGlobalStorageOption|loadUrl)|notificationStorageOption|CAS_proxiedService|macro)s|o(?:idcS(?:erviceMetaDataAuthnContext|torageOptions)|penIdExportedVars)|s(?:(?:amlStorageOption|laveExportedVar)s|essionDataToRemember)|a(?:uthChoiceModules|pplicationList))';
+our $simpleHashKeys = '(?:(?:g(?:r(?:antSessionRule|oup)|lobalStorageOption|oogleExportedVar)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar)|ca(?:s(?:StorageOption|Attribute)|ptchaStorageOption)|(?:(?:d(?:emo|bi)|facebook|webID)E|e)xportedVar|p(?:ersistentStorageOption|ortalSkinRule)|re(?:moteGlobalStorageOption|loadUrl)|notificationStorageOption|CASproxiedService|macro)s|o(?:idcS(?:erviceMetaDataAuthnContext|torageOptions)|penIdExportedVars)|s(?:(?:amlStorageOption|laveExportedVar)s|essionDataToRemember)|a(?:uthChoiceModules|pplicationList))';
 our $specialNodeKeys = '(?:(?:saml(?:ID|S)|oidc[OR])PMetaDataNode|virtualHost)s';
 our $oidcOPMetaDataNodeKeys = 'oidcOPMetaData(?:Options(?:C(?:lient(?:Secret|ID)|heckJWTSignature|onfigurationURI)|TokenEndpointAuthMethod|(?:JWKSTimeou|Promp)t|I(?:DTokenMaxAge|con)|U(?:iLocales|seNonce)|Display(?:Name)?|(?:MaxAg|Scop)e|AcrValues)|ExportedVars|J(?:SON|WKS))';
 our $oidcRPMetaDataNodeKeys = 'oidcRPMetaData(?:Options(?:I(?:DToken(?:Expiration|SignAlg)|con)|(?:RedirectUri|ExtraClaim)s|AccessTokenExpiration|Client(?:Secret|ID)|DisplayName|UserIDAttr)|ExportedVars)';
@@ -33,7 +33,7 @@ our $authParameters = {
   adParams => [qw(ADPwdMaxAge ADPwdExpireWarning)],
   apacheParams => [qw(apacheAuthnLevel)],
   browseridParams => [qw(browserIdAuthnLevel browserIdAutoLogin browserIdVerificationURL browserIdSiteName browserIdSiteLogo browserIdBackgroundColor)],
-  casParams => [qw(CAS_authnLevel CAS_url CAS_CAFile CAS_renew CAS_gateway CAS_pgtFile CAS_proxiedServices)],
+  casParams => [qw(CASAuthnLevel CASurl CASCAFile CASrenew CASgateway CASpgtFile CASproxiedServices)],
   choiceParams => [qw(authChoiceParam authChoiceModules)],
   dbiParams => [qw(dbiAuthnLevel dbiExportedVars dbiAuthChain dbiAuthUser dbiAuthPassword dbiUserChain dbiUserUser dbiUserPassword dbiAuthTable dbiUserTable dbiAuthLoginCol dbiAuthPasswordCol dbiPasswordMailCol userPivot dbiAuthPasswordHash)],
   demoParams => [qw(demoExportedVars)],

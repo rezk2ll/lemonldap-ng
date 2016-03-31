@@ -1841,25 +1841,25 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         SSLVar => { type => 'text', },
 
         # CAS
-        CAS_authnLevel => {
+        CASAuthnLevel => {
             type          => 'int',
             default       => 1,
             documentation => 'CAS authentication level',
         },
-        CAS_url => {
+        CASurl => {
             type    => 'text',
             test    => $url,
             msgFail => '__badUrl__',
         },
-        CAS_CAFile  => { type => 'text', },
-        CAS_renew   => { type => 'bool', },
-        CAS_gateway => { type => 'bool', },
-        CAS_pgtFile => {
+        CASCAFile  => { type => 'text', },
+        CASrenew   => { type => 'bool', },
+        CASgateway => { type => 'bool', },
+        CASpgtFile => {
             type          => 'text',
             default       => '/tmp/pgt.txt',
             documentation => 'CAS PGT file',
         },
-        CAS_proxiedServices => {
+        CASproxiedServices => {
             type       => 'keyTextContainer',
             keyTest    => qr/^\w+$/,
             keyMsgFail => '__badCasProxyId__',
