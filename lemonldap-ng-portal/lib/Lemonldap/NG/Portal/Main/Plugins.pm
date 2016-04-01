@@ -18,7 +18,7 @@ sub enabledPlugins {
     foreach my $key (qw(SAML OpenID CAS OpenIDConnect)) {
         if ( $self->conf->{"issuerDB${key}Activation"} ) {
             $self->lmlog( "IssuerDB${key} enabled", 'debug' );
-            push @res, "IssuerDB$key";
+            push @res, "::IssuerDB::$key";
         }
     }
 
@@ -29,7 +29,7 @@ sub enabledPlugins {
     {
         if ( $self->conf->{$key} ) {
             $self->lmLog( 'Captcha enabled', 'debug' );
-            push @res, 'Captcha';
+            push @res, '::Plugins::Captcha';
             last;
         }
     }
@@ -39,17 +39,17 @@ sub enabledPlugins {
     push @res, 'SOAP' if ( $self->conf->{Soap} );
 
     # Check if notification is enabled
-    push @res, 'Notifications' if ( $self->conf->{notification} );
+    push @res, '::Plugins::Notifications' if ( $self->conf->{notification} );
     foreach my $type (qw(password register)) {
         my $tmp = $self->conf->{$type};
         if ( $tmp and $tmp ne 'Null' ) {
-            $tmp = ucfirst($type) . "DB$tmp";
+            $tmp = '::'.ucfirst($type) . "DB::$tmp";
             $self->lmLog("$tmp enabled");
             push @res, $tmp;
         }
     }
 
-    push @res, 'GrantSession' if ( $self->conf->{grantSessionRule} );
+    push @res, '::Plugins::GrantSession' if ( $self->conf->{grantSessionRule} );
 
     # TODO: Password
 

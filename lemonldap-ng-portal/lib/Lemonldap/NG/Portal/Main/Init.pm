@@ -123,15 +123,8 @@ sub reloadConf {
             $self->error("$type is not set");
             return 0;
         }
-        my $module = ucfirst($type) . $self->conf->{$type};
-        $module =~ s/\s.*$//;
-        $module =~ s/^Authentication/Auth/;
-        $module = "Lemonldap::NG::Portal::$module";
-
-        # $self->conf->{authentication} and $self->conf->{userDB} can
-        # contains arguments (key1 = scalar_value; key2 = ...)
-        my ( $tmp, %h ) = split( /\s*[=;]\s*/, $self->conf->{$type} );
-        %{ $self->{conf} } = ( %h, %{ $self->{conf} } ) if (%h);
+        my $module = '::' . ucfirst($type) . '::' . $self->conf->{$type};
+        $module =~ s/Authentication/Auth/;
 
         # Launch and initialize module
         return 0
@@ -168,7 +161,7 @@ sub loadPlugin {
     my $obj;
     return 0
       unless ( $obj =
-        $self->loadModule("Lemonldap::NG::Portal::Plugins::$plugin") );
+        $self->loadModule("$plugin") );
     foreach my $sub (
         qw(beforeAuthProcess addSessionData afterAuthProcess forAuthUser))
     {
@@ -184,6 +177,7 @@ sub loadPlugin {
 sub loadModule {
     my ( $self, $module ) = @_;
     my $obj;
+    $module = "Lemonldap::NG::Portal$module" if($module =~/^::/);
 
     eval "require $module";
     if ($@) {
