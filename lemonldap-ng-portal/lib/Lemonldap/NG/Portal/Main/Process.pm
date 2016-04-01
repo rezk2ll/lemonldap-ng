@@ -66,7 +66,7 @@ sub setSessionInfo {
 sub setMacros {
     my ( $self, $req ) = @_;
     foreach ( sort keys %{ $self->_macros } ) {
-        $req->{sessionInfo}->{$_} = $self->_macros->($req);
+        $req->{sessionInfo}->{$_} = $self->_macros->{$_}->($req);
     }
     PE_OK;
 }
