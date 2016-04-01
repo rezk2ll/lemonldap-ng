@@ -26,6 +26,10 @@ has conf        => ( is => 'rw', default => sub { {} } );
 has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
 
+# Macros and groups
+has _macros => (is => 'rw');
+has _groups => (is => 'rw');
+
 # Lists to store plugins entry-points
 has beforeAuth => (
     is      => 'rw',
@@ -65,10 +69,10 @@ sub init {
 
       # Core REST API
       ->addUnauthRoute( 'test', 'pleaseAuth', ['GET'] )
-      ->addAuthRoute( 'test', 'authenticated', ['GET'] )
+      ->addAuthRoute( 'test', 'authenticated', ['GET'] );
 
-      # Default routes must point to routines declared above
-      $self->defaultAuthRoute('');
+    # Default routes must point to routines declared above
+    $self->defaultAuthRoute('');
     $self->defaultUnauthRoute('');
     return $self->reloadConf($args);
 }
@@ -84,6 +88,11 @@ sub reloadConf {
       )
     {
         delete $self->conf->{$key};
+    }
+
+    # Reinitialize arrays
+    foreach (qw(_macros _groups beforeAuth betweenAuthAndDatas afterDatas forAuthUser)) {
+        $self->{$_} = [];
     }
 
     # Load conf in portal object
@@ -144,6 +153,8 @@ sub reloadConf {
           . join( '|', split( /\s+/, $self->conf->{trustedDomains} ) ) . ')';
         $self->conf->{trustedDomains} =~ s/\./\\./g;
     }
+
+    # TODO: compile macros in _macros, groups in _groups
 
     # Load plugins
     foreach my $plugin ( $self->enabledPlugins ) {

@@ -9,7 +9,10 @@
 #
 # Entry points:
 #  - "/test": * authenticated() for already authenticated users
-#             + pleaseAuth() for others
+#             * pleaseAuth() for others
+#  - "/":     * login() ~first access
+#             * postLogin(), same for POST requests
+#             * authenticatedRequest() for authenticated users
 package Lemonldap::NG::Portal::Main::Run;
 
 use strict;
@@ -49,14 +52,14 @@ sub pleaseAuth {
 sub authProcess { qw(extractFormInfo getUser authenticate) }
 
 sub sessionDatas {
-    qw(setAuthSessionInfo setSessionInfo setMacros setGroups
-      setPersistentSessionInfo setLocalGroups grantSession store
-      buildCookie);
+    qw(setSessionInfo setMacros setGroups setPersistentSessionInfo
+      setLocalGroups grantSession store buildCookie);
 }
 
 sub login {
     my ( $self, $req ) = @_;
-    return $req->do($req,
+    return $req->do(
+        $req,
         [
             'rememberArgs', @{ $self->beforeAuth },
             &authProcess,   @{ $self->betweenAuthAndDatas },
@@ -67,7 +70,8 @@ sub login {
 
 sub postLogin {
     my ( $self, $req ) = @_;
-    return $req->do($req,
+    return $req->do(
+        $req,
         [
             'restoreArgs', @{ $self->beforeAuth },
             &authProcess,  @{ $self->betweenAuthAndDatas },
@@ -78,25 +82,34 @@ sub postLogin {
 
 sub authenticatedRequest {
     my ( $self, $req ) = @_;
-    return $req->do($req, $self->forAuthUser );
+    return $req->do( $req, $self->forAuthUser );
 }
 
 sub do {
-    my ($self,$req,$steps) = @_;
+    my ( $self, $req, $steps ) = @_;
     $req->steps($steps);
     my $err = $self->process($req);
+
     # TODO: updateStatus
-    if (   !$self->conf->{noAjaxHook} and $req->wantJSON ) {
+    if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         if ( $err > 0 ) {
-            return [ 401, ['WWW-Authenticate' => "SSO ".$self->conf->{portal},'Access-Control-Allow-Origin' => '*'],[]];
+            return [
+                401,
+                [
+                    'WWW-Authenticate' => "SSO " . $self->conf->{portal},
+                    'Access-Control-Allow-Origin' => '*'
+                ],
+                []
+            ];
         }
         else {
-            return $self->senfJSONresponse({result=>1,message=>'Authenticated'});
+            return $self->senfJSONresponse(
+                { result => 1, message => 'Authenticated' } );
         }
     }
     else {
-        if($err) {
-            return $self->sendHtml($req,'login.tpl');
+        if ($err) {
+            return $self->sendHtml( $req, 'login.tpl' );
         }
         else {
             return $self->autoRedirect($req);
@@ -106,10 +119,11 @@ sub do {
 
 sub process {
     my ( $self, $req ) = @_;
+
     #$req->error(PE_OK);
     my $err = PE_OK;
-    while(my $sub = shift @{$req->steps}) {
-        last if($err = $self->$sub($req);
+    while ( my $sub = shift @{ $req->steps } ) {
+        last if ( $err = $self->$sub($req) );
     }
     return $err;
 }

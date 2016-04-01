@@ -9,6 +9,7 @@ extends(
     'Lemonldap::NG::Handler::PSGI::Try',
     'Lemonldap::NG::Portal::Main::Init',
     'Lemonldap::NG::Portal::Main::Run',
+    'Lemonldap::NG::Portal::Main::Process',
 );
 
 1;
