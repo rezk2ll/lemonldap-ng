@@ -73,26 +73,138 @@ sub setMacros {
 
 sub setGroups {
     my ( $self, $req ) = @_;
+    return $self->_userDB->setGroups(@_);
 }
 
 sub setPersistentSessionInfo {
     my ( $self, $req ) = @_;
+
+    # Do not restore infos if session already opened
+    unless ( $req->{id} ) {
+        my $key = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+
+        return PE_OK unless ( $key and length($key) );
+
+        my $persistentSession = $self->getPersistentSession($key);
+
+        if ($persistentSession) {
+            $self->lmLog( "Persistent session found for $key", 'debug' );
+            foreach my $k ( keys %{ $persistentSession->data } ) {
+
+                # Do not restore some parameters
+                next if $k =~ /^_(?:utime|session_(?:u?id|kind))$/;
+                $self->lmLog( "Restore persistent parameter $k", 'debug' );
+                $req->{sessionInfo}->{$k} = $persistentSession->data->{$k};
+            }
+        }
+    }
+
+    PE_OK;
 }
 
 sub setLocalGroups {
     my ( $self, $req ) = @_;
-}
+    foreach ( sort keys %{ $self->_groups } ) {
+        if ( $self->_groups->{$_}->($req) ) ) {
+            $req->{sessionInfo}->{groups} .=
+              $self->conf->{multiValuesSeparator} . $_;
+            $req->{sessionInfo}->{hGroups}->{$_}->{name} = $_;
+        }
+    }
 
-sub grantSession {
-    my ( $self, $req ) = @_;
+    # Clear values separator at the beginning
+    if ( $req->{sessionInfo}->{groups} ) {
+        $req->{sessionInfo}->{groups} =~
+          s/^\Q$self->conf->{multiValuesSeparator}\E//o;
+    }
+    PE_OK;
 }
 
 sub store {
     my ( $self, $req ) = @_;
+
+    # Now, user is authenticated => inform handler
+    $req->userData($req->sessionInfo);
+    
+    # Create second session for unsecure cookie
+    if($self->conf->{securedCookie} == 2 ) {
+        my $session2 = $self->getApacheSession( undef, 1 );
+
+        my %infos = %{ $req->{sessionInfo} };
+        $infos{_httpSessionType} = 1;
+
+        $session2->update( \%infos );
+
+        $req->{sessionInfo}->{_httpSession} = $session2->id;
+    }
+
+    # Main session
+    my $session = $self->getApacheSession( $req->{id}, 0, $self->{force} );
+    return PE_APACHESESSIONERROR unless ($session);
+
+    # Compute unsecure cookie value if needed
+    if ( $self->conf->{securedCookie} == 3 ) {
+        $req->{sessionInfo}->{_httpSession} =
+          $self->conf->{cipher}->encryptHex( $self->{id}, "http" );
+    }
+
+    # Fill session
+    my $infos = {};
+    foreach my $k ( keys %{ $req->{sessionInfo} } ) {
+        next unless defined $req->{sessionInfo}->{$k};
+        my $displayValue = $req->{sessionInfo}->{$k};
+        if ( $self->conf->{hiddenAttributes} =~ /\b$k\b/ ) {
+            $displayValue = '****';
+        }
+        $self->lmLog( "Store $displayValue in session key $k", 'debug' );
+        $self->_dump($displayValue) if ref($displayValue);
+        $infos->{$k} = $self->{sessionInfo}->{$k};
+    }
+    $session->update($infos);
+
+    PE_OK;
 }
 
 sub buildCookie {
     my ( $self, $req ) = @_;
+    push @{ $req->respCookies },
+      $self->cookie(
+        name     => $self->{cookieName},
+        value    => $self->{id},
+        domain   => $self->{domain},
+        path     => "/",
+        secure   => $self->{securedCookie},
+        HttpOnly => $self->{httpOnly},
+        expires  => $self->{cookieExpiration},
+        @_,
+      );
+    if ( $self->conf->{securedCookie} >= 2 ) {
+        push @{ $req->respCookies },
+          $self->cookie(
+            name     => $self->{cookieName} . "http",
+            value    => $self->{sessionInfo}->{_httpSession},
+            domain   => $self->{domain},
+            path     => "/",
+            secure   => 0,
+            HttpOnly => $self->{httpOnly},
+            expires  => $self->{cookieExpiration},
+            @_,
+          );
+    }
+    PE_OK;
+}
+
+sub cookie {
+    my ($self,%h) = @_;
+    my @res;
+    $req[0] = "$h{name}" or die("name required");
+    my $res[0] .= "=$h{value}";
+    foreach (qw(domain path expires max_age)) {
+        my $f = $_;
+        s/_/-/g;
+        push @res, "$_=$h{$f}" if($h{$f});
+    }
+    return join('; ',@res);
 }
 
 1;

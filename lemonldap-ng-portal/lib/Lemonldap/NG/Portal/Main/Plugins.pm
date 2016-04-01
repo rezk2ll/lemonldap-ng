@@ -49,6 +49,8 @@ sub enabledPlugins {
         }
     }
 
+    push @res, 'GrantSession' if ( $self->conf->{grantSessionRule} );
+
     # TODO: Password
 
     # Check if custom plugins are required

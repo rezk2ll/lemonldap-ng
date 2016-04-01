@@ -53,7 +53,7 @@ sub authProcess { qw(extractFormInfo getUser authenticate) }
 
 sub sessionDatas {
     qw(setSessionInfo setMacros setGroups setPersistentSessionInfo
-      setLocalGroups grantSession store buildCookie);
+      setLocalGroups store buildCookie);
 }
 
 sub login {
