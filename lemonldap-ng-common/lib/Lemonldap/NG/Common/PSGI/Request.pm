@@ -66,17 +66,20 @@ has QUERY_STRING => (
     reader  => 'query',
     trigger => sub {
         my $self = shift;
-        $self->{QUERY_STRING} = uri_unescape( $self->{QUERY_STRING} );
-        my @tmp =
-          $self->{QUERY_STRING}
-          ? split /&/, $self->{QUERY_STRING}
-          : ();
-        foreach my $s (@tmp) {
-            if   ( $s =~ /^(.+?)=(.+)$/ ) { $self->{_params}->{$1} = $2; }
-            else                          { $self->{_params}->{$s} = 1; }
-        }
+        $self->_urlcode2params( $self->{QUERY_STRING} );
     },
 );
+
+sub _urlcode2params {
+    my ( $self, $str ) = shift;
+    my @tmp = $str ? map { uri_unescape($_) } split( /&/, $str ) : ();
+    foreach my $s (@tmp) {
+        if   ( $s =~ /^(.+?)=(.+)$/ ) { $self->{_params}->{$1} = $2; }
+        else                          { $self->{_params}->{$s} = 1; }
+    }
+}
+
+*param = *params;
 
 sub params {
     my ( $self, $key, $value ) = @_;
@@ -143,6 +146,17 @@ sub jsonBodyToObj {
         return undef;
     }
     return $self->{body} = $j;
+}
+
+sub parseBody {
+    my $self = shift;
+    if ( $self->contentType =~ /application\/json/ ) {
+        %{ $self->_params } =
+          ( %{ $self->_params }, %{ $self->jsonBodyToObj } );
+    }
+    elsif ( $self->contentType =~ /^application\/x-www-form-urlencoded/ ) {
+        $self->_urlcode2params( $self->body );
+    }
 }
 
 1;

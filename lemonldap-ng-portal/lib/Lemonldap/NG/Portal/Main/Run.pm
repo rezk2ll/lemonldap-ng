@@ -2,17 +2,17 @@
 # Serve request part of Lemonldap::NG portal
 #
 # Methods:
-#  - handler():    verify that portal configuration is the same that the
-#                  underlying handler configuration before launching
-#                  Lemonldap::NG::Common::PSGI::Router::handler() (which parse
-#                  routes)
+#  - handler(): verify that portal configuration is the same that the
+#               underlying handler configuration before launching
+#               Lemonldap::NG::Common::PSGI::Router::handler() (which parse
+#               routes)
 #
 # Entry points:
-#  - "/test": * authenticated() for already authenticated users
-#             * pleaseAuth() for others
-#  - "/":     * login() ~first access
-#             * postLogin(), same for POST requests
-#             * authenticatedRequest() for authenticated users
+#  - "/test": - authenticated() for already authenticated users
+#             - pleaseAuth() for others
+#  - "/":     - login() ~first access
+#             - postLogin(), same for POST requests
+#             - authenticatedRequest() for authenticated users
 package Lemonldap::NG::Portal::Main::Run;
 
 use strict;
@@ -61,9 +61,9 @@ sub login {
     return $req->do(
         $req,
         [
-            'rememberArgs', @{ $self->beforeAuth },
-            &authProcess,   @{ $self->betweenAuthAndDatas },
-            &sessionDatas,  @{ $self->afterdatas },
+            'controlUrl',  @{ $self->beforeAuth },
+            &authProcess,  @{ $self->betweenAuthAndDatas },
+            &sessionDatas, @{ $self->afterdatas },
         ]
     );
 }
@@ -73,7 +73,7 @@ sub postLogin {
     return $req->do(
         $req,
         [
-            'restoreArgs', @{ $self->beforeAuth },
+            'restoreArgs', 'controlUrl' @{ $self->beforeAuth },
             &authProcess,  @{ $self->betweenAuthAndDatas },
             &sessionDatas, @{ $self->afterdatas },
         ]
@@ -109,7 +109,7 @@ sub do {
     }
     else {
         if ($err) {
-            return $self->sendHtml( $req, 'login.tpl' );
+            return $self->sendHtml( $req, $req->template || 'login' );
         }
         else {
             return $self->autoRedirect($req);
