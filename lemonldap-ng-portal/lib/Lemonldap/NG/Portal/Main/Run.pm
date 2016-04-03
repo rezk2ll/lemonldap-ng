@@ -62,7 +62,6 @@ sub pleaseAuth {
     return $self->sendJSONresponse( $req, { status => 0 } );
 }
 
-
 sub login {
     my ( $self, $req ) = @_;
     return $req->do(
@@ -154,6 +153,28 @@ sub getModule {
     else {
         die "Unknown type $type";
     }
+}
+
+sub autoRedirect {
+    my ( $self, $req ) = @_;
+
+    # Set redirection URL if needed
+    $req->datas->{urldc} ||= $self->conf->{portal} if ( $req->mustRedirect );
+
+    # Redirection should be made if urldc defined
+    if ( $req->datas->{urldc} ) {
+        return [ 302, [ Location => $req->datas->{urldc} ], [] ];
+    }
+    else {
+        return $self->sendHtml( $req->template || 'menu' );
+    }
+}
+
+# Check if an URL's domain name is declared in LL::NG config or is declared as
+# trusted domain
+sub isTrustedUrl {
+    my ( $self, $url ) = @_;
+    return $url =~ $self->trustedDomains ? 1 : 0;
 }
 
 1;

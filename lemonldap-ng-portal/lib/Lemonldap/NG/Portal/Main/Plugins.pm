@@ -49,7 +49,9 @@ sub enabledPlugins {
         }
     }
 
+    # Simple plugins
     push @res, '::Plugins::GrantSession' if ( $self->conf->{grantSessionRule} );
+    push @res, '::Plugins::CDA'          if ( $self->conf->{cda} );
 
     # TODO: Password
 

@@ -1,7 +1,7 @@
 ##@class Lemonldap::NG::Portal::Main::Init
 # Initialization part of Lemonldap::NG portal
 #
-# 2 methods:
+# 2 public methods:
 #  - init():       launch at startup. Load 'portal' section of lemonldap-ng.ini,
 #                  initialize default route and launch reloadConf()
 #  - reloadConf(): (re)load configuration using localConf (ie 'portal' section
@@ -137,17 +137,48 @@ sub reloadConf {
     $self->_authentication->authnLevel(
         $self->conf->{ $self->conf->authentication . "AuthnLevel" } );
 
-    # Initialize trusted domain list
-    $self->conf->{trustedDomains} ||= "";
-    $self->conf->{trustedDomains} = "*"
-      if ( $self->conf->{trustedDomains} =~ /(^|\s)\*(\s|$)/ );
-    if (    $self->conf->{trustedDomains}
-        and $self->conf->{trustedDomains} ne "*" )
-    {
-        $self->conf->{trustedDomains} =~ s#(^|\s+)\.#${1}[^/]+.#g;
-        $self->conf->{trustedDomains} = '('
-          . join( '|', split( /\s+/, $self->conf->{trustedDomains} ) ) . ')';
-        $self->conf->{trustedDomains} =~ s/\./\\./g;
+    # Initialize trusted domain regexp
+    if ( $self->conf->{trustedDomains} =~ /^\s*\*\s*$/ ) {
+        $self->trustedDomains(qr#^https?://#);
+    }
+    else {
+        my $re = Regexp::Assemble->new();
+        if ( my $td = $self->conf->{trustedDomains} ) {
+            $td =~ s/^\s*(.*?)\s*/$1/;
+            $self->lmLog( "Domain $_ added in trusted domains", 'debug' );
+            foreach ( split( /\s+/, $td ) ) {
+                s#^\.#([^/]+\.)?#;
+                s/\./\\./;
+                $re->add($_);
+            }
+        }
+        foreach my $vhost ( keys %{ $self->conf->{locationRules} } ) {
+            $self->lmLog( "Vhost $vhost added in trusted domains", 'debug' );
+            $re->add( quotemeta($vhost) );
+            if ( my $tmp =
+                $self->conf->{vhostOptions}->{$vhost}->{vhostAliases} )
+            {
+                foreach my $alias ( split /\s+/, $tmp ) {
+                    $self->lmLog( "Alias $alias added in trusted domains",
+                        'debug' );
+                    $re->add( quotemeta($alias) );
+                }
+            }
+        }
+        my $tmp = 'https?://' . $re->as_string . '(?:/|$)';
+        $self->trustedDomains(qr/$tmp/);
+    }
+    if ( my $td = $self->conf->{trustedDomains} ) {
+        $td =~ s/^\s*(.*?)\s*/$1/;
+        if ( $td eq '*' ) {
+            $self->trustedDomains(qr#^https?://#);
+        }
+        else {
+            my $tmp =
+              join( '|', map { s#^\.#([^/]+\.)?# } split( /\s+/, $td ) );
+            $tmp =~ s/\./\\./g;
+            $self->trustedDomains(qr#^https?://$tmp(?:\d+)?(?:/|$)#);
+        }
     }
 
     # TODO: compile macros in _macros, groups in _groups
