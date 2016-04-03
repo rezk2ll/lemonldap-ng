@@ -43,7 +43,7 @@ sub enabledPlugins {
     foreach my $type (qw(password register)) {
         my $tmp = $self->conf->{$type};
         if ( $tmp and $tmp ne 'Null' ) {
-            $tmp = '::'.ucfirst($type) . "DB::$tmp";
+            $tmp = '::' . ucfirst($type) . "DB::$tmp";
             $self->lmLog("$tmp enabled");
             push @res, $tmp;
         }

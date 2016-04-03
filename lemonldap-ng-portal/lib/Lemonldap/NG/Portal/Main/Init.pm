@@ -27,8 +27,8 @@ has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
 
 # Macros and groups
-has _macros => (is => 'rw');
-has _groups => (is => 'rw');
+has _macros => ( is => 'rw' );
+has _groups => ( is => 'rw' );
 
 # Lists to store plugins entry-points
 has beforeAuth => (
@@ -91,7 +91,10 @@ sub reloadConf {
     }
 
     # Reinitialize arrays
-    foreach (qw(_macros _groups beforeAuth betweenAuthAndDatas afterDatas forAuthUser)) {
+    foreach (
+        qw(_macros _groups beforeAuth betweenAuthAndDatas afterDatas forAuthUser)
+      )
+    {
         $self->{$_} = [];
     }
 
@@ -160,8 +163,7 @@ sub loadPlugin {
     my ( $self, $plugin ) = @_;
     my $obj;
     return 0
-      unless ( $obj =
-        $self->loadModule("$plugin") );
+      unless ( $obj = $self->loadModule("$plugin") );
     foreach my $sub (
         qw(beforeAuthProcess addSessionData afterAuthProcess forAuthUser))
     {
@@ -177,7 +179,7 @@ sub loadPlugin {
 sub loadModule {
     my ( $self, $module ) = @_;
     my $obj;
-    $module = "Lemonldap::NG::Portal$module" if($module =~/^::/);
+    $module = "Lemonldap::NG::Portal$module" if ( $module =~ /^::/ );
 
     eval "require $module";
     if ($@) {

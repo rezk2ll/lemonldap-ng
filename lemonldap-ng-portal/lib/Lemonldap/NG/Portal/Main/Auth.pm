@@ -7,6 +7,6 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Main::Module';
 
-has authnLevel => (is => 'rw');
+has authnLevel => ( is => 'rw' );
 
 1;

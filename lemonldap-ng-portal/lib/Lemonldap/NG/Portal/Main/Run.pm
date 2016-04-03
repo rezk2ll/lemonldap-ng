@@ -1,18 +1,12 @@
 ##@class Lemonldap::NG::Portal::Main::Run
 # Serve request part of Lemonldap::NG portal
 #
-# Methods:
-#  - handler(): verify that portal configuration is the same that the
-#               underlying handler configuration before launching
-#               Lemonldap::NG::Common::PSGI::Router::handler() (which parse
-#               routes)
+# Parts of this file:
+#  - response handler
+#  - main entry points
+#  - running methods
+#  - utilities
 #
-# Entry points:
-#  - "/test": - authenticated() for already authenticated users
-#             - pleaseAuth() for others
-#  - "/":     - login() ~first access
-#             - postLogin(), same for POST requests
-#             - authenticatedRequest() for authenticated users
 package Lemonldap::NG::Portal::Main::Run;
 
 use strict;
@@ -22,6 +16,21 @@ use Lemonldap::NG::Portal::Main::Request;
 
 our $VERSION = '2.0.0';
 
+# List constants
+sub authProcess { qw(extractFormInfo getUser authenticate) }
+
+sub sessionDatas {
+    qw(setSessionInfo setMacros setGroups setPersistentSessionInfo
+      setLocalGroups store buildCookie);
+}
+
+# RESPONSE HANDLER
+# ----------------
+#
+# - check if conf has changed
+# - replace Lemonldap::NG::Common::PSGI::Request request by
+#   Lemonldap::NG::Portal::Main::Request
+# - launch Lemonldap::NG::Common::PSGI::Request::handler()
 sub handler {
     my ( $self, $req ) = shift;
     unless ($self->conf->{cfgNum}
@@ -33,9 +42,16 @@ sub handler {
     return $self->SUPER::handler($req);
 }
 
-# CORE REST API
+# MAIN ENTRY POINTS (declared in Lemonldap::NG::Portal::Main::Init)
+# -----------------
+#
+# Entry points:
+#  - "/test": - authenticated() for already authenticated users
+#             - pleaseAuth() for others
+#  - "/":     - login() ~first access
+#             - postLogin(), same for POST requests
+#             - authenticatedRequest() for authenticated users
 
-# Methods that handle /test
 sub authenticated {
     my ( $self, $req ) = @_;
     return $self->sendJSONresponse( $req, { status => 1 } );
@@ -46,15 +62,6 @@ sub pleaseAuth {
     return $self->sendJSONresponse( $req, { status => 0 } );
 }
 
-# MAIN ENTRY POINTS
-
-# List constants
-sub authProcess { qw(extractFormInfo getUser authenticate) }
-
-sub sessionDatas {
-    qw(setSessionInfo setMacros setGroups setPersistentSessionInfo
-      setLocalGroups store buildCookie);
-}
 
 sub login {
     my ( $self, $req ) = @_;
@@ -73,9 +80,10 @@ sub postLogin {
     return $req->do(
         $req,
         [
-            'restoreArgs', 'controlUrl' @{ $self->beforeAuth },
-            &authProcess,  @{ $self->betweenAuthAndDatas },
-            &sessionDatas, @{ $self->afterdatas },
+            'restoreArgs',                   'controlUrl',
+            @{ $self->beforeAuth },          &authProcess,
+            @{ $self->betweenAuthAndDatas }, &sessionDatas,
+            @{ $self->afterdatas },
         ]
     );
 }
@@ -84,6 +92,9 @@ sub authenticatedRequest {
     my ( $self, $req ) = @_;
     return $req->do( $req, $self->forAuthUser );
 }
+
+# RUNNING METHODS
+# ---------------
 
 sub do {
     my ( $self, $req, $steps ) = @_;
@@ -117,18 +128,32 @@ sub do {
     }
 }
 
-sub process {
-    my ( $self, $req ) = @_;
+# Utilities
+# ---------
 
-    #$req->error(PE_OK);
-    my $err = PE_OK;
-    while ( my $sub = shift @{ $req->steps } ) {
-        last if ( $err = $self->$sub($req) );
+sub getModule {
+    my ( $self, $req, $type ) = @_;
+    if (
+        my $mod = {
+            auth     => '_authentication',
+            user     => '_userDB',
+            password => '_passwordDB'
+        }->{$type}
+      )
+    {
+        if ( $self->$mod->can('name') ) {
+            return $self->$mod->can('name');
+        }
+        else {
+            return ref( $self->$mod );
+        }
     }
-    return $err;
+    elsif ( $type eq 'issuer' ) {
+        return $req->{_activeIssuerDB};
+    }
+    else {
+        die "Unknown type $type";
+    }
 }
-
-# TODO in run
-#  - mustRedirect
 
 1;
