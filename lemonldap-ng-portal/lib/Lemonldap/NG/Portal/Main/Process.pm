@@ -151,6 +151,9 @@ sub setSessionInfo {
     # Store URL origin in session
     $req->{sessionInfo}->{_url} = $req->datas->{urldc};
 
+    # Share sessionInfo with underlying handler (needed for safe jail)
+    HANDLER->datas($req->{sessionInfo});
+
     # Call UserDB setSessionInfo
     return $self->_userDB->setSessionInfo($req);
 
