@@ -152,7 +152,7 @@ sub setSessionInfo {
     $req->{sessionInfo}->{_url} = $req->datas->{urldc};
 
     # Share sessionInfo with underlying handler (needed for safe jail)
-    HANDLER->datas($req->{sessionInfo});
+    HANDLER->datas( $req->{sessionInfo} );
 
     # Call UserDB setSessionInfo
     return $self->_userDB->setSessionInfo($req);
@@ -163,7 +163,7 @@ sub setSessionInfo {
 sub setMacros {
     my ( $self, $req ) = @_;
     foreach ( sort keys %{ $self->_macros } ) {
-        $req->{sessionInfo}->{$_} = $self->_macros->{$_}->($req);
+        $req->{sessionInfo}->{$_} = $self->_macros->{$_}->();
     }
     PE_OK;
 }
@@ -202,7 +202,7 @@ sub setPersistentSessionInfo {
 sub setLocalGroups {
     my ( $self, $req ) = @_;
     foreach ( sort keys %{ $self->_groups } ) {
-        if ( $self->_groups->{$_}->($req) ) {
+        if ( $self->_groups->{$_}->() ) {
             $req->{sessionInfo}->{groups} .=
               $self->conf->{multiValuesSeparator} . $_;
             $req->{sessionInfo}->{hGroups}->{$_}->{name} = $_;

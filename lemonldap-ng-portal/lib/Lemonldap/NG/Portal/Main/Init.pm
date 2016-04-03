@@ -181,7 +181,26 @@ sub reloadConf {
         }
     }
 
-    # TODO: compile macros in _macros, groups in _groups
+    # Compile macros in _macros, groups in _groups
+    foreach my $type (qw(macros groups)) {
+        $self->{"_$type"} = {};
+        if ( $self->conf->{$type} ) {
+            for my $name ( sort keys %{ $self->conf->{$type} } ) {
+                my $sub = HANDLER->tsv->{jail}->jail_reval(
+                    "sub{return(" . $self->conf->{$type}->{$name} . ")}" );
+                if ($sub) {
+                    $self->{"_$type"}->{$name} = $sub;
+                }
+                else {
+                    $self->lmLog(
+                        "$type $name returns an error: "
+                          . HANDLER->tsv->{jail}->error,
+                        'error'
+                    );
+                }
+            }
+        }
+    }
 
     # Load plugins
     foreach my $plugin ( $self->enabledPlugins ) {
