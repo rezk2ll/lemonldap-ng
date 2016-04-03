@@ -16,6 +16,8 @@ use Lemonldap::NG::Portal::Main::Request;
 
 extends 'Lemonldap::NG::Portal::Main::Process';
 
+use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::API';
+
 our $VERSION = '2.0.0';
 
 # List constants
@@ -34,14 +36,14 @@ sub sessionDatas {
 #   Lemonldap::NG::Portal::Main::Request
 # - launch Lemonldap::NG::Common::PSGI::Request::handler()
 sub handler {
-    my ( $self, $req ) = shift;
+    my ( $self, $req ) = @_;
     unless ($self->conf->{cfgNum}
         and $self->conf->{cfgNum} eq HANDLER->lmConf->{cfgNum} )
     {
         $self->reloadConf();
     }
     bless $req, 'Lemonldap::NG::Portal::Main::Request';
-    return $self->SUPER::handler($req);
+    return $self->Lemonldap::NG::Common::PSGI::Router::handler($req);
 }
 
 # MAIN ENTRY POINTS (declared in Lemonldap::NG::Portal::Main::Init)

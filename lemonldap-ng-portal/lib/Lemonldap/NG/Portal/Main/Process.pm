@@ -44,7 +44,7 @@ sub restoreArgs {
 # Verify url parameter
 sub controlUrl {
     my ( $self, $req ) = @_;
-    $req->datas->{_url} ||= '';
+    $req->{datas}->{_url} ||= '';
     if ( my $url = $req->param('url') ) {
 
         # REJECT NON BASE64 URL

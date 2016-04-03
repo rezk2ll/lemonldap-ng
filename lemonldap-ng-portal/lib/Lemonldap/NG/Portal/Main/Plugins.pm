@@ -24,22 +24,22 @@ sub enabledPlugins {
 
     # Check if captcha is required
     # TODO: verify if this list is OK
-    foreach my $key (
-        qw(captcha_login_enabled captcha_mail_enabled captcha_register_enabled))
-    {
-        if ( $self->conf->{$key} ) {
-            $self->lmLog( 'Captcha enabled', 'debug' );
-            push @res, '::Plugins::Captcha';
-            last;
-        }
-    }
+    #foreach my $key (
+    #    qw(captcha_login_enabled captcha_mail_enabled captcha_register_enabled))
+    #{
+    #    if ( $self->conf->{$key} ) {
+    #        $self->lmLog( 'Captcha enabled', 'debug' );
+    #        push @res, '::Plugins::Captcha';
+    #        last;
+    #    }
+    #}
 
     # Check if SOAP is enabled
     # TODO: REST
     push @res, 'SOAP' if ( $self->conf->{Soap} );
 
     # Check if notification is enabled
-    push @res, '::Plugins::Notifications' if ( $self->conf->{notification} );
+    push @res, '::Plugins::Notifications' if ( $self->conf->{notifications} );
     foreach my $type (qw(password register)) {
         my $tmp = $self->conf->{$type};
         if ( $tmp and $tmp ne 'Null' ) {
@@ -60,6 +60,7 @@ sub enabledPlugins {
         $self->lmLog( 'Custom plugins: ' . $self->conf->{plugins}, 'debug' );
         push @res, grep ( /\w/, split( /,\s*/, $self->conf->{plugins} ) );
     }
+    return @res;
 }
 
 1;
