@@ -14,7 +14,7 @@ sub changeUrldc {
     my $urldc = $req->datas->{urldc};
     if (    $req->id
         and $urldc !~ m#^https?://[^/]*$self->{conf}->{domain}(:\d+)?/#oi
-        and $self->isTrustedUrl($urldc) )
+        and $self->p->isTrustedUrl($urldc) )
     {
         my $ssl = $urldc =~ /^https/;
         $self->lmLog( 'CDA request', 'debug' );

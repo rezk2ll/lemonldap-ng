@@ -36,7 +36,7 @@ our $_v = { session => {}, datas => {} };
 BEGIN {
     # Thread shared accessors
     foreach (
-        qw(tsv cfgNum lastCheck checkTime confAcc localConfig logLevel _logLevel logLevels)
+        qw(tsv cfgNum lastCheck checkTime confAcc localConfig logLevel _logLevel logLevels lmConf)
       )
     {
         eval " sub $_ {
