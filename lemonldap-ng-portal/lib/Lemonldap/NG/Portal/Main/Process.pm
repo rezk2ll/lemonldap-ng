@@ -121,8 +121,8 @@ sub setSessionInfo {
     my ( $self, $req ) = @_;
 
     # Get the current user module
-    $req->{sessionInfo}->{_auth}   = $self->getModule("auth");
-    $req->{sessionInfo}->{_userDB} = $self->getModule("user");
+    $req->{sessionInfo}->{_auth}   = $self->getModule( $req, "auth" );
+    $req->{sessionInfo}->{_userDB} = $self->getModule( $req, "user" );
 
     # Store IP address from remote address or X-FORWARDED-FOR header
     $req->{sessionInfo}->{ipAddr} = $req->remote_ip;

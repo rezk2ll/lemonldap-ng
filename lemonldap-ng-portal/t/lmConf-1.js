@@ -51,6 +51,7 @@
   "macros": {
     "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\""
   },
+  "notifications": 0,
   "portal": "http://auth.example.com/",
   "reloadUrls": {},
   "userDB": "Demo",

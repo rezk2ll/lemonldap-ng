@@ -6,7 +6,10 @@
 package Lemonldap::NG::Portal::UserDB::Demo;
 
 use strict;
+use Mouse;
 use Lemonldap::NG::Portal::Main::Constants;
+
+extends Lemonldap::NG::Portal::Main::Module;
 
 our $VERSION = '2.0.0';
 
@@ -16,7 +19,7 @@ our $VERSION = '2.0.0';
 sub init {
     my $self = shift;
 
-    unless ( $self->get_module('auth') =~ /^Demo/ ) {
+    unless ( $self->p->getModule( undef, 'auth' ) =~ /^Demo/ ) {
         $self->lmLog( "Use UserDBDemo only with AuthDemo", 'error' );
         return PE_ERROR;
     }
@@ -40,7 +43,7 @@ sub init {
         },
     };
 
-    PE_OK;
+    1;
 }
 
 ## @apmethod int getUser()

@@ -26,7 +26,7 @@ sub init {
         "Using demonstration mode, go in Manager to edit the configuration",
         'warn' );
 
-    PE_OK;
+    1;
 }
 
 ## @apmethod int authenticate()

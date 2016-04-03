@@ -13,8 +13,12 @@ use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Handler::Main::Reload qw/keepConf/;
 use Lemonldap::NG::Portal::Main::Plugins;
+use Regexp::Assemble;
 
 our $VERSION = '2.0.0';
+
+extends 'Lemonldap::NG::Handler::PSGI::Try',
+  'Lemonldap::NG::Portal::Main::Plugins';
 
 use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::API';
 
@@ -29,6 +33,9 @@ has _userDB         => ( is => 'rw' );
 # Macros and groups
 has _macros => ( is => 'rw' );
 has _groups => ( is => 'rw' );
+
+# TrustedDomain regexp
+has trustedDomains => ( is => 'rw' );
 
 # Lists to store plugins entry-points
 has beforeAuth => (
@@ -80,7 +87,7 @@ sub init {
 sub reloadConf {
     my ($self) = @_;
 
-    my $conf = HANDLER->lmConf->{cfgNum};
+    my $conf = HANDLER->lmConf;
 
     # Delete keys that will be generated
     foreach my $key (
@@ -135,10 +142,12 @@ sub reloadConf {
             and $self->{"_$type"}->init );
     }
     $self->_authentication->authnLevel(
-        $self->conf->{ $self->conf->authentication . "AuthnLevel" } );
+        $self->conf->{ $self->conf->{authentication} . "AuthnLevel" } );
 
     # Initialize trusted domain regexp
-    if ( $self->conf->{trustedDomains} =~ /^\s*\*\s*$/ ) {
+    if (    $self->conf->{trustedDomains}
+        and $self->conf->{trustedDomains} =~ /^\s*\*\s*$/ )
+    {
         $self->trustedDomains(qr#^https?://#);
     }
     else {

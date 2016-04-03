@@ -16,7 +16,7 @@ ok(
             app => Lemonldap::NG::Portal::Main->run(
                 {
                     configStorage => { type => 'File', dirName => 't' },
-                    logLevel      => 'warn',
+                    logLevel      => 'debug',
                     cookieName    => 'lemonldap',
                     securedCookie => 0,
                     https         => 0,

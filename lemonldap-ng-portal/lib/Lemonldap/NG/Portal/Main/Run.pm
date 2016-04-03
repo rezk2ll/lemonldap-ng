@@ -66,19 +66,19 @@ sub pleaseAuth {
 
 sub login {
     my ( $self, $req ) = @_;
-    return $req->do(
+    return $self->do(
         $req,
         [
             'controlUrl',  @{ $self->beforeAuth },
             &authProcess,  @{ $self->betweenAuthAndDatas },
-            &sessionDatas, @{ $self->afterdatas },
+            &sessionDatas, @{ $self->afterDatas },
         ]
     );
 }
 
 sub postLogin {
     my ( $self, $req ) = @_;
-    return $req->do(
+    return $self->do(
         $req,
         [
             'restoreArgs',                   'controlUrl',
@@ -91,7 +91,7 @@ sub postLogin {
 
 sub authenticatedRequest {
     my ( $self, $req ) = @_;
-    return $req->do( $req, $self->forAuthUser );
+    return $self->do( $req, $self->forAuthUser );
 }
 
 # RUNNING METHODS
