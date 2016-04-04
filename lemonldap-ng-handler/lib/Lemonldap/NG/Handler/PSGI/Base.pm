@@ -16,7 +16,7 @@ has api        => ( is => 'rw', isa => 'Str' );
 sub init {
     my ( $self, $args ) = @_;
     eval { $self->api->init($self) };
-    if ( $@ and not $self->{protection} eq 'none' ) {
+    if ( $@ and not( $self->{protection} and $self->{protection} eq 'none' ) ) {
         $self->error($@);
         return 0;
     }
@@ -28,7 +28,8 @@ sub init {
         return 0;
     }
     $self->portal( $self->api->tsv->{portal}->() );
-    my $rule = $self->{protection} || $self->api->localConfig->{protection} || '';
+    my $rule =
+      $self->{protection} || $self->api->localConfig->{protection} || '';
     $self->rule(
         $rule eq 'authenticate' ? 1 : $rule eq 'manager' ? '' : $rule );
     return 1;

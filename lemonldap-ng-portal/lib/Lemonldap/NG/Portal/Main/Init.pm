@@ -61,7 +61,7 @@ has forAuthUser => (
 sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
-    return 0 unless ( $self->SUPER::init( { conf => $args } ) );
+    return 0 unless ( $self->SUPER::init($args) );
     $self->localConfig(
         { %{ HANDLER->confAcc->getLocalConf('portal') }, %$args } );
 

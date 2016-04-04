@@ -11,8 +11,8 @@ our $VERSION = '2.0.0';
 
 sub init {
     $_[0]->api('Lemonldap::NG::Handler::PSGI::API');
-    my $tmp = $_[0]->Lemonldap::NG::Common::PSGI::Router::init( $_[1] )
-      and $_[0]->Lemonldap::NG::Handler::PSGI::Base::init( $_[1] );
+    my $tmp = ( $_[0]->Lemonldap::NG::Common::PSGI::Router::init( $_[1] )
+          and $_[0]->Lemonldap::NG::Handler::PSGI::Base::init( $_[1] ) );
     return $tmp;
 }
 
