@@ -16,8 +16,6 @@ use Lemonldap::NG::Portal::Main::Request;
 
 extends 'Lemonldap::NG::Portal::Main::Process';
 
-use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::API';
-
 our $VERSION = '2.0.0';
 
 # List constants
@@ -86,14 +84,14 @@ sub postLogin {
             'restoreArgs',                   'controlUrl',
             @{ $self->beforeAuth },          &authProcess,
             @{ $self->betweenAuthAndDatas }, &sessionDatas,
-            @{ $self->afterdatas },
+            @{ $self->afterDatas },
         ]
     );
 }
 
 sub authenticatedRequest {
     my ( $self, $req ) = @_;
-    return $self->do( $req, $self->forAuthUser );
+    return $self->do( $req, [ 'controlUrl', @{ $self->forAuthUser } ] );
 }
 
 # RUNNING METHODS

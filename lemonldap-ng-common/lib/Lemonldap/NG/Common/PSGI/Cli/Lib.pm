@@ -120,8 +120,8 @@ sub _del {
 sub jsonResponse {
     my ( $self, $path, $query ) = @_;
     my $res = $self->_get( $path, $query )
-      or die "Manager lib has refused my get, aborting";
-    die "Manager lib does not return a 200 code, aborting"
+      or die "PSGI lib has refused my get, aborting";
+    die "PSGI lib does not return a 200 code, aborting"
       unless ( $res->[0] == 200 );
     my $href = from_json( $res->[2]->[0] ) or die 'Response is not JSON';
     return $href;
@@ -130,8 +130,8 @@ sub jsonResponse {
 sub jsonPostResponse {
     my ( $self, $path, $query, $body, $type, $len ) = @_;
     my $res = $self->_post( $path, $query, $body, $type, $len )
-      or die "Manager lib has refused my post, aborting";
-    die "Manager lib does not return a 200 code, aborting"
+      or die "PSGI lib has refused my post, aborting";
+    die "PSGI lib does not return a 200 code, aborting"
       unless ( $res->[0] == 200 );
     my $href = from_json( $res->[2]->[0] ) or die 'Response is not JSON';
     return $href;
@@ -140,8 +140,8 @@ sub jsonPostResponse {
 sub jsonPutResponse {
     my ( $self, $path, $query, $body, $type, $len ) = @_;
     my $res = $self->_put( $path, $query, $body, $type, $len )
-      or die "Manager lib has refused my put, aborting";
-    die "Manager lib does not return a 200 code, aborting"
+      or die "PSGI lib has refused my put, aborting";
+    die "PSGI lib does not return a 200 code, aborting"
       unless ( $res->[0] == 200 );
     my $href = from_json( $res->[2]->[0] ) or die 'Response is not JSON';
     return $href;

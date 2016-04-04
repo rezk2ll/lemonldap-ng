@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Main::Constants;
 use strict;
 use Exporter 'import';
 
+use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::API';
 use constant {
 
     # Portal errors
@@ -150,6 +151,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PM_LAST_LOGINS PM_LAST_FAILED_LOGINS PM_OIDC_CONSENT PM_OIDC_SCOPE_OPENID
   PM_OIDC_SCOPE_PROFILE PM_OIDC_SCOPE_EMAIL PM_OIDC_SCOPE_ADDRESS
   PM_OIDC_SCOPE_PHONE PM_OIDC_SCOPE_OTHER PM_OIDC_CONFIRM_LOGOUT
+  HANDLER
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 

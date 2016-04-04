@@ -99,9 +99,6 @@ sub extractFormInfo {
     # Other parameters
     $req->{timezone} = $req->param('timezone');
 
-    # Check user
-    return PE_MALFORMEDUSER unless $self->get_user;
-
     PE_OK;
 }
 

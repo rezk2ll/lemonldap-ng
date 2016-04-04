@@ -19,9 +19,9 @@ our $VERSION = '2.0.0';
 sub init {
     my $self = shift;
 
-    unless ( $self->p->getModule( undef, 'auth' ) =~ /^Demo/ ) {
-        $self->lmLog( "Use UserDBDemo only with AuthDemo", 'error' );
-        return PE_ERROR;
+    unless ( $self->p->getModule( undef, 'auth' ) =~ /Demo/ ) {
+        $self->p->error("Use UserDB::Demo only with Auth::Demo");
+        return 0;
     }
 
     # Sample accounts from Doctor Who characters
@@ -53,9 +53,9 @@ sub getUser {
     my ( $self, $req ) = @_;
 
     # Search by login
-    if ( $req->{user} ) {
+    if ( $req->user ) {
         return PE_OK
-          if ( defined $self->{_demoAccounts}->{ $req->{user} } );
+          if ( defined $self->{_demoAccounts}->{ $req->user } );
     }
 
     # Search by mail

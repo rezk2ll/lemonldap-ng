@@ -17,6 +17,7 @@ has datas => ( is => 'rw', default => sub { {} } );
 # Session datas when created
 has id          => ( is => 'rw' );
 has sessionInfo => ( is => 'rw' );
+has user        => ( is => 'rw' );
 
 # Response cookies (list of strings built by cookie())
 has respCookies => ( is => 'rw' );

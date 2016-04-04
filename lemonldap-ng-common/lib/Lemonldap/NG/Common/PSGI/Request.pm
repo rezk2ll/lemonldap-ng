@@ -71,7 +71,7 @@ has QUERY_STRING => (
 );
 
 sub _urlcode2params {
-    my ( $self, $str ) = shift;
+    my ( $self, $str ) = @_;
     my @tmp = $str ? map { uri_unescape($_) } split( /&/, $str ) : ();
     foreach my $s (@tmp) {
         if   ( $s =~ /^(.+?)=(.+)$/ ) { $self->{_params}->{$1} = $2; }

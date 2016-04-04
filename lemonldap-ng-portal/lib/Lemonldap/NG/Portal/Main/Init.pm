@@ -11,6 +11,7 @@ package Lemonldap::NG::Portal::Main::Init;
 use strict;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Portal::Main::Constants;
 use Lemonldap::NG::Handler::Main::Reload qw/keepConf/;
 use Lemonldap::NG::Portal::Main::Plugins;
 use Regexp::Assemble;
@@ -19,8 +20,6 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Handler::PSGI::Try',
   'Lemonldap::NG::Portal::Main::Plugins';
-
-use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::API';
 
 # Configuration storage
 has localConfig => ( is => 'rw', default => sub { {} } );
