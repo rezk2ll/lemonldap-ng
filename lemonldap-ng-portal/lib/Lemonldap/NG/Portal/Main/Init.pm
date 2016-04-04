@@ -12,7 +12,6 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Portal::Main::Constants;
-use Lemonldap::NG::Handler::Main::Reload qw/keepConf/;
 use Lemonldap::NG::Portal::Main::Plugins;
 use Regexp::Assemble;
 
@@ -61,7 +60,9 @@ has forAuthUser => (
 sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
+    Lemonldap::NG::Handler::Main::Reload->onReload( $self, 'reloadConf' );
     return 0 unless ( $self->SUPER::init($args) );
+    return 0 if ( $self->error );
     $self->localConfig(
         { %{ HANDLER->confAcc->getLocalConf('portal') }, %$args } );
 
@@ -80,13 +81,11 @@ sub init {
     # Default routes must point to routines declared above
     $self->defaultAuthRoute('');
     $self->defaultUnauthRoute('');
-    return $self->reloadConf($args);
+    1;
 }
 
 sub reloadConf {
-    my ($self) = @_;
-
-    my $conf = HANDLER->lmConf;
+    my ( $self, $conf ) = @_;
 
     # Delete keys that will be generated
     foreach my $key (

@@ -5,18 +5,19 @@ use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Crypto;
 use Lemonldap::NG::Common::Safelib;            #link protected safe Safe object
 use Lemonldap::NG::Handler::Main::Jail;
+use Scalar::Util qw(weaken);
 
 use constant UNPROTECT => 1;
 use constant SKIP      => 2;
 
 our $VERSION = '2.0.0';
 
-our $keepConf = 0;
+our @_onReload;
 
-sub import {
-    if($_[1] and $_[1] eq 'keepConf') {
-        $keepConf = 1;
-    }
+sub onReload {
+    my ( $class, $obj, $sub ) = @_;
+    weaken($obj);
+    push @_onReload, [ $obj, $sub ];
 }
 
 # CONFIGURATION UPDATE
@@ -55,8 +56,19 @@ sub checkConf {
         $class->configReload($conf);
     }
     $class->lmLog( "$class: configuration is up to date", 'debug' );
-    if($keepConf){
-        $class->lmConf($conf);
+    foreach (@_onReload) {
+        my ( $obj, $sub ) = @$_;
+        if ($obj) {
+            $class->lmLog( 'Launching ' . ref($obj) . "->$sub(conf)", 'debug' );
+            unless ( $obj->$sub($conf) ) {
+                $class->lmLog(
+                    "Underlying object can't read conf ("
+                      . ref($obj)
+                      . "->$sub)",
+                    'error'
+                );
+            }
+        }
     }
     return 1;
 }
