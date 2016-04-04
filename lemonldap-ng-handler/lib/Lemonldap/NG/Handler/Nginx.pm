@@ -11,7 +11,7 @@ extends 'Lemonldap::NG::Handler::PSGI';
 sub init {
     my $self = shift;
     $self->api('Lemonldap::NG::Handler::PSGI::API::Server');
-    my $tmp  = $self->SUPER::init(@_);
+    my $tmp = $self->SUPER::init(@_);
 }
 
 ## @method void _run()
@@ -64,18 +64,19 @@ sub _run {
 sub handler {
     my ( $self, $req ) = @_;
     my $hdrs = $req->{respHeaders};
-    $req->{respHeaders} = {};
+    $req->{respHeaders} = [];
     my @convertedHdrs =
       ( 'Content-Length' => 0, Cookie => ( $req->cookies // '' ) );
     my $i = 0;
-    foreach my $k ( keys %$hdrs ) {
+    while( my $k = shift @$hdrs ) {
+        my $v = shift @$hdrs;
         if ( $k =~ /^(?:Lm-Remote-User|Cookie)$/ ) {
-            push @convertedHdrs, $k, $hdrs->{$k};
+            push @convertedHdrs, $k, $v;
         }
         else {
             $i++;
-            push @convertedHdrs, "Headername$i", $k, "Headervalue$i",
-              $hdrs->{$k}, $k, $hdrs->{$k};
+            push @convertedHdrs, "Headername$i", $k, "Headervalue$i", $v, $k,
+              $v;
         }
     }
     return [ 200, \@convertedHdrs, [] ];

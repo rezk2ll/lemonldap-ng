@@ -14,7 +14,7 @@ our $VERSION = '2.0.0';
 our $keepConf = 0;
 
 sub import {
-    if($_[1] eq 'keepConf') {
+    if($_[1] and $_[1] eq 'keepConf') {
         $keepConf = 1;
     }
 }

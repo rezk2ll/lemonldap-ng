@@ -95,7 +95,7 @@ sub unset_header_in {
 sub set_header_out {
     my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        $request->{respHeaders}->{"-$h"} = $v;
+        push @{ $request->{respHeaders} }, "-$h" => $v;
     }
 }
 

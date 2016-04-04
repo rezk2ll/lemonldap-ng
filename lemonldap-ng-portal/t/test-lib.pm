@@ -43,4 +43,11 @@ sub explain {
     print STDERR "Expect $ref, get $get\n";
 }
 
+sub clean_sessions {
+    opendir D, 't/sessions' or die $!;
+    foreach ( grep { /^[^\.]/ } readdir(D) ) {
+        unlink "t/sessions/$_", "t/sessions/lock/Apache-Session-$_.lock";
+    }
+}
+
 1;

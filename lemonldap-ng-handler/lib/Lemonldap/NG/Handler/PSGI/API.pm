@@ -52,7 +52,7 @@ sub newRequest {
 # @param user string username
 sub set_user {
     my ( $class, $user ) = @_;
-    $request->{respHeaders}->{'Lm-Remote-User'} = $user;
+    push @{ $request->respHeaders }, 'Lm-Remote-User' => $user;
 }
 
 ## @method string header_in(string header)
@@ -91,7 +91,7 @@ sub unset_header_in {
 sub set_header_out {
     my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        $request->{respHeaders}->{$h} = $v;
+        push @{ $request->respHeaders }, $h => $v;
     }
 }
 

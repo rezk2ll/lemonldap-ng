@@ -152,7 +152,8 @@ sub init {
 sub handler { _mustBeDefined(@_) }
 
 sub sendHtml {
-    my ( $self, $req, $template ) = @_;
+    my ( $self, $req, $template, %args ) = @_;
+    $args{headers} ||= [];
     my $htpl;
     $template = $self->templateDir . "/$template.tpl";
     return $self->sendError( $req, "Unable to read $template", 500 )
@@ -190,7 +191,7 @@ sub sendHtml {
         'debug' );
 
     # Set headers
-    my $hdrs = [ 'Content-Type' => 'text/html' ];
+    my $hdrs = [ 'Content-Type' => 'text/html', @{ $args{headers} } ];
     unless ( $self->logLevel eq 'debug' ) {
         push @$hdrs,
           ETag            => "LMNG-manager-$VERSION",

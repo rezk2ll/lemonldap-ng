@@ -11,23 +11,16 @@ ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
 count(2);
 
 ok(
-    $res = eval {
-        &client->jsonPostResponse(
-            '/', '',
-            IO::String->new('user=dwho&password=dwho'),
-            'application/x-www-form-urlencoded', 23
-        );
-    },
-    'Auth query'
-  )
-  or explain(
-    &client->_post(
+    $res = &client->_post(
         '/', '',
         IO::String->new('user=dwho&password=dwho'),
         'application/x-www-form-urlencoded', 23
     ),
-    200
-  );
+    'Auth query'
+);
+print STDERR Dumper($res);
 count(1);
+
+clean_sessions();
 
 done_testing( count() );

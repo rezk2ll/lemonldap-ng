@@ -241,6 +241,7 @@ sub store {
     # Main session
     my $session = $self->getApacheSession( $req->{id}, 0, $self->{force} );
     return PE_APACHESESSIONERROR unless ($session);
+    $req->id( $session->{id} );
 
     # Compute unsecure cookie value if needed
     if ( $self->conf->{securedCookie} == 3 ) {
@@ -253,7 +254,9 @@ sub store {
     foreach my $k ( keys %{ $req->{sessionInfo} } ) {
         next unless defined $req->{sessionInfo}->{$k};
         my $displayValue = $req->{sessionInfo}->{$k};
-        if ( $self->conf->{hiddenAttributes} =~ /\b$k\b/ ) {
+        if (    $self->conf->{hiddenAttributes}
+            and $self->conf->{hiddenAttributes} =~ /\b$k\b/ )
+        {
             $displayValue = '****';
         }
         $self->lmLog( "Store $displayValue in session key $k", 'debug' );
@@ -267,27 +270,26 @@ sub store {
 
 sub buildCookie {
     my ( $self, $req ) = @_;
-    push @{ $req->respCookies },
-      $self->cookie(
-        name     => $self->{cookieName},
-        value    => $self->{id},
-        domain   => $self->{domain},
+    push @{ $req->respHeaders },
+      'Set-Cookie' => $self->cookie(
+        name     => $self->conf->{cookieName},
+        value    => $req->{id},
+        domain   => $self->conf->{domain},
         path     => "/",
-        secure   => $self->{securedCookie},
-        HttpOnly => $self->{httpOnly},
-        expires  => $self->{cookieExpiration},
-        @_,
+        secure   => $self->conf->{securedCookie},
+        HttpOnly => $self->conf->{httpOnly},
+        expires  => $self->conf->{cookieExpiration},
       );
     if ( $self->conf->{securedCookie} >= 2 ) {
-        push @{ $req->respCookies },
-          $self->cookie(
-            name     => $self->{cookieName} . "http",
-            value    => $self->{sessionInfo}->{_httpSession},
-            domain   => $self->{domain},
+        push @{ $req->respHeaders },
+          'Set-Cookie' => $self->cookie(
+            name     => $self->conf->{cookieName} . "http",
+            value    => $req->{sessionInfo}->{_httpSession},
+            domain   => $self->conf->{domain},
             path     => "/",
             secure   => 0,
-            HttpOnly => $self->{httpOnly},
-            expires  => $self->{cookieExpiration},
+            HttpOnly => $self->conf->{httpOnly},
+            expires  => $self->conf->{cookieExpiration},
             @_,
           );
     }
@@ -301,8 +303,8 @@ sub cookie {
     $res[0] .= "=$h{value}";
     foreach (qw(domain path expires max_age)) {
         my $f = $_;
-        s/_/-/g;
-        push @res, "$_=$h{$f}" if ( $h{$f} );
+        $f =~ s/_/-/g;
+        push @res, "$f=$h{$_}" if ( $h{$_} );
     }
     return join( '; ', @res );
 }

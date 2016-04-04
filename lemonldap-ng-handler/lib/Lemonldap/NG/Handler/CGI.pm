@@ -33,7 +33,7 @@ sub new {
             "You don't have rights to access this page" );
     }
     elsif ($res) {
-        print $self->header( -status => $res, %{ $request->{respHeaders} } );
+        print $self->header( -status => $res, @{ $request->{respHeaders} } );
         $self->quit;
     }
     else {

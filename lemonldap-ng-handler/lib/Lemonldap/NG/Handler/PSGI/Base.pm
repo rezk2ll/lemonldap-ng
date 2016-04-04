@@ -68,7 +68,7 @@ sub _run {
         return sub {
             my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
             my $res = $self->handler($req);
-            push @{ $res->[1] }, %{ $req->{respHeaders} };
+            push @{ $res->[1] }, @{ $req->{respHeaders} };
             return $res;
         };
     }
@@ -85,7 +85,7 @@ sub status {
     return sub {
         my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
         $self->api->status($req);
-        return [ 200, [ %{ $req->{respHeaders} } ], [ $req->{respBody} ] ];
+        return [ 200, [ @{ $req->{respHeaders} } ], [ $req->{respBody} ] ];
     };
 }
 
@@ -101,11 +101,11 @@ sub _authAndTrace {
     if ( $res < 300 ) {
         $self->lmLog( 'User authenticated, calling handler()', 'debug' );
         $res = $self->handler($req);
-        push @{ $res->[1] }, %{ $req->{respHeaders} };
+        push @{ $res->[1] }, @{ $req->{respHeaders} };
         return $res;
     }
     else {
-        my %h = $req->{respHeaders} ? %{ $req->{respHeaders} } : ();
+        my %h = $req->{respHeaders} ? @{ $req->{respHeaders} } : ();
         my $s = $self->api->tsv->{portal}->() . "?lmError=$res";
         $s =
             '<html><head><title>Redirection</title></head><body>'

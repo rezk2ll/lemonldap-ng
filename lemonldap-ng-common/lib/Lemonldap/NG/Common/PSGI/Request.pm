@@ -126,7 +126,7 @@ has CONTENT_LENGTH => (
 );
 has error => ( is => 'rw', isa => 'Str', default => '' );
 
-has respHeaders => ( is => 'rw', isa => 'HashRef', default => sub { {} } );
+has respHeaders => ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
 
 # JSON parser
 sub jsonBodyToObj {

@@ -57,6 +57,8 @@ sub _run {
             $req->userData( $self->api->datas );
         }
         else {
+            # Unset headers (handler adds a Location header)
+            $req->respHeaders( [] );
             $self->routes( $self->unAuthRoutes );
         }
         return $self->handler($req);
