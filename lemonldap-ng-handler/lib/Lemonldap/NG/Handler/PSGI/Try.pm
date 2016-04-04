@@ -58,6 +58,8 @@ sub _run {
         }
         else {
             # Unset headers (handler adds a Location header)
+            $self->lmLog( "User not authenticated, cancel redirection",
+                'debug' );
             $req->respHeaders( [] );
             $self->routes( $self->unAuthRoutes );
         }

@@ -35,11 +35,6 @@ sub sessionDatas {
 # - launch Lemonldap::NG::Common::PSGI::Request::handler()
 sub handler {
     my ( $self, $req ) = @_;
-    unless ($self->conf->{cfgNum}
-        and $self->conf->{cfgNum} eq HANDLER->lmConf->{cfgNum} )
-    {
-        $self->reloadConf();
-    }
     bless $req, 'Lemonldap::NG::Portal::Main::Request';
     return $self->Lemonldap::NG::Common::PSGI::Router::handler($req);
 }
