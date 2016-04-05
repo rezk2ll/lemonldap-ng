@@ -102,7 +102,8 @@ sub sendJSONresponse {
     $args{headers} ||= [];
     my $type = 'application/json; charset=utf-8';
     if ( ref $j ) {
-        $j = $_json->encode($j);
+        eval { $j = $_json->encode($j); };
+        return $self->sendError( $req, $@ ) if ($@);
     }
     return [ $args{code}, [ 'Content-Type' => $type, @{ $args{headers} } ],
         [$j] ];
