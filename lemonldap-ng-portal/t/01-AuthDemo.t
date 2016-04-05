@@ -6,6 +6,8 @@ require 't/test-lib.pm';
 
 my $res;
 
+init( { logLevel => 'debug' } );
+
 ok( $res = &client->_get('/'), 'Unauth JSON request' );
 ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
 count(2);
@@ -18,8 +20,12 @@ ok(
     ),
     'Auth query'
 );
+
+my $cookies = getCookies($res);
+my $id;
+ok( $id = $cookies->{lemonldap}, 'Get cookie' );
 print STDERR Dumper($res);
-count(1);
+count(2);
 
 clean_sessions();
 

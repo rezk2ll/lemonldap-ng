@@ -3,29 +3,27 @@
 use strict;
 use Data::Dumper;
 use 5.10.0;
-use_ok('Lemonldap::NG::Common::PSGI::Cli::Lib');
-use_ok('Lemonldap::NG::Portal::Main');
+
+BEGIN {
+    use_ok('Lemonldap::NG::Portal::Main');
+}
 
 our $client;
-our $count = 3;
+our $count = 1;
 $Data::Dumper::Deparse = 1;
+my $ini;
 
-ok(
-    $client = Lemonldap::NG::Common::PSGI::Cli::Lib->new(
-        {
-            app => Lemonldap::NG::Portal::Main->run(
-                {
-                    configStorage => { type => 'File', dirName => 't' },
-                    logLevel      => 'debug',
-                    cookieName    => 'lemonldap',
-                    securedCookie => 0,
-                    https         => 0,
-                }
-            ),
-        }
-    ),
-    'Portal app'
-);
+sub init {
+    $ini = shift;
+    $ini ||= {};
+    $ini->{configStorage} ||= { type => 'File', dirName => 't' };
+    $ini->{logLevel}      ||= 'error';
+    $ini->{cookieName}    ||= 'lemonldap';
+    $ini->{securedCookie} //= 0;
+    $ini->{https}         //= 0;
+    ok( $client = My::Cli->new(), 'Portal app' );
+    count(1);
+}
 
 sub client {
     return $client;
@@ -48,6 +46,63 @@ sub clean_sessions {
     foreach ( grep { /^[^\.]/ } readdir(D) ) {
         unlink "t/sessions/$_", "t/sessions/lock/Apache-Session-$_.lock";
     }
+}
+
+sub getCookies {
+    my $req  = shift;
+    my @hdrs = @{ $req->[1] };
+    my $res  = {};
+    while ( my $name = shift @hdrs ) {
+        my $v = shift @hdrs;
+        if ( $name eq 'Set-Cookie' ) {
+            if ( $v =~ /^(\w+)=([^;]+)/ ) {
+                $res->{$1} = $2;
+            }
+        }
+    }
+    return $res;
+}
+
+package My::Cli;
+
+use strict;
+use Mouse;
+
+extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
+
+has app => (
+    is      => 'ro',
+    isa     => 'CodeRef',
+    builder => sub {
+        return Lemonldap::NG::Portal::Main->run($ini);
+    }
+);
+
+sub _get {
+    my ( $self, $path, %args ) = @_;
+    return $self->app->(
+        {
+            'HTTP_ACCEPT' => $args{accept}
+              || 'application/json, text/plain, */*',
+            'SCRIPT_NAME'          => '',
+            'SERVER_NAME'          => 'auth.example.com',
+            'HTTP_CACHE_CONTROL'   => 'max-age=0',
+            'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+            'PATH_INFO'            => $path,
+            ( $args{cookie} ? ( 'COOKIE' => $args{cookie} ) : () ),
+            'REQUEST_METHOD' => 'GET',
+            'REQUEST_URI'    => $path
+              . ( $args{query} ? "?$args{query}" : '' ),
+            ( $args{query} ? ( 'QUERY_STRING' => $args{query} ) : () ),
+            'SERVER_PORT'     => '8002',
+            'SERVER_PROTOCOL' => 'HTTP/1.1',
+            'HTTP_USER_AGENT' =>
+              'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
+            'REMOTE_ADDR' => '127.0.0.1',
+            'HTTP_HOST'   => 'auth.example.com'
+
+        }
+    );
 }
 
 1;
