@@ -117,6 +117,12 @@ sub reloadConf {
         return 0;
     }
 
+    # Initialize persistent session DB
+    unless ( $self->conf->{persistentStorage} ) {
+        $self->conf->{persistentStorage} = $self->conf->{globalStorage};
+        $self->conf->{persistentStorageOptions} = $self->conf->{globalStorageOptions};
+    }
+
     # Initialize cookie domain
     unless ( $self->conf->{domain} ) {
         $self->error('Configuration error: no domain');
@@ -193,8 +199,10 @@ sub reloadConf {
         $self->{"_$type"} = {};
         if ( $self->conf->{$type} ) {
             for my $name ( sort keys %{ $self->conf->{$type} } ) {
-                my $sub = HANDLER->tsv->{jail}->jail_reval(
-                    "sub{return(" . $self->conf->{$type}->{$name} . ")}" );
+                my $sub =
+                  HANDLER->tsv->{jail}->jail_reval( "sub{return("
+                      . HANDLER->substitute( $self->conf->{$type}->{$name} )
+                      . ")}" );
                 if ($sub) {
                     $self->{"_$type"}->{$name} = $sub;
                 }

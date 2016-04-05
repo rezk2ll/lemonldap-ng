@@ -80,7 +80,6 @@ has app => (
 
 sub _get {
     my ( $self, $path, %args ) = @_;
-    print STDERR Data::Dumper::Dumper( \%args );
     return $self->app->(
         {
             'HTTP_ACCEPT' => $args{accept}

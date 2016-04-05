@@ -6,7 +6,7 @@ require 't/test-lib.pm';
 
 my $res;
 
-init( { logLevel => 'debug' } );
+init( { logLevel => 'debug', useSafeJail => 1 } );
 
 ok( $res = &client->_get('/'), 'Unauth JSON request' );
 ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
@@ -40,9 +40,18 @@ ok(
     ),
     'Auth ajax request with good url'
 );
-count(1);
-print STDERR Dumper($res);
+ok( $res->[0] == 302, 'Get redirection' ) or explain( $res, 302 );
+my %hdrs = @{ $res->[1] };
+ok(
+    $hdrs{Location} eq 'http://test1.example.com/',
+    'Location is http://test1.example.com/'
+) or explain( \%hdrs, 'Location => "http://test1.example.com/"' );
+ok( $hdrs{'Lm-Remote-User'} eq 'dwho', 'User is set' )
+  or explain( \%hdrs, 'Lm-Remote-User => "dwho"' );
+count(4);
 
-#clean_sessions();
+#print STDERR Dumper($res);
+
+clean_sessions();
 
 done_testing( count() );

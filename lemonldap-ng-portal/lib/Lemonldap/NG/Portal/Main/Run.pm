@@ -227,10 +227,10 @@ sub getPersistentSession {
 
     my $ps = Lemonldap::NG::Common::Session->new(
         {
-            storageModule        => $self->{persistentStorage},
-            storageModuleOptions => $self->{persistentStorageOptions},
-            cacheModule          => $self->{localSessionStorage},
-            cacheModuleOptions   => $self->{localSessionStorageOptions},
+            storageModule        => $self->conf->{persistentStorage},
+            storageModuleOptions => $self->conf->{persistentStorageOptions},
+            cacheModule          => $self->conf->{localSessionStorage},
+            cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
             id                   => $pid,
             force                => 1,
             kind                 => "Persistent",

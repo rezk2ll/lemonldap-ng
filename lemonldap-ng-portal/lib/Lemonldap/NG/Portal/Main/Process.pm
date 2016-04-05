@@ -143,6 +143,9 @@ sub authenticate {
 sub setSessionInfo {
     my ( $self, $req ) = @_;
 
+    # Set _user
+    $req->{sessionInfo}->{_user} = $req->{user};
+
     # Get the current user module
     $req->{sessionInfo}->{_auth}   = $self->getModule( $req, "auth" );
     $req->{sessionInfo}->{_userDB} = $self->getModule( $req, "user" );
