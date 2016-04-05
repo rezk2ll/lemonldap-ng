@@ -17,9 +17,6 @@ has error => ( is => 'rw' );
 
 our $VERSION = '2.0.0';
 
-*datas = *Lemonldap::NG::Handler::Main::SharedVariables::datas;
-*tsv   = *Lemonldap::NG::Handler::Main::SharedVariables::tsv;
-
 ## @imethod protected build_jail()
 # Build and return the security jail used to compile rules and headers.
 # @return Safe object
@@ -72,9 +69,9 @@ sub build_jail {
               &unparsed_uri &args &method &header_in   )
         ]
     );
-    $self->jail->share_from( __PACKAGE__,
-        [ @t, '&tsv', '&datas', '&encrypt' ] );
+    $self->jail->share_from( __PACKAGE__, [ @t, '&encrypt' ] );
     $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
+    $self->jail->share_from( 'Lemonldap::NG::Handler::Main::SharedVariables', [ '$_v' ] );
 
     return $self->jail;
 }
