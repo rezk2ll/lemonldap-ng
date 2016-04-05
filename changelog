@@ -14,7 +14,6 @@ lemonldap-ng (1.9.1) stable; urgency=low
     * [LEMONLDAP-978] - CPAN Tests fails for Lemonldap-NG-Common
     * [LEMONLDAP-980] - Error "password must be changed" when user not found in AD
     * [LEMONLDAP-984] - Allow to set replica for MongoDB configuration backend
-    * [LEMONLDAP-985] - authForce is not well called trough AuthMulti
     * [LEMONLDAP-973] - Activate maintenance mode if reval() fails
     * [LEMONLDAP-185] - Check configuration uploaded by lmConfigEditor
 
