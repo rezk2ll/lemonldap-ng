@@ -51,8 +51,8 @@ sub _run {
 
     return sub {
         my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
-        my $res = $self->_authAndTrace($req);
-        if ( $res->[0] == 200 ) {
+        my $res = $self->_authAndTrace( $req, 1 );
+        if ( $res->[0] < 300 ) {
             $self->routes( $self->authRoutes );
             $req->userData( $self->api->datas );
         }

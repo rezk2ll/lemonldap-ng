@@ -80,6 +80,7 @@ has app => (
 
 sub _get {
     my ( $self, $path, %args ) = @_;
+    print STDERR Data::Dumper::Dumper( \%args );
     return $self->app->(
         {
             'HTTP_ACCEPT' => $args{accept}
@@ -89,7 +90,7 @@ sub _get {
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'PATH_INFO'            => $path,
-            ( $args{cookie} ? ( 'COOKIE' => $args{cookie} ) : () ),
+            ( $args{cookie} ? ( 'HTTP_COOKIE' => $args{cookie} ) : () ),
             'REQUEST_METHOD' => 'GET',
             'REQUEST_URI'    => $path
               . ( $args{query} ? "?$args{query}" : '' ),

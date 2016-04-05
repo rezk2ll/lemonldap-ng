@@ -173,7 +173,7 @@ sub autoRedirect {
         ];
     }
     else {
-        return $self->sendHtml( $req->template || 'menu' );
+        return $self->sendHtml( $req, $req->template || 'menu' );
     }
 }
 

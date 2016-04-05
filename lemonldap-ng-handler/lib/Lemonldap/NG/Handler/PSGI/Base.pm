@@ -93,15 +93,20 @@ sub status {
 # Launch $self->api::run() and then handler() if
 # response is 200.
 sub _authAndTrace {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $noCall ) = @_;
     my $res = $self->api->run( $req, $self->{rule} );
     $self->portal( $self->api->tsv->{portal}->() );
     $req->userData( $self->api->datas ) if ( $self->api->datas );
 
     if ( $res < 300 ) {
-        $self->lmLog( 'User authenticated, calling handler()', 'debug' );
-        $res = $self->handler($req);
-        push @{ $res->[1] }, @{ $req->{respHeaders} };
+        if ($noCall) {
+            return [ $res, $req->{respHeaders}, [] ];
+        }
+        else {
+            $self->lmLog( 'User authenticated, calling handler()', 'debug' );
+            $res = $self->handler($req);
+            push @{ $res->[1] }, @{ $req->{respHeaders} };
+        }
         return $res;
     }
     else {

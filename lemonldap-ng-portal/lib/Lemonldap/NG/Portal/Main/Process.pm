@@ -99,6 +99,26 @@ sub controlUrl {
     PE_OK;
 }
 
+# Check value to detect XSS attack
+# @param name Parameter name
+# @param value Parameter value
+# @return 1 if attack detected, 0 else
+sub checkXSSAttack {
+    my ( $self, $name, $value ) = @_;
+
+    # Empty values are not bad
+    return 0 unless $value;
+
+    # Test value
+    if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ ) {
+        $self->lmLog( "XSS attack detected (param: $name | value: $value)",
+            "warn" );
+        return $self->conf->{checkXSS};
+    }
+
+    return 0;
+}
+
 # Second block: auth process (call auth or userDB object)
 # -------------------------------------------------------
 
@@ -261,7 +281,7 @@ sub store {
         }
         $self->lmLog( "Store $displayValue in session key $k", 'debug' );
         $self->_dump($displayValue) if ref($displayValue);
-        $infos->{$k} = $self->{sessionInfo}->{$k};
+        $infos->{$k} = $req->{sessionInfo}->{$k};
     }
     $session->update($infos);
 
