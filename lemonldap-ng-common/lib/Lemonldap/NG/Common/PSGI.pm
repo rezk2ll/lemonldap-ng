@@ -99,7 +99,7 @@ sub userError {
 sub sendJSONresponse {
     my ( $self, $req, $j, %args ) = @_;
     $args{code} ||= 200;
-    $args{headers} ||= [];
+    $args{headers} ||= $req->respHeaders || [];
     my $type = 'application/json; charset=utf-8';
     if ( ref $j ) {
         eval { $j = $_json->encode($j); };
@@ -117,7 +117,11 @@ sub sendError {
     return (
           $req->accept =~ /json/
         ? $self->sendJSONresponse( $req, { error => $err }, code => $code )
-        : [ $code, [ 'Content-Type' => 'text/plain' ], ["Error: $err"] ]
+        : [
+            $code,
+            [ 'Content-Type' => 'text/plain', @{ $req->respHeaders || [] } ],
+            ["Error: $err"]
+        ]
     );
 }
 

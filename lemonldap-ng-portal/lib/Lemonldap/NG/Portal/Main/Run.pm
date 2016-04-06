@@ -110,11 +110,8 @@ sub do {
             ];
         }
         else {
-            return $self->sendJSONresponse(
-                $req,
-                { result => 1, message => 'Authenticated' },
-                headers => $req->respHeaders
-            );
+            return $self->sendJSONresponse( $req,
+                { result => 1, message => 'Authenticated' } );
         }
     }
     else {
