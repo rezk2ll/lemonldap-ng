@@ -60,11 +60,17 @@ has forAuthUser => (
 sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
+    $self->localConfig(
+        {
+            %{ Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
+                  ->getLocalConf('portal')
+            },
+            %$args
+        }
+    );
     Lemonldap::NG::Handler::Main::Reload->onReload( $self, 'reloadConf' );
     return 0 unless ( $self->SUPER::init($args) );
     return 0 if ( $self->error );
-    $self->localConfig(
-        { %{ HANDLER->confAcc->getLocalConf('portal') }, %$args } );
 
     # Handle requests (other path may be declared in enabled plugins)
     $self
