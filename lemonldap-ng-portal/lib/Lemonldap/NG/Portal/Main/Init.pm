@@ -87,13 +87,8 @@ sub init {
 sub reloadConf {
     my ( $self, $conf ) = @_;
 
-    # Delete keys that will be generated
-    foreach my $key (
-        qw(persistentStorage samlStorage casStorage captchaStorage oidcStorage)
-      )
-    {
-        delete $self->conf->{$key};
-    }
+    # Reinitialize $self->conf
+    %{ $self->{conf} } = %{ $self->localConfig };
 
     # Reinitialize arrays
     foreach (
@@ -105,9 +100,12 @@ sub reloadConf {
 
     # Load conf in portal object
     foreach my $key ( keys %$conf ) {
-        $self->conf->{$key} =
-          $self->localConfig->{$key} // $conf->{$key};
+        $self->{conf}->{$key} ||= $conf->{$key};
     }
+
+    # Initialize templateDir
+    $self->{templateDir} =
+      $self->conf->{templateDir} . '/' . $self->conf->{portalSkin};
 
     # Initialize session DBs
     unless ( $self->conf->{globalStorage} ) {
@@ -120,7 +118,8 @@ sub reloadConf {
     # Initialize persistent session DB
     unless ( $self->conf->{persistentStorage} ) {
         $self->conf->{persistentStorage} = $self->conf->{globalStorage};
-        $self->conf->{persistentStorageOptions} = $self->conf->{globalStorageOptions};
+        $self->conf->{persistentStorageOptions} =
+          $self->conf->{globalStorageOptions};
     }
 
     # Initialize cookie domain

@@ -50,6 +50,21 @@ ok( $hdrs{'Lm-Remote-User'} eq 'dwho', 'User is set' )
   or explain( \%hdrs, 'Lm-Remote-User => "dwho"' );
 count(4);
 
+#ok(
+#    $res = &client->_get(
+#        '/',
+#        query  => 'url=aHR0cHM6Ly90LmV4YW1wbGUuY29tLw==',
+#        cookie => "lemonldap=$id",
+#        accept => 'text/html'
+#    ),
+#    'Auth request with bad url'
+#);
+#ok( $res->[0] == 200, 'Get redirection' ) or explain( $res, 200 );
+#my %hdrs = @{ $res->[1] };
+#ok( $hdrs{'Lm-Remote-User'} eq 'dwho', 'User is set' )
+#  or explain( \%hdrs, 'Lm-Remote-User => "dwho"' );
+#count(3);
+
 #print STDERR Dumper($res);
 
 clean_sessions();

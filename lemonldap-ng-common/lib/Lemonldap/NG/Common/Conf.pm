@@ -169,6 +169,18 @@ sub getConf {
         unless ( ref( $self->{refLocalStorage} ) ) {
             $msg .= "Get remote configuration (localStorage unavailable).\n";
             $r = $self->getDBConf($args);
+            unless ( $args->{raw} ) {
+
+                # Adapt some values before storing in local cache
+                # Get default values
+                my $defaultValues =
+                  Lemonldap::NG::Common::Conf::DefaultValues->defaultValues();
+
+                foreach my $k ( keys %$defaultValues ) {
+                    $r->{$k} //= $defaultValues->{$k};
+                }
+            }
+
         }
         else {
             eval { $r = $self->{refLocalStorage}->get('conf') }
@@ -186,20 +198,6 @@ sub getConf {
             else {
                 $r = $self->getDBConf($args);
                 return undef unless ( $r->{cfgNum} );
-
-                # TODO: default values may not be set here
-                unless ( $args->{raw} ) {
-
-                    # Adapt some values before storing in local cache
-                    # Get default values
-                    my $defaultValues =
-                      Lemonldap::NG::Common::Conf::DefaultValues
-                      ->defaultValues();
-
-                    foreach my $k ( keys %$defaultValues ) {
-                        $r->{$k} //= $defaultValues->{$k};
-                    }
-                }
 
                 # Convert old option useXForwardedForIP into trustedProxies
                 if ( defined $r->{useXForwardedForIP}
