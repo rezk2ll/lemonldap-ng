@@ -13,9 +13,11 @@ package Lemonldap::NG::Manager;
 use 5.10.0;
 use utf8;
 use Mouse;
-our $VERSION = '2.0.0';
+use JSON;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
+
+our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Manager::Lib', 'Lemonldap::NG::Handler::PSGI::Router';
 
@@ -103,6 +105,15 @@ sub init {
       }
       if ( defined $Lemonldap::NG::Handler::PSGI::API::tsv->{portal} );
     1;
+}
+
+sub tplParams {
+    my $self = shift;
+    return {
+        LINKS     => $self->links     ? to_json( $self->links )     : '""',
+        MENULINKS => $self->menuLinks ? to_json( $self->menuLinks ) : '""',
+        VERSION   => $VERSION,
+    };
 }
 
 1;

@@ -158,7 +158,8 @@ sub handler { _mustBeDefined(@_) }
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
-    $args{headers} ||= [];
+    $args{code} ||= 200;
+    $args{headers} ||= $req->respHeaders || [];
     my $htpl;
     $template = $self->templateDir . "/$template.tpl";
     return $self->sendError( $req, "Unable to read $template", 500 )
@@ -183,27 +184,17 @@ sub sendHtml {
             STATIC_PREFIX       => $sp,
             AVAILABLE_LANGUAGES => $self->languages,
             PORTAL              => $self->portal,
-            LINKS => $self->links ? to_json( $self->links ) : '""',
-            MENULINKS => $self->menuLinks ? to_json( $self->menuLinks ) : '""',
-            VERSION => $VERSION,
+            ( $self->can('tplParams') ? %{ $self->tplParams } : () ),
         );
     };
     if ($@) {
         return $self->sendError( $req, "Unable to load template: $@", 500 );
     }
-    $self->lmLog(
-        'For more performance, store the result of this as static file',
-        'debug' );
 
     # Set headers
     my $hdrs = [ 'Content-Type' => 'text/html', @{ $args{headers} } ];
-    unless ( $self->logLevel eq 'debug' ) {
-        push @$hdrs,
-          ETag            => "LMNG-manager-$VERSION",
-          'Cache-Control' => 'private, max-age=2592000';
-    }
     $self->lmLog( "Sending $template", 'debug' );
-    return [ 200, $hdrs, [ $htpl->output() ] ];
+    return [ $args{code}, $hdrs, [ $htpl->output() ] ];
 }
 
 ###############
