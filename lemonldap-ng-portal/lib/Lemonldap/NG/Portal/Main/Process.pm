@@ -1,13 +1,12 @@
 package Lemonldap::NG::Portal::Main::Process;
 
+our $VERSION = '2.0.0';
+
+package Lemonldap::NG::Portal::Main;
+
 use strict;
-use Mouse;
-use Lemonldap::NG::Portal::Main::Constants;
-use Lemonldap::NG::Portal::Main::Request;
 use MIME::Base64;
 use POSIX qw(strftime);
-
-our $VERSION = '2.0.0';
 
 # Main method
 # -----------

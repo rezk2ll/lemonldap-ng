@@ -9,14 +9,11 @@
 #
 package Lemonldap::NG::Portal::Main::Run;
 
-use strict;
-use Mouse;
-use Lemonldap::NG::Portal::Main::Constants;
-use Lemonldap::NG::Portal::Main::Request;
-
-extends 'Lemonldap::NG::Portal::Main::Process';
-
 our $VERSION = '2.0.0';
+
+package Lemonldap::NG::Portal::Main;
+
+use strict;
 
 # List constants
 sub authProcess { qw(extractFormInfo getUser authenticate) }
@@ -116,11 +113,7 @@ sub do {
     }
     else {
         if ($err) {
-            return $self->sendHtml(
-                $req,
-                $req->template || 'login',
-                headers => $req->respHeaders
-            );
+            return $self->display($req);
         }
         else {
             return $self->autoRedirect($req);
@@ -170,7 +163,7 @@ sub autoRedirect {
         ];
     }
     else {
-        return $self->sendHtml( $req, $req->template || 'menu' );
+        return $self->display($req);
     }
 }
 

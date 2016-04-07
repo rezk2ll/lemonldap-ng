@@ -20,6 +20,7 @@ sub init {
     $ini->{logLevel}      ||= 'error';
     $ini->{cookieName}    ||= 'lemonldap';
     $ini->{templateDir}   ||= 'site/templates';
+    $ini->{staticPrefix}  ||= '/index.fcgi';
     $ini->{securedCookie} //= 0;
     $ini->{https}         //= 0;
     ok( $client = My::Cli->new(), 'Portal app' );

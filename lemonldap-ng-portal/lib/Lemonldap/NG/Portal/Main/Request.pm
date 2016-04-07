@@ -31,8 +31,35 @@ has mustRedirect => ( is => 'rw' );
 # Boolean to indicate that url isn't Base64 encoded
 has urlNotBase64 => ( is => 'rw' );
 
+# Info to display at login
+has info => ( is => 'rw' );
+
+# Menu error
+has menuError => ( is => 'rw' );
+
+# Notification
+has notification => ( is => 'rw' );
+
+has _authChoice   => ( is => 'rw' );
+has _openidPortal => ( is => 'rw' );
+
 sub wantJSON {
     return $_[0]->accept =~ m#(?:application|text)/json# ? 1 : 0;
 }
 
+# Error type
+sub error_type {
+
+    #TODO
+}
+
+sub errorString {
+
+    #TODO
+}
+
+sub loginInfo {
+}
+
+# TODO: oldpassword
 1;

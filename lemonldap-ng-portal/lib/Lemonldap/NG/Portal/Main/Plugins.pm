@@ -2,10 +2,11 @@
 # into "plugins" list in lemonldap-ng.ini, section "portal"
 package Lemonldap::NG::Portal::Main::Plugins;
 
-use strict;
-use Mouse;
-
 our $VERSION = '2.0.0';
+
+package Lemonldap::NG::Portal::Main;
+
+use strict;
 
 ##@method list enabledPlugins
 #

@@ -1,0 +1,431 @@
+## @file
+# Display functions for LemonLDAP::NG Portal
+package Lemonldap::NG::Portal::Main::Display;
+
+our $VERSION = '2.0.0';
+
+package Lemonldap::NG::Portal::Main;
+use strict;
+
+# Call portal process and set template parameters
+# @return template name and template parameters
+sub display {
+    my ( $self, $req ) = @_;
+
+    my $skin_dir = $self->conf->{templatesDir};
+    my ( $skinfile, %templateParams );
+
+    # 0. Display error page
+    if ( my $http_error = $req->param('lmError') ) {
+
+        $skinfile = 'error';
+
+        # Check URL
+        $self->_sub('controlUrlOrigin');
+
+        # Load session content
+        $self->_sub('controlExistingSession');
+
+        %templateParams = (
+            PORTAL_URL => $self->conf->{portal},
+            LOGOUT_URL => $self->conf->{portal} . "?logout=1",
+            URL        => $req->{urldc},
+        );
+
+        # Error code
+        foreach ( 403, 500, 503 ) {
+            $templateParams{"ERROR$_"} = ( $http_error == $_ ? 1 : 0 );
+        }
+
+    }
+
+    # 1. Good authentication
+    elsif ( $req->error eq PE_OK ) {
+
+        # 1.1 Image mode
+        if ( $req->{error} == PE_IMG_OK || $req->{error} == PE_IMG_NOK ) {
+            return staticFile( "common/"
+                  . ( $req->{error} == PE_IMG_OK ? 'ok.png' : 'warning.png' ) );
+        }
+
+        # 1.2 Case : there is a message to display
+        elsif ( my $info = $req->info() ) {
+            $skinfile       = 'info';
+            %templateParams = (
+                AUTH_ERROR_TYPE => $req->error_type,
+                MSG             => $info,
+                URL             => $req->{urldc},
+                HIDDEN_INPUTS   => $self->buildHiddenForm(),
+                ACTIVE_TIMER    => $self->conf->{activeTimer},
+                FORM_METHOD     => $self->conf->{infoFormMethod},
+            );
+        }
+
+        # 1.3 Redirection
+        elsif ( $req->{error} == PE_REDIRECT ) {
+            $skinfile       = "redirect";
+            %templateParams = (
+                URL           => $req->{urldc},
+                HIDDEN_INPUTS => $self->buildHiddenForm(),
+                FORM_METHOD   => $self->conf->{redirectFormMethod},
+            );
+        }
+
+        # 1.4 Case : display menu
+        else {
+
+            # Initialize menu elements
+            $self->menuInit;
+
+            $skinfile = 'menu';
+            my $auth_user =
+              $req->{sessionInfo}->{ $self->conf->{portalUserAttr} };
+
+            #utf8::decode($auth_user);
+
+            %templateParams = (
+                AUTH_USER           => $auth_user,
+                NEWWINDOW           => $self->conf->{portalOpenLinkInNewWindow},
+                AUTH_ERROR          => $req->errorString( $req->{menuError} ),
+                AUTH_ERROR_TYPE     => $req->error_type( $req->{menuError} ),
+                DISPLAY_TAB         => $self->conf->{menuDisplayTab},
+                LOGOUT_URL          => $self->conf->{portal} . "?logout=1",
+                REQUIRE_OLDPASSWORD => $self->conf->{portalRequireOldPassword},
+                HIDE_OLDPASSWORD =>
+                  0,    # Do not hide old password if it is required
+                DISPLAY_MODULES => $self->conf->{menuDisplayModules},
+                APPSLIST_MENU   => $self->conf->{menuAppslistMenu}
+                ,       # For old templates
+                APPSLIST_DESC => $self->conf->{menuAppslistDesc}
+                ,       # For old templates
+                APPSLIST_ORDER => $req->{sessionInfo}->{'appsListOrder'},
+                PING           => $self->conf->{portalPingInterval},
+            );
+
+        }
+    }
+
+    # 2. Authentication not complete
+
+ # 2.1 A notification has to be done (session is created but hidden and unusable
+ #     until the user has accept the message)
+    elsif ( my $notif = $req->notification ) {
+        $skinfile       = 'notification';
+        %templateParams = (
+            AUTH_ERROR_TYPE => $req->error_type,
+            NOTIFICATION    => $notif,
+            HIDDEN_INPUTS   => $self->buildHiddenForm(),
+            AUTH_URL        => $self->get_url,
+            CHOICE_PARAM    => $self->conf->{authChoiceParam},
+            CHOICE_VALUE    => $req->{_authChoice},
+        );
+    }
+
+    # 2.2 An authentication (or userDB) module needs to ask a question
+    #     before processing to the request
+    elsif ( $req->{error} == PE_CONFIRM ) {
+        $skinfile       = 'confirm';
+        %templateParams = (
+            AUTH_ERROR      => $req->error,
+            AUTH_ERROR_TYPE => $req->error_type,
+            AUTH_URL        => $self->get_url,
+            MSG             => $req->info,
+            HIDDEN_INPUTS   => $self->buildHiddenForm(),
+            ACTIVE_TIMER    => $self->conf->{activeTimer},
+            FORM_METHOD     => $self->conf->{confirmFormMethod},
+            CHOICE_PARAM    => $self->conf->{authChoiceParam},
+            CHOICE_VALUE    => $req->{_authChoice},
+            CHECK_LOGINS    => $self->conf->{portalCheckLogins}
+              && $self->conf->{login},
+            ASK_LOGINS => $self->conf->{checkLogins},
+            CONFIRMKEY => $self->stamp(),
+            LIST       => $req->datas->{list} || [],
+            REMEMBER   => $self->conf->{confirmRemember},
+        );
+    }
+
+    # 2.3 There is a message to disp->conf->conflay
+    elsif ( my $info = $req->info ) {
+        $skinfile       = 'info';
+        %templateParams = (
+            AUTH_ERROR      => $self->error,
+            AUTH_ERROR_TYPE => $req->error_type,
+            MSG             => $info,
+            URL             => $req->{urldc},
+            HIDDEN_INPUTS   => $self->buildHiddenForm(),
+            ACTIVE_TIMER    => $self->conf->{activeTimer},
+            FORM_METHOD     => $self->conf->{infoFormMethod},
+            CHOICE_PARAM    => $self->conf->{authChoiceParam},
+            CHOICE_VALUE    => $req->{_authChoice},
+        );
+    }
+
+    # 2.4 OpenID menu page
+    elsif ($req->{error} == PE_OPENID_EMPTY
+        or $req->{error} == PE_OPENID_BADID )
+    {
+        $skinfile = 'openid';
+        my $p = $self->{portal} . $self->{issuerDBOpenIDPath};
+        $p =~ s#(?<!:)/\^?/#/#g;
+        %templateParams = (
+            AUTH_ERROR      => $self->error,
+            AUTH_ERROR_TYPE => $req->error_type,
+            PROVIDERURI     => $p,
+            ID              => $self->{_openidPortal}
+              . $req->{sessionInfo}
+              ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} },
+            PORTAL_URL => $self->conf->{portal},
+            MSG        => $req->info(),
+        );
+    }
+
+    # 2.5 Authentication has been refused OR this is the first access
+    else {
+        $skinfile       = 'login';
+        %templateParams = (
+            AUTH_ERROR            => $req->error,
+            AUTH_ERROR_TYPE       => $req->error_type,
+            AUTH_URL              => $self->get_url,
+            LOGIN                 => $self->user($req),
+            CHECK_LOGINS          => $self->conf->{portalCheckLogins},
+            ASK_LOGINS            => $self->conf->{checkLogins},
+            DISPLAY_RESETPASSWORD => $self->conf->{portalDisplayResetPassword},
+            DISPLAY_REGISTER      => $self->conf->{portalDisplayRegister},
+            MAIL_URL              => $self->conf->{mailUrl},
+            REGISTER_URL          => $self->conf->{registerUrl},
+            HIDDEN_INPUTS         => $self->buildHiddenForm(),
+            LOGIN_INFO            => $req->loginInfo(),
+        );
+
+        # Display captcha if it's enabled
+        if ( $self->{captcha_login_enabled} ) {
+            %templateParams = (
+                %templateParams,
+                CAPTCHA_IMG  => $req->{captcha_img},
+                CAPTCHA_CODE => $req->{captcha_code},
+                CAPTCHA_SIZE => $req->{captcha_size}
+            );
+        }
+
+        # Show password form if password policy error
+        if (
+
+               $req->{error} == PE_PP_CHANGE_AFTER_RESET
+            or $req->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
+            or $req->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
+            or $req->{error} == PE_PP_PASSWORD_TOO_SHORT
+            or $req->{error} == PE_PP_PASSWORD_TOO_YOUNG
+            or $req->{error} == PE_PP_PASSWORD_IN_HISTORY
+            or $req->{error} == PE_PASSWORD_MISMATCH
+            or $req->{error} == PE_BADOLDPASSWORD
+            or $req->{error} == PE_PASSWORDFORMEMPTY
+          )
+        {
+            %templateParams = (
+                %templateParams,
+                REQUIRE_OLDPASSWORD =>
+                  1,    # Old password is required to check user credentials
+                DISPLAY_FORM          => 0,
+                DISPLAY_OPENID_FORM   => 0,
+                DISPLAY_YUBIKEY_FORM  => 0,
+                DISPLAY_PASSWORD      => 1,
+                DISPLAY_RESETPASSWORD => 0,
+                AUTH_LOOP             => [],
+                CHOICE_PARAM          => $self->conf->{authChoiceParam},
+                CHOICE_VALUE          => $req->{_authChoice},
+                OLDPASSWORD =>
+                  $self->checkXSSAttack( 'oldpassword', $req->{oldpassword} )
+                ? ""
+                : $self->{oldpassword},
+                HIDE_OLDPASSWORD => $self->conf->{hideOldPassword},
+            );
+        }
+
+        # Disable all forms on:
+        # * Logout message
+        # * Bad URL error
+        elsif ($req->{error} == PE_LOGOUT_OK
+            or $req->{error} == PE_BADURL )
+        {
+            %templateParams = (
+                %templateParams,
+                DISPLAY_RESETPASSWORD => 0,
+                DISPLAY_FORM          => 0,
+                DISPLAY_OPENID_FORM   => 0,
+                DISPLAY_YUBIKEY_FORM  => 0,
+                AUTH_LOOP             => [],
+                PORTAL_URL            => $self->conf->{portal},
+                MSG                   => $req->info(),
+            );
+
+        }
+
+        # Display authentifcation form
+        else {
+
+            # Authentication loop
+            if ( $self->{authLoop} ) {
+                %templateParams = (
+                    %templateParams,
+                    AUTH_LOOP            => $self->conf->{authLoop},
+                    CHOICE_PARAM         => $self->conf->{authChoiceParam},
+                    CHOICE_VALUE         => $req->{_authChoice},
+                    DISPLAY_FORM         => 0,
+                    DISPLAY_OPENID_FORM  => 0,
+                    DISPLAY_YUBIKEY_FORM => 0,
+                );
+            }
+
+            # Choose what form to display if not in a loop
+            else {
+
+                my $displayType = $self->_authentication->getDisplayType();
+
+                $self->lmLog( "Display type $displayType ", 'debug' );
+
+                %templateParams = (
+                    %templateParams,
+                    DISPLAY_FORM => $displayType eq "standardform" ? 1 : 0,
+                    DISPLAY_OPENID_FORM => $displayType eq "openidform" ? 1 : 0,
+                    DISPLAY_YUBIKEY_FORM => $displayType eq "yubikeyform" ? 1
+                    : 0,
+                    DISPLAY_LOGO_FORM => $displayType eq "logo" ? 1 : 0,
+                    module => $displayType eq "logo" ? $self->get_module('auth')
+                    : "",
+                    AUTH_LOOP => [],
+                    PORTAL_URL =>
+                      ( $displayType eq "logo" ? $self->conf->{portal} : 0 ),
+                    MSG => $req->info(),
+                );
+
+            }
+
+        }
+
+    }
+
+    ## Common template params
+    my $skin       = $self->getSkin($req);
+    my $portalPath = $self->conf->{portal};
+    $portalPath =~ s#^https?://[^/]+/?#/#;
+    $portalPath =~ s#[^/]+\.pl$##;
+    %templateParams = (
+        %templateParams,
+        SKIN_PATH => $portalPath . "skins",
+        SKIN      => $skin,
+        ANTIFRAME => $self->conf->{portalAntiFrame},
+        SKIN_BG   => $self->conf->{portalSkinBackground},
+    );
+
+    ## Custom template params
+    if ( my $customParams = $self->getCustomTemplateParameters() ) {
+        %templateParams = ( %templateParams, %$customParams );
+    }
+
+    return $self->sendHtml( $req, "$skinfile", params => \%templateParams );
+
+}
+
+##@method public void printImage(string file, string type)
+# Print image to STDOUT
+# @param $file The path to the file to print
+# @param $type The content-type to use (ie: image/png)
+# @return void
+sub staticFile {
+    my ( $self, $file, $type ) = @_;
+    require Plack::Util;
+    require Cwd;
+    require HTTP::Date;
+    open my $fh, '<:raw', $self->conf->{templatesDir} . "/$file"
+      or return $self->sendError( $!, 403 );
+    my @stat = stat $file;
+    Plack::Util::set_io_path( $fh, Cwd::realpath($file) );
+    return [
+        200,
+        [
+            'Content-Type'   => $type,
+            'Content-Length' => $stat[7],
+            'Last-Modified'  => HTTP::Date::time2str( $stat[9] )
+        ],
+        $fh,
+    ];
+}
+
+sub buildHiddenForm {
+    my ($self) = @_;
+    my @keys   = keys %{ $self->conf->{portalHiddenFormValues} };
+    my $val    = '';
+
+    foreach (@keys) {
+
+        # Check XSS attacks
+        next
+          if $self->checkXSSAttack( $_,
+            $self->conf->{portalHiddenFormValues}->{$_} );
+
+        # Build hidden input HTML code
+        $val .= qq{<input type="hidden" name="$_" id="$_" value="}
+          . $self->conf->{portalHiddenFormValues}->{$_} . '" />';
+    }
+
+    return $val;
+}
+
+# Return skin name
+# @return skin name
+sub getSkin {
+    my ( $self, $req ) = @_;
+
+    my $skin = $self->conf->{portalSkin};
+
+    # Fill sessionInfo to eval rule if empty (unauthenticated user)
+    $req->{sessionInfo}->{_url}   ||= $req->{urldc};
+    $req->{sessionInfo}->{ipAddr} ||= $req->remote_ip;
+
+    # Load specific skin from skinRules
+    if ( $self->conf->{portalSkinRules} ) {
+        foreach my $skinRule ( sort keys %{ $self->conf->{portalSkinRules} } ) {
+            if ( HANDLER->tsv->{jail}->reval($skinRule) ) {
+                $skin = $self->conf->{portalSkinRules}->{$skinRule};
+                $self->lmLog( "Skin $skin selected from skin rule", 'debug' );
+            }
+        }
+    }
+
+    # Check skin GET/POST parameter
+    my $skinParam = $req->param('skin');
+    if ( defined $skinParam && !$self->checkXSSAttack( 'skin', $skinParam ) ) {
+        $skin = $skinParam;
+        $self->lmLog( "Skin $skin selected from GET/POST parameter", 'debug' );
+    }
+
+    return $skin;
+}
+
+# Find custom templates parameters
+# @return Custom parameters
+sub getCustomTemplateParameters {
+    my ($self)          = @_;
+    my $conf            = $self->conf;
+    my $customTplParams = {};
+
+    foreach ( keys %$conf ) {
+        next unless ( $_ =~ /^tpl_(.+)$/ );
+        my $tplParam = $1;
+        my $tplValue = $conf->{$_};
+        $self->lmLog( "Set custom template parameter $tplParam with $tplValue",
+            'debug' );
+
+        $customTplParams->{$tplParam} = $tplValue;
+    }
+
+    return $customTplParams;
+}
+
+sub menuInit {
+}
+
+sub get_url {
+}
+
+1;

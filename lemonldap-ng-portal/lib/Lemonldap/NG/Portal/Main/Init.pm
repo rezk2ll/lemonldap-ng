@@ -8,17 +8,13 @@
 #                  of lemonldap-ng.ini) and underlying handler configuration
 package Lemonldap::NG::Portal::Main::Init;
 
-use strict;
-use Mouse;
-use Lemonldap::NG::Common::Conf::Constants;
-use Lemonldap::NG::Portal::Main::Constants;
-use Lemonldap::NG::Portal::Main::Plugins;
-use Regexp::Assemble;
-
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Handler::PSGI::Try',
-  'Lemonldap::NG::Portal::Main::Plugins';
+package Lemonldap::NG::Portal::Main;
+
+use strict;
+use Mouse;
+use Regexp::Assemble;
 
 # Configuration storage
 has localConfig => ( is => 'rw', default => sub { {} } );
