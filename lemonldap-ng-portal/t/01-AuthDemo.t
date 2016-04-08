@@ -8,15 +8,20 @@ my $res;
 
 init( { logLevel => 'debug', useSafeJail => 1 } );
 
+# Test normal first access
+# ------------------------
 ok( $res = &client->_get('/'), 'Unauth JSON request' );
 ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
 count(2);
 
+# Test "first access" with good url
 ok( $res = &client->_get('/?url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw=='),
     'Unauth ajax request with good url' );
 ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
 count(2);
 
+# Try yo authenticate
+# -------------------
 ok(
     $res = &client->_post(
         '/', '',
@@ -25,12 +30,13 @@ ok(
     ),
     'Auth query'
 );
-
 my $cookies = getCookies($res);
 my $id;
 ok( $id = $cookies->{lemonldap}, 'Get cookie' );
 count(2);
 
+# Try to get a redirection for an auth user with a valid url
+# ----------------------------------------------------------
 ok(
     $res = &client->_get(
         '/',
@@ -50,6 +56,9 @@ ok( $hdrs{'Lm-Remote-User'} eq 'dwho', 'User is set' )
   or explain( \%hdrs, 'Lm-Remote-User => "dwho"' );
 count(4);
 
+# Try to get a redirection for an auth user with a bad url (host undeclared
+# in manager)
+# -------------------------------------------------------------------------
 ok(
     $res = &client->_get(
         '/',
