@@ -44,6 +44,7 @@ sub display {
 
         # 1.1 Image mode
         if ( $req->{error} == PE_IMG_OK || $req->{error} == PE_IMG_NOK ) {
+            $self->lmLog( 'Request for file', 'debug' );
             return staticFile( "common/"
                   . ( $req->{error} == PE_IMG_OK ? 'ok.png' : 'warning.png' ) );
         }
@@ -181,12 +182,14 @@ sub display {
 
     # 2.5 Authentication has been refused OR this is the first access
     else {
-        $skinfile       = 'login';
+        $skinfile = 'login';
+        my $login = $self->userId($req);
+        $login = '' if ( $login eq 'anonymous' );
         %templateParams = (
             AUTH_ERROR            => $req->error,
             AUTH_ERROR_TYPE       => $req->error_type,
             AUTH_URL              => $self->get_url,
-            LOGIN                 => $self->user($req),
+            LOGIN                 => $login,
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
             ASK_LOGINS            => $self->conf->{checkLogins},
             DISPLAY_RESETPASSWORD => $self->conf->{portalDisplayResetPassword},
@@ -322,6 +325,7 @@ sub display {
         %templateParams = ( %templateParams, %$customParams );
     }
 
+    $self->lmLog( "Skin returned: $skinfile", 'debug' );
     return $self->sendHtml( $req, "$skinfile", params => \%templateParams );
 
 }

@@ -1,7 +1,7 @@
 <div class="form">
   <div class="form-group input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> </span>
-    <input name="user" type="text" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="login" required />
+    <input name="user" type="text" class="form-control" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="login" required />
   </div>
 
   <div class="form-group input-group">
