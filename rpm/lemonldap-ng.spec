@@ -91,6 +91,7 @@ BuildRequires:  perl(HTML::Template)
 BuildRequires:  perl(JSON)
 BuildRequires:  perl(Config::IniFiles)
 BuildRequires:  perl(Convert::PEM)
+BuildRequires:  perl(Crypt::OpenSSL::Bignum)
 BuildRequires:  perl(Crypt::OpenSSL::RSA)
 BuildRequires:  perl(Crypt::OpenSSL::X509)
 BuildRequires:  perl(Class::Inspector)
@@ -104,7 +105,7 @@ BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Env)
 BuildRequires:  systemd
 %else
-BuildRequires:  perl-Regexp-Assemble, perl-Regexp-Common, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Net-CIDR-Lite, perl-Unicode-String, perl-Mouse, perl-Digest-SHA, perl-ExtUtims-MakeMaker, perl-Env, systemd
+BuildRequires:  perl-Regexp-Assemble, perl-Regexp-Common, perl-Authen-Captcha, perl-Cache-Cache, perl-Apache-Session, perl-LDAP, perl-CGI-Session, perl-IO-String, perl-MIME-Lite, perl-SOAP-Lite, perl-XML-Simple, perl-XML-LibXSLT, perl-String-Random, perl-Email-Date-Format, perl-Crypt-Rijndael, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-Bignum, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone, perl-Net-CIDR-Lite, perl-Unicode-String, perl-Mouse, perl-Digest-SHA, perl-ExtUtims-MakeMaker, perl-Env, systemd
 %endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}

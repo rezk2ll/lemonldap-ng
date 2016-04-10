@@ -202,10 +202,8 @@ sub getConf {
                 }
 
             # Some parameters expect key name (example), not variable ($example)
-                foreach (qw/whatToTrace/) {
-                    if ( defined $r->{$_} ) {
-                        $r->{$_} =~ s/^\$//;
-                    }
+                if ( defined $r->{whatToTrace} ) {
+                    $r->{whatToTrace} =~ s/^\$//;
                 }
 
                 # Store modified configuration in cache
