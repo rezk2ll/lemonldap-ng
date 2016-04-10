@@ -1,8 +1,8 @@
     <!-- Custom HTML footer -->
     <p>
-      <lang en="Service provided by" fr="Ce service est fourni par" />
+      <span trspan="serviceProvidedBy">Service provided by</span>
       <a href="http://lemonldap-ng.org" target="_blank">LemonLDAP::NG</a>,
-      <lang en="free software covered by the GPL license" fr="logiciel libre prot&eacute;g&eacute; par la licence GPL" />.
+      <span trspan="gplSoft">free software covered by the GPL license</span>.
     </p>
     <a href="http://lemonldap-ng.org" target="_blank"><img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/llng-logo-32.png" alt="LemonLDAP::NG logo" /></a>
 

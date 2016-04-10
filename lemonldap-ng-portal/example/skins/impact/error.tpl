@@ -4,32 +4,32 @@
     <div id="content-all">
       <div class="title">
         <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/logo-warn.png" />
-        <lang en="Warning" fr="Attention" />
+        <span trspan="warning">Warning</span>
       </div>
       <p></p>
       <div id="content-all-info">
         <TMPL_IF ERROR403>
-          <h3><lang en="You have no access authorization for this application" fr="Vous n'avez pas les droits d'acc&egrave;s &agrave; cette application" /></h3>
+          <h3><span trspan="accessDenied">You have no access authorization for this application</span></h3>
         </TMPL_IF>
         <TMPL_IF ERROR500>
-          <h3><lang en="Error occurs on the server" fr="Une erreur est survenue sur le serveur" /></h3>
+          <h3><span trspan="serverError">Error occurs on the server</span></h3>
         </TMPL_IF>
         <TMPL_IF ERROR503>
-          <h3><lang en="This application is in maintenance, please try to connect later" fr="Cette application est en maintenance, merci de r&eacute;essayer plus tard" /></h3>
+          <h3><span trspan="maintenanceMode">This application is in maintenance, please try to connect later</span></h3>
         </TMPL_IF>
         <TMPL_IF URL>
           <h3>
-            <lang en="You were redirect from " fr="Vous avez &eacute;t&eacute; redirig&eacute; depuis " />
+            <span trspan="redirectedFrom">You were redirect from </span>
             <a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="URL"></a>
           </h3>
         </TMPL_IF>
       </div>
       <div class="panel-buttons">
         <button type="button" class="positive" tabindex="1" onclick="location.href='<TMPL_VAR NAME="PORTAL_URL">';return false;">
-          <lang en="Go to portal" fr="Aller au portail" />
+          <span trspan="goToPortal">Go to portal</span>
         </button>
         <button type="button" class="negative" tabindex="2" onclick="location.href='<TMPL_VAR NAME="LOGOUT_URL">';return false;">
-          <lang en="Logout" fr="Se d&eacute;connecter" />
+          <span trspan="logout">Logout</span>
         </button>
       </div>
     </div>

@@ -4,10 +4,10 @@
     <div id="content-all">
       <div class="title">
         <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/logo-ok.png" />
-        <lang en="You have some new messages" fr="Vous avez de nouveaux messages"/>
+        <span trspan="gotNewMessages">You have some new messages</span>
       </div>
       <hr class="solid" />
-      <p class="text-error"><lang en="New message(s)" fr="Nouveaux messages"/></p>
+      <p class="text-error"><span trspan="newMessages">New message(s)</span></p>
       <form action="#" method="post" class="login">
       <TMPL_VAR NAME="HIDDEN_INPUTS">
       <TMPL_IF NAME="CHOICE_VALUE">
@@ -21,7 +21,7 @@
       </div>
       <div class="buttons">
         <button type="submit" class="positive">
-          <lang en="Accept" fr="Accepter" />
+          <span trspan="accept">Accept</span>
         </button>
       </div>
       </form>

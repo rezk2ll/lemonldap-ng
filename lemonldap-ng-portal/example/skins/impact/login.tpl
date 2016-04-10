@@ -19,7 +19,7 @@
 
     <div id="content-right">
 
-      <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
+      <h1 trspan="openSSOSession">Open your SSO session</h1>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
       <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
@@ -76,7 +76,7 @@
         <p>
         <label for="checkLogins">
             <input type="checkbox" id="checkLogins" name="checkLogins" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF>/>
-            <lang en="Check my last logins" fr="Voir mes derni&egrave;res connexions"/>
+            <span trspan="checkLastLogins">Check my last logins</span>
         </label>
         </p>
         </TMPL_IF>
@@ -84,10 +84,10 @@
         <hr class="solid" />
         <div class="panel-buttons">
           <button type="reset" class="negative" tabindex="4">
-            <lang en="Cancel" fr="Annuler" />
+            <span trspan="cancel">Cancel</span>
           </button>
           <button type="submit" class="positive" tabindex="3">
-            <lang en="Connect" fr="Se connecter" />
+            <span trspan="connect">Connect</span>
           </button>
         </div>
 
@@ -119,7 +119,7 @@
     </div>
 
     <div id="content-right">
-      <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
+      <h1 trspan="openSSOSession">Open your SSO session</h1>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
       <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
@@ -149,7 +149,7 @@
     </div>
 
     <div id="content-right">
-      <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
+      <h1 trspan="openSSOSession">Open your SSO session</h1>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
       <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
@@ -179,7 +179,7 @@
     </div>
 
     <div id="content-right">
-      <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
+      <h1 trspan="openSSOSession">Open your SSO session</h1>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
       <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
@@ -209,7 +209,7 @@
     </div>
 
     <div id="content-right">
-      <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
+      <h1 trspan="openSSOSession">Open your SSO session</h1>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
       <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
@@ -230,7 +230,7 @@
                 <tr><td colspan="2"><div class="buttons">
                 <label for="checkLogins">
                     <input type="checkbox" id="checkLogins" name="checkLogins" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF>/>
-                    <lang en="Check my last logins" fr="Voir mes derni&egrave;res connexions"/>
+                    <span trspan="checkLastLogins:">Check my last logins</span>
                 </label>
                 </div></td></tr>
                 </TMPL_IF>
@@ -239,11 +239,11 @@
                 <div class="buttons">
                 <button type="reset" class="negative" tabindex="4">
                         <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
-                        <lang en="Cancel" fr="Annuler" />
+                        <span trspan="cancel">Cancel</span>
                 </button>
                 <button type="submit" class="positive" tabindex="3">
                         <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
-                        <lang en="Connect" fr="Se connecter" />
+                        <span trspan="connect">Connect</span>
                 </button>
                 </div></td></tr>
 
@@ -258,7 +258,7 @@
       <div id="content-all">
       <div class="title">
         <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/logo-info.png" />
-        <lang en="Password change" fr="Changement de mot de passe" />
+        <span trspan="pwdChange">Password change</span>
       </div>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
@@ -273,7 +273,7 @@
     <div id="content-all">
       <div class="title">
         <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/logo-info.png" />
-        <lang en="SSO session inactive" fr="Session SSO inactive" />
+        <span trspan="SSOSessionInactive">SSO session inactive</span>
       </div>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
@@ -285,7 +285,7 @@
       </div>
       </TMPL_IF>
       <p>
-        <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive"><lang en="Go to portal" fr="Aller au portail" /></a>
+        <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive"><span trspan="goToPortal">Go to portal</span></a>
       </p>
     </div>
     </TMPL_IF>
@@ -294,14 +294,14 @@
     <div id="content-all">
       <div class="title">
         <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/logo-info.png" />
-        <lang en="Close your SSO session" fr="Fermer votre Session SSO" />
+        <span trspan="closeSSO">Close your SSO session</span>
       </div>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
       <p class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></p>
       </TMPL_IF>
       <p>
-        <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative"><lang en="Logout" fr="Se d&eacute;connecter"/></a>
+        <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative"><span trspan="logout">Logout</span></a>
       </p>
     </div>
     </TMPL_IF>
