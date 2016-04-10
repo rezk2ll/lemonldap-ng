@@ -37,7 +37,7 @@
 
         <TMPL_IF NAME="LIST">
 
-        <h3><span trspan="selectIdP">Select your Identity Provider</span></h3>
+        <h3 trspan="selectIdP">Select your Identity Provider</h3>
         <input type="hidden" id="idp" name="idp"/>
         <table style="margin: 0px auto">
         <TMPL_LOOP NAME="LIST">

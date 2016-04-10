@@ -11,12 +11,12 @@
       <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
     </TMPL_IF>
 
-    <h3><lang en="Change your password" fr="Changez votre mot de passe" /></h3>
+    <h3 trspan="changePwd">Change your password</h3>
 
     <table>
 
       <TMPL_IF NAME="LOGIN">
-        <tr><th><lang en="Login" fr="Identifiant"/></th>
+        <tr><th><span trspan="login">Login</span></th>
         <td><input name="user" type="hidden" value="<TMPL_VAR NAME=LOGIN>" tabindex="1" /><TMPL_VAR NAME=LOGIN></td></tr>
       </TMPL_IF>
 
@@ -25,7 +25,7 @@
         <TMPL_IF NAME="HIDE_OLDPASSWORD">
           <input name="oldpassword" type="hidden" value="<TMPL_VAR NAME=OLDPASSWORD>">
         <TMPL_ELSE>
-          <tr><th><lang en="Current password" fr="Mot de passe actuel" /></th>
+          <tr><th><span trspan="currentPwd">Current password</span></th>
             <td><input name="oldpassword" type="password" tabindex="2" value="<TMPL_VAR NAME=OLDPASSWORD>"/></td>
           </tr>
         </TMPL_IF>
@@ -33,21 +33,21 @@
       </TMPL_IF>
 
       <tr>
-        <th><lang en="New password" fr="Nouveau mot de passe" /></th>
+        <th><span trspan="newPassword">New password</span></th>
         <td><input name="newpassword" type="password" tabindex="3" /></td>
       </tr><tr>
-        <th><lang en="Confirm password" fr="Confirmez le mot de passe" /></th>
+        <th><span trspan="confimrPwd">Confirm password</span></th>
         <td><input name="confirmpassword" type="password" tabindex="4" /></td>
       </tr><tr>
         <td colspan="2">
           <div class="buttons">
             <button type="reset" class="negative" tabindex="6">
               <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
-              <lang en="Cancel" fr="Annuler" />
+              <span trspan="cancel">Cancel</span>
             </button>
             <button type="submit" class="positive" tabindex="5">
               <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
-              <lang en="Submit" fr="Soumettre" />
+              <span trspan="submit">Submit</span>
             </button>
           </div>
         </td>

@@ -7,7 +7,7 @@
         <TMPL_IF NAME="AUTH_URL">
 	<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
         </TMPL_IF>
-        <h3><span trspan="changePwd">Change your password</span></h3>
+        <h3 trspan="changePwd">Change your password</h3>
         <table>
         <TMPL_IF NAME="LOGIN">
         <tr><th><span trspan="login">Login</span></th>

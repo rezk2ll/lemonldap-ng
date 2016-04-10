@@ -9,7 +9,7 @@
   <div class="loginlogo"></div>
 
   <TMPL_IF NAME="ID">
-    <h3><lang en="Your identity is" fr="Votre identit&eacute; est&nbsp;"/>:</h3>
+    <h3><span trspan="yourIdentityIs">Your identity is</span>:</h3>
     <p><TMPL_VAR NAME="ID"></p>
   </TMPL_IF>
 
@@ -19,7 +19,7 @@
       <div class="buttons">
         <a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive">
           <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
-          <lang en="Go to portal" fr="Aller au portail" />
+          <span trspan="goToPortal">Go to portal</span>
         </a>
       </div>
     </div>

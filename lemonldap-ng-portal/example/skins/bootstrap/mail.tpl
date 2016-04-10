@@ -98,7 +98,7 @@
           <input type="hidden" id="mail_token" name="mail_token" value="<TMPL_VAR NAME="MAIL_TOKEN">" />
         </TMPL_IF>
 
-        <h3><span trspan="changePwd">Change your password</span></h3>
+        <h3 trspan="changePwd">Change your password</h3>
 
         <div class="form-group input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>

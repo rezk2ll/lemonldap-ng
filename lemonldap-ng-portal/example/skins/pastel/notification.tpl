@@ -3,7 +3,7 @@
 <div id="notifcontent">
   
   <div class="message <TMPL_VAR NAME="AUTH_ERROR_TYPE">"><ul><li>
-    <lang en="You have some new messages" fr="Vous avez de nouveaux messages"/>
+    <span trspan="gotNewMessages">You have some new messages</span>
   </li></ul></div>
 
   <div class="loginlogo"></div>
@@ -16,14 +16,14 @@
     <TMPL_IF NAME="AUTH_URL">
       <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
     </TMPL_IF>
-    <h3><lang en="New message(s)" fr="Nouveaux messages"/>&nbsp;:</h3>
+    <h3><span trspan="newMessages">New message(s)</span>&nbsp;:</h3>
     <table>
       <tr><td>
         <TMPL_VAR NAME="NOTIFICATION">
         <div class="buttons">
           <button type="submit" class="positive">
             <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
-            <lang en="Accept" fr="Accepter" />
+            <span trspan="accept">Accept</span>
           </button>
         </div>
       </td></tr>

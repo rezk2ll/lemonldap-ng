@@ -8,7 +8,7 @@
 
   <div id="menu">
 
-    <div class="user"><lang en="Connected as" fr="Connect&eacute; en tant que" /> <TMPL_VAR NAME="AUTH_USER"></div>
+    <div class="user"><span trspan="connectedAs">Connected as</span> <TMPL_VAR NAME="AUTH_USER"></div>
 
     <TMPL_IF DISPLAY_MODULES>
     <!-- Tabs list -->
@@ -18,25 +18,25 @@
           <TMPL_IF NAME="Appslist">
             <li><a href="#appslist"><span>
               <img src="<TMPL_VAR NAME="SKIN_PATH">/common/application_cascade.png" width="16" height="16" alt="appslist" />
-              <lang en="Your applications" fr="Vos applications" />
+              <span trspan="yourApps">Your applications</span>
             </span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="ChangePassword">
             <li><a href="#password"><span>
               <img src="<TMPL_VAR NAME="SKIN_PATH">/common/vcard_edit.png" width="16" height="16" alt="password" />
-              <lang en="Password" fr="Mot de passe" />
+              <span trspan="password">Password</span>
             </span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="LoginHistory">
             <li><a href="#loginHistory"><span>
               <img src="<TMPL_VAR NAME="SKIN_PATH">/common/calendar.png" width="16" height="16" alt="login history" />
-              <lang en="Login history" fr="Historique des connexions" />
+              <span trspan="loginHistory">Login history</span>
             </span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="Logout">
             <li><a href="#logout"><span>
               <img src="<TMPL_VAR NAME="SKIN_PATH">/common/door_out.png" width="16" height="16" alt="logout" />
-              <lang en="Logout" fr="D&eacute;connexion" />
+              <span trspan="logout">Logout</span>
             </span></a></li>
           </TMPL_IF>
         </TMPL_LOOP>
@@ -165,11 +165,11 @@
         <div id="loginHistory">
           <div class="form">
             <TMPL_IF NAME="SUCCESS_LOGIN">
-              <h3><lang en="Last logins" fr="Derni&egrave;res connexions" /></h3>
+              <h3 trspan="lastLogins">Last logins</h3>
               <TMPL_VAR NAME="SUCCESS_LOGIN">
             </TMPL_IF>
             <TMPL_IF NAME="FAILED_LOGIN">
-              <h3><lang en="Last failed logins" fr="Derni&egrave;res connexions refus&eacute;es" /></h3>
+              <h3 trspan="lastFailedLogins">Last failed logins</h3>
               <TMPL_VAR NAME="FAILED_LOGIN">
             </TMPL_IF>
           </div>
@@ -178,10 +178,10 @@
 
       <TMPL_IF NAME="Logout">
         <div id="logout">
-          <h3><lang en="Are you sure ?" fr="&Ecirc;tes vous s&ucirc;r ?" /></h3>
+          <h3 trspan="areYouSure">Are you sure ?</h3>
           <div class="buttons">
             <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="positive">
-              <span><img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="ok"/> <lang en="I'm sure" fr="Je suis s&ucirc;r" /></span>
+              <span><img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="ok"/> <span trspan="imSure">I'm sure</span></span>
             </a>
           </div>
         </div>

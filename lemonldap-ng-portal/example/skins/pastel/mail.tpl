@@ -17,11 +17,11 @@
         <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
       </TMPL_IF>
 
-      <h3><lang en="Forgot your password?" fr="Mot de passe oubli&eacute; ?"/></h3>
+      <h3 trspan="forgotPwd">Forgot your password?</h3>
 
       <table>
         <tr>
-          <th><lang en="Mail" fr="Adresse mail"/></th>
+          <th><span trspan="mail">Mail</span></th>
           <td><input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">"/></td>
         </tr>
 
@@ -29,7 +29,7 @@
           <tr><td></td><td>
             <img src="<TMPL_VAR NAME=CAPTCHA_IMG>" />
           </td></tr>
-          <tr><th><lang en="Captcha" fr="Captcha" /></th>
+          <tr><th><span trspan="captcha">Captcha</span></th>
             <td><input type="text" name="captcha_user_code" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" />
             <input type="hidden" name="captcha_code" value="<TMPL_VAR NAME=CAPTCHA_CODE>" /></td>
           </tr>
@@ -39,7 +39,7 @@
           <div class="buttons">
             <button type="submit" class="positive">
               <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
-              <lang en="Send me a new password" fr="Envoyez-moi un nouveau mot de passe" />
+              <span trspan="sendPwd">Send me a new password</span>
             </button>
           </div>
         </td></tr>
@@ -59,23 +59,23 @@
         <input type="hidden" value="<TMPL_VAR NAME="MAIL">" name="mail">
       </TMPL_IF>
 
-      <h3><lang en="Resend confirmation mail?" fr="Renvoyer le mail de confirmation ?"/></h3>
+      <h3 trspan="resendConfirmMail">Resend confirmation mail?</h3>
 
       <p>
-        <lang en="A password reset request was already issued on " fr="Une demande de r&eacute;initialisation de mot de passe a d&eacute;j&agrave; &eacute;t&eacute; faite le " />
+        <span trspan="registerRequestAlreadyIssued">A password reset request was already issued on </span>
         <TMPL_VAR NAME="STARTMAILDATE">.
-        <lang en="Do you want the confirmation mail to be resent?" fr="Voulez-vous que le message de confirmation soit renvoy&eacute; ?" />
+        <span trspan="resentConfirm">Do you want the confirmation mail to be resent?</span>
       </p>
 
       <table>
         <tr><th><input id="resendconfirmation" type="checkbox" name="resendconfirmation"></th>
-          <td><lang en="Yes, resend the mail" fr="Oui, renvoyer le mail"/></td>
+          <td><span trspan="yesResendMail">Yes, resend the mail</span></td>
         </tr>
         <tr><td colspan="2">
           <div class="buttons">
             <button type="submit" class="positive">
               <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
-              <lang en="Submit" fr="Valider" />
+              <span trspan="submit">Submit</span>
             </button>
           </div>
         </td></tr>
@@ -94,25 +94,25 @@
         <TMPL_IF NAME="MAIL_TOKEN">
           <input type="hidden" id="mail_token" name="mail_token" value="<TMPL_VAR NAME="MAIL_TOKEN">" />
         </TMPL_IF>
-        <h3><lang en="Change your password" fr="Changez votre mot de passe" /></h3>
+        <h3 trspan="changePwd">Change your password</h3>
         <table>
-          <tr><th><lang en="New password" fr="Nouveau mot de passe" /></th>
+          <tr><th><span trspan="newPassword">New password</span></th>
             <td><input name="newpassword" type="password" tabindex="3" /></td></tr>
-          <tr><th><lang en="Confirm password" fr="Confirmez le mot de passe" /></th>
+          <tr><th><span trspan="confirmPwd">Confirm password</span></th>
             <td><input name="confirmpassword" type="password" tabindex="4" /></td></tr>
           <tr><td colspan="2">
             <input id="reset" type="checkbox" name="reset" />
-            <lang en="Generate the password automatically" fr="G&eacute;n&eacute;rer le mot de passe automatiquement" />
+            <span trspan="generatePwd">Generate the password automatically</span>
           </td></tr>
           <tr><td colspan="2">
             <div class="buttons">
               <button type="reset" class="negative" tabindex="6">
                 <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
-                <lang en="Cancel" fr="Annuler" />
+                <span trspan="cancel">Cancel</span>
               </button>
               <button type="submit" class="positive" tabindex="5">
                 <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
-                <lang en="Submit" fr="Soumettre" />
+                <span trspan="submit">Submit</span>
               </button>
             </div>
           </td></tr>
@@ -124,10 +124,10 @@
   <TMPL_IF NAME="DISPLAY_CONFIRMMAILSENT">
     <form action="#" method="post" class="login">
       <h3>
-        <lang en="A message has been sent to your mail address." fr="Un message a &eacute;t&eacute; envoy&eacute; &agrave; votre adresse mail." />
+        <span trspan="mailSent2">A message has been sent to your mail address.</span>
       </h3>
       <p>
-        <lang en="This message contains a link to reset your password, this link is valid until " fr="Ce message contient un lien pour r&eacute;initialiser votre mot de passe, ce lien est valide jusqu'au " />
+        <span trspan="linkValidUntil">This message contains a link to reset your password, this link is valid until </span>
         <TMPL_VAR NAME="EXPMAILDATE">.
       </p>
     </form>
@@ -136,14 +136,14 @@
   <TMPL_IF NAME="DISPLAY_MAILSENT">
     <form action="#" method="post" class="login">
       <h3>
-        <lang en="Your new password has been sent to your mail address." fr="Votre nouveau mot de passe a &eacute;t&eacute; envoy&eacute; &agrave; votre adresse mail." />
+        <span trspan="newPwdSentTo">Your new password has been sent to your mail address.</span>
       </h3>
     </form>
   </TMPL_IF>
 
   <div class="link">
     <a href="<TMPL_VAR NAME="PORTAL_URL">?skin=<TMPL_VAR NAME="SKIN">">
-      <lang en="Go back to portal" fr="Retourner au portail" />
+      <span trspan="back2Portal">Go back to portal</span>
     </a>
   </div>
 

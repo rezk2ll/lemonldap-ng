@@ -2,7 +2,7 @@
 
 <div id="logincontent">
 
-  <div class="message warning"><ul><li><lang en="Information" fr="Information"/></li></ul></div>
+  <div class="message warning"><ul><li><span trspan="info">Information</span></li></ul></div>
 
   <div class="loginlogo"></div>
 
@@ -12,16 +12,16 @@
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
     </TMPL_IF>
     <TMPL_VAR NAME="MSG">
-    <p id="timer"><lang en="You'll be redirected in 10 seconds" fr="Vous allez &ecirc;tre redirig&eacute;(e) automatiquement dans 10 secondes"/></p>
+    <p id="timer"><span trspan="redirectedIn">You'll be redirected in 10 seconds</span></p>
     <table><tbody><tr><td>
       <div class="buttons">
         <button type="submit" class="positive">
           <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
-          <lang en="Continue" fr="Continuer" />
+          <span trspan="continue">Continue</span>
         </button>
         <button type="reset" class="negative" onclick="stop();">
           <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
-          <lang en="Wait" fr="Attendre" />
+          <span trspan="wait">Wait</span>
         </button>
       </div>
     </td></tr></tbody></table>

@@ -2,7 +2,7 @@
 
 <div id="logincontent">
 
-  <div class="message warning"><ul><li><lang en="Confirmation" fr="Confirmation"/></li></ul></div>
+  <div class="message warning"><ul><li><span trspan="confirmation">Confirmation</span></li></ul></div>
 
   <div class="loginlogo"></div>
 
@@ -23,7 +23,7 @@
 
     <TMPL_IF NAME="LIST">
 
-      <h3><lang en="Select your Identity Provider" fr="Choisissez votre fournisseur d'identit&eacute;"/></h3>
+      <h3 trspan="selectIdP">Select your Identity Provider</h3>
       <input type="hidden" id="idp" name="idp"/>
       <table>
       <TMPL_LOOP NAME="LIST">
@@ -35,12 +35,12 @@
 
       </TMPL_LOOP>
         <tr>
-          <td><input type="checkbox" id="remember" name="cookie_type" value="1"><label for="remember"><lang en="Remember my choice" fr="Se souvenir de mon choix"/></label>
+          <td><input type="checkbox" id="remember" name="cookie_type" value="1"><label for="remember"><span trspan="rememberChoice">Remember my choice</span></label>
 
     <TMPL_ELSE>
 
       <TMPL_IF NAME="ACTIVE_TIMER">
-        <p id="timer"><lang en="Automatically accept in 5 seconds" fr="Acceptation automatique dans 5 secondes"/></p>
+        <p id="timer"><span trspan="autoAccept">Automatically accept in 5 seconds</span></p>
         <!-- //if:jsminified
           <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.min.js"></script>
         //else -->
@@ -52,11 +52,11 @@
       <div class="buttons">
         <button type="submit" class="positive">
           <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
-          <lang en="Accept" fr="Accepter" />
+          <span trspan="accept">Accept</span>
         </button>
         <button type="submit" class="negative" onclick="$('#confirm').attr('value','-<TMPL_VAR NAME="CONFIRMKEY">');">
           <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
-          <lang en="Refuse" fr="Refuser" />
+          <span trspan="refuse">Refuse</span>
         </button>
       </div>
 
@@ -66,7 +66,7 @@
     <div class="buttons">
       <input type="checkbox" id="checkLogins" name="checkLogins" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF>/>
       <label for="checkLogins">
-        <lang en="Check my last logins" fr="Voir mes derni&egrave;res connexions"/>
+        <span trspan="checkLastLogins">Check my last logins</span>
       </label>
     </div>
     </TMPL_IF>

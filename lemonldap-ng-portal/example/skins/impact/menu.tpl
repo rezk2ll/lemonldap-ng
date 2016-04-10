@@ -160,11 +160,11 @@
           <div id="loginHistory">
             <div class="form">
               <TMPL_IF NAME="SUCCESS_LOGIN">
-              <h3><span trspan="lastLogins">Last logins</span></h3>
+              <h3 trspan="lastLogins">Last logins</h3>
               <TMPL_VAR NAME="SUCCESS_LOGIN">
               </TMPL_IF>
               <TMPL_IF NAME="FAILED_LOGIN">
-              <h3><span trspan="lastFailedLogins">Last failed logins</span></h3>
+              <h3 trspan="lastFailedLogins">Last failed logins</h3>
               <TMPL_VAR NAME="FAILED_LOGIN">
               </TMPL_IF>
             </div>

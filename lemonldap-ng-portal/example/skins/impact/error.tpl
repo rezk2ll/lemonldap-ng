@@ -9,13 +9,13 @@
       <p></p>
       <div id="content-all-info">
         <TMPL_IF ERROR403>
-          <h3><span trspan="accessDenied">You have no access authorization for this application</span></h3>
+          <h3 trspan="accessDenied">You have no access authorization for this application</h3>
         </TMPL_IF>
         <TMPL_IF ERROR500>
-          <h3><span trspan="serverError">Error occurs on the server</span></h3>
+          <h3 trspan="serverError">Error occurs on the server</h3>
         </TMPL_IF>
         <TMPL_IF ERROR503>
-          <h3><span trspan="maintenanceMode">This application is in maintenance, please try to connect later</span></h3>
+          <h3 trspan="maintenanceMode">This application is in maintenance, please try to connect later</h3>
         </TMPL_IF>
         <TMPL_IF URL>
           <h3>
