@@ -170,7 +170,7 @@ sub sendHtml {
         $htpl = HTML::Template->new(
             filehandle             => IO::File->new($template),
             path                   => $self->templateDir,
-            die_on_bad_params      => 1,
+            die_on_bad_params      => 0,
             die_on_missing_include => 1,
             cache                  => 0,
         );

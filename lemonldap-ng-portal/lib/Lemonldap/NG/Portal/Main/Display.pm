@@ -40,7 +40,7 @@ sub display {
     }
 
     # 1. Good authentication
-    elsif ( $req->error eq PE_OK ) {
+    elsif ( $req->error == PE_OK ) {
 
         # 1.1 Image mode
         if ( $req->{error} == PE_IMG_OK || $req->{error} == PE_IMG_NOK ) {
@@ -91,14 +91,7 @@ sub display {
                 AUTH_ERROR_TYPE     => $req->error_type( $req->{menuError} ),
                 DISPLAY_TAB         => $self->conf->{menuDisplayTab},
                 LOGOUT_URL          => $self->conf->{portal} . "?logout=1",
-                REQUIRE_OLDPASSWORD => $self->conf->{portalRequireOldPassword},
-                HIDE_OLDPASSWORD =>
-                  0,    # Do not hide old password if it is required
-                DISPLAY_MODULES => $self->conf->{menuDisplayModules},
-                APPSLIST_MENU   => $self->conf->{menuAppslistMenu}
-                ,       # For old templates
-                APPSLIST_DESC => $self->conf->{menuAppslistDesc}
-                ,       # For old templates
+                DISPLAY_MODULES => $self->conf->{menuDisplayModules} || [],
                 APPSLIST_ORDER => $req->{sessionInfo}->{'appsListOrder'},
                 PING           => $self->conf->{portalPingInterval},
             );

@@ -31,7 +31,7 @@ BEGIN {
 sub authInit {
     my $self = shift;
     my $tmp  = $self->SUPER::authInit(@_);
-    return $tmp unless ( $tmp eq PE_OK );
+    return $tmp unless ( $tmp == PE_OK );
     unless ($initDone) {
         eval "use Web::ID";
         $self->abort( 'Unable to load Web::ID', $@ ) if ($@);
