@@ -10,7 +10,7 @@
 
   <TMPL_IF NAME="ID">
     <div class="alert alert-info">
-      <h3><lang en="Your identity is" fr="Votre identit&eacute; est&nbsp;"/>: <TMPL_VAR NAME="ID"></h3>
+      <h3><span trspan="yourIdentityIs">Your identity is</span>: <TMPL_VAR NAME="ID"></h3>
     </div>
   </TMPL_IF>
 
@@ -25,7 +25,7 @@
     <div class="buttons">
       <a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive btn btn-success">
         <span class="glyphicon glyphicon-ok"></span>
-        <lang en="Go to portal" fr="Aller au portail" />
+        <span trspan="goToPortal">Go to portal</span>
       </a>
     </div>
 

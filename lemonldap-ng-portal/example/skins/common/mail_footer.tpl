@@ -2,8 +2,8 @@
 
 <div id="footer" style="font-size:9pt;">
 <p>
-<lang en="This mail was sent automatically" fr="Ceci est un message automatique" /><br />
-<lang en="The request was issued from IP" fr="La demande provient de l'IP" />
+<span trspan="autoMail">This mail was sent automatically</span><br />
+<span trspan="requestIssuedFromIP">The request was issued from IP</span>
 $ipAddr
 </p>
 </div>

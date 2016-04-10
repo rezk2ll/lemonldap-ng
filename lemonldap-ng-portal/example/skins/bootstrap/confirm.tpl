@@ -19,9 +19,9 @@
       <div class="panel-heading">
         <h3 class="panel-title">
         <TMPL_IF NAME="LIST">
-          <lang en="Select your Identity Provider" fr="Choisissez votre fournisseur d'identit&eacute;"/>
+          <span trspan="selectIdP">Select your Identity Provider</span>
         <TMPL_ELSE>
-          <lang en="Confirmation" fr="Confirmation"/>
+          <span trspan="confirmation">Confirmation</span>
         </TMPL_IF>
         </h3>
       </div>
@@ -52,7 +52,7 @@
       <div class="checkbox">
         <label for="remember">
           <input type="checkbox" id="remember" name="cookie_type" value="1">
-          <lang en="Remember my choice" fr="Se souvenir de mon choix"/>
+          <span trspan="rememberChoice">Remember my choice</span>
         </label>
       </div>
       </TMPL_IF>
@@ -62,7 +62,7 @@
       <TMPL_IF NAME="ACTIVE_TIMER">
 
         <div class="alert alert-info">
-          <p id="timer"><lang en="Automatically accept in 5 seconds" fr="Acceptation automatique dans 5 secondes"/></p>
+          <p id="timer" trspan="autoAccept">Automatically accept in 5 seconds</p>
         </div>
 
         <!-- //if:jsminified
@@ -75,11 +75,11 @@
       <div class="buttons">
         <button type="submit" class="positive btn btn-success">
           <span class="glyphicon glyphicon-ok"></span>
-          <lang en="Accept" fr="Accepter" />
+          <span trspan="accept">Accept</span>
         </button>
         <button type="submit" class="negative btn btn-danger" onclick="$('#confirm').attr('value','-<TMPL_VAR NAME="CONFIRMKEY">');">
           <span class="glyphicon glyphicon-stop"></span>
-          <lang en="Refuse" fr="Refuser" />
+          <span trspan="refuse">Refuse</span>
         </button>
       </div>
 

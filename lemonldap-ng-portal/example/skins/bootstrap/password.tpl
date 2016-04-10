@@ -25,7 +25,7 @@
       <TMPL_ELSE>
         <div class="form-group input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
-          <input name="oldpassword" type="password" value="<TMPL_VAR NAME=OLDPASSWORD>" class="form-control" placeholder="<lang en="Current password" fr="Mot de passe actuel" />" required/>
+          <input name="oldpassword" type="password" value="<TMPL_VAR NAME=OLDPASSWORD>" class="form-control" trplaceholder="currentPwd" required/>
         </div>
       </TMPL_IF>
 
@@ -33,16 +33,16 @@
 
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
-      <input name="newpassword" type="password" class="form-control" placeholder="<lang en="New password" fr="Nouveau mot de passe" />" required />
+      <input name="newpassword" type="password" class="form-control" trplaceholder="newPassword" required />
     </div>
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
-      <input name="confirmpassword" type="password" class="form-control" placeholder="<lang en="Confirm password" fr="Confirmez le mot de passe" />" required/>
+      <input name="confirmpassword" type="password" class="form-control" trplaceholder="confirmPwd" required/>
     </div>
 
     <button type="submit" class="btn btn-success" >
       <span class="glyphicon glyphicon-ok"></span>
-      <lang en="Submit" fr="Soumettre" />
+      <span trspan="submit">Submit</span>
     </button>
   </div>
   </form>

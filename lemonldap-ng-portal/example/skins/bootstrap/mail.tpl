@@ -18,11 +18,11 @@
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
     </TMPL_IF>
 
-    <h3><lang en="Forgot your password?" fr="Mot de passe oubli&eacute; ?"/></h3>
+    <h3 trspan="forgotPwd">Forgot your password?</h3>
 
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i> </span>
-      <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" placeholder="<lang en="Mail" fr="Adresse mail"/>" required />
+      <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required />
     </div>
 
     <TMPL_IF NAME=CAPTCHA_IMG>
@@ -38,7 +38,7 @@
 
     <button type="submit" class="btn btn-success" >
       <span class="glyphicon glyphicon-send"></span>
-      <lang en="Send me a new password" fr="Envoyez-moi un nouveau mot de passe" />
+      <span trspan="sendPwd">Send me a new password</span>
     </button>
     
     </div>
@@ -58,25 +58,25 @@
         <input type="hidden" value="<TMPL_VAR NAME="MAIL">" name="mail">
       </TMPL_IF>
 
-      <h3><lang en="Resend confirmation mail?" fr="Renvoyer le mail de confirmation ?"/></h3>
+      <h3 trspan="resendConfirmMail">Resend confirmation mail?</h3>
 
       <p class="alert alert-info">
-        <lang en="A password reset request was already issued on " fr="Une demande de r&eacute;initialisation de mot de passe a d&eacute;j&agrave; &eacute;t&eacute; faite le " />
+        <span trspan="pwdResetAlreadyIssued">A password reset request was already issued on </span>
         <TMPL_VAR NAME="STARTMAILDATE">.
-        <lang en="Do you want the confirmation mail to be resent?" fr="Voulez-vous que le message de confirmation soit renvoy&eacute; ?" />
+        <span trspan="resentConfirm">Do you want the confirmation mail to be resent?</span>
       </p>
 
 
       <div class="checkbox">
         <label for="resendconfirmation">
           <input id="resendconfirmation" type="checkbox" name="resendconfirmation">
-          <lang en="Yes, resend the mail" fr="Oui, renvoyer le mail"/>
+          <span trspan="confirmPwd">Yes, resend the mail</span>
         </label>
       </div>
 
       <div class="form-group">
         <button type="submit" class="btn btn-success">
-          <lang en="Submit" fr="Valider" />
+          <span trspan="submit">Submit</span>
         </button>
       </div>
 
@@ -98,28 +98,28 @@
           <input type="hidden" id="mail_token" name="mail_token" value="<TMPL_VAR NAME="MAIL_TOKEN">" />
         </TMPL_IF>
 
-        <h3><lang en="Change your password" fr="Changez votre mot de passe" /></h3>
+        <h3><span trspan="changePwd">Change your password</span></h3>
 
         <div class="form-group input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
-          <input name="newpassword" type="password" class="form-control" placeholder="<lang en="New password" fr="Nouveau mot de passe" />" />
+          <input name="newpassword" type="password" class="form-control" trplaceholder="newPassword" />
         </div>
 
         <div class="form-group input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
-          <input name="confirmpassword" type="password" class="form-control" placeholder="<lang en="Confirm password" fr="Confirmez le mot de passe" />" />
+          <input name="confirmpassword" type="password" class="form-control" trplaceholder="confirmPwd" />
         </div>
 
         <div class="checkbox">
           <label for="reset">
             <input id="reset" type="checkbox" name="reset" />
-            <lang en="Generate the password automatically" fr="G&eacute;n&eacute;rer le mot de passe automatiquement" />
+            <span trspan="generatePwd">Generate the password automatically</span>
           </label>
         </div>
 
         <div class="form-group">
           <button type="submit" class="btn btn-success">
-            <lang en="Submit" fr="Soumettre" />
+            <span trspan="submit">Submit</span>
           </button>
         </div>
 
@@ -132,10 +132,10 @@
     <form action="#" method="post" class="login" role="form">
     <div class="form">
       <h3>
-        <lang en="A message has been sent to your mail address." fr="Un message a &eacute;t&eacute; envoy&eacute; &agrave; votre adresse mail." />
+        <span trspan="mailSent2">A message has been sent to your mail address.</span>
       </h3>
       <p class="alert alert-info">
-        <lang en="This message contains a link to reset your password, this link is valid until " fr="Ce message contient un lien pour r&eacute;initialiser votre mot de passe, ce lien est valide jusqu'au " />
+        <span trspan="linkValidUntil">This message contains a link to reset your password, this link is valid until </span>
         <TMPL_VAR NAME="EXPMAILDATE">.
       </p>
     </div>
@@ -146,7 +146,7 @@
     <form action="#" method="post" class="login" role="form">
     <div class="form">
       <h3>
-        <lang en="Your new password has been sent to your mail address." fr="Votre nouveau mot de passe a &eacute;t&eacute; envoy&eacute; &agrave; votre adresse mail." />
+        <span trspan="newPwdSentTo">Your new password has been sent to your mail address.</span>
       </h3>
     </div>
     </form>
@@ -157,7 +157,7 @@
   <div class="buttons">
     <a href="<TMPL_VAR NAME="PORTAL_URL">?skin=<TMPL_VAR NAME="SKIN">" class="btn btn-primary" role="button">
       <span class="glyphicon glyphicon-home"></span>
-      <lang en="Go back to portal" fr="Retourner au portail" />
+      <span trspan="back2Portal">Go back to portal</span>
     </a>
   </div>
 

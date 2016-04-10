@@ -12,7 +12,7 @@
     </TMPL_IF>
     <div class="panel panel-info">
       <div class="panel-heading">
-        <h3 class="panel-title"><lang en="You have some new messages" fr="Vous avez de nouveaux messages"/></h3>
+        <h3 class="panel-title" trspan="gotNewMessages">You have some new messages</h3>
       </div>
       <div class="panel-body">
         <div class="form well">
@@ -24,7 +24,7 @@
     <div class="buttons">
       <button type="submit" class="positive btn btn-success">
         <span class="glyphicon glyphicon-ok"></span>
-        <lang en="Accept" fr="Accepter" />
+        <span trspan="accept">Accept</span>
       </button>
     </div>
 

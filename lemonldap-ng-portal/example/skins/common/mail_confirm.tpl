@@ -1,11 +1,11 @@
 <TMPL_INCLUDE NAME="mail_header.tpl">
 
 <p>
-<lang en="Hello" fr="Bonjour" /> $cn,<br />
+<span trspan="hello">Hello</span> $cn,<br />
 <br />
 <span><img src="cid:arrow:skins/common/bullet_go.png" /></span>
 <a href="$url" style="text-decoration:none;color:orange;">
-<lang en="Click here to reset your password" fr="Cliquez ici pour r&eacute;initialiser votre mot de passe" />
+<span trspan="click2Reset">Click here to reset your password</span>
 </a>
 </p>
 

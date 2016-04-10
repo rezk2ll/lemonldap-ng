@@ -1,14 +1,14 @@
 <TMPL_INCLUDE NAME="mail_header.tpl">
 
 <p>
-<lang en="Hello" fr="Bonjour" /> $cn,<br />
+<span trspan="hello">Hello</span> $cn,<br />
 <br />
 <TMPL_IF NAME="RESET">
-<lang en="Your new password is" fr="Votre nouveau mot de passe est" /> 
+<span trspan="newPwdIs">Your new password is</span> 
 <span><img src="cid:key:skins/common/key.png" /></span>
 <b>$password</b>
 <TMPL_ELSE>
-<lang en="Your password was changed." fr="Votre mot de passe a &eacute;t&eacute; chang&eacute;." /> 
+<span trspan="pwdChanged">Your password was changed.</span> 
 </TMPL_IF>
 </p>
 

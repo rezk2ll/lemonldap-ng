@@ -20,17 +20,17 @@
 
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> </span>
-      <input name="firstname" type="text" value="<TMPL_VAR NAME="FIRSTNAME">" class="form-control" placeholder="<lang en="First name" fr="Pr&eacute;nom"/>" required />
+      <input name="firstname" type="text" value="<TMPL_VAR NAME="FIRSTNAME">" class="form-control" trplaceholder="firstName" required />
     </div>
 
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> </span>
-      <input name="lastname" type="text" value="<TMPL_VAR NAME="LASTNAME">" class="form-control" placeholder="<lang en="Last name" fr="Nom"/>" required />
+      <input name="lastname" type="text" value="<TMPL_VAR NAME="LASTNAME">" class="form-control" trplaceholder="lastName" required />
     </div>
 
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i> </span>
-      <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" placeholder="<lang en="Mail" fr="Adresse mail"/>" required />
+      <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required />
     </div>
 
     <TMPL_IF NAME=CAPTCHA_IMG>
@@ -46,7 +46,7 @@
 
     <button type="submit" class="btn btn-success" >
       <span class="glyphicon glyphicon-ok"></span>
-      <lang en="Submit" fr="Envoyer" />
+      <span trspan="submit">Submit</span>
     </button>
 
     </div>
@@ -72,25 +72,25 @@
         <input type="hidden" value="<TMPL_VAR NAME="MAIL">" name="mail">
       </TMPL_IF>
 
-      <h3><lang en="Resend confirmation mail?" fr="Renvoyer le mail de confirmation ?"/></h3>
+      <h3 trspan="resendConfirmMail">Resend confirmation mail?</h3>
 
       <p class="alert alert-info">
-        <lang en="A register request for this account was already issued on " fr="Une demande de cr&eacute;ation pour ce compte a d&eacute;j&agrave; &eacute;t&eacute; faite le " />
+        <span trspan="registerRequestAlreadyIssued">A register request for this account was already issued on </span>
         <TMPL_VAR NAME="STARTMAILDATE">.
-        <lang en="Do you want the confirmation mail to be resent?" fr="Voulez-vous que le message de confirmation soit renvoy&eacute; ?" />
+        <span trspan="resentConfirm">Do you want the confirmation mail to be resent?</span>
       </p>
 
 
       <div class="checkbox">
         <label for="resendconfirmation">
           <input id="resendconfirmation" type="checkbox" name="resendconfirmation">
-          <lang en="Yes, resend the mail" fr="Oui, renvoyer le mail"/>
+          <span trspan="yesResendMail">Yes, resend the mail</span>
         </label>
       </div>
 
       <div class="form-group">
         <button type="submit" class="btn btn-success">
-          <lang en="Submit" fr="Valider" />
+          <span trspan="submit">Submit</span>
         </button>
       </div>
 
@@ -101,11 +101,9 @@
   <TMPL_IF NAME="DISPLAY_CONFIRMMAILSENT">
     <form action="#" method="post" class="login" role="form">
     <div class="form">
-      <h3>
-        <lang en="A message has been sent to your mail address." fr="Un message a &eacute;t&eacute; envoy&eacute; &agrave; votre adresse mail." />
-      </h3>
+      <h3 trspan="mailSent2">A message has been sent to your mail address.</h3>
       <p class="alert alert-info">
-        <lang en="A confirmation link has been sent, this link is valid until " fr="Un lien de confirmation a &eacute;t&eacute; envoy&eacute;, ce lien est valide jusqu'au " />
+        <span trspan="confirmLinkSent">A confirmation link has been sent, this link is valid until </span>
         <TMPL_VAR NAME="EXPMAILDATE">.
       </p>
     </div>
@@ -115,9 +113,7 @@
   <TMPL_IF NAME="DISPLAY_MAILSENT">
     <form action="#" method="post" class="login" role="form">
     <div class="form">
-      <h3>
-        <lang en="Your account has been created, your temporary password has been sent to your mail address." fr="Votre compte a &eacute;t&eacute; cr&eacute;&eacute;, un mot de passe temporaire a &eacute;t&eacute; envoy&eacute; &agrave; votre adresse mail." />
-      </h3>
+      <h3 trspan="accountCreated">Your account has been created, your temporary password has been sent to your mail address.</h3>
     </div>
     </form>
   </TMPL_IF>
@@ -127,7 +123,7 @@
   <div class="buttons">
     <a href="<TMPL_VAR NAME="PORTAL_URL">?skin=<TMPL_VAR NAME="SKIN">" class="btn btn-primary" role="button">
       <span class="glyphicon glyphicon-home"></span>
-      <lang en="Go back to portal" fr="Retourner au portail" />
+      <span trspan="back2Portal">Go back to portal</span>
     </a>
   </div>
 

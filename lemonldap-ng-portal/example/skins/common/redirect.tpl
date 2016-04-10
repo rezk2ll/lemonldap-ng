@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title><lang en="Authentication portal" fr="Portail d'authentification"/></title>
+  <title trspan="authPortal">Authentication portal</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <meta http-equiv="cache-control" content="no-cache" />
@@ -33,20 +33,20 @@ form {
 <body onload="document.location.href='<TMPL_VAR NAME="URL">'">
 </TMPL_IF>
 
-  <h1><lang en="Redirection in progress..." fr="Redirection en cours..."/></h1>
+  <h1 trspan="redirectionInProgres">Redirection in progress...</h1>
   <noscript>
-    <p><lang en="It appears that your browser<br/>does not support Javascript." fr="Il semble que votre navigateur<br/>ne prend pas en charge Javascript."/></p>
+    <p>It appears that your browser<br/>does not support Javascript.</p>
   </noscript>
   <TMPL_IF NAME="HIDDEN_INPUTS">
     <form id="form" action="<TMPL_VAR NAME="URL">" method="<TMPL_VAR NAME="FORM_METHOD">" class="login">
       <TMPL_VAR NAME="HIDDEN_INPUTS">
       <noscript>
-        <input type="submit" value="<lang en="Please click here" fr="Cliquez ici"/>"/>
+        <input type="submit" value="Please click here"/>
       </noscript>
     </form>
   <TMPL_ELSE>
     <noscript>
-      <p><a href="<TMPL_VAR NAME="URL">"><lang en="Please click here" fr="Cliquez ici"/></a></p>
+      <p><a href="<TMPL_VAR NAME="URL">" trspan="clickHere">Please click here</a></p>
     </noscript>
   </TMPL_IF>
 </body>

@@ -1,12 +1,12 @@
 <div class="form">
   <div class="form-group input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i> </span>
-    <input name="user" type="text" value="<TMPL_VAR NAME="LOGIN">" class="form-control" placeholder="<lang en="Login" fr="Identifiant"/>" required />
+    <input name="user" type="text" value="<TMPL_VAR NAME="LOGIN">" trplaceholder="login" required />
   </div>
 
   <div class="form-group input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i> </span>
-    <input name="password" type="password" class="form-control" placeholder="<lang en="Password" fr="Mot de passe"/>" required />
+    <input name="password" type="password" class="form-control" trplaceholder="password" required />
   </div>
 
   <TMPL_IF NAME=CAPTCHA_IMG>
@@ -24,7 +24,7 @@
 
   <button type="submit" class="btn btn-success" >
     <span class="glyphicon glyphicon-log-in"></span>
-    <lang en="Connect" fr="Se connecter" />
+    <span trspan="connect">Connect</span>
   </button>
 </div>
 
@@ -32,14 +32,14 @@
   <TMPL_IF NAME="DISPLAY_RESETPASSWORD">
   <a class="btn btn-info" href="<TMPL_VAR NAME="MAIL_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
     <span class="glyphicon glyphicon-info-sign"></span>
-    <lang en="Reset my password" fr="R&eacute;initialiser mon mot de passe"/>
+    <span trspan="resetPwd">Reset my password</span>
   </a>
   </TMPL_IF>
 
   <TMPL_IF NAME="DISPLAY_REGISTER">
   <a class="btn btn-warning" href="<TMPL_VAR NAME="REGISTER_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
     <span class="glyphicon glyphicon-plus-sign"></span>
-    <lang en="Create an account" fr="Cr&eacute;er un compte"/>
+    <span trspan="createAccount">Create an account</span>
   </a>
   </TMPL_IF>
 </div>

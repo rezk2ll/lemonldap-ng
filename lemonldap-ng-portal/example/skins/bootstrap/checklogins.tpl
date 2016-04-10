@@ -3,7 +3,7 @@
     <div class="checkbox">
       <label for="checkLogins">
         <input type="checkbox" id="checkLogins" name="checkLogins" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF> />
-        <lang en="Check my last logins" fr="Voir mes derni&egrave;res connexions"/>
+        <span trspan="checkLastLogins">Check my last logins</span>
       </label>
     </div>
     </TMPL_IF>

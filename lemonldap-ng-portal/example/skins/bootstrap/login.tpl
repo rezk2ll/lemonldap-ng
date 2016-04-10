@@ -79,7 +79,7 @@
                 <div class="buttons">
                   <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-log-in"></span>
-                    <lang en="Connect" fr="Se connecter" />
+                    <span trspan="connect">Connect</span>
                   </button>
                 </div>
 
@@ -161,7 +161,7 @@
       <div class="buttons">
       <button type="submit" class="btn btn-success">
         <span class="glyphicon glyphicon-log-in"></span>&nbsp;
-        <lang en="Connect" fr="Se connecter" />
+        <span trspan="connect">Connect</span>
       </button>
       </div>
       </div>
@@ -188,7 +188,7 @@
       <TMPL_IF NAME="MSG"><TMPL_VAR NAME="MSG"></TMPL_IF>
         <a href="<TMPL_VAR NAME="PORTAL_URL">" class="btn btn-primary" role="button">
           <span class="glyphicon glyphicon-home"></span>&nbsp;
-          <lang en="Go to portal" fr="Aller au portail" />
+          <span trspan="goToPortal">Go to portal</span>
         </a>
       </div>
     </div>
@@ -199,7 +199,7 @@
       <div class="buttons">
         <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="btn btn-danger" role="button">
           <span class="glyphicon glyphicon-log-out"></span>&nbps;
-          <lang en="Logout" fr="Se d&eacute;connecter"/>
+          <span trspan="logout">Logout</span>
         </a>
       </div>
     </div>

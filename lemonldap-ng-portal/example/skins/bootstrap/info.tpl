@@ -9,23 +9,23 @@
     </TMPL_IF>
     <div class="panel panel-info">
       <div class="panel-heading">
-        <h3 class="panel-title"><lang en="Information" fr="Information"/></h3>
+        <h3 class="panel-title" trspan="info">Information</h3>
       </div>
       <div class="panel-body">
         <TMPL_VAR NAME="MSG">
       </div>
     </div>
     <div class="alert alert-info">
-      <p id="timer"><lang en="You'll be redirected in 10 seconds" fr="Vous allez &ecirc;tre redirig&eacute;(e) automatiquement dans 10 secondes"/></p>
+      <p id="timer" trspan="redirectedIn">You'll be redirected in 10 seconds</p>
     </div>
       <div class="buttons">
         <button type="submit" class="positive btn btn-success">
           <span class="glyphicon glyphicon-ok"></span>
-          <lang en="Continue" fr="Continuer" />
+          <span trspan="continue">Continue</span>
         </button>
         <button type="reset" class="negative btn btn-danger" onclick="stop();">
           <span class="glyphicon glyphicon-stop"></span>
-          <lang en="Wait" fr="Attendre" />
+          <span trspan="wait">Wait</span>
         </button>
       </div>
   </form>

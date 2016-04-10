@@ -1,16 +1,16 @@
 <TMPL_INCLUDE NAME="mail_header.tpl">
 
 <p>
-<lang en="Hello" fr="Bonjour" /> $firstname $lastname,<br />
+<span trspan="hello">Hello</span> $firstname $lastname,<br />
 <br />
-<lang en="Your account was successfully created." fr="Votre compte a bien &eacute;t&eacute; cr&eacute;&eacute;." />
+<span trspan="accountCreated">Your account was successfully created.</span>
 <br /> 
 <br /> 
-<lang en="Your login is" fr="Votre identifiant est" /> 
+<span trspan="yourLoginIs">Your login is</span> 
 <span><img src="cid:key:skins/common/bullet_go.png" /></span>
 <b>$login</b>
 <br /> 
-<lang en="Your password is" fr="Votre mot de passe est" /> 
+<span trspan="pwdIs">Your password is</span> 
 <span><img src="cid:key:skins/common/key.png" /></span>
 <b>$password</b>
 </p>
