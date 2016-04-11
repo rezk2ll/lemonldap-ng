@@ -113,7 +113,8 @@ sub do {
     }
     else {
         if ($err) {
-            return $self->display($req);
+            my ( $tpl, $prms ) = $self->display($req);
+            return $self->sendHtml( $req, $tpl, params => $prms );
         }
         else {
             return $self->autoRedirect($req);
@@ -163,7 +164,8 @@ sub autoRedirect {
         ];
     }
     else {
-        return $self->display($req);
+        my ( $tpl, $prms ) = $self->display($req);
+        return $self->sendHtml( $req, $tpl, params => $prms );
     }
 }
 

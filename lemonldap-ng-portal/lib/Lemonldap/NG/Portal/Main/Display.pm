@@ -319,7 +319,7 @@ sub display {
     }
 
     $self->lmLog( "Skin returned: $skinfile", 'debug' );
-    return $self->sendHtml( $req, "$skinfile", params => \%templateParams );
+    return ( $skinfile, \%templateParams);
 
 }
 
