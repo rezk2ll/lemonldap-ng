@@ -85,15 +85,15 @@ sub display {
             #utf8::decode($auth_user);
 
             %templateParams = (
-                AUTH_USER           => $auth_user,
-                NEWWINDOW           => $self->conf->{portalOpenLinkInNewWindow},
-                AUTH_ERROR          => $req->errorString( $req->{menuError} ),
-                AUTH_ERROR_TYPE     => $req->error_type( $req->{menuError} ),
-                DISPLAY_TAB         => $self->conf->{menuDisplayTab},
-                LOGOUT_URL          => $self->conf->{portal} . "?logout=1",
+                AUTH_USER       => $auth_user,
+                NEWWINDOW       => $self->conf->{portalOpenLinkInNewWindow},
+                AUTH_ERROR      => $req->errorString( $req->{menuError} ),
+                AUTH_ERROR_TYPE => $req->error_type( $req->{menuError} ),
+                DISPLAY_TAB     => $self->conf->{menuDisplayTab},
+                LOGOUT_URL      => $self->conf->{portal} . "?logout=1",
                 DISPLAY_MODULES => $self->conf->{menuDisplayModules} || [],
-                APPSLIST_ORDER => $req->{sessionInfo}->{'appsListOrder'},
-                PING           => $self->conf->{portalPingInterval},
+                APPSLIST_ORDER  => $req->{sessionInfo}->{'appsListOrder'},
+                PING            => $self->conf->{portalPingInterval},
             );
 
         }
@@ -109,7 +109,7 @@ sub display {
             AUTH_ERROR_TYPE => $req->error_type,
             NOTIFICATION    => $notif,
             HIDDEN_INPUTS   => $self->buildHiddenForm(),
-            AUTH_URL        => $self->get_url,
+            AUTH_URL        => $req->{datas}->{_url},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->{_authChoice},
         );
@@ -122,7 +122,7 @@ sub display {
         %templateParams = (
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
-            AUTH_URL        => $self->get_url,
+            AUTH_URL        => $req->{datas}->{_url},
             MSG             => $req->info,
             HIDDEN_INPUTS   => $self->buildHiddenForm(),
             ACTIVE_TIMER    => $self->conf->{activeTimer},
@@ -181,7 +181,7 @@ sub display {
         %templateParams = (
             AUTH_ERROR            => $req->error,
             AUTH_ERROR_TYPE       => $req->error_type,
-            AUTH_URL              => $self->get_url,
+            AUTH_URL              => $req->{datas}->{_url},
             LOGIN                 => $login,
             CHECK_LOGINS          => $self->conf->{portalCheckLogins},
             ASK_LOGINS            => $self->conf->{checkLogins},

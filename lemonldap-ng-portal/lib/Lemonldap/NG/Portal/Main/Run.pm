@@ -92,7 +92,7 @@ sub authenticatedRequest {
 sub do {
     my ( $self, $req, $steps ) = @_;
     $req->steps($steps);
-    my $err = $self->process($req);
+    my $err = $req->error( $self->process($req) );
 
     # TODO: updateStatus
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {

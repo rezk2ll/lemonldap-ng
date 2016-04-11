@@ -5,6 +5,7 @@ package Lemonldap::NG::Portal::Main::Request;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Portal::Main::Constants;
 
 extends 'Lemonldap::NG::Common::PSGI::Request';
 
@@ -49,6 +50,41 @@ sub wantJSON {
 
 # Error type
 sub error_type {
+    my $req = shift;
+    my $code = shift || $req->error;
+
+    # Positive errors
+    return "positive"
+      if (
+        scalar(
+            grep { /^$code$/ } (
+                PE_REDIRECT,        PE_DONE,
+                PE_OK,              PE_PASSWORD_OK,
+                PE_MAILOK,          PE_LOGOUT_OK,
+                PE_MAILFIRSTACCESS, PE_PASSWORDFIRSTACCESS,
+                PE_MAILCONFIRMOK,   PE_REGISTERFIRSTACCESS,
+            )
+        )
+      );
+
+    # Warning errors
+    return "warning"
+      if (
+        scalar(
+            grep { /^$code$/ } (
+                PE_INFO,                          PE_SESSIONEXPIRED,
+                PE_FORMEMPTY,                     PE_FIRSTACCESS,
+                PE_PP_GRACE,                      PE_PP_EXP_WARNING,
+                PE_NOTIFICATION,                  PE_BADURL,
+                PE_CONFIRM,                       PE_MAILFORMEMPTY,
+                PE_MAILCONFIRMATION_ALREADY_SENT, PE_PASSWORDFORMEMPTY,
+                PE_CAPTCHAEMPTY,                  PE_REGISTERFORMEMPTY,
+            )
+        )
+      );
+
+    # Negative errors (default)
+    return "negative";
 
     #TODO
 }
