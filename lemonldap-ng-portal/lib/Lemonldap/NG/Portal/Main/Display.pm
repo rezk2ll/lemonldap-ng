@@ -75,25 +75,16 @@ sub display {
         # 1.4 Case : display menu
         else {
 
-            # Initialize menu elements
-            $self->menuInit;
-
             $skinfile = 'menu';
-            my $auth_user =
-              $req->{sessionInfo}->{ $self->conf->{portalUserAttr} };
-
             #utf8::decode($auth_user);
 
             %templateParams = (
-                AUTH_USER       => $auth_user,
+                AUTH_USER       => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
                 NEWWINDOW       => $self->conf->{portalOpenLinkInNewWindow},
-                AUTH_ERROR      => $req->errorString( $req->{menuError} ),
-                AUTH_ERROR_TYPE => $req->error_type( $req->{menuError} ),
-                DISPLAY_TAB     => $self->conf->{menuDisplayTab},
                 LOGOUT_URL      => $self->conf->{portal} . "?logout=1",
-                DISPLAY_MODULES => $self->conf->{menuDisplayModules} || [],
                 APPSLIST_ORDER  => $req->{sessionInfo}->{'appsListOrder'},
                 PING            => $self->conf->{portalPingInterval},
+                $self->menu->params($req),
             );
 
         }
@@ -417,12 +408,6 @@ sub getCustomTemplateParameters {
     }
 
     return $customTplParams;
-}
-
-sub menuInit {
-}
-
-sub get_url {
 }
 
 1;

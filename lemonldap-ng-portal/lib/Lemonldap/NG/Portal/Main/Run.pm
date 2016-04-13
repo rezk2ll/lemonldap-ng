@@ -86,6 +86,12 @@ sub authenticatedRequest {
     return $self->do( $req, [ 'controlUrl', @{ $self->forAuthUser } ] );
 }
 
+sub postAuthenticatedRequest {
+    my ( $self, $req ) = @_;
+    return $self->do( $req,
+        [ 'restoreArgs', 'controlUrl', @{ $self->forAuthUser } ] );
+}
+
 # RUNNING METHODS
 # ---------------
 

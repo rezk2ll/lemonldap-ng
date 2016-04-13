@@ -75,6 +75,7 @@ sub init {
       ->addUnauthRoute( '*', 'login',     ['GET'] )
       ->addUnauthRoute( '*', 'postLogin', ['POST'] )
       ->addAuthRoute( '*', 'authenticatedRequest', ['GET'] )
+      ->addAuthRoute( '*', 'postAuthenticatedRequest', ['POST'] )
 
       # Core REST API
       ->addUnauthRoute( 'test', 'pleaseAuth', ['GET'] )
@@ -108,6 +109,8 @@ sub reloadConf {
     # Initialize templateDir
     $self->{templateDir} =
       $self->conf->{templateDir} . '/' . $self->conf->{portalSkin};
+
+    $self->{staticPrefix} = $self->conf->{staticPrefix} || '/';
 
     # Initialize session DBs
     unless ( $self->conf->{globalStorage} ) {
@@ -222,6 +225,8 @@ sub reloadConf {
     foreach my $plugin ( $self->enabledPlugins ) {
         $self->loadPlugin($plugin) or return 0;
     }
+
+    $self->menu = $self->loadModule('::Main::Menu');
     1;
 }
 
