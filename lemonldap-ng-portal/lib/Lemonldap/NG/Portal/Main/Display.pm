@@ -76,17 +76,18 @@ sub display {
         else {
 
             $skinfile = 'menu';
+
             #utf8::decode($auth_user);
 
             %templateParams = (
-                AUTH_USER       => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
-                NEWWINDOW       => $self->conf->{portalOpenLinkInNewWindow},
-                LOGOUT_URL      => $self->conf->{portal} . "?logout=1",
-                APPSLIST_ORDER  => $req->{sessionInfo}->{'appsListOrder'},
-                PING            => $self->conf->{portalPingInterval},
+                AUTH_USER =>
+                  $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
+                NEWWINDOW      => $self->conf->{portalOpenLinkInNewWindow},
+                LOGOUT_URL     => $self->conf->{portal} . "?logout=1",
+                APPSLIST_ORDER => $req->{sessionInfo}->{'appsListOrder'},
+                PING           => $self->conf->{portalPingInterval},
                 $self->menu->params($req),
             );
-
         }
     }
 
@@ -310,7 +311,7 @@ sub display {
     }
 
     $self->lmLog( "Skin returned: $skinfile", 'debug' );
-    return ( $skinfile, \%templateParams);
+    return ( $skinfile, \%templateParams );
 
 }
 
@@ -408,6 +409,42 @@ sub getCustomTemplateParameters {
     }
 
     return $customTplParams;
+}
+
+# Build an HTML array to display sessions
+# @param $sessions Array ref of hash ref containing sessions datas
+# @param $title Title of the array
+# @param $displayUser To display "User" column
+# @param $displaError To display "Error" column
+# @return HTML string
+sub mkSessionArray {
+    my ( $self, $sessions, $title, $displayUser, $displayError ) = @_;
+
+    return "" unless ( ref $sessions eq "ARRAY" and @$sessions );
+
+    my $tmp = $title ? "<h3>$title</h3>" : "";
+    $tmp .=
+        '<table class="info"><tbody><tr>'
+      . ( $displayUser ? '<th trspan="user">User</th>' : '' )
+      . '<th trspan="date">Date</th><th trspan="ipAddr">IP address</th>';
+    $tmp .= "<th>" . $self->conf->{sessionDataToRemember}->{$_} . "</th>"
+      foreach ( keys %{ $self->conf->{sessionDataToRemember} } );
+    $tmp .= '<th trspan="errorMsg">Error message</th>' if ($displayError);
+    $tmp .= '</tr>';
+
+    foreach my $session (@$sessions) {
+        $tmp .= "<tr>";
+        $tmp .= "<td>$session->{user}</td>" if ($displayUser);
+        $tmp .=
+"<td><script type=\"text/javascript\">var _date=new Date($session->{_utime}*1000);document.write(_date.toLocaleString());</script></td>";
+        $tmp .= "<td>$session->{ipAddr}</td>";
+        $tmp .= "<td>" . ( $session->{$_} || "" ) . "</td>"
+          foreach ( keys %{ $self->conf->{sessionDataToRemember} } );
+        $tmp .= "<td>$session->{error}</td>" if ($displayError);
+        $tmp .= "</tr>";
+    }
+    $tmp .= '</tbody></table>';
+    return $tmp;
 }
 
 1;

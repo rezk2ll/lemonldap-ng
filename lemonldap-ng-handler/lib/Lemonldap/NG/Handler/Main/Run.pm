@@ -242,10 +242,10 @@ sub checkMaintenanceMode {
 # @param $cond optional Function granting access
 # @return True if the user is granted to access to the current URL
 sub grant {
-    my ( $class, $uri, $cond ) = @_;
+    my ( $class, $uri, $cond, $vhost ) = @_;
     return &{$cond}() if ($cond);
 
-    my $vhost = $class->resolveAlias;
+    $vhost ||= $class->resolveAlias;
     for ( my $i = 0 ; $i < $class->tsv->{locationCount}->{$vhost} ; $i++ ) {
         if ( $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] ) {
             $class->lmLog(

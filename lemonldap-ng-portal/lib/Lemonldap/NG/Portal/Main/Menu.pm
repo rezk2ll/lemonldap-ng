@@ -15,8 +15,11 @@ has menuModules => (
         my %res;
         foreach (qw(Appslist ChangePassword LoginHistory Logout)) {
             my $cond = $conf->{"portalDisplay$_"} // 1;
-            $_[0]->p->lmLog( "Evaluate condition $cond for module $_", 'debug' );
-            $res{$_} = $_[0]->{p}->HANDLER->tsv->{jail}->jail_reval($cond);
+            $_[0]
+              ->p->lmLog( "Evaluate condition $cond for module $_", 'debug' );
+            my $tmp =
+              $_[0]->{p}->HANDLER->tsv->{jail}->jail_reval("sub{return $cond}");
+            $res{$_} = $tmp if ($tmp);
         }
         return \%res;
     }
@@ -42,9 +45,6 @@ sub params {
 
     # Tab to display
     # Get the tab URL parameter
-    $res{DISPLAY_TAB} =
-      scalar( grep /^(password|logout|loginHistory)$/, $req->param("tab") )
-      || "applist";
 
     # Force password tab in case of password error
     if (
@@ -73,12 +73,15 @@ sub params {
 
     # else calculate modules to display
     else {
-        $res{DISPLAY_MODULES} = $self->displayModules($req);
+        $res{DISPLAY_TAB} =
+          scalar( grep /^(password|logout|loginHistory)$/, $req->param("tab") )
+          || "applist";
     }
+    $res{DISPLAY_MODULES} = $self->displayModules($req);
     $res{AUTH_ERROR_TYPE} =
       $req->error_type( $res{AUTH_ERROR} = $req->menuError );
 
-    return \%res;
+    return %res;
 }
 
 ## @method arrayref displayModules()
@@ -100,11 +103,11 @@ sub displayModules {
             }
             elsif ( $module eq 'LoginHistory' ) {
                 $moduleHash->{'SUCCESS_LOGIN'} =
-                  $self->mkSessionArray(
+                  $self->p->mkSessionArray(
                     $req->{sessionInfo}->{loginHistory}->{successLogin},
                     "", 0, 0 );
                 $moduleHash->{'FAILED_LOGIN'} =
-                  $self->mkSessionArray(
+                  $self->p->mkSessionArray(
                     $req->{sessionInfo}->{loginHistory}->{failedLogin},
                     "", 0, 1 );
             }
@@ -172,7 +175,7 @@ sub _buildCategoryHash {
         next if $catkey =~ /(type|options|catname)/;
         if ( $cathash->{$catkey}->{type} eq "category" ) {
             push @$categories,
-              $self->_buildCategoryHash( $catkey, $cathash->{$catkey},
+              $self->_buildCategoryHash( $req, $catkey, $cathash->{$catkey},
                 $catlevel + 1 );
         }
     }
@@ -390,7 +393,7 @@ sub _filter {
     }
 
     # Filter hash
-    $self->_filterHash($filteredHash);
+    $self->_filterHash( $req, $filteredHash );
 
     # Hide empty categories
     $self->_isCategoryEmpty($filteredHash);
@@ -403,36 +406,36 @@ sub _filter {
 # @param $apphash Menu elements
 # @return filtered hash
 sub _filterHash {
-    my $self = shift;
-    my ($apphash) = @_;
-    my $key;
-    my $appkey;
+    my ( $self, $req, $apphash ) = @_;
 
-    foreach $key ( keys %$apphash ) {
+    foreach my $key ( keys %$apphash ) {
         next if $key =~ /(type|options|catname)/;
         if (    $apphash->{$key}->{type}
             and $apphash->{$key}->{type} eq "category" )
         {
 
             # Filter the category
-            $self->_filterHash( $apphash->{$key} );
+            $self->_filterHash( $req, $apphash->{$key} );
         }
         if (    $apphash->{$key}->{type}
             and $apphash->{$key}->{type} eq "application" )
         {
 
             # Find sub applications and filter them
-            foreach $appkey ( keys %{ $apphash->{$key} } ) {
+            foreach my $appkey ( keys %{ $apphash->{$key} } ) {
                 next if $appkey =~ /(type|options|catname)/;
 
                 # We have sub elements, so we filter them
-                $self->_filterHash( $apphash->{$key} );
+                $self->_filterHash( $req, $apphash->{$key} );
             }
 
             # Check rights
             my $appdisplay = $apphash->{$key}->{options}->{display}
               || "auto";
-            my $appuri = $apphash->{$key}->{options}->{uri};
+            my ( $vhost, $appuri ) =
+              $apphash->{$key}->{options}->{uri} =~ m#^https?://([^/]*)(.*)#;
+            $vhost =~ s/:\d+$//;
+            $appuri ||= '/';
 
             # Remove if display is "no" or "off"
             delete $apphash->{$key} and next if ( $appdisplay =~ /^(no|off)$/ );
@@ -441,7 +444,8 @@ sub _filterHash {
             next if ( $appdisplay =~ /^(yes|on)$/ );
 
             # Check grant function if display is "auto" (this is the default)
-            delete $apphash->{$key} unless ( $self->_grant($appuri) );
+            delete $apphash->{$key}
+              unless ( $self->p->HANDLER->grant( $appuri, undef, $vhost ) );
             next;
         }
     }

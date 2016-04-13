@@ -19,6 +19,7 @@ use Regexp::Assemble;
 # Configuration storage
 has localConfig => ( is => 'rw', default => sub { {} } );
 has conf        => ( is => 'rw', default => sub { {} } );
+has menu        => ( is => 'rw', default => sub { {} } );
 
 # Sub modules
 has _authentication => ( is => 'rw' );
@@ -74,7 +75,7 @@ sub init {
       # "/"
       ->addUnauthRoute( '*', 'login',     ['GET'] )
       ->addUnauthRoute( '*', 'postLogin', ['POST'] )
-      ->addAuthRoute( '*', 'authenticatedRequest', ['GET'] )
+      ->addAuthRoute( '*', 'authenticatedRequest',     ['GET'] )
       ->addAuthRoute( '*', 'postAuthenticatedRequest', ['POST'] )
 
       # Core REST API
@@ -226,7 +227,7 @@ sub reloadConf {
         $self->loadPlugin($plugin) or return 0;
     }
 
-    $self->menu = $self->loadModule('::Main::Menu');
+    $self->menu( $self->loadModule('::Main::Menu') );
     1;
 }
 
