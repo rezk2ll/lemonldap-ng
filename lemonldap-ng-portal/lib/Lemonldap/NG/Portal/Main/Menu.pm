@@ -8,13 +8,26 @@ use Clone 'clone';
 
 extends 'Lemonldap::NG::Portal::Main::Module';
 
-has menuModules => ( is => 'rw', builder => sub {
-    return $_[0]->{conf}->{menuModule} || 'Appslist ChangePassword LoginHistory Logout';
-});
+has menuModules => (
+    is      => 'rw',
+    builder => sub {
+        my $conf = $_[0]->{conf}->{menuModule};
+        my %res;
+        foreach (qw(Appslist ChangePassword LoginHistory Logout)) {
+            my $cond = $conf->{"portalDisplay$_"} // 1;
+            $_[0]->p->lmLog( "Evaluate condition $cond for module $_", 'debug' );
+            $res{$_} = $_[0]->{p}->HANDLER->tsv->{jail}->jail_reval($cond);
+        }
+        return \%res;
+    }
+);
 
-has imgPath => ( is => 'rw', builder => sub {
-    return $_[0]->{conf}->{impgPath} || '/static/logos';
-});
+has imgPath => (
+    is      => 'rw',
+    builder => sub {
+        return $_[0]->{conf}->{impgPath} || '/static/logos';
+    }
+);
 
 # Prepare menu template elements
 # Returns hash (=list) containing :
@@ -23,46 +36,21 @@ has imgPath => ( is => 'rw', builder => sub {
 #  - AUTH_ERROR
 #  - AUTH_ERROR_TYPE
 sub params {
-    my ($self,$req) = @_;
+    my ( $self, $req ) = @_;
     $self->{conf}->{imgPath} ||= '/static/';
-
-#TODO: Change all after here
-
-    # Modules to display
-    $self->{menuModules} ||= "Appslist ChangePassword LoginHistory Logout";
-    $self->{menuDisplayModules} = $self->displayModules();
-
-    # Extract password from POST data
-    $self->{oldpassword}     = $self->param('oldpassword');
-    $self->{newpassword}     = $self->param('newpassword');
-    $self->{confirmpassword} = $self->param('confirmpassword');
-    $self->{dn}              = $self->{sessionInfo}->{dn};
-    $self->{user}            = $self->{sessionInfo}->{_user};
-
-    # Try to change password
-    $self->{menuError} =
-      $self->_subProcess(
-        qw(passwordDBInit modifyPassword passwordDBFinish sendPasswordMail))
-      unless $self->{ignorePasswordChange};
-
-    # Default menu error code
-    $self->{menuError} = PE_PASSWORD_OK if ( $self->{passwordWasChanged} );
-    $self->{menuError} ||= $self->{error};
+    my %res;
 
     # Tab to display
     # Get the tab URL parameter
-    $self->{menuDisplayTab} = $self->param("tab") || "none";
-
-    # Default to appslist if invalid tab URL parameter
-    $self->{menuDisplayTab} = "appslist"
-      unless ( $self->{menuDisplayTab} =~ /^(password|logout|loginHistory)$/ );
+    $res{DISPLAY_TAB} =
+      scalar( grep /^(password|logout|loginHistory)$/, $req->param("tab") )
+      || "applist";
 
     # Force password tab in case of password error
-    $self->{menuDisplayTab} = "password"
-      if (
+    if (
         (
             scalar(
-                grep { $_ == $self->{menuError} } (
+                grep { $_ == $req->menuError } (
                     25,    #PE_PP_CHANGE_AFTER_RESET
                     26,    #PE_PP_PASSWORD_MOD_NOT_ALLOWED
                     27,    #PE_PP_MUST_SUPPLY_OLD_PASSWORD
@@ -78,47 +66,46 @@ sub params {
                 )
             )
         )
-      );
-
-    # Application list for old templates
-    if ( $self->{useOldMenuItems} ) {
-        $self->{menuAppslistMenu} = $self->appslistMenu();
-        $self->{menuAppslistDesc} = $self->appslistDescription();
+      )
+    {
+        $res{DISPLAY_TAB} = "password";
     }
 
-    return;
+    # else calculate modules to display
+    else {
+        $res{DISPLAY_MODULES} = $self->displayModules($req);
+    }
+    $res{AUTH_ERROR_TYPE} =
+      $req->error_type( $res{AUTH_ERROR} = $req->menuError );
+
+    return \%res;
 }
 
 ## @method arrayref displayModules()
 # List modules that can be displayed in Menu
 # @return modules list
 sub displayModules {
-    my $self           = shift;
+    my ( $self, $req ) = @_;
     my $displayModules = [];
-
-    # Modules list
-    my @modules = split( /\s/, $self->{menuModules} );
 
     # Foreach module, eval condition
     # Store module in result if condition is valid
-    foreach my $module (@modules) {
-        my $cond = $self->{ 'portalDisplay' . $module };
-        $cond = 1 unless defined $cond;
+    foreach my $module ( keys %{ $self->menuModules } ) {
+        $self->lmLog( "Check if $module has to be displayed", 'debug' );
 
-        $self->lmLog( "Evaluate condition $cond for module $module", 'debug' );
-
-        if ( $self->safe->reval($cond) ) {
+        if ( $self->menuModules->{$module}->() ) {
             my $moduleHash = { $module => 1 };
-            $moduleHash->{'APPSLIST_LOOP'} = $self->appslist()
-              if ( $module eq 'Appslist' );
-            if ( $module eq 'LoginHistory' ) {
+            if ( $module eq 'Appslist' ) {
+                $moduleHash->{'APPSLIST_LOOP'} = $self->appslist($req);
+            }
+            elsif ( $module eq 'LoginHistory' ) {
                 $moduleHash->{'SUCCESS_LOGIN'} =
                   $self->mkSessionArray(
-                    $self->{sessionInfo}->{loginHistory}->{successLogin},
+                    $req->{sessionInfo}->{loginHistory}->{successLogin},
                     "", 0, 0 );
                 $moduleHash->{'FAILED_LOGIN'} =
                   $self->mkSessionArray(
-                    $self->{sessionInfo}->{loginHistory}->{failedLogin},
+                    $req->{sessionInfo}->{loginHistory}->{failedLogin},
                     "", 0, 1 );
             }
             push @$displayModules, $moduleHash;
@@ -132,17 +119,18 @@ sub displayModules {
 # Returns categories and applications list as HTML::Template loop
 # @return categories and applications list
 sub appslist {
-    my ($self) = @_;
+    my ( $self, $req ) = @_;
     my $appslist = [];
 
-    return $appslist unless defined $self->{applicationList};
+    return $appslist unless defined $self->conf->{applicationList};
 
     # Reset level
     my $catlevel = 0;
 
-    my $applicationList = clone( $self->{applicationList} );
-    my $filteredList    = $self->_filter($applicationList);
-    push @$appslist, $self->_buildCategoryHash( "", $filteredList, $catlevel );
+    my $applicationList = clone( $self->conf->{applicationList} );
+    my $filteredList = $self->_filter( $req, $applicationList );
+    push @$appslist,
+      $self->_buildCategoryHash( $req, "", $filteredList, $catlevel );
 
     # We must return an ARRAY ref
     return ( ref $appslist->[0]->{categories} eq "ARRAY" )
@@ -157,7 +145,7 @@ sub appslist {
 # @param catlevel Category level
 # @return Category Hash
 sub _buildCategoryHash {
-    my ( $self, $catid, $cathash, $catlevel ) = @_;
+    my ( $self, $req, $catid, $cathash, $catlevel ) = @_;
     my $catname = $cathash->{catname} || $catid;
     my $applications;
     my $categories;
@@ -242,47 +230,6 @@ sub _buildApplicationHash {
     };
     $applicationHash->{applications} = $applications if $applications;
     return $applicationHash;
-}
-
-## @method string appslistMenu()
-# Returns HTML code for application list menu.
-# @return HTML string
-sub appslistMenu {
-    my $self = shift;
-
-    # We no more use XML file for menu configuration
-    unless ( defined $self->{applicationList} ) {
-        $self->abort(
-            "XML menu configuration is deprecated",
-"Please use lmMigrateConfFiles2ini to migrate your menu configuration"
-        );
-    }
-
-    # Use configuration to get menu parameters
-    my $applicationList = clone( $self->{applicationList} );
-    my $filteredList    = $self->_filter($applicationList);
-
-    return $self->_displayConfCategory( "", $filteredList, $catlevel );
-}
-
-## @method string appslistDescription()
-# Returns HTML code for application description.
-# @return HTML string
-sub appslistDescription {
-    my $self = shift;
-
-    # We no more use XML file for menu configuration
-    unless ( defined $self->{applicationList} ) {
-        $self->lmLog(
-"XML menu configuration is deprecated. Please use lmMigrateConfFiles2ini to migrate your menu configuration",
-            'error'
-        );
-        return "&nbsp;";
-    }
-
-    # Use configuration to get menu parameters
-    my $applicationList = clone( $self->{applicationList} );
-    return $self->_displayConfDescription( "", $applicationList );
 }
 
 ## @method string _displayConfCategory(string catname, hashref cathash, int catlevel)
@@ -433,7 +380,7 @@ sub _displayConfDescription {
 # @param $apphash Menu elements
 # @return filtered hash
 sub _filter {
-    my ( $self, $apphash ) = @_;
+    my ( $self, $req, $apphash ) = @_;
     my $filteredHash;
     my $key;
 
