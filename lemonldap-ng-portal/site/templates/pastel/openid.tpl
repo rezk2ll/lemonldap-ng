@@ -18,7 +18,7 @@
       <TMPL_IF NAME="MSG"><TMPL_VAR NAME="MSG"></TMPL_IF>
       <div class="buttons">
         <a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive">
-          <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
+          <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/accept.png" alt="" />
           <span trspan="goToPortal">Go to portal</span>
         </a>
       </div>

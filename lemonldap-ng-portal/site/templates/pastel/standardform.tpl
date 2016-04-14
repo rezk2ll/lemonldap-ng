@@ -30,11 +30,11 @@
   <tr><td colspan="2">
     <div class="buttons">
       <button type="reset" class="negative" tabindex="10">
-        <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
+        <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/cancel.png" alt="" />
         <span trspan="cancel">Cancel</span>
       </button>
       <button type="submit" class="positive" tabindex="8">
-        <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
+        <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/accept.png" alt="" />
         <span trspan="connect">Connect</span>
       </button>
     </div>
@@ -44,7 +44,7 @@
     <tr><td colspan="2">
       <div class="buttons">
         <a class="positive" tabindex="5" href="<TMPL_VAR NAME="MAIL_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
-          <img src="<TMPL_VAR NAME="SKIN_PATH">/common/email.png" alt="" />
+          <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/email.png" alt="" />
           <span trspan="resetPwd">Reset my password</span>
         </a>
       </div>
@@ -55,7 +55,7 @@
     <tr><td colspan="2">
       <div class="buttons">
         <a class="positive" tabindex="6" href="<TMPL_VAR NAME="REGISTER_URL">?skin=<TMPL_VAR NAME="SKIN"><TMPL_IF NAME="key">&<TMPL_VAR NAME="CHOICE_PARAM">=<TMPL_VAR NAME="key"></TMPL_IF>">
-          <img src="<TMPL_VAR NAME="SKIN_PATH">/common/vcard_edit.png" alt="" />
+          <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/vcard_edit.png" alt="" />
           <span trspan="createAccount">Create an account</span>
         </a>
       </div>

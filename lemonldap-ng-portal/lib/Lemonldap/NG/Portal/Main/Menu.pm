@@ -12,16 +12,16 @@ has menuModules => (
     is      => 'rw',
     builder => sub {
         my $conf = $_[0]->{conf}->{menuModule};
-        my %res;
+        my @res;
         foreach (qw(Appslist ChangePassword LoginHistory Logout)) {
             my $cond = $conf->{"portalDisplay$_"} // 1;
             $_[0]
               ->p->lmLog( "Evaluate condition $cond for module $_", 'debug' );
             my $tmp =
               $_[0]->{p}->HANDLER->tsv->{jail}->jail_reval("sub{return $cond}");
-            $res{$_} = $tmp if ($tmp);
+            push @res, [$_, $tmp] if ($tmp);
         }
-        return \%res;
+        return \@res;
     }
 );
 
@@ -93,15 +93,15 @@ sub displayModules {
 
     # Foreach module, eval condition
     # Store module in result if condition is valid
-    foreach my $module ( keys %{ $self->menuModules } ) {
-        $self->lmLog( "Check if $module has to be displayed", 'debug' );
+    foreach my $module ( @{ $self->menuModules } ) {
+        $self->lmLog( "Check if $module->[0] has to be displayed", 'debug' );
 
-        if ( $self->menuModules->{$module}->() ) {
-            my $moduleHash = { $module => 1 };
-            if ( $module eq 'Appslist' ) {
+        if ( $module->[1]->() ) {
+            my $moduleHash = { $module->[0] => 1 };
+            if ( $module->[0] eq 'Appslist' ) {
                 $moduleHash->{'APPSLIST_LOOP'} = $self->appslist($req);
             }
-            elsif ( $module eq 'LoginHistory' ) {
+            elsif ( $module->[0] eq 'LoginHistory' ) {
                 $moduleHash->{'SUCCESS_LOGIN'} =
                   $self->p->mkSessionArray(
                     $req->{sessionInfo}->{loginHistory}->{successLogin},

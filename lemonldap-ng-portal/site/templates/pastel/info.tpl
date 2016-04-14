@@ -16,20 +16,20 @@
     <table><tbody><tr><td>
       <div class="buttons">
         <button type="submit" class="positive">
-          <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
+          <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/accept.png" alt="" />
           <span trspan="continue">Continue</span>
         </button>
         <button type="reset" class="negative" onclick="stop();">
-          <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
+          <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/cancel.png" alt="" />
           <span trspan="wait">Wait</span>
         </button>
       </div>
     </td></tr></tbody></table>
   </form>
   <!-- //if:jsminified
-    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.min.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/info.min.js"></script>
   //else -->
-    <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.js"></script>
+    <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/info.js"></script>
   <!-- //endif -->
 
 </div>

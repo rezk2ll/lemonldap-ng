@@ -17,11 +17,11 @@
 	<tr><td>
 		<div class="buttons">
 			<button type="reset" class="negative" tabindex="4">
-				<img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
+				<img src="<TMPL_VAR NAME="STATIC_PREFIX">common/cancel.png" alt="" />
 				<span trspan="cancel">Cancel</span>
 			</button>
 			<button type="submit" class="positive" tabindex="3">
-				<img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
+				<img src="<TMPL_VAR NAME="STATIC_PREFIX">common/accept.png" alt="" />
 				<span trspan="connect">Connect</span>
 			</button>
 		</div>

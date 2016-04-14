@@ -66,9 +66,9 @@
         </div>
 
         <!-- //if:jsminified
-          <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/confirm.min.js"></script>
+          <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/confirm.min.js"></script>
         //else -->
-          <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/confirm.js"></script>
+          <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/confirm.js"></script>
         <!-- //endif -->
       </TMPL_IF>
 

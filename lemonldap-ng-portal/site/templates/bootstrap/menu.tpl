@@ -35,25 +35,25 @@
 
           <TMPL_IF NAME="Appslist">
             <li><a href="#appslist"><span>
-              <img src="<TMPL_VAR NAME="SKIN_PATH">/common/application_cascade.png" width="16" height="16" alt="appslist" />
+              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/application_cascade.png" width="16" height="16" alt="appslist" />
               <span trspan="yourApps">Your applications</span>
             </span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="ChangePassword">
             <li><a href="#password"><span>
-              <img src="<TMPL_VAR NAME="SKIN_PATH">/common/vcard_edit.png" width="16" height="16" alt="password" />
+              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/vcard_edit.png" width="16" height="16" alt="password" />
               <span trspan="password">Password</span>
             </span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="LoginHistory">
             <li><a href="#loginHistory"><span>
-              <img src="<TMPL_VAR NAME="SKIN_PATH">/common/calendar.png" width="16" height="16" alt="login history" />
+              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/calendar.png" width="16" height="16" alt="login history" />
               <span trspan="loginHistory">Login history</span>
             </span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="Logout">
             <li><a href="#logout"><span>
-              <img src="<TMPL_VAR NAME="SKIN_PATH">/common/door_out.png" width="16" height="16" alt="logout" />
+              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/door_out.png" width="16" height="16" alt="logout" />
               <span trspan="logout">Logout</span>
             </span></a></li>
           </TMPL_IF>
@@ -103,7 +103,7 @@
                         <!-- Logo (optional) -->
                         <TMPL_IF NAME="applogo">
                           <div class="col-xs-3">
-                          <img src="<TMPL_VAR NAME="SKIN_PATH">/common/apps/<TMPL_VAR NAME="applogo">"
+                          <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/apps/<TMPL_VAR NAME="applogo">"
                             class="applogo <TMPL_VAR NAME="appid">"
                             alt="<TMPL_VAR NAME="appname">" />
                           </div>

@@ -43,6 +43,12 @@ sub restoreArgs {
     return ( %{ $req->params } ? PE_OK : PE_FORMEMPTY );
 }
 
+sub importHandlerDatas {
+    my ( $self, $req ) = @_;
+    $req->{sessionInfo} = HANDLER->datas;
+    PE_OK;
+}
+
 # Verify url parameter
 sub controlUrl {
     my ( $self, $req ) = @_;

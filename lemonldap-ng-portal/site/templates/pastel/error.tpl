@@ -27,12 +27,12 @@
 
     <div class="buttons">
       <a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive">
-        <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
+        <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/accept.png" alt="" />
         <span trspan="goToPortal">Go to portal</span>
       </a>
       <TMPL_IF NAME="LOGOUT_URL">
         <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative">
-          <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
+          <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/cancel.png" alt="" />
           <span trspan="logout">Logout</span>
         </a>
       </TMPL_IF>

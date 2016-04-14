@@ -83,13 +83,19 @@ sub postLogin {
 
 sub authenticatedRequest {
     my ( $self, $req ) = @_;
-    return $self->do( $req, [ 'controlUrl', @{ $self->forAuthUser } ] );
+    return $self->do( $req,
+        [ 'importHandlerDatas', 'controlUrl', @{ $self->forAuthUser } ] );
 }
 
 sub postAuthenticatedRequest {
     my ( $self, $req ) = @_;
-    return $self->do( $req,
-        [ 'restoreArgs', 'controlUrl', @{ $self->forAuthUser } ] );
+    return $self->do(
+        $req,
+        [
+            'importHandlerDatas', 'restoreArgs',
+            'controlUrl',         @{ $self->forAuthUser }
+        ]
+    );
 }
 
 # RUNNING METHODS

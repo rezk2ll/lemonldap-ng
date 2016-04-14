@@ -35,7 +35,7 @@ my $cookies = getCookies($res);
 my $id;
 ok( $id = $cookies->{lemonldap}, 'Get cookie' )
   or explain( $res, 'Set-Cookie: something' );
-count(2);
+count(3);
 
 # Try to get a redirection for an auth user with a valid url
 # ----------------------------------------------------------

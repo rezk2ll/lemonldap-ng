@@ -1,7 +1,7 @@
 <TMPL_IF NAME="SKIN_BG">
   <style>
   html, body {
-    background: url("<TMPL_VAR NAME="SKIN_PATH">/common/backgrounds/<TMPL_VAR NAME="SKIN_BG">") no-repeat center fixed;
+    background: url("<TMPL_VAR NAME="STATIC_PREFIX">common/backgrounds/<TMPL_VAR NAME="SKIN_BG">") no-repeat center fixed;
     background-size: cover;
   }
   </style>

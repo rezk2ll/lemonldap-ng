@@ -11,9 +11,9 @@
       <TMPL_UNLESS NAME="LIST"><TMPL_IF NAME="ACTIVE_TIMER">
       <p id="timer" class="text-error"><span trspan="autoAccept">Automaticaly accept in 5 seconds</span></p>
       <!-- //if:jsminified
-        <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.min.js"></script>
+        <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/info.min.js"></script>
       //else -->
-        <script type="text/javascript" src="<TMPL_VAR NAME="SKIN_PATH">/common/js/info.js"></script>
+        <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/info.js"></script>
       <!-- //endif -->
       </TMPL_IF></TMPL_UNLESS>
 

@@ -51,7 +51,7 @@
               <table>
                 <TMPL_IF NAME="logoFile">
                   <tr class="authLogo"><td>
-                  <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="logoFile">" alt="<TMPL_VAR NAME="module">" />
+                  <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/<TMPL_VAR NAME="logoFile">" alt="<TMPL_VAR NAME="module">" />
                   </td></tr>
                 </TMPL_IF>
 
@@ -67,11 +67,11 @@
                 <tr><td>
                   <div class="buttons">
                     <button type="reset" class="negative" tabindex="4">
-                      <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
+                      <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/cancel.png" alt="" />
                       <span trspan="cancel">Cancel</span>
                     </button>
                     <button type="submit" class="positive" tabindex="3">
-                      <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
+                      <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/accept.png" alt="" />
                       <span trspan="connect">Connect</span>
                     </button>
                   </div>
@@ -136,7 +136,7 @@
       <table>
         <TMPL_IF NAME="module">
           <tr class="authLogo"><td>
-            <img src="<TMPL_VAR NAME="SKIN_PATH">/common/<TMPL_VAR NAME="module">.png" alt="<TMPL_VAR NAME="module">" />
+            <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/<TMPL_VAR NAME="module">.png" alt="<TMPL_VAR NAME="module">" />
           </td></tr>
         </TMPL_IF>
 
@@ -152,11 +152,11 @@
         <tr><td>
           <div class="buttons">
             <button type="reset" class="negative" tabindex="4">
-              <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
+              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/cancel.png" alt="" />
               <span trspan="cancel">Cancel</span>
             </button>
             <button type="submit" class="positive" tabindex="3">
-              <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
+              <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/accept.png" alt="" />
               <span trspan="connect">Connect</span>
             </button>
           </div>
@@ -180,7 +180,7 @@
       <TMPL_IF NAME="MSG"><TMPL_VAR NAME="MSG"></TMPL_IF>
       <div class="buttons">
         <a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive">
-          <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
+          <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/accept.png" alt="" />
           <span trspan="goToPortal">Go to portal</span>
         </a>
       </div>
@@ -191,7 +191,7 @@
     <div id="logout">
       <div class="buttons">
         <a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative">
-          <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
+          <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/cancel.png" alt="" />
           <span trspan="logout">Logout</span>
         </a>
       </div>

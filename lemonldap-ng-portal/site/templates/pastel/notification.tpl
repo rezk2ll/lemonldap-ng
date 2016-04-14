@@ -22,7 +22,7 @@
         <TMPL_VAR NAME="NOTIFICATION">
         <div class="buttons">
           <button type="submit" class="positive">
-            <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
+            <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/accept.png" alt="" />
             <span trspan="accept">Accept</span>
           </button>
         </div>

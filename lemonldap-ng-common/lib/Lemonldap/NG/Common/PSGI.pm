@@ -173,6 +173,7 @@ sub sendHtml {
             die_on_bad_params      => 0,
             die_on_missing_include => 1,
             cache                  => 0,
+            global_vars            => 1,
         );
 
         # TODO: replace app
