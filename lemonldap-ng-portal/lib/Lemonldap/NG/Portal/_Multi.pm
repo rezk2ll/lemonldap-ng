@@ -164,7 +164,8 @@ sub replay {
 
     foreach (
         qw(authInit extractFormInfo userDBInit getUser setAuthSessionInfo
-        setSessionInfo setGroups authenticate authFinish)
+        setSessionInfo setMacros setGroups setPersistentSessionInfo
+        setLocalGroups authenticate authFinish)
       )
     {
         push @subs, $_;
