@@ -169,7 +169,7 @@ sub types {
         },
         keyText => {
             keyTest => qr/^[a-zA-Z0-9_]+$/,
-            test    => qr/^.*$/,
+            test    => sub { 1 },
             msgFail => '__badValue__',
         },
         menuApp => {
@@ -572,7 +572,7 @@ sub attributes {
         },
         domain => {
             type          => 'text',
-            test          => qr/^(?:$Regexp::Common::URI::RFC2396::hostname)?/,
+            test          => qr/^(?:$Regexp::Common::URI::RFC2396::hostname)?$/,
             msgFail       => '__badDomainName__',
             default       => 'example.com',
             documentation => 'DNS domain',

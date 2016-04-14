@@ -68,7 +68,9 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'keyText' => {
             'keyTest' => qr/^[a-zA-Z0-9_]+$/,
             'msgFail' => '__badValue__',
-            'test'    => qr/^.*$/
+            'test'    => sub {
+                1;
+              }
         },
         'keyTextContainer' => {
             'keyMsgFail' => '__badKeyName__',
@@ -778,7 +780,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 'example.com',
             'msgFail' => '__badDomainName__',
             'test' =>
-qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?/,
+qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
             'type' => 'text'
         },
         'exportedAttr' => {
