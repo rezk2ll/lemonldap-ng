@@ -364,7 +364,7 @@ prepare_test_server:
 		VHOSTLISTEN='*:$(TESTWEBSERVERPORT)' \
 		PORT=$(TESTWEBSERVERPORT) \
 		FASTCGISOCKDIR=`pwd`/e2e-tests/conf \
-		PORTALDIR=`pwd`/$(SRCPORTALDIR)/example \
+		PORTALDIR=`pwd`/$(SRCPORTALDIR)/site/htdocs \
 		MANAGERDIR=`pwd`/$(SRCMANAGERDIR)/site \
 		TESTDIR=`pwd`/e2e-tests/conf/site \
 		MANAGERPSGIDIR=`pwd`/e2e-tests \

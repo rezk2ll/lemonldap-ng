@@ -83,8 +83,13 @@ sub postLogin {
 
 sub authenticatedRequest {
     my ( $self, $req ) = @_;
-    return $self->do( $req,
-        [ 'importHandlerDatas', 'controlUrl', @{ $self->forAuthUser } ] );
+    return $self->do(
+        $req,
+        [
+            'importHandlerDatas', 'checkLogout',
+            'controlUrl',         @{ $self->forAuthUser }
+        ]
+    );
 }
 
 sub postAuthenticatedRequest {
@@ -92,8 +97,9 @@ sub postAuthenticatedRequest {
     return $self->do(
         $req,
         [
-            'importHandlerDatas', 'restoreArgs',
-            'controlUrl',         @{ $self->forAuthUser }
+            'importHandlerDatas', 'checkLogout',
+            'restoreArgs',        'controlUrl',
+            @{ $self->forAuthUser }
         ]
     );
 }
@@ -256,6 +262,62 @@ sub getPersistentSession {
     }
 
     return $ps;
+}
+
+# Delete an existing session. If "securedCookie" is set to 2, the http session
+# will also be removed.
+# @param h tied Apache::Session object
+# @param preserveCookie do not delete cookie
+# @return True if session has been deleted
+sub _deleteSession {
+    my ( $self, $req, $session, $preserveCookie ) = @_;
+
+    # Invalidate http cookie and session, if set
+    if ( $self->{securedCookie} >= 2 ) {
+
+        # Try to find a linked http session (securedCookie == 2)
+        if ( my $id2 = $session->data->{_httpSession} ) {
+            if ( my $session2 = $self->getApacheSession( $id2, 1 ) ) {
+                $session2->remove;
+                if ( $session2->error ) {
+                    $self->lmLog( "Unable to remove linked session $id2",
+                        'debug' );
+                    $self->lmLog( $session2->error, 'debug' );
+                }
+            }
+        }
+
+        # Create an obsolete cookie to remove it
+        push @{ $req->respHeaders },
+          'Set-Cookie' => $self->cookie(
+            name    => $self->conf->{cookieName} . 'http',
+            value   => 0,
+            domain  => $self->conf->{domain},
+            path    => "/",
+            secure  => 0,
+            expires => '-1d',
+          ) unless ($preserveCookie);
+    }
+
+    $session->remove;
+
+    # Create an obsolete cookie to remove it
+    push @{ $req->respHeaders },
+      'Set-Cookie' => $self->cookie(
+        name    => $self->conf->{cookieName},
+        value   => 0,
+        domain  => $self->conf->{domain},
+        path    => "/",
+        secure  => 0,
+        expires => '-1d',
+        @_,
+      ) unless ($preserveCookie);
+
+    # Log
+    my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+    $self->userNotice("User $user has been disconnected") if $user;
+
+    return $session->error ? 0 : 1;
 }
 
 # Return md5(s)
