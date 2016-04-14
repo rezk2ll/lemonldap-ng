@@ -30,9 +30,11 @@ ok(
     ),
     'Auth query'
 );
+ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
 my $cookies = getCookies($res);
 my $id;
-ok( $id = $cookies->{lemonldap}, 'Get cookie' );
+ok( $id = $cookies->{lemonldap}, 'Get cookie' )
+  or explain( $res, 'Set-Cookie: something' );
 count(2);
 
 # Try to get a redirection for an auth user with a valid url
@@ -46,7 +48,8 @@ ok(
     ),
     'Auth ajax request with good url'
 );
-ok( $res->[0] == 302, 'Get redirection' ) or explain( $res, 302 );
+ok( $res->[0] == 302, 'Get redirection' )
+  or explain( [ $res->[0], $res->[1] ], 302 );
 my %hdrs = @{ $res->[1] };
 ok(
     $hdrs{Location} eq 'http://test1.example.com/',
