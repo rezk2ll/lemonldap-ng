@@ -19,7 +19,7 @@ sub init {
     $ini->{configStorage} ||= { type => 'File', dirName => 't' };
     $ini->{logLevel}      ||= 'error';
     $ini->{cookieName}    ||= 'lemonldap';
-    $ini->{templateDir}   ||= 'example/skins';
+    $ini->{templateDir}   ||= 'site/templates';
     $ini->{staticPrefix}  ||= '/index.fcgi';
     $ini->{securedCookie} //= 0;
     $ini->{https}         //= 0;
