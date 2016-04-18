@@ -1,7 +1,167 @@
-window.translatePage = (lang) ->
+###
+LemonLDAP::NG Portal jQuery scripts
+
+Used variables:
+ - displaytab
+ - choicetab
+ - login
+ - newwindow
+ - antiframe
+###
+
+# Translation mechanism
+translatePage = (lang) ->
 	$("[trspan]").each ->
 		this.text translate this.attr 'trspan'
 
+translate = (str) ->
+	# TODO
+
+# Set default values
+newwindow   = if window.newwindow.match('1') then true else false
+antiframe   = if window.antiframe.match('0') then false else true
+activeTimer = if window.activeTimer.match('0') then false else true
+
+# Code from http://snipplr.com/view/29434/
+# ----------------------------------------
+setSelector = "#appslist"
+
+# function that writes the list order to session
+getOrder = ->
+	$.ajax
+		type: "POST"
+		url: scriptname
+		data:
+			storeAppsListOrder: $(setSelector).sortable("toArray").join()
+		dataType: 'json'
+
+# function that restores the list order from session
+restoreOrder = ->
+	list = $(setSelector)
+	return null unless list? and appslistorder
+
+	# make array from saved order
+	IDs = appslistorder.split ','
+
+	# fetch current order
+	items = list.sortable "toArray"
+
+	# make array from current order
+	rebuild = []
+	for v in items
+		rebuild[v] = v
+	
+	for itemID in IDs
+		if itemID in rebuild
+
+			# select item id from current order
+			item = rebuild[itemID]
+
+			# select the item according to current order
+			child = $(setSelector + ".ui-sortable").children "#" + item
+
+			# select the item according to the saved order
+			savedOrd = $(setSelector + ".ui-sortable").children "#" + itemID
+
+			# remove all the items
+			child.remove()
+
+			# add the items in turn according to saved order
+			# we need to filter here since the "ui-sortable"
+			# class is applied to all ul elements and we
+			# only want the very first! You can modify this
+			# to support multiple lists - not tested!
+			$(setSelector + ".ui-sortable").filter(":first").append savedOrd
+	1
+
+# function boolean isHiddenFormValueSet(string option)
+# Check if an hidden option is set
+# @param option Option name
+# @return true if option is set, false else
+isHiddenFormValueSet = (option) ->
+	return $('#lmhidden_' + option).length
+
+# function void ping()
+# Check if session is alive on server side
+# @return nothing
+ping = ->
+	$.ajax
+		type: "POST"
+		url: scriptname
+		data:
+			ping: 1
+		dataType: 'json'
+		success: (data) ->
+			if data.auth
+				setTimeout 'ping();', pingInterval
+			else
+				location.reload true
+
+# Initialization
 $(document).ready ->
+	if antiframe and top != self
+		top.location.href = location.href
+
+	$("#appslist").sortable
+		axis: "y"
+		cursor: "move"
+		opacity: 0.5
+		revert: true
+		items: "> div.category"
+		update: ->
+			getOrder()
+
+	restoreOrder()
+
+	$("div.message").fadeIn 'slow'
+
+	# Set timezone
+	$("input[name=timezone]").val -(new Date().getTimezoneOffset() / 60)
+
+	# Menu tabs
+	menuTabs = $("#menu").tabs
+		active: 0
+	menuIndex = $('#menu a[href="#' + displaytab + '"]').parent().index()
+	menuIndex = 0 if menuIndex < 0
+	menuTabs.tabs "option", "active", menuIndex
+
+	# Authentication choice tabs
+	authMenuTabs = $("#authMenu").tabs
+		active: 0
+
+	# TODO: cookie
+	# $("#authMenu").tabs
+	# 	cookie:
+	# 		name: 'lemonldapauthchoice'
+	if choicetab
+		authMenuTabs.tabs "option", "active", $('#authMenu a[href="#' + choicetab + '"]').parent().index()
+
+	if login
+		$("input[type=password]:first").focus()
+	else
+		# Focus on first visible input
+		$("input[type!=hidden]:first").focus()
+
+	# Open links in new windows
+	if newwindow
+		$('#appslist a').attr "target", "_blank"
+
+	# Complete removeOther link
+	if $("p.removeOther").length
+		action = $("form.login").attr "action"
+		method = $("form.login").attr "method"
+
+		back_url = ""
+		if action.indexOf("?") != -1
+			action.substring(0, action.indexOf("?")) + "?"
+		else
+			back_url = action + "?"
+
+		$("form.login input[type=hidden]").each (index) ->
+			back_url +=  "&" + $(this).attr("name") + "=" + $(this).val()
+
+		link = $("p.removeOther a").attr("href") + "&method=" + method + "&url=" + btoa(back_url)
+		$("p.removeOther a").attr "href", link
+
 	translatePage(lang)
 
