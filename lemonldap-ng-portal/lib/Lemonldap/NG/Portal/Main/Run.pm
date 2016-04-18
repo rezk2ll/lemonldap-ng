@@ -104,6 +104,11 @@ sub postAuthenticatedRequest {
     );
 }
 
+sub logout {
+    my ( $self, $req ) = @_;
+    return $self->do( $req, [ @{ $self->beforeLogout }, 'deleteSession' ] );
+}
+
 # RUNNING METHODS
 # ---------------
 

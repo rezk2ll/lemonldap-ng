@@ -107,88 +107,42 @@ sub controlUrl {
 sub checkLogout {
     my ( $self, $req ) = @_;
     if ( $req->param('logout') ) {
-        my $apacheSession = $self->getApacheSession($req->id);
-        unless ( $self->_deleteSession( $req, $apacheSession ) ) {
-            $self->lmLog( "Unable to delete session ".$req->id, 'error' );
-            $self->lmLog( $apacheSession->error,          'error' );
-            return PE_ERROR;
-        }
-        else {
-            $self->lmLog( "Session $req->{id} deleted from global storage", 'debug' );
-        }
+        $req->steps([@{ $self->beforeLogout }, 'deleteSession' ] );
+    }
+    PE_OK;
+}
 
- # TODO
- # Call issuerDB logout on each used issuerDBmodule
- #my $issuerDBList = $req->{sessionInfo}->{_issuerDB};
- #if ( defined $issuerDBList ) {
- #    foreach my $issuerDBtype (
- #        split( /\Q$self->{conf}->{multiValuesSeparator}\E/o, $issuerDBList ) )
- #    {
- #        my $module_name = "Lemonldap::NG::Portal::IssuerDB/$issuerDBtype";
- #        $self->lmLog(
- #            "Process logout for issuerDB module $issuerDBtype",
- #            'debug' );
+sub deleteSession {
+    my ( $self, $req ) = @_;
+    my $apacheSession = $self->getApacheSession( $req->id );
+    unless ( $self->_deleteSession( $req, $apacheSession ) ) {
+        $self->lmLog( "Unable to delete session " . $req->id, 'error' );
+        $self->lmLog( $apacheSession->error,                  'error' );
+        return PE_ERROR;
+    }
+    else {
+        $self->lmLog( "Session $req->{id} deleted from global storage",
+            'debug' );
+    }
 
-        #        $self->{error} = $self->_subProcess(
-        #            $module_name . "::issuerDBInit",
-        #            $module_name . '::issuerLogout'
-        #        );
+    # Collect logout services and build hidden iFrames
+    #if ( $self->{logoutServices} and %{ $self->{logoutServices} } ) {
 
-        #    }
-        #}
+    #    $self->lmLog( "Create iFrames to forward logout to services",
+    #        'debug' );
 
-        # Call logout for the module used to authenticate
-        #$self->lmLog(
-        #    "Process logout for authentication module "
-        #      . $self->{sessionInfo}->{_auth},
-        #    'debug'
-        #);
+    #    $self->info( "<h3>" . $self->msg(PM_LOGOUT) . "</h3>" );
 
-        #if ( $self->{sessionInfo}->{'_auth'} ne $self->get_module('auth') ) {
-        #    my $module_name =
-        #      'Lemonldap::NG::Portal::Auth' . $self->{sessionInfo}->{_auth};
+    #    foreach ( keys %{ $self->{logoutServices} } ) {
+    #        my $logoutServiceName = $_;
+    #        my $logoutServiceUrl =
+    #          $self->{logoutServices}->{$logoutServiceName};
 
-       #    unless ( $self->loadModule($module_name) ) {
-       #        $self->lmLog( "Unable to load $module_name", 'error' );
-       #    }
-       #    else {
-       #        eval {
-       #            $self->{error} = $self->_subProcess(
-       #                $module_name . "::authInit",
-       #                $module_name . "::authLogout"
-       #            );
-       #        };
-       #    }
-       #}
-       #else {
-       #    eval {
-       #        $self->{error} = $self->_subProcess( 'authInit', 'authLogout' );
-       #    };
-       #}
-       #if ($@) {
-       #    $self->lmLog( "Error when calling authentication logout: $@",
-       #        'debug' );
-       #}
-       #return $self->{error} if $self->{error} > 0;
+    #        $self->lmLog(
+    #"Find lo#gout service $logoutServiceName ($logoutServiceUrl)",
 
-        # Collect logout services and build hidden iFrames
-        #if ( $self->{logoutServices} and %{ $self->{logoutServices} } ) {
-
-        #    $self->lmLog( "Create iFrames to forward logout to services",
-        #        'debug' );
-
-        #    $self->info( "<h3>" . $self->msg(PM_LOGOUT) . "</h3>" );
-
-        #    foreach ( keys %{ $self->{logoutServices} } ) {
-        #        my $logoutServiceName = $_;
-        #        my $logoutServiceUrl =
-        #          $self->{logoutServices}->{$logoutServiceName};
-
-        #        $self->lmLog(
-        #"Find lo#gout service $logoutServiceName ($logoutServiceUrl)",
-
-          #            'debug'
-          #        );
+    #            'debug'
+    #        );
 
 #        my $iframe =
 #            "<iframe src=\"$logoutServiceUrl\""
@@ -197,27 +151,32 @@ sub checkLogout {
 #          . " width=\"0\" height=\"0\" frameborder=\"0\">"
 #          . "</iframe>";
 
-          #        $self->info($iframe);
-          #    }
+    #        $self->info($iframe);
+    #    }
 
-          #    # Redirect on logout page if no other target defined
-          #    if ( !$self->{urldc} and !$self->{postUrl} ) {
-          #        $self->{urldc} = $ENV{SCRIPT_NAME} . "?logout=1";
-          #    }
-          #}
+    #    # Redirect on logout page if no other target defined
+    #    if ( !$self->{urldc} and !$self->{postUrl} ) {
+    #        $self->{urldc} = $ENV{SCRIPT_NAME} . "?logout=1";
+    #    }
+    #}
 
-          # Redirect or Post if asked by authLogout
-          #return $self->_subProcess(qw(autoRedirect))
-          #  if (  $self->{urldc}
-          #    and $self->{urldc} ne $self->{portal} );
+    # Redirect or Post if asked by authLogout
+    #return $self->_subProcess(qw(autoRedirect))
+    #  if (  $self->{urldc}
+    #    and $self->{urldc} ne $self->{portal} );
 
-          #return $self->_subProcess(qw(autoPost))
-          #  if ( $self->{postUrl} );
+    #return $self->_subProcess(qw(autoPost))
+    #  if ( $self->{postUrl} );
 
-          # Display logout message
-          return PE_LOGOUT_OK;
+    # If logout redirects to another URL, just remove next steps for the
+    # request so autoRedirect will be called
+    if ( $req->{urldc} and $req->{urldc} ne $self->conf->{portal} ) {
+        $req->steps( [] );
+        return PE_OK;
     }
 
+    # Else display "error"
+    return PE_LOGOUT_OK;
 }
 
 # Check value to detect XSS attack

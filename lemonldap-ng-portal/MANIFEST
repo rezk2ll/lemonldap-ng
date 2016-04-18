@@ -364,15 +364,6 @@ t/70-Lemonldap-NG-Portal-AuthOpenIDConnect.t
 t/99-pod.t
 t/lmConf-1.js
 t/sessions/lock/.exists
-t/sessions/lock/Apache-Session-145dba262c1053fd855990d571d5583fe1c75f2ff6910a079f1e44c2b12f5f81.lock
-t/sessions/lock/Apache-Session-1e662c0b3103d632d332d9561b6fbbf1f2aacb9a0d55263ee513311ec9ee7712.lock
-t/sessions/lock/Apache-Session-32409f452220ef603d5819e1553d980b441474cf4a8f899de1243be2724aa50f.lock
-t/sessions/lock/Apache-Session-4797304de2aa18005dc54b56d829477860f4ebadd1fc407af8f6de90edd59a2b.lock
-t/sessions/lock/Apache-Session-5ece000315bf915633f75225fcdb11c2754bd254e49783a01f9763887d780c46.lock
-t/sessions/lock/Apache-Session-7446b65e4838f5e35d661797c23118ee7afa08d3c673e3fd22c05721bdc5f273.lock
-t/sessions/lock/Apache-Session-8e7cd669256eacc113b159e23d3ed1d84c862e9a3782022e50b362e6f3b29bab.lock
-t/sessions/lock/Apache-Session-99ae337a06625431c00c76d8f85db2c9fed2afce9bdefba24e47a7f5f67a0f9f.lock
-t/sessions/lock/Apache-Session-d44bc6a227a1a33ac7876b5e9d781f232262ec5ff9df68e62be81a38146edea3.lock
 t/test-lib.pm
 xt/PE_Constants.t
 xt/test-weaken-portal.t

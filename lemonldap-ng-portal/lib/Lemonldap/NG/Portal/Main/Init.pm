@@ -53,6 +53,11 @@ has forAuthUser => (
     isa     => 'ArrayRef',
     default => sub { [] }
 );
+has beforeLogout => (
+    is      => 'rw',
+    isa     => 'ArrayRef',
+    default => sub { [] }
+);
 
 sub init {
     my ( $self, $args ) = @_;
@@ -73,14 +78,17 @@ sub init {
     $self
 
       # "/"
-      ->addUnauthRoute( '*', 'login',     ['GET'] )
-      ->addUnauthRoute( '*', 'postLogin', ['POST'] )
-      ->addAuthRoute( '*', 'authenticatedRequest',     ['GET'] )
-      ->addAuthRoute( '*', 'postAuthenticatedRequest', ['POST'] )
+      ->addUnauthRoute( '*' => 'login',     ['GET'] )
+      ->addUnauthRoute( '*' => 'postLogin', ['POST'] )
+      ->addAuthRoute( '*' => 'authenticatedRequest',     ['GET'] )
+      ->addAuthRoute( '*' => 'postAuthenticatedRequest', ['POST'] )
 
       # Core REST API
-      ->addUnauthRoute( 'test', 'pleaseAuth', ['GET'] )
-      ->addAuthRoute( 'test', 'authenticated', ['GET'] );
+      ->addUnauthRoute( ping => 'pleaseAuth', ['GET'] )
+      ->addAuthRoute( ping => 'authenticated', ['GET'] )
+
+      # Logout
+      ->addAuthRoute( logout => 'logout', ['GET'] );
 
     # Default routes must point to routines declared above
     $self->defaultAuthRoute('');
