@@ -2085,6 +2085,8 @@ sub setSessionInfo {
 #@return Lemonldap::NG::Portal constant
 sub setMacros {
     my $self = shift;
+    $self->{sessionInfo}->{groups} = '';
+    $self->{sessionInfo}->{hGroups} = {};
     foreach ( sort keys %{ $self->{macros} } ) {
         $self->{sessionInfo}->{$_} =
           $self->safe->reval( $self->{macros}->{$_} );
@@ -2098,8 +2100,6 @@ sub setMacros {
 #@return Lemonldap::NG::Portal constant
 sub setLocalGroups {
     my $self = shift;
-    $self->{sessionInfo}->{groups} = '';
-    $self->{sessionInfo}->{hGroups} = {};
     foreach ( sort keys %{ $self->{groups} } ) {
         if ( $self->safe->reval( $self->{groups}->{$_} ) ) {
             $self->{sessionInfo}->{groups} .=
