@@ -114,6 +114,21 @@ sub bind {
     return $mesg;
 }
 
+## @method Net::LDAP::Message unbind()
+# Reimplementation of Net::LDAP::unbind() to force call to disconnect()
+# @return Net::LDAP::Message
+sub unbind {
+    my $self = shift;
+    my $ldap_uri = $self->uri;
+
+    $self->{portal}->lmLog("Unbind and disconnect from $ldap_uri", 'debug');
+
+    my $mesg = $self->SUPER::unbind();
+    $self->SUPER::disconnect();
+
+    return $mesg;
+}
+
 ## @method private boolean loadPP ()
 # Load Net::LDAP::Control::PasswordPolicy
 # @return true if succeed.
