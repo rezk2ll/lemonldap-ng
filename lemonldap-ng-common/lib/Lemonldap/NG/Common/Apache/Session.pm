@@ -338,6 +338,7 @@ sub _LDAPGKFAS {
     );
 
     $ldap->unbind();
+    $ldap->disconnect();
 
     Apache::Session::Store::LDAP->logError($msg) if ( $msg->code );
 
