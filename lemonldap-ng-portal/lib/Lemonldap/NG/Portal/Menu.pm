@@ -154,6 +154,7 @@ sub appslist {
 sub _buildCategoryHash {
     my ( $self, $catid, $cathash, $catlevel ) = @_;
     my $catname = $cathash->{catname} || $catid;
+    utf8::decode($catname);
     my $applications;
     my $categories;
 
@@ -209,6 +210,8 @@ sub _buildApplicationHash {
     my $appuri  = $apphash->{options}->{uri}  || "";
     my $appdesc = $apphash->{options}->{description};
     my $applogo = $apphash->{options}->{logo};
+    utf8::decode($appname);
+    utf8::decode($appdesc) if $appdesc;
 
     # Detect sub applications
     my $subapphash;
