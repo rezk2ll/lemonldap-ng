@@ -452,11 +452,9 @@ sub conditionSub {
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
-                my $r = shift;
-                $r->add_output_filter(
+                $Lemonldap::NG::Handler::ApacheMP2::request->add_output_filter(
                     sub {
-                        return Lemonldap::NG::Handler::Main->redirectFilter( $u,
-                            @_ );
+                        return $class->redirectFilter( $u, @_ );
                     }
                 );
                 1;
@@ -469,15 +467,15 @@ sub conditionSub {
         my $u = $1 || &{ $class->tsv->{portal} }();
         return (
             sub {
-                my $r = shift;
-                Lemonldap::NG::Handler::Main->localUnlog;
-                $r->add_output_filter(
+
+                #TODO: check this
+                $class->localUnlog;
+                $Lemonldap::NG::Handler::ApacheMP2::request->add_output_filter(
                     sub {
-                        my $r = shift->r;
-                        return Lemonldap::NG::Handler::Main->redirectFilter(
+                        my $r = $_[0]->r;
+                        return $class->redirectFilter(
                             &{ $class->tsv->{portal} }() . "?url="
-                              . Lemonldap::NG::Handler::Main->encodeUrl( $r,
-                                $u )
+                              . $class->encodeUrl( $r, $u )
                               . "&logout=1",
                             @_
                         );
