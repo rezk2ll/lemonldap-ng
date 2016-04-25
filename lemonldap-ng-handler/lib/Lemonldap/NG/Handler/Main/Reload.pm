@@ -463,8 +463,8 @@ sub conditionSub {
         );
     }
     elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
-        eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         my $u = $1 || &{ $class->tsv->{portal} }();
+        eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
 
@@ -475,7 +475,7 @@ sub conditionSub {
                         my $r = $_[0]->r;
                         return $class->redirectFilter(
                             &{ $class->tsv->{portal} }() . "?url="
-                              . $class->encodeUrl( $r, $u )
+                              . $class->encodeUrl($u)
                               . "&logout=1",
                             @_
                         );

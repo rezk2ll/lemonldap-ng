@@ -136,6 +136,8 @@
     },
     "test1.example.com": {
       "^/logout": "logout_sso",
+      "^/index.pl\\?logout_app$": "logout_app http://test1.example.com:__port__/index.pl?foo=1",
+      "^/index.pl\\?logout_all$": "logout_app_sso http://lemonldap-ng.org/welcome/",
       "default": "accept"
     },
     "test2.example.com": {
