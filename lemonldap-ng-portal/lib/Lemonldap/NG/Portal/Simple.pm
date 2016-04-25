@@ -953,8 +953,6 @@ sub getPersistentSession {
         {
             storageModule        => $self->{persistentStorage},
             storageModuleOptions => $self->{persistentStorageOptions},
-            cacheModule          => $self->{localSessionStorage},
-            cacheModuleOptions   => $self->{localSessionStorageOptions},
             id                   => $pid,
             force                => 1,
             kind                 => "Persistent",
