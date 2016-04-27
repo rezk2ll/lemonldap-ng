@@ -12,6 +12,7 @@ describe('Lemonldap::NG handler', function() {
       expect(browser.driver.findElement(by.id('v-Hello')).getText()).toEqual('Hello');
       expect(browser.driver.findElement(by.id('v-Uri')).getText()).toEqual('/');
       expect(browser.driver.findElement(by.id('v-Additional-Arg')).getText()).toEqual('header-added');
+      expect(browser.driver.findElement(by.id('v-Base64')).getText()).toEqual('YTpi');
     });
   });
 });

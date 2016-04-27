@@ -103,7 +103,8 @@
       "Ip-Addr": "$ipAddr",
       "Hello": "hello()",
       "Uri": "get_uri()",
-      "Additional-Arg": "get_additional_arg('header-added')"
+      "Additional-Arg": "get_additional_arg('header-added')",
+      "Base64": "encode_base64('a:b','')"
     },
     "test2.example.com": {
       "Auth-User": "$uid"
