@@ -440,7 +440,9 @@ sub conditionSub {
     # Since filter exists only with Apache>=2, logout_app and logout_app_sso
     # targets are available only for it.
     # This error can also appear with Manager configured as CGI script
-    if ( $cond =~ /^logout_app/i and $class->MP() < 2 ) {
+    if ( $cond =~ /^logout_app/i
+        and not $class->isa('Lemonldap::NG::Handler::ApacheMP2') )
+    {
         $class->lmLog( "Rules logout_app and logout_app_sso require Apache>=2",
             'warn' );
         return ( sub { 1 }, 0 );
