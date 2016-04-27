@@ -145,6 +145,14 @@ lemonldap-ng (1.9.0) stable; urgency=low
     * [LEMONLDAP-956] - Custom functions don't work with useSafeJail
     * [LEMONLDAP-957] - Replace $http.success() by .then()
 
+lemonldap-ng (1.4.8) stable; urgency=low
+
+    * [LEMONLDAP-985] - authForce is not well called trough AuthMulti
+    * [LEMONLDAP-991] - LDAP TCP connections is still not closed
+    * [LEMONLDAP-992] - LL:NG use wrong variables with Multi auth
+    * [LEMONLDAP-1000] - Session errors with persistent sessions
+    * [LEMONLDAP-986] - Propose packages for SLES 12 SP1
+
 lemonldap-ng (1.4.7) stable; urgency=low
 
     * [LEMONLDAP-802] - Apache2::Connection remote_ip not supported in Apache 2.4
