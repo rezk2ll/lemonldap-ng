@@ -203,7 +203,7 @@ sub updateStatus {
 # @param $level string (emerg|alert|crit|error|warn|notice|info|debug)
 sub lmLog {
     my ( $class, $msg, $level ) = @_;
-    return if ( $class->logLevels->{$level} <  $class->_logLevel );
+    return if ( $class->logLevels->{$level} < $class->_logLevel );
 
     my ( $module, $file, $line ) = caller();
 
@@ -482,8 +482,20 @@ sub isUnprotected {
 sub sendHeaders {
     my $class = shift;
     my $vhost = $class->resolveAlias;
+
     if ( defined( $class->tsv->{forgeHeaders}->{$vhost} ) ) {
-        $class->set_header_in( &{ $class->tsv->{forgeHeaders}->{$vhost} } );
+
+        # Log headers in debug mode
+        my %headers = &{ $class->tsv->{forgeHeaders}->{$vhost} };
+        while ( my ( $h, $v ) = each %headers ) {
+            if ( defined $v ) {
+                $class->lmLog( "Send header $h with value $v", "debug" );
+            }
+            else {
+                $class->lmLog( "Send header $h with empty value", "debug" );
+            }
+        }
+        $class->set_header_in(%headers);
     }
 }
 
