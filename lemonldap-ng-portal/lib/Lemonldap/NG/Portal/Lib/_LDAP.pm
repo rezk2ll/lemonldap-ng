@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Main::Constants;
 use Encode;
 use Unicode::String qw(utf8);
 
-our $VERSION = '2.0.0';
+our $VERSION  = '2.0.0';
 our $ppLoaded = 0;
 
 BEGIN {
@@ -24,14 +24,15 @@ BEGIN {
 # Build a Net::LDAP object using parameters issued from $portal
 # @return Lemonldap::NG::Portal::_LDAP object
 sub new {
-    my ($class,$args)  = @_;
-    my $portal = $args->{p} or die "$class : p argument required !");
-    my $conf = $args->{conf} or die "$class : conf argument required !");
+    my ( $class, $args ) = @_;
+    my $portal = $args->{p}    or die "$class : p argument required !";
+    my $conf   = $args->{conf} or die "$class : conf argument required !";
     my $self;
     my $useTls = 0;
     my $tlsParam;
     my @servers = ();
     foreach my $server ( split /[\s,]+/, $conf->{ldapServer} ) {
+
         if ( $server =~ m{^ldap\+tls://([^/]+)/?\??(.*)$} ) {
             $useTls   = 1;
             $server   = $1;
@@ -65,11 +66,11 @@ sub new {
             return 0;
         }
     }
-    $self->{p} = $portal;
+    $self->{portal}    = $portal;
     $self->{conf} = $conf;
 
     # Setting default LDAP password storage encoding to utf-8
-    $self->{portal}->{ldapPwdEnc} ||= 'utf-8';
+    $self->{conf}->{ldapPwdEnc} ||= 'utf-8';
     return $self;
 }
 
@@ -82,18 +83,18 @@ sub new {
 # @param %args See Net::LDAP(3) manpage for more
 # @return Net::LDAP::Message
 sub bind {
-    my $self = shift;
+    my ( $self, $dn, %args ) = @_;
     my $mesg;
-    my ( $dn, %args ) = @_;
     unless ($dn) {
-        $dn = $self->{portal}->{managerDn};
-        $args{password} = decode( 'utf-8', $self->{portal}->{managerPassword} );
+        $dn = $self->{conf}->{managerDn};
+        $args{password} =
+          decode( 'utf-8', $self->{conf}->{managerPassword} );
     }
     if ( $dn && $args{password} ) {
-        if ( $self->{portal}->{ldapPwdEnc} ne 'utf-8' ) {
+        if ( $self->{conf}->{ldapPwdEnc} ne 'utf-8' ) {
             eval {
                 my $tmp = encode(
-                    $self->{portal}->{ldapPwdEnc},
+                    $self->{conf}->{ldapPwdEnc},
                     decode( 'utf-8', $args{password} )
                 );
                 $args{password} = $tmp;
@@ -112,10 +113,10 @@ sub bind {
 # Reimplementation of Net::LDAP::unbind() to force call to disconnect()
 # @return Net::LDAP::Message
 sub unbind {
-    my $self = shift;
+    my $self     = shift;
     my $ldap_uri = $self->uri;
 
-    $self->{portal}->lmLog("Unbind and disconnect from $ldap_uri", 'debug');
+    $self->{portal}->lmLog( "Unbind and disconnect from $ldap_uri", 'debug' );
 
     my $mesg = $self->SUPER::unbind();
     $self->SUPER::disconnect();
@@ -132,7 +133,7 @@ sub loadPP {
 
     # Minimal version of Net::LDAP required
     if ( $Net::LDAP::VERSION < 0.38 ) {
-        $self->{portal}->abort(
+        die(
 "Module Net::LDAP is too old for password policy, please install version 0.38 or higher"
         );
     }
@@ -156,7 +157,7 @@ sub loadPP {
 sub userBind {
     my $self = shift;
 
-    if ( $self->{portal}->{ldapPpolicyControl} ) {
+    if ( $self->{conf}->{ldapPpolicyControl} ) {
 
         # Create Control object
         my $pp = Net::LDAP::Control::PasswordPolicy->new();
@@ -170,8 +171,7 @@ sub userBind {
         # Return direct unless control resonse
         unless ( defined $resp ) {
             if ( $mesg->code == 49 ) {
-                $self->{portal}->_sub( 'userError',
-                    "Bad password for $self->{portal}->{user}" );
+                $self->{portal}->userError("Bad password");
                 return PE_BADCREDENTIALS;
             }
             return ( $mesg->code == 0 ? PE_OK : PE_LDAPERROR );
@@ -180,8 +180,8 @@ sub userBind {
         # Check for ppolicy error
         my $pp_error = $resp->pp_error;
         if ( defined $pp_error ) {
-            $self->{portal}->_sub( 'userError',
-                "Password policy error $pp_error for $self->{portal}->{user}" );
+            $self->{portal}->userError(
+                "Password policy error $pp_error for $self->{portal}->{user}");
             return [
                 PE_PP_PASSWORD_EXPIRED,
                 PE_PP_ACCOUNT_LOCKED,
@@ -198,6 +198,8 @@ sub userBind {
 
             # Get expiration warning and graces
             if ( $resp->grace_authentications_remaining ) {
+
+                # TODO
                 $self->{portal}->info( "<h3>"
                       . $resp->grace_authentications_remaining . " "
                       . $self->{portal}->msg(PM_PP_GRACE)
@@ -224,8 +226,7 @@ sub userBind {
             return PE_OK;
         }
     }
-    $self->{portal}
-      ->_sub( 'userError', "Bad password for $self->{portal}->{user}" );
+    $self->{portal}->userError("Bad password for $self->{portal}->{user}");
     return PE_BADCREDENTIALS;
 }
 
@@ -239,10 +240,10 @@ sub userBind {
 # @return Lemonldap::NG::Portal constant
 sub userModifyPassword {
     my ( $self, $dn, $newpassword, $confirmpassword, $oldpassword, $ad ) = @_;
-    my $ppolicyControl     = $self->{portal}->{ldapPpolicyControl};
-    my $setPassword        = $self->{portal}->{ldapSetPassword};
-    my $asUser             = $self->{portal}->{ldapChangePasswordAsUser};
-    my $requireOldPassword = $self->{portal}->{portalRequireOldPassword};
+    my $ppolicyControl     = $self->{conf}->{ldapPpolicyControl};
+    my $setPassword        = $self->{conf}->{ldapSetPassword};
+    my $asUser             = $self->{conf}->{ldapChangePasswordAsUser};
+    my $requireOldPassword = $self->{conf}->{portalRequireOldPassword};
     my $passwordAttribute  = "userPassword";
     my $err;
     my $mesg;
@@ -265,7 +266,8 @@ sub userModifyPassword {
         # Encode password for AD
         $newpassword = utf8( chr(34) . $newpassword . chr(34) )->utf16le();
         if ( $oldpassword and $asUser ) {
-            $oldpassword = utf8( chr(34) . $oldpassword . chr(34) )->utf16le();
+            $oldpassword =
+              utf8( chr(34) . $oldpassword . chr(34) )->utf16le();
         }
         $self->{portal}->lmLog( "Active Directory mode enabled", 'debug' );
 
@@ -375,8 +377,7 @@ sub userModifyPassword {
         return PE_PP_PASSWORD_MOD_NOT_ALLOWED
           if ( $mesg->code == 19 && $ad );
         return PE_LDAPERROR unless ( $mesg->code == 0 );
-        $self->{portal}
-          ->_sub( 'userNotice', "Password changed $self->{portal}->{user}" );
+        $self->{portal}->userNotice("Password changed $self->{portal}->{user}");
 
         # Rebind as manager for next LDAP operations if we were bound as user
         $self->bind() if $asUser;
@@ -454,8 +455,8 @@ sub userModifyPassword {
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
         if ( $mesg->code == 0 ) {
-            $self->{portal}->_sub( 'userNotice',
-                "Password changed $self->{portal}->{user}" );
+            $self->{portal}
+              ->userNotice("Password changed $self->{portal}->{user}");
 
            # Rebind as manager for next LDAP operations if we were bound as user
             $self->bind() if $asUser;
@@ -466,9 +467,7 @@ sub userModifyPassword {
         if ( defined $resp ) {
             my $pp_error = $resp->pp_error;
             if ( defined $pp_error ) {
-                $self->{portal}->_sub( 'userError',
-"Password policy error $pp_error for $self->{portal}->{user}"
-                );
+                $self->{portal}->userError("Password policy error $pp_error");
                 return [
                     PE_PP_PASSWORD_EXPIRED,
                     PE_PP_ACCOUNT_LOCKED,
@@ -493,7 +492,8 @@ sub userModifyPassword {
 sub ldap {
     my $self = shift;
     return $self->{ldap}
-      if ( ref( $self->{ldap} ) and $self->{flags}->{ldapActive} );
+      if ( ref( $self->{ldap} )
+        and $self->{flags}->{ldapActive} );
     if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
         and my $mesg = $self->{ldap}->bind )
     {
@@ -554,8 +554,8 @@ sub searchGroups {
 
         foreach my $entry ( $mesg->all_entries ) {
 
-            $self->{p}->lmLog( "Matching group " . $entry->dn() . " found",
-                'debug' );
+            $self->{p}
+              ->lmLog( "Matching group " . $entry->dn() . " found", 'debug' );
 
             # If recursive search is activated, do it here
             if ( $self->{conf}->{ldapGroupRecursive} ) {
@@ -568,8 +568,8 @@ sub searchGroups {
                 # Launch group search
                 if ($group_value) {
 
-                    $self->{p}->lmLog( "Recursive search for $group_value",
-                        'debug' );
+                    $self->{p}
+                      ->lmLog( "Recursive search for $group_value", 'debug' );
 
                     my $recursive_groups =
                       $self->searchGroups( $base, $key, $group_value,
@@ -589,7 +589,8 @@ sub searchGroups {
             foreach (@$attributes) {
 
                 # Next if group attribute value
-                next if ( $_ eq $self->{conf}->{ldapGroupAttributeValueGroup} );
+                next
+                  if ( $_ eq $self->{conf}->{ldapGroupAttributeValueGroup} );
 
                 my $data = $entry->get_value( $_, asref => 1 );
 
@@ -615,16 +616,10 @@ sub getLdapValue {
 
     return $entry->dn() if ( $attribute eq "dn" );
 
-    my $value;
-
-    foreach ( $entry->get_value($attribute) ) {
-        $value .= $_;
-        $value .= $self->{portal}->{multiValuesSeparator};
-    }
-
-    $value =~ s/\Q$self->{portal}->{multiValuesSeparator}\E$//;
-
-    return $value;
+    return join(
+        $self->{conf}->{multiValuesSeparator},
+        $entry->get_value($attribute)
+    );
 }
 
 1;
