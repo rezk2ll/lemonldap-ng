@@ -482,9 +482,10 @@ sub isUnprotected {
 sub sendHeaders {
     my $class = shift;
     my $vhost = $class->resolveAlias;
-    if ( defined( my %headers = $class->tsv->{forgeHeaders}->{$vhost}->() ) ) {
+    if ( defined $class->tsv->{forgeHeaders}->{$vhost} ) {
 
         # Log headers in debug mode
+        my %headers = $class->tsv->{forgeHeaders}->{$vhost}->();
         foreach my $h ( sort keys %headers ) {
             if ( defined( my $v = $headers{$h} ) ) {
                 $class->lmLog( "Send header $h with value $v", 'debug' );
@@ -493,7 +494,7 @@ sub sendHeaders {
                 $class->lmLog( "Send header $h with empty value", 'debug' );
             }
         }
-        $class->set_header_in( %headers );
+        $class->set_header_in(%headers);
     }
 }
 
