@@ -13,7 +13,7 @@ my $module;
 
 sub init {
     my $arg = shift;
-    if($arg) {
+    if ($arg) {
         $module = $arg;
         use_ok($module);
     }
@@ -27,7 +27,7 @@ sub client {
 }
 
 sub module {
-    if(my $arg = shift) {
+    if ( my $arg = shift ) {
         $module = $arg;
     }
     return $module;

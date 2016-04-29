@@ -369,7 +369,12 @@ $managerAttr}
     printf STDERR $format, $self->reverseTreeFile;
     open( F, ">", $self->reverseTreeFile ) or die($!);
     $jsonEnc->pretty(0);
-    print F $jsonEnc->encode($self->reverseScan(Lemonldap::NG::Manager::Build::Tree::tree(),'',{}));
+    print F $jsonEnc->encode(
+        $self->reverseScan(
+            Lemonldap::NG::Manager::Build::Tree::tree(),
+            '', {}
+        )
+    );
     close F;
     print STDERR "done\n";
 }
@@ -564,11 +569,12 @@ sub scanLeaf1 {
 
 sub reverseScan {
     my ( $self, $tree, $path, $res ) = @_;
-    foreach my $elem ( @$tree ) {
+    foreach my $elem (@$tree) {
         $elem =~ s/^\*//;
         if ( ref($elem) eq 'HASH' ) {
             foreach (qw(nodes nodes_cond group)) {
-                $self->reverseScan($elem->{$_}, "$path$elem->{title}/", $res) if($elem->{$_});
+                $self->reverseScan( $elem->{$_}, "$path$elem->{title}/", $res )
+                  if ( $elem->{$_} );
             }
         }
         else {

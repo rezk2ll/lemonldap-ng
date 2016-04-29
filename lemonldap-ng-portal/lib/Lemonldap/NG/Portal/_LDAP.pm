@@ -15,7 +15,7 @@ use Unicode::String qw(utf8);
 use strict;
 
 our @EXPORT   = qw(ldap);
-our $VERSION = '2.0.0';
+our $VERSION  = '2.0.0';
 our $ppLoaded = 0;
 
 BEGIN {
@@ -118,10 +118,10 @@ sub bind {
 # Reimplementation of Net::LDAP::unbind() to force call to disconnect()
 # @return Net::LDAP::Message
 sub unbind {
-    my $self = shift;
+    my $self     = shift;
     my $ldap_uri = $self->uri;
 
-    $self->{portal}->lmLog("Unbind and disconnect from $ldap_uri", 'debug');
+    $self->{portal}->lmLog( "Unbind and disconnect from $ldap_uri", 'debug' );
 
     my $mesg = $self->SUPER::unbind();
     $self->SUPER::disconnect();

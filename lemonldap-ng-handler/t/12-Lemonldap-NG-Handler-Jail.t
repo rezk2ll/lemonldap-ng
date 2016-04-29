@@ -16,8 +16,8 @@ BEGIN { use_ok('Lemonldap::NG::Handler::Main::Jail') }
 
 ok(
     my $jail = Lemonldap::NG::Handler::Main::Jail->new(
-        'jail'            => undef,
-        'useSafeJail'     => 1,
+        'jail'        => undef,
+        'useSafeJail' => 1,
     ),
     'new jail object'
 );

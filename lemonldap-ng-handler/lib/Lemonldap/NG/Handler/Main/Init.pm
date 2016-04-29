@@ -50,7 +50,7 @@ sub logLevelInit {
         $class->lmLog( "Undefined log level: $level", 'error' );
     }
     else {
-        $class->_logLevel( $class->logLevels->{$level || 'notice'} );
+        $class->_logLevel( $class->logLevels->{ $level || 'notice' } );
     }
 }
 

@@ -33,7 +33,7 @@ sub init {
 # Does nothing.
 # @return Lemonldap::NG::Portal constant
 sub authenticate {
-    my ($self,$req) = @_;
+    my ( $self, $req ) = @_;
 
     return PE_BADCREDENTIALS unless ( $req->{user} eq $req->{password} );
 

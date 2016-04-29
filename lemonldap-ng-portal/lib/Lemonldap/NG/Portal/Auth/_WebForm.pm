@@ -23,7 +23,7 @@ sub init {
 # Read username and password from POST datas
 # @return Lemonldap::NG::Portal constant
 sub extractFormInfo {
-    my ($self,$req) = @_;
+    my ( $self, $req ) = @_;
 
     # Init captcha
     if ( $self->conf->{captcha_login_enabled} ) {

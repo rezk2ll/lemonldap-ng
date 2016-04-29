@@ -47,25 +47,19 @@ sub run {
     my $timeout          = $localConfig->{'timeout'} || '0';
 
     # Display found values in debug mode
-    $class->lmLog(
-        "zimbraPreAuthKey: $zimbraPreAuthKey", 'debug' );
-    $class->lmLog(
-        "zimbraAccountKey: $zimbraAccountKey", 'debug' );
-    $class->lmLog( "zimbraBy: $zimbraBy",
-        'debug' );
-    $class->lmLog( "zimbraUrl: $zimbraUrl",
-        'debug' );
-    $class->lmLog( "zimbraSsoUrl: $zimbraSsoUrl",
-        'debug' );
-    $class->lmLog( "timeout: $timeout", 'debug' );
+    $class->lmLog( "zimbraPreAuthKey: $zimbraPreAuthKey", 'debug' );
+    $class->lmLog( "zimbraAccountKey: $zimbraAccountKey", 'debug' );
+    $class->lmLog( "zimbraBy: $zimbraBy",                 'debug' );
+    $class->lmLog( "zimbraUrl: $zimbraUrl",               'debug' );
+    $class->lmLog( "zimbraSsoUrl: $zimbraSsoUrl",         'debug' );
+    $class->lmLog( "timeout: $timeout",                   'debug' );
 
     # Return if we are not on a Zimbra SSO URI
     return $class->OK unless ( $uri =~ $zimbraSsoUrl );
 
     # Check mandatory parameters
     unless ($zimbraPreAuthKey) {
-        $class->lmLog(
-            "No Zimbra preauth key configured", 'error' );
+        $class->lmLog( "No Zimbra preauth key configured", 'error' );
         return $class->SERVER_ERROR;
     }
 
@@ -94,7 +88,8 @@ sub _buildZimbraPreAuthUrl {
     my ( $class, $key, $url, $account, $by, $timeout ) = @_;
 
     # Expiration time is calculated with _utime and timeout
-    my $expires = $timeout ? ( $class->datas->{_utime} + $timeout ) * 1000 : $timeout;
+    my $expires =
+      $timeout ? ( $class->datas->{_utime} + $timeout ) * 1000 : $timeout;
 
     # Timestamp
     my $timestamp = time() * 1000;
@@ -111,8 +106,7 @@ sub _buildZimbraPreAuthUrl {
     my $zimbra_url =
 "$url?account=$account&by=$by&timestamp=$timestamp&expires=$expires&preauth=$computed_value";
 
-    $class->lmLog(
-        "Build Zimbra URL: $zimbra_url", 'debug' );
+    $class->lmLog( "Build Zimbra URL: $zimbra_url", 'debug' );
 
     return $zimbra_url;
 }

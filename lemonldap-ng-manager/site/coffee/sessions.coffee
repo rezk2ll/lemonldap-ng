@@ -117,7 +117,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 
 	# SESSION MANAGEMENT
 
-	# Delete 
+	# Delete
 	$scope.deleteSession = ->
 		$scope.waiting = true
 		$http['delete']("#{scriptname}sessions/#{sessionType}/#{$scope.currentSession.id}").then (response) ->

@@ -71,7 +71,8 @@ sub build_jail {
     );
     $self->jail->share_from( __PACKAGE__, [ @t, '&encrypt' ] );
     $self->jail->share_from( 'MIME::Base64', ['&encode_base64'] );
-    $self->jail->share_from( 'Lemonldap::NG::Handler::Main::SharedVariables', [ '$_v' ] );
+    $self->jail->share_from( 'Lemonldap::NG::Handler::Main::SharedVariables',
+        ['$_v'] );
 
     return $self->jail;
 }

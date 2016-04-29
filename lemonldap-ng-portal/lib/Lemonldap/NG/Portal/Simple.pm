@@ -1142,7 +1142,8 @@ sub _subProcess {
 # status module with the result (portal error).
 sub updateStatus {
     my $self = shift;
-    my $p    = $Lemonldap::NG::Handler::Main::SharedVariables::_tshv->{tsv}->{statusPipe};
+    my $p    = $Lemonldap::NG::Handler::Main::SharedVariables::_tshv->{tsv}
+      ->{statusPipe};
     print $p ( $self->{user} ? $self->{user} : $self->ipAddr )
       . " => $ENV{SERVER_NAME}$ENV{SCRIPT_NAME} "
       . $self->{error} . "\n"
@@ -2083,7 +2084,7 @@ sub setSessionInfo {
 #@return Lemonldap::NG::Portal constant
 sub setMacros {
     my $self = shift;
-    $self->{sessionInfo}->{groups} = '';
+    $self->{sessionInfo}->{groups}  = '';
     $self->{sessionInfo}->{hGroups} = {};
     foreach ( sort keys %{ $self->{macros} } ) {
         $self->{sessionInfo}->{$_} =

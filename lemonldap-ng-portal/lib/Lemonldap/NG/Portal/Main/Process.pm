@@ -107,7 +107,7 @@ sub controlUrl {
 sub checkLogout {
     my ( $self, $req ) = @_;
     if ( $req->param('logout') ) {
-        $req->steps([@{ $self->beforeLogout }, 'deleteSession' ] );
+        $req->steps( [ @{ $self->beforeLogout }, 'deleteSession' ] );
     }
     PE_OK;
 }

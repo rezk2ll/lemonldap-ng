@@ -68,7 +68,7 @@ sub handler {
     my @convertedHdrs =
       ( 'Content-Length' => 0, Cookie => ( $req->cookies // '' ) );
     my $i = 0;
-    while( my $k = shift @$hdrs ) {
+    while ( my $k = shift @$hdrs ) {
         my $v = shift @$hdrs;
         if ( $k =~ /^(?:Lm-Remote-User|Cookie)$/ ) {
             push @convertedHdrs, $k, $v;

@@ -66,8 +66,8 @@ sub new {
             return 0;
         }
     }
-    $self->{portal}    = $portal;
-    $self->{conf} = $conf;
+    $self->{portal} = $portal;
+    $self->{conf}   = $conf;
 
     # Setting default LDAP password storage encoding to utf-8
     $self->{conf}->{ldapPwdEnc} ||= 'utf-8';

@@ -20,13 +20,14 @@ sub new {
     Lemonldap::NG::Handler::Main->checkConf($self);
 
     # Get access control rule
-    my $rule = $self->{protection} || Lemonldap::NG::Handler::Main->localConfig->{protection};
+    my $rule = $self->{protection}
+      || Lemonldap::NG::Handler::Main->localConfig->{protection};
     $rule =~ s/^rule\s*:?\s*//;
     return $self if ( $rule eq "none" );
     $rule =
       $rule eq "authenticate" ? "accept" : $rule eq "manager" ? "" : $rule;
     my $request = {};
-    my $res = $self->run($rule);
+    my $res     = $self->run($rule);
 
     if ( $res == 403 ) {
         $self->abort( 'Forbidden',

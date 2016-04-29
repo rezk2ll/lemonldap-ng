@@ -23,17 +23,17 @@ sub enabledPlugins {
         }
     }
 
-    # Check if captcha is required
-    # TODO: verify if this list is OK
-    #foreach my $key (
-    #    qw(captcha_login_enabled captcha_mail_enabled captcha_register_enabled))
-    #{
-    #    if ( $self->conf->{$key} ) {
-    #        $self->lmLog( 'Captcha enabled', 'debug' );
-    #        push @res, '::Plugins::Captcha';
-    #        last;
-    #    }
-    #}
+   # Check if captcha is required
+   # TODO: verify if this list is OK
+   #foreach my $key (
+   #    qw(captcha_login_enabled captcha_mail_enabled captcha_register_enabled))
+   #{
+   #    if ( $self->conf->{$key} ) {
+   #        $self->lmLog( 'Captcha enabled', 'debug' );
+   #        push @res, '::Plugins::Captcha';
+   #        last;
+   #    }
+   #}
 
     # Check if SOAP is enabled
     # TODO: REST
