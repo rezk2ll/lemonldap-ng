@@ -1,5 +1,19 @@
 lemonldap-ng (2.0.0) stable; urgency=low
 
+lemonldap-ng (1.9.2) stable; urgency=low
+
+    * [LEMONLDAP-985] - authForce is not well called trough AuthMulti
+    * [LEMONLDAP-988] - CPAN Tests fails for Lemonldap-NG-Common
+    * [LEMONLDAP-989] - CPAN Tests fails for Lemonldap-NG-Portal
+    * [LEMONLDAP-991] - LDAP TCP connections is still not closed
+    * [LEMONLDAP-992] - LL:NG use wrong variables with Multi auth
+    * [LEMONLDAP-994] - Can't call method "add_output_filter" on an undefined value when I logout
+    * [LEMONLDAP-995] - Encoding problem in menu categories and applications
+    * [LEMONLDAP-996] - logout_app_sso URL rejected
+    * [LEMONLDAP-1000] - Session errors with persistent sessions
+    * [LEMONLDAP-1002] - Show sent headers in debug mode
+    * [LEMONLDAP-986] - Propose packages for SLES 12 SP1
+
 lemonldap-ng (1.9.1) stable; urgency=low
 
     * [LEMONLDAP-961] - PAUSE indexer report
