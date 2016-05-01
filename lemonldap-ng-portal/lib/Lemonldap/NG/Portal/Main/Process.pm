@@ -112,6 +112,11 @@ sub checkLogout {
     PE_OK;
 }
 
+sub authLogout {
+    my $self = shift;
+    return $self->_authentication->authLogout(@_);
+}
+
 sub deleteSession {
     my ( $self, $req ) = @_;
     my $apacheSession = $self->getApacheSession( $req->id );

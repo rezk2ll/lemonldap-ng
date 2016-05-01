@@ -50,31 +50,31 @@ sub extractFormInfo {
     if ( $defUser && $defOldPassword ) {
         return PE_PASSWORDFORMEMPTY
           unless ( ( $req->{user} = $req->param('user') )
-            && ( $req->{oldpassword}     = $req->param('oldpassword') )
-            && ( $req->{newpassword}     = $req->param('newpassword') )
-            && ( $req->{confirmpassword} = $req->param('confirmpassword') ) );
+            && ( $req->datas->{oldpassword}     = $req->param('oldpassword') )
+            && ( $req->datas->{newpassword}     = $req->param('newpassword') )
+            && ( $req->datas->{confirmpassword} = $req->param('confirmpassword') ) );
     }
 
     # 4. Captcha for login form
     if ( $self->conf->{captcha_login_enabled} && $defUser && $defPassword ) {
-        $req->{captcha_user_code}  = $req->param('captcha_user_code');
-        $req->{captcha_check_code} = $req->param('captcha_code');
+        $req->datas->{captcha_user_code}  = $req->param('captcha_user_code');
+        $req->datas->{captcha_check_code} = $req->param('captcha_code');
 
-        unless ( $req->{captcha_user_code} && $req->{captcha_check_code} ) {
+        unless ( $req->datas->{captcha_user_code} && $req->datas->{captcha_check_code} ) {
             $self->lmLog( "Captcha not filled", 'warn' );
             return PE_CAPTCHAEMPTY;
         }
 
         $self->lmLog(
             "Captcha data received: "
-              . $req->{captcha_user_code} . " and "
-              . $req->{captcha_check_code},
+              . $req->datas->{captcha_user_code} . " and "
+              . $req->datas->{captcha_check_code},
             'debug'
         );
 
         # Check captcha
-        my $captcha_result = $self->checkCaptcha( $req->{captcha_user_code},
-            $req->{captcha_check_code} );
+        my $captcha_result = $self->checkCaptcha( $req->datas->{captcha_user_code},
+            $req->datas->{captcha_check_code} );
 
         if ( $captcha_result != 1 ) {
             if (   $captcha_result == -3
@@ -97,7 +97,7 @@ sub extractFormInfo {
     }
 
     # Other parameters
-    $req->{timezone} = $req->param('timezone');
+    $req->datas->{timezone} = $req->param('timezone');
 
     PE_OK;
 }
