@@ -1,3 +1,21 @@
+# Lemonldap::NG::Portal::Main::Request extends Lemonldap::NG::Common::PSGI::Request
+# to add all parameters needed to manage authentication:
+#
+#  - steps: list of methods to call
+#  - datas: free hash ref where plugins can store their datas
+#  - user infos:
+#    * id: Apache::Session id
+#    * sessionInfo: hash ref that will be stored in session DB
+#    * user: username given by authentication module, used by userDB module
+#  - query elements:
+#    * mustRedirect: boolean to indicate that response must be a redirection
+#    * urlNotBase64: boolean to indicate that url isn't Base64 encoded
+#  - menu elements:
+#    * info: info to display at login
+#    * menuError
+#    * notification: see notification plugin
+#    * errorType: returns positive/warning/negative depending on error (stored
+#                 in error property)
 package Lemonldap::NG::Portal::Main::Request;
 
 # Developpers, be careful: new() is never called so default values will not be
@@ -43,10 +61,6 @@ has notification => ( is => 'rw' );
 
 has _authChoice   => ( is => 'rw' );
 has _openidPortal => ( is => 'rw' );
-
-sub wantJSON {
-    return $_[0]->accept =~ m#(?:application|text)/json# ? 1 : 0;
-}
 
 # Error type
 sub error_type {

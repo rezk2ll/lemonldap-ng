@@ -222,9 +222,9 @@ sub display {
                 CHOICE_PARAM          => $self->conf->{authChoiceParam},
                 CHOICE_VALUE          => $req->{_authChoice},
                 OLDPASSWORD =>
-                  $self->checkXSSAttack( 'oldpassword', $req->{oldpassword} )
+                  $self->checkXSSAttack( 'oldpassword', $req->datas->{oldpassword} )
                 ? ""
-                : $self->{oldpassword},
+                : $req->datas->{oldpassword},
                 HIDE_OLDPASSWORD => $self->conf->{hideOldPassword},
             );
         }

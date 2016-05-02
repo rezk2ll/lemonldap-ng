@@ -35,15 +35,8 @@ sub init {
 sub authenticate {
     my ( $self, $req ) = @_;
 
-    return PE_BADCREDENTIALS unless ( $req->{user} eq $req->{password} );
+    return PE_BADCREDENTIALS unless ( $req->{user} eq $req->datas->{password} );
 
-    PE_OK;
-}
-
-## @apmethod int authFinish()
-# Does nothing.
-# @return Lemonldap::NG::Portal constant
-sub authFinish {
     PE_OK;
 }
 
@@ -58,13 +51,7 @@ sub authLogout {
 # Does nothing
 # @return result
 sub authForce {
-    return 0;
-}
-
-## @method string getDisplayType
-# @return display type
-sub getDisplayType {
-    return "standardform";
+    PE_OK;
 }
 
 1;

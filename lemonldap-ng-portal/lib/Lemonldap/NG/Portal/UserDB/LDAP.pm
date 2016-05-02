@@ -82,7 +82,8 @@ has filter => (
           || $conf->{LDAPFilter}
           || '(&(uid=$user)(objectClass=inetOrgPerson))';
         $filter =~ s/"/\\"/g;
-        $filter =~ s/\$(user|_?password|mail)/".\$req->{$1}."/g;
+        $filter =~ s/\$(user)/".\$req->{$1}."/g;
+        $filter =~ s/\$(user|_?password|mail)/".\$req->{datas}->{$1}."/g;
         $filter =~ s/\$(\w+)/".\$req->{sessionInfo}->{$1}."/g;
         $_[0]->{p}->lmLog( "LDAP transformed filter: $filter", 'debug' );
         $filter =

@@ -43,7 +43,7 @@ sub extractFormInfo {
     if ( $defUser && $defPassword ) {
         return PE_FORMEMPTY
           unless ( ( $req->{user} = $req->param('user') )
-            && ( $req->{password} = $req->param('password') ) );
+            && ( $req->datas->{password} = $req->param('password') ) );
     }
 
     # 3. If user and oldpassword defined -> password form
@@ -110,9 +110,10 @@ sub setAuthSessionInfo {
 
     # authenticationLevel
     # +1 for user/password with HTTPS
-    $self->{_authnLevel} ||= 0;
+    $self->{_authnLevel} //= 0;
     $self->{_authnLevel} += 1 if $self->https();
 
+    #TODO: check where _authnLevel is defined
     $self->{sessionInfo}->{authenticationLevel} = $self->{_authnLevel};
 
     # Store user submitted login for basic rules
@@ -121,14 +122,19 @@ sub setAuthSessionInfo {
     # Store submitted password if set in configuration
     # WARNING: it can be a security hole
     if ( $self->conf->{storePassword} ) {
-        $self->{sessionInfo}->{'_password'} = $self->{'newpassword'}
-          || $self->{'password'};
+        $self->{sessionInfo}->{'_password'} = $req->datas->{'newpassword'}
+          || $req->datas->{'password'};
     }
 
     # Store user timezone
     $self->{sessionInfo}->{'_timezone'} = $self->{'timezone'};
 
     PE_OK;
+}
+
+# @return display type
+sub getDisplayType {
+    return "standardform";
 }
 
 1;

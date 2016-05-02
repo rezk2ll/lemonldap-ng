@@ -5,7 +5,7 @@ use Mouse;
 
 our $VERSION = '2.0.0';
 
-# Inheritance: UserDB::LDAP provides all needed ldap function
+# Inheritance: UserDB::LDAP provides all needed ldap functions
 extends
   qw(Lemonldap::NG::Portal::Auth::_WebForm Lemonldap::NG::Portal::UserDB::LDAP);
 
@@ -22,7 +22,7 @@ sub authenticate {
     }
 
     my $res =
-      $self->ldap->userBind( $req->datas->{dn}, password => $req->{password} );
+      $self->ldap->userBind( $req->datas->{dn}, password => $req->datas->{password} );
 
     # Remember password if password reset needed
     $req->datas->{oldpassword} = $self->{password}
@@ -34,6 +34,10 @@ sub authenticate {
 }
 
 sub authLogout {
+    PE_OK;
+}
+
+sub authForce {
     PE_OK;
 }
 
