@@ -1,6 +1,6 @@
 ##@file
 # Extends Net::LDAP
-package Lemonldap::NG::Portal::_LDAP;
+package Lemonldap::NG::Portal::LDAP;
 
 use strict;
 use Net::LDAP;    #inherits
@@ -20,9 +20,7 @@ BEGIN {
     };
 }
 
-## @cmethod Lemonldap::NG::Portal::_LDAP new(Lemonldap::NG::Portal::Simple portal)
 # Build a Net::LDAP object using parameters issued from $portal
-# @return Lemonldap::NG::Portal::_LDAP object
 sub new {
     my ( $class, $args ) = @_;
     my $portal = $args->{p}    or die "$class : p argument required !";

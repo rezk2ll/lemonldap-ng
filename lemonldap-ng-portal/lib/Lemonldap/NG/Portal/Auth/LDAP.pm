@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Auth::LDAP;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Portal::Main::Constants;
 
 our $VERSION = '2.0.0';
 
@@ -10,6 +11,7 @@ extends
   qw(Lemonldap::NG::Portal::Auth::_WebForm Lemonldap::NG::Portal::UserDB::LDAP);
 
 sub authenticate {
+    my ( $self, $req ) = @_;
     unless ( $self->ldap ) {
         return PE_LDAPCONNECTFAILED;
     }
@@ -22,7 +24,8 @@ sub authenticate {
     }
 
     my $res =
-      $self->ldap->userBind( $req->datas->{dn}, password => $req->datas->{password} );
+      $self->ldap->userBind( $req->datas->{dn},
+        password => $req->datas->{password} );
 
     # Remember password if password reset needed
     $req->datas->{oldpassword} = $self->{password}

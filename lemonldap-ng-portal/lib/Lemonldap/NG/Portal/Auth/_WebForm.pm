@@ -50,9 +50,10 @@ sub extractFormInfo {
     if ( $defUser && $defOldPassword ) {
         return PE_PASSWORDFORMEMPTY
           unless ( ( $req->{user} = $req->param('user') )
-            && ( $req->datas->{oldpassword}     = $req->param('oldpassword') )
-            && ( $req->datas->{newpassword}     = $req->param('newpassword') )
-            && ( $req->datas->{confirmpassword} = $req->param('confirmpassword') ) );
+            && ( $req->datas->{oldpassword} = $req->param('oldpassword') )
+            && ( $req->datas->{newpassword} = $req->param('newpassword') )
+            && ( $req->datas->{confirmpassword} =
+                $req->param('confirmpassword') ) );
     }
 
     # 4. Captcha for login form
@@ -60,7 +61,9 @@ sub extractFormInfo {
         $req->datas->{captcha_user_code}  = $req->param('captcha_user_code');
         $req->datas->{captcha_check_code} = $req->param('captcha_code');
 
-        unless ( $req->datas->{captcha_user_code} && $req->datas->{captcha_check_code} ) {
+        unless ( $req->datas->{captcha_user_code}
+            && $req->datas->{captcha_check_code} )
+        {
             $self->lmLog( "Captcha not filled", 'warn' );
             return PE_CAPTCHAEMPTY;
         }
@@ -73,8 +76,10 @@ sub extractFormInfo {
         );
 
         # Check captcha
-        my $captcha_result = $self->checkCaptcha( $req->datas->{captcha_user_code},
-            $req->datas->{captcha_check_code} );
+        my $captcha_result = $self->checkCaptcha(
+            $req->datas->{captcha_user_code},
+            $req->datas->{captcha_check_code}
+        );
 
         if ( $captcha_result != 1 ) {
             if (   $captcha_result == -3
@@ -106,7 +111,7 @@ sub extractFormInfo {
 # Set password in session datas if wanted.
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
-    my $self = shift;
+    my ( $self, $req ) = @_;
 
     # authenticationLevel
     # +1 for user/password with HTTPS

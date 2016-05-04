@@ -86,8 +86,8 @@ has filter => (
         $filter =~ s/\$(user|_?password|mail)/".\$req->{datas}->{$1}."/g;
         $filter =~ s/\$(\w+)/".\$req->{sessionInfo}->{$1}."/g;
         $_[0]->{p}->lmLog( "LDAP transformed filter: $filter", 'debug' );
-        $filter =
-          "sub{my(\$self,\$req)=\@_;return \"$filter\";}" return eval $filter;
+        $filter = "sub{my(\$self,\$req)=\@_;return \"$filter\";}";
+        return eval $filter;
     }
 );
 

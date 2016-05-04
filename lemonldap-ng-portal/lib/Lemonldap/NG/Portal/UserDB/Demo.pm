@@ -9,7 +9,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants;
 
-extends Lemonldap::NG::Portal::Main::Module;
+extends 'Lemonldap::NG::Portal::Main::Module';
 
 our $VERSION = '2.0.0';
 
