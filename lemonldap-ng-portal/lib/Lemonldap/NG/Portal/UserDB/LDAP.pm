@@ -11,6 +11,7 @@ our $VERSION = '2.0.0';
 
 has ldap => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         my $self = $_[0];
         my $ldap;
@@ -71,6 +72,7 @@ has attrs => (
 
 has filter => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf};
         $_[0]->{p}
@@ -82,14 +84,20 @@ has filter => (
           || $conf->{LDAPFilter}
           || '(&(uid=$user)(objectClass=inetOrgPerson))';
         $filter =~ s/"/\\"/g;
-        $filter =~ s/\$(user)/".\$req->{$1}."/g;
-        $filter =~ s/\$(user|_?password|mail)/".\$req->{datas}->{$1}."/g;
         $filter =~ s/\$(\w+)/".\$req->{sessionInfo}->{$1}."/g;
+        $filter =~ s/\$req->\{sessionInfo\}->\{user\}/\$req->{user}/g;
+        $filter =~
+s/\$req->\{sessionInfo\}->\{(_?password|mail)\}/\$req->{datas}->{$1}/g;
         $_[0]->{p}->lmLog( "LDAP transformed filter: $filter", 'debug' );
         $filter = "sub{my(\$self,\$req)=\@_;return \"$filter\";}";
         return eval $filter;
     }
 );
+
+sub init {
+    my ($self) = @_;
+    1;
+}
 
 sub getUser {
     my ( $self, $req ) = @_;

@@ -1,6 +1,6 @@
 ##@file
 # Extends Net::LDAP
-package Lemonldap::NG::Portal::LDAP;
+package Lemonldap::NG::Portal::Lib::LDAP;
 
 use strict;
 use Net::LDAP;    #inherits
