@@ -682,8 +682,8 @@ sub error_nl {
         'LDAP-account of wachtwoord van de toepassing is niet correct',
         'Niet bestaande gebruiker',
         'Wachtwoord of identifier  is niet correct',
-        'Kan geen verbinding maken met LDAP-server'
-          'Abnormale fout van de LDAP-server',
+        'Kan geen verbinding maken met LDAP-server',
+        'Abnormale fout van de LDAP-server',
         'Fout Apache-module::Gekozen sessie',
         'Identificeer uzelf',
         'Ongeldig certificaat',
@@ -691,8 +691,8 @@ sub error_nl {
         'Mislukte resolutie artefact Liberty Alliance',
         'Échec de la défédération Liberty Alliance',
         'Het verzoek verzonden door de identiteitsprovider Liberty Alliance is leeg',
-        'Een van de oproepen SOAP Liberty Alliance is mislukt'
-          . 'Een van de oproepen Liberty Alliance voor verbreken verbinding is mislukt',
+        'Een van de oproepen SOAP Liberty Alliance is mislukt',
+        'Een van de oproepen Liberty Alliance voor verbreken verbinding is mislukt',
         'Geen enkel SAML artefact gevonden, of zelfacceptatie SSO mislukt',
         'Initialisatie, opbouw of verzoek SSO mislukt',
         'Kon identifier verbinding Liberty Alliance niet registreren',
@@ -701,8 +701,8 @@ sub error_nl {
         'Uw wachtwoord is verlopen',
         'Certificaat nodig',
         'Fout',
-        'Het wachtwoord is gereset en moet worden gewijzigd'
-          'Niet-toegelaten wijziging wachtwoord',
+        'Het wachtwoord is gereset en moet worden gewijzigd',
+        'Niet-toegelaten wijziging wachtwoord',
         'Het oude wachtwoord is vereist voor wijziging',
         'Het wachtwoord is niet voldoende veilig',
         'Te kort wachtwoord',
