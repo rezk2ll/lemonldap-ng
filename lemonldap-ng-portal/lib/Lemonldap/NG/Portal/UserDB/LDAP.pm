@@ -46,7 +46,8 @@ has ldap => (
 has ldapGroupAttributeNameSearch => (
     is      => 'rw',
     builder => sub {
-        return [
+        return $_[0]->{conf}->{ldapGroupAttributeNameSearch}
+          ? [
             split( /\s+/, $_[0]->{conf}->{ldapGroupAttributeNameSearch} ),
 
             # Push group attribute value for recursive search
@@ -56,7 +57,8 @@ has ldapGroupAttributeNameSearch => (
                 ? $_[0]->{conf}->{ldapGroupAttributeNameGroup}
                 : ()
             )
-        ];
+          ]
+          : [];
     }
 );
 
@@ -96,7 +98,7 @@ s/\$req->\{sessionInfo\}->\{(_?password|mail)\}/\$req->{datas}->{$1}/g;
 
 sub init {
     my ($self) = @_;
-    1;
+    $self->ldap and $self->filter;
 }
 
 sub getUser {
