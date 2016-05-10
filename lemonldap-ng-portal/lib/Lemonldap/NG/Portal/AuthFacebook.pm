@@ -155,7 +155,7 @@ sub extractFormInfo {
     # Build Facebook redirection
     # TODO: use a param to use "publish_stream" or not
     my $check_url = $self->fb()->get_authorization_url(
-        scope   => ['offline_access'],
+        scope   => [ 'public_profile', 'email' ],
         display => 'page',
     );
     print $self->redirect($check_url);
