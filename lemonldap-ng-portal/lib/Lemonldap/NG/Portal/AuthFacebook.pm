@@ -88,8 +88,8 @@ sub extractFormInfo {
         {
             $self->{sessionInfo}->{_facebookToken} = $access_token;
 
-            # Get fields (see https://developers.facebook.com/tools/explorer)
-            my @fields = ( 'id', 'username' );
+     # Get mandatory fields (see https://developers.facebook.com/tools/explorer)
+            my @fields = ('id');
 
             # Look at wanted fields
             my %vars =
@@ -128,13 +128,10 @@ sub extractFormInfo {
                 return PE_ERROR;
             }
 
-            # Look if a field can be used to trace user
-            unless ( $self->{user} = $datas->{username} ) {
-                $self->lmLog( 'Unable to get Facebook username', 'warn' );
-                unless ( $self->{user} = $datas->{id} ) {
-                    $self->lmLog( 'Unable to get Facebook id', 'error' );
-                    return PE_ERROR;
-                }
+            # Use id fieldto trace user
+            unless ( $self->{user} = $datas->{id} ) {
+                $self->lmLog( 'Unable to get Facebook id', 'error' );
+                return PE_ERROR;
             }
             $self->{_facebookDatas} = $datas;
 
