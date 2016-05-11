@@ -264,7 +264,8 @@ sub tree {
                                         'ldapPwdEnc',
                                         'ldapUsePasswordResetAttribute',
                                         'ldapPasswordResetAttribute',
-                                        'ldapPasswordResetAttributeValue'
+                                        'ldapPasswordResetAttributeValue',
+                                        'ldapAllowResetExpiredPassword'
                                     ]
                                 },
                             ]

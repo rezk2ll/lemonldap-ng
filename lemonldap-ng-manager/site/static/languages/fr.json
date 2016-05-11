@@ -254,6 +254,7 @@
 "languages": "Langues",
 "latest": "Dernière",
 "ldap": "LDAP",
+"ldapAllowResetExpiredPassword": "Autoriser le changement de mot de passe expiré",
 "ldapAuthnLevel": "Niveau d'authentification",
 "ldapBase": "Base de recherche des utilisateurs",
 "ldapChangePasswordAsUser": "Changement en tant qu'utilisateur",

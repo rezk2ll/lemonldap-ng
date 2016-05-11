@@ -1831,6 +1831,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'LDAP protocol version',
         },
         ldapRaw => { type => 'text', },
+        ldapAllowResetExpiredPassword => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Allow a user to reset his expired password',
+        },
 
         # SSL
         SSLAuthnLevel => {

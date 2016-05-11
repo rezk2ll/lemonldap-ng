@@ -76,6 +76,7 @@ sub defaultValues {
         'issuerDBSAMLPath'                => '^/saml/',
         'issuerDBSAMLRule'                => 1,
         'jsRedirect'                      => 0,
+        'ldapAllowResetExpiredPassword'   => 0,
         'ldapAuthnLevel'                  => 2,
         'ldapBase'                        => 'dc=example,dc=com',
         'ldapChangePasswordAsUser'        => 0,
