@@ -119,7 +119,11 @@ sub authenticate {
 
     # Remember password if password reset needed
     $self->{oldpassword} = $self->{password}
-      if ( $res == PE_PP_CHANGE_AFTER_RESET );
+      if (
+        $res == PE_PP_CHANGE_AFTER_RESET
+        or (    $res == PE_PP_PASSWORD_EXPIRED
+            and $self->{ldapAllowResetExpiredPassword} )
+      );
 
     return $res;
 }

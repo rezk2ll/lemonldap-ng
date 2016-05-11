@@ -398,10 +398,40 @@ sub userModifyPassword {
 
             # Bind as user if oldpassword and ldapChangePasswordAsUser
             if ( $oldpassword and $asUser ) {
-                $mesg = $self->bind( $dn, password => $oldpassword );
-                if ( $mesg->code != 0 ) {
-                    $self->{portal}->lmLog( "Bad old password", 'debug' );
-                    return PE_BADOLDPASSWORD;
+
+                $mesg = $self->bind(
+                    $dn,
+                    password => $oldpassword,
+                    control  => [$pp]
+                );
+                my ($bind_resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
+
+                unless ( defined $bind_resp ) {
+                    if ( $mesg->code != 0 ) {
+                        $self->{portal}->lmLog( "Bad old password", 'debug' );
+                        return PE_BADOLDPASSWORD;
+                    }
+                }
+                else {
+
+                    # Check if password is expired
+                    my $pp_error = $bind_resp->pp_error;
+                    if (    defined $pp_error
+                        and $pp_error == 0
+                        and $self->{portal}->{ldapAllowResetExpiredPassword} )
+                    {
+                        $self->{portal}->lmLog(
+"Password is expired but user is allowed to change it",
+                            'debug'
+                        );
+                    }
+                    else {
+                        if ( $mesg->code != 0 ) {
+                            $self->{portal}
+                              ->lmLog( "Bad old password", 'debug' );
+                            return PE_BADOLDPASSWORD;
+                        }
+                    }
                 }
             }
 
@@ -433,10 +463,39 @@ sub userModifyPassword {
             if ($oldpassword) {
 
                 # Check old password with a bind
-                $mesg = $self->bind( $dn, password => $oldpassword );
-                if ( $mesg->code != 0 ) {
-                    $self->{portal}->lmLog( "Bad old password", 'debug' );
-                    return PE_BADOLDPASSWORD;
+                $mesg = $self->bind(
+                    $dn,
+                    password => $oldpassword,
+                    control  => [$pp]
+                );
+                my ($bind_resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
+
+                unless ( defined $bind_resp ) {
+                    if ( $mesg->code != 0 ) {
+                        $self->{portal}->lmLog( "Bad old password", 'debug' );
+                        return PE_BADOLDPASSWORD;
+                    }
+                }
+                else {
+
+                    # Check if password is expired
+                    my $pp_error = $bind_resp->pp_error;
+                    if (    defined $pp_error
+                        and $pp_error == 0
+                        and $self->{portal}->{ldapAllowResetExpiredPassword} )
+                    {
+                        $self->{portal}->lmLog(
+"Password is expired but user is allowed to change it",
+                            'debug'
+                        );
+                    }
+                    else {
+                        if ( $mesg->code != 0 ) {
+                            $self->{portal}
+                              ->lmLog( "Bad old password", 'debug' );
+                            return PE_BADOLDPASSWORD;
+                        }
+                    }
                 }
 
           # Rebind as Manager only if user is not granted to change its password

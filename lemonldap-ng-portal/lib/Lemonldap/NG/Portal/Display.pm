@@ -230,6 +230,8 @@ sub display {
             or $self->{error} == PE_PASSWORD_MISMATCH
             or $self->{error} == PE_BADOLDPASSWORD
             or $self->{error} == PE_PASSWORDFORMEMPTY
+            or (    $self->{error} == PE_PP_PASSWORD_EXPIRED
+                and $self->{ldapAllowResetExpiredPassword} )
           )
         {
             %templateParams = (
