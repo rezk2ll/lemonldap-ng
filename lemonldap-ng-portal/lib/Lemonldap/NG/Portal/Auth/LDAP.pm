@@ -24,14 +24,12 @@ sub authenticate {
     }
 
     my $res =
-      $self->ldap->userBind( $req->datas->{dn},
-        password => $req->datas->{password} );
+      $self->userBind( $req->datas->{dn}, password => $req->datas->{password} );
 
     # Remember password if password reset needed
     $req->datas->{oldpassword} = $self->{password}
       if ( $res == PE_PP_CHANGE_AFTER_RESET );
 
-    $self->ldap->unbind;
     return $res;
 
 }
@@ -42,6 +40,17 @@ sub authLogout {
 
 sub authForce {
     PE_OK;
+}
+
+# Test LDAP connection before trying to bind
+sub userBind {
+    my $self = shift;
+    unless ($self->ldap
+        and $self->ldap->root_dse( attrs => ['supportedLDAPVersion'] ) )
+    {
+        $self->ldap( $self->newLdap );
+    }
+    return $self->ldap ? $self->ldap->userBind(@_) : undef;
 }
 
 1;

@@ -12,36 +12,35 @@ our $VERSION = '2.0.0';
 has ldap => (
     is      => 'rw',
     lazy    => 1,
-    builder => sub {
-        my $self = $_[0];
-        my $ldap;
+    builder => 'newLdap';
+);
 
-        # Build object and test LDAP connexion
-        if (
-            $ldap = Lemonldap::NG::Portal::Lib::LDAP->new(
-                { p => $self->{p}, conf => $self->{conf} }
-            )
-            and my $msg = $ldap->bind
-          )
-        {
-            if ( $msg->code != 0 ) {
-                $self->lmLog( "LDAP error: " . $msg->error, 'error' );
-            }
-            else {
-                if ( $self->{conf}->{ldapPpolicyControl}
-                    and not $ldap->loadPP() )
-                {
-                    $self->lmLog( "LDAP password policy error", 'error' );
-                }
-            }
+sub newLdap {
+    my $self = $_[0];
+    my $ldap;
+
+    # Build object and test LDAP connexion
+    if (
+        $ldap = Lemonldap::NG::Portal::Lib::LDAP->new(
+            { p => $self->{p}, conf => $self->{conf} }
+        )
+        and my $msg = $ldap->bind
+      )
+    {
+        if ( $msg->code != 0 ) {
+            $self->lmLog( "LDAP error: " . $msg->error, 'error' );
         }
         else {
-            $self->lmLog( "LDAP error: $@", 'error' );
+            if ( $self->{conf}->{ldapPpolicyControl} and not $ldap->loadPP() ) {
+                $self->lmLog( "LDAP password policy error", 'error' );
+            }
         }
-        $ldap->unbind;
-        return $ldap;
     }
-);
+    else {
+        $self->lmLog( "LDAP error: $@", 'error' );
+    }
+    return $ldap;
+}
 
 has ldapGroupAttributeNameSearch => (
     is      => 'rw',
@@ -101,9 +100,20 @@ sub init {
     $self->ldap and $self->filter;
 }
 
+# Test LDAP connection before trying to bind
+sub bind {
+    my $self = shift;
+    unless ($self->ldap
+        and $self->ldap->root_dse( attrs => ['supportedLDAPVersion'] ) )
+    {
+        $self->ldap( $self->newLdap );
+    }
+    return $self->ldap ? $self->ldap->bind(@_) : undef;
+}
+
 sub getUser {
     my ( $self, $req ) = @_;
-    return PE_LDAPCONNECTFAILED unless $self->ldap and $self->ldap->bind();
+    return PE_LDAPCONNECTFAILED unless $self->ldap and $self->bind();
     my $mesg = $self->ldap->search(
         base   => $self->conf->{ldapBase},
         scope  => 'sub',
@@ -113,19 +123,16 @@ sub getUser {
     );
     if ( $mesg->code() != 0 ) {
         $self->lmLog( 'LDAP Search error: ' . $mesg->error, 'error' );
-        $self->ldap->unbind;
         return PE_LDAPERROR;
     }
     if ( $mesg->count() > 1 ) {
         $self->lmLog( 'More than one entry returned by LDAP directory',
             'error' );
-        $self->ldap->unbind;
         return PE_BADCREDENTIALS;
     }
     unless ( $req->datas->entry( $mesg->entry(0) ) ) {
         my $user = $req->{mail} || $req->{user};
         $self->_sub( 'userError', "$user was not found in LDAP directory" );
-        $self->ldap->unbind;
         return PE_BADCREDENTIALS;
     }
     $req->datas->{dn} = $req->datas->{entry}->dn();
@@ -193,7 +200,6 @@ sub setGroups {
     }
 
     $self->{sessionInfo}->{groups} = $groups;
-    $self->ldap->unbind;
     PE_OK;
 }
 

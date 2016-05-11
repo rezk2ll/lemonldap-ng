@@ -9,6 +9,7 @@ use base qw(Net::LDAP);
 use Lemonldap::NG::Portal::Main::Constants;
 use Encode;
 use Unicode::String qw(utf8);
+use Scalar::Util 'weaken';
 
 our $VERSION  = '2.0.0';
 our $ppLoaded = 0;
@@ -66,6 +67,7 @@ sub new {
     }
     $self->{portal} = $portal;
     $self->{conf}   = $conf;
+    weaken $self->{portal};
 
     # Setting default LDAP password storage encoding to utf-8
     $self->{conf}->{ldapPwdEnc} ||= 'utf-8';
