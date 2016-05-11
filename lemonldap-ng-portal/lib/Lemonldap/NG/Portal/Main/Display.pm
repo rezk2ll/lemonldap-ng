@@ -207,6 +207,8 @@ sub display {
             or $req->{error} == PE_PASSWORD_MISMATCH
             or $req->{error} == PE_BADOLDPASSWORD
             or $req->{error} == PE_PASSWORDFORMEMPTY
+            or (    $req->{error} == PE_PP_PASSWORD_EXPIRED
+                and $self->conf->{ldapAllowResetExpiredPassword} )
           )
         {
             %templateParams = (
@@ -221,8 +223,8 @@ sub display {
                 AUTH_LOOP             => [],
                 CHOICE_PARAM          => $self->conf->{authChoiceParam},
                 CHOICE_VALUE          => $req->{_authChoice},
-                OLDPASSWORD =>
-                  $self->checkXSSAttack( 'oldpassword', $req->datas->{oldpassword} )
+                OLDPASSWORD           => $self->checkXSSAttack( 'oldpassword',
+                    $req->datas->{oldpassword} )
                 ? ""
                 : $req->datas->{oldpassword},
                 HIDE_OLDPASSWORD => $self->conf->{hideOldPassword},
