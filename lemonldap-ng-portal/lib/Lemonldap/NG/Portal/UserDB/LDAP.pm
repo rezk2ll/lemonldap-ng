@@ -12,7 +12,7 @@ our $VERSION = '2.0.0';
 has ldap => (
     is      => 'rw',
     lazy    => 1,
-    builder => 'newLdap';
+    builder => 'newLdap',
 );
 
 sub newLdap {
@@ -90,7 +90,7 @@ has filter => (
         $filter =~
 s/\$req->\{sessionInfo\}->\{(_?password|mail)\}/\$req->{datas}->{$1}/g;
         $_[0]->{p}->lmLog( "LDAP transformed filter: $filter", 'debug' );
-        $filter = "sub{my(\$self,\$req)=\@_;return \"$filter\";}";
+        $filter = "sub{my(\$req)=\$_[0];return \"$filter\";}";
         return eval $filter;
     }
 );
@@ -130,9 +130,9 @@ sub getUser {
             'error' );
         return PE_BADCREDENTIALS;
     }
-    unless ( $req->datas->entry( $mesg->entry(0) ) ) {
+    unless ( $req->datas->{entry} = $mesg->entry(0) ) {
         my $user = $req->{mail} || $req->{user};
-        $self->_sub( 'userError', "$user was not found in LDAP directory" );
+        $self->p->userError("$user was not found in LDAP directory");
         return PE_BADCREDENTIALS;
     }
     $req->datas->{dn} = $req->datas->{entry}->dn();

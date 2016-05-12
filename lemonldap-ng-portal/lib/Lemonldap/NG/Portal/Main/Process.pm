@@ -22,13 +22,14 @@ sub process {
     while ( my $sub = shift @{ $req->steps } ) {
         if ( ref $sub ) {
             $self->lmLog( "Processing code ref", 'debug' );
-            last if ( $sub->($req) );
+            last if ( $err = $sub->($req) );
         }
         else {
             $self->lmLog( "Processing $sub", 'debug' );
             last if ( $err = $self->$sub($req) );
         }
     }
+    $self->lmLog( "Returned error: $err", 'debug' ) if ($err);
     return $err;
 }
 
