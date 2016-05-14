@@ -9,7 +9,7 @@ use Exporter;
 use base qw(Exporter);
 use strict;
 
-our @EXPORT  = qw(checkIP);
+our @EXPORT  = qw(checkIP checkHeader);
 our $VERSION = '2.0.0';
 
 ## @method Lemonldap::NG::Portal::_Slave checkIP()
