@@ -30,7 +30,7 @@ describe('Lemonldap::NG Manager', function() {
     });
     it('should save new configuration', function() {
       element(by.id('save')).click();
-      element(by.id('longtextinput')).sendKeys('Activate SAML');
+      element(by.id('longtextinput')).sendKeys('Create OIDC OP');
       element(by.id('saveok')).click();
       element(by.id('messageok')).click();
       expect(element(by.id('cfgnum')).getText()).toEqual('5');
