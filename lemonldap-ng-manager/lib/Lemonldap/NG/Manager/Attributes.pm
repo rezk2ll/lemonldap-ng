@@ -31,12 +31,12 @@ sub types {
                     'iso2unicode',   'groupMatch',
                     'encrypt'
                 );
-                push @cf, defined $$conf{'customFunctions'}
+                push @cf, defined $conf->{'customFunctions'}
                   ? map( {
                         my $f = $_;
                           $f =~ s/\w+:://g;
                           $f, $_;
-                    } split( /\s+/, $$conf{'customFunctions'}, 0 ) )
+                    } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
                   : ();
                 foreach my $f (@cf) {
                     $s = "sub $f {1} $s";
@@ -83,10 +83,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'test' => sub {
                 my ( $val, $conf ) = @_;
                 return 1
-                  if defined $$conf{'macros'}{$val} or $val eq '_timezone';
+                  if defined $conf->{'macros'}{$val} or $val eq '_timezone';
                 foreach $_ ( keys %$conf ) {
                     return 1
-                      if $_ =~ /exportedvars$/i and defined $$conf{$_}{$val};
+                      if $_ =~ /exportedvars$/i and defined $conf->{$_}{$val};
                 }
                 return 1, "__unknownAttrOrMacro__: $val";
               }
@@ -221,7 +221,7 @@ m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\
             'test' => sub {
                 my $test =
                   grep( { $_ eq $_[0]; }
-                    map( { $$_{'k'}; } @{ $_[2]{'select'}; } ) );
+                    map( { $_->{'k'}; } @{ $_[2]{'select'}; } ) );
                 return $test
                   ? 1
                   : ( 0, "Invalid value '$_[0]' for this select" );
@@ -803,12 +803,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                         'iso2unicode',   'groupMatch',
                         'encrypt'
                     );
-                    push @cf, defined $$conf{'customFunctions'}
+                    push @cf, defined $conf->{'customFunctions'}
                       ? map( {
                             my $f = $_;
                               $f =~ s/\w+:://g;
                               $f, $_;
-                        } split( /\s+/, $$conf{'customFunctions'}, 0 ) )
+                        } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
                       : ();
                     foreach my $f (@cf) {
                         $s = "sub $f {1} $s";
@@ -887,12 +887,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     'iso2unicode',   'groupMatch',
                     'encrypt'
                 );
-                push @cf, defined $$conf{'customFunctions'}
+                push @cf, defined $conf->{'customFunctions'}
                   ? map( {
                         my $f = $_;
                           $f =~ s/\w+:://g;
                           $f, $_;
-                    } split( /\s+/, $$conf{'customFunctions'}, 0 ) )
+                    } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
                   : ();
                 foreach my $f (@cf) {
                     $s = "sub $f {1} $s";
@@ -917,12 +917,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     'iso2unicode',   'groupMatch',
                     'encrypt'
                 );
-                push @cf, defined $$conf{'customFunctions'}
+                push @cf, defined $conf->{'customFunctions'}
                   ? map( {
                         my $f = $_;
                           $f =~ s/\w+:://g;
                           $f, $_;
-                    } split( /\s+/, $$conf{'customFunctions'}, 0 ) )
+                    } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
                   : ();
                 foreach my $f (@cf) {
                     $s = "sub $f {1} $s";
@@ -1128,7 +1128,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 'ldap://localhost',
             'test'    => sub {
                 my $l = shift();
-                my (@s) = split( /[\s,]+/, $l, 0 );
+                my @s = split( /[\s,]+/, $l, 0 );
                 foreach my $s (@s) {
                     return 0, qq[__badLdapUri__: "$s"]
                       unless $s =~
@@ -1202,12 +1202,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                         'iso2unicode',   'groupMatch',
                         'encrypt'
                     );
-                    push @cf, defined $$conf{'customFunctions'}
+                    push @cf, defined $conf->{'customFunctions'}
                       ? map( {
                             my $f = $_;
                               $f =~ s/\w+:://g;
                               $f, $_;
-                        } split( /\s+/, $$conf{'customFunctions'}, 0 ) )
+                        } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
                       : ();
                     foreach my $f (@cf) {
                         $s = "sub $f {1} $s";
@@ -1240,12 +1240,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     'iso2unicode',   'groupMatch',
                     'encrypt'
                 );
-                push @cf, defined $$conf{'customFunctions'}
+                push @cf, defined $conf->{'customFunctions'}
                   ? map( {
                         my $f = $_;
                           $f =~ s/\w+:://g;
                           $f, $_;
-                    } split( /\s+/, $$conf{'customFunctions'}, 0 ) )
+                    } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
                   : ();
                 foreach my $f (@cf) {
                     $s = "sub $f {1} $s";
@@ -1858,12 +1858,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     'iso2unicode',   'groupMatch',
                     'encrypt'
                 );
-                push @cf, defined $$conf{'customFunctions'}
+                push @cf, defined $conf->{'customFunctions'}
                   ? map( {
                         my $f = $_;
                           $f =~ s/\w+:://g;
                           $f, $_;
-                    } split( /\s+/, $$conf{'customFunctions'}, 0 ) )
+                    } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
                   : ();
                 foreach my $f (@cf) {
                     $s = "sub $f {1} $s";
