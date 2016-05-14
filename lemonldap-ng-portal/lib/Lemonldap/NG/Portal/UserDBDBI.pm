@@ -118,47 +118,5 @@ sub setGroups {
     PE_OK;
 }
 
-## @method boolean setUserDBValue(string key, string value)
-# Store a value in UserDB
-# @param key Key in user information
-# @param value Value to store
-# @return result
-sub setUserDBValue {
-    my ( $self, $key, $value ) = @_;
-
-    # Mandatory attributes
-    return 0 unless defined $key;
-
-    # Write in database
-    $self->lmLog( "Replace $key attribute in database with value $value",
-        'debug' );
-
-    # Connect
-    my $dbh =
-      $self->dbh( $self->{dbiUserChain}, $self->{dbiUserUser},
-        $self->{dbiUserPassword} );
-    return 0 unless $dbh;
-
-    my $table = $self->{dbiUserTable};
-    my $pivot = $self->{userPivot};
-    my $user  = $self->{user};
-
-    $user =~ s/'/''/g;
-    my $sth;
-
-    eval {
-        $sth = $dbh->prepare("UPDATE $table SET $key = $value WHERE $pivot=?");
-        $sth->execute($user);
-    };
-
-    # Check result
-    if ($@) {
-        $self->lmLog( "DBI error: $@", 'error' );
-        return 0;
-    }
-
-    return 1;
-}
-
 1;
 
