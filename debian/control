@@ -45,7 +45,7 @@ Build-Depends-Indep: libapache-session-perl,
                      libxml-libxslt-perl,
                      libxml-simple-perl,
                      perl
-Standards-Version: 3.9.7
+Standards-Version: 3.9.8
 Vcs-Browser: https://anonscm.debian.org/cgit/pkg-perl/packages/lemonldap-ng.git
 Vcs-Git: https://anonscm.debian.org/git/pkg-perl/packages/lemonldap-ng.git
 Homepage: http://lemonldap-ng.org/
@@ -53,7 +53,7 @@ Homepage: http://lemonldap-ng.org/
 Package: lemonldap-ng
 Architecture: all
 Depends: ${misc:Depends},
-         liblemonldap-ng-handler-perl (= ${binary:Version}),
+         lemonldap-ng-handler (= ${binary:Version}),
          liblemonldap-ng-manager-perl (= ${binary:Version}),
          liblemonldap-ng-portal-perl (= ${binary:Version})
 Provides: openid-connect-provider,
@@ -112,9 +112,9 @@ Package: lemonldap-ng-fastcgi-server
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
-         nginx-extras | nginx,
          liblemonldap-ng-handler-perl,
-         libplack-perl
+         libplack-perl,
+         nginx-extras | nginx
 Recommends: libhttp-parser-xs-perl,
 Suggests: nginx-extras
 Section: web
@@ -131,11 +131,31 @@ Description: Lemonldap::NG FastCGI server
  .
  Lemonldap::NG FastCGI server provides a Nginx auth_request server.
 
+Package: lemonldap-ng-handler
+Architecture: all
+Depends: ${misc:Depends},
+         libapache2-mod-perl2 | lemonldap-ng-fastcgi-server (= ${binary:Version}),
+         liblemonldap-ng-handler-perl (= ${binary:Version})
+Breaks: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
+Replaces: liblemonldap-ng-handler-perl (<< 1.9.1-2~)
+Description: Lemonldap::NG Apache handler part
+ Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
+ or directly on application Apache servers. It can be used in conjunction with
+ OpenID-Connect, CAS and SAML systems as identity or service provider. It can
+ also be used as proxy between those federation systems.
+ .
+ It manages both authentication and authorization and provides headers for
+ accounting. So you can have a full AAA protection. Authorization are built by
+ associating a regular expression and a rule. Regular expression is applied on
+ the requested URL and the rule calculates if the user is authorized.
+ .
+ This package provides configuration files for Apache and Nginx used to protect
+ web areas.
+
 Package: liblemonldap-ng-handler-perl
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
-         libapache2-mod-perl2 | lemonldap-ng-fastcgi-server,
          liblemonldap-ng-common-perl (= ${binary:Version}),
          libmouse-perl,
          liburi-perl,
@@ -157,8 +177,7 @@ Description: Lemonldap::NG Apache handler part
  associating a regular expression and a rule. Regular expression is applied on
  the requested URL and the rule calculates if the user is authorized.
  .
- Lemonldap::NG::Handler is the Apache module part (handler) used to protect web
- areas.
+ Lemonldap::NG::Handler provides Perl libraries used by web server handlers.
 
 Package: liblemonldap-ng-conf-perl
 Depends: ${misc:Depends},

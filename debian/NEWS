@@ -1,3 +1,11 @@
+lemonldap-ng (1.9.3-1) unstable; urgency=medium
+
+  liblemonldap-ng-handler-perl package has been split into:
+  - lemonldap-ng-handler that provides web server configuration
+  - liblemonldap-ng-handler-perl that provides Perl libraries only
+
+ -- Xavier Guimard <x.guimard@free.fr>  Sat, 17 May 2016 22:25:43 +0200
+
 lemonldap-ng (1.9.0-1) unstable; urgency=low
 
   1) Configuration and sessions storage
