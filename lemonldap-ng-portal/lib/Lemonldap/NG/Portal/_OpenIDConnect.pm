@@ -1149,7 +1149,7 @@ sub getAttributesListFromClaim {
 
     # Additional claims
     my $extraClaims =
-      $self->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsExtraClaims};
+      $self->{oidcRPMetaDataOptionsExtraClaims}->{$rp};
 
     if ($extraClaims) {
         foreach my $claim ( keys %$extraClaims ) {

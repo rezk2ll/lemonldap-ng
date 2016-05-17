@@ -26,7 +26,7 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsExtraClaims')).click();
       element(by.css('.glyphicon-plus-sign')).click();
       element(by.id('a-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsExtraClaims')).click();
-      element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsExtraClaims/n1')).click();
+      element(by.id('t-oidcRPMetaDataNodes/new__rp-example/oidcRPMetaDataOptionsExtraClaims/n2')).click();
       element(by.id('hashkeyinput')).clear().sendKeys('MyClaim');
       element(by.id('hashvalueinput')).clear().sendKeys('MyAttribute');
     });

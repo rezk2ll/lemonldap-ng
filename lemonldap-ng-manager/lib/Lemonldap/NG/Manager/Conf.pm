@@ -434,7 +434,10 @@ sub _oidcMetaDataNodes {
     my ( $id, $resp ) = ( 1, [] );
 
     # Return all exported attributes if asked
-    if ( $query =~ /^oidc${type}MetaDataExportedVars$/ ) {
+    if ( $query =~
+        /^(?:oidc${type}MetaDataExportedVars|oidcRPMetaDataOptionsExtraClaims)$/
+      )
+    {
         my $pk = eval { $self->getConfKey( $req, $query )->{$partner} } // {};
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
         foreach my $h ( sort keys %$pk ) {
