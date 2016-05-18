@@ -1,0 +1,4 @@
+# These 3 demo accounts use their name as password
+lemonldap-ng: spelling-error-in-readme-debian rtyler rtyler (duplicate word) rtyler
+lemonldap-ng: spelling-error-in-readme-debian msmith msmith (duplicate word) msmith
+lemonldap-ng: spelling-error-in-readme-debian dwho dwho (duplicate word) dwho
