@@ -28,8 +28,9 @@ has 'kind' => (
 );
 
 has 'data' => (
-    is  => 'rw',
-    isa => 'HashRef',
+    is      => 'rw',
+    isa     => 'HashRef',
+    default => sub { {} },
 );
 
 has 'options' => (
