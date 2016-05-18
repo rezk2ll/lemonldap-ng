@@ -815,8 +815,9 @@ sub attributes {
             documentation => 'URL of password reset page',
         },
         SMTPServer => {
-            type          => 'hostname',
-            default       => '',
+            type    => 'text',
+            default => '',
+            test    => qr/^(?:$Regexp::Common::URI::RFC2396::host(?::\d+)?)?$/,
             documentation => 'SMTP Server',
         },
         SMTPAuthUser => { type => 'text', },
@@ -1830,7 +1831,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 3,
             documentation => 'LDAP protocol version',
         },
-        ldapRaw => { type => 'text', },
+        ldapRaw                       => { type => 'text', },
         ldapAllowResetExpiredPassword => {
             default       => 0,
             type          => 'bool',
