@@ -2755,7 +2755,7 @@ sub getCustomTemplateParameters {
         $self->lmLog( "Set custom template parameter $tplParam with $tplValue",
             'debug' );
 
-        $customTplParams->{$tplParam} = $tplValue;
+        $customTplParams->{$tplParam} = $self->safe->reval($tplValue);
     }
 
     return $customTplParams;
