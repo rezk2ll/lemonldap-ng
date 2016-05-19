@@ -1,0 +1,126 @@
+package Lemonldap::NG::Portal::Auth::AD;
+
+use strict;
+use Mouse;
+use Lemonldap::NG::Portal::Main::Constants;
+
+our $VERSION = '2.0.0';
+
+extends 'Lemonldap::NG::Portal::Auth::LDAP';
+
+has adPwdMaxAge => (
+    is      => 'rw',
+    builder => sub {
+        my $conf = $_[0]->{conf};
+        my $res = $conf->{ADPwdMaxAge} || 0;
+        return $res * 10000000;   # padding with '0' to obtain 0.1 micro-seconds
+    }
+);
+
+has adPwdExpireWarning => (
+    is      => 'rw',
+    builder => sub {
+        my $conf = $_[0]->{conf};
+        my $res = $conf->{ADPwdExpireWarning} || 0;
+        return $res * 10000000;   # padding with '0' to obtain 0.1 micro-seconds
+    }
+);
+
+sub init {
+    my ($self) = @_;
+
+    $self->conf->{ldapExportedVars}->{_AD_pwdLastSet} = 'pwdLastSet';
+    $self->conf->{ldapExportedVars}->{_AD_userAccountControl} =
+      'userAccountControl';
+    $self->conf->{ldapExportedVars}->{_AD_msDS_UACC} =
+      'msDS-User-Account-Control-Computed';
+
+    if ( $self->adPwdExpireWarning > $self->adPwdMaxAge ) {
+        $self->adPwdExpireWarning( $self->adPwdMaxAge );
+        $self->lmLog(
+            "Error: ADPwdExpireWarning > ADPwdMaxAge, this should not happen",
+            'warn' );
+    }
+    return $self->SUPER::init();
+}
+
+sub authenticate {
+    my ( $self, $req ) = @_;
+    my $res = $self->SUPER::authenticate;
+
+    unless ( $res == PE_OK ) {
+
+        # Check specific AD attributes
+        my $pls      = $req->{sessionInfo}->{_AD_pwdLastSet};
+        my $computed = $req->{sessionInfo}->{_AD_msDS_UACC};
+        my $mask = 0xf00000;    # mask to get the 8 at 6th position
+        my $expired_flag =
+          0x800000;   # 8 at 6th position for flag UF_PASSWORD_EXPIRED to be set
+        if ( ( $computed & $mask ) == $expired_flag ) {
+            $self->lmLog( "[AD] Password has expired", 'warn' );
+            $res = PE_PP_PASSWORD_EXPIRED;
+        }
+
+        # Password must be changed if pwdLastSet 0
+        if ( defined $pls and $pls == 0 ) {
+            $self->lmLog( "[AD] Password reset. User must change his password",
+                'warn' );
+            $res = PE_PP_CHANGE_AFTER_RESET;
+        }
+
+    }
+    else {
+
+        # get userAccountControl to ckeck password expiration flags
+        my $_adUac = $req->{sessionInfo}->{_AD_userAccountControl} || 0;
+
+        # Compute current timestamp in AD format (date)
+        my $time = time;    # unix timestamp (seconds since Jan 01 1970)
+        my $a_time =
+          $time + 11644473600;    # adding difference (in s) from Jan 01 1601
+        my $timestamp =
+          $a_time . '0000000';   # padding with '0' to obatin 0.1 micro-seconds
+
+        # Compute password expiration time (date)
+        my $_pwdExpire = $req->{sessionInfo}->{_AD_pwdLastSet} || $timestamp;
+        $_pwdExpire += $self->adPwdMaxAge;
+
+        # computing when the warning message is displayed on portal
+        # (date - delay = date)
+        my $_pwdWarning = $_pwdExpire - $self->adPwdExpireWarning;
+
+        # display warning if account warning time before expiration is
+        # reached and flag "password nevers expires" is not set
+        if (   $timestamp > $_pwdWarning
+            && $timestamp < $_pwdExpire
+            && ( $_adUac & 0x10000 ) != 0x10000 )
+        {
+
+            # calculating remaining time before password expiration
+            my $remainingTime = $_pwdExpire - $timestamp;
+            $self->info(
+                "<h3>"
+                  . sprintf(
+                    $self->msg(PM_PP_EXP_WARNING),
+                    $self->convertSec(
+                        substr( $remainingTime, 0, length($remainingTime) - 7 )
+                    )
+                  )
+                  . "</h3>"
+            );
+        }
+
+    }
+
+    # Remember password if password reset needed
+    $req->datas->{oldpassword} = $req->datas->{password}
+      if (
+        $res == PE_PP_CHANGE_AFTER_RESET
+        or (    $res == PE_PP_PASSWORD_EXPIRED
+            and $self->conf->{ldapAllowResetExpiredPassword} )
+      );
+
+    return $res;
+}
+
+1;

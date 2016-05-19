@@ -74,26 +74,27 @@ has attrs => (
 has filter => (
     is      => 'rw',
     lazy    => 1,
-    builder => sub {
-        my $conf = $_[0]->{conf};
-        $_[0]->{p}
-          ->lmLog( "LDAP Search base: $_[0]->{conf}->{ldapBase}", 'debug' );
-
-        # TODO : mailLDAPFilter
-        my $filter =
-             $conf->{AuthLDAPFilter}
-          || $conf->{LDAPFilter}
-          || '(&(uid=$user)(objectClass=inetOrgPerson))';
-        $filter =~ s/"/\\"/g;
-        $filter =~ s/\$(\w+)/".\$req->{sessionInfo}->{$1}."/g;
-        $filter =~ s/\$req->\{sessionInfo\}->\{user\}/\$req->{user}/g;
-        $filter =~
-s/\$req->\{sessionInfo\}->\{(_?password|mail)\}/\$req->{datas}->{$1}/g;
-        $_[0]->{p}->lmLog( "LDAP transformed filter: $filter", 'debug' );
-        $filter = "sub{my(\$req)=\$_[0];return \"$filter\";}";
-        return eval $filter;
-    }
+    builder => 'buildFilter',
 );
+
+sub buildFilter {
+    my $conf = $_[0]->{conf};
+    $_[0]->{p}->lmLog( "LDAP Search base: $_[0]->{conf}->{ldapBase}", 'debug' );
+
+    # TODO : mailLDAPFilter
+    my $filter =
+         $conf->{AuthLDAPFilter}
+      || $conf->{LDAPFilter}
+      || '(&(uid=$user)(objectClass=inetOrgPerson))';
+    $filter =~ s/"/\\"/g;
+    $filter =~ s/\$(\w+)/".\$req->{sessionInfo}->{$1}."/g;
+    $filter =~ s/\$req->\{sessionInfo\}->\{user\}/\$req->{user}/g;
+    $filter =~
+      s/\$req->\{sessionInfo\}->\{(_?password|mail)\}/\$req->{datas}->{$1}/g;
+    $_[0]->{p}->lmLog( "LDAP transformed filter: $filter", 'debug' );
+    $filter = "sub{my(\$req)=\$_[0];return \"$filter\";}";
+    return eval $filter;
+}
 
 sub init {
     my ($self) = @_;
