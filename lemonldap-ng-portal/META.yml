@@ -19,7 +19,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: '0'
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 7.0401, CPAN::Meta::Converter version 2.150005'
+generated_by: 'ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.150005'
 license: open_source
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -41,9 +41,9 @@ recommends:
   Lemonldap::NG::Handler: v1.9.0
   MIME::Lite: '0'
   Net::Facebook::Oauth2: '0'
+  Net::OAuth: '0'
   Net::OpenID::Consumer: '0'
   Net::OpenID::Server: '0'
-  Net::Twitter: '0'
   SOAP::Lite: '0'
   String::Random: '0'
   URI: '0'
