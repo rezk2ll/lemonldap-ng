@@ -60,7 +60,7 @@ sub extractFormInfo {
         $self->lmLog( 'Redirection to Twitter', 'debug' );
 
         # 1.1 Try to get token to dialog with Twitter
-        my $callback_url = $self->{portal};
+        my $callback_url = $self->url();
 
         # Twitter callback parameter
         $callback_url .=
@@ -81,7 +81,7 @@ sub extractFormInfo {
         # Forward hidden fields
         if ( exists $self->{portalHiddenFormValues} ) {
 
-            $self->lmLog( "Add hidden values to CAS redirect URL\n", 'debug' );
+            $self->lmLog( "Add hidden values to Twitter redirect URL", 'debug' );
 
             foreach ( keys %{ $self->{portalHiddenFormValues} } ) {
                 $callback_url .=
