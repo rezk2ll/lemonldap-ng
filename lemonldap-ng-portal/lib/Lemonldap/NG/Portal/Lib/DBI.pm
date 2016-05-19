@@ -16,6 +16,7 @@ our $VERSION = '2.0.0';
 # dbh object: DB connection object
 has dbh => (
     is      => 'rw',
+    lazy    => 1,
     builder => sub {
         my $conf = $_[0]->{conf};
         my $dbh  = eval {
@@ -45,8 +46,8 @@ sub hash_password {
         return uc($hash) . "($password)";
     }
     else {
-        $self->lmLog(
-            "No valid password hash, using clear text for password", 'warn' );
+        $self->lmLog( "No valid password hash, using clear text for password",
+            'warn' );
         return $password;
     }
 
@@ -58,7 +59,7 @@ sub hash_password {
 # @param hash hash mechanism
 # @return SQL statement string
 sub hash_password_for_select {
-    my($self, $password, $hash)=@_;
+    my ( $self, $password, $hash ) = @_;
     my $passwordCol = $self->conf->{dbiAuthPasswordCol};
 
     if ( $hash =~ /^encrypt$/i ) {
@@ -70,21 +71,26 @@ sub hash_password_for_select {
 }
 
 # Verify user and password with SQL SELECT
-# @param dbh database handle
 # @param user user
 # @param password password
 # @return boolean result
 sub check_password {
-    my($self, $user,$password)         = @_;
-    $user        ||= $self->{user};
-    $password    ||= $self->{password};
+    my ( $self, $user, $password ) = @_;
+
+    # If $user is an object then it's a Lemonldap::NG::Portal::Main::Request
+    # object
+    if ( ref($user) ) {
+        $password ||= $user->datas->{password};
+        $user ||= $user->{user};
+    }
     my $table       = $self->conf->{dbiAuthTable};
     my $loginCol    = $self->conf->{dbiAuthLoginCol};
     my $passwordCol = $self->conf->{dbiAuthPasswordCol};
 
     # Password hash
     my $passwordsql =
-      $self->hash_password_for_select( "?", $self->conf->{dbiAuthPasswordHash} );
+      $self->hash_password_for_select( "?",
+        $self->conf->{dbiAuthPasswordHash} );
 
     my @rows = ();
     eval {
@@ -104,7 +110,7 @@ sub check_password {
         return 1;
     }
     else {
-        $self->p->userError( "Bad password for $user" );
+        $self->p->userError("Bad password for $user");
         return 0;
     }
 
@@ -118,17 +124,19 @@ sub check_password {
 # @param passwordCol optional password column
 # @return boolean result
 sub modify_password {
-    my($self,$user,$password,$userCol,$passwordCol)=@_;
+    my ( $self, $user, $password, $userCol, $passwordCol ) = @_;
     $userCol     ||= $self->conf->{dbiAuthLoginCol};
     $passwordCol ||= $self->conf->{dbiAuthPasswordCol};
 
     my $table = $self->conf->{dbiAuthTable};
 
     # Password hash
-    my $passwordsql = $self->hash_password( "?", $self->conf->{dbiAuthPasswordHash} );
+    my $passwordsql =
+      $self->hash_password( "?", $self->conf->{dbiAuthPasswordHash} );
 
     eval {
-        my $sth = $self->dbh->prepare( "UPDATE $table SET $passwordCol=$passwordsql WHERE $userCol=?");
+        my $sth = $self->dbh->prepare(
+            "UPDATE $table SET $passwordCol=$passwordsql WHERE $userCol=?");
         $sth->execute( $password, $user );
     };
     if ($@) {
