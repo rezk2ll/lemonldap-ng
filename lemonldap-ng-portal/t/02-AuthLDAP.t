@@ -32,7 +32,7 @@ SKIP: {
     ok(
         $res = &client->_post(
             '/', '',
-            IO::String->new('user=dwho&password=dwho'),
+            IO::String->new($postString),
             'application/x-www-form-urlencoded',
             length($postString)
         ),
