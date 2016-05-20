@@ -1,3 +1,6 @@
+# Auth::AD inherits from Auth::LDAP. It defines some additional configuration
+# parameters and manage AD password expiration
+
 package Lemonldap::NG::Portal::Auth::AD;
 
 use strict;
@@ -26,6 +29,13 @@ has adPwdExpireWarning => (
     }
 );
 
+# AD timestamp starts from Jan 01 1601 and is defined in 0.1 micro seconds.
+# This method converts Unix timestamp into AD timestamp.
+sub adTime {
+    return ( time + 11644473600 ) * 10000000;
+}
+
+# Initialization: update LDAP configuration
 sub init {
     my ($self) = @_;
 
@@ -74,12 +84,7 @@ sub authenticate {
         # get userAccountControl to ckeck password expiration flags
         my $_adUac = $req->{sessionInfo}->{_AD_userAccountControl} || 0;
 
-        # Compute current timestamp in AD format (date)
-        my $time = time;    # unix timestamp (seconds since Jan 01 1970)
-        my $a_time =
-          $time + 11644473600;    # adding difference (in s) from Jan 01 1601
-        my $timestamp =
-          $a_time . '0000000';   # padding with '0' to obatin 0.1 micro-seconds
+        my $timestamp = $self->adTime;
 
         # Compute password expiration time (date)
         my $_pwdExpire = $req->{sessionInfo}->{_AD_pwdLastSet} || $timestamp;

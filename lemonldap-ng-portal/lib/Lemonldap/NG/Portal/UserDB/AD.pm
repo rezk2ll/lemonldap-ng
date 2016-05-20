@@ -1,3 +1,4 @@
+# UserDB::AD inherits from UserDB::LDAP. It just redefined default filter
 package Lemonldap::NG::Portal::UserDB::AD;
 
 use strict;
