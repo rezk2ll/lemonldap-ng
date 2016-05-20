@@ -7,7 +7,7 @@ require 't/test-lib.pm';
 my $res;
 
 SKIP: {
-    skip 'No LDAP server given', 3 unless ( $ENV{LDAPSERVER} );
+    skip 'No AD server given', 3 unless ( $ENV{ADSERVER} );
 
     init(
         {
@@ -15,17 +15,17 @@ SKIP: {
             useSafeJail     => 1,
             authentication  => 'AD',
             userDB          => 'AD',
-            LDAPFilter      => $ENV{LDAPFILTER} || '(cn=$user)',
-            ldapServer      => $ENV{LDAPSERVER},
-            ldapBase        => $ENV{LDAPBASE},
+            LDAPFilter      => $ENV{ADFILTER} || '(cn=$user)',
+            ldapServer      => $ENV{ADSERVER},
+            ldapBase        => $ENV{ADBASE},
             managerDn       => $ENV{MANAGERDN} || '',
             managerPassword => $ENV{MANAGERPASSWORD} || '',
         }
     );
     my $postString = 'user='
-      . ( $ENV{LDAPACCOUNT} || 'dwho' )
+      . ( $ENV{ADACCOUNT} || 'dwho' )
       . '&password='
-      . ( $ENV{LDAPPWD} || 'dwho' );
+      . ( $ENV{ADPWD} || 'dwho' );
 
     # Try yo authenticate
     # -------------------
