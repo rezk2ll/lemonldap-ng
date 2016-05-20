@@ -186,13 +186,17 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		_example/conf/lmConf-1.js
 
 # Javascript and CSS to minify
-JSSRCFILES:=$(shell find */site/static/js $(SRCPORTALDIR)/example -type f -name '*.js' ! -name '*.min.js') \
+JSSRCFILES:=$(shell find */site/static/js $(SRCPORTALDIR)/site/htdocs/static/common/js -type f -name '*.js' ! -name '*.min.js') \
 		$(SRCMANAGERDIR)/site/static/bwr/file-saver.js/FileSaver.js
-CSSSRCFILES:=$(shell find */site/static/css  $(SRCPORTALDIR)/example -type f -name '*.css' ! -name '*.min.css')
+CSSSRCFILES:=$(shell find */site/static/css  $(SRCPORTALDIR)/site/htdocs/static/common/css -type f -name '*.css' ! -name '*.min.css')
 
 # Coffee files
-COFFEESRCFILES:=$(shell find */site/coffee/ -type f -name '*.coffee')
-COFFEEDSTFILES:=$(subst coffee/,static/js/,$(COFFEESRCFILES:.coffee=.js))
+MANAGERCOFFEESRCFILES:=$(shell find lemonldap-ng-manager/site/coffee -type f -name '*.coffee')
+PORTALCOFFEESRCFILES:=$(shell find lemonldap-ng-portal/site/coffee -type f -name '*.coffee')
+COFFEESRCFILES=$(MANAGERCOFFEESRCFILES) $(PORTALCOFFEESRCFILES)
+MANAGERCOFFEEDSTFILES:=$(subst coffee/,static/js/,$(MANAGERCOFFEESRCFILES:.coffee=.js))
+PORTALCOFFEEDSTFILES:=$(subst coffee/,htdocs/static/common/js/,$(PORTALCOFFEESRCFILES:.coffee=.js))
+COFFEEDSTFILES:=$(MANAGERCOFFEEDSTFILES) $(PORTALCOFFEEDSTFILES)
 
 # Minified files
 JSDSTFILES=$(JSSRCFILES:.js=.min.js)
@@ -264,10 +268,10 @@ js: $(COFFEEDSTFILES)
 
 minify: js $(JSDSTFILES) $(CSSDSTFILES)
 
-$(SRCPORTALDIR)/site/static/js/%.js: $(SRCPORTALDIR)/site/coffee/%.coffee
+$(SRCPORTALDIR)/site/htdocs/static/common/js/%.js: $(SRCPORTALDIR)/site/coffee/%.coffee
 	@if which coffee >/dev/null; then \
 		echo "Compiling $(SRCPORTALDIR)/site/coffee/$*.coffee"; \
-		coffee -c -o $(SRCPORTALDIR)/site/static/js/ $(SRCPORTALDIR)/site/coffee/$*.coffee; \
+		coffee -c -o $(SRCPORTALDIR)/site/htdocs/static/common/js/ $(SRCPORTALDIR)/site/coffee/$*.coffee; \
 	fi
 
 $(SRCMANAGERDIR)/site/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee

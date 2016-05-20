@@ -97,6 +97,8 @@ ping = ->
 			else
 				location.reload true
 
+window.ping = ping
+
 # Initialization
 $(document).ready ->
 	if antiframe and top != self
