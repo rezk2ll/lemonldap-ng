@@ -1,0 +1,4 @@
+# Missing methods
+
+* info()
+
