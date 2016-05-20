@@ -197,7 +197,8 @@ sub _buildAuthLoop {
         if ( $auth and $userDB and $passwordDB ) {
 
             # Default URL
-            $url ||= "#";
+            $url = ( defined $url ? $url .= $ENV{'REQUEST_URI'} : '#' );
+            $self->lmLog( "Use URL $url", 'debug' );
 
             # Options to store in the loop
             my $optionsLoop =
