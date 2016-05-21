@@ -12,16 +12,27 @@ Used variables:
  */
 
 (function() {
-  var activeTimer, antiframe, getOrder, isHiddenFormValueSet, newwindow, ping, restoreOrder, setSelector, translate, translatePage,
+  var activeTimer, antiframe, getOrder, isHiddenFormValueSet, newwindow, ping, restoreOrder, setSelector, translate, translatePage, translationFields,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
+  translationFields = {};
+
   translatePage = function(lang) {
-    return $("[trspan]").each(function() {
-      return this.text(translate(this.attr('trspan')));
+    return $.getJSON(window.staticPrefix + "languages/" + lang + ".json", function(data) {
+      translationFields = data;
+      return $("[trspan]").each(function() {
+        return $(this).text(translate($(this).attr('trspan')));
+      });
     });
   };
 
-  translate = function(str) {};
+  translate = function(str) {
+    if (translationFields[str]) {
+      return translationFields[str];
+    } else {
+      return str;
+    }
+  };
 
   newwindow = window.newwindow.match('1') ? true : false;
 
@@ -93,7 +104,7 @@ Used variables:
   window.ping = ping;
 
   $(document).ready(function() {
-    var action, authMenuTabs, back_url, link, menuIndex, menuTabs, method;
+    var action, al, authMenuTabs, back_url, i, j, lang, langs, langs2, len, len1, link, menuIndex, menuTabs, method, nl, nlangs, ref;
     if (antiframe && top !== self) {
       top.location.href = location.href;
     }
@@ -146,6 +157,29 @@ Used variables:
       });
       link = $("p.removeOther a").attr("href") + "&method=" + method + "&url=" + btoa(back_url);
       $("p.removeOther a").attr("href", link);
+    }
+    if (navigator) {
+      langs = [];
+      langs2 = [];
+      nlangs = [navigator.language];
+      if (navigator.languages) {
+        nlangs = navigator.languages;
+      }
+      for (i = 0, len = nlangs.length; i < len; i++) {
+        nl = nlangs[i];
+        ref = window.availableLanguages;
+        for (j = 0, len1 = ref.length; j < len1; j++) {
+          al = ref[j];
+          if (al === nl) {
+            langs.push(al);
+          } else if (al.substring(0, 1) === nl.substring(0, 1)) {
+            langs2.push(al);
+          }
+        }
+      }
+      lang = langs[0] ? langs[0] : langs2[0] ? langs2[0] : 'en';
+    } else {
+      lang = 'en';
     }
     return translatePage(lang);
   });

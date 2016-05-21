@@ -10,12 +10,17 @@ Used variables:
 ###
 
 # Translation mechanism
+
+translationFields = {}
+
 translatePage = (lang) ->
-	$("[trspan]").each ->
-		this.text translate this.attr 'trspan'
+	$.getJSON "#{window.staticPrefix}languages/#{lang}.json", (data) ->
+		translationFields = data
+		$("[trspan]").each ->
+			$(this).text translate $(this).attr 'trspan'
 
 translate = (str) ->
-	# TODO
+	return if translationFields[str] then translationFields[str] else str
 
 # Set default values
 newwindow   = if window.newwindow.match('1') then true else false
@@ -165,5 +170,21 @@ $(document).ready ->
 		link = $("p.removeOther a").attr("href") + "&method=" + method + "&url=" + btoa(back_url)
 		$("p.removeOther a").attr "href", link
 
+	# Language detection
+	if navigator
+		langs = []
+		langs2 = []
+		nlangs = [ navigator.language ]
+		if navigator.languages
+			nlangs = navigator.languages
+		for nl in nlangs
+			for al in window.availableLanguages
+				if al == nl
+					langs.push al
+				else if al.substring(0, 1) == nl.substring(0, 1)
+					langs2.push al
+		lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else 'en';
+	else
+		lang = 'en'
 	translatePage(lang)
 
