@@ -120,6 +120,7 @@ sub reloadConf {
       $self->conf->{templateDir} . '/' . $self->conf->{portalSkin};
 
     $self->{staticPrefix} = $self->conf->{staticPrefix} || '/';
+    $self->{languages} = $self->conf->{languages} || '/';
 
     # Initialize session DBs
     unless ( $self->conf->{globalStorage} ) {
