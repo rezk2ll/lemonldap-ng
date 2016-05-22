@@ -87,23 +87,26 @@ sub _get {
         {
             'HTTP_ACCEPT' => $args{accept}
               || 'application/json, text/plain, */*',
-            'SCRIPT_NAME'          => '',
-            'SERVER_NAME'          => 'auth.example.com',
-            'HTTP_CACHE_CONTROL'   => 'max-age=0',
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
-            'PATH_INFO'            => $path,
+            'HTTP_CACHE_CONTROL'   => 'max-age=0',
             ( $args{cookie} ? ( 'HTTP_COOKIE' => $args{cookie} ) : () ),
-            'REQUEST_METHOD' => 'GET',
-            'REQUEST_URI'    => $path
-              . ( $args{query} ? "?$args{query}" : '' ),
-            ( $args{query} ? ( 'QUERY_STRING' => $args{query} ) : () ),
-            'SERVER_PORT'     => '8002',
-            'SERVER_PROTOCOL' => 'HTTP/1.1',
+            'HTTP_HOST' => 'auth.example.com',
             'HTTP_USER_AGENT' =>
               'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
+            'PATH_INFO'   => $path,
             'REMOTE_ADDR' => '127.0.0.1',
-            'HTTP_HOST'   => 'auth.example.com'
-
+            (
+                $args{remote_user}
+                ? ( 'REMOTE_USER' => $args{remote_user} )
+                : ()
+            ),
+            'REQUEST_METHOD' => 'GET',
+            'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
+            ( $args{query} ? ( 'QUERY_STRING' => $args{query} ) : () ),
+            'SCRIPT_NAME'     => '',
+            'SERVER_NAME'     => 'auth.example.com',
+            'SERVER_PORT'     => '8002',
+            'SERVER_PROTOCOL' => 'HTTP/1.1',
         }
     );
 }

@@ -28,18 +28,33 @@ authentication modules.
   
   use strict;
   use Mouse;
+  use Lemonldap::NG::Portal::Main::Constants;
   
   our $VERSION = '0.1';
   
   extends 'Lemonldap::NG::Portal::Auth::Base';
   
-  sub extractFormInfo {...}
+  sub extractFormInfo {
+      my ( $self, $req ) = @_;
+      ...
+  }
   
-  sub authenticate {...}
+  sub authenticate {
+      my ( $self, $req ) = @_;
+      ...
+  }
   
-  sub authForce {...}
+  sub authForce {
+      my ( $self, $req ) = @_;
+      ...
+  }
   
-  sub authLogout {...}
+  sub authLogout {
+      my ( $self, $req ) = @_;
+      ...
+  }
+  
+  1;
 
 =head1 DESCRIPTION
 
