@@ -28,7 +28,8 @@ authentication modules.
   
   use strict;
   use Mouse;
-  use Lemonldap::NG::Portal::Main::Constants;
+  # Add constants used by this module
+  use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
   
   our $VERSION = '0.1';
   
