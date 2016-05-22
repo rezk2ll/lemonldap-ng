@@ -3,7 +3,7 @@
 <div id="mailcontent" class="container">
 
   <TMPL_IF NAME="AUTH_ERROR">
-  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><TMPL_VAR NAME="AUTH_ERROR"></div>
+  <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert"><span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></div>
   </TMPL_IF>
 
   <div class="panel panel-default">

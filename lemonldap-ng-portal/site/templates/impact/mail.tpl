@@ -8,7 +8,7 @@
       </div>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
-      <p class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></p>
+      <p class="text-error" trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></p>
       </TMPL_IF>
 
       <TMPL_IF NAME="DISPLAY_FORM">

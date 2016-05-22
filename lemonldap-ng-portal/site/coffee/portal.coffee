@@ -18,6 +18,8 @@ translatePage = (lang) ->
 		translationFields = data
 		$("[trspan]").each ->
 			$(this).text translate $(this).attr 'trspan'
+		$("[trmsg]").each ->
+			$(this).text translate "PE#{$(this).attr 'trmsg'}"
 
 translate = (str) ->
 	return if translationFields[str] then translationFields[str] else str

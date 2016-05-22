@@ -22,7 +22,7 @@
       <h1 trspan="openSSOSession">Open your SSO session</h1>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
-      <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
+      <p><span class="text-error" trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></p>
       </TMPL_IF>
 
       <!-- tabs -->
@@ -122,7 +122,7 @@
       <h1 trspan="openSSOSession">Open your SSO session</h1>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
-      <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
+      <p><span class="text-error" trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></p>
       </TMPL_IF>
       <form action="#" method="post" class="login">
         <TMPL_VAR NAME="HIDDEN_INPUTS">
@@ -152,7 +152,7 @@
       <h1 trspan="openSSOSession">Open your SSO session</h1>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
-      <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
+      <p><span class="text-error" trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></p>
       </TMPL_IF>
       <form action="#" method="post" class="login">
         <TMPL_VAR NAME="HIDDEN_INPUTS">
@@ -182,7 +182,7 @@
       <h1 trspan="openSSOSession">Open your SSO session</h1>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
-      <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
+      <p><span class="text-error" trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span></p>
       </TMPL_IF>
       <form action="#" method="post" class="login">
         <TMPL_VAR NAME="HIDDEN_INPUTS">
@@ -212,7 +212,7 @@
       <h1 trspan="openSSOSession">Open your SSO session</h1>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
-      <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
+      <p><span class="text-error" trmsg"<TMPL_VAR NAME="AUTH_ERROR">"></span></p>
       </TMPL_IF>
       <form action="#" method="post" class="login <TMPL_VAR NAME="module">">
         <TMPL_VAR NAME="HIDDEN_INPUTS">
@@ -262,7 +262,7 @@
       </div>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
-      <p class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></p>
+      <p class="text-error" trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></p>
       </TMPL_IF>
       <TMPL_INCLUDE NAME="password.tpl">
       </div>
@@ -277,7 +277,7 @@
       </div>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
-      <p class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></p>
+      <p class="text-error" trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></p>
       </TMPL_IF>
       <TMPL_IF NAME="MSG">
       <div id="content-all-info">
@@ -298,7 +298,7 @@
       </div>
       <hr class="solid" />
       <TMPL_IF NAME="AUTH_ERROR">
-      <p class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></p>
+      <p class="text-error" trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></p>
       </TMPL_IF>
       <p>
         <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative"><span trspan="logout">Logout</span></a>

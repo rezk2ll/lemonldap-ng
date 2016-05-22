@@ -5,7 +5,7 @@
       <TMPL_IF NAME="AUTH_ERROR">
       <div class="title">
         <img src="<TMPL_VAR NAME="STATIC_PREFIX">/<TMPL_VAR NAME="SKIN">/images/logo-ok.png" />
-        <TMPL_VAR NAME="AUTH_ERROR">
+        <span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span>
       </div>
       <hr class="solid" />
       </TMPL_IF>

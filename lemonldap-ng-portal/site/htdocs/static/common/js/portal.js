@@ -20,8 +20,11 @@ Used variables:
   translatePage = function(lang) {
     return $.getJSON(window.staticPrefix + "languages/" + lang + ".json", function(data) {
       translationFields = data;
-      return $("[trspan]").each(function() {
+      $("[trspan]").each(function() {
         return $(this).text(translate($(this).attr('trspan')));
+      });
+      return $("[trmsg]").each(function() {
+        return $(this).text(translate("PE" + ($(this).attr('trmsg'))));
       });
     });
   };

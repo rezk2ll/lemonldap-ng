@@ -3,7 +3,7 @@
 <div id="logincontent">
 
   <TMPL_IF NAME="AUTH_ERROR">
-  <div class="message <TMPL_VAR NAME="AUTH_ERROR_TYPE">"><ul><li><TMPL_VAR NAME="AUTH_ERROR"></li></ul></div>
+  <div class="message <TMPL_VAR NAME="AUTH_ERROR_TYPE">"><ul><li trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></li></ul></div>
   </TMPL_IF>
   <div class="loginlogo"></div>
 

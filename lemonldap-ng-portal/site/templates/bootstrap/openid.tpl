@@ -4,7 +4,7 @@
 
   <TMPL_IF NAME="AUTH_ERROR">
     <div class="message message-<TMPL_VAR NAME="AUTH_ERROR_TYPE"> alert">
-      <TMPL_VAR NAME="AUTH_ERROR">
+      <span trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span>
     </div>
   </TMPL_IF>
 
