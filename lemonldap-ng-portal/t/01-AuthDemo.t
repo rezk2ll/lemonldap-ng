@@ -79,6 +79,9 @@ ok( $hdrs{'Content-Type'} eq 'text/html', 'Reponse is HTML' )
   or explain( \%hdrs, 'Content-Type => "text/html"' );
 count(4);
 
+# Test logout
+logout($id);
+
 #print STDERR Dumper($res);
 
 clean_sessions();

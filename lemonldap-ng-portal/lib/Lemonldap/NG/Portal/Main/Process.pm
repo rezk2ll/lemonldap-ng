@@ -47,6 +47,7 @@ sub restoreArgs {
 sub importHandlerDatas {
     my ( $self, $req ) = @_;
     $req->{sessionInfo} = HANDLER->datas;
+    $req->id( $req->sessionInfo->{_session_id} );
     PE_OK;
 }
 
@@ -72,8 +73,11 @@ sub controlUrl {
         }
 
         # For logout request, test if Referer comes from an authorizated site
-        my $tmp =
-          ( $req->param('logout') ? $ENV{HTTP_REFERER} : $req->datas->{urldc} );
+        my $tmp = (
+              $req->param('logout')
+            ? $ENV{HTTP_REFERER}
+            : $req->datas->{urldc}
+        );
 
         # XSS attack
         if (
@@ -127,6 +131,7 @@ sub deleteSession {
         return PE_ERROR;
     }
     else {
+        HANDLER->localUnlog( $req->id );
         $self->lmLog( "Session $req->{id} deleted from global storage",
             'debug' );
     }

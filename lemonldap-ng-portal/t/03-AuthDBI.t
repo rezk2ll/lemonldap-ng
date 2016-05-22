@@ -42,8 +42,7 @@ SKIP: {
         $res = &client->_post(
             '/', '',
             IO::String->new('user=dwho&password=dwho'),
-            'application/x-www-form-urlencoded',
-            23
+            'application/x-www-form-urlencoded', 23
         ),
         'Auth query'
     );
@@ -53,6 +52,7 @@ SKIP: {
     ok( $id = $cookies->{lemonldap}, 'Get cookie' )
       or explain( $res, 'Set-Cookie: something' );
 
+    logout($id);
     clean_sessions();
 }
 count(3);

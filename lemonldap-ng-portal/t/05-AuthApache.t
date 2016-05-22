@@ -17,7 +17,8 @@ init(
 ok( $res = &client->_get( '/', remote_user => 'dwho' ), 'Auth query' );
 ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
 my $cookies = getCookies($res);
-ok( $cookies->{lemonldap}, 'Get cookie' )
+my $id;
+ok( $id = $cookies->{lemonldap}, 'Get cookie' )
   or explain( $res, 'Set-Cookie: something' );
 clean_sessions();
 

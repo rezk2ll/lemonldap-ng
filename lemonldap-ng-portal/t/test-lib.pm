@@ -44,10 +44,34 @@ sub explain {
     print STDERR "Expect $ref, get $get\n";
 }
 
+sub logout {
+    my ($id) = @_;
+    my $res;
+    ok(
+        $res = &client->_get(
+            '/',
+            query  => 'logout',
+            cookie => "lemonldap=$id",
+            accept => 'text/html'
+        ),
+        'Logout'
+    );
+    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+    ok( $res = &client->_get( '/', cookie => "lemonldap=$id" ),
+        'Disconnect request' );
+    ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
+    count(4);
+
+}
+
 sub clean_sessions {
     opendir D, 't/sessions' or die $!;
     foreach ( grep { /^[^\.]/ } readdir(D) ) {
         unlink "t/sessions/$_", "t/sessions/lock/Apache-Session-$_.lock";
+    }
+    opendir D, 't/sessions/lock' or die $!;
+    foreach ( grep { /^[^\.]/ } readdir(D) ) {
+        unlink "t/sessions/lock/$_";
     }
 }
 

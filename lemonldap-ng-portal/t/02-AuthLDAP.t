@@ -43,6 +43,7 @@ SKIP: {
     my $id;
     ok( $id = $cookies->{lemonldap}, 'Get cookie' )
       or explain( $res, 'Set-Cookie: something' );
+    logout($id);
 
     clean_sessions();
 }

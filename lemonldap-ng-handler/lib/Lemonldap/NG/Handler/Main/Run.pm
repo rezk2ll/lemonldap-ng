@@ -547,8 +547,8 @@ sub abort {
 ## @rmethod protected void localUnlog()
 # Delete current user from local cache entry.
 sub localUnlog {
-    my $class = shift;
-    if ( my $id = $class->fetchId ) {
+    my ( $class, $id ) = @_;
+    if ( $id //= $class->fetchId ) {
 
         # Delete thread datas
         if ( $id eq $class->datas->{_session_id} ) {

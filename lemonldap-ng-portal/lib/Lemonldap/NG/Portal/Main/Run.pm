@@ -225,8 +225,6 @@ sub getApacheSession {
     }
 
     unless ($noInfo) {
-        $self->setApacheUser( $as->data->{ $self->{whatToTrace} } )
-          if ($id);
         $self->{id} = $as->id;
     }
     return $as;

@@ -6,7 +6,7 @@ use strict;
 use Net::LDAP;    #inherits
 use Net::LDAP::Util qw(escape_filter_value);
 use base qw(Net::LDAP);
-use Lemonldap::NG::Portal::Main::Constants;
+use Lemonldap::NG::Portal::Main::Constants ':all';
 use Encode;
 use Unicode::String qw(utf8);
 use Scalar::Util 'weaken';
