@@ -7,7 +7,7 @@ package Lemonldap::NG::Portal::Auth::Demo;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants;
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_BADCREDENTIALS);
 
 extends qw(Lemonldap::NG::Portal::Auth::_WebForm);
 

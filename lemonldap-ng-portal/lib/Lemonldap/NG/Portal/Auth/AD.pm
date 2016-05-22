@@ -5,7 +5,8 @@ package Lemonldap::NG::Portal::Auth::AD;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants;
+use Lemonldap::NG::Portal::Main::Constants
+  qw(PE_OK PE_PP_PASSWORD_EXPIRED PE_PP_CHANGE_AFTER_RESET);
 
 our $VERSION = '2.0.0';
 

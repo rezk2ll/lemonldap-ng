@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 
 use Lemonldap::NG::Common::Conf::Constants;
-use Lemonldap::NG::Portal::Main::Constants;
+use Lemonldap::NG::Portal::Main::Constants ':all';
 use Lemonldap::NG::Portal::Main::Request;
 use Lemonldap::NG::Portal::Main::Plugins;
 use Lemonldap::NG::Portal::Main::Init;

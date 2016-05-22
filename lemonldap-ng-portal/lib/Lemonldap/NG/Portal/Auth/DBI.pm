@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Auth::DBI;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants;
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_BADCREDENTIALS);
 
 our $VERSION = '2.0.0';
 

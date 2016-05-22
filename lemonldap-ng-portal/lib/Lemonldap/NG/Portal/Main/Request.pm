@@ -23,7 +23,7 @@ package Lemonldap::NG::Portal::Main::Request;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants;
+use Lemonldap::NG::Portal::Main::Constants ':all';
 
 extends 'Lemonldap::NG::Common::PSGI::Request';
 

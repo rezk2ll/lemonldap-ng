@@ -2,7 +2,8 @@ package Lemonldap::NG::Portal::UserDB::LDAP;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants;
+use Lemonldap::NG::Portal::Main::Constants
+  qw(PE_OK PE_LDAPCONNECTFAILED PE_LDAPERROR PE_BADCREDENTIALS);
 use Lemonldap::NG::Portal::Lib::LDAP;
 
 extends 'Lemonldap::NG::Portal::Main::Module';

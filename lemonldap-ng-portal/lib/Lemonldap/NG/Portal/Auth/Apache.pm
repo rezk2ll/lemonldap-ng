@@ -2,13 +2,14 @@ package Lemonldap::NG::Portal::Auth::Apache;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants;
+use Lemonldap::NG::Portal::Main::Constants qw(PE_ERROR PE_OK);
 
 our $VERSION = '0.1';
 
 extends 'Lemonldap::NG::Portal::Auth::Base';
 
 sub init {
+    PE_ERROR;
     1;
 }
 
