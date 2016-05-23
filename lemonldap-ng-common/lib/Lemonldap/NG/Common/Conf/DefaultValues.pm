@@ -18,6 +18,11 @@ sub defaultValues {
         'authChoiceParam'          => 'lmAuth',
         'authentication'           => 'Demo',
         'browserIdAuthnLevel'      => 1,
+        'browserIdAutoLogin'       => 0,
+        'browserIdBackgroundColor' => '#000',
+        'browserIdSiteName'        => 'LemonLDAP::NG',
+        'browserIdVerificationURL' =>
+          'https://verifier.login.persona.org/verify',
         'captcha_login_enabled'    => 0,
         'captcha_mail_enabled'     => 0,
         'captcha_register_enabled' => 1,

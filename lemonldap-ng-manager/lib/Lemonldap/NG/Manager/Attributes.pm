@@ -566,19 +566,23 @@ sub attributes {
             'type'    => 'int'
         },
         'browserIdAutoLogin' => {
-            'type' => 'bool'
+            'default' => 0,
+            'type'    => 'bool'
         },
         'browserIdBackgroundColor' => {
-            'type' => 'text'
+            'default' => '#000',
+            'type'    => 'text'
         },
         'browserIdSiteLogo' => {
             'type' => 'text'
         },
         'browserIdSiteName' => {
-            'type' => 'text'
+            'default' => 'LemonLDAP::NG',
+            'type'    => 'text'
         },
         'browserIdVerificationURL' => {
-            'type' => 'text'
+            'default' => 'https://verifier.login.persona.org/verify',
+            'type'    => 'text'
         },
         'captcha_login_enabled' => {
             'default' => 0,

@@ -2140,11 +2140,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 1,
             documentation => 'Browser ID authentication level',
         },
-        browserIdAutoLogin       => { type => 'bool', },
-        browserIdVerificationURL => { type => 'text', },
-        browserIdSiteName        => { type => 'text', },
+        browserIdAutoLogin       => { type => 'bool', default => 0 },
+        browserIdVerificationURL => { type => 'text', default => 'https://verifier.login.persona.org/verify', },
+        browserIdSiteName        => { type => 'text', default => 'LemonLDAP::NG', },
         browserIdSiteLogo        => { type => 'text', },
-        browserIdBackgroundColor => { type => 'text', },
+        browserIdBackgroundColor => { type => 'text', default => '#000', },
 
         # OpenID Connect auth params
         oidcAuthnLevel => {
