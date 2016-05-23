@@ -49,22 +49,21 @@ sub params {
 
     # Force password tab in case of password error
     if (
-        (
-            scalar(
-                grep { $_ == $req->menuError } (
-                    25,    #PE_PP_CHANGE_AFTER_RESET
-                    26,    #PE_PP_PASSWORD_MOD_NOT_ALLOWED
-                    27,    #PE_PP_MUST_SUPPLY_OLD_PASSWORD
-                    28,    #PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-                    29,    #PE_PP_PASSWORD_TOO_SHORT
-                    30,    #PE_PP_PASSWORD_TOO_YOUNG
-                    31,    #PE_PP_PASSWORD_IN_HISTORY
-                    32,    #PE_PP_GRACE
-                    33,    #PE_PP_EXP_WARNING
-                    34,    #PE_PASSWORD_MISMATCH
-                    39,    #PE_BADOLDPASSWORD
-                    74,    #PE_MUST_SUPPLY_OLD_PASSWORD
-                )
+        $req->menuError
+        and scalar(
+            grep { $_ == $req->menuError } (
+                25,    #PE_PP_CHANGE_AFTER_RESET
+                26,    #PE_PP_PASSWORD_MOD_NOT_ALLOWED
+                27,    #PE_PP_MUST_SUPPLY_OLD_PASSWORD
+                28,    #PE_PP_INSUFFICIENT_PASSWORD_QUALITY
+                29,    #PE_PP_PASSWORD_TOO_SHORT
+                30,    #PE_PP_PASSWORD_TOO_YOUNG
+                31,    #PE_PP_PASSWORD_IN_HISTORY
+                32,    #PE_PP_GRACE
+                33,    #PE_PP_EXP_WARNING
+                34,    #PE_PASSWORD_MISMATCH
+                39,    #PE_BADOLDPASSWORD
+                74,    #PE_MUST_SUPPLY_OLD_PASSWORD
             )
         )
       )
@@ -74,8 +73,8 @@ sub params {
 
     # else calculate modules to display
     else {
-        $res{DISPLAY_TAB} =
-          scalar( grep /^(password|logout|loginHistory)$/, $req->param("tab") )
+        $res{DISPLAY_TAB} = scalar( grep /^(password|logout|loginHistory)$/,
+            $req->param("tab") // '' )
           || "applist";
     }
     $res{DISPLAY_MODULES} = $self->displayModules($req);
