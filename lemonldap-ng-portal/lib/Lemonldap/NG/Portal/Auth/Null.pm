@@ -30,4 +30,12 @@ sub authLogout {
     PE_OK;
 }
 
+sub getDisplayType {
+    return 'logo';
+}
+
+sub getDisplayType {
+    return '';
+}
+
 1;

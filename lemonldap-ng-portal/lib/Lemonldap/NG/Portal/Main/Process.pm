@@ -119,7 +119,7 @@ sub checkLogout {
 }
 
 sub authLogout {
-    my $self = shift;
+    my ( $self, $req ) = @_;
     return $self->_authentication->authLogout(@_);
 }
 
@@ -215,18 +215,18 @@ sub checkXSSAttack {
 # -------------------------------------------------------
 
 sub extractFormInfo {
-    my $self = shift;
-    return $self->_authentication->extractFormInfo(@_);
+    my ( $self, $req ) = @_;
+    return $self->_authentication->extractFormInfo($req);
 }
 
 sub getUser {
-    my $self = shift;
-    return $self->_userDB->getUser(@_);
+    my ( $self, $req ) = @_;
+    return $self->_userDB->getUser($req);
 }
 
 sub authenticate {
-    my $self = shift;
-    return $self->_authentication->authenticate(@_);
+    my ( $self, $req ) = @_;
+    return $self->_authentication->authenticate($req);
 }
 
 # Third block: Session data providing
@@ -288,7 +288,7 @@ sub setMacros {
 
 sub setGroups {
     my ( $self, $req ) = @_;
-    return $self->_userDB->setGroups(@_);
+    return $self->_userDB->setGroups($req);
 }
 
 sub setPersistentSessionInfo {
@@ -396,8 +396,6 @@ sub buildCookie {
         expires  => $self->conf->{cookieExpiration},
       );
     if ( $self->conf->{securedCookie} >= 2 ) {
-        shift;
-        shift;
         push @{ $req->respHeaders },
           'Set-Cookie' => $self->cookie(
             name     => $self->conf->{cookieName} . "http",
@@ -407,7 +405,6 @@ sub buildCookie {
             secure   => 0,
             HttpOnly => $self->conf->{httpOnly},
             expires  => $self->conf->{cookieExpiration},
-            @_,
           );
     }
     PE_OK;

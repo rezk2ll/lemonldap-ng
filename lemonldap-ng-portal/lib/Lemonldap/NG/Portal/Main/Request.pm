@@ -31,7 +31,7 @@ extends 'Lemonldap::NG::Common::PSGI::Request';
 has steps => ( is => 'rw' );
 
 # Datas shared between methods
-has datas => ( is => 'rw', default => sub { {} } );
+has datas => ( is => 'rw' );
 
 # Session datas when created
 has id          => ( is => 'rw' );
@@ -45,7 +45,7 @@ has respCookies => ( is => 'rw' );
 has template => ( is => 'rw' );
 
 # Custom template parameters
-has customParameters => ( is => 'rw', default => sub { {} } );
+has customParameters => ( is => 'rw' );
 
 # Boolean to indicate that response must be a redirection
 has mustRedirect => ( is => 'rw' );
@@ -61,12 +61,6 @@ has info => ( is => 'rw' );
 
 # Menu error
 has menuError => ( is => 'rw' );
-
-# Notification
-has notification => ( is => 'rw' );
-
-has _authChoice   => ( is => 'rw' );
-has _openidPortal => ( is => 'rw' );
 
 # Error type
 sub error_type {

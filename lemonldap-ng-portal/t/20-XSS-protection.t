@@ -112,7 +112,7 @@ my $id;
 ok( $id = getCookies($res)->{lemonldap}, 'Get LLNG cookie' )
   or explain( $res, 'Set-Cookie: something' );
 
-count(4);
+count(3);
 
 while ( defined( my $url = shift(@tests) ) ) {
     last if ( $url eq 'LOGOUT' );

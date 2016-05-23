@@ -15,7 +15,7 @@ sub display {
     my $skin_dir = $self->conf->{templatesDir};
     my $skinfile;
     my %templateParams =
-      ( %{ $self->customParameters }, %{ $req->customParameters } );
+      ( %{ $self->customParameters }, %{ $req->{customParameters} // {} } );
 
     # 0. Display error page
     if ( my $http_error = $req->param('lmError') ) {
@@ -97,7 +97,7 @@ sub display {
 
  # 2.1 A notification has to be done (session is created but hidden and unusable
  #     until the user has accept the message)
-    elsif ( my $notif = $req->notification ) {
+    elsif ( my $notif = $req->{notification} ) {
         $skinfile       = 'notification';
         %templateParams = (
             AUTH_ERROR_TYPE => $req->error_type,
@@ -281,7 +281,8 @@ sub display {
                     DISPLAY_YUBIKEY_FORM => $displayType eq "yubikeyform" ? 1
                     : 0,
                     DISPLAY_LOGO_FORM => $displayType eq "logo" ? 1 : 0,
-                    module => $displayType eq "logo" ? $self->get_module('auth')
+                    module => $displayType eq "logo"
+                    ? $self->getModule( $req, 'auth' )
                     : "",
                     AUTH_LOOP => [],
                     PORTAL_URL =>

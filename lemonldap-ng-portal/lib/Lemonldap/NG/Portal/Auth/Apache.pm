@@ -38,4 +38,8 @@ sub authLogout {
     PE_OK;
 }
 
+sub getDisplayType {
+    return 'logo';
+}
+
 1;
