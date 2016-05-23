@@ -315,7 +315,6 @@ sub _deleteSession {
         path    => "/",
         secure  => 0,
         expires => '-1d',
-        @_,
       ) unless ($preserveCookie);
 
     # Log

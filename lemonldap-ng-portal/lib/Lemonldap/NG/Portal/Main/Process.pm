@@ -396,6 +396,8 @@ sub buildCookie {
         expires  => $self->conf->{cookieExpiration},
       );
     if ( $self->conf->{securedCookie} >= 2 ) {
+        shift;
+        shift;
         push @{ $req->respHeaders },
           'Set-Cookie' => $self->cookie(
             name     => $self->conf->{cookieName} . "http",

@@ -2,10 +2,6 @@ use Test::More;
 use strict;
 use IO::String;
 
-BEGIN {
-    use_ok( 'Lemonldap::NG::Portal::Main::Constants', ':all' );
-}
-
 require 't/test-lib.pm';
 
 init(

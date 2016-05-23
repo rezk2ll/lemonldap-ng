@@ -354,7 +354,7 @@ sub goToPortal {
 # @return Value of the cookie if found, 0 else
 sub fetchId {
     my $class             = shift;
-    my $t                 = $class->header_in('Cookie');
+    my $t                 = $class->header_in('Cookie') or return 0;
     my $vhost             = $class->resolveAlias;
     my $lookForHttpCookie = $class->tsv->{securedCookie} =~ /^(2|3)$/
       && !(

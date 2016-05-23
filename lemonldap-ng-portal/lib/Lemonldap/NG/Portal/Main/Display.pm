@@ -182,7 +182,6 @@ sub display {
             MAIL_URL              => $self->conf->{mailUrl},
             REGISTER_URL          => $self->conf->{registerUrl},
             HIDDEN_INPUTS         => $self->buildHiddenForm(),
-            LOGIN_INFO            => $req->loginInfo(),
         );
 
         # Display captcha if it's enabled
