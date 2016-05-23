@@ -59,7 +59,7 @@ sub controlUrl {
 
         # REJECT NON BASE64 URL
         if ( $req->urlNotBase64 ) {
-            $req->datas->{urldc} = $url;
+            $req->{urldc} = $url;
         }
         else {
             if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
@@ -68,26 +68,26 @@ sub controlUrl {
                     "warn" );
                 return PE_BADURL;
             }
-            $req->datas->{urldc} = decode_base64($url);
-            $req->datas->{urldc} =~ s/[\r\n]//sg;
+            $req->{urldc} = decode_base64($url);
+            $req->{urldc} =~ s/[\r\n]//sg;
         }
 
         # For logout request, test if Referer comes from an authorizated site
         my $tmp = (
               $req->param('logout')
             ? $ENV{HTTP_REFERER}
-            : $req->datas->{urldc}
+            : $req->{urldc}
         );
 
         # XSS attack
         if (
             $self->checkXSSAttack(
                 $req->param('logout') ? 'HTTP Referer' : 'urldc',
-                $req->datas->{urldc}
+                $req->{urldc}
             )
           )
         {
-            delete $req->datas->{urldc};
+            delete $req->{urldc};
             return PE_BADURL;
         }
 
@@ -99,7 +99,7 @@ sub controlUrl {
                   . " | value: $tmp)",
                 "warn"
             );
-            delete $req->datas->{urldc};
+            delete $req->{urldc};
             return PE_BADURL;
         }
 
@@ -266,7 +266,7 @@ sub setSessionInfo {
     }
 
     # Store URL origin in session
-    $req->{sessionInfo}->{_url} = $req->datas->{urldc};
+    $req->{sessionInfo}->{_url} = $req->{urldc};
 
     # Share sessionInfo with underlying handler (needed for safe jail)
     HANDLER->datas( $req->{sessionInfo} );

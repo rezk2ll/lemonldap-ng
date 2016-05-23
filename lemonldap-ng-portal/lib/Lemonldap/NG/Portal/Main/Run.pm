@@ -136,7 +136,7 @@ sub do {
         }
     }
     else {
-        if ($err) {
+        if ( $err and $err != PE_LOGOUT_OK ) {
             my ( $tpl, $prms ) = $self->display($req);
             return $self->sendHtml( $req, $tpl, params => $prms );
         }
@@ -178,12 +178,12 @@ sub autoRedirect {
     my ( $self, $req ) = @_;
 
     # Set redirection URL if needed
-    $req->datas->{urldc} ||= $self->conf->{portal} if ( $req->mustRedirect );
+    $req->{urldc} ||= $self->conf->{portal} if ( $req->mustRedirect );
 
     # Redirection should be made if urldc defined
-    if ( $req->datas->{urldc} ) {
+    if ( $req->{urldc} ) {
         return [
-            302, [ Location => $req->datas->{urldc}, @{ $req->respHeaders } ],
+            302, [ Location => $req->{urldc}, @{ $req->respHeaders } ],
             []
         ];
     }
