@@ -30,7 +30,7 @@ has _macros => ( is => 'rw' );
 has _groups => ( is => 'rw' );
 
 # TrustedDomain regexp
-has trustedDomains => ( is => 'rw' );
+has trustedDomainsRe => ( is => 'rw' );
 
 # Lists to store plugins entry-points
 has beforeAuth => (
@@ -120,7 +120,7 @@ sub reloadConf {
       $self->conf->{templateDir} . '/' . $self->conf->{portalSkin};
 
     $self->{staticPrefix} = $self->conf->{staticPrefix} || '/';
-    $self->{languages} = $self->conf->{languages} || '/';
+    $self->{languages}    = $self->conf->{languages}    || '/';
 
     # Initialize session DBs
     unless ( $self->conf->{globalStorage} ) {
@@ -166,17 +166,25 @@ sub reloadConf {
     if (    $self->conf->{trustedDomains}
         and $self->conf->{trustedDomains} =~ /^\s*\*\s*$/ )
     {
-        $self->trustedDomains(qr#^https?://#);
+        $self->trustedDomainsRe(qr#^https?://#);
     }
     else {
         my $re = Regexp::Assemble->new();
         if ( my $td = $self->conf->{trustedDomains} ) {
             $td =~ s/^\s*(.*?)\s*/$1/;
-            $self->lmLog( "Domain $_ added in trusted domains", 'debug' );
             foreach ( split( /\s+/, $td ) ) {
+                next unless($td);
                 s#^\.#([^/]+\.)?#;
-                s/\./\\./;
-                $re->add($_);
+                $self->lmLog( "Domain $_ added in trusted domains", 'debug' );
+                s/\./\\./g;
+
+                # This regexp is valid for the followings hosts:
+                #  - $td
+                #  - $domainlabel.$td
+                # $domainlabel is build looking RFC2396
+                # (see Regexp::Common::URI::RFC2396)
+                $_ =~ s/\*\\\./(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]\\.)*/g;
+                $re->add("$_");
             }
         }
         foreach my $vhost ( keys %{ $self->conf->{locationRules} } ) {
@@ -192,20 +200,8 @@ sub reloadConf {
                 }
             }
         }
-        my $tmp = 'https?://' . $re->as_string . '(?:/|$)';
-        $self->trustedDomains(qr/$tmp/);
-    }
-    if ( my $td = $self->conf->{trustedDomains} ) {
-        $td =~ s/^\s*(.*?)\s*/$1/;
-        if ( $td eq '*' ) {
-            $self->trustedDomains(qr#^https?://#);
-        }
-        else {
-            my $tmp =
-              join( '|', map { s#^\.#([^/]+\.)?# } split( /\s+/, $td ) );
-            $tmp =~ s/\./\\./g;
-            $self->trustedDomains(qr#^https?://$tmp(?:\d+)?(?:/|$)#);
-        }
+        my $tmp = 'https?://' . $re->as_string . '(?::\d+)?(?:/|$)';
+        $self->trustedDomainsRe(qr/$tmp/);
     }
 
     # Compile macros in _macros, groups in _groups

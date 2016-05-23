@@ -332,7 +332,7 @@ sub _md5hash {
 # trusted domain
 sub isTrustedUrl {
     my ( $self, $url ) = @_;
-    return $url =~ $self->trustedDomains ? 1 : 0;
+    return $url =~ $self->trustedDomainsRe ? 1 : 0;
 }
 
 1;
