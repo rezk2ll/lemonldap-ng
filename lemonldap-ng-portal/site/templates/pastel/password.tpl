@@ -36,7 +36,7 @@
         <th><span trspan="newPassword">New password</span></th>
         <td><input name="newpassword" type="password" tabindex="3" /></td>
       </tr><tr>
-        <th><span trspan="confimrPwd">Confirm password</span></th>
+        <th><span trspan="confirmPwd">Confirm password</span></th>
         <td><input name="confirmpassword" type="password" tabindex="4" /></td>
       </tr><tr>
         <td colspan="2">

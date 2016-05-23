@@ -166,6 +166,7 @@
 "openIdExample":"par exemple :http://myopenid.org/toto",
 "openSessionSpace":"Cet espace vous permet d'ouvrir une session SSO. Celle-ci vous aidera à accéder de manière totalement sécurisée à l'ensemble des applications autorisées par votre profil utilisateur.",
 "openSSOSession":"Ouvrir une session SSO",
+"password": "Mot-de-passe",
 "pwdChange":"Changement de mot de passe",
 "pwdChanged":"Votre mot de passe a été changé.",
 "pwdIs":"Votre mot de passe est",
