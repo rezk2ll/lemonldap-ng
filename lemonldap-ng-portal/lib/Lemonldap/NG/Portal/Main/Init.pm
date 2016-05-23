@@ -59,6 +59,9 @@ has beforeLogout => (
     default => sub { [] }
 );
 
+# Custom template parameters
+has customParameters => ( is => 'rw', default => sub { {} } );
+
 sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
@@ -70,6 +73,11 @@ sub init {
             %$args
         }
     );
+    foreach my $k ( keys $self->localConfig ) {
+        if ( $k =~ /tpl_(.*)/ ) {
+            $self->customParameters->{$1} = $self->localConfig->{$k};
+        }
+    }
     Lemonldap::NG::Handler::Main::Reload->onReload( $self, 'reloadConf' );
     return 0 unless ( $self->SUPER::init($args) );
     return 0 if ( $self->error );
@@ -173,7 +181,7 @@ sub reloadConf {
         if ( my $td = $self->conf->{trustedDomains} ) {
             $td =~ s/^\s*(.*?)\s*/$1/;
             foreach ( split( /\s+/, $td ) ) {
-                next unless($td);
+                next unless ($td);
                 s#^\.#([^/]+\.)?#;
                 $self->lmLog( "Domain $_ added in trusted domains", 'debug' );
                 s/\./\\./g;
@@ -183,7 +191,8 @@ sub reloadConf {
                 #  - $domainlabel.$td
                 # $domainlabel is build looking RFC2396
                 # (see Regexp::Common::URI::RFC2396)
-                $_ =~ s/\*\\\./(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]\\.)*/g;
+                $_ =~
+                  s/\*\\\./(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9]\\.)*/g;
                 $re->add("$_");
             }
         }

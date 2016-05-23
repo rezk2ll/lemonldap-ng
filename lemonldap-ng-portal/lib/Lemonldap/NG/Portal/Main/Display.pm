@@ -13,7 +13,9 @@ sub display {
     my ( $self, $req ) = @_;
 
     my $skin_dir = $self->conf->{templatesDir};
-    my ( $skinfile, %templateParams );
+    my $skinfile;
+    my %templateParams =
+      ( %{ $self->customParameters }, %{ $req->customParameters } );
 
     # 0. Display error page
     if ( my $http_error = $req->param('lmError') ) {

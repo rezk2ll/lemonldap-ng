@@ -44,6 +44,9 @@ has respCookies => ( is => 'rw' );
 # Template to display (if not defined, login or menu)
 has template => ( is => 'rw' );
 
+# Custom template parameters
+has customParameters => ( is => 'rw', default => sub { {} } );
+
 # Boolean to indicate that response must be a redirection
 has mustRedirect => ( is => 'rw' );
 
