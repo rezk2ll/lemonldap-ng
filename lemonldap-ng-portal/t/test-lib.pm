@@ -57,10 +57,15 @@ sub logout {
         'Logout'
     );
     ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+    my $c;
+    ok( ( defined( $c = getCookies($res)->{lemonldap} ) and not $c ),
+        'Cookie is deleted' )
+      or explain( $res->[1], "Set-Cookie => 'lemonldap='" );
     ok( $res = &client->_get( '/', cookie => "lemonldap=$id" ),
-        'Disconnect request' );
+        'Disconnect request' )
+      or explain( $res, '[<code>,<hdrs>,<content>]' );
     ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
-    count(4);
+    count(5);
 
 }
 
@@ -76,13 +81,13 @@ sub clean_sessions {
 }
 
 sub getCookies {
-    my $req  = shift;
-    my @hdrs = @{ $req->[1] };
+    my $resp = shift;
+    my @hdrs = @{ $resp->[1] };
     my $res  = {};
     while ( my $name = shift @hdrs ) {
         my $v = shift @hdrs;
         if ( $name eq 'Set-Cookie' ) {
-            if ( $v =~ /^(\w+)=([^;]+)/ ) {
+            if ( $v =~ /^(\w+)=([^;]*)/ ) {
                 $res->{$1} = $2;
             }
         }
