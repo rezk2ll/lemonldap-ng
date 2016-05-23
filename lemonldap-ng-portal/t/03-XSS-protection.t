@@ -8,7 +8,13 @@ BEGIN {
 
 require 't/test-lib.pm';
 
-init( { useSafeJail => 1, trustedDomains => 'example3.com *.example2.com' } );
+init(
+    {
+        logLevel       => 'error',
+        useSafeJail    => 1,
+        trustedDomains => 'example3.com *.example2.com'
+    }
+);
 
 my @tests = (
 
@@ -87,12 +93,12 @@ my @tests = (
 
     # 19 url=http://www.toto.com/, good referer
     'aHR0cDovL3d3dy50b3RvLmNvbS8=',
-    'http://test.example.com/' => 1,
+    'http://test1.example.com/' => 1,
     'Logout required by good site',
 
     # 20 url=http://www?<script>, good referer
     'aHR0cDovL3d3dz88c2NyaXB0Pg==',
-    'http://test.example.com/' => 0,
+    'http://test1.example.com/' => 0,
     'script with logout',
 );
 
@@ -132,17 +138,42 @@ while ( defined( my $url = shift(@tests) ) ) {
     count(2);
 }
 
+while ( defined( my $url = shift(@tests) ) ) {
+    my $referer = shift @tests;
+    my $redir   = shift @tests;
+    my $detail  = shift @tests;
+    ok(
+        $res = &client->_get(
+            '/',
+            query  => "url=$url&logout=1",
+            cookie => "lemonldap=$id",
+
+            accept  => 'text/html',
+            referer => $referer,
+        ),
+        $detail
+    );
+    ok( ( $res->[0] == ( $redir ? 302 : 200 ) ),
+        ( $redir ? 'Get redirection' : 'Redirection dropped' ) )
+      or explain( $res->[0], ( $redir ? 302 : 200 ) );
+    ok(
+        $res = &client->_post(
+            '/', '',
+            IO::String->new('user=dwho&password=dwho'),
+            'application/x-www-form-urlencoded', 23
+        ),
+        'Auth query'
+    );
+    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+    ok( $id = getCookies($res)->{lemonldap}, 'Get LLNG cookie' )
+      or explain( $res, 'Set-Cookie: something' );
+    count(5);
+}
+
 clean_sessions();
 
 done_testing( count() );
 __END__
-while ( defined( $url = shift(@h) ) ) {
-    last if ( $url eq 'LOGOUT' );
-    $result = shift @h;
-    my $text = shift @h;
-
-    ok( $p->controlUrlOrigin() == $result, $text );
-}
 
 # LOGOUT CASES
 $logout = 1;

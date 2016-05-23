@@ -47,6 +47,9 @@ has template => ( is => 'rw' );
 # Boolean to indicate that response must be a redirection
 has mustRedirect => ( is => 'rw' );
 
+# Store URL for redirections
+has urldc => ( is => 'rw' );
+
 # Boolean to indicate that url isn't Base64 encoded
 has urlNotBase64 => ( is => 'rw' );
 

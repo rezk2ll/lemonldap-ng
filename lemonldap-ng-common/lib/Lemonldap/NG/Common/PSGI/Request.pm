@@ -15,6 +15,7 @@ has HTTP_ACCEPT_ENCODING => ( is => 'ro', reader => 'encodings' );
 has HTTP_ACCEPT_LANGUAGE => ( is => 'ro', reader => 'languages' );
 has HTTP_COOKIE          => ( is => 'ro', reader => 'cookies' );
 has HTTP_HOST            => ( is => 'ro', reader => 'hostname' );
+has REFERER              => ( is => 'ro', reader => 'referer' );
 has REMOTE_ADDR => ( is => 'ro', isa => 'Str', reader => 'remote_ip' );
 has REMOTE_PORT    => ( is => 'ro', isa => 'Int', reader => 'port' );
 has REQUEST_METHOD => ( is => 'ro', isa => 'Str', reader => 'method' );

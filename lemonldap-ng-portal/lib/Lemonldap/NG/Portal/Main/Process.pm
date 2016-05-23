@@ -75,7 +75,7 @@ sub controlUrl {
         # For logout request, test if Referer comes from an authorizated site
         my $tmp = (
               $req->param('logout')
-            ? $ENV{HTTP_REFERER}
+            ? $req->referer
             : $req->{urldc}
         );
 
@@ -112,7 +112,8 @@ sub controlUrl {
 sub checkLogout {
     my ( $self, $req ) = @_;
     if ( $req->param('logout') ) {
-        $req->steps( [ @{ $self->beforeLogout }, 'deleteSession' ] );
+        $req->steps(
+            [ @{ $self->beforeLogout }, 'authLogout', 'deleteSession' ] );
     }
     PE_OK;
 }

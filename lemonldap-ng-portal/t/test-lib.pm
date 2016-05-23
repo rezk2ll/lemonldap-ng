@@ -113,11 +113,12 @@ sub _get {
               || 'application/json, text/plain, */*',
             'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
             'HTTP_CACHE_CONTROL'   => 'max-age=0',
-            ( $args{cookie} ? ( 'HTTP_COOKIE' => $args{cookie} ) : () ),
+            ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
             'HTTP_HOST' => 'auth.example.com',
             'HTTP_USER_AGENT' =>
               'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
-            'PATH_INFO'   => $path,
+            'PATH_INFO' => $path,
+            ( $args{referer} ? ( REFERER => $args{referer} ) : () ),
             'REMOTE_ADDR' => '127.0.0.1',
             (
                 $args{remote_user}
@@ -126,7 +127,7 @@ sub _get {
             ),
             'REQUEST_METHOD' => 'GET',
             'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
-            ( $args{query} ? ( 'QUERY_STRING' => $args{query} ) : () ),
+            ( $args{query} ? ( QUERY_STRING => $args{query} ) : () ),
             'SCRIPT_NAME'     => '',
             'SERVER_NAME'     => 'auth.example.com',
             'SERVER_PORT'     => '8002',

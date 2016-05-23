@@ -86,8 +86,8 @@ sub authenticatedRequest {
     return $self->do(
         $req,
         [
-            'importHandlerDatas', 'checkLogout',
-            'controlUrl',         @{ $self->forAuthUser }
+            'importHandlerDatas', 'controlUrl',
+            'checkLogout',        @{ $self->forAuthUser }
         ]
     );
 }
@@ -97,8 +97,8 @@ sub postAuthenticatedRequest {
     return $self->do(
         $req,
         [
-            'importHandlerDatas', 'checkLogout',
-            'restoreArgs',        'controlUrl',
+            'importHandlerDatas', 'restoreArgs',
+            'controlUrl',         'checkLogout',
             @{ $self->forAuthUser }
         ]
     );
@@ -106,8 +106,13 @@ sub postAuthenticatedRequest {
 
 sub logout {
     my ( $self, $req ) = @_;
-    return $self->do( $req,
-        [ @{ $self->beforeLogout }, 'authLogout', 'deleteSession' ] );
+    return $self->do(
+        $req,
+        [
+            'controlUrl', @{ $self->beforeLogout },
+            'authLogout', 'deleteSession'
+        ]
+    );
 }
 
 # RUNNING METHODS
@@ -182,10 +187,8 @@ sub autoRedirect {
 
     # Redirection should be made if urldc defined
     if ( $req->{urldc} ) {
-        return [
-            302, [ Location => $req->{urldc}, @{ $req->respHeaders } ],
-            []
-        ];
+        return [ 302, [ Location => $req->{urldc}, @{ $req->respHeaders } ],
+            [] ];
     }
     else {
         my ( $tpl, $prms ) = $self->display($req);
