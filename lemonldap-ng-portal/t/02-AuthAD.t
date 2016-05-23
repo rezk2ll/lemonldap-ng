@@ -11,7 +11,7 @@ SKIP: {
 
     init(
         {
-            logLevel        => 'debug',
+            logLevel        => 'error',
             useSafeJail     => 1,
             authentication  => 'AD',
             userDB          => 'AD',

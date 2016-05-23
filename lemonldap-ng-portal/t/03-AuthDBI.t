@@ -18,7 +18,7 @@ SKIP: {
     $dbh->do("INSERT INTO users VALUES ('dwho','dwho','Doctor who')");
     init(
         {
-            logLevel            => 'debug',
+            logLevel            => 'error',
             useSafeJail         => 1,
             authentication      => 'DBI',
             userDB              => 'DBI',

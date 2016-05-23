@@ -6,7 +6,7 @@ require 't/test-lib.pm';
 
 my $res;
 
-init( { logLevel => 'debug', useSafeJail => 1 } );
+init( { logLevel => 'error', useSafeJail => 1 } );
 
 # Test normal first access
 # ------------------------
