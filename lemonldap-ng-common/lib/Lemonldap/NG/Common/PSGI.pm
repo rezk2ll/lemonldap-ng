@@ -185,7 +185,11 @@ sub sendHtml {
             STATIC_PREFIX       => $sp,
             AVAILABLE_LANGUAGES => $self->languages,
             PORTAL              => $self->portal,
-            ( $args{params} ? %{ $args{params} } : () ),
+            (
+                $args{params}
+                ? %{ $args{params} }
+                : ( $self->can('tplParams') ? ( $self->tplParams ) : () )
+            ),
         );
     };
     if ($@) {

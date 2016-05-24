@@ -109,11 +109,11 @@ sub init {
 
 sub tplParams {
     my $self = shift;
-    return {
+    return (
         LINKS     => $self->links     ? to_json( $self->links )     : '""',
         MENULINKS => $self->menuLinks ? to_json( $self->menuLinks ) : '""',
         VERSION   => $VERSION,
-    };
+    );
 }
 
 1;
