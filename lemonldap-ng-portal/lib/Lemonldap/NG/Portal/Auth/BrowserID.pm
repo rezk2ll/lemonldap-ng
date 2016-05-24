@@ -134,7 +134,7 @@ sub authLogout {
 }
 
 sub authForce {
-    return PE_OK;
+    0;
 }
 
 sub getDisplayType {

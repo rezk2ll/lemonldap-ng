@@ -51,7 +51,7 @@ sub authLogout {
 # Does nothing
 # @return result
 sub authForce {
-    PE_OK;
+    0;
 }
 
 1;

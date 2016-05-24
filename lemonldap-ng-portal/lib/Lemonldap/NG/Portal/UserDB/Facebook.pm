@@ -21,9 +21,8 @@ has vars => (
 sub init {
     my ($self) = @_;
     unless ( $self->p->getModule('auth') =~ /^Facebook/ ) {
-        $self->lmLog(
-"UserDBFacebook isn't useable unless authentication module is set to Facebook",
-            'error'
+        $self->error(
+"UserDBFacebook isn't useable unless authentication module is set to Facebook"
         );
         return 0;
     }

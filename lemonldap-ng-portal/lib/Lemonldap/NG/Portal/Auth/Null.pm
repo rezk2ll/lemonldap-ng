@@ -23,7 +23,7 @@ sub authenticate {
 }
 
 sub authForce {
-    PE_OK;
+    0;
 }
 
 sub authLogout {

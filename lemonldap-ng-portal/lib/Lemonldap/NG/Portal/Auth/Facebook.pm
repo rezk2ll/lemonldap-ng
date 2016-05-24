@@ -13,14 +13,14 @@ sub init {
     my ($self) = @_;
     eval { require Net::Facebook::Oauth2; };
     if ($@) {
-        $self->lmLog( "Unable to load Net::Facebook::Oauth2: $@", 'error' );
+        $self->error("Unable to load Net::Facebook::Oauth2: $@");
         return 0;
     }
     my $ret = 1;
     foreach my $arg (qw(facebookAppId facebookAppSecret)) {
         unless ( $self->conf->{$arg} ) {
             $ret = 0;
-            $self->lmLog( "Parameter $arg is required", 'error' );
+            $self->error("Parameter $arg is required");
         }
     }
     return $ret;
@@ -124,7 +124,7 @@ sub authLogout {
 }
 
 sub authForce {
-    PE_OK;
+    0;
 }
 
 sub getDisplayType {

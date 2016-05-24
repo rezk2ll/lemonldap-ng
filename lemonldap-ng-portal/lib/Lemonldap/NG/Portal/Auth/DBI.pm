@@ -24,7 +24,7 @@ sub authLogout {
 }
 
 sub authForce {
-    PE_OK;
+    0;
 }
 
 1;

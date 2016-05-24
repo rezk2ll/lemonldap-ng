@@ -9,7 +9,6 @@ our $VERSION = '0.1';
 extends 'Lemonldap::NG::Portal::Auth::Base';
 
 sub init {
-    PE_ERROR;
     1;
 }
 
@@ -31,7 +30,7 @@ sub authenticate {
 }
 
 sub authForce {
-    PE_OK;
+    0;
 }
 
 sub authLogout {

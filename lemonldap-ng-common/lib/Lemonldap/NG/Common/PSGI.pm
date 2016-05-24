@@ -114,13 +114,33 @@ sub sendError {
     $err  ||= $req->error;
     $code ||= 500;
     $self->lmLog( "Error $code: $err", $code > 499 ? 'error' : 'notice' );
+    my $title;
     return (
           $req->accept =~ /json/
         ? $self->sendJSONresponse( $req, { error => $err }, code => $code )
         : [
             $code,
-            [ 'Content-Type' => 'text/plain', @{ $req->respHeaders || [] } ],
-            ["Error: $err"]
+            [
+                'Content-Type' => 'text/html; charset=utf-8',
+                @{ $req->respHeaders || [] }
+            ],
+            [
+                '<html><head>',
+                '<title>',
+                $title = (
+                      $code >= 500 ? 'Server error'
+                    : $code == 403 ? 'Forbidden'
+                    : $code == 401 ? 'Authentication required'
+                    :                'Error'
+                ),
+                '</title>',
+'<style>body{background:#000;color:#fff;padding:10px 50px;font-family:sans-serif;}a{text-decoration:none;color:#fff;}h1{text-align:center;}</style>',
+                '</head><body>',
+                "<h1>$title</h1>",
+                "<p>$err</p>",
+'<center><a href="http://lemonldap-ng.org">LemonLDAP::NG</a></center>',
+                '</body></html>'
+            ]
         ]
     );
 }
@@ -244,7 +264,7 @@ Use Lemonldap::NG::Common::PSGI::Router for REST API.
   
     # Store debug level
     $self->logLevel('info');
-    # Can use syslog for user actions
+    # It is possible to use syslog for user actions
     $self->syslog('daemon');
   
     # Return a boolean. If false, then error message has to be stored in

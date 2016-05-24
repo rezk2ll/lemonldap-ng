@@ -101,7 +101,7 @@ sub init {
     # Default routes must point to routines declared above
     $self->defaultAuthRoute('');
     $self->defaultUnauthRoute('');
-    1;
+    return 1;
 }
 
 sub reloadConf {

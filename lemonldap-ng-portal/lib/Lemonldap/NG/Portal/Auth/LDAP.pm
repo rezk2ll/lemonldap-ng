@@ -44,7 +44,7 @@ sub authLogout {
 }
 
 sub authForce {
-    PE_OK;
+    0;
 }
 
 # Test LDAP connection before trying to bind

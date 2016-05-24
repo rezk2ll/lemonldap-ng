@@ -62,7 +62,7 @@ sub checkConf {
             $class->lmLog( 'Launching ' . ref($obj) . "->$sub(conf)", 'debug' );
             unless ( $obj->$sub($conf) ) {
                 $class->lmLog(
-                    "Underlying object can't read conf ("
+                    "Underlying object can't load conf ("
                       . ref($obj)
                       . "->$sub)",
                     'error'
@@ -444,7 +444,7 @@ sub conditionSub {
         and not $class->isa('Lemonldap::NG::Handler::ApacheMP2') )
     {
         $class->lmLog( "Rules logout_app and logout_app_sso require Apache>=2",
-            'warn' );
+            'info' );
         return ( sub { 1 }, 0 );
     }
 
