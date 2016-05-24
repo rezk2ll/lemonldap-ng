@@ -41,7 +41,7 @@ sub extractFormInfo {
             my @fields = ('id');
 
             # Look at wanted fields
-            if ( $self->getModule('user') =~ /^Facebook/ ) {
+            if ( $self->getModule( $req, 'user' ) =~ /^Facebook/ ) {
                 push @fields,
                   map { /^(\w+)$/ ? ($1) : () }
                   values %{ $self->conf->{facebookExportedVars} };
