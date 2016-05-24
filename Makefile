@@ -328,7 +328,7 @@ common:		common_conf
 handler:	handler_conf common
 	@$(MAKE) -C ${SRCHANDLERDIR}
 
-portal:		portal_conf common
+portal:		portal_conf handler
 	@$(MAKE) -C ${SRCPORTALDIR}
 
 manager:	manager_conf handler
