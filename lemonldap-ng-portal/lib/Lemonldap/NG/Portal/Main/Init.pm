@@ -73,7 +73,7 @@ sub init {
             %$args
         }
     );
-    foreach my $k ( keys $self->localConfig ) {
+    foreach my $k ( keys %{ $self->localConfig } ) {
         if ( $k =~ /tpl_(.*)/ ) {
             $self->customParameters->{$1} = $self->localConfig->{$k};
         }

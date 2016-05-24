@@ -168,7 +168,9 @@ sub getModule {
             return $self->$mod->can('name');
         }
         else {
-            return ref( $self->$mod );
+            my $s = ref( $self->$mod );
+            $s =~ s/^Lemonldap::NG::Portal::(?:(?:Issuer|UserDB|Auth)::)?//;
+            return $s;
         }
     }
     elsif ( $type eq 'issuer' ) {

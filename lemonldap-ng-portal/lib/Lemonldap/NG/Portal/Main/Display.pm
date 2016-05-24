@@ -13,9 +13,7 @@ sub display {
     my ( $self, $req ) = @_;
 
     my $skin_dir = $self->conf->{templatesDir};
-    my $skinfile;
-    my %templateParams =
-      ( %{ $self->customParameters }, %{ $req->{customParameters} // {} } );
+    my ( $skinfile, %templateParams );
 
     # 0. Display error page
     if ( my $http_error = $req->param('lmError') ) {
@@ -307,6 +305,8 @@ sub display {
         SKIN      => $skin,
         ANTIFRAME => $self->conf->{portalAntiFrame},
         SKIN_BG   => $self->conf->{portalSkinBackground},
+        %{ $self->customParameters },
+        %{ $req->{customParameters} // {} },
     );
 
     ## Custom template params
