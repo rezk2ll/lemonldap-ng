@@ -4,9 +4,7 @@ use strict;
 use Data::Dumper;
 use 5.10.0;
 
-BEGIN {
-    use_ok('Lemonldap::NG::Portal::Main');
-}
+use_ok('Lemonldap::NG::Portal::Main');
 
 our $client;
 our $count = 1;
@@ -137,6 +135,7 @@ sub _get {
             'SERVER_NAME'     => 'auth.example.com',
             'SERVER_PORT'     => '8002',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
+            ( $args{custom} ? %{ $args{custom} } : () ),
         }
     );
 }

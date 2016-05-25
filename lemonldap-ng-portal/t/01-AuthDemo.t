@@ -72,7 +72,7 @@ ok(
     'Auth request with bad url'
 );
 ok( $res->[0] == 200, 'HTTP code is 200' ) or explain( $res, 200 );
-my %hdrs = @{ $res->[1] };
+%hdrs = @{ $res->[1] };
 ok( $hdrs{'Lm-Remote-User'} eq 'dwho', 'User is set' )
   or explain( \%hdrs, 'Lm-Remote-User => "dwho"' );
 ok( $hdrs{'Content-Type'} eq 'text/html', 'Reponse is HTML' )

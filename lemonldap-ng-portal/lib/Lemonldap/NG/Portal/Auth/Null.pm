@@ -31,10 +31,6 @@ sub authLogout {
 }
 
 sub getDisplayType {
-    return 'logo';
-}
-
-sub getDisplayType {
     return '';
 }
 

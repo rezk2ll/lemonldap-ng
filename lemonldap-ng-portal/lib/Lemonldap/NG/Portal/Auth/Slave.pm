@@ -1,0 +1,49 @@
+package Lemonldap::NG::Portal::Auth::Slave;
+
+use strict;
+use Mouse;
+
+# Add constants used by this module
+use Lemonldap::NG::Portal::Main::Constants
+  qw(PE_OK PE_FORBIDDENIP PE_USERNOTFOUND);
+use Lemonldap::NG::Portal::Lib::Slave;
+
+our $VERSION = '2.0.0';
+
+extends 'Lemonldap::NG::Portal::Auth::Base';
+
+sub init { 1 }
+
+sub extractFormInfo {
+    my ( $self, $req ) = @_;
+    return PE_FORBIDDENIP
+      unless ( $self->checkIP($req) and $self->checkHeader($req) );
+
+    my $user_header = $self->conf->{slaveUserHeader};
+    $user_header = 'HTTP_' . uc($user_header);
+    $user_header =~ s/\-/_/g;
+
+    unless ( $req->{user} = $req->{$user_header} ) {
+        $self->lmLog( "No header " . $self->conf->{slaveUserHeader} . " found",
+            'error' );
+        return PE_USERNOTFOUND;
+    }
+    PE_OK;
+}
+
+sub authenticate {
+    my ( $self, $req ) = @_;
+    PE_OK;
+}
+
+sub authForce {
+    my ( $self, $req ) = @_;
+    PE_OK;
+}
+
+sub authLogout {
+    my ( $self, $req ) = @_;
+    PE_OK;
+}
+
+1;

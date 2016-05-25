@@ -34,6 +34,10 @@ authentication modules.
   our $VERSION = '0.1';
   
   extends 'Lemonldap::NG::Portal::Auth::Base';
+
+  sub init {
+      ...
+  }
   
   sub extractFormInfo {
       my ( $self, $req ) = @_;
