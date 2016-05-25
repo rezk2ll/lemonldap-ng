@@ -112,6 +112,7 @@ Package: lemonldap-ng-fastcgi-server
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
+         libfcgi-procmanager-perl,
          liblemonldap-ng-handler-perl,
          libplack-perl,
          nginx-extras | nginx
