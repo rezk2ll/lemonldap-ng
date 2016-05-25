@@ -152,7 +152,7 @@ RCAPTCHADIR=$(DESTDIR)/$(CAPTCHADIR)
 RFASTCGISOCKDIR=$(DESTDIR)/$(FASTCGISOCKDIR)
 
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
-PORTALSKINS=`ls $(SRCPORTALDIR)/example/skins/`
+PORTALSKINS=`ls $(SRCPORTALDIR)/site/templates/`
 DIFF=diff -aurN -x '*.tpl' -x '*.bak' -x .svn -x '*.map' -x '*.min.js' -x '*.min.css' -x '*.swp' --ignore-matching-lines='.*jquery.*' --ignore-matching-lines='.*lemonldap-ng\.ini.*'
 DIFFPREFIX=
 
@@ -480,7 +480,7 @@ install_bin:	install_conf_dir
 	@install -v -d $(RBINDIR)
 	@cp -f\
 		${SRCHANDLERDIR}/example/scripts/purgeLocalCache \
-		${SRCPORTALDIR}/example/scripts/purgeCentralCache \
+		${SRCPORTALDIR}/site/cron/purgeCentralCache \
 		${SRCPORTALDIR}/example/scripts/buildPortalWSDL \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
@@ -625,17 +625,18 @@ install_portal_site:	install_conf_dir
 	@install -v -d $(RPORTALDIR) $(RPORTALSKINSDIR) \
 		$(RPORTALDIR)/skins/ \
 		$(RCRONDIR) $(RCONFDIR)
-	@for skin in $$(ls $(SRCPORTALDIR)/example/skins/); do \
+	@for skin in $$(ls $(SRCPORTALDIR)/site/templates/); do \
 		[ -h $(RPORTALDIR)/skins/$$skin ] && rm -f $(RPORTALDIR)/skins/$$skin; \
 		install -v -d $(RPORTALSKINSDIR)/$$skin; \
 	done
-	@cp -pR -f ${SRCPORTALDIR}/example/index_skin.pl ${RPORTALDIR}/index.pl
-	@cp -pR -f ${SRCPORTALDIR}/example/mail.pl ${RPORTALDIR}
-	@cp -pR -f ${SRCPORTALDIR}/example/metadata.pl ${RPORTALDIR}
-	@cp -pR -f ${SRCPORTALDIR}/example/openid-configuration.pl ${RPORTALDIR}
-	@cp -pR -f ${SRCPORTALDIR}/example/cdc.pl ${RPORTALDIR}
-	@cp -pR -f ${SRCPORTALDIR}/example/register.pl ${RPORTALDIR}
-	@tar -cf - -C ${SRCPORTALDIR}/example/skins/ $$(ls ${SRCPORTALDIR}/example/skins/) |tar -xf - -C $(RPORTALSKINSDIR)
+	#cp -pR -f ${SRCPORTALDIR}/example/index_skin.pl ${RPORTALDIR}/index.pl
+	#cp -pR -f ${SRCPORTALDIR}/example/mail.pl ${RPORTALDIR}
+	#cp -pR -f ${SRCPORTALDIR}/example/metadata.pl ${RPORTALDIR}
+	#cp -pR -f ${SRCPORTALDIR}/example/openid-configuration.pl ${RPORTALDIR}
+	#cp -pR -f ${SRCPORTALDIR}/example/cdc.pl ${RPORTALDIR}
+	#cp -pR -f ${SRCPORTALDIR}/example/register.pl ${RPORTALDIR}
+	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/index.fcgi $(RPORTALDIR)
+	@tar -cf - -C ${SRCPORTALDIR}/site/templates/ $$(ls ${SRCPORTALDIR}/site/templates/) |tar -xf - -C $(RPORTALSKINSDIR)
 	@for f in `find $(RPORTALSKINSDIR) -type f -name '*.tpl'`; do \
 		./scripts/transform-templates \
 			usedebianlibs $(USEDEBIANLIBS) \
@@ -651,13 +652,13 @@ install_portal_site:	install_conf_dir
 		rm -rvf $(PORTALLIBSTOREMOVEFORDEBIAN); \
 	fi
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
-		for skin in $$(ls $(SRCPORTALDIR)/example/skins/); do \
+		for skin in $$(ls $(SRCPORTALDIR)/site/templates/); do \
 			rm -rf $(RPORTALDIR)/skins/$$skin/; \
 			ln -s $(PORTALSKINSDIR)/$$skin $(RPORTALDIR)/skins/$$skin; \
 		done; \
 	fi
 	# Cron files
-	@cp -f $(SRCPORTALDIR)/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
+	@cp -f $(SRCPORTALDIR)/site/cron/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
 	@if [ ! "$(APACHEUSER)" ]; then \
 		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	else \
@@ -690,10 +691,10 @@ install_test_site:
 install_examples_site:
 	# Examples install
 	@install -v -d $(REXAMPLESDIR)
-	@for i in portal handler; do \
+	@for i in handler; do \
 		cp -a -f lemonldap-ng-$$i/example $(REXAMPLESDIR)/$$i; \
 	done
-	@for i in manager; do \
+	@for i in portal manager; do \
 		cp -a -f lemonldap-ng-$$i/eg $(REXAMPLESDIR)/$$i; \
 	done
 	@rm -rf $(REXAMPLESDIR)/portal/skins \
@@ -1032,7 +1033,7 @@ tidy: clean
 	$(MAKE) json
 
 tidy-js: clean
-	@find e2e-tests/ $(SRCPORTALDIR)/example \
+	@find e2e-tests/ \
 		  -type f \
 		  -name '*.js' \
 		! -name 'jq*' \
