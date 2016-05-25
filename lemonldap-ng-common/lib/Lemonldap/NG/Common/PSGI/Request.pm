@@ -10,6 +10,13 @@ our $VERSION = '2.0.0';
 #       http          ://  server   / path      ? query      # fragment
 # m|(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*)(?:\?([^#]*))?(?:#(.*))?|;
 
+sub BUILD {
+    my ( $self, $env ) = @_;
+    foreach ( keys %$env ) {
+        $self->{$_} ||= $env->{$_} if (/^HTTP_/);
+    }
+}
+
 has HTTP_ACCEPT          => ( is => 'ro', reader => 'accept' );
 has HTTP_ACCEPT_ENCODING => ( is => 'ro', reader => 'encodings' );
 has HTTP_ACCEPT_LANGUAGE => ( is => 'ro', reader => 'languages' );
