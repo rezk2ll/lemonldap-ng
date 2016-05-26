@@ -26,8 +26,9 @@ has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
 
 # Macros and groups
-has _macros => ( is => 'rw' );
-has _groups => ( is => 'rw' );
+has _macros     => ( is => 'rw' );
+has _groups     => ( is => 'rw' );
+has _jsRedirect => ( is => 'rw' );
 
 # TrustedDomain regexp
 has trustedDomainsRe => ( is => 'rw' );
@@ -235,6 +236,12 @@ sub reloadConf {
             }
         }
     }
+    $self->{_jsRedirect} =
+      HANDLER->tsv->{jail}->jail_reval(
+        "sub{return " . HANDLER->substitute( $self->conf->{jsRedirect} ) . "}" )
+      or $self->lmLog(
+        'jsRedirect returns an error: ' . HANDLER->tsv->{jail}->error,
+        'error' );
 
     # Load plugins
     foreach my $plugin ( $self->enabledPlugins ) {

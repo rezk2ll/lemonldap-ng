@@ -188,14 +188,34 @@ sub autoRedirect {
     $req->{urldc} ||= $self->conf->{portal} if ( $req->mustRedirect );
 
     # Redirection should be made if urldc defined
-    if ( $req->{urldc} ) {
-        return [ 302, [ Location => $req->{urldc}, @{ $req->respHeaders } ],
-            [] ];
+    if ( $req->{urldc} and not $req->param('lmError') ) {
+        if (    $self->conf->{cda}
+            and $req->{id}
+            and $req->{urldc} !~
+            m#^https?://[^/]*$self->conf->{domain}(:\d+)?/#oi
+            and $self->isTrustedUrl( $req->{urldc} ) )
+        {
+            my $ssl = $req->{urldc} =~ /^https/;
+            $self->lmLog( 'CDA request', 'debug' );
+            $req->{urldc} .= ( $req->{urldc} =~ /\?/ ? '&' : '?' )
+              . (
+                ( $self->conf->{securedCookie} < 2 or $ssl )
+                ? "$self->conf->{cookieName}=$self->{id}"
+                : "$self->conf->{cookieName}http="
+                  . $self->{sessionInfo}->{_httpSession}
+              );
+        }
+        if ( $self->_jsRedirect->() ) {
+            $req->error(PE_REDIRECT);
+            $req->datas->{redirectFormMethod} = "get";
+        }
+        else {
+            return [ 302, [ Location => $req->{urldc}, @{ $req->respHeaders } ],
+                [] ];
+        }
     }
-    else {
-        my ( $tpl, $prms ) = $self->display($req);
-        return $self->sendHtml( $req, $tpl, params => $prms );
-    }
+    my ( $tpl, $prms ) = $self->display($req);
+    return $self->sendHtml( $req, $tpl, params => $prms );
 }
 
 # Try to recover the session corresponding to id and return session datas.

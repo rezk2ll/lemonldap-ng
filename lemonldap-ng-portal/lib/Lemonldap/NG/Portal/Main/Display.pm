@@ -68,7 +68,7 @@ sub display {
             %templateParams = (
                 URL           => $req->{urldc},
                 HIDDEN_INPUTS => $self->buildHiddenForm(),
-                FORM_METHOD   => $self->conf->{redirectFormMethod},
+                FORM_METHOD   => $req->datas->{redirectFormMethod} || 'get',
             );
         }
 
