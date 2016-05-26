@@ -217,8 +217,10 @@ sub checkXSSAttack {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     my $ret = $self->_authentication->extractFormInfo($req);
-    if($ret == PE_OK and not $req->user) {
-        $self->lmLog('Authentication module succeed but has not set $req->user','error');
+    if ( $ret == PE_OK and not $req->user ) {
+        $self->lmLog(
+            'Authentication module succeed but has not set $req->user',
+            'error' );
         return PE_ERROR;
     }
     return $ret;
@@ -426,6 +428,14 @@ sub cookie {
         push @res, "$f=$h{$_}" if ( $h{$_} );
     }
     return join( '; ', @res );
+}
+
+sub _dump {
+    my($self, $variable) = @_;
+    require Data::Dumper;
+    $Data::Dumper::Indent = 0;
+    $self->lmLog( "Dump: " . Data::Dumper::Dumper($variable), 'debug' );
+    return;
 }
 
 1;

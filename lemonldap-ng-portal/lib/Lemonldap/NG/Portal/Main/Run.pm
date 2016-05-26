@@ -141,7 +141,7 @@ sub do {
         }
     }
     else {
-        if ( $err and $err != PE_LOGOUT_OK ) {
+        if ( $err and $err != PE_LOGOUT_OK and $err != PE_REDIRECT ) {
             my ( $tpl, $prms ) = $self->display($req);
             return $self->sendHtml( $req, $tpl, params => $prms );
         }
@@ -200,8 +200,8 @@ sub autoRedirect {
             $req->{urldc} .= ( $req->{urldc} =~ /\?/ ? '&' : '?' )
               . (
                 ( $self->conf->{securedCookie} < 2 or $ssl )
-                ? "$self->conf->{cookieName}=$self->{id}"
-                : "$self->conf->{cookieName}http="
+                ? "$self->{conf}->{cookieName}=$self->{id}"
+                : "$self->{conf}->{cookieName}http="
                   . $self->{sessionInfo}->{_httpSession}
               );
         }

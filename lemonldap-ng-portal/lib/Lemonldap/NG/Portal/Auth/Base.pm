@@ -59,6 +59,10 @@ authentication modules.
       ...
   }
   
+  sub getDisplayType {
+      return ...;
+  }
+  
   1;
 
 =head1 DESCRIPTION
