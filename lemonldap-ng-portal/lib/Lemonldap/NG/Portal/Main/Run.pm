@@ -189,22 +189,6 @@ sub autoRedirect {
 
     # Redirection should be made if urldc defined
     if ( $req->{urldc} and not $req->param('lmError') ) {
-        if (    $self->conf->{cda}
-            and $req->{id}
-            and $req->{urldc} !~
-            m#^https?://[^/]*$self->conf->{domain}(:\d+)?/#oi
-            and $self->isTrustedUrl( $req->{urldc} ) )
-        {
-            my $ssl = $req->{urldc} =~ /^https/;
-            $self->lmLog( 'CDA request', 'debug' );
-            $req->{urldc} .= ( $req->{urldc} =~ /\?/ ? '&' : '?' )
-              . (
-                ( $self->conf->{securedCookie} < 2 or $ssl )
-                ? "$self->{conf}->{cookieName}=$self->{id}"
-                : "$self->{conf}->{cookieName}http="
-                  . $self->{sessionInfo}->{_httpSession}
-              );
-        }
         if ( $self->_jsRedirect->() ) {
             $req->error(PE_REDIRECT);
             $req->datas->{redirectFormMethod} = "get";
