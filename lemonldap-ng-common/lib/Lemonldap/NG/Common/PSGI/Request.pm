@@ -13,7 +13,7 @@ our $VERSION = '2.0.0';
 sub BUILD {
     my ( $self, $env ) = @_;
     foreach ( keys %$env ) {
-        $self->{$_} ||= $env->{$_} if (/^HTTP_/);
+        $self->{$_} ||= $env->{$_} if (/^(?:HTTP|SSL)_/);
     }
 }
 
