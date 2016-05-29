@@ -1,15 +1,30 @@
+# Notifications plugin.
+#
+# Three entry points for notifications:
+#  * a new route "/notifback" for checking accepted notifications
+#    (sub getNotifBack). It launch then autoRedirect() with "mustRedirect"
+#    set to 1 because underlying handler has not seen user as authenticated
+#    so datas are not set;
+#  * two callbacks inserted in process steps:
+#    - one inserted after authentication process,
+#    - one for authenticated users,
+#    These callbacks launch checkForNotifications to get notification and
+#    cipher LemonLDAP::NG cookies if any found.
+
 package Lemonldap::NG::Portal::Plugins::Notifications;
 
 use strict;
 use Mouse;
 use XML::LibXML;
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_NOTIFICATION);
 
 our $VERSION = '2.0.0';
 
+# Lemonldap::NG::Portal::Main::Plugin provides addAuthRoute() and
+# addUnauthRoute() methods in addition of Lemonldap::NG::Portal::Main::Module.
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-has notifObject => ( is => 'rw' );
-
+# XML parser. TODO: replace this by JSON
 has parser => (
     is      => 'rw',
     builder => sub {
@@ -17,26 +32,47 @@ has parser => (
     }
 );
 
-# Two entry points for notifications:
-#  * a new route "/reference" for checking accepted notifications
-#    (sub getNotifBack). It launch then autoRedirect() with "mustRedirect"
-#    set to 1 because underlying handler has not seen user as authenticated
-#    so datas are not set;
-#  * a process step inserted after authentication process:
-#    checkForNotifications that cipher cookies
+# XSLT document
+has stylesheet => (
+    is      => 'rw',
+    lazy    => 1,
+    builder => sub {
+        my $self = $_[0];
+        my $xslt = XML::LibXSLT->new();
+        my $styleFile =
+          ( -e $self->conf->{notificationXSLTfile}
+            ? $self->conf->{notificationXSLTfile}
+            : $self->conf->{templatesDir} . '/skins/common/notification.xsl' );
+        return $xslt->parse_stylesheet( $self->parser($styleFile) );
+    }
+);
 
+# Underlying notifications storage object (File, DBI, LDAP,...)
+has notifObject => ( is => 'rw' );
+
+# Declare additional process steps
+sub afterDatas { 'checkNotifDuringAuth' }
+
+sub forAuthUser { 'checkNotifForAuthUser' }
+
+# Plugin initialization
 sub init {
     my ($self) = @_;
-    $self->addUnauthRoute( 'reference' => 'getNotifBack', ['POST'] );
-    $self->addAuthRoute( 'reference' => 'getNotifBack', ['POST'] );
 
-    # Use configuration options
+    # Declare new route
+    $self->addUnauthRoute( 'notifback' => 'getNotifBack', ['POST'] );
+    $self->addAuthRoute( 'notifback' => 'getNotifBack', ['POST'] );
+
+    # Search for configuration options
     my $type = $self->conf->{notificationStorage};
     unless ($type) {
         $self->error('notificationStorage is not defined, aborting');
         return 0;
     }
-    eval "require Lemonldap::NG::Common::Notification::$type";
+
+    # Initialize notifications storage object
+    $type = "Lemonldap::NG::Common::Notification::$type";
+    eval "require $type";
     if ($@) {
         $self->error($@);
         return 0;
@@ -47,10 +83,7 @@ sub init {
     unless (
         eval {
             $self->notifObject(
-                "Lemonldap::NG::Common::Notification::$type"->new(
-                    $self->conf->{notificationStorageOptions}
-                )
-            );
+                $type->new( $self->conf->{notificationStorageOptions} ) );
         }
       )
     {
@@ -60,25 +93,133 @@ sub init {
     1;
 }
 
-sub afterDatas { 'checkForNotifications' }
+sub checkNotifDuringAuth {
+    my ( $self, $req ) = @_;
+    if ( my $notif = $self->checkForNotifications($req) ) {
 
+        # Cipher cookies
+    }
+    else {
+        return PE_OK;
+    }
+}
+
+sub checkNotifForAuthUser {
+    my ( $self, $req ) = @_;
+    if ( my $notif = $self->checkForNotifications($req) ) {
+
+        # Restore and cipher cookies
+    }
+    else {
+        return PE_OK;
+    }
+}
+
+has notifField => (
+    is      => 'rw',
+    builder => sub {
+        return
+             $_[0]->conf->{notificationField}
+          || $_[0]->conf->{whatToTrace}
+          || 'uid';
+    }
+);
+
+# Search for notifications and if any, returns HTML fragment.
+# TODO: replace this by JSON+Ajax
 sub checkForNotifications {
     my ( $self, $req ) = @_;
 
     # Look for pending notifications in database
+    my $uid = $req->sessionInfo->{ $self->notifField };
+    my $notifs;
+    my $form;
+    {
+        my $forUser = $self->notifObject->get($uid);
+        my $forAll =
+          $self->notifObject->get( $self->conf->{notificationWildcard} );
+        if ( $forUser and $forAll ) { $notifs = { %$forUser, %$forAll }; }
+        else                        { $notifs = $forUser ? $forUser : $forAll; }
+    }
+    return 0 unless ($notifs);
 
-    # If found, store them and cipher cookies
-    PE_OK;
+    # Transform notifications
+    my $i=0;#Files count
+    foreach my $file (values %$notifs) {
+        eval {
+            my $xml = $self->parser->parse_string($file);
+            my $j=0;#Notifications count
+            foreach my $notif($xml->documentElement->getElementsByTagName('notification') ){
+
+                # Get the reference
+                my $reference = $notif->getAttribute('reference');
+
+                $self->lmLog( "Get reference $reference", 'debug' );
+
+                # Check it in session
+                if ( exists $req->{sessionInfo}->{ "notification_$reference" } ) {
+
+                    # The notification was already accepted
+                    $self->lmLog(
+                        "Notification $reference was already accepted",
+                        'debug' );
+
+                    # Remove it from XML
+                    $notif->unbindNode();
+                    next;
+                }
+
+                # Check condition if any
+                my $condition = $notif->getAttribute('condition');
+
+                if ($condition) {
+
+                    $self->lmLog( "Get condition $condition", 'debug' );
+
+                    unless ( $self->p->HANDLER->safe->reval($condition) ) {
+                        $self->lmLog( "Notification condition not accepted",
+                            'debug' );
+
+                        # Remove it from XML
+                        $notif->unbindNode();
+                        next;
+
+                    }
+                }
+
+                $j++;
+            }
+
+            # Go to next file if no notification found
+            next unless $j;
+            $i++;
+
+            # Transform XML into HTML
+            my $results = $self->stylesheet->transform( $xml, start => $i );
+            $form .= $self->stylesheet->output_string($results);
+        };
+        if ($@) {
+            $self->lmLog(
+                "Bad XML file: a notification for $uid was not done ($@)",
+                'warn' );
+            return 0;
+        }
+    }
+
+    # Stop here if nothing to display
+    return 0 unless $i;
+
+    # Returns HTML fragment
+    return $form;
 }
 
 sub getNotifBack {
     my ( $self, $req, $name ) = @_;
 
-    # Look if al notifications have been accepted. If not, redirects to
+    # Look if all notifications have been accepted. If not, redirects to
     # portal
-    #TODO
 
-    # Else restore args and launch autoredirect
+    # Else uncipher cookie, restore args and launch autoredirect
     # TODO
     $self->p->do( $req, [] );
 }
