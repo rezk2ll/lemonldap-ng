@@ -31,10 +31,9 @@ SKIP: {
     # -------------------
     ok(
         $res = &client->_post(
-            '/', '',
+            '/',
             IO::String->new($postString),
-            'application/x-www-form-urlencoded',
-            length($postString)
+            length => length($postString)
         ),
         'Auth query'
     );

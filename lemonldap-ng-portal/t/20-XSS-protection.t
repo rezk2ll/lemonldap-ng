@@ -101,9 +101,9 @@ my @tests = (
 my $res;
 ok(
     $res = &client->_post(
-        '/', '',
+        '/',
         IO::String->new('user=dwho&password=dwho'),
-        'application/x-www-form-urlencoded', 23
+        length => 23
     ),
     'Auth query'
 );
@@ -154,9 +154,9 @@ while ( defined( my $url = shift(@tests) ) ) {
       or explain( $res->[0], ( $redir ? 302 : 200 ) );
     ok(
         $res = &client->_post(
-            '/', '',
+            '/',
             IO::String->new('user=dwho&password=dwho'),
-            'application/x-www-form-urlencoded', 23
+            length => 23
         ),
         'Auth query'
     );

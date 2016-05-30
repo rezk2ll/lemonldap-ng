@@ -40,9 +40,9 @@ SKIP: {
     # -------------------
     ok(
         $res = &client->_post(
-            '/', '',
+            '/',
             IO::String->new('user=dwho&password=dwho'),
-            'application/x-www-form-urlencoded', 23
+            length => 23
         ),
         'Auth query'
     );

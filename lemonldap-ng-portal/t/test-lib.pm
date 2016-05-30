@@ -140,4 +140,43 @@ sub _get {
     );
 }
 
+sub _post {
+    my ( $self, $path, $body, %args ) = @_;
+    die "$body must be a IO::Handle"
+      unless ( ref($body) and $body->can('read') );
+    return $self->app->(
+        {
+            'HTTP_ACCEPT' => $args{accept}
+              || 'application/json, text/plain, */*',
+            'HTTP_ACCEPT_LANGUAGE' => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+            'HTTP_CACHE_CONTROL'   => 'max-age=0',
+            ( $args{cookie} ? ( HTTP_COOKIE => $args{cookie} ) : () ),
+            'HTTP_HOST' => 'auth.example.com',
+            'HTTP_USER_AGENT' =>
+              'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
+            'PATH_INFO' => $path,
+            ( $args{query} ? ( QUERY_STRING => $args{query} ) : () ),
+            ( $args{referer} ? ( REFERER => $args{referer} ) : () ),
+            'REMOTE_ADDR' => '127.0.0.1',
+            (
+                $args{remote_user}
+                ? ( 'REMOTE_USER' => $args{remote_user} )
+                : ()
+            ),
+            'REQUEST_METHOD' => 'POST',
+            'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
+            'SCRIPT_NAME'     => '',
+            'SERVER_NAME'     => 'auth.example.com',
+            'SERVER_PORT'     => '8002',
+            'SERVER_PROTOCOL' => 'HTTP/1.1',
+            ( $args{custom} ? %{ $args{custom} } : () ),
+            'psgix.input.buffered' => 1,
+            'psgi.input'           => $body,
+            'CONTENT_LENGTH' => $args{length} // scalar( ( stat $body )[7] ),
+            'CONTENT_TYPE'   => $args{type}
+              || 'application/x-www-form-urlencoded',
+        }
+    );
+}
+
 1;
