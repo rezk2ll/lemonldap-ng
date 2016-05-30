@@ -37,18 +37,31 @@ has stylesheet => (
     is      => 'rw',
     lazy    => 1,
     builder => sub {
-        my $self = $_[0];
-        my $xslt = XML::LibXSLT->new();
-        my $styleFile =
-          ( -e $self->conf->{notificationXSLTfile}
+        my $self      = $_[0];
+        my $xslt      = XML::LibXSLT->new();
+        my $styleFile = (
+            -e $self->conf->{notificationXSLTfile}
             ? $self->conf->{notificationXSLTfile}
-            : $self->conf->{templatesDir} . '/skins/common/notification.xsl' );
+            : $self->conf->{templatesDir} . '/skins/common/notification.xsl'
+        );
         return $xslt->parse_stylesheet( $self->parser($styleFile) );
     }
 );
 
 # Underlying notifications storage object (File, DBI, LDAP,...)
 has notifObject => ( is => 'rw' );
+
+has notifField => (
+    is      => 'rw',
+    builder => sub {
+        my $uid =
+             $_[0]->conf->{notificationField}
+          || $_[0]->conf->{whatToTrace}
+          || 'uid';
+        $uid =~ s/^\$//;
+        return $uid;
+    }
+);
 
 # Declare additional process steps
 sub afterDatas { 'checkNotifDuringAuth' }
@@ -115,16 +128,6 @@ sub checkNotifForAuthUser {
     }
 }
 
-has notifField => (
-    is      => 'rw',
-    builder => sub {
-        return
-             $_[0]->conf->{notificationField}
-          || $_[0]->conf->{whatToTrace}
-          || 'uid';
-    }
-);
-
 # Search for notifications and if any, returns HTML fragment.
 # TODO: replace this by JSON+Ajax
 sub checkForNotifications {
@@ -132,24 +135,19 @@ sub checkForNotifications {
 
     # Look for pending notifications in database
     my $uid = $req->sessionInfo->{ $self->notifField };
-    my $notifs;
+    my $notifs $$self->getNotifications($uid);
     my $form;
-    {
-        my $forUser = $self->notifObject->get($uid);
-        my $forAll =
-          $self->notifObject->get( $self->conf->{notificationWildcard} );
-        if ( $forUser and $forAll ) { $notifs = { %$forUser, %$forAll }; }
-        else                        { $notifs = $forUser ? $forUser : $forAll; }
-    }
     return 0 unless ($notifs);
 
     # Transform notifications
-    my $i=0;#Files count
-    foreach my $file (values %$notifs) {
+    my $i = 0;    #Files count
+    foreach my $file ( values %$notifs ) {
         eval {
             my $xml = $self->parser->parse_string($file);
-            my $j=0;#Notifications count
-            foreach my $notif($xml->documentElement->getElementsByTagName('notification') ){
+            my $j   = 0;                                    #Notifications count
+            foreach my $notif (
+                $xml->documentElement->getElementsByTagName('notification') )
+            {
 
                 # Get the reference
                 my $reference = $notif->getAttribute('reference');
@@ -157,7 +155,7 @@ sub checkForNotifications {
                 $self->lmLog( "Get reference $reference", 'debug' );
 
                 # Check it in session
-                if ( exists $req->{sessionInfo}->{ "notification_$reference" } ) {
+                if ( exists $req->{sessionInfo}->{"notification_$reference"} ) {
 
                     # The notification was already accepted
                     $self->lmLog(
@@ -219,9 +217,60 @@ sub getNotifBack {
     # Look if all notifications have been accepted. If not, redirects to
     # portal
 
-    # Else uncipher cookie, restore args and launch autoredirect
-    # TODO
-    $self->p->do( $req, [] );
-}
+    # Search for Lemonldap::NG cookie (ciphered)
+    my $id;
+    if (    $id = $req->cookies
+        and $id =~ s/$self->{conf}->{cookieName}=([^,; ]+)/$1/o )
+    {
+        return $self->p->sendError( 'No cookie found', 401 );
+    }
+    $id = $self->p->conf->decrypt($id)
+      or return $self->sendError( 'Unable to decrypt', 500 );
 
-1;
+    # Verify that session exists
+    $self->p->HANDLER->retrieveSession($id)
+      or return $self->sendError( 'Unknown session', 401 );
+
+    # Restore datas
+    $self->p->importHandlerDatas($req);
+    my $uid = $req->sessionInfo->{ $self->notifField };
+
+    if (
+        my $notifs = $self->getNotifications($uid){
+
+            #TODO
+
+            # Get accepted notifications
+            $req->parseBody;
+              my ( $refs, $checks );
+              my $prms = $req->params;
+              foreach ( keys %$prms ) {
+                my $v = $prms ($_);
+                if (s/^reference//) {
+                    $refs->{$_} = $v;
+                }
+                elsif ( s/^check// and /^(\d+x\d+)x(\d+)$/ ) {
+                    push @{ $checks->{$1} }, $2;
+                }
+            }
+        }
+
+        # Else uncipher cookie, restore args and launch autoredirect
+        # TODO
+        $self->p->do( $req, [] );
+    }
+
+    sub getNotifications {
+        my ( $self, $uid ) = @_;
+        my $forUser = $self->notifObject->get($uid);
+        my $forAll =
+          $self->notifObject->get( $self->conf->{notificationWildcard} );
+        if ( $forUser and $forAll ) {
+            return { %$forUser, %$forAll };
+        }
+        else {
+            return ( $forUser ? $forUser : $forAll );
+        }
+    }
+
+    1;
