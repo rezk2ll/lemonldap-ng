@@ -16,6 +16,7 @@ package Lemonldap::NG::Portal::Plugins::Notifications;
 use strict;
 use Mouse;
 use XML::LibXML;
+use XML::LibXSLT;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_NOTIFICATION);
 
 our $VERSION = '2.0.0';
@@ -40,11 +41,15 @@ has stylesheet => (
         my $self      = $_[0];
         my $xslt      = XML::LibXSLT->new();
         my $styleFile = (
-            -e $self->conf->{notificationXSLTfile}
+            (
+                $self->conf->{notificationXSLTfile}
+                  and -e $self->conf->{notificationXSLTfile}
+            )
             ? $self->conf->{notificationXSLTfile}
-            : $self->conf->{templatesDir} . '/skins/common/notification.xsl'
+            : $self->conf->{templatesDir} . '/common/notification.xsl'
         );
-        return $xslt->parse_stylesheet( $self->parser($styleFile) );
+        die "$styleFile not found" unless ( -e $styleFile );
+        return $xslt->parse_stylesheet( $self->parser->parse_file($styleFile) );
     }
 );
 
@@ -111,6 +116,7 @@ sub checkNotifDuringAuth {
     if ( my $notif = $self->checkForNotifications($req) ) {
 
         # Cipher cookies
+        return PE_NOTIFICATION;
     }
     else {
         return PE_OK;
@@ -122,6 +128,7 @@ sub checkNotifForAuthUser {
     if ( my $notif = $self->checkForNotifications($req) ) {
 
         # Restore and cipher cookies
+        return PE_NOTIFICATION;
     }
     else {
         return PE_OK;
@@ -134,8 +141,8 @@ sub checkForNotifications {
     my ( $self, $req ) = @_;
 
     # Look for pending notifications in database
-    my $uid = $req->sessionInfo->{ $self->notifField };
-    my $notifs $$self->getNotifications($uid);
+    my $uid    = $req->sessionInfo->{ $self->notifField };
+    my $notifs = $self->getNotifications($uid);
     my $form;
     return 0 unless ($notifs);
 
@@ -242,7 +249,7 @@ sub getNotifBack {
         my ( $refs, $checks );
         my $prms = $req->params;
         foreach ( keys %$prms ) {
-            my $v = $prms ($_);
+            my $v = $prms->{$_};
             if (s/^reference//) {
                 $refs->{$_} = $v;
             }
@@ -250,19 +257,22 @@ sub getNotifBack {
                 push @{ $checks->{$1} }, $2;
             }
         }
-        foreach my $file (values %$notifs) {
+        foreach my $file ( values %$notifs ) {
             my $xml = $self->parser->parse_string($file);
-            foreach my $notif ($xml->documentElement->getElementsByTagName('notification') ) {
-                my $condition = $notif->getAttribute('condition');
+            foreach my $notif (
+                $xml->documentElement->getElementsByTagName('notification') )
+            {
                 my $reference = $notif->getAttribute('reference');
-                if(defined $refs->{$reference}) {
-                    if(defined $condition) {
-                        # Verity that checkboxes have been checked
-                    }
-                    else {
-                        # TODO: Do the job
-                        delete $refs->{$reference};
-                    }
+                if ( defined $refs->{$reference} ) {
+
+                    #if ( defined $XX ) {
+
+                    #    # Verity that checkboxes have been checked
+                    #}
+                    #else {
+                    #    # TODO: Do the job
+                    #    delete $refs->{$reference};
+                    #}
                 }
                 else {
                     # TODO: launch checkForUnauthUser()

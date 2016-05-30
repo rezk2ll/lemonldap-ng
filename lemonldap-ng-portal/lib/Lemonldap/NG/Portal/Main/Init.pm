@@ -113,7 +113,7 @@ sub reloadConf {
 
     # Reinitialize arrays
     foreach (
-        qw(_macros _groups beforeAuth betweenAuthAndDatas afterDatas forAuthUser)
+        qw(_macros _groups beforeAuth betweenAuthAndDatas afterDatas forAuthUser beforeLogout)
       )
     {
         $self->{$_} = [];
@@ -258,11 +258,11 @@ sub loadPlugin {
     return 0
       unless ( $obj = $self->loadModule("$plugin") );
     foreach my $sub (
-        qw(beforeAuthProcess addSessionData afterAuthProcess forAuthUser))
+        qw(beforeAuth betweenAuthAndDatas afterDatas forAuthUser beforeLogout))
     {
         if ( $obj->can($sub) ) {
             if ( my $callback = $obj->$sub ) {
-                push @{ $self->{$sub} }, sub { $obj->$callback( $_[1] ) };
+                push @{ $self->{$sub} }, sub { $obj->$callback( $_[0] ) };
             }
         }
     }

@@ -6,35 +6,22 @@
 package Lemonldap::NG::Common::Notification::File;
 
 use strict;
+use Mouse;
 use MIME::Base64;
 
 our $VERSION = '2.0.0';
 
-## @method boolean prereq()
-# Check if parameters are set and if storage directory exists.
-# @return true if all is OK
-sub prereq {
-    my $self = shift;
-    unless ( $self->{dirName} ) {
-        $Lemonldap::NG::Common::Notification::msg =
-          '"dirName" is required in "File" notification type !';
-        return 0;
-    }
-    if ( $self->{table} ) {
-        $self->{dirName} =~ s/\/conf\/?$//;
-        $self->{dirName} .= "/$self->{table}";
-    }
-    unless ( -d $self->{dirName} ) {
-        $Lemonldap::NG::Common::Notification::msg =
-          "Directory \"$self->{dirName}\" does not exist !";
-        return 0;
-    }
+has dirName => ( is => 'rw', required => 1 );
 
-    # Configure file name separator (_ by default)
-    $self->{fileNameSeparator} ||= "_";
+has table => (
+    is      => 'rw',
+    trigger => sub {
+        $_[0]->{dirName} =~ s/\/conf\/?$//;
+        $_[0]->{dirName} .= "/$_[0]->{table}";
+    }
+);
 
-    1;
-}
+has fileNameSeparator => ( is => 'rw', default => '_' );
 
 ## @method hashref get(string uid,string ref)
 # Returns notifications corresponding to the user $uid.
