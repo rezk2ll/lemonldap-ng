@@ -235,42 +235,60 @@ sub getNotifBack {
     $self->p->importHandlerDatas($req);
     my $uid = $req->sessionInfo->{ $self->notifField };
 
-    if (
-        my $notifs = $self->getNotifications($uid){
+    if ( my $notifs = $self->getNotifications($uid) ) {
 
-            #TODO
-
-            # Get accepted notifications
-            $req->parseBody;
-              my ( $refs, $checks );
-              my $prms = $req->params;
-              foreach ( keys %$prms ) {
-                my $v = $prms ($_);
-                if (s/^reference//) {
-                    $refs->{$_} = $v;
+        # Get accepted notifications
+        $req->parseBody;
+        my ( $refs, $checks );
+        my $prms = $req->params;
+        foreach ( keys %$prms ) {
+            my $v = $prms ($_);
+            if (s/^reference//) {
+                $refs->{$_} = $v;
+            }
+            elsif ( s/^check// and /^(\d+x\d+)x(\d+)$/ ) {
+                push @{ $checks->{$1} }, $2;
+            }
+        }
+        foreach my $file (values %$notifs) {
+            my $xml = $self->parser->parse_string($file);
+            foreach my $notif ($xml->documentElement->getElementsByTagName('notification') ) {
+                my $condition = $notif->getAttribute('condition');
+                my $reference = $notif->getAttribute('reference');
+                if(defined $refs->{$reference}) {
+                    if(defined $condition) {
+                        # Verity that checkboxes have been checked
+                    }
+                    else {
+                        # TODO: Do the job
+                        delete $refs->{$reference};
+                    }
                 }
-                elsif ( s/^check// and /^(\d+x\d+)x(\d+)$/ ) {
-                    push @{ $checks->{$1} }, $2;
+                else {
+                    # TODO: launch checkForUnauthUser()
                 }
             }
         }
-
-        # Else uncipher cookie, restore args and launch autoredirect
-        # TODO
-        $self->p->do( $req, [] );
+    }
+    else {
+        # TODO: redirect to portal
     }
 
-    sub getNotifications {
-        my ( $self, $uid ) = @_;
-        my $forUser = $self->notifObject->get($uid);
-        my $forAll =
-          $self->notifObject->get( $self->conf->{notificationWildcard} );
-        if ( $forUser and $forAll ) {
-            return { %$forUser, %$forAll };
-        }
-        else {
-            return ( $forUser ? $forUser : $forAll );
-        }
-    }
+    # Else uncipher cookie, restore args and launch autoredirect
+    # TODO
+    $self->p->do( $req, [] );
+}
 
-    1;
+sub getNotifications {
+    my ( $self, $uid ) = @_;
+    my $forUser = $self->notifObject->get($uid);
+    my $forAll = $self->notifObject->get( $self->conf->{notificationWildcard} );
+    if ( $forUser and $forAll ) {
+        return { %$forUser, %$forAll };
+    }
+    else {
+        return ( $forUser ? $forUser : $forAll );
+    }
+}
+
+1;
