@@ -59,7 +59,7 @@ sub encrypt {
     my $l = bytes::length($data) % 16;
     $data .= "\0" x ( 16 - $l ) unless ( $l == 0 );
 
-    eval { $data = encode_base64( $self->_getCipher->encrypt($data) ); };
+    eval { $data = encode_base64( $self->_getCipher->encrypt($data), '' ); };
     if ($@) {
         $msg = "Crypt::Rijndael error : $@";
         return undef;
