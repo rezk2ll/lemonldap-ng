@@ -19,7 +19,7 @@ close F;
 
 init(
     {
-        logLevel                   => 'debug',
+        logLevel                   => 'error',
         useSafeJail                => 1,
         notifications              => 1,
         templatesDir               => 'site/templates/',
@@ -63,7 +63,7 @@ ok( $res->[0] == 401, "Session isn't valid" )
 count(2);
 
 # Try to validate notification without accepting it
-my $str = 'reference1x1=testref';
+my $str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
 ok(
     $res = &client->_post(
         '/notifback',
@@ -78,7 +78,23 @@ ok( $res->[0] == 200, "Don't receive redirection" )
   or explain( [ $res->[0], $res->[1] ], 200 );
 count(2);
 
-print STDERR Dumper($res);
+# Try to validate notification
+my $str = 'reference1x1=testref&check1x1x1=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
+ok(
+    $res = &client->_post(
+        '/notifback',
+        IO::String->new($str),
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+        length => length($str),
+    ),
+    "Accept notification"
+);
+ok( $res->[0] == 302, "Get redirection" )
+  or explain( [ $res->[0], $res->[1] ], 302 );
+count(2);
+
+#print STDERR Dumper($res);
 
 clean_sessions();
 

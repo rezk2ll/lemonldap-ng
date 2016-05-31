@@ -124,8 +124,7 @@ sub init {
 
 sub checkNotifDuringAuth {
     my ( $self, $req ) = @_;
-    if ( $req->{datas}->{notification} = $self->checkForNotifications($req) )
-    {
+    if ( $req->{datas}->{notification} = $self->checkForNotifications($req) ) {
         $self->rebuildCookies($req);
 
         # Restore and cipher cookies
@@ -228,7 +227,7 @@ sub getNotifBack {
 
     # Search for Lemonldap::NG cookie (ciphered)
     my $id;
-    unless (    $id = $req->cookies
+    unless ($id = $req->cookies
         and $id =~ s/$self->{conf}->{cookieName}=([^,; ]+)/$1/o )
     {
         return $self->p->sendError( $req, 'No cookie found', 401 );
@@ -248,48 +247,60 @@ sub getNotifBack {
 
         # Get accepted notifications
         $req->parseBody;
-        my ( $refs, $checks );
+        my ( $refs, $checks ) = ( {}, {} );
         my $prms = $req->params;
         foreach ( keys %$prms ) {
             my $v = $prms->{$_};
             if (s/^reference//) {
-                $refs->{$_} = $v;
+                $refs->{$v} = $_;
             }
-            elsif ( s/^check// and /^(\d+x\d+)x(\d+)$/ ) {
+            elsif ( s/^check// and /^(\d+x\d+)x(\d+)$/ and $v eq 'accepted' ) {
                 push @{ $checks->{$1} }, $2;
             }
         }
+
         foreach my $file ( values %$notifs ) {
             my $xml = $self->parser->parse_string($file);
+
+            # Get pending notifications and verify that they have been accepted
             foreach my $notif (
                 $xml->documentElement->getElementsByTagName('notification') )
             {
                 my $reference = $notif->getAttribute('reference');
-                if ( defined $refs->{$reference} ) {
 
-                    #if ( defined $XX ) {
+                # Check if this pending notification has been seen
+                if ( my $refId = $refs->{$reference} ) {
 
-                    #    # Verity that checkboxes have been checked
-                    #}
-                    #else {
-                    #    # TODO: Do the job
-                    #    delete $refs->{$reference};
-                    #}
+                    # Verity that checkboxes have been checked
+                    my @toCheck = $notif->getElementsByTagName('check');
+                    if ( my $toCheckCount = @toCheck ) {
+                        unless ($checks->{$refId}
+                            and $toCheckCount == @{ $checks->{$refId} } )
+                        {
+                            return $self->p->do( $req, $self->p->afterDatas );
+                        }
+                    }
                 }
                 else {
-                    # TODO: launch checkForUnauthUser()
+                    # One pending notification has been found and not accepted,
+                    # restart process to display pending notifications
+                    # TODO: is it a good idea to launch all 'afterDatas' subs ?
+                    return $self->p->do( $req, $self->p->afterDatas );
                 }
             }
         }
+
+       # All pending notifications has been accepted, restore cookies and launch
+       # 'controlUrl' to restore "urldc" using do()
+        $self->rebuildCookies($req);
+        $self->p->do( $req, ['controlUrl'] );
     }
     else {
-        # TODO: redirect to portal
+        # No notifications checked here, this entry point must not be called.
+        # Redirecting to portal
+        $req->mustRedirect(1);
+        $self->p->do( $req, [] );
     }
-
-    # Else uncipher cookie, restore args and launch autoredirect
-    # TODO
-    $self->rebuildCookies($req);
-    $self->p->do( $req, [] );
 }
 
 sub getNotifications {
