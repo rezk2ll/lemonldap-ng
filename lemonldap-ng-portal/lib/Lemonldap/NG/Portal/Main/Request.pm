@@ -19,7 +19,7 @@
 package Lemonldap::NG::Portal::Main::Request;
 
 # Developpers, be careful: new() is never called so default values will not be
-# taken in account (see Portal::Run::handler())
+# taken in account (see Portal::Run::handler()): set default values in init()
 
 use strict;
 use Mouse;
@@ -101,6 +101,12 @@ sub error_type {
     return "negative";
 
     #TODO
+}
+
+sub init {
+    my ($self) = @_;
+    $self->{$_} = {} foreach(qw(datas customParameters));;
+    $self->{$_} = [] foreach(qw(respCookies));;
 }
 
 sub errorString {

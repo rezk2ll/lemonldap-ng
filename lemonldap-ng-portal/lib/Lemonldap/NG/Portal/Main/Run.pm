@@ -33,6 +33,7 @@ sub sessionDatas {
 sub handler {
     my ( $self, $req ) = @_;
     bless $req, 'Lemonldap::NG::Portal::Main::Request';
+    $req->init();
     return $self->Lemonldap::NG::Common::PSGI::Router::handler($req);
 }
 
