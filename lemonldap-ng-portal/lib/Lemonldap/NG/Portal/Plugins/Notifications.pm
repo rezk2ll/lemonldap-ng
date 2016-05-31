@@ -228,17 +228,17 @@ sub getNotifBack {
 
     # Search for Lemonldap::NG cookie (ciphered)
     my $id;
-    if (    $id = $req->cookies
+    unless (    $id = $req->cookies
         and $id =~ s/$self->{conf}->{cookieName}=([^,; ]+)/$1/o )
     {
-        return $self->p->sendError( 'No cookie found', 401 );
+        return $self->p->sendError( $req, 'No cookie found', 401 );
     }
     $id = $self->p->HANDLER->tsv->{cipher}->decrypt($id)
-      or return $self->sendError( 'Unable to decrypt', 500 );
+      or return $self->sendError( $req, 'Unable to decrypt', 500 );
 
     # Verify that session exists
     $self->p->HANDLER->retrieveSession($id)
-      or return $self->sendError( 'Unknown session', 401 );
+      or return $self->sendError( $req, 'Unknown session', 401 );
 
     # Restore datas
     $self->p->importHandlerDatas($req);
@@ -309,8 +309,9 @@ sub rebuildCookies {
     my @tmp;
     for ( my $i = 0 ; $i < @{ $req->{respHeaders} } ; $i += 2 ) {
         push @tmp, $req->respHeaders->[0], $req->respHeaders->[1]
-          unless ( $req->respHeaders eq 'Set-Cookie' );
+          unless ( $req->respHeaders->[0] eq 'Set-Cookie' );
     }
+    $req->{respHeaders} = \@tmp;
     $self->p->buildCookie($req);
 }
 

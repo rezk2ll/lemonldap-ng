@@ -9,17 +9,17 @@ my $file = 't/20160530_dwho_dGVzdHJlZg==.xml';
 
 open F, "> $file" or die($!);
 print F '<?xml version="1.0" encoding="UTF-8"?>
-<root><notification uid="dwho" date="2016-05-30" reference="testref"><root>
+<root><notification uid="dwho" date="2016-05-30" reference="testref">
 <title>Test title</title>
 <subtitle>Test subtitle</subtitle>
 <text>This is a test text</text>
 <check>Accept test</check>
-</root></notification></root>';
+</notification></root>';
 close F;
 
 init(
     {
-        logLevel                   => 'error',
+        logLevel                   => 'debug',
         useSafeJail                => 1,
         notifications              => 1,
         templatesDir               => 'site/templates/',
@@ -49,7 +49,36 @@ ok( $id = $cookies->{lemonldap}, 'Get cookie' )
   or explain( $res, 'Set-Cookie: something' );
 count(3);
 
-#print STDERR Dumper($res);
+# Verify that cookie is ciphered (session unvalid)
+ok(
+    $res = &client->_get(
+        '/',
+        query  => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
+        cookie => "lemonldap=$id",
+    ),
+    'Test cookie received'
+);
+ok( $res->[0] == 401, "Session isn't valid" )
+  or explain( [ $res->[0], $res->[1] ], 401 );
+count(2);
+
+# Try to validate notification without accepting it
+my $str = 'reference1x1=testref';
+ok(
+    $res = &client->_post(
+        '/notifback',
+        IO::String->new($str),
+        cookie => "lemonldap=$id",
+        accept => 'text/html',
+        length => length($str),
+    ),
+    "Don't accept notification"
+);
+ok( $res->[0] == 200, "Don't receive redirection" )
+  or explain( [ $res->[0], $res->[1] ], 200 );
+count(2);
+
+print STDERR Dumper($res);
 
 clean_sessions();
 

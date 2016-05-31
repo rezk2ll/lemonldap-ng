@@ -21,6 +21,7 @@
 						<xsl:attribute name="type">checkbox</xsl:attribute>
 						<xsl:attribute name="name">check<xsl:value-of select="$start"/>x<xsl:value-of select="$level"/>x<xsl:value-of select="$sublevel"/></xsl:attribute>
 						<xsl:attribute name="id">check<xsl:value-of select="$start"/>x<xsl:value-of select="$level"/>x<xsl:value-of select="$sublevel"/></xsl:attribute>
+						<xsl:attribute name="value">accepted</xsl:attribute>
 					</xsl:element>
 					<xsl:value-of select="."/>
 				</xsl:element>

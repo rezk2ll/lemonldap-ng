@@ -18,6 +18,7 @@ sub init {
     $ini->{localSessionStorage} ||= '';
     $ini->{logLevel}            ||= 'error';
     $ini->{cookieName}          ||= 'lemonldap';
+    $ini->{domain}              ||= 'example.com';
     $ini->{templateDir}         ||= 'site/templates';
     $ini->{staticPrefix}        ||= '/index.fcgi';
     $ini->{securedCookie} //= 0;
