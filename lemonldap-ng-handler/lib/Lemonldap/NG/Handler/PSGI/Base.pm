@@ -27,7 +27,7 @@ sub init {
             "Unable to protect this app ($Lemonldap::NG::Common::Conf::msg)");
         return 0;
     }
-    $self->portal( $self->api->tsv->{portal}->() );
+    eval { $self->portal( $self->api->tsv->{portal}->() ) };
     my $rule =
       $self->{protection} || $self->api->localConfig->{protection} || '';
     $self->rule(
