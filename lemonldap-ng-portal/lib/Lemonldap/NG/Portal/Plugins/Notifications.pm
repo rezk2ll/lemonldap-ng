@@ -1,15 +1,13 @@
 # Notifications plugin.
 #
-# Three entry points for notifications:
+# Two entry points for notifications:
 #  * a new route "/notifback" for checking accepted notifications
 #    (sub getNotifBack). It launch then autoRedirect() with "mustRedirect"
 #    set to 1 because underlying handler has not seen user as authenticated
 #    so datas are not set;
-#  * two callbacks inserted in process steps:
-#    - one inserted after authentication process,
-#    - one for authenticated users,
-#    These callbacks launch checkForNotifications to get notification and
-#    cipher LemonLDAP::NG cookies if any found.
+#  * a callback inserted in process steps after authentication process,
+#    This callback launches checkForNotifications to get notification and
+#    cipher LemonLDAP::NG cookies.
 
 package Lemonldap::NG::Portal::Plugins::Notifications;
 
@@ -71,8 +69,6 @@ has notifField => (
 # Declare additional process steps
 sub afterDatas { 'checkNotifDuringAuth' }
 
-sub forAuthUser { 'checkNotifForAuthUser' }
-
 # Plugin initialization
 sub init {
     my ($self) = @_;
@@ -111,21 +107,26 @@ sub init {
     1;
 }
 
+# For now, notifications are done only during authentication process
+#sub forAuthUser { 'checkNotifForAuthUser' }
+
+#sub checkNotifForAuthUser {
+#    my ( $self, $req ) = @_;
+#    if ( my $notif = $self->checkForNotifications($req) ) {
+#
+#        # Cipher cookies
+#        return PE_NOTIFICATION;
+#    }
+#    else {
+#        return PE_OK;
+#    }
+#}
+
 sub checkNotifDuringAuth {
     my ( $self, $req ) = @_;
-    if ( my $notif = $self->checkForNotifications($req) ) {
-
-        # Cipher cookies
-        return PE_NOTIFICATION;
-    }
-    else {
-        return PE_OK;
-    }
-}
-
-sub checkNotifForAuthUser {
-    my ( $self, $req ) = @_;
-    if ( my $notif = $self->checkForNotifications($req) ) {
+    if ( $req->{datas}->{notification} = $self->checkForNotifications($req) )
+    {
+        $self->rebuildCookies($req);
 
         # Restore and cipher cookies
         return PE_NOTIFICATION;
@@ -215,6 +216,7 @@ sub checkForNotifications {
     return 0 unless $i;
 
     # Returns HTML fragment
+    $req->id( $self->p->HANDLER->tsv->{cipher}->encrypt( $req->id ) );
     return $form;
 }
 
@@ -231,7 +233,7 @@ sub getNotifBack {
     {
         return $self->p->sendError( 'No cookie found', 401 );
     }
-    $id = $self->p->conf->decrypt($id)
+    $id = $self->p->HANDLER->tsv->{cipher}->decrypt($id)
       or return $self->sendError( 'Unable to decrypt', 500 );
 
     # Verify that session exists
@@ -286,6 +288,7 @@ sub getNotifBack {
 
     # Else uncipher cookie, restore args and launch autoredirect
     # TODO
+    $self->rebuildCookies($req);
     $self->p->do( $req, [] );
 }
 
@@ -299,6 +302,16 @@ sub getNotifications {
     else {
         return ( $forUser ? $forUser : $forAll );
     }
+}
+
+sub rebuildCookies {
+    my ( $self, $req ) = @_;
+    my @tmp;
+    for ( my $i = 0 ; $i < @{ $req->{respHeaders} } ; $i += 2 ) {
+        push @tmp, $req->respHeaders->[0], $req->respHeaders->[1]
+          unless ( $req->respHeaders eq 'Set-Cookie' );
+    }
+    $self->p->buildCookie($req);
 }
 
 1;

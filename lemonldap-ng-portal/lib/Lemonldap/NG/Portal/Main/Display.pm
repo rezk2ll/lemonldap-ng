@@ -95,7 +95,7 @@ sub display {
 
  # 2.1 A notification has to be done (session is created but hidden and unusable
  #     until the user has accept the message)
-    elsif ( my $notif = $req->{notification} ) {
+    elsif ( my $notif = $req->datas->{notification} ) {
         $skinfile       = 'notification';
         %templateParams = (
             AUTH_ERROR_TYPE => $req->error_type,
