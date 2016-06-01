@@ -276,6 +276,82 @@ sub getPersistentSession {
     return $ps;
 }
 
+# Update persistent session.
+# Call updateSession() and store %$infos in a persistent session.
+# Note that if the session does not exists, it will be created.
+# @param infos hash reference of information to update
+# @param uid optional Unhashed persistent session ID
+# @param id optional SSO session ID
+# @return nothing
+sub updatePersistentSession {
+    my ( $self, $req, $infos, $uid, $id ) = @_;
+
+    # Return if no infos to update
+    return () unless ( ref $infos eq 'HASH' and %$infos );
+
+    # Update current session
+    $self->updateSession( $req, $infos, $id );
+
+    $uid ||= $self->{sessionInfo}->{ $self->{whatToTrace} };
+    return () unless ($uid);
+
+    my $persistentSession = $self->getPersistentSession($uid);
+
+    $persistentSession->update($infos);
+
+    if ( $persistentSession->error ) {
+        $self->lmLog(
+            "Cannot update persistent session " . $self->_md5hash($uid),
+            'error' );
+        $self->lmLog( $persistentSession->error, 'error' );
+    }
+}
+
+# Update session stored.
+# If no id is given, try to get it from cookie.
+# If the session is available, update datas with $info.
+# Note that outdated session data may remain some time on
+# server local cache, if there are several LL::NG servers.
+# @param infos hash reference of information to update
+# @param id Session ID
+# @return nothing
+sub updateSession {
+    my ( $self, $req, $infos, $id ) = @_;
+
+    # Return if no infos to update
+    return () unless ( ref $infos eq 'HASH' and %$infos );
+
+    # Recover session ID unless given
+    $id ||= $req->{id};
+
+    if ($id) {
+
+        # Update sessionInfo data
+        ## sessionInfo updated if $id defined : quite strange !!
+        ## See http://jira.ow2.org/browse/LEMONLDAP-430
+        foreach ( keys %$infos ) {
+            $self->lmLog( "Update sessionInfo $_ with " . $infos->{$_},
+                'debug' );
+            $req->{sessionInfo}->{$_} = $infos->{$_};
+        }
+
+        # Update session in global storage
+        if ( my $apacheSession = $self->getApacheSession( $id, 1 ) ) {
+
+            # Store updateTime
+            $infos->{updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
+
+            # Store/update session values
+            $apacheSession->update($infos);
+
+            if ( $apacheSession->error ) {
+                $self->lmLog( "Cannot update session $id", 'error' );
+                $self->lmLog( $apacheSession->error,       'error' );
+            }
+        }
+    }
+}
+
 # Delete an existing session. If "securedCookie" is set to 2, the http session
 # will also be removed.
 # @param h tied Apache::Session object

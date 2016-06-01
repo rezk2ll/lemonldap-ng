@@ -298,7 +298,7 @@ sub getNotifBack {
                 # Register acceptation
                 $self->p->userNotice(
                     "$uid has accepted notification $reference");
-                $self->p->updatePersistentSession(
+                $self->p->updatePersistentSession( $req,
                     { "notification_$reference" => time() } );
                 $self->lmLog(
                     "Notification $reference registered in persistent session",
