@@ -292,7 +292,7 @@ sub updatePersistentSession {
     # Update current session
     $self->updateSession( $req, $infos, $id );
 
-    $uid ||= $self->{sessionInfo}->{ $self->{whatToTrace} };
+    $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
     return () unless ($uid);
 
     my $persistentSession = $self->getPersistentSession($uid);

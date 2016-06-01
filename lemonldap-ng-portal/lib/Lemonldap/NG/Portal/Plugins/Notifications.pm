@@ -261,7 +261,8 @@ sub getNotifBack {
         }
 
         my $result = 1;
-        foreach my $file ( values %$notifs ) {
+        foreach my $fileName ( keys %$notifs ) {
+            my $file       = $notifs->{$fileName};
             my $fileResult = 1;
             my $xml        = $self->parser->parse_string($file);
 
@@ -307,9 +308,9 @@ sub getNotifBack {
             }
 
         # Notifications accepted for this file, delete it unless it's a wildcard
-            if ( $fileResult and exists $forUser->{$file} ) {
+            if ( $fileResult and exists $forUser->{$fileName} ) {
                 $self->lmLog( "Notification file deleted", 'debug' );
-                $self->notifObject->delete($file);
+                $self->notifObject->delete($fileName);
             }
         }
         unless ($result) {

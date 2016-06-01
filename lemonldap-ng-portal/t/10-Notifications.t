@@ -92,7 +92,9 @@ ok(
 );
 ok( $res->[0] == 302, "Get redirection" )
   or explain( [ $res->[0], $res->[1] ], 302 );
-count(2);
+$file =~ s/xml$/done/;
+ok(-e $file,'Notification was deleted');
+count(3);
 
 #print STDERR Dumper($res);
 
