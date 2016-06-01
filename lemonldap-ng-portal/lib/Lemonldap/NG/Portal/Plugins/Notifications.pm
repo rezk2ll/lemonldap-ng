@@ -141,8 +141,8 @@ sub checkForNotifications {
     my ( $self, $req ) = @_;
 
     # Look for pending notifications in database
-    my $uid    = $req->sessionInfo->{ $self->notifField };
-    my $notifs = $self->getNotifications($uid);
+    my $uid = $req->sessionInfo->{ $self->notifField };
+    my ( $notifs, $forUser ) = $self->getNotifications($uid);
     my $form;
     return 0 unless ($notifs);
 
@@ -243,7 +243,8 @@ sub getNotifBack {
     $self->p->importHandlerDatas($req);
     my $uid = $req->sessionInfo->{ $self->notifField };
 
-    if ( my $notifs = $self->getNotifications($uid) ) {
+    my ( $notifs, $forUser ) = $self->getNotifications($uid);
+    if ($notifs) {
 
         # Get accepted notifications
         $req->parseBody;
@@ -259,8 +260,10 @@ sub getNotifBack {
             }
         }
 
+        my $result = 1;
         foreach my $file ( values %$notifs ) {
-            my $xml = $self->parser->parse_string($file);
+            my $fileResult = 1;
+            my $xml        = $self->parser->parse_string($file);
 
             # Get pending notifications and verify that they have been accepted
             foreach my $notif (
@@ -277,21 +280,48 @@ sub getNotifBack {
                         unless ($checks->{$refId}
                             and $toCheckCount == @{ $checks->{$refId} } )
                         {
-                            return $self->p->do( $req, $self->p->afterDatas );
+                            $self->p->userNotice(
+                                "$uid has not accepted notification $reference"
+                            );
+                            $result = $fileResult = 0;
+                            next;
                         }
                     }
                 }
                 else {
-                    # One pending notification has been found and not accepted,
-                    # restart process to display pending notifications
-                    # TODO: is it a good idea to launch all 'afterDatas' subs ?
-                    return $self->p->do( $req, $self->p->afterDatas );
+                    # Current pending notification has not been found in
+                    # request
+                    $result = $fileResult = 0;
+                    next;
                 }
+
+                # Register acceptation
+                $self->p->userNotice(
+                    "$uid has accepted notification $reference");
+                $self->p->updatePersistentSession(
+                    { "notification_$reference" => time() } );
+                $self->lmLog(
+                    "Notification $reference registered in persistent session",
+                    'debug'
+                );
+            }
+
+        # Notifications accepted for this file, delete it unless it's a wildcard
+            if ( $fileResult and exists $forUser->{$file} ) {
+                $self->lmLog( "Notification file deleted", 'debug' );
+                $self->notifObject->delete($file);
             }
         }
+        unless ($result) {
 
-       # All pending notifications has been accepted, restore cookies and launch
-       # 'controlUrl' to restore "urldc" using do()
+            # One pending notification has been found and not accepted,
+            # restart process to display pending notifications
+            # TODO: is it a good idea to launch all 'afterDatas' subs ?
+            return $self->p->do( $req, $self->p->afterDatas );
+        }
+
+        # All pending notifications has been accepted, restore cookies and
+        # launch 'controlUrl' to restore "urldc" using do()
         $self->rebuildCookies($req);
         $self->p->do( $req, ['controlUrl'] );
     }
@@ -311,7 +341,7 @@ sub getNotifications {
         return { %$forUser, %$forAll };
     }
     else {
-        return ( $forUser ? $forUser : $forAll );
+        return ( ( $forUser ? $forUser : $forAll ), $forUser );
     }
 }
 
