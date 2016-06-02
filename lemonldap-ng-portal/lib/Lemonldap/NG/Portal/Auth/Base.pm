@@ -5,7 +5,7 @@ use Mouse;
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Main::Module';
+extends 'Lemonldap::NG::Common::Module';
 
 has authnLevel => ( is => 'rw' );
 

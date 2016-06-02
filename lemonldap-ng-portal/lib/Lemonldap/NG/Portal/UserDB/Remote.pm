@@ -6,7 +6,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Main::Module',
+extends 'Lemonldap::NG::Common::Module',
   'Lemonldap::NG::Portal::Lib::Remote';
 
 *getUser = *Lemonldap::NG::Portal::Lib::Remote::checkRemoteId;

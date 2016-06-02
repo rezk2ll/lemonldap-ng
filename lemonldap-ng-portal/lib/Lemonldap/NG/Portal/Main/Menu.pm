@@ -7,7 +7,7 @@ use utf8;
 use Mouse;
 use Clone 'clone';
 
-extends 'Lemonldap::NG::Portal::Main::Module';
+extends 'Lemonldap::NG::Common::Module';
 
 has menuModules => (
     is      => 'rw',

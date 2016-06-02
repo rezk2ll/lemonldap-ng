@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_FORBIDDENIP PE_OK);
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Main::Module';
+extends 'Lemonldap::NG::Common::Module';
 
 sub init { 1 }
 

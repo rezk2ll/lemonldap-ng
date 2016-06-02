@@ -3,7 +3,7 @@
 
 ## @class
 # File storage methods for notifications
-package Lemonldap::NG::Common::Notification::File;
+package Lemonldap::NG::Common::Notifications::File;
 
 use strict;
 use Mouse;
@@ -11,7 +11,9 @@ use MIME::Base64;
 
 our $VERSION = '2.0.0';
 
-has dirName => ( is => 'rw', required => 1 );
+extends 'Lemonldap::NG::Common::Notifications';
+
+has dirName => ( is => 'ro', required => 1 );
 
 has table => (
     is      => 'rw',

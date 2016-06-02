@@ -899,8 +899,8 @@ zip-dist:
 manifest:   configure
 	@for i in ${SRCCOMMONDIR} ${SRCHANDLERDIR} ${SRCPORTALDIR} ${SRCMANAGERDIR}; do \
 		cd $$i; \
+		rm -vf MANIFEST*; \
 		make manifest; \
-		rm -vf MANIFEST.*; \
 		cd -; \
 	done
 

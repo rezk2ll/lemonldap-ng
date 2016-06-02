@@ -9,7 +9,7 @@ use DBI;
 use strict;
 use Mouse;
 
-extends 'Lemonldap::NG::Portal::Main::Module';
+extends 'Lemonldap::NG::Common::Module';
 
 our $VERSION = '2.0.0';
 

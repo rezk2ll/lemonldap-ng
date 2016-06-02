@@ -3,42 +3,62 @@
 
 ## @class
 # DBI storage methods for notifications
-package Lemonldap::NG::Common::Notification::DBI;
+package Lemonldap::NG::Common::Notifications::DBI;
 
 use strict;
+use Mouse;
 use Time::Local;
 use DBI;
-use utf8;
+use Encode;
 
 our $VERSION = '2.0.0';
 
-## @method boolean prereq()
-# Check if DBI parameters are set.
-# @return true if all is OK
-sub prereq {
-    my $self = shift;
-    $self->{dbiTable} = $self->{table} if ( $self->{table} );
-    unless ( $self->{dbiChain} ) {
-        $Lemonldap::NG::Common::Notification::msg =
-          '"dbiChain" is required in DBI notification type';
-        return 0;
-    }
-    $self->lmLog( 'Warning: "dbiUser" parameter is not set', 'warn' )
-      unless ( $self->{dbiUser} );
-    1;
-}
+extends 'Lemonldap::NG::Common::Notifications';
 
-## @method hashref get(string uid,string ref)
+has dbiTable => (
+    is      => 'ro',
+    default => sub { $_[0]->{table} || 'notifications' }
+);
+
+has dbiChain => (
+    is       => 'ro',
+    required => 1
+);
+
+has dbiUser => (
+    is      => 'ro',
+    default => sub {
+        $_[0]->p->lmLog( 'Warning: "dbiUser" parameter is not set', 'warn' );
+        return '';
+    }
+);
+
+has dbiPassword => ( is => 'ro', default => '' );
+
+# Database handle object
+has _dbh => (
+    is      => 'rw',
+    lazy    => 1,
+    builder => sub {
+        my $self = shift;
+        my $r    = DBI->connect_cached(
+            $self->{dbiChain}, $self->{dbiUser},
+            $self->{dbiPassword}, { RaiseError => 0 }
+        );
+        $self->lmLog( $DBI::errstr, 'error' ) unless ($r);
+        return $r;
+    }
+);
+
+# Current query
+has sth => ( is => 'rw' );
+
 # Returns notifications corresponding to the user $uid.
 # If $ref is set, returns only notification corresponding to this reference.
-# @param $uid UID
-# @param $ref Notification reference
-# @return hashref where keys are internal reference and values are XML strings
 sub get {
     my ( $self, $uid, $ref ) = @_;
     return () unless ($uid);
-    _execute(
-        $self,
+    $self->_execute(
         "SELECT * FROM $self->{dbiTable} WHERE done IS NULL AND uid=?"
           . ( $ref ? " AND ref=?" : '' )
           . "ORDER BY date",
@@ -46,7 +66,7 @@ sub get {
         ( $ref ? $ref : () )
     ) or return ();
     my $result;
-    while ( my $h = $self->{sth}->fetchrow_hashref() ) {
+    while ( my $h = $self->sth->fetchrow_hashref() ) {
 
         # Get XML message
         my $xml = $h->{xml};
@@ -59,7 +79,7 @@ sub get {
           &getIdentifier( $self, $h->{uid}, $h->{ref}, $h->{date} );
         $result->{$identifier} = $xml;
     }
-    $self->lmLog( $self->{sth}->err(), 'warn' ) if ( $self->{sth}->err() );
+    $self->lmLog( $self->sth->err(), 'warn' ) if ( $self->sth->err() );
     return $result;
 }
 
@@ -69,10 +89,10 @@ sub get {
 # keys date, uid and ref.
 sub getAll {
     my $self = shift;
-    _execute( $self,
-        "SELECT * FROM $self->{dbiTable} WHERE done IS NULL ORDER BY date" );
+    $self->_execute(
+        "SELECT * FROM $self->{dbiTable} WHERE done IS NULL ORDER BY date");
     my $result;
-    while ( my $h = $self->{sth}->fetchrow_hashref() ) {
+    while ( my $h = $self->sth->fetchrow_hashref() ) {
         $result->{"$h->{date}#$h->{uid}#$h->{ref}"} = {
             date      => $h->{date},
             uid       => $h->{uid},
@@ -80,7 +100,7 @@ sub getAll {
             condition => $h->{condition}
         };
     }
-    $self->lmLog( $self->{sth}->err(), 'warn' ) if ( $self->{sth}->err() );
+    $self->lmLog( $self->sth->err(), 'warn' ) if ( $self->sth->err() );
     return $result;
 }
 
@@ -98,15 +118,10 @@ sub delete {
     my @ts = localtime();
     $ts[5] += 1900;
     $ts[4]++;
-    return _execute(
-        $self,
-        "UPDATE $self->{dbiTable} "
+    return $self->_execute( "UPDATE $self->{dbiTable} "
           . "SET done='$ts[5]-$ts[4]-$ts[3] $ts[2]:$ts[1]' "
           . "WHERE done IS NULL AND uid=? AND ref=? AND date=?",
-        $u,
-        $r,
-        $d
-    );
+        $u, $r, $d );
 }
 
 ## @method boolean purge(string myref, boolean force)
@@ -126,14 +141,9 @@ sub purge {
     my $clause;
     $clause = "done IS NOT NULL AND" unless ($force);
 
-    return _execute(
-        $self,
-        "DELETE FROM $self->{dbiTable} "
+    return $self->_execute( "DELETE FROM $self->{dbiTable} "
           . "WHERE $clause uid=? AND ref=? AND date=?",
-        $u,
-        $r,
-        $d
-    );
+        $u, $r, $d );
 }
 
 ## @method boolean newNotif(string date, string uid, string ref, string condition, string xml)
@@ -152,24 +162,13 @@ sub newNotif {
 
     my $res =
       $condition =~ /.+/
-      ? _execute(
-        $self,
+      ? $self->_execute(
         "INSERT INTO $self->{dbiTable} (date,uid,ref,cond,xml) "
           . "VALUES(?,?,?,?,?)",
-        $date,
-        $uid,
-        $ref,
-        $condition,
-        $xml
-      )
-      : _execute(
-        $self,
+        $date, $uid, $ref, $condition, $xml )
+      : $self->_execute(
         "INSERT INTO $self->{dbiTable} (date,uid,ref,xml) " . "VALUES(?,?,?,?)",
-        $date,
-        $uid,
-        $ref,
-        $xml
-      );
+        $date, $uid, $ref, $xml );
     return $res;
 }
 
@@ -179,17 +178,16 @@ sub newNotif {
 # keys notified, uid and ref.
 sub getDone {
     my ($self) = @_;
-    _execute( $self,
-        "SELECT * FROM $self->{dbiTable} WHERE done IS NOT NULL ORDER BY done"
-    );
+    $self->_execute(
+        "SELECT * FROM $self->{dbiTable} WHERE done IS NOT NULL ORDER BY done");
     my $result;
-    while ( my $h = $self->{sth}->fetchrow_hashref() ) {
+    while ( my $h = $self->sth->fetchrow_hashref() ) {
         my @t = split( /\D+/, $h->{date} );
         my $done = timelocal( $t[5], $t[4], $t[3], $t[2], $t[1], $t[0] );
         $result->{"$h->{date}#$h->{uid}#$h->{ref}"} =
           { notified => $done, uid => $h->{uid}, ref => $h->{ref}, };
     }
-    $self->lmLog( $self->{sth}->err(), 'warn' ) if ( $self->{sth}->err() );
+    $self->lmLog( $self->sth->err(), 'warn' ) if ( $self->sth->err() );
     return $result;
 }
 
@@ -198,32 +196,17 @@ sub getDone {
 # @return number of lines touched or 1 if select succeed
 sub _execute {
     my ( $self, $query, @args ) = @_;
-    my $dbh = _dbh($self) or return 0;
-    unless ( $self->{sth} = $dbh->prepare($query) ) {
+    my $dbh = $self->_dbh or return 0;
+    unless ( $self->sth( $dbh->prepare($query) ) ) {
         $self->lmLog( $dbh->errstr(), 'warn' );
         return 0;
     }
     my $tmp;
-    unless ( $tmp = $self->{sth}->execute(@args) ) {
-        $self->lmLog( $self->{sth}->errstr(), 'warn' );
+    unless ( $tmp = $self->sth->execute(@args) ) {
+        $self->lmLog( $self->sth->errstr(), 'warn' );
         return 0;
     }
     return $tmp;
-}
-
-## @method object private _dbh()
-# Return the DBI object (build it if needed).
-# @return database handle object
-sub _dbh {
-    my $self = shift;
-    $self->{dbiTable} ||= "notifications";
-    return $self->{dbh} if ( $self->{dbh} and $self->{dbh}->ping );
-    my $r = DBI->connect_cached(
-        $self->{dbiChain}, $self->{dbiUser},
-        $self->{dbiPassword}, { RaiseError => 0 }
-    );
-    $self->lmLog( $DBI::errstr, 'error' ) unless ($r);
-    return $r;
 }
 
 ## @method string getIdentifier(string uid, string ref, string date)

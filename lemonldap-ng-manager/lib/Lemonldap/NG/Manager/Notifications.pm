@@ -74,7 +74,6 @@ sub notifAccess {
         $self->error($Lemonldap::NG::Common::Conf::msg);
         return 0;
     }
-    my $args;
 
     # TODO: refresh system
     $self->{$_} //= $conf->{$_}
@@ -91,29 +90,31 @@ sub notifAccess {
               'notificationStorage is not defined in configuration' );
         return 0;
     }
-    $args->{type} = $self->{notificationStorage};
-    foreach ( keys %{ $self->{notificationStorageOptions} } ) {
-        $args->{$_} = $self->{notificationStorageOptions}->{$_};
-    }
-
-    # Get the type
-    $args->{type} =~ s/.*:://;
-    $args->{type} =~ s/(CBDI|RDBI)/DBI/;    # CDBI/RDBI are DBI
-
-    # If type not File or DBI, abort
-    unless ( $args->{type} =~ /^(File|DBI|LDAP)$/ ) {
-        $self->handlerAbort( notifications =>
-              "Only File, DBI or LDAP supported for Notifications" );
+    my $type =
+      "Lemonldap::NG::Common::Notifications::$self->{notificationStorage}";
+    $type =~ s/(?:C|R)DBI$/DBI/;
+    eval "require $type";
+    if ($@) {
+        $self->handlerAbort( notifications => "Unable to load $type: $@" );
         return 0;
     }
 
     # Force table name
-    $args->{p} = $self;
     unless (
-        $self->_notifAccess( Lemonldap::NG::Common::Notification->new($args) ) )
+        eval {
+            $self->_notifAccess(
+                $type->new(
+                    {
+                        %{ $self->{notificationStorageOptions} },
+                        p    => $self,
+                        conf => $self
+                    }
+                )
+            );
+        }
+      )
     {
-        $self->handlerAbort(
-            notifications => $Lemonldap::NG::Common::Notification::msg );
+        $self->handlerAbort( notifications => $@ );
         return 0;
     }
     return $self->_notifAccess();
@@ -224,7 +225,7 @@ sub notification {
 
     if ( $type eq 'actives' ) {
         my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
-        my $n = $self->notifAccess->_get( $uid, $ref );
+        my $n = $self->notifAccess->get( $uid, $ref );
         unless ($n) {
             $self->lmLog( "Notification $ref not found for user $uid",
                 'notice' );
@@ -309,7 +310,7 @@ sub updateNotification {
     my $id = $req->params('notificationId') or die;
     my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
     my ( $n, $res );
-    unless ( $n = $self->notifAccess->_get( $uid, $ref ) ) {
+    unless ( $n = $self->notifAccess->get( $uid, $ref ) ) {
         $self->lmLog( "Notification $ref not found for user $uid", 'notice' );
         return $self->sendError( $req,
             "Notification $ref not found for user $uid" );
@@ -318,7 +319,7 @@ sub updateNotification {
     # Delete notifications
     my $status = 1;
     foreach ( keys %$n ) {
-        $status = 0 unless ( $self->notifAccess->_delete($_) );
+        $status = 0 unless ( $self->notifAccess->delete($_) );
     }
 
     unless ($status) {
@@ -340,7 +341,7 @@ sub deleteDoneNotification {
     # Purge notification
     my $id = $req->params('notificationId') or die;
     my ( $uid, $ref, $date ) = ( $id =~ /([^_]+?)_([^_]+?)_(.+)/ );
-    my $identifier = $self->notifAccess->_getIdentifier( $uid, $ref, $date );
+    my $identifier = $self->notifAccess->getIdentifier( $uid, $ref, $date );
     unless ( $self->notifAccess->purge($identifier) ) {
         $self->lmLog(
 "Notification $identifier not purged ($Lemonldap::NG::Common::Notification::msg)",

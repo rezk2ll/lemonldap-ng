@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Plugins::CDA;
 use strict;
 use Mouse;
 
-extends 'Lemonldap::NG::Portal::Main::Module';
+extends 'Lemonldap::NG::Common::Module';
 
 sub afterDatas {
     return 'changeUrldc';

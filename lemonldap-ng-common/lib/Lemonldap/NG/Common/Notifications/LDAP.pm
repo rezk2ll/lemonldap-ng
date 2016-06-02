@@ -4,9 +4,10 @@
 ## @class
 # LDAP storage methods for notifications
 
-package Lemonldap::NG::Common::Notification::LDAP;
+package Lemonldap::NG::Common::Notifications::LDAP;
 
 use strict;
+use Mouse;
 use Time::Local;
 use MIME::Base64;
 use Net::LDAP;
@@ -14,42 +15,41 @@ use utf8;
 
 our $VERSION = '2.0.0';
 
-## @method boolean prereq()
-# Check if LDAP parameters are set.
-# @return true if all is OK
-sub prereq {
-    my $self = shift;
-    unless ( $self->{ldapServer} ) {
-        $self->lmLog( '"ldapServer" is required in LDAP notification type',
-            'error' );
-        $Lemonldap::NG::Common::Notification::msg =
-          '"ldapServer" is required in LDAP notification type';
-        return 0;
-    }
-    if ( $self->{table} ) {
-        $self->{ldapConfBase} =~ s/^\w+=\w+(,.*)$/ou=$self->{table}$1/;
-    }
+extends 'Lemonldap::NG::Common::Notifications';
 
-    $self->lmLog( 'Warning: "ldapBindDN" parameter is not set', 'warn' )
-      unless ( $self->{ldapBindDN} );
-    1;
-}
+has ldapServer => (
+    is       => 'ro',
+    required => 1,
+);
 
-## @method hashref get(string uid,string ref)
+has ldapConfBase => (
+    is      => 'ro',
+    trigger => sub {
+        if ( my $table = $_[0]->{table} ) {
+            $_[0]->{ldapConfBase} =~ s/^\w+=\w+(,.*)$/ou=$table$1/;
+        }
+    }
+);
+
+has ldapBindDN => (
+    is      => 'ro',
+    default => sub {
+        $_[0]->p->lmLog( 'Warning: "ldapBindDN" parameter is not set', 'warn' );
+        return '';
+    }
+);
+
 # Returns notifications corresponding to the user $uid.
 # If $ref is set, returns only notification corresponding to this reference.
-# @param $uid UID
-# @param $ref Notification reference
-# @return hashref where keys are internal reference and values are XML strings
 sub get {
     my ( $self, $uid, $ref ) = @_;
     return () unless ($uid);
 
-    my $filter = '(&(objectClass=applicationProcess)(!(description={done}*))';
-    $filter .= '(description={uid}' . $uid . ')';
-    $filter .= '(description={ref}' . $ref . ')' if $ref;
-    $filter .= ')';
-    my @entries = _search( $self, "$filter" );
+    my $filter =
+        '(&(objectClass=applicationProcess)(!(description={done}*))'
+      . "(description={uid}$uid)"
+      . ( $ref ? '(description={ref}' . $ref . ')' : '' ) . ')';
+    my @entries = _search( $self, $filter );
 
     my $result = {};
     foreach my $entry (@entries) {
@@ -69,7 +69,6 @@ sub get {
 
     }
     return $result;
-
 }
 
 ## @method hashref getAll()
@@ -79,8 +78,8 @@ sub get {
 sub getAll {
     my $self = shift;
 
-    my @entries = _search( $self,
-        '(&(objectClass=applicationProcess)(!(description={done}*)))' );
+    my @entries = $self->_search(
+        '(&(objectClass=applicationProcess)(!(description={done}*)))');
 
     my $result = {};
     foreach my $entry (@entries) {
@@ -110,7 +109,6 @@ sub delete {
     my ( $self, $myref ) = @_;
     my ( $d, $u, $r );
     unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
-        $Lemonldap::NG::Common::Notification::msg = "Bad reference $myref";
         $self->lmLog( "Bad reference $myref", 'warn' );
         return 0;
     }
@@ -119,13 +117,11 @@ sub delete {
     $ts[4]++;
     return _modify(
         $self,
-        '(&(objectClass=applicationProcess)(description={uid}'
-          . $u
-          . ')(description={ref}'
-          . $r
-          . ')(description={date}'
-          . $d
-          . ')(!(description={done}*)))',
+        '(&(objectClass=applicationProcess)'
+          . "(description={uid}$u)"
+          . "(description={ref}$r)"
+          . "(description={date}$d)"
+          . '(!(description={done}*)))',
         "description",
         "{done}$ts[5]-$ts[4]-$ts[3] $ts[2]:$ts[1]"
     );
@@ -140,25 +136,18 @@ sub purge {
     my ( $self, $myref, $force ) = @_;
     my ( $d, $u, $r );
     unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
-        $Lemonldap::NG::Common::Notification::msg = "Bad reference $myref";
         $self->lmLog( "Bad reference $myref", 'warn' );
         return 0;
     }
 
-    my $clause;
-    $clause = '(description={done}*)' unless ($force);
-    return _delete( $self,
-            '(&(objectClass=applicationProcess)(description={uid}'
-          . $u
-          . ')(description={ref}'
-          . $r
-          . ')(description={date}'
-          . $d . ')'
-          . $clause
-          . ')' );
+    my $clause = ($force ? '' : '(description={done}*)');
+    return $self->_delete( '(&(objectClass=applicationProcess)'
+          . "(description={uid}$u)"
+          . "(description={ref}$r)"
+          . "(description={date}$d)"
+          . "$clause)" );
 }
 
-## @method boolean newNotif(string date, string uid, string ref, string condition, string xml)
 # Insert a new notification
 # @param date Date
 # @param uid UID
@@ -168,7 +157,7 @@ sub purge {
 # @return true if succeed
 sub newNotif {
     my ( $self, $date, $uid, $ref, $condition, $xml ) = @_;
-    my $fns = $self->{fileNameSeparator};
+    my $fns = $self->conf->{fileNameSeparator};
     $fns ||= '_';
     $date =~ s/-//g;
     return ( 0, "Bad date" ) unless ( $date =~ /^\d{8}/ );

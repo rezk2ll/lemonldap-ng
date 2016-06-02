@@ -13,23 +13,18 @@ package Lemonldap::NG::Portal::Plugins::Notifications;
 
 use strict;
 use Mouse;
-use XML::LibXML;
 use XML::LibXSLT;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_NOTIFICATION);
 
 our $VERSION = '2.0.0';
 
 # Lemonldap::NG::Portal::Main::Plugin provides addAuthRoute() and
-# addUnauthRoute() methods in addition of Lemonldap::NG::Portal::Main::Module.
+# addUnauthRoute() methods in addition of Lemonldap::NG::Common::Module.
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
-# XML parser. TODO: replace this by JSON
-has parser => (
-    is      => 'rw',
-    builder => sub {
-        return XML::LibXML->new();
-    }
-);
+sub parser {
+    return $_[0]->notifObject->parser;
+}
 
 # XSLT document
 has stylesheet => (
@@ -54,18 +49,6 @@ has stylesheet => (
 # Underlying notifications storage object (File, DBI, LDAP,...)
 has notifObject => ( is => 'rw' );
 
-has notifField => (
-    is      => 'rw',
-    builder => sub {
-        my $uid =
-             $_[0]->conf->{notificationField}
-          || $_[0]->conf->{whatToTrace}
-          || 'uid';
-        $uid =~ s/^\$//;
-        return $uid;
-    }
-);
-
 # Declare additional process steps
 sub afterDatas { 'checkNotifDuringAuth' }
 
@@ -85,22 +68,22 @@ sub init {
     }
 
     # Initialize notifications storage object
-    $type = "Lemonldap::NG::Common::Notification::$type";
+    $type = "Lemonldap::NG::Common::Notifications::$type";
     eval "require $type";
     if ($@) {
-        $self->error($@);
+        $self->error(
+            "Unable to load Lemonldap::NG::Common::Notifications::$type: $@");
         return 0;
     }
 
     # TODO: use conf database?
 
-    unless (
-        eval {
-            $self->notifObject(
-                $type->new( $self->conf->{notificationStorageOptions} ) );
-        }
-      )
-    {
+    my $prms = {
+        %{ $self->conf->{notificationStorageOptions} },
+        p    => $self->p,
+        conf => $self->p->conf
+    };
+    unless ( eval { $self->notifObject( $type->new($prms) ); } ) {
         $self->error($@);
         return 0;
     }
@@ -141,8 +124,8 @@ sub checkForNotifications {
     my ( $self, $req ) = @_;
 
     # Look for pending notifications in database
-    my $uid = $req->sessionInfo->{ $self->notifField };
-    my ( $notifs, $forUser ) = $self->getNotifications($uid);
+    my $uid = $req->sessionInfo->{ $self->notifObject->notifField };
+    my ( $notifs, $forUser ) = $self->notifObject->getNotifications($uid);
     my $form;
     return 0 unless ($notifs);
 
@@ -241,9 +224,9 @@ sub getNotifBack {
 
     # Restore datas
     $self->p->importHandlerDatas($req);
-    my $uid = $req->sessionInfo->{ $self->notifField };
+    my $uid = $req->sessionInfo->{ $self->notifObject->notifField };
 
-    my ( $notifs, $forUser ) = $self->getNotifications($uid);
+    my ( $notifs, $forUser ) = $self->notifObject->getNotifications($uid);
     if ($notifs) {
 
         # Get accepted notifications
@@ -331,18 +314,6 @@ sub getNotifBack {
         # Redirecting to portal
         $req->mustRedirect(1);
         $self->p->do( $req, [] );
-    }
-}
-
-sub getNotifications {
-    my ( $self, $uid ) = @_;
-    my $forUser = $self->notifObject->get($uid);
-    my $forAll = $self->notifObject->get( $self->conf->{notificationWildcard} );
-    if ( $forUser and $forAll ) {
-        return { %$forUser, %$forAll };
-    }
-    else {
-        return ( ( $forUser ? $forUser : $forAll ), $forUser );
     }
 }
 

@@ -6,7 +6,7 @@ use Lemonldap::NG::Portal::Main::Constants
   qw(PE_OK PE_LDAPCONNECTFAILED PE_LDAPERROR PE_BADCREDENTIALS);
 use Lemonldap::NG::Portal::Lib::LDAP;
 
-extends 'Lemonldap::NG::Portal::Main::Module';
+extends 'Lemonldap::NG::Common::Module';
 
 our $VERSION = '2.0.0';
 
