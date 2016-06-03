@@ -159,6 +159,15 @@ lemonldap-ng (1.9.0) stable; urgency=low
     * [LEMONLDAP-956] - Custom functions don't work with useSafeJail
     * [LEMONLDAP-957] - Replace $http.success() by .then()
 
+lemonldap-ng (1.4.9) stable; urgency=low
+
+    * [LEMONLDAP-1003] - Replace Mouse by Moose if ModPerl::Registry is used with Perl 5.22
+    * [LEMONLDAP-1006] - Typo in Common/Apache/Session.pm on LDAP disconnect
+    * [LEMONLDAP-1022] - The path of the request is lost when using the url parameter of a Choice module
+    * [LEMONLDAP-1027] - Can't locate object method "client_ip" via package "Apache2::Connection"
+    * [LEMONLDAP-1004] - Es, it, pt, ne and de translations
+    * [LEMONLDAP-1031] - Be less restrictive on service parameter check in CAS issuer
+
 lemonldap-ng (1.4.8) stable; urgency=low
 
     * [LEMONLDAP-985] - authForce is not well called trough AuthMulti
