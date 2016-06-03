@@ -2,8 +2,6 @@ use Test::More;
 use strict;
 use IO::String;
 
-require 't/test-lib.pm';
-
 my $res;
 my $file = 't/notifications.db';
 eval { unlink $file };
@@ -13,6 +11,9 @@ SKIP: {
     if ($@) {
         skip 'DBD::SQLite not found', 1;
     }
+
+    require 't/test-lib.pm';
+
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file");
     $dbh->do(
 'CREATE TABLE notifications (uid text,ref text,date datetime,xml text,cond text,done datetime)'
@@ -90,7 +91,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     count(2);
 
     # Try to validate notification
-    my $str =
+    $str =
 'reference1x1=testref&check1x1x1=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
     ok(
         $res = &client->_post(
@@ -116,8 +117,8 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
 
     clean_sessions();
 
+    eval { unlink $file };
+
 }
+done_testing( eval { count() } );
 
-eval { unlink $file };
-
-done_testing( count() );
