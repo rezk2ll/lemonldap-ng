@@ -969,6 +969,52 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 1,
             'type'    => 'boolOrExpr'
         },
+        'issuerDBGetActivation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'issuerDBGetParameters' => {
+            'default'    => {},
+            'keyMsgFail' => '__badHostname__',
+            'keyTest' =>
+qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)$/,
+            'test' => {
+                'keyMsgFail' => '__badKeyName__',
+                'keyTest'    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
+                'test'       => sub {
+                    my ( $val, $conf ) = @_;
+                    my $s = $val;
+                    my (@cf) = (
+                        'encode_base64', 'checkLogonHours',
+                        'date',          'checkDate',
+                        'basic',         'unicode2iso',
+                        'iso2unicode',   'groupMatch',
+                        'encrypt'
+                    );
+                    push @cf, defined $conf->{'customFunctions'}
+                      ? map( {
+                            my $f = $_;
+                              $f =~ s/\w+:://g;
+                              $f, $_;
+                        } split( /\s+/, $conf->{'customFunctions'}, 0 ) )
+                      : ();
+                    foreach my $f (@cf) {
+                        $s = "sub $f {1} $s";
+                    }
+                    eval $s;
+                    return $@ ? ( 1, "__badExpression__: $@" ) : 1;
+                  }
+            },
+            'type' => 'doubleHash'
+        },
+        'issuerDBGetPath' => {
+            'default' => '^/get/',
+            'type'    => 'text'
+        },
+        'issuerDBGetRule' => {
+            'default' => 1,
+            'type'    => 'boolOrExpr'
+        },
         'issuerDBOpenIDActivation' => {
             'default' => 0,
             'type'    => 'bool'

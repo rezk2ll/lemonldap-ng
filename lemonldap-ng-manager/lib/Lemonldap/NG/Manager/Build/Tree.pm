@@ -428,7 +428,16 @@ sub tree {
                                 'issuerDBOpenIDConnectPath',
                                 'issuerDBOpenIDConnectRule',
                             ]
-                        }
+                        },
+                        {
+                            title => 'issuerDBGet',
+                            nodes => [
+                                'issuerDBGetActivation',
+                                'issuerDBGetPath',
+                                'issuerDBGetRule',
+                                'issuerDBGetParameters'
+                            ]
+                        },
                     ]
                 },
                 {

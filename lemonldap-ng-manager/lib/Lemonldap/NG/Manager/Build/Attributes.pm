@@ -639,8 +639,8 @@ sub attributes {
             documentation => 'Captcha size',
         },
 
-        #captcha_data             => {
-        #captcha_output           => {
+        #captcha_data
+        #captcha_output
         captchaStorage => {
             type          => 'PerlModule',
             default       => 'Apache::Session::File',
@@ -756,6 +756,50 @@ sub attributes {
             type          => 'boolOrExpr',
             default       => 1,
             documentation => 'OpenID Connect server rule',
+        },
+
+        # GET issuer
+        issuerDBGetActivation => {
+            type          => 'bool',
+            default       => '0',
+            documentation => 'Get issuer activation',
+        },
+        issuerDBGetPath => {
+            type          => 'text',
+            default       => '^/get/',
+            documentation => 'Get issuer request path',
+        },
+        issuerDBGetRule => {
+            type          => 'boolOrExpr',
+            default       => 1,
+            documentation => 'Get issuer rule',
+        },
+        issuerDBGetParameters => {
+            type       => 'doubleHash',
+            default    => {},
+            keyTest    => qr/^$Regexp::Common::URI::RFC2396::hostname$/,
+            keyMsgFail => '__badHostname__',
+            test       => {
+                keyTest    => qr/^(?=[^\-])[\w\-]+(?<=[^-])$/,
+                keyMsgFail => '__badKeyName__',
+                test       => sub {
+                    my ( $val, $conf ) = @_;
+                    my $s = $val;
+                    my @cf =
+                      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch encrypt);
+                    push @cf,
+                      defined $conf->{customFunctions}
+                      ? map { my $f = $_; $f =~ s/\w+:://g; ( $f, $_ ) }
+                      split( /\s+/, $conf->{customFunctions} )
+                      : ();
+                    foreach my $f (@cf) {
+                        $s = "sub $f {1} $s";
+                    }
+                    eval $s;
+                    return $@ ? ( 1, "__badExpression__: $@" ) : (1);
+                },
+            },
+            documentation => 'List of virtualHosts with their get parameters',
         },
 
         # Password
@@ -2141,9 +2185,12 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             documentation => 'Browser ID authentication level',
         },
         browserIdAutoLogin       => { type => 'bool', default => 0 },
-        browserIdVerificationURL => { type => 'text', default => 'https://verifier.login.persona.org/verify', },
-        browserIdSiteName        => { type => 'text', default => 'LemonLDAP::NG', },
-        browserIdSiteLogo        => { type => 'text', },
+        browserIdVerificationURL => {
+            type    => 'text',
+            default => 'https://verifier.login.persona.org/verify',
+        },
+        browserIdSiteName => { type => 'text', default => 'LemonLDAP::NG', },
+        browserIdSiteLogo => { type => 'text', },
         browserIdBackgroundColor => { type => 'text', default => '#000', },
 
         # OpenID Connect auth params
