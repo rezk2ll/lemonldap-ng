@@ -784,19 +784,15 @@ sub attributes {
                 keyMsgFail => '__badKeyName__',
                 test       => sub {
                     my ( $val, $conf ) = @_;
-                    my $s = $val;
-                    my @cf =
-                      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch encrypt);
-                    push @cf,
-                      defined $conf->{customFunctions}
-                      ? map { my $f = $_; $f =~ s/\w+:://g; ( $f, $_ ) }
-                      split( /\s+/, $conf->{customFunctions} )
-                      : ();
-                    foreach my $f (@cf) {
-                        $s = "sub $f {1} $s";
+                    return 1
+                      if ( defined $conf->{macros}->{$val}
+                        or $val eq '_timezone' );
+                    foreach ( keys %$conf ) {
+                        return 1
+                          if ( $_ =~ /exportedvars$/i
+                            and defined $conf->{$_}->{$val} );
                     }
-                    eval $s;
-                    return $@ ? ( 1, "__badExpression__: $@" ) : (1);
+                    return ( 1, "__unknownAttrOrMacro__: $val" );
                 },
             },
             documentation => 'List of virtualHosts with their get parameters',
