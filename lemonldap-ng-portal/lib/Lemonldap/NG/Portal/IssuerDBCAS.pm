@@ -9,6 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_CAS;
 use base qw(Lemonldap::NG::Portal::_CAS Lemonldap::NG::Portal::_LibAccess);
+use URI;
 
 our $VERSION = '2.0.0';
 
@@ -136,19 +137,37 @@ sub issuerForUnAuthUser {
 
         $self->lmLog( "Service ticket session $ticket found", 'debug' );
 
-        # Check service
-        unless ( $service eq $casServiceSession->data->{service} ) {
-            $self->lmLog(
-                "Submitted service $service does not match initial service "
-                  . $casServiceSession->data->{service},
-                'error'
-            );
-            $self->deleteCasSession($casServiceSession);
-            $self->returnCasValidateError();
-        }
+        my $service1_uri = URI->new($service);
+        my $service2_uri = URI->new( $casServiceSession->data->{service} );
 
-        $self->lmLog( "Submitted service $service math initial servce",
-            'debug' );
+        # Check service
+        unless ( $service1_uri->eq($service2_uri) ) {
+
+            # Tolerate that relative URI are the same
+            if (   $service1_uri->rel($service2_uri) eq "./"
+                or $service2_uri->rel($service1_uri) eq "./" )
+            {
+                $self->lmLog(
+"Submitted service $service1_uri does not exactly match initial service "
+                      . $service2_uri
+                      . ' but difference is tolerated.',
+                    'warn'
+                );
+            }
+            else {
+                $self->lmLog(
+                    "Submitted service $service does not match initial service "
+                      . $casServiceSession->data->{service},
+                    'error'
+                );
+                $self->deleteCasSession($casServiceSession);
+                $self->returnCasValidateError();
+            }
+        }
+        else {
+            $self->lmLog( "Submitted service $service math initial servce",
+                'debug' );
+        }
 
         # Check renew
         if ( $renew eq 'true' ) {
@@ -259,21 +278,39 @@ sub issuerForUnAuthUser {
 
         $self->lmLog( "$urlType ticket session $ticket found", 'debug' );
 
+        my $service1_uri = URI->new($service);
+        my $service2_uri = URI->new( $casServiceSession->data->{service} );
+
         # Check service
-        unless ( $service eq $casServiceSession->data->{service} ) {
-            $self->lmLog(
-                "Submitted service $service does not match initial service "
-                  . $casServiceSession->data->{service},
-                'error'
-            );
+        unless ( $service1_uri->eq($service2_uri) ) {
 
-            $self->deleteCasSession($casServiceSession);
-            $self->returnCasServiceValidateError( 'INVALID_SERVICE',
-                'Submitted service does not match initial service' );
+            # Tolerate that relative URI are the same
+            if (   $service1_uri->rel($service2_uri) eq "./"
+                or $service2_uri->rel($service1_uri) eq "./" )
+            {
+                $self->lmLog(
+"Submitted service $service1_uri does not exactly match initial service "
+                      . $service2_uri
+                      . ' but difference is tolerated.',
+                    'warn'
+                );
+            }
+            else {
+                $self->lmLog(
+                    "Submitted service $service does not match initial service "
+                      . $casServiceSession->data->{service},
+                    'error'
+                );
+
+                $self->deleteCasSession($casServiceSession);
+                $self->returnCasServiceValidateError( 'INVALID_SERVICE',
+                    'Submitted service does not match initial service' );
+            }
         }
-
-        $self->lmLog( "Submitted service $service match initial servce",
-            'debug' );
+        else {
+            $self->lmLog( "Submitted service $service match initial service",
+                'debug' );
+        }
 
         # Check renew
         if ( $renew eq 'true' ) {
