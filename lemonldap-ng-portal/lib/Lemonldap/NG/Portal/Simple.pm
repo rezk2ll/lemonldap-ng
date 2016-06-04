@@ -354,7 +354,7 @@ sub new {
     }
 
     # Check issuerDB path to load the correct issuerDB module
-    foreach my $issuerDBtype (qw(SAML OpenID CAS OpenIDConnect)) {
+    foreach my $issuerDBtype (qw(SAML OpenID CAS OpenIDConnect Get)) {
         my $module_name = 'Lemonldap::NG::Portal::IssuerDB' . $issuerDBtype;
 
         $self->lmLog( "[IssuerDB activation] Try issuerDB module $issuerDBtype",
