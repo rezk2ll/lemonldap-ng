@@ -167,15 +167,20 @@ sub computeGetParams {
 
     # Additional GET variables
     my $getVars="";
-    if( exists $self->{issuerDBGetParams} ) {
-      my $issuerDBGetParams = $self->{issuerDBGetParams};
-      foreach my $vhost ( keys %$issuerDBGetParams ) {
+    if( exists $self->{issuerDBGetParameters} ) {
+      my $issuerDBGetParameters = $self->{issuerDBGetParameters};
+      foreach my $vhost ( keys %$issuerDBGetParameters ) {
         # if vhost is matching
         if( index( $self->{urldc}, $vhost ) != -1 ) {
-          my $params = $issuerDBGetParams->{$vhost};
+          my $params = $issuerDBGetParameters->{$vhost};
           foreach my $param ( keys %$params ) {
             my $val = $params->{$param};
             my $value;
+            
+            # substitute session variables
+            $val = &substitute($val);
+            my $datas = $self->{sessionInfo};
+            
             $value = eval($val);
             $self->lmLog( "Error while evaluating $val: $@", 'warn' )
                                                         if $@;
@@ -202,6 +207,21 @@ sub computeGetParams {
       $self->{urldc}=$urldc;
     }
 
+}
+
+
+sub substitute {
+    my $expr = shift;
+
+    # substitute special vars, just for retro-compatibility
+    $expr =~ s/\$date\b/&date/sg;
+    $expr =~ s/\$vhost\b/&hostname/sg;
+    $expr =~ s/\$ip\b/&remote_ip/sg;
+
+    # substitute vars with session datas, excepts special vars $_ and $\d+
+    $expr =~ s/\$(?!ENV)(_*[a-zA-Z]\w*)/\$datas->{$1}/sg;
+
+    return $expr;
 }
 
 
