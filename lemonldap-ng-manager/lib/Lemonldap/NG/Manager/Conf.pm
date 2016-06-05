@@ -19,6 +19,8 @@ use feature 'state';
 
 extends 'Lemonldap::NG::Manager::Lib';
 
+our $VERSION = '2.0.0';
+
 #############################
 # I. INITIALIZATION METHODS #
 #############################
@@ -737,6 +739,19 @@ sub getKey {
               };
         }
         return $self->sendJSONresponse( $req, \@res );
+    }
+    elsif ( $key =~ qr/^$doubleHashKeys$/o ) {
+        my @res;
+        if ( defined $value ) {
+            foreach my $host ( sort keys %$value ) {
+                my @tmp;
+                foreach my $k ( sort keys %{ $value->{$host} } ) {
+                    push @tmp, { k => $k, v => $value->{$host}->{$k} };
+                }
+                push @res, { k => $host, h => \@tmp };
+            }
+        }
+        return $self->sendJSONresponse( $req, { value => \@res } );
     }
 
     # When scalar

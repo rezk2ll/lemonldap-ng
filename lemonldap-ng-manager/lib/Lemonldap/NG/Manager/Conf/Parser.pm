@@ -24,6 +24,8 @@ use Mouse;
 use Lemonldap::NG::Manager::Constants;
 use Lemonldap::NG::Manager::Attributes;
 
+our $VERSION = '2.0.0';
+
 # High debugging for developpers, set this to 1
 use constant HIGHDEBUG => 0;
 
@@ -626,7 +628,7 @@ sub _scanNodes {
         ####################
         # Other hash nodes #
         ####################
-        elsif ( $leaf->{title} =~ $simpleHashKeys
+        elsif ( $leaf->{title} =~ /^$simpleHashKeys$/o
             and not $leaf->{title} eq 'applicationList' )
         {
             hdebug( $leaf->{title} );
@@ -677,6 +679,75 @@ sub _scanNodes {
                     push @{ $self->changes }, { key => $name, old => $_, }
                       foreach (@old);
                 }
+            }
+            next;
+        }
+
+        # Double hash nodes
+        elsif ( $leaf->{title} =~ /^$doubleHashKeys$/ ) {
+            hdebug( $leaf->{title} );
+            my @oldHosts = (
+                ref( $self->refConf->{$name} )
+                ? ( keys %{ $self->refConf->{$name} } )
+                : ()
+            );
+            $self->newConf->{$name} = {};
+            if ( ref( $leaf->{data} ) ne 'ARRAY' ) {
+                $self->lmLog( "Double hash doesn't push an array, aborting",
+                    'error' );
+                return 0;
+            }
+            foreach my $getHost ( @{ $leaf->{data} } ) {
+                my $change = 0;
+                my @oldKeys;
+                my $host = $getHost->{k};
+                hdebug("  looking at host: $host");
+                $self->newConf->{$name}->{$host} = {};
+                unless ( defined $self->refConf->{$name}->{$host} ) {
+                    $self->confChanged(1);
+                    $change++;
+                    push @{ $self->changes }, { key => $name, new => $host };
+                    hdebug("    $host is new");
+                }
+                else {
+                    @oldHosts = grep { $_ ne $host } @oldHosts;
+                    @oldKeys = keys %{ $self->refConf->{$name}->{$host} };
+                }
+                foreach my $prm ( @{ $getHost->{h} } ) {
+                    $self->newConf->{$name}->{$host}->{ $prm->{k} } = $prm->{v};
+                    if (
+                        !$change
+                        and (
+                            not defined(
+                                $self->refConf->{$name}->{$host}->{ $prm->{k} }
+                            )
+                            or $self->newConf->{$name}->{$host}->{ $prm->{k} }
+                            ne $self->refConf->{$name}->{$host}->{ $prm->{k} }
+                        )
+                      )
+                    {
+                        $self->confChanged(1);
+                        hdebug("    key $prm->{k} has been changed");
+                        push @{ $self->changes },
+                          { key => "$name/$host", new => $prm->{k} };
+                    }
+                    elsif ( !$change ) {
+                        @oldKeys = grep { $_ ne $prm->{k} } @oldKeys;
+                    }
+                }
+                if (@oldKeys) {
+                    $self->confChanged(1);
+                    hdebug( "  old keys: " . join( ' ', @oldKeys ) );
+                    push @{ $self->changes },
+                      { key => "$name/$host", old => $_ }
+                      foreach (@oldKeys);
+                }
+            }
+            if (@oldHosts) {
+                $self->confChanged(1);
+                hdebug( "  old hosts " . join( ' ', @oldHosts ) );
+                push @{ $self->changes }, { key => "$name", old => $_ }
+                  foreach (@oldHosts);
             }
             next;
         }
@@ -839,7 +910,7 @@ sub _unitTest {
             }
 
             # Hash parameters
-            if ( $key =~ $simpleHashKeys ) {
+            if ( $key =~ /^$simpleHashKeys$/o ) {
                 $conf->{$key} //= {};
                 unless ( ref $conf->{$key} eq 'HASH' ) {
                     push @{ $self->errors },
@@ -852,7 +923,9 @@ sub _unitTest {
 
                 #TODO
             }
-            if ( $key =~ $simpleHashKeys or $attr->{type} =~ /Container$/ ) {
+            if (   $key =~ /^$simpleHashKeys$/o
+                or $attr->{type} =~ /Container$/ )
+            {
                 my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail};
                 my $msg    = $attr->{msgFail}    // $type->{msgFail};
                 $res = 0

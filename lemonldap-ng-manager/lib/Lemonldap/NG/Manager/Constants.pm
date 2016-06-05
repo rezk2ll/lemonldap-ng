@@ -7,7 +7,7 @@ use base qw(Exporter);
 
 our $VERSION = '2.0.0';
 
-our %EXPORT_TAGS = ( 'all' => [qw($simpleHashKeys $specialNodeKeys $oidcOPMetaDataNodeKeys $oidcRPMetaDataNodeKeys $samlIDPMetaDataNodeKeys $samlSPMetaDataNodeKeys $virtualHostKeys $specialNodeHash @sessionTypes $authParameters $issuerParameters $samlServiceParameters $oidcServiceParameters)] );
+our %EXPORT_TAGS = ( 'all' => [qw($simpleHashKeys $doubleHashKeys $specialNodeKeys $oidcOPMetaDataNodeKeys $oidcRPMetaDataNodeKeys $samlIDPMetaDataNodeKeys $samlSPMetaDataNodeKeys $virtualHostKeys $specialNodeHash @sessionTypes $authParameters $issuerParameters $samlServiceParameters $oidcServiceParameters)] );
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT      = ( @{ $EXPORT_TAGS{'all'} } );
 
@@ -21,6 +21,7 @@ our $specialNodeHash = {
 
 our @sessionTypes = ( 'captcha', 'remoteGlobal', 'cas', 'global', 'localSession', 'persistent', 'saml', 'oidc' );
 
+our $doubleHashKeys = 'issuerDBGetParameters';
 our $simpleHashKeys = '(?:(?:g(?:r(?:antSessionRule|oup)|lobalStorageOption|oogleExportedVar)|l(?:o(?:calSessionStorageOption|goutService)|dapExportedVar)|ca(?:s(?:StorageOption|Attribute)|ptchaStorageOption)|(?:(?:d(?:emo|bi)|facebook|webID)E|e)xportedVar|p(?:ersistentStorageOption|ortalSkinRule)|re(?:moteGlobalStorageOption|loadUrl)|notificationStorageOption|CASproxiedService|macro)s|o(?:idcS(?:erviceMetaDataAuthnContext|torageOptions)|penIdExportedVars)|s(?:(?:amlStorageOption|laveExportedVar)s|essionDataToRemember)|a(?:uthChoiceModules|pplicationList))';
 our $specialNodeKeys = '(?:(?:saml(?:ID|S)|oidc[OR])PMetaDataNode|virtualHost)s';
 our $oidcOPMetaDataNodeKeys = 'oidcOPMetaData(?:Options(?:C(?:lient(?:Secret|ID)|heckJWTSignature|onfigurationURI)|TokenEndpointAuthMethod|(?:JWKSTimeou|Promp)t|I(?:DTokenMaxAge|con)|U(?:iLocales|seNonce)|Display(?:Name)?|(?:MaxAg|Scop)e|AcrValues)|ExportedVars|J(?:SON|WKS))';
