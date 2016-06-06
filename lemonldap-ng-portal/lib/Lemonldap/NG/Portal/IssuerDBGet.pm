@@ -40,7 +40,7 @@ sub issuerForUnAuthUser {
     $url_path =~ s#^//#/#;
 
     # 1. LOGIN
-    if ( $url_path =~ m#${issuerDBGetPath}${get_login}# ) {
+    if ( $url_path =~ m#${issuerDBGetPath}${get_login}#o ) {
 
         $self->lmLog( "URL $url detected as a Get LOGIN URL", 'debug' );
 
@@ -49,7 +49,7 @@ sub issuerForUnAuthUser {
     }
 
     # 2. LOGOUT
-    if ( $url_path =~ m#${issuerDBGetPath}${get_logout}# ) {
+    if ( $url_path =~ m#${issuerDBGetPath}${get_logout}#o ) {
 
         $self->lmLog( "URL $url detected as an Get LOGOUT URL", 'debug' );
 
@@ -98,7 +98,7 @@ sub issuerForAuthUser {
     my $time = $self->{sessionInfo}->{_utime} || time();
 
     # 1. LOGIN
-    if ( $url_path =~ m#${issuerDBGetPath}${get_login}# ) {
+    if ( $url_path =~ m#${issuerDBGetPath}${get_login}#o ) {
 
         $self->lmLog( "URL $url detected as an Get LOGIN URL", 'debug' );
 
@@ -111,7 +111,7 @@ sub issuerForAuthUser {
     }
 
     # 2. LOGOUT
-    if ( $url_path =~ m#${issuerDBGetPath}${get_logout}# ) {
+    if ( $url_path =~ m#${issuerDBGetPath}${get_logout}#o ) {
 
         $self->lmLog( "URL $url detected as an Get LOGOUT URL", 'debug' );
 
@@ -175,16 +175,7 @@ sub computeGetParams {
             if ( index( $self->{urldc}, $vhost ) != -1 ) {
                 my $params = $issuerDBGetParameters->{$vhost};
                 foreach my $param ( keys %$params ) {
-                    my $val = $params->{$param};
-                    my $value;
-
-                    # substitute session variables
-                    $val = &substitute($val);
-                    my $datas = $self->{sessionInfo};
-
-                    $value = eval($val);
-                    $self->lmLog( "Error while evaluating $val: $@", 'warn' )
-                      if $@;
+                    my $value = $self->safe->reval( $params->{$param} );
 
                     # Chain GET parameters unless there are evaluation errors
                     $getVars .= "&" . $param . "=" . uri_escape($value)
@@ -215,20 +206,6 @@ sub computeGetParams {
 
 }
 
-sub substitute {
-    my $expr = shift;
-
-    # substitute special vars, just for retro-compatibility
-    $expr =~ s/\$date\b/&date/sg;
-    $expr =~ s/\$vhost\b/&hostname/sg;
-    $expr =~ s/\$ip\b/&remote_ip/sg;
-
-    # substitute vars with session datas, excepts special vars $_ and $\d+
-    $expr =~ s/\$(?!ENV)(_*[a-zA-Z]\w*)/\$datas->{$1}/sg;
-
-    return $expr;
-}
-
 1;
 
 __END__
@@ -251,12 +228,6 @@ L<Lemonldap::NG::Portal>,
 
 =over
 
-=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
 =item David Coutadeur, E<lt>dcoutadeur@linagora.comE<gt>
 
 =back
@@ -274,12 +245,6 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 =head1 COPYRIGHT AND LICENSE
 
 =over
-
-=item Copyright (C) 2010 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2012 by François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Copyright (C) 2010-2012 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
 
 =item Copyright (C) 2016 by David Coutadeur, E<lt>dcoutadeur@linagora.comE<gt>
 
