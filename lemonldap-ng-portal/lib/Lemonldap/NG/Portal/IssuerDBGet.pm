@@ -9,9 +9,10 @@ package Lemonldap::NG::Portal::IssuerDBGet;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 use MIME::Base64;
+use URI::Escape;
 use base qw(Lemonldap::NG::Portal::_LibAccess);
 
-our $VERSION = '1.9.3';
+our $VERSION = '2.0.0';
 
 ## @method void issuerDBInit()
 # Nothing to do
@@ -29,9 +30,9 @@ sub issuerForUnAuthUser {
     my $self = shift;
 
     # Get URLs
-    my $issuerDBGetPath     = $self->{issuerDBGetPath};
-    my $get_login           = 'login';
-    my $get_logout          = 'logout';
+    my $issuerDBGetPath = $self->{issuerDBGetPath};
+    my $get_login       = 'login';
+    my $get_logout      = 'logout';
 
     # Called URL
     my $url = $self->url();
@@ -60,7 +61,7 @@ sub issuerForUnAuthUser {
             # Display a link to the provided URL
             $self->lmLog( "Logout URL $logout_url will be displayed", 'debug' );
 
-            $self->info( "<h3>Back to logout url</h3>" );
+            $self->info("<h3>Back to logout url</h3>");
             $self->info("<p><a href=\"$logout_url\">$logout_url</a></p>");
             $self->{activeTimer} = 0;
 
@@ -74,7 +75,6 @@ sub issuerForUnAuthUser {
     return PE_OK;
 }
 
-
 ## @apmethod int issuerForAuthUser()
 # Manage Get request for authenticated user
 # @return Lemonldap::NG::Portal error code
@@ -82,9 +82,9 @@ sub issuerForAuthUser {
     my $self = shift;
 
     # Get URLs
-    my $issuerDBGetPath     = $self->{issuerDBGetPath};
-    my $get_login           = 'login';
-    my $get_logout          = 'logout';
+    my $issuerDBGetPath = $self->{issuerDBGetPath};
+    my $get_login       = 'login';
+    my $get_logout      = 'logout';
 
     # Called URL
     my $url = $self->url();
@@ -105,7 +105,7 @@ sub issuerForAuthUser {
         # Compute GET parameters to send and build urldc accordingly
         &computeGetParams($self);
 
-        $self->lmLog( "Redirect user to ".$self->{urldc}, 'debug' );
+        $self->lmLog( "Redirect user to " . $self->{urldc}, 'debug' );
 
         return $self->_subProcess(qw(autoRedirect));
     }
@@ -130,7 +130,7 @@ sub issuerForAuthUser {
             # Display a link to the provided URL
             $self->lmLog( "Logout URL $logout_url will be displayed", 'debug' );
 
-            $self->info( "<h3>back to logout url</h3>" );
+            $self->info("<h3>back to logout url</h3>");
             $self->info("<p><a href=\"$logout_url\">$logout_url</a></p>");
             $self->{activeTimer} = 0;
 
@@ -166,49 +166,54 @@ sub computeGetParams {
     my $self = shift;
 
     # Additional GET variables
-    my $getVars="";
-    if( exists $self->{issuerDBGetParameters} ) {
-      my $issuerDBGetParameters = $self->{issuerDBGetParameters};
-      foreach my $vhost ( keys %$issuerDBGetParameters ) {
-        # if vhost is matching
-        if( index( $self->{urldc}, $vhost ) != -1 ) {
-          my $params = $issuerDBGetParameters->{$vhost};
-          foreach my $param ( keys %$params ) {
-            my $val = $params->{$param};
-            my $value;
-            
-            # substitute session variables
-            $val = &substitute($val);
-            my $datas = $self->{sessionInfo};
-            
-            $value = eval($val);
-            $self->lmLog( "Error while evaluating $val: $@", 'warn' )
-                                                        if $@;
-            # Chain GET parameters unless there are evaluation errors
-            $getVars .= "&".$param."=".$value unless $@;
-          }
+    my $getVars = "";
+    if ( exists $self->{issuerDBGetParameters} ) {
+        my $issuerDBGetParameters = $self->{issuerDBGetParameters};
+        foreach my $vhost ( keys %$issuerDBGetParameters ) {
+
+            # if vhost is matching
+            if ( index( $self->{urldc}, $vhost ) != -1 ) {
+                my $params = $issuerDBGetParameters->{$vhost};
+                foreach my $param ( keys %$params ) {
+                    my $val = $params->{$param};
+                    my $value;
+
+                    # substitute session variables
+                    $val = &substitute($val);
+                    my $datas = $self->{sessionInfo};
+
+                    $value = eval($val);
+                    $self->lmLog( "Error while evaluating $val: $@", 'warn' )
+                      if $@;
+
+                    # Chain GET parameters unless there are evaluation errors
+                    $getVars .= "&" . $param . "=" . uri_escape($value)
+                      unless $@;
+                }
+            }
         }
-      }
     }
-    $getVars =~ s/^\&//; # remove first &
-    $getVars =~ s/[\r\n\t]//; # remove invalid characters
-    
+    $getVars =~ s/^\&//;         # remove first &
+    $getVars =~ s/[\r\n\t]//;    # remove invalid characters
+
     # If there are some GET variables to send
     # Add them to URL string
-    if( $getVars ne "" ) {
-      my $urldc = $self->{urldc};
-    
-      $urldc .= ( $urldc =~ /\?\w/ ) ?
-         # there are already get variables
-         "&".$getVars
-         :
-         # there are no get variables 
-         "?".$getVars;
-      $self->{urldc}=$urldc;
+    if ( $getVars ne "" ) {
+        my $urldc = $self->{urldc};
+
+        $urldc .= ( $urldc =~ /\?\w/ )
+          ?
+
+          # there are already get variables
+          "&" . $getVars
+          :
+
+          # there are no get variables
+          "?" . $getVars;
+        $self->{urldc} = $urldc;
     }
 
 }
-
 
 sub substitute {
     my $expr = shift;
@@ -223,10 +228,6 @@ sub substitute {
 
     return $expr;
 }
-
-
-
-
 
 1;
 
