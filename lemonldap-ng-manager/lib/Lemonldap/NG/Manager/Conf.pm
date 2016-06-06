@@ -687,7 +687,7 @@ sub metadatas {
         my $id = -1;
         my ($ind) = map { $id++; $_ == $res->{cfgNum} ? ($id) : () } @a;
         if ($ind)         { $res->{prev} = $a[ $ind - 1 ]; }
-        if ( $ind < $#a ) { $res->{next} = $a[ $ind + 1 ]; }
+        if ( $ind and $ind < $#a ) { $res->{next} = $a[ $ind + 1 ]; }
         $self->userNotice( 'User '
               . $self->userId($req)
               . ' ask for configuration metadatas ('
