@@ -693,8 +693,9 @@ sub _scanNodes {
             );
             $self->newConf->{$name} = {};
             if ( ref( $leaf->{data} ) ne 'ARRAY' ) {
-                $self->lmLog( "Double hash doesn't push an array, aborting",
-                    'error' );
+                push @{ $self->errors },
+                  { message => $leaf->{title}
+                      . ": double hash doesn't push an array, aborting" };
                 return 0;
             }
             foreach my $getHost ( @{ $leaf->{data} } ) {
