@@ -692,11 +692,10 @@ sub _scanNodes {
                 : ()
             );
             $self->newConf->{$name} = {};
-            if ( ref( $leaf->{data} ) ne 'ARRAY' ) {
-                push @{ $self->errors },
-                  { message => $leaf->{title}
-                      . ": double hash doesn't push an array, aborting" };
-                return 0;
+            unless ( defined $leaf->{data} ) {
+                hdebug('  unopened');
+                $self->newConf->{$name} = $self->refConf->{$name};
+                next;
             }
             foreach my $getHost ( @{ $leaf->{data} } ) {
                 my $change = 0;
