@@ -175,7 +175,7 @@ sub computeGetParams {
             if ( index( $self->{urldc}, $vhost ) != -1 ) {
                 my $params = $issuerDBGetParameters->{$vhost};
                 foreach my $param ( keys %$params ) {
-                    my $value = $self->safe->reval( $params->{$param} );
+                    my $value = $self->{sessionInfo}->{ $params->{$param} };
 
                     # Chain GET parameters unless there are evaluation errors
                     $getVars .= "&" . $param . "=" . uri_escape($value)
