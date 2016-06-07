@@ -892,6 +892,7 @@ sub _unitTest {
     my $attrs = &Lemonldap::NG::Manager::Attributes::attributes();
     my $res   = 1;
     foreach my $key ( keys %$conf ) {
+        hdebug("Testing $key");
         my $attr = $attrs->{$key};
         my $type = $types->{ $attr->{type} };
         die "Unkown type $attr->{type}" unless ( $type or $attr->{test} );
@@ -923,7 +924,7 @@ sub _unitTest {
 
                 #TODO
             }
-            if (   $key =~ /^$simpleHashKeys$/o
+            if (   $key =~ /^(?:$simpleHashKeys|$doubleHashKeys)$/o
                 or $attr->{type} =~ /Container$/ )
             {
                 my $keyMsg = $attr->{keyMsgFail} // $type->{keyMsgFail};
