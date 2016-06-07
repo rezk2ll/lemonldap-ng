@@ -1,18 +1,17 @@
-use Test::More;
+use Test::More tests => 12;
 use strict;
 use IO::String;
 
 my $res;
 my $file = 't/notifications.db';
 eval { unlink $file };
+require 't/test-lib.pm';
 
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
     if ($@) {
-        skip 'DBD::SQLite not found', 1;
+        skip 'DBD::SQLite not found', 11;
     }
-
-    require 't/test-lib.pm';
 
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file");
     $dbh->do(
@@ -59,7 +58,6 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     my $id;
     ok( $id = $cookies->{lemonldap}, 'Get cookie' )
       or explain( $res, 'Set-Cookie: something' );
-    count(3);
 
     # Verify that cookie is ciphered (session unvalid)
     ok(
@@ -72,7 +70,6 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     );
     ok( $res->[0] == 401, "Session isn't valid" )
       or explain( [ $res->[0], $res->[1] ], 401 );
-    count(2);
 
     # Try to validate notification without accepting it
     my $str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
@@ -88,7 +85,6 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     );
     ok( $res->[0] == 200, "Don't receive redirection" )
       or explain( [ $res->[0], $res->[1] ], 200 );
-    count(2);
 
     # Try to validate notification
     $str =
@@ -113,12 +109,10 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     my $i = 0;
     while ( $sth->fetchrow_hashref ) { $i++ }
     ok( $i == 1, 'Notification was deleted' );
-    count(3);
 
     clean_sessions();
 
     eval { unlink $file };
 
 }
-done_testing( eval { count() } );
 

@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Lib::Proxy;
 
 use strict;
 use Mouse;
+use SOAP::Lite;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS);
 
 our $VERSION = '2.0.0';
@@ -23,11 +24,11 @@ sub init {
 sub proxyQuery {
     my ( $self, $req ) = @_;
     return PE_OK if ( $req->datas->{_proxyQueryDone} );
-    my $soap = SOAP::Lite->proxy( $self->conf->{soapAuthService} )
+    my $soap = SOAP::Lite->proxy( $self->conf->{soapSessionService} )
       ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
-    my $r = $soap->getCookies( $self->{user}, $self->{password} );
+    my $r = $soap->getCookies( $req->{user}, $req->datas->{password} );
     if ( $r->fault ) {
-        $req->lmLog(
+        $self->lmLog(
             "Unable to query authentication service: "
               . $r->fault->{faultstring},
             'error'
@@ -37,9 +38,9 @@ sub proxyQuery {
     my $res = $r->result();
 
     # If authentication failed, display error
-    if ( $res->{error} ) {
-        $self->userError( "Authentication failed for $self->{user}: "
-              . $soap->error( $res->{error} )->result() );
+    if ( $res->{errorCode} ) {
+        $self->p->userError(
+            "Authentication failed for $req->{user}: error $res->{errorCode}");
         return PE_BADCREDENTIALS;
     }
     unless ( $req->datas->{_remoteId} =
