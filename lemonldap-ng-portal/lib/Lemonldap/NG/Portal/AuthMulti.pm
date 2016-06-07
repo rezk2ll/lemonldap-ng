@@ -43,7 +43,9 @@ sub authLogout {
 
 sub authForce {
     my $self = shift;
-    return $self->_multi->try( 'authForce', 0 );
+    $self->_sub('authInit');
+    my $s    = $self->{_multi}->{last}->[0] . "::authForce";
+    return &{$s}($self);
 }
 
 sub getDisplayType {
