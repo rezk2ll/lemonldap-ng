@@ -1,5 +1,31 @@
 lemonldap-ng (2.0.0) stable; urgency=low
 
+lemonldap-ng (1.9.3) stable; urgency=low
+
+    * [LEMONLDAP-985] - authForce is not well called trough AuthMulti
+    * [LEMONLDAP-997] - Circular dependency for liblemonldap-ng-handler-perl package
+    * [LEMONLDAP-1003] - Replace Mouse by Moose if ModPerl::Registry is used with Perl 5.22
+    * [LEMONLDAP-1006] - Typo in Common/Apache/Session.pm on LDAP disconnect
+    * [LEMONLDAP-1008] - Bad comment in lemonldap-ng.ini
+    * [LEMONLDAP-1009] - Version shown in Manager is not the one of the main module
+    * [LEMONLDAP-1010] - Problem with persistent sessions and MongoDB backend
+    * [LEMONLDAP-1012] - AuthTwitter is not working anymore
+    * [LEMONLDAP-1013] - AuthFacebook is not working anymore
+    * [LEMONLDAP-1014] - Example values for LDAP backend configuration are wrong
+    * [LEMONLDAP-1016] - Can't configure OpenID Connect RP Extra claims in lemonldap web manager
+    * [LEMONLDAP-1018] - Slave authentication error (Can't locate object method "checkHeader")
+    * [LEMONLDAP-1020] - Can't define SMTP server with port
+    * [LEMONLDAP-1022] - The path of the request is lost when using the url parameter of a Choice module
+    * [LEMONLDAP-1026] - lemonldap-ng-fastcgi-server is missing libfcgi-procmanager-perl as a dependency
+    * [LEMONLDAP-1029] - Missing images in Debian packaging
+    * [LEMONLDAP-1030] - Cannot start Manager with zero conf in LDAP backend
+    * [LEMONLDAP-983] - Import encrypt in functions
+    * [LEMONLDAP-1004] - Es, it, pt, ne and de translations
+    * [LEMONLDAP-1011] - Option to allow a user to reset an expired password
+    * [LEMONLDAP-1023] - Add documentation to nginx handler
+    * [LEMONLDAP-1025] - provide additional GET parameters while redirecting to handler
+    * [LEMONLDAP-1031] - Be less restrictive on service parameter check in CAS issuer
+
 lemonldap-ng (1.9.2) stable; urgency=low
 
     * [LEMONLDAP-985] - authForce is not well called trough AuthMulti
