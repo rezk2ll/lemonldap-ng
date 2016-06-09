@@ -12,6 +12,8 @@ use strict;
 our @EXPORT  = qw(checkIP checkHeader);
 our $VERSION = '2.0.0';
 
+# RUNNING METHODS
+
 ## @method Lemonldap::NG::Portal::_Slave checkIP()
 # @return true if remote IP is accredited in LL::NG conf
 sub checkIP {

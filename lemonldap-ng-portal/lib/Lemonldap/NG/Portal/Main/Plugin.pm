@@ -1,3 +1,5 @@
+# Base package for LLNG portal plugins. It adds somme wrapper to
+# Lemonldap::NG::Handler::PSGI::Try (base of portal)
 package Lemonldap::NG::Portal::Main::Plugin;
 
 use strict;

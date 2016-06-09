@@ -16,6 +16,8 @@ use strict;
 use Mouse;
 use Regexp::Assemble;
 
+# PROPERTIES
+
 # Configuration storage
 has localConfig => ( is => 'rw', default => sub { {} } );
 has conf        => ( is => 'rw', default => sub { {} } );
@@ -62,6 +64,8 @@ has beforeLogout => (
 
 # Custom template parameters
 has customParameters => ( is => 'rw', default => sub { {} } );
+
+# INITIALIZATION
 
 sub init {
     my ( $self, $args ) = @_;

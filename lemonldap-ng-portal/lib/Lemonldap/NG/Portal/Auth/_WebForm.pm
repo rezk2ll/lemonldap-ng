@@ -14,15 +14,15 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Auth::Base';
 
-## @apmethod int authInit()
-# Does nothing.
+# INITIALIZATION
+
 sub init {
     1;
 }
 
-## @apmethod int extractFormInfo()
+# RUNNING METHODS
+
 # Read username and password from POST datas
-# @return Lemonldap::NG::Portal constant
 sub extractFormInfo {
     my ( $self, $req ) = @_;
 
@@ -108,9 +108,7 @@ sub extractFormInfo {
     PE_OK;
 }
 
-## @apmethod int setAuthSessionInfo()
 # Set password in session datas if wanted.
-# @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
 

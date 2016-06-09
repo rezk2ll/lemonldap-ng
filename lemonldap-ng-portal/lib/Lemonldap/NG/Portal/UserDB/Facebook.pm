@@ -18,6 +18,8 @@ has vars => (
     }
 );
 
+# INITIALIZATION
+
 sub init {
     my ($self) = @_;
     unless ( $self->p->getModule(undef,'auth') =~ /^Facebook/ ) {
@@ -28,6 +30,8 @@ sub init {
     }
     return 1;
 }
+
+# RUNNING METHODS
 
 sub getUser {
 

@@ -13,6 +13,8 @@ extends 'Lemonldap::NG::Common::Module';
 
 our $VERSION = '2.0.0';
 
+# PROPERTIES
+
 # dbh object: DB connection object
 has dbh => (
     is      => 'rw',
@@ -34,6 +36,8 @@ has dbh => (
         return $dbh;
     }
 );
+
+# RUNNING METHODS
 
 # Return hashed password for use in SQL statement
 # @param password clear password

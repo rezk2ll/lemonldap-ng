@@ -8,6 +8,8 @@ extends 'Lemonldap::NG::Common::Module','Lemonldap::NG::Portal::Lib::Proxy';
 
 our $VERSION = '2.0.0';
 
+# RUNNING METHODS
+
 sub setGroups {
     PE_OK;
 }

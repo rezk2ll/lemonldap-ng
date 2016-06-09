@@ -22,6 +22,8 @@ our $VERSION = '2.0.0';
 # addUnauthRoute() methods in addition of Lemonldap::NG::Common::Module.
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
+# PROPERTIES
+
 sub parser {
     return $_[0]->notifObject->parser;
 }
@@ -49,10 +51,16 @@ has stylesheet => (
 # Underlying notifications storage object (File, DBI, LDAP,...)
 has notifObject => ( is => 'rw' );
 
+# INTERFACE
+
 # Declare additional process steps
 sub afterDatas { 'checkNotifDuringAuth' }
 
-# Plugin initialization
+# For now, notifications are done only during authentication process
+#sub forAuthUser { 'checkNotifForAuthUser' }
+
+# INITIALIZATION
+
 sub init {
     my ($self) = @_;
 
@@ -90,9 +98,6 @@ sub init {
     1;
 }
 
-# For now, notifications are done only during authentication process
-#sub forAuthUser { 'checkNotifForAuthUser' }
-
 #sub checkNotifForAuthUser {
 #    my ( $self, $req ) = @_;
 #    if ( my $notif = $self->checkForNotifications($req) ) {
@@ -104,6 +109,8 @@ sub init {
 #        return PE_OK;
 #    }
 #}
+
+# RUNNING METHODS
 
 sub checkNotifDuringAuth {
     my ( $self, $req ) = @_;

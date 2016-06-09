@@ -21,6 +21,8 @@ BEGIN {
     };
 }
 
+# INITIALIZATION
+
 # Build a Net::LDAP object using parameters issued from $portal
 sub new {
     my ( $class, $args ) = @_;
@@ -73,6 +75,8 @@ sub new {
     $self->{conf}->{ldapPwdEnc} ||= 'utf-8';
     return $self;
 }
+
+# RUNNING METHODS
 
 ## @method Net::LDAP::Message bind(string dn, hash args)
 # Reimplementation of Net::LDAP::bind(). Connection is done :

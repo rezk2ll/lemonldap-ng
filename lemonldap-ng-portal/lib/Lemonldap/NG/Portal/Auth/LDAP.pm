@@ -11,6 +11,8 @@ our $VERSION = '2.0.0';
 extends
   qw(Lemonldap::NG::Portal::Auth::_WebForm Lemonldap::NG::Portal::UserDB::LDAP);
 
+# RUNNING METHODS
+
 sub authenticate {
     my ( $self, $req ) = @_;
     unless ( $self->ldap ) {

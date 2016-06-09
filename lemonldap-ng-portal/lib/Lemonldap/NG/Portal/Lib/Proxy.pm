@@ -1,3 +1,4 @@
+# Auth/Proxy.pm and UserDB/Proxy.pm simple inheritance of this package
 package Lemonldap::NG::Portal::Lib::Proxy;
 
 use strict;
@@ -6,6 +7,8 @@ use SOAP::Lite;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS);
 
 our $VERSION = '2.0.0';
+
+# INITIALIZATION
 
 sub init {
     my ($self) = @_;
@@ -20,6 +23,8 @@ sub init {
     }
     return 1;
 }
+
+# RUNNING METHODS
 
 *authenticate = *getUser;
 

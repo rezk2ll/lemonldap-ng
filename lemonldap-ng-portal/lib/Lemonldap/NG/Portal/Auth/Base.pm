@@ -7,6 +7,8 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Common::Module';
 
+# PROPERTIES
+
 has authnLevel => ( is => 'rw' );
 
 1;

@@ -15,7 +15,8 @@ our $VERSION = '2.0.0';
 
 use constant AuthnLevel => 0;
 
-## @apmethod int authInit()
+# INITIALIZATION
+
 # Initialize demo accounts
 # @return Lemonldap::NG::Portal constant
 sub init {
@@ -29,9 +30,8 @@ sub init {
     1;
 }
 
-## @apmethod int authenticate()
-# Does nothing.
-# @return Lemonldap::NG::Portal constant
+# RUNNING METHODS
+
 sub authenticate {
     my ( $self, $req ) = @_;
 
@@ -40,16 +40,10 @@ sub authenticate {
     PE_OK;
 }
 
-## @apmethod int authLogout()
-# Does nothing
-# @return Lemonldap::NG::Portal constant
 sub authLogout {
     PE_OK;
 }
 
-## @apmethod boolean authForce()
-# Does nothing
-# @return result
 sub authForce {
     0;
 }

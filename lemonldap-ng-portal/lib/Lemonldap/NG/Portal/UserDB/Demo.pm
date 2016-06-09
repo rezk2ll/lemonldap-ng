@@ -13,9 +13,9 @@ extends 'Lemonldap::NG::Common::Module';
 
 our $VERSION = '2.0.0';
 
-## @apmethod int userDBInit()
+# INITIALIZATION
+
 # Check AuthDemo use
-# @return Lemonldap::NG::Portal constant
 sub init {
     my $self = shift;
 
@@ -45,6 +45,8 @@ sub init {
 
     1;
 }
+
+# INITIALIZATION
 
 ## @apmethod int getUser()
 # Check known accounts

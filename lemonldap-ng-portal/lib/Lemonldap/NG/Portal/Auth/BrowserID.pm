@@ -11,8 +11,9 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Auth::Base';
 
-## @method LWP::UserAgent ua()
-# @return LWP::UserAgent object
+# PROPERTIES
+
+# return LWP::UserAgent object
 has ua => (
     is      => 'rw',
     lasy    => 1,
@@ -26,7 +27,9 @@ has ua => (
     }
 );
 
-# Initialization: enables Browser ID (required for templates) and
+# INITIALIZATION
+
+# Enables Browser ID (required for templates) and
 # LWP::UserAgent object
 sub init {
     my ($self) = @_;
@@ -41,7 +44,8 @@ sub init {
     return $self->ua;
 }
 
-## @apmethod int extractFormInfo()
+# RUNNING METHODS
+
 # Get BrowserID assertion
 # @return Lemonldap::NG::Portal constant
 sub extractFormInfo {

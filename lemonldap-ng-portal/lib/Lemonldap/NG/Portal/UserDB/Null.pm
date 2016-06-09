@@ -8,9 +8,13 @@ extends 'Lemonldap::NG::Common::Module';
 
 our $VERSION = '2.0.0';
 
+# INITIALIZATION
+
 sub init {
     1;
 }
+
+# RUNNING METHODS
 
 sub getUser {
     PE_OK;

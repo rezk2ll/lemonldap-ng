@@ -10,6 +10,8 @@ extends 'Lemonldap::NG::Common::Module';
 
 our $VERSION = '2.0.0';
 
+# PROPERTIES
+
 has ldap => (
     is      => 'rw',
     lazy    => 1,
@@ -97,6 +99,8 @@ sub buildFilter {
     return eval $filter;
 }
 
+# INITIALIZATION
+
 sub init {
     my ($self) = @_;
     $self->ldap and $self->filter;
@@ -112,6 +116,8 @@ sub bind {
     }
     return $self->ldap ? $self->ldap->bind(@_) : undef;
 }
+
+# RUNNING METHODS
 
 sub getUser {
     my ( $self, $req ) = @_;

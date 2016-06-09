@@ -9,6 +9,8 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Auth::Base';
 
+# INITIALIZATION
+
 sub init {
     my ($self) = @_;
     eval { require Net::Facebook::Oauth2; };
@@ -25,6 +27,8 @@ sub init {
     }
     return $ret;
 }
+
+# RUNNING METHODS
 
 sub extractFormInfo {
     my ( $self, $req ) = @_;

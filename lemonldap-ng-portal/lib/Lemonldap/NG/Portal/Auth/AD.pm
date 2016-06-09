@@ -12,6 +12,8 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Auth::LDAP';
 
+# PROPERTIES
+
 has adPwdMaxAge => (
     is      => 'rw',
     builder => sub {
@@ -36,7 +38,8 @@ sub adTime {
     return ( time + 11644473600 ) * 10000000;
 }
 
-# Initialization: update LDAP configuration
+# INITIALIZATION
+# update LDAP configuration
 sub init {
     my ($self) = @_;
 
@@ -54,6 +57,8 @@ sub init {
     }
     return $self->SUPER::init();
 }
+
+# RUNNING METHODS
 
 sub authenticate {
     my ( $self, $req ) = @_;

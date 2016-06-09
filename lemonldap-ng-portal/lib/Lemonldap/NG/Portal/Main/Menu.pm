@@ -9,6 +9,8 @@ use Clone 'clone';
 
 extends 'Lemonldap::NG::Common::Module';
 
+# PROPERTIES
+
 has menuModules => (
     is      => 'rw',
     builder => sub {
@@ -32,6 +34,8 @@ has imgPath => (
         return $_[0]->{conf}->{impgPath} || '/static/logos';
     }
 );
+
+# RUNNING METHODS
 
 # Prepare menu template elements
 # Returns hash (=list) containing :

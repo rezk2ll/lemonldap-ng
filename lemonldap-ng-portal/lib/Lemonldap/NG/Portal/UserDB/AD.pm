@@ -8,6 +8,8 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::UserDB::LDAP';
 
+# PROPERTIES
+
 has filter => (
     is      => 'rw',
     lazy    => 1,

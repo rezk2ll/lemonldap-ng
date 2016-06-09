@@ -8,6 +8,8 @@ extends 'Lemonldap::NG::Portal::Lib::DBI';
 
 our $VERSION = '2.0.0';
 
+# PROPERTIES
+
 has table => (
     is      => 'rw',
     builder => sub {
@@ -32,10 +34,14 @@ has exportedVars => (
     }
 );
 
+# INITIALIZATION
+
 sub init {
     my $self = shift;
     return $self->dbh;
 }
+
+# RUNNING METHODS
 
 sub getUser {
     my ( $self, $req ) = @_;

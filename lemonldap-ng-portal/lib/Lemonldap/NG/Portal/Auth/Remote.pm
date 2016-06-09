@@ -9,6 +9,8 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Auth::Base',
   'Lemonldap::NG::Portal::Lib::Remote';
 
+# RUNNING METHODS
+
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     my $r    = $self->checkRemoteId($req);

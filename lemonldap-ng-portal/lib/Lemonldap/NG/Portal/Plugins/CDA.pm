@@ -3,11 +3,17 @@ package Lemonldap::NG::Portal::Plugins::CDA;
 use strict;
 use Mouse;
 
+our $VERSION = '2.0.0';
+
 extends 'Lemonldap::NG::Common::Module';
+
+# INTERFACE
 
 sub afterDatas {
     return 'changeUrldc';
 }
+
+# RUNNING METHOD
 
 sub changeUrldc {
     my ( $self, $req ) = @_;

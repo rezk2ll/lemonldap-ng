@@ -8,6 +8,8 @@ use MIME::Base64;
 
 our $VERSION = '2.0.0';
 
+# INITIALIZATION
+
 sub init {
     my $self    = shift;
     my @missing = ();
@@ -25,6 +27,8 @@ sub init {
     }
     $self->conf->{remoteCookieName} ||= $self->conf->{cookieName};
 }
+
+# RUNNING METHODS
 
 ## @apmethod int checkRemoteId()
 # check if a CDA mechanism has been instanciated and if session is available.
