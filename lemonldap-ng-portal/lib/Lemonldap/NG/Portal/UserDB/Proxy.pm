@@ -8,8 +8,6 @@ extends 'Lemonldap::NG::Common::Module','Lemonldap::NG::Portal::Lib::Proxy';
 
 our $VERSION = '2.0.0';
 
-*getUser = *Lemonldap::NG::Portal::Lib::Proxy::proxyQuery;
-
 sub setGroups {
     PE_OK;
 }

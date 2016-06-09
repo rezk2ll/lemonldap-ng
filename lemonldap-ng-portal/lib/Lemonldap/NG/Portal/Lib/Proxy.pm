@@ -21,7 +21,9 @@ sub init {
     return 1;
 }
 
-sub proxyQuery {
+*authenticate = *getUser;
+
+sub getUser {
     my ( $self, $req ) = @_;
     return PE_OK if ( $req->datas->{_proxyQueryDone} );
     my $soap = SOAP::Lite->proxy( $self->conf->{soapSessionService} )

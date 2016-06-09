@@ -9,8 +9,6 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Auth::_WebForm',
   'Lemonldap::NG::Portal::Lib::Proxy';
 
-*authenticate = *Lemonldap::NG::Portal::Lib::Proxy::proxyQuery;
-
 sub authForce {
     0;
 }
