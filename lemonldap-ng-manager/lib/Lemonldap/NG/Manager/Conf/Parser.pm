@@ -993,6 +993,7 @@ sub _execTest {
     # Recursive test (for locationRules,...)
     else {
         my $res = 1;
+        return $res unless ( ref($value) eq 'HASH' );
         foreach my $k ( keys %$value ) {
             $res = 0
               unless (
