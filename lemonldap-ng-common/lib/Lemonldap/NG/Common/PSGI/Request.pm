@@ -105,7 +105,6 @@ has body                   => ( is => 'rw', isa    => 'Str', default => '' );
 has CONTENT_TYPE => ( is => 'ro', isa => 'Str', reader => 'contentType', );
 has CONTENT_LENGTH => (
     is      => 'ro',
-    isa     => 'Int',
     reader  => 'contentLength',
     lazy    => 1,
     default => 0,

@@ -13,3 +13,6 @@ GROUP=__GROUP__
 
 # Custom functions file
 #CUSTOM_FUNCTIONS_FILE=/var/lib/lemonldap-ng/myfile.pm
+
+# Engine (default to FCGI)
+#ENGINE=AnyEvent::FCGI

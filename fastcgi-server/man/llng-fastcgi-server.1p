@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "llng-fastcgi-server 1"
-.TH llng-fastcgi-server 1 "2016-05-31" "perl v5.22.2" "User Contributed Perl Documentation"
+.TH llng-fastcgi-server 1 "2016-06-09" "perl v5.22.2" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -153,6 +153,25 @@ llng-fastcgi-server has been designed provides Lemonldap::NG services to Nginx.
 Portal, manager and handler will be compiled only is used. So this FastCGI
 server can be used on every Lemonldap::NG server even if it needs only some
 parts (isolated handlers, portal,...).
+.SH "PARAMETERS"
+.IX Header "PARAMETERS"
+Each parameter can be set by an option or a environment variable.
+.IP "\-p ($ENV{\s-1PID\s0}):                   pid file" 4
+.IX Item "-p ($ENV{PID}): pid file"
+.PD 0
+.IP "\-u ($ENV{\s-1USER\s0}):                  user" 4
+.IX Item "-u ($ENV{USER}): user"
+.IP "\-g ($ENV{\s-1GROUP\s0}):                 group" 4
+.IX Item "-g ($ENV{GROUP}): group"
+.IP "\-n ($ENV{\s-1NPROC\s0}):                 Number of processus for \s-1FCGI\s0" 4
+.IX Item "-n ($ENV{NPROC}): Number of processus for FCGI"
+.IP "\-e ($ENV{\s-1ENGINE\s0}):                Plack::Handler engine, default to \s-1FCGI\s0" 4
+.IX Item "-e ($ENV{ENGINE}): Plack::Handler engine, default to FCGI"
+.IP "\-s ($ENV{\s-1SOCKET\s0}):                Unix socket" 4
+.IX Item "-s ($ENV{SOCKET}): Unix socket"
+.IP "\-f ($ENV{\s-1CUSTOM_FUNCTIONS_FILE\s0}): file to load for custom functions" 4
+.IX Item "-f ($ENV{CUSTOM_FUNCTIONS_FILE}): file to load for custom functions"
+.PD
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 <http://lemonldap\-ng.org/>

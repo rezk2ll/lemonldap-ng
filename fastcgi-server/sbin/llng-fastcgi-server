@@ -9,8 +9,11 @@ use Getopt::Std;
 our %opts;
 my %_apps;
 
-getopts( 'Fn:p:s:u:g:f:', \%opts );
+getopts( 'Fn:p:s:u:g:f:e:', \%opts );
 
+$SIG{'PIPE'} = 'IGNORE';
+
+$opts{e} ||= $ENV{ENGINE} || 'FCGI';
 $opts{n} ||= $ENV{NPROC}  || 7;
 $opts{p} ||= $ENV{PID}    || '__FASTCGISOCKDIR__/llng-fastcgi.pid';
 $opts{s} ||= $ENV{SOCKET} || '__FASTCGISOCKDIR__/llng-fastcgi.sock';
@@ -28,9 +31,9 @@ if ( $opts{u} ) {
     POSIX::setuid($uid);
 }
 
-if($opts{f}) {
-    eval {require $opts{f}};
-    die $@ if($@);
+if ( $opts{f} ) {
+    eval { require $opts{f} };
+    die $@ if ($@);
 }
 
 my %builder = (
@@ -79,7 +82,7 @@ Lemonldap::NG::Handler::PSGI::API->init();
 
 my $server = Plack::Runner->new();
 $server->parse_options(
-    '-s'           => 'FCGI',
+    '-s'           => $opts{e},
     '-E'           => 'deployment',
     '--pid'        => $opts{p},
     '--nproc'      => $opts{n},
@@ -110,6 +113,28 @@ llng-fastcgi-server has been designed provides Lemonldap::NG services to Nginx.
 Portal, manager and handler will be compiled only is used. So this FastCGI
 server can be used on every Lemonldap::NG server even if it needs only some
 parts (isolated handlers, portal,...).
+
+=head1 PARAMETERS
+
+Each parameter can be set by an option or a environment variable.
+
+=over
+
+=item -p ($ENV{PID}):                   pid file
+
+=item -u ($ENV{USER}):                  user
+
+=item -g ($ENV{GROUP}):                 group
+
+=item -n ($ENV{NPROC}):                 Number of processus for FCGI
+
+=item -e ($ENV{ENGINE}):                Plack::Handler engine, default to FCGI
+
+=item -s ($ENV{SOCKET}):                Unix socket
+
+=item -f ($ENV{CUSTOM_FUNCTIONS_FILE}): file to load for custom functions
+
+=back
 
 =head1 SEE ALSO
 
