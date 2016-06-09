@@ -3,6 +3,7 @@
 use strict;
 use Data::Dumper;
 use 5.10.0;
+use POSIX 'strftime';
 use_ok('Lemonldap::NG::Common::PSGI::Cli::Lib');
 
 our $client;
@@ -10,6 +11,8 @@ our $count = 1;
 $Data::Dumper::Deparse = 1;
 
 my $module;
+our $sessionId = 'f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545';
+our $file = "t/sessions/$sessionId";
 
 sub init {
     my $arg = shift;
@@ -20,6 +23,23 @@ sub init {
     ok( $client = Lemonldap::NG::Handler::PSGI::Cli::Lib->new(),
         'Client object' );
     count(2);
+    open F, ">$file"
+      or die $!;
+    my $now = time;
+    my $ts = strftime "%Y%m%d%H%M%S", localtime;
+
+    print F '{"updateTime":"'
+      . $ts
+      . '","_timezone":"1","_session_kind":"SSO","_passwordDB":"Demo","startTime":"'
+      . $ts
+      . '","ipAddr":"127.0.0.1","UA":"Mozilla/5.0 (X11; VAX4000; rv:43.0) Gecko/20100101 Firefox/143.0 Iceweasel/143.0.1","_user":"dwho","_userDB":"Demo","_lastAuthnUTime":'
+      . $now
+      . ',"uid":"dwho","_issuerDB":"Null","_session_id":"f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545","authenticationLevel":1,"_whatToTrace":"dwho","_auth":"Demo","_utime":'
+      . $now
+      . ',"loginHistory":{"successLogin":[{"ipAddr":"127.0.0.1","_utime":'
+      . $now
+      . '}]},"cn":"Doctor Who","mail":"dwho@badwolf.org"}';
+    close F;
 }
 
 sub client {
@@ -43,6 +63,10 @@ sub explain {
     my ( $get, $ref ) = @_;
     $get = Dumper($get) if ( ref $get );
     print STDERR "Expect $ref, get $get\n";
+}
+
+sub clean {
+    unlink $file;
 }
 
 package Lemonldap::NG::Handler::PSGI::Cli::Lib;

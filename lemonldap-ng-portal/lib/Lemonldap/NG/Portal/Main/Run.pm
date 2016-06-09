@@ -212,6 +212,13 @@ sub autoRedirect {
 sub getApacheSession {
     my ( $self, $id, $noInfo, $force ) = @_;
 
+    if ($id) {
+        $self->lmLog( "Try to get session $id", 'debug' );
+    }
+    else {
+        $self->lmLog( "Try to get a new session", 'debug' );
+    }
+
     my $as = Lemonldap::NG::Common::Session->new(
         {
             storageModule        => $self->conf->{globalStorage},
@@ -225,7 +232,7 @@ sub getApacheSession {
     );
 
     if ( $as->error ) {
-        $self->lmLog( $as->error, 'debug' );
+        $self->lmLog( $as->error, 'error' );
         return;
     }
 
@@ -234,9 +241,28 @@ sub getApacheSession {
         return;
     }
 
+    my $now = time;
+    if (
+        $id
+        and (
+            $now - $as->data->{_utime} > $self->conf->{timeout}
+            or (    $self->conf->{timeoutActivity}
+                and $as->data->{_lastSeen}
+                and $now - $as->data->{_lastSeen} >
+                $self->conf->{timeoutActivity} )
+        )
+      )
+    {
+        $self->lmLog( "Session $id expired", 'debug' );
+        return;
+    }
+
     unless ($noInfo) {
         $self->{id} = $as->id;
     }
+
+    $self->lmLog( "Return session " . $as->id, 'debug' );
+
     return $as;
 }
 

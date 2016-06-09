@@ -410,6 +410,18 @@ sub retrieveSession {
 
         $class->lmLog( "Get session $id", 'debug' );
 
+        # Verify that session is valid
+        if (
+            $now - $class->datas->{_utime} > $class->tsv->{timeout}
+            or (    $class->tsv->{timeoutActivity}
+                and $class->datas->{_lastSeen}
+                and $now - $class->datas->{_lastSeen} > $class->tsv->{timeoutActivity} )
+          )
+        {
+            $class->lmLog( "Session expired", 'info' );
+            return 0;
+        }
+
         # Update the session to notify activity, if necessary
         if ( $class->tsv->{timeoutActivity}
             and ( $now - $class->datas->{_lastSeen} > 60 ) )

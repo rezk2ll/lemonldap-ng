@@ -184,10 +184,10 @@ sub defaultValuesInit {
 
     $class->tsv->{$_} = $conf->{$_} foreach (
         qw(
-        cda              cookieExpiration    cookieName
-        customFunctions  httpOnly            securedCookie
-        timeoutActivity  useRedirectOnError  useRedirectOnForbidden
-        useSafeJail      whatToTrace
+        cda                    cookieExpiration cookieName
+        customFunctions        httpOnly         securedCookie
+        timeout                timeoutActivity  useRedirectOnError
+        useRedirectOnForbidden useSafeJail      whatToTrace
         )
     );
 

@@ -193,10 +193,7 @@ sub _dbiGKFAS {
     my ( $class, $type, $args, $data ) = @_;
     my $next;
     if ( $type !~ /(?:MySQL)/ ) {
-        $next = sub {
-            require MIME::Base64;
-            return thaw( MIME::Base64::decode_base64( $_[0] ) );
-        };
+        $next = \&decodeThaw64;
         if ( $args->{useStorable} ) {
             $args->{unserialize} = $next;
         }
@@ -349,7 +346,7 @@ sub _LDAPGKFAS {
             $entry->get_value('cn'),
             $entry->get_value( $args->{ldapAttributeContent} )
         );
-        eval { $v = decodeThaw64($v); };
+        eval { $v = $args->{unserialize}->( $v, \&decodeThaw64 ); };
         next if ($@);
         if ( ref($data) eq 'CODE' ) {
             $res{$k} = &$data( $v, $k );
@@ -375,7 +372,8 @@ sub _NoSQLGKFAS {
     my %res;
 
     foreach my $k (@keys) {
-        my $v = eval { decodeThaw64( $redis->get($k) ); };
+        my $v =
+          eval { $args->{unserialize}->( $redis->get($k), \&decodeThaw64 ); };
         next if ($@);
         if ( ref($data) eq 'CODE' ) {
             $res{$k} = &$data( $v, $k );

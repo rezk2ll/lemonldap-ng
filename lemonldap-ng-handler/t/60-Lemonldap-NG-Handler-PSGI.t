@@ -33,29 +33,15 @@ count(4);
 # --------------------
 
 # Authorizated query
-ok(
-    $res = $client->_get(
-        '/',
-        undef,
-        undef,
-'lemonldap=f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545'
-    ),
-    'Authentified query'
-);
-ok( $res->[0] == 200, 'Code is 200' ) or explain( $res->[0], 200 );
+ok( $res = $client->_get( '/', undef, undef, "lemonldap=$sessionId" ),
+    'Authentified query' );
+ok( $res->[0] == 200, 'Code is 200' ) or explain( $res, 200 );
 
 count(2);
 
 # Denied query
-ok(
-    $res = $client->_get(
-        '/deny',
-        undef,
-        undef,
-'lemonldap=f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545'
-    ),
-    'Denied query'
-);
+ok( $res = $client->_get( '/deny', undef, undef, "lemonldap=$sessionId" ),
+    'Denied query' );
 ok( $res->[0] == 403, 'Code is 403' ) or explain( $res->[0], 403 );
 
 count(2);
@@ -78,6 +64,8 @@ unlink(
 count(2);
 
 done_testing( count() );
+
+clean();
 
 sub Lemonldap::NG::Handler::PSGI::handler {
     my ( $self, $req ) = @_;
