@@ -694,7 +694,7 @@ sub _scanNodes {
             $self->newConf->{$name} = {};
             unless ( defined $leaf->{data} ) {
                 hdebug('  unopened');
-                $self->newConf->{$name} = $self->refConf->{$name};
+                $self->newConf->{$name} = $self->refConf->{$name} || {};
                 next;
             }
             foreach my $getHost ( @{ $leaf->{data} } ) {
