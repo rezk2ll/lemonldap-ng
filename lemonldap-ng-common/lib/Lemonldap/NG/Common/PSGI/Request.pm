@@ -62,7 +62,8 @@ has REMOTE_USER => (
     is      => 'rw',
     reader  => 'user',
     trigger => sub {
-        $_[0]->{userData} = { _whatToTrace => $_[0]->{REMOTE_USER}, };
+        $_[0]->{userData} = { $Lemonldap::NG::Handler::Main::tsv->{whatTotrace}
+              || _whatToTrace => $_[0]->{REMOTE_USER}, };
     },
 );
 has userData => ( is => 'rw', isa => 'HashRef', default => sub { {} } );

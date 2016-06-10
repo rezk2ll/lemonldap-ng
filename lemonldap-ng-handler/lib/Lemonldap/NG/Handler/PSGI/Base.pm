@@ -128,14 +128,14 @@ sub _authAndTrace {
 # @return hash of user datas
 sub user {
     my ( $self, $req ) = @_;
-    return $req->userData || { _whatToTrace => 'anonymous' };
+    return $req->userData || { $Lemonldap::NG::Handler::Main::tsv->{whatToTrace} || _whatToTrace => 'anonymous' };
 }
 
 ## @method string userId()
 # @return user identifier to log
 sub userId {
     my ( $self, $req ) = @_;
-    return $req->userData->{_whatToTrace} || 'anonymous';
+    return $req->userData->{$Lemonldap::NG::Handler::Main::tsv->{whatToTrace} || '_whatToTrace'} || 'anonymous';
 }
 
 ## @method boolean group(string group)
