@@ -16,7 +16,7 @@ sub enabledPlugins {
     my @res;
 
     # Search for IssuerDB* modules enabled
-    foreach my $key (qw(SAML OpenID CAS OpenIDConnect)) {
+    foreach my $key (qw(SAML OpenID CAS OpenIDConnect Get)) {
         if ( $self->conf->{"issuerDB${key}Activation"} ) {
             $self->lmlog( "IssuerDB${key} enabled", 'debug' );
             push @res, "::IssuerDB::$key";
