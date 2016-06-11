@@ -90,11 +90,10 @@ sub sessions {
 
     # Case 2: list of sessions
 
+    my $whatToTrace = Lemonldap::NG::Handler::PSGI::API->tsv->{whatToTrace};
+
     # 2.1 Get fields to require
-    my @fields = (
-        '_httpSessionType', $self->{ipField},
-        Lemonldap::NG::Handler::PSGI::API->tsv->{whatToTrace}
-    );
+    my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace );
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy = $1
           if ( $groupBy =~ /^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/ );
@@ -102,12 +101,14 @@ sub sessions {
             push @fields, $1;
         }
         else {
-            push @fields, $groupBy;
+            $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
+              or push @fields, $groupBy;
         }
     }
     elsif ( my $order = $params->{orderBy} ) {
         $order =~ s/^net4\((\w+)\)$/$1/;
-        push @fields, split( /, /, $order );
+        $order =~ s/^_whatToTrace$/$whatToTrace/o
+          or push @fields, split( /, /, $order );
     }
     else {
         push @fields, '_utime';
@@ -169,30 +170,16 @@ sub sessions {
         foreach my $id ( keys %$res ) {
             my $entry = $res->{$id};
             next if ( $entry->{_httpSessionType} );
-            $r{ $entry->{ Lemonldap::NG::Handler::PSGI::API->tsv->{whatToTrace}
-            } }->{ $entry->{ $self->{ipField} } }++;
+            $r{ $entry->{$whatToTrace} }->{ $entry->{ $self->{ipField} } }++;
         }
 
    # 2.4.2 Store sessions owned by users that has more than one IP address in $r
         my $r;
         foreach my $k ( keys %$res ) {
-            my @tmp = keys %{
-                $r{
-                    $res->{$k}
-                      ->{ Lemonldap::NG::Handler::PSGI::API->tsv->{whatToTrace}
-                      }
-                }
-            };
+            my @tmp = keys %{ $r{ $res->{$k}->{$whatToTrace} } };
             if ( @tmp > 1 ) {
                 $res->{$k}->{_sessionId} = $k;
-                push @{
-                    $r->{
-                        $res->{$k}->{ Lemonldap::NG::Handler::PSGI::API->tsv
-                              ->{whatToTrace}
-                        }
-                    }
-                  },
-                  $res->{$k};
+                push @{ $r->{ $res->{$k}->{$whatToTrace} } }, $res->{$k};
             }
         }
 
@@ -228,6 +215,7 @@ sub sessions {
     #   { uid => 'foo.bar', count => 3 }
     elsif ( my $group = $req->params('groupBy') ) {
         my $r;
+        $group =~ s/^_whatToTrace$/$whatToTrace/o;
 
         # Substrings
         if ( $group =~ /^substr\((\w+)(?:,(\d+)(?:,(\d+))?)?\)$/ ) {
@@ -256,9 +244,16 @@ sub sessions {
 
         # Simple field groupBy query
         elsif ( $group =~ /^\w+$/ ) {
-            foreach my $k ( keys %$res ) {
-                $r->{ $res->{$k}->{$group} }++;
-            }
+            eval {
+                foreach my $k ( keys %$res ) {
+                    $r->{ $res->{$k}->{$group} }++;
+                }
+            };
+            return $self->sendError(
+                $req,
+qq{Use of an uninitialized attribute "$group" to group sessions},
+                400
+            ) if ($@);
         }
         else {
             return $self->sendError( $req, 'Syntax error in groupBy', 400 );
