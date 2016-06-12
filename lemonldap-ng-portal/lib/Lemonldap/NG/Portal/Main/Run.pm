@@ -26,7 +26,6 @@ sub sessionDatas {
 # RESPONSE HANDLER
 # ----------------
 #
-# - check if conf has changed
 # - replace Lemonldap::NG::Common::PSGI::Request request by
 #   Lemonldap::NG::Portal::Main::Request
 # - launch Lemonldap::NG::Common::PSGI::Request::handler()

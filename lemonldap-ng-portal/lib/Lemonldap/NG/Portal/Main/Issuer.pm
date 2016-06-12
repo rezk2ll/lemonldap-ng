@@ -19,6 +19,12 @@ our $VERSION = '2.0.0';
 
 has type => ( is => 'rw' );
 
+# INTERFACE
+
+# Only logout is called in normal use. Issuer that inherits from this
+# package are called only by their path
+sub beforeLogout { 'logout' }
+
 # INITIALIZATION
 
 sub init {
@@ -46,7 +52,15 @@ sub _redirect {
         $self->conf->{portal}
       . $req->path
       . ( $req->query ? '?' . $req->query : () );
-    return $self->p->do( $req, [] );
+    # TODO: launch normal process with 'run' at the end
+    return $self->p->do( $req, [
+            'controlUrl',  @{ $self->p->beforeAuth },
+            &authProcess,  @{ $self->p->betweenAuthAndDatas },
+            &sessionDatas, @{ $self->p->afterDatas },
+            sub {
+                return $self->run(@_);
+            }
+    ] );
 }
 
 sub _pRedirect {
@@ -54,7 +68,8 @@ sub _pRedirect {
     $req->parseBody;
 
     # TODO
-    die("TODO: store datas and redirect");
+    die("TODO: store datas");
+    return $self->_redirect($req);
 }
 
 # Case 3: authentified user, launch
@@ -67,7 +82,7 @@ sub _forAuthUser {
             'controlUrl',
             @{ $self->p->forAuthUser },
             sub {
-                return $self->forAuthUser(@_);
+                return $self->run(@_);
             },
         ]
     );
