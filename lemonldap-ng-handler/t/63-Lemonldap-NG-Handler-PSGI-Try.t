@@ -62,5 +62,7 @@ ok( $res->[2]->[0] eq 'Auth', 'Get auth result' )
   or print "Expect Auth, got $res->[2]->[0]\n";
 count(3);
 
+clean();
+
 done_testing( count() );
 
