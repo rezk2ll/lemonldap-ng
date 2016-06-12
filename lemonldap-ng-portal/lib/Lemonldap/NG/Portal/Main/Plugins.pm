@@ -18,7 +18,7 @@ sub enabledPlugins {
     # Search for Issuer* modules enabled
     foreach my $key (qw(SAML OpenID CAS OpenIDConnect Get)) {
         if ( $self->conf->{"issuerDB${key}Activation"} ) {
-            $self->lmlog( "Issuer${key} enabled", 'debug' );
+            $self->lmLog( "Issuer${key} enabled", 'debug' );
             push @res, "::Issuer::$key";
         }
     }

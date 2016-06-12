@@ -33,6 +33,7 @@ sub init {
     $type =~ s/.*:://;
     $self->type($type);
     if ( my $path = $self->conf->{"issuerDB${type}Path"} ) {
+        $path =~ s/^.*?(\w+).*?$/$1/;
         $self->addUnauthRoute( $path => '_redirect',  ['GET'] );
         $self->addUnauthRoute( $path => '_pRedirect', ['POST'] );
         $self->addAuthRoute( $path => "_forAuthUser", [ 'GET', 'POST' ] );

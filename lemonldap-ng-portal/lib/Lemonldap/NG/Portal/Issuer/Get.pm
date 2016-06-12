@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Issuer::Get;
 
 use strict;
 use Mouse;
+use URI::Escape;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_BADURL);
 
 our $VERSION = '2.0.0';
@@ -18,7 +19,7 @@ sub run {
 
     # Session creation timestamp
     my $time = $self->{sessionInfo}->{_utime} || time();
-    $req->path =~ m#^$self->{conf}->{issuerDBGetPath}/(log(?:in|out)#;
+    $req->path =~ m#^$self->{conf}->{issuerDBGetPath}/(log(?:in|out))#;
     my $logInOut = $1 || 'login';
     if ( $logInOut eq 'login' ) {
         $self->lmLog( "IssuerGet: request for login", 'debug' );
@@ -65,7 +66,7 @@ sub computeGetParams {
             my $value =
               eval { uri_escape( $req->{sessionInfo}->{ $prms->{$param} } ) };
             if ($@) {
-                $self->lmLog( "IssuerGet: unable to compute $param", 'error' );
+                $self->lmLog( "IssuerGet: unable to compute $param ($@)", 'error' );
                 return;
             }
             $value =~ s/[\r\n\t]//;
