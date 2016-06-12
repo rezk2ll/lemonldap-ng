@@ -53,15 +53,22 @@ sub _redirect {
         $self->conf->{portal}
       . $req->path
       . ( $req->query ? '?' . $req->query : () );
+
     # TODO: launch normal process with 'run' at the end
-    return $self->p->do( $req, [
-            'controlUrl',  @{ $self->p->beforeAuth },
-            &authProcess,  @{ $self->p->betweenAuthAndDatas },
-            &sessionDatas, @{ $self->p->afterDatas },
+    return $self->p->do(
+        $req,
+        [
+            'controlUrl',
+            @{ $self->p->beforeAuth },
+            $self->p->authProcess,
+            @{ $self->p->betweenAuthAndDatas },
+            $self->p->sessionDatas,
+            @{ $self->p->afterDatas },
             sub {
                 return $self->run(@_);
-            }
-    ] );
+              }
+        ]
+    );
 }
 
 sub _pRedirect {

@@ -34,6 +34,7 @@ ok( $id = $cookies->{lemonldap}, 'Get cookie' )
   or explain( $res, 'Set-Cookie: something' );
 count(3);
 
+# Test GET login
 ok(
     $res = &client->_get(
         '/test',
@@ -41,7 +42,7 @@ ok(
         cookie => "lemonldap=$id",
         accept => 'text/html'
     ),
-    'Auth ajax request with good url'
+    'GET request with good url'
 );
 ok( $res->[0] == 302, 'Get redirection' )
   or explain( [ $res->[0], $res->[1] ], 302 );
@@ -51,6 +52,17 @@ ok(
     'Location is http://test1.example.com/<$id>'
 ) or explain( \%hdrs, "Location => 'http://test1.example.com/$id'" );
 count(3);
+
+# Test not logged access
+ok(
+    $res = &client->_get(
+        '/test',
+        query  => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
+    ),
+    'Not logged access'
+);
+ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
+count(2);
 
 clean_sessions();
 
