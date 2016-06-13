@@ -208,7 +208,8 @@ sub _scanNodes {
         elsif ( $leaf->{id} =~
             /^($specialNodeKeys)\/([^\/]+)\/([^\/]+)(?:\/(.*))?$/io )
         {
-            my ( $base, $key, $target, $h ) = ( $1, $newNames{$2}, $3, $4 );
+            my ( $base, $key, $oldName, $target, $h ) =
+              ( $1, $newNames{$2}, $2, $3, $4 );
             hdebug(
                 "Special node chield subnode detected $leaf->{id}",
                 "  base $base, key $key, target $target, h "
@@ -222,7 +223,7 @@ sub _scanNodes {
                     if ( $leaf->{cnodes} ) {
                         hdebug('    unopened subnode');
                         $self->newConf->{$target}->{$key} =
-                          $self->refConf->{$target}->{$key} // {};
+                          $self->refConf->{$target}->{$oldName} // {};
                     }
 
                     elsif ($h) {
@@ -302,7 +303,7 @@ sub _scanNodes {
                     if ( $leaf->{cnodes} ) {
                         hdebug("  $target: unopened node");
                         $self->newConf->{$target}->{$key} =
-                          $self->refConf->{$target}->{$key} // {};
+                          $self->refConf->{$target}->{$oldName} // {};
                     }
                     elsif ($h) {
                         hdebug("  $target: opened node");
@@ -358,7 +359,7 @@ sub _scanNodes {
                     if ( $leaf->{cnodes} ) {
                         hdebug('    unopened');
                         $self->newConf->{$target}->{$key} =
-                          $self->refConf->{$target}->{$key} // {};
+                          $self->refConf->{$target}->{$oldName} // {};
                     }
                     elsif ($h) {
                         hdebug('    opened');
@@ -377,7 +378,7 @@ sub _scanNodes {
                         if ( $leaf->{cnodes} ) {
                             hdebug('    unopened');
                             $self->newConf->{$target}->{$key} =
-                              $self->refConf->{$target}->{$key} // {};
+                              $self->refConf->{$target}->{$oldName} // {};
                         }
                         elsif ($h) {
                             hdebug('    opened');
