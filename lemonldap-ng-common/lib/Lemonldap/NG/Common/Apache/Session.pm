@@ -343,7 +343,7 @@ sub _LDAPGKFAS {
 
     foreach my $entry ( $msg->entries ) {
         my ( $k, $v ) = (
-            $entry->get_value('cn'),
+            $entry->get_value( $args->{ldapAttributeId} ),
             $entry->get_value( $args->{ldapAttributeContent} )
         );
         eval { $v = $args->{unserialize}->( $v, \&decodeThaw64 ); };
