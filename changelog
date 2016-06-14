@@ -1,5 +1,17 @@
 lemonldap-ng (2.0.0) stable; urgency=low
 
+lemonldap-ng (1.9.4) stable; urgency=high
+
+    * [LEMONLDAP-1034] - Missing dependencies in documentation
+    * [LEMONLDAP-1036] - LDAP sessions are not purged
+    * [LEMONLDAP-1037] - Using LDAP as conf backend, IssuerDBGetParameters with wrong value inserted after conf save
+    * [LEMONLDAP-1038] - All information is lost when vhost or SAML/OIDC partner is renamed in Manager
+    * [LEMONLDAP-1039] - Error not displayed correctly for notification browsing
+    * [LEMONLDAP-1040] - Session browsing not working if _whatToTrace is missing
+    * [LEMONLDAP-1041] - ldapAttributeId not used everywhere in _LDAPGKFAS
+    * [LEMONLDAP-1035] - Manage Plack engines in FastCGI server
+    * [LEMONLDAP-1042] - Some information are lost when renaming OIDC/SAML partner
+
 lemonldap-ng (1.9.3) stable; urgency=low
 
     * [LEMONLDAP-985] - authForce is not well called trough AuthMulti
