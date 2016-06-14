@@ -289,6 +289,7 @@ $(SRCMANAGERDIR)/site/static/js/%.js: $(SRCMANAGERDIR)/site/coffee/%.coffee
 	@yui-compressor $*.js > $*.min.js
 
 fastcgi-server/man/llng-fastcgi-server.1p: fastcgi-server/sbin/llng-fastcgi-server
+	@echo Update FastCGI server man page
 	@pod2man -name llng-fastcgi-server fastcgi-server/sbin/llng-fastcgi-server >fastcgi-server/man/llng-fastcgi-server.1p
 
 # Perl libraries configuration
