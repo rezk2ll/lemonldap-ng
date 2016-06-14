@@ -116,9 +116,11 @@ sub sessions {
     $moduleOptions->{backend} = $mod->{module};
     if (
         my %filters = map {
+            my $s = $_;
+            s/\b_whatToTrace\b/$tsv->{whatToTrace}/o;
             /^(?:(?:group|order)By|doubleIp)$/
               ? ()
-              : ( $_ => $params->{$_} );
+              : ( $_ => $params->{$s} );
         } keys %$params
       )
     {
