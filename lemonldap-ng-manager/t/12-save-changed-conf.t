@@ -174,6 +174,11 @@ sub changes {
         },
         {
             'key' => 'virtualHosts',
+            'new' => 'test3.example.com',
+            'old' => 'test2.example.com'
+        },
+        {
+            'key' => 'virtualHosts',
             'old' => 'test2.example.com'
         }
     ];

@@ -199,6 +199,12 @@ sub _scanNodes {
 
             # Check hostname/partner name changes (id points to the old name)
             $newNames{$host} = $leaf->{title};
+            if ( $newNames{$host} ne $host and $host !~ /^new__/ ) {
+                hdebug("  $host becomes $newNames{$host}");
+                $self->confChanged(1);
+                push @{ $self->changes },
+                  { key => $base, old => $host, new => $newNames{$host} };
+            }
 
             $self->_scanNodes($subNodes);
             next;
@@ -281,7 +287,8 @@ sub _scanNodes {
                     }
                 }
                 elsif ( $target =~ /^$virtualHostKeys$/o ) {
-                    $self->set( 'vhostOptions', $key, $target, $leaf->{data} );
+                    $self->set( 'vhostOptions', [ $oldName, $key ],
+                        $target, $leaf->{data} );
                 }
                 else {
                     push @{ $self->errors },
@@ -317,7 +324,8 @@ sub _scanNodes {
                 }
                 elsif ( $target =~ /^saml(?:S|ID)PMetaDataXML$/ ) {
                     hdebug("  $target");
-                    $self->set( $target, $key, $target, $leaf->{data} );
+                    $self->set( $target, [ $oldName, $key ],
+                        $target, $leaf->{data} );
                 }
                 elsif ( $target =~ /^saml(?:ID|S)PMetaDataOptions/ ) {
                     my $optKey = $&;
@@ -326,7 +334,10 @@ sub _scanNodes {
                         /^(?:$samlIDPMetaDataNodeKeys|$samlSPMetaDataNodeKeys)/o
                       )
                     {
-                        $self->set( $optKey, $key, $target, $leaf->{data} );
+                        $self->set(
+                            $optKey, [ $oldName, $key ],
+                            $target, $leaf->{data}
+                        );
                     }
                     else {
                         push @{ $self->errors },
@@ -394,7 +405,10 @@ sub _scanNodes {
                         /^(?:$oidcOPMetaDataNodeKeys|$oidcRPMetaDataNodeKeys)/o
                       )
                     {
-                        $self->set( $optKey, $key, $target, $leaf->{data} );
+                        $self->set(
+                            $optKey, [ $oldName, $key ],
+                            $target, $leaf->{data}
+                        );
                     }
                     else {
                         push @{ $self->errors },
@@ -813,8 +827,9 @@ sub set {
         my $tmp = shift;
         push @path, $tmp;
         foreach my $i ( 0, 1 ) {
-            $confs[$i]->{$tmp} //= {};
-            $confs[$i] = $confs[$i]->{$tmp};
+            my $v = ref($tmp) ? $tmp->[$i] : $tmp;
+            $confs[$i]->{$v} //= {};
+            $confs[$i] = $confs[$i]->{$v};
         }
     }
     my $target = shift;
