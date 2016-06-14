@@ -159,6 +159,8 @@ sub sessions {
             $moduleOptions, [@fields] );
     }
 
+    my $total = (keys %$res);
+
     # 2.4 Special case doubleIp (users connected from more than 1 IP)
     if ( $params->{doubleIp} ) {
         my %r;
@@ -308,8 +310,15 @@ qq{Use of an uninitialized attribute "$group" to group sessions},
         ];
     }
 
-    return $self->sendJSONresponse( $req,
-        { result => 1, count => scalar(@$res), values => $res } );
+    return $self->sendJSONresponse(
+        $req,
+        {
+            result => 1,
+            count  => scalar(@$res),
+            total  => $total,
+            values => $res
+        }
+    );
 }
 
 sub delSession {

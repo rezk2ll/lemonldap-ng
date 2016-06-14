@@ -341,6 +341,9 @@
               }
               node.push(n);
             }
+            if (value === '') {
+              $scope.total = data.total;
+            }
           }
           return $scope.waiting = false;
         }, function(resp) {

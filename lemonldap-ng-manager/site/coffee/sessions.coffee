@@ -315,6 +315,7 @@ llapp.controller 'SessionsExplorerCtrl', ['$scope', '$translator', '$location', 
 							#  8 digits -> 2016-03-15
 							.replace(/^(\d{4})(\d{2})(\d{2})/,'$1-$2-$3')
 					node.push n
+				$scope.total = data.total if value == ''
 			$scope.waiting = false
 		, (resp) ->
 			$scope.waiting = false
