@@ -281,6 +281,8 @@ LemonLDAP::NG base app module
         responseError: function(rejection) {
           if (rejection.status === 401 && window.portal) {
             return window.location = (window.portal + "?url=") + window.btoa(window.location).replace(/\//, '_');
+          } else {
+            return $q.reject(rejection);
           }
         }
       };

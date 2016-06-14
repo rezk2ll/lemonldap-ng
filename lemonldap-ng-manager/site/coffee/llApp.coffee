@@ -230,6 +230,8 @@ llapp.factory '$lmhttp', ['$q', '$location', ($q, $location) ->
 	responseError: (rejection) ->
 		if rejection.status == 401 and window.portal
 			window.location = "#{window.portal}?url=" + window.btoa(window.location).replace(/\//, '_')
+		else
+			return $q.reject rejection
 ]
 
 llapp.config [ '$httpProvider', ($httpProvider) ->
