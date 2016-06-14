@@ -27,7 +27,8 @@ sub addRoutes {
     my $self = shift;
 
     unless ( $self->notifAccess ) {
-        $self->addRoute( notifications => 'notEnabled' );
+        $self->addRoute( 'notifications.html', 'notEnabled', ['GET'] );
+        $self->addRoute( notifications => 'notEnabled', ['GET'] );
         return ( $self->error ? 0 : 1 );
     }
     $self->{multiValuesSeparator} ||= '; ';
