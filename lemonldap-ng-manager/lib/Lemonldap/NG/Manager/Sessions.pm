@@ -97,9 +97,8 @@ sub sessions {
     if ( my $groupBy = $params->{groupBy} ) {
         $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/
           or $groupBy =~ s/^net4\((\w+),\d\)$/$1/;
-        $groupBy =~ s/^_whatToTrace$/$tsv->{whatToTrace}/o
+        $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
           or push @fields, $groupBy;
-        }
     }
     elsif ( my $order = $params->{orderBy} ) {
         $order =~ s/^net4\((\w+)\)$/$1/;
@@ -117,7 +116,7 @@ sub sessions {
     if (
         my %filters = map {
             my $s = $_;
-            s/\b_whatToTrace\b/$tsv->{whatToTrace}/o;
+            s/\b_whatToTrace\b/$whatToTrace/o;
             /^(?:(?:group|order)By|doubleIp)$/
               ? ()
               : ( $_ => $params->{$s} );
