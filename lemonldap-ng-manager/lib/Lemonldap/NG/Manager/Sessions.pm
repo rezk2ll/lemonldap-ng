@@ -95,14 +95,10 @@ sub sessions {
     # 2.1 Get fields to require
     my @fields = ( '_httpSessionType', $self->{ipField}, $whatToTrace );
     if ( my $groupBy = $params->{groupBy} ) {
-        $groupBy = $1
-          if ( $groupBy =~ /^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/ );
-        if ( $groupBy =~ /^net4\((\w+),\d\)$/ ) {
-            push @fields, $1;
-        }
-        else {
-            $groupBy =~ s/^_whatToTrace$/$whatToTrace/o
-              or push @fields, $groupBy;
+        $groupBy =~ s/^substr\((\w+)(?:,\d+(?:,\d+)?)?\)$/$1/
+          or $groupBy =~ s/^net4\((\w+),\d\)$/$1/;
+        $groupBy =~ s/^_whatToTrace$/$tsv->{whatToTrace}/o
+          or push @fields, $groupBy;
         }
     }
     elsif ( my $order = $params->{orderBy} ) {
@@ -215,7 +211,7 @@ sub sessions {
     #   { uid => 'foo.bar', count => 3 }
     elsif ( my $group = $req->params('groupBy') ) {
         my $r;
-        $group =~ s/^_whatToTrace$/$whatToTrace/o;
+        $group =~ s/\b_whatToTrace\b/$whatToTrace/o;
 
         # Substrings
         if ( $group =~ /^substr\((\w+)(?:,(\d+)(?:,(\d+))?)?\)$/ ) {
