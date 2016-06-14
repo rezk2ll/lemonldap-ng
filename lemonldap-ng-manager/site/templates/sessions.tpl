@@ -24,6 +24,7 @@
           </ul>
         </div>
       </div>
+      <div class="text-center"><p class="badge">{{total}} sessions</p></div>
       <div class="region region-sidebar-first">
         <section id="block-superfish-1" class="block block-superfish clearfix">
           <div ui-tree data-drag-enabled="false" id="tree-root">
