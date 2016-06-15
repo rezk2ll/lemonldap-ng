@@ -555,6 +555,7 @@
 "serverError": "Erreur du serveur",
 "session": "session",
 "sessions": "Sessions",
+"session_s": "session(s)",
 "sessionDataToRemember": "Données de session à conserver",
 "sessionDeleted": "La session a été supprimée",
 "sessionParams": "Sessions",
