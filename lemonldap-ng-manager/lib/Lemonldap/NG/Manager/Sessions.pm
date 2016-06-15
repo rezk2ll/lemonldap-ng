@@ -159,7 +159,7 @@ sub sessions {
             $moduleOptions, [@fields] );
     }
 
-    my $total = (keys %$res);
+    my $total = ( keys %$res );
 
     # 2.4 Special case doubleIp (users connected from more than 1 IP)
     if ( $params->{doubleIp} ) {
@@ -174,9 +174,11 @@ sub sessions {
 
    # 2.4.2 Store sessions owned by users that has more than one IP address in $r
         my $r;
+        $total = 0;
         foreach my $k ( keys %$res ) {
             my @tmp = keys %{ $r{ $res->{$k}->{$whatToTrace} } };
             if ( @tmp > 1 ) {
+                $total += @tmp;
                 $res->{$k}->{_sessionId} = $k;
                 push @{ $r->{ $res->{$k}->{$whatToTrace} } }, $res->{$k};
             }
