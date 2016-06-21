@@ -906,7 +906,7 @@ sub extractFormInfo {
     my $method =
       $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsSSOBinding};
-    $method = $self->getHttpMethod($method) if $method;
+    $method = $self->getHttpMethod($method);
 
     # If no method defined, get first HTTP method
     unless ( defined $method ) {
