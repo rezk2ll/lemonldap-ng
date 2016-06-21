@@ -2213,7 +2213,34 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'trool'
         },
         'samlIDPMetaDataOptionsSLOBinding' => {
-            'type' => 'text'
+            'default' => '',
+            'select'  => [
+                {
+                    'k' => '',
+                    'v' => ''
+                },
+                {
+                    'k' => 'http-post',
+                    'v' => 'POST'
+                },
+                {
+                    'k' => 'http-redirect',
+                    'v' => 'Redirect'
+                },
+                {
+                    'k' => 'http-soap',
+                    'v' => 'SOAP'
+                },
+                {
+                    'k' => 'artifact-get',
+                    'v' => 'Artifact GET'
+                },
+                {
+                    'k' => 'artifact-post',
+                    'v' => 'Artifact POST'
+                }
+            ],
+            'type' => 'select'
         },
         'samlIDPMetaDataOptionsSSOBinding' => {
             'default' => '',

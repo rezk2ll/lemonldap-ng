@@ -255,6 +255,7 @@ sub defaultValues {
         'samlIDPMetaDataOptionsRequestedAuthnContext'    => '',
         'samlIDPMetaDataOptionsSignSLOMessage'           => -1,
         'samlIDPMetaDataOptionsSignSSOMessage'           => -1,
+        'samlIDPMetaDataOptionsSLOBinding'               => '',
         'samlIDPMetaDataOptionsSSOBinding'               => '',
         'samlIdPResolveCookie'                           => 'lemonldapidp',
         'samlIDPSSODescriptorArtifactResolutionServiceArtifact' =>

@@ -1488,7 +1488,16 @@ sub attributes {
             default => '',
         },
         samlIDPMetaDataOptionsSLOBinding => {
-            type => 'text',
+            type   => 'select',
+            select => [
+                { k => '',              v => '' },
+                { k => 'http-post',     v => 'POST' },
+                { k => 'http-redirect', v => 'Redirect' },
+                { k => 'http-soap',     v => 'SOAP' },
+                { k => 'artifact-get',  v => 'Artifact GET' },
+                { k => 'artifact-post', v => 'Artifact POST' },
+            ],
+            default => '',
         },
         samlIDPMetaDataOptionsEncryptionMode => {
             type   => 'select',

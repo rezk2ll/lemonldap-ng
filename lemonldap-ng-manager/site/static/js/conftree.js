@@ -571,9 +571,37 @@ function templates(tpl,key) {
             "type" : "select"
          },
          {
+            "default" : "",
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSLOBinding",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsSLOBinding",
-            "title" : "samlIDPMetaDataOptionsSLOBinding"
+            "select" : [
+               {
+                  "k" : "",
+                  "v" : ""
+               },
+               {
+                  "k" : "http-post",
+                  "v" : "POST"
+               },
+               {
+                  "k" : "http-redirect",
+                  "v" : "Redirect"
+               },
+               {
+                  "k" : "http-soap",
+                  "v" : "SOAP"
+               },
+               {
+                  "k" : "artifact-get",
+                  "v" : "Artifact GET"
+               },
+               {
+                  "k" : "artifact-post",
+                  "v" : "Artifact POST"
+               }
+            ],
+            "title" : "samlIDPMetaDataOptionsSLOBinding",
+            "type" : "select"
          }
       ],
       "id" : "samlIDPMetaDataOptionsBinding",

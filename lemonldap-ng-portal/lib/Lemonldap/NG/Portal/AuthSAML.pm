@@ -1277,7 +1277,7 @@ sub authLogout {
     $method =
       $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsSLOBinding};
-    $method = $self->getHttpMethod($method) if $method;
+    $method = $self->getHttpMethod($method);
 
     # If no method defined, get first HTTP method
     unless ( defined $method ) {
