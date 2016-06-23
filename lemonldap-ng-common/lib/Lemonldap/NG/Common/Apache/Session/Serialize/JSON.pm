@@ -19,6 +19,20 @@ sub unserialize {
     $session->{data} = $data;
 }
 
+sub unserializeBase64 {
+    my $session = shift;
+
+    my $data = _unserialize( $session->{serialized}, \&decodeThaw64 );
+    die "Session could not be unserialized" unless defined $data;
+    $session->{data} = $data;
+}
+
+sub decodeThaw64 {
+    require MIME::Base64;
+    my $s = shift;
+    return Storable::thaw( MIME::Base64::decode_base64($s) );
+}
+
 sub _unserialize {
     my ( $serialized, $next ) = @_;
     my $tmp;

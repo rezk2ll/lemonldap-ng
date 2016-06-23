@@ -43,6 +43,10 @@ sub populate {
           \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::serialize;
         $self->{unserialize} =
           \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::unserialize;
+        if ( $backend =~ /^Apache::Session::LDAP/ ) {
+            $self->{unserialize} =
+              \&Lemonldap::NG::Common::Apache::Session::Serialize::JSON::unserializeBase64;
+        }
     }
     if ( $self->{args}->{generateModule} ) {
         my $generate = $self->{args}->{generateModule};
