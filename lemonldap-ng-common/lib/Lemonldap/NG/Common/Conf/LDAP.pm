@@ -219,7 +219,7 @@ sub load {
     my $entry      = $search->shift_entry();
     my @confValues = $entry->get_value( $self->{ldapAttributeContent} );
     foreach (@confValues) {
-        my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/ );
+        my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/sm );
         $v = decodeLdapValue($v);
         if ($fields) {
             $f->{$k} = $v if ( grep { $_ eq $k } @$fields );
