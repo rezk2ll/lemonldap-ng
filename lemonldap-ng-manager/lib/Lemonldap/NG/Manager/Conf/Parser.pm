@@ -912,7 +912,11 @@ sub _unitTest {
         hdebug("Testing $key");
         my $attr = $attrs->{$key};
         my $type = $types->{ $attr->{type} };
-        die "Unkown type $attr->{type}" unless ( $type or $attr->{test} );
+        unless ( $type or $attr->{test} ) {
+            print STDERR "Unknown attribute $key, deleting it\n";
+            delete $conf->{$key};
+            next;
+        }
 
         if ( $attr->{type} and $attr->{type} eq 'subContainer' ) {
 
