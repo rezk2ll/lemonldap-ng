@@ -59,7 +59,7 @@ sub addRoutes {
                  $self->{ $type . 'StorageOptions' }
               || $conf->{ $type . 'StorageOptions' }
               || {};
-            $self->{conf}->{kind} =
+            $self->{conf}->{$type}->{kind} =
               ( $type eq 'global' ? 'SSO' : ucfirst($type) );
         }
     }
@@ -84,7 +84,8 @@ sub sessions {
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
     my $params = $req->params();
-    delete $params->{sessionType};
+    my $type   = delete $params->{sessionType};
+    $type = $type eq 'global' ? 'SSO' : ucfirst($type);
 
     my $res;
 
@@ -113,50 +114,44 @@ sub sessions {
     #     not a keyword)
     my $moduleOptions = $mod->{options};
     $moduleOptions->{backend} = $mod->{module};
-    if (
-        my %filters = map {
-            my $s = $_;
-            s/\b_whatToTrace\b/$whatToTrace/o;
-            /^(?:(?:group|order)By|doubleIp)$/
-              ? ()
-              : ( $_ => $params->{$s} );
-        } keys %$params
-      )
-    {
+    my %filters = map {
+        my $s = $_;
+        $s =~ s/\b_whatToTrace\b/$whatToTrace/o;
+        /^(?:(?:group|order)By|doubleIp)$/
+          ? ()
+          : ( $s => $params->{$_} );
+    } keys %$params;
+    $filters{_session_kind} = $type;
 
-        # Check if a '*' is required
-        my $function = 'searchOn';
-        $function = 'searchOnExpr' if ( grep /\*/, values %filters );
+    # Check if a '*' is required
+    my $function = 'searchOn';
+    $function = 'searchOnExpr' if ( grep /\*/, values %filters );
 
-        # For now, only one argument can be passed to
-        # Lemonldap::NG::Common::Apache::Session so just the first filter is
-        # used
-        my ($firstFilter) = keys %filters;
-        $res =
-          Lemonldap::NG::Common::Apache::Session->$function( $moduleOptions,
-            $firstFilter, $filters{$firstFilter}, @fields );
+    # For now, only one argument can be passed to
+    # Lemonldap::NG::Common::Apache::Session so just the first filter is
+    # used
+    my ($firstFilter) = sort {
+            $a eq '_session_kind' ? 1
+          : $b eq '_session_kind' ? -1
+          : $a cmp $b
+    } keys %filters;
+    $res =
+      Lemonldap::NG::Common::Apache::Session->$function( $moduleOptions,
+        $firstFilter, $filters{$firstFilter}, @fields );
 
-        # TODO: change this
-        return $self->sendError( $req, 'No sessions', 200 )
-          unless ( $res and %$res );
-        delete $filters{$firstFilter};
-        foreach my $k ( keys %filters ) {
-            $filters{$k} =~ s/\*/\.\*/g;
-            foreach my $session ( keys %$res ) {
-                if ( $res->{$session}->{$k} ) {
-                    delete $res->{$session}
-                      unless ( $res->{$session}->{$k} =~ /^$filters{$k}$/ );
-                    print STDERR "Deleted\n";
-                }
+    # TODO: change this
+    return $self->sendError( $req, 'No sessions', 200 )
+      unless ( $res and %$res );
+    delete $filters{$firstFilter};
+    foreach my $k ( keys %filters ) {
+        $filters{$k} =~ s/\*/\.\*/g;
+        foreach my $session ( keys %$res ) {
+            if ( $res->{$session}->{$k} ) {
+                delete $res->{$session}
+                  unless ( $res->{$session}->{$k} =~ /^$filters{$k}$/ );
+                print STDERR "Deleted\n";
             }
         }
-    }
-
-    # 2.3 Else get all sessions
-    else {
-        $res =
-          Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
-            $moduleOptions, [@fields] );
     }
 
     my $total = ( keys %$res );
