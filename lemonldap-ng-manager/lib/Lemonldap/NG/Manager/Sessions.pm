@@ -139,9 +139,16 @@ sub sessions {
       Lemonldap::NG::Common::Apache::Session->$function( $moduleOptions,
         $firstFilter, $filters{$firstFilter}, @fields );
 
-    # TODO: change this
-    return $self->sendError( $req, 'No sessions', 200 )
-      unless ( $res and %$res );
+    return $self->sendJSONresponse(
+        $req,
+        {
+            result => 1,
+            count  => 0,
+            total  => 0,
+            values => []
+        }
+    ) unless ( $res and %$res );
+
     delete $filters{$firstFilter};
     foreach my $k ( keys %filters ) {
         $filters{$k} =~ s/\*/\.\*/g;
