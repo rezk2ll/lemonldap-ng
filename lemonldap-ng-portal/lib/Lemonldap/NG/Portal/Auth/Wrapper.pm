@@ -17,10 +17,9 @@ has current => ( is => 'rw' );
 has availableModules => ( is => 'rw', default => sub { {} } );
 
 # loadModule() fakes portal loadModule()
-sub loadModule {
+sub loadPlugin {
     my ( $self, $name, $module ) = @_;
-    my $obj = $self->p->can('loadModule')->( $self, $module );
-    ( $obj and $obj->init() ) or return 0;
+    my $obj = $self->p->can('loadPlugin')->( $self, $module );
     return $obj;
 }
 

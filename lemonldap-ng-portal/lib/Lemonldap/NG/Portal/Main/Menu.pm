@@ -35,6 +35,12 @@ has imgPath => (
     }
 );
 
+# INITIALIZATION
+
+sub init {
+    1;
+}
+
 # RUNNING METHODS
 
 # Prepare menu template elements

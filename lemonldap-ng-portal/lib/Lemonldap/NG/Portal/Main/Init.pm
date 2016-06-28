@@ -169,8 +169,7 @@ sub reloadConf {
 
         # Launch and initialize module
         return 0
-          unless ( $self->{"_$type"} = $self->loadModule($module)
-            and $self->{"_$type"}->init );
+          unless ( $self->{"_$type"} = $self->loadPlugin($module) );
     }
     $self->_authentication->authnLevel(
         $self->conf->{ $self->conf->{authentication} . "AuthnLevel" } );
@@ -252,7 +251,7 @@ sub reloadConf {
         $self->loadPlugin($plugin) or return 0;
     }
 
-    $self->menu( $self->loadModule('::Main::Menu') );
+    $self->menu( $self->loadPlugin('::Main::Menu') );
     1;
 }
 
@@ -270,7 +269,8 @@ sub loadPlugin {
             }
         }
     }
-    return $obj->init;
+    ( $obj and $obj->init ) or return 0;
+    return $obj;
 }
 
 sub loadModule {
