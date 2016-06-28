@@ -6,15 +6,45 @@ package Lemonldap::NG::Portal::Auth::Wrapper;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
 our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Auth::Base';
 
-# Current underlying auth module
-has current => ( is => 'rw' );
-
 has availableModules => ( is => 'rw', default => sub { {} } );
+
+# Wrappers for portal entry points: entry points are enabled only for active
+# authentication module
+#
+# Note that "beforeAuth" can't be used here and must be wrapped in auth
+# module
+#
+# Note also that auth module must store in $req->datas->{enabledMods} a ref
+# to each enabled underlying auth modules
+sub betweenAuthAndDatas { '_betweenAuthAndDatas' }
+sub afterDatas          { '_afterDatas' }
+sub forAuthUser         { '_forAuthUser' }
+sub beforeLogout        { '_beforeLogout' }
+
+sub _betweenAuthAndDatas { _wrapEntryPoint( @_, 'betweenAuthAndDatas' ); }
+sub _afterDatas          { _wrapEntryPoint( @_, 'afterDatas' ); }
+sub _forAuthUser         { _wrapEntryPoint( @_, 'forAuthUser' ); }
+sub _beforeLogout        { _wrapEntryPoint( @_, 'beforeLogout' ); }
+
+sub _wrapEntryPoint {
+    my ( $self, $req, $name ) = @_;
+    foreach ( @{ $req->datas->{enabledMods} } ) {
+        if ( $_->can($name) ) {
+
+            # Launch sub and break loop if result isn't PE_OK (==0)
+            if ( my $r = $_->$name($req) ) {
+                return $r;
+            }
+        }
+    }
+    return PE_OK;
+}
 
 # loadModule() fakes portal loadModule()
 sub loadPlugin {
@@ -24,6 +54,7 @@ sub loadPlugin {
 }
 
 sub AUTOLOAD {
+    no strict;
 
     # Unknown methods are tried with real portal
     my $self = shift;
