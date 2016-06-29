@@ -8,7 +8,7 @@ my $res;
 
 init(
     {
-        logLevel              => 'debug',
+        logLevel              => 'error',
         useSafeJail           => 1,
         issuerDBGetActivation => 1,
         issuerDBGetPath       => '^/test/',

@@ -2,7 +2,7 @@
 #
 # It fakes portal object to catch entry points and load them only if underlying
 # auth module is activated
-package Lemonldap::NG::Portal::Auth::Wrapper;
+package Lemonldap::NG::Portal::Lib::Wrapper;
 
 use strict;
 use Mouse;
@@ -46,10 +46,12 @@ sub _wrapEntryPoint {
     return PE_OK;
 }
 
-# loadModule() fakes portal loadModule()
+# loadPlugin() fakes portal loadPlugin: it loads module but does not load
+# entry points since they will be launched by ^ methods
 sub loadPlugin {
     my ( $self, $name, $module ) = @_;
-    my $obj = $self->p->can('loadPlugin')->( $self, $module );
+    my $obj = $self->p->can('loadModule')->( $self, $module );
+    ( $obj and $obj->init ) or return 0;
     return $obj;
 }
 
