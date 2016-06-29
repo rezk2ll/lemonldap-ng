@@ -202,7 +202,8 @@ sub checkXSSAttack {
     return 0 unless $value;
 
     # Test value
-    if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ ) {
+    $value =~ s/\%25/\%/g;
+    if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|3C|22|27|2C))/ ) {
         $self->lmLog( "XSS attack detected (param: $name | value: $value)",
             "warn" );
         return $self->conf->{checkXSS};
