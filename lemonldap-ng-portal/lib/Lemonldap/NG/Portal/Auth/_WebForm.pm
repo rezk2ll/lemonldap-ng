@@ -114,7 +114,7 @@ sub setAuthSessionInfo {
 
     # authenticationLevel
     # +1 for user/password with HTTPS
-    $self->{_authnLevel} //= 0;
+    $self->{_authnLevel} //= 1;
     $self->{_authnLevel} += 1 if $self->https();
 
     #TODO: check where _authnLevel is defined

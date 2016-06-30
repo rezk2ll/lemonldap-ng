@@ -36,14 +36,18 @@ sub init {
             return 0;
         }
     }
-    return $self;
+    return 1;
 }
 
 sub checkChoice {
     my ( $self, $req ) = @_;
-
-    # TODO: find choice or return 0
-    # then set $req->datas->{_choice} to "$name"
+    return $req->sessionInfo->{_choice} if ( $req->sessionInfo->{_choice} );
+    my $name;
+# TODO: find choice or return 0
+# then set $req->sessionInfo->{_choice} to "$name"
+# and $req->datas->{enabledMods} to [ $self->modules->{ $req->sessionInfo->{_choice} } ]
+    $self->p->_authentication->authnLevel("${name}AuthnLevel");
+    1;
 }
 
 package Lemonldap::NG::Portal::Simple;
