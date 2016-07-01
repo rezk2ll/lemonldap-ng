@@ -22,8 +22,10 @@ sub init {
         my @mods =
           split( /[;\|]/, $self->conf->{authChoiceModules}->{$name} );
         my $module =
-          '::' . [ 'Auth', 'UserDB', 'Password' ]->[$type] . '/' . $mods[$type];
-        if ( $module = $self->loadPlugin($module) ) {
+            '::'
+          . [ 'Auth', 'UserDB', 'Password' ]->[$type] . '::'
+          . $mods[$type];
+        if ( $module = $self->loadPlugin( $name, $module ) ) {
             $self->modules->{$name} = $module;
             $self->p->lmLog(
                 [qw(Authentication User Password)]->[$type]
@@ -42,19 +44,21 @@ sub init {
 sub checkChoice {
     my ( $self, $req ) = @_;
     return $req->sessionInfo->{_choice} if ( $req->sessionInfo->{_choice} );
-    my $name;
-# TODO: find choice or return 0
-# then set $req->sessionInfo->{_choice} to "$name"
-# and $req->datas->{enabledMods} to [ $self->modules->{ $req->sessionInfo->{_choice} } ]
+    my $name = $req->param( $self->conf->{authChoiceParam} ) or return 0;
+    unless ( defined $self->modules->{$name} ) {
+        $self->lmLog( "Unknown choice '$name'", 'error' );
+        return 0;
+    }
+    $req->sessionInfo->{_choice} = $name;
+    $req->datas->{enabledMods}   = [ $self->modules->{$name} ];
     $self->p->_authentication->authnLevel("${name}AuthnLevel");
-    1;
+    return 1;
 }
 
 package Lemonldap::NG::Portal::Simple;
 
-## @method private Lemonldap::NG::Portal::_Choice _buildAuthLoop()
 # Build authentication loop displayed in template
-# @return authLoop rarray reference
+# Return authLoop array reference
 sub _buildAuthLoop {
     my ( $self, $req ) = @_;
     my @authLoop;
