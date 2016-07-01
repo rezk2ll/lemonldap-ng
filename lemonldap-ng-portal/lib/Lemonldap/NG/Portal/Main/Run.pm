@@ -165,7 +165,7 @@ sub getModule {
       )
     {
         if ( $self->$mod->can('name') ) {
-            return $self->$mod->can('name');
+            return $self->$mod->can('name')->($self->mod,$req,$type);
         }
         else {
             my $s = ref( $self->$mod );

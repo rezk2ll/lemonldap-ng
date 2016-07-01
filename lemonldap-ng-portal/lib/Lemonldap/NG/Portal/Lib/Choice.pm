@@ -55,6 +55,13 @@ sub checkChoice {
     return 1;
 }
 
+sub name {
+    my ( $self, $req, $type ) = @_;
+    my $n = ref( $req->datas->{enableMods}->[0] );
+    $n =~ s/^Lemonldap::NG::Portal::(?:(?:UserDB|Auth)::)?//;
+    return $n;
+}
+
 package Lemonldap::NG::Portal::Simple;
 
 # Build authentication loop displayed in template
