@@ -9,6 +9,8 @@ our $VERSION = '2.0.0';
 
 has modules => ( is => 'rw', default => sub { {} } );
 
+has type => ( is => 'rw' );
+
 # INITIALIZATION
 
 # init() must be called by module::init() with a number:
@@ -17,6 +19,7 @@ has modules => ( is => 'rw', default => sub { {} } );
 #  - 2 for passwordDB ?
 sub init {
     my ( $self, $type ) = @_;
+    $self->type($type);
 
     foreach my $name ( keys %{ $self->conf->{authChoiceModules} } ) {
         my @mods =
@@ -34,11 +37,13 @@ sub init {
             );
         }
         else {
-            $self->lmLog("Choice: unable to load $name, disabling it: ".$self->error,'error');
+            $self->lmLog(
+                "Choice: unable to load $name, disabling it: " . $self->error,
+                'error' );
             $self->error('');
         }
     }
-    unless( keys %{$self->modules}) {
+    unless ( keys %{ $self->modules } ) {
         $self->error('Choice: no available modules found, aborting');
         return 0;
     }
@@ -47,21 +52,24 @@ sub init {
 
 sub checkChoice {
     my ( $self, $req ) = @_;
-    my $name = $req->sessionInfo->{_choice} || $req->param( $self->conf->{authChoiceParam} ) or return 0;
-    return $name if ( $req->datas->{enabledMods} );
+    my $name =
+         $req->sessionInfo->{_choice}
+      || $req->param( $self->conf->{authChoiceParam} )
+      or return 0;
+    return $name if ( $req->datas->{ "enabledMods" . $self->type } );
     unless ( defined $self->modules->{$name} ) {
         $self->lmLog( "Unknown choice '$name'", 'error' );
         return 0;
     }
     $req->sessionInfo->{_choice} = $name;
-    $req->datas->{enabledMods}   = [ $self->modules->{$name} ];
+    $req->datas->{ "enabledMods" . $self->type } = [ $self->modules->{$name} ];
     $self->p->_authentication->authnLevel("${name}AuthnLevel");
     return $name;
 }
 
 sub name {
     my ( $self, $req, $type ) = @_;
-    unless($req) {
+    unless ($req) {
         return 'Choice';
     }
     my $n = ref( $req->datas->{enableMods}->[0] );
@@ -69,7 +77,7 @@ sub name {
     return $n;
 }
 
-package Lemonldap::NG::Portal::Simple;
+package Lemonldap::NG::Portal::Main;
 
 # Build authentication loop displayed in template
 # Return authLoop array reference
@@ -113,20 +121,25 @@ sub _buildAuthLoop {
               { name => $name, key => $_, module => $auth, url => $url };
 
             # Get displayType for this module
-            my $displayType =
-              &{"Lemonldap::NG::Portal::Auth::${auth}::getDisplayType"};
+            no strict 'refs';
+            my $displayType = "Lemonldap::NG::Portal::Auth::${auth}"
+              ->can('getDisplayType')->( undef, $req );
 
             $self->lmLog( "Display type $displayType for module $auth",
                 'debug' );
             $optionsLoop->{$displayType} = 1;
 
-            # If displayType is logo, check if key.png is available
-            if (
-                -e $self->getApacheHtdocsPath . "/skins/common/" . $_ . ".png" )
-            {
-                $optionsLoop->{logoFile} = $_ . ".png";
-            }
-            else { $optionsLoop->{logoFile} = $auth . ".png"; }
+           # If displayType is logo, check if key.png is available
+           # TODO:
+           #if (
+           #    -e $self->getApacheHtdocsPath . "/skins/common/" . $_ . ".png" )
+           #{
+           #    $optionsLoop->{logoFile} = $_ . ".png";
+           #}
+           #else {
+            $optionsLoop->{logoFile} = $auth . ".png";
+
+            #}
 
             # Register item in loop
             push @authLoop, $optionsLoop;

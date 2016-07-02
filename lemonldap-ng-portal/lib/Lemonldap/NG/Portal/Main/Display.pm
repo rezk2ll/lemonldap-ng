@@ -253,10 +253,10 @@ sub display {
         else {
 
             # Authentication loop
-            if ( $self->{authLoop} ) {
+            if ( my $authLoop = $self->_buildAuthLoop($req) ) {
                 %templateParams = (
                     %templateParams,
-                    AUTH_LOOP            => $self->conf->{authLoop},
+                    AUTH_LOOP            => $authLoop,
                     CHOICE_PARAM         => $self->conf->{authChoiceParam},
                     CHOICE_VALUE         => $req->{_authChoice},
                     DISPLAY_FORM         => 0,
