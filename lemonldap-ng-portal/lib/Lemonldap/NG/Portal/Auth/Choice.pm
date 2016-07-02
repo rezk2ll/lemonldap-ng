@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Auth::Choice;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_FIRSTACCESS);
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_FIRSTACCESS);
 
 extends 'Lemonldap::NG::Portal::Lib::Choice';
 
@@ -21,17 +21,17 @@ sub authenticate {
 }
 
 sub authForce {
-    $_[0]->checkChoice( $_[1] );
+    $_[0]->checkChoice( $_[1] ) or return PE_OK;
     return $_[1]->datas->{enabledMods}->[0]->authForce( $_[1] );
 }
 
 sub authLogout {
-    $_[0]->checkChoice( $_[1] );
+    $_[0]->checkChoice( $_[1] ) or return PE_OK;
     return $_[1]->datas->{enabledMods}->[0]->authLogout( $_[1] );
 }
 
 sub getDisplayType {
-    $_[0]->checkChoice( $_[1] );
+    $_[0]->checkChoice( $_[1] ) or return PE_OK;
     return $_[1]->datas->{enabledMods}->[0]->getDisplayType( $_[1] );
 }
 

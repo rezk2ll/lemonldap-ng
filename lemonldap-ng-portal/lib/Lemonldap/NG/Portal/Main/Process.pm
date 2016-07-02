@@ -120,7 +120,7 @@ sub checkLogout {
 
 sub authLogout {
     my ( $self, $req ) = @_;
-    return $self->_authentication->authLogout(@_);
+    return $self->_authentication->authLogout($req);
 }
 
 sub deleteSession {
@@ -432,7 +432,7 @@ sub cookie {
 }
 
 sub _dump {
-    my($self, $variable) = @_;
+    my ( $self, $variable ) = @_;
     require Data::Dumper;
     $Data::Dumper::Indent = 0;
     $self->lmLog( "Dump: " . Data::Dumper::Dumper($variable), 'debug' );

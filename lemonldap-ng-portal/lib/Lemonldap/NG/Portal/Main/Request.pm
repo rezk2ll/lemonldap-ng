@@ -105,7 +105,7 @@ sub error_type {
 
 sub init {
     my ($self) = @_;
-    $self->{$_} = {} foreach(qw(datas customParameters));;
+    $self->{$_} = {} foreach(qw(datas customParameters sessionInfo));;
     $self->{$_} = [] foreach(qw(respCookies));;
 }
 

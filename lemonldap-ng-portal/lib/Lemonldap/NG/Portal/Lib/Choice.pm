@@ -34,17 +34,21 @@ sub init {
             );
         }
         else {
-            # error() is set by underlying module
-            return 0;
+            $self->lmLog("Choice: unable to load $name, disabling it: ".$self->error,'error');
+            $self->error('');
         }
+    }
+    unless( keys %{$self->modules}) {
+        $self->error('Choice: no available modules found, aborting');
+        return 0;
     }
     return 1;
 }
 
 sub checkChoice {
     my ( $self, $req ) = @_;
-    return $req->sessionInfo->{_choice} if ( $req->sessionInfo->{_choice} );
-    my $name = $req->param( $self->conf->{authChoiceParam} ) or return 0;
+    my $name = $req->sessionInfo->{_choice} || $req->param( $self->conf->{authChoiceParam} ) or return 0;
+    return $name if ( $req->datas->{enabledMods} );
     unless ( defined $self->modules->{$name} ) {
         $self->lmLog( "Unknown choice '$name'", 'error' );
         return 0;
@@ -52,11 +56,14 @@ sub checkChoice {
     $req->sessionInfo->{_choice} = $name;
     $req->datas->{enabledMods}   = [ $self->modules->{$name} ];
     $self->p->_authentication->authnLevel("${name}AuthnLevel");
-    return 1;
+    return $name;
 }
 
 sub name {
     my ( $self, $req, $type ) = @_;
+    unless($req) {
+        return 'Choice';
+    }
     my $n = ref( $req->datas->{enableMods}->[0] );
     $n =~ s/^Lemonldap::NG::Portal::(?:(?:UserDB|Auth)::)?//;
     return $n;

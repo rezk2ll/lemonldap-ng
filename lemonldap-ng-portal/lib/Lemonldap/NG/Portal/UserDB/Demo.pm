@@ -21,7 +21,6 @@ sub init {
 
     unless ( $self->p->getModule( undef, 'auth' ) =~ /Demo/ ) {
         $self->p->error("Use UserDB::Demo only with Auth::Demo");
-        return 0;
     }
 
     # Sample accounts from Doctor Who characters
