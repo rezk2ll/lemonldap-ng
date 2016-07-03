@@ -89,21 +89,19 @@ sub init {
     }
 
     $self->menuLinks( [] );
-    push @{ $self->menuLinks },
-      {
-        target => &{ $Lemonldap::NG::Handler::PSGI::API::tsv->{portal} },
-        title  => 'backtoportal',
-        icon   => 'home'
-      }
-      if ( defined $Lemonldap::NG::Handler::PSGI::API::tsv->{portal} );
-    push @{ $self->menuLinks },
-      {
-        target => &{ $Lemonldap::NG::Handler::PSGI::API::tsv->{portal} }
-          . '?logout=1',
-        title => 'logout',
-        icon  => 'log-out'
-      }
-      if ( defined $Lemonldap::NG::Handler::PSGI::API::tsv->{portal} );
+    if ( my $portal = Lemonldap::NG::Handler::PSGI::API->tsv->{portal}->() ) {
+        push @{ $self->menuLinks },
+          {
+            target => $portal,
+            title  => 'backtoportal',
+            icon   => 'home'
+          },
+          {
+            target => "$portal?logout=1",
+            title  => 'logout',
+            icon   => 'log-out'
+          };
+    }
     1;
 }
 

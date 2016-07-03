@@ -253,7 +253,9 @@ sub display {
         else {
 
             # Authentication loop
-            if ( my $authLoop = $self->_buildAuthLoop($req) ) {
+            if ( $req->sessionInfo->{_choice}
+                and my $authLoop = $self->_buildAuthLoop($req) )
+            {
                 %templateParams = (
                     %templateParams,
                     AUTH_LOOP            => $authLoop,
