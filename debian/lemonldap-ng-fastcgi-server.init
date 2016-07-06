@@ -108,12 +108,6 @@ case "$1" in
 	restart)
 		log_daemon_msg "Restarting $DESC" "$NAME"
 
-		# Check configuration before stopping llng-fastcgi-server
-		if ! test_config; then
-			log_end_msg 1 # Configuration error
-			exit $?
-		fi
-
 		stop_server
 		case "$?" in
 			0|1)
