@@ -51,10 +51,13 @@ sub enabledPlugins {
     }
 
     # Simple plugins
+    # TODO: write these plugins
     push @res, '::Plugins::GrantSession' if ( $self->conf->{grantSessionRule} );
     push @res, '::Plugins::CDA'          if ( $self->conf->{cda} );
 
-    # TODO: Password
+    if ( my $p = $self->conf->{passwordDB} ) {
+        push @res, "::Password::$p" if ( $p ne 'Null' );
+    }
 
     # Check if custom plugins are required
     if ( $self->conf->{plugins} ) {

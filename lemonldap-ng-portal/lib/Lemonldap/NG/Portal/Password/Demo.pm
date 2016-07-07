@@ -1,0 +1,34 @@
+package Lemonldap::NG::Portal::Password::Demo;
+
+use strict;
+use Mouse;
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
+
+extends 'Lemonldap::NG::Portal::Password::Base';
+
+sub init {
+    my ($self) = @_;
+    if ( $self->p->get_module('auth') eq 'Demo' ) {
+        return PE_OK;
+    }
+    else {
+        $self->lmLog( "Use PasswordDBDemo only with AuthDemo", 'error' );
+        return PE_ERROR;
+    }
+
+    PE_OK;
+}
+
+sub confirm {
+    my ( $self, $req, $pwd ) = @_;
+    return ( $pwd eq $req->{sessionInfo}->{uid} );
+}
+
+sub modifyPassword {
+    my ( $self, $req ) = @_;
+
+    # Nothing to do here, all new passwords are accepted
+    PE_OK;
+}
+
+1

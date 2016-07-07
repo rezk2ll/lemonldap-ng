@@ -52,6 +52,7 @@
     "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\""
   },
   "notifications": 0,
+  "passwordDB": "Null",
   "portal": "http://auth.example.com/",
   "reloadUrls": {},
   "userDB": "Demo",
