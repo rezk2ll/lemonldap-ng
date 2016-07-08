@@ -2432,6 +2432,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
+        'samlSPMetaDataOptionsForceUTF8' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
         'samlSPMetaDataOptionsNameIDFormat' => {
             'default' => '',
             'select'  => [

@@ -739,6 +739,13 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsNotOnOrAfterTimeout",
                   "title" : "samlSPMetaDataOptionsNotOnOrAfterTimeout",
                   "type" : "int"
+               },
+               {
+                  "default" : 1,
+                  "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsForceUTF8",
+                  "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsForceUTF8",
+                  "title" : "samlSPMetaDataOptionsForceUTF8",
+                  "type" : "bool"
                }
             ],
             "id" : "samlSPMetaDataOptionsAuthnResponse",

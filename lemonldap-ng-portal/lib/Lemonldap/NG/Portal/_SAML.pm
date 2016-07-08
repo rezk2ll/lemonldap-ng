@@ -2907,19 +2907,23 @@ sub createAttribute {
     return $attribute;
 }
 
-## @method Lasso::Saml2AttributeValue createAttributeValue(string value)
+## @method Lasso::Saml2AttributeValue createAttributeValue(string value, boolean force_utf8)
 # Create a new SAML attribute value
 # @param value Value to store
+# @param force_utf8 set to 1 to decode UTF8 value
 # @return SAML attribute value
 sub createAttributeValue {
-    my ( $self, $value ) = @_;
+    my ( $self, $value, $force_utf8 ) = @_;
     my $saml2value;
+    $force_utf8 = 1 unless defined($force_utf8);
 
     # Value is required
     return unless defined $value;
 
     # Decode UTF-8
-    $value = decode( "utf8", $value );
+    $self->lmLog( "Decode UTF8 value $value", 'debug' ) if $force_utf8;
+    $value = decode( "utf8", $value ) if $force_utf8;
+    $self->lmLog( "Create attribute value $value", 'debug' );
 
     # SAML2 attribute value
     eval { $saml2value = Lasso::Saml2AttributeValue->new(); };

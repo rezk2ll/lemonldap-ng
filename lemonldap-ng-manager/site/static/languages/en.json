@@ -713,6 +713,7 @@
 "samlSPMetaDataOptionsNameIDSessionKey": "Force NameID session key",
 "samlSPMetaDataOptionsSessionNotOnOrAfterTimeout": "sessionNotOnOrAfter duration",
 "samlSPMetaDataOptionsNotOnOrAfterTimeout": "notOnOrAfter duration",
+"samlSPMetaDataOptionsForceUTF8": "Force UTF-8",
 "samlIDPName": "SAML IDP Name",
 "samlServiceMetaData": "SAML 2 Service",
 "samlEntityID": "Entity Identifier",

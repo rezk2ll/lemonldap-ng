@@ -1512,6 +1512,10 @@ sub attributes {
             type    => 'bool',
             default => 0,
         },
+        samlSPMetaDataOptionsForceUTF8 => {
+            type    => 'bool',
+            default => 1,
+        },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {

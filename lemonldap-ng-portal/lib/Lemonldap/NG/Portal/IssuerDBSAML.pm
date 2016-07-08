@@ -1008,8 +1008,11 @@ sub issuerForUnAuthUser {
                         }
 
                         # SAML2 attribute value
-                        my $saml2value =
-                          $self->createAttributeValue($local_value);
+                        my $saml2value = $self->createAttributeValue(
+                            $local_value,
+                            $self->{samlSPMetaDataOptions}->{$spConfKey}
+                              ->{samlSPMetaDataOptionsForceUTF8}
+                        );
 
                         unless ($saml2value) {
                             $self->lmLog(
@@ -1627,7 +1630,9 @@ sub issuerForAuthUser {
                 foreach (@values) {
 
                     # SAML2 attribute value
-                    my $saml2value = $self->createAttributeValue($_);
+                    my $saml2value = $self->createAttributeValue( $_,
+                        $self->{samlSPMetaDataOptions}->{$spConfKey}
+                          ->{samlSPMetaDataOptionsForceUTF8} );
 
                     unless ($saml2value) {
                         $self->lmLog(

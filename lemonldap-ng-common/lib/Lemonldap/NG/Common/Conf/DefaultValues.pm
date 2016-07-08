@@ -295,6 +295,7 @@ sub defaultValues {
         'samlSPMetaDataOptionsCheckSSOMessageSignature'   => 0,
         'samlSPMetaDataOptionsEnableIDPInitiatedURL'      => 0,
         'samlSPMetaDataOptionsEncryptionMode'             => 'none',
+        'samlSPMetaDataOptionsForceUTF8'                  => 1,
         'samlSPMetaDataOptionsNameIDFormat'               => '',
         'samlSPMetaDataOptionsNotOnOrAfterTimeout'        => 72000,
         'samlSPMetaDataOptionsOneTimeUse'                 => 0,

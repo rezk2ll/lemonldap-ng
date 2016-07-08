@@ -95,7 +95,8 @@ sub cTrees {
                             "samlSPMetaDataOptionsNameIDSessionKey",
                             "samlSPMetaDataOptionsOneTimeUse",
                             "samlSPMetaDataOptionsSessionNotOnOrAfterTimeout",
-                            "samlSPMetaDataOptionsNotOnOrAfterTimeout"
+                            "samlSPMetaDataOptionsNotOnOrAfterTimeout",
+                            "samlSPMetaDataOptionsForceUTF8"
                         ]
                     },
                     {
