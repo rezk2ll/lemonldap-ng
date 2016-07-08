@@ -78,6 +78,7 @@ site/static/forms/blackWhiteList.html
 site/static/forms/bool.html
 site/static/forms/boolOrExpr.html
 site/static/forms/catAndAppList.html
+site/static/forms/doubleHash.html
 site/static/forms/file.html
 site/static/forms/grant.html
 site/static/forms/grantContainer.html
