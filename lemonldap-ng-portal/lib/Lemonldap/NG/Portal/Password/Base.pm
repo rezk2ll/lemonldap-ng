@@ -14,7 +14,7 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 our $VERSION = '2.0.0';
 
-sub betweenAuthAndDatas { '_modifyPassword' }
+sub forAuthUser { '_modifyPassword' }
 
 sub _modifyPassword {
     my ( $self, $req ) = @_;
