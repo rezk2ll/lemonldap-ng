@@ -142,9 +142,7 @@
     "Directory": "__PSESSIONDIR__"
   },
   "portal": "http://auth.example.com/",
-  "reloadUrls": {
-    "reload.example.com": "http://reload.example.com/reload"
-  },
+  "reloadUrls": {},
   "securedCookie": 0,
   "sessionDataToRemember": {},
   "timeout": 72000,

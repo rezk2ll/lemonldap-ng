@@ -1448,13 +1448,7 @@
   }, {
     "id": "reloadUrls",
     "title": "reloadUrls",
-    "type": "keyTextContainer",
-    "nodes": [{
-      "data": "http://reload.example.com/reload",
-      "title": "reload.example.com",
-      "id": "reloadUrls/reload.example.com",
-      "type": "keyText"
-    }]
+    "type": "keyTextContainer"
   }, {
     "id": "advancedParams",
     "title": "advancedParams",
