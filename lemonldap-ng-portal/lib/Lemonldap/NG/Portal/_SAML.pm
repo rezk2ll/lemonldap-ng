@@ -48,7 +48,8 @@ BEGIN {
     eval 'use Lasso;';
     if ($@) {
         print STDERR "Lasso.pm not loaded: $@";
-        eval 'use constant LASSO => 0;use constant BADLASSO => 0;';
+        eval
+'use constant LASSO => 0;use constant BADLASSO => 0;use constant LASSOTHINSESSIONS => 0';
     }
     else {
         no strict 'subs';
@@ -64,6 +65,15 @@ BEGIN {
         }
         else {
             eval 'use constant BADLASSO => 0';
+        }
+
+        # Try to set thin-sessions flag
+        eval 'Lasso::set_flag("thin-sessions");';
+        if ($@) {
+            eval 'use constant LASSOTHINSESSIONS => 0';
+        }
+        else {
+            eval 'use constant LASSOTHINSESSIONS => 1';
         }
     }
 
@@ -110,6 +120,13 @@ sub loadLasso {
     if (BADLASSO) {
         $self->lmLog( 'Lasso version >= 2.3.0 required', 'error' );
         return 0;
+    }
+
+    unless (LASSOTHINSESSIONS) {
+        $self->lmLog( 'Lasso thin-sessions flag could not be set', 'warn' );
+    }
+    else {
+        $self->lmLog( 'Lasso thin-sessions flag set', 'debug' );
     }
 
     $initGlibDone = 1;
