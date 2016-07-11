@@ -8,15 +8,13 @@ extends 'Lemonldap::NG::Portal::Password::Base';
 
 sub init {
     my ($self) = @_;
-    if ( $self->p->get_module('auth') eq 'Demo' ) {
-        return PE_OK;
+    if ( $self->p->getModule(undef,'auth') eq 'Demo' ) {
+        return 1;
     }
     else {
         $self->lmLog( "Use PasswordDBDemo only with AuthDemo", 'error' );
-        return PE_ERROR;
+        return 0;
     }
-
-    PE_OK;
 }
 
 sub confirm {

@@ -1,0 +1,103 @@
+use Test::More;
+use strict;
+use IO::String;
+use JSON;
+use Lemonldap::NG::Portal::Main::Constants
+  qw(PE_BADOLDPASSWORD PE_PASSWORD_MISMATCH PE_PP_MUST_SUPPLY_OLD_PASSWORD);
+
+require 't/test-lib.pm';
+
+my $res;
+
+init(
+    {
+        logLevel                 => 'error',
+        passwordDB               => 'Demo',
+        portalRequireOldPassword => 1,
+    }
+);
+
+# Try yo authenticate
+# -------------------
+ok(
+    $res = &client->_post(
+        '/',
+        IO::String->new('user=dwho&password=dwho'),
+        length => 23
+    ),
+    'Auth query'
+);
+ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+my $cookies = getCookies($res);
+my $id;
+ok( $id = $cookies->{lemonldap}, 'Get cookie' )
+  or explain( $res, 'Set-Cookie: something' );
+count(3);
+
+# Test mismatch pwd
+ok(
+    $res = &client->_post(
+        '/',
+        IO::String->new('oldpassword=dwho&newpassword=test&confirmpassword=t'),
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+        length => 51
+    ),
+    'Password mismatch'
+);
+ok( $res->[0] == 400, 'Response is 400' ) or explain( $res->[0], 400 );
+my $json;
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok( $json->{error} == PE_PASSWORD_MISMATCH, 'Response is PE_PASSWORD_MISMATCH' )
+  or explain( $json, "error => 34" );
+count(3);
+
+# Test missing old pwd
+ok(
+    $res = &client->_post(
+        '/',
+        IO::String->new('newpassword=test&confirmpassword=test'),
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+        length => 37
+    ),
+    'Missing old password'
+);
+ok( $res->[0] == 400, 'Response is 400' ) or explain( $res->[0], 400 );
+my $json;
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok(
+    $json->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD,
+    'Response is PE_PP_MUST_SUPPLY_OLD_PASSWORD'
+) or explain( $json, "error => 27" );
+count(3);
+
+# Test bad old pwd
+ok(
+    $res = &client->_post(
+        '/',
+        IO::String->new('oldpassword=dd&newpassword=test&confirmpassword=test'),
+        cookie => "lemonldap=$id",
+        accept => 'application/json',
+        length => 52
+    ),
+    'Bad old password'
+);
+ok( $res->[0] == 400, 'Response is 400' ) or explain( $res->[0], 400 );
+my $json;
+ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
+  or print STDERR "$@\n" . Dumper($res);
+ok( $json->{error} == PE_BADOLDPASSWORD, 'Response is PE_BADOLDPASSWORD' )
+  or explain( $json, "error => 27" );
+count(3);
+
+# Test logout
+logout($id);
+
+#print STDERR Dumper($res);
+
+clean_sessions();
+
+done_testing( count() );

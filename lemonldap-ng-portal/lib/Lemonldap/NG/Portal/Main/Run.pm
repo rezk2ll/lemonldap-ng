@@ -125,7 +125,7 @@ sub do {
 
     # TODO: updateStatus
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
-        if ( $err > 0 ) {
+        if ( $err > 0 and !%{ $req->sessionInfo } ) {
             return [
                 401,
                 [
@@ -135,9 +135,21 @@ sub do {
                 []
             ];
         }
+        elsif ( $err > 0 ) {
+            return $self->sendJSONresponse(
+                $req,
+                { result => 0, error => $err },
+                code => 400
+            );
+        }
         else {
-            return $self->sendJSONresponse( $req,
-                { result => 1, message => 'Authenticated' } );
+            return $self->sendJSONresponse(
+                $req,
+                {
+                    result => 1,
+                    code   => $err
+                }
+            );
         }
     }
     else {

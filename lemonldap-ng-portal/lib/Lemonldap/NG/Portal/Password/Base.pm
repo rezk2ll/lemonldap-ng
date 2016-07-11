@@ -5,6 +5,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
+  PE_BADOLDPASSWORD
   PE_PASSWORD_OK
   PE_PASSWORD_MISMATCH
   PE_PP_MUST_SUPPLY_OLD_PASSWORD
@@ -28,7 +29,7 @@ sub _modifyPassword {
 
         # TODO: verify oldpassword
         unless ( $req->datas->{oldpassword} = $req->param('oldpassword') ) {
-            $self->lmLog( "Portal require old password", 'error' );
+            $self->lmLog( "Portal require old password", 'warn' );
             return PE_PP_MUST_SUPPLY_OLD_PASSWORD;
         }
 
@@ -38,6 +39,8 @@ sub _modifyPassword {
             $req->datas->{newpassword} eq $req->param('confirmpassword') );
 
         # Verify old password
+        return PE_BADOLDPASSWORD
+          unless ( $self->confirm( $req, $req->datas->{newpassword} ) );
     }
 
     # Call password package
