@@ -136,7 +136,7 @@
   <TMPL_IF NAME="DISPLAY_MAILSENT">
     <form action="#" method="post" class="login">
       <h3>
-        <span trspan="newPwdSentTo">Your new password has been sent to your mail address.</span>
+        <span trspan="newPwdSentTo">A confirmation has been sent to your mail address.</span>
       </h3>
     </form>
   </TMPL_IF>

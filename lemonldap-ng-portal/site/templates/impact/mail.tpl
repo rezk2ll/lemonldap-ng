@@ -123,7 +123,7 @@
 
       <TMPL_IF NAME="DISPLAY_MAILSENT">
       <div id="content-all-info">
-      <span trspan="newPwdSentTo">Your new password has been sent to your mail address.</span>
+      <span trspan="newPwdSentTo">A confirmation has been sent to your mail address.</span>
       </div>
       </TMPL_IF>
 

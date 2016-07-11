@@ -146,7 +146,7 @@
     <form action="#" method="post" class="login" role="form">
     <div class="form">
       <h3>
-        <span trspan="newPwdSentTo">Your new password has been sent to your mail address.</span>
+        <span trspan="newPwdSentTo">A confirmation has been sent to your mail address.</span>
       </h3>
     </div>
     </form>

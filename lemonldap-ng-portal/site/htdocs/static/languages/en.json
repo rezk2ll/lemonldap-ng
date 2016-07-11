@@ -162,7 +162,7 @@
 "newMessages":"New message(s)",
 "newPassword":"New password",
 "newPwdIs":"Your new password is",
-"newPwdSentTo":"Your new password has been sent to your mail address.",
+"newPwdSentTo":"A confirmation has been sent to your mail address.",
 "openIdExample":"for example:http://myopenid.org/toto",
 "openSessionSpace":"This space allow you to open a SSO session. This will help you to securely access to all applications authorized by your profil.",
 "openSSOSession":"Open your SSO session",

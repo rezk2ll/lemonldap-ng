@@ -162,7 +162,7 @@
 "newMessages":"Nouveaux messages",
 "newPassword":"Nouveau mot de passe",
 "newPwdIs":"Votre nouveau mot de passe est",
-"newPwdSentTo":"Votre nouveau mot de passe a été envoyé à votre adresse mail.",
+"newPwdSentTo":"Une confirmation a été envoyée à votre adresse mail.",
 "openIdExample":"par exemple :http://myopenid.org/toto",
 "openSessionSpace":"Cet espace vous permet d'ouvrir une session SSO. Celle-ci vous aidera à accéder de manière totalement sécurisée à l'ensemble des applications autorisées par votre profil utilisateur.",
 "openSSOSession":"Ouvrir une session SSO",
