@@ -2513,8 +2513,8 @@ sub sendLogoutRequestToProvider {
         }
     }
 
-    # Build the request unless this is a SOAP relay logout request
-    unless ( $method == Lasso::Constants::HTTP_METHOD_SOAP && $relay ) {
+    # Build the request
+    unless ( $logout->request() ) {
 
         $self->lmLog( "No logout request found, build it", 'debug' );
 
@@ -2532,11 +2532,6 @@ sub sendLogoutRequestToProvider {
             return ( 0, $method, undef );
         }
 
-    }
-
-    unless ( $logout->request() ) {
-        $self->lmLog( "Unable to create SAML request", 'error' );
-        return ( 0, $method, undef );
     }
 
     # Keep message ID in memory to prevent replay
@@ -2622,21 +2617,15 @@ sub sendLogoutRequestToProvider {
             # Create a new relay session
             my $relayInfos = $self->getSamlSession();
 
-            # Build needed information to be stored into samlStorage
-            unless ( $logout->get_session() && $logout->get_identity() ) {
-                $self->lmLog(
-                    "No session and identity found into logout object",
-                    'error' );
-                return ( 0, $method, undef );
-            }
-
             my $infos;
-            $infos->{type}               = 'relay';
-            $infos->{_utime}             = time;
-            $infos->{_lassoSessionDump}  = $logout->get_session->dump;
-            $infos->{_lassoIdentityDump} = $logout->get_identity->dump;
-            $infos->{_providerID}        = $providerID;
-            $infos->{_relayState}        = $logout->msg_relayState;
+            $infos->{type}   = 'relay';
+            $infos->{_utime} = time;
+            $infos->{_lassoSessionDump} =
+              $self->{sessionInfo}->{_lassoSessionDump};
+            $infos->{_lassoIdentityDump} =
+              $self->{sessionInfo}->{_lassoIdentityDump};
+            $infos->{_providerID} = $providerID;
+            $infos->{_relayState} = $logout->msg_relayState;
 
             $relayInfos->update($infos);
 
