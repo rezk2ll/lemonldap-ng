@@ -51,7 +51,7 @@ ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok( $json->{error} == PE_PASSWORD_MISMATCH, 'Response is PE_PASSWORD_MISMATCH' )
   or explain( $json, "error => 34" );
-count(3);
+count(4);
 
 # Test missing old pwd
 ok(
@@ -72,7 +72,7 @@ ok(
     $json->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD,
     'Response is PE_PP_MUST_SUPPLY_OLD_PASSWORD'
 ) or explain( $json, "error => 27" );
-count(3);
+count(4);
 
 # Test bad old pwd
 ok(
@@ -91,7 +91,7 @@ ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok( $json->{error} == PE_BADOLDPASSWORD, 'Response is PE_BADOLDPASSWORD' )
   or explain( $json, "error => 27" );
-count(3);
+count(4);
 
 # Test logout
 logout($id);
