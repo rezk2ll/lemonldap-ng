@@ -75,13 +75,10 @@ sub issuerForUnAuthUser {
         2 );
     my $saml_ars_url = $self->getMetaDataURL(
         "samlIDPSSODescriptorArtifactResolutionServiceArtifact");
-    my $saml_slo_url_relay_soap =
-      $self->{portal} . '/saml/relaySingleLogoutSOAP';
-    my $saml_slo_url_relay_post =
-      $self->{portal} . '/saml/relaySingleLogoutPOST';
-    my $saml_slo_url_relay_term =
-      $self->{portal} . '/saml/relaySingleLogoutTermination';
-    my $saml_att_soap_url = $self->getMetaDataURL(
+    my $saml_slo_url_relay_soap = '/saml/relaySingleLogoutSOAP';
+    my $saml_slo_url_relay_post = '/saml/relaySingleLogoutPOST';
+    my $saml_slo_url_relay_term = '/saml/relaySingleLogoutTermination';
+    my $saml_att_soap_url       = $self->getMetaDataURL(
         "samlAttributeAuthorityDescriptorAttributeServiceSOAP", 1 );
 
     # Get HTTP request informations to know

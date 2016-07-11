@@ -2546,6 +2546,10 @@ sub sendLogoutRequestToProvider {
         return ( 0, $method, undef );
     }
 
+    # Get portal value
+    my $portal = $self->{portal};
+    $portal =~ s/\/$//;
+
     # Send logout request to the provider depending of the request method
     # HTTP-REDIRECT
     if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
@@ -2591,8 +2595,7 @@ sub sendLogoutRequestToProvider {
         my $relayID = $relayInfos->id;
 
         # Build the URL that could be used to play this logout request
-        my $slo_url =
-          $self->{portal} . '/saml/relaySingleLogoutPOST?relay=' . $relayID;
+        my $slo_url = $portal . '/saml/relaySingleLogoutPOST?relay=' . $relayID;
 
         # Create iFrame
         $info .=
@@ -2641,7 +2644,7 @@ sub sendLogoutRequestToProvider {
 
             # Build the URL that could be used to play this logout request
             my $slo_url =
-              $self->{portal} . '/saml/relaySingleLogoutSOAP?relay=' . $relayID;
+              $portal . '/saml/relaySingleLogoutSOAP?relay=' . $relayID;
 
             # Display information to the user
             $info .= '<tr>'
