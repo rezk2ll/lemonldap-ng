@@ -48,6 +48,7 @@ sub importHandlerDatas {
     my ( $self, $req ) = @_;
     $req->{sessionInfo} = HANDLER->datas;
     $req->id( $req->sessionInfo->{_session_id} );
+    $req->user( $req->sessionInfo->{ $self->conf->{whatToTrace} } );
     PE_OK;
 }
 

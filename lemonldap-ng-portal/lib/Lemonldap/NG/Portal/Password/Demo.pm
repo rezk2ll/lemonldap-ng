@@ -6,6 +6,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
 
 extends 'Lemonldap::NG::Portal::Password::Base';
 
+our $VERSION = '2.0.0';
+
 sub init {
     my ($self) = @_;
     if ( $self->p->getModule(undef,'auth') eq 'Demo' ) {
@@ -29,4 +31,4 @@ sub modifyPassword {
     PE_OK;
 }
 
-1
+1;
