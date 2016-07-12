@@ -401,7 +401,9 @@ sub _deleteSession {
     if ( $self->{securedCookie} >= 2 ) {
 
         # Try to find a linked http session (securedCookie == 2)
-        if ( my $id2 = $session->data->{_httpSession} ) {
+        if ( $self->{securedCookie} == 2
+            and my $id2 = $session->data->{_httpSession} )
+        {
             if ( my $session2 = $self->getApacheSession( $id2, 1 ) ) {
                 $session2->remove;
                 if ( $session2->error ) {
