@@ -197,6 +197,15 @@ lemonldap-ng (1.9.0) stable; urgency=low
     * [LEMONLDAP-956] - Custom functions don't work with useSafeJail
     * [LEMONLDAP-957] - Replace $http.success() by .then()
 
+lemonldap-ng (1.4.10) stable; urgency=low
+
+    * [LEMONLDAP-985] - authForce is not well called trough AuthMulti
+    * [LEMONLDAP-1034] - Missing dependencies in documentation
+    * [LEMONLDAP-1047] - SAML SLO from IDP does not work when SP is LL::NG
+    * [LEMONLDAP-1050] - signing in to chrome devices via sso is broken
+    * [LEMONLDAP-1059] - Portal disconnection warning
+    * [LEMONLDAP-1057] - Change displayed message when sending confirmation mail after password reset
+
 lemonldap-ng (1.4.9) stable; urgency=low
 
     * [LEMONLDAP-1003] - Replace Mouse by Moose if ModPerl::Registry is used with Perl 5.22
