@@ -1,5 +1,23 @@
 lemonldap-ng (2.0.0) stable; urgency=low
 
+lemonldap-ng (1.9.5) stable; urgency=high
+
+    * [LEMONLDAP-966] - RSA Keys generated from Manager are incomplete
+    * [LEMONLDAP-1028] - SAML SP SOAP logout does not happen
+    * [LEMONLDAP-1046] - Default value for samlIDPMetaDataOptionsSSOBinding should be undef
+    * [LEMONLDAP-1047] - SAML SLO from IDP does not work when SP is LL::NG
+    * [LEMONLDAP-1048] - Unable to upgrade a configuration from 1.4 to 1.9 using lmConfigEditor
+    * [LEMONLDAP-1049] - Unable to read LDAP session in 1.4 format with 1.9 version
+    * [LEMONLDAP-1050] - signing in to chrome devices via sso is broken
+    * [LEMONLDAP-1054] - test_config not found in lemonldap-ng-fastcgi-server init script
+    * [LEMONLDAP-1059] - Portal disconnection warning
+    * [LEMONLDAP-1043] - Display total number of sessions
+    * [LEMONLDAP-1045] - Wrong SAML attributes encoding issued by IDP
+    * [LEMONLDAP-1052] - Use Lasso 'thin-sessions'
+    * [LEMONLDAP-1055] - Remove network access attempts during tests
+    * [LEMONLDAP-1057] - Change displayed message when sending confirmation mail after password reset
+    * [LEMONLDAP-1056] - SAML SLO relay URL not catched
+
 lemonldap-ng (1.9.4) stable; urgency=high
 
     * [LEMONLDAP-1034] - Missing dependencies in documentation
