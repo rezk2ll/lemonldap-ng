@@ -49,9 +49,20 @@ sub _modifyPassword {
         $self->lmLog( 'Update password in session for ' . $req->user, 'debug' );
         my $infos;
 
-        # TODO: verify newPassword ?
-        $self->p->updateSession( { _password => $req->{newpassword} } )
-          if ( $self->conf->{storePassword} );
+        # Store new password if asked
+        if ( $self->conf->{storePassword} ) {
+            $self->p->updateSession(
+                $req,
+                {
+                    _passwordDB => $self->getModule( $req, 'password' ),
+                    _password   => $req->{newpassword}
+                }
+            );
+        }
+        else {
+            $self->p->updateSession( $req,
+                { _passwordDB => $self->getModule( $req, 'password' ) } );
+        }
 
         # Set a flag to ignore password change in Menu
         $req->{ignorePasswordChange} = 1;

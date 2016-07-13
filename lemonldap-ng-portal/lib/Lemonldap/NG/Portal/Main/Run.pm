@@ -181,7 +181,8 @@ sub getModule {
         }
         else {
             my $s = ref( $self->$mod );
-            $s =~ s/^Lemonldap::NG::Portal::(?:(?:Issuer|UserDB|Auth)::)?//;
+            $s =~
+s/^Lemonldap::NG::Portal::(?:(?:Issuer|UserDB|Auth|Password)::)?//;
             return $s;
         }
     }
