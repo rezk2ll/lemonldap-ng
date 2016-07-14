@@ -61,9 +61,9 @@ sub login {
     return $self->do(
         $req,
         [
-            'controlUrl',  @{ $self->beforeAuth },
-            &authProcess,  @{ $self->betweenAuthAndDatas },
-            &sessionDatas, @{ $self->afterDatas },
+            'controlUrl',        @{ $self->beforeAuth },
+            $self->authProcess,  @{ $self->betweenAuthAndDatas },
+            $self->sessionDatas, @{ $self->afterDatas },
         ]
     );
 }
@@ -74,8 +74,8 @@ sub postLogin {
         $req,
         [
             'restoreArgs',                   'controlUrl',
-            @{ $self->beforeAuth },          &authProcess,
-            @{ $self->betweenAuthAndDatas }, &sessionDatas,
+            @{ $self->beforeAuth },          $self->authProcess,
+            @{ $self->betweenAuthAndDatas }, $self->sessionDatas,
             @{ $self->afterDatas },
         ]
     );
