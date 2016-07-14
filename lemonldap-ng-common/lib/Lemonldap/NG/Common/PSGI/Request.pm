@@ -250,7 +250,7 @@ Server port.
 
 =head3 path
 
-PATH_INFO content which has been substracted `scriptname`. So it's the relative
+PATH_INFO content which has been subtracted `scriptname`. So it's the relative
 path_info for REST calls.
 
 =head3 uri
