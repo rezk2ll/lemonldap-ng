@@ -167,7 +167,7 @@ Suggests: libcache-memcached-perl,
           libdigest-hmac-perl,
           liblemonldap-ng-portal-perl,
           libsoap-lite-perl
-Description: Lemonldap::NG handler part
+Description: Lemonldap::NG handler common libraries
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application webservers. It can be used in conjunction with
  OpenID-Connect, CAS and SAML systems as identity or service provider. It can
