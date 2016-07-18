@@ -120,35 +120,4 @@ sub check_password {
 
 }
 
-## @method protected Lemonldap::NG::Portal::_DBI modify_password(string user, string password, string userCol, string passwordCol)
-# Modify password with SQL UPDATE
-# @param user user
-# @param password password
-# @param userCol optional user column
-# @param passwordCol optional password column
-# @return boolean result
-sub modify_password {
-    my ( $self, $user, $password, $userCol, $passwordCol ) = @_;
-    $userCol     ||= $self->conf->{dbiAuthLoginCol};
-    $passwordCol ||= $self->conf->{dbiAuthPasswordCol};
-
-    my $table = $self->conf->{dbiAuthTable};
-
-    # Password hash
-    my $passwordsql =
-      $self->hash_password( "?", $self->conf->{dbiAuthPasswordHash} );
-
-    eval {
-        my $sth = $self->dbh->prepare(
-            "UPDATE $table SET $passwordCol=$passwordsql WHERE $userCol=?");
-        $sth->execute( $password, $user );
-    };
-    if ($@) {
-        $self->lmLog( "DBI password modification error: $@", 'error' );
-        return 0;
-    }
-
-    return 1;
-}
-
 1;

@@ -234,16 +234,15 @@ sub userBind {
     return PE_BADCREDENTIALS;
 }
 
-## @method int userModifyPassword(string dn, string newpassword, string confirmpassword, string oldpassword, boolean ad)
+## @method int userModifyPassword(string dn, string newpassword, string oldpassword, boolean ad)
 # Change user's password.
 # @param $dn DN
 # @param $newpassword New password
-# @param $confirmpassword New password
 # @param $oldpassword Current password
 # @param $ad Active Directory mode
 # @return Lemonldap::NG::Portal constant
 sub userModifyPassword {
-    my ( $self, $dn, $newpassword, $confirmpassword, $oldpassword, $ad ) = @_;
+    my ( $self, $dn, $newpassword, $oldpassword, $ad ) = @_;
     my $ppolicyControl     = $self->{conf}->{ldapPpolicyControl};
     my $setPassword        = $self->{conf}->{ldapSetPassword};
     my $asUser             = $self->{conf}->{ldapChangePasswordAsUser};
@@ -251,15 +250,6 @@ sub userModifyPassword {
     my $passwordAttribute  = "userPassword";
     my $err;
     my $mesg;
-
-    # Verify confirmation password matching
-    unless ( $newpassword eq $confirmpassword ) {
-        $self->{portal}->lmLog(
-"Password $newpassword and password $confirmpassword are not the same",
-            'debug'
-        );
-        return PE_PASSWORD_MISMATCH;
-    }
 
     # Adjust configuration for AD
     if ($ad) {

@@ -25,7 +25,7 @@ sub confirm {
 }
 
 sub modifyPassword {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $pwd ) = @_;
 
     # Nothing to do here, all new passwords are accepted
     PE_OK;

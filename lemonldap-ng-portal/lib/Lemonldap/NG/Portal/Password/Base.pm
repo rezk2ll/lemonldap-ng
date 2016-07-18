@@ -44,7 +44,8 @@ sub _modifyPassword {
     }
 
     # Call password package
-    my $res = $self->modifyPassword($req);
+    my $res =
+      $self->modifyPassword( $req, $req->datas->{newpassword} );
     if ( $res == PE_PASSWORD_OK ) {
         $self->lmLog( 'Update password in session for ' . $req->user, 'debug' );
         my $infos;
