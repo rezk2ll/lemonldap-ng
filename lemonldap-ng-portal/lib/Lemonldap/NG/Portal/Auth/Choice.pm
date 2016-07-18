@@ -25,11 +25,6 @@ sub authForce {
     return $_[1]->datas->{enabledMods0}->[0]->authForce( $_[1] );
 }
 
-sub authLogout {
-    $_[0]->checkChoice( $_[1] ) or return PE_OK;
-    return $_[1]->datas->{enabledMods0}->[0]->authLogout( $_[1] );
-}
-
 sub getDisplayType {
     $_[0]->checkChoice( $_[1] ) or return PE_OK;
     return $_[1]->datas->{enabledMods0}->[0]->getDisplayType( $_[1] );

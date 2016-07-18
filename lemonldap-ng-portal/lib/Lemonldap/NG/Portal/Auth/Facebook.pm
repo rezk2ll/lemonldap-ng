@@ -127,10 +127,6 @@ sub authLogout {
     PE_OK;
 }
 
-sub authForce {
-    0;
-}
-
 sub getDisplayType {
     return "logo";
 }

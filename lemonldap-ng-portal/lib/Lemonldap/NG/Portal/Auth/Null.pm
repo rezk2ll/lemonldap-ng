@@ -26,10 +26,6 @@ sub authenticate {
     PE_OK;
 }
 
-sub authForce {
-    0;
-}
-
 sub authLogout {
     PE_OK;
 }

@@ -11,10 +11,6 @@ extends 'Lemonldap::NG::Portal::Auth::_WebForm',
 
 # RUNNING METHODS
 
-sub authForce {
-    0;
-}
-
 sub authLogout {
     PE_OK;
 }

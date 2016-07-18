@@ -51,11 +51,6 @@ authentication modules.
       ...
   }
   
-  sub authForce {
-      my ( $self, $req ) = @_;
-      ...
-  }
-  
   sub authLogout {
       my ( $self, $req ) = @_;
       ...

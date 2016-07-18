@@ -5,7 +5,8 @@ use Mouse;
 use JSON;
 use LWP::UserAgent;
 use HTTP::Request;
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS PE_FIRSTACCESS);
+use Lemonldap::NG::Portal::Main::Constants
+  qw(PE_OK PE_ERROR PE_BADCREDENTIALS PE_FIRSTACCESS);
 
 our $VERSION = '2.0.0';
 
@@ -135,10 +136,6 @@ sub authenticate {
 sub authLogout {
     $_[1]->{customParameters}->{browserIdLoadLoginScript} = 1;
     PE_OK;
-}
-
-sub authForce {
-    0;
 }
 
 sub getDisplayType {

@@ -40,11 +40,6 @@ sub authenticate {
     PE_OK;
 }
 
-sub authForce {
-    my ( $self, $req ) = @_;
-    PE_OK;
-}
-
 sub authLogout {
     my ( $self, $req ) = @_;
     PE_OK;

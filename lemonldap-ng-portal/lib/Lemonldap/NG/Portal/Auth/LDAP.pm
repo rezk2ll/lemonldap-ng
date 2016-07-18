@@ -45,10 +45,6 @@ sub authLogout {
     PE_OK;
 }
 
-sub authForce {
-    0;
-}
-
 # Test LDAP connection before trying to bind
 sub userBind {
     my $self = shift;

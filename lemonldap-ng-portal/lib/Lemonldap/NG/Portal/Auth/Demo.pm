@@ -44,10 +44,6 @@ sub authLogout {
     PE_OK;
 }
 
-sub authForce {
-    0;
-}
-
 1;
 __END__
 

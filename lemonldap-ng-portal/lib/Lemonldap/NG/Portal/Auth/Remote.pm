@@ -13,7 +13,7 @@ extends 'Lemonldap::NG::Portal::Auth::Base',
 
 sub extractFormInfo {
     my ( $self, $req ) = @_;
-    my $r    = $self->checkRemoteId($req);
+    my $r = $self->checkRemoteId($req);
     return $r unless ( $r == PE_OK );
     $req->{user} =
       $req->datas->{rSessionInfo}->{ $self->conf->{remoteUserField} || 'uid' };
@@ -23,10 +23,6 @@ sub extractFormInfo {
 
 sub authenticate {
     PE_OK;
-}
-
-sub authForce {
-    0;
 }
 
 sub authLogout {
