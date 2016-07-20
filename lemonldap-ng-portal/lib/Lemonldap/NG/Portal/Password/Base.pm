@@ -15,7 +15,17 @@ extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 our $VERSION = '2.0.0';
 
+# INITIALIZATION
+
+sub init {
+    $_[0]->p->{_passwordDB} = $_[0];
+}
+
+# INTERFACE
+
 sub forAuthUser { '_modifyPassword' }
+
+# RUNNING METHODS
 
 sub _modifyPassword {
     my ( $self, $req ) = @_;
@@ -40,12 +50,11 @@ sub _modifyPassword {
 
         # Verify old password
         return PE_BADOLDPASSWORD
-          unless ( $self->confirm( $req, $req->datas->{newpassword} ) );
+          unless ( $self->confirm( $req, $req->datas->{oldpassword} ) );
     }
 
     # Call password package
-    my $res =
-      $self->modifyPassword( $req, $req->datas->{newpassword} );
+    my $res = $self->modifyPassword( $req, $req->datas->{newpassword} );
     if ( $res == PE_PASSWORD_OK ) {
         $self->lmLog( 'Update password in session for ' . $req->user, 'debug' );
         my $infos;
@@ -55,14 +64,14 @@ sub _modifyPassword {
             $self->p->updateSession(
                 $req,
                 {
-                    _passwordDB => $self->getModule( $req, 'password' ),
+                    _passwordDB => $self->p->getModule( $req, 'password' ),
                     _password   => $req->{newpassword}
                 }
             );
         }
         else {
             $self->p->updateSession( $req,
-                { _passwordDB => $self->getModule( $req, 'password' ) } );
+                { _passwordDB => $self->p->getModule( $req, 'password' ) } );
         }
 
         # Set a flag to ignore password change in Menu

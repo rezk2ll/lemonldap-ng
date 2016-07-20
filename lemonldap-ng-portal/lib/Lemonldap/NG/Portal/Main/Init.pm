@@ -26,6 +26,7 @@ has menu        => ( is => 'rw', default => sub { {} } );
 # Sub modules
 has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
+has _passwordDB     => ( is => 'rw' );
 
 # Macros and groups
 has _macros     => ( is => 'rw' );

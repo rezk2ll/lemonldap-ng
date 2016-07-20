@@ -9,6 +9,11 @@ extends 'Lemonldap::NG::Portal::Password::Base',
 
 our $VERSION = '2.0.0';
 
+sub init {
+    $_[0]->Lemonldap::NG::Portal::Password::Base::init
+      and $_[0]->Lemonldap::NG::Portal::Lib::DBI::init;
+}
+
 sub confirm {
     my ( $self, $req, $pwd ) = @_;
     return $self->check_password( $req->user, $pwd );

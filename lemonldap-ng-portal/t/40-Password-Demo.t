@@ -65,7 +65,6 @@ ok(
     'Missing old password'
 );
 ok( $res->[0] == 400, 'Response is 400' ) or explain( $res->[0], 400 );
-my $json;
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok(
@@ -86,7 +85,6 @@ ok(
     'Bad old password'
 );
 ok( $res->[0] == 400, 'Response is 400' ) or explain( $res->[0], 400 );
-my $json;
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok( $json->{error} == PE_BADOLDPASSWORD, 'Response is PE_BADOLDPASSWORD' )

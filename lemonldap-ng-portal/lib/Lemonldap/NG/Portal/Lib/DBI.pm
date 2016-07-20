@@ -39,7 +39,7 @@ sub dbh {
 
 # INITIALIZATION
 
-# All DBI modules has just to verify that DBI connection is available
+# All DBI modules have just to verify that DBI connection is available
 sub init {
     my ($self) = @_;
     return $self->_dbh;
