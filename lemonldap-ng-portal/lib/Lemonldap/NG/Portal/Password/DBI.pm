@@ -9,11 +9,6 @@ extends 'Lemonldap::NG::Portal::Password::Base',
 
 our $VERSION = '2.0.0';
 
-sub init {
-    my ($self) = @_;
-    return $self->dbh;
-}
-
 sub confirm {
     my ( $self, $req, $pwd ) = @_;
     return $self->check_password( $req->user, $pwd );
@@ -31,7 +26,10 @@ sub modifyPassword {
               . '=?' )->execute( $pwd, $req->user );
     };
     if ($@) {
-        $self->lmLog( "DBI password modification error: $@", 'error' );
+
+        # If connection isn't available, error is displayed by dbh()
+        $self->lmLog( "DBI password modification error: $@", 'error' )
+          if ( $self->_dbh );
         return PE_ERROR;
     }
     else {

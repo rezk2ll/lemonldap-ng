@@ -34,13 +34,6 @@ has exportedVars => (
     }
 );
 
-# INITIALIZATION
-
-sub init {
-    my $self = shift;
-    return $self->dbh;
-}
-
 # RUNNING METHODS
 
 sub getUser {
@@ -54,7 +47,9 @@ sub getUser {
         $sth->execute($user);
     };
     if ($@) {
-        $self->lmLog( "DBI error: $@", 'error' );
+
+        # If connection isn't available, error is displayed by dbh()
+        $self->lmLog( "DBI error: $@", 'error' ) if ( $self->_dbh );
         return PE_ERROR;
     }
     unless ( $req->datas->{entry} = $sth->fetchrow_hashref() ) {

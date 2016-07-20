@@ -9,13 +9,6 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Auth::_WebForm',
   'Lemonldap::NG::Portal::Lib::DBI';
 
-# INITIALIZATION
-
-sub init {
-    my ($self) = @_;
-    return $self->dbh;
-}
-
 # RUNNING METHODS
 
 sub authenticate {

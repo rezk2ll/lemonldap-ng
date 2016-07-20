@@ -15,27 +15,35 @@ our $VERSION = '2.0.0';
 
 # PROPERTIES
 
-# dbh object: DB connection object
-has dbh => (
+# _dbh object: DB connection object
+has _dbh => (
     is      => 'rw',
     lazy    => 1,
-    builder => sub {
-        my $conf = $_[0]->{conf};
-        my $dbh  = eval {
-
-            #TODO: pb
-            DBI->connect_cached(
-                $conf->{dbiAuthChain}, $conf->{dbiAuthUser},
-                $conf->{dbiAuthPassword}, { RaiseError => 1 }
-            );
-        };
-        if ($@) {
-            $_[0]->{p}->lmLog( "DBI connection error: $@", 'error' );
-            return 0;
-        }
-        return $dbh;
-    }
+    builder => 'dbh',
 );
+
+sub dbh {
+    my $conf = $_[0]->{conf};
+    $_[0]->{_dbh} = eval {
+        DBI->connect_cached(
+            $conf->{dbiAuthChain}, $conf->{dbiAuthUser},
+            $conf->{dbiAuthPassword}, { RaiseError => 1 }
+        );
+    };
+    if ($@) {
+        $_[0]->{p}->lmLog( "DBI connection error: $@", 'error' );
+        return 0;
+    }
+    return $_[0]->{_dbh};
+}
+
+# INITIALIZATION
+
+# All DBI modules has just to verify that DBI connection is available
+sub init {
+    my ($self) = @_;
+    return $self->_dbh;
+}
 
 # RUNNING METHODS
 
@@ -105,7 +113,9 @@ sub check_password {
         @rows = $sth->fetchrow_array();
     };
     if ($@) {
-        $self->lmLog( "DBI error: $@", 'error' );
+
+        # If connection isn't available, error is displayed by dbh()
+        $self->lmLog( "DBI error: $@", 'error' ) if ( $self->_dbh );
         return 0;
     }
 
