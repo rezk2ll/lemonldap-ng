@@ -255,7 +255,8 @@ sub getApacheSession {
 
     my $now = time;
     if (
-        $id
+            $id
+        and defined $as->data->{_utime}
         and (
             $now - $as->data->{_utime} > $self->conf->{timeout}
             or (    $self->conf->{timeoutActivity}
