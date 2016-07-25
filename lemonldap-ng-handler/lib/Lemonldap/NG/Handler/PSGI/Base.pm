@@ -24,7 +24,8 @@ sub init {
         or $self->{protection} eq 'none' )
     {
         $self->error(
-            "Unable to protect this app ($Lemonldap::NG::Common::Conf::msg)");
+            "Unable to protect this server ($Lemonldap::NG::Common::Conf::msg)"
+        );
         return 0;
     }
     eval { $self->portal( $self->api->tsv->{portal}->() ) };
@@ -128,14 +129,18 @@ sub _authAndTrace {
 # @return hash of user datas
 sub user {
     my ( $self, $req ) = @_;
-    return $req->userData || { $Lemonldap::NG::Handler::Main::tsv->{whatToTrace} || _whatToTrace => 'anonymous' };
+    return $req->userData
+      || { $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
+          || _whatToTrace => 'anonymous' };
 }
 
 ## @method string userId()
 # @return user identifier to log
 sub userId {
     my ( $self, $req ) = @_;
-    return $req->userData->{$Lemonldap::NG::Handler::Main::tsv->{whatToTrace} || '_whatToTrace'} || 'anonymous';
+    return $req->userData->{ $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
+          || '_whatToTrace' }
+      || 'anonymous';
 }
 
 ## @method boolean group(string group)
