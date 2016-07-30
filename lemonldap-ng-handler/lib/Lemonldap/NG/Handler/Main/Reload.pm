@@ -338,7 +338,7 @@ sub headersInit {
         }
 
         unless ( $class->tsv->{forgeHeaders}->{$vhost} =
-            $class->tsv->{jail}->jail_reval("sub{return($sub)}") )
+            $class->buildSub($sub) )
         {
             $class->tsv->{maintenance}->{$vhost} = 1;
             $class->lmLog(
@@ -375,7 +375,7 @@ sub postUrlInit {
             unless (
                 $class->tsv->{inputPostData}->{$vhost}->{ delete $d->{target} }
                 = $class->tsv->{outputPostData}->{$vhost}->{$url} =
-                $class->tsv->{jail}->jail_reval("sub{$sub}") )
+                $class->buildSub($sub) )
             {
                 $class->tsv->{maintenance}->{$vhost} = 1;
                 $class->lmLog(
@@ -492,7 +492,7 @@ sub conditionSub {
     # Replace some strings in condition
     $cond = $class->substitute($cond);
     my $sub;
-    unless ( $sub = $class->tsv->{jail}->jail_reval("sub{return($cond)}") ) {
+    unless ( $sub = $class->buildSub($cond) ) {
         $class->lmLog(
             "$class: Unable to build condition ($cond): "
               . $class->tsv->{jail}->error,
@@ -532,9 +532,15 @@ sub substitute {
     $expr =~ s/\$ip\b/&remote_ip/sg;
 
     # substitute vars with session datas, excepts special vars $_ and $\d+
-    $expr =~ s/\$(?!ENV)(_*[a-zA-Z]\w*)/\$_v->{datas}->{$1}/sg;
+    $expr =~ s/\$(?!ENV)(_*[a-zA-Z]\w*)/\$session->{$1}/sg;
 
     return $expr;
+}
+
+sub buildSub {
+    my ( $class, $val ) = @_;
+    return $class->tsv->{jail}
+      ->jail_reval("sub{my \$session=\$_[0];return($val)}");
 }
 
 1;

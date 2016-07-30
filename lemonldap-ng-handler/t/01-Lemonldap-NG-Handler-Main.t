@@ -49,9 +49,9 @@ ok( $h->configReload($conf), 'Load conf' );
 
 ok( $h->tsv->{portal}->() eq 'http://auth.example.com/', 'portal' );
 
-ok( $h->grant('/s'),    'basic rule "accept"' );
-ok( !$h->grant('/no'),  'basic rule "deny"' );
-ok( $h->grant('/a/a'),  'bad ordered rule 1/2' );
-ok( $h->grant('/a'),    'bad ordered rule 2/2' );
-ok( !$h->grant('/b/a'), 'good ordered rule 1/2' );
-ok( $h->grant('/b'),    'good ordered rule 2/2' );
+ok( $h->grant( undef, '/s' ), 'basic rule "accept"' );
+ok( !$h->grant( undef, '/no' ), 'basic rule "deny"' );
+ok( $h->grant( undef, '/a/a' ), 'bad ordered rule 1/2' );
+ok( $h->grant( undef, '/a' ),   'bad ordered rule 2/2' );
+ok( !$h->grant( undef, '/b/a' ), 'good ordered rule 1/2' );
+ok( $h->grant( undef, '/b' ), 'good ordered rule 2/2' );

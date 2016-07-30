@@ -113,31 +113,31 @@ sub run {
         return $class->OK;
     }
 
-    my $id;
+    my ( $id, $session );
 
     # Try to recover cookie and user session
-    if ( $id = $class->fetchId and $class->retrieveSession($id) ) {
+    if ( $id = $class->fetchId and $session = $class->retrieveSession($id) ) {
 
         # AUTHENTICATION done
 
         # Local macros
-        my $kc = keys %{ $class->datas };   # in order to detect new local macro
+        my $kc = keys %{$session};    # in order to detect new local macro
 
         # ACCOUNTING (1. Inform web server)
-        $class->set_user( $class->datas->{ $class->tsv->{whatToTrace} } );
+        $class->set_user( $session->{ $class->tsv->{whatToTrace} } );
 
         # AUTHORIZATION
-        return $class->forbidden unless ( $class->grant( $uri, $cond ) );
-        $class->updateStatus( 'OK',
-            $class->datas->{ $class->tsv->{whatToTrace} } );
+        return $class->forbidden($session)
+          unless ( $class->grant( $session, $uri, $cond ) );
+        $class->updateStatus( 'OK', $session->{ $class->tsv->{whatToTrace} } );
 
         # ACCOUNTING (2. Inform remote application)
-        $class->sendHeaders;
+        $class->sendHeaders($session);
 
         # Store local macros
-        if ( keys %{ $class->datas } > $kc ) {
+        if ( keys %$session > $kc ) {
             $class->lmLog( "Update local cache", 'debug' );
-            $class->session->update( $class->datas, { updateCache => 2 } );
+            $class->session->update( $session, { updateCache => 2 } );
         }
 
         # Hide Lemonldap::NG cookie
@@ -146,14 +146,14 @@ sub run {
         # Log access granted
         $class->lmLog(
             "User "
-              . $class->datas->{ $class->tsv->{whatToTrace} }
+              . $session->{ $class->tsv->{whatToTrace} }
               . " was granted to access to $uri",
             'debug'
         );
 
         #  Catch POST rules
-        $class->postOutputFilter($uri);
-        $class->postInputFilter($uri);
+        $class->postOutputFilter( $session, $uri );
+        $class->postInputFilter( $session, $uri );
 
         return $class->OK;
     }
@@ -242,7 +242,7 @@ sub checkMaintenanceMode {
 # @param $cond optional Function granting access
 # @return True if the user is granted to access to the current URL
 sub grant {
-    my ( $class, $uri, $cond, $vhost ) = @_;
+    my ( $class, $session, $uri, $cond, $vhost ) = @_;
     return &{$cond}() if ($cond);
 
     $vhost ||= $class->resolveAlias;
@@ -254,7 +254,7 @@ sub grant {
                   . '" match',
                 'debug'
             );
-            return &{ $class->tsv->{locationCondition}->{$vhost}->[$i] }();
+            return $class->tsv->{locationCondition}->{$vhost}->[$i]->($session);
         }
     }
     unless ( $class->tsv->{defaultCondition}->{$vhost} ) {
@@ -265,7 +265,7 @@ sub grant {
         return 0;
     }
     $class->lmLog( "$vhost: Apply default rule", 'debug' );
-    return &{ $class->tsv->{defaultCondition}->{$vhost} }();
+    return $class->tsv->{defaultCondition}->{$vhost}->($session);
 }
 
 ## @rmethod protected int forbidden(string uri)
@@ -274,13 +274,13 @@ sub grant {
 # @param $uri URI
 # @return Constant $class->FORBIDDEN
 sub forbidden {
-    my $class = shift;
-    my $uri   = $class->unparsed_uri;
+    my ( $class, $session ) = @_;
+    my $uri = $class->unparsed_uri;
 
-    if ( $class->datas->{_logout} ) {
+    if ( $session->{_logout} ) {
         $class->updateStatus( 'LOGOUT',
-            $class->datas->{ $class->tsv->{whatToTrace} } );
-        my $u = $class->datas->{_logout};
+            $session->{ $class->tsv->{whatToTrace} } );
+        my $u = $session->{_logout};
         $class->localUnlog;
         return $class->goToPortal( $u, 'logout=1' );
     }
@@ -288,12 +288,11 @@ sub forbidden {
     # Log forbidding
     $class->lmLog(
         "User "
-          . $class->datas->{ $class->tsv->{whatToTrace} }
+          . $session->{ $class->tsv->{whatToTrace} }
           . " was forbidden to access to $uri",
         "notice"
     );
-    $class->updateStatus( 'REJECT',
-        $class->datas->{ $class->tsv->{whatToTrace} } );
+    $class->updateStatus( 'REJECT', $session->{ $class->tsv->{whatToTrace} } );
 
     # Redirect or Forbidden?
     if ( $class->tsv->{useRedirectOnForbidden} ) {
@@ -387,11 +386,11 @@ sub retrieveSession {
         and ( $now - $class->datasUpdate < 60 ) )
     {
         $class->lmLog( "Get session $id from Handler internal cache", 'debug' );
-        return 1;
+        return $class->datas;
     }
 
     # 2. Get the session from cache or backend
-    $class->session(
+    my $session = $class->session(
         Lemonldap::NG::Common::Session->new(
             {
                 storageModule        => $class->tsv->{sessionStorageModule},
@@ -404,18 +403,19 @@ sub retrieveSession {
         )
     );
 
-    unless ( $class->session->error ) {
+    unless ( $session->error ) {
 
-        $class->datas( $class->session->data );
+        $class->datas( $session->data );
 
         $class->lmLog( "Get session $id", 'debug' );
 
         # Verify that session is valid
         if (
-            $now - $class->datas->{_utime} > $class->tsv->{timeout}
+            $now - $session->data->{_utime} > $class->tsv->{timeout}
             or (    $class->tsv->{timeoutActivity}
-                and $class->datas->{_lastSeen}
-                and $now - $class->datas->{_lastSeen} > $class->tsv->{timeoutActivity} )
+                and $session->data->{_lastSeen}
+                and $now - $session->data->{_lastSeen} >
+                $class->tsv->{timeoutActivity} )
           )
         {
             $class->lmLog( "Session expired", 'info' );
@@ -424,11 +424,11 @@ sub retrieveSession {
 
         # Update the session to notify activity, if necessary
         if ( $class->tsv->{timeoutActivity}
-            and ( $now - $class->datas->{_lastSeen} > 60 ) )
+            and ( $now - $session->data->{_lastSeen} > 60 ) )
         {
             $class->session->update( { '_lastSeen' => $now } );
 
-            if ( $class->session->error ) {
+            if ( $session->error ) {
                 $class->lmLog( "Cannot update session $id", 'error' );
                 $class->lmLog( $class->session->error,      'error' );
             }
@@ -438,11 +438,11 @@ sub retrieveSession {
         }
 
         $class->datasUpdate($now);
-        return 1;
+        return $session->data;
     }
     else {
         $class->lmLog( "Session $id can't be retrieved", 'info' );
-        $class->lmLog( $class->session->error,           'info' );
+        $class->lmLog( $session->error,                  'info' );
 
         return 0;
     }
@@ -492,12 +492,12 @@ sub isUnprotected {
 ## @rmethod void sendHeaders()
 # Launch function compiled by forgeHeadersInit() for the current virtual host
 sub sendHeaders {
-    my $class = shift;
+    my ( $class, $session ) = @_;
     my $vhost = $class->resolveAlias;
     if ( defined $class->tsv->{forgeHeaders}->{$vhost} ) {
 
         # Log headers in debug mode
-        my %headers = $class->tsv->{forgeHeaders}->{$vhost}->();
+        my %headers = $class->tsv->{forgeHeaders}->{$vhost}->($session);
         foreach my $h ( sort keys %headers ) {
             if ( defined( my $v = $headers{$h} ) ) {
                 $class->lmLog( "Send header $h with value $v", 'debug' );
@@ -590,16 +590,17 @@ sub unlog ($$) {
 # Add a javascript to html page in order to fill html form with fake data
 # @param uri URI to catch
 sub postOutputFilter {
-    my ( $class, $uri ) = @_;
+    my ( $class, $session, $uri ) = @_;
     my $vhost = $class->resolveAlias;
 
     if ( defined( $class->tsv->{outputPostData}->{$vhost}->{$uri} ) ) {
         $class->lmLog( "Filling a html form with fake data", "debug" );
 
         $class->unset_header_in("Accept-Encoding");
-        my %postdata   = &{ $class->tsv->{outputPostData}->{$vhost}->{$uri} };
+        my %postdata =
+          $class->tsv->{outputPostData}->{$vhost}->{$uri}->($session);
         my $formParams = $class->tsv->{postFormParams}->{$vhost}->{$uri};
-        my $js         = $class->postJavascript( \%postdata, $formParams );
+        my $js = $class->postJavascript( \%postdata, $formParams );
         $class->addToHtmlHead($js);
     }
 }
@@ -608,13 +609,13 @@ sub postOutputFilter {
 # Replace request body with form datas defined in configuration
 # @param uri URI to catch
 sub postInputFilter {
-    my ( $class, $uri ) = @_;
+    my ( $class, $session, $uri ) = @_;
     my $vhost = $class->resolveAlias;
 
     if ( defined( $class->tsv->{inputPostData}->{$vhost}->{$uri} ) ) {
         $class->lmLog( "Replacing fake data with real form data", "debug" );
 
-        my %data = &{ $class->tsv->{inputPostData}->{$vhost}->{$uri} };
+        my %data = $class->tsv->{inputPostData}->{$vhost}->{$uri}->($session);
         foreach ( keys %data ) {
             $data{$_} = uri_escape( $data{$_} );
         }
