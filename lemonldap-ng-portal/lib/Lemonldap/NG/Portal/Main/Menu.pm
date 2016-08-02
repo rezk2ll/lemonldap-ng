@@ -21,7 +21,7 @@ has menuModules => (
             $_[0]
               ->p->lmLog( "Evaluate condition $cond for module $_", 'debug' );
             my $tmp =
-              $_[0]->{p}->HANDLER->tsv->{jail}->jail_reval("sub{return $cond}");
+              $_[0]->{p}->HANDLER->buildSub($cond);
             push @res, [ $_, $tmp ] if ($tmp);
         }
         return \@res;

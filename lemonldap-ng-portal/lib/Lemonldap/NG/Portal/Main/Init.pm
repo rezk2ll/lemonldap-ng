@@ -224,9 +224,8 @@ sub reloadConf {
         if ( $self->conf->{$type} ) {
             for my $name ( sort keys %{ $self->conf->{$type} } ) {
                 my $sub =
-                  HANDLER->tsv->{jail}->jail_reval( "sub{return("
-                      . HANDLER->substitute( $self->conf->{$type}->{$name} )
-                      . ")}" );
+                  HANDLER->buildSub(
+                    HANDLER->substitute( $self->conf->{$type}->{$name} ) );
                 if ($sub) {
                     $self->{"_$type"}->{$name} = $sub;
                 }
@@ -241,8 +240,7 @@ sub reloadConf {
         }
     }
     $self->{_jsRedirect} =
-      HANDLER->tsv->{jail}->jail_reval(
-        "sub{return " . HANDLER->substitute( $self->conf->{jsRedirect} ) . "}" )
+      HANDLER->buildSub( HANDLER->substitute( $self->conf->{jsRedirect} ) )
       or $self->lmLog(
         'jsRedirect returns an error: ' . HANDLER->tsv->{jail}->error,
         'error' );

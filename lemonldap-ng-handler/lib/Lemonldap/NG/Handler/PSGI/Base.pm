@@ -95,9 +95,9 @@ sub status {
 # response is 200.
 sub _authAndTrace {
     my ( $self, $req, $noCall ) = @_;
-    my $res = $self->api->run( $req, $self->{rule} );
+    my ( $res, $session ) = $self->api->run( $req, $self->{rule} );
     $self->portal( $self->api->tsv->{portal}->() );
-    $req->userData( $self->api->datas ) if ( $self->api->datas );
+    $req->userData($session) if ($session);
 
     if ( $res < 300 ) {
         if ($noCall) {

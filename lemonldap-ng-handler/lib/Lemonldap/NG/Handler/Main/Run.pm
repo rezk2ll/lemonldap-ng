@@ -127,7 +127,7 @@ sub run {
         $class->set_user( $session->{ $class->tsv->{whatToTrace} } );
 
         # AUTHORIZATION
-        return $class->forbidden($session)
+        return ( $class->forbidden($session), $session )
           unless ( $class->grant( $session, $uri, $cond ) );
         $class->updateStatus( 'OK', $session->{ $class->tsv->{whatToTrace} } );
 
@@ -155,7 +155,7 @@ sub run {
         $class->postOutputFilter( $session, $uri );
         $class->postInputFilter( $session, $uri );
 
-        return $class->OK;
+        return ( $class->OK, $session );
     }
 
     elsif ( $protection == $class->UNPROTECT ) {

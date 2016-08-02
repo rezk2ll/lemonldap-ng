@@ -368,6 +368,7 @@ sub buildHiddenForm {
 
 # Return skin name
 # @return skin name
+# TODO: create property for skinRule
 sub getSkin {
     my ( $self, $req ) = @_;
 

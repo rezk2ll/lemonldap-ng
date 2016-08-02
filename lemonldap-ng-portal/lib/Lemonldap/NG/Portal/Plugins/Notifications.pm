@@ -226,7 +226,7 @@ sub getNotifBack {
       or return $self->sendError( $req, 'Unable to decrypt', 500 );
 
     # Verify that session exists
-    $self->p->HANDLER->retrieveSession($id)
+    $req->userData( $self->p->HANDLER->retrieveSession($id) )
       or return $self->sendError( $req, 'Unknown session', 401 );
 
     # Restore datas
@@ -283,6 +283,9 @@ sub getNotifBack {
                     # Current pending notification has not been found in
                     # request
                     $result = $fileResult = 0;
+                    $self->lmLog(
+                        'Current pending notification has not been found',
+                        'debug' );
                     next;
                 }
 
@@ -308,17 +311,22 @@ sub getNotifBack {
             # One pending notification has been found and not accepted,
             # restart process to display pending notifications
             # TODO: is it a good idea to launch all 'afterDatas' subs ?
+            $self->lmLog(
+                'Pending notification has been found and not accepted',
+                'debug' );
             return $self->p->do( $req, $self->p->afterDatas );
         }
 
-        # All pending notifications has been accepted, restore cookies and
+        # All pending notifications have been accepted, restore cookies and
         # launch 'controlUrl' to restore "urldc" using do()
+        $self->lmLog( 'All pending notifications have been accepted', 'debug' );
         $self->rebuildCookies($req);
         $self->p->do( $req, ['controlUrl'] );
     }
     else {
         # No notifications checked here, this entry point must not be called.
         # Redirecting to portal
+        $self->lmLog( 'No notifications checked', 'debug' );
         $req->mustRedirect(1);
         $self->p->do( $req, [] );
     }
