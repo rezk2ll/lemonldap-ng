@@ -12,7 +12,8 @@ our $VERSION = '2.0.0';
 
 sub handler {
     die "Must be overloaded" unless ($#_);
-    return $_[0]->run( $_[1] );
+    my ($res) = $_[0]->run( $_[1] );
+    return $res;
 }
 
 sub logout {

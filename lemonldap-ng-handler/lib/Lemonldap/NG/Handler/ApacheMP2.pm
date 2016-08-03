@@ -44,7 +44,8 @@ our $request;    # Apache2::RequestRec object for current request
 sub handler {
     my $class;
     $class = $#_ ? shift : __PACKAGE__;
-    return $class->run(@_);
+    my ($res) = $class->run(@_);
+    return $res;
 }
 
 ## @rmethod protected int redirectFilter(string url, Apache2::Filter f)
