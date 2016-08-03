@@ -421,14 +421,14 @@ sub conditionSub {
             $url
             ? (
                 sub {
-                    $Lemonldap::NG::Handler::Main::datas->{_logout} = $url;
+                    $_[0]->{_logout} = $url;
                     return 0;
                 },
                 0
               )
             : (
                 sub {
-                    $Lemonldap::NG::Handler::Main::datas->{_logout} =
+                    $_[0]->{_logout} =
                       &{ $class->tsv->{portal} }();
                     return 0;
                 },
