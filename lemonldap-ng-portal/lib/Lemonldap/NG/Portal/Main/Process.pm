@@ -279,7 +279,7 @@ sub setSessionInfo {
     $req->{sessionInfo}->{_url} = $req->{urldc};
 
     # Share sessionInfo with underlying handler (needed for safe jail)
-    $req->userData( $req->{sessionInfo} );
+    $req->userData( $req->sessionInfo );
 
     # Call UserDB setSessionInfo
     return $self->_userDB->setSessionInfo($req);

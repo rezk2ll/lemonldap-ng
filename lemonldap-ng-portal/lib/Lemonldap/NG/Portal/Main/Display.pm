@@ -21,10 +21,7 @@ sub display {
         $skinfile = 'error';
 
         # Check URL
-        $self->_sub('controlUrlOrigin');
-
-        # Load session content
-        $self->_sub('controlExistingSession');
+        $self->controlUrl($req);
 
         %templateParams = (
             PORTAL_URL => $self->conf->{portal},

@@ -458,7 +458,12 @@ sub _filterHash {
 
             # Check grant function if display is "auto" (this is the default)
             delete $apphash->{$key}
-              unless ( $self->p->HANDLER->grant( $appuri, undef, $vhost ) );
+              unless (
+                $self->p->HANDLER->grant(
+                    $req->sessionInfo,
+                    $appuri, undef, $vhost
+                )
+              );
             next;
         }
     }
