@@ -7,6 +7,29 @@ our $VERSION = '2.0.0';
 package Lemonldap::NG::Portal::Main;
 use strict;
 
+has skinRules => ( is => 'rw' );
+
+sub displayInit {
+    my ($self) = @_;
+    $self->skinRules( [] );
+    if ( $self->conf->{portalSkinRules} ) {
+        foreach my $skinRule ( sort keys %{ $self->conf->{portalSkinRules} } ) {
+            my $sub = HANDLER->buildSub( HANDLER->substitute($skinRule) );
+            if ($sub) {
+                push @{ $self->skinRules },
+                  [ $self->conf->{portalSkinRules}->{$skinRule}, $sub ];
+            }
+            else {
+                $self->lmLog(
+                    qq(Skin rule "$skinRule" returns an error: )
+                      . HANDLER->tsv->{jail}->error,
+                    'error'
+                );
+            }
+        }
+    }
+}
+
 # Call portal process and set template parameters
 # @return template name and template parameters
 sub display {
@@ -376,12 +399,10 @@ sub getSkin {
     $req->{sessionInfo}->{ipAddr} ||= $req->remote_ip;
 
     # Load specific skin from skinRules
-    if ( $self->conf->{portalSkinRules} ) {
-        foreach my $skinRule ( sort keys %{ $self->conf->{portalSkinRules} } ) {
-            if ( HANDLER->tsv->{jail}->reval($skinRule) ) {
-                $skin = $self->conf->{portalSkinRules}->{$skinRule};
-                $self->lmLog( "Skin $skin selected from skin rule", 'debug' );
-            }
+    foreach my $rule ( @{ $self->skinRules } ) {
+        if ( $rule->[1]->( $req->sessionInfo ) ) {
+            $skin = $rule->[0];
+            $self->lmLog( "Skin $skin selected from skin rule", 'debug' );
         }
     }
 
@@ -433,7 +454,8 @@ sub mkSessionArray {
       . '<th trspan="date">Date</th><th trspan="ipAddr">IP address</th>';
     $tmp .= "<th>" . $self->conf->{sessionDataToRemember}->{$_} . "</th>"
       foreach ( keys %{ $self->conf->{sessionDataToRemember} } );
-    $tmp .= '<th trspan="errorMsg">Error message</th>' if ($displayError);
+    $tmp .= '<th trspan="errorMsg">Error message</th>'
+      if ($displayError);
     $tmp .= '</tr>';
 
     foreach my $session (@$sessions) {

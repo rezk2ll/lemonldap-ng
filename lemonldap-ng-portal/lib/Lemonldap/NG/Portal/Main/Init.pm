@@ -251,6 +251,7 @@ sub reloadConf {
     }
 
     $self->menu( $self->loadPlugin('::Main::Menu') );
+    $self->displayInit;
     1;
 }
 

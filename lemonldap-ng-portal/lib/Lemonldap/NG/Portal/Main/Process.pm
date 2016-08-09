@@ -138,6 +138,7 @@ sub deleteSession {
             'debug' );
     }
 
+    # TODO
     # Collect logout services and build hidden iFrames
     #if ( $self->{logoutServices} and %{ $self->{logoutServices} } ) {
 
@@ -267,9 +268,10 @@ sub setSessionInfo {
           if $self->conf->{timeoutActivity};
     }
 
-    # Get environment variables matching exportedVars
+    # Get environment variables matching exportedVars (works only with HTTP_*
+    # and SSL_*: see Main/Request.pm)
     foreach ( keys %{ $self->conf->{exportedVars} } ) {
-        if ( my $tmp = $ENV{ $self->conf->{exportedVars}->{$_} } ) {
+        if ( my $tmp = $req->{ $self->conf->{exportedVars}->{$_} } ) {
             $tmp =~ s/[\r\n]/ /gs;
             $req->{sessionInfo}->{$_} = $tmp;
         }

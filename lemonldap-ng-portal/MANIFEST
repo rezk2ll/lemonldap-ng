@@ -49,7 +49,6 @@ lib/Lemonldap/NG/Portal/AuthOpenID.pm
 lib/Lemonldap/NG/Portal/AuthOpenIDConnect.pm
 lib/Lemonldap/NG/Portal/AuthRadius.pm
 lib/Lemonldap/NG/Portal/AuthSAML.pm
-lib/Lemonldap/NG/Portal/AuthSSL.pm
 lib/Lemonldap/NG/Portal/AuthTwitter.pm
 lib/Lemonldap/NG/Portal/AuthWebID.pm
 lib/Lemonldap/NG/Portal/AuthYubikey.pm
