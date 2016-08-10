@@ -76,7 +76,7 @@ stop_server() {
 	#   1 if daemon was already stopped
 	#   2 if daemon could not be stopped
 	#   other if a failure occurred
-	start-stop-daemon --stop --quiet --retry=$STOP_SCHEDULE --pidfile $PID --name $NAME
+	start-stop-daemon --stop --quiet --retry=$STOP_SCHEDULE --pidfile $PID --exec $DAEMON
 	RETVAL="$?"
 	sleep 1
 	return "$RETVAL"
@@ -84,7 +84,7 @@ stop_server() {
 
 reload_server() {
 	# Function that sends a SIGHUP to the daemon/service
-	start-stop-daemon --stop --signal HUP --quiet --pidfile $PID --name $NAME
+	start-stop-daemon --stop --signal HUP --quiet --pidfile $PID --exec $DAEMON
 	return 0
 }
 
