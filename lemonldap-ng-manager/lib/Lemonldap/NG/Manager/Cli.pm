@@ -80,12 +80,13 @@ sub addKey {
     unless ( @_ % 3 == 0 ) {
         die 'usage: "addKey (?:rootKey newKey newValue)+';
     }
+    my $sep = $self->sep;
     my @list;
     while (@_) {
         my $root   = shift;
         my $newKey = shift;
         my $value  = shift;
-        unless ( $root =~ /$simpleHashKeys$/o ) {
+        unless ( $root =~ /$simpleHashKeys$/o or $root =~ /$sep/o ) {
             die "$root is not a simple hash. Aborting";
         }
         push @list, [ $root, $newKey, $value ];
@@ -93,7 +94,16 @@ sub addKey {
     require Clone;
     my $new = Clone::clone( $self->mgr->currentConf );
     foreach my $el (@list) {
-        $new->{ $el->[0] }->{ $el->[1] } = $el->[2];
+        my @path = split $sep, $el->[0];
+        if ( $#path == 0 ) {
+            $new->{ $path[0] }->{ $el->[1] } = $el->[2];
+        }
+        elsif ( $#path == 1 ) {
+            $new->{ $path[0] }->{ $path[1] }->{ $el->[1] } = $el->[2];
+        }
+        else {
+            die $el->[0] . " has too many levels. Aborting";
+        }
     }
     return $self->_save($new);
 }
@@ -103,11 +113,12 @@ sub delKey {
     unless ( @_ % 2 == 0 ) {
         die 'usage: "delKey (?:rootKey key)+';
     }
+    my $sep = $self->sep;
     my @list;
     while (@_) {
         my $root = shift;
         my $key  = shift;
-        unless ( $root =~ /$simpleHashKeys$/o ) {
+        unless ( $root =~ /$simpleHashKeys$/o or $root =~ /$sep/o ) {
             die "$root is not a simple hash. Aborting";
         }
         push @list, [ $root, $key ];
@@ -115,7 +126,16 @@ sub delKey {
     require Clone;
     my $new = Clone::clone( $self->mgr->currentConf );
     foreach my $el (@list) {
-        delete $new->{ $el->[0] }->{ $el->[1] };
+        my @path = split $sep, $el->[0];
+        if ( $#path == 0 ) {
+            delete $new->{ $path[0] }->{ $el->[1] };
+        }
+        elsif ( $#path == 1 ) {
+            delete $new->{ $path[0] }->{ $path[1] }->{ $el->[1] };
+        }
+        else {
+            die $el->[0] . " has too many levels. Aborting";
+        }
     }
     return $self->_save($new);
 }
