@@ -37,6 +37,7 @@ sub cTrees {
                 help  => 'authsaml.html#options',
                 form  => 'simpleInputContainer',
                 nodes => [
+                    'samlIDPMetaDataOptionsResolutionRule',
                     'samlIDPMetaDataOptionsNameIDFormat',
                     'samlIDPMetaDataOptionsForceAuthn',
                     'samlIDPMetaDataOptionsIsPassive',

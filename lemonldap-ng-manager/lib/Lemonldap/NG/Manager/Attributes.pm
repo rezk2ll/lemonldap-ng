@@ -2204,6 +2204,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
+        'samlIDPMetaDataOptionsResolutionRule' => {
+            'default' => '',
+            'type'    => 'longtext'
+        },
         'samlIDPMetaDataOptionsSignSLOMessage' => {
             'default' => -1,
             'type'    => 'trool'

@@ -253,6 +253,7 @@ sub defaultValues {
         'samlIDPMetaDataOptionsIsPassive'                => 0,
         'samlIDPMetaDataOptionsNameIDFormat'             => '',
         'samlIDPMetaDataOptionsRequestedAuthnContext'    => '',
+        'samlIDPMetaDataOptionsResolutionRule'           => '',
         'samlIDPMetaDataOptionsSignSLOMessage'           => -1,
         'samlIDPMetaDataOptionsSignSSOMessage'           => -1,
         'samlIDPMetaDataOptionsSLOBinding'               => '',

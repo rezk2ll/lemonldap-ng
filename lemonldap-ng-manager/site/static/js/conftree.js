@@ -369,6 +369,13 @@ function templates(tpl,key) {
       "_nodes" : [
          {
             "default" : "",
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsResolutionRule",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsResolutionRule",
+            "title" : "samlIDPMetaDataOptionsResolutionRule",
+            "type" : "longtext"
+         },
+         {
+            "default" : "",
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsNameIDFormat",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsNameIDFormat",
             "select" : [

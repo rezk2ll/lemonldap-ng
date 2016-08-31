@@ -1516,6 +1516,10 @@ sub attributes {
             type    => 'bool',
             default => 1,
         },
+        samlIDPMetaDataOptionsResolutionRule => {
+            type    => 'longtext',
+            default => '',
+        },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {
