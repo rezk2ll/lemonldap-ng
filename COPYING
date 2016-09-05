@@ -141,6 +141,11 @@ Files: lemonldap-ng-manager/site/static/bwr/es5-shim/*
 Copyright: 2009-2015, Kristopher Michael Kowal and contributors
 License: Expat
 
+Files: lemonldap-ng-portal/site/static/bwr/crypto-js/*
+Copyright: 2009-2013 Jeff Mott
+ 2013-2016 Evan Vosberg
+License: Expat
+
 Files: debian/*
 Copyright: 2005-2016, Xavier Guimard <x.guimard@free.fr>
 License: GPL-2+

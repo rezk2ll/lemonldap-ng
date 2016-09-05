@@ -115,7 +115,6 @@ lib/Lemonldap/NG/Portal/UserDBGoogle.pm
 lib/Lemonldap/NG/Portal/UserDBMulti.pm
 lib/Lemonldap/NG/Portal/UserDBOpenID.pm
 lib/Lemonldap/NG/Portal/UserDBOpenIDConnect.pm
-lib/Lemonldap/NG/Portal/UserDBProxy.pm
 lib/Lemonldap/NG/Portal/UserDBSAML.pm
 lib/Lemonldap/NG/Portal/UserDBWebID.pm
 Makefile.PL
@@ -144,6 +143,10 @@ site/htdocs/static/bwr/bootstrap/dist/fonts/glyphicons-halflings-regular.woff
 site/htdocs/static/bwr/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.js
 site/htdocs/static/bwr/bootstrap/dist/js/bootstrap.min.js
+site/htdocs/static/bwr/crypto-js/enc-base64.js
+site/htdocs/static/bwr/crypto-js/enc-base64.min.js
+site/htdocs/static/bwr/crypto-js/sha256.js
+site/htdocs/static/bwr/crypto-js/sha256.min.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.js
@@ -271,6 +274,7 @@ site/templates/common/mail_password.tpl
 site/templates/common/mail_register_confirm.tpl
 site/templates/common/mail_register_done.tpl
 site/templates/common/notification.xsl
+site/templates/common/oidc_checksession.tpl
 site/templates/common/redirect.tpl
 site/templates/common/saml2-metadata.tpl
 site/templates/common/script.tpl
