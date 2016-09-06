@@ -109,7 +109,7 @@ sub extractFormInfo {
     # 3. Check if an OpenID url has been submitted
     else {
         my $tmp = $url;
-        $tmp =~ m#^http//(.*?)/#;
+        $tmp =~ m#^https?://(.*?)/#;
         if ( $tmp =~
             $self->{_reopenIdIDPList} xor $self->{_openIdIDPListIsWhite} )
         {
