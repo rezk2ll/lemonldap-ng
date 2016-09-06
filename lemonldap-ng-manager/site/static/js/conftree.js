@@ -517,7 +517,7 @@ function templates(tpl,key) {
             "type" : "trool"
          },
          {
-            "default" : 0,
+            "default" : 1,
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckSSOMessageSignature",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckSSOMessageSignature",
             "title" : "samlIDPMetaDataOptionsCheckSSOMessageSignature",
@@ -531,7 +531,7 @@ function templates(tpl,key) {
             "type" : "trool"
          },
          {
-            "default" : 0,
+            "default" : 1,
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckSLOMessageSignature",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckSLOMessageSignature",
             "title" : "samlIDPMetaDataOptionsCheckSLOMessageSignature",
@@ -639,7 +639,7 @@ function templates(tpl,key) {
             "type" : "select"
          },
          {
-            "default" : 0,
+            "default" : 1,
             "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckConditions",
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckConditions",
             "title" : "samlIDPMetaDataOptionsCheckConditions",
@@ -769,7 +769,7 @@ function templates(tpl,key) {
                   "type" : "trool"
                },
                {
-                  "default" : 0,
+                  "default" : 1,
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsCheckSSOMessageSignature",
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsCheckSSOMessageSignature",
                   "title" : "samlSPMetaDataOptionsCheckSSOMessageSignature",
@@ -783,7 +783,7 @@ function templates(tpl,key) {
                   "type" : "trool"
                },
                {
-                  "default" : 0,
+                  "default" : 1,
                   "get" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsCheckSLOMessageSignature",
                   "id" : tpl+"s/"+key+"/"+"samlSPMetaDataOptionsCheckSLOMessageSignature",
                   "title" : "samlSPMetaDataOptionsCheckSLOMessageSignature",

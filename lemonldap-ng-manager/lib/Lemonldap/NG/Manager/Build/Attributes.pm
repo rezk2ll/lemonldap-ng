@@ -1465,7 +1465,7 @@ sub attributes {
         },
         samlIDPMetaDataOptionsCheckSSOMessageSignature => {
             type    => 'bool',
-            default => 0,
+            default => 1,
         },
         samlIDPMetaDataOptionsSignSLOMessage => {
             type    => 'trool',
@@ -1473,7 +1473,7 @@ sub attributes {
         },
         samlIDPMetaDataOptionsCheckSLOMessageSignature => {
             type    => 'bool',
-            default => 0,
+            default => 1,
         },
         samlIDPMetaDataOptionsSSOBinding => {
             type   => 'select',
@@ -1510,7 +1510,7 @@ sub attributes {
         },
         samlIDPMetaDataOptionsCheckConditions => {
             type    => 'bool',
-            default => 0,
+            default => 1,
         },
         samlSPMetaDataOptionsForceUTF8 => {
             type    => 'bool',
@@ -1625,7 +1625,7 @@ sub attributes {
         },
         samlSPMetaDataOptionsCheckSSOMessageSignature => {
             type    => 'bool',
-            default => 0,
+            default => 1,
         },
         samlSPMetaDataOptionsSignSLOMessage => {
             type    => 'trool',
@@ -1633,7 +1633,7 @@ sub attributes {
         },
         samlSPMetaDataOptionsCheckSLOMessageSignature => {
             type    => 'bool',
-            default => 0,
+            default => 1,
         },
         samlSPMetaDataOptionsEncryptionMode => {
             type   => 'select',

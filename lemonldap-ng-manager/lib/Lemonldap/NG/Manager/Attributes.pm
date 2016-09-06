@@ -2091,15 +2091,15 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'samlIDPMetaDataOptionsCheckConditions' => {
-            'default' => 0,
+            'default' => 1,
             'type'    => 'bool'
         },
         'samlIDPMetaDataOptionsCheckSLOMessageSignature' => {
-            'default' => 0,
+            'default' => 1,
             'type'    => 'bool'
         },
         'samlIDPMetaDataOptionsCheckSSOMessageSignature' => {
-            'default' => 0,
+            'default' => 1,
             'type'    => 'bool'
         },
         'samlIDPMetaDataOptionsEncryptionMode' => {
@@ -2407,11 +2407,11 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'       => 'keyTextContainer'
         },
         'samlSPMetaDataOptionsCheckSLOMessageSignature' => {
-            'default' => 0,
+            'default' => 1,
             'type'    => 'bool'
         },
         'samlSPMetaDataOptionsCheckSSOMessageSignature' => {
-            'default' => 0,
+            'default' => 1,
             'type'    => 'bool'
         },
         'samlSPMetaDataOptionsEnableIDPInitiatedURL' => {
