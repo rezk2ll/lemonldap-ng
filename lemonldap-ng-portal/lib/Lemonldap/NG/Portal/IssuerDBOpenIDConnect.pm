@@ -559,23 +559,17 @@ sub issuerForUnAuthUser {
             -type                        => 'text/html',
             -access_control_allow_origin => '*'
         );
-        print $self->start_html(
-            -title  => 'Check Session',
-            -script => [
-                {
-                    -type => 'text/javascript',
-                    -src =>
-'http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js'
-                },
-                {
-                    -type => 'text/javascript',
-                    -src =>
-'http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js'
-                },
-                { -code => $self->getSessionManagementOPIFrameJS }
-            ]
-        );
-        print $self->end_html();
+
+        my $checksession_tpl =
+          $self->getApacheHtdocsPath
+          . "/site/templates/common/oidc_checksession.tpl";
+
+        my $static_prefix = "";    #TODO
+
+        my $template = HTML::Template->new( filename => $checksession_tpl );
+        $template->param( "JS_CODE" => $self->getSessionManagementOPIFrameJS );
+        $template->param( "STATIC_PREFIX" => $static_prefix );
+        print $template->output;
         $self->quit();
     }
 
