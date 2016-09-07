@@ -50,6 +50,7 @@ sub authForce {
 
 sub getDisplayType {
     my $self = shift;
+    return unless defined $self->{_multi}->{last};
     my $s    = $self->{_multi}->{last}->[0] . "::getDisplayType";
     return &{$s};
 }
