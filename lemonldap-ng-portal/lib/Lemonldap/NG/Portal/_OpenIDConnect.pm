@@ -407,6 +407,11 @@ sub getAuthorizationCodeAccessToken {
       $self->{_oidcOPList}->{$op}->{conf}->{token_endpoint};
     my $grant_type = "authorization_code";
 
+    unless ( $auth_method =~ /^client_secret_(basic|post)$/o ) {
+        $self->lmLog( "Bad authentication method on token endpoint", 'error' );
+        return 0;
+    }
+
     $self->lmLog(
         "Using auth method $auth_method to token endpoint $access_token_uri",
         'debug' );
@@ -1148,8 +1153,7 @@ sub getAttributesListFromClaim {
     $attributes->{phone} = [qw/phone_number phone_number_verified/];
 
     # Additional claims
-    my $extraClaims =
-      $self->{oidcRPMetaDataOptionsExtraClaims}->{$rp};
+    my $extraClaims = $self->{oidcRPMetaDataOptionsExtraClaims}->{$rp};
 
     if ($extraClaims) {
         foreach my $claim ( keys %$extraClaims ) {
