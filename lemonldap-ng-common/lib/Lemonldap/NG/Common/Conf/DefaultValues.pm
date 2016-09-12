@@ -339,6 +339,7 @@ sub defaultValues {
         'syslog'                                  => '',
         'timeout'                                 => 72000,
         'timeoutActivity'                         => 0,
+        'timeoutActivityInterval'                 => 60,
         'trustedProxies'                          => '',
         'twitterAuthnLevel'                       => 1,
         'userControl'                             => '^[\\w\\.\\-@]+$',

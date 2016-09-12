@@ -599,6 +599,7 @@
 "syslog": "Facilité syslog",
 "timeout": "Durée de vie maximale des sessions",
 "timeoutActivity": "Délai d'expiration des sessions",
+"timeoutActivityInterval": "Intervalle de mise à jour des sessions",
 "trustedDomains": "Domaines approuvés",
 "trustedProxies": "IP des proxys de confiance",
 "twitterAppName": "Nom de l'application",

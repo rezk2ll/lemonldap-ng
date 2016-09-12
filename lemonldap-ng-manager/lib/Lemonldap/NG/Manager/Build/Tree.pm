@@ -466,6 +466,7 @@ sub tree {
                         'storePassword',
                         'timeout',
                         'timeoutActivity',
+                        'timeoutActivityInterval',
                         'grantSessionRules',
                         {
                             title => 'sessionStorage',

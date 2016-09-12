@@ -107,6 +107,7 @@ sub reload {
 #      - whatToTrace
 #      - customFunctions
 #      - timeoutActivity
+#      - timeoutActivityInterval
 #      - useRedirectOnError
 #      - useRedirectOnForbidden
 #      - useSafeJail
@@ -186,8 +187,9 @@ sub defaultValuesInit {
         qw(
         cda                    cookieExpiration cookieName
         customFunctions        httpOnly         securedCookie
-        timeout                timeoutActivity  useRedirectOnError
-        useRedirectOnForbidden useSafeJail      whatToTrace
+        timeout                timeoutActivity  timeoutActivityInterval
+        useRedirectOnError     useRedirectOnForbidden useSafeJail
+        whatToTrace
         )
     );
 

@@ -480,6 +480,12 @@ sub attributes {
             default       => 0,
             documentation => 'Session activity timeout on server side',
         },
+        timeoutActivityInterval => {
+            type          => 'int',
+            test          => sub { $_[0] >= 0 },
+            default       => 60,
+            documentation => 'Update session timeout interval on server side',
+        },
         trustedProxies => {
             type          => 'text',
             default       => '',

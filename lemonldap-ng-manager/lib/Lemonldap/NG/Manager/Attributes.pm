@@ -2720,6 +2720,13 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             },
             'type' => 'int'
         },
+        'timeoutActivityInterval' => {
+            'default' => 60,
+            'test'    => sub {
+                $_[0] >= 0;
+            },
+            'type' => 'int'
+        },
         'trustedDomains' => {
             'type' => 'text'
         },

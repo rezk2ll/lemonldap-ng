@@ -424,8 +424,11 @@ sub retrieveSession {
         }
 
         # Update the session to notify activity, if necessary
-        if ( $class->tsv->{timeoutActivity}
-            and ( $now - $session->data->{_lastSeen} > 60 ) )
+        if (
+            $class->tsv->{timeoutActivity}
+            and ( $now - $session->data->{_lastSeen} >
+                $class->tsv->{timeoutActivityInterval} )
+          )
         {
             $class->session->update( { '_lastSeen' => $now } );
 
