@@ -1285,11 +1285,11 @@ sub authLogout {
         $method = $self->getFirstHttpMethod( $server, $idp, $protocolType );
     }
 
-    # Failback to SOAP
+    # Skip SLO if no method found
     unless ( defined $method and $method != -1 ) {
         $self->lmLog( "No method found with IDP $idpConfKey for SLO profile",
             'debug' );
-        $method = $self->getHttpMethod("soap");
+        return PE_OK;
     }
 
     $self->lmLog(
