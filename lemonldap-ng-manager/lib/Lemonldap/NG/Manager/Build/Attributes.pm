@@ -2376,8 +2376,9 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
           { type => 'bool', default => 1 },
         oidcOPMetaDataOptionsIDTokenMaxAge => { type => 'int',  default => 30 },
         oidcOPMetaDataOptionsUseNonce      => { type => 'bool', default => 1 },
-        oidcOPMetaDataOptionsDisplayName => { type => 'text', },
-        oidcOPMetaDataOptionsIcon        => { type => 'text', },
+        oidcOPMetaDataOptionsDisplayName  => { type => 'text', },
+        oidcOPMetaDataOptionsIcon         => { type => 'text', },
+        oidcOPMetaDataOptionsStoreIDToken => { type => 'bool', default => 0 },
 
         # OpenID Connect relying parties
         oidcRPMetaDataExportedVars => {

@@ -394,6 +394,7 @@
 "oidcOPMetaDataOptionsJWKSTimeout": "JWKS data timeout",
 "oidcOPMetaDataOptionsProtocol": "Protocol",
 "oidcOPMetaDataOptionsScope": "Scope",
+"oidcOPMetaDataOptionsStoreIDToken": "Store ID Token",
 "oidcOPMetaDataOptionsTokenEndpointAuthMethod": "Token endpoint authentication method",
 "oidcOPName": "OpenID Connect Provider Name",
 "oidcParams": "OpenID Connect parameters",

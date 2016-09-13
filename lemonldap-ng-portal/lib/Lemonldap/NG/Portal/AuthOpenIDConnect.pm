@@ -29,14 +29,27 @@ sub authInit {
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
     my $self = shift;
+    my $op   = $self->{_oidcOPCurrent};
 
     $self->{sessionInfo}->{'_user'} = $self->{user};
     $self->{sessionInfo}->{authenticationLevel} = $self->{oidcAuthnLevel};
 
-    $self->{sessionInfo}->{OpenIDConnect_OP} = $self->{_oidcOPCurrent};
+    $self->{sessionInfo}->{OpenIDConnect_OP} = $op;
     $self->{sessionInfo}->{OpenIDConnect_access_token} =
       $self->{tmp}->{access_token};
-    $self->{sessionInfo}->{OpenIDConnect_IDToken} = $self->{tmp}->{id_token};
+
+    # Keep ID Token in session
+    my $store_IDToken =
+      $self->{oidcOPMetaDataOptions}->{$op}
+      ->{oidcOPMetaDataOptionsStoreIDToken};
+    if ($store_IDToken) {
+        $self->lmLog( "Store ID Token in session", 'debug' );
+        $self->{sessionInfo}->{OpenIDConnect_IDToken} =
+          $self->{tmp}->{id_token};
+    }
+    else {
+        $self->lmLog( "ID Token will not be stored in session", 'debug' );
+    }
 
     PE_OK;
 }

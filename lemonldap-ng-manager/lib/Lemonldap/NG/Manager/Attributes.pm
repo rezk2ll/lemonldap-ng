@@ -1483,6 +1483,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 'openid profile',
             'type'    => 'text'
         },
+        'oidcOPMetaDataOptionsStoreIDToken' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'oidcOPMetaDataOptionsTokenEndpointAuthMethod' => {
             'default' => 'client_secret_post',
             'select'  => [

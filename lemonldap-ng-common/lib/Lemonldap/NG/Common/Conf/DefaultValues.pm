@@ -160,6 +160,7 @@ sub defaultValues {
         'oidcOPMetaDataOptionsJWKSTimeout'             => 0,
         'oidcOPMetaDataOptionsMaxAge'                  => 0,
         'oidcOPMetaDataOptionsScope'                   => 'openid profile',
+        'oidcOPMetaDataOptionsStoreIDToken'            => 0,
         'oidcOPMetaDataOptionsTokenEndpointAuthMethod' => 'client_secret_post',
         'oidcOPMetaDataOptionsUseNonce'                => 1,
         'oidcRPCallbackGetParam'     => 'openidconnectcallback',

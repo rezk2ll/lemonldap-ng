@@ -80,6 +80,13 @@ function templates(tpl,key) {
                   "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsClientSecret",
                   "title" : "oidcOPMetaDataOptionsClientSecret",
                   "type" : "password"
+               },
+               {
+                  "default" : 0,
+                  "get" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsStoreIDToken",
+                  "id" : tpl+"s/"+key+"/"+"oidcOPMetaDataOptionsStoreIDToken",
+                  "title" : "oidcOPMetaDataOptionsStoreIDToken",
+                  "type" : "bool"
                }
             ],
             "id" : "oidcOPMetaDataOptionsConfiguration",

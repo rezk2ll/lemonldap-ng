@@ -136,7 +136,8 @@ sub cTrees {
                             'oidcOPMetaDataOptionsConfigurationURI',
                             'oidcOPMetaDataOptionsJWKSTimeout',
                             'oidcOPMetaDataOptionsClientID',
-                            'oidcOPMetaDataOptionsClientSecret'
+                            'oidcOPMetaDataOptionsClientSecret',
+                            'oidcOPMetaDataOptionsStoreIDToken'
                         ]
                     },
                     {
