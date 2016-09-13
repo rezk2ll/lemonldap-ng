@@ -696,6 +696,7 @@
 "samlIDPMetaDataOptionsSignature": "Signature",
 "samlIDPMetaDataOptionsBinding": "Binding",
 "samlIDPMetaDataOptionsSecurity": "Security",
+"samlIDPMetaDataOptionsStoreSAMLToken": "Store SAML Token",
 "samlSPMetaDataNodes": "SAML service providers",
 "samlSPMetaDataXML": "Metadata",
 "samlSPMetaDataExportedAttributes": "Exported attributes",

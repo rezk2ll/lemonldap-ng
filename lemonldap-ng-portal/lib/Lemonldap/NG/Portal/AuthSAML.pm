@@ -1131,7 +1131,18 @@ sub setAuthSessionInfo {
     # Dump Lasso objects in session
     $self->{sessionInfo}->{_lassoSessionDump}  = $session->dump()  if $session;
     $self->{sessionInfo}->{_lassoIdentityDump} = $identity->dump() if $identity;
-    $self->{sessionInfo}->{_samlToken} = $self->{_samlToken};
+
+    # Keep SAML Token in session
+    my $store_samlToken =
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
+      ->{samlIDPMetaDataOptionsStoreSAMLToken};
+    if ($store_samlToken) {
+        $self->lmLog( "Store SAML Token in session", 'debug' );
+        $self->{sessionInfo}->{_samlToken} = $self->{_samlToken};
+    }
+    else {
+        $self->lmLog( "SAML Token will not be stored in session", 'debug' );
+    }
 
     $self->{_lassoLogin} = $login;
 

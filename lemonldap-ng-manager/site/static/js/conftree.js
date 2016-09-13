@@ -501,6 +501,13 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsForceUTF8",
             "title" : "samlIDPMetaDataOptionsForceUTF8",
             "type" : "bool"
+         },
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsStoreSAMLToken",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsStoreSAMLToken",
+            "title" : "samlIDPMetaDataOptionsStoreSAMLToken",
+            "type" : "bool"
          }
       ],
       "id" : "samlIDPMetaDataOptionsSession",

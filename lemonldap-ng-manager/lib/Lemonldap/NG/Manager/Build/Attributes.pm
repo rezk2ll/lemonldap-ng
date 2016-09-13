@@ -1518,13 +1518,13 @@ sub attributes {
             type    => 'bool',
             default => 1,
         },
-        samlSPMetaDataOptionsForceUTF8 => {
-            type    => 'bool',
-            default => 1,
-        },
         samlIDPMetaDataOptionsResolutionRule => {
             type    => 'longtext',
             default => '',
+        },
+        samlIDPMetaDataOptionsStoreSAMLToken => {
+            type    => 'bool',
+            default => 0,
         },
 
         # SP keys
@@ -1653,6 +1653,10 @@ sub attributes {
         samlSPMetaDataOptionsEnableIDPInitiatedURL => {
             type    => 'bool',
             default => 0,
+        },
+        samlSPMetaDataOptionsForceUTF8 => {
+            type    => 'bool',
+            default => 1,
         },
 
         # AUTH, USERDB and PASSWORD MODULES

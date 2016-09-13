@@ -51,7 +51,8 @@ sub cTrees {
                 form  => 'simpleInputContainer',
                 nodes => [
                     "samlIDPMetaDataOptionsAdaptSessionUtime",
-                    "samlIDPMetaDataOptionsForceUTF8"
+                    "samlIDPMetaDataOptionsForceUTF8",
+                    "samlIDPMetaDataOptionsStoreSAMLToken"
                 ]
             },
             {

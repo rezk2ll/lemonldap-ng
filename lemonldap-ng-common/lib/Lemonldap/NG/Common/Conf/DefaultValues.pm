@@ -258,6 +258,7 @@ sub defaultValues {
         'samlIDPMetaDataOptionsSignSSOMessage'           => -1,
         'samlIDPMetaDataOptionsSLOBinding'               => '',
         'samlIDPMetaDataOptionsSSOBinding'               => '',
+        'samlIDPMetaDataOptionsStoreSAMLToken'           => 0,
         'samlIdPResolveCookie'                           => 'lemonldapidp',
         'samlIDPSSODescriptorArtifactResolutionServiceArtifact' =>
 '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',

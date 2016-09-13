@@ -2276,6 +2276,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
+        'samlIDPMetaDataOptionsStoreSAMLToken' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'samlIDPMetaDataXML' => {
             'type' => 'file'
         },
