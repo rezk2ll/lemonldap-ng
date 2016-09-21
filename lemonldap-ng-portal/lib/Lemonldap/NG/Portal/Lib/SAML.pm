@@ -17,11 +17,9 @@ our $VERSION = '2.0.0';
 
 # PROPERTIES
 
-has lassoServer      => ( is => 'rw' );
-has spList           => ( is => 'rw', default => sub { {} } );
-has idpList          => ( is => 'rw', default => sub { {} } );
-has privateKeyEnc    => ( is => 'rw' );
-has privateKeyEncPwd => ( is => 'rw' );
+has lassoServer => ( is => 'rw' );
+has spList      => ( is => 'rw', default => sub { {} } );
+has idpList     => ( is => 'rw', default => sub { {} } );
 
 # INITIALIZATION
 
@@ -40,8 +38,8 @@ BEGIN {
             "Lasso",
             [qw/ error critical warning message info debug /],
             sub {
-                $_[0]->lmLog( $_[0] . " error " . $_[1] . ": " . $_[2],
-                    'debug' );
+                $_[0]
+                  ->lmLog( $_[0] . " error " . $_[1] . ": " . $_[2], 'debug' );
             }
         );
     }
@@ -104,16 +102,13 @@ sub init {
 
     # Conf initialization
 
-    # use signature cert for encryption unless defined
-    if ( $self->conf->{samlServicePrivateKeyEnc} ) {
-        $self->privateKeyEnc( $self->conf->{samlServicePrivateKeyEnc} );
-        $self->privateKeyEncPwd( $self->conf->{samlServicePrivateKeyEncPwd} );
-    }
-    else {
-        $self->privateKeyEnc( $self->conf->{samlServicePrivateKeySig} );
-        $self->privateKeyEncPwd( $self->conf->{samlServicePrivateKeySigPwd} );
-    }
+    return 0 unless ( $self->lassoServer( $self->loadService ) );
+}
 
+sub loadService {
+    my ($self) = @_;
+
+    # Check if certificate is available
     unless ($self->conf->{samlServicePublicKeySig}
         and $self->conf->{samlServicePrivateKeySig} )
     {
@@ -121,13 +116,6 @@ sub init {
         return 0;
     }
 
-    # TODO
-    $self->lassoServer( $self->loadService() ) or return 0;
-    return 1;
-}
-
-sub loadService {
-    my ($self) = @_;
     my $serviceCertificate;
     if (    $self->conf->{samlServiceUseCertificateInResponse}
         and $self->conf->{samlServicePublicKeySig} =~ /CERTIFICATE/ )
@@ -149,8 +137,19 @@ sub loadService {
         ),
         $self->conf->{samlServicePrivateKeySig},
         $self->conf->{samlServicePrivateKeySigPwd},
-        $self->privateKeyEnc,
-        $self->privateKeyEncPwd,
+
+        # use signature cert for encryption unless defined
+        (
+            $self->conf->{samlServicePrivateKeyEnc}
+            ? (
+                $self->conf->{samlServicePrivateKeyEnc},
+                $self->conf->{samlServicePrivateKeyEncPwd}
+              )
+            : (
+                $self->conf->{samlServicePrivateKeySig},
+                $self->conf->{samlServicePrivateKeySigPwd}
+            )
+        ),
         $serviceCertificate
     );
 
@@ -162,6 +161,157 @@ sub loadService {
     $self->lmLog( "Service created", 'debug' );
 
     return $server;
+}
+
+sub loadIDPs {
+    my ($self) = @_;
+
+    # Check presence of at least one identity provider in configuration
+    unless ( $self->conf->{samlIDPMetaDataXML}
+        and keys %{ $self->conf->{samlIDPMetaDataXML} } )
+    {
+        $self->lmLog( "No IDP found in configuration", 'warn' );
+    }
+
+    # Load identity provider metadata
+    # IDP metadata are listed in $self->{samlIDPMetaDataXML}
+    # Each key is the IDP name
+    # Build IDP list for later use in extractFormInfo
+    $self->idpList( {} );
+
+    # TODO: QUESTION: do we have to return 0 (<=> block initialization) if one
+    #                 IdP load fails ?
+    foreach ( keys %{ $self->conf->{samlIDPMetaDataXML} } ) {
+        $self->lmLog( "Get Metadata for IDP $_", 'debug' );
+
+        my $idp_metadata =
+          $self->conf->{samlIDPMetaDataXML}->{$_}->{samlIDPMetaDataXML};
+
+        # Check metadata format
+        if ( ref $idp_metadata eq "HASH" ) {
+            $self->error(
+"Metadata for IDP $_ is in old format. Please reload them from Manager"
+            );
+            return 0;
+        }
+
+        if ( $self->conf->{samlMetadataForceUTF8} ) {
+            $idp_metadata = encode( "utf8", $idp_metadata );
+        }
+
+        # Add this IDP to Lasso::Server
+        my $result = $self->addIDP( $self->lassoServer, $idp_metadata );
+
+        unless ($result) {
+            $self->error("Fail to use IDP $_ Metadata");
+            return 0;
+        }
+
+        # Store IDP entityID and Organization Name
+        my ($entityID) = ( $idp_metadata =~ /entityID="(.+?)"/i );
+        my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
+          || ucfirst($_);
+        $self->idpList->{$entityID}->{confKey} = $_;
+        $self->idpList->{$entityID}->{name}    = $name;
+
+        # Set encryption mode
+        my $encryption_mode = $self->conf->{samlIDPMetaDataOptions}->{$_}
+          ->{samlIDPMetaDataOptionsEncryptionMode};
+        my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
+
+        unless (
+            $self->setProviderEncryptionMode(
+                $self->lassoServer->get_provider($entityID),
+                $lasso_encryption_mode
+            )
+          )
+        {
+            $self->error(
+                "Unable to set encryption mode $encryption_mode on IDP $_");
+            return 0;
+        }
+
+        $self->lmLog( "Set encryption mode $encryption_mode on IDP $_",
+            'debug' );
+
+        $self->lmLog( "IDP $_ added", 'debug' );
+    }
+    return 1;
+}
+
+sub loadSPs {
+    my ($self) = @_;
+
+    # Check presence of at least one service provider in configuration
+    unless ( $self->conf->{samlSPMetaDataXML}
+        and keys %{ $self->conf->{samlSPMetaDataXML} } )
+    {
+        $self->lmLog( "No SP found in configuration", 'warn' );
+    }
+
+    # Load service provider metadata
+    # SP metadata are listed in $self->{samlSPMetaDataXML}
+    # Each key is the SP name
+    # Build SP list for later use in extractFormInfo
+    $self->spList( {} );
+    foreach ( keys %{ $self->conf->{samlSPMetaDataXML} } ) {
+
+        $self->lmLog( "Get Metadata for SP $_", 'debug' );
+
+        my $sp_metadata =
+          $self->conf->{samlSPMetaDataXML}->{$_}->{samlSPMetaDataXML};
+
+        # Check metadata format
+        if ( ref $sp_metadata eq "HASH" ) {
+            $self->error(
+"Metadata for SP $_ is in old format. Please reload them from Manager"
+            );
+            return 0;
+        }
+
+        if ( $self->conf->{samlMetadataForceUTF8} ) {
+            $sp_metadata = encode( "utf8", $sp_metadata );
+        }
+
+        # Add this SP to Lasso::Server
+        my $result = $self->addSP( $self->lassoServer, $sp_metadata );
+
+        unless ($result) {
+            $self->error("Fail to use SP $_ Metadata");
+            return 0;
+        }
+
+        # Store SP entityID and Organization Name
+        my ($entityID) = ( $sp_metadata =~ /entityID="(.+?)"/i );
+        my $name = $self->getOrganizationName( $self->lassoServer, $entityID )
+          || ucfirst($_);
+        $self->spList->{$entityID}->{confKey} = $_;
+        $self->spList->{$entityID}->{name}    = $name;
+
+        # Set encryption mode
+        my $encryption_mode = $self->conf->{samlSPMetaDataOptions}->{$_}
+          ->{samlSPMetaDataOptionsEncryptionMode};
+        my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
+
+        unless (
+            $self->setProviderEncryptionMode(
+                $self->lassoServer->get_provider($entityID),
+                $lasso_encryption_mode
+            )
+          )
+        {
+            $self->error(
+                "Unable to set encryption mode $encryption_mode on SP $_");
+            return 0;
+        }
+
+        $self->lmLog( "Set encryption mode $encryption_mode on SP $_",
+            'debug' );
+
+        $self->lmLog( "SP $_ added", 'debug' );
+    }
+
+    return 1;
 }
 
 1;
