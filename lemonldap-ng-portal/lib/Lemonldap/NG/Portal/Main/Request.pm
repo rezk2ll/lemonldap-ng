@@ -53,6 +53,9 @@ has mustRedirect => ( is => 'rw' );
 # Store URL for redirections
 has urldc => ( is => 'rw' );
 
+# "check logins "flag"
+has checkLogins => ( is => 'rw' );
+
 # Boolean to indicate that url isn't Base64 encoded
 has urlNotBase64 => ( is => 'rw' );
 
