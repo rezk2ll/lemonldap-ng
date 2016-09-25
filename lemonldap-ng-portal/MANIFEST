@@ -40,6 +40,7 @@ lib/Lemonldap/NG/Portal/Auth/LDAP.pm
 lib/Lemonldap/NG/Portal/Auth/Null.pm
 lib/Lemonldap/NG/Portal/Auth/Proxy.pm
 lib/Lemonldap/NG/Portal/Auth/Remote.pm
+lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
 lib/Lemonldap/NG/Portal/AuthCAS.pm
@@ -65,6 +66,7 @@ lib/Lemonldap/NG/Portal/Lib/DBI.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Proxy.pm
 lib/Lemonldap/NG/Portal/Lib/Remote.pm
+lib/Lemonldap/NG/Portal/Lib/SAML.pm
 lib/Lemonldap/NG/Portal/Lib/Slave.pm
 lib/Lemonldap/NG/Portal/Lib/Wrapper.pm
 lib/Lemonldap/NG/Portal/MailReset.pm
