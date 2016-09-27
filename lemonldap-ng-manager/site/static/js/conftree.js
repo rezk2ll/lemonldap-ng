@@ -345,6 +345,13 @@ function templates(tpl,key) {
             "title" : "oidcRPMetaDataOptionsRedirectUris"
          },
          {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsBypassConsent",
+            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsBypassConsent",
+            "title" : "oidcRPMetaDataOptionsBypassConsent",
+            "type" : "bool"
+         },
+         {
             "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
             "title" : "oidcRPMetaDataOptionsExtraClaims",

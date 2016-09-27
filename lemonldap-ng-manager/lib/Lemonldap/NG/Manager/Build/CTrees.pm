@@ -193,6 +193,7 @@ sub cTrees {
                     'oidcRPMetaDataOptionsIDTokenExpiration',
                     'oidcRPMetaDataOptionsAccessTokenExpiration',
                     'oidcRPMetaDataOptionsRedirectUris',
+                    'oidcRPMetaDataOptionsBypassConsent',
                     'oidcRPMetaDataOptionsExtraClaims'
                 ]
             },

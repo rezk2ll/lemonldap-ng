@@ -874,129 +874,143 @@ sub issuerForAuthUser {
         }
 
         # Obtain consent
-        my $ask_for_consent = 1;
-        if (    $self->{sessionInfo}->{"_oidc_consent_time_$rp"}
-            and $self->{sessionInfo}->{"_oidc_consent_scope_$rp"} )
-        {
-            $ask_for_consent = 0;
-            my $consent_time = $self->{sessionInfo}->{"_oidc_consent_time_$rp"};
-            my $consent_scope =
-              $self->{sessionInfo}->{"_oidc_consent_scope_$rp"};
-
+        my $bypassConsent = $self->{oidcRPMetaDataOptions}->{$rp}
+          ->{oidcRPMetaDataOptionsBypassConsent};
+        if ($bypassConsent) {
             $self->lmLog(
-"Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)",
-                'debug'
-            );
-
-            # Check accepted scope
-            foreach
-              my $requested_scope ( split( /\s+/, $oidc_request->{'scope'} ) )
-            {
-                if ( $consent_scope =~ /\b$requested_scope\b/ ) {
-                    $self->lmLog( "Scope $requested_scope already accepted",
-                        'debug' );
-                }
-                else {
-                    $self->lmLog(
-                        "Scope $requested_scope was not previously accepted",
-                        'debug' );
-                    $ask_for_consent = 1;
-                    last;
-                }
-            }
-
-            # Check prompt parameter
-            $ask_for_consent = 1 if ( $prompt =~ /\bconsent\b/ );
+                "Consent is disabled for RP $rp, user will not be prompted",
+                'debug' );
         }
-        if ($ask_for_consent) {
-            if ( $self->param('confirm') == 1 ) {
-                $self->updatePersistentSession(
-                    { "_oidc_consent_time_$rp" => time } );
-                $self->updatePersistentSession(
-                    {
-                        "_oidc_consent_scope_$rp" => $oidc_request->{'scope'}
-                    }
-                );
-                $self->lmLog( "Consent given for Relying Party $rp", 'debug' );
-            }
-            elsif ( $self->param('confirm') == -1 ) {
-                $self->lmLog( "User refused consent for Relying party $rp",
-                    'debug' );
-                $self->returnRedirectError(
-                    $oidc_request->{'redirect_uri'},
-                    "consent_required",
-                    "consent not given",
-                    undef,
-                    $oidc_request->{'state'},
-                    ( $flow ne "authorizationcode" )
-                );
-            }
-            else {
-                $self->lmLog( "Obtain user consent for Relying Party $rp",
-                    'debug' );
+        else {
+            my $ask_for_consent = 1;
+            if (    $self->{sessionInfo}->{"_oidc_consent_time_$rp"}
+                and $self->{sessionInfo}->{"_oidc_consent_scope_$rp"} )
+            {
+                $ask_for_consent = 0;
+                my $consent_time =
+                  $self->{sessionInfo}->{"_oidc_consent_time_$rp"};
+                my $consent_scope =
+                  $self->{sessionInfo}->{"_oidc_consent_scope_$rp"};
 
-                # Return error if prompt is none
-                if ( $prompt =~ /\bnone\b/ ) {
-                    $self->lmLog( "Consent is needed but prompt is none",
+                $self->lmLog(
+"Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)",
+                    'debug'
+                );
+
+                # Check accepted scope
+                foreach my $requested_scope (
+                    split( /\s+/, $oidc_request->{'scope'} ) )
+                {
+                    if ( $consent_scope =~ /\b$requested_scope\b/ ) {
+                        $self->lmLog( "Scope $requested_scope already accepted",
+                            'debug' );
+                    }
+                    else {
+                        $self->lmLog(
+"Scope $requested_scope was not previously accepted",
+                            'debug'
+                        );
+                        $ask_for_consent = 1;
+                        last;
+                    }
+                }
+
+                # Check prompt parameter
+                $ask_for_consent = 1 if ( $prompt =~ /\bconsent\b/ );
+            }
+            if ($ask_for_consent) {
+                if ( $self->param('confirm') == 1 ) {
+                    $self->updatePersistentSession(
+                        { "_oidc_consent_time_$rp" => time } );
+                    $self->updatePersistentSession(
+                        {
+                            "_oidc_consent_scope_$rp" =>
+                              $oidc_request->{'scope'}
+                        }
+                    );
+                    $self->lmLog( "Consent given for Relying Party $rp",
+                        'debug' );
+                }
+                elsif ( $self->param('confirm') == -1 ) {
+                    $self->lmLog( "User refused consent for Relying party $rp",
                         'debug' );
                     $self->returnRedirectError(
                         $oidc_request->{'redirect_uri'},
                         "consent_required",
-                        "consent required",
+                        "consent not given",
                         undef,
                         $oidc_request->{'state'},
                         ( $flow ne "authorizationcode" )
                     );
                 }
+                else {
+                    $self->lmLog( "Obtain user consent for Relying Party $rp",
+                        'debug' );
 
-                my $display_name = $self->{oidcRPMetaDataOptions}->{$rp}
-                  ->{oidcRPMetaDataOptionsDisplayName};
-                my $icon = $self->{oidcRPMetaDataOptions}->{$rp}
-                  ->{oidcRPMetaDataOptionsIcon};
-                my $img_src;
-                my $portalPath = $self->{portal};
-                $portalPath =~ s#^https?://[^/]+/?#/#;
-                $portalPath =~ s#[^/]+\.pl$##;
-
-                if ($icon) {
-                    $img_src =
-                      ( $icon =~ m#^https?://# )
-                      ? $icon
-                      : $portalPath . "skins/common/" . $icon;
-                }
-
-                $self->info('<div class="oidc_consent_message">');
-                $self->info( '<img src="' . $img_src . '" />' ) if $img_src;
-                $self->info( '<h3>'
-                      . sprintf( $self->msg(PM_OIDC_CONSENT), $display_name )
-                      . '</h3>' );
-                $self->info('<ul>');
-
-                foreach my $requested_scope (
-                    split( /\s/, $oidc_request->{'scope'} ) )
-                {
-                    my $message;
-                    my $scope_messages = {
-                        openid  => PM_OIDC_SCOPE_OPENID,
-                        profile => PM_OIDC_SCOPE_PROFILE,
-                        email   => PM_OIDC_SCOPE_EMAIL,
-                        address => PM_OIDC_SCOPE_ADDRESS,
-                        phone   => PM_OIDC_SCOPE_PHONE,
-                    };
-                    if ( $scope_messages->{$requested_scope} ) {
-                        $message =
-                          $self->msg( $scope_messages->{$requested_scope} );
+                    # Return error if prompt is none
+                    if ( $prompt =~ /\bnone\b/ ) {
+                        $self->lmLog( "Consent is needed but prompt is none",
+                            'debug' );
+                        $self->returnRedirectError(
+                            $oidc_request->{'redirect_uri'},
+                            "consent_required",
+                            "consent required",
+                            undef,
+                            $oidc_request->{'state'},
+                            ( $flow ne "authorizationcode" )
+                        );
                     }
-                    else {
-                        $message = $self->msg(PM_OIDC_SCOPE_OTHER) . " "
-                          . $requested_scope;
+
+                    my $display_name = $self->{oidcRPMetaDataOptions}->{$rp}
+                      ->{oidcRPMetaDataOptionsDisplayName};
+                    my $icon = $self->{oidcRPMetaDataOptions}->{$rp}
+                      ->{oidcRPMetaDataOptionsIcon};
+                    my $img_src;
+                    my $portalPath = $self->{portal};
+                    $portalPath =~ s#^https?://[^/]+/?#/#;
+                    $portalPath =~ s#[^/]+\.pl$##;
+
+                    if ($icon) {
+                        $img_src =
+                          ( $icon =~ m#^https?://# )
+                          ? $icon
+                          : $portalPath . "skins/common/" . $icon;
                     }
-                    $self->info("<li>$message</li>");
+
+                    $self->info('<div class="oidc_consent_message">');
+                    $self->info( '<img src="' . $img_src . '" />' ) if $img_src;
+                    $self->info( '<h3>'
+                          . sprintf( $self->msg(PM_OIDC_CONSENT),
+                            $display_name )
+                          . '</h3>' );
+                    $self->info('<ul>');
+
+                    foreach my $requested_scope (
+                        split( /\s/, $oidc_request->{'scope'} ) )
+                    {
+                        my $message;
+                        my $scope_messages = {
+                            openid  => PM_OIDC_SCOPE_OPENID,
+                            profile => PM_OIDC_SCOPE_PROFILE,
+                            email   => PM_OIDC_SCOPE_EMAIL,
+                            address => PM_OIDC_SCOPE_ADDRESS,
+                            phone   => PM_OIDC_SCOPE_PHONE,
+                        };
+                        if ( $scope_messages->{$requested_scope} ) {
+                            $message =
+                              $self->msg( $scope_messages->{$requested_scope} );
+                        }
+                        else {
+                            $message = $self->msg(PM_OIDC_SCOPE_OTHER) . " "
+                              . $requested_scope;
+                        }
+                        $self->info("<li>$message</li>");
+                    }
+                    $self->info('</ul>');
+                    $self->info('</div>');
+                    $self->{activeTimer} = 0;
+                    return PE_CONFIRM;
                 }
-                $self->info('</ul>');
-                $self->info('</div>');
-                $self->{activeTimer} = 0;
-                return PE_CONFIRM;
             }
         }
 

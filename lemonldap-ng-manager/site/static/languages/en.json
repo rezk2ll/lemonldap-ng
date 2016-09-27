@@ -404,6 +404,7 @@
 "oidcRPMetaDataNode": "OpenID Connect Relying Parties",
 "oidcRPMetaDataOptions": "Options",
 "oidcRPMetaDataOptionsAccessTokenExpiration": "Access token expiration",
+"oidcRPMetaDataOptionsBypassConsent": "Bypass consent",
 "oidcRPMetaDataOptionsClientID": "Client ID",
 "oidcRPMetaDataOptionsClientSecret": "Client secret",
 "oidcRPMetaDataOptionsDisplay": "Display",

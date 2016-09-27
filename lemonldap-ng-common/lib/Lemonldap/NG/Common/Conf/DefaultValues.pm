@@ -170,6 +170,7 @@ sub defaultValues {
             'name'        => 'cn'
         },
         'oidcRPMetaDataOptionsAccessTokenExpiration' => 3600,
+        'oidcRPMetaDataOptionsBypassConsent'         => 0,
         'oidcRPMetaDataOptionsIDTokenExpiration'     => 3600,
         'oidcRPMetaDataOptionsIDTokenSignAlg'        => 'HS512',
         'oidcRPStateTimeout'                         => 600,

@@ -404,6 +404,7 @@
 "oidcRPMetaDataNode": "Clients OpenID Connect",
 "oidcRPMetaDataOptions": "Options",
 "oidcRPMetaDataOptionsAccessTokenExpiration": "Expiration des jetons d'accès",
+"oidcRPMetaDataOptionsBypassConsent": "Contourner le consentement",
 "oidcRPMetaDataOptionsClientID": "Identifiant",
 "oidcRPMetaDataOptionsClientSecret": "Mot de passe",
 "oidcRPMetaDataOptionsDisplay": "Affichage",
