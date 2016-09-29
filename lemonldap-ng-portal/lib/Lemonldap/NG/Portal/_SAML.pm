@@ -1336,52 +1336,68 @@ sub getAttributeValue {
     return $value;
 }
 
-## @method boolean validateConditions(Lasso::Saml2::Assertion assertion, string entityID)
+## @method boolean validateConditions(Lasso::Saml2::Assertion assertion, string entityID, boolean checkTime, boolean checkAudience)
 # Validate conditions
 # @param assertion SAML2 assertion
 # @param entityID relying party entity ID
+# @param checkTime Enable time conditions check
+# @param checkAudience Enable audience conditions check
 # @return result
 sub validateConditions {
-    my ( $self, $assertion, $entityID ) = @_;
+    my ( $self, $assertion, $entityID, $checkTime, $checkAudience ) = @_;
     my $tolerance = 10;
     my $status;
+    $checkTime     = 1 unless defined $checkTime;
+    $checkAudience = 1 unless defined $checkAudience;
 
     # Time
-    eval {
-        $status =
-          Lasso::Saml2Assertion::validate_time_checks( $assertion, $tolerance );
-    };
+    if ($checkTime) {
+        eval {
+            $status =
+              Lasso::Saml2Assertion::validate_time_checks( $assertion,
+                $tolerance );
+        };
 
-    if ($@) {
-        $self->checkLassoError($@);
-        return 0;
+        if ($@) {
+            $self->checkLassoError($@);
+            return 0;
+        }
+
+        unless ( $status eq Lasso::Constants::SAML2_ASSERTION_VALID ) {
+            $self->lmLog( "Time conditions validations result: $status",
+                'error' );
+            return 0;
+        }
+
+        $self->lmLog( "Time conditions validated", 'debug' );
     }
-
-    unless ( $status eq Lasso::Constants::SAML2_ASSERTION_VALID ) {
-        $self->lmLog( "Time conditions validations result: $status", 'error' );
-        return 0;
+    else {
+        $self->lmLog( "Time conditions not checked", 'debug' );
     }
-
-    $self->lmLog( "Time conditions validated", 'debug' );
 
     # Audience
-    eval {
-        $status =
-          Lasso::Saml2Assertion::validate_audience( $assertion, $entityID );
-    };
+    if ($checkAudience) {
+        eval {
+            $status =
+              Lasso::Saml2Assertion::validate_audience( $assertion, $entityID );
+        };
 
-    if ($@) {
-        $self->checkLassoError($@);
-        return 0;
+        if ($@) {
+            $self->checkLassoError($@);
+            return 0;
+        }
+
+        unless ( $status eq Lasso::Constants::SAML2_ASSERTION_VALID ) {
+            $self->lmLog( "Audience conditions validations result: $status",
+                'error' );
+            return 0;
+        }
+
+        $self->lmLog( "Audience conditions validated", 'debug' );
     }
-
-    unless ( $status eq Lasso::Constants::SAML2_ASSERTION_VALID ) {
-        $self->lmLog( "Audience conditions validations result: $status",
-            'error' );
-        return 0;
+    else {
+        $self->lmLog( "Audience conditions not checked", 'debug' );
     }
-
-    $self->lmLog( "Audience conditions validated", 'debug' );
 
     return 1;
 }

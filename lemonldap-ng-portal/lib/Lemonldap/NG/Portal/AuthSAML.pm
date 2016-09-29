@@ -192,15 +192,18 @@ sub extractFormInfo {
             }
 
             # Do we check conditions?
-            my $checkConditions =
+            my $checkTime =
               $self->{samlIDPMetaDataOptions}->{$idpConfKey}
-              ->{samlIDPMetaDataOptionsCheckConditions};
+              ->{samlIDPMetaDataOptionsCheckTime};
+            my $checkAudience =
+              $self->{samlIDPMetaDataOptions}->{$idpConfKey}
+              ->{samlIDPMetaDataOptionsCheckAudience};
 
             # Check conditions - time and audience
-            if (
-                $checkConditions
-                and !$self->validateConditions(
-                    $assertion, $self->getMetaDataURL( "samlEntityID", 0, 1 )
+            unless (
+                $self->validateConditions(
+                    $assertion, $self->getMetaDataURL( "samlEntityID", 0, 1 ),
+                    $checkTime, $checkAudience
                 )
               )
             {
