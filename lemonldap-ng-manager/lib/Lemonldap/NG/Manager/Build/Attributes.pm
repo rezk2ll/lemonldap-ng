@@ -1514,7 +1514,11 @@ sub attributes {
             ],
             default => 'none',
         },
-        samlIDPMetaDataOptionsCheckConditions => {
+        samlIDPMetaDataOptionsCheckTime => {
+            type    => 'bool',
+            default => 1,
+        },
+        samlIDPMetaDataOptionsCheckAudience => {
             type    => 'bool',
             default => 1,
         },

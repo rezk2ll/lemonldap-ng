@@ -2098,7 +2098,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 0,
             'type'    => 'bool'
         },
-        'samlIDPMetaDataOptionsCheckConditions' => {
+        'samlIDPMetaDataOptionsCheckAudience' => {
             'default' => 1,
             'type'    => 'bool'
         },
@@ -2107,6 +2107,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'samlIDPMetaDataOptionsCheckSSOMessageSignature' => {
+            'default' => 1,
+            'type'    => 'bool'
+        },
+        'samlIDPMetaDataOptionsCheckTime' => {
             'default' => 1,
             'type'    => 'bool'
         },

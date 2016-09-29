@@ -661,9 +661,16 @@ function templates(tpl,key) {
          },
          {
             "default" : 1,
-            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckConditions",
-            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckConditions",
-            "title" : "samlIDPMetaDataOptionsCheckConditions",
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckTime",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckTime",
+            "title" : "samlIDPMetaDataOptionsCheckTime",
+            "type" : "bool"
+         },
+         {
+            "default" : 1,
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckAudience",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsCheckAudience",
+            "title" : "samlIDPMetaDataOptionsCheckAudience",
             "type" : "bool"
          }
       ],

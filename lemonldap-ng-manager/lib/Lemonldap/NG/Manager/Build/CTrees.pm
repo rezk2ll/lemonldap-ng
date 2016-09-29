@@ -78,7 +78,8 @@ sub cTrees {
                 form  => 'simpleInputContainer',
                 nodes => [
                     "samlIDPMetaDataOptionsEncryptionMode",
-                    "samlIDPMetaDataOptionsCheckConditions"
+                    "samlIDPMetaDataOptionsCheckTime",
+                    "samlIDPMetaDataOptionsCheckAudience"
                 ]
             }
         ],
