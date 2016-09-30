@@ -16,7 +16,7 @@ use constant AUTH_REQUIRED     => 401;
 use constant MAINTENANCE       => 503;
 
 our $request;
-#
+
 ## @method void setServerSignature(string sign)
 # modifies web server signature
 # @param $sign String to add to server signature

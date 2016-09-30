@@ -33,8 +33,6 @@ print STDERR
 
 our @ISA = qw(Lemonldap::NG::Handler::Main);
 
-die unless __PACKAGE__->can('hostname');
-
 our $VERSION = '2.0.0';
 
 our $request;    # Apache2::RequestRec object for current request
