@@ -64,8 +64,8 @@ sub createSession {
     $xheader .= $class->remote_ip;
     my $soapHeaders = HTTP::Headers->new( "X-Forwarded-For" => $xheader );
 
-    my $soapClient =
-      SOAP::Lite->proxy( $tsv->{portal}->(), default_headers => $soapHeaders )
+    my $soapClient = SOAP::Lite->proxy( $class->tsv->{portal}->(),
+        default_headers => $soapHeaders )
       ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
 
     my $creds = $class->header_in('Authorization');
