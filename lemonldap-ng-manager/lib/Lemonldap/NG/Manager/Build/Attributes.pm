@@ -1530,6 +1530,10 @@ sub attributes {
             type    => 'bool',
             default => 0,
         },
+        samlIDPMetaDataOptionsRelayStateURL => {
+            type    => 'bool',
+            default => 0,
+        },
 
         # SP keys
         samlSPMetaDataExportedAttributes => {

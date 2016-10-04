@@ -700,6 +700,7 @@
 "samlIDPMetaDataOptionsBinding": "Binding",
 "samlIDPMetaDataOptionsSecurity": "Security",
 "samlIDPMetaDataOptionsStoreSAMLToken": "Store SAML Token",
+"samlIDPMetaDataOptionsRelayStateURL": "Allow URL as RelayState",
 "samlSPMetaDataNodes": "SAML service providers",
 "samlSPMetaDataXML": "Metadata",
 "samlSPMetaDataExportedAttributes": "Exported attributes",

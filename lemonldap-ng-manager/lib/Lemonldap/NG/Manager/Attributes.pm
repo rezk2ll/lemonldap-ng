@@ -2190,6 +2190,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
+        'samlIDPMetaDataOptionsRelayStateURL' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'samlIDPMetaDataOptionsRequestedAuthnContext' => {
             'default' => '',
             'select'  => [

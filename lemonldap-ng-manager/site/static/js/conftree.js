@@ -493,6 +493,13 @@ function templates(tpl,key) {
             ],
             "title" : "samlIDPMetaDataOptionsRequestedAuthnContext",
             "type" : "select"
+         },
+         {
+            "default" : 0,
+            "get" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRelayStateURL",
+            "id" : tpl+"s/"+key+"/"+"samlIDPMetaDataOptionsRelayStateURL",
+            "title" : "samlIDPMetaDataOptionsRelayStateURL",
+            "type" : "bool"
          }
       ],
       "help" : "authsaml.html#options",

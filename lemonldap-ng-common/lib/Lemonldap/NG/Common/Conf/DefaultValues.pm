@@ -255,6 +255,7 @@ sub defaultValues {
         'samlIDPMetaDataOptionsForceUTF8'                => 0,
         'samlIDPMetaDataOptionsIsPassive'                => 0,
         'samlIDPMetaDataOptionsNameIDFormat'             => '',
+        'samlIDPMetaDataOptionsRelayStateURL'            => 0,
         'samlIDPMetaDataOptionsRequestedAuthnContext'    => '',
         'samlIDPMetaDataOptionsResolutionRule'           => '',
         'samlIDPMetaDataOptionsSignSLOMessage'           => -1,

@@ -44,6 +44,7 @@ sub cTrees {
                     'samlIDPMetaDataOptionsAllowProxiedAuthn',
                     'samlIDPMetaDataOptionsAllowLoginFromIDP',
                     'samlIDPMetaDataOptionsRequestedAuthnContext',
+                    'samlIDPMetaDataOptionsRelayStateURL',
                 ],
             },
             {

@@ -700,6 +700,7 @@
 "samlIDPMetaDataOptionsBinding": "Méthode",
 "samlIDPMetaDataOptionsSecurity": "Sécurité",
 "samlIDPMetaDataOptionsStoreSAMLToken": "Conserver le jeton SAML",
+"samlIDPMetaDataOptionsRelayStateURL": "Pemettre une URL dans le RelayState",
 "samlSPMetaDataNodes": "Fournisseurs de service SAML",
 "samlSPMetaDataXML": "Metadonnées",
 "samlSPMetaDataExportedAttributes": "Attributs exportés",
