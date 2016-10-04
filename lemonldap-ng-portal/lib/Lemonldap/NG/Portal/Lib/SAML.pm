@@ -1102,33 +1102,42 @@ sub storeRelayState {
     return $relaystate_id;
 }
 
-## @method boolean extractRelayState(string relaystate)
+## @method boolean extractRelayState(string relaystate, boolean relayStateURL)
 # Extract RelayState information into $self
 # @param relaystate Relay state value
+# @param relayStateURL Allow Relay state value to be the redirection URL
 # @return result
 sub extractRelayState {
-    my ( $self, $req, $relaystate ) = @_;
+    my ( $self, $req, $relaystate, $relayStateURL ) = @_;
 
     return 0 unless $relaystate;
-
-    # Open relaystate session
-    my $samlSessionInfo = $self->getSamlSession($relaystate);
-
-    return 0 unless $samlSessionInfo;
-
-    # Push values in $self
-    foreach ( keys %{ $samlSessionInfo->data } ) {
-        next if $_ =~ /(type|_session_id|_utime)/;
-        $req->{$_} = $samlSessionInfo->data->{$_};
-    }
-
-    # delete relaystate session
-    if ( $samlSessionInfo->remove ) {
-        $self->lmLog( "Relaystate $relaystate was deleted", 'debug' );
+    if ( $relayStateURL and $relaystate =~ /^https?:\/\// ) {
+        $self->lmLog( "RelayState is a redirection URL: $relaystate", 'debug' );
+        $req->{urldc} = $relaystate;
+        return 1;
     }
     else {
-        $self->lmLog( "Unable to delete relaystate $relaystate", 'error' );
-        $self->lmLog( $samlSessionInfo->error,                   'error' );
+
+        # Open relaystate session
+        my $samlSessionInfo = $self->getSamlSession($relaystate);
+
+        return 0 unless $samlSessionInfo;
+
+        # Push values in $self
+        foreach ( keys %{ $samlSessionInfo->data } ) {
+            next if $_ =~ /(type|_session_id|_utime)/;
+            $req->{$_} = $samlSessionInfo->data->{$_};
+        }
+
+        # delete relaystate session
+        if ( $samlSessionInfo->remove ) {
+            $self->lmLog( "Relaystate $relaystate was deleted", 'debug' );
+        }
+        else {
+            $self->lmLog( "Unable to delete relaystate $relaystate", 'error' );
+            $self->lmLog( $samlSessionInfo->error,                   'error' );
+        }
+
     }
 
     return 1;

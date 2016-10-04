@@ -213,8 +213,12 @@ sub extractFormInfo {
                 return PE_SAML_CONDITIONS_ERROR;
             }
 
+            my $relayStateURL =
+              $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
+              ->{samlIDPMetaDataOptionsRelayStateURL};
+
             #  Extract RelayState information
-            if ( $self->extractRelayState($relaystate) ) {
+            if ( $self->extractRelayState( $relaystate, $relayStateURL ) ) {
                 $self->lmLog( "RelayState $relaystate extracted", 'debug' );
             }
 
