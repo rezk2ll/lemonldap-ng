@@ -215,6 +215,16 @@ lemonldap-ng (1.9.0) stable; urgency=low
     * [LEMONLDAP-956] - Custom functions don't work with useSafeJail
     * [LEMONLDAP-957] - Replace $http.success() by .then()
 
+lemonldap-ng (1.4.11) stable; urgency=low
+
+    * [LEMONLDAP-1068] - Error in logout request
+    * [LEMONLDAP-1080] - Typo is URL matching for Auth OpenID
+    * [LEMONLDAP-1092] - Net::LDAP does not have an uri method in el5
+    * [LEMONLDAP-1001] - Possibility to configure the update interval used for timeout activity
+    * [LEMONLDAP-1052] - Use Lasso 'thin-sessions'
+    * [LEMONLDAP-1083] - Create an option to not store SAML/OIDC tokens in session
+    * [LEMONLDAP-1084] - Disable SAML SLO request when LL::NG configured as SP and IDP does not support SLO
+
 lemonldap-ng (1.4.10) stable; urgency=low
 
     * [LEMONLDAP-985] - authForce is not well called trough AuthMulti
