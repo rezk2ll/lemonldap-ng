@@ -343,7 +343,7 @@ sub goToPortal {
     $class->lmLog(
         "Redirect " . $class->remote_ip . " to portal (url was $url)",
         'debug' );
-    $class->set_header_out( 'Location' => &{ $class->tsv->{portal} }()
+    $class->set_header_out( 'Location' => $class->tsv->{portal}->()
           . "?url=$urlc_init"
           . ( $arg ? "&$arg" : "" ) );
     return $class->REDIRECT;

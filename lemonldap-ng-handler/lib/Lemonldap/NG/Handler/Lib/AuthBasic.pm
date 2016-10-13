@@ -41,11 +41,11 @@ sub retrieveSession {
     my ( $class, $id ) = @_;
 
     # First check if session already exists
-    return 1 if ( $class->SUPER::retrieveSession($id) );
+    return 1 if ( $class->Lemonldap::NG::Handler::Main::Run::retrieveSession($id) );
 
     # Then ask portal to create it
     if ( $class->createSession($id) ) {
-        return $class->SUPER::retrieveSession($id);
+        return $class->Lemonldap::NG::Handler::Main::Run::retrieveSession($id);
     }
     else {
         return 0;
@@ -72,6 +72,7 @@ sub createSession {
     $creds =~ s/^Basic\s+//;
     my ( $user, $pwd ) = ( decode_base64($creds) =~ /^(.*?):(.*)$/ );
     $class->lmLog( "AuthBasic authentication for user: $user", 'debug' );
+    die 'Replace this by REST call';
     my $soapRequest = $soapClient->getCookies( $user, $pwd, $id );
 
     # Catch SOAP errors
@@ -114,7 +115,7 @@ sub hideCookie {
 sub goToPortal {
     my ( $class, $url, $arg ) = @_;
     if ($arg) {
-        return $class->SUPER::goToPortal( $url, $arg );
+        return $class->Lemonldap::NG::Handler::Main::Run::goToPortal( $url, $arg );
     }
     else {
         $class->set_header_out(
