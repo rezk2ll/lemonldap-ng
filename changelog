@@ -1,5 +1,30 @@
 lemonldap-ng (2.0.0) stable; urgency=low
 
+lemonldap-ng (1.9.6) stable; urgency=high
+
+    * [LEMONLDAP-1058] - Timeout on save conf
+    * [LEMONLDAP-1060] - Missing reload target for nginx
+    * [LEMONLDAP-1064] - getApacheSession not working with id
+    * [LEMONLDAP-1068] - Error in logout request
+    * [LEMONLDAP-1069] - start-stop-daemon warning in lemonldap-ng-fastcgi-server init script
+    * [LEMONLDAP-1071] - OpenID Connect discovery: LLNG does not use booleans
+    * [LEMONLDAP-1075] - Unable to add rule or header in a vhost using lemonldap-ng-cli
+    * [LEMONLDAP-1076] - IDP resolution rule is no more available in Manager
+    * [LEMONLDAP-1078] - CryptoJS URL have changed
+    * [LEMONLDAP-1079] - Security options for SAML are set to Off by default
+    * [LEMONLDAP-1080] - Typo is URL matching for Auth OpenID
+    * [LEMONLDAP-1093] - /run/llng-fastcgi-server is deleted on reboot
+    * [LEMONLDAP-1094] - typo in error_pt.al
+    * [LEMONLDAP-1001] - Possibility to configure the update interval used for timeout activity
+    * [LEMONLDAP-1065] - Provide SSL options for AuthBasic
+    * [LEMONLDAP-1082] - Return explicit error if no token endpoint auth method is set
+    * [LEMONLDAP-1083] - Create an option to not store SAML/OIDC tokens in session
+    * [LEMONLDAP-1084] - Disable SAML SLO request when LL::NG configured as SP and IDP does not support SLO
+    * [LEMONLDAP-1087] - Allow to check audience and time conditions separately in SAML flow
+    * [LEMONLDAP-1088] - Allow relayState to be a redirection URI
+    * [LEMONLDAP-1089] - Option to bypass consent in OpenID Connect Issuer
+    * [LEMONLDAP-1067] - Authbasic handler for Nginx
+
 lemonldap-ng (1.9.5) stable; urgency=high
 
     * [LEMONLDAP-966] - RSA Keys generated from Manager are incomplete
