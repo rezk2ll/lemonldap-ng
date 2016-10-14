@@ -393,8 +393,12 @@ mkdir -p %{buildroot}%{_unitdir}
 install -m644 fastcgi-server/systemd/llng-fastcgi-server.service %{buildroot}%{_unitdir}
 sed -i 's:__FASTCGISOCKDIR__:/var/run/llng-fastcgi-server:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
 sed -i 's:__SBINDIR__:/usr/share/lemonldap-ng/sbin:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
-sed -i 's:__USER__:%{lm_apacheuser}:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
-sed -i 's:__GROUP__:%{lm_apachegroup}:' %{buildroot}%{_unitdir}/llng-fastcgi-server.service
+
+mkdir -p %{buildroot}%{_tmpfilesdir}
+install -m644 fastcgi-server/systemd/llng-fastcgi-server.tmpfile %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
+sed -i 's:__FASTCGISOCKDIR__:/var/run/llng-fastcgi-server:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
+sed -i 's:__USER__:%{lm_apacheuser}:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
+sed -i 's:__GROUP__:%{lm_apachegroup}:' %{buildroot}%{_tmpfilesdir}/llng-fastcgi-server.conf
 
 # Set apache user in some files (see Makefile)
 # Note: we do not use the APACHEUSER and APACHEGROUP in make install
@@ -579,6 +583,7 @@ rm -rf %{buildroot}
 %config(noreplace) /etc/default/llng-fastcgi-server
 /etc/init.d/llng-fastcgi-server
 %{_unitdir}/llng-fastcgi-server.service
+%{_tmpfilesdir}/llng-fastcgi-server.conf
 %defattr(755,%{lm_apacheuser},%{lm_apachegroup},-)
 %dir /var/run/llng-fastcgi-server
 

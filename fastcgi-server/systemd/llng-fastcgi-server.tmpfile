@@ -1,1 +1,1 @@
-d	/run/llng-fastcgi-server	0755	__USER__	__GROUP__
+d	__FASTCGISOCKDIR__	0755	__USER__	__GROUP__
