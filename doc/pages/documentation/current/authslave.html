@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:authslave</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,authslave"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="authslave.html"/>
+<link rel="contents" href="authslave.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authslave","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="slave">Slave</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [22-85] -->
+</div>
+<!-- EDIT1 SECTION "Slave" [1-85] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> Slave backend relies on HTTP headers to retrieve user login and/or attributes.
+</p>
+<ul>
+<li class="level1"><div class="li"> Authentication: will check user login in a header and create session without prompting any credentials (but will register client <abbr title="Internet Protocol">IP</abbr> and creation date)</div>
+</li>
+<li class="level1"><div class="li"> Users: collect data transfered in HTTP headers by the “master”.</div>
+</li>
+</ul>
+
+<p>
+It allows to put <abbr title="LemonLDAP::NG">LL::NG</abbr>::portal behind another web <abbr title="Single Sign On">SSO</abbr>, or behind a SSL hardware to delegate SSL authentication to that hardware.
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Presentation" [86-553] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose Slave for authentication or users module.
+</p>
+
+<p>
+Then, go in <code>Slave parameters</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Authentication level</strong>: authentication level for this module.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Header for user login</strong>: header that contains the user main login</div>
+</li>
+<li class="level1"><div class="li"> <strong>Master&#039;s <abbr title="Internet Protocol">IP</abbr> address</strong>: the <abbr title="Internet Protocol">IP</abbr> addresses of servers which are accredited to authenticate user. This is a security point, to prevent someone to create a session by sending custom headers. You can set one or several <abbr title="Internet Protocol">IP</abbr> addresses, separated by spaces, or let this parameter empty to disable the checking.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Control header name</strong>: header that contains a value to control. Let this parameter empty to disable the checking.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Control header content</strong>: value to control. Let this parameter empty to disable the checking.</div>
+</li>
+</ul>
+
+<p>
+You have then to declare HTTP headers exported by the main <abbr title="Single Sign On">SSO</abbr> (in <strong>Exported Variables</strong>). Example :
+</p>
+<div class="table sectionedit5"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Key (<abbr title="LemonLDAP::NG">LL::NG</abbr> name)  </th><th class="col1 centeralign">  Value (HTTP header name)  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  uid  </td><td class="col1 centeralign">  Auth-User  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  mail  </td><td class="col1 centeralign">  User-Email  </td>
+	</tr>
+</table></div>
+<!-- EDIT5 TABLE [1510-1612] -->
+<p>
+See also <a href="exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables configuration</a>.
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Configuration" [554-] --></div>
+</body>
+</html>

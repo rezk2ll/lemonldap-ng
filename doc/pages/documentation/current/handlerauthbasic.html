@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:handlerauthbasic</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,handlerauthbasic"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="handlerauthbasic.html"/>
+<link rel="contents" href="handlerauthbasic.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:handlerauthbasic","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#presentation">Presentation</a></div></li>
+<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#virtual_host">Virtual host</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#apache">Apache</a></div></li>
+<li class="level3"><div class="li"><a href="#nginx">Nginx</a></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><a href="#handler_parameters">Handler parameters</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<h1 class="sectionedit1" id="authbasic_handler">AuthBasic Handler</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1 SECTION "AuthBasic Handler" [1-33] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+The AuthBasic Handler is a special Handler that will us AuthBasic to authenticate to a virtual host, and then play authorizations rules to allow access to the virtual 
+host.
+</p>
+
+<p>
+The Handler will send a WWW-Authenticate header to the client, to request user and password, and then check the credentials using SOAP getCookies web service. When session is granted, the Handler will then check the authorizations like the standard Handler.
+</p>
+
+<p>
+This can be useful to allow an third party application to access a virtual host with users credentials by sending a Basic challenge to it.
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Presentation" [34-634] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT3 SECTION "Configuration" [635-661] -->
+<h3 class="sectionedit4" id="virtual_host">Virtual host</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="apache">Apache</h4>
+<div class="level4">
+
+<p>
+Configure the virtual host like other <a href="configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a> but use AuthBasic Handler instead of default Handler.
+</p>
+<pre class="code file apache">PerlModule Lemonldap::NG::Handler::Specific::AuthBasic
+&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+       <span class="kw1">ServerName</span> basic.example.com
+&nbsp;
+       <span class="co1"># Load AuthBasic Handler</span>
+       PerlHeaderParserHandler Lemonldap::NG::Handler::Specific::AuthBasic
+&nbsp;
+       ...
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+<div class="notetip">If LemonLDAP::NG portal is protected by SSL with a self-signed certificate, you can add this line to accept it:
+<pre class="code file apache">PerlSetEnv PERL_LWP_SSL_VERIFY_HOSTNAME <span class="nu0">0</span></pre>
+
+</div>
+</div>
+
+<h4 id="nginx">Nginx</h4>
+<div class="level4">
+
+<p>
+Since 1.9.6, LLNG FastCGI server can handle AuthBasic handler. To call it, you just have to add <code>fastcgi_param LLTYPE authbasic;</code> in the FastCGI server call and remove <code>error_page 401</code> directive:
+</p>
+<pre class="file">location = /lmauth {
+  internal;
+  include /etc/nginx/fastcgi_params;
+  fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+  fastcgi_param LLTYPE authbasic;
+
+  # Drop post datas
+  fastcgi_pass_request_body  off;
+  fastcgi_param CONTENT_LENGTH &quot;&quot;;
+
+  # Keep original hostname
+  fastcgi_param HOST $http_host;
+
+  # Keep original request (LLNG server will received /llauth)
+  fastcgi_param X_ORIGINAL_URI  $request_uri;
+}
+location / {
+  ...
+  ##################################
+  # CALLING AUTHENTICATION         #
+  ##################################
+  auth_request /lmauth;
+  auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+  auth_request_set $lmlocation $upstream_http_location;
+  # Remove this for AuthBasic handler
+  #error_page 401 $lmlocation;
+  ...
+}</pre>
+
+</div>
+<!-- EDIT4 SECTION "Virtual host" [662-2321] -->
+<h3 class="sectionedit5" id="handler_parameters">Handler parameters</h3>
+<div class="level3">
+
+<p>
+No parameters needed. But you have to allow sessions web services, see <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP sessions backend</a>.
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Handler parameters" [2322-] --></div>
+</body>
+</html>

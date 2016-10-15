@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:sessions</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,sessions"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="sessions.html"/>
+<link rel="contents" href="sessions.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:sessions","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="sessions">Sessions</h1>
+<div class="level1">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> rely on a session mechanism with the session ID as a shared secret between the user (in <a href="ssocookie.html" class="wikilink1" title="documentation:2.0:ssocookie">SSO cookie</a>) and the <a href="start.html#sessions_databases" class="wikilink1" title="documentation:2.0:start">session database</a>.
+</p>
+
+<p>
+To configure sessions, go in Manager, <code>General Parameters</code> » <code>Sessions</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Store user password in session data</strong>: see <a href="passwordstore.html" class="wikilink1" title="documentation:2.0:passwordstore">password store documentation</a>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sessions timeout</strong>: Maximum lifetime of a session. Old sessions are deleted by a cron script.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sessions activity timeout</strong>: Maximum inactivity duration.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sessions update interval</strong>: Minimum interval used to update session when activity timeout is set.</div>
+</li>
+</ul>
+<div class="notewarning">Session activity timeout requires Handlers to have a write access to sessions database.
+</div><ul>
+<li class="level1"><div class="li"> <strong>Opening conditions</strong>: rules which are evaluated before granting session. If a user does not comply with any condition, he is prompted a customized message. That message can contain session data as user attributes or macros. The conditions are checked in alphabetical order of comments.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sessions Storage</strong>: you can define here which session backend to use, with the backend options. See <a href="start.html#sessions_database" class="wikilink1" title="documentation:2.0:start">sessions database configuration</a> to know which modules you can use. Here are some global  options that you can use with all sessions backends:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>generateModule</strong>: allows to override the default module that generates sessions identifiers. For security reasons, we recommend to use Lemonldap::NG::Common::Apache::Session::Generate::SHA256</div>
+</li>
+<li class="level2"><div class="li"> <strong>IDLength</strong>: length of sessions identifiers. Max is 32 for MD5 and 64 for SHA256</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Multiple sessions</strong>, you can restrict the number of open sessions:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>One session only by user</strong>: a user can not open 2 sessions with the same account.</div>
+</li>
+<li class="level2"><div class="li"> <strong>One <abbr title="Internet Protocol">IP</abbr> only by user</strong>: a user can not open 2 sessions with different <abbr title="Internet Protocol">IP</abbr>.</div>
+</li>
+<li class="level2"><div class="li"> <strong>One user by <abbr title="Internet Protocol">IP</abbr> address</strong>: 2 users can not open a session with the same <abbr title="Internet Protocol">IP</abbr>.</div>
+</li>
+<li class="level2"><div class="li"> <strong>Display deleted sessions</strong>: display deleted sessions on authentication phase.</div>
+</li>
+<li class="level2"><div class="li"> <strong>Display other sessions </strong>: display other sessions on authentication phase, with a link to delete them.</div>
+</li>
+</ul>
+</li>
+</ul>
+<div class="noteimportant">Note that since HTTP protocol is not connected, restrictions are not applied to the new session: the oldest are destroyed.
+</div>
+</div>
+</div>
+</body>
+</html>

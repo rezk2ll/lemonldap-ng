@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:mysqlminihowto</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,mysqlminihowto"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="mysqlminihowto.html"/>
+<link rel="contents" href="mysqlminihowto.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:mysqlminihowto","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="configure_lemonldapng_to_use_mysql_as_main_database">Configure LemonLDAP::NG to use MySQL as main database</h1>
+<div class="level1">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> use 2 internal databases to store its configuration and sessions.
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Configure LemonLDAP::NG to use MySQL as main database" [1-143] -->
+<h2 class="sectionedit2" id="use_mysql_for_lemonldapng_configuration">Use MySQL for Lemonldap::NG configuration</h2>
+<div class="level2">
+
+<p>
+Steps:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="sqlconfbackend.html" class="wikilink1" title="documentation:2.0:sqlconfbackend">Prepare the database and the LL::NG configuration file</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">Convert existing configuration</a></div>
+</li>
+<li class="level1"><div class="li"> Restart all your Apache servers</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "Use MySQL for Lemonldap::NG configuration" [144-377] -->
+<h2 class="sectionedit3" id="use_mysql_for_lemonldapng_sessions">Use MySQL for Lemonldap::NG sessions</h2>
+<div class="level2">
+
+<p>
+Steps:
+</p>
+<ul>
+<li class="level1"><div class="li"> Choose one of the following:</div>
+<ul>
+<li class="level2"><div class="li"> <a href="browseablesessionbackend.html" class="wikilink1" title="documentation:2.0:browseablesessionbackend">Using Apache::Session::Browseable::MySQL</a> (recommended for best performances)</div>
+</li>
+<li class="level2"><div class="li"> <a href="sqlsessionbackend.html" class="wikilink1" title="documentation:2.0:sqlsessionbackend">Using Apache::Session::MySQL</a> <em>(if you choose this option, then read <a href="performances.html#apachesession_performances" class="wikilink1" title="documentation:2.0:performances">how to increase MySQL performances</a>)</em></div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- EDIT3 SECTION "Use MySQL for Lemonldap::NG sessions" [378-] --></div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:confignginx</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,confignginx"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="confignginx.html"/>
+<link rel="contents" href="confignginx.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:confignginx","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#files">Files</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#debianubuntu">Debian/Ubuntu</a></div></li>
+<li class="level2"><div class="li"><a href="#red_hatcentos">Red Hat/CentOS</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<h1 class="sectionedit1" id="deploy_nginx_configuration">Deploy Nginx configuration</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1 SECTION "Deploy Nginx configuration" [1-42] -->
+<h2 class="sectionedit2" id="files">Files</h2>
+<div class="level2">
+
+<p>
+With tarball installation, Nginx configuration files will be installed in <code>/usr/local/lemonldap-ng/etc/</code>, else they are in <code>/etc/lemonldap-ng</code>.
+</p>
+
+<p>
+You have to include them in Nginx main configuration.
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Files" [43-265] -->
+<h3 class="sectionedit3" id="debianubuntu">Debian/Ubuntu</h3>
+<div class="level3">
+
+<p>
+Link files into <code>sites-available</code> directory (should already have been done if you used packages):
+</p>
+<pre class="code">ln -s /etc/lemonldap-ng/handler-nginx.conf /etc/nginx/sites-available/
+ln -s /etc/lemonldap-ng/manager-nginx.conf /etc/nginx/sites-available/
+ln -s /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/sites-available/
+ln -s /etc/lemonldap-ng/test-nginx.conf /etc/nginx/sites-available/</pre>
+
+<p>
+Enable sites:
+</p>
+<pre class="code">ln -s /etc/nginx/sites-available/handler-nginx.conf /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/manager-nginx.conf /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/portal-nginx.conf /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/test-nginx.conf /etc/nginx/sites-enabled/</pre>
+
+</div>
+<!-- EDIT3 SECTION "Debian/Ubuntu" [266-1024] -->
+<h3 class="sectionedit4" id="red_hatcentos">Red Hat/CentOS</h3>
+<div class="level3">
+
+<p>
+Link files directly in <code>conf.d</code> directory:
+</p>
+<pre class="code">ln -s /etc/lemonldap-ng/handler-nginx.conf /etc/nginx/conf.d/
+ln -s /etc/lemonldap-ng/manager-nginx.conf /etc/nginx/conf.d/
+ln -s /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/conf.d/
+ln -s /etc/lemonldap-ng/test-nginx.conf /etc/nginx/conf.d/</pre>
+
+</div>
+<!-- EDIT4 SECTION "Red Hat/CentOS" [1025-] --></div>
+</body>
+</html>

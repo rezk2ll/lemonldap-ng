@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:captcha</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,captcha"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="captcha.html"/>
+<link rel="contents" href="captcha.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:captcha","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="captcha">Captcha</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1 SECTION "Captcha" [1-23] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+Captcha is a security mechanism aimed to prevent robots to submit forms.
+</p>
+
+<p>
+Captchas are available on the following forms:
+</p>
+<ul>
+<li class="level1"><div class="li"> Login form: where user enters login and password to authenticate</div>
+</li>
+<li class="level1"><div class="li"> Password reset by mail form: where user enters mail to recover a lost password</div>
+</li>
+<li class="level1"><div class="li"> Register form: where user enters information to create a new account</div>
+</li>
+</ul>
+
+<p>
+We use the Perl module Authen::Captcha to generate codes and images, which look like this:
+</p>
+
+<p>
+<a href="documentation/captcha.png_documentation_2.0_captcha.html" class="media" title="documentation:captcha.png"><img src="documentation/captcha.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Presentation" [24-524] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+Go in <code>General parameters</code> &gt; <code>Portal</code> &gt; <code>Captcha</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Activation in login form</strong>: set to 1 to display captcha in login form</div>
+</li>
+<li class="level1"><div class="li"> <strong>Activation in password reset by mail form</strong>: set to 1 to display captcha in password reset by mail form</div>
+</li>
+<li class="level1"><div class="li"> <strong>Activation in register form</strong>: set to 1 to display captcha in register form</div>
+</li>
+<li class="level1"><div class="li"> <strong>Size</strong>: length of captcha</div>
+</li>
+<li class="level1"><div class="li"> <strong>Captcha module name</strong>: Apache session module used to store generated captchas</div>
+</li>
+<li class="level1"><div class="li"> <strong>Captcha module options</strong>: options for above module</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT3 SECTION "Configuration" [525-] --></div>
+</body>
+</html>

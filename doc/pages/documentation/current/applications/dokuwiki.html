@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:applications:dokuwiki</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,applications,dokuwiki"/>
+<link rel="search" type="application/opensearchdescription+xml" href="../lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="dokuwiki.html"/>
+<link rel="contents" href="dokuwiki.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="../lib/exe/css.php.t.bootstrap3.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0:applications';var JSINFO = {"id":"documentation:2.0:applications:dokuwiki","namespace":"documentation:2.0:applications"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="../lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#presentation">Presentation</a></div></li>
+<li class="level1"><div class="li"><a href="#installation">Installation</a></div></li>
+<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#dokuwiki_local_configuration">Dokuwiki local configuration</a></div></li>
+<li class="level2"><div class="li"><a href="#dokuwiki_virtual_host">Dokuwiki virtual host</a></div></li>
+<li class="level2"><div class="li"><a href="#dokuwiki_virtual_host_in_manager">Dokuwiki virtual host in Manager</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<h1 class="sectionedit1" id="dokuwiki">Dokuwiki</h1>
+<div class="level1">
+
+<p>
+<a href="dokuwiki_logo.png_documentation_2.0_applications_dokuwiki.html" class="media" title="applications:dokuwiki_logo.png"><img src="dokuwiki_logo.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Dokuwiki" [1-64] -->
+<h2 class="sectionedit2" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+<a href="http://www.dokuwiki.org/" class="urlextern" title="http://www.dokuwiki.org/"  rel="nofollow">DokuWiki</a> is a standards compliant, simple to use Wiki, mainly aimed at creating documentation of any kind. It is targeted at developer teams, workgroups and small companies. It has a simple but powerful syntax which makes sure the data files remain readable outside the Wiki and eases the creation of structured texts. All data is stored in plain text files – no database is required.
+</p>
+<div class="notetip">LemonLDAP::NG wiki uses Dokuwiki!
+</div>
+<p>
+You will need to install a Dokuwiki plugin, available on <a href="../download.html#contributions" class="wikilink1" title="download">download page</a>. The plugin will check the <code>REMOTE_USER</code> environment variable to get the connected user.
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Presentation" [65-750] -->
+<h2 class="sectionedit3" id="installation">Installation</h2>
+<div class="level2">
+
+<p>
+<a href="../download.html#contributions" class="wikilink1" title="download">Download</a> the plugin and copy the files in dokuwiki <code>inc/auth/</code> directory:
+</p>
+<pre class="code">cp lemonldap.class.php inc/auth/
+cp lemonldapuserdatabackend.class.php inc/auth/</pre>
+
+</div>
+<!-- EDIT3 SECTION "Installation" [751-977] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT4 SECTION "Configuration" [978-1004] -->
+<h3 class="sectionedit5" id="dokuwiki_local_configuration">Dokuwiki local configuration</h3>
+<div class="level3">
+
+<p>
+Edit Dokuwiki local configuration (<code>conf/local.php</code>) and set <code>lemonldap</code> as authentication type:
+</p>
+<pre class="code file php"><span class="re0">$conf</span><span class="br0">&#91;</span>authtype<span class="br0">&#93;</span> <span class="sy0">=</span> lemonldap<span class="sy0">;</span></pre>
+
+</div>
+<!-- EDIT5 SECTION "Dokuwiki local configuration" [1005-1194] -->
+<h3 class="sectionedit6" id="dokuwiki_virtual_host">Dokuwiki virtual host</h3>
+<div class="level3">
+
+<p>
+Configure Dokuwiki virtual host like other <a href="../configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">protected virtual host</a>.
+</p>
+<div class="noteimportant">If you are protecting Dokuwiki with <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, <a href="../header_remote_user_conversion.html" class="wikilink1" title="documentation:2.0:header_remote_user_conversion">convert header into REMOTE_USER environment variable</a>.
+</div><ul>
+<li class="level1"><div class="li"> For Apache:</div>
+</li>
+</ul>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:<span class="nu0">80</span>&gt;
+       <span class="kw1">ServerName</span> dokuwiki.example.com
+&nbsp;
+       PerlHeaderParserHandler Lemonldap::NG::Handler
+&nbsp;
+       ...
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+<ul>
+<li class="level1"><div class="li"> For Nginx:</div>
+</li>
+</ul>
+<pre class="code file nginx">server {
+  listen 80;
+  server_name dokuwiki.example.com;
+  root /path/to/application;
+  # Internal authentication request
+  location = /lmauth {
+    internal;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/llng-fastcgi-server/llng-fastcgi.sock;
+    # Drop post datas
+    fastcgi_pass_request_body  off;
+    fastcgi_param CONTENT_LENGTH &quot;&quot;;
+    # Keep original hostname
+    fastcgi_param HOST $http_host;
+    # Keep original request (LLNG server will received /llauth)
+    fastcgi_param X_ORIGINAL_URI  $request_uri;
+  } 
+&nbsp;
+  # Client requests
+  location / {
+    auth_request /lmauth;
+    auth_request_set $lmremote_user $upstream_http_lm_remote_user;
+    auth_request_set $lmlocation $upstream_http_location;
+    error_page 401 $lmlocation;
+    try_files $uri $uri/ =404;
+&nbsp;
+    ...
+&nbsp;
+    include /etc/lemonldap-ng/nginx-lua-headers.conf;
+  }
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}</pre>
+
+</div>
+<!-- EDIT6 SECTION "Dokuwiki virtual host" [1195-2630] -->
+<h3 class="sectionedit7" id="dokuwiki_virtual_host_in_manager">Dokuwiki virtual host in Manager</h3>
+<div class="level3">
+
+<p>
+Go to the Manager and <a href="../configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:2.0:configvhost">create a new virtual host</a> for Dokuwiki.
+</p>
+
+<p>
+Just configure the <a href="../writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">access rules</a>.
+</p>
+
+<p>
+If using <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, configure the <code>Auth-User</code> <a href="../writingrulesand_headers.html#headers" class="wikilink1" title="documentation:2.0:writingrulesand_headers">header</a>, else no headers are needed.
+</p>
+
+</div>
+<!-- EDIT7 SECTION "Dokuwiki virtual host in Manager" [2631-] --></div>
+</body>
+</html>

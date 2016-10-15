@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:installdeb</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,installdeb"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="installdeb.html"/>
+<link rel="contents" href="installdeb.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:installdeb","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#organization">Organization</a></div></li>
+<li class="level1"><div class="li"><a href="#get_the_packages">Get the packages</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#official_repository">Official repository</a></div></li>
+<li class="level2"><div class="li"><a href="#llng_repository">LL::NG repository</a></div></li>
+<li class="level2"><div class="li"><a href="#manual_download">Manual download</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#package_gpg_signature">Package GPG signature</a></div></li>
+<li class="level1"><div class="li"><a href="#install_packages">Install packages</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#with_aptitude">With aptitude</a></div></li>
+<li class="level2"><div class="li"><a href="#with_dpkg">With dpkg</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#first_configuration_steps">First configuration steps</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#change_default_dns_domain">Change default DNS domain</a></div></li>
+<li class="level2"><div class="li"><a href="#reload_virtual_host">Reload virtual host</a></div></li>
+<li class="level2"><div class="li"><a href="#upgrade">Upgrade</a></div></li>
+<li class="level2"><div class="li"><a href="#dns">DNS</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#file_location">File location</a></div></li>
+<li class="level1"><div class="li"><a href="#build_your_packages">Build your packages</a></div></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<h1 class="sectionedit1" id="installation_on_debianubuntu_with_packages">Installation on Debian/Ubuntu with packages</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1 SECTION "Installation on Debian/Ubuntu with packages" [1-59] -->
+<h2 class="sectionedit2" id="organization">Organization</h2>
+<div class="level2">
+
+<p>
+LemonLDAP::NG provides these packages:
+</p>
+<ul>
+<li class="level1"><div class="li"> lemonldap-ng: meta-package, contains no file but dependencies on other packages</div>
+</li>
+<li class="level1"><div class="li"> lemonldap-ng-doc: contains <abbr title="HyperText Markup Language">HTML</abbr> documentation and project docs (README, etc.)</div>
+</li>
+<li class="level1"><div class="li"> lemonldap-ng-fastcgi-server: <abbr title="LemonLDAP::NG">LL::NG</abbr> FastCGI server (for Nginx)</div>
+</li>
+<li class="level1"><div class="li"> lemonldap-ng-fr-doc: French translation for <abbr title="HyperText Markup Language">HTML</abbr> documentation</div>
+</li>
+<li class="level1"><div class="li"> liblemonldap-ng-common-perl: configuration and common files</div>
+</li>
+<li class="level1"><div class="li"> liblemonldap-ng-handler-perl: Handler files</div>
+</li>
+<li class="level1"><div class="li"> liblemonldap-ng-manager-perl: Manager files</div>
+</li>
+<li class="level1"><div class="li"> liblemonldap-ng-portal-perl: Portal files</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "Organization" [60-631] -->
+<h2 class="sectionedit3" id="get_the_packages">Get the packages</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT3 SECTION "Get the packages" [632-661] -->
+<h3 class="sectionedit4" id="official_repository">Official repository</h3>
+<div class="level3">
+
+<p>
+If you run Debian testing or unstable, the packages are directly installable:
+</p>
+<pre class="code">apt-cache search lemonldap-ng</pre>
+<div class="noteimportant">Packages from <a href="http://packages.debian.org/search?keywords=lemonldap-ng" class="urlextern" title="http://packages.debian.org/search?keywords=lemonldap-ng"  rel="nofollow">Debian repository</a> may not be up to date. Prefer then the other solutions (see below).
+</div>
+</div>
+<!-- EDIT4 SECTION "Official repository" [662-1000] -->
+<h3 class="sectionedit5" id="llng_repository">LL::NG repository</h3>
+<div class="level3">
+
+<p>
+You can add this repository to have recent packages:
+</p>
+<pre class="code">vi /etc/apt/sources.list.d/lemonldap-ng.list</pre>
+<pre class="file"># LemonLDAP::NG repository
+deb     http://lemonldap-ng.org/deb stable main
+deb-src http://lemonldap-ng.org/deb stable main</pre>
+<div class="notetip">Use the <code>oldstable</code> repository to get packages from previous major version:
+<pre class="file"># LemonLDAP::NG repository
+deb     http://lemonldap-ng.org/deb oldstable main
+deb-src http://lemonldap-ng.org/deb oldstable main</pre>
+
+</div>
+<p>
+Run this to update packages cache:
+</p>
+<pre class="code">apt-get update</pre>
+
+</div>
+<!-- EDIT5 SECTION "LL::NG repository" [1001-1590] -->
+<h3 class="sectionedit6" id="manual_download">Manual download</h3>
+<div class="level3">
+
+<p>
+Packages are available on the <a href="download.html" class="wikilink1" title="download">Download page</a>.
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Manual download" [1591-1677] -->
+<h2 class="sectionedit7" id="package_gpg_signature">Package GPG signature</h2>
+<div class="level2">
+
+<p>
+The GPG key can be downloaded here: <a href="rpm-gpg-key-ow2" class="media mediafile mf_" title="rpm-gpg-key-ow2 (1.7 KB)">rpm-gpg-key-ow2</a>
+</p>
+
+<p>
+Install it to trust packages:
+</p>
+<pre class="code">apt-key add rpm-gpg-key-ow2</pre>
+
+</div>
+<!-- EDIT7 SECTION "Package GPG signature" [1678-1846] -->
+<h2 class="sectionedit8" id="install_packages">Install packages</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT8 SECTION "Install packages" [1847-1876] -->
+<h3 class="sectionedit9" id="with_aptitude">With aptitude</h3>
+<div class="level3">
+<pre class="code">aptitude install lemonldap-ng</pre>
+
+</div>
+<!-- EDIT9 SECTION "With aptitude" [1877-1947] -->
+<h3 class="sectionedit10" id="with_dpkg">With dpkg</h3>
+<div class="level3">
+
+<p>
+Before installing the packages, install <a href="prereq.html" class="wikilink1" title="documentation:2.0:prereq">dependencies</a>.
+</p>
+
+<p>
+Then:
+</p>
+<pre class="code">dpkg -i liblemonldap-ng-* lemonldap-ng*</pre>
+
+</div>
+<!-- EDIT10 SECTION "With dpkg" [1948-2096] -->
+<h2 class="sectionedit11" id="first_configuration_steps">First configuration steps</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT11 SECTION "First configuration steps" [2097-2135] -->
+<h3 class="sectionedit12" id="change_default_dns_domain">Change default DNS domain</h3>
+<div class="level3">
+
+<p>
+By default, <abbr title="Domain Name System">DNS</abbr> domain is <code>example.com</code>. You can change it quick with a sed command. For example, we change it to <code>ow2.org</code>:
+</p>
+<pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.js /var/lib/lemonldap-ng/test/index.pl</pre>
+
+</div>
+<!-- EDIT12 SECTION "Change default DNS domain" [2136-2453] -->
+<h3 class="sectionedit13" id="reload_virtual_host">Reload virtual host</h3>
+<div class="level3">
+
+<p>
+To allow the manager to reload the configuration, register the reload virtual host name in the hosts of the server:
+</p>
+<pre class="code shell">echo &quot;127.0.0.1 reload.example.com&quot; &gt;&gt; /etc/hosts</pre>
+<div class="notetip">Adapt the reload virtual host name to the domain you configured.
+</div>
+</div>
+<!-- EDIT13 SECTION "Reload virtual host" [2454-2755] -->
+<h3 class="sectionedit14" id="upgrade">Upgrade</h3>
+<div class="level3">
+
+<p>
+If you upgraded <abbr title="LemonLDAP::NG">LL::NG</abbr>, check all <a href="upgrade.html" class="wikilink1" title="documentation:2.0:upgrade">upgrade notes</a>.
+</p>
+
+</div>
+<!-- EDIT14 SECTION "Upgrade" [2756-2836] -->
+<h3 class="sectionedit15" id="dns">DNS</h3>
+<div class="level3">
+
+<p>
+Configure your <abbr title="Domain Name System">DNS</abbr> server to resolve names with your server <abbr title="Internet Protocol">IP</abbr>.
+</p>
+<div class="notetip">For tests with <code>example.com</code>, launch the following :
+<pre class="code shell">cat /etc/lemonldap-ng/for_etc_hosts &gt;&gt; /etc/hosts</pre>
+
+</div>
+<p>
+Follow the <a href="start.html#configuration" class="wikilink1" title="documentation:2.0:start">next steps</a>
+</p>
+
+</div>
+<!-- EDIT15 SECTION "DNS" [2837-3109] -->
+<h2 class="sectionedit16" id="file_location">File location</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Configuration is in /etc/lemonldap-ng</div>
+</li>
+<li class="level1"><div class="li"> LemonLDAP::NG configuration (edited by the Manager) is in /var/lib/lemonldap-ng/conf/</div>
+</li>
+<li class="level1"><div class="li"> All Perl modules are in the VENDOR perl directory (/usr/share/perl5/)</div>
+</li>
+<li class="level1"><div class="li"> All Perl scripts/pages are in /var/lib/lemonldap-ng/</div>
+</li>
+<li class="level1"><div class="li"> All lemonldap-ng tools are in /usr/share/lemonldap-ng/bin/</div>
+</li>
+<li class="level1"><div class="li"> All static content (examples, <abbr title="Cascading Style Sheets">CSS</abbr>, images, etc.) is in /usr/share/lemonldap-ng/</div>
+</li>
+<li class="level1"><div class="li"> Apache configuration files are in /etc/lemonldap-ng and linked in /etc/apache2/sites-available</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT16 SECTION "File location" [3110-3646] -->
+<h2 class="sectionedit17" id="build_your_packages">Build your packages</h2>
+<div class="level2">
+
+<p>
+You can also get the <a href="download.html" class="wikilink1" title="download">LemonLDAP::NG archive</a> and make the package yourself:
+</p>
+<pre class="code">tar xzf lemonldap-ng-*.tar.gz
+cd lemonldap-ng-*
+make debian-packages</pre>
+
+</div>
+<!-- EDIT17 SECTION "Build your packages" [3647-] --></div>
+</body>
+</html>

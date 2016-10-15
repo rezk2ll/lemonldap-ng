@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:writingrulesand_headers</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,writingrulesand_headers"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="writingrulesand_headers.html"/>
+<link rel="contents" href="writingrulesand_headers.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:writingrulesand_headers","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="writing_rules_and_headers">Writing rules and headers</h1>
+<div class="level1">
+
+<p>
+Lemonldap::NG manage applications by their hostname (Apache&#039;s virtualHosts). Rules are used to protect applications, headers are HTTP headers added to the request to give datas to the application (for logs, profiles,…).
+</p>
+<div class="noteimportant">Note that variables designed by $xx correspond to the name of the <a href="exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">exported variables</a> or <a href="performances.html#macros_and_groups" class="wikilink1" title="documentation:2.0:performances">macro names</a>.
+</div>
+<p>
+See also <a href="extendedfunctions.html" class="wikilink1" title="documentation:2.0:extendedfunctions">extended functions</a>.
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Writing rules and headers" [1-492] -->
+<h2 class="sectionedit2" id="rules">Rules</h2>
+<div class="level2">
+
+<p>
+A rule associates a <a href="http://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions" class="urlextern" title="http://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions"  rel="nofollow">regular expression</a> to a Perl boolean expression or a keyword.
+</p>
+
+<p>
+<a href="documentation/manager-rule.png_documentation_2.0_writingrulesand_headers.html" class="media" title="documentation:manager-rule.png"><img src="documentation/manager-rule.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Examples:
+</p>
+<div class="table sectionedit3"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Goal  </th><th class="col1 centeralign">  Regular expression  </th><th class="col2 centeralign">  Rule  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 leftalign"> Restrict /admin/ directory to user bart.simpson  </td><td class="col1 centeralign">  ^/admin/  </td><td class="col2 centeralign">  $uid&nbsp;eq&nbsp;"bart.simpson"  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 leftalign"> Restrict /js/ and /css/ directory to authenticated users  </td><td class="col1 centeralign">  ^/(css|js)/  </td><td class="col2 centeralign">  accept  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 leftalign"> Deny access to /config/ directory  </td><td class="col1 centeralign">  ^/config/  </td><td class="col2 centeralign">  deny  </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0 leftalign"> Do not restrict /public/  </td><td class="col1 centeralign">  ^/public/  </td><td class="col2 centeralign">  skip  </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0 leftalign"> Makes authentication optional, but authenticated users are seen as such (that is, user data are sent to the app through HTTP headers)  </td><td class="col1 centeralign">  ^/forum/  </td><td class="col2 centeralign">  unprotect  </td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0 leftalign"> Restrict access to the whole site to users that have the LDAP description field set to “LDAP administrator” (must be set in exported variables)  </td><td class="col1 centeralign">  default  </td><td class="col2 centeralign">  $description&nbsp;eq&nbsp;"LDAP&nbsp;administrator"  </td>
+	</tr>
+</table></div>
+<!-- EDIT3 TABLE [715-1558] -->
+<p>
+The “<strong>default</strong>” access rule is used if no other access rule match the current <abbr title="Uniform Resource Locator">URL</abbr>.
+</p>
+<div class="notetip"><ul>
+<li class="level1"><div class="li"> Comments can be used to order your rules: rules are applied in the alphabetical order of comment (or regexp in there is no comment). See <strong><a href="security.html#write_good_rules" class="wikilink1" title="documentation:2.0:security">security chapter</a></strong> to learn more about writing good rules.</div>
+</li>
+<li class="level1"><div class="li"> See <a href="performances.html#handler_performance" class="wikilink1" title="documentation:2.0:performances">performances</a> to know how to use macros and groups in rules.</div>
+</li>
+</ul>
+
+</div>
+<p>
+Rules can also be used to intercept logout <abbr title="Uniform Resource Locator">URL</abbr>:
+</p>
+<div class="table sectionedit4"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Goal  </th><th class="col1 centeralign">  Regular expression  </th><th class="col2 centeralign">  Rule  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 leftalign"> Logout user from Lemonldap::NG and redirect it to http://intranet/  </td><td class="col1 centeralign">  ^/index.php\?logout  </td><td class="col2 centeralign">  logout_sso&nbsp;http://intranet/  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 leftalign"> Logout user from current application and redirect it to the menu  </td><td class="col1 centeralign">  ^/index.php\?logout  </td><td class="col2 centeralign">  logout_app&nbsp;https://auth.example.com/  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 leftalign"> Logout user from current application and from Lemonldap::NG and redirect it to http://intranet/  </td><td class="col1 centeralign">  ^/index.php\?logout  </td><td class="col2 centeralign">  logout_app_sso&nbsp;http://intranet/  </td>
+	</tr>
+</table></div>
+<!-- EDIT4 TABLE [2052-2657] --><div class="notetip">By default, user will be redirected on portal if no <abbr title="Uniform Resource Locator">URL</abbr> defined, or on the specified <abbr title="Uniform Resource Locator">URL</abbr> if any.
+</div><div class="noteimportant">Only current application is concerned by logout_app* targets. Be careful with some applications which doesn&#039;t verify Lemonldap::NG headers after having created their own cookies. If so, you can redirect users to a <abbr title="HyperText Markup Language">HTML</abbr> page that explain that it is safe to close browser after disconnect.
+</div>
+</div>
+<!-- EDIT2 SECTION "Rules" [493-3085] -->
+<h2 class="sectionedit5" id="headers">Headers</h2>
+<div class="level2">
+
+<p>
+Headers are associations between an header name and a perl expression that returns a string. Headers are used to give user datas to the application. 
+</p>
+
+<p>
+Examples:
+</p>
+<div class="table sectionedit6"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Goal  </th><th class="col1 centeralign">  Header name  </th><th class="col2 centeralign">  Header value  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 leftalign"> Give the uid (for accounting)  </td><td class="col1 centeralign">  Auth-User  </td><td class="col2 centeralign">  $uid  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 leftalign"> Give a static value  </td><td class="col1 centeralign">  Some-Thing  </td><td class="col2 centeralign">  “static-value”  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 leftalign"> Give display name  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  $givenName.“ ”.$surName  </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0 leftalign"> Give a non ascii data  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  encode_base64($givenName."&nbsp;".$surName)  </td>
+	</tr>
+</table></div>
+<!-- EDIT6 TABLE [3269-3602] -->
+<p>
+As described in <a href="performances.html#handler_performance" class="wikilink1" title="documentation:2.0:performances">performances chapter</a>, you can use macros, local macros,…
+</p>
+<div class="noteimportant"><ul>
+<li class="level1"><div class="li"> Since many HTTP servers refuse non ascii headers, it is recommended to use encode_base64() function to transmit those headers</div>
+</li>
+<li class="level1"><div class="li"> Header names must contain only letters and “-” character</div>
+</li>
+</ul>
+
+</div><div class="notetip">By default, <abbr title="Single Sign On">SSO</abbr> cookie is hidden, so protected applications cannot get <abbr title="Single Sign On">SSO</abbr> session key. But you can forward this key if it is really needed:
+<pre class="code">Session-ID =&gt; $_session_id</pre>
+
+</div>
+</div>
+<!-- EDIT5 SECTION "Headers" [3086-] --></div>
+</body>
+</html>
