@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8" />
+  <title>documentation:2.0:logs</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,logs"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="logs.html"/>
+<link rel="contents" href="logs.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:logs","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container"><!-- TOC START -->
+
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#apache_logging">Journaux d'Apache</a></div></li>
+<li class="level1"><div class="li"><a href="#syslog">Syslog</a></div></li>
+<li class="level1"><div class="li"><a href="#override_logging_functions">Surcharger les fonctions de journalisation</a></div></li>
+</ul>
+</div>
+</div><!-- TOC END -->
+
+
+<h1 class="sectionedit1" id="logs">Journaux</h1>
+<div class="level1">
+
+</div><!-- EDIT1 SECTION "Logs" [1-20] -->
+
+<h2 class="sectionedit2" id="apache_logging">Journaux d'Apache</h2>
+<div class="level2">
+
+<p>
+Par défaut, LemonLDAP::NG utilise les journaux d'Apache pour journaliser les actions des utilisateurs et autre messages :
+</p>
+<ul>
+<li class="level1"><div class="li"> Journaux d'erreur (ErrorLog) : tous les messages emis par le programme, suivant le niveau de journalisation configuré (LogLevel)</div>
+</li>
+<li class="level1"><div class="li"> Journaux d'accès (AccessLog) : l'utilisateur de chaque requête est identifié</div>
+</li>
+</ul>
+
+<p>
+Le niveau de journalisation peut être configuré via le paramètre <code>LogLevel</code> d'Apache. Il peut être configuré globalement, ou dans chaque hôte virtuel.
+</p>
+
+<p>
+Voir <a href="http://httpd.apache.org/docs/current/mod/core.html#loglevel" class="urlextern" title="http://httpd.apache.org/docs/current/mod/core.html#loglevel"  rel="nofollow">http://httpd.apache.org/docs/current/mod/core.html#loglevel</a> pour plus d'informations.
+</p>
+
+<p>
+Pour configurer l'identifiant utilisateur dans les journaux d'accès, aller dans le manager, <code>Paramètres généraux</code> &gt; <code>Journalisation</code> &gt; <code>REMOTE_USER</code>.
+</p>
+
+<p>
+On peut aussi masque les sonnées sensibles dans les journaux (le contenu de la session est affiché dans les journaux lorsque logLevel est positionné à debug). Aller dans le manager, <code>Paramètres généraux</code> » <code>Journaux</code> » <code>Attributs masqués</code> et indiquer la liste des attributs à masquer (séparés par des espaces). 
+</p>
+
+</div><!-- EDIT2 SECTION "Apache logging" [21-850] -->
+
+<h2 class="sectionedit3" id="syslog">Syslog</h2>
+<div class="level2">
+
+<p>
+LemonLDAP::NG peut également utiliser syslog (seulement pour les actions utilisateurs).
+</p>
+
+<p>
+Dans le manager, choisir la facilité syslog dans <code>Paramètres généraux</code> &gt; <code>Journalisation</code> &gt; <code>Facilité syslog</code>.
+</p>
+
+<p>
+Les messages sont stockés avec les niveaux :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>info</strong> pour les actions utilisateurs</div>
+</li>
+<li class="level1"><div class="li"> <strong>notice</strong> pour les authentifications réussies et les échanges externes (<abbr title="Security Assertion Markup Language">SAML</abbr>, OpenID,…)</div>
+</li>
+<li class="level1"><div class="li"> <strong>warn</strong> pour les échecs d'authentifications</div>
+</li>
+</ul>
+
+</div><!-- EDIT3 SECTION "Syslog" [851-1219] -->
+
+<h2 class="sectionedit4" id="override_logging_functions">Surcharger les fonctions de journalisation</h2>
+<div class="level2">
+
+<p>
+On peut personnaliser les fonctions de journalisation en redéfinissant les méthodes userNotice() et userError(), directement dans <code>lemonldap-ng.ini</code>
+</p>
+
+<p>
+Exemple :
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">[</span>portal<span class="br0">]</span></span>
+<span class="re1">userError</span> <span class="sy0">=</span><span class="re2"> sub <span class="br0">{</span> my <span class="br0">(</span>$self, $message<span class="br0">)</span> = @_</span><span class="co0">; ... }</span>
+<span class="re1">userNotice</span> <span class="sy0">=</span><span class="re2"> sub <span class="br0">{</span> my <span class="br0">(</span>$self, $message<span class="br0">)</span> = @_</span><span class="co0">; ... }</span></pre>
+
+</div><!-- EDIT4 SECTION "Override logging functions" [1220-] -->
+</div>
+</body>
+</html>

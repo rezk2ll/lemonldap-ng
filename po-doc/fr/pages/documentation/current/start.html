@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8" />
+  <title>documentation:2.0:start</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,start"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="start.html"/>
+<link rel="contents" href="start.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:start","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container"><!-- TOC START -->
+
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#installation">Installation</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#before_installation">Before installation</a></div></li>
+<li class="level2"><div class="li"><a href="#installation1">Installation</a></div></li>
+<li class="level2"><div class="li"><a href="#after_installation">After installation</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#first_steps">Premiers pas</a></div></li>
+<li class="level2"><div class="li"><a href="#portal">Portail</a></div></li>
+<li class="level2"><div class="li"><a href="#authentication_users_and_password_databases">Bases de données d'authentification, des utilisateurs et des mots-de-passe</a></div></li>
+<li class="level2"><div class="li"><a href="#configuration_database">Base de données de la configuration</a></div></li>
+<li class="level2"><div class="li"><a href="#sessions_database">Base de données des sessions</a></div></li>
+<li class="level2"><div class="li"><a href="#identity_provider">Fournisseur d'identité</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#applications_protection">Protection des applications</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#well_known_compatible_applications">Well known compatible applications</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#advanced_features">Fonctionnalités avancées</a></div></li>
+<li class="level1"><div class="li"><a href="#mini_howtos">Mini howtos</a></div></li>
+<li class="level1"><div class="li"><a href="#exploitation">Exploitation</a></div></li>
+</ul>
+</div>
+</div><!-- TOC END -->
+
+
+<h1 class="sectionedit1" id="documentation_for_lemonldapng_20">Documentation for LemonLDAP::NG 2.0</h1>
+<div class="level1">
+
+</div><!-- EDIT1 SECTION "Documentation for LemonLDAP::NG 2.0" [1-51] -->
+
+<h2 class="sectionedit2" id="installation">Installation</h2>
+<div class="level2">
+
+</div><!-- EDIT2 SECTION "Installation" [52-77] -->
+
+<h3 class="sectionedit3" id="before_installation">Before installation</h3>
+<div class="level3">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<img src="icons/kthememgr.png" class="media" alt="" />
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="prereq.html" class="wikilink1" title="documentation:2.0:prereq">Pré-requis et dépendances</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="upgrade.html" class="wikilink1" title="documentation:2.0:upgrade">Upgrade notes</a></div>
+</li>
+</ul>
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT3 SECTION "Before installation" [78-342] -->
+
+<h3 class="sectionedit4" id="installation1">Installation</h3>
+<div class="level3">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<img src="icons/warehause.png" class="media" alt="" />
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="installtarball.html" class="wikilink1" title="documentation:2.0:installtarball">Installation depuis l'archive</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="installdeb.html" class="wikilink1" title="documentation:2.0:installdeb">Installation sur Debian/Ubuntu avec les paquets</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="installrpm.html" class="wikilink1" title="documentation:2.0:installrpm">Installation sur RHEL/CentOS avec les paquets</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="installsles.html" class="wikilink1" title="documentation:2.0:installsles">Installation on Suse Linux Enterprise Server with packages</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="docker.html" class="wikilink1" title="documentation:2.0:docker">Run in LemonLDAP::NG in Docker</a></div>
+</li>
+</ul>
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT4 SECTION "Installation" [343-826] -->
+
+<h3 class="sectionedit5" id="after_installation">After installation</h3>
+<div class="level3">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<img src="icons/clean.png" class="media" alt="" />
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="configapache.html" class="wikilink1" title="documentation:2.0:configapache">Deployer la configuration Apache</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="confignginx.html" class="wikilink1" title="documentation:2.0:confignginx">Deployer la configuration Nginx</a></div>
+</li>
+</ul>
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT5 SECTION "After installation" [827-1106] -->
+
+<h2 class="sectionedit6" id="configuration">Configuration</h2>
+<div class="level2">
+
+</div><!-- EDIT6 SECTION "Configuration" [1107-1133] -->
+
+<h3 class="sectionedit7" id="first_steps">Premiers pas</h3>
+<div class="level3">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/lists.png_documentation_2.0_start.html" class="media" title="icons:lists.png"><img src="icons/lists.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="configlocation.html" class="wikilink1" title="documentation:2.0:configlocation">Vue d'ensemble de la configuration</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="ssocookie.html" class="wikilink1" title="documentation:2.0:ssocookie">Configurer le cookie SSO (Single Sign On) et l'URL du portail</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="redirections.html" class="wikilink1" title="documentation:2.0:redirections">Paramètrer les redirections</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">Définir les variables exportées</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="configvhost.html" class="wikilink1" title="documentation:2.0:configvhost">Gérer les hôtes virtuels</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="sessions.html" class="wikilink1" title="documentation:2.0:sessions">Configurer les spécificités des sessions</a></div>
+</li>
+</ul>
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT7 SECTION "First steps" [1134-1593] -->
+
+<h3 class="sectionedit8" id="portal">Portail</h3>
+<div class="level3">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/colors.png_documentation_2.0_start.html" class="media" title="icons:colors.png"><img src="icons/colors.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="portal.html" class="wikilink1" title="documentation:2.0:portal">Présentation</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="portalcustom.html" class="wikilink1" title="documentation:2.0:portalcustom">Personnalisation du portail</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="portalmenu.html" class="wikilink1" title="documentation:2.0:portalmenu">Menu du portail</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="captcha.html" class="wikilink1" title="documentation:2.0:captcha">Captcha</a></div>
+</li>
+</ul>
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT8 SECTION "Portal" [1594-1884] -->
+
+<h3 class="sectionedit9" id="authentication_users_and_password_databases">Bases de données d'authentification, des utilisateurs et des mots-de-passe</h3>
+<div class="level3">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/gpg.png_documentation_2.0_start.html" class="media" title="icons:gpg.png"><img src="icons/gpg.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+<div class="table sectionedit10"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0">  Official Backends  </th><th class="col1 centeralign">  Authentification  </th><th class="col2 centeralign">  Utilisateurs  </th><th class="col3 centeralign">  Mot-de-passe  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0"> <a href="authad.html" class="wikilink1" title="documentation:2.0:authad">Active Directory</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">Apache (Kerberos, NTLM, OTP, ...)</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0"> <a href="authbrowserid.html" class="wikilink1" title="documentation:2.0:authbrowserid">BrowserID (Mozilla Persona)</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0"> <a href="authcas.html" class="wikilink1" title="documentation:2.0:authcas">CAS</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0"> <a href="authdbi.html" class="wikilink1" title="documentation:2.0:authdbi">Bases de données (DBI)</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0"> <a href="authdemo.html" class="wikilink1" title="documentation:2.0:authdemo">Démonstration</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
+	</tr>
+	<tr class="row7 rowodd">
+		<td class="col0"> <a href="authfacebook.html" class="wikilink1" title="documentation:2.0:authfacebook">Facebook</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
+	</tr>
+	<tr class="row8 roweven">
+		<td class="col0"> <a href="authldap.html" class="wikilink1" title="documentation:2.0:authldap">LDAP</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
+	</tr>
+	<tr class="row9 rowodd">
+		<td class="col0"> <a href="authnull.html" class="wikilink1" title="documentation:2.0:authnull">Null</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
+	</tr>
+	<tr class="row10 roweven">
+		<td class="col0"> <a href="authopenidconnect.html" class="wikilink1" title="documentation:2.0:authopenidconnect">OpenID Connect</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row11 rowodd">
+		<td class="col0"> <a href="authproxy.html" class="wikilink1" title="documentation:2.0:authproxy">Proxy LL::NG</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row12 roweven">
+		<td class="col0"> <a href="authradius.html" class="wikilink1" title="documentation:2.0:authradius">Radius</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row13 rowodd">
+		<td class="col0"> <a href="authsaml.html" class="wikilink1" title="documentation:2.0:authsaml">SAML 2.0 / Shibboleth</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row14 roweven">
+		<td class="col0"> <a href="authslave.html" class="wikilink1" title="documentation:2.0:authslave">Slave</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
+	</tr>
+	<tr class="row15 rowodd">
+		<td class="col0"> <a href="authssl.html" class="wikilink1" title="documentation:2.0:authssl">SSL</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row16 roweven">
+		<td class="col0"> <a href="authtwitter.html" class="wikilink1" title="documentation:2.0:authtwitter">Twitter</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row17 rowodd">
+		<td class="col0"> <a href="authwebid.html" class="wikilink1" title="documentation:2.0:authwebid">WebID</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
+	</tr>
+	<tr class="row18 roweven">
+		<td class="col0"> <a href="authyubikey.html" class="wikilink1" title="documentation:2.0:authyubikey">Yubikey</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row19 rowodd">
+		<th class="col0">  Combo Backends  </th><th class="col1 centeralign">  Authentification  </th><th class="col2 centeralign">  Utilisateurs  </th><th class="col3 centeralign">  Mot-de-passe  </th>
+	</tr>
+	<tr class="row20 roweven">
+		<td class="col0"> <a href="authchoice.html" class="wikilink1" title="documentation:2.0:authchoice">Choice by users</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
+	</tr>
+	<tr class="row21 rowodd">
+		<td class="col0"> <a href="authmulti.html" class="wikilink1" title="documentation:2.0:authmulti">Empiler de multiples backends</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row22 roweven">
+		<th class="col0">  Obsolete Backends  </th><th class="col1 centeralign">  Authentification  </th><th class="col2 centeralign">  Utilisateurs  </th><th class="col3 centeralign">  Mot-de-passe  </th>
+	</tr>
+	<tr class="row23 rowodd">
+		<td class="col0"> <a href="authgoogle.html" class="wikilink1" title="documentation:2.0:authgoogle">Google</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
+	</tr>
+	<tr class="row24 roweven">
+		<td class="col0"> <a href="authopenid.html" class="wikilink1" title="documentation:2.0:authopenid">OpenID</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+	</tr>
+	<tr class="row25 rowodd">
+		<td class="col0"> <a href="authremote.html" class="wikilink1" title="documentation:2.0:authremote">LL::NG distant</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+	</tr>
+</table></div><!-- EDIT10 TABLE [2058-3434] -->
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT9 SECTION "Authentication, users and password databases" [1885-3462] -->
+
+<h3 class="sectionedit11" id="configuration_database">Base de données de la configuration</h3>
+<div class="level3">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/utilities.png_documentation_2.0_start.html" class="media" title="icons:utilities.png"><img src="icons/utilities.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> a besoin d'un dispositif de stockage de sa propre configuration (gérée par le manager). Choisir l'une des options suivantes :
+</p>
+<div class="table sectionedit12"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">    Backend    </th><th class="col1 centeralign">  Partageable  </th><th class="col2 centeralign">  Commentaire  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  <a href="fileconfbackend.html" class="wikilink1" title="documentation:2.0:fileconfbackend">File (JSON)</a>  </td><td class="col1"> </td><td class="col2 leftalign">Not shareable between servers except if used in conjunction with <a href="soapconfbackend.html" class="wikilink1" title="documentation:2.0:soapconfbackend">SOAP</a> or with a shared file system (NFS,…). Sélectionné par défaut lors de l'installation.  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  <a href="sqlconfbackend.html" class="wikilink1" title="documentation:2.0:sqlconfbackend">SQL (RDBI/CDBI)</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2"> </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 centeralign">  <a href="ldapconfbackend.html" class="wikilink1" title="documentation:2.0:ldapconfbackend">LDAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2"> </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0 centeralign">  <a href="mongodbconfbackend.html" class="wikilink1" title="documentation:2.0:mongodbconfbackend">MongoDB</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2"> </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0 centeralign">  <a href="soapconfbackend.html" class="wikilink1" title="documentation:2.0:soapconfbackend">SOAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign"> Backend proxy à utiliser avec un autre backend de configuration. <br/><strong>Peut être utilisé pour sécuriser un autre backend</strong> pour des serveurs distants.  </td>
+	</tr>
+</table></div><!-- EDIT12 TABLE [3737-4326] -->
+<div class="notetip">On ne peut démarrer avec une configuration vide, il faut donc lire <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">comment changer de backend de configuration</a> pour convertir une configuration existante en une autre.
+</div>
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT11 SECTION "Configuration database" [3463-4542] -->
+
+<h3 class="sectionedit13" id="sessions_database">Base de données des sessions</h3>
+<div class="level3">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/kmultiple.png_documentation_2.0_start.html" class="media" title="icons:kmultiple.png"><img src="icons/kmultiple.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+
+<p>
+Les sessions sont stockées en utilisant les modules de la famille <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a>. Tous les modules de type <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a> sont utilisables excepté pour quelques fonctionnalités.
+</p>
+<div class="table sectionedit14"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">    Backend    </th><th class="col1 centeralign">  Partageable  </th><th class="col2 centeralign">   <a href="documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">Explorateur de sessions</a>  </th><th class="col3 centeralign">  <a href="documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">Resctriction d'ouverture de session</a>  </th><th class="col4 centeralign">  Expiration des sessions  </th><th class="col5 centeralign">  Commentaire  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  <a href="filesessionbackend.html" class="wikilink1" title="documentation:2.0:filesessionbackend">File</a>  </td><td class="col1"> </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">      ✔    </td><td class="col5 leftalign">Pas partageable entre serveurs sauf si utilisé avec le <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">backend de configuration SOAP</a> ou un système de partage de fichiers (NFS,…). Sélectionné par défaut lors de l'installation.  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  <a href="sqlsessionbackend.html" class="wikilink1" title="documentation:2.0:sqlsessionbackend">SQL</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign" rowspan="2"> Pas optimisé pour l'<a href="documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">exlorateur de sessions</a> et les fonctionnalités de <a href="documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">session unique</a>.  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 centeralign">  <a href="ldapsessionbackend.html" class="wikilink1" title="documentation:2.0:ldapsessionbackend">LDAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0 centeralign">  <a href="nosqlsessionbackend.html" class="wikilink1" title="documentation:2.0:nosqlsessionbackend">Redis</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign"> Le plus rapide. Doit être securisé par un contrôle d'accès réseau.  </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0 centeralign">  <a href="mongodbsessionbackend.html" class="wikilink1" title="documentation:2.0:mongodbsessionbackend">MongoDB</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign"> Doit être securisé par un contrôle d'accès réseau.  </td>
+	</tr>
+	<tr class="row6 roweven">
+		<td class="col0 centeralign">  <a href="browseablesessionbackend.html" class="wikilink1" title="documentation:2.0:browseablesessionbackend">Browseable (SQL, Redis ou LDAP)</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign"> <strong>Optimisé</strong> pour l'<a href="documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">explorateur de sessions</a> et les fonctionnalités de <a href="documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">session unique</a>.  </td>
+	</tr>
+	<tr class="row7 rowodd">
+		<td class="col0 centeralign">  <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign"> Backend proxy à utiliser avec un autre backend de sessions. <br/> <strong>Peut être utilisé pour sécuriser un autre backend</strong> pour des serveurs distants.  </td>
+	</tr>
+</table></div><!-- EDIT14 TABLE [4928-6382] -->
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT13 SECTION "Sessions database" [4543-6410] -->
+
+<h3 class="sectionedit15" id="identity_provider">Fournisseur d'identité</h3>
+<div class="level3">
+<div class="notetip"><ul>
+<li class="level1"><div class="li"> Tous les protocoles de fournisseur d'identité peuvent être utilisés simultanément</div>
+</li>
+<li class="level1"><div class="li"> <a href="federationproxy.html" class="wikilink1" title="documentation:2.0:federationproxy">LemonLDAP::NG peut être utilisé comme proxy entre ces protocoles</a></div>
+</li>
+</ul>
+
+</div>
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/personal.png_documentation_2.0_start.html" class="media" title="icons:personal.png"><img src="icons/personal.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="idpcas.html" class="wikilink1" title="documentation:2.0:idpcas">CAS 1.0 / 2.0 / 3.0  </a></div>
+</li>
+<li class="level1"><div class="li"> <a href="idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML 2.0 / Shibboleth</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="idpopenid.html" class="wikilink1" title="documentation:2.0:idpopenid">OpenID 2.0 (obsolete)</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="idpopenidconnect.html" class="wikilink1" title="documentation:2.0:idpopenidconnect">OpenID Connect</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="issuerdbget.html" class="wikilink1" title="documentation:2.0:issuerdbget">Get parameters provider</a></div>
+</li>
+</ul>
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT15 SECTION "Identity provider" [6411-6955] -->
+
+<h2 class="sectionedit16" id="applications_protection">Protection des applications</h2>
+<div class="level2">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/access.png_documentation_2.0_start.html" class="media" title="icons:access.png"><img src="icons/access.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">Écrire les règles et en-têtes</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="variables.html" class="wikilink1" title="documentation:2.0:variables">Variables qui peuvent être utilisées dans les règles et en-têtes</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="applications.html" class="wikilink1" title="documentation:2.0:applications">Integrate vendor applications</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="selfmadeapplication.html" class="wikilink1" title="documentation:2.0:selfmadeapplication">Integrate self-made applications</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">Rejeu de formulaires</a></div>
+</li>
+</ul>
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT16 SECTION "Applications protection" [6956-7407] -->
+
+<h3 class="sectionedit17" id="well_known_compatible_applications">Well known compatible applications</h3>
+<div class="level3">
+<div class="noteclassic">Here is a list of well known applications that are compatible with <abbr title="LemonLDAP::NG">LL::NG</abbr>. A full list is available on <a href="applications.html" class="wikilink1" title="documentation:2.0:applications">vendor applications page</a>.
+
+</div>
+<p>
+</p><div class="row">
+</p>
+
+<p>
+</p><div class="col-sm-3">
+<a href="applications/alfresco.html" class="media" title="documentation:2.0:applications:alfresco"><img src="icons/kmultiple.png" class="mediacenter" title="Alfresco" alt="Alfresco" /></a>
+</div>
+</p>
+
+<p>
+</p><div class="col-sm-3">
+<a href="applications/bugzilla.html" class="media" title="documentation:2.0:applications:bugzilla"><img src="icons/kmultiple.png" class="mediacenter" title="Bugzilla" alt="Bugzilla" /></a>
+</div>
+</p>
+
+<p>
+</p><div class="col-sm-3">
+<a href="applications/dokuwiki.html" class="media" title="documentation:2.0:applications:dokuwiki"><img src="icons/kmultiple.png" class="mediacenter" title="Dokuwiki" alt="Dokuwiki" /></a>
+</div>
+</p>
+
+<p>
+</p><div class="col-sm-3">
+<a href="applications/drupal.html" class="media" title="documentation:2.0:applications:drupal"><img src="icons/kmultiple.png" class="mediacenter" title="Drupal" alt="Drupal" /></a>
+</div>
+</p>
+
+<p>
+</p><div class="col-sm-3">
+<a href="applications/glpi.html" class="media" title="documentation:2.0:applications:glpi"><img src="icons/kmultiple.png" class="mediacenter" title="GLPI" alt="GLPI" /></a>
+</div>
+</p>
+
+<p>
+</p><div class="col-sm-3">
+<a href="applications/liferay.html" class="media" title="documentation:2.0:applications:liferay"><img src="icons/kmultiple.png" class="mediacenter" title="Liferay" alt="Liferay" /></a>
+</div>
+</p>
+
+<p>
+</p><div class="col-sm-3">
+<a href="applications/mediawiki.html" class="media" title="documentation:2.0:applications:mediawiki"><img src="icons/kmultiple.png" class="mediacenter" title="Mediawiki" alt="Mediawiki" /></a>
+</div>
+</p>
+
+<p>
+</p><div class="col-sm-3">
+<a href="applications/nextcloud.html" class="media" title="documentation:2.0:applications:nextcloud"><img src="icons/kmultiple.png" class="mediacenter" title="NextCloud" alt="NextCloud" /></a>
+</div>
+</p>
+
+<p>
+</p><div class="col-sm-3">
+<a href="applications/simplesamlphp.html" class="media" title="documentation:2.0:applications:simplesamlphp"><img src="icons/kmultiple.png" class="mediacenter" title="simpleSAMLphp" alt="simpleSAMLphp" /></a>
+</div>
+</p>
+
+<p>
+</p><div class="col-sm-3">
+<a href="applications/zimbra.html" class="media" title="documentation:2.0:applications:zimbra"><img src="icons/kmultiple.png" class="mediacenter" title="Zimbra" alt="Zimbra" /></a>
+</div>
+</p>
+
+<p>
+</p></div>
+</p>
+
+</div><!-- EDIT17 SECTION "Well known compatible applications" [7408-9049] -->
+
+<h2 class="sectionedit18" id="advanced_features">Fonctionnalités avancées</h2>
+<div class="level2">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/neotux.png_documentation_2.0_start.html" class="media" title="icons:neotux.png"><img src="icons/neotux.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="notifications.html" class="wikilink1" title="documentation:2.0:notifications">Systèmes de notification</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="passwordstore.html" class="wikilink1" title="documentation:2.0:passwordstore">Stockage du mot-de-passe en session</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="cda.html" class="wikilink1" title="documentation:2.0:cda">Authentification inter-domaines (CDA)</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="rbac.html" class="wikilink1" title="documentation:2.0:rbac">Contrôle d'accès basé sur les rôles (RBAC)</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="customfunctions.html" class="wikilink1" title="documentation:2.0:customfunctions">Utiliser les fonctions personnalisées</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="extendedfunctions.html" class="wikilink1" title="documentation:2.0:extendedfunctions">Utiliser les fonctions étendues</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="resetpassword.html" class="wikilink1" title="documentation:2.0:resetpassword">Réinitialiser les mots-de-passe par mail (self-service)</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="register.html" class="wikilink1" title="documentation:2.0:register">Create an account (self service)</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="logoutforward.html" class="wikilink1" title="documentation:2.0:logoutforward">Propager les déconnexions aux applications</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="securetoken.html" class="wikilink1" title="documentation:2.0:securetoken">Agent jeton sécurisé</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Cage sécurisée</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="loginhistory.html" class="wikilink1" title="documentation:2.0:loginhistory">Historique de connexion</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="handlerauthbasic.html" class="wikilink1" title="documentation:2.0:handlerauthbasic">Agent AuthBasic</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="fastcgi.html" class="wikilink1" title="documentation:2.0:fastcgi">Support FastCGI</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">Voir la liste complète des paramètres</a></div>
+</li>
+</ul>
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT18 SECTION "Advanced features" [9050-9894] -->
+
+<h2 class="sectionedit19" id="mini_howtos">Mini howtos</h2>
+<div class="level2">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/jabber_protocol.png_documentation_2.0_start.html" class="media" title="icons:jabber_protocol.png"><img src="icons/jabber_protocol.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="managerprotection.html" class="wikilink1" title="documentation:2.0:managerprotection">Modifier la protection du manager</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="mysqlminihowto.html" class="wikilink1" title="documentation:2.0:mysqlminihowto">Configuration et sessions dans MySQL</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="ldapminihowto.html" class="wikilink1" title="documentation:2.0:ldapminihowto">Configuration et sessions dans LDAP</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="soapminihowto.html" class="wikilink1" title="documentation:2.0:soapminihowto">Accès à la configuration et aux sessions par SOAP</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="activedirectoryminihowto.html" class="wikilink1" title="documentation:2.0:activedirectoryminihowto">Integration dans Active Directory (LDAP et Kerberos)</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="federationproxy.html" class="wikilink1" title="documentation:2.0:federationproxy">Créer un proxy de protocoles </a> <em>(<abbr title="Security Assertion Markup Language">SAML</abbr> vers OpenID, <abbr title="Central Authentication Service">CAS</abbr> vers <abbr title="Security Assertion Markup Language">SAML</abbr> ,…)</em></div>
+</li>
+<li class="level1"><div class="li"> <a href="header_remote_user_conversion.html" class="wikilink1" title="documentation:2.0:header_remote_user_conversion">Convertir les en-têtes HTTP en variables d'environnement</a></div>
+</li>
+</ul>
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT19 SECTION "Mini howtos" [9895-10564] -->
+
+<h2 class="sectionedit20" id="exploitation">Exploitation</h2>
+<div class="level2">
+
+<p>
+</p><div class="row"><div class="col-md-1">
+<a href="icons/xeyes.png_documentation_2.0_start.html" class="media" title="icons:xeyes.png"><img src="icons/xeyes.png" class="media" alt="" /></a>
+</div><div class="col-md-11">
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="performances.html" class="wikilink1" title="documentation:2.0:performances">Performances</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="security.html" class="wikilink1" title="documentation:2.0:security">Sécurité</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="selinux.html" class="wikilink1" title="documentation:2.0:selinux">SELinux</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="status.html" class="wikilink1" title="documentation:2.0:status">Page de statut de l'agent</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="mrtg.html" class="wikilink1" title="documentation:2.0:mrtg">Supervision MRTG</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="logs.html" class="wikilink1" title="documentation:2.0:logs">Journalisation</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="error.html" class="wikilink1" title="documentation:2.0:error">Messages d'erreur</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="highavailability.html" class="wikilink1" title="documentation:2.0:highavailability">Haute disponibilité</a></div>
+</li>
+</ul>
+
+<p>
+</p></div></div>
+</p>
+
+</div><!-- EDIT20 SECTION "Exploitation" [10565-] -->
+</div>
+</body>
+</html>

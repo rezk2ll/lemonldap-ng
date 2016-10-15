@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8" />
+  <title>documentation:2.0:cda</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,cda"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="cda.html"/>
+<link rel="contents" href="cda.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:cda","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="cross_domain_authentication">Authentification inter-domaines</h1>
+<div class="level1">
+
+</div><!-- EDIT1 SECTION "Cross Domain Authentication" [1-43] -->
+
+<h2 class="sectionedit2" id="presentation">Présentation</h2>
+<div class="level2">
+
+</div><!-- EDIT3 PLUGIN_INCLUDE_START_NOREDIRECT "documentation:presentation" [0-] -->
+<div class="plugin_include_content plugin_include__documentation:presentation">
+<div class="level3">
+<div class="noteclassic">Pour des raisons de sécurité, un cookie fournit par un domaine ne peut être transmit à un autre. Pour étendre le <abbr title="Authentification unique (Single Sign On)">SSO</abbr> sur plusieurs domaines, un mécanisme inter-domaines est intégré à LemonLDAP::NG.
+</div><ol>
+<li class="level1"><div class="li"> Les utilisateurs possèdent des <a href="documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookies SSO</a> dans le domaine principal (voir la <a href="documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">cinématique de connexion</a>)</div>
+</li>
+<li class="level1"><div class="li"> L'utilisateur tente d'accéder à une application protégée d'un autre domaine</div>
+</li>
+<li class="level1"><div class="li"> L'agent n'intercepte pas de <a href="documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookie SSO</a> (car il n'est pas dans le même domaine) et redirige l'utilisateur vers le portail</div>
+</li>
+<li class="level1"><div class="li"> Le portail reconnaît l'utilisateur par son <a href="documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookie SSO</a> et voit qu'il sollicite une application d'un domaine différent</div>
+</li>
+<li class="level1"><div class="li"> Portal redirige l'utilisateur vers l'application demandée avec son identifiant de session en paramètre de l'<abbr title="Uniform Resource Locator">URL</abbr></div>
+</li>
+<li class="level1"><div class="li"> L'agent détecte le paramètre d'<abbr title="Uniform Resource Locator">URL</abbr> et crée le <a href="documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">cookie SSO</a> dans son domaine, avec la valeur de l'identifiant de session</div>
+</li>
+</ol>
+
+</div><!-- EDIT4 PLUGIN_INCLUDE_END "documentation:presentation" [0-] -->
+</div>
+<div class="level2">
+
+</div><!-- EDIT2 SECTION "Presentation" [44-138] -->
+
+<h2 class="sectionedit5" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+Aller dans le manager, <code>Paramètres généraux</code> » <code>Cookies</code> » <code>Domaines multiples</code> et sélectioonner "activer"
+</p>
+
+<p>
+Pour utiliser cette fonctionnalité seulement localement, éditer <code>lemonldap-ng.ini</code> dans la section [all]:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">[</span>all<span class="br0">]</span></span>
+<span class="re1">cda</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
+
+</div><!-- EDIT5 SECTION "Configuration" [139-] -->
+</div>
+</body>
+</html>

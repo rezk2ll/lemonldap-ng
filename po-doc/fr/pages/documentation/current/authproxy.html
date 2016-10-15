@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8" />
+  <title>documentation:2.0:authproxy</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,authproxy"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="authproxy.html"/>
+<link rel="contents" href="authproxy.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authproxy","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container"><!-- TOC START -->
+
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#presentation">Présentation</a></div></li>
+<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#external_portal">Portail externe</a></div></li>
+<li class="level2"><div class="li"><a href="#internal_portal">Portail interne</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div><!-- TOC END -->
+
+
+<h1 class="sectionedit1" id="proxy">Proxy</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentification  </th><th class="col1 centeralign">  Utilisateurs  </th><th class="col2 centeralign">  Mot-de-passe  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">    ✔    </td><td class="col1 centeralign">    ✔    </td><td class="col2"> </td>
+	</tr>
+</table></div><!-- EDIT2 TABLE [22-85] -->
+
+</div><!-- EDIT1 SECTION "Proxy" [1-86] -->
+
+<h2 class="sectionedit3" id="presentation">Présentation</h2>
+<div class="level2">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> peut transferer (en utilisant SOAP) les éléments d'authentification à un autre portail <abbr title="LemonLDAP::NG">LL::NG</abbr>, comme un proxy.
+</p>
+
+<p>
+La différence avec <a href="authremote.html" class="wikilink1" title="documentation:2.0:authremote">l'authentification "Remote"</a> est que le client n'est jamais redirigé vers le portail <abbr title="LemonLDAP::NG">LL::NG</abbr> principal. Cette configuration est utilisable l'on soujaite exposer un portail <abbr title="Authentification unique (Single Sign On)">SSO</abbr> interne à une autre réseau (DMZ).
+</p>
+
+</div><!-- EDIT3 SECTION "Presentation" [87-450] -->
+
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+</div><!-- EDIT4 SECTION "Configuration" [451-477] -->
+
+<h3 class="sectionedit5" id="external_portal">Portail externe</h3>
+<div class="level3">
+
+<p>
+Dans le manager, aller dans <code>Paramètres généraux</code> &gt; <code>Modules d'authentification</code> et choisir Proxy pour les modules authentification et utilisateurs.
+</p>
+
+<p>
+Ensuite, aller dans les <code>paramètres Proxy</code> :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong><abbr title="Uniform Resource Locator">URL</abbr> du portail</strong> : <abbr title="Uniform Resource Locator">URL</abbr> du portail interne</div>
+</li>
+<li class="level1"><div class="li"> <strong>Nom du cookie</strong> (optionnel) : nom du cookie du portail interne s'il est différent de celui du portail externe</div>
+</li>
+<li class="level1"><div class="li"> <strong>Point terminal des sessions SOAP</strong> (optionnel): URL du service SOAP si elle n'est pas basée sur celle du portail interne avec le suffixe <code>index.pl/sessions</code></div>
+</li>
+</ul>
+
+</div><!-- EDIT5 SECTION "External portal" [478-935] -->
+
+<h3 class="sectionedit6" id="internal_portal">Portail interne</h3>
+<div class="level3">
+
+<p>
+Ce portail doit être configuré pour accepter les requêtes d'authentification SOAP. Voir la documentation du <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">backend de sessions SOAP</a>.
+</p>
+
+</div><!-- EDIT6 SECTION "Internal portal" [936-] -->
+</div>
+</body>
+</html>

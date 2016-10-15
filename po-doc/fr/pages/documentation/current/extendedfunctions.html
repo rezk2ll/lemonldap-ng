@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8" />
+  <title>documentation:2.0:extendedfunctions</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,extendedfunctions"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="extendedfunctions.html"/>
+<link rel="contents" href="extendedfunctions.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:extendedfunctions","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container"><!-- TOC START -->
+
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#presentation">Présentation</a></div></li>
+<li class="level1"><div class="li"><a href="#request_informations">Informations sur la requête</a></div></li>
+<li class="level1"><div class="li"><a href="#extended_functions_list">Liste des fonctions étendues</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#date">date</a></div></li>
+<li class="level2"><div class="li"><a href="#checklogonhours">checkLogonHours</a></div></li>
+<li class="level2"><div class="li"><a href="#checkdate">checkDate</a></div></li>
+<li class="level2"><div class="li"><a href="#basic">basic</a></div></li>
+<li class="level2"><div class="li"><a href="#unicode2iso">unicode2iso</a></div></li>
+<li class="level2"><div class="li"><a href="#iso2unicode">iso2unicode</a></div></li>
+<li class="level2"><div class="li"><a href="#groupmatch">groupMatch</a></div></li>
+<li class="level2"><div class="li"><a href="#encrypt">encrypt</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div><!-- TOC END -->
+
+
+<h1 class="sectionedit1" id="extended_functions">Fonctions étendues</h1>
+<div class="level1">
+
+</div><!-- EDIT1 SECTION "Extended functions" [1-34] -->
+
+<h2 class="sectionedit2" id="presentation">Présentation</h2>
+<div class="level2">
+
+<p>
+En <a href="writingrulesand_headers.html" class="wikilink1" title="documentation:2.0:writingrulesand_headers">écrivant des règles et en-têtes</a>, on peut utiliser des expressions Perl qui seront évaluées dans une cage pour prévenir les codes malveillants.
+</p>
+
+<p>
+C'est disponible pour :
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="portalmenu.html#menu_modules" class="wikilink1" title="documentation:2.0:portalmenu">les règles d'activation des modules du menu</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">les données à rejouer dans les formulaires</a></div>
+</li>
+<li class="level1"><div class="li">  Macros</div>
+</li>
+<li class="level1"><div class="li"> les règles d'utilisation des bases de données des fournisseur d'identité</div>
+</li>
+<li class="level1"><div class="li"> etc...</div>
+</li>
+</ul>
+
+<p>
+Dans cette cage, on peut accéder aux éléments suivants :
+</p>
+<ul>
+<li class="level1"><div class="li"> Fonctions standards de Perl (split, pop, map, etc...)</div>
+</li>
+<li class="level1"><div class="li"> <a href="customfunctions.html" class="wikilink1" title="documentation:2.0:customfunctions">Fonctions personnalisées</a></div>
+</li>
+<li class="level1"><div class="li"> Fonction <a href="http://perldoc.perl.org/MIME/Base64.html" class="urlextern" title="http://perldoc.perl.org/MIME/Base64.html"  rel="nofollow">encode_base64</a></div>
+</li>
+<li class="level1"><div class="li"> Variables d'environnement, dans certains cas (via %ENV)</div>
+</li>
+<li class="level1"><div class="li"> <a href="#request_informations" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">Informations sur la requête courante</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="#extended_functions_list" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">Fonctions étendues</a></div>
+<ul>
+<li class="level2"><div class="li"> <a href="#date" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">date</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#checklogonhours" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">checkLogonHours</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#checkdate" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">checkDate</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#basic" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">basic</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#unicode2iso" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">unicode2iso</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#iso2unicode" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">iso2unicode</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="#groupmatch" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">groupMatch</a></div>
+</li>
+</ul>
+</li>
+</ul>
+<div class="notetip">Pour en savoir plus sur la cage, consulter la <a href="http://perldoc.perl.org/Safe.html" class="urlextern" title="http://perldoc.perl.org/Safe.html"  rel="nofollow">documentation du module Safe</a>.
+</div>
+</div><!-- EDIT2 SECTION "Presentation" [35-1108] -->
+
+<h2 class="sectionedit3" id="request_informations">Informations sur la requête</h2>
+<div class="level2">
+
+<p>
+Les données suivantes concernant la requête courante sont disponibles via les fonctions :
+</p>
+<ul>
+<li class="level1"><div class="li">  hostname</div>
+</li>
+<li class="level1"><div class="li"> remote_ip : l'adresse <abbr title="Internet Protocol">IP</abbr> cliente</div>
+</li>
+<li class="level1"><div class="li"> uri : l'<abbr title="Uniform Resource Locator">URL</abbr></div>
+</li>
+<li class="level1"><div class="li"> uri_with_args : l'<abbr title="Uniform Resource Locator">URL</abbr> complète (y compris les arguments GET)</div>
+</li>
+<li class="level1"><div class="li"> unparsed_uri : l'<abbr title="Uniform Resource Locator">URL</abbr> avant décodage</div>
+</li>
+<li class="level1"><div class="li"> args : la chaîne de requête</div>
+</li>
+<li class="level1"><div class="li"> method : la méthode de la requête (GET, POST, etc…)</div>
+</li>
+<li class="level1"><div class="li"> header_in(“Your-Request-Header”) : n'importe quel en-tête de la requête</div>
+</li>
+</ul>
+
+</div><!-- EDIT3 SECTION "Request informations" [1109-1515] -->
+
+<h2 class="sectionedit4" id="extended_functions_list">Liste des fonctions étendues</h2>
+<div class="level2">
+
+</div><!-- EDIT4 SECTION "Extended Functions List" [1516-1552] -->
+
+<h3 class="sectionedit5" id="date">date</h3>
+<div class="level3">
+
+<p>
+Retourne la date au format AAAAMMJJHHMMSS, heure locale par défaut, GMT si demandé 
+</p>
+<pre class="code">date(1)</pre>
+
+</div><!-- EDIT5 SECTION "date" [1553-1672] -->
+
+<h3 class="sectionedit6" id="checklogonhours">checkLogonHours</h3>
+<div class="level3">
+
+<p>
+Cette fonction examine le jour et l'heure de la requête courante et la compare aux jours et heures autorisés. Elle retourne 1 si c'est bon, 0 sinon. Par défaut, les jours et heures autorisés sont des valeurs hexadécimales, représentant chaque heure de la semaine. Un jour a 24 heures et une semaine 7 jours, donc la valeur contient 168 bits, convertie en 42 caractères hexadécimaux. Dimanche est le premier jour.
+</p>
+
+<p>
+Par exemple, pour un accès total excepté le week-end:
+</p>
+<pre class="code">000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000</pre>
+<div class="notetip">L'<a href="authldap.html#schema_extension" class="wikilink1" title="documentation:2.0:authldap">extension de schéma LDAP</a> peut être utilisée pour stocker cette valeur. La valeur binaire de l'attribut logonHours d'Active Directory peut également être utilisée
+</div>
+<p>
+Paramètres de la fonction :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>logon_hours</strong> : chaîne représentant les heures autorisées (GMT)</div>
+</li>
+<li class="level1"><div class="li"> <strong>syntax</strong> (optionnel) : <code>hexadecimal</code> (défaut) ou <code>octetstring</code></div>
+</li>
+<li class="level1"><div class="li"> <strong>time_correction</strong> (optionnel) : heures à ajouter ou soustraire</div>
+</li>
+<li class="level1"><div class="li"> <strong>default_access</strong> (optionnel) : resultat à retourner si <strong>logon_hours</strong> est vide</div>
+</li>
+</ul>
+
+<p>
+Exemple d'usage simple :
+</p>
+<pre class="code">checkLogonHours($ssoLogonHours)</pre>
+
+<p>
+Si une valeur binaire est utilisée (Active Directory) :
+</p>
+<pre class="code">All e
+checkLogonHours($ssoLogonHours, 'octetstring')</pre>
+
+<p>
+On peut aussi configurer jetlag (si tous les utilisateurs utilisent le même fuseau):
+</p>
+<pre class="code">checkLogonHours($ssoLogonHours, '', '+2')</pre>
+
+<p>
+Si plusieurs fuseaux sont utilisés, le jetlag doit être introduit dans le compte dans la valeur ssoLogonHours, ou utiliser le paramètre $_timezone. Ce paramètre est géré par le portail et utilise javascript pour obtenir le fuseau de l'utilisateur connecté. Ça doit marcher avec tous les navigateurs :
+</p>
+<pre class="code">checkLogonHours($ssoLogonHours, '', $_timezone)</pre>
+
+<p>
+Il est possible de modifier le comportement par défaut pour les utilisateurs ne disposant pas d'une valeur ssoLogonHours. Sinon, par défaut, les utilisateurs sans créneau horaire de connexion sont rejetés. On peut autoriser ces utilisateurs au lieu de les rejeter :
+</p>
+<pre class="code">checkLogonHours($ssoLogonHours, '', '', '1')</pre>
+
+</div><!-- EDIT6 SECTION "checkLogonHours" [1673-3610] -->
+
+<h3 class="sectionedit7" id="checkdate">checkDate</h3>
+<div class="level3">
+
+<p>
+Cette fonction examine la date de la requête en cours et la compare avec une date de début et de fin. Elle retourne 1 si c'est bon, 0 sinon.
+</p>
+<div class="notetip">L'<a href="authldap.html#schema_extension" class="wikilink1" title="documentation:2.0:authldap">extension de schéma LDAP</a> peut être utilisée pour stocker ces valeurs.
+</div>
+<p>
+Le format de date est celui de la syntaxe des dates LDAP, par exemple pour le 1er Mars 2009 :
+</p>
+<pre class="code">20090301000000Z</pre>
+
+<p>
+Paramètres de la fonction :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>start</strong> : date de début (GMT)</div>
+</li>
+<li class="level1"><div class="li"> <strong>end</strong>: date de fin (GMT)</div>
+</li>
+<li class="level1"><div class="li"> <strong>default_access</strong> (optionnel) : resultat à retourner si <strong>start</strong> et <strong>end</strong> sont vides</div>
+</li>
+</ul>
+
+<p>
+Exemple d'usage simple :
+</p>
+<pre class="code">checkDate($ssoStartDate, $ssoEndDate)</pre>
+
+</div><!-- EDIT7 SECTION "checkDate" [3611-4238] -->
+
+<h3 class="sectionedit8" id="basic">basic</h3>
+<div class="level3">
+<div class="noteimportant">Cette fonction n'est pas compatible avec la <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">cage saine</a>, il faut désactiver la mise en cage.
+</div>
+<p>
+Cette fonction contruit l'en-tête HTTP <code>Authorization</code> utiisée dans le <a href="applications/authbasic.html" class="wikilink1" title="documentation:2.0:applications:authbasic">schéma d'authentification basique HTTP</a>. Elle force la conversion de UTF-8 en ISO-8859-1 du nom de compte et du mot-de-passe.
+</p>
+
+<p>
+Paramètres de la fonction :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>user</strong></div>
+</li>
+<li class="level1"><div class="li"> <strong>password</strong></div>
+</li>
+</ul>
+
+<p>
+Exemple d'usage simple :
+</p>
+<pre class="code">basic($uid,$_password)</pre>
+
+</div><!-- EDIT8 SECTION "basic" [4239-4701] -->
+
+<h3 class="sectionedit9" id="unicode2iso">unicode2iso</h3>
+<div class="level3">
+<div class="noteimportant">Cette fonction n'est pas compatible avec la <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">cage saine</a>, il faut désactiver la mise en cage.
+</div>
+<p>
+Cette fonction convertit une chaine UTF-8 en ISO-8859-1.
+</p>
+
+<p>
+Paramètres de la fonction :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>chaîne</strong></div>
+</li>
+</ul>
+
+<p>
+Exemple d'usage simple :
+</p>
+<pre class="code">unicode2iso($nom)</pre>
+
+</div><!-- EDIT9 SECTION "unicode2iso" [4702-5006] -->
+
+<h3 class="sectionedit10" id="iso2unicode">iso2unicode</h3>
+<div class="level3">
+<div class="noteimportant">Cette fonction n'est pas compatible avec la <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">cage saine</a>, il faut désactiver la mise en cage.
+</div>
+<p>
+Cette fonction convertit une chaîne ISO-8859-1 en UTF-8.
+</p>
+
+<p>
+Paramètres de la fonction :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>chaîne</strong></div>
+</li>
+</ul>
+
+<p>
+Exemple d'usage simple :
+</p>
+<pre class="code">iso2unicode($name)</pre>
+
+</div><!-- EDIT10 SECTION "iso2unicode" [5007-5311] -->
+
+<h3 class="sectionedit11" id="groupmatch">groupMatch</h3>
+<div class="level3">
+
+<p>
+cette fonction permet de parcourir la variable <code>$hGroups</code> pour vérifier si une valeur y présente. dans un attribut de groupe
+</p>
+
+<p>
+Paramètres de la fonction :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>groups</strong> : variable <code>$hGroups</code></div>
+</li>
+<li class="level1"><div class="li"> <strong>attribute</strong> : Nom de l'attribut du groupe</div>
+</li>
+<li class="level1"><div class="li"> <strong>value</strong> : Valeur à chercher</div>
+</li>
+</ul>
+
+<p>
+Exemple d'usage simple :
+</p>
+<pre class="code">groupMatch($hGroups, 'description', 'Service 1')</pre>
+
+</div><!-- EDIT11 SECTION "groupMatch" [5312-5666] -->
+
+<h3 class="sectionedit12" id="encrypt">encrypt</h3>
+<div class="level3">
+<div class="noteimportant">Cette fonction n'est pas compatible avec la <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">cage saine</a>, il faut désactiver la mise en cage.
+</div>
+<p>
+
+This function uses the secret key of LLNG configuration to crypt a data. This can be used to anonymize identifier given to the protected application.
+
+</p>
+<pre class="code">encrypt($_whatToTrace)</pre>
+
+</div><!-- EDIT12 SECTION "encrypt" [5667-] -->
+</div>
+</body>
+</html>

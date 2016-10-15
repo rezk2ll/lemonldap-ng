@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8" />
+  <title>documentation:2.0:configapache</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,configapache"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="configapache.html"/>
+<link rel="contents" href="configapache.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:configapache","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="deploy_apache_configuration">Deployer la configuration Apache</h1>
+<div class="level1">
+<div class="noteclassic">Cette étape est effectuée automatiquement lorsqu'on installe <abbr title="LemonLDAP::NG">LL::NG</abbr> avec les packages.
+</div>
+</div><!-- EDIT1 SECTION "Deploy Apache configuration" [1-130] -->
+
+<h2 class="sectionedit2" id="files">Fichiers</h2>
+<div class="level2">
+
+<p>
+Depuis une installation par les sources, les fichiers de configuration d'Apache se trouvent dans <code>/usr/local/lemonldap-ng/etc/</code>, sinon, ils sont dans <code>/etc/lemonldap-ng</code>.
+</p>
+
+<p>
+Il faut les inclure dans la configuration d'Apache, par exemple :
+</p>
+<pre class="code file apache"><span class="kw1">include</span> /usr/local/lemonldap-ng/etc/portal-apache2.conf
+<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/handler-apache2.conf
+<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/manager-apache2.conf
+<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/test-apache2.conf</pre>
+<div class="notetip"><ul>
+<li class="level1"><div class="li"> On peut aussi utiliser des liens symboliques dans le répertiore <code>conf.d</code> ou <code>sites-available</code> d'Apache.</div>
+</li>
+<li class="level1"><div class="li"> Pour la commande d'installation Debian/Ubuntu, utiliser simplement :</div>
+</li>
+</ul>
+<pre class="code">a2ensite manager-apache2.conf
+a2ensite portal-apache2.conf
+a2ensite handler-apache2.conf
+a2ensite test-apache2.conf</pre>
+
+</div>
+</div><!-- EDIT2 SECTION "Files" [131-922] -->
+
+<h2 class="sectionedit3" id="modules">Modules</h2>
+<div class="level2">
+
+<p>
+Il faut également charger quelques modules Apache :
+</p>
+<ul>
+<li class="level1"><div class="li">  mod_rewrite</div>
+</li>
+<li class="level1"><div class="li">  mod_perl</div>
+</li>
+<li class="level1"><div class="li">  mod_alias</div>
+</li>
+<li class="level1"><div class="li">  mod_fcgid</div>
+</li>
+</ul>
+<div class="notetip">Avec Debian/Ubuntu:
+<pre class="code">a2enmod fcgid perl alias rewrite</pre>
+
+</div>
+</div><!-- EDIT3 SECTION "Modules" [923-] -->
+</div>
+</body>
+</html>

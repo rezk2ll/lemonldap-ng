@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8" />
+  <title>documentation:2.0:federationproxy</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="index,follow"/>
+<meta name="keywords" content="documentation,2.0,federationproxy"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="federationproxy.html"/>
+<link rel="contents" href="federationproxy.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:federationproxy","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+</head>
+<body>
+<div class="dokuwiki export container">
+
+<h1 class="sectionedit1" id="llng_as_federation_protocol_proxy">LL::NG en proxy de fédération de protocoles</h1>
+<div class="level1">
+
+<p>
+<abbr title="LemonLDAP::NG">LL::NG</abbr> peut utiliser des protocoles de fédération (<abbr title="Security Assertion Markup Language">SAML</abbr>, <abbr title="Central Authentication Service">CAS</abbr>, OpenID) indépendamment pour :
+</p>
+<ul>
+<li class="level1"><div class="li"> authentifier les utilisateurs</div>
+</li>
+<li class="level1"><div class="li"> fournir une identité à d'autres systèmes</div>
+</li>
+</ul>
+
+<p>
+Ainsi on peut le configurer pour authentifier les utilisateurs en utilisant un protocole de fédération et simultanément pour fournir les identités en en utilisant en autre.
+</p>
+
+<p>
+Par exemple, un serveur <abbr title="LemonLDAP::NG">LL::NG</abbr> peut être :
+</p>
+<ul>
+<li class="level1"><div class="li"> Un <a href="idpcas.html" class="wikilink1" title="documentation:2.0:idpcas"> serveur CAS</a> avec une <a href="authsaml.html" class="wikilink1" title="documentation:2.0:authsaml">authentification SAML</a></div>
+</li>
+<li class="level1"><div class="li"> Un <a href="idpopenid.html" class="wikilink1" title="documentation:2.0:idpopenid">serveur OpenID</a> avec une <a href="authcas.html" class="wikilink1" title="documentation:2.0:authcas">authentification CAS</a></div>
+</li>
+<li class="level1"><div class="li"> Un <a href="idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">serveur SAML</a> avec une <a href="authopenid.html" class="wikilink1" title="documentation:2.0:authopenid">authentification OpenID</a></div>
+</li>
+<li class="level1"><div class="li">  …</div>
+</li>
+</ul>
+
+<p>
+Voir les chapîtres suivants :
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:2.0:start">Authentication protocols</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="start.html#identity_provider" class="wikilink1" title="documentation:2.0:start">Fournisseur d'identité</a></div>
+</li>
+</ul>
+
+</div>
+</div>
+</body>
+</html>
