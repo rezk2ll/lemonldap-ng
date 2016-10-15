@@ -3,7 +3,8 @@
 #====================================================================
 # Offline doc script
 #
-# Use Dokuwiki offline plugin
+# Use Dokuwiki exportsite plugin
+# https://www.dokuwiki.org/plugin:siteexport
 #
 # This script is part of LemonLDAP::NG project
 # Released under GPL license
@@ -13,76 +14,50 @@ use strict;
 use LWP::Simple;
 use Tie::File;
 
-my $offline_script_url =
-  'http://lemonldap-ng.org/lib/plugins/offline/create.php';
-my $offline_zip_url = 'http://lemonldap-ng.org/lib/plugins/offline/offline.zip';
-my $remove_versions = [qw/latest 1.0 1.1 1.2 1.3 1.4 1.9/];
+my $version = "2.0";
+my $offline_zip_url = "http://lemonldap-ng.org/documentation/$version/start?depth=0&depthType=1.0&disableCache=1&do=siteexport&ens=documentation%3A$version%3Astart&exportLinkedPages=1&exportbody=1&renderer=&template=bootstrap3&disableplugin[]=acl&disableplugin[]=config&disableplugin[]=extension&disableplugin[]=oddeven&disableplugin[]=siteexport&disableplugin[]=usermanager";
 my $rc;
 
-# Launch remote offline script
-$rc = getprint($offline_script_url);
+# Get offline archive
+$rc = getstore( $offline_zip_url, 'siteexport.zip' );
 exit 1 if ( is_error($rc) );
 
-# Get offline archive
-$rc = getstore( $offline_zip_url, 'offline.zip' );
-exit 1 if ( is_error($rc) );
+# Remove old doc
+system('rm -rf pages/documentation/current/*');
 
 # Unzip archive
-system("unzip -o offline.zip");
-system("rm -f offline.zip");
+system("unzip -o siteexport.zip -d pages/documentation/current/");
+system("rm -f siteexport.zip");
 
-# Move offline contents in current directory
-system("cp -rf offline/* .");
-system("rm -rf offline");
-
-# Keep only the latest
-system("rm -rf pages/wiki pages/playground");
-foreach my $version (@$remove_versions) {
-    system("rm -rf pages/documentation/$version");
-}
-system('find . -name \*.html -exec sed -i "s#/latest/#/current/#g" {} \;');
-
-# Rewrite documentation.html
-tie my @documentation, 'Tie::File', 'pages/documentation.html'
-  or die("Unable to open pages/documentation.html");
-
-splice @documentation, 61, 27;
-
-# Correct some bad media links
-system('find . -name \*.html -exec sed -i "s#/_media#../media#g" {} \;');
-
-# Remove unused pages
-system("rm -rf pages/default_sidebar.html");
-system("rm -rf pages/start.html");
-
-# Rewrite index.html
-tie my @index, 'Tie::File', 'index.html' or die("Unable to open index.html");
-
-my @links = (
-"\t\t<p><a href=\"pages/documentation.html\" class=\"wikilink1\">Documentation</a></p>",
-    "\t\t<p><a href=\"pages/contact.html\" class=\"wikilink1\">Contact</a></p>",
-"\t\t<p><a href=\"index/alphabetical.html\" class=\"wikilink1\">All pages</a></p>",
-);
-
-splice @index, 21, 2, @links;
+# Remove some files
+system('rm -rf pages/documentation/current/screenshots');
+system('rm -rf pages/documentation/current/_export');
 
 # Remove external logos and replace them by a default image
-system('rm -rf media/applications/ media/logos/');
-system('find . -name \*.html -exec sed -i "s#/media/applications/[^\.]*\.\(png\|jpg\|gif\)#/media/icons/kmultiple.png#g" {} \;');
-system('find . -name \*.html -exec sed -i "s#/media/logos/[^\.]*\.\(png\|jpg\|gif\)#/media/icons/kmultiple.png#g" {} \;');
-
-# Remove Facebook iframe (See http://jira.ow2.org/browse/LEMONLDAP-674)
-system('sed -i "/<iframe/d" pages/contact.html');
+system('rm -rf pages/documentation/current/applications/*png pages/documentation/current/applications/*gif pages/documentation/current/applications/*jpeg');
+system('find . -name \*.html -exec sed -i "s#applications/[^\"]*\.\(png\|jpeg\|gif\)#icons/kmultiple.png#g" {} \;');
 
 # Remove background image
-system('sed -i "s#/lib/tpl/bootstrap3/images/background.jpg##g" css/*');
+system('sed -i "s#/lib/tpl/bootstrap3/images/background.jpeg##g" pages/documentation/current/lib/exe/css*');
 
-# Download missing images
-system('mkdir -p lib/bootstrap3/images && cd lib/bootstrap3/images && wget -l 1 -nd -r http://lemonldap-ng.org/lib/tpl/bootstrap3/images/ && rm -f index* && cd -');
+# Remove alternate and canonical head links fo fix lintian privacy-breach-generic errors
+system('find . -name \*.html -exec sed -i "/<link rel=\"alternate\"/d" {} \;');
+system('find . -name \*.html -exec sed -i "/<link rel=\"canonical\"/d" {} \;');
+system('find . -name \*.html -exec sed -i "/oss\.maxcdn\.com/d" {} \;');
+
+# Add link to bootstrap
+system('find . -name \*.html -exec sed -i "s#<link rel=\"stylesheet\" type=\"text/css\" href=\"lib/exe/css.php.t.bootstrap3.css\"/>#<link rel=\"stylesheet\" type=\"text/css\" href=\"lib/exe/css.php.t.bootstrap3.css\"/>\n<link rel=\"stylesheet\" type=\"text/css\" href=\"/static/bwr/bootstrap/dist/css/bootstrap.min.css\"/>#" {} \;');
+
+# Put content in a container
+system('find . -name \*.html -exec sed -i "s#<div class=\"dokuwiki export\">#<div class=\"dokuwiki export container\">#" {} \;');
+
+# Responsive images
+system('find . -name \*.html -exec sed -i "s#<img class=\"mediacenter\">#<img class=\"mediacenter img-responsive\">#" {} \;');
+
+# Tables
+system('find . -name \*.html -exec sed -i "s#<table class=\"inline\">#<table class=\"inline table table-bordered table-striped\">#" {} \;');
 
 # Link duplicates files
 system(q@find . -type f -printf "%s %p\n"|sort -n|perl -a -ne 'if($F[0]==$lf&&`md5sum $F[1]|cut -f1 -d" "` eq `md5sum $ln|cut -f1 -d" "`){print "ln -srf $ln $F[1]\n"}else{$lf=$F[0];$ln=$F[1]}'|sh@);
-
-system("find lib/bootstrap3/images -name '*.1' -delete");
 
 exit 0;

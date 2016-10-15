@@ -1062,7 +1062,6 @@ translation: omegat-configuration-file
 
 translated-doc: omegat-configuration-file
 	omegat omegat.files/$(LANGCODE) --mode=console-translate --quiet 2>/dev/null
-	cd po-doc/$(LANGCODE)/pages/documentation && rm -rf current && ln -s $$(find * -maxdepth 0 -type d) current
 
 # 2. Public targets
 
@@ -1072,7 +1071,6 @@ translated-doc: omegat-configuration-file
 %-doc: test_omegat_%_dir omegat-%-clean
 	mkdir -p po-doc/$*
 	$(MAKE) translated-doc LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
-	cd po-doc/$*/pages/documentation/ && rm -rf current && ln -s 2.0 current && cd -
 	
 omegat-clean:
 	rm -rf omegat.files/*/omegat.project omegat.files/*/omegat/project_save*.bak
