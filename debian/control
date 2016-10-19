@@ -112,8 +112,9 @@ Package: lemonldap-ng-fastcgi-server
 Architecture: all
 Depends: ${misc:Depends},
          ${perl:Depends},
+         lsb-base (>= 3.0-6),
          libfcgi-procmanager-perl,
-         liblemonldap-ng-handler-perl,
+         liblemonldap-ng-handler-perl (= ${binary:Version}),
          libplack-perl,
          nginx-extras | nginx
 Recommends: libhttp-parser-xs-perl,
@@ -243,7 +244,7 @@ Depends: ${misc:Depends},
          libwww-perl
 Recommends: lemonldap-ng-doc (= ${binary:Version}),
             libapache-session-browseable-perl,
-            libapache2-mod-fcgid | libapache2-mod-fastcgi | lemonldap-ng-fastcgi-server,
+            libapache2-mod-fcgid | libapache2-mod-fastcgi | lemonldap-ng-fastcgi-server (= ${binary:Version}),
             libjson-xs-perl,
             libhttp-parser-xs-perl,
             liblwp-protocol-https-perl,
