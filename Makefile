@@ -703,8 +703,25 @@ install_examples_site:
 install_doc_site:
 	# Offline documentation install
 	@rm -rf $(RDEFDOCDIR)
-	@install -v -d $(RDEFDOCDIR)
-	@cp -a -f doc/* $(RDEFDOCDIR)
+	# Install doc directories
+	@install -v -d -m 755 $(RDEFDOCDIR)
+	@cd doc && find * -type d |(cd $(RDEFDOCDIR); xargs install -v -d -m 755) && cd -
+	# Install HTML files
+	@cd doc && for f in `find * -type f -name '*.html'`; do \
+		echo "Installing $$f"; \
+		../scripts/transform-templates \
+			usedebianlibs $(USEDEBIANLIBS) \
+			useexternallibs $(USEEXTERNALLIBS) \
+			jsminified $(JSCOMPRESS) \
+			cssminified $(CSSCOMPRESS) <$$f \
+		> $(RDEFDOCDIR)/$$f; \
+	done && cd -
+	# Install other files
+	@cd doc && for f in `find * -type f ! -name '*.html'`; do \
+		install -v -m 644 $$f $(RDEFDOCDIR)/$$f; \
+	done && cd -
+	# Install symlinks
+	@cd doc && tar cf - `find * -type l` | tar xvf - -C $(RDEFDOCDIR) && cd -
 
 install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 	# Configuration files install
