@@ -168,6 +168,8 @@ PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSKINSDIR)/bootstrap/fonts \
 			$(RPORTALSKINSDIR)/bootstrap/js/bootstrap* \
 			$(RPORTALSKINSDIR)/common/js/jquery-* \
 			$(RPORTALSKINSDIR)/common/js/jquery.cookie*
+DOCLIBSTOREMOVEFORDEBIAN=doc/pages/documentation/current/lib/tpl/bootstrap3
+DOCEXTERNALLIBS=$(DOCLIBSTOREMOVEFORDEBIAN)
 MANAGEREXTERNALLIBS=$(RMANAGERSTATICDIR)/bwr/
 PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN) $(RPORTALSKINSDIR)/common/js/jquery*
 
@@ -722,6 +724,12 @@ install_doc_site:
 	done && cd -
 	# Install symlinks
 	@cd doc && tar cf - `find * -type l` | tar xvf - -C $(RDEFDOCDIR) && cd -
+	# Remove js
+	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
+		rm -rvf $(DOCEXTERNALLIBS); \
+	elif test "$(USEDEBIANLIBS)" = "yes"; then \
+		rm -rvf $(DOCLIBSTOREMOVEFORDEBIAN); \
+	fi
 
 install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 	# Configuration files install
