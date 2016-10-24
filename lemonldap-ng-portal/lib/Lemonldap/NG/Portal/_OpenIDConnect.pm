@@ -1129,6 +1129,9 @@ sub getEndPointAccessToken {
     if ( $authorization =~ /^Bearer (\w+)/i ) {
         $self->lmLog( "Bearer access token", 'debug' );
         $access_token = $1;
+    } elsif ( $self->param('access_token') ) {
+        $self->lmLog( "GET/POST access token", 'debug' );
+        $access_token = $self->param('access_token');
     }
 
     return $access_token;
