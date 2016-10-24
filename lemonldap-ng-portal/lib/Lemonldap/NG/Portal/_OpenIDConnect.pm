@@ -1374,8 +1374,8 @@ sub key2jwks {
     my $rsa_pub = Crypt::OpenSSL::RSA->new_public_key($key);
     my @params  = $rsa_pub->get_key_parameters();
 
-    $hash->{n} = encode_base64( $params[0]->to_bin(), "" );
-    $hash->{e} = encode_base64( $params[1]->to_bin(), "" );
+    $hash->{n} = encode_base64url( $params[0]->to_bin(), "" );
+    $hash->{e} = encode_base64url( $params[1]->to_bin(), "" );
 
     return $hash;
 }
