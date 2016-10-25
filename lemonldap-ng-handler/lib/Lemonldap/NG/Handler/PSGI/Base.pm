@@ -76,7 +76,9 @@ sub _run {
 }
 
 sub status {
-    my $self = shift;
+    my ( $class, $args ) = @_;
+    $args //= {};
+    my $self = $class->new($args);
 
     # Check if main handler initialization has been done
     unless ( %$self->api->tsv ) {
@@ -86,6 +88,23 @@ sub status {
     return sub {
         my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
         $self->api->status($req);
+        return [ 200, [ @{ $req->{respHeaders} } ], [ $req->{respBody} ] ];
+    };
+}
+
+sub reload {
+    my ( $class, $args ) = @_;
+    $args //= {};
+    my $self = $class->new($args);
+
+    # Check if main handler initialization has been done
+    unless ( %$self->api->tsv ) {
+        eval { $self->api->checkConf() };
+        $self->lmLog( $@, 'error' ) if ($@);
+    }
+    return sub {
+        my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
+        $self->api->reload($req);
         return [ 200, [ @{ $req->{respHeaders} } ], [ $req->{respBody} ] ];
     };
 }
