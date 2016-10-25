@@ -443,7 +443,7 @@ restart_web_server: start_web_server
 
 plackup:
 	@LLNG_DEFAULTCONFFILE=`pwd`/e2e-tests/conf/lemonldap-ng.ini \
-	perl -I`pwd`/lemonldap-ng-common/blib/lib/ \
+	perl -I . -I`pwd`/lemonldap-ng-common/blib/lib/ \
 			-I`pwd`/lemonldap-ng-handler/blib/lib/ \
 			-I`pwd`/lemonldap-ng-portal/blib/lib/ \
 			-I`pwd`/lemonldap-ng-manager/blib/lib/ \
