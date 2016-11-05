@@ -267,7 +267,7 @@ $defaultAttr}
         samlSPMetaDataExportedAttributes samlSPMetaDataOptions
         oidcOPMetaDataJSON oidcOPMetaDataJWKS oidcOPMetaDataOptions
         oidcOPMetaDataExportedVars oidcRPMetaDataOptions
-        oidcRPMetaDataExportedVars)
+        oidcRPMetaDataExportedVars oidcRPMetaDataOptionsExtraClaims)
       )
     {
         $ra->add($_);
