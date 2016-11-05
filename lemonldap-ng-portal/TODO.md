@@ -12,3 +12,6 @@
 
 * Enable it during auth
 
+# Other
+
+* Import fastcgi-server changes
