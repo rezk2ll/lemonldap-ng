@@ -51,6 +51,8 @@ sub new {
         ( $conf->{ldapTimeout} ? ( timeout => $conf->{ldapTimeout} ) : () ),
         ( $conf->{ldapVersion} ? ( version => $conf->{ldapVersion} ) : () ),
         ( $conf->{ldapRaw}     ? ( raw     => $conf->{ldapRaw} )     : () ),
+        ( $conf->{caFile}      ? ( cafile  => $conf->{caFile} )      : () ),
+        ( $conf->{caPath}      ? ( capath  => $conf->{caPath} )      : () ),
     );
     unless ($self) {
         $portal->lmLog( $@, 'error' );
