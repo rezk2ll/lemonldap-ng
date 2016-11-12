@@ -11,7 +11,8 @@ our $count = 1;
 $Data::Dumper::Deparse = 1;
 
 my $module;
-our $sessionId = 'f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545';
+our $sessionId =
+  'f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545';
 our $file = "t/sessions/$sessionId";
 
 sub init {
@@ -22,7 +23,8 @@ sub init {
     }
     ok( $client = Lemonldap::NG::Handler::PSGI::Cli::Lib->new(),
         'Client object' );
-    count(2);
+    ok( $client->app, 'App object' ) or explain( $client, '->app...' );
+    count(3);
     open F, ">$file"
       or die $!;
     my $now = time;

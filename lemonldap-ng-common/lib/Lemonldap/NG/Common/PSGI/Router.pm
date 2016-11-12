@@ -138,7 +138,7 @@ sub followPath {
         return $self->$sub( $req, @$path );
     }
     else {
-        $self->lmLog( 'Bad request received (' . $req->path . ')', 'warn' );
+        $self->lmLog( 'Bad request received (' . $req->path . ')', 'error' );
         return $self->sendError( $req, 'Bad request', 400 );
     }
 }

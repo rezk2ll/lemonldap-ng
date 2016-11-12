@@ -1,0 +1,32 @@
+#!/bin/sh
+
+BASE=debian/tests/lib
+
+TYPE=$1
+[ -n "$TYPE" ] || exit 1
+
+TESTDIR=${BASE}/${TYPE}.d
+[ -d "$TESTDIR" ] || exit 1
+
+SKIPLIST=debian/tests/pkg-perl/SKIP
+SKIPTMP=$(mktemp)
+if [ -f "$SKIPLIST" ]; then
+    grep -v '^ *#' "$SKIPLIST" |grep -v '^ *$' > "$SKIPTMP"
+fi
+
+EXITCODE=0
+for T in $(run-parts --list --regex '(^[a-z0-9.]+$)' ${TESTDIR} | \
+           grep -v -F -f "$SKIPTMP") ; do
+    if echo "$T" | grep -q '\.t$'
+    then
+        prove --norc -v "$T"
+        RET=$?
+        if [ $EXITCODE = 0 ]; then EXITCODE=$RET; fi
+    else
+        "$T"
+        RET=$?
+        if [ $EXITCODE = 0 ]; then EXITCODE=$RET; fi
+    fi
+done
+rm -f "$SKIPTMP"
+exit $EXITCODE

@@ -121,8 +121,11 @@ sub jsonResponse {
     my ( $self, $path, $query ) = @_;
     my $res = $self->_get( $path, $query )
       or die "PSGI lib has refused my get, aborting";
-    die "PSGI lib does not return a 200 code, aborting"
-      unless ( $res->[0] == 200 );
+    unless ( $res->[0] == 200 ) {
+        require Data::Dumper;
+        print STDERR "Result dump :\n" . Data::Dumper::Dumper($res);
+        die "Manager lib does not return a 200 code, aborting";
+    }
     my $href = from_json( $res->[2]->[0] ) or die 'Response is not JSON';
     return $href;
 }
@@ -131,8 +134,11 @@ sub jsonPostResponse {
     my ( $self, $path, $query, $body, $type, $len ) = @_;
     my $res = $self->_post( $path, $query, $body, $type, $len )
       or die "PSGI lib has refused my post, aborting";
-    die "PSGI lib does not return a 200 code, aborting"
-      unless ( $res->[0] == 200 );
+    unless ( $res->[0] == 200 ) {
+        require Data::Dumper;
+        print STDERR "Result dump :\n" . Data::Dumper::Dumper($res);
+        die "Manager lib does not return a 200 code, aborting";
+    }
     my $href = from_json( $res->[2]->[0] ) or die 'Response is not JSON';
     return $href;
 }
@@ -141,8 +147,11 @@ sub jsonPutResponse {
     my ( $self, $path, $query, $body, $type, $len ) = @_;
     my $res = $self->_put( $path, $query, $body, $type, $len )
       or die "PSGI lib has refused my put, aborting";
-    die "PSGI lib does not return a 200 code, aborting"
-      unless ( $res->[0] == 200 );
+    unless ( $res->[0] == 200 ) {
+        require Data::Dumper;
+        print STDERR "Result dump :\n" . Data::Dumper::Dumper($res);
+        die "Manager lib does not return a 200 code, aborting";
+    }
     my $href = from_json( $res->[2]->[0] ) or die 'Response is not JSON';
     return $href;
 }
