@@ -353,6 +353,7 @@ t/26-AuthRemote.t
 t/27-AuthProxy.t
 t/28-AuthChoice.t
 t/29-AuthSSL.t
+t/30-Auth-and-issuer-SAML.t
 t/40-Notifications-DBI.t
 t/50-IssuerGet.t
 t/90-translations.t

@@ -34,14 +34,6 @@ BEGIN {
     }
     else {
         eval "use constant GLIB => 1";
-        Glib::Log->set_handler(
-            "Lasso",
-            [qw/ error critical warning message info debug /],
-            sub {
-                $_[0]
-                  ->lmLog( $_[0] . " error " . $_[1] . ": " . $_[2], 'debug' );
-            }
-        );
     }
 
     # Load Lasso.pm
@@ -99,6 +91,16 @@ sub init {
     else {
         $self->lmLog( 'Lasso thin-sessions flag set', 'debug' );
     }
+    if (GLIB) {
+        Glib::Log->set_handler(
+            "Lasso",
+            [qw/ error critical warning message info debug /],
+            sub {
+                $self->lmLog( $_[0] . " error " . $_[1] . ": " . $_[2],
+                    'debug' );
+            }
+        );
+    }
 
     # Conf initialization
 
@@ -132,8 +134,7 @@ sub loadService {
     # Create Lasso server with service metadata
     my $server = $self->createServer(
         $service_metadata->serviceToXML(
-            $self->getApacheHtdocsPath() . "/skins/common/saml2-metadata.tpl",
-            $self
+            $self->conf->{templateDir} . "/common/saml2-metadata.tpl", $self->conf
         ),
         $self->conf->{samlServicePrivateKeySig},
         $self->conf->{samlServicePrivateKeySigPwd},
