@@ -137,7 +137,10 @@ has error => ( is => 'rw', isa => 'Str', default => '' );
 has respHeaders => ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
 
 sub wantJSON {
-    return $_[0]->accept =~ m#(?:application|text)/json# ? 1 : 0;
+    return 1
+      if ( defined $_[0]->accept
+        and $_[0]->accept =~ m#(?:application|text)/json# );
+    return 0;
 }
 
 # JSON parser

@@ -1528,7 +1528,8 @@ sub process {
           issuerForAuthUser autoRedirect)
     );
     $self->updateStatus;
-    if (   !$self->{noAjaxHook}
+    if (    !$self->{noAjaxHook}
+        and defined $self->http('Accept')
         and $self->http('Accept') =~ m#(?:application|text)/json# )
     {
         if ( ( my $code = $self->{error} ) > 0 ) {
