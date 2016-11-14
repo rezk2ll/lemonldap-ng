@@ -1047,6 +1047,34 @@ sub returnRedirectError {
     $self->quit;
 }
 
+## @method void returnJSONStatus(String content, int status_code);
+## Print JSON content
+## @param content Message
+## @param status_code The HTTP status code to return
+## @return void
+sub returnJSONStatus {
+    my ( $self, $content, $status_code ) = @_;
+
+    # We use to_json because values are already UTF-8 encoded
+    my $json = to_json( $content, { pretty => 1 } );
+
+    if ( $ENV{MOD_PERL} ) {
+        my $r = CGI->new->r;
+        $r->status($status_code);
+        $r->content_type("application/json; charset=UTF-8");
+        $r->rflush;
+        $r->status(200);
+    }
+    else {
+        print $self->header(
+            -type    => 'application/json',
+            -charset => 'UTF-8',
+            -status  => $status_code
+        );
+    }
+    print $json;
+}
+
 ## @method void returnJSONError(String error);
 # Print JSON error
 # @param error Error message
@@ -1054,14 +1082,7 @@ sub returnRedirectError {
 sub returnJSONError {
     my ( $self, $error ) = @_;
     my $content = { "error" => "$error" };
-
-    # We use to_json because values are already UTF-8 encoded
-    my $json = to_json( $content, { pretty => 1 } );
-
-# TODO Send 400 return code
-# CGI always add HTML code to non 200 return code, which is not compatible with JSON response
-    print $self->header('application/json');
-    print $json;
+    $self->returnJSONStatus( $content, 400 );
 }
 
 ## @method void returnJSON(String content);
@@ -1070,14 +1091,7 @@ sub returnJSONError {
 # @return void
 sub returnJSON {
     my ( $self, $content ) = @_;
-
-    # We use to_json because values are already UTF-8 encoded
-    my $json = to_json( $content, { pretty => 1 } );
-
-    $self->lmLog( "Return JSON: $json", 'debug' );
-
-    print $self->header('application/json');
-    print $json;
+    $self->returnJSONStatus( $content, 200 );
 }
 
 ## @method void returnBearerError(String error_code, String error_message);
@@ -1129,7 +1143,8 @@ sub getEndPointAccessToken {
     if ( $authorization =~ /^Bearer (\w+)/i ) {
         $self->lmLog( "Bearer access token", 'debug' );
         $access_token = $1;
-    } elsif ( $self->param('access_token') ) {
+    }
+    elsif ( $self->param('access_token') ) {
         $self->lmLog( "GET/POST access token", 'debug' );
         $access_token = $self->param('access_token');
     }
@@ -1621,6 +1636,10 @@ Create Hash
 =head2 returnRedirectError
 
 Create error redirection
+
+=head2 returnJSONStatus
+
+Print JSON content
 
 =head2 returnJSONError
 
