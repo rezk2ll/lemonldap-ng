@@ -1,4 +1,5 @@
 # Base library for portal tests
+package main;
 
 use strict;
 use Data::Dumper;
@@ -6,30 +7,9 @@ use 5.10.0;
 
 use_ok('Lemonldap::NG::Portal::Main');
 
-our $client;
 our $count = 1;
 $Data::Dumper::Deparse = 1;
 my $ini;
-
-sub init {
-    $ini = shift;
-    $ini ||= {};
-    $ini->{configStorage} ||= { type => 'File', dirName => 't' };
-    $ini->{localSessionStorage} ||= '';
-    $ini->{logLevel}            ||= 'error';
-    $ini->{cookieName}          ||= 'lemonldap';
-    $ini->{domain}              ||= 'example.com';
-    $ini->{templateDir}         ||= 'site/templates';
-    $ini->{staticPrefix}        ||= '/index.fcgi';
-    $ini->{securedCookie} //= 0;
-    $ini->{https}         //= 0;
-    ok( $client = My::Cli->new(), 'Portal app' );
-    count(1);
-}
-
-sub client {
-    return $client;
-}
 
 sub count {
     my $c = shift;
@@ -43,31 +23,6 @@ sub explain {
     print STDERR "Expect $ref, get $get\n";
 }
 
-sub logout {
-    my ($id) = @_;
-    my $res;
-    ok(
-        $res = &client->_get(
-            '/',
-            query  => 'logout',
-            cookie => "lemonldap=$id",
-            accept => 'text/html'
-        ),
-        'Logout'
-    );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    my $c;
-    ok( ( defined( $c = getCookies($res)->{lemonldap} ) and not $c ),
-        'Cookie is deleted' )
-      or explain( $res->[1], "Set-Cookie => 'lemonldap='" );
-    ok( $res = &client->_get( '/', cookie => "lemonldap=$id" ),
-        'Disconnect request' )
-      or explain( $res, '[<code>,<hdrs>,<content>]' );
-    ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
-    count(5);
-
-}
-
 sub clean_sessions {
     opendir D, 't/sessions' or die $!;
     foreach ( grep { /^[^\.]/ } readdir(D) ) {
@@ -79,8 +34,71 @@ sub clean_sessions {
     }
 }
 
+package LLNG::Manager::Test;
+
+use strict;
+use Mouse;
+
+extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
+
+our $defaultIni = {
+    configStorage       => { type => 'File', dirName => 't' },
+    localSessionStorage => '',
+    logLevel            => 'error',
+    cookieName          => 'lemonldap',
+    domain              => 'example.com',
+    templateDir         => 'site/templates',
+    staticPrefix        => '/index.fcgi',
+    securedCookie       => 0,
+    https               => 0,
+};
+
+has app => (
+    is      => 'rw',
+    isa     => 'CodeRef',
+);
+
+has ini => ( is => 'rw',
+default => sub { $defaultIni; },
+trigger => sub {
+    my($self,$ini) = @_;
+    foreach my $k (keys %$defaultIni) {
+        $ini->{$k} //= $defaultIni->{$k};
+    }
+    $self->{ini} = $ini;
+    main::ok($self->{app} = Lemonldap::NG::Portal::Main->run($ini),'Portal app');
+    main::count(1);
+    $self;
+}
+);
+
+sub logout {
+    my ($self,$id) = @_;
+    my $res;
+    main::ok(
+        $res = $self->_get(
+            '/',
+            query  => 'logout',
+            cookie => "lemonldap=$id",
+            accept => 'text/html'
+        ),
+        'Logout'
+    );
+    main::ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+    my $c;
+    main::ok( ( defined( $c = $self->getCookies($res)->{lemonldap} ) and not $c ),
+        'Cookie is deleted' )
+      or explain( $res->[1], "Set-Cookie => 'lemonldap='" );
+    main::ok( $res = $self->_get( '/', cookie => "lemonldap=$id" ),
+        'Disconnect request' )
+      or explain( $res, '[<code>,<hdrs>,<content>]' );
+    main::ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
+    main::count(5);
+
+}
+
 sub getCookies {
-    my $resp = shift;
+    my ($self,$resp) = @_;
     my @hdrs = @{ $resp->[1] };
     my $res  = {};
     while ( my $name = shift @hdrs ) {
@@ -93,21 +111,6 @@ sub getCookies {
     }
     return $res;
 }
-
-package My::Cli;
-
-use strict;
-use Mouse;
-
-extends 'Lemonldap::NG::Common::PSGI::Cli::Lib';
-
-has app => (
-    is      => 'ro',
-    isa     => 'CodeRef',
-    builder => sub {
-        return Lemonldap::NG::Portal::Main->run($ini);
-    }
-);
 
 sub _get {
     my ( $self, $path, %args ) = @_;

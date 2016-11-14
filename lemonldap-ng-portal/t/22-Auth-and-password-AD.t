@@ -9,17 +9,19 @@ my $res;
 SKIP: {
     skip 'No AD server given', 3 unless ( $ENV{ADSERVER} );
 
-    init(
+    my $client = LLNG::Manager::Test->new(
         {
-            logLevel        => 'error',
-            useSafeJail     => 1,
-            authentication  => 'AD',
-            userDB          => 'AD',
-            LDAPFilter      => $ENV{ADFILTER} || '(cn=$user)',
-            ldapServer      => $ENV{ADSERVER},
-            ldapBase        => $ENV{ADBASE},
-            managerDn       => $ENV{MANAGERDN} || '',
-            managerPassword => $ENV{MANAGERPASSWORD} || '',
+            ini => {
+                logLevel        => 'error',
+                useSafeJail     => 1,
+                authentication  => 'AD',
+                userDB          => 'AD',
+                LDAPFilter      => $ENV{ADFILTER} || '(cn=$user)',
+                ldapServer      => $ENV{ADSERVER},
+                ldapBase        => $ENV{ADBASE},
+                managerDn       => $ENV{MANAGERDN} || '',
+                managerPassword => $ENV{MANAGERPASSWORD} || '',
+            }
         }
     );
     my $postString = 'user='
@@ -30,19 +32,18 @@ SKIP: {
     # Try yo authenticate
     # -------------------
     ok(
-        $res = &client->_post(
-            '/',
-            IO::String->new($postString),
+        $res = $client->_post(
+            '/', IO::String->new($postString),
             length => length($postString)
         ),
         'Auth query'
     );
     ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    my $cookies = getCookies($res);
+    my $cookies = $client->getCookies($res);
     my $id;
     ok( $id = $cookies->{lemonldap}, 'Get cookie' )
       or explain( $res, 'Set-Cookie: something' );
-    logout($id);
+    $client->logout($id);
 
     clean_sessions();
 }

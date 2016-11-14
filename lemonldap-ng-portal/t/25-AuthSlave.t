@@ -5,27 +5,29 @@ require 't/test-lib.pm';
 
 my $res;
 
-init(
+my $client = LLNG::Manager::Test->new(
     {
-        logLevel          => 'error',
-        useSafeJail       => 1,
-        authentication    => 'Slave',
-        userDB            => 'Slave',
-        slaveUserHeader   => 'My-Test',
-        slaveExportedVars => {
-            name => 'Name',
+        ini => {
+            logLevel          => 'error',
+            useSafeJail       => 1,
+            authentication    => 'Slave',
+            userDB            => 'Slave',
+            slaveUserHeader   => 'My-Test',
+            slaveExportedVars => {
+                name => 'Name',
+            }
         }
     }
 );
 
 ok(
-    $res = &client->_get(
+    $res = $client->_get(
         '/', custom => { HTTP_MY_TEST => 'dwho', HTTP_NAME => 'Dr Who' }
     ),
     'Auth query'
 );
 ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-my $cookies = getCookies($res);
+my $cookies = $client->getCookies($res);
 my $id;
 ok( $id = $cookies->{lemonldap}, 'Get cookie' )
   or explain( $res, 'Set-Cookie: something' );

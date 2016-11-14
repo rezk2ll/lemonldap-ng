@@ -20,32 +20,34 @@ SKIP: {
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
     $dbh->do("INSERT INTO users VALUES ('dwho','dwho','Doctor who')");
 
-    init(
+    my $client = LLNG::Manager::Test->new(
         {
-            logLevel       => 'error',
-            useSafeJail    => 1,
-            authentication => 'Choice',
-            userDB         => 'Choice',
+            ini => {
+                logLevel       => 'error',
+                useSafeJail    => 1,
+                authentication => 'Choice',
+                userDB         => 'Choice',
 
-            authChoiceParam   => 'test',
-            authChoiceModules => {
-                ldap => 'LDAP;LDAP;LDAP',
-                sql  => 'DBI;DBI;DBI',
-            },
+                authChoiceParam   => 'test',
+                authChoiceModules => {
+                    ldap => 'LDAP;LDAP;LDAP',
+                    sql  => 'DBI;DBI;DBI',
+                },
 
-            dbiAuthChain        => 'dbi:SQLite:dbname=t/userdb.db',
-            dbiAuthUser         => '',
-            dbiAuthPassword     => '',
-            dbiAuthTable        => 'users',
-            dbiAuthLoginCol     => 'user',
-            dbiAuthPasswordCol  => 'password',
-            dbiAuthPasswordHash => '',
+                dbiAuthChain        => 'dbi:SQLite:dbname=t/userdb.db',
+                dbiAuthUser         => '',
+                dbiAuthPassword     => '',
+                dbiAuthTable        => 'users',
+                dbiAuthLoginCol     => 'user',
+                dbiAuthPasswordCol  => 'password',
+                dbiAuthPasswordHash => '',
 
-            LDAPFilter      => $ENV{LDAPFILTER}      || '(cn=$user)',
-            ldapServer      => $ENV{LDAPSERVER},
-            ldapBase        => $ENV{LDAPBASE},
-            managerDn       => $ENV{MANAGERDN}       || '',
-            managerPassword => $ENV{MANAGERPASSWORD} || '',
+                LDAPFilter      => $ENV{LDAPFILTER}      || '(cn=$user)',
+                ldapServer      => $ENV{LDAPSERVER},
+                ldapBase        => $ENV{LDAPBASE},
+                managerDn       => $ENV{MANAGERDN}       || '',
+                managerPassword => $ENV{MANAGERPASSWORD} || '',
+            }
         }
     );
     foreach my $postString (
@@ -61,18 +63,18 @@ SKIP: {
         # Try yo authenticate
         # -------------------
         ok(
-            $res = &client->_post(
+            $res = $client->_post(
                 '/', IO::String->new($postString),
                 length => length($postString)
             ),
             'Auth query'
         );
         ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-        my $cookies = getCookies($res);
+        my $cookies = $client->getCookies($res);
         my $id;
         ok( $id = $cookies->{lemonldap}, 'Get cookie' )
           or explain( $res, 'Set-Cookie: something' );
-        logout($id);
+        $client->logout($id);
     }
 
     clean_sessions();

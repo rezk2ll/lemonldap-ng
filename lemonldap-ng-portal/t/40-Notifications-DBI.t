@@ -27,23 +27,25 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
 </notification></root>',null,null)}
     );
 
-    init(
+    my $client = LLNG::Manager::Test->new(
         {
-            logLevel                   => 'error',
-            useSafeJail                => 1,
-            notifications              => 1,
-            templatesDir               => 'site/templates/',
-            notificationStorage        => 'DBI',
-            notificationStorageOptions => {
-                dbiChain => "dbi:SQLite:dbname=$file",
-            },
+            ini => {
+                logLevel                   => 'error',
+                useSafeJail                => 1,
+                notifications              => 1,
+                templatesDir               => 'site/templates/',
+                notificationStorage        => 'DBI',
+                notificationStorageOptions => {
+                    dbiChain => "dbi:SQLite:dbname=$file",
+                },
+            }
         }
     );
 
     # Try yo authenticate
     # -------------------
     ok(
-        $res = &client->_post(
+        $res = $client->_post(
             '/',
             IO::String->new(
 'user=dwho&password=dwho&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw=='
@@ -54,14 +56,14 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
         'Auth query'
     );
     ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    my $cookies = getCookies($res);
+    my $cookies = $client->getCookies($res);
     my $id;
     ok( $id = $cookies->{lemonldap}, 'Get cookie' )
       or explain( $res, 'Set-Cookie: something' );
 
     # Verify that cookie is ciphered (session unvalid)
     ok(
-        $res = &client->_get(
+        $res = $client->_get(
             '/',
             query  => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
             cookie => "lemonldap=$id",
@@ -74,7 +76,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     # Try to validate notification without accepting it
     my $str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
     ok(
-        $res = &client->_post(
+        $res = $client->_post(
             '/notifback',
             IO::String->new($str),
             cookie => "lemonldap=$id",
@@ -90,7 +92,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     $str =
 'reference1x1=testref&check1x1x1=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
     ok(
-        $res = &client->_post(
+        $res = $client->_post(
             '/notifback',
             IO::String->new($str),
             cookie => "lemonldap=$id",

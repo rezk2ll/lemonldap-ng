@@ -4,11 +4,13 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-init(
+my $client = LLNG::Manager::Test->new(
     {
-        logLevel       => 'error',
-        useSafeJail    => 1,
-        trustedDomains => 'example3.com *.example2.com'
+        ini => {
+            logLevel       => 'error',
+            useSafeJail    => 1,
+            trustedDomains => 'example3.com *.example2.com'
+        }
     }
 );
 
@@ -100,7 +102,7 @@ my @tests = (
 
 my $res;
 ok(
-    $res = &client->_post(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho'),
         length => 23
@@ -109,7 +111,7 @@ ok(
 );
 ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
 my $id;
-ok( $id = getCookies($res)->{lemonldap}, 'Get LLNG cookie' )
+ok( $id = $client->getCookies($res)->{lemonldap}, 'Get LLNG cookie' )
   or explain( $res, 'Set-Cookie: something' );
 
 count(3);
@@ -119,7 +121,7 @@ while ( defined( my $url = shift(@tests) ) ) {
     my $redir  = shift @tests;
     my $detail = shift @tests;
     ok(
-        $res = &client->_get(
+        $res = $client->_get(
             '/',
             query  => "url=$url",
             cookie => "lemonldap=$id",
@@ -139,7 +141,7 @@ while ( defined( my $url = shift(@tests) ) ) {
     my $redir   = shift @tests;
     my $detail  = shift @tests;
     ok(
-        $res = &client->_get(
+        $res = $client->_get(
             '/',
             query  => "url=$url&logout=1",
             cookie => "lemonldap=$id",
@@ -153,7 +155,7 @@ while ( defined( my $url = shift(@tests) ) ) {
         ( $redir ? 'Get redirection' : 'Redirection dropped' ) )
       or explain( $res->[0], ( $redir ? 302 : 200 ) );
     ok(
-        $res = &client->_post(
+        $res = $client->_post(
             '/',
             IO::String->new('user=dwho&password=dwho'),
             length => 23
@@ -161,7 +163,7 @@ while ( defined( my $url = shift(@tests) ) ) {
         'Auth query'
     );
     ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    ok( $id = getCookies($res)->{lemonldap}, 'Get LLNG cookie' )
+    ok( $id = $client->getCookies($res)->{lemonldap}, 'Get LLNG cookie' )
       or explain( $res, 'Set-Cookie: something' );
     count(5);
 }

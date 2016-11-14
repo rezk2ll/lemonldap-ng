@@ -9,18 +9,20 @@ require 't/test-lib.pm';
 
 my $res;
 
-init(
+my $client = LLNG::Manager::Test->new(
     {
-        logLevel                 => 'error',
-        passwordDB               => 'Demo',
-        portalRequireOldPassword => 1,
+        ini => {
+            logLevel                 => 'error',
+            passwordDB               => 'Demo',
+            portalRequireOldPassword => 1,
+        }
     }
 );
 
 # Try yo authenticate
 # -------------------
 ok(
-    $res = &client->_post(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho'),
         length => 23
@@ -28,7 +30,7 @@ ok(
     'Auth query'
 );
 ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-my $cookies = getCookies($res);
+my $cookies = $client->getCookies($res);
 my $id;
 ok( $id = $cookies->{lemonldap}, 'Get cookie' )
   or explain( $res, 'Set-Cookie: something' );
@@ -36,7 +38,7 @@ count(3);
 
 # Test mismatch pwd
 ok(
-    $res = &client->_post(
+    $res = $client->_post(
         '/',
         IO::String->new('oldpassword=dwho&newpassword=test&confirmpassword=t'),
         cookie => "lemonldap=$id",
@@ -55,7 +57,7 @@ count(4);
 
 # Test missing old pwd
 ok(
-    $res = &client->_post(
+    $res = $client->_post(
         '/',
         IO::String->new('newpassword=test&confirmpassword=test'),
         cookie => "lemonldap=$id",
@@ -75,7 +77,7 @@ count(4);
 
 # Test bad old pwd
 ok(
-    $res = &client->_post(
+    $res = $client->_post(
         '/',
         IO::String->new('oldpassword=dd&newpassword=test&confirmpassword=test'),
         cookie => "lemonldap=$id",
@@ -91,8 +93,8 @@ ok( $json->{error} == PE_BADOLDPASSWORD, 'Response is PE_BADOLDPASSWORD' )
   or explain( $json, "error => 27" );
 count(4);
 
-# Test logout
-logout($id);
+# Test $client->logout
+$client->logout($id);
 
 #print STDERR Dumper($res);
 

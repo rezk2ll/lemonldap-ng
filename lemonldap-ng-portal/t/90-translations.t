@@ -62,14 +62,14 @@ foreach my $lang (@langs) {
 use File::Find;
 
 my @trspan = ();
-my @unTr = ();
+my @unTr   = ();
 find(
     sub {
         my $f = $File::Find::name;
-        return unless ( $_ =~ /tpl$/ and -f $_);
+        return unless ( $_ =~ /tpl$/ and -f $_ );
         open F, $_;
-        while(my $l = <F>) {
-            push @trspan, ($l =~ /trspan="(\w+)"/g);
+        while ( my $l = <F> ) {
+            push @trspan, ( $l =~ /trspan="(\w+)"/g );
         }
         close F;
     },
@@ -78,8 +78,8 @@ find(
 
 ok( @trspan > 1, 'Found "trspan" attributes' );
 @unTr = ();
-my $last='';
-foreach (grep {$last ne $_ ? $last = $_ : undef} sort @trspan) {
+my $last = '';
+foreach ( grep { $last ne $_ ? $last = $_ : undef } sort @trspan ) {
     push @unTr, $_ unless ( $keys->{$_} );
 }
 ok( @unTr == 0,

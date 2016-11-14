@@ -17,23 +17,25 @@ print F '<?xml version="1.0" encoding="UTF-8"?>
 </notification></root>';
 close F;
 
-init(
+my $client = LLNG::Manager::Test->new(
     {
-        logLevel                   => 'error',
-        useSafeJail                => 1,
-        notifications              => 1,
-        templatesDir               => 'site/templates/',
-        notificationStorage        => 'File',
-        notificationStorageOptions => {
-            dirName => 't'
-        },
+        ini => {
+            logLevel                   => 'error',
+            useSafeJail                => 1,
+            notifications              => 1,
+            templatesDir               => 'site/templates/',
+            notificationStorage        => 'File',
+            notificationStorageOptions => {
+                dirName => 't'
+            },
+        }
     }
 );
 
 # Try yo authenticate
 # -------------------
 ok(
-    $res = &client->_post(
+    $res = $client->_post(
         '/',
         IO::String->new(
             'user=dwho&password=dwho&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw=='),
@@ -43,7 +45,7 @@ ok(
     'Auth query'
 );
 ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-my $cookies = getCookies($res);
+my $cookies = $client->getCookies($res);
 my $id;
 ok( $id = $cookies->{lemonldap}, 'Get cookie' )
   or explain( $res, 'Set-Cookie: something' );
@@ -51,7 +53,7 @@ count(3);
 
 # Verify that cookie is ciphered (session unvalid)
 ok(
-    $res = &client->_get(
+    $res = $client->_get(
         '/',
         query  => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
         cookie => "lemonldap=$id",
@@ -65,7 +67,7 @@ count(2);
 # Try to validate notification without accepting it
 my $str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
 ok(
-    $res = &client->_post(
+    $res = $client->_post(
         '/notifback',
         IO::String->new($str),
         cookie => "lemonldap=$id",
@@ -79,9 +81,10 @@ ok( $res->[0] == 200, "Don't receive redirection" )
 count(2);
 
 # Try to validate notification
-my $str = 'reference1x1=testref&check1x1x1=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
+my $str =
+'reference1x1=testref&check1x1x1=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
 ok(
-    $res = &client->_post(
+    $res = $client->_post(
         '/notifback',
         IO::String->new($str),
         cookie => "lemonldap=$id",
@@ -93,7 +96,7 @@ ok(
 ok( $res->[0] == 302, "Get redirection" )
   or explain( [ $res->[0], $res->[1] ], 302 );
 $file =~ s/xml$/done/;
-ok(-e $file,'Notification was deleted');
+ok( -e $file, 'Notification was deleted' );
 count(3);
 
 #print STDERR Dumper($res);

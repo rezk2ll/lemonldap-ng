@@ -6,18 +6,19 @@ require 't/test-lib.pm';
 
 my $res;
 
-init( { logLevel => 'error', useSafeJail => 1 } );
+my $client = LLNG::Manager::Test->new(
+    { ini => { logLevel => 'error', useSafeJail => 1 } } );
 
 # Test normal first access
 # ------------------------
-ok( $res = &client->_get('/'), 'Unauth JSON request' );
+ok( $res = $client->_get('/'), 'Unauth JSON request' );
 ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
 count(2);
 
 # Test "first access" with good url
 ok(
     $res =
-      &client->_get( '/', query => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==' ),
+      $client->_get( '/', query => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==' ),
     'Unauth ajax request with good url'
 );
 ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
@@ -26,7 +27,7 @@ count(2);
 # Try yo authenticate
 # -------------------
 ok(
-    $res = &client->_post(
+    $res = $client->_post(
         '/',
         IO::String->new('user=dwho&password=dwho'),
         length => 23
@@ -34,7 +35,7 @@ ok(
     'Auth query'
 );
 ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-my $cookies = getCookies($res);
+my $cookies = $client->getCookies($res);
 my $id;
 ok( $id = $cookies->{lemonldap}, 'Get cookie' )
   or explain( $res, 'Set-Cookie: something' );
@@ -43,7 +44,7 @@ count(3);
 # Try to get a redirection for an auth user with a valid url
 # ----------------------------------------------------------
 ok(
-    $res = &client->_get(
+    $res = $client->_get(
         '/',
         query  => 'url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==',
         cookie => "lemonldap=$id",
@@ -66,7 +67,7 @@ count(4);
 # in manager)
 # -------------------------------------------------------------------------
 ok(
-    $res = &client->_get(
+    $res = $client->_get(
         '/',
         query  => 'url=aHR0cHM6Ly90LmV4YW1wbGUuY29tLw==',
         cookie => "lemonldap=$id",
@@ -83,7 +84,7 @@ ok( $hdrs{'Content-Type'} eq 'text/html', 'Reponse is HTML' )
 count(4);
 
 # Test logout
-logout($id);
+$client->logout($id);
 
 #print STDERR Dumper($res);
 

@@ -7,17 +7,19 @@ my $res;
 SKIP: {
     skip 'REMOTELLNG is not set', 10 unless ( $ENV{REMOTELLNG} );
     require 't/test-lib.pm';
-    init(
+    my $client = LLNG::Manager::Test->new(
         {
-            logLevel        => 'error',
-            useSafeJail     => 1,
-            authentication  => 'Proxy',
-            userDB          => 'Proxy',
-            soapAuthService => $ENV{REMOTELLNG},
+            ini => {
+                logLevel        => 'error',
+                useSafeJail     => 1,
+                authentication  => 'Proxy',
+                userDB          => 'Proxy',
+                soapAuthService => $ENV{REMOTELLNG},
+            }
         }
     );
     ok(
-        $res = &client->_post(
+        $res = $client->_post(
             '/',
             IO::String->new('user=dwho&password=dwho'),
             length => 23
@@ -25,12 +27,12 @@ SKIP: {
         'Auth query'
     );
     ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    my $cookies = getCookies($res);
+    my $cookies = $client->getCookies($res);
     my $id;
     ok( $id = $cookies->{lemonldap}, 'Get cookie' )
       or explain( $res, 'Set-Cookie: something' );
 
-    logout($id);
+    $client->logout($id);
     clean_sessions();
 }
 done_testing(10);
