@@ -1277,11 +1277,13 @@ sub issuerForAuthUser {
                 my $nameIDFormatKey =
                   $self->{samlSPMetaDataOptions}->{$idp_initiated_spConfKey}
                   ->{samlSPMetaDataOptionsNameIDFormat} || "email";
-                $login->request()->NameIDPolicy()
-                  ->Format( $self->getNameIDFormat($nameIDFormatKey) );
+                eval {
+                    $login->request()->NameIDPolicy()
+                      ->Format( $self->getNameIDFormat($nameIDFormatKey) );
+                };
 
                 # Force AllowCreate to TRUE
-                $login->request()->NameIDPolicy()->AllowCreate(1);
+                eval { $login->request()->NameIDPolicy()->AllowCreate(1); };
             }
 
             # Process authentication request
