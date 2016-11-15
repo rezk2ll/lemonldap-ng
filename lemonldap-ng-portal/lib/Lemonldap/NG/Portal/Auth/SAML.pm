@@ -380,7 +380,7 @@ sub extractFormInfo {
 
     # 1.2 SLO
     elsif ( $url =~
-/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/io
+/^\Q($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)\E$/io
       )
     {
         $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
