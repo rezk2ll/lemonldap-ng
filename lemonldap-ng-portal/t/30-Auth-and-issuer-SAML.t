@@ -4,7 +4,7 @@ use strict;
 require 't/test-lib.pm';
 
 my $tests = 0;
-my $debug = 'error';
+my $debug = 'debug';
 my $res;
 
 SKIP: {
@@ -14,7 +14,7 @@ SKIP: {
     }
     my $issuer = issuer();
 
-    #my $sp     = sp();
+    my $sp = sp();
 }
 
 count($tests);
@@ -24,13 +24,13 @@ sub issuer {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel                                             => $debug,
+                logLevel               => $debug,
                 domain                 => 'idp.com',
                 portal                 => 'auth.idp.com',
                 authentication         => 'Demo',
                 userDB                 => 'Demo',
                 issuerDBSAMLActivation => "1",
-                samlSPMetaDataOptions                       => {
+                samlSPMetaDataOptions  => {
                     'sp.com' => {
                         samlSPMetaDataOptionsEncryptionMode => 'none',
                     }
@@ -134,8 +134,7 @@ protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">
 RSq+nrT2zyQRM/vkj5vR9ZVz67HO/+Wk3Mx6RAwkVcMdgMAqCq8odmbI0yCRZiTL9ybKWRKqWJoK
 J0p5+Q2fPEBPupQZR09Jt/JPuLVSsGfCxi9Nqw==
 </Modulus>
-  <Exponent>AQAB
-</Exponent>
+  <Exponent>AQAB</Exponent>
  </RSAKeyValue>
 </ds:KeyValue>
 </ds:KeyInfo>
@@ -150,71 +149,37 @@ R+QUm+/1LIKYb3OCBTvOlY7xHoP6NSU1+Mr+YzGBUacdO2vnNxe/PQhxIeP1zO0njuqGHkwEpy8r
 UWRZbbDn31TmKjqlhgtsz5HPhbRaYEExhyepKgBiNz+RyxtYXVhuG8OrWQDoS5gYHSjdw1CTJyix
 eJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz+w==
 </Modulus>
-  <Exponent>AQAB
-</Exponent>
+  <Exponent>AQAB</Exponent>
  </RSAKeyValue>
 </ds:KeyValue>
 </ds:KeyInfo>
 </KeyDescriptor>
-<ArtifactResolutionService
-isDefault=\"true\"
-index=\"0\"
-Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\"
-Location=\"http://auth.sp.com/saml/artifact\" />
-<SingleLogoutService
-Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\"
-Location=\"http://auth.sp.com/saml/singleLogoutSOAP\" />
-<SingleLogoutService
-Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"
-Location=\"http://auth.sp.com/saml/singleLogout\"
-
-      ResponseLocation=\"http://auth.sp.com/saml/singleLogoutReturn\"
-/>
-<SingleLogoutService
-Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\"
-Location=\"http://auth.sp.com/saml/singleLogout\"
-
-ResponseLocation=\"http://auth.sp.com/saml/singleLogoutReturn\"
-/>
+<ArtifactResolutionService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.sp.com/saml/artifact\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.sp.com/saml/singleLogoutSOAP\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"http://auth.sp.com/saml/singleLogout\" ResponseLocation=\"http://auth.sp.com/saml/singleLogoutReturn\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://auth.sp.com/saml/singleLogout\" ResponseLocation=\"http://auth.sp.com/saml/singleLogoutReturn\" />
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
-<SingleSignOnService
-Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"
-Location=\"http://auth.sp.com/saml/singleSignOn\"
-/>
-<SingleSignOnService
-Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\"
-Location=\"http://auth.sp.com/saml/singleSignOn\"
-/>
-<SingleSignOnService
-Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact\"
-Location=\"http://auth.sp.com/saml/singleSignOnArtifact\"
-/>
-<SingleSignOnService
-Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\"
-Location=\"http://auth.sp.com/saml/singleSignOnSOAP\" />
-</IDPSSODescriptor>
-
-  <SPSSODescriptor
-AuthnRequestsSigned=\"true\"
-WantAssertionsSigned=\"true\"
-protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"http://auth.sp.com/saml/singleSignOn\" />
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://auth.sp.com/saml/singleSignOn\" />
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact\" Location=\"http://auth.sp.com/saml/singleSignOnArtifact\" />
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.sp.com/saml/singleSignOnSOAP\" /> </IDPSSODescriptor>
+<SPSSODescriptor AuthnRequestsSigned=\"true\" WantAssertionsSigned=\"true\" protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">
 <KeyDescriptor use=\"signing\">
 <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">
 <ds:KeyValue>
- <RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
-  <Modulus>u4iToYAEmWQxgZDihGVzMMql1elPn37domWcvXeU2E4yt2hh5jkQHiFjgodfOlNeRIw5QJVlUBwr
+<RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
+<Modulus>u4iToYAEmWQxgZDihGVzMMql1elPn37domWcvXeU2E4yt2hh5jkQHiFjgodfOlNeRIw5QJVlUBwr
 +CQvbaKRFXd7BrOhQIDC0TZPRVB0XHarUtsCuDekN4/2GKSzHsoToKUVPWq9thsuek3xkpsJGZNX
 7bglfEc9+QQpYTqN1rkdN1PVU0epNMokFFGho5pLRqLUV5+I/QXAL49jfTjaSxsp4UndTI8/+mGS
 RSq+nrT2zyQRM/vkj5vR9ZVz67HO/+Wk3Mx6RAwkVcMdgMAqCq8odmbI0yCRZiTL9ybKWRKqWJoK
 J0p5+Q2fPEBPupQZR09Jt/JPuLVSsGfCxi9Nqw==
 </Modulus>
-  <Exponent>AQAB
-</Exponent>
+<Exponent>AQAB</Exponent>
  </RSAKeyValue>
 </ds:KeyValue>
 </ds:KeyInfo>
@@ -229,100 +194,70 @@ R+QUm+/1LIKYb3OCBTvOlY7xHoP6NSU1+Mr+YzGBUacdO2vnNxe/PQhxIeP1zO0njuqGHkwEpy8r
 UWRZbbDn31TmKjqlhgtsz5HPhbRaYEExhyepKgBiNz+RyxtYXVhuG8OrWQDoS5gYHSjdw1CTJyix
 eJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz+w==
 </Modulus>
-  <Exponent>AQAB
-</Exponent>
- </RSAKeyValue>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
 </ds:KeyValue>
 </ds:KeyInfo>
 </KeyDescriptor>
-<ArtifactResolutionService
-isDefault=\"true\"
-index=\"0\"
-Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\"
-Location=\"http://auth.sp.com/saml/artifact\" />
-<SingleLogoutService
-Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\"
-      Location=\"http://auth.sp.com/saml/proxySingleLogoutSOAP\" />
-    <SingleLogoutService
-      Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\"
-      Location=\"http://auth.sp.com/saml/proxySingleLogout\"
-      
-      ResponseLocation=\"http://auth.sp.com/saml/proxySingleLogoutReturn\"
-      />
-    <SingleLogoutService
-      Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\"
-      Location=\"http://auth.sp.com/saml/proxySingleLogout\"
-      
-      ResponseLocation=\"http://auth.sp.com/saml/proxySingleLogoutReturn\"
-      />
-    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
-    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
-    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
-    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
-    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
-    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
-    <AssertionConsumerService
-      isDefault=\"true\"
-      index=\"0\"
-      Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact\"
-      Location=\"http://auth.sp.com/saml/proxySingleSignOnArtifact\" />
-    <AssertionConsumerService
-      isDefault=\"false\"
-      index=\"1\"
-      Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\"
-      Location=\"http://auth.sp.com/saml/proxySingleSignOnPost\" />
-  </SPSSODescriptor>
+<ArtifactResolutionService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.sp.com/saml/artifact\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.sp.com/saml/proxySingleLogoutSOAP\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"http://auth.sp.com/saml/proxySingleLogout\" ResponseLocation=\"http://auth.sp.com/saml/proxySingleLogoutReturn\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://auth.sp.com/saml/proxySingleLogout\" ResponseLocation=\"http://auth.sp.com/saml/proxySingleLogoutReturn\" />
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+<AssertionConsumerService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact\" Location=\"http://auth.sp.com/saml/proxySingleSignOnArtifact\" />
+<AssertionConsumerService isDefault=\"false\" index=\"1\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://auth.sp.com/saml/proxySingleSignOnPost\" />
+</SPSSODescriptor>
 
-  <AttributeAuthorityDescriptor
-    protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">
-    <KeyDescriptor use=\"signing\">
-      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">
-          <ds:KeyValue>
- <RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
-  <Modulus>u4iToYAEmWQxgZDihGVzMMql1elPn37domWcvXeU2E4yt2hh5jkQHiFjgodfOlNeRIw5QJVlUBwr
+<AttributeAuthorityDescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">
+<KeyDescriptor use=\"signing\">
+<ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">
+<ds:KeyValue>
+<RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
+<Modulus>u4iToYAEmWQxgZDihGVzMMql1elPn37domWcvXeU2E4yt2hh5jkQHiFjgodfOlNeRIw5QJVlUBwr
 +CQvbaKRFXd7BrOhQIDC0TZPRVB0XHarUtsCuDekN4/2GKSzHsoToKUVPWq9thsuek3xkpsJGZNX
 7bglfEc9+QQpYTqN1rkdN1PVU0epNMokFFGho5pLRqLUV5+I/QXAL49jfTjaSxsp4UndTI8/+mGS
 RSq+nrT2zyQRM/vkj5vR9ZVz67HO/+Wk3Mx6RAwkVcMdgMAqCq8odmbI0yCRZiTL9ybKWRKqWJoK
 J0p5+Q2fPEBPupQZR09Jt/JPuLVSsGfCxi9Nqw==
 </Modulus>
-  <Exponent>AQAB
-</Exponent>
- </RSAKeyValue>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
 </ds:KeyValue>
-      </ds:KeyInfo>
-    </KeyDescriptor>
-    <KeyDescriptor use=\"encryption\">
-      <ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">
-          <ds:KeyValue>
- <RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
-  <Modulus>sRaod2RZ8hMFBl+VhsnhyPM8l/Fj1obnBxfQIaWuHFIFfXiGe/CYHuZ5QJQLnZxHMJX6LL3Sh+Us
+</ds:KeyInfo>
+</KeyDescriptor>
+<KeyDescriptor use=\"encryption\">
+<ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">
+<ds:KeyValue>
+<RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
+<Modulus>sRaod2RZ8hMFBl+VhsnhyPM8l/Fj1obnBxfQIaWuHFIFfXiGe/CYHuZ5QJQLnZxHMJX6LL3Sh+Us
 og3p0jpijpcg0QgfBSEkfopKTgReYN8DiDIll0rV1XdTni7E85Nd1YyNy3ui/ZD+UShWwqu6jLVL
 R+QUm+/1LIKYb3OCBTvOlY7xHoP6NSU1+Mr+YzGBUacdO2vnNxe/PQhxIeP1zO0njuqGHkwEpy8r
 UWRZbbDn31TmKjqlhgtsz5HPhbRaYEExhyepKgBiNz+RyxtYXVhuG8OrWQDoS5gYHSjdw1CTJyix
 eJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz+w==
 </Modulus>
-  <Exponent>AQAB
-</Exponent>
- </RSAKeyValue>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
 </ds:KeyValue>
-      </ds:KeyInfo>
-    </KeyDescriptor>
-    <AttributeService
-      Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\"
-      Location=\"http://auth.sp.com/saml/AA/SOAP\"/>
-    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
-    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
-    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
-    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
-    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
-    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
-  </AttributeAuthorityDescriptor>
-  
-  <Organization>
-    <OrganizationName xml:lang=\"en\">Example</OrganizationName>
-    <OrganizationDisplayName xml:lang=\"en\">Example</OrganizationDisplayName>
-    <OrganizationURL xml:lang=\"en\">http://www.sp.com</OrganizationURL>
-  </Organization>
+</ds:KeyInfo>
+</KeyDescriptor>
+<AttributeService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.sp.com/saml/AA/SOAP\"/>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+</AttributeAuthorityDescriptor>
+
+<Organization>
+<OrganizationName xml:lang=\"en\">SP</OrganizationName>
+<OrganizationDisplayName xml:lang=\"en\">SP</OrganizationDisplayName>
+<OrganizationURL xml:lang=\"en\">http://www.sp.com</OrganizationURL>
+</Organization>
 
 </EntityDescriptor>
 "
@@ -338,11 +273,255 @@ sub sp {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel       => $debug,
-                domain         => 'sp.com',
-                authentication => 'SAML',
-                userDB         => 'SAML',
-            }
+                logLevel                          => $debug,
+                domain                            => 'sp.com',
+                authentication                    => 'SAML',
+                userDB                            => 'SAML',
+                samlIDPMetaDataExportedAttributes => {
+                    idp => {
+                        mail => "0;mail;;",
+                        uid  => "1;uid",
+                        cn   => "0;cn"
+                    }
+                },
+                samlIDPMetaDataOptions => {
+                    idp => {
+                        samlIDPMetaDataOptionsEncryptionMode => 'none',
+                    }
+                },
+                samlIDPMetaDataXML => {
+                    idp => {
+                        samlIDPMetaDataXML => "<?xml version=\"1.0\"?>
+<EntityDescriptor xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\"
+xmlns:saml=\"urn:oasis:names:tc:SAML:2.0:assertion\"
+xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"
+entityID=\"https://auth.idp.com/saml/metadata\">
+
+<IDPSSODescriptor WantAuthnRequestsSigned=\"true\" protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">
+<KeyDescriptor use=\"signing\">
+<ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">
+<ds:KeyValue>
+<RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
+<Modulus>tR/wgDqWB4Maho5V6TjcL/NbNfjgIh7GcgkrB5RZcVT1GTejJlMjUQdgBKBuZXQN+7/29P6UcGq1
+kYalURq6S8SpeJ1ofp5rBEoD/TIkvU0JOcid65wp+fdzXGXsfiZvHraU74jSCgjP/wqfVGRyBIQz
+B0SIxSpnrsigqNsE1E94toDMx4wovjHu/9ABAImREV7Sz83OeFF00/sghrjTEJOD/gHf04JCn9Mg
+NOqvSTysr9LXWg/oUKQDEYeTq9ux6pq/oqv1MxwONbSZPtN5yD41mi+hT8Rh+W8Je8rsiML4VMxz
+sb1l9303asw6suo5bLTISKNSbu1nt1NkpNxzyw==
+</Modulus>
+<Exponent>AQAB</Exponent>
+ </RSAKeyValue>
+</ds:KeyValue>
+</ds:KeyInfo>
+</KeyDescriptor>
+<KeyDescriptor use=\"encryption\">
+<ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">
+<ds:KeyValue>
+<RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
+<Modulus>nfKBDG/K0TnGT7Xu8q1N45sNWvIK91SqNg8nvN2uVeKoHADTcsus5Xn3id5+8Q9TuMFsW9kIEeXi
+aPKXQa9ryfSNDhWDWloNkpGEeWif2BnHUu46Abu1UBWb0mH6VwcG1PR4qHruLis1odjQ1qnVDNfS
+EASVIppEBYjDX203ypmURIzU6h53GRRRlf1BLWkbVn9ysmDeR57Xw5Rsx/+tBlcnMrkv/40DSUke
+hQIl2JmlFrl2Caik+gU4pd20apA/pNLjBZF0OmGoS08AIR5NMd0KFa6CwZUUSHJqH5GFy5Y2yl4l
+g8K0klAS9q7L7aXI+eFQZhkwidjpxXnHPyxIGQ==
+</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</ds:KeyValue>
+</ds:KeyInfo>
+</KeyDescriptor>
+<ArtifactResolutionService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/artifact\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/singleLogoutSOAP\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"https://auth.idp.com/saml/singleLogout\" ResponseLocation=\"https://auth.idp.com/saml/singleLogoutReturn\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"https://auth.idp.com/saml/singleLogout\" ResponseLocation=\"https://auth.idp.com/saml/singleLogoutReturn\" />
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"https://auth.idp.com/saml/singleSignOn\" />
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"https://auth.idp.com/saml/singleSignOn\" />
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact\" Location=\"https://auth.idp.com/saml/singleSignOnArtifact\" />
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/singleSignOnSOAP\" />
+</IDPSSODescriptor>
+
+<SPSSODescriptor AuthnRequestsSigned=\"true\" WantAssertionsSigned=\"true\" protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">
+<KeyDescriptor use=\"signing\">
+<ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">
+<ds:KeyValue>
+<RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
+<Modulus>tR/wgDqWB4Maho5V6TjcL/NbNfjgIh7GcgkrB5RZcVT1GTejJlMjUQdgBKBuZXQN+7/29P6UcGq1
+kYalURq6S8SpeJ1ofp5rBEoD/TIkvU0JOcid65wp+fdzXGXsfiZvHraU74jSCgjP/wqfVGRyBIQz
+B0SIxSpnrsigqNsE1E94toDMx4wovjHu/9ABAImREV7Sz83OeFF00/sghrjTEJOD/gHf04JCn9Mg
+NOqvSTysr9LXWg/oUKQDEYeTq9ux6pq/oqv1MxwONbSZPtN5yD41mi+hT8Rh+W8Je8rsiML4VMxz
+sb1l9303asw6suo5bLTISKNSbu1nt1NkpNxzyw==
+</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</ds:KeyValue>
+</ds:KeyInfo>
+</KeyDescriptor>
+<KeyDescriptor use=\"encryption\">
+<ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">
+<ds:KeyValue>
+<RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
+<Modulus>nfKBDG/K0TnGT7Xu8q1N45sNWvIK91SqNg8nvN2uVeKoHADTcsus5Xn3id5+8Q9TuMFsW9kIEeXi
+aPKXQa9ryfSNDhWDWloNkpGEeWif2BnHUu46Abu1UBWb0mH6VwcG1PR4qHruLis1odjQ1qnVDNfS
+EASVIppEBYjDX203ypmURIzU6h53GRRRlf1BLWkbVn9ysmDeR57Xw5Rsx/+tBlcnMrkv/40DSUke
+hQIl2JmlFrl2Caik+gU4pd20apA/pNLjBZF0OmGoS08AIR5NMd0KFa6CwZUUSHJqH5GFy5Y2yl4l
+g8K0klAS9q7L7aXI+eFQZhkwidjpxXnHPyxIGQ==
+</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</ds:KeyValue>
+</ds:KeyInfo>
+</KeyDescriptor>
+<ArtifactResolutionService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/artifact\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/proxySingleLogoutSOAP\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"https://auth.idp.com/saml/proxySingleLogout\" ResponseLocation=\"https://auth.idp.com/saml/proxySingleLogoutReturn\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"https://auth.idp.com/saml/proxySingleLogout\" ResponseLocation=\"https://auth.idp.com/saml/proxySingleLogoutReturn\" />
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+<AssertionConsumerService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact\" Location=\"https://auth.idp.com/saml/proxySingleSignOnArtifact\" />
+<AssertionConsumerService isDefault=\"false\" index=\"1\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"https://auth.idp.com/saml/proxySingleSignOnPost\" />
+</SPSSODescriptor>
+
+<AttributeAuthorityDescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">
+<KeyDescriptor use=\"signing\">
+<ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">
+<ds:KeyValue>
+<RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
+<Modulus>tR/wgDqWB4Maho5V6TjcL/NbNfjgIh7GcgkrB5RZcVT1GTejJlMjUQdgBKBuZXQN+7/29P6UcGq1
+kYalURq6S8SpeJ1ofp5rBEoD/TIkvU0JOcid65wp+fdzXGXsfiZvHraU74jSCgjP/wqfVGRyBIQz
+B0SIxSpnrsigqNsE1E94toDMx4wovjHu/9ABAImREV7Sz83OeFF00/sghrjTEJOD/gHf04JCn9Mg
+NOqvSTysr9LXWg/oUKQDEYeTq9ux6pq/oqv1MxwONbSZPtN5yD41mi+hT8Rh+W8Je8rsiML4VMxz
+sb1l9303asw6suo5bLTISKNSbu1nt1NkpNxzyw==
+</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</ds:KeyValue>
+</ds:KeyInfo>
+</KeyDescriptor>
+<KeyDescriptor use=\"encryption\">
+<ds:KeyInfo xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\">
+<ds:KeyValue>
+<RSAKeyValue xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
+<Modulus>nfKBDG/K0TnGT7Xu8q1N45sNWvIK91SqNg8nvN2uVeKoHADTcsus5Xn3id5+8Q9TuMFsW9kIEeXi
+aPKXQa9ryfSNDhWDWloNkpGEeWif2BnHUu46Abu1UBWb0mH6VwcG1PR4qHruLis1odjQ1qnVDNfS
+EASVIppEBYjDX203ypmURIzU6h53GRRRlf1BLWkbVn9ysmDeR57Xw5Rsx/+tBlcnMrkv/40DSUke
+hQIl2JmlFrl2Caik+gU4pd20apA/pNLjBZF0OmGoS08AIR5NMd0KFa6CwZUUSHJqH5GFy5Y2yl4l
+g8K0klAS9q7L7aXI+eFQZhkwidjpxXnHPyxIGQ==
+</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</ds:KeyValue>
+</ds:KeyInfo>
+</KeyDescriptor>
+<AttributeService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/AA/SOAP\"/>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+</AttributeAuthorityDescriptor>
+
+<Organization>
+<OrganizationName xml:lang=\"en\">IDP</OrganizationName>
+<OrganizationDisplayName xml:lang=\"en\">IDP</OrganizationDisplayName>
+<OrganizationURL xml:lang=\"en\">https://www.idp.fr/</OrganizationURL>
+</Organization>
+
+</EntityDescriptor>
+"
+                    }
+                },
+                samlOrganizationDisplayName => "SP",
+                samlOrganizationName        => "SP",
+                samlOrganizationURL         => "http://www.sp.com",
+                samlServicePublicKeySig     => "-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu4iToYAEmWQxgZDihGVz
+MMql1elPn37domWcvXeU2E4yt2hh5jkQHiFjgodfOlNeRIw5QJVlUBwr+CQvbaKR
+FXd7BrOhQIDC0TZPRVB0XHarUtsCuDekN4/2GKSzHsoToKUVPWq9thsuek3xkpsJ
+GZNX7bglfEc9+QQpYTqN1rkdN1PVU0epNMokFFGho5pLRqLUV5+I/QXAL49jfTja
+Sxsp4UndTI8/+mGSRSq+nrT2zyQRM/vkj5vR9ZVz67HO/+Wk3Mx6RAwkVcMdgMAq
+Cq8odmbI0yCRZiTL9ybKWRKqWJoKJ0p5+Q2fPEBPupQZR09Jt/JPuLVSsGfCxi9N
+qwIDAQAB
+-----END PUBLIC KEY-----
+",
+                samlServicePrivateKeyEnc => "-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAsRaod2RZ8hMFBl+VhsnhyPM8l/Fj1obnBxfQIaWuHFIFfXiG
+e/CYHuZ5QJQLnZxHMJX6LL3Sh+Usog3p0jpijpcg0QgfBSEkfopKTgReYN8DiDIl
+l0rV1XdTni7E85Nd1YyNy3ui/ZD+UShWwqu6jLVLR+QUm+/1LIKYb3OCBTvOlY7x
+HoP6NSU1+Mr+YzGBUacdO2vnNxe/PQhxIeP1zO0njuqGHkwEpy8rUWRZbbDn31Tm
+Kjqlhgtsz5HPhbRaYEExhyepKgBiNz+RyxtYXVhuG8OrWQDoS5gYHSjdw1CTJyix
+eJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz+wIDAQABAoIBAEkZrk8iiJKJ0WAx
+IrsyKNbXuWKLTYgnxcRCyzKofrfID+YcU39j8JeI0fKbajQUZ7qhnlTLwtU//+2h
+SqzyVu6/add/v7ZRWQw3L7cGzKK2THHzKVtLk/t7N3QroDdf1LMrQvkFP2HmcWS0
+/yN62hXtXHb/qpY4Nn+6JQyUpM5dkv8S/QjDl2NTdyWrXKzWp+4I3QLQ20f4zym+
+ir7RennziMc0HlQNcTjGAUbFULtdqEfSFWhNK7UjiRY+S0XV2xJIbGjnxUQH62fS
+w1ZzYsF7sBtoSckvfL4WfGbylhOVnliU05RLU2c67PRjj1Gskoslq1Ow/3DHR7rI
+BSBpV8ECgYEA1eHfcog7xQGDkW+cshJtFPFx+9MegB58gFW1rl0rn+tfbexvoSEA
+7G7EOTyaU6OAI+8StiRT6AYTgEU7PMM9zDykdGIWj3h0OpHGA86xhEiiaaM2DDRv
+/DEKRVlEdmRLLLY28pJVHOMYomia3mb2VKZGg2VfGtSfjg1GXD3I8OECgYEA0/X0
+U55KjZ1JQTPUgFc1WK1NxX9MaH+NcpDaolEUy3Qf3QTbfws+a9K3vwCn7EpQhrfs
+I6RVUtwFdCyfl/jzBY9Gykkg03sMgW7Qw2SCCsSt05M+jDtBbNJ7esP6PAeKFvXZ
+ZWhdeiAa4kM/P6gtvZXQ4tY4LkSbcd6b0SzzFFsCgYBjMsusFzuBd95JyfZnMNye
+5gzzu0teKMWd0CLfqB7foQ81sH9lwCTpg8ZGtbDuMdrwz6ViDR9NceQBjhqXaAZ1
+f3rW79d+22Ms9wdcJLV4oSeSzzv2FSwLT8NvvqNeNc4YArshbnVDXKDEUrfhhueh
+Ay2ZK58clpkaDVYg2hckgQKBgG3KuhtSI/YE4fwXN9yez7A2XNGPZem/IGqWo9lu
+PGJCrXqT2IqPLW82gB083r6jo+CUhonTxqqb82tA7g4PUvqvQ5Dmnk1NMKYe255K
+gp3HUO8GF2EWFIak5Hcr6oOLuDi6cjh3/euTk7ld8fYsTD0mzEOjiQhWW1p5X6bT
+LLp/AoGAHvkxA1NM1HJ3myAREbwNXxRy/nhNt4mwMkZ6hPQsW/Eg/3r7j6MJOFrm
+U8AJJjDGKe6nlXhhnMoQfJzAc0cYNgjktmJXW27fHGIwt/2QwYNFHPK3s7HTrfH6
+7T4XKT3yGeeeyC2soKJQPlGB+ETdIUnXa7eo9KVWtMTgISyx1Qk=
+-----END RSA PRIVATE KEY-----
+",
+                samlServicePrivateKeySig => "-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAu4iToYAEmWQxgZDihGVzMMql1elPn37domWcvXeU2E4yt2hh
+5jkQHiFjgodfOlNeRIw5QJVlUBwr+CQvbaKRFXd7BrOhQIDC0TZPRVB0XHarUtsC
+uDekN4/2GKSzHsoToKUVPWq9thsuek3xkpsJGZNX7bglfEc9+QQpYTqN1rkdN1PV
+U0epNMokFFGho5pLRqLUV5+I/QXAL49jfTjaSxsp4UndTI8/+mGSRSq+nrT2zyQR
+M/vkj5vR9ZVz67HO/+Wk3Mx6RAwkVcMdgMAqCq8odmbI0yCRZiTL9ybKWRKqWJoK
+J0p5+Q2fPEBPupQZR09Jt/JPuLVSsGfCxi9NqwIDAQABAoIBABE0Cjb6g3F+23vD
+SsRSeiqzrFrfOEqtXK+VGrfWzHS7V7Ozg6eW/H+HGJXUzUuQcklfg7EFA3JB41a0
+GxW3oA+UElkfCV/dcAG5NbRqGQKScEz9glZb5FikgDLqiPP+HabS/gvQSu71t2HI
+3KxSRJdwCNTp26Z28pxxYUpmELTtxd9vlHjffit2Mnt2uc8hOtFHdNavfYwvYH7o
+bmlckp7b/JVOy2Yy21O94ZWkE498jXyn71Gr+V1cnJ0RrmYbhQqIvFpFHj98Pf4O
+if3c4YmBcZ4t7PUsZUYF3ooWt8k/mdigQC3D6p80OKe+wUTYKcCN0ZdFbiURv9pg
+CsqLh+ECgYEA9vA+9QfzvXC7S5yXgTkuRiusPlNye/AiyA/0oGjmjFZ1YNsT7awH
+6BjW6WE+rS4elKJu1GaefM/cDguH4ZmJc+eKgi4LDCqYw9rr9les3aneBc8demd3
+O/Ej1Pud1QxXArBNfBYo08vEqwST9P89clJC5090U6bGK2E0rTVu1w0CgYEAwmpG
+9LbOFeGCPmwX7Avuk7tQQfRSV6q9TFZo+HxDfKYvxec846l1vBenY2rrgYhtolYJ
+YS795LYgbSWRxGfgr1GuIbP5GsjHy6/1o6bS8M++GJ7KHArb0QLAYyQweqqb164A
+NvHJkveueWnxzeOlD9j2fcjEnBHwTnqjG+17CZcCgYEAqMXawa4FsNxzpmIISpHC
+RsNindZ60Kp3mzUMhPYtXI1a/C+/lxmU7dTMTgXgyIxU6lF6XkEk4TlPtWm8HTzK
+7SS7Te4aLt6OOo5N57hUtct7q4y7IQXGQHm3e8HdRdeBQJ0u2Dhs/xSt/hTK6w/n
+91Kx11Y+s02w88UkM53pe6ECgYAF/UYwVc1liSv9BlF6WSfBb1zam09KGh1405Sq
+SxG9LlV8cFJE5TyWTdg/TNTyiaRvAt2JG+yAdkfrdOPXvCeE3yxRJ30+IP9evA4C
+O6p19sBxe7rYQFFjUAVjSIMh1E22yEqDZtGB8JV0chob8K5uHY4CdAPylu7jTA3o
+V1maAwKBgQCSGQ3yzsk4EGN2xd/JdgGDzhKyTZTQKMWYqQcsYxRAQ7Paj7u+Wkgv
+dBeKcI0HwgpLy5ZohSd2erqieIsW0pEbJWCmos4IcO8tgNfEOa5WXYdyLbj5tFwt
+ctu4/BJdijqfpMAtG8pv6k09gYjfASVytXmydGcs/0rVKYCRQA8Tow==
+-----END RSA PRIVATE KEY-----
+",
+                samlServicePublicKeyEnc => "-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsRaod2RZ8hMFBl+Vhsnh
+yPM8l/Fj1obnBxfQIaWuHFIFfXiGe/CYHuZ5QJQLnZxHMJX6LL3Sh+Usog3p0jpi
+jpcg0QgfBSEkfopKTgReYN8DiDIll0rV1XdTni7E85Nd1YyNy3ui/ZD+UShWwqu6
+jLVLR+QUm+/1LIKYb3OCBTvOlY7xHoP6NSU1+Mr+YzGBUacdO2vnNxe/PQhxIeP1
+zO0njuqGHkwEpy8rUWRZbbDn31TmKjqlhgtsz5HPhbRaYEExhyepKgBiNz+RyxtY
+XVhuG8OrWQDoS5gYHSjdw1CTJyixeJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz
++wIDAQAB
+-----END PUBLIC KEY-----
+",
+                samlSPMetaDataXML                      => {},
+                samlSPSSODescriptorAuthnRequestsSigned => 1,
+                samlStorageOptions                     => {},
+            },
         }
     );
 }
