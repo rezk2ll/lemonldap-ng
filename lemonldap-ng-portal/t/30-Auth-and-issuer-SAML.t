@@ -24,100 +24,17 @@ sub issuer {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                samlAttributeAuthorityDescriptorAttributeServiceSOAP => '',
                 logLevel                                             => $debug,
                 domain                 => 'idp.com',
                 portal                 => 'auth.idp.com',
                 authentication         => 'Demo',
                 userDB                 => 'Demo',
                 issuerDBSAMLActivation => "1",
-                samlAttributeAuthorityDescriptorAttributeServiceSOAP =>
-'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
-                samlAuthnContextMapKerberos                   => 4,
-                samlAuthnContextMapPassword                   => 2,
-                samlAuthnContextMapPasswordProtectedTransport => 3,
-                samlAuthnContextMapTLSClient                  => 5,
-                samlCommonDomainCookieActivation              => 0,
-                samlEntityID                      => '#PORTAL#/saml/metadata',
-                samlIDPMetaDataExportedAttributes => {},
-                samlIDPMetaDataOptionsAdaptSessionUtime        => 0,
-                samlIDPMetaDataOptionsAllowLoginFromIDP        => 0,
-                samlIDPMetaDataOptionsAllowProxiedAuthn        => 0,
-                samlIDPMetaDataOptionsCheckAudience            => 1,
-                samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
-                samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
-                samlIDPMetaDataOptionsCheckTime                => 1,
-                samlIDPMetaDataOptionsEncryptionMode           => 'none',
-                samlIDPMetaDataOptionsForceAuthn               => 0,
-                samlIDPMetaDataOptionsForceUTF8                => 0,
-                samlIDPMetaDataOptionsIsPassive                => 0,
-                samlIDPMetaDataOptionsNameIDFormat             => '',
-                samlIDPMetaDataOptionsRelayStateURL            => 0,
-                samlIDPMetaDataOptionsRequestedAuthnContext    => '',
-                samlIDPMetaDataOptionsResolutionRule           => '',
-                samlIDPMetaDataOptionsSignSLOMessage           => -1,
-                samlIDPMetaDataOptionsSignSSOMessage           => -1,
-                samlIDPMetaDataOptionsSLOBinding               => '',
-                samlIDPMetaDataOptionsSSOBinding               => '',
-                samlIDPMetaDataOptionsStoreSAMLToken           => 0,
-                samlIdPResolveCookie => 'lemonldapidp',
-                samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
-'1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
-                samlIDPSSODescriptorSingleLogoutServiceHTTPPost =>
-'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn',
-                samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect =>
-'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleLogout;#PORTAL#/saml/singleLogoutReturn',
-                samlIDPSSODescriptorSingleLogoutServiceSOAP =>
-'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleLogoutSOAP;',
-                samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact =>
-'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/singleSignOnArtifact;',
-                samlIDPSSODescriptorSingleSignOnServiceHTTPPost =>
-'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleSignOn;',
-                samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
-'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleSignOn;',
-                samlIDPSSODescriptorSingleSignOnServiceSOAP =>
-'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleSignOnSOAP;',
-                samlIDPSSODescriptorWantAuthnRequestsSigned => 1,
-                samlMetadataForceUTF8                       => 1,
-                samlNameIDFormatMapEmail                    => 'mail',
-                samlNameIDFormatMapKerberos                 => 'uid',
-                samlNameIDFormatMapWindows                  => 'uid',
-                samlNameIDFormatMapX509                     => 'mail',
-                samlRelayStateTimeout                       => 600,
-                samlServiceUseCertificateInResponse         => 0,
-                samlSPMetaDataExportedAttributes            => {},
                 samlSPMetaDataOptions                       => {
                     'sp.com' => {
                         samlSPMetaDataOptionsEncryptionMode => 'none',
                     }
                 },
-                samlSPMetaDataOptionsCheckSLOMessageSignature   => 1,
-                samlSPMetaDataOptionsCheckSSOMessageSignature   => 1,
-                samlSPMetaDataOptionsEnableIDPInitiatedURL      => 0,
-                samlSPMetaDataOptionsEncryptionMode             => 'none',
-                samlSPMetaDataOptionsForceUTF8                  => 1,
-                samlSPMetaDataOptionsNameIDFormat               => '',
-                samlSPMetaDataOptionsNotOnOrAfterTimeout        => 72000,
-                samlSPMetaDataOptionsOneTimeUse                 => 0,
-                samlSPMetaDataOptionsSessionNotOnOrAfterTimeout => 72000,
-                samlSPMetaDataOptionsSignSLOMessage             => -1,
-                samlSPMetaDataOptionsSignSSOMessage             => -1,
-                samlSPSSODescriptorArtifactResolutionServiceArtifact =>
-'1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/artifact',
-                samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
-'1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;#PORTAL#/saml/proxySingleSignOnArtifact',
-                samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
-'0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleSignOnPost',
-                samlSPSSODescriptorAuthnRequestsSigned => 1,
-                samlSPSSODescriptorSingleLogoutServiceHTTPPost =>
-'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn',
-                samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
-'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/proxySingleLogout;#PORTAL#/saml/proxySingleLogoutReturn',
-                samlSPSSODescriptorSingleLogoutServiceSOAP =>
-'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/proxySingleLogoutSOAP;',
-                samlSPSSODescriptorWantAssertionsSigned => 1,
-                samlUseQueryStringSpecific              => 0,
-
                 samlOrganizationDisplayName => "IDP",
                 samlOrganizationName        => "IDP",
                 samlOrganizationURL         => "https://www.idp.com/",
@@ -412,7 +329,6 @@ eJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz+w==
                     },
                 },
                 samlStorageOptions => {},
-                userPivot          => "uid",
             }
         }
     );
