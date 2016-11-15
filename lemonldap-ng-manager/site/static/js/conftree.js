@@ -350,16 +350,17 @@ function templates(tpl,key) {
             "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsBypassConsent",
             "title" : "oidcRPMetaDataOptionsBypassConsent",
             "type" : "bool"
-         },
-         {
-            "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
-            "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
-            "title" : "oidcRPMetaDataOptionsExtraClaims",
-            "type" : "keyTextContainer"
          }
       ],
       "id" : "oidcRPMetaDataOptions",
       "title" : "oidcRPMetaDataOptions"
+   },
+   {
+      "cnodes" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
+      "default" : [],
+      "id" : tpl+"s/"+key+"/"+"oidcRPMetaDataOptionsExtraClaims",
+      "title" : "oidcRPMetaDataOptionsExtraClaims",
+      "type" : "keyTextContainer"
    }
 ]
 ;

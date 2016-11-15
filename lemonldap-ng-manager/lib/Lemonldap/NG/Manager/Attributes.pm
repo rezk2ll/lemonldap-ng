@@ -1544,7 +1544,8 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type' => 'text'
         },
         'oidcRPMetaDataOptionsExtraClaims' => {
-            'type' => 'keyTextContainer'
+            'default' => {},
+            'type'    => 'keyTextContainer'
         },
         'oidcRPMetaDataOptionsIcon' => {
             'type' => 'text'

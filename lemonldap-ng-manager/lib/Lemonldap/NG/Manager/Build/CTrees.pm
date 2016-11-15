@@ -196,9 +196,9 @@ sub cTrees {
                     'oidcRPMetaDataOptionsAccessTokenExpiration',
                     'oidcRPMetaDataOptionsRedirectUris',
                     'oidcRPMetaDataOptionsBypassConsent',
-                    'oidcRPMetaDataOptionsExtraClaims'
                 ]
             },
+            'oidcRPMetaDataOptionsExtraClaims',
         ],
     };
 }
