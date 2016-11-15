@@ -113,6 +113,7 @@ lib/Lemonldap/NG/Portal/UserDB/LDAP.pm
 lib/Lemonldap/NG/Portal/UserDB/Null.pm
 lib/Lemonldap/NG/Portal/UserDB/Proxy.pm
 lib/Lemonldap/NG/Portal/UserDB/Remote.pm
+lib/Lemonldap/NG/Portal/UserDB/SAML.pm
 lib/Lemonldap/NG/Portal/UserDB/Slave.pm
 lib/Lemonldap/NG/Portal/UserDBGoogle.pm
 lib/Lemonldap/NG/Portal/UserDBMulti.pm
