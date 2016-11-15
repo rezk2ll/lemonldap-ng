@@ -220,15 +220,17 @@ sub autoRedirect {
 # @param id session reference
 # @param noInfo do not set Apache REMOTE_USER
 # @param force Force session creation if it does not exist
+# @param kind Session kind
 # return Lemonldap::NG::Common::Session object
 sub getApacheSession {
-    my ( $self, $id, $noInfo, $force ) = @_;
+    my ( $self, $id, $noInfo, $force, $kind ) = @_;
+    $kind ||= "SSO";
 
     if ($id) {
-        $self->lmLog( "Try to get session $id", 'debug' );
+        $self->lmLog( "Try to get $kind session $id", 'debug' );
     }
     else {
-        $self->lmLog( "Try to get a new session", 'debug' );
+        $self->lmLog( "Try to get a new $kind session", 'debug' );
     }
 
     my $as = Lemonldap::NG::Common::Session->new(
@@ -239,7 +241,7 @@ sub getApacheSession {
             cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
             id                   => $id,
             force                => $force,
-            kind                 => "SSO",
+            kind                 => $kind,
         }
     );
 
@@ -249,7 +251,7 @@ sub getApacheSession {
     }
 
     if ( $id and !$force and !$as->data ) {
-        $self->lmLog( "Session $id not found", 'debug' );
+        $self->lmLog( "Session $kind $id not found", 'debug' );
         return;
     }
 
@@ -266,7 +268,7 @@ sub getApacheSession {
         )
       )
     {
-        $self->lmLog( "Session $id expired", 'debug' );
+        $self->lmLog( "Session $kind $id expired", 'debug' );
         return;
     }
 
@@ -274,7 +276,7 @@ sub getApacheSession {
         $self->{id} = $as->id;
     }
 
-    $self->lmLog( "Return session " . $as->id, 'debug' );
+    $self->lmLog( "Return $kind session " . $as->id, 'debug' );
 
     return $as;
 }

@@ -24,13 +24,35 @@ sub changeUrldc {
     {
         my $ssl = $urldc =~ /^https/;
         $self->lmLog( 'CDA request', 'debug' );
-        $req->{urldc} .= ( $urldc =~ /\?/ ? '&' : '?' )
-          . (
-            ( $self->conf->{securedCookie} < 2 or $ssl )
-            ? $self->conf->{cookieName} . "=" . $req->id
-            : $self->conf->{cookieName} . "http="
-              . $req->{sessionInfo}->{_httpSession}
-          );
+
+        # Create CDA session
+        if ( my $cdaSession =
+            $self->getApacheSession( undef, 1, undef, "CDA" ) )
+        {
+            my $cdaInfos = { '_utime' => time };
+            if ( $self->{conf}->{securedCookie} < 2 or $ssl ) {
+                $cdaInfos->{cookie_value} = $req->id;
+                $cdaInfos->{cookie_name}  = $self->{conf}->{cookieName};
+            }
+            else {
+                $cdaInfos->{cookie_value} =
+                  $req->{sessionInfo}->{_httpSession};
+                $cdaInfos->{cookie_name} = $self->{conf}->{cookieName} . "http";
+            }
+
+            $self->updateSession( $cdaInfos, $cdaSession->id );
+
+            $req->{urldc} .=
+                ( $urldc =~ /\?/ ? '&' : '?' )
+              . $self->{conf}->{cookieName} . "cda="
+              . $cdaSession->id;
+
+            $self->lmLog( "CDA redirection to " . $req->{urldc}, 'debug' );
+        }
+        else {
+            $self->lmLog( "Unable to create CDA session", 'error' );
+            return PE_APACHESESSIONERROR;
+        }
     }
     PE_OK;
 }

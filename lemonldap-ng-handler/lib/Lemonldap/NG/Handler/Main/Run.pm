@@ -79,15 +79,24 @@ sub run {
     my $uri = $class->unparsed_uri;
     my $cn  = $class->tsv->{cookieName};
     if (    $class->tsv->{cda}
-        and $uri =~ s/[\?&;]($cn(http)?=\w+)$//oi )
+        and $uri =~ s/[\?&;]${cn}cda=(\w+)$//oi )
     {
-        my $str = $1;
-        $class->lmLog( 'CDA request', 'debug' );
+        my $cdaid = $1;
+        $class->lmLog( "CDA request with id $cdaid", 'debug' );
+
+        my $cdaInfos = $class->getCDAInfos($cdaid);
+        unless ( $cdaInfos->{cookie_value} and $cdaInfos->{cookie_name} ) {
+            $class->lmLog( "CDA request for id $cdaid is not valid", 'error' );
+            return $class->FORBIDDEN;
+        }
+
         my $redirectUrl   = $class->_buildUrl($uri);
         my $redirectHttps = ( $redirectUrl =~ m/^https/ );
         $class->set_header_out(
             'Location'   => $redirectUrl,
-            'Set-Cookie' => "$str; path=/"
+            'Set-Cookie' => $cdaInfos->{cookie_name} . "="
+              . $cdaInfos->{cookie_value}
+              . "; path=/"
               . ( $redirectHttps          ? "; secure"   : "" )
               . ( $class->tsv->{httpOnly} ? "; HttpOnly" : "" )
               . (
@@ -450,6 +459,41 @@ sub retrieveSession {
 
         return 0;
     }
+}
+
+## @rmethod protected hash getCDAInfos(id)
+# Tries to retrieve the CDA session, get infos and delete session
+# @return CDA session infos
+sub getCDAInfos {
+    my ( $class, $id ) = @_;
+    my $infos = {};
+
+    # Get the session
+    my $cdaSession = Lemonldap::NG::Common::Session->new(
+        {
+            storageModule        => $class->tsv->{sessionStorageModule},
+            storageModuleOptions => $class->tsv->{sessionStorageOptions},
+            cacheModule          => $class->tsv->{sessionCacheModule},
+            cacheModuleOptions   => $class->tsv->{sessionCacheOptions},
+            id                   => $id,
+            kind                 => "CDA",
+        }
+    );
+
+    unless ( $cdaSession->error ) {
+        $class->lmLog( "Get CDA session $id", 'debug' );
+
+        $infos->{cookie_value} = $cdaSession->data->{cookie_value};
+        $infos->{cookie_name}  = $cdaSession->data->{cookie_name};
+
+        $cdaSession->remove;
+    }
+    else {
+        $class->lmLog( "CDA Session $id can't be retrieved", 'info' );
+        $class->lmLog( $cdaSession->error,                   'info' );
+    }
+
+    return $infos;
 }
 
 ## @cmethod private string _buildUrl(string s)
