@@ -14,4 +14,5 @@
 
 # Other
 
-* Import fastcgi-server changes
+* Import fastcgi-server changes (nginxCustomHandlers)
+* Add test for #173
