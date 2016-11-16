@@ -6,6 +6,7 @@ require 't/test-lib.pm';
 my $tests = 0;
 my $debug = 'debug';
 my $res;
+my %handlerOR = ( issuer => [], sp => [] );
 
 SKIP: {
     eval "use Lasso";
@@ -13,12 +14,22 @@ SKIP: {
         skip 'Lasso not found', $tests;
     }
     my $issuer = issuer();
+    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
+    switch ('sp');
 
     my $sp = sp();
+    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
 }
 
 count($tests);
 done_testing( count() );
+
+sub switch {
+    my $type = shift;
+    @Lemonldap::NG::Handler::Main::Reload::_onReload = @{
+        $handlerOR{$type};
+    };
+}
 
 sub issuer {
     return LLNG::Manager::Test->new(
@@ -29,7 +40,7 @@ sub issuer {
                 portal                 => 'auth.idp.com',
                 authentication         => 'Demo',
                 userDB                 => 'Demo',
-                issuerDBSAMLActivation => "1",
+                issuerDBSAMLActivation => 1,
                 samlSPMetaDataOptions  => {
                     'sp.com' => {
                         samlSPMetaDataOptionsEncryptionMode => 'none',
@@ -277,6 +288,7 @@ sub sp {
                 domain                            => 'sp.com',
                 authentication                    => 'SAML',
                 userDB                            => 'SAML',
+                issuerDBSAMLActivation            => 0,
                 samlIDPMetaDataExportedAttributes => {
                     idp => {
                         mail => "0;mail;;",
@@ -518,7 +530,6 @@ XVhuG8OrWQDoS5gYHSjdw1CTJyixeJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz
 +wIDAQAB
 -----END PUBLIC KEY-----
 ",
-                samlSPMetaDataXML                      => {},
                 samlSPSSODescriptorAuthnRequestsSigned => 1,
                 samlStorageOptions                     => {},
             },

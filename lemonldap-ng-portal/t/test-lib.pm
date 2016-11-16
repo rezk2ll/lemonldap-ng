@@ -54,26 +54,28 @@ our $defaultIni = {
 };
 
 has app => (
-    is      => 'rw',
-    isa     => 'CodeRef',
+    is  => 'rw',
+    isa => 'CodeRef',
 );
 
-has ini => ( is => 'rw',
-default => sub { $defaultIni; },
-trigger => sub {
-    my($self,$ini) = @_;
-    foreach my $k (keys %$defaultIni) {
-        $ini->{$k} //= $defaultIni->{$k};
+has ini => (
+    is      => 'rw',
+    default => sub { $defaultIni; },
+    trigger => sub {
+        my ( $self, $ini ) = @_;
+        foreach my $k ( keys %$defaultIni ) {
+            $ini->{$k} //= $defaultIni->{$k};
+        }
+        $self->{ini} = $ini;
+        main::ok( $self->{app} = Lemonldap::NG::Portal::Main->run($ini),
+            'Portal app' );
+        main::count(1);
+        $self;
     }
-    $self->{ini} = $ini;
-    main::ok($self->{app} = Lemonldap::NG::Portal::Main->run($ini),'Portal app');
-    main::count(1);
-    $self;
-}
 );
 
 sub logout {
-    my ($self,$id) = @_;
+    my ( $self, $id ) = @_;
     my $res;
     main::ok(
         $res = $self->_get(
@@ -84,9 +86,11 @@ sub logout {
         ),
         'Logout'
     );
-    main::ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+    main::ok( $res->[0] == 200, 'Response is 200' )
+      or explain( $res->[0], 200 );
     my $c;
-    main::ok( ( defined( $c = $self->getCookies($res)->{lemonldap} ) and not $c ),
+    main::ok(
+        ( defined( $c = $self->getCookies($res)->{lemonldap} ) and not $c ),
         'Cookie is deleted' )
       or explain( $res->[1], "Set-Cookie => 'lemonldap='" );
     main::ok( $res = $self->_get( '/', cookie => "lemonldap=$id" ),
@@ -98,7 +102,7 @@ sub logout {
 }
 
 sub getCookies {
-    my ($self,$resp) = @_;
+    my ( $self, $resp ) = @_;
     my @hdrs = @{ $resp->[1] };
     my $res  = {};
     while ( my $name = shift @hdrs ) {
@@ -159,8 +163,8 @@ sub _post {
             'HTTP_USER_AGENT' =>
               'Mozilla/5.0 (VAX-4000; rv:36.0) Gecko/20350101 Firefox',
             'PATH_INFO' => $path,
-            ( $args{query} ? ( QUERY_STRING => $args{query} ) : () ),
-            ( $args{referer} ? ( REFERER => $args{referer} ) : () ),
+            ( $args{query}   ? ( QUERY_STRING => $args{query} )   : () ),
+            ( $args{referer} ? ( REFERER      => $args{referer} ) : () ),
             'REMOTE_ADDR' => '127.0.0.1',
             (
                 $args{remote_user}
@@ -169,9 +173,9 @@ sub _post {
             ),
             'REQUEST_METHOD' => 'POST',
             'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
-            'SCRIPT_NAME'     => '',
-            'SERVER_NAME'     => 'auth.example.com',
-            'SERVER_PORT'     => '8002',
+            'SCRIPT_NAME'    => '',
+            'SERVER_NAME'    => 'auth.example.com',
+            'SERVER_PORT'    => '8002',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
             ( $args{custom} ? %{ $args{custom} } : () ),
             'psgix.input.buffered' => 1,
