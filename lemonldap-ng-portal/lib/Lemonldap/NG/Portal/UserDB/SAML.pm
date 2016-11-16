@@ -27,8 +27,9 @@ sub init {
         return 0;
     }
 
-    # Load SAML service and SAML SP list
-    return ( $self->SUPER::init and $self->loadSPs );
+    # SAML service has been already loaded
+    $self->lassoServer($self->p->loadedModules->{'Lemonldap::NG::Portal::Auth::SAML'}->lassoServer);
+    return 1;
 }
 
 # RUNNONG METHODS
