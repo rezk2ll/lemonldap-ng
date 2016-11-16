@@ -28,6 +28,8 @@ has _authentication => ( is => 'rw' );
 has _userDB         => ( is => 'rw' );
 has _passwordDB     => ( is => 'rw' );
 
+has loadedModules => ( is => 'rw' );
+
 # Macros and groups
 has _macros     => ( is => 'rw' );
 has _groups     => ( is => 'rw' );
@@ -84,6 +86,9 @@ sub init {
             $self->customParameters->{$1} = $self->localConfig->{$k};
         }
     }
+
+    # Purge loaded module list
+    $self->loadedModules( {} );
     Lemonldap::NG::Handler::Main::Reload->onReload( $self, 'reloadConf' );
     return 0 unless ( $self->SUPER::init($args) );
     return 0 if ( $self->error );
@@ -107,6 +112,7 @@ sub init {
     # Default routes must point to routines declared above
     $self->defaultAuthRoute('');
     $self->defaultUnauthRoute('');
+
     return 1;
 }
 
@@ -291,6 +297,7 @@ sub loadModule {
         $self->error("Unable to build $module object: $@");
         return 0;
     }
+    $self->loadedModules->{$module} = $obj;
     return $obj;
 }
 
