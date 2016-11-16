@@ -3,7 +3,7 @@ use strict;
 
 require 't/test-lib.pm';
 
-my $tests = 0;
+my $tests = 3;
 my $debug = 'debug';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
@@ -13,12 +13,21 @@ SKIP: {
     if ($@) {
         skip 'Lasso not found', $tests;
     }
-    my $issuer = issuer();
+    my $issuer;
+    ok( $issuer = issuer(), 'Issuer portal' );
     $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
     switch ('sp');
 
-    my $sp = sp();
+    my $sp;
+    ok( $sp = sp(), 'SP portal' );
     $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
+
+    ok(
+        $sp->_get(
+            '/', accept => 'text/html',
+        ),
+        'Unauth SP request'
+    );
 }
 
 count($tests);

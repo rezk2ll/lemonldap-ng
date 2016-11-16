@@ -1416,13 +1416,13 @@ sub setIdentityFromDump {
 # @param full Return full URL instead of path
 # @return url
 sub getMetaDataURL {
-    my ( $self, $req, $key, $index, $full ) = @_;
+    my ( $self, $key, $index, $full ) = @_;
     $index = 3 unless defined $index;
     $full  = 0 unless defined $full;
 
-    return unless defined $req->{$key};
+    return unless defined $self->conf->{$key};
 
-    my $url = ( split( /;/, $req->{$key} ) )[$index];
+    my $url = ( split( /;/, $self->conf->{$key} ) )[$index];
 
     # Get portal value
     my $portal = $self->conf->{portal};

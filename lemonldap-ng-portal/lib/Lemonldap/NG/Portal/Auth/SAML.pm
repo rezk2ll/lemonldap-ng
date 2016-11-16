@@ -23,10 +23,44 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Auth::Base', 'Lemonldap::NG::Portal::Lib::SAML';
 
+has sloAssConsumerRe => ( is => 'rw' );
+has sloRe            => ( is => 'rw' );
+has artRe            => ( is => 'rw' );
+
 # INITIALIZATION
 
 sub init {
     my ($self) = @_;
+
+    my $saml_acs_art_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact");
+    my $saml_acs_post_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorAssertionConsumerServiceHTTPPost");
+    my $saml_acs_get_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect");
+    $self->sloAssConsumerRe(
+        qr/^\Q($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url)\E$/i);
+    my $saml_slo_soap_url =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 1 );
+    my $saml_slo_soap_url_ret =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 1 );
+    my $saml_slo_get_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
+    my $saml_slo_get_url_ret = $self->getMetaDataURL(
+        "samlSPSSODescriptorSingleLogoutServiceHTTPRedirect", 2 );
+    my $saml_slo_post_url =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
+        1 );
+    my $saml_slo_post_url_ret =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
+        2 );
+    $self->sloRe(
+qr/^\Q($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)\E$/i
+    );
+
+    my $saml_ars_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorArtifactResolutionServiceArtifact");
+    $self->artRe(qr/^(\Q$saml_ars_url\E)$/i);
 
     # Load SAML service and SAML IdP list
     return ( $self->SUPER::init and $self->loadIDPs );
@@ -43,34 +77,8 @@ sub extractFormInfo {
     my $request_method = $req->method;
     my $content_type   = $req->contentType;
 
-    my $saml_acs_art_url = $self->getMetaDataURL(
-        "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact");
-    my $saml_acs_post_url = $self->getMetaDataURL(
-        "samlSPSSODescriptorAssertionConsumerServiceHTTPPost");
-    my $saml_acs_get_url = $self->getMetaDataURL(
-        "samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect");
-    my $saml_slo_soap_url =
-      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 1 );
-    my $saml_slo_soap_url_ret =
-      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 2 );
-    my $saml_slo_get_url = $self->getMetaDataURL(
-        "samlSPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
-    my $saml_slo_get_url_ret = $self->getMetaDataURL(
-        "samlSPSSODescriptorSingleLogoutServiceHTTPRedirect", 2 );
-    my $saml_slo_post_url =
-      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
-        1 );
-    my $saml_slo_post_url_ret =
-      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
-        2 );
-    my $saml_ars_url = $self->getMetaDataURL(
-        "samlSPSSODescriptorArtifactResolutionServiceArtifact");
-
     # 1.1 SSO assertion consumer
-    if ( $url =~
-/^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E)$/io
-      )
-    {
+    if ( $url =~ $self->sloAssConsumerRe ) {
         $self->lmLog( "URL $url detected as an SSO assertion consumer URL",
             'debug' );
 
@@ -379,10 +387,7 @@ sub extractFormInfo {
     }
 
     # 1.2 SLO
-    elsif ( $url =~
-/^\Q($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)\E$/io
-      )
-    {
+    elsif ( $url =~ $self->sloRe ) {
         $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
 
         # Check SAML Message
@@ -756,13 +761,13 @@ sub extractFormInfo {
     }
 
     # 1.3 Artifact
-    elsif ( $url =~ /^(\Q$saml_ars_url\E)$/io ) {
+    elsif ( $url =~ $self->artRe ) {
 
         $self->lmLog( "URL $url detected as an artifact resolution service URL",
             'debug' );
 
         # Artifact request are sent with SOAP trough POST
-        my $art_request = $self->param('POSTDATA');
+        my $art_request = $req->param('POSTDATA');
         my $art_response;
 
         # Create Login object
@@ -806,7 +811,7 @@ sub extractFormInfo {
     my ( $idp, $idp_cookie ) = $self->getIDP($req);
 
     # Get confirmation flag
-    my $confirm_flag = $self->param("confirm");
+    my $confirm_flag = $req->param("confirm");
 
     # If confirmation is -1 from resolved IDP screen,
     # or IDP was not resolve, let the user choose its IDP
@@ -814,7 +819,7 @@ sub extractFormInfo {
         $self->lmLog( "Redirecting user to IDP list", 'debug' );
 
         # Control url parameter
-        my $urlcheck = $self->controlUrlOrigin();
+        my $urlcheck = $self->p->controlUrl($req);
         return $urlcheck unless ( $urlcheck == PE_OK );
 
         # IDP list
@@ -831,7 +836,7 @@ sub extractFormInfo {
 
         # Delete existing IDP resolution cookie
         push @{ $req->respHeaders },
-          'Set-Cookie' => $self->cookie(
+          'Set-Cookie' => $self->p->cookie(
             name    => $self->conf->{samlIdPResolveCookie},
             value   => 0,
             domain  => $self->conf->{domain},
@@ -863,7 +868,7 @@ sub extractFormInfo {
           . $idp
           . "</i></p>\n"
           . "<input type=\"hidden\" name=\"url\" value=\""
-          . $self->param("url") . "\" />"
+          . $req->param("url") . "\" />"
           . "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
 
         $self->info($html);
@@ -881,7 +886,7 @@ sub extractFormInfo {
         return $urlcheck unless ( $urlcheck == PE_OK );
 
         # User can choose temporary (0) or persistent cookie (1)
-        my $cookie_type = $self->param("cookie_type") || "0";
+        my $cookie_type = $req->param("cookie_type") || "0";
 
         push @{ $req->{respHeaders} },
           'Set-Cookie' => $self->cookie(
@@ -1385,17 +1390,17 @@ sub getIDP {
     my $idpName;
 
     my $idp_cookie;
-    if (   $req->cookie
-        && $req->cookie =~ /$self->{conf}->{samlIdPResolveCookie}=([^,; ]+)/o )
+    if (   $req->cookies
+        && $req->cookies =~ /$self->{conf}->{samlIdPResolveCookie}=([^,; ]+)/o )
     {
         $idp_cookie = $1;
     }
 
     # Case 1: Recover IDP from idp URL Parameter
-    unless ( $idp = $self->param("idp") ) {
+    unless ( $idp = $req->param("idp") ) {
 
         # Case 2: Recover IDP from idpName URL Parameter
-        if ( $idpName = $self->param("idpName") ) {
+        if ( $idpName = $req->param("idpName") ) {
             foreach ( keys %{ $self->idpList } ) {
                 my $idpConfKey = $self->idpList->{$_}->{confKey};
                 if ( $idpName eq $idpConfKey ) {

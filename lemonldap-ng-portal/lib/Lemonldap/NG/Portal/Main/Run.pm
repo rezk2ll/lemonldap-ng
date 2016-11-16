@@ -463,4 +463,9 @@ sub isTrustedUrl {
     return $url =~ $self->trustedDomainsRe ? 1 : 0;
 }
 
+sub stamp {
+    my $self = shift;
+    return $self->conf->{cipher} ? $self->conf->{cipher}->encrypt( time() ) : 1;
+}
+
 1;

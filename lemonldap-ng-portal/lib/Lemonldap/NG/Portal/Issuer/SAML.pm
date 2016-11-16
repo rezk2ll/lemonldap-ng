@@ -19,10 +19,55 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
 
+has ssoUrlRe => ( is => 'rw' );
+has sloRe    => ( is => 'rw' );
+
 # INITIALIZATION
 
 sub init {
     my ($self) = @_;
+
+    # Get configuration parameter
+    my $saml_sso_soap_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 1 );
+    my $saml_sso_soap_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 2 );
+    my $saml_sso_get_url = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 1 );
+    my $saml_sso_get_url_ret = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 2 );
+    my $saml_sso_post_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
+        1 );
+    my $saml_sso_post_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
+        2 );
+    my $saml_sso_art_url = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 1 );
+    my $saml_sso_art_url_ret = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 2 );
+    $self->ssoUrlRe(
+qr/^(\Q$saml_sso_soap_url\E|\Q$saml_sso_soap_url_ret\E|\Q$saml_sso_get_url\E|\Q$saml_sso_get_url_ret\E|\Q$saml_sso_post_url\E|\Q$saml_sso_post_url_ret\E|\Q$saml_sso_art_url\E|\Q$saml_sso_art_url_ret\E)$/i
+    );
+
+    my $saml_slo_soap_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 1 );
+    my $saml_slo_soap_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 2 );
+    my $saml_slo_get_url = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
+    my $saml_slo_get_url_ret = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 2 );
+    my $saml_slo_post_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
+        1 );
+    my $saml_slo_post_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
+        2 );
+    $self->sloRe(
+qr/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|\Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/i
+    );
+
     return (
         $self->Lemonldap::NG::Portal::Main::Issuer::init()
 
@@ -54,40 +99,6 @@ sub run {
     # Session creation timestamp
     my $time = $req->{sessionInfo}->{_utime} || time();
 
-    # Get configuration parameter
-    my $saml_sso_soap_url =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 1 );
-    my $saml_sso_soap_url_ret =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 2 );
-    my $saml_sso_get_url = $self->getMetaDataURL(
-        "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 1 );
-    my $saml_sso_get_url_ret = $self->getMetaDataURL(
-        "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 2 );
-    my $saml_sso_post_url =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
-        1 );
-    my $saml_sso_post_url_ret =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
-        2 );
-    my $saml_sso_art_url = $self->getMetaDataURL(
-        "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 1 );
-    my $saml_sso_art_url_ret = $self->getMetaDataURL(
-        "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 2 );
-    my $saml_slo_soap_url =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 1 );
-    my $saml_slo_soap_url_ret =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 2 );
-    my $saml_slo_get_url = $self->getMetaDataURL(
-        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
-    my $saml_slo_get_url_ret = $self->getMetaDataURL(
-        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 2 );
-    my $saml_slo_post_url =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
-        1 );
-    my $saml_slo_post_url_ret =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
-        2 );
-
     # Get HTTP request informations to know
     # if we are receving SAML request or response
     my $url                     = $self->url( -absolute => 1 );
@@ -98,10 +109,7 @@ sub run {
     my $idp_initiated_spConfKey = $self->param('spConfKey');
 
     # 1.1. SSO (SSO URL or Proxy Mode)
-    if ( $url =~
-/^(\Q$saml_sso_soap_url\E|\Q$saml_sso_soap_url_ret\E|\Q$saml_sso_get_url\E|\Q$saml_sso_get_url_ret\E|\Q$saml_sso_post_url\E|\Q$saml_sso_post_url_ret\E|\Q$saml_sso_art_url\E|\Q$saml_sso_art_url_ret\E)$/io
-        or $req->datas->{_proxiedRequest} )
-    {
+    if ( $url =~ $self->ssoUrlRe or $req->datas->{_proxiedRequest} ) {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
@@ -918,11 +926,7 @@ sub run {
     }
 
     # 1.2. SLO
-    if ( $url =~
-/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|\Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/io
-      )
-    {
-
+    if ( $url =~ $self->sloRe ) {
         $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
 
         # Check SAML Message
