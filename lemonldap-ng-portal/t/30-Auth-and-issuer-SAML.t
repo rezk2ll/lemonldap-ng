@@ -1,18 +1,21 @@
 use Test::More;
 use strict;
+use IO::String;
 
 require 't/test-lib.pm';
 
-my $tests = 3;
-my $debug = 'debug';
+my $maintests = 7;
+my $debug     = 'debug';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
 
 SKIP: {
     eval "use Lasso";
     if ($@) {
-        skip 'Lasso not found', $tests;
+        skip 'Lasso not found', $maintests;
     }
+
+    # Initialization
     my $issuer;
     ok( $issuer = issuer(), 'Issuer portal' );
     $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
@@ -22,15 +25,51 @@ SKIP: {
     ok( $sp = sp(), 'SP portal' );
     $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
 
+    # Simple SP login
+    my $res;
     ok(
-        $sp->_get(
+        $res = $sp->_get(
             '/', accept => 'text/html',
         ),
         'Unauth SP request'
     );
+    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+    my $cookies = $sp->getCookies($res);
+    ok(
+        (
+            defined( $cookies->{lemonldapidp} )
+              and $cookies->{lemonldapidp} == 0
+        ),
+        'IDP cookie defined'
+      )
+      or explain( $res->[1],
+        'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
+    ok(
+        $res->[2]->[0] =~
+          /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
+        'Found confirm key'
+      )
+      or explain(
+        $res->[2],
+'<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
+      );
+    my $confirm = $1;
+
+    # Choose idp on sp
+    ok(
+        $res = $sp->_post(
+            '/',
+            IO::String->new(
+                "confirm=$confirm&idp=https://auth.idp.com/saml/metadata"),
+            accept => 'text/html',
+            length => length($confirm) + 47,
+            cookie => 'lemonldapidp=0',
+        ),
+        'Select IDP'
+    );
 }
 
-count($tests);
+count($maintests);
 done_testing( count() );
 
 sub switch {
@@ -308,6 +347,7 @@ sub sp {
                 samlIDPMetaDataOptions => {
                     idp => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
+                        samlIDPMetaDataOptionsSSOBinding => 'POST',
                     }
                 },
                 samlIDPMetaDataXML => {

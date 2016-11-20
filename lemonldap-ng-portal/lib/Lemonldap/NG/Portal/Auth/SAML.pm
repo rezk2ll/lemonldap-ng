@@ -811,11 +811,11 @@ sub extractFormInfo {
     my ( $idp, $idp_cookie ) = $self->getIDP($req);
 
     # Get confirmation flag
-    my $confirm_flag = $req->param("confirm") // 0;
+    my $confirm_flag = $req->param("confirm") // '';
 
     # If confirmation is -1 from resolved IDP screen,
     # or IDP was not resolve, let the user choose its IDP
-    if ( $confirm_flag == -1 or !$idp ) {
+    if ( $confirm_flag eq '-1' or !$idp ) {
         $self->lmLog( "Redirecting user to IDP list", 'debug' );
 
         # Control url parameter
@@ -851,11 +851,11 @@ sub extractFormInfo {
     }
 
     # If IDP is found but not confirmed, let the user confirm it
-    elsif ( $confirm_flag != 1 ) {
+    elsif ( $confirm_flag eq '1' ) {
         $self->lmLog( "IDP $idp selected, need user confirmation", 'debug' );
 
         # Control url parameter
-        my $urlcheck = $self->controlUrlOrigin();
+        my $urlcheck = $self->p->controlUrl($req);
         return $urlcheck unless ( $urlcheck == PE_OK );
 
         # Choosen IDP
@@ -882,14 +882,14 @@ sub extractFormInfo {
         $self->lmLog( "Build cookie to remember $idp as IDP choice", 'debug' );
 
         # Control url parameter
-        my $urlcheck = $self->controlUrlOrigin();
+        my $urlcheck = $self->p->controlUrl($req);
         return $urlcheck unless ( $urlcheck == PE_OK );
 
         # User can choose temporary (0) or persistent cookie (1)
         my $cookie_type = $req->param("cookie_type") || "0";
 
         push @{ $req->{respHeaders} },
-          'Set-Cookie' => $self->cookie(
+          'Set-Cookie' => $self->p->cookie(
             name     => $self->conf->{samlIdPResolveCookie},
             value    => $idp,
             domain   => $self->conf->{domain},
