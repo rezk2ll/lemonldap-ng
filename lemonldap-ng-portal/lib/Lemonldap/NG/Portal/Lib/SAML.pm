@@ -134,7 +134,8 @@ sub loadService {
     # Create Lasso server with service metadata
     my $server = $self->createServer(
         $service_metadata->serviceToXML(
-            $self->conf->{templateDir} . "/common/saml2-metadata.tpl", $self->conf
+            $self->conf->{templateDir} . "/common/saml2-metadata.tpl",
+            $self->conf
         ),
         $self->conf->{samlServicePrivateKeySig},
         $self->conf->{samlServicePrivateKeySigPwd},
@@ -1420,9 +1421,9 @@ sub getMetaDataURL {
     $index = 3 unless defined $index;
     $full  = 0 unless defined $full;
 
-    return unless defined $self->conf->{$key};
+    return '' unless defined $self->conf->{$key};
 
-    my $url = ( split( /;/, $self->conf->{$key} ) )[$index];
+    my $url = ( split( /;/, $self->conf->{$key} ) )[$index] || '';
 
     # Get portal value
     my $portal = $self->conf->{portal};

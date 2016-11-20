@@ -47,7 +47,7 @@ sub init {
     my $saml_sso_art_url_ret = $self->getMetaDataURL(
         "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 2 );
     $self->ssoUrlRe(
-qr/^(\Q$saml_sso_soap_url\E|\Q$saml_sso_soap_url_ret\E|\Q$saml_sso_get_url\E|\Q$saml_sso_get_url_ret\E|\Q$saml_sso_post_url\E|\Q$saml_sso_post_url_ret\E|\Q$saml_sso_art_url\E|\Q$saml_sso_art_url_ret\E)$/i
+qr/^\Q($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)\E$/i
     );
 
     my $saml_slo_soap_url =

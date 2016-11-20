@@ -811,7 +811,7 @@ sub extractFormInfo {
     my ( $idp, $idp_cookie ) = $self->getIDP($req);
 
     # Get confirmation flag
-    my $confirm_flag = $req->param("confirm");
+    my $confirm_flag = $req->param("confirm") // 0;
 
     # If confirmation is -1 from resolved IDP screen,
     # or IDP was not resolve, let the user choose its IDP
