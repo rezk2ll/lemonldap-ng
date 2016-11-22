@@ -60,55 +60,52 @@ sub display {
     }
 
     # 1. Good authentication
+
+    # 1.1 Image mode
+    if ( $req->{error} == PE_IMG_OK || $req->{error} == PE_IMG_NOK ) {
+        $self->lmLog( 'Request for file', 'debug' );
+        return staticFile( "common/"
+              . ( $req->{error} == PE_IMG_OK ? 'ok.png' : 'warning.png' ) );
+    }
+
+    # 1.2 Case : there is a message to display
+    elsif ( my $info = $req->info() ) {
+        $skinfile       = 'info';
+        %templateParams = (
+            AUTH_ERROR_TYPE => $req->error_type,
+            MSG             => $info,
+            URL             => $req->{urldc},
+            HIDDEN_INPUTS   => $self->buildHiddenForm(),
+            ACTIVE_TIMER    => $self->conf->{activeTimer},
+            FORM_METHOD     => $self->conf->{infoFormMethod},
+        );
+    }
+
+    # 1.3 Redirection
+    elsif ( $req->{error} == PE_REDIRECT ) {
+        $skinfile       = "redirect";
+        %templateParams = (
+            URL           => $req->{urldc},
+            HIDDEN_INPUTS => $self->buildHiddenForm($req),
+            FORM_METHOD   => $req->datas->{redirectFormMethod} || 'get',
+        );
+    }
+
+    # 1.4 Case : display menu
     elsif ( $req->error == PE_OK ) {
 
-        # 1.1 Image mode
-        if ( $req->{error} == PE_IMG_OK || $req->{error} == PE_IMG_NOK ) {
-            $self->lmLog( 'Request for file', 'debug' );
-            return staticFile( "common/"
-                  . ( $req->{error} == PE_IMG_OK ? 'ok.png' : 'warning.png' ) );
-        }
+        $skinfile = 'menu';
 
-        # 1.2 Case : there is a message to display
-        elsif ( my $info = $req->info() ) {
-            $skinfile       = 'info';
-            %templateParams = (
-                AUTH_ERROR_TYPE => $req->error_type,
-                MSG             => $info,
-                URL             => $req->{urldc},
-                HIDDEN_INPUTS   => $self->buildHiddenForm(),
-                ACTIVE_TIMER    => $self->conf->{activeTimer},
-                FORM_METHOD     => $self->conf->{infoFormMethod},
-            );
-        }
+        #utf8::decode($auth_user);
 
-        # 1.3 Redirection
-        elsif ( $req->{error} == PE_REDIRECT ) {
-            $skinfile       = "redirect";
-            %templateParams = (
-                URL           => $req->{urldc},
-                HIDDEN_INPUTS => $self->buildHiddenForm(),
-                FORM_METHOD   => $req->datas->{redirectFormMethod} || 'get',
-            );
-        }
-
-        # 1.4 Case : display menu
-        else {
-
-            $skinfile = 'menu';
-
-            #utf8::decode($auth_user);
-
-            %templateParams = (
-                AUTH_USER =>
-                  $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
-                NEWWINDOW      => $self->conf->{portalOpenLinkInNewWindow},
-                LOGOUT_URL     => $self->conf->{portal} . "?logout=1",
-                APPSLIST_ORDER => $req->{sessionInfo}->{'appsListOrder'},
-                PING           => $self->conf->{portalPingInterval},
-                $self->menu->params($req),
-            );
-        }
+        %templateParams = (
+            AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
+            NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
+            LOGOUT_URL     => $self->conf->{portal} . "?logout=1",
+            APPSLIST_ORDER => $req->{sessionInfo}->{'appsListOrder'},
+            PING           => $self->conf->{portalPingInterval},
+            $self->menu->params($req),
+        );
     }
 
     # 2. Authentication not complete
@@ -120,7 +117,7 @@ sub display {
         %templateParams = (
             AUTH_ERROR_TYPE => $req->error_type,
             NOTIFICATION    => $notif,
-            HIDDEN_INPUTS   => $self->buildHiddenForm(),
+            HIDDEN_INPUTS   => $self->buildHiddenForm($req),
             AUTH_URL        => $req->{datas}->{_url},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->{_authChoice},
@@ -136,7 +133,7 @@ sub display {
             AUTH_ERROR_TYPE => $req->error_type,
             AUTH_URL        => $req->{datas}->{_url},
             MSG             => $req->info,
-            HIDDEN_INPUTS   => $self->buildHiddenForm(),
+            HIDDEN_INPUTS   => $self->buildHiddenForm($req),
             ACTIVE_TIMER    => $self->conf->{activeTimer},
             FORM_METHOD     => $self->conf->{confirmFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
@@ -158,7 +155,7 @@ sub display {
             AUTH_ERROR_TYPE => $req->error_type,
             MSG             => $info,
             URL             => $req->{urldc},
-            HIDDEN_INPUTS   => $self->buildHiddenForm(),
+            HIDDEN_INPUTS   => $self->buildHiddenForm($req),
             ACTIVE_TIMER    => $self->conf->{activeTimer},
             FORM_METHOD     => $self->conf->{infoFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
@@ -201,7 +198,7 @@ sub display {
             DISPLAY_REGISTER      => $self->conf->{portalDisplayRegister},
             MAIL_URL              => $self->conf->{mailUrl},
             REGISTER_URL          => $self->conf->{registerUrl},
-            HIDDEN_INPUTS         => $self->buildHiddenForm(),
+            HIDDEN_INPUTS         => $self->buildHiddenForm($req),
         );
 
         # Display captcha if it's enabled
@@ -367,16 +364,15 @@ sub staticFile {
 }
 
 sub buildHiddenForm {
-    my ($self) = @_;
-    my @keys   = keys %{ $self->conf->{portalHiddenFormValues} };
-    my $val    = '';
+    my ( $self, $req ) = @_;
+    my @keys = keys %{ $req->{portalHiddenFormValues} };
+    my $val  = '';
 
     foreach (@keys) {
 
         # Check XSS attacks
         next
-          if $self->checkXSSAttack( $_,
-            $self->conf->{portalHiddenFormValues}->{$_} );
+          if $self->checkXSSAttack( $_, $req->{portalHiddenFormValues}->{$_} );
 
         # Build hidden input HTML code
         $val .= qq{<input type="hidden" name="$_" id="$_" value="}

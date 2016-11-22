@@ -28,9 +28,13 @@ sub clean_sessions {
     foreach ( grep { /^[^\.]/ } readdir(D) ) {
         unlink "t/sessions/$_", "t/sessions/lock/Apache-Session-$_.lock";
     }
-    opendir D, 't/sessions/lock' or die $!;
-    foreach ( grep { /^[^\.]/ } readdir(D) ) {
-        unlink "t/sessions/lock/$_";
+    foreach my $dir (qw(t/sessions/lock t/sessions/saml/lock t/sessions/saml)) {
+        if ( -d $dir ) {
+            opendir D, $dir or die $!;
+            foreach ( grep { /^[^\.]/ } readdir(D) ) {
+                unlink "$dir/$_";
+            }
+        }
     }
 }
 

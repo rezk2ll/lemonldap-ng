@@ -4,7 +4,7 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $maintests = 7;
+my $maintests = 9;
 my $debug     = 'debug';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
@@ -40,7 +40,7 @@ SKIP: {
             defined( $cookies->{lemonldapidp} )
               and $cookies->{lemonldapidp} == 0
         ),
-        'IDP cookie defined'
+        'IDP cookie deleted'
       )
       or explain( $res->[1],
         'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
@@ -63,13 +63,26 @@ SKIP: {
                 "confirm=$confirm&idp=https://auth.idp.com/saml/metadata"),
             accept => 'text/html',
             length => length($confirm) + 47,
-            cookie => 'lemonldapidp=0',
         ),
         'Select IDP'
     );
+    ok( $res->[0] == 200, 'Return code is 200' );
+    $cookies = $sp->getCookies($res);
+    ok(
+        (
+            defined( $cookies->{lemonldapidp} )
+              and $cookies->{lemonldapidp} eq 'https://auth.idp.com/saml/metadata'
+        ),
+        'IDP cookie defined'
+      )
+      or explain(
+        $res->[1],
+'Set-Cookie => lemonldapidp=https://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
+      );
 }
 
 count($maintests);
+clean_sessions();
 done_testing( count() );
 
 sub switch {
@@ -346,7 +359,7 @@ sub sp {
                 samlIDPMetaDataOptions => {
                     idp => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
-                        samlIDPMetaDataOptionsSSOBinding => 'POST',
+                        samlIDPMetaDataOptionsSSOBinding     => 'POST',
                     }
                 },
                 samlIDPMetaDataXML => {

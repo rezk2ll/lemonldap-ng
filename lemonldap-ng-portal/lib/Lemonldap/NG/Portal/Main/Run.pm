@@ -153,7 +153,16 @@ sub do {
         }
     }
     else {
-        if ( $err and $err != PE_LOGOUT_OK and $err != PE_REDIRECT ) {
+        if (
+                $err
+            and $err != PE_LOGOUT_OK
+            and (
+                $err != PE_REDIRECT
+                or (    $err == PE_REDIRECT
+                    and $req->datas->{redirectFormMethod} eq 'post' )
+            )
+          )
+        {
             my ( $tpl, $prms ) = $self->display($req);
             return $self->sendHtml( $req, $tpl, params => $prms );
         }
@@ -488,7 +497,7 @@ sub autoPost {
         return PE_INFO;
     }
 
-    $self->{redirectFormMethod} = "post";
+    $req->datas->{redirectFormMethod} = "post";
     return PE_REDIRECT;
 }
 
@@ -561,28 +570,6 @@ sub clearHiddenFormValue {
     }
 
     return;
-}
-
-##@method public string buildHiddenForm()
-# Return an HTML representation of hidden values.
-# @return HTML code
-sub buildHiddenForm {
-    my ( $self, $req ) = @_;
-    my @keys = keys %{ $req->{portalHiddenFormValues} // {} };
-    my $val = '';
-
-    foreach (@keys) {
-
-        # Check XSS attacks
-        next
-          if $self->checkXSSAttack( $_, $req->{portalHiddenFormValues}->{$_} );
-
-        # Build hidden input HTML code
-        $val .= qq{<input type="hidden" name="$_" id="$_" value="}
-          . $req->{portalHiddenFormValues}->{$_} . '" />';
-    }
-
-    return $val;
 }
 
 1;

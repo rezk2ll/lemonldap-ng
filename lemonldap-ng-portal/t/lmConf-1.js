@@ -56,8 +56,8 @@
   "portal": "http://auth.example.com/",
   "samlStorage": "Apache::Session::File",
   "samlStorageOptions": {
-    "Directory": "t/sessions",
-    "LockDirectory": "t/sessions/lock",
+    "Directory": "t/sessions/saml",
+    "LockDirectory": "t/sessions/saml/lock",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
   "reloadUrls": {},

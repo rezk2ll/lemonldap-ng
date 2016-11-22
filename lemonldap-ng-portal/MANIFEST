@@ -361,6 +361,7 @@ t/90-translations.t
 t/99-pod.t
 t/lmConf-1.js
 t/sessions/lock/.exists
+t/sessions/saml/lock/.exists
 t/sessions2/6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101
 t/sessions2/lock/Apache-Session-6e30af4ffa5689b3e49a104d1b160d316db2b2161a0f45776994eed19dbdc101.lock
 t/test-lib.pm
