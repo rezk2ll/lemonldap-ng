@@ -54,6 +54,12 @@
   "notifications": 0,
   "passwordDB": "Null",
   "portal": "http://auth.example.com/",
+  "samlStorage": "Apache::Session::File",
+  "samlStorageOptions": {
+    "Directory": "t/sessions",
+    "LockDirectory": "t/sessions/lock",
+    "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
+  },
   "reloadUrls": {},
   "userDB": "Demo",
   "whatToTrace": "_whatToTrace"

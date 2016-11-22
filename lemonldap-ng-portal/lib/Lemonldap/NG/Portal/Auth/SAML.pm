@@ -975,9 +975,10 @@ sub extractFormInfo {
 
     # Create SSO request
     my $login = $self->createAuthnRequest(
-        $self->lassoServer, $idp,            $method,
-        $forceAuthn,        $isPassive,      $nameIDFormat,
-        $allowProxiedAuthn, $signSSOMessage, $requestedAuthnContext
+        $req,          $self->lassoServer, $idp,
+        $method,       $forceAuthn,        $isPassive,
+        $nameIDFormat, $allowProxiedAuthn, $signSSOMessage,
+        $requestedAuthnContext
     );
 
     unless ($login) {
@@ -1043,7 +1044,7 @@ sub extractFormInfo {
         my $sso_url  = $login->msg_url;
         my $sso_body = $login->msg_body;
 
-        $self->postUrl($sso_url);
+        $req->postUrl($sso_url);
 
         if ( $method == $self->getHttpMethod("artifact-post") ) {
             $req->{postFields} = { 'SAMLart' => $sso_body };
@@ -1252,7 +1253,8 @@ sub authLogout {
     no strict 'subs';
     unless ( defined $method ) {
         my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
-        $method = $self->getFirstHttpMethod( $self->lassoServer, $idp, $protocolType );
+        $method =
+          $self->getFirstHttpMethod( $self->lassoServer, $idp, $protocolType );
     }
 
     # Skip SLO if no method found
@@ -1338,7 +1340,7 @@ sub authLogout {
         }
 
         # Create Logout object
-        $logout = $self->createLogout($self->lassoServer);
+        $logout = $self->createLogout( $self->lassoServer );
 
         # Process logout response
         my $result = $self->processLogoutResponseMsg( $logout, $response );

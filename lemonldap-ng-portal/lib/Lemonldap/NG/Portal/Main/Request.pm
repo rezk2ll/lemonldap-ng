@@ -51,7 +51,8 @@ has customParameters => ( is => 'rw' );
 has mustRedirect => ( is => 'rw' );
 
 # Store URL for redirections
-has urldc => ( is => 'rw' );
+has urldc   => ( is => 'rw' );
+has postUrl => ( is => 'rw' );
 
 # "check logins "flag"
 has checkLogins => ( is => 'rw' );
@@ -108,8 +109,8 @@ sub error_type {
 
 sub init {
     my ($self) = @_;
-    $self->{$_} = {} foreach(qw(datas customParameters sessionInfo));;
-    $self->{$_} = [] foreach(qw(respCookies));;
+    $self->{$_} = {} foreach (qw(datas customParameters sessionInfo));
+    $self->{$_} = [] foreach (qw(respCookies));
 }
 
 sub errorString {

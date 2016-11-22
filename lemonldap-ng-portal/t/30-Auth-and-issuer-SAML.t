@@ -322,7 +322,6 @@ eJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz+w==
 "
                     },
                 },
-                samlStorageOptions => {},
             }
         }
     );
@@ -580,7 +579,6 @@ XVhuG8OrWQDoS5gYHSjdw1CTJyixeJwyoqA9RGYguG5nh9zndi3LWAh7Z0lx+tIz
 -----END PUBLIC KEY-----
 ",
                 samlSPSSODescriptorAuthnRequestsSigned => 1,
-                samlStorageOptions                     => {},
             },
         }
     );
