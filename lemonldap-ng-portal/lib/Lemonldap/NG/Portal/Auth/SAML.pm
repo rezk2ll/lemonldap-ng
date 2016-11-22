@@ -1066,7 +1066,6 @@ sub extractFormInfo {
 
 sub authenticate {
     my ( $self, $req ) = @_;
-    my $server     = $self->lassoServer;
     my $login      = $req->datas->{_lassoLogin};
     my $idp        = $req->datas->{_idp};
     my $idpConfKey = $req->datas->{_idpConfKey};
@@ -1235,8 +1234,6 @@ sub authLogout {
     # remove corresponding SAML sessions
     $self->deleteSAMLSecondarySessions($session_id);
 
-    my $server = $self->lassoServer;
-
     # Recover Lasso::Session dump
     my $session_dump = $req->{sessionInfo}->{_lassoSessionDump};
 
@@ -1255,7 +1252,7 @@ sub authLogout {
     no strict 'subs';
     unless ( defined $method ) {
         my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
-        $method = $self->getFirstHttpMethod( $server, $idp, $protocolType );
+        $method = $self->getFirstHttpMethod( $self->lassoServer, $idp, $protocolType );
     }
 
     # Skip SLO if no method found
@@ -1279,7 +1276,7 @@ sub authLogout {
 
     # Build Logout Request
     my $logout =
-      $self->createLogoutRequest( $server, $session_dump, $method,
+      $self->createLogoutRequest( $self->lassoServer, $session_dump, $method,
         $signSLOMessage );
     unless ($logout) {
         $self->lmLog( "Could not create logout request", 'error' );
@@ -1341,7 +1338,7 @@ sub authLogout {
         }
 
         # Create Logout object
-        $logout = $self->createLogout($server);
+        $logout = $self->createLogout($self->lassoServer);
 
         # Process logout response
         my $result = $self->processLogoutResponseMsg( $logout, $response );
