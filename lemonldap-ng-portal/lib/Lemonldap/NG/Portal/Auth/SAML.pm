@@ -725,6 +725,7 @@ sub extractFormInfo {
 
                 # TODO: verify this
                 $req->steps( ['autoPost'] );
+                $req->continue(1);
                 return PE_OK;
             }
 
@@ -1059,6 +1060,7 @@ sub extractFormInfo {
 
         # TODO: verify this
         $req->steps( ['autoPost'] );
+        $req->continue(1);
         return PE_OK;
     }
 

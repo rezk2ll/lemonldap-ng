@@ -51,8 +51,13 @@ has customParameters => ( is => 'rw' );
 has mustRedirect => ( is => 'rw' );
 
 # Store URL for redirections
-has urldc   => ( is => 'rw' );
-has postUrl => ( is => 'rw' );
+has urldc                  => ( is => 'rw' );
+has postUrl                => ( is => 'rw' );
+has postFields             => ( is => 'rw' );
+has portalHiddenFormValues => ( is => 'rw' );
+
+# Flag that permit to a auth module to return PE_OK without setting $user
+has continue => ( is => 'rw' );
 
 # "check logins "flag"
 has checkLogins => ( is => 'rw' );
@@ -114,11 +119,15 @@ sub init {
 }
 
 sub errorString {
-
-    #TODO
+    print STDERR "TODO Request::errorString()\n";
 }
 
 sub loginInfo {
+    print STDERR "TODO Request::loginInfo()\n";
+}
+
+sub info {
+    print STDERR "TODO Request::info()\n";
 }
 
 # TODO: oldpassword

@@ -468,4 +468,121 @@ sub stamp {
     return $self->conf->{cipher} ? $self->conf->{cipher}->encrypt( time() ) : 1;
 }
 
+# Transfer POST data with auto submit
+# @return void
+sub autoPost {
+    my ( $self, $req ) = @_;
+
+    # Get URL and Form fields
+    $req->{urldc} = $req->postUrl;
+    my $formFields = $req->postFields;
+
+    $self->clearHiddenFormValue($req);
+    foreach ( keys %$formFields ) {
+        $self->setHiddenFormValue( $req, $_, $formFields->{$_}, "", 0 );
+    }
+
+    # Display info before redirecting
+    if ( $req->info() ) {
+        $req->{infoFormMethod} = $req->param('method') || "post";
+        return PE_INFO;
+    }
+
+    $self->{redirectFormMethod} = "post";
+    return PE_REDIRECT;
+}
+
+# Add element into $self->{portalHiddenFormValues}, those values could be
+# used to hide values into HTML form.
+# @param fieldname The field name which will contain the correponding value
+# @param value The associated value
+# @param prefix Prefix of the field key
+# @param base64 Encode value in base64
+# @return nothing
+sub setHiddenFormValue {
+    my ( $self, $req, $key, $val, $prefix, $base64 ) = @_;
+
+    # Default values
+    $prefix = "lmhidden_" unless defined $prefix;
+    $base64 = 1           unless defined $base64;
+
+    # Store value
+    if ($val) {
+        $key                                   = $prefix . $key;
+        $val                                   = encode_base64($val) if $base64;
+        $req->{portalHiddenFormValues}->{$key} = $val;
+        $self->lmLog( "Store $val in hidden key $key", 'debug' );
+    }
+}
+
+## @method public void getHiddenFormValue(string fieldname, string prefix, boolean base64)
+# Get value into $self->{portalHiddenFormValues}.
+# @param fieldname The existing field name which contains a value
+# @param prefix Prefix of the field key
+# @param base64 Decode value from base64
+# @return string The associated value
+sub getHiddenFormValue {
+    my ( $self, $req, $key, $prefix, $base64 ) = @_;
+
+    # Default values
+    $prefix = "lmhidden_" unless defined $prefix;
+    $base64 = 1           unless defined $base64;
+
+    $key = $prefix . $key;
+
+    # Get value
+    if ( my $val = $req->param($key) ) {
+        $val = decode_base64($val) if $base64;
+        return $val;
+        $self->lmLog( "Hidden value $val found for key $key", 'debug' );
+    }
+
+    # No value found
+    return undef;
+}
+
+## @method protected void clearHiddenFormValue(arrayref keys)
+# Clear values form stored hidden fields
+# Delete all keys if no keys provided
+# @param keys Array reference of keys
+# @return nothing
+sub clearHiddenFormValue {
+    my ( $self, $req, $keys ) = @_;
+
+    unless ( defined $keys ) {
+        delete $req->{portalHiddenFormValues};
+        $self->lmLog( "Delete all hidden values", 'debug' );
+    }
+    else {
+        foreach (@$keys) {
+            delete $req->{portalHiddenFormValues}->{$_};
+            $self->lmLog( "Delete hidden value for key $_", 'debug' );
+        }
+    }
+
+    return;
+}
+
+##@method public string buildHiddenForm()
+# Return an HTML representation of hidden values.
+# @return HTML code
+sub buildHiddenForm {
+    my ( $self, $req ) = @_;
+    my @keys = keys %{ $req->{portalHiddenFormValues} // {} };
+    my $val = '';
+
+    foreach (@keys) {
+
+        # Check XSS attacks
+        next
+          if $self->checkXSSAttack( $_, $req->{portalHiddenFormValues}->{$_} );
+
+        # Build hidden input HTML code
+        $val .= qq{<input type="hidden" name="$_" id="$_" value="}
+          . $req->{portalHiddenFormValues}->{$_} . '" />';
+    }
+
+    return $val;
+}
+
 1;

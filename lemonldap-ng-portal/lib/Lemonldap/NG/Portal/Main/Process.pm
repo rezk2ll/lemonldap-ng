@@ -220,7 +220,7 @@ sub checkXSSAttack {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     my $ret = $self->_authentication->extractFormInfo($req);
-    if ( $ret == PE_OK and not $req->user ) {
+    if ( $ret == PE_OK and not ($req->user or $req->continue) ) {
         $self->lmLog(
             'Authentication module succeed but has not set $req->user',
             'error' );
