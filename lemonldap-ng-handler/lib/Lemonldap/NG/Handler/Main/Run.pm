@@ -428,7 +428,9 @@ sub retrieveSession {
                 $class->tsv->{timeoutActivity} )
           )
         {
-            $class->lmLog( "Session expired", 'info' );
+            $class->lmLog( "Session $id expired", 'info' );
+            # Clean cached data
+            $class->datas( {} );
             return 0;
         }
 
