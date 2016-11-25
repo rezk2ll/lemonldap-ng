@@ -376,7 +376,7 @@ sub buildHiddenForm {
 
         # Build hidden input HTML code
         $val .= qq{<input type="hidden" name="$_" id="$_" value="}
-          . $self->conf->{portalHiddenFormValues}->{$_} . '" />';
+          . $req->{portalHiddenFormValues}->{$_} . '" />';
     }
 
     return $val;

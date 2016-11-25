@@ -4,7 +4,7 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $maintests = 9;
+my $maintests = 10;
 my $debug     = 'debug';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
@@ -71,7 +71,8 @@ SKIP: {
     ok(
         (
             defined( $cookies->{lemonldapidp} )
-              and $cookies->{lemonldapidp} eq 'https://auth.idp.com/saml/metadata'
+              and $cookies->{lemonldapidp} eq
+              'https://auth.idp.com/saml/metadata'
         ),
         'IDP cookie defined'
       )
@@ -79,6 +80,16 @@ SKIP: {
         $res->[1],
 'Set-Cookie => lemonldapidp=https://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
       );
+    ok(
+        $res->[2]->[0] =~
+          /<input type="hidden".+?name="SAMLRequest".+?value="(.+?)"/s,
+        'Found SAML request'
+      )
+      or explain(
+        $res->[2],
+        ' <input type="hidden" name="SAMLRequest" id="SAMLRequest" value="...'
+      );
+    my $samlReq = $1;
 }
 
 count($maintests);
