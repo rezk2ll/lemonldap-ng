@@ -1080,28 +1080,28 @@ test_omegat_%_dir:
 	fi
 
 omegat-configuration-file:
-	perl -pe 'BEGIN{$$p=`pwd`;chomp $$p;}s/__LANG__/$(OMEGATCODE)/;s/__PWD__/$$p/o;' omegat.files/_base.project >omegat.files/$(LANGCODE)/omegat.project
+	@perl -pe 'BEGIN{$$p=`pwd`;chomp $$p;}s/__LANG__/$(OMEGATCODE)/;s/__PWD__/$$p/o;' omegat.files/_base.project >omegat.files/$(LANGCODE)/omegat.project
 
 translation: omegat-configuration-file
-	omegat omegat.files/$(LANGCODE) --no-team --quiet
+	@omegat omegat.files/$(LANGCODE) --no-team --quiet
 
 translated-doc: omegat-configuration-file
-	omegat omegat.files/$(LANGCODE) --mode=console-translate --quiet 2>/dev/null
+	@omegat omegat.files/$(LANGCODE) --mode=console-translate --quiet 2>/dev/null
 
 # 2. Public targets
 
 %-translation: test_omegat_%_dir omegat-%-clean
-	$(MAKE) translation LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
+	@$(MAKE) translation LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
 
 %-doc: test_omegat_%_dir omegat-%-clean
-	mkdir -p po-doc/$*
-	$(MAKE) translated-doc LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
+	@mkdir -p po-doc/$*
+	@$(MAKE) translated-doc LANGCODE=$* OMEGATCODE=`$(call language_code,$*)`
 	
 omegat-clean:
-	rm -rf omegat.files/*/omegat.project omegat.files/*/omegat/project_save*.bak
+	@rm -rf omegat.files/*/omegat.project omegat.files/*/omegat/project_save*.bak
 
 omegat-%-clean:
-	rm -rf po-doc/$*
+	@rm -rf po-doc/$*
 
 install_%_doc_site:
 	@rm -rf $(RDOCDIR)/$*-doc || true
