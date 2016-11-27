@@ -168,7 +168,7 @@ PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSKINSDIR)/bootstrap/fonts \
 			$(RPORTALSKINSDIR)/bootstrap/js/bootstrap* \
 			$(RPORTALSKINSDIR)/common/js/jquery-* \
 			$(RPORTALSKINSDIR)/common/js/jquery.cookie*
-DOCLIBSTOREMOVEFORDEBIAN=doc/pages/documentation/current/lib/tpl/bootstrap3
+DOCLIBSTOREMOVEFORDEBIAN=pages/documentation/current/lib/tpl/bootstrap3 pages/documentation/current/lib/scripts/jquery-ui*.js
 DOCEXTERNALLIBS=$(DOCLIBSTOREMOVEFORDEBIAN)
 MANAGEREXTERNALLIBS=$(RMANAGERSTATICDIR)/bwr/
 PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN) $(RPORTALSKINSDIR)/common/js/jquery*
@@ -725,11 +725,11 @@ install_doc_site:
 	# Install symlinks
 	@cd doc && tar cf - `find * -type l` | tar xvf - -C $(RDEFDOCDIR) && cd -
 	# Remove js
-	@if test "$(USEEXTERNALLIBS)" = "yes"; then \
+	@cd $(RDEFDOCDIR) && if test "$(USEEXTERNALLIBS)" = "yes"; then \
 		rm -rvf $(DOCEXTERNALLIBS); \
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(DOCLIBSTOREMOVEFORDEBIAN); \
-	fi
+	fi && cd -
 
 install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 	# Configuration files install
@@ -1105,6 +1105,29 @@ omegat-%-clean:
 
 install_%_doc_site:
 	@rm -rf $(RDOCDIR)/$*-doc || true
-	@install -v -d $(RDOCDIR)/$*-doc
-	@cp -dR -f po-doc/$*/* $(RDOCDIR)/$*-doc
+	# Install doc directories
+	@install -v -d -m 755 $(RDOCDIR)/$*-doc
+	@cd po-doc/$* && find * -type d |(cd $(RDOCDIR)/$*-doc; xargs install -v -d -m 755) && cd -
+	# Install HTML files
+	@cd po-doc/$* && for f in `find * -type f -name '*.html'`; do \
+		echo "Installing $$f"; \
+		../../scripts/transform-templates \
+			usedebianlibs $(USEDEBIANLIBS) \
+			useexternallibs $(USEEXTERNALLIBS) \
+			jsminified $(JSCOMPRESS) \
+			cssminified $(CSSCOMPRESS) <$$f \
+		> $(RDOCDIR)/$*-doc/$$f; \
+	done && cd -
+	# Install other files
+	@cd po-doc/$* && for f in `find * -type f ! -name '*.html'`; do \
+		install -v -m 644 $$f $(RDOCDIR)/$*-doc/$$f; \
+	done && cd -
+	# Install symlinks (no symlinks)
+	@#cd po-doc/$* && tar cf - `find * -type l` | tar xvf - -C $(RDOCDIR)/$*-doc && cd -
+	# Remove js
+	@cd $(RDOCDIR)/$*-doc && if test "$(USEEXTERNALLIBS)" = "yes"; then \
+		rm -rvf $(DOCEXTERNALLIBS); \
+	elif test "$(USEDEBIANLIBS)" = "yes"; then \
+		rm -rvf $(DOCLIBSTOREMOVEFORDEBIAN); \
+	fi && cd -
 

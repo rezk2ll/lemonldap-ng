@@ -20886,8 +20886,8 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       <tuv lang="EN-US">
         <seg>&lt;s0&gt;Searched attributes&lt;/s0&gt;: name(s) of the attribute storing the name of the group, spaces separated (default: cn).</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120107T114828Z" changeid="xavier">
-        <seg>&lt;s0&gt;Attributs recherchés&lt;/s0&gt; : nom(s) de l'attribut stocké dans le nom du groupe, séparés par des virgules (défaut: cn).</seg>
+      <tuv lang="FR-FR" changedate="20161126T062423Z" changeid="xavier">
+        <seg>&lt;s0&gt;Attributs recherchés&lt;/s0&gt; : nom(s) de l'attribut stocké dans le nom du groupe, séparés par des espaces (défaut: cn).</seg>
       </tuv>
     </tu>
     <tu>

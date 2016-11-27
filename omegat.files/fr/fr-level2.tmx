@@ -24586,8 +24586,8 @@ a2ensite test-apache2.conf</seg>
       <tuv xml:lang="EN-US">
         <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Searched attributes<ept i='0'>&lt;/s0&gt;</ept>: name(s) of the attribute storing the name of the group, spaces separated (default: cn).</seg>
       </tuv>
-      <tuv xml:lang="FR-FR" changedate="20120107T114828Z" changeid="xavier">
-        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Attributs recherchés<ept i='0'>&lt;/s0&gt;</ept> : nom(s) de l'attribut stocké dans le nom du groupe, séparés par des virgules (défaut: cn).</seg>
+      <tuv xml:lang="FR-FR" changedate="20161126T062423Z" changeid="xavier">
+        <seg><bpt i='0' x='0'>&lt;s0&gt;</bpt>Attributs recherchés<ept i='0'>&lt;/s0&gt;</ept> : nom(s) de l'attribut stocké dans le nom du groupe, séparés par des espaces (défaut: cn).</seg>
       </tuv>
     </tu>
     <tu>

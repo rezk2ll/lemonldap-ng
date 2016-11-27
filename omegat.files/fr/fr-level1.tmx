@@ -24586,8 +24586,8 @@ tpl_myparam = world</seg>
       <tuv lang="EN-US">
         <seg>Searched attributes: name(s) of the attribute storing the name of the group, spaces separated (default: cn).</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120107T114828Z" changeid="xavier">
-        <seg>Attributs recherchés : nom(s) de l'attribut stocké dans le nom du groupe, séparés par des virgules (défaut: cn).</seg>
+      <tuv lang="FR-FR" changedate="20161126T062423Z" changeid="xavier">
+        <seg>Attributs recherchés : nom(s) de l'attribut stocké dans le nom du groupe, séparés par des espaces (défaut: cn).</seg>
       </tuv>
     </tu>
     <tu>
