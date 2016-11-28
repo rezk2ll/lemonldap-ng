@@ -84,7 +84,8 @@ sub extractFormInfo {
 
         # Check SAML Message
         my ( $request, $response, $method, $relaystate, $artifact ) =
-          $self->checkMessage( $url, $request_method, $content_type, "login" );
+          $self->checkMessage( $req, $url, $request_method, $content_type,
+            "login" );
 
         # Create Login object
         my $login = $self->createLogin( $self->lassoServer );
@@ -392,7 +393,8 @@ sub extractFormInfo {
 
         # Check SAML Message
         my ( $request, $response, $method, $relaystate, $artifact ) =
-          $self->checkMessage( $url, $request_method, $content_type, "logout" );
+          $self->checkMessage( $req, $url, $request_method, $content_type,
+            "logout" );
 
         # Create Logout object
         my $logout = $self->createLogout( $self->lassoServer );

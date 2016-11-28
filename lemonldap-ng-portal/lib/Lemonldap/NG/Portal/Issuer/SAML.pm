@@ -47,7 +47,7 @@ sub init {
     my $saml_sso_art_url_ret = $self->getMetaDataURL(
         "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 2 );
     $self->ssoUrlRe(
-qr/^\Q($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)\E$/i
+qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)$/i
     );
 
     my $saml_slo_soap_url =
@@ -65,7 +65,7 @@ qr/^\Q($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
         2 );
     $self->sloRe(
-qr/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|\Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/i
+qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)$/i
     );
 
     return (
@@ -101,12 +101,12 @@ sub run {
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
-    my $url                     = $self->url( -absolute => 1 );
-    my $request_method          = $self->request_method();
-    my $content_type            = $self->content_type();
-    my $idp_initiated           = $self->param('IDPInitiated');
-    my $idp_initiated_sp        = $self->param('sp');
-    my $idp_initiated_spConfKey = $self->param('spConfKey');
+    my $url                     = $req->uri;
+    my $request_method          = $req->method();
+    my $content_type            = $req->contentType();
+    my $idp_initiated           = $req->param('IDPInitiated');
+    my $idp_initiated_sp        = $req->param('sp');
+    my $idp_initiated_spConfKey = $req->param('spConfKey');
 
     # 1.1. SSO (SSO URL or Proxy Mode)
     if ( $url =~ $self->ssoUrlRe or $req->datas->{_proxiedRequest} ) {
@@ -114,11 +114,12 @@ sub run {
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
         # Get hidden params for IDP initiated if needed
-        $idp_initiated = $self->getHiddenFormValue('IDPInitiated')
+        $idp_initiated = $self->p->getHiddenFormValue( $req, 'IDPInitiated' )
           unless defined $idp_initiated;
-        $idp_initiated_sp = $self->getHiddenFormValue('sp')
+        $idp_initiated_sp = $self->p->getHiddenFormValue( $req, 'sp' )
           unless defined $idp_initiated_sp;
-        $idp_initiated_spConfKey = $self->getHiddenFormValue('spConfKey')
+        $idp_initiated_spConfKey =
+          $self->p->getHiddenFormValue( $req, 'spConfKey' )
           unless defined $idp_initiated_spConfKey;
 
         # Check message
@@ -132,7 +133,7 @@ sub run {
         }
         else {
             ( $request, $response, $method, $relaystate, $artifact ) =
-              $self->checkMessage( $url, $request_method, $content_type );
+              $self->checkMessage( $req, $url, $request_method, $content_type );
         }
 
         # Create Login object
@@ -444,7 +445,7 @@ sub run {
             # Build Assertion
             unless (
                 $self->buildAssertion(
-                    $login, $authn_context, $notOnOrAfterTimeout
+                    $req, $login, $authn_context, $notOnOrAfterTimeout
                 )
               )
             {
@@ -501,7 +502,7 @@ sub run {
             my $nameIDContent;
             if ( defined $req->{sessionInfo}->{$nameIDSessionKey} ) {
                 $nameIDContent =
-                  $self->getFirstValue(
+                  $self->p->getFirstValue(
                     $req->{sessionInfo}->{$nameIDSessionKey} );
             }
 
@@ -730,7 +731,7 @@ sub run {
                     last;
                 }
             }
-            $self->_sub( 'userNotice',
+            $self->p->userNotice(
 "SAML authentication response sent to SAML SP $spConfKey for $user$nameIDLog"
             );
 
@@ -795,7 +796,7 @@ sub run {
 
             if ( $login->is_session_dirty ) {
                 $self->lmLog( "Save Lasso session in session", 'debug' );
-                $self->updateSession(
+                $self->p->updateSession(
                     { _lassoSessionDump => $login->get_session->dump },
                     $session_id );
             }
@@ -903,7 +904,8 @@ sub run {
                 $req->{postFields}->{'RelayState'} = $relaystate
                   if ($relaystate);
 
-                return $self->_subProcess(qw(autoPost));
+                $req->steps( ['autoPost'] );
+                return PE_OK;
             }
 
         }
@@ -931,7 +933,8 @@ sub run {
 
         # Check SAML Message
         my ( $request, $response, $method, $relaystate, $artifact ) =
-          $self->checkMessage( $url, $request_method, $content_type, "logout" );
+          $self->checkMessage( $req, $url, $request_method, $content_type,
+            "logout" );
 
         # Create Logout object
         my $logout = $self->createLogout($server);

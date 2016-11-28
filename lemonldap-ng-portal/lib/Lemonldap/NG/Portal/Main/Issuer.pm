@@ -49,6 +49,10 @@ sub init {
 
 sub _redirect {
     my ( $self, $req ) = @_;
+    my $prms = $req->params;
+    foreach my $k ( keys %$prms ) {
+        $self->p->setHiddenFormValue( $req, $k, $prms->{$k}, '', 0 );
+    }
     $req->{urldc} =
         $self->conf->{portal}
       . $req->path
@@ -74,9 +78,6 @@ sub _redirect {
 sub _pRedirect {
     my ( $self, $req ) = @_;
     $req->parseBody;
-
-    # TODO
-    die("TODO: store datas");
     return $self->_redirect($req);
 }
 

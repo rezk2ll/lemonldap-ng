@@ -518,7 +518,7 @@ sub setHiddenFormValue {
     # Store value
     if ($val) {
         $key                                   = $prefix . $key;
-        $val                                   = encode_base64($val) if $base64;
+        $val                                   = encode_base64($val,'') if $base64;
         $req->{portalHiddenFormValues}->{$key} = $val;
         $self->lmLog( "Store $val in hidden key $key", 'debug' );
     }
@@ -570,6 +570,15 @@ sub clearHiddenFormValue {
     }
 
     return;
+}
+
+# Get the first value of a multivaluated session value
+sub getFirstValue {
+    my ( $self, $value ) = @_;
+
+    my @values = split /$self->{conf}->{multiValuesSeparator}/, $value;
+
+    return $values[0];
 }
 
 1;

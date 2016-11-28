@@ -4,7 +4,7 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $maintests = 10;
+my $maintests = 14;
 my $debug     = 'debug';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
@@ -60,9 +60,9 @@ SKIP: {
         $res = $sp->_post(
             '/',
             IO::String->new(
-                "confirm=$confirm&idp=https://auth.idp.com/saml/metadata"),
+                "confirm=$confirm&idp=http://auth.idp.com/saml/metadata"),
             accept => 'text/html',
-            length => length($confirm) + 47,
+            length => length($confirm) + 46,
         ),
         'Select IDP'
     );
@@ -72,13 +72,13 @@ SKIP: {
         (
             defined( $cookies->{lemonldapidp} )
               and $cookies->{lemonldapidp} eq
-              'https://auth.idp.com/saml/metadata'
+              'http://auth.idp.com/saml/metadata'
         ),
         'IDP cookie defined'
       )
       or explain(
         $res->[1],
-'Set-Cookie => lemonldapidp=https://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
+'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
       );
     ok(
         $res->[2]->[0] =~
@@ -90,6 +90,42 @@ SKIP: {
         ' <input type="hidden" name="SAMLRequest" id="SAMLRequest" value="...'
       );
     my $samlReq = $1;
+    ok(
+        $res->[2]->[0] =~ m#<form id="form" action="http://auth.idp.com(.*?)"#s,
+        'Found IdP URL'
+    );
+    my $url = $1;
+    switch ('issuer');
+    my $s = "SAMLRequest=$samlReq";
+    ok(
+        $res = $issuer->_post(
+            $url,
+            IO::String->new($s),
+            accept => 'text/html',
+            length => length($s)
+        ),
+        'Post SAML request to IdP'
+    );
+    ok( $res->[0] == 200, 'Return code is 200' );
+    my $body = $res->[2]->[0];
+    $body =~ s/^.*?<form.*?>//s;
+    $body =~ s#</form>.*$##s;
+    my %fields =
+      ( $body =~ /<input type="hidden".+?name="(.+?)".+?value="(.*?)"/sg );
+    $fields{user} = $fields{password} = 'dwho';
+    use URI::Escape;
+    $s = join( '&', map { "$_=" . uri_escape( $fields{$_} ) } keys %fields );
+    ok(
+        $res = $issuer->_post(
+            $url,
+            IO::String->new($s),
+            accept => 'text/html',
+            length => length($s)
+        ),
+        'Post authentication'
+    );
+
+    #print STDERR Dumper($res);
 }
 
 count($maintests);
@@ -109,7 +145,7 @@ sub issuer {
             ini => {
                 logLevel               => $debug,
                 domain                 => 'idp.com',
-                portal                 => 'auth.idp.com',
+                portal                 => 'http://auth.idp.com',
                 authentication         => 'Demo',
                 userDB                 => 'Demo',
                 issuerDBSAMLActivation => 1,
@@ -120,7 +156,7 @@ sub issuer {
                 },
                 samlOrganizationDisplayName => "IDP",
                 samlOrganizationName        => "IDP",
-                samlOrganizationURL         => "https://www.idp.com/",
+                samlOrganizationURL         => "http://www.idp.com/",
                 samlServicePrivateKeyEnc    => "-----BEGIN RSA PRIVATE KEY-----
 MIIEogIBAAKCAQEAnfKBDG/K0TnGT7Xu8q1N45sNWvIK91SqNg8nvN2uVeKoHADT
 csus5Xn3id5+8Q9TuMFsW9kIEeXiaPKXQa9ryfSNDhWDWloNkpGEeWif2BnHUu46
@@ -357,6 +393,7 @@ sub sp {
             ini => {
                 logLevel                          => $debug,
                 domain                            => 'sp.com',
+                portal                            => 'http://auth.sp.com',
                 authentication                    => 'SAML',
                 userDB                            => 'SAML',
                 issuerDBSAMLActivation            => 0,
@@ -379,7 +416,7 @@ sub sp {
 <EntityDescriptor xmlns=\"urn:oasis:names:tc:SAML:2.0:metadata\"
 xmlns:saml=\"urn:oasis:names:tc:SAML:2.0:assertion\"
 xmlns:ds=\"http://www.w3.org/2000/09/xmldsig#\"
-entityID=\"https://auth.idp.com/saml/metadata\">
+entityID=\"http://auth.idp.com/saml/metadata\">
 
 <IDPSSODescriptor WantAuthnRequestsSigned=\"true\" protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">
 <KeyDescriptor use=\"signing\">
@@ -412,20 +449,20 @@ g8K0klAS9q7L7aXI+eFQZhkwidjpxXnHPyxIGQ==
 </ds:KeyValue>
 </ds:KeyInfo>
 </KeyDescriptor>
-<ArtifactResolutionService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/artifact\" />
-<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/singleLogoutSOAP\" />
-<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"https://auth.idp.com/saml/singleLogout\" ResponseLocation=\"https://auth.idp.com/saml/singleLogoutReturn\" />
-<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"https://auth.idp.com/saml/singleLogout\" ResponseLocation=\"https://auth.idp.com/saml/singleLogoutReturn\" />
+<ArtifactResolutionService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.idp.com/saml/artifact\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.idp.com/saml/singleLogoutSOAP\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"http://auth.idp.com/saml/singleLogout\" ResponseLocation=\"http://auth.idp.com/saml/singleLogoutReturn\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://auth.idp.com/saml/singleLogout\" ResponseLocation=\"http://auth.idp.com/saml/singleLogoutReturn\" />
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
-<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"https://auth.idp.com/saml/singleSignOn\" />
-<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"https://auth.idp.com/saml/singleSignOn\" />
-<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact\" Location=\"https://auth.idp.com/saml/singleSignOnArtifact\" />
-<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/singleSignOnSOAP\" />
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"http://auth.idp.com/saml/singleSignOn\" />
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://auth.idp.com/saml/singleSignOn\" />
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact\" Location=\"http://auth.idp.com/saml/singleSignOnArtifact\" />
+<SingleSignOnService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.idp.com/saml/singleSignOnSOAP\" />
 </IDPSSODescriptor>
 
 <SPSSODescriptor AuthnRequestsSigned=\"true\" WantAssertionsSigned=\"true\" protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">
@@ -459,18 +496,18 @@ g8K0klAS9q7L7aXI+eFQZhkwidjpxXnHPyxIGQ==
 </ds:KeyValue>
 </ds:KeyInfo>
 </KeyDescriptor>
-<ArtifactResolutionService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/artifact\" />
-<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/proxySingleLogoutSOAP\" />
-<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"https://auth.idp.com/saml/proxySingleLogout\" ResponseLocation=\"https://auth.idp.com/saml/proxySingleLogoutReturn\" />
-<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"https://auth.idp.com/saml/proxySingleLogout\" ResponseLocation=\"https://auth.idp.com/saml/proxySingleLogoutReturn\" />
+<ArtifactResolutionService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.idp.com/saml/artifact\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.idp.com/saml/proxySingleLogoutSOAP\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect\" Location=\"http://auth.idp.com/saml/proxySingleLogout\" ResponseLocation=\"http://auth.idp.com/saml/proxySingleLogoutReturn\" />
+<SingleLogoutService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://auth.idp.com/saml/proxySingleLogout\" ResponseLocation=\"http://auth.idp.com/saml/proxySingleLogoutReturn\" />
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
-<AssertionConsumerService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact\" Location=\"https://auth.idp.com/saml/proxySingleSignOnArtifact\" />
-<AssertionConsumerService isDefault=\"false\" index=\"1\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"https://auth.idp.com/saml/proxySingleSignOnPost\" />
+<AssertionConsumerService isDefault=\"true\" index=\"0\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact\" Location=\"http://auth.idp.com/saml/proxySingleSignOnArtifact\" />
+<AssertionConsumerService isDefault=\"false\" index=\"1\" Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST\" Location=\"http://auth.idp.com/saml/proxySingleSignOnPost\" />
 </SPSSODescriptor>
 
 <AttributeAuthorityDescriptor protocolSupportEnumeration=\"urn:oasis:names:tc:SAML:2.0:protocol\">
@@ -504,7 +541,7 @@ g8K0klAS9q7L7aXI+eFQZhkwidjpxXnHPyxIGQ==
 </ds:KeyValue>
 </ds:KeyInfo>
 </KeyDescriptor>
-<AttributeService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"https://auth.idp.com/saml/AA/SOAP\"/>
+<AttributeService Binding=\"urn:oasis:names:tc:SAML:2.0:bindings:SOAP\" Location=\"http://auth.idp.com/saml/AA/SOAP\"/>
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
 <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
@@ -516,7 +553,7 @@ g8K0klAS9q7L7aXI+eFQZhkwidjpxXnHPyxIGQ==
 <Organization>
 <OrganizationName xml:lang=\"en\">IDP</OrganizationName>
 <OrganizationDisplayName xml:lang=\"en\">IDP</OrganizationDisplayName>
-<OrganizationURL xml:lang=\"en\">https://www.idp.fr/</OrganizationURL>
+<OrganizationURL xml:lang=\"en\">http://www.idp.fr/</OrganizationURL>
 </Organization>
 
 </EntityDescriptor>
