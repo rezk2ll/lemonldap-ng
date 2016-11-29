@@ -341,7 +341,7 @@ sub setLocalGroups {
     # Clear values separator at the beginning
     if ( $req->{sessionInfo}->{groups} ) {
         $req->{sessionInfo}->{groups} =~
-          s/^\Q$self->conf->{multiValuesSeparator}\E//o;
+          s/^$self->conf->{multiValuesSeparator}//o;
     }
     PE_OK;
 }

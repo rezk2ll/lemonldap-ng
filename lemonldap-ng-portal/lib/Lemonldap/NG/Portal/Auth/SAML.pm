@@ -39,7 +39,7 @@ sub init {
     my $saml_acs_get_url = $self->getMetaDataURL(
         "samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect");
     $self->sloAssConsumerRe(
-        qr/^\Q($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url)\E$/i);
+        qr/^($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url)$/i);
     my $saml_slo_soap_url =
       $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 1 );
     my $saml_slo_soap_url_ret =
@@ -55,12 +55,12 @@ sub init {
       $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
         2 );
     $self->sloRe(
-qr/^\Q($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)\E$/i
+qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)$/i
     );
 
     my $saml_ars_url = $self->getMetaDataURL(
         "samlSPSSODescriptorArtifactResolutionServiceArtifact");
-    $self->artRe(qr/^(\Q$saml_ars_url\E)$/i);
+    $self->artRe(qr/^($saml_ars_url)$/i);
 
     # Load SAML service and SAML IdP list
     return ( $self->SUPER::init and $self->loadIDPs );
@@ -478,7 +478,7 @@ sub extractFormInfo {
             }
 
             if (    $req->urldc
-                and $self->conf->{portal} !~ /\Q$req->{urldc}\E\/?/ )
+                and $self->conf->{portal} !~ /$req->{urldc}\/?/ )
             {
                 $req->steps( [] );
                 return PE_OK;
