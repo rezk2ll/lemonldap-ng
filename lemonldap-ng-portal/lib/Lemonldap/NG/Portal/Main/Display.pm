@@ -148,7 +148,7 @@ sub display {
     }
 
     # 2.3 There is a message to disp->conf->conflay
-    elsif ( my $info = $req->info ) {
+    elsif ( $info = $req->info ) {
         $skinfile       = 'info';
         %templateParams = (
             AUTH_ERROR      => $self->error,

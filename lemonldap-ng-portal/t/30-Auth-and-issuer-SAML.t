@@ -2,7 +2,9 @@ use Test::More;
 use strict;
 use IO::String;
 
-require 't/test-lib.pm';
+BEGIN {
+    require 't/test-lib.pm';
+}
 
 my $maintests = 19;
 my $debug     = 'debug';
@@ -135,8 +137,11 @@ SKIP: {
       or explain( $res, 'Set-Cookie: something' );
 
     # Post SAML artifact to SP
-    ok( $res->[2]->[0] =~ m#<form.+?action="http://auth.sp.com(.*?)".+?method="post"#,
-        'Form method is POST' );
+    ok(
+        $res->[2]->[0] =~
+          m#<form.+?action="http://auth.sp.com(.*?)".+?method="post"#,
+        'Form method is POST'
+    );
     $url = $1;
     ok(
         $res->[2]->[0] =~

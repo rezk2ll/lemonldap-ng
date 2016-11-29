@@ -3,9 +3,20 @@ package main;
 
 use strict;
 use Data::Dumper;
+use LWP::UserAgent;
 use 5.10.0;
 
-use_ok('Lemonldap::NG::Portal::Main');
+BEGIN {
+    use_ok('Lemonldap::NG::Portal::Main');
+}
+
+# Redefine LWP methods for tests
+sub LWP::UserAgent::request {
+    my ( $self, $req ) = @_;
+    return HTTP::Response->new(500);
+}
+
+package main;
 
 our $count = 1;
 $Data::Dumper::Deparse = 1;
@@ -17,7 +28,7 @@ sub count {
     return $count;
 }
 
-sub explain {
+sub main::explain {
     my ( $get, $ref ) = @_;
     $get = Dumper($get) if ( ref $get );
     print STDERR "Expect $ref, get $get\n";

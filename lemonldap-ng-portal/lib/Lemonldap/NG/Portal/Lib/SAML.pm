@@ -1643,7 +1643,7 @@ sub resolveArtifact {
             'debug' );
 
         # SOAP call
-        my $soap_answer = $self->ua()->request($request);
+        my $soap_answer = $self->ua->request($request);
         if ( $soap_answer->code() == "200" ) {
             $message = $soap_answer->content();
             $self->lmLog( "Get message $message", 'debug' );
