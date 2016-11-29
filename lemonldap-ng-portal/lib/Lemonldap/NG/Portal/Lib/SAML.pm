@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use Lemonldap::NG::Common::Session;
+use LWP::UserAgent;
 use XML::Simple;
 use MIME::Base64;
 use String::Random;
@@ -20,6 +21,20 @@ our $VERSION = '2.0.0';
 has lassoServer => ( is => 'rw' );
 has spList      => ( is => 'rw', default => sub { {} } );
 has idpList     => ( is => 'rw', default => sub { {} } );
+
+# return LWP::UserAgent object
+has ua => (
+    is      => 'rw',
+    lasy    => 1,
+    builder => sub {
+
+        # TODO : LWP options to use a proxy for example
+        my $ua = LWP::UserAgent->new();
+        push @{ $ua->requests_redirectable }, 'POST';
+        $ua->env_proxy();
+        return $ua;
+    }
+);
 
 # INITIALIZATION
 

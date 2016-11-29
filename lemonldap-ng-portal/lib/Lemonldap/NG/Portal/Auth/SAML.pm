@@ -9,6 +9,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_ART_ERROR
   PE_SAML_CONDITIONS_ERROR
   PE_SAML_DESTINATION_ERROR
+  PE_SAML_ERROR
   PM_SAML_IDPCHOOSEN
   PE_SAML_IDPSSOINITIATED_NOTALLOWED
   PE_SAML_SESSION_ERROR
@@ -379,10 +380,7 @@ sub extractFormInfo {
             # This should not happen
             $self->lmLog( "SSO request or response was not found", 'error' );
 
-            # Redirect user
-            $req->mustRedirect(1);
-            $req->steps( [] );
-            return PE_OK;
+            return PE_SAML_ERROR;
         }
 
     }

@@ -4,7 +4,7 @@ use IO::String;
 
 require 't/test-lib.pm';
 
-my $maintests = 14;
+my $maintests = 19;
 my $debug     = 'debug';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
@@ -25,7 +25,7 @@ SKIP: {
     ok( $sp = sp(), 'SP portal' );
     $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
 
-    # Simple SP login
+    # Simple SP access
     my $res;
     ok(
         $res = $sp->_get(
@@ -95,6 +95,8 @@ SKIP: {
         'Found IdP URL'
     );
     my $url = $1;
+
+    # Push SAML request to IdP
     switch ('issuer');
     my $s = "SAMLRequest=$samlReq";
     ok(
@@ -107,6 +109,8 @@ SKIP: {
         'Post SAML request to IdP'
     );
     ok( $res->[0] == 200, 'Return code is 200' );
+
+    # Try to authenticate to IdP
     my $body = $res->[2]->[0];
     $body =~ s/^.*?<form.*?>//s;
     $body =~ s#</form>.*$##s;
@@ -120,12 +124,39 @@ SKIP: {
             $url,
             IO::String->new($s),
             accept => 'text/html',
-            length => length($s)
+            length => length($s),
         ),
         'Post authentication'
     );
+    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+    $cookies = $sp->getCookies($res);
+    my $idpId;
+    ok( $idpId = $cookies->{lemonldap}, 'Get cookie' )
+      or explain( $res, 'Set-Cookie: something' );
 
-    #print STDERR Dumper($res);
+    # Post SAML artifact to SP
+    ok( $res->[2]->[0] =~ m#<form.+?action="http://auth.sp.com(.*?)".+?method="post"#,
+        'Form method is POST' );
+    $url = $1;
+    ok(
+        $res->[2]->[0] =~
+          /<input type="hidden".+?name="SAMLart".+?value="(.+?)"/s,
+        'Found SAML artifact'
+    );
+    my $samlArt = $1;
+    switch ('sp');
+    $s = "SAMLart=$samlArt";
+    ok(
+        $res = $sp->_post(
+            $url, IO::String->new($s),
+            accept => 'text/html',
+            length => length($s),
+            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
+        ),
+        'Post artifact to SP'
+    );
+
+    #print STDERR Dumper( $res, $url, $s );
 }
 
 count($maintests);

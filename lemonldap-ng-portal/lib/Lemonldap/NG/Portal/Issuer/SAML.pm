@@ -634,9 +634,8 @@ sub run {
               ->set_subject_name_id( $login->nameIdentifier );
 
             # Set basic conditions
-            my $oneTimeUse =
-              $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
-              ->{samlSPMetaDataOptionsOneTimeUse};
+            my $oneTimeUse = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsOneTimeUse} // 0;
 
             my $conditionNotOnOrAfter = $notOnOrAfterTimeout || "86400";
             eval {
@@ -704,7 +703,7 @@ sub run {
             # Signature
             my $signSSOMessage =
               $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
-              ->{samlSPMetaDataOptionsSignSSOMessage};
+              ->{samlSPMetaDataOptionsSignSSOMessage} // -1;
 
             if ( $signSSOMessage == 0 ) {
                 $self->lmLog( "SSO response will not be signed", 'debug' );
@@ -720,8 +719,8 @@ sub run {
             }
 
             # log that a SAML authn response is build
-            my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
-            my $nameIDLog;
+            my $user      = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
+            my $nameIDLog = '';
             foreach my $format (qw(persistent transient)) {
                 if ( $login->nameIdentifier->Format eq
                     $self->getNameIDFormat($format) )
