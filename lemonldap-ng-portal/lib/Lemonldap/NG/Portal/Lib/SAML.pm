@@ -25,7 +25,7 @@ has idpList     => ( is => 'rw', default => sub { {} } );
 # return LWP::UserAgent object
 has ua => (
     is      => 'rw',
-    lasy    => 1,
+    lazy    => 1,
     builder => sub {
 
         # TODO : LWP options to use a proxy for example

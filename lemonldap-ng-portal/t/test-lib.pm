@@ -10,6 +10,8 @@ BEGIN {
     use_ok('Lemonldap::NG::Portal::Main');
 }
 
+no warnings 'redefine';
+
 # Redefine LWP methods for tests
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
