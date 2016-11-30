@@ -1,6 +1,7 @@
 package Lemonldap::NG::Portal::UserDB::SAML;
 
 use strict;
+use Encode;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_OK
