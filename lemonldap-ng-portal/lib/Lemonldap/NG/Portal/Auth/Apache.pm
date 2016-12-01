@@ -33,6 +33,12 @@ sub authenticate {
     PE_OK;
 }
 
+sub setAuthSessionInfo {
+    my ( $self, $req ) = @_;
+    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{apacheAuthnLevel};
+    PE_OK;
+}
+
 sub authLogout {
     PE_OK;
 }

@@ -20,6 +20,10 @@ sub authenticate {
     return $_[1]->datas->{enabledMods0}->[0]->authenticate( $_[1] );
 }
 
+sub setAuthSessionInfo {
+    return $_[1]->datas->{enabledMods0}->[0]->setAuthSessionInfo( $_[1] );
+}
+
 sub authLogout {
     $_[0]->checkChoice( $_[1] ) or return PE_OK;
     return $_[1]->datas->{enabledMods0}->[0]->authLogout( $_[1] );

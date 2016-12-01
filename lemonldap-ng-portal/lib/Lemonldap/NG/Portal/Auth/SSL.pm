@@ -41,6 +41,12 @@ sub authenticate {
     PE_OK;
 }
 
+sub setAuthSessionInfo {
+    my ( $self, $req ) = @_;
+    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{SSLAuthnLevel};
+    PE_OK;
+}
+
 sub getDisplayType {
     return "logo";
 }

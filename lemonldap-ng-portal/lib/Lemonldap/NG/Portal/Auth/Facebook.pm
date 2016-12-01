@@ -119,6 +119,12 @@ sub authenticate {
     PE_OK;
 }
 
+sub setAuthSessionInfo {
+    my ( $self, $req ) = @_;
+    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{facebookAuthnLevel};
+    PE_OK;
+}
+
 sub authFinish {
     PE_OK;
 }

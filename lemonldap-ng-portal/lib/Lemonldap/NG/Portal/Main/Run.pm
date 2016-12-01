@@ -19,7 +19,7 @@ use strict;
 sub authProcess { qw(extractFormInfo getUser authenticate) }
 
 sub sessionDatas {
-    qw(setSessionInfo setMacros setGroups setPersistentSessionInfo
+    qw(setAuthSessionInfo setSessionInfo setMacros setGroups setPersistentSessionInfo
       setLocalGroups store buildCookie);
 }
 

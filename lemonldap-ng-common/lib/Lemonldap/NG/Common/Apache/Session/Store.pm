@@ -28,7 +28,9 @@ sub update {
 
     #TODO: remove cache on all LL::NG instances if updateCache == 1
 
-    unless ( $session->{args}->{updateCache} == -1 ) {
+    unless ( defined( $session->{args}->{updateCache} )
+        and $session->{args}->{updateCache} == -1 )
+    {
 
         # Update session in cache
         my $id = $session->{data}->{_session_id};
@@ -36,7 +38,9 @@ sub update {
         $self->cache->set( $id, $session->{serialized} );
     }
 
-    unless ( $session->{args}->{updateCache} == 2 ) {
+    unless ( defined( $session->{args}->{updateCache} )
+        and $session->{args}->{updateCache} == 2 )
+    {
 
         # Update session in backend
         return $self->module->update($session);

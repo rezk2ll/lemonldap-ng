@@ -25,6 +25,15 @@ sub authenticate {
     PE_OK;
 }
 
+sub setAuthSessionInfo {
+    my ( $self, $req ) = @_;
+
+    # Store password (deleted in checkRemoteId() if local policy does not accept
+    # stored passwords)
+    $req->{sessionInfo}->{'_password'} = $req->datas->{'password'};
+    PE_OK;
+}
+
 sub authLogout {
     PE_OK;
 }

@@ -56,7 +56,7 @@ sub _redirect {
     $req->{urldc} =
         $self->conf->{portal}
       . $req->path
-      . ( $req->query ? '?' . $req->query : () );
+      . ( $req->query ? '?' . $req->query : '' );
 
     # TODO: launch normal process with 'run' at the end
     return $self->p->do(

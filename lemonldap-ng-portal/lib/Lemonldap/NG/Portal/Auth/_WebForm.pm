@@ -14,6 +14,14 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Auth::Base';
 
+has authnLevel => (
+    is      => 'rw',
+    builder => sub {
+        my $conf = $_[0]->{conf};
+        return ( $conf->{portal} =~ /^https/ ? 2 : 1 );
+    },
+);
+
 # INITIALIZATION
 
 sub init {
@@ -113,15 +121,7 @@ sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
 
     # authenticationLevel
-    # +1 for user/password with HTTPS
-    $self->{_authnLevel} //= 1;
-    $self->{_authnLevel} += 1 if $self->https();
-
-    #TODO: check where _authnLevel is defined
-    $self->{sessionInfo}->{authenticationLevel} = $self->{_authnLevel};
-
-    # Store user submitted login for basic rules
-    $self->{sessionInfo}->{'_user'} = $self->{'user'};
+    $self->{sessionInfo}->{authenticationLevel} = $self->authnLevel;
 
     # Store submitted password if set in configuration
     # WARNING: it can be a security hole

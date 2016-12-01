@@ -965,12 +965,12 @@ sub extractFormInfo {
     # Set signature
     my $signSSOMessage =
       $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
-      ->{samlIDPMetaDataOptionsSignSSOMessage};
+      ->{samlIDPMetaDataOptionsSignSSOMessage} // -1;
 
     # Authentication Context
     my $requestedAuthnContext =
       $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
-      ->{samlIDPMetaDataOptionsRequestedAuthnContext};
+      ->{samlIDPMetaDataOptionsRequestedAuthnContext} // '';
     $requestedAuthnContext = $self->getAuthnContext($requestedAuthnContext)
       if $requestedAuthnContext;
 
@@ -1068,6 +1068,10 @@ sub extractFormInfo {
 }
 
 sub authenticate {
+    PE_OK;
+}
+
+sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     my $login      = $req->datas->{_lassoLogin};
     my $idp        = $req->datas->{_idp};

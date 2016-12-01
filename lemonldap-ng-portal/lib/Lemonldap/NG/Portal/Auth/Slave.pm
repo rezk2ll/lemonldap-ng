@@ -40,6 +40,12 @@ sub authenticate {
     PE_OK;
 }
 
+sub setAuthSessionInfo {
+    my ( $self, $req ) = @_;
+    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{slaveAuthnLevel};
+    PE_OK;
+}
+
 sub authLogout {
     my ( $self, $req ) = @_;
     PE_OK;

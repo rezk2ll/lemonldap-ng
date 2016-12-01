@@ -220,7 +220,7 @@ sub checkXSSAttack {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     my $ret = $self->_authentication->extractFormInfo($req);
-    if ( $ret == PE_OK and not ($req->user or $req->continue) ) {
+    if ( $ret == PE_OK and not( $req->user or $req->continue ) ) {
         $self->lmLog(
             'Authentication module succeed but has not set $req->user',
             'error' );
@@ -242,11 +242,21 @@ sub authenticate {
 # Third block: Session data providing
 # -----------------------------------
 
+sub setAuthSessionInfo {
+    my ( $self, $req ) = @_;
+    my $ret = $self->_authentication->setAuthSessionInfo($req);
+    if ( $ret == PE_OK and not( $req->sessionInfo->{authenticationLevel} ) ) {
+        $self->lmLog( 'Authentication level is not set by auth module',
+            'error' );
+    }
+    return $ret;
+}
+
 sub setSessionInfo {
     my ( $self, $req ) = @_;
 
     # Set _user
-    $req->{sessionInfo}->{_user} = $req->{user};
+    $req->{sessionInfo}->{_user} //= $req->{user};
 
     # Get the current user module
     $req->{sessionInfo}->{_auth}   = $self->getModule( $req, "auth" );
