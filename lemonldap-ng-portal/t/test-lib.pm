@@ -133,6 +133,32 @@ sub getCookies {
     return $res;
 }
 
+sub getRedirection {
+    my ( $self, $resp ) = @_;
+    my @hdrs = @{ $resp->[1] };
+    my $res  = {};
+    while ( my $name = shift @hdrs ) {
+        my $v = shift @hdrs;
+        if ( $name eq 'Location' ) {
+            return $v;
+        }
+    }
+    return undef
+}
+
+sub getUser {
+    my ( $self, $resp ) = @_;
+    my @hdrs = @{ $resp->[1] };
+    my $res  = {};
+    while ( my $name = shift @hdrs ) {
+        my $v = shift @hdrs;
+        if ( $name eq 'Lm-Remote-User' ) {
+            return $v;
+        }
+    }
+    return undef
+}
+
 sub _get {
     my ( $self, $path, %args ) = @_;
     return $self->app->(

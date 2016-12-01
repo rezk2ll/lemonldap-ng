@@ -6,7 +6,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 19;
+my $maintests = 25;
 my $debug     = 'debug';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
@@ -159,8 +159,23 @@ SKIP: {
         ),
         'Post artifact to SP'
     );
+    ok( $res->[0] == 302, 'Get redirection' );
+    $cookies = $sp->getCookies($res);
+    my $spId;
+    ok( $spId = $cookies->{lemonldap}, 'Get cookie' )
+      or explain( $res, 'Set-Cookie: something' );
+    ok( $sp->getRedirection($res) eq 'http://auth.sp.com',
+        'Redirection points to SP portal' )
+      or explain( $res, 'Location: http://auth.sp.com' );
 
-    #print STDERR Dumper( $res, $url, $s );
+    ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
+    ok( $res->[0] == 200, 'User is authentified' ) or explain( $res->[0], 200 );
+    ok(
+        $sp->getUser($res) eq 'dwho@badwolf.org@idp',
+        'User is identified as dwho@badwolf.org@idp'
+    ) or explain( $res->[1], 'Lm-Remote-User: dwho@badwolf.org@idp' );
+
+    #print STDERR Dumper($res);
 }
 
 count($maintests);
@@ -187,6 +202,14 @@ sub issuer {
                 samlSPMetaDataOptions  => {
                     'sp.com' => {
                         samlSPMetaDataOptionsEncryptionMode => 'none',
+                    }
+                },
+                samlSPMetaDataExportedAttributes => {
+                    'sp.com' => {
+                        cn =>
+'1;cn;urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
+                        uid =>
+'1;uid;urn:oasis:names:tc:SAML:2.0:attrname-format:basic',
                     }
                 },
                 samlOrganizationDisplayName => "IDP",
