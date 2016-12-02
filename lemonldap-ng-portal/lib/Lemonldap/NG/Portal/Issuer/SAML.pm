@@ -865,9 +865,13 @@ sub run {
             }
 
             # HTTP-REDIRECT
-            if ( $protocolProfile eq
+            if (
+                $protocolProfile eq
                 Lasso::Constants::LOGIN_PROTOCOL_PROFILE_REDIRECT
-                or $artifact_method == $self->getHttpMethod("artifact-get") )
+                or (    $artifact_method
+                    and $artifact_method ==
+                    $self->getHttpMethod("artifact-get") )
+              )
             {
 
                 # Redirect user to response URL
@@ -891,7 +895,9 @@ sub run {
 
                 $req->postUrl($sso_url);
 
-                if ( $artifact_method == $self->getHttpMethod("artifact-post") )
+                if (    $artifact_method
+                    and $artifact_method ==
+                    $self->getHttpMethod("artifact-post") )
                 {
                     $req->{postFields} = { 'SAMLart' => $sso_body };
                 }
