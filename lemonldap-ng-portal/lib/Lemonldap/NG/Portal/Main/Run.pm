@@ -159,6 +159,7 @@ sub do {
             and (
                 $err != PE_REDIRECT
                 or (    $err == PE_REDIRECT
+                    and $req->datas->{redirectFormMethod}
                     and $req->datas->{redirectFormMethod} eq 'post' )
             )
           )
@@ -517,8 +518,8 @@ sub setHiddenFormValue {
 
     # Store value
     if ($val) {
-        $key                                   = $prefix . $key;
-        $val                                   = encode_base64($val,'') if $base64;
+        $key = $prefix . $key;
+        $val = encode_base64( $val, '' ) if $base64;
         $req->{portalHiddenFormValues}->{$key} = $val;
         $self->lmLog( "Store $val in hidden key $key", 'debug' );
     }

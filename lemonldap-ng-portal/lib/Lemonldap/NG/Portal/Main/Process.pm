@@ -245,7 +245,9 @@ sub authenticate {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     my $ret = $self->_authentication->setAuthSessionInfo($req);
-    if ( $ret == PE_OK and not( $req->sessionInfo->{authenticationLevel} ) ) {
+    if ( $ret == PE_OK
+        and not( defined $req->sessionInfo->{authenticationLevel} ) )
+    {
         $self->lmLog( 'Authentication level is not set by auth module',
             'error' );
     }

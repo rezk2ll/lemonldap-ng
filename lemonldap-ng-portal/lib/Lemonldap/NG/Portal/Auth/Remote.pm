@@ -31,6 +31,8 @@ sub setAuthSessionInfo {
     # Store password (deleted in checkRemoteId() if local policy does not accept
     # stored passwords)
     $req->{sessionInfo}->{'_password'} = $req->datas->{'password'};
+    $req->{sessionInfo}->{authenticationLevel} =
+      $req->datas->{rSessionInfo}->{authenticationLevel};
     PE_OK;
 }
 

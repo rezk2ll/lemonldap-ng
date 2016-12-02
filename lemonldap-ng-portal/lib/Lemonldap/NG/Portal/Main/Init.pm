@@ -178,8 +178,6 @@ sub reloadConf {
         return 0
           unless ( $self->{"_$type"} = $self->loadPlugin($module) );
     }
-    $self->_authentication->authnLevel(
-        $self->conf->{ $self->conf->{authentication} . "AuthnLevel" // 0 } );
 
     # Initialize trusted domain regexp
     if (    $self->conf->{trustedDomains}

@@ -121,17 +121,17 @@ sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
 
     # authenticationLevel
-    $self->{sessionInfo}->{authenticationLevel} = $self->authnLevel;
+    $req->{sessionInfo}->{authenticationLevel} = $self->authnLevel;
 
     # Store submitted password if set in configuration
     # WARNING: it can be a security hole
     if ( $self->conf->{storePassword} ) {
-        $self->{sessionInfo}->{'_password'} = $req->datas->{'newpassword'}
+        $req->{sessionInfo}->{'_password'} = $req->datas->{'newpassword'}
           || $req->datas->{'password'};
     }
 
     # Store user timezone
-    $self->{sessionInfo}->{'_timezone'} = $self->{'timezone'};
+    $req->{sessionInfo}->{'_timezone'} = $self->{'timezone'};
 
     PE_OK;
 }
