@@ -27,9 +27,6 @@ my @notManagedAttributes = (
     # HTML template parameter (for PSGI) (must be set in lemonldap-ng.ini)
     'staticPrefix',
 
-    # Menu display parameters
-    'redirectFormMethod', 'infoFormMethod', 'activeTimer', 'confirmFormMethod',
-
     # PSGI/CGI protection (must be set in lemonldap-ng.ini)
     'protection',
 );

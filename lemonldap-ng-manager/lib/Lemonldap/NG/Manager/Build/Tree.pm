@@ -648,7 +648,14 @@ sub tree {
                             ]
                         },
                         'logoutServices',
-                        'multiValuesSeparator'
+                        'multiValuesSeparator',
+                        {
+                            title => 'forms',
+                            nodes => [
+                                'infoFormMethod',     'confirmFormMethod',
+                                'redirectFormMethod', 'activeTimer',
+                            ]
+                        }
                     ]
                 }
             ]
