@@ -5,6 +5,7 @@ use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CONFIRM
   PE_LOGOUT_OK
+  PE_REDIRECT
   PE_OK
   PE_SAML_ART_ERROR
   PE_SAML_CONDITIONS_ERROR
@@ -706,7 +707,7 @@ sub extractFormInfo {
                 $req->urldc($slo_url);
 
                 $req->steps( [] );
-                return PE_OK;
+                return PE_REDIRECT;
             }
 
             # HTTP-POST
@@ -757,7 +758,7 @@ sub extractFormInfo {
             # Redirect user
             $req->mustRedirect(1);
             $req->steps( [] );
-            return PE_OK;
+            return PE_REDIRECT;
         }
     }
 
@@ -1032,8 +1033,7 @@ sub extractFormInfo {
 
         $req->urldc($sso_url);
 
-        $req->steps( [] );
-        return PE_OK;
+        return PE_REDIRECT;
     }
 
     # HTTP-POST
@@ -1310,7 +1310,7 @@ sub authLogout {
         $req->urldc($slo_url);
 
         # Redirect done in Portal/Simple.pm
-        return PE_OK;
+        return PE_REDIRECT;
     }
 
     # HTTP-POST
@@ -1467,7 +1467,7 @@ sub getIDP {
             $req->urldc($cdc_reader_url);
 
             $req->steps( [] );
-            return PE_OK;
+            return PE_REDIRECT;
         }
 
         $self->lmLog( 'No IDP found', 'debug' ) unless ($idp);
