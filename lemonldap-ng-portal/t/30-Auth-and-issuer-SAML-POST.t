@@ -1,12 +1,13 @@
 use Test::More;
 use strict;
 use IO::String;
+use MIME::Base64;
 
 BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 25;
+my $maintests = 26;
 my $debug     = 'error';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
@@ -92,6 +93,8 @@ SKIP: {
         ' <input type="hidden" name="SAMLRequest" id="SAMLRequest" value="...'
       );
     my $samlReq = $1;
+    ok( decode_base64($samlReq) =~ /^</s, 'SAML request seems valid' )
+      or explain( decode_base64($samlReq), '<?xml ...' );
     ok(
         $res->[2]->[0] =~ m#<form id="form" action="http://auth.idp.com(.*?)"#s,
         'Found IdP URL'
