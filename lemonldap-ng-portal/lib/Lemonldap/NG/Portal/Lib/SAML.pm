@@ -2961,13 +2961,13 @@ sub getQueryString {
     my $query_string;
 
     if ( $self->conf->{samlUseQueryStringSpecific} ) {
-        my @pairs = split( /&/, $req->query );
+        my @pairs = split( /&/, $req->param('issuerQuery') || $req->query );
         $query_string = join( ';', @pairs );
 
     }
     else {
         # TODO: verify this
-        $query_string = $req->query;
+        $query_string = $req->param('issuerQuery') || $req->query;
     }
 
     return $query_string;

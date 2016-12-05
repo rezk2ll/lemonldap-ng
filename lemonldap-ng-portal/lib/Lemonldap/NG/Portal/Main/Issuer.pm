@@ -54,6 +54,7 @@ sub _redirect {
         $self->p->setHiddenFormValue( $req, $k, $prms->{$k}, '', 0 );
     }
     $self->p->setHiddenFormValue( $req, 'issuerMethod', $req->method, '', 0);
+    $self->p->setHiddenFormValue( $req, 'issuerQuery', $req->query, '', 0);
     $req->{urldc} =
         $self->conf->{portal}
       . $req->path

@@ -879,8 +879,10 @@ sub run {
                 $self->lmLog( "Redirect user to $sso_url", 'debug' );
 
                 $req->{urldc} = $sso_url;
+                $req->mustRedirect(1);
+                $req->steps([]);
 
-                return $self->_subProcess(qw(autoRedirect));
+                return PE_OK;
             }
 
             # HTTP-POST
