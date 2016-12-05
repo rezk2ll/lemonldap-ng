@@ -1,12 +1,13 @@
 use Test::More;
 use strict;
 use IO::String;
+use MIME::Base64;
 
 BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 16;
+my $maintests = 17;
 my $debug     = 'debug';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
@@ -90,22 +91,26 @@ SKIP: {
         'Redirection points to IdP with SAML request' )
       or explain( $res->[1],
         'Location: http://auth.idp.com/saml/singleSignOn?SAMLRequest=...' );
-    my $query;
+    my ( $query, $samlReq );
     $url =~ m#^http://auth.idp.com(.+?)\?(.+)$#;
-    $url = $1;
+    $url   = $1;
     $query = $2;
+    ok( $query =~ /SAMLRequest=([^&]+)/s, 'Found SAML request in URL' );
+    $samlReq = $1;
+    #ok( decode_base64($samlReq) =~ /^</s, 'SAML request seems valid' )
+    #  or explain( decode_base64($samlReq), '<?xml ...' );
 
     # Push SAML request to IdP
     switch ('issuer');
     ok(
         $res = $issuer->_get(
             $url,
-            query => $query,
+            query  => $query,
             accept => 'text/html',
         ),
         'Launch SAML request to IdP'
     );
-    ok( $res->[0] == 200, 'Return code is 200' ) or explain($res->[0],200);
+    ok( $res->[0] == 200, 'Return code is 200' ) or explain( $res->[0], 200 );
 
     # Try to authenticate to IdP
     my $body = $res->[2]->[0];
@@ -125,11 +130,12 @@ SKIP: {
         ),
         'Post authentication'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+    ok( $res->[0] == 302, 'Response is 302' ) or explain( $res->[0], 302 );
     $cookies = $sp->getCookies($res);
     my $idpId;
     ok( $idpId = $cookies->{lemonldap}, 'Get cookie' )
       or explain( $res, 'Set-Cookie: something' );
+    print STDERR Dumper($res);
 }
 
 count($maintests);
