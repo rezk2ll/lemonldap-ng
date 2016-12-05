@@ -53,6 +53,7 @@ sub _redirect {
     foreach my $k ( keys %$prms ) {
         $self->p->setHiddenFormValue( $req, $k, $prms->{$k}, '', 0 );
     }
+    $self->p->setHiddenFormValue( $req, 'issuerMethod', $req->method, '', 0);
     $req->{urldc} =
         $self->conf->{portal}
       . $req->path

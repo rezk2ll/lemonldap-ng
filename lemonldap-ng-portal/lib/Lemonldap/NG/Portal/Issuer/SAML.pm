@@ -102,7 +102,7 @@ sub run {
     # Get HTTP request informations to know
     # if we are receving SAML request or response
     my $url                     = $req->uri;
-    my $request_method          = $req->method();
+    my $request_method          = $req->param('issuerMethod') || $req->method;
     my $content_type            = $req->contentType();
     my $idp_initiated           = $req->param('IDPInitiated');
     my $idp_initiated_sp        = $req->param('sp');
