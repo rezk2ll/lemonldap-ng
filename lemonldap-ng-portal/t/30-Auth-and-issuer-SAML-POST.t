@@ -94,7 +94,7 @@ SKIP: {
       );
     my $samlReq = $1;
     ok( decode_base64($samlReq) =~ /^</s, 'SAML request seems valid' )
-      or explain( decode_base64($samlReq), '<?xml ...' );
+      or explain( decode_base64($samlReq), '<saml ...' );
     ok(
         $res->[2]->[0] =~ m#<form id="form" action="http://auth.idp.com(.*?)"#s,
         'Found IdP URL'
