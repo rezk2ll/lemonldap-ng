@@ -2334,7 +2334,7 @@ sub forceSignatureVerification {
 
     eval {
         Lasso::Profile::set_signature_verify_hint( $profile,
-            Lasso::Constants::PROFILE_SIGNATURE_VERIFY_HINT_FORCE );
+            Lasso::Constants::PROFILE_SIGNATURE_VERIFY_HINT_MAYBE );
     };
 
     return $self->checkLassoError($@);
