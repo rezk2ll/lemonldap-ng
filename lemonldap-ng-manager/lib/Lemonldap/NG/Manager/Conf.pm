@@ -14,6 +14,7 @@ use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Manager::Constants;
 use Crypt::OpenSSL::RSA;
 use Convert::PEM;
+use URI::URL;
 
 use feature 'state';
 
@@ -1012,15 +1013,18 @@ sub applyConf {
 
     # Parse apply values
     while ( my ( $host, $request ) = each %reloadUrls ) {
-        my ( $method, $vhost, $uri ) =
-          ( $request =~ /^(https?):\/\/([^\/]+)(.*)$/ );
-        unless ($vhost) {
-            $vhost = $host;
-            $uri   = $request;
+        my $r = HTTP::Request->new( 'GET', "http://$host$request");
+        if ($request =~ /^https?:\/\/[^\/]+.*$/) {
+            my $url = URI::URL->new($request);
+            my $targetUrl = $url->scheme."://$host".$url->full_path;
+            $r =
+              HTTP::Request->new( 'GET', $targetUrl,
+                HTTP::Headers->new( Host => $url->host ) );
+            if (defined $url->userinfo && $url->userinfo =~/^([^:]+):(.*)$/) {
+                $r->authorization_basic($1,$2);
+            }
         }
-        my $r =
-          HTTP::Request->new( 'GET', "$method://$host$uri",
-            HTTP::Headers->new( Host => $vhost ) );
+
         my $response = $ua->request($r);
         if ( $response->code != 200 ) {
             $status->{$host} =
