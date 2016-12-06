@@ -7,8 +7,8 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 17;
-my $debug     = 'debug';
+my $maintests = 26;
+my $debug     = 'error';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -97,6 +97,7 @@ SKIP: {
     $query = $2;
     ok( $query =~ /SAMLRequest=([^&]+)/s, 'Found SAML request in URL' );
     $samlReq = $1;
+
     #ok( decode_base64($samlReq) =~ /^</s, 'SAML request seems valid' )
     #  or explain( decode_base64($samlReq), '<?xml ...' );
 
@@ -130,12 +131,52 @@ SKIP: {
         ),
         'Post authentication'
     );
-    ok( $res->[0] == 302, 'Response is 302' ) or explain( $res->[0], 302 );
+    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
     $cookies = $sp->getCookies($res);
     my $idpId;
     ok( $idpId = $cookies->{lemonldap}, 'Get cookie' )
       or explain( $res, 'Set-Cookie: something' );
-    print STDERR Dumper($res);
+
+    # Post SAML artifact to SP
+    ok(
+        $res->[2]->[0] =~
+          m#<form.+?action="http://auth.sp.com(.*?)".+?method="post"#,
+        'Form method is POST'
+    );
+    $url = $1;
+    ok(
+        $res->[2]->[0] =~
+          /<input type="hidden".+?name="SAMLResponse".+?value="(.+?)"/s,
+        'Found SAML response'
+    );
+    $s = "SAMLResponse=$1";
+    switch ('sp');
+    ok(
+        $res = $sp->_post(
+            $url, IO::String->new($s),
+            accept => 'text/html',
+            length => length($s),
+            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
+        ),
+        'Post artifact to SP'
+    );
+    ok( $res->[0] == 302, 'Get redirection' );
+    $cookies = $sp->getCookies($res);
+    my $spId;
+    ok( $spId = $cookies->{lemonldap}, 'Get cookie' )
+      or explain( $res, 'Set-Cookie: something' );
+    ok( $sp->getRedirection($res) eq 'http://auth.sp.com',
+        'Redirection points to SP portal' )
+      or explain( $res, 'Location: http://auth.sp.com' );
+
+    ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
+    ok( $res->[0] == 200, 'User is authentified' ) or explain( $res->[0], 200 );
+    ok(
+        $sp->getUser($res) eq 'dwho@badwolf.org@idp',
+        'User is identified as dwho@badwolf.org@idp'
+    ) or explain( $res->[1], 'Lm-Remote-User: dwho@badwolf.org@idp' );
+
+    #print STDERR Dumper($res);
 }
 
 count($maintests);
@@ -382,7 +423,7 @@ entityID="http://auth.sp.com/saml/metadata">
     <NameIDFormat>
     urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
     <AssertionConsumerService isDefault="true" index="0"
-     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
      Location="http://auth.sp.com/saml/proxySingleSignOnPost" />
     <AssertionConsumerService isDefault="false" index="1"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
@@ -605,11 +646,11 @@ entityID="http://auth.idp.com/saml/metadata">
     <NameIDFormat>
     urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
     <AssertionConsumerService isDefault="true" index="0"
-     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
-     Location="http://auth.idp.com/saml/proxySingleSignOnArtifact" />
-    <AssertionConsumerService isDefault="false" index="1"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
      Location="http://auth.idp.com/saml/proxySingleSignOnPost" />
+    <AssertionConsumerService isDefault="false" index="1"
+     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
+     Location="http://auth.idp.com/saml/proxySingleSignOnArtifact" />
   </SPSSODescriptor>
   <AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
 
