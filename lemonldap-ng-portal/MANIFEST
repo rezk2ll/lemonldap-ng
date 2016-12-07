@@ -354,6 +354,7 @@ t/26-AuthRemote.t
 t/27-AuthProxy.t
 t/28-AuthChoice.t
 t/29-AuthSSL.t
+t/30-Auth-and-issuer-SAML-Artifact.t
 t/30-Auth-and-issuer-SAML-POST.t
 t/30-Auth-and-issuer-SAML-Redirect.t
 t/40-Notifications-DBI.t

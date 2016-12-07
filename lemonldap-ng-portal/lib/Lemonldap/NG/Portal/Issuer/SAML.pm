@@ -21,6 +21,7 @@ extends 'Lemonldap::NG::Portal::Main::Issuer',
 
 has ssoUrlRe => ( is => 'rw' );
 has sloRe    => ( is => 'rw' );
+has artRe    => ( is => 'rw' );
 
 # INITIALIZATION
 
@@ -47,8 +48,11 @@ sub init {
     my $saml_sso_art_url_ret = $self->getMetaDataURL(
         "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 2 );
     $self->ssoUrlRe(
-qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)$/i
+qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)(?:\?.*)?$/i
     );
+    my $saml_art_url = $self->getMetaDataURL(
+        'samlIDPSSODescriptorArtifactResolutionServiceArtifact');
+    $self->artRe(qr/^$saml_art_url(?:\?.*)?$/i);
 
     my $saml_slo_soap_url =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 1 );
@@ -65,7 +69,7 @@ qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_u
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
         2 );
     $self->sloRe(
-qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)$/i
+qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)(?:\?.*)?$/i
     );
 
     return (
@@ -84,6 +88,18 @@ qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_u
 }
 
 # RUNNING METHODS
+
+# Override _predirect to catch artifact requests
+
+sub _pRedirect {
+    my ( $self, $req ) = @_;
+    if ( $req->uri =~ $self->artRe ) {
+        return $self->artifactServer($req);
+    }
+    else {
+        return $self->SUPER::_pRedirect($req);
+    }
+}
 
 sub run {
     my ( $self, $req ) = @_;
@@ -880,7 +896,7 @@ sub run {
 
                 $req->{urldc} = $sso_url;
                 $req->mustRedirect(1);
-                $req->steps([]);
+                $req->steps( [] );
 
                 return PE_OK;
             }
@@ -1144,6 +1160,50 @@ sub run {
     }
 
     return PE_OK;
+}
+
+sub artifactServer {
+    my ( $self, $req ) = @_;
+    $self->lmLog(
+        "URL $req->uri detected as an artifact resolution service URL",
+        'debug' );
+
+    # Artifact request are sent with SOAP trough POST
+    my $art_request = $req->body;
+    my $art_response;
+
+    # Create Login object
+    my $login = $self->createLogin( $self->lassoServer );
+
+    # Process request message
+    unless ( $self->processArtRequestMsg( $login, $art_request ) ) {
+        return $self->p->sendError( $req,
+            'Unable to process artifact request message', 400 );
+    }
+
+    # Check Destination
+    unless ( $self->checkDestination( $login->request, $req->uri ) ) {
+        return $self->p->sendError( $req, 'Bad request', 400 );
+    }
+
+    # Create artifact response
+    unless ( $art_response = $self->createArtifactResponse($login) ) {
+        return $self->p->sendError( $req,
+            "Unable to create artifact response message", 400 );
+    }
+
+    $self->{SOAPMessage} = $art_response;
+
+    # Return SOAP message
+    $self->lmLog( "Send SOAP Message: $art_response", 'debug' );
+    return [
+        200,
+        [
+            'Content-Type'   => 'application/xml',
+            'Content-Length' => length($art_response)
+        ],
+        [$art_response]
+    ];
 }
 
 sub logout {

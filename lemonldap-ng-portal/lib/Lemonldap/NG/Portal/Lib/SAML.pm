@@ -1635,7 +1635,7 @@ sub resolveArtifact {
         }
 
         my $request = HTTP::Request->new( 'POST' => $profile->msg_url );
-        $request->content_type('text/xml');
+        $request->content_type('application/xml');
         $request->content( $profile->msg_body );
 
         $self->lmLog(
@@ -1768,7 +1768,7 @@ sub createArtifactResponse {
         $self->lmLog( "Find session_id $session_id in artifact session",
             'debug' );
 
-        my $session = $self->getApacheSession( $session_id, 1 );
+        my $session = $self->p->getApacheSession( $session_id, 1 );
         unless ($session) {
             $self->lmLog( "Unable to open session $session_id", 'error' );
             return;
@@ -2335,7 +2335,7 @@ sub sendLogoutResponseToServiceProvider {
 
         $self->lmLog( "SOAP response $slo_body", 'debug' );
 
-        $self->_subProcess(qw(returnSOAPMessage));
+        $self->returnSOAPMessage;
 
         # If we are here, there was a problem with SOAP response
         $self->lmLog( "Logout response was not sent trough SOAP", 'error' );

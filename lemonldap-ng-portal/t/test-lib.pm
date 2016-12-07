@@ -10,16 +10,6 @@ BEGIN {
     use_ok('Lemonldap::NG::Portal::Main');
 }
 
-no warnings 'redefine';
-
-# Redefine LWP methods for tests
-sub LWP::UserAgent::request {
-    my ( $self, $req ) = @_;
-    return HTTP::Response->new(500);
-}
-
-package main;
-
 our $count = 1;
 $Data::Dumper::Deparse = 1;
 my $ini;
@@ -133,30 +123,27 @@ sub getCookies {
     return $res;
 }
 
-sub getRedirection {
-    my ( $self, $resp ) = @_;
+sub getHeader {
+    my ( $self, $resp, $hname ) = @_;
     my @hdrs = @{ $resp->[1] };
     my $res  = {};
     while ( my $name = shift @hdrs ) {
         my $v = shift @hdrs;
-        if ( $name eq 'Location' ) {
+        if ( $name eq $hname ) {
             return $v;
         }
     }
-    return undef
+    return undef;
+}
+
+sub getRedirection {
+    my ( $self, $resp ) = @_;
+    return $self->getHeader( $resp, 'Location' );
 }
 
 sub getUser {
     my ( $self, $resp ) = @_;
-    my @hdrs = @{ $resp->[1] };
-    my $res  = {};
-    while ( my $name = shift @hdrs ) {
-        my $v = shift @hdrs;
-        if ( $name eq 'Lm-Remote-User' ) {
-            return $v;
-        }
-    }
-    return undef
+    return $self->getHeader( $resp, 'Lm-Remote-User' );
 }
 
 sub _get {
@@ -184,7 +171,7 @@ sub _get {
             ( $args{query} ? ( QUERY_STRING => $args{query} ) : () ),
             'SCRIPT_NAME'     => '',
             'SERVER_NAME'     => 'auth.example.com',
-            'SERVER_PORT'     => '8002',
+            'SERVER_PORT'     => '80',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
             ( $args{custom} ? %{ $args{custom} } : () ),
         }
@@ -218,7 +205,7 @@ sub _post {
             'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
             'SCRIPT_NAME'    => '',
             'SERVER_NAME'    => 'auth.example.com',
-            'SERVER_PORT'    => '8002',
+            'SERVER_PORT'    => '80',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
             ( $args{custom} ? %{ $args{custom} } : () ),
             'psgix.input.buffered' => 1,

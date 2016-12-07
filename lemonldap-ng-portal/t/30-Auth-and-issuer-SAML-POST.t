@@ -648,11 +648,11 @@ entityID="http://auth.idp.com/saml/metadata">
     <NameIDFormat>
     urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
     <AssertionConsumerService isDefault="true" index="0"
-     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
-     Location="http://auth.idp.com/saml/proxySingleSignOnArtifact" />
-    <AssertionConsumerService isDefault="false" index="1"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
      Location="http://auth.idp.com/saml/proxySingleSignOnPost" />
+    <AssertionConsumerService isDefault="false" index="1"
+     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
+     Location="http://auth.idp.com/saml/proxySingleSignOnArtifact" />
   </SPSSODescriptor>
   <AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
 
