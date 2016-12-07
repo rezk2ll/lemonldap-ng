@@ -114,35 +114,63 @@ sub sendError {
     $err  ||= $req->error;
     $code ||= 500;
     $self->lmLog( "Error $code: $err", $code > 499 ? 'error' : 'notice' );
-    my $title;
-    return (
-          $req->accept =~ /json/
-        ? $self->sendJSONresponse( $req, { error => $err }, code => $code )
-        : [
+    my $title = (
+          $code >= 500 ? 'Server error'
+        : $code == 403 ? 'Forbidden'
+        : $code == 401 ? 'Authentication required'
+        :                'Error'
+    );
+
+    # Handle Ajax responses
+    if ( $req->accept =~ /json/ ) {
+        return $self->sendJSONresponse( $req, { error => $err },
+            code => $code );
+    }
+
+    # SOAP responses
+    elsif ( $req->accept =~ m#text/xml# ) {
+        my $s = '<soapenv:Body>
+ <soapenv:Fault>
+  <Faultcode>soapenv:Client</Faultcode>
+  <Faultstring>' . $err . '.</Faultstring>
+  <Detail>
+   <Key>Fred</Key>
+  </Detail>
+ </soapenv:Fault>
+</soapenv:Body>';
+        return [
+            $code,
+            [
+                'Content-Type' => 'text/xml; charset=utf-8',
+                @{ $req->respHeaders || [] },
+                'Content-Length' => length($s)
+            ],
+            [$s]
+        ];
+    }
+
+    # Default response: HTML
+    else {
+        my $s = "<html><head><title>$title</title>
+<style>
+body{background:#000;color:#fff;padding:10px 50px;font-family:sans-serif;}a{text-decoration:none;color:#fff;}h1{text-align:center;}
+</style>
+</head>
+<body>
+<h1>$title</h1>
+<p>$err</p>
+<center><a href=\"http://lemonldap-ng.org\">LemonLDAP::NG</a></center>'
+</body>
+</html>";
+        return [
             $code,
             [
                 'Content-Type' => 'text/html; charset=utf-8',
-                @{ $req->respHeaders || [] }
+                @{ $req->respHeaders || [] }, 'Content-Length' => length($s)
             ],
-            [
-                '<html><head>',
-                '<title>',
-                $title = (
-                      $code >= 500 ? 'Server error'
-                    : $code == 403 ? 'Forbidden'
-                    : $code == 401 ? 'Authentication required'
-                    :                'Error'
-                ),
-                '</title>',
-'<style>body{background:#000;color:#fff;padding:10px 50px;font-family:sans-serif;}a{text-decoration:none;color:#fff;}h1{text-align:center;}</style>',
-                '</head><body>',
-                "<h1>$title</h1>",
-                "<p>$err</p>",
-'<center><a href="http://lemonldap-ng.org">LemonLDAP::NG</a></center>',
-                '</body></html>'
-            ]
-        ]
-    );
+            [$s]
+        ];
+    }
 }
 
 sub abort {
