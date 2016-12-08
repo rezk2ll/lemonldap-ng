@@ -1016,7 +1016,9 @@ sub applyConf {
         my $r = HTTP::Request->new( 'GET', "http://$host$request");
         if ($request =~ /^https?:\/\/[^\/]+.*$/) {
             my $url = URI::URL->new($request);
-            my $targetUrl = $url->scheme."://$host".$url->full_path;
+            my $targetUrl = $url->scheme."://".$host;
+            $targetUrl .= ":".$url->port if defined ($url->port);
+            $targetUrl .= $url->full_path;
             $r =
               HTTP::Request->new( 'GET', $targetUrl,
                 HTTP::Headers->new( Host => $url->host ) );
