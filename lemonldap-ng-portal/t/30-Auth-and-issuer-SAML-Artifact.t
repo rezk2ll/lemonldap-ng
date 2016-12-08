@@ -7,8 +7,8 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 22;
-my $debug     = 'debug';
+my $maintests = 26;
+my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -158,22 +158,21 @@ m#http://auth.sp.com(/saml/proxySingleSignOnArtifact)\?(SAMLart=[^&]+)#,
         ),
         'Push artifact to SP'
     );
-    #exit;
-    #ok( $res->[0] == 302, 'Get redirection' );
-    #$cookies = $sp->getCookies($res);
-    #my $spId;
-    #ok( $spId = $cookies->{lemonldap}, 'Get cookie' )
-    #  or explain( $res, 'Set-Cookie: something' );
-    #ok( $sp->getRedirection($res) eq 'http://auth.sp.com',
-    #    'Redirection points to SP portal' )
-    #  or explain( $res, 'Location: http://auth.sp.com' );
+    ok( $res->[0] == 302, 'Get redirection' );
+    $cookies = $sp->getCookies($res);
+    my $spId;
+    ok( $spId = $cookies->{lemonldap}, 'Get cookie' )
+      or explain( $res, 'Set-Cookie: something' );
+    ok( $sp->getRedirection($res) eq 'http://auth.sp.com',
+        'Redirection points to SP portal' )
+      or explain( $res, 'Location: http://auth.sp.com' );
 
-    #ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
-    #ok( $res->[0] == 200, 'User is authentified' ) or explain( $res->[0], 200 );
-    #ok(
-    #    $sp->getUser($res) eq 'dwho@badwolf.org@idp',
-    #    'User is identified as dwho@badwolf.org@idp'
-    #) or explain( $res->[1], 'Lm-Remote-User: dwho@badwolf.org@idp' );
+    ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
+    ok( $res->[0] == 200, 'User is authentified' ) or explain( $res->[0], 200 );
+    ok(
+        $sp->getUser($res) eq 'dwho@badwolf.org@idp',
+        'User is identified as dwho@badwolf.org@idp'
+    ) or explain( $res->[1], 'Lm-Remote-User: dwho@badwolf.org@idp' );
 
     #print STDERR Dumper($res);
 }
@@ -209,7 +208,6 @@ sub LWP::UserAgent::request {
     }
     $httpResp->content( join( '', @{ $res->[2] } ) );
     count(3);
-    print STDERR Dumper($httpResp);
     return $httpResp;
 }
 

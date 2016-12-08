@@ -2734,6 +2734,7 @@ sub checkDestination {
     my $portal = $self->conf->{portal};
     $portal =~ s#^(https?://[^/]+)/.*#$1#;    # remove path of portal URL
     $url = $portal . $url;
+    $url =~ s/\?.*//;
 
     # Compare Destination and URL
     if ( $destination eq $url ) {
