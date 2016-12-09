@@ -36,7 +36,8 @@ sub init {
         $path =~ s/^.*?(\w+).*?$/$1/;
         $self->addUnauthRoute( $path => '_redirect',  ['GET'] );
         $self->addUnauthRoute( $path => '_pRedirect', ['POST'] );
-        $self->addAuthRoute( $path => "_forAuthUser", [ 'GET', 'POST' ] );
+        $self->addAuthRoute( $path => "_forAuthUser",  ['GET'] );
+        $self->addAuthRoute( $path => "_pForAuthUser", ['POST'] );
     }
     else {
         $self->lmLog( "No path declared for issuer $type. Skipping", 'debug' );
@@ -53,8 +54,8 @@ sub _redirect {
     foreach my $k ( keys %$prms ) {
         $self->p->setHiddenFormValue( $req, $k, $prms->{$k}, '', 0 );
     }
-    $self->p->setHiddenFormValue( $req, 'issuerMethod', $req->method, '', 0);
-    $self->p->setHiddenFormValue( $req, 'issuerQuery', $req->query, '', 0);
+    $self->p->setHiddenFormValue( $req, 'issuerMethod', $req->method, '', 0 );
+    $self->p->setHiddenFormValue( $req, 'issuerQuery',  $req->query,  '', 0 );
     $req->{urldc} =
         $self->conf->{portal}
       . $req->path
@@ -79,6 +80,7 @@ sub _redirect {
 
 sub _pRedirect {
     my ( $self, $req ) = @_;
+    $self->lmLog( 'Parsing posted datas', 'debug' );
     $req->parseBody;
     return $self->_redirect($req);
 }
@@ -97,6 +99,13 @@ sub _forAuthUser {
             },
         ]
     );
+}
+
+sub _pForAuthUser {
+    my ( $self, $req ) = @_;
+    $self->lmLog( 'Parsing posted datas', 'debug' );
+    $req->parseBody;
+    return $self->_forAuthUser($req);
 }
 
 1;

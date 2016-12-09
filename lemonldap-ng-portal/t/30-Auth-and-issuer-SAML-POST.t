@@ -7,8 +7,8 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 26;
-my $debug     = 'error';
+my $maintests = 33;
+my $debug     = 'debug';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -177,6 +177,50 @@ SKIP: {
         $sp->getUser($res) eq 'dwho@badwolf.org@idp',
         'User is identified as dwho@badwolf.org@idp'
     ) or explain( $res->[1], 'Lm-Remote-User: dwho@badwolf.org@idp' );
+
+    # Logout initiated by SP
+    ok(
+        $res = $sp->_get(
+            '/',
+            query  => 'logout',
+            cookie => "lemonldap=$spId",
+            accept => 'text/html'
+        ),
+        'Query SP for logout'
+    );
+    ok( $res->[0] == 200, 'Return code is 200' );
+    ok(
+        $res->[2]->[0] =~
+          /<input type="hidden".+?name="SAMLRequest".+?value="(.+?)"/s,
+        'Found SAML request'
+      )
+      or explain(
+        $res->[2],
+        ' <input type="hidden" name="SAMLRequest" id="SAMLRequest" value="...'
+      );
+    $samlReq = $1;
+    ok( decode_base64($samlReq) =~ /^</s, 'SAML request seems valid' )
+      or explain( decode_base64($samlReq), '<saml ...' );
+    ok(
+        $res->[2]->[0] =~ m#<form id="form" action="http://auth.idp.com(.*?)"#s,
+        'Found IdP URL'
+    );
+    $url = $1;
+
+    # Push SAML logout request to IdP
+    switch ('issuer');
+    $s = "SAMLRequest=$samlReq";
+    ok(
+        $res = $issuer->_post(
+            $url,
+            IO::String->new($s),
+            accept => 'text/html',
+            cookie => "lemonldap=$idpId",
+            length => length($s)
+        ),
+        'Post SAML request to IdP'
+    );
+    ok( $res->[0] == 200, 'Return code is 200' );
 
     #print STDERR Dumper($res);
 }
@@ -515,6 +559,7 @@ sub sp {
                     idp => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
                         samlIDPMetaDataOptionsSSOBinding     => 'POST',
+                        samlIDPMetaDataOptionsSLOBinding     => 'POST',
                     }
                 },
                 samlIDPMetaDataXML => {

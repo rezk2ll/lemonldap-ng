@@ -13,6 +13,11 @@ use POSIX qw(strftime);    # Convert SAML2 date into timestamp
 use Time::Local;           # Convert SAML2 date into timestamp
 use Encode;                # Encode attribute values
 use URI;                   # Get metadata URL path
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_OK
+  PE_REDIRECT
+  PE_SAML_SLO_ERROR
+);
 
 our $VERSION = '2.0.0';
 
@@ -2289,7 +2294,7 @@ sub sendLogoutResponseToServiceProvider {
     # Logout response
     unless ( $self->buildLogoutResponseMsg($logout) ) {
         $self->lmLog( "Unable to build SLO response", 'error' );
-        return 0;
+        return PE_SAML_SLO_ERROR;
     }
 
     # Send response depending on request method
@@ -2303,7 +2308,7 @@ sub sendLogoutResponseToServiceProvider {
         $self->lmLog( "Redirect user to $slo_url", 'debug' );
 
         die 'TODO: autoRedirect must not be called now';
-        return $self->autoRedirect;
+        return PE_REDIRECT;
     }
 
     # HTTP-POST
@@ -2323,7 +2328,8 @@ sub sendLogoutResponseToServiceProvider {
           if ($relaystate);
 
         die 'autoPost must not be called here';
-        return $self->autoPost;
+        $req->steps(['autoPost']);
+        return PE_OK;
     }
 
     # HTTP-SOAP
@@ -2340,7 +2346,7 @@ sub sendLogoutResponseToServiceProvider {
         # If we are here, there was a problem with SOAP response
         $self->lmLog( "Logout response was not sent trough SOAP", 'error' );
 
-        return 0;
+        return PE_SAML_SLO_ERROR;
 
     }
 
@@ -2945,8 +2951,7 @@ sub sendSLOErrorResponse {
 
     unless ( $self->setSessionFromDump( $logout, $session ) ) {
         $self->lmLog( "Could not set empty session in logout object", 'error' );
-        die 'Replace this';
-        $self->quit();
+        return PE_SAML_SLO_ERROR;
     }
 
     # Send unvalidated SLO response

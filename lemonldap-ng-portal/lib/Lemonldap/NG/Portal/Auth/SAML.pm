@@ -1285,8 +1285,8 @@ sub authLogout {
 
     # Build Logout Request
     my $logout =
-      $self->createLogoutRequest( $self->lassoServer, $session_dump, $method,
-        $signSLOMessage );
+      $self->createLogoutRequest( $req, $self->lassoServer, $session_dump,
+        $method, $signSLOMessage );
     unless ($logout) {
         $self->lmLog( "Could not create logout request", 'error' );
         return PE_SAML_SLO_ERROR;
@@ -1322,13 +1322,14 @@ sub authLogout {
         my $slo_body = $logout->msg_body;
 
         $req->postUrl($slo_url);
-        $self->postFields( { 'SAMLRequest' => $slo_body } );
+        $req->postFields( { 'SAMLRequest' => $slo_body } );
 
         # RelayState
         $self->postFields->{'RelayState'} = $logout->msg_relayState
           if ( $logout->msg_relayState );
 
         # Post done in Portal/Simple.pm
+        $req->steps( ['autoPost'] );
         return PE_OK;
     }
 
