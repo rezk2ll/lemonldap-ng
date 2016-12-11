@@ -420,7 +420,7 @@
 "oidcRPName": "OpenID Connect RP Name",
 "oidcRPStateTimeout": "State session timeout",
 "oidcServiceMetaData": "OpenID Connect Service",
-"oidcServiceMetaDataAuthorizeURI": "Autorization",
+"oidcServiceMetaDataAuthorizeURI": "Authorization",
 "oidcServiceMetaDataEndPoints": "End points",
 "oidcServiceMetaDataJWKSURI": "JWKS",
 "oidcServiceMetaDataKeys": "Keys",

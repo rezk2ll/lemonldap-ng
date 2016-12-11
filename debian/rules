@@ -27,7 +27,7 @@ override_dh_auto_build:
 	$(MAKE) all
 
 override_dh_auto_install:
-	$(MAKE) install install_fr_doc_site \
+	$(MAKE) install \
 			DESTDIR=$(CURDIR)/debian/tmp \
 			PREFIX=/usr \
 			LMPREFIX=/usr/share/lemonldap-ng/ \
@@ -49,7 +49,10 @@ override_dh_auto_install:
 			DEFDOCDIR=/usr/share/doc/lemonldap-ng-doc \
 			FRDOCDIR=/usr/share/doc/lemonldap-ng-fr-doc \
 			PROD=yes
-
+	$(MAKE) install_fr_doc_site \
+			DESTDIR=$(CURDIR)/debian/tmp \
+			DOCDIR=/usr/share/doc/lemonldap-ng-fr-doc \
+			USEDEBIANLIBS=yes
 	mkdir $(TMP)/$(LMSHAREDIR)/portal
 	mv $(TMP)/$(LMVARDIR)/portal/*.pl $(TMP)/$(LMSHAREDIR)/portal/
 	for i in handler portal manager test; do \

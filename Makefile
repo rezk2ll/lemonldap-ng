@@ -168,7 +168,9 @@ PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSKINSDIR)/bootstrap/fonts \
 			$(RPORTALSKINSDIR)/bootstrap/js/bootstrap* \
 			$(RPORTALSKINSDIR)/common/js/jquery-* \
 			$(RPORTALSKINSDIR)/common/js/jquery.cookie*
-DOCLIBSTOREMOVEFORDEBIAN=pages/documentation/current/lib/tpl/bootstrap3 pages/documentation/current/lib/scripts/jquery-ui*.js
+DOCLIBSTOREMOVEFORDEBIAN=pages/documentation/current/lib/tpl/bootstrap3 \
+			pages/documentation/current/lib/scripts/jquery-ui*.js \
+			pages/documentation/current/bootswatch/3.3.4/flatly/bootstrap.min.css
 DOCEXTERNALLIBS=$(DOCLIBSTOREMOVEFORDEBIAN)
 MANAGEREXTERNALLIBS=$(RMANAGERSTATICDIR)/bwr/
 PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN) $(RPORTALSKINSDIR)/common/js/jquery*
@@ -943,10 +945,7 @@ debian-packages: debian-dist
 	rm -rf lemonldap-ng-$$version && \
 	$(UNCOMPRESS) lemonldap-ng_$$version.orig.$(COMPRESSSUFFIX) && \
 	cd lemonldap-ng-$$version && \
-	debuild -us -uc -b --lintian-opts -i \
-		--lintian-opts -v --lintian-opts -I --lintian-opts -E \
-		--lintian-opts --color --lintian-opts auto --lintian-opts -L \
-		--lintian-opts +=pedantic
+	dpkg-buildpackage -us -uc
 
 # Developper corner
 # -----------------

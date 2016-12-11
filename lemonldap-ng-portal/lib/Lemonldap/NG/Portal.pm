@@ -110,7 +110,7 @@ described below.
 The portal part inherits from L<CGI> so yo can use it both with Apache 1 and 2
 and use all L<CGI> features.
 
-=head2 Authentication, Autorization, Accounting
+=head2 Authentication, Authorization, Accounting
 
 =head3 B<Authentication>
 

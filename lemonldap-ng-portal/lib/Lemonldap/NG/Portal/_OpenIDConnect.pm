@@ -389,7 +389,7 @@ sub buildHybridAuthnResponse {
 }
 
 ## @method String getAuthorizationCodeAccessToken(String op, String code, String auth_method)
-# Get Token response with autorization code
+# Get Token response with authorization code
 # @param op OpenIP Provider configuration key
 # @param code Code
 # @param auth_method Authentication Method
@@ -1591,7 +1591,7 @@ Build Authentication Response URI for Hybrid Flow
 
 =head2 getAuthorizationCodeAccessToken
 
-Get Token response with autorization code
+Get Token response with authorization code
 
 =head2 checkTokenResponseValidity
 

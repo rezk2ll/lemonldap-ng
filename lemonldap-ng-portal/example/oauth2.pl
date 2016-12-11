@@ -703,9 +703,9 @@ else {
     print
 "<a href=\"$hybrid_redirect_url\" class=\"btn btn-info\" role=\"button\">Hybrid Flow</a>\n";
     print
-"<a href=\"$request_redirect_url\" class=\"btn btn-info\" role=\"button\">Autorization Code Flow with request</a>\n";
+"<a href=\"$request_redirect_url\" class=\"btn btn-info\" role=\"button\">Authorization Code Flow with request</a>\n";
     print
-"<a href=\"$request_uri_redirect_url\" class=\"btn btn-info\" role=\"button\">Autorization Code Flow with request_uri</a>\n";
+"<a href=\"$request_uri_redirect_url\" class=\"btn btn-info\" role=\"button\">Authorization Code Flow with request_uri</a>\n";
     print "</div>\n";
     print "<h2 class=\"text-center\">Configuration</h2>\n";
     print "<div class=\"text-center\">\n";
