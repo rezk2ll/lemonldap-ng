@@ -2328,7 +2328,7 @@ sub sendLogoutResponseToServiceProvider {
           if ($relaystate);
 
         die 'autoPost must not be called here';
-        $req->steps(['autoPost']);
+        $req->steps( ['autoPost'] );
         return PE_OK;
     }
 

@@ -7,8 +7,8 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 26;
-my $debug     = 'error';
+my $maintests = 32;
+my $debug     = 'debug';
 my $res;
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -176,6 +176,41 @@ SKIP: {
         'User is identified as dwho@badwolf.org@idp'
     ) or explain( $res->[1], 'Lm-Remote-User: dwho@badwolf.org@idp' );
 
+    # Logout initiated by SP
+    ok(
+        $res = $sp->_get(
+            '/',
+            query  => 'logout',
+            cookie => "lemonldap=$spId",
+            accept => 'text/html'
+        ),
+        'Query SP for logout'
+    );
+    ok( $res->[0] == 302, 'Return code is 302' );
+    ok( $url = $sp->getRedirection($res), 'Get location header' )
+      or explain( $res->[1],
+        'Location: http://auth.idp.com/saml/singleLogout?SAMLRequest=...' );
+    ok( $url =~ m#^http://auth.idp.com/saml/singleLogout\?SAMLRequest=(.+)#,
+        'Redirection points to IdP with SAML request' )
+      or explain( $res->[1],
+        'Location: http://auth.idp.com/saml/singleLogout?SAMLRequest=...' );
+    $url =~ m#^http://auth.idp.com(.+?)\?(.+)$#;
+    $url   = $1;
+    $query = $2;
+    ok( $query =~ /SAMLRequest=([^&]+)/s, 'Found SAML request in URL' );
+    $samlReq = $1;
+
+    # Push SAML logout request to IdP
+    switch ('issuer');
+    ok(
+        $res = $issuer->_get(
+            $url,
+            query  => $query,
+            accept => 'text/html',
+            cookie => "lemonldap=$idpId",
+        ),
+        'Launch SAML logout request to IdP'
+    );
     #print STDERR Dumper($res);
 }
 
@@ -513,6 +548,8 @@ sub sp {
                     idp => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
                         samlIDPMetaDataOptionsSSOBinding     => 'Redirect',
+                        samlIDPMetaDataOptionsSLOBinding     => 'Redirect',
+                        samlIDPMetaDataOptionsSignSLOMessage => 0,
                     }
                 },
                 samlIDPMetaDataXML => {
