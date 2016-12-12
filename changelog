@@ -1,5 +1,27 @@
 lemonldap-ng (2.0.0) stable; urgency=low
 
+lemonldap-ng (1.9.7) stable; urgency=high
+
+    * [LEMONLDAP-1097] - invalid base64 encoding on openidconnect key2jwks
+    * [LEMONLDAP-1099] - FCGI: reload method return Internal Server Error
+    * [LEMONLDAP-1101] - SAML IDP-initiated : Federation not found on login
+    * [LEMONLDAP-1102] - Random access denied
+    * [LEMONLDAP-1105] - Broken openidconect oidcRPMetaDataOptionsExtraClaims parsing (or saving) when using sql datastore
+    * [LEMONLDAP-1107] - Use of uninitialized value in pattern match...Simple.pm line 1561
+    * [LEMONLDAP-1109] - Notification DBI backend has compilation error
+    * [LEMONLDAP-1117] - Corrupted persistent session when value has accentued characters and storage is LDAP
+    * [LEMONLDAP-1096] - Use manager libraries for doc with "external" hook
+    * [LEMONLDAP-1098] - Allow access tokens to be gathered as parameters too
+    * [LEMONLDAP-1100] - Create custom lltype for custom handler
+    * [LEMONLDAP-1104] - Allow the parameters for the reload url to contain basic credentials
+    * [LEMONLDAP-1106] - returnJSONError on _OpenIDConnect.pm should return a 400 status not a 200
+    * [LEMONLDAP-1108] - caFile/caPathc options should be available for LDAPS, not only for LDAP+TLS
+    * [LEMONLDAP-1110] - Provide autopkgtest tests
+    * [LEMONLDAP-1114] - Missing DirectoryIndex in offline documentation
+    * [LEMONLDAP-1116] - Change how we check signatures on SAML messages
+    * [LEMONLDAP-173]  - Token for cross domain authentication
+    * [LEMONLDAP-1115] - Documentation error
+
 lemonldap-ng (1.9.6) stable; urgency=high
 
     * [LEMONLDAP-1058] - Timeout on save conf
