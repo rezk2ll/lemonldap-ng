@@ -2199,6 +2199,10 @@ sub registerLogin {
     if ( $self->{loginHistoryEnabled} ) {
         my $history = $self->{sessionInfo}->{loginHistory} ||= {};
 
+        foreach ( @{ $history->{failedLogin} } ) {
+            utf8::decode( $_->{error} );
+        }
+
         my $type = ( $errorCode ? "failed" : "success" ) . "Login";
         $history->{$type} ||= [];
         $self->lmLog( "Current login saved into $type", "debug" );
