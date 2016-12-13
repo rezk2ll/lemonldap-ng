@@ -7,8 +7,8 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 26;
-my $debug     = 'error';
+my $maintests = 28;
+my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -174,6 +174,16 @@ m#http://auth.sp.com(/saml/proxySingleSignOnArtifact)\?(SAMLart=[^&]+)#,
         'User is identified as dwho@badwolf.org@idp'
     ) or explain( $res->[1], 'Lm-Remote-User: dwho@badwolf.org@idp' );
 
+    # Logout initiated by SP
+    ok(
+        $res = $sp->_get(
+            '/',
+            query  => 'logout',
+            cookie => "lemonldap=$spId",
+            accept => 'text/html'
+        ),
+        'Query SP for logout'
+    );
     #print STDERR Dumper($res);
 }
 
@@ -198,10 +208,10 @@ sub LWP::UserAgent::request {
         ),
         'Execute request'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+    ok( $res->[0] == 200 or $res->[0] == 400, 'Response is 200 or 400' ) or explain( $res->[0], "200 or 400" );
     ok( $issuer->getHeader( $res, 'Content-Type' ) eq 'application/xml',
         'Content is XML' );
-    my $httpResp = HTTP::Response->new( $res->[0], 'OK');
+    my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
 
     while ( my $name = shift @{ $res->[1] } ) {
         $httpResp->header( $name, shift( @{ $res->[1] } ) );
@@ -231,6 +241,7 @@ sub issuer {
                 samlSPMetaDataOptions  => {
                     'sp.com' => {
                         samlSPMetaDataOptionsEncryptionMode => 'none',
+                        samlSPMetaDataOptionsSignSLOMessage => 0,
                     }
                 },
                 samlSPMetaDataExportedAttributes => {

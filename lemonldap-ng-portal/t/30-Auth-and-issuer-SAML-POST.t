@@ -9,7 +9,7 @@ BEGIN {
 
 my $maintests = 33;
 my $debug     = 'debug';
-my $res;
+my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
 SKIP: {
@@ -19,12 +19,10 @@ SKIP: {
     }
 
     # Initialization
-    my $issuer;
     ok( $issuer = issuer(), 'Issuer portal' );
     $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
     switch ('sp');
 
-    my $sp;
     ok( $sp = sp(), 'SP portal' );
     $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
 
@@ -139,7 +137,7 @@ SKIP: {
     ok( $idpId = $cookies->{lemonldap}, 'Get cookie' )
       or explain( $res, 'Set-Cookie: something' );
 
-    # Post SAML artifact to SP
+    # Post SAML response to SP
     ok(
         $res->[2]->[0] =~
           m#<form.+?action="http://auth.sp.com(.*?)".+?method="post"#,

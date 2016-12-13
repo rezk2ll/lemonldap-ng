@@ -451,7 +451,7 @@ sub checkMessage {
             $self->lmLog( "SAML method: HTTP-SOAP", 'debug' );
 
             # SOAP is always a request
-            $request = $req->param('POSTDATA');
+            $request = $req->body;
             $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
 
         }
@@ -1862,7 +1862,7 @@ sub sendSOAPMessage {
     my $response;
 
     my $request = HTTP::Request->new( 'POST' => $endpoint );
-    $request->content_type('text/xml');
+    $request->content_type('application/xml');
     $request->content($message);
 
     $self->lmLog( "Send SOAP message $message to $endpoint", 'debug' );
@@ -2941,7 +2941,6 @@ sub deleteSAMLSecondarySessions {
 # Send an SLO error response
 # @param logout Lasso::Logout object
 # @param method HTTP method
-# @return nothing
 sub sendSLOErrorResponse {
     my ( $self, $req, $logout, $method ) = @_;
 
@@ -2956,6 +2955,26 @@ sub sendSLOErrorResponse {
 
     # Send unvalidated SLO response
     return $self->sendLogoutResponseToServiceProvider( $req, $logout, $method );
+}
+
+## @method void sendSLOErrorResponse(Lasso::Logout logout, string method)
+# Send an SLO error response
+# @param logout Lasso::Logout object
+# @param method HTTP method
+# @return PSGI response
+sub sendSLOSoapErrorResponse {
+    my($self, $req, $logout, $method ) = @_;
+
+    # Load empty session
+    my $session =
+      '<Session xmlns="http://www.entrouvert.org/namespaces/lasso/0.0"/>';
+
+    unless ( $self->setSessionFromDump( $logout, $session ) ) {
+        return $self->p->sendError( "Could not set empty session in logout object");
+    }
+    my $slo_body = $logout->msg_body;
+    $self->lmLog( "SOAP response $slo_body", 'debug' );
+    return [200,['Content-Type'   => 'application/xml','Content-Length' => length($slo_body)],[$slo_body]];
 }
 
 ## @method string getQueryString()

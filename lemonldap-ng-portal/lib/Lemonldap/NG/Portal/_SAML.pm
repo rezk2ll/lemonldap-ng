@@ -1756,7 +1756,7 @@ sub resolveArtifact {
         }
 
         my $request = HTTP::Request->new( 'POST' => $profile->msg_url );
-        $request->content_type('text/xml');
+        $request->content_type('application/xml');
         $request->content( $profile->msg_body );
 
         $self->lmLog(
@@ -1978,7 +1978,7 @@ sub sendSOAPMessage {
     my $response;
 
     my $request = HTTP::Request->new( 'POST' => $endpoint );
-    $request->content_type('text/xml');
+    $request->content_type('application/xml');
     $request->content($message);
 
     $self->lmLog( "Send SOAP message $message to $endpoint", 'debug' );

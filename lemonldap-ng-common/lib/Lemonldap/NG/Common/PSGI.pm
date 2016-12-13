@@ -128,7 +128,7 @@ sub sendError {
     }
 
     # SOAP responses
-    elsif ( $req->accept =~ m#text/xml# ) {
+    elsif ( $req->accept =~ m#(?:application|text)/xml# ) {
         my $s = '<soapenv:Body>
  <soapenv:Fault>
   <Faultcode>soapenv:Client</Faultcode>
@@ -141,7 +141,7 @@ sub sendError {
         return [
             $code,
             [
-                'Content-Type' => 'text/xml; charset=utf-8',
+                'Content-Type' => 'application/xml; charset=utf-8',
                 @{ $req->respHeaders || [] },
                 'Content-Length' => length($s)
             ],

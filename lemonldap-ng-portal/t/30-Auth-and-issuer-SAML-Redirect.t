@@ -9,7 +9,7 @@ BEGIN {
 
 my $maintests = 32;
 my $debug     = 'debug';
-my $res;
+my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
 SKIP: {
@@ -19,12 +19,10 @@ SKIP: {
     }
 
     # Initialization
-    my $issuer;
     ok( $issuer = issuer(), 'Issuer portal' );
     $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
     switch ('sp');
 
-    my $sp;
     ok( $sp = sp(), 'SP portal' );
     $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
 
@@ -211,6 +209,7 @@ SKIP: {
         ),
         'Launch SAML logout request to IdP'
     );
+
     #print STDERR Dumper($res);
 }
 
