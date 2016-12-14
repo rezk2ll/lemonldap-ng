@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 17;
+my $maintests = 18;
 my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -52,6 +52,7 @@ SKIP: {
         ),
         'Query IdP to access to SP'
     );
+    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
 
     # Post SAML response to SP
     ok(
