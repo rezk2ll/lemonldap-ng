@@ -24,7 +24,7 @@ ok(
 ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
 count(2);
 
-# Try yo authenticate
+# Try to authenticate
 # -------------------
 ok(
     $res = $client->_post(

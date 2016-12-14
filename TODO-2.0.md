@@ -6,7 +6,9 @@
 
 * Verify `useSafeJail=0`
 * Finish IssuerGet logout (-> info())
-* Import r5420 (ssl_opts) to trunk
+* Import r5420 (ssl\_opts) to trunk
+
+* Don't display "login" when connected
 
 # Password
 

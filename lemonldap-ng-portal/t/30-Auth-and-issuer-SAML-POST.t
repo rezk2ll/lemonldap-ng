@@ -158,8 +158,10 @@ SKIP: {
             length => length($s),
             cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
-        'Post artifact to SP'
+        'Post SAML response to SP'
     );
+
+    # Verify authentication on SP
     ok( $res->[0] == 302, 'Get redirection' );
     $cookies = $sp->getCookies($res);
     my $spId;

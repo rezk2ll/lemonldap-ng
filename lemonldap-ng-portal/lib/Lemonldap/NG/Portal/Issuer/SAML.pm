@@ -1418,6 +1418,56 @@ sub soapSloServer {
 }
 
 sub logout {
+    my($self,$req) = @_;
+
+    # Session ID
+    my $session_id = $req->{sessionInfo}->{_session_id} || $req->{id};
+
+    # Close SAML sessions
+    unless ( $self->deleteSAMLSecondarySessions($session_id) ) {
+        $self->lmLog( "Fail to delete SAML sessions", 'error' );
+    }
+
+    # Create Logout object
+    my $logout = $self->createLogout( $self->lassoServer );
+
+    # Load Session and Identity if they exist
+    my $session  = $req->{sessionInfo}->{_lassoSessionDump};
+    my $identity = $req->{sessionInfo}->{_lassoIdentityDump};
+
+    if ($session) {
+        unless ( $self->setSessionFromDump( $logout, $session ) ) {
+            $self->lmLog( "Unable to load Lasso Session", 'error' );
+            return PE_SAML_SLO_ERROR;
+        }
+        $self->lmLog( "Lasso Session loaded", 'debug' );
+    }
+
+    # No need to initiate logout requests on SP, if no SAML session is
+    # available into the session.
+    else {
+        return PE_OK;
+    }
+
+    if ($identity) {
+        unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
+            $self->lmLog( "Unable to load Lasso Identity", 'error' );
+            return PE_SAML_SLO_ERROR;
+        }
+        $self->lmLog( "Lasso Identity loaded", 'debug' );
+    }
+
+    # Proceed to logout on all others SP.
+    # Verify that logout response is correctly sent. If we have to wait for
+    # providers during HTTP-REDIRECT process, return PE_INFO to notify to wait
+    # for them.
+    # Redirect on logout page when all is done.
+    if ( $self->sendLogoutRequestToProviders($logout) ) {
+        $self->{urldc} = $ENV{SCRIPT_NAME} . "?logout=1";
+        return PE_INFO;
+    }
+
+    return PE_OK;
 }
 
 # INTERNAL METHODS
