@@ -1641,6 +1641,7 @@ sub resolveArtifact {
 
         my $request = HTTP::Request->new( 'POST' => $profile->msg_url );
         $request->content_type('application/xml');
+        $request->header( Accept => 'application/xml' );
         $request->content( $profile->msg_body );
 
         $self->lmLog(
@@ -1863,6 +1864,7 @@ sub sendSOAPMessage {
 
     my $request = HTTP::Request->new( 'POST' => $endpoint );
     $request->content_type('application/xml');
+    $request->header( Accept => 'application/xml' );
     $request->content($message);
 
     $self->lmLog( "Send SOAP message $message to $endpoint", 'debug' );
@@ -2963,18 +2965,26 @@ sub sendSLOErrorResponse {
 # @param method HTTP method
 # @return PSGI response
 sub sendSLOSoapErrorResponse {
-    my($self, $req, $logout, $method ) = @_;
+    my ( $self, $req, $logout, $method ) = @_;
 
     # Load empty session
     my $session =
       '<Session xmlns="http://www.entrouvert.org/namespaces/lasso/0.0"/>';
 
     unless ( $self->setSessionFromDump( $logout, $session ) ) {
-        return $self->p->sendError( "Could not set empty session in logout object");
+        return $self->p->sendError(
+            "Could not set empty session in logout object");
     }
     my $slo_body = $logout->msg_body;
     $self->lmLog( "SOAP response $slo_body", 'debug' );
-    return [200,['Content-Type'   => 'application/xml','Content-Length' => length($slo_body)],[$slo_body]];
+    return [
+        200,
+        [
+            'Content-Type'   => 'application/xml',
+            'Content-Length' => length($slo_body)
+        ],
+        [$slo_body]
+    ];
 }
 
 ## @method string getQueryString()

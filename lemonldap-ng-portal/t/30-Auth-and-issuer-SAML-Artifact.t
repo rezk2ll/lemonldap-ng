@@ -184,6 +184,7 @@ m#http://auth.sp.com(/saml/proxySingleSignOnArtifact)\?(SAMLart=[^&]+)#,
         ),
         'Query SP for logout'
     );
+
     #print STDERR Dumper($res);
 }
 
@@ -204,13 +205,15 @@ sub LWP::UserAgent::request {
         $res = $issuer->_post(
             $url, IO::String->new($s),
             length => length($s),
-            type   => 'text/xml',
+            type   => 'application/xml',
         ),
         'Execute request'
     );
-    ok( $res->[0] == 200 or $res->[0] == 400, 'Response is 200 or 400' ) or explain( $res->[0], "200 or 400" );
-    ok( $issuer->getHeader( $res, 'Content-Type' ) eq 'application/xml',
-        'Content is XML' );
+    ok( $res->[0] == 200 or $res->[0] == 400, 'Response is 200 or 400' )
+      or explain( $res->[0], "200 or 400" );
+    ok( $issuer->getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
+        'Content is XML' )
+      or explain( $res->[1], 'Content-Type => application/xml' );
     my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
 
     while ( my $name = shift @{ $res->[1] } ) {

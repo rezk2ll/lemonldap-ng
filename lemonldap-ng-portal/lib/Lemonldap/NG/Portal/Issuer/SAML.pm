@@ -137,13 +137,13 @@ sub run {
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
         # Get hidden params for IDP initiated if needed
-        $idp_initiated = $self->p->getHiddenFormValue( $req, 'IDPInitiated' )
-          unless defined $idp_initiated;
-        $idp_initiated_sp = $self->p->getHiddenFormValue( $req, 'sp' )
-          unless defined $idp_initiated_sp;
-        $idp_initiated_spConfKey =
-          $self->p->getHiddenFormValue( $req, 'spConfKey' )
-          unless defined $idp_initiated_spConfKey;
+        #$idp_initiated = $self->p->getHiddenFormValue( $req, 'IDPInitiated' )
+        #  unless defined $idp_initiated;
+        #$idp_initiated_sp = $self->p->getHiddenFormValue( $req, 'sp' )
+        #  unless defined $idp_initiated_sp;
+        #$idp_initiated_spConfKey =
+        #  $self->p->getHiddenFormValue( $req, 'spConfKey' )
+        #  unless defined $idp_initiated_spConfKey;
 
         # Check message
         my ( $request, $response, $method, $relaystate, $artifact );

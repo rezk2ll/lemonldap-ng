@@ -121,14 +121,10 @@ sub sendError {
         :                'Error'
     );
 
-    # Handle Ajax responses
-    if ( $req->accept =~ /json/ ) {
-        return $self->sendJSONresponse( $req, { error => $err },
-            code => $code );
-    }
-
     # SOAP responses
-    elsif ( $req->accept =~ m#(?:application|text)/xml# ) {
+    if (   $req->accept =~ m#(?:application|text)/xml#
+        or $req->contentType =~ m#(?:application|text)/xml# )
+    {
         my $s = '<soapenv:Body>
  <soapenv:Fault>
   <Faultcode>soapenv:Client</Faultcode>
@@ -147,6 +143,12 @@ sub sendError {
             ],
             [$s]
         ];
+    }
+
+    # Handle Ajax responses
+    elsif ( $req->accept =~ /json/ ) {
+        return $self->sendJSONresponse( $req, { error => $err },
+            code => $code );
     }
 
     # Default response: HTML
