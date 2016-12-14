@@ -1418,7 +1418,7 @@ sub soapSloServer {
 }
 
 sub logout {
-    my($self,$req) = @_;
+    my ( $self, $req ) = @_;
 
     # Session ID
     my $session_id = $req->{sessionInfo}->{_session_id} || $req->{id};
@@ -1446,6 +1446,7 @@ sub logout {
     # No need to initiate logout requests on SP, if no SAML session is
     # available into the session.
     else {
+        $self->lmLog( 'No SAML session available into this session', 'debug' );
         return PE_OK;
     }
 
