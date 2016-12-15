@@ -1753,7 +1753,7 @@ sub loadArtifact {
 # @param login Lasso::Login object
 # @return Artifact response
 sub createArtifactResponse {
-    my ( $self, $login ) = @_;
+    my ( $self, $req, $login ) = @_;
 
     my $artifact_id = $login->assertionArtifact();
 
@@ -1807,7 +1807,7 @@ sub createArtifactResponse {
     # Store Lasso session if session opened
     if ( $session_id and $login->is_session_dirty ) {
         $self->lmLog( "Save Lasso session in session", 'debug' );
-        $self->updateSession(
+        $self->updateSession( $req,
             { _lassoSessionDump => $login->get_session->dump }, $session_id );
     }
 
@@ -2630,7 +2630,7 @@ sub sendLogoutRequestToProviders {
     $self->resetProviderIdIndex($logout);
 
     # Header of the block which will be displayed to the user, if needed.
-    die 'Replace this';
+    #TODO: Replace this
     $info .= '<h3>'
 
       #. $self->msg(Lemonldap::NG::Portal::Simple::PM_SAML_SPLOGOUT) . '</h3>'

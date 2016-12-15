@@ -788,7 +788,8 @@ sub extractFormInfo {
           unless ( $self->checkDestination( $login->request, $url ) );
 
         # Create artifact response
-        unless ( $art_response = $self->createArtifactResponse($login) ) {
+        unless ( $art_response = $self->createArtifactResponse( $req, $login ) )
+        {
             $self->lmLog( "Unable to create artifact response message",
                 'error' );
             return PE_SAML_ART_ERROR;

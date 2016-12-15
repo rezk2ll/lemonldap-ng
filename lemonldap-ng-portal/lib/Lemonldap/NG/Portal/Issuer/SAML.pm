@@ -818,7 +818,7 @@ sub run {
 
             if ( $login->is_session_dirty ) {
                 $self->lmLog( "Save Lasso session in session", 'debug' );
-                $self->p->updateSession(
+                $self->p->updateSession( $req,
                     { _lassoSessionDump => $login->get_session->dump },
                     $session_id );
             }
@@ -1095,7 +1095,8 @@ sub run {
             );
 
             my $user = $req->{sessionInfo}->{user};
-            my $local_session = $self->getApacheSession( $local_session_id, 1 );
+            my $local_session =
+              $self->p->getApacheSession( $local_session_id, 1 );
 
             # Close SAML sessions
             unless ( $self->deleteSAMLSecondarySessions($local_session_id) ) {
@@ -1103,7 +1104,7 @@ sub run {
             }
 
             # Close local session
-            unless ( $self->_deleteSession( $req, $local_session ) ) {
+            unless ( $self->p->_deleteSession( $req, $local_session ) ) {
                 $self->lmLog(
                     "Fail to delete session $local_session_id for user $user",
                     'error' );
@@ -1194,7 +1195,7 @@ sub artifactServer {
     }
 
     # Create artifact response
-    unless ( $art_response = $self->createArtifactResponse($login) ) {
+    unless ( $art_response = $self->createArtifactResponse( $req, $login ) ) {
         return $self->p->sendError( $req,
             "Unable to create artifact response message", 400 );
     }
