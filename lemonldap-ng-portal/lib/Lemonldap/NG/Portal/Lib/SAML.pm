@@ -2309,7 +2309,6 @@ sub sendLogoutResponseToServiceProvider {
 
         $self->lmLog( "Redirect user to $slo_url", 'debug' );
 
-        die 'TODO: autoRedirect must not be called now';
         return PE_REDIRECT;
     }
 
@@ -2323,13 +2322,12 @@ sub sendLogoutResponseToServiceProvider {
 
         # TODO: insert postUrl in $req
         $req->postUrl($slo_url);
-        $req->datas->{postFields} = { 'SAMLResponse' => $slo_body };
+        $req->{postFields} = { 'SAMLResponse' => $slo_body };
 
         # RelayState
-        $req->datas->{postFields}->{'RelayState'} = $relaystate
+        $req->{postFields}->{'RelayState'} = $relaystate
           if ($relaystate);
 
-        die 'autoPost must not be called here';
         $req->steps( ['autoPost'] );
         return PE_OK;
     }
@@ -2644,7 +2642,7 @@ sub sendLogoutRequestToProviders {
     $info .= '</table>';
 
     # Print some information to the user.
-    $self->info($info) if $providersCount;
+    $self->p->info( $req, $info ) if $providersCount;
 
     return $providersCount;
 }

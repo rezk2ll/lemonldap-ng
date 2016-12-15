@@ -884,7 +884,7 @@ sub run {
                 # TODO: replace this
                 #$self->info( "<h3>" . $self->msg(PM_CDC_WRITER) . "</h3>" );
 
-                $self->info($cdc_iframe);
+                $self->info( $req, $cdc_iframe );
             }
 
             # HTTP-REDIRECT
@@ -1083,7 +1083,7 @@ sub run {
 
             # Prepare logout on all others SP
             my $provider_nb =
-              $self->sendLogoutRequestToProviders( $logout, $relayID );
+              $self->sendLogoutRequestToProviders( $req, $logout, $relayID );
 
             # Decrypt session index
             my $local_session_id =
@@ -1123,18 +1123,8 @@ sub run {
 
             # If no waiting SP, return directly SLO response
             unless ($provider_nb) {
-                if (
-                    my $tmp = $self->sendLogoutResponseToServiceProvider(
-                        $logout, $method
-                    )
-                  )
-                {
-                    return $tmp;
-                }
-                else {
-                    $self->lmLog( "Fail to send SLO response", 'error' );
-                    return $self->sendSLOErrorResponse( $logout, $method );
-                }
+                return $self->sendLogoutResponseToServiceProvider( $req,
+                    $logout, $method );
             }
 
             # Else build SLO status relay URL and display info
@@ -1463,8 +1453,8 @@ sub logout {
     # providers during HTTP-REDIRECT process, return PE_INFO to notify to wait
     # for them.
     # Redirect on logout page when all is done.
-    if ( $self->sendLogoutRequestToProviders($logout) ) {
-        $self->{urldc} = $ENV{SCRIPT_NAME} . "?logout=1";
+    if ( $self->sendLogoutRequestToProviders( $req, $logout ) ) {
+        $self->{urldc} = $req->scriptname . "?logout=1";
         return PE_INFO;
     }
 

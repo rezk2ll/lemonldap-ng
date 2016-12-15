@@ -875,7 +875,7 @@ sub extractFormInfo {
           . $req->param("url") . "\" />"
           . "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
 
-        $self->info($html);
+        $self->info( $req, $html );
 
         $req->datas->{login} = 1;
         return PE_CONFIRM;
@@ -1282,7 +1282,7 @@ sub authLogout {
     # Set signature
     my $signSLOMessage =
       $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
-      ->{samlIDPMetaDataOptionsSignSLOMessage};
+      ->{samlIDPMetaDataOptionsSignSLOMessage} // 0;
 
     # Build Logout Request
     my $logout =

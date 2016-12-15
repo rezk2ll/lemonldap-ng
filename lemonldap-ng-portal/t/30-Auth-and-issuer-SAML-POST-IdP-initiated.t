@@ -447,6 +447,7 @@ sub sp {
                         samlIDPMetaDataOptionsEncryptionMode    => 'none',
                         samlIDPMetaDataOptionsSSOBinding        => 'POST',
                         samlIDPMetaDataOptionsSLOBinding        => 'POST',
+                        samlIDPMetaDataOptionsSignSLOMessage    => 0,
                         samlIDPMetaDataOptionsAllowLoginFromIDP => 1,
                     }
                 },

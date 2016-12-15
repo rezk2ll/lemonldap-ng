@@ -7,8 +7,8 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 32;
-my $debug     = 'debug';
+my $maintests = 37;
+my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -209,6 +209,36 @@ SKIP: {
         ),
         'Launch SAML logout request to IdP'
     );
+    ok( $res->[0] == 302, 'Return code is 302' );
+    ok( $url = $sp->getRedirection($res), 'Get location header' )
+      or explain(
+        $res->[1],
+'Location: http://auth.sp.com/saml/proxySingleLogoutReturn?SAMLResponse=...'
+      );
+    ok(
+        $url =~
+m#^http://auth.sp.com/saml/proxySingleLogoutReturn\?SAMLResponse=(.+)#,
+        'Redirection points to SP with SAML response'
+      )
+      or explain(
+        $res->[1],
+'Location: http://auth.sp.com/saml/proxySingleLogoutReturn?SAMLResponse=...'
+      );
+    $url =~ m#^http://auth.sp.com(.+?)\?(.+)$#;
+    $url   = $1;
+    $query = $2;
+
+    # Send SAML response to SP
+    switch ('sp');
+    ok(
+        $res = $sp->_get(
+            $url,
+            query  => $query,
+            accept => 'text/html',
+        ),
+        'Launch SAML logout request to IdP'
+    );
+    ok( $res->[0] == 200, 'Return code is 200' ) or explain( $res->[0], 200 );
 
     #print STDERR Dumper($res);
 }

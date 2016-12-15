@@ -7,8 +7,8 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 33;
-my $debug     = 'debug';
+my $maintests = 39;
+my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -221,6 +221,40 @@ SKIP: {
         'Post SAML request to IdP'
     );
     ok( $res->[0] == 200, 'Return code is 200' );
+
+    # Get SAML response
+    ok(
+        $res->[2]->[0] =~
+          /<input type="hidden".+?name="SAMLResponse".+?value="(.+?)"/s,
+        'Found SAML request'
+      )
+      or explain(
+        $res->[2],
+        ' <input type="hidden" name="SAMLRequest" id="SAMLRequest" value="...'
+      );
+    $samlReq = $1;
+    ok( decode_base64($samlReq) =~ /^</s, 'SAML response seems valid' )
+      or explain( decode_base64($samlReq), '<saml ...' );
+    ok(
+        $res->[2]->[0] =~ m#<form id="form" action="http://auth.sp.com(.*?)"#s,
+        'Found IdP URL'
+    );
+    $url = $1;
+
+    # Post SAML response to SP
+    $s = "SAMLResponse=$samlReq";
+    switch ('sp');
+    ok(
+        $res = $sp->_post(
+            $url, IO::String->new($s),
+            accept => 'text/html',
+            length => length($s),
+            cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
+        ),
+        'Post SAML response to SP'
+    );
+    ok( $res->[0] == 302, 'Get redirection' );
+    ok( $sp->getRedirection($res) eq 'http://auth.sp.com', 'Redirection points to SP');
 
     #print STDERR Dumper($res);
 }

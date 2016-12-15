@@ -582,4 +582,9 @@ sub getFirstValue {
     return $values[0];
 }
 
+sub info {
+    my($self,$req,$info)=@_;
+    print STDERR "####### TODO: info()\n";
+}
+
 1;
