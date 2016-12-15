@@ -8,7 +8,7 @@ BEGIN {
 }
 
 my $maintests = 28;
-my $debug     = 'debug';
+my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -209,7 +209,7 @@ sub LWP::UserAgent::request {
         ),
         'Execute request'
     );
-    ok( $res->[0] == 200 or $res->[0] == 400, 'Response is 200 or 400' )
+    ok( ( $res->[0] == 200 or $res->[0] == 400 ), 'Response is 200 or 400' )
       or explain( $res->[0], "200 or 400" );
     ok( $issuer->getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
         'Content is XML' )
@@ -555,6 +555,8 @@ sub sp {
                     idp => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
                         samlIDPMetaDataOptionsSSOBinding     => 'Artifact',
+                        samlIDPMetaDataOptionsSLOBinding     => 'Artifact',
+                        samlIDPMetaDataOptionsSignSLOMessage => 0,
                     }
                 },
                 samlIDPMetaDataXML => {

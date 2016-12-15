@@ -88,11 +88,12 @@ rm -f $TDIR/*/t/99-pod.t \
     $TDIR/lemonldap-ng-manager/t/90-translations.t
 
 for INI in $(find $TDIR/lemonldap-ng-* -name lemonldap-ng.ini); do
-    echo "Change $INI logLevel to debug" >&2
+    echo "Change $INI logLevel to debug"
     perl -pi -e 's/^logLevel\s*=\s*\w+$/logLevel=debug/' $INI
 done
 
-for dir in common handler portal manager; do
+# For now, too many bugs with Moose in autopkg jail, so manager isn't tested
+for dir in common handler portal; do
     TDIR2=${TDIR}/lemonldap-ng-$dir
 
     # this is intended to be a last resort, please use it responsibly

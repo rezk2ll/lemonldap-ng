@@ -2333,26 +2333,9 @@ sub sendLogoutResponseToServiceProvider {
         $req->steps( ['autoPost'] );
         return PE_OK;
     }
-
-    # HTTP-SOAP
-    elsif ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
-
-        die 'Replace this call';
-        my $slo_body = $logout->msg_body;
-        $self->{SOAPMessage} = $slo_body;
-
-        $self->lmLog( "SOAP response $slo_body", 'debug' );
-
-        $self->returnSOAPMessage;
-
-        # If we are here, there was a problem with SOAP response
-        $self->lmLog( "Logout response was not sent trough SOAP", 'error' );
-
-        return PE_SAML_SLO_ERROR;
-
-    }
-
-    return 1;
+    $self->lmLog( "Lasso method '$method' should not be handle here...",
+        'error' );
+    return PE_SAML_SLO_ERROR;
 
 }
 

@@ -1383,7 +1383,7 @@ sub soapSloServer {
         # Signature
         my $signSLOMessage =
           $self->{samlSPMetaDataOptions}->{$spConfKey}
-          ->{samlSPMetaDataOptionsSignSLOMessage};
+          ->{samlSPMetaDataOptionsSignSLOMessage} // 0;
 
         if ( $signSLOMessage == 0 ) {
             $self->lmLog( "SLO response will not be signed", 'debug' );
@@ -1399,21 +1399,20 @@ sub soapSloServer {
         }
 
         # Send logout response
-        if ( my $tmp =
-            $self->sendLogoutResponseToServiceProvider( $logout, $method ) )
-        {
-            return [
-                200,
-                [
-                    'Content-Type'   => 'application/xml',
-                    'Content-Length' => length($tmp)
-                ],
-                [$tmp]
-            ];
+        unless ( $self->buildLogoutResponseMsg($logout) ) {
+            $self->lmLog( "Unable to build SLO response", 'error' );
+            return $self->p->sendError( $req, 'Unable to build SLO response',
+                400 );
         }
-        else {
-            return $self->p->sendError( $req, 'SAML error', 400 );
-        }
+        my $slo_body = $logout->msg_body;
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/xml',
+                'Content-Length' => length($slo_body)
+            ],
+            [$slo_body]
+        ];
     }
 
 }
