@@ -243,8 +243,11 @@ sub issuer {
                 issuerDBSAMLActivation => 1,
                 samlSPMetaDataOptions  => {
                     'sp.com' => {
-                        samlSPMetaDataOptionsEncryptionMode => 'none',
-                        samlSPMetaDataOptionsSignSLOMessage => 0,
+                        samlSPMetaDataOptionsEncryptionMode           => 'none',
+                        samlSPMetaDataOptionsSignSSOMessage           => 1,
+                        samlSPMetaDataOptionsSignSLOMessage           => 1,
+                        samlSPMetaDataOptionsCheckSSOMessageSignature => 1,
+                        samlSPMetaDataOptionsCheckSLOMessageSignature => 1,
                     }
                 },
                 samlSPMetaDataExportedAttributes => {
@@ -556,7 +559,10 @@ sub sp {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
                         samlIDPMetaDataOptionsSSOBinding     => 'Artifact',
                         samlIDPMetaDataOptionsSLOBinding     => 'Artifact',
-                        samlIDPMetaDataOptionsSignSLOMessage => 0,
+                        samlIDPMetaDataOptionsSignSSOMessage => 1,
+                        samlIDPMetaDataOptionsSignSLOMessage => 1,
+                        samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
+                        samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
                     }
                 },
                 samlIDPMetaDataXML => {

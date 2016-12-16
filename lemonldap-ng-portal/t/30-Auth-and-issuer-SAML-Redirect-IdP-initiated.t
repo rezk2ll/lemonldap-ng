@@ -134,8 +134,12 @@ sub issuer {
                 issuerDBSAMLActivation => 1,
                 samlSPMetaDataOptions  => {
                     'sp.com' => {
-                        samlSPMetaDataOptionsEncryptionMode        => 'none',
-                        samlSPMetaDataOptionsEnableIDPInitiatedURL => 1,
+                        samlSPMetaDataOptionsEncryptionMode           => 'none',
+                        samlSPMetaDataOptionsEnableIDPInitiatedURL    => 1,
+                        samlSPMetaDataOptionsSignSSOMessage           => 1,
+                        samlSPMetaDataOptionsSignSLOMessage           => 1,
+                        samlSPMetaDataOptionsCheckSSOMessageSignature => 1,
+                        samlSPMetaDataOptionsCheckSLOMessageSignature => 1,
                     }
                 },
                 samlSPMetaDataExportedAttributes => {
@@ -444,11 +448,14 @@ sub sp {
                 },
                 samlIDPMetaDataOptions => {
                     idp => {
-                        samlIDPMetaDataOptionsEncryptionMode    => 'none',
-                        samlIDPMetaDataOptionsSSOBinding        => 'Redirect',
-                        samlIDPMetaDataOptionsSLOBinding        => 'Redirect',
-                        samlIDPMetaDataOptionsSignSLOMessage    => 0,
-                        samlIDPMetaDataOptionsAllowLoginFromIDP => 1,
+                        samlIDPMetaDataOptionsEncryptionMode => 'none',
+                        samlIDPMetaDataOptionsSSOBinding     => 'Redirect',
+                        samlIDPMetaDataOptionsSLOBinding     => 'Redirect',
+                        samlIDPMetaDataOptionsSignSSOMessage => 1,
+                        samlIDPMetaDataOptionsSignSLOMessage => 1,
+                        samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
+                        samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
+                        samlIDPMetaDataOptionsAllowLoginFromIDP        => 1,
                     }
                 },
                 samlIDPMetaDataXML => {

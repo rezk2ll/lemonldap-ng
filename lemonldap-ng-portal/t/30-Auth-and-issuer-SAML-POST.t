@@ -254,7 +254,8 @@ SKIP: {
         'Post SAML response to SP'
     );
     ok( $res->[0] == 302, 'Get redirection' );
-    ok( $sp->getRedirection($res) eq 'http://auth.sp.com', 'Redirection points to SP');
+    ok( $sp->getRedirection($res) eq 'http://auth.sp.com',
+        'Redirection points to SP' );
 
     #print STDERR Dumper($res);
 }
@@ -282,7 +283,11 @@ sub issuer {
                 issuerDBSAMLActivation => 1,
                 samlSPMetaDataOptions  => {
                     'sp.com' => {
-                        samlSPMetaDataOptionsEncryptionMode => 'none',
+                        samlSPMetaDataOptionsEncryptionMode           => 'none',
+                        samlSPMetaDataOptionsSignSSOMessage           => 1,
+                        samlSPMetaDataOptionsSignSLOMessage           => 1,
+                        samlSPMetaDataOptionsCheckSSOMessageSignature => 1,
+                        samlSPMetaDataOptionsCheckSLOMessageSignature => 1,
                     }
                 },
                 samlSPMetaDataExportedAttributes => {
@@ -594,6 +599,10 @@ sub sp {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
                         samlIDPMetaDataOptionsSSOBinding     => 'POST',
                         samlIDPMetaDataOptionsSLOBinding     => 'POST',
+                        samlIDPMetaDataOptionsSignSSOMessage => 1,
+                        samlIDPMetaDataOptionsSignSLOMessage => 1,
+                        samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,
+                        samlIDPMetaDataOptionsCheckSLOMessageSignature => 1,
                     }
                 },
                 samlIDPMetaDataXML => {
