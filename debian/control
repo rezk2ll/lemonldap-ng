@@ -2,6 +2,7 @@ Source: lemonldap-ng
 Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
 Uploaders: Xavier Guimard <x.guimard@free.fr>
 Section: perl
+Testsuite: autopkgtest
 Priority: extra
 Build-Depends: debhelper (>= 9),
                dh-systemd,
@@ -18,6 +19,7 @@ Build-Depends-Indep: libapache-session-perl,
                      libcrypt-openssl-rsa-perl,
                      libcrypt-openssl-x509-perl,
                      libcrypt-rijndael-perl,
+                     libdbd-sqlite3-perl,
                      libdbi-perl,
                      libdigest-hmac-perl,
                      libglib-perl,

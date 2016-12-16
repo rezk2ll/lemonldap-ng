@@ -60,8 +60,9 @@ override_dh_auto_install:
 	done
 
 override_dh_link:
-	rm -rf debian/lemonldap-ng-fr-doc/usr/share/doc/lemonldap-ng-fr-doc/media \
-		debian/lemonldap-ng-fr-doc/usr/share/doc/lemonldap-ng-fr-doc/lib
+	rm -rf debian/lemonldap-ng-fr-doc/usr/share/doc/lemonldap-ng-fr-doc/pages/documentation/current/documentation \
+		debian/lemonldap-ng-fr-doc/usr/share/doc/lemonldap-ng-fr-doc/pages/documentation/current/icons \
+		debian/lemonldap-ng-fr-doc/usr/share/doc/lemonldap-ng-fr-doc/pages/documentation/current/lib
 	dh_link
 
 override_dh_compress:
