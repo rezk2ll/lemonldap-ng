@@ -129,6 +129,9 @@ sub _authAndTrace {
         }
         return $res;
     }
+    elsif ( $res < 400 ) {
+        return [ $res, $req->{respHeaders}, [] ];
+    }
     else {
         my %h = $req->{respHeaders} ? @{ $req->{respHeaders} } : ();
         my $s = $self->api->tsv->{portal}->() . "?lmError=$res";
