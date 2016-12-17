@@ -19,10 +19,11 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
 
-has ssoUrlRe  => ( is => 'rw' );
-has sloRe     => ( is => 'rw' );
-has artRe     => ( is => 'rw' );
-has soapSloRe => ( is => 'rw' );
+has ssoUrlRe       => ( is => 'rw' );
+has sloRe          => ( is => 'rw' );
+has artRe          => ( is => 'rw' );
+has soapSloRe      => ( is => 'rw' );
+has sloRelaySoapRe => ( is => 'rw' );
 
 # INITIALIZATION
 
@@ -76,6 +77,8 @@ qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_u
 qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)(?:\?.*)?$/i
     );
 
+    $self->sloRelaySoapRe(qr#^/saml/relaySingleLogoutSOAP(?:\?.*)?$#i);
+
     return (
         $self->Lemonldap::NG::Portal::Main::Issuer::init()
 
@@ -104,7 +107,20 @@ sub _pRedirect {
         return $self->soapSloServer($req);
     }
     else {
-        return $self->SUPER::_pRedirect($req);
+        $req->parseBody;
+        return $self->SUPER::_redirect($req);
+    }
+}
+
+# Override _redirect to catch SLO relay
+
+sub _redirect {
+    my ( $self, $req ) = @_;
+    if ( $req->uri =~ $self->sloRelaySoapRe ) {
+        return $self->sloRelaySoap($req);
+    }
+    else {
+        return $self->SUPER::_redirect($req);
     }
 }
 
@@ -1461,6 +1477,105 @@ sub logout {
     return PE_OK;
 }
 
+sub sloRelaySoap {
+    my ( $self, $req ) = @_;
+    $self->lmLog( "URL " . $req->uri . " detected as a SOAP relay service URL",
+        'debug' );
+
+    # Check if relay parameter is present (mandatory)
+    my $relayID;
+    unless ( $relayID = $req->param('relay') ) {
+        $self->lmLog( "No relayID detected", 'error' );
+        return $self->imgnok($req);
+    }
+
+    # Retrieve the corresponding data from samlStorage
+    my $relayInfos = $self->getSamlSession($relayID);
+    unless ($relayInfos) {
+        $self->lmLog( "Could not get relay session $relayID", 'error' );
+        return $self->imgnok($req);
+    }
+
+    $self->lmLog( "Found relay session $relayID", 'debug' );
+
+    # Rebuild the logout object
+    my $logout;
+    unless ( $logout = $self->createLogout( $self->lassoServer ) ) {
+        $self->lmLog( "Could not rebuild logout object", 'error' );
+        return $self->imgnok($req);
+    }
+
+    # Load Session and Identity if they exist
+    my $session    = $relayInfos->data->{_lassoSessionDump};
+    my $identity   = $relayInfos->data->{_lassoIdentityDump};
+    my $providerID = $relayInfos->data->{_providerID};
+    my $relayState = $relayInfos->data->{_relayState};
+    my $spConfKey  = $self->spList->{$providerID}->{confKey};
+
+    if ($session) {
+        unless ( $self->setSessionFromDump( $logout, $session ) ) {
+            $self->lmLog( "Unable to load Lasso Session", 'error' );
+            return $self->imgnok($req);
+        }
+        $self->lmLog( "Lasso Session loaded", 'debug' );
+    }
+
+    if ($identity) {
+        unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
+            $self->lmLog( "Unable to load Lasso Identity", 'error' );
+            return $self->imgnok($req);
+        }
+        $self->lmLog( "Lasso Identity loaded", 'debug' );
+    }
+
+    # Send the logout request
+    my ( $rstatus, $rmethod, $rinfo ) =
+      $self->sendLogoutRequestToProvider( $req, $logout, $providerID,
+        Lasso::Constants::HTTP_METHOD_SOAP );
+    unless ($rstatus) {
+        $self->lmLog( "Fail to process SOAP logout request to $providerID",
+            'error' );
+        return $self->imgnok($req);
+    }
+
+    # Store success status for this SLO request
+    my $sloStatusSessionInfos = $self->getSamlSession($relayState);
+
+    if ($sloStatusSessionInfos) {
+        $sloStatusSessionInfos->update( { $spConfKey => 1 } );
+        $self->lmLog( "Store SLO status for $spConfKey in session $relayState",
+            'debug' );
+    }
+    else {
+        $self->lmLog(
+            "Unable to store SLO status for $spConfKey in session $relayState",
+            'warn'
+        );
+    }
+
+    # Delete relay session
+    $relayInfos->remove();
+
+    # SLO response is OK
+    $self->lmLog( "Display OK status for SLO on $spConfKey", 'debug' );
+    return $self->imgok($req);
+}
+
 # INTERNAL METHODS
+
+sub imgok {
+    my ( $self, $req, ) = @_;
+    return $self->sendImage( $req, 'ok.png' );
+}
+
+sub imgnok {
+    my ( $self, $req, ) = @_;
+    return $self->sendImage( $req, 'warning.png' );
+}
+
+sub sendImage {
+    my ( $self, $req,, $img ) = @_;
+    return $self->p->staticFile( $req, "common/$img", 'image/png' );
+}
 
 1;

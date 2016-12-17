@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 18;
+my $maintests = 21;
 my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -104,16 +104,64 @@ SKIP: {
             cookie => "lemonldap=$idpId",
             accept => 'text/html'
         ),
-        'Query SP for logout'
+        'Query IdP for logout'
     );
     ok( $res->[0] == 200, 'Return code is 200' );
 
-    #print STDERR Dumper($res);
+    ok(
+        $res->[2]->[0] =~
+m#img src="http://auth.idp.com(/saml/relaySingleLogoutSOAP)\?(relay=.*?)"#s,
+        'Get image request'
+    );
+
+    ok(
+        $res = $issuer->_get(
+            $1,
+            query => $2,
+
+            #cookie => "lemonldap=$idpId",
+            accept => 'text/html'
+        ),
+        'Get image'
+    );
+    ok( $issuer->getHeader( $res, 'Content-Type' ) eq 'image/png',
+        'Get an image' );
+
 }
 
 count($maintests);
 clean_sessions();
 done_testing( count() );
+
+# Redefine LWP methods for tests
+sub LWP::UserAgent::request {
+    my ( $self, $req ) = @_;
+    ok( $req->uri =~ m#http://auth.sp.com(.*)#, 'Request from SP to IdP' );
+    my $url = $1;
+    my $res;
+    my $s = $req->content;
+    ok(
+        $res = $sp->_post(
+            $url, IO::String->new($s),
+            length => length($s),
+            type   => 'application/xml',
+        ),
+        'Execute request'
+    );
+    #ok( ( $res->[0] == 200 or $res->[0] == 400 ), 'Response is 200 or 400' )
+    #  or explain( $res->[0], "200 or 400" );
+    #ok( $issuer->getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
+    #    'Content is XML' )
+    #  or explain( $res->[1], 'Content-Type => application/xml' );
+    my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
+
+    while ( my $name = shift @{ $res->[1] } ) {
+        $httpResp->header( $name, shift( @{ $res->[1] } ) );
+    }
+    $httpResp->content( join( '', @{ $res->[2] } ) );
+    count(2);
+    return $httpResp;
+}
 
 sub switch {
     my $type = shift;
@@ -127,6 +175,7 @@ sub issuer {
         {
             ini => {
                 logLevel               => $debug,
+                templatesDir           => 'site/htdocs/static',
                 domain                 => 'idp.com',
                 portal                 => 'http://auth.idp.com',
                 authentication         => 'Demo',

@@ -61,15 +61,8 @@ sub display {
 
     # 1. Good authentication
 
-    # 1.1 Image mode
-    if ( $req->{error} == PE_IMG_OK || $req->{error} == PE_IMG_NOK ) {
-        $self->lmLog( 'Request for file', 'debug' );
-        return staticFile( "common/"
-              . ( $req->{error} == PE_IMG_OK ? 'ok.png' : 'warning.png' ) );
-    }
-
-    # 1.2 Case : there is a message to display
-    elsif ( my $info = $req->info() ) {
+    # 1.1 Case : there is a message to display
+    if ( my $info = $req->info() ) {
         $skinfile       = 'info';
         %templateParams = (
             AUTH_ERROR_TYPE => $req->error_type,
@@ -81,7 +74,7 @@ sub display {
         );
     }
 
-    # 1.3 Redirection
+    # 1.2 Redirection
     elsif ( $req->{error} == PE_REDIRECT ) {
         $skinfile       = "redirect";
         %templateParams = (
@@ -91,7 +84,7 @@ sub display {
         );
     }
 
-    # 1.4 Case : display menu
+    # 1.3 Case : display menu
     elsif ( $req->error == PE_OK ) {
 
         $skinfile = 'menu';
@@ -110,8 +103,8 @@ sub display {
 
     # 2. Authentication not complete
 
- # 2.1 A notification has to be done (session is created but hidden and unusable
- #     until the user has accept the message)
+    # 2.1 A notification has to be done (session is created but hidden and
+    #     unusable until the user has accept the message)
     elsif ( my $notif = $req->datas->{notification} ) {
         $skinfile       = 'notification';
         %templateParams = (
@@ -344,12 +337,12 @@ sub display {
 # @param $type The content-type to use (ie: image/png)
 # @return void
 sub staticFile {
-    my ( $self, $file, $type ) = @_;
+    my ( $self, $req, $file, $type ) = @_;
     require Plack::Util;
     require Cwd;
     require HTTP::Date;
     open my $fh, '<:raw', $self->conf->{templatesDir} . "/$file"
-      or return $self->sendError( $!, 403 );
+      or return $self->sendError( $req, $!, 403 );
     my @stat = stat $file;
     Plack::Util::set_io_path( $fh, Cwd::realpath($file) );
     return [

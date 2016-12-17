@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 28;
+my $maintests = 26;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -220,7 +220,7 @@ sub LWP::UserAgent::request {
         $httpResp->header( $name, shift( @{ $res->[1] } ) );
     }
     $httpResp->content( join( '', @{ $res->[2] } ) );
-    count(3);
+    count(4);
     return $httpResp;
 }
 

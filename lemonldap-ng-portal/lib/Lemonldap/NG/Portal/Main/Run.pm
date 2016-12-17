@@ -583,8 +583,8 @@ sub getFirstValue {
 }
 
 sub info {
-    my($self,$req,$info)=@_;
-    print STDERR "####### TODO: info()\n";
+    my ( $self, $req, $info ) = @_;
+    return $req->info($info);
 }
 
 1;

@@ -127,7 +127,9 @@ sub loginInfo {
 }
 
 sub info {
-    print STDERR "TODO Request::info()\n";
+    my ( $self, $info ) = @_;
+    $self->datas->{_info} .= $info if ( defined $info );
+    return $self->datas->{_info};
 }
 
 # TODO: oldpassword
