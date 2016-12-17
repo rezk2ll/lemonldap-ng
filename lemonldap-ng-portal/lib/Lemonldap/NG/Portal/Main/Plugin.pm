@@ -11,27 +11,32 @@ extends 'Lemonldap::NG::Common::Module';
 
 sub addAuthRoute {
     my $self = shift;
-    return $self->_addRoute('addAuthRoute',@_);
+    return $self->_addRoute( 'addAuthRoute', @_ );
 }
 
 sub addUnauthRoute {
     my $self = shift;
-    return $self->_addRoute('addUnauthRoute',@_);
+    return $self->_addRoute( 'addUnauthRoute', @_ );
 }
 
 sub _addRoute {
-    my ( $self, $type, $word, $subName, $methods ) = @_;
-    die 'Only simple route are authorizated here. Uses $self->p->addAuthRoute'
-      if ( ref $subName );
-    $self->can($subName) or die "Unknown sub $subName";
-    $self->p->$type(
-        $word,
-        sub {
-            my $p = shift;
-            return $self->$subName(@_);
-        },
-        $methods
-    );
+    my ( $self, $type, $word, $subName, $methods, $transform ) = @_;
+    $transform //= sub {
+        my ($sub) = @_;
+        if ( ref $sub ) {
+            return sub {
+                shift;
+                return $sub->( $self, @_ );
+              }
+        }
+        else {
+            return sub {
+                shift;
+                return $self->$sub(@_);
+              }
+        }
+    };
+    return $self->p->$type( $word, $subName, $methods, $transform );
 }
 
 1;

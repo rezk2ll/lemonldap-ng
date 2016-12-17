@@ -19,19 +19,19 @@ has 'defaultRoute' => ( is => 'rw', default => 'index.html' );
 # Routes initialization
 
 sub addRoute {
-    my ( $self, $word, $dest, $methods ) = (@_);
+    my ( $self, $word, $dest, $methods, $transform ) = (@_);
     $methods ||= [qw(GET POST PUT DELETE)];
     foreach my $method (@$methods) {
-        $self->genRoute( $self->routes->{$method}, $word, $dest );
+        $self->genRoute( $self->routes->{$method}, $word, $dest, $transform );
     }
     return $self;
 }
 
 sub genRoute {
-    my ( $self, $routes, $word, $dest ) = @_;
+    my ( $self, $routes, $word, $dest, $transform ) = @_;
     if ( ref $word eq 'ARRAY' ) {
         foreach my $w (@$word) {
-            $self->genRoute( $routes, $w, $dest );
+            $self->genRoute( $routes, $w, $dest, $transform );
         }
     }
     else {
@@ -42,10 +42,13 @@ sub genRoute {
         }
         elsif ( $word =~ m#/# ) {
             $word =~ s#^(.*?)/##;
-            return $self->genRoute( $routes->{$1}, $word, $dest );
+            return $self->genRoute( $routes->{$1}, $word, $dest, $transform );
         }
         else {
             $dest ||= $word;
+        }
+        if ( $transform and ( not ref($dest) or ref($dest) eq 'CODE' ) ) {
+            $dest = $transform->($dest);
         }
         if ( my $t = ref $dest ) {
             if ( $t eq 'CODE' ) {
@@ -54,13 +57,14 @@ sub genRoute {
             elsif ( $t eq 'HASH' ) {
                 $routes->{$word} ||= {};
                 foreach my $w ( keys %$dest ) {
-                    $self->genRoute( $routes->{$word}, $w, $dest->{$w} );
+                    $self->genRoute( $routes->{$word}, $w, $dest->{$w},
+                        $transform );
                 }
             }
             elsif ( $t eq 'ARRAY' ) {
                 $routes->{$word} ||= {};
                 foreach my $w ( @{$dest} ) {
-                    $self->genRoute( $routes->{$word}, $w );
+                    $self->genRoute( $routes->{$word}, $w, $transform );
                 }
             }
             else {
