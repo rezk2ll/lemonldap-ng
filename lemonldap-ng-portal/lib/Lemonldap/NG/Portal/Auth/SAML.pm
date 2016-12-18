@@ -18,6 +18,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_SLO_ERROR
   PE_SAML_SSO_ERROR
   PE_SAML_UNKNOWN_ENTITY
+  PE_SENDRESPONSE
 );
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 
@@ -599,7 +600,7 @@ sub extractFormInfo {
                         my $real_session = $sessionInfo->data->{_saml_id};
 
                         my $ssoSession =
-                          $self->getApacheSession( $real_session, 1 );
+                          $self->p->getApacheSession( $real_session, 1 );
 
                   # Get Lasso::Session dump
                   # This value is erased if a next session match the SLO request
@@ -616,7 +617,7 @@ sub extractFormInfo {
 
                         # Delete real session
                         my $del_real_result =
-                          $self->_deleteSession($ssoSession);
+                          $self->p->_deleteSession( $req, $ssoSession );
 
                         $self->lmLog(
 "Delete real session $real_session result: $del_real_result",
@@ -738,16 +739,18 @@ sub extractFormInfo {
 
                 $self->lmLog( "SOAP response $slo_body", 'debug' );
 
-                $req->datas->{SOAPMessage} = $slo_body;
+                $req->response(
+                    [
+                        200,
+                        [
+                            'Content-Type'   => 'application/xml',
+                            'Content-Length' => length($slo_body)
+                        ],
+                        [$slo_body]
+                    ]
+                );
 
-                # TODO: check this
-                $req->steps( ['returnSOAPMessage'] );
-                return PE_OK;
-
-                # If we are here, there was a problem with SOAP response
-                $self->lmLog( "Logout response was not sent trough SOAP",
-                    'error' );
-                return PE_SAML_SLO_ERROR;
+                return PE_SENDRESPONSE;
             }
 
         }

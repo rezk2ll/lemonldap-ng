@@ -1460,6 +1460,41 @@ sub getMetaDataURL {
     return $uri->path();
 }
 
+sub getRouteFromMetaDataURL {
+    my ( $self, $key, $index, $sub ) = @_;
+    my $uri = $self->getMetaDataURL( $key, $index, 0 );
+    unless ( $uri =~ m#^/\w# ) {
+        $self->lmLog( "$key has no index $index", 'debug' );
+        return undef;
+    }
+    my @t = grep /\w/, split( /\//, $uri );
+    my $h = { pop(@t) => $sub };
+    while ( my $s = pop @t ) {
+        $h = { $s => $h };
+    }
+    return %$h;
+}
+
+sub addRouteFormMetaDataURL {
+    my ( $self, @args ) = @_;
+    $self->addAuthRouteFormMetaDataURL(@args);
+    $self->addUnauthRouteFormMetaDataURL(@args);
+}
+
+sub addAuthRouteFormMetaDataURL {
+    my ( $self, $key, $index, $sub, $methods ) = @_;
+    my %route = $self->getRouteFromMetaDataURL( $key, $index, $sub );
+    return unless (%route);
+    $self->addAuthRoute( %route, $methods );
+}
+
+sub addUnauthRouteFormMetaDataURL {
+    my ( $self, $key, $index, $sub, $methods ) = @_;
+    my %route = $self->getRouteFromMetaDataURL( $key, $index, $sub );
+    return unless (%route);
+    $self->addUnauthRoute( %route, $methods );
+}
+
 ## @method boolean processLogoutResponseMsg(Lasso::Logout logout, string response)
 # Process logout response message
 # @param logout Lasso::Logout object

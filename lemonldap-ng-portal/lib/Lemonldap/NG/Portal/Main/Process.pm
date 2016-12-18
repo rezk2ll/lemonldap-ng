@@ -41,7 +41,7 @@ sub restoreArgs {
     my ( $self, $req ) = @_;
     $req->parseBody;
     $req->mustRedirect(1);
-    return ( %{ $req->params } ? PE_OK : PE_FORMEMPTY );
+    return PE_OK;
 }
 
 sub importHandlerDatas {

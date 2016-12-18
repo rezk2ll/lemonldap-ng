@@ -5,7 +5,7 @@ use Mouse;
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Common::Module';
+extends 'Lemonldap::NG::Portal::Main::Plugin';
 
 # PROPERTIES
 

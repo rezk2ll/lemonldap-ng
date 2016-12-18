@@ -148,18 +148,18 @@ sub LWP::UserAgent::request {
         ),
         'Execute request'
     );
-    #ok( ( $res->[0] == 200 or $res->[0] == 400 ), 'Response is 200 or 400' )
-    #  or explain( $res->[0], "200 or 400" );
-    #ok( $issuer->getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
-    #    'Content is XML' )
-    #  or explain( $res->[1], 'Content-Type => application/xml' );
+    ok( ( $res->[0] == 200 or $res->[0] == 400 ), 'Response is 200 or 400' )
+      or explain( $res->[0], "200 or 400" );
+    ok( $issuer->getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
+        'Content is XML' )
+      or explain( $res->[1], 'Content-Type => application/xml' );
     my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
 
     while ( my $name = shift @{ $res->[1] } ) {
         $httpResp->header( $name, shift( @{ $res->[1] } ) );
     }
     $httpResp->content( join( '', @{ $res->[2] } ) );
-    count(2);
+    count(4);
     return $httpResp;
 }
 

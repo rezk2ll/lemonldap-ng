@@ -124,6 +124,9 @@ sub do {
     my $err = $req->error( $self->process($req) );
 
     # TODO: updateStatus
+    if ( $err == PE_SENDRESPONSE ) {
+        return $req->response;
+    }
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         if ( $err > 0 and !%{ $req->sessionInfo } ) {
             return [

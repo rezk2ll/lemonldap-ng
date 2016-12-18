@@ -41,6 +41,9 @@ has user        => ( is => 'rw' );
 # Response cookies (list of strings built by cookie())
 has respCookies => ( is => 'rw' );
 
+# Embedded response
+has response => ( is => 'rw' );
+
 # Template to display (if not defined, login or menu)
 has template => ( is => 'rw' );
 
