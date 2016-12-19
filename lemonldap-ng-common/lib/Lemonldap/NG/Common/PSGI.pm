@@ -122,8 +122,11 @@ sub sendError {
     );
 
     # SOAP responses
-    if (   $req->accept =~ m#(?:application|text)/xml#
-        or $req->contentType =~ m#(?:application|text)/xml# )
+    if (
+        $req->accept =~ m#(?:application|text)/xml#
+        or (    $req->contentType
+            and $req->contentType =~ m#(?:application|text)/xml# )
+      )
     {
         my $s = '<soapenv:Body>
  <soapenv:Fault>

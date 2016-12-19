@@ -296,6 +296,15 @@ Content type of posted datas.
 
 Length of posted datas.
 
+=head3 respHeaders
+
+Used to store response headers. Be careful, it contains an array, not a hash
+reference because headers can be multi-valued.
+
+Exemple:
+
+  $req->respHeaders( "Location" => "http://x.y.z/", Etag => "XYZ", );
+
 =head2 Private accessors
 
 =head3 _psgixBuffered
@@ -308,9 +317,19 @@ PSGI psgix.input variable.
 
 =head2 Methods
 
+=head3 parseBody()
+
+Transform JSON or form/url-encoded POST content into GET parameters. Using this
+it is possible to manage POST requests like GET requests.
+
 =head3 jsonBodyToObj()
 
 Get the content of a JSON POST request as Perl object.
+
+=head3 wantJSON
+
+Return true if current request ask JSON content (verify that "Accept" header
+contains "application/json" or "text/json").
 
 =head1 SEE ALSO
 
