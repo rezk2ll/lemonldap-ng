@@ -3419,7 +3419,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =over
 
-=item Copyright (C) 2009-2012 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+=item Copyright (C) 2009-2016 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =item Copyright (C) 2012 by Sandro Cazzaniga, E<lt>cazzaniga.sandro@gmail.comE<gt>
 
