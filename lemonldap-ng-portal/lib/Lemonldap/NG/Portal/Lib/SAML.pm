@@ -1465,7 +1465,7 @@ sub getRouteFromMetaDataURL {
     my $uri = $self->getMetaDataURL( $key, $index, 0 );
     unless ( $uri =~ m#^/\w# ) {
         $self->lmLog( "$key has no index $index", 'debug' );
-        return undef;
+        return ();
     }
     my @t = grep /\w/, split( /\//, $uri );
     my $h = { pop(@t) => $sub };
@@ -1475,20 +1475,20 @@ sub getRouteFromMetaDataURL {
     return %$h;
 }
 
-sub addRouteFormMetaDataURL {
+sub addRouteFromMetaDataURL {
     my ( $self, @args ) = @_;
-    $self->addAuthRouteFormMetaDataURL(@args);
-    $self->addUnauthRouteFormMetaDataURL(@args);
+    $self->addAuthRouteFromMetaDataURL(@args);
+    $self->addUnauthRouteFromMetaDataURL(@args);
 }
 
-sub addAuthRouteFormMetaDataURL {
+sub addAuthRouteFromMetaDataURL {
     my ( $self, $key, $index, $sub, $methods ) = @_;
     my %route = $self->getRouteFromMetaDataURL( $key, $index, $sub );
     return unless (%route);
     $self->addAuthRoute( %route, $methods );
 }
 
-sub addUnauthRouteFormMetaDataURL {
+sub addUnauthRouteFromMetaDataURL {
     my ( $self, $key, $index, $sub, $methods ) = @_;
     my %route = $self->getRouteFromMetaDataURL( $key, $index, $sub );
     return unless (%route);
