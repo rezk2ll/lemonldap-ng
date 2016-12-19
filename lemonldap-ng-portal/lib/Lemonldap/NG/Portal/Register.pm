@@ -447,7 +447,7 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::Register - Regsiter a new user
+Lemonldap::NG::Portal::Register - Register a new user
 
 =head1 SYNOPSIS
 

@@ -243,7 +243,6 @@ site/htdocs/static/impact/images/logo-lock.png
 site/htdocs/static/impact/images/logo-ok.png
 site/htdocs/static/impact/images/logo-warn.png
 site/htdocs/static/impact/README
-site/htdocs/static/js/portal.min.js
 site/htdocs/static/languages/en.json
 site/htdocs/static/languages/fr.json
 site/htdocs/static/pastel/css/styles.css

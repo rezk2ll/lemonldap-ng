@@ -725,7 +725,7 @@ rm -rf %{buildroot}
 - Merge with existing .spec file from RPMforge.
 - Use the same directories as the Debian package.
 - Create a symlink in Apache confguration.
-- Create specific portal/manager/handler/conf packages independant from CPAN packages
+- Create specific portal/manager/handler/conf packages independent from CPAN packages
 * Thu Nov 20 2008 Jean-Christophe Toussaint <jean-christophe.toussaint@ac-nancy-metz.fr> - 0.9.2-1DSI
 - Updated to release 0.9.2.
 - Using official tar.gz from forge.

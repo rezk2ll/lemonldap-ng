@@ -115,7 +115,7 @@ sub run {
     # Session creation timestamp
     my $time = $req->{sessionInfo}->{_utime} || time();
 
-    # Get HTTP request informations to know
+    # Get HTTP request information to know
     # if we are receving SAML request or response
     my $url                     = $req->uri;
     my $request_method          = $req->param('issuerMethod') || $req->method;

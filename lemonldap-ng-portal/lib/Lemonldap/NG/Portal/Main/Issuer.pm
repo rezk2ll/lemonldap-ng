@@ -167,7 +167,7 @@ Lemonldap::NG::Portal::Main::Constants constant.
 A classic identity provider needs a "issuerDBE<gt>XXXE<lt>Path" parameter in
 LLNG configuration to declare its base URI path (see
 L<Lemonldap::NG::Manager::Build>). Example: /saml/. All requests that starts
-with /saml/ will call run() after authenticatio if needed, and noone else.
+with /saml/ will call run() after authenticatio if needed, and no one else.
 
 The logout() function is called when user asks for logout on this server. If
 you want to write an identity provider, you must implement a single logout

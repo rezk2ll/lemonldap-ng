@@ -31,7 +31,7 @@ sub init {
 # RUNNING METHODS
 
 ## @apmethod int checkRemoteId()
-# check if a CDA mechanism has been instanciated and if session is available.
+# check if a CDA mechanism has been instantiated and if session is available.
 # Redirect the user to the remote portal else by calling goToPortal().
 # @return Lemonldap::NG::Portal constant
 sub checkRemoteId {

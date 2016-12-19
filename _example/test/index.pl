@@ -77,7 +77,7 @@ print "</div>\n";
 
 print "<div class=\"panel panel-info\">\n";
 print "<div class=\"panel-heading\">\n";
-print "<h2 class=\"panel-title text-center\">Main informations</h2>\n";
+print "<h2 class=\"panel-title text-center\">Main information</h2>\n";
 print "</div>\n";
 print "<div class=\"panel-body\">\n";
 print "<ul class=\"list-unstyled\">\n";

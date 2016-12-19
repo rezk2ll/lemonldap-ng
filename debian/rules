@@ -54,7 +54,6 @@ override_dh_auto_install:
 			DOCDIR=/usr/share/doc/lemonldap-ng-fr-doc \
 			USEDEBIANLIBS=yes
 	mkdir $(TMP)/$(LMSHAREDIR)/portal
-	mv $(TMP)/$(LMVARDIR)/portal/*.pl $(TMP)/$(LMSHAREDIR)/portal/
 	for i in handler portal manager test; do \
 		mv $(TMP)/etc/lemonldap-ng/$$i-apache2.X.conf $(TMP)/etc/lemonldap-ng/$$i-apache2.conf; \
 	done

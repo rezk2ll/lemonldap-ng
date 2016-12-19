@@ -36,7 +36,7 @@ sub extractFormInfo {
     my $self   = shift;
     my $server = $self->{_lassoServer};
 
-    # 1. Get HTTP request informations to know
+    # 1. Get HTTP request information to know
     # if we are receving SAML request or response
     my $url            = $self->url( -absolute => 1 );
     my $request_method = $self->request_method();
@@ -1087,7 +1087,7 @@ sub setAuthSessionInfo {
         }
     }
 
-    # Store other informations in session
+    # Store other information in session
     $self->{sessionInfo}->{_user}       = $self->{user};
     $self->{sessionInfo}->{_idp}        = $idp;
     $self->{sessionInfo}->{_idpConfKey} = $idpConfKey;

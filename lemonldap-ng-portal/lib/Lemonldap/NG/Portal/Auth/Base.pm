@@ -65,7 +65,7 @@ authentication modules.
 =head1 DESCRIPTION
 
 This base library must be used to build Lemonldap::NG authentication modules.
-Authentication modules are independant objects that are instanciated by
+Authentication modules are independent objects that are instantiated by
 Lemonldap::NG portal. They must provides methods described below.
 
 =head1 METHODS
@@ -134,7 +134,7 @@ object.
 =head4 extractFormInfo($req)
 
 First authentication method called during authentication process. It must set
-$req->user that will be used by the userDB object to get user informations.
+$req->user that will be used by the userDB object to get user information.
 
 =head4 authenticate($req)
 

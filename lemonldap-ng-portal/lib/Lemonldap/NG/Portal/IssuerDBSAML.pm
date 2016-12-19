@@ -81,7 +81,7 @@ sub issuerForUnAuthUser {
     my $saml_att_soap_url       = $self->getMetaDataURL(
         "samlAttributeAuthorityDescriptorAttributeServiceSOAP", 1 );
 
-    # Get HTTP request informations to know
+    # Get HTTP request information to know
     # if we are receving SAML request or response
     my $url                     = $self->url( -absolute => 1 );
     my $request_method          = $self->request_method();
@@ -1146,7 +1146,7 @@ sub issuerForAuthUser {
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
         2 );
 
-    # Get HTTP request informations to know
+    # Get HTTP request information to know
     # if we are receving SAML request or response
     my $url                     = $self->url( -absolute => 1 );
     my $request_method          = $self->request_method();

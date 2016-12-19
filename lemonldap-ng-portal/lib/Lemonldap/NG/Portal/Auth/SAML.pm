@@ -75,7 +75,7 @@ qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_u
 sub extractFormInfo {
     my ( $self, $req ) = @_;
 
-    # 1. Get HTTP request informations to know
+    # 1. Get HTTP request information to know
     # if we are receving SAML request or response
     my $url            = $req->uri;
     my $request_method = $req->method;
@@ -1125,7 +1125,7 @@ sub setAuthSessionInfo {
         }
     }
 
-    # Store other informations in session
+    # Store other information in session
     $req->{sessionInfo}->{_idp}        = $idp;
     $req->{sessionInfo}->{_idpConfKey} = $idpConfKey;
 

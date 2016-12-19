@@ -178,7 +178,7 @@ lemonldap-ng (1.9.0) stable; urgency=low
     * [LEMONLDAP-824] - autocomplete=off does not prevent anymore password manager use
     * [LEMONLDAP-833] - Manager - Multi : display only the selected modules
     * [LEMONLDAP-865] - Check conditions in AuthSlave and UserDBSlave
-    * [LEMONLDAP-877] - Replace Storable by JSON to be arch independant
+    * [LEMONLDAP-877] - Replace Storable by JSON to be arch independent
     * [LEMONLDAP-908] - Replace own minifier by external
     * [LEMONLDAP-911] - Possibility to set a specific logo for a choice module
     * [LEMONLDAP-917] - Possibility to define finely sessions timeout activity
@@ -1091,7 +1091,7 @@ lemonldap-ng (1.0) stable; urgency=low
     * [LEMONLDAP-97] - Add configuration parameters for private keys passwords
     * [LEMONLDAP-103] - String encoding in sessions
     * [LEMONLDAP-120] - Force UTF-8 in File backend
-    * [LEMONLDAP-130] - Create a "reload" vhost independant from test
+    * [LEMONLDAP-130] - Create a "reload" vhost independent from test
       applications
     * [LEMONLDAP-131] - SAML documentation
     * [LEMONLDAP-147] - Add an activation parameter for each IssuerDB
