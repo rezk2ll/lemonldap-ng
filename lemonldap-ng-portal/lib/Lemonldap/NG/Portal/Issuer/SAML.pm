@@ -27,7 +27,7 @@ has sloRe    => ( is => 'rw' );
 sub init {
     my ($self) = @_;
 
-    # Get configuration parameter
+    # Prepare SSO URL catching
     my $saml_sso_soap_url =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 1 );
     my $saml_sso_soap_url_ret =
@@ -50,7 +50,7 @@ sub init {
 qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)(?:\?.*)?$/i
     );
 
-    # SOAP routes
+    # SOAP routes (access without authentication)
     $self->addRouteFromMetaDataURL(
         'samlIDPSSODescriptorArtifactResolutionServiceArtifact',
         3, 'artifactServer', ['POST'] );
@@ -61,6 +61,13 @@ qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_u
         "samlIDPSSODescriptorSingleLogoutServiceSOAP",
         2, 'soapSloServer', ['POST'] );
 
+    # TODO: @coudot, why this URL isn't managed with a conf param ?
+    $self->addUnauthRoute(
+        saml => { relaySingleLogoutSOAP => 'sloRelaySoap' },
+        [ 'GET', 'POST' ]
+    );
+
+    # Single logout routes (managed by regexp in run())
     my $saml_slo_get_url = $self->getMetaDataURL(
         "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
     my $saml_slo_get_url_ret = $self->getMetaDataURL(
@@ -75,11 +82,7 @@ qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_u
 qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)(?:\?.*)?$/i
     );
 
-    $self->addUnauthRoute(
-        saml => { relaySingleLogoutSOAP => 'sloRelaySoap' },
-        [ 'GET', 'POST' ]
-    );
-
+    # Launch parents initialization subroutines, then launch IdP en SP lists
     return (
         $self->Lemonldap::NG::Portal::Main::Issuer::init()
 
@@ -97,6 +100,7 @@ qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_u
 
 # RUNNING METHODS
 
+# Main method (launched only for authenticated users, see Main/Issuer)
 sub run {
     my ( $self, $req ) = @_;
     my $server = $self->lassoServer;
@@ -124,15 +128,6 @@ sub run {
     if ( $url =~ $self->ssoUrlRe or $req->datas->{_proxiedRequest} ) {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
-
-        # Get hidden params for IDP initiated if needed
-        #$idp_initiated = $self->p->getHiddenFormValue( $req, 'IDPInitiated' )
-        #  unless defined $idp_initiated;
-        #$idp_initiated_sp = $self->p->getHiddenFormValue( $req, 'sp' )
-        #  unless defined $idp_initiated_sp;
-        #$idp_initiated_spConfKey =
-        #  $self->p->getHiddenFormValue( $req, 'spConfKey' )
-        #  unless defined $idp_initiated_spConfKey;
 
         # Check message
         my ( $request, $response, $method, $relaystate, $artifact );

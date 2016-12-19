@@ -109,3 +109,146 @@ sub _pForAuthUser {
 }
 
 1;
+__END__
+
+=pod
+
+=encoding utf8
+
+=head1 NAME
+
+Lemonldap::NG::Portal::Main::Issuer - Base class for identity providers.
+
+=head1 SYNOPSIS
+
+  package Lemonldap::NG::Portal::Issuer::My;
+  use strict;
+  use Mouse;
+  extends 'Lemonldap::NG::Portal::Main::Issuer';
+  use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+  
+  # Optional initialization method
+  sub init {
+      my ($self) = @_;
+      ...
+      # Must return 1 (succeed) or 0 (failure)
+  }
+  
+  # Required methods are run() and logout(), they are launched only for
+  # authenticated users
+  # $req is a Lemonldap::NG::Portal::Main::Request object
+  # They must return a Lemonldap::NG::Portal::Main::Constants constant
+  sub run {
+      my ( $self, $req ) = @_
+      ...
+      return PE_OK
+  }
+  
+  sub logout {
+      my ( $self, $req ) = @_
+      ...
+      return PE_OK
+  }
+  1;
+
+=head1 DESCRIPTION
+
+Lemonldap::NG::Portal::Main::Issuer is a base class to write identity providers
+for Lemonldap::NG web-SSO system. It provide several methods to write easily
+an IdP and manage authentication if the identity request comes before
+authentication.
+
+=head1 WRITING AN IDENTITY PROVIDER
+
+To write a classic identity provider, you just have to inherit this class and
+write run() and logout() methods. These methods must return a
+Lemonldap::NG::Portal::Main::Constants constant.
+
+A classic identity provider needs a "issuerDBE<gt>XXXE<lt>Path" parameter in
+LLNG configuration to declare its base URI path (see
+L<Lemonldap::NG::Manager::Build>). Example: /saml/. All requests that starts
+with /saml/ will call run() after authenticatio if needed, and noone else.
+
+The logout() function is called when user asks for logout on this server. If
+you want to write an identity provider, you must implement a single logout
+system.
+
+=head2 managing other URI path
+
+Lemonldap::NG::Portal::Main::Issuer provides methods to bind a method to an
+URI path:
+
+=over
+
+=item addAuthRoute() for authenticated users
+
+=item addUnauthRoute() for unauthenticated users
+
+=back
+
+They must be called during initialization process (so you must write the
+optional init() sub).
+
+Example:
+
+  sub init {
+      my ($self) = @_;
+      ...
+      $self->addUnauthRoute( saml => { soap => 'soapServer' }, [ 'POST' ] );
+      return 1;
+  }
+  sub soapServer {
+      my ( $self, $req ) = @_;
+      ...
+      # You must return a valid PSGI response
+      return [ 200, [ 'Content-Type' => 'application/xml' ], [] ];
+  }
+
+=head1 SEE ALSO
+
+L<http://lemonldap-ng.org/>
+
+=head1 AUTHOR
+
+=over
+
+=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
+=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=back
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<http://jira.ow2.org>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+
+=head1 COPYRIGHT AND LICENSE
+
+=over
+
+=item Copyright (C) 2016 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=item Copyright (C) 2016 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
+=back
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see L<http://www.gnu.org/licenses/>.
+
+=cut
