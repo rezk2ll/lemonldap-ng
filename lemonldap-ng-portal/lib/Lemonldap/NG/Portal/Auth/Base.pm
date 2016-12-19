@@ -86,6 +86,38 @@ Lemonldap::NG portal. They must provides methods described below.
 
 =back
 
+=head3 "Routes" management
+
+Like any module that inherits from Lemonldap::NG::Portal::Plugin,
+Lemonldap::NG::Portal::Auth::Base provides URI path functions:
+
+=over
+
+=item addAuthRoute: wrapper to L<Lemonldap::NG::Handler::PSGI::Try>
+addAuthRoute() method
+
+=item addUnauthRoute: wrapper to L<Lemonldap::NG::Handler::PSGI::Try>
+addUnauthRoute() method
+
+=back
+
+Exemple:
+
+  sub init {
+      ...
+      $self->addAuthRoute( saml => { proxy => "proxySub" }, [ 'GET', 'POST' ] );
+      ...
+  }
+  sub proxySub {
+      my ( $self, $req ) = @_;
+      ...
+      # This sub must return a PSGI response. Example
+      return [ 302, [ Location => 'http://x.y/' ], [] ];
+  }
+
+This means that requests http://auth.../saml/proxy will be given to proxySub()
+method.
+
 =head2 Methods that must be provided by an authentication module
 
 =head3 init()
