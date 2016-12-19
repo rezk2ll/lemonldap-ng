@@ -1509,7 +1509,7 @@ sub sloRelaySoap {
     my $session    = $relayInfos->data->{_lassoSessionDump};
     my $identity   = $relayInfos->data->{_lassoIdentityDump};
     my $providerID = $relayInfos->data->{_providerID};
-    my $relayState = $relayInfos->data->{_relayState};
+    my $relayState = $relayInfos->data->{_relayState} // '';
     my $spConfKey  = $self->spList->{$providerID}->{confKey};
 
     if ($session) {
@@ -1531,7 +1531,8 @@ sub sloRelaySoap {
     # Send the logout request
     my ( $rstatus, $rmethod, $rinfo ) =
       $self->sendLogoutRequestToProvider( $req, $logout, $providerID,
-        Lasso::Constants::HTTP_METHOD_SOAP );
+        Lasso::Constants::HTTP_METHOD_SOAP,
+        undef, $relayState );
     unless ($rstatus) {
         $self->lmLog( "Fail to process SOAP logout request to $providerID",
             'error' );
