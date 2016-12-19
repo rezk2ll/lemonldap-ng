@@ -62,6 +62,7 @@ lib/Lemonldap/NG/Portal/IssuerDBNull.pm
 lib/Lemonldap/NG/Portal/IssuerDBOpenID.pm
 lib/Lemonldap/NG/Portal/IssuerDBOpenIDConnect.pm
 lib/Lemonldap/NG/Portal/IssuerDBSAML.pm
+lib/Lemonldap/NG/Portal/Lib/CAS.pm
 lib/Lemonldap/NG/Portal/Lib/Choice.pm
 lib/Lemonldap/NG/Portal/Lib/DBI.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
