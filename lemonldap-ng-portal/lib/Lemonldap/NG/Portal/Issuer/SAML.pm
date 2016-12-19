@@ -19,11 +19,8 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
 
-has ssoUrlRe       => ( is => 'rw' );
-has sloRe          => ( is => 'rw' );
-has artRe          => ( is => 'rw' );
-has soapSloRe      => ( is => 'rw' );
-has sloRelaySoapRe => ( is => 'rw' );
+has ssoUrlRe => ( is => 'rw' );
+has sloRe    => ( is => 'rw' );
 
 # INITIALIZATION
 
@@ -52,16 +49,17 @@ sub init {
     $self->ssoUrlRe(
 qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)(?:\?.*)?$/i
     );
-    my $saml_art_url = $self->getMetaDataURL(
-        'samlIDPSSODescriptorArtifactResolutionServiceArtifact');
-    $self->artRe(qr/^$saml_art_url(?:\?.*)?$/i);
 
-    my $saml_slo_soap_url =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 1 );
-    my $saml_slo_soap_url_ret =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 2 );
-    $self->soapSloRe(
-        qr/^(?:$saml_slo_soap_url|$saml_slo_soap_url_ret)(?:\?.*)?$/i);
+    # SOAP routes
+    $self->addRouteFromMetaDataURL(
+        'samlIDPSSODescriptorArtifactResolutionServiceArtifact',
+        3, 'artifactServer', ['POST'] );
+    $self->addRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
+        1, 'soapSloServer', ['POST'] );
+    $self->addRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
+        2, 'soapSloServer', ['POST'] );
 
     my $saml_slo_get_url = $self->getMetaDataURL(
         "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
@@ -74,10 +72,13 @@ qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_u
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
         2 );
     $self->sloRe(
-qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)(?:\?.*)?$/i
+qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)(?:\?.*)?$/i
     );
 
-    $self->sloRelaySoapRe(qr#^/saml/relaySingleLogoutSOAP(?:\?.*)?$#i);
+    $self->addUnauthRoute(
+        saml => { relaySingleLogoutSOAP => 'sloRelaySoap' },
+        [ 'GET', 'POST' ]
+    );
 
     return (
         $self->Lemonldap::NG::Portal::Main::Issuer::init()
@@ -95,34 +96,6 @@ qr/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_u
 }
 
 # RUNNING METHODS
-
-# Override _predirect to catch artifact requests
-
-sub _pRedirect {
-    my ( $self, $req ) = @_;
-    if ( $req->uri =~ $self->artRe ) {
-        return $self->artifactServer($req);
-    }
-    elsif ( $req->uri =~ $self->soapSloRe ) {
-        return $self->soapSloServer($req);
-    }
-    else {
-        $req->parseBody;
-        return $self->SUPER::_redirect($req);
-    }
-}
-
-# Override _redirect to catch SLO relay
-
-sub _redirect {
-    my ( $self, $req ) = @_;
-    if ( $req->uri =~ $self->sloRelaySoapRe ) {
-        return $self->sloRelaySoap($req);
-    }
-    else {
-        return $self->SUPER::_redirect($req);
-    }
-}
 
 sub run {
     my ( $self, $req ) = @_;
