@@ -6,6 +6,8 @@ use Data::Dumper;
 use LWP::UserAgent;
 use 5.10.0;
 
+no warnings 'redefine';
+
 BEGIN {
     use_ok('Lemonldap::NG::Portal::Main');
 }

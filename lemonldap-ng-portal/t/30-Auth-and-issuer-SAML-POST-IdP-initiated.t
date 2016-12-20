@@ -134,6 +134,7 @@ clean_sessions();
 done_testing( count() );
 
 # Redefine LWP methods for tests
+no warnings 'redefine';
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
     ok( $req->uri =~ m#http://auth.sp.com(.*)#, 'Request from SP to IdP' );
