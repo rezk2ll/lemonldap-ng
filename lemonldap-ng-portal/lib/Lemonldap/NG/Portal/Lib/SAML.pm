@@ -3032,11 +3032,11 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::_SAML - Common SAML functions
+Lemonldap::NG::Portal::Lib::SAML - Common SAML functions
 
 =head1 SYNOPSIS
 
-use Lemonldap::NG::Portal::_SAML;
+use Lemonldap::NG::Portal::Lib::SAML;
 
 =head1 DESCRIPTION
 
@@ -3387,7 +3387,7 @@ Get query string with or without CGI query_string() method
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Portal::AuthSAML>, L<Lemonldap::NG::Portal::UserDBSAML>
+L<Lemonldap::NG::Portal::Auth::SAML>, L<Lemonldap::NG::Portal::UserDBSAML>
 
 =head1 AUTHOR
 

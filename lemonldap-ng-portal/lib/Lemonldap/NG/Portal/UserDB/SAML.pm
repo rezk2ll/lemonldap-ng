@@ -195,11 +195,11 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::UserDBSAML - SAML User backend
+Lemonldap::NG::Portal::UserDB::SAML - SAML User backend
 
 =head1 SYNOPSIS
 
-  use Lemonldap::NG::Portal::UserDBSAML;
+  use Lemonldap::NG::Portal::UserDB::SAML;
 
 =head1 DESCRIPTION
 
@@ -207,7 +207,7 @@ Collect all required attributes trough SAML Attribute Requests
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::AuthSAML>, L<Lemonldap::NG::Portal::_SAML>
+L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::Auth::SAML>, L<Lemonldap::NG::Portal::Lib::SAML>
 
 =head1 AUTHOR
 

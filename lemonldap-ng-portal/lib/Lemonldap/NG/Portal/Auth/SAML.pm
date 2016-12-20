@@ -1495,11 +1495,11 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::AuthSAML - SAML Authentication backend
+Lemonldap::NG::Portal::Auth::SAML - SAML Authentication backend
 
 =head1 SYNOPSIS
 
-  use Lemonldap::NG::Portal::AuthSAML;
+  use Lemonldap::NG::Portal::Auth::SAML;
 
 =head1 DESCRIPTION
 
@@ -1507,7 +1507,7 @@ Use SAML to authenticate users
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::UserDBSAML>, L<Lemonldap::NG::Portal::_SAML>
+L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::User::SAML>, L<Lemonldap::NG::Portal::Lib::SAML>
 
 =head1 AUTHOR
 
