@@ -140,47 +140,50 @@ sub deleteSession {
 
     # TODO
     # Collect logout services and build hidden iFrames
-    #if ( $self->{logoutServices} and %{ $self->{logoutServices} } ) {
+    if ( $req->datas->{logoutServices} and %{ $req->datas->{logoutServices} } )
+    {
 
-    #    $self->lmLog( "Create iFrames to forward logout to services",
-    #        'debug' );
+        $self->lmLog( "Create iFrames to forward logout to services", 'debug' );
 
-    #    $self->info( "<h3>" . $self->msg(PM_LOGOUT) . "</h3>" );
+        $self->info('<h3 trmsg="logoutFromOtherApp"></h3>');
 
-    #    foreach ( keys %{ $self->{logoutServices} } ) {
-    #        my $logoutServiceName = $_;
-    #        my $logoutServiceUrl =
-    #          $self->{logoutServices}->{$logoutServiceName};
+        foreach ( keys %{ $req->datas->{logoutServices} } ) {
+            my $logoutServiceName = $_;
+            my $logoutServiceUrl =
+              $req->datas->{logoutServices}->{$logoutServiceName};
 
-    #        $self->lmLog(
-    #"Find lo#gout service $logoutServiceName ($logoutServiceUrl)",
+            $self->lmLog(
+                "Find lo#gout service $logoutServiceName ($logoutServiceUrl)",
 
-    #            'debug'
-    #        );
+                'debug'
+            );
 
-#        my $iframe =
-#            "<iframe src=\"$logoutServiceUrl\""
-#          . " alt=\"$logoutServiceName\" marginwidth=\"0\""
-#          . " marginheight=\"0\" scrolling=\"no\" style=\"border: none;display: hidden;margin: 0\""
-#          . " width=\"0\" height=\"0\" frameborder=\"0\">"
-#          . "</iframe>";
+            my $iframe =
+                "<iframe src=\"$logoutServiceUrl\""
+              . " alt=\"$logoutServiceName\" marginwidth=\"0\""
+              . " marginheight=\"0\" scrolling=\"no\" style=\"border: none;display: hidden;margin: 0\""
+              . " width=\"0\" height=\"0\" frameborder=\"0\">"
+              . "</iframe>";
 
-    #        $self->info($iframe);
-    #    }
+            $self->info($iframe);
+        }
 
-    #    # Redirect on logout page if no other target defined
-    #    if ( !$self->{urldc} and !$self->{postUrl} ) {
-    #        $self->{urldc} = $ENV{SCRIPT_NAME} . "?logout=1";
-    #    }
-    #}
+        # Redirect on logout page if no other target defined
+        if ( !$req->urldc and !$req->postUrl ) {
+            $req->urldc( $req->scriptname . "?logout=1" );
+        }
+    }
 
     # Redirect or Post if asked by authLogout
-    #return $self->_subProcess(qw(autoRedirect))
-    #  if (  $self->{urldc}
-    #    and $self->{urldc} ne $self->{portal} );
+    if ( $req->urldc and $req->urldc ne $self->conf->{portal} ) {
+        $req->steps( [] );
+        return PE_REDIRECT;
+    }
 
-    #return $self->_subProcess(qw(autoPost))
-    #  if ( $self->{postUrl} );
+    if ( $req->postUrl ) {
+        $req->steps( ['autoPost'] );
+        return PE_OK;
+    }
 
     # If logout redirects to another URL, just remove next steps for the
     # request so autoRedirect will be called
@@ -304,7 +307,8 @@ sub setSessionInfo {
 sub setMacros {
     my ( $self, $req ) = @_;
     foreach ( sort keys %{ $self->_macros } ) {
-        $req->{sessionInfo}->{$_} = $self->_macros->{$_}->( $req->sessionInfo );
+        $req->{sessionInfo}->{$_} =
+          $self->_macros->{$_}->( $req->sessionInfo );
     }
     PE_OK;
 }
