@@ -33,7 +33,7 @@ sub init {
     return 1;
 }
 
-# RUNNONG METHODS
+# RUNNING METHODS
 
 # Does nothing
 sub getUser {

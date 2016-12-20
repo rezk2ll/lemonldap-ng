@@ -54,6 +54,12 @@
   "notifications": 0,
   "passwordDB": "Null",
   "portal": "http://auth.example.com/",
+  "casStorage": "Apache::Session::File",
+  "casStorageOptions": {
+    "Directory": "t/sessions/saml",
+    "LockDirectory": "t/sessions/saml/lock",
+    "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
+  },
   "samlStorage": "Apache::Session::File",
   "samlStorageOptions": {
     "Directory": "t/sessions/saml",

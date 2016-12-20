@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Auth::SAML;
+package Lemonldap::NG::Portal::Auth::CAS;
 
 use strict;
 use Mouse;
@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Auth::Base', 'Lemonldap::NG::Portal::Lib::SAML';
+extends 'Lemonldap::NG::Portal::Auth::Base', 'Lemonldap::NG::Portal::Lib::CAS';
 
 # PROPERTIES
 
@@ -211,6 +211,8 @@ sub authLogout {
 sub getDisplayType {
     return "logo";
 }
+
+1;
 __END__
 
 =head1 NAME
