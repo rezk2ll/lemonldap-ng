@@ -130,7 +130,7 @@ SKIP: {
         'Post authentication'
     );
     ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    $cookies = $sp->getCookies($res);
+    $cookies = $issuer->getCookies($res);
     my $idpId;
     ok( $idpId = $cookies->{lemonldap}, 'Get cookie' )
       or explain( $res, 'Set-Cookie: something' );

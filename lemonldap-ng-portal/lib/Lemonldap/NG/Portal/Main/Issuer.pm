@@ -49,7 +49,7 @@ sub init {
 # Case 1: Unauthentified users are redirected to the main portal
 
 sub _redirect {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, @path ) = @_;
     my $prms = $req->params;
     foreach my $k ( keys %$prms ) {
         $self->p->setHiddenFormValue( $req, $k, $prms->{$k}, '', 0 );
@@ -72,17 +72,17 @@ sub _redirect {
             $self->p->sessionDatas,
             @{ $self->p->afterDatas },
             sub {
-                return $self->run(@_);
+                return $self->run(@_, @path);
               }
         ]
     );
 }
 
 sub _pRedirect {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, @path ) = @_;
     $self->lmLog( 'Parsing posted datas', 'debug' );
     $req->parseBody;
-    return $self->_redirect($req);
+    return $self->_redirect( $req, @path );
 }
 
 # Case 3: authentified user, launch

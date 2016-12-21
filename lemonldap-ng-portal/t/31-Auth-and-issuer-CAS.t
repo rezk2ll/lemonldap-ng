@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 5;
+my $maintests = 13;
 my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -43,6 +43,56 @@ SKIP: {
         $res->[1],
         'location => http://auth.idp.com/cas/login?service=http://auth.sp.com/'
       );
+
+    # Query IdP
+    switch ('issuer');
+    ok(
+        $res = $issuer->_get(
+            '/cas/login',
+            query  => 'service=http://auth.sp.com/',
+            accept => 'text/html'
+        ),
+        'Query CAS server'
+    );
+    ok( $res->[0] == 200, 'Return code is 200' ) or explain( $res->[0], 200 );
+
+    # Try to authenticate to IdP
+    my $body = $res->[2]->[0];
+    $body =~ s/^.*?<form.*?>//s;
+    $body =~ s#</form>.*$##s;
+    my %fields =
+      ( $body =~ /<input type="hidden".+?name="(.+?)".+?value="(.*?)"/sg );
+    $fields{user} = $fields{password} = 'dwho';
+    use URI::Escape;
+    my $s = join( '&', map { "$_=" . uri_escape( $fields{$_} ) } keys %fields );
+    ok(
+        $res = $issuer->_post(
+            '/cas/login',
+            IO::String->new($s),
+            accept => 'text/html',
+            length => length($s),
+        ),
+        'Post authentication'
+    );
+    ok( $res->[0] == 302, 'Response is 302' ) or explain( $res->[0], 302 );
+    my $cookies = $issuer->getCookies($res);
+    my $idpId;
+    ok( $idpId = $cookies->{lemonldap}, 'Get cookie' )
+      or explain( $res, 'Set-Cookie: something' );
+    my $url;
+    ok( $url = $issuer->getRedirection($res), 'Get location header' )
+      or explain( $res->[1], 'Location: http://auth.sp.com/?ticket=...' );
+    ok( $url =~ m#(http://auth.sp.com/)\?(ticket=[^&]+)$#,
+        'Get ticket in redirection' )
+      or explain( $url, 'http://auth.sp.com/?ticket=...' );
+    $url = $1;
+    my $query = $2;
+
+    # Back to SP
+    switch ('sp');
+    ok( $res = $sp->_get( $url, query => $query, accept => 'text/html' ),
+        'Query SP with ticket' );
+
     #print STDERR Dumper($res);
 }
 

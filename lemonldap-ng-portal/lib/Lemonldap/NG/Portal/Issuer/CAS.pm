@@ -53,11 +53,11 @@ sub run {
         $self->lmLog( "URL $url detected as an CAS LOGIN URL", 'debug' );
 
         # GET parameters
-        my $service = $self->getHiddenFormValue( $req, 'service' )
+        my $service = $self->p->getHiddenFormValue( $req, 'service' )
           || $req->param('service');
         my $renew =
-          $self->getHiddenFormValue( $req, 'renew' ) || $req->param('renew');
-        my $gateway = $self->getHiddenFormValue( $req, 'gateway' )
+          $self->p->getHiddenFormValue( $req, 'renew' ) || $req->param('renew');
+        my $gateway = $self->p->getHiddenFormValue( $req, 'gateway' )
           || $req->param('gateway');
         my $casServiceTicket;
 
@@ -171,9 +171,10 @@ sub run {
 
         $self->lmLog( "Redirect user to $service_url", 'debug' );
 
-        $self->{urldc} = $service_url;
+        $req->{urldc} = $service_url;
 
-        return $self->_subProcess(qw(autoRedirect));
+        $req->steps([]);
+        return PE_OK;
     }
 
     # 2. LOGOUT
