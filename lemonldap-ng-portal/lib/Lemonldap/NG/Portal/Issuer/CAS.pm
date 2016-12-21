@@ -3,6 +3,10 @@ package Lemonldap::NG::Portal::Issuer::CAS;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_CAS_SERVICE_NOT_ALLOWED
+  PE_CONFIRM
+  PE_ERROR
+  PE_LOGOUT_OK
   PE_OK
 );
 
@@ -195,7 +199,9 @@ sub run {
             # Display a link to the provided URL
             $self->lmLog( "Logout URL $logout_url will be displayed", 'debug' );
 
-            $self->info( "<h3>" . $self->msg(PM_BACKTOCASURL) . "</h3>" );
+            $self->info(
+'<h3 trmsg="back2CasUrl">The application you just logged out of has provided a link it would like you to follow</h3>'
+            );
             $self->info("<p><a href=\"$logout_url\">$logout_url</a></p>");
             $self->{activeTimer} = 0;
 

@@ -44,7 +44,7 @@ sub init {
             CAFile => $self->conf->{CASCAFile},
         )
     );
-    return ( $self->SUPER::init );
+    return 1;
 }
 
 # RUNNING METHODS

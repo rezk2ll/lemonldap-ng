@@ -28,10 +28,6 @@ has ua => (
 
 # INITIALIZATION
 
-sub init {
-    my ($self) = @_;
-}
-
 sub sendSoapResponse {
     my ( $self, $req, $s ) = @_;
     $req->response(

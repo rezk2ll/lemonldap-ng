@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 1;
+my $maintests = 2;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -18,8 +18,8 @@ SKIP: {
         skip 'AuthCAS not found', $maintests;
     }
 
-    #ok( $issuer = issuer(), 'Issuer portal' );
-    #$handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
+    ok( $issuer = issuer(), 'Issuer portal' );
+    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
     switch ('sp');
 
     ok( $sp = sp(), 'SP portal' );
