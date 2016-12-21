@@ -7,8 +7,8 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 2;
-my $debug     = 'error';
+my $maintests = 5;
+my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -25,6 +25,25 @@ SKIP: {
     ok( $sp = sp(), 'SP portal' );
     $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
 
+    # Simple SP access
+    my $res;
+    ok(
+        $res = $sp->_get(
+            '/', accept => 'text/html',
+        ),
+        'Unauth SP request'
+    );
+    ok( $res->[0] == 302, 'Return code is 302' ) or explain( $res->[0], 302 );
+    ok(
+        $sp->getRedirection($res) eq
+          'http://auth.idp.com/cas/login?service=http://auth.sp.com/',
+        'Redirection points to IdP'
+      )
+      or explain(
+        $res->[1],
+        'location => http://auth.idp.com/cas/login?service=http://auth.sp.com/'
+      );
+    #print STDERR Dumper($res);
 }
 
 count($maintests);
@@ -33,6 +52,7 @@ done_testing( count() );
 
 # Redefine LWP methods for tests
 no warnings 'redefine';
+
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
     ok( $req->uri =~ m#http://auth.sp.com(.*)#, 'Request from SP to IdP' );
@@ -98,7 +118,7 @@ sub sp {
                 authentication        => 'CAS',
                 userDB                => 'Null',
                 issuerDBCASActivation => 0,
-                CASurl                => 'http://auth.idp.com/cas/',
+                CASurl                => 'http://auth.idp.com/cas',
                 CASCAFile             => 't/caFile.pem',
             },
         }

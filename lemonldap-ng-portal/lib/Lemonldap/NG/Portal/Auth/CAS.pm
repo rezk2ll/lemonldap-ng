@@ -53,7 +53,7 @@ sub extractFormInfo {
     my ( $self, $req ) = @_;
 
     # Local URL
-    my $local_url = $req->uri;
+    my $local_url = $self->conf->{portal} . $req->uri;
 
     # Add request state parameters
     if ( $req->datas->{_url} ) {
