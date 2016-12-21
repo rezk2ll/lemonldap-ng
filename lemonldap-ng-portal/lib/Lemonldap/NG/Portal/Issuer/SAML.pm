@@ -50,23 +50,6 @@ sub init {
 qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)(?:\?.*)?$/i
     );
 
-    # SOAP routes (access without authentication)
-    $self->addRouteFromMetaDataURL(
-        'samlIDPSSODescriptorArtifactResolutionServiceArtifact',
-        3, 'artifactServer', ['POST'] );
-    $self->addRouteFromMetaDataURL(
-        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
-        1, 'soapSloServer', ['POST'] );
-    $self->addRouteFromMetaDataURL(
-        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
-        2, 'soapSloServer', ['POST'] );
-
-    # TODO: @coudot, why this URL isn't managed with a conf param ?
-    $self->addUnauthRoute(
-        saml => { relaySingleLogoutSOAP => 'sloRelaySoap' },
-        [ 'GET', 'POST' ]
-    );
-
     # Single logout routes (managed by regexp in run())
     my $saml_slo_get_url = $self->getMetaDataURL(
         "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
@@ -83,7 +66,7 @@ qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_u
     );
 
     # Launch parents initialization subroutines, then launch IdP en SP lists
-    return (
+    my $res = (
         $self->Lemonldap::NG::Portal::Main::Issuer::init()
 
           # Load SAML service
@@ -96,6 +79,23 @@ qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_u
           # Required to manage SLO in Proxy mode
           and $self->loadIDPs()
     );
+    # SOAP routes (access without authentication)
+    $self->addRouteFromMetaDataURL(
+        'samlIDPSSODescriptorArtifactResolutionServiceArtifact',
+        3, 'artifactServer', ['POST'] );
+    $self->addRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
+        1, 'soapSloServer', ['POST'] );
+    $self->addRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
+        2, 'soapSloServer', ['POST'] );
+
+    # TODO: @coudot, why this URL isn't managed with a conf param ?
+    $self->addUnauthRoute(
+        $self->path => { relaySingleLogoutSOAP => 'sloRelaySoap' },
+        [ 'GET', 'POST' ]
+    );
+    return $res;
 }
 
 # RUNNING METHODS

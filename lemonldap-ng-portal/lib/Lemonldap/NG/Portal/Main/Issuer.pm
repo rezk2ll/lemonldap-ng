@@ -19,6 +19,8 @@ our $VERSION = '2.0.0';
 
 has type => ( is => 'rw' );
 
+has path => ( is => 'rw' );
+
 # INTERFACE
 
 # Only logout is called in normal use. Issuer that inherits from this
@@ -34,6 +36,7 @@ sub init {
     $self->type($type);
     if ( my $path = $self->conf->{"issuerDB${type}Path"} ) {
         $path =~ s/^.*?(\w+).*?$/$1/;
+        $self->path($path);
         $self->addUnauthRoute( $path => { '*' => '_redirect' },  ['GET'] );
         $self->addUnauthRoute( $path => { '*' => '_pRedirect' }, ['POST'] );
         $self->addAuthRoute( $path => { '*' => "_forAuthUser" },  ['GET'] );

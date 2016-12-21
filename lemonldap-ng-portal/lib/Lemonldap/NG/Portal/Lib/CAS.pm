@@ -3,11 +3,6 @@ package Lemonldap::NG::Portal::Lib::CAS;
 use strict;
 use Mouse;
 
-use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_OK
-  PE_SENDRESPONSE
-);
-
 our $VERSION = '2.0.0';
 
 # PROPERTIES
@@ -30,16 +25,7 @@ has ua => (
 
 sub sendSoapResponse {
     my ( $self, $req, $s ) = @_;
-    $req->response(
-        [
-            200,
-            [
-                'Content-Length' => length($s)
-            ],
-            [$s]
-        ]
-    );
-    return PE_SENDRESPONSE;
+    return [ 200, [ 'Content-Length' => length($s) ], [$s] ];
 }
 
 # Try to recover the CAS session corresponding to id and return session datas
@@ -78,8 +64,7 @@ sub returnCasValidateError {
 
     $self->lmLog( "Return CAS validate error", 'debug' );
 
-    $req->response( [ 200, [ 'Content-Length' => 4 ], ["no\n\n"] ] );
-    return PE_SENDRESPONSE;
+    return [ 200, [ 'Content-Length' => 4 ], ["no\n\n"] ];
 }
 
 # Return success for CAS VALIDATE request
