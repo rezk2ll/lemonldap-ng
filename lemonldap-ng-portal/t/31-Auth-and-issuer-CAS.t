@@ -8,7 +8,7 @@ BEGIN {
 }
 
 my $maintests = 24;
-my $debug     = 'debug';
+my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -20,6 +20,7 @@ SKIP: {
         skip 'AuthCAS not found', $maintests;
     }
 
+    no warnings 'once';
     *AuthCAS::get_https2 = *mygethttps2;
 
     ok( $issuer = issuer(), 'Issuer portal' );

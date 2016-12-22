@@ -73,7 +73,7 @@ sub run {
         my $casServiceTicket;
 
         # Renew
-        if ( $renew eq 'true' ) {
+        if ( $renew and $renew eq 'true' ) {
 
             # Authentication must be replayed
             $self->lmLog( "Authentication renew requested", 'debug' );
@@ -136,7 +136,8 @@ sub run {
             my $casRenewFlag = 0;
             my $last_authn_utime = $self->{sessionInfo}->{_lastAuthnUTime} || 0;
             if (
-                time() - $last_authn_utime < $self->{portalForceAuthnInterval} )
+                time() - $last_authn_utime <
+                $self->conf->{portalForceAuthnInterval} )
             {
                 $self->lmLog(
                     "Authentication is recent, will set CAS renew flag to true",
@@ -367,7 +368,7 @@ sub validate {
     }
 
     # Check renew
-    if ( $renew eq 'true' ) {
+    if ( $renew and $renew eq 'true' ) {
 
         # We should check the ST was delivered with primary credentials
         $self->lmLog( "Renew flag detected ", 'debug' );
@@ -511,7 +512,7 @@ sub _validate2 {
     }
 
     # Check renew
-    if ( $renew eq 'true' ) {
+    if ( $renew and $renew eq 'true' ) {
 
         # We should check the ST was delivered with primary credentials
         $self->lmLog( "Renew flag detected ", 'debug' );

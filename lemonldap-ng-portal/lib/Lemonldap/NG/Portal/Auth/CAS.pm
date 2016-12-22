@@ -190,7 +190,7 @@ sub authenticate {
 # Set authenticationLevel.
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->{CASauthnLevel};
+    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{CASAuthnLevel};
     PE_OK;
 }
 

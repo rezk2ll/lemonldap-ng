@@ -133,7 +133,6 @@ sub deleteSession {
         return PE_ERROR;
     }
     else {
-        HANDLER->localUnlog( $req->id );
         $self->lmLog( "Session $req->{id} deleted from global storage",
             'debug' );
     }

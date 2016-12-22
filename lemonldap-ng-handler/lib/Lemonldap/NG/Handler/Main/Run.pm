@@ -614,7 +614,7 @@ sub localUnlog {
     if ( $id //= $class->fetchId ) {
 
         # Delete thread datas
-        if ( $id eq $class->datas->{_session_id} ) {
+        if ( $class->datas and $id eq $class->datas->{_session_id} ) {
             $class->datas( {} );
         }
 
