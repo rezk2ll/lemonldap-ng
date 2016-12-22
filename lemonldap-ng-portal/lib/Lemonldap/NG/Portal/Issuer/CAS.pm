@@ -397,7 +397,7 @@ sub validate {
 
     # Get username
     my $username =
-      $localSession->data->{ $self->{casAttr} || $self->{whatToTrace} };
+      $localSession->data->{ $self->conf->{casAttr} || $self->conf->{whatToTrace} };
 
     $self->lmLog( "Get username $username", 'debug' );
 
@@ -425,7 +425,7 @@ sub proxyValidate {
 sub _validate2 {
     my ( $self, $urlType, $req ) = @_;
     $self->lmLog(
-        'URL ' . $req->uri . ' detected as an CAS $urlType VALIDATE URL',
+        'URL ' . $req->uri . " detected as an CAS $urlType VALIDATE URL",
         'debug' );
 
     # GET parameters
@@ -497,7 +497,6 @@ sub _validate2 {
                   . $casServiceSession->data->{service},
                 'error'
             );
-
             $self->deleteCasSession($casServiceSession);
             return $self->returnCasServiceValidateError( 'INVALID_SERVICE',
                 'Submitted service does not match initial service' );
