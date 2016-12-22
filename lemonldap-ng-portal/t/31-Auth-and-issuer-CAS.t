@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 19;
+my $maintests = 22;
 my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -116,7 +116,28 @@ SKIP: {
         ),
         'Query SP for logout'
     );
-    print STDERR Dumper($res);
+    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+    ok(
+        $res->[2]->[0] =~
+          m#iframe src="http://auth.idp.com(/cas/logout)\?(.+?)"#s,
+        'Found iframe'
+    );
+
+    #print STDERR Dumper($res);
+
+    # Query IdP with iframe src
+    $url   = $1;
+    $query = $2;
+    switch ('issuer');
+    ok(
+        $res = $issuer->_get(
+            $1,
+            query  => $query,
+            accept => 'text/html',
+            cookie => "lemonldap=$idpId"
+        ),
+        'Get iframe from IdP'
+    );
 }
 
 count($maintests);

@@ -75,7 +75,7 @@ sub _redirect {
             $self->p->sessionDatas,
             @{ $self->p->afterDatas },
             sub {
-                return $self->run(@_, @path);
+                return $self->run( @_, @path );
               }
         ]
     );
@@ -90,7 +90,7 @@ sub _pRedirect {
 
 # Case 3: authentified user, launch
 sub _forAuthUser {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, @path ) = @_;
     return $self->p->do(
         $req,
         [
@@ -98,7 +98,7 @@ sub _forAuthUser {
             'controlUrl',
             @{ $self->p->forAuthUser },
             sub {
-                return $self->run(@_);
+                return $self->run( @_, @path );
             },
         ]
     );

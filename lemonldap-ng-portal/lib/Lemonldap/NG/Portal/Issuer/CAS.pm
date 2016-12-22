@@ -194,14 +194,14 @@ sub run {
         $self->lmLog( "URL $url detected as an CAS LOGOUT URL", 'debug' );
 
         # GET parameters
-        my $logout_url = $self->param('url');
+        my $logout_url = $req->param('url');
 
         # Delete linked CAS sessions
         $self->deleteCasSecondarySessions($session_id);
 
         # Delete local session
         unless (
-            $self->_deleteSession(
+            $self->p->_deleteSession(
                 $self->p->getApacheSession( $session_id, 1 )
             )
           )
