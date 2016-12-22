@@ -444,6 +444,7 @@ sub _deleteSession {
           ) unless ($preserveCookie);
     }
 
+    HANDLER->unlog($session->id);
     $session->remove;
 
     # Create an obsolete cookie to remove it

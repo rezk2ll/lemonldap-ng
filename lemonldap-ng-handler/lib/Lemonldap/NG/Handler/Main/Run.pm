@@ -610,6 +610,7 @@ sub abort {
 # Delete current user from local cache entry.
 sub localUnlog {
     my ( $class, $id ) = @_;
+    $class->lmLog('Local handler logout','debug');
     if ( $id //= $class->fetchId ) {
 
         # Delete thread datas
@@ -629,9 +630,9 @@ sub localUnlog {
 ## @rmethod protected int unlog()
 # Call localUnlog() then goToPortal() to unlog the current user.
 # @return Constant value returned by goToPortal()
-sub unlog ($$) {
+sub unlog {
     my $class = shift;
-    $class->localUnlog;
+    $class->localUnlog(@_);
     $class->updateStatus('LOGOUT');
     return $class->goToPortal( '/', 'logout=1' );
 }
