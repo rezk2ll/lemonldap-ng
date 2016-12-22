@@ -102,7 +102,7 @@ sub returnCasServiceValidateSuccess {
     $self->lmLog( "Return CAS service validate success with username $username",
         'debug' );
 
-    my $s = "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas
+    my $s = "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
 \t<cas:authenticationSuccess>
 \t\t<cas:user>$username</cas:user>\n";
     if ( defined $attributes ) {
@@ -110,7 +110,7 @@ sub returnCasServiceValidateSuccess {
         foreach my $attribute ( keys %$attributes ) {
             foreach my $value (
                 split(
-                    $self->{multiValuesSeparator},
+                    $self->conf->{multiValuesSeparator},
                     $attributes->{$attribute}
                 )
               )

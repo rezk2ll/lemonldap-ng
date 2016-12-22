@@ -106,7 +106,7 @@ done_testing( count() );
 # Redefine LWP methods for tests
 sub mygethttps2 {
     my ( $host, $port, $path, $ssl_data ) = @_;
-    ok( $path =~ m#^(/[^\?]+)(?:\?(.*))?$#, "Path to push to IdP: $path");
+    ok( $path =~ m#^(/[^\?]+)(?:\?(.*))?$#, "Path to push to IdP: $path" );
     $path = $1;
     my $query = $2;
     ok( $res = $issuer->_get( $path, query => $query ), 'Execute request' );
@@ -138,6 +138,7 @@ sub issuer {
                 casAttr                => 'uid',
                 casAttributes          => { cn => 'cn', uid => 'uid', },
                 casAccessControlPolicy => 'none',
+                multiValuesSeparator   => ';',
             }
         }
     );
@@ -155,6 +156,7 @@ sub sp {
                 issuerDBCASActivation => 0,
                 CASurl                => 'http://auth.idp.com/cas',
                 CASCAFile             => 't/caFile.pem',
+                multiValuesSeparator  => ';',
             },
         }
     );

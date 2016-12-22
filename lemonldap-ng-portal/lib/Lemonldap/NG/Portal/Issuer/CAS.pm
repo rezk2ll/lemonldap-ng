@@ -432,7 +432,7 @@ sub _validate2 {
     my $service = $req->param('service');
     my $ticket  = $req->param('ticket');
     my $pgtUrl  = $req->param('pgtUrl');
-    my $renew   = $req->param('renew');
+    my $renew   = $req->param('renew') // 'false';
 
     # PGTIOU
     my $casProxyGrantingTicketIOU;
@@ -621,16 +621,20 @@ sub _validate2 {
 
     # Get username
     my $username =
-      $localSession->data->{ $self->{casAttr} || $self->{whatToTrace} };
+      $localSession->data->{ $self->conf->{casAttr}
+          || $self->conf->{whatToTrace} };
 
     $self->lmLog( "Get username $username", 'debug' );
 
     # Get attributes [CAS 3.0]
     my $attributes = {};
-    if ( defined $self->{casAttributes} ) {
-        foreach my $casAttribute ( keys %{ $self->{casAttributes} } ) {
+    if ( defined $self->conf->{casAttributes}
+        and %{ $self->conf->{casAttributes} } )
+    {
+        foreach my $casAttribute ( keys %{ $self->conf->{casAttributes} } ) {
             my $localSessionValue =
-              $localSession->data->{ $self->{casAttributes}->{$casAttribute} };
+              $localSession->data->{ $self->conf->{casAttributes}
+                  ->{$casAttribute} };
             $attributes->{$casAttribute} = $localSessionValue
               if defined $localSessionValue;
         }
@@ -638,7 +642,7 @@ sub _validate2 {
 
     # Return success message
     $self->deleteCasSession($casServiceSession);
-    return $self->returnCasServiceValidateSuccess( $username,
+    return $self->returnCasServiceValidateSuccess( $req, $username,
         $casProxyGrantingTicketIOU, $proxies, $attributes );
 }
 
