@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 22;
+my $maintests = 24;
 my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -138,6 +138,25 @@ SKIP: {
         ),
         'Get iframe from IdP'
     );
+
+    # Verify that user has been disconnected
+    ok( $res = $issuer->_get( '/', cookie => "lemonldap=$idpId" ),
+        'Query IdP' );
+    ok( $res->[0] == 401, 'User has been disconnected' )
+      or explain( $res->[0], 401 );
+
+    #switch ('sp');
+    #ok( $res = $sp->_get( '/', cookie => "lemonldap=$idpId" ), 'Query IdP' );
+    #ok( $res->[0] == 302, 'Return code is 302' ) or explain( $res->[0], 302 );
+    #ok(
+    #    $sp->getRedirection($res) eq
+    #      'http://auth.idp.com/cas/login?service=http://auth.sp.com/',
+    #    'Redirection points to IdP'
+    #  )
+    #  or explain(
+    #    $res->[1],
+    #    'location => http://auth.idp.com/cas/login?service=http://auth.sp.com/'
+    #  );
 }
 
 count($maintests);

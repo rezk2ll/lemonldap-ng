@@ -200,28 +200,29 @@ sub run {
         $self->deleteCasSecondarySessions($session_id);
 
         # Delete local session
-        unless (
-            $self->p->_deleteSession(
-                $self->p->getApacheSession( $session_id, 1 )
-            )
-          )
-        {
-            $self->lmLog( "Fail to delete session $session_id ", 'error' );
-        }
+        if ( my $session = $self->p->getApacheSession( $session_id, 1 ) ) {
+            unless ( $self->p->_deleteSession( $req, $session ) ) {
+                $self->lmLog( "Fail to delete session $session_id ", 'error' );
+            }
 
-        if ($logout_url) {
+            if ($logout_url) {
 
-            # Display a link to the provided URL
-            $self->lmLog( "Logout URL $logout_url will be displayed", 'debug' );
+                # Display a link to the provided URL
+                $self->lmLog( "Logout URL $logout_url will be displayed",
+                    'debug' );
 
-            $self->info( $req,
+                $self->info( $req,
 '<h3 trmsg="back2CasUrl">The application you just logged out of has provided a link it would like you to follow</h3>'
-            );
-            $self->info( $req,
-                "<p><a href=\"$logout_url\">$logout_url</a></p>" );
-            $self->{activeTimer} = 0;
+                );
+                $self->info( $req,
+                    "<p><a href=\"$logout_url\">$logout_url</a></p>" );
+                $self->{activeTimer} = 0;
 
-            return PE_CONFIRM;
+                return PE_CONFIRM;
+            }
+        }
+        else {
+            $self->lmLog( "Unknown session $session_id", 'info' );
         }
 
         return PE_LOGOUT_OK;
