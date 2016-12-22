@@ -110,6 +110,7 @@ sub authenticate {
             # calculating remaining time before password expiration
             my $remainingTime = $_pwdExpire - $timestamp;
             $self->info(
+                $req,
                 "<h3>"
                   . sprintf(
                     $self->msg(PM_PP_EXP_WARNING),

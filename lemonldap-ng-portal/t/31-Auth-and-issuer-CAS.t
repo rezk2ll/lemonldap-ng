@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 14;
+my $maintests = 19;
 my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -95,8 +95,28 @@ SKIP: {
     switch ('sp');
     ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
         'Query SP with ticket' );
+    $cookies = $sp->getCookies($res);
+    my $spId;
+    ok( $spId = $cookies->{lemonldap}, 'Get cookie' )
+      or explain( $res, 'Set-Cookie: something' );
 
-    #print STDERR Dumper($res);
+    # Test authentication
+    ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
+    ok( $res->[0] == 200, 'User is authentified' ) or explain( $res->[0], 200 );
+    ok( $sp->getUser($res) eq 'dwho', 'User is identified as dwho' )
+      or explain( $res->[1], 'Lm-Remote-User: dwho' );
+
+    # Logout initiated by SP
+    ok(
+        $res = $sp->_get(
+            '/',
+            query  => 'logout',
+            cookie => "lemonldap=$spId",
+            accept => 'text/html'
+        ),
+        'Query SP for logout'
+    );
+    print STDERR Dumper($res);
 }
 
 count($maintests);

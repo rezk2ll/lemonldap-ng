@@ -206,13 +206,17 @@ sub userBind {
             if ( $resp->grace_authentications_remaining ) {
 
                 # TODO
-                $self->{portal}->info( "<h3>"
-                      . $resp->grace_authentications_remaining . " "
-                      . $self->{portal}->msg(PM_PP_GRACE)
-                      . "</h3>" );
+                $self->{portal}->info( $req,
+                        '<h3>'
+                      . $resp->grace_authentications_remaining
+                      . ' <span trmsg="ppGrace">authentications remaining, change your password!</span></h3>'
+                );
             }
+
             if ( $resp->time_before_expiration ) {
+                die 'TODO: change this by JS conversion';
                 $self->{portal}->info(
+                    $req,
                     "<h3>"
                       . sprintf(
                         $self->{portal}->msg(PM_PP_EXP_WARNING),

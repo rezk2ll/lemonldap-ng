@@ -53,7 +53,7 @@ sub extractFormInfo {
     my ( $self, $req ) = @_;
 
     # Local URL
-    my $local_url = $self->conf->{portal} . $req->uri;
+    my $local_url = $self->p->fullUrl($req);
 
     # Add request state parameters
     if ( $req->datas->{_url} ) {
@@ -82,7 +82,7 @@ sub extractFormInfo {
 
     if ( $self->proxy ) {
         $self->lmLog( "CAS: Proxy mode activated", 'debug' );
-        my $proxy_url = $req->uri . '?casProxy=1';
+        my $proxy_url = $self->p->fullUrl($req) . '?casProxy=1';
 
         if ( my $tmp = $req->param( $self->conf->{authChoiceParam} ) ) {
             $proxy_url .= '&' . $self->conf->{authChoiceParam} . "=$tmp";
@@ -198,7 +198,8 @@ sub authLogout {
     my ( $self, $req ) = @_;
 
     # Build CAS logout URL
-    my $logout_url = $self->cas->getServerLogoutURL( $req->uri );
+    my $logout_url =
+      $self->cas->getServerLogoutURL( uri_escape( $self->p->fullUrl($req) ) );
 
     $self->lmLog( "Build CAS logout URL: $logout_url", 'debug' );
 

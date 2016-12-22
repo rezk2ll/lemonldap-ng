@@ -79,6 +79,7 @@ qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_u
           # Required to manage SLO in Proxy mode
           and $self->loadIDPs()
     );
+
     # SOAP routes (access without authentication)
     $self->addRouteFromMetaDataURL(
         'samlIDPSSODescriptorArtifactResolutionServiceArtifact',
@@ -865,10 +866,9 @@ sub run {
                   . " width=\"0\" height=\"0\" frameborder=\"0\">"
                   . "</iframe>";
 
-                # TODO: replace this
-                #$self->info( "<h3>" . $self->msg(PM_CDC_WRITER) . "</h3>" );
-
-                $self->info( $req, $cdc_iframe );
+                $self->info( $req,
+                    '<h3 trspan="updateCdc">Update Common Domain Cookie</h3>'
+                      . $cdc_iframe );
             }
 
             # HTTP-REDIRECT

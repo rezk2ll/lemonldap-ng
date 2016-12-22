@@ -164,6 +164,7 @@ sub do {
                 or (    $err == PE_REDIRECT
                     and $req->datas->{redirectFormMethod}
                     and $req->datas->{redirectFormMethod} eq 'post' )
+                or ( $err == PE_REDIRECT and $req->info )
             )
           )
         {
@@ -588,6 +589,13 @@ sub getFirstValue {
 sub info {
     my ( $self, $req, $info ) = @_;
     return $req->info($info);
+}
+
+sub fullUrl {
+    my ( $self, $req ) = @_;
+    my $pHost = $self->conf->{portal};
+    $pHost =~ s#^(https?://[^/]+)(?:/.*)?$#$1#;
+    return $pHost . $req->uri;
 }
 
 1;

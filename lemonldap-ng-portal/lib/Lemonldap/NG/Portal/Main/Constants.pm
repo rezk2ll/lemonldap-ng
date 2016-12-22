@@ -8,7 +8,6 @@ use constant {
 
     # Portal errors
     # Developers warning, do not use PE_INFO, it's reserved to autoRedirect.
-    # If you want to send an information, use $self->info('text').
     PE_SENDRESPONSE                     => -4,
     PE_INFO                             => -3,
     PE_REDIRECT                         => -2,

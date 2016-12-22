@@ -214,10 +214,11 @@ sub run {
             # Display a link to the provided URL
             $self->lmLog( "Logout URL $logout_url will be displayed", 'debug' );
 
-            $self->info(
+            $self->info( $req,
 '<h3 trmsg="back2CasUrl">The application you just logged out of has provided a link it would like you to follow</h3>'
             );
-            $self->info("<p><a href=\"$logout_url\">$logout_url</a></p>");
+            $self->info( $req,
+                "<p><a href=\"$logout_url\">$logout_url</a></p>" );
             $self->{activeTimer} = 0;
 
             return PE_CONFIRM;
@@ -397,7 +398,8 @@ sub validate {
 
     # Get username
     my $username =
-      $localSession->data->{ $self->conf->{casAttr} || $self->conf->{whatToTrace} };
+      $localSession->data->{ $self->conf->{casAttr}
+          || $self->conf->{whatToTrace} };
 
     $self->lmLog( "Get username $username", 'debug' );
 
