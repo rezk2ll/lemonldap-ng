@@ -253,11 +253,11 @@ SKIP: {
         $res->[2]->[0] =~
           /<input type="hidden".+?name="SAMLRequest".+?value="(.+?)"/s,
         'Found SAML request'
+      )
+      or explain(
+        $res->[2],
+        ' <input type="hidden" name="SAMLRequest" id="SAMLRequest" value="...'
       );
-      #or explain(
-      #  $res->[2],
-      #  ' <input type="hidden" name="SAMLRequest" id="SAMLRequest" value="...'
-      #);
 
     #print STDERR Dumper($res);
 }
