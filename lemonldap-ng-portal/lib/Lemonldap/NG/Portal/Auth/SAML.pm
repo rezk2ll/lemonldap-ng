@@ -1326,7 +1326,7 @@ sub authLogout {
         $req->urldc($slo_url);
 
         # Redirect done in Portal/Simple.pm
-        return PE_REDIRECT;
+        return PE_OK;
     }
 
     # HTTP-POST
