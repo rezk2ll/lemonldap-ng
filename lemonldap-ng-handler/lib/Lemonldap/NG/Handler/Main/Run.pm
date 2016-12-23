@@ -429,6 +429,7 @@ sub retrieveSession {
           )
         {
             $class->lmLog( "Session $id expired", 'info' );
+
             # Clean cached data
             $class->datas( {} );
             return 0;
@@ -610,11 +611,13 @@ sub abort {
 # Delete current user from local cache entry.
 sub localUnlog {
     my ( $class, $id ) = @_;
-    $class->lmLog('Local handler logout','debug');
+    $class->lmLog( 'Local handler logout', 'debug' );
     if ( $id //= $class->fetchId ) {
 
         # Delete thread datas
-        if ( $class->datas and $id eq $class->datas->{_session_id} ) {
+        if (    $class->datas->{_session_id}
+            and $id eq $class->datas->{_session_id} )
+        {
             $class->datas( {} );
         }
 
