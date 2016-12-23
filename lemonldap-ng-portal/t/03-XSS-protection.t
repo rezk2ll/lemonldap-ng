@@ -109,12 +109,9 @@ ok(
     ),
     'Auth query'
 );
-ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-my $id;
-ok( $id = $client->getCookies($res)->{lemonldap}, 'Get LLNG cookie' )
-  or explain( $res, 'Set-Cookie: something' );
-
-count(3);
+count(1);
+expectOK($res);
+my $id = expectCookie($res);
 
 while ( defined( my $url = shift(@tests) ) ) {
     last if ( $url eq 'LOGOUT' );
@@ -162,10 +159,9 @@ while ( defined( my $url = shift(@tests) ) ) {
         ),
         'Auth query'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    ok( $id = $client->getCookies($res)->{lemonldap}, 'Get LLNG cookie' )
-      or explain( $res, 'Set-Cookie: something' );
-    count(5);
+    expectOK($res);
+    $id = expectCookie($res);
+    count(3);
 }
 
 clean_sessions();

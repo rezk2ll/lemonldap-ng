@@ -5,9 +5,10 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
+my $mainTests = 1;
 
 SKIP: {
-    skip 'No AD server given', 3 unless ( $ENV{ADSERVER} );
+    skip 'No AD server given', $mainTests unless ( $ENV{ADSERVER} );
 
     my $client = LLNG::Manager::Test->new(
         {
@@ -38,14 +39,11 @@ SKIP: {
         ),
         'Auth query'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    my $cookies = $client->getCookies($res);
-    my $id;
-    ok( $id = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
+    expectOK($res);
+    my $id = expectCookie($res);
     $client->logout($id);
 
     clean_sessions();
 }
-count(3);
+count($mainTests);
 done_testing( count() );

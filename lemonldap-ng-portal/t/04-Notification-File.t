@@ -44,12 +44,9 @@ ok(
     ),
     'Auth query'
 );
-ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-my $cookies = $client->getCookies($res);
-my $id;
-ok( $id = $cookies->{lemonldap}, 'Get cookie' )
-  or explain( $res, 'Set-Cookie: something' );
-count(3);
+count(1);
+expectOK($res);
+my $id = expectCookie($res);
 
 # Verify that cookie is ciphered (session unvalid)
 ok(
@@ -60,9 +57,8 @@ ok(
     ),
     'Test cookie received'
 );
-ok( $res->[0] == 401, "Session isn't valid" )
-  or explain( [ $res->[0], $res->[1] ], 401 );
-count(2);
+count(1);
+expectReject($res);
 
 # Try to validate notification without accepting it
 my $str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
@@ -81,7 +77,7 @@ ok( $res->[0] == 200, "Don't receive redirection" )
 count(2);
 
 # Try to validate notification
-my $str =
+$str =
 'reference1x1=testref&check1x1x1=accepted&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
 ok(
     $res = $client->_post(
@@ -93,11 +89,10 @@ ok(
     ),
     "Accept notification"
 );
-ok( $res->[0] == 302, "Get redirection" )
-  or explain( [ $res->[0], $res->[1] ], 302 );
+expectRedirection( $res, qr/./ );
 $file =~ s/xml$/done/;
 ok( -e $file, 'Notification was deleted' );
-count(3);
+count(2);
 
 #print STDERR Dumper($res);
 

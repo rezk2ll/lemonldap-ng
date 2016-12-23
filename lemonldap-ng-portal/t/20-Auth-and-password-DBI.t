@@ -5,13 +5,14 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
+my $mainTests = 3;
 
 eval { unlink 't/userdb.db' };
 
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
     if ($@) {
-        skip 'DBD::SQLite not found', 8;
+        skip 'DBD::SQLite not found', $mainTests;
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
@@ -46,11 +47,8 @@ SKIP: {
         ),
         'Auth query'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    my $cookies = $client->getCookies($res);
-    my $id;
-    ok( $id = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
+    expectOK($res);
+    my $id = expectCookie($res);
 
     ok(
         $res = $client->_post(
@@ -63,7 +61,7 @@ SKIP: {
         ),
         'Change password'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res, 200 );
+    expectOK($res);
     $client->logout($id);
     ok(
         $res = $client->_post(
@@ -74,14 +72,12 @@ SKIP: {
         ),
         'Auth query with new password'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    $cookies = $client->getCookies($res);
-    ok( $id = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
+    expectOK($res);
+    $id = expectCookie($res);
 
     $client->logout($id);
     clean_sessions();
 }
 eval { unlink 't/userdb.db' };
-count(8);
+count($mainTests);
 done_testing( count() );

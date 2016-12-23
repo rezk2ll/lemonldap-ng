@@ -7,7 +7,7 @@ require 't/test-lib.pm';
 my $res;
 
 SKIP: {
-    skip 'No LDAP server given', 3 unless ( $ENV{LDAPSERVER} );
+    skip 'No LDAP server given', 1 unless ( $ENV{LDAPSERVER} );
 
     my $client = LLNG::Manager::Test->new(
         {
@@ -38,14 +38,11 @@ SKIP: {
         ),
         'Auth query'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    my $cookies = $client->getCookies($res);
-    my $id;
-    ok( $id = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
+    expectOK($res);
+    my $id = expectCookie($res);
     $client->logout($id);
 
     clean_sessions();
 }
-count(3);
+count(1);
 done_testing( count() );

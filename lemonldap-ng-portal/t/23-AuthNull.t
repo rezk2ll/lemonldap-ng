@@ -17,12 +17,9 @@ my $client = LLNG::Manager::Test->new(
 );
 
 ok( $res = $client->_get('/'), 'Auth query' );
-ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-my $cookies = $client->getCookies($res);
-my $id;
-ok( $id = $cookies->{lemonldap}, 'Get cookie' )
-  or explain( $res, 'Set-Cookie: something' );
+count(1);
+expectOK($res);
+my $id = expectCookie($res);
 clean_sessions();
 
-count(3);
 done_testing( count() );

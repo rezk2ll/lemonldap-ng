@@ -25,24 +25,8 @@ my $client = LLNG::Manager::Test->new(
 
 # Test redirection to remote portal
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'First request' );
-ok( $res->[0] == 302, 'Response is 302' ) or explain( $res->[0], 302 );
-my @tmp = @{ $res->[1] };
-while ( @tmp and $tmp[0] ne 'Location' ) {
-    shift @tmp;
-}
-ok(
-    (
-              $tmp[0]
-          and $tmp[1] eq
-          'http://auth2.example.com?url=aHR0cDovL2F1dGguZXhhbXBsZS5jb20v'
-    ),
-    'Get redirection to remote portal'
-  )
-  or explain(
-    $res->[1],
-    'Location => http://auth2.example.com?url=aHR0cDovL2F1dGguZXhhbXBsZS5jb20v'
-  );
-count(3);
+count(1);
+expectRedirection($res, 'http://auth2.example.com?url=aHR0cDovL2F1dGguZXhhbXBsZS5jb20v');
 
 ok(
     $res = $client->_get(
@@ -52,12 +36,10 @@ ok(
     ),
     'Auth query'
 );
-ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-my $cookies = $client->getCookies($res);
-my $id;
-ok( $id = $cookies->{lemonldap}, 'Get cookie' )
-  or explain( $res, 'Set-Cookie: something' );
-count(3);
+count(1);
+expectOK($res);
+my $id = expectCookie($res);
+
 clean_sessions();
 
 done_testing( count() );

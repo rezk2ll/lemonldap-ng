@@ -43,6 +43,98 @@ sub clean_sessions {
     }
 }
 
+sub expectRedirection {
+    my ( $res, $location ) = @_;
+    ok( $res->[0] == 302, 'Get redirection' )
+      or explain( $res->[0], 302 );
+    count(2);
+    if ( ref $location ) {
+        my @match;
+        @match = ( getRedirection($res) =~ $location );
+        ok( @match, 'Location header found' )
+          or explain( $res->[1], "Location match: " . Dumper($location) );
+        return @match;
+    }
+    else {
+        ok( getRedirection($res) eq $location, "Location is $location" )
+          or explain( $res->[1], "Location => $location" );
+    }
+}
+
+sub expectAuthenticatedAs {
+    my ( $res, $user ) = @_;
+    ok( getHeader( $res, 'Lm-Remote-User' ) eq $user, "Authenticated as $user" )
+      or explain( $res->[1], "Lm-Remote-User => $user" );
+    count(1);
+}
+
+sub expectOK {
+    my ($res) = @_;
+    ok( $res->[0] == 200, 'HTTP code is 200' ) or explain( $res, 200 );
+    count(1);
+}
+
+sub expectBadRequest {
+    my ($res) = @_;
+    ok( $res->[0] == 400, 'HTTP code is 400' ) or explain( $res->[0], 400 );
+    count(1);
+}
+
+sub expectReject {
+    my ($res) = @_;
+    ok( $res->[0] == 401, 'Response is 401' ) or explain( $res->[0], 401 );
+    count(1);
+}
+
+sub expectCookie {
+    my ( $res, $cookieName ) = @_;
+    $cookieName ||= 'lemonldap';
+    my $cookies = getCookies($res);
+    my $id;
+    ok( $id = $cookies->{$cookieName}, "Get cookie $cookieName" )
+      or explain( $res->[1], "Set-Cookie: $cookieName=something" );
+    count(1);
+    return $id;
+}
+
+sub getCookies {
+    my ($resp) = @_;
+    my @hdrs   = @{ $resp->[1] };
+    my $res    = {};
+    while ( my $name = shift @hdrs ) {
+        my $v = shift @hdrs;
+        if ( $name eq 'Set-Cookie' ) {
+            if ( $v =~ /^(\w+)=([^;]*)/ ) {
+                $res->{$1} = $2;
+            }
+        }
+    }
+    return $res;
+}
+
+sub getHeader {
+    my ( $resp, $hname ) = @_;
+    my @hdrs = @{ $resp->[1] };
+    my $res  = {};
+    while ( my $name = shift @hdrs ) {
+        my $v = shift @hdrs;
+        if ( $name eq $hname ) {
+            return $v;
+        }
+    }
+    return undef;
+}
+
+sub getRedirection {
+    my ($resp) = @_;
+    return getHeader( $resp, 'Location' );
+}
+
+sub getUser {
+    my ($resp) = @_;
+    return getHeader( $resp, 'Lm-Remote-User' );
+}
+
 package LLNG::Manager::Test;
 
 use strict;
@@ -93,13 +185,13 @@ sub logout {
             cookie => "lemonldap=$id",
             accept => 'text/html'
         ),
-        'Logout'
+        'Logout request'
     );
     main::ok( $res->[0] == 200, 'Response is 200' )
       or explain( $res->[0], 200 );
     my $c;
     main::ok(
-        ( defined( $c = $self->getCookies($res)->{lemonldap} ) and not $c ),
+        ( defined( $c = main::getCookies($res)->{lemonldap} ) and not $c ),
         'Cookie is deleted' )
       or explain( $res->[1], "Set-Cookie => 'lemonldap='" );
     main::ok( $res = $self->_get( '/', cookie => "lemonldap=$id" ),
@@ -108,44 +200,6 @@ sub logout {
     main::ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
     main::count(5);
 
-}
-
-sub getCookies {
-    my ( $self, $resp ) = @_;
-    my @hdrs = @{ $resp->[1] };
-    my $res  = {};
-    while ( my $name = shift @hdrs ) {
-        my $v = shift @hdrs;
-        if ( $name eq 'Set-Cookie' ) {
-            if ( $v =~ /^(\w+)=([^;]*)/ ) {
-                $res->{$1} = $2;
-            }
-        }
-    }
-    return $res;
-}
-
-sub getHeader {
-    my ( $self, $resp, $hname ) = @_;
-    my @hdrs = @{ $resp->[1] };
-    my $res  = {};
-    while ( my $name = shift @hdrs ) {
-        my $v = shift @hdrs;
-        if ( $name eq $hname ) {
-            return $v;
-        }
-    }
-    return undef;
-}
-
-sub getRedirection {
-    my ( $self, $resp ) = @_;
-    return $self->getHeader( $resp, 'Location' );
-}
-
-sub getUser {
-    my ( $self, $resp ) = @_;
-    return $self->getHeader( $resp, 'Lm-Remote-User' );
 }
 
 sub _get {

@@ -29,12 +29,9 @@ ok(
     ),
     'Auth query'
 );
-ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-my $cookies = $client->getCookies($res);
-my $id;
-ok( $id = $cookies->{lemonldap}, 'Get cookie' )
-  or explain( $res, 'Set-Cookie: something' );
-count(3);
+count(1);
+expectOK($res);
+my $id = expectCookie($res);
 
 # Test mismatch pwd
 ok(
@@ -47,13 +44,13 @@ ok(
     ),
     'Password mismatch'
 );
-ok( $res->[0] == 400, 'Response is 400' ) or explain( $res->[0], 400 );
+expectBadRequest($res);
 my $json;
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok( $json->{error} == PE_PASSWORD_MISMATCH, 'Response is PE_PASSWORD_MISMATCH' )
   or explain( $json, "error => 34" );
-count(4);
+count(3);
 
 # Test missing old pwd
 ok(
@@ -66,14 +63,14 @@ ok(
     ),
     'Missing old password'
 );
-ok( $res->[0] == 400, 'Response is 400' ) or explain( $res->[0], 400 );
+expectBadRequest($res);
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok(
     $json->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD,
     'Response is PE_PP_MUST_SUPPLY_OLD_PASSWORD'
 ) or explain( $json, "error => 27" );
-count(4);
+count(3);
 
 # Test bad old pwd
 ok(
@@ -86,12 +83,12 @@ ok(
     ),
     'Bad old password'
 );
-ok( $res->[0] == 400, 'Response is 400' ) or explain( $res->[0], 400 );
+expectBadRequest($res);
 ok( $json = eval { from_json( $res->[2]->[0] ) }, 'Response is JSON' )
   or print STDERR "$@\n" . Dumper($res);
 ok( $json->{error} == PE_BADOLDPASSWORD, 'Response is PE_BADOLDPASSWORD' )
   or explain( $json, "error => 27" );
-count(4);
+count(3);
 
 # Test $client->logout
 $client->logout($id);
