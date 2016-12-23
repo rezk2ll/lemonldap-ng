@@ -2363,7 +2363,7 @@ sub sendLogoutResponseToServiceProvider {
         $req->{postFields}->{'RelayState'} = $relaystate
           if ($relaystate);
 
-        $req->steps( ['autoPost'] );
+        $req->steps( [ 'deleteSession', 'autoPost' ] );
         return PE_OK;
     }
     $self->lmLog( "Lasso method '$method' should not be handle here...",
@@ -2444,6 +2444,7 @@ sub sendLogoutRequestToProvider {
             );
             return ( 0, $method, undef );
         }
+        $self->lmLog( 'Relay state set', 'debug' );
     }
 
     # Build the request
@@ -2465,6 +2466,7 @@ sub sendLogoutRequestToProvider {
             return ( 0, $method, undef );
         }
 
+        $self->lmLog( "Request built for $providerID", 'debug' );
     }
 
     # Keep message ID in memory to prevent replay
@@ -3022,6 +3024,13 @@ sub getQueryString {
     }
 
     return $query_string;
+}
+
+sub importRealSession {
+    my ( $self, $req, $ssoSession ) = @_;
+    $req->sessionInfo( $ssoSession->data );
+    $req->id( $ssoSession->id );
+    $req->user( $ssoSession->data->{ $self->conf->{whatToTrace} } );
 }
 
 1;

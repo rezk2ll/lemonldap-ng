@@ -260,7 +260,7 @@ sub getApacheSession {
     );
 
     if ( $as->error ) {
-        $self->lmLog( $as->error, 'error' );
+        $self->lmLog( $as->error, 'info' );
         return;
     }
 
@@ -444,7 +444,7 @@ sub _deleteSession {
           ) unless ($preserveCookie);
     }
 
-    HANDLER->unlog($session->id);
+    HANDLER->unlog( $session->id );
     $session->remove;
 
     # Create an obsolete cookie to remove it

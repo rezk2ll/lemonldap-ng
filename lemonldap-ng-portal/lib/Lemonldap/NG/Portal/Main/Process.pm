@@ -127,13 +127,18 @@ sub authLogout {
 sub deleteSession {
     my ( $self, $req ) = @_;
     my $apacheSession = $self->getApacheSession( $req->id );
+    my $id = $req->id;
+    unless ($apacheSession) {
+        $self->lmLog( "Session $id already deleted", 'debug' );
+        return PE_OK;
+    }
     unless ( $self->_deleteSession( $req, $apacheSession ) ) {
-        $self->lmLog( "Unable to delete session " . $req->id, 'error' );
-        $self->lmLog( $apacheSession->error,                  'error' );
+        $self->lmLog( "Unable to delete session $id", 'error' );
+        $self->lmLog( $apacheSession->error, 'error' );
         return PE_ERROR;
     }
     else {
-        $self->lmLog( "Session $req->{id} deleted from global storage",
+        $self->lmLog( "Session $id deleted from global storage",
             'debug' );
     }
 
@@ -169,7 +174,8 @@ sub deleteSession {
 
         # Redirect on logout page if no other target defined
         if ( !$req->urldc and !$req->postUrl ) {
-            $self->lmLog('No other target defined, redirect on logout','debug');
+            $self->lmLog( 'No other target defined, redirect on logout',
+                'debug' );
             $req->urldc( $req->scriptname . "?logout=1" );
         }
     }

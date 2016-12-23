@@ -92,6 +92,10 @@ qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_u
         2, 'soapSloServer', ['POST'] );
 
     # TODO: @coudot, why this URL isn't managed with a conf param ?
+    $self->addUnauthRoute(
+        $self->path => { relaySingleLogoutSOAP => 'sloRelaySoap' },
+        [ 'GET', 'POST' ]
+    );
     $self->addAuthRoute(
         $self->path => { relaySingleLogoutSOAP => 'sloRelaySoap' },
         [ 'GET', 'POST' ]
@@ -1439,7 +1443,7 @@ sub logout {
     # Redirect on logout page when all is done.
     if ( $self->sendLogoutRequestToProviders( $req, $logout ) ) {
         $self->{urldc} = $req->scriptname . "?logout=1";
-        return PE_INFO;
+        return PE_OK;
     }
 
     return PE_OK;

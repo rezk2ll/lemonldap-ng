@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 12;
+my $maintests = 14;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -136,6 +136,29 @@ SKIP: {
         ),
         'Query SP for logout'
     );
+
+    # Test if logout is done
+    switch ('issuer');
+    ok(
+        $res = $sp->_get(
+            '/', cookie => "lemonldap=$idpId",
+        ),
+        'Test if user is reject on IdP'
+    );
+    expectReject($res);
+
+    switch ('sp');
+    ok(
+        $res = $sp->_get(
+            '/',
+            accept => 'text/html',
+            cookie =>
+              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
+        ),
+        'Test if user is reject on SP'
+    );
+    expectRedirection( $res,
+        qr#^http://auth.idp.com/saml/singleSignOn\?(SAMLRequest=.*)# );
 
     #print STDERR Dumper($res);
 }

@@ -392,6 +392,9 @@ sub extractFormInfo {
     elsif ( $url =~ $self->sloRe ) {
         $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
 
+        # TODO: call authLogout instead of duplicating SLO
+        $req->steps( [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
+
         # Check SAML Message
         my ( $request, $response, $method, $relaystate, $artifact ) =
           $self->checkMessage( $req, $url, $request_method, $content_type,
@@ -482,11 +485,13 @@ sub extractFormInfo {
                 and $self->conf->{portal} !~ /$req->{urldc}\/?/ )
             {
                 $req->steps( [] );
+                $req->user('TODO');
                 return PE_OK;
             }
 
             # Else, inform user that logout is OK
-            return PE_LOGOUT_OK;
+            $req->user('TODO');
+            return PE_OK;
         }
 
         elsif ($request) {
@@ -602,6 +607,9 @@ sub extractFormInfo {
                         my $ssoSession =
                           $self->p->getApacheSession( $real_session, 1 );
 
+                        # Import SSO session in $req
+                        $self->importRealSession( $req, $ssoSession );
+
                   # Get Lasso::Session dump
                   # This value is erased if a next session match the SLO request
                         if (   $ssoSession
@@ -615,16 +623,7 @@ sub extractFormInfo {
                               $ssoSession->data->{_lassoSessionDump};
                         }
 
-                        # Delete real session
-                        my $del_real_result =
-                          $self->p->_deleteSession( $req, $ssoSession );
-
-                        $self->lmLog(
-"Delete real session $real_session result: $del_real_result",
-                            'debug'
-                        );
-
-                        $logout_error = 1 unless $del_real_result;
+                # Real session will be deleted after (see $req->steps... before)
 
                         # Delete SAML session
                         my $del_saml_result = $sessionInfo->remove();
@@ -749,8 +748,20 @@ sub extractFormInfo {
                         [$slo_body]
                     ]
                 );
+                $req->steps(
+                    [
+                        @{ $self->p->beforeLogout },
+                        sub {
+                            my ($req) = @_;
+                            my $res = $self->p->deleteSession($req);
+                            return (
+                                $res eq PE_LOGOUT_OK ? PE_SENDRESPONSE : $res );
+                          }
+                    ]
+                );
 
-                return PE_SENDRESPONSE;
+                $req->user('SOAP client');
+                return PE_OK;
             }
 
         }
@@ -1333,7 +1344,7 @@ sub authLogout {
           if ( $logout->msg_relayState );
 
         # Post done in Portal/Simple.pm
-        $req->steps( ['autoPost'] );
+        $req->steps( [ 'deleteSession', 'autoPost' ] );
         return PE_OK;
     }
 
@@ -1481,7 +1492,7 @@ sub getIDP {
 
     # Alert when selected IDP is unknown
     if ( $idp and !exists $self->idpList->{$idp} ) {
-        $self->userError("Required IDP $idp does not exists");
+        $self->p->userError("Required IDP $idp does not exists");
         $idp = undef;
     }
 

@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 12;
+my $maintests = 14;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -72,7 +72,7 @@ SKIP: {
             length => length($s),
             cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
-        'Post SAML response to SP'
+        'Post SAML logout response to SP'
     );
 
     # Verify authentication on SP
@@ -114,6 +114,28 @@ m#img src="http://auth.idp.com(/saml/relaySingleLogoutSOAP)\?(relay=.*?)"#s,
     ok( getHeader( $res, 'Content-Type' ) eq 'image/png', 'Get an image' )
       or explain( [ $res->[0], $res->[1] ], 'Content-Type => image/png' );
 
+    # Test if logout is done
+    switch ('issuer');
+    ok(
+        $res = $sp->_get(
+            '/', cookie => "lemonldap=$idpId",
+        ),
+        'Test if user is reject on IdP'
+    );
+    expectReject($res);
+
+    switch ('sp');
+    ok(
+        $res = $sp->_get(
+            '/',
+            accept => 'text/html',
+            cookie =>
+              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
+        ),
+        'Test if user is reject on SP'
+    );
+    expectRedirection( $res,
+        qr#^http://auth.idp.com/saml/singleSignOn\?(SAMLRequest=.*)# );
 }
 
 count($maintests);

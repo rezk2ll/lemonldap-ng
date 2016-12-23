@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 12;
+my $maintests = 15;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -114,6 +114,36 @@ m#img src="http://auth.idp.com(/saml/relaySingleLogoutSOAP)\?(relay=.*?)"#s,
     ok( getHeader( $res, 'Content-Type' ) eq 'image/png', 'Get an image' )
       or explain( [ $res->[0], $res->[1] ], 'Content-Type => image/png' );
 
+    # Test if logout is done
+    switch ('issuer');
+    ok(
+        $res = $sp->_get(
+            '/', cookie => "lemonldap=$idpId",
+        ),
+        'Test if user is reject on IdP'
+    );
+    expectReject($res);
+
+    switch ('sp');
+    ok(
+        $res = $sp->_get(
+            '/',
+            accept => 'text/html',
+            cookie =>
+              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
+        ),
+        'Test if user is reject on SP'
+    );
+    expectOK($res);
+    ok(
+        $res->[2]->[0] =~
+          /<input type="hidden".+?name="SAMLRequest".+?value="(.+?)"/s,
+        'Found SAML request'
+      )
+      or explain(
+        $res->[2],
+        ' <input type="hidden" name="SAMLRequest" id="SAMLRequest" value="...'
+      );
 }
 
 count($maintests);
@@ -125,7 +155,7 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.sp.com(.*)#, 'Request from SP to IdP' );
+    ok( $req->uri =~ m#http://auth.sp.com(.*)#, 'Request from IdP to SP' );
     my $url = $1;
     my $res;
     my $s = $req->content;
