@@ -92,7 +92,7 @@ qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_u
         2, 'soapSloServer', ['POST'] );
 
     # TODO: @coudot, why this URL isn't managed with a conf param ?
-    $self->addUnauthRoute(
+    $self->addAuthRoute(
         $self->path => { relaySingleLogoutSOAP => 'sloRelaySoap' },
         [ 'GET', 'POST' ]
     );
