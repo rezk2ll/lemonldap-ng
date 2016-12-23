@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 24;
+my $maintests = 12;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -38,16 +38,7 @@ SKIP: {
         ),
         'Unauth SP request'
     );
-    ok( $res->[0] == 302, 'Return code is 302' ) or explain( $res->[0], 302 );
-    ok(
-        $sp->getRedirection($res) eq
-          'http://auth.idp.com/cas/login?service=http://auth.sp.com/',
-        'Redirection points to IdP'
-      )
-      or explain(
-        $res->[1],
-        'location => http://auth.idp.com/cas/login?service=http://auth.sp.com/'
-      );
+    expectRedirection($res, 'http://auth.idp.com/cas/login?service=http://auth.sp.com/');
 
     # Query IdP
     switch ('issuer');
@@ -59,7 +50,7 @@ SKIP: {
         ),
         'Query CAS server'
     );
-    ok( $res->[0] == 200, 'Return code is 200' ) or explain( $res->[0], 200 );
+    expectOK($res);
 
     # Try to authenticate to IdP
     my $body = $res->[2]->[0];
@@ -79,33 +70,19 @@ SKIP: {
         ),
         'Post authentication'
     );
-    ok( $res->[0] == 302, 'Response is 302' ) or explain( $res->[0], 302 );
-    my $cookies = $issuer->getCookies($res);
-    my $idpId;
-    ok( $idpId = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
-    my $url;
-    ok( $url = $issuer->getRedirection($res), 'Get location header' )
-      or explain( $res->[1], 'Location: http://auth.sp.com/?ticket=...' );
-    ok( $url =~ m#(http://auth.sp.com/)\?(ticket=[^&]+)$#,
-        'Get ticket in redirection' )
-      or explain( $url, 'http://auth.sp.com/?ticket=...' );
-    my $query = $2;
+    my ($query) = expectRedirection($res,qr#^http://auth.sp.com/\?(ticket=[^&]+)$#);
+    my $idpId = expectCookie($res);
 
     # Back to SP
     switch ('sp');
     ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
         'Query SP with ticket' );
-    $cookies = $sp->getCookies($res);
-    my $spId;
-    ok( $spId = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
+    my $spId = expectCookie($res);
 
     # Test authentication
     ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
-    ok( $res->[0] == 200, 'User is authentified' ) or explain( $res->[0], 200 );
-    ok( $sp->getUser($res) eq 'dwho', 'User is identified as dwho' )
-      or explain( $res->[1], 'Lm-Remote-User: dwho' );
+    expectOK($res);
+    expectAuthenticatedAs($res,'dwho');
 
     # Logout initiated by SP
     ok(
@@ -117,17 +94,15 @@ SKIP: {
         ),
         'Query SP for logout'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
+    expectOK($res);
     ok(
         $res->[2]->[0] =~
           m#iframe src="http://auth.idp.com(/cas/logout)\?(.+?)"#s,
         'Found iframe'
     );
 
-    #print STDERR Dumper($res);
-
     # Query IdP with iframe src
-    $url   = $1;
+    my $url   = $1;
     $query = $2;
     switch ('issuer');
     ok(
@@ -139,12 +114,12 @@ SKIP: {
         ),
         'Get iframe from IdP'
     );
+    expectOK($res);
 
     # Verify that user has been disconnected
     ok( $res = $issuer->_get( '/', cookie => "lemonldap=$idpId" ),
         'Query IdP' );
-    ok( $res->[0] == 401, 'User has been disconnected' )
-      or explain( $res->[0], 401 );
+    expectReject($res);
 
     #switch ('sp');
     #ok( $res = $sp->_get( '/', cookie => "lemonldap=$idpId" ), 'Query IdP' );

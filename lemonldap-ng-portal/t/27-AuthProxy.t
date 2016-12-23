@@ -3,10 +3,11 @@ use strict;
 use IO::String;
 
 my $res;
+my $mainTests = 2;
+require 't/test-lib.pm';
 
 SKIP: {
-    skip 'REMOTELLNG is not set', 10 unless ( $ENV{REMOTELLNG} );
-    require 't/test-lib.pm';
+    skip 'REMOTELLNG is not set', $mainTests unless ( $ENV{REMOTELLNG} );
     my $client = LLNG::Manager::Test->new(
         {
             ini => {
@@ -26,13 +27,11 @@ SKIP: {
         ),
         'Auth query'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    my $cookies = $client->getCookies($res);
-    my $id;
-    ok( $id = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
+    expectOK($res);
+    my $id = expectCookie($res);
 
     $client->logout($id);
     clean_sessions();
 }
-done_testing(10);
+count($mainTests);
+done_testing( count() );

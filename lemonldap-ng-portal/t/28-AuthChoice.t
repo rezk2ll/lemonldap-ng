@@ -5,16 +5,17 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
+my $mainTests = 1;
 
 eval { unlink 't/userdb.db' };
 
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
     if ($@) {
-        skip 'DBD::SQLite not found', 3;
+        skip 'DBD::SQLite not found', $mainTests;
     }
     elsif ( !$ENV{LDAPSERVER} ) {
-        skip 'No LDAP server given', 3;
+        skip 'No LDAP server given', $mainTests;
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
@@ -69,16 +70,13 @@ SKIP: {
             ),
             'Auth query'
         );
-        ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-        my $cookies = $client->getCookies($res);
-        my $id;
-        ok( $id = $cookies->{lemonldap}, 'Get cookie' )
-          or explain( $res, 'Set-Cookie: something' );
+        expectOK($res);
+        my $id = expectCookie($res);
         $client->logout($id);
     }
 
     clean_sessions();
 }
-count(3);
+count($mainTests);
 eval { unlink 't/userdb.db' };
 done_testing( count() );

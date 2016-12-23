@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 39;
+my $maintests = 25;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -34,15 +34,8 @@ SKIP: {
         ),
         'Unauth SP request'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    my $cookies = $sp->getCookies($res);
-    ok(
-        (
-            defined( $cookies->{lemonldapidp} )
-              and $cookies->{lemonldapidp} == 0
-        ),
-        'IDP cookie deleted'
-      )
+    expectOK($res);
+    ok( expectCookie( $res, 'lemonldapidp' ) == 0, 'IDP cookie deleted' )
       or explain( $res->[1],
         'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
     ok(
@@ -67,16 +60,8 @@ SKIP: {
         ),
         'Select IDP'
     );
-    ok( $res->[0] == 200, 'Return code is 200' );
-    $cookies = $sp->getCookies($res);
-    ok(
-        (
-            defined( $cookies->{lemonldapidp} )
-              and $cookies->{lemonldapidp} eq
-              'http://auth.idp.com/saml/metadata'
-        ),
-        'IDP cookie defined'
-      )
+    expectOK($res);
+    ok( expectCookie( $res, 'lemonldapidp' ), 'IDP cookie defined' )
       or explain(
         $res->[1],
 'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
@@ -111,7 +96,7 @@ SKIP: {
         ),
         'Post SAML request to IdP'
     );
-    ok( $res->[0] == 200, 'Return code is 200' );
+    expectOK($res);
 
     # Try to authenticate to IdP
     my $body = $res->[2]->[0];
@@ -131,11 +116,8 @@ SKIP: {
         ),
         'Post authentication'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    $cookies = $sp->getCookies($res);
-    my $idpId;
-    ok( $idpId = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
+    expectOK($res);
+    my $idpId = expectCookie($res);
 
     # Post SAML response to SP
     ok(
@@ -162,21 +144,12 @@ SKIP: {
     );
 
     # Verify authentication on SP
-    ok( $res->[0] == 302, 'Get redirection' );
-    $cookies = $sp->getCookies($res);
-    my $spId;
-    ok( $spId = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
-    ok( $sp->getRedirection($res) eq 'http://auth.sp.com',
-        'Redirection points to SP portal' )
-      or explain( $res, 'Location: http://auth.sp.com' );
+    expectRedirection( $res, 'http://auth.sp.com' );
+    my $spId = expectCookie($res);
 
     ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
-    ok( $res->[0] == 200, 'User is authentified' ) or explain( $res->[0], 200 );
-    ok(
-        $sp->getUser($res) eq 'dwho@badwolf.org@idp',
-        'User is identified as dwho@badwolf.org@idp'
-    ) or explain( $res->[1], 'Lm-Remote-User: dwho@badwolf.org@idp' );
+    expectOK($res);
+    expectAuthenticatedAs( $res, 'dwho@badwolf.org@idp' );
 
     # Logout initiated by SP
     ok(
@@ -188,7 +161,7 @@ SKIP: {
         ),
         'Query SP for logout'
     );
-    ok( $res->[0] == 200, 'Return code is 200' );
+    expectOK($res);
     ok(
         $res->[2]->[0] =~
           /<input type="hidden".+?name="SAMLRequest".+?value="(.+?)"/s,
@@ -218,9 +191,9 @@ SKIP: {
             cookie => "lemonldap=$idpId",
             length => length($s)
         ),
-        'Post SAML request to IdP'
+        'Post SAML logout request to IdP'
     );
-    ok( $res->[0] == 200, 'Return code is 200' );
+    expectOK($res);
 
     # Get SAML response
     ok(
@@ -253,9 +226,7 @@ SKIP: {
         ),
         'Post SAML response to SP'
     );
-    ok( $res->[0] == 302, 'Get redirection' );
-    ok( $sp->getRedirection($res) eq 'http://auth.sp.com',
-        'Redirection points to SP' );
+    expectRedirection( $res, 'http://auth.sp.com' );
 
     #print STDERR Dumper($res);
 }

@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 26;
+my $maintests = 12;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -34,15 +34,8 @@ SKIP: {
         ),
         'Unauth SP request'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    my $cookies = $sp->getCookies($res);
-    ok(
-        (
-            defined( $cookies->{lemonldapidp} )
-              and $cookies->{lemonldapidp} == 0
-        ),
-        'IDP cookie deleted'
-      )
+    expectOK($res);
+    ok( expectCookie( $res, 'lemonldapidp' ) == 0, 'IDP cookie deleted' )
       or explain( $res->[1],
         'Set-Cookie => lemonldapidp=0; domain=.sp.com; path=/; expires=-1d' );
     ok(
@@ -67,34 +60,13 @@ SKIP: {
         ),
         'Select IDP'
     );
-    ok( $res->[0] == 302, 'Return code is 302' ) or explain( $res->[0], 302 );
-    $cookies = $sp->getCookies($res);
-    ok(
-        (
-            defined( $cookies->{lemonldapidp} )
-              and $cookies->{lemonldapidp} eq
-              'http://auth.idp.com/saml/metadata'
-        ),
-        'IDP cookie defined'
-      )
+    ok( expectCookie( $res, 'lemonldapidp' ), 'IDP cookie defined' )
       or explain(
         $res->[1],
 'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
       );
-    my $url;
-    ok( $url = $sp->getRedirection($res), 'Get location header' )
-      or explain( $res->[1],
-        'Location: http://auth.idp.com/saml/singleSignOn?SAMLRequest=...' );
-    ok( $url =~ m#^http://auth.idp.com/saml/singleSignOn\?SAMLRequest=(.+)#,
-        'Redirection points to IdP with SAML request' )
-      or explain( $res->[1],
-        'Location: http://auth.idp.com/saml/singleSignOn?SAMLRequest=...' );
-    my ( $query, $samlReq );
-    $url =~ m#^http://auth.idp.com(.+?)\?(.+)$#;
-    $url   = $1;
-    $query = $2;
-    ok( $query =~ /SAMLRequest=([^&]+)/s, 'Found SAML request in URL' );
-    $samlReq = $1;
+    my ( $url, $query ) = expectRedirection( $res,
+        qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
 
     #ok( decode_base64($samlReq) =~ /^</s, 'SAML request seems valid' )
     #  or explain( decode_base64($samlReq), '<?xml ...' );
@@ -109,7 +81,7 @@ SKIP: {
         ),
         'Launch SAML request to IdP'
     );
-    ok( $res->[0] == 200, 'Return code is 200' ) or explain( $res->[0], 200 );
+    expectOK($res);
 
     # Try to authenticate to IdP
     my $body = $res->[2]->[0];
@@ -129,22 +101,10 @@ SKIP: {
         ),
         'Post authentication'
     );
-    ok( $res->[0] == 302, 'Response is 302' ) or explain( $res->[0], 200 );
-    $cookies = $sp->getCookies($res);
-    my $idpId;
-    ok( $idpId = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
-    ok(
-        $issuer->getRedirection($res) =~
-m#http://auth.sp.com(/saml/proxySingleSignOnArtifact)\?(SAMLart=[^&]+)#,
-        'Get artifact'
-      )
-      or explain(
-        $res,
-'Location: http://auth.sp.com/saml/proxySingleSignOnArtifact?SAMLart=...'
-      );
-    $url   = $1;
-    $query = $2;
+    my $idpId = expectCookie($res);
+    ( $url, $query ) = expectRedirection( $res,
+        qr#http://auth.sp.com(/saml/proxySingleSignOnArtifact)\?(SAMLart=[^&]+)#
+    );
 
     # Query SP with SAML artifact
     switch ('sp');
@@ -158,21 +118,13 @@ m#http://auth.sp.com(/saml/proxySingleSignOnArtifact)\?(SAMLart=[^&]+)#,
         ),
         'Push artifact to SP'
     );
-    ok( $res->[0] == 302, 'Get redirection' );
-    $cookies = $sp->getCookies($res);
-    my $spId;
-    ok( $spId = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
-    ok( $sp->getRedirection($res) eq 'http://auth.sp.com',
-        'Redirection points to SP portal' )
-      or explain( $res, 'Location: http://auth.sp.com' );
+    my $spId = expectCookie($res);
+    expectRedirection( $res, 'http://auth.sp.com' );
 
+    # Verify authentication
     ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
-    ok( $res->[0] == 200, 'User is authentified' ) or explain( $res->[0], 200 );
-    ok(
-        $sp->getUser($res) eq 'dwho@badwolf.org@idp',
-        'User is identified as dwho@badwolf.org@idp'
-    ) or explain( $res->[1], 'Lm-Remote-User: dwho@badwolf.org@idp' );
+    expectOK($res);
+    expectAuthenticatedAs( $res, 'dwho@badwolf.org@idp' );
 
     # Logout initiated by SP
     ok(
@@ -196,6 +148,7 @@ no warnings 'redefine';
 
 # Redefine LWP methods for tests
 no warnings 'redefine';
+
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
     ok( $req->uri =~ m#http://auth.idp.com(.*)#, 'Request from SP to IdP' );
@@ -210,9 +163,8 @@ sub LWP::UserAgent::request {
         ),
         'Execute request'
     );
-    ok( ( $res->[0] == 200 or $res->[0] == 400 ), 'Response is 200 or 400' )
-      or explain( $res->[0], "200 or 400" );
-    ok( $issuer->getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
+    expectOK($res);
+    ok( getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
         'Content is XML' )
       or explain( $res->[1], 'Content-Type => application/xml' );
     my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
@@ -221,7 +173,7 @@ sub LWP::UserAgent::request {
         $httpResp->header( $name, shift( @{ $res->[1] } ) );
     }
     $httpResp->content( join( '', @{ $res->[2] } ) );
-    count(4);
+    count(3);
     return $httpResp;
 }
 

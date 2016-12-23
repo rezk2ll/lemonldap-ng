@@ -17,9 +17,9 @@ my $client = LLNG::Manager::Test->new(
 );
 
 ok( $res = $client->_get( '/', remote_user => 'dwho' ), 'Auth query' );
+count(1);
 expectOK($res);
 my $id = expectCookie($res);
 clean_sessions();
 
-count(3);
 done_testing( count() );

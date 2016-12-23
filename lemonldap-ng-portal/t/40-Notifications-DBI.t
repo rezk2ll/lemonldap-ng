@@ -1,16 +1,17 @@
-use Test::More tests => 12;
+use Test::More;
 use strict;
 use IO::String;
 
 my $res;
-my $file = 't/notifications.db';
+my $file      = 't/notifications.db';
+my $mainTests = 5;
 eval { unlink $file };
 require 't/test-lib.pm';
 
 SKIP: {
     eval { require DBI; require DBD::SQLite; };
     if ($@) {
-        skip 'DBD::SQLite not found', 11;
+        skip 'DBD::SQLite not found', $mainTests;
     }
 
     my $dbh = DBI->connect("dbi:SQLite:dbname=$file");
@@ -55,11 +56,8 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
         ),
         'Auth query'
     );
-    ok( $res->[0] == 200, 'Response is 200' ) or explain( $res->[0], 200 );
-    my $cookies = $client->getCookies($res);
-    my $id;
-    ok( $id = $cookies->{lemonldap}, 'Get cookie' )
-      or explain( $res, 'Set-Cookie: something' );
+    expectOK($res);
+    my $id = expectCookie($res);
 
     # Verify that cookie is ciphered (session unvalid)
     ok(
@@ -70,8 +68,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
         ),
         'Test cookie received'
     );
-    ok( $res->[0] == 401, "Session isn't valid" )
-      or explain( [ $res->[0], $res->[1] ], 401 );
+    expectReject($res);
 
     # Try to validate notification without accepting it
     my $str = 'reference1x1=testref&url=aHR0cDovL3Rlc3QxLmV4YW1wbGUuY29tLw==';
@@ -85,8 +82,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
         ),
         "Don't accept notification"
     );
-    ok( $res->[0] == 200, "Don't receive redirection" )
-      or explain( [ $res->[0], $res->[1] ], 200 );
+    expectOK($res);
 
     # Try to validate notification
     $str =
@@ -101,8 +97,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
         ),
         "Accept notification"
     );
-    ok( $res->[0] == 302, "Get redirection" )
-      or explain( [ $res->[0], $res->[1] ], 302 );
+    expectRedirection( $res, 'http://test1.example.com/' );
 
     # Verify that notification was tagged as 'done'
     my $sth =
@@ -117,4 +112,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     eval { unlink $file };
 
 }
+
+count($mainTests);
+done_testing( count() );
 
