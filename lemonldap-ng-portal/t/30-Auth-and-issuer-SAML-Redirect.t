@@ -362,12 +362,7 @@ entityID="http://auth.sp.com/saml/metadata">
     <ArtifactResolutionService isDefault="true" index="0"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
      Location="http://auth.sp.com/saml/artifact" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-     Location="http://auth.sp.com/saml/singleLogoutSOAP" />
     <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-     Location="http://auth.sp.com/saml/singleLogout"
-    ResponseLocation="http://auth.sp.com/saml/singleLogoutReturn" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
      Location="http://auth.sp.com/saml/singleLogout"
     ResponseLocation="http://auth.sp.com/saml/singleLogoutReturn" />
     <NameIDFormat>
@@ -384,12 +379,6 @@ entityID="http://auth.sp.com/saml/metadata">
     urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
     <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
      Location="http://auth.sp.com/saml/singleSignOn" />
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-     Location="http://auth.sp.com/saml/singleSignOn" />
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
-     Location="http://auth.sp.com/saml/singleSignOnArtifact" />
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-     Location="http://auth.sp.com/saml/singleSignOnSOAP" />
   </IDPSSODescriptor>
   <SPSSODescriptor AuthnRequestsSigned="true"
   WantAssertionsSigned="true"
@@ -428,12 +417,7 @@ entityID="http://auth.sp.com/saml/metadata">
     <ArtifactResolutionService isDefault="true" index="0"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
      Location="http://auth.sp.com/saml/artifact" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-     Location="http://auth.sp.com/saml/proxySingleLogoutSOAP" />
     <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-     Location="http://auth.sp.com/saml/proxySingleLogout"
-    ResponseLocation="http://auth.sp.com/saml/proxySingleLogoutReturn" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
      Location="http://auth.sp.com/saml/proxySingleLogout"
     ResponseLocation="http://auth.sp.com/saml/proxySingleLogoutReturn" />
     <NameIDFormat>
@@ -590,12 +574,7 @@ entityID="http://auth.idp.com/saml/metadata">
     <ArtifactResolutionService isDefault="true" index="0"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
      Location="http://auth.idp.com/saml/artifact" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-     Location="http://auth.idp.com/saml/singleLogoutSOAP" />
     <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-     Location="http://auth.idp.com/saml/singleLogout"
-    ResponseLocation="http://auth.idp.com/saml/singleLogoutReturn" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
      Location="http://auth.idp.com/saml/singleLogout"
     ResponseLocation="http://auth.idp.com/saml/singleLogoutReturn" />
     <NameIDFormat>
@@ -612,12 +591,6 @@ entityID="http://auth.idp.com/saml/metadata">
     urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
     <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
      Location="http://auth.idp.com/saml/singleSignOn" />
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-     Location="http://auth.idp.com/saml/singleSignOn" />
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
-     Location="http://auth.idp.com/saml/singleSignOnArtifact" />
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-     Location="http://auth.idp.com/saml/singleSignOnSOAP" />
   </IDPSSODescriptor>
   <SPSSODescriptor AuthnRequestsSigned="true"
   WantAssertionsSigned="true"
@@ -656,12 +629,7 @@ entityID="http://auth.idp.com/saml/metadata">
     <ArtifactResolutionService isDefault="true" index="0"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
      Location="http://auth.idp.com/saml/artifact" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-     Location="http://auth.idp.com/saml/proxySingleLogoutSOAP" />
     <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-     Location="http://auth.idp.com/saml/proxySingleLogout"
-    ResponseLocation="http://auth.idp.com/saml/proxySingleLogoutReturn" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
      Location="http://auth.idp.com/saml/proxySingleLogout"
     ResponseLocation="http://auth.idp.com/saml/proxySingleLogoutReturn" />
     <NameIDFormat>

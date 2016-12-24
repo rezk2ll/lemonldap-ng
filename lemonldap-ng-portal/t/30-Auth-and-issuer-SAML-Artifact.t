@@ -66,7 +66,7 @@ SKIP: {
 'Set-Cookie => lemonldapidp=http://auth.idp.com/saml/metadata; domain=.sp.com; path=/'
       );
     my ( $url, $query ) = expectRedirection( $res,
-        qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
+        qr#^http://auth.idp.com(/saml/singleSignOnArtifact)\?(SAMLart=.+)# );
 
     #ok( decode_base64($samlReq) =~ /^</s, 'SAML request seems valid' )
     #  or explain( decode_base64($samlReq), '<?xml ...' );
@@ -158,7 +158,7 @@ SKIP: {
         'Test if user is reject on SP'
     );
     expectRedirection( $res,
-        qr#^http://auth.idp.com/saml/singleSignOn\?(SAMLRequest=.*)# );
+        qr#^http://auth.idp.com/saml/singleSignOnArtifact\?(SAMLart=.*)# );
 
     #print STDERR Dumper($res);
 }
@@ -174,12 +174,14 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.idp.com(.*)#, 'Request from SP to IdP' );
-    my $url = $1;
+    ok( $req->uri =~ m#http://auth.((?:id|s)p).com(.*)#, 'SOAP request' );
+    my $host = $1;
+    my $url  = $2;
     my $res;
     my $s = $req->content;
+    my $client = ( $host eq 'idp' ? $issuer : $sp );
     ok(
-        $res = $issuer->_post(
+        $res = $client->_post(
             $url, IO::String->new($s),
             length => length($s),
             type   => 'application/xml',
@@ -377,14 +379,8 @@ entityID="http://auth.sp.com/saml/metadata">
     urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
     <NameIDFormat>
     urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-     Location="http://auth.sp.com/saml/singleSignOn" />
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-     Location="http://auth.sp.com/saml/singleSignOn" />
     <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
      Location="http://auth.sp.com/saml/singleSignOnArtifact" />
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-     Location="http://auth.sp.com/saml/singleSignOnSOAP" />
   </IDPSSODescriptor>
   <SPSSODescriptor AuthnRequestsSigned="true"
   WantAssertionsSigned="true"
@@ -446,9 +442,6 @@ entityID="http://auth.sp.com/saml/metadata">
     <AssertionConsumerService isDefault="true" index="0"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
      Location="http://auth.sp.com/saml/proxySingleSignOnArtifact" />
-    <AssertionConsumerService isDefault="false" index="1"
-     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-     Location="http://auth.sp.com/saml/proxySingleSignOnPost" />
   </SPSSODescriptor>
   <AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
 
@@ -605,14 +598,8 @@ entityID="http://auth.idp.com/saml/metadata">
     urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
     <NameIDFormat>
     urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-     Location="http://auth.idp.com/saml/singleSignOn" />
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-     Location="http://auth.idp.com/saml/singleSignOn" />
     <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
      Location="http://auth.idp.com/saml/singleSignOnArtifact" />
-    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-     Location="http://auth.idp.com/saml/singleSignOnSOAP" />
   </IDPSSODescriptor>
   <SPSSODescriptor AuthnRequestsSigned="true"
   WantAssertionsSigned="true"
@@ -674,9 +661,6 @@ entityID="http://auth.idp.com/saml/metadata">
     <AssertionConsumerService isDefault="true" index="0"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
      Location="http://auth.idp.com/saml/proxySingleSignOnArtifact" />
-    <AssertionConsumerService isDefault="false" index="1"
-     Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-     Location="http://auth.idp.com/saml/proxySingleSignOnPost" />
   </SPSSODescriptor>
   <AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
 

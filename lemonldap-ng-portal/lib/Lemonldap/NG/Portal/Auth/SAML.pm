@@ -784,7 +784,7 @@ sub extractFormInfo {
             'debug' );
 
         # Artifact request are sent with SOAP trough POST
-        my $art_request = $req->param('POSTDATA');
+        my $art_request = $req->body;
         my $art_response;
 
         # Create Login object
@@ -809,18 +809,18 @@ sub extractFormInfo {
             return PE_SAML_ART_ERROR;
         }
 
-        $req->datas->{SOAPMessage} = $art_response;
-
-        $self->lmLog( "Send SOAP Message: " . $req->datas->{SOAPMessage},
-            'debug' );
-
-        # Return SOAP message
-        $self->returnSOAPMessage();
-
-        # If we are here, there was a problem with SOAP request
-        $self->lmLog( "Artifact response was not sent trough SOAP", 'error' );
-        return PE_SAML_ART_ERROR;
-
+        $req->response(
+            [
+                200,
+                [
+                    'Content-Type'   => 'application/xml',
+                    'Content-Length' => length($art_response)
+                ],
+                [$art_response]
+            ]
+        );
+        $req->user('SOAP client');
+        return PE_SENDRESPONSE;
     }
 
     # 2. IDP resolution
