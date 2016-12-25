@@ -1421,9 +1421,62 @@ sub sloServer {
 
         $self->lmLog( "SLO: Logout request is valid", 'debug' );
 
+        # Get SP entityID
+        my $sp = $logout->remote_providerID();
+
+        $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
+
+        # SP conf key
+        my $spConfKey = $self->spList->{$sp}->{confKey};
+
+        unless ($spConfKey) {
+            return $self->p->sendError( $req,
+                "$sp do not match any SP in configuration", 400 );
+        }
+
+        $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
+
         # Load Session and Identity if they exist
-        my $session  = $req->{sessionInfo}->{_lassoSessionDump};
-        my $identity = $req->{sessionInfo}->{_lassoIdentityDump};
+        my ( $session, $session_index, $identity, $local_session_id );
+
+        eval { $session_index = $logout->request()->SessionIndex; };
+
+        # SLO requests without session index are not accepted
+        unless ( defined $session_index ) {
+            $self->lmLog( "No session index in SLO request from $spConfKey SP",
+                'error' );
+            return $self->sendSLOErrorResponse( $logout, $method );
+        }
+        $local_session_id = $self->conf->{cipher}->decrypt($session_index);
+        $self->lmLog(
+            "Get session id $local_session_id (decrypted from $session_index)",
+            'debug'
+        );
+
+        if ( $req->{sessionInfo} ) {
+            $session  = $req->{sessionInfo}->{_lassoSessionDump};
+            $identity = $req->{sessionInfo}->{_lassoIdentityDump};
+        }
+        unless ($session) {
+
+            # Open local session
+            my $local_session =
+              $self->p->getApacheSession( $local_session_id, 1 );
+
+            unless ($local_session) {
+                $self->lmLog( "No local session found", 'error' );
+                return $self->sendSLOErrorResponse( $logout, $method );
+            }
+
+            # Load Session and Identity if they exist
+            $session  = $local_session->data->{_lassoSessionDump};
+            $identity = $local_session->data->{_lassoIdentityDump};
+
+            # Import user datas in $req (for other "logout" subs)
+            $req->id( $local_session->data->{_session_id} );
+            $req->sessionInfo( $local_session->data );
+            $req->user( $local_session->data->{ $self->conf->{whatToTrace} } );
+        }
 
         if ($session) {
             unless ( $self->setSessionFromDump( $logout, $session ) ) {
@@ -1440,21 +1493,6 @@ sub sloServer {
             }
             $self->lmLog( "Lasso Identity loaded", 'debug' );
         }
-
-        # Get SP entityID
-        my $sp = $logout->remote_providerID();
-
-        $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
-
-        # SP conf key
-        my $spConfKey = $self->spList->{$sp}->{confKey};
-
-        unless ($spConfKey) {
-            return $self->p->sendError( $req,
-                "$sp do not match any SP in configuration", 400 );
-        }
-
-        $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
 
         # Do we check signature?
         my $checkSLOMessageSignature =
@@ -1480,16 +1518,6 @@ sub sloServer {
         # Check Destination
         return $self->sendSLOErrorResponse( $logout, $method )
           unless ( $self->checkDestination( $logout->request, $url ) );
-
-        # Get session index
-        my $session_index;
-        eval { $session_index = $logout->request()->SessionIndex; };
-
-        # SLO requests without session index are not accepted
-        if ( $@ or !defined $session_index ) {
-            return $self->p->sendError( $req,
-                "No session index in SLO request from $spConfKey SP", 400 );
-        }
 
         # Validate request if no previous error
         unless ( $self->validateLogoutRequest($logout) ) {
@@ -1518,17 +1546,6 @@ sub sloServer {
         # Prepare logout on all others SP
         my $provider_nb =
           $self->sendLogoutRequestToProviders( $req, $logout, $relayID );
-
-        # Decrypt session index
-        my $local_session_id = $self->conf->{cipher}->decrypt($session_index);
-
-        $self->lmLog(
-            "Get session id $local_session_id (decrypted from $session_index)",
-            'debug'
-        );
-
-        my $user = $req->{sessionInfo}->{user};
-        my $local_session = $self->p->getApacheSession( $local_session_id, 1 );
 
         # Close SAML sessions
         unless ( $self->deleteSAMLSecondarySessions($local_session_id) ) {

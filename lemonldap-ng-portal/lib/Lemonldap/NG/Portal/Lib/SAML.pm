@@ -401,7 +401,7 @@ sub checkMessage {
 
         # 2.2.1. POST
         if ( $content_type !~ /xml/ ) {
-            $req->parseBody unless(%{$req->params});
+            $req->parseBody unless ( %{ $req->params } );
 
             $method = Lasso::Constants::HTTP_METHOD_POST;
             $self->lmLog( "SAML method: HTTP-POST", 'debug' );
@@ -2360,6 +2360,9 @@ sub sendLogoutResponseToServiceProvider {
           if ($relaystate);
 
         return $self->p->do( $req, ['autoPost'] );
+    }
+    elsif ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+        return $self->sendSLOSoapErrorResponse( $req, $logout, $method );
     }
     return $self->p->sendError( $req,
         "Lasso method '$method' should not be handle here...", 400 );
