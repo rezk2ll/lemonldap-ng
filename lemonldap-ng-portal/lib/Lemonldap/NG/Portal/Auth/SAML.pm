@@ -26,9 +26,13 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Auth::Base', 'Lemonldap::NG::Portal::Lib::SAML';
 
+# INTERFACE
+
 has sloAssConsumerRe => ( is => 'rw' );
 has sloRe            => ( is => 'rw' );
 has artRe            => ( is => 'rw' );
+
+sub forAuthUser { 'handleAuthRequests' }
 
 # INITIALIZATION
 
@@ -707,8 +711,7 @@ sub extractFormInfo {
 
                 $req->urldc($slo_url);
 
-                $req->steps( [] );
-                return PE_REDIRECT;
+                return PE_OK;
             }
 
             # HTTP-POST
@@ -719,15 +722,14 @@ sub extractFormInfo {
                 my $slo_body = $logout->msg_body;
 
                 $req->postUrl($slo_url);
-                $req->postFields = { 'SAMLResponse' => $slo_body };
+                $req->postFields( { 'SAMLResponse' => $slo_body } );
 
                 # RelayState
                 $req->postFields->{'RelayState'} = $relaystate
                   if ($relaystate);
 
                 # TODO: verify this
-                $req->steps( ['autoPost'] );
-                $req->continue(1);
+                push @{ $req->steps }, 'autoPost';
                 return PE_OK;
             }
 
@@ -1387,6 +1389,14 @@ sub authLogout {
 
         return PE_OK;
     }
+}
+
+sub handleAuthRequests {
+    my ( $self, $req ) = @_;
+    if ( $req->uri =~ $self->sloRe ) {
+        return $self->extractFormInfo($req);
+    }
+    PE_OK;
 }
 
 # TODO: authForce

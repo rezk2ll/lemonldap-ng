@@ -53,6 +53,7 @@ sub init {
 
 sub _redirect {
     my ( $self, $req, @path ) = @_;
+    $self->lmLog('Processing _redirect','debug');
     my $prms = $req->params;
     foreach my $k ( keys %$prms ) {
         $self->p->setHiddenFormValue( $req, $k, $prms->{$k}, '', 0 );
@@ -83,7 +84,7 @@ sub _redirect {
 
 sub _pRedirect {
     my ( $self, $req, @path ) = @_;
-    $self->lmLog( 'Parsing posted datas', 'debug' );
+    $self->lmLog( '_pRedirect: parsing posted datas', 'debug' );
     $req->parseBody;
     return $self->_redirect( $req, @path );
 }
@@ -91,6 +92,7 @@ sub _pRedirect {
 # Case 3: authentified user, launch
 sub _forAuthUser {
     my ( $self, $req, @path ) = @_;
+    $self->lmLog('Processing _forAuthUser','debug');
     return $self->p->do(
         $req,
         [

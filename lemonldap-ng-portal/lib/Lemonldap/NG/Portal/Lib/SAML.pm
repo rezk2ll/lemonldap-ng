@@ -401,6 +401,7 @@ sub checkMessage {
 
         # 2.2.1. POST
         if ( $content_type !~ /xml/ ) {
+            $req->parseBody unless(%{$req->params});
 
             $method = Lasso::Constants::HTTP_METHOD_POST;
             $self->lmLog( "SAML method: HTTP-POST", 'debug' );
@@ -2330,8 +2331,7 @@ sub sendLogoutResponseToServiceProvider {
 
     # Logout response
     unless ( $self->buildLogoutResponseMsg($logout) ) {
-        $self->lmLog( "Unable to build SLO response", 'error' );
-        return PE_SAML_SLO_ERROR;
+        return $self->p->sendError( $req, "Unable to build SLO response", 500 );
     }
 
     # Send response depending on request method
@@ -2340,11 +2340,7 @@ sub sendLogoutResponseToServiceProvider {
 
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
-        $req->urldc($slo_url);
-
-        $self->lmLog( "Redirect user to $slo_url", 'debug' );
-
-        return PE_REDIRECT;
+        return [ 302, [ Location => $slo_url ], [] ];
     }
 
     # HTTP-POST
@@ -2363,13 +2359,10 @@ sub sendLogoutResponseToServiceProvider {
         $req->{postFields}->{'RelayState'} = $relaystate
           if ($relaystate);
 
-        $req->steps( [ 'deleteSession', 'autoPost' ] );
-        return PE_OK;
+        return $self->p->do( $req, ['autoPost'] );
     }
-    $self->lmLog( "Lasso method '$method' should not be handle here...",
-        'error' );
-    return PE_SAML_SLO_ERROR;
-
+    return $self->p->sendError( $req,
+        "Lasso method '$method' should not be handle here...", 400 );
 }
 
 ## @pmethod int sendLogoutRequestToProvider(Lasso::Logout $logout, string $providerID, int $method, boolean $relay, string $relayState)
@@ -2969,15 +2962,15 @@ sub sendSLOErrorResponse {
       '<Session xmlns="http://www.entrouvert.org/namespaces/lasso/0.0"/>';
 
     unless ( $self->setSessionFromDump( $logout, $session ) ) {
-        $self->lmLog( "Could not set empty session in logout object", 'error' );
-        return PE_SAML_SLO_ERROR;
+        return $self->p->sendError( $req,
+            "Could not set empty session in logout object", 500 );
     }
 
     # Send unvalidated SLO response
     return $self->sendLogoutResponseToServiceProvider( $req, $logout, $method );
 }
 
-## @method void sendSLOErrorResponse(Lasso::Logout logout, string method)
+## @method void sendSLOSoapErrorResponse(Lasso::Logout logout, string method)
 # Send an SLO error response
 # @param logout Lasso::Logout object
 # @param method HTTP method
@@ -2990,8 +2983,8 @@ sub sendSLOSoapErrorResponse {
       '<Session xmlns="http://www.entrouvert.org/namespaces/lasso/0.0"/>';
 
     unless ( $self->setSessionFromDump( $logout, $session ) ) {
-        return $self->p->sendError(
-            "Could not set empty session in logout object");
+        return $self->p->sendError( $req,
+            "Could not set empty session in logout object" );
     }
     my $slo_body = $logout->msg_body;
     $self->lmLog( "SOAP response $slo_body", 'debug' );

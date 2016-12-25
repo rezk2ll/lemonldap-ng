@@ -20,7 +20,6 @@ extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::SAML';
 
 has ssoUrlRe => ( is => 'rw' );
-has sloRe    => ( is => 'rw' );
 
 # INITIALIZATION
 
@@ -50,21 +49,6 @@ sub init {
 qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)(?:\?.*)?$/i
     );
 
-    # Single logout routes (managed by regexp in run())
-    my $saml_slo_get_url = $self->getMetaDataURL(
-        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
-    my $saml_slo_get_url_ret = $self->getMetaDataURL(
-        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 2 );
-    my $saml_slo_post_url =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
-        1 );
-    my $saml_slo_post_url_ret =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
-        2 );
-    $self->sloRe(
-qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_url_ret)(?:\?.*)?$/i
-    );
-
     # Launch parents initialization subroutines, then launch IdP en SP lists
     my $res = (
         $self->Lemonldap::NG::Portal::Main::Issuer::init()
@@ -80,16 +64,49 @@ qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_u
           and $self->loadIDPs()
     );
 
+    # Single logout routes
+    $self->addUnauthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
+        1, 'sloServer', ['POST'] );
+    $self->addUnauthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
+        2, 'sloServer', ['POST'] );
+    $self->addUnauthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect",
+        1, 'sloServer', ['GET'] );
+    $self->addUnauthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect",
+        2, 'sloServer', ['GET'] );
+    $self->addUnauthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
+        1, 'sloServer', ['POST'] );
+    $self->addUnauthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
+        2, 'sloServer', ['POST'] );
+
+    $self->addAuthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
+        1, 'authSloServer', ['POST'] );
+    $self->addAuthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
+        2, 'authSloServer', ['POST'] );
+    $self->addAuthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect",
+        1, 'authSloServer', ['GET'] );
+    $self->addAuthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect",
+        2, 'authSloServer', ['GET'] );
+    $self->addAuthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
+        1, 'authSloServer', ['POST'] );
+    $self->addAuthRouteFromMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
+        2, 'authSloServer', ['POST'] );
+
     # SOAP routes (access without authentication)
     $self->addRouteFromMetaDataURL(
         'samlIDPSSODescriptorArtifactResolutionServiceArtifact',
         3, 'artifactServer', ['POST'] );
-    $self->addRouteFromMetaDataURL(
-        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
-        1, 'soapSloServer', ['POST'] );
-    $self->addRouteFromMetaDataURL(
-        "samlIDPSSODescriptorSingleLogoutServiceSOAP",
-        2, 'soapSloServer', ['POST'] );
 
     # TODO: @coudot, why this URL isn't managed with a conf param ?
     $self->addUnauthRoute(
@@ -97,7 +114,11 @@ qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_u
         [ 'GET', 'POST' ]
     );
     $self->addAuthRoute(
-        $self->path => { relaySingleLogoutSOAP => 'sloRelaySoap' },
+        $self->path => { relaySingleLogoutPOST => 'sloRelayPost' },
+        [ 'GET', 'POST' ]
+    );
+    $self->addUnauthRoute(
+        $self->path => { relaySingleLogoutPOST => 'sloRelayPost' },
         [ 'GET', 'POST' ]
     );
     return $res;
@@ -108,7 +129,6 @@ qr/^($saml_slo_get_url|$saml_slo_get_url_ret|$saml_slo_post_url|$saml_slo_post_u
 # Main method (launched only for authenticated users, see Main/Issuer)
 sub run {
     my ( $self, $req ) = @_;
-    my $server = $self->lassoServer;
     my $login;
     my $protocolProfile;
     my $artifact_method;
@@ -149,7 +169,7 @@ sub run {
         }
 
         # Create Login object
-        my $login = $self->createLogin($server);
+        my $login = $self->createLogin( $self->lassoServer );
 
         # Ignore signature verification
         $self->disableSignatureVerification($login);
@@ -946,204 +966,6 @@ sub run {
     }
 
     # 1.2. SLO
-    if ( $url =~ $self->sloRe ) {
-        $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
-
-        # Check SAML Message
-        my ( $request, $response, $method, $relaystate, $artifact ) =
-          $self->checkMessage( $req, $url, $request_method, $content_type,
-            "logout" );
-
-        # Create Logout object
-        my $logout = $self->createLogout($server);
-
-        # Ignore signature verification
-        $self->disableSignatureVerification($logout);
-
-        if ($request) {
-
-            # Process logout request
-            unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
-                $self->lmLog( "SLO: Fail to process logout request", 'error' );
-                return PE_SAML_SLO_ERROR;
-            }
-
-            $self->lmLog( "SLO: Logout request is valid", 'debug' );
-
-            # Load Session and Identity if they exist
-            my $session  = $req->{sessionInfo}->{_lassoSessionDump};
-            my $identity = $req->{sessionInfo}->{_lassoIdentityDump};
-
-            if ($session) {
-                unless ( $self->setSessionFromDump( $logout, $session ) ) {
-                    $self->lmLog( "Unable to load Lasso Session", 'error' );
-                    return $self->sendSLOErrorResponse( $logout, $method );
-                }
-                $self->lmLog( "Lasso Session loaded", 'debug' );
-            }
-
-            if ($identity) {
-                unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
-                    $self->lmLog( "Unable to load Lasso Identity", 'error' );
-                    return $self->sendSLOErrorResponse( $logout, $method );
-                }
-                $self->lmLog( "Lasso Identity loaded", 'debug' );
-            }
-
-            # Get SP entityID
-            my $sp = $logout->remote_providerID();
-
-            $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
-
-            # SP conf key
-            my $spConfKey = $self->spList->{$sp}->{confKey};
-
-            unless ($spConfKey) {
-                $self->lmLog( "$sp do not match any SP in configuration",
-                    'error' );
-                return $self->sendSLOErrorResponse( $logout, $method );
-            }
-
-            $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
-
-            # Do we check signature?
-            my $checkSLOMessageSignature =
-              $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
-              ->{samlSPMetaDataOptionsCheckSLOMessageSignature};
-
-            if ($checkSLOMessageSignature) {
-
-                $self->forceSignatureVerification($logout);
-
-                unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
-                    $self->lmLog( "Signature is not valid", 'error' );
-                    return $self->sendSLOErrorResponse( $logout, $method );
-                }
-                else {
-                    $self->lmLog( "Signature is valid", 'debug' );
-                }
-            }
-            else {
-                $self->lmLog( "Message signature will not be checked",
-                    'debug' );
-            }
-
-            # Check Destination
-            return $self->sendSLOErrorResponse( $logout, $method )
-              unless ( $self->checkDestination( $logout->request, $url ) );
-
-            # Get session index
-            my $session_index;
-            eval { $session_index = $logout->request()->SessionIndex; };
-
-            # SLO requests without session index are not accepted
-            if ( $@ or !defined $session_index ) {
-                $self->lmLog(
-                    "No session index in SLO request from $spConfKey SP",
-                    'error' );
-                return $self->sendSLOErrorResponse( $logout, $method );
-            }
-
-            # Validate request if no previous error
-            unless ( $self->validateLogoutRequest($logout) ) {
-                $self->lmLog( "SLO request is not valid", 'error' );
-                return $self->sendSLOErrorResponse( $logout, $method );
-            }
-
-            # Set RelayState
-            if ($relaystate) {
-                $logout->msg_relayState($relaystate);
-                $self->lmLog( "Set $relaystate in RelayState", 'debug' );
-            }
-
-            # Create SLO status session and get ID
-            my $sloStatusSessionInfo = $self->getSamlSession();
-
-            my $sloInfos;
-            $sloInfos->{type}    = 'sloStatus';
-            $sloInfos->{_utime}  = time;
-            $sloInfos->{_logout} = $logout->dump;
-            $sloInfos->{_session} =
-              $logout->get_session() ? $logout->get_session()->dump : "";
-            $sloInfos->{_method} = $method;
-            $sloStatusSessionInfo->update($sloInfos);
-            my $relayID = $sloStatusSessionInfo->id;
-
-            # Prepare logout on all others SP
-            my $provider_nb =
-              $self->sendLogoutRequestToProviders( $req, $logout, $relayID );
-
-            # Decrypt session index
-            my $local_session_id =
-              $self->conf->{cipher}->decrypt($session_index);
-
-            $self->lmLog(
-"Get session id $local_session_id (decrypted from $session_index)",
-                'debug'
-            );
-
-            my $user = $req->{sessionInfo}->{user};
-            my $local_session =
-              $self->p->getApacheSession( $local_session_id, 1 );
-
-            # Close SAML sessions
-            unless ( $self->deleteSAMLSecondarySessions($local_session_id) ) {
-                $self->lmLog( "Fail to delete SAML sessions", 'error' );
-            }
-
-            # Close local session
-            unless ( $self->p->_deleteSession( $req, $local_session ) ) {
-                $self->lmLog(
-                    "Fail to delete session $local_session_id for user $user",
-                    'error' );
-            }
-
-            # Signature
-            my $signSLOMessage =
-              $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
-              ->{samlSPMetaDataOptionsSignSLOMessage};
-
-            unless ($signSLOMessage) {
-                $self->lmLog( "Do not sign this SLO response", 'debug' );
-                return $self->sendSLOErrorResponse( $logout, $method )
-                  unless ( $self->disableSignature($logout) );
-            }
-
-            # If no waiting SP, return directly SLO response
-            unless ($provider_nb) {
-                return $self->sendLogoutResponseToServiceProvider( $req,
-                    $logout, $method );
-            }
-
-            # Else build SLO status relay URL and display info
-            else {
-                $req->{urldc} =
-                  $self->conf->{portal} . '/saml/relaySingleLogoutTermination';
-                $self->setHiddenFormValue( 'relay', $relayID );
-                return PE_INFO;
-            }
-
-        }
-
-        elsif ($response) {
-
-            # No SLO response should be here
-            # else it means SSO session was not closed
-            $self->lmLog(
-                "SLO response found on an active SSO session, ignoring it",
-                'debug' );
-            return PE_OK;
-        }
-
-        else {
-
-            # No request or response
-            # This should not happen
-            $self->lmLog( "No request or response found", 'debug' );
-            return PE_OK;
-        }
-
-    }
 
     return PE_OK;
 }
@@ -1236,7 +1058,7 @@ sub soapSloServer {
         my $spConfKey = $self->spList->{$sp}->{confKey};
 
         unless ($spConfKey) {
-            return $self->sendError( $req,
+            return $self->p->sendError( $req,
                 "$sp do not match any SP in configuration", 400 );
         }
 
@@ -1304,29 +1126,29 @@ sub soapSloServer {
 
         if ($session) {
             unless ( $self->setSessionFromDump( $logout, $session ) ) {
-                return $self->sendError( $req, "Unable to load Lasso Session",
-                    400 );
+                return $self->p->sendError( $req,
+                    "Unable to load Lasso Session", 400 );
             }
             $self->lmLog( "Lasso Session loaded", 'debug' );
         }
 
         if ($identity) {
             unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
-                return $self->sendError( $req, "Unable to load Lasso Identity",
-                    400 );
+                return $self->p->sendError( $req,
+                    "Unable to load Lasso Identity", 400 );
             }
             $self->lmLog( "Lasso Identity loaded", 'debug' );
         }
 
         # Close SAML sessions
         unless ( $self->deleteSAMLSecondarySessions($local_session_id) ) {
-            return $self->sendError( $req, "Fail to delete SAML sessions",
+            return $self->p->sendError( $req, "Fail to delete SAML sessions",
                 400 );
         }
 
         # Close local session
         unless ( $self->p->_deleteSession( $req, $local_session ) ) {
-            return $self->sendError( $req,
+            return $self->p->sendError( $req,
                 "Fail to delete session $local_session_id", 400 );
         }
 
@@ -1397,6 +1219,7 @@ sub soapSloServer {
 
 sub logout {
     my ( $self, $req ) = @_;
+    return PE_OK if ( $req->datas->{samlSLOCalled} );
 
     # Session ID
     my $session_id = $req->{sessionInfo}->{_session_id} || $req->{id};
@@ -1532,6 +1355,238 @@ sub sloRelaySoap {
     # SLO response is OK
     $self->lmLog( "Display OK status for SLO on $spConfKey", 'debug' );
     return $self->imgok($req);
+}
+
+sub sloRelayPost {
+    my ( $self, $req ) = @_;
+    $self->lmLog( "URL " . $req->uri . " detected as a POST relay service URL",
+        'debug' );
+
+    # Check if relay parameter is present (mandatory)
+    my $relayID;
+    unless ( $relayID = $req->param('relay') ) {
+        return $self->p->sendError( $req, 'No relayID detected' );
+    }
+
+    # Retrieve the corresponding data from samlStorage
+    my $relayInfos = $self->getSamlSession($relayID);
+    unless ($relayInfos) {
+        return $self->p->sendError( $req,
+            "Could not get relay session $relayID" );
+    }
+
+    $self->lmLog( "Found relay session $relayID", 'debug' );
+
+    # Get data to build POST form
+    $req->{postUrl}                     = $relayInfos->data->{url};
+    $req->{postFields}->{'SAMLRequest'} = $relayInfos->data->{body};
+    $req->{postFields}->{'RelayState'}  = $relayInfos->data->{relayState};
+
+    # Delete relay session
+    $relayInfos->remove();
+    return $self->p->do( $req, ['autoPost'] );
+}
+
+sub authSloServer {
+    my ( $self, $req ) = @_;
+    $self->p->importHandlerDatas($req);
+    return $self->sloServer($req);
+}
+
+sub sloServer {
+    my ( $self, $req ) = @_;
+    my $url            = $req->uri;
+    my $request_method = $req->param('issuerMethod') || $req->method;
+    my $content_type   = $req->contentType();
+    $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
+
+    # Check SAML Message
+    my ( $request, $response, $method, $relaystate, $artifact ) =
+      $self->checkMessage( $req, $url, $request_method, $content_type,
+        "logout" );
+
+    # Create Logout object
+    my $logout = $self->createLogout( $self->lassoServer );
+
+    # Ignore signature verification
+    $self->disableSignatureVerification($logout);
+
+    if ($request) {
+
+        # Process logout request
+        unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
+            return $self->p->sendError( $req,
+                "SLO: Fail to process logout request", 400 );
+        }
+
+        $self->lmLog( "SLO: Logout request is valid", 'debug' );
+
+        # Load Session and Identity if they exist
+        my $session  = $req->{sessionInfo}->{_lassoSessionDump};
+        my $identity = $req->{sessionInfo}->{_lassoIdentityDump};
+
+        if ($session) {
+            unless ( $self->setSessionFromDump( $logout, $session ) ) {
+                return $self->p->sendError( $req,
+                    "Unable to load Lasso Session", 400 );
+            }
+            $self->lmLog( "Lasso Session loaded", 'debug' );
+        }
+
+        if ($identity) {
+            unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
+                return $self->p->sendError( $req,
+                    "Unable to load Lasso Identity", 400 );
+            }
+            $self->lmLog( "Lasso Identity loaded", 'debug' );
+        }
+
+        # Get SP entityID
+        my $sp = $logout->remote_providerID();
+
+        $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
+
+        # SP conf key
+        my $spConfKey = $self->spList->{$sp}->{confKey};
+
+        unless ($spConfKey) {
+            return $self->p->sendError( $req,
+                "$sp do not match any SP in configuration", 400 );
+        }
+
+        $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
+
+        # Do we check signature?
+        my $checkSLOMessageSignature =
+          $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+          ->{samlSPMetaDataOptionsCheckSLOMessageSignature};
+
+        if ($checkSLOMessageSignature) {
+
+            $self->forceSignatureVerification($logout);
+
+            unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
+                return $self->p->sendError( $req, "Signature is not valid",
+                    400 );
+            }
+            else {
+                $self->lmLog( "Signature is valid", 'debug' );
+            }
+        }
+        else {
+            $self->lmLog( "Message signature will not be checked", 'debug' );
+        }
+
+        # Check Destination
+        return $self->sendSLOErrorResponse( $logout, $method )
+          unless ( $self->checkDestination( $logout->request, $url ) );
+
+        # Get session index
+        my $session_index;
+        eval { $session_index = $logout->request()->SessionIndex; };
+
+        # SLO requests without session index are not accepted
+        if ( $@ or !defined $session_index ) {
+            return $self->p->sendError( $req,
+                "No session index in SLO request from $spConfKey SP", 400 );
+        }
+
+        # Validate request if no previous error
+        unless ( $self->validateLogoutRequest($logout) ) {
+            return $self->p->sendError( $req, "SLO request is not valid", 400 );
+        }
+
+        # Set RelayState
+        if ($relaystate) {
+            $logout->msg_relayState($relaystate);
+            $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+        }
+
+        # Create SLO status session and get ID
+        my $sloStatusSessionInfo = $self->getSamlSession();
+
+        my $sloInfos;
+        $sloInfos->{type}    = 'sloStatus';
+        $sloInfos->{_utime}  = time;
+        $sloInfos->{_logout} = $logout->dump;
+        $sloInfos->{_session} =
+          $logout->get_session() ? $logout->get_session()->dump : "";
+        $sloInfos->{_method} = $method;
+        $sloStatusSessionInfo->update($sloInfos);
+        my $relayID = $sloStatusSessionInfo->id;
+
+        # Prepare logout on all others SP
+        my $provider_nb =
+          $self->sendLogoutRequestToProviders( $req, $logout, $relayID );
+
+        # Decrypt session index
+        my $local_session_id = $self->conf->{cipher}->decrypt($session_index);
+
+        $self->lmLog(
+            "Get session id $local_session_id (decrypted from $session_index)",
+            'debug'
+        );
+
+        my $user = $req->{sessionInfo}->{user};
+        my $local_session = $self->p->getApacheSession( $local_session_id, 1 );
+
+        # Close SAML sessions
+        unless ( $self->deleteSAMLSecondarySessions($local_session_id) ) {
+            $self->lmLog( "Fail to delete SAML sessions", 'error' );
+        }
+
+        # Close local session
+        # This flag is for logout() to say that SAML logout is already done
+        $req->datas->{samlSLOCalled} = 1;
+
+        # Launch normal logout and ignore errors
+        $self->p->do( $req, [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
+
+        # Signature
+        my $signSLOMessage =
+          $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+          ->{samlSPMetaDataOptionsSignSLOMessage};
+
+        unless ($signSLOMessage) {
+            $self->lmLog( "Do not sign this SLO response", 'debug' );
+            return $self->sendSLOErrorResponse( $logout, $method )
+              unless ( $self->disableSignature($logout) );
+        }
+
+        # If no waiting SP, return directly SLO response
+        unless ($provider_nb) {
+            return $self->sendLogoutResponseToServiceProvider( $req,
+                $logout, $method );
+        }
+
+        # Else build SLO status relay URL and display info
+        else {
+            $req->{urldc} =
+              $self->conf->{portal} . '/saml/relaySingleLogoutTermination';
+            $self->p->setHiddenFormValue( 'relay', $relayID );
+            return $self->do( $req, [] );
+        }
+
+    }
+
+    elsif ($response) {
+
+        # No SLO response should be here
+        # else it means SSO session was not closed: launching it
+        $self->lmLog(
+            "SLO response found on an active SSO session, ignoring it",
+            'debug' );
+        $req->datas->{samlSLOCalled} = 1;
+        return $self->p->do( $req,
+            [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
+    }
+
+    else {
+
+        # No request or response
+        # This should not happen
+        return $self->p->sendError( $req, "No request or response found", 400 );
+    }
 }
 
 # INTERNAL METHODS
