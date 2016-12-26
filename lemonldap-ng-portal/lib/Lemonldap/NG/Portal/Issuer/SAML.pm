@@ -107,6 +107,9 @@ qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_u
     $self->addRouteFromMetaDataURL(
         'samlIDPSSODescriptorArtifactResolutionServiceArtifact',
         3, 'artifactServer', ['POST'] );
+    $self->addRouteFromMetaDataURL(
+        'samlAttributeAuthorityDescriptorAttributeServiceSOAP',
+        1, 'attributeServer', ['POST'] );
 
     # TODO: @coudot, why this URL isn't managed with a conf param ?
     $self->addUnauthRoute(
@@ -1604,6 +1607,277 @@ sub sloServer {
         # This should not happen
         return $self->p->sendError( $req, "No request or response found", 400 );
     }
+}
+
+sub attributeServer {
+    my ( $self, $req, ) = @_;
+    my $url = $req->uri;
+    $self->lmLog( "URL $url detected as an attribute service URL", 'debug' );
+
+    # Attribute request are sent with SOAP trough POST
+    my $att_request = $req->body;
+    my $att_response;
+
+    # Process request
+    my $query =
+      $self->processAttributeRequest( $self->lassoServer, $att_request );
+    unless ($query) {
+        return $self->p->sendError( $req,
+            "Unable to process attribute request", 400 );
+    }
+
+    # Get SP entityID
+    my $sp = $query->remote_providerID();
+
+    $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
+
+    # SP conf key
+    my $spConfKey = $self->spList->{$sp}->{confKey};
+
+    unless ($spConfKey) {
+        return $self->p->sendError( $req,
+            "$sp do not match any SP in configuration", 400 );
+    }
+
+    $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
+
+    # Check Destination
+    unless ( $self->checkDestination( $query->request, $url ) ) {
+        return $self->p->sendError( $req, "Bad destination $url", 400 );
+    }
+
+    # Validate request
+    unless ( $self->validateAttributeRequest($query) ) {
+        return $self->p->sendError( $req, "Attribute request not valid", 400 );
+    }
+
+    # Get NameID
+    my $name_id = $query->nameIdentifier();
+
+    unless ($name_id) {
+        $self->p->sendError( $req, "Fail to get NameID from attribute request",
+            400 );
+    }
+
+    my $user = $name_id->content();
+
+    # Get sessionInfo for the given NameID
+    my $sessionInfo;
+    my $moduleOptions = $self->conf->{samlStorageOptions} || {};
+    $moduleOptions->{backend} = $self->conf->{samlStorage};
+    my $module = "Lemonldap::NG::Common::Apache::Session";
+
+    my $saml_sessions =
+      $module->searchOn( $moduleOptions, "_nameID", $name_id->dump );
+
+    if ( my @saml_sessions_keys = keys %$saml_sessions ) {
+
+        # Warning if more than one session found
+        if ( $#saml_sessions_keys > 0 ) {
+            $self->lmLog( "More than one SAML session found for user $user",
+                'warn' );
+        }
+
+        # Take the first session
+        my $saml_session = shift @saml_sessions_keys;
+
+        # Get session
+        $self->lmLog( "Retrieve SAML session $saml_session for user $user",
+            'debug' );
+
+        my $samlSessionInfo = $self->getSamlSession($saml_session);
+
+        # Get real session
+        my $real_session = $samlSessionInfo->data->{_saml_id};
+
+        $self->lmLog( "Retrieve real session $real_session for user $user",
+            'debug' );
+
+        $sessionInfo = $self->p->getApacheSession( $real_session, 1 );
+
+        unless ($sessionInfo) {
+            return $self->p->sendError( $req,
+                "Cannot get session $real_session", 500 );
+        }
+
+    }
+    else {
+        return $self->p->sendError( $req,
+            "No SAML session found for user $user", 400 );
+    }
+
+    # Get requested attributes
+    my @requested_attributes;
+    eval { @requested_attributes = $query->request()->Attribute(); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return $self->p->sendError( $req, "Unable to get requested attributes",
+            400 );
+    }
+
+    # Returned attributes
+    my @returned_attributes;
+
+    # Browse SP authorized attributes
+    foreach (
+        keys %{ $self->conf->{samlSPMetaDataExportedAttributes}->{$spConfKey} }
+      )
+    {
+        my $sp_attr = $_;
+
+        # Extract fields from exportedAttr value
+        my ( $mandatory, $name, $format, $friendly_name ) =
+          split( /;/,
+            $self->conf->{samlSPMetaDataExportedAttributes}->{$spConfKey}
+              ->{$sp_attr} );
+
+        foreach (@requested_attributes) {
+            my $req_attr       = $_;
+            my $rname          = $req_attr->Name();
+            my $rformat        = $req_attr->NameFormat();
+            my $rfriendly_name = $req_attr->FriendlyName();
+
+            # Skip if name does not match
+            next unless ( $rname =~ /^$name$/ );
+
+            # Check format and friendly name
+            next if ( $rformat and $rformat !~ /^$format$/ );
+            next
+              if (  $rfriendly_name
+                and $rfriendly_name !~ /^$friendly_name$/ );
+
+            $self->lmLog(
+                "SP $spConfKey is authorized to access attribute $rname",
+                'debug' );
+
+            $self->lmLog( "Attribute $rname is linked to $sp_attr session key",
+                'debug' );
+
+            # Check if values are given
+            my $rvalue =
+              $self->getAttributeValue( $rname, $rformat, $rfriendly_name,
+                [$req_attr] );
+
+            $self->lmLog( "Some values are explicitely requested: $rvalue",
+                'debug' )
+              if defined $rvalue;
+
+            # Get session value
+            if ( $sessionInfo->data->{$sp_attr} ) {
+
+                my @values = split $self->conf->{multiValuesSeparator},
+                  $sessionInfo->data->{$sp_attr};
+                my @saml2values;
+
+                # SAML2 attribute
+                my $ret_attr =
+                  $self->createAttribute( $rname, $rformat, $rfriendly_name );
+
+                unless ($ret_attr) {
+                    return $self->p->sendError( $req,
+                        "Unable to create a new SAML attribute", 500 );
+                }
+
+                foreach (@values) {
+
+                    my $local_value = $_;
+
+                    # Check if values were set in requested attribute
+                    # In this case, only requested values can be returned
+                    if (
+                        $rvalue
+                        and !map( /^$local_value$/,
+                            split(
+                                $self->conf->{multiValuesSeparator}, $rvalue
+                            ) )
+                      )
+                    {
+                        $self->lmLog(
+"$local_value value is not in requested values, it will not be sent",
+                            'warn'
+                        );
+                        next;
+                    }
+
+                    # SAML2 attribute value
+                    my $saml2value = $self->createAttributeValue( $local_value,
+                        $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+                          ->{samlSPMetaDataOptionsForceUTF8} );
+
+                    unless ($saml2value) {
+                        return $self->p->sendError( $req,
+                            "Unable to create a new SAML attribute value",
+                            400 );
+                    }
+
+                    push @saml2values, $saml2value;
+
+                    $self->lmLog( "Push $local_value in SAML attribute $name",
+                        'debug' );
+
+                }
+
+                $ret_attr->AttributeValue(@saml2values);
+
+                # Push attribute in attribute list
+                push @returned_attributes, $ret_attr;
+
+            }
+            else {
+                $self->lmLog( "No session value for $sp_attr", 'debug' );
+            }
+
+        }
+
+    }
+
+    # Create attribute statement
+    if ( scalar @returned_attributes ) {
+        my $attribute_statement;
+
+        eval { $attribute_statement = Lasso::Saml2AttributeStatement->new(); };
+        if ($@) {
+            $self->checkLassoError($@);
+            return $self->p->sendError( $req, 'An error occurs, see IdP logs',
+                500 );
+        }
+
+        # Register attributes in attribute statement
+        $attribute_statement->Attribute(@returned_attributes);
+
+        # Create assetion
+        my $assertion;
+
+        eval { $assertion = Lasso::Saml2Assertion->new(); };
+        if ($@) {
+            $self->checkLassoError($@);
+            return $self->p->sendError( $req, 'An error occurs, see IdP logs',
+                500 );
+        }
+
+        # Add attribute statement in response assertion
+        my @attributes_statement = ($attribute_statement);
+        $assertion->AttributeStatement(@attributes_statement);
+
+        # Set response assertion
+        $query->response->Assertion( ($assertion) );
+    }
+
+    # Build response
+    $att_response = $self->buildAttributeResponse($query);
+
+    unless ($att_response) {
+        $self->p->sendError( $req, "Unable to build attribute response", 500 );
+    }
+
+    return [
+        200,
+        [
+            'Content-Type'   => 'application/xml',
+            'Content-Length' => length($att_response)
+        ],
+        [$att_response]
+    ];
 }
 
 # INTERNAL METHODS

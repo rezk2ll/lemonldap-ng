@@ -1073,6 +1073,7 @@ sub extractFormInfo {
     }
 
     # No SOAP transport for SSO request
+    return PE_SAML_SSO_ERROR;
 }
 
 sub authenticate {
