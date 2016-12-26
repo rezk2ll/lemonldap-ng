@@ -21,7 +21,9 @@ sub init {
     my ( $self, $type ) = @_;
     $self->type($type);
 
-    unless( $self->conf->{authChoiceModules} and %{ $self->conf->{authChoiceModules} } ) {
+    unless ( $self->conf->{authChoiceModules}
+        and %{ $self->conf->{authChoiceModules} } )
+    {
         $self->error("'authChoiceModules' is empty");
         return 0;
     }

@@ -6,7 +6,7 @@ use Mouse;
 our $VERSION = '2.0.0';
 
 # Object that provides lmLog and error methods (typically PSGI object)
-has p    => ( is => 'rw', weak_ref => 1 );
+has p => ( is => 'rw', weak_ref => 1 );
 
 # Lemonldap::NG configuration hash ref
 has conf => ( is => 'rw', weak_ref => 1 );

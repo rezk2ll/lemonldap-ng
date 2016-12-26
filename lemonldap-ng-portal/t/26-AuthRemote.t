@@ -26,7 +26,8 @@ my $client = LLNG::Manager::Test->new(
 # Test redirection to remote portal
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'First request' );
 count(1);
-expectRedirection($res, 'http://auth2.example.com?url=aHR0cDovL2F1dGguZXhhbXBsZS5jb20v');
+expectRedirection( $res,
+    'http://auth2.example.com?url=aHR0cDovL2F1dGguZXhhbXBsZS5jb20v' );
 
 ok(
     $res = $client->_get(

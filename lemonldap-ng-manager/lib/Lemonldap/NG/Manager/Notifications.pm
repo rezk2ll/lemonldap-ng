@@ -280,8 +280,8 @@ sub newNotification {
       ) . ">$json->{xml}</notification></root>";
 
     unless ( eval { $self->notifAccess->newNotification($newNotif) } ) {
-        $self->lmLog( "Notification not created: $@", 'error');
-        return $self->sendError( $req, "Notification not created: $@", 200);
+        $self->lmLog( "Notification not created: $@", 'error' );
+        return $self->sendError( $req, "Notification not created: $@", 200 );
     }
     else {
         return $self->sendJSONresponse( $req, { result => 1 } );
@@ -337,8 +337,9 @@ sub deleteDoneNotification {
     my ( $uid, $ref, $date ) = ( $id =~ /([^_]+?)_([^_]+?)_(.+)/ );
     my $identifier = $self->notifAccess->getIdentifier( $uid, $ref, $date );
     unless ( eval { $self->notifAccess->purge($identifier) } ) {
-        $self->lmLog( "Notification $identifier not purged ($@)", 'warn');
-        return $self->sendError( $req, "Notification $identifier not purged ($@)", 400);
+        $self->lmLog( "Notification $identifier not purged ($@)", 'warn' );
+        return $self->sendError( $req,
+            "Notification $identifier not purged ($@)", 400 );
     }
 
     $self->lmLog( "Notification $identifier purged", 'info' );

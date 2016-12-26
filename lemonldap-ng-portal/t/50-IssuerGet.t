@@ -44,7 +44,7 @@ ok(
     'GET request with good url'
 );
 count(1);
-expectRedirection($res,"http://test1.example.com/?ID=$id");
+expectRedirection( $res, "http://test1.example.com/?ID=$id" );
 
 # Test not logged access
 ok(

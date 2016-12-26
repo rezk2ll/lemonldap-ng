@@ -38,7 +38,8 @@ SKIP: {
         ),
         'Unauth SP request'
     );
-    expectRedirection($res, 'http://auth.idp.com/cas/login?service=http://auth.sp.com/');
+    expectRedirection( $res,
+        'http://auth.idp.com/cas/login?service=http://auth.sp.com/' );
 
     # Query IdP
     switch ('issuer');
@@ -70,7 +71,8 @@ SKIP: {
         ),
         'Post authentication'
     );
-    my ($query) = expectRedirection($res,qr#^http://auth.sp.com/\?(ticket=[^&]+)$#);
+    my ($query) =
+      expectRedirection( $res, qr#^http://auth.sp.com/\?(ticket=[^&]+)$# );
     my $idpId = expectCookie($res);
 
     # Back to SP
@@ -82,7 +84,7 @@ SKIP: {
     # Test authentication
     ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ), 'Get / on SP' );
     expectOK($res);
-    expectAuthenticatedAs($res,'dwho');
+    expectAuthenticatedAs( $res, 'dwho' );
 
     # Logout initiated by SP
     ok(
@@ -102,7 +104,7 @@ SKIP: {
     );
 
     # Query IdP with iframe src
-    my $url   = $1;
+    my $url = $1;
     $query = $2;
     switch ('issuer');
     ok(

@@ -91,7 +91,7 @@ sub expectCookie {
     $cookieName ||= 'lemonldap';
     my $cookies = getCookies($res);
     my $id;
-    ok( defined($id = $cookies->{$cookieName}), "Get cookie $cookieName" )
+    ok( defined( $id = $cookies->{$cookieName} ), "Get cookie $cookieName" )
       or explain( $res->[1], "Set-Cookie: $cookieName=something" );
     count(1);
     return $id;

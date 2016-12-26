@@ -6,8 +6,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Common::Module',
-  'Lemonldap::NG::Portal::Lib::Remote';
+extends 'Lemonldap::NG::Common::Module', 'Lemonldap::NG::Portal::Lib::Remote';
 
 # RUNNING METHODS
 

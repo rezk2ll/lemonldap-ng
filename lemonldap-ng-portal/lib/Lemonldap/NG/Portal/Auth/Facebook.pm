@@ -121,7 +121,8 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{facebookAuthnLevel};
+    $req->{sessionInfo}->{authenticationLevel} =
+      $self->conf->{facebookAuthnLevel};
     PE_OK;
 }
 

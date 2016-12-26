@@ -135,9 +135,11 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{browserIdAuthnLevel};
-    $req->{sessionInfo}->{_browserIdAnswer}    = $self->conf->{browserIdAnswer};
-    $req->{sessionInfo}->{_browserIdAnswerRaw} = $self->conf->{browserIdAnswerRaw};
+    $req->{sessionInfo}->{authenticationLevel} =
+      $self->conf->{browserIdAuthnLevel};
+    $req->{sessionInfo}->{_browserIdAnswer} = $self->conf->{browserIdAnswer};
+    $req->{sessionInfo}->{_browserIdAnswerRaw} =
+      $self->conf->{browserIdAnswerRaw};
     PE_OK;
 }
 

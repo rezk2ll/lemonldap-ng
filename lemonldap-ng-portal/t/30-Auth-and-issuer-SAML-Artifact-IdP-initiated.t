@@ -49,10 +49,13 @@ SKIP: {
         ),
         'Query IdP to access to SP'
     );
-    my($url,$query) = expectRedirection($res,qr#http://auth.sp.com(/saml/proxySingleSignOnArtifact)\?(SAMLart=[^&]+)#);
-    switch('sp');
-    ok($res=$sp->_get($url,query=>$query,accept=>'test/html'),'Give artifact to SP');
-    expectRedirection($res,'http://auth.sp.com');
+    my ( $url, $query ) = expectRedirection( $res,
+        qr#http://auth.sp.com(/saml/proxySingleSignOnArtifact)\?(SAMLart=[^&]+)#
+    );
+    switch ('sp');
+    ok( $res = $sp->_get( $url, query => $query, accept => 'test/html' ),
+        'Give artifact to SP' );
+    expectRedirection( $res, 'http://auth.sp.com' );
     my $spId = expectCookie($res);
 
     # Verify authentication on SP

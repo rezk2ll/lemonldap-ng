@@ -98,9 +98,9 @@ SKIP: {
 
     ok(
         $res->[2]->[0] =~
-        m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
+m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         'Get iframe request'
-    ) or explain($res,'');
+    ) or explain( $res, '' );
 
     ok(
         $res = $issuer->_get(
@@ -114,7 +114,7 @@ SKIP: {
     expectOK($res);
     ok(
         $res->[2]->[0] =~
-          m#<form.+?action="http://auth.sp.com(/saml/proxySingleLogout)".+?method="post"#,
+m#<form.+?action="http://auth.sp.com(/saml/proxySingleLogout)".+?method="post"#,
         'Form method is POST'
     );
     $url = $1;
@@ -139,7 +139,7 @@ SKIP: {
     expectOK($res);
     ok(
         $res->[2]->[0] =~
-          m#<form.+?action="http://auth.idp.com(/saml/singleLogoutReturn)".+?method="post"#,
+m#<form.+?action="http://auth.idp.com(/saml/singleLogoutReturn)".+?method="post"#,
         'Form method is POST'
     );
     $url = $1;
@@ -151,7 +151,7 @@ SKIP: {
     $s = "SAMLResponse=$1";
 
     # Post SAML logout response to IdP
-    switch('issuer');
+    switch ('issuer');
     ok(
         $res = $sp->_post(
             $url, IO::String->new($s),
@@ -192,6 +192,7 @@ SKIP: {
         $res->[2],
         ' <input type="hidden" name="SAMLRequest" id="SAMLRequest" value="...'
       );
+
     #print STDERR Dumper($res);
 }
 

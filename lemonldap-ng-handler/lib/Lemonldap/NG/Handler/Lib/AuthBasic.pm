@@ -41,7 +41,8 @@ sub retrieveSession {
     my ( $class, $id ) = @_;
 
     # First check if session already exists
-    return 1 if ( $class->Lemonldap::NG::Handler::Main::Run::retrieveSession($id) );
+    return 1
+      if ( $class->Lemonldap::NG::Handler::Main::Run::retrieveSession($id) );
 
     # Then ask portal to create it
     if ( $class->createSession($id) ) {
@@ -115,7 +116,8 @@ sub hideCookie {
 sub goToPortal {
     my ( $class, $url, $arg ) = @_;
     if ($arg) {
-        return $class->Lemonldap::NG::Handler::Main::Run::goToPortal( $url, $arg );
+        return $class->Lemonldap::NG::Handler::Main::Run::goToPortal( $url,
+            $arg );
     }
     else {
         $class->set_header_out(

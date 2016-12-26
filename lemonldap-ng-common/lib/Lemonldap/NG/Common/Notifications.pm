@@ -31,7 +31,7 @@ has notifField => (
 sub getNotifications {
     my ( $self, $uid ) = @_;
     my $forUser = $self->get($uid);
-    my $forAll = $self->get( $self->conf->{notificationWildcard} );
+    my $forAll  = $self->get( $self->conf->{notificationWildcard} );
     if ( $forUser and $forAll ) {
         return { %$forUser, %$forAll };
     }

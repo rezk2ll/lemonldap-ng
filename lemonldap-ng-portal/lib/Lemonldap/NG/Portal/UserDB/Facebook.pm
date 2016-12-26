@@ -22,7 +22,7 @@ has vars => (
 
 sub init {
     my ($self) = @_;
-    unless ( $self->p->getModule(undef,'auth') =~ /^Facebook/ ) {
+    unless ( $self->p->getModule( undef, 'auth' ) =~ /^Facebook/ ) {
         $self->error(
 "UserDBFacebook isn't useable unless authentication module is set to Facebook"
         );

@@ -140,7 +140,7 @@ sub purge {
         return 0;
     }
 
-    my $clause = ($force ? '' : '(description={done}*)');
+    my $clause = ( $force ? '' : '(description={done}*)' );
     return $self->_delete( '(&(objectClass=applicationProcess)'
           . "(description={uid}$u)"
           . "(description={ref}$r)"

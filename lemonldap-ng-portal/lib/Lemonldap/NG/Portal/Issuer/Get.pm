@@ -66,7 +66,8 @@ sub computeGetParams {
             my $value =
               eval { uri_escape( $req->{sessionInfo}->{ $prms->{$param} } ) };
             if ($@) {
-                $self->lmLog( "IssuerGet: unable to compute $param ($@)", 'error' );
+                $self->lmLog( "IssuerGet: unable to compute $param ($@)",
+                    'error' );
                 return;
             }
             $value =~ s/[\r\n\t]//;

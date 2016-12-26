@@ -22,14 +22,14 @@ sub init {
     my ($self) = @_;
 
     unless ( $self->p->getModule( undef, 'auth' ) =~ /^SAML/ ) {
-        $self->error(
-"SAML user module requires SAML authentication"
-        );
+        $self->error( "SAML user module requires SAML authentication" );
         return 0;
     }
 
     # SAML service has been already loaded
-    $self->lassoServer($self->p->loadedModules->{'Lemonldap::NG::Portal::Auth::SAML'}->lassoServer);
+    $self->lassoServer(
+        $self->p->loadedModules->{'Lemonldap::NG::Portal::Auth::SAML'}
+          ->lassoServer );
     return 1;
 }
 
@@ -57,18 +57,21 @@ sub setSessionInfo {
     # Get all required attributes, not already set
     # in setAuthSessionInfo()
     foreach (
-        keys %{ $self->conf->{samlIDPMetaDataExportedAttributes}->{$idpConfKey} } )
+        keys %{ $self->conf->{samlIDPMetaDataExportedAttributes}->{$idpConfKey}
+        } )
     {
 
         # Extract fields from exportedAttr value
         my ( $mandatory, $name, $format, $friendly_name ) =
           split( /;/,
-            $self->conf->{samlIDPMetaDataExportedAttributes}->{$idpConfKey}->{$_} );
+            $self->conf->{samlIDPMetaDataExportedAttributes}->{$idpConfKey}
+              ->{$_} );
 
         # Keep mandatory attributes not sent in authentication response
         if ( $mandatory and not defined $req->{sessionInfo}->{$_} ) {
             $exportedAttr->{$_} =
-              $self->conf->{samlIDPMetaDataExportedAttributes}->{$idpConfKey}->{$_};
+              $self->conf->{samlIDPMetaDataExportedAttributes}->{$idpConfKey}
+              ->{$_};
             $self->lmLog( "Attribute $_ will be requested to $idpConfKey",
                 'debug' );
         }
