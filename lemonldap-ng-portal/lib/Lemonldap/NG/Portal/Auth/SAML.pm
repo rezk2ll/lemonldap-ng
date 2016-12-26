@@ -357,16 +357,6 @@ sub extractFormInfo {
                 $req->datas->{_proxiedArtifact} =
                   $samlSessionInfo->data->{Artifact};
 
-               # Save values in hidden fields in case of other user interactions
-                $self->setHiddenFormValue( 'SAMLRequest',
-                    $req->datas->{_proxiedRequest} );
-                $self->setHiddenFormValue( 'Method',
-                    $req->datas->{_proxiedMethod} );
-                $self->setHiddenFormValue( 'RelayState',
-                    $req->datas->{_proxiedRelayState} );
-                $self->setHiddenFormValue( 'SAMLart',
-                    $req->datas->{_proxiedArtifact} );
-
                 # Delete session
                 $samlSessionInfo->remove();
             }
