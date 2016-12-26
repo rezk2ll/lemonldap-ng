@@ -148,30 +148,9 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.sp.com(.*)#, 'Request from SP to IdP' );
-    my $url = $1;
-    my $res;
-    my $s = $req->content;
-    ok(
-        $res = $sp->_post(
-            $url, IO::String->new($s),
-            length => length($s),
-            type   => 'application/xml',
-        ),
-        'Execute request'
-    );
-    ok( ( $res->[0] == 200 or $res->[0] == 400 ), 'Response is 200 or 400' )
-      or explain( $res->[0], "200 or 400" );
-    ok( getHeader( $res, 'Content-Type' ) =~ m#^application/xml#,
-        'Content is XML' )
-      or explain( $res->[1], 'Content-Type => application/xml' );
-    my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
-
-    while ( my $name = shift @{ $res->[1] } ) {
-        $httpResp->header( $name, shift( @{ $res->[1] } ) );
-    }
-    $httpResp->content( join( '', @{ $res->[2] } ) );
-    count(4);
+    fail('Redirect should not launch SOAP requests');
+    my $httpResp = HTTP::Response->new(500);
+    count(1);
     return $httpResp;
 }
 

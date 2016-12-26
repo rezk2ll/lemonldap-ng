@@ -205,6 +205,17 @@ count($maintests);
 clean_sessions();
 done_testing( count() );
 
+# Redefine LWP methods for tests
+no warnings 'redefine';
+
+sub LWP::UserAgent::request {
+    my ( $self, $req ) = @_;
+    fail('Redirect should not launch SOAP requests');
+    my $httpResp = HTTP::Response->new(500);
+    count(1);
+    return $httpResp;
+}
+
 sub switch {
     my $type = shift;
     @Lemonldap::NG::Handler::Main::Reload::_onReload = @{
