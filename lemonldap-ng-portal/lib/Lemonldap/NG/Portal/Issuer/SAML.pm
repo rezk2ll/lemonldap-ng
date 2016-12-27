@@ -158,18 +158,8 @@ sub run {
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
         # Check message
-        my ( $request, $response, $method, $relaystate, $artifact );
-
-        if ( $req->datas->{_proxiedRequest} ) {
-            $request    = $req->datas->{_proxiedRequest};
-            $method     = $req->datas->{_proxiedMethod};
-            $relaystate = $req->datas->{_proxiedRelayState};
-            $artifact   = $req->datas->{_proxiedArtifact};
-        }
-        else {
-            ( $request, $response, $method, $relaystate, $artifact ) =
-              $self->checkMessage( $req, $url, $request_method, $content_type );
-        }
+        my ( $request, $response, $method, $relaystate, $artifact ) =
+          $self->checkMessage( $req, $url, $request_method, $content_type );
 
         # Create Login object
         my $login = $self->createLogin( $self->lassoServer );
@@ -773,18 +763,23 @@ sub run {
             $protocolProfile = $login->protocolProfile();
 
             # Artifact
+            # Choose method
+            if ($artifact) {
+                if (   $method == $self->getHttpMethod("post")
+                    || $method == $self->getHttpMethod("artifact-post") )
+                {
+                    $artifact_method = $self->getHttpMethod("artifact-post")
+
+                }
+                else {
+                    $artifact_method = $self->getHttpMethod("artifact-get");
+                }
+            }
+
             no strict 'subs';
             if ( $protocolProfile ==
                 Lasso::Constants::LOGIN_PROTOCOL_PROFILE_BRWS_ART )
             {
-
-                # Choose method
-                $artifact_method = $self->getHttpMethod("artifact-get")
-                  if ( $method == $self->getHttpMethod("redirect")
-                    || $method == $self->getHttpMethod("artifact-get") );
-                $artifact_method = $self->getHttpMethod("artifact-post")
-                  if ( $method == $self->getHttpMethod("post")
-                    || $method == $self->getHttpMethod("artifact-post") );
 
                 # Build artifact message
                 unless ( $self->buildArtifactMsg( $login, $artifact_method ) ) {
@@ -898,31 +893,17 @@ sub run {
                       . $cdc_iframe );
             }
 
-            # HTTP-REDIRECT
-            if (
-                $protocolProfile eq
-                Lasso::Constants::LOGIN_PROTOCOL_PROFILE_REDIRECT
-                or (    $artifact_method
-                    and $artifact_method ==
-                    $self->getHttpMethod("artifact-get") )
-              )
-            {
-
-                # Redirect user to response URL
-                my $sso_url = $login->msg_url;
-                $self->lmLog( "Redirect user to $sso_url", 'debug' );
-
-                $req->{urldc} = $sso_url;
-                $req->mustRedirect(1);
-                $req->steps( [] );
-
-                return PE_OK;
-            }
-
             # HTTP-POST
-            if ( $protocolProfile eq
-                Lasso::Constants::LOGIN_PROTOCOL_PROFILE_BRWS_POST
-                or $artifact_method == $self->getHttpMethod("artifact-post") )
+            if (
+                (
+                       !$artifact
+                    and $protocolProfile eq
+                    Lasso::Constants::LOGIN_PROTOCOL_PROFILE_BRWS_POST
+                )
+                or (    $artifact
+                    and $artifact_method ==
+                    $self->getHttpMethod("artifact-post") )
+              )
             {
 
                 # Use autosubmit form
@@ -946,6 +927,22 @@ sub run {
                   if ($relaystate);
 
                 $req->steps( ['autoPost'] );
+                return PE_OK;
+            }
+
+            # HTTP-REDIRECT
+            if ( $protocolProfile eq
+                Lasso::Constants::LOGIN_PROTOCOL_PROFILE_REDIRECT or $artifact )
+            {
+
+                # Redirect user to response URL
+                my $sso_url = $login->msg_url;
+                $self->lmLog( "Redirect user to $sso_url", 'debug' );
+
+                $req->{urldc} = $sso_url;
+                $req->mustRedirect(1);
+                $req->steps( [] );
+
                 return PE_OK;
             }
 

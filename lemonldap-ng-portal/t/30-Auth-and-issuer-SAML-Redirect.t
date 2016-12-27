@@ -533,8 +533,8 @@ sub sp {
                 samlIDPMetaDataOptions => {
                     idp => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
-                        samlIDPMetaDataOptionsSSOBinding     => 'Redirect',
-                        samlIDPMetaDataOptionsSLOBinding     => 'Redirect',
+                        samlIDPMetaDataOptionsSSOBinding     => 'redirect',
+                        samlIDPMetaDataOptionsSLOBinding     => 'redirect',
                         samlIDPMetaDataOptionsSignSSOMessage => 1,
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,

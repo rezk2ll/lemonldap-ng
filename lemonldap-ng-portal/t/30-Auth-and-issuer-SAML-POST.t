@@ -591,8 +591,8 @@ sub sp {
                 samlIDPMetaDataOptions => {
                     idp => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
-                        samlIDPMetaDataOptionsSSOBinding     => 'POST',
-                        samlIDPMetaDataOptionsSLOBinding     => 'POST',
+                        samlIDPMetaDataOptionsSSOBinding     => 'post',
+                        samlIDPMetaDataOptionsSLOBinding     => 'post',
                         samlIDPMetaDataOptionsSignSSOMessage => 1,
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,

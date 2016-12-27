@@ -136,6 +136,12 @@ SKIP: {
         ),
         'Query SP for logout'
     );
+    expectOK($res);
+    #($url,$query)=expectRedirection($res,qr#http://auth.idp.com(/saml/singleLogout)\?(SAMLart=.*)#);
+
+    ## Push logout artifact to IdP
+    #switch('issuer');
+    #ok($res=$issuer->_get($url,query=>$query,accept=>'text/html',cookie=>"lemonldap=$idpId"),'Follow redirection');
 
     # Test if logout is done
     switch ('issuer');
@@ -359,12 +365,7 @@ entityID="http://auth.sp.com/saml/metadata">
     <ArtifactResolutionService isDefault="true" index="0"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
      Location="http://auth.sp.com/saml/artifact" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-     Location="http://auth.sp.com/saml/singleLogoutSOAP" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-     Location="http://auth.sp.com/saml/singleLogout"
-    ResponseLocation="http://auth.sp.com/saml/singleLogoutReturn" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
      Location="http://auth.sp.com/saml/singleLogout"
     ResponseLocation="http://auth.sp.com/saml/singleLogoutReturn" />
     <NameIDFormat>
@@ -419,12 +420,7 @@ entityID="http://auth.sp.com/saml/metadata">
     <ArtifactResolutionService isDefault="true" index="0"
      Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
      Location="http://auth.sp.com/saml/artifact" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-     Location="http://auth.sp.com/saml/proxySingleLogoutSOAP" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-     Location="http://auth.sp.com/saml/proxySingleLogout"
-    ResponseLocation="http://auth.sp.com/saml/proxySingleLogoutReturn" />
-    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
      Location="http://auth.sp.com/saml/proxySingleLogout"
     ResponseLocation="http://auth.sp.com/saml/proxySingleLogoutReturn" />
     <NameIDFormat>
@@ -526,8 +522,8 @@ sub sp {
                 samlIDPMetaDataOptions => {
                     idp => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
-                        samlIDPMetaDataOptionsSSOBinding     => 'Artifact',
-                        samlIDPMetaDataOptionsSLOBinding     => 'Artifact',
+                        samlIDPMetaDataOptionsSSOBinding     => 'artifact-get',
+                        samlIDPMetaDataOptionsSLOBinding     => 'http-soap',
                         samlIDPMetaDataOptionsSignSSOMessage => 1,
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,

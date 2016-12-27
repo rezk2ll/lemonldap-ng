@@ -1310,7 +1310,9 @@ sub authLogout {
 
     # Send request depending on request method
     # HTTP-REDIRECT
-    if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
+    if (   $method == Lasso::Constants::HTTP_METHOD_REDIRECT
+        or $method == Lasso::Constants::HTTP_METHOD_ARTIFACT_GET )
+    {
 
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
@@ -1323,11 +1325,14 @@ sub authLogout {
     }
 
     # HTTP-POST
-    elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+    elsif ($method == Lasso::Constants::HTTP_METHOD_POST
+        or $method == Lasso::Constants::HTTP_METHOD_ARTIFACT_POST )
+    {
 
         # Use autosubmit form
         my $slo_url  = $logout->msg_url;
         my $slo_body = $logout->msg_body;
+        $self->lmLog( "Redirect user to $slo_url using autoPost", 'debug' );
 
         $req->postUrl($slo_url);
         $req->postFields( { 'SAMLRequest' => $slo_body } );
@@ -1379,6 +1384,10 @@ sub authLogout {
         }
 
         return PE_OK;
+    }
+    else {
+        $self->lmLog("Lasso method $method not implemented here",'error');
+        return PE_SAML_SLO_ERROR;
     }
 }
 

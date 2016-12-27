@@ -1671,7 +1671,7 @@ sub resolveArtifact {
         return unless $self->checkLassoError($@);
 
         unless ( $profile->msg_url ) {
-            $self->lmLog( "No artifcat resolution URL found", 'error' );
+            $self->lmLog( "No artifact resolution URL found", 'error' );
             return;
         }
 
