@@ -56,7 +56,6 @@ SKIP: {
     ok( $res = $sp->_get( $url, query => $query, accept => 'test/html' ),
         'Give artifact to SP' );
     expectRedirection( $res, 'http://auth.sp.com' );
-    my $spId = expectCookie($res);
 
     # Verify authentication on SP
     my $spId = expectCookie($res);
@@ -485,8 +484,8 @@ sub sp {
                 samlIDPMetaDataOptions => {
                     idp => {
                         samlIDPMetaDataOptionsEncryptionMode => 'none',
-                        samlIDPMetaDataOptionsSSOBinding     => 'Artifact',
-                        samlIDPMetaDataOptionsSLOBinding     => 'Artifact',
+                        samlIDPMetaDataOptionsSSOBinding     => 'artifact-get',
+                        samlIDPMetaDataOptionsSLOBinding     => 'http-soap',
                         samlIDPMetaDataOptionsSignSSOMessage => 1,
                         samlIDPMetaDataOptionsSignSLOMessage => 1,
                         samlIDPMetaDataOptionsCheckSSOMessageSignature => 1,

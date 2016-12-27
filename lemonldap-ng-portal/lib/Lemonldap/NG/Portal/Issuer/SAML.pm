@@ -764,7 +764,11 @@ sub run {
 
             # Artifact
             # Choose method
-            if ($artifact) {
+            if (   $artifact
+                or $protocolProfile ==
+                Lasso::Constants::LOGIN_PROTOCOL_PROFILE_BRWS_ART )
+            {
+                $artifact = 1;
                 if (   $method == $self->getHttpMethod("post")
                     || $method == $self->getHttpMethod("artifact-post") )
                 {
