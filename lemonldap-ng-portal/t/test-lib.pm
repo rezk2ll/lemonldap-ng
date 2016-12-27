@@ -4,6 +4,7 @@ package main;
 use strict;
 use Data::Dumper;
 use LWP::UserAgent;
+use URI::Escape;
 use 5.10.0;
 
 no warnings 'redefine';
@@ -58,6 +59,55 @@ sub expectRedirection {
     else {
         ok( getRedirection($res) eq $location, "Location is $location" )
           or explain( $res->[1], "Location => $location" );
+    }
+}
+
+sub expectAutoPost {
+    my ( $res, $hostRe, $uriRe, @requiredFields ) = @_;
+    expectOK($res);
+    count(2);
+    if (
+        ok(
+            $res->[2]->[0] =~
+              m@<form.+?action="(?:http://([^/]+)(/.*?)?|#)".+method="post"@s,
+            'Form method is POST'
+        )
+      )
+    {
+        my ( $host, $uri ) = ( $1, $2 );
+        if ($hostRe) {
+            if ( ref $hostRe ) {
+                ok( $host =~ $hostRe, 'Host match' )
+                  or explain( $host, $hostRe );
+            }
+            else {
+                ok( $host eq $hostRe, 'Host match' )
+                  or explain( $host, $hostRe );
+            }
+            count(1);
+        }
+        if ($uriRe) {
+            if ( ref $uriRe ) {
+                ok( $uri =~ $uriRe, 'URI match' ) or explain( $uri, $uriRe );
+            }
+            else {
+                ok( $uri eq $uriRe, 'URI match' ) or explain( $uri, $uriRe );
+            }
+            count(1);
+        }
+        my %fields = ( $res->[2]->[0] =~
+              m#<input type="hidden".+?name="(.+?)".+?value="(.+?)"#s );
+        my $query = join( '&',
+            map { "$_=" . uri_escape( uri_unescape( $fields{$_} ) ) }
+              keys(%fields) );
+        foreach my $f (@requiredFields) {
+            ok( defined $fields{$f}, qq{Field "$f" is defined} );
+            count(1);
+        }
+        return ( $host, $uri, $query );
+    }
+    else {
+        return ();
     }
 }
 

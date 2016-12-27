@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 20;
+my $maintests = 9;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -49,19 +49,9 @@ SKIP: {
         ),
         'Query IdP to access to SP'
     );
-    expectOK($res);
-    ok(
-        $res->[2]->[0] =~
-          m#<form.+?action="http://auth.sp.com(.*?)".+?method="post"#,
-        'Form method is POST'
-    );
-    my $url = $1;
-    ok(
-        $res->[2]->[0] =~
-          /<input type="hidden".+?name="SAMLResponse".+?value="(.+?)"/s,
-        'Found SAML response'
-    );
-    my $s = "SAMLResponse=$1";
+    my ( $host, $url, $s ) =
+      expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',
+        'SAMLResponse' );
 
     # Post SAML response to SP
     switch ('sp');
@@ -111,19 +101,9 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         ),
         'Get iframe'
     );
-    expectOK($res);
-    ok(
-        $res->[2]->[0] =~
-m#<form.+?action="http://auth.sp.com(/saml/proxySingleLogout)".+?method="post"#,
-        'Form method is POST'
-    );
-    $url = $1;
-    ok(
-        $res->[2]->[0] =~
-          /<input type="hidden".+?name="SAMLRequest".+?value="(.+?)"/s,
-        'Found SAML response'
-    );
-    $s = "SAMLRequest=$1";
+    ( $host, $url, $s ) =
+      expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleLogout',
+        'SAMLRequest' );
 
     # Post SAML logout request to SP
     switch ('sp');
@@ -136,19 +116,9 @@ m#<form.+?action="http://auth.sp.com(/saml/proxySingleLogout)".+?method="post"#,
         ),
         'Post SAML logout request to SP'
     );
-    expectOK($res);
-    ok(
-        $res->[2]->[0] =~
-m#<form.+?action="http://auth.idp.com(/saml/singleLogoutReturn)".+?method="post"#,
-        'Form method is POST'
-    );
-    $url = $1;
-    ok(
-        $res->[2]->[0] =~
-          /<input type="hidden".+?name="SAMLResponse".+?value="(.+?)"/s,
-        'Found SAML response'
-    );
-    $s = "SAMLResponse=$1";
+    ( $host, $url, $s ) =
+      expectAutoPost( $res, 'auth.idp.com', '/saml/singleLogoutReturn',
+        'SAMLResponse' );
 
     # Post SAML logout response to IdP
     switch ('issuer');
@@ -182,16 +152,9 @@ m#<form.+?action="http://auth.idp.com(/saml/singleLogoutReturn)".+?method="post"
         ),
         'Test if user is reject on SP'
     );
-    expectOK($res);
-    ok(
-        $res->[2]->[0] =~
-          /<input type="hidden".+?name="SAMLRequest".+?value="(.+?)"/s,
-        'Found SAML request'
-      )
-      or explain(
-        $res->[2],
-        ' <input type="hidden" name="SAMLRequest" id="SAMLRequest" value="...'
-      );
+    ( $host, $url, $s ) =
+      expectAutoPost( $res, 'auth.idp.com', '/saml/singleSignOn',
+        'SAMLRequest' );
 
     #print STDERR Dumper($res);
 }
