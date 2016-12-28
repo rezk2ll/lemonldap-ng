@@ -356,8 +356,8 @@ t/26-AuthRemote.t
 t/27-AuthProxy.t
 t/28-AuthChoice.t
 t/29-AuthSSL.t
-t/30-Auth-and-issuer-SAML-Artifact-soap-slo-IdP-initiated.t
-t/30-Auth-and-issuer-SAML-Artifact-soap-slo.t
+t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
+t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
 t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-POST.t
 t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
