@@ -125,6 +125,15 @@ sub init {
     # Conf initialization
 
     return 0 unless ( $self->lassoServer( $self->loadService ) );
+    $self->addUnauthRoute(
+        ( $self->{path} || 'saml' ) => { 'metadata' => 'metadata' },
+        ['GET']
+    );
+    $self->addAuthRoute(
+        ( $self->{path} || 'saml' ) => { 'metadata' => 'metadata' },
+        ['GET']
+    );
+    return 1;
 }
 
 sub loadService {
@@ -154,7 +163,6 @@ sub loadService {
     # Create Lasso server with service metadata
     my $server = $self->createServer(
         $service_metadata->serviceToXML(
-            $self->conf->{templateDir} . "/common/saml2-metadata.tpl",
             $self->conf
         ),
         $self->conf->{samlServicePrivateKeySig},
@@ -3030,6 +3038,23 @@ sub importRealSession {
     $req->sessionInfo( $ssoSession->data );
     $req->id( $ssoSession->id );
     $req->user( $ssoSession->data->{ $self->conf->{whatToTrace} } );
+}
+
+sub metadata {
+    my ( $self, $req ) = @_;
+    require Lemonldap::NG::Common::Conf::SAML::Metadata;
+    if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
+        my $s = $metadata->serviceToXML($self->conf);
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/xml',
+                'Content-Length' => length($s),
+            ],
+            [$s]
+        ];
+    }
+    return $self->p->sendError( $req, 'Unable to build Metadata', 500 );
 }
 
 1;

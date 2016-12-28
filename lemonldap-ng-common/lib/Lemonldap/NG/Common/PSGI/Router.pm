@@ -118,7 +118,8 @@ sub handler {
     if ( !@path and $self->defaultRoute ) {
         @path = ( $self->defaultRoute );
     }
-    return $self->followPath( $req, $self->routes->{ $req->method }, \@path );
+    my $res = $self->followPath( $req, $self->routes->{ $req->method }, \@path );
+    return $res ? $res : $self->sendError($req,'Bad request',400);
 }
 
 sub followPath {
@@ -128,9 +129,11 @@ sub followPath {
         if ( ref( $routes->{$w} ) eq 'CODE' ) {
             return $routes->{$w}->( $self, $req, @$path );
         }
-        return $self->followPath( $req, $routes->{$w}, $path );
+        my $res = $self->followPath( $req, $routes->{$w}, $path );
+        return $res if($res);
+        unshift @$path, $w;
     }
-    elsif ( $routes->{':'} ) {
+    if ( $routes->{':'} ) {
         my $v = shift @$path;
         $req->params->{ $routes->{'#'} } = $v;
         if ( ref( $routes->{':'} ) eq 'CODE' ) {
@@ -142,8 +145,7 @@ sub followPath {
         return $self->$sub( $req, @$path );
     }
     else {
-        $self->lmLog( 'Bad request received (' . $req->path . ')', 'error' );
-        return $self->sendError( $req, 'Bad request', 400 );
+        return undef;
     }
 }
 

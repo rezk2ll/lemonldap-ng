@@ -20,7 +20,6 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_UNKNOWN_ENTITY
   PE_SENDRESPONSE
 );
-use Lemonldap::NG::Common::Conf::SAML::Metadata;
 
 our $VERSION = '2.0.0';
 

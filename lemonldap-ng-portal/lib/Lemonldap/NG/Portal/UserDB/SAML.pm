@@ -10,8 +10,6 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_LOAD_SERVICE_ERROR
 );
 
-use Lemonldap::NG::Common::Conf::SAML::Metadata;
-
 our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Common::Module', 'Lemonldap::NG::Portal::Lib::SAML';

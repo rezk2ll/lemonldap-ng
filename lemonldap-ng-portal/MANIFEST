@@ -282,7 +282,6 @@ site/templates/common/mail_register_done.tpl
 site/templates/common/notification.xsl
 site/templates/common/oidc_checksession.tpl
 site/templates/common/redirect.tpl
-site/templates/common/saml2-metadata.tpl
 site/templates/common/script.tpl
 site/templates/dark/confirm.tpl
 site/templates/dark/customfooter.tpl
@@ -358,6 +357,7 @@ t/28-AuthChoice.t
 t/29-AuthSSL.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-Artifact-with-SOAP-SLO.t
+t/30-Auth-and-issuer-SAML-Metadata.t
 t/30-Auth-and-issuer-SAML-POST-IdP-initiated.t
 t/30-Auth-and-issuer-SAML-POST.t
 t/30-Auth-and-issuer-SAML-Redirect-IdP-initiated.t
