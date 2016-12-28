@@ -1008,69 +1008,72 @@ sub processAuthnResponseMsg {
     return $self->checkLassoError($@);
 }
 
-## @method Lasso::Saml2NameID getNameIdentifer(Lasso::Profile profile)
-# Get NameID from Lasso Profile
-# @param profile Lasso::Profile object
-# @return result or NULL if error
-sub getNameIdentifier {
-    my ( $self, $profile ) = @_;
-    my $nameid;
+# UNUSED
+### @method Lasso::Saml2NameID getNameIdentifer(Lasso::Profile profile)
+## Get NameID from Lasso Profile
+## @param profile Lasso::Profile object
+## @return result or NULL if error
+#sub getNameIdentifier {
+#    my ( $self, $profile ) = @_;
+#    my $nameid;
+#
+#    eval { $nameid = Lasso::Profile::get_nameIdentifier($profile); };
+#
+#    if ($@) {
+#        $self->checkLassoError($@);
+#        return;
+#    }
+#
+#    return $nameid;
+#}
 
-    eval { $nameid = Lasso::Profile::get_nameIdentifier($profile); };
+# UNUSED
+### @method Lasso::Identity createIdentity(string dump)
+## Create Lasso::Identity object
+## @param dump optional Identity dump
+## @return Lasso::Identity object
+#sub createIdentity {
+#    my ( $self, $dump ) = @_;
+#    my $identity;
+#
+#    if ($dump) {
+#        eval { $identity = Lasso::Identity::new_from_dump($dump); };
+#    }
+#    else {
+#        eval { $identity = Lasso::Identity->new(); };
+#    }
+#
+#    if ($@) {
+#        $self->checkLassoError($@);
+#        return;
+#    }
+#
+#    return $identity;
+#}
 
-    if ($@) {
-        $self->checkLassoError($@);
-        return;
-    }
-
-    return $nameid;
-}
-
-## @method Lasso::Identity createIdentity(string dump)
-# Create Lasso::Identity object
-# @param dump optional Identity dump
-# @return Lasso::Identity object
-sub createIdentity {
-    my ( $self, $dump ) = @_;
-    my $identity;
-
-    if ($dump) {
-        eval { $identity = Lasso::Identity::new_from_dump($dump); };
-    }
-    else {
-        eval { $identity = Lasso::Identity->new(); };
-    }
-
-    if ($@) {
-        $self->checkLassoError($@);
-        return;
-    }
-
-    return $identity;
-}
-
-## @method Lasso::Session createSession(string dump)
-# Create Lasso::Session object
-# @param dump optional Session dump
-# @return Lasso::Session object
-sub createSession {
-    my ( $self, $dump ) = @_;
-    my $session;
-
-    if ($dump) {
-        eval { $session = Lasso::Session::new_from_dump($dump); };
-    }
-    else {
-        eval { $session = Lasso::Session->new(); };
-    }
-
-    if ($@) {
-        $self->checkLassoError($@);
-        return;
-    }
-
-    return $session;
-}
+## UNUSED
+### @method Lasso::Session createSession(string dump)
+## Create Lasso::Session object
+## @param dump optional Session dump
+## @return Lasso::Session object
+#sub createSession {
+#    my ( $self, $dump ) = @_;
+#    my $session;
+#
+#    if ($dump) {
+#        eval { $session = Lasso::Session::new_from_dump($dump); };
+#    }
+#    else {
+#        eval { $session = Lasso::Session->new(); };
+#    }
+#
+#    if ($@) {
+#        $self->checkLassoError($@);
+#        return;
+#    }
+#
+#    return $session;
+#}
 
 ## @method boolean acceptSSO(Lasso::Login login)
 # Accept SSO from IDP
