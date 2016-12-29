@@ -4,35 +4,54 @@ use Plack::Runner;
 use strict;
 use warnings;
 use POSIX;
-use Getopt::Std;
+use Getopt::Long;
+use Lemonldap::NG::Handler::SharedConf;
 
-our %opts;
+our $VERSION = '2.0.0';
+
+our (
+    $foreground, $engine,              $nproc,
+    $pidFile,    $socket,              $user,
+    $group,      $customFunctionsFile, %plackOptions
+);
 my %_apps;
-
-getopts( 'Fn:p:s:u:g:f:e:', \%opts );
 
 $SIG{'PIPE'} = 'IGNORE';
 
-$opts{e} ||= $ENV{ENGINE} || 'FCGI';
-$opts{n} ||= $ENV{NPROC}  || 7;
-$opts{p} ||= $ENV{PID}    || '__FASTCGISOCKDIR__/llng-fastcgi.pid';
-$opts{s} ||= $ENV{SOCKET} || '__FASTCGISOCKDIR__/llng-fastcgi.sock';
-$opts{u} ||= $ENV{USER};
-$opts{g} ||= $ENV{GROUP};
-$opts{f} ||= $ENV{CUSTOM_FUNCTIONS_FILE};
+$foreground = 0;
+$engine  ||= $ENV{ENGINE} || 'FCGI';
+$nproc   ||= $ENV{NPROC}  || 7;
+$pidFile ||= $ENV{PID}    || '__FASTCGISOCKDIR__/llng-fastcgi.pid';
+$socket  ||= $ENV{SOCKET} || '__FASTCGISOCKDIR__/llng-fastcgi.sock';
+$user    ||= $ENV{USER};
+$group   ||= $ENV{GROUP};
+$customFunctionsFile ||= $ENV{CUSTOM_FUNCTIONS_FILE};
 
-if ( $opts{g} ) {
-    my $grp = getgrnam( $opts{g} ) or warn "Can't change uid to $opts{g}";
+#Getopt::Long::Configure ("bundling_values");
+GetOptions(
+    'foreground'              => \$foreground,
+    'engine|e=s'              => \$engine,
+    'proc|n=s'                => \$nproc,
+    'pid|p=s'                 => \$pidFile,
+    'socket|s=s'              => \$socket,
+    'user|u=s'                => \$user,
+    'group|g=s'               => \$group,
+    'customFunctionsFile|f=s' => \$customFunctionsFile,
+    'plackOptions=s'          => \%plackOptions,
+);
+
+if ($group) {
+    my $grp = getgrnam($group) or warn "Can't change uid to $group";
     POSIX::setgid($grp);
 }
 
-if ( $opts{u} ) {
-    my $uid = getpwnam( $opts{u} ) or warn "Can't change uid to $opts{u}";
+if ($user) {
+    my $uid = getpwnam($user) or warn "Can't change uid to $user";
     POSIX::setuid($uid);
 }
 
-if ( $opts{f} ) {
-    eval { require $opts{f} };
+if ($customFunctionsFile) {
+    eval { require $customFunctionsFile };
     die $@ if ($@);
 }
 
@@ -40,6 +59,10 @@ my %builder = (
     handler => sub {
         require Lemonldap::NG::Handler::Nginx;
         return Lemonldap::NG::Handler::Nginx->run( {} );
+    },
+    authbasic => sub {
+        require Lemonldap::NG::Handler::Nginx::AuthBasic;
+        return Lemonldap::NG::Handler::Nginx::AuthBasic->run( {} );
     },
     reload => sub {
         require Lemonldap::NG::Handler::Nginx;
@@ -81,19 +104,43 @@ my $app = sub {
 };
 
 # Hook for customFunctions initialization
-use Lemonldap::NG::Handler::PSGI::API;
-Lemonldap::NG::Handler::PSGI::API->init();
+use Lemonldap::NG::Handler::API::PSGI::Server;
+$Lemonldap::NG::Handler::API::mode = 'PSGI::Server';
+Lemonldap::NG::Handler::SharedConf->init();
+
+# Load configuration and look if custom handlers have been defined
+{
+    $Lemonldap::NG::Handler::API::mode = 'PSGI::Server';
+    my $conf = Lemonldap::NG::Handler::SharedConf->checkConf()
+      or die "Unable to get configuration";
+    foreach my $lltype ( keys %{ $conf->{nginxCustomHandlers} // {} } ) {
+        my $v = $conf->{nginxCustomHandlers}->{$lltype};
+        eval "use $v";
+        if ( my $err = $@ ) {
+            eval { require $v; };
+            if ($@) {
+                print STDERR "Unable to load $v, skipping:\n$err\n$@\n";
+                next;
+            }
+        }
+        $builder{$lltype} = sub {
+            require $v;
+            return $v->run( {} );
+        };
+    }
+}
 
 my $server = Plack::Runner->new();
 $server->parse_options(
-    '-s'           => $opts{e},
+    '-s'           => $engine,
     '-E'           => 'deployment',
-    '--pid'        => $opts{p},
-    '--nproc'      => $opts{n},
-    '--socket'     => $opts{s},
+    '--pid'        => $pidFile,
+    '--nproc'      => $nproc,
+    '--socket'     => $socket,
     '--proc-title' => 'llng-fastcgi-server',
-    ( $opts{F} ? () : '--daemonize' ),
+    ( $foreground ? () : '--daemonize' ),
     '--no-default-middleware',
+    %plackOptions,
 );
 
 $server->run($app);
@@ -124,19 +171,23 @@ Each parameter can be set by an option or a environment variable.
 
 =over
 
-=item -p ($ENV{PID}):                   pid file
+=item --pid -p ($ENV{PID}):       pid file
 
-=item -u ($ENV{USER}):                  user
+=item --user -u ($ENV{USER}):     user
 
-=item -g ($ENV{GROUP}):                 group
+=item --group -g ($ENV{GROUP}):   group
 
-=item -n ($ENV{NPROC}):                 Number of processus for FCGI
+=item --proc -n ($ENV{NPROC}):    Number of processus for FCGI
 
-=item -e ($ENV{ENGINE}):                Plack::Handler engine, default to FCGI
+=item --engine -e ($ENV{ENGINE}): Plack::Handler engine, default to FCGI
 
-=item -s ($ENV{SOCKET}):                Unix socket
+=item --socket -s ($ENV{SOCKET}): Unix socket
 
-=item -f ($ENV{CUSTOM_FUNCTIONS_FILE}): file to load for custom functions
+=item --customFunctionsFile -f ($ENV{CUSTOM_FUNCTIONS_FILE}): file to load for
+custom functions
+
+=item --plackOptions: other options to pass to Plack. This multi-valued
+parameter must have "key=value" values.
 
 =back
 
