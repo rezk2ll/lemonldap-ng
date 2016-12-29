@@ -358,6 +358,7 @@ sub issuerForUnAuthUser {
 
         my $userinfo_response =
           $self->buildUserInfoResponse( $scope, $rp, $user_session_id );
+        # TODO XG: return error if undef
 
         my $userinfo_sign_alg = $self->{oidcRPMetaDataOptions}->{$rp}
           ->{oidcRPMetaDataOptionsUserInfoSignAlg};

@@ -118,6 +118,7 @@ sub sendError {
           $code >= 500 ? 'Server error'
         : $code == 403 ? 'Forbidden'
         : $code == 401 ? 'Authentication required'
+        : $code == 400 ? 'Bad request'
         :                'Error'
     );
 
