@@ -20,6 +20,7 @@ sub BUILD {
 has HTTP_ACCEPT          => ( is => 'ro', reader => 'accept' );
 has HTTP_ACCEPT_ENCODING => ( is => 'ro', reader => 'encodings' );
 has HTTP_ACCEPT_LANGUAGE => ( is => 'ro', reader => 'languages' );
+has HTTP_AUTHORIZATION   => ( is => 'ro', reader => 'authorization' );
 has HTTP_COOKIE          => ( is => 'ro', reader => 'cookies' );
 has HTTP_HOST            => ( is => 'ro', reader => 'hostname' );
 has REFERER              => ( is => 'ro', reader => 'referer' );

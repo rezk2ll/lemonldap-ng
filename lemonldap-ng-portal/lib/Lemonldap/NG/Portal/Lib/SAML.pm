@@ -136,6 +136,8 @@ sub init {
     return 1;
 }
 
+# METHODS
+
 sub loadService {
     my ($self) = @_;
 
