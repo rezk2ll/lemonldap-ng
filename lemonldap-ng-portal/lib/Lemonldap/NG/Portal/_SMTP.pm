@@ -52,7 +52,7 @@ sub send_mail {
       if $self->{mailReplyTo};
 
     # Encode the subject
-    $subject = encode_base64($subject);
+    $subject = encode_base64( $subject, '' );
     $subject =~ s/\s//g;
     $subject = "=?$charset?B?" . $subject . "?=";
 

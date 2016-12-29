@@ -10,6 +10,8 @@ use warnings;
 
 use Exporter 'import';
 
+our $VERSION = '1.9.7';
+
 use warnings;
 use MIME::Base64;
 use Lemonldap::NG::Common::CGI;
@@ -70,8 +72,6 @@ use Digest::MD5;
 #inherits Lemonldap::NG::Portal::PasswordDBLDAP
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
-
-our $VERSION = '2.0.0';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;
@@ -556,7 +556,7 @@ sub setHiddenFormValue {
     # Store value
     if ($val) {
         $key = $prefix . $key;
-        $val = encode_base64($val) if $base64;
+        $val = encode_base64( $val, '' ) if $base64;
         $self->{portalHiddenFormValues}->{$key} = $val;
         $self->lmLog( "Store $val in hidden key $key", 'debug' );
     }
@@ -741,7 +741,8 @@ sub checkXSSAttack {
     return 0 unless $value;
 
     # Test value
-    if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ ) {
+    $value =~ s/\%25/\%/g;
+    if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|3C|22|27|2C))/ ) {
         $self->lmLog( "XSS attack detected (param: $name | value: $value)",
             "warn" );
         return $self->{checkXSS};
@@ -897,15 +898,25 @@ sub redirect {
     }
 }
 
-## @method protected hashref getApacheSession(string id, boolean noInfo, boolean $force)
+## @method protected hashref getApacheSession(string id, boolean noInfo, boolean $force, string $kind)
 # Try to recover the session corresponding to id and return session datas.
 # If $id is set to undef or if $force is true, return a new session.
 # @param id session reference
 # @param noInfo do not set Apache REMOTE_USER
 # @param force Force session creation if it does not exist
+# @param kind Session kind
 # return Lemonldap::NG::Common::Session object
 sub getApacheSession {
-    my ( $self, $id, $noInfo, $force ) = @_;
+    my ( $self, $id, $noInfo, $force, $kind ) = @_;
+
+    $kind ||= "SSO";
+
+    if ($id) {
+        $self->lmLog( "Try to get $kind session $id", 'debug' );
+    }
+    else {
+        $self->lmLog( "Try to get a new $kind session", 'debug' );
+    }
 
     my $apacheSession = Lemonldap::NG::Common::Session->new(
         {
@@ -915,17 +926,34 @@ sub getApacheSession {
             cacheModuleOptions   => $self->{localSessionStorageOptions},
             id                   => $id,
             force                => $force,
-            kind                 => "SSO",
+            kind                 => $kind,
         }
     );
 
     if ( $apacheSession->error ) {
-        $self->lmLog( $apacheSession->error, 'debug' );
+        $self->lmLog( $apacheSession->error, 'error' );
         return;
     }
 
     if ( $id and !$force and !$apacheSession->data ) {
-        $self->lmLog( "Session $id not found", 'debug' );
+        $self->lmLog( "Session $kind $id not found", 'debug' );
+        return;
+    }
+
+    my $now = time;
+    if (
+            $id
+        and defined $apacheSession->data->{_utime}
+        and (
+            $now - $apacheSession->data->{_utime} > $self->{timeout}
+            or (    $self->{timeoutActivity}
+                and $apacheSession->data->{_lastSeen}
+                and $now - $apacheSession->data->{_lastSeen} >
+                $self->{timeoutActivity} )
+        )
+      )
+    {
+        $self->lmLog( "Session $kind $id expired", 'debug' );
         return;
     }
 
@@ -934,6 +962,9 @@ sub getApacheSession {
           if ($id);
         $self->{id} = $apacheSession->id;
     }
+
+    $self->lmLog( "Return $kind session " . $apacheSession->id, 'debug' );
+
     return $apacheSession;
 }
 
@@ -1142,8 +1173,7 @@ sub _subProcess {
 # status module with the result (portal error).
 sub updateStatus {
     my $self = shift;
-    my $p    = $Lemonldap::NG::Handler::Main::SharedVariables::_tshv->{tsv}
-      ->{statusPipe};
+    my $p    = $Lemonldap::NG::Handler::Main::tsv->{statusPipe};
     print $p ( $self->{user} ? $self->{user} : $self->ipAddr )
       . " => $ENV{SERVER_NAME}$ENV{SCRIPT_NAME} "
       . $self->{error} . "\n"
@@ -1300,7 +1330,9 @@ sub _deleteSession {
     if ( $self->{securedCookie} >= 2 ) {
 
         # Try to find a linked http session (securedCookie == 2)
-        if ( my $id2 = $session->data->{_httpSession} ) {
+        if ( $self->{securedCookie} == 2
+            and my $id2 = $session->data->{_httpSession} )
+        {
             if ( my $session2 = $self->getApacheSession( $id2, 1 ) ) {
                 $session2->remove;
                 if ( $session2->error ) {
@@ -1498,6 +1530,7 @@ sub getSkin {
 #    - setAuthSessionInfo
 #    - authenticate
 #    - authFinish
+#    - authPostStore
 #  - userDB module:
 #    - userDBInit
 #    - getUser
@@ -1524,8 +1557,8 @@ sub process {
           modifyPassword setSessionInfo setMacros setGroups
           setPersistentSessionInfo setLocalGroups sendPasswordMail
           authenticate authFinish userDBFinish passwordDBFinish
-          grantSession removeOther store buildCookie checkNotification
-          issuerForAuthUser autoRedirect)
+          grantSession removeOther store authPostStore buildCookie
+          checkNotification issuerForAuthUser autoRedirect)
     );
     $self->updateStatus;
     if (    !$self->{noAjaxHook}
@@ -1941,7 +1974,7 @@ sub existingSession {
                 qw(issuerDBInit authInit issuerForUnAuthUser extractFormInfo
                   userDBInit getUser setAuthSessionInfo setSessionInfo
                   setMacros setGroups setPersistentSessionInfo
-                  setLocalGroups authenticate authFinish userDBFinish store)
+                  setLocalGroups authenticate authFinish userDBFinish store authPostStore)
             );
             return $self->{error} || PE_DONE;
         }
@@ -2504,6 +2537,24 @@ sub authFinish {
     return $self->{error};
 }
 
+## @apmethod int authPostStore
+# Call authPostStore method from authentication module
+# @return Lemonldap::NG::Portal constant
+sub authPostStore {
+    my $self = shift;
+
+    eval { $self->{error} = $self->SUPER::authPostStore; };
+    if ($@) {
+        $self->lmLog(
+"Optional authPostStore method not defined in current authentication module: $@",
+            'debug'
+        );
+        return PE_OK;
+    }
+
+    return $self->{error};
+}
+
 ## @apmethod int userDBFinish
 # Call userDBFinish method from userDB module
 # @return Lemonldap::NG::Portal constant
@@ -2677,13 +2728,36 @@ sub autoRedirect {
         {
             my $ssl = $self->{urldc} =~ /^https/;
             $self->lmLog( 'CDA request', 'debug' );
-            $self->{urldc} .= ( $self->{urldc} =~ /\?/ ? '&' : '?' )
-              . (
-                ( $self->{securedCookie} < 2 or $ssl )
-                ? $self->{cookieName} . "=" . $self->{id}
-                : $self->{cookieName} . "http="
-                  . $self->{sessionInfo}->{_httpSession}
-              );
+
+            # Create CDA session
+            if ( my $cdaSession =
+                $self->getApacheSession( undef, 1, undef, "CDA" ) )
+            {
+                my $cdaInfos = { '_utime' => time };
+                if ( $self->{securedCookie} < 2 or $ssl ) {
+                    $cdaInfos->{cookie_value} = $self->{id};
+                    $cdaInfos->{cookie_name}  = $self->{cookieName};
+                }
+                else {
+                    $cdaInfos->{cookie_value} =
+                      $self->{sessionInfo}->{_httpSession};
+                    $cdaInfos->{cookie_name} = $self->{cookieName} . "http";
+                }
+
+                $self->updateSession( $cdaInfos, $cdaSession->id );
+
+                $self->{urldc} .=
+                    ( $self->{urldc} =~ /\?/ ? '&' : '?' )
+                  . $self->{cookieName} . "cda="
+                  . $cdaSession->id;
+
+                $self->lmLog( "CDA redirection to " . $self->{urldc}, 'debug' );
+
+            }
+            else {
+                $self->lmLog( "Unable to create CDA session", 'error' );
+                return PE_APACHESESSIONERROR;
+            }
         }
 
         $self->updateStatus;
@@ -2761,7 +2835,7 @@ sub getCustomTemplateParameters {
         $self->lmLog( "Set custom template parameter $tplParam with $tplValue",
             'debug' );
 
-        $customTplParams->{$tplParam} = $self->safe->reval($tplValue);
+        $customTplParams->{$tplParam} = $tplValue;
     }
 
     return $customTplParams;

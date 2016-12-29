@@ -427,7 +427,7 @@ sub getAuthorizationCodeAccessToken {
         $response = $self->ua->post(
             $access_token_uri, \%form,
             "Authorization" => "Basic "
-              . encode_base64("$client_id:$client_secret"),
+              . encode_base64( "$client_id:$client_secret", '' ),
             "Content-Type" => 'application/x-www-form-urlencoded',
         );
     }

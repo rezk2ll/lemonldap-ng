@@ -169,7 +169,7 @@ sub types {
         },
         keyText => {
             keyTest => qr/^[a-zA-Z0-9_]+$/,
-            test    => sub { 1 },
+            test    => qr/^.*$/,
             msgFail => '__badValue__',
         },
         menuApp => {
@@ -286,6 +286,12 @@ sub attributes {
             default       => 0,
             type          => 'bool',
             documentation => 'Maintenance mode for all virtual hosts',
+        },
+        nginxCustomHandlers => {
+            type    => 'keyTextContainer',
+            keyTest => qr/^\w+$/,
+            test    => qr/^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/,
+            msgFail => '__badPerlPackageName__',
         },
         noAjaxHook => {
             default       => 0,
@@ -515,6 +521,10 @@ sub attributes {
             type          => 'lmAttrOrMacro',
             default       => 'uid',
             documentation => 'Session parameter used to fill REMOTE_USER',
+        },
+        lwpSslOpts => {
+            type          => 'keyTextContainer',
+            documentation => 'Options given to LWP::UserAgent',
         },
 
         # History
@@ -1922,25 +1932,25 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         SSLVar => { type => 'text', },
 
         # CAS
-        CASAuthnLevel => {
+        CAS_authnLevel => {
             type          => 'int',
             default       => 1,
             documentation => 'CAS authentication level',
         },
-        CASurl => {
+        CAS_url => {
             type    => 'text',
             test    => $url,
             msgFail => '__badUrl__',
         },
-        CASCAFile  => { type => 'text', },
-        CASrenew   => { type => 'bool', },
-        CASgateway => { type => 'bool', },
-        CASpgtFile => {
+        CAS_CAFile  => { type => 'text', },
+        CAS_renew   => { type => 'bool', },
+        CAS_gateway => { type => 'bool', },
+        CAS_pgtFile => {
             type          => 'text',
             default       => '/tmp/pgt.txt',
             documentation => 'CAS PGT file',
         },
-        CASproxiedServices => {
+        CAS_proxiedServices => {
             type       => 'keyTextContainer',
             keyTest    => qr/^\w+$/,
             keyMsgFail => '__badCasProxyId__',
@@ -2065,11 +2075,14 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         dbiAuthChain       => { type => 'text', },
         dbiAuthUser        => { type => 'text', },
         dbiAuthPassword    => { type => 'password', },
+        dbiUserChain       => { type => 'text', },
+        dbiUserUser        => { type => 'text', },
+        dbiUserPassword    => { type => 'password', },
         dbiAuthTable       => { type => 'text', },
+        dbiUserTable       => { type => 'text', },
         dbiAuthLoginCol    => { type => 'text', },
         dbiAuthPasswordCol => { type => 'text', },
         dbiPasswordMailCol => { type => 'text', },
-        dbiUserTable       => { type => 'text', },
         userPivot          => { type => 'text', },
         dbiAuthPasswordHash =>
           { type => 'text', help => 'authdbi.html#password', },
@@ -2215,14 +2228,11 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 1,
             documentation => 'Browser ID authentication level',
         },
-        browserIdAutoLogin       => { type => 'bool', default => 0 },
-        browserIdVerificationURL => {
-            type    => 'text',
-            default => 'https://verifier.login.persona.org/verify',
-        },
-        browserIdSiteName => { type => 'text', default => 'LemonLDAP::NG', },
-        browserIdSiteLogo => { type => 'text', },
-        browserIdBackgroundColor => { type => 'text', default => '#000', },
+        browserIdAutoLogin       => { type => 'bool', },
+        browserIdVerificationURL => { type => 'text', },
+        browserIdSiteName        => { type => 'text', },
+        browserIdSiteLogo        => { type => 'text', },
+        browserIdBackgroundColor => { type => 'text', },
 
         # OpenID Connect auth params
         oidcAuthnLevel => {

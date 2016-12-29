@@ -21,8 +21,8 @@ has proxy => (
     is      => 'rw',
     builder => sub {
         return
-          ref( $_[0]->conf->{CASproxiedServices} ) eq 'HASH'
-          ? ( %{ $_[0]->conf->{CASproxiedServices} } ? 1 : 0 )
+          ref( $_[0]->conf->{CAS_proxiedServices} ) eq 'HASH'
+          ? ( %{ $_[0]->conf->{CAS_proxiedServices} } ? 1 : 0 )
           : 0;
     }
 );
@@ -40,8 +40,8 @@ sub init {
     }
     $self->cas(
         AuthCAS->new(
-            casUrl => $self->conf->{CASurl},
-            CAFile => $self->conf->{CASCAFile},
+            casUrl => $self->conf->{CAS_url},
+            CAFile => $self->conf->{CAS_CAFile},
         )
     );
     return 1;
@@ -91,7 +91,7 @@ sub extractFormInfo {
         $self->lmLog( "CAS Proxy URL: $proxy_url", 'debug' );
 
         $self->cas->proxyMode(
-            pgtFile        => $self->{CASpgtFile},
+            pgtFile        => $self->conf->{CAS_pgtFile},
             pgtCallbackUrl => $proxy_url
         );
     }
@@ -122,8 +122,8 @@ sub extractFormInfo {
 
     # Build login URL
     my $login_url = $self->cas->getServerLoginURL($local_url);
-    $login_url .= '&renew=true'   if $self->conf->{CASrenew};
-    $login_url .= '&gateway=true' if $self->conf->{CASgateway};
+    $login_url .= '&renew=true'   if $self->conf->{CAS_renew};
+    $login_url .= '&gateway=true' if $self->conf->{CAS_gateway};
 
     # Check Service Ticket
     my $ticket = $req->param('ticket');
@@ -160,8 +160,8 @@ sub extractFormInfo {
         }
 
         # Get a proxy ticket for each proxied service
-        foreach ( keys %{ $self->conf->{CASproxiedServices} } ) {
-            my $service = $self->conf->{CASproxiedServices}->{$_};
+        foreach ( keys %{ $self->conf->{CAS_proxiedServices} } ) {
+            my $service = $self->conf->{CAS_proxiedServices}->{$_};
             my $pt      = $self->cas->retrievePT($service);
 
             unless ($pt) {
@@ -190,7 +190,7 @@ sub authenticate {
 # Set authenticationLevel.
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{CASAuthnLevel};
+    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{CAS_authnLevel};
     PE_OK;
 }
 

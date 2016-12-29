@@ -7,14 +7,14 @@
 * Verify `useSafeJail=0`
 * Finish IssuerGet logout (-> info())
 * Import r5420 (ssl\_opts) to trunk
+* Verify DBI (UserUser)
 
 * Don't display "login" when connected
+* Import fastcgi-server changes (nginxCustomHandlers)
+* Add test for #173
+* lwpSslOpt
 
 # Password
 
 * Enable it during auth
 
-# Other
-
-* Import fastcgi-server changes (nginxCustomHandlers)
-* Add test for #173

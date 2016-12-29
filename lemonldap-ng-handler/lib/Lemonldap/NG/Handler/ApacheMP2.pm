@@ -570,7 +570,7 @@ Example:
           'Unit'      => '$ou',
       },
       www2.domain.com => {
-          'Authorization' => '"Basic ".encode_base64($employeeNumber.":dummy")',
+          'Authorization' => '"Basic ".encode_base64($employeeNumber.":dummy","")',
           'Remote-IP'     => '$ip',
       },
   }

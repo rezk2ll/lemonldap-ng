@@ -13,7 +13,7 @@
 
 package Lemonldap::NG::Manager::Build::Tree;
 
-our $VERSION = '2.0.0';
+our $VERSION = '1.9.6';
 
 # TODO: Missing:
 #  * activeTimer
@@ -137,10 +137,10 @@ sub tree {
                             title => 'casParams',
                             help  => 'authcas.html',
                             nodes => [
-                                'CASAuthnLevel', 'CASurl',
-                                'CASCAFile',     'CASrenew',
-                                'CASgateway',    'CASpgtFile',
-                                'CASproxiedServices'
+                                'CAS_authnLevel', 'CAS_url',
+                                'CAS_CAFile',     'CAS_renew',
+                                'CAS_gateway',    'CAS_pgtFile',
+                                'CAS_proxiedServices'
                             ]
                         },
                         {
@@ -152,10 +152,25 @@ sub tree {
                                 {
                                     title => 'dbiConnection',
                                     help  => 'authdbi.html#connection',
-                                    form  => 'simpleInputContainer',
                                     nodes => [
-                                        'dbiAuthChain', 'dbiAuthUser',
-                                        'dbiAuthPassword'
+                                        {
+                                            title => 'dbiConnectionAuth',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'dbiAuthChain',
+                                                'dbiAuthUser',
+                                                'dbiAuthPassword'
+                                            ]
+                                        },
+                                        {
+                                            title => 'dbiConnectionUser',
+                                            form  => 'simpleInputContainer',
+                                            nodes => [
+                                                'dbiUserChain',
+                                                'dbiUserUser',
+                                                'dbiUserPassword'
+                                            ]
+                                        }
                                     ]
                                 },
                                 {
@@ -590,7 +605,8 @@ sub tree {
                                 'key',
                                 'trustedDomains',
                                 'useSafeJail',
-                                'checkXSS'
+                                'checkXSS',
+                                'lwpSslOpts'
                             ]
                         },
                         {
@@ -647,6 +663,7 @@ sub tree {
                                 }
                             ]
                         },
+                        'nginxCustomHandlers',
                         'logoutServices',
                         'multiValuesSeparator',
                         {

@@ -18,11 +18,6 @@ sub defaultValues {
         'authChoiceParam'          => 'lmAuth',
         'authentication'           => 'Demo',
         'browserIdAuthnLevel'      => 1,
-        'browserIdAutoLogin'       => 0,
-        'browserIdBackgroundColor' => '#000',
-        'browserIdSiteName'        => 'LemonLDAP::NG',
-        'browserIdVerificationURL' =>
-          'https://verifier.login.persona.org/verify',
         'captcha_login_enabled'    => 0,
         'captcha_mail_enabled'     => 0,
         'captcha_register_enabled' => 1,
@@ -31,9 +26,9 @@ sub defaultValues {
         'captchaStorageOptions'    => {
             'Directory' => '/var/lib/lemonldap-ng/captcha/'
         },
+        'CAS_authnLevel'         => 1,
+        'CAS_pgtFile'            => '/tmp/pgt.txt',
         'casAccessControlPolicy' => 'none',
-        'CASAuthnLevel'          => 1,
-        'CASpgtFile'             => '/tmp/pgt.txt',
         'cda'                    => 0,
         'checkXSS'               => 1,
         'confirmFormMethod'      => 'post',

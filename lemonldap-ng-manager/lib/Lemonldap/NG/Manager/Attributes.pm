@@ -68,9 +68,7 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'keyText' => {
             'keyTest' => qr/^[a-zA-Z0-9_]+$/,
             'msgFail' => '__badValue__',
-            'test'    => sub {
-                1;
-              }
+            'test'    => qr/^.*$/
         },
         'keyTextContainer' => {
             'keyMsgFail' => '__badKeyName__',
@@ -566,23 +564,19 @@ sub attributes {
             'type'    => 'int'
         },
         'browserIdAutoLogin' => {
-            'default' => 0,
-            'type'    => 'bool'
+            'type' => 'bool'
         },
         'browserIdBackgroundColor' => {
-            'default' => '#000',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'browserIdSiteLogo' => {
             'type' => 'text'
         },
         'browserIdSiteName' => {
-            'default' => 'LemonLDAP::NG',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'browserIdVerificationURL' => {
-            'default' => 'https://verifier.login.persona.org/verify',
-            'type'    => 'text'
+            'type' => 'text'
         },
         'captcha_login_enabled' => {
             'default' => 0,
@@ -610,6 +604,34 @@ sub attributes {
             },
             'type' => 'keyTextContainer'
         },
+        'CAS_authnLevel' => {
+            'default' => 1,
+            'type'    => 'int'
+        },
+        'CAS_CAFile' => {
+            'type' => 'text'
+        },
+        'CAS_gateway' => {
+            'type' => 'bool'
+        },
+        'CAS_pgtFile' => {
+            'default' => '/tmp/pgt.txt',
+            'type'    => 'text'
+        },
+        'CAS_proxiedServices' => {
+            'keyMsgFail' => '__badCasProxyId__',
+            'keyTest'    => qr/^\w+$/,
+            'type'       => 'keyTextContainer'
+        },
+        'CAS_renew' => {
+            'type' => 'bool'
+        },
+        'CAS_url' => {
+            'msgFail' => '__badUrl__',
+            'test' =>
+qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
+            'type' => 'text'
+        },
         'casAccessControlPolicy' => {
             'default' => 'none',
             'select'  => [
@@ -634,39 +656,11 @@ sub attributes {
         'casAttributes' => {
             'type' => 'keyTextContainer'
         },
-        'CASAuthnLevel' => {
-            'default' => 1,
-            'type'    => 'int'
-        },
-        'CASCAFile' => {
-            'type' => 'text'
-        },
-        'CASgateway' => {
-            'type' => 'bool'
-        },
-        'CASpgtFile' => {
-            'default' => '/tmp/pgt.txt',
-            'type'    => 'text'
-        },
-        'CASproxiedServices' => {
-            'keyMsgFail' => '__badCasProxyId__',
-            'keyTest'    => qr/^\w+$/,
-            'type'       => 'keyTextContainer'
-        },
-        'CASrenew' => {
-            'type' => 'bool'
-        },
         'casStorage' => {
             'type' => 'PerlModule'
         },
         'casStorageOptions' => {
             'type' => 'keyTextContainer'
-        },
-        'CASurl' => {
-            'msgFail' => '__badUrl__',
-            'test' =>
-qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:\/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))(?:[?](?:(?:(?:[;\/?:@&=+\$,a-zA-Z0-9\-_.!~*'()]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)))?))?)/,
-            'type' => 'text'
         },
         'cda' => {
             'default' => 0,
@@ -756,7 +750,16 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'dbiPasswordMailCol' => {
             'type' => 'text'
         },
+        'dbiUserChain' => {
+            'type' => 'text'
+        },
+        'dbiUserPassword' => {
+            'type' => 'password'
+        },
         'dbiUserTable' => {
+            'type' => 'text'
+        },
+        'dbiUserUser' => {
             'type' => 'text'
         },
         'demoExportedVars' => {
@@ -775,7 +778,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 'example.com',
             'msgFail' => '__badDomainName__',
             'test' =>
-qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?$/,
+qr/^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?))?/,
             'type' => 'text'
         },
         'exportedAttr' => {
@@ -1255,6 +1258,9 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => {},
             'type'    => 'keyTextContainer'
         },
+        'lwpSslOpts' => {
+            'type' => 'keyTextContainer'
+        },
         'macros' => {
             'default'    => {},
             'keyMsgFail' => '__badMacroName__',
@@ -1353,6 +1359,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'multiValuesSeparator' => {
             'default' => '; ',
             'type'    => 'authParamsText'
+        },
+        'nginxCustomHandlers' => {
+            'keyTest' => qr/^\w+$/,
+            'msgFail' => '__badPerlPackageName__',
+            'test'    => qr/^[a-zA-Z][a-zA-Z0-9]*(?:::[a-zA-Z][a-zA-Z0-9]*)*$/,
+            'type'    => 'keyTextContainer'
         },
         'noAjaxHook' => {
             'default' => 0,

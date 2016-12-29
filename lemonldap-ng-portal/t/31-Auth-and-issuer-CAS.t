@@ -192,8 +192,8 @@ sub sp {
                 authentication        => 'CAS',
                 userDB                => 'Null',
                 issuerDBCASActivation => 0,
-                CASurl                => 'http://auth.idp.com/cas',
-                CASCAFile             => 't/caFile.pem',
+                CAS_url               => 'http://auth.idp.com/cas',
+                CAS_CAFile            => 't/caFile.pem',
                 multiValuesSeparator  => ';',
             },
         }

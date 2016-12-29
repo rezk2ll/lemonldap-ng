@@ -11,7 +11,7 @@ use String::Random qw(random_string);
 use HTML::Template;
 use base qw(Lemonldap::NG::Portal::_OpenIDConnect);
 
-our $VERSION = '2.0.0';
+our $VERSION = '1.9.6';
 
 ## @method void issuerDBInit()
 # Get configuration data
@@ -561,14 +561,15 @@ sub issuerForUnAuthUser {
         );
 
         my $checksession_tpl =
-          $self->getApacheHtdocsPath
-          . "/site/templates/common/oidc_checksession.tpl";
+          $self->getApacheHtdocsPath . "/skins/common/oidc_checksession.tpl";
 
-        my $static_prefix = "";    #TODO
+        my $portalPath = $self->{portal};
+        $portalPath =~ s#^https?://[^/]+/?#/#;
+        $portalPath =~ s#[^/]+\.pl$##;
 
         my $template = HTML::Template->new( filename => $checksession_tpl );
         $template->param( "JS_CODE" => $self->getSessionManagementOPIFrameJS );
-        $template->param( "STATIC_PREFIX" => $static_prefix );
+        $template->param( "SKIN_PATH" => $portalPath . "skins" );
         print $template->output;
         $self->quit();
     }
@@ -1406,14 +1407,15 @@ sub issuerForAuthUser {
         );
 
         my $checksession_tpl =
-          $self->getApacheHtdocsPath
-          . "/site/templates/common/oidc_checksession.tpl";
+          $self->getApacheHtdocsPath . "/skins/common/oidc_checksession.tpl";
 
-        my $static_prefix = "";    #TODO
+        my $portalPath = $self->{portal};
+        $portalPath =~ s#^https?://[^/]+/?#/#;
+        $portalPath =~ s#[^/]+\.pl$##;
 
         my $template = HTML::Template->new( filename => $checksession_tpl );
         $template->param( "JS_CODE" => $self->getSessionManagementOPIFrameJS );
-        $template->param( "STATIC_PREFIX" => $static_prefix );
+        $template->param( "SKIN_PATH" => $portalPath . "skins" );
         print $template->output;
         $self->quit();
     }
