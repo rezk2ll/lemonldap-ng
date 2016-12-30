@@ -12,6 +12,8 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::OpenIDConnect';
 
+# PROPERTIES
+
 # INITIALIZATION
 
 sub init {
@@ -75,7 +77,7 @@ sub token {
 "No authentication provided to get token, or authentication type not supported",
             "error"
         );
-        return $self->p->sendError($req, 'unauthorized_client', 401);
+        return $self->p->sendError( $req, 'unauthorized_client', 401 );
     }
 
     # Verify that client_id is registered in configuration
@@ -85,7 +87,7 @@ sub token {
         $self->lmLog(
             "No registered Relying Party found with client_id $client_id",
             'error' );
-        return $self->p->sendError($req,"unauthorized_client",403);
+        return $self->p->sendError( $req, "unauthorized_client", 403 );
     }
     else {
         $self->lmLog( "Client id $client_id match RP $rp", 'debug' );
@@ -96,7 +98,7 @@ sub token {
         ->{oidcRPMetaDataOptionsClientSecret} )
     {
         $self->lmLog( "Wrong credentials for $rp", "error" );
-        return $self->p->sendError("access_denied",403);
+        return $self->p->sendError( "access_denied", 403 );
     }
 
     # Get code session
@@ -108,19 +110,18 @@ sub token {
 
     unless ($codeSession) {
         $self->lmLog( "Unable to find OIDC session $code", "error" );
-        $self->p->sendError($req,"invalid_request",400);
+        $self->p->sendError( $req, "invalid_request", 400 );
     }
 
     # Check we have the same redirect_uri value
-    unless (
-        $req->param("redirect_uri") eq $codeSession->data->{redirect_uri} )
+    unless ( $req->param("redirect_uri") eq $codeSession->data->{redirect_uri} )
     {
         $self->lmLog(
             "Provided redirect_uri is different from "
               . $codeSession->{redirect_uri},
             "error"
         );
-        $self->p->sendError($req,"invalid_request",400);
+        $self->p->sendError( $req, "invalid_request", 400 );
     }
 
     # Get user identifier
@@ -132,11 +133,12 @@ sub token {
             "Unable to find user session linked to OIDC session $code",
             "error" );
         $codeSession->remove();
-        $self->p->sendError($req,"invalid_request",400);
+        $self->p->sendError( $req, "invalid_request", 400 );
     }
 
     my $user_id_attribute =
-      $self->conf->{oidcRPMetaDataOptions}->{$rp}->{oidcRPMetaDataOptionsUserIDAttr}
+      $self->conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsUserIDAttr}
       || $self->conf->{whatToTrace};
     my $user_id = $apacheSession->data->{$user_id_attribute};
 
@@ -149,7 +151,7 @@ sub token {
         $self->lmLog( "Unable to create OIDC session for access_token",
             "error" );
         $codeSession->remove();
-        $self->p->sendError($req,"invalid_request",400);
+        $self->p->sendError( $req, "invalid_request", 400 );
     }
 
     # Store data in access token
@@ -180,11 +182,11 @@ sub token {
     my $id_token_acr = "loa-" . $apacheSession->data->{authenticationLevel};
 
     my $id_token_payload_hash = {
-        iss => $issuer,          # Issuer Identifier
-        sub => $user_id,         # Subject Identifier
-        aud => [$client_id],     # Audience
-        exp => $id_token_exp,    # expiration
-        iat => time,             # Issued time
+        iss => $self->conf->{oidcServiceMetaDataIssuer},    # Issuer Identifier
+        sub => $user_id,                                    # Subject Identifier
+        aud => [$client_id],                                # Audience
+        exp => $id_token_exp,                               # expiration
+        iat => time,                                        # Issued time
         auth_time =>
           $apacheSession->data->{_lastAuthnUTime},    # Authentication time
         acr => $id_token_acr,    # Authentication Context Class Reference
@@ -215,11 +217,62 @@ sub token {
     $self->lmLog( "Send token response", 'debug' );
 
     $codeSession->remove();
-    return $self->p->sendJSONresponse($req,$token_response);
+    return $self->p->sendJSONresponse( $req, $token_response );
 }
 
 sub userInfo {
     my ( $self, $req ) = @_;
+    $self->lmLog( "URL detected as an OpenID Connect USERINFO URL", 'debug' );
+
+    my $access_token = $self->getEndPointAccessToken($req);
+
+    unless ($access_token) {
+        $self->lmLog( "Unable to get access_token", "error" );
+        return $self->returnBearerError( "invalid_request",
+            "Access token not found in request" );
+    }
+
+    $self->lmLog( "Received Access Token $access_token", 'debug' );
+
+    my $accessTokenSession = $self->getOpenIDConnectSession($access_token);
+
+    unless ($accessTokenSession) {
+        $self->lmLog( "Unable to get access token session for id $access_token",
+            "error" );
+        return $self->returnBearerError( "invalid_token",
+            "Access Token not found or expired" );
+    }
+
+    # Get access token session data
+    my $scope           = $accessTokenSession->data->{scope};
+    my $rp              = $accessTokenSession->data->{rp};
+    my $user_session_id = $accessTokenSession->data->{user_session_id};
+
+    my $userinfo_response =
+      $self->buildUserInfoResponse( $scope, $rp, $user_session_id );
+    unless ($userinfo_response) {
+        return $self->p->sendError( $req, "invalid_request", 400 );
+    }
+
+    my $userinfo_sign_alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
+      ->{oidcRPMetaDataOptionsUserInfoSignAlg};
+
+    unless ($userinfo_sign_alg) {
+        return $self->p->sendJSONresponse( $req, $userinfo_response );
+    }
+    else {
+        my $userinfo_jwt =
+          $self->createJWT( $userinfo_response, $userinfo_sign_alg, $rp );
+        $self->lmLog( "Return UserInfo as JWT: $userinfo_jwt", 'debug' );
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/jwt',
+                'Content-Length' => length($userinfo_jwt)
+            ],
+            [$userinfo_jwt]
+        ];
+    }
 }
 
 sub jwks {
