@@ -31,7 +31,7 @@ has menuModules => (
 has imgPath => (
     is      => 'rw',
     builder => sub {
-        return $_[0]->{conf}->{impgPath} || '/static/logos';
+        return $_[0]->{conf}->{impgPath} || $_[0]->{conf}->{staticPrefix} . '/logos';
     }
 );
 
@@ -51,7 +51,7 @@ sub init {
 #  - AUTH_ERROR_TYPE
 sub params {
     my ( $self, $req ) = @_;
-    $self->{conf}->{imgPath} ||= '/static/';
+    $self->{conf}->{imgPath} ||= $self->{staticPrefix};
     my %res;
 
     # Tab to display

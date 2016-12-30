@@ -643,6 +643,7 @@ sub getUserInfo {
 
 # Convert JSON to HashRef
 # @return HashRef JSON decoded content
+# TODO: remove this
 sub decodeJSON {
     my ( $self, $json ) = @_;
     my $json_hash;
@@ -726,7 +727,7 @@ sub storeState {
 
 # Extract state information into $self
 sub extractState {
-    my ( $self, $state ) = @_;
+    my ( $self, $req, $state ) = @_;
 
     return 0 unless $state;
 
@@ -738,7 +739,12 @@ sub extractState {
     # Push values in $self
     foreach ( keys %{ $stateSession->data } ) {
         next if $_ =~ /(type|_session_id|_utime)/;
-        $self->{$_} = $stateSession->data->{$_};
+        if ( $req->can($_) ) {
+            $req->$_( $stateSession->data->{$_} );
+        }
+        else {
+            $req->datas->{$_} = $stateSession->data->{$_};
+        }
     }
 
     # Delete state session
@@ -1429,11 +1435,11 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::_OpenIDConnect - Common OpenIDConnect functions
+Lemonldap::NG::Portal::Lib::OpenIDConnect - Common OpenIDConnect functions
 
 =head1 SYNOPSIS
 
-use Lemonldap::NG::Portal::_OpenIDConnect;
+use Lemonldap::NG::Portal::Lib::OpenIDConnect;
 
 =head1 DESCRIPTION
 
@@ -1583,6 +1589,8 @@ L<Lemonldap::NG::Portal::AuthOpenIDConnect>, L<Lemonldap::NG::Portal::UserDBOpen
 =over
 
 =item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
+
+=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =back
 

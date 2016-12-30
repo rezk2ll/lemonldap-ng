@@ -139,7 +139,7 @@ sub reloadConf {
     $self->{templateDir} =
       $self->conf->{templateDir} . '/' . $self->conf->{portalSkin};
 
-    $self->{staticPrefix} = $self->conf->{staticPrefix} || '/';
+    $self->{staticPrefix} = $self->conf->{staticPrefix} || '/static';
     $self->{languages}    = $self->conf->{languages}    || '/';
 
     # Initialize session DBs

@@ -113,7 +113,7 @@ sub display {
             HIDDEN_INPUTS   => $self->buildHiddenForm($req),
             AUTH_URL        => $req->{datas}->{_url},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE    => $req->{_authChoice},
+            CHOICE_VALUE    => $req->datas->{_authChoice},
         );
     }
 
@@ -130,13 +130,13 @@ sub display {
             ACTIVE_TIMER    => $self->conf->{activeTimer},
             FORM_METHOD     => $self->conf->{confirmFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE    => $req->{_authChoice},
+            CHOICE_VALUE    => $req->datas->{_authChoice},
             CHECK_LOGINS    => $self->conf->{portalCheckLogins}
-              && $self->conf->{login},
-            ASK_LOGINS => $self->conf->{checkLogins},
+              && $req->datas->{login},
+            ASK_LOGINS => $req->datas->{checkLogins},
             CONFIRMKEY => $self->stamp(),
             LIST       => $req->datas->{list} || [],
-            REMEMBER   => $self->conf->{confirmRemember},
+            REMEMBER   => $req->datas->{confirmRemember},
         );
     }
 
@@ -152,7 +152,7 @@ sub display {
             ACTIVE_TIMER    => $self->conf->{activeTimer},
             FORM_METHOD     => $self->conf->{infoFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
-            CHOICE_VALUE    => $req->{_authChoice},
+            CHOICE_VALUE    => $req->datas->{_authChoice},
         );
     }
 
@@ -231,7 +231,7 @@ sub display {
                 DISPLAY_RESETPASSWORD => 0,
                 AUTH_LOOP             => [],
                 CHOICE_PARAM          => $self->conf->{authChoiceParam},
-                CHOICE_VALUE          => $req->{_authChoice},
+                CHOICE_VALUE          => $req->datas->{_authChoice},
                 OLDPASSWORD           => $self->checkXSSAttack( 'oldpassword',
                     $req->datas->{oldpassword} )
                 ? ""
@@ -270,7 +270,7 @@ sub display {
                     %templateParams,
                     AUTH_LOOP            => $authLoop,
                     CHOICE_PARAM         => $self->conf->{authChoiceParam},
-                    CHOICE_VALUE         => $req->{_authChoice},
+                    CHOICE_VALUE         => $req->datas->{_authChoice},
                     DISPLAY_FORM         => 0,
                     DISPLAY_OPENID_FORM  => 0,
                     DISPLAY_YUBIKEY_FORM => 0,
