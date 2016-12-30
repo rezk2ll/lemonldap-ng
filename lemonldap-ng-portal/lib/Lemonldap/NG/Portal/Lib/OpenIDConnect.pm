@@ -261,7 +261,7 @@ sub buildAuthorizationCodeAuthnRequest {
 
     my $nonce;
     if ($use_nonce) {
-        my $nonceSession = $self->getOpenIDConnectSession($req);
+        my $nonceSession = $self->getOpenIDConnectSession();
         $nonceSession->update( { '_utime' => time } );
         $nonce = $nonceSession->id;
     }
