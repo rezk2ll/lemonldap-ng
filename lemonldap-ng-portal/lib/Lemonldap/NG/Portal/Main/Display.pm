@@ -69,7 +69,7 @@ sub display {
             MSG             => $info,
             URL             => $req->{urldc},
             HIDDEN_INPUTS   => $self->buildHiddenForm(),
-            ACTIVE_TIMER    => $self->conf->{activeTimer},
+            ACTIVE_TIMER    => $req->datas->{activeTimer},
             FORM_METHOD     => $self->conf->{infoFormMethod},
         );
     }
@@ -127,7 +127,7 @@ sub display {
             AUTH_URL        => $req->{datas}->{_url},
             MSG             => $req->info,
             HIDDEN_INPUTS   => $self->buildHiddenForm($req),
-            ACTIVE_TIMER    => $self->conf->{activeTimer},
+            ACTIVE_TIMER    => $req->datas->{activeTimer},
             FORM_METHOD     => $self->conf->{confirmFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->datas->{_authChoice},
@@ -149,7 +149,7 @@ sub display {
             MSG             => $info,
             URL             => $req->{urldc},
             HIDDEN_INPUTS   => $self->buildHiddenForm($req),
-            ACTIVE_TIMER    => $self->conf->{activeTimer},
+            ACTIVE_TIMER    => $req->datas->{activeTimer},
             FORM_METHOD     => $self->conf->{infoFormMethod},
             CHOICE_PARAM    => $self->conf->{authChoiceParam},
             CHOICE_VALUE    => $req->datas->{_authChoice},
@@ -328,7 +328,6 @@ sub display {
 
     $self->lmLog( "Skin returned: $skinfile", 'debug' );
     return ( $skinfile, \%templateParams );
-
 }
 
 ##@method public void printImage(string file, string type)

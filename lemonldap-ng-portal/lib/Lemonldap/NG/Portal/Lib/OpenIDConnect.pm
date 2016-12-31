@@ -1028,7 +1028,7 @@ sub returnRedirectError {
     $urldc .= "&state=" . uri_escape($state)         if defined $state;
 
     $self->lmLog( "Redirect user to $urldc", 'debug' );
-    $self->{'urldc'} = $urldc;
+    $req->urldc($urldc);
 
     $req->steps( [] );
     return PE_OK;

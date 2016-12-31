@@ -217,7 +217,7 @@ sub run {
                 );
                 $self->info( $req,
                     "<p><a href=\"$logout_url\">$logout_url</a></p>" );
-                $self->{activeTimer} = 0;
+                $req->datas->{activeTimer} = 0;
 
                 return PE_CONFIRM;
             }
