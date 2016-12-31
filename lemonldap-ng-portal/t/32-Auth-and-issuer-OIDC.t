@@ -12,19 +12,30 @@ my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
 # Initialization
-ok( $issuer = issuer(), 'Issuer portal' );
+ok( $issuer = issuer(), 'OP portal' );
+
+ok( $res = $issuer->_get('/oauth2/jwks'), 'Get JWKS' );
+my $jwks = $res->[2]->[0];
+
+ok( $res = $issuer->_get('/.well-known/openid-configuration'), 'Get metadata' );
+my $metadata = $res->[2]->[0];
+count(3);
+
+switch ('sp');
+ok( $sp = sp( $jwks, $metadata ), 'RP portal' );
 count(1);
 
-ok($res=$issuer->_get('/oauth2/jwks'),'Get JWKS');
-count(1);
-
-ok($res=$issuer->_get('/.well-known/openid-configuration'),'Get metadata');
-count(1);
-
-print STDERR Dumper($res);
+#print STDERR Dumper( $jwks, $metadata );
 
 clean_sessions();
 done_testing( count() );
+
+sub switch {
+    my $type = shift;
+    @Lemonldap::NG::Handler::Main::Reload::_onReload = @{
+        $handlerOR{$type};
+    };
+}
 
 sub issuer {
     return LLNG::Manager::Test->new(
@@ -57,13 +68,13 @@ sub issuer {
                 oidcServiceAllowAuthorizationCodeFlow => 1,
                 oidcRPMetaDataOptions                 => {
                     rp => {
-                        oidcRPMetaDataOptionsDisplayName           => "RP",
-                        oidcRPMetaDataOptionsIDTokenExpiration     => 3600,
-                        oidcRPMetaDataOptionsClientID              => "rp",
-                        oidcRPMetaDataOptionsIDTokenSignAlg        => "HS512",
-                        oidcRPMetaDataOptionsBypassConsent         => 0,
-                        oidcRPMetaDataOptionsClientSecret          => "rp",
-                        oidcRPMetaDataOptionsUserIDAttr            => "",
+                        oidcRPMetaDataOptionsDisplayName       => "RP",
+                        oidcRPMetaDataOptionsIDTokenExpiration => 3600,
+                        oidcRPMetaDataOptionsClientID          => "rpid",
+                        oidcRPMetaDataOptionsIDTokenSignAlg    => "HS512",
+                        oidcRPMetaDataOptionsBypassConsent     => 0,
+                        oidcRPMetaDataOptionsClientSecret      => "rpsecret",
+                        oidcRPMetaDataOptionsUserIDAttr        => "",
                         oidcRPMetaDataOptionsAccessTokenExpiration => 3600
                     }
                 },
@@ -78,8 +89,7 @@ sub issuer {
                     'loa-2' => 2,
                     'loa-3' => 3
                 },
-                oidcServicePrivateKeySig =>
-"-----BEGIN RSA PRIVATE KEY-----
+                oidcServicePrivateKeySig => "-----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEAs2jsmIoFuWzMkilJaA8//5/T30cnuzX9GImXUrFR2k9EKTMt
 GMHCdKlWOl3BV+BTAU9TLz7Jzd/iJ5GJ6B8TrH1PHFmHpy8/qE/S5OhinIpIi7eb
 ABqnoVcwDdCa8ugzq8k8SWxhRNXfVIlwz4NH1caJ8lmiERFj7IvNKqEhzAk0pyDr
@@ -107,8 +117,7 @@ EYqYAev/l82wi+OZ5O8U+qjFUpT1CVeUJdDs0o5u19v0UJjunU1cwh9jsxBZAWLy
 PAGd6SWf4S3uQCTw6dLeMna25YIlPh5qPA6I/pAahe8e3nSu2ckl
 -----END RSA PRIVATE KEY-----
 ",
-                oidcServicePublicKeySig =>
-"-----BEGIN PUBLIC KEY-----
+                oidcServicePublicKeySig => "-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs2jsmIoFuWzMkilJaA8/
 /5/T30cnuzX9GImXUrFR2k9EKTMtGMHCdKlWOl3BV+BTAU9TLz7Jzd/iJ5GJ6B8T
 rH1PHFmHpy8/qE/S5OhinIpIi7ebABqnoVcwDdCa8ugzq8k8SWxhRNXfVIlwz4NH
@@ -118,6 +127,47 @@ kX5rx0h5SslG3jVWYhZ/SOb2aIzOr0RMjhQmsYRwbpt3anjlBZ98aOzg7GAkbO80
 GQIDAQAB
 -----END PUBLIC KEY-----
 ",
+            }
+        }
+    );
+}
+
+sub sp {
+    my ( $jwks, $metadata ) = @_;
+    return LLNG::Manager::Test->new(
+        {
+            ini => {
+                logLevel                   => $debug,
+                domain                     => 'rp.com',
+                portal                     => 'http://auth.rp.com',
+                authentication             => 'OpenIDConnect',
+                userDB                     => 'OpenIDConnect',
+                oidcOPMetaDataExportedVars => {
+                    op => {
+                        cn   => "name",
+                        uid  => "sub",
+                        sn   => "family_name",
+                        mail => "email"
+                    }
+                },
+                oidcOPMetaDataOptions => {
+                    op => {
+                        oidcOPMetaDataOptionsJWKSTimeout  => 0,
+                        oidcOPMetaDataOptionsClientSecret => "rpsecret",
+                        oidcOPMetaDataOptionsScope        => "openid profile",
+                        oidcOPMetaDataOptionsStoreIDToken => 0,
+                        oidcOPMetaDataOptionsDisplay      => "",
+                        oidcOPMetaDataOptionsClientID     => "rpid",
+                        oidcOPMetaDataOptionsConfigurationURI =>
+                          "https://auth.op.com/.well-known/openid-configuration"
+                    }
+                },
+                oidcOPMetaDataJWKS => {
+                    op => $jwks,
+                },
+                oidcOPMetaDataJSON => {
+                    op => $metadata,
+                }
             }
         }
     );

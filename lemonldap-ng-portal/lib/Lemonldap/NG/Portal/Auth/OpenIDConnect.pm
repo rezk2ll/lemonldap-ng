@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Auth::SAML;
+package Lemonldap::NG::Portal::Auth::OpenIDConnect;
 
 use strict;
 use Mouse;
@@ -22,7 +22,7 @@ has opNumber => ( is => 'rw', default => 0 );
 
 sub init {
     my ($self) = @_;
-    return 0 unless ( $self->loadOPs and $self->refreshJWSdata );
+    return 0 unless ( $self->loadOPs and $self->refreshJWKSdata );
     my @tab = ( sort keys %{ $self->oidcOPList } );
     unless (@tab) {
         $self->lmLog( "No OP configured", 'error' );
@@ -31,7 +31,7 @@ sub init {
     $self->opNumber( scalar @tab );
     my @list = ();
 
-    my $portalPath = $self->{portal};
+    my $portalPath = $self->conf->{portal};
     $portalPath =~ s#^https?://[^/]+/?#/#;
 
     foreach (@tab) {
