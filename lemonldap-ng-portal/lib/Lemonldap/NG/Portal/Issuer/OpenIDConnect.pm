@@ -1,6 +1,7 @@
 package Lemonldap::NG::Portal::Issuer::OpenIDConnect;
 
 use strict;
+use JSON;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CONFIRM
@@ -28,6 +29,8 @@ extends 'Lemonldap::NG::Portal::Main::Issuer',
 #  - register    : => registration()   for unauth users (RP)
 #
 # Other paths will be handle by run() and return PE_ERROR
+#
+# .well-known/openid-configuration is handled by metadata()
 
 sub init {
     my ($self) = @_;
@@ -56,6 +59,16 @@ sub init {
         oidcServiceMetaDataUserInfoURI     => 'badAuthRequest',
         oidcServiceMetaDataJWKSURI         => 'badAuthRequest',
         oidcServiceMetaDataRegistrationURI => 'badAuthRequest',
+    );
+
+    # Metadata (.well-known/openid-configuration)
+    $self->addUnauthRoute(
+        '.well-known' => { 'openid-configuration' => 'metadata' },
+        ['GET']
+    );
+    $self->addAuthRoute(
+        '.well-known' => { 'openid-configuration' => 'metadata' },
+        ['GET']
     );
     return 1;
 }
@@ -1260,6 +1273,96 @@ sub addRouteFromConf {
         }
         $self->$adder( $self->path => { $path => $sub }, [ 'GET', 'POST' ] );
     }
+}
+
+sub metadata {
+    my ( $self, $req ) = @_;
+    my $issuerDBOpenIDConnectPath = $self->conf->{issuerDBOpenIDConnectPath};
+    my $authorize_uri    = $self->conf->{oidcServiceMetaDataAuthorizeURI};
+    my $token_uri        = $self->conf->{oidcServiceMetaDataTokenURI};
+    my $userinfo_uri     = $self->conf->{oidcServiceMetaDataUserInfoURI};
+    my $jwks_uri         = $self->conf->{oidcServiceMetaDataJWKSURI};
+    my $registration_uri = $self->conf->{oidcServiceMetaDataRegistrationURI};
+    my $endsession_uri   = $self->conf->{oidcServiceMetaDataEndSessionURI};
+    my $checksession_uri = $self->conf->{oidcServiceMetaDataCheckSessionURI};
+
+    my $path   = $self->path . '/';
+    my $issuer = $self->conf->{oidcServiceMetaDataIssuer};
+    $path = "/" . $path unless ( $issuer =~ /\/$/ );
+    my $baseUrl = $issuer . $path;
+
+    my @acr = keys %{ $self->conf->{oidcServiceMetaDataAuthnContext} };
+
+    # Add a slash to path value if issuer has no trailing slash
+
+    # Create OpenID configuration hash;
+    return $self->p->sendJSONresponse(
+        $req,
+        {
+            issuer => $issuer,
+
+            # Endpoints
+            token_endpoint         => $baseUrl . $token_uri,
+            userinfo_endpoint      => $baseUrl . $userinfo_uri,
+            jwks_uri               => $baseUrl . $jwks_uri,
+            authorization_endpoint => $baseUrl . $authorize_uri,
+            end_session_endpoint   => $baseUrl . $endsession_uri,
+            check_session_iframe   => $baseUrl . $checksession_uri,
+            (
+                $self->conf->{oidcServiceAllowDynamicRegistration}
+                ? ( registration_endpoint => $baseUrl . $registration_uri )
+                : ()
+            ),
+
+            # Scopes
+            scopes_supported => [qw/openid profile email address phone/],
+            response_types_supported => [
+                "code",
+                "id_token",
+                "id_token token",
+                "code id_token",
+                "code token",
+                "code id_token token"
+            ],
+            grant_types_supported   => [qw/authorization_code implicit hybrid/],
+            acr_values_supported    => \@acr,
+            subject_types_supported => ["public"],
+            token_endpoint_auth_methods_supported =>
+              [qw/client_secret_post client_secret_basic/],
+            request_parameter_supported      => JSON::true,
+            request_uri_parameter_supported  => JSON::true,
+            require_request_uri_registration => JSON::false,
+
+            # Algorithms
+            id_token_signing_alg_values_supported =>
+              [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
+            userinfo_signing_alg_values_supported =>
+              [qw/none HS256 HS384 HS512 RS256 RS384 RS512/],
+        }
+    );
+
+    # response_modes_supported}
+
+    # id_token_encryption_alg_values_supported
+    # id_token_encryption_enc_values_supported
+
+    # userinfo_encryption_alg_values_supported
+    # userinfo_encryption_enc_values_supported
+    # request_object_signing_alg_values_supported
+    # request_object_encryption_alg_values_supported
+    # request_object_encryption_enc_values_supported
+
+    # token_endpoint_auth_signing_alg_values_supported
+    # display_values_supported
+    # claim_types_supported
+    # RECOMMENDED # claims_supported
+    # service_documentation
+    # claims_locales_supported
+    # ui_locales_supported
+    # claims_parameter_supported
+
+    # op_policy_uri
+    # op_tos_uri
 }
 
 1;
