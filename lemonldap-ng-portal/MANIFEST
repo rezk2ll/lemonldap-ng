@@ -39,6 +39,7 @@ lib/Lemonldap/NG/Portal/Auth/Demo.pm
 lib/Lemonldap/NG/Portal/Auth/Facebook.pm
 lib/Lemonldap/NG/Portal/Auth/LDAP.pm
 lib/Lemonldap/NG/Portal/Auth/Null.pm
+lib/Lemonldap/NG/Portal/Auth/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Auth/Proxy.pm
 lib/Lemonldap/NG/Portal/Auth/Remote.pm
 lib/Lemonldap/NG/Portal/Auth/SAML.pm
@@ -58,6 +59,7 @@ lib/Lemonldap/NG/Portal/CDC.pm
 lib/Lemonldap/NG/Portal/Display.pm
 lib/Lemonldap/NG/Portal/Issuer/CAS.pm
 lib/Lemonldap/NG/Portal/Issuer/Get.pm
+lib/Lemonldap/NG/Portal/Issuer/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Issuer/SAML.pm
 lib/Lemonldap/NG/Portal/IssuerDBCAS.pm
 lib/Lemonldap/NG/Portal/IssuerDBNull.pm
@@ -115,6 +117,7 @@ lib/Lemonldap/NG/Portal/UserDB/Demo.pm
 lib/Lemonldap/NG/Portal/UserDB/Facebook.pm
 lib/Lemonldap/NG/Portal/UserDB/LDAP.pm
 lib/Lemonldap/NG/Portal/UserDB/Null.pm
+lib/Lemonldap/NG/Portal/UserDB/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/UserDB/Proxy.pm
 lib/Lemonldap/NG/Portal/UserDB/Remote.pm
 lib/Lemonldap/NG/Portal/UserDB/SAML.pm
