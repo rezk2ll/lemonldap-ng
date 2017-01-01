@@ -165,7 +165,7 @@ sub run {
                         'debug'
                     );
                     $oidc_request->{$_} = $request->{$_};
-                    $self->setHiddenFormValue( $_, $request->{$_}, '' );
+                    $self->p->setHiddenFormValue( $_, $request->{$_}, '' );
                 }
             }
 
@@ -268,7 +268,7 @@ sub run {
             if ($reauthentication) {
 
                 # Set prompt to 0 to avoid loop
-                $self->setHiddenFormValue( $req, 'prompt', '', '' );
+                $self->p->setHiddenFormValue( $req, 'prompt', '', '' );
 
                 # Replay authentication process
                 $self->{updateSession} = 1;
@@ -825,13 +825,15 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
             my $oidc_request = {};
             foreach my $param (qw/id_token_hint post_logout_redirect_uri state/)
             {
-                $oidc_request->{$param} = $req->param($param);
-                $self->lmLog(
-                    "OIDC request parameter $param: " . $oidc_request->{$param},
-                    'debug'
-                );
-                $self->setHiddenFormValue( $param, $oidc_request->{$param},
-                    '' );
+                if ( $oidc_request->{$param} = $req->param($param) ) {
+                    $self->lmLog(
+                        "OIDC request parameter $param: "
+                          . $oidc_request->{$param},
+                        'debug'
+                    );
+                    $self->p->setHiddenFormValue( $param,
+                        $oidc_request->{$param}, '' );
+                }
             }
 
             my $post_logout_redirect_uri =
@@ -842,7 +844,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
             if ( $req->param('confirm') ) {
                 if ( $req->param('confirm') == 1 ) {
                     my $apacheSession = $self->p->getApacheSession( $req->id );
-                    $self->p->_deleteSession($apacheSession);
+                    $self->p->_deleteSession( $req, $apacheSession );
                 }
 
                 if ($post_logout_redirect_uri) {
@@ -874,7 +876,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 # Handle token endpoint
 sub token {
     my ( $self, $req ) = @_;
-    $req->parseBody if($req->method =~ /^post$/i);
+    $req->parseBody if ( $req->method =~ /^post$/i );
     $self->lmLog( "URL detected as an OpenID Connect TOKEN URL", 'debug' );
 
     # Check authentication
@@ -1033,7 +1035,7 @@ sub token {
 sub userInfo {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL detected as an OpenID Connect USERINFO URL", 'debug' );
-    $req->parseBody if($req->method =~ /^post$/i);
+    $req->parseBody if ( $req->method =~ /^post$/i );
 
     my $access_token = $self->getEndPointAccessToken($req);
 
@@ -1090,7 +1092,7 @@ sub userInfo {
 sub jwks {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL detected as an OpenID Connect JWKS URL", 'debug' );
-    $req->parseBody if($req->method =~ /^post$/i);
+    $req->parseBody if ( $req->method =~ /^post$/i );
 
     my $jwks = { keys => [] };
 
@@ -1220,7 +1222,7 @@ sub endSessionDone {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL  detected as an OpenID Connect END SESSION URL",
         'debug' );
-    $req->parseBody if($req->method =~ /^post$/i);
+    $req->parseBody if ( $req->method =~ /^post$/i );
     $self->lmLog( "User is already logged out", 'debug' );
 
     my $post_logout_redirect_uri = $req->param('post_logout_redirect_uri');
@@ -1245,7 +1247,7 @@ sub checkSession {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL  detected as an OpenID Connect CHECK SESSION URL",
         'debug' );
-    $req->parseBody if($req->method =~ /^post$/i);
+    $req->parseBody if ( $req->method =~ /^post$/i );
 
     my $portalPath = $self->{portal};
     $portalPath =~ s#^https?://[^/]+/?#/#;

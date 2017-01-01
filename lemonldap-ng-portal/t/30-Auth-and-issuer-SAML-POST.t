@@ -164,7 +164,7 @@ SKIP: {
     # Test if logout is done
     switch ('issuer');
     ok(
-        $res = $sp->_get(
+        $res = $issuer->_get(
             '/', cookie => "lemonldap=$idpId",
         ),
         'Test if user is reject on IdP'

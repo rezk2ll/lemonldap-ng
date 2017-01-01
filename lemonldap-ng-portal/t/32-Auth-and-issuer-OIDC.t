@@ -74,7 +74,74 @@ switch ('sp');
 ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
     'Call openidconnectcallback on RP' );
 count(1);
-my $rpId = expectCookie($res);
+my $spId = expectCookie($res);
+
+# Logout initiated by RP
+ok(
+    $res = $sp->_get(
+        '/',
+        query  => 'logout',
+        cookie => "lemonldap=$spId",
+        accept => 'text/html'
+    ),
+    'Query SP for logout'
+);
+count(1);
+( $url, $query ) = expectRedirection( $res,
+    qr#http://auth.op.com(/oauth2/logout)\?(post_logout_redirect_uri=.+)$# );
+
+# Push logout to OP
+switch ('issuer');
+
+ok(
+    $res = $issuer->_get(
+        $url,
+        query  => $query,
+        cookie => "lemonldap=$idpId",
+        accept => 'text/html'
+    ),
+    'Push logout request to OP'
+);
+count(1);
+
+( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
+
+ok(
+    $res = $issuer->_post(
+        $url, IO::String->new($query),
+        length => length($query),
+        cookie => "lemonldap=$idpId",
+    ),
+    'Confirm logout'
+);
+count(1);
+
+    # Test if logout is done
+    switch ('issuer');
+    ok(
+        $res = $issuer->_get(
+            '/', cookie => "lemonldap=$idpId",
+        ),
+        'Test if user is reject on IdP'
+    );
+    count(1);
+    expectReject($res);
+
+    switch ('sp');
+    ok(
+        $res = $sp->_get(
+            '/',
+            accept => 'text/html',
+            cookie =>
+              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
+        ),
+        'Test if user is reject on SP'
+    );
+    count(1);
+    expectRedirection($res,qr#^http://auth.op.com/oauth2/authorize#);
+
+    #print STDERR Dumper($res);
+#print STDERR Dumper($res);
 
 clean_sessions();
 done_testing( count() );
