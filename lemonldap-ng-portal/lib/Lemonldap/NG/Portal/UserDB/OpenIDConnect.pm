@@ -15,6 +15,7 @@ extends 'Lemonldap::NG::Common::Module', 'Lemonldap::NG::Portal::Lib::OpenIDConn
 
 sub init {
     my ($self) = @_;
+    return $self->loadOPs;
 }
 
 # RUNNING METHODS

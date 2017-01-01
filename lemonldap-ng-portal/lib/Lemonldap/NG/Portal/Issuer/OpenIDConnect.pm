@@ -116,11 +116,14 @@ sub run {
                 login_hint acr_valuesi request request_uri/
               )
             {
-                $oidc_request->{$param} = $req->param($param);
-                $self->lmLog(
-                    "OIDC request parameter $param: " . $oidc_request->{$param},
-                    'debug'
-                );
+                if ( $req->param($param) ) {
+                    $oidc_request->{$param} = $req->param($param);
+                    $self->lmLog(
+                        "OIDC request parameter $param: "
+                          . $oidc_request->{$param},
+                        'debug'
+                    );
+                }
             }
 
             # Detect requested flow
@@ -244,7 +247,7 @@ sub run {
             # Check if user needs to be reauthenticated
             my $reauthentication = 0;
             my $prompt           = $oidc_request->{'prompt'};
-            if ( $prompt =~ /\blogin\b/ ) {
+            if ( $prompt and $prompt =~ /\blogin\b/ ) {
                 $self->lmLog(
 "Reauthentication requested by Relying Party in prompt parameter",
                     'debug'
@@ -439,10 +442,12 @@ sub run {
                     $ask_for_consent = 1 if ( $prompt =~ /\bconsent\b/ );
                 }
                 if ($ask_for_consent) {
-                    if ( $self->param('confirm') == 1 ) {
-                        $self->updatePersistentSession(
+                    if (    $req->param('confirm')
+                        and $req->param('confirm') == 1 )
+                    {
+                        $self->p->updatePersistentSession(
                             { "_oidc_consent_time_$rp" => time } );
-                        $self->updatePersistentSession(
+                        $self->p->updatePersistentSession(
                             {
                                 "_oidc_consent_scope_$rp" =>
                                   $oidc_request->{'scope'}
@@ -451,7 +456,9 @@ sub run {
                         $self->lmLog( "Consent given for Relying Party $rp",
                             'debug' );
                     }
-                    elsif ( $req->param('confirm') == -1 ) {
+                    elsif ( $req->param('confirm')
+                        and $req->param('confirm') == -1 )
+                    {
                         $self->lmLog(
                             "User refused consent for Relying party $rp",
                             'debug' );
@@ -471,7 +478,7 @@ sub run {
                             'debug' );
 
                         # Return error if prompt is none
-                        if ( $prompt =~ /\bnone\b/ ) {
+                        if ( $prompt and $prompt =~ /\bnone\b/ ) {
                             $self->lmLog(
                                 "Consent is needed but prompt is none",
                                 'debug' );
@@ -501,10 +508,10 @@ sub run {
                         }
 
                         # HERE
-                        $self->info('<div class="oidc_consent_message">');
-                        $self->info( '<img src="' . $img_src . '" />' )
+                        $req->info('<div class="oidc_consent_message">');
+                        $req->info( '<img src="' . $img_src . '" />' )
                           if $img_src;
-                        $self->info(
+                        $req->info(
 qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would like to know:</h3><ul>'
                         );
 
@@ -520,10 +527,10 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                         {
                             my $message = $scope_messages->{$requested_scope}
                               || 'anotherInformation';
-                            $self->info(
+                            $req->info(
                                 qq'<li trspan="$message ">$message</li>');
                         }
-                        $self->info('</ul></div>');
+                        $req->info('</ul></div>');
                         $req->datas->{activeTimer} = 0;
                         return PE_CONFIRM;
                     }
@@ -833,7 +840,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 
             # Ask consent for logout
             if ( $req->param('confirm') ) {
-                if ( $self->param('confirm') == 1 ) {
+                if ( $req->param('confirm') == 1 ) {
                     my $apacheSession = $self->p->getApacheSession( $req->id );
                     $self->p->_deleteSession($apacheSession);
                 }
@@ -853,7 +860,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 return $req->param('confirm') == 1 ? PE_LOGOUT_OK : PE_OK;
             }
 
-            $self->info(
+            $req->info(
 '<div class="oidc_logout_message"><h3 trspan="logoutConfirm">Do you want to logout?</h3></div>'
             );
             $req->datas->{activeTimer} = 0;
@@ -867,6 +874,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 # Handle token endpoint
 sub token {
     my ( $self, $req ) = @_;
+    $req->parseBody if($req->method =~ /^post$/i);
     $self->lmLog( "URL detected as an OpenID Connect TOKEN URL", 'debug' );
 
     # Check authentication
@@ -903,7 +911,7 @@ sub token {
     }
 
     # Get code session
-    my $code = $self->param('code');
+    my $code = $req->param('code');
 
     $self->lmLog( "OpenID Connect Code: $code", 'debug' );
 
@@ -1025,6 +1033,7 @@ sub token {
 sub userInfo {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL detected as an OpenID Connect USERINFO URL", 'debug' );
+    $req->parseBody if($req->method =~ /^post$/i);
 
     my $access_token = $self->getEndPointAccessToken($req);
 
@@ -1081,6 +1090,7 @@ sub userInfo {
 sub jwks {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL detected as an OpenID Connect JWKS URL", 'debug' );
+    $req->parseBody if($req->method =~ /^post$/i);
 
     my $jwks = { keys => [] };
 
@@ -1210,10 +1220,11 @@ sub endSessionDone {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL  detected as an OpenID Connect END SESSION URL",
         'debug' );
+    $req->parseBody if($req->method =~ /^post$/i);
     $self->lmLog( "User is already logged out", 'debug' );
 
-    my $post_logout_redirect_uri = $self->param('post_logout_redirect_uri');
-    my $state                    = $self->param('state');
+    my $post_logout_redirect_uri = $req->param('post_logout_redirect_uri');
+    my $state                    = $req->param('state');
 
     if ($post_logout_redirect_uri) {
 
@@ -1234,6 +1245,7 @@ sub checkSession {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL  detected as an OpenID Connect CHECK SESSION URL",
         'debug' );
+    $req->parseBody if($req->method =~ /^post$/i);
 
     my $portalPath = $self->{portal};
     $portalPath =~ s#^https?://[^/]+/?#/#;

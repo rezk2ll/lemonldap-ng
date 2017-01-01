@@ -50,9 +50,6 @@ has checkLogins => ( is => 'rw' );
 # Boolean to indicate that url isn't Base64 encoded
 has urlNotBase64 => ( is => 'rw' );
 
-# Info to display at login
-has info => ( is => 'rw' );
-
 # Menu error
 has menuError => ( is => 'rw' );
 

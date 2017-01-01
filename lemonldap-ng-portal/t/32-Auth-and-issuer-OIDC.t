@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $debug = 'error';
+my $debug = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 
@@ -25,10 +25,104 @@ switch ('sp');
 ok( $sp = sp( $jwks, $metadata ), 'RP portal' );
 count(1);
 
-#print STDERR Dumper( $jwks, $metadata );
+# Query RP for auth
+ok( $res = $sp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
+count(1);
+my ( $url, $query ) =
+  expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
+
+# Push request to OP
+switch ('issuer');
+ok( $res = $issuer->_get( $url, query => $query, accept => 'text/html' ),
+    'Push request to OP' );
+count(1);
+expectOK($res);
+
+# Try to authenticate to IdP
+$query = "user=dwho&password=dwho&$query";
+ok(
+    $res = $issuer->_post(
+        $url,
+        IO::String->new($query),
+        accept => 'text/html',
+        length => length($query),
+    ),
+    'Post authentication'
+);
+count(1);
+my $idpId = expectCookie($res);
+my ( $host, $tmp );
+( $host, $tmp, $query ) = expectForm( $res, '#' );
+
+ok(
+    $res = $issuer->_post(
+        $url,
+        IO::String->new($query),
+        accept => 'text/html',
+        cookie => "lemonldap=$idpId",
+        length => length($query),
+    ),
+    'Post authentication'
+);
+count(1);
+
+($query) = expectRedirection( $res, qr#^http://auth.rp.com/?\?(.*)$# );
+
+# Push OP response to RP
+switch ('sp');
+
+ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
+    'Call openidconnectcallback on RP' );
+count(1);
+my $rpId = expectCookie($res);
 
 clean_sessions();
 done_testing( count() );
+
+no warnings 'redefine';
+
+sub LWP::UserAgent::request {
+    my ( $self, $req ) = @_;
+    ok( $req->uri =~ m#http://auth.((?:o|r)p).com(.*)#, 'REST request' );
+    my $host = $1;
+    my $url  = $2;
+    my $res;
+    my $client = ( $host eq 'op' ? $issuer : $sp );
+    if ( $req->method =~ /^post$/i ) {
+        my $s = $req->content;
+        ok(
+            $res = $client->_post(
+                $url, IO::String->new($s),
+                length => length($s),
+                type   => $req->header('Content-Type'),
+            ),
+            'Execute request'
+        );
+    }
+    else {
+        ok(
+            $res = $client->_get(
+                $url,
+                custom => {
+                    HTTP_AUTHORIZATION => $req->header('Authorization'),
+                }
+            ),
+            'Execute request'
+        );
+    }
+    expectOK($res);
+    ok( getHeader( $res, 'Content-Type' ) =~ m#^application/json#,
+        'Content is JSON' )
+      or explain( $res->[1], 'Content-Type => application/json' );
+    my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
+
+    while ( my $name = shift @{ $res->[1] } ) {
+        $httpResp->header( $name, shift( @{ $res->[1] } ) );
+    }
+    $httpResp->content( join( '', @{ $res->[2] } ) );
+    count(3);
+    return $httpResp;
+}
 
 sub switch {
     my $type = shift;

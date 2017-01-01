@@ -69,7 +69,7 @@ sub loadOPs {
     }
 
     # Extract JSON data
-    foreach ( keys %{ $self->{oidcOPMetaDataJSON} } ) {
+    foreach ( keys %{ $self->conf->{oidcOPMetaDataJSON} } ) {
         $self->oidcOPList->{$_}->{conf} =
           $self->decodeJSON( $self->conf->{oidcOPMetaDataJSON}->{$_} );
         $self->oidcOPList->{$_}->{jwks} =
@@ -209,7 +209,7 @@ sub getCallbackUri {
 
     my $callback_uri = $self->conf->{portal};
     $callback_uri .=
-      ( $self->{portal} =~ /\?/ )
+      ( $self->conf->{portal} =~ /\?/ )
       ? '&' . $callback_get_param . '=1'
       : '?' . $callback_get_param . '=1';
 
@@ -693,12 +693,13 @@ sub getOpenIDConnectSession {
 # corresponding session_id
 # @return State Session ID
 sub storeState {
-    my ( $self, @data ) = @_;
+    my ( $self, $req, @data ) = @_;
 
     # check if there are data to store
     my $infos;
     foreach (@data) {
-        $infos->{$_} = $self->{$_} if $self->{$_};
+        $infos->{$_} = $req->{$_} if $req->{$_};
+        $infos->{"datas_$_"} = $req->datas->{$_} if $req->datas->{$_};
     }
     return unless ($infos);
 
@@ -738,12 +739,16 @@ sub extractState {
 
     # Push values in $self
     foreach ( keys %{ $stateSession->data } ) {
-        next if $_ =~ /(type|_session_id|_utime)/;
-        if ( $req->can($_) ) {
-            $req->$_( $stateSession->data->{$_} );
+        next if $_ =~ /(type|_session_id|_session_kind|_utime)/;
+        my $tmp = $stateSession->data->{$_};
+        if (s/^datas_//) {
+            $req->datas->{$_} = $tmp;
+        }
+        elsif ( $req->can($_) ) {
+            $req->$_($tmp);
         }
         else {
-            $req->datas->{$_} = $stateSession->data->{$_};
+            $self->lmLog( "Unknown request property $_, skipping", 'warn' );
         }
     }
 
@@ -1071,7 +1076,7 @@ sub getEndPointAuthenticationCredentials {
     my ( $client_id, $client_secret );
 
     my $authorization = $req->authorization;
-    if ( $authorization =~ /^Basic (\w+)/i ) {
+    if ( $authorization and $authorization =~ /^Basic (\w+)/i ) {
         $self->lmLog( "Method client_secret_basic used", 'debug' );
         eval {
             ( $client_id, $client_secret ) = split( /:/, decode_base64($1) );

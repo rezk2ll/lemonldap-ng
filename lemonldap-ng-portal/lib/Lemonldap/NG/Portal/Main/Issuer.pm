@@ -107,10 +107,10 @@ sub _forAuthUser {
 }
 
 sub _pForAuthUser {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, @path ) = @_;
     $self->lmLog( 'Parsing posted datas', 'debug' );
     $req->parseBody;
-    return $self->_forAuthUser($req);
+    return $self->_forAuthUser( $req, @path );
 }
 
 1;

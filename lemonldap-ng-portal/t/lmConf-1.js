@@ -66,6 +66,12 @@
     "LockDirectory": "t/sessions/saml/lock",
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
+  "oidcStorage": "Apache::Session::File",
+  "oidcStorageOptions": {
+    "Directory": "t/sessions/saml",
+    "LockDirectory": "t/sessions/saml/lock",
+    "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
+  },
   "reloadUrls": {},
   "userDB": "Demo",
   "whatToTrace": "_whatToTrace"

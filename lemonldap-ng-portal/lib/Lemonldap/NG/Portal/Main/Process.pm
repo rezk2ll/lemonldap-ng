@@ -52,9 +52,28 @@ sub importHandlerDatas {
     PE_OK;
 }
 
-# Verify url parameter
+# Verify url and confirm parameter
 sub controlUrl {
     my ( $self, $req ) = @_;
+    if ( my $c = $req->param('confirm') ) {
+
+        # Replace confirm stamp by 1 or -1
+        $c =~ s/^(-?)(.*)$/${1}1/;
+
+        # Decrypt confirm stamp if cipher available
+        # and confirm not already decrypted
+        if ( $self->conf->{cipher} and $2 ne "1" ) {
+            my $time = time() - $self->conf->{cipher}->decrypt($2);
+            if ( $time < 600 ) {
+                $self->lmLog( "Confirm parameter accepted $c", 'debug' );
+                $req->param( 'confirm', $c );
+            }
+            else {
+                $self->lmLog( 'Confirmation to old, refused', 'notice' );
+                $req->param( 'confirm', 0 );
+            }
+        }
+    }
     $req->{datas}->{_url} ||= '';
     if ( my $url = $req->param('url') ) {
 

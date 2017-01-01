@@ -48,33 +48,46 @@ sub expectRedirection {
     my ( $res, $location ) = @_;
     ok( $res->[0] == 302, 'Get redirection' )
       or explain( $res->[0], 302 );
-    count(2);
+    count(1);
     if ( ref $location ) {
         my @match;
         @match = ( getRedirection($res) =~ $location );
         ok( @match, 'Location header found' )
           or explain( $res->[1], "Location match: " . Dumper($location) );
+        count(1);
         return @match;
     }
     else {
         ok( getRedirection($res) eq $location, "Location is $location" )
           or explain( $res->[1], "Location => $location" );
+count(1);
     }
 }
 
 sub expectAutoPost {
+    my @r = expectForm(@_);
+    my $method = pop @r;
+    ok ( $method =~ /^post$/i );
+    count(1);
+}
+
+sub expectForm {
     my ( $res, $hostRe, $uriRe, @requiredFields ) = @_;
     expectOK($res);
-    count(2);
+    count(1);
     if (
         ok(
             $res->[2]->[0] =~
-              m@<form.+?action="(?:http://([^/]+)(/.*?)?|#)".+method="post"@s,
-            'Form method is POST'
+              m@<form.+?action="(?:http://([^/]+)(/.*?)?|(#))".+method="(post|get)"@is,
+            'Page contains a form'
         )
       )
     {
-        my ( $host, $uri ) = ( $1, $2 );
+        my ( $host, $uri, $hash, $method ) = ( $1, $2, $3, $4 );
+        if($hash and $hash eq '#') {
+            $host = '#';
+            $uri = '';
+        }
         if ($hostRe) {
             if ( ref $hostRe ) {
                 ok( $host =~ $hostRe, 'Host match' )
@@ -96,7 +109,7 @@ sub expectAutoPost {
             count(1);
         }
         my %fields = ( $res->[2]->[0] =~
-              m#<input type="hidden".+?name="(.+?)".+?value="(.+?)"#s );
+              m#<input.+?name="(.+?)".+?value="(.+?)"#gs );
         my $query = join( '&',
             map { "$_=" . uri_escape( uri_unescape( $fields{$_} ) ) }
               keys(%fields) );
@@ -254,6 +267,7 @@ sub logout {
 
 sub _get {
     my ( $self, $path, %args ) = @_;
+    print STDERR Data::Dumper::Dumper($args{custom});
     return $self->app->(
         {
             'HTTP_ACCEPT' => $args{accept}

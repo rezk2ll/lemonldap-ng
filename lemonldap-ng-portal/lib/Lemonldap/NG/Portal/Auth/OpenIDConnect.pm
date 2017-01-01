@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Auth::OpenIDConnect;
 
 use strict;
 use Mouse;
+use MIME::Base64 qw/encode_base64 decode_base64/;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CONFIRM
   PE_ERROR
@@ -15,7 +16,7 @@ extends 'Lemonldap::NG::Portal::Auth::Base',
 
 # INTERFACE
 
-has oplist => ( is => 'rw', default => sub { [] } );
+has opList => ( is => 'rw', default => sub { [] } );
 has opNumber => ( is => 'rw', default => 0 );
 
 # INITIALIZATION
@@ -56,7 +57,7 @@ sub init {
             class => "openidconnect",
           };
     }
-    $self->oplist( [@list] );
+    $self->opList( [@list] );
     return 1;
 }
 
@@ -68,15 +69,15 @@ sub extractFormInfo {
     # Check callback
     if ( $req->param( $self->conf->{oidcRPCallbackGetParam} ) ) {
 
-        $self->lmLog(
-            'OpenIDConnect callback URI detected: ' . $req->uri, 'debug' );
+        $self->lmLog( 'OpenIDConnect callback URI detected: ' . $req->uri,
+            'debug' );
 
         # AuthN Response
         my $state = $req->param('state');
 
         # Restore state
         if ($state) {
-            if ( $self->extractState($req, $state) ) {
+            if ( $self->extractState( $req, $state ) ) {
                 $self->lmLog( "State $state extracted", 'debug' );
             }
             else {
@@ -86,8 +87,6 @@ sub extractFormInfo {
         }
 
         # Get OpenID Provider
-        $self->lmLog( "################### TODO: verify this (Auth:52)",
-            'debug' );
         my $op = $req->datas->{_oidcOPCurrent};
 
         unless ($op) {
@@ -115,7 +114,8 @@ sub extractFormInfo {
         my $code = $req->param("code");
         my $auth_method =
           $self->conf->{oidcOPMetaDataOptions}->{$op}
-          ->{oidcOPMetaDataOptionsTokenEndpointAuthMethod};
+          ->{oidcOPMetaDataOptionsTokenEndpointAuthMethod}
+          || 'client_secret_post';
 
         my $content =
           $self->getAuthorizationCodeAccessToken( $req, $op, $code,
@@ -197,7 +197,7 @@ sub extractFormInfo {
         $req->datas->{id_token}     = $id_token;
 
         $self->lmLog( "Found user_id: " . $user_id, 'debug' );
-        $self->{user} = $user_id;
+        $req->user($user_id);
 
         return PE_OK;
     }
@@ -210,7 +210,7 @@ sub extractFormInfo {
 
         # Auto select provider if there is only one
         if ( $self->opNumber == 1 ) {
-            $op = $self->opList->[0];
+            $op = $self->opList->[0]->{val};
             $self->lmLog( "Selecting the only defined OP: $op", 'debug' );
         }
 
@@ -222,29 +222,7 @@ sub extractFormInfo {
             my $portalPath = $self->{portal};
             $portalPath =~ s#^https?://[^/]+/?#/#;
 
-            foreach ( @{ $self->oplist } ) {
-                my $name = $self->conf->{oidcOPMetaDataOptions}->{$_}
-                  ->{oidcOPMetaDataOptionsDisplayName};
-                my $icon = $self->conf->{oidcOPMetaDataOptions}->{$_}
-                  ->{oidcOPMetaDataOptionsIcon};
-                my $img_src;
-
-                if ($icon) {
-                    $img_src =
-                      ( $icon =~ m#^https?://# )
-                      ? $icon
-                      : $portalPath . "skins/common/" . $icon;
-                }
-
-                push @list,
-                  {
-                    val   => $_,
-                    name  => $name,
-                    icon  => $img_src,
-                    class => "openidconnect",
-                  };
-            }
-            $req->datas->{list}  = $self->opList;
+            $req->datas->{list}            = $self->opList;
             $req->datas->{confirmRemember} = 0;
 
             $req->datas->{login} = 1;
@@ -261,14 +239,15 @@ sub extractFormInfo {
     $self->lmLog( "Build OpenIDConnect AuthN Request", 'debug' );
 
     # Save state
-    my $state = $self->storeState(qw/urldc checkLogins _oidcOPCurrent/);
+    my $state = $self->storeState( $req, qw/urldc checkLogins _oidcOPCurrent/ );
 
     # Authorization Code Flow
-    $req->urldc( $self->buildAuthorizationCodeAuthnRequest( $req, $op, $state ) );
+    $req->urldc(
+        $self->buildAuthorizationCodeAuthnRequest( $req, $op, $state ) );
 
-    $self->lmLog( "Redirect user to " . $self->{urldc}, 'debug' );
-
-    $req->steps([]);
+    $self->lmLog( "Redirect user to " . $req->{urldc}, 'debug' );
+    $req->continue(1);
+    $req->steps( [] );
 
     return PE_OK;
 }
@@ -279,15 +258,17 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    my $op   = $req->datas->{_oidcOPCurrent};
+    my $op = $req->datas->{_oidcOPCurrent};
 
     $req->{sessionInfo}->{authenticationLevel} = $self->conf->{oidcAuthnLevel};
 
     $req->{sessionInfo}->{OpenIDConnect_OP} = $op;
-    $req->{sessionInfo}->{OpenIDConnect_access_token} = $req->datas->{access_token};
+    $req->{sessionInfo}->{OpenIDConnect_access_token} =
+      $req->datas->{access_token};
 
     # Keep ID Token in session
-    my $store_IDToken = $self->conf->{oidcOPMetaDataOptions}->{$op}->{oidcOPMetaDataOptionsStoreIDToken};
+    my $store_IDToken = $self->conf->{oidcOPMetaDataOptions}->{$op}
+      ->{oidcOPMetaDataOptionsStoreIDToken};
     if ($store_IDToken) {
         $self->lmLog( "Store ID Token in session", 'debug' );
         $req->{sessionInfo}->{OpenIDConnect_IDToken} = $req->datas->{id_token};
@@ -311,11 +292,14 @@ sub authLogout {
     if ($endsession_endpoint) {
         my $logout_url = $self->conf->{portal} . '?logout=1';
         $req->urldc(
-          $self->buildLogoutRequest( $endsession_endpoint,
-            $self->{sessionInfo}->{OpenIDConnect_IDToken}, $logout_url ));
+            $self->buildLogoutRequest(
+                $endsession_endpoint,
+                $self->{sessionInfo}->{OpenIDConnect_IDToken}, $logout_url
+            )
+        );
 
         $self->lmLog(
-            "OpenID Connect logout to $op will be done on ".$req->urldc,
+            "OpenID Connect logout to $op will be done on " . $req->urldc,
             'debug' );
     }
     else {

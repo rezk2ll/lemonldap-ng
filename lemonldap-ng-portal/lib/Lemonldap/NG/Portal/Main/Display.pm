@@ -59,53 +59,11 @@ sub display {
 
     }
 
-    # 1. Good authentication
+    # 1. Authentication not complete
 
-    # 1.1 Case : there is a message to display
-    if ( my $info = $req->info() ) {
-        $skinfile       = 'info';
-        %templateParams = (
-            AUTH_ERROR_TYPE => $req->error_type,
-            MSG             => $info,
-            URL             => $req->{urldc},
-            HIDDEN_INPUTS   => $self->buildHiddenForm(),
-            ACTIVE_TIMER    => $req->datas->{activeTimer},
-            FORM_METHOD     => $self->conf->{infoFormMethod},
-        );
-    }
-
-    # 1.2 Redirection
-    elsif ( $req->{error} == PE_REDIRECT ) {
-        $skinfile       = "redirect";
-        %templateParams = (
-            URL           => $req->{urldc},
-            HIDDEN_INPUTS => $self->buildHiddenForm($req),
-            FORM_METHOD   => $req->datas->{redirectFormMethod} || 'get',
-        );
-    }
-
-    # 1.3 Case : display menu
-    elsif ( $req->error == PE_OK ) {
-
-        $skinfile = 'menu';
-
-        #utf8::decode($auth_user);
-
-        %templateParams = (
-            AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
-            NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
-            LOGOUT_URL     => $self->conf->{portal} . "?logout=1",
-            APPSLIST_ORDER => $req->{sessionInfo}->{'appsListOrder'},
-            PING           => $self->conf->{portalPingInterval},
-            $self->menu->params($req),
-        );
-    }
-
-    # 2. Authentication not complete
-
-    # 2.1 A notification has to be done (session is created but hidden and
+    # 1.1 A notification has to be done (session is created but hidden and
     #     unusable until the user has accept the message)
-    elsif ( my $notif = $req->datas->{notification} ) {
+    if ( my $notif = $req->datas->{notification} ) {
         $skinfile       = 'notification';
         %templateParams = (
             AUTH_ERROR_TYPE => $req->error_type,
@@ -117,7 +75,7 @@ sub display {
         );
     }
 
-    # 2.2 An authentication (or userDB) module needs to ask a question
+    # 1.2 An authentication (or userDB) module needs to ask a question
     #     before processing to the request
     elsif ( $req->{error} == PE_CONFIRM ) {
         $skinfile       = 'confirm';
@@ -140,8 +98,8 @@ sub display {
         );
     }
 
-    # 2.3 There is a message to disp->conf->conflay
-    elsif ( $info = $req->info ) {
+    # 1.3 There is a message to display
+    elsif ( my $info = $req->info ) {
         $skinfile       = 'info';
         %templateParams = (
             AUTH_ERROR      => $self->error,
@@ -156,7 +114,7 @@ sub display {
         );
     }
 
-    # 2.4 OpenID menu page
+    # 1.4 OpenID menu page
     elsif ($req->{error} == PE_OPENID_EMPTY
         or $req->{error} == PE_OPENID_BADID )
     {
@@ -175,7 +133,36 @@ sub display {
         );
     }
 
-    # 2.5 Authentication has been refused OR this is the first access
+    # 2. Good authentication
+
+    # 2.1 Redirection
+    elsif ( $req->{error} == PE_REDIRECT ) {
+        $skinfile       = "redirect";
+        %templateParams = (
+            URL           => $req->{urldc},
+            HIDDEN_INPUTS => $self->buildHiddenForm($req),
+            FORM_METHOD   => $req->datas->{redirectFormMethod} || 'get',
+        );
+    }
+
+    # 2.2 Case : display menu
+    elsif ( $req->error == PE_OK ) {
+
+        $skinfile = 'menu';
+
+        #utf8::decode($auth_user);
+
+        %templateParams = (
+            AUTH_USER => $req->{sessionInfo}->{ $self->conf->{portalUserAttr} },
+            NEWWINDOW => $self->conf->{portalOpenLinkInNewWindow},
+            LOGOUT_URL     => $self->conf->{portal} . "?logout=1",
+            APPSLIST_ORDER => $req->{sessionInfo}->{'appsListOrder'},
+            PING           => $self->conf->{portalPingInterval},
+            $self->menu->params($req),
+        );
+    }
+
+    # 3 Authentication has been refused OR this is the first access
     else {
         $skinfile = 'login';
         my $login = $self->userId($req);
