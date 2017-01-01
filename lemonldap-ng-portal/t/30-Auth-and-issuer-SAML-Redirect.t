@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 18;
+my $maintests = 19;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -195,8 +195,16 @@ qr#^http://auth.sp.com(/saml/proxySingleLogoutReturn)\?(SAMLResponse=.+)#
         ),
         'Test if user is reject on SP'
     );
-    ( $url, $query ) = expectRedirection( $res,
-        qr#^http://auth.idp.com(/saml/singleSignOn)\?(SAMLRequest=.+)# );
+    expectOK($res);
+    ok(
+        $res->[2]->[0] =~
+          /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
+        'Found confirm key'
+      )
+      or explain(
+        $res->[2],
+'<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
+      );
 
     #print STDERR Dumper($res);
 }

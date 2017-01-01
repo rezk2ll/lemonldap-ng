@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 14;
+my $maintests = 15;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -135,8 +135,16 @@ m#iframe src="http://auth.sp.com(/saml/proxySingleLogout)\?(SAMLRequest=.*?)"#,
         ),
         'Test if user is reject on SP'
     );
-    expectRedirection( $res,
-        qr#^http://auth.idp.com/saml/singleSignOn\?(SAMLRequest=.*)# );
+    expectOK($res);
+    ok(
+        $res->[2]->[0] =~
+          /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
+        'Found confirm key'
+      )
+      or explain(
+        $res->[2],
+'<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
+      );
 }
 
 count($maintests);

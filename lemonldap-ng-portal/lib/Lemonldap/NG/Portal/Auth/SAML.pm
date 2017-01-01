@@ -11,7 +11,6 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_SAML_CONDITIONS_ERROR
   PE_SAML_DESTINATION_ERROR
   PE_SAML_ERROR
-  PM_SAML_IDPCHOOSEN
   PE_SAML_IDPSSOINITIATED_NOTALLOWED
   PE_SAML_SESSION_ERROR
   PE_SAML_SIGNATURE_ERROR
@@ -820,11 +819,11 @@ sub extractFormInfo {
     my ( $idp, $idp_cookie ) = $self->getIDP($req);
 
     # Get confirmation flag
-    my $confirm_flag = $req->param("confirm") // '';
+    my $confirm_flag = $req->param("confirm") // 0;
 
     # If confirmation is -1 from resolved IDP screen,
     # or IDP was not resolve, let the user choose its IDP
-    if ( $confirm_flag eq '-1' or !$idp ) {
+    if ( $confirm_flag == -1 or !$idp ) {
         $self->lmLog( "Redirecting user to IDP list", 'debug' );
 
         # Control url parameter
@@ -860,7 +859,7 @@ sub extractFormInfo {
     }
 
     # If IDP is found but not confirmed, let the user confirm it
-    elsif ( $confirm_flag eq '1' ) {
+    elsif ( $confirm_flag != 1 ) {
         $self->lmLog( "IDP $idp selected, need user confirmation", 'debug' );
 
         # Control url parameter
@@ -868,19 +867,20 @@ sub extractFormInfo {
         return $urlcheck unless ( $urlcheck == PE_OK );
 
         # Choosen IDP
-        my $html = '<h3>'
-          . $self->msg(PM_SAML_IDPCHOOSEN)
-          . "</h3>\n" . "<h4>"
+        my $html =
+'<h3 trspan="redirectionToIdp">Redirection to your Identity Provider</h3><h4>'
           . $self->idpList->{$idp}->{name}
           . "</h4>\n"
           . "<p><i>"
           . $idp
           . "</i></p>\n"
-          . "<input type=\"hidden\" name=\"url\" value=\""
-          . $req->param("url") . "\" />"
+          . ( $req->param("url")
+            ? "<input type=\"hidden\" name=\"url\" value=\""
+              . $req->param("url") . "\" />"
+            : '' )
           . "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
 
-        $self->info( $req, $html );
+        $self->p->info( $req, $html );
 
         $req->datas->{login} = 1;
         return PE_CONFIRM;
@@ -1385,7 +1385,7 @@ sub authLogout {
         return PE_OK;
     }
     else {
-        $self->lmLog("Lasso method $method not implemented here",'error');
+        $self->lmLog( "Lasso method $method not implemented here", 'error' );
         return PE_SAML_SLO_ERROR;
     }
 }

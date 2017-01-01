@@ -86,7 +86,6 @@
 "PM6":"authentications remaining, change your password!",
 "PM7":"%d days, %d hours, %d minutes and %d seconds before password expiration, change it!",
 "PM8":"Select your Identity Provider",
-"PM9":"Redirection to your Identity Provider",
 "PM10":"Remember my choice",
 "PM11":"Logout from service providers...",
 "PM12":"Redirection in progress...",
@@ -171,6 +170,7 @@
 "redirectedFrom":"You were redirect from ",
 "redirectedIn":"You'll be redirected in 10 seconds",
 "redirectionInProgres":"Redirection in progress...",
+"redirectionToIdp":"Redirection to your Identity Provider",
 "refuse":"Refuse",
 "registerRequestAlreadyIssued":"A register request for this account was already issued on ",
 "rememberChoice":"Remember my choice",
@@ -196,7 +196,7 @@
 "yourEmail":"Your email",
 "yourIdentity":"Your identity",
 "yourIdentityIs":"Your identity is",
-"yourLoginIs":"Your login is"
+"yourLoginIs":"Your login is",
 "yourPhone":"Your phone number",
-"yourProfile":"Your profile",
+"yourProfile":"Your profile"
 }

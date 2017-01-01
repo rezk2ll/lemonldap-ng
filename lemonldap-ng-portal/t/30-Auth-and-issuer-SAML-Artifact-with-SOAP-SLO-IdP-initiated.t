@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 12;
+my $maintests = 13;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -116,8 +116,16 @@ m#img src="http://auth.idp.com(/saml/relaySingleLogoutSOAP)\?(relay=.*?)"#s,
         ),
         'Test if user is reject on SP'
     );
-    expectRedirection( $res,
-        qr#^http://auth.idp.com(/saml/singleSignOnArtifact)\?(SAMLart=.+)# );
+    expectOK($res);
+    ok(
+        $res->[2]->[0] =~
+          /<input type="hidden".+?id="confirm".+?value="(.+?)"/s,
+        'Found confirm key'
+      )
+      or explain(
+        $res->[2],
+'<input type="hidden" id="confirm" name="confirm" value="<base64 value>" />'
+      );
 }
 
 count($maintests);

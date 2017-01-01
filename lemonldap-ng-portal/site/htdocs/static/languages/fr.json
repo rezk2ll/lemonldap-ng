@@ -86,7 +86,6 @@
 "PM6":"authentifications restantes, changez votre mot de passe !",
 "PM7":"%d jours, %d heures, %d minutes et %d secondes avant expiration de votre mot de passe, pensez à le changer !",
 "PM8":"Choisissez votre fournisseur d'identité",
-"PM9":"Redirection vers votre fournisseur d'identité",
 "PM10":"Se souvenir de mon choix",
 "PM11":"Déconnexion des services...",
 "PM12":"Redirection en cours...",
@@ -171,6 +170,7 @@
 "redirectedFrom":"Vous avez été redirigé depuis ",
 "redirectedIn":"Vous allez être redirigé(e) automatiquement dans 10 secondes",
 "redirectionInProgres":"Redirection en cours...",
+"redirectionToIdp":"Redirection vers votre fournisseur d'identité",
 "refuse":"Refuser",
 "registerRequestAlreadyIssued":"Une demande de création pour ce compte a déjà été faite le ",
 "rememberChoice":"Se souvenir de mon choix",
@@ -196,7 +196,7 @@
 "yourEmail":"Votre adresse électronique",
 "yourIdentity":"Votre identité",
 "yourIdentityIs":"Votre identité est&nbsp;",
-"yourLoginIs":"Votre identifiant est"
+"yourLoginIs":"Votre identifiant est",
 "yourPhone":"Votre numéro de téléphone",
-"yourProfile":"Vos informations personnelles",
+"yourProfile":"Vos informations personnelles"
 }

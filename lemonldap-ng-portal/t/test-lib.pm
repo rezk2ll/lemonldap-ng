@@ -67,8 +67,9 @@ count(1);
 sub expectAutoPost {
     my @r = expectForm(@_);
     my $method = pop @r;
-    ok ( $method =~ /^post$/i );
+    ok ( $method =~ /^post$/i, 'Method is POST' ) or explain (\@r,'POST');
     count(1);
+    return @r;
 }
 
 sub expectForm {
@@ -117,7 +118,7 @@ sub expectForm {
             ok( defined $fields{$f}, qq{Field "$f" is defined} );
             count(1);
         }
-        return ( $host, $uri, $query );
+        return ( $host, $uri, $query, $method );
     }
     else {
         return ();
@@ -267,7 +268,6 @@ sub logout {
 
 sub _get {
     my ( $self, $path, %args ) = @_;
-    print STDERR Data::Dumper::Dumper($args{custom});
     return $self->app->(
         {
             'HTTP_ACCEPT' => $args{accept}
