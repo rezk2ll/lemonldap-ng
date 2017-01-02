@@ -115,13 +115,15 @@ Lemonldap::NG::Handler::SharedConf->init();
       or die "Unable to get configuration";
     foreach my $lltype ( keys %{ $conf->{nginxCustomHandlers} // {} } ) {
         my $v = $conf->{nginxCustomHandlers}->{$lltype};
-        eval "use $v";
-        if ( my $err = $@ ) {
+        if ( $v =~ m#[/\\\.]# ) {
             eval { require $v; };
-            if ($@) {
-                print STDERR "Unable to load $v, skipping:\n$err\n$@\n";
-                next;
-            }
+        }
+        else {
+            eval "use $v";
+        }
+        if ($@) {
+            print STDERR "Unable to load $v, skipping: $@\n";
+            next;
         }
         $builder{$lltype} = sub {
             require $v;
