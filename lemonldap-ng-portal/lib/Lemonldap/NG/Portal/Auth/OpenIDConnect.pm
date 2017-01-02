@@ -362,7 +362,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =item Copyright (C) 2014-2016 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
 
-=item Copyright (C) 2016 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+=item Copyright (C) 2016-2017 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =back
 

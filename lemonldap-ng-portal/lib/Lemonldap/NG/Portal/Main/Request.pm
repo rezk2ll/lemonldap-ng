@@ -226,7 +226,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =over
 
-=item Copyright (C) 2015-2016 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+=item Copyright (C) 2015-2017 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =item Copyright (C) 2015-2016 by Clément Oudot, E<lt>clem.oudot@gmail.comE<gt>
 
