@@ -466,7 +466,7 @@ sub cookie {
     my @res;
     $res[0] = "$h{name}" or die("name required");
     $res[0] .= "=$h{value}";
-    foreach (qw(domain path expires max_age)) {
+    foreach (qw(domain path expires max_age HttpOnly)) {
         my $f = $_;
         $f =~ s/_/-/g;
         push @res, "$f=$h{$_}" if ( $h{$_} );
