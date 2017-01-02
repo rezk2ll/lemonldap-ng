@@ -6,44 +6,79 @@
 package Lemonldap::NG::Portal::CDC;
 
 use strict;
-use warnings;
+use Mouse;
 use MIME::Base64;
-use Lemonldap::NG::Portal::SharedConf;    # inherits
-use Lemonldap::NG::Portal::_SAML;         # inherits
 
 our $VERSION = '2.0.0';
-our @ISA = qw(Lemonldap::NG::Portal::_SAML Lemonldap::NG::Portal::SharedConf);
+
+extends 'Lemonldap::NG::Common::PSGI';
+
+# PROPERTIES
+
+has cdc_name         => ( is => 'rw' );
+has cdc_domain       => ( is => 'rw' );
+has httpOnly         => ( is => 'rw' );
+has cookieExpiration => ( is => 'rw' );
+has oldStyleUrl      => ( is => 'rw' );
+has cdc_values       => ( is => 'rw' );
+
+# INITIALIZATION
+
+sub init {
+    my ( $self, $args ) = @_;
+    my $tmp = Lemonldap::NG::Common::Conf->new( $args->{configStorage} );
+    unless ($tmp) {
+        $self->error(
+            "Unable to build configuration: $Lemonldap::NG::Common::Conf::msg");
+        return 0;
+    }
+    my $conf = $tmp->getConf();
+    unless ( ref($conf) ) {
+        $self->error(
+            "Unable to load configuration: $Lemonldap::NG::Common::Conf::msg");
+        return 0;
+    }
+    $self->cdc_name( $conf->{samlCommonDomainCookieName} || '_saml_idp' );
+    $self->cdc_domain( $conf->{samlCommonDomainCookieDomain} );
+    $self->lmLog( "[CDC] Cookie name: " . $self->cdc_name, 'debug' );
+    $self->lmLog(
+        "[CDC] Domain name: "
+          . ( $self->cdc_domain ? $self->cdc_domain : '<host name>' ),
+        'debug'
+    );
+
+    foreach (qw(httpOnly cookieExpiration oldStyleUrl)) {
+        $self->$_( $conf->{$_} );
+    }
+    return 1;
+}
 
 ## @method int process()
 # Main method to process CDC requests
 # @return portal error code
-sub process {
-    my $self       = shift;
+sub handler {
+    my ( $self, $req ) = @_;
     my $cdc_idp    = "";
     my $cdc_cookie = "";
 
     # Default values
-    my $cdc_name   = $self->{samlCommonDomainCookieName}   || '_saml_idp';
-    my $cdc_domain = $self->{samlCommonDomainCookieDomain} || $ENV{'HTTP_HOST'};
-
-    $self->lmLog( "[CDC] Cookie name: $cdc_name",   'debug' );
-    $self->lmLog( "[CDC] Domain name: $cdc_domain", 'debug' );
+    my $cdc_domain = $self->cdc_domain || $req->hostname;
 
     # Request parameter
-    my $action = $self->param('action') || "";    # What we do
-    my $idp = $self->param('idp');                # IDP ID in write mode
+    my $action = $req->param('action') || "";    # What we do
+    my $idp = $req->param('idp');                # IDP ID in write mode
 
-    # Control URL
-    my $control_url = $self->_sub('controlUrlOrigin');
-    unless ( $control_url == PE_OK ) {
-        $self->lmLog( "[CDC] Bad URL", 'error' );
-        return $control_url;
-    }
+    # TODO: Control URL
+    #my $control_url = $self->_sub('controlUrlOrigin');
+    #unless ( $control_url == PE_OK ) {
+    #    $self->lmLog( "[CDC] Bad URL", 'error' );
+    #    return $control_url;
+    #}
 
     # Get cookie
-    my %cookies = fetch CGI::Cookie;
-    $cdc_cookie = $cookies{$cdc_name} if %cookies;
-    $cdc_cookie &&= $cdc_cookie->value;
+    my %cookies =
+      map { /=/ ? ( split /=/, $_ ) : () } split( /;\s*/, $req->cookie );
+    $cdc_cookie = $cookies{ $self->cdc_name } if %cookies;
 
     if ($cdc_cookie) {
         $self->lmLog( "[CDC] Cookie found with value $cdc_cookie", 'debug' );
@@ -59,8 +94,7 @@ sub process {
 
         # Check IDP value
         unless ($idp) {
-            $self->lmLog( "[CDC] No IDP given", 'error' );
-            return PE_SAML_ERROR;
+            return $self->sendError( $req, "[CDC] No IDP given", 400 );
         }
 
         # Add IDP value
@@ -75,19 +109,17 @@ sub process {
         $cdc_cookie .= ( $cdc_cookie ? " " : "" );
         $cdc_cookie .= $encoded_idp;
 
-        $self->lmLog( "[CDC] Build cookie $cdc_name with value $cdc_cookie",
+        $self->lmLog(
+            "[CDC] Build cookie $self->{cdc_name} with value $cdc_cookie",
             'debug' );
 
         # Build cookie
-        push @{ $self->{cookie} }, $self->cookie(
-            -name     => $cdc_name,
-            -value    => $cdc_cookie,
-            -domain   => $cdc_domain,
-            -path     => "/",                         # See SAML protocol
-            -secure   => 1,                           # See SAML protocol
-            -httponly => $self->{httpOnly},
-            -expires  => $self->{cookieExpiration},
-        );
+        push @{ $req->respHeaders },
+            'Set-Cookie' => $self->cdc_name
+          . "=$cdc_cookie; domain=$cdc_domain; path=/; secure=1; HttpOnly="
+          . $self->httpOnly
+          . "; expires="
+          . $self->cookieExpiration;
     }
 
     # Read request
@@ -110,14 +142,20 @@ sub process {
     }
 
     # Redirect if needed
-    if ( $self->{urldc} ) {
+    if ( my $url = $req->param('url') ) {
+
+        # Decode URL
+        if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
+            return $self->sendError( $req, "Bad URL", 400 );
+        }
+        my $urldc = decode_base64($url);
 
         # Add CDC IDP in return URL if needed
         # olStyleUrl can be set to 1 to use & instead of ;
-        $self->{urldc} .= (
+        $urldc .= (
             $cdc_idp
             ? (
-                $self->{urldc} =~ /\?/
+                $urldc =~ /\?/
                 ? ( $self->{oldStyleUrl} ? '&' : ';' ) . 'idp=' . $cdc_idp
                 : '?idp=' . $cdc_idp
               )
@@ -125,7 +163,7 @@ sub process {
         );
 
         # Redirect
-        return $self->_subProcess('autoRedirect');
+        return [ 302, [ Location => $urldc, @{ $req->respHeaders } ], [] ];
 
     }
 
@@ -137,7 +175,15 @@ sub process {
         $self->{cdc_values} = \@cdc_values;
     }
 
-    return PE_OK;
+    return [
+        200,
+        [
+            'Content-Type'   => 'text/plain',
+            'Content-Length' => 2,
+            @{ $req->respHeaders }
+        ],
+        ['OK']
+    ];
 }
 
 1;
