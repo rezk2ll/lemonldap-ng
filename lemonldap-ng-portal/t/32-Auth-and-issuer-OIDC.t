@@ -14,10 +14,16 @@ my %handlerOR = ( issuer => [], sp => [] );
 # Initialization
 ok( $issuer = issuer(), 'OP portal' );
 
-ok( $res = $issuer->_get('/oauth2/jwks'), 'Get JWKS' );
+ok(
+    $res = $issuer->_get('/oauth2/jwks'),
+    'Get JWKS,     endpoint /oauth2/jwks'
+);
 my $jwks = $res->[2]->[0];
 
-ok( $res = $issuer->_get('/.well-known/openid-configuration'), 'Get metadata' );
+ok(
+    $res = $issuer->_get('/.well-known/openid-configuration'),
+    'Get metadata, endpoint /.well-known/openid-configuration'
+);
 my $metadata = $res->[2]->[0];
 count(3);
 
@@ -34,7 +40,7 @@ my ( $url, $query ) =
 # Push request to OP
 switch ('issuer');
 ok( $res = $issuer->_get( $url, query => $query, accept => 'text/html' ),
-    'Push request to OP' );
+    "Push request to OP,  endpoint $url" );
 count(1);
 expectOK($res);
 
@@ -47,12 +53,12 @@ ok(
         accept => 'text/html',
         length => length($query),
     ),
-    'Post authentication'
+    "Post authentication, endpoint $url"
 );
 count(1);
 my $idpId = expectCookie($res);
 my ( $host, $tmp );
-( $host, $tmp, $query ) = expectForm( $res, '#' );
+( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
 
 ok(
     $res = $issuer->_post(
@@ -62,7 +68,7 @@ ok(
         cookie => "lemonldap=$idpId",
         length => length($query),
     ),
-    'Post authentication'
+    "Post confirmation, endpoint $url"
 );
 count(1);
 
@@ -76,7 +82,12 @@ ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
 count(1);
 my $spId = expectCookie($res);
 
+switch('issuer');
+ok($res=$issuer->_get('/oauth2/checksession',accept=>'text.html'),'Check session, endpoint /oauth2/checksession');
+count(1);
+
 # Logout initiated by RP
+switch ('sp');
 ok(
     $res = $sp->_get(
         '/',
@@ -100,7 +111,7 @@ ok(
         cookie => "lemonldap=$idpId",
         accept => 'text/html'
     ),
-    'Push logout request to OP'
+    "Push logout request to OP, endpoint $url"
 );
 count(1);
 
@@ -112,35 +123,35 @@ ok(
         length => length($query),
         cookie => "lemonldap=$idpId",
     ),
-    'Confirm logout'
+    "Confirm logout,            endpoint $url"
 );
 count(1);
 
-    # Test if logout is done
-    switch ('issuer');
-    ok(
-        $res = $issuer->_get(
-            '/', cookie => "lemonldap=$idpId",
-        ),
-        'Test if user is reject on IdP'
-    );
-    count(1);
-    expectReject($res);
+# Test if logout is done
+switch ('issuer');
+ok(
+    $res = $issuer->_get(
+        '/', cookie => "lemonldap=$idpId",
+    ),
+    'Test if user is reject on IdP'
+);
+count(1);
+expectReject($res);
 
-    switch ('sp');
-    ok(
-        $res = $sp->_get(
-            '/',
-            accept => 'text/html',
-            cookie =>
-              "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
-        ),
-        'Test if user is reject on SP'
-    );
-    count(1);
-    expectRedirection($res,qr#^http://auth.op.com/oauth2/authorize#);
+switch ('sp');
+ok(
+    $res = $sp->_get(
+        '/',
+        accept => 'text/html',
+        cookie =>
+          "lemonldapidp=http://auth.idp.com/saml/metadata; lemonldap=$spId"
+    ),
+    'Test if user is reject on SP'
+);
+count(1);
+expectRedirection( $res, qr#^http://auth.op.com/oauth2/authorize# );
 
-    #print STDERR Dumper($res);
+#print STDERR Dumper($res);
 #print STDERR Dumper($res);
 
 clean_sessions();
@@ -150,11 +161,23 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.((?:o|r)p).com(.*)#, 'REST request' );
+    ok( $req->uri =~ m#http://auth.((?:o|r)p).com(.*)#, ' REST request' );
     my $host = $1;
     my $url  = $2;
-    my $res;
-    my $client = ( $host eq 'op' ? $issuer : $sp );
+    my ( $res, $client );
+    count(1);
+    if ( $host eq 'op' ) {
+        pass("  Request from RP to OP, endpoint $url");
+        $client = $issuer;
+    }
+    elsif ( $host eq 'rp' ) {
+        pass('  Request from OP to RP');
+        $client = $sp;
+    }
+    else {
+        fail('  Aborting REST request (external)');
+        return HTTP::Response->new(500);
+    }
     if ( $req->method =~ /^post$/i ) {
         my $s = $req->content;
         ok(
@@ -163,7 +186,7 @@ sub LWP::UserAgent::request {
                 length => length($s),
                 type   => $req->header('Content-Type'),
             ),
-            'Execute request'
+            '  Execute request'
         );
     }
     else {
@@ -174,12 +197,12 @@ sub LWP::UserAgent::request {
                     HTTP_AUTHORIZATION => $req->header('Authorization'),
                 }
             ),
-            'Execute request'
+            '  Execute request'
         );
     }
-    expectOK($res);
+    ok( $res->[0] == 200, '  Response is 200' );
     ok( getHeader( $res, 'Content-Type' ) =~ m#^application/json#,
-        'Content is JSON' )
+        '  Content is JSON' )
       or explain( $res->[1], 'Content-Type => application/json' );
     my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
 
@@ -187,12 +210,14 @@ sub LWP::UserAgent::request {
         $httpResp->header( $name, shift( @{ $res->[1] } ) );
     }
     $httpResp->content( join( '', @{ $res->[2] } ) );
-    count(3);
+    count(4);
     return $httpResp;
 }
 
 sub switch {
     my $type = shift;
+    pass( '==> Switching to ' . uc($type) . ' <==' );
+    count(1);
     @Lemonldap::NG::Handler::Main::Reload::_onReload = @{
         $handlerOR{$type};
     };

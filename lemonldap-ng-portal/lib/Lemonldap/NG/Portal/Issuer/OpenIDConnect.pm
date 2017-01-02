@@ -1249,15 +1249,18 @@ sub checkSession {
         'debug' );
     $req->parseBody if ( $req->method =~ /^post$/i );
 
-    my $portalPath = $self->{portal};
+    my $portalPath = $self->conf->{portal};
     $portalPath =~ s#^https?://[^/]+/?#/#;
     $portalPath =~ s#[^/]+\.pl$##;
 
     # TODO: access_control_allow_origin => '*'
-    return $self->sendHtml(
-        $req, '../common/oidc_checksession',
-        JS_CODE   => $self->getSessionManagementOPIFrameJS,
-        SKIN_PATH => $portalPath . 'skins'
+    return $self->p->sendHtml(
+        $req,
+        '../common/oidc_checksession',
+        params => {
+            JS_CODE   => $self->getSessionManagementOPIFrameJS,
+            SKIN_PATH => $portalPath . 'skins',
+        }
     );
 }
 
