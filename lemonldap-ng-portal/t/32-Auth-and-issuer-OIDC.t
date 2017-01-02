@@ -8,52 +8,49 @@ BEGIN {
 }
 
 my $debug = 'error';
-my ( $issuer, $sp, $res );
-my %handlerOR = ( issuer => [], sp => [] );
+my ( $op, $rp, $res );
+my %handlerOR = ( op => [], rp => [] );
 
 # Initialization
-ok( $issuer = issuer(), 'OP portal' );
+ok( $op = op(), 'OP portal' );
 
-ok(
-    $res = $issuer->_get('/oauth2/jwks'),
-    'Get JWKS,     endpoint /oauth2/jwks'
-);
+ok( $res = $op->_get('/oauth2/jwks'), 'Get JWKS,     endpoint /oauth2/jwks' );
 my $jwks = $res->[2]->[0];
 
 ok(
-    $res = $issuer->_get('/.well-known/openid-configuration'),
+    $res = $op->_get('/.well-known/openid-configuration'),
     'Get metadata, endpoint /.well-known/openid-configuration'
 );
 my $metadata = $res->[2]->[0];
 count(3);
 
-switch ('sp');
-ok( $sp = sp( $jwks, $metadata ), 'RP portal' );
+switch ('rp');
+ok( $rp = rp( $jwks, $metadata ), 'RP portal' );
 count(1);
 
 # Query RP for auth
-ok( $res = $sp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
+ok( $res = $rp->_get( '/', accept => 'text/html' ), 'Unauth SP request' );
 count(1);
 my ( $url, $query ) =
   expectRedirection( $res, qr#http://auth.op.com(/oauth2/authorize)\?(.*)$# );
 
 # Push request to OP
-switch ('issuer');
-ok( $res = $issuer->_get( $url, query => $query, accept => 'text/html' ),
-    "Push request to OP,  endpoint $url" );
+switch ('op');
+ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
+    "Push request to OP,       endpoint $url" );
 count(1);
 expectOK($res);
 
 # Try to authenticate to IdP
 $query = "user=dwho&password=dwho&$query";
 ok(
-    $res = $issuer->_post(
+    $res = $op->_post(
         $url,
         IO::String->new($query),
         accept => 'text/html',
         length => length($query),
     ),
-    "Post authentication, endpoint $url"
+    "Post authentication,      endpoint $url"
 );
 count(1);
 my $idpId = expectCookie($res);
@@ -61,35 +58,36 @@ my ( $host, $tmp );
 ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
 
 ok(
-    $res = $issuer->_post(
+    $res = $op->_post(
         $url,
         IO::String->new($query),
         accept => 'text/html',
         cookie => "lemonldap=$idpId",
         length => length($query),
     ),
-    "Post confirmation, endpoint $url"
+    "Post confirmation,        endpoint $url"
 );
 count(1);
 
 ($query) = expectRedirection( $res, qr#^http://auth.rp.com/?\?(.*)$# );
 
 # Push OP response to RP
-switch ('sp');
+switch ('rp');
 
-ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
+ok( $res = $rp->_get( '/', query => $query, accept => 'text/html' ),
     'Call openidconnectcallback on RP' );
 count(1);
 my $spId = expectCookie($res);
 
-switch('issuer');
-ok($res=$issuer->_get('/oauth2/checksession',accept=>'text.html'),'Check session, endpoint /oauth2/checksession');
+switch ('op');
+ok( $res = $op->_get( '/oauth2/checksession', accept => 'text.html' ),
+    'Check session,         endpoint /oauth2/checksession' );
 count(1);
 
 # Logout initiated by RP
-switch ('sp');
+switch ('rp');
 ok(
-    $res = $sp->_get(
+    $res = $rp->_get(
         '/',
         query  => 'logout',
         cookie => "lemonldap=$spId",
@@ -102,35 +100,35 @@ count(1);
     qr#http://auth.op.com(/oauth2/logout)\?(post_logout_redirect_uri=.+)$# );
 
 # Push logout to OP
-switch ('issuer');
+switch ('op');
 
 ok(
-    $res = $issuer->_get(
+    $res = $op->_get(
         $url,
         query  => $query,
         cookie => "lemonldap=$idpId",
         accept => 'text/html'
     ),
-    "Push logout request to OP, endpoint $url"
+    "Push logout request to OP,   endpoint $url"
 );
 count(1);
 
 ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
 
 ok(
-    $res = $issuer->_post(
+    $res = $op->_post(
         $url, IO::String->new($query),
         length => length($query),
         cookie => "lemonldap=$idpId",
     ),
-    "Confirm logout,            endpoint $url"
+    "Confirm logout,              endpoint $url"
 );
 count(1);
 
 # Test if logout is done
-switch ('issuer');
+switch ('op');
 ok(
-    $res = $issuer->_get(
+    $res = $op->_get(
         '/', cookie => "lemonldap=$idpId",
     ),
     'Test if user is reject on IdP'
@@ -138,9 +136,9 @@ ok(
 count(1);
 expectReject($res);
 
-switch ('sp');
+switch ('rp');
 ok(
-    $res = $sp->_get(
+    $res = $rp->_get(
         '/',
         accept => 'text/html',
         cookie =>
@@ -167,12 +165,12 @@ sub LWP::UserAgent::request {
     my ( $res, $client );
     count(1);
     if ( $host eq 'op' ) {
-        pass("  Request from RP to OP, endpoint $url");
-        $client = $issuer;
+        pass("  Request from RP to OP,   endpoint $url");
+        $client = $op;
     }
     elsif ( $host eq 'rp' ) {
         pass('  Request from OP to RP');
-        $client = $sp;
+        $client = $rp;
     }
     else {
         fail('  Aborting REST request (external)');
@@ -223,7 +221,7 @@ sub switch {
     };
 }
 
-sub issuer {
+sub op {
     return LLNG::Manager::Test->new(
         {
             ini => {
@@ -318,7 +316,7 @@ GQIDAQAB
     );
 }
 
-sub sp {
+sub rp {
     my ( $jwks, $metadata ) = @_;
     return LLNG::Manager::Test->new(
         {

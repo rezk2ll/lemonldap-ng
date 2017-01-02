@@ -46,19 +46,19 @@ sub clean_sessions {
 
 sub expectRedirection {
     my ( $res, $location ) = @_;
-    ok( $res->[0] == 302, 'Get redirection' )
+    ok( $res->[0] == 302, ' Get redirection' )
       or explain( $res->[0], 302 );
     count(1);
     if ( ref $location ) {
         my @match;
         @match = ( getRedirection($res) =~ $location );
-        ok( @match, 'Location header found' )
+        ok( @match, ' Location header found' )
           or explain( $res->[1], "Location match: " . Dumper($location) );
         count(1);
         return @match;
     }
     else {
-        ok( getRedirection($res) eq $location, "Location is $location" )
+        ok( getRedirection($res) eq $location, " Location is $location" )
           or explain( $res->[1], "Location => $location" );
 count(1);
     }
@@ -67,7 +67,7 @@ count(1);
 sub expectAutoPost {
     my @r = expectForm(@_);
     my $method = pop @r;
-    ok ( $method =~ /^post$/i, 'Method is POST' ) or explain (\@r,'POST');
+    ok ( $method =~ /^post$/i, ' Method is POST' ) or explain (\@r,'POST');
     count(1);
     return @r;
 }
@@ -80,7 +80,7 @@ sub expectForm {
         ok(
             $res->[2]->[0] =~
               m@<form.+?action="(?:http://([^/]+)(/.*?)?|(#))".+method="(post|get)"@is,
-            'Page contains a form'
+            ' Page contains a form'
         )
       )
     {
@@ -91,21 +91,21 @@ sub expectForm {
         }
         if ($hostRe) {
             if ( ref $hostRe ) {
-                ok( $host =~ $hostRe, 'Host match' )
+                ok( $host =~ $hostRe, ' Host match' )
                   or explain( $host, $hostRe );
             }
             else {
-                ok( $host eq $hostRe, 'Host match' )
+                ok( $host eq $hostRe, ' Host match' )
                   or explain( $host, $hostRe );
             }
             count(1);
         }
         if ($uriRe) {
             if ( ref $uriRe ) {
-                ok( $uri =~ $uriRe, 'URI match' ) or explain( $uri, $uriRe );
+                ok( $uri =~ $uriRe, ' URI match' ) or explain( $uri, $uriRe );
             }
             else {
-                ok( $uri eq $uriRe, 'URI match' ) or explain( $uri, $uriRe );
+                ok( $uri eq $uriRe, ' URI match' ) or explain( $uri, $uriRe );
             }
             count(1);
         }
@@ -115,7 +115,7 @@ sub expectForm {
             map { "$_=" . uri_escape( uri_unescape( $fields{$_} ) ) }
               keys(%fields) );
         foreach my $f (@requiredFields) {
-            ok( defined $fields{$f}, qq{Field "$f" is defined} );
+            ok( defined $fields{$f}, qq{ Field "$f" is defined} );
             count(1);
         }
         return ( $host, $uri, $query, $method );
@@ -127,26 +127,26 @@ sub expectForm {
 
 sub expectAuthenticatedAs {
     my ( $res, $user ) = @_;
-    ok( getHeader( $res, 'Lm-Remote-User' ) eq $user, "Authenticated as $user" )
+    ok( getHeader( $res, 'Lm-Remote-User' ) eq $user, " Authenticated as $user" )
       or explain( $res->[1], "Lm-Remote-User => $user" );
     count(1);
 }
 
 sub expectOK {
     my ($res) = @_;
-    ok( $res->[0] == 200, 'HTTP code is 200' ) or explain( $res, 200 );
+    ok( $res->[0] == 200, ' HTTP code is 200' ) or explain( $res, 200 );
     count(1);
 }
 
 sub expectBadRequest {
     my ($res) = @_;
-    ok( $res->[0] == 400, 'HTTP code is 400' ) or explain( $res->[0], 400 );
+    ok( $res->[0] == 400, ' HTTP code is 400' ) or explain( $res->[0], 400 );
     count(1);
 }
 
 sub expectReject {
     my ($res) = @_;
-    ok( $res->[0] == 401, 'Response is 401' ) or explain( $res->[0], 401 );
+    ok( $res->[0] == 401, ' Response is 401' ) or explain( $res->[0], 401 );
     count(1);
 }
 
@@ -155,7 +155,7 @@ sub expectCookie {
     $cookieName ||= 'lemonldap';
     my $cookies = getCookies($res);
     my $id;
-    ok( defined( $id = $cookies->{$cookieName} ), "Get cookie $cookieName" )
+    ok( defined( $id = $cookies->{$cookieName} ), " Get cookie $cookieName" )
       or explain( $res->[1], "Set-Cookie: $cookieName=something" );
     count(1);
     return $id;
