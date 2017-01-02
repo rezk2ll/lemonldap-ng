@@ -37,7 +37,7 @@ my ( $url, $query ) =
 # Push request to OP
 switch ('op');
 ok( $res = $op->_get( $url, query => $query, accept => 'text/html' ),
-    "Push request to OP,       endpoint $url" );
+    "Push request to OP,         endpoint $url" );
 count(1);
 expectOK($res);
 
@@ -50,7 +50,7 @@ ok(
         accept => 'text/html',
         length => length($query),
     ),
-    "Post authentication,      endpoint $url"
+    "Post authentication,        endpoint $url"
 );
 count(1);
 my $idpId = expectCookie($res);
@@ -65,7 +65,7 @@ ok(
         cookie => "lemonldap=$idpId",
         length => length($query),
     ),
-    "Post confirmation,        endpoint $url"
+    "Post confirmation,          endpoint $url"
 );
 count(1);
 
@@ -80,9 +80,12 @@ count(1);
 my $spId = expectCookie($res);
 
 switch ('op');
-ok( $res = $op->_get( '/oauth2/checksession', accept => 'text.html' ),
-    'Check session,         endpoint /oauth2/checksession' );
+ok(
+    $res = $op->_get( '/oauth2/checksession', accept => 'text.html' ),
+    'Check session,           endpoint /oauth2/checksession'
+);
 count(1);
+expectOK($res);
 
 # Logout initiated by RP
 switch ('rp');
@@ -109,7 +112,7 @@ ok(
         cookie => "lemonldap=$idpId",
         accept => 'text/html'
     ),
-    "Push logout request to OP,   endpoint $url"
+    "Push logout request to OP,     endpoint $url"
 );
 count(1);
 
@@ -121,12 +124,28 @@ ok(
         length => length($query),
         cookie => "lemonldap=$idpId",
     ),
-    "Confirm logout,              endpoint $url"
+    "Confirm logout,                endpoint $url"
 );
 count(1);
 
+# Test logout endpoint without session
+ok(
+    $res = $op->_get(
+        '/oauth2/logout',
+        accept => 'text/html',
+        query  => 'post_logout_redirect_uri=http://auth.rp.com'
+    ),
+    'logout endpoint with redirect, endpoint /oauth2/logout'
+);
+count(1);
+expectRedirection( $res, 'http://auth.rp.com' );
+
+ok( $res = $op->_get('/oauth2/logout'),
+    'logout endpoint,               endpoint /oauth2/logout' );
+count(1);
+expectReject($res);
+
 # Test if logout is done
-switch ('op');
 ok(
     $res = $op->_get(
         '/', cookie => "lemonldap=$idpId",
@@ -165,7 +184,7 @@ sub LWP::UserAgent::request {
     my ( $res, $client );
     count(1);
     if ( $host eq 'op' ) {
-        pass("  Request from RP to OP,   endpoint $url");
+        pass("  Request from RP to OP,     endpoint $url");
         $client = $op;
     }
     elsif ( $host eq 'rp' ) {
