@@ -46,7 +46,6 @@ lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
 lib/Lemonldap/NG/Portal/AuthCAS.pm
-lib/Lemonldap/NG/Portal/AuthGoogle.pm
 lib/Lemonldap/NG/Portal/AuthMulti.pm
 lib/Lemonldap/NG/Portal/AuthOpenID.pm
 lib/Lemonldap/NG/Portal/AuthOpenIDConnect.pm
@@ -122,7 +121,6 @@ lib/Lemonldap/NG/Portal/UserDB/Proxy.pm
 lib/Lemonldap/NG/Portal/UserDB/Remote.pm
 lib/Lemonldap/NG/Portal/UserDB/SAML.pm
 lib/Lemonldap/NG/Portal/UserDB/Slave.pm
-lib/Lemonldap/NG/Portal/UserDBGoogle.pm
 lib/Lemonldap/NG/Portal/UserDBMulti.pm
 lib/Lemonldap/NG/Portal/UserDBOpenID.pm
 lib/Lemonldap/NG/Portal/UserDBOpenIDConnect.pm

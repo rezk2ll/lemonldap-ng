@@ -862,18 +862,6 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             },
             'type' => 'keyTextContainer'
         },
-        'googleAuthnLevel' => {
-            'default' => 1,
-            'type'    => 'int'
-        },
-        'googleExportedVars' => {
-            'default'    => {},
-            'keyMsgFail' => '__badVariableName__',
-            'keyTest'    => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            'msgFail'    => '__badValue__',
-            'test'       => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            'type'       => 'keyTextContainer'
-        },
         'grantSessionRules' => {
             'keyTest' => sub {
                 my ( $val, $conf ) = @_;

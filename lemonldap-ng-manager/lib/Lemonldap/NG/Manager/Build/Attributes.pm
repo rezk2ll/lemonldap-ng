@@ -2005,22 +2005,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         'openIdIDPList' => { 'type' => 'blackWhiteList', default => '0;' },
 
-        # Google
-        googleAuthnLevel => {
-            type          => 'int',
-            default       => 1,
-            documentation => 'Google authentication level',
-        },
-        googleExportedVars => {
-            type          => 'keyTextContainer',
-            keyTest       => qr/^!?[a-zA-Z][a-zA-Z0-9_-]*$/,
-            keyMsgFail    => '__badVariableName__',
-            test          => qr/^[a-zA-Z][a-zA-Z0-9_:\-]*$/,
-            msgFail       => '__badValue__',
-            default       => {},
-            documentation => 'Google exported variables',
-        },
-
         # Facebook
         facebookAuthnLevel => {
             type          => 'int',

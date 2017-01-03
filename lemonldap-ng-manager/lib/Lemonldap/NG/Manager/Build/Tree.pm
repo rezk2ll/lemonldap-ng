@@ -208,12 +208,6 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'googleParams',
-                            help  => 'authgoogle.html',
-                            nodes =>
-                              [ 'googleAuthnLevel', 'googleExportedVars' ]
-                        },
-                        {
                             title => 'ldapParams',
                             help  => 'authldap.html',
                             nodes => [

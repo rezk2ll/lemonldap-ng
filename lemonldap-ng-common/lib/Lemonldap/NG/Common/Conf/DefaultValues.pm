@@ -54,8 +54,6 @@ sub defaultValues {
               'Lemonldap::NG::Common::Apache::Session::Generate::SHA256',
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
         },
-        'googleAuthnLevel'                => 1,
-        'googleExportedVars'              => {},
         'groups'                          => {},
         'hiddenAttributes'                => '_password',
         'hideOldPassword'                 => 0,
