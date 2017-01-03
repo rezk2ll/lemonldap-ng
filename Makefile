@@ -50,7 +50,11 @@ DATADIR=$(LMPREFIX)/data
 # Document roots for Apache VirtualHosts
 DOCUMENTROOT=$(LMPREFIX)/htdocs
 PORTALDIR=$(DOCUMENTROOT)/portal
-PORTALSKINSDIR=$(PORTALDIR)/skins
+PORTALSITEDIR=$(MANAGERDIR)
+PORTALSTATICDIR=$(MANAGERSITEDIR)/static
+PORTALRELATIVESTATICDIR=/static
+PORTALTEMPLATESDIR=$(MANAGERSITEDIR)/templates
+
 MANAGERDIR=$(DOCUMENTROOT)/manager
 MANAGERSITEDIR=$(MANAGERDIR)
 MANAGERSTATICDIR=$(MANAGERSITEDIR)/static
@@ -128,7 +132,10 @@ RINITDIR=$(DESTDIR)/$(INITDIR)
 RETCDEFAULTDIR=$(DESTDIR)/$(ETCDEFAULTDIR)
 RDATADIR=$(DESTDIR)/$(DATADIR)
 RPORTALDIR=$(DESTDIR)/$(PORTALDIR)
-RPORTALSKINSDIR=$(DESTDIR)/$(PORTALSKINSDIR)
+RPORTALSITEDIR=$(DESTDIR)/$(MANAGERSITEDIR)
+RPORTALSTATICDIR=$(DESTDIR)/$(MANAGERSTATICDIR)
+RPORTALPSGIDIR=$(DESTDIR)/$(MANAGERPSGIDIR)
+RPORTALTEMPLATESDIR=$(DESTDIR)/$(MANAGERTEMPLATESDIR)
 RMANAGERDIR=$(DESTDIR)/$(MANAGERDIR)
 RMANAGERSITEDIR=$(DESTDIR)/$(MANAGERSITEDIR)
 RMANAGERSTATICDIR=$(DESTDIR)/$(MANAGERSTATICDIR)
@@ -163,17 +170,16 @@ MANAGERLIBSTOREMOVEFORDEBIAN=$(RMANAGERSTATICDIR)/bwr/jquery/ \
 			$(RMANAGERSTATICDIR)/bwr/angular-cookie/ \
 			$(RMANAGERSTATICDIR)/bwr/bootstrap/ \
 			$(RMANAGERSTATICDIR)/bwr/es5-shim/
-PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSKINSDIR)/bootstrap/fonts \
-			$(RPORTALSKINSDIR)/bootstrap/css/bootstrap* \
-			$(RPORTALSKINSDIR)/bootstrap/js/bootstrap* \
-			$(RPORTALSKINSDIR)/common/js/jquery-* \
-			$(RPORTALSKINSDIR)/common/js/jquery.cookie*
+PORTALLIBSTOREMOVEFORDEBIAN=$(RPORTALSTATICDIR)/bwr/bootstrap/ \
+			$(RPORTALSTATICDIR)/bwr/jquery-ui \
+			$(RPORTALSTATICDIR)/bwr/jquery.cookie \
+			$(RPORTALSTATICDIR)/bwr/jquery
 DOCLIBSTOREMOVEFORDEBIAN=pages/documentation/current/lib/tpl/bootstrap3 \
 			pages/documentation/current/lib/scripts/jquery-ui*.js \
 			pages/documentation/current/bootswatch/3.3.4/flatly/bootstrap.min.css
 DOCEXTERNALLIBS=$(DOCLIBSTOREMOVEFORDEBIAN)
 MANAGEREXTERNALLIBS=$(RMANAGERSTATICDIR)/bwr/
-PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN) $(RPORTALSKINSDIR)/common/js/jquery*
+PORTALEXTERNALLIBS=$(PORTALLIBSTOREMOVEFORDEBIAN)
 
 # GENERATED SRC FILES
 MANAGERJSONSRC= scripts/jsongenerator.pl \
@@ -369,7 +375,8 @@ prepare_test_server:
 		VHOSTLISTEN='*:$(TESTWEBSERVERPORT)' \
 		PORT=$(TESTWEBSERVERPORT) \
 		FASTCGISOCKDIR=`pwd`/e2e-tests/conf \
-		PORTALDIR=`pwd`/$(SRCPORTALDIR)/site/htdocs \
+		PORTALDIR=`pwd`/e2e-tests/conf \
+		PORTALSTATICDIR=`pwd`/$(SRCPORTALDIR)/site/htdocs/static \
 		MANAGERDIR=`pwd`/$(SRCMANAGERDIR)/site \
 		TESTDIR=`pwd`/e2e-tests/conf/site \
 		MANAGERPSGIDIR=`pwd`/e2e-tests \
@@ -378,6 +385,7 @@ prepare_test_server:
 		SBINDIR=`pwd`/e2e-tests/conf/sbin \
 		INITDIR=`pwd`/e2e-tests/conf/init \
 		ETCDEFAULTDIR=`pwd`/e2e-tests/conf/def
+	@cp -f e2e-tests/index.fcgi e2e-tests/conf/index.fcgi
 	@cp e2e-tests/lmConf-1.js e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
 	@cp e2e-tests/form.html e2e-tests/conf/site
 	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s#__port__#$(TESTWEBSERVERPORT)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#;' \
@@ -482,7 +490,6 @@ install_bin:	install_conf_dir
 	@cp -f\
 		${SRCHANDLERDIR}/example/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/site/cron/purgeCentralCache \
-		${SRCPORTALDIR}/example/scripts/buildPortalWSDL \
 		${SRCCOMMONDIR}/scripts/convertConfig \
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
 		${SRCCOMMONDIR}/scripts/rotateOidcKeys \
@@ -542,7 +549,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	# Fix a lost of rights on the main directory
-	@chmod 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSKINSDIR) $(RMANAGERSITEDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
+	@chmod 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSTATICDIR) $(RMANAGERSITEDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
 	@echo
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${CONFDIR}"
@@ -585,6 +592,7 @@ install_webserver_conf:
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
 			s#__PORTALDIR__#$(PORTALDIR)/#g; \
+			s#__PORTALSTATICDIR__#$(PORTALSTATICDIR)/#g; \
 			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
 			s#__MANAGERSTATICDIR__#$(MANAGERSTATICDIR)/#g; \
 			s#__MANAGERPSGIDIR__#$(MANAGERPSGIDIR)/#g; \
@@ -623,22 +631,13 @@ install_manager_site:	install_conf_dir
 
 install_portal_site:	install_conf_dir
 	# Portal install
-	@install -v -d $(RPORTALDIR) $(RPORTALSKINSDIR) \
+	@install -v -d $(RPORTALDIR) $(RPORTALSTATICDIR) \
 		$(RPORTALDIR)/skins/ \
 		$(RCRONDIR) $(RCONFDIR)
-	@for skin in $$(ls $(SRCPORTALDIR)/site/templates/); do \
-		[ -h $(RPORTALDIR)/skins/$$skin ] && rm -f $(RPORTALDIR)/skins/$$skin; \
-		install -v -d $(RPORTALSKINSDIR)/$$skin; \
-	done
-	#cp -pR -f ${SRCPORTALDIR}/example/index_skin.pl ${RPORTALDIR}/index.pl
-	#cp -pR -f ${SRCPORTALDIR}/example/mail.pl ${RPORTALDIR}
-	#cp -pR -f ${SRCPORTALDIR}/example/metadata.pl ${RPORTALDIR}
-	#cp -pR -f ${SRCPORTALDIR}/example/openid-configuration.pl ${RPORTALDIR}
-	#cp -pR -f ${SRCPORTALDIR}/example/cdc.pl ${RPORTALDIR}
-	#cp -pR -f ${SRCPORTALDIR}/example/register.pl ${RPORTALDIR}
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/index.fcgi $(RPORTALDIR)
-	@tar -cf - -C ${SRCPORTALDIR}/site/templates/ $$(ls ${SRCPORTALDIR}/site/templates/) |tar -xf - -C $(RPORTALSKINSDIR)
-	@for f in `find $(RPORTALSKINSDIR) -type f -name '*.tpl'`; do \
+	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/static/* $(RPORTALSTATICDIR)
+	@tar -cf - -C ${SRCPORTALDIR}/site/templates/ $$(ls ${SRCPORTALDIR}/site/templates/) |tar -xf - -C $(RPORTALTEMPLATESDIR)
+	@for f in `find $(RPORTALTEMPLATEDIR) -type f -name '*.tpl'`; do \
 		./scripts/transform-templates \
 			usedebianlibs $(USEDEBIANLIBS) \
 			useexternallibs $(USEEXTERNALLIBS) \
@@ -651,12 +650,6 @@ install_portal_site:	install_conf_dir
 		rm -rvf $(PORTALEXTERNALLIBS); \
 	elif test "$(USEDEBIANLIBS)" = "yes"; then \
 		rm -rvf $(PORTALLIBSTOREMOVEFORDEBIAN); \
-	fi
-	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
-		for skin in $$(ls $(SRCPORTALDIR)/site/templates/); do \
-			rm -rf $(RPORTALDIR)/skins/$$skin/; \
-			ln -s $(PORTALSKINSDIR)/$$skin $(RPORTALDIR)/skins/$$skin; \
-		done; \
 	fi
 	# Cron files
 	@cp -f $(SRCPORTALDIR)/site/cron/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
@@ -983,37 +976,7 @@ doxygen:	clean
 
 diff: debian-diff
 
-debian-diff:
-	@# Portal
-	@$(DIFF) $(SRCPORTALDIR)/lib/Lemonldap/NG/Portal $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Portal ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/scripts/purgeCentralCache $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/purgeCentralCache ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/scripts/buildPortalWSDL $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/buildPortalWSDL ||true
-	@for i in $(PORTALSKINS); do \
-		$(DIFF) -x 'jquery*' $(SRCPORTALDIR)/example/skins/$$i $(DIFFPREFIX)/usr/share/lemonldap-ng/portal-skins/$$i; \
-	done ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/index_skin.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/index.pl ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/mail.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/mail.pl ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/metadata.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/metadata.pl ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/openid-configuration.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/openid-configuration.pl ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/cdc.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/cdc.pl ||true
-	@$(DIFF) $(SRCPORTALDIR)/example/register.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/register.pl ||true
-	@# Handler
-	@$(DIFF) $(SRCHANDLERDIR)/lib/Lemonldap/NG/Handler $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Handler ||true
-	@$(DIFF) $(SRCHANDLERDIR)/example/scripts/purgeLocalCache $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/purgeLocalCache ||true
-	@# Common
-	@$(DIFF) $(SRCCOMMONDIR)/lib/Lemonldap/NG/Common $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Common ||true
-	@$(DIFF) $(SRCCOMMONDIR)/lib/Lemonldap/NG/Common.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Common.pm ||true
-	@$(DIFF) $(SRCCOMMONDIR)/scripts/lmMigrateConfFiles2ini $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini ||true
-	@$(DIFF) $(SRCCOMMONDIR)/scripts/convertConfig $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/convertConfig ||true
-	@$(DIFF) $(SRCCOMMONDIR)/scripts/rotateOidcKeys $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/rotateOidcKeys ||true
-	@# Manager
-	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager ||true
-	@$(DIFF) $(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager.pm ||true
-	@$(DIFF) $(SRCMANAGERDIR)/site/static $(DIFFPREFIX)/usr/share/lemonldap-ng/manager/static ||true
-	@$(DIFF) $(SRCMANAGERDIR)/site/templates $(DIFFPREFIX)/user/share/lemonldap-ng/manager/templates ||true
-	@$(DIFF) --ignore-matching-lines='set.*get.*\[2\]' $(SRCMANAGERDIR)/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
-	@$(DIFF) --ignore-matching-lines='set.*get.*' $(SRCCOMMONDIR)/scripts/lemonldap-ng-cli $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lemonldap-ng-cli ||true
-
+# TODO: change this
 default-diff:
 	@# Portal
 	@$(DIFF) $(SRCPORTALDIR)/lib/Lemonldap/NG/Portal /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Portal ||true
