@@ -581,7 +581,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 my $access_token;
                 my $at_hash;
 
-                if ( $response_type =~ /token\b/ ) {
+                if ( $response_type =~ /\btoken\b/ ) {
 
                     # Generate access_token
                     my $accessTokenSession = $self->getOpenIDConnectSession;
@@ -680,9 +680,9 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 );
 
                 $self->lmLog( "Redirect user to $response_url", 'debug' );
-                $req->{'urldc'} = $response_url;
+                $self->{'urldc'} = $response_url;
 
-                return PE_REDIRECT;
+                $self->_sub('autoRedirect');
             }
 
             # Hybrid Flow
