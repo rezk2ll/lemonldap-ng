@@ -7,6 +7,7 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CONFIRM
   PE_ERROR
   PE_LOGOUT_OK
+  PE_REDIRECT
   PE_OK
 );
 
@@ -571,8 +572,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 $self->lmLog( "Redirect user to $response_url", 'debug' );
                 $req->urldc($response_url);
 
-                $req->steps( [] );
-                return PE_OK;
+                return PE_REDIRECT;
             }
 
             # Implicit Flow
@@ -680,9 +680,9 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 );
 
                 $self->lmLog( "Redirect user to $response_url", 'debug' );
-                $self->{'urldc'} = $response_url;
+                $req->urldc($response_url);
 
-                $self->_sub('autoRedirect');
+                return PE_REDIRECT;
             }
 
             # Hybrid Flow
@@ -808,8 +808,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 
                 $self->lmLog( "Redirect user to $response_url", 'debug' );
                 $req->urldc($response_url);
-                $req->steps( [] );
-                return PE_OK;
+                return PE_REDIRECT;
             }
 
             $self->lmLog( "No flow has been selected", 'debug' );
@@ -856,8 +855,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 
                     $self->lmLog( "Redirect user to $response_url", 'debug' );
                     $req->urldc($response_url);
-                    $req->steps( [] );
-                    return PE_OK;
+                    return PE_REDIRECT;
                 }
                 return $req->param('confirm') == 1 ? PE_LOGOUT_OK : PE_OK;
             }
