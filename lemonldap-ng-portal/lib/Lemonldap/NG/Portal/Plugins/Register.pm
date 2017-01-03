@@ -1,0 +1,480 @@
+package Lemonldap::NG::Portal::Plugins::Register;
+
+use strict;
+use Mouse;
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_BADMAILTOKEN
+  PE_CAPTCHAEMPTY
+  PE_CAPTCHAERROR
+  PE_MALFORMEDUSER
+  PE_OK
+  PE_REGISTERALREADYEXISTS
+  PE_REGISTERFIRSTACCESS
+  PE_REGISTERFORMEMPTY
+);
+
+our $VERSION = '2.0.0';
+
+extends 'Lemonldap::NG::Portal::Main::Plugin',
+  'Lemonldap::NG::Portal::Lib::SMTP';
+
+# INITIALIZATION
+
+sub init {
+    my ($self) = @_;
+    $self->addUnauthRoute( register => 'register' );
+    if ( $self->conf->{captcha_register_enabled} ) {
+
+        # TODO: load captcha plugin
+    }
+
+    # TODO: load module if != $self->p->authentication
+    return 1;
+}
+
+# PROPERTIES
+
+has captchaModule => ( is => 'rw' );
+
+# TODO
+has registerModule => ( is => 'rw' );
+
+# RUNNIG METHODS
+
+sub register {
+    my ( $self, $req ) = @_;
+    $req->error( $self->_register($req) );
+    my ( $tpl, $prms ) = $self->display($req);
+    return $self->p->sendHtml( $req, $tpl, params => $prms );
+}
+
+sub _register {
+    my ( $self, $req ) = @_;
+
+    unless ( $req->param('mail') || $req->param('register_token') ) {
+        return PE_REGISTERFIRSTACCESS if ( $req->method =~ /GET/ );
+        return PE_REGISTERFORMEMPTY;
+    }
+
+    $req->datas->{register_token} = $req->param('register_token');
+
+    # If a register token is present, find the corresponding info
+    if ( $req->datas->{register_token} ) {
+
+        $self->lmLog(
+            "Token given for register: " . $req->datas->{register_token},
+            'debug' );
+
+        # Get the corresponding session
+        my $registerSession =
+          $self->p->getApacheSession( $req->datas->{register_token} );
+
+        if ( $registerSession && $registerSession->data ) {
+            foreach (qw(mail firstname lastname ipAddr)) {
+                $req->datas->{registerInfo}->{$_} =
+                  $registerSession->data->{$_};
+            }
+            $self->lmLog(
+                "User associated to token: "
+                  . $req->datas->{registerInfo}->{mail},
+                'debug'
+            );
+        }
+
+        return PE_BADMAILTOKEN unless ( $req->datas->{registerInfo}->{mail} );
+    }
+    else {
+
+        # Use submitted value
+        $req->datas->{registerInfo}->{mail}      = $req->param('mail');
+        $req->datas->{registerInfo}->{firstname} = $req->param('firstname');
+        $req->datas->{registerInfo}->{lastname}  = $req->param('lastname');
+        $req->datas->{registerInfo}->{ipAddr}    = $req->remote_ip();
+
+        # Captcha for register form
+        # Only if register session does not already exist
+        if (   $self->conf->{captcha_register_enabled}
+            && $req->datas->{registerInfo}->{mail}
+            && !$self->getRegisterSession( $req->datas->{registerInfo}->{mail} )
+          )
+        {
+            $req->datas->{captcha_user_code} = $req->param('captcha_user_code');
+            $req->datas->{captcha_check_code} = $req->param('captcha_code');
+
+            unless ( $self->{captcha_user_code} && $self->{captcha_check_code} )
+            {
+                $self->lmLog( "Captcha not filled", 'warn' );
+                return PE_CAPTCHAEMPTY;
+            }
+
+            $self->lmLog(
+                "Captcha data received: "
+                  . $req->datas->{captcha_user_code} . " and "
+                  . $req->datas->{captcha_check_code},
+                'debug'
+            );
+
+            # Check captcha
+            my $captcha_result = $self->captchaModule->checkCaptcha(
+                $req->datas->{captcha_user_code},
+                $req->datas->{captcha_check_code}
+            );
+
+            if ( $captcha_result != 1 ) {
+                if (   $captcha_result == -3
+                    or $captcha_result == -2 )
+                {
+                    $self->lmLog( "Captcha failed: wrong code", 'warn' );
+                    return PE_CAPTCHAERROR;
+                }
+                elsif ( $captcha_result == 0 ) {
+                    $self->lmLog(
+                        "Captcha failed: code not checked (file error)",
+                        'warn' );
+                    return PE_CAPTCHAERROR;
+                }
+                elsif ( $captcha_result == -1 ) {
+                    $self->lmLog( "Captcha failed: code has expired", 'warn' );
+                    return PE_CAPTCHAERROR;
+                }
+            }
+            $self->lmLog( "Captcha code verified", 'debug' );
+        }
+
+    }
+
+    # Check mail
+    return PE_MALFORMEDUSER
+      unless ( $req->datas->{registerInfo}->{mail} =~
+        /$self->{conf}->{userControl}/o );
+
+    # Search for user using UserDB module
+    # If the user already exists, register is forbidden
+    $req->datas->{mail} = $req->{registerInfo}->{mail};
+    if ( $self->p->_userDB->getUser($req) == PE_OK ) {
+        $self->lmLog(
+"Register: refuse mail $req->{mail} because already exists in UserDB",
+            'error'
+        );
+        return PE_REGISTERALREADYEXISTS;
+    }
+
+    # Skip this step if confirmation was already sent
+    unless ( $req->datas->{register_token}
+        or $self->getRegisterSession( $req->datas->{registerInfo}->{mail} ) )
+    {
+
+        # Create a new session
+        my $registerSession = $self->p->getApacheSession();
+
+        # Set _utime for session autoremove
+        # Use default session timeout and register session timeout to compute it
+        my $time            = time();
+        my $timeout         = $self->conf->{timeout};
+        my $registerTimeout = $self->conf->{registerTimeout} || $timeout;
+
+        my $infos = {};
+        $infos->{_utime} = $time + ( $registerTimeout - $timeout );
+
+        # Store expiration timestamp for further use
+        $infos->{registerSessionTimeoutTimestamp} = $time + $registerTimeout;
+        $req->datas->{registerInfo}->{registerSessionTimeoutTimestamp} =
+          $time + $registerTimeout;
+
+        # Store start timestamp for further use
+        $infos->{registerSessionStartTimestamp} = $time;
+        $req->datas->{registerInfo}->{registerSessionStartTimestamp} = $time;
+
+        # Store infos
+        $infos->{mail}      = $req->datas->{registerInfo}->{mail};
+        $infos->{firstname} = $req->datas->{registerInfo}->{firstname};
+        $infos->{lastname}  = $req->datas->{registerInfo}->{lastname};
+        $infos->{ipAddr}    = $req->datas->{registerInfo}->{ipAddr};
+
+        # Store type
+        $infos->{_type} = "register";
+
+        # Update session
+        $registerSession->update($infos);
+    }
+
+    # Send confirmation mail
+
+    # Skip this step if user clicked on the confirmation link
+    unless ( $req->datas->{register_token} ) {
+
+        # Check if confirmation mail has already been sent
+        my $register_session =
+          $self->getRegisterSession( $req->datas->{registerInfo}->{mail} );
+        $req->datas->{mail_already_sent} =
+          ( $register_session and !$req->id ) ? 1 : 0;
+
+        # Read session to get creation and expiration dates
+        $req->id($register_session) unless $req->id;
+
+        $self->lmLog( "Register session found: $register_session", 'debug' );
+
+        my $registerSession =
+          $self->p->getApacheSession( $register_session, 1 );
+        $req->datas->{registerInfo}->{registerSessionTimeoutTimestamp} =
+          $registerSession->data->{registerSessionTimeoutTimestamp};
+        $req->datas->{registerInfo}->{registerSessionStartTimestamp} =
+          $registerSession->data->{registerSessionStartTimestamp};
+
+        # Mail session expiration date
+        my $expTimestamp =
+          $req->datas->{registerInfo}->{registerSessionTimeoutTimestamp};
+
+        $self->lmLog( "Register expiration timestamp: $expTimestamp", 'debug' );
+
+        $req->datas->{expMailDate} =
+          strftime( "%d/%m/%Y", localtime $expTimestamp );
+        $req->datas->{expMailTime} =
+          strftime( "%H:%M", localtime $expTimestamp );
+
+        # Mail session start date
+        my $startTimestamp =
+          $req->datas->{registerInfo}->{registerSessionStartTimestamp};
+
+        $self->lmLog( "Register start timestamp: $startTimestamp", 'debug' );
+
+        $req->datas->{startMailDate} =
+          strftime( "%d/%m/%Y", localtime $startTimestamp );
+        $req->datas->{startMailTime} =
+          strftime( "%H:%M", localtime $startTimestamp );
+
+        # Ask if user want another confirmation email
+        if ( $req->datas->{mail_already_sent}
+            and !$self->param('resendconfirmation') )
+        {
+            return PE_MAILCONFIRMATION_ALREADY_SENT;
+        }
+
+        # Build confirmation url
+        my $url = $self->conf->{registerUrl} . "?register_token=" . $req->{id};
+        $url .= '&skin=' . $self->p->getSkin();
+        $url .= '&'
+          . $self->conf->{authChoiceParam} . '='
+          . $req->datas->{_authChoice}
+          if ( $req->datas->{_authChoice} );
+
+        # Build mail content
+        my $subject = $self->conf->{registerConfirmSubject};
+        my $body;
+        my $html = 1;
+
+        # Use HTML template
+        my $tplfile =
+            $self->conf->{templateDir} . '/'
+          . $self->conf->{portalSkin}
+          . '/mail_register_confirm.tpl';
+        $tplfile =
+          $self->conf->{templateDir} . '/common/mail_register_confirm.tpl'
+          unless ( -e $tplfile );
+        my $template = HTML::Template->new( filename => $tplfile, );
+        $body = $template->output();
+
+        # Replace variables in body
+        $body =~ s/\$expMailDate/$req->datas->{expMailDate}/g;
+        $body =~ s/\$expMailTime/$req->datas->{expMailTime}/g;
+        $body =~ s/\$url/$url/g;
+        $body =~ s/\$(\w+)/decode("utf8",$req->datas->{registerInfo}->{$1})/ge;
+
+        # Send mail
+        return PE_MAILERROR
+          unless $self->send_mail( $req->datas->{registerInfo}->{mail},
+            $subject, $body, $html );
+
+        PE_MAILCONFIRMOK;
+    }
+
+    # Generate a complex password
+    my $password = $self->gen_password( $self->conf->{randomPasswordRegexp} );
+
+    $self->lmLog( "Generated password: " . $password, 'debug' );
+
+    $req->datas->{registerInfo}->{password} = $password;
+    $req->datas->{forceReset} = 1;
+
+    # Find a login
+    $result = $self->registerModule->computeLogin($req);
+    unless ( $result == PE_OK ) {
+        $self->lmLog(
+            "Could not compute login for "
+              . $req->datas->{registerInfo}->{mail},
+            'error'
+        );
+        return $result;
+    }
+
+    # Create user
+    $self->lmLog( "Create new user $req->datas->{registerInfo}->{login}",
+        'debug' );
+    $result = $self->registerModule->createUser($req);
+    unless ( $result == PE_OK ) {
+        $self->lmLog(
+            "Could not create user " . $req->datas->{registerInfo}->{login},
+            'error' );
+        return $result;
+    }
+
+    # Register token can be used only one time, delete the session if all is ok
+
+    # Get the corresponding session
+    my $registerSession =
+      $self->getApacheSession( $req->datas->{register_token} );
+
+    if ($registerSession) {
+
+        $self->lmLog(
+            "Delete register session " . $self->datas->{register_token},
+            'debug' );
+
+        $registerSession->remove;
+    }
+    else {
+        $self->lmLog( "Register session not found", 'warn' );
+    }
+
+    my $subject = $self->conf->{registerDoneSubject};
+    my $body;
+    my $html = 1;
+
+    # Use HTML template
+    my $tplfile =
+        $self->conf->{templateDir} . '/'
+      . $self->conf->{portalSkin}
+      . "/mail_register_done.tpl";
+    $tplfile = $self->conf->{templateDir} . "/common/mail_register_done.tpl"
+      unless ( -e $tplfile );
+    my $template = HTML::Template->new( filename => $tplfile, );
+    $body = $template->output();
+
+    # Replace variables in body
+    $body =~ s/\$(\w+)/decode("utf8",$self->{registerInfo}->{$1})/ge;
+
+    # Send mail
+    return PE_MAILERROR
+      unless $self->send_mail( $self->{registerInfo}->{mail}, $subject, $body,
+        $html );
+
+    return PE_MAILOK;
+}
+
+sub display {
+    my ( $self, $req ) = @_;
+    my %templateParams = (
+        PORTAL_URL      => $self->conf->param,
+        SKIN_PATH       => '/static',
+        SKIN            => $self->conf->{portalSkin},
+        SKIN_BG         => $self->conf->{portalSkinBackground},
+        AUTH_ERROR      => $req->error,
+        AUTH_ERROR_TYPE => $req->error_type,
+        CHOICE_PARAM    => $self->conf->{authChoiceParam},
+        CHOICE_VALUE    => $req->datas->{_authChoice},
+        EXPMAILDATE     => $req->datas->{expMailDate},
+        EXPMAILTIME     => $req->datas->{expMailTime},
+        STARTMAILDATE   => $req->datas->{startMailDate},
+        STARTMAILTIME   => $req->datas->{startMailTime},
+        MAILALREADYSENT => $req->datas->{mail_already_sent},
+        MAIL            => $self->p->checkXSSAttack( 'mail',
+            $req->datas->{registerInfo}->{mail} ) ? ""
+        : $req->datas->{registerInfo}->{mail},
+        FIRSTNAME => $self->p->checkXSSAttack( 'firstname',
+            $req->datas->{registerInfo}->{firstname} ) ? ""
+        : $req->datas->{registerInfo}->{firstname},
+        LASTNAME => $req->datas->checkXSSAttack( 'lastname',
+            $req->datas->{registerInfo}->{lastname} ) ? ""
+        : $req->datas->{registerInfo}->{lastname},
+        REGISTER_TOKEN => $req->datas->checkXSSAttack( 'register_token',
+            $req->datas->{register_token} ) ? ""
+        : $req->datas->{register_token},
+    );
+
+    # Display form the first time
+    if (
+        (
+               $req->error == PE_REGISTERFORMEMPTY
+            or $req->error == PE_REGISTERFIRSTACCESS
+            or $req->error == PE_REGISTERALREADYEXISTS
+            or $req->error == PE_CAPTCHAERROR
+            or $req->error == PE_CAPTCHAEMPTY
+        )
+        and !$req->param('mail_token')
+      )
+    {
+        %templateParams = (
+            %templateParams,
+            DISPLAY_FORM            => 1,
+            DISPLAY_RESEND_FORM     => 0,
+            DISPLAY_CONFIRMMAILSENT => 0,
+            DISPLAY_MAILSENT        => 0,
+            DISPLAY_PASSWORD_FORM   => 0,
+        );
+    }
+
+    # Display captcha if it's enabled
+    if ( $self->conf->{captcha_register_enabled} ) {
+        %templateParams = (
+            %templateParams,
+            CAPTCHA_IMG  => $elf->captcha_img,
+            CAPTCHA_CODE => $elf->captcha_code,
+            CAPTCHA_SIZE => $elf->captcha_size
+        );
+    }
+
+    # Display mail confirmation resent form
+    if ( $req->{error} == PE_MAILCONFIRMATION_ALREADY_SENT ) {
+        %templateParams = (
+            %templateParams,
+            DISPLAY_FORM            => 0,
+            DISPLAY_RESEND_FORM     => 1,
+            DISPLAY_CONFIRMMAILSENT => 0,
+            DISPLAY_MAILSENT        => 0,
+            DISPLAY_PASSWORD_FORM   => 0,
+        );
+    }
+
+    # Display confirmation mail sent
+    if ( $req->{error} == PE_MAILCONFIRMOK ) {
+        %templateParams = (
+            %templateParams,
+            DISPLAY_FORM            => 0,
+            DISPLAY_RESEND_FORM     => 0,
+            DISPLAY_CONFIRMMAILSENT => 1,
+            DISPLAY_MAILSENT        => 0,
+            DISPLAY_PASSWORD_FORM   => 0,
+        );
+    }
+
+    # Display mail sent
+    if ( $req->{error} == PE_MAILOK ) {
+        %templateParams = (
+            %templateParams,
+            DISPLAY_FORM            => 0,
+            DISPLAY_RESEND_FORM     => 0,
+            DISPLAY_CONFIRMMAILSENT => 0,
+            DISPLAY_MAILSENT        => 1,
+            DISPLAY_PASSWORD_FORM   => 0,
+        );
+    }
+
+    # Display password change form
+    if (    $req->param('mail_token')
+        and $req->{error} != PE_MAILERROR
+        and $req->{error} != PE_BADMAILTOKEN
+        and $req->{error} != PE_MAILOK )
+    {
+        %templateParams = (
+            %templateParams,
+            DISPLAY_FORM            => 0,
+            DISPLAY_RESEND_FORM     => 0,
+            DISPLAY_CONFIRMMAILSENT => 0,
+            DISPLAY_MAILSENT        => 0,
+            DISPLAY_PASSWORD_FORM   => 1,
+        );
+    }
+    return ( 'register', \%templateParams );
+}
+
+1;

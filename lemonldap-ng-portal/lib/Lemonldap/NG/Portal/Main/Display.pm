@@ -374,7 +374,7 @@ sub getSkin {
     $req->{sessionInfo}->{ipAddr} ||= $req->remote_ip;
 
     # Load specific skin from skinRules
-    foreach my $rule ( @{ $self->skinRules } ) {
+    foreach my $rule ( @{ $self->conf->skinRules } ) {
         if ( $rule->[1]->( $req->sessionInfo ) ) {
             $skin = $rule->[0];
             $self->lmLog( "Skin $skin selected from skin rule", 'debug' );
