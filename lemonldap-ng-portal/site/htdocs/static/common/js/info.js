@@ -21,13 +21,13 @@ function timer() {
   }
   h = h.replace(/\d+/, i);
   $('#timer').html(h);
-  window.setTimeout('timer()', 1000);
+  window.setTimeout(timer, 1000);
 }
 
 $(document).ready(function() {
   if (activeTimer) {
-    window.setTimeout('go()', 10000);
-    window.setTimeout('timer()', 1000);
+    window.setTimeout(go, 10000);
+    window.setTimeout(timer, 1000);
   } else {
     stop();
   }

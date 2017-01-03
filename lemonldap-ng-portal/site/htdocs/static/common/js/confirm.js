@@ -13,10 +13,10 @@ function timer() {
   }
   h = h.replace(/\d+/, i);
   $('#timer').html(h);
-  window.setTimeout('timer()', 1000);
+  window.setTimeout(timer, 1000);
 }
 
 $(document).ready(function() {
-  window.setTimeout('go()', 5000);
-  window.setTimeout('timer()', 1000);
+  window.setTimeout(go, 5000);
+  window.setTimeout(timer, 1000);
 });
