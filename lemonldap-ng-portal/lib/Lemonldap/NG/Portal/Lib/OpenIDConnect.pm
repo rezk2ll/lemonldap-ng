@@ -1065,7 +1065,7 @@ sub returnBearerError {
             'WWW-Authenticate' =>
               "error=$error_code,error_description=$error_message"
         ],
-        [qq#{"error":$error_code,"error_description":"$error_message"}#]
+        []
     ];
 }
 
