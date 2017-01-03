@@ -100,7 +100,7 @@ ping = ->
 		dataType: 'json'
 		success: (data) ->
 			if data.auth
-				setTimeout 'ping();', pingInterval
+				setTimeout ping, pingInterval
 			else
 				location.reload true
 

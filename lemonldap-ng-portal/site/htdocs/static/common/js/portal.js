@@ -96,7 +96,7 @@ Used variables:
       dataType: 'json',
       success: function(data) {
         if (data.auth) {
-          return setTimeout('ping();', pingInterval);
+          return setTimeout(ping, pingInterval);
         } else {
           return location.reload(true);
         }
