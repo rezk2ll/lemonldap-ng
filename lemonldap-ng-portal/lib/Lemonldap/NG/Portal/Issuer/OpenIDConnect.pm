@@ -373,7 +373,8 @@ sub run {
                 my $sub = $self->getIDTokenSub($id_token_hint);
                 my $user_id_attribute =
                   $self->conf->{oidcRPMetaDataOptions}->{$rp}
-                  ->{oidcRPMetaDataOptionsUserIDAttr} || $self->{whatToTrace};
+                  ->{oidcRPMetaDataOptionsUserIDAttr}
+                  || $self->conf->{whatToTrace};
                 my $user_id = $req->{sessionInfo}->{$user_id_attribute};
                 unless ( $sub eq $user_id ) {
                     $self->lmLog(
@@ -766,7 +767,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                     my $user_id_attribute =
                       $self->conf->{oidcRPMetaDataOptions}->{$rp}
                       ->{oidcRPMetaDataOptionsUserIDAttr}
-                      || $self->{whatToTrace};
+                      || $self->conf->{whatToTrace};
                     my $user_id = $req->{sessionInfo}->{$user_id_attribute};
 
                     my $id_token_payload_hash = {
