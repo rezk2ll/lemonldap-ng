@@ -223,6 +223,8 @@ has app => (
     isa => 'CodeRef',
 );
 
+has p => ( is => 'rw' );
+
 has ini => (
     is      => 'rw',
     default => sub { $defaultIni; },
@@ -232,9 +234,11 @@ has ini => (
             $ini->{$k} //= $defaultIni->{$k};
         }
         $self->{ini} = $ini;
-        main::ok( $self->{app} = Lemonldap::NG::Portal::Main->run($ini),
+        main::ok($self->{p} = Lemonldap::NG::Portal::Main->new(),'Portal object');
+        main::ok($self->{p}->init($ini),'Init');
+        main::ok( $self->{app} = $self->{p}->run(),
             'Portal app' );
-        main::count(1);
+        main::count(3);
         $self;
     }
 );

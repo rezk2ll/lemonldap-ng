@@ -84,7 +84,16 @@ ok( $prms{state},         ' state found' );
 ok( $prms{session_state}, ' session_state found' );
 count(6);
 
-#print STDERR Dumper($query);
+my $at;
+ok( $at = $rp->p->_userDB->getUserInfo( 'op', $prms{access_token} ),
+    'Get access token' );
+ok( $at = JSON::from_json($at), ' Decode JSON' );
+ok( $at->{name} eq 'Doctor Who',        ' Get name' );
+ok( $at->{family_name} eq 'Doctor Who', ' Get family_name' );
+ok( $at->{sub} eq 'dwho',               ' Get sub' );
+count(5);
+
+#print STDERR Dumper($at);
 
 clean_sessions();
 done_testing( count() );

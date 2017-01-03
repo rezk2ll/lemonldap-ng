@@ -169,7 +169,6 @@ count(1);
 expectRedirection( $res, qr#^http://auth.op.com/oauth2/authorize# );
 
 #print STDERR Dumper($res);
-#print STDERR Dumper($res);
 
 clean_sessions();
 done_testing( count() );
