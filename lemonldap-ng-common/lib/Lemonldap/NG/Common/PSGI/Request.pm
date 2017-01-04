@@ -151,145 +151,97 @@ PSGIs
 =head1 DESCRIPTION
 
 This package provides HTTP request objects used by Lemonldap::NG PSGIs. It
-contains common accessors to work with request
+contains common accessors to work with request. Note that it inherits from
+L<Plack::Request>.
 
 =head1 METHODS
 
-=head2 Accessors
+All methods of L<Plack::Request> are available.
+Lemonldap::NG::Common::PSGI::Request adds the following methods:
 
-=head3 accept
+=head2 accept
 
 'Accept' header content.
 
-=head3 encodings
+=head2 encodings
 
 'Accept-Encoding' header content.
 
-=head3 languages
+=head2 error
 
-'Accept-Language header content.
+Used to store error value (usually a L<Lemonldap::NG::Portal::Main::Constants>
+constant).
 
-=head3 cookies
-
-'Cookie' header content.
-
-=head3 hostname
-
-'Host' header content.
-
-=head3 remote_ip
-
-Client IP address.
-
-=head3 port
-
-Client TCP port.
-
-=head3 method
-
-HTTP method asked by client (GET/POST/PUT/DELETE).
-
-=head3 get_server_port
-
-Server port.
-
-=head3 path
-
-PATH_INFO content which has been subtracted `scriptname`. So it's the relative
-path_info for REST calls.
-
-=head3 uri
-
-REQUEST_URI environment variable.
-
-=head3 unparsed_uri
-
-Same as `uri` but without decoding.
-
-=head3 user
-
-REMOTE_USER environment variable. It contains username when a server authentication
-is done.
-
-=head3 userData
-
-Hash reference to be used by Lemonldap::NG::Handler::PSGI. If a server authentication
-is done, it contains:
-
-  { _whatToTrace => `user()` }
-
-=head3 params
-
-GET parameters.
-
-=head3 body
-
-Content of POST requests
-
-=head3 error
-
-Set if an error occurs
-
-=head3 contentType
-
-Content type of posted datas.
-
-=head3 contentLength
-
-Length of posted datas.
-
-=head3 respHeaders
-
-Used to store response headers. Be careful, it contains an array, not a hash
-reference because headers can be multi-valued.
-
-Exemple:
-
-  $req->respHeaders( "Location" => "http://x.y.z/", Etag => "XYZ", );
-
-=head2 Private accessors
-
-=head3 _psgixBuffered
-
-PSGI psgix.input.buffered variable.
-
-=head3 _psgiInput
-
-PSGI psgix.input variable.
-
-=head2 Methods
-
-=head3 parseBody()
-
-Transform JSON or form/url-encoded POST content into GET parameters. Using this
-it is possible to manage POST requests like GET requests.
-
-=head3 jsonBodyToObj()
+=head2 jsonBodyToObj
 
 Get the content of a JSON POST request as Perl object.
 
-=head3 wantJSON
+=head2 languages
+
+'Accept-Language header content.
+
+=head2 hostname
+
+'Host' header content.
+
+=head2 read-body
+
+Since body() methods returns an L<IO::Handle> object, this method reads and
+return the request content as string.
+
+=head2 respHeaders
+
+Accessor to 'respHeaders' property. It is used to store headers that have to
+be pushed in response (see L<Lemonldap::NG::Common::PSGI>).
+
+Be careful, it contains an array reference, not a hash one because headers
+can be multi-valued.
+
+Exemple:
+
+  # Set headers
+  $req->respHeaders( "Location" => "http://x.y.z/", Etag => "XYZ", );
+  # Add header
+  $req->respHeaders->{"X-Key"} = "Value"; 
+
+=head2 set_param( $key, $value )
+
+L<Plack::Request> param() method is read-only. This method can be used to
+modify a GET parameter value
+
+=head2 uri
+
+REQUEST_URI environment variable decoded.
+
+=head2 user
+
+REMOTE_USER environment variable. It contains username when a server
+authentication is done.
+
+=head2 userData
+
+Hash reference to the session information (if app inherits from
+L<Lemonldap::NG::Handler::PSGI> or any other handler PSGI package). If no
+session information is available, it contains:
+
+  { _whatToTrace => <REMOTE-USER value> }
+
+=head2 wantJSON
 
 Return true if current request ask JSON content (verify that "Accept" header
 contains "application/json" or "text/json").
 
 =head1 SEE ALSO
 
-L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Handler>,
-L<Plack>, L<PSGI>, L<Lemonldap::NG::Common::PSGI>,
-L<Lemonldap::NG::Common::PSGI::Router>, L<HTML::Template>, 
+L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Common::PSGI>,
+L<Lemonldap::NG::Hander::PSGI>, L<Plack::Request>,
+L<Lemonldap::NG::Portal::Main::Constants>, 
 
 =head1 AUTHORS
 
 =over
 
-=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Thomas Chemineau, E<lt>thomas.chemineau@gmail.comE<gt>
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
 
 =back
 
@@ -305,13 +257,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =head1 COPYRIGHT AND LICENSE
 
-=over
-
-=item Copyright (C) 2015-2016 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2015-2016 by Clément Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=back
+See COPYING file for details.
 
 This library is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

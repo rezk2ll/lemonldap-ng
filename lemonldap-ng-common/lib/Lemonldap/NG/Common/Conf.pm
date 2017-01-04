@@ -453,6 +453,8 @@ Web-SSO configuration.
 =head1 SYNOPSIS
 
   use Lemonldap::NG::Common::Conf;
+  # Lemonldap::NG::Common::Conf reads loacl configuration from lemonldap-ng.ini.
+  # Parameters can be overriden in a hash:
   my $confAccess = new Lemonldap::NG::Common::Conf(
               {
                   type=>'File',
@@ -469,68 +471,38 @@ Web-SSO configuration.
                   },
               },
     ) or die "Unable to build Lemonldap::NG::Common::Conf, see Apache logs";
+  # Next, get global configuration. Note that local parameters override global
+  # ones
   my $config = $confAccess->getConf();
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Common::Conf provides a simple interface to access to
-Lemonldap::NG Web-SSO configuration. It is used by L<Lemonldap::NG::Handler>,
-L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>.
+Lemonldap::NG::Common::Conf is used by all Lemonldap::NG packages to access to
+local/global configuration.
 
 =head2 SUBROUTINES
 
 =over
 
-=item * B<new> (constructor): it takes different arguments depending on the
-chosen type. Examples:
+=item * B<new> (constructor)
+
+It can takes any Lemonldap::NG parameter to override configuration. The
+'confFile' parameter can be used to override lemonldap-ng.ini path.
+Examples:
 
 =over
 
-=item * B<File>:
+=item * B<Set another lemonldap-ng.ini file>
   $confAccess = new Lemonldap::NG::Common::Conf(
-                {
-                type    => 'File',
-                dirName => '/var/lib/lemonldap-ng/',
-                });
-
-=item * B<DBI>:
+                  { confFile => '/opt/lemonldap-ng.ini' } );
+=item * B<Override global storage>:
   $confAccess = new Lemonldap::NG::Common::Conf(
-                {
-                type        => 'DBI',
-                dbiChain    => 'DBI:mysql:database=lemonldap-ng;host=1.2.3.4',
-                dbiUser     => 'lemonldap'
-                dbiPassword => 'pass'
-                dbiTable    => 'lmConfig',
-                });
-
-=item * B<SOAP>:
-  $confAccess = new Lemonldap::NG::Common::Conf(
-                {
-                type         => 'SOAP',
-                proxy        => 'http://auth.example.com/index.pl/config',
-                proxyOptions => {
-                                timeout => 5,
-                                },
-                });
-
-SOAP configuration access is a sort of proxy: the portal is configured to use
-the real session storage type (DBI or File for example). See HTML documentation
-for more.
-
-=item * B<LDAP>:
-  $confAccess = new Lemonldap::NG::Common::Conf(
-                {
-                type             => 'LDAP',
-                ldapServer       => 'ldap://localhost',
-                ldapConfBranch   => 'ou=conf,ou=applications,dc=example,dc=com',
-                ldapBindDN       => 'cn=manager,dc=example,dc=com",
-                ldapBindPassword => 'secret'
-                });
+                  {
+                    type    => 'File',
+                    dirName => '/var/lib/lemonldap-ng/conf',
+                   });
 
 =back
-
-WARNING: You have to use the same storage type on all Lemonldap::NG parts in
-the same server.
 
 =item * B<getConf>: returns a hash reference to the configuration. it takes
 a hash reference as first argument containing 2 optional parameters:
@@ -552,20 +524,13 @@ getConf returns all (C<select * from lmConfig>).
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>,
 L<http://lemonldap-ng.org/>
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 =over
 
-=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Sandro Cazzaniga, E<lt>cazzaniga.sandro@gmail.comE<gt>
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
 
 =back
 
@@ -581,17 +546,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =head1 COPYRIGHT AND LICENSE
 
-=over
-
-=item Copyright (C) 2008-2016 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2012 by Sandro Cazzaniga, E<lt>cazzaniga.sandro@gmail.comE<gt>
-
-=item Copyright (C) 2012 by François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Copyright (C) 2009-2016 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=back
+See COPYING file for details.
 
 This library is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

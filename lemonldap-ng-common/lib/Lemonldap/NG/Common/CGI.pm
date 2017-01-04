@@ -472,8 +472,7 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Common::CGI - Simple module to extend L<CGI> to manage
-HTTP "If-Modified-Since / 304 Not Modified" system.
+Lemonldap::NG::Common::CGI - Simple module to extend L<CGI>. DEPRECATED
 
 =head1 SYNOPSIS
 
@@ -487,7 +486,10 @@ HTTP "If-Modified-Since / 304 Not Modified" system.
 =head1 DESCRIPTION
 
 Lemonldap::NG::Common::CGI just add header_public subroutine to CGI module to
-avoid printing HTML elements that can be cached.
+avoid printing HTML elements that can be cached. It manage HTTP
+"If-Modified-Since / 304 Not Modified" system.
+
+This module has been deprecated, now use FastCGI/PSGI packages.
 
 =head1 METHODS
 
@@ -496,22 +498,18 @@ avoid printing HTML elements that can be cached.
 header_public works like header (see L<CGI>) but the first argument has to be
 a filename: the last modify date of this file is used for reference.
 
-=head2 EXPORT
-
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Manager>, L<CGI>,
-L<http://lemonldap-ng.org/>
+L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Common::PSGI>,
+L<Lemonldap::NG::Common::PSGI::Router>, L<Lemonldap::NG::Handler::PSGI>,
+L<Lemonldap::NG::Handler::PSGI::Router>, L<Lemonldap::NG::Handler::PSGI::Server>, 
+L<Lemonldap::NG::Handler::PSGI::Try>
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 =over
 
-=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
 
 =back
 
@@ -527,15 +525,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =head1 COPYRIGHT AND LICENSE
 
-=over
-
-=item Copyright (C) 2008-2016 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2012-2013 by François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Copyright (C) 2010-2016 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=back
+See COPYING file for details.
 
 This library is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

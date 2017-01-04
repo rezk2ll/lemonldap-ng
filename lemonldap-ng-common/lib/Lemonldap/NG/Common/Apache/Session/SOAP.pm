@@ -398,15 +398,11 @@ L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Common::Conf::SOAP>,
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>,
 L<http://lemonldap-ng.org/>
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 =over
 
-=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
 
 =back
 
@@ -422,15 +418,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =head1 COPYRIGHT AND LICENSE
 
-=over
-
-=item Copyright (C) 2008-2013 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2012 by François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Copyright (C) 2010-2012 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=back
+See COPYING file for details.
 
 This library is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
