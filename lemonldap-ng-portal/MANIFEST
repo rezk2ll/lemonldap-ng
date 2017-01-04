@@ -25,7 +25,6 @@ lib/Lemonldap/NG/Portal/_Multi.pm
 lib/Lemonldap/NG/Portal/_OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/_Proxy.pm
 lib/Lemonldap/NG/Portal/_SAML.pm
-lib/Lemonldap/NG/Portal/_SMTP.pm
 lib/Lemonldap/NG/Portal/_SOAP.pm
 lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
 lib/Lemonldap/NG/Portal/Auth/AD.pm
@@ -74,6 +73,7 @@ lib/Lemonldap/NG/Portal/Lib/Proxy.pm
 lib/Lemonldap/NG/Portal/Lib/Remote.pm
 lib/Lemonldap/NG/Portal/Lib/SAML.pm
 lib/Lemonldap/NG/Portal/Lib/Slave.pm
+lib/Lemonldap/NG/Portal/Lib/SMTP.pm
 lib/Lemonldap/NG/Portal/Lib/Wrapper.pm
 lib/Lemonldap/NG/Portal/MailReset.pm
 lib/Lemonldap/NG/Portal/Main.pm
@@ -102,6 +102,7 @@ lib/Lemonldap/NG/Portal/PasswordDBNull.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuth.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
+lib/Lemonldap/NG/Portal/Plugins/Register.pm
 lib/Lemonldap/NG/Portal/Register.pm
 lib/Lemonldap/NG/Portal/RegisterDBAD.pm
 lib/Lemonldap/NG/Portal/RegisterDBDemo.pm

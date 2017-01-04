@@ -3,9 +3,10 @@
 
 ##@class
 # SMTP common functions
-package Lemonldap::NG::Portal::_SMTP;
+package Lemonldap::NG::Portal::Lib::SMTP;
 
 use strict;
+use Mouse;
 use String::Random;
 use MIME::Lite;
 use MIME::Base64;
@@ -13,19 +14,20 @@ use Encode;
 
 our $VERSION = '2.0.0';
 
-## @method string gen_password(string regexp)
+# PROPERTIES
+
+has random => (is => 'rw', default => sub {
+    return String::Random->new;
+});
+has charset => (is=>'rw',default => sub{return $_[0]->{conf}->{mailCharset} || 'utf-8'});
+
 # Generate a complex password based on a regular expression
 # @param regexp regular expression
-# @return complex password
 sub gen_password {
-    my $self   = shift;
-    my $regexp = shift;
-
-    my $random = new String::Random;
-    return $random->randregex($regexp);
+    my($self,$regexp) = @_;
+    return $self->random->randregex($regexp);
 }
 
-## @method int send_mail(string mail, string subject, string body, string html)
 # Send mail
 # @param mail recipient address
 # @param subject mail subject
@@ -35,12 +37,9 @@ sub gen_password {
 sub send_mail {
     my ( $self, $mail, $subject, $body, $html ) = @_;
 
-    # Set charset
-    my $charset = $self->{mailCharset} ? $self->{mailCharset} : "utf-8";
-
     # Encode the body with the given charset
-    $body    = encode( $charset, $body );
-    $subject = encode( $charset, $subject );
+    $body    = encode( $self->charset, $body );
+    $subject = encode( $self->charset, $subject );
 
     # Debug messages
     $self->lmLog( "SMTP From " . $self->{mailFrom}, 'debug' );
@@ -53,8 +52,8 @@ sub send_mail {
 
     # Encode the subject
     $subject = encode_base64( $subject, '' );
-    $subject =~ s/\s//g;
-    $subject = "=?$charset?B?" . $subject . "?=";
+    $subject =~ s/\s//gs;
+    $subject = '=?'.$self->charset."?B?$subject?=";
 
     # Detect included images (cid)
     my %cid = ( $body =~ m/"cid:([^:]+):([^"]+)"/g );
@@ -79,7 +78,7 @@ sub send_mail {
 
             # Attach HTML message
             $message->attach(
-                Type => "text/html; charset=$charset",
+                Type => 'text/html; charset='.$self->charset,
                 Data => qq{$body},
             );
 
@@ -88,7 +87,7 @@ sub send_mail {
                 $message->attach(
                     Type => "image/" . ( $cid{$_} =~ m/\.(\w+)/ )[0],
                     Id => $_,
-                    Path => $self->getApacheHtdocsPath() . "/" . $cid{$_},
+                    Path => $self->p->{templateDir} . "/" . $cid{$_},
                 );
             }
         }
@@ -106,16 +105,16 @@ sub send_mail {
 
             # Manage content type and charset
             $message->attr( "content-type"         => "text/plain" );
-            $message->attr( "content-type.charset" => $charset );
+            $message->attr( "content-type.charset" => $self->charset );
 
         }
 
         # Send the mail
-        $self->{SMTPServer}
+        $self->conf->{SMTPServer}
           ? $message->send(
-            "smtp", $self->{SMTPServer},
-            AuthUser => $self->{SMTPAuthUser},
-            AuthPass => $self->{SMTPAuthPass}
+            "smtp", $self->conf->{SMTPServer},
+            AuthUser => $self->conf->{SMTPAuthUser},
+            AuthPass => $self->conf->{SMTPAuthPass}
           )
           : $message->send();
     };
@@ -134,8 +133,8 @@ sub send_mail {
 sub getMailSession {
     my ( $self, $user ) = @_;
 
-    my $moduleOptions = $self->{globalStorageOptions} || {};
-    $moduleOptions->{backend} = $self->{globalStorage};
+    my $moduleOptions = $self->conf->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $self->conf->{globalStorage};
     my $module = "Lemonldap::NG::Common::Apache::Session";
 
     # Search on mail sessions
@@ -143,7 +142,7 @@ sub getMailSession {
 
     # Browse found sessions to check if it's a mail session
     foreach my $id ( keys %$sessions ) {
-        my $mailSession = $self->getApacheSession( $id, 1 );
+        my $mailSession = $self->p->getApacheSession( $id, 1 );
         next unless ($mailSession);
         return $id if ( $mailSession->data->{_type} =~ /^mail$/ );
     }
@@ -159,8 +158,8 @@ sub getMailSession {
 sub getRegisterSession {
     my ( $self, $mail ) = @_;
 
-    my $moduleOptions = $self->{globalStorageOptions} || {};
-    $moduleOptions->{backend} = $self->{globalStorage};
+    my $moduleOptions = $self->conf->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $self->conf->{globalStorage};
     my $module = "Lemonldap::NG::Common::Apache::Session";
 
     # Search on register sessions
@@ -168,7 +167,7 @@ sub getRegisterSession {
 
     # Browse found sessions to check if it's a register session
     foreach my $id ( keys %$sessions ) {
-        my $registerSession = $self->getApacheSession( $id, 1 );
+        my $registerSession = $self->p->getApacheSession( $id, 1 );
         next unless ($registerSession);
         return $id if ( $registerSession->data->{_type} =~ /^register$/ );
     }
