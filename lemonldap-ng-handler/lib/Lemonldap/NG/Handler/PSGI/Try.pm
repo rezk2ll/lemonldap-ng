@@ -140,23 +140,19 @@ received by REST methods):
 
 =over
 
-=item $req->user() returns "whatToTrace" uniq identifier
-
 =item $req->userData() returns a hash reference containing user session datas
 
 =back
 
 =head1 SEE ALSO
 
-See L<Lemonldap::NG::Common::PSGI::Router> for more. You just have to re
+See L<Lemonldap::NG::Common::PSGI::Router> for more.
 
 =head1 AUTHORS
 
 =over
 
-=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
 
 =back
 
@@ -172,13 +168,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =head1 COPYRIGHT AND LICENSE
 
-=over
-
-=item Copyright (C) 2015-2016 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2015-2016 by Clément Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=back
+See COPYING file for details.
 
 This library is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

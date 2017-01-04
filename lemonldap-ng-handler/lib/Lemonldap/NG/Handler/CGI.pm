@@ -64,31 +64,13 @@ __END__
 =encoding utf8
 
 Lemonldap::NG::Handler::CGI - Perl extension for using Lemonldap::NG
-authentication in Perl CGI without using Lemonldap::NG::Handler
+authentication in Perl CGI without using Lemonldap::NG::Handler -
+DEPRECATED
 
 =head1 SYNOPSIS
 
   use Lemonldap::NG::Handler::CGI;
-  my $cgi = Lemonldap::NG::Handler::CGI->new ( {
-      # Local storage used for sessions and configuration
-      localStorage        => "Cache::FileCache",
-      localStorageOptions => {...},
-      # How to get my configuration
-      configStorage       => {
-          type                => "DBI",
-          dbiChain            => "DBI:mysql:database=lemondb;host=$hostname",
-          dbiUser             => "lemonldap",
-          dbiPassword          => "password",
-      },
-      https               => 0,
-      # Optional
-      protection    => 'rule: $uid eq "admin"',
-      # Or to use rules from manager
-      protection    => 'manager',
-      # Or just to authenticate without managing authorization
-      protection    => 'authenticate',
-    }
-  );
+  my $cgi = Lemonldap::NG::Handler::CGI->new ( {} );
   
   # See CGI(3) for more about writing HTML pages
   print $cgi->header;
@@ -115,21 +97,19 @@ instead.
 Warning, this module must not be used in a Lemonldap::NG::Handler protected
 area because it hides Lemonldap::NG cookies. 
 
+This package has been deprecated in favor of FastCGI/PSGI files.
+
 =head1 SEE ALSO
 
-L<http://lemonldap-ng.org/>
-L<CGI>, L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Manager>,
-L<Lemonldap::NG::Portal>
+L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Handler::PSGI>,
+L<Lemonldap::NG::Handler::PSGI::Router>, L<Lemonldap::NG::Handler::PSGI::Server>,
+L<Lemonldap::NG::Handler::PSGI::Try>
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 =over
 
-=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Sandro Cazzaniga, E<lt>cazzaniga.sandro@gmail.comE<gt>
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
 
 =back
 
@@ -145,15 +125,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =head1 COPYRIGHT AND LICENSE
 
-=over
-
-=item Copyright (C) 2007-2015 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2012 by Sandro Cazzaniga, E<lt>cazzaniga.sandro@gmail.comE<gt>
-
-=item Copyright (C) 2010-2015 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=back
+See COPYING file for details.
 
 This library is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
