@@ -123,7 +123,7 @@ sub scanTree {
     $self->newConf->{cfgAuthor} =
       $self->req->userData->{ $Lemonldap::NG::Handler::Main::tsv->{whatToTrace}
           || '_whatToTrace' } // "anonymous";
-    $self->newConf->{cfgAuthorIP} = $self->req->remote_ip;
+    $self->newConf->{cfgAuthorIP} = $self->req->address;
     $self->newConf->{cfgDate}     = time;
     $self->newConf->{key} ||=
       join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) );

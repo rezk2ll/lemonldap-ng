@@ -261,11 +261,11 @@ sub logout {
     main::ok(
         ( defined( $c = main::getCookies($res)->{lemonldap} ) and not $c ),
         'Cookie is deleted' )
-      or explain( $res->[1], "Set-Cookie => 'lemonldap='" );
+      or main::explain( $res->[1], "Set-Cookie => 'lemonldap='" );
     main::ok( $res = $self->_get( '/', cookie => "lemonldap=$id" ),
         'Disconnect request' )
       or explain( $res, '[<code>,<hdrs>,<content>]' );
-    main::ok( $res->[0] == 401, 'Response is 401' ) or explain( $res, 401 );
+    main::ok( $res->[0] == 401, 'Response is 401' ) or main::explain( $res, 401 );
     main::count(5);
 
 }

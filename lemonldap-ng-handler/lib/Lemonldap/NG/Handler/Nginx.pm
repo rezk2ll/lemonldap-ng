@@ -66,7 +66,7 @@ sub handler {
     my $hdrs = $req->{respHeaders};
     $req->{respHeaders} = [];
     my @convertedHdrs =
-      ( 'Content-Length' => 0, Cookie => ( $req->cookies // '' ) );
+      ( 'Content-Length' => 0, Cookie => ( $req->env->{HTTP_COOKIE} // '' ) );
     my $i = 0;
     while ( my $k = shift @$hdrs ) {
         my $v = shift @$hdrs;

@@ -125,8 +125,8 @@ sub sendError {
     # SOAP responses
     if (
         $req->accept =~ m#(?:application|text)/xml#
-        or (    $req->contentType
-            and $req->contentType =~ m#(?:application|text)/xml# )
+        or (    $req->content_type
+            and $req->content_type =~ m#(?:application|text)/xml# )
       )
     {
         my $s = '<soapenv:Body>
@@ -235,7 +235,7 @@ sub sendHtml {
         my $sp = $self->staticPrefix;
         $sp =~ s/\/*$/\//;
         $htpl->param(
-            SCRIPT_NAME         => $req->scriptname,
+            SCRIPT_NAME         => $req->script_name,
             STATIC_PREFIX       => $sp,
             AVAILABLE_LANGUAGES => $self->languages,
             PORTAL              => $self->portal,

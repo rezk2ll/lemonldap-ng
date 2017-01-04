@@ -62,7 +62,7 @@ sub set_user {
 sub header_in {
     my ( $class, $header ) = @_;
     $header ||= $class;    # to use header_in as a method or as a function
-    return $request->{ cgiName($header) };
+    return $request->env->{ cgiName($header) };
 }
 
 ## @method void set_header_in(hash headers)
@@ -71,7 +71,7 @@ sub header_in {
 sub set_header_in {
     my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        $request->{ cgiName($h) } = $v;
+        $request->env->{ cgiName($h) } = $v;
     }
 }
 
@@ -81,7 +81,7 @@ sub set_header_in {
 sub unset_header_in {
     my ( $class, @headers ) = @_;
     foreach my $h (@headers) {
-        delete $request->{ cgiName($h) };
+        delete $request->env->{ cgiName($h) };
     }
 }
 
@@ -108,7 +108,7 @@ sub hostname {
 # returns client IP address
 # @return IP_Addr string client IP
 sub remote_ip {
-    return $request->remote_ip;
+    return $request->address;
 }
 
 ## @method boolean is_initial_req
@@ -122,7 +122,7 @@ sub is_initial_req {
 # gets the query string
 # @return args string Query string
 sub args {
-    return $request->query;
+    return $request->query_string;
 }
 
 ## @method string uri
@@ -140,21 +140,21 @@ sub uri {
 # returns the URI, with arguments and with path portion normalized
 # @return URI with normalized path portion
 sub uri_with_args {
-    return $request->uri;
+    return $request->request_uri;
 }
 
 ## @method string unparsed_uri
 # returns the full original request URI, with arguments
 # @return full original request URI, with arguments
 sub unparsed_uri {
-    return $request->unparsed_uri;
+    return $request->request_uri;
 }
 
 ## @method string get_server_port
 # returns the port the server is receiving the current request on
 # @return port string server port
 sub get_server_port {
-    return $request->get_server_port;
+    return $request->port;
 }
 
 ## @method string method

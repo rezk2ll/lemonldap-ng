@@ -3,9 +3,12 @@ package Lemonldap::NG::Common::PSGI::Request;
 use strict;
 use Mouse;
 use JSON;
+use Plack::Request;
 use URI::Escape;
 
 our $VERSION = '2.0.0';
+
+our @ISA = ('Plack::Request');
 
 #       http          ://  server   / path      ? query      # fragment
 # m|(?:([^:/?#]+):)?(?://([^/?#]*))?([^?#]*)(?:\?([^#]*))?(?:#(.*))?|;
@@ -17,125 +20,78 @@ sub BUILD {
     }
 }
 
-has HTTP_ACCEPT          => ( is => 'ro', reader => 'accept' );
-has HTTP_ACCEPT_ENCODING => ( is => 'ro', reader => 'encodings' );
-has HTTP_ACCEPT_LANGUAGE => ( is => 'ro', reader => 'languages' );
-has HTTP_AUTHORIZATION   => ( is => 'ro', reader => 'authorization' );
-has HTTP_COOKIE          => ( is => 'ro', reader => 'cookies' );
-has HTTP_HOST            => ( is => 'ro', reader => 'hostname' );
-has REFERER              => ( is => 'ro', reader => 'referer' );
-has REMOTE_ADDR => ( is => 'ro', isa => 'Str', reader => 'remote_ip' );
-has REMOTE_PORT    => ( is => 'ro', isa => 'Int', reader => 'port' );
-has REQUEST_METHOD => ( is => 'ro', isa => 'Str', reader => 'method' );
-has SCRIPT_NAME    => ( is => 'ro', isa => 'Str', reader => 'scriptname' );
-has SERVER_PORT    => ( is => 'ro', isa => 'Int', reader => 'get_server_port' );
-has X_ORIGINAL_URI => ( is => 'ro', isa => 'Str' );
-has PATH_INFO => (
-    is      => 'ro',
-    reader  => 'path',
-    lazy    => 1,
-    default => '',
-    trigger => sub {
-        my $tmp = $_[0]->{SCRIPT_NAME};
-        $_[0]->{PATH_INFO} =~ s|^$tmp|/|;
-        $_[0]->{PATH_INFO} =~ s|//+|/|g;
-    },
-);
-has REQUEST_URI => (
-    is      => 'ro',
-    reader  => 'uri',
-    lazy    => 1,
-    default => '/',
-    trigger => sub {
-        my $uri = $_[0]->{X_ORIGINAL_URI} || $_[0]->{REQUEST_URI};
-        $_[0]->{unparsed_uri} = $uri;
-        $_[0]->{REQUEST_URI}  = uri_unescape($uri);
-        $_[0]->{REQUEST_URI} =~ s|//+|/|g;
-    },
-);
-has unparsed_uri => ( is => 'rw', isa => 'Str' );
-
-has 'psgi.errors' => ( is => 'rw', reader => 'stderr' );
-
-# Authentication
-
-has REMOTE_USER => (
-    is      => 'rw',
-    reader  => 'user',
-    trigger => sub {
-        $_[0]->{userData} = { $Lemonldap::NG::Handler::Main::tsv->{whatTotrace}
-              || _whatToTrace => $_[0]->{REMOTE_USER}, };
-    },
-);
-has userData => ( is => 'rw', isa => 'HashRef', default => sub { {} } );
-
-# Query parameters
-has _params => ( is => 'rw', isa => 'HashRef', default => sub { {} } );
-has QUERY_STRING => (
-    is      => 'ro',
-    reader  => 'query',
-    trigger => sub {
-        my $self = shift;
-        $self->_urlcode2params( $self->{QUERY_STRING} );
-    },
-);
-
-sub _urlcode2params {
-    my ( $self, $str ) = @_;
-    my @tmp = $str ? map { uri_unescape($_) } split( /&/, $str ) : ();
-    foreach my $s (@tmp) {
-        if   ( $s =~ /^(.+?)=(.+)$/ ) { $self->{_params}->{$1} = $2; }
-        else                          { $self->{_params}->{$s} = 1; }
-    }
+sub new {
+    my $self = Plack::Request::new(@_);
+    my $tmp  = $self->script_name;
+    $self->env->{REQUEST_URI} = $self->env->{X_ORIGINAL_URI}
+      if ( $self->env->{X_ORIGINAL_URI} );
+    $self->env->{PATH_INFO} =~ s|^$tmp|/|;
+    $self->env->{PATH_INFO} =~ s|//+|/|g;
+    $self->{uri} = uri_unescape( $self->env->{REQUEST_URI} );
+    $self->{uri} =~ s|//+|/|g;
+    $self->{error}       = 0;
+    $self->{respHeaders} = [];
+    return $self;
 }
 
-*param = *params;
+sub uri { $_[0]->{uri} }
 
-sub params {
-    my ( $self, $key, $value ) = @_;
-    return $self->_params unless ($key);
-    $self->_params->{$key} = $value if ( defined $value );
-    return $self->_params->{$key};
+sub userData {
+    my($self,$v)=@_;
+    return $_[0]->{userData} = $v if($v);
+    return $_[0]->{userData} || { _whatToTrace => $_[0]->user, };
 }
 
-# POST management
-#
-# When CONTENT_LENGTH is set, store body in memory in `body` key
-has 'psgix.input.buffered' => ( is => 'ro', reader => '_psgixBuffered', );
-has 'psgi.input'           => ( is => 'ro', reader => '_psgiInput', );
-has body                   => ( is => 'rw', isa    => 'Str', default => '' );
-has CONTENT_TYPE => ( is => 'ro', isa => 'Str', reader => 'contentType', );
-has CONTENT_LENGTH => (
-    is      => 'ro',
-    reader  => 'contentLength',
-    lazy    => 1,
-    default => 0,
-    trigger => sub {
-        my $self = shift;
-        if ( $self->method eq 'GET' ) { $self->{body} = undef; }
-        elsif ( $self->method =~ /^(?:POST|PUT)$/ ) {
-            $self->{body} = '';
-            if ( $self->_psgixBuffered ) {
-                my $length = $self->{CONTENT_LENGTH};
-                while ( $length > 0 ) {
-                    my $buffer;
-                    $self->_psgiInput->read( $buffer,
-                        ( $length < 8192 ) ? $length : 8192 );
-                    $length -= length($buffer);
-                    $self->{body} .= $buffer;
-                }
+sub respHeaders {
+    my ( $self, $respHeaders ) = @_;
+    $self->{respHeaders} = $respHeaders if ($respHeaders);
+    return $self->{respHeaders};
+}
+
+sub accept        { $_[0]->env->{HTTP_ACCEPT} }
+sub encodings     { $_[0]->env->{HTTP_ACCEPT_ENCODING} }
+sub languages     { $_[0]->env->{HTTP_ACCEPT_LANGUAGE} }
+sub authorization { $_[0]->env->{HTTP_AUTHORIZATION} }
+sub hostname      { $_[0]->env->{HTTP_HOST} }
+sub referer       { $_[0]->env->{REFERER} }
+
+sub error {
+    my ( $self, $err ) = @_;
+    $self->{error} = $err if ($err);
+    return $self->{error};
+}
+
+sub read_body {
+    my $self = shift;
+    if ( $self->method eq 'GET' ) { return undef; }
+    elsif ( $self->method =~ /^(?:POST|PUT)$/ ) {
+        my $body = '';
+        if ( $self->env->{'_psgix.buffered'} ) {
+            my $length = $self->content_length;
+            while ( $length > 0 ) {
+                my $buffer;
+                $self->body->read( $buffer,
+                    ( $length < 8192 ) ? $length : 8192 );
+                $length -= length($buffer);
+                $body .= $buffer;
             }
-            else {
-                $self->_psgiInput->read( $self->{body},
-                    $self->{CONTENT_LENGTH}, 0 );
-            }
-            utf8::upgrade( $self->{body} );
         }
+        else {
+            $self->body->read( $body, $self->content_length, 0 );
+        }
+        utf8::upgrade($body);
+        return $body;
     }
-);
-has error => ( is => 'rw', isa => 'Str', default => '' );
+}
 
-has respHeaders => ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
+*params = \&Plack::Request::param;
+
+sub set_param {
+    my ( $self, $k, $v ) = @_;
+    $self->param;
+    $self->env->{'plack.request.merged'}->{$k} =
+      $self->env->{'plack.request.query'}->{$k} = $v;
+}
 
 sub wantJSON {
     return 1
@@ -147,7 +103,8 @@ sub wantJSON {
 # JSON parser
 sub jsonBodyToObj {
     my $self = shift;
-    unless ( $self->contentType =~ /application\/json/ ) {
+    return $self->{json_body} if ( $self->{json_body} );
+    unless ( $self->content_type =~ /application\/json/ ) {
         $self->error('Data is not JSON');
         return undef;
     }
@@ -155,24 +112,12 @@ sub jsonBodyToObj {
         $self->error('No data');
         return undef;
     }
-    return $self->body if ( ref( $self->body ) );
-    my $j = eval { from_json( $self->body ) };
+    my $j = eval { from_json( $self->read_body ) };
     if ($@) {
         $self->error("$@$!");
         return undef;
     }
-    return $self->{body} = $j;
-}
-
-sub parseBody {
-    my $self = shift;
-    if ( $self->contentType =~ /application\/json/ ) {
-        %{ $self->_params } =
-          ( %{ $self->_params }, %{ $self->jsonBodyToObj } );
-    }
-    elsif ( $self->contentType =~ /^application\/x-www-form-urlencoded/ ) {
-        $self->_urlcode2params( $self->body );
-    }
+    return $self->{json_body} = $j;
 }
 
 1;
@@ -243,10 +188,6 @@ Client TCP port.
 =head3 method
 
 HTTP method asked by client (GET/POST/PUT/DELETE).
-
-=head3 scriptname
-
-SCRIPT_NAME environment variable provided by HTTP server.
 
 =head3 get_server_port
 

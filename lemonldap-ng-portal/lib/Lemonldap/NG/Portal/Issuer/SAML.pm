@@ -147,7 +147,7 @@ sub run {
     # if we are receving SAML request or response
     my $url                     = $req->uri;
     my $request_method          = $req->param('issuerMethod') || $req->method;
-    my $content_type            = $req->contentType();
+    my $content_type            = $req->content_type();
     my $idp_initiated           = $req->param('IDPInitiated');
     my $idp_initiated_sp        = $req->param('sp');
     my $idp_initiated_spConfKey = $req->param('spConfKey');
@@ -981,7 +981,7 @@ sub artifactServer {
         'debug' );
 
     # Artifact request are sent with SOAP trough POST
-    my $art_request = $req->body;
+    my $art_request = $req->read_body;
     my $art_response;
 
     # Create Login object
@@ -1022,7 +1022,7 @@ sub soapSloServer {
     my ( $self, $req ) = @_;
     my $url            = $req->uri;
     my $request_method = $req->param('issuerMethod') || $req->method;
-    my $content_type   = $req->contentType();
+    my $content_type   = $req->content_type();
 
     $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
 
@@ -1269,7 +1269,7 @@ sub logout {
     # for them.
     # Redirect on logout page when all is done.
     if ( $self->sendLogoutRequestToProviders( $req, $logout ) ) {
-        $self->{urldc} = $req->scriptname . "?logout=1";
+        $self->{urldc} = $req->script_name . "?logout=1";
         return PE_OK;
     }
 
@@ -1401,7 +1401,7 @@ sub sloServer {
     my ( $self, $req ) = @_;
     my $url            = $req->uri;
     my $request_method = $req->param('issuerMethod') || $req->method;
-    my $content_type   = $req->contentType();
+    my $content_type   = $req->content_type();
     $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
 
     # Check SAML Message
@@ -1616,7 +1616,7 @@ sub attributeServer {
     $self->lmLog( "URL $url detected as an attribute service URL", 'debug' );
 
     # Attribute request are sent with SOAP trough POST
-    my $att_request = $req->body;
+    my $att_request = $req->read_body;
     my $att_response;
 
     # Process request

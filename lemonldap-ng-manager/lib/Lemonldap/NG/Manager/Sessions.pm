@@ -83,7 +83,7 @@ sub sessions {
 
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
-    my $params = $req->params();
+    my $params = $req->parameters();
     my $type   = delete $params->{sessionType};
     $type = $type eq 'global' ? 'SSO' : ucfirst($type);
 
@@ -164,7 +164,7 @@ sub sessions {
     my $total = ( keys %$res );
 
     # 2.4 Special case doubleIp (users connected from more than 1 IP)
-    if ( $params->{doubleIp} ) {
+    if ( defined $params->{doubleIp} ) {
         my %r;
 
         # 2.4.1 Store user IP addresses in %r

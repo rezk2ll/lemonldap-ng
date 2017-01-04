@@ -76,7 +76,9 @@ sub goToPortal {
     $req->urldc(
         $self->conf->{remotePortal} . "?url="
           . encode_base64(
-            $self->conf->{portal} . ( $req->query ? "?$req->query" : '' ), ''
+            $self->conf->{portal}
+              . ( $req->query_string ? '?' . $req->query_string : '' ),
+            ''
           )
     );
     return PE_REDIRECT;

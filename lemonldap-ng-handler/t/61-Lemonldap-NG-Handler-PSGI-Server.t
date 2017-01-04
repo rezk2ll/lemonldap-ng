@@ -42,7 +42,7 @@ count(2);
 # Check headers
 %h = @{ $res->[1] };
 ok( $h{'Auth-User'} eq 'dwho', 'Header Auth-User is set to "dwho"' )
-  or explain( $h, 'Auth-User => "dwho"' );
+  or explain( \%h, 'Auth-User => "dwho"' );
 count(1);
 
 # Denied query

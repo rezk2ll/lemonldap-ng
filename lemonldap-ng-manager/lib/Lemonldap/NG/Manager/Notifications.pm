@@ -150,7 +150,7 @@ sub notifications {
     return $self->notification( $req, $notif, $type ) if ($notif);
 
     # Case 2: list
-    my $params = $req->params();
+    my $params = $req->parameters();
     my ( $notifs, $res );
 
     $notifs = $self->notifAccess->$sub();

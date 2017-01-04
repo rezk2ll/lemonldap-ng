@@ -14,6 +14,7 @@ our $VERSION = '2.0.0';
 package Lemonldap::NG::Portal::Main;
 
 use strict;
+use WWW::Form::UrlEncoded 'build_urlencoded';
 
 # List constants
 sub authProcess { qw(extractFormInfo getUser authenticate) }
@@ -480,7 +481,9 @@ sub isTrustedUrl {
 
 sub stamp {
     my $self = shift;
-    return $self->conf->{cipher} ? $self->conf->{cipher}->encrypt( time() ) : 1;
+    my $res = $self->conf->{cipher} ? $self->conf->{cipher}->encrypt( time() ) : 1;
+    $res =~ s/\+/%2B/g;
+    return $res;
 }
 
 # Transfer POST data with auto submit
@@ -524,7 +527,7 @@ sub setHiddenFormValue {
     # Store value
     if ($val) {
         $key = $prefix . $key;
-        $val = encode_base64( $val, '' ) if $base64;
+        $val =~ s/\+/%2B/g;
         $req->{portalHiddenFormValues}->{$key} = $val;
         $self->lmLog( "Store $val in hidden key $key", 'debug' );
     }

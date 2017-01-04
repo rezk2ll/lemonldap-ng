@@ -217,9 +217,7 @@ sub getNotifBack {
 
     # Search for Lemonldap::NG cookie (ciphered)
     my $id;
-    unless ($id = $req->cookies
-        and $id =~ s/$self->{conf}->{cookieName}=([^,; ]+)/$1/o )
-    {
+    unless ( $id = $req->cookies->{ $self->{conf}->{cookieName} } ) {
         return $self->p->sendError( $req, 'No cookie found', 401 );
     }
     $id = $self->p->HANDLER->tsv->{cipher}->decrypt($id)
@@ -237,9 +235,8 @@ sub getNotifBack {
     if ($notifs) {
 
         # Get accepted notifications
-        $req->parseBody;
         my ( $refs, $checks ) = ( {}, {} );
-        my $prms = $req->params;
+        my $prms = $req->parameters;
         foreach ( keys %$prms ) {
             my $v = $prms->{$_};
             if (s/^reference//) {

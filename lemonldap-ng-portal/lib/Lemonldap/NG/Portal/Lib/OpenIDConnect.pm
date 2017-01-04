@@ -15,9 +15,9 @@ use JSON;
 use LWP::UserAgent;
 use MIME::Base64 qw/encode_base64 decode_base64/;
 use Mouse;
-use URI::Escape;
+use WWW::Form::UrlEncoded qw/parse_urlencoded build_urlencoded/;
 
-use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
 
 our $VERSION = '2.0.0';
 
@@ -216,8 +216,8 @@ sub getCallbackUri {
     # Use authChoiceParam in redirect URL
     if ( $req->param( $self->conf->{authChoiceParam} ) ) {
         $callback_uri .= '&'
-          . $self->{authChoiceParam} . '='
-          . uri_escape( $req->param( $self->conf->{authChoiceParam} ) );
+          . build_urlencoded( $self->{authChoiceParam} =>
+              $req->param( $self->conf->{authChoiceParam} ) );
     }
 
     $self->lmLog( "OpenIDConnect Callback URI: $callback_uri", 'debug' );
@@ -265,32 +265,23 @@ sub buildAuthorizationCodeAuthnRequest {
         $nonceSession->update( { '_utime' => time } );
         $nonce = $nonceSession->id;
     }
-    $client_id     = uri_escape($client_id);
-    $scope         = uri_escape($scope);
-    $response_type = uri_escape($response_type);
-    $redirect_uri  = uri_escape($redirect_uri);
-    $state         = uri_escape($state) if defined $state;
-    $nonce         = uri_escape($nonce) if defined $nonce;
-    $display       = uri_escape($display) if defined $display;
-    $prompt        = uri_escape($prompt) if defined $prompt;
-    $max_age       = uri_escape($max_age) if defined $max_age;
-    $ui_locales    = uri_escape($ui_locales) if defined $ui_locales;
-    $acr_values    = uri_escape($acr_values) if defined $acr_values;
 
     my $authn_uri =
         $authorize_uri
       . ( $authorize_uri =~ /\?/ ? '&' : '?' )
-      . "response_type=$response_type"
-      . "&client_id=$client_id"
-      . "&scope=$scope"
-      . "&redirect_uri=$redirect_uri";
-    $authn_uri .= "&state=$state"           if defined $state;
-    $authn_uri .= "&nonce=$nonce"           if defined $nonce;
-    $authn_uri .= "&display=$display"       if defined $display;
-    $authn_uri .= "&prompt=$prompt"         if defined $prompt;
-    $authn_uri .= "&max_age=$max_age"       if $max_age;
-    $authn_uri .= "&ui_locales=$ui_locales" if defined $ui_locales;
-    $authn_uri .= "&acr_values=$acr_values" if defined $acr_values;
+      . build_urlencoded(
+        response_type => $response_type,
+        client_id     => $client_id,
+        scope         => $scope,
+        redirect_uri  => $redirect_uri,
+        ( defined $state      ? ( state      => $state )      : () ),
+        ( defined $nonce      ? ( nonce      => $nonce )      : () ),
+        ( defined $display    ? ( display    => $display )    : () ),
+        ( defined $prompt     ? ( prompt     => $prompt )     : () ),
+        ( $max_age            ? ( max_age    => $max_age )    : () ),
+        ( defined $ui_locales ? ( ui_locales => $ui_locales ) : () ),
+        ( defined $acr_values ? ( acr_values => $acr_values ) : () )
+      );
 
     $self->lmLog(
         "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri",
@@ -308,19 +299,14 @@ sub buildAuthorizationCodeAuthnRequest {
 sub buildAuthorizationCodeAuthnResponse {
     my ( $self, $redirect_uri, $code, $state, $session_state ) = @_;
 
-    my $response_url = $redirect_uri;
-
-    $response_url .= ( $redirect_uri =~ /\?/ ? '&' : '?' );
-
-    $response_url .= "code=" . uri_escape($code);
-
-    if ($state) {
-        $response_url .= "&state=" . uri_escape($state);
-    }
-
-    if ($session_state) {
-        $response_url .= "&session_state=" . uri_escape($session_state);
-    }
+    my $response_url =
+        $redirect_uri
+      . ( $redirect_uri =~ /\?/ ? '&' : '?' )
+      . build_urlencoded(
+        code => $code,
+        ( $state         ? ( state         => $state )         : () ),
+        ( $session_state ? ( session_state => $session_state ) : () )
+      );
 
     return $response_url;
 }
@@ -338,20 +324,18 @@ sub buildImplicitAuthnResponse {
         $session_state )
       = @_;
 
-    my $response_url = "$redirect_uri#id_token=" . uri_escape($id_token);
-    if ($access_token) {
-        $response_url .=
-          "&token_type=bearer&access_token=" . uri_escape($access_token);
-    }
-    if ($expires_in) {
-        $response_url .= "&expires_in=" . uri_escape($expires_in);
-    }
-    if ($state) {
-        $response_url .= "&state=" . uri_escape($state);
-    }
-    if ($session_state) {
-        $response_url .= "&session_state=" . uri_escape($session_state);
-    }
+    my $response_url = "$redirect_uri#"
+      . build_urlencoded(
+        id_token => $id_token,
+        (
+            $access_token
+            ? ( token_type => 'bearer', access_token => $access_token )
+            : ()
+        ),
+        ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
+        ( $state         ? ( state         => $state )         : () ),
+        ( $session_state ? ( session_state => $session_state ) : () )
+      );
     return $response_url;
 }
 
@@ -370,23 +354,18 @@ sub buildHybridAuthnResponse {
         $id_token, $expires_in,   $state, $session_state
     ) = @_;
 
-    my $response_url = "$redirect_uri#code=" . uri_escape($code);
-    if ($access_token) {
-        $response_url .=
-          "&token_type=bearer&access_token=" . uri_escape($access_token);
-    }
-    if ($id_token) {
-        $response_url .= "&id_token=" . uri_escape($id_token);
-    }
-    if ($expires_in) {
-        $response_url .= "&expires_in=" . uri_escape($expires_in);
-    }
-    if ($state) {
-        $response_url .= "&state=" . uri_escape($state);
-    }
-    if ($session_state) {
-        $response_url .= "&session_state=" . uri_escape($session_state);
-    }
+    my $response_url = "$redirect_uri#"
+      . build_urlencoded(
+        code => $code,
+        (
+            $access_token
+            ? ( token_type => 'bearer', access_token => $access_token )
+            : ()
+        ),
+        ( $expires_in    ? ( expires_in    => $expires_in )    : () ),
+        ( $state         ? ( state         => $state )         : () ),
+        ( $session_state ? ( session_state => $session_state ) : () )
+      );
     return $response_url;
 }
 
@@ -1025,18 +1004,18 @@ sub returnRedirectError {
     my $urldc =
         $redirect_url
       . ( $fragment ? '#' : $redirect_url =~ /\?/ ? '&' : '?' )
-      . "error="
-      . uri_escape($error);
-    $urldc .= "&error_description=" . uri_escape($error_description)
-      if defined $error_description;
-    $urldc .= "&error_uri=" . uri_escape($error_uri) if defined $error_uri;
-    $urldc .= "&state=" . uri_escape($state)         if defined $state;
-
-    $self->lmLog( "Redirect user to $urldc", 'debug' );
+      . build_urlencoded(
+        error => $error,
+        (
+            defined $error_description
+            ? ( error_description => $error_description )
+            : ()
+        ),
+        ( defined $error_uri ? ( error_uri => $error_uri ) : () ),
+        ( defined $state     ? ( state     => $state )     : () )
+      );
     $req->urldc($urldc);
-
-    $req->steps( [] );
-    return PE_OK;
+    return PE_REDIRECT;
 }
 
 #sub returnJSONStatus {
@@ -1331,11 +1310,12 @@ sub buildLogoutRequest {
     my @tab = (qw(id_token_hint post_logout_redirect_uri state));
     my @prms;
     for ( my $i = 0 ; $i < 3 ; $i++ ) {
-        push @prms, "$tab[$i]=" . uri_escape( $args[$i] )
+        push @prms, $tab[$i], $args[$i]
           if defined( $args[$i] );
     }
     my $response_url = $redirect_uri;
-    $response_url .= ( $response_url =~ /\?/ ? '&' : '?' ) . join( '&', @prms )
+    $response_url .=
+      ( $response_url =~ /\?/ ? '&' : '?' ) . build_urlencoded(@prms)
       if (@prms);
     return $response_url;
 }
@@ -1351,7 +1331,7 @@ sub buildLogoutResponse {
 
     if ($state) {
         $response_url .= ( $redirect_uri =~ /\?/ ? '&' : '?' );
-        $response_url .= "state=" . uri_escape($state);
+        $response_url .= build_urlencoded( state => $state );
     }
 
     return $response_url;

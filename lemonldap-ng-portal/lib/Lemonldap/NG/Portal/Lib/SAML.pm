@@ -411,7 +411,6 @@ sub checkMessage {
 
         # 2.2.1. POST
         if ( $content_type !~ /xml/ ) {
-            $req->parseBody unless ( %{ $req->params } );
 
             $method = Lasso::Constants::HTTP_METHOD_POST;
             $self->lmLog( "SAML method: HTTP-POST", 'debug' );
@@ -462,7 +461,7 @@ sub checkMessage {
             $self->lmLog( "SAML method: HTTP-SOAP", 'debug' );
 
             # SOAP is always a request
-            $request = $req->body;
+            $request = $req->read_body;
             $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
 
         }
@@ -3023,13 +3022,13 @@ sub getQueryString {
     my $query_string;
 
     if ( $self->conf->{samlUseQueryStringSpecific} ) {
-        my @pairs = split( /&/, $req->param('issuerQuery') || $req->query );
+        my @pairs = split( /&/, $req->param('issuerQuery') || $req->query_string );
         $query_string = join( ';', @pairs );
 
     }
     else {
         # TODO: verify this
-        $query_string = $req->param('issuerQuery') || $req->query;
+        $query_string = $req->param('issuerQuery') || $req->query_string;
     }
 
     return $query_string;

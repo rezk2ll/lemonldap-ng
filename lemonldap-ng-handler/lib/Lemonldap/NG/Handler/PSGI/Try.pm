@@ -61,6 +61,7 @@ sub _run {
             $self->lmLog(
                 "User not authenticated, Try in use, cancel redirection",
                 'debug' );
+            $req->userData( {} );
             $req->respHeaders( [] );
             $self->routes( $self->unAuthRoutes );
         }

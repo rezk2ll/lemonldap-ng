@@ -81,7 +81,7 @@ sub extractFormInfo {
     # if we are receving SAML request or response
     my $url            = $req->uri;
     my $request_method = $req->method;
-    my $content_type   = $req->contentType;
+    my $content_type   = $req->content_type;
 
     # 1.1 SSO assertion consumer
     if ( $url =~ $self->sloAssConsumerRe ) {
@@ -774,7 +774,7 @@ sub extractFormInfo {
             'debug' );
 
         # Artifact request are sent with SOAP trough POST
-        my $art_request = $req->body;
+        my $art_request = $req->read_body;
         my $art_response;
 
         # Create Login object
@@ -874,11 +874,12 @@ sub extractFormInfo {
           . "<p><i>"
           . $idp
           . "</i></p>\n"
-          . ( $req->param("url")
+          . (
+            $req->param("url")
             ? "<input type=\"hidden\" name=\"url\" value=\""
               . $req->param("url") . "\" />"
-            : '' )
-          . "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
+            : ''
+          ) . "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
 
         $self->p->info( $req, $html );
 
@@ -1420,12 +1421,7 @@ sub getIDP {
     my $idp;
     my $idpName;
 
-    my $idp_cookie;
-    if (   $req->cookies
-        && $req->cookies =~ /$self->{conf}->{samlIdPResolveCookie}=([^,; ]+)/o )
-    {
-        $idp_cookie = $1;
-    }
+    my $idp_cookie = $req->cookies->{ $self->{conf}->{samlIdPResolveCookie} };
 
     # Case 1: Recover IDP from idp URL Parameter
     unless ( $idp = $req->param("idp") ) {

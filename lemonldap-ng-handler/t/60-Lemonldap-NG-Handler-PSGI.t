@@ -69,8 +69,8 @@ clean();
 
 sub Lemonldap::NG::Handler::PSGI::handler {
     my ( $self, $req ) = @_;
-    ok( $req->{HTTP_AUTH_USER} eq 'dwho', 'Header is given to app' )
-      or explain( $req->{HTTP_REMOTE_USER}, 'dwho' );
+    ok( $req->env->{HTTP_AUTH_USER} eq 'dwho', 'Header is given to app' )
+      or explain( $req->env->{HTTP_AUTH_USER}, 'dwho' );
     count(1);
     return [ 200, [ 'Content-Type', 'text/plain' ], ['Hello'] ];
 }

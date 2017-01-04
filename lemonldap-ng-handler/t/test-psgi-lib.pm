@@ -10,6 +10,8 @@ our $client;
 our $count = 1;
 $Data::Dumper::Deparse = 1;
 
+no warnings 'redefine';
+
 my $module;
 our $sessionId =
   'f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545';
@@ -84,7 +86,7 @@ has app => (
         return $module->run(
             {
                 configStorage => { type => 'File', dirName => 't' },
-                logLevel      => 'warn',
+                logLevel      => 'error',
                 cookieName    => 'lemonldap',
                 securedCookie => 0,
                 https         => 0,

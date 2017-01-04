@@ -33,6 +33,7 @@ sub build_jail {
     my @t =
       $self->customFunctions ? split( /\s+/, $self->customFunctions ) : ();
     foreach (@t) {
+        no warnings 'redefine';
         $api->lmLog( "Custom function : $_", 'debug' );
         my $sub = $_;
         unless (/::/) {

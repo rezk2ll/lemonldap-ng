@@ -27,7 +27,7 @@ sub extractFormInfo {
     $user_header = 'HTTP_' . uc($user_header);
     $user_header =~ s/\-/_/g;
 
-    unless ( $req->{user} = $req->{$user_header} ) {
+    unless ( $req->{user} = $req->env->{$user_header} ) {
         $self->lmLog( "No header " . $self->conf->{slaveUserHeader} . " found",
             'error' );
         return PE_USERNOTFOUND;

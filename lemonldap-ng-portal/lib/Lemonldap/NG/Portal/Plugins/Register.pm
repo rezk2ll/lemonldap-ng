@@ -89,7 +89,7 @@ sub _register {
         $req->datas->{registerInfo}->{mail}      = $req->param('mail');
         $req->datas->{registerInfo}->{firstname} = $req->param('firstname');
         $req->datas->{registerInfo}->{lastname}  = $req->param('lastname');
-        $req->datas->{registerInfo}->{ipAddr}    = $req->remote_ip();
+        $req->datas->{registerInfo}->{ipAddr}    = $req->address;
 
         # Captcha for register form
         # Only if register session does not already exist

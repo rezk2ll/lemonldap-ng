@@ -37,10 +37,8 @@ sub init {
     if ( my $path = $self->conf->{"issuerDB${type}Path"} ) {
         $path =~ s/^.*?(\w+).*?$/$1/;
         $self->path($path);
-        $self->addUnauthRoute( $path => { '*' => '_redirect' },  ['GET'] );
-        $self->addUnauthRoute( $path => { '*' => '_pRedirect' }, ['POST'] );
-        $self->addAuthRoute( $path => { '*' => "_forAuthUser" },  ['GET'] );
-        $self->addAuthRoute( $path => { '*' => "_pForAuthUser" }, ['POST'] );
+        $self->addUnauthRoute( $path => { '*' => '_redirect' },  ['GET','POST'] );
+        $self->addAuthRoute( $path => { '*' => "_forAuthUser" },  ['GET','POST'] );
     }
     else {
         $self->lmLog( "No path declared for issuer $type. Skipping", 'debug' );
@@ -54,16 +52,16 @@ sub init {
 sub _redirect {
     my ( $self, $req, @path ) = @_;
     $self->lmLog( 'Processing _redirect', 'debug' );
-    my $prms = $req->params;
+    my $prms = $req->parameters;
     foreach my $k ( keys %$prms ) {
         $self->p->setHiddenFormValue( $req, $k, $prms->{$k}, '', 0 );
     }
     $self->p->setHiddenFormValue( $req, 'issuerMethod', $req->method, '', 0 );
-    $self->p->setHiddenFormValue( $req, 'issuerQuery',  $req->query,  '', 0 );
+    $self->p->setHiddenFormValue( $req, 'issuerQuery',  $req->query_string,  '', 0 );
     $req->{urldc} =
         $self->conf->{portal}
       . $req->path
-      . ( $req->query ? '?' . $req->query : '' );
+      . ( $req->query_string ? '?' . $req->query_string : '' );
 
     # TODO: launch normal process with 'run' at the end
     return $self->p->do(
@@ -82,13 +80,6 @@ sub _redirect {
     );
 }
 
-sub _pRedirect {
-    my ( $self, $req, @path ) = @_;
-    $self->lmLog( '_pRedirect: parsing posted datas', 'debug' );
-    $req->parseBody;
-    return $self->_redirect( $req, @path );
-}
-
 # Case 3: authentified user, launch
 sub _forAuthUser {
     my ( $self, $req, @path ) = @_;
@@ -104,13 +95,6 @@ sub _forAuthUser {
             },
         ]
     );
-}
-
-sub _pForAuthUser {
-    my ( $self, $req, @path ) = @_;
-    $self->lmLog( 'Parsing posted datas', 'debug' );
-    $req->parseBody;
-    return $self->_forAuthUser( $req, @path );
 }
 
 1;

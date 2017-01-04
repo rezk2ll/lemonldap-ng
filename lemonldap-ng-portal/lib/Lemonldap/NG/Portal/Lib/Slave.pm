@@ -18,7 +18,7 @@ our $VERSION = '2.0.0';
 # @return true if remote IP is accredited in LL::NG conf
 sub checkIP {
     my ( $self, $req ) = @_;
-    my $remoteIP = $req->remote_ip;
+    my $remoteIP = $req->address;
     return 1
       if (!$self->conf->{slaveMasterIP}
         || $self->conf->{slaveMasterIP} =~ /\b$remoteIP\b/ );

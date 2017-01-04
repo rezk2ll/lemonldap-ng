@@ -875,7 +875,6 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 # Handle token endpoint
 sub token {
     my ( $self, $req ) = @_;
-    $req->parseBody if ( $req->method =~ /^post$/i );
     $self->lmLog( "URL detected as an OpenID Connect TOKEN URL", 'debug' );
 
     # Check authentication
@@ -1034,7 +1033,6 @@ sub token {
 sub userInfo {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL detected as an OpenID Connect USERINFO URL", 'debug' );
-    $req->parseBody if ( $req->method =~ /^post$/i );
 
     my $access_token = $self->getEndPointAccessToken($req);
 
@@ -1091,7 +1089,6 @@ sub userInfo {
 sub jwks {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL detected as an OpenID Connect JWKS URL", 'debug' );
-    $req->parseBody if ( $req->method =~ /^post$/i );
 
     my $jwks = { keys => [] };
 
@@ -1117,7 +1114,7 @@ sub registration {
     # TODO: check Initial Access Token
 
     # Specific message to allow DOS detection
-    my $source_ip = $req->remote_ip;
+    my $source_ip = $req->address;
     $self->lmLog( "OpenID Connect Registration request from $source_ip",
         'warn' );
 
@@ -1128,7 +1125,7 @@ sub registration {
     }
 
     # Get client metadata
-    my $client_metadata_json = $req->body;
+    my $client_metadata_json = $req->read_body;
     unless ($client_metadata_json) {
         return $self->p->sendError( $req, 'Missing POST datas', 400 );
     }
@@ -1221,7 +1218,6 @@ sub endSessionDone {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL  detected as an OpenID Connect END SESSION URL",
         'debug' );
-    $req->parseBody if ( $req->method =~ /^post$/i );
     $self->lmLog( "User is already logged out", 'debug' );
 
     my $post_logout_redirect_uri = $req->param('post_logout_redirect_uri');
@@ -1246,7 +1242,6 @@ sub checkSession {
     my ( $self, $req ) = @_;
     $self->lmLog( "URL  detected as an OpenID Connect CHECK SESSION URL",
         'debug' );
-    $req->parseBody if ( $req->method =~ /^post$/i );
 
     my $portalPath = $self->conf->{portal};
     $portalPath =~ s#^https?://[^/]+/?#/#;

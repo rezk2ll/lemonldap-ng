@@ -76,13 +76,12 @@ count(1);
     qr#^http://auth.rp.com/?\?openidconnectcallback=1\#(.*)$# );
 
 my %prms = map { split /=/, $_ } split /&/, $query;
-ok( $prms{id_token},      ' id_token found' );
 ok( $prms{token_type},    ' token_type found' );
 ok( $prms{session_state}, ' session_state found' );
 ok( $prms{access_token},  ' access_token found' );
 ok( $prms{state},         ' state found' );
 ok( $prms{session_state}, ' session_state found' );
-count(6);
+count(5);
 
 my $at;
 ok( $at = $rp->p->_userDB->getUserInfo( 'op', $prms{access_token} ),

@@ -39,7 +39,6 @@ sub process {
 # For post requests, parse datas
 sub restoreArgs {
     my ( $self, $req ) = @_;
-    $req->parseBody;
     $req->mustRedirect(1);
     return PE_OK;
 }
@@ -66,11 +65,11 @@ sub controlUrl {
             my $time = time() - $self->conf->{cipher}->decrypt($2);
             if ( $time < 600 ) {
                 $self->lmLog( "Confirm parameter accepted $c", 'debug' );
-                $req->param( 'confirm', $c );
+                $req->set_param( 'confirm', $c );
             }
             else {
                 $self->lmLog( 'Confirmation to old, refused', 'notice' );
-                $req->param( 'confirm', 0 );
+                $req->set_param( 'confirm', 0 );
             }
         }
     }
@@ -131,7 +130,7 @@ sub controlUrl {
 
 sub checkLogout {
     my ( $self, $req ) = @_;
-    if ( $req->param('logout') ) {
+    if ( defined $req->param('logout') ) {
         $req->steps(
             [ @{ $self->beforeLogout }, 'authLogout', 'deleteSession' ] );
     }
@@ -194,7 +193,7 @@ sub deleteSession {
         if ( !$req->urldc and !$req->postUrl ) {
             $self->lmLog( 'No other target defined, redirect on logout',
                 'debug' );
-            $req->urldc( $req->scriptname . "?logout=1" );
+            $req->urldc( $req->script_name . "?logout=1" );
         }
     }
 
@@ -292,7 +291,7 @@ sub setSessionInfo {
     $req->{sessionInfo}->{_userDB} = $self->getModule( $req, "user" );
 
     # Store IP address from remote address or X-FORWARDED-FOR header
-    $req->{sessionInfo}->{ipAddr} = $req->remote_ip;
+    $req->{sessionInfo}->{ipAddr} = $req->address;
 
     # Date and time
     if ( $self->conf->{updateSession} ) {

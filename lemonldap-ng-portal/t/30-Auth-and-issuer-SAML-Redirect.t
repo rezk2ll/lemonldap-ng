@@ -105,7 +105,7 @@ SKIP: {
     expectOK($res);
     my $idpId = expectCookie($res);
 
-    # Post SAML artifact to SP
+    # Post SAML response to SP
     ok(
         $res->[2]->[0] =~
           m#<form.+?action="http://auth.sp.com(.*?)".+?method="post"#,
@@ -126,7 +126,7 @@ SKIP: {
             length => length($s),
             cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
-        'Post artifact to SP'
+        'Post SAML response to SP'
     );
     my $spId = expectCookie($res);
     expectRedirection( $res, 'http://auth.sp.com' );

@@ -118,8 +118,9 @@ sub handler {
     if ( !@path and $self->defaultRoute ) {
         @path = ( $self->defaultRoute );
     }
-    my $res = $self->followPath( $req, $self->routes->{ $req->method }, \@path );
-    return $res ? $res : $self->sendError($req,'Bad request',400);
+    my $res =
+      $self->followPath( $req, $self->routes->{ $req->method }, \@path );
+    return $res ? $res : $self->sendError( $req, 'Bad request', 400 );
 }
 
 sub followPath {
@@ -130,12 +131,12 @@ sub followPath {
             return $routes->{$w}->( $self, $req, @$path );
         }
         my $res = $self->followPath( $req, $routes->{$w}, $path );
-        return $res if($res);
+        return $res if ($res);
         unshift @$path, $w;
     }
     if ( $routes->{':'} ) {
         my $v = shift @$path;
-        $req->params->{ $routes->{'#'} } = $v;
+        $req->set_param($routes->{'#'}, $v);
         if ( ref( $routes->{':'} ) eq 'CODE' ) {
             return $routes->{':'}->( $self, $req, @$path );
         }

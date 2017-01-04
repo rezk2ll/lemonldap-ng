@@ -97,7 +97,7 @@ sub getConfKey {
     # when 'latest' => replace by last cfgNum
     if ( $req->params('cfgNum') eq 'latest' ) {
         my $tmp = $self->confAcc->lastCfg;
-        $req->params( 'cfgNum', $tmp );
+        $req->set_param( 'cfgNum', $tmp );
         if ($Lemonldap::NG::Common::Conf::msg) {
             $req->error($Lemonldap::NG::Common::Conf::msg);
             return undef;
@@ -107,7 +107,9 @@ sub getConfKey {
         $req->error("cfgNum must be a number");
         return undef;
     }
-    unless ( defined $self->getConfByNum( $req->params('cfgNum'), @args ) ) {
+    unless (
+        defined $self->getConfByNum( scalar( $req->params('cfgNum') ), @args ) )
+    {
         $req->error( "Configuration "
               . $req->params('cfgNum')
               . " is not available ("
@@ -1050,7 +1052,8 @@ sub diff {
     my ( $self, $req, @path ) = @_;
     return $self->sendError( $req, 'to many arguments in path info', 400 )
       if (@path);
-    my @cfgNum = ( $req->params('conf1'), $req->params('conf2') );
+    my @cfgNum =
+      ( scalar( $req->param('conf1') ), scalar( $req->param('conf2') ) );
     my @conf;
 
     # Load the 2 configurations

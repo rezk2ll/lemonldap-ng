@@ -25,7 +25,7 @@ sub init {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     return PE_OK
-      if ( $req->user( $req->{ $self->SSLField } ) );
+      if ( $req->user( $req->env->{ $self->SSLField } ) );
     if ( $req->{SSL_CLIENT_S_DN} ) {
         $self->p->userError(
             "$self->SSLField was not found in user certificate");

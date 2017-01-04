@@ -371,10 +371,10 @@ sub getSkin {
 
     # Fill sessionInfo to eval rule if empty (unauthenticated user)
     $req->{sessionInfo}->{_url}   ||= $req->{urldc};
-    $req->{sessionInfo}->{ipAddr} ||= $req->remote_ip;
+    $req->{sessionInfo}->{ipAddr} ||= $req->address;
 
     # Load specific skin from skinRules
-    foreach my $rule ( @{ $self->conf->skinRules } ) {
+    foreach my $rule ( @{ $self->conf->{skinRules} } ) {
         if ( $rule->[1]->( $req->sessionInfo ) ) {
             $skin = $rule->[0];
             $self->lmLog( "Skin $skin selected from skin rule", 'debug' );
