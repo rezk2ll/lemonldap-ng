@@ -1172,7 +1172,7 @@ L<Lemonldap::NG::Manager>, L<http://lemonldap-ng.org/>
 
 =over
 
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
 
 =back
 
@@ -1181,6 +1181,10 @@ L<Lemonldap::NG::Manager>, L<http://lemonldap-ng.org/>
 Use OW2 system to report bug or ask for features:
 L<http://jira.ow2.org>
 
+If you want to report a bug concerning configuration upload, please change
+HIGHDEBUG constant value to produce more logs. Then post them in the Jira
+ticket.
+
 =head1 DOWNLOAD
 
 Lemonldap::NG is available at
@@ -1188,13 +1192,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =head1 COPYRIGHT AND LICENSE
 
-=over
-
-=item Copyright (C) 2015-2016 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2015-2016 by Clément Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=back
+See COPYING file for details.
 
 This library is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
