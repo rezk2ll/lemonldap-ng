@@ -198,41 +198,30 @@ Lemonldap::NG::Portal::CDC - Manage SAML Common Domain Cookie
 
 =head1 SYNOPSIS
 
+Choose any L<Plack> method. CGI example:
+
+  #!/usr/bin/env plackup -I pl/lib
+  
   use Lemonldap::NG::Portal::CDC;
   
-  my $portal = new Lemonldap::NG::Portal::CDC();
- 
-  $portal->process();
-
-  # Write here HTML to manage errors and confirmation messages
+  # This must be the last instruction ! See PSGI for more
+  Lemonldap::NG::Portal::CDC->run($opts);
 
 =head1 DESCRIPTION
 
 Lemonldap::NG::Portal::CDC - Manage SAML Common Domain Cookie
 
-See L<Lemonldap::NG::Portal::SharedConf> for a complete example of use of
-Lemonldap::Portal::* libraries.
-
-=head1 METHODS
-
-=head3 process
-
-Main method.
+See L<http://lemonldap-ng.org> for more.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal::SharedConf>, L<CGI>,
 L<http://lemonldap-ng.org/>
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 =over
 
-=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=item François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
 
 =back
 
@@ -248,15 +237,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =head1 COPYRIGHT AND LICENSE
 
-=over
-
-=item Copyright (C) 2010-2017 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2012 by François-Xavier Deltombe, E<lt>fxdeltombe@gmail.com.E<gt>
-
-=item Copyright (C) 2010, 2012 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=back
+See COPYING file for details.
 
 This library is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
