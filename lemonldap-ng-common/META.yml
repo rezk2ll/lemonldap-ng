@@ -43,6 +43,7 @@ requires:
   JSON: '0'
   Mouse: '0'
   Net::CIDR::Lite: '0'
+  Plack: '0'
   SOAP::Lite: '0'
   Storable: '0'
 version: v2.0.0
