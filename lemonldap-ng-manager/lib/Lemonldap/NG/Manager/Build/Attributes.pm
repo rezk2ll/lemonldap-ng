@@ -2273,7 +2273,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
         oidcServiceMetaDataCheckSessionURI => {
             type          => 'text',
-            default       => 'checksession',
+            default       => 'checksession.html',
             documentation => 'OpenID Connect check session iframe',
         },
         oidcServiceMetaDataAuthnContext => {

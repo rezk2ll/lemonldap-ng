@@ -1373,30 +1373,6 @@ sub getRequestJWT {
     return $response->decoded_content;
 }
 
-# Create JS code needed on OP side to manage session
-# return String JS code
-sub getSessionManagementOPIFrameJS {
-    my ($self) = @_;
-
-    return q@window.addEventListener("message", receiveMessage, false);
-function receiveMessage(e){
-  var message = e.data;
-  client_id = decodeURIComponent(message.split(' ')[0]);
-  session_state = decodeURIComponent(message.split(' ')[1]);
-  var salt = decodeURIComponent(session_state.split('.')[1]);
-  var opbs = document.cookie.replace(/(?:(?:^|.*;\s*)@
-      . $self->conf->{cookieName} . q@\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-  var hash = CryptoJS.SHA256(client_id + ' ' + opbs + ' ' + salt);
-  var ss = hash.toString(CryptoJS.enc.Base64) + '.'  + salt;
-  if (session_state == ss) {
-    stat = 'unchanged';
-  } else {
-    stat = 'changed';
-  }
-  e.source.postMessage(stat,e.origin);
-}@;
-}
-
 ### Import encode_base64url and decode_base64url from recent MIME::Base64 module:
 sub encode_base64url {
     my $e = encode_base64( shift, '' );

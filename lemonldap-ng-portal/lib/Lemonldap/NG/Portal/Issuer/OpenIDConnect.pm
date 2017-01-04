@@ -1243,17 +1243,12 @@ sub checkSession {
     $self->lmLog( "URL  detected as an OpenID Connect CHECK SESSION URL",
         'debug' );
 
-    my $portalPath = $self->conf->{portal};
-    $portalPath =~ s#^https?://[^/]+/?#/#;
-    $portalPath =~ s#[^/]+\.pl$##;
-
     # TODO: access_control_allow_origin => '*'
     return $self->p->sendHtml(
         $req,
         '../common/oidc_checksession',
         params => {
-            JS_CODE   => $self->getSessionManagementOPIFrameJS,
-            SKIN_PATH => $portalPath . 'skins',
+            COOKIENAME   => $self->conf->{cookieName},
         }
     );
 }

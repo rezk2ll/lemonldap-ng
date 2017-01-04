@@ -41,7 +41,7 @@ sub handler {
 # -----------------
 #
 # Entry points:
-#  - "/test": - authenticated() for already authenticated users
+#  - "/ping": - authenticated() for already authenticated users
 #             - pleaseAuth() for others
 #  - "/":     - login() ~first access
 #             - postLogin(), same for POST requests

@@ -1633,7 +1633,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'text'
         },
         'oidcServiceMetaDataCheckSessionURI' => {
-            'default' => 'checksession',
+            'default' => 'checksession.html',
             'type'    => 'text'
         },
         'oidcServiceMetaDataEndSessionURI' => {

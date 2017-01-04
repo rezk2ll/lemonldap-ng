@@ -154,7 +154,7 @@ sub defaultValues {
             'loa-5' => 5
         },
         'oidcServiceMetaDataAuthorizeURI'    => 'authorize',
-        'oidcServiceMetaDataCheckSessionURI' => 'checksession',
+        'oidcServiceMetaDataCheckSessionURI' => 'checksession.html',
         'oidcServiceMetaDataEndSessionURI'   => 'logout',
         'oidcServiceMetaDataIssuer'          => 'http://auth.example.com',
         'oidcServiceMetaDataJWKSURI'         => 'jwks',

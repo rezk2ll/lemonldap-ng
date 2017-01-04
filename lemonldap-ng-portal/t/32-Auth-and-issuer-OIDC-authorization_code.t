@@ -81,11 +81,13 @@ my $spId = expectCookie($res);
 
 switch ('op');
 ok(
-    $res = $op->_get( '/oauth2/checksession', accept => 'text.html' ),
-    'Check session,           endpoint /oauth2/checksession'
+    $res = $op->_get( '/oauth2/checksession.html', accept => 'text.html' ),
+    'Check session,      endpoint /oauth2/checksession.html'
 );
 count(1);
 expectOK($res);
+ok($res->[2]->[0]=~ /e\.source\.postMessage/, 'Found javascript');
+count(1);
 
 # Logout initiated by RP
 switch ('rp');
@@ -258,7 +260,7 @@ sub op {
                 },
                 oidcServiceMetaDataIssuer             => "http://auth.op.com",
                 oidcServiceMetaDataAuthorizeURI       => "authorize",
-                oidcServiceMetaDataCheckSessionURI    => "checksession",
+                oidcServiceMetaDataCheckSessionURI    => "checksession.html",
                 oidcServiceMetaDataJWKSURI            => "jwks",
                 oidcServiceMetaDataEndSessionURI      => "logout",
                 oidcServiceMetaDataRegistrationURI    => "register",
