@@ -16,15 +16,21 @@ our $VERSION = '2.0.0';
 
 # PROPERTIES
 
-has random => (is => 'rw', default => sub {
-    return String::Random->new;
-});
-has charset => (is=>'rw',default => sub{return $_[0]->{conf}->{mailCharset} || 'utf-8'});
+has random => (
+    is      => 'rw',
+    default => sub {
+        return String::Random->new;
+    }
+);
+has charset => (
+    is      => 'rw',
+    default => sub { return $_[0]->{conf}->{mailCharset} || 'utf-8' }
+);
 
 # Generate a complex password based on a regular expression
 # @param regexp regular expression
 sub gen_password {
-    my($self,$regexp) = @_;
+    my ( $self, $regexp ) = @_;
     return $self->random->randregex($regexp);
 }
 
@@ -53,7 +59,7 @@ sub send_mail {
     # Encode the subject
     $subject = encode_base64( $subject, '' );
     $subject =~ s/\s//gs;
-    $subject = '=?'.$self->charset."?B?$subject?=";
+    $subject = '=?' . $self->charset . "?B?$subject?=";
 
     # Detect included images (cid)
     my %cid = ( $body =~ m/"cid:([^:]+):([^"]+)"/g );
@@ -78,7 +84,7 @@ sub send_mail {
 
             # Attach HTML message
             $message->attach(
-                Type => 'text/html; charset='.$self->charset,
+                Type => 'text/html; charset=' . $self->charset,
                 Data => qq{$body},
             );
 
