@@ -54,6 +54,7 @@ WriteMakefile(
         'File::Basename'         => 0,
         'JSON'                   => 0,
         'Mouse'                  => 0,
+        'Plack'                  => 0,
         'Net::CIDR::Lite'        => 0,
         'SOAP::Lite'             => 0,
         'Storable'               => 0,
