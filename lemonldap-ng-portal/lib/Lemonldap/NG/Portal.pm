@@ -22,6 +22,17 @@ __END__
 Lemonldap::NG::Portal - The authentication portal part of Lemonldap::NG Web-SSO
 system.
 
+=head1 SYNOPSIS
+
+Use any of Plack launcher. Example:
+
+  #!/usr/bin/env plackup
+  
+  use Lemonldap::NG::Portal;
+  
+  # This must be the last instruction ! See PSGI for more
+  Lemonldap::NG::Portal->run($opts);
+
 =head1 DESCRIPTION
 
 Lemonldap::NG is a modular Web-SSO based on Apache::Session modules. It

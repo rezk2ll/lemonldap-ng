@@ -126,7 +126,9 @@ system.
 
 =head1 SYNOPSIS
 
-  #!/usr/bin/env plackup -I pl/lib
+Use any of Plack launcher. Example:
+
+  #!/usr/bin/env plackup
   
   use Lemonldap::NG::Manager;
   

@@ -200,7 +200,7 @@ Lemonldap::NG::Portal::CDC - Manage SAML Common Domain Cookie
 
 Choose any L<Plack> method. CGI example:
 
-  #!/usr/bin/env plackup -I pl/lib
+  #!/usr/bin/env plackup
   
   use Lemonldap::NG::Portal::CDC;
   
