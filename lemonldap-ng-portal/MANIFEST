@@ -68,6 +68,8 @@ lib/Lemonldap/NG/Portal/Lib/CAS.pm
 lib/Lemonldap/NG/Portal/Lib/Choice.pm
 lib/Lemonldap/NG/Portal/Lib/DBI.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
+lib/Lemonldap/NG/Portal/Lib/OpenID/Server.pm
+lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Lib/Proxy.pm
 lib/Lemonldap/NG/Portal/Lib/Remote.pm
@@ -88,8 +90,6 @@ lib/Lemonldap/NG/Portal/Main/Process.pm
 lib/Lemonldap/NG/Portal/Main/Request.pm
 lib/Lemonldap/NG/Portal/Main/Run.pm
 lib/Lemonldap/NG/Portal/Menu.pm
-lib/Lemonldap/NG/Portal/OpenID/Server.pm
-lib/Lemonldap/NG/Portal/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Password/Base.pm
 lib/Lemonldap/NG/Portal/Password/DBI.pm
 lib/Lemonldap/NG/Portal/Password/Demo.pm
