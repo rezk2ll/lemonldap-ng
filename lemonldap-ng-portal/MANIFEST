@@ -19,7 +19,6 @@ example/soaperrortest.pl
 example/soaptest.pl
 KINEMATIC.md
 lib/Lemonldap/NG/Portal.pm
-lib/Lemonldap/NG/Portal/_CAS.pm
 lib/Lemonldap/NG/Portal/_i18n.pm
 lib/Lemonldap/NG/Portal/_Multi.pm
 lib/Lemonldap/NG/Portal/_OpenIDConnect.pm
@@ -44,7 +43,6 @@ lib/Lemonldap/NG/Portal/Auth/Remote.pm
 lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
-lib/Lemonldap/NG/Portal/AuthCAS.pm
 lib/Lemonldap/NG/Portal/AuthMulti.pm
 lib/Lemonldap/NG/Portal/AuthOpenID.pm
 lib/Lemonldap/NG/Portal/AuthOpenIDConnect.pm
@@ -60,7 +58,6 @@ lib/Lemonldap/NG/Portal/Issuer/Get.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Issuer/SAML.pm
-lib/Lemonldap/NG/Portal/IssuerDBCAS.pm
 lib/Lemonldap/NG/Portal/IssuerDBNull.pm
 lib/Lemonldap/NG/Portal/IssuerDBOpenID.pm
 lib/Lemonldap/NG/Portal/IssuerDBOpenIDConnect.pm
