@@ -268,8 +268,10 @@ sub loadPlugin {
         qw(beforeAuth betweenAuthAndDatas afterDatas forAuthUser beforeLogout))
     {
         if ( $obj->can($sub) ) {
+            $self->lmLog( " Found $sub entry point:", 'debug' );
             if ( my $callback = $obj->$sub ) {
                 push @{ $self->{$sub} }, sub { $obj->$callback( $_[0] ) };
+                $self->lmLog( "  -> $callback", 'debug' );
             }
         }
     }
@@ -300,7 +302,7 @@ sub loadModule {
 }
 
 sub fail {
-    $_[0]->lmLog($_[0]->error,'error');
+    $_[0]->lmLog( $_[0]->error, 'error' );
     return 0;
 }
 

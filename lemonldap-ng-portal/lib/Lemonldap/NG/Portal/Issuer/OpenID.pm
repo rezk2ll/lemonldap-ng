@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::Issuer::OpenID;
 use strict;
 use JSON;
 use Mouse;
+use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADPARTNER
   PE_CONFIRM
@@ -47,14 +48,7 @@ has spList => (
     }
 );
 
-has openidPortal => (
-    is      => 'rw',
-    default => sub {
-        return $_[0]->conf->{portal} . '/' . $_[0]->path;
-
-        #$openidPortal =~ s#(?<!:)//#/#g;
-    }
-);
+has openidPortal => ( is => 'rw' );
 
 # INITIALIZATION
 
@@ -65,6 +59,10 @@ sub init {
         $self->error("Unable to load Net::OpenID::Server: $@");
         return 0;
     }
+    return 0 unless ( $self->SUPER::init() );
+    $self->openidPortal( $self->conf->{portal} . '/' . $self->path );
+
+    #$openidPortal =~ s#(?<!:)//#/#g;
     return 1;
 }
 
@@ -119,7 +117,8 @@ sub openIDServer {
     my ( $self, $req ) = @_;
     return $req->datas->{_openidserver} if ( $req->datas->{_openidserver} );
 
-    $req->datas->{_openidserver} = Lemonldap::NG::Portal::Lib::OpenID::Server->new(
+    $req->datas->{_openidserver} =
+      Lemonldap::NG::Portal::Lib::OpenID::Server->new(
         server_secret => sub { return $self->secret },
         args          => $req,
         endpoint_url  => $self->openidPortal,
@@ -179,10 +178,12 @@ sub openIDServer {
             sreg => sub {
                 return ( 1, {} ) unless (@_);
                 require Lemonldap::NG::Portal::Lib::OpenID::SREG;
-                return $self->Lemonldap::NG::Portal::Lib::OpenID::SREG::sregHook($req, @_);
+                return
+                  $self->Lemonldap::NG::Portal::Lib::OpenID::SREG::sregHook(
+                    $req, @_ );
             },
         },
-    );
+      );
     return $req->datas->{_openidserver};
 }
 
