@@ -15,7 +15,7 @@ use JSON;
 use LWP::UserAgent;
 use MIME::Base64 qw/encode_base64 decode_base64/;
 use Mouse;
-use WWW::Form::UrlEncoded qw/parse_urlencoded build_urlencoded/;
+use WWW::Form::UrlEncoded qw/build_urlencoded/;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
 

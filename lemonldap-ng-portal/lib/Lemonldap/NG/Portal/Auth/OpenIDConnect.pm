@@ -312,6 +312,4 @@ sub getDisplayType {
     return "logo";
 }
 
-# Internal methods
-
 1;
