@@ -20,7 +20,6 @@ sub init {
 
 # RUNNING METHODS
 
-# Does nothing
 sub getUser {
     my ( $self, $req ) = @_;
     my $op   = $req->datas->{_oidcOPCurrent};
@@ -73,4 +72,3 @@ sub setGroups {
 }
 
 1;
-__END__

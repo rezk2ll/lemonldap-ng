@@ -1,8 +1,10 @@
-package Lemonldap::NG::Portal::Auth::OpenIDConnect;
+package Lemonldap::NG::Portal::Auth::OpenID;
 
 use strict;
 use Mouse;
 use WWW::Form::UrlEncoded qw/build_urlencoded/;
+use Lemonldap::NG::Common::Regexp;
+use Cache::FileCache;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
   PE_BADPARTNER
@@ -71,7 +73,7 @@ sub init {
 
 sub extractFormInfo {
     my ( $self, $req ) = @_;
-    $req->data->{csr} = Net::OpenID::Consumer->new(
+    $req->datas->{csr} = Net::OpenID::Consumer->new(
         ua    => $self->ua(),
         cache => $self->p->HANDLER->tsv->{refLocalStorage}
           || Cache::FileCache->new,

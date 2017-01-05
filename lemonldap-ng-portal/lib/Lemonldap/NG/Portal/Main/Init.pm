@@ -147,7 +147,7 @@ sub reloadConf {
         $self->error(
             'globalStorage not defined (perhaps configuration can not be read)'
         );
-        return 0;
+        return $self->fail;
     }
 
     # Initialize persistent session DB
@@ -160,7 +160,7 @@ sub reloadConf {
     # Initialize cookie domain
     unless ( $self->conf->{domain} ) {
         $self->error('Configuration error: no domain');
-        return 0;
+        return $self->fail;
     }
     $self->conf->{domain} =~ s/^([^\.])/.$1/;
 
@@ -169,13 +169,13 @@ sub reloadConf {
     for my $type (qw(authentication userDB)) {
         unless ( $self->conf->{$type} ) {
             $self->error("$type is not set");
-            return 0;
+            return $self->fail;
         }
         my $module = '::' . ucfirst($type) . '::' . $self->conf->{$type};
         $module =~ s/Authentication/Auth/;
 
         # Launch and initialize module
-        return 0
+        return $self->fail
           unless ( $self->{"_$type"} = $self->loadPlugin($module) );
     }
 
@@ -251,7 +251,7 @@ sub reloadConf {
 
     # Load plugins
     foreach my $plugin ( $self->enabledPlugins ) {
-        $self->loadPlugin($plugin) or return 0;
+        $self->loadPlugin($plugin) or return $self->fail;
     }
 
     $self->menu( $self->loadPlugin('::Main::Menu') );
@@ -284,7 +284,7 @@ sub loadModule {
 
     eval "require $module";
     if ($@) {
-        $self->error("$module load error: $@");
+        $self->lmLog( "$module load error: $@", 'error' );
         return 0;
     }
     eval {
@@ -297,6 +297,11 @@ sub loadModule {
     }
     $self->loadedModules->{$module} = $obj;
     return $obj;
+}
+
+sub fail {
+    $_[0]->lmLog($_[0]->error,'error');
+    return 0;
 }
 
 1;

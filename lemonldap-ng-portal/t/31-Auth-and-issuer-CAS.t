@@ -16,7 +16,6 @@ SKIP: {
     no warnings 'redefine';
     eval q#use AuthCAS#;
     if ($@) {
-        print STDERR $@;
         skip 'AuthCAS not found', $maintests;
     }
 
