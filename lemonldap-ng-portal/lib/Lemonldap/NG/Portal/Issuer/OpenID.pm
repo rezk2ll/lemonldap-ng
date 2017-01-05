@@ -73,6 +73,8 @@ sub forUnauthUser {
     my $mode = $req->param('openid.mode');
     unless ($mode) {
         $self->lmLog( 'OpenID SP test', 'debug' );
+        push @{ $req->respHeaders },
+          'X-XRDS-Location' => $self->openidPortal . '?openid.mode=yadis';
         return PE_OPENID_EMPTY;
     }
     if ( $mode eq 'associate' ) {
@@ -92,6 +94,8 @@ sub run {
 
     unless ($mode) {
         $self->lmLog( 'OpenID SP test', 'debug' );
+        push @{ $req->respHeaders },
+          'X-XRDS-Location' => $self->openidPortal . '?openid.mode=yadis';
         return PE_OPENID_EMPTY;
     }
 
@@ -116,11 +120,12 @@ sub logout {
 sub openIDServer {
     my ( $self, $req ) = @_;
     return $req->datas->{_openidserver} if ( $req->datas->{_openidserver} );
+    my Plack::Request $r = $req;
 
     $req->datas->{_openidserver} =
       Lemonldap::NG::Portal::Lib::OpenID::Server->new(
         server_secret => sub { return $self->secret },
-        args          => $req,
+        args          => $r,
         endpoint_url  => $self->openidPortal,
         setup_url     => $self->openidPortal,
         get_user      => sub {
