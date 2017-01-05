@@ -3,7 +3,7 @@
 
 ## @class
 # Subclass of Net::OpenID::Server that manage OpenID extensions
-package Lemonldap::NG::Portal::OpenID::Server;
+package Lemonldap::NG::Portal::Lib::OpenID::Server;
 
 use strict;
 use base qw(Net::OpenID::Server);
@@ -15,8 +15,9 @@ use constant DEBUG => 0;
 
 our $VERSION = '2.0.0';
 
-my $OPENID2_NS        = qq!http://specs.openid.net/auth/2.0!;
-my $OPENID2_ID_SELECT = qq!http://specs.openid.net/auth/2.0/identifier_select!;
+use constant OPENID2_NS => 'http://specs.openid.net/auth/2.0';
+
+use constant OPENID2_ID_SELECT => 'http://specs.openid.net/auth/2.0/identifier_select';
 
 *_push_url_arg =
   ( $Net::OpenID::Server::VERSION >= 1.09 )
@@ -61,7 +62,7 @@ sub _mode_checkid {
 
     my $trust_root = $self->args("openid.trust_root") || $return_to;
     $trust_root = $self->args("openid.realm")
-      if $self->args('openid.ns') eq $OPENID2_NS;
+      if $self->args('openid.ns') eq OPENID2_NS;
     return $self->_fail("invalid_trust_root")
       unless ( $trust_root =~ Lemonldap::NG::Common::Regexp::HTTP_URI
         and Net::OpenID::Server::_url_is_under( $trust_root, $return_to ) );
@@ -72,8 +73,8 @@ sub _mode_checkid {
     $trust_root =~ s/\?.*//;
 
     my $u = $self->_proxy("get_user");
-    if (   $self->args('openid.ns') eq $OPENID2_NS
-        && $identity eq $OPENID2_ID_SELECT )
+    if (   $self->args('openid.ns') eq OPENID2_NS
+        && $identity eq OPENID2_ID_SELECT )
     {
         $identity = $self->_proxy( "get_identity", $u, $identity );
     }
@@ -149,7 +150,7 @@ sub _mode_checkid {
 
     if ( $mode eq "checkid_immediate" ) {
         my $ret_url = $return_to;
-        if ( $self->args('openid.ns') eq $OPENID2_NS ) {
+        if ( $self->args('openid.ns') eq OPENID2_NS ) {
             _push_url_arg( \$ret_url, "openid.ns",   $self->args('openid.ns') );
             _push_url_arg( \$ret_url, "openid.mode", "setup_needed" );
         }
@@ -173,51 +174,6 @@ sub _mode_checkid {
     }
 }
 
-#*args = \&get_args;
-
-#sub get_args {
-#    my $self = shift;
-#
-#    if ( my $what = shift ) {
-#        Carp::croak("Too many parameters") if @_;
-#
-#        # Lemonldap::NG only (direct CGI)
-#        $self->{get_args} = sub { $what->param( $_[0] ) };
-#
-#        # INCLUDE IN PROPOSED PATCH FOR Net::OpenID::Server
-#        #my $getter;
-#        #if ( !ref $what ) {
-#        #    Carp::croak("No get_args defined") unless $self->{get_args};
-#        #    return $self->{get_args}->($what) || "";
-#        #}
-#        #elsif ( ref $what eq "HASH" ) {
-#        #    $getter = sub { $_[0] ? $what->{ $_[0] } : ( keys %$what ); };
-#        #}
-#        #elsif ( ref $what eq "Apache" ) {
-#        #    my %get = $what->args;
-#        #    $getter = sub { $_[0] ? $get{ $_[0] } : ( keys %get ); };
-#        #}
-#        #elsif ( ref $what eq "CODE" ) {
-#        #    $getter = $what;
-#        #}
-#        #else {
-#        #    my $r = eval { $what->can('param') };
-#        #    if ( $@ or not $r ) {
-#        #        Carp::croak("Unknown parameter type ($what)");
-#        #    }
-#        #    else {
-#        #        $getter = sub {
-#        #            $_[0] ? scalar $what->param( $_[0] ) : ( $what->param() );
-#        #        };
-#        #    }
-#        #}
-#        #if ($getter) {
-#        #    $self->{get_args} = $getter;
-#        #}
-#    }
-#    $self->{get_args};
-#}
-
 1;
 __END__
 
@@ -228,43 +184,20 @@ __END__
 Lemonldap::NG::Portal::OpenID::Server - Add capability to manage extensions to
 Net::OpenID::Server
 
-=head1 SYNOPSIS
-
-  use Lemonldap::NG::Portal::OpenID::Server;
-  blah blah blah
-
 =head1 DESCRIPTION
 
-Stub documentation for Lemonldap::NG::Portal::OpenID::Server, created by h2xs. It looks like the
-author of the extension was negligent enough to leave the stub
-unedited.
-
-Blah blah blah.
-
-=head2 EXPORT
-
-None by default.
-
-
+Lemonldap::NG::Portal::OpenID::Server adds capability to manage extensions to
+Net::OpenID::Server.
 
 =head1 SEE ALSO
 
-Mention other useful documentation such as the documentation of
-related modules or operating system documentation (such as man pages
-in UNIX), or any relevant external documentation such as RFCs or
-standards.
+L<http://lemonldap-ng.org>, L<Net::OpenID::Server>
 
-If you have a mailing list set up for your module, mention it here.
-
-If you have a web site set up for your module, mention it here.
-
-=head1 AUTHOR
+=head1 AUTHORS
 
 =over
 
-=item Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+=item LemonLDAP::NG team L<http://lemonldap-ng.org/team>
 
 =back
 
@@ -280,13 +213,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =head1 COPYRIGHT AND LICENSE
 
-=over
-
-=item Copyright (C) 2010 by Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=item Copyright (C) 2010-2012 by Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
-
-=back
+See COPYING file for details.
 
 This library is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

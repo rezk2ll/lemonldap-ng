@@ -1,15 +1,13 @@
 ## @file
-# OpenID SREG extension for Lemonldap::NG::Portal::IssuerOpenID class
+# OpenID SREG extension for Lemonldap::NG::Portal::Issuer::OpenID class
 
 ## @class
-# OpenID SREG extension for Lemonldap::NG::Portal::IssuerOpenID class
+# OpenID SREG extension for Lemonldap::NG::Portal::Issuer::OpenID class
 
-package Lemonldap::NG::Portal::OpenID::SREG;
+package Lemonldap::NG::Portal::Lib::OpenID::SREG;
 
 use strict;
 use Lemonldap::NG::Common::Regexp;
-use Lemonldap::NG::Portal::Simple;
-use utf8;
 
 ## @method protected hash sregHook(hash prm)
 # Hook called to add SREG parameters to the OpenID response
