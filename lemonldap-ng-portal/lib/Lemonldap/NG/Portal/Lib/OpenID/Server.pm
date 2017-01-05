@@ -24,10 +24,10 @@ use constant OPENID2_ID_SELECT => 'http://specs.openid.net/auth/2.0/identifier_s
   ? *OpenID::util::push_url_arg
   : *Net::OpenID::Server::_push_url_arg;
 
-## @cmethod Lemonldap::NG::Portal::OpenID::Server new(hash opts)
+## @cmethod Lemonldap::NG::Portal::Lib::OpenID::Server new(hash opts)
 # Call Net::OpenID::Server::new() and store extensions
 # @param %opts Net::OpenID::Server options
-# @return Lemonldap::NG::Portal::OpenID::Server new object
+# @return Lemonldap::NG::Portal::Lib::OpenID::Server new object
 sub new {
     my $class = shift;
     my $self  = fields::new($class);
@@ -52,7 +52,7 @@ sub extensions {
 # setup
 # @return (string $type, hashref parameters)
 sub _mode_checkid {
-    my Lemonldap::NG::Portal::OpenID::Server $self = shift;
+    my Lemonldap::NG::Portal::Lib::OpenID::Server $self = shift;
     my ( $mode, $redirect_for_setup ) = @_;
 
     my $return_to = $self->args("openid.return_to");
@@ -181,12 +181,12 @@ __END__
 
 =head1 NAME
 
-Lemonldap::NG::Portal::OpenID::Server - Add capability to manage extensions to
+Lemonldap::NG::Portal::Lib::OpenID::Server - Add capability to manage extensions to
 Net::OpenID::Server
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Portal::OpenID::Server adds capability to manage extensions to
+Lemonldap::NG::Portal::Lib::OpenID::Server adds capability to manage extensions to
 Net::OpenID::Server.
 
 =head1 SEE ALSO

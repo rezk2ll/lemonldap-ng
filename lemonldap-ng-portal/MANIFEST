@@ -57,6 +57,7 @@ lib/Lemonldap/NG/Portal/CDC.pm
 lib/Lemonldap/NG/Portal/Display.pm
 lib/Lemonldap/NG/Portal/Issuer/CAS.pm
 lib/Lemonldap/NG/Portal/Issuer/Get.pm
+lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Issuer/SAML.pm
 lib/Lemonldap/NG/Portal/IssuerDBCAS.pm

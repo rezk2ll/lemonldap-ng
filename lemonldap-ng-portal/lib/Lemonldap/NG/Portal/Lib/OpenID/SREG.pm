@@ -13,16 +13,16 @@ use Lemonldap::NG::Common::Regexp;
 # Hook called to add SREG parameters to the OpenID response
 # @return Hash containing wanted parameters
 sub sregHook {
-    my ( $self, $u, $trust_root, $is_id, $is_trusted, $prm ) = @_;
+    my ( $self, $req, $u, $trust_root, $is_id, $is_trusted, $prm ) = @_;
     my ( @req, @opt );
 
     # Refuse federation if rejected by user
-    if ( $self->param('confirm') == -1 ) {
+    if ( $req->param('confirm') == -1 ) {
         my %h;
         $h{$_} = undef foreach (
             qw(fullname nickname language postcode timezone country gender email dob)
         );
-        $self->updatePersistentSession( \%h );
+        $self->p->updatePersistentSession( \%h );
         return 0;
     }
 
@@ -39,15 +39,13 @@ sub sregHook {
         # Store policy if provided
         if ( $k eq 'policy_url' ) {
             if ( $v =~ Lemonldap::NG::Common::Regexp::HTTP_URI ) {
-                $self->{_openIdTrustExtMsg} .=
-                    '<dl><dt>'
-                  . $self->msg(PM_OPENID_PA)
-                  . "&nbsp;:</dt><dd><a href=\"$v\">$v</a></dd></dl>";
+                $req->datas->{_openIdTrustExtMsg} .=
+                    '<dl><dt trspan="openidPA">' . "&nbsp;:</dt><dd><a href=\"$v\">$v</a></dd></dl>";
 
                 # Question: is it important to notify policy changes ?
                 # if yes, uncomment this
                 #my $p =
-                #  $self->{sessionInfo}->{"_openidTrust$trust_root\_Policy"};
+                #  $req->{sessionInfo}->{"_openidTrust$trust_root\_Policy"};
                 #$accepted = 0 unless ( $p and $p eq $v );
             }
             else {
@@ -64,7 +62,7 @@ sub sregHook {
         # Parse optional attributes
         elsif ( $k eq 'optional' ) {
             $self->lmLog( "Optional attr $v", 'debug' );
-            push @opt, grep { defined $self->{"openIdSreg_$trust_root$_"} }
+            push @opt, grep { defined $self->conf->{"openIdSreg_$trust_root$_"} }
               split( /,/, $v );
         }
         else {
@@ -82,14 +80,13 @@ sub sregHook {
 
     # If a required data is not available, returns nothing
     foreach my $k (@req) {
-        unless ( $self->{"openIdSreg_$k"} ) {
+        unless ( $self->conf->{"openIdSreg_$k"} ) {
             $self->lmLog(
 "Parameter $k is required by $trust_root but not defined in configuration",
                 'notice'
             );
 
-            $self->info(
-                '<h3>' . sprintf( $self->msg(PM_OPENID_RPNS), $k ) . '</h3>' );
+            $self->info( qq'<h3 trspan="openidRpns,$k"></h3>');
             return ( 0, {} );
         }
     }
@@ -99,38 +96,40 @@ sub sregHook {
 
     # Requested parameters: check if already agreed or confirm is set
     foreach my $k (@req) {
-        my $agree = $self->{sessionInfo}->{"_openidTrust$trust_root\_$k"};
+        my $agree = $req->{sessionInfo}->{"_openidTrust$trust_root\_$k"};
         if ($accepted) {
-            unless ( $self->param('confirm') or $agree ) {
+            unless ( $req->param('confirm') or $agree ) {
                 $accepted = 0;
             }
             elsif ( !$agree ) {
                 $toStore{"_openidTrust$trust_root\_$k"} = 1;
             }
         }
-        $self->{"openIdSreg_$k"} =~ s/^\$//;
+        my $tmp = $self->conf->{"openIdSreg_$k"};
+        $tmp =~ s/^\$//;
         $msg{req}->{$k} = $r{$k} =
-          $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} } || '';
+          $req->{sessionInfo}->{ $self->{"openIdSreg_$k"} } || '';
     }
 
     # Optional parameters:
     foreach my $k (@opt) {
-        $self->{"openIdSreg_$k"} =~ s/^\$//;
-        my $agree = $self->{sessionInfo}->{"_openidTrust$trust_root\_$k"};
+        my $tmp = $self->conf->{"openIdSreg_$k"};
+        $tmp =~ s/^\$//;
+        my $agree = $req->{sessionInfo}->{"_openidTrust$trust_root\_$k"};
         if ($accepted) {
 
             # First, check if already accepted
-            unless ( $self->param('confirm') or defined($agree) ) {
+            unless ( $req->param('confirm') or defined($agree) ) {
                 $accepted = 0;
-                $r{$k} = $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} }
+                $r{$k} = $req->{sessionInfo}->{$tmp}
                   || '';
             }
 
             # If confirmation is returned, check the value for this field
-            elsif ( $self->param('confirm') == 1 ) {
+            elsif ( $req->param('confirm') == 1 ) {
                 my $ck = 0;
-                if ( defined( $self->param("sreg_$k") ) ) {
-                    $ck = ( $self->param("sreg_$k") eq 'OK' ) || 0;
+                if ( defined( $req->param("sreg_$k") ) ) {
+                    $ck = ( $req->param("sreg_$k") eq 'OK' ) || 0;
                 }
 
                 # Store the value returned
@@ -141,8 +140,7 @@ sub sregHook {
             }
         }
 
-        $msg{opt}->{$k} = $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} }
-          || '';
+        $msg{opt}->{$k} = $req->{sessionInfo}->{$tmp} || '';
 
         # Store the value only if user agree it
         if ($agree) {
@@ -156,12 +154,12 @@ sub sregHook {
             $ag{$k} = 0;
         }
     }
-    $self->updatePersistentSession( \%toStore ) if (%toStore);
+    $self->p->updatePersistentSession( \%toStore ) if (%toStore);
 
     # Check if user has agreed request
     if ($accepted) {
-        $self->_sub( 'userInfo',
-            $self->{sessionInfo}->{ $self->{whatToTrace} }
+        $self->p->userInfo(
+            $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
               . " has accepted OpenID SREG exchange with $trust_root" );
         return ( 1, \%r );
     }
@@ -169,15 +167,14 @@ sub sregHook {
     # else build message and return 0
     else {
 
-        $self->{_openIdTrustExtMsg} .=
-          "<h3>" . $self->msg(PM_OPENID_AP) . "</h3>\n";
+        $req->datas->{_openIdTrustExtMsg} .= qq'<h3 trspan="openidAp"></h3>';
 
-        $self->{_openIdTrustExtMsg} .= "<table class=\"openidsreg\">\n";
+        $req->datas->{_openIdTrustExtMsg} .= "<table class=\"openidsreg\">\n";
 
         # No choice for requested parameters: just an information
         foreach my $k (@req) {
             utf8::decode( $msg{req}->{$k} );
-            $self->{_openIdTrustExtMsg} .=
+            $req->datas->{_openIdTrustExtMsg} .=
                 "<tr class=\"required\">\n" . "<td>"
               . "<input type=\"checkbox\" disabled=\"disabled\" checked=\"checked\"/>"
               . "</td>\n"
@@ -190,7 +187,7 @@ sub sregHook {
         # For optional parameters: checkboxes are displayed
         foreach my $k (@opt) {
             utf8::decode( $msg{opt}->{$k} );
-            $self->{_openIdTrustExtMsg} .=
+            $req->datas->{_openIdTrustExtMsg} .=
                 "<tr class=\"optional\">\n"
               . "<td>\n"
               . "<input type=\"checkbox\" value=\"OK\""
@@ -203,7 +200,7 @@ sub sregHook {
               . "</tr>\n";
         }
 
-        $self->{_openIdTrustExtMsg} .= "</table>\n";
+        $req->datas->{_openIdTrustExtMsg} .= "</table>\n";
 
         $self->lmLog( 'Building validation form', 'debug' );
         return ( 0, $prm );
