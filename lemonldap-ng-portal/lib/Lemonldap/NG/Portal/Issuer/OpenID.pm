@@ -76,11 +76,11 @@ sub forUnauthUser {
         return PE_OPENID_EMPTY;
     }
     if ( $mode eq 'associate' ) {
-        return $self->_openIDResponse(
+        return $self->_openIDResponse( $req,
             $self->openIDServer($req)->_mode_associate() );
     }
     elsif ( $mode eq 'check_authentication' ) {
-        return $self->_openIDResponse(
+        return $self->_openIDResponse( $req,
             $self->openIDServer($req)->_mode_check_authentication() );
     }
     return PE_OK;
@@ -103,7 +103,7 @@ sub run {
         return PE_ERROR;
     }
     my @r = $self->openIDServer($req)->_mode_checkid();
-    return $self->_openIDResponse(@r);
+    return $self->_openIDResponse( $req, @r );
 }
 
 sub logout {
@@ -237,9 +237,7 @@ sub _openIDResponse {
     else {
         $req->response(
             $self->p->sendError(
-                $req,
-                'OpenID error ',
-                $self->openIDServer($req)->err()
+                $req, 'OpenID error ' . $self->openIDServer($req)->err()
             )
         );
     }

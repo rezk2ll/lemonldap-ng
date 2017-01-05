@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 4;
+my $maintests = 7;
 my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -33,18 +33,44 @@ SKIP: {
         'Unauth SP request'
     );
     expectForm( $res, '#', undef );
-    ok( $res->[2]->[0] =~ /name="openid_identifier"/, ' Found OpenID input' );
+    ok( $res->[2]->[0] =~ /name="openid_identifier"/,
+        ' Ask for OpenID identity' );
 
     my $query =
       'openid_identifier=http%3A%2F%2Fauth.idp.com%2Fopenidserver%2Fdwho';
-    #ok(
-    #    $res = $sp->_post(
-    #        '/', IO::String->new($query), length => length($query),
-    #    ),
-    #    'Post OpenID identity'
-    #);
 
-    #print STDERR Dumper($res);
+    ok(
+        $res = $sp->_post(
+            '/', IO::String->new($query),
+            length => length($query),
+            accept => 'text/html',
+        ),
+        'Post OpenID identity'
+    );
+    my $uri;
+    ( $uri, $query ) = expectRedirection( $res,
+        qr#http://auth.idp.com(/openidserver/?)\?(openid.*)$# );
+
+    # Follow redirection do IdP
+    switch ('issuer');
+    ok( $res = $issuer->_get( $uri, query => $query, accept => 'text/html' ),
+        'Follow redirection to IdP' );
+    expectOK($res);
+    my ( $host, $tmp );
+    ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'openid.mode' );
+    $query .= '&user=dwho&password=dwho';
+
+    # Try to authenticate
+    ok(
+        $res = $issuer->_post(
+            $uri, IO::String->new($query),
+            length => length($query),
+            accept => 'text/html'
+        ),
+        'Try to authenticate'
+    );
+
+    #print STDERR Dumper($query);
 }
 
 count($maintests);
@@ -66,7 +92,6 @@ sub LWP::UserAgent::request {
     my $url = $1;
     my ($res);
     count(1);
-    print STDERR Dumper($req);
     if ( $req->method =~ /^post$/i ) {
         my $s = $req->content;
         ok(
@@ -74,24 +99,23 @@ sub LWP::UserAgent::request {
                 $url, IO::String->new($s),
                 length => length($s),
                 type   => $req->header('Content-Type'),
+                accept => 'text/plain',
             ),
             '  Execute request'
         );
     }
     else {
-        ok( $res = $issuer->_get( $url, ), '  Execute request' );
+        ok( $res = $issuer->_get( $url, accept => 'text/plain', ),
+            '  Execute post request' );
     }
     expectOK($res);
-    ok( getHeader( $res, 'Content-Type' ) =~ m#^application/json#,
-        '  Content is JSON' )
-      or explain( $res->[1], 'Content-Type => application/json' );
     my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
 
     while ( my $name = shift @{ $res->[1] } ) {
         $httpResp->header( $name, shift( @{ $res->[1] } ) );
     }
     $httpResp->content( join( '', @{ $res->[2] } ) );
-    count(2);
+    count(1);
     return $httpResp;
 }
 
@@ -121,6 +145,9 @@ sub sp {
                 authentication => 'OpenID',
                 userDB         => 'OpenID',
                 openIdSecret   => 'qwerty',
+                exportedVars   => {
+                    mail => 'email',
+                }
             },
         }
     );

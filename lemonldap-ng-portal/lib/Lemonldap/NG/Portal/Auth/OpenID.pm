@@ -50,8 +50,6 @@ has ua => (
 
         # TODO : LWP options to use a proxy for example
         my $ua = LWP::UserAgent->new();
-        push @{ $ua->requests_redirectable }, 'POST';
-        $ua->env_proxy();
         return $ua;
     }
 );
