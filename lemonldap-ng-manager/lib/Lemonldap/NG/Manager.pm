@@ -147,25 +147,19 @@ inherits of L<Lemonldap::NG::Handler::PSGI::Router>
 
 =head1 ORGANIZATION
 
-Lemonldap::NG Manager contains 4 parts:
+Lemonldap::NG Manager contains 5 parts:
 
 =over
 
-=item Configuration management:
+=item Configuration management
 
-see L<Lemonldap::NG::Manager::Conf>;
+=item Session explorer
 
-=item Session explorer:
+=item Notification explorer
 
-see L<Lemonldap::NG::Manager::Sessions>;
+=item Configuration builder (see L<Lemonldap::NG::Manager::Build>
 
-=item Notification explorer:
-
-see L<Lemonldap::NG::Manager::Notifications>;
-
-=item Some files uses to generate static files:
-
-see below.
+=item Command line (see L<Lemonldap::NG::Manager::Cli>
 
 =back
 
@@ -232,9 +226,6 @@ you can also fix them in $opts hash ref passed as argument to run() or new()).
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Handler::Router>, L<Lemonldap::NG::Portal>, L<Plack>, L<PSGI>,
-L<Lemonldap::NG::Manager::Conf>, L<Lemonldap::NG::Manager::Sessions>,
-L<Lemonldap::NG::Manager::Notifications>
 L<http://lemonldap-ng.org/>
 
 =head1 AUTHORS
@@ -249,6 +240,9 @@ L<http://lemonldap-ng.org/>
 
 Use OW2 system to report bug or ask for features:
 L<http://jira.ow2.org>
+
+Note that if you want to post a ticket for a conf upload problem, please
+see L<Lemonldap::NG::Manager::Conf::Parser> before.
 
 =head1 DOWNLOAD
 

@@ -643,6 +643,43 @@ root of the Lemonldap::NG project sources).
 
 See below for details.
 
+=head3 Files generated
+
+The `scripts/jsongenerator.pl` file uses Lemonldap::NG::Manager::Build::Attributes,
+Lemonldap::NG::Manager::Build::Tree and Lemonldap::NG::Manager::Build::CTrees to generate
+
+=over
+
+=item `site/static/struct.json`:
+
+the main file that contains the tree view;
+
+=item `site/static/js/conftree.js`:
+
+generates sub tree for virtualhosts and SAML and OpenID-Connect partners;
+
+=item `site/static/reverseTree.json`:
+
+map used by manager diff to find attribute position in the tree;
+
+=item `Lemonldap::NG::Manager::Constants`:
+
+constants used by all Perl manager components;
+
+=item `Lemonldap::NG::Common::Conf::DefaultValues`:
+
+constants used to read configuration;
+
+=item `Lemonldap::NG::Manager::Attributes`:
+
+parameters attributes used by the manager during configuration upload;
+
+=item lmConf-1.js:
+
+first configuration in file format;
+
+=back
+
 =head3 Attribute declaration
 
 Set your new attribute as a key of attributes() function that points to a hash
@@ -778,6 +815,9 @@ L<http://lemonldap-ng.org/>
 
 Use OW2 system to report bug or ask for features:
 L<http://jira.ow2.org>
+
+Note that if you want to post a ticket for a conf upload problem, please
+see L<Lemonldap::NG::Manager::Conf::Parser> before.
 
 =head1 DOWNLOAD
 

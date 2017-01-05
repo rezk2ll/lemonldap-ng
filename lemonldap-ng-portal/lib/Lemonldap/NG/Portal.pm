@@ -34,6 +34,29 @@ described below.
 Lemonldap::NG::Portal provides portal components. See
 L<http://lemonldap-ng.org> for more.
 
+=head1 OTHER POD FILES
+
+Most of the documentation is available on the website
+L<http://lemonldap-ng.org>.
+
+=over
+
+=item Writing an authentication module: L<Lemonldap::NG::Portal::Auth::Base>
+
+=item Writing an issuer module: L<Lemonldap::NG::Portal::Main::Issuer>
+
+=item Writing another type of plugin: L<Lemonldap::NG::Portal::Main::Plugin>
+
+=item Request object: L<Lemonldap::NG::Portal::Main::Request>
+
+=item Adding parameters in the manager: L<Lemonldap::NG::Manager::Build>
+
+=back
+
+=head1 SEE ALSO
+
+L<http://lemonldap-ng.org>
+
 =head1 AUTHORS
 
 =over
