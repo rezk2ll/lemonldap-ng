@@ -19,7 +19,6 @@ lib/Lemonldap/NG/Manager/Conf/Parser.pm
 lib/Lemonldap/NG/Manager/Conf/Tests.pm
 lib/Lemonldap/NG/Manager/Conf/Zero.pm
 lib/Lemonldap/NG/Manager/Constants.pm
-lib/Lemonldap/NG/Manager/Lib.pm
 lib/Lemonldap/NG/Manager/Notifications.pm
 lib/Lemonldap/NG/Manager/Sessions.pm
 Makefile.PL

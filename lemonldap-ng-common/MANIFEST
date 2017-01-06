@@ -13,19 +13,20 @@ lib/Lemonldap/NG/Common/CGI/SOAPServer.pm
 lib/Lemonldap/NG/Common/CGI/SOAPService.pm
 lib/Lemonldap/NG/Common/Cli.pm
 lib/Lemonldap/NG/Common/Conf.pm
-lib/Lemonldap/NG/Common/Conf/_DBI.pm
-lib/Lemonldap/NG/Common/Conf/CDBI.pm
+lib/Lemonldap/NG/Common/Conf/AccessLib.pm
+lib/Lemonldap/NG/Common/Conf/Backends/_DBI.pm
+lib/Lemonldap/NG/Common/Conf/Backends/CDBI.pm
+lib/Lemonldap/NG/Common/Conf/Backends/DBI.pm
+lib/Lemonldap/NG/Common/Conf/Backends/File.pm
+lib/Lemonldap/NG/Common/Conf/Backends/JSONFile.pm
+lib/Lemonldap/NG/Common/Conf/Backends/LDAP.pm
+lib/Lemonldap/NG/Common/Conf/Backends/MongoDB.pm
+lib/Lemonldap/NG/Common/Conf/Backends/RDBI.pm
+lib/Lemonldap/NG/Common/Conf/Backends/SOAP.pm
 lib/Lemonldap/NG/Common/Conf/Constants.pm
-lib/Lemonldap/NG/Common/Conf/DBI.pm
 lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
-lib/Lemonldap/NG/Common/Conf/File.pm
-lib/Lemonldap/NG/Common/Conf/JSONFile.pm
-lib/Lemonldap/NG/Common/Conf/LDAP.pm
-lib/Lemonldap/NG/Common/Conf/MongoDB.pm
-lib/Lemonldap/NG/Common/Conf/RDBI.pm
 lib/Lemonldap/NG/Common/Conf/SAML/Metadata.pm
 lib/Lemonldap/NG/Common/Conf/Serializer.pm
-lib/Lemonldap/NG/Common/Conf/SOAP.pm
 lib/Lemonldap/NG/Common/Crypto.pm
 lib/Lemonldap/NG/Common/Module.pm
 lib/Lemonldap/NG/Common/Notifications.pm
@@ -41,6 +42,7 @@ lib/Lemonldap/NG/Common/Regexp.pm
 lib/Lemonldap/NG/Common/Safe.pm
 lib/Lemonldap/NG/Common/Safelib.pm
 lib/Lemonldap/NG/Common/Session.pm
+lib/Lemonldap/NG/Common/Session/REST.pm
 Makefile.PL
 MANIFEST			This list of files
 META.yml
