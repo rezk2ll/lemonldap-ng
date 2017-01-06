@@ -53,7 +53,7 @@ sub retrieveSession {
     }
 }
 
-## @rmethod protected boolean retrieveSession(id)
+## @rmethod protected boolean createSession(id)
 # Ask portal to create it through a SOAP request
 # @return true if the session is created, else false
 sub createSession {
