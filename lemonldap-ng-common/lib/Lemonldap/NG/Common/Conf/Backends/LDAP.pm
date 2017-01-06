@@ -3,7 +3,7 @@
 
 ##@class
 # Implements LDAP backend for Lemonldap::NG
-package Lemonldap::NG::Common::Conf::LDAP;
+package Lemonldap::NG::Common::Conf::Backends::LDAP;
 
 use strict;
 use utf8;

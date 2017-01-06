@@ -1,4 +1,4 @@
-package Lemonldap::NG::Common::Conf::SOAP;
+package Lemonldap::NG::Common::Conf::Backends::SOAP;
 
 use strict;
 use utf8;
@@ -14,8 +14,8 @@ BEGIN {
     *Lemonldap::NG::Common::Conf::_connect  = \&_connect;
 
     sub SOAP::Transport::HTTP::Client::get_basic_credentials {
-        return $Lemonldap::NG::Common::Conf::SOAP::username =>
-          $Lemonldap::NG::Common::Conf::SOAP::password;
+        return $Lemonldap::NG::Common::Conf::Backends::SOAP::username =>
+          $Lemonldap::NG::Common::Conf::Backends::SOAP::password;
     }
 }
 

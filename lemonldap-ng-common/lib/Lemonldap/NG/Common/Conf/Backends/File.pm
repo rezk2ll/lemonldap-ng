@@ -1,4 +1,4 @@
-package Lemonldap::NG::Common::Conf::File;
+package Lemonldap::NG::Common::Conf::Backends::File;
 
 use strict;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits

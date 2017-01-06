@@ -1,12 +1,12 @@
-package Lemonldap::NG::Common::Conf::RDBI;
+package Lemonldap::NG::Common::Conf::Backends::RDBI;
 
 use strict;
 use utf8;
 use Lemonldap::NG::Common::Conf::Serializer;
-use Lemonldap::NG::Common::Conf::_DBI;
+use Lemonldap::NG::Common::Conf::Backends::_DBI;
 
 our $VERSION = '2.0.0';
-our @ISA     = qw(Lemonldap::NG::Common::Conf::_DBI);
+our @ISA     = qw(Lemonldap::NG::Common::Conf::Backends::_DBI);
 
 sub store {
     my ( $self, $fields ) = @_;

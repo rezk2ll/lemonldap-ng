@@ -1,4 +1,4 @@
-package Lemonldap::NG::Common::Conf::MongoDB;
+package Lemonldap::NG::Common::Conf::Backends::MongoDB;
 
 use 5.010;
 use utf8;

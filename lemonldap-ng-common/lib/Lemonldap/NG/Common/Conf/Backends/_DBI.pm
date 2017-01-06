@@ -1,4 +1,4 @@
-package Lemonldap::NG::Common::Conf::_DBI;
+package Lemonldap::NG::Common::Conf::Backends::_DBI;
 
 use strict;
 use utf8;

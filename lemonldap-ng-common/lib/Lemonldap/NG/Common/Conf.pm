@@ -79,7 +79,7 @@ sub new {
         unless ( $self->{type} =~ /^[\w:]+$/ ) {
             $msg .= "Error: configStorage: type is not well formed.\n";
         }
-        $self->{type} = "Lemonldap::NG::Common::Conf::$self->{type}"
+        $self->{type} = "Lemonldap::NG::Common::Conf::Backends::$self->{type}"
           unless $self->{type} =~ /^Lemonldap::/;
         eval "require $self->{type}";
         if ($@) {

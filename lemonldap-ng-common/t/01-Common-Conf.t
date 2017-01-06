@@ -21,7 +21,7 @@ ok(
     (
         Lemonldap::NG::Common::Conf->new( type => 'bad' ) == 0
           and $Lemonldap::NG::Common::Conf::msg =~
-          /Error: Unknown package Lemonldap::NG::Common::Conf::bad\.$/
+          /Error: Unknown package Lemonldap::NG::Common::Conf::Backends::bad\.$/
     ),
     'Bad module'
 );
