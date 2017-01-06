@@ -943,6 +943,13 @@ sub attributes {
             documentation => 'Allow only one session per user on an IP',
         },
 
+        # REST server
+        rest => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable REST services',
+        },
+
         # SOAP server
         Soap => {
             default       => 0,

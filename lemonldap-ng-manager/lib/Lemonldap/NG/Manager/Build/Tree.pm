@@ -510,6 +510,7 @@ sub tree {
                     help  => 'start.html#advanced_features',
                     nodes => [
                         'customFunctions',
+                        'rest',
                         {
                             title => 'soap',
                             form  => 'simpleInputContainer',

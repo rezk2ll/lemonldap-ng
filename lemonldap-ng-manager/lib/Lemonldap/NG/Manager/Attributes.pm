@@ -2024,6 +2024,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'remotePortal' => {
             'type' => 'text'
         },
+        'rest' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'samlAttributeAuthorityDescriptorAttributeServiceSOAP' => {
             'default' =>
 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
