@@ -17,7 +17,7 @@ sub sregHook {
     my ( @req, @opt );
 
     # Refuse federation if rejected by user
-    if ( $req->param('confirm') == -1 ) {
+    if ( $req->param('confirm') and $req->param('confirm') == -1 ) {
         my %h;
         $h{$_} = undef foreach (
             qw(fullname nickname language postcode timezone country gender email dob)

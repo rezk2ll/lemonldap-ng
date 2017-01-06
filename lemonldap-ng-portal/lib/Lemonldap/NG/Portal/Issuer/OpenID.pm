@@ -106,7 +106,7 @@ sub run {
         );
         return PE_ERROR;
     }
-    my @r = $self->openIDServer($req)->_mode_checkid();
+    my @r = $self->openIDServer($req)->_mode_checkid($mode);
     return $self->_openIDResponse( $req, @r );
 }
 
@@ -120,12 +120,11 @@ sub logout {
 sub openIDServer {
     my ( $self, $req ) = @_;
     return $req->datas->{_openidserver} if ( $req->datas->{_openidserver} );
-    my Plack::Request $r = $req;
 
     $req->datas->{_openidserver} =
       Lemonldap::NG::Portal::Lib::OpenID::Server->new(
         server_secret => sub { return $self->secret },
-        args          => $r,
+        args          => sub { $req->param(@_) },
         endpoint_url  => $self->openidPortal,
         setup_url     => $self->openidPortal,
         get_user      => sub {
@@ -163,12 +162,12 @@ sub openIDServer {
                 $self->lmLog( 'OpenID request already trusted', 'debug' );
                 return 1;
             }
-            elsif ( $req->param("confirm") == 1 ) {
+            elsif ( $req->param("confirm") and $req->param("confirm") == 1 ) {
                 $self->p->updatePersistentSession(
                     { "_openidTrust$trust_root" => 1 } );
                 return 1;
             }
-            elsif ( $req->param("confirm") == -1 ) {
+            elsif ( $req->param("confirm") and $req->param("confirm") == -1 ) {
                 $self->p->updatePersistentSession(
                     { "_openidTrust$trust_root" => 0 } );
                 return 0;

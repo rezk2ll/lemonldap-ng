@@ -114,6 +114,7 @@ sub LWP::UserAgent::request {
     while ( my $name = shift @{ $res->[1] } ) {
         $httpResp->header( $name, shift( @{ $res->[1] } ) );
     }
+    $httpResp->request($req);
     $httpResp->content( join( '', @{ $res->[2] } ) );
     count(1);
     return $httpResp;

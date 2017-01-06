@@ -58,7 +58,7 @@ sub _mode_checkid {
     my $return_to = $self->args("openid.return_to");
     return $self->_fail("no_return_to")
       unless ( $return_to
-        and $return_to =~ Lemonldap::NG::Common::Regexp::HTTP_URI );
+        and $return_to =~ m!^https?://! );
 
     my $trust_root = $self->args("openid.trust_root") || $return_to;
     $trust_root = $self->args("openid.realm")
