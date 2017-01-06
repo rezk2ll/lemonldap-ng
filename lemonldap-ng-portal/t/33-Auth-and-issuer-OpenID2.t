@@ -69,8 +69,27 @@ SKIP: {
         ),
         'Try to authenticate'
     );
+    my $idpId = expectCookie($res);
+    ( $host, $tmp, $query ) = expectForm( $res, '#', undef, 'confirm' );
+
+    # Confirm
+    ok(
+        $res = $issuer->_post(
+            $uri, IO::String->new($query),
+            length => length($query),
+            accept => 'text/html'
+        ),
+        'Confirm choice'
+    );
+    $query = expectRedirection( $res, qr#^http://auth.sp.com/?\?(.*)# );
+
+    # Push redirection to SP
+    switch ('sp');
+    ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
+        'Follow redirection to SP' );
 
     #print STDERR Dumper($query);
+    #print STDERR Dumper($res);
 }
 
 count($maintests);
