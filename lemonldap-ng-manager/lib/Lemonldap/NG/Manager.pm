@@ -19,7 +19,7 @@ use Lemonldap::NG::Common::PSGI::Constants;
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Manager::Lib', 'Lemonldap::NG::Handler::PSGI::Router';
+extends 'Lemonldap::NG::Common::Conf::AccessLib', 'Lemonldap::NG::Handler::PSGI::Router';
 
 ## @method boolean init($args)
 # Launch initialization method

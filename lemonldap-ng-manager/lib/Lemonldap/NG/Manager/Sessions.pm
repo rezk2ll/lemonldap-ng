@@ -13,7 +13,7 @@ use Lemonldap::NG::Manager::Constants;
 
 use feature 'state';
 
-extends 'Lemonldap::NG::Manager::Lib', 'Lemonldap::NG::Common::Session::REST';
+extends 'Lemonldap::NG::Common::Conf::AccessLib', 'Lemonldap::NG::Common::Session::REST';
 
 has conf => ( is => 'rw', isa => 'HashRef', default => sub { {} } );
 

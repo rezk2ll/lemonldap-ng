@@ -8,7 +8,7 @@ BEGIN {
 }
 
 my $maintests = 9;
-my $debug     = 'debug';
+my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
 

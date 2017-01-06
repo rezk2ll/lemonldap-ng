@@ -1,4 +1,4 @@
-package Lemonldap::NG::Manager::Lib;
+package Lemonldap::NG::Common::Conf::AccessLib;
 
 use 5.10.0;
 use utf8;

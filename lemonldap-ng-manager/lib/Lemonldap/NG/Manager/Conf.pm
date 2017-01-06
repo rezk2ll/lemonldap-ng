@@ -18,7 +18,7 @@ use URI::URL;
 
 use feature 'state';
 
-extends 'Lemonldap::NG::Manager::Lib';
+extends 'Lemonldap::NG::Common::Conf::AccessLib';
 
 our $VERSION = '2.0.0';
 
