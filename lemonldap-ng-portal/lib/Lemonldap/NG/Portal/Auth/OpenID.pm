@@ -89,7 +89,7 @@ sub extractFormInfo {
 
     # 2. Check OpenID responses
     if ($openid) {
-        my $csr = $req->data->{csr};
+        my $csr = $req->datas->{csr};
 
         # Remote error
         unless ( $csr->is_server_response() ) {
@@ -111,8 +111,8 @@ sub extractFormInfo {
         }
 
         # TODO: check verified identity
-        elsif ( $req->data->{vident} = $csr->verified_identity ) {
-            $req->user( $req->data->{vident}->url() );
+        elsif ( $req->datas->{vident} = $csr->verified_identity ) {
+            $req->user( $req->datas->{vident}->url() );
             $self->lmLog( "OpenID good authentication for $req->{user}",
                 'debug' );
             $req->{mustRedirect} = 1;

@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 7;
+my $maintests = 9;
 my $debug     = 'debug';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -81,14 +81,15 @@ SKIP: {
         ),
         'Confirm choice'
     );
-    $query = expectRedirection( $res, qr#^http://auth.sp.com/?\?(.*)# );
+    ($query) = expectRedirection( $res, qr#^http://auth.sp.com/?\?(.*)# );
 
     # Push redirection to SP
     switch ('sp');
     ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
         'Follow redirection to SP' );
+    my $spId = expectCookie($res);
+    expectRedirection($res,qr#^http://auth.sp.com/?$#);
 
-    #print STDERR Dumper($query);
     #print STDERR Dumper($res);
 }
 
@@ -167,7 +168,8 @@ sub sp {
                 openIdSecret   => 'qwerty',
                 exportedVars   => {
                     mail => 'email',
-                }
+                },
+                openIdIDPList => '0;',
             },
         }
     );

@@ -60,7 +60,7 @@ sub init {
         return 0;
     }
     return 0 unless ( $self->SUPER::init() );
-    $self->openidPortal( $self->conf->{portal} . '/' . $self->path );
+    $self->openidPortal( $self->conf->{portal} . '/' . $self->path . '/' );
 
     #$openidPortal =~ s#(?<!:)//#/#g;
     return 1;
@@ -73,8 +73,6 @@ sub forUnauthUser {
     my $mode = $req->param('openid.mode');
     unless ($mode) {
         $self->lmLog( 'OpenID SP test', 'debug' );
-        push @{ $req->respHeaders },
-          'X-XRDS-Location' => $self->openidPortal . '?openid.mode=yadis';
         return PE_OPENID_EMPTY;
     }
     if ( $mode eq 'associate' ) {
@@ -94,8 +92,6 @@ sub run {
 
     unless ($mode) {
         $self->lmLog( 'OpenID SP test', 'debug' );
-        push @{ $req->respHeaders },
-          'X-XRDS-Location' => $self->openidPortal . '?openid.mode=yadis';
         return PE_OPENID_EMPTY;
     }
 
