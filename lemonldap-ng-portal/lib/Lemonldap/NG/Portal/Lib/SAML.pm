@@ -461,7 +461,7 @@ sub checkMessage {
             $self->lmLog( "SAML method: HTTP-SOAP", 'debug' );
 
             # SOAP is always a request
-            $request = $req->read_body;
+            $request = $req->content;
             $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
 
         }

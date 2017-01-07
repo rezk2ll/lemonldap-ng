@@ -61,29 +61,6 @@ sub error {
     return $self->{error};
 }
 
-sub read_body {
-    my $self = shift;
-    if ( $self->method eq 'GET' ) { return undef; }
-    elsif ( $self->method =~ /^(?:POST|PUT)$/ ) {
-        my $body = '';
-        if ( $self->env->{'_psgix.buffered'} ) {
-            my $length = $self->content_length;
-            while ( $length > 0 ) {
-                my $buffer;
-                $self->body->read( $buffer,
-                    ( $length < 8192 ) ? $length : 8192 );
-                $length -= length($buffer);
-                $body .= $buffer;
-            }
-        }
-        else {
-            $self->body->read( $body, $self->content_length, 0 );
-        }
-        utf8::upgrade($body);
-        return $body;
-    }
-}
-
 *params = \&Plack::Request::param;
 
 sub set_param {
@@ -112,7 +89,7 @@ sub jsonBodyToObj {
         $self->error('No data');
         return undef;
     }
-    my $j = eval { from_json( $self->read_body ) };
+    my $j = eval { from_json( $self->content ) };
     if ($@) {
         $self->error("$@$!");
         return undef;

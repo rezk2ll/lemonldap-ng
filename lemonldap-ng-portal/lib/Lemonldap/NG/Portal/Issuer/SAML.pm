@@ -981,7 +981,7 @@ sub artifactServer {
         'debug' );
 
     # Artifact request are sent with SOAP trough POST
-    my $art_request = $req->read_body;
+    my $art_request = $req->content;
     my $art_response;
 
     # Create Login object
@@ -1616,7 +1616,7 @@ sub attributeServer {
     $self->lmLog( "URL $url detected as an attribute service URL", 'debug' );
 
     # Attribute request are sent with SOAP trough POST
-    my $att_request = $req->read_body;
+    my $att_request = $req->content;
     my $att_response;
 
     # Process request

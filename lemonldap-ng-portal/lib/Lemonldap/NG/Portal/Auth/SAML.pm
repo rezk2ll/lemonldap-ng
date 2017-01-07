@@ -774,7 +774,7 @@ sub extractFormInfo {
             'debug' );
 
         # Artifact request are sent with SOAP trough POST
-        my $art_request = $req->read_body;
+        my $art_request = $req->content;
         my $art_response;
 
         # Create Login object

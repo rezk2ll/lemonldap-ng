@@ -1125,7 +1125,7 @@ sub registration {
     }
 
     # Get client metadata
-    my $client_metadata_json = $req->read_body;
+    my $client_metadata_json = $req->content;
     unless ($client_metadata_json) {
         return $self->p->sendError( $req, 'Missing POST datas', 400 );
     }

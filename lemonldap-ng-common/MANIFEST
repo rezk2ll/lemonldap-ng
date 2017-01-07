@@ -9,7 +9,6 @@ lib/Lemonldap/NG/Common/Apache/Session/SOAP.pm
 lib/Lemonldap/NG/Common/Apache/Session/Store.pm
 lib/Lemonldap/NG/Common/Captcha.pm
 lib/Lemonldap/NG/Common/CGI.pm
-lib/Lemonldap/NG/Common/CGI/SOAPServer.pm
 lib/Lemonldap/NG/Common/CGI/SOAPService.pm
 lib/Lemonldap/NG/Common/Cli.pm
 lib/Lemonldap/NG/Common/Conf.pm
@@ -38,6 +37,7 @@ lib/Lemonldap/NG/Common/PSGI/Cli/Lib.pm
 lib/Lemonldap/NG/Common/PSGI/Constants.pm
 lib/Lemonldap/NG/Common/PSGI/Request.pm
 lib/Lemonldap/NG/Common/PSGI/Router.pm
+lib/Lemonldap/NG/Common/PSGI/SOAPServer.pm
 lib/Lemonldap/NG/Common/Regexp.pm
 lib/Lemonldap/NG/Common/Safe.pm
 lib/Lemonldap/NG/Common/Safelib.pm
