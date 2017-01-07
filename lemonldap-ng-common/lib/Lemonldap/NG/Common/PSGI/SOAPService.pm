@@ -3,17 +3,17 @@
 
 ## @class
 # SOAP wrapper used to restrict exported functions
-package Lemonldap::NG::Common::CGI::SOAPService;
+package Lemonldap::NG::Common::PSGI::SOAPService;
 
 require SOAP::Lite;
 
 our $VERSION = '2.0.0';
 
-## @cmethod Lemonldap::NG::Common::CGI::SOAPService new(object obj,string @func)
+## @cmethod Lemonldap::NG::Common::PSGI::SOAPService new(object obj,string @func)
 # Constructor
 # @param $obj object which will be called for SOAP authorizated methods
 # @param @func authorizated methods
-# @return Lemonldap::NG::Common::CGI::SOAPService object
+# @return Lemonldap::NG::Common::PSGI::SOAPService object
 sub new {
     my ( $class, $obj, @func ) = @_;
     s/.*::// foreach (@func);

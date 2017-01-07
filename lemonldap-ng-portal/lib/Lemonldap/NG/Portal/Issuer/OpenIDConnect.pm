@@ -14,7 +14,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Main::Issuer',
-  'Lemonldap::NG::Portal::Lib::OpenIDConnect';
+  'Lemonldap::NG::Portal::Lib::OpenIDConnect',
+  'Lemonldap::NG::Common::Conf::AccessLib';
 
 # INITIALIZATION
 
@@ -72,28 +73,6 @@ sub init {
         ['GET']
     );
     return 1;
-}
-
-# PROPERTIES
-
-has '_confAcc' => ( is => 'rw', isa => 'Lemonldap::NG::Common::Conf' );
-
-# Configuration access object
-# Return _confAcc property if exists or create it. Used for RP registration
-#@return Lemonldap::NG::Common::Conf object
-sub confAcc {
-    my $self = shift;
-    return $self->_confAcc if ( $self->_confAcc );
-
-    # TODO: pass args and remove this
-    my $d = `pwd`;
-    chomp $d;
-    my $tmp;
-    unless ( $tmp = Lemonldap::NG::Common::Conf->new( $self->configStorage ) ) {
-        die "Unable to build Lemonldap::NG::Common::Conf "
-          . $Lemonldap::NG::Common::Conf::msg;
-    }
-    return $self->_confAcc($tmp);
 }
 
 # RUNNING METHODS

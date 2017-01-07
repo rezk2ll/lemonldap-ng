@@ -27,7 +27,7 @@ sub new {
 # SOAP::Transport::HTTP::Server::handle(), then return the result to the client.
 sub handle {
     my $self = shift->new;
-    my $req    = shift;
+    my $req  = shift;
 
     unless ( $req->content_length ) {
         return [ 411, [], [] ];

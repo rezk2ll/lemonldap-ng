@@ -5,8 +5,6 @@ use utf8;
 use Mouse;
 
 use Lemonldap::NG::Common::Conf;
-use Lemonldap::NG::Common::Conf::Constants;
-use Lemonldap::NG::Common::PSGI::Constants;
 
 has '_confAcc' => ( is => 'rw', isa => 'Lemonldap::NG::Common::Conf' );
 has 'configStorage' => ( is => 'rw', isa => 'HashRef', default => sub { {} } );

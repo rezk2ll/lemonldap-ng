@@ -104,7 +104,13 @@ sub run {
                 'debug' );
 
             ## HERE
-            if ( $self->_grant($service) ) {
+            unless ( $service =~ m#^https?://([^/]+)(/.*)?$# ) {
+                $self->lmLog( "Bad service $service", 'error' );
+                return PE_ERROR;
+            }
+            my ( $host, $uri ) = ( $1, $2 );
+            if ( $self->p->HANDLER->grant( $req->sessionInfo, $1, undef, $2 ) )
+            {
                 $self->lmLog( "CAS service $service access allowed", 'debug' );
             }
 
