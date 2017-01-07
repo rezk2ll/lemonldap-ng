@@ -470,17 +470,17 @@ sub new {
     }
 
     # SOAP
-    if ( $self->{Soap} or $self->{soap} ) {
-        $self->loadModule('Lemonldap::NG::Portal::_SOAP');
-        if ( $self->{notification} and $ENV{PATH_INFO} ) {
-            $self->{CustomSOAPServices} ||= {};
-            $self->{CustomSOAPServices}->{'/notification'} = {
-                f => 'newNotification deleteNotification',
-                o => $self->{notifObject}
-            };
-        }
-        $self->startSoapServices();
-    }
+    #if ( $self->{Soap} or $self->{soap} ) {
+    #    $self->loadModule('Lemonldap::NG::Portal::_SOAP');
+    #    if ( $self->{notification} and $ENV{PATH_INFO} ) {
+    #        $self->{CustomSOAPServices} ||= {};
+    #        $self->{CustomSOAPServices}->{'/notification'} = {
+    #            f => 'newNotification deleteNotification',
+    #            o => $self->{notifObject}
+    #        };
+    #    }
+    #    $self->startSoapServices();
+    #}
 
     # Trusted domains
     $self->{trustedDomains} ||= "";

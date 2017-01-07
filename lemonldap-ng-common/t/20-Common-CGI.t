@@ -7,7 +7,7 @@
 package My::Portal;
 
 use strict;
-use Test::More tests => 25;
+use Test::More tests => 22;
 use_ok('Lemonldap::NG::Common::CGI');
 
 #our @ISA = qw('Lemonldap::NG::Common::CGI');
@@ -32,10 +32,6 @@ our $param;
 
 sub param {
     return $param;
-}
-
-sub soapfunc {
-    return 'SoapOK';
 }
 
 our $buf;
@@ -117,17 +113,4 @@ SKIP: {
     ok( $lang = $cgi4->extract_lang(), 'extract_lang with * value' );
     ok( scalar(@$lang) == 2, 'extract_lang with * value' );
 
-    # SOAP
-    eval { require SOAP::Lite };
-    skip "SOAP::Lite is not installed, so CGI SOAP functions will not work", 3
-      if ($@);
-    $ENV{HTTP_SOAPACTION} =
-      'http://localhost/Lemonldap/NG/Common/CGI/SOAPService#soapfunc';
-    $param =
-'<?xml version="1.0" encoding="UTF-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><soapfunc xmlns="http://localhost/Lemonldap/NG/Common/CGI/SOAPService"><var xsi:type="xsd:string">fr</var></soapfunc></soap:Body></soap:Envelope>';
-    ok( $cgi->soapTest('soapfunc') == 2, 'SOAP call exit fine' );
-    my $tmp = diff();
-    ok( $tmp =~ /^Status: 200/s, 'HTTP response 200' );
-    ok( $tmp =~ /<result xsi:type="xsd:string">SoapOK<\/result>/s,
-        'result of SOAP call' );
 }
