@@ -332,7 +332,7 @@ sub _post {
             'SERVER_PORT'    => '80',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
             ( $args{custom} ? %{ $args{custom} } : () ),
-            'psgix.input.buffered' => 1,
+            'psgix.input.buffered' => 0,
             'psgi.input'           => $body,
             'CONTENT_LENGTH' => $args{length} // scalar( ( stat $body )[7] ),
             'CONTENT_TYPE'   => $args{type}

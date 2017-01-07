@@ -148,8 +148,7 @@ sub getCookies {
 
     # Launch process
     else {
-        $req->{error} = $self->p->process(
-            $req,
+        $req->steps(
             [
                 qw(getUser setAuthSessionInfo),
                 @{ $self->p->betweenAuthAndDatas },
@@ -157,6 +156,7 @@ sub getCookies {
                 @{ $self->p->afterDatas },
             ]
         );
+        $req->{error} = $self->p->process($req);
         $self->lmLog(
             "SOAP authentication result for $user: code $req->{error}",
             'debug' );
@@ -176,7 +176,9 @@ sub getCookies {
     }
     push @tmp, SOAP::Data->name( cookies => \SOAP::Data->value(@cookies) );
     my $res = SOAP::Data->name( session => \SOAP::Data->value(@tmp) );
-    $self->p->updateStatus($req);
+
+    #TODO: updateStatus
+    #$self->p->updateStatus($req);
     return $res;
 }
 
@@ -209,7 +211,7 @@ sub getAttributes {
         push @tmp, SOAP::Data->name( error => 0 )->type('int');
         push @tmp,
           SOAP::Data->name( attributes =>
-              _buildSoapHash( $session->data, @{ $self->exportedAttr($req) } )
+              _buildSoapHash( $session->data, @{ $self->exportedAttr } )
           );
     }
     my $res = SOAP::Data->name( session => \SOAP::Data->value(@tmp) );

@@ -126,7 +126,7 @@ sub _connect {
     if ( $self->{proxyOptions} ) {
         push @args, %{ $self->{proxyOptions} };
     }
-    $self->{ns} ||= 'urn:Lemonldap/NG/Common/CGI/SOAPService';
+    $self->{ns} ||= 'urn:Lemonldap/NG/Common/PSGI/SOAPService';
     return $self->{service} = SOAP::Lite->ns( $self->{ns} )->proxy(@args);
 }
 

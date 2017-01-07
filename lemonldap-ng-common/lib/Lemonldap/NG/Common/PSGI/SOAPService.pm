@@ -15,9 +15,9 @@ our $VERSION = '2.0.0';
 # @param @func authorizated methods
 # @return Lemonldap::NG::Common::PSGI::SOAPService object
 sub new {
-    my ( $class, $obj, @func ) = @_;
+    my ( $class, $obj, $req, @func ) = @_;
     s/.*::// foreach (@func);
-    return bless { obj => $obj, func => \@func }, $class;
+    return bless { obj => $obj, func => \@func, req => $req }, $class;
 }
 
 ## @method datas AUTOLOAD()
@@ -30,7 +30,7 @@ sub AUTOLOAD {
     my $self = shift;
     $AUTOLOAD =~ s/.*:://;
     if ( grep { $_ eq $AUTOLOAD } @{ $self->{func} } ) {
-        my $tmp = $self->{obj}->$AUTOLOAD(@_);
+        my $tmp = $self->{obj}->$AUTOLOAD( $self->{req}, @_ );
         unless ( ref($tmp) and ref($tmp) eq 'SOAP::Data' ) {
             $tmp = SOAP::Data->name( result => $tmp );
         }

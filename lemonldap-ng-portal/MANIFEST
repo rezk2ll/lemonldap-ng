@@ -372,6 +372,7 @@ t/32-Auth-and-issuer-OIDC-authorization_code.t
 t/32-Auth-and-issuer-OIDC-hybrid.t
 t/32-Auth-and-issuer-OIDC-implicit.t
 t/33-Auth-and-issuer-OpenID2.t
+t/34-Auth-Proxy-and-SOAP-Server.t
 t/40-Notifications-DBI.t
 t/50-IssuerGet.t
 t/90-translations.t

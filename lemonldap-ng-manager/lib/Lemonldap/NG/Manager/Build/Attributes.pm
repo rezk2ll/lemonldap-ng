@@ -956,7 +956,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Enable SOAP services',
         },
-        exportedAttr => { type => 'text', },
+        exportedAttr => {
+            type => 'text',
+            documentation =>
+              'List of attributes to export by SOAP or REST servers',
+        },
 
         ## Virtualhosts
 

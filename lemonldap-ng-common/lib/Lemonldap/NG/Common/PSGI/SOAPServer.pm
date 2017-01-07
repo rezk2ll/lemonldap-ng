@@ -6,7 +6,7 @@ use bytes;
 use strict;
 use SOAP::Transport::HTTP;
 
-our @ISA = ('SOAP::Transport::HTTP');
+our @ISA = ('SOAP::Transport::HTTP::Server');
 
 our $VERSION = '2.0.0';
 
@@ -17,7 +17,8 @@ sub new {
     my $self = shift;
     return $self if ref $self;
 
-    $self = $self->SUPER::new(@_);
+    my $class = ref($self) || $self;
+    $self = $class->SUPER::new(@_);
     SOAP::Trace::objects('()');
 
     return $self;

@@ -67,7 +67,7 @@ sub createSession {
 
     my $soapClient = SOAP::Lite->proxy( $class->tsv->{portal}->(),
         default_headers => $soapHeaders )
-      ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
+      ->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
 
     my $creds = $class->header_in('Authorization');
     $creds =~ s/^Basic\s+//;

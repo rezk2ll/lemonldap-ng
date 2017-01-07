@@ -50,7 +50,7 @@ sub proxyQuery {
     return PE_OK if ( $self->{_proxyQueryDone} );
     my $soap =
       SOAP::Lite->proxy( $self->{soapAuthService} )
-      ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
+      ->uri('urn:Lemonldap/NG/Common/CGI/SOAPService');
     my $r = $soap->getCookies( $self->{user}, $self->{password} );
     if ( $r->fault ) {
         $self->abort( "Unable to query authentication service",
@@ -79,7 +79,7 @@ sub setSessionInfo {
     return PE_OK if ( $self->{_setSessionInfoDone} );
     my $soap =
       SOAP::Lite->proxy( $self->{soapSessionService} )
-      ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
+      ->uri('urn:Lemonldap/NG/Common/CGI/SOAPService');
     my $r = $soap->getAttributes( $self->{_remoteId} );
     if ( $r->fault ) {
         $self->abort( "Unable to query authentication service",

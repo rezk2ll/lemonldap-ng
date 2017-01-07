@@ -1,3 +1,4 @@
+* updateStatus( Main, SOAP server )
 * replace SOAP calls in Handler/Lib/AuthBasic and Auth/Proxy
 * replace SOAP by REST for notification creation
 * "mail" in UserDB/*

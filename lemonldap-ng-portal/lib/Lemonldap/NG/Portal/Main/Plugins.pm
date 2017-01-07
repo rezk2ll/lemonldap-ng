@@ -36,8 +36,10 @@ sub enabledPlugins {
    #}
 
     # Check if SOAP is enabled
-    # TODO: REST
-    push @res, 'SOAP' if ( $self->conf->{Soap} );
+    push @res, '::Plugins::SOAPServer' if ( $self->conf->{Soap} );
+
+    # Check if REST is enabled
+    push @res, '::Plugins::RESTServer' if ( $self->conf->{rest} );
 
     # Check if notification is enabled
     push @res, '::Plugins::Notifications' if ( $self->conf->{notifications} );

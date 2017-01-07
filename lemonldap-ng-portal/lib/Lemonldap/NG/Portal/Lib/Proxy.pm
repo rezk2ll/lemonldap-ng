@@ -13,12 +13,12 @@ our $VERSION = '2.0.0';
 sub init {
     my ($self) = @_;
     $self->conf->{soapSessionService} ||=
-      $self->conf->{soapAuthService} . 'index.pl/sessions';
+      $self->conf->{soapAuthService} . '/sessions';
     $self->conf->{soapSessionService} =~ s/\.plindex.pl/\.pl/;
     $self->conf->{remoteCookieName} ||= $self->conf->{cookieName};
 
-    unless ( defined $self->conf->{soapAuthService} ) {
-        $self->error("Missing soapAuthService parameter");
+    unless ( defined $self->conf->{soapSessionService} ) {
+        $self->error("Missing soapSessionService parameter");
         return 0;
     }
     return 1;
@@ -32,7 +32,7 @@ sub getUser {
     my ( $self, $req ) = @_;
     return PE_OK if ( $req->datas->{_proxyQueryDone} );
     my $soap = SOAP::Lite->proxy( $self->conf->{soapSessionService} )
-      ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
+      ->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
     my $r = $soap->getCookies( $req->{user}, $req->datas->{password} );
     if ( $r->fault ) {
         $self->lmLog(
@@ -65,7 +65,7 @@ sub setSessionInfo {
     return PE_OK if ( $req->datas->{_setSessionInfoDone} );
     my $soap =
       SOAP::Lite->proxy( $self->conf->{soapSessionService} )
-      ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
+      ->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
     my $r = $soap->getAttributes( $req->datas->{_remoteId} );
     if ( $r->fault ) {
         $self->lmLog(
