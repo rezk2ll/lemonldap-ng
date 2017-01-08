@@ -13,9 +13,8 @@ use Lemonldap::NG::Manager::Constants;
 
 use feature 'state';
 
-extends 'Lemonldap::NG::Common::Conf::AccessLib', 'Lemonldap::NG::Common::Session::REST';
-
-has conf => ( is => 'rw', isa => 'HashRef', default => sub { {} } );
+extends 'Lemonldap::NG::Common::Conf::AccessLib',
+  'Lemonldap::NG::Common::Session::REST';
 
 our $VERSION = '2.0.0';
 
@@ -50,19 +49,7 @@ sub addRoutes {
     #
     # Return unless configuration is available
     return 0 unless ($conf);
-    foreach my $type (@sessionTypes) {
-        if ( my $tmp =
-            $self->{ $type . 'Storage' } || $conf->{ $type . 'Storage' } )
-        {
-            $self->{conf}->{$type}->{module} = $tmp;
-            $self->{conf}->{$type}->{options} =
-                 $self->{ $type . 'StorageOptions' }
-              || $conf->{ $type . 'StorageOptions' }
-              || {};
-            $self->{conf}->{$type}->{kind} =
-              ( $type eq 'global' ? 'SSO' : ucfirst($type) );
-        }
-    }
+    $self->setTypes($conf);
 
     $self->{ipField}              ||= 'ipAddr';
     $self->{multiValuesSeparator} ||= '; ';

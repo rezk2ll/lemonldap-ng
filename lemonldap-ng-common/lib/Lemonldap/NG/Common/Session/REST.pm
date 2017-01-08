@@ -2,6 +2,26 @@ package Lemonldap::NG::Common::Session::REST;
 
 use strict;
 use Mouse;
+use Lemonldap::NG::Common::Conf::Constants;
+
+has sessionTypes => ( is => 'rw' );
+
+sub setTypes {
+    my ( $self, $conf ) = @_;
+    foreach my $type (@sessionTypes) {
+        if ( my $tmp =
+            $self->{ $type . 'Storage' } || $conf->{ $type . 'Storage' } )
+        {
+            $self->{sessionTypes}->{$type}->{module} = $tmp;
+            $self->{sessionTypes}->{$type}->{options} =
+                 $self->{ $type . 'StorageOptions' }
+              || $conf->{ $type . 'StorageOptions' }
+              || {};
+            $self->{sessionTypes}->{$type}->{kind} =
+              ( $type eq 'global' ? 'SSO' : ucfirst($type) );
+        }
+    }
+}
 
 sub separator {
     $_[0]->{multiValuesSeparator} || $_[0]->conf->{multiValuesSeparator};
@@ -30,7 +50,7 @@ sub delSession {
 sub session {
     my ( $self, $req, $id, $skey ) = @_;
     my ( %h, $res );
-    return $self->sendError( $req, 'Bad request', 400 ) unless($id);
+    return $self->sendError( $req, 'Bad request', 400 ) unless ($id);
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
 
@@ -85,7 +105,7 @@ sub getMod {
         $self->error('Session type is required');
         return ();
     }
-    unless ( $m = $self->conf->{$s} ) {
+    unless ( $m = $self->sessionTypes->{$s} ) {
         $self->error('Unknown (or unconfigured) session type');
         return ();
     }

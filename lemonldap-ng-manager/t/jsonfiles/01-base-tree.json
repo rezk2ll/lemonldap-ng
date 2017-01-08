@@ -1270,19 +1270,6 @@
       "title": "customFunctions"
     }, {
       "_nodes": [{
-        "default": 0,
-        "id": "Soap",
-        "title": "Soap",
-        "type": "bool"
-      }, {
-        "id": "exportedAttr",
-        "title": "exportedAttr"
-      }],
-      "id": "soap",
-      "title": "soap",
-      "type": "simpleInputContainer"
-    }, {
-      "_nodes": [{
         "default": 1,
         "id": "loginHistoryEnabled",
         "title": "loginHistoryEnabled",
