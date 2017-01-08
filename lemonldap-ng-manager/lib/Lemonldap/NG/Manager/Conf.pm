@@ -146,11 +146,31 @@ sub prx {
 # IV. Upload methods #
 ######################
 
-# In this section, 3 methods:
+# In this section, 4 methods:
+#  - getConfByNum: override SUPER method to be able to use Zero
 #  - newConf()
 #  - newRawConf(): restore a saved conf
 #  - applyConf(): called by the 2 previous to prevent other servers that a new
 #                 configuration is available
+
+sub getConfByNum {
+    my ( $self, $cfgNum, @args ) = @_;
+    unless ( %{ $self->currentConf }
+        and $cfgNum == $self->currentConf->{cfgNum} )
+    {
+        my $tmp;
+        if ( $cfgNum == 0 ) {
+            require Lemonldap::NG::Manager::Conf::Zero;
+            $tmp = Lemonldap::NG::Manager::Conf::Zero::zeroConf();
+            $self->currentConf($tmp);
+        }
+        else {
+            $tmp = $self->SUPER::getConfByNum( $cfgNum, @args );
+            return undef unless (defined $tmp);
+        }
+    }
+    return $cfgNum;
+}
 
 ## @method PSGI-JSON-response newConf($req)
 # Call Lemonldap::NG::Manager::Conf::Parser to parse new configuration and store

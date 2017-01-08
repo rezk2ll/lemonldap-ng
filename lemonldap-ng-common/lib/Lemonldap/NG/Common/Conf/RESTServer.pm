@@ -71,17 +71,9 @@ sub getConfByNum {
     unless ( %{ $self->currentConf }
         and $cfgNum == $self->currentConf->{cfgNum} )
     {
-        my $tmp;
-        if ( $cfgNum == 0 ) {
-            require Lemonldap::NG::Manager::Conf::Zero;
-            $tmp = Lemonldap::NG::Manager::Conf::Zero::zeroConf();
-        }
-        else {
-            $tmp =
-              $self->confAcc->getConf(
-                { cfgNum => $cfgNum, raw => 1, noCache => 1, @args } );
-            return undef unless ( $tmp and ref($tmp) and %$tmp );
-        }
+        my $tmp = $self->confAcc->getConf(
+            { cfgNum => $cfgNum, raw => 1, noCache => 1, @args } );
+        return undef unless ( $tmp and ref($tmp) and %$tmp );
         $self->currentConf($tmp);
     }
     return $cfgNum;
