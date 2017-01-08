@@ -201,7 +201,8 @@ sub defaultValues {
               'http://auth.example.com/Lemonldap/NG/Common/CGI/SOAPService',
             'proxy' => 'http://auth.example.com/index.pl/sessions'
         },
-        'rest' => 0,
+        'restConfigServer'  => 0,
+        'restSessionServer' => 0,
         'samlAttributeAuthorityDescriptorAttributeServiceSOAP' =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
         'samlAuthnContextMapKerberos'                   => 4,
@@ -267,7 +268,8 @@ sub defaultValues {
         'slaveAuthnLevel'                         => 2,
         'slaveExportedVars'                       => {},
         'SMTPServer'                              => '',
-        'Soap'                                    => 0,
+        'soapConfigServer'                        => 0,
+        'soapSessionServer'                       => 0,
         'SSLAuthnLevel'                           => 5,
         'storePassword'                           => 0,
         'successLoginNumber'                      => 5,

@@ -65,12 +65,19 @@ sub init {
         return 0;
     }
     $self->server( Lemonldap::NG::Common::PSGI::SOAPServer->new );
-    $self->addUnauthRoute( sessions      => 'unauthSessions',      ['POST'] );
-    $self->addUnauthRoute( adminSessions => 'unauthAdminSessions', ['POST'] );
-    $self->addUnauthRoute( config        => 'config',              ['POST'] );
-    $self->addAuthRoute( sessions      => 'badSoapRequest', ['POST'] );
-    $self->addAuthRoute( adminSessions => 'badSoapRequest', ['POST'] );
-    $self->addAuthRoute( config        => 'badSoapRequest', ['POST'] );
+    if ( $self->conf->{soapSessionServer} ) {
+        $self->addUnauthRoute( sessions => 'unauthSessions', ['POST'] );
+        $self->addUnauthRoute(
+            adminSessions => 'unauthAdminSessions',
+            ['POST']
+        );
+        $self->addAuthRoute( sessions      => 'badSoapRequest', ['POST'] );
+        $self->addAuthRoute( adminSessions => 'badSoapRequest', ['POST'] );
+    }
+    if ( $self->conf->{soapConfigServer} ) {
+        $self->addUnauthRoute( config => 'config', ['POST'] );
+        $self->addAuthRoute( config => 'badSoapRequest', ['POST'] );
+    }
     1;
 }
 
@@ -211,8 +218,7 @@ sub getAttributes {
         push @tmp, SOAP::Data->name( error => 0 )->type('int');
         push @tmp,
           SOAP::Data->name( attributes =>
-              _buildSoapHash( $session->data, @{ $self->exportedAttr } )
-          );
+              _buildSoapHash( $session->data, @{ $self->exportedAttr } ) );
     }
     my $res = SOAP::Data->name( session => \SOAP::Data->value(@tmp) );
     return $res;

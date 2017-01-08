@@ -510,11 +510,14 @@ sub tree {
                     help  => 'start.html#advanced_features',
                     nodes => [
                         'customFunctions',
-                        'rest',
                         {
-                            title => 'soap',
+                            title => 'portalServers',
                             form  => 'simpleInputContainer',
-                            nodes => [ 'Soap', 'exportedAttr' ]
+                            nodes => [
+                                'restSessionServer', 'restConfigServer',
+                                'soapSessionServer', 'soapConfigServer',
+                                'exportedAttr'
+                            ]
                         },
                         {
                             title => 'loginHistory',

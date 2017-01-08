@@ -944,17 +944,27 @@ sub attributes {
         },
 
         # REST server
-        rest => {
+        restSessionServer => {
             default       => 0,
             type          => 'bool',
-            documentation => 'Enable REST services',
+            documentation => 'Enable REST session server',
+        },
+        restConfigServer => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Enable REST config server',
         },
 
         # SOAP server
-        Soap => {
+        soapSessionServer => {
             default       => 0,
             type          => 'bool',
-            documentation => 'Enable SOAP services',
+            documentation => 'Enable SOAP session server',
+        },
+        soapConfigServer => {
+            default      => 0,
+            type         => 'bool',
+            documentation => 'Enable SOAP config server',
         },
         exportedAttr => {
             type => 'text',

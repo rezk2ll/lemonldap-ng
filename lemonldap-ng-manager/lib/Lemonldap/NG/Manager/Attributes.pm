@@ -2024,7 +2024,11 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'remotePortal' => {
             'type' => 'text'
         },
-        'rest' => {
+        'restConfigServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'restSessionServer' => {
             'default' => 0,
             'type'    => 'bool'
         },
@@ -2690,12 +2694,16 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
 qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?)?$/,
             'type' => 'text'
         },
-        'Soap' => {
+        'soapAuthService' => {
+            'type' => 'text'
+        },
+        'soapConfigServer' => {
             'default' => 0,
             'type'    => 'bool'
         },
-        'soapAuthService' => {
-            'type' => 'text'
+        'soapSessionServer' => {
+            'default' => 0,
+            'type'    => 'bool'
         },
         'soapSessionService' => {
             'type' => 'text'

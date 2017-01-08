@@ -99,13 +99,13 @@ sub issuer {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel       => $debug,
-                templatesDir   => 'site/htdocs/static',
-                domain         => 'idp.com',
-                portal         => 'http://auth.idp.com',
-                authentication => 'Demo',
-                userDB         => 'Demo',
-                Soap           => 1,
+                logLevel          => $debug,
+                templatesDir      => 'site/htdocs/static',
+                domain            => 'idp.com',
+                portal            => 'http://auth.idp.com',
+                authentication    => 'Demo',
+                userDB            => 'Demo',
+                soapSessionServer => 1,
             }
         }
     );

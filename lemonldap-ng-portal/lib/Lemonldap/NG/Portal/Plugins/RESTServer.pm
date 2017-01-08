@@ -30,11 +30,72 @@ use Mouse;
 
 our $VERSION = '2.0.0';
 
+extends 'Lemonldap::NG::Portal::Main::Plugin';
+
 # INITIALIZATION
 
 sub init {
     my ($self) = @_;
-    1;
+    my @parents = ('Lemonldap::NG::Portal::Main::Plugin');
+    if ( $self->conf->{restConfigServer} ) {
+        push @parents, 'Lemonldap::NG::Common::Conf::RESTServer';
+
+        # Methods inherited from Lemonldap::NG::Common::Conf::RESTServer
+        $self->addUnauthRoute(
+            confs => {
+                ':cfgNum' => [
+                    qw(virtualHosts samlIDPMetaDataNodes samlSPMetaDataNodes
+                      applicationList oidcOPMetaDataNodes oidcRPMetaDataNodes
+                      authChoiceModules grantSessionRules)
+                ]
+            },
+            ['GET'],
+        );
+        $self->addUnauthRoute(
+            confs => { ':cfgNum' => { '*' => 'getKey' } },
+            ['GET']
+        );
+    }
+    if ( $self->conf->{restSessionServer} ) {
+        push @parents, 'Lemonldap::NG::Common::Session::REST';
+
+        # Methods inherited from Lemonldap::NG::Common::Session::REST
+        $self->addUnauthRoute(
+            sessions => { ':sessionType' => 'session' },
+            ['GET']
+        );
+        $self->addUnauthRoute(
+            sessions => { ':sessionType' => 'newSession' },
+            ['POST']
+        );
+        $self->addUnauthRoute(
+            sessions =>
+              { ':sessionType' => { ':sessionId' => 'updateSession' } },
+            ['PUT']
+        );
+        $self->addUnauthRoute(
+            sessions => { ':sessionType' => { ':sessionId' => 'delSession' } },
+            ['DELETE']
+        );
+    }
+    $self->addAuthRoute(
+        authorization => 'isUrlAuthorized',
+        [ 'GET', 'POST' ]
+    );
+    extends @parents;
+    return 1;
+}
+
+sub updateSession {
+    my ( $self, $req ) = @_;
+}
+
+sub delSession {
+    my ( $self, $req ) = @_;
+}
+
+sub isUrlAuthorized {
+    my ( $self, $req ) = @_;
 }
 
 1;

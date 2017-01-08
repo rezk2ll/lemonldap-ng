@@ -30,6 +30,7 @@ sub delSession {
 sub session {
     my ( $self, $req, $id, $skey ) = @_;
     my ( %h, $res );
+    return $self->sendError( $req, 'Bad request', 400 ) unless($id);
     my $mod = $self->getMod($req)
       or return $self->sendError( $req, undef, 400 );
 
