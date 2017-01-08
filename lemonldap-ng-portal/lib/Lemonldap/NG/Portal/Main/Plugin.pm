@@ -36,7 +36,8 @@ sub _addRoute {
               }
         }
     };
-    return $self->p->$type( $word, $subName, $methods, $transform );
+    $self->p->$type( $word, $subName, $methods, $transform );
+    return $self;
 }
 
 1;

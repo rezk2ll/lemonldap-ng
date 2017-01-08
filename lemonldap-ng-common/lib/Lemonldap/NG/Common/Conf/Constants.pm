@@ -26,6 +26,8 @@ use constant APPLYSECTION            => "apply";
 our $hashParameters = qr/^(?:(?:l(?:o(?:ca(?:lSessionStorageOption|tionRule)|goutService)|dapExportedVar|wpSslOpt)|(?:(?:d(?:emo|bi)|facebook|webID)ExportedVa|exported(?:Heade|Va))r|ca(?:s(?:StorageOption|Attribute)|ptchaStorageOption)|g(?:r(?:antSessionRule|oup)|lobalStorageOption)|n(?:otificationStorageOption|ginxCustomHandler)|re(?:moteGlobalStorageOption|loadUrl)|CAS_proxiedService|macro)s|o(?:idc(?:RPMetaData(?:(?:Option(?:sExtraClaim)?|ExportedVar)s|Node)|OPMetaData(?:(?:ExportedVar|Option)s|J(?:SON|WKS)|Node)|S(?:erviceMetaDataAuthnContext|torageOptions))|penIdExportedVars)|s(?:aml(?:S(?:PMetaData(?:(?:ExportedAttribute|Option)s|Node|XML)|torageOptions)|IDPMetaData(?:(?:ExportedAttribute|Option)s|Node|XML))|essionDataToRemember|laveExportedVars)|p(?:ersistentStorageOptions|o(?:rtalSkinRules|st))|a(?:uthChoiceModules|pplicationList)|v(?:hostOptions|irtualHost))$/;
 
 
+sub NO {qr/^(?:off|no|0)?$/i}
+
 our %EXPORT_TAGS = (
     'all' => [
         qw(
@@ -43,6 +45,7 @@ our %EXPORT_TAGS = (
           MANAGERSECTION
           SESSIONSEXPLORERSECTION
           APPLYSECTION
+          NO
           $hashParameters
           )
     ]

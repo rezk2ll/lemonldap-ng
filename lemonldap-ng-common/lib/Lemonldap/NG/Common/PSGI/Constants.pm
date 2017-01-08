@@ -15,7 +15,6 @@ use constant {
     NOTICE => 1,
     ERROR  => 0,
 };
-our $no = qr/^(?:off|no|0)?$/i;
 
 our %EXPORT_TAGS = ( 'all' => [qw(DEBUG INFO WARN ERROR $no)] );
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} } );

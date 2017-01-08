@@ -302,6 +302,8 @@ use constant SESSIONSEXPLORERSECTION => "sessionsExplorer";
 use constant APPLYSECTION            => "apply";
 $confConstants
 
+sub NO {qr/^(?:off|no|0)?\$/i}
+
 our %EXPORT_TAGS = (
     'all' => [
         qw(
@@ -319,6 +321,7 @@ our %EXPORT_TAGS = (
           MANAGERSECTION
           SESSIONSEXPLORERSECTION
           APPLYSECTION
+          NO
           \$hashParameters
           )
     ]
