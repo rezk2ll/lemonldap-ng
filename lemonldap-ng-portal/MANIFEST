@@ -138,6 +138,7 @@ site/coffee/portal.coffee
 site/cron/purgeCentralCache
 site/cron/purgeCentralCache.cron.d
 site/htdocs/index.fcgi
+site/htdocs/index.psgi
 site/htdocs/static/bootstrap/css/styles.css
 site/htdocs/static/bootstrap/css/styles.min.css
 site/htdocs/static/bootstrap/js/skin.js
