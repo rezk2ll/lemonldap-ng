@@ -121,16 +121,16 @@ sub display {
         $skinfile = 'openid';
         my $p = $self->conf->{portal} . $self->conf->{issuerDBOpenIDPath};
         $p =~ s#(?<!:)/?\^?/#/#g;
+        my $id = $req->{sessionInfo}
+          ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} };
         %templateParams = (
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $req->error_type,
             PROVIDERURI     => $p,
-            ID              => $req->datas->{_openidPortal}
-              . $req->{sessionInfo}
-              ->{ $self->conf->{openIdAttr} || $self->conf->{whatToTrace} },
-            PORTAL_URL => $self->conf->{portal},
-            MSG        => $req->info(),
+            PORTAL_URL      => $self->conf->{portal},
+            MSG             => $req->info(),
         );
+        $templateParams{ID} = $req->datas->{_openidPortal} . $id if ($id);
     }
 
     # 2. Good authentication
