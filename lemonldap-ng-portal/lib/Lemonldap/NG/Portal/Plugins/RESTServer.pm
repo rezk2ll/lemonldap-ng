@@ -76,15 +76,16 @@ sub init {
 
         # Methods written below
         $self->addUnauthRoute(
-            sessions =>
-              { ':sessionType' => { ':sessionId' => 'updateSession' } },
+            sessions => { ':sessionType' => 'updateSession' },
             ['PUT']
         );
         $self->addUnauthRoute(
-            sessions => { ':sessionType' => { ':sessionId' => 'delSession' } },
+            sessions => { ':sessionType' => 'delSession' },
             ['DELETE']
         );
     }
+
+    # Methods always available
     $self->addAuthRoute(
         mysession => { '*' => 'mysession' },
         [ 'GET', 'POST' ]
@@ -97,12 +98,63 @@ sub init {
     return 1;
 }
 
-sub updateSession {
+sub newSession {
     my ( $self, $req ) = @_;
+    my $mod = $self->getMod($req)
+      or return $self->p->sendError( $req, undef, 400 );
+    my $infos = $req->jsonBodyToObj
+      or return $self->p->sendError( $req, undef, 400 );
+    $infos->{_utime} = time();
+
+    my $session = $self->getApacheSession($mod);
+    return $self->p->sendError( $req, 'Unable to create session', 500 )
+      unless ($session);
+
+    $session->update($infos);
+
+    $self->lmLog(
+        'REST request to create a session for '
+          . $session->data->{ $self->conf->{whatToTrace} },
+        'debug'
+    );
+    return $self->p->sendJSONresponse( $req, { result => 1 } );
+}
+
+sub updateSession {
+    my ( $self, $req, $id ) = @_;
+    my $mod = $self->getMod($req)
+      or return $self->p->sendError( $req, undef, 400 );
+    return $self->p->sendError( $req, 'ID is required', 400 ) unless ($id);
+
+    # Get session
+    my $session = $self->getApacheSession( $mod, $id )
+      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
+
+    # Get new info
+    my $infos = $req->jsonBodyToObj
+      or return $self->p->sendError( $req, undef, 400 );
+
+    # Store them
+    $self->lmLog( "REST request to update session $id", 'debug' );
+    $session->update($infos);
+    return $self->p->sendJSONresponse( $req, { result => 1 } );
 }
 
 sub delSession {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $id ) = @_;
+    my $mod = $self->getMod($req)
+      or return $self->p->sendError( $req, undef, 400 );
+    return $self->p->sendError( $req, 'ID is required', 400 ) unless ($id);
+
+    # Get session
+    my $session = $self->getApacheSession( $mod, $id )
+      or return $self->p->sendError( $req, 'Session id does not exists', 400 );
+
+    # Delete it
+    $self->lmLog( "REST request to delete session $id", 'debug' );
+    my $res = $self->p->_deleteSession($session);
+    $self->lmLog( " Result is $res", 'debug' );
+    return $self->p->sendJSONresponse( $req, { result => $res } );
 }
 
 sub mysession {
@@ -130,7 +182,7 @@ sub mysession {
 
     # Now check for authorization
     my $res = $self->p->HANDLER->grant( $req->userDatas, $uri, undef, $host );
-    $self->lmLog( "Result is $res", 'debug' );
+    $self->lmLog( " Result is $res", 'debug' );
     return $self->p->sendJSONresponse( $req, { result => $res } );
 }
 
@@ -141,4 +193,4 @@ sub getMyKey {
     return $self->session( $req, $req->id, $key );
 }
 
-1;
+1

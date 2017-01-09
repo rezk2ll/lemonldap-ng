@@ -9,6 +9,16 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Common::Module';
 
+sub sendError {
+    my $self = shift;
+    return $self->p->sendError(@_);
+}
+
+sub sendJSONresponse {
+    my $self = shift;
+    return $self->p->sendJSONresponse(@_);
+}
+
 sub addAuthRoute {
     my $self = shift;
     return $self->_addRoute( 'addAuthRoute', @_ );

@@ -40,10 +40,8 @@ sub enabledPlugins {
       if ( $self->conf->{soapSessionServer}
         or $self->conf->{soapConfigServer} );
 
-    # Check if REST is enabled
-    push @res, '::Plugins::RESTServer'
-      if ( $self->conf->{restSessionServer}
-        or $self->conf->{soapSessionServer} );
+    # Add REST (check is done by it)
+    push @res, '::Plugins::RESTServer';
 
     # Check if notification is enabled
     push @res, '::Plugins::Notifications' if ( $self->conf->{notifications} );
