@@ -385,7 +385,7 @@ prepare_test_server:
 		SBINDIR=`pwd`/e2e-tests/conf/sbin \
 		INITDIR=`pwd`/e2e-tests/conf/init \
 		ETCDEFAULTDIR=`pwd`/e2e-tests/conf/def
-	@cp -f e2e-tests/index.fcgi e2e-tests/conf/index.fcgi
+	@cp -f e2e-tests/index.* e2e-tests/conf/
 	@cp e2e-tests/lmConf-1.js e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
 	@cp e2e-tests/form.html e2e-tests/conf/site
 	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s#__port__#$(TESTWEBSERVERPORT)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#;' \
@@ -626,15 +626,15 @@ install_manager_site:	install_conf_dir
 	# Clean svn files
 	@rm -rf $$(find ${RMANAGERSTATICDIR} $(RMANAGERPSGIDIR) \
 		$(RMANAGERTEMPLATESDIR) $(RCONFDIR) -type d -name .svn)
-	$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
-	$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
+	@$(PERL) -i -pe 's#__MANAGERSTATICDIR__#$(MANAGERRELATIVESTATICDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
+	@$(PERL) -i -pe 's#__MANAGERTEMPLATESDIR__#$(MANAGERTEMPLATESDIR)#g' $(RCONFDIR)/$(CONFFILENAME)
 
 install_portal_site:	install_conf_dir
 	# Portal install
 	@install -v -d $(RPORTALDIR) $(RPORTALSTATICDIR) \
 		$(RPORTALDIR)/skins/ \
 		$(RCRONDIR) $(RCONFDIR)
-	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/index.fcgi $(RPORTALDIR)
+	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/index.* $(RPORTALDIR)
 	@cp -pR -f $(SRCPORTALDIR)/site/htdocs/static/* $(RPORTALSTATICDIR)
 	@tar -cf - -C ${SRCPORTALDIR}/site/templates/ $$(ls ${SRCPORTALDIR}/site/templates/) |tar -xf - -C $(RPORTALTEMPLATESDIR)
 	@for f in `find $(RPORTALTEMPLATEDIR) -type f -name '*.tpl'`; do \

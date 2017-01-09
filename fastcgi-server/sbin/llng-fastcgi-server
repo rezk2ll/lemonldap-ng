@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use POSIX;
 use Getopt::Long;
-use Lemonldap::NG::Handler::SharedConf;
+use Lemonldap::NG::Handler::Main::Reload;
 
 our $VERSION = '2.0.0';
 
@@ -87,6 +87,14 @@ my %builder = (
             return $_apps{$script}->(@_);
         };
     },
+    psgi => sub {
+        return sub {
+            my $script = $_[0]->{SCRIPT_FILENAME};
+            return $_apps{$script}->(@_) if ( $_apps{$script} );
+            $_apps{$script} = do $script;
+            return $_apps{$script}->(@_);
+          }
+    },
 );
 
 unless ($>) {
@@ -104,15 +112,30 @@ my $app = sub {
 };
 
 # Hook for customFunctions initialization
-use Lemonldap::NG::Handler::API::PSGI::Server;
-$Lemonldap::NG::Handler::API::mode = 'PSGI::Server';
-Lemonldap::NG::Handler::SharedConf->init();
+Lemonldap::NG::Handler::Main::Reload->onReload(
+    bless( {}, 'Lemonldap::NG::Handler::FastCGI::Loader' ),
+    'loadCustomLogins' );
+
+my $server = Plack::Runner->new();
+$server->parse_options(
+    '-s'           => $engine,
+    '-E'           => 'deployment',
+    '--pid'        => $pidFile,
+    '--nproc'      => $nproc,
+    '--socket'     => $socket,
+    '--proc-title' => 'llng-fastcgi-server',
+    ( $foreground ? () : '--daemonize' ),
+    '--no-default-middleware',
+    %plackOptions,
+);
+
+$server->run($app);
+
+package Lemonldap::NG::Handler::FastCGI::Loader;
 
 # Load configuration and look if custom handlers have been defined
-{
-    $Lemonldap::NG::Handler::API::mode = 'PSGI::Server';
-    my $conf = Lemonldap::NG::Handler::SharedConf->checkConf()
-      or die "Unable to get configuration";
+sub loadCustomLogins {
+    my ( $obj, $conf ) = @_;
     foreach my $lltype ( keys %{ $conf->{nginxCustomHandlers} // {} } ) {
         my $v = $conf->{nginxCustomHandlers}->{$lltype};
         if ( $v =~ m#[/\\\.]# ) {
@@ -131,21 +154,6 @@ Lemonldap::NG::Handler::SharedConf->init();
         };
     }
 }
-
-my $server = Plack::Runner->new();
-$server->parse_options(
-    '-s'           => $engine,
-    '-E'           => 'deployment',
-    '--pid'        => $pidFile,
-    '--nproc'      => $nproc,
-    '--socket'     => $socket,
-    '--proc-title' => 'llng-fastcgi-server',
-    ( $foreground ? () : '--daemonize' ),
-    '--no-default-middleware',
-    %plackOptions,
-);
-
-$server->run($app);
 __END__
 
 =head1 NAME
