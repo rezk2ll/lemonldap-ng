@@ -115,12 +115,13 @@ sub sp {
     return LLNG::Manager::Test->new(
         {
             ini => {
-                logLevel           => $debug,
-                domain             => 'sp.com',
-                portal             => 'http://auth.sp.com',
-                authentication     => 'Proxy',
-                userDB             => 'Proxy',
-                soapSessionService => 'http://auth.idp.com/sessions',
+                logLevel         => $debug,
+                domain           => 'sp.com',
+                portal           => 'http://auth.sp.com',
+                authentication   => 'Proxy',
+                userDB           => 'Proxy',
+                proxyAuthService => 'http://auth.idp.com/sessions',
+                proxyUseSoap     => 1,
             },
         }
     );

@@ -186,6 +186,8 @@ sub defaultValues {
         'portalRequireOldPassword'           => 1,
         'portalSkin'                         => 'bootstrap',
         'portalUserAttr'                     => '_user',
+        'proxyAuthnLevel'                    => 2,
+        'proxyUseSoap'                       => 0,
         'radiusAuthnLevel'                   => 3,
         'randomPasswordRegexp'               => '[A-Z]{3}[a-z]{5}.\\d{2}',
         'redirectFormMethod'                 => 'get',

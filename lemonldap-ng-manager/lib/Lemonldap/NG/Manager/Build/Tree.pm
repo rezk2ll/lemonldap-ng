@@ -298,8 +298,8 @@ sub tree {
                             help  => 'authproxy.html',
                             form  => 'simpleInputContainer',
                             nodes => [
-                                'soapAuthService', 'remoteCookieName',
-                                'soapSessionService'
+                                'proxyUseSoap',     'proxyAuthService',
+                                'remoteCookieName', 'proxyAuthnLevel'
                             ]
                         },
                         {

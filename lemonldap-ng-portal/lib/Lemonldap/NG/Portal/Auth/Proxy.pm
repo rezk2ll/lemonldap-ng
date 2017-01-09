@@ -6,10 +6,30 @@ use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Auth::_WebForm',
-  'Lemonldap::NG::Portal::Lib::Proxy';
+extends 'Lemonldap::NG::Portal::Auth::_WebForm';
+
+# INITIALIZATION
+
+sub init {
+    my ($self) = @_;
+    if ( $self->conf->{proxyUseSoap} ) {
+        extends 'Lemonldap::NG::Portal::Auth::_WebForm',
+          'Lemonldap::NG::Portal::Lib::SOAPProxy';
+    }
+    else {
+        extends 'Lemonldap::NG::Portal::Auth::_WebForm',
+          'Lemonldap::NG::Portal::Lib::RESTProxy';
+    }
+    return $self->SUPER::init();
+}
 
 # RUNNING METHODS
+
+sub setAuthSessionInfo {
+    my ( $self, $req ) = @_;
+    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{proxyAuthnLevel};
+    PE_OK;
+}
 
 sub authLogout {
     PE_OK;

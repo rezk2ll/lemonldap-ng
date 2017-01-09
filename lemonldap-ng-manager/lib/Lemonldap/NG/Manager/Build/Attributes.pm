@@ -962,8 +962,8 @@ sub attributes {
             documentation => 'Enable SOAP session server',
         },
         soapConfigServer => {
-            default      => 0,
-            type         => 'bool',
+            default       => 0,
+            type          => 'bool',
             documentation => 'Enable SOAP config server',
         },
         exportedAttr => {
@@ -2004,9 +2004,18 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         # Proxy
-        soapAuthService    => { type => 'text', },
-        remoteCookieName   => { type => 'text', },
-        soapSessionService => { type => 'text', },
+        proxyAuthService => { type => 'text', },
+        remoteCookieName => { type => 'text', },
+        proxyUseSoap     => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Use SOAP instead of REST',
+        },
+        proxyAuthnLevel => {
+            type          => 'int',
+            default       => 2,
+            documentation => 'Proxy authentication level',
+        },
 
         # OpenID
         openIdAuthnLevel => {

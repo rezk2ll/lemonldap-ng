@@ -1932,6 +1932,17 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'test'    => qr/^(?:none|authenticate|manager|)$/,
             'type'    => 'text'
         },
+        'proxyAuthnLevel' => {
+            'default' => 2,
+            'type'    => 'int'
+        },
+        'proxyAuthService' => {
+            'type' => 'text'
+        },
+        'proxyUseSoap' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'radiusAuthnLevel' => {
             'default' => 3,
             'type'    => 'int'
@@ -2694,9 +2705,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
 qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+))(?::\d+)?)?$/,
             'type' => 'text'
         },
-        'soapAuthService' => {
-            'type' => 'text'
-        },
         'soapConfigServer' => {
             'default' => 0,
             'type'    => 'bool'
@@ -2704,9 +2712,6 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'soapSessionServer' => {
             'default' => 0,
             'type'    => 'bool'
-        },
-        'soapSessionService' => {
-            'type' => 'text'
         },
         'SSLAuthnLevel' => {
             'default' => 5,

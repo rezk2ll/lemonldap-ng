@@ -1,5 +1,5 @@
 # Auth/Proxy.pm and UserDB/Proxy.pm simple inheritance of this package
-package Lemonldap::NG::Portal::Lib::Proxy;
+package Lemonldap::NG::Portal::Lib::SOAPProxy;
 
 use strict;
 use Mouse;
@@ -12,13 +12,10 @@ our $VERSION = '2.0.0';
 
 sub init {
     my ($self) = @_;
-    $self->conf->{soapSessionService} ||=
-      $self->conf->{soapAuthService} . '/sessions';
-    $self->conf->{soapSessionService} =~ s/\.plindex.pl/\.pl/;
     $self->conf->{remoteCookieName} ||= $self->conf->{cookieName};
 
-    unless ( defined $self->conf->{soapSessionService} ) {
-        $self->error("Missing soapSessionService parameter");
+    unless ( defined $self->conf->{proxyAuthService} ) {
+        $self->error("Missing proxyAuthService parameter");
         return 0;
     }
     return 1;
@@ -31,7 +28,7 @@ sub init {
 sub getUser {
     my ( $self, $req ) = @_;
     return PE_OK if ( $req->datas->{_proxyQueryDone} );
-    my $soap = SOAP::Lite->proxy( $self->conf->{soapSessionService} )
+    my $soap = SOAP::Lite->proxy( $self->conf->{proxyAuthService} )
       ->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
     my $r = $soap->getCookies( $req->{user}, $req->datas->{password} );
     if ( $r->fault ) {
@@ -64,7 +61,7 @@ sub setSessionInfo {
     my ( $self, $req ) = @_;
     return PE_OK if ( $req->datas->{_setSessionInfoDone} );
     my $soap =
-      SOAP::Lite->proxy( $self->conf->{soapSessionService} )
+      SOAP::Lite->proxy( $self->conf->{proxyAuthService} )
       ->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
     my $r = $soap->getAttributes( $req->datas->{_remoteId} );
     if ( $r->fault ) {
