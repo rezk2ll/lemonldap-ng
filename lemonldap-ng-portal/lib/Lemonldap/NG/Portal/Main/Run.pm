@@ -14,7 +14,6 @@ our $VERSION = '2.0.0';
 package Lemonldap::NG::Portal::Main;
 
 use strict;
-use WWW::Form::UrlEncoded 'build_urlencoded';
 
 # List constants
 sub authProcess { qw(extractFormInfo getUser authenticate) }

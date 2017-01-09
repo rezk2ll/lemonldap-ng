@@ -70,11 +70,11 @@ lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/Server.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm
-lib/Lemonldap/NG/Portal/Lib/Proxy.pm
 lib/Lemonldap/NG/Portal/Lib/Remote.pm
 lib/Lemonldap/NG/Portal/Lib/SAML.pm
 lib/Lemonldap/NG/Portal/Lib/Slave.pm
 lib/Lemonldap/NG/Portal/Lib/SMTP.pm
+lib/Lemonldap/NG/Portal/Lib/SOAPProxy.pm
 lib/Lemonldap/NG/Portal/Lib/Wrapper.pm
 lib/Lemonldap/NG/Portal/MailReset.pm
 lib/Lemonldap/NG/Portal/Main.pm

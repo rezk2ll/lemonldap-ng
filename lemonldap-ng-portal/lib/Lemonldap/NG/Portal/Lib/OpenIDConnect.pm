@@ -12,10 +12,10 @@ use Digest::SHA
   qw/hmac_sha256_base64 hmac_sha384_base64 hmac_sha512_base64 sha256 sha384
   sha512 sha256_base64 sha384_base64 sha512_base64/;
 use JSON;
+use Lemonldap::NG::Common::FormEncode;
 use LWP::UserAgent;
 use MIME::Base64 qw/encode_base64 decode_base64/;
 use Mouse;
-use WWW::Form::UrlEncoded qw/build_urlencoded/;
 
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_REDIRECT);
 
@@ -320,8 +320,8 @@ sub buildAuthorizationCodeAuthnResponse {
 # @param session_state Session state
 # return String Authentication Response URI
 sub buildImplicitAuthnResponse {
-    my ( $self, $redirect_uri, $access_token, $id_token, $expires_in, $state,
-        $session_state )
+    my ( $self, $redirect_uri, $access_token, $id_token, $expires_in,
+        $state, $session_state )
       = @_;
 
     my $response_url = "$redirect_uri#"
@@ -588,7 +588,8 @@ sub checkIDTokenValidity {
 sub getUserInfo {
     my ( $self, $op, $access_token ) = @_;
 
-    my $userinfo_uri = $self->oidcOPList->{$op}->{conf}->{userinfo_endpoint};
+    my $userinfo_uri =
+      $self->oidcOPList->{$op}->{conf}->{userinfo_endpoint};
 
     unless ($userinfo_uri) {
         $self->lmLog( "UserInfo URI not found in $op configuration", 'error' );
@@ -1058,7 +1059,8 @@ sub getEndPointAuthenticationCredentials {
     if ( $authorization and $authorization =~ /^Basic (\w+)/i ) {
         $self->lmLog( "Method client_secret_basic used", 'debug' );
         eval {
-            ( $client_id, $client_secret ) = split( /:/, decode_base64($1) );
+            ( $client_id, $client_secret ) =
+              split( /:/, decode_base64($1) );
         };
         $self->lmLog( "Bad authentication header: $@", 'error' ) if ($@);
     }
@@ -1344,7 +1346,8 @@ sub buildLogoutResponse {
 sub createSessionState {
     my ( $self, $session_id, $client_id ) = @_;
 
-    my $salt = encode_base64url( $self->conf->{cipher}->encrypt($client_id) );
+    my $salt =
+      encode_base64url( $self->conf->{cipher}->encrypt($client_id) );
     my $data = $client_id . " " . $session_id . " " . $salt;
 
     my $hash = sha256_base64($data);

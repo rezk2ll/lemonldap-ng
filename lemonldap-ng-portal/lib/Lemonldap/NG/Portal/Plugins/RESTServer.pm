@@ -175,7 +175,7 @@ sub mysession {
 
     # 1. whoami
     if ( defined $req->param('whoami') ) {
-        return $self->p->sendJSONresponse( $res,
+        return $self->p->sendJSONresponse( $req,
             { result => $req->sessionInfo->{ $self->conf->{whatToTrace} } } );
     }
 

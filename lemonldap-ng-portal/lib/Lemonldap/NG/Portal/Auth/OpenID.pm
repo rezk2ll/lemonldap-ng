@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::Auth::OpenID;
 
 use strict;
 use Mouse;
-use WWW::Form::UrlEncoded qw/build_urlencoded/;
+use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Regexp;
 use Cache::FileCache;
 use Lemonldap::NG::Portal::Main::Constants qw(
