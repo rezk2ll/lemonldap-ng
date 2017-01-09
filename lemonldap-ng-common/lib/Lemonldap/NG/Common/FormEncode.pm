@@ -16,18 +16,13 @@ BEGIN {
         eval <<'EOT';
 sub build_urlencoded {
     my(%h)=@_;
-    my $v;
-    return join('&',map {$v=URI::Escape::uri_escape($h{$_});"$_=$v"} keys %h);
+    return join('&',map {my $v=URI::Escape::uri_escape($h{$_});"$_=$v"} keys %h);
 }
 EOT
     }
     else {
         require WWW::Form::UrlEncoded;
-        eval <<'EOT';
-sub build_urlencoded {
-    return WWW::Form::UrlEncoded::build_urlencoded(@_);
-}
-EOT
+        *build_urlencoded = \&WWW::Form::UrlEncoded::build_urlencoded;
     }
 }
 
