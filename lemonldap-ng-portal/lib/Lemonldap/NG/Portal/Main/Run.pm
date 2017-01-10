@@ -128,7 +128,7 @@ sub do {
         return $req->response;
     }
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
-        $self->lmLog('Processing to JSON response','debug');
+        $self->lmLog( 'Processing to JSON response', 'debug' );
         if ( $err > 0 and !%{ $req->sessionInfo } ) {
             return [
                 401,
@@ -170,11 +170,11 @@ sub do {
           )
         {
             my ( $tpl, $prms ) = $self->display($req);
-            $self->lmLog("Calling sendHtml with template $tpl",'debug');
+            $self->lmLog( "Calling sendHtml with template $tpl", 'debug' );
             return $self->sendHtml( $req, $tpl, params => $prms );
         }
         else {
-            $self->lmLog('Calling autoredirect','debug');
+            $self->lmLog( 'Calling autoredirect', 'debug' );
             return $self->autoRedirect($req);
         }
     }
@@ -229,7 +229,7 @@ sub autoRedirect {
         }
     }
     my ( $tpl, $prms ) = $self->display($req);
-    $self->lmLog("Calling sendHtml with template $tpl",'debug');
+    $self->lmLog( "Calling sendHtml with template $tpl", 'debug' );
     return $self->sendHtml( $req, $tpl, params => $prms );
 }
 
@@ -484,7 +484,8 @@ sub isTrustedUrl {
 
 sub stamp {
     my $self = shift;
-    my $res = $self->conf->{cipher} ? $self->conf->{cipher}->encrypt( time() ) : 1;
+    my $res =
+      $self->conf->{cipher} ? $self->conf->{cipher}->encrypt( time() ) : 1;
     $res =~ s/\+/%2B/g;
     return $res;
 }

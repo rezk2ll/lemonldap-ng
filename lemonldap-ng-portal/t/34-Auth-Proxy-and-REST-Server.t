@@ -7,7 +7,7 @@ BEGIN {
 }
 
 my $debug = 'error';
-my ( $issuer, $sp, $res );
+my ( $issuer, $sp, $res, $spId, $idpId );
 my %handlerOR = ( issuer => [], sp => [] );
 
 ok( $issuer = issuer(), 'Issuer portal' );
@@ -36,9 +36,117 @@ ok(
     'Post user/password'
 );
 expectRedirection( $res, 'http://auth.sp.com' );
-my $spId = expectCookie($res);
+$spId = expectCookie($res);
+
+# Test other REST queries
+switch ('issuer');
+
+# Session content
+ok( $res = $issuer->_get("/sessions/global/$idpId"), 'Session content' );
+expectOK($res);
+ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+  or print STDERR $@;
+ok( $res->{_session_id} eq $idpId, ' Good ID' )
+  or explain( $res, "_session_id => $idpId" );
+count(3);
+
+# Session key
+ok( $res = $issuer->_get("/sessions/global/$idpId/[_session_id,uid]"),
+    'Some session keys' );
+expectOK($res);
+ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+  or print STDERR $@;
+ok( $res->{_session_id} eq $idpId, ' Good ID' )
+  or explain( $res, "_session_id => $idpId" );
+ok( $res->{uid} eq 'dwho', ' Uid is dwho' ) or explain( $res, 'uid => dwho' );
+count(4);
+
+# New session
+ok(
+    $res = $issuer->_post(
+        '/sessions/global', IO::String->new('{"uid":"zz","_whatToTrace":"zz"}'),
+        length => 32,
+        type   => 'application/json'
+    ),
+    'Create session'
+);
+expectOK($res);
+ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+  or print STDERR $@;
+my $newId = $res->{sessionId};
+
+# Verify a key
+ok( $res = $issuer->_get("/sessions/global/$newId/uid"), 'Verify uid' );
+ok( $res->[2]->[0] eq 'zz', ' Uid is good' );
+count(4);
+
+# Update a key
+ok(
+    $res = $issuer->app->(
+        {
+            HTTP_ACCEPT            => 'application/json',
+            HTTP_ACCEPT_LANGUAGE   => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+            HTTP_HOST              => 'auth.idp.com',
+            PATH_INFO              => "/sessions/global/$newId",
+            REMOTE_ADDR            => '127.0.0.1',
+            REQUEST_METHOD         => 'PUT',
+            REQUEST_URI            => "/sessions/global/$newId",
+            SCRIPT_NAME            => '',
+            SERVER_NAME            => 'auth.example.com',
+            SERVER_PORT            => '80',
+            SERVER_PROTOCOL        => 'HTTP/1.1',
+            'psgix.input.buffered' => 0,
+            'psgi.input'           => IO::String->new('{"cn":"CN"}'),
+            CONTENT_TYPE           => 'application/json',
+            CONTENT_LENGTH         => 11,
+        }
+    ),
+    'Put a new key'
+);
+expectOK($res);
+ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+  or print STDERR $@;
+ok( $res->{result} == 1, ' Result is 1' );
+count(3);
+
+# Verify new key
+ok( $res = $issuer->_get("/sessions/global/$newId/cn"), 'Verify cn' );
+ok( $res->[2]->[0] eq 'CN', ' CN is good' );
+count(2);
+
+# Del new session
+ok(
+    $res = $issuer->app->(
+        {
+            HTTP_ACCEPT          => 'application/json',
+            HTTP_ACCEPT_LANGUAGE => 'fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3',
+            HTTP_HOST            => 'auth.idp.com',
+            PATH_INFO            => "/sessions/global/$newId",
+            REMOTE_ADDR          => '127.0.0.1',
+            REQUEST_METHOD       => 'DELETE',
+            REQUEST_URI          => "/sessions/global/$newId",
+            SCRIPT_NAME          => '',
+            SERVER_NAME          => 'auth.example.com',
+            SERVER_PORT          => '80',
+            SERVER_PROTOCOL      => 'HTTP/1.1',
+        }
+    ),
+    'Delete new session'
+);
+expectOK($res);
+ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
+  or print STDERR $@;
+ok( $res->{result} == 1, ' Result is 1' );
+count(3);
+
+# Verify that session is deleted
+ok( $res = $issuer->_get("/sessions/global/$newId/cn"),
+    'New session is deleted' );
+ok( $res->[0] == 400, ' Session does not exist' );
+count(2);
 
 # Logout
+switch ('sp');
 ok(
     $res = $sp->_get(
         '/',
@@ -88,7 +196,7 @@ sub LWP::UserAgent::request {
         );
         count(1);
         expectOK($res);
-        expectCookie($res);
+        $idpId = expectCookie($res);
     }
     else {
         ok(
@@ -134,6 +242,8 @@ sub issuer {
                 authentication    => 'Demo',
                 userDB            => 'Demo',
                 restSessionServer => 1,
+                restConfigServer  => 1,
+                whatToTrace       => '_whatToTrace',
             }
         }
     );
@@ -150,6 +260,7 @@ sub sp {
                 userDB           => 'Proxy',
                 proxyAuthService => 'http://auth.idp.com',
                 proxyUseSoap     => 0,
+                whatToTrace      => '_whatToTrace',
             },
         }
     );

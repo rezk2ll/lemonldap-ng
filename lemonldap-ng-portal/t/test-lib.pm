@@ -60,14 +60,14 @@ sub expectRedirection {
     else {
         ok( getRedirection($res) eq $location, " Location is $location" )
           or explain( $res->[1], "Location => $location" );
-count(1);
+        count(1);
     }
 }
 
 sub expectAutoPost {
-    my @r = expectForm(@_);
+    my @r      = expectForm(@_);
     my $method = pop @r;
-    ok ( $method =~ /^post$/i, ' Method is POST' ) or explain (\@r,'POST');
+    ok( $method =~ /^post$/i, ' Method is POST' ) or explain( \@r, 'POST' );
     count(1);
     return @r;
 }
@@ -79,15 +79,15 @@ sub expectForm {
     if (
         ok(
             $res->[2]->[0] =~
-              m@<form.+?action="(?:http://([^/]+)(/.*?)?|(#))".+method="(post|get)"@is,
+m@<form.+?action="(?:http://([^/]+)(/.*?)?|(#))".+method="(post|get)"@is,
             ' Page contains a form'
         )
       )
     {
         my ( $host, $uri, $hash, $method ) = ( $1, $2, $3, $4 );
-        if($hash and $hash eq '#') {
+        if ( $hash and $hash eq '#' ) {
             $host = '#';
-            $uri = '';
+            $uri  = '';
         }
         if ($hostRe) {
             if ( ref $hostRe ) {
@@ -109,8 +109,8 @@ sub expectForm {
             }
             count(1);
         }
-        my %fields = ( $res->[2]->[0] =~
-              m#<input.+?name="(.+?)".+?value="(.*?)"#gs );
+        my %fields =
+          ( $res->[2]->[0] =~ m#<input.+?name="(.+?)".+?value="(.*?)"#gs );
         my $query = join( '&',
             map { "$_=" . uri_escape( uri_unescape( $fields{$_} ) ) }
               keys(%fields) );
@@ -127,7 +127,8 @@ sub expectForm {
 
 sub expectAuthenticatedAs {
     my ( $res, $user ) = @_;
-    ok( getHeader( $res, 'Lm-Remote-User' ) eq $user, " Authenticated as $user" )
+    ok( getHeader( $res, 'Lm-Remote-User' ) eq $user,
+        " Authenticated as $user" )
       or explain( $res->[1], "Lm-Remote-User => $user" );
     count(1);
 }
@@ -234,10 +235,10 @@ has ini => (
             $ini->{$k} //= $defaultIni->{$k};
         }
         $self->{ini} = $ini;
-        main::ok($self->{p} = Lemonldap::NG::Portal::Main->new(),'Portal object');
-        main::ok($self->{p}->init($ini),'Init');
-        main::ok( $self->{app} = $self->{p}->run(),
-            'Portal app' );
+        main::ok( $self->{p} = Lemonldap::NG::Portal::Main->new(),
+            'Portal object' );
+        main::ok( $self->{p}->init($ini), 'Init' );
+        main::ok( $self->{app} = $self->{p}->run(), 'Portal app' );
         main::count(3);
         $self;
     }
@@ -265,7 +266,8 @@ sub logout {
     main::ok( $res = $self->_get( '/', cookie => "lemonldap=$id" ),
         'Disconnect request' )
       or explain( $res, '[<code>,<hdrs>,<content>]' );
-    main::ok( $res->[0] == 401, 'Response is 401' ) or main::explain( $res, 401 );
+    main::ok( $res->[0] == 401, 'Response is 401' )
+      or main::explain( $res, 401 );
     main::count(5);
 
 }

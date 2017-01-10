@@ -4,6 +4,7 @@
 # - Sessions (if restSessionServer is on)
 #   * GET /sessions/<type>/<session-id>          : get session datas
 #   * GET /sessions/<type>/<session-id>/<key>    : get a session key value
+#   * GET /sessions/<type>/<session-id>/[k1,k2]  : get some session key value
 #   * POST /sessions/<type>                      : create a session
 #   * PUT /sessions/<type>/<session-id>          : update some keys
 #   * DELETE /adminSessions/<type>/<session-id>  : delete a session
@@ -40,6 +41,36 @@ use MIME::Base64;
 our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Portal::Main::Plugin';
+
+has exportedAttr => (
+    is      => 'rw',
+    default => sub {
+        my $conf = $_[0]->{conf};
+        if ( $conf->{exportedAttr} and $conf->{exportedAttr} !~ /^\s*\+/ ) {
+            return [ split /\s+/, $conf->{exportedAttr} ];
+        }
+        else {
+            my @attributes = (
+                'authenticationLevel', 'groups',
+                'ipAddr',              'startTime',
+                '_utime',              '_lastSeen',
+                '_session_id',
+            );
+            if ( my $exportedAttr = $conf->{exportedAttr} ) {
+                $exportedAttr =~ s/^\s*\+\s+//;
+                @attributes = ( @attributes, split( /\s+/, $exportedAttr ) );
+            }
+
+            # convert @attributes into hash to remove duplicates
+            my %attributes = map( { $_ => 1 } @attributes );
+            %attributes =
+              ( %attributes, %{ $conf->{exportedVars} }, %{ $conf->{macros} },
+              );
+
+            return '[' . join( ',', keys %attributes ) . ']';
+        }
+    }
+);
 
 # INITIALIZATION
 
@@ -126,7 +157,8 @@ sub newSession {
           . $session->data->{ $self->conf->{whatToTrace} },
         'debug'
     );
-    return $self->p->sendJSONresponse( $req, { result => 1 } );
+    return $self->p->sendJSONresponse( $req,
+        { result => 1, sessionId => $session->data->{_session_id} } );
 }
 
 sub updateSession {
@@ -161,7 +193,7 @@ sub delSession {
 
     # Delete it
     $self->lmLog( "REST request to delete session $id", 'debug' );
-    my $res = $self->p->_deleteSession($session);
+    my $res = $self->p->_deleteSession( $req, $session );
     $self->lmLog( " Result is $res", 'debug' );
     return $self->p->sendJSONresponse( $req, { result => $res } );
 }
@@ -211,7 +243,11 @@ sub mysession {
 sub getMyKey {
     my ( $self, $req, $key ) = @_;
     $self->lmLog( 'Request to get personal session info', 'debug' );
-    return $self->session( $req, $req->userData->{_session_id}, $key );
+    return $self->session(
+        $req,
+        $req->userData->{_session_id},
+        $key || $self->exportedAttr
+    );
 }
 
 1;
