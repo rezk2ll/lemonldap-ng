@@ -1939,6 +1939,9 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'proxyAuthService' => {
             'type' => 'text'
         },
+        'proxySessionService' => {
+            'type' => 'text'
+        },
         'proxyUseSoap' => {
             'default' => 0,
             'type'    => 'bool'

@@ -11,7 +11,8 @@ our $VERSION = '2.0.0';
 
 sub init {
     my ($self) = @_;
-    $self->conf->{remoteCookieName} ||= $self->conf->{cookieName};
+    $self->conf->{remoteCookieName}    ||= $self->conf->{cookieName};
+    $self->conf->{proxySessionService} ||= $self->conf->{proxyAuthService};
 
     unless ( defined $self->conf->{proxyAuthService} ) {
         $self->error("Missing proxyAuthService parameter");
@@ -21,6 +22,8 @@ sub init {
 }
 
 # RUNNING METHODS
+
+no warnings 'once';
 
 *authenticate = *getUser;
 
@@ -59,8 +62,7 @@ sub getUser {
 sub setSessionInfo {
     my ( $self, $req ) = @_;
     return PE_OK if ( $req->datas->{_setSessionInfoDone} );
-    my $soap =
-      SOAP::Lite->proxy( $self->conf->{proxyAuthService} )
+    my $soap = SOAP::Lite->proxy( $self->conf->{proxySessionService} )
       ->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
     my $r = $soap->getAttributes( $req->datas->{_remoteId} );
     if ( $r->fault ) {

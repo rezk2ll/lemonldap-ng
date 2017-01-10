@@ -2004,9 +2004,10 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         },
 
         # Proxy
-        proxyAuthService => { type => 'text', },
-        remoteCookieName => { type => 'text', },
-        proxyUseSoap     => {
+        proxyAuthService    => { type => 'text', },
+        proxySessionService => { type => 'text', },
+        remoteCookieName    => { type => 'text', },
+        proxyUseSoap        => {
             type          => 'bool',
             default       => 0,
             documentation => 'Use SOAP instead of REST',
