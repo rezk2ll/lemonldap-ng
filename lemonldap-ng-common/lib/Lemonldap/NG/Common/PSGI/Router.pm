@@ -112,7 +112,11 @@ sub handler {
     }
 
     # Only words are taken in path
-    my @path = grep { $_ =~ /^[\.\w]+/ } split /\//, $req->path();
+    my $last = 0;
+    my @path = grep {
+        $last = 1 if ( $_ =~ /[^\.\w]/ );
+        ( $last or /^$/ ? 0 : 1 );
+    } split /\//, $req->path();
     $self->lmLog( "Start routing " . ( $path[0] // 'default route' ), 'debug' );
 
     if ( !@path and $self->defaultRoute ) {
@@ -136,7 +140,7 @@ sub followPath {
     }
     if ( $routes->{':'} ) {
         my $v = shift @$path;
-        $req->set_param($routes->{'#'}, $v);
+        $req->set_param( $routes->{'#'}, $v );
         if ( ref( $routes->{':'} ) eq 'CODE' ) {
             return $routes->{':'}->( $self, $req, @$path );
         }

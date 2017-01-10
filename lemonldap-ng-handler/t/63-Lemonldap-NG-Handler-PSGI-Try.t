@@ -62,6 +62,12 @@ ok( $res->[2]->[0] eq 'Auth', 'Get auth result' )
   or print "Expect Auth, got $res->[2]->[0]\n";
 count(3);
 
+# Pad path test
+
+ok($res = $client->_get('/[]/test'), 'Try a bad path');
+ok( $res->[0] == 400, 'Response is 400' );
+count(2);
+
 clean();
 
 done_testing( count() );
