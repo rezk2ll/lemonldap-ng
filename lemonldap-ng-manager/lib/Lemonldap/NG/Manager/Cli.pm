@@ -3,7 +3,7 @@ package Lemonldap::NG::Manager::Cli;
 use strict;
 use Mouse;
 use Data::Dumper;
-use Lemonldap::NG::Manager::Constants;
+use Lemonldap::NG::Common::Conf::ReConstants;
 
 extends('Lemonldap::NG::Manager::Cli::Lib');
 

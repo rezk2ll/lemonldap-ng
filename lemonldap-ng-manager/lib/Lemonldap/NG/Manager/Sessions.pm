@@ -9,7 +9,7 @@ use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Session;
 use Lemonldap::NG::Common::PSGI::Constants;
-use Lemonldap::NG::Manager::Constants;
+use Lemonldap::NG::Common::Conf::ReConstants;
 
 use feature 'state';
 

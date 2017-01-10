@@ -21,7 +21,7 @@ package Lemonldap::NG::Manager::Conf::Parser;
 use strict;
 use utf8;
 use Mouse;
-use Lemonldap::NG::Manager::Constants;
+use Lemonldap::NG::Common::Conf::ReConstants;
 use Lemonldap::NG::Manager::Attributes;
 
 our $VERSION = '2.0.0';

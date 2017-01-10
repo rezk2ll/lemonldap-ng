@@ -6,7 +6,7 @@ use Mouse;
 
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
-use Lemonldap::NG::Manager::Constants;
+use Lemonldap::NG::Common::Conf::ReConstants;
 use Lemonldap::NG::Common::Notifications;
 
 use feature 'state';

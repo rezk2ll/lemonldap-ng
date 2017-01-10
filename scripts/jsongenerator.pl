@@ -5,7 +5,7 @@ use Lemonldap::NG::Manager::Build;
 Lemonldap::NG::Manager::Build->run(
     structFile            => 'lemonldap-ng-manager/site/static/struct.json',
     confTreeFile          => 'lemonldap-ng-manager/site/static/js/conftree.js',
-    managerConstantsFile  => 'lemonldap-ng-manager/lib/Lemonldap/NG/Manager/Constants.pm',
+    managerConstantsFile  => 'lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/ReConstants.pm',
     managerAttributesFile => 'lemonldap-ng-manager/lib/Lemonldap/NG/Manager/Attributes.pm',
     defaultValuesFile     => 'lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm',
     confConstantsFile     => 'lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/Constants.pm',

@@ -190,7 +190,7 @@ MANAGERJSONSRC= scripts/jsongenerator.pl \
 MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		$(SRCMANAGERDIR)/site/static/js/conftree.js \
 		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Attributes.pm \
-		$(SRCMANAGERDIR)/lib/Lemonldap/NG/Manager/Constants.pm \
+		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/ReConstants.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/Constants.pm \
 		_example/conf/lmConf-1.js

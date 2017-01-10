@@ -180,7 +180,7 @@ the main file that contains the tree view;
 
 generates sub tree for virtualhosts and SAML and OpenID-Connect partners;
 
-=item `Lemonldap::NG::Manager::Constants`:
+=item `Lemonldap::NG::Common::Conf::ReConstants`:
 
 constants used by all Perl manager components;
 
