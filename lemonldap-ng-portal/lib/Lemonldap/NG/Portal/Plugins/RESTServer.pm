@@ -103,6 +103,7 @@ sub init {
         [ 'GET', 'POST' ]
     );
     extends @parents if ($add);
+    $self->setTypes( $self->conf ) if ( $self->conf->{restSessionServer} );
     return 1;
 }
 
@@ -167,7 +168,7 @@ sub delSession {
 
 sub delMySession {
     my ( $self, $req, $id ) = @_;
-    return $self->delSession( $req, $req->id );
+    return $self->delSession( $req, $req->userData->{_session_id} );
 }
 
 sub mysession {
@@ -176,7 +177,7 @@ sub mysession {
     # 1. whoami
     if ( defined $req->param('whoami') ) {
         return $self->p->sendJSONresponse( $req,
-            { result => $req->sessionInfo->{ $self->conf->{whatToTrace} } } );
+            { result => $req->userData->{ $self->conf->{whatToTrace} } } );
     }
 
     # Verify authorizationfor arg
@@ -209,7 +210,8 @@ sub mysession {
 
 sub getMyKey {
     my ( $self, $req, $key ) = @_;
-    return $self->session( $req, $req->id, $key );
+    $self->lmLog( 'Request to get personal session info', 'debug' );
+    return $self->session( $req, $req->userData->{_session_id}, $key );
 }
 
 1;

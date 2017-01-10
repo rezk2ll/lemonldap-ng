@@ -13,12 +13,12 @@ extends 'Lemonldap::NG::Portal::Auth::_WebForm';
 sub init {
     my ($self) = @_;
     if ( $self->conf->{proxyUseSoap} ) {
-        extends 'Lemonldap::NG::Portal::Auth::_WebForm',
-          'Lemonldap::NG::Portal::Lib::SOAPProxy';
+        extends 'Lemonldap::NG::Portal::Lib::SOAPProxy',
+          'Lemonldap::NG::Portal::Auth::_WebForm';
     }
     else {
-        extends 'Lemonldap::NG::Portal::Auth::_WebForm',
-          'Lemonldap::NG::Portal::Lib::RESTProxy';
+        extends 'Lemonldap::NG::Portal::Lib::RESTProxy',
+          'Lemonldap::NG::Portal::Auth::_WebForm';
     }
     return $self->SUPER::init();
 }
@@ -28,10 +28,6 @@ sub init {
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
     $req->{sessionInfo}->{authenticationLevel} = $self->conf->{proxyAuthnLevel};
-    PE_OK;
-}
-
-sub authLogout {
     PE_OK;
 }
 

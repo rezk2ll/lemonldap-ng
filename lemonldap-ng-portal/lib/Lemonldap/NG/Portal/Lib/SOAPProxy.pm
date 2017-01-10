@@ -84,4 +84,8 @@ sub setSessionInfo {
     PE_OK;
 }
 
+sub authLogout {
+    PE_OK;
+}
+
 1;
