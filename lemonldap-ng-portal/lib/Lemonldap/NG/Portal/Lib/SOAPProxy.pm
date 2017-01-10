@@ -1,4 +1,3 @@
-# Auth/Proxy.pm and UserDB/Proxy.pm simple inheritance of this package
 package Lemonldap::NG::Portal::Lib::SOAPProxy;
 
 use strict;
