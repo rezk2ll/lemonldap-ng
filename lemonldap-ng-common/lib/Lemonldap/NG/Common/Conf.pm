@@ -12,6 +12,10 @@ use utf8;
 no strict 'refs';
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
+# Import compacter
+use Lemonldap::NG::Common::Conf::Compact;
+*compactConf = \&Lemonldap::NG::Common::Conf::Compact::compactConf;
+
 # TODO: don't import this big file, use a proxy
 use Lemonldap::NG::Common::Conf::DefaultValues;    #inherits
 use Lemonldap::NG::Common::Crypto
@@ -169,6 +173,7 @@ sub getConf {
         unless ( ref( $self->{refLocalStorage} ) ) {
             $msg .= "Get remote configuration (localStorage unavailable).\n";
             $r = $self->getDBConf($args);
+            $self->compactConf($r);
         }
         else {
             eval { $r = $self->{refLocalStorage}->get('conf') }
@@ -205,6 +210,8 @@ sub getConf {
                 if ( defined $r->{whatToTrace} ) {
                     $r->{whatToTrace} =~ s/^\$//;
                 }
+
+                $self->compactConf($r);
 
                 # Store modified configuration in cache
                 $self->setLocalConf($r)

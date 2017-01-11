@@ -21,8 +21,10 @@ lib/Lemonldap/NG/Common/Conf/Backends/LDAP.pm
 lib/Lemonldap/NG/Common/Conf/Backends/MongoDB.pm
 lib/Lemonldap/NG/Common/Conf/Backends/RDBI.pm
 lib/Lemonldap/NG/Common/Conf/Backends/SOAP.pm
+lib/Lemonldap/NG/Common/Conf/Compact.pm
 lib/Lemonldap/NG/Common/Conf/Constants.pm
 lib/Lemonldap/NG/Common/Conf/DefaultValues.pm
+lib/Lemonldap/NG/Common/Conf/ReConstants.pm
 lib/Lemonldap/NG/Common/Conf/RESTServer.pm
 lib/Lemonldap/NG/Common/Conf/SAML/Metadata.pm
 lib/Lemonldap/NG/Common/Conf/Serializer.pm
