@@ -41,6 +41,11 @@ sub types {
                 foreach my $f (@cf) {
                     $s = "sub $f {1} $s";
                 }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55";
+                }
                 eval "$s $val";
                 return $@ ? ( 1, "__badExpression__: $@" ) : 1;
               }
@@ -811,6 +816,11 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     foreach my $f (@cf) {
                         $s = "sub $f {1} $s";
                     }
+
+                    BEGIN {
+                        ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55";
+                    }
                     eval $s;
                     return $@ ? ( 1, "__badExpression__: $@" ) : 1;
                   }
@@ -883,6 +893,11 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                 foreach my $f (@cf) {
                     $s = "sub $f {1} $s";
                 }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55";
+                }
                 eval "$s $val";
                 return $@ ? ( 1, "__badExpression__: $@" ) : 1;
             },
@@ -912,6 +927,11 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                   : ();
                 foreach my $f (@cf) {
                     $s = "sub $f {1} $s";
+                }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 return $@ ? ( 1, "__badExpression__: $@" ) : 1;
@@ -1232,6 +1252,11 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                     foreach my $f (@cf) {
                         $s = "sub $f {1} $s";
                     }
+
+                    BEGIN {
+                        ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55";
+                    }
                     eval $s;
                     return $@ ? ( 1, "__badExpression__: $@" ) : 1;
                   }
@@ -1272,6 +1297,11 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                   : ();
                 foreach my $f (@cf) {
                     $s = "sub $f {1} $s";
+                }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 return $@ ? ( 1, "__badExpression__: $@" ) : 1;
@@ -1905,6 +1935,11 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
                   : ();
                 foreach my $f (@cf) {
                     $s = "sub $f {1} $s";
+                }
+
+                BEGIN {
+                    ${^WARNING_BITS} =
+"\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
                 return $@ ? ( 1, "__badExpression__: $@" ) : 1;

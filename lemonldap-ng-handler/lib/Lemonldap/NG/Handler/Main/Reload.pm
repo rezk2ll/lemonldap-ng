@@ -31,7 +31,8 @@ sub onReload {
 # @return true if config is up to date or if reload config succeeded
 sub checkConf {
     my ( $class, $force ) = @_;
-    my $conf = $class->confAcc->getConf( { local => !$force } );
+    my $conf = $class->confAcc->getConf(
+        { local => !$force, localPrm => $class->localConfig } );
 
     unless ( ref($conf) ) {
         $class->lmLog(
@@ -51,8 +52,6 @@ sub checkConf {
             $class->lmLog( 'No configuration available', 'error' );
             return 0;
         }
-        $conf->{$_} = $class->localConfig->{$_}
-          foreach ( keys %{ $class->localConfig } );
         $class->configReload($conf);
     }
     $class->lmLog( "$class: configuration is up to date", 'debug' );

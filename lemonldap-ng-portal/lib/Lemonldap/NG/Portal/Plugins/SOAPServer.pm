@@ -265,7 +265,7 @@ sub setAttributes {
 
 sub getConfig {
     my ( $self, $req, $id ) = @_;
-    my $conf = $self->confAcc->getConf( { cfgNum => $id } )
+    my $conf = $self->confAcc->getConf( { raw => 1, cfgNum => $id } )
       or die("No configuration available");
     return $conf;
 }

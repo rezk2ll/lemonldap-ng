@@ -173,6 +173,8 @@ sub getConf {
         unless ( ref( $self->{refLocalStorage} ) ) {
             $msg .= "Get remote configuration (localStorage unavailable).\n";
             $r = $self->getDBConf($args);
+            return undef unless ($r->{cfgNum});
+            $self->setDefault( $r, $args->{localPrm} );
             $self->compactConf($r);
         }
         else {
@@ -192,25 +194,7 @@ sub getConf {
                 $r = $self->getDBConf($args);
                 return undef unless ( $r->{cfgNum} );
 
-                # Convert old option useXForwardedForIP into trustedProxies
-                if ( defined $r->{useXForwardedForIP}
-                    and $r->{useXForwardedForIP} == 1 )
-                {
-                    $r->{trustedProxies} = '*';
-                    delete $r->{useXForwardedForIP};
-                }
-
-                # Force Choice backend
-                if ( $r->{authentication} eq "Choice" ) {
-                    $r->{userDB}     = "Choice";
-                    $r->{passwordDB} = "Choice";
-                }
-
-            # Some parameters expect key name (example), not variable ($example)
-                if ( defined $r->{whatToTrace} ) {
-                    $r->{whatToTrace} =~ s/^\$//;
-                }
-
+                $self->setDefault( $r, $args->{localPrm} );
                 $self->compactConf($r);
 
                 # Store modified configuration in cache
@@ -224,13 +208,6 @@ sub getConf {
         # Create cipher object
         unless ( $args->{raw} ) {
 
-            # Set default values
-            my $defaultValues =
-              Lemonldap::NG::Common::Conf::DefaultValues->defaultValues();
-
-            foreach my $k ( keys %$defaultValues ) {
-                $r->{$k} //= $defaultValues->{$k};
-            }
             eval {
                 $r->{cipher} = Lemonldap::NG::Common::Crypto->new( $r->{key} );
             };
@@ -242,6 +219,42 @@ sub getConf {
         # Return configuration hash
         return $r;
     }
+}
+
+# Set default values
+sub setDefault {
+    my ( $self, $conf, $localPrm ) = @_;
+    my $defaultValues =
+      Lemonldap::NG::Common::Conf::DefaultValues->defaultValues();
+    if ( $localPrm and %$localPrm ) {
+        foreach my $k ( keys %$localPrm ) {
+            $conf->{$k} = $localPrm->{$k};
+        }
+    }
+    foreach my $k ( keys %$defaultValues ) {
+        $conf->{$k} //= $defaultValues->{$k};
+    }
+
+    # Convert old option useXForwardedForIP into trustedProxies
+    if ( defined $conf->{useXForwardedForIP}
+        and $conf->{useXForwardedForIP} == 1 )
+    {
+        $conf->{trustedProxies} = '*';
+        delete $conf->{useXForwardedForIP};
+    }
+
+    # Force Choice backend
+    if ( $conf->{authentication} eq "Choice" ) {
+        $conf->{userDB}     = "Choice";
+        $conf->{passwordDB} = "Choice";
+    }
+
+    # Some parameters expect key name (example), not variable ($example)
+    if ( defined $conf->{whatToTrace} ) {
+        $conf->{whatToTrace} =~ s/^\$//;
+    }
+
+    return $conf;
 }
 
 ## @method hashRef getLocalConf(string section, string file, int loaddefault)

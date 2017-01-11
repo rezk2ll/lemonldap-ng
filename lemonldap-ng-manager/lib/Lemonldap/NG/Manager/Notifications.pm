@@ -70,7 +70,8 @@ sub notifAccess {
     return $self->_notifAccess if ( $self->_notifAccess );
 
     # 1. Get notificationStorage or build it using globalStorage
-    my $conf = $self->_confAcc->getConf();
+    my $conf = $self->_confAcc->getConf(
+        { localPrm => $self->confAcc->getLocalConf(MANAGERSECTION) } );
     unless ($conf) {
         $self->error($Lemonldap::NG::Common::Conf::msg);
         return 0;

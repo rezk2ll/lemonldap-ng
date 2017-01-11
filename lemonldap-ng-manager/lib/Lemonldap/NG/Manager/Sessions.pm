@@ -39,13 +39,8 @@ sub addRoutes {
         ['DELETE']
       );
 
-    #TODO: transfer this in Manager.pm ?
-    if ( my $localConf = $self->confAcc->getLocalConf(SESSIONSEXPLORERSECTION) )
-    {
-        $self->{$_} = $localConf->{$_} foreach ( keys %$localConf );
-    }
-
-    my $conf = $self->confAcc->getConf();
+    my $conf = $self->confAcc->getConf(
+        { localPrm => $self->confAcc->getLocalConf(SESSIONSEXPLORERSECTION) } );
     #
     # Return unless configuration is available
     return 0 unless ($conf);

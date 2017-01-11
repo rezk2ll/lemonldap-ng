@@ -37,7 +37,7 @@ sub compactConf {
             }
         }
     }
-    foreach my $key (%$authParameters) {
+    foreach my $key (keys %$authParameters) {
         my $mod = $key;
         $mod =~ s/Params$//;
         unless ( $keep{$mod} ) {
@@ -47,22 +47,22 @@ sub compactConf {
 
     # Disabled for now:
 
-    ## Remove unused issuerDB parameters
-    #foreach my $k ( keys %$issuerParameters ) {
-    #    unless ( $conf->{ $k . "Activation" } ) {
-    #        delete $conf->{$_} foreach ( @{ $issuerParameters->{$k} } );
-    #    }
-    #}
+    # Remove unused issuerDB parameters
+    foreach my $k ( keys %$issuerParameters ) {
+        unless ( $conf->{ $k . "Activation" } ) {
+            delete $conf->{$_} foreach ( @{ $issuerParameters->{$k} } );
+        }
+    }
 
-    ## Remove SAML service unless used
-    #unless ( $keep{saml} or $conf->{issuerDBSAMLActivation} ) {
-    #    delete $conf->{$_} foreach (@$samlServiceParameters);
-    #}
+    # Remove SAML service unless used
+    unless ( $keep{saml} or $conf->{issuerDBSAMLActivation} ) {
+        delete $conf->{$_} foreach (@$samlServiceParameters);
+    }
 
-    ## Remove OpenIF-Connect service unless used
-    #unless ( $keep{oidc} or $conf->{issuerDBOpenIDConnectActivation} ) {
-    #    delete $conf->{$_} foreach (@$oidcServiceParameters);
-    #}
+    # Remove OpenID-Connect service unless used
+    unless ( $keep{oidc} or $conf->{issuerDBOpenIDConnectActivation} ) {
+        delete $conf->{$_} foreach (@$oidcServiceParameters);
+    }
     return $conf;
 }
 

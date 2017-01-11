@@ -285,17 +285,6 @@
         "id": "captchaStorage",
         "title": "captchaStorage",
         "data": "Apache::Session::File"
-      }, {
-        "default": [{
-          "data": "/var/lib/lemonldap-ng/captcha/",
-          "id": "captchaStorageOptions/Directory",
-          "title": "Directory",
-          "type": "keyText"
-        }],
-        "id": "captchaStorageOptions",
-        "title": "captchaStorageOptions",
-        "type": "keyTextContainer",
-        "nodes": []
       }]
     }]
   }, {
@@ -1353,37 +1342,6 @@
         "id": "localSessionStorage",
         "title": "localSessionStorage",
         "data": "Cache::FileCache"
-      }, {
-        "default": [{
-          "data": 3,
-          "id": "localSessionStorageOptions/cache_depth",
-          "title": "cache_depth",
-          "type": "keyText"
-        }, {
-          "data": "/tmp",
-          "id": "localSessionStorageOptions/cache_root",
-          "title": "cache_root",
-          "type": "keyText"
-        }, {
-          "data": 600,
-          "id": "localSessionStorageOptions/default_expires_in",
-          "title": "default_expires_in",
-          "type": "keyText"
-        }, {
-          "data": "007",
-          "id": "localSessionStorageOptions/directory_umask",
-          "title": "directory_umask",
-          "type": "keyText"
-        }, {
-          "data": "lemonldap-ng-sessions",
-          "id": "localSessionStorageOptions/namespace",
-          "title": "namespace",
-          "type": "keyText"
-        }],
-        "id": "localSessionStorageOptions",
-        "title": "localSessionStorageOptions",
-        "type": "keyTextContainer",
-        "nodes": []
       }]
     }, {
       "id": "multipleSessions",

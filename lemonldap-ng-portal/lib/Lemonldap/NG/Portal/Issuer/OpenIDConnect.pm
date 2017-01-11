@@ -1139,7 +1139,7 @@ sub registration {
     my $redirect_uris = $client_metadata->{redirect_uris};
 
     # Register RP in global configuration
-    my $conf = $self->confAcc->getConf();
+    my $conf = $self->confAcc->getConf( { raw => 1 } );
 
     $conf->{cfgAuthor}   = "OpenID Connect Registration ($client_name)";
     $conf->{cfgAuthorIP} = $source_ip;
@@ -1227,7 +1227,7 @@ sub checkSession {
         $req,
         '../common/oidc_checksession',
         params => {
-            COOKIENAME   => $self->conf->{cookieName},
+            COOKIENAME => $self->conf->{cookieName},
         }
     );
 }

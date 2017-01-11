@@ -96,12 +96,12 @@ sub check {
     unless ( $self->newConf ) {
         return 0 unless ( $self->scanTree );
     }
-    $self->compactConf( $self->newConf );
     unless ( $self->testNewConf ) {
         hdebug("  testNewConf() failed");
         return 0;
     }
     hdebug("  tests succeed");
+    $self->compactConf( $self->newConf );
     unless ( $self->confChanged ) {
         hdebug("  no changes detected");
         $self->message('__confNotChanged__');

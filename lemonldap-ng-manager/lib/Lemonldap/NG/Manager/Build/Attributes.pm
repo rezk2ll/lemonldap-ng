@@ -25,6 +25,7 @@ my $perlExpr = sub {
     foreach my $f (@cf) {
         $s = "sub $f {1} $s";
     }
+    no warnings 'redefine';
     eval "$s $val";
     return $@ ? ( 1, "__badExpression__: $@" ) : (1);
 };
@@ -1010,6 +1011,7 @@ sub attributes {
                     foreach my $f (@cf) {
                         $s = "sub $f {1} $s";
                     }
+                    no warnings 'redefine';
                     eval $s;
                     return $@ ? ( 1, "__badExpression__: $@" ) : (1);
                 },
@@ -1043,6 +1045,7 @@ sub attributes {
                     foreach my $f (@cf) {
                         $s = "sub $f {1} $s";
                     }
+                    no warnings 'redefine';
                     eval $s;
                     return $@ ? ( 1, "__badExpression__: $@" ) : (1);
                   }
