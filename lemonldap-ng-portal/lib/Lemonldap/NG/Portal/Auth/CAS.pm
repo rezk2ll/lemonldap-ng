@@ -60,7 +60,9 @@ sub extractFormInfo {
         my $url_param = 'url=' . uri_escape( $req->datas->{_url} );
         $local_url .= ( $local_url =~ /\?/ ? '&' : '?' ) . $url_param;
     }
-    if ( my $tmp = $req->param( $self->conf->{authChoiceParam} ) ) {
+    if ( $self->conf->{authChoiceParam}
+        and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
+    {
         my $url_param = $self->conf->{authChoiceParam} . '=' . uri_escape($tmp);
         $local_url .= ( $local_url =~ /\?/ ? '&' : '?' ) . $url_param;
     }
@@ -84,7 +86,9 @@ sub extractFormInfo {
         $self->lmLog( "CAS: Proxy mode activated", 'debug' );
         my $proxy_url = $self->p->fullUrl($req) . '?casProxy=1';
 
-        if ( my $tmp = $req->param( $self->conf->{authChoiceParam} ) ) {
+        if ( $self->conf->{authChoiceParam}
+            and my $tmp = $req->param( $self->conf->{authChoiceParam} ) )
+        {
             $proxy_url .= '&' . $self->conf->{authChoiceParam} . "=$tmp";
         }
 

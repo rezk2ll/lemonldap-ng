@@ -150,9 +150,10 @@ sub extractFormInfo {
               . build_urlencoded(
                 ( $req->datas->{_url} ? ( url => $req->datas->{_url} ) : () ),
                 (
-                    $req->param( $self->conf->{authChoiceParam} )
+                    $self->conf->{authChoiceParam}
+                      and $req->param( $self->conf->{authChoiceParam} )
                     ? ( $self->conf->{authChoiceParam} =>
-                          $req->param( $self->{authChoiceParam} ) )
+                          $req->param( $self->conf->{authChoiceParam} ) )
                     : ()
                 )
               ),
@@ -162,16 +163,22 @@ sub extractFormInfo {
 
         # If UserDB uses OpenID, add "OpenID Simple Registration Extension"
         # compatible fields
-        if ( $self->p->getModule($req,'user') eq 'OpenID' ) {
+        if ( $self->p->getModule( $req, 'user' ) eq 'OpenID' ) {
             my ( @r, @o );
-            my %vars = ( %{ $self->conf->{exportedVars} }, %{ $self->conf->{openIdExportedVars} } );
+            my %vars = (
+                %{ $self->conf->{exportedVars} },
+                %{ $self->conf->{openIdExportedVars} }
+            );
             while ( my ( $v, $k ) = each %vars ) {
                 if ( $k =~ Lemonldap::NG::Common::Regexp::OPENIDSREGATTR() ) {
                     if   ( $v =~ s/^!// ) { push @r, $k }
                     else                  { push @o, $k }
                 }
                 else {
-                    $self->lmLog( qq'Unknown "OpenID Simple Registration Extension" field name: $k', 'warn');
+                    $self->lmLog(
+qq'Unknown "OpenID Simple Registration Extension" field name: $k',
+                        'warn'
+                    );
                 }
             }
             my @tmp;
@@ -190,7 +197,8 @@ sub authenticate {
 
 sub setAuthSessionInfo {
     my ( $self, $req ) = @_;
-    $req->{sessionInfo}->{authenticationLevel} = $self->conf->{openIdAuthnLevel};
+    $req->{sessionInfo}->{authenticationLevel} =
+      $self->conf->{openIdAuthnLevel};
     PE_OK;
 }
 

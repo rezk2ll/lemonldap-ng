@@ -214,7 +214,9 @@ sub getCallbackUri {
       : '?' . $callback_get_param . '=1';
 
     # Use authChoiceParam in redirect URL
-    if ( $req->param( $self->conf->{authChoiceParam} ) ) {
+    if (    $self->conf->{authChoiceParam}
+        and $req->param( $self->conf->{authChoiceParam} ) )
+    {
         $callback_uri .= '&'
           . build_urlencoded( $self->{authChoiceParam} =>
               $req->param( $self->conf->{authChoiceParam} ) );
