@@ -196,7 +196,7 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		_example/conf/lmConf-1.js
 
 # Javascript and CSS to minify
-JSSRCFILES:=$(shell find */site/static/js $(SRCPORTALDIR)/site/htdocs/static/common/js -type f -name '*.js' ! -name '*.min.js') \
+JSSRCFILES:=$(shell find */site/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
 		$(SRCMANAGERDIR)/site/static/bwr/file-saver.js/FileSaver.js
 CSSSRCFILES:=$(shell find */site/static/css  $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.css' ! -name '*.min.css')
 
