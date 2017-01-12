@@ -591,16 +591,8 @@ function templates(tpl,key) {
                   "v" : "Redirect"
                },
                {
-                  "k" : "http-soap",
-                  "v" : "SOAP"
-               },
-               {
                   "k" : "artifact-get",
                   "v" : "Artifact GET"
-               },
-               {
-                  "k" : "artifact-post",
-                  "v" : "Artifact POST"
                }
             ],
             "title" : "samlIDPMetaDataOptionsSSOBinding",
@@ -626,14 +618,6 @@ function templates(tpl,key) {
                {
                   "k" : "http-soap",
                   "v" : "SOAP"
-               },
-               {
-                  "k" : "artifact-get",
-                  "v" : "Artifact GET"
-               },
-               {
-                  "k" : "artifact-post",
-                  "v" : "Artifact POST"
                }
             ],
             "title" : "samlIDPMetaDataOptionsSLOBinding",

@@ -2308,14 +2308,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                 {
                     'k' => 'http-soap',
                     'v' => 'SOAP'
-                },
-                {
-                    'k' => 'artifact-get',
-                    'v' => 'Artifact GET'
-                },
-                {
-                    'k' => 'artifact-post',
-                    'v' => 'Artifact POST'
                 }
             ],
             'type' => 'select'
@@ -2336,16 +2328,8 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
                     'v' => 'Redirect'
                 },
                 {
-                    'k' => 'http-soap',
-                    'v' => 'SOAP'
-                },
-                {
                     'k' => 'artifact-get',
                     'v' => 'Artifact GET'
-                },
-                {
-                    'k' => 'artifact-post',
-                    'v' => 'Artifact POST'
                 }
             ],
             'type' => 'select'
