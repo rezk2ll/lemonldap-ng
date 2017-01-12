@@ -24,9 +24,13 @@ sub build_jail {
     my ( $self, $api ) = @_;
 
     return $self->jail
-      if ( $self->jail
-        && $self->jail->useSafeJail == $self->useSafeJail
-        && $self->jail->customFunctions == $self->customFunctions );
+      if (  $self->jail
+        and $self->jail->useSafeJail
+        and $self->jail->customFunctions
+        and $self->useSafeJail
+        and $self->customFunctions
+        and $self->jail->useSafeJail == $self->useSafeJail
+        and $self->jail->customFunctions == $self->customFunctions );
 
     $self->useSafeJail(1) unless defined $self->useSafeJail;
 

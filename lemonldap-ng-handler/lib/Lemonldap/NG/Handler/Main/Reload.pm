@@ -205,9 +205,13 @@ sub defaultValuesInit {
             my $name = 'vhost' . ucfirst($opt);
             foreach my $vhost ( keys %{ $conf->{vhostOptions} } ) {
                 my $val = $conf->{vhostOptions}->{$vhost}->{$name};
-                $class->lmLog( "Options $opt for vhost $vhost: $val", 'debug' );
-                $class->tsv->{$opt}->{$vhost} = $val
-                  if ( $val >= 0 );    # Keep default value if $val is negative
+
+                # Keep default value if $val is negative
+                if ( defined $val and $val >= 0 ) {
+                    $class->lmLog( "Options $opt for vhost $vhost: $val",
+                        'debug' );
+                    $class->tsv->{$opt}->{$vhost} = $val;
+                }
             }
         }
     }
@@ -332,7 +336,7 @@ sub headersInit {
     foreach my $vhost ( keys %{ $conf->{exportedHeaders} } ) {
         my %headers = %{ $conf->{exportedHeaders}->{$vhost} };
         $class->tsv->{headerList}->{$vhost} = [ keys %headers ];
-        my $sub;
+        my $sub = '';
         foreach ( keys %headers ) {
             my $val = $class->substitute( $headers{$_} );
             $sub .= "('$_' => $val),";
