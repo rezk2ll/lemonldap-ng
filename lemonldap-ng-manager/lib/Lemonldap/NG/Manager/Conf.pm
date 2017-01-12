@@ -317,6 +317,9 @@ sub applyConf {
     my ( $self, $newConf ) = @_;
     my $status;
 
+    # 1 Apply conf locally
+    $self->api->checkConf();
+
     # Get apply section values
     my %reloadUrls =
       %{ $self->confAcc->getLocalConf( APPLYSECTION, undef, 0 ) };
