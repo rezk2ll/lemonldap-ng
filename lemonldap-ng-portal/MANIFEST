@@ -94,11 +94,7 @@ lib/Lemonldap/NG/Portal/Password/Base.pm
 lib/Lemonldap/NG/Portal/Password/DBI.pm
 lib/Lemonldap/NG/Portal/Password/Demo.pm
 lib/Lemonldap/NG/Portal/Password/LDAP.pm
-lib/Lemonldap/NG/Portal/PasswordDBAD.pm
 lib/Lemonldap/NG/Portal/PasswordDBChoice.pm
-lib/Lemonldap/NG/Portal/PasswordDBDBI.pm
-lib/Lemonldap/NG/Portal/PasswordDBLDAP.pm
-lib/Lemonldap/NG/Portal/PasswordDBNull.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuth.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
