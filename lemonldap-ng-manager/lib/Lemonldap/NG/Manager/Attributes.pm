@@ -2380,11 +2380,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;#PORTAL#/saml/singleSignOn;',
             'type' => 'samlService'
         },
-        'samlIDPSSODescriptorSingleSignOnServiceSOAP' => {
-            'default' =>
-'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleSignOnSOAP;',
-            'type' => 'samlService'
-        },
         'samlIDPSSODescriptorWantAuthnRequestsSigned' => {
             'default' => 1,
             'type'    => 'bool'

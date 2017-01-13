@@ -129,7 +129,6 @@ sub serviceToXML {
       samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect
       samlIDPSSODescriptorSingleSignOnServiceHTTPPost
       samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact
-      samlIDPSSODescriptorSingleSignOnServiceSOAP
       samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect
       samlIDPSSODescriptorSingleLogoutServiceHTTPPost
       samlIDPSSODescriptorSingleLogoutServiceSOAP
@@ -254,9 +253,6 @@ __DATA__
       <TMPL_IF NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPArtifactResponseLocation">
       ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPArtifactResponseLocation">"
       </TMPL_IF>/>
-    <SingleSignOnService
-      Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceSOAPBinding">"
-      Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceSOAPLocation">" />
   </IDPSSODescriptor>
 
   <SPSSODescriptor

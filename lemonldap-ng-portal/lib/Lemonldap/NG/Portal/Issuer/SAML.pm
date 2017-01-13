@@ -27,10 +27,6 @@ sub init {
     my ($self) = @_;
 
     # Prepare SSO URL catching
-    my $saml_sso_soap_url =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 1 );
-    my $saml_sso_soap_url_ret =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 2 );
     my $saml_sso_get_url = $self->getMetaDataURL(
         "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 1 );
     my $saml_sso_get_url_ret = $self->getMetaDataURL(
@@ -46,7 +42,7 @@ sub init {
     my $saml_sso_art_url_ret = $self->getMetaDataURL(
         "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 2 );
     $self->ssoUrlRe(
-qr/^($saml_sso_soap_url|$saml_sso_soap_url_ret|$saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)(?:\?.*)?$/i
+qr/^($saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)(?:\?.*)?$/i
     );
 
     # Launch parents initialization subroutines, then launch IdP en SP lists

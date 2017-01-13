@@ -759,7 +759,6 @@
 "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect": "Redirection HTTP",
 "samlIDPSSODescriptorSingleSignOnServiceHTTPPost": "POST HTTP",
 "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact": "HTTP Artifact",
-"samlIDPSSODescriptorSingleSignOnServiceSOAP": "SOAP",
 "samlIDPSSODescriptorSingleLogoutService": "Single Logout",
 "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect": "Redirection HTTP",
 "samlIDPSSODescriptorSingleLogoutServiceHTTPPost": "POST HTTP",

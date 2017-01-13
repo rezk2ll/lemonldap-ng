@@ -2257,12 +2257,6 @@
         "title": "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact",
         "type": "samlService",
         "data": ["urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact", "#PORTAL#/saml/singleSignOnArtifact", ""]
-      }, {
-        "default": "urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleSignOnSOAP;",
-        "id": "samlIDPSSODescriptorSingleSignOnServiceSOAP",
-        "title": "samlIDPSSODescriptorSingleSignOnServiceSOAP",
-        "type": "samlService",
-        "data": ["urn:oasis:names:tc:SAML:2.0:bindings:SOAP", "#PORTAL#/saml/singleSignOnSOAP", ""]
       }]
     }, {
       "id": "samlIDPSSODescriptorSingleLogoutService",

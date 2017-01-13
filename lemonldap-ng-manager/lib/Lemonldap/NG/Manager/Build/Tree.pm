@@ -784,7 +784,6 @@ sub tree {
 'samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect',
 'samlIDPSSODescriptorSingleSignOnServiceHTTPPost',
 'samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact',
-                                'samlIDPSSODescriptorSingleSignOnServiceSOAP'
                             ]
                         },
                         {

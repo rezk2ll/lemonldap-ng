@@ -1378,12 +1378,6 @@ sub attributes {
               . '#PORTAL#/saml/singleSignOnArtifact;',
             documentation => 'SAML IDP SSO HTTP Artifact',
         },
-        samlIDPSSODescriptorSingleSignOnServiceSOAP => {
-            type    => 'samlService',
-            default => 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-              . '#PORTAL#/saml/singleSignOnSOAP;',
-            documentation => 'SAML IDP SSO SOAP',
-        },
         samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect => {
             type    => 'samlService',
             default => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'

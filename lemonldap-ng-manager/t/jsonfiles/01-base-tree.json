@@ -1823,11 +1823,6 @@
         "id": "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact",
         "title": "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact",
         "type": "samlService"
-      }, {
-        "default": "urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/singleSignOnSOAP;",
-        "id": "samlIDPSSODescriptorSingleSignOnServiceSOAP",
-        "title": "samlIDPSSODescriptorSingleSignOnServiceSOAP",
-        "type": "samlService"
       }],
       "id": "samlIDPSSODescriptorSingleSignOnService",
       "title": "samlIDPSSODescriptorSingleSignOnService"
