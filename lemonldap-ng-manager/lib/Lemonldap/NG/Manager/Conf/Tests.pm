@@ -248,12 +248,12 @@ sub tests {
 
             # Use SMTP
             eval "use Net::SMTP";
-            return ( 0, "Net::SMTP module is required to use SMTP server" )
+            return ( 1, "Net::SMTP module is required to use SMTP server" )
               if ($@);
 
             # Create SMTP object
             my $smtp = Net::SMTP->new( $conf->{SMTPServer} );
-            return ( 0,
+            return ( 1,
                 "SMTP connection to " . $conf->{SMTPServer} . " failed" )
               unless ($smtp);
 
@@ -262,12 +262,35 @@ sub tests {
               unless ( $conf->{SMTPAuthUser} and $conf->{SMTPAuthPass} );
 
             # Try authentication
-            return ( 0, "SMTP authentication failed" )
+            return ( 1, "SMTP authentication failed" )
               unless $smtp->auth( $conf->{SMTPAuthUser},
                 $conf->{SMTPAuthPass} );
 
             # Return
             return 1;
+        },
+
+        # SAML entity ID must be uniq
+        samlIDPEntityIdUniqueness => sub {
+            return 1 unless ($conf->{samlIDPMetaDataXML} and %{$conf->{samlIDPMetaDataXML}});
+            my @msg;
+            my $res = 1;
+            my %entityIds;
+            foreach my $idpId (keys %{$conf->{samlIDPMetaDataXML}}) {
+                unless($conf->{samlIDPMetaDataXML}->{$idpId}->{samlIDPMetaDataXML} =~ /entityID="(.+?)"/si) {
+                    push @msg, "$idpId SAML metadata has ne EntityID";
+                    $res = 0;
+                    next;
+                }
+                my $eid = $1;
+                if(defined $entityIds{$eid}) {
+                    push @msg, "$idpId and $entityIds{$eid} have the same SAML EntityID";
+                    $res = 0;
+                    next;
+                }
+                $entityIds{$eid} = $idpId;
+            }
+            return ($res, join(', ',@msg));
         },
     };
 }
