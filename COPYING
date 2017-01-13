@@ -78,6 +78,10 @@ Files: lemonldap-ng-portal/site/static/bwr/jquery.cookie/*
 Copyright: 2010, Klaus Hartl (stilbuero.de)
 License: Expat
 
+Files: lemonldap-ng-portal/site/htdocs/static/bwr/fingerprintjs2/*
+Copyright: 2015, Valentin Vasilyev <valentin.vasilyev@outlook.com>
+Licence: Expat or Apache-2.0
+
 Files: *jquery.base64.js
 Copyright: Muhammad Hussein Fattahizadeh <muhammad@semnanweb.com>
 License: GPL-2+

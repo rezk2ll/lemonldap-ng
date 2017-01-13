@@ -161,6 +161,8 @@ site/htdocs/static/bwr/crypto-js/enc-base64.js
 site/htdocs/static/bwr/crypto-js/enc-base64.min.js
 site/htdocs/static/bwr/crypto-js/sha256.js
 site/htdocs/static/bwr/crypto-js/sha256.min.js
+site/htdocs/static/bwr/fingerprintjs2/fingerprint2.js
+site/htdocs/static/bwr/fingerprintjs2/fingerprint2.min.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.js
 site/htdocs/static/bwr/jquery-ui/jquery-ui.min.js
 site/htdocs/static/bwr/jquery.cookie/jquery.cookie.js
