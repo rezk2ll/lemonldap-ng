@@ -843,15 +843,15 @@ sub extractFormInfo {
         $req->datas->{confirmRemember} = 1;
 
         # Delete existing IDP resolution cookie
-        push @{ $req->respHeaders },
-          'Set-Cookie' => $self->p->cookie(
-            name    => $self->conf->{samlIdPResolveCookie},
-            value   => 0,
-            domain  => $self->conf->{domain},
-            path    => "/",
-            secure  => 0,
-            expires => '-1d',
-          );
+        $req->addCookie(
+            $self->p->cookie(
+                name    => $self->conf->{samlIdPResolveCookie},
+                value   => 0,
+                domain  => $self->conf->{domain},
+                secure  => 0,
+                expires => '-1d',
+            )
+        );
 
         #TODO: check this
         $req->datas->{login} = 1;
@@ -898,16 +898,15 @@ sub extractFormInfo {
         # User can choose temporary (0) or persistent cookie (1)
         my $cookie_type = $req->param("cookie_type") || "0";
 
-        push @{ $req->{respHeaders} },
-          'Set-Cookie' => $self->p->cookie(
-            name     => $self->conf->{samlIdPResolveCookie},
-            value    => $idp,
-            domain   => $self->conf->{domain},
-            path     => "/",
-            secure   => $self->conf->{securedCookie},
-            HttpOnly => $self->conf->{httpOnly},
-            expires  => $cookie_type ? "+365d" : "",
-          );
+        $req->addCookie(
+            $self->p->cookie(
+                name    => $self->conf->{samlIdPResolveCookie},
+                value   => $idp,
+                domain  => $self->conf->{domain},
+                secure  => $self->conf->{securedCookie},
+                expires => $cookie_type ? "+365d" : "",
+            )
+        );
     }
 
     # 3. Build authentication request

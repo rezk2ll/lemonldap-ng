@@ -437,30 +437,30 @@ sub _deleteSession {
         }
 
         # Create an obsolete cookie to remove it
-        push @{ $req->respHeaders },
-          'Set-Cookie' => $self->cookie(
-            name    => $self->conf->{cookieName} . 'http',
-            value   => 0,
-            domain  => $self->conf->{domain},
-            path    => "/",
-            secure  => 0,
-            expires => '-1d',
-          ) unless ($preserveCookie);
+        $req->addCookie(
+            $self->cookie(
+                name    => $self->conf->{cookieName} . 'http',
+                value   => 0,
+                domain  => $self->conf->{domain},
+                secure  => 0,
+                expires => '-1d',
+            )
+        ) unless ($preserveCookie);
     }
 
     HANDLER->localUnlog( $session->id );
     $session->remove;
 
     # Create an obsolete cookie to remove it
-    push @{ $req->respHeaders },
-      'Set-Cookie' => $self->cookie(
-        name    => $self->conf->{cookieName},
-        value   => 0,
-        domain  => $self->conf->{domain},
-        path    => "/",
-        secure  => 0,
-        expires => '-1d',
-      ) unless ($preserveCookie);
+    $req->addCookie(
+        $self->cookie(
+            name    => $self->conf->{cookieName},
+            value   => 0,
+            domain  => $self->conf->{domain},
+            secure  => 0,
+            expires => '-1d',
+        )
+    ) unless ($preserveCookie);
 
     # Log
     my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
@@ -604,6 +604,31 @@ sub fullUrl {
     my $pHost = $self->conf->{portal};
     $pHost =~ s#^(https?://[^/]+)(?:/.*)?$#$1#;
     return $pHost . $req->uri;
+}
+
+sub cookie {
+    my ( $self, %h ) = @_;
+    my @res;
+    $res[0] = "$h{name}" or die("name required");
+    $res[0] .= "=$h{value}";
+    $h{path} ||= '/';
+    $h{HttpOnly} //= $self->conf->{httpOnly};
+    $h{expires}  //= $self->conf->{cookieExpiration};
+    foreach (qw(domain path expires max_age HttpOnly)) {
+        my $f = $_;
+        $f =~ s/_/-/g;
+        push @res, "$f=$h{$_}" if ( $h{$_} );
+    }
+    push @res, 'secure' if($h{secure});
+    return join( '; ', @res );
+}
+
+sub _dump {
+    my ( $self, $variable ) = @_;
+    require Data::Dumper;
+    $Data::Dumper::Indent = 0;
+    $self->lmLog( "Dump: " . Data::Dumper::Dumper($variable), 'debug' );
+    return;
 }
 
 1;

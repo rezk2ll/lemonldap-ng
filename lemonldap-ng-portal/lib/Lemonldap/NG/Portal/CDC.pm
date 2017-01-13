@@ -114,12 +114,14 @@ sub handler {
             'debug' );
 
         # Build cookie
-        push @{ $req->respHeaders },
-            'Set-Cookie' => $self->cdc_name
-          . "=$cdc_cookie; domain=$cdc_domain; path=/; secure=1; HttpOnly="
-          . $self->httpOnly
-          . "; expires="
-          . $self->cookieExpiration;
+        $req->addCookie(
+            $self->p->cookie(
+                name   => $self->cdc_name,
+                value  => $cdc_cookie,
+                domain => $cdc_domain,
+                secure => 1
+            )
+        );
     }
 
     # Read request

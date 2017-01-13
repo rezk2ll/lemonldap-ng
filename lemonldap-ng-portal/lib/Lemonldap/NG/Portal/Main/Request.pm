@@ -114,6 +114,11 @@ sub info {
     return $self->datas->{_info};
 }
 
+sub addCookie {
+    my ( $self, $cookie ) = @_;
+    push @{ $self->respHeaders }, 'Set-Cookie' => $cookie;
+}
+
 # TODO: oldpassword
 1;
 __END__

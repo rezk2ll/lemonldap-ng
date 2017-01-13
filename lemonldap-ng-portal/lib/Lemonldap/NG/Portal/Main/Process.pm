@@ -255,15 +255,15 @@ sub extractFormInfo {
     elsif ( $ret == PE_FIRSTACCESS
         and $req->cookies->{ $self->conf->{cookieName} } )
     {
-        push @{ $req->respHeaders },
-          'Set-Cookie' => $self->cookie(
-            name    => $self->conf->{cookieName},
-            value   => 0,
-            domain  => $self->conf->{domain},
-            path    => "/",
-            secure  => 0,
-            expires => '-1d',
-          );
+        $req->addCookie(
+            $self->cookie(
+                name    => $self->conf->{cookieName},
+                value   => 0,
+                domain  => $self->conf->{domain},
+                secure  => 0,
+                expires => '-1d',
+            )
+        );
         return PE_SESSIONEXPIRED;
     }
     return $ret;
@@ -449,50 +449,25 @@ sub store {
 
 sub buildCookie {
     my ( $self, $req ) = @_;
-    push @{ $req->respHeaders },
-      'Set-Cookie' => $self->cookie(
-        name     => $self->conf->{cookieName},
-        value    => $req->{id},
-        domain   => $self->conf->{domain},
-        path     => "/",
-        secure   => $self->conf->{securedCookie},
-        HttpOnly => $self->conf->{httpOnly},
-        expires  => $self->conf->{cookieExpiration},
-      );
+    $req->addCookie(
+        $self->cookie(
+            name   => $self->conf->{cookieName},
+            value  => $req->{id},
+            domain => $self->conf->{domain},
+            secure => $self->conf->{securedCookie},
+        )
+    );
     if ( $self->conf->{securedCookie} >= 2 ) {
-        push @{ $req->respHeaders },
-          'Set-Cookie' => $self->cookie(
-            name     => $self->conf->{cookieName} . "http",
-            value    => $req->{sessionInfo}->{_httpSession},
-            domain   => $self->conf->{domain},
-            path     => "/",
-            secure   => 0,
-            HttpOnly => $self->conf->{httpOnly},
-            expires  => $self->conf->{cookieExpiration},
-          );
+        $req->addCookie(
+            $self->cookie(
+                name   => $self->conf->{cookieName} . "http",
+                value  => $req->{sessionInfo}->{_httpSession},
+                domain => $self->conf->{domain},
+                secure => 0,
+            )
+        );
     }
     PE_OK;
-}
-
-sub cookie {
-    my ( $self, %h ) = @_;
-    my @res;
-    $res[0] = "$h{name}" or die("name required");
-    $res[0] .= "=$h{value}";
-    foreach (qw(domain path expires max_age HttpOnly)) {
-        my $f = $_;
-        $f =~ s/_/-/g;
-        push @res, "$f=$h{$_}" if ( $h{$_} );
-    }
-    return join( '; ', @res );
-}
-
-sub _dump {
-    my ( $self, $variable ) = @_;
-    require Data::Dumper;
-    $Data::Dumper::Indent = 0;
-    $self->lmLog( "Dump: " . Data::Dumper::Dumper($variable), 'debug' );
-    return;
 }
 
 1;
