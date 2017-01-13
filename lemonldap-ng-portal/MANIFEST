@@ -91,10 +91,10 @@ lib/Lemonldap/NG/Portal/Main/Request.pm
 lib/Lemonldap/NG/Portal/Main/Run.pm
 lib/Lemonldap/NG/Portal/Menu.pm
 lib/Lemonldap/NG/Portal/Password/Base.pm
+lib/Lemonldap/NG/Portal/Password/Choice.pm
 lib/Lemonldap/NG/Portal/Password/DBI.pm
 lib/Lemonldap/NG/Portal/Password/Demo.pm
 lib/Lemonldap/NG/Portal/Password/LDAP.pm
-lib/Lemonldap/NG/Portal/PasswordDBChoice.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuth.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
