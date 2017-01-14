@@ -7,6 +7,10 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_CAPTCHAEMPTY
   PE_CAPTCHAERROR
   PE_MALFORMEDUSER
+  PE_MAILCONFIRMATION_ALREADY_SENT
+  PE_MAILCONFIRMOK
+  PE_MAILERROR
+  PE_MAILOK
   PE_OK
   PE_REGISTERALREADYEXISTS
   PE_REGISTERFIRSTACCESS
@@ -22,13 +26,17 @@ extends 'Lemonldap::NG::Portal::Main::Plugin',
 
 sub init {
     my ($self) = @_;
-    $self->addUnauthRoute( register => 'register' );
+    $self->addUnauthRoute( register => 'register', [ 'POST', 'GET' ] );
     if ( $self->conf->{captcha_register_enabled} ) {
 
         # TODO: load captcha plugin
     }
+    $self->registerModule(
+        $self->p->loadPlugin( '::Register::' . $self->conf->{registerDB} ) )
+      or return 0;
 
     # TODO: load module if != $self->p->authentication
+
     return 1;
 }
 
@@ -38,6 +46,15 @@ has captchaModule => ( is => 'rw' );
 
 # TODO
 has registerModule => ( is => 'rw' );
+
+has registerUrl => (
+    is      => 'rw',
+    default => sub {
+        my $p = $_[0]->conf->{portal};
+        $p =~ s#/*$##;
+        return "$p/register";
+    }
+);
 
 # RUNNIG METHODS
 
@@ -251,7 +268,7 @@ sub _register {
         }
 
         # Build confirmation url
-        my $url = $self->conf->{registerUrl} . "?register_token=" . $req->{id};
+        my $url = $self->registerUrl . "?register_token=" . $req->{id};
         $url .= '&skin=' . $self->p->getSkin();
         $url .= '&'
           . $self->conf->{authChoiceParam} . '='
@@ -285,7 +302,7 @@ sub _register {
           unless $self->send_mail( $req->datas->{registerInfo}->{mail},
             $subject, $body, $html );
 
-        PE_MAILCONFIRMOK;
+        return PE_MAILCONFIRMOK;
     }
 
     # Generate a complex password
@@ -297,7 +314,7 @@ sub _register {
     $req->datas->{forceReset} = 1;
 
     # Find a login
-    $result = $self->registerModule->computeLogin($req);
+    my $result = $self->registerModule->computeLogin($req);
     unless ( $result == PE_OK ) {
         $self->lmLog(
             "Could not compute login for "
@@ -417,9 +434,9 @@ sub display {
     if ( $self->conf->{captcha_register_enabled} ) {
         %templateParams = (
             %templateParams,
-            CAPTCHA_IMG  => $elf->captcha_img,
-            CAPTCHA_CODE => $elf->captcha_code,
-            CAPTCHA_SIZE => $elf->captcha_size
+            CAPTCHA_IMG  => $self->captcha_img,
+            CAPTCHA_CODE => $self->captcha_code,
+            CAPTCHA_SIZE => $self->captcha_size
         );
     }
 

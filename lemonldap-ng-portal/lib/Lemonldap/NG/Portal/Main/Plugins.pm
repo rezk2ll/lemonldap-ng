@@ -35,6 +35,10 @@ sub enabledPlugins {
    #    }
    #}
 
+    # Check if register is enabled
+    push @res, '::Plugins::Register'
+      if ( $self->conf->{registerDB} and $self->conf->{registerDB} ne 'Null' );
+
     # Check if SOAP is enabled
     push @res, '::Plugins::SOAPServer'
       if ( $self->conf->{soapSessionServer}

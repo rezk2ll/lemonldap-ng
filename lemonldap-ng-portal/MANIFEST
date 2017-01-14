@@ -102,6 +102,7 @@ lib/Lemonldap/NG/Portal/Plugins/Register.pm
 lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
 lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
 lib/Lemonldap/NG/Portal/Register.pm
+lib/Lemonldap/NG/Portal/Register/Demo.pm
 lib/Lemonldap/NG/Portal/RegisterDBAD.pm
 lib/Lemonldap/NG/Portal/RegisterDBDemo.pm
 lib/Lemonldap/NG/Portal/RegisterDBLDAP.pm
@@ -375,6 +376,7 @@ t/33-Auth-and-issuer-OpenID2.t
 t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-SOAP-Server.t
 t/40-Notifications-DBI.t
+t/41-Register-Demo.t
 t/50-IssuerGet.t
 t/90-translations.t
 t/99-pod.t
