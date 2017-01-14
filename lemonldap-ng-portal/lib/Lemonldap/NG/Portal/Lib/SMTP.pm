@@ -42,19 +42,20 @@ sub gen_password {
 # @return boolean result
 sub send_mail {
     my ( $self, $mail, $subject, $body, $html ) = @_;
+    $self->lmLog( "send_mail called to send \"$subject\" to $mail", 'debug' );
 
     # Encode the body with the given charset
     $body    = encode( $self->charset, $body );
     $subject = encode( $self->charset, $subject );
 
     # Debug messages
-    $self->lmLog( "SMTP From " . $self->{mailFrom}, 'debug' );
-    $self->lmLog( "SMTP To " . $mail,               'debug' );
-    $self->lmLog( "SMTP Subject " . $subject,       'debug' );
-    $self->lmLog( "SMTP Body " . $body,             'debug' );
+    $self->lmLog( "SMTP From " . $self->conf->{mailFrom}, 'debug' );
+    $self->lmLog( "SMTP To " . $mail,                     'debug' );
+    $self->lmLog( "SMTP Subject " . $subject,             'debug' );
+    $self->lmLog( "SMTP Body " . $body,                   'debug' );
     $self->lmLog( "SMTP HTML flag " . ( $html ? "on" : "off" ), 'debug' );
-    $self->lmLog( "SMTP Reply-To " . $self->{mailReplyTo}, 'debug' )
-      if $self->{mailReplyTo};
+    $self->lmLog( "SMTP Reply-To " . $self->conf->{mailReplyTo}, 'debug' )
+      if $self->conf->{mailReplyTo};
 
     # Encode the subject
     $subject = encode_base64( $subject, '' );
@@ -75,11 +76,15 @@ sub send_mail {
         # HTML case
         if ($html) {
             $message = MIME::Lite->new(
-                From       => $self->{mailFrom},
-                To         => $mail,
-                "Reply-To" => $self->{mailReplyTo},
-                Subject    => $subject,
-                Type       => 'multipart/related',
+                From => $self->conf->{mailFrom},
+                To   => $mail,
+                (
+                    $self->conf->{mailReplyTo}
+                    ? ( "Reply-To" => $self->conf->{mailReplyTo} )
+                    : ()
+                ),
+                Subject => $subject,
+                Type    => 'multipart/related',
             );
 
             # Attach HTML message
@@ -101,9 +106,9 @@ sub send_mail {
         # Plain text case
         else {
             $message = MIME::Lite->new(
-                From       => $self->{mailFrom},
+                From       => $self->conf->{mailFrom},
                 To         => $mail,
-                "Reply-To" => $self->{mailReplyTo},
+                "Reply-To" => $self->conf->{mailReplyTo},
                 Subject    => $subject,
                 Type       => 'TEXT',
                 Data       => $body,

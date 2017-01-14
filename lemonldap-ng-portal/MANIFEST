@@ -197,7 +197,6 @@ site/htdocs/static/common/backgrounds/1280px-Cedar_Breaks_National_Monument_part
 site/htdocs/static/common/backgrounds/1280px-Parry_Peak_from_Winter_Park.jpg
 site/htdocs/static/common/backgrounds/Aletschgletscher_mit_Pinus_cembra1.jpg
 site/htdocs/static/common/BrowserID.png
-site/htdocs/static/common/bullet_go.png
 site/htdocs/static/common/calendar.png
 site/htdocs/static/common/cancel.png
 site/htdocs/static/common/CAS.png
@@ -279,6 +278,8 @@ site/templates/bootstrap/register.tpl
 site/templates/bootstrap/standardform.tpl
 site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/background.tpl
+site/templates/common/bullet_go.png
+site/templates/common/key.png
 site/templates/common/mail_confirm.tpl
 site/templates/common/mail_footer.tpl
 site/templates/common/mail_header.tpl

@@ -13,18 +13,8 @@ extends 'Lemonldap::NG::Common::Module';
 
 our $VERSION = '2.0.0';
 
-# INITIALIZATION
-
-# Check AuthDemo use
-sub init {
-    my $self = shift;
-
-    unless ( $self->p->getModule( undef, 'auth' ) =~ /Demo/ ) {
-        $self->p->error("Use UserDB::Demo only with Auth::Demo");
-    }
-
     # Sample accounts from Doctor Who characters
-    $self->{_demoAccounts} = {
+has demoAccounts => (is=>'rw',default=>sub{{
         'rtyler' => {
             'uid'  => 'rtyler',
             'cn'   => 'Rose Tyler',
@@ -40,7 +30,17 @@ sub init {
             'cn'   => 'Doctor Who',
             'mail' => 'dwho@badwolf.org',
         },
-    };
+}});
+
+# INITIALIZATION
+
+# Check AuthDemo use
+sub init {
+    my $self = shift;
+
+    unless ( $self->p->getModule( undef, 'auth' ) =~ /Demo/ ) {
+        $self->p->error("Use UserDB::Demo only with Auth::Demo");
+    }
 
     1;
 }
@@ -56,7 +56,7 @@ sub getUser {
     # Search by login
     if ( $req->user ) {
         return PE_OK
-          if ( defined $self->{_demoAccounts}->{ $req->user } );
+          if ( defined $self->demoAccounts->{ $req->user } );
     }
 
     # Search by mail
@@ -64,8 +64,8 @@ sub getUser {
         return PE_OK
           if (
             my $req->{user} =
-            grep { $self->{_demoAccounts}->{$_}->{mail} eq $req->{mail} }
-            keys %{ $self->{_demoAccounts} }
+            grep { $self->demoAccounts->{$_}->{mail} eq $req->{mail} }
+            keys %{ $self->demoAccounts }
           );
     }
 
@@ -82,7 +82,7 @@ sub setSessionInfo {
         %{ $self->conf->{demoExportedVars} } );
     while ( my ( $k, $v ) = each %vars ) {
         $req->{sessionInfo}->{$k} =
-          $self->{_demoAccounts}->{ $req->{user} }->{$v}
+          $self->demoAccounts->{ $req->{user} }->{$v}
           || "";
     }
 

@@ -1,7 +1,9 @@
 package Lemonldap::NG::Portal::Plugins::Register;
 
 use strict;
+use Encode;
 use Mouse;
+use POSIX qw(strftime);
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADMAILTOKEN
   PE_CAPTCHAEMPTY
@@ -83,13 +85,13 @@ sub _register {
             'debug' );
 
         # Get the corresponding session
-        my $registerSession =
+        my $registerSessionObj =
           $self->p->getApacheSession( $req->datas->{register_token} );
 
-        if ( $registerSession && $registerSession->data ) {
+        if ( $registerSessionObj && $registerSessionObj->data ) {
             foreach (qw(mail firstname lastname ipAddr)) {
                 $req->datas->{registerInfo}->{$_} =
-                  $registerSession->data->{$_};
+                  $registerSessionObj->data->{$_};
             }
             $self->lmLog(
                 "User associated to token: "
@@ -110,6 +112,7 @@ sub _register {
 
         # Captcha for register form
         # Only if register session does not already exist
+        # TODO captcha
         if (   $self->conf->{captcha_register_enabled}
             && $req->datas->{registerInfo}->{mail}
             && !$self->getRegisterSession( $req->datas->{registerInfo}->{mail} )
@@ -175,14 +178,16 @@ sub _register {
         );
         return PE_REGISTERALREADYEXISTS;
     }
+    my $register_session =
+      $self->getRegisterSession( $req->datas->{registerInfo}->{mail} );
+    $req->datas->{mail_already_sent} =
+      ( $register_session and !$req->id ) ? 1 : 0;
 
     # Skip this step if confirmation was already sent
-    unless ( $req->datas->{register_token}
-        or $self->getRegisterSession( $req->datas->{registerInfo}->{mail} ) )
-    {
+    unless ( $req->datas->{register_token} or $register_session ) {
 
         # Create a new session
-        my $registerSession = $self->p->getApacheSession();
+        my $registerSessionObj = $self->p->getApacheSession();
 
         # Set _utime for session autoremove
         # Use default session timeout and register session timeout to compute it
@@ -212,7 +217,8 @@ sub _register {
         $infos->{_type} = "register";
 
         # Update session
-        $registerSession->update($infos);
+        $registerSessionObj->update($infos);
+        $register_session = $registerSessionObj->id;
     }
 
     # Send confirmation mail
@@ -221,22 +227,25 @@ sub _register {
     unless ( $req->datas->{register_token} ) {
 
         # Check if confirmation mail has already been sent
-        my $register_session =
-          $self->getRegisterSession( $req->datas->{registerInfo}->{mail} );
-        $req->datas->{mail_already_sent} =
-          ( $register_session and !$req->id ) ? 1 : 0;
+        $self->lmLog( 'No register_token', 'debug' );
+        $self->lmLog(
+            'mail '
+              . ( $req->datas->{mail_already_sent} ? 'already' : 'not' )
+              . ' sent',
+            'debug'
+        );
 
         # Read session to get creation and expiration dates
         $req->id($register_session) unless $req->id;
 
         $self->lmLog( "Register session found: $register_session", 'debug' );
 
-        my $registerSession =
+        my $registerSessionObj =
           $self->p->getApacheSession( $register_session, 1 );
         $req->datas->{registerInfo}->{registerSessionTimeoutTimestamp} =
-          $registerSession->data->{registerSessionTimeoutTimestamp};
+          $registerSessionObj->data->{registerSessionTimeoutTimestamp};
         $req->datas->{registerInfo}->{registerSessionStartTimestamp} =
-          $registerSession->data->{registerSessionStartTimestamp};
+          $registerSessionObj->data->{registerSessionStartTimestamp};
 
         # Mail session expiration date
         my $expTimestamp =
@@ -262,14 +271,14 @@ sub _register {
 
         # Ask if user want another confirmation email
         if ( $req->datas->{mail_already_sent}
-            and !$self->param('resendconfirmation') )
+            and !$req->param('resendconfirmation') )
         {
             return PE_MAILCONFIRMATION_ALREADY_SENT;
         }
 
         # Build confirmation url
         my $url = $self->registerUrl . "?register_token=" . $req->{id};
-        $url .= '&skin=' . $self->p->getSkin();
+        $url .= '&skin=' . $self->p->getSkin($req);
         $url .= '&'
           . $self->conf->{authChoiceParam} . '='
           . $req->datas->{_authChoice}
@@ -302,6 +311,7 @@ sub _register {
           unless $self->send_mail( $req->datas->{registerInfo}->{mail},
             $subject, $body, $html );
 
+        $self->lmLog( 'Register message sent', 'debug' );
         return PE_MAILCONFIRMOK;
     }
 
@@ -325,7 +335,7 @@ sub _register {
     }
 
     # Create user
-    $self->lmLog( "Create new user $req->datas->{registerInfo}->{login}",
+    $self->lmLog( 'Create new user ' . $req->datas->{registerInfo}->{login},
         'debug' );
     $result = $self->registerModule->createUser($req);
     unless ( $result == PE_OK ) {
@@ -338,16 +348,16 @@ sub _register {
     # Register token can be used only one time, delete the session if all is ok
 
     # Get the corresponding session
-    my $registerSession =
-      $self->getApacheSession( $req->datas->{register_token} );
+    my $registerSessionObj =
+      $self->p->getApacheSession( $req->datas->{register_token} );
 
-    if ($registerSession) {
+    if ($registerSessionObj) {
 
         $self->lmLog(
-            "Delete register session " . $self->datas->{register_token},
+            "Delete register session " . $req->datas->{register_token},
             'debug' );
 
-        $registerSession->remove;
+        $registerSessionObj->remove;
     }
     else {
         $self->lmLog( "Register session not found", 'warn' );
@@ -368,12 +378,12 @@ sub _register {
     $body = $template->output();
 
     # Replace variables in body
-    $body =~ s/\$(\w+)/decode("utf8",$self->{registerInfo}->{$1})/ge;
+    $body =~ s/\$(\w+)/decode("utf8",$req->datas->{registerInfo}->{$1})/ge;
 
     # Send mail
     return PE_MAILERROR
-      unless $self->send_mail( $self->{registerInfo}->{mail}, $subject, $body,
-        $html );
+      unless $self->send_mail( $req->datas->{registerInfo}->{mail},
+        $subject, $body, $html );
 
     return PE_MAILOK;
 }
@@ -381,7 +391,7 @@ sub _register {
 sub display {
     my ( $self, $req ) = @_;
     my %templateParams = (
-        PORTAL_URL      => $self->conf->param,
+        PORTAL_URL      => $self->conf->{portal},
         SKIN_PATH       => '/static',
         SKIN            => $self->conf->{portalSkin},
         SKIN_BG         => $self->conf->{portalSkinBackground},
@@ -400,10 +410,10 @@ sub display {
         FIRSTNAME => $self->p->checkXSSAttack( 'firstname',
             $req->datas->{registerInfo}->{firstname} ) ? ""
         : $req->datas->{registerInfo}->{firstname},
-        LASTNAME => $req->datas->checkXSSAttack( 'lastname',
+        LASTNAME => $self->p->checkXSSAttack( 'lastname',
             $req->datas->{registerInfo}->{lastname} ) ? ""
         : $req->datas->{registerInfo}->{lastname},
-        REGISTER_TOKEN => $req->datas->checkXSSAttack( 'register_token',
+        REGISTER_TOKEN => $self->p->checkXSSAttack( 'register_token',
             $req->datas->{register_token} ) ? ""
         : $req->datas->{register_token},
     );

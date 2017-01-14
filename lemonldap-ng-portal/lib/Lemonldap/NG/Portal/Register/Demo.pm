@@ -4,6 +4,8 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
 
+extends 'Lemonldap::NG::Portal::Main::Plugin';
+
 our $VERSION = '2.0.0';
 
 sub init {
@@ -13,14 +15,14 @@ sub init {
 # Compute a login from register infos
 # @result Lemonldap::NG::Portal constant
 sub computeLogin {
-    my ($self) = @_;
+    my ( $self, $req ) = @_;
 
     # Get first letter of firstname and lastname
     my $login =
-      substr( lc $self->{registerInfo}->{firstname}, 0, 1 )
-      . lc $self->{registerInfo}->{lastname};
+      substr( lc $req->datas->{registerInfo}->{firstname}, 0, 1 )
+      . lc $req->datas->{registerInfo}->{lastname};
 
-    $self->{registerInfo}->{login} = $login;
+    $req->datas->{registerInfo}->{login} = $login;
 
     return PE_OK;
 }
@@ -29,17 +31,14 @@ sub computeLogin {
 # Do nothing
 # @result Lemonldap::NG::Portal constant
 sub createUser {
-    my ($self) = @_;
-
-    return PE_OK;
-}
-
-## @method int registerDBFinish
-# Do nothing
-# @result Lemonldap::NG::Portal constant
-sub registerDBFinish {
-    my ($self) = @_;
-
+    my ( $self, $req ) = @_;
+    $self->p->_userDB->{demoAccounts}->{ $req->datas->{registerInfo}->{login} }
+      = {
+        uid => $req->datas->{registerInfo}->{login},
+        cn  => $req->datas->{registerInfo}->{firstname} . ' '
+          . $req->datas->{registerInfo}->{lastname},
+        mail => $req->datas->{registerInfo}->{login} . '@badwolf.org',
+      };
     return PE_OK;
 }
 
