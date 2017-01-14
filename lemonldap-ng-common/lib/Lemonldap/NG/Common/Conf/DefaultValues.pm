@@ -193,10 +193,9 @@ sub defaultValues {
         'redirectFormMethod'                 => 'get',
         'registerConfirmSubject' =>
           '[LemonLDAP::NG] Account register confirmation',
-        'registerDB'          => 'Demo',
+        'registerDB'          => 'Null',
         'registerDoneSubject' => '[LemonLDAP::NG] Your new account',
         'registerTimeout'     => 0,
-        'registerUrl'         => 'http://auth.example.com/register.pl',
         'remoteGlobalStorage' => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         'remoteGlobalStorageOptions' => {
             'ns' =>
