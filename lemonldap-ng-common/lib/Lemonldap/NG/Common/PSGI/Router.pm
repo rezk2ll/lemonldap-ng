@@ -22,6 +22,7 @@ sub addRoute {
     my ( $self, $word, $dest, $methods, $transform ) = (@_);
     $methods ||= [qw(GET POST PUT DELETE)];
     foreach my $method (@$methods) {
+        $self->lmLog( "Add $method route:", 'debug' );
         $self->genRoute( $self->routes->{$method}, $word, $dest, $transform );
     }
     return $self;

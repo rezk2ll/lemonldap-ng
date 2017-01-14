@@ -24,7 +24,7 @@ sub init {
 
     # Add warning in log
     $self->lmLog(
-        "Using demonstration mode, go in Manager to edit the configuration",
+        "Using demonstration mode, go to Manager to edit the configuration",
         'warn' );
 
     1;

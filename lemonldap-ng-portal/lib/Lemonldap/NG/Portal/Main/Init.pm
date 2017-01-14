@@ -276,6 +276,7 @@ sub loadPlugin {
         }
     }
     ( $obj and $obj->init ) or return 0;
+    $self->lmLog( "Plugin $plugin initializated", 'debug' );
     return $obj;
 }
 

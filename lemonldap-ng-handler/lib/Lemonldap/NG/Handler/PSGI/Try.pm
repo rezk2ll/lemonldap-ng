@@ -24,12 +24,14 @@ sub addRoute {
 sub addAuthRoute {
     my $self = shift;
     $self->routes( $self->authRoutes );
+    $self->lmLog( 'Declaring auth route', 'debug' );
     return $self->SUPER::addRoute(@_);
 }
 
 sub addUnauthRoute {
     my $self = shift;
     $self->routes( $self->unAuthRoutes );
+    $self->lmLog( 'Declaring unauth route', 'debug' );
     return $self->SUPER::addRoute(@_);
 }
 
