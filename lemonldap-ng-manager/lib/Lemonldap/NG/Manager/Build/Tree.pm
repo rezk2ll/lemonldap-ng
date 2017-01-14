@@ -587,7 +587,6 @@ sub tree {
                             form  => 'simpleInputContainer',
                             nodes => [
                                 'registerDB',
-                                'registerUrl',
                                 'registerTimeout',
                                 'registerConfirmSubject',
                                 'registerDoneSubject'

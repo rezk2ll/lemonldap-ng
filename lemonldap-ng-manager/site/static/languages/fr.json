@@ -541,7 +541,6 @@
 "registerDB": "Module",
 "registerDoneSubject": "Sujet du mail de prise en compte",
 "registerTimeout": "Durée de validité de la requête",
-"registerUrl": "URL de la page",
 "reloadUrls": "Mise à jour de la configuration",
 "remoteCookieName": "Nom du cookie",
 "remoteGlobalStorage": "Module des sessions",

@@ -541,7 +541,6 @@
 "registerDB": "Module",
 "registerDoneSubject": "Subject for done mail",
 "registerTimeout": "Validity time of a register request",
-"registerUrl": "Page URL",
 "reloadUrls": "Configuration reload",
 "remoteCookieName": "Cookie name",
 "remoteGlobalStorage": "Sessions module",

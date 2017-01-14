@@ -2014,7 +2014,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'text'
         },
         'registerDB' => {
-            'default' => 'Demo',
+            'default' => 'Null',
             'select'  => [
                 {
                     'k' => 'AD',
@@ -2042,10 +2042,6 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'registerTimeout' => {
             'default' => 0,
             'type'    => 'int'
-        },
-        'registerUrl' => {
-            'default' => 'http://auth.example.com/register.pl',
-            'type'    => 'text'
         },
         'reloadUrls' => {
             'keyTest' =>
@@ -2339,6 +2335,31 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type'    => 'bool'
         },
         'samlIDPMetaDataXML' => {
+            'test' => sub {
+                my $v = shift();
+                return 1 unless $v and %$v;
+                my @msg;
+                my $res = 1;
+                my %entityIds;
+                foreach my $idpId ( keys %$v ) {
+                    unless ( $v->{$idpId}{'samlIDPMetaDataXML'} =~
+                        /entityID="(.+?)"/is )
+                    {
+                        push @msg, "$idpId SAML metadata has ne EntityID";
+                        $res = 0;
+                        next;
+                    }
+                    my $eid = $1;
+                    if ( defined $entityIds{$eid} ) {
+                        push @msg,
+"$idpId and $entityIds{$eid} have the same SAML EntityID";
+                        $res = 0;
+                        next;
+                    }
+                    $entityIds{$eid} = $idpId;
+                }
+                return $res, join( ', ', @msg );
+            },
             'type' => 'file'
         },
         'samlIdPResolveCookie' => {

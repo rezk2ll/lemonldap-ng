@@ -894,7 +894,7 @@ sub attributes {
                 { k => 'LDAP', v => 'LDAP' },
                 { k => 'Null', v => 'None' },
             ],
-            default       => 'Demo',
+            default       => 'Null',
             documentation => 'Register module',
         },
         registerDoneSubject => {
@@ -906,11 +906,6 @@ sub attributes {
             default       => 0,
             type          => 'int',
             documentation => 'Register session timeout',
-        },
-        registerUrl => {
-            type          => 'text',
-            default       => 'http://auth.example.com/register.pl',
-            documentation => 'URL of register page',
         },
 
         # Single session
@@ -1433,6 +1428,31 @@ sub attributes {
         },
         samlIDPMetaDataXML => {
             type => 'file',
+            test => sub {
+                my $v = shift;
+                return 1 unless ( $v and %$v );
+                my @msg;
+                my $res = 1;
+                my %entityIds;
+                foreach my $idpId ( keys %$v ) {
+                    unless ( $v->{$idpId}->{samlIDPMetaDataXML} =~
+                        /entityID="(.+?)"/si )
+                    {
+                        push @msg, "$idpId SAML metadata has ne EntityID";
+                        $res = 0;
+                        next;
+                    }
+                    my $eid = $1;
+                    if ( defined $entityIds{$eid} ) {
+                        push @msg,
+"$idpId and $entityIds{$eid} have the same SAML EntityID";
+                        $res = 0;
+                        next;
+                    }
+                    $entityIds{$eid} = $idpId;
+                }
+                return ( $res, join( ', ', @msg ) );
+            },
         },
         samlIDPMetaDataOptions => {
             type       => 'keyTextContainer',
