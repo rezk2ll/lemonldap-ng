@@ -12,7 +12,7 @@ our $VERSION = '2.0.0';
 sub init {
     my ($self) = @_;
     return (  $self->Lemonldap::NG::Portal::Password::Base::init()
-          and $self->Lemonldap::NG::Portal::Lib::Choice->init(2) );
+          and $self->Lemonldap::NG::Portal::Lib::Choice::init(2) );
 }
 
 sub confirm {

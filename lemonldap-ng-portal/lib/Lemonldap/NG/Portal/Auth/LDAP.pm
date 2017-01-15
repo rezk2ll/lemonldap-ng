@@ -9,7 +9,12 @@ our $VERSION = '2.0.0';
 
 # Inheritance: UserDB::LDAP provides all needed ldap functions
 extends
-  qw(Lemonldap::NG::Portal::Auth::_WebForm Lemonldap::NG::Portal::UserDB::LDAP);
+  qw(Lemonldap::NG::Portal::Auth::_WebForm Lemonldap::NG::Portal::Lib::LDAP);
+
+sub init {
+    my ($self) = @_;
+    return $self->Lemonldap::NG::Portal::Lib::LDAP::init;
+}
 
 # RUNNING METHODS
 

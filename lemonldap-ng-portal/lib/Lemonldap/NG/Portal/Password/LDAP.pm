@@ -3,9 +3,8 @@ package Lemonldap::NG::Portal::Password::LDAP;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_PASSWORD_OK PE_LDAPERROR);
-use Lemonldap::NG::Portal::Lib::LDAP;
 
-extends 'Lemonldap::NG::Portal::UserDB::LDAP',
+extends 'Lemonldap::NG::Portal::Lib::LDAP',
   'Lemonldap::NG::Portal::Password::Base';
 
 our $VERSION = '2.0.0';

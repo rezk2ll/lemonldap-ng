@@ -15,6 +15,7 @@ SKIP: {
                 logLevel        => 'error',
                 useSafeJail     => 1,
                 authentication  => 'LDAP',
+                portal          => 'http://auth.example.com/',
                 userDB          => 'LDAP',
                 registerDB      => 'LDAP',
                 LDAPFilter      => $ENV{LDAPFILTER} || '(cn=$user)',

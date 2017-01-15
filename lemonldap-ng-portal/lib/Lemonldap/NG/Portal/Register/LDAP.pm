@@ -2,22 +2,17 @@ package Lemonldap::NG::Portal::Register::LDAP;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Lib::LDAP;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_LDAPCONNECTFAILED
   PE_LDAPERROR
   PE_OK
 );
 
-extends 'Lemonldap::NG::Portal::UserDB::LDAP';
+extends 'Lemonldap::NG::Portal::Lib::LDAP';
 
 our $VERSION = '2.0.0';
 
 # RUNNING METHODS
-
-sub init {
-    my ($self) = @_;
-}
 
 # Compute a login from register infos
 # @result Lemonldap::NG::Portal constant
