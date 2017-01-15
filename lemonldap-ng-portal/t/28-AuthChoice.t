@@ -5,7 +5,7 @@ use IO::String;
 require 't/test-lib.pm';
 
 my $res;
-my $mainTests = 1;
+my $mainTests = 2;
 
 eval { unlink 't/userdb.db' };
 
@@ -51,6 +51,8 @@ SKIP: {
             }
         }
     );
+
+    # Test LDAP and SQL
     foreach my $postString (
           'user='
         . ( $ENV{LDAPACCOUNT} || 'dwho' )

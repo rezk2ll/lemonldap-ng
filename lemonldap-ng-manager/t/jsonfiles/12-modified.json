@@ -1571,7 +1571,7 @@
       "title": "register",
       "type": "simpleInputContainer",
       "nodes": [{
-        "default": "Demo",
+        "default": "Null",
         "id": "registerDB",
         "select": [{
           "k": "AD",
@@ -1588,12 +1588,7 @@
         }],
         "title": "registerDB",
         "type": "select",
-        "data": "Demo"
-      }, {
-        "default": "http://auth.example.com/register.pl",
-        "id": "registerUrl",
-        "title": "registerUrl",
-        "data": "http://auth.example.com/register.pl"
+        "data": "Null"
       }, {
         "default": 0,
         "id": "registerTimeout",

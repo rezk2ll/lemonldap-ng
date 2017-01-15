@@ -1403,7 +1403,7 @@
       "title": "passwordManagement"
     }, {
       "_nodes": [{
-        "default": "Demo",
+        "default": "Null",
         "id": "registerDB",
         "select": [{
           "k": "AD",
@@ -1420,10 +1420,6 @@
         }],
         "title": "registerDB",
         "type": "select"
-      }, {
-        "default": "http://auth.example.com/register.pl",
-        "id": "registerUrl",
-        "title": "registerUrl"
       }, {
         "default": 0,
         "id": "registerTimeout",
