@@ -162,6 +162,7 @@ sub loadPP {
 # @return Lemonldap::NG portal error code
 sub userBind {
     my $self = shift;
+    my $req = shift;
 
     if ( $self->{conf}->{ldapPpolicyControl} ) {
 
@@ -214,17 +215,11 @@ sub userBind {
             }
 
             if ( $resp->time_before_expiration ) {
-                die 'TODO: change this by JS conversion';
-                $self->{portal}->info(
-                    $req,
-                    "<h3>"
-                      . sprintf(
-                        $self->{portal}->msg(PM_PP_EXP_WARNING),
-                        $self->{portal}
-                          ->convertSec( $resp->time_before_expiration )
-                      )
-                      . "</h3>"
-                );
+                $self->{portal}->info( $req,
+                    '<h3 trspan="authRemaining,'
+                      . $self->{portal}
+                      ->convertSec( $resp->time_before_expiration )
+                      . '"></h3>' );
             }
 
             return PE_OK;

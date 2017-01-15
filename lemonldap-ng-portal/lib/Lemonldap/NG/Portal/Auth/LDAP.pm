@@ -27,7 +27,8 @@ sub authenticate {
     }
 
     my $res =
-      $self->userBind( $req->datas->{dn}, password => $req->datas->{password} );
+      $self->userBind( $req, $req->datas->{dn},
+        password => $req->datas->{password} );
 
     # Remember password if password reset needed
     $req->datas->{oldpassword} = $self->{password}

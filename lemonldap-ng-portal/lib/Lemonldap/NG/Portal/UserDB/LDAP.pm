@@ -114,7 +114,13 @@ sub bind {
     {
         $self->ldap( $self->newLdap );
     }
-    return $self->ldap ? $self->ldap->bind(@_) : undef;
+    return undef unless($self->ldap);
+    my $msg = $self->ldap->bind(@_);
+    if ( $msg->code ) {
+        $self->lmLog( $msg->error, 'error' );
+        return undef;
+    }
+    return 1;
 }
 
 # RUNNING METHODS
