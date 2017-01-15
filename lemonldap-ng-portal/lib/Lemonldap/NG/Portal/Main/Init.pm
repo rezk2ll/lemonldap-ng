@@ -304,7 +304,15 @@ sub loadModule {
 
 sub fail {
     $_[0]->lmLog( $_[0]->error, 'error' );
+    $_[0]->addUnauthRoute( '*' => 'displayError' );
+    $_[0]->addAuthRoute( '*' => 'displayError' );
     return 0;
+}
+
+sub displayError {
+    my ( $self, $req ) = @_;
+    return $self->sendError( $req, 'Portal error, contact your administrator',
+        500 );
 }
 
 1;
