@@ -115,12 +115,6 @@ Files: doc/media/icons/flags/*
 Copyright: Mark James
 License: CC-3
 
-Files: scripts/doxygenfilter scripts/DoxyGen/Filter.pm
- scripts/DoxyGen/SQLFilter.pm
-Copyright: 2002, Bart Schuller
- 2006, Phinex Informatik AG <tom.aeby@phinex.ch>
-License: Artistic or GPL-1+
-
 Files: doc/lib/tpl/default/images/* doc/lib/images/*
  doc/lib/plugins/note/images/* doc/media/wiki/dokuwiki-128.png
 Copyright: 2004-2012 Andreas Gohr <andi@splitbrain.org>

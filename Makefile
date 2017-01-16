@@ -242,8 +242,6 @@ all:	configure common handler manager portal
 	@echo 'Other targets :'
 	@echo " * Partial build :"
 	@echo "   - portal, manager, handler"
-	@echo " * Doxygen documentation"
-	@echo "   - doxygen (to build Doxygen documentation in doc/devel/)"
 	@echo
 	@echo 'Other targets launched by "make install" :'
 	@echo " * Perl libraries install :"
@@ -961,18 +959,6 @@ manager_cpan:	manager_conf
 
 documentation:
 	@cd doc/ && ../scripts/doc.pl
-
-doxygen:	clean
-	$(PERL) -i -pe 's/^(PROJECT_NUMBER\s*=\s*)\d.*$$/$${1}'$(VERSION)'/' Doxyfile
-	COLLABORATIVE_GRAPH=1 doxygen Doxyfile
-	mkdir doc/devel/tmp
-	mv doc/devel/html/inherit* doc/devel/tmp/
-	COLLABORATIVE_GRAPH=0 doxygen Doxyfile
-	mv -f doc/devel/tmp/* doc/devel/html/
-	rm -rf doc/devel/tmp
-	$(PERL) -i -pe 's/Graphical Class Hierarchy/Class Collaboration Graph/' doc/devel/html/inherits.html doc/devel/html/tree.html
-	# Some files are not generated
-	for i in doc/devel/html/*dot; do dot -T png -o $${i/.dot/.png} $$i; rm -f $$i; done
 
 diff: debian-diff
 
