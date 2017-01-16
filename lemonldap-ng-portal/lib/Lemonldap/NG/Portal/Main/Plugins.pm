@@ -44,6 +44,9 @@ sub enabledPlugins {
       if ( $self->conf->{soapSessionServer}
         or $self->conf->{soapConfigServer} );
 
+    # Check if portal status is enabled
+    push @res, '::Plugins::Status' if($self->conf->{portalStatus});
+
     # Add REST (check is done by it)
     push @res, '::Plugins::RESTServer';
 

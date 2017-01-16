@@ -512,6 +512,7 @@
 "portalSkin": "Thème visuel par défaut",
 "portalSkinBackground": "Image de fond",
 "portalSkinRules": "Règles d'affichage du thème visuel",
+"portalStatus": "Publie le statut du portail",
 "portalUserAttr": "Attribut de l'utilisateur",
 "post": "Rejeu de formulaires",
 "postedVars": "Variables à poster",

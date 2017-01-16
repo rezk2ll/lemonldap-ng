@@ -185,6 +185,7 @@ sub defaultValues {
         'portalPingInterval'                 => 60000,
         'portalRequireOldPassword'           => 1,
         'portalSkin'                         => 'bootstrap',
+        'portalStatus'                       => 0,
         'portalUserAttr'                     => '_user',
         'proxyAuthnLevel'                    => 2,
         'proxyUseSoap'                       => 0,

@@ -512,6 +512,7 @@
 "portalSkin": "Default Skin",
 "portalSkinBackground": "Skin background",
 "portalSkinRules": "Skin display rules",
+"portalStatus": "Publish portal status",
 "portalUserAttr": "User attribute",
 "post": "Form replay",
 "postedVars": "Variables to post",

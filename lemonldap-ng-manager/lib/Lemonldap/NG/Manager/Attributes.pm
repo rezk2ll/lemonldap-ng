@@ -1948,6 +1948,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'test'    => qr/^\w+$/,
             'type'    => 'keyTextContainer'
         },
+        'portalStatus' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'portalUserAttr' => {
             'default' => '_user',
             'type'    => 'text'

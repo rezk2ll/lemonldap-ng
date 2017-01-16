@@ -304,9 +304,15 @@ sub attributes {
             default       => 'http://auth.example.com/',
             documentation => 'Portal URL',
         },
+        portalStatus => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'Enable portal status',
+        },
         portalUserAttr => {
             type    => 'text',
             default => '_user',
+            help    => 'monitoring.html',
             documentation =>
               'Session parameter to display connected user in portal',
         },
