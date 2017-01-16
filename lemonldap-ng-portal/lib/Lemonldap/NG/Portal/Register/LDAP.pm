@@ -46,11 +46,13 @@ sub createUser {
 
     # LDAP connection has been verified by computeLogin
     my $mesg = $self->ldap->add(
-        "uid=" . $req->datas->{registerInfo}->{login} . "," . $self->conf->{ldapBase},
+        "uid="
+          . $req->datas->{registerInfo}->{login} . ","
+          . $self->conf->{ldapBase},
         attrs => [
             objectClass => [qw/top person organizationalPerson inetOrgPerson/],
             uid         => $req->datas->{registerInfo}->{login},
-            cn          => ucfirst $req->datas->{registerInfo}->{firstname} . " "
+            cn => ucfirst $req->datas->{registerInfo}->{firstname} . " "
               . uc $req->datas->{registerInfo}->{lastname},
             sn           => uc $req->datas->{registerInfo}->{lastname},
             givenName    => ucfirst $req->datas->{registerInfo}->{firstname},
@@ -62,7 +64,8 @@ sub createUser {
     if ( $mesg->is_error ) {
         $self->lmLog(
             "Can not create entry for " . $req->datas->{registerInfo}->{login},
-            'error' );
+            'error'
+        );
         $self->lmLog( "LDAP error " . $mesg->error, 'error' );
 
         $self->ldap->unbind();
