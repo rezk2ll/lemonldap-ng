@@ -1,27 +1,26 @@
 #!/usr/bin/perl
 
-use Lemonldap::NG::Portal::SharedConf;
+use Lemonldap::NG::Portal::Main;
 
-my $self = Lemonldap::NG::Portal::SharedConf->new( {} );
+my $self = Lemonldap::NG::Portal::Main->new( {} );
 
-unless ( $self->{Soap} ) {
-    print STDERR "Lemonldap::NG Portal SOAP capability is disabled.\n"
-      . "Set 'Soap' option to 1 in manager or lemonldap-ng.ini to enable it.\n";
+unless ( $self->conf->{soapConfigServer} or $self->conf->{soapSessionServer} ) {
+    print STDERR "Lemonldap::NG Portal SOAP capability is disabled.\n";
     exit;
 }
 
-my $portal = $self->{portal};
+my $portal = $self->conf->{portal};
 $portal .= "index.pl" if ( $portal =~ /\/$/ );
 
-my @cookies = ( $self->{cookieName} );
-push @cookies, "$self->{cookieName}http"
-  if ( $self->{securedCookie} >= 2 );
+my @cookies = ( $self->conf->{cookieName} );
+push @cookies, "$self->conf->{cookieName}http"
+  if ( $self->conf->{securedCookie} >= 2 );
 my $cookieList = join "\n",
   map { "<element name='$_' type='xsd:string'></element>" } @cookies;
 
 my $attrList = join "\n",
   map { "<element name='$_' type='xsd:string' nillable='true'></element>" }
-  $self->exportedAttr;
+  $self->conf->{exportedAttr};
 
 print <<EOT;
 <?xml version="1.0" encoding="UTF-8"?>
