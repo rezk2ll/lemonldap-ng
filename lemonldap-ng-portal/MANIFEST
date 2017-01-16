@@ -8,12 +8,7 @@ example/index.pl
 example/index_simple.pl
 example/index_skin.pl
 example/mail.pl
-example/metadata.pl
-example/oauth2.pl
-example/openid-configuration.pl
 example/PortalStatus.pl
-example/register.pl
-example/scripts/buildPortalWSDL
 example/soapconfigtest.pl
 example/soaperrortest.pl
 example/soaptest.pl
@@ -115,6 +110,7 @@ MANIFEST			This list of files
 META.yml
 README
 REST-API.md
+scripts/buildPortalWSDL
 site/coffee/portal.coffee
 site/cron/purgeCentralCache
 site/cron/purgeCentralCache.cron.d
