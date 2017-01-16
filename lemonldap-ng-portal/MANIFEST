@@ -21,10 +21,6 @@ KINEMATIC.md
 lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/_i18n.pm
 lib/Lemonldap/NG/Portal/_Multi.pm
-lib/Lemonldap/NG/Portal/_OpenIDConnect.pm
-lib/Lemonldap/NG/Portal/_Proxy.pm
-lib/Lemonldap/NG/Portal/_SAML.pm
-lib/Lemonldap/NG/Portal/_SOAP.pm
 lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
 lib/Lemonldap/NG/Portal/Auth/AD.pm
 lib/Lemonldap/NG/Portal/Auth/Apache.pm
@@ -45,10 +41,7 @@ lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
 lib/Lemonldap/NG/Portal/AuthMulti.pm
-lib/Lemonldap/NG/Portal/AuthOpenID.pm
-lib/Lemonldap/NG/Portal/AuthOpenIDConnect.pm
 lib/Lemonldap/NG/Portal/AuthRadius.pm
-lib/Lemonldap/NG/Portal/AuthSAML.pm
 lib/Lemonldap/NG/Portal/AuthTwitter.pm
 lib/Lemonldap/NG/Portal/AuthWebID.pm
 lib/Lemonldap/NG/Portal/AuthYubikey.pm
@@ -59,14 +52,11 @@ lib/Lemonldap/NG/Portal/Issuer/Get.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Issuer/SAML.pm
-lib/Lemonldap/NG/Portal/IssuerDBNull.pm
-lib/Lemonldap/NG/Portal/IssuerDBOpenID.pm
-lib/Lemonldap/NG/Portal/IssuerDBOpenIDConnect.pm
-lib/Lemonldap/NG/Portal/IssuerDBSAML.pm
 lib/Lemonldap/NG/Portal/Lib/CAS.pm
 lib/Lemonldap/NG/Portal/Lib/Choice.pm
 lib/Lemonldap/NG/Portal/Lib/DBI.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
+lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/Server.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm
@@ -101,13 +91,9 @@ lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
 lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
 lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
-lib/Lemonldap/NG/Portal/Register.pm
+lib/Lemonldap/NG/Portal/Register/AD.pm
 lib/Lemonldap/NG/Portal/Register/Demo.pm
-lib/Lemonldap/NG/Portal/RegisterDBAD.pm
-lib/Lemonldap/NG/Portal/RegisterDBDemo.pm
-lib/Lemonldap/NG/Portal/RegisterDBLDAP.pm
-lib/Lemonldap/NG/Portal/RegisterDBNull.pm
-lib/Lemonldap/NG/Portal/SharedConf.pm
+lib/Lemonldap/NG/Portal/Register/LDAP.pm
 lib/Lemonldap/NG/Portal/Simple.pm
 lib/Lemonldap/NG/Portal/UserDB/AD.pm
 lib/Lemonldap/NG/Portal/UserDB/Choice.pm
@@ -123,9 +109,6 @@ lib/Lemonldap/NG/Portal/UserDB/Remote.pm
 lib/Lemonldap/NG/Portal/UserDB/SAML.pm
 lib/Lemonldap/NG/Portal/UserDB/Slave.pm
 lib/Lemonldap/NG/Portal/UserDBMulti.pm
-lib/Lemonldap/NG/Portal/UserDBOpenID.pm
-lib/Lemonldap/NG/Portal/UserDBOpenIDConnect.pm
-lib/Lemonldap/NG/Portal/UserDBSAML.pm
 lib/Lemonldap/NG/Portal/UserDBWebID.pm
 Makefile.PL
 MANIFEST			This list of files
