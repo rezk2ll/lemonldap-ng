@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 2;
+my $maintests = 3;
 my $debug     = 'error';
 my ( $issuer, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -23,6 +23,7 @@ SKIP: {
     $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
 
     ok( $res = $issuer->_get('/saml/metadata'), 'Get metadata');
+    ok( $res->[2]->[0] =~ m#^<\?xml version="1.0"\?>#s, 'Metadata is XML');
 
     #print STDERR Dumper($res);
 }
