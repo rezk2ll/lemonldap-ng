@@ -40,9 +40,9 @@ lib/Lemonldap/NG/Portal/Auth/Remote.pm
 lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
 lib/Lemonldap/NG/Portal/Auth/SSL.pm
+lib/Lemonldap/NG/Portal/Auth/Twitter.pm
 lib/Lemonldap/NG/Portal/AuthMulti.pm
 lib/Lemonldap/NG/Portal/AuthRadius.pm
-lib/Lemonldap/NG/Portal/AuthTwitter.pm
 lib/Lemonldap/NG/Portal/AuthWebID.pm
 lib/Lemonldap/NG/Portal/AuthYubikey.pm
 lib/Lemonldap/NG/Portal/CDC.pm

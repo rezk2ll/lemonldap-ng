@@ -13,8 +13,6 @@ extends qw(Lemonldap::NG::Portal::Auth::_WebForm);
 
 our $VERSION = '2.0.0';
 
-use constant AuthnLevel => 0;
-
 # INITIALIZATION
 
 # Initialize demo accounts
