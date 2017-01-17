@@ -131,6 +131,9 @@ All these methods must return a Lemonldap::NG::Portal::Main::Constants value.
 They are called with one argument: a L<Lemonldap::NG::Portal::Main::Request>
 object.
 
+Note: if you want to change process() next steps, you just have to change
+$req->steps array.
+
 =head4 extractFormInfo($req)
 
 First authentication method called during authentication process. It must set
