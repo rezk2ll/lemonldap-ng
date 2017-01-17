@@ -263,8 +263,9 @@ sub getApacheSession {
         }
     );
 
-    if ( $as->error ) {
-        $self->lmLog( $as->error, 'info' );
+    if ( my $err = $as->error ) {
+        $self->lmLog( $err,
+            ( $err =~ /Object does not exist/ ? 'notice' : 'error' ) );
         return;
     }
 
@@ -619,7 +620,7 @@ sub cookie {
         $f =~ s/_/-/g;
         push @res, "$f=$h{$_}" if ( $h{$_} );
     }
-    push @res, 'secure' if($h{secure});
+    push @res, 'secure' if ( $h{secure} );
     return join( '; ', @res );
 }
 
