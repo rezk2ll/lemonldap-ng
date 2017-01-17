@@ -33,10 +33,7 @@ Special container to show hash in hash
 <script type="text/menu">
 [{
   'title': 'newHost',
-  'action': function(cn,scope){
-    if(!cn.data) cn.data=[];
-    cn.data.push({"k":"newHost",h:[{"k":"key","v":"uid"}]});
-  },
+  'action': "addHost",
   'icon': 'plus-sign'
 }]
 </script>

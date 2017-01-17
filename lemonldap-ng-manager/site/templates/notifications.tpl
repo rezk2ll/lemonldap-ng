@@ -3,7 +3,7 @@
   <title>LemonLDAP::NG notifications explorer</title>
 </head>
 
-<body ng-app="llngNotificationsExplorer" ng-controller="NotificationsExplorerCtrl">
+<body ng-app="llngNotificationsExplorer" ng-controller="NotificationsExplorerCtrl" ng-csp>
 
   <TMPL_INCLUDE NAME="menubar.tpl">
 
@@ -24,7 +24,7 @@
       <div class="region region-sidebar-first">
         <section id="block-superfish-1" class="block block-superfish clearfix">
           <div ui-tree data-drag-enabled="false" id="tree-root">
-            <div ng-show="data.length==0" style="text-align:center;">
+            <div ng-show="data.length==0" class="center">
               <span class="label label-warning" trspan="noDatas"></span>
             </div>
             <ol ui-tree-nodes="" ng-model="data">

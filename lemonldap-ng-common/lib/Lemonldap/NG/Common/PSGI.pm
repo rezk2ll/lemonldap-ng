@@ -212,6 +212,27 @@ sub handler { _mustBeDefined(@_) }
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
+    my $sp = $self->staticPrefix;
+    $sp =~ s/\/*$/\//;
+    my $sc = $req->script_name;
+    $sc = '.' unless ($sc);
+    $sc =~ s#/*$#/#;
+    if ( defined $req->param('js') ) {
+        my $s =
+            sprintf 'var staticPrefix="%s";'
+          . 'var scriptname="%s";'
+          . 'var availableLanguages="%s".split(/[,;] */);'
+          . 'var portal="%s";', $sp, $sc, $self->languages, $self->portal;
+        $s .= $self->javascript($req) if ( $self->can('javascript') );
+        return [
+            200,
+            [
+                'Content-Type'   => 'application/javascript',
+                'Content-Length' => length($s)
+            ],
+            [$s]
+        ];
+    }
     $args{code} ||= 200;
     $args{headers} ||= $req->respHeaders || [];
     my $htpl;
@@ -232,13 +253,9 @@ sub sendHtml {
 
         # TODO: replace app
         # TODO: warn if STATICPREFIX does not end with '/'
-        my $sp = $self->staticPrefix;
-        $sp =~ s/\/*$/\//;
         $htpl->param(
-            SCRIPT_NAME         => $req->script_name,
-            STATIC_PREFIX       => $sp,
-            AVAILABLE_LANGUAGES => $self->languages,
-            PORTAL              => $self->portal,
+            STATIC_PREFIX => $sp,
+            SCRIPTNAME    => $sc,
             (
                 $args{params}
                 ? %{ $args{params} }

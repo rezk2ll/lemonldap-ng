@@ -195,6 +195,9 @@ This file contains:
         }
         return $scope.showModal('message.html');
       };
+      $scope.downlaodConf = function(c, $scope) {
+        return window.open($scope.confPrefix + $scope.currentCfg.cfgNum + '?full');
+      };
       $scope.save = function() {
         $scope.showModal('save.html').then(function() {
           $scope.waiting = true;
@@ -343,6 +346,20 @@ This file contains:
             logo: "network.png",
             display: "auto"
           }
+        });
+      };
+      $scope.addHost = function(cn, scope) {
+        if (!cn.data) {
+          cn.data = [];
+        }
+        return cn.data.push({
+          k: "newHost",
+          h: [
+            {
+              "k": "key",
+              "v": "uid"
+            }
+          ]
         });
       };
       $scope.addSamlAttribute = function() {
@@ -833,7 +850,9 @@ This file contains:
             $scope.showModal('message.html');
           }
           $scope.form = 'home';
-          return $scope.waiting = false;
+          console.log('OK', $scope.waiting);
+          $scope.waiting = false;
+          console.log('OK', $scope.waiting);
         }, readError);
       };
       c = $location.path().match(new RegExp('^/confs/(latest|[0-9]+)'));
@@ -853,10 +872,16 @@ This file contains:
       $scope.replaceContent = function(node, $fileContent) {
         return node.data = $fileContent;
       };
-      return $scope.saveAs = function(content, type, filename) {
+      $scope.saveAs = function(content, type, filename) {
         return saveAs(new Blob([content], {
           "type": type
         }), filename);
+      };
+      $scope.saveAsPem = function(cs, scope) {
+        return scope.saveAs(cs.data[0].data + "\n" + cs.data[2].data, 'application/x-pem-file', cs.title + ".pem");
+      };
+      return $scope.saveAsText = function(cs, scope) {
+        return scope.saveAs(cs.data, 'text/plain', cs.title + ".txt");
       };
     }
   ]);

@@ -19,16 +19,7 @@
 
 
 <!-- Constants -->
-<script type="text/JavaScript">
-  var staticPrefix = '<TMPL_VAR NAME="STATIC_PREFIX">'.replace(/\/*$/,'/');
-  var formPrefix = staticPrefix+'forms/';
-  var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">'.replace(/^$/,'.').replace(/\/*$/,'/');
-  var confPrefix=scriptname+'confs/';
-  var availableLanguages='<TMPL_VAR NAME="AVAILABLE_LANGUAGES">'.split(/[,;] */);
-  var links=<TMPL_VAR NAME="LINKS">;
-  var menulinks=<TMPL_VAR NAME="MENULINKS">;
-  var portal   ='<TMPL_VAR NAME="PORTAL">';
-</script>
+<script type="text/JavaScript" src="<TMPL_VAR NAME="SCRIPTNAME">?js"></script>
 
 <!-- //if:usedebianlibs
 <script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>

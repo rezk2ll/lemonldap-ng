@@ -147,9 +147,14 @@ LemonLDAP::NG base app module
         restrict: 'E',
         terminal: true,
         compile: function(element, attr) {
-          var t;
+          var e, error, t;
           if (t = attr.type.match(/text\/(menu|parameters)/)) {
-            return $htmlParams.set(t[1], eval(element[0].text));
+            try {
+              return $htmlParams.set(t[1], JSON.parse(element[0].text));
+            } catch (error) {
+              e = error;
+              console.log("Parsing error:", e);
+            }
           }
         }
       };

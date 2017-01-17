@@ -129,7 +129,11 @@ llapp.directive 'script', ['$htmlParams', ($htmlParams) ->
 	terminal: true
 	compile: (element, attr) ->
 		if t = attr.type.match /text\/(menu|parameters)/
-			$htmlParams.set t[1], eval element[0].text
+			try
+				return $htmlParams.set t[1], JSON.parse(element[0].text)
+			catch e
+				console.log "Parsing error:", e
+				return
 ]
 
 # Modal controller used to display messages

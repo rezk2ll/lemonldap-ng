@@ -160,6 +160,10 @@ llapp.controller 'TreeCtrl', [
 				$scope.message.title = 'saveReport'
 			$scope.showModal 'message.html'
 
+		# Download raw conf
+		$scope.downlaodConf = (c,$scope) ->
+			window.open $scope.confPrefix + $scope.currentCfg.cfgNum + '?full'
+
 		# Main save function
 		$scope.save = ->
 			$scope.showModal('save.html').then ->
@@ -293,6 +297,13 @@ llapp.controller 'TreeCtrl', [
 					uri: "https://test.example.com/"
 					logo: "network.png"
 					display: "auto"
+
+		# Add host
+		$scope.addHost = (cn,scope) ->
+			cn.data=[] unless cn.data
+			cn.data.push
+				k: "newHost"
+				h: [{"k":"key","v":"uid"}]
 
 		# SAML attribute entry
 		$scope.addSamlAttribute = ->
@@ -719,4 +730,10 @@ llapp.controller 'TreeCtrl', [
 		# Import Filesaver.js saveAs()
 		$scope.saveAs = (content, type, filename) ->
 			saveAs(new Blob([content], {"type": type}), filename)
+
+		# Save as pem, text,...
+		$scope.saveAsPem = (cs,scope) ->
+			scope.saveAs "#{cs.data[0].data}\n#{cs.data[2].data}", 'application/x-pem-file', "#{cs.title}.pem"
+		$scope.saveAsText = (cs,scope) ->
+			scope.saveAs cs.data, 'text/plain', "#{cs.title}.txt"
 ]

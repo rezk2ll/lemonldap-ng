@@ -5,7 +5,7 @@
   <link rel="prefetch" href="<TMPL_VAR NAME="STATIC_PREFIX">struct.json" />
 </head>
 
-<body ng-app="llngManager" ng-controller="TreeCtrl">
+<body ng-app="llngManager" ng-controller="TreeCtrl" ng-csp>
 
   <TMPL_INCLUDE NAME="menubar.tpl">
 
@@ -54,9 +54,6 @@
       </div>
       <!-- Help container -->
       <div id="bottom" ng-if="showH" class="hidden-xs">
-        <div style="position:absolute;top:-3px;right:0;color:red">
-          <span class="glyphicon glyphicon-remove" ng-click="setShowHelp(false)" tabIndex="10"></span>
-        </div>
         <div class="panel panel-default">
           <div class="panel-body">
             <iframe id="helpframe" width="100%" height="100%" ng-src="{{translate('/doc/')+'pages/documentation/current/'+helpUrl}}" frameborder="0"></iframe>
@@ -109,7 +106,7 @@
       <h3 class="modal-title" trspan="{{elem('message').title}}" />
     </div>
     <div class="modal-body">
-      <div class="input-group" style="width:100%;">
+      <div class="input-group maxw">
         <label class="input-group-addon" for="promptinput" trspan="{{elem('message').field}}"/>
         <input id="promptinput" class="form-control" ng-model="result"/>
       </div>
@@ -150,7 +147,7 @@
       <h3 class="modal-title" trspan="enterPassword" />
     </div>
     <div class="modal-body">
-      <div class="input-group" style="width:100%;">
+      <div class="input-group maxw">
         <label class="input-group-addon" for="mdPwd" trspan="password"/>
         <input id="mdPwd" class="form-control" ng-model="result"/>
       </div>
@@ -167,7 +164,7 @@
       <h3 class="modal-title" trspan="savingConfirmation" />
     </div>
     <div class="modal-body">
-      <div class="input-group" style="width:100%;">
+      <div class="input-group maxw">
         <label class="input-group-addon" for="longtextinput" trspan="cfgLog"/>
         <textarea id="longtextinput" rows="5" class="form-control" ng-model="result"/>
       </div>

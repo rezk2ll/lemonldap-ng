@@ -237,3 +237,11 @@ dl,
 .new {
   color: #0A0;
 }
+
+/* Some specific styles */
+.maxw {
+  width: 100%;
+}
+.center {
+  text-align: center;
+}

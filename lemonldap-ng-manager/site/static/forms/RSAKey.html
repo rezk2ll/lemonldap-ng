@@ -38,8 +38,6 @@
 },{
   "title": "download",
   "icon": "save-file",
-  "action": function(cs,scope) {
-    scope.saveAs(cs.data[0].data+"\n"+cs.data[2].data,'application/x-pem-file',cs.title+'.pem');
-  }
+  "action": "saveAsPem"
 }]
 </script>

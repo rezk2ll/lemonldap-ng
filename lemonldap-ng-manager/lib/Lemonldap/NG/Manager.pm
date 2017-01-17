@@ -19,7 +19,8 @@ use Lemonldap::NG::Common::PSGI::Constants;
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Common::Conf::AccessLib', 'Lemonldap::NG::Handler::PSGI::Router';
+extends 'Lemonldap::NG::Common::Conf::AccessLib',
+  'Lemonldap::NG::Handler::PSGI::Router';
 
 ## @method boolean init($args)
 # Launch initialization method
@@ -106,12 +107,17 @@ sub init {
 }
 
 sub tplParams {
-    my $self = shift;
-    return (
-        LINKS     => $self->links     ? to_json( $self->links )     : '""',
-        MENULINKS => $self->menuLinks ? to_json( $self->menuLinks ) : '""',
-        VERSION   => $VERSION,
-    );
+    return ( VERSION => $VERSION, );
+}
+
+sub javascript {
+    my ($self) = @_;
+    return
+      'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";'
+      . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
+      . ( $self->menuLinks
+        ? 'var menulinks=' . to_json( $self->menuLinks ) . ';'
+        : '' );
 }
 
 1;
