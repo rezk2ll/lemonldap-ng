@@ -9,7 +9,6 @@ require 't/test-lib.pm';
 my $struct = 'site/static/struct.json';
 
 my @bad = qw(
-  /conf/latest
   /confs/1567
   /confs/abc
   /confs/1/virtualHosts/unknown/locationRules
