@@ -24,7 +24,7 @@ describe('Lemonldap::NG Manager', function() {
       element(by.id('hashkeyinput')).clear().sendKeys('Hello');
       expect(hdr.getText()).toEqual('Hello');
     });
-    it('shoud be able to add keys in hash', function() {
+    it('should be able to add keys in hash', function() {
       browser.get('/#/confs/1');
       var els = element.all(by.css('[ng-click="getLanguage(lang)"]'));
       /* English version */

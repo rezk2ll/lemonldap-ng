@@ -143,22 +143,6 @@ of menu items.
 
 Same as below except that it will launch `$scope.addVhost()`.
 
-#### 3.1.4. Custom function
-
-    <script type="text/menu">
-    [{
-      "title": "addVirtualHost",
-      "action": function(currentNode,currentScope){
-        doSomethingWith(currentNode);
-      }
-    }]
-    </script>
-
-In this case, the item will launch the defined function with two arguments:
-
-* `currentNode`: the data subnode corresponding to the selected tree item
-* `currentScope`: the AngularJS scope corresponding to the selected tree item
-
 ##### Tips
 
 You can access to the parent using this:
