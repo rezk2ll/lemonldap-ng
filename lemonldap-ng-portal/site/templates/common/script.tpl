@@ -17,7 +17,7 @@
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/jquery.cookie/jquery.cookie.js"></script>
  <!-- //endif -->
  <TMPL_IF NAME="browserIdEnabled">
-   <script src="https://login.persona.org/include.js"></script>
+   <script type="text/javascript" src="https://login.persona.org/include.js"></script>
   <!-- //endif -->
  </TMPL_IF>
  <TMPL_IF NAME="browserIdLoadLoginScript">

@@ -30,8 +30,8 @@
  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
  <!--[if lt IE 9]>
-   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-   <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+   <script type="text/javascript" src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+   <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
  <![endif]-->
  <link href="<TMPL_VAR NAME="STATIC_PREFIX">common/favicon.ico" rel="icon" type="image/vnd.microsoft.icon" sizes="16x16 32x32 48x48 64x64 128x128" />
  <link href="<TMPL_VAR NAME="STATIC_PREFIX">common/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" sizes="16x16 32x32 48x48 64x64 128x128" />
@@ -41,17 +41,17 @@
  </TMPL_IF>
  <TMPL_INCLUDE NAME="../common/script.tpl">
 <!-- //if:usedebianlibs
-  <script src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.min.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/portal.min.js"></script>
   <script type="text/javascript" src="/javascript/bootstrap/js/bootstrap.min.js"></script>
  //elsif:jsminified
-  <script src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.min.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/portal.min.js"></script>
-  <script src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/js/bootstrap.min.js"></script>
  //else -->
-  <script src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX"><TMPL_VAR NAME="SKIN">/js/skin.js"></script>
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/portal.js"></script>
-  <script src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/js/bootstrap.js"></script>
+  <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">bwr/bootstrap/dist/js/bootstrap.js"></script>
  <!-- //endif -->
  <TMPL_INCLUDE NAME="customhead.tpl">
 </head>
