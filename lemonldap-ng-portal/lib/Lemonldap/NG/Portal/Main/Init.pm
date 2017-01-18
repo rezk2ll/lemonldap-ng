@@ -68,6 +68,9 @@ has beforeLogout => (
 # Custom template parameters
 has customParameters => ( is => 'rw', default => sub { {} } );
 
+# Content-Security-Policy header
+has csp => ( is => 'rw' );
+
 # INITIALIZATION
 
 sub init {
@@ -134,6 +137,14 @@ sub reloadConf {
     foreach my $key ( keys %$conf ) {
         $self->{conf}->{$key} ||= $conf->{$key};
     }
+
+    # Initialize content-security-policy header
+    my $csp = '';
+    foreach (qw(default img src style font connect)) {
+        my $prm = $self->conf->{ 'csp' . ucfirst($_) };
+        $csp .= "$_-src $prm;" if($prm);
+    }
+    $self->csp($csp);
 
     # Initialize templateDir
     $self->{templateDir} =

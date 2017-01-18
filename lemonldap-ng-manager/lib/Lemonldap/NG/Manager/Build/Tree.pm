@@ -605,7 +605,17 @@ sub tree {
                                 'trustedDomains',
                                 'useSafeJail',
                                 'checkXSS',
-                                'lwpSslOpts'
+                                'lwpSslOpts',
+                                {
+                                    title => 'contentSecurityPolicy',
+                                    help  => 'csp.html',
+                                    form  => 'simpleInputContainer',
+                                    nodes => [
+                                        'cspDefault', 'cspImg',
+                                        'cspScript',  'cspStyle',
+                                        'cspConnect', 'cspFont',
+                                    ]
+                                }
                             ]
                         },
                         {

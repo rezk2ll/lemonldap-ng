@@ -449,11 +449,43 @@ sub attributes {
             type          => 'password',
             documentation => 'Secret key',
         },
+        cspDefault => {
+            type          => 'text',
+            default       => "'none'",
+            documentation => 'Default value for Content-Security-Policy',
+        },
+        cspImg => {
+            type          => 'text',
+            default       => "'self'",
+            documentation => 'Image source for Content-Security-Policy',
+        },
+        cspScript => {
+            type          => 'text',
+            default       => "'self'",
+            documentation => 'Javascript source for Content-Security-Policy',
+        },
+        cspStyle => {
+            type          => 'text',
+            default       => "'self'",
+            documentation => 'Style source for Content-Security-Policy',
+        },
+        cspConnect => {
+            type    => 'text',
+            default => "'self'",
+            documentation =>
+              'Authorizated Ajax destination for Content-Security-Policy',
+        },
+        cspFont => {
+            type          => 'text',
+            default       => "'self'",
+            documentation => 'Font source for Content-Security-Policy',
+        },
         portalAntiFrame => {
             default       => 1,
             type          => 'bool',
             documentation => 'Avoid portal to be displayed inside frames',
         },
+
         portalCheckLogins => {
             default       => 1,
             type          => 'bool',

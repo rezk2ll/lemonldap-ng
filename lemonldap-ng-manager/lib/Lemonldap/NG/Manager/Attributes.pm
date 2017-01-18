@@ -714,6 +714,30 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'test'    => qr/^[a-zA-Z][a-zA-Z0-9_-]*$/,
             'type'    => 'text'
         },
+        'cspConnect' => {
+            'default' => '\'self\'',
+            'type'    => 'text'
+        },
+        'cspDefault' => {
+            'default' => '\'none\'',
+            'type'    => 'text'
+        },
+        'cspFont' => {
+            'default' => '\'self\'',
+            'type'    => 'text'
+        },
+        'cspImg' => {
+            'default' => '\'self\'',
+            'type'    => 'text'
+        },
+        'cspScript' => {
+            'default' => '\'self\'',
+            'type'    => 'text'
+        },
+        'cspStyle' => {
+            'default' => '\'self\'',
+            'type'    => 'text'
+        },
         'customFunctions' => {
             'msgFail' => '__badCustomFuncName__',
             'test'    => qr/^(?:\w+(?:::\w+)*(?:\s+\w+(?:::\w+)*)*)?$/,

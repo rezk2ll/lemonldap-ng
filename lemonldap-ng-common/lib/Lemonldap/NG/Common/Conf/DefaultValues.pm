@@ -33,6 +33,12 @@ sub defaultValues {
         'checkXSS'               => 1,
         'confirmFormMethod'      => 'post',
         'cookieName'             => 'lemonldap',
+        'cspConnect'             => '\'self\'',
+        'cspDefault'             => '\'none\'',
+        'cspFont'                => '\'self\'',
+        'cspImg'                 => '\'self\'',
+        'cspScript'              => '\'self\'',
+        'cspStyle'               => '\'self\'',
         'dbiAuthnLevel'          => 2,
         'dbiExportedVars'        => {},
         'demoExportedVars'       => {

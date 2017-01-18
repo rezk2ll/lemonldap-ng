@@ -632,4 +632,35 @@ sub _dump {
     return;
 }
 
+sub sendHtml {
+    my ( $self, $req, $template, %args ) = @_;
+    my $csp = $self->csp;
+    push @{ $req->respHeaders },
+      'X-XSS-Protection'       => '1; mode=block',
+      'X-Content-Type-Options' => 'nosniff';
+    $csp .= "form-action 'self'";
+    my $url = $args{params}->{URL};
+    if ( $url and $url =~ s#https?://([^/]+).*#$1# ) {
+        $csp .= $url;
+    }
+    $csp .= ';';
+    unless ( $self->conf->{portalAntiFrame} == 0 ) {
+        my @url;
+        if ( $req->info ) {
+            @url = map { s#https?://([^/]+).*#$1#; $_ }
+              ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
+        }
+        if (@url) {
+            $csp = join 'frame-ancestors', @url;
+        }
+        else {
+            push @{ $req->respHeaders }, 'X-Frame-Options' => 'DENY';
+            $csp .= "frame-ancestors 'none';";
+        }
+    }
+    push @{ $req->respHeaders }, 'Content-Security-Policy' => $csp;
+
+    return $self->SUPER::sendHtml( $req, $template, %args );
+}
+
 1;
