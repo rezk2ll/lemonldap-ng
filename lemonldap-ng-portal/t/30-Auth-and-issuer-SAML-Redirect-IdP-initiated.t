@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 15;
+my $maintests = 16;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -102,6 +102,13 @@ m#iframe src="http://auth.sp.com(/saml/proxySingleLogout)\?(SAMLRequest=.*?)"#,
     );
     $url = $1;
     my $query = $2;
+    ok(
+        getHeader( $res, 'Content-Security-Policy' ) =~
+          /frame-ancestors auth.sp.com/,
+        'Frame is authorizated'
+      )
+      or explain( $res->[1],
+        'Content-Security-Policy => ...frame-ancestors auth.idp.com' );
 
     switch ('sp');
     ok( $res = $sp->_get( $url, query => $query, accept => 'text/html' ),

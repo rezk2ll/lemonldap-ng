@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 14;
+my $maintests = 15;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -49,7 +49,7 @@ SKIP: {
         ),
         'Query IdP to access to SP'
     );
-    my ( $host, $url, $s ) =
+    my ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleSignOnPost',
         'SAMLResponse' );
 
@@ -57,9 +57,9 @@ SKIP: {
     switch ('sp');
     ok(
         $res = $sp->_post(
-            $url, IO::String->new($s),
+            $url, IO::String->new($query),
             accept => 'text/html',
-            length => length($s),
+            length => length($query),
             cookie => 'lemonldapidp=http://auth.idp.com/saml/metadata',
         ),
         'Post SAML response to SP'
@@ -91,17 +91,25 @@ SKIP: {
 m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         'Get iframe request'
     ) or explain( $res, '' );
+    ( $url, $query ) = ( $1, $2 );
+    ok(
+        getHeader( $res, 'Content-Security-Policy' ) =~
+          /frame-ancestors auth.idp.com/,
+        'Frame is authorizated'
+      )
+      or explain( $res->[1],
+        'Content-Security-Policy => ...frame-ancestors auth.idp.com' );
 
     ok(
         $res = $issuer->_get(
-            $1,
-            query  => $2,
+            $url,
+            query  => $query,
             cookie => "lemonldap=$idpId",
             accept => 'text/html'
         ),
         'Get iframe'
     );
-    ( $host, $url, $s ) =
+    ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleLogout',
         'SAMLRequest' );
 
@@ -109,14 +117,14 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
     switch ('sp');
     ok(
         $res = $sp->_post(
-            $url, IO::String->new($s),
+            $url, IO::String->new($query),
             accept => 'text/html',
-            length => length($s),
+            length => length($query),
             cookie => "lemonldap=$spId",
         ),
         'Post SAML logout request to SP'
     );
-    ( $host, $url, $s ) =
+    ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.idp.com', '/saml/singleLogoutReturn',
         'SAMLResponse' );
 
@@ -124,9 +132,9 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
     switch ('issuer');
     ok(
         $res = $sp->_post(
-            $url, IO::String->new($s),
+            $url, IO::String->new($query),
             accept => 'text/html',
-            length => length($s),
+            length => length($query),
             cookie => "lemonldap=$spId",
         ),
         'Post SAML logout response to IdP'

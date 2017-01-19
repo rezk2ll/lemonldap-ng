@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 12;
+my $maintests = 13;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -105,10 +105,18 @@ SKIP: {
     # Query IdP with iframe src
     my $url = $1;
     $query = $2;
+    ok(
+        getHeader( $res, 'Content-Security-Policy' ) =~
+          /frame-ancestors auth.idp.com/,
+        'Frame is authorizated'
+      )
+      or explain( $res->[1],
+        'Content-Security-Policy => ...frame-ancestors auth.idp.com' );
+
     switch ('issuer');
     ok(
         $res = $issuer->_get(
-            $1,
+            $url,
             query  => $query,
             accept => 'text/html',
             cookie => "lemonldap=$idpId"
