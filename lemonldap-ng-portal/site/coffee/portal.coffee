@@ -24,6 +24,17 @@ translatePage = (lang) ->
 translate = (str) ->
 	return if translationFields[str] then translationFields[str] else str
 
+getValues = () ->
+	values = {}
+	$("script[type='application/init']").each ->
+		try
+			tmp = JSON.parse $(this).text
+			for k of tmp
+				values[k] = tmp[k]
+		catch e
+			console.log 'Parsing error', e
+	values
+
 # Set default values
 newwindow   = if window.newwindow.match('1') then true else false
 antiframe   = if window.antiframe.match('0') then false else true

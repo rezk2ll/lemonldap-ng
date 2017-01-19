@@ -451,7 +451,7 @@ sub attributes {
         },
         cspDefault => {
             type          => 'text',
-            default       => "'none'",
+            default       => "'self'",
             documentation => 'Default value for Content-Security-Policy',
         },
         cspImg => {

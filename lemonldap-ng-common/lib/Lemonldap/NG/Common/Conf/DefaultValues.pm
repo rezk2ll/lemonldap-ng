@@ -34,7 +34,7 @@ sub defaultValues {
         'confirmFormMethod'      => 'post',
         'cookieName'             => 'lemonldap',
         'cspConnect'             => '\'self\'',
-        'cspDefault'             => '\'none\'',
+        'cspDefault'             => '\'self\'',
         'cspFont'                => '\'self\'',
         'cspImg'                 => '\'self\'',
         'cspScript'              => '\'self\'',

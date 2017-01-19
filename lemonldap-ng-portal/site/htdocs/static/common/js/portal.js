@@ -12,7 +12,7 @@ Used variables:
  */
 
 (function() {
-  var activeTimer, antiframe, getOrder, isHiddenFormValueSet, newwindow, ping, restoreOrder, setSelector, translate, translatePage, translationFields,
+  var activeTimer, antiframe, getOrder, getValues, isHiddenFormValueSet, newwindow, ping, restoreOrder, setSelector, translate, translatePage, translationFields,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   translationFields = {};
@@ -35,6 +35,26 @@ Used variables:
     } else {
       return str;
     }
+  };
+
+  getValues = function() {
+    var values;
+    values = {};
+    $("script[type='application/init']").each(function() {
+      var e, error, k, results, tmp;
+      try {
+        tmp = JSON.parse($(this).text);
+        results = [];
+        for (k in tmp) {
+          results.push(values[k] = tmp[k]);
+        }
+        return results;
+      } catch (error) {
+        e = error;
+        return console.log('Parsing error', e);
+      }
+    });
+    return values;
   };
 
   newwindow = window.newwindow.match('1') ? true : false;
