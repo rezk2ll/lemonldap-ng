@@ -106,8 +106,7 @@ LemonLDAP::NG Portal jQuery scripts
         if (data.auth) {
           return setTimeout(ping, datas['pingInterval']);
         } else {
-          console.log(data);
-          //return location.reload(true);
+          return location.reload(true);
         }
       }
     });
@@ -200,6 +199,11 @@ LemonLDAP::NG Portal jQuery scripts
     if (datas['pingInterval'] && datas['pingInterval'] > 0) {
       window.setTimeout(ping, datas['pingInterval']);
     }
+    $(".localeDate").each(function() {
+      var s;
+      s = new Date($(this).attr("val") * 1000);
+      return $(this).text(s.toLocaleString());
+    });
     return translatePage(lang);
   });
 

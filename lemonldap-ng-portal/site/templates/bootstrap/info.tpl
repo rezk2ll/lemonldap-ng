@@ -23,7 +23,7 @@
           <span class="glyphicon glyphicon-ok"></span>
           <span trspan="continue">Continue</span>
         </button>
-        <button type="reset" class="negative btn btn-danger" onclick="stop();">
+        <button id="wait" type="reset" class="negative btn btn-danger">
           <span class="glyphicon glyphicon-stop"></span>
           <span trspan="wait">Wait</span>
         </button>

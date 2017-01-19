@@ -36,7 +36,7 @@
       <div class="row">
       <TMPL_LOOP NAME="LIST">
         <div class="col-sm-6 <TMPL_VAR NAME="class">">
-          <button type="submit" class="btn btn-info" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
+          <button type="submit" class="btn btn-info idploop" val="<TMPL_VAR NAME="VAL">">
           <TMPL_IF NAME="icon">
             <img src="<TMPL_VAR NAME="icon">" class="glyphicon" />
           <TMPL_ELSE>
@@ -77,7 +77,7 @@
           <span class="glyphicon glyphicon-ok"></span>
           <span trspan="accept">Accept</span>
         </button>
-        <button type="submit" class="negative btn btn-danger" onclick="$('#confirm').attr('value','-<TMPL_VAR NAME="CONFIRMKEY">');">
+        <button id="refuse" type="submit" class="negative btn btn-danger" val="-<TMPL_VAR NAME="CONFIRMKEY">">
           <span class="glyphicon glyphicon-stop"></span>
           <span trspan="refuse">Refuse</span>
         </button>

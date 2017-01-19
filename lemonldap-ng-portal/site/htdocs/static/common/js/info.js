@@ -31,10 +31,13 @@
   $(document).ready(function() {
     if (window.datas['activeTimer']) {
       window.setTimeout(go, 10000);
-      return window.setTimeout(timer, 1000);
+      window.setTimeout(timer, 1000);
     } else {
-      return stop;
+      stop;
     }
+    return $("#wait").on('click', function() {
+      return stop();
+    });
   });
 
 }).call(this);

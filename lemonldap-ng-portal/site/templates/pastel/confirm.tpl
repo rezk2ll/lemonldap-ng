@@ -28,7 +28,7 @@
       <table>
       <TMPL_LOOP NAME="LIST">
         <tr><td><div class="buttons">
-          <button type="submit" class="positive" class="maxw" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
+          <button type="submit" class="idploop positive maxw" val="<TMPL_VAR NAME="VAL">">
             <TMPL_VAR NAME="NAME">
           </button>
         </div></td></tr>
@@ -54,7 +54,7 @@
           <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/accept.png" alt="" />
           <span trspan="accept">Accept</span>
         </button>
-        <button type="submit" class="negative" onclick="$('#confirm').attr('value','-<TMPL_VAR NAME="CONFIRMKEY">');">
+          <button id="refuse" type="submit" class="negative" tabindex="4" val="-<TMPL_VAR NAME="CONFIRMKEY">">
           <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/cancel.png" alt="" />
           <span trspan="refuse">Refuse</span>
         </button>

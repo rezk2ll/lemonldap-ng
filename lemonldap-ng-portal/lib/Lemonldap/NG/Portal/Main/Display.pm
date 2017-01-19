@@ -434,11 +434,10 @@ sub mkSessionArray {
     $tmp .= '</tr>';
 
     foreach my $session (@$sessions) {
-        $tmp .= "<tr>";
-        $tmp .= "<td>$session->{user}</td>" if ($displayUser);
-        $tmp .=
-"<td><script type=\"text/javascript\">var _date=new Date($session->{_utime}*1000);document.write(_date.toLocaleString());</script></td>";
-        $tmp .= "<td>$session->{ipAddr}</td>";
+        $tmp .= "<tr>"
+        .($displayUser ? "<td>$session->{user}</td>" : '')
+        . qq'<td class="localeDate" val="$session->{_utime}"></td>'
+        . "<td>$session->{ipAddr}</td>";
         $tmp .= "<td>" . ( $session->{$_} || "" ) . "</td>"
           foreach ( keys %{ $self->conf->{sessionDataToRemember} } );
         $tmp .= "<td>$session->{error}</td>" if ($displayError);

@@ -23,3 +23,5 @@ $(document).ready ->
 		window.setTimeout timer, 1000
 	else
 		stop
+	$("#wait").on 'click', () ->
+		stop()

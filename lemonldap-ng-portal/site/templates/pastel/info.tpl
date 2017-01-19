@@ -19,7 +19,7 @@
           <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/accept.png" alt="" />
           <span trspan="continue">Continue</span>
         </button>
-        <button type="reset" class="negative" onclick="stop();">
+        <button id="wait" type="reset" class="negative">
           <img src="<TMPL_VAR NAME="STATIC_PREFIX">common/cancel.png" alt="" />
           <span trspan="wait">Wait</span>
         </button>

@@ -60,7 +60,7 @@ restoreOrder = ->
 	rebuild = []
 	for v in items
 		rebuild[v] = v
-	
+
 	for itemID in IDs
 		if itemID in rebuild
 
@@ -199,5 +199,10 @@ $(document).ready ->
 	# Ping if asked
 	if datas['pingInterval'] and datas['pingInterval'] > 0
 		window.setTimeout ping, datas['pingInterval']
+
+	# Set local dates (used to display history)
+	$(".localeDate").each ->
+		s = new Date($(this).attr("val")*1000)
+		$(this).text s.toLocaleString()
 	translatePage(lang)
 

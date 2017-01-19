@@ -177,9 +177,11 @@
           <p class="text-label">
             <span trspan="areYouSure">Are you sure?</span>
           </p>
-          <button type="submit" class="positive" onclick="location.href='<TMPL_VAR NAME="LOGOUT_URL">';return false;">
-            <span trspan="imSure">I'm sure</span>
-          </button>
+          <form>
+            <button type="submit" class="positive" formaction="<TMPL_VAR NAME="LOGOUT_URL">">
+              <span trspan="imSure">I'm sure</span>
+            </button>
+          </form>
         </div>
         </TMPL_IF>
 

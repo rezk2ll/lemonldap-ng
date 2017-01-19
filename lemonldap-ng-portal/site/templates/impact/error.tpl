@@ -25,12 +25,16 @@
         </TMPL_IF>
       </div>
       <div class="panel-buttons">
-        <button type="button" class="positive" tabindex="1" onclick="location.href='<TMPL_VAR NAME="PORTAL_URL">';return false;">
-          <span trspan="goToPortal">Go to portal</span>
-        </button>
-        <button type="button" class="negative" tabindex="2" onclick="location.href='<TMPL_VAR NAME="LOGOUT_URL">';return false;">
-          <span trspan="logout">Logout</span>
-        </button>
+        <form>
+          <button type="button" class="positive" tabindex="1" formaction="<TMPL_VAR NAME="PORTAL_URL">">
+            <span trspan="goToPortal">Go to portal</span>
+          </button>
+        </form>
+        <form>
+          <button type="button" class="negative" tabindex="2" formaction="<TMPL_VAR NAME="LOGOUT_URL">">
+            <span trspan="logout">Logout</span>
+          </button>
+        </form>
       </div>
     </div>
   </div>

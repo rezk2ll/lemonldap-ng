@@ -17,7 +17,7 @@
         <TMPL_VAR NAME="MSG">
       </div>
         <div class="panel-buttons">
-          <button type="reset" class="negative" tabindex="4" onclick="stop();">
+          <button id="wait" type="reset" class="negative" tabindex="4">
             <span trspan="wait">Wait</span>
           </button>
           <button type="submit" class="positive" tabindex="3">

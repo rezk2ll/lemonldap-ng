@@ -128,9 +128,11 @@
       </TMPL_IF>
 
       <div class="panel-buttons">
-        <button type="button" class="positive" tabindex="1" onclick="location.href='<TMPL_VAR NAME="PORTAL_URL">?skin=<TMPL_VAR NAME="SKIN">';return false;">
-          <span trspan="goToPortal">Go to portal</span>
-        </button>
+        <form>
+          <button type="button" class="positive" tabindex="1" formaction="<TMPL_VAR NAME="PORTAL_URL">?skin=<TMPL_VAR NAME="SKIN">">
+            <span trspan="goToPortal">Go to portal</span>
+          </button>
+        </form>
       </div>
     </div>
   </div>
