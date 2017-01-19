@@ -326,3 +326,13 @@ margin:40px 200px;
 .maxw {
   width: 100%;
 }
+
+.hiddenFrame {
+  border: none;
+  display: hidden;
+  margin: 0
+}
+
+.noborder {
+  border: none;
+}

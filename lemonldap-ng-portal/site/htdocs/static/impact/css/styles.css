@@ -371,3 +371,13 @@ div.application p.appdesc {
 .margin0 {
   margin: 0px auto;
 }
+
+.hiddenFrame {
+  border: none;
+  display: hidden;
+  margin: 0
+}
+
+.noborder {
+  border: none;
+}

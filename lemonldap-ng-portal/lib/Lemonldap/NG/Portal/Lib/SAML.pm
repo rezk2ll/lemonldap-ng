@@ -2498,15 +2498,10 @@ sub sendLogoutRequestToProvider {
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
 
-        $info .=
-            '<tr>' . '<td>'
-          . '<iframe src="'
-          . $slo_url
-          . '" alt="" marginwidth="0"'
-          . ' marginheight="0" scrolling="no" style="border: none"'
+        $info .= qq'<tr><td><iframe src="$slo_url" alt="" marginwidth="0"'
+          . ' marginheight="0" scrolling="no" class="noborder"'
           . ' width="10px" height="10px" frameborder="0">'
-          . '</iframe>' . '</td>' . '<td>'
-          . $providerName . '</td>' . '</tr>';
+          . qq'</iframe></td><td>$providerName</td></tr>';
 
     }
 
@@ -2536,15 +2531,10 @@ sub sendLogoutRequestToProvider {
         my $slo_url = $portal . '/saml/relaySingleLogoutPOST?relay=' . $relayID;
 
         # Create iFrame
-        $info .=
-            '<tr>' . '<td>'
-          . '<iframe src="'
-          . $slo_url
-          . '" alt="" marginwidth="0"'
-          . ' marginheight="0" scrolling="no" style="border: none"'
+        $info .= qq'<tr><td><iframe src="$slo_url" alt="" marginwidth="0"'
+          . ' marginheight="0" scrolling="no" class="noborder"'
           . ' width="10px" height="10px" frameborder="0">'
-          . '</iframe>' . '</td>' . '<td>'
-          . $providerName . '</td>' . '</tr>';
+          . qq'</iframe></td><td>$providerName</td></tr>';
 
     }
 

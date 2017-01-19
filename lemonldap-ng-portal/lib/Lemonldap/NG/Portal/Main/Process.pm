@@ -180,11 +180,10 @@ sub deleteSession {
             );
 
             my $iframe =
-                "<iframe src=\"$logoutServiceUrl\""
-              . " alt=\"$logoutServiceName\" marginwidth=\"0\""
-              . " marginheight=\"0\" scrolling=\"no\" style=\"border: none;display: hidden;margin: 0\""
-              . " width=\"0\" height=\"0\" frameborder=\"0\">"
-              . "</iframe>";
+                qq'<iframe src="$logoutServiceUrl" alt="$logoutServiceName"'
+              . ' marginwidth="0" marginheight="0" scrolling="no"'
+              . ' class="hiddenFrame" width="0" height="0"'
+              . ' frameborder="0"></iframe>';
 
             $self->info( $req, $iframe );
         }

@@ -881,12 +881,10 @@ sub run {
                     : '?url=' . $cdc_idp
                 );
 
-                my $cdc_iframe =
-                    "<iframe src=\"$cdc_writer_url\""
-                  . " alt=\"Common Dommain Cookie\" marginwidth=\"0\""
-                  . " marginheight=\"0\" scrolling=\"no\" style=\"border: none;display: hidden;margin: 0\""
-                  . " width=\"0\" height=\"0\" frameborder=\"0\">"
-                  . "</iframe>";
+                my $cdc_iframe = qq'<iframe src="$cdc_writer_url"'
+                  . ' alt="Common Dommain Cookie" marginwidth="0"'
+                  . ' marginheight="0" scrolling="no" class="hiddenFrame"'
+                  . ' width="0" height="0" frameborder="0"></iframe>';
 
                 $self->info( $req,
                     '<h3 trspan="updateCdc">Update Common Domain Cookie</h3>'

@@ -135,3 +135,13 @@ div.oidc_consent_message > ul {
     height: 60px;
   }
 }
+
+.hiddenFrame {
+  border: none;
+  display: hidden;
+  margin: 0
+}
+
+.noborder {
+  border: none;
+}

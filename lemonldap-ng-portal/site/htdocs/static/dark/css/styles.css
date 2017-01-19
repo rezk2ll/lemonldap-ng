@@ -343,3 +343,13 @@ text-size:8pt;
 color:#aaa;
 font-style:italic;
 }
+
+.hiddenFrame {
+  border: none;
+  display: hidden;
+  margin: 0
+}
+
+.noborder {
+  border: none;
+}
