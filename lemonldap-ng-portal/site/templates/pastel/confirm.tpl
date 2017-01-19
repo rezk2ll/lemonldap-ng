@@ -28,7 +28,7 @@
       <table>
       <TMPL_LOOP NAME="LIST">
         <tr><td><div class="buttons">
-          <button type="submit" class="positive" style="width: 100%" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
+          <button type="submit" class="positive" class="maxw" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
             <TMPL_VAR NAME="NAME">
           </button>
         </div></td></tr>

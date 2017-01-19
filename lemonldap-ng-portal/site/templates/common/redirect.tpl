@@ -8,23 +8,6 @@
   <meta http-equiv="cache-control" content="no-cache" />
   <link href="<TMPL_VAR NAME="STATIC_PREFIX">common/favicon.ico" rel="icon" type="image/x-icon" />
   <link href="<TMPL_VAR NAME="STATIC_PREFIX">common/favicon.ico" rel="shortcut icon" />
-  <style type="text/css">
-body, a {
-  background: #ddd;
-  color: #fff;
-}
-h1 {
-  size: 10pt;
-  letter-spacing: 5px;
-  margin: 100px auto 100px;
-}
-p, h1 {
-  text-align: center;
-}
-form {
-  display: none;
-}
-  </style>
 </head>
 
 <TMPL_IF NAME="HIDDEN_INPUTS">

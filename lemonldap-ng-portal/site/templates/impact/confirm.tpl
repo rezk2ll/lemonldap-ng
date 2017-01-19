@@ -39,10 +39,10 @@
 
         <h3 trspan="selectIdP">Select your Identity Provider</h3>
         <input type="hidden" id="idp" name="idp"/>
-        <table style="margin: 0px auto">
+        <table class="margin0">
         <TMPL_LOOP NAME="LIST">
           <tr><td><div class="buttons">
-            <button type="submit" class="positive" style="width: 100%" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
+            <button type="submit" class="positive" class="maxw" onclick="$('#idp').val('<TMPL_VAR NAME="VAL">')">
               <TMPL_VAR NAME="NAME">
             </button>
           </div></td></tr>
@@ -56,7 +56,7 @@
 
         <TMPL_ELSE>
 
-        <table style="margin: 0px auto">
+        <table class="margin0">
           <tr><td><div class="panel-buttons">
           <button type="submit" class="negative" tabindex="4" onclick="$('#confirm').attr('value','-<TMPL_VAR NAME="CONFIRMKEY">');">
             <span trspan="refuse">Refuse</span>

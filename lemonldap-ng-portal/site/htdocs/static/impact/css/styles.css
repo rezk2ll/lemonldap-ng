@@ -364,3 +364,10 @@ div.application p.appdesc {
 	display:none;
 }
 
+.maxw {
+  width: 100%;
+}
+
+.margin0 {
+  margin: 0px auto;
+}
