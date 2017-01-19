@@ -36,7 +36,7 @@ LemonLDAP::NG Portal jQuery scripts
     $("script[type='application/init']").each(function() {
       var e, error, k, results, tmp;
       try {
-        tmp = JSON.parse($(this).text);
+        tmp = JSON.parse($(this).text());
         results = [];
         for (k in tmp) {
           results.push(values[k] = tmp[k]);
@@ -44,7 +44,8 @@ LemonLDAP::NG Portal jQuery scripts
         return results;
       } catch (error) {
         e = error;
-        return console.log('Parsing error', e);
+        console.log('Parsing error', e);
+        return console.log('JSON', $(this).text());
       }
     });
     return values;
@@ -105,7 +106,8 @@ LemonLDAP::NG Portal jQuery scripts
         if (data.auth) {
           return setTimeout(ping, datas['pingInterval']);
         } else {
-          return location.reload(true);
+          console.log(data);
+          //return location.reload(true);
         }
       }
     });

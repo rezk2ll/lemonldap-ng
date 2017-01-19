@@ -22,11 +22,12 @@ getValues = () ->
 	values = {}
 	$("script[type='application/init']").each ->
 		try
-			tmp = JSON.parse $(this).text
+			tmp = JSON.parse $(this).text()
 			for k of tmp
 				values[k] = tmp[k]
 		catch e
 			console.log 'Parsing error', e
+			console.log 'JSON', $(this).text()
 	values
 
 # Set default values

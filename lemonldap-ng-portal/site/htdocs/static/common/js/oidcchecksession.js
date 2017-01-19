@@ -8,7 +8,7 @@
     $("script[type='application/init']").each(function() {
       var e, error, k, results, tmp;
       try {
-        tmp = JSON.parse($(this).text);
+        tmp = JSON.parse($(this).text());
         results = [];
         for (k in tmp) {
           results.push(values[k] = tmp[k]);

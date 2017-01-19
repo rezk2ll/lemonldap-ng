@@ -2,7 +2,7 @@ values = {}
 $(document).ready ->
 	$("script[type='application/init']").each ->
 		try
-			tmp = JSON.parse $(this).text
+			tmp = JSON.parse $(this).text()
 			for k of tmp
 				values[k] = tmp[k]
 		catch e
