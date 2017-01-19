@@ -1,0 +1,25 @@
+# Timer for information page
+
+i = 30
+_go = 1
+
+stop = () ->
+	_go = 0
+	$('#timer').html("...");
+
+go = () ->
+	$("#form").submit() if _go
+
+timer = () ->
+	h = $('#timer').html()
+	i-- if i>0
+	h = h.replace /\d+/, i
+	$('#timer').html(h)
+	window.setTimeout timer, 1000
+
+$(document).ready ->
+	if window.datas['activeTimer']
+		window.setTimeout go, 10000
+		window.setTimeout timer, 1000
+	else
+		stop

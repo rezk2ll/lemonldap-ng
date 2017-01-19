@@ -2,17 +2,10 @@
 
 /*
 LemonLDAP::NG Portal jQuery scripts
-
-Used variables:
- - displaytab
- - choicetab
- - login
- - newwindow
- - antiframe
  */
 
 (function() {
-  var activeTimer, antiframe, getOrder, getValues, isHiddenFormValueSet, newwindow, ping, restoreOrder, setSelector, translate, translatePage, translationFields,
+  var datas, getOrder, getValues, isHiddenFormValueSet, ping, restoreOrder, setSelector, translate, translatePage, translationFields,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   translationFields = {};
@@ -57,18 +50,12 @@ Used variables:
     return values;
   };
 
-  newwindow = window.newwindow.match('1') ? true : false;
-
-  antiframe = window.antiframe.match('0') ? false : true;
-
-  activeTimer = window.activeTimer.match('0') ? false : true;
-
   setSelector = "#appslist";
 
   getOrder = function() {
     return $.ajax({
       type: "POST",
-      url: scriptname,
+      url: datas['scriptname'],
       data: {
         storeAppsListOrder: $(setSelector).sortable("toArray").join()
       },
@@ -79,10 +66,10 @@ Used variables:
   restoreOrder = function() {
     var IDs, child, i, item, itemID, items, j, len, len1, list, rebuild, savedOrd, v;
     list = $(setSelector);
-    if (!((list != null) && appslistorder)) {
+    if (!((list != null) && datas['appslistorder'])) {
       return null;
     }
-    IDs = appslistorder.split(',');
+    IDs = datas['appslistorder'].split(',');
     items = list.sortable("toArray");
     rebuild = [];
     for (i = 0, len = items.length; i < len; i++) {
@@ -109,14 +96,14 @@ Used variables:
   ping = function() {
     return $.ajax({
       type: "POST",
-      url: scriptname,
+      url: datas['scriptname'],
       data: {
         ping: 1
       },
       dataType: 'json',
       success: function(data) {
         if (data.auth) {
-          return setTimeout(ping, pingInterval);
+          return setTimeout(ping, datas['pingInterval']);
         } else {
           return location.reload(true);
         }
@@ -126,9 +113,13 @@ Used variables:
 
   window.ping = ping;
 
+  datas = {};
+
   $(document).ready(function() {
     var action, al, authMenuTabs, back_url, i, j, lang, langs, langs2, len, len1, link, menuIndex, menuTabs, method, nl, nlangs, ref;
-    if (antiframe && top !== self) {
+    datas = getValues();
+    window.datas = datas;
+    if (datas['antiframe'] && top !== self) {
       top.location.href = location.href;
     }
     $("#appslist").sortable({
@@ -147,7 +138,7 @@ Used variables:
     menuTabs = $("#menu").tabs({
       active: 0
     });
-    menuIndex = $('#menu a[href="#' + displaytab + '"]').parent().index();
+    menuIndex = $('#menu a[href="#' + datas['displaytab'] + '"]').parent().index();
     if (menuIndex < 0) {
       menuIndex = 0;
     }
@@ -155,15 +146,15 @@ Used variables:
     authMenuTabs = $("#authMenu").tabs({
       active: 0
     });
-    if (choicetab) {
-      authMenuTabs.tabs("option", "active", $('#authMenu a[href="#' + choicetab + '"]').parent().index());
+    if (datas['choicetab']) {
+      authMenuTabs.tabs("option", "active", $('#authMenu a[href="#' + datas['choicetab'] + '"]').parent().index());
     }
-    if (login) {
+    if (datas['login']) {
       $("input[type=password]:first").focus();
     } else {
       $("input[type!=hidden]:first").focus();
     }
-    if (newwindow) {
+    if (datas['newwindow']) {
       $('#appslist a').attr("target", "_blank");
     }
     if ($("p.removeOther").length) {
@@ -203,6 +194,9 @@ Used variables:
       lang = langs[0] ? langs[0] : langs2[0] ? langs2[0] : 'en';
     } else {
       lang = 'en';
+    }
+    if (datas['pingInterval'] && datas['pingInterval'] > 0) {
+      window.setTimeout(ping, datas['pingInterval']);
     }
     return translatePage(lang);
   });

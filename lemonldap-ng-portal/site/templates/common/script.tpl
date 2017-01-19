@@ -21,12 +21,14 @@
   <!-- //endif -->
  </TMPL_IF>
  <TMPL_IF NAME="browserIdLoadLoginScript">
-  <script type="text/javascript">//<![CDATA[
-     var browserIdSiteName="<TMPL_VAR NAME="browserIdSiteName">";
-     var browserIdSiteLogo="<TMPL_VAR NAME="browserIdSiteLogo">";
-     var browserIdBackgroundColor="<TMPL_VAR NAME="browserIdBackgroundColor">";
-     var browserIdAutoLogin="<TMPL_VAR NAME="browserIdAutoLogin">";
-  //]]></script>
+  <script type="application/init">
+  {
+  "browserIdSiteName":"<TMPL_VAR NAME="browserIdSiteName">",
+  "browserIdSiteLogo":"<TMPL_VAR NAME="browserIdSiteLogo">",
+  "browserIdBackgroundColor":"<TMPL_VAR NAME="browserIdBackgroundColor">",
+  "browserIdAutoLogin":"<TMPL_VAR NAME="browserIdAutoLogin">"
+  }
+  </script>
   <!-- //if:jsminified
     <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/browserid.min.js"></script>
     <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/browseridlogin.min.js"></script>
@@ -44,15 +46,17 @@
     <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">common/js/browseridlogout.js"></script>
   <!-- //endif -->
  </TMPL_IF>
- <script type="text/javascript">//<![CDATA[
-    var displaytab="<TMPL_VAR NAME="DISPLAY_TAB">";
-    var choicetab="<TMPL_VAR NAME="CHOICE_VALUE">";
-    var login="<TMPL_VAR NAME="LOGIN">";
-    var newwindow="<TMPL_VAR NAME="NEWWINDOW">";
-    var antiframe="<TMPL_VAR NAME="ANTIFRAME">";
-    var appslistorder="<TMPL_VAR NAME="APPSLIST_ORDER">";
-    var scriptname="<TMPL_VAR NAME="SCRIPT_NAME">";
-    var activeTimer="<TMPL_VAR NAME="ACTIVE_TIMER">";
-    var pingInterval=parseInt("<TMPL_VAR NAME="PING">");
- //]]></script>
+ <script type="application/init">
+ {
+ "displaytab":"<TMPL_VAR NAME="DISPLAY_TAB">",
+ "choicetab":"<TMPL_VAR NAME="CHOICE_VALUE">",
+ "login":"<TMPL_VAR NAME="LOGIN">",
+ "newwindow":"<TMPL_VAR NAME="NEWWINDOW">",
+ "antiframe":"<TMPL_VAR NAME="ANTIFRAME">",
+ "appslistorder":"<TMPL_VAR NAME="APPSLIST_ORDER">",
+ "scriptname":"<TMPL_VAR NAME="SCRIPT_NAME">",
+ "activeTimer":"<TMPL_VAR NAME="ACTIVE_TIMER">",
+ "pingInterval":<TMPL_VAR NAME="PING">
+ }
+ </script>
 

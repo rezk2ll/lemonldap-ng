@@ -1,12 +1,5 @@
 ###
 LemonLDAP::NG Portal jQuery scripts
-
-Used variables:
- - displaytab
- - choicetab
- - login
- - newwindow
- - antiframe
 ###
 
 # Translation mechanism
@@ -24,6 +17,7 @@ translatePage = (lang) ->
 translate = (str) ->
 	return if translationFields[str] then translationFields[str] else str
 
+# Initialization variables
 getValues = () ->
 	values = {}
 	$("script[type='application/init']").each ->
@@ -36,9 +30,6 @@ getValues = () ->
 	values
 
 # Set default values
-newwindow   = if window.newwindow.match('1') then true else false
-antiframe   = if window.antiframe.match('0') then false else true
-activeTimer = if window.activeTimer.match('0') then false else true
 
 # Code from http://snipplr.com/view/29434/
 # ----------------------------------------
@@ -48,7 +39,7 @@ setSelector = "#appslist"
 getOrder = ->
 	$.ajax
 		type: "POST"
-		url: scriptname
+		url: datas['scriptname']
 		data:
 			storeAppsListOrder: $(setSelector).sortable("toArray").join()
 		dataType: 'json'
@@ -56,10 +47,10 @@ getOrder = ->
 # function that restores the list order from session
 restoreOrder = ->
 	list = $(setSelector)
-	return null unless list? and appslistorder
+	return null unless list? and datas['appslistorder']
 
 	# make array from saved order
-	IDs = appslistorder.split ','
+	IDs = datas['appslistorder'].split ','
 
 	# fetch current order
 	items = list.sortable "toArray"
@@ -105,21 +96,25 @@ isHiddenFormValueSet = (option) ->
 ping = ->
 	$.ajax
 		type: "POST"
-		url: scriptname
+		url: datas['scriptname']
 		data:
 			ping: 1
 		dataType: 'json'
 		success: (data) ->
 			if data.auth
-				setTimeout ping, pingInterval
+				setTimeout ping, datas['pingInterval']
 			else
 				location.reload true
 
 window.ping = ping
 
 # Initialization
+datas = {}
 $(document).ready ->
-	if antiframe and top != self
+	datas = getValues()
+	# Export datas for other scripts
+	window.datas = datas
+	if datas['antiframe'] and top != self
 		top.location.href = location.href
 
 	$("#appslist").sortable
@@ -141,7 +136,7 @@ $(document).ready ->
 	# Menu tabs
 	menuTabs = $("#menu").tabs
 		active: 0
-	menuIndex = $('#menu a[href="#' + displaytab + '"]').parent().index()
+	menuIndex = $('#menu a[href="#' + datas['displaytab'] + '"]').parent().index()
 	menuIndex = 0 if menuIndex < 0
 	menuTabs.tabs "option", "active", menuIndex
 
@@ -153,17 +148,17 @@ $(document).ready ->
 	# $("#authMenu").tabs
 	# 	cookie:
 	# 		name: 'lemonldapauthchoice'
-	if choicetab
-		authMenuTabs.tabs "option", "active", $('#authMenu a[href="#' + choicetab + '"]').parent().index()
+	if datas['choicetab']
+		authMenuTabs.tabs "option", "active", $('#authMenu a[href="#' + datas['choicetab'] + '"]').parent().index()
 
-	if login
+	if datas['login']
 		$("input[type=password]:first").focus()
 	else
 		# Focus on first visible input
 		$("input[type!=hidden]:first").focus()
 
 	# Open links in new windows
-	if newwindow
+	if datas['newwindow']
 		$('#appslist a').attr "target", "_blank"
 
 	# Complete removeOther link
@@ -199,5 +194,9 @@ $(document).ready ->
 		lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else 'en';
 	else
 		lang = 'en'
+
+	# Ping if asked
+	if datas['pingInterval'] and datas['pingInterval'] > 0
+		window.setTimeout ping, datas['pingInterval']
 	translatePage(lang)
 

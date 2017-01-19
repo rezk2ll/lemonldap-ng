@@ -195,9 +195,6 @@
 
 <TMPL_IF NAME="PING">
 <!-- Keep session alive -->
-<script type="text/javascript">
-  setTimeout(ping,pingInterval);
-</script>
 </TMPL_IF>
 
 <TMPL_INCLUDE NAME="footer.tpl">
