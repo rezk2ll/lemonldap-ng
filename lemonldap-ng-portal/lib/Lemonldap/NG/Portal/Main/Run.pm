@@ -634,14 +634,13 @@ sub _dump {
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
-    my $csp = $self->csp;
+    my $csp = $self->csp . "form-action 'self'";
     push @{ $req->respHeaders },
       'X-XSS-Protection'       => '1; mode=block',
       'X-Content-Type-Options' => 'nosniff';
-    $csp .= "form-action 'self'";
     my $url = $args{params}->{URL};
     if ( $url and $url =~ s#https?://([^/]+).*#$1# ) {
-        $csp .= $url;
+        $csp .= " $url";
     }
     $csp .= ';';
     unless ( $self->conf->{portalAntiFrame} == 0 ) {
@@ -651,7 +650,7 @@ sub sendHtml {
               ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
         }
         if (@url) {
-            $csp = join 'frame-ancestors', @url;
+            $csp .= join( ' ', 'frame-ancestors', @url ) . ';';
         }
         else {
             push @{ $req->respHeaders }, 'X-Frame-Options' => 'DENY';
