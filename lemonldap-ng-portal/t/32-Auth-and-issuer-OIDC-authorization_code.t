@@ -86,8 +86,6 @@ ok(
 );
 count(1);
 expectOK($res);
-ok($res->[2]->[0]=~ /e\.source\.postMessage/, 'Found javascript');
-count(1);
 
 # Logout initiated by RP
 switch ('rp');
