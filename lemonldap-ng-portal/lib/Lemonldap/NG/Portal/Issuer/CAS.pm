@@ -200,6 +200,10 @@ sub run {
 
         $self->lmLog( "URL $url detected as an CAS LOGOUT URL", 'debug' );
 
+        # Disable Content-Security-Policy header since logout can be embedded
+        # in a frame
+        $req->frame(1);
+
         # GET parameters
         my $logout_url = $req->param('url');
 
