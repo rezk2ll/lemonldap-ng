@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 15;
+my $maintests = 16;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -95,7 +95,7 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
     ok(
         getHeader( $res, 'Content-Security-Policy' ) =~
           /frame-ancestors auth.idp.com/,
-        'Frame is authorizated'
+        ' Frame is authorizated'
       )
       or explain( $res->[1],
         'Content-Security-Policy => ...frame-ancestors auth.idp.com' );
@@ -109,6 +109,8 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         ),
         'Get iframe'
     );
+    ok( !defined getHeader( $res, 'Content-Security-Policy' ),
+        ' No CSP header' );
     ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleLogout',
         'SAMLRequest' );

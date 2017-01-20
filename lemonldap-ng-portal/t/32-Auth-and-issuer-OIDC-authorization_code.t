@@ -86,6 +86,8 @@ ok(
 );
 count(1);
 expectOK($res);
+ok( !defined getHeader( $res, 'Content-Security-Policy' ), ' No CSP header' );
+count(1);
 
 # Logout initiated by RP
 switch ('rp');

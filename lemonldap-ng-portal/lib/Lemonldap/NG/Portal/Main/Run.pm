@@ -634,16 +634,16 @@ sub _dump {
 
 sub sendHtml {
     my ( $self, $req, $template, %args ) = @_;
-    my $csp = $self->csp . "form-action 'self'";
     push @{ $req->respHeaders },
       'X-XSS-Protection'       => '1; mode=block',
       'X-Content-Type-Options' => 'nosniff';
-    my $url = $args{params}->{URL};
-    if ( $url and $url =~ s#https?://([^/]+).*#$1# ) {
-        $csp .= " $url";
-    }
-    $csp .= ';';
-    unless ( $self->conf->{portalAntiFrame} == 0 ) {
+    unless ( $req->frame or $self->conf->{portalAntiFrame} == 0 ) {
+        my $csp = $self->csp . "form-action 'self'";
+        my $url = $args{params}->{URL};
+        if ( $url and $url =~ s#https?://([^/]+).*#$1# ) {
+            $csp .= " $url";
+        }
+        $csp .= ';';
         my @url;
         if ( $req->info ) {
             @url = map { s#https?://([^/]+).*#$1#; $_ }
@@ -656,8 +656,8 @@ sub sendHtml {
             push @{ $req->respHeaders }, 'X-Frame-Options' => 'DENY';
             $csp .= "frame-ancestors 'none';";
         }
+        push @{ $req->respHeaders }, 'Content-Security-Policy' => $csp;
     }
-    push @{ $req->respHeaders }, 'Content-Security-Policy' => $csp;
 
     return $self->SUPER::sendHtml( $req, $template, %args );
 }

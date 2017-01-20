@@ -7,7 +7,7 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my $maintests = 13;
+my $maintests = 14;
 my $debug     = 'error';
 my ( $issuer, $sp, $res );
 my %handlerOR = ( issuer => [], sp => [] );
@@ -124,6 +124,8 @@ SKIP: {
         'Get iframe from IdP'
     );
     expectOK($res);
+    ok( !defined getHeader( $res, 'Content-Security-Policy' ),
+        ' No CSP header' );
 
     # Verify that user has been disconnected
     ok( $res = $issuer->_get( '/', cookie => "lemonldap=$idpId" ),

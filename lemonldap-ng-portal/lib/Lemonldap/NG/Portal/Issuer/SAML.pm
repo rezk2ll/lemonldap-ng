@@ -1382,6 +1382,7 @@ sub sloRelayPost {
 
     # Delete relay session
     $relayInfos->remove();
+    $req->frame(1);
     return $self->p->do( $req, ['autoPost'] );
 }
 
@@ -1408,6 +1409,10 @@ sub sloServer {
 
     # Ignore signature verification
     $self->disableSignatureVerification($logout);
+
+    # Disable Content-Security-Policy header since logout can be embedded in
+    # a frame
+    $req->frame(1);
 
     if ($request) {
 

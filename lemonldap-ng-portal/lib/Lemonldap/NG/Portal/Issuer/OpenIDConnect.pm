@@ -1223,6 +1223,7 @@ sub checkSession {
         'debug' );
 
     # TODO: access_control_allow_origin => '*'
+    $req->frame(1);
     return $self->p->sendHtml(
         $req,
         '../common/oidc_checksession',

@@ -53,6 +53,9 @@ has urlNotBase64 => ( is => 'rw' );
 # Menu error
 has menuError => ( is => 'rw' );
 
+# Frame flag (used by Run to not send Content-Security-Policy header)
+has frame => ( is => 'rw' );
+
 # Error type
 sub error_type {
     my $req = shift;
