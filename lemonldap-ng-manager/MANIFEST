@@ -43,6 +43,8 @@ site/static/bwr/angular-cookies/angular-cookies.min.js.map
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.js
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.css
 site/static/bwr/angular-ui-tree/dist/angular-ui-tree.min.js
+site/static/bwr/angular/angular-csp.css
+site/static/bwr/angular/angular-csp.min.css
 site/static/bwr/angular/angular.js
 site/static/bwr/angular/angular.min.js
 site/static/bwr/angular/angular.min.js.map

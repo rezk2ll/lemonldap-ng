@@ -106,6 +106,9 @@ META.yml
 README
 REST-API.md
 scripts/buildPortalWSDL
+site/coffee/confirm.coffee
+site/coffee/info.coffee
+site/coffee/oidcchecksession.coffee
 site/coffee/portal.coffee
 site/cron/purgeCentralCache
 site/cron/purgeCentralCache.cron.d
@@ -174,6 +177,8 @@ site/htdocs/static/common/BrowserID.png
 site/htdocs/static/common/calendar.png
 site/htdocs/static/common/cancel.png
 site/htdocs/static/common/CAS.png
+site/htdocs/static/common/css/bg.css
+site/htdocs/static/common/css/bg.min.css
 site/htdocs/static/common/css/buttons.css
 site/htdocs/static/common/css/buttons.min.css
 site/htdocs/static/common/css/inputicons.css
@@ -194,6 +199,8 @@ site/htdocs/static/common/js/confirm.js
 site/htdocs/static/common/js/confirm.min.js
 site/htdocs/static/common/js/info.js
 site/htdocs/static/common/js/info.min.js
+site/htdocs/static/common/js/oidcchecksession.js
+site/htdocs/static/common/js/oidcchecksession.min.js
 site/htdocs/static/common/js/portal.js
 site/htdocs/static/common/js/portal.min.js
 site/htdocs/static/common/key.png
