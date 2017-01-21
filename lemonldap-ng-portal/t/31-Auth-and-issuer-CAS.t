@@ -107,11 +107,11 @@ SKIP: {
     $query = $2;
     ok(
         getHeader( $res, 'Content-Security-Policy' ) =~
-          /frame-ancestors auth.idp.com/,
+          /child-src auth.idp.com/,
         'Frame is authorizated'
       )
       or explain( $res->[1],
-        'Content-Security-Policy => ...frame-ancestors auth.idp.com' );
+        'Content-Security-Policy => ...child-src auth.idp.com' );
 
     switch ('issuer');
     ok(
@@ -124,8 +124,10 @@ SKIP: {
         'Get iframe from IdP'
     );
     expectOK($res);
-    ok( !defined getHeader( $res, 'Content-Security-Policy' ),
-        ' No CSP header' );
+    ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancessor/,
+        ' Frame can be embedded' )
+      or explain( $res->[1],
+        'Content-Security-Policy does not contain a frame-ancessor' );
 
     # Verify that user has been disconnected
     ok( $res = $issuer->_get( '/', cookie => "lemonldap=$idpId" ),

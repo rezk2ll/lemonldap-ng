@@ -94,11 +94,11 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
     ( $url, $query ) = ( $1, $2 );
     ok(
         getHeader( $res, 'Content-Security-Policy' ) =~
-          /frame-ancestors auth.idp.com/,
+          /child-src auth.idp.com/,
         ' Frame is authorizated'
       )
       or explain( $res->[1],
-        'Content-Security-Policy => ...frame-ancestors auth.idp.com' );
+        'Content-Security-Policy => ...child-src auth.idp.com' );
 
     ok(
         $res = $issuer->_get(
@@ -109,8 +109,9 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         ),
         'Get iframe'
     );
-    ok( !defined getHeader( $res, 'Content-Security-Policy' ),
-        ' No CSP header' );
+    ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancessor/,
+        ' Framing authorizated' )
+      or explain( $res->[1], 'No frame-ancessor' );
     ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleLogout',
         'SAMLRequest' );

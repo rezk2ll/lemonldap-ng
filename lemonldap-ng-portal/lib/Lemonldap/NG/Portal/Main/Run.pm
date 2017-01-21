@@ -637,27 +637,33 @@ sub sendHtml {
     push @{ $req->respHeaders },
       'X-XSS-Protection'       => '1; mode=block',
       'X-Content-Type-Options' => 'nosniff';
-    unless ( $req->frame or $self->conf->{portalAntiFrame} == 0 ) {
-        my $csp = $self->csp . "form-action 'self'";
-        my $url = $args{params}->{URL};
-        if ( $url and $url =~ s#https?://([^/]+).*#$1# ) {
-            $csp .= " $url";
-        }
-        $csp .= ';';
-        my @url;
-        if ( $req->info ) {
-            @url = map { s#https?://([^/]+).*#$1#; $_ }
-              ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
-        }
-        if (@url) {
-            $csp .= join( ' ', 'frame-ancestors', @url ) . ';';
-        }
-        else {
-            push @{ $req->respHeaders }, 'X-Frame-Options' => 'DENY';
-            $csp .= "frame-ancestors 'none';";
-        }
-        push @{ $req->respHeaders }, 'Content-Security-Policy' => $csp;
+
+    # Set authorizated URL for POST
+    my $csp = $self->csp . "form-action 'self'";
+    my $url = $args{params}->{URL};
+    if ( $url and $url =~ s#https?://([^/]+).*#$1# ) {
+        $csp .= " $url";
     }
+    $csp .= ';';
+
+    # Deny using portal in frame except if it is required
+    unless ( $req->frame or $self->conf->{portalAntiFrame} == 0 ) {
+        push @{ $req->respHeaders }, 'X-Frame-Options' => 'DENY';
+        $csp .= "frame-ancestors 'none';";
+    }
+
+    # Check if frames need to be embedded
+    my @url;
+    if ( $req->info ) {
+        @url = map { s#https?://([^/]+).*#$1#; $_ }
+          ( $req->info =~ /<iframe.*?src="(.*?)"/sg );
+    }
+    if (@url) {
+        $csp .= join( ' ', 'child-src', @url ) . ';';
+    }
+
+    # Set CSP header
+    push @{ $req->respHeaders }, 'Content-Security-Policy' => $csp;
 
     return $self->SUPER::sendHtml( $req, $template, %args );
 }

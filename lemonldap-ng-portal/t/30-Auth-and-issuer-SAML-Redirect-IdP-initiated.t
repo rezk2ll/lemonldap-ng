@@ -103,12 +103,11 @@ m#iframe src="http://auth.sp.com(/saml/proxySingleLogout)\?(SAMLRequest=.*?)"#,
     $url = $1;
     my $query = $2;
     ok(
-        getHeader( $res, 'Content-Security-Policy' ) =~
-          /frame-ancestors auth.sp.com/,
+        getHeader( $res, 'Content-Security-Policy' ) =~ /child-src auth.sp.com/,
         'Frame is authorizated'
       )
       or explain( $res->[1],
-        'Content-Security-Policy => ...frame-ancestors auth.idp.com' );
+        'Content-Security-Policy => ...child-src auth.idp.com' );
 
     switch ('sp');
     ok( $res = $sp->_get( $url, query => $query, accept => 'text/html' ),
@@ -121,8 +120,10 @@ m#iframe src="http://auth.sp.com(/saml/proxySingleLogout)\?(SAMLRequest=.*?)"#,
     ok( $res = $issuer->_get( $url, query => $query, accept => 'text/html' ),
         'Push SAML response to IdP' );
     expectOK($res);
-    ok( !defined getHeader( $res, 'Content-Security-Policy' ),
-        ' No CSP header' );
+    ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancessor/,
+        ' Frame can be embedded' )
+      or explain( $res->[1],
+        'Content-Security-Policy does not contain a frame-ancessor' );
 
     # Test if logout is done
     switch ('issuer');

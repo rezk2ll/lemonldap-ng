@@ -86,7 +86,10 @@ ok(
 );
 count(1);
 expectOK($res);
-ok( !defined getHeader( $res, 'Content-Security-Policy' ), ' No CSP header' );
+ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancessor/,
+    ' Frame can be embedded' )
+  or explain( $res->[1],
+    'Content-Security-Policy does not contain a frame-ancessor' );
 count(1);
 
 # Logout initiated by RP
