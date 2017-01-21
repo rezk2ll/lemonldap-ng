@@ -93,7 +93,7 @@ sub unauthAdminSessions {
     return $self->dispatch_to(
         $req,
         qw(getCookies getAttributes isAuthorizedURI getMenuApplications
-          newSession deleteSession get_key_from_all_sessions)
+          newSession setAttributes deleteSession get_key_from_all_sessions)
     );
 }
 
@@ -213,8 +213,9 @@ sub getAttributes {
         push @tmp, SOAP::Data->name( error => 1 )->type('int');
     }
     else {
-        $self->p->userInfo( "SOAP attributes request for "
-              . $session->data->{ $self->conf->{whatToTrace} } );
+        my $wtt = $session->data->{ $self->conf->{whatToTrace} };
+        $self->p->userInfo(
+            "SOAP attributes request for " . ( $wtt ? $wtt : $id ) );
         push @tmp, SOAP::Data->name( error => 0 )->type('int');
         push @tmp,
           SOAP::Data->name( attributes =>
@@ -290,18 +291,15 @@ sub newSession {
         return 0;
     }
 
+    $args ||= {};
     my $infos = {};
     %$infos = %$args;
     $infos->{_utime} = time();
 
     $session->update($infos);
 
-    $self->lmLog(
-        "SOAP request to store "
-          . $session->id . " ("
-          . $session->data->{ $self->conf->{whatToTrace} } . ")",
-        'debug'
-    );
+    $self->lmLog( "SOAP request create a new session (" . $session->id . ")",
+        'debug' );
 
     return SOAP::Data->name( attributes => _buildSoapHash( $session->data ) );
 }
