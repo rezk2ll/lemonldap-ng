@@ -109,9 +109,9 @@ m#iframe src="http://auth.idp.com(/saml/relaySingleLogoutPOST)\?(relay=.*?)"#s,
         ),
         'Get iframe'
     );
-    ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancessor/,
+    ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
         ' Framing authorizated' )
-      or explain( $res->[1], 'No frame-ancessor' );
+      or explain( $res->[1], 'No frame-ancestors' );
     ( $host, $url, $query ) =
       expectAutoPost( $res, 'auth.sp.com', '/saml/proxySingleLogout',
         'SAMLRequest' );

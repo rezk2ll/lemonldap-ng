@@ -124,10 +124,10 @@ SKIP: {
         'Get iframe from IdP'
     );
     expectOK($res);
-    ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancessor/,
+    ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
         ' Frame can be embedded' )
       or explain( $res->[1],
-        'Content-Security-Policy does not contain a frame-ancessor' );
+        'Content-Security-Policy does not contain a frame-ancestors' );
 
     # Verify that user has been disconnected
     ok( $res = $issuer->_get( '/', cookie => "lemonldap=$idpId" ),

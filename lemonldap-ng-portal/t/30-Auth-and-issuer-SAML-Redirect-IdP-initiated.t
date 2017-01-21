@@ -120,10 +120,10 @@ m#iframe src="http://auth.sp.com(/saml/proxySingleLogout)\?(SAMLRequest=.*?)"#,
     ok( $res = $issuer->_get( $url, query => $query, accept => 'text/html' ),
         'Push SAML response to IdP' );
     expectOK($res);
-    ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancessor/,
+    ok( getHeader( $res, 'Content-Security-Policy' ) !~ /frame-ancestors/,
         ' Frame can be embedded' )
       or explain( $res->[1],
-        'Content-Security-Policy does not contain a frame-ancessor' );
+        'Content-Security-Policy does not contain a frame-ancestors' );
 
     # Test if logout is done
     switch ('issuer');
