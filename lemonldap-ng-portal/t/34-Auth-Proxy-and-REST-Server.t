@@ -73,7 +73,7 @@ ok(
 expectOK($res);
 ok( $res = eval { JSON::from_json( $res->[2]->[0] ) }, ' GET JSON' )
   or print STDERR $@;
-my $newId = $res->{sessionId};
+my $newId = $res->{session}->{_session_id};
 
 # Verify a key
 ok( $res = $issuer->_get("/sessions/global/$newId/uid"), 'Verify uid' );

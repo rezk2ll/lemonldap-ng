@@ -156,8 +156,10 @@ sub expectCookie {
     $cookieName ||= 'lemonldap';
     my $cookies = getCookies($res);
     my $id;
-    ok( defined( $id = $cookies->{$cookieName} ), " Get cookie $cookieName" )
-      or explain( $res->[1], "Set-Cookie: $cookieName=something" );
+    ok(
+        defined( $id = $cookies->{$cookieName} ),
+        " Get cookie $cookieName ($id)"
+    ) or explain( $res->[1], "Set-Cookie: $cookieName=something" );
     count(1);
     return $id;
 }
@@ -292,8 +294,8 @@ sub _get {
                 ? ( 'REMOTE_USER' => $args{remote_user} )
                 : ()
             ),
-            'REQUEST_METHOD' => 'GET',
-            'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
+            'REQUEST_METHOD' => $args{method} || 'GET',
+            'REQUEST_URI' => $path . ( $args{query} ? "?$args{query}" : '' ),
             ( $args{query} ? ( QUERY_STRING => $args{query} ) : () ),
             'SCRIPT_NAME'     => '',
             'SERVER_NAME'     => 'auth.example.com',
@@ -327,11 +329,11 @@ sub _post {
                 ? ( 'REMOTE_USER' => $args{remote_user} )
                 : ()
             ),
-            'REQUEST_METHOD' => 'POST',
-            'REQUEST_URI'    => $path . ( $args{query} ? "?$args{query}" : '' ),
-            'SCRIPT_NAME'    => '',
-            'SERVER_NAME'    => 'auth.example.com',
-            'SERVER_PORT'    => '80',
+            'REQUEST_METHOD' => $args{method} || 'POST',
+            'REQUEST_URI' => $path . ( $args{query} ? "?$args{query}" : '' ),
+            'SCRIPT_NAME' => '',
+            'SERVER_NAME'     => 'auth.example.com',
+            'SERVER_PORT'     => '80',
             'SERVER_PROTOCOL' => 'HTTP/1.1',
             ( $args{custom} ? %{ $args{custom} } : () ),
             'psgix.input.buffered' => 0,
@@ -341,6 +343,18 @@ sub _post {
               || 'application/x-www-form-urlencoded',
         }
     );
+}
+
+sub _delete {
+    my ( $self, $path, %args ) = @_;
+    $args{method} = 'DELETE';
+    return $self->_get( $path, %args );
+}
+
+sub _put {
+    my ( $self, $path, $body, %args ) = @_;
+    $args{method} = 'PUT';
+    return $self->_post( $path, $body, %args );
 }
 
 1;

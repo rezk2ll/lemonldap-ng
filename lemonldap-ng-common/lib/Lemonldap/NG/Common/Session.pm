@@ -126,7 +126,7 @@ sub _tie_session {
     eval {
         # SOAP session module must be directly tied
         if ( $self->storageModule =~
-            /Lemonldap::NG::Common::Apache::Session::SOAP/ )
+            /^Lemonldap::NG::Common::Apache::Session/ )
         {
             tie %h, $self->storageModule, $self->id,
               { %{ $self->options }, %$options };

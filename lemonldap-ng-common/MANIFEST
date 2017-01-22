@@ -4,6 +4,7 @@ lib/Lemonldap/NG/Common.pm
 lib/Lemonldap/NG/Common/Apache/Session.pm
 lib/Lemonldap/NG/Common/Apache/Session/Generate/SHA256.pm
 lib/Lemonldap/NG/Common/Apache/Session/Lock.pm
+lib/Lemonldap/NG/Common/Apache/Session/REST.pm
 lib/Lemonldap/NG/Common/Apache/Session/Serialize/JSON.pm
 lib/Lemonldap/NG/Common/Apache/Session/SOAP.pm
 lib/Lemonldap/NG/Common/Apache/Session/Store.pm
@@ -20,6 +21,7 @@ lib/Lemonldap/NG/Common/Conf/Backends/JSONFile.pm
 lib/Lemonldap/NG/Common/Conf/Backends/LDAP.pm
 lib/Lemonldap/NG/Common/Conf/Backends/MongoDB.pm
 lib/Lemonldap/NG/Common/Conf/Backends/RDBI.pm
+lib/Lemonldap/NG/Common/Conf/Backends/REST.pm
 lib/Lemonldap/NG/Common/Conf/Backends/SOAP.pm
 lib/Lemonldap/NG/Common/Conf/Compact.pm
 lib/Lemonldap/NG/Common/Conf/Constants.pm

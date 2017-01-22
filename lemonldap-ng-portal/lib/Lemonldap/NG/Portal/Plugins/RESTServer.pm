@@ -152,13 +152,11 @@ sub newSession {
 
     $session->update($infos);
 
-    $self->lmLog(
-        'REST request to create a session for '
-          . $session->data->{ $self->conf->{whatToTrace} },
-        'debug'
-    );
+    $self->lmLog( "SOAP request create a new session (" . $session->id . ")",
+        'debug' );
+
     return $self->p->sendJSONresponse( $req,
-        { result => 1, sessionId => $session->data->{_session_id} } );
+        { result => 1, session => $session->data } );
 }
 
 sub updateSession {

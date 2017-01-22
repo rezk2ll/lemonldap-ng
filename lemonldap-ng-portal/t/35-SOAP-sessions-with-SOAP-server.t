@@ -106,7 +106,6 @@ sub issuer {
                 authentication    => 'Demo',
                 userDB            => 'Demo',
                 soapSessionServer => 1,
-                whatToTrace => 'cn',
             }
         }
     );
