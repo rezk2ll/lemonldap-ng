@@ -27,8 +27,11 @@ extends 'Lemonldap::NG::Portal::Main::Plugin',
 has ott => (
     is      => 'rw',
     default => sub {
-        return $_[0]->{p}
-          ->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->conf->{registerTimeout} )
+          if ( $_[0]->conf->{registerTimeout} );
+        return $ott;
     }
 );
 
