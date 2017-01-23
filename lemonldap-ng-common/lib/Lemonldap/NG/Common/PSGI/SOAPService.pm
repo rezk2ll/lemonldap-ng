@@ -31,7 +31,7 @@ sub AUTOLOAD {
     $AUTOLOAD =~ s/.*:://;
     if ( grep { $_ eq $AUTOLOAD } @{ $self->{func} } ) {
         my $tmp = $self->{obj}->$AUTOLOAD( $self->{req}, @_ );
-        unless ( ref($tmp) and ref($tmp) eq 'SOAP::Data' ) {
+        unless ( ref($tmp) and ref($tmp) =~ /^SOAP/ ) {
             $tmp = SOAP::Data->name( result => $tmp );
         }
         return $tmp;

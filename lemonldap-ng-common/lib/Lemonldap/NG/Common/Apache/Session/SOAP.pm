@@ -235,8 +235,12 @@ sub get_key_from_all_sessions() {
     }
     die('proxy is required') unless ( $self->{proxy} );
     ( $user, $password ) = ( $args->{User}, $args->{Password} );
+
+    # Get token before query
+    my $token = Lemonldap::NG::Handler::Main->tsv->{cipher}
+      ->decrypt( $self->_soapCall('getCipheredToken') );
     if ( ref($data) eq 'CODE' ) {
-        my $r = $self->_soapCall( "get_key_from_all_sessions", $args );
+        my $r = $self->_soapCall( "get_key_from_all_sessions", $token );
         my $res;
         if ($r) {
             foreach my $k ( keys %$r ) {
@@ -246,7 +250,7 @@ sub get_key_from_all_sessions() {
         }
     }
     else {
-        return $self->_soapCall( "get_key_from_all_sessions", $args, $data );
+        return $self->_soapCall( "get_key_from_all_sessions", $token, $data );
     }
 }
 

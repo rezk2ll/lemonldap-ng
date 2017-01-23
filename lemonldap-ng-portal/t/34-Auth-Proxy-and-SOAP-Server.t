@@ -52,6 +52,28 @@ SKIP: {
     count(1);
     expectOK($res);
 
+    use_ok('Lemonldap::NG::Common::Apache::Session::SOAP');
+    ok(
+        $res =
+          Lemonldap::NG::Common::Apache::Session::SOAP
+          ->get_key_from_all_sessions(
+            {
+                proxy => 'http://auth.idp.com/adminSessions',
+                ns    => 'urn:Lemonldap/NG/Common/PSGI/SOAPService'
+            },
+            [ 'uid', 'cn' ],
+          ),
+        'Try get_key_from_all_sessions'
+    );
+    ok( defined $res->{$spId}, ' Found session' );
+    count(3);
+
+#my $soap = SOAP::Lite->new->proxy('http://auth.idp.com/adminSessions')->ns('urn:Lemonldap/NG/Common/PSGI/SOAPService');
+#my $token = $issuer->p->conf->{cipher}->decrypt($soap->getCipheredToken->result());
+#print STDERR Dumper($token);
+#print STDERR Dumper(
+#      $soap->get_key_from_all_sessions( $token, ['uid'] )->result());
+
     # Logout
     ok(
         $res = $sp->_get(
@@ -91,6 +113,7 @@ sub LWP::UserAgent::request {
     my $res;
     my $s = $req->content;
     my $client = ( $host eq 'idp' ? $issuer : $sp );
+    switch ( $host eq 'idp' ? 'issuer' : 'sp' );
     ok(
         $res = $client->_post(
             $url,
@@ -115,6 +138,7 @@ sub LWP::UserAgent::request {
     $httpResp->content( join( '', @{ $res->[2] } ) );
     pass(' @ END OF SOAP REQUEST @');
     count(4);
+    switch ( $host eq 'idp' ? 'sp' : 'issuer' );
     return $httpResp;
 }
 

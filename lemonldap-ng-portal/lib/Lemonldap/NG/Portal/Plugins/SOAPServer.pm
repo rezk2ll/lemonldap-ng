@@ -93,7 +93,8 @@ sub unauthAdminSessions {
     return $self->dispatch_to(
         $req,
         qw(getCookies getAttributes isAuthorizedURI getMenuApplications
-          newSession setAttributes deleteSession get_key_from_all_sessions)
+          newSession setAttributes deleteSession getCipheredToken
+          get_key_from_all_sessions)
     );
 }
 
@@ -321,18 +322,38 @@ sub deleteSession {
 
 # Returns key from all sessions
 
-sub get_key_from_all_sessions {
-    my $self = shift;
-    my $req  = shift;
+sub getCipheredToken {
+    my ( $self, $req ) = @_;
+    require Lemonldap::NG::Portal::Lib::OneTimeToken;
+    return $self->conf->{cipher}->encrypt(
+        Lemonldap::NG::Portal::Lib::OneTimeToken->new(
+            { p => $self->p, conf => $self->conf, timeout => 5 }
+        )->createToken()
+    );
+}
 
+sub get_key_from_all_sessions {
+    my $self  = shift;
+    my $req   = shift;
+    my $token = shift;
+
+    # Verify that token is valid (must be unciphered by client)
+    require Lemonldap::NG::Portal::Lib::OneTimeToken;
+    unless (
+        Lemonldap::NG::Portal::Lib::OneTimeToken->new(
+            { p => $self->p, conf => $self->conf }
+        )->getToken($token)
+      )
+    {
+        die SOAP::Fault->faultcode('Server.Custom')->faultstring('Bad token');
+    }
     my $moduleOptions = $self->conf->{globalStorageOptions} || {};
     $moduleOptions->{backend} = $self->conf->{globalStorage};
-    my $module = "Lemonldap::NG::Common::Apache::Session";
-
-    require $module;
+    require Lemonldap::NG::Common::Apache::Session;
 
     no strict 'refs';
-    return $module->get_key_from_all_sessions( $moduleOptions, @_ );
+    return Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+        $moduleOptions, @_ );
 }
 
 # Check user's authorization for uri.
