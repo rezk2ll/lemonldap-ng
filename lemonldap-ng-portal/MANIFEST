@@ -46,6 +46,7 @@ lib/Lemonldap/NG/Portal/Lib/Choice.pm
 lib/Lemonldap/NG/Portal/Lib/DBI.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
+lib/Lemonldap/NG/Portal/Lib/OneTimeToken.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/Server.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm

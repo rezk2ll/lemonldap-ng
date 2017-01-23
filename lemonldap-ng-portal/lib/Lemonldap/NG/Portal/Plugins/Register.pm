@@ -24,6 +24,14 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::SMTP';
 
+has ott => (
+    is      => 'rw',
+    default => sub {
+        return $_[0]->{p}
+          ->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+    }
+);
+
 # INITIALIZATION
 
 sub init {
@@ -85,13 +93,10 @@ sub _register {
             'debug' );
 
         # Get the corresponding session
-        my $registerSessionObj =
-          $self->p->getApacheSession( $req->datas->{register_token} );
-
-        if ( $registerSessionObj && $registerSessionObj->data ) {
+        if ( my $datas = $self->ott->getToken( $req->datas->{register_token} ) )
+        {
             foreach (qw(mail firstname lastname ipAddr)) {
-                $req->datas->{registerInfo}->{$_} =
-                  $registerSessionObj->data->{$_};
+                $req->datas->{registerInfo}->{$_} = $datas->{$_};
             }
             $self->lmLog(
                 "User associated to token: "
@@ -99,8 +104,9 @@ sub _register {
                 'debug'
             );
         }
-
-        return PE_BADMAILTOKEN unless ( $req->datas->{registerInfo}->{mail} );
+        else {
+            return PE_BADMAILTOKEN;
+        }
     }
     else {
 
@@ -121,7 +127,8 @@ sub _register {
             $req->datas->{captcha_user_code} = $req->param('captcha_user_code');
             $req->datas->{captcha_check_code} = $req->param('captcha_code');
 
-            unless ( $self->{captcha_user_code} && $self->{captcha_check_code} )
+            unless ( $self->{captcha_user_code}
+                && $self->{captcha_check_code} )
             {
                 $self->lmLog( "Captcha not filled", 'warn' );
                 return PE_CAPTCHAEMPTY;
@@ -186,39 +193,16 @@ sub _register {
     # Skip this step if confirmation was already sent
     unless ( $req->datas->{register_token} or $register_session ) {
 
-        # Create a new session
-        my $registerSessionObj = $self->p->getApacheSession();
-
-        # Set _utime for session autoremove
-        # Use default session timeout and register session timeout to compute it
-        my $time            = time();
-        my $timeout         = $self->conf->{timeout};
-        my $registerTimeout = $self->conf->{registerTimeout} || $timeout;
-
-        my $infos = {};
-        $infos->{_utime} = $time + ( $registerTimeout - $timeout );
-
-        # Store expiration timestamp for further use
-        $infos->{registerSessionTimeoutTimestamp} = $time + $registerTimeout;
-        $req->datas->{registerInfo}->{registerSessionTimeoutTimestamp} =
-          $time + $registerTimeout;
-
-        # Store start timestamp for further use
-        $infos->{registerSessionStartTimestamp} = $time;
-        $req->datas->{registerInfo}->{registerSessionStartTimestamp} = $time;
-
-        # Store infos
-        $infos->{mail}      = $req->datas->{registerInfo}->{mail};
-        $infos->{firstname} = $req->datas->{registerInfo}->{firstname};
-        $infos->{lastname}  = $req->datas->{registerInfo}->{lastname};
-        $infos->{ipAddr}    = $req->datas->{registerInfo}->{ipAddr};
-
-        # Store type
-        $infos->{_type} = "register";
-
-        # Update session
-        $registerSessionObj->update($infos);
-        $register_session = $registerSessionObj->id;
+        # Create token
+        $register_session = $self->ott->createToken(
+            {
+                mail      => $req->datas->{registerInfo}->{mail},
+                firstname => $req->datas->{registerInfo}->{firstname},
+                lastname  => $req->datas->{registerInfo}->{lastname},
+                ipAddr    => $req->datas->{registerInfo}->{ipAddr},
+                _type     => 'register',
+            }
+        );
     }
 
     # Send confirmation mail
@@ -228,12 +212,6 @@ sub _register {
 
         # Check if confirmation mail has already been sent
         $self->lmLog( 'No register_token', 'debug' );
-        $self->lmLog(
-            'mail '
-              . ( $req->datas->{mail_already_sent} ? 'already' : 'not' )
-              . ' sent',
-            'debug'
-        );
 
         # Read session to get creation and expiration dates
         $req->id($register_session) unless $req->id;
@@ -242,14 +220,10 @@ sub _register {
 
         my $registerSessionObj =
           $self->p->getApacheSession( $register_session, 1 );
-        $req->datas->{registerInfo}->{registerSessionTimeoutTimestamp} =
-          $registerSessionObj->data->{registerSessionTimeoutTimestamp};
-        $req->datas->{registerInfo}->{registerSessionStartTimestamp} =
-          $registerSessionObj->data->{registerSessionStartTimestamp};
 
         # Mail session expiration date
         my $expTimestamp =
-          $req->datas->{registerInfo}->{registerSessionTimeoutTimestamp};
+          $self->{conf}->{registerTimeout} || $self->conf->{timeout} + time;
 
         $self->lmLog( "Register expiration timestamp: $expTimestamp", 'debug' );
 
@@ -259,8 +233,7 @@ sub _register {
           strftime( "%H:%M", localtime $expTimestamp );
 
         # Mail session start date
-        my $startTimestamp =
-          $req->datas->{registerInfo}->{registerSessionStartTimestamp};
+        my $startTimestamp = time;
 
         $self->lmLog( "Register start timestamp: $startTimestamp", 'debug' );
 
@@ -343,24 +316,6 @@ sub _register {
             "Could not create user " . $req->datas->{registerInfo}->{login},
             'error' );
         return $result;
-    }
-
-    # Register token can be used only one time, delete the session if all is ok
-
-    # Get the corresponding session
-    my $registerSessionObj =
-      $self->p->getApacheSession( $req->datas->{register_token} );
-
-    if ($registerSessionObj) {
-
-        $self->lmLog(
-            "Delete register session " . $req->datas->{register_token},
-            'debug' );
-
-        $registerSessionObj->remove;
-    }
-    else {
-        $self->lmLog( "Register session not found", 'warn' );
     }
 
     my $subject = $self->conf->{registerDoneSubject};
