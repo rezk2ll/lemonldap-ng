@@ -3,7 +3,7 @@
 # This plugin adds the following entry points:
 #  * POST /sessions     , methods: getCookies getAttributes isAuthorizedURI
 #  * POST /adminSessions, methods: getAttributes setAttributes isAuthorizedURI
-#                                  newSession deleteSession
+#                                  newSession deleteSession getCipheredToken
 #                                  get_key_from_all_sessions
 #  * POST /config       , methods: getConfig lastCfg
 #

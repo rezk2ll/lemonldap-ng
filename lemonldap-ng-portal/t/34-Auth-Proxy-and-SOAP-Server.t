@@ -68,12 +68,6 @@ SKIP: {
     ok( defined $res->{$spId}, ' Found session' );
     count(3);
 
-#my $soap = SOAP::Lite->new->proxy('http://auth.idp.com/adminSessions')->ns('urn:Lemonldap/NG/Common/PSGI/SOAPService');
-#my $token = $issuer->p->conf->{cipher}->decrypt($soap->getCipheredToken->result());
-#print STDERR Dumper($token);
-#print STDERR Dumper(
-#      $soap->get_key_from_all_sessions( $token, ['uid'] )->result());
-
     # Logout
     ok(
         $res = $sp->_get(

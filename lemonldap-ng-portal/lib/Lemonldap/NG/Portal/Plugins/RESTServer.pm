@@ -7,7 +7,7 @@
 #   * GET /sessions/<type>/<session-id>/[k1,k2]  : get some session key value
 #   * POST /sessions/<type>                      : create a session
 #   * PUT /sessions/<type>/<session-id>          : update some keys
-#   * DELETE /sessions/<type>/<session-id>  : delete a session
+#   * DELETE /sessions/<type>/<session-id>       : delete a session
 #
 # - Sessions for connected users (if restSessionServer is on):
 #   * GET /mysession/<type>                      : get session datas
