@@ -316,7 +316,7 @@ sub deleteSession {
 
     $self->lmLog( "SOAP request to delete session $id", 'debug' );
 
-    return $self->p->_deleteSession($session);
+    return $self->p->_deleteSession( $req, $session );
 }
 
 # Returns key from all sessions

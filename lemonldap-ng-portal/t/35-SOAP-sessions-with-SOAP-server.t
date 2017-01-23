@@ -44,7 +44,36 @@ SKIP: {
         'Post user/password'
     );
     expectRedirection( $res, 'http://auth.sp.com' );
-    expectCookie($res);
+    my $spId = expectCookie($res);
+
+    # Test if we're authenticated
+    ok( $res = $sp->_get( '/', cookie => "lemonldap=$spId" ),
+        'Try to get menu' );
+    count(1);
+    expectOK($res);
+
+    # Logout
+    ok(
+        $res = $sp->_get(
+            '/',
+            query  => 'logout',
+            accept => 'text/html',
+            cookie => "lemonldap=$spId"
+        ),
+        'Ask for logout'
+    );
+    count(1);
+    expectOK($res);
+
+    # Test if logout is done
+    ok(
+        $res = $sp->_get(
+            '/', cookie => "lemonldap=$spId",
+        ),
+        'Test if user is reject on IdP'
+    );
+    count(1);
+    expectReject($res);
 }
 
 count($maintests);
@@ -56,7 +85,7 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.((?:id|s)p).com(.*)#, 'SOAP request' );
+    ok( $req->uri =~ m#http://auth.((?:id|s)p).com(.*)#, ' @ SOAP REQUEST @' );
     my $host = $1;
     my $url  = $2;
     my $res;
@@ -72,11 +101,11 @@ sub LWP::UserAgent::request {
                 HTTP_SOAPACTION => $req->header('Soapaction'),
             },
         ),
-        'Execute request'
+        ' Execute request'
     );
     expectOK($res);
     ok( getHeader( $res, 'Content-Type' ) =~ m#^(?:text|application)/xml#,
-        'Content is XML' )
+        ' Content is XML' )
       or explain( $res->[1], 'Content-Type => application/xml' );
     my $httpResp = HTTP::Response->new( $res->[0], 'OK' );
 
@@ -84,7 +113,8 @@ sub LWP::UserAgent::request {
         $httpResp->header( $name, shift( @{ $res->[1] } ) );
     }
     $httpResp->content( join( '', @{ $res->[2] } ) );
-    count(3);
+    pass(' @ END OF SOAP REQUEST @');
+    count(4);
     return $httpResp;
 }
 

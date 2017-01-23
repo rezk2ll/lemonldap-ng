@@ -95,7 +95,10 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.idp.com(.*)#, " REST request (uri: $1)" );
+    ok(
+        $req->uri =~ m#http://auth.idp.com(.*)#,
+        ' @ REST request (' . $req->method . " $1)"
+    );
     count(1);
     my $url = $1;
     my $res;
@@ -137,6 +140,8 @@ sub LWP::UserAgent::request {
         $httpResp->header( $name, shift( @{ $res->[1] } ) );
     }
     $httpResp->content( join( '', @{ $res->[2] } ) );
+    pass(' @ END OF REST REQUEST');
+    count(1);
     return $httpResp;
 }
 

@@ -16,6 +16,7 @@ switch ('sp');
 
 ok( $sp = sp(), 'SP portal' );
 $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
+count(2);
 
 # Simple SP access
 ok(
@@ -35,6 +36,7 @@ ok(
     ),
     'Post user/password'
 );
+count(2);
 expectRedirection( $res, 'http://auth.sp.com' );
 $spId = expectCookie($res);
 
@@ -159,7 +161,7 @@ ok(
 count(1);
 expectOK($res);
 
-# Test if logout is done
+# Test if user is reject on IdP
 ok(
     $res = $sp->_get(
         '/', cookie => "lemonldap=$spId",
@@ -169,7 +171,6 @@ ok(
 count(1);
 expectReject($res);
 
-count(4);
 clean_sessions();
 done_testing( count() );
 
@@ -178,15 +179,19 @@ no warnings 'redefine';
 
 sub LWP::UserAgent::request {
     my ( $self, $req ) = @_;
-    ok( $req->uri =~ m#http://auth.idp.com(.*)#, " REST request (uri: $1)" );
+    ok(
+        $req->uri =~ m#http://auth.idp.com(.*)#,
+        ' @ REST request (' . $req->method . " $1)"
+    );
     count(1);
     my $url = $1;
     my $res;
     my $s = $req->content;
-    if ( $req->method =~ /^post$/i ) {
-        my $s = $req->content;
+    if ( $req->method =~ /^(post|put)$/i ) {
+        my $mth = '_' . lc($1);
+        my $s   = $req->content;
         ok(
-            $res = $issuer->_post(
+            $res = $issuer->$mth(
                 $url,
                 IO::String->new($s),
                 length => length($s),
@@ -198,9 +203,10 @@ sub LWP::UserAgent::request {
         expectOK($res);
         $idpId = expectCookie($res);
     }
-    else {
+    elsif ( $req->method =~ /^(get|delete)$/i ) {
+        my $mth = '_' . lc($1);
         ok(
-            $res = $issuer->_get(
+            $res = $issuer->$mth(
                 $url,
                 accept => $req->header('Accept'),
                 cookie => $req->header('Cookie')
@@ -221,6 +227,8 @@ sub LWP::UserAgent::request {
         $httpResp->header( $name, shift( @{ $res->[1] } ) );
     }
     $httpResp->content( join( '', @{ $res->[2] } ) );
+    pass(' @ END OF REST REQUEST');
+    count(1);
     return $httpResp;
 }
 
@@ -243,7 +251,6 @@ sub issuer {
                 userDB            => 'Demo',
                 restSessionServer => 1,
                 restConfigServer  => 1,
-                whatToTrace       => '_whatToTrace',
             }
         }
     );
