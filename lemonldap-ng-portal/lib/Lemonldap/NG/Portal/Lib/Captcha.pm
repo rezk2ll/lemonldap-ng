@@ -17,12 +17,23 @@ has lines =>
   ( is => 'rw', default => sub { $_[0]->{conf}->{captchaLines} || 5 } );
 has scramble =>
   ( is => 'rw', default => sub { $_[0]->{conf}->{captchaScramble} || 1 } );
-
 has fgColor =>
   ( is => 'rw', default => sub { $_[0]->{conf}->{captchaFg} || '#403030' } );
-
 has bgColor =>
   ( is => 'rw', default => sub { $_[0]->{conf}->{captchaBg} || '#FF644B' } );
+has rndmax =>
+  ( is => 'rw', default => sub { $_[0]->{conf}->{captcha_size} || 6 } );
+has timeout => ( is => 'rw', default => sub { $_[0]->{conf}->{formTimeout} } );
+
+has ott => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        my $ott = Lemonldap::NG::Portal::Lib::OneTimeToken->new(
+            { timeout => $_[0]->timeout } );
+        return $ott;
+    }
+);
 
 # Returns secret + a HTML <img> tag with embedded image
 sub getCaptcha {
@@ -33,13 +44,29 @@ sub getCaptcha {
         lines    => $self->lines,
         gd_font  => 'Giant',
         scramble => $self->scramble,
+        rndmax   => $self->rndmax,
     );
     $image->random;
     $image->create( 'normal', 'default', $self->fgColor, $self->bgColor );
     my ( $imageData, $mimeType, $rdm ) = $image->out( force => 'png' );
     my $img = '<img src="data:image/png;base64,'
       . encode_base64( $imageData, '' ) . '">';
-    return ( $rdm, $img );
+    my $token = $self->ott->createToken( { captcha => $rdm } );
+    return ( $token, $img );
+}
+
+sub validateCaptcha {
+    my ( $self, $token, $value ) = @_;
+    my $s = $self->ott->getToken($token);
+    unless ($s) {
+        $self->lmLog( "Captcha token $token isn't valid", 'warn' );
+        return 0;
+    }
+    unless ( $s->{captcha} == $value ) {
+        $self->lmLog( 'Bad captcha response', 'notice' ) return 0;
+    }
+    $self->lmLog( 'Good captcha response', 'debug' );
+    return 1;
 }
 
 1;
