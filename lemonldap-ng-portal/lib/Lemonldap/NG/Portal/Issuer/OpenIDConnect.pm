@@ -330,15 +330,7 @@ sub run {
                 unless ($redirect_uri_allowed) {
                     $self->lmLog( "Redirect URI $redirect_uri not allowed",
                         'error' );
-                    return $self->returnRedirectError(
-                        $req,
-                        $oidc_request->{'redirect_uri'},
-                        "invalid_request",
-                        "redirect_uri $redirect_uri not allowed",
-                        undef,
-                        $oidc_request->{'state'},
-                        ( $flow ne "authorizationcode" )
-                    );
+                    return PE_BADURL;
                 }
             }
 
