@@ -1308,6 +1308,7 @@ sub metadata {
             subject_types_supported => ["public"],
             token_endpoint_auth_methods_supported =>
               [qw/client_secret_post client_secret_basic/],
+            claims_supported                 => [qw/sub iss auth_time acr/],
             request_parameter_supported      => JSON::true,
             request_uri_parameter_supported  => JSON::true,
             require_request_uri_registration => JSON::false,
