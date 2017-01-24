@@ -509,7 +509,9 @@ sub scanTree {
                 $jleaf->{$w} = $attr->{$w} if ( defined $attr->{$w} );
             }
             if ( defined $jleaf->{default} ) {
-                $defaultValues->{$leaf} = $jleaf->{default};
+                unless ( $attr->{type} eq 'bool' and $jleaf->{default} == 0 ) {
+                    $defaultValues->{$leaf} = $jleaf->{default};
+                }
                 if ( ref( $jleaf->{default} ) ) {
                     $jleaf->{default} = [];
                     my $type = $attr->{type};
