@@ -91,8 +91,6 @@ sub tree {
                                 'captcha_mail_enabled',
                                 'captcha_register_enabled',
                                 'captcha_size',
-                                'captchaStorage',
-                                'captchaStorageOptions'
                             ]
                         }
                     ]
@@ -615,7 +613,9 @@ sub tree {
                                         'cspScript',  'cspStyle',
                                         'cspConnect', 'cspFont',
                                     ]
-                                }
+                                },
+                                'requireToken',
+                                'formTimeout',
                             ]
                         },
                         {

@@ -20,25 +20,21 @@ sub defaultValues {
         'browserIdAuthnLevel'      => 1,
         'captcha_register_enabled' => 1,
         'captcha_size'             => 6,
-        'captchaStorage'           => 'Apache::Session::File',
-        'captchaStorageOptions'    => {
-            'Directory' => '/var/lib/lemonldap-ng/captcha/'
-        },
-        'CAS_authnLevel'         => 1,
-        'CAS_pgtFile'            => '/tmp/pgt.txt',
-        'casAccessControlPolicy' => 'none',
-        'checkXSS'               => 1,
-        'confirmFormMethod'      => 'post',
-        'cookieName'             => 'lemonldap',
-        'cspConnect'             => '\'self\'',
-        'cspDefault'             => '\'self\'',
-        'cspFont'                => '\'self\'',
-        'cspImg'                 => '\'self\'',
-        'cspScript'              => '\'self\'',
-        'cspStyle'               => '\'self\'',
-        'dbiAuthnLevel'          => 2,
-        'dbiExportedVars'        => {},
-        'demoExportedVars'       => {
+        'CAS_authnLevel'           => 1,
+        'CAS_pgtFile'              => '/tmp/pgt.txt',
+        'casAccessControlPolicy'   => 'none',
+        'checkXSS'                 => 1,
+        'confirmFormMethod'        => 'post',
+        'cookieName'               => 'lemonldap',
+        'cspConnect'               => '\'self\'',
+        'cspDefault'               => '\'self\'',
+        'cspFont'                  => '\'self\'',
+        'cspImg'                   => '\'self\'',
+        'cspScript'                => '\'self\'',
+        'cspStyle'                 => '\'self\'',
+        'dbiAuthnLevel'            => 2,
+        'dbiExportedVars'          => {},
+        'demoExportedVars'         => {
             'cn'   => 'cn',
             'mail' => 'mail',
             'uid'  => 'uid'
@@ -50,6 +46,7 @@ sub defaultValues {
         'facebookAuthnLevel'   => 1,
         'facebookExportedVars' => {},
         'failedLoginNumber'    => 5,
+        'formTimeout'          => 120,
         'globalStorage'        => 'Apache::Session::File',
         'globalStorageOptions' => {
             'Directory' => '/var/lib/lemonldap-ng/sessions/',
@@ -182,6 +179,7 @@ sub defaultValues {
               'http://auth.example.com/Lemonldap/NG/Common/CGI/SOAPService',
             'proxy' => 'http://auth.example.com/index.pl/sessions'
         },
+        'requireToken' => 1,
         'samlAttributeAuthorityDescriptorAttributeServiceSOAP' =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/AA/SOAP;',
         'samlAuthnContextMapKerberos'                   => 4,

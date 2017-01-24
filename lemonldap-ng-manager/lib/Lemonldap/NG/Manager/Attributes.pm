@@ -599,16 +599,6 @@ sub attributes {
             'default' => 6,
             'type'    => 'int'
         },
-        'captchaStorage' => {
-            'default' => 'Apache::Session::File',
-            'type'    => 'PerlModule'
-        },
-        'captchaStorageOptions' => {
-            'default' => {
-                'Directory' => '/var/lib/lemonldap-ng/captcha/'
-            },
-            'type' => 'keyTextContainer'
-        },
         'CAS_authnLevel' => {
             'default' => 1,
             'type'    => 'int'
@@ -881,6 +871,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         },
         'failedLoginNumber' => {
             'default' => 5,
+            'type'    => 'int'
+        },
+        'formTimeout' => {
+            'default' => 120,
             'type'    => 'int'
         },
         'globalStorage' => {
@@ -2096,6 +2090,10 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'remotePortal' => {
             'type' => 'text'
+        },
+        'requireToken' => {
+            'default' => 1,
+            'type'    => 'bool'
         },
         'restConfigServer' => {
             'default' => 0,

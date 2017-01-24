@@ -73,6 +73,7 @@
     "generateModule": "Lemonldap::NG::Common::Apache::Session::Generate::SHA256"
   },
   "reloadUrls": {},
+  "requireToken": 0,
   "userDB": "Demo",
   "whatToTrace": "_whatToTrace"
 }

@@ -56,6 +56,14 @@ has menuError => ( is => 'rw' );
 # Frame flag (used by Run to not send Content-Security-Policy header)
 has frame => ( is => 'rw' );
 
+# Security
+#
+# Captcha
+has captcha => ( is => 'rw' );
+
+# Token
+has token => ( is => 'rw' );
+
 # Error type
 sub error_type {
     my $req = shift;

@@ -425,6 +425,16 @@ sub attributes {
         },
 
         # Security
+        formTimeout => {
+            default => 120,
+            type => 'int',
+            documentation => 'Token timeout for forms',
+        },
+        requireToken => {
+            default => 1,
+            type => 'bool',
+            documentation => 'Enable token for forms',
+        },
         cda => {
             default       => 0,
             type          => 'bool',
@@ -692,19 +702,6 @@ sub attributes {
             type          => 'int',
             default       => 6,
             documentation => 'Captcha size',
-        },
-
-        #captcha_data
-        #captcha_output
-        captchaStorage => {
-            type          => 'PerlModule',
-            default       => 'Apache::Session::File',
-            documentation => 'Captcha backend module',
-        },
-        captchaStorageOptions => {
-            type    => 'keyTextContainer',
-            default => { 'Directory' => '/var/lib/lemonldap-ng/captcha/', },
-            documentation => 'Captcha backend module options',
         },
 
         # Variables

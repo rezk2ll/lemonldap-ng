@@ -7,8 +7,16 @@ package Lemonldap::NG::Portal::Auth::_WebForm;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Portal::Main::Constants
-  qw(PE_OK PE_FIRSTACCESS PE_FORMEMPTY PE_PASSWORDFORMEMPTY PE_CAPTCHAEMPTY PE_CAPTCHAERROR);
+use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_CAPTCHAEMPTY
+  PE_CAPTCHAERROR
+  PE_FIRSTACCESS
+  PE_FORMEMPTY
+  PE_NOTOKEN
+  PE_OK
+  PE_PASSWORDFORMEMPTY
+  PE_TOKENEXPIRED
+);
 
 our $VERSION = '2.0.0';
 
@@ -22,10 +30,24 @@ has authnLevel => (
     },
 );
 
+has captcha => ( is => 'rw' );
+has ott     => ( is => 'rw' );
+
 # INITIALIZATION
 
 sub init {
-    1;
+    if ( $_[0]->{conf}->{captcha_login_enabled} ) {
+        $_[0]->captcha(
+            $_[0]->p->loadModule('Lemonldap::NG::Portal::Lib::Captcha') )
+          or return 0;
+    }
+    elsif ( $_[0]->{conf}->{requireToken} ) {
+        $_[0]->ott(
+            $_[0]->p->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken') )
+          or return 0;
+        $_[0]->ott->timeout( $_[0]->conf->{formTimeout} );
+    }
+    return 1;
 }
 
 # RUNNING METHODS
@@ -34,30 +56,27 @@ sub init {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
 
-    # Init captcha
-    if ( $self->conf->{captcha_login_enabled} ) {
-        eval { $self->initCaptcha(); };
-        $self->lmLog( "Can't init captcha: $@", "error" ) if $@;
-    }
-
     # Detect first access and empty forms
     my $defUser        = defined $req->param('user');
     my $defPassword    = defined $req->param('password');
     my $defOldPassword = defined $req->param('oldpassword');
+    my $res            = PE_OK;
 
     # 1. No user defined at all -> first access
-    return PE_FIRSTACCESS unless $defUser;
+    unless ($defUser) {
+        $res = PE_FIRSTACCESS;
+    }
 
     # 2. If user and password defined -> login form
-    if ( $defUser && $defPassword ) {
-        return PE_FORMEMPTY
+    elsif ( $defUser && $defPassword ) {
+        $res = PE_FORMEMPTY
           unless ( ( $req->{user} = $req->param('user') )
             && ( $req->datas->{password} = $req->param('password') ) );
     }
 
     # 3. If user and oldpassword defined -> password form
-    if ( $defUser && $defOldPassword ) {
-        return PE_PASSWORDFORMEMPTY
+    elsif ( $defUser && $defOldPassword ) {
+        $res = PE_PASSWORDFORMEMPTY
           unless ( ( $req->{user} = $req->param('user') )
             && ( $req->datas->{oldpassword} = $req->param('oldpassword') )
             && ( $req->datas->{newpassword} = $req->param('newpassword') )
@@ -65,49 +84,48 @@ sub extractFormInfo {
                 $req->param('confirmpassword') ) );
     }
 
-    # 4. Captcha for login form
-    if ( $self->conf->{captcha_login_enabled} && $defUser && $defPassword ) {
-        $req->datas->{captcha_user_code}  = $req->param('captcha_user_code');
-        $req->datas->{captcha_check_code} = $req->param('captcha_code');
+    # If form seems empty
+    if ( $res != PE_OK ) {
 
-        unless ( $req->datas->{captcha_user_code}
-            && $req->datas->{captcha_check_code} )
-        {
-            $self->lmLog( "Captcha not filled", 'warn' );
-            return PE_CAPTCHAEMPTY;
+        # If captcha is enable, prepare it
+        if ( $self->captcha ) {
+            $self->setCaptcha($req);
         }
 
-        $self->lmLog(
-            "Captcha data received: "
-              . $req->datas->{captcha_user_code} . " and "
-              . $req->datas->{captcha_check_code},
-            'debug'
-        );
+        # Else get token
+        elsif ( $self->ott ) {
+            $self->setToken($req);
+        }
+        return $res;
+    }
 
-        # Check captcha
-        my $captcha_result = $self->checkCaptcha(
-            $req->datas->{captcha_user_code},
-            $req->datas->{captcha_check_code}
-        );
-
-        if ( $captcha_result != 1 ) {
-            if (   $captcha_result == -3
-                or $captcha_result == -2 )
-            {
-                $self->lmLog( "Captcha failed: wrong code", 'warn' );
+    # Security: check for captcha or token
+    if ( $self->captcha or $self->ott ) {
+        my $token;
+        unless ( $token = $req->param('token') ) {
+            $self->p->userError('Authentication tried without token');
+            return PE_NOTOKEN;
+        }
+        if ( $self->captcha ) {
+            my $code = $req->param('captcha');
+            unless ($code) {
+                $self->setCaptcha($req);
+                return PE_CAPTCHAEMPTY;
+            }
+            unless ( $self->captcha->validateCaptcha( $token, $code ) ) {
+                $self->setCaptcha($req);
+                $self->p->userNotice("Captcha failed: wrong or expired code");
                 return PE_CAPTCHAERROR;
             }
-            elsif ( $captcha_result == 0 ) {
-                $self->lmLog( "Captcha failed: code not checked (file error)",
-                    'warn' );
-                return PE_CAPTCHAERROR;
-            }
-            elsif ( $captcha_result == -1 ) {
-                $self->lmLog( "Captcha failed: code has expired", 'warn' );
-                return PE_CAPTCHAERROR;
+            $self->lmLog( "Captcha code verified", 'debug' );
+        }
+        elsif ( $self->ott ) {
+            unless ( $self->ott->getToken($token) ) {
+                $self->setToken($req);
+                $self->p->userNotice('Token expired');
+                return PE_TOKENEXPIRED;
             }
         }
-        $self->lmLog( "Captcha code verified", 'debug' );
     }
 
     # Other parameters
@@ -139,6 +157,20 @@ sub setAuthSessionInfo {
 # @return display type
 sub getDisplayType {
     return "standardform";
+}
+
+sub setCaptcha {
+    my ( $self,  $req )   = @_;
+    my ( $token, $image ) = $self->captcha->getCaptcha;
+    $self->lmLog( 'Prepare captcha', 'debug' );
+    $req->token($token);
+    $req->captcha($image);
+}
+
+sub setToken {
+    my ( $self, $req ) = @_;
+    $self->lmLog( 'Prepare token', 'debug' );
+    $req->token( $self->ott->createToken );
 }
 
 1;
