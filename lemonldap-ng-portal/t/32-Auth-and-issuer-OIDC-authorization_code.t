@@ -15,12 +15,14 @@ my %handlerOR = ( op => [], rp => [] );
 ok( $op = op(), 'OP portal' );
 
 ok( $res = $op->_get('/oauth2/jwks'), 'Get JWKS,     endpoint /oauth2/jwks' );
+expectOK($res);
 my $jwks = $res->[2]->[0];
 
 ok(
     $res = $op->_get('/.well-known/openid-configuration'),
     'Get metadata, endpoint /.well-known/openid-configuration'
 );
+expectOK($res);
 my $metadata = $res->[2]->[0];
 count(3);
 

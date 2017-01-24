@@ -4,6 +4,7 @@ use strict;
 use JSON;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants qw(
+  PE_BADURL
   PE_CONFIRM
   PE_ERROR
   PE_LOGOUT_OK
