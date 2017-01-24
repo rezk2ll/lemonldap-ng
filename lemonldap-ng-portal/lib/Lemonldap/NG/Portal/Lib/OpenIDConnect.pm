@@ -1112,7 +1112,7 @@ sub buildUserInfoResponse {
     my $userinfo_response = {};
 
     # Get user identifier
-    my $apacheSession = $self->p->getApacheSession( $user_session_id, 1 );
+    my $apacheSession = $self->p->getApacheSession($user_session_id);
 
     unless ($apacheSession) {
         $self->lmLog( "Unable to find user session", "error" );

@@ -234,21 +234,16 @@ sub autoRedirect {
 }
 
 # Try to recover the session corresponding to id and return session datas.
-# If $id is set to undef or if $force is true, return a new session.
-# @param id session reference
-# @param noInfo do not set Apache REMOTE_USER
-# @param force Force session creation if it does not exist
-# @param kind Session kind
-# return Lemonldap::NG::Common::Session object
+# If $id is set to undef or if $args{force} is true, return a new session.
 sub getApacheSession {
-    my ( $self, $id, $noInfo, $force, $kind ) = @_;
-    $kind ||= "SSO";
+    my ( $self, $id, %args ) = @_;
+    $args{kind} ||= "SSO";
 
     if ($id) {
-        $self->lmLog( "Try to get $kind session $id", 'debug' );
+        $self->lmLog( "Try to get $args{kind} session $id", 'debug' );
     }
     else {
-        $self->lmLog( "Try to get a new $kind session", 'debug' );
+        $self->lmLog( "Try to get a new $args{kind} session", 'debug' );
     }
 
     my $as = Lemonldap::NG::Common::Session->new(
@@ -258,8 +253,8 @@ sub getApacheSession {
             cacheModule          => $self->conf->{localSessionStorage},
             cacheModuleOptions   => $self->conf->{localSessionStorageOptions},
             id                   => $id,
-            force                => $force,
-            kind                 => $kind,
+            force                => $args{force},
+            kind                 => $args{kind},
         }
     );
 
@@ -269,8 +264,8 @@ sub getApacheSession {
         return;
     }
 
-    if ( $id and !$force and !$as->data ) {
-        $self->lmLog( "Session $kind $id not found", 'debug' );
+    if ( $id and !$args{force} and !$as->data ) {
+        $self->lmLog( "Session $args{kind} $id not found", 'debug' );
         return;
     }
 
@@ -287,15 +282,11 @@ sub getApacheSession {
         )
       )
     {
-        $self->lmLog( "Session $kind $id expired", 'debug' );
+        $self->lmLog( "Session $args{kind} $id expired", 'debug' );
         return;
     }
 
-    unless ($noInfo) {
-        $self->{id} = $as->id;
-    }
-
-    $self->lmLog( "Return $kind session " . $as->id, 'debug' );
+    $self->lmLog( "Return $args{kind} session " . $as->id, 'debug' );
 
     return $as;
 }
@@ -396,7 +387,7 @@ sub updateSession {
         }
 
         # Update session in global storage
-        if ( my $apacheSession = $self->getApacheSession( $id, 1 ) ) {
+        if ( my $apacheSession = $self->getApacheSession($id) ) {
 
             # Store updateTime
             $infos->{updateTime} = strftime( "%Y%m%d%H%M%S", localtime() );
@@ -427,7 +418,7 @@ sub _deleteSession {
         if ( $self->conf->{securedCookie} == 2
             and my $id2 = $session->data->{_httpSession} )
         {
-            if ( my $session2 = $self->getApacheSession( $id2, 1 ) ) {
+            if ( my $session2 = $self->getApacheSession($id2) ) {
                 $session2->remove;
                 if ( $session2->error ) {
                     $self->lmLog( "Unable to remove linked session $id2",
@@ -640,7 +631,7 @@ sub sendHtml {
 
     # Set authorizated URL for POST
     my $csp = $self->csp . "form-action 'self'";
-    if(my $url = $req->urldc) {
+    if ( my $url = $req->urldc ) {
         $url =~ s#https?://([^/]+).*#$1#;
         $csp .= " $url";
     }

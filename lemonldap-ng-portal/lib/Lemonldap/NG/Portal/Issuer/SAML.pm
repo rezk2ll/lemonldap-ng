@@ -881,7 +881,8 @@ sub run {
                     : '?url=' . $cdc_idp
                 );
 
-                my $cdc_iframe = qq'<iframe src="$cdc_writer_url"'
+                my $cdc_iframe =
+                    qq'<iframe src="$cdc_writer_url"'
                   . ' alt="Common Dommain Cookie" marginwidth="0"'
                   . ' marginheight="0" scrolling="no" class="hiddenFrame"'
                   . ' width="0" height="0" frameborder="0"></iframe>';
@@ -1112,7 +1113,7 @@ sub soapSloServer {
         );
 
         # Open local session
-        my $local_session = $self->p->getApacheSession( $local_session_id, 1 );
+        my $local_session = $self->p->getApacheSession($local_session_id);
 
         unless ($local_session) {
             return $self->p->sendError( $req, "No local session found", 400 );
@@ -1463,8 +1464,7 @@ sub sloServer {
         unless ($session) {
 
             # Open local session
-            my $local_session =
-              $self->p->getApacheSession( $local_session_id, 1 );
+            my $local_session = $self->p->getApacheSession($local_session_id);
 
             unless ($local_session) {
                 $self->lmLog( "No local session found", 'error' );
@@ -1693,7 +1693,7 @@ sub attributeServer {
         $self->lmLog( "Retrieve real session $real_session for user $user",
             'debug' );
 
-        $sessionInfo = $self->p->getApacheSession( $real_session, 1 );
+        $sessionInfo = $self->p->getApacheSession($real_session);
 
         unless ($sessionInfo) {
             return $self->p->sendError( $req,

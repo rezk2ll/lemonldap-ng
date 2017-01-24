@@ -211,7 +211,7 @@ sub run {
         $self->deleteCasSecondarySessions($session_id);
 
         # Delete local session
-        if ( my $session = $self->p->getApacheSession( $session_id, 1 ) ) {
+        if ( my $session = $self->p->getApacheSession($session_id) ) {
             unless ( $self->p->_deleteSession( $req, $session ) ) {
                 $self->lmLog( "Fail to delete session $session_id ", 'error' );
             }
@@ -395,7 +395,7 @@ sub validate {
 
     # Open local session
     my $localSession =
-      $self->p->getApacheSession( $casServiceSession->data->{_cas_id}, 1 );
+      $self->p->getApacheSession( $casServiceSession->data->{_cas_id} );
 
     unless ($localSession) {
         $self->lmLog(
@@ -618,7 +618,7 @@ sub _validate2 {
 
     # Open local session
     my $localSession =
-      $self->p->getApacheSession( $casServiceSession->data->{_cas_id}, 1 );
+      $self->p->getApacheSession( $casServiceSession->data->{_cas_id} );
 
     unless ($localSession) {
         $self->lmLog(

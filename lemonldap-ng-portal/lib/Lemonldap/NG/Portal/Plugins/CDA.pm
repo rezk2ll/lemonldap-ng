@@ -26,8 +26,7 @@ sub changeUrldc {
         $self->lmLog( 'CDA request', 'debug' );
 
         # Create CDA session
-        if ( my $cdaSession =
-            $self->getApacheSession( undef, 1, undef, "CDA" ) )
+        if ( my $cdaSession = $self->getApacheSession( undef, kind => "CDA" ) )
         {
             my $cdaInfos = { '_utime' => time };
             if ( $self->{conf}->{securedCookie} < 2 or $ssl ) {

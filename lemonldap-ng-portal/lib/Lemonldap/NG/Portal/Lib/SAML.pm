@@ -164,9 +164,7 @@ sub loadService {
 
     # Create Lasso server with service metadata
     my $server = $self->createServer(
-        $service_metadata->serviceToXML(
-            $self->conf
-        ),
+        $service_metadata->serviceToXML( $self->conf ),
         $self->conf->{samlServicePrivateKeySig},
         $self->conf->{samlServicePrivateKeySigPwd},
 
@@ -1822,7 +1820,7 @@ sub createArtifactResponse {
         $self->lmLog( "Find session_id $session_id in artifact session",
             'debug' );
 
-        my $session = $self->p->getApacheSession( $session_id, 1 );
+        my $session = $self->p->getApacheSession($session_id);
         unless ($session) {
             $self->lmLog( "Unable to open session $session_id", 'error' );
             return;
@@ -2498,7 +2496,8 @@ sub sendLogoutRequestToProvider {
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
 
-        $info .= qq'<tr><td><iframe src="$slo_url" alt="" marginwidth="0"'
+        $info .=
+            qq'<tr><td><iframe src="$slo_url" alt="" marginwidth="0"'
           . ' marginheight="0" scrolling="no" class="noborder"'
           . ' width="10px" height="10px" frameborder="0">'
           . qq'</iframe></td><td>$providerName</td></tr>';
@@ -2531,7 +2530,8 @@ sub sendLogoutRequestToProvider {
         my $slo_url = $portal . '/saml/relaySingleLogoutPOST?relay=' . $relayID;
 
         # Create iFrame
-        $info .= qq'<tr><td><iframe src="$slo_url" alt="" marginwidth="0"'
+        $info .=
+            qq'<tr><td><iframe src="$slo_url" alt="" marginwidth="0"'
           . ' marginheight="0" scrolling="no" class="noborder"'
           . ' width="10px" height="10px" frameborder="0">'
           . qq'</iframe></td><td>$providerName</td></tr>';
@@ -3012,7 +3012,8 @@ sub getQueryString {
     my $query_string;
 
     if ( $self->conf->{samlUseQueryStringSpecific} ) {
-        my @pairs = split( /&/, $req->param('issuerQuery') || $req->query_string );
+        my @pairs =
+          split( /&/, $req->param('issuerQuery') || $req->query_string );
         $query_string = join( ';', @pairs );
 
     }
@@ -3035,7 +3036,7 @@ sub metadata {
     my ( $self, $req ) = @_;
     require Lemonldap::NG::Common::Conf::SAML::Metadata;
     if ( my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new() ) {
-        my $s = $metadata->serviceToXML($self->conf);
+        my $s = $metadata->serviceToXML( $self->conf );
         return [
             200,
             [

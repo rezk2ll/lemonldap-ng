@@ -914,7 +914,8 @@ sub token {
 
     # Get user identifier
     my $apacheSession =
-      $self->p->getApacheSession( $codeSession->data->{user_session_id}, 1 );
+      $self->p->getApacheSession( $codeSession->data->{user_session_id},
+        noInfo => 1 );
 
     unless ($apacheSession) {
         $self->lmLog(

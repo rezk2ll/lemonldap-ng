@@ -221,8 +221,7 @@ sub _register {
 
         $self->lmLog( "Register session found: $register_session", 'debug' );
 
-        my $registerSessionObj =
-          $self->p->getApacheSession( $register_session, 1 );
+        my $registerSessionObj = $self->p->getApacheSession($register_session);
 
         # Mail session expiration date
         my $expTimestamp =

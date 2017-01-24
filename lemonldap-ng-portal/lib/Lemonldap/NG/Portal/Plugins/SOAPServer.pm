@@ -206,7 +206,7 @@ sub getAttributes {
     my ( $self, $req, $id ) = @_;
     die 'id is required' unless ($id);
 
-    my $session = $self->p->getApacheSession( $id, 1 );
+    my $session = $self->p->getApacheSession($id);
 
     my @tmp = ();
     unless ($session) {
@@ -378,7 +378,7 @@ sub isAuthorizedURI {
     my ( $host, $uri ) = ( $1, $2 );
 
     # Get user session.
-    my $session = $self->p->getApacheSession( $id, 1 );
+    my $session = $self->p->getApacheSession($id);
 
     unless ($session) {
         $self->lmLog( "Session $id does not exists", 'warn' );

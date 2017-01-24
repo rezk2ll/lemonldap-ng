@@ -153,7 +153,7 @@ sub getMailSession {
 
     # Browse found sessions to check if it's a mail session
     foreach my $id ( keys %$sessions ) {
-        my $mailSession = $self->p->getApacheSession( $id, 1 );
+        my $mailSession = $self->p->getApacheSession($id);
         next unless ($mailSession);
         return $id if ( $mailSession->data->{_type} =~ /^mail$/ );
     }
@@ -178,7 +178,7 @@ sub getRegisterSession {
 
     # Browse found sessions to check if it's a register session
     foreach my $id ( keys %$sessions ) {
-        my $registerSession = $self->p->getApacheSession( $id, 1 );
+        my $registerSession = $self->p->getApacheSession($id);
         next unless ($registerSession);
         return $id if ( $registerSession->data->{_type} =~ /^register$/ );
     }

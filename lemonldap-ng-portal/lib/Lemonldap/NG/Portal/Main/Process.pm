@@ -406,7 +406,7 @@ sub store {
 
     # Create second session for unsecure cookie
     if ( $self->conf->{securedCookie} == 2 ) {
-        my $session2 = $self->getApacheSession( undef, 1 );
+        my $session2 = $self->getApacheSession(undef);
 
         my %infos = %{ $req->{sessionInfo} };
         $infos{_httpSessionType} = 1;
@@ -417,7 +417,8 @@ sub store {
     }
 
     # Main session
-    my $session = $self->getApacheSession( $req->{id}, 0, $self->{force} );
+    my $session =
+      $self->getApacheSession( $req->{id}, force => $self->{force} );
     return PE_APACHESESSIONERROR unless ($session);
     $req->id( $session->{id} );
 
