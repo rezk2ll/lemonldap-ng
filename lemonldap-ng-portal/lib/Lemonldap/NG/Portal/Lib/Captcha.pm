@@ -29,8 +29,8 @@ has ott => (
     is      => 'rw',
     lazy    => 1,
     default => sub {
-        my $ott = Lemonldap::NG::Portal::Lib::OneTimeToken->new(
-            { timeout => $_[0]->timeout } );
+        my $ott = $_[0]->{p}->loadModule('::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->timeout );
         return $ott;
     }
 );
@@ -40,7 +40,7 @@ sub getCaptcha {
     my ($self) = @_;
     my $image = GD::SecurityImage->new(
         width    => $self->width,
-        heigth   => $self->heigth,
+        height   => $self->height,
         lines    => $self->lines,
         gd_font  => 'Giant',
         scramble => $self->scramble,
