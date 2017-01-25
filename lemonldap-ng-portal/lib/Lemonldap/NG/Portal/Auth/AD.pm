@@ -6,7 +6,7 @@ package Lemonldap::NG::Portal::Auth::AD;
 use strict;
 use Mouse;
 use Lemonldap::NG::Portal::Main::Constants
-  qw(PE_OK PE_PP_PASSWORD_EXPIRED PE_PP_CHANGE_AFTER_RESET PM_PP_EXP_WARNING);
+  qw(PE_OK PE_PP_PASSWORD_EXPIRED PE_PP_CHANGE_AFTER_RESET);
 
 our $VERSION = '2.0.0';
 
@@ -111,14 +111,14 @@ sub authenticate {
             my $remainingTime = $_pwdExpire - $timestamp;
             $self->info(
                 $req,
-                "<h3>"
-                  . sprintf(
-                    $self->msg(PM_PP_EXP_WARNING),
-                    $self->convertSec(
+                '<h3 trspan="pwdWillExpire,'
+                  . join(
+                    ',',
+                    $self->ldap->convertSec(
                         substr( $remainingTime, 0, length($remainingTime) - 7 )
                     )
                   )
-                  . "</h3>"
+                  . '"></h3>'
             );
         }
 

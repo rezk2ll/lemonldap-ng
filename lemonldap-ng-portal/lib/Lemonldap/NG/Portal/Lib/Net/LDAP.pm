@@ -217,8 +217,7 @@ sub userBind {
             if ( $resp->time_before_expiration ) {
                 $self->{portal}->info( $req,
                     '<h3 trspan="authRemaining,'
-                      . $self->{portal}
-                      ->convertSec( $resp->time_before_expiration )
+                      . $self->convertSec( $resp->time_before_expiration )
                       . '"></h3>' );
             }
 
@@ -674,6 +673,33 @@ sub getLdapValue {
         $self->{conf}->{multiValuesSeparator},
         $entry->get_value($attribute)
     );
+}
+
+# Convert seconds to hours, minutes, seconds
+sub convertSec {
+    my ( $self, $sec ) = @_;
+    my ( $day, $hrs, $min ) = ( 0, 0, 0 );
+
+    # Calculate the minutes
+    if ( $sec > 60 ) {
+        $min = $sec / 60, $sec %= 60;
+        $min = int($min);
+    }
+
+    # Calculate the hours
+    if ( $min > 60 ) {
+        $hrs = $min / 60, $min %= 60;
+        $hrs = int($hrs);
+    }
+
+    # Calculate the days
+    if ( $hrs > 24 ) {
+        $day = $hrs / 24, $hrs %= 24;
+        $day = int($day);
+    }
+
+    # Return the date
+    return ( $day, $hrs, $min, $sec );
 }
 
 1;
