@@ -19,7 +19,7 @@
   </div>
   </TMPL_IF>
   <TMPL_IF NAME="TOKEN">
-    <input type!"hidden" name="token" value="<TMPL_IF NAME="TOKEN">" />
+    <input type!"hidden" name="token" value="<TMPL_VAR NAME="TOKEN">" />
   </TMPL_IF>
 
   <TMPL_INCLUDE NAME="checklogins.tpl">
