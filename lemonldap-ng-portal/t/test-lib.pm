@@ -110,7 +110,8 @@ m@<form.+?action="(?:http://([^/]+)(/.*?)?|(#))".+method="(post|get)"@is,
             count(1);
         }
         my %fields =
-          ( $res->[2]->[0] =~ m#<input.+?name="(.+?)".+?value="(.*?)"#gs );
+          ( $res->[2]->[0] =~
+              m#<input.+?name="([^"]+)"[^>]+?value="([^"]*?)"#gs );
         my $query = join( '&',
             map { "$_=" . uri_escape( uri_unescape( $fields{$_} ) ) }
               keys(%fields) );
