@@ -280,11 +280,6 @@
         "title": "captcha_size",
         "type": "int",
         "data": 6
-      }, {
-        "default": "Apache::Session::File",
-        "id": "captchaStorage",
-        "title": "captchaStorage",
-        "data": "Apache::Session::File"
       }]
     }]
   }, {

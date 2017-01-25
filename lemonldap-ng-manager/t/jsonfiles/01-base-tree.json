@@ -159,21 +159,6 @@
         "id": "captcha_size",
         "title": "captcha_size",
         "type": "int"
-      }, {
-        "default": "Apache::Session::File",
-        "id": "captchaStorage",
-        "title": "captchaStorage"
-      }, {
-        "cnodes": "captchaStorageOptions",
-        "default": [{
-          "data": "/var/lib/lemonldap-ng/captcha/",
-          "id": "captchaStorageOptions/Directory",
-          "title": "Directory",
-          "type": "keyText"
-        }],
-        "id": "captchaStorageOptions",
-        "title": "captchaStorageOptions",
-        "type": "keyTextContainer"
       }],
       "id": "portalCaptcha",
       "title": "portalCaptcha"
