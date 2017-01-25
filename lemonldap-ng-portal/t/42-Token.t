@@ -62,8 +62,14 @@ ok(
       $client->_post( '/', IO::String->new($query), length => length($query) ),
     'Try to reuse the same token'
 );
-count(1);
 expectReject($res);
+ok(
+    $res =
+      $client->_post( '/', IO::String->new($query), length => length($query), accept=>'text/html' ),
+    'Verify that there is a new token'
+);
+expectForm( $res, '#', undef, 'token' );
+count(2);
 
 clean_sessions();
 
