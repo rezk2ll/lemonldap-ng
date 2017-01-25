@@ -25,15 +25,17 @@
       <input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">" class="form-control" trplaceholder="mail" required />
     </div>
 
-    <TMPL_IF NAME=CAPTCHA_IMG>
+    <TMPL_IF NAME=CAPTCHA_SRC>
     <div class="form-group">
-      <img src="<TMPL_VAR NAME=CAPTCHA_IMG>" class="img-thumbnail" />
+      <img src="<TMPL_VAR NAME=CAPTCHA_SRC>" class="img-thumbnail" />
     </div>
     <div class="form-group input-group">
       <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i> </span>
-      <input type="text" name="captcha_user_code" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" placeholder="Captcha" required />
+      <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" class="form-control" placeholder="Captcha" required />
     </div>
-    <input type="hidden" name="captcha_code" value="<TMPL_VAR NAME=CAPTCHA_CODE>" />
+    </TMPL_IF>
+    <TMPL_IF NAME="TOKEN">
+      <input type!"hidden" name="token" value="<TMPL_IF NAME="TOKEN">" />
     </TMPL_IF>
 
     <button type="submit" class="btn btn-success" >

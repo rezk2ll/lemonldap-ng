@@ -182,12 +182,16 @@ sub display {
         );
 
         # Display captcha if it's enabled
-        if ( $self->{captcha_login_enabled} ) {
+        if ( $req->captcha ) {
             %templateParams = (
                 %templateParams,
-                CAPTCHA_IMG  => $req->{captcha_img},
-                CAPTCHA_CODE => $req->{captcha_code},
-                CAPTCHA_SIZE => $req->{captcha_size}
+                CAPTCHA_SRC  => $req->captcha,
+            );
+        }
+        if ( $req->token ) {
+            %templateParams = (
+                %templateParams,
+                TOKEN  => $req->token,
             );
         }
 

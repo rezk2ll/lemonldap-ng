@@ -35,7 +35,7 @@ has ott => (
     }
 );
 
-# Returns secret + a HTML <img> tag with embedded image
+# Returns secret + a HTML image src content
 sub getCaptcha {
     my ($self) = @_;
     my $image = GD::SecurityImage->new(
@@ -49,8 +49,7 @@ sub getCaptcha {
     $image->random;
     $image->create( 'normal', 'default', $self->fgColor, $self->bgColor );
     my ( $imageData, $mimeType, $rdm ) = $image->out( force => 'png' );
-    my $img = '<img src="data:image/png;base64,'
-      . encode_base64( $imageData, '' ) . '">';
+    my $img = 'data:image/png;base64,' . encode_base64( $imageData, '' );
     my $token = $self->ott->createToken( { captcha => $rdm } );
     return ( $token, $img );
 }
@@ -63,7 +62,8 @@ sub validateCaptcha {
         return 0;
     }
     unless ( $s->{captcha} == $value ) {
-        $self->lmLog( 'Bad captcha response', 'notice' ) return 0;
+        $self->lmLog( 'Bad captcha response', 'notice' );
+        return 0;
     }
     $self->lmLog( 'Good captcha response', 'debug' );
     return 1;

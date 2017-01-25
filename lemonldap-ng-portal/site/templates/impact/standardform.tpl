@@ -7,15 +7,17 @@
           <input name="password" type="password" tabindex="2" /><br/>
         </p>
 
-        <TMPL_IF NAME=CAPTCHA_IMG>
+        <TMPL_IF NAME=CAPTCHA_SRC>
 	<p>
-          <img src="<TMPL_VAR NAME=CAPTCHA_IMG>" />
+          <img src="<TMPL_VAR NAME=CAPTCHA_SRC>" />
         </p>
         <p>
           <span class="text-label"><span trspan="captcha">Captcha</span></span><br />
-          <input type="text" name="captcha_user_code" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" tabindex="3" /><br />
-          <input type="hidden" name="captcha_code" value="<TMPL_VAR NAME=CAPTCHA_CODE>" />
+          <input type="text" name="captcha" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" tabindex="3" /><br />
         </p>
+        </TMPL_IF>
+        <TMPL_IF NAME="TOKEN">
+          <input type!"hidden" name="token" value="<TMPL_IF NAME="TOKEN">" />
         </TMPL_IF>
 
         <TMPL_IF NAME="CHECK_LOGINS">

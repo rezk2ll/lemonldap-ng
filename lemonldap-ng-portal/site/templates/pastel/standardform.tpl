@@ -8,14 +8,16 @@
     <td><input name="password" type="password" tabindex="2" /></td>
   </tr>
 
-  <TMPL_IF NAME=CAPTCHA_IMG>
+  <TMPL_IF NAME="CAPTCHA_SRC">
     <tr><td></td><td>
-      <img src="<TMPL_VAR NAME=CAPTCHA_IMG>" />
+      <img src="<TMPL_VAR NAME="CAPTCHA_SRC">" />
     </td></tr>
     <tr><th><span trspan="captcha">Captcha</span></th>
-      <td><input type="text" name="captcha_user_code" size="<TMPL_VAR NAME=CAPTCHA_SIZE>" tabindex="3" />
-      <input type="hidden" name="captcha_code" value="<TMPL_VAR NAME=CAPTCHA_CODE>" /></td>
+      <td><input type="text" name="captcha" size="<TMPL_VAR NAME="CAPTCHA_SIZE">" tabindex="3" /></td>
     </tr>
+  </TMPL_IF>
+  <TMPL_IF NAME="TOKEN">
+    <input type!"hidden" name="token" value="<TMPL_IF NAME="TOKEN">" />
   </TMPL_IF>
 
   <TMPL_IF NAME="CHECK_LOGINS">
