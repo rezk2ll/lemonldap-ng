@@ -80,6 +80,8 @@
 "PE78":"Merci de saisir vos informations",
 "PE79":"Une information est manquante",
 "PE80":"Cette adresse est déjà utilisée",
+"PE81":"Tentative d'authentification invalide",
+"PE82":"Délai d'authentification dépassé",
 "PM3":"Les sessions suivantes ont été fermées",
 "PM4":"Autres sessions ouvertes",
 "PM5":"Fermer les autres sessions",

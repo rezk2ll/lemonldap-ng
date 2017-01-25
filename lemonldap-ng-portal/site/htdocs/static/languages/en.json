@@ -80,6 +80,8 @@
 "PE78":"Please enter your information",
 "PE79":"An information is missing",
 "PE80":"This address is already used",
+"PE81":"Invalid authentication attempt",
+"PE82":"Exceeded authentication timeout",
 "PM3":"The following sessions have been closed",
 "PM4":"Other active sessions",
 "PM5":"Remove other sessions",
