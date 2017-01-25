@@ -25,7 +25,7 @@ sub init {
         "Using demonstration mode, go to Manager to edit the configuration",
         'warn' );
 
-    1;
+    return $self->Lemonldap::NG::Portal::Auth::_WebForm::init();
 }
 
 # RUNNING METHODS

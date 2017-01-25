@@ -13,7 +13,8 @@ extends
 
 sub init {
     my ($self) = @_;
-    return $self->Lemonldap::NG::Portal::Lib::LDAP::init;
+    return $self->Lemonldap::NG::Portal::Auth::_WebForm::init
+      and $self->Lemonldap::NG::Portal::Lib::LDAP::init;
 }
 
 # RUNNING METHODS

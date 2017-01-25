@@ -12,6 +12,7 @@ extends 'Lemonldap::NG::Portal::Auth::_WebForm';
 
 sub init {
     my ($self) = @_;
+    return 0 unless $self->Lemonldap::NG::Portal::Auth::_WebForm::init();
     if ( $self->conf->{proxyUseSoap} ) {
         extends 'Lemonldap::NG::Portal::Lib::SOAPProxy',
           'Lemonldap::NG::Portal::Auth::_WebForm';
