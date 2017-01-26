@@ -186,6 +186,7 @@ sub display {
             %templateParams = (
                 %templateParams,
                 CAPTCHA_SRC  => $req->captcha,
+                CAPTCHA_SIZE => $self->{conf}->{captcha_size} || 6
             );
         }
         if ( $req->token ) {
