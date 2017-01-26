@@ -58,4 +58,10 @@ sub getToken {
     return \%h;
 }
 
+sub setToken {
+    my ( $self, $req ) = @_;
+    $self->lmLog( 'Prepare token', 'debug' );
+    $req->token( $self->createToken );
+}
+
 1;

@@ -69,4 +69,12 @@ sub validateCaptcha {
     return 1;
 }
 
+sub setCaptcha {
+    my ( $self,  $req )   = @_;
+    my ( $token, $image ) = $self->getCaptcha;
+    $self->lmLog( 'Prepare captcha', 'debug' );
+    $req->token($token);
+    $req->captcha($image);
+}
+
 1;

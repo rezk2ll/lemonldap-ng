@@ -13,10 +13,12 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_MAILCONFIRMOK
   PE_MAILERROR
   PE_MAILOK
+  PE_NOTOKEN
   PE_OK
   PE_REGISTERALREADYEXISTS
   PE_REGISTERFIRSTACCESS
   PE_REGISTERFORMEMPTY
+  PE_TOKENEXPIRED
 );
 
 our $VERSION = '2.0.0';
@@ -26,8 +28,10 @@ extends 'Lemonldap::NG::Portal::Main::Plugin',
 
 # PROPERTIES
 
+# Sub module (Demo, LDAP,...)
 has registerModule => ( is => 'rw' );
 
+# Register url to set in the mail
 has registerUrl => (
     is      => 'rw',
     default => sub {
@@ -37,7 +41,8 @@ has registerUrl => (
     }
 );
 
-has ott => (
+# Mail timeout token generator
+has mailott => (
     is      => 'rw',
     default => sub {
         my $ott =
@@ -48,6 +53,10 @@ has ott => (
     }
 );
 
+# Form timout token generator (used if requireToken is set)
+has ott => ( is => 'rw' );
+
+# Captcha generator
 has captcha => ( is => 'rw' );
 
 # INITIALIZATION
@@ -61,38 +70,53 @@ sub init {
     # Initialize Captcha if needed
     if ( $self->conf->{captcha_register_enabled} ) {
         $self->captcha( $self->p->loadModule('::Lib::Captcha') ) or return 0;
-
-        # TODO: timeout
-        $self->captcha->timeout( $self->conf->{registerTimeout} );
     }
 
-    # Load register module
+    # Initialize form token if needed (captcha provides also a token)
+    elsif ( $self->conf->{requireToken} ) {
+        $_[0]->ott(
+            $_[0]->p->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken') )
+          or return 0;
+        $_[0]->ott->timeout( $_[0]->conf->{formTimeout} );
+    }
+
+    # Load registered module
     $self->registerModule(
         $self->p->loadPlugin( '::Register::' . $self->conf->{registerDB} ) )
       or return 0;
-
-    # TODO: load module if != $self->p->authentication
 
     return 1;
 }
 
 # RUNNIG METHODS
 
+# Main request
 sub register {
     my ( $self, $req ) = @_;
+
+    # Check parameters
     $req->error( $self->_register($req) );
+
+    # Display form
     my ( $tpl, $prms ) = $self->display($req);
     return $self->p->sendHtml( $req, $tpl, params => $prms );
 }
 
+# Parameters check
 sub _register {
     my ( $self, $req ) = @_;
 
+    # Check if it's a first access
     unless ( $req->param('mail') || $req->param('register_token') ) {
+
+        # Set captcha or token
+        $self->setSecurity($req);
+        $self->lmLog( 'First access to register form', 'debug' );
         return PE_REGISTERFIRSTACCESS if ( $req->method =~ /GET/ );
         return PE_REGISTERFORMEMPTY;
     }
 
+    # Get register token (mail link)
     $req->datas->{register_token} = $req->param('register_token');
 
     # If a register token is present, find the corresponding info
@@ -103,7 +127,8 @@ sub _register {
             'debug' );
 
         # Get the corresponding session
-        if ( my $datas = $self->ott->getToken( $req->datas->{register_token} ) )
+        if ( my $datas =
+            $self->mailott->getToken( $req->datas->{register_token} ) )
         {
             foreach (qw(mail firstname lastname ipAddr)) {
                 $req->datas->{registerInfo}->{$_} = $datas->{$_};
@@ -118,6 +143,8 @@ sub _register {
             return PE_BADMAILTOKEN;
         }
     }
+
+    # Case else: user tries to register
     else {
 
         # Use submitted value
@@ -126,42 +153,65 @@ sub _register {
         $req->datas->{registerInfo}->{lastname}  = $req->param('lastname');
         $req->datas->{registerInfo}->{ipAddr}    = $req->address;
 
-        # Captcha for register form
-        # Only if register session does not already exist
-        # TODO captcha
-        if (   $self->conf->{captcha_register_enabled}
-            && $req->datas->{registerInfo}->{mail}
-            && !$self->getRegisterSession( $req->datas->{registerInfo}->{mail} )
-          )
+        # Check captcha/token only if register session does not already exist
+        if ( $req->datas->{registerInfo}->{mail}
+            and
+            !$self->getRegisterSession( $req->datas->{registerInfo}->{mail} ) )
         {
-            $req->datas->{captcha} = $req->param('captcha');
-            $req->datas->{token}   = $req->param('token');
-
-            unless ( $req->datas->{captcha} and $req->datas->{token} ) {
-                $self->lmLog( "Captcha not filled", 'warn' );
-                return PE_CAPTCHAEMPTY;
+            # Check if token exists
+            my $token;
+            if ( $self->ott or $self->captcha ) {
+                $token = $req->param('token');
+                unless ($token) {
+                    $self->setSecurity($req);
+                    $self->p->userNotice('Register try without token');
+                    return PE_NOTOKEN;
+                }
             }
 
-            # Check captcha
-            unless (
-                $self->captcha->validateCaptcha(
-                    $req->datas->{token},
-                    $req->datas->{captcha}
-                )
-              )
-            {
-                $self->p->userNotice('Captcha failed: wrong code');
-                return PE_CAPTCHAERROR;
+            # Captcha for register form
+            if ( $self->captcha ) {
+                my $captcha = $req->param('captcha');
+
+                unless ($captcha) {
+                    $self->p->userNotice(
+                        'Register try with captcha not filled');
+
+                    # Set captcha or token
+                    $self->setSecurity($req);
+                    return PE_CAPTCHAEMPTY;
+                }
+
+                # Check captcha
+                unless (
+                    $self->captcha->validateCaptcha(
+                        $req->datas->{token},
+                        $req->datas->{captcha}
+                    )
+                  )
+                {
+                    $self->p->userNotice('Captcha failed: wrong code');
+
+                    # Set captcha or token
+                    $self->setSecurity($req);
+                    return PE_CAPTCHAERROR;
+                }
+                $self->lmLog( "Captcha code verified", 'debug' );
             }
-            $self->lmLog( "Captcha code verified", 'debug' );
+            elsif ( $self->ott ) {
+                unless ( $self->ott->getToken($token) ) {
+                    $self->setSecurity($req);
+                    $self->p->userNotice('Register try with expired/bas token');
+                    return PE_TOKENEXPIRED;
+                }
+            }
         }
-
     }
 
     # Check mail
     return PE_MALFORMEDUSER
       unless ( $req->datas->{registerInfo}->{mail} =~
-        /$self->{conf}->{userControl}/o );
+        m/$self->{conf}->{userControl}/o );
 
     # Search for user using UserDB module
     # If the user already exists, register is forbidden
@@ -181,8 +231,8 @@ sub _register {
     # Skip this step if confirmation was already sent
     unless ( $req->datas->{register_token} or $register_session ) {
 
-        # Create token
-        $register_session = $self->ott->createToken(
+        # Create mail token
+        $register_session = $self->mailott->createToken(
             {
                 mail      => $req->datas->{registerInfo}->{mail},
                 firstname => $req->datas->{registerInfo}->{firstname},
@@ -368,6 +418,8 @@ sub display {
             or $req->error == PE_REGISTERALREADYEXISTS
             or $req->error == PE_CAPTCHAERROR
             or $req->error == PE_CAPTCHAEMPTY
+            or $req->error == PE_NOTOKEN
+            or $req->error == PE_TOKENEXPIRED
         )
         and !$req->param('mail_token')
       )
@@ -383,12 +435,12 @@ sub display {
     }
 
     # Display captcha if it's enabled
-    if ( $self->conf->{captcha_register_enabled} ) {
-        %templateParams = (
-            %templateParams,
-            CAPTCHA_SRC => $req->captcha,
-            TOKEN       => $req->token,
-        );
+    if ( $req->captcha ) {
+        $templateParams{CAPTCHA_SRC} = $req->captcha;
+        $templateParams{CAPTCHA_SIZE} = $self->conf->{captcha_size} || 6;
+    }
+    if ( $req->token ) {
+        $templateParams{TOKEN} = $req->token;
     }
 
     # Display mail confirmation resent form
@@ -443,6 +495,16 @@ sub display {
         );
     }
     return ( 'register', \%templateParams );
+}
+
+sub setSecurity {
+    my ( $self, $req ) = @_;
+    if ( $self->captcha ) {
+        $self->captcha->setCaptcha($req);
+    }
+    elsif ( $self->ott ) {
+        $self->ott->setToken($req);
+    }
 }
 
 1;

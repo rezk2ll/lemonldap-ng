@@ -37,14 +37,10 @@ has ott     => ( is => 'rw' );
 
 sub init {
     if ( $_[0]->{conf}->{captcha_login_enabled} ) {
-        $_[0]->captcha(
-            $_[0]->p->loadModule('Lemonldap::NG::Portal::Lib::Captcha') )
-          or return 0;
+        $_[0]->captcha( $_[0]->p->loadModule('::Lib::Captcha') ) or return 0;
     }
     elsif ( $_[0]->{conf}->{requireToken} ) {
-        $_[0]->ott(
-            $_[0]->p->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken') )
-          or return 0;
+        $_[0]->ott( $_[0]->p->loadModule('::Lib::OneTimeToken') ) or return 0;
         $_[0]->ott->timeout( $_[0]->conf->{formTimeout} );
     }
     return 1;
@@ -89,12 +85,12 @@ sub extractFormInfo {
 
         # If captcha is enable, prepare it
         if ( $self->captcha ) {
-            $self->setCaptcha($req);
+            $self->captcha->setCaptcha($req);
         }
 
         # Else get token
         elsif ( $self->ott ) {
-            $self->setToken($req);
+            $self->ott->setToken($req);
         }
         return $res;
     }
@@ -109,11 +105,11 @@ sub extractFormInfo {
         if ( $self->captcha ) {
             my $code = $req->param('captcha');
             unless ($code) {
-                $self->setCaptcha($req);
+                $self->captcha->setCaptcha($req);
                 return PE_CAPTCHAEMPTY;
             }
             unless ( $self->captcha->validateCaptcha( $token, $code ) ) {
-                $self->setCaptcha($req);
+                $self->captcha->setCaptcha($req);
                 $self->p->userNotice("Captcha failed: wrong or expired code");
                 return PE_CAPTCHAERROR;
             }
@@ -121,7 +117,7 @@ sub extractFormInfo {
         }
         elsif ( $self->ott ) {
             unless ( $self->ott->getToken($token) ) {
-                $self->setToken($req);
+                $self->ott->setToken($req);
                 $self->p->userNotice('Token expired');
                 return PE_TOKENEXPIRED;
             }
@@ -157,20 +153,6 @@ sub setAuthSessionInfo {
 # @return display type
 sub getDisplayType {
     return "standardform";
-}
-
-sub setCaptcha {
-    my ( $self,  $req )   = @_;
-    my ( $token, $image ) = $self->captcha->getCaptcha;
-    $self->lmLog( 'Prepare captcha', 'debug' );
-    $req->token($token);
-    $req->captcha($image);
-}
-
-sub setToken {
-    my ( $self, $req ) = @_;
-    $self->lmLog( 'Prepare token', 'debug' );
-    $req->token( $self->ott->createToken );
 }
 
 1;
