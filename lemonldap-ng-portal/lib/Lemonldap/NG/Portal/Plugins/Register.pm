@@ -24,6 +24,19 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Main::Plugin',
   'Lemonldap::NG::Portal::Lib::SMTP';
 
+# PROPERTIES
+
+has registerModule => ( is => 'rw' );
+
+has registerUrl => (
+    is      => 'rw',
+    default => sub {
+        my $p = $_[0]->conf->{portal};
+        $p =~ s#/*$##;
+        return "$p/register";
+    }
+);
+
 has ott => (
     is      => 'rw',
     default => sub {
@@ -35,15 +48,25 @@ has ott => (
     }
 );
 
+has captcha => ( is => 'rw' );
+
 # INITIALIZATION
 
 sub init {
     my ($self) = @_;
-    $self->addUnauthRoute( register => 'register', [ 'POST', 'GET' ] );
-    if ( $self->conf->{captcha_register_enabled} ) {
 
-        # TODO: load captcha plugin
+    # Declare REST route
+    $self->addUnauthRoute( register => 'register', [ 'POST', 'GET' ] );
+
+    # Initialize Captcha if needed
+    if ( $self->conf->{captcha_register_enabled} ) {
+        $self->captcha( $self->p->loadModule('::Lib::Captcha') ) or return 0;
+
+        # TODO: timeout
+        $self->captcha->timeout( $self->conf->{registerTimeout} );
     }
+
+    # Load register module
     $self->registerModule(
         $self->p->loadPlugin( '::Register::' . $self->conf->{registerDB} ) )
       or return 0;
@@ -52,22 +75,6 @@ sub init {
 
     return 1;
 }
-
-# PROPERTIES
-
-has captchaModule => ( is => 'rw' );
-
-# TODO
-has registerModule => ( is => 'rw' );
-
-has registerUrl => (
-    is      => 'rw',
-    default => sub {
-        my $p = $_[0]->conf->{portal};
-        $p =~ s#/*$##;
-        return "$p/register";
-    }
-);
 
 # RUNNIG METHODS
 
@@ -127,46 +134,24 @@ sub _register {
             && !$self->getRegisterSession( $req->datas->{registerInfo}->{mail} )
           )
         {
-            $req->datas->{captcha_user_code} = $req->param('captcha_user_code');
-            $req->datas->{captcha_check_code} = $req->param('captcha_code');
+            $req->datas->{captcha} = $req->param('captcha');
+            $req->datas->{token}   = $req->param('token');
 
-            unless ( $self->{captcha_user_code}
-                && $self->{captcha_check_code} )
-            {
+            unless ( $req->datas->{captcha} and $req->datas->{token} ) {
                 $self->lmLog( "Captcha not filled", 'warn' );
                 return PE_CAPTCHAEMPTY;
             }
 
-            $self->lmLog(
-                "Captcha data received: "
-                  . $req->datas->{captcha_user_code} . " and "
-                  . $req->datas->{captcha_check_code},
-                'debug'
-            );
-
             # Check captcha
-            my $captcha_result = $self->captchaModule->checkCaptcha(
-                $req->datas->{captcha_user_code},
-                $req->datas->{captcha_check_code}
-            );
-
-            if ( $captcha_result != 1 ) {
-                if (   $captcha_result == -3
-                    or $captcha_result == -2 )
-                {
-                    $self->lmLog( "Captcha failed: wrong code", 'warn' );
-                    return PE_CAPTCHAERROR;
-                }
-                elsif ( $captcha_result == 0 ) {
-                    $self->lmLog(
-                        "Captcha failed: code not checked (file error)",
-                        'warn' );
-                    return PE_CAPTCHAERROR;
-                }
-                elsif ( $captcha_result == -1 ) {
-                    $self->lmLog( "Captcha failed: code has expired", 'warn' );
-                    return PE_CAPTCHAERROR;
-                }
+            unless (
+                $self->captcha->validateCaptcha(
+                    $req->datas->{token},
+                    $req->datas->{captcha}
+                )
+              )
+            {
+                $self->p->userNotice('Captcha failed: wrong code');
+                return PE_CAPTCHAERROR;
             }
             $self->lmLog( "Captcha code verified", 'debug' );
         }
@@ -401,9 +386,8 @@ sub display {
     if ( $self->conf->{captcha_register_enabled} ) {
         %templateParams = (
             %templateParams,
-            CAPTCHA_IMG  => $self->captcha_img,
-            CAPTCHA_CODE => $self->captcha_code,
-            CAPTCHA_SIZE => $self->captcha_size
+            CAPTCHA_SRC => $req->captcha,
+            TOKEN       => $req->token,
         );
     }
 
