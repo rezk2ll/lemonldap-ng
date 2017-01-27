@@ -90,7 +90,7 @@ sub init {
 
 # RUNNIG METHODS
 
-# Main request
+# Handle register requests
 sub register {
     my ( $self, $req ) = @_;
 
@@ -183,13 +183,7 @@ sub _register {
                 }
 
                 # Check captcha
-                unless (
-                    $self->captcha->validateCaptcha(
-                        $req->datas->{token},
-                        $req->datas->{captcha}
-                    )
-                  )
-                {
+                unless ( $self->captcha->validateCaptcha( $token, $captcha ) ) {
                     $self->p->userNotice('Captcha failed: wrong code');
 
                     # Set captcha or token
