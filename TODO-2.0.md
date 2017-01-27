@@ -1,9 +1,6 @@
-* Doc for token/captcha
 * login history
-* Create "csp" in doc
 * Test for Zero
 * updateStatus( Main, SOAP server )
-* replace SOAP calls in Handler/Lib/AuthBasic and Auth/Proxy
 * replace SOAP by REST for notification creation
 * "mail" in UserDB/*
 * checkLogins in SAML

@@ -7,90 +7,91 @@ BEGIN {
     require 't/test-lib.pm';
 }
 
-my ( $res, $user, $pwd );
-my $mailSend = 0;
+my $maintests = 11;
+my ( $res, $user, $pwd, $host, $url, $query ) = my $mailSend = 0;
 
-my $client = LLNG::Manager::Test->new(
-    {
-        ini => {
-            logLevel                 => 'error',
-            useSafeJail              => 1,
-            portalDisplayRegister    => 1,
-            registerDB               => 'Demo',
-            captcha_register_enabled => 1,
-        }
+SKIP: {
+    eval 'use GD::SecurityImage;use Image::Magick;';
+    if ($@) {
+        skip 'Lasso not found', $maintests;
     }
-);
 
-# Test normal first access
-# ------------------------
-ok(
-    $res = $client->_get( '/register', accept => 'text/html' ),
-    'Unauth JSON request',
-);
-count(1);
-my ( $host, $url, $query ) =
-  expectForm( $res, '#', undef, 'firstname', 'lastname', 'mail' );
-ok(
-    $query =~
+    my $client = LLNG::Manager::Test->new(
+        {
+            ini => {
+                logLevel                 => 'error',
+                useSafeJail              => 1,
+                portalDisplayRegister    => 1,
+                registerDB               => 'Demo',
+                captcha_register_enabled => 1,
+            }
+        }
+    );
+
+    # Test normal first access
+    # ------------------------
+    ok(
+        $res = $client->_get( '/register', accept => 'text/html' ),
+        'Unauth JSON request',
+    );
+    ( $host, $url, $query ) =
+      expectForm( $res, '#', undef, 'firstname', 'lastname', 'mail' );
+    ok(
+        $query =~
 s/^.*token=([^&]+).*$/token=$1&firstname=foo&lastname=bar&mail=foobar%40badwolf.org/,
-    'Token found'
-);
-my $token;
-ok( $token = $1, ' Token value is defined' );
-ok( $res->[2]->[0] =~ m#<img src="data:image/png;base64#,
-    ' Captcha image inserted' );
-count(3);
+        'Token found'
+    );
+    my $token;
+    ok( $token = $1, ' Token value is defined' );
+    ok( $res->[2]->[0] =~ m#<img src="data:image/png;base64#,
+        ' Captcha image inserted' );
 
-# Try to get captcha value
+    # Try to get captcha value
 
-my ( $ts, $captcha );
-ok( $ts = $client->p->getApacheSession($token), ' Found token session' );
-ok( $captcha = $ts->data->{captcha}, ' Found captcha value' );
-count(2);
+    my ( $ts, $captcha );
+    ok( $ts = $client->p->getApacheSession($token), ' Found token session' );
+    ok( $captcha = $ts->data->{captcha}, ' Found captcha value' );
 
-$query .= "&captcha=$captcha";
+    $query .= "&captcha=$captcha";
 
-ok(
-    $res = $client->_post(
-        '/register',
-        IO::String->new($query),
-        length => length($query),
-        accept => 'text/html'
-    ),
-    'Ask to create account'
-);
-count(1);
-expectOK($res);
+    ok(
+        $res = $client->_post(
+            '/register',
+            IO::String->new($query),
+            length => length($query),
+            accept => 'text/html'
+        ),
+        'Ask to create account'
+    );
+    expectOK($res);
 
-# $query is set by MIME::Lite::send below
-ok( $query =~ /register_token=/, 'Found register_token' );
-count(1);
+    # $query is set by MIME::Lite::send below
+    ok( $query =~ /register_token=/, 'Found register_token' );
 
-ok(
-    $res = $client->_get( '/register', query => $query, accept => 'text/html' ),
-    'Push register_token'
-);
-expectOK($res);
-count(1);
+    ok(
+        $res =
+          $client->_get( '/register', query => $query, accept => 'text/html' ),
+        'Push register_token'
+    );
+    expectOK($res);
 
-# $user/$pwd are set by MIME::Lite::send below
-ok( $user eq 'fbar', 'Get good login' );
-count(1);
+    # $user/$pwd are set by MIME::Lite::send below
+    ok( $user eq 'fbar', 'Get good login' );
 
-# Try to authenticate
-$query = '&user=fbar&password=fbar';
+    # Try to authenticate
+    $query = '&user=fbar&password=fbar';
 
-ok(
-    $res = $client->_post(
-        '/', IO::String->new($query),
-        length => length($query),
-        accept => 'text/html'
-    ),
-    'Try to authenticate'
-);
-count(1);
-expectCookie($res);
+    ok(
+        $res = $client->_post(
+            '/', IO::String->new($query),
+            length => length($query),
+            accept => 'text/html'
+        ),
+        'Try to authenticate'
+    );
+    expectCookie($res);
+}
+count($maintests);
 
 clean_sessions();
 
