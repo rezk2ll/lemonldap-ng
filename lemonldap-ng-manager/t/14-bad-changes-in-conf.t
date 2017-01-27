@@ -14,7 +14,7 @@ sub body {
     return IO::File->new( $struct, 'r' );
 }
 
-unlink 't/conf/lmConf-2.js';
+unlink 't/conf/lmConf-2.json';
 
 my ( $res, $resBody );
 ok( $res = &client->_post( '/confs/', 'cfgNum=1', &body, 'application/json' ),
@@ -35,4 +35,4 @@ count(5);
 
 done_testing( count() );
 
-unlink 't/conf/lmConf-2.js';
+unlink 't/conf/lmConf-2.json';

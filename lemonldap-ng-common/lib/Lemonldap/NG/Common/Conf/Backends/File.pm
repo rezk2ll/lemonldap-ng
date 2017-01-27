@@ -15,7 +15,7 @@ sub Lemonldap::NG::Common::Conf::_lock {
 
 sub Lemonldap::NG::Common::Conf::_file {
     my ( $self, $cfgNum ) = @_;
-    return "$self->{dirName}/lmConf-$cfgNum.js";
+    return "$self->{dirName}/lmConf-$cfgNum.json";
 }
 
 sub prereq {
@@ -40,7 +40,7 @@ sub available {
     closedir D;
     @conf =
       sort { $a <=> $b }
-      map { /lmConf-(\d+)(?:\.js)?/ ? ( $1 + 0 ) : () } @conf;
+      map { /lmConf-(\d+)(?:\.js(?:on))?/ ? ( $1 + 0 ) : () } @conf;
     return @conf;
 }
 
@@ -96,11 +96,17 @@ sub store {
 
 sub load {
     my ( $self, $cfgNum, $fields ) = @_;
-    my $f;
+    my ($f,$filename);
     if ( -e $self->_file($cfgNum) ) {
+        $filename = $self->_file($cfgNum);
+    }
+    elsif ( -e "$self->{dirName}/lmConf-$cfgNum.js" ) {
+        $filename = "$self->{dirName}/lmConf-$cfgNum.js";
+    }
+    if($filename) {
         local $/ = '';
         my $ret;
-        unless ( open FILE, $self->_file($cfgNum) ) {
+        unless ( open FILE, $filename ) {
             $Lemonldap::NG::Common::Conf::msg .= "Read error: $!$@";
             return undef;
         }

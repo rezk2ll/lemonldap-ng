@@ -11,7 +11,7 @@ require 't/test-lib.pm';
 my @struct =
   qw[t/jsonfiles/01-base-tree.json t/jsonfiles/02-base-tree-all-nodes-opened.json];
 my @desc = ( 'Unopened conf', 'Unchanged conf with all nodes opened' );
-my $confFiles = [ 't/conf/lmConf-1.js', 't/conf/lmConf-2.js' ];
+my $confFiles = [ 't/conf/lmConf-1.json', 't/conf/lmConf-2.json' ];
 
 sub body {
     return 0 unless (@struct);
@@ -19,7 +19,7 @@ sub body {
     return IO::File->new( $t, 'r' );
 }
 
-# Delete lmConf-2.js if exists
+# Delete lmConf-2.json if exists
 eval { unlink $confFiles->[1]; };
 mkdir 't/sessions';
 

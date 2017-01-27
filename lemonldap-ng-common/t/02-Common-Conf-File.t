@@ -45,7 +45,7 @@ for ( my $i = 0 ; $i < @test ; $i++ ) {
     $count++;
     if ( -x '/usr/bin/file' ) {
         eval {
-            open F, 'file t/lmConf-1.js |';
+            open F, 'file t/lmConf-1.json |';
             $_ = join( '', <F> );
             close F;
             ok( /(ascii|utf-?8)/si, "File is $1 encoded" );
@@ -60,6 +60,6 @@ for ( my $i = 0 ; $i < @test ; $i++ ) {
     $count += 2;
 }
 
-#unlink 't/lmConf-1.js';
+unlink 't/lmConf-1.json';
 
 done_testing($count);

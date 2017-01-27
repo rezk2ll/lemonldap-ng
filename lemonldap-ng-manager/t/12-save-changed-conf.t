@@ -10,13 +10,13 @@ use Data::Dumper;
 require 't/test-lib.pm';
 
 my $struct = 't/jsonfiles/12-modified.json';
-my $confFiles = [ 't/conf/lmConf-1.js', 't/conf/lmConf-2.js' ];
+my $confFiles = [ 't/conf/lmConf-1.json', 't/conf/lmConf-2.json' ];
 
 sub body {
     return IO::File->new( $struct, 'r' );
 }
 
-# Delete lmConf-2.js if exists
+# Delete lmConf-2.json if exists
 eval { unlink $confFiles->[1]; };
 mkdir 't/sessions';
 

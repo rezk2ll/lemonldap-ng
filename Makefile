@@ -193,7 +193,7 @@ MANAGERJSONDST=$(SRCMANAGERDIR)/site/static/struct.json \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/ReConstants.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm \
 		$(SRCCOMMONDIR)/lib/Lemonldap/NG/Common/Conf/Constants.pm \
-		_example/conf/lmConf-1.js
+		_example/conf/lmConf-1.json
 
 # Javascript and CSS to minify
 JSSRCFILES:=$(shell find */site/static/js $(SRCPORTALDIR)/site/htdocs/static -type f -name '*.js' ! -name '*.min.js') \
@@ -384,11 +384,11 @@ prepare_test_server:
 		INITDIR=`pwd`/e2e-tests/conf/init \
 		ETCDEFAULTDIR=`pwd`/e2e-tests/conf/def
 	@cp -f e2e-tests/index.* e2e-tests/conf/
-	@cp e2e-tests/lmConf-1.js e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
+	@cp e2e-tests/lmConf-1.json e2e-tests/lemonldap-ng.ini e2e-tests/env.conf e2e-tests/test-nginx.conf e2e-tests/conf/
 	@cp e2e-tests/form.html e2e-tests/conf/site
 	@perl -i -pe 'BEGIN{$$p=`pwd`;chomp $$p}s#__pwd__#$$p#;s#__port__#$(TESTWEBSERVERPORT)#;s#__FASTCGISOCKDIR__#$(FASTCGISOCKDIR)#;' \
 		e2e-tests/conf/lemonldap-ng.ini \
-		e2e-tests/conf/lmConf-1.js \
+		e2e-tests/conf/lmConf-1.json \
 		e2e-tests/conf/env.conf \
 		e2e-tests/conf/test-nginx.conf
 
@@ -731,11 +731,11 @@ install_conf_dir:	install_sessions_dir install_notif_dir install_captcha_dir
 		cp -f $(SRCCOMMONDIR)/$(CONFFILENAME) $(RCONFDIR); \
 		$(PERL) -i -pe 's#^dirName\s*=\s*.*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)/$(CONFFILENAME); \
 	fi
-	@cp _example/conf/lmConf-1.js $(RFILECONFIGDIR)
+	@cp _example/conf/lmConf-1.json $(RFILECONFIGDIR)
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
 		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;\
 		s#__PSESSIONDIR__#$(APACHEPSESSIONFILEDIR)#g;\
-		s#__NOTIFICATIONDIR__#$(APACHEFILENOTIFDIR)#g;' $(RFILECONFIGDIR)/lmConf-1.js
+		s#__NOTIFICATIONDIR__#$(APACHEFILENOTIFDIR)#g;' $(RFILECONFIGDIR)/lmConf-1.json
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		chown $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \

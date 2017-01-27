@@ -621,7 +621,7 @@ system.
     managerConstantsFile  => "lib/Lemonldap/NG/Common/Conf/ReConstants.pm",
     managerAttributesFile => 'lib/Lemonldap/NG/Manager/Attributes.pm',
     defaultValuesFile     => "lib/Lemonldap/NG/Common/Conf/DefaultValues.pm",
-    firstLmConfFile       => "_example/conf/lmConf-1.js",
+    firstLmConfFile       => "_example/conf/lmConf-1.json",
     reverseTreeFile       => "site/static/reverseTree.json",
   );
 
@@ -679,7 +679,7 @@ constants used to read configuration;
 
 parameters attributes used by the manager during configuration upload;
 
-=item lmConf-1.js:
+=item lmConf-1.json:
 
 first configuration in file format;
 

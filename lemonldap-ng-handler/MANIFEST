@@ -48,7 +48,7 @@ t/61-Lemonldap-NG-Handler-PSGI-Server.t
 t/62-Lemonldap-NG-Handler-Nginx.t
 t/63-Lemonldap-NG-Handler-PSGI-Try.t
 t/99-pod.t
-t/lmConf-1.js
+t/lmConf-1.json
 t/sessions/lock/Apache-Session-f5eec18ebb9bc96352595e2d8ce962e8ecf7af7c9a98cb9a43f9cd181cf4b545.lock
 t/test-psgi-lib.pm
 t/test.pm
