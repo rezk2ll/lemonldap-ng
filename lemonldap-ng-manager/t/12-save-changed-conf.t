@@ -18,6 +18,7 @@ sub body {
 
 # Delete lmConf-2.js if exists
 eval { unlink $confFiles->[1]; };
+mkdir 't/sessions';
 
 my ( $res, $resBody );
 ok( $res = &client->_post( '/confs/', 'cfgNum=1', &body, 'application/json' ),
@@ -76,6 +77,7 @@ ok( @c2 == 13, '13 keys changed or created in conf 2' )
 count(5);
 
 unlink $confFiles->[1];
+eval { rmdir 't/sessions'; };
 done_testing( count() );
 
 sub changes {

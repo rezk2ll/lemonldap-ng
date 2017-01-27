@@ -186,13 +186,16 @@ sub tests {
               $Lemonldap::NG::Handler::PSGI::API::tsv->{sessionStorageModule};
             return 1
               if ( ( $gc and $gc eq $conf->{globalStorage} )
-                or $conf->{globalStorage} eq
-                'Lemonldap::NG::Common::Apache::Session::SOAP' );
+                or $conf->{globalStorage} =~
+                /^Lemonldap::NG::Common::Apache::Session::/ );
             eval "use $conf->{globalStorage}";
             return ( -1, "Unknown package $conf->{globalStorage}" ) if ($@);
             eval {
-                tie %h, $conf->{globalStorage}, undef,
-                  $conf->{globalStorageOptions};
+                tie %h, 'Lemonldap::NG::Common::Apache::Session', undef,
+                  {
+                    %{ $conf->{globalStorageOptions} },
+                    backend => $conf->{globalStorage}
+                  };
             };
             return ( -1, "Unable to create a session ($@)" )
               if ( $@ or not tied(%h) );
@@ -200,8 +203,11 @@ sub tests {
                 $h{a} = 1;
                 $id = $h{_session_id} or return ( -1, 'No _session_id' );
                 untie(%h);
-                tie %h, $conf->{globalStorage}, $id,
-                  $conf->{globalStorageOptions};
+                tie %h, 'Lemonldap::NG::Common::Apache::Session', $id,
+                  {
+                    %{ $conf->{globalStorageOptions} },
+                    backend => $conf->{globalStorage}
+                  };
             };
             return ( -1, "Unable to insert datas ($@)" ) if ($@);
             return ( -1, "Unable to recover data stored" )
@@ -210,7 +216,7 @@ sub tests {
             return ( -1, "Unable to delete session ($@)" ) if ($@);
             return ( -1,
 'All sessions may be lost and you must restart all your Apache servers'
-            ) if ( $conf->{globalStorage} ne $gc );
+            ) if ( $gc and $conf->{globalStorage} ne $gc );
             return 1;
         },
 

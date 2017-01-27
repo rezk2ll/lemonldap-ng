@@ -24,8 +24,10 @@ ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
 ok( $resBody->{result} == 0, "JSON response contains \"result:0\"" )
   or print STDERR Dumper($res);
 ok(
-    $resBody->{details}->{__errors__}
-      and @{ $resBody->{details}->{__errors__} } == 1,
+    (
+        $resBody->{details}->{__errors__}
+          and @{ $resBody->{details}->{__errors__} } == 1
+    ),
     '1 error detected'
 ) or print STDERR Dumper($resBody);
 

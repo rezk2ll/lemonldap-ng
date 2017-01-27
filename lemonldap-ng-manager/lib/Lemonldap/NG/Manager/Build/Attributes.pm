@@ -25,7 +25,7 @@ my $perlExpr = sub {
     foreach my $f (@cf) {
         $s = "sub $f {1} $s";
     }
-    no warnings 'redefine';
+    no warnings( 'redefine', 'uninitialized' );
     eval "$s $val";
     return $@ ? ( 1, "__badExpression__: $@" ) : (1);
 };
@@ -426,13 +426,13 @@ sub attributes {
 
         # Security
         formTimeout => {
-            default => 120,
-            type => 'int',
+            default       => 120,
+            type          => 'int',
             documentation => 'Token timeout for forms',
         },
         requireToken => {
-            default => 1,
-            type => 'bool',
+            default       => 1,
+            type          => 'bool',
             documentation => 'Enable token for forms',
         },
         cda => {
@@ -1041,7 +1041,7 @@ sub attributes {
                     foreach my $f (@cf) {
                         $s = "sub $f {1} $s";
                     }
-                    no warnings 'redefine';
+                    no warnings( 'redefine', 'uninitialized' );
                     eval $s;
                     return $@ ? ( 1, "__badExpression__: $@" ) : (1);
                 },
@@ -1075,7 +1075,7 @@ sub attributes {
                     foreach my $f (@cf) {
                         $s = "sub $f {1} $s";
                     }
-                    no warnings 'redefine';
+                    no warnings( 'redefine', 'uninitialized' );
                     eval $s;
                     return $@ ? ( 1, "__badExpression__: $@" ) : (1);
                   }

@@ -21,6 +21,7 @@ sub body {
 
 # Delete lmConf-2.js if exists
 eval { unlink $confFiles->[1]; };
+mkdir 't/sessions';
 
 # Try to save an unmodified conf
 while ( my $body = &body() ) {
@@ -48,6 +49,7 @@ while ( my $body = &body() ) {
     #print STDERR Dumper($resBody);
     count(6);
 }
-eval { unlink $confFiles->[1]; };
+eval { unlink $confFiles->[1]; rmdir 't/sessions'; };
+
 done_testing( count() );
 
