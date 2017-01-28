@@ -363,11 +363,11 @@ t/34-Auth-Proxy-and-SOAP-Server.t
 t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-sessions-with-SOAP-server.t
 t/40-Notifications-DBI.t
-t/41-Register-Demo-with-captcha.t
-t/41-Register-Demo-with-token.t
-t/41-Register-Demo.t
-t/42-Captcha.t
-t/42-Token.t
+t/41-Captcha.t
+t/41-Token.t
+t/42-Register-Demo-with-captcha.t
+t/42-Register-Demo-with-token.t
+t/42-Register-Demo.t
 t/50-IssuerGet.t
 t/60-status.t
 t/90-translations.t
