@@ -47,8 +47,8 @@ has mailott => (
     default => sub {
         my $ott =
           $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
-        $ott->timeout( $_[0]->conf->{registerTimeout} )
-          if ( $_[0]->conf->{registerTimeout} );
+        $ott->timeout( $_[0]->conf->{registerTimeout}
+              || $_[0]->conf->{timeout} );
         return $ott;
     }
 );
@@ -112,7 +112,7 @@ sub _register {
         # Set captcha or token
         $self->setSecurity($req);
         $self->lmLog( 'First access to register form', 'debug' );
-        return PE_REGISTERFIRSTACCESS if ( $req->method =~ /GET/ );
+        return PE_REGISTERFIRSTACCESS if ( $req->method eq 'GET' );
         return PE_REGISTERFORMEMPTY;
     }
 
@@ -184,7 +184,7 @@ sub _register {
 
                 # Check captcha
                 unless ( $self->captcha->validateCaptcha( $token, $captcha ) ) {
-                    $self->p->userNotice('Captcha failed: wrong code');
+                    $self->p->userInfo('Captcha failed: wrong code');
 
                     # Set captcha or token
                     $self->setSecurity($req);
