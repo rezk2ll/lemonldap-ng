@@ -10,7 +10,7 @@ unless ( $self->conf->{soapConfigServer} or $self->conf->{soapSessionServer} ) {
 }
 
 my $portal = $self->conf->{portal};
-$portal .= "index.pl" if ( $portal =~ /\/$/ );
+$portal .= "index.fcgi" if ( $portal =~ /\/$/ );
 
 my @cookies = ( $self->conf->{cookieName} );
 push @cookies, "$self->conf->{cookieName}http"

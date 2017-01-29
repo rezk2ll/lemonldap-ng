@@ -32,7 +32,7 @@ SKIP: {
     # ------------------------
     ok(
         $res = $client->_get( '/register', accept => 'text/html' ),
-        'Unauth JSON request',
+        'Unauth request',
     );
     ( $host, $url, $query ) =
       expectForm( $res, '#', undef, 'firstname', 'lastname', 'mail' );

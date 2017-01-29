@@ -16,6 +16,8 @@ my $client = LLNG::Manager::Test->new(
             logLevel                 => 'error',
             useSafeJail              => 1,
             portalDisplayRegister    => 1,
+            authentication           => 'Demo',
+            userDB                   => 'Demo',
             registerDB               => 'Demo',
             captcha_register_enabled => 0,
         }
@@ -26,7 +28,7 @@ my $client = LLNG::Manager::Test->new(
 # ------------------------
 ok(
     $res = $client->_get( '/register', accept => 'text/html' ),
-    'Unauth JSON request',
+    'Unauth request',
 );
 count(1);
 my ( $host, $url, $query ) =

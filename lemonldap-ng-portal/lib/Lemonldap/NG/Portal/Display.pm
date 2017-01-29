@@ -320,7 +320,7 @@ sub display {
     my $skin       = $self->getSkin();
     my $portalPath = $self->{portal};
     $portalPath =~ s#^https?://[^/]+/?#/#;
-    $portalPath =~ s#[^/]+\.pl$##;
+    $portalPath =~ s#[^/]+\.fcgi$##;
     %templateParams = (
         %templateParams,
         SKIN_PATH => $portalPath . "skins",

@@ -62,7 +62,7 @@ sub extractFormInfo {
     unless ( $ENV{SSL_CLIENT_S_DN} ) {
         $self->_sub( 'userError', "No certificate found for " . $self->ipAddr );
         $self->lmLog(
-'No certificate found, be sure to have "SSLOptions +StdEnvVars +ExportCertData" for .pl files',
+'No certificate found, be sure to have "SSLOptions +StdEnvVars +ExportCertData" for .fcgi files',
             'debug'
         );
         return PE_CERTIFICATEREQUIRED;
@@ -72,7 +72,7 @@ sub extractFormInfo {
     $self->abort(
         'SSL configuration error',
         'Unable to get client certificate, SSL_CLIENT_CERT is not set<br/>'
-          . 'Be sure to have "SSLOptions +StdEnvVars +ExportCertData" for .pl files'
+          . 'Be sure to have "SSLOptions +StdEnvVars +ExportCertData" for .fcgi files'
     ) unless ( $ENV{SSL_CLIENT_CERT} );
 
     # 3. Verify that certificate is WebID compliant

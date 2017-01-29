@@ -27,7 +27,7 @@ my $client = LLNG::Manager::Test->new(
 # ------------------------
 ok(
     $res = $client->_get( '/register', accept => 'text/html' ),
-    'Unauth JSON request',
+    'Unauth request',
 );
 count(1);
 my ( $host, $url, $query ) =

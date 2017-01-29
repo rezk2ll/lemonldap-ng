@@ -52,7 +52,6 @@ has captcha => ( is => 'rw' );
 
 sub init {
     my ($self) = @_;
-    return 1;
 
     # Declare REST route
     $self->addUnauthRoute( resetpwd => 'resetPwd', [ 'POST', 'GET' ] );
@@ -69,6 +68,7 @@ sub init {
           or return 0;
         $_[0]->ott->timeout( $_[0]->conf->{formTimeout} );
     }
+    return 1;
 }
 
 # RUNNIG METHODS
