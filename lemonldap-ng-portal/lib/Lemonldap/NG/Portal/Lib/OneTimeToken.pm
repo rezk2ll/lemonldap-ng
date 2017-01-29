@@ -59,9 +59,9 @@ sub getToken {
 }
 
 sub setToken {
-    my ( $self, $req ) = @_;
+    my ( $self, $req, $info ) = @_;
     $self->lmLog( 'Prepare token', 'debug' );
-    $req->token( $self->createToken );
+    $req->token( $self->createToken($info) );
 }
 
 1;

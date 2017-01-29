@@ -44,8 +44,16 @@ has mailott => (
     }
 );
 
-# Form timout token generator (used if requireToken is set)
-has ott => ( is => 'rw' );
+# Form timout token generator (used even if requireToken is not set)
+has ott => (
+    is      => 'rw',
+    default => sub {
+        my $ott =
+          $_[0]->{p}->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken');
+        $ott->timeout( $_[0]->conf->{formTimeout} );
+        return $ott;
+    }
+);
 
 # Captcha generator
 has captcha => ( is => 'rw' );
@@ -61,14 +69,6 @@ sub init {
     # Initialize Captcha if needed
     if ( $self->conf->{captcha_mail_enabled} ) {
         $self->captcha( $self->p->loadModule('::Lib::Captcha') ) or return 0;
-    }
-
-    # Initialize form token if needed (captcha provides also a token)
-    elsif ( $self->conf->{requireToken} ) {
-        $_[0]->ott(
-            $_[0]->p->loadModule('Lemonldap::NG::Portal::Lib::OneTimeToken') )
-          or return 0;
-        $_[0]->ott->timeout( $_[0]->conf->{formTimeout} );
     }
     return 1;
 }
@@ -125,7 +125,7 @@ sub _reset {
 
         # Check if token exists
         my $token;
-        if ( $self->ott or $self->captcha ) {
+        if ( $self->conf->{requireToken} or $self->captcha ) {
             $token = $req->param('token');
             unless ($token) {
                 $self->setSecurity($req);
@@ -156,7 +156,7 @@ sub _reset {
             }
             $self->lmLog( "Captcha code verified", 'debug' );
         }
-        elsif ( $self->ott ) {
+        elsif ( $self->conf->{requireToken} ) {
             unless ( $self->ott->getToken($token) ) {
                 $self->setSecurity($req);
                 $self->p->userNotice('Reset try with expired/bas token');
@@ -226,9 +226,9 @@ sub _reset {
 
         # Update session
         $mailSession->update($infos);
-        $req->id($mailSession->id);
+        $req->id( $mailSession->id );
     }
-    elsif($mailSession) {
+    elsif ($mailSession) {
         $self->lmLog( 'Mail session found: ' . $mailSession->id, 'debug' );
         $req->datas->{mailAlreadySent} = 1;
     }
@@ -270,7 +270,7 @@ sub _reset {
         $req->datas->{mailAddress} ||=
           $self->p->getFirstValue(
             $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
-        return PE_MAILERROR unless($req->datas->{mailAddress});
+        return PE_MAILERROR unless ( $req->datas->{mailAddress} );
 
         # Build confirmation url
         my $url =
@@ -315,7 +315,11 @@ sub _reset {
 
         # Send mail
         unless (
-            $self->send_mail( $req->datas->{mailAddress}, $subject, $body, $html ) )
+            $self->send_mail(
+                $req->datas->{mailAddress},
+                $subject, $body, $html
+            )
+          )
         {
             $self->lmLog( 'Unable to send reset mail', 'debug' );
 
@@ -349,6 +353,8 @@ sub _reset {
         $req->datas->{confirmpassword} = $req->param('confirmpassword');
         unless ( $req->datas->{newpassword} && $req->datas->{confirmpassword} )
         {
+            # A token is required
+            $self->ott->setToken( $req, $req->sessionInfo );
             return PE_PASSWORDFIRSTACCESS if ( $req->method eq 'GET' );
             return PE_PASSWORDFORMEMPTY;
         }
@@ -407,13 +413,14 @@ sub setSecurity {
     if ( $self->captcha ) {
         $self->captcha->setCaptcha($req);
     }
-    elsif ( $self->ott ) {
+    elsif ( $self->conf->{requireToken} ) {
         $self->ott->setToken($req);
     }
 }
 
 sub display {
     my ( $self, $req ) = @_;
+    $self->lmLog( 'Display called with code: ' . $req->error, 'debug' );
     my %tplPrm = (
         PORTAL_URL      => $self->conf->{portal},
         SKIN_PATH       => '/static',
@@ -429,13 +436,9 @@ sub display {
         STARTMAILTIME   => $req->datas->{startMailTime},
         MAILALREADYSENT => $req->datas->{mailAlreadySent},
         MAIL            => (
-              $self->p->checkXSSAttack( 'mail', $req->{mail} ) ? ""
-            : $self->{mail}
-        ),
-        MAIL_TOKEN => (
-            $self->p->checkXSSAttack( 'mail_token', $req->datas->{mailToken} )
+            $self->p->checkXSSAttack( 'mail', $req->{mail} )
             ? ""
-            : $req->datas->{mailToken}
+            : $self->{mail}
         ),
         DISPLAY_FORM            => 0,
         DISPLAY_RESEND_FORM     => 0,
@@ -443,6 +446,12 @@ sub display {
         DISPLAY_MAILSENT        => 0,
         DISPLAY_PASSWORD_FORM   => 0,
     );
+    if ( $req->datas->{mailToken}
+        and !$self->p->checkXSSAttack( 'mail_token', $req->datas->{mailToken} )
+      )
+    {
+        $tplPrm{MAIL_TOKEN} = $req->datas->{mailToken};
+    }
 
     # Display captcha if it's enabled
     if ( $req->captcha ) {
@@ -465,25 +474,25 @@ sub display {
         and !$req->datas->{mailToken}
       )
     {
-        $self->lmLog('Display form','debug');
+        $self->lmLog( 'Display form', 'debug' );
         $tplPrm{DISPLAY_FORM} = 1;
     }
 
     # Display mail confirmation resent form
     elsif ( $req->error == PE_MAILCONFIRMATION_ALREADY_SENT ) {
-        $self->lmLog('Display resend form','debug');
+        $self->lmLog( 'Display resend form', 'debug' );
         $tplPrm{DISPLAY_RESEND_FORM} = 1;
     }
 
     # Display confirmation mail sent
     elsif ( $req->error == PE_MAILCONFIRMOK ) {
-        $self->lmLog('Display "confirm mail sent"','debug');
+        $self->lmLog( 'Display "confirm mail sent"', 'debug' );
         $tplPrm{DISPLAY_CONFIRMMAILSENT} = 1;
     }
 
     # Display mail sent
     elsif ( $req->error == PE_MAILOK ) {
-        $self->lmLog('Display "mail sent"','debug');
+        $self->lmLog( 'Display "mail sent"', 'debug' );
         $tplPrm{DISPLAY_MAILSENT} = 1;
     }
 
@@ -493,7 +502,7 @@ sub display {
         and $req->error != PE_BADMAILTOKEN
         and $req->error != PE_MAILOK )
     {
-        $self->lmLog('Display password form','debug');
+        $self->lmLog( 'Display password form', 'debug' );
         $tplPrm{DISPLAY_PASSWORD_FORM} = 1;
     }
 

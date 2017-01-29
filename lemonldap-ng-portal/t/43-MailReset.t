@@ -52,8 +52,21 @@ ok(
     'Post mail token'
 );
 count(1);
-( $host, $url, $query ) = expectForm( $res, '#', undef, 'mail_token' );
-ok($res->[2]->[0]=~/newpassword/s,' Ask for a new password');
+( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
+ok( $res->[2]->[0] =~ /newpassword/s, ' Ask for a new password' );
+count(1);
+
+$query .= '&newpassword=zz&confirmpassword=zz';
+
+# Post new password
+ok(
+    $res = $client->_post(
+        '/resetpwd', IO::String->new($query),
+        length => length($query),
+        accept => 'text/html'
+    ),
+    'Post new password'
+);
 count(1);
 
 #print STDERR Dumper($query);
