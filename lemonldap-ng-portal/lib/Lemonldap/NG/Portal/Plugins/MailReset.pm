@@ -91,6 +91,11 @@ sub _reset {
     my ( $self, $req ) = @_;
     my ( $mailToken, $newPwd, $confirmPwd );
 
+    # Check for password change form
+    if ( $req->param('newpassword') or $req->param('reset') ) {
+        return $self->changePassword($req);
+    }
+
     # Check for first access
     $mailToken = $req->datas->{mailToken} = $req->param('mail_token');
     unless ( $req->param('mail') || $mailToken ) {
@@ -328,7 +333,38 @@ sub _reset {
         return PE_MAILCONFIRMOK;
     }
 
-    # mailToken is valid, time to change password
+    # User has a valid mailToken, allow to change password
+    # A token is required
+    $self->ott->setToken( $req, { %{ $req->sessionInfo }, pwdAllowed => 1 } );
+    return PE_PASSWORDFIRSTACCESS if ( $req->method eq 'GET' );
+    return PE_PASSWORDFORMEMPTY;
+}
+
+sub changePassword {
+    my ( $self, $req ) = @_;
+    $self->lmLog( 'Change password form response', 'debug' );
+
+    if ( my $token = $req->param('token') ) {
+        $req->sessionInfo( $self->ott->getToken($token) );
+        unless ( $req->sessionInfo ) {
+            $self->p->userNotice(
+                'User tries to change password with an invalid or expired token'
+            );
+            return PE_NOTOKEN;
+        }
+    }
+
+    # These 2 cases means that a user tries to change password without
+    # following valid links!!!
+    else {
+        $self->p->userError('User tries to change password without token');
+        return PE_NOTOKEN;
+    }
+    unless ( delete $req->sessionInfo->{pwdAllowed} ) {
+        $self->p->userError(
+            'User tries to use another token to change a password');
+        return PE_NOTOKEN;
+    }
 
     # Check if user wants to generate the new password
     if ( $req->param('reset') ) {
@@ -351,11 +387,11 @@ sub _reset {
     else {
         $req->datas->{newpassword}     = $req->param('newpassword');
         $req->datas->{confirmpassword} = $req->param('confirmpassword');
-        unless ( $req->datas->{newpassword} && $req->datas->{confirmpassword} )
+        unless ($req->datas->{newpassword}
+            and $req->datas->{confirmpassword}
+            and $req->datas->{newpassword} eq $req->datas->{confirmpassword} )
         {
-            # A token is required
             $self->ott->setToken( $req, $req->sessionInfo );
-            return PE_PASSWORDFIRSTACCESS if ( $req->method eq 'GET' );
             return PE_PASSWORDFORMEMPTY;
         }
 
@@ -403,7 +439,8 @@ sub _reset {
 
     # Send mail
     return PE_MAILERROR
-      unless $self->send_mail( $self->{mailAddress}, $subject, $body, $html );
+      unless $self->send_mail( $req->datas->{mailAddress}, $subject, $body,
+        $html );
 
     PE_MAILOK;
 }

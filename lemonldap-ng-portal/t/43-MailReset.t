@@ -15,7 +15,7 @@ my $mail2 = 0;
 my $client = LLNG::Manager::Test->new(
     {
         ini => {
-            logLevel                   => 'debug',
+            logLevel                   => 'error',
             useSafeJail                => 1,
             portalDisplayRegister      => 1,
             authentication             => 'Demo',
@@ -42,14 +42,14 @@ ok(
         length => length($query),
         accept => 'text/html'
     ),
-    'Post email'
+    'Post mail'
 );
 count(1);
 
 # $query has been set by MIME::Lite::send
 ok(
     $res = $client->_get( '/resetpwd', query => $query, accept => 'text/html' ),
-    'Post mail token'
+    'Post mail token received by mail'
 );
 count(1);
 ( $host, $url, $query ) = expectForm( $res, '#', undef, 'token' );
@@ -80,7 +80,7 @@ no warnings 'redefine';
 sub MIME::Lite::send {
     my ($mail) = @_;
     pass('----- Mail given to MIME::Lite -----');
-    ok( $mail->header_as_string =~ /dwho\@badwolf.org/s, 'Found dest' )
+    ok( $mail->header_as_string =~ /dwho\@badwolf.org/s, ' Found dest' )
       or explain( $mail->header_as_string, 'To: dwho@badwolf.org' );
     count(2);
     unless ($mail2) {
@@ -88,7 +88,7 @@ sub MIME::Lite::send {
         ok(
             $mail->body_as_string =~
               m#a href="http://auth.example.com/resetpwd\?(.*?)"#,
-            'Found link'
+            ' Found link'
         );
         count(1);
         $query = $1;
@@ -96,13 +96,11 @@ sub MIME::Lite::send {
     }
     else {
         $mailSend = 2;
-        ok(
-            $mail->body_as_string =~
-              m#yourLoginIs.+?<b>(\w+)</b>.*?pwdIs.+?<b>(.*?)</b>#s,
-            'Get login/pwd'
-        );
+        ok( $mail->body_as_string =~ /pwdChanged/, ' Password was changed' );
         ( $user, $pwd ) = ( $1, $2 );
         count(1);
     }
+    pass('----- Mail sent -----');
+    count(1);
 }
 
