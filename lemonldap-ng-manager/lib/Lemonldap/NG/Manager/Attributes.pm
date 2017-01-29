@@ -1367,7 +1367,7 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'type'    => 'int'
         },
         'mailUrl' => {
-            'default' => 'http://auth.example.com/mail.pl',
+            'default' => 'http://auth.example.com/resetpwd',
             'type'    => 'url'
         },
         'maintenance' => {
@@ -2084,7 +2084,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => {
                 'ns' =>
                   'http://auth.example.com/Lemonldap/NG/Common/CGI/SOAPService',
-                'proxy' => 'http://auth.example.com/index.pl/sessions'
+                'proxy' => 'http://auth.example.com/sessions'
             },
             'type' => 'keyTextContainer'
         },

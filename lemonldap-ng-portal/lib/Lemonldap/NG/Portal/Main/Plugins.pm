@@ -39,13 +39,16 @@ sub enabledPlugins {
     push @res, '::Plugins::Register'
       if ( $self->conf->{registerDB} and $self->conf->{registerDB} ne 'Null' );
 
+    push @res, '::Plugins::MailReset'
+      if ( $self->conf->{portalDisplayResetPassword} );
+
     # Check if SOAP is enabled
     push @res, '::Plugins::SOAPServer'
       if ( $self->conf->{soapSessionServer}
         or $self->conf->{soapConfigServer} );
 
     # Check if portal status is enabled
-    push @res, '::Plugins::Status' if($self->conf->{portalStatus});
+    push @res, '::Plugins::Status' if ( $self->conf->{portalStatus} );
 
     # Add REST (check is done by it)
     push @res, '::Plugins::RESTServer';
@@ -72,6 +75,7 @@ sub enabledPlugins {
     }
 
     # Check if custom plugins are required
+    # TODO: change this name
     if ( $self->conf->{plugins} ) {
         $self->lmLog( 'Custom plugins: ' . $self->conf->{plugins}, 'debug' );
         push @res, grep ( /\w/, split( /,\s*/, $self->conf->{plugins} ) );

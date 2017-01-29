@@ -13,24 +13,29 @@ extends 'Lemonldap::NG::Common::Module';
 
 our $VERSION = '2.0.0';
 
-    # Sample accounts from Doctor Who characters
-has demoAccounts => (is=>'rw',default=>sub{{
-        'rtyler' => {
-            'uid'  => 'rtyler',
-            'cn'   => 'Rose Tyler',
-            'mail' => 'rtyler@badwolf.org',
-        },
-        'msmith' => {
-            'uid'  => 'msmith',
-            'cn'   => 'Mickey Smith',
-            'mail' => 'msmith@badwolf.org',
-        },
-        'dwho' => {
-            'uid'  => 'dwho',
-            'cn'   => 'Doctor Who',
-            'mail' => 'dwho@badwolf.org',
-        },
-}});
+# Sample accounts from Doctor Who characters
+has demoAccounts => (
+    is      => 'rw',
+    default => sub {
+        {
+            'rtyler' => {
+                'uid'  => 'rtyler',
+                'cn'   => 'Rose Tyler',
+                'mail' => 'rtyler@badwolf.org',
+            },
+            'msmith' => {
+                'uid'  => 'msmith',
+                'cn'   => 'Mickey Smith',
+                'mail' => 'msmith@badwolf.org',
+            },
+            'dwho' => {
+                'uid'  => 'dwho',
+                'cn'   => 'Doctor Who',
+                'mail' => 'dwho@badwolf.org',
+            },
+        };
+    }
+);
 
 # INITIALIZATION
 
@@ -63,7 +68,7 @@ sub getUser {
     if ( $req->{mail} ) {
         return PE_OK
           if (
-            my $req->{user} =
+            ( $req->{user} ) =
             grep { $self->demoAccounts->{$_}->{mail} eq $req->{mail} }
             keys %{ $self->demoAccounts }
           );
@@ -81,8 +86,7 @@ sub setSessionInfo {
     my %vars = ( %{ $self->conf->{exportedVars} },
         %{ $self->conf->{demoExportedVars} } );
     while ( my ( $k, $v ) = each %vars ) {
-        $req->{sessionInfo}->{$k} =
-          $self->demoAccounts->{ $req->{user} }->{$v}
+        $req->{sessionInfo}->{$k} = $self->demoAccounts->{ $req->{user} }->{$v}
           || "";
     }
 

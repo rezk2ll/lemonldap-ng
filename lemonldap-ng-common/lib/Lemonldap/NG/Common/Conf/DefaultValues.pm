@@ -111,7 +111,7 @@ sub defaultValues {
         'mailSessionKey'       => 'mail',
         'mailSubject'          => '[LemonLDAP::NG] Your new password',
         'mailTimeout'          => 0,
-        'mailUrl'              => 'http://auth.example.com/mail.pl',
+        'mailUrl'              => 'http://auth.example.com/resetpwd',
         'managerDn'            => '',
         'managerPassword'      => '',
         'multiValuesSeparator' => '; ',
@@ -177,7 +177,7 @@ sub defaultValues {
         'remoteGlobalStorageOptions' => {
             'ns' =>
               'http://auth.example.com/Lemonldap/NG/Common/CGI/SOAPService',
-            'proxy' => 'http://auth.example.com/index.pl/sessions'
+            'proxy' => 'http://auth.example.com/sessions'
         },
         'requireToken' => 1,
         'samlAttributeAuthorityDescriptorAttributeServiceSOAP' =>

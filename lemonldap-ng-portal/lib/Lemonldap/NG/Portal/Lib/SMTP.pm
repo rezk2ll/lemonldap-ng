@@ -155,7 +155,7 @@ sub getMailSession {
     foreach my $id ( keys %$sessions ) {
         my $mailSession = $self->p->getApacheSession($id);
         next unless ($mailSession);
-        return $id if ( $mailSession->data->{_type} =~ /^mail$/ );
+        return $mailSession if ( $mailSession->data->{_type} =~ /^mail$/ );
     }
 
     # No mail session found, return empty string

@@ -903,7 +903,7 @@ sub attributes {
         },
         mailUrl => {
             type          => 'url',
-            default       => 'http://auth.example.com/mail.pl',
+            default       => 'http://auth.example.com/resetpwd',
             documentation => 'URL of password reset page',
         },
         SMTPServer => {
@@ -2044,7 +2044,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         remoteGlobalStorageOptions => {
             type    => 'keyTextContainer',
             default => {
-                proxy => 'http://auth.example.com/index.pl/sessions',
+                proxy => 'http://auth.example.com/sessions',
                 ns =>
                   'http://auth.example.com/Lemonldap/NG/Common/CGI/SOAPService',
             },

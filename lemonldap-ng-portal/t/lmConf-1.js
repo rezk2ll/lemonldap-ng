@@ -21,7 +21,8 @@
     }
   },
   "exportedVars": {
-    "UA": "HTTP_USER_AGENT"
+    "mail": "mail",
+    "cn": "cn"
   },
   "globalStorage": "Apache::Session::File",
   "globalStorageOptions": {

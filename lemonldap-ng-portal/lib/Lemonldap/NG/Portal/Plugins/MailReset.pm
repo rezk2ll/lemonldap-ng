@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Plugins::Register;
+package Lemonldap::NG::Portal::Plugins::MailReset;
 
 use strict;
 use Encode;
@@ -9,10 +9,12 @@ use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADMAILTOKEN
   PE_CAPTCHAEMPTY
   PE_CAPTCHAERROR
+  PE_MAILCONFIRMATION_ALREADY_SENT
   PE_MAILCONFIRMOK
   PE_MAILERROR
   PE_MAILFIRSTACCESS
   PE_MAILFORMEMPTY
+  PE_MAILNOTFOUND
   PE_MAILOK
   PE_MALFORMEDUSER
   PE_NOTOKEN
@@ -90,7 +92,7 @@ sub _reset {
     my ( $mailToken, $newPwd, $confirmPwd );
 
     # Check for first access
-    $mailToken = $req->param('mail_token');
+    $mailToken = $req->datas->{mailToken} = $req->param('mail_token');
     unless ( $req->param('mail') || $mailToken ) {
         $self->setSecurity($req);
         return PE_MAILFIRSTACCESS if ( $req->method eq 'GET' );
@@ -112,7 +114,7 @@ sub _reset {
         $req->{mail} = $mailSession->{user};
         $req->datas->{mailAddress} =
           $mailSession->{ $self->conf->{mailSessionKey} };
-        $self->lmLog( 'User associated to: ' . $req->{mail} . 'debug' );
+        $self->lmLog( 'User associated to: ' . $req->{mail}, 'debug' );
     }
 
     # Check for values posted
@@ -168,7 +170,7 @@ sub _reset {
     }
 
     # Search user in database
-    $req->user( $req->{mail} );
+    #$req->user( $req->{mail} );
     $req->steps(
         [
             'getUser',                  'setSessionInfo',
@@ -188,10 +190,8 @@ sub _reset {
     }
 
     # Build temporary session
-    my $mailSession;
-    unless ( ( $mailSession = $self->getMailSession( $req->{mail} ) )
-        or $mailToken )
-    {
+    my $mailSession = $self->getMailSession( $req->{mail} );
+    unless ( $mailSession or $mailToken ) {
 
         # Create a new session
 
@@ -226,32 +226,39 @@ sub _reset {
 
         # Update session
         $mailSession->update($infos);
+        $req->id($mailSession->id);
+    }
+    elsif($mailSession) {
+        $self->lmLog( 'Mail session found: ' . $mailSession->id, 'debug' );
+        $req->datas->{mailAlreadySent} = 1;
     }
 
     # Send confirmation mail
     unless ($mailToken) {
-        my $mailAlreadySent = ( $mailSession->{id} and !$req->id ) ? 1 : 0;
-        $req->{id} ||= $mailSession->{id};
-
-        $self->lmLog( 'Mail session found: ' . $mailSession->id, 'debug' );
 
         # Mail session expiration date
         my $expTimestamp = $mailSession->data->{mailSessionTimeoutTimestamp};
 
         $self->lmLog( "Mail expiration timestamp: $expTimestamp", 'debug' );
 
-        my $expMailDate = strftime( "%d/%m/%Y", localtime $expTimestamp );
-        my $expMailTime = strftime( "%H:%M",    localtime $expTimestamp );
+        $req->datas->{expMailDate} =
+          strftime( "%d/%m/%Y", localtime $expTimestamp );
+        $req->datas->{expMailTime} =
+          strftime( "%H:%M", localtime $expTimestamp );
 
         # Mail session start date
         my $startTimestamp = $mailSession->data->{mailSessionStartTimestamp};
 
         $self->lmLog( "Mail start timestamp: $startTimestamp", 'debug' );
-        my $startMailDate = strftime( "%d/%m/%Y", localtime $startTimestamp );
-        my $startMailTime = strftime( "%H:%M",    localtime $startTimestamp );
+        $req->datas->{startMailDate} =
+          strftime( "%d/%m/%Y", localtime $startTimestamp );
+        $req->datas->{startMailTime} =
+          strftime( "%H:%M", localtime $startTimestamp );
 
         # Ask if user want another confirmation email
-        if ( $self->mailAlreadySent and !$req->param('resendconfirmation') ) {
+        if ( $req->datas->{mailAlreadySent}
+            and !$req->param('resendconfirmation') )
+        {
             $self->p->userNotice(
                 'Reset mail already sent to ' . $req->{mail} );
 
@@ -263,6 +270,7 @@ sub _reset {
         $req->datas->{mailAddress} ||=
           $self->p->getFirstValue(
             $req->{sessionInfo}->{ $self->conf->{mailSessionKey} } );
+        return PE_MAILERROR unless($req->datas->{mailAddress});
 
         # Build confirmation url
         my $url =
@@ -270,7 +278,7 @@ sub _reset {
           . "?mail_token="
           . $req->{id}
           . '&skin='
-          . $self->p->getSkin;
+          . $self->p->getSkin($req);
         $url .= '&'
           . $self->conf->{authChoiceParam} . '='
           . $req->datas->{_authChoice}
@@ -300,14 +308,14 @@ sub _reset {
         }
 
         # Replace variables in body
-        $body =~ s/\$expMailDate/$expMailDate/g;
-        $body =~ s/\$expMailTime/$expMailTime/g;
+        $body =~ s/\$expMailDate/$req->datas->{expMailDate}/ge;
+        $body =~ s/\$expMailTime/$req->datas->{expMailTime}/ge;
         $body =~ s/\$url/$url/g;
         $body =~ s/\$(\w+)/decode("utf8",$req->{sessionInfo}->{$1})/ge;
 
         # Send mail
         unless (
-            $self->send_mail( $self->{mailAddress}, $subject, $body, $html ) )
+            $self->send_mail( $req->datas->{mailAddress}, $subject, $body, $html ) )
         {
             $self->lmLog( 'Unable to send reset mail', 'debug' );
 
@@ -402,6 +410,100 @@ sub setSecurity {
     elsif ( $self->ott ) {
         $self->ott->setToken($req);
     }
+}
+
+sub display {
+    my ( $self, $req ) = @_;
+    my %tplPrm = (
+        PORTAL_URL      => $self->conf->{portal},
+        SKIN_PATH       => '/static',
+        SKIN            => $self->conf->{portalSkin},
+        SKIN_BG         => $self->conf->{portalSkinBackground},
+        AUTH_ERROR      => $req->error,
+        AUTH_ERROR_TYPE => $req->error_type,
+        CHOICE_PARAM    => $self->conf->{authChoiceParam},
+        CHOICE_VALUE    => $req->{_authChoice},
+        EXPMAILDATE     => $req->datas->{expMailDate},
+        EXPMAILTIME     => $req->datas->{expMailTime},
+        STARTMAILDATE   => $req->datas->{startMailDate},
+        STARTMAILTIME   => $req->datas->{startMailTime},
+        MAILALREADYSENT => $req->datas->{mailAlreadySent},
+        MAIL            => (
+              $self->p->checkXSSAttack( 'mail', $req->{mail} ) ? ""
+            : $self->{mail}
+        ),
+        MAIL_TOKEN => (
+            $self->p->checkXSSAttack( 'mail_token', $req->datas->{mailToken} )
+            ? ""
+            : $req->datas->{mailToken}
+        ),
+        DISPLAY_FORM            => 0,
+        DISPLAY_RESEND_FORM     => 0,
+        DISPLAY_CONFIRMMAILSENT => 0,
+        DISPLAY_MAILSENT        => 0,
+        DISPLAY_PASSWORD_FORM   => 0,
+    );
+
+    # Display captcha if it's enabled
+    if ( $req->captcha ) {
+        $tplPrm{CAPTCHA_SRC}  = $req->captcha;
+        $tplPrm{CAPTCHA_SIZE} = $self->conf->{captcha_size};
+    }
+    if ( $req->token ) {
+        $tplPrm{TOKEN} = $req->token;
+    }
+
+    # Display form the first time
+    if (
+        (
+               $req->error == PE_MAILFORMEMPTY
+            or $req->error == PE_MAILFIRSTACCESS
+            or $req->error == PE_MAILNOTFOUND
+            or $req->error == PE_CAPTCHAERROR
+            or $req->error == PE_CAPTCHAEMPTY
+        )
+        and !$req->datas->{mailToken}
+      )
+    {
+        $self->lmLog('Display form','debug');
+        $tplPrm{DISPLAY_FORM} = 1;
+    }
+
+    # Display mail confirmation resent form
+    elsif ( $req->error == PE_MAILCONFIRMATION_ALREADY_SENT ) {
+        $self->lmLog('Display resend form','debug');
+        $tplPrm{DISPLAY_RESEND_FORM} = 1;
+    }
+
+    # Display confirmation mail sent
+    elsif ( $req->error == PE_MAILCONFIRMOK ) {
+        $self->lmLog('Display "confirm mail sent"','debug');
+        $tplPrm{DISPLAY_CONFIRMMAILSENT} = 1;
+    }
+
+    # Display mail sent
+    elsif ( $req->error == PE_MAILOK ) {
+        $self->lmLog('Display "mail sent"','debug');
+        $tplPrm{DISPLAY_MAILSENT} = 1;
+    }
+
+    # Display password change form
+    elsif ( $req->datas->{mailToken}
+        and $req->error != PE_MAILERROR
+        and $req->error != PE_BADMAILTOKEN
+        and $req->error != PE_MAILOK )
+    {
+        $self->lmLog('Display password form','debug');
+        $tplPrm{DISPLAY_PASSWORD_FORM} = 1;
+    }
+
+    # Custom template parameters
+    if ( my $customParams = $self->p->getCustomTemplateParameters() ) {
+        foreach ( keys %$customParams ) {
+            $tplPrm{$_} = $customParams->{$_};
+        }
+    }
+    return 'mail', \%tplPrm;
 }
 
 1;
