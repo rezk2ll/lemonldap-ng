@@ -9,7 +9,7 @@ Lemonldap::NG::Manager::Build->run(
     managerAttributesFile => 'lemonldap-ng-manager/lib/Lemonldap/NG/Manager/Attributes.pm',
     defaultValuesFile     => 'lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/DefaultValues.pm',
     confConstantsFile     => 'lemonldap-ng-common/lib/Lemonldap/NG/Common/Conf/Constants.pm',
-    firstLmConfFile       => '_example/conf/lmConf-1.js',
+    firstLmConfFile       => '_example/conf/lmConf-1.json',
     reverseTreeFile       => 'lemonldap-ng-manager/site/static/reverseTree.json',
 );
 
