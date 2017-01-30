@@ -1363,7 +1363,7 @@
         "type": "simpleInputContainer"
       }, {
         "_nodes": [{
-          "default": "http://auth.example.com/mail.pl",
+          "default": "http://auth.example.com/resetpwd",
           "id": "mailUrl",
           "title": "mailUrl"
         }, {
