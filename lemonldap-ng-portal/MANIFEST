@@ -58,7 +58,6 @@ lib/Lemonldap/NG/Portal/Lib/Slave.pm
 lib/Lemonldap/NG/Portal/Lib/SMTP.pm
 lib/Lemonldap/NG/Portal/Lib/SOAPProxy.pm
 lib/Lemonldap/NG/Portal/Lib/Wrapper.pm
-lib/Lemonldap/NG/Portal/MailReset.pm
 lib/Lemonldap/NG/Portal/Main.pm
 lib/Lemonldap/NG/Portal/Main/Constants.pm
 lib/Lemonldap/NG/Portal/Main/Display.pm
