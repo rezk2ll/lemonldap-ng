@@ -368,6 +368,9 @@ t/41-Token.t
 t/42-Register-Demo-with-captcha.t
 t/42-Register-Demo-with-token.t
 t/42-Register-Demo.t
+t/43-MailReset-with-captcha.t
+t/43-MailReset-with-token.t
+t/43-MailReset.t
 t/50-IssuerGet.t
 t/60-status.t
 t/90-translations.t

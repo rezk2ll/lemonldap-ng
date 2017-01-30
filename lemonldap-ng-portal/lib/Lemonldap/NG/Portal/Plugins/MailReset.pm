@@ -91,12 +91,12 @@ sub _reset {
     my ( $self, $req ) = @_;
     my ( $mailToken, $newPwd, $confirmPwd );
 
-    # Check for password change form
+    # PASSWORD CHANGE FORM => changePwd()
     if ( $req->param('newpassword') or $req->param('reset') ) {
-        return $self->changePassword($req);
+        return $self->changePwd($req);
     }
 
-    # Check for first access
+    # FIRST FORM
     $mailToken = $req->datas->{mailToken} = $req->param('mail_token');
     unless ( $req->param('mail') || $mailToken ) {
         $self->setSecurity($req);
@@ -104,7 +104,7 @@ sub _reset {
         return PE_MAILFORMEMPTY;
     }
 
-    # Check for mail link
+    # OTHER FORMS
     if ($mailToken) {
         $self->lmLog( "Token given for password reset: " . $mailToken,
             'debug' );
@@ -340,7 +340,7 @@ sub _reset {
     return PE_PASSWORDFORMEMPTY;
 }
 
-sub changePassword {
+sub changePwd {
     my ( $self, $req ) = @_;
     $self->lmLog( 'Change password form response', 'debug' );
 
