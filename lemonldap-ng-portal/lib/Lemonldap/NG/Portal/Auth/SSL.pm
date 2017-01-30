@@ -18,6 +18,7 @@ has SSLField => ( is => 'rw' );
 sub init {
     my ($self) = @_;
     $self->SSLField( $self->conf->{SSLVar} ||= 'SSL_CLIENT_S_DN_Email' );
+    return 1;
 }
 
 # Read username in SSL environment variables, or return an error

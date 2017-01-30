@@ -50,7 +50,7 @@ sub init {
     1;
 }
 
-# INITIALIZATION
+# RUNNING METHODS
 
 ## @apmethod int getUser()
 # Check known accounts
@@ -101,4 +101,3 @@ sub setGroups {
 }
 
 1;
-
