@@ -76,9 +76,9 @@ sub enabledPlugins {
 
     # Check if custom plugins are required
     # TODO: change this name
-    if ( $self->conf->{plugins} ) {
-        $self->lmLog( 'Custom plugins: ' . $self->conf->{plugins}, 'debug' );
-        push @res, grep ( /\w/, split( /,\s*/, $self->conf->{plugins} ) );
+    if ( $self->conf->{customPlugins} ) {
+        $self->lmLog( 'Custom plugins: ' . $self->conf->{customPlugins}, 'debug' );
+        push @res, grep ( /\w/, split( /,\s*/, $self->conf->{customPlugins} ) );
     }
     return @res;
 }

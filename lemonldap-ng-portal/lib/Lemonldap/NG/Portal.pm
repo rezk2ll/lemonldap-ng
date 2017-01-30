@@ -30,7 +30,7 @@ Use any of Plack launcher. Example:
   
   use Lemonldap::NG::Portal;
   
-  # This must be the last instruction ! See PSGI for more
+  # This must be the last instruction! See PSGI for more
   Lemonldap::NG::Portal->run($opts);
 
 =head1 DESCRIPTION
@@ -72,14 +72,11 @@ During configuration reload, every enabled components are loaded as plugins:
 init() is called for each plugin. If one plugin initialization fails (init()
 returns 0), the portal responds a 500 status code for each request.
 
-Plugins can declare unauthRoutes/authRoutes during this initialization (=
-/path/info). Methods declared in this way must be declared in the plugin class.
-They will be called this the $req argument: the HTTP request
-(L<Lemonldap::NG::Portal::Main::Request>).
+See L<Lemonldap::NG::Portal::Main::Plugin> to see how to write modules.
 
 =head2 Main route
 
-The "/" route is declared in L<Lemonldap::NG::Portal::Main::Init> it points to
+The "/" route is declared in L<Lemonldap::NG::Portal::Main::Init>. It points to
 different methods in L<Lemonldap::NG::Portal::Main::Run>. Theses methods choose
 methods to call in the process and call do().
 
@@ -110,7 +107,7 @@ Whole configuration is always available. It is stored in $self->conf. It must
 not be modified by anyone even during initialization or receiving request
 (during initialization, copy the value in the plugin namespace instead).
 
-All plugins can dial with the portal methods using $self->p whoch points to
+All plugins can dial with the portal methods using $self->p which points to
 portal main object. Some main methods are mapped to the plugin namespace:
 
 =over
@@ -121,10 +118,12 @@ portal main object. Some main methods are mapped to the plugin namespace:
 
 =back
 
-=head2 OTHER POD FILES
+=head1 SEE ALSO
 
 Most of the documentation is available on the website
-L<http://lemonldap-ng.org>.
+L<http://lemonldap-ng.org>
+
+=head2 OTHER POD FILES
 
 =over
 
@@ -139,10 +138,6 @@ L<http://lemonldap-ng.org>.
 =item Adding parameters in the manager: L<Lemonldap::NG::Manager::Build>
 
 =back
-
-=head1 SEE ALSO
-
-L<http://lemonldap-ng.org>
 
 =head1 AUTHORS
 
