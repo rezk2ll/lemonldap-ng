@@ -284,8 +284,9 @@ sub grant {
 # @param $uri URI
 # @return Constant $class->FORBIDDEN
 sub forbidden {
-    my ( $class, $session ) = @_;
+    my ( $class, $session, $vhost ) = @_;
     my $uri = $class->unparsed_uri;
+    $vhost ||= $class->resolveAlias;
 
     if ( $session->{_logout} ) {
         $class->updateStatus( 'LOGOUT',
@@ -299,7 +300,7 @@ sub forbidden {
     $class->lmLog(
         "User "
           . $session->{ $class->tsv->{whatToTrace} }
-          . " was forbidden to access to $uri",
+          . " was forbidden to access to $vhost$uri",
         "notice"
     );
     $class->updateStatus( 'REJECT', $session->{ $class->tsv->{whatToTrace} } );
