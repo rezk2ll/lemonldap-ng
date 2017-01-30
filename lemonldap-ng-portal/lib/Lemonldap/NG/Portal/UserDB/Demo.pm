@@ -41,12 +41,6 @@ has demoAccounts => (
 
 # Check AuthDemo use
 sub init {
-    my $self = shift;
-
-    unless ( $self->p->getModule( undef, 'auth' ) =~ /Demo/ ) {
-        $self->p->error("Use UserDB::Demo only with Auth::Demo");
-    }
-
     1;
 }
 

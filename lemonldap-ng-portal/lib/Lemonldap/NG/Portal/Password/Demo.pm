@@ -10,13 +10,7 @@ our $VERSION = '2.0.0';
 
 sub init {
     my ($self) = @_;
-    if ( $self->p->getModule( undef, 'auth' ) eq 'Demo' ) {
-        return $self->SUPER::init;
-    }
-    else {
-        $self->lmLog( "Use PasswordDBDemo only with AuthDemo", 'error' );
-        return 0;
-    }
+    return $self->SUPER::init;
 }
 
 sub confirm {

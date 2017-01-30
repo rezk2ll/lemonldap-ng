@@ -16,12 +16,6 @@ extends 'Lemonldap::NG::Common::Module',
 
 sub init {
     my ($self) = @_;
-    unless ( $self->p->getModule( undef, 'auth' ) =~ /^OpenID\b/ ) {
-        $self->error(
-'UserDBOpenID isn\'t useable unless authentication module is set to OpenID'
-        );
-        return 0;
-    }
     return 1;
 }
 

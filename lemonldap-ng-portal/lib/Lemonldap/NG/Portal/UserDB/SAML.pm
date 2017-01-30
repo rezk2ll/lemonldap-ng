@@ -19,11 +19,6 @@ extends 'Lemonldap::NG::Common::Module', 'Lemonldap::NG::Portal::Lib::SAML';
 sub init {
     my ($self) = @_;
 
-    unless ( $self->p->getModule( undef, 'auth' ) =~ /^SAML/ ) {
-        $self->error( "SAML user module requires SAML authentication" );
-        return 0;
-    }
-
     # SAML service has been already loaded
     $self->lassoServer(
         $self->p->loadedModules->{'Lemonldap::NG::Portal::Auth::SAML'}

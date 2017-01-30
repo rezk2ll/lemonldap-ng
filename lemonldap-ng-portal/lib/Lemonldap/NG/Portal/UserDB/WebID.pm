@@ -15,13 +15,6 @@ our $VERSION = '2.0.0';
 # INITIALIZATION
 
 sub init {
-    my $self = shift;
-    unless ( $self->p->getModule( undef, 'auth' ) =~ /^WebID/ ) {
-        $self->error(
-"UserDB::WebID isn't useable unless authentication module is set to WebID"
-        );
-        return 0;
-    }
     1;
 }
 
