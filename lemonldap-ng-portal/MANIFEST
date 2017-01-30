@@ -24,6 +24,7 @@ lib/Lemonldap/NG/Portal/Auth/Null.pm
 lib/Lemonldap/NG/Portal/Auth/OpenID.pm
 lib/Lemonldap/NG/Portal/Auth/OpenIDConnect.pm
 lib/Lemonldap/NG/Portal/Auth/Proxy.pm
+lib/Lemonldap/NG/Portal/Auth/Radius.pm
 lib/Lemonldap/NG/Portal/Auth/Remote.pm
 lib/Lemonldap/NG/Portal/Auth/SAML.pm
 lib/Lemonldap/NG/Portal/Auth/Slave.pm
@@ -32,7 +33,6 @@ lib/Lemonldap/NG/Portal/Auth/Twitter.pm
 lib/Lemonldap/NG/Portal/Auth/WebID.pm
 lib/Lemonldap/NG/Portal/Auth/Yubikey.pm
 lib/Lemonldap/NG/Portal/AuthMulti.pm
-lib/Lemonldap/NG/Portal/AuthRadius.pm
 lib/Lemonldap/NG/Portal/CDC.pm
 lib/Lemonldap/NG/Portal/Display.pm
 lib/Lemonldap/NG/Portal/Issuer/CAS.pm
