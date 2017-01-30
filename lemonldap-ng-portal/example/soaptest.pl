@@ -15,7 +15,7 @@ my $session_id = shift @ARGV;
 
 # Service
 my $soap =
-  SOAP::Lite->new( proxy => 'http://auth.example.com/index.pl/sessions' );
+  SOAP::Lite->new( proxy => 'http://auth.example.com/sessions' );
 $soap->default_ns('urn:Lemonldap/NG/Common/CGI/SOAPService');
 
 # Call some SOAP methods

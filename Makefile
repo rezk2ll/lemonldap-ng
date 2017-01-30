@@ -692,8 +692,6 @@ install_examples_site:
 	@rm -rf $(REXAMPLESDIR)/portal/skins \
 		$(REXAMPLESDIR)/manager/skins \
 	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
-	@$(PERL) -i -pe 's#__SESSIONDIR__#$(APACHESESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl
-	@$(PERL) -i -pe 's#__PSESSIONDIR__#$(APACHEPSESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl
 
 install_doc_site:
 	# Offline documentation install
@@ -998,7 +996,7 @@ test-diff:
 	done
 
 tidy: clean
-	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.t' \) -print -exec perltidy -b {} \;
+	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.fcgi' -or -name '*.t' \) -print -exec perltidy -b {} \;
 	find lemon*/ -name '*.bak' -delete
 	$(MAKE) json
 

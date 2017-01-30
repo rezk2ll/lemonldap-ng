@@ -140,7 +140,7 @@ sub zeroConf {
             }
         },
         'registerDB'          => 'Demo',
-        'registerUrl'         => "http://auth.$domain/register.pl",
+        'registerUrl'         => "http://auth.$domain/register",
         'portal'              => "http://auth.$domain/",
         'notificationStorage' => 'File',
         'locationRules'       => {
@@ -170,7 +170,7 @@ sub zeroConf {
         'portalSkin' => 'bootstrap',
         'portalSkinBackground' =>
           '1280px-Cedar_Breaks_National_Monument_partially.jpg',
-        'mailUrl'                    => "http://auth.$domain/mail.pl",
+        'mailUrl'                    => "http://auth.$domain/resetpwd",
         'localSessionStorage'        => 'Cache::FileCache',
         'localSessionStorageOptions' => {
             'namespace'          => 'lemonldap-ng-sessions',

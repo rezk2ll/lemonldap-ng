@@ -1,5 +1,4 @@
 Changes
-example/autoProtectedCGI.pl
 example/menu.pl
 example/MyHandlerLog4Perl.pm
 example/scripts/purgeLocalCache

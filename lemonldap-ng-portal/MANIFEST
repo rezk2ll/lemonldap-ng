@@ -2,7 +2,6 @@
 bower.json
 Changes
 eg/index.fcgi
-example/mail.pl
 example/soapconfigtest.pl
 example/soaperrortest.pl
 example/soaptest.pl

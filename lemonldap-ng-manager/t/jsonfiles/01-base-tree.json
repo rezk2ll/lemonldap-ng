@@ -779,7 +779,7 @@
           "title": "ns",
           "type": "keyText"
         }, {
-          "data": "http://auth.example.com/index.pl/sessions",
+          "data": "http://auth.example.com/sessions",
           "id": "remoteGlobalStorageOptions/proxy",
           "title": "proxy",
           "type": "keyText"

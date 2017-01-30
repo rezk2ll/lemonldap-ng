@@ -98,7 +98,7 @@
             "id": "applicationList/0004-cat/0006-app",
             "data": {
               "display": "auto",
-              "uri": "http://manager.example.com/notifications.pl",
+              "uri": "http://manager.example.com/notifications",
               "description": "Explore WebSSO notifications",
               "logo": "database.png"
             }
@@ -107,7 +107,7 @@
               "display": "auto",
               "description": "Explore WebSSO sessions",
               "logo": "database.png",
-              "uri": "http://manager.example.com/sessions.pl"
+              "uri": "http://manager.example.com/sessions"
             },
             "title": "Sessions explorer",
             "type": "menuApp",
@@ -908,7 +908,7 @@
           "title": "ns",
           "type": "keyText"
         }, {
-          "data": "http://auth.example.com/index.pl/sessions",
+          "data": "http://auth.example.com/sessions",
           "id": "remoteGlobalStorageOptions/proxy",
           "title": "proxy",
           "type": "keyText"

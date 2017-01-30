@@ -6,9 +6,7 @@ set -e
 
 if [ "$1" == "configure" ]
 then
-	if [ -f /var/lib/lemonldap-ng/portal/index.pl ]; then \
-		diff /var/lib/lemonldap-ng/portal/index.pl \
-			/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin.pl && \
+	if [ -l /var/lib/lemonldap-ng/portal/index.pl ]; then
 		rm -rf /var/lib/lemonldap-ng/portal/index.pl
 	fi
 fi

@@ -47,7 +47,7 @@ BEGIN {
 # - { Type => "File", dirName => "/path/to/conf/dir/" },
 # - { Type => "DBI", dbiChain => "DBI:mysql:database=lemonldap-ng;host=1.2.3.4",
 # dbiUser => "user", dbiPassword => "password" },
-# - { Type => "SOAP", proxy => "https://auth.example.com/index.pl/config" },
+# - { Type => "SOAP", proxy => "https://auth.example.com/config" },
 # - { Type => "LDAP", ldapServer => "ldap://localhost", ldapConfBranch => "ou=conf,ou=applications,dc=example,dc=com",
 #  ldapBindDN => "cn=manager,dc=example,dc=com", ldapBindPassword => "secret"},
 #

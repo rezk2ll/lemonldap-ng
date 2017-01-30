@@ -290,7 +290,7 @@ access to Lemonldap::NG Web-SSO sessions via SOAP.
   __PACKAGE__->init ({
          globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
          globalStorageOptions => {
-                 proxy => 'http://auth.example.com/index.pl/sessions',
+                 proxy => 'http://auth.example.com/sessions',
                  proxyOptions => {
                      timeout => 5,
                  },
@@ -313,7 +313,7 @@ access to Lemonldap::NG Web-SSO sessions via SOAP.
   my $portal = new Lemonldap::NG::Portal::SharedConf (
          globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
          globalStorageOptions => {
-                 proxy => 'http://auth.example.com/index.pl/sessions',
+                 proxy => 'http://auth.example.com/sessions',
                  proxyOptions => {
                      timeout => 5,
                  },
@@ -368,7 +368,7 @@ C<>SOAP::Transport::HTTP::Client::get_basic_credentials>:
   __PACKAGE__->init ( {
       globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
       globalStorageOptions => {
-                proxy => 'http://auth.example.com/index.pl/sessions',
+                proxy => 'http://auth.example.com/sessions',
                 User     => 'http-user',
                 Password => 'pass',
       },
@@ -390,7 +390,7 @@ set environment variables.
   __PACKAGE__->init ( {
       globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
       globalStorageOptions => {
-                proxy => 'https://auth.example.com/index.pl/sessions',
+                proxy => 'https://auth.example.com/sessions',
       },
   } );
 

@@ -16,7 +16,7 @@ my ( $request, @get, @post, @menu, @cookies, @handler );
 $request = new HTTP::Request( 'GET', 'http://lemonldap-ng.org/' );
 $ua->request( $request, \&cb_content );
 
-$request = new HTTP::Request( 'GET', 'http://127.0.0.1/index_simple.pl' );
+$request = new HTTP::Request( 'GET', 'http://127.0.0.1/' );
 $request->header( Host => 'auth.example.com' );
 for ( my $i = 0 ; $i < NB ; $i++ ) {
     my $time = time();
@@ -25,7 +25,7 @@ for ( my $i = 0 ; $i < NB ; $i++ ) {
     push @get, $time2;
 }
 
-$request = new HTTP::Request( 'POST', 'http://127.0.0.1/index_simple.pl' );
+$request = new HTTP::Request( 'POST', 'http://127.0.0.1/' );
 $request->header( Host             => 'auth.example.com' );
 $request->header( 'Content-Lenght' => '42' );
 $request->header( 'Content-Type'   => 'application/x-www-form-urlencoded' );
@@ -54,7 +54,7 @@ for ( my $i = 0 ; $i < NB ; $i++ ) {
 }
 
 for ( my $i = 0 ; $i < NB ; $i++ ) {
-    $request = new HTTP::Request( 'GET', 'http://127.0.0.1/index_simple.pl' );
+    $request = new HTTP::Request( 'GET', 'http://127.0.0.1/' );
     $request->header( Host => 'auth.example.com' );
     my $cookie = shift @cookies;
     $request->header( "Cookie", $cookie );
@@ -62,7 +62,7 @@ for ( my $i = 0 ; $i < NB ; $i++ ) {
     my $response = $ua->request( $request, \&cb_content );
     my $time2    = time() - $time;
     push @menu, $time2;
-    $request = new HTTP::Request( 'GET', 'http://127.0.0.1/index.pl' );
+    $request = new HTTP::Request( 'GET', 'http://127.0.0.1/' );
     $request->header( Host => 'test.example.com' );
     $request->header( "Cookie", $cookie );
 

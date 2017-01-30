@@ -12,7 +12,7 @@ use Data::Dumper;
 
 # Service
 my $soap =
-  SOAP::Lite->new( proxy => 'http://auth.example.com/index.pl/config' );
+  SOAP::Lite->new( proxy => 'http://auth.example.com/config' );
 $soap->default_ns('urn:Lemonldap/NG/Common/CGI/SOAPService');
 
 # Call SOAP methods

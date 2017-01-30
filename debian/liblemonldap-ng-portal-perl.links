@@ -1,9 +1,3 @@
 /etc/lemonldap-ng/portal-apache2.conf /etc/apache2/sites-available/portal-apache2.conf
 /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/sites-available/portal-nginx.conf
-/usr/share/lemonldap-ng/portal/cdc.pl /var/lib/lemonldap-ng/portal/cdc.pl
-/usr/share/lemonldap-ng/portal/index.pl /var/lib/lemonldap-ng/portal/index.pl
-/usr/share/lemonldap-ng/portal/mail.pl /var/lib/lemonldap-ng/portal/mail.pl
-/usr/share/lemonldap-ng/portal/metadata.pl /var/lib/lemonldap-ng/portal/metadata.pl
-/usr/share/lemonldap-ng/portal/register.pl /var/lib/lemonldap-ng/portal/register.pl
-/usr/share/lemonldap-ng/portal/openid-configuration.pl /var/lib/lemonldap-ng/portal/openid-configuration.pl
-/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin.pl /usr/share/doc/liblemonldap-ng-portal-perl/examples/index.pl
+/usr/share/lemonldap-ng/portal/index.fcgi /var/lib/lemonldap-ng/portal/index.fcgi

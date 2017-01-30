@@ -42,7 +42,7 @@
           "display": "auto",
           "logo": "database.png",
           "name": "Notifications explorer",
-          "uri": "http://manager.example.com/notifications.pl"
+          "uri": "http://manager.example.com/notifications"
         },
         "type": "application"
       },
@@ -52,7 +52,7 @@
           "display": "auto",
           "logo": "database.png",
           "name": "Sessions explorer",
-          "uri": "http://manager.example.com/sessions.pl"
+          "uri": "http://manager.example.com/sessions"
         },
         "type": "application"
       },
