@@ -12,6 +12,11 @@ no warnings 'redefine';
 # addUnauthRoute() methods in addition of Lemonldap::NG::Common::Module.
 extends 'Lemonldap::NG::Portal::Main::Plugin';
 
+# PROPERTIES
+
+# Underlying notifications storage object (File, DBI, LDAP,...)
+has notifObject => ( is => 'rw' );
+
 # INITIALIZATION
 
 sub init {
@@ -124,8 +129,8 @@ sub getNotifBack {
                 if ( my $refId = $refs->{$reference} ) {
 
                     # Verity that checkboxes have been checked
-                    if ( $json->{check} ) {
-                        if ( my $toCheckCount = @{ $json->{check} } ) {
+                    if ( $notif->{check} ) {
+                        if ( my $toCheckCount = @{ $notif->{check} } ) {
                             unless ($checks->{$refId}
                                 and $toCheckCount == @{ $checks->{$refId} } )
                             {
