@@ -39,6 +39,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
                 notificationStorageOptions => {
                     dbiChain => "dbi:SQLite:dbname=$file",
                 },
+                oldNotifFormat => 1,
             }
         }
     );

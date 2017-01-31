@@ -7,7 +7,7 @@ use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
 use Lemonldap::NG::Common::Conf::ReConstants;
-use Lemonldap::NG::Common::Notifications;
+require Lemonldap::NG::Common::Notifications;
 
 use feature 'state';
 
@@ -24,7 +24,14 @@ has _notifAccess => ( is => 'rw' );
 use constant defaultRoute => 'notifications.html';
 
 sub addRoutes {
-    my $self = shift;
+    my($self,$conf) = @_;
+
+    if($conf->{oldNotifFormat}) {
+        Lemonldap::NG::Common::Notifications->import('XML');
+    }
+    else {
+        Lemonldap::NG::Common::Notifications->import('JSON');
+    }
 
     unless ( $self->notifAccess ) {
         $self->addRoute( 'notifications.html', 'notEnabled', ['GET'] );

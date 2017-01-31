@@ -27,7 +27,7 @@ our $VERSION = '2.0.0';
 use constant defaultRoute => 'manager.html';
 
 sub addRoutes {
-    my $self = shift;
+    my($self,$conf) = @_;
 
     # HTML template
     $self->addRoute( 'manager.html', undef, ['GET'] )

@@ -534,6 +534,7 @@ sub tree {
                             help  => 'notifications.html',
                             nodes => [
                                 'notification',
+                                'oldNotifFormat',
                                 'notificationStorage',
                                 'notificationStorageOptions',
                                 'notificationWildcard',

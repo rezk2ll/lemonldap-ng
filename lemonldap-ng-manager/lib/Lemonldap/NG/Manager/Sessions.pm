@@ -25,7 +25,7 @@ our $VERSION = '2.0.0';
 use constant defaultRoute => 'sessions.html';
 
 sub addRoutes {
-    my $self = shift;
+    my($self,$conf) = @_;
 
     # HTML template
     $self->addRoute( 'sessions.html', undef, ['GET'] )
@@ -39,11 +39,6 @@ sub addRoutes {
         ['DELETE']
       );
 
-    my $conf = $self->confAcc->getConf(
-        { localPrm => $self->confAcc->getLocalConf(SESSIONSEXPLORERSECTION) } );
-    #
-    # Return unless configuration is available
-    return 0 unless ($conf);
     $self->setTypes($conf);
 
     $self->{ipField}              ||= 'ipAddr';

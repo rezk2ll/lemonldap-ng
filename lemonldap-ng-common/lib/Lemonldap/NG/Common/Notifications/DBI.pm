@@ -14,6 +14,10 @@ use Encode;
 our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
+sub import {
+    shift;
+    return Lemonldap::NG::Common::Notifications->import(@_)
+}
 
 has dbiTable => (
     is      => 'ro',
@@ -28,7 +32,7 @@ has dbiChain => (
 has dbiUser => (
     is      => 'ro',
     default => sub {
-        $_[0]->p->lmLog( 'Warning: "dbiUser" parameter is not set', 'warn' );
+        $_[0]->{p}->lmLog( 'Warning: "dbiUser" parameter is not set', 'warn' );
         return '';
     }
 );

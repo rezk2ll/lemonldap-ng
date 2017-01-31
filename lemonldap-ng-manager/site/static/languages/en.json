@@ -461,6 +461,7 @@
 "oidcServiceAllowImplicitFlow": "Implicit Flow",
 "oidcServiceAllowHybridFlow": "Hybrid Flow",
 "ok": "OK",
+"oldNotifFormat": "Use old XML format",
 "openIdAttr": "OpenID login",
 "openIdAuthnLevel": "Authentication level",
 "openIdExportedVars": "Exported variables",

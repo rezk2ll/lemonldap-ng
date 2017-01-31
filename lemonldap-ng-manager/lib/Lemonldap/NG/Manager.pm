@@ -31,9 +31,7 @@ sub init {
     my ( $self, $args ) = @_;
     $args ||= {};
 
-    my $conf = $self->confAcc;
-
-    if ( my $localconf = $conf->getLocalConf(MANAGERSECTION) ) {
+    if ( my $localconf = $self->confAcc->getLocalConf(MANAGERSECTION) ) {
         $self->{$_} = $args->{$_} // $localconf->{$_}
           foreach ( keys %$localconf );
     }
@@ -57,10 +55,11 @@ sub init {
       split( /[,\s]+/, $self->{enabledModules} );
     extends 'Lemonldap::NG::Handler::PSGI::Router', @enabledModules;
     my @working;
+    my $conf = $self->confAcc->getConf;
     for ( my $i = 0 ; $i < @enabledModules ; $i++ ) {
         my $mod = $enabledModules[$i];
         no strict 'refs';
-        if ( &{"${mod}::addRoutes"}($self) ) {
+        if ( &{"${mod}::addRoutes"}($self,$conf) ) {
             $self->lmLog( "Module $mod enabled", 'debug' );
             push @working, $mod;
         }

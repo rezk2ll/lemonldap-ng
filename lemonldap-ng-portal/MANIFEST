@@ -46,6 +46,8 @@ lib/Lemonldap/NG/Portal/Lib/Choice.pm
 lib/Lemonldap/NG/Portal/Lib/DBI.pm
 lib/Lemonldap/NG/Portal/Lib/LDAP.pm
 lib/Lemonldap/NG/Portal/Lib/Net/LDAP.pm
+lib/Lemonldap/NG/Portal/Lib/Notifications/JSON.pm
+lib/Lemonldap/NG/Portal/Lib/Notifications/XML.pm
 lib/Lemonldap/NG/Portal/Lib/OneTimeToken.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/Server.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
@@ -333,7 +335,6 @@ site/templates/pastel/yubikeyform.tpl
 t/01-AuthDemo.t
 t/02-Password-Demo.t
 t/03-XSS-protection.t
-t/04-Notification-File.t
 t/20-Auth-and-password-DBI.t
 t/21-Auth-and-password-LDAP.t
 t/22-Auth-and-password-AD.t
@@ -361,6 +362,7 @@ t/34-Auth-Proxy-and-SOAP-Server.t
 t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-sessions-with-SOAP-server.t
 t/40-Notifications-DBI.t
+t/40-Notifications-File.t
 t/41-Captcha.t
 t/41-Token.t
 t/42-Register-Demo-with-captcha.t

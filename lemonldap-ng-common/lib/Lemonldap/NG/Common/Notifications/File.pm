@@ -12,6 +12,11 @@ use MIME::Base64;
 our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
+sub import {
+    shift;
+    return Lemonldap::NG::Common::Notifications->import(@_)
+}
+
 
 has dirName => ( is => 'ro', required => 1 );
 

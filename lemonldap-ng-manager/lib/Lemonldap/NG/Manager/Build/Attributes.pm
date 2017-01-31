@@ -660,6 +660,11 @@ sub attributes {
         },
 
         # Notification
+        oldNotifFormat => {
+            type => 'bool',
+            default => 0,
+            documentation => 'Use old XML format',
+        },
         notificationWildcard => {
             type          => 'text',
             default       => 'allusers',

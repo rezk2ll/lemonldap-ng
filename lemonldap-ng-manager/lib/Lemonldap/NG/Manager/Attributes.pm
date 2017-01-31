@@ -1720,6 +1720,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
         'oidcStorageOptions' => {
             'type' => 'keyTextContainer'
         },
+        'oldNotifFormat' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'openIdAttr' => {
             'type' => 'text'
         },
