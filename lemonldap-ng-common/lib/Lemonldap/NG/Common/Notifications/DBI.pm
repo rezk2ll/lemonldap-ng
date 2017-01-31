@@ -158,9 +158,6 @@ sub purge {
 # @return true if succeed
 sub newNotif {
     my ( $self, $date, $uid, $ref, $condition, $xml ) = @_;
-    $xml = $xml->serialize();
-
-    utf8::encode($xml);
 
     my $res =
       $condition =~ /.+/

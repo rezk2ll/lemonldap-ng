@@ -26,16 +26,13 @@ has stylesheet => (
     is      => 'rw',
     lazy    => 1,
     builder => sub {
-        my $self      = $_[0];
-        my $xslt      = XML::LibXSLT->new();
-        my $styleFile = (
-            (
-                $self->conf->{notificationXSLTfile}
-                  and -e $self->conf->{notificationXSLTfile}
-            )
-            ? $self->conf->{notificationXSLTfile}
-            : $self->conf->{templatesDir} . '/common/notification.xsl'
-        );
+        my $self = $_[0];
+        my $xslt = XML::LibXSLT->new();
+        my $styleFile =
+          ( $self->conf->{notificationXSLTfile}
+              and -e $self->conf->{notificationXSLTfile} )
+          ? $self->conf->{notificationXSLTfile}
+          : $self->conf->{templatesDir} . '/common/notification.xsl';
         die "$styleFile not found" unless ( -e $styleFile );
         return $xslt->parse_stylesheet( $self->parser->parse_file($styleFile) );
     }
@@ -101,7 +98,6 @@ sub checkForNotifications {
                     # Remove it from XML
                     $notif->unbindNode();
                     next LOOP;
-
                 }
             }
 

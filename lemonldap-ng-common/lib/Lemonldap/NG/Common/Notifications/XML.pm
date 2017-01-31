@@ -17,9 +17,9 @@ has parser => (
 # @return number of notifications done
 sub newNotification {
     my ( $self, $xml ) = @_;
-    eval { $xml = $self->parser->parse_string($xml); };
+    eval { $xml = $self->parser->parse_string($xml) };
     if ($@) {
-        $self->lmLog( "Unable to read XML file : $@", 'error' );
+        eval { $self->lmLog( "Unable to read XML file : $@", 'error' ) };
         return 0;
     }
     my @notifs;
@@ -52,9 +52,10 @@ sub newNotification {
         my $root = XML::LibXML::Element->new('root');
         $root->appendChild($notif);
         $result->setDocumentElement($root);
+        $result = $result->serialize;
+        utf8::encode($result);
         push @notifs, [ @datas, $result ];
     }
-    my $tmp = $self->{type};
     my $count;
     foreach (@notifs) {
         $count++;

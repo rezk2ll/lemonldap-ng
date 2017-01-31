@@ -270,6 +270,7 @@ site/templates/common/mail_header.tpl
 site/templates/common/mail_password.tpl
 site/templates/common/mail_register_confirm.tpl
 site/templates/common/mail_register_done.tpl
+site/templates/common/notification.tpl
 site/templates/common/notification.xsl
 site/templates/common/oidc_checksession.tpl
 site/templates/common/redirect.tpl

@@ -12,11 +12,11 @@ use MIME::Base64;
 our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
+
 sub import {
     shift;
-    return Lemonldap::NG::Common::Notifications->import(@_)
+    return Lemonldap::NG::Common::Notifications->import(@_);
 }
-
 
 has dirName => ( is => 'ro', required => 1 );
 
@@ -125,7 +125,7 @@ sub newNotif {
     return ( 0, 'This notification has been done' ) if ( -e $old );
     open my $F, ">$filename" or return ( 0, "Unable to create $filename ($!)" );
     binmode($F);
-    $xml->toFH($F);
+    print $F $xml;
     return ( 0, "Unable to close $filename ($!)" ) unless ( close $F );
     return 1;
 }
