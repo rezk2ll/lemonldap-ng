@@ -61,19 +61,16 @@ sub checkForNotifications {
         # Go to next file if no notification found
         next unless $j;
         $i++;
-        if ( $req->wantJSON ) {
-            $form = \@res;
-        }
-        else {
-            $form .= $self->toForm(@res);
-        }
+        $form .= $self->toForm(@res);
     }
 
     # Stop here if nothing to display
     return 0 unless $i;
 
-    # Returns HTML fragment
+    # Cipher cookie
     $req->id( $self->p->HANDLER->tsv->{cipher}->encrypt( $req->id ) );
+
+    # Returns HTML fragment
     return $form;
 }
 
@@ -215,24 +212,20 @@ sub toForm {
     } @notifs;
     require HTML::Template;
     my $file =
-      ( $self->conf->{notificationTplFile}
-          and -e $self->conf->{notificationTplFile} )
-      ? $self->conf->{notificationTplFile}
-      : $self->conf->{templatesDir} . '/common/notification.tpl';
-    return join(
-        '',
-        map {
-            my $tpl = HTML::Template->new(
-                filename               => $file,
-                die_on_bad_params      => 0,
-                die_on_missing_include => 1,
-                cache                  => 1,
-                global_vars            => 1,
-            );
-            $tpl->param(%$_);
-            $tpl->output;
-        } @notifs
+        $self->conf->{templateDir} . '/'
+      . $self->conf->{portalSkin}
+      . '/notifinclude.tpl';
+    $file = $self->conf->{templatesDir} . '/common/notifinclude.tpl'
+      unless ( -e $file );
+    my $tpl = HTML::Template->new(
+        filename               => $file,
+        die_on_bad_params      => 0,
+        die_on_missing_include => 1,
+        cache                  => 1,
+        global_vars            => 0,
     );
+    $tpl->param( notifications => \@notifs );
+    return $tpl->output;
 }
 
 1;

@@ -13,8 +13,11 @@ our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
 
+our $ext = 'json';
+
 sub import {
     shift;
+    $ext = 'xml' if ( $_[0] eq 'XML' );
     return Lemonldap::NG::Common::Notifications->import(@_);
 }
 
@@ -30,12 +33,8 @@ has table => (
 
 has fileNameSeparator => ( is => 'rw', default => '_' );
 
-## @method hashref get(string uid,string ref)
 # Returns notifications corresponding to the user $uid.
 # If $ref is set, returns only notification corresponding to this reference.
-# @param $uid UID
-# @param $ref Notification reference
-# @return hashref where keys are filenames and values are XML strings
 sub get {
     my ( $self, $uid, $ref ) = @_;
     return () unless ($uid);
@@ -43,7 +42,7 @@ sub get {
     my $identifier = &getIdentifier( $self, $uid, $ref );
 
     opendir D, $self->{dirName};
-    my @notif = grep /^\d{8}${fns}${identifier}\S*\.xml$/, readdir(D);
+    my @notif = grep /^\d{8}${fns}${identifier}\S*\.$ext$/, readdir(D);
     closedir D;
 
     my $files;
@@ -67,9 +66,9 @@ sub getAll {
     opendir D, $self->{dirName};
     my @notif;
     my $fns = $self->{fileNameSeparator};
-    @notif = grep /^\S*\.xml$/, readdir(D);
+    @notif = grep /^\S*\.$ext$/, readdir(D);
     my %h = map {
-/^(\d{8})${fns}([^\s${fns}]+)${fns}([^\s${fns}]+)(?:${fns}([^\s${fns}]+))?\.xml$/
+/^(\d{8})${fns}([^\s${fns}]+)${fns}([^\s${fns}]+)(?:${fns}([^\s${fns}]+))?\.$ext$/
           ? (
             $_ => {
                 date      => $1,
@@ -88,7 +87,7 @@ sub getAll {
 # @param $myref identifier returned by get() or getAll()
 sub delete {
     my ( $self, $myref ) = @_;
-    my $new = ( $myref =~ /(.*?)(?:\.xml)$/ )[0] . '.done';
+    my $new = ( $myref =~ /(.*?)(?:\.$ext)$/ )[0] . '.done';
     return rename( $self->{dirName} . "/$myref", $self->{dirName} . "/$new" );
 }
 
@@ -101,15 +100,9 @@ sub purge {
     return unlink( $self->{dirName} . "/$myref" );
 }
 
-## @method boolean newNotif(string date, string uid, string ref, string xml)
 # Insert a new notification
-# @param date Date
-# @param uid UID
-# @param ref Reference of the notification
-# @param xml XML notification
-# @return true if succeed
 sub newNotif {
-    my ( $self, $date, $uid, $ref, $condition, $xml ) = @_;
+    my ( $self, $date, $uid, $ref, $condition, $content ) = @_;
     my $fns = $self->{fileNameSeparator};
     $date =~ s/-//g;
     return ( 0, "Bad date" ) unless ( $date =~ /^\d{8}/ );
@@ -118,14 +111,14 @@ sub newNotif {
       . "/${date}${fns}${uid}${fns}"
       . encode_base64( $ref, '' );
     $filename .= "${fns}" . encode_base64( $condition, '' ) if $condition;
-    $filename .= ".xml";
+    $filename .= ".$ext";
 
     return ( 0, 'This notification still exists' ) if ( -e $filename );
-    my $old = ( $filename =~ /(.*?)(?:\.xml)$/ )[0] . '.done';
+    my $old = ( $filename =~ /(.*?)(?:\.$ext)$/ )[0] . '.done';
     return ( 0, 'This notification has been done' ) if ( -e $old );
     open my $F, ">$filename" or return ( 0, "Unable to create $filename ($!)" );
     binmode($F);
-    print $F $xml;
+    print $F $content;
     return ( 0, "Unable to close $filename ($!)" ) unless ( close $F );
     return 1;
 }
