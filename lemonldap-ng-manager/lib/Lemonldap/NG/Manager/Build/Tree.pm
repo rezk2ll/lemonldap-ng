@@ -119,19 +119,6 @@ sub tree {
                             nodes => ['apacheAuthnLevel']
                         },
                         {
-                            title => 'browseridParams',
-                            help  => 'authbrowserid.html',
-                            form  => 'simpleInputContainer',
-                            nodes => [
-                                'browserIdAuthnLevel',
-                                'browserIdAutoLogin',
-                                'browserIdVerificationURL',
-                                'browserIdSiteName',
-                                'browserIdSiteLogo',
-                                'browserIdBackgroundColor'
-                            ]
-                        },
-                        {
                             title => 'casParams',
                             help  => 'authcas.html',
                             nodes => [

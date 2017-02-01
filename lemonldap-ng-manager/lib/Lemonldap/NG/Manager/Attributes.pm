@@ -297,10 +297,6 @@ sub attributes {
                         'v' => 'Active Directory'
                     },
                     {
-                        'k' => 'BrowserID',
-                        'v' => 'BrowserID (Mozilla Persona)'
-                    },
-                    {
                         'k' => 'CAS',
                         'v' => 'Central Authentication Service (CAS)'
                     },
@@ -475,10 +471,6 @@ sub attributes {
                     'v' => 'Active Directory'
                 },
                 {
-                    'k' => 'BrowserID',
-                    'v' => 'BrowserID (Mozilla Persona)'
-                },
-                {
                     'k' => 'Choice',
                     'v' => 'authChoice'
                 },
@@ -562,25 +554,6 @@ sub attributes {
             'type' => 'select'
         },
         'AuthLDAPFilter' => {
-            'type' => 'text'
-        },
-        'browserIdAuthnLevel' => {
-            'default' => 1,
-            'type'    => 'int'
-        },
-        'browserIdAutoLogin' => {
-            'type' => 'bool'
-        },
-        'browserIdBackgroundColor' => {
-            'type' => 'text'
-        },
-        'browserIdSiteLogo' => {
-            'type' => 'text'
-        },
-        'browserIdSiteName' => {
-            'type' => 'text'
-        },
-        'browserIdVerificationURL' => {
             'type' => 'text'
         },
         'captcha_login_enabled' => {

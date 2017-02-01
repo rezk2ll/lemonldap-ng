@@ -1757,7 +1757,6 @@ sub attributes {
             select => [
                 { k => 'Apache',    v => 'Apache' },
                 { k => 'AD',        v => 'Active Directory' },
-                { k => 'BrowserID', v => 'BrowserID (Mozilla Persona)' },
                 { k => 'Choice',    v => 'authChoice' },
                 { k => 'CAS',  v => 'Central Authentication Service (CAS)' },
                 { k => 'DBI',  v => 'Database (DBI)' },
@@ -2217,7 +2216,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
                 [
                     { k => 'Apache',    v => 'Apache' },
                     { k => 'AD',        v => 'Active Directory' },
-                    { k => 'BrowserID', v => 'BrowserID (Mozilla Persona)' },
                     { k => 'CAS', v => 'Central Authentication Service (CAS)' },
                     { k => 'DBI', v => 'Database (DBI)' },
                     { k => 'Demo',          v => 'Demo' },
@@ -2289,18 +2287,6 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default       => 12,
             documentation => 'Yubikey public ID size',
         },
-
-        # BrowserID
-        browserIdAuthnLevel => {
-            type          => 'int',
-            default       => 1,
-            documentation => 'Browser ID authentication level',
-        },
-        browserIdAutoLogin       => { type => 'bool', },
-        browserIdVerificationURL => { type => 'text', },
-        browserIdSiteName        => { type => 'text', },
-        browserIdSiteLogo        => { type => 'text', },
-        browserIdBackgroundColor => { type => 'text', },
 
         # OpenID Connect auth params
         oidcAuthnLevel => {

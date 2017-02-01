@@ -17,7 +17,6 @@ sub defaultValues {
         },
         'authChoiceParam'          => 'lmAuth',
         'authentication'           => 'Demo',
-        'browserIdAuthnLevel'      => 1,
         'captcha_register_enabled' => 1,
         'captcha_size'             => 6,
         'CAS_authnLevel'           => 1,

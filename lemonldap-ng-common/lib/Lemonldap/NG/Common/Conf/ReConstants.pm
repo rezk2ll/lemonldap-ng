@@ -31,7 +31,6 @@ our $virtualHostKeys = '(?:vhost(?:(?:Aliase|Http)s|Maintenance|Port)|(?:exporte
 our $authParameters = {
   adParams => [qw(ADPwdMaxAge ADPwdExpireWarning)],
   apacheParams => [qw(apacheAuthnLevel)],
-  browseridParams => [qw(browserIdAuthnLevel browserIdAutoLogin browserIdVerificationURL browserIdSiteName browserIdSiteLogo browserIdBackgroundColor)],
   casParams => [qw(CAS_authnLevel CAS_url CAS_CAFile CAS_renew CAS_gateway CAS_pgtFile CAS_proxiedServices)],
   choiceParams => [qw(authChoiceParam authChoiceModules)],
   dbiParams => [qw(dbiAuthnLevel dbiExportedVars dbiAuthChain dbiAuthUser dbiAuthPassword dbiUserChain dbiUserUser dbiUserPassword dbiAuthTable dbiUserTable dbiAuthLoginCol dbiAuthPasswordCol dbiPasswordMailCol userPivot dbiAuthPasswordHash)],
