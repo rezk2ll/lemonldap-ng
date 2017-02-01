@@ -132,7 +132,7 @@
     "_whatToTrace": "$_auth eq 'SAML' ? \"$_user\\@$_idpConfKey\" : \"$_user\""
   },
   "notification": 1,
-  "oldNotifFormat": 1,
+  "oldNotifFormat": 0,
   "notificationStorage": "File",
   "notificationStorageOptions": {
     "dirName": "t/notifications"

@@ -5,10 +5,11 @@ use Mouse;
 use JSON qw(from_json to_json);
 
 sub newNotification {
-    my ( $self, $json ) = @_;
-    eval { $json = from_json($json) };
-    if ($@) {
-        eval { $self->lmLog( "Unable to decode JSON file: $@", 'error' ) };
+    my ( $self, $jsonString ) = @_;
+    my $json;
+    eval { $json = from_json($jsonString) };
+    if ( my $err = $@ ) {
+        eval { $self->lmLog( "Unable to decode JSON file: $err", 'error' ) };
         return 0;
     }
     my @notifs;
@@ -26,7 +27,7 @@ sub newNotification {
             push @datas, $tmp;
         }
         push @datas, ( $notif->{condition} // '' );
-        push @notifs, to_json(\@datas);
+        push @notifs, [@datas,$jsonString];
     }
     my $count;
     foreach (@notifs) {

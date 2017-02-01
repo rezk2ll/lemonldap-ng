@@ -5,6 +5,7 @@
 use Test::More;
 use strict;
 use IO::String;
+use JSON qw(from_json);
 
 eval { mkdir 't/notifications' };
 `rm -rf t/notifications/*`;
@@ -12,7 +13,7 @@ require 't/test-lib.pm';
 
 # Try to create a notification
 my $notif =
-'{"date":"2015-05-03","uid":"dwho","reference":"Test","xml":"<title>Test</title>"}';
+'{"date":"2015-05-03","uid":"dwho","reference":"Test","xml":{"title":"Test"}}';
 my $res =
   &client->jsonPostResponse( 'notifications/actives', '',
     IO::String->new($notif),
@@ -92,9 +93,11 @@ sub displayTests {
 
     if ( $type eq 'actives' ) {
         $res = &client->jsonResponse( "notifications/$type/dwho_Test", '' );
-        ok( $res->{result} == 1,                     'Result = 1' );
-        ok( $res->{count} == 1,                      'Count = 1' );
-        ok( $res->{notifications}->[0] =~ /^<\?xml/, 'Response is XML' );
+        ok( $res->{result} == 1, 'Result = 1' );
+        ok( $res->{count} == 1,  'Count = 1' );
+        ok( eval { from_json( $res->{notifications}->[0] ) },
+            'Response is JSON' )
+          or print STDERR "Expect JSON, found:\n$res->{notifications}->[0]\n";
         count(3);
     }
 }

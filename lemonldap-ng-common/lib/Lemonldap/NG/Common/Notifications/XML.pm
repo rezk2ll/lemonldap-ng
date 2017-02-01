@@ -18,8 +18,8 @@ has parser => (
 sub newNotification {
     my ( $self, $xml ) = @_;
     eval { $xml = $self->parser->parse_string($xml) };
-    if ($@) {
-        eval { $self->lmLog( "Unable to read XML file : $@", 'error' ) };
+    if ( my $err = $@ ) {
+        eval { $self->lmLog( "Unable to read XML file : $err", 'error' ) };
         return 0;
     }
     my @notifs;

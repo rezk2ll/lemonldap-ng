@@ -3,6 +3,7 @@ package Lemonldap::NG::Manager::Notifications;
 use 5.10.0;
 use utf8;
 use Mouse;
+use JSON qw(to_json);
 
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
@@ -17,6 +18,8 @@ our $VERSION = '2.0.0';
 
 has _notifAccess => ( is => 'rw' );
 
+has notifFormat => ( is => 'rw' );
+
 #############################
 # I. INITIALIZATION METHODS #
 #############################
@@ -24,13 +27,15 @@ has _notifAccess => ( is => 'rw' );
 use constant defaultRoute => 'notifications.html';
 
 sub addRoutes {
-    my($self,$conf) = @_;
+    my ( $self, $conf ) = @_;
 
-    if($conf->{oldNotifFormat}) {
+    if ( $conf->{oldNotifFormat} ) {
         Lemonldap::NG::Common::Notifications->import('XML');
+        $self->notifFormat('XML');
     }
     else {
         Lemonldap::NG::Common::Notifications->import('JSON');
+        $self->notifFormat('JSON');
     }
 
     unless ( $self->notifAccess ) {
@@ -275,17 +280,22 @@ sub newNotification {
         return $self->sendError( $req, "Malformed date", 200 );
     }
 
-    utf8::decode( $json->{xml} );
-
-    my $newNotif = qq#<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+    my $newNotif;
+    if ( $self->notifFormat eq 'XML' ) {
+        utf8::decode( $json->{xml} );
+        $newNotif = qq#<?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <root><notification #
-      . join(
-        ' ',
-        map {
-            if ( my $t = $json->{$_} ) { $t =~ s/"/'/g; qq#$_="$t"# }
-            else                       { () }
-        } (qw(uid date reference condition))
-      ) . ">$json->{xml}</notification></root>";
+          . join(
+            ' ',
+            map {
+                if ( my $t = $json->{$_} ) { $t =~ s/"/'/g; qq#$_="$t"# }
+                else                       { () }
+            } (qw(uid date reference condition))
+          ) . ">$json->{xml}</notification></root>";
+    }
+    else {
+        $newNotif = to_json($json);
+    }
 
     unless ( eval { $self->notifAccess->newNotification($newNotif) } ) {
         $self->lmLog( "Notification not created: $@", 'error' );
