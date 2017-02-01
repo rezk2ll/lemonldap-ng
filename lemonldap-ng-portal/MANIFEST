@@ -13,7 +13,6 @@ lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
 lib/Lemonldap/NG/Portal/Auth/AD.pm
 lib/Lemonldap/NG/Portal/Auth/Apache.pm
 lib/Lemonldap/NG/Portal/Auth/Base.pm
-lib/Lemonldap/NG/Portal/Auth/BrowserID.pm
 lib/Lemonldap/NG/Portal/Auth/CAS.pm
 lib/Lemonldap/NG/Portal/Auth/Choice.pm
 lib/Lemonldap/NG/Portal/Auth/DBI.pm
