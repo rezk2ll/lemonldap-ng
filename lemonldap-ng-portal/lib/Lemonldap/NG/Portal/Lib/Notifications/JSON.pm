@@ -209,9 +209,6 @@ sub toForm {
                   @{ $_->{check} } ];
         }
         $_->{id} = "1x$i";
-        foreach my $k ( keys %{ $_->{xml} } ) {
-            $_{$k} = $_->{xml}->{$k};
-        }
         $_;
     } @notifs;
     require HTML::Template;
