@@ -4,7 +4,7 @@ use IO::String;
 
 my $res;
 my $file      = 't/notifications.db';
-my $mainTests = 5;
+my $mainTests = 6;
 eval { unlink $file };
 require 't/test-lib.pm';
 
@@ -59,6 +59,8 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     );
     expectOK($res);
     my $id = expectCookie($res);
+    ok($res->[2]->[0] =~ /1x1x1/,' Found ref');
+    expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
 
     # Verify that cookie is ciphered (session unvalid)
     ok(

@@ -8,7 +8,7 @@
       </div>
       <hr class="solid" />
       <p class="text-error"><span trspan="newMessages">New message(s)</span></p>
-      <form action="#" method="post" class="login">
+      <form action="/notifback" method="post" class="login">
       <TMPL_VAR NAME="HIDDEN_INPUTS">
       <TMPL_IF NAME="CHOICE_VALUE">
       <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />

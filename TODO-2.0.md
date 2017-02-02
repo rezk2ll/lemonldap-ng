@@ -1,3 +1,4 @@
+* Calendar in notifications explorer
 * login history
 * Test for Zero
 * updateStatus( Main, SOAP server )

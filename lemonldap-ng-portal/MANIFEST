@@ -269,8 +269,8 @@ site/templates/common/mail_header.tpl
 site/templates/common/mail_password.tpl
 site/templates/common/mail_register_confirm.tpl
 site/templates/common/mail_register_done.tpl
-site/templates/common/notification.tpl
 site/templates/common/notification.xsl
+site/templates/common/notifinclude.tpl
 site/templates/common/oidc_checksession.tpl
 site/templates/common/redirect.tpl
 site/templates/common/script.tpl
@@ -362,6 +362,8 @@ t/34-Auth-Proxy-and-SOAP-Server.t
 t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-sessions-with-SOAP-server.t
 t/40-Notifications-JSON-DBI.t
+t/40-Notifications-JSON-File-with-token.t
+t/40-Notifications-JSON-File.t
 t/40-Notifications-XML-DBI.t
 t/40-Notifications-XML-File.t
 t/41-Captcha.t

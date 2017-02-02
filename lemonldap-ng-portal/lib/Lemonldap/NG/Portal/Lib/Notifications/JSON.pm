@@ -118,6 +118,7 @@ sub getNotifBack {
             my $file       = $notifs->{$fileName};
             my $fileResult = 1;
             my $json       = from_json($file);
+            $json = [$json] unless ( ref $json eq 'ARRAY' );
 
             # Get pending notifications and verify that they have been accepted
             foreach my $notif (@$json) {

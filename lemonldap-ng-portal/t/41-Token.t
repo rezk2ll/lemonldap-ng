@@ -18,10 +18,6 @@ my $client = LLNG::Manager::Test->new(
 
 # Test normal first access
 # ------------------------
-ok( $res = $client->_get('/'), 'Unauth JSON request' );
-count(1);
-expectReject($res);
-
 ok( $res = $client->_get( '/', accept => 'text/html' ), 'Unauth request' );
 count(1);
 

@@ -3,7 +3,7 @@ package Lemonldap::NG::Manager::Notifications;
 use 5.10.0;
 use utf8;
 use Mouse;
-use JSON qw(to_json);
+use JSON qw(from_json to_json);
 
 use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::PSGI::Constants;
