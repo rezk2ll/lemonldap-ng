@@ -27,7 +27,7 @@ sub newNotification {
             push @datas, $tmp;
         }
         push @datas, ( $notif->{condition} // '' );
-        push @notifs, [@datas,$jsonString];
+        push @notifs, [ @datas, $jsonString ];
     }
     my $count;
     foreach (@notifs) {

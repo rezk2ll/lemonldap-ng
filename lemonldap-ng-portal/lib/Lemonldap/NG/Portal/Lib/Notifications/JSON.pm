@@ -39,6 +39,7 @@ sub checkForNotifications {
         my $json = from_json($file);
         my $j    = 0;                  #Notifications count
         my @res;
+        $json = [$json] unless ( ref $json eq 'ARRAY' );
       LOOP: foreach my $notif ( @{$json} ) {
 
             # Get the reference
@@ -208,6 +209,9 @@ sub toForm {
                   @{ $_->{check} } ];
         }
         $_->{id} = "1x$i";
+        foreach my $k ( keys %{ $_->{xml} } ) {
+            $_{$k} = $_->{xml}->{$k};
+        }
         $_;
     } @notifs;
     require HTML::Template;
@@ -215,7 +219,7 @@ sub toForm {
         $self->conf->{templateDir} . '/'
       . $self->conf->{portalSkin}
       . '/notifinclude.tpl';
-    $file = $self->conf->{templatesDir} . '/common/notifinclude.tpl'
+    $file = $self->conf->{templateDir} . '/common/notifinclude.tpl'
       unless ( -e $file );
     my $tpl = HTML::Template->new(
         filename               => $file,
