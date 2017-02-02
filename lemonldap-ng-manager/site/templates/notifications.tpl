@@ -111,16 +111,34 @@
           <tr>
             <th><span trspan="XMLcontent" /></th>
             <td>
+              <textarea rows=5 class="form-control" ng-model="form.xml"></textarea>
               <div class="alert alert-info">
                 <p><span trspan="allowedMarkups" /></p>
-                <ul>
-                  <li>&lt;title&gt;...&lt;/title&gt;</li>
-                  <li>&lt;subtitle&gt;...&lt;/subtitle&gt;</li>
-                  <li>&lt;text&gt;...&lt;/text&gt;</li>
-                  <li>&lt;check&gt;...&lt;/check&gt;</li>
-                </ul>
+                <table border="0">
+                 <thead>
+                  <tr><th>JSON</th><th>XML</th></tr>
+                 </thead>
+                 <tbody><tr>
+                  <td>
+                    <pre>
+{
+  "title":    "...",
+  "subtitle": "...",
+  "text":     "...",
+  "check": [ "...", "..." ]
+}
+                    </pre>
+                  </td>
+                  <td>
+                    <ul>
+                      <li>&lt;title&gt;...&lt;/title&gt;</li>
+                      <li>&lt;subtitle&gt;...&lt;/subtitle&gt;</li>
+                      <li>&lt;text&gt;...&lt;/text&gt;</li>
+                      <li>&lt;check&gt;...&lt;/check&gt;</li>
+                    </ul>
+                  </td>
+                </tr></tbody></table>
               </div>
-              <textarea rows=5 class="form-control" ng-model="form.xml"></textarea>
             </td>
           </tr>
         </table>

@@ -32,7 +32,7 @@
 "ADPwdExpireWarning": "Avertissement avant expiration du mot de passe",
 "ADPwdMaxAge": "Âge maximal du mot de passe",
 "advancedParams": "Paramètres avancés",
-"allowedMarkups": "Balises XML autorisées :",
+"allowedMarkups": "Balises autorisées :",
 "apacheParams": "Paramètres Apache",
 "apacheAuthnLevel": "Niveau d'authentification",
 "application": "Application",
