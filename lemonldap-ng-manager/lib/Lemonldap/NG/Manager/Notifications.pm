@@ -285,6 +285,11 @@ sub newNotification {
           ) . ">$json->{xml}</notification></root>";
     }
     else {
+        eval { my $tmp = from_json( $json->{xml} ); $json->{xml} = $tmp; };
+        if ($@) {
+            $self->lmLog( "Notification malformed $@", 'error' );
+            return $self->sendError( $req, "Notification malformed: $@", 200 );
+        }
         $newNotif = to_json($json);
     }
 
