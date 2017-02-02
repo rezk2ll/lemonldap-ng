@@ -94,6 +94,10 @@ Files: lemonldap-ng-manager/site/static/bwr/angular/* lemonldap-ng-manager/site/
 Copyright: 2010-2015, Google, Inc. http://angularjs.org
 License: Expat
 
+Files: lemonldap-ng-portal/site/htdocs/static/common/js/u2f-api.*
+Copyright: 2014-2015, Google Inc.
+License: Expat
+
 Files: lemonldap-ng-manager/site/static/bwr/angular-bootstrap/*
 Copyright: 2012-2016, the AngularUI Team, https://github.com/organizations/angular-ui/teams/291112
 License: Expat

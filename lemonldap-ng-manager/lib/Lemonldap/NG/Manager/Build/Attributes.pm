@@ -661,8 +661,8 @@ sub attributes {
 
         # Notification
         oldNotifFormat => {
-            type => 'bool',
-            default => 0,
+            type          => 'bool',
+            default       => 0,
             documentation => 'Use old XML format',
         },
         notificationWildcard => {
@@ -946,6 +946,18 @@ sub attributes {
             default       => 0,
             type          => 'int',
             documentation => 'Register session timeout',
+        },
+
+        # U2F
+        u2fActivation => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'U2F activation',
+        },
+        u2fAppId => {
+            default       => 'Lemonldap::NG',
+            type          => 'text',
+            documentation => 'U2F application ID',
         },
 
         # Single session
@@ -1755,12 +1767,12 @@ sub attributes {
         authentication => {
             type   => 'select',
             select => [
-                { k => 'Apache',    v => 'Apache' },
-                { k => 'AD',        v => 'Active Directory' },
-                { k => 'Choice',    v => 'authChoice' },
-                { k => 'CAS',  v => 'Central Authentication Service (CAS)' },
-                { k => 'DBI',  v => 'Database (DBI)' },
-                { k => 'Demo', v => 'Demonstration' },
+                { k => 'Apache', v => 'Apache' },
+                { k => 'AD',     v => 'Active Directory' },
+                { k => 'Choice', v => 'authChoice' },
+                { k => 'CAS',    v => 'Central Authentication Service (CAS)' },
+                { k => 'DBI',    v => 'Database (DBI)' },
+                { k => 'Demo',   v => 'Demonstration' },
                 { k => 'Facebook',      v => 'Facebook' },
                 { k => 'Google',        v => 'Google' },
                 { k => 'LDAP',          v => 'LDAP' },
@@ -2214,8 +2226,8 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             test       => sub { 1 },
             select     => [
                 [
-                    { k => 'Apache',    v => 'Apache' },
-                    { k => 'AD',        v => 'Active Directory' },
+                    { k => 'Apache', v => 'Apache' },
+                    { k => 'AD',     v => 'Active Directory' },
                     { k => 'CAS', v => 'Central Authentication Service (CAS)' },
                     { k => 'DBI', v => 'Database (DBI)' },
                     { k => 'Demo',          v => 'Demo' },

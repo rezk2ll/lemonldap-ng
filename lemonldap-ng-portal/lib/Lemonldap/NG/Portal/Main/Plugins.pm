@@ -74,10 +74,16 @@ sub enabledPlugins {
         push @res, "::Password::$p" if ( $p ne 'Null' );
     }
 
+    # U2F
+    if ( $self->conf->{u2fActivation} ) {
+        push @res, '::Register::U2F', '::Plugins::U2F';
+    }
+
     # Check if custom plugins are required
     # TODO: change this name
     if ( $self->conf->{customPlugins} ) {
-        $self->lmLog( 'Custom plugins: ' . $self->conf->{customPlugins}, 'debug' );
+        $self->lmLog( 'Custom plugins: ' . $self->conf->{customPlugins},
+            'debug' );
         push @res, grep ( /\w/, split( /,\s*/, $self->conf->{customPlugins} ) );
     }
     return @res;

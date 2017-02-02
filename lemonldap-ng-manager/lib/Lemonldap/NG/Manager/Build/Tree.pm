@@ -580,6 +580,11 @@ sub tree {
                             ]
                         },
                         {
+                            title => 'u2f',
+                            form  => 'simpleInputContainer',
+                            nodes => [ 'u2fActivation', 'u2fAppId', ]
+                        },
+                        {
                             title => 'security',
                             help => 'security.html#configure_security_settings',
                             form => 'simpleInputContainer',

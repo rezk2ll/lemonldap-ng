@@ -2826,6 +2826,14 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
         'twitterSecret' => {
             'type' => 'text'
         },
+        'u2fActivation' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
+        'u2fAppId' => {
+            'default' => 'Lemonldap::NG',
+            'type'    => 'text'
+        },
         'userControl' => {
             'default' => '^[\\w\\.\\-@]+$',
             'type'    => 'pcre'
