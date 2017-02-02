@@ -54,6 +54,8 @@ sub status {
 
 sub run {
     my ( $class, $req, $rule, $protection ) = @_;
+    my ( $id, $session );
+
     $class->newRequest($req);
     if ( time() - $class->lastCheck > $class->checkTime ) {
         die("$class: No configuration found")
@@ -81,32 +83,41 @@ sub run {
     if (    $class->tsv->{cda}
         and $uri =~ s/[\?&;]${cn}cda=(\w+)$//oi )
     {
-        my $cdaid = $1;
-        $class->lmLog( "CDA request with id $cdaid", 'debug' );
-
-        my $cdaInfos = $class->getCDAInfos($cdaid);
-        unless ( $cdaInfos->{cookie_value} and $cdaInfos->{cookie_name} ) {
-            $class->lmLog( "CDA request for id $cdaid is not valid", 'error' );
-            return $class->FORBIDDEN;
+        if ( $class->fetchId and $session = $class->retrieveSession($id) ) {
+            $class->lmLog(
+                'CDA asked for an already available session, skipping', 'info' );
         }
+        else {
+            my $cdaid = $1;
+            $class->lmLog( "CDA request with id $cdaid", 'debug' );
 
-        my $redirectUrl   = $class->_buildUrl($uri);
-        my $redirectHttps = ( $redirectUrl =~ m/^https/ );
-        $class->set_header_out(
-            'Location'   => $redirectUrl,
-            'Set-Cookie' => $cdaInfos->{cookie_name} . "="
-              . $cdaInfos->{cookie_value}
-              . "; path=/"
-              . ( $redirectHttps          ? "; secure"   : "" )
-              . ( $class->tsv->{httpOnly} ? "; HttpOnly" : "" )
-              . (
-                $class->tsv->{cookieExpiration}
-                ? "; expires="
-                  . expires( $class->tsv->{cookieExpiration}, 'cookie' )
-                : ""
-              )
-        );
-        return $class->REDIRECT;
+            my $cdaInfos = $class->getCDAInfos($cdaid);
+            unless ( $cdaInfos->{cookie_value} and $cdaInfos->{cookie_name} ) {
+                $class->lmLog( "CDA request for id $cdaid is not valid",
+                    'error' );
+                return $class->FORBIDDEN;
+            }
+
+            my $redirectUrl   = $class->_buildUrl($uri);
+            my $redirectHttps = ( $redirectUrl =~ m/^https/ );
+            $class->set_header_out(
+                'Location'   => $redirectUrl,
+                'Set-Cookie' => $cdaInfos->{cookie_name} . "=" . 'c:'
+                  . $class->tsv->{cipher}->encrypt(
+                    $cdaInfos->{cookie_value} . ' ' . $class->resolveAlias
+                  )
+                  . "; path=/"
+                  . ( $redirectHttps          ? "; secure"   : "" )
+                  . ( $class->tsv->{httpOnly} ? "; HttpOnly" : "" )
+                  . (
+                    $class->tsv->{cookieExpiration}
+                    ? "; expires="
+                      . expires( $class->tsv->{cookieExpiration}, 'cookie' )
+                    : ""
+                  )
+            );
+            return $class->REDIRECT;
+        }
     }
 
     $uri = $class->uri_with_args;
@@ -123,10 +134,11 @@ sub run {
         return $class->OK;
     }
 
-    my ( $id, $session );
-
     # Try to recover cookie and user session
-    if ( $id = $class->fetchId and $session = $class->retrieveSession($id) ) {
+    if (   !$id
+        and $id      = $class->fetchId
+        and $session = $class->retrieveSession($id) )
+    {
 
         # AUTHENTICATION done
 
@@ -366,20 +378,29 @@ sub fetchId {
     my $class             = shift;
     my $t                 = $class->header_in('Cookie') or return 0;
     my $vhost             = $class->resolveAlias;
-    my $lookForHttpCookie = $class->tsv->{securedCookie} =~ /^(2|3)$/
-      && !(
-        defined( $class->tsv->{https}->{$vhost} )
+    my $lookForHttpCookie = (
+        $class->tsv->{securedCookie} =~ /^(2|3)$/
+          and !( defined( $class->tsv->{https}->{$vhost} ) )
         ? $class->tsv->{https}->{$vhost}
         : $class->tsv->{https}->{_}
-      );
+    );
     my $cn = $class->tsv->{cookieName};
     my $value =
       $lookForHttpCookie
       ? ( $t =~ /${cn}http=([^,; ]+)/o ? $1 : 0 )
       : ( $t =~ /$cn=([^,; ]+)/o ? $1 : 0 );
 
-    $value = $class->tsv->{cipher}->decryptHex( $value, "http" )
-      if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 );
+    if ( $value && $lookForHttpCookie && $class->tsv->{securedCookie} == 3 ) {
+        $value = $class->tsv->{cipher}->decryptHex( $value, "http" );
+    }
+    elsif ( $value =~ s/^c:// ) {
+        $value = $class->tsv->{cipher}->decrypt($value);
+        unless ( $value =~ s/^(.*)? (.*)$/$1/ and $2 eq $vhost ) {
+            $class->lmLog( "Bad CDA cookie: available for $2 instead od $vhost",
+                'error' );
+            return undef;
+        }
+    }
     return $value;
 }
 
