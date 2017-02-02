@@ -13,7 +13,7 @@ require 't/test-lib.pm';
 
 # Try to create a notification
 my $notif =
-'{"date":"2015-05-03","uid":"dwho","reference":"Test","xml":{"title":"Test"}}';
+'{"date":"2015-05-03","uid":"dwho","reference":"Test","xml":"{\"title\":\"Test\"}"}';
 my $res =
   &client->jsonPostResponse( 'notifications/actives', '',
     IO::String->new($notif),
