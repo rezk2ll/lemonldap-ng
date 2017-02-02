@@ -33,7 +33,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
             ini => {
                 logLevel                   => 'error',
                 useSafeJail                => 1,
-                notifications              => 1,
+                notification               => 1,
                 templatesDir               => 'site/templates/',
                 notificationStorage        => 'DBI',
                 notificationStorageOptions => {

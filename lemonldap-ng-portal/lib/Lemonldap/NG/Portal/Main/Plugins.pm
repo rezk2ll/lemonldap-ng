@@ -54,7 +54,7 @@ sub enabledPlugins {
     push @res, '::Plugins::RESTServer';
 
     # Check if notification is enabled
-    push @res, '::Plugins::Notifications' if ( $self->conf->{notifications} );
+    push @res, '::Plugins::Notifications' if ( $self->conf->{notification} );
     foreach my $type (qw(password register)) {
         my $tmp = $self->conf->{$type};
         if ( $tmp and $tmp ne 'Null' ) {
