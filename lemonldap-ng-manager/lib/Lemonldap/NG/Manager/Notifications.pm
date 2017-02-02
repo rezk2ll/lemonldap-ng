@@ -16,7 +16,7 @@ extends 'Lemonldap::NG::Common::Conf::AccessLib';
 
 our $VERSION = '2.0.0';
 
-has _notifAccess => ( is => 'rw' );
+has notifAccess => ( is => 'rw' );
 
 has notifFormat => ( is => 'rw' );
 
@@ -38,7 +38,7 @@ sub addRoutes {
         $self->notifFormat('JSON');
     }
 
-    unless ( $self->notifAccess ) {
+    unless ( $self->setNotifAccess($conf) ) {
         $self->addRoute( 'notifications.html', 'notEnabled', ['GET'] );
         $self->addRoute( notifications => 'notEnabled', ['GET'] );
         return ( $self->error ? 0 : 1 );
@@ -77,17 +77,8 @@ sub addRoutes {
 
 }
 
-sub notifAccess {
-    my $self = shift;
-    return $self->_notifAccess if ( $self->_notifAccess );
-
-    # 1. Get notificationStorage or build it using globalStorage
-    my $conf = $self->_confAcc->getConf(
-        { localPrm => $self->confAcc->getLocalConf(MANAGERSECTION) } );
-    unless ($conf) {
-        $self->error($Lemonldap::NG::Common::Conf::msg);
-        return 0;
-    }
+sub setNotifAccess {
+    my ( $self, $conf ) = @_;
 
     # TODO: refresh system
     $self->{$_} //= $conf->{$_}
@@ -116,7 +107,7 @@ sub notifAccess {
     # Force table name
     unless (
         eval {
-            $self->_notifAccess(
+            $self->notifAccess(
                 $type->new(
                     {
                         %{ $self->{notificationStorageOptions} },
@@ -131,7 +122,7 @@ sub notifAccess {
         $self->handlerAbort( notifications => $@ );
         return 0;
     }
-    return $self->_notifAccess();
+    return $self->notifAccess();
 }
 
 #######################
