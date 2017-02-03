@@ -20,8 +20,7 @@ our $page_title = 'Lemonldap::NG statistics';
 # @return Constant hash used to convert error codes into string.
 sub portalTab {
     return {
-        -5 => 'PORTAL_IMG_NOK',
-        -4 => 'PORTAL_IMG_OK',
+        -4 => 'PORTAL_SENDRESPONSE',
         -3 => 'PORTAL_INFO',
         -2 => 'PORTAL_REDIRECT',
         -1 => 'PORTAL_DONE',
@@ -96,6 +95,8 @@ sub portalTab {
         78 => 'PORTAL_REGISTERFIRSTACCESS',
         79 => 'PORTAL_REGISTERFORMEMPTY',
         80 => 'PORTAL_REGISTERALREADYEXISTS',
+        81 => 'PE_NOTOKEN',
+        82 => 'PE_TOKENEXPIRED',
     };
 }
 
