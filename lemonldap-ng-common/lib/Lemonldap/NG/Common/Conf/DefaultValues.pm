@@ -243,7 +243,6 @@ sub defaultValues {
         'timeoutActivityInterval'                 => 60,
         'trustedProxies'                          => '',
         'twitterAuthnLevel'                       => 1,
-        'u2fAppId'                                => 'Lemonldap::NG',
         'userControl'                             => '^[\\w\\.\\-@]+$',
         'userDB'                                  => 'Demo',
         'useRedirectOnError'                      => 1,

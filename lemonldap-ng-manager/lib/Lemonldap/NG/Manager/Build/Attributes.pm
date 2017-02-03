@@ -954,10 +954,10 @@ sub attributes {
             default       => 0,
             documentation => 'U2F activation',
         },
-        u2fAppId => {
-            default       => 'Lemonldap::NG',
-            type          => 'text',
-            documentation => 'U2F application ID',
+        u2fSelfRegistration => {
+            type          => 'bool',
+            default       => 0,
+            documentation => 'U2F self registration activation',
         },
 
         # Single session

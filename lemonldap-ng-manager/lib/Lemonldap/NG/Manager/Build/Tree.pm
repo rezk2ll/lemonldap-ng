@@ -582,7 +582,7 @@ sub tree {
                         {
                             title => 'u2f',
                             form  => 'simpleInputContainer',
-                            nodes => [ 'u2fActivation', 'u2fAppId', ]
+                            nodes => [ 'u2fActivation', 'u2fSelfRegistration', ]
                         },
                         {
                             title => 'security',

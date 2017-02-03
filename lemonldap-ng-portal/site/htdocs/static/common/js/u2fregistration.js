@@ -9,10 +9,13 @@ LemonLDAP::NG U2F registration script
 
   register = function() {
     var request;
-    request = {
-      challenge: window.datas.challenge,
-      version: 'U2F_V2'
-    };
+    request = [
+      {
+        challenge: window.datas.challenge,
+        version: 'U2F_V2'
+      }
+    ];
+    console.log('Register: ', request);
     return u2f.register(window.datas.appId, request, [], function(data) {
       $('#bind-data').val(JSON.stringify(data));
       return $('#bind-form').submit();

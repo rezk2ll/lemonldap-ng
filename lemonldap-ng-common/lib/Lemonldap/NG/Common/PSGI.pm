@@ -123,12 +123,7 @@ sub sendError {
     );
 
     # SOAP responses
-    if (
-        $req->accept =~ m#(?:application|text)/xml#
-        or (    $req->content_type
-            and $req->content_type =~ m#(?:application|text)/xml# )
-      )
-    {
+    if ( $req->env->{HTTP_SOAPACTION} ) {
         my $s = '<soapenv:Body>
  <soapenv:Fault>
   <Faultcode>soapenv:Client</Faultcode>

@@ -76,7 +76,10 @@ sub enabledPlugins {
 
     # U2F
     if ( $self->conf->{u2fActivation} ) {
-        push @res, '::Register::U2F', '::Plugins::U2F';
+        push @res, '::Plugins::U2F';
+    }
+    if ( $self->conf->{u2fSelfRegistration} ) {
+        push @res, '::Register::U2F';
     }
 
     # Check if custom plugins are required
