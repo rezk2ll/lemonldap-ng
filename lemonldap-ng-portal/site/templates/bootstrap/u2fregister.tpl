@@ -1,5 +1,9 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
+<TMPL_IF NAME="FAILED">
+  FAILED
+</TMPL_IF>
+
 <TMPL_IF NAME="CHALLENGE">
   <p trspan="touchU2fDevice">Please touch the flashing U2F device now.</p>
   <p trspan="u2fPermission">You may be prompted to allow the site permission to access your security keys. After granting permission, the device will start to blink.</p>
@@ -7,10 +11,7 @@
     <input type="hidden" id="bind-data" name="registration" value="">
   </form>
   <script type="application/init">
-{
-  "challenge":"<TMPL_VAR NAME="CHALLENGE">",
-  "appId": "<TMPL_VAR NAME="APPID">"
-}
+  <TMPL_VAR NAME="CHALLENGE">
   </script>
 <!-- //if:jsminified
   <script type="text/javascript" src="<TMPL_VAR NAME="STATIC_PREFIX">/common/js/u2f-api.min.js"></script>

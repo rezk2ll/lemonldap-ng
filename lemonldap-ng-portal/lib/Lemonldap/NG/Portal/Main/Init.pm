@@ -260,13 +260,14 @@ sub reloadConf {
         'jsRedirect returns an error: ' . HANDLER->tsv->{jail}->error,
         'error' );
 
+    $self->menu( $self->loadPlugin('::Main::Menu') );
+    $self->displayInit;
+
     # Load plugins
     foreach my $plugin ( $self->enabledPlugins ) {
         $self->loadPlugin($plugin) or return $self->fail;
     }
 
-    $self->menu( $self->loadPlugin('::Main::Menu') );
-    $self->displayInit;
     1;
 }
 

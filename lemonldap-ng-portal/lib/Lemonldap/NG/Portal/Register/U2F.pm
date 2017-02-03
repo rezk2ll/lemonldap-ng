@@ -28,7 +28,7 @@ sub init {
         $self->error( Crypt::U2F::Server::Simple::lastError() );
         return 0;
     }
-    $self->addAuthRoute( u2f => 'run', [ 'GET', 'POST' ] );
+    $self->addAuthRoute( u2fregister => 'run', [ 'GET', 'POST' ] );
     return 1;
 }
 
@@ -39,13 +39,27 @@ sub run {
     if ( my $rd = $req->param('registration') ) {
         $self->lmLog( "Get registration data $rd", 'debug' );
         my ( $keyHandle, $userKey ) = $self->crypter->registrationVerify($rd);
-        $self->lmLog( "Handle: $keyHandle, Key: $userKey", 'debug' );
-        $self->p->updatePersistentSession( $req,
-            { _u2fHandle => $keyHandle, _u2fKey => $userKey } );
-        return $self->sendHtml( $req, 'u2fregister', params => { SUCCESS => 1 } );
+        if ( $keyHandle and $userKey ) {
+            $self->lmLog( "Handle: $keyHandle, Key: $userKey", 'debug' );
+            $self->p->updatePersistentSession( $req,
+                { _u2fHandle => $keyHandle, _u2fKey => $userKey } );
+            return $self->p->sendHtml( $req, 'u2fregister',
+                params => { SUCCESS => 1 } );
+        }
+        else {
+            $self->lmLog(
+                'U2F Registration failed: '
+                  . Crypt::U2F::Server::Simple::lastError(),
+                'notice'
+            );
+            return $self->p->sendHtml( $req, 'u2fregister',
+                params => { FAILED => 1 } );
+        }
     }
-    return $self->sendHtml( $req, 'u2fregister',
-        params => { CHALLENGE => $challenge, APPID=>$self->conf->{u2fAppId} } );
+    my $challenge = $self->crypter->registrationChallenge;
+    return $self->p->sendHtml( $req, 'u2fregister',
+        params =>
+          { CHALLENGE => $challenge, APPID => $self->conf->{u2fAppId} } );
 }
 
 1;
