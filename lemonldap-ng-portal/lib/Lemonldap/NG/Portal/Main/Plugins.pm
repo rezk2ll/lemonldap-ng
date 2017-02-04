@@ -7,6 +7,21 @@ our $VERSION = '2.0.0';
 package Lemonldap::NG::Portal::Main;
 
 use strict;
+use Mouse;
+
+# Plugins enabled by a simple boolean value (ordered list)
+#
+# Developers: U2F must be loaded before Notifications
+our @pList = (
+    portalDisplayResetPassword => '::Plugins::MailReset',
+    portalStatus               => '::Plugins::Status',
+    grantSessionRule           => '::Plugins::GrantSession',
+    cda                        => '::Plugins::CDA',
+    portalForceAuthn           => '::Plugins::ForceAuth',
+    u2fActivation              => '::Plugins::U2F',
+    u2fSelfRegistration        => '::Register::U2F',
+    notification               => '::Plugins::Notifications',
+);
 
 ##@method list enabledPlugins
 #
@@ -23,64 +38,26 @@ sub enabledPlugins {
         }
     }
 
-   # Check if captcha is required
-   # TODO: verify if this list is OK
-   #foreach my $key (
-   #    qw(captcha_login_enabled captcha_mail_enabled captcha_register_enabled))
-   #{
-   #    if ( $self->conf->{$key} ) {
-   #        $self->lmLog( 'Captcha enabled', 'debug' );
-   #        push @res, '::Plugins::Captcha';
-   #        last;
-   #    }
-   #}
-
-    # Check if register is enabled
-    push @res, '::Plugins::Register'
-      if ( $self->conf->{registerDB} and $self->conf->{registerDB} ne 'Null' );
-
-    push @res, '::Plugins::MailReset'
-      if ( $self->conf->{portalDisplayResetPassword} );
+    # Load static plugin list
+    for ( my $i = 0 ; $i < @pList ; $i += 2 ) {
+        push @res, $pList[ $i + 1 ] if ( $self->conf->{ $pList[$i] } );
+    }
 
     # Check if SOAP is enabled
     push @res, '::Plugins::SOAPServer'
       if ( $self->conf->{soapSessionServer}
         or $self->conf->{soapConfigServer} );
 
-    # Check if portal status is enabled
-    push @res, '::Plugins::Status' if ( $self->conf->{portalStatus} );
-
     # Add REST (check is done by it)
     push @res, '::Plugins::RESTServer';
-
-    # Check if notification is enabled
-    push @res, '::Plugins::Notifications' if ( $self->conf->{notification} );
-    foreach my $type (qw(password register)) {
-        my $tmp = $self->conf->{$type};
-        if ( $tmp and $tmp ne 'Null' ) {
-            $tmp = '::' . ucfirst($type) . "DB::$tmp";
-            $self->lmLog("$tmp enabled");
-            push @res, $tmp;
-        }
-    }
-
-    # Simple plugins
-    # TODO: write these plugins
-    push @res, '::Plugins::GrantSession' if ( $self->conf->{grantSessionRule} );
-    push @res, '::Plugins::CDA'          if ( $self->conf->{cda} );
-    push @res, '::Plugins::ForceAuth'    if ( $self->conf->{portalForceAuthn} );
 
     if ( my $p = $self->conf->{passwordDB} ) {
         push @res, "::Password::$p" if ( $p ne 'Null' );
     }
 
-    # U2F
-    if ( $self->conf->{u2fActivation} ) {
-        push @res, '::Plugins::U2F';
-    }
-    if ( $self->conf->{u2fSelfRegistration} ) {
-        push @res, '::Register::U2F';
-    }
+    # Check if register is enabled
+    push @res, '::Plugins::Register'
+      if ( $self->conf->{registerDB} and $self->conf->{registerDB} ne 'Null' );
 
     # Check if custom plugins are required
     # TODO: change this name
