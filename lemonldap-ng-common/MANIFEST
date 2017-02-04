@@ -11,6 +11,7 @@ lib/Lemonldap/NG/Common/Apache/Session/Store.pm
 lib/Lemonldap/NG/Common/Captcha.pm
 lib/Lemonldap/NG/Common/CGI.pm
 lib/Lemonldap/NG/Common/Cli.pm
+lib/Lemonldap/NG/Common/CombinationParser.pm
 lib/Lemonldap/NG/Common/Conf.pm
 lib/Lemonldap/NG/Common/Conf/AccessLib.pm
 lib/Lemonldap/NG/Common/Conf/Backends/_DBI.pm
