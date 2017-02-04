@@ -1,46 +1,26 @@
+# Self U2F registration
 package Lemonldap::NG::Portal::Register::U2F;
 
 use strict;
 use Mouse;
+use MIME::Base64;
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Portal::Main::Plugin';
+extends 'Lemonldap::NG::Portal::Lib::U2F';
 
-has crypter => ( is => 'rw' );
-
-has origin => (
-    is      => 'rw',
-    default => sub {
-        my $p = $_[0]->{conf}->{portal};
-        $p =~ s#^(https?://[^/]+).*$#$1#;
-        return $p;
-    }
-);
+# INITIALIZATION
 
 sub init {
     my ($self) = @_;
-    eval 'use Crypt::U2F::Server::Simple';
-    if ($@) {
-        $self->error("Can't load U2F library: $@");
-        return 0;
-    }
-    unless (
-        $self->crypter(
-            Crypt::U2F::Server::Simple->new(
-                appId  => $self->origin,
-                origin => $self->origin,
-            )
-        )
-      )
-    {
-        $self->error( Crypt::U2F::Server::Simple::lastError() );
-        return 0;
-    }
+    return 0 unless $self->SUPER::init;
     $self->addAuthRoute( u2fregister => 'run', [ 'GET', 'POST' ] );
     return 1;
 }
 
+# RUNNING METHODS
+
+# Main method
 sub run {
     my ( $self, $req ) = @_;
 
@@ -50,8 +30,13 @@ sub run {
         my ( $keyHandle, $userKey ) =
           $self->crypter->registrationVerify($response);
         if ( $keyHandle and $userKey ) {
-            $self->p->updatePersistentSession( $req,
-                { _u2fHandle => $keyHandle, _u2fKey => $userKey } );
+            $self->p->updatePersistentSession(
+                $req,
+                {
+                    _u2fHandle => encode_base64( $keyHandle, '' ),
+                    _u2fKey    => encode_base64( $userKey,   '' )
+                }
+            );
             return $self->p->sendHtml( $req, 'u2fregister',
                 params => { SUCCESS => 1 } );
         }

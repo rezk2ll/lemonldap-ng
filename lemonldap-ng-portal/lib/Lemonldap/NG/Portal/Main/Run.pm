@@ -345,6 +345,7 @@ sub updatePersistentSession {
 
     $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
     return () unless ($uid);
+    $self->lmLog("Update $uid persistent session", 'debug');
 
     my $persistentSession = $self->getPersistentSession($uid);
 
