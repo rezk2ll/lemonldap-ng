@@ -57,6 +57,7 @@ lib/Lemonldap/NG/Portal/Lib/SAML.pm
 lib/Lemonldap/NG/Portal/Lib/Slave.pm
 lib/Lemonldap/NG/Portal/Lib/SMTP.pm
 lib/Lemonldap/NG/Portal/Lib/SOAPProxy.pm
+lib/Lemonldap/NG/Portal/Lib/U2F.pm
 lib/Lemonldap/NG/Portal/Lib/Wrapper.pm
 lib/Lemonldap/NG/Portal/Main.pm
 lib/Lemonldap/NG/Portal/Main/Constants.pm
@@ -83,9 +84,11 @@ lib/Lemonldap/NG/Portal/Plugins/Register.pm
 lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
 lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
 lib/Lemonldap/NG/Portal/Plugins/Status.pm
+lib/Lemonldap/NG/Portal/Plugins/U2F.pm
 lib/Lemonldap/NG/Portal/Register/AD.pm
 lib/Lemonldap/NG/Portal/Register/Demo.pm
 lib/Lemonldap/NG/Portal/Register/LDAP.pm
+lib/Lemonldap/NG/Portal/Register/U2F.pm
 lib/Lemonldap/NG/Portal/Simple.pm
 lib/Lemonldap/NG/Portal/UserDB/AD.pm
 lib/Lemonldap/NG/Portal/UserDB/Choice.pm
@@ -112,6 +115,7 @@ site/coffee/confirm.coffee
 site/coffee/info.coffee
 site/coffee/oidcchecksession.coffee
 site/coffee/portal.coffee
+site/coffee/u2fregistration.coffee
 site/cron/purgeCentralCache
 site/cron/purgeCentralCache.cron.d
 site/htdocs/index.fcgi
@@ -205,6 +209,10 @@ site/htdocs/static/common/js/oidcchecksession.js
 site/htdocs/static/common/js/oidcchecksession.min.js
 site/htdocs/static/common/js/portal.js
 site/htdocs/static/common/js/portal.min.js
+site/htdocs/static/common/js/u2f-api.js
+site/htdocs/static/common/js/u2f-api.min.js
+site/htdocs/static/common/js/u2fregistration.js
+site/htdocs/static/common/js/u2fregistration.min.js
 site/htdocs/static/common/key.png
 site/htdocs/static/common/lemonldap-ng_square.png
 site/htdocs/static/common/ok.png
@@ -259,6 +267,7 @@ site/templates/bootstrap/password.tpl
 site/templates/bootstrap/redirect.tpl
 site/templates/bootstrap/register.tpl
 site/templates/bootstrap/standardform.tpl
+site/templates/bootstrap/u2fregister.tpl
 site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/background.tpl
 site/templates/common/bullet_go.png

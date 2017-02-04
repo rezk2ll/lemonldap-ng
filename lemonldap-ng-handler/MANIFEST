@@ -26,7 +26,6 @@ lib/Lemonldap/NG/Handler/PSGI/Router.pm
 lib/Lemonldap/NG/Handler/PSGI/Server.pm
 lib/Lemonldap/NG/Handler/PSGI/Try.pm
 lib/Lemonldap/NG/Handler/SecureToken.pm
-lib/Lemonldap/NG/Handler/SharedConf.pm
 lib/Lemonldap/NG/Handler/Status.pm
 lib/Lemonldap/NG/Handler/ZimbraPreAuth.pm
 Makefile.PL
