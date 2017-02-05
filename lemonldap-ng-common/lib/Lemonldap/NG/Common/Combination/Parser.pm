@@ -46,8 +46,8 @@ sub parse {
             die('Bad combination: bad then or else');
         }
         return sub {
-            my ($req) = @_;
-            return ( $cond->($req) ? $then : $else->($req) );
+            my ($env) = @_;
+            return ( $cond->($env) ? $then : $else->($env) );
         };
     }
     else {
@@ -181,7 +181,7 @@ sub findB {
 sub buildSub {
     my ( $self, $cond ) = @_;
     my $safe = Safe->new;
-    my $res  = $safe->reval("sub{my(\$req)=@\_;return ($cond)}");
+    my $res  = $safe->reval("sub{my(\$env)=@\_;return ($cond)}");
     die "Bad condition $cond: $@" if ($@);
     return $res;
 }

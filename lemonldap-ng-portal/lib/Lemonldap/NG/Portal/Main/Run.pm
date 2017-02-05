@@ -129,7 +129,7 @@ sub do {
     }
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->lmLog( 'Processing to JSON response', 'debug' );
-        if ( $err > 0 and !%{ $req->sessionInfo } ) {
+        if ( $err > 0 and !$req->id ) {
             return [
                 401,
                 [
@@ -345,7 +345,7 @@ sub updatePersistentSession {
 
     $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
     return () unless ($uid);
-    $self->lmLog("Update $uid persistent session", 'debug');
+    $self->lmLog( "Update $uid persistent session", 'debug' );
 
     my $persistentSession = $self->getPersistentSession($uid);
 

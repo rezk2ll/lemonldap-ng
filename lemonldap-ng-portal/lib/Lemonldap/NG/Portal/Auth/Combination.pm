@@ -98,7 +98,7 @@ sub getDisplayType {
 sub getStack {
     my ( $self, $req, @steps ) = @_;
     return $req->datas->{multiStack} if ( $req->datas->{multiStack} );
-    my $stack = $req->datas->{multiStack} = $self->stackSub->($req);
+    my $stack = $req->datas->{multiStack} = $self->stackSub->($req->env);
     unless ($stack) {
         $self->lmLog( 'No authentication scheme for this user', 'error' );
     }
@@ -113,7 +113,7 @@ sub try {
 
     # If more than 1 scheme is available
     my ( $res, $name );
-    if ( $nb < @$stack ) {
+    if ( $nb < @$stack - 1 ) {
 
         # TODO: change logLevel for userLog()
         ( $res, $name ) = $stack->[$nb]->[$type]->( $subname, $req );
@@ -128,7 +128,7 @@ sub try {
         }
     }
     else {
-        ( $res, $name ) = $stack->[$nb]->[$type]->$subname($req);
+        ( $res, $name ) = $stack->[$nb]->[$type]->( $subname, $req );
     }
     $req->sessionInfo->{ [ '_auth', '_userDB' ]->[$type] } = $name;
     return $res;

@@ -27,8 +27,8 @@ my @tests = (
     'if(0) then [A,B] else [B,C]',                       'B', 'C',
     'if(0) then [A,B] else if(1) then [B,C] else [B,A]', 'B', 'C',
     'if(0) then [A,B] else if(0) then [B,C] else [B,A]', 'B', 'A',
-    'if($req->{test}) then [A,B] else [B,C]',            'A', 'B',
-    'if($req->{false}) then [A,B] else [B,C]',           'B', 'C',
+    'if($env->{test}) then [A,B] else [B,C]',            'A', 'B',
+    'if($env->{false}) then [A,B] else [B,C]',           'B', 'C',
     '[A,B] or [B,C]',                                    'A', 'B',
     'if(1) then [A,B] or [C,A] else [B,C]',              'A', 'B',
 );

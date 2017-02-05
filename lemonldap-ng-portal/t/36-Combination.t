@@ -17,14 +17,27 @@ SKIP: {
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
-    $dbh->do("INSERT INTO users VALUES ('test1','test1','Test user 1')");
+    $dbh->do("INSERT INTO users VALUES ('dvador','dvador','Test user 1')");
+    $dbh->do("INSERT INTO users VALUES ('rtyler','rtyler','Test user 1')");
 
     $client = iniCmb('[Dm] or [DB]');
-    my $res = try('dwho');
-    expectCookie($res);
+    expectCookie( try('dwho') );
+    expectCookie( try('dvador') );
 
-    $res = try('test1');
-    expectCookie($res);
+    $client = iniCmb('[Dm] and [DB]');
+    expectCookie( try('rtyler') );
+    expectReject( try('dwho') );
+
+    $client = iniCmb('if($env->{HTTP_X} eq "dwho") then [Dm] else [DB]');
+    expectCookie( try('dwho') );
+    expectCookie( try('dvador') );
+
+    $client = iniCmb(
+'if($env->{HTTP_X} eq "rtyler") then [Dm] and [DB] else if($env->{HTTP_X} eq "dvador") then [DB] else [DB]'
+    );
+    expectCookie( try('rtyler') );
+    expectCookie( try('dvador') );
+    expectReject( try('dwho') );
 }
 count($mainTests);
 clean_sessions();
@@ -36,8 +49,12 @@ sub try {
     my $s    = "user=$user&password=$user";
     my $res;
     ok(
-        $res = $client->_post( '/', IO::String->new($s), length => length($s) ),
-        "Test $user"
+        $res = $client->_post(
+            '/', IO::String->new($s),
+            length => length($s),
+            custom => { HTTP_X => $user }
+        ),
+        " Try to connect with login $user"
     );
     count(1);
     return $res;
@@ -45,39 +62,45 @@ sub try {
 
 sub iniCmb {
     my $expr = shift;
-    my $res;
-    return LLNG::Manager::Test->new(
-        {
-            ini => {
-                logLevel       => 'debug',
-                useSafeJail    => 1,
-                authentication => 'Combination',
-                userDB         => 'Same',
+    if (
+        my $res = LLNG::Manager::Test->new(
+            {
+                ini => {
+                    logLevel       => 'error',
+                    useSafeJail    => 1,
+                    authentication => 'Combination',
+                    userDB         => 'Same',
 
-                combination => $expr,
-                combModules => [
-                    {
-                        for  => 0,
-                        name => 'DB',
-                        type => 'DBI',
-                    },
-                    {
-                        for  => 0,
-                        name => 'Dm',
-                        type => 'Demo',
-                    },
-                ],
+                    combination => $expr,
+                    combModules => [
+                        {
+                            for  => 0,
+                            name => 'DB',
+                            type => 'DBI',
+                        },
+                        {
+                            for  => 0,
+                            name => 'Dm',
+                            type => 'Demo',
+                        },
+                    ],
 
-                dbiAuthChain        => 'dbi:SQLite:dbname=t/userdb.db',
-                dbiAuthUser         => '',
-                dbiAuthPassword     => '',
-                dbiAuthTable        => 'users',
-                dbiAuthLoginCol     => 'user',
-                dbiAuthPasswordCol  => 'password',
-                dbiAuthPasswordHash => '',
-                dbiExportedVars     => {},
-                demoExportedVars    => {},
+                    dbiAuthChain        => 'dbi:SQLite:dbname=t/userdb.db',
+                    dbiAuthUser         => '',
+                    dbiAuthPassword     => '',
+                    dbiAuthTable        => 'users',
+                    dbiAuthLoginCol     => 'user',
+                    dbiAuthPasswordCol  => 'password',
+                    dbiAuthPasswordHash => '',
+                    dbiExportedVars     => {},
+                    demoExportedVars    => {},
+                }
             }
-        }
-    );
+        )
+      )
+    {
+        pass(qq'Expression loaded: "$expr"');
+        count(1);
+        return $res;
+    }
 }
