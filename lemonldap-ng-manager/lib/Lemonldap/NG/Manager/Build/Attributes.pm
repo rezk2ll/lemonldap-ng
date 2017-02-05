@@ -1801,7 +1801,6 @@ sub attributes {
                 { k => 'DBI',   v => 'Database (DBI)' },
                 { k => 'LDAP',  v => 'LDAP' },
                 { k => 'Null',  v => 'None' },
-                { k => 'WebID', v => 'WebID' },
             ],
             default       => 'Same',
             documentation => 'User module',
