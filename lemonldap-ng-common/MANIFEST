@@ -9,7 +9,6 @@ lib/Lemonldap/NG/Common/Apache/Session/Serialize/JSON.pm
 lib/Lemonldap/NG/Common/Apache/Session/SOAP.pm
 lib/Lemonldap/NG/Common/Apache/Session/Store.pm
 lib/Lemonldap/NG/Common/Captcha.pm
-lib/Lemonldap/NG/Common/CGI.pm
 lib/Lemonldap/NG/Common/Cli.pm
 lib/Lemonldap/NG/Common/Combination/Parser.pm
 lib/Lemonldap/NG/Common/Conf.pm
@@ -65,7 +64,6 @@ t/02-Common-Conf-File.t
 t/03-Common-Conf-CDBI.t
 t/03-Common-Conf-RDBI.t
 t/05-Common-Conf-LDAP.t
-t/20-Common-CGI.t
 t/30-Common-Safelib.t
 t/35-Common-Crypto.t
 t/36-Common-Regexp.t
