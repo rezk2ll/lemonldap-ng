@@ -73,7 +73,7 @@ sub parseAnd {
     my ( $self, $moduleList, $expr ) = @_;
     if ( $expr =~ /\]\s*and\s*\[/ ) {
         my @mod = ( [], [] );
-        foreach my $part ( split /\]\s*and\s*\[/, $expr ) {
+        foreach my $part ( split /\s*and\s*/, $expr ) {
             my $tmp = $self->parseBlock( $moduleList, $part );
             push @{ $mod[0] }, $tmp->[0];
             push @{ $mod[1] }, $tmp->[1];
