@@ -372,6 +372,7 @@ t/34-Auth-Proxy-and-REST-Server.t
 t/34-Auth-Proxy-and-SOAP-Server.t
 t/35-REST-sessions-with-REST-server.t
 t/35-SOAP-sessions-with-SOAP-server.t
+t/36-Combination-with-over.t
 t/36-Combination.t
 t/40-Notifications-JSON-DBI.t
 t/40-Notifications-JSON-File-with-token.t

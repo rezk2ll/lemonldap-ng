@@ -654,6 +654,15 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'default' => 1,
             'type'    => 'bool'
         },
+        'combination' => {
+            'type' => 'text'
+        },
+        'combModules' => {
+            'type' => 'keyTextContainer'
+        },
+        'combOver' => {
+            'type' => 'keyTextContainer'
+        },
         'confirmFormMethod' => {
             'default' => 'post',
             'select'  => [
@@ -1358,12 +1367,6 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'msgFail' => '__badValue__',
             'test'    => qr/^\S*$/,
             'type'    => 'password'
-        },
-        'multiAuthStack' => {
-            'type' => 'authParamsText'
-        },
-        'multiUserDBStack' => {
-            'type' => 'authParamsText'
         },
         'multiValuesSeparator' => {
             'default' => '; ',

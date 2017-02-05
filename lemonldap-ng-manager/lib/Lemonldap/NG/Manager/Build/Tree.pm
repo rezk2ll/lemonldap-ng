@@ -250,10 +250,10 @@ sub tree {
                             ]
                         },
                         {
-                            title => 'multiParams',
-                            help  => 'authmulti.html',
-                            form  => 'authParamsTextContainer',
-                            nodes => [ 'multiAuthStack', 'multiUserDBStack' ]
+                            title => 'combinationParams',
+                            help  => 'authcombination.html',
+                            nodes =>
+                              [ 'combination', 'combModules', 'combOver' ]
                         },
                         {
                             title => 'nullParams',

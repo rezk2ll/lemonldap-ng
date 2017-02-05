@@ -5,6 +5,7 @@
 
 use Test::More;
 use strict;
+use Data::Dumper;
 
 my $formDir = 'site/static/forms';
 
@@ -31,7 +32,7 @@ $count += 4;
 
 my %types = %{ getTypes( $tree, values(%$ctrees), $attr ) };
 
-foreach (qw(home menuCat menuApp)) {
+foreach (qw(home menuCat menuApp authParamsTextContainer)) {
     ok( $forms{$_}, "Found $_ form" );
     $count++;
     delete $forms{$_};
@@ -39,10 +40,13 @@ foreach (qw(home menuCat menuApp)) {
 
 foreach my $type ( keys %types ) {
     delete $types{$type};
-    next
-      if ( $type =~
+    if ( $type =~
 /^(?:authParamsText|url|PerlModule|hostname|pcre|lmAttrOrMacro|subContainer|RSAP(?:ublic|rivate)Key(?:OrCertificate)?)$/
-      );
+      )
+    {
+        delete $forms{$type};
+        next;
+    }
     ok( $forms{$type}, "Found $type" );
     delete $forms{$type};
     $count++;
@@ -53,7 +57,7 @@ foreach my $type ( keys %types ) {
         $count++;
     }
 }
-ok( !%forms, "No unused forms" );
+ok( !%forms, "No unused forms" ) or print "Found:\n" . Dumper( \%forms );
 $count++;
 
 done_testing($count);

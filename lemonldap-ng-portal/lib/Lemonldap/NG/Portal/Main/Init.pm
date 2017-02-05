@@ -142,7 +142,7 @@ sub reloadConf {
     my $csp = '';
     foreach (qw(default img src style font connect)) {
         my $prm = $self->conf->{ 'csp' . ucfirst($_) };
-        $csp .= "$_-src $prm;" if($prm);
+        $csp .= "$_-src $prm;" if ($prm);
     }
     $self->csp($csp);
 
@@ -183,7 +183,7 @@ sub reloadConf {
             $self->error("$type is not set");
             return $self->fail;
         }
-        $mod = $self->conf->{$type} unless($self->conf->{$type} eq 'Same');
+        $mod = $self->conf->{$type} unless ( $self->conf->{$type} eq 'Same' );
         my $module = '::' . ucfirst($type) . '::' . $mod;
         $module =~ s/Authentication/Auth/;
 
@@ -278,6 +278,11 @@ sub loadPlugin {
     my $obj;
     return 0
       unless ( $obj = $self->loadModule("$plugin") );
+    return $self->findEP( $plugin, $obj );
+}
+
+sub findEP {
+    my ( $self, $plugin, $obj ) = @_;
     foreach my $sub (
         qw(beforeAuth betweenAuthAndDatas afterDatas forAuthUser beforeLogout))
     {
@@ -295,7 +300,8 @@ sub loadPlugin {
 }
 
 sub loadModule {
-    my ( $self, $module ) = @_;
+    my ( $self, $module, $conf ) = @_;
+    $conf //= $self->conf;
     my $obj;
     $module = "Lemonldap::NG::Portal$module" if ( $module =~ /^::/ );
 
@@ -305,7 +311,7 @@ sub loadModule {
         return 0;
     }
     eval {
-        $obj = $module->new( { p => $self, conf => $self->conf } );
+        $obj = $module->new( { p => $self, conf => $conf } );
         $self->lmLog( "Module $module loaded", 'debug' );
     };
     if ($@) {

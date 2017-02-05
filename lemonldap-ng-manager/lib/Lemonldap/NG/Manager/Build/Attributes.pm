@@ -342,6 +342,11 @@ sub attributes {
             default       => '',
             documentation => 'Syslog facility',
         },
+        multiValuesSeparator => {
+            type          => 'authParamsText',
+            default       => '; ',
+            documentation => 'Separator for multiple values',
+        },
 
         # Manager
         protection => {
@@ -1796,11 +1801,11 @@ sub attributes {
         userDB => {
             type   => 'select',
             select => [
-                { k => 'Same',  v => 'Same' },
-                { k => 'AD',    v => 'Active Directory' },
-                { k => 'DBI',   v => 'Database (DBI)' },
-                { k => 'LDAP',  v => 'LDAP' },
-                { k => 'Null',  v => 'None' },
+                { k => 'Same', v => 'Same' },
+                { k => 'AD',   v => 'Active Directory' },
+                { k => 'DBI',  v => 'Database (DBI)' },
+                { k => 'LDAP', v => 'LDAP' },
+                { k => 'Null', v => 'None' },
             ],
             default       => 'Same',
             documentation => 'User module',
@@ -2262,17 +2267,17 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             ],
         },
 
-        # Multi
-        multiAuthStack => {
-            type => 'authParamsText',
+        # Combination
+        combination => {
+            type => 'text',
         },
-        multiUserDBStack => {
-            type => 'authParamsText',
+        combModules => {
+            type => 'keyTextContainer',
         },
-        multiValuesSeparator => {
-            type          => 'authParamsText',
-            default       => '; ',
-            documentation => 'Separator for multiple values',
+        combOver => {
+
+            #TODO: create new type
+            type => 'keyTextContainer',
         },
 
         # Yubikey

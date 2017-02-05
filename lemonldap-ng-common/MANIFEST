@@ -30,6 +30,7 @@ lib/Lemonldap/NG/Common/Conf/ReConstants.pm
 lib/Lemonldap/NG/Common/Conf/RESTServer.pm
 lib/Lemonldap/NG/Common/Conf/SAML/Metadata.pm
 lib/Lemonldap/NG/Common/Conf/Serializer.pm
+lib/Lemonldap/NG/Common/Conf/Wrapper.pm
 lib/Lemonldap/NG/Common/Crypto.pm
 lib/Lemonldap/NG/Common/FormEncode.pm
 lib/Lemonldap/NG/Common/Module.pm
