@@ -1,4 +1,4 @@
-package Lemonldap::NG::Portal::Auth::Choice;
+package Lemonldap::NG::Portal::Auth::Combination;
 
 use strict;
 use Mouse;
@@ -16,7 +16,7 @@ has stackSub => ( is => 'rw' );
 
 sub init {
     my ($self) = @_;
-    unless ( $self->conf->combination ) {
+    unless ( $self->conf->{combination} ) {
         $self->error('No combination found');
         return 0;
     }
@@ -44,7 +44,7 @@ sub init {
     eval {
         $self->stackSub(
             Lemonldap::NG::Common::Combination::Parser->parse(
-                \%mods, $self->conf->combination
+                \%mods, $self->conf->{combination}
             )
         );
     };

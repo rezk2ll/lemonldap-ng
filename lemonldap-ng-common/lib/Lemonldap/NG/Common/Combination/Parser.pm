@@ -116,7 +116,7 @@ sub parseBlock {
 sub parseMod {
     my ( $self, $moduleList, $type, $expr ) = @_;
     my @mods = map {
-        die "Unknown module $_"
+        die "Undeclared module $_"
           unless ( $moduleList->{$_}->[$type] );
         $moduleList->{$_}->[$type]
     } split( /\s+and\s+/, $expr );
