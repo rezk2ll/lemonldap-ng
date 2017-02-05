@@ -149,7 +149,7 @@ sub issuer {
                 domain                   => 'idp.com',
                 portal                   => 'http://auth.idp.com',
                 authentication           => 'Demo',
-                userDB                   => 'Demo',
+                userDB                   => 'Same',
                 issuerDBOpenIDActivation => 1,
             }
         }
@@ -164,7 +164,7 @@ sub sp {
                 domain         => 'sp.com',
                 portal         => 'http://auth.sp.com',
                 authentication => 'OpenID',
-                userDB         => 'OpenID',
+                userDB         => 'Same',
                 openIdSecret   => 'qwerty',
                 exportedVars   => {
                     mail => 'email',

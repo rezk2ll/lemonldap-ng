@@ -161,7 +161,7 @@ sub issuer {
                 domain            => 'idp.com',
                 portal            => 'http://auth.idp.com',
                 authentication    => 'Demo',
-                userDB            => 'Demo',
+                userDB            => 'Same',
                 restSessionServer => 1,
                 restConfigServer  => 1,
             }
@@ -177,7 +177,7 @@ sub sp {
                 domain         => 'sp.com',
                 portal         => 'http://auth.sp.com',
                 authentication => 'Demo',
-                userDB         => 'Demo',
+                userDB         => 'Same',
                 globalStorage => 'Lemonldap::NG::Common::Apache::Session::REST',
                 globalStorageOptions => {
                     baseUrl => 'http://auth.idp.com/sessions/global/'

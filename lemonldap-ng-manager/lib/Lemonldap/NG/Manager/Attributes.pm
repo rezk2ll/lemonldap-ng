@@ -227,7 +227,7 @@ m[^(?:(?:\-+\s*BEGIN\s+(?:PUBLIC\s+KEY|CERTIFICATE)\s*\-+\r?\n)?[a-zA-Z0-9/\+\r\
                     map( { $_->{'k'}; } @{ $_[2]{'select'}; } ) );
                 return $test
                   ? 1
-                  : ( 0, "Invalid value '$_[0]' for this select" );
+                  : ( 1, "Invalid value '$_[0]' for this select" );
               }
         },
         'subContainer' => {
@@ -2839,8 +2839,12 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'pcre'
         },
         'userDB' => {
-            'default' => 'Demo',
+            'default' => 'Same',
             'select'  => [
+                {
+                    'k' => 'Same',
+                    'v' => 'Same'
+                },
                 {
                     'k' => 'AD',
                     'v' => 'Active Directory'
@@ -2850,56 +2854,12 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
                     'v' => 'Database (DBI)'
                 },
                 {
-                    'k' => 'Choice',
-                    'v' => 'authChoice'
-                },
-                {
-                    'k' => 'Demo',
-                    'v' => 'Demonstration'
-                },
-                {
-                    'k' => 'Facebook',
-                    'v' => 'Facebook'
-                },
-                {
-                    'k' => 'Google',
-                    'v' => 'Google'
-                },
-                {
                     'k' => 'LDAP',
                     'v' => 'LDAP'
                 },
                 {
-                    'k' => 'Multi',
-                    'v' => 'Multiple'
-                },
-                {
                     'k' => 'Null',
                     'v' => 'None'
-                },
-                {
-                    'k' => 'OpenID',
-                    'v' => 'OpenID'
-                },
-                {
-                    'k' => 'OpenIDConnect',
-                    'v' => 'OpenID Connect'
-                },
-                {
-                    'k' => 'Proxy',
-                    'v' => 'Proxy'
-                },
-                {
-                    'k' => 'Remote',
-                    'v' => 'Remote'
-                },
-                {
-                    'k' => 'SAML',
-                    'v' => 'SAML v2'
-                },
-                {
-                    'k' => 'Slave',
-                    'v' => 'Slave'
                 },
                 {
                     'k' => 'WebID',

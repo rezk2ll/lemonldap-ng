@@ -120,7 +120,7 @@ sub types {
                     { $_ eq $_[0] } map ( { $_->{k} } @{ $_[2]->{select} } ) );
                 return $test
                   ? 1
-                  : ( 0, "Invalid value '$_[0]' for this select" );
+                  : ( 1, "Invalid value '$_[0]' for this select" );
             },
         },
 
@@ -1796,24 +1796,14 @@ sub attributes {
         userDB => {
             type   => 'select',
             select => [
-                { k => 'AD',            v => 'Active Directory' },
-                { k => 'DBI',           v => 'Database (DBI)' },
-                { k => 'Choice',        v => 'authChoice' },
-                { k => 'Demo',          v => 'Demonstration' },
-                { k => 'Facebook',      v => 'Facebook' },
-                { k => 'Google',        v => 'Google' },
-                { k => 'LDAP',          v => 'LDAP' },
-                { k => 'Multi',         v => 'Multiple' },
-                { k => 'Null',          v => 'None' },
-                { k => 'OpenID',        v => 'OpenID' },
-                { k => 'OpenIDConnect', v => 'OpenID Connect' },
-                { k => 'Proxy',         v => 'Proxy' },
-                { k => 'Remote',        v => 'Remote' },
-                { k => 'SAML',          v => 'SAML v2' },
-                { k => 'Slave',         v => 'Slave' },
-                { k => 'WebID',         v => 'WebID' },
+                { k => 'Same',  v => 'Same' },
+                { k => 'AD',    v => 'Active Directory' },
+                { k => 'DBI',   v => 'Database (DBI)' },
+                { k => 'LDAP',  v => 'LDAP' },
+                { k => 'Null',  v => 'None' },
+                { k => 'WebID', v => 'WebID' },
             ],
-            default       => 'Demo',
+            default       => 'Same',
             documentation => 'User module',
         },
         passwordDB => {

@@ -173,7 +173,7 @@ sub op {
                 domain                          => 'idp.com',
                 portal                          => 'http://auth.op.com',
                 authentication                  => 'Demo',
-                userDB                          => 'Demo',
+                userDB                          => 'Same',
                 issuerDBOpenIDConnectActivation => "1",
                 oidcRPMetaDataExportedVars      => {
                     rp => {
@@ -269,7 +269,7 @@ sub rp {
                 domain                     => 'rp.com',
                 portal                     => 'http://auth.rp.com',
                 authentication             => 'OpenIDConnect',
-                userDB                     => 'OpenIDConnect',
+                userDB                     => 'Same',
                 oidcOPMetaDataExportedVars => {
                     op => {
                         cn   => "name",

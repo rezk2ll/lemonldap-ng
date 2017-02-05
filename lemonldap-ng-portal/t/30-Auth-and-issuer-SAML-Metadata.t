@@ -40,7 +40,7 @@ sub issuer {
                 domain                 => 'idp.com',
                 portal                 => 'http://auth.idp.com',
                 authentication         => 'Demo',
-                userDB                 => 'Demo',
+                userDB                 => 'Same',
                 issuerDBSAMLActivation => 1,
                 samlSPMetaDataOptions  => {
                     'sp.com' => {

@@ -27,7 +27,7 @@ SKIP: {
                 logLevel       => 'error',
                 useSafeJail    => 1,
                 authentication => 'Choice',
-                userDB         => 'Choice',
+                userDB         => 'Same',
 
                 authChoiceParam   => 'test',
                 authChoiceModules => {

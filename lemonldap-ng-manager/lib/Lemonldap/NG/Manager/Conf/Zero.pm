@@ -9,7 +9,7 @@ sub zeroConf {
     return {
         'timeout'             => 72000,
         'loginHistoryEnabled' => 1,
-        'userDB'              => 'Demo',
+        'userDB'              => 'Same',
         'applicationList'     => {
             '2administration' => {
                 'manager' => {

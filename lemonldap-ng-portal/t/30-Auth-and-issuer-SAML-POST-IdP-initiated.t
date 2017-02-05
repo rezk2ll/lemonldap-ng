@@ -208,7 +208,7 @@ sub issuer {
                 domain                 => 'idp.com',
                 portal                 => 'http://auth.idp.com',
                 authentication         => 'Demo',
-                userDB                 => 'Demo',
+                userDB                 => 'Same',
                 issuerDBSAMLActivation => 1,
                 samlSPMetaDataOptions  => {
                     'sp.com' => {
@@ -496,7 +496,7 @@ sub sp {
                 domain                            => 'sp.com',
                 portal                            => 'http://auth.sp.com',
                 authentication                    => 'SAML',
-                userDB                            => 'SAML',
+                userDB                            => 'Same',
                 issuerDBSAMLActivation            => 0,
                 samlIDPMetaDataExportedAttributes => {
                     idp => {

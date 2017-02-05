@@ -14,7 +14,7 @@ SKIP: {
                 logLevel        => 'error',
                 useSafeJail     => 1,
                 authentication  => 'Proxy',
-                userDB          => 'Proxy',
+                userDB          => 'Same',
                 soapAuthService => $ENV{REMOTELLNG},
             }
         }

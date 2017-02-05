@@ -16,7 +16,7 @@ SKIP: {
                 useSafeJail     => 1,
                 authentication  => 'LDAP',
                 portal          => 'http://auth.example.com/',
-                userDB          => 'LDAP',
+                userDB          => 'Same',
                 registerDB      => 'LDAP',
                 LDAPFilter      => $ENV{LDAPFILTER} || '(cn=$user)',
                 ldapServer      => $ENV{LDAPSERVER},

@@ -134,7 +134,7 @@ sub issuer {
                 domain            => 'idp.com',
                 portal            => 'http://auth.idp.com',
                 authentication    => 'Demo',
-                userDB            => 'Demo',
+                userDB            => 'Same',
                 soapSessionServer => 1,
             }
         }
@@ -149,7 +149,7 @@ sub sp {
                 domain         => 'sp.com',
                 portal         => 'http://auth.sp.com',
                 authentication => 'Demo',
-                userDB         => 'Demo',
+                userDB         => 'Same',
                 globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
                 globalStorageOptions =>
                   { proxy => 'http://auth.idp.com/adminSessions' },

@@ -24,8 +24,8 @@ describe('Lemonldap::NG Manager', function() {
       element(by.css('.glyphicon-plus-sign')).click();
       element(by.id('a-authChoiceModules')).click();
       element(by.id('t-authChoiceModules/n1')).click();
-      element(by.xpath("//option[@value='BrowserID']")).click();
-      expect(element(by.id('t-browseridParams')).isDisplayed()).toBeTruthy();
+      element(by.xpath("//option[@value='LDAP']")).click();
+      expect(element(by.id('t-ldapParams')).isDisplayed()).toBeTruthy();
     });
 
     it('should display auth modules chosen with authMulti', function() {

@@ -25,7 +25,7 @@ SKIP: {
                 useSafeJail                => 1,
                 portalDisplayRegister      => 1,
                 authentication             => 'Demo',
-                userDB                     => 'Demo',
+                userDB                     => 'Same',
                 passwordDB                 => 'Demo',
                 captcha_mail_enabled       => 1,
                 requireToken               => 1,

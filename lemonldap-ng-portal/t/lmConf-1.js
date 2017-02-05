@@ -75,6 +75,6 @@
   },
   "reloadUrls": {},
   "requireToken": 0,
-  "userDB": "Demo",
+  "userDB": "Same",
   "whatToTrace": "_whatToTrace"
 }

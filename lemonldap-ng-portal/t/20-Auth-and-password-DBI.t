@@ -23,7 +23,7 @@ SKIP: {
                 logLevel                 => 'error',
                 useSafeJail              => 1,
                 authentication           => 'DBI',
-                userDB                   => 'DBI',
+                userDB                   => 'Same',
                 dbiAuthChain             => 'dbi:SQLite:dbname=t/userdb.db',
                 dbiAuthUser              => '',
                 dbiAuthPassword          => '',

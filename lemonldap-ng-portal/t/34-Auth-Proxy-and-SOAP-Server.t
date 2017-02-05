@@ -152,7 +152,7 @@ sub issuer {
                 domain            => 'idp.com',
                 portal            => 'http://auth.idp.com',
                 authentication    => 'Demo',
-                userDB            => 'Demo',
+                userDB            => 'Same',
                 soapSessionServer => 1,
             }
         }
@@ -167,7 +167,7 @@ sub sp {
                 domain           => 'sp.com',
                 portal           => 'http://auth.sp.com',
                 authentication   => 'Proxy',
-                userDB           => 'Proxy',
+                userDB           => 'Same',
                 proxyAuthService => 'http://auth.idp.com/sessions',
                 proxyUseSoap     => 1,
             },

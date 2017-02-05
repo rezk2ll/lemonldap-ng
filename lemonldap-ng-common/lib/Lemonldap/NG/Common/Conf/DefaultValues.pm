@@ -244,7 +244,7 @@ sub defaultValues {
         'trustedProxies'                          => '',
         'twitterAuthnLevel'                       => 1,
         'userControl'                             => '^[\\w\\.\\-@]+$',
-        'userDB'                                  => 'Demo',
+        'userDB'                                  => 'Same',
         'useRedirectOnError'                      => 1,
         'useSafeJail'                             => 1,
         'webIDAuthnLevel'                         => 1,

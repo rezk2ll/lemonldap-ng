@@ -17,7 +17,7 @@ my $client = LLNG::Manager::Test->new(
             useSafeJail              => 1,
             portalDisplayRegister    => 1,
             authentication           => 'Demo',
-            userDB                   => 'Demo',
+            userDB                   => 'Same',
             registerDB               => 'Demo',
             captcha_register_enabled => 0,
         }

@@ -182,7 +182,7 @@ sub issuer {
                 domain                 => 'idp.com',
                 portal                 => 'http://auth.idp.com',
                 authentication         => 'Demo',
-                userDB                 => 'Demo',
+                userDB                 => 'Same',
                 issuerDBCASActivation  => 1,
                 casAttr                => 'uid',
                 casAttributes          => { cn => 'cn', uid => 'uid', },

@@ -147,6 +147,6 @@
   "securedCookie": 0,
   "sessionDataToRemember": {},
   "timeout": 72000,
-  "userDB": "Demo",
+  "userDB": "Same",
   "whatToTrace": "_whatToTrace"
 }

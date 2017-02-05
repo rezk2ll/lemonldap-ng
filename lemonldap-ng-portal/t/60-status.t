@@ -14,7 +14,7 @@ my $client = LLNG::Manager::Test->new(
             logLevel       => 'error',
             portalStatus   => 1,
             authentication => 'Demo',
-            userDB         => 'Demo',
+            userDB         => 'Same',
         }
     }
 );

@@ -177,12 +177,14 @@ sub reloadConf {
 
     # Load authentication/userDB
     # --------------------------
+    my $mod;
     for my $type (qw(authentication userDB)) {
         unless ( $self->conf->{$type} ) {
             $self->error("$type is not set");
             return $self->fail;
         }
-        my $module = '::' . ucfirst($type) . '::' . $self->conf->{$type};
+        $mod = $self->conf->{$type} unless($self->conf->{$type} eq 'Same');
+        my $module = '::' . ucfirst($type) . '::' . $mod;
         $module =~ s/Authentication/Auth/;
 
         # Launch and initialize module

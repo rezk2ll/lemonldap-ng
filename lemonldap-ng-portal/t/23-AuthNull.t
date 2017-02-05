@@ -11,7 +11,7 @@ my $client = LLNG::Manager::Test->new(
             logLevel       => 'error',
             useSafeJail    => 1,
             authentication => 'Null',
-            userDB         => 'Null',
+            userDB         => 'Same',
         }
     }
 );
