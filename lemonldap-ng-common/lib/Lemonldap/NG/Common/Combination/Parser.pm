@@ -22,39 +22,32 @@ sub parse {
     if ( $rest =~ s/^\s*if\s*\(// ) {
         my ( $cond, $then, $else );
         ( $cond, $rest ) = $self->findB( $rest, ')' );
-        unless ($cond) {
+        unless ( length $cond ) {
             die('Bad combination: unmatched bracket');
         }
-        unless ( $rest =~ s/\s*then\s*\{// ) {
+        unless ( $rest =~ s/^\s*\bthen\b\s*// ) {
             die('Bad combination: missing "then"');
         }
-        ( $then, $rest ) = $self->findB( $rest, '}' );
+        unless( $rest =~ /(.*?)\s*\belse\b\s*(.*)$/ ) {
+            die('Bad combination: missing "else"');
+        }
+        ($then,$else)=($1,$2);
         unless ($then) {
             die('Bad combination: missing "then" content');
         }
-        unless ( $rest =~ s/\s*else\s*\{// ) {
-            die('Bad combination: missing "else"');
-        }
-        ( $else, $rest ) = $self->findB( $rest, '}' );
         unless ($else) {
             die('Bad combination: missing "else" content');
         }
-        if ( $rest !~ /^\s*$/ ) {
-            die('Bad combination: trailing characters after else{}');
-        }
 
-        $cond = buildSub($cond);
-        $then = $self->parse( $moduleList, $then );
+        $cond = $self->buildSub($cond);
+        $then = $self->parseOr( $moduleList, $then );
         $else = $self->parse( $moduleList, $else );
         unless ( $then and $else ) {
             die('Bad combination: bad then or else');
         }
         return sub {
-            my ( $sub, $req ) = @_;
-            return [
-                ( $cond->($req) ? $then->[0]->($@) : $else->[0]->($@) ),
-                ( $cond->($req) ? $then->[1]->($@) : $else->[1]->($@) ),
-            ];
+            my ( $req ) = @_;
+            return ( $cond->($req) ? $then : $else->($req) );
         };
     }
     else {
@@ -146,7 +139,8 @@ sub findB {
     my ( $self, $expr, $char ) = @_;
     my $res;
     my @chars = split //, $expr;
-    while ( my $c = shift @chars ) {
+    while (@chars) {
+        my $c = shift @chars;
         if ( $c eq "\\" ) {
             $res .= $c . shift(@chars);
             next;
@@ -167,7 +161,7 @@ sub findB {
             }->{$c};
             my ( $m, $rest ) =
               $self->findB( join( '', @chars ), $wanted );
-            unless ($m) {
+            unless ( length $m ) {
                 die("Bad combination: unmatched $c");
             }
             $res .= "$c$m$wanted";
