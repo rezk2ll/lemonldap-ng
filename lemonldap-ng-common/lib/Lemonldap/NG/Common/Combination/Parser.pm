@@ -82,10 +82,10 @@ sub parseAnd {
         foreach my $type (@mod) {
             push @res, sub {
                 foreach my $obj (@$type) {
-                    my $r = $obj->(@_);
-                    return $r unless ( $r == PE_OK );
+                    my ( $r, $name ) = $obj->(@_);
+                    return ( $r, $name ) unless ( $r == PE_OK );
                 }
-                return PE_OK;
+                return ( PE_OK, $expr );
             };
         }
         return \@res;
@@ -115,25 +115,26 @@ sub parseBlock {
 # Return sub
 sub parseMod {
     my ( $self, $moduleList, $type, $expr ) = @_;
+    my @list = split( /\s+and\s+/, $expr );
     my @mods = map {
         die "Undeclared module $_"
           unless ( $moduleList->{$_}->[$type] );
         $moduleList->{$_}->[$type]
-    } split( /\s+and\s+/, $expr );
+    } @list;
     if ( @mods == 1 ) {
         my ($m) = @mods;
         return sub {
             my ( $sub, $req ) = @_;
-            return $m->$sub($req);
+            return ( $m->$sub($req), $expr );
         };
     }
     return sub {
         my ( $sub, $req ) = @_;
-        foreach my $obj (@mods) {
-            my $res = $obj->$sub($req);
-            return $res unless ( $res == PE_OK );
+        for ( my $i = 0 ; $i < @list ; $i++ ) {
+            my $res = $mods[$i]->$sub($req);
+            return ( $res, $list[$i] ) unless ( $res == PE_OK );
         }
-        return PE_OK;
+        return ( PE_OK, $expr );
     };
 }
 

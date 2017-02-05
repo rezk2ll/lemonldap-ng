@@ -6,6 +6,7 @@ require 't/test-lib.pm';
 
 my $res;
 my $mainTests = 0;
+my $client;
 
 eval { unlink 't/userdb.db' };
 
@@ -16,9 +17,36 @@ SKIP: {
     }
     my $dbh = DBI->connect("dbi:SQLite:dbname=t/userdb.db");
     $dbh->do('CREATE TABLE users (user text,password text,name text)');
-    $dbh->do("INSERT INTO users VALUES ('test','test','Test user')");
+    $dbh->do("INSERT INTO users VALUES ('test1','test1','Test user 1')");
 
-    my $client = LLNG::Manager::Test->new(
+    $client = iniCmb('[Dm] or [DB]');
+    my $res = try('dwho');
+    expectCookie($res);
+
+    $res = try('test1');
+    expectCookie($res);
+}
+count($mainTests);
+clean_sessions();
+eval { unlink 't/userdb.db' };
+done_testing( count() );
+
+sub try {
+    my $user = shift;
+    my $s    = "user=$user&password=$user";
+    my $res;
+    ok(
+        $res = $client->_post( '/', IO::String->new($s), length => length($s) ),
+        "Test $user"
+    );
+    count(1);
+    return $res;
+}
+
+sub iniCmb {
+    my $expr = shift;
+    my $res;
+    return LLNG::Manager::Test->new(
         {
             ini => {
                 logLevel       => 'debug',
@@ -26,16 +54,16 @@ SKIP: {
                 authentication => 'Combination',
                 userDB         => 'Same',
 
-                combination => '[DBI] or [Demo]',
+                combination => $expr,
                 combModules => [
                     {
-                        for => 0,
-                        name => 'DBI',
+                        for  => 0,
+                        name => 'DB',
                         type => 'DBI',
                     },
                     {
-                        for => 0,
-                        name => 'Demo',
+                        for  => 0,
+                        name => 'Dm',
                         type => 'Demo',
                     },
                 ],
@@ -47,11 +75,9 @@ SKIP: {
                 dbiAuthLoginCol     => 'user',
                 dbiAuthPasswordCol  => 'password',
                 dbiAuthPasswordHash => '',
-                dbiExportedVars => {},
+                dbiExportedVars     => {},
+                demoExportedVars    => {},
             }
         }
     );
 }
-count($mainTests);
-eval { unlink 't/userdb.db' };
-done_testing( count() );
