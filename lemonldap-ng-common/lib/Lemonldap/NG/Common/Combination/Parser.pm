@@ -103,7 +103,7 @@ sub parseBlock {
         die "Bad expression: $expr";
     }
     my @res = ( $1, $2 || $1 );
-    @res = map { $self->parseMod( $moduleList, $_ ) } @res;
+    @res = ($self->parseMod( $moduleList, 0, $res[0]),$self->parseMod( $moduleList, 1, $res[1]));
     return \@res;
 }
 
@@ -111,11 +111,11 @@ sub parseBlock {
 # These expressions can be "LDAP" or "LDAP and DBI"
 # Return sub
 sub parseMod {
-    my ( $self, $moduleList, $expr ) = @_;
+    my ( $self, $moduleList, $type, $expr ) = @_;
     my @mods = map {
         die "Unknown module $_"
-          unless ( $moduleList->{$_} );
-        $moduleList->{$_}
+          unless ( $moduleList->{$_}->[$type] );
+        $moduleList->{$_}->[$type]
     } split( /\s+and\s+/, $expr );
     if ( @mods == 1 ) {
         my ($m) = @mods;

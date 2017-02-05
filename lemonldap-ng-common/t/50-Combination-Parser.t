@@ -8,7 +8,7 @@ use_ok($m);
 my $authMods = {};
 
 foreach (qw(A B C)) {
-    $authMods->{$_} = LLNG::Auth->new($_);
+    $authMods->{$_} = [ LLNG::Auth->new($_), LLNG::Auth->new($_) ];
 }
 
 # Verify structure
@@ -55,11 +55,8 @@ ok(
 
 # Test "and"
 
-@tests = (
-    '[A and B, A]',
-    '[A,B] and [B,C]',
-    'if(0) then [A,B] else [A,B] and [B,C]'
-);
+@tests = ( '[A and B, A]', '[A,B] and [B,C]',
+    'if(0) then [A,B] else [A,B] and [B,C]' );
 
 while ( my $expr = shift @tests ) {
     ok( getok($expr) == 0, qq{"$expr" returns PE_OK as auth result} )
@@ -67,13 +64,10 @@ while ( my $expr = shift @tests ) {
 }
 
 # Test bad expr
-@tests = (
-    'if(1) then {if(1) then [A] else [B]} else [C]',
-    '[A,B or C]',
-);
+@tests = ( 'if(1) then {if(1) then [A] else [B]} else [C]', '[A,B or C]', );
 
-foreach(@tests) {
-    ok(!eval{authName($_)}, qq'Bad expr "$_"');
+foreach (@tests) {
+    ok( !eval { authName($_) }, qq'Bad expr "$_"' );
 }
 
 sub getok {
@@ -109,5 +103,5 @@ sub name {
 }
 
 sub ok {
-    return 0; # PE_OK
+    return 0;    # PE_OK
 }
