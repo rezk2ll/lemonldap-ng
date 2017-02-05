@@ -1,12 +1,13 @@
-package Lemonldap::NG::Common::CombinationParser;
+package Lemonldap::NG::Common::Combination::Parser;
 
 use strict;
 use Mouse;
+use Safe;
 use constant PE_OK => 0;
 
 # Handle "if then else" (used during init)
 # return a sub that can be called with ($req) to get a [array] of combination
-# 
+#
 # During auth, these combinations represents "or" (like Multi)
 # Each combination is a [authSub,userSub] called like this:
 #      $authSub->('authenticate',$req)
@@ -22,41 +23,31 @@ sub parse {
         my ( $cond, $then, $else );
         ( $cond, $rest ) = $self->findB( $rest, ')' );
         unless ($cond) {
-            $self->lmLog( 'Bad combination: unmatched bracket', 'error' );
-            return undef;
+            die('Bad combination: unmatched bracket');
         }
         unless ( $rest =~ s/\s*then\s*\{// ) {
-            $self->lmLog( 'Bad combination: missing "then"', 'error' );
-            return undef;
+            die('Bad combination: missing "then"');
         }
         ( $then, $rest ) = $self->findB( $rest, '}' );
         unless ($then) {
-            $self->lmLog( 'Bad combination: missing "then" content', 'error' );
-            return undef;
+            die('Bad combination: missing "then" content');
         }
         unless ( $rest =~ s/\s*else\s*\{// ) {
-            $self->lmLog( 'Bad combination: missing "else"', 'error' );
-            return undef;
+            die('Bad combination: missing "else"');
         }
         ( $else, $rest ) = $self->findB( $rest, '}' );
         unless ($else) {
-            $self->lmLog( 'Bad combination: missing "else" content', 'error' );
-            return undef;
+            die('Bad combination: missing "else" content');
         }
         if ( $rest !~ /^\s*$/ ) {
-            $self->lmLog( 'Bad combination: trailing characters after else{}',
-                'error' );
-            return undef;
+            die('Bad combination: trailing characters after else{}');
         }
 
-        #TODO:
-        #$cond = HANDLER->buildSub($cond);
-        $cond = sub { 1 };
+        $cond = buildSub($cond);
         $then = $self->parse( $moduleList, $then );
         $else = $self->parse( $moduleList, $else );
         unless ( $then and $else ) {
-            $self->lmLog('Bad combination: bad then or else');
-            return undef;
+            die('Bad combination: bad then or else');
         }
         return sub {
             my ( $sub, $req ) = @_;
@@ -177,8 +168,7 @@ sub findB {
             my ( $m, $rest ) =
               $self->findB( join( '', @chars ), $wanted );
             unless ($m) {
-                $self->lmLog( "Bad combination: unmatched $c", 'error' );
-                return undef;
+                die("Bad combination: unmatched $c");
             }
             $res .= "$c$m$wanted";
             @chars = split //, $rest;
@@ -187,6 +177,15 @@ sub findB {
         $res .= $c;
     }
     return undef;
+}
+
+# Compiles condition into sub
+sub buildSub {
+    my ( $self, $cond ) = @_;
+    my $safe = Safe->new;
+    my $res  = $safe->reval("sub{my(\$req)=@\_;return ($cond)}");
+    die "Bad condition $cond: $@" if ($@);
+    return $res;
 }
 
 1;
