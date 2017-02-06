@@ -18,14 +18,14 @@
         </td>
         <td>
           <select class="form-control" ng-model="currentNode.data.type" ng-change="execFilters(_findScopeByKey('authParams'))">
-            <option ng-repeat="item in _findContainer().select" ng-selected="item.k==currentNode.data[i]" value="{{item.k}}">{{item.v}}</option>
+            <option ng-repeat="item in _findContainer().select" ng-selected="item.k==currentNode.data.type" value="{{item.k}}">{{item.v}}</option>
           </select>
         </td>
         <td>
           <select class="form-control" ng-model="currentNode.data.for">
-            <option value="0" trspan="authAndUserdb">
-            <option value="0" trspan="authOnly">
-            <option value="0" trspan="userdbOnly">
+            <option value="0" ng-selected="currentNode.data.for===0" trspan="authAndUserdb">
+            <option value="1" ng-selected="currentNode.data.for===1" trspan="authOnly">
+            <option value="2" ng-selected="currentNode.data.for===2" trspan="userdbOnly">
           </select>
         </td>
       </tr>

@@ -471,20 +471,8 @@ sub attributes {
                     'v' => 'Active Directory'
                 },
                 {
-                    'k' => 'Choice',
-                    'v' => 'authChoice'
-                },
-                {
-                    'k' => 'CAS',
-                    'v' => 'Central Authentication Service (CAS)'
-                },
-                {
                     'k' => 'DBI',
                     'v' => 'Database (DBI)'
-                },
-                {
-                    'k' => 'Demo',
-                    'v' => 'Demonstration'
                 },
                 {
                     'k' => 'Facebook',
@@ -499,40 +487,8 @@ sub attributes {
                     'v' => 'LDAP'
                 },
                 {
-                    'k' => 'Multi',
-                    'v' => 'Multiple'
-                },
-                {
-                    'k' => 'Null',
-                    'v' => 'None'
-                },
-                {
-                    'k' => 'OpenID',
-                    'v' => 'OpenID'
-                },
-                {
-                    'k' => 'OpenIDConnect',
-                    'v' => 'OpenID Connect'
-                },
-                {
-                    'k' => 'Proxy',
-                    'v' => 'Proxy'
-                },
-                {
                     'k' => 'Radius',
                     'v' => 'Radius'
-                },
-                {
-                    'k' => 'Remote',
-                    'v' => 'Remote'
-                },
-                {
-                    'k' => 'SAML',
-                    'v' => 'SAML v2'
-                },
-                {
-                    'k' => 'Slave',
-                    'v' => 'Slave'
                 },
                 {
                     'k' => 'SSL',
@@ -549,6 +505,50 @@ sub attributes {
                 {
                     'k' => 'Yubikey',
                     'v' => 'Yubikey'
+                },
+                {
+                    'k' => 'Demo',
+                    'v' => 'Demonstration'
+                },
+                {
+                    'k' => 'Choice',
+                    'v' => 'authChoice'
+                },
+                {
+                    'k' => 'Combination',
+                    'v' => 'combineMods'
+                },
+                {
+                    'k' => 'CAS',
+                    'v' => 'Central Authentication Service (CAS)'
+                },
+                {
+                    'k' => 'OpenID',
+                    'v' => 'OpenID'
+                },
+                {
+                    'k' => 'OpenIDConnect',
+                    'v' => 'OpenID Connect'
+                },
+                {
+                    'k' => 'SAML',
+                    'v' => 'SAML v2'
+                },
+                {
+                    'k' => 'Proxy',
+                    'v' => 'Proxy'
+                },
+                {
+                    'k' => 'Remote',
+                    'v' => 'Remote'
+                },
+                {
+                    'k' => 'Slave',
+                    'v' => 'Slave'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
                 }
             ],
             'type' => 'select'
@@ -659,7 +659,89 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         },
         'combModules' => {
             'keyTest' => qr/^\w+$/,
-            'test'    => sub {
+            'select'  => [
+                {
+                    'k' => 'Apache',
+                    'v' => 'Apache'
+                },
+                {
+                    'k' => 'AD',
+                    'v' => 'Active Directory'
+                },
+                {
+                    'k' => 'DBI',
+                    'v' => 'Database (DBI)'
+                },
+                {
+                    'k' => 'Facebook',
+                    'v' => 'Facebook'
+                },
+                {
+                    'k' => 'Google',
+                    'v' => 'Google'
+                },
+                {
+                    'k' => 'LDAP',
+                    'v' => 'LDAP'
+                },
+                {
+                    'k' => 'Radius',
+                    'v' => 'Radius'
+                },
+                {
+                    'k' => 'SSL',
+                    'v' => 'SSL'
+                },
+                {
+                    'k' => 'Twitter',
+                    'v' => 'Twitter'
+                },
+                {
+                    'k' => 'WebID',
+                    'v' => 'WebID'
+                },
+                {
+                    'k' => 'Yubikey',
+                    'v' => 'Yubikey'
+                },
+                {
+                    'k' => 'Demo',
+                    'v' => 'Demonstration'
+                },
+                {
+                    'k' => 'CAS',
+                    'v' => 'Central Authentication Service (CAS)'
+                },
+                {
+                    'k' => 'OpenID',
+                    'v' => 'OpenID'
+                },
+                {
+                    'k' => 'OpenIDConnect',
+                    'v' => 'OpenID Connect'
+                },
+                {
+                    'k' => 'SAML',
+                    'v' => 'SAML v2'
+                },
+                {
+                    'k' => 'Proxy',
+                    'v' => 'Proxy'
+                },
+                {
+                    'k' => 'Remote',
+                    'v' => 'Remote'
+                },
+                {
+                    'k' => 'Slave',
+                    'v' => 'Slave'
+                },
+                {
+                    'k' => 'Null',
+                    'v' => 'None'
+                }
+            ],
+            'test' => sub {
                 1;
             },
             'type' => 'cmbModuleContainer'
