@@ -309,6 +309,7 @@ llapp.controller 'TreeCtrl', [
 					type: 'LDAP'
 					for: 0
 					over: []
+			$scope.execFilters $scope._findScopeByKey 'authParams'
 
 		$scope.newCmbOver = ->
 			d = $scope.currentNode.data

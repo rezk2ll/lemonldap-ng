@@ -7,6 +7,7 @@ var filterFunctions = {
 
     /* 1. be sure to have all datas in main nodes */
     var wait = [];
+    console.log('filterFunctions called');
     node.nodes.forEach(function(n) {
       wait.push(scope.getKey(n));
     });
@@ -34,11 +35,12 @@ var filterFunctions = {
       });
       /* Get choice or multi sub modules */
       node.nodes_cond.forEach(function(n) {
-	var restart = 0;
+        var restart = 0;
         var nd = n._nodes ? n._nodes : n.nodes;
         if (node.nodes[0].data == 'Choice' && n.id == 'choiceParams') {
+          console.log('Choice is selected');
           if (nd[1].cnodes) {
-	    restart++;
+            restart++;
           }
           else {
             nd = nd[1]._nodes ? nd[1]._nodes : nd[1].nodes;
@@ -50,19 +52,18 @@ var filterFunctions = {
           };
         }
         else if (node.nodes[0].data == 'Combination' && n.id == 'combinationParams') {
+          console.log('Combination is selected');
           if (nd[1].cnodes) {
-	    restart++;
+            restart++;
           }
           else {
             nd = nd[1]._nodes ? nd[1]._nodes : nd[1].nodes;
-	    nd.forEach(function(m) {
-	      m.data.over.forEach(function(s) {
-	      	p(s.type);
-	      });
-	    });
-	  }
+            nd.forEach(function(m) {
+	      p(m.data.type);
+            });
+          }
         }
-	if(restart==1) {
+        if(restart==1) {
           scope.waiting = true;
           scope.download({
             '$modelValue': nd[1]
@@ -70,7 +71,7 @@ var filterFunctions = {
             filterFunctions.authParams(scope, $q, node)
           });
           return;
-	}
+        }
       });
       /* 2.2 Display modules */
       node.nodes_cond.forEach(function(n) {

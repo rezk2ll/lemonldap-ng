@@ -351,7 +351,7 @@ This file contains:
       $scope.newCmbMod = function() {
         var node;
         node = $scope._findContainer();
-        return node.nodes.push({
+        node.nodes.push({
           id: node.id + "/n" + (id++),
           title: 'new',
           type: 'cmbModule',
@@ -361,6 +361,7 @@ This file contains:
             over: []
           }
         });
+        return $scope.execFilters($scope._findScopeByKey('authParams'));
       };
       $scope.newCmbOver = function() {
         var d;
