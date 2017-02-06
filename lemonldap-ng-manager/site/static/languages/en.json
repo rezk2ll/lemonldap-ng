@@ -493,6 +493,7 @@
 "OpenIDConnect_IDToken": "ID Token",
 "OpenIDConnect_OP": "Provider key",
 "OptionalTitle": "Optional title",
+"overPrm": "Overloaded parameters",
 "password": "Password",
 "passwordDB": "Password module",
 "passwordManagement": "Password management",

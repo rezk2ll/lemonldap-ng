@@ -25,54 +25,52 @@ var filterFunctions = {
         }
         nToShow.push(tmp + 'Params');
       }
-      if (node.nodes[0].data.match(/^(Choice|Multi)/)) {
-        node.nodes[1].data = node.nodes[0].data;
-        if (node.nodes[0].data.match(/^Choice/)) {
-          node.nodes[2].data = 'Choice';
-        }
-        //all = true;
+      if (node.nodes[0].data.match(/^Choice/)) {
+        node.nodes[2].data = 'Choice';
       }
+
       node.nodes.forEach(function(n) {
         p(n.data);
       });
       /* Get choice or multi sub modules */
       node.nodes_cond.forEach(function(n) {
+	var restart = 0;
+        var nd = n._nodes ? n._nodes : n.nodes;
         if (node.nodes[0].data == 'Choice' && n.id == 'choiceParams') {
-          var nd = n._nodes ? n._nodes : n.nodes;
-          if (!nd[1].cnodes) {
+          if (nd[1].cnodes) {
+	    restart++;
+          }
+          else {
             nd = nd[1]._nodes ? nd[1]._nodes : nd[1].nodes;
             nd.forEach(function(m) {
               m.data.forEach(function(s) {
                 p(s);
               });
             });
-          }
-          else {
-            scope.waiting = true;
-            scope.download({
-              '$modelValue': nd[1]
-            }).then(function() {
-              filterFunctions.authParams(scope, $q, node)
-            });
-            return;
           };
         }
-        else if (node.nodes[0].data == 'Multi' && n.id == 'multiParams') {
-          var nd = n._nodes ? n._nodes : n.nodes;
-          if (! ('data' in nd[0])) {
-            $q.all([scope.getKey(nd[0]), scope.getKey(nd[1])]).then(function() {
-              filterFunctions.authParams(scope, $q, node)
-            });
-            return;
+        else if (node.nodes[0].data == 'Combination' && n.id == 'combinationParams') {
+          if (nd[1].cnodes) {
+	    restart++;
           }
-          /* TODO: Change this with multiValueSeparator when it will be set in tree */
-          var sep = ';';
-          var reg = new RegExp(sep + '\\s*(\\w+)', 'g');
-          var s = '' + (nd[0].data ? sep + nd[0].data : '') + (nd[1].data ? sep + nd[1].data : '');
-          while ((result = reg.exec(s)) !== null) {
-            p(result[1]);
-          }
+          else {
+            nd = nd[1]._nodes ? nd[1]._nodes : nd[1].nodes;
+	    nd.forEach(function(m) {
+	      m.data.over.forEach(function(s) {
+	      	p(s.type);
+	      });
+	    });
+	  }
         }
+	if(restart==1) {
+          scope.waiting = true;
+          scope.download({
+            '$modelValue': nd[1]
+          }).then(function() {
+            filterFunctions.authParams(scope, $q, node)
+          });
+          return;
+	}
       });
       /* 2.2 Display modules */
       node.nodes_cond.forEach(function(n) {

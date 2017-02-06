@@ -18,7 +18,7 @@
         </td>
         <td>
           <select class="form-control" ng-model="currentNode.data.type" ng-change="execFilters(_findScopeByKey('authParams'))">
-            <option ng-repeat="item in _findContainer().select" ng-selected="item.k==currentNode.data.type" value="{{item.k}}">{{item.v}}</option>
+            <option ng-repeat="item in _findContainer().select" ng-selected="item.k===currentNode.data.type" value="{{item.k}}">{{item.v}}</option>
           </select>
         </td>
         <td>
@@ -31,13 +31,14 @@
       </tr>
     </tbody>
   </table>
+  <h4 trspan="overPrm"></h4>
   <table class="table">
-    <tr ng-repeat="(k,v) in currentNode.data.over">
+    <tr ng-repeat="t in currentNode.data.over">
       <td>
-        <input class="form-control" ng-model="k" />
+        <input class="form-control" ng-model="t[0]" />
       </td>
       <td>
-        <input class="form-control" ng-model="v" />
+        <input class="form-control" ng-model="t[1]" />
       </td>
       <td>
         <span class="link text-danger glyphicon glyphicon-minus-sign" ng-click="del(currentNode.data.over,$index)"/>

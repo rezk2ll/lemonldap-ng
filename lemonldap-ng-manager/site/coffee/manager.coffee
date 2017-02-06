@@ -308,10 +308,12 @@ llapp.controller 'TreeCtrl', [
 				data:
 					type: 'LDAP'
 					for: 0
-					over: {}
+					over: []
 
 		$scope.newCmbOver = ->
-			$scope.currentNode.data.over.set "new#{id++}", ''
+			d = $scope.currentNode.data
+			d.over = [] unless d.over
+			d.over.push ["new#{id++}", '']
 
 		# Add host
 		$scope.addHost = (cn,scope) ->
@@ -586,7 +588,18 @@ llapp.controller 'TreeCtrl', [
 
 		$scope.keyWritable = (scope) ->
 			node = scope.$modelValue
-			return if node.type and node.type.match /^(authChoice|keyText|virtualHost|rule|menuCat|menuApp|saml(Attribute|(IDP|SP)MetaDataNode))$/ then true else false
+			# regexp-assemble of:
+			#  authChoice
+			#  keyText
+			#  cmbModule
+			#  virtualHost
+			#  rule
+			#  menuCat
+			#  menuApp
+			#  samlAttribute
+			#  samlIDPMetaDataNode
+			#  samlSPMetaDataNode
+			return if node.type and node.type.match /^(?:(?:saml(?:(?:ID|S)PMetaDataNod|Attribut)|(?:cmbMod|r)ul|authChoic)e|(?:virtualHos|keyTex)t|menu(?:App|Cat))$/ then true else false
 
 		# RSA keys generation
 		$scope.newRSAKey = ->

@@ -358,12 +358,17 @@ This file contains:
           data: {
             type: 'LDAP',
             "for": 0,
-            over: {}
+            over: []
           }
         });
       };
       $scope.newCmbOver = function() {
-        return $scope.currentNode.data.over.set("new" + (id++), '');
+        var d;
+        d = $scope.currentNode.data;
+        if (!d.over) {
+          d.over = [];
+        }
+        return d.over.push(["new" + (id++), '']);
       };
       $scope.addHost = function(cn, scope) {
         if (!cn.data) {
@@ -719,7 +724,7 @@ This file contains:
       $scope.keyWritable = function(scope) {
         var node;
         node = scope.$modelValue;
-        if (node.type && node.type.match(/^(authChoice|keyText|virtualHost|rule|menuCat|menuApp|saml(Attribute|(IDP|SP)MetaDataNode))$/)) {
+        if (node.type && node.type.match(/^(?:(?:saml(?:(?:ID|S)PMetaDataNod|Attribut)|(?:cmbMod|r)ul|authChoic)e|(?:virtualHos|keyTex)t|menu(?:App|Cat))$/)) {
           return true;
         } else {
           return false;
