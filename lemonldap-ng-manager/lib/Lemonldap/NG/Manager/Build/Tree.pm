@@ -253,7 +253,7 @@ sub tree {
                             title => 'combinationParams',
                             help  => 'authcombination.html',
                             nodes =>
-                              [ 'combination', 'combModules', 'combOver' ]
+                              [ 'combination', 'combModules' ]
                         },
                         {
                             title => 'nullParams',

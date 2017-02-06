@@ -2270,14 +2270,13 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
         # Combination
         combination => {
             type => 'text',
+            documentation => 'Combination rule'
         },
         combModules => {
-            type => 'keyTextContainer',
-        },
-        combOver => {
-
-            #TODO: create new type
-            type => 'keyTextContainer',
+            type => 'cmbModuleContainer',
+            keyTest => qr/^\w+$/,
+            test => sub {1},
+            documentation => 'Combination module description'
         },
 
         # Yubikey

@@ -658,10 +658,11 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             'type' => 'text'
         },
         'combModules' => {
-            'type' => 'keyTextContainer'
-        },
-        'combOver' => {
-            'type' => 'keyTextContainer'
+            'keyTest' => qr/^\w+$/,
+            'test'    => sub {
+                1;
+            },
+            'type' => 'cmbModuleContainer'
         },
         'confirmFormMethod' => {
             'default' => 'post',

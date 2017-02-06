@@ -348,6 +348,23 @@ This file contains:
           }
         });
       };
+      $scope.newCmbMod = function() {
+        var node;
+        node = $scope._findContainer();
+        return node.nodes.push({
+          id: node.id + "/n" + (id++),
+          title: 'new',
+          type: 'cmbModule',
+          data: {
+            type: 'LDAP',
+            "for": 0,
+            over: {}
+          }
+        });
+      };
+      $scope.newCmbOver = function() {
+        return $scope.currentNode.data.over.set("new" + (id++), '');
+      };
       $scope.addHost = function(cn, scope) {
         if (!cn.data) {
           cn.data = [];
@@ -850,9 +867,7 @@ This file contains:
             $scope.showModal('message.html');
           }
           $scope.form = 'home';
-          console.log('OK', $scope.waiting);
-          $scope.waiting = false;
-          console.log('OK', $scope.waiting);
+          return $scope.waiting = false;
         }, readError);
       };
       c = $location.path().match(new RegExp('^/confs/(latest|[0-9]+)'));

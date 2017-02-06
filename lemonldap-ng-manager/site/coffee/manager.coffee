@@ -298,6 +298,21 @@ llapp.controller 'TreeCtrl', [
 					logo: "network.png"
 					display: "auto"
 
+		# Combination module
+		$scope.newCmbMod = ->
+			node = $scope._findContainer()
+			node.nodes.push
+				id: "#{node.id}/n#{id++}"
+				title: 'new'
+				type: 'cmbModule'
+				data:
+					type: 'LDAP'
+					for: 0
+					over: {}
+
+		$scope.newCmbOver = ->
+			$scope.currentNode.data.over.set "new#{id++}", ''
+
 		# Add host
 		$scope.addHost = (cn,scope) ->
 			cn.data=[] unless cn.data
