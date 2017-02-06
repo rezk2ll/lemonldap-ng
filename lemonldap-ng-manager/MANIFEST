@@ -78,6 +78,8 @@ site/static/forms/blackWhiteList.html
 site/static/forms/bool.html
 site/static/forms/boolOrExpr.html
 site/static/forms/catAndAppList.html
+site/static/forms/cmbModule.html
+site/static/forms/cmbModuleContainer.html
 site/static/forms/doubleHash.html
 site/static/forms/file.html
 site/static/forms/grant.html
@@ -165,6 +167,7 @@ t/07-utf8.t
 t/10-save-unchanged-conf.t
 t/12-save-changed-conf.t
 t/14-bad-changes-in-conf.t
+t/15-combination.t
 t/20-test-coverage.t
 t/40-sessions.t
 t/50-notifications.t
@@ -176,5 +179,6 @@ t/jsonfiles/01-base-tree.json
 t/jsonfiles/02-base-tree-all-nodes-opened.json
 t/jsonfiles/12-modified.json
 t/jsonfiles/14-bad.json
+t/jsonfiles/15-combination.json
 t/lemonldap-ng.ini
 t/test-lib.pm

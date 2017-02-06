@@ -581,6 +581,28 @@ sub _scanCatsAndApps {
     return \@res;
 }
 
+# 325 - Combination modules
+
+# Returns raw value, just transform "over" key
+sub combModules {
+    my ( $self, $req, $key ) = @_;
+    return $self->sendError( 'Subkeys forbidden for combModules', 400 )
+      if ($key);
+    my $val = $self->getConfKey( $req, 'combModules' ) // {};
+    my $res = [];
+    foreach my $mod ( keys %$val ) {
+        my $tmp;
+        $tmp->{title} = $mod;
+        $tmp->{id} = "combModules/$mod";
+        $tmp->{type} = 'cmbModule';
+        $tmp->{data}->{$_} = $val->{$mod}->{$_} foreach (qw(type for));
+        my $over = $val->{$mod}->{over} // {};
+        $tmp->{data}->{over} = [ map { [ $_, $over->{$_} ] } keys %$over ];
+        push @$res, $tmp;
+    }
+    return $self->sendJSONresponse($req,$res);
+}
+
 # 33 - Root queries
 #      -----------
 

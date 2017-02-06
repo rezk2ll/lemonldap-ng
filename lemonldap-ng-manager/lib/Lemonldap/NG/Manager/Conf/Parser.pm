@@ -643,6 +643,25 @@ sub _scanNodes {
             next;
         }
 
+        # combModules: just to replace "over" key
+        elsif ( $name eq 'combModules' ) {
+            hdebug('combModules');
+            $self->newConf->{$name} = {};
+            foreach my $node ( @{ $leaf->{nodes} } ) {
+                my $tmp;
+                $tmp->{$_} = $node->{data}->{$_} foreach (qw(type for));
+                $tmp->{over} = {};
+                foreach ( @{ $node->{data}->{over} } ) {
+                    $tmp->{over}->{ $_->[0] } = $_->[1];
+                }
+                $self->newConf->{$name}->{ $node->{title} } = $tmp;
+            }
+
+            # TODO: check changes
+            $self->confChanged(1);
+            next;
+        }
+
         ####################
         # Other hash nodes #
         ####################
