@@ -57,32 +57,28 @@ sub iniCmb {
                     userDB         => 'Same',
 
                     combination => $expr,
-                    combModules => [
-                        {
+                    combModules => {
+                        DB => {
                             for  => 0,
-                            name => 'DB',
                             type => 'DBI',
+                            over => {
+                                dbiAuthChain => 'dbi:SQLite:dbname=t/userdb.db',
+                                dbiAuthUser  => '',
+                                dbiAuthPassword     => '',
+                                dbiAuthTable        => 'users',
+                                dbiAuthLoginCol     => 'user',
+                                dbiAuthPasswordCol  => 'password',
+                                dbiAuthPasswordHash => '',
+                                dbiExportedVars     => {},
+                            }
                         },
-                        {
+                        Dm => {
                             for  => 0,
-                            name => 'Dm',
                             type => 'Demo',
                         },
-                    ],
-
-                    combOver => {
-                        DB => {
-                            dbiAuthChain    => 'dbi:SQLite:dbname=t/userdb.db',
-                            dbiAuthUser     => '',
-                            dbiAuthPassword => '',
-                            dbiAuthTable    => 'users',
-                            dbiAuthLoginCol => 'user',
-                            dbiAuthPasswordCol  => 'password',
-                            dbiAuthPasswordHash => '',
-                            dbiExportedVars     => {},
-                        }
                     },
-                    demoExportedVars    => {},
+
+                    demoExportedVars => {},
                 }
             }
         )

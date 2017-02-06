@@ -72,18 +72,16 @@ sub iniCmb {
                     userDB         => 'Same',
 
                     combination => $expr,
-                    combModules => [
-                        {
+                    combModules => {
+                        DB => {
                             for  => 0,
-                            name => 'DB',
                             type => 'DBI',
                         },
-                        {
+                        Dm => {
                             for  => 0,
-                            name => 'Dm',
                             type => 'Demo',
                         },
-                    ],
+                    },
 
                     dbiAuthChain        => 'dbi:SQLite:dbname=t/userdb.db',
                     dbiAuthUser         => '',

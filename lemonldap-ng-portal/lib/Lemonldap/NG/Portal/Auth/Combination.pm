@@ -25,11 +25,16 @@ sub init {
 
     # Load all declared modules
     my %mods;
-    foreach my $mod ( @{ $self->conf->{combModules} } ) {
+    foreach my $key ( keys %{ $self->conf->{combModules} } ) {
         my @tmp = ( undef, undef );
+        my $mod = $self->conf->{combModules}->{$key};
+
+        unless ( $mod->{type} and defined $mod->{for} ) {
+            $self->error("Malformed combination module $key");
+            return 0;
+        }
 
         # Override parameters
-        my $over = $self->conf->{combOver}->{ $mod->{name} };
 
         # "for" key can have 3 values:
         # 0: this module will be used for Auth and UserDB
@@ -38,7 +43,7 @@ sub init {
 
         # Load Auth module
         if ( $mod->{for} < 2 ) {
-            $tmp[0] = $self->loadPlugin( "::Auth::$mod->{type}", $over );
+            $tmp[0] = $self->loadPlugin( "::Auth::$mod->{type}", $mod->{over} );
             unless ( $tmp[0] ) {
                 $self->error("Unable to load Auth::$mod->{type}");
                 return 0;
@@ -47,7 +52,8 @@ sub init {
 
         # Load UserDB module
         unless ( $mod->{for} == 1 ) {
-            $tmp[1] = $self->loadPlugin( "::UserDB::$mod->{type}", $over );
+            $tmp[1] =
+              $self->loadPlugin( "::UserDB::$mod->{type}", $mod->{over} );
             unless ( $tmp[1] ) {
                 $self->error("Unable to load UserDB::$mod->{type}");
                 return 0;
@@ -55,7 +61,7 @@ sub init {
         }
 
         # Store modules as array
-        $mods{ $mod->{name} } = \@tmp;
+        $mods{$key} = \@tmp;
     }
 
     # Compile expression
@@ -167,7 +173,7 @@ sub loadPlugin {
     my ( $self, $plugin, $over ) = @_;
     my $obj;
     my $nc;
-    if($over) {
+    if ($over) {
         require Lemonldap::NG::Common::Conf::Wrapper;
         tie %$nc, 'Lemonldap::NG::Common::Conf::Wrapper', $self->conf, $over;
         $overC{$plugin} = $nc;
