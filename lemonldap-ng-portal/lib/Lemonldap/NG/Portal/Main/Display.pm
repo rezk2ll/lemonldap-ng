@@ -251,7 +251,7 @@ sub display {
 
         }
 
-        # Display authentifcation form
+        # Display authentication form
         else {
 
             # Authentication loop

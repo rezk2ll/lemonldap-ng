@@ -19,6 +19,11 @@
 * Add test for #173
 * lwpSslOpt
 
+# Combination
+
+* getDisplayType()
+* detect changes
+
 # Password
 
 * Enable it during auth

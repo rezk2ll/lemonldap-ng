@@ -111,7 +111,10 @@ sub setGroups {
 }
 
 sub getDisplayType {
-    return $_[0]->try( 0, 'getDisplayType', {} );
+    my ( $self, $req ) = @_;
+    my ( $nb, $stack ) = ( $req->datas->{multiTry}, $req->datas->{multiStack} );
+    my ( $res, $name ) = $stack->[$nb]->[0]->( 'getDisplayType', $req );
+    return $res;
 }
 
 # TODO: authLogout

@@ -275,6 +275,27 @@ sub tests {
             # Return
             return 1;
         },
+        checkCombinations => sub {
+            return 1 unless ( $conf->{authentication} eq 'Combination' );
+            require Lemonldap::NG::Common::Combination::Parser;
+            return ( 0, 'No module declared for combination' )
+              unless ( $conf->{combModules} and %{ $conf->{combModules} } );
+            my $moduleList;
+            foreach my $md ( keys %{ $conf->{combModules} } ) {
+                my $entry = $conf->{combModules}->{$md};
+                $moduleList->{$md} = (
+                      $entry->{for} == 2 ? [ undef, {} ]
+                    : $entry->{for} == 1 ? [ {}, undef ]
+                    :                      [ {}, {} ]
+                );
+            }
+            eval {
+                Lemonldap::NG::Common::Combination::Parser->parse( $moduleList,
+                    $conf->{combination} );
+            };
+            return ( 0, $@ ) if ($@);
+            return 1;
+        },
     };
 }
 
