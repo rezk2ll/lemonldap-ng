@@ -343,8 +343,13 @@ sub updatePersistentSession {
     # Update current session
     $self->updateSession( $req, $infos, $id );
 
-    $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
-    return () unless ($uid);
+    $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
+      || $req->userData->{ $self->conf->{whatToTrace} };
+    unless ($uid) {
+        $self->lmLog( 'No uid found, skipping updatePersistentSession',
+            'debug' );
+        return ();
+    }
     $self->lmLog( "Update $uid persistent session", 'debug' );
 
     my $persistentSession = $self->getPersistentSession($uid);

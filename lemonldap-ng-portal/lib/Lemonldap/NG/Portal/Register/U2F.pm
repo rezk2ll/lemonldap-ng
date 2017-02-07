@@ -33,8 +33,8 @@ sub run {
             $self->p->updatePersistentSession(
                 $req,
                 {
-                    _u2fHandle => encode_base64( $keyHandle, '' ),
-                    _u2fKey    => encode_base64( $userKey,   '' )
+                    _u2fKeyHandle => encode_base64( $keyHandle, '' ),
+                    _u2fUserKey    => encode_base64( $userKey,   '' )
                 }
             );
             return $self->p->sendHtml( $req, 'u2fregister',
