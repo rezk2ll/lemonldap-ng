@@ -474,7 +474,7 @@ Web-SSO configuration.
 
   use Lemonldap::NG::Common::Conf;
   # Lemonldap::NG::Common::Conf reads loacl configuration from lemonldap-ng.ini.
-  # Parameters can be overriden in a hash:
+  # Parameters can be overridden in a hash:
   my $confAccess = new Lemonldap::NG::Common::Conf(
               {
                   type=>'File',

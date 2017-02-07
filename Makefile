@@ -1077,3 +1077,16 @@ install_%_doc_site:
 		rm -rvf $(DOCLIBSTOREMOVEFORDEBIAN); \
 	fi && cd -
 
+html_spelling:
+	@for i in $$(find doc/ -type f -name '*.html'); do \
+		text=$$(html2text $$i|spellintian --picky); \
+		if [ "$$text" != "" ]; then echo "### $$i ###"; echo $$text; fi \
+	done
+
+spelling:
+	@for i in $$(find * -type f -name '*.pm'); do \
+		if grep '=head1' $$i >/dev/null; then \
+			text=$$(pod2text $$i|spellintian --picky); \
+			if [ "$$text" != "" ]; then echo "### $$i ###"; echo $$text; fi \
+		fi \
+	done

@@ -53,7 +53,7 @@ declared during initialization.
 
 =head2 Initialization
 
-The intialisation process subscribes portal to handler configuration reload and
+The initialisation process subscribes portal to handler configuration reload and
 ask for handler initialization (L<Lemonldap::NG::Portal::Main::Init>).
 So configuration read is triggered by handler at each reload.
 
@@ -82,7 +82,7 @@ methods to call in the process and call do().
 
 do() stores methods to call in $req->steps and launches
 Lemonldap::NG::Portal::Main::Process::process(). This method removes each method
-stored in $req->steps and launches it. If the result is PE_OK, proces()
+stored in $req->steps and launches it. If the result is PE_OK, process()
 continues, else it returns the error code.
 
 If the request was an Ajax one, do() responds in JSON format else it manages

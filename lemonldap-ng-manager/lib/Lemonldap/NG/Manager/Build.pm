@@ -630,7 +630,7 @@ system.
 Lemonldap::NG::Manager::Build is used only to build javascript files and
 Lemonldap::NG constants Perl files. It has to be launched after each change.
 
-=head2 DEVELOPPER CORNER
+=head2 DEVELOPER CORNER
 
 To add a new parameter, you have to:
 
