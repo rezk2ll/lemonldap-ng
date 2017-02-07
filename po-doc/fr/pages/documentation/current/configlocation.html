@@ -221,7 +221,7 @@ Si une modification est effectuée, la configuration est sauvée avec un nouveau
 <div class="notewarning">C'est un outil expérimental qui évoluera dans les prochaines versions.
 </div>
 <p>
-LemonLDAP::NG fournit un script qui autorise l'édition d'éléments de configuration en mode non-interactif. Ce script se nomme <code>lemonldap-ng-cli</code> et se trouve dans le répertoire bin/ de LemonLDAP::NG, par exemple /usr/share/lemonldap-ng/bin:
+LemonLDAP::NG provide a script that allows one to edit configuration items in non interactive mode. Ce script se nomme <code>lemonldap-ng-cli</code> et se trouve dans le répertoire bin/ de LemonLDAP::NG, par exemple /usr/share/lemonldap-ng/bin:
 </p>
 <pre class="code">/usr/share/lemonldap-ng/bin/lemonldap-ng-cli</pre>
 <div class="notetip">Ce script doit être lancé par root, il utilisera ensuite le compte et le groupe d'Apache pour accéder à la configuration.
@@ -274,7 +274,7 @@ Quelques exemples:
 /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set notification 1
 /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -sep ',' get macros,_whatToTrace</pre>
 
-</div><!-- EDIT5 SECTION "Command Line Interface (CLI)" [4466-6284] -->
+</div><!-- EDIT5 SECTION "Command Line Interface (CLI)" [4466-6288] -->
 
 <h2 class="sectionedit6" id="apache">Apache</h2>
 <div class="level2">
@@ -297,7 +297,7 @@ Voir <a href="configapache.html" class="wikilink1" title="documentation:2.0:conf
 </p>
 <div class="notewarning">Mod Perl doit être chargé avant LemonLDAP::NG, donc les inclusions aprèsla directive <code>LoadModule</code> de mod_perl.
 </div>
-</div><!-- EDIT6 SECTION "Apache" [6285-6827] -->
+</div><!-- EDIT6 SECTION "Apache" [6289-6831] -->
 
 <h3 class="sectionedit7" id="portal">Portail</h3>
 <div class="level3">
@@ -407,7 +407,7 @@ Dans l'hôte virtuel du portail se trouve plusieurs éléments de configuration 
     <span class="kw1">require</span> SOAP::Lite;
 &lt;/Perl&gt;</pre>
 
-</div><!-- EDIT7 SECTION "Portal" [6828-9615] -->
+</div><!-- EDIT7 SECTION "Portal" [6832-9619] -->
 
 <h3 class="sectionedit8" id="manager1">Manager</h3>
 <div class="level3">
@@ -454,7 +454,7 @@ L'hôte virtuel du manager est utilisé pour servir l'interface de configuration
 L'accès à l'interface de configuration n'est pas protégée par Apache mais par LemonLDAP::NG lui-même (voir <code>lemonldap-ng.ini</code>) :
 </p>
 
-</div><!-- EDIT8 SECTION "Manager" [9616-11166] -->
+</div><!-- EDIT8 SECTION "Manager" [9620-11170] -->
 
 <h3 class="sectionedit9" id="handler">Agent (Handler)</h3>
 <div class="level3">
@@ -503,7 +503,7 @@ Protéger ensuite un hôte virtuel standard, la seul ligne de configuration à a
 </p>
 <pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
 
-</div><!-- EDIT9 SECTION "Handler" [11167-12360] -->
+</div><!-- EDIT9 SECTION "Handler" [11171-12364] -->
 
 <h2 class="sectionedit10" id="nginx">Nginx</h2>
 <div class="level2">
@@ -526,7 +526,7 @@ Voir <a href="confignginx.html" class="wikilink1" title="documentation:2.0:confi
 </p>
 <div class="notewarning">Le serveur <a href="fastcgiserver.html" class="wikilink1" title="documentation:2.0:fastcgiserver">FastCGI LL::NG</a> doit être lancé séparemment.
 </div>
-</div><!-- EDIT10 SECTION "Nginx" [12361-12820] -->
+</div><!-- EDIT10 SECTION "Nginx" [12365-12824] -->
 
 <h3 class="sectionedit11" id="portal1">Portail</h3>
 <div class="level3">
@@ -606,7 +606,7 @@ Dans l'hôte virtuel du portail se trouve plusieurs éléments de configuration 
     # Get Issuer
     rewrite ^/get/.* /index.pl;</pre>
 
-</div><!-- EDIT11 SECTION "Portal" [12821-14564] -->
+</div><!-- EDIT11 SECTION "Portal" [12825-14568] -->
 
 <h3 class="sectionedit12" id="manager2">Manager</h3>
 <div class="level3">
@@ -640,7 +640,7 @@ L'hôte virtuel du manager est utilisé pour servir l'interface de configuration
 L'accès à l'interface de configuration n'est pas protégée par Nginx mais par LemonLDAP::NG lui-même (voir <code>lemonldap-ng.ini</code>) :
 </p>
 
-</div><!-- EDIT12 SECTION "Manager" [14565-15317] -->
+</div><!-- EDIT12 SECTION "Manager" [14569-15321] -->
 
 <h3 class="sectionedit13" id="handler1">Agent (Handler)</h3>
 <div class="level3">
@@ -737,7 +737,7 @@ Pour protéger ensuite un hôte virtuel, il faut insérer ceci (ou créer un fic
 &nbsp;
     # Insérer ensuite la configuration (fastcgi_* ou proxy_*)</pre>
 
-</div><!-- EDIT13 SECTION "Handler" [15318-18265] -->
+</div><!-- EDIT13 SECTION "Handler" [15322-18269] -->
 
 <h2 class="sectionedit14" id="configuration_reload">Rechargement de la configuration</h2>
 <div class="level2">
@@ -759,7 +759,7 @@ The <code>reload</code> target is managed in Apache or Nginx configuration, insi
 </p>
 <div class="noteimportant">Il faut autoriser l'accès à l'URL déclarée au manager.
 </div>
-</div><!-- EDIT14 SECTION "Configuration reload" [18266-19435] -->
+</div><!-- EDIT14 SECTION "Configuration reload" [18270-19439] -->
 
 <h2 class="sectionedit15" id="local_file">Fichier local</h2>
 <div class="level2">
@@ -793,7 +793,7 @@ Par exemple, pour surcharger l'apparence du portail :
 <span class="re1">portalSkin</span> <span class="sy0">=</span><span class="re2"> dark</span></pre>
 <div class="notetip">Il est nécessaire de connaître le nom technique du paramètre de configuration pour le faire. Se référer à la <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">liste des paramètres</a> pour le trouver.
 </div>
-</div><!-- EDIT15 SECTION "Local file" [19436-] -->
+</div><!-- EDIT15 SECTION "Local file" [19440-] -->
 </div>
 </body>
 </html>

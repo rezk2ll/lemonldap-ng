@@ -94,7 +94,7 @@ Lemonldap::NG a été conçu pour être très performant. En particulier, il uti
 <div class="level2">
 
 <p>
-Avec linux, par défaut, il n'y a pas de cache <abbr title="Domain Name System">DNS</abbr> et le portail LemonLDAP::NG questionne le <abbr title="Domain Name System">DNS</abbr> à chaque connexion au serveur LDAP ou DB. Sous forte charge, ça peut générer des centaines de requêtes <abbr title="Domain Name System">DNS</abbr> et des erreurs sur les connexions LDAP (timed out).
+On Linux, by default, there is no <abbr title="Domain Name System">DNS</abbr> cache and LemonLDAP::NG portal request <abbr title="Domain Name System">DNS</abbr> at every connexions on LDAP or DB. Sous forte charge, ça peut générer des centaines de requêtes <abbr title="Domain Name System">DNS</abbr> et des erreurs sur les connexions LDAP (timed out).
 </p>
 
 <p>
@@ -183,7 +183,7 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 <div class="level3">
 
 <p>
-Les macros et les groupes sont stockées dans la base de données des sessions. Les macros locales sont une fonctionnalité spéciale des agents qui permettent d'avoir des macros utilisables localement seulement. Ces macros sont calculées seulement à leur premier usage et stockées dans le cache local des sessions (uniquement pour ce serveur) et seulement si l'utilisateur accède à l'application relative. Ce dispositif évite de stocker trop de données.
+Les macros et les groupes sont stockées dans la base de données des sessions. Local macros is a special feature of handler that permit one to have macros useable localy only. Ces macros sont calculées seulement à leur premier usage et stockées dans le cache local des sessions (uniquement pour ce serveur) et seulement si l'utilisateur accède à l'application relative. Ce dispositif évite de stocker trop de données.
 </p>
 <pre class="code perl"><span class="co1"># règle</span>
 admin <span class="sy0">-&gt;</span> <span class="re0">$admin</span> <span class="sy0">||=</span> <span class="br0">(</span><span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span><span class="br0">)</span>
@@ -191,12 +191,12 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$admin</span> <span class
 Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class="re0">$displayName</span> <span class="sy0">||=</span> <span class="re0">$givenName</span><span class="sy0">.</span><span class="st0">" "</span><span class="sy0">.</span><span class="re0">$surName</span></pre>
 <div class="notetip">Notez que cette fonctionnalité n'est intéressante que pour les systèmes Lemonldap::NG protégeant un grand nombre d'applications
 </div>
-</div><!-- EDIT5 SECTION "Local macros" [2820-3477] -->
+</div><!-- EDIT5 SECTION "Local macros" [2820-3481] -->
 
 <h2 class="sectionedit6" id="portal_performances">Performances du portail</h2>
 <div class="level2">
 
-</div><!-- EDIT6 SECTION "Portal performances" [3478-3510] -->
+</div><!-- EDIT6 SECTION "Portal performances" [3482-3514] -->
 
 <h3 class="sectionedit7" id="general_performances">Performances générales</h3>
 <div class="level3">
@@ -215,7 +215,7 @@ On peut utiliser un serveur FastCGI en utilisant le fichier index.fcgi disponibl
 <div class="notetip">En environnement de production et pour de meilleures performances réseau, utiliser les versions compactées des librairies javascript et css : utiliser <code>make install <strong>PROD=yes</strong></code>. Ceci est fait par défaut avec les paquets RPM/DEB.
 
 </div>
-</div><!-- EDIT7 SECTION "General performances" [3511-4141] -->
+</div><!-- EDIT7 SECTION "General performances" [3515-4145] -->
 
 <h3 class="sectionedit8" id="configuration_access">Accès à la configuration</h3>
 <div class="level3">
@@ -224,7 +224,7 @@ On peut utiliser un serveur FastCGI en utilisant le fichier index.fcgi disponibl
 En mettant <code>useLocalConf</code> à 1 dans lemonldap-ng.ini (section [Portal]), le portail utilisera la configuration cachée. Pour la rafraîchir, il faut installer un agent (handler) sur le même serveur pour utiliser le mécanisme de rafraîchissement ou redémarrer le serveur à chaque changement.
 </p>
 
-</div><!-- EDIT8 SECTION "Configuration access" [4142-4444] -->
+</div><!-- EDIT8 SECTION "Configuration access" [4146-4448] -->
 
 <h3 class="sectionedit9" id="starting_performances">Performances au démarrage</h3>
 <div class="level3">
@@ -242,7 +242,7 @@ Pour accélérer le démarrage du portail lorsque le serveur est relancé, ajout
     <span class="kw1">require</span> SOAP::Lite;
 &lt;/Perl&gt;</pre>
 
-</div><!-- EDIT9 SECTION "Starting performances" [4445-5020] -->
+</div><!-- EDIT9 SECTION "Starting performances" [4449-5024] -->
 
 <h3 class="sectionedit10" id="apachesession_performances">Performances d'Apache::Session</h3>
 <div class="level3">
@@ -291,9 +291,9 @@ Index      -&gt; ipAddr uid</pre>
 Notez que Apache::Session::Browseable::MySQL n'utilise pas les verrous MySQL.
 </p>
 <div class="notetip">Un module <a href="https://metacpan.org/module/Apache::Session::Browseable::Redis" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> a été créé, c'est le plus rapide (excepté pour l'explorateur de sessions, battu par Apache::Session::Browseable::<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">DBI</a>/<a href="https://metacpan.org/module/Apache::Session::Browseable::LDAP" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::LDAP"  rel="nofollow">LDAP</a> &gt;= 1.0)
-</div><div class="noteimportant">Certains modules Apache::Session ne sont pas utilisables par Lemonldap::NG tel Apache::Session::Memcached, car ce module n'offre pas de dispositif de parcours des sessions Ils ne permettent pas d'utiliser l'explorateur de sessions ne de gérer l'unicité des sessions.
+</div><div class="noteimportant">Certains modules Apache::Session ne sont pas utilisables par Lemonldap::NG tel Apache::Session::Memcached, car ce module n'offre pas de dispositif de parcours des sessions They does not allow one to use sessions explorer neither manage one-off sessions.
 </div>
-</div><!-- EDIT10 SECTION "Apache::Session performances" [5021-7373] -->
+</div><!-- EDIT10 SECTION "Apache::Session performances" [5025-7381] -->
 
 <h3 class="sectionedit11" id="ldap_performances">Performances LDAP</h3>
 <div class="level3">
@@ -330,12 +330,12 @@ Maintenant, ldapgroups contient “admin su”
 </p>
 
 </div>
-</div><!-- EDIT11 SECTION "LDAP performances" [7374-8503] -->
+</div><!-- EDIT11 SECTION "LDAP performances" [7382-8511] -->
 
 <h2 class="sectionedit12" id="manager_performances">Performances du Manager</h2>
 <div class="level2">
 
-</div><!-- EDIT12 SECTION "Manager performances" [8504-8537] -->
+</div><!-- EDIT12 SECTION "Manager performances" [8512-8545] -->
 
 <h3 class="sectionedit13" id="disable_unused_modules">Désactiver les modules inutilisés</h3>
 <div class="level3">
@@ -346,7 +346,7 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <pre class="code ini"><span class="re0"><span class="br0">[</span>manager<span class="br0">]</span></span>
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
-</div><!-- EDIT13 SECTION "Disable unused modules" [8538-8784] -->
+</div><!-- EDIT13 SECTION "Disable unused modules" [8546-8792] -->
 
 <h3 class="sectionedit14" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
@@ -379,7 +379,7 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 
 </p>
 
-</div><!-- EDIT14 SECTION "Use static HTML files" [8785-] -->
+</div><!-- EDIT14 SECTION "Use static HTML files" [8793-] -->
 </div>
 </body>
 </html>

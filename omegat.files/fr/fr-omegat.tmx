@@ -7302,14 +7302,6 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You can also display a check box on the authentication form, to allow user to see their login history before beeing redirected to the protected application (see &lt;a0&gt;portal customization&lt;/a0&gt;).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T173411Z" changeid="xavier">
-        <seg>on peut aussi afficher une case à cocher dans le formulaire d'authentification pour autoriser l'utilisateur à voir son historique de connexion avant d'être redirigé vers l'application protégée (voir la &lt;a0&gt;personnalisation du portail&lt;/a0&gt;).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can use one or a combination of:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T135123Z" changeid="xavier">
@@ -13182,14 +13174,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This backend allows to chain authentication method, for example to failback to LDAP authentication if Remote authentication failed…</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171203Z" changeid="xavier">
-        <seg>Ce backend permet de chaîner des méthodes d'authentification, par exemple pour basculer sur une authentification LDAP si l'authentification amont a échouée…</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>If you don't know jQuery selector, just be aware that they are similar to css selectors: for example, button#foo points to the html button whose id is “foo”, and .bar points to all html elements of css class “bar”.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T172838Z" changeid="xavier">
@@ -16676,14 +16660,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Informations about current request</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T161857Z" changeid="xavier">
-        <seg>Informations sur la requête courante</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;a0&gt;URL&lt;/a0&gt; used before being redirected to the portal (empty if portal was used as entry point)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T084018Z" changeid="xavier">
@@ -16696,14 +16672,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T082430Z" changeid="xavier">
         <seg>Variables</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>LemonLDAP::NG provide a script that allows to edit configuration items in non interactive mode.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131103T202657Z" changeid="xavier">
-        <seg>LemonLDAP::NG fournit un script qui autorise l'édition d'éléments de configuration en mode non-interactif.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17198,14 +17166,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You should grab some informations:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T193015Z" changeid="xavier">
-        <seg>Il faut récolter quelques informations:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>http://en.wikipedia.org/wiki/OAuth2</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T060900Z" changeid="xavier">
@@ -17258,14 +17218,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T202328Z" changeid="xavier">
         <seg>Donner un nom technique (sans espaces ni caratères speciaux), tel “sample-rp” ;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Request informations</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T161939Z" changeid="xavier">
-        <seg>Informations sur la requête</seg>
       </tuv>
     </tu>
     <tu>
@@ -20234,14 +20186,6 @@ createuser lemonldap-ng -P</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Allez dans le Manager et cliquez sur le nœud &lt;c0&gt;Service &lt;a1&gt;SAML&lt;/a1&gt; 2&lt;/c0&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>They does not allow to use sessions explorer neither manage one-off sessions.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T062926Z" changeid="xavier">
-        <seg>Ils ne permettent pas d'utiliser l'explorateur de sessions ne de gérer l'unicité des sessions.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28926,14 +28870,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This mode allow to test LemonLDAP::NG without any third-party software.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115115Z" changeid="xavier">
-        <seg>Ce mode permet de tester LemonLDAP::NG sans aucun autre programme tiers.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Activation&lt;/s0&gt;: set to &lt;c1&gt;On&lt;/c1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053918Z" changeid="xavier">
@@ -29428,14 +29364,6 @@ Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T054742Z" changeid="guimard">
         <seg>&lt;title&gt; : titre à afficher : sera inséré dans la page &lt;a0&gt;HTML&lt;/a0&gt; encadré dans &lt;h2 class=“notifText”&gt;…&lt;/h2&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Local macros is a special feature of handler that permit to have macros useable localy only.</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Les macros locales sont une fonctionnalité spéciale des agents qui permettent d'avoir des macros utilisables localement seulement.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33364,14 +33292,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081457Z" changeid="xavier">
         <seg>netid_http_header             HTTP_AUTH_USER</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>On linux, by default, there is no &lt;a0&gt;DNS&lt;/a0&gt; cache and LemonLDAP::NG portal request &lt;a1&gt;DNS&lt;/a1&gt; at every connexions on LDAP or DB.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T062312Z" changeid="xavier">
-        <seg>Avec linux, par défaut, il n'y a pas de cache &lt;a0&gt;DNS&lt;/a0&gt; et le portail LemonLDAP::NG questionne le &lt;a1&gt;DNS&lt;/a1&gt; à chaque connexion au serveur LDAP ou DB.</seg>
       </tuv>
     </tu>
     <tu>

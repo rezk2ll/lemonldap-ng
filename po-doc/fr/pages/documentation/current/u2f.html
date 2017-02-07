@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8" />
+  <title>documentation:2.0:u2f</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="keywords" content="documentation,2.0,u2f"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="u2f.html"/>
+<link rel="contents" href="u2f.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:u2f","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
+</head>
+<body>
+<div class="dokuwiki export container"><!-- TOC START -->
+
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div></li>
+<li class="level1"><div class="li"><a href="#assistance">Assistance</a></div></li>
+<li class="level1"><div class="li"><a href="#developer_corner">Developer corner</a></div></li>
+</ul>
+</div>
+</div><!-- TOC END -->
+
+
+<h1 class="sectionedit1" id="universal_2nd_factor_authentication_u2f">Universal 2nd Factor Authentication (U2F)</h1>
+<div class="level1">
+
+<p>
+<a href="https://en.wikipedia.org/wiki/Universal_2nd_Factor" class="urlextern" title="https://en.wikipedia.org/wiki/Universal_2nd_Factor"  rel="nofollow">Universal 2nd Factor</a> (U2F) is an open authentication standard that strengthens and simplifies two-factor authentication using specialized USB or NFC devices.
+
+</p>
+
+<p>
+
+LLNG can propose to users to register their keys. When done, registered user can't login without using its key.
+
+</p>
+<div class="notetip">Note that it's a second factor, not an authentication module. Users are authenticated by both login form and U2F form.
+
+</div>
+</div><!-- EDIT1 SECTION "Universal 2nd Factor Authentication (U2F)" [1-521] -->
+
+<h2 class="sectionedit2" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+
+In the manager (advanced parameters), you just have to enable it:
+
+</p>
+<ul>
+<li class="level1"><div class="li">  U2F ⇒ Activation: set it to “on”</div>
+</li>
+<li class="level1"><div class="li">  U2F ⇒ Self registration: set it to “on” <em>(to display this application on the menu, create an application that points to <a href="http://auth.your.domain/u2fregister" class="urlextern" title="http://auth.your.domain/u2fregister"  rel="nofollow">http://auth.your.domain/u2fregister</a>)</em></div>
+</li>
+</ul>
+
+</div><!-- EDIT2 SECTION "Configuration" [522-818] -->
+
+<h2 class="sectionedit3" id="assistance">Assistance</h2>
+<div class="level2">
+
+<p>
+
+If a user lost its key, you may remove it's persistent session using the session explorer.
+
+</p>
+
+</div><!-- EDIT3 SECTION "Assistance" [819-934] -->
+
+<h2 class="sectionedit4" id="developer_corner">Developer corner</h2>
+<div class="level2">
+
+<p>
+
+If you have another U2F registration interface, you have to populate session (using exported variables) to set these keys:
+
+</p>
+<div class="table sectionedit5"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0"> Nom </th><th class="col1">  Value  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0">  _u2fKeyHandle  </td><td class="col1">  key handle value, base64 encoded  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0">  _u2fUserKey  </td><td class="col1">  user key value, base64 encoded  </td>
+	</tr>
+</table></div><!-- EDIT5 TABLE [1089-1207] -->
+
+<p>
+
+Note that both “origin” and “appId” are fixed to portal <abbr title="Uniform Resource Locator">URL</abbr>.
+
+</p>
+
+</div><!-- EDIT4 SECTION "Developer corner" [935-] -->
+</div>
+</body>
+</html>
