@@ -2677,7 +2677,7 @@ sub sendLogoutRequestToProviders {
     $info .= '</table>';
 
     # Print some information to the user.
-    $self->p->info( $req, $info ) if $providersCount;
+    $req->info($info) if $providersCount;
 
     return $providersCount;
 }

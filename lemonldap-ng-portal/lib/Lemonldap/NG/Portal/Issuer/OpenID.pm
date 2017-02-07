@@ -207,7 +207,7 @@ sub _openIDResponse {
 
             # TODO
             $req->info('<h3 trspan="openidExchange,$data->{trust_root}"></h3>');
-            $self->info( $req->datas->{_openIdTrustExtMsg} )
+            $req->info( $req->datas->{_openIdTrustExtMsg} )
               if ( $req->datas->{_openIdTrustExtMsg} );
             $self->lmLog( 'OpenID confirmation', 'debug' );
             return PE_CONFIRM;

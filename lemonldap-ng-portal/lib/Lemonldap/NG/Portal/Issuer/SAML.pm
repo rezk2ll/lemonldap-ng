@@ -887,7 +887,7 @@ sub run {
                   . ' marginheight="0" scrolling="no" class="hiddenFrame"'
                   . ' width="0" height="0" frameborder="0"></iframe>';
 
-                $self->info( $req,
+                $req->info(
                     '<h3 trspan="updateCdc">Update Common Domain Cookie</h3>'
                       . $cdc_iframe );
             }

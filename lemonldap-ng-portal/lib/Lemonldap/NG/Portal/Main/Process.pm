@@ -166,7 +166,7 @@ sub deleteSession {
 
         $self->lmLog( "Create iFrames to forward logout to services", 'debug' );
 
-        $self->info( $req, '<h3 trmsg="logoutFromOtherApp"></h3>' );
+        $req->info('<h3 trmsg="logoutFromOtherApp"></h3>');
 
         foreach ( keys %{ $req->datas->{logoutServices} } ) {
             my $logoutServiceName = $_;
@@ -185,7 +185,7 @@ sub deleteSession {
               . ' class="hiddenFrame" width="0" height="0"'
               . ' frameborder="0"></iframe>';
 
-            $self->info( $req, $iframe );
+            $req->info($iframe);
         }
 
         # Redirect on logout page if no other target defined

@@ -881,7 +881,7 @@ sub extractFormInfo {
             : ''
           ) . "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
 
-        $self->p->info( $req, $html );
+        $req->info($html);
 
         $req->datas->{login} = 1;
         return PE_CONFIRM;

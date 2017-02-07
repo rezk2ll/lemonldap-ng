@@ -86,7 +86,7 @@ sub sregHook {
                 'notice'
             );
 
-            $self->info( qq'<h3 trspan="openidRpns,$k"></h3>');
+            $req->info( qq'<h3 trspan="openidRpns,$k"></h3>');
             return ( 0, {} );
         }
     }

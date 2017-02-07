@@ -162,7 +162,7 @@ sub loadPP {
 # @return Lemonldap::NG portal error code
 sub userBind {
     my $self = shift;
-    my $req = shift;
+    my $req  = shift;
 
     if ( $self->{conf}->{ldapPpolicyControl} ) {
 
@@ -207,16 +207,14 @@ sub userBind {
             if ( $resp->grace_authentications_remaining ) {
 
                 # TODO
-                $self->{portal}->info( $req,
-                        '<h3>'
+                $req->info( '<h3>'
                       . $resp->grace_authentications_remaining
                       . ' <span trmsg="ppGrace">authentications remaining, change your password!</span></h3>'
                 );
             }
 
             if ( $resp->time_before_expiration ) {
-                $self->{portal}->info( $req,
-                    '<h3 trspan="authRemaining,'
+                $req->info( '<h3 trspan="authRemaining,'
                       . $self->convertSec( $resp->time_before_expiration )
                       . '"></h3>' );
             }

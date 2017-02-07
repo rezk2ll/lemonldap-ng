@@ -109,8 +109,7 @@ sub authenticate {
 
             # calculating remaining time before password expiration
             my $remainingTime = $_pwdExpire - $timestamp;
-            $self->info(
-                $req,
+            $req->info(
                 '<h3 trspan="pwdWillExpire,'
                   . join(
                     ',',
