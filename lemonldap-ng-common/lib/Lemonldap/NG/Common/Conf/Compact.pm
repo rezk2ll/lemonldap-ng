@@ -17,14 +17,12 @@ sub compactConf {
         $mod = lc($mod);
         $keep{$mod} = 1;
     }
-    if ( $keep{multi} ) {
-        foreach my $prm (qw(multiAuthStack multiUserDBStack)) {
-            my @tmp = split /;\s*/, $conf->{$prm};
-            foreach (@tmp) {
-                s/^(\w+).*$/lc($1)/e;
-                s/OpenIDConnect/oidc/i;
-                $keep{$_} = 1;
-            }
+    if ( $keep{combination} ) {
+        foreach my $md (keys %{$conf->{combModules}}) {
+            $_ = $conf->{combModules}->{$md}->{type};
+            s/^(\w+).*$/lc($1)/e;
+            s/OpenIDConnect/oidc/i;
+            $keep{$_} = 1;
         }
     }
     if ( $keep{choice} ) {

@@ -27,7 +27,11 @@ ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
 ok( $res = &client->_get( '/confs/2/combModules', 'application/json' ), 'Get combModules');
 ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
 
-count(6);
+ok( $res = &client->_get( '/confs/2/ldapServer', 'application/json' ), 'Get combModules');
+ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
+ok( $resBody->{value} eq 'ldap://192.168.1.1', 'Key ldapServer has been modified');
+
+count(8);
 
 done_testing( count() );
 
