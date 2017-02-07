@@ -34,20 +34,42 @@ sub run {
                 $req,
                 {
                     _u2fKeyHandle => encode_base64( $keyHandle, '' ),
-                    _u2fUserKey    => encode_base64( $userKey,   '' )
+                    _u2fUserKey   => encode_base64( $userKey,   '' )
                 }
             );
-            return $self->p->sendHtml( $req, 'u2fregister',
-                params => { SUCCESS => 1 } );
+            return $self->p->sendHtml(
+                $req,
+                'u2fregister',
+                params => {
+                    PORTAL_URL => $self->conf->{portal},
+                    SKIN       => $self->conf->{portalSkin},
+                    SUCCESS    => 1
+                }
+            );
         }
         $self->p->userError( 'U2F Registration failed: '
               . Crypt::U2F::Server::Simple::lastError() );
-        return $self->p->sendHtml( $req, 'u2fregister',
-            params => { FAILED => 1 } );
+        return $self->p->sendHtml(
+            $req,
+            'u2fregister',
+            params => {
+                PORTAL_URL => $self->conf->{portal},
+                SKIN       => $self->conf->{portalSkin},
+                FAILED     => 1
+            }
+        );
     }
     my $challenge = $self->crypter->registrationChallenge;
-    return $self->p->sendHtml( $req, 'u2fregister',
-        params => { CHALLENGE => $challenge, APPID => $self->origin } );
+    return $self->p->sendHtml(
+        $req,
+        'u2fregister',
+        params => {
+            PORTAL_URL => $self->conf->{portal},
+            SKIN       => $self->conf->{portalSkin},
+            CHALLENGE  => $challenge,
+            APPID      => $self->origin
+        }
+    );
 }
 
 1;

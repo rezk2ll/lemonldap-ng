@@ -449,23 +449,25 @@ sub store {
 
 sub buildCookie {
     my ( $self, $req ) = @_;
-    $req->addCookie(
-        $self->cookie(
-            name   => $self->conf->{cookieName},
-            value  => $req->{id},
-            domain => $self->conf->{domain},
-            secure => $self->conf->{securedCookie},
-        )
-    );
-    if ( $self->conf->{securedCookie} >= 2 ) {
+    if ( $req->id ) {
         $req->addCookie(
             $self->cookie(
-                name   => $self->conf->{cookieName} . "http",
-                value  => $req->{sessionInfo}->{_httpSession},
+                name   => $self->conf->{cookieName},
+                value  => $req->{id},
                 domain => $self->conf->{domain},
-                secure => 0,
+                secure => $self->conf->{securedCookie},
             )
         );
+        if ( $self->conf->{securedCookie} >= 2 ) {
+            $req->addCookie(
+                $self->cookie(
+                    name   => $self->conf->{cookieName} . "http",
+                    value  => $req->{sessionInfo}->{_httpSession},
+                    domain => $self->conf->{domain},
+                    secure => 0,
+                )
+            );
+        }
     }
     PE_OK;
 }

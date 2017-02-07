@@ -99,7 +99,7 @@ sub checkNotifDuringAuth {
     if ( $req->{datas}->{notification} =
         $self->module->checkForNotifications($req) )
     {
-        $self->rebuildCookies($req);
+        $self->p->rebuildCookies($req);
 
         # Restore and cipher cookies
         return PE_NOTIFICATION;
@@ -112,17 +112,6 @@ sub checkNotifDuringAuth {
 sub getNotifBack {
     my $self = shift;
     return $self->module->getNotifBack(@_);
-}
-
-sub rebuildCookies {
-    my ( $self, $req ) = @_;
-    my @tmp;
-    for ( my $i = 0 ; $i < @{ $req->{respHeaders} } ; $i += 2 ) {
-        push @tmp, $req->respHeaders->[0], $req->respHeaders->[1]
-          unless ( $req->respHeaders->[0] eq 'Set-Cookie' );
-    }
-    $req->{respHeaders} = \@tmp;
-    $self->p->buildCookie($req);
 }
 
 1;

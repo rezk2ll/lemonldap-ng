@@ -97,6 +97,7 @@ sub portalTab {
         80 => 'PORTAL_REGISTERALREADYEXISTS',
         81 => 'PE_NOTOKEN',
         82 => 'PE_TOKENEXPIRED',
+        83 => 'PE_U2FFAILED',
     };
 }
 

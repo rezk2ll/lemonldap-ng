@@ -6,10 +6,14 @@ package Lemonldap::NG::Portal::Plugins::U2F;
 
 use strict;
 use Mouse;
+use MIME::Base64;
 use Lemonldap::NG::Portal::Main::Constants qw(
-  PE_BADCREDENTIALS
   PE_ERROR
+  PE_NOTOKEN
   PE_OK
+  PE_SENDRESPONSE
+  PE_TOKENEXPIRED
+  PE_U2FFAILED
 );
 
 our $VERSION = '2.0.0';
@@ -50,10 +54,30 @@ sub run {
     if ( my $res = $self->loadUser($req) ) {
         return PE_ERROR if ( $res == -1 );
 
-        # TODO: remove cookie and set token
+        $req->sessionInfo->{_u2fRealSession} = $req->id;
+        my $token = $self->ott->createToken( $req->sessionInfo );
+        $req->id(0);
+        $self->p->rebuildCookies($req);
+
         my $challenge = $self->crypter->authenticationChallenge;
-        return $self->sendHtml( $req, 'u2fcheck',
-            params => { CHALLENGE => $challenge } );
+        my $tmp       = $self->p->sendHtml(
+            $req,
+            'u2fcheck',
+            params => {
+                PORTAL_URL => $self->conf->{portal},
+                SKIN       => $self->conf->{portalSkin},
+                CHALLENGE  => $challenge,
+                TOKEN      => $token
+            }
+        );
+        $self->lmLog(
+            'Prepare U2F verification for '
+              . $req->sessionInfo->{ $self->conf->{whatToTrace} },
+            "debug"
+        );
+
+        $req->response($tmp);
+        return PE_SENDRESPONSE;
     }
     return PE_OK;
 }
@@ -62,24 +86,60 @@ sub verify {
     my ( $self, $req ) = @_;
 
     # TODO: set sessionInfo with token
-    if ( my $resp = $req->param('u2fSignature') ) {
+    my $token;
+    unless ( $token = $req->param('token') ) {
+        $self->p->userError('U2F access without token');
+        $req->error(PE_NOTOKEN);
+        return $self->fail($req);
+    }
+    unless ( $req->sessionInfo( $self->ott->getToken($token) ) ) {
+        $self->p->userInfo('Token expired');
+        $req->error(PE_TOKENEXPIRED);
+        return $self->fail($req);
+    }
+    if ( my $resp = $req->param('signature') ) {
         unless ( $self->loadUser($req) == 1 ) {
-            return $self->p->do( $req, [ sub { PE_ERROR } ] );
+            $req->error(PE_ERROR);
+            return $self->fail($req);
         }
         if ( $self->crypter->authenticationVerify($resp) ) {
-
-            # OK
-            return [ 200, [ 'Content-Type', 'text/plain' ], ['OK'] ];
+            $req->id( $req->sessionInfo->{_u2fRealSession} );
+            delete $req->sessionInfo->{_u2fRealSession};
+            $self->p->rebuildCookies($req);
+            $req->mustRedirect(1);
+            $self->p->userInfo( 'U2F signature verified for '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
+            return $self->p->do( $req, [ sub { PE_OK } ] );
         }
         else {
-            return $self->p->do( $req, [ sub { PE_BADCREDENTIALS } ] );
+            $self->p->userNotice( 'Invalid U2F signature for '
+                  . $req->sessionInfo->{ $self->conf->{whatToTrace} } . ' ('
+                  . Crypt::U2F::Server::u2fclib_getError()
+                  . ')' );
+            $req->error(PE_U2FFAILED);
+            return $self->fail($req);
         }
     }
     else {
         $self->p->userNotice( 'No U2F response for user'
               . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
-        return $self->p->do( $req, [ sub { PE_BADCREDENTIALS } ] );
+        return $self->fail($req);
     }
+}
+
+sub fail {
+    my ( $self, $req ) = @_;
+    return $self->p->sendHtml(
+        $req,
+        'u2fcheck',
+        params => {
+            PORTAL_URL      => $self->conf->{portal},
+            AUTH_ERROR      => $req->error,
+            AUTH_ERROR_TYPE => $req->error_type,
+            SKIN            => $self->conf->{portalSkin},
+            FAILED          => 1
+        }
+    );
 }
 
 sub loadUser {
@@ -88,8 +148,8 @@ sub loadUser {
     if (    ( $kh = $req->sessionInfo->{_u2fKeyHandle} )
         and ( $uk = $req->sessionInfo->{_u2fUserKey} ) )
     {
-        $self->crypter->{keyHandle} = $kh;
-        $self->crypter->{publicKey} = $uk;
+        $self->crypter->{keyHandle} = decode_base64($kh);
+        $self->crypter->{publicKey} = decode_base64($uk);
         unless ( $self->crypter->setKeyHandle and $self->crypter->setPublicKey )
         {
             $self->lmLog(

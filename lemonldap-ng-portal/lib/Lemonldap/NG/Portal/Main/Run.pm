@@ -669,4 +669,15 @@ sub sendHtml {
     return $self->SUPER::sendHtml( $req, $template, %args );
 }
 
+sub rebuildCookies {
+    my ( $self, $req ) = @_;
+    my @tmp;
+    for ( my $i = 0 ; $i < @{ $req->{respHeaders} } ; $i += 2 ) {
+        push @tmp, $req->respHeaders->[0], $req->respHeaders->[1]
+          unless ( $req->respHeaders->[0] eq 'Set-Cookie' );
+    }
+    $req->{respHeaders} = \@tmp;
+    $self->buildCookie($req);
+}
+
 1;

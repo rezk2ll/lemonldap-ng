@@ -117,6 +117,7 @@ site/coffee/confirm.coffee
 site/coffee/info.coffee
 site/coffee/oidcchecksession.coffee
 site/coffee/portal.coffee
+site/coffee/u2fcheck.coffee
 site/coffee/u2fregistration.coffee
 site/cron/purgeCentralCache
 site/cron/purgeCentralCache.cron.d
@@ -213,6 +214,8 @@ site/htdocs/static/common/js/portal.js
 site/htdocs/static/common/js/portal.min.js
 site/htdocs/static/common/js/u2f-api.js
 site/htdocs/static/common/js/u2f-api.min.js
+site/htdocs/static/common/js/u2fcheck.js
+site/htdocs/static/common/js/u2fcheck.min.js
 site/htdocs/static/common/js/u2fregistration.js
 site/htdocs/static/common/js/u2fregistration.min.js
 site/htdocs/static/common/key.png
@@ -269,6 +272,7 @@ site/templates/bootstrap/password.tpl
 site/templates/bootstrap/redirect.tpl
 site/templates/bootstrap/register.tpl
 site/templates/bootstrap/standardform.tpl
+site/templates/bootstrap/u2fcheck.tpl
 site/templates/bootstrap/u2fregister.tpl
 site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/background.tpl

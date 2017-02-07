@@ -234,7 +234,7 @@ sub getNotifBack {
         # All pending notifications have been accepted, restore cookies and
         # launch 'controlUrl' to restore "urldc" using do()
         $self->lmLog( 'All pending notifications have been accepted', 'debug' );
-        $self->rebuildCookies($req);
+        $self->p->rebuildCookies($req);
         return $self->p->do( $req, ['controlUrl'] );
     }
     else {
@@ -245,8 +245,5 @@ sub getNotifBack {
         return $self->p->do( $req, [] );
     }
 }
-
-*rebuildCookies =
-  \&Lemonldap::NG::Portal::Plugins::Notifications::rebuildCookies;
 
 1;
