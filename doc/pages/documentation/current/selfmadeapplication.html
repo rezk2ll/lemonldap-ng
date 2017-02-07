@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:selfmadeapplication</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,selfmadeapplication"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="selfmadeapplication.html"/>
 <link rel="contents" href="selfmadeapplication.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:selfmadeapplication","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -79,10 +105,10 @@ Examples with a <a href="writingrulesand_headers.html#headers" class="wikilink1"
 <!-- EDIT4 SECTION "Perl" [659-742] -->
 <h3 class="sectionedit5" id="php">PHP</h3>
 <div class="level3">
-<pre class="code file php"><span class="kw1">print</span> <span class="st0">&quot;Connected user: &quot;</span><span class="sy0">.</span><span class="re0">$_SERVER</span><span class="br0">&#123;</span>HTTP_AUTH_USER<span class="br0">&#125;</span><span class="sy0">;</span></pre>
+<pre class="code file php"><span class="kw1">print</span> <span class="st0">&quot;Connected user: &quot;</span><span class="sy0">.</span><span class="re0">$_SERVER</span><span class="br0">&#91;</span><span class="st0">&quot;HTTP_AUTH_USER&quot;</span><span class="br0">&#93;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- EDIT5 SECTION "PHP" [743-828] -->
+<!-- EDIT5 SECTION "PHP" [743-830] -->
 <h2 class="sectionedit6" id="perl_auto-protected_cgi">Perl auto-protected CGI</h2>
 <div class="level2">
 
@@ -148,6 +174,6 @@ You can test any <abbr title="Uniform Resource Locator">URL</abbr> to see if it&
 <span class="br0">&#125;</span></pre>
 
 </div>
-<!-- EDIT6 SECTION "Perl auto-protected CGI" [829-] --></div>
+<!-- EDIT6 SECTION "Perl auto-protected CGI" [831-] --></div>
 </body>
 </html>

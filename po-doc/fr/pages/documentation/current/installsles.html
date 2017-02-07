@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:installsles</title>
+  <title>documentation:2.0:installsles</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,installsles"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="installsles.html"/>
 <link rel="contents" href="installsles.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:installsles","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -70,7 +96,7 @@ LemonLDAP::NG provides packages for SLES:
 
 </p>
 <ul>
-<li class="level1"><div class="li"> lemonldap-ng : meta-paquet qui ne contient aucun fichier mais des dépendances vers les autres paquets</div>
+<li class="level1"><div class="li">  lemonldap-ng: metapackage, contains no file but dependencies on other packages</div>
 </li>
 <li class="level1"><div class="li"> lemonldap-ng-doc : contient la documentation <abbr title="HyperText Markup Language">HTML</abbr> et celle du projet (README, etc...)</div>
 </li>
@@ -98,12 +124,12 @@ LemonLDAP::NG provides packages for SLES:
 </li>
 </ul>
 
-</div><!-- EDIT2 SECTION "Organization" [118-1046] -->
+</div><!-- EDIT2 SECTION "Organization" [118-1045] -->
 
 <h2 class="sectionedit3" id="get_the_packages">Obtenir ces paquets</h2>
 <div class="level2">
 
-</div><!-- EDIT3 SECTION "Get the packages" [1047-1076] -->
+</div><!-- EDIT3 SECTION "Get the packages" [1046-1075] -->
 
 <h3 class="sectionedit4" id="repositories">Repositories</h3>
 <div class="level3">
@@ -122,7 +148,7 @@ Different repositories are necessary for LemonLDAP::NG dependencies:
 <ul>
 <li class="level1"><div class="li">  Suse official repositories</div>
 </li>
-<li class="level1"><div class="li">  2 repositories on <a href="https://build.opensuse.org/" class="urlextern" title="https://build.opensuse.org/"  rel="nofollow">OpenSuse Build Service</a></div>
+<li class="level1"><div class="li">  2 repositories on <a href="https://build.opensuse.org/" class="urlextern" title="https://build.opensuse.org/"  rel="nofollow">openSUSE Build Service</a></div>
 </li>
 <li class="level1"><div class="li">  Additional packages available on repository.linagora.org or lemonldap-ng.org</div>
 </li>
@@ -139,7 +165,7 @@ First, make sure the exploitation system is up to date:
 
 <p>
 
-You can add the OpenSuse Build Service repositories with the following commands:
+You can add the openSUSE Build Service repositories with the following commands:
 
 </p>
 <pre class="code">zypper addrepo http://download.opensuse.org/distribution/leap/42.1/repo/oss/suse/ leap42
@@ -172,7 +198,7 @@ zypper refresh</pre>
 
 
 </div>
-</div><!-- EDIT4 SECTION "Repositories" [1077-2471] -->
+</div><!-- EDIT4 SECTION "Repositories" [1076-2470] -->
 
 <h3 class="sectionedit5" id="manual_download">Téléchargement manuel</h3>
 <div class="level3">
@@ -181,7 +207,7 @@ zypper refresh</pre>
 Les paquets RPM sont disponibles sur la <a href="download.html" class="wikilink1" title="Téléchargement">page de téléchargement</a>.
 </p>
 
-</div><!-- EDIT5 SECTION "Manual download" [2472-2554] -->
+</div><!-- EDIT5 SECTION "Manual download" [2471-2553] -->
 
 <h2 class="sectionedit6" id="package_gpg_signature">Signature GPG des paquets</h2>
 <div class="level2">
@@ -195,12 +221,12 @@ L'installer pour certifier les RPMs:
 </p>
 <pre class="code">rpm --import rpm-gpg-key-ow2</pre>
 
-</div><!-- EDIT6 SECTION "Package GPG signature" [2555-2719] -->
+</div><!-- EDIT6 SECTION "Package GPG signature" [2554-2718] -->
 
 <h2 class="sectionedit7" id="install_packages">Installer les paquets</h2>
 <div class="level2">
 
-</div><!-- EDIT7 SECTION "Install packages" [2720-2749] -->
+</div><!-- EDIT7 SECTION "Install packages" [2719-2748] -->
 
 <h3 class="sectionedit8" id="with_zypper">With ZYPPER</h3>
 <div class="level3">
@@ -222,7 +248,7 @@ You can also use zypper on local RPMs file:
 </p>
 <pre class="code">zypper install lemonldap-ng-* perl-Lemonldap-NG-*</pre>
 
-</div><!-- EDIT8 SECTION "With ZYPPER" [2750-3188] -->
+</div><!-- EDIT8 SECTION "With ZYPPER" [2749-3187] -->
 
 <h3 class="sectionedit9" id="with_rpm">Avec RPM</h3>
 <div class="level3">
@@ -244,12 +270,12 @@ Installer le paquet <code>lemonldap-ng-conf</code> sur tous les serveurs qui con
 </p>
 
 </div>
-</div><!-- EDIT9 SECTION "With RPM" [3189-4688] -->
+</div><!-- EDIT9 SECTION "With RPM" [3188-4687] -->
 
 <h2 class="sectionedit10" id="first_configuration_steps">Premiers pas de configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT10 SECTION "First configuration steps" [4689-4727] -->
+</div><!-- EDIT10 SECTION "First configuration steps" [4688-4726] -->
 
 <h3 class="sectionedit11" id="enable_apache_extensions">Enable Apache extensions</h3>
 <div class="level3">
@@ -274,7 +300,7 @@ If you decide to use SSL, you should also activate the appopriate flag:
 </p>
 <pre class="code">sed -i 's/^APACHE_SERVER_FLAGS=.*/APACHE_SERVER_FLAGS="SSL"/' /etc/sysconfig/apache2</pre>
 
-</div><!-- EDIT11 SECTION "Enable Apache extensions" [4728-5134] -->
+</div><!-- EDIT11 SECTION "Enable Apache extensions" [4727-5133] -->
 
 <h3 class="sectionedit12" id="change_default_dns_domain">Changer le domaine DNS par défaut</h3>
 <div class="level3">
@@ -290,7 +316,7 @@ Vérifier la configuration d'Apache et redémarrer :
 <pre class="code shell">apachectl configtest
 apachectl restart</pre>
 
-</div><!-- EDIT12 SECTION "Change default DNS domain" [5135-5577] -->
+</div><!-- EDIT12 SECTION "Change default DNS domain" [5134-5576] -->
 
 <h3 class="sectionedit13" id="reload_virtual_host">Recharger l'hôte virtuel</h3>
 <div class="level3">
@@ -301,7 +327,7 @@ Pour autoriser le manager à recharger la configuration, enregistrer le nom d'h�
 <pre class="code shell">echo "127.0.0.1 reload.example.com" &gt;&gt; /etc/hosts</pre>
 <div class="notetip">Adapter le nom d'hôte virtuel de rechargement au domaine configuré.
 </div>
-</div><!-- EDIT13 SECTION "Reload virtual host" [5578-5879] -->
+</div><!-- EDIT13 SECTION "Reload virtual host" [5577-5878] -->
 
 <h3 class="sectionedit14" id="upgrade">Mise à jour</h3>
 <div class="level3">
@@ -327,7 +353,7 @@ Le processus de mise-à-jour va également migrer les anciens fichiers de config
 <span class="re1">applicationList</span><span class="sy0">=</span><span class="re2"><span class="br0">{</span> 'Menu' <span class="sy0">=</span>&gt; <span class="br0">{</span> type <span class="sy0">=</span>&gt; 'category', 'Example' <span class="sy0">=</span>&gt; <span class="br0">{</span> type <span class="sy0">=</span>&gt; 'category', 'test1' <span class="sy0">=</span>&gt; <span class="br0">{</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">{</span> name <span class="sy0">=</span>&gt; 'Application Test 1', uri <span class="sy0">=</span>&gt; 'http://test1.example.com/', description <span class="sy0">=</span>&gt; 'A simple application displaying authenticated user', logo <span class="sy0">=</span>&gt; 'wheels.png', display <span class="sy0">=</span>&gt; 'auto',  <span class="br0">}</span>, <span class="br0">}</span>,'test2' <span class="sy0">=</span>&gt; <span class="br0">{</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">{</span> name <span class="sy0">=</span>&gt; 'Application Test 2', uri <span class="sy0">=</span>&gt; 'http://test2.example.com/', description <span class="sy0">=</span>&gt; 'The same simple application displaying authenticated user', logo <span class="sy0">=</span>&gt; 'wheels.png', display <span class="sy0">=</span>&gt; 'auto',  <span class="br0">}</span>, <span class="br0">}</span>, <span class="br0">}</span>,'Administration' <span class="sy0">=</span>&gt; <span class="br0">{</span> type <span class="sy0">=</span>&gt; 'category', 'manager' <span class="sy0">=</span>&gt; <span class="br0">{</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">{</span> name <span class="sy0">=</span>&gt; 'WebSSO Manager', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/', description <span class="sy0">=</span>&gt; 'Configure LemonLDAP::NG WebSSO', logo <span class="sy0">=</span>&gt; 'tools.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">}</span>, <span class="br0">}</span>,'sessions' <span class="sy0">=</span>&gt; <span class="br0">{</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">{</span> name <span class="sy0">=</span>&gt; 'Sessions explorer', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/sessions.pl', description <span class="sy0">=</span>&gt; 'Explore WebSSO sessions', logo <span class="sy0">=</span>&gt; 'tools.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">}</span>, <span class="br0">}</span>, <span class="br0">}</span>,'Documentation' <span class="sy0">=</span>&gt; <span class="br0">{</span> type <span class="sy0">=</span>&gt; 'category', 'localdoc' <span class="sy0">=</span>&gt; <span class="br0">{</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">{</span> name <span class="sy0">=</span>&gt; 'Local documentation', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/doc/', description <span class="sy0">=</span>&gt; 'Documentation supplied with LemonLDAP::NG', logo <span class="sy0">=</span>&gt; 'docs.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">}</span>, <span class="br0">}</span>,'officialwebsite' <span class="sy0">=</span>&gt; <span class="br0">{</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">{</span> name <span class="sy0">=</span>&gt; 'Offical Website', uri <span class="sy0">=</span>&gt; 'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation', description <span class="sy0">=</span>&gt; 'Official LemonLDAP::NG Website', logo <span class="sy0">=</span>&gt; 'web.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">}</span>, <span class="br0">}</span>, <span class="br0">}</span>, <span class="br0">}</span>, <span class="br0">}</span></span></pre>
 <div class="noteimportant">Il est désormais possible d'utiliser le manager pour configurer toutes les <a href="portalmenu.html#categories_and_applications" class="wikilink1" title="documentation:2.0:portalmenu">applications et catégories</a>, ensuite commenter ou supprimer le paramètre <code>applicationList</code> de <code>/etc/lemonldap-ng/lemonldap-ng.ini</code>.
 </div>
-</div><!-- EDIT14 SECTION "Upgrade" [5880-8393] -->
+</div><!-- EDIT14 SECTION "Upgrade" [5879-8392] -->
 
 <h3 class="sectionedit15" id="dns">DNS</h3>
 <div class="level3">
@@ -343,7 +369,7 @@ Configurer le serveur <abbr title="Domain Name System">DNS</abbr> pour résoudre
 Suivre les <a href="start.html#configuration" class="wikilink1" title="documentation:2.0:start">étapes suivantes</a>
 </p>
 
-</div><!-- EDIT15 SECTION "DNS" [8394-8666] -->
+</div><!-- EDIT15 SECTION "DNS" [8393-8665] -->
 
 <h2 class="sectionedit16" id="file_location">Emplacement du fichier</h2>
 <div class="level2">
@@ -360,7 +386,7 @@ Suivre les <a href="start.html#configuration" class="wikilink1" title="documenta
 </li>
 </ul>
 
-</div><!-- EDIT16 SECTION "File location" [8667-9022] -->
+</div><!-- EDIT16 SECTION "File location" [8666-9021] -->
 
 <h2 class="sectionedit17" id="build_your_packages">Construire les paquets</h2>
 <div class="level2">
@@ -391,7 +417,7 @@ Alternatively, you can use the automatic script “create-lemonldap-packages.sh�
 
 </p>
 
-</div><!-- EDIT17 SECTION "Build your packages" [9023-] -->
+</div><!-- EDIT17 SECTION "Build your packages" [9022-] -->
 </div>
 </body>
 </html>

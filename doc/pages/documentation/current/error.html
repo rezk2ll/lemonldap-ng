@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:error</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,error"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="error.html"/>
 <link rel="contents" href="error.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:error","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -80,7 +106,7 @@
 <p>
 → The cache has been created by another user than Apache&#039;s user. Restart Apache to purge it.
 </p>
-<div class="noteimportant">This can happend when you use lmConfigEditor or launch <strong>cron files</strong> with a different user than Apache process. That is why it is important to set APACHEUSER variable when you launch “make install”
+<div class="noteimportant">This can append when you use lmConfigEditor or launch <strong>cron files</strong> with a different user than Apache process. That is why it is important to set APACHEUSER variable when you launch “make install”
 
 </div><pre class="file">Lemonldap::NG::Handler::SharedConf: No cookie found</pre>
 
@@ -109,7 +135,7 @@
 </ul>
 
 </div>
-<!-- EDIT3 SECTION "Lemonldap::NG::Handler" [614-2430] -->
+<!-- EDIT3 SECTION "Lemonldap::NG::Handler" [614-2429] -->
 <h2 class="sectionedit4" id="lemonldapngmanager">Lemonldap::NG::Manager</h2>
 <div class="level2">
 <pre class="file">XXXX was not found in tree</pre>
@@ -119,7 +145,7 @@
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Lemonldap::NG::Manager" [2431-2556] -->
+<!-- EDIT4 SECTION "Lemonldap::NG::Manager" [2430-2555] -->
 <h2 class="sectionedit5" id="lemonldapngportal">Lemonldap::NG::Portal</h2>
 <div class="level2">
 <pre class="file">User XXXX was not granted to open session</pre>
@@ -149,6 +175,6 @@
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Lemonldap::NG::Portal" [2557-] --></div>
+<!-- EDIT5 SECTION "Lemonldap::NG::Portal" [2556-] --></div>
 </body>
 </html>

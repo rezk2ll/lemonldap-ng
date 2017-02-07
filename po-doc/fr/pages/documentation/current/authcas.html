@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:authcas</title>
+  <title>documentation:2.0:authcas</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authcas"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authcas.html"/>
 <link rel="contents" href="authcas.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authcas","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -53,7 +79,8 @@
 <p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> peut déléguer l'authentification à un serveur <abbr title="Central Authentication Service">CAS</abbr>. Ceci nécessite un <a href="http://sourcesup.cru.fr/projects/perlcas/" class="urlextern" title="http://sourcesup.cru.fr/projects/perlcas/"  rel="nofollow">module Perl CAS</a>.
 </p>
-<div class="notetip"><abbr title="LemonLDAP::NG">LL::NG</abbr> peut également agir en <a href="idpcas.html" class="wikilink1" title="documentation:2.0:idpcas">serveur CAS</a>, ce qui peut servir à connecter deux systèmes <abbr title="LemonLDAP::NG">LL::NG</abbr>.
+<div class="notetip"><abbr title="LemonLDAP::NG">LL::NG</abbr> can also act as <a href="idpcas.html" class="wikilink1" title="documentation:2.0:idpcas">CAS server</a>, that allows one to interconnect two <abbr title="LemonLDAP::NG">LL::NG</abbr> systems.
+
 </div>
 <p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> peut également requérir des tickets de proxy pour les services qu'il protège. Les tickets de proxy seront collectés lors de la phase d'authentification et stockés dans la session utilisateur sous la forme :
@@ -68,7 +95,7 @@ Ils peuvent être transférés aux applications via les <a href="writingrulesand
 </p>
 <div class="notetip">L'authentification <abbr title="Central Authentication Service">CAS</abbr> ajoute automatiquement une <a href="logoutforward.html" class="wikilink1" title="documentation:2.0:logoutforward">règle de renvoi après déconnexion</a> sur l'<abbr title="Uniform Resource Locator">URL</abbr> de déconnexion du serveur <abbr title="Central Authentication Service">CAS</abbr> afin de clore la session <abbr title="Central Authentication Service">CAS</abbr> lors de la déconnexion <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </div>
-</div><!-- EDIT3 SECTION "Presentation" [71-828] -->
+</div><!-- EDIT3 SECTION "Presentation" [71-832] -->
 
 <h2 class="sectionedit4" id="perl-cas_module_installation">Installation du module Perl-CAS</h2>
 <div class="level2">
@@ -92,7 +119,7 @@ Installer le module :
 </p>
 <pre class="code">sudo make install</pre>
 
-</div><!-- EDIT4 SECTION "Perl-CAS module installation" [829-1162] -->
+</div><!-- EDIT4 SECTION "Perl-CAS module installation" [833-1166] -->
 
 <h2 class="sectionedit5" id="configuration">Configuration</h2>
 <div class="level2">
@@ -132,7 +159,7 @@ Aller ensuite dans <code>Paramètres <abbr title="Central Authentication Service
 <pre class="code">touch /tmp/pgt.txt</pre>
 
 </div>
-</div><!-- EDIT5 SECTION "Configuration" [1163-] -->
+</div><!-- EDIT5 SECTION "Configuration" [1167-] -->
 </div>
 </body>
 </html>

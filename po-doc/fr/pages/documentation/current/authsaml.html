@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:authsaml</title>
+  <title>documentation:2.0:authsaml</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authsaml"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authsaml.html"/>
 <link rel="contents" href="authsaml.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authsaml","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -71,14 +97,15 @@ Plusieurs IDPs peuvent être autorisés, dans ce cas l'utilisateur peut choisir 
 <p>
 Pour chaque IDP, il faut configurer les attributs à collecter. Certains peuvent être obligatoires, et s'ils ne sont pas retournés par l'IDP, la session n'est pas ouverte.
 </p>
-<div class="notetip"><abbr title="LemonLDAP::NG">LL::NG</abbr> peut également agir comme un <a href="idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">IDP SAML</a>, ce qui permet d'interconnecter deux systèmes <abbr title="LemonLDAP::NG">LL::NG</abbr>.
+<div class="notetip"><abbr title="LemonLDAP::NG">LL::NG</abbr> can also act as <a href="idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML IDP</a>, that allows one to interconnect two <abbr title="LemonLDAP::NG">LL::NG</abbr> systems.
+
 </div>
-</div><!-- EDIT3 SECTION "Presentation" [86-689] -->
+</div><!-- EDIT3 SECTION "Presentation" [86-693] -->
 
 <h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT4 SECTION "Configuration" [690-716] -->
+</div><!-- EDIT4 SECTION "Configuration" [694-720] -->
 
 <h3 class="sectionedit5" id="saml_service">Service SAML</h3>
 <div class="level3">
@@ -87,7 +114,7 @@ Pour chaque IDP, il faut configurer les attributs à collecter. Certains peuvent
 Voir le chapître de configuration du <a href="samlservice.html" class="wikilink1" title="documentation:2.0:samlservice">service SAML</a>.
 </p>
 
-</div><!-- EDIT5 SECTION "SAML Service" [717-797] -->
+</div><!-- EDIT5 SECTION "SAML Service" [721-801] -->
 
 <h3 class="sectionedit6" id="authentication_and_userdb">Authentification et base d'utilisateurs</h3>
 <div class="level3">
@@ -103,7 +130,7 @@ Dans <code>Paramètres généraux</code> &gt; <code>Modules d'authentification</
 </ul>
 <div class="notetip">Comme les mots-de-passe ne sernt pas gérés par <abbr title="LemonLDAP::NG">LL::NG</abbr>, il est possile de désactiver le <a href="portalmenu.html#menu_modules" class="wikilink1" title="documentation:2.0:portalmenu">module mots-de-passe du menu</a>.
 </div>
-</div><!-- EDIT6 SECTION "Authentication and UserDB" [798-1081] -->
+</div><!-- EDIT6 SECTION "Authentication and UserDB" [802-1085] -->
 
 <h3 class="sectionedit7" id="register_lemonldapng_on_partner_identity_provider">Enregistrer LemonLDAP::NG dans le fournisseur d'identité partenaire</h3>
 <div class="level3">
@@ -116,7 +143,7 @@ Après avoir configuré le service <abbr title="Security Assertion Markup Langua
 Elles sont disponibles à l'<abbr title="Uniform Resource Locator">URL</abbr> EntityID, par défaut : <a href="http://auth.example.com/saml/metadata" class="urlextern" title="http://auth.example.com/saml/metadata"  rel="nofollow">http://auth.example.com/saml/metadata</a>.
 </p>
 
-</div><!-- EDIT7 SECTION "Register LemonLDAP::NG on partner Identity Provider" [1082-1328] -->
+</div><!-- EDIT7 SECTION "Register LemonLDAP::NG on partner Identity Provider" [1086-1332] -->
 
 <h3 class="sectionedit8" id="register_partner_identity_provider_on_lemonldapng">Enregistrer le fournisseur d'identité partenaire dans LemonLDAP::NG</h3>
 <div class="level3">
@@ -213,7 +240,7 @@ Par exemple, pour pré-sélectionner cet IDP pour les utilisateurs provenant dui
 </li>
 <li class="level1"><div class="li"> <strong>Forcer l'UTF-8</strong> : force la conversion UTF-8 des valeurs d'attributs collectées depuis l'IDP.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Store <abbr title="Security Assertion Markup Language">SAML</abbr> Token</strong>: allows to keep <abbr title="Security Assertion Markup Language">SAML</abbr> token (assertion) inside user session. Don't enable it unless you need to replay this token on an application.</div>
+<li class="level1"><div class="li"> <strong>Store <abbr title="Security Assertion Markup Language">SAML</abbr> Token</strong>: allows one to keep <abbr title="Security Assertion Markup Language">SAML</abbr> token (assertion) inside user session. Don't enable it unless you need to replay this token on an application.</div>
 </li>
 </ul>
 
@@ -261,7 +288,7 @@ Ces options surchargent les options de signature du service (voir la <a href="sa
 </li>
 </ul>
 
-</div><!-- EDIT8 SECTION "Register partner Identity Provider on LemonLDAP::NG" [1329-] -->
+</div><!-- EDIT8 SECTION "Register partner Identity Provider on LemonLDAP::NG" [1333-] -->
 </div>
 </body>
 </html>

@@ -4,15 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:applications:mediawiki</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,applications,mediawiki"/>
 <link rel="search" type="application/opensearchdescription+xml" href="../lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="mediawiki.html"/>
 <link rel="contents" href="mediawiki.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="../lib/exe/css.php.t.bootstrap3.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0:applications';var JSINFO = {"id":"documentation:2.0:applications:mediawiki","namespace":"documentation:2.0:applications"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="../lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -52,7 +79,7 @@
 </p>
 
 <p>
-Several extensions allows to configure <abbr title="Single Sign On">SSO</abbr> on MediaWiki:
+Several extensions allows one to configure <abbr title="Single Sign On">SSO</abbr> on MediaWiki:
 </p>
 <ul>
 <li class="level1"><div class="li"> <a href="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER" class="urlextern" title="http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER"  rel="nofollow">Automatic REMOTE_USER</a></div>
@@ -66,7 +93,7 @@ We will explain how to use <a href="http://www.mediawiki.org/wiki/Extension:Auto
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Presentation" [67-590] -->
+<!-- EDIT2 SECTION "Presentation" [67-594] -->
 <h2 class="sectionedit3" id="installation">Installation</h2>
 <div class="level2">
 
@@ -84,12 +111,12 @@ You have to install <code> Auth_remoteuser</code> in the <code>extensions/</code
 <pre class="code">cp -a Auth_remoteuser/ extensions/</pre>
 
 </div>
-<!-- EDIT3 SECTION "Installation" [591-985] -->
+<!-- EDIT3 SECTION "Installation" [595-989] -->
 <h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT4 SECTION "Configuration" [986-1012] -->
+<!-- EDIT4 SECTION "Configuration" [990-1016] -->
 <h3 class="sectionedit5" id="mediwiki_local_configuration">MediWiki local configuration</h3>
 <div class="level3">
 
@@ -147,7 +174,7 @@ You can use the code below for normalizing logins containing “_” in the exte
 <pre class="code">sed -i &#039;/$usertest = $this-&gt;getRemoteUsername();/a\                $usertest = str_replace( &quot;_&quot;,&quot; &quot;, $usertest );&#039; extensions/Auth_remoteuser/Auth_remoteuser.body.php</pre>
 
 </div>
-<!-- EDIT5 SECTION "MediWiki local configuration" [1013-3666] -->
+<!-- EDIT5 SECTION "MediWiki local configuration" [1017-3670] -->
 <h3 class="sectionedit6" id="mediawiki_virtual_host">MediaWiki virtual host</h3>
 <div class="level3">
 
@@ -207,7 +234,7 @@ Configure MediaWiki virtual host like other <a href="../configvhost.html" class=
 }</pre>
 
 </div>
-<!-- EDIT6 SECTION "MediaWiki virtual host" [3667-5106] -->
+<!-- EDIT6 SECTION "MediaWiki virtual host" [3671-5110] -->
 <h3 class="sectionedit7" id="mediawiki_virtual_host_in_manager">MediaWiki virtual host in Manager</h3>
 <div class="level3">
 
@@ -231,6 +258,6 @@ If using <abbr title="LemonLDAP::NG">LL::NG</abbr> as reverse proxy, configure a
 </p>
 
 </div>
-<!-- EDIT7 SECTION "MediaWiki virtual host in Manager" [5107-] --></div>
+<!-- EDIT7 SECTION "MediaWiki virtual host in Manager" [5111-] --></div>
 </body>
 </html>

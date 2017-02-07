@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:start</title>
+  <title>documentation:2.0:start</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,start"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="start.html"/>
 <link rel="contents" href="start.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:start","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -121,9 +147,9 @@
 </div><div class="col-md-11">
 </p>
 <ul>
-<li class="level1"><div class="li"> <a href="configapache.html" class="wikilink1" title="documentation:2.0:configapache">Deployer la configuration Apache</a></div>
+<li class="level1"><div class="li"> <a href="confignginx.html" class="wikilink1" title="documentation:2.0:confignginx">Deploy Nginx configuration</a> <em>(recommended configuration)</em></div>
 </li>
-<li class="level1"><div class="li"> <a href="confignginx.html" class="wikilink1" title="documentation:2.0:confignginx">Deployer la configuration Nginx</a></div>
+<li class="level1"><div class="li"> <a href="configapache.html" class="wikilink1" title="documentation:2.0:configapache">Deployer la configuration Apache</a></div>
 </li>
 </ul>
 
@@ -131,12 +157,12 @@
 </p></div></div>
 </p>
 
-</div><!-- EDIT5 SECTION "After installation" [827-1106] -->
+</div><!-- EDIT5 SECTION "After installation" [827-1138] -->
 
 <h2 class="sectionedit6" id="configuration">Configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT6 SECTION "Configuration" [1107-1133] -->
+</div><!-- EDIT6 SECTION "Configuration" [1139-1165] -->
 
 <h3 class="sectionedit7" id="first_steps">Premiers pas</h3>
 <div class="level3">
@@ -165,7 +191,7 @@
 </p></div></div>
 </p>
 
-</div><!-- EDIT7 SECTION "First steps" [1134-1593] -->
+</div><!-- EDIT7 SECTION "First steps" [1166-1625] -->
 
 <h3 class="sectionedit8" id="portal">Portail</h3>
 <div class="level3">
@@ -184,13 +210,15 @@
 </li>
 <li class="level1"><div class="li"> <a href="captcha.html" class="wikilink1" title="documentation:2.0:captcha">Captcha</a></div>
 </li>
+<li class="level1"><div class="li"> <a href="public_pages.html" class="wikilink1" title="documentation:2.0:public_pages">Public pages</a></div>
+</li>
 </ul>
 
 <p>
 </p></div></div>
 </p>
 
-</div><!-- EDIT8 SECTION "Portal" [1594-1884] -->
+</div><!-- EDIT8 SECTION "Portal" [1626-1950] -->
 
 <h3 class="sectionedit9" id="authentication_users_and_password_databases">Bases de données d'authentification, des utilisateurs et des mots-de-passe</h3>
 <div class="level3">
@@ -267,13 +295,13 @@
 		<td class="col0"> <a href="authchoice.html" class="wikilink1" title="documentation:2.0:authchoice">Choice by users</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td>
 	</tr>
 	<tr class="row21 rowodd">
-		<td class="col0"> <a href="authmulti.html" class="wikilink1" title="documentation:2.0:authmulti">Empiler de multiples backends</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination of auth schemes</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
 	</tr>
 	<tr class="row22 roweven">
-		<th class="col0">  Obsolete Backends  </th><th class="col1 centeralign">  Authentification  </th><th class="col2 centeralign">  Utilisateurs  </th><th class="col3 centeralign">  Mot-de-passe  </th>
+		<td class="col0"> <del><a href="authmulti.html" class="wikilink1" title="documentation:2.0:authmulti">Empiler de multiples backends</a></del> </td><td class="col1 leftalign">    </td><td class="col2 leftalign">    </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row23 rowodd">
-		<td class="col0"> <a href="authgoogle.html" class="wikilink1" title="documentation:2.0:authgoogle">Google</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">   </td>
+		<th class="col0">  Obsolete Backends  </th><th class="col1 centeralign">  Authentification  </th><th class="col2 centeralign">  Utilisateurs  </th><th class="col3 centeralign">  Mot-de-passe  </th>
 	</tr>
 	<tr class="row24 roweven">
 		<td class="col0"> <a href="authopenid.html" class="wikilink1" title="documentation:2.0:authopenid">OpenID</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
@@ -281,13 +309,13 @@
 	<tr class="row25 rowodd">
 		<td class="col0"> <a href="authremote.html" class="wikilink1" title="documentation:2.0:authremote">LL::NG distant</a> </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 leftalign">    </td>
 	</tr>
-</table></div><!-- EDIT10 TABLE [2058-3434] -->
+</table></div><!-- EDIT10 TABLE [2124-3531] -->
 
 <p>
 </p></div></div>
 </p>
 
-</div><!-- EDIT9 SECTION "Authentication, users and password databases" [1885-3462] -->
+</div><!-- EDIT9 SECTION "Authentication, users and password databases" [1951-3559] -->
 
 <h3 class="sectionedit11" id="configuration_database">Base de données de la configuration</h3>
 <div class="level3">
@@ -322,14 +350,14 @@
 	<tr class="row5 rowodd">
 		<td class="col0 centeralign">  <a href="soapconfbackend.html" class="wikilink1" title="documentation:2.0:soapconfbackend">SOAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 leftalign"> Backend proxy à utiliser avec un autre backend de configuration. <br/><strong>Peut être utilisé pour sécuriser un autre backend</strong> pour des serveurs distants.  </td>
 	</tr>
-</table></div><!-- EDIT12 TABLE [3737-4326] -->
+</table></div><!-- EDIT12 TABLE [3834-4423] -->
 <div class="notetip">On ne peut démarrer avec une configuration vide, il faut donc lire <a href="changeconfbackend.html" class="wikilink1" title="documentation:2.0:changeconfbackend">comment changer de backend de configuration</a> pour convertir une configuration existante en une autre.
 </div>
 <p>
 </p></div></div>
 </p>
 
-</div><!-- EDIT11 SECTION "Configuration database" [3463-4542] -->
+</div><!-- EDIT11 SECTION "Configuration database" [3560-4639] -->
 
 <h3 class="sectionedit13" id="sessions_database">Base de données des sessions</h3>
 <div class="level3">
@@ -370,13 +398,13 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 	<tr class="row7 rowodd">
 		<td class="col0 centeralign">  <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP</a>  </td><td class="col1 centeralign">    ✔    </td><td class="col2 centeralign">    ✔    </td><td class="col3 centeralign">    ✔    </td><td class="col4 centeralign">    ✔    </td><td class="col5 leftalign"> Backend proxy à utiliser avec un autre backend de sessions. <br/> <strong>Peut être utilisé pour sécuriser un autre backend</strong> pour des serveurs distants.  </td>
 	</tr>
-</table></div><!-- EDIT14 TABLE [4928-6382] -->
+</table></div><!-- EDIT14 TABLE [5025-6479] -->
 
 <p>
 </p></div></div>
 </p>
 
-</div><!-- EDIT13 SECTION "Sessions database" [4543-6410] -->
+</div><!-- EDIT13 SECTION "Sessions database" [4640-6507] -->
 
 <h3 class="sectionedit15" id="identity_provider">Fournisseur d'identité</h3>
 <div class="level3">
@@ -410,7 +438,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT15 SECTION "Identity provider" [6411-6955] -->
+</div><!-- EDIT15 SECTION "Identity provider" [6508-7052] -->
 
 <h2 class="sectionedit16" id="applications_protection">Protection des applications</h2>
 <div class="level2">
@@ -431,13 +459,15 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </li>
 <li class="level1"><div class="li"> <a href="formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">Rejeu de formulaires</a></div>
 </li>
+<li class="level1"><div class="li"> <a href="customhandlers.html" class="wikilink1" title="documentation:2.0:customhandlers">Custom Handlers</a></div>
+</li>
 </ul>
 
 <p>
 </p></div></div>
 </p>
 
-</div><!-- EDIT16 SECTION "Applications protection" [6956-7407] -->
+</div><!-- EDIT16 SECTION "Applications protection" [7053-7543] -->
 
 <h3 class="sectionedit17" id="well_known_compatible_applications">Well known compatible applications</h3>
 <div class="level3">
@@ -512,7 +542,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div>
 </p>
 
-</div><!-- EDIT17 SECTION "Well known compatible applications" [7408-9049] -->
+</div><!-- EDIT17 SECTION "Well known compatible applications" [7544-9185] -->
 
 <h2 class="sectionedit18" id="advanced_features">Fonctionnalités avancées</h2>
 <div class="level2">
@@ -559,7 +589,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT18 SECTION "Advanced features" [9050-9894] -->
+</div><!-- EDIT18 SECTION "Advanced features" [9186-10030] -->
 
 <h2 class="sectionedit19" id="mini_howtos">Mini howtos</h2>
 <div class="level2">
@@ -590,7 +620,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT19 SECTION "Mini howtos" [9895-10564] -->
+</div><!-- EDIT19 SECTION "Mini howtos" [10031-10700] -->
 
 <h2 class="sectionedit20" id="exploitation">Exploitation</h2>
 <div class="level2">
@@ -609,7 +639,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </li>
 <li class="level1"><div class="li"> <a href="status.html" class="wikilink1" title="documentation:2.0:status">Page de statut de l'agent</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="mrtg.html" class="wikilink1" title="documentation:2.0:mrtg">Supervision MRTG</a></div>
+<li class="level1"><div class="li"> <a href="monitoring.html" class="wikilink1" title="documentation:2.0:monitoring">Monitoring</a></div>
 </li>
 <li class="level1"><div class="li"> <a href="logs.html" class="wikilink1" title="documentation:2.0:logs">Journalisation</a></div>
 </li>
@@ -623,7 +653,7 @@ Les sessions sont stockées en utilisant les modules de la famille <a href="http
 </p></div></div>
 </p>
 
-</div><!-- EDIT20 SECTION "Exploitation" [10565-] -->
+</div><!-- EDIT20 SECTION "Exploitation" [10701-] -->
 </div>
 </body>
 </html>

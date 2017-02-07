@@ -1,3 +1,4 @@
+* public\_page
 * GrantSession plugin
 * Test ForceAuth
 * Calendar in notifications explorer

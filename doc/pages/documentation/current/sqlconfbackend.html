@@ -10,10 +10,36 @@
 <link rel="start" href="sqlconfbackend.html"/>
 <link rel="contents" href="sqlconfbackend.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:sqlconfbackend","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -133,9 +159,9 @@ You have to grant read/write access for the manager component. Other components 
 <p>
 MySQL example (suppose that our servers are in 10.0.0.0/24 network):
 </p>
-<pre class="code sql"><span class="kw1">GRANT</span> <span class="kw1">SELECT</span><span class="sy0">,</span><span class="kw1">INSERT</span><span class="sy0">,</span><span class="kw1">UPDATE</span><span class="sy0">,</span><span class="kw1">LOCK</span> <span class="kw1">TABLES</span> <span class="kw1">ON</span> lmConfig<span class="sy0">.*</span>
+<pre class="code sql"><span class="kw1">GRANT</span> <span class="kw1">SELECT</span><span class="sy0">,</span><span class="kw1">INSERT</span><span class="sy0">,</span><span class="kw1">UPDATE</span><span class="sy0">,</span><span class="kw1">DELETE</span><span class="sy0">,</span><span class="kw1">LOCK</span> <span class="kw1">TABLES</span> <span class="kw1">ON</span> lemonldap<span class="sy0">-</span>ng<span class="sy0">.</span>lmConfig
   <span class="kw1">TO</span> lemonldap<span class="sy0">-</span>ng@manager<span class="sy0">.</span>host <span class="kw1">IDENTIFIED</span> <span class="kw1">BY</span> <span class="st0">'mypassword'</span>;
-<span class="kw1">GRANT</span> <span class="kw1">SELECT</span> <span class="kw1">ON</span> lmConfig<span class="sy0">.*</span>
+<span class="kw1">GRANT</span> <span class="kw1">SELECT</span> <span class="kw1">ON</span> lemonldap<span class="sy0">-</span>ng<span class="sy0">.</span>lmConfig
   <span class="kw1">TO</span> lemonldap<span class="sy0">-</span>ng<span class="sy0">-</span><span class="kw1">USER</span>@<span class="st0">'10.0.0.%'</span> <span class="kw1">IDENTIFIED</span> <span class="kw1">BY</span> <span class="st0">'myotherpassword'</span>;</pre>
 
 </div>

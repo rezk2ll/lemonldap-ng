@@ -3,7 +3,13 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:soapsessionbackend</title>
+  <title>documentation:2.0:soapsessionbackend</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
 <meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,soapsessionbackend"/>
@@ -11,10 +17,30 @@
 <link rel="start" href="soapsessionbackend.html"/>
 <link rel="contents" href="soapsessionbackend.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:soapsessionbackend","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -98,12 +124,12 @@ Then, set <code>Lemonldap::NG::Common::Apache::Session::SOAP</code> in <code>Gen
 	</tr>
 	</thead>
 	<tr class="row2 roweven">
-		<td class="col0 centeralign">  <strong>proxy</strong>  </td><td class="col1"> <abbr title="Uniform Resource Locator">URL</abbr> of sessions SOAP end point  </td><td class="col2">  http://auth.example.com/index.pl/sessions  </td>
+		<td class="col0 centeralign">  <strong>proxy</strong>  </td><td class="col1"> <abbr title="Uniform Resource Locator">URL</abbr> of sessions SOAP end point  </td><td class="col2">  http://auth.example.com/index.fcgi/sessions  </td>
 	</tr>
-</table></div><!-- EDIT4 TABLE [1163-1322] -->
+</table></div><!-- EDIT4 TABLE [1163-1324] -->
 <div class="notetip">Utiliser /adminSessions si l'agent doit modifier la session, par exemple si on configure un délai d'inactivité des sessions.
 </div>
-</div><!-- EDIT3 SECTION "Manager" [852-1450] -->
+</div><!-- EDIT3 SECTION "Manager" [852-1452] -->
 
 <h3 class="sectionedit5" id="apache">Apache</h3>
 <div class="level3">
@@ -114,20 +140,16 @@ Sessions SOAP end points access must be allowed in Apache portal configuration (
 
 </p>
 <pre class="code file apache"><span class="co1"># SOAP functions for sessions management (disabled by default)</span>
-&lt;<span class="kw3">Location</span> /index.pl/adminSessions&gt;
-    <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-    <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    <span class="kw1">Allow</span> from 192.168.2.0/<span class="nu0">24</span>
+&lt;<span class="kw3">Location</span> /index.fcgi/adminSessions&gt;
+    <span class="kw1">Require</span> 192.168.2.0/<span class="nu0">24</span>
 &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
 <span class="co1"># SOAP functions for sessions access (disabled by default)</span>
-&lt;<span class="kw3">Location</span> /index.pl/sessions&gt;
-    <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-    <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    <span class="kw1">Allow</span> from 192.168.2.0/<span class="nu0">24</span>
+&lt;<span class="kw3">Location</span> /index.fcgi/sessions&gt;
+    <span class="kw1">Require</span> 192.168.2.0/<span class="nu0">24</span>
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
-</div><!-- EDIT5 SECTION "Apache" [1451-1956] -->
+</div><!-- EDIT5 SECTION "Apache" [1453-1878] -->
 
 <h3 class="sectionedit6" id="real_session_backend">Backend de session réel</h3>
 <div class="level3">
@@ -146,7 +168,7 @@ Par exemple, si les sessions réelels sont stockées dans des <a href="filesessi
 <span class="re1">globalStorageOptions</span> <span class="sy0">=</span><span class="re2"> <span class="br0">{</span> 'Directory' <span class="sy0">=</span>&gt; '/var/lib/lemonldap-ng/sessions/', 'LockDirectory' <span class="sy0">=</span>&gt; '/var/lib/lemonldap-ng/sessions/lock/', <span class="br0">}</span></span></pre>
 <div class="notetip">Si l'explorateur de sessions est sur le même serveur que le portail, utiliser soit la terminaison <strong>adminSessions</strong> dans la configuration eu manager, ou surcharger les paramètres <code>globalStorage</code> et <code>globalStorageOptions</code> dans la section all (et pas portal) de <code>lemonldap-ng.ini</code>. 
 </div>
-</div><!-- EDIT6 SECTION "Real session backend" [1957-] -->
+</div><!-- EDIT6 SECTION "Real session backend" [1879-] -->
 </div>
 </body>
 </html>

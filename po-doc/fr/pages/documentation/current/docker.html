@@ -3,7 +3,13 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:docker</title>
+  <title>documentation:2.0:docker</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
 <meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,docker"/>
@@ -11,10 +17,30 @@
 <link rel="start" href="docker.html"/>
 <link rel="contents" href="docker.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:docker","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -40,10 +66,11 @@ On peut trouver des images Docker pour LemonLDAP::NG dans ce dépôt : <a href="
 </p>
 
 <p>
-Voir aussi le projet Github : <a href="https://github.com/coudot/lemonldap-ng-docker" class="urlextern" title="https://github.com/coudot/lemonldap-ng-docker"  rel="nofollow">https://github.com/coudot/lemonldap-ng-docker</a>
+
+See also this github project: <a href="https://github.com/LemonLDAPNG/lemonldap-ng-docker" class="urlextern" title="https://github.com/LemonLDAPNG/lemonldap-ng-docker"  rel="nofollow">https://github.com/LemonLDAPNG/lemonldap-ng-docker</a>
 </p>
 
-</div><!-- EDIT2 SECTION "Presentation" [94-388] -->
+</div><!-- EDIT2 SECTION "Presentation" [94-393] -->
 
 <h2 class="sectionedit3" id="usage">Utilisation</h2>
 <div class="level2">
@@ -68,7 +95,7 @@ Pré-requis
 Se connecter ensuite à l'adresse <a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a> avec un navigateur et se connecter avec dwho/dwho.
 </p>
 
-</div><!-- EDIT3 SECTION "Usage" [389-] -->
+</div><!-- EDIT3 SECTION "Usage" [394-] -->
 </div>
 </body>
 </html>

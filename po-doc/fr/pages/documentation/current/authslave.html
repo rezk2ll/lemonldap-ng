@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:authslave</title>
+  <title>documentation:2.0:authslave</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authslave"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authslave.html"/>
 <link rel="contents" href="authslave.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authslave","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -43,15 +69,17 @@ Le backend Slave de <abbr title="LemonLDAP::NG">LL::NG</abbr> utilise les en-tê
 <ul>
 <li class="level1"><div class="li"> Authentification : recherche le nom d'utilisateur dans un en-tête et crée la session sans exiger de mot-de-passe (mais enregistre l'adresse <abbr title="Internet Protocol">IP</abbr> cliente et la date)</div>
 </li>
-<li class="level1"><div class="li"> Utilisateurs : collecte les données transférées par en-tête HTTP par le “maître”.</div>
+<li class="level1"><div class="li">  Users: collect data transferred in HTTP headers by the “master”.</div>
 </li>
 </ul>
 
 <p>
-Ceci permet de metre un portail <abbr title="LemonLDAP::NG">LL::NG</abbr> derrière un autre web <abbr title="Authentification unique (Single Sign On)">SSO</abbr>, ou derrière un matériel SSL pour déléguer à ce matériel l'authentification.
+
+It allows one to put <abbr title="LemonLDAP::NG">LL::NG</abbr>::portal behind another web <abbr title="Authentification unique (Single Sign On)">SSO</abbr>, or behind a SSL hardware to delegate SSL authentication to that hardware.
+
 </p>
 
-</div><!-- EDIT3 SECTION "Presentation" [86-553] -->
+</div><!-- EDIT3 SECTION "Presentation" [86-558] -->
 
 <h2 class="sectionedit4" id="configuration">Configuration</h2>
 <div class="level2">
@@ -91,13 +119,13 @@ Déclarer ensuite les en-têtes HTTP exportés par le <abbr title="Authentificat
 	<tr class="row2 roweven">
 		<td class="col0 centeralign">    mail    </td><td class="col1 centeralign">    User-Email    </td>
 	</tr>
-</table></div><!-- EDIT5 TABLE [1510-1612] -->
+</table></div><!-- EDIT5 TABLE [1515-1617] -->
 
 <p>
 Voir aussi la <a href="exportedvars.html" class="wikilink1" title="documentation:2.0:exportedvars">configuration des variables exportées</a>.
 </p>
 
-</div><!-- EDIT4 SECTION "Configuration" [554-] -->
+</div><!-- EDIT4 SECTION "Configuration" [559-] -->
 </div>
 </body>
 </html>

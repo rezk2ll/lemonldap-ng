@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:extendedfunctions</title>
+  <title>documentation:2.0:extendedfunctions</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,extendedfunctions"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="extendedfunctions.html"/>
 <link rel="contents" href="extendedfunctions.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:extendedfunctions","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -311,7 +337,9 @@ Exemple d'usage simple :
 <div class="level3">
 
 <p>
-cette fonction permet de parcourir la variable <code>$hGroups</code> pour vérifier si une valeur y présente. dans un attribut de groupe
+
+this function allows one to parse the <code>$hGroups</code> variable to check if a value is present inside a group attribute.
+
 </p>
 
 <p>
@@ -331,7 +359,7 @@ Exemple d'usage simple :
 </p>
 <pre class="code">groupMatch($hGroups, 'description', 'Service 1')</pre>
 
-</div><!-- EDIT11 SECTION "groupMatch" [5312-5666] -->
+</div><!-- EDIT11 SECTION "groupMatch" [5312-5670] -->
 
 <h3 class="sectionedit12" id="encrypt">encrypt</h3>
 <div class="level3">
@@ -344,7 +372,7 @@ This function uses the secret key of LLNG configuration to crypt a data. This ca
 </p>
 <pre class="code">encrypt($_whatToTrace)</pre>
 
-</div><!-- EDIT12 SECTION "encrypt" [5667-] -->
+</div><!-- EDIT12 SECTION "encrypt" [5671-] -->
 </div>
 </body>
 </html>

@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:authldap</title>
+  <title>documentation:2.0:authldap</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authldap"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authldap.html"/>
 <link rel="contents" href="authldap.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authldap","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -159,7 +185,7 @@ Liste d'attributs à interroger pour trouver la session utilisateur. Voir aussi 
 <div class="level3">
 <div class="notetip">Dans les filtres LDAP, $user est remplacé par le nom du compte et $mail par l'adresse email.
 </div><ul>
-<li class="level1"><div class="li"> <strong>Filtre par défaut</strong> : filtre LDAP par défaut pour les recherches, ne devrait pas être modifié.</div>
+<li class="level1"><div class="li"> <strong>Default filter</strong>: default LDAP filter for searches, should not be modified.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Filtre d'authentication</strong> : filtre pour trouver l'utilisateur à partir de son login (défaut : <code>(&amp;(uid=$user)(objectClass=inetOrgPerson))</code>)</div>
 </li>
@@ -209,7 +235,7 @@ Et le filtre d'adresse mail est :
 </li>
 <li class="level1"><div class="li"> <strong>Change comme utilisateur</strong> : active la modification du mot-de-passe avec les éléments d'authentification de l'utilisateur connecté. Nécessite de requérir l'ancien mot-de-passe (voir <a href="portalcustom.html" class="wikilink1" title="documentation:2.0:portalcustom">personnalisation du portail</a>).</div>
 </li>
-<li class="level1"><div class="li"> <strong>Encodage des mots-de-passe LDAP</strong> : peut permettre de gérer les anciens servers LDAP en utilisant un encodage spécifique pour les mots-de-passe (défaut: utf-8).</div>
+<li class="level1"><div class="li"> <strong>LDAP password encoding</strong>: can allow one to manage old LDAP servers using specific encoding for passwords (default: utf-8).</div>
 </li>
 <li class="level1"><div class="li"> <strong>Utiliser l'attribut reset</strong> : activé pour utiliser l'attribut reset du mot-de-passe. Cet attribut est activé par LemonLDAP::NG lorsque <a href="resetpassword.html" class="wikilink1" title="documentation:2.0:resetpassword">le mot-de-passe a été réinitialisé par mail</a> et que l'utilisateur a choisi de générer le mot-de-passe (défaut : activé).</div>
 </li>

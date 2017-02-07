@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authdemo</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authdemo"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authdemo.html"/>
 <link rel="contents" href="authdemo.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authdemo","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -37,7 +63,7 @@
 <div class="level2">
 
 <p>
-This mode allow to test LemonLDAP::NG without any third-party software.
+This mode allow one to test LemonLDAP::NG without any third-party software.
 </p>
 <div class="notewarning">This mode must not be used for other purpose than test and demonstration!
 </div>
@@ -60,14 +86,14 @@ Demonstration backend has hard coded user accounts:
 		<td class="col0 centeralign">  dwho  </td><td class="col1 centeralign">  dwho  </td><td class="col2 centeralign">  dwho@badwolf.org  </td><td class="col3 centeralign">  administrator  </td>
 	</tr>
 </table></div>
-<!-- EDIT4 TABLE [349-562] --><div class="noteclassic">As you may have guessed, these accounts are famous characters from the TV show <a href="http://en.wikipedia.org/wiki/Doctor_Who" class="urlextern" title="http://en.wikipedia.org/wiki/Doctor_Who"  rel="nofollow">Doctor Who</a>.
+<!-- EDIT4 TABLE [353-566] --><div class="noteclassic">As you may have guessed, these accounts are famous characters from the TV show <a href="http://en.wikipedia.org/wiki/Doctor_Who" class="urlextern" title="http://en.wikipedia.org/wiki/Doctor_Who"  rel="nofollow">Doctor Who</a>.
 </div>
 <p>
 The AuthDemo and UserDBDemo will allow you to log in and get the standard attributes (uid, cn and mail). The PasswordDBDemo will allow you to change the password with some basic checks, but as the data are hard coded, the password will never be really changed.
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Presentation" [101-974] -->
+<!-- EDIT3 SECTION "Presentation" [101-978] -->
 <h2 class="sectionedit5" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -80,6 +106,6 @@ You can also modify list of exported variables. Only uid, cn and mail attributes
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Configuration" [975-] --></div>
+<!-- EDIT5 SECTION "Configuration" [979-] --></div>
 </body>
 </html>

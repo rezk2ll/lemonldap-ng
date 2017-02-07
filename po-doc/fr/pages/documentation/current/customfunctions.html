@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:customfunctions</title>
+  <title>documentation:2.0:customfunctions</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,customfunctions"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="customfunctions.html"/>
 <link rel="contents" href="customfunctions.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:customfunctions","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -46,10 +72,12 @@
 <div class="level1">
 
 <p>
-Les fonctions personnalisées permettent d'étendre <abbr title="LemonLDAP::NG">LL::NG</abbr>, elles peuvent être utilisées dans les <a href="writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">règles</a>, les <a href="writingrulesand_headers.html#headers" class="wikilink1" title="documentation:2.0:writingrulesand_headers">en-têtes</a> et les <a href="formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">données à rejouer dans les formulaires</a>.
+
+Custom functions allow one to extend <abbr title="LemonLDAP::NG">LL::NG</abbr>, they can be used in <a href="writingrulesand_headers.html#headers" class="wikilink1" title="documentation:2.0:writingrulesand_headers">headers</a>, <a href="writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">rules</a> or <a href="formreplay.html" class="wikilink1" title="documentation:2.0:formreplay">form replay data</a>.
+
 </p>
 
-</div><!-- EDIT1 SECTION "Custom functions" [1-215] -->
+</div><!-- EDIT1 SECTION "Custom functions" [1-219] -->
 
 <h2 class="sectionedit2" id="write_custom_functions_library">Écrire une librairie de fonctions personnalisées</h2>
 <div class="level2">
@@ -78,12 +106,12 @@ Créer un module Perl avec des fonctions personnalisées. Le module peut être a
 </ul>
 
 </div>
-</div><!-- EDIT2 SECTION "Write custom functions library" [216-840] -->
+</div><!-- EDIT2 SECTION "Write custom functions library" [220-844] -->
 
 <h2 class="sectionedit3" id="import_custom_functions_in_lemonldapng">Importer les fonctions personnalisées dans LemonLDAP::NG</h2>
 <div class="level2">
 
-</div><!-- EDIT3 SECTION "Import custom functions in LemonLDAP::NG" [841-894] -->
+</div><!-- EDIT3 SECTION "Import custom functions in LemonLDAP::NG" [845-898] -->
 
 <h3 class="sectionedit4" id="declare_module_in_handler_server">Declarer le module dans le serveur « handler »</h3>
 <div class="level3">
@@ -125,7 +153,7 @@ GROUP=www-data
 # Fichier éventuel de fonctions personnalisées
 CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</pre>
 
-</div><!-- EDIT4 SECTION "Declare module in handler server" [895-1829] -->
+</div><!-- EDIT4 SECTION "Declare module in handler server" [899-1833] -->
 
 <h3 class="sectionedit5" id="declare_custom_functions">Declarer les fonctions personnalisées</h3>
 <div class="level3">
@@ -136,7 +164,7 @@ Aller dans le manager, <code>Paramètres généraux</code> » <code>Paramètres 
 <pre class="code">SSOExtensions::function1</pre>
 <div class="noteimportant">Si la fonction n'est pas compatible avec la <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">cage saine</a>, il faut désactiver la mise en cage.
 </div>
-</div><!-- EDIT5 SECTION "Declare custom functions" [1830-2126] -->
+</div><!-- EDIT5 SECTION "Declare custom functions" [1834-2130] -->
 
 <h2 class="sectionedit6" id="use_it">Les utiliser</h2>
 <div class="level2">
@@ -146,7 +174,7 @@ Les fonctions peuvent être utilisées dans une macro, un en-tête ou une règle
 </p>
 <pre class="code">Custom-Header =&gt; function1($uid)</pre>
 
-</div><!-- EDIT6 SECTION "Use it" [2127-] -->
+</div><!-- EDIT6 SECTION "Use it" [2131-] -->
 </div>
 </body>
 </html>

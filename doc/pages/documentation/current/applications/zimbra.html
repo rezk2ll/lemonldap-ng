@@ -4,15 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:applications:zimbra</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,applications,zimbra"/>
 <link rel="search" type="application/opensearchdescription+xml" href="../lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="zimbra.html"/>
 <link rel="contents" href="zimbra.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="../lib/exe/css.php.t.bootstrap3.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0:applications';var JSINFO = {"id":"documentation:2.0:applications:zimbra","namespace":"documentation:2.0:applications"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="../lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -58,13 +85,13 @@
 </p>
 
 <p>
-Zimbra use a specific <a href="http://wiki.zimbra.com/index.php?title=Preauth" class="urlextern" title="http://wiki.zimbra.com/index.php?title=Preauth"  rel="nofollow">preauthentication protocol</a> to provide <abbr title="Single Sign On">SSO</abbr> on its application. This protocol is implementated in an <abbr title="LemonLDAP::NG">LL::NG</abbr> specific Handler.
+Zimbra use a specific <a href="http://wiki.zimbra.com/index.php?title=Preauth" class="urlextern" title="http://wiki.zimbra.com/index.php?title=Preauth"  rel="nofollow">preauthentication protocol</a> to provide <abbr title="Single Sign On">SSO</abbr> on its application. This protocol is implemented in an <abbr title="LemonLDAP::NG">LL::NG</abbr> specific Handler.
 </p>
 <div class="notetip">Zimbra can also be connected to <abbr title="LemonLDAP::NG">LL::NG</abbr> via <a href="../idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML protocol</a> (see <a href="http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html" class="urlextern" title="http://blog.zimbra.com/blog/archives/2010/06/using-saml-assertions-to-access-zimbra.html"  rel="nofollow">Zimbra blog</a>).
 </div><div class="noteimportant">For now, Zimbra isn&#039;t supported by Nginx handler. You have to use Apache.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [61-1099] -->
+<!-- EDIT2 SECTION "Presentation" [61-1097] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -83,7 +110,7 @@ The integration with <abbr title="LemonLDAP::NG">LL::NG</abbr> is the following:
 </ul>
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [1100-1440] -->
+<!-- EDIT3 SECTION "Configuration" [1098-1438] -->
 <h3 class="sectionedit4" id="zimbra_preauth_key">Zimbra preauth key</h3>
 <div class="level3">
 
@@ -96,7 +123,7 @@ See <a href="http://wiki.zimbra.com/index.php?title=Preauth#Preparing_a_domain_f
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Zimbra preauth key" [1441-1639] -->
+<!-- EDIT4 SECTION "Zimbra preauth key" [1439-1637] -->
 <h3 class="sectionedit5" id="zimbra_application_in_menu">Zimbra application in menu</h3>
 <div class="level3">
 
@@ -105,7 +132,7 @@ Choose for example <a href="http://zimbra.example.com/zimbrasso" class="urlexter
 </p>
 
 </div>
-<!-- EDIT5 SECTION "Zimbra application in menu" [1640-1821] -->
+<!-- EDIT5 SECTION "Zimbra application in menu" [1638-1819] -->
 <h3 class="sectionedit6" id="zimbra_virtual_host">Zimbra virtual host</h3>
 <div class="level3">
 
@@ -134,7 +161,7 @@ You will configure Zimbra virtual host like other <a href="../configvhost.html" 
 <div class="noteclassic">Zimbra Handler cannot be used in Nginx for the moment.
 </div>
 </div>
-<!-- EDIT6 SECTION "Zimbra virtual host" [1822-2382] -->
+<!-- EDIT6 SECTION "Zimbra virtual host" [1820-2380] -->
 <h3 class="sectionedit7" id="zimbra_virtual_host_in_manager">Zimbra virtual host in Manager</h3>
 <div class="level3">
 
@@ -147,7 +174,7 @@ Just configure the <a href="../writingrulesand_headers.html#rules" class="wikili
 </p>
 
 </div>
-<!-- EDIT7 SECTION "Zimbra virtual host in Manager" [2383-2599] -->
+<!-- EDIT7 SECTION "Zimbra virtual host in Manager" [2381-2597] -->
 <h3 class="sectionedit8" id="zimbra_handler_parameters">Zimbra Handler parameters</h3>
 <div class="level3">
 
@@ -176,6 +203,6 @@ Zimbra parameters are the following:
 
 </div>
 </div>
-<!-- EDIT8 SECTION "Zimbra Handler parameters" [2600-] --></div>
+<!-- EDIT8 SECTION "Zimbra Handler parameters" [2598-] --></div>
 </body>
 </html>

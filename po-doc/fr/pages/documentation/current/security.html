@@ -3,7 +3,13 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:security</title>
+  <title>documentation:2.0:security</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
 <meta name="robots" content="index,follow"/>
 <meta name="keywords" content="documentation,2.0,security"/>
@@ -11,10 +17,30 @@
 <link rel="start" href="security.html"/>
 <link rel="contents" href="security.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:security","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -27,8 +53,13 @@
 <li class="level1"><div class="li"><a href="#secure_configuration_access">Securiser l'accès à la configuration</a></div></li>
 <li class="level1"><div class="li"><a href="#protect_the_manager">Protéger le manager</a></div>
 <ul class="toc">
-<li class="level2"><div class="li"><a href="#protect_the_manager_by_apache">Protéger le Manager par Apache</a></div></li>
+<li class="level2"><div class="li"><a href="#protect_the_manager_by_the_web_server">Protect the Manager by the web server</a></div></li>
 <li class="level2"><div class="li"><a href="#protect_the_manager_by_llng">Protéger le manager par LL::NG</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#portal">Portail</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#split_portal_when_using_soaprest">Split portal when using SOAP/REST</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#write_good_rules">Écrire de bonnes règles</a></div>
@@ -83,7 +114,7 @@ Par défaut, l'accès au manager est restreint à l'utilisateur "dwho" (le backe
 
 </div><!-- EDIT3 SECTION "Protect the Manager" [810-1069] -->
 
-<h3 class="sectionedit4" id="protect_the_manager_by_apache">Protéger le Manager par Apache</h3>
+<h3 class="sectionedit4" id="protect_the_manager_by_the_web_server">Protect the Manager by the web server</h3>
 <div class="level3">
 
 <p>
@@ -109,7 +140,7 @@ You can use any of the mechanisms proposed by Apache: SSL, Auth-Basic, Kerberos,
     &lt;/<span class="kw3">Location</span>&gt;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
-</div><!-- EDIT4 SECTION "Protect the Manager by Apache" [1070-1680] -->
+</div><!-- EDIT4 SECTION "Protect the Manager by the web server" [1070-1688] -->
 
 <h3 class="sectionedit5" id="protect_the_manager_by_llng">Protéger le manager par LL::NG</h3>
 <div class="level3">
@@ -121,14 +152,42 @@ Pour protéger le manager par <abbr title="LemonLDAP::NG">LL::NG</abbr>, il suff
 <span class="re1">protection</span> <span class="sy0">=</span><span class="re2"> manager</span></pre>
 <div class="noteimportant">Avant, il faut créer l'hôte virtuel <code>manager.your.domain</code> dans le manager et mettre une <a href="writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">règle</a>, sinon l'accès au manager sera interdit.
 </div>
-</div><!-- EDIT5 SECTION "Protect the Manager by LL::NG" [1681-2097] -->
+</div><!-- EDIT5 SECTION "Protect the Manager by LL::NG" [1689-2105] -->
 
-<h2 class="sectionedit6" id="write_good_rules">Écrire de bonnes règles</h2>
+<h2 class="sectionedit6" id="portal">Portail</h2>
 <div class="level2">
 
-</div><!-- EDIT6 SECTION "Write good rules" [2098-2127] -->
+<p>
 
-<h3 class="sectionedit7" id="order_your_rules">Ordonner les règles</h3>
+LLNG portal now embeds the following features:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" class="urlextern" title="https://en.wikipedia.org/wiki/Cross-site_request_forgery"  rel="nofollow">CSRF</a> protection <em>(Cross-Site Request Forgery)</em>: a token is build for each form. To disable it, set requireToken to 0 <em>(portal security parameters in the manager)</em>. Token timeout can be defined via manager (default to 120 seconds),</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://en.wikipedia.org/wiki/Content_Security_Policy" class="urlextern" title="https://en.wikipedia.org/wiki/Content_Security_Policy"  rel="nofollow">Content-Security-Policy</a> header: portal build dynamically this header. You can modify default values in the manager <em>(Général parameters » Advanced parameters » Security » Content-Security-Policy)</em>.</div>
+</li>
+</ul>
+
+</div><!-- EDIT6 SECTION "Portal" [2106-2740] -->
+
+<h3 class="sectionedit7" id="split_portal_when_using_soaprest">Split portal when using SOAP/REST</h3>
+<div class="level3">
+
+<p>
+
+If you use <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP</a> or <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0:restsessionbackend">REST</a> session backend, dedicate a portal especially for these internal requests.
+
+</p>
+
+</div><!-- EDIT7 SECTION "Split portal when using SOAP/REST" [2741-2931] -->
+
+<h2 class="sectionedit8" id="write_good_rules">Écrire de bonnes règles</h2>
+<div class="level2">
+
+</div><!-- EDIT8 SECTION "Write good rules" [2932-2961] -->
+
+<h3 class="sectionedit9" id="order_your_rules">Ordonner les règles</h3>
 <div class="level3">
 
 <p>
@@ -147,7 +206,7 @@ Le manager permet de définir des commentaires de règles, ce qui permet de les 
 <p>
 Par exemple, si ces règles sont utilisées sans commentaires :
 </p>
-<div class="table sectionedit8"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit10"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Expression régulière  </th><th class="col1 centeralign">  Règle  </th><th class="col2 leftalign"> Commentaire  </th>
@@ -159,7 +218,7 @@ Par exemple, si ces règles sont utilisées sans commentaires :
 	<tr class="row2 roweven">
 		<td class="col0">  ^/pub/  </td><td class="col1">  accept  </td><td class="col2"> </td>
 	</tr>
-</table></div><!-- EDIT8 TABLE [2544-2654] -->
+</table></div><!-- EDIT10 TABLE [3378-3488] -->
 
 <p>
 Alors la seconde règle est appliquée en premier, donc tous les utilisateurs authentifiés pourront accéder au répertoire <code>/pub/admin</code>.
@@ -168,7 +227,7 @@ Alors la seconde règle est appliquée en premier, donc tous les utilisateurs au
 <p>
 Utiliser des commentaires pour corriger ça :
 </p>
-<div class="table sectionedit9"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit11"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Expression régulière  </th><th class="col1 centeralign">  Règle  </th><th class="col2 leftalign"> Commentaire  </th>
@@ -180,7 +239,7 @@ Utiliser des commentaires pour corriger ça :
 	<tr class="row2 roweven">
 		<td class="col0">  ^/pub/  </td><td class="col1">  accept  </td><td class="col2">  2_pub  </td>
 	</tr>
-</table></div><!-- EDIT9 TABLE [2799-2923] -->
+</table></div><!-- EDIT11 TABLE [3633-3757] -->
 <div class="notetip"><ul>
 <li class="level1"><div class="li"> Recharger le manager pour voir l'ordre dans lequel elles seront appliquées</div>
 </li>
@@ -189,9 +248,9 @@ Utiliser des commentaires pour corriger ça :
 </ul>
 
 </div>
-</div><!-- EDIT7 SECTION "Order your rules" [2128-3044] -->
+</div><!-- EDIT9 SECTION "Order your rules" [2962-3878] -->
 
-<h3 class="sectionedit10" id="be_careful_with_url_parameters">Attention aux paramètres des URL</h3>
+<h3 class="sectionedit12" id="be_careful_with_url_parameters">Attention aux paramètres des URL</h3>
 <div class="level3">
 
 <p>
@@ -201,7 +260,7 @@ On peut écrire des <a href="writingrulesand_headers.html#rules" class="wikilink
 <p>
 Par exemple avec cette règle sur le paramètre <code>access</code> :
 </p>
-<div class="table sectionedit11"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit13"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Expression régulière  </th><th class="col1 centeralign">  Règle  </th><th class="col2 leftalign"> Commentaire  </th>
@@ -213,7 +272,7 @@ Par exemple avec cette règle sur le paramètre <code>access</code> :
 	<tr class="row2 roweven">
 		<td class="col0">  default  </td><td class="col1">  accept  </td><td class="col2"> </td>
 	</tr>
-</table></div><!-- EDIT11 TABLE [3281-3415] -->
+</table></div><!-- EDIT13 TABLE [4115-4249] -->
 
 <p>
 Alors l'utilisateur qui tente d'accéder à l'une des URL suivantes <em class="u">sera autorisé</em> !
@@ -228,7 +287,7 @@ Alors l'utilisateur qui tente d'accéder à l'une des URL suivantes <em class="u
 <p>
 On peut utiliser les règles suivantes à la place :
 </p>
-<div class="table sectionedit12"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit14"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Expression régulière  </th><th class="col1 centeralign">  Règle  </th><th class="col2 leftalign"> Commentaire  </th>
@@ -243,22 +302,22 @@ On peut utiliser les règles suivantes à la place :
 	<tr class="row3 rowodd">
 		<td class="col0">  default  </td><td class="col1">  accept  </td><td class="col2"> </td>
 	</tr>
-</table></div><!-- EDIT12 TABLE [3613-3816] -->
+</table></div><!-- EDIT14 TABLE [4447-4650] -->
 <div class="notetip"><strong>(?i)</strong> signifie insensible à la casse.
 </div><div class="notewarning">Rappel : les règles poratnt sur des paramètres GET doivent être testées.
 </div>
-</div><!-- EDIT10 SECTION "Be careful with URL parameters" [3045-3953] -->
+</div><!-- EDIT12 SECTION "Be careful with URL parameters" [3879-4787] -->
 
-<h3 class="sectionedit13" id="encoded_characters">Caractères encodés</h3>
+<h3 class="sectionedit15" id="encoded_characters">Caractères encodés</h3>
 <div class="level3">
 
 <p>
 Certains caractères sont encodés dans les URLs par le navigateur (tels les espaces,…). Pour éviter les problèmes, <abbr title="LemonLDAP::NG">LL::NG</abbr> les décode en utilisant <a href="http://search.cpan.org/perldoc?Apache2::URI#unescape_url" class="urlextern" title="http://search.cpan.org/perldoc?Apache2::URI#unescape_url"  rel="nofollow">http://search.cpan.org/perldoc?Apache2::URI#unescape_url</a>. Il faut donc écrire les règles en utilisant les caractères normaux.
 </p>
 
-</div><!-- EDIT13 SECTION "Encoded characters" [3954-4207] -->
+</div><!-- EDIT15 SECTION "Encoded characters" [4788-5041] -->
 
-<h2 class="sectionedit14" id="secure_reverse-proxies">Securiser les proxies inverses</h2>
+<h2 class="sectionedit16" id="secure_reverse-proxies">Securiser les proxies inverses</h2>
 <div class="level2">
 
 <p>
@@ -302,9 +361,9 @@ Il est donc recommandé de sécurisé le canal entre le proxy inverse et l'appli
 </li>
 </ul>
 
-</div><!-- EDIT14 SECTION "Secure reverse-proxies" [4208-5876] -->
+</div><!-- EDIT16 SECTION "Secure reverse-proxies" [5042-6710] -->
 
-<h2 class="sectionedit15" id="configure_security_settings">Configurer les paramètres de sécurité</h2>
+<h2 class="sectionedit17" id="configure_security_settings">Configurer les paramètres de sécurité</h2>
 <div class="level2">
 
 <p>
@@ -329,9 +388,9 @@ Aller dans le manager, <code>Paramètres généraux</code> » <code>Paramètres 
 </li>
 </ul>
 
-</div><!-- EDIT15 SECTION "Configure security settings" [5877-7210] -->
+</div><!-- EDIT17 SECTION "Configure security settings" [6711-8044] -->
 
-<h2 class="sectionedit16" id="fail2ban">Fail2ban</h2>
+<h2 class="sectionedit18" id="fail2ban">Fail2ban</h2>
 <div class="level2">
 
 <p>
@@ -381,9 +440,9 @@ ignoreregex =</pre>
 Redémarrer fail2ban
 </p>
 
-</div><!-- EDIT16 SECTION "Fail2ban" [7211-8264] -->
+</div><!-- EDIT18 SECTION "Fail2ban" [8045-9098] -->
 
-<h2 class="sectionedit17" id="sessions_identifier">Sessions identifier</h2>
+<h2 class="sectionedit19" id="sessions_identifier">Sessions identifier</h2>
 <div class="level2">
 
 <p>
@@ -398,7 +457,7 @@ We recommend the use of <code>Lemonldap::NG::Common::Apache::Session::Generate::
 
 </p>
 
-</div><!-- EDIT17 SECTION "Sessions identifier" [8265-] -->
+</div><!-- EDIT19 SECTION "Sessions identifier" [9099-] -->
 </div>
 </body>
 </html>

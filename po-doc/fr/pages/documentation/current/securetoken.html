@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:securetoken</title>
+  <title>documentation:2.0:securetoken</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,securetoken"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="securetoken.html"/>
 <link rel="contents" href="securetoken.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:securetoken","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -53,15 +79,17 @@ L'agent jeton sécurisé est un agent particulier qui crée un jeton pour chaque
 </p>
 
 <p>
-Ce mécanisme permet de faire du <abbr title="Authentification unique (Single Sign On)">SSO</abbr> sur une application sans lien sécurisé entre l'agent et l'application, mais avec un lien sûr avec le serveur Memcached.
+
+This mechanism allow one to do <abbr title="Authentification unique (Single Sign On)">SSO</abbr> on application with an unsafe link between Handler and the application, but with a safe link with the Memcached server.
+
 </p>
 
-</div><!-- EDIT2 SECTION "Presentation" [37-488] -->
+</div><!-- EDIT2 SECTION "Presentation" [37-492] -->
 
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT3 SECTION "Configuration" [489-515] -->
+</div><!-- EDIT3 SECTION "Configuration" [493-519] -->
 
 <h3 class="sectionedit4" id="virtual_host">Hôte virtuel</h3>
 <div class="level3">
@@ -92,7 +120,7 @@ Configurer l'hôte virtuel Sympa comme n'importe quel autre <a href="configvhost
 <div class="noteclassic">This module uses Apache2 Filter and is not compatible with Nginx.
 
 </div>
-</div><!-- EDIT4 SECTION "Virtual host" [516-1068] -->
+</div><!-- EDIT4 SECTION "Virtual host" [520-1072] -->
 
 <h3 class="sectionedit5" id="handler_parameters">Paramètres de l'agent</h3>
 <div class="level3">
@@ -126,7 +154,7 @@ SecureToken parameters are the following:
 <span class="re1">secureTokenAllowOnError</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
 
 </div>
-</div><!-- EDIT5 SECTION "Handler parameters" [1069-] -->
+</div><!-- EDIT5 SECTION "Handler parameters" [1073-] -->
 </div>
 </body>
 </html>

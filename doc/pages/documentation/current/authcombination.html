@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>documentation:2.0:authcombination</title>
+<meta name="generator" content="DokuWiki"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="keywords" content="documentation,2.0,authcombination"/>
+<link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
+<link rel="start" href="authcombination.html"/>
+<link rel="contents" href="authcombination.html" title="Sitemap"/>
+<link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
+<script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authcombination","namespace":"documentation:2.0"};
+/*!]]>*/</script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
+</head>
+<body>
+<div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#presentation">Presentation</a></div></li>
+<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#modules_declaration">Modules declaration</a></div></li>
+<li class="level2"><div class="li"><a href="#rule_chain">Rule chain</a></div>
+<ul class="toc">
+<li class="level3"><div class="li"><a href="#boolean_expression">Boolean expression</a></div></li>
+<li class="level3"><div class="li"><a href="#tests">Tests</a></div></li>
+<li class="level3"><div class="li"><a href="#let_s_be_crazy">Let&#039;s be crazy</a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#known_problems">Known problems</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#authapache_authentication">AuthApache authentication</a></div></li>
+<li class="level2"><div class="li"><a href="#ssl_authentication">SSL authentication</a></div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
+
+<h1 class="sectionedit1" id="combination_of_authentication_schemes">Combination of authentication schemes</h1>
+<div class="level1">
+<div class="table sectionedit2"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign">  </td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [54-118] -->
+</div>
+<!-- EDIT1 SECTION "Combination of authentication schemes" [1-119] -->
+<h2 class="sectionedit3" id="presentation">Presentation</h2>
+<div class="level2">
+
+<p>
+This backend allows one to chain authentication method, for example to failback to LDAP authentication if Remote authentication failed…
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Presentation" [120-284] -->
+<h2 class="sectionedit4" id="configuration">Configuration</h2>
+<div class="level2">
+
+<p>
+You have to use <code>Combination</code> as authentication module (users module must be set to “Same”). Then go in <code>Combination parameters</code> to :
+</p>
+<ul>
+<li class="level1"><div class="li"> declare the modules that will be used</div>
+</li>
+<li class="level1"><div class="li"> set the rule chain</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT4 SECTION "Configuration" [285-515] -->
+<h3 class="sectionedit5" id="modules_declaration">Modules declaration</h3>
+<div class="level3">
+
+<p>
+Each module that will be used in combination rule must be declared. You must set:
+</p>
+<ul>
+<li class="level1"><div class="li"> the name used in the rule (a uniq string)</div>
+</li>
+<li class="level1"><div class="li"> the type (LDAP, <abbr title="Database Interface">DBI</abbr>,…)</div>
+</li>
+<li class="level1"><div class="li"> the scope:</div>
+<ul>
+<li class="level2"><div class="li"> authentication and user DB</div>
+</li>
+<li class="level2"><div class="li"> authentication only</div>
+</li>
+<li class="level2"><div class="li"> user DB only</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+For example:
+</p>
+<div class="table sectionedit6"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0"> Name </th><th class="col1"> Type </th><th class="col2"> Scope </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0"> DB1 </td><td class="col1"> <abbr title="Database Interface">DBI</abbr> </td><td class="col2"> Auth only </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> DB2 </td><td class="col1"> <abbr title="Database Interface">DBI</abbr> </td><td class="col2"> User DB only </td>
+	</tr>
+</table></div>
+<!-- EDIT6 TABLE [811-889] -->
+<p>
+Usually, you can&#039;t declare two modules of the same type if they don&#039;t have the same parameters. For example, usually you can&#039;t declare a MySQL <abbr title="Database Interface">DBI</abbr> and a PostgreSQL <abbr title="Database Interface">DBI</abbr>, because there is no extra field for PostgreSQL parameters. Now with Combination, you can declare some overloaded parameters. For example, if <abbr title="Database Interface">DBI</abbr> is configured to use PostgreSQL but DB2 is a MySQL DB, you can override the “dbiChain” parameter.
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Modules declaration" [516-1303] -->
+<h3 class="sectionedit7" id="rule_chain">Rule chain</h3>
+<div class="level3">
+
+<p>
+Combination allows:
+</p>
+<ul>
+<li class="level1"><div class="li"> to chain schemes (example: <code>[LDAP] and [<abbr title="Database Interface">DBI</abbr>]</code>)</div>
+</li>
+<li class="level1"><div class="li"> to test different schemes (example: <code>[LDAP] or [<abbr title="Database Interface">DBI</abbr>]</code>)</div>
+</li>
+<li class="level1"><div class="li"> to choose authentication scheme depending on some request values</div>
+</li>
+</ul>
+
+<p>
+Each scheme must be enclose in <code>[]</code>. A comma separates auth and user DB modules. If only one value is set, the same is used for both.
+</p>
+
+</div>
+
+<h4 id="boolean_expression">Boolean expression</h4>
+<div class="level4">
+
+<p>
+Remember that schemes in rules are the names declared above.
+</p>
+<div class="table sectionedit8"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0"> Example </th><th class="col1"> Explanation </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 leftalign"> <code>[myLDAP] or [myDBI]</code>                 </td><td class="col1"> If myLDAP fails, use myDBI </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> <code>[mySSL, myLDAP] or [myLDAP, myLDAP]</code> </td><td class="col1"> Try mySSL for auth and myLDAP for userDB. If fails, switch to myLDAP for both </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 leftalign"> <code>[myLDAP] or [myDBI1] or [myDBI2]</code>    </td><td class="col1"> Try myLDAP, then if it fails, myDBI1, then if it fails myDBI2 </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0 leftalign"> <code>[mySSL and myLDAP, myLDAP ]</code>         </td><td class="col1"> Use mySSL and myLDAP to authentify, myLDAP to get user </td>
+	</tr>
+</table></div>
+<!-- EDIT8 TABLE [1757-2188] --><div class="noteimportant">Note that “or” can&#039;t be used inside a scheme.
+If you think to “[mySSL or myLDAP, myLDAP]”, you must write <code>[mySSL, myLDAP] or [myLDAP, myLDAP]</code>
+
+</div><div class="table sectionedit9"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0"> Example </th><th class="col1"> Explanation </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0 leftalign"> <code>[myDBI1] and [myDBI2] or [myLDAP]</code>              </td><td class="col1"> Try myDBI1 and myDBI2, if it fails, try myLDAP </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> <code>[myDBI1] and [myDBI2] or [myLDAP] and [myDBI2]</code> </td><td class="col1"> Try myDBI1 and myDBI2, if it fails, try myLDAP and myDBI2 </td>
+	</tr>
+</table></div>
+<!-- EDIT9 TABLE [2361-2605] --><div class="noteimportant">You can&#039;t use brackets in a boolean expression and “and” has precedence on “or”.
+<p>
+If you think to “( [myLDAP] or [myDBI1] ) and [myDBI2]”, you must write <code>[myLDAP] and [myDBI2] or [myDBI1] and [myDBI2]</code>
+</p>
+
+</div>
+</div>
+
+<h4 id="tests">Tests</h4>
+<div class="level4">
+
+<p>
+Test can use only the <code>$env</code> variable. It contains the FastCGI environment variables.
+</p>
+<div class="table sectionedit10"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0"> Example </th><th class="col1"> Explanation </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0"> <code>if($env→{REMOTE_ADDR} =~ /^10\./) then [myLDAP] else [mySSL, myLDAP]</code> </td><td class="col1"> If user doesn&#039;t come from 10.0.0.0/8 network, use SSL as authentication module </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> <code>if($env→{REMOTE_ADDR} =~ /^10\./) then [myLDAP] else if($env→{REMOTE_ADDR} =~ /^192/) then [myDBI1] else [myDBI2]</code> </td><td class="col1"> Chain tests </td>
+	</tr>
+</table></div>
+<!-- EDIT10 TABLE [2941-3263] --><div class="noteimportant">Note that brackets can&#039;t be used except to enclose test.
+<p>
+If you wants to write <code>if(…) then if…</code>, you must write <code>if(not …) then … else if(…)…</code>
+</p>
+
+</div>
+</div>
+
+<h4 id="let_s_be_crazy">Let&#039;s be crazy</h4>
+<div class="level4">
+
+<p>
+The following rule is valid:
+</p>
+
+<p>
+<code>if($env→{REMOTE_ADDR} =~ /^192\./) then [mySSL, myLDAP] or [myLDAP] else [myLDAP and myDBI, myLDAP]</code>
+</p>
+
+</div>
+<!-- EDIT7 SECTION "Rule chain" [1304-3610] -->
+<h2 class="sectionedit11" id="known_problems">Known problems</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT11 SECTION "Known problems" [3611-3638] -->
+<h3 class="sectionedit12" id="authapache_authentication">AuthApache authentication</h3>
+<div class="level3">
+
+<p>
+When using this module, <abbr title="LemonLDAP::NG">LL::NG</abbr> portal will be called only if Apache does not return “401 Authentication required”, but this is not the Apache behaviour: if the auth module fails, Apache returns 401. So Kerberos can be used only with a “and” boolean expression.
+</p>
+
+<p>
+Example: <code>[ Apache and LDAP, LDAP ]</code>
+</p>
+
+<p>
+To bypass this, follow the documentation of <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">AuthApache module</a>
+</p>
+
+</div>
+<!-- EDIT12 SECTION "AuthApache authentication" [3639-4055] -->
+<h3 class="sectionedit13" id="ssl_authentication">SSL authentication</h3>
+<div class="level3">
+
+<p>
+To chain SSL, you have to set “SSLRequire optional” in Apache configuration, else users will be authenticated by SSL only.
+</p>
+
+</div>
+<!-- EDIT13 SECTION "SSL authentication" [4056-] --></div>
+</body>
+</html>

@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:loginhistory</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,loginhistory"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="loginhistory.html"/>
 <link rel="contents" href="loginhistory.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:loginhistory","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -27,7 +53,7 @@
 <div class="level2">
 
 <p>
-LemonLDAP::NG allows to store user logins and login attempts in their persistent session.
+LemonLDAP::NG allows one to store user logins and login attempts in their persistent session.
 </p>
 
 <p>
@@ -35,7 +61,7 @@ Users can see their own history in menu, if menu module <code>Login history</cod
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Presentation" [30-307] -->
+<!-- EDIT2 SECTION "Presentation" [30-311] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -56,10 +82,10 @@ To allow the Login History tab in Menu, configure it in <code>General Parameters
 </p>
 
 <p>
-You can also display a check box on the authentication form, to allow user to see their login history before beeing redirected to the protected application (see <a href="portalcustom.html#other_parameters" class="wikilink1" title="documentation:2.0:portalcustom">portal customization</a>). 
+You can also display a check box on the authentication form, to allow user to see their login history before being redirected to the protected application (see <a href="portalcustom.html#other_parameters" class="wikilink1" title="documentation:2.0:portalcustom">portal customization</a>). 
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Configuration" [308-] --></div>
+<!-- EDIT3 SECTION "Configuration" [312-] --></div>
 </body>
 </html>

@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authopenidconnect</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authopenidconnect"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authopenidconnect.html"/>
 <link rel="contents" href="authopenidconnect.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authopenidconnect","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -137,12 +163,12 @@ Then in <code>General Parameters</code> &gt; <code>Authentication modules</code>
 </li>
 <li class="level1"><div class="li"> <strong>Callback GET parameter</strong>: name of GET parameter used to intercept callback (default: openidconnectcallback)</div>
 </li>
-<li class="level1"><div class="li"> <strong>State session timeout</strong>: duration of a state session (used to keep  state information between autentication request and authentication response) in seconds (default: 600)</div>
+<li class="level1"><div class="li"> <strong>State session timeout</strong>: duration of a state session (used to keep  state information between authentication request and authentication response) in seconds (default: 600)</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT7 SECTION "Authentication and UserDB" [1243-2033] -->
+<!-- EDIT7 SECTION "Authentication and UserDB" [1243-2034] -->
 <h3 class="sectionedit8" id="register_llng_to_an_openid_connect_provider">Register LL::NG to an OpenID Connect Provider</h3>
 <div class="level3">
 
@@ -168,7 +194,7 @@ After registration, the OP must give you a client ID and a client secret, that w
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Register LL::NG to an OpenID Connect Provider" [2034-2748] -->
+<!-- EDIT8 SECTION "Register LL::NG to an OpenID Connect Provider" [2035-2749] -->
 <h3 class="sectionedit9" id="declare_the_openid_connect_provider_in_llng">Declare the OpenID Connect Provider in LL::NG</h3>
 <div class="level3">
 
@@ -362,7 +388,7 @@ So you can define for example:
 </li>
 <li class="level2"><div class="li"> <strong>Client secret</strong>: Client secret given by OP</div>
 </li>
-<li class="level2"><div class="li"> <strong>Store ID token</strong>: Allows to store the ID token (JWT) inside user session. Don&#039;t enable it unless you need to replay this token on an application, or if you need the id_token_hint parameter when using logout.</div>
+<li class="level2"><div class="li"> <strong>Store ID token</strong>: Allows one to store the ID token (JWT) inside user session. Don&#039;t enable it unless you need to replay this token on an application, or if you need the id_token_hint parameter when using logout.</div>
 </li>
 </ul>
 </li>
@@ -401,6 +427,6 @@ So you can define for example:
 </ul>
 
 </div>
-<!-- EDIT9 SECTION "Declare the OpenID Connect Provider in LL::NG" [2749-] --></div>
+<!-- EDIT9 SECTION "Declare the OpenID Connect Provider in LL::NG" [2750-] --></div>
 </body>
 </html>

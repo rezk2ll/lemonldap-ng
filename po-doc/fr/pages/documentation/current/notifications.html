@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <meta charset="utf-8" />
-  <title>documentation:2.0:notifications</title>
+  <title>documentation:2.0:notifications</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,notifications"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="notifications.html"/>
 <link rel="contents" href="notifications.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:notifications","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -191,7 +217,7 @@ Pour résumer les options disponibles :
 <div class="level3">
 
 <p>
-Le module de notifications utilise une carte blanche pour gérer les notifications destinées à tous les utilisateurs. La valeur par défaut de cette carte blanche est <code>allusers</code>, mais on peut la changer si <code>allusers</code> est un nom d'utilisateur.
+Le module de notifications utilise une carte blanche pour gérer les notifications destinées à tous les utilisateurs. The default value of this wildcard is <code>allusers</code>, but you can change it if <code>allusers</code> is a known identifier in your system.
 </p>
 
 <p>
@@ -202,7 +228,7 @@ Pour le changer, aller dans Paramètres généraux &gt; Paramètres avancés &gt
 Ainsi, créer une notification pour <code>alluserscustom</code> affichera la notification à tous les utilisateurs.
 </p>
 
-</div><!-- EDIT5 SECTION "Wildcard" [3327-3796] -->
+</div><!-- EDIT5 SECTION "Wildcard" [3327-3797] -->
 
 <h3 class="sectionedit6" id="custom_xslt_file">Fichier XSLT personnalisé</h3>
 <div class="level3">
@@ -211,12 +237,12 @@ Ainsi, créer une notification pour <code>alluserscustom</code> affichera la not
 La transformation entre le texte XML d'une notification et l'affichage HTML est faite par XSLT. Le fichier XSLT par défaut est portal/skins/common/notification.xsl. On peut créer son propre fichier XSLT et le stocker à un autre endroit, par exemple /etc/lemonldap-ng. Configure ensuite le nouveau fichier XSLT dans le manager, aller dans Paramètres généraux &gt; Paramètres avancés &gt; Notifications &gt; Fichier XSLT personnalisé et mettre par exemple <code>/etc/lemonldap-ng/notification.xsl</code>.
 </p>
 
-</div><!-- EDIT6 SECTION "Custom XSLT file" [3797-4269] -->
+</div><!-- EDIT6 SECTION "Custom XSLT file" [3798-4270] -->
 
 <h2 class="sectionedit7" id="using_notification_system">Utiliser le système de notification</h2>
 <div class="level2">
 
-</div><!-- EDIT7 SECTION "Using notification system" [4270-4308] -->
+</div><!-- EDIT7 SECTION "Using notification system" [4271-4309] -->
 
 <h3 class="sectionedit8" id="notification_format">Format des notifications</h3>
 <div class="level3">
@@ -283,7 +309,7 @@ Exemple :
 <span class="sc3"><span class="re1">&lt;/notification<span class="re2">&gt;</span></span></span>
 <span class="sc3"><span class="re1">&lt;/root<span class="re2">&gt;</span></span></span></pre>
 
-</div><!-- EDIT8 SECTION "Notification format" [4309-6407] -->
+</div><!-- EDIT8 SECTION "Notification format" [4310-6408] -->
 
 <h3 class="sectionedit9" id="create_new_notifications_with_notifications_explorer">Créer de nouvelles notifications avec l'explorateur des notifications</h3>
 <div class="level3">
@@ -304,7 +330,7 @@ Remplir ensuite tous les champs pour créer la notification. Seule la condition 
 Lorsque tout est bon, cliquer sur <code>Sauver</code>.
 </p>
 
-</div><!-- EDIT9 SECTION "Create new notifications with notifications explorer" [6408-6726] -->
+</div><!-- EDIT9 SECTION "Create new notifications with notifications explorer" [6409-6727] -->
 
 <h3 class="sectionedit10" id="notifications_trough_soap">Notifications via SOAP</h3>
 <div class="level3">
@@ -387,7 +413,7 @@ On peut également effacer certaines notifications avec SOAP, si SOAP est activ�
     <a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> <span class="st0">"$res notification(s) have been deleted<span class="es0">\n</span>"</span><span class="sy0">;</span>
 <span class="br0">}</span></pre>
 
-</div><!-- EDIT10 SECTION "Notifications trough SOAP" [6727-8623] -->
+</div><!-- EDIT10 SECTION "Notifications trough SOAP" [6728-8624] -->
 
 <h3 class="sectionedit11" id="test_notification">Tester les notifications</h3>
 <div class="level3">
@@ -404,7 +430,7 @@ Il suffit d'insérer une notification et de se connecter au portail en utilisant
 Essayer alors de créer une notification globale (à l'utilisateur “allusers”), et se connecter avec n'importe quel compte, le message sera affiché.
 </p>
 
-</div><!-- EDIT11 SECTION "Test notification" [8624-] -->
+</div><!-- EDIT11 SECTION "Test notification" [8625-] -->
 </div>
 </body>
 </html>

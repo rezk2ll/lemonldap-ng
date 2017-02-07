@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:kerberos</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,kerberos"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="kerberos.html"/>
 <link rel="contents" href="kerberos.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:kerberos","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -64,7 +90,7 @@
 <li class="level2"><div class="li"><a href="#configuration_of_portal_virtual_host2">Configuration of portal virtual host</a></div></li>
 </ul>
 </li>
-<li class="level1"><div class="li"><a href="#other_ressources">Other ressources</a></div></li>
+<li class="level1"><div class="li"><a href="#other_resources">Other resources</a></div></li>
 </ul>
 </div>
 </div>
@@ -415,7 +441,7 @@ Create a redirection script, called login.pl:
 <span class="kw1">my</span> <span class="re0">$uri</span> <span class="sy0">=</span> <span class="re0">$ENV</span><span class="br0">&#123;</span><span class="st0">&quot;REQUEST_URI&quot;</span><span class="br0">&#125;</span><span class="sy0">;</span>
 <a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> CGI<span class="sy0">::</span><span class="me2">header</span><span class="br0">&#40;</span><span class="sy0">-</span>Refresh <span class="sy0">=&gt;</span> <span class="st_h">'0; URL=https://authpwd.example.com'</span><span class="sy0">.</span><span class="re0">$uri</span><span class="br0">&#41;</span><span class="sy0">;</span>
 <a href="http://perldoc.perl.org/functions/exit.html"><span class="kw3">exit</span></a><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">;</span></pre>
-<div class="notetip">The redirection script is needed if you use a failaback authentication. If not, you can just  keep a single virtual host (the authentication will fail if Kerberos negociation do not succeed).
+<div class="notetip">The redirection script is needed if you use a failaback authentication. If not, you can just  keep a single virtual host (the authentication will fail if Kerberos negotiation do not succeed).
 </div>
 </div>
 <!-- EDIT15 SECTION "Redirection script" [6902-7459] -->
@@ -575,7 +601,7 @@ The configuration is the same as with a single AD domain.
 
 </div>
 <!-- EDIT25 SECTION "Configuration of portal virtual host" [10399-10505] -->
-<h2 class="sectionedit26" id="other_ressources">Other ressources</h2>
+<h2 class="sectionedit26" id="other_resources">Other resources</h2>
 <div class="level2">
 
 <p>
@@ -589,6 +615,6 @@ You can check these documentations to get more information:
 </ul>
 
 </div>
-<!-- EDIT26 SECTION "Other ressources" [10506-] --></div>
+<!-- EDIT26 SECTION "Other resources" [10506-] --></div>
 </body>
 </html>

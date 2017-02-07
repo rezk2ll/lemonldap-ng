@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:idpopenid</title>
+  <title>documentation:2.0:idpopenid</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,idpopenid"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="idpopenid.html"/>
 <link rel="contents" href="idpopenid.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:idpopenid","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -45,7 +71,8 @@
 <div class="level2">
 
 <p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> peut agir comme un serveur OpenID 2.0, ce qui permet de fédérer <abbr title="LemonLDAP::NG">LL::NG</abbr> avec :
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can act as an OpenID 2.0 Server, that can allow one to federate <abbr title="LemonLDAP::NG">LL::NG</abbr> with:
+
 </p>
 <ul>
 <li class="level1"><div class="li"> Un autre système <abbr title="LemonLDAP::NG">LL::NG</abbr> configuré avec <a href="authopenid.html" class="wikilink1" title="documentation:2.0:authopenid">authentification OpenID</a></div>
@@ -73,7 +100,7 @@ Exemple :
 </p>
 <pre class="code">http://auth.example.com/openidserver/foo.bar</pre>
 
-</div><!-- EDIT2 SECTION "Presentation" [137-1121] -->
+</div><!-- EDIT2 SECTION "Presentation" [137-1125] -->
 
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
@@ -110,7 +137,7 @@ Aller ensuite dans <code>Options</code> pour définir :
 </ul>
 <div class="notetip">Si l'<code>identifiant OpenID</code> n'est pas renseigné, la donnée <code>Paramètres généraux</code> » <code>Journalisation</code> » <code>REMOTE_USER</code> est  utilisée, mise à <code>uid</code> par défaut
 </div>
-</div><!-- EDIT3 SECTION "Configuration" [1122-2419] -->
+</div><!-- EDIT3 SECTION "Configuration" [1126-2423] -->
 
 <h3 class="sectionedit4" id="shared_attributes_sreg">Attributs partagés (SREG)</h3>
 <div class="level3">
@@ -144,7 +171,7 @@ Chaque attribut SREG est associé à une clef de session utilisateur. Une clef d
 </p>
 <div class="noteclassic">Si le client OpenID demande des données utilisateurs, ceux-ci sont questionnés pour accepter ou non le partage.
 </div>
-</div><!-- EDIT4 SECTION "Shared attributes (SREG)" [2420-2927] -->
+</div><!-- EDIT4 SECTION "Shared attributes (SREG)" [2424-2931] -->
 
 <h3 class="sectionedit5" id="security">Sécurité</h3>
 <div class="level3">
@@ -156,7 +183,7 @@ Chaque attribut SREG est associé à une clef de session utilisateur. Une clef d
 </ul>
 <div class="noteimportant">Noter que le protocole <a href="idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML</a> est plus securisé que OpenID, ainsi si les partenaires sont connus, preférer <a href="idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">SAML</a>.
 </div>
-</div><!-- EDIT5 SECTION "Security" [2928-] -->
+</div><!-- EDIT5 SECTION "Security" [2932-] -->
 </div>
 </body>
 </html>

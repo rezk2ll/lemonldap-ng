@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:configapache</title>
+  <title>documentation:2.0:configapache</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,configapache"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="configapache.html"/>
 <link rel="contents" href="configapache.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:configapache","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -23,11 +49,17 @@
 <div class="level1">
 <div class="noteclassic">Cette étape est effectuée automatiquement lorsqu'on installe <abbr title="LemonLDAP::NG">LL::NG</abbr> avec les packages.
 </div>
-</div><!-- EDIT1 SECTION "Deploy Apache configuration" [1-130] -->
+</div><!-- EDIT1 SECTION "Deploy Apache configuration" [1-131] -->
 
 <h2 class="sectionedit2" id="files">Fichiers</h2>
 <div class="level2">
+<div class="noteimportant">Apache-ModPerl is no longer usable since version 2.4 <em>(many segfaults,…)</em>. No problem for portal and manager since they are now handle by FastCGI.
 
+<p>
+<strong>But for handlers, please use <a href="confignginx.html" class="wikilink1" title="documentation:2.0:confignginx">Nginx</a> !</strong>
+</p>
+
+</div>
 <p>
 Depuis une installation par les sources, les fichiers de configuration d'Apache se trouvent dans <code>/usr/local/lemonldap-ng/etc/</code>, sinon, ils sont dans <code>/etc/lemonldap-ng</code>.
 </p>
@@ -51,7 +83,7 @@ a2ensite handler-apache2.conf
 a2ensite test-apache2.conf</pre>
 
 </div>
-</div><!-- EDIT2 SECTION "Files" [131-922] -->
+</div><!-- EDIT2 SECTION "Files" [132-1156] -->
 
 <h2 class="sectionedit3" id="modules">Modules</h2>
 <div class="level2">
@@ -73,7 +105,7 @@ Il faut également charger quelques modules Apache :
 <pre class="code">a2enmod fcgid perl alias rewrite</pre>
 
 </div>
-</div><!-- EDIT3 SECTION "Modules" [923-] -->
+</div><!-- EDIT3 SECTION "Modules" [1157-] -->
 </div>
 </body>
 </html>

@@ -10,10 +10,36 @@
 <link rel="start" href="idpopenidconnect.html"/>
 <link rel="contents" href="idpopenidconnect.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:idpopenidconnect","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -33,6 +59,7 @@
 <ul class="toc">
 <li class="level3"><div class="li"><a href="#exported_attributes">Exported attributes</a></div></li>
 <li class="level3"><div class="li"><a href="#options">Options</a></div></li>
+<li class="level3"><div class="li"><a href="#extra_claims">Extra claims</a></div></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -367,9 +394,16 @@ You can also define extra claims and link them to attributes (see below). Then y
 </li>
 <li class="level1"><div class="li"> <strong>Bypass consent</strong>: Enable if you never want to display the scope sharing consent screen (consent will be accepted by default). Bypassing the consent is <strong>not</strong> compliant with OpenID Connect standard.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Extra claims</strong>: Associate attributes to extra claims if the RP request them, for example <code>birth</code> ⇒ <code>birthplace birthcountry</code></div>
-</li>
 </ul>
+
+</div>
+
+<h4 id="extra_claims">Extra claims</h4>
+<div class="level4">
+
+<p>
+Associate attributes to extra claims if the RP request them, for example <code>birth</code> ⇒ <code>birthplace birthcountry</code>
+</p>
 
 </div>
 <!-- EDIT7 SECTION "Configuration of Relying Party in LL::NG" [3525-] --></div>

@@ -3,17 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:applications:limesurvey</title>
+  <title>documentation:2.0:applications:limesurvey</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,applications,limesurvey"/>
 <link rel="search" type="application/opensearchdescription+xml" href="../lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="limesurvey.html"/>
 <link rel="contents" href="limesurvey.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="../lib/exe/css.php.t.bootstrap3.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0:applications';var JSINFO = {"id":"documentation:2.0:applications:limesurvey","namespace":"documentation:2.0:applications"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="../lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="../lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -52,7 +79,7 @@
 <div class="level2">
 
 <p>
-<a href="http://www.limesurvey.org" class="urlextern" title="http://www.limesurvey.org"  rel="nofollow">LimeSurvey</a> est un logiciel de sondage écrit en PHP. LimeSurvey dispose d'un mode d'authentification par serveur web qui permet de l'integrer directement dans LemonLDAP::NG.
+<a href="http://www.limesurvey.org" class="urlextern" title="http://www.limesurvey.org"  rel="nofollow">LimeSurvey</a> est un logiciel de sondage écrit en PHP. LimeSurvey has a webserver authentication mode that allows one to integrate it directly into LemonLDAP::NG.
 </p>
 
 <p>
@@ -67,13 +94,13 @@ Pour une meilleure integration, LimeSurvey doit être configuré pour créer aut
 </li>
 </ul>
 
-</div><!-- EDIT2 SECTION "Presentation" [71-557] -->
+</div><!-- EDIT2 SECTION "Presentation" [71-561] -->
 
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 <div class="noteclassic">On suppose que LimeSurvey est installé dans /var/www/html/limesurvey
 </div>
-</div><!-- EDIT3 SECTION "Configuration" [558-666] -->
+</div><!-- EDIT3 SECTION "Configuration" [562-670] -->
 
 <h3 class="sectionedit4" id="limesurvey_configuration">Configuration de LimeSurvey</h3>
 <div class="level3">
@@ -104,7 +131,7 @@ La configuration est effectuée via config.php:
 <span class="br0">)</span><span class="sy0">;</span></pre>
 <div class="notetip">On utilise les en-têtes HTTP pour trouver le profil utilisateur par défaut.
 </div>
-</div><!-- EDIT4 SECTION "LimeSurvey configuration" [667-1672] -->
+</div><!-- EDIT4 SECTION "LimeSurvey configuration" [671-1676] -->
 
 <h3 class="sectionedit5" id="limesurvey_virtual_host">Hôte virtuel LimeSurvey</h3>
 <div class="level3">
@@ -167,7 +194,7 @@ Configurer l'hôte virtuel LimeSurvey comme n'importe quel autre <a href="../con
   }
 }</pre>
 
-</div><!-- EDIT5 SECTION "LimeSurvey virtual host" [1673-3192] -->
+</div><!-- EDIT5 SECTION "LimeSurvey virtual host" [1677-3196] -->
 
 <h3 class="sectionedit6" id="limesurvey_virtual_host_in_manager">Hôte virtuel LimeSurvey dans le manager</h3>
 <div class="level3">
@@ -201,7 +228,7 @@ Aller dans le manager et <a href="../configvhost.html#lemonldapng_configuration"
 	<tr class="row5 rowodd">
 		<td class="col0 centeralign">    Auth-SuperAdmin    </td><td class="col1 centeralign">  1 si l'utilisateur est super-administrateur  </td>
 	</tr>
-</table></div><!-- EDIT7 TABLE [3365-3583] -->
+</table></div><!-- EDIT7 TABLE [3369-3587] -->
 <div class="notetip">On peut gérer les rôles avec le <a href="../rbac.html" class="wikilink1" title="documentation:2.0:rbac">modèle RBAC</a> ou en utilisant les groupes.
 </div>
 </div>
@@ -223,7 +250,7 @@ Aller dans le manager et <a href="../configvhost.html#lemonldapng_configuration"
 	<tr class="row3 rowodd">
 		<td class="col0 centeralign">  Défaut  </td><td class="col1 centeralign">    default    </td><td class="col2 centeralign">  Autorise seulement les utilisateurs avec un rôle LimeSurvey  </td>
 	</tr>
-</table></div><!-- EDIT8 TABLE [3690-3975] -->
+</table></div><!-- EDIT8 TABLE [3694-3979] -->
 <div class="notetip">Il est possible de mettre l'accès par défaut à :<ul>
 <li class="level1"><div class="li"> <strong>accept</strong> : tous les utilisateurs authentifiés peuvent accéder aux surveillances</div>
 </li>
@@ -232,7 +259,7 @@ Aller dans le manager et <a href="../configvhost.html#lemonldapng_configuration"
 </ul>
 
 </div>
-</div><!-- EDIT6 SECTION "LimeSurvey virtual host in Manager" [3193-] -->
+</div><!-- EDIT6 SECTION "LimeSurvey virtual host in Manager" [3197-] -->
 </div>
 </body>
 </html>

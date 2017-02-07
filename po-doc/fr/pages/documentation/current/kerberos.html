@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:kerberos</title>
+  <title>documentation:2.0:kerberos</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,kerberos"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="kerberos.html"/>
 <link rel="contents" href="kerberos.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:kerberos","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -65,7 +91,7 @@
 <li class="level2"><div class="li"><a href="#configuration_of_portal_virtual_host2">Configuration de l'hôte virtuel du portail</a></div></li>
 </ul>
 </li>
-<li class="level1"><div class="li"><a href="#other_ressources">Autres documentations</a></div></li>
+<li class="level1"><div class="li"><a href="#other_resources">Autres documents</a></div></li>
 </ul>
 </div>
 </div><!-- TOC END -->
@@ -416,7 +442,7 @@ Créer un script de redirection, appelé login.pl:
 <span class="kw1">my</span> <span class="re0">$uri</span> <span class="sy0">=</span> <span class="re0">$ENV</span><span class="br0">{</span><span class="st0">"REQUEST_URI"</span><span class="br0">}</span><span class="sy0">;</span>
 <a href="http://perldoc.perl.org/functions/print.html"><span class="kw3">print</span></a> CGI<span class="sy0">::</span><span class="me2">header</span><span class="br0">(</span><span class="sy0">-</span>Refresh <span class="sy0">=&gt;</span> <span class="st_h">'0; URL=https://authpwd.example.com'</span><span class="sy0">.</span><span class="re0">$uri</span><span class="br0">)</span><span class="sy0">;</span>
 <a href="http://perldoc.perl.org/functions/exit.html"><span class="kw3">exit</span></a><span class="br0">(</span><span class="nu0">0</span><span class="br0">)</span><span class="sy0">;</span></pre>
-<div class="notetip">Le script de redirection est nécessaire si l'authentification de secours est utilisée. Sinon, on peut ne conserver qu'un hôte virtuel (l'authentification sera refusée si la négociation Kerberos échoue).
+<div class="notetip">Le script de redirection est nécessaire si l'authentification de secours est utilisée. If not, you can just keep a single virtual host (the authentication will fail if Kerberos negotiation do not succeed).
 </div>
 </div><!-- EDIT15 SECTION "Redirection script" [6902-7459] -->
 
@@ -576,7 +602,7 @@ La configuration est la même que pour un domaine AD unique.
 
 </div><!-- EDIT25 SECTION "Configuration of portal virtual host" [10399-10505] -->
 
-<h2 class="sectionedit26" id="other_ressources">Autres documentations</h2>
+<h2 class="sectionedit26" id="other_resources">Autres documents</h2>
 <div class="level2">
 
 <p>
@@ -589,7 +615,7 @@ Pour en savoir plus :
 </li>
 </ul>
 
-</div><!-- EDIT26 SECTION "Other ressources" [10506-] -->
+</div><!-- EDIT26 SECTION "Other resources" [10506-] -->
 </div>
 </body>
 </html>

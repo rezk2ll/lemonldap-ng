@@ -3,17 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:applications:cornerstone</title>
+  <title>documentation:2.0:applications:cornerstone</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,applications,cornerstone"/>
 <link rel="search" type="application/opensearchdescription+xml" href="../lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="cornerstone.html"/>
 <link rel="contents" href="cornerstone.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="../lib/exe/css.php.t.bootstrap3.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0:applications';var JSINFO = {"id":"documentation:2.0:applications:cornerstone","namespace":"documentation:2.0:applications"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="../lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="../lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -51,7 +78,7 @@
 <div class="level2">
 
 <p>
-<a href="http://www.cornerstoneondemand.com/" class="urlextern" title="http://www.cornerstoneondemand.com/"  rel="nofollow">CornerStone On Demand (CSOD)</a> permet d'utiliser <abbr title="Security Assertion Markup Language">SAML</abbr> pour authentifier les utilisateurs. Il fonctionne par défaut avec un mécanisme initié par l'IDP mais permet un fonctionnement standard initié par le SP.
+<a href="http://www.cornerstoneondemand.com/" class="urlextern" title="http://www.cornerstoneondemand.com/"  rel="nofollow">CornerStone On Demand (CSOD)</a> allows one to use <abbr title="Security Assertion Markup Language">SAML</abbr> to authenticate users. Il fonctionne par défaut avec un mécanisme initié par l'IDP mais permet un fonctionnement standard initié par le SP.
 </p>
 
 <p>
@@ -66,12 +93,12 @@ Pour fonctionner avec <abbr title="LemonLDAP::NG">LL::NG</abbr> il faut :
 </li>
 </ul>
 
-</div><!-- EDIT2 SECTION "Presentation" [74-574] -->
+</div><!-- EDIT2 SECTION "Presentation" [74-578] -->
 
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT3 SECTION "Configuration" [575-601] -->
+</div><!-- EDIT3 SECTION "Configuration" [579-605] -->
 
 <h3 class="sectionedit4" id="new_service_provider">Nouveau fournisseur de service</h3>
 <div class="level3">
@@ -110,7 +137,7 @@ Base64 encoded CSOD certificate
 <span class="sc3"><span class="re1">&lt;/md:EntityDescriptor<span class="re2">&gt;</span></span></span></pre>
 <div class="noteimportant">Changer <strong>mycompanyid</strong> (dans <code>AssertionConsumerService</code> markup, parameter <code>Location</code>) avec l'ID CSOD de l'entreprise et mettre la valeur du certificat dans ds:X509Certificate markup
 </div>
-</div><!-- EDIT4 SECTION "New Service Provider" [602-2116] -->
+</div><!-- EDIT4 SECTION "New Service Provider" [606-2120] -->
 
 <h3 class="sectionedit5" id="csod_control_panel">Panneau de configuration CSOD</h3>
 <div class="level3">
@@ -144,7 +171,7 @@ Il faut utiliser la fonctionnalité initiée par l'IDP de <abbr title="LemonLDAP
 </p>
 <pre class="code">https://auth.example.com/saml/singleSignOn?IDPInitiated=1&amp;sp=mycompanyid.csod.com</pre>
 
-</div><!-- EDIT5 SECTION "CSOD control panel" [2117-] -->
+</div><!-- EDIT5 SECTION "CSOD control panel" [2121-] -->
 </div>
 </body>
 </html>

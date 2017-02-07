@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:configlocation</title>
+  <title>documentation:2.0:configlocation</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,configlocation"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="configlocation.html"/>
 <link rel="contents" href="configlocation.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:configlocation","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -158,7 +184,9 @@ Lorsque toutes les modifications sont effectuées, cliquer sur <code>Sauver</cod
 <div class="level2">
 
 <p>
-LemonLDAP::NG fournit un script qui permet d'éditer la configuration sans interface graphique, ce script se nomme <code>lmConfigEditor</code> et se trouvedans le répertoire bin/ de LemonLDAP::NG, par exemple /usr/share/lemonldap-ng/bin :
+
+LemonLDAP::NG provide a script that allows one to edit configuration without graphical interface, this script is called <code>lmConfigEditor</code> and is stored in the LemonLDAP::NG bin/ directory, for example /usr/share/lemonldap-ng/bin:
+
 </p>
 <pre class="code">/usr/share/lemonldap-ng/bin/lmConfigEditor</pre>
 <div class="notetip">Ce script doit être lancé par root, il utilisera ensuite le compte et le groupe d'Apache pour accéder à la configuration.
@@ -186,7 +214,7 @@ La configuration est affichée en une grande table de hachage Perl, qu'on peut �
 Si une modification est effectuée, la configuration est sauvée avec un nouveau numéro. Sinon, la configuration courante est gardée.
 </p>
 
-</div><!-- EDIT4 SECTION "Configuration text editor" [3237-4461] -->
+</div><!-- EDIT4 SECTION "Configuration text editor" [3237-4465] -->
 
 <h2 class="sectionedit5" id="command_line_interface_cli">Interface en ligne de commande (CLI)</h2>
 <div class="level2">
@@ -246,7 +274,7 @@ Quelques exemples:
 /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set notification 1
 /usr/share/lemonldap-ng/bin/lemonldap-ng-cli -sep ',' get macros,_whatToTrace</pre>
 
-</div><!-- EDIT5 SECTION "Command Line Interface (CLI)" [4462-6280] -->
+</div><!-- EDIT5 SECTION "Command Line Interface (CLI)" [4466-6284] -->
 
 <h2 class="sectionedit6" id="apache">Apache</h2>
 <div class="level2">
@@ -269,7 +297,7 @@ Voir <a href="configapache.html" class="wikilink1" title="documentation:2.0:conf
 </p>
 <div class="notewarning">Mod Perl doit être chargé avant LemonLDAP::NG, donc les inclusions aprèsla directive <code>LoadModule</code> de mod_perl.
 </div>
-</div><!-- EDIT6 SECTION "Apache" [6281-6823] -->
+</div><!-- EDIT6 SECTION "Apache" [6285-6827] -->
 
 <h3 class="sectionedit7" id="portal">Portail</h3>
 <div class="level3">
@@ -379,7 +407,7 @@ Dans l'hôte virtuel du portail se trouve plusieurs éléments de configuration 
     <span class="kw1">require</span> SOAP::Lite;
 &lt;/Perl&gt;</pre>
 
-</div><!-- EDIT7 SECTION "Portal" [6824-9611] -->
+</div><!-- EDIT7 SECTION "Portal" [6828-9615] -->
 
 <h3 class="sectionedit8" id="manager1">Manager</h3>
 <div class="level3">
@@ -395,7 +423,7 @@ L'hôte virtuel du manager est utilisé pour servir l'interface de configuration
 &nbsp;
     <span class="kw1">RewriteRule</span> <span class="st0">"^/$"</span> <span class="st0">"/psgi/manager-server.fcgi"</span> [PT]
     <span class="co1"># Pour de meilleures performances, on peut effacer la ligne RewriteRule après</span>
-    <span class="co1"># avoir mis les fichiers html : mettre simplement le résultat HTML des différents modules</span>
+    <span class="co1"># puttings html files: simply put the HTML results of different modules</span>
     <span class="co1"># (configuration, sessions, notifications) en manager.html, sessions.html,</span>
     <span class="co1"># notifications.html, puis décommenter les 2 lignes suivantes :</span>
     <span class="co1"># DirectoryIndex manager.html</span>
@@ -426,7 +454,7 @@ L'hôte virtuel du manager est utilisé pour servir l'interface de configuration
 L'accès à l'interface de configuration n'est pas protégée par Apache mais par LemonLDAP::NG lui-même (voir <code>lemonldap-ng.ini</code>) :
 </p>
 
-</div><!-- EDIT8 SECTION "Manager" [9612-11163] -->
+</div><!-- EDIT8 SECTION "Manager" [9616-11166] -->
 
 <h3 class="sectionedit9" id="handler">Agent (Handler)</h3>
 <div class="level3">
@@ -475,7 +503,7 @@ Protéger ensuite un hôte virtuel standard, la seul ligne de configuration à a
 </p>
 <pre class="code file apache">PerlHeaderParserHandler Lemonldap::NG::Handler</pre>
 
-</div><!-- EDIT9 SECTION "Handler" [11164-12357] -->
+</div><!-- EDIT9 SECTION "Handler" [11167-12360] -->
 
 <h2 class="sectionedit10" id="nginx">Nginx</h2>
 <div class="level2">
@@ -498,7 +526,7 @@ Voir <a href="confignginx.html" class="wikilink1" title="documentation:2.0:confi
 </p>
 <div class="notewarning">Le serveur <a href="fastcgiserver.html" class="wikilink1" title="documentation:2.0:fastcgiserver">FastCGI LL::NG</a> doit être lancé séparemment.
 </div>
-</div><!-- EDIT10 SECTION "Nginx" [12358-12817] -->
+</div><!-- EDIT10 SECTION "Nginx" [12361-12820] -->
 
 <h3 class="sectionedit11" id="portal1">Portail</h3>
 <div class="level3">
@@ -578,7 +606,7 @@ Dans l'hôte virtuel du portail se trouve plusieurs éléments de configuration 
     # Get Issuer
     rewrite ^/get/.* /index.pl;</pre>
 
-</div><!-- EDIT11 SECTION "Portal" [12818-14561] -->
+</div><!-- EDIT11 SECTION "Portal" [12821-14564] -->
 
 <h3 class="sectionedit12" id="manager2">Manager</h3>
 <div class="level3">
@@ -612,7 +640,7 @@ L'hôte virtuel du manager est utilisé pour servir l'interface de configuration
 L'accès à l'interface de configuration n'est pas protégée par Nginx mais par LemonLDAP::NG lui-même (voir <code>lemonldap-ng.ini</code>) :
 </p>
 
-</div><!-- EDIT12 SECTION "Manager" [14562-15314] -->
+</div><!-- EDIT12 SECTION "Manager" [14565-15317] -->
 
 <h3 class="sectionedit13" id="handler1">Agent (Handler)</h3>
 <div class="level3">
@@ -709,7 +737,7 @@ Pour protéger ensuite un hôte virtuel, il faut insérer ceci (ou créer un fic
 &nbsp;
     # Insérer ensuite la configuration (fastcgi_* ou proxy_*)</pre>
 
-</div><!-- EDIT13 SECTION "Handler" [15315-18262] -->
+</div><!-- EDIT13 SECTION "Handler" [15318-18265] -->
 
 <h2 class="sectionedit14" id="configuration_reload">Rechargement de la configuration</h2>
 <div class="level2">
@@ -725,11 +753,13 @@ Ces paramètres peuvent être surchargés dans le fichier ini de LemonLDAP::NG i
 <div class="notetip">Une <abbr title="Uniform Resource Locator">URL</abbr> par serveur physique est nécessaire, car les agents partagent le même cache de configuration pour chaque serveur physique.
 </div>
 <p>
-La cible <code>reload</code> est gérée dans la configuration d'Apache, dans un hôte virtuel protégé par LemonLDAP::NG Handler (voir ci-dessous les exemple Apache→handler ou Nginx→Handler).:
+
+The <code>reload</code> target is managed in Apache or Nginx configuration, inside a virtual host protected by LemonLDAP::NG Handler (see below examples in Apache→handler or Nginx→Handler).
+
 </p>
 <div class="noteimportant">Il faut autoriser l'accès à l'URL déclarée au manager.
 </div>
-</div><!-- EDIT14 SECTION "Configuration reload" [18263-19433] -->
+</div><!-- EDIT14 SECTION "Configuration reload" [18266-19435] -->
 
 <h2 class="sectionedit15" id="local_file">Fichier local</h2>
 <div class="level2">
@@ -763,7 +793,7 @@ Par exemple, pour surcharger l'apparence du portail :
 <span class="re1">portalSkin</span> <span class="sy0">=</span><span class="re2"> dark</span></pre>
 <div class="notetip">Il est nécessaire de connaître le nom technique du paramètre de configuration pour le faire. Se référer à la <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">liste des paramètres</a> pour le trouver.
 </div>
-</div><!-- EDIT15 SECTION "Local file" [19434-] -->
+</div><!-- EDIT15 SECTION "Local file" [19436-] -->
 </div>
 </body>
 </html>

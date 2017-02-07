@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authcas</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authcas"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authcas.html"/>
 <link rel="contents" href="authcas.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authcas","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -52,7 +78,7 @@
 <p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> can delegate authentication to a <abbr title="Central Authentication Service">CAS</abbr> server. This requires <a href="http://sourcesup.cru.fr/projects/perlcas/" class="urlextern" title="http://sourcesup.cru.fr/projects/perlcas/"  rel="nofollow">Perl CAS module</a>.
 </p>
-<div class="notetip"><abbr title="LemonLDAP::NG">LL::NG</abbr> can also act as <a href="idpcas.html" class="wikilink1" title="documentation:2.0:idpcas">CAS server</a>, that allows to interconnect two <abbr title="LemonLDAP::NG">LL::NG</abbr> systems.
+<div class="notetip"><abbr title="LemonLDAP::NG">LL::NG</abbr> can also act as <a href="idpcas.html" class="wikilink1" title="documentation:2.0:idpcas">CAS server</a>, that allows one to interconnect two <abbr title="LemonLDAP::NG">LL::NG</abbr> systems.
 </div>
 <p>
 <abbr title="LemonLDAP::NG">LL::NG</abbr> can also request proxy tickets for its protected services. Proxy tickets will be collected at authentication phase and stored in user session under the form:
@@ -68,7 +94,7 @@ They can then be forwarded to applications trough <a href="writingrulesand_heade
 <div class="notetip"><abbr title="Central Authentication Service">CAS</abbr> authentication will automatically add a <a href="logoutforward.html" class="wikilink1" title="documentation:2.0:logoutforward">logout forward rule</a> on <abbr title="Central Authentication Service">CAS</abbr> server logout <abbr title="Uniform Resource Locator">URL</abbr> in order to close <abbr title="Central Authentication Service">CAS</abbr> session on <abbr title="LemonLDAP::NG">LL::NG</abbr> logout.
 </div>
 </div>
-<!-- EDIT3 SECTION "Presentation" [71-828] -->
+<!-- EDIT3 SECTION "Presentation" [71-832] -->
 <h2 class="sectionedit4" id="perl-cas_module_installation">Perl-CAS module installation</h2>
 <div class="level2">
 
@@ -92,7 +118,7 @@ Install the module:
 <pre class="code">sudo make install</pre>
 
 </div>
-<!-- EDIT4 SECTION "Perl-CAS module installation" [829-1162] -->
+<!-- EDIT4 SECTION "Perl-CAS module installation" [833-1166] -->
 <h2 class="sectionedit5" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -132,6 +158,6 @@ Then, go in <code><abbr title="Central Authentication Service">CAS</abbr> parame
 
 </div>
 </div>
-<!-- EDIT5 SECTION "Configuration" [1163-] --></div>
+<!-- EDIT5 SECTION "Configuration" [1167-] --></div>
 </body>
 </html>

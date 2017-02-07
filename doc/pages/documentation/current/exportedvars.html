@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:exportedvars</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,exportedvars"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="exportedvars.html"/>
 <link rel="contents" href="exportedvars.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:exportedvars","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -61,10 +87,10 @@ You can define exported variables for each module in the module configuration it
 <p>
 <img src="documentation/manager-exported-variables.png" class="mediacenter" title="Exported variables in the Manager" alt="Exported variables in the Manager" />
 </p>
-<div class="notetip">You can define environment variables in <code>Exported variables</code>, this allows to populate user session with some environment values. Environment variables will not be queried in users database.
+<div class="notetip">You can define environment variables in <code>Exported variables</code>, this allows one to populate user session with some environment values. Environment variables will not be queried in users database.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [35-1266] -->
+<!-- EDIT2 SECTION "Presentation" [35-1270] -->
 <h2 class="sectionedit4" id="extend_variables_using_macros_and_groups">Extend variables using macros and groups</h2>
 <div class="level2">
 
@@ -131,6 +157,6 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 <div class="level2">
 
 </div>
-<!-- EDIT4 SECTION "Extend variables using macros and groups" [1267-] --></div>
+<!-- EDIT4 SECTION "Extend variables using macros and groups" [1271-] --></div>
 </body>
 </html>

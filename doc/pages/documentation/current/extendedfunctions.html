@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:extendedfunctions</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,extendedfunctions"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="extendedfunctions.html"/>
 <link rel="contents" href="extendedfunctions.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:extendedfunctions","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -81,7 +107,7 @@ Inside this jail, you can access to:
 </li>
 <li class="level1"><div class="li"> Environment variables, in some cases (through %ENV)</div>
 </li>
-<li class="level1"><div class="li"> <a href="#request_information" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">Informations about current request</a></div>
+<li class="level1"><div class="li"> <a href="#request_information" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">Information about current request</a></div>
 </li>
 <li class="level1"><div class="li"> <a href="#extended_functions_list" title="documentation:2.0:extendedfunctions ↵" class="wikilink1">Extended functions</a>:</div>
 <ul>
@@ -105,7 +131,7 @@ Inside this jail, you can access to:
 <div class="notetip">To know more about the jail, check <a href="http://perldoc.perl.org/Safe.html" class="urlextern" title="http://perldoc.perl.org/Safe.html"  rel="nofollow">Safe module documentation</a>.
 </div>
 </div>
-<!-- EDIT2 SECTION "Presentation" [35-1108] -->
+<!-- EDIT2 SECTION "Presentation" [35-1106] -->
 <h2 class="sectionedit3" id="request_information">Request information</h2>
 <div class="level2">
 
@@ -132,12 +158,12 @@ The following data about the current request are available through functions :
 </ul>
 
 </div>
-<!-- EDIT3 SECTION "Request information" [1109-1515] -->
+<!-- EDIT3 SECTION "Request information" [1107-1512] -->
 <h2 class="sectionedit4" id="extended_functions_list">Extended Functions List</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT4 SECTION "Extended Functions List" [1516-1552] -->
+<!-- EDIT4 SECTION "Extended Functions List" [1513-1549] -->
 <h3 class="sectionedit5" id="date">date</h3>
 <div class="level3">
 
@@ -147,7 +173,7 @@ Returns the date, in format YYYYMMDDHHMMSS, local time by default, GMT by callin
 <pre class="code">date(1)</pre>
 
 </div>
-<!-- EDIT5 SECTION "date" [1553-1672] -->
+<!-- EDIT5 SECTION "date" [1550-1669] -->
 <h3 class="sectionedit6" id="checklogonhours">checkLogonHours</h3>
 <div class="level3">
 
@@ -204,7 +230,7 @@ You can modify the default behavior for people without value in ssoLogonHours. I
 <pre class="code">checkLogonHours($ssoLogonHours, &#039;&#039;, &#039;&#039;, &#039;1&#039;)</pre>
 
 </div>
-<!-- EDIT6 SECTION "checkLogonHours" [1673-3610] -->
+<!-- EDIT6 SECTION "checkLogonHours" [1670-3607] -->
 <h3 class="sectionedit7" id="checkdate">checkDate</h3>
 <div class="level3">
 
@@ -236,7 +262,7 @@ Simple usage example:
 <pre class="code">checkDate($ssoStartDate, $ssoEndDate)</pre>
 
 </div>
-<!-- EDIT7 SECTION "checkDate" [3611-4238] -->
+<!-- EDIT7 SECTION "checkDate" [3608-4235] -->
 <h3 class="sectionedit8" id="basic">basic</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -261,7 +287,7 @@ Simple usage example:
 <pre class="code">basic($uid,$_password)</pre>
 
 </div>
-<!-- EDIT8 SECTION "basic" [4239-4701] -->
+<!-- EDIT8 SECTION "basic" [4236-4698] -->
 <h3 class="sectionedit9" id="unicode2iso">unicode2iso</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -284,7 +310,7 @@ Simple usage example:
 <pre class="code">unicode2iso($name)</pre>
 
 </div>
-<!-- EDIT9 SECTION "unicode2iso" [4702-5006] -->
+<!-- EDIT9 SECTION "unicode2iso" [4699-5003] -->
 <h3 class="sectionedit10" id="iso2unicode">iso2unicode</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -307,12 +333,12 @@ Simple usage example:
 <pre class="code">iso2unicode($name)</pre>
 
 </div>
-<!-- EDIT10 SECTION "iso2unicode" [5007-5311] -->
+<!-- EDIT10 SECTION "iso2unicode" [5004-5308] -->
 <h3 class="sectionedit11" id="groupmatch">groupMatch</h3>
 <div class="level3">
 
 <p>
-this function allows to parse the <code>$hGroups</code> variable to check if a value is present inside a group attribute.
+this function allows one to parse the <code>$hGroups</code> variable to check if a value is present inside a group attribute.
 </p>
 
 <p>
@@ -333,7 +359,7 @@ Simple usage example:
 <pre class="code">groupMatch($hGroups, &#039;description&#039;, &#039;Service 1&#039;)</pre>
 
 </div>
-<!-- EDIT11 SECTION "groupMatch" [5312-5666] -->
+<!-- EDIT11 SECTION "groupMatch" [5309-5667] -->
 <h3 class="sectionedit12" id="encrypt">encrypt</h3>
 <div class="level3">
 <div class="noteimportant">This function is not compliant with <a href="safejail.html" class="wikilink1" title="documentation:2.0:safejail">Safe jail</a>, you will need to disable the jail to use it.
@@ -344,6 +370,6 @@ This function uses the secret key of LLNG configuration to crypt a data. This ca
 <pre class="code">encrypt($_whatToTrace)</pre>
 
 </div>
-<!-- EDIT12 SECTION "encrypt" [5667-] --></div>
+<!-- EDIT12 SECTION "encrypt" [5668-] --></div>
 </body>
 </html>

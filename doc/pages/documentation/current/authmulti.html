@@ -4,156 +4,51 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authmulti</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authmulti"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authmulti.html"/>
 <link rel="contents" href="authmulti.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authmulti","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
-<!-- TOC START -->
-<div id="dw__toc">
-<h3 class="toggle">Table of Contents</h3>
-<div>
-
-<ul class="toc">
-<li class="level1"><div class="li"><a href="#presentation">Presentation</a></div></li>
-<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
-<ul class="toc">
-<li class="level2"><div class="li"><a href="#advanced_configuration">Advanced configuration</a></div></li>
-</ul>
-</li>
-<li class="level1"><div class="li"><a href="#known_problems">Known problems</a></div>
-<ul class="toc">
-<li class="level2"><div class="li"><a href="#authapache_authentication">AuthApache authentication</a></div></li>
-<li class="level2"><div class="li"><a href="#ssl_authentication">SSL authentication</a></div></li>
-</ul></li>
-</ul>
-</div>
-</div>
-<!-- TOC END -->
 
 <h1 class="sectionedit1" id="multiple_backends_stack">Multiple backends stack</h1>
 <div class="level1">
-<div class="table sectionedit2"><table class="inline table table-bordered table-striped">
-	<thead>
-	<tr class="row0 roweven">
-		<th class="col0 centeralign">  Authentication  </th><th class="col1 centeralign">  Users  </th><th class="col2 centeralign">  Password  </th>
-	</tr>
-	</thead>
-	<tr class="row1 rowodd">
-		<td class="col0 centeralign">  ✔  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
-	</tr>
-</table></div>
-<!-- EDIT2 TABLE [40-103] -->
-</div>
-<!-- EDIT1 SECTION "Multiple backends stack" [1-104] -->
-<h2 class="sectionedit3" id="presentation">Presentation</h2>
-<div class="level2">
-
-<p>
-This backend allows to chain authentication method, for example to failback to LDAP authentication if Remote authentication failed…
-</p>
-
-</div>
-<!-- EDIT3 SECTION "Presentation" [105-265] -->
-<h2 class="sectionedit4" id="configuration">Configuration</h2>
-<div class="level2">
-
-<p>
-You have to use <code>Multiple</code> as authentication modul (this will also force <code>Multiple</code> for the users module). Then go in <code>Multiple parameters</code> to define the modules to chain for authentication and users. Modules are separated by semi-colons/
-</p>
-
-<p>
-For example:
-</p>
-<pre class="code">CAS;LDAP</pre>
-
-<p>
-If <abbr title="Central Authentication Service">CAS</abbr> failed, LDAP will be used.
-</p>
-
-<p>
-You can also add a condition. Example:
-</p>
-<pre class="code">Remote $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/&#039;</pre>
-<div class="notetip">Multiple will try to use the same module for authentication and users. Example, if you have <code><abbr title="Database Interface">DBI</abbr>;LDAP</code> and <abbr title="Database Interface">DBI</abbr> failed for authentication, it will try first to call LDAP as user database.
+<div class="noteimportant">This module has been removed and replaced by the more powerful <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination of auth schemes</a>.
 </div>
 </div>
-<!-- EDIT4 SECTION "Configuration" [266-934] -->
-<h3 class="sectionedit5" id="advanced_configuration">Advanced configuration</h3>
-<div class="level3">
-
-<p>
-The <code>Multiple</code> system can :
-</p>
-<ul>
-<li class="level1"><div class="li"> stack several times the same module with a different name</div>
-</li>
-<li class="level1"><div class="li"> overload any <abbr title="LemonLDAP::NG">LL::NG</abbr> <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">parameter</a> when a specific backend is used</div>
-</li>
-</ul>
-<div class="notetip">Overloading is not available trough the Manager
 </div>
-<p>
-To stack several times the same module, use “#name” with different names. Example:
-</p>
-<pre class="code">LDAP#Openldap; LDAP#ActiveDirectory</pre>
-
-<p>
-Then you can have different <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">parameters</a> for each stored in a Perl hash entry named multi:
-</p>
-<pre class="code perl">multi <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
-    <span class="st_h">'LDAP#Openldap'</span> <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
-      <span class="st_h">'ldapServer'</span> <span class="sy0">=&gt;</span> <span class="st_h">'ldap1.example.com'</span><span class="sy0">,</span>
-      <span class="st_h">'LDAPFilter'</span> <span class="sy0">=&gt;</span> <span class="st_h">'(uid=$user)'</span><span class="sy0">,</span>
-    <span class="br0">&#125;</span><span class="sy0">,</span>
-    <span class="st_h">'LDAP#ActiveDirectory'</span> <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
-      <span class="st_h">'ldapServer'</span> <span class="sy0">=&gt;</span> <span class="st_h">'ldaps://ad.example.com'</span><span class="sy0">,</span>
-      <span class="st_h">'LDAPFilter'</span> <span class="sy0">=&gt;</span> <span class="st_h">'(&amp;(sAMAccountName=$user)(objectClass=person))'</span><span class="sy0">,</span>
-    <span class="br0">&#125;</span>
-<span class="br0">&#125;</span><span class="sy0">,</span></pre>
-
-<p>
-This key must be stored directly in lemonldap-ng.ini:
-</p>
-<pre class="code ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
-<span class="re1">multi</span> <span class="sy0">=</span><span class="re2"> <span class="br0">&#123;</span>'LDAP#Openldap'<span class="sy0">=</span>&gt;<span class="br0">&#123;</span>'ldapServer'<span class="sy0">=</span>&gt;'ldap1.example.com','LDAPFilter'<span class="sy0">=</span>&gt;'<span class="br0">&#40;</span>uid<span class="sy0">=</span>$user<span class="br0">&#41;</span>'<span class="br0">&#125;</span>,'LDAP#ActiveDirectory'<span class="sy0">=</span>&gt;<span class="br0">&#123;</span>'ldapServer'<span class="sy0">=</span>&gt;'ldaps://ad.example.com','LDAPFilter'<span class="sy0">=</span>&gt;'<span class="br0">&#40;</span>&amp;<span class="br0">&#40;</span>sAMAccountName<span class="sy0">=</span>$user<span class="br0">&#41;</span><span class="br0">&#40;</span>objectClass<span class="sy0">=</span>person<span class="br0">&#41;</span><span class="br0">&#41;</span>'<span class="br0">&#125;</span><span class="br0">&#125;</span></span></pre>
-
-</div>
-<!-- EDIT5 SECTION "Advanced configuration" [935-2056] -->
-<h2 class="sectionedit6" id="known_problems">Known problems</h2>
-<div class="level2">
-
-</div>
-<!-- EDIT6 SECTION "Known problems" [2057-2084] -->
-<h3 class="sectionedit7" id="authapache_authentication">AuthApache authentication</h3>
-<div class="level3">
-
-<p>
-When using this module, <abbr title="LemonLDAP::NG">LL::NG</abbr> portal will be called only if Apache does not return “401 Authentication required”, but this is not the Apache behaviour: if the auth module fails, Apache returns 401.
-</p>
-
-<p>
-To bypass this, follow the documentation of <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">AuthApache module</a>
-</p>
-
-</div>
-<!-- EDIT7 SECTION "AuthApache authentication" [2085-2399] -->
-<h3 class="sectionedit8" id="ssl_authentication">SSL authentication</h3>
-<div class="level3">
-
-<p>
-To chain SSL, you have to set “SSLRequire optional” in Apache configuration, else users will be authenticated by SSL only. 
-</p>
-
-</div>
-<!-- EDIT8 SECTION "SSL authentication" [2400-] --></div>
 </body>
 </html>

@@ -70,14 +70,6 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>To use it, edit lemonldap-ng.ini (this is not available trough Manager) and configure:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T140844Z" changeid="xavier">
-        <seg>Pour l'utiliser, éditer lemonldap-ng.ini (ce n'est pas disponible dans le Manager) et configurer :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>If you use TLS, you can set any of the &lt;a0&gt;Net::LDAP&lt;/a0&gt; start_tls() sub like &lt;c1&gt;ldap+tls://server/verify=none&amp;capath=/etc/ssl&lt;/c1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184710Z" changeid="xavier">
@@ -276,14 +268,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T161238Z" changeid="xavier">
         <seg>Les variables définies dans le &lt;c0&gt;Variables exportées&lt;/c0&gt; principal seront utilisées dans chaque backend.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Default filter&lt;/s0&gt;: default LDAP fitler for searches, should not be modified.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T165352Z" changeid="xavier">
-        <seg>&lt;s0&gt;Filtre par défaut&lt;/s0&gt; : filtre LDAP par défaut pour les recherches, ne devrait pas être modifié.</seg>
       </tuv>
     </tu>
     <tu>
@@ -550,14 +534,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T062223Z" changeid="guimard">
         <seg>ldapGroupBase</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>If you still need to use Google login after this date, use &lt;a0&gt;OpenID Connect authentication module&lt;/a0&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T135553Z" changeid="xavier">
-        <seg>S'il est nécessaire d'utiliser la connexion Google après cette date, utiliser le &lt;a0&gt;module d'authentification OpenID-Connect&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -1156,16 +1132,6 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>cd myskin
-ln -s ../pastel/*.tpl .</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T074626Z" changeid="guimard">
-        <seg>cd myskin
-ln -s ../pastel/*.tpl .</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>documentation:liferay_2.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073652Z" changeid="xavier">
@@ -1482,22 +1448,6 @@ deb-src http://lemonldap-ng.org/deb stable main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can act as an OpenID 2.0 Server, that can allow to federate &lt;a1&gt;LL::NG&lt;/a1&gt; with:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120303T081938Z" changeid="xavier">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut agir comme un serveur OpenID 2.0, ce qui permet de fédérer &lt;a1&gt;LL::NG&lt;/a1&gt; avec :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You need to register your LemonLDAP::NG application to Google in order to obtain the Client ID and the Client Secret, see &lt;a0&gt;https://developers.google.com/&lt;/a0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T140932Z" changeid="xavier">
-        <seg>Il faut enregistrer l'application LemonLDAP::NG chez Google pour obtenir le couple identifiant mot-de-passe, voir &lt;a0&gt;https://developers.google.com/&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Virtual Hosts&lt;/s0&gt;: Access rules, headers, etc.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T075433Z" changeid="xavier">
@@ -1534,14 +1484,6 @@ deb-src http://lemonldap-ng.org/deb stable main</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162016Z" changeid="xavier">
         <seg>User-Email</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The choosen backends will be registered in session:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T185024Z" changeid="xavier">
-        <seg>Les backends choisits enregistrent dans la session :</seg>
       </tuv>
     </tu>
     <tu>
@@ -2516,14 +2458,6 @@ apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://en.wikipedia.org/wiki/OpenID</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>http://fr.wikipedia.org/wiki/OpenID</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Edit first &lt;c0&gt;alfresco-global.properties&lt;/c0&gt; and add the following:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160227T183612Z" changeid="xavier">
@@ -2568,14 +2502,6 @@ apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T114241Z" changeid="xavier">
         <seg>→ Le nœud spécifié n'est pas dans l'arbre chargé.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>managerTreeAutoClose</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063615Z" changeid="guimard">
-        <seg>managerTreeAutoClose</seg>
       </tuv>
     </tu>
     <tu>
@@ -2932,14 +2858,6 @@ make debian-packages</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Google proposes to allow applications to reuse its own authentication process using &lt;a0&gt;OpenID&lt;/a0&gt; protocol (it means, if your are connected to Google, other applications can trust Google and let you in).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T062232Z" changeid="xavier">
-        <seg>Google propose d'autoriser les applications à réutiliser son propre processus d'authentification en utilisant le protocole &lt;a0&gt;OpenID&lt;/a0&gt; (ce qui signifie que si on est connecté à Google, d'autres applications peuvent agréer Google et accepter l'utilisateur).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Claim name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T202013Z" changeid="xavier">
@@ -2960,14 +2878,6 @@ make debian-packages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053747Z" changeid="guimard">
         <seg>Ainsi, créer une notification pour &lt;c0&gt;alluserscustom&lt;/c0&gt; affichera la notification à tous les utilisateurs.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>This module is not available in version 1.9 and superior, you must use instead the &lt;a0&gt;OpenID Connect authentication module&lt;/a0&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T140136Z" changeid="xavier">
-        <seg>Ce module n'est plus disponible dans les versions 1.9 et supérieures, il faut utiliser le &lt;a0&gt;module d'authentification OpenID-Connect&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -3328,14 +3238,6 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120507T183326Z" changeid="xavier">
         <seg>Par défaut, l'accès au manager est restreint à l'utilisateur &quot;dwho&quot; (le backend par défaut est Demo).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Captcha module options&lt;/s0&gt;: options for above module</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T060916Z" changeid="xavier">
-        <seg>&lt;s0&gt;Options du module Captcha&lt;/s0&gt; : options pour ce module</seg>
       </tuv>
     </tu>
     <tu>
@@ -4240,14 +4142,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;State session timeout&lt;/s0&gt;: duration of a state session (used to keep state information between autentication request and authentication response) in seconds (default: 600)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T200200Z" changeid="xavier">
-        <seg>&lt;s0&gt;Durée de vie de la session d'état&lt;/s0&gt; : délai durant lequel la session d'état (utilisée pour conserver l'état entre la requête d'authentification et la réponse) en secondes (défaut : 600)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Date of validation of the notification &lt;e0&gt;id&lt;/e0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T131730Z" changeid="xavier">
@@ -4356,14 +4250,6 @@ ignoreregex =</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>L'agent n'intercepte pas de &lt;a0&gt;cookie SSO&lt;/a0&gt; (car il n'est pas dans le même domaine) et redirige l'utilisateur vers le portail</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You have to use &lt;c0&gt;Multiple&lt;/c0&gt; as authentication modul (this will also force &lt;c1&gt;Multiple&lt;/c1&gt; for the users module).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171312Z" changeid="xavier">
-        <seg>Il faut utiliser &lt;c0&gt;Multiple&lt;/c0&gt; comme module d'authentification (celà force &lt;c1&gt;Multiple&lt;/c1&gt; pour le module utilisateur).</seg>
       </tuv>
     </tu>
     <tu>
@@ -5144,14 +5030,6 @@ ignoreregex =</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Handler detects &lt;a0&gt;URL&lt;/a0&gt; parameter and create a &lt;a1&gt;SSO cookies&lt;/a1&gt; on its domain, with session ID as value</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>L'agent détecte le paramètre d'&lt;a0&gt;URL&lt;/a0&gt; et crée le &lt;a1&gt;cookie SSO&lt;/a1&gt; dans son domaine, avec la valeur de l'identifiant de session</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>BrowserID (Mozilla Persona)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T082342Z" changeid="xavier">
@@ -5562,14 +5440,6 @@ make test</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195440Z" changeid="xavier">
         <seg>Thomas CHEMINEAU</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Manager menu organization</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063532Z" changeid="guimard">
-        <seg>Organisation du menu du manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -6820,14 +6690,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Apache based protection allow to be independent from WebSSO, so Manager will always be reachable even if WebSSO configuration is corrupted.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T050017Z" changeid="guimard">
-        <seg>Une protection basée sur Apache permet d'être indépendant du WebSSO, ainsi le manager est toujours accessible même si la configuration du WebSSO est corrompue.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Go in Manager and create a new OpenID Connect provider.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T174012Z" changeid="xavier">
@@ -6934,14 +6796,6 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;CornerStone On Demand (CSOD)&lt;/a0&gt; allows to use &lt;a1&gt;SAML&lt;/a1&gt; to authenticate users.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160227T184748Z" changeid="xavier">
-        <seg>&lt;a0&gt;CornerStone On Demand (CSOD)&lt;/a0&gt; permet d'utiliser &lt;a1&gt;SAML&lt;/a1&gt; pour authentifier les utilisateurs.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>The metadata can be found at the standard “Well Known” &lt;a0&gt;URL&lt;/a0&gt;: &lt;a1&gt;http://auth.example.com/.well-known/openid-configuration&lt;/a1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T202043Z" changeid="xavier">
@@ -6994,14 +6848,6 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160302T062023Z" changeid="xavier">
         <seg>Activer SOAP dans Paramètres généraux » Paramètres avancés » SOAP</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You can define environment variables in &lt;c0&gt;Exported variables&lt;/c0&gt;, this allows to populate user session with some environment values.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T161443Z" changeid="xavier">
-        <seg>On peut définir des variables d'environnement dans &lt;c0&gt;Variables exportées&lt;/c0&gt;, ceci permet de peupler une session utilisateur avec des valeurs issues de l'environnement.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7280,14 +7126,6 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s15&gt;Deny&lt;/s15&gt; from &lt;s16&gt;all&lt;/s16&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T094959Z" changeid="xavier">
-        <seg>&lt;s15&gt;Deny&lt;/s15&gt; from &lt;s16&gt;all&lt;/s16&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Sympa shared secret</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064445Z" changeid="guimard">
@@ -7300,14 +7138,6 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064434Z" changeid="guimard">
         <seg>Clef de session mail pour Sympa</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You also need to register to Google the redirect &lt;a0&gt;URI&lt;/a0&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T141006Z" changeid="xavier">
-        <seg>Il faut également enregistrer chez Google l'&lt;a0&gt;URI&lt;/a0&gt; de redirection.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7746,14 +7576,6 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Identity Provider Certificate: whereas it is mentionned that this is the authentication certificate, you must give your LemonLDAP::NG (IdP) signing certificate.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160228T222708Z" changeid="xavier">
-        <seg>Identity Provider Certificate : bien qu'il semble devoir être renseigné ici le certificat d'authentification, c'est celui de signature de l'IdP Lemonldap::NG qu'il faut renseigner.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Password&lt;/s0&gt;: password to used to connect to LDAP server.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T165235Z" changeid="xavier">
@@ -7846,14 +7668,6 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112322Z" changeid="xavier">
         <seg>&lt;s134&gt;//&quot;userobm_web_list&quot;            =&gt; ,&lt;/s134&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>A specific persistent session is created with this module, to store attribute values returned by Google.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T063036Z" changeid="xavier">
-        <seg>Une session persistente est créée avec ce module pour stocker les valeurs d'attribut renvoyées par Google.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8390,14 +8204,6 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>If OpenID is used as users database, attributes will be requested to the server with SREG extention.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120214T045921Z" changeid="xavier">
-        <seg>Si OpenID est utilisé comme base d'utilisateurs, les attributs sont demandés en utilisant l'extension SREG d'OpenID.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>phpLDAPadmin will connect to the directory with a static &lt;a0&gt;DN&lt;/a0&gt; and password, and so will not request authentication anymore.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173243Z" changeid="xavier">
@@ -8684,14 +8490,6 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160227T185109Z" changeid="xavier">
         <seg>Mettre csod comme nom de fournisseur de service.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>It allows to put &lt;a0&gt;LL::NG&lt;/a0&gt;::portal behind another web &lt;a1&gt;SSO&lt;/a1&gt;, or behind a SSL hardware to delegate SSL authentication to that hardware.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T212622Z" changeid="xavier">
-        <seg>Ceci permet de metre un portail &lt;a0&gt;LL::NG&lt;/a0&gt; derrière un autre web &lt;a1&gt;SSO&lt;/a1&gt;, ou derrière un matériel SSL pour déléguer à ce matériel l'authentification.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9278,22 +9076,6 @@ description: {whatToTrace}'$uid'
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also act as &lt;a1&gt;CAS server&lt;/a1&gt;, that allows to interconnect two &lt;a2&gt;LL::NG&lt;/a2&gt; systems.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T155656Z" changeid="xavier">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut également agir en &lt;a1&gt;serveur CAS&lt;/a1&gt;, ce qui peut servir à connecter deux systèmes &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>managerSkin</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063552Z" changeid="guimard">
-        <seg>managerSkin</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Add &lt;c0&gt;&lt;a1&gt;https://auth.example.com&lt;/a1&gt;&lt;/c0&gt; as trusted site.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T212345Z" changeid="xavier">
@@ -9410,14 +9192,6 @@ description: {whatToTrace}'$uid'
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T071702Z" changeid="guimard">
         <seg>Le portail est le principal composant de &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Use the name you want but this values in the value field.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T122845Z" changeid="xavier">
-        <seg>Utiliser n'importe quel nom de clef mais ces valeurs dans le champ « valeur ».</seg>
       </tuv>
     </tu>
     <tu>
@@ -10468,14 +10242,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;print&lt;/s0&gt; &lt;s1&gt;&quot;Connected user: &quot;&lt;/s1&gt;&lt;s2&gt;.&lt;/s2&gt;&lt;s3&gt;$_SERVER&lt;/s3&gt;&lt;s4&gt;{&lt;/s4&gt;HTTP_AUTH_USER&lt;s5&gt;}&lt;/s5&gt;&lt;s6&gt;;&lt;/s6&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T140815Z" changeid="xavier">
-        <seg>&lt;s0&gt;print&lt;/s0&gt; &lt;s1&gt;&quot;Connected user: &quot;&lt;/s1&gt;&lt;s2&gt;.&lt;/s2&gt;&lt;s3&gt;$_SERVER&lt;/s3&gt;&lt;s4&gt;{&lt;/s4&gt;HTTP_AUTH_USER&lt;s5&gt;}&lt;/s5&gt;&lt;s6&gt;;&lt;/s6&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>It is particularly important for smart cards: when the card is not inserted before the browser starts, the user must restart his browser, or at least refresh (F5) the page.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T213429Z" changeid="xavier">
@@ -10928,14 +10694,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>OpenID 2.0 support is closed since 20th April 2015.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T135452Z" changeid="xavier">
-        <seg>Le support OpenID-2.0 esl clos depuis le 20 avril 2015.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>icons:access.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10972,14 +10730,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T135341Z" changeid="xavier">
         <seg>On peut également modifier la liste des variables exportées.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>If you want to require that a field is set, add “!” before the key name :</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T135607Z" changeid="xavier">
-        <seg>Pour imposer qu'une valeur soit renseignée, ajouter un ”!” devant le nom de clef :</seg>
       </tuv>
     </tu>
     <tu>
@@ -11132,14 +10882,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR">
         <seg>Options du module de stockage &lt;a0&gt;SAML&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>If this session is lost, Google will ask a confirmation for each requested attribute.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T063117Z" changeid="xavier">
-        <seg>Si cette session est perdue, Google redemandera confirmation pour chaque attribut demandé.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11872,14 +11614,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Portal redirects user on protected application with his session ID as &lt;a0&gt;URL&lt;/a0&gt; parameter</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Portal redirige l'utilisateur vers l'application demandée avec son identifiant de session en paramètre de l'&lt;a0&gt;URL&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>^/index.php\?.*access=admin</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T100350Z" changeid="xavier">
@@ -12020,14 +11754,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T084339Z" changeid="xavier">
         <seg>startTime</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>These settings can be overriden per virtual host, see &lt;a0&gt;virtual host management&lt;/a0&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T143942Z" changeid="guimard">
-        <seg>Ces paramètres peuvent être surchargés dans chaque hôte virtuel, voir la &lt;a0&gt;gestion des hôtes virtuels&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12346,14 +12072,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>managerCss</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120223T144154Z" changeid="xavier">
-        <seg>managerCss</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;manager&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
 &lt;s3&gt;;protection = manager&lt;/s3&gt;</seg>
       </tuv>
@@ -12590,14 +12308,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This module is not part of &lt;a0&gt;LL::NG&lt;/a0&gt; distibution, and can be found on CPAN: &lt;a1&gt;Apache::Session::LDAP&lt;/a1&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T114029Z" changeid="xavier">
-        <seg>Ce module ne fait pas partie de la distribution &lt;a0&gt;LL::NG&lt;/a0&gt;, et se trouve sur le CPAN : &lt;a1&gt;Apache::Session::LDAP&lt;/a1&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Error log: all messages emitted by the program, depending on the configured log level</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T200945Z" changeid="guimard">
@@ -12610,22 +12320,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082011Z" changeid="xavier">
         <seg>http://openid.net/specs/openid-authentication-2_0.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>It provides a specific and lightweight OpenID Connect module that will replace the current Google module.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T140023Z" changeid="xavier">
-        <seg>Il fournit un module OpenID-Connect spécifique et facile qui remplace l'actuel module Google.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Google for authentication module.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T062257Z" changeid="xavier">
-        <seg>Dans le manager, allez dans &lt;c0&gt;Paramètres generaux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisissez Google comme module d'authentication.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12658,14 +12352,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T155617Z" changeid="xavier">
         <seg>Exemple d'hôte virtuel protégé pour une application locale :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>This allows to use different databases for these process.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111226T200452Z" changeid="xavier">
-        <seg>Ceci autorise à utiliser deux bases de données différentes pour ces deux processus.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12760,14 +12446,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Several extensions allows to configure &lt;a0&gt;SSO&lt;/a0&gt; on MediaWiki:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111211T074534Z" changeid="xavier">
-        <seg>Plusieurs extensions permettent de configurer le &lt;a0&gt;SSO&lt;/a0&gt; dans MediaWiki :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s87&gt;//&quot;userobm_local&quot;               =&gt; ,&lt;/s87&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112310Z" changeid="xavier">
@@ -12840,14 +12518,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s2&gt;'LDAP#Openldap'&lt;/s2&gt; &lt;s3&gt;=&gt;&lt;/s3&gt; &lt;s4&gt;{&lt;/s4&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120107T150000Z" changeid="xavier">
-        <seg>&lt;s2&gt;'LDAP#Openldap'&lt;/s2&gt; &lt;s3&gt;=&gt;&lt;/s3&gt; &lt;s4&gt;{&lt;/s4&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Authentication table&lt;/s0&gt;: authentication table name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200820Z" changeid="xavier">
@@ -12900,14 +12570,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR">
         <seg>Authentification Autorisation Traçabilité</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>It allows to use &lt;a0&gt;SAML&lt;/a0&gt; to authenticate users.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160228T221216Z" changeid="xavier">
-        <seg>SalesForce permet l'emploi de &lt;a0&gt;SAML&lt;/a0&gt; pour authentifier les utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13008,14 +12670,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This mechanism allow to do &lt;a0&gt;SSO&lt;/a0&gt; on application with an unsafe link between Handler and the application, but with a safe link with the Memcached server.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T205046Z" changeid="xavier">
-        <seg>Ce mécanisme permet de faire du &lt;a0&gt;SSO&lt;/a0&gt; sur une application sans lien sécurisé entre l'agent et l'application, mais avec un lien sûr avec le serveur Memcached.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s95&gt;&quot;userobm_fax&quot;&lt;/s95&gt;                   &lt;s96&gt;=&gt;&lt;/s96&gt; &lt;s97&gt;&quot;HTTP_OBM_FACSIMILETELEPHONENUMBER&quot;&lt;/s97&gt;&lt;s98&gt;,&lt;/s98&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112313Z" changeid="xavier">
@@ -13092,14 +12746,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T171643Z" changeid="xavier">
         <seg>&lt;s29&gt;Allow&lt;/s29&gt; from &lt;s30&gt;all&lt;/s30&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You have to set your portal &lt;a1&gt;URL&lt;/a1&gt; with the googlecb=1 GET parameter, for example:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T141052Z" changeid="xavier">
-        <seg>Il faut indiquer l'&lt;a1&gt;URL&lt;/a1&gt; du portail avec le paramètre GET « googlecb=1 », par exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -13388,14 +13034,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T081137Z" changeid="xavier">
         <seg>&lt;s3&gt;# Mécanisme de rechargement de la configuration (un seul par serveur physique&lt;/s3&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Then in exported variables, you can ask only for :</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T062643Z" changeid="xavier">
-        <seg>Ensuite dans les « variables exportées », on ne peut demander que :</seg>
       </tuv>
     </tu>
     <tu>
@@ -13752,14 +13390,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Advanced configuration</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120107T145545Z" changeid="xavier">
-        <seg>Configuration avancée</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Save the configuration and exit the Manager.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203342Z" changeid="guimard">
@@ -14016,14 +13646,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;SOAP sessions end point&lt;/s0&gt; (optional): SOAP end point, if not based on internal portal &lt;a1&gt;URL&lt;/a1&gt; with &lt;c2&gt;index.pl/sessions&lt;/c2&gt; suffix</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T212050Z" changeid="xavier">
-        <seg>&lt;s0&gt;Point terminal des sessions SOAP&lt;/s0&gt; (optionnel): URL du service SOAP si elle n'est pas basée sur celle du portail interne avec le suffixe &lt;c2&gt;index.pl/sessions&lt;/c2&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You can force here another session key that will be used as NameID content.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T204829Z" changeid="xavier">
@@ -14044,14 +13666,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112517Z" changeid="xavier">
         <seg>→ LemonLDAP::NG utilise une clef pour chiffrer/déchiffrer certaines données.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Extra claims&lt;/s0&gt;: Associate attributes to extra claims if the RP request them, for example &lt;c1&gt;birth&lt;/c1&gt; ⇒ &lt;c2&gt;birthplace birthcountry&lt;/c2&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T203459Z" changeid="xavier">
-        <seg>&lt;s0&gt;Déclaration (scopes/claims)&lt;/s0&gt; : attributs associés à des &quot;claims&quot; supplémentaires si le RP les demande, par exemple &lt;c1&gt;birth&lt;/c1&gt; ⇒ &lt;c2&gt;birthplace birthcountry&lt;/c2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -14208,14 +13822,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>LemonLDAP::NG allows to store user logins and login attempts in their persistent session.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T172243Z" changeid="xavier">
-        <seg>LemonLDAP::NG permet de stocker les connexions et tentatives dans les sessions persistantes.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>_issuerDB</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T083415Z" changeid="xavier">
@@ -14336,14 +13942,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This can happend when you use lmConfigEditor or launch &lt;s0&gt;cron files&lt;/s0&gt; with a different user than Apache process.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T113322Z" changeid="xavier">
-        <seg>Ceci peut arriver lorsqu'on utilise lmConfigEditor ou lorsqu'on lance les &lt;s0&gt;fichiers cron&lt;/s0&gt; avec un utilisateur différent de celui du processus Apache.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Twitter application key</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064521Z" changeid="guimard">
@@ -14432,14 +14030,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Overloading is not available trough the Manager</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171757Z" changeid="xavier">
-        <seg>La surcharge n'est pas paramètrable dans le manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>https://metacpan.org/module/Apache::Session::Browseable::LDAP</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T082005Z" changeid="xavier">
@@ -14452,14 +14042,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112410Z" changeid="xavier">
         <seg>Messages d'erreur</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>overload any &lt;a0&gt;LL::NG&lt;/a0&gt; &lt;a1&gt;parameter&lt;/a1&gt; when a specific backend is used</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120107T145720Z" changeid="xavier">
-        <seg>surcharger n'importe quel &lt;a1&gt;paramètre&lt;/a1&gt; &lt;a0&gt;LL::NG&lt;/a0&gt; en fonction du backend utilisé</seg>
       </tuv>
     </tu>
     <tu>
@@ -14524,14 +14106,6 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T160845Z" changeid="xavier">
         <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;Slave&lt;/a2&gt;) pour les modules authentification ou utilisateurs.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>managerCssTheme</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120223T144156Z" changeid="xavier">
-        <seg>managerCssTheme</seg>
       </tuv>
     </tu>
     <tu>
@@ -15198,14 +14772,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You can also add a condition.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120107T145342Z" changeid="xavier">
-        <seg>Il est possibe d'ajouter une condition.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Form replay allows you to open a session on a protected application by filling a &lt;a0&gt;HTML&lt;/a0&gt; POST login form and autosubmitting it, without asking anything to the user.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T171808Z" changeid="xavier">
@@ -15342,14 +14908,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Manager tree autoClose</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063614Z" changeid="guimard">
-        <seg>Auto-fermeture de l'arbre du manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Session-ID =&gt; $_session_id</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T103518Z" changeid="xavier">
@@ -15476,14 +15034,6 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T143007Z" changeid="xavier">
         <seg>Configuration de Nginx</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>“myfield ⇒ firstname” can be “”</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T135815Z" changeid="xavier">
-        <seg>“myfield ⇒ prénom”, peut être “”</seg>
       </tuv>
     </tu>
     <tu>
@@ -16818,20 +16368,6 @@ createuser lemonldap-ng -P</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>cd portal/skins
-mkdir myskin
-mkdir myskin/css
-mkdir myskin/images</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T074528Z" changeid="guimard">
-        <seg>cd portal/skins
-mkdir myskin
-mkdir myskin/css
-mkdir myskin/images</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>(&amp;(sAMAccountName=$user)(objectClass=person))</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101135Z" changeid="xavier">
@@ -17236,14 +16772,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s9&gt;# puttings html files: simply put the HTML results of differents modules&lt;/s9&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T080709Z" changeid="xavier">
-        <seg>&lt;s9&gt;# avoir mis les fichiers html : mettre simplement le résultat HTML des différents modules&lt;/s9&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;a0&gt;DBI&lt;/a0&gt; Connection chain</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061254Z" changeid="guimard">
@@ -17312,14 +16840,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T174303Z" changeid="xavier">
         <seg>http://static.springsource.org/spring-security/site/</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The &lt;c0&gt;Multiple&lt;/c0&gt; system can :</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171732Z" changeid="xavier">
-        <seg>Le système &lt;c0&gt;Multiple&lt;/c0&gt; peut :</seg>
       </tuv>
     </tu>
     <tu>
@@ -17418,14 +16938,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Performances</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Other ressources</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T215156Z" changeid="xavier">
-        <seg>Autres documentations</seg>
       </tuv>
     </tu>
     <tu>
@@ -18282,14 +17794,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>lemonldap-ng: meta-package, contains no file but dependencies on other packages</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120303T092921Z" changeid="xavier">
-        <seg>lemonldap-ng : meta-paquet qui ne contient aucun fichier mais des dépendances vers les autres paquets</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;portal&lt;/s0&gt;: parameters only for Portal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071412Z" changeid="xavier">
@@ -18344,14 +17848,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T162810Z" changeid="xavier">
         <seg>&lt;s0&gt;groups&lt;/s0&gt; : variable &lt;c1&gt;$hGroups&lt;/c1&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Google Migration</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T135839Z" changeid="xavier">
-        <seg>Migration Google</seg>
       </tuv>
     </tu>
     <tu>
@@ -18536,14 +18032,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195342Z" changeid="xavier">
         <seg>SHA1</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The default value of this wilcard is &lt;c0&gt;allusers&lt;/c0&gt;, but you can change it if &lt;c1&gt;allusers&lt;/c1&gt; is a known identifier in your system.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T053559Z" changeid="guimard">
-        <seg>La valeur par défaut de cette carte blanche est &lt;c0&gt;allusers&lt;/c0&gt;, mais on peut la changer si &lt;c1&gt;allusers&lt;/c1&gt; est un nom d'utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18796,14 +18284,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120217T045517Z" changeid="xavier">
         <seg>Redirection vers le portail de type remote</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Example, if you have &lt;c0&gt;&lt;a1&gt;DBI&lt;/a1&gt;;LDAP&lt;/c0&gt; and &lt;a2&gt;DBI&lt;/a2&gt; failed for authentication, it will try first to call LDAP as user database.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171710Z" changeid="xavier">
-        <seg>Exemple, en utilisant “&lt;c0&gt;&lt;a1&gt;DBI&lt;/a1&gt;;LDAP&lt;/c0&gt;”, si &lt;a2&gt;DBI&lt;/a2&gt; échoue pour l'authentification, Multi essaie d'utiliser LDAP comme base d'utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19248,14 +18728,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Manager skin</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063551Z" changeid="guimard">
-        <seg>Thème du manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Example with the portal:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T075547Z" changeid="xavier">
@@ -19292,16 +18764,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141001Z" changeid="guimard">
         <seg>String::Random</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;# SOAP functions for sessions management (disabled by default)&lt;/s0&gt;
-&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/adminSessions&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T201244Z" changeid="xavier">
-        <seg>&lt;s0&gt;# SOAP functions for sessions management (disabled by default)&lt;/s0&gt;
-&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/adminSessions&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -19930,14 +19392,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>A Google Migration workaround is available since LemonLDAP::NG 1.4.4.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T135927Z" changeid="xavier">
-        <seg>Un contournement à la migration Google est disponible depuis la version 1.4.4 de LemonLDAP::NG.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;a0&gt;SAML&lt;/a0&gt; Version: check that version 2.0 is used</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T222502Z" changeid="xavier">
@@ -20188,14 +19642,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>stack several times the same module with a different name</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120107T145628Z" changeid="xavier">
-        <seg>empiler plusieurs fois le même module avec un nom différent</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>You need to use the IDP initiated feature of &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160227T185431Z" changeid="xavier">
@@ -20268,14 +19714,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>This protocol is implementated in an &lt;a2&gt;LL::NG&lt;/a2&gt; specific Handler.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111220T155201Z" changeid="xavier">
-        <seg>Ce protocole est implementé dans un handler spécifique de &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;ID Token max age&lt;/s0&gt;: If defined, &lt;a1&gt;LL::NG&lt;/a1&gt; will check the date of ID token and refuse it if it is too old</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T203233Z" changeid="xavier">
@@ -20308,14 +19746,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Modules are separated by semi-colons/</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171458Z" changeid="xavier">
-        <seg>Les modules doivent être séparés par point-virgules/</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>The transformation between notification XML content and &lt;a0&gt;HTML&lt;/a0&gt; display is done with XSLT.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160302T061815Z" changeid="xavier">
@@ -20344,14 +19774,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160229T192532Z" changeid="xavier">
         <seg>On peut aussi charger les données JWKS depuis l'&lt;a0&gt;URL&lt;/a0&gt; &lt;a1&gt;https://www.googleapis.com/oauth2/v3/certs&lt;/a1&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>firstname</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T062647Z" changeid="xavier">
-        <seg>firstname</seg>
       </tuv>
     </tu>
     <tu>
@@ -20440,14 +19862,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T221607Z" changeid="xavier">
         <seg>Ces problèmes sont généralement résolus en moins de 72 heures)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Users: collect data transfered in HTTP headers by the “master”.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T212604Z" changeid="xavier">
-        <seg>Utilisateurs : collecte les données transférées par en-tête HTTP par le “maître”.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20588,14 +20002,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The first will allow to configure &lt;a0&gt;SSO&lt;/a0&gt; for the alfresco webapp, and the other for the share webapp.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160227T183546Z" changeid="xavier">
-        <seg>Le premier autorise la configuration du &lt;a0&gt;SSO&lt;/a0&gt; pour la webapp Alfresco et l'autre pour la webapp partagée.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Dokuwiki local configuration</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115239Z" changeid="xavier">
@@ -20652,14 +20058,6 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Custom functions allow to extend &lt;a0&gt;LL::NG&lt;/a0&gt;, they can be used in &lt;a1&gt;headers&lt;/a1&gt;, &lt;a2&gt;rules&lt;/a2&gt; or &lt;a3&gt;form replay data&lt;/a3&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T111626Z" changeid="xavier">
-        <seg>Les fonctions personnalisées permettent d'étendre &lt;a0&gt;LL::NG&lt;/a0&gt;, elles peuvent être utilisées dans les &lt;a2&gt;règles&lt;/a2&gt;, les &lt;a1&gt;en-têtes&lt;/a1&gt; et les &lt;a3&gt;données à rejouer dans les formulaires&lt;/a3&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Unable to clear local cache</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112726Z" changeid="xavier">
@@ -20672,14 +20070,6 @@ mkdir myskin/images</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063701Z" changeid="guimard">
         <seg>multi</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>If not, you can just keep a single virtual host (the authentication will fail if Kerberos negociation do not succeed).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T214211Z" changeid="xavier">
-        <seg>Sinon, on peut ne conserver qu'un hôte virtuel (l'authentification sera refusée si la négociation Kerberos échoue).</seg>
       </tuv>
     </tu>
     <tu>
@@ -21060,14 +20450,6 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Portal &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; of internal portal</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120215T045719Z" changeid="xavier">
-        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; du portail&lt;/s0&gt; : &lt;a2&gt;URL&lt;/a2&gt; du portail interne</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>By default, mail content are empty in order to use &lt;a0&gt;HTML&lt;/a0&gt; templates:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T151348Z" changeid="guimard">
@@ -21430,14 +20812,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Manager theme</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063540Z" changeid="guimard">
-        <seg>Thème du manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Configure Drupal virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111201T124858Z" changeid="xavier">
@@ -21550,14 +20924,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>The portal must be configured to accept SOAP authentication requests.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T212104Z" changeid="xavier">
-        <seg>Ce portail doit être configuré pour accepter les requêtes d'authentification SOAP.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;installation pages&lt;/a0&gt; to know how install and use it.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T170346Z" changeid="xavier">
@@ -21648,14 +21014,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also act as &lt;a1&gt;OpenID server&lt;/a1&gt;, that allows to interconnect two &lt;a2&gt;LL::NG&lt;/a2&gt; systems.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120214T045456Z" changeid="xavier">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut également agir en &lt;a1&gt;serveur OpenID&lt;/a1&gt;, ce qui permet également d'interconnecter deux systèmes &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Exported attributes</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120220T203935Z" changeid="xavier">
@@ -21708,14 +21066,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T134544Z" changeid="guimard">
         <seg>&lt;s0&gt;Déconnexion&lt;/s0&gt; : bouton de déconnexion</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Protect the Manager by Apache</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120420T094912Z" changeid="xavier">
-        <seg>Protéger le Manager par Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -22680,14 +22030,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can act as an &lt;a1&gt;SAML&lt;/a1&gt; 2.0 Identity Provider, that can allow to federate &lt;a2&gt;LL::NG&lt;/a2&gt; with:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120303T091407Z" changeid="xavier">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut agir en fournisseur d'identité &lt;a1&gt;SAML&lt;/a1&gt; 2.0, ce qui permet de fédérer &lt;a2&gt;LL::NG&lt;/a2&gt; avec :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>remote_ip: the client &lt;a0&gt;IP&lt;/a0&gt; address</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T162031Z" changeid="xavier">
@@ -22860,14 +22202,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131103T202859Z" changeid="xavier">
         <seg>liblemonldap-ng-common-perl : fichiers communs et de configuration</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;LDAP password encoding&lt;/s0&gt;: can allow to manage old LDAP servers using specific encoding for passwords (default: utf-8).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T165855Z" changeid="xavier">
-        <seg>&lt;s0&gt;Encodage des mots-de-passe LDAP&lt;/s0&gt; : peut permettre de gérer les anciens servers LDAP en utilisant un encodage spécifique pour les mots-de-passe (défaut: utf-8).</seg>
       </tuv>
     </tu>
     <tu>
@@ -23156,14 +22490,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120424T040233Z" changeid="xavier">
         <seg>Cookie SSO</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>This key must be stored directly in lemonldap-ng.ini:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171911Z" changeid="xavier">
-        <seg>Cette clef doit être stockée directement dans lemonldap-ng.ini :</seg>
       </tuv>
     </tu>
     <tu>
@@ -23736,14 +23062,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>If &lt;a0&gt;CAS&lt;/a0&gt; failed, LDAP will be used.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171529Z" changeid="xavier">
-        <seg>Si &lt;a0&gt;CAS&lt;/a0&gt; échoue, LDAP est utilisé.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Another &lt;a0&gt;LL::NG&lt;/a0&gt; system configured with &lt;a1&gt;OpenID authentication&lt;/a1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T081957Z" changeid="xavier">
@@ -23848,14 +23166,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>this function allows to parse the &lt;c0&gt;$hGroups&lt;/c0&gt; variable to check if a value is present inside a group attribute.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T162727Z" changeid="xavier">
-        <seg>cette fonction permet de parcourir la variable &lt;c0&gt;$hGroups&lt;/c0&gt; pour vérifier si une valeur y présente. dans un attribut de groupe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Remote</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T045311Z" changeid="xavier">
@@ -23884,14 +23194,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T124806Z" changeid="xavier">
         <seg>Lancer ceci :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>managerTreeJqueryCss</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063643Z" changeid="guimard">
-        <seg>managerTreeJqueryCss</seg>
       </tuv>
     </tu>
     <tu>
@@ -24140,14 +23442,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064415Z" changeid="xavier">
         <seg>&lt;&lt;s14&gt;IfModule&lt;/s14&gt; mod_rewrite.c&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>One remote portal that delegates authentication to the second organization (just an other file on the same server)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120216T201045Z" changeid="xavier">
-        <seg>Un portail distant qui délègue l'authentification à la seconde organisation (juste un autre fichier sur le même serveur)</seg>
       </tuv>
     </tu>
     <tu>
@@ -24544,14 +23838,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>With OpenLDAP, you can use the &lt;a0&gt;memberof overlay&lt;/a0&gt; to do it automaticaly.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160302T063017Z" changeid="xavier">
-        <seg>Avec OpenLDAP, vous pouvez utiliser &lt;a0&gt;memberof overlay&lt;/a0&gt; qui le fera automatiquement.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Handler&lt;/s0&gt;: user is redirected if he has no &lt;a1&gt;SSO&lt;/a1&gt; cookie (or in &lt;a2&gt;CDA&lt;/a2&gt; mode)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T080543Z" changeid="xavier">
@@ -24944,14 +24230,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160301T151213Z" changeid="xavier">
         <seg>Serveur FastCGI (Nginx)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>To stack several times the same module, use “#name” with different names.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171816Z" changeid="xavier">
-        <seg>Pour empiler plusieurs fois le même module, utiliser ”#nom” avec différents noms.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25388,14 +24666,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Multiple will try to use the same module for authentication and users.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171617Z" changeid="xavier">
-        <seg>Multiple essaiera d'utiliser le même module pour l'authentification et les utilisateurs.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s42&gt;'create_survey'&lt;/s42&gt; &lt;s43&gt;=&gt;&lt;/s43&gt; &lt;s44&gt;$_SERVER&lt;/s44&gt;&lt;s45&gt;[&lt;/s45&gt;&lt;s46&gt;'HTTP_AUTH_ADMIN'&lt;/s46&gt;&lt;s47&gt;]&lt;/s47&gt; &lt;s48&gt;||&lt;/s48&gt; &lt;s49&gt;$_SERVER&lt;/s49&gt;&lt;s50&gt;[&lt;/s50&gt;&lt;s51&gt;'HTTP_AUTH_SUPERADMIN'&lt;/s51&gt;&lt;s52&gt;]&lt;/s52&gt;&lt;s53&gt;,&lt;/s53&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101918Z" changeid="xavier">
@@ -25416,14 +24686,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074439Z" changeid="xavier">
         <seg>applications:mediawiki_logo.png</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>You have to register the media identifer in your user backend (LDAP or SQL) to match the yubikey with a real user.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T054810Z" changeid="xavier">
-        <seg>Il faut enregistrer le matériel dans le backend utilisateurs (LDAP ou SQL) pour le faire correspondre à un utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25632,16 +24894,6 @@ a2ensite test-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T224206Z" changeid="xavier">
         <seg>Configurer l'identifiant de fédération</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s11&gt;TO&lt;/s11&gt; lemonldap&lt;s12&gt;-&lt;/s12&gt;ng@manager&lt;s13&gt;.&lt;/s13&gt;host &lt;s14&gt;IDENTIFIED&lt;/s14&gt; &lt;s15&gt;BY&lt;/s15&gt; &lt;s16&gt;'mypassword'&lt;/s16&gt;;
-&lt;s17&gt;GRANT&lt;/s17&gt; &lt;s18&gt;SELECT&lt;/s18&gt; &lt;s19&gt;ON&lt;/s19&gt; lmConfig&lt;s20&gt;.*&lt;/s20&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120423T204529Z" changeid="xavier">
-        <seg>&lt;s11&gt;TO&lt;/s11&gt; lemonldap&lt;s12&gt;-&lt;/s12&gt;ng@manager&lt;s13&gt;.&lt;/s13&gt;host &lt;s14&gt;IDENTIFIED&lt;/s14&gt; &lt;s15&gt;BY&lt;/s15&gt; &lt;s16&gt;'mypassword'&lt;/s16&gt;;
-&lt;s17&gt;GRANT&lt;/s17&gt; &lt;s18&gt;SELECT&lt;/s18&gt; &lt;s19&gt;ON&lt;/s19&gt; lmConfig&lt;s20&gt;.*&lt;/s20&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -25950,14 +25202,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Then you &lt;e0&gt;only&lt;/e0&gt; have to write &lt;c1&gt;myskin/css/styles.css&lt;/c1&gt; and add your media to &lt;c2&gt;myskin/images&lt;/c2&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T075016Z" changeid="guimard">
-        <seg>Il suffit ensuite d'écrire &lt;c1&gt;myskin/css/styles.css&lt;/c1&gt; et d'ajouter les médias dans &lt;c2&gt;myskin/images&lt;/c2&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>It can not be used to share sessions between different servers except if you share directories (with NFS,…) or if you use &lt;a0&gt;SOAP proxy&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T175618Z" changeid="xavier">
@@ -26222,14 +25466,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>To customize a skin, the simplest way is to create a new skin folder:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T074525Z" changeid="guimard">
-        <seg>Pour personnaliser un thème, la meilleure façon est de créer un nouveau répertoire :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>applications:zimbra_logo.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T112608Z" changeid="xavier">
@@ -26398,16 +25634,6 @@ a2ensite test-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>rm custom*
-cp ../pastel/custom* .</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T074937Z" changeid="guimard">
-        <seg>rm custom*
-cp ../pastel/custom* .</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Mail From address</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26452,14 +25678,6 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171917Z" changeid="xavier">
         <seg>&lt;s0&gt;Règle logout&lt;/s0&gt; : intercepter la déconnexion OBM</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>LemonLDAP::NG provide a script that allows to edit configuration without graphical interface, this script is called &lt;c0&gt;lmConfigEditor&lt;/c0&gt; and is stored in the LemonLDAP::NG bin/ directory, for example /usr/share/lemonldap-ng/bin:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120418T111120Z" changeid="xavier">
-        <seg>LemonLDAP::NG fournit un script qui permet d'éditer la configuration sans interface graphique, ce script se nomme &lt;c0&gt;lmConfigEditor&lt;/c0&gt; et se trouvedans le répertoire bin/ de LemonLDAP::NG, par exemple /usr/share/lemonldap-ng/bin :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26552,14 +25770,6 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>multi &lt;s0&gt;=&gt;&lt;/s0&gt; &lt;s1&gt;{&lt;/s1&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120107T145959Z" changeid="xavier">
-        <seg>multi &lt;s0&gt;=&gt;&lt;/s0&gt; &lt;s1&gt;{&lt;/s1&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>^/config/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T055520Z" changeid="xavier">
@@ -26644,14 +25854,6 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T205407Z" changeid="xavier">
         <seg>&lt;s0&gt;Expiration du jeton&lt;/s0&gt; : délai en secondes pour l'expiration du jeton (effacement du serveur Memcached).</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>So HTTP Basic Autentication is managed trough an HTTP header (&lt;c0&gt;Authorization&lt;/c0&gt;), that can be forged by &lt;a1&gt;LL::NG&lt;/a1&gt;, with this precautions:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160227T184427Z" changeid="xavier">
-        <seg>Ainsi l'authentification basique HTTP est gérée par des en-têtes HTTP (&lt;c0&gt;Autorisation&lt;/c0&gt;), qui peut être générée par &lt;a1&gt;LL::NG&lt;/a1&gt;, avec les précautions suivantes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26854,14 +26056,6 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070230Z" changeid="guimard">
         <seg>Répertoire des autorités de certification</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is able to transfer (trough SOAP) authentication credentials to another &lt;a1&gt;LL::NG&lt;/a1&gt; portal, like a proxy.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T211938Z" changeid="xavier">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut transferer (en utilisant SOAP) les éléments d'authentification à un autre portail &lt;a1&gt;LL::NG&lt;/a1&gt;, comme un proxy.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27076,14 +26270,6 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>If you want to access to other datas, you have to use Google in &lt;c2&gt;General Parameters&lt;/c2&gt; &gt; &lt;c3&gt;Authentication modules &gt; User module&lt;/c3&gt;.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T062555Z" changeid="xavier">
-        <seg>Pour accéder aux autres données, utiliser Google in &lt;c2&gt;Paramètres generaux&lt;/c2&gt; &gt; &lt;c3&gt;Modules d'authentification &gt; Modules d'utilisateurs&lt;/c3&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>This script must be run as root, it will then use the Apache user and group to access configuration.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042215Z" changeid="xavier">
@@ -27260,14 +26446,6 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171849Z" changeid="xavier">
         <seg>&lt;s0&gt;Règle default&lt;/s0&gt; : qui peut accéder à l'application</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>This will use email as login name (for accounting, session explorer,…).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T062411Z" changeid="xavier">
-        <seg>L'adresse email est utilisée comme nom de compte (pour la traçabilité, l'explorateur de session,…).</seg>
       </tuv>
     </tu>
     <tu>
@@ -27604,14 +26782,6 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T134833Z" changeid="guimard">
         <seg>http://vhost.example.com/appli1</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;GRANT&lt;/s0&gt; &lt;s1&gt;SELECT&lt;/s1&gt;&lt;s2&gt;,&lt;/s2&gt;&lt;s3&gt;INSERT&lt;/s3&gt;&lt;s4&gt;,&lt;/s4&gt;&lt;s5&gt;UPDATE&lt;/s5&gt;&lt;s6&gt;,&lt;/s6&gt;&lt;s7&gt;LOCK&lt;/s7&gt; &lt;s8&gt;TABLES&lt;/s8&gt; &lt;s9&gt;ON&lt;/s9&gt; lmConfig&lt;s10&gt;.*&lt;/s10&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120423T204526Z" changeid="xavier">
-        <seg>&lt;s0&gt;GRANT&lt;/s0&gt; &lt;s1&gt;SELECT&lt;/s1&gt;&lt;s2&gt;,&lt;/s2&gt;&lt;s3&gt;INSERT&lt;/s3&gt;&lt;s4&gt;,&lt;/s4&gt;&lt;s5&gt;UPDATE&lt;/s5&gt;&lt;s6&gt;,&lt;/s6&gt;&lt;s7&gt;LOCK&lt;/s7&gt; &lt;s8&gt;TABLES&lt;/s8&gt; &lt;s9&gt;ON&lt;/s9&gt; lmConfig&lt;s10&gt;.*&lt;/s10&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -28146,14 +27316,6 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T085411Z" changeid="xavier">
         <seg>La configuration peut être stockée sous plusieurs formats (&lt;a0&gt;SQL&lt;/a0&gt;, &lt;a1&gt;File&lt;/a1&gt;, &lt;a2&gt;LDAP&lt;/a2&gt;) mais doit être partégée via le réseau si on utilise plus d'un serveur.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>This timeout allows to purge sessions of lost RelayState.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T082335Z" changeid="xavier">
-        <seg>Ce délai permet de supprimer les sessions des RelayState perdus.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29580,14 +28742,6 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>lastname</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T062649Z" changeid="xavier">
-        <seg>lastname</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Preauthentication key&lt;/s0&gt;: the one you grab from zmprov command</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181027Z" changeid="xavier">
@@ -30132,14 +29286,6 @@ Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Then you can have different &lt;a0&gt;parameters&lt;/a0&gt; for each stored in a Perl hash entry named multi:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171842Z" changeid="xavier">
-        <seg>Ensuite on peut avoir différents &lt;a0&gt;paramètres&lt;/a0&gt; pour chacun, stockés dans une table de hachage &lt;a1&gt;Perl&lt;/a1&gt; nommée multi :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Redirect on forbidden&lt;/s0&gt;: use 302 instead 403</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T144619Z" changeid="guimard">
@@ -30168,14 +29314,6 @@ Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>En particulier, il utilise les capacités multi-threads d'Apache-2, donc pour optimiser les performances, utilisez de préférence &lt;a0&gt;mpm-worker&lt;/a0&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>The &lt;c0&gt;reload&lt;/c0&gt; target is managed in Apache or Nginx configuration, inside a virtual host protected by LemonLDAP::NG Handler (see bellow examples in Apache→handler or Nginx→Handler).</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T082817Z" changeid="xavier">
-        <seg>La cible &lt;c0&gt;reload&lt;/c0&gt; est gérée dans la configuration d'Apache, dans un hôte virtuel protégé par LemonLDAP::NG Handler (voir ci-dessous les exemple Apache→handler ou Nginx→Handler).:</seg>
       </tuv>
     </tu>
     <tu>
@@ -30306,14 +29444,6 @@ Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145310Z" changeid="xavier">
         <seg>Par exemple :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>See &lt;a0&gt;SOAP session backend&lt;/a0&gt; documentation.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T212143Z" changeid="xavier">
-        <seg>Voir la documentation du &lt;a0&gt;backend de sessions SOAP&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31004,14 +30134,6 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can act as an &lt;a1&gt;CAS&lt;/a1&gt; server, that can allow to federate &lt;a2&gt;LL::NG&lt;/a2&gt; with:</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120301T053613Z" changeid="xavier">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut agir en serveur &lt;a1&gt;CAS&lt;/a1&gt;, ce qui permet de fédérer &lt;a2&gt;LL::NG&lt;/a2&gt; avec :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>name =&gt; foaf:name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T064103Z" changeid="xavier">
@@ -31370,14 +30492,6 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Sécurité du cookie</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Captcha module name&lt;/s0&gt;: Apache session module used to store generated captchas</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T060859Z" changeid="xavier">
-        <seg>&lt;s0&gt;Nom du module Captcha&lt;/s0&gt; : module Apache::Session utilisé pour stocker les captchas générés</seg>
       </tuv>
     </tu>
     <tu>
@@ -32944,14 +32058,6 @@ CUSTOM_FUNCTIONS_FILE=/root/SSOExtensions.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also act as &lt;a1&gt;SAML IDP&lt;/a1&gt;, that allows to interconnect two &lt;a2&gt;LL::NG&lt;/a2&gt; systems.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120218T220519Z" changeid="xavier">
-        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut également agir comme un &lt;a1&gt;IDP SAML&lt;/a1&gt;, ce qui permet d'interconnecter deux systèmes &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;s3&gt;# SSO protection&lt;/s3&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20160228T220156Z" changeid="xavier">
@@ -33250,14 +32356,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Manager tree JQuery &lt;a0&gt;CSS&lt;/a0&gt; file</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120419T063641Z" changeid="guimard">
-        <seg>Fichier &lt;a0&gt;CSS&lt;/a0&gt; de l'arbre JQuery du manager</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Even if LL:NG can catch logout &lt;a0&gt;URL&lt;/a0&gt; trough &lt;a1&gt;virtual host rules&lt;/a1&gt;, you can have the need to forward a logout to other applications, to close their local sessions.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T195614Z" changeid="guimard">
@@ -33538,14 +32636,6 @@ Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T061249Z" changeid="xavier">
         <seg>Voir &lt;a0&gt;https://developers.facebook.com/apps&lt;/a0&gt; pour en savoir plus.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>“!myfield ⇒ lastname” must be set</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T135830Z" changeid="xavier">
-        <seg>“!myfield ⇒ nom” doit être renseigné</seg>
       </tuv>
     </tu>
     <tu>
@@ -33958,14 +33048,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T135355Z" changeid="xavier">
         <seg>Aller dans le manager, &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Sécurité&lt;/c2&gt; :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>LimeSurvey has a webserver authentication mode that allows to integrate it directly into LemonLDAP::NG.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120226T101601Z" changeid="xavier">
-        <seg>LimeSurvey dispose d'un mode d'authentification par serveur web qui permet de l'integrer directement dans LemonLDAP::NG.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34632,14 +33714,6 @@ maxretry = 3</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>See also this github project: &lt;a0&gt;https://github.com/coudot/lemonldap-ng-docker&lt;/a0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160301T151713Z" changeid="xavier">
-        <seg>Voir aussi le projet Github : &lt;a0&gt;https://github.com/coudot/lemonldap-ng-docker&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>XML menu configuration is deprecated.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T114305Z" changeid="xavier">
@@ -34772,14 +33846,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20131025T061233Z" changeid="xavier">
         <seg>Il faut enregistrer la nouvelle application dans Facebook pour obtenir un identifiant d'application et un secret.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Then go in &lt;c2&gt;Multiple parameters&lt;/c2&gt; to define the modules to chain for authentication and users.</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20160229T171427Z" changeid="xavier">
-        <seg>Aller ensuite dans les &lt;c2&gt;paramètres Multiple&lt;/c2&gt; pour définir les modules à chaîner pour l'authentification et les utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>

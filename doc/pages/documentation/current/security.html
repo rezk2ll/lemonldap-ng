@@ -10,10 +10,36 @@
 <link rel="start" href="security.html"/>
 <link rel="contents" href="security.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:security","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -26,8 +52,13 @@
 <li class="level1"><div class="li"><a href="#secure_configuration_access">Secure configuration access</a></div></li>
 <li class="level1"><div class="li"><a href="#protect_the_manager">Protect the Manager</a></div>
 <ul class="toc">
-<li class="level2"><div class="li"><a href="#protect_the_manager_by_apache">Protect the Manager by Apache</a></div></li>
+<li class="level2"><div class="li"><a href="#protect_the_manager_by_the_web_server">Protect the Manager by the web server</a></div></li>
 <li class="level2"><div class="li"><a href="#protect_the_manager_by_llng">Protect the Manager by LL::NG</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#portal">Portal</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#split_portal_when_using_soaprest">Split portal when using SOAP/REST</a></div></li>
 </ul>
 </li>
 <li class="level1"><div class="li"><a href="#write_good_rules">Write good rules</a></div>
@@ -80,7 +111,7 @@ By default, the manager is restricted to the user &#039;dwho&#039; (default back
 
 </div>
 <!-- EDIT3 SECTION "Protect the Manager" [810-1069] -->
-<h3 class="sectionedit4" id="protect_the_manager_by_apache">Protect the Manager by Apache</h3>
+<h3 class="sectionedit4" id="protect_the_manager_by_the_web_server">Protect the Manager by the web server</h3>
 <div class="level3">
 
 <p>
@@ -105,7 +136,7 @@ You can use any of the mechanisms proposed by Apache: SSL, Auth-Basic, Kerberos,
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- EDIT4 SECTION "Protect the Manager by Apache" [1070-1680] -->
+<!-- EDIT4 SECTION "Protect the Manager by the web server" [1070-1688] -->
 <h3 class="sectionedit5" id="protect_the_manager_by_llng">Protect the Manager by LL::NG</h3>
 <div class="level3">
 
@@ -117,13 +148,37 @@ To protect the manager by <abbr title="LemonLDAP::NG">LL::NG</abbr>, you just ha
 <div class="noteimportant">Before, you have to create the virtual host <code>manager.your.domain</code> in the manager and set a <a href="writingrulesand_headers.html#rules" class="wikilink1" title="documentation:2.0:writingrulesand_headers">rules</a>, else access to the manager will be denied.
 </div>
 </div>
-<!-- EDIT5 SECTION "Protect the Manager by LL::NG" [1681-2097] -->
-<h2 class="sectionedit6" id="write_good_rules">Write good rules</h2>
+<!-- EDIT5 SECTION "Protect the Manager by LL::NG" [1689-2105] -->
+<h2 class="sectionedit6" id="portal">Portal</h2>
+<div class="level2">
+
+<p>
+LLNG portal now embeds the following features:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" class="urlextern" title="https://en.wikipedia.org/wiki/Cross-site_request_forgery"  rel="nofollow">CSRF</a> protection <em>(Cross-Site Request Forgery)</em>: a token is build for each form. To disable it, set requireToken to 0 <em>(portal security parameters in the manager)</em>. Token timeout can be defined via manager (default to 120 seconds),</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://en.wikipedia.org/wiki/Content_Security_Policy" class="urlextern" title="https://en.wikipedia.org/wiki/Content_Security_Policy"  rel="nofollow">Content-Security-Policy</a> header: portal build dynamically this header. You can modify default values in the manager <em>(Général parameters » Advanced parameters » Security » Content-Security-Policy)</em>.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT6 SECTION "Portal" [2106-2740] -->
+<h3 class="sectionedit7" id="split_portal_when_using_soaprest">Split portal when using SOAP/REST</h3>
+<div class="level3">
+
+<p>
+If you use <a href="soapsessionbackend.html" class="wikilink1" title="documentation:2.0:soapsessionbackend">SOAP</a> or <a href="restsessionbackend.html" class="wikilink1" title="documentation:2.0:restsessionbackend">REST</a> session backend, dedicate a portal especially for these internal requests.
+</p>
+
+</div>
+<!-- EDIT7 SECTION "Split portal when using SOAP/REST" [2741-2931] -->
+<h2 class="sectionedit8" id="write_good_rules">Write good rules</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT6 SECTION "Write good rules" [2098-2127] -->
-<h3 class="sectionedit7" id="order_your_rules">Order your rules</h3>
+<!-- EDIT8 SECTION "Write good rules" [2932-2961] -->
+<h3 class="sectionedit9" id="order_your_rules">Order your rules</h3>
 <div class="level3">
 
 <p>
@@ -142,7 +197,7 @@ The Manager let you define comments in rules, to order them:
 <p>
 For example, if these rules are used without comments:
 </p>
-<div class="table sectionedit8"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit10"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Regular expression  </th><th class="col1 centeralign">  Rule  </th><th class="col2 leftalign"> Comment  </th>
@@ -155,7 +210,7 @@ For example, if these rules are used without comments:
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT8 TABLE [2544-2654] -->
+<!-- EDIT10 TABLE [3378-3488] -->
 <p>
 Then the second rule will be applied first, so every authenticated user will access to <code>/pub/admin</code> directory.
 </p>
@@ -163,7 +218,7 @@ Then the second rule will be applied first, so every authenticated user will acc
 <p>
 Use comment to correct this:
 </p>
-<div class="table sectionedit9"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit11"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Regular expression  </th><th class="col1 centeralign">  Rule  </th><th class="col2 leftalign"> Comment  </th>
@@ -176,7 +231,7 @@ Use comment to correct this:
 		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> 2_pub </td>
 	</tr>
 </table></div>
-<!-- EDIT9 TABLE [2799-2923] --><div class="notetip"><ul>
+<!-- EDIT11 TABLE [3633-3757] --><div class="notetip"><ul>
 <li class="level1"><div class="li"> Reload the Manager to see the order that will be used</div>
 </li>
 <li class="level1"><div class="li"> Use rule comments to order your rules</div>
@@ -185,8 +240,8 @@ Use comment to correct this:
 
 </div>
 </div>
-<!-- EDIT7 SECTION "Order your rules" [2128-3044] -->
-<h3 class="sectionedit10" id="be_careful_with_url_parameters">Be careful with URL parameters</h3>
+<!-- EDIT9 SECTION "Order your rules" [2962-3878] -->
+<h3 class="sectionedit12" id="be_careful_with_url_parameters">Be careful with URL parameters</h3>
 <div class="level3">
 
 <p>
@@ -196,7 +251,7 @@ You can write <a href="writingrulesand_headers.html#rules" class="wikilink1" tit
 <p>
 For example with this rule on the <code>access</code> parameter:
 </p>
-<div class="table sectionedit11"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit13"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Regular expression  </th><th class="col1 centeralign">  Rule  </th><th class="col2 leftalign"> Comment  </th>
@@ -209,7 +264,7 @@ For example with this rule on the <code>access</code> parameter:
 		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT11 TABLE [3281-3415] -->
+<!-- EDIT13 TABLE [4115-4249] -->
 <p>
 Then a user that try to access to one of the following <em class="u">will be granted</em> !
 </p>
@@ -223,7 +278,7 @@ Then a user that try to access to one of the following <em class="u">will be gra
 <p>
 You can use the following rules instead:
 </p>
-<div class="table sectionedit12"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit14"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0 centeralign">  Regular expression  </th><th class="col1 centeralign">  Rule  </th><th class="col2 leftalign"> Comment  </th>
@@ -239,12 +294,12 @@ You can use the following rules instead:
 		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT12 TABLE [3613-3816] --><div class="notetip"><strong>(?i)</strong> means case no sensitive.
+<!-- EDIT14 TABLE [4447-4650] --><div class="notetip"><strong>(?i)</strong> means case no sensitive.
 </div><div class="notewarning">Remember that rules written on GET parameters must be tested.
 </div>
 </div>
-<!-- EDIT10 SECTION "Be careful with URL parameters" [3045-3953] -->
-<h3 class="sectionedit13" id="encoded_characters">Encoded characters</h3>
+<!-- EDIT12 SECTION "Be careful with URL parameters" [3879-4787] -->
+<h3 class="sectionedit15" id="encoded_characters">Encoded characters</h3>
 <div class="level3">
 
 <p>
@@ -252,8 +307,8 @@ Some characters are encoded in URLs by the browser (such as space,…). To avoid
 </p>
 
 </div>
-<!-- EDIT13 SECTION "Encoded characters" [3954-4207] -->
-<h2 class="sectionedit14" id="secure_reverse-proxies">Secure reverse-proxies</h2>
+<!-- EDIT15 SECTION "Encoded characters" [4788-5041] -->
+<h2 class="sectionedit16" id="secure_reverse-proxies">Secure reverse-proxies</h2>
 <div class="level2">
 
 <p>
@@ -298,8 +353,8 @@ It is recommended to secure the channel between reverse-proxies and application 
 </ul>
 
 </div>
-<!-- EDIT14 SECTION "Secure reverse-proxies" [4208-5876] -->
-<h2 class="sectionedit15" id="configure_security_settings">Configure security settings</h2>
+<!-- EDIT16 SECTION "Secure reverse-proxies" [5042-6710] -->
+<h2 class="sectionedit17" id="configure_security_settings">Configure security settings</h2>
 <div class="level2">
 
 <p>
@@ -325,8 +380,8 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- EDIT15 SECTION "Configure security settings" [5877-7210] -->
-<h2 class="sectionedit16" id="fail2ban">Fail2ban</h2>
+<!-- EDIT17 SECTION "Configure security settings" [6711-8044] -->
+<h2 class="sectionedit18" id="fail2ban">Fail2ban</h2>
 <div class="level2">
 
 <p>
@@ -377,8 +432,8 @@ Restart fail2ban
 </p>
 
 </div>
-<!-- EDIT16 SECTION "Fail2ban" [7211-8264] -->
-<h2 class="sectionedit17" id="sessions_identifier">Sessions identifier</h2>
+<!-- EDIT18 SECTION "Fail2ban" [8045-9098] -->
+<h2 class="sectionedit19" id="sessions_identifier">Sessions identifier</h2>
 <div class="level2">
 
 <p>
@@ -390,6 +445,6 @@ We recommend the use of <code>Lemonldap::NG::Common::Apache::Session::Generate::
 </p>
 
 </div>
-<!-- EDIT17 SECTION "Sessions identifier" [8265-] --></div>
+<!-- EDIT19 SECTION "Sessions identifier" [9099-] --></div>
 </body>
 </html>

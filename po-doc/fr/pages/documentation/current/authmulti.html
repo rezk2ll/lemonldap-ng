@@ -3,158 +3,54 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:authmulti</title>
+  <title>documentation:2.0:authmulti</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authmulti"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authmulti.html"/>
 <link rel="contents" href="authmulti.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authmulti","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
-<div class="dokuwiki export container"><!-- TOC START -->
-
-<div id="dw__toc">
-<h3 class="toggle">Table of Contents</h3>
-<div>
-
-<ul class="toc">
-<li class="level1"><div class="li"><a href="#presentation">Présentation</a></div></li>
-<li class="level1"><div class="li"><a href="#configuration">Configuration</a></div>
-<ul class="toc">
-<li class="level2"><div class="li"><a href="#advanced_configuration">Configuration avancée</a></div></li>
-</ul>
-</li>
-<li class="level1"><div class="li"><a href="#known_problems">Problèmes connus</a></div>
-<ul class="toc">
-<li class="level2"><div class="li"><a href="#authapache_authentication">Authentification AuthApache</a></div></li>
-<li class="level2"><div class="li"><a href="#ssl_authentication">Authentification SSL</a></div></li>
-</ul></li>
-</ul>
-</div>
-</div><!-- TOC END -->
-
+<div class="dokuwiki export container">
 
 <h1 class="sectionedit1" id="multiple_backends_stack">Empiler de multiples backends</h1>
 <div class="level1">
-<div class="table sectionedit2"><table class="inline table table-bordered table-striped">
-	<thead>
-	<tr class="row0 roweven">
-		<th class="col0 centeralign">  Authentification  </th><th class="col1 centeralign">  Utilisateurs  </th><th class="col2 centeralign">  Mot-de-passe  </th>
-	</tr>
-	</thead>
-	<tr class="row1 rowodd">
-		<td class="col0 centeralign">    ✔    </td><td class="col1 centeralign">    ✔    </td><td class="col2"> </td>
-	</tr>
-</table></div><!-- EDIT2 TABLE [40-103] -->
+<div class="noteimportant">This module has been removed and replaced by the more powerful <a href="authcombination.html" class="wikilink1" title="documentation:2.0:authcombination">Combination of auth schemes</a>.
 
-</div><!-- EDIT1 SECTION "Multiple backends stack" [1-104] -->
-
-<h2 class="sectionedit3" id="presentation">Présentation</h2>
-<div class="level2">
-
-<p>
-Ce backend permet de chaîner des méthodes d'authentification, par exemple pour basculer sur une authentification LDAP si l'authentification amont a échouée…
-</p>
-
-</div><!-- EDIT3 SECTION "Presentation" [105-265] -->
-
-<h2 class="sectionedit4" id="configuration">Configuration</h2>
-<div class="level2">
-
-<p>
-Il faut utiliser <code>Multiple</code> comme module d'authentification (celà force <code>Multiple</code> pour le module utilisateur). Aller ensuite dans les <code>paramètres Multiple</code> pour définir les modules à chaîner pour l'authentification et les utilisateurs. Les modules doivent être séparés par point-virgules/
-</p>
-
-<p>
-Par exemple :
-</p>
-<pre class="code">CAS;LDAP</pre>
-
-<p>
-Si <abbr title="Central Authentication Service">CAS</abbr> échoue, LDAP est utilisé.
-</p>
-
-<p>
-Il est possibe d'ajouter une condition. Exemple :
-</p>
-<pre class="code">Remote $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/'</pre>
-<div class="notetip">Multiple essaiera d'utiliser le même module pour l'authentification et les utilisateurs. Exemple, en utilisant “<code><abbr title="Database Interface">DBI</abbr>;LDAP</code>”, si <abbr title="Database Interface">DBI</abbr> échoue pour l'authentification, Multi essaie d'utiliser LDAP comme base d'utilisateurs.
 </div>
-</div><!-- EDIT4 SECTION "Configuration" [266-934] -->
-
-<h3 class="sectionedit5" id="advanced_configuration">Configuration avancée</h3>
-<div class="level3">
-
-<p>
-Le système <code>Multiple</code> peut :
-</p>
-<ul>
-<li class="level1"><div class="li"> empiler plusieurs fois le même module avec un nom différent</div>
-</li>
-<li class="level1"><div class="li"> surcharger n'importe quel <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">paramètre</a> <abbr title="LemonLDAP::NG">LL::NG</abbr> en fonction du backend utilisé</div>
-</li>
-</ul>
-<div class="notetip">La surcharge n'est pas paramètrable dans le manager
 </div>
-<p>
-Pour empiler plusieurs fois le même module, utiliser ”#nom” avec différents noms. Exemple :
-</p>
-<pre class="code">LDAP#Openldap; LDAP#ActiveDirectory</pre>
-
-<p>
-Ensuite on peut avoir différents <a href="parameterlist.html" class="wikilink1" title="documentation:2.0:parameterlist">paramètres</a> pour chacun, stockés dans une table de hachage &lt;a1&gt;Perl&lt;/a1&gt; nommée multi :
-</p>
-<pre class="code perl">multi <span class="sy0">=&gt;</span> <span class="br0">{</span>
-    <span class="st_h">'LDAP#Openldap'</span> <span class="sy0">=&gt;</span> <span class="br0">{</span>
-      <span class="st_h">'ldapServer'</span> <span class="sy0">=&gt;</span> <span class="st_h">'ldap1.example.com'</span><span class="sy0">,</span>
-      <span class="st_h">'LDAPFilter'</span> <span class="sy0">=&gt;</span> <span class="st_h">'(uid=$user)'</span><span class="sy0">,</span>
-    <span class="br0">}</span><span class="sy0">,</span>
-    <span class="st_h">'LDAP#ActiveDirectory'</span> <span class="sy0">=&gt;</span> <span class="br0">{</span>
-      <span class="st_h">'ldapServer'</span> <span class="sy0">=&gt;</span> <span class="st_h">'ldaps://ad.example.com'</span><span class="sy0">,</span>
-      <span class="st_h">'LDAPFilter'</span> <span class="sy0">=&gt;</span> <span class="st_h">'(&amp;(sAMAccountName=$user)(objectClass=person))'</span><span class="sy0">,</span>
-    <span class="br0">}</span>
-<span class="br0">}</span><span class="sy0">,</span></pre>
-
-<p>
-Cette clef doit être stockée directement dans lemonldap-ng.ini :
-</p>
-<pre class="code ini"><span class="re0"><span class="br0">[</span>portal<span class="br0">]</span></span>
-<span class="re1">multi</span> <span class="sy0">=</span><span class="re2"> <span class="br0">{</span>'LDAP#Openldap'<span class="sy0">=</span>&gt;<span class="br0">{</span>'ldapServer'<span class="sy0">=</span>&gt;'ldap1.example.com','LDAPFilter'<span class="sy0">=</span>&gt;'<span class="br0">(</span>uid<span class="sy0">=</span>$user<span class="br0">)</span>'<span class="br0">}</span>,'LDAP#ActiveDirectory'<span class="sy0">=</span>&gt;<span class="br0">{</span>'ldapServer'<span class="sy0">=</span>&gt;'ldaps://ad.example.com','LDAPFilter'<span class="sy0">=</span>&gt;'<span class="br0">(</span>&amp;<span class="br0">(</span>sAMAccountName<span class="sy0">=</span>$user<span class="br0">)</span><span class="br0">(</span>objectClass<span class="sy0">=</span>person<span class="br0">)</span><span class="br0">)</span>'<span class="br0">}</span><span class="br0">}</span></span></pre>
-
-</div><!-- EDIT5 SECTION "Advanced configuration" [935-2056] -->
-
-<h2 class="sectionedit6" id="known_problems">Problèmes connus</h2>
-<div class="level2">
-
-</div><!-- EDIT6 SECTION "Known problems" [2057-2084] -->
-
-<h3 class="sectionedit7" id="authapache_authentication">Authentification AuthApache</h3>
-<div class="level3">
-
-<p>
-En utilisant ce module, le portail <abbr title="LemonLDAP::NG">LL::NG</abbr> est appelé uniquement si Apache ne retourne pas “401 Authentication required”, aucune bascule n'est donc possible.
-</p>
-
-<p>
-Pour outrepasser ceci, suivre la documentation du <a href="authapache.html" class="wikilink1" title="documentation:2.0:authapache">module AuthApache</a>
-</p>
-
-</div><!-- EDIT7 SECTION "AuthApache authentication" [2085-2399] -->
-
-<h3 class="sectionedit8" id="ssl_authentication">Authentification SSL</h3>
-<div class="level3">
-
-<p>
-Pour chaîner SSL, il est nécessaire de mettre “SSLRequire optional” dans le fichier de configuration Apache, sinon les utilisateurs ne seront authentifiés que par SSL. 
-</p>
-
-</div><!-- EDIT8 SECTION "SSL authentication" [2400-] -->
 </div>
 </body>
 </html>

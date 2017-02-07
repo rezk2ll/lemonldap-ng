@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:performances</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,performances"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="performances.html"/>
 <link rel="contents" href="performances.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:performances","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -67,7 +93,7 @@ LemonLDAP::NG is designed to be very performant. In particular, it use Apache2 t
 <div class="level2">
 
 <p>
-On linux, by default, there is no <abbr title="Domain Name System">DNS</abbr> cache and LemonLDAP::NG portal request <abbr title="Domain Name System">DNS</abbr> at every connexions on LDAP or DB. Under heavy loads, that can generated hundred of <abbr title="Domain Name System">DNS</abbr> queries and many errors on LDAP connexions (timed out) from IO::Socket.
+On Linux, by default, there is no <abbr title="Domain Name System">DNS</abbr> cache and LemonLDAP::NG portal request <abbr title="Domain Name System">DNS</abbr> at every connexions on LDAP or DB. Under heavy loads, that can generated hundred of <abbr title="Domain Name System">DNS</abbr> queries and many errors on LDAP connexions (timed out) from IO::Socket.
 </p>
 
 <p>
@@ -154,7 +180,7 @@ admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="
 <div class="level3">
 
 <p>
-Macros and groups are stored in session database. Local macros is a special feature of handler that permit to have macros useable localy only. Those macros are calculated only at the first usage and stored in the local session cache (only for this server) and only if the user access to the related applications. This avoid to have to many datas stored.
+Macros and groups are stored in session database. Local macros is a special feature of handler that permit one to have macros useable localy only. Those macros are calculated only at the first usage and stored in the local session cache (only for this server) and only if the user access to the related applications. This avoid to have to many datas stored.
 </p>
 <pre class="code perl"><span class="co1"># rule</span>
 admin <span class="sy0">-&gt;</span> <span class="re0">$admin</span> <span class="sy0">||=</span> <span class="br0">&#40;</span><span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span><span class="br0">&#41;</span>
@@ -163,12 +189,12 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 <div class="notetip">Note that this feature is interesting only for the Lemonldap::NG systems protecting a high number of applications
 </div>
 </div>
-<!-- EDIT5 SECTION "Local macros" [2820-3477] -->
+<!-- EDIT5 SECTION "Local macros" [2820-3481] -->
 <h2 class="sectionedit6" id="portal_performances">Portal performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT6 SECTION "Portal performances" [3478-3510] -->
+<!-- EDIT6 SECTION "Portal performances" [3482-3514] -->
 <h3 class="sectionedit7" id="general_performances">General performances</h3>
 <div class="level3">
 
@@ -187,7 +213,7 @@ You can also use a FastCGI server using index.fcgi given in portal examples.
 
 </div>
 </div>
-<!-- EDIT7 SECTION "General performances" [3511-4141] -->
+<!-- EDIT7 SECTION "General performances" [3515-4145] -->
 <h3 class="sectionedit8" id="configuration_access">Configuration access</h3>
 <div class="level3">
 
@@ -196,7 +222,7 @@ If you set <code>useLocalConf</code> to 1 in lemonldap-ng.ini (section [Portal])
 </p>
 
 </div>
-<!-- EDIT8 SECTION "Configuration access" [4142-4444] -->
+<!-- EDIT8 SECTION "Configuration access" [4146-4448] -->
 <h3 class="sectionedit9" id="starting_performances">Starting performances</h3>
 <div class="level3">
 
@@ -214,7 +240,7 @@ To make the portal start faster when the server is relaunched, add those lines i
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- EDIT9 SECTION "Starting performances" [4445-5020] -->
+<!-- EDIT9 SECTION "Starting performances" [4449-5024] -->
 <h3 class="sectionedit10" id="apachesession_performances">Apache::Session performances</h3>
 <div class="level3">
 
@@ -262,10 +288,10 @@ Index      -&gt; ipAddr uid</pre>
 Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </p>
 <div class="notetip">A <a href="https://metacpan.org/module/Apache::Session::Browseable::Redis" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> has been created, it is the faster (except for session explorer, defeated by Apache::Session::Browseable::<a href="https://metacpan.org/module/Apache::Session::Browseable" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable"  rel="nofollow">DBI</a>/<a href="https://metacpan.org/module/Apache::Session::Browseable::LDAP" class="urlextern" title="https://metacpan.org/module/Apache::Session::Browseable::LDAP"  rel="nofollow">LDAP</a> &gt;= 1.0)
-</div><div class="noteimportant">Some Apache::Session module are not fully usable by Lemonldap::NG such as Apache::Session::Memcached since this modules do not offer capability to browse sessions. They does not allow to use sessions explorer neither manage one-off sessions.
+</div><div class="noteimportant">Some Apache::Session module are not fully usable by Lemonldap::NG such as Apache::Session::Memcached since this modules do not offer capability to browse sessions. They does not allow one to use sessions explorer neither manage one-off sessions.
 </div>
 </div>
-<!-- EDIT10 SECTION "Apache::Session performances" [5021-7373] -->
+<!-- EDIT10 SECTION "Apache::Session performances" [5025-7381] -->
 <h3 class="sectionedit11" id="ldap_performances">LDAP performances</h3>
 <div class="level3">
 
@@ -278,7 +304,7 @@ LDAP server can be a brake when you use LDAP groups recovery. You can avoid this
 <span class="re0">memberOf</span>:<span class="re1"> cn=su,dmdName=groups,dc=example,dc=com</span></pre>
 
 <p>
-So instead of using LDAP groups recovery, you just have to store “memberOf” field in your exported variables. With OpenLDAP, you can use the <a href="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance" class="urlextern" title="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance"  rel="nofollow">memberof overlay</a> to do it automaticaly.
+So instead of using LDAP groups recovery, you just have to store “memberOf” field in your exported variables. With OpenLDAP, you can use the <a href="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance" class="urlextern" title="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance"  rel="nofollow">memberof overlay</a> to do it automatically.
 </p>
 <div class="noteimportant">Don&#039;t forget to create an index on the field used to find users (uid by default)
 </div><div class="notetip">To avoid having group dn stored in sessions datas, you can use a macro to rewrite memberOf:<ul>
@@ -302,12 +328,12 @@ Now ldapgroups contains “admin su”
 
 </div>
 </div>
-<!-- EDIT11 SECTION "LDAP performances" [7374-8502] -->
+<!-- EDIT11 SECTION "LDAP performances" [7382-8511] -->
 <h2 class="sectionedit12" id="manager_performances">Manager performances</h2>
 <div class="level2">
 
 </div>
-<!-- EDIT12 SECTION "Manager performances" [8503-8536] -->
+<!-- EDIT12 SECTION "Manager performances" [8512-8545] -->
 <h3 class="sectionedit13" id="disable_unused_modules">Disable unused modules</h3>
 <div class="level3">
 
@@ -318,7 +344,7 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
 </div>
-<!-- EDIT13 SECTION "Disable unused modules" [8537-8783] -->
+<!-- EDIT13 SECTION "Disable unused modules" [8546-8792] -->
 <h3 class="sectionedit14" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
 
@@ -345,6 +371,6 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 </p>
 
 </div>
-<!-- EDIT14 SECTION "Use static HTML files" [8784-] --></div>
+<!-- EDIT14 SECTION "Use static HTML files" [8793-] --></div>
 </body>
 </html>

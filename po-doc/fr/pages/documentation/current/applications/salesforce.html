@@ -3,17 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:applications:salesforce</title>
+  <title>documentation:2.0:applications:salesforce</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,applications,salesforce"/>
 <link rel="search" type="application/opensearchdescription+xml" href="../lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="salesforce.html"/>
 <link rel="contents" href="salesforce.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="../lib/exe/css.php.t.bootstrap3.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0:applications';var JSINFO = {"id":"documentation:2.0:applications:salesforce","namespace":"documentation:2.0:applications"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="../lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="../lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -52,7 +79,7 @@
 </p>
 
 <p>
-SalesForce permet l'emploi de <abbr title="Security Assertion Markup Language">SAML</abbr> pour authentifier les utilisateurs. Il peut utiliser les modes initiés par le SP ou l'IdP.
+It allows one to use <abbr title="Security Assertion Markup Language">SAML</abbr> to authenticate users. Il peut utiliser les modes initiés par le SP ou l'IdP.
 </p>
 
 <p>
@@ -67,7 +94,7 @@ Pour fonctionner avec <abbr title="LemonLDAP::NG">LL::NG</abbr> il faut :
 </li>
 </ul>
 
-</div><!-- EDIT2 SECTION "Presentation" [69-468] -->
+</div><!-- EDIT2 SECTION "Presentation" [69-472] -->
 
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
@@ -76,7 +103,7 @@ Pour fonctionner avec <abbr title="LemonLDAP::NG">LL::NG</abbr> il faut :
 Il est nécessaire d'avoir configuré <abbr title="LemonLDAP::NG">LL::NG</abbr> comme <a href="../idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">fournisseur d'identité SAML</a>,
 </p>
 
-</div><!-- EDIT3 SECTION "Configuration" [469-574] -->
+</div><!-- EDIT3 SECTION "Configuration" [473-578] -->
 
 <h3 class="sectionedit4" id="create_salesforce_domain">Créer le domaine Salesforce</h3>
 <div class="level3">
@@ -112,7 +139,7 @@ correspondent aux bonnes valeurs. (adapter le domaine si nécessaire)
 </p>
 <div class="noteimportant">Pour l'instant, le paramètre du service d'authentification ne dispose pas d'un domaine disponible. Il faudra revenir plus tard pour adapter ce paramètre. Une fois que la cinématique <abbr title="Security Assertion Markup Language">SAML</abbr> fonctionne, mettre le domaine, et supprimer le formulaire de connexion, la redirection se fera alors automatiquement vers le fournisseur d'identité (plus besoin de cliquer pour l'utilisateur). Noter que l'on peut toujours accéder à Salesforce par la page générale de connexion : <a href="https://login.salesforce.com" class="urlextern" title="https://login.salesforce.com"  rel="nofollow">https://login.salesforce.com</a>
 </div>
-</div><!-- EDIT4 SECTION "Create Salesforce domain" [575-1566] -->
+</div><!-- EDIT4 SECTION "Create Salesforce domain" [579-1570] -->
 
 <h3 class="sectionedit5" id="saml_settings">Paramètres SAML</h3>
 <div class="level3">
@@ -135,7 +162,7 @@ Aller dans les paramètres SSO de <abbr title="Security Assertion Markup Languag
 </li>
 <li class="level1"><div class="li"> Issuer : c'est l'identifiant d'entité de LemonLDAP::NG, qui est par défaut #PORTAL#/saml/metadata</div>
 </li>
-<li class="level1"><div class="li"> Identity Provider Certificate : bien qu'il semble devoir être renseigné ici le certificat d'authentification, c'est celui de signature de l'IdP Lemonldap::NG qu'il faut renseigner. S'il n'en dispose pas, en créer un avec la paire de clef déjà générée (on peut le faire avec openssl). "SSL authentication (https)" ne semble pas devoir être sélectionné.</div>
+<li class="level1"><div class="li"> Identity Provider Certificate: whereas it is mentioned that this is the authentication certificate, you must give your LemonLDAP::NG (IdP) signing certificate. S'il n'en dispose pas, en créer un avec la paire de clef déjà générée (on peut le faire avec openssl). "SSL authentication (https)" ne semble pas devoir être sélectionné.</div>
 </li>
 <li class="level1"><div class="li"> Signing Certificate : choisir un certificat pour la signature du SP. (en créer un à défaut)</div>
 </li>
@@ -165,7 +192,7 @@ Aller dans les paramètres SSO de <abbr title="Security Assertion Markup Languag
 </li>
 </ul>
 
-</div><!-- EDIT5 SECTION "SAML settings" [1567-3679] -->
+</div><!-- EDIT5 SECTION "SAML settings" [1571-3682] -->
 
 <h3 class="sectionedit6" id="configure_federation_id">Configurer l'identifiant de fédération</h3>
 <div class="level3">
@@ -186,7 +213,7 @@ Une fois ceci terminé, cliquer pour exporter les métadatas Salesforce et les i
 Voir <a href="../idpsaml.html" class="wikilink1" title="documentation:2.0:idpsaml">Enregistrer un fournisseur de service dans LemonLDAP::NG</a>.
 </p>
 
-</div><!-- EDIT6 SECTION "Configure Federation ID" [3680-] -->
+</div><!-- EDIT6 SECTION "Configure Federation ID" [3683-] -->
 </div>
 </body>
 </html>

@@ -4,15 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:applications:alfresco</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,applications,alfresco"/>
 <link rel="search" type="application/opensearchdescription+xml" href="../lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="alfresco.html"/>
 <link rel="contents" href="alfresco.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="../lib/exe/css.php.t.bootstrap3.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0:applications';var JSINFO = {"id":"documentation:2.0:applications:alfresco","namespace":"documentation:2.0:applications"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="../lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -78,7 +105,7 @@ You need to find the following files in your Alfresco installation:
 </ul>
 
 <p>
-The first will allow to configure <abbr title="Single Sign On">SSO</abbr> for the alfresco webapp, and the other for the share webapp. 
+The first will allow one to configure <abbr title="Single Sign On">SSO</abbr> for the alfresco webapp, and the other for the share webapp. 
 </p>
 
 <p>
@@ -136,7 +163,7 @@ You need to restart Tomcat to apply changes.
 <div class="notewarning">Now you can log in with a simple HTTP header. You need to restrict access to Alfresco to <abbr title="LemonLDAP::NG">LL::NG</abbr>.
 </div>
 </div>
-<!-- EDIT4 SECTION "Alfresco" [423-3119] -->
+<!-- EDIT4 SECTION "Alfresco" [423-3123] -->
 <h3 class="sectionedit5" id="llng">LL::NG</h3>
 <div class="level3">
 
@@ -149,7 +176,7 @@ You can intercept the logout with this rule: <code>^/share/page/dologout ⇒ log
 </p>
 
 </div>
-<!-- EDIT5 SECTION "LL::NG" [3120-3332] -->
+<!-- EDIT5 SECTION "LL::NG" [3124-3336] -->
 <h2 class="sectionedit6" id="other_resources">Other resources</h2>
 <div class="level2">
 <ul>
@@ -158,6 +185,6 @@ You can intercept the logout with this rule: <code>^/share/page/dologout ⇒ log
 </ul>
 
 </div>
-<!-- EDIT6 SECTION "Other resources" [3333-] --></div>
+<!-- EDIT6 SECTION "Other resources" [3337-] --></div>
 </body>
 </html>

@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:authldap</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,authldap"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="authldap.html"/>
 <link rel="contents" href="authldap.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:authldap","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -158,7 +184,7 @@ List of attributes to query to fill user session. See also <a href="exportedvars
 <div class="level3">
 <div class="notetip">In LDAP filters, $user is replaced by user login, and $mail by user email.
 </div><ul>
-<li class="level1"><div class="li"> <strong>Default filter</strong>: default LDAP fitler for searches, should not be modified.</div>
+<li class="level1"><div class="li"> <strong>Default filter</strong>: default LDAP filter for searches, should not be modified.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Authentication filter</strong>: Filter to find user from its login (default: <code>(&amp;(uid=$user)(objectClass=inetOrgPerson))</code>)</div>
 </li>
@@ -208,7 +234,7 @@ And the mail filter is:
 </li>
 <li class="level1"><div class="li"> <strong>Change as user</strong>: enable to perform password modification with credentials of connected user. This requires to request user old password (see <a href="portalcustom.html" class="wikilink1" title="documentation:2.0:portalcustom">portal customization</a>).</div>
 </li>
-<li class="level1"><div class="li"> <strong>LDAP password encoding</strong>: can allow to manage old LDAP servers using specific encoding for passwords (default: utf-8).</div>
+<li class="level1"><div class="li"> <strong>LDAP password encoding</strong>: can allow one to manage old LDAP servers using specific encoding for passwords (default: utf-8).</div>
 </li>
 <li class="level1"><div class="li"> <strong>Use reset attribute</strong>: enable to use the password reset attribute. This attribute is set by LemonLDAP::NG when <a href="resetpassword.html" class="wikilink1" title="documentation:2.0:resetpassword">password was reset by mail</a> and the user choose to generate the password (default: enabled).</div>
 </li>

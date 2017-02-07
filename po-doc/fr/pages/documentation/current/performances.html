@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:performances</title>
+  <title>documentation:2.0:performances</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,performances"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="performances.html"/>
 <link rel="contents" href="performances.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:performances","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -281,7 +307,7 @@ Le serveur LDAP peut être un frein lorsque vous utilisez la récupération des 
 <span class="re0">memberOf</span>:<span class="re1"> cn=su,dmdName=groups,dc=example,dc=com</span></pre>
 
 <p>
-Ainsi au lieu d'utiliser la récupération des groupes LDAP, vous avez juste à stocker le champ “memberOf” dans vos variables exportées. Avec OpenLDAP, vous pouvez utiliser <a href="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance" class="urlextern" title="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance"  rel="nofollow">memberof overlay</a> qui le fera automatiquement.
+Ainsi au lieu d'utiliser la récupération des groupes LDAP, vous avez juste à stocker le champ “memberOf” dans vos variables exportées. With OpenLDAP, you can use the <a href="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance" class="urlextern" title="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance"  rel="nofollow">memberof overlay</a> to do it automatically.
 </p>
 <div class="noteimportant">N'oubliez pas de créer un index sur le champ utilisé pour trouver les utilisateurs (uid par défaut)
 </div><div class="notetip">Pour éviter de stocker les dn dans votre base de sessions, vous pouvez utiliser une macro pour réécrire memberOf :<ul>
@@ -304,12 +330,12 @@ Maintenant, ldapgroups contient “admin su”
 </p>
 
 </div>
-</div><!-- EDIT11 SECTION "LDAP performances" [7374-8502] -->
+</div><!-- EDIT11 SECTION "LDAP performances" [7374-8503] -->
 
 <h2 class="sectionedit12" id="manager_performances">Performances du Manager</h2>
 <div class="level2">
 
-</div><!-- EDIT12 SECTION "Manager performances" [8503-8536] -->
+</div><!-- EDIT12 SECTION "Manager performances" [8504-8537] -->
 
 <h3 class="sectionedit13" id="disable_unused_modules">Désactiver les modules inutilisés</h3>
 <div class="level3">
@@ -320,7 +346,7 @@ In lemonldap-ng.ini, set only modules that you will use. By default, configurati
 <pre class="code ini"><span class="re0"><span class="br0">[</span>manager<span class="br0">]</span></span>
 <span class="re1">enabledModules</span> <span class="sy0">=</span><span class="re2"> conf, sessions</span></pre>
 
-</div><!-- EDIT13 SECTION "Disable unused modules" [8537-8783] -->
+</div><!-- EDIT13 SECTION "Disable unused modules" [8538-8784] -->
 
 <h3 class="sectionedit14" id="use_static_html_files">Use static HTML files</h3>
 <div class="level3">
@@ -353,7 +379,7 @@ So manager <abbr title="HyperText Markup Language">HTML</abbr> templates will be
 
 </p>
 
-</div><!-- EDIT14 SECTION "Use static HTML files" [8784-] -->
+</div><!-- EDIT14 SECTION "Use static HTML files" [8785-] -->
 </div>
 </body>
 </html>

@@ -10,10 +10,36 @@
 <link rel="start" href="cda.html"/>
 <link rel="contents" href="cda.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:cda","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -39,9 +65,9 @@
 </li>
 <li class="level1"><div class="li"> Portal recognizes the user with its <a href="documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a>, and see he is coming from a different domain</div>
 </li>
-<li class="level1"><div class="li"> Portal redirects user on protected application with his session ID as <abbr title="Uniform Resource Locator">URL</abbr> parameter</div>
+<li class="level1"><div class="li"> Portal redirects user on protected application with a token as <abbr title="Uniform Resource Locator">URL</abbr> parameter. The token is linked to a session which contains the real session ID</div>
 </li>
-<li class="level1"><div class="li"> Handler detects <abbr title="Uniform Resource Locator">URL</abbr> parameter and create a <a href="documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on its domain, with session ID as value</div>
+<li class="level1"><div class="li"> Handler detects <abbr title="Uniform Resource Locator">URL</abbr> parameter, gets the real session ID, delete the token session and creates a <a href="documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on its domain, with session ID as value</div>
 </li>
 </ol>
 

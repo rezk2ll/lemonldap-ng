@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:managerprotection</title>
+  <title>documentation:2.0:managerprotection</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,managerprotection"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="managerprotection.html"/>
 <link rel="contents" href="managerprotection.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:managerprotection","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -30,7 +56,8 @@ Lorsqu'on installe <abbr title="LemonLDAP::NG">LL::NG</abbr>, le manager n'est a
 
 <h2 class="sectionedit2" id="apache_based_protection">Protection basée sur Apache</h2>
 <div class="level2">
-<div class="notetip">Une protection basée sur Apache permet d'être indépendant du WebSSO, ainsi le manager est toujours accessible même si la configuration du WebSSO est corrompue.
+<div class="notetip">Apache based protection allow one to be independent from WebSSO, so Manager will always be reachable even if WebSSO configuration is corrupted.
+
 </div>
 <p>
 Cette configuration peut être changée dans <code>etc/manager-apache2.conf</code>, par exemple pour restreindre les adresses <abbr title="Internet Protocol">IP</abbr> autorisées à accéder au manager :
@@ -61,7 +88,7 @@ Il est souvent souhaitable d'utiliser un module d'authentification Apache, tel p
 <span class="co0">;protection = manager</span></pre>
 
 </div>
-</div><!-- EDIT2 SECTION "Apache based protection" [216-1605] -->
+</div><!-- EDIT2 SECTION "Apache based protection" [216-1609] -->
 
 <h2 class="sectionedit3" id="llng_based_protection">Protection basée sur LL::NG</h2>
 <div class="level2">
@@ -109,7 +136,7 @@ On peut aussi ajouter le manager dans les <a href="portalmenu.html#categories_an
 </p>
 <div class="notetip">Si pour une quelconque raison le WebSSO ne fonctionne pas, pour accéder au manager, supprimer la protection dans <code>lemonldap-ng.ini</code>. Ajouter un contrôle d'accès Apache pour éviter les autres accès.
 </div>
-</div><!-- EDIT3 SECTION "LL::NG based protection" [1606-] -->
+</div><!-- EDIT3 SECTION "LL::NG based protection" [1610-] -->
 </div>
 </body>
 </html>

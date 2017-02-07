@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:parameterlist</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,parameterlist"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="parameterlist.html"/>
 <link rel="contents" href="parameterlist.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:parameterlist","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -287,297 +313,282 @@ The attribute key name can be used directly in <code>lemonldap-ng.ini</code> or 
 		<td class="col0"> Session key containing email address </td><td class="col1"> mailSessionKey </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
 	<tr class="row85 rowodd">
-		<td class="col0"> Manager menu organization </td><td class="col1"> managerCss </td><td class="col2"> </td><td class="col3"> </td><td class="col4 centeralign">   ✔  </td>
-	</tr>
-	<tr class="row86 roweven">
-		<td class="col0"> Manager theme </td><td class="col1"> managerCssTheme </td><td class="col2"> </td><td class="col3"> </td><td class="col4 centeralign">   ✔  </td>
-	</tr>
-	<tr class="row87 rowodd">
 		<td class="col0"> LDAP Bind <abbr title="Distinguished Name">DN</abbr> </td><td class="col1"> managerDn </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row88 roweven">
+	<tr class="row86 roweven">
 		<td class="col0"> LDAP Bind Password </td><td class="col1"> managerPassword </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row89 rowodd">
-		<td class="col0"> Manager skin </td><td class="col1"> managerSkin </td><td class="col2"> </td><td class="col3"> </td><td class="col4 centeralign">   ✔  </td>
-	</tr>
-	<tr class="row90 roweven">
-		<td class="col0"> Manager tree autoClose </td><td class="col1"> managerTreeAutoClose </td><td class="col2"> </td><td class="col3"> </td><td class="col4 centeralign">   ✔  </td>
-	</tr>
-	<tr class="row91 rowodd">
-		<td class="col0"> Manager tree JQuery <abbr title="Cascading Style Sheets">CSS</abbr> file </td><td class="col1"> managerTreeJqueryCss </td><td class="col2"> </td><td class="col3"> </td><td class="col4 centeralign">   ✔  </td>
-	</tr>
-	<tr class="row92 roweven">
+	<tr class="row87 rowodd">
 		<td class="col0"> Multi overridden parameters </td><td class="col1"> multi </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row93 rowodd">
+	<tr class="row88 roweven">
 		<td class="col0"> Multi values separator </td><td class="col1 leftalign"> multiValuesSeparator  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td>
 	</tr>
-	<tr class="row94 roweven">
+	<tr class="row89 rowodd">
 		<td class="col0"> Notification activation </td><td class="col1"> notification </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4 centeralign">  ✔  </td>
 	</tr>
-	<tr class="row95 rowodd">
+	<tr class="row90 roweven">
 		<td class="col0"> Notification backend </td><td class="col1"> notificationStorage </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4 centeralign">  ✔  </td>
 	</tr>
-	<tr class="row96 roweven">
+	<tr class="row91 rowodd">
 		<td class="col0"> Notification backend options </td><td class="col1"> notificationStorageOptions </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4 centeralign">  ✔  </td>
 	</tr>
-	<tr class="row97 rowodd">
+	<tr class="row92 roweven">
 		<td class="col0 leftalign"> Notification uid for all users  </td><td class="col1"> notificationWildcard </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4 centeralign">  ✔  </td>
 	</tr>
-	<tr class="row98 roweven">
+	<tr class="row93 rowodd">
 		<td class="col0"> Display deleted sessions </td><td class="col1"> notifyDeleted </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row99 rowodd">
+	<tr class="row94 roweven">
 		<td class="col0"> Display other sessions </td><td class="col1"> notifyOther </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row100 roweven">
+	<tr class="row95 rowodd">
 		<td class="col0"> Null authentication level </td><td class="col1"> nullAuthnLevel </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row101 rowodd">
+	<tr class="row96 roweven">
 		<td class="col0"> OpenID authentication level </td><td class="col1"> openIdAuthnLevel </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row102 roweven">
+	<tr class="row97 rowodd">
 		<td class="col0"> OpenID allowed domains </td><td class="col1"> openIdIDPList </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row103 rowodd">
+	<tr class="row98 roweven">
 		<td class="col0"> OpenID secret token </td><td class="col1"> openIdSecret </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row104 roweven">
+	<tr class="row99 rowodd">
 		<td class="col0"> Password backend </td><td class="col1"> passwordDB </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row105 rowodd">
+	<tr class="row100 roweven">
 		<td class="col0"> Force port in redirection </td><td class="col1"> port </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row106 roweven">
+	<tr class="row101 rowodd">
 		<td class="col0"> Portal <abbr title="Uniform Resource Locator">URL</abbr> </td><td class="col1"> portal </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row107 rowodd">
+	<tr class="row102 roweven">
 		<td class="col0"> Anti frame protection </td><td class="col1"> portalAntiFrame </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row108 roweven">
+	<tr class="row103 rowodd">
 		<td class="col0"> Display applications list </td><td class="col1"> portalDisplayAppslist </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row109 rowodd">
+	<tr class="row104 roweven">
 		<td class="col0"> Display change password module </td><td class="col1"> portalDisplayChangePassword </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row110 roweven">
+	<tr class="row105 rowodd">
 		<td class="col0"> Display logout module </td><td class="col1"> portalDisplayLogout </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row111 rowodd">
+	<tr class="row106 roweven">
 		<td class="col0"> Display reset password form </td><td class="col1"> portalDisplayResetPassword </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row112 roweven">
+	<tr class="row107 rowodd">
 		<td class="col0"> Open links in new window </td><td class="col1"> portalOpenLinkInNewWindow </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row113 rowodd">
+	<tr class="row108 roweven">
 		<td class="col0"> Ping interval </td><td class="col1"> portalPingInterval </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row114 roweven">
+	<tr class="row109 rowodd">
 		<td class="col0"> Require old password (change) </td><td class="col1"> portalRequireOldPassword </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row115 rowodd">
+	<tr class="row110 roweven">
 		<td class="col0"> Skin name </td><td class="col1"> portalSkin </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row116 roweven">
+	<tr class="row111 rowodd">
 		<td class="col0"> User name session field </td><td class="col1"> portalUserAttr </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row117 rowodd">
+	<tr class="row112 roweven">
 		<td class="col0"> Protection scheme </td><td class="col1"> protection </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4 centeralign">  ✔  </td>
 	</tr>
-	<tr class="row118 roweven">
+	<tr class="row113 rowodd">
 		<td class="col0"> Regular expression for random password </td><td class="col1"> randomPasswordRegexp </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row119 rowodd">
+	<tr class="row114 roweven">
 		<td class="col0"> Delay between check of local configuration </td><td class="col1"> reloadTime </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row120 roweven">
+	<tr class="row115 rowodd">
 		<td class="col0"> Remote cookie name </td><td class="col1"> remoteCookieName </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row121 rowodd">
+	<tr class="row116 roweven">
 		<td class="col0"> Proxy cookie name </td><td class="col1"> remoteCookieName </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row122 roweven">
+	<tr class="row117 rowodd">
 		<td class="col0"> Remote Session backend </td><td class="col1"> remoteGlobalStorage </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row123 rowodd">
+	<tr class="row118 roweven">
 		<td class="col0"> Remote Session backend options </td><td class="col1"> remoteGlobalStorageOptions </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row124 roweven">
+	<tr class="row119 rowodd">
 		<td class="col0"> Remote portal </td><td class="col1"> remotePortal </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row125 rowodd">
+	<tr class="row120 roweven">
 		<td class="col0"> <abbr title="Security Assertion Markup Language">SAML</abbr> Session backend </td><td class="col1"> samlStorage </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row126 roweven">
+	<tr class="row121 rowodd">
 		<td class="col0"> <abbr title="Security Assertion Markup Language">SAML</abbr> Session backend options </td><td class="col1"> samlStorageOptions </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row127 rowodd">
+	<tr class="row122 roweven">
 		<td class="col0"> Cookie security </td><td class="col1"> securedCookie </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row128 roweven">
+	<tr class="row123 rowodd">
 		<td class="col0"> Delete other session if <abbr title="Internet Protocol">IP</abbr> differs </td><td class="col1"> singleIP </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row129 rowodd">
+	<tr class="row124 roweven">
 		<td class="col0"> Delete other session </td><td class="col1"> singleSession </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row130 roweven">
+	<tr class="row125 rowodd">
 		<td class="col0"> Do not allow several users for 1 <abbr title="Internet Protocol">IP</abbr> </td><td class="col1"> singleUserByIP </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row131 rowodd">
+	<tr class="row126 roweven">
 		<td class="col0"> SMTP server </td><td class="col1"> SMTPServer </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row132 roweven">
+	<tr class="row127 rowodd">
 		<td class="col0"> SMTP user </td><td class="col1"> SMTPAuthUser </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row133 rowodd">
+	<tr class="row128 roweven">
 		<td class="col0"> SMTP password </td><td class="col1"> SMTPAuthPass </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row134 roweven">
+	<tr class="row129 rowodd">
 		<td class="col0"> SOAP activation </td><td class="col1"> Soap </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row135 rowodd">
+	<tr class="row130 roweven">
 		<td class="col0"> Proxy portal <abbr title="Uniform Resource Locator">URL</abbr> </td><td class="col1"> soapAuthService </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row136 roweven">
+	<tr class="row131 rowodd">
 		<td class="col0"> Proxy session SOAP end point </td><td class="col1"> soapSessionService </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row137 rowodd">
+	<tr class="row132 roweven">
 		<td class="col0"> SSL authentication level </td><td class="col1"> SSLAuthnLevel </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row138 roweven">
+	<tr class="row133 rowodd">
 		<td class="col0"> SSL user field in certificate </td><td class="col1"> SSLVar </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row139 rowodd">
+	<tr class="row134 roweven">
 		<td class="col0"> Status module activation </td><td class="col1"> status </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row140 roweven">
+	<tr class="row135 rowodd">
 		<td class="col0"> Store password in session </td><td class="col1"> storePassword </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row141 rowodd">
+	<tr class="row136 roweven">
 		<td class="col0"> Sympa mail session key </td><td class="col1"> sympaMailKey </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row142 roweven">
+	<tr class="row137 rowodd">
 		<td class="col0"> Sympa shared secret </td><td class="col1"> sympaSecret </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row143 rowodd">
+	<tr class="row138 roweven">
 		<td class="col0"> Syslog facility </td><td class="col1"> syslog </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row144 roweven">
+	<tr class="row139 rowodd">
 		<td class="col0"> Session lifetime for cronjob </td><td class="col1"> timeout </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row145 rowodd">
+	<tr class="row140 roweven">
 		<td class="col0"> Trusted domains </td><td class="col1"> trustedDomains </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row146 roweven">
+	<tr class="row141 rowodd">
 		<td class="col0"> Twitter application name </td><td class="col1"> twitterAppName </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row147 rowodd">
+	<tr class="row142 roweven">
 		<td class="col0"> Twitter authentication level </td><td class="col1"> twitterAuthnLevel </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row148 roweven">
+	<tr class="row143 rowodd">
 		<td class="col0"> Twitter application key </td><td class="col1"> twitterKey </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row149 rowodd">
+	<tr class="row144 roweven">
 		<td class="col0"> Twitter application secret </td><td class="col1"> twitterSecret </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row150 roweven">
+	<tr class="row145 rowodd">
 		<td class="col0"> User backend </td><td class="col1"> userDB </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row151 rowodd">
+	<tr class="row146 roweven">
 		<td class="col0"> Use redirect on error </td><td class="col1"> useRedirectOnError </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row152 roweven">
+	<tr class="row147 rowodd">
 		<td class="col0"> Use Safe Jail </td><td class="col1"> useSafeJail </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row153 rowodd">
+	<tr class="row148 roweven">
 		<td class="col0"> <abbr title="Database Interface">DBI</abbr> Pivot from user table </td><td class="col1"> userPivot </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row154 roweven">
+	<tr class="row149 rowodd">
 		<td class="col0"> Use XForwardedFor for <abbr title="Internet Protocol">IP</abbr> </td><td class="col1"> useXForwardedForIP </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row155 rowodd">
+	<tr class="row150 roweven">
 		<td class="col0"> Data to store as REMOTE_USER (used also in Apache logs) </td><td class="col1"> whatToTrace </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row156 roweven">
+	<tr class="row151 rowodd">
 		<td class="col0"> Zimbra account session key </td><td class="col1"> zimbraAccountKey </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row157 rowodd">
+	<tr class="row152 roweven">
 		<td class="col0"> Zimbra account type </td><td class="col1"> zimbraBy </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row158 roweven">
+	<tr class="row153 rowodd">
 		<td class="col0"> Zimbra preauthentication key </td><td class="col1"> zimbraPreAuthKey </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row159 rowodd">
+	<tr class="row154 roweven">
 		<td class="col0"> Zimbra local <abbr title="Single Sign On">SSO</abbr> <abbr title="Uniform Resource Locator">URL</abbr> pattern </td><td class="col1"> zimbraSsoUrl </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row160 roweven">
+	<tr class="row155 rowodd">
 		<td class="col0"> Zimbra preauthentication <abbr title="Uniform Resource Locator">URL</abbr> </td><td class="col1"> zimbraUrl </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row161 rowodd">
+	<tr class="row156 roweven">
 		<td class="col0"> Yubikey client ID </td><td class="col1"> yubikeyClientID </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row162 roweven">
+	<tr class="row157 rowodd">
 		<td class="col0"> Yubikey secret key </td><td class="col1"> yubikeySecretKey </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row163 rowodd">
+	<tr class="row158 roweven">
 		<td class="col0"> Yubikey public ID size </td><td class="col1"> yubikeyPublicIDSize </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row164 roweven">
+	<tr class="row159 rowodd">
 		<td class="col0"> Yubikey authentication level </td><td class="col1"> yubikeyAuthnLevel </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row165 rowodd">
+	<tr class="row160 roweven">
 		<td class="col0"> Hide old password in reset form </td><td class="col1"> hideOldPassword </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row166 roweven">
+	<tr class="row161 rowodd">
 		<td class="col0"> Secure Token allow requests in error </td><td class="col1"> secureTokenAllowOnError </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row167 rowodd">
+	<tr class="row162 roweven">
 		<td class="col0"> Secure Token attribute </td><td class="col1"> secureTokenAttribute </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row168 roweven">
+	<tr class="row163 rowodd">
 		<td class="col0"> Secure Token expiration </td><td class="col1"> secureTokenExpiration </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row169 rowodd">
+	<tr class="row164 roweven">
 		<td class="col0"> Secure Token header </td><td class="col1"> secureTokenHeader </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row170 roweven">
+	<tr class="row165 rowodd">
 		<td class="col0"> Secure Token Memcached servers </td><td class="col1"> secureTokenMemcachedServers </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row171 rowodd">
+	<tr class="row166 roweven">
 		<td class="col0"> Secure Token protected URLs </td><td class="col1"> secureTokenUrls </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row172 roweven">
+	<tr class="row167 rowodd">
 		<td class="col0"> Cookie Javascript protection </td><td class="col1"> httpOnly </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row173 rowodd">
+	<tr class="row168 roweven">
 		<td class="col0"> Send mail on password change </td><td class="col1"> mailOnPasswordChange </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row174 roweven">
+	<tr class="row169 rowodd">
 		<td class="col0"> Radius authentication level </td><td class="col1"> radiusAuthnLevel </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row175 rowodd">
+	<tr class="row170 roweven">
 		<td class="col0"> Radius server </td><td class="col1"> radiusServer </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row176 roweven">
+	<tr class="row171 rowodd">
 		<td class="col0"> Radius secret </td><td class="col1"> radiusSecret </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row177 rowodd">
+	<tr class="row172 roweven">
 		<td class="col0"> Check <abbr title="Cross Site Scripting">XSS</abbr> Attacks </td><td class="col1"> checkXSS </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row178 roweven">
+	<tr class="row173 rowodd">
 		<td class="col0"> Maintenance mode </td><td class="col1"> maintenance </td><td class="col2"> </td><td class="col3 centeralign">  ✔  </td><td class="col4"> </td>
 	</tr>
-	<tr class="row179 rowodd">
+	<tr class="row174 roweven">
 		<td class="col0"> Persistent Session backend </td><td class="col1"> persistentStorage </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
-	<tr class="row180 roweven">
+	<tr class="row175 rowodd">
 		<td class="col0"> Persistent Session backend options </td><td class="col1"> persistentStorageOptions </td><td class="col2 centeralign">  ✔  </td><td class="col3"> </td><td class="col4"> </td>
 	</tr>
 </table></div>
-<!-- EDIT3 TABLE [306-10764] --></div>
+<!-- EDIT3 TABLE [306-10483] --></div>
 </div>
-<!-- EDIT2 SECTION "Main parameters" [264-10777] -->
+<!-- EDIT2 SECTION "Main parameters" [264-10496] -->
 <h2 class="sectionedit4" id="configuration_backend_parameters">Configuration backend parameters</h2>
 <div class="level2">
 <div class="table sectionedit5"><table class="inline table table-bordered table-striped">
@@ -629,8 +640,8 @@ The attribute key name can be used directly in <code>lemonldap-ng.ini</code> or 
 		<td class="col0"> <a href="http://search.cpan.org/perldoc?LWP::UserAgent" class="urlextern" title="http://search.cpan.org/perldoc?LWP::UserAgent"  rel="nofollow">LWP::UserAgent</a> parameters </td><td class="col1"> proxyOptions </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [10824-11583] -->
+<!-- EDIT5 TABLE [10543-11302] -->
 </div>
-<!-- EDIT4 SECTION "Configuration backend parameters" [10778-] --></div>
+<!-- EDIT4 SECTION "Configuration backend parameters" [10497-] --></div>
 </body>
 </html>

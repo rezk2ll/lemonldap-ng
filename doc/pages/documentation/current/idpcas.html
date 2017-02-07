@@ -4,16 +4,42 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:idpcas</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,idpcas"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="idpcas.html"/>
 <link rel="contents" href="idpcas.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+<!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else -->
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+<!-- //endif -->
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:idpcas","namespace":"documentation:2.0"};
 /*!]]>*/</script>
 <script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script>
+<!-- //endif -->
+<!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script>
+<!-- //endif -->
 </head>
 <body>
 <div class="dokuwiki export container">
@@ -27,7 +53,7 @@
 <div class="level2">
 
 <p>
-<abbr title="LemonLDAP::NG">LL::NG</abbr> can act as an <abbr title="Central Authentication Service">CAS</abbr> server, that can allow to federate <abbr title="LemonLDAP::NG">LL::NG</abbr> with:
+<abbr title="LemonLDAP::NG">LL::NG</abbr> can act as an <abbr title="Central Authentication Service">CAS</abbr> server, that can allow one to federate <abbr title="LemonLDAP::NG">LL::NG</abbr> with:
 </p>
 <ul>
 <li class="level1"><div class="li"> Another <abbr title="LemonLDAP::NG">LL::NG</abbr> system configured with <a href="authcas.html" class="wikilink1" title="documentation:2.0:authcas">CAS authentication</a></div>
@@ -41,7 +67,7 @@
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Presentation" [27-406] -->
+<!-- EDIT2 SECTION "Presentation" [27-410] -->
 <h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
@@ -86,6 +112,6 @@ Then go in <code>Options</code> to define:
 <div class="notetip">If <code><abbr title="Central Authentication Service">CAS</abbr> login</code> is not set, it uses <code>General Parameters</code> » <code>Logs</code> » <code>REMOTE_USER</code> data, which is set to <code>uid</code> by default
 </div>
 </div>
-<!-- EDIT3 SECTION "Configuration" [407-] --></div>
+<!-- EDIT3 SECTION "Configuration" [411-] --></div>
 </body>
 </html>

@@ -3,18 +3,44 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8" />
-  <title>documentation:2.0:installdeb</title>
+  <title>documentation:2.0:installdeb</title><!-- //if:usedebianlibs
+  <link rel="stylesheet" type="text/css" href="/javascript/bootstrap/css/bootstrap.min.css" />
+//elsif:useexternallibs
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></script>
+//elsif:cssminified
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css" />
+//else --><!-- //endif -->
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,installdeb"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="installdeb.html"/>
 <link rel="contents" href="installdeb.html" title="Sitemap"/>
 <link rel="stylesheet" type="text/css" href="lib/exe/css.php.t.bootstrap3.css"/>
-<link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.min.css"/>
+
+  <link rel="stylesheet" type="text/css" href="/static/bwr/bootstrap/dist/css/bootstrap.css" />
+
 <script type="text/javascript">/*<![CDATA[*/var NS='documentation:2.0';var JSINFO = {"id":"documentation:2.0:installdeb","namespace":"documentation:2.0"};
 /*!]]>*/</script>
-<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script>
+<script type="text/javascript" charset="utf-8" src="lib/exe/js.php.t.bootstrap3.js"></script><!-- //if:usedebianlibs
+<script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+//elsif:useexternallibs
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+//elsif:jsminified
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.min.js"></script>
+//else -->
+
+<script type="text/javascript" src="/static/bwr/jquery/dist/jquery.js"></script><!-- //endif --><!-- //if:usedebianlibs
+  <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
+//elsif:useexternallibs
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+//elsif:jsminified
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.min.js"></script>
+//else -->
+
+
+  <script type="text/javascript" src="/lib/scripts/jquery-ui.js"></script><!-- //endif -->
+
 </head>
 <body>
 <div class="dokuwiki export container"><!-- TOC START -->
@@ -66,7 +92,7 @@
 LemonLDAP::NG fournit ces paquets :
 </p>
 <ul>
-<li class="level1"><div class="li"> lemonldap-ng : meta-paquet qui ne contient aucun fichier mais des dépendances vers les autres paquets</div>
+<li class="level1"><div class="li">  lemonldap-ng: metapackage, contains no file but dependencies on other packages</div>
 </li>
 <li class="level1"><div class="li"> lemonldap-ng-doc : contient la documentation <abbr title="HyperText Markup Language">HTML</abbr> et celle du projet (README, etc...)</div>
 </li>
@@ -84,12 +110,12 @@ LemonLDAP::NG fournit ces paquets :
 </li>
 </ul>
 
-</div><!-- EDIT2 SECTION "Organization" [60-631] -->
+</div><!-- EDIT2 SECTION "Organization" [60-630] -->
 
 <h2 class="sectionedit3" id="get_the_packages">Obtenir ces paquets</h2>
 <div class="level2">
 
-</div><!-- EDIT3 SECTION "Get the packages" [632-661] -->
+</div><!-- EDIT3 SECTION "Get the packages" [631-660] -->
 
 <h3 class="sectionedit4" id="official_repository">Dépôt officiel</h3>
 <div class="level3">
@@ -100,7 +126,7 @@ Pour les utilisateurs de Debian testing ou unstable, les paquets sont directemen
 <pre class="code">apt-cache search lemonldap-ng</pre>
 <div class="noteimportant">Les paquets du <a href="http://packages.debian.org/search?keywords=lemonldap-ng" class="urlextern" title="http://packages.debian.org/search?keywords=lemonldap-ng"  rel="nofollow">dépôt Debian</a> peuvent ne pas être à jour. Si c'est le cas, utiliser une autre solution (voir ci-dessous).
 </div>
-</div><!-- EDIT4 SECTION "Official repository" [662-1000] -->
+</div><!-- EDIT4 SECTION "Official repository" [661-999] -->
 
 <h3 class="sectionedit5" id="llng_repository">Dépôt LL::NG</h3>
 <div class="level3">
@@ -124,7 +150,7 @@ Lancer ceci pour rafraîchir le cache :
 </p>
 <pre class="code">apt-get update</pre>
 
-</div><!-- EDIT5 SECTION "LL::NG repository" [1001-1590] -->
+</div><!-- EDIT5 SECTION "LL::NG repository" [1000-1589] -->
 
 <h3 class="sectionedit6" id="manual_download">Téléchargement manuel</h3>
 <div class="level3">
@@ -133,7 +159,7 @@ Lancer ceci pour rafraîchir le cache :
 Les paquets sont disponibles sur la <a href="download.html" class="wikilink1" title="Téléchargement">page de téléchargement</a>.
 </p>
 
-</div><!-- EDIT6 SECTION "Manual download" [1591-1677] -->
+</div><!-- EDIT6 SECTION "Manual download" [1590-1676] -->
 
 <h2 class="sectionedit7" id="package_gpg_signature">Signature GPG des paquets</h2>
 <div class="level2">
@@ -147,18 +173,18 @@ L'installer pour certifier les paquets :
 </p>
 <pre class="code">apt-key add rpm-gpg-key-ow2</pre>
 
-</div><!-- EDIT7 SECTION "Package GPG signature" [1678-1846] -->
+</div><!-- EDIT7 SECTION "Package GPG signature" [1677-1845] -->
 
 <h2 class="sectionedit8" id="install_packages">Installer les paquets</h2>
 <div class="level2">
 
-</div><!-- EDIT8 SECTION "Install packages" [1847-1876] -->
+</div><!-- EDIT8 SECTION "Install packages" [1846-1875] -->
 
 <h3 class="sectionedit9" id="with_aptitude">Avec aptitude</h3>
 <div class="level3">
 <pre class="code">aptitude install lemonldap-ng</pre>
 
-</div><!-- EDIT9 SECTION "With aptitude" [1877-1947] -->
+</div><!-- EDIT9 SECTION "With aptitude" [1876-1946] -->
 
 <h3 class="sectionedit10" id="with_dpkg">Avec dpkg</h3>
 <div class="level3">
@@ -172,12 +198,12 @@ Ensuite :
 </p>
 <pre class="code">dpkg -i liblemonldap-ng-* lemonldap-ng*</pre>
 
-</div><!-- EDIT10 SECTION "With dpkg" [1948-2096] -->
+</div><!-- EDIT10 SECTION "With dpkg" [1947-2095] -->
 
 <h2 class="sectionedit11" id="first_configuration_steps">Premiers pas de configuration</h2>
 <div class="level2">
 
-</div><!-- EDIT11 SECTION "First configuration steps" [2097-2135] -->
+</div><!-- EDIT11 SECTION "First configuration steps" [2096-2134] -->
 
 <h3 class="sectionedit12" id="change_default_dns_domain">Changer le domaine DNS par défaut</h3>
 <div class="level3">
@@ -187,7 +213,7 @@ Par défaut, le domaine <abbr title="Domain Name System">DNS</abbr> est <code>ex
 </p>
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1.js /var/lib/lemonldap-ng/test/index.pl</pre>
 
-</div><!-- EDIT12 SECTION "Change default DNS domain" [2136-2453] -->
+</div><!-- EDIT12 SECTION "Change default DNS domain" [2135-2452] -->
 
 <h3 class="sectionedit13" id="reload_virtual_host">Recharger l'hôte virtuel</h3>
 <div class="level3">
@@ -198,7 +224,7 @@ Pour autoriser le manager à recharger la configuration, enregistrer le nom d'h�
 <pre class="code shell">echo "127.0.0.1 reload.example.com" &gt;&gt; /etc/hosts</pre>
 <div class="notetip">Adapter le nom d'hôte virtuel de rechargement au domaine configuré.
 </div>
-</div><!-- EDIT13 SECTION "Reload virtual host" [2454-2755] -->
+</div><!-- EDIT13 SECTION "Reload virtual host" [2453-2754] -->
 
 <h3 class="sectionedit14" id="upgrade">Mise à jour</h3>
 <div class="level3">
@@ -207,7 +233,7 @@ Pour autoriser le manager à recharger la configuration, enregistrer le nom d'h�
 Pour mettre à jour <abbr title="LemonLDAP::NG">LL::NG</abbr>, lisez toutes les <a href="upgrade.html" class="wikilink1" title="documentation:2.0:upgrade">notes de mise à jour</a>.
 </p>
 
-</div><!-- EDIT14 SECTION "Upgrade" [2756-2836] -->
+</div><!-- EDIT14 SECTION "Upgrade" [2755-2835] -->
 
 <h3 class="sectionedit15" id="dns">DNS</h3>
 <div class="level3">
@@ -223,7 +249,7 @@ Configurer le serveur <abbr title="Domain Name System">DNS</abbr> pour résoudre
 Suivre les <a href="start.html#configuration" class="wikilink1" title="documentation:2.0:start">étapes suivantes</a>
 </p>
 
-</div><!-- EDIT15 SECTION "DNS" [2837-3109] -->
+</div><!-- EDIT15 SECTION "DNS" [2836-3108] -->
 
 <h2 class="sectionedit16" id="file_location">Emplacement du fichier</h2>
 <div class="level2">
@@ -244,7 +270,7 @@ Suivre les <a href="start.html#configuration" class="wikilink1" title="documenta
 </li>
 </ul>
 
-</div><!-- EDIT16 SECTION "File location" [3110-3646] -->
+</div><!-- EDIT16 SECTION "File location" [3109-3645] -->
 
 <h2 class="sectionedit17" id="build_your_packages">Construire les paquets</h2>
 <div class="level2">
@@ -256,7 +282,7 @@ On peut également construire les paquets à partir de l'<a href="download.html"
 cd lemonldap-ng-*
 make debian-packages</pre>
 
-</div><!-- EDIT17 SECTION "Build your packages" [3647-] -->
+</div><!-- EDIT17 SECTION "Build your packages" [3646-] -->
 </div>
 </body>
 </html>
