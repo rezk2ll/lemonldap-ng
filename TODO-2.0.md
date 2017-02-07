@@ -21,8 +21,8 @@
 
 # Combination
 
-* getDisplayType()
 * detect changes
+* diff()
 
 # Password
 
