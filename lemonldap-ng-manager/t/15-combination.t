@@ -31,7 +31,7 @@ ok( $res = &client->_get( '/confs/2/ldapServer', 'application/json' ), 'Get comb
 ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
 ok( $resBody->{value} eq 'ldap://192.168.1.1', 'Key ldapServer has been modified');
 
-count(8);
+count(9);
 
 done_testing( count() );
 
