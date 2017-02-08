@@ -254,8 +254,9 @@ sub sendHtml {
             (
                 $args{params}
                 ? %{ $args{params} }
-                : ( $self->can('tplParams') ? ( $self->tplParams ) : () )
+                : ()
             ),
+            ( $self->can('tplParams') ? ( $self->tplParams ) : () ),
         );
     };
     if ($@) {

@@ -14,7 +14,8 @@ extends 'Lemonldap::NG::Portal::Lib::U2F';
 sub init {
     my ($self) = @_;
     return 0 unless $self->SUPER::init;
-    $self->addAuthRoute( u2fregister => 'run', [ 'GET', 'POST' ] );
+    $self->addAuthRoute( u2fregister => { ':action' => 'run' }, ['POST'] );
+    $self->addAuthRoute( 'u2fregister.html' => undef, ['GET'] );
     return 1;
 }
 
@@ -23,12 +24,20 @@ sub init {
 # Main method
 sub run {
     my ( $self, $req ) = @_;
+    my $action = $req->param('action');
 
-    # Check for registration response
-    if ( my $response = $req->param('registration') ) {
-        $self->lmLog( "Get registration data $response", 'debug' );
-        my ( $keyHandle, $userKey ) =
-          $self->crypter->registrationVerify($response);
+    if ( $action eq 'register' ) {
+        my $challenge = $self->crypter->registrationChallenge;
+        return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
+    }
+    if ( $action eq 'registration' ) {
+        my $resp;
+        unless ( $resp = $req->param('registration') ) {
+            return $self->p->sendError( $req, 'Missing registration parameter',
+                400 );
+        }
+        $self->lmLog( "Get registration data $resp", 'debug' );
+        my ( $keyHandle, $userKey ) = $self->crypter->registrationVerify($resp);
         if ( $keyHandle and $userKey ) {
             $self->p->updatePersistentSession(
                 $req,
@@ -37,39 +46,63 @@ sub run {
                     _u2fUserKey   => encode_base64( $userKey,   '' )
                 }
             );
-            return $self->p->sendHtml(
-                $req,
-                'u2fregister',
-                params => {
-                    PORTAL_URL => $self->conf->{portal},
-                    SKIN       => $self->conf->{portalSkin},
-                    SUCCESS    => 1
-                }
-            );
+            return [
+                200, [ 'Content-Type' => 'application/json' ],
+                ['{"result":1}']
+            ];
         }
-        $self->p->userError( 'U2F Registration failed: '
-              . Crypt::U2F::Server::Simple::lastError() );
-        return $self->p->sendHtml(
-            $req,
-            'u2fregister',
-            params => {
-                PORTAL_URL => $self->conf->{portal},
-                SKIN       => $self->conf->{portalSkin},
-                FAILED     => 1
-            }
-        );
+        my $err = Crypt::U2F::Server::Simple::lastError();
+        $self->p->userError("U2F Registration failed: $err");
+        return $self->p->sendError( $req, $err, 200 );
     }
-    my $challenge = $self->crypter->registrationChallenge;
-    return $self->p->sendHtml(
-        $req,
-        'u2fregister',
-        params => {
-            PORTAL_URL => $self->conf->{portal},
-            SKIN       => $self->conf->{portalSkin},
-            CHALLENGE  => $challenge,
-            APPID      => $self->origin
+    if ( $action eq 'verify' ) {
+        my ( $err, $error ) = $self->loadUser($req);
+        if ( $err == -1 ) {
+            return $self->p->sendError( $req, "U2F error: $error", 200 );
         }
-    );
+        elsif ( $err == 0 ) {
+            return $self->p->sendError( $req, "noU2FKeyFound" );
+        }
+        my $challenge = $self->crypter->authenticationChallenge;
+        return [ 200, [ 'Content-Type' => 'application/json' ], [$challenge] ];
+    }
+    if ( $action eq 'signature' ) {
+        my $resp;
+        unless ( $resp = $req->param('signature') ) {
+            return $self->p->sendError( $req, 'Missing signature parameter',
+                400 );
+        }
+        my ( $err, $error ) = $self->loadUser($req);
+        if ( $err == -1 ) {
+            return $self->p->sendError( $req, "U2F error: $error", 200 );
+        }
+        elsif ( $err == 0 ) {
+            return $self->p->sendError( $req, "noU2FKeyFound" );
+        }
+        my $res = ( $self->crypter->authenticationVerify($resp) ? 1 : 0 );
+        return [
+            200, [ 'Content-Type' => 'application/json' ],
+            [qq'{"result":$res}']
+        ];
+    }
+}
+
+sub loadUser {
+    my ( $self, $req ) = @_;
+    my $uid     = $req->userData->{ $self->conf->{whatToTrace} };
+    my $session = getPersistentSession($uid);
+    my $kh      = $session->data->{_u2fKeyHandle};
+    my $uk      = $session->data->{_u2fUserKey};
+    unless ( $kh and $uk ) {
+        return 0;
+    }
+    $self->crypter->{keyHandle} = decode_base64($kh);
+    $self->crypter->{publicKey} = decode_base64($uk);
+    unless ( $self->crypter->setKeyHandle and $self->crypter->setPublicKey ) {
+        my $error = Crypt::U2F::Server::Simple::lastError();
+        return ( -1, $error );
+    }
+    return 1;
 }
 
 1;

@@ -680,4 +680,8 @@ sub rebuildCookies {
     $self->buildCookie($req);
 }
 
+sub tplParams {
+    return ( SKIN => $_[0]->conf->{portalSkin} );
+}
+
 1;

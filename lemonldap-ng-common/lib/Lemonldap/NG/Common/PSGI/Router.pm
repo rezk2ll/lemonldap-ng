@@ -36,6 +36,7 @@ sub genRoute {
         }
     }
     else {
+        $dest //= $word;
         if ( $word =~ /^:(.*)$/ ) {
             $routes->{'#'} = $1;
             die "Target required for $word" unless ($dest);
@@ -47,6 +48,12 @@ sub genRoute {
         }
         else {
             $dest ||= $word;
+        }
+        if ( $dest =~ /^(.+)\.html$/ ) {
+            my $tpl = $1 or die;
+            $self->lmLog( "route $dest will use $tpl" );
+            $routes->{$word} = sub { $self->sendHtml( $_[1], $tpl ) };
+            return;
         }
         if ( $transform and ( not ref($dest) or ref($dest) eq 'CODE' ) ) {
             $dest = $transform->($dest);
@@ -71,10 +78,6 @@ sub genRoute {
             else {
                 die "Type $t unauthorizated in routes";
             }
-        }
-        elsif ( $dest =~ /^(.+)\.html$/ ) {
-            my $tpl = $1 or die;
-            $routes->{$word} = sub { $self->sendHtml( $_[1], $tpl ) };
         }
         elsif ( $self->can($dest) ) {
             $routes->{$word} = sub { shift; $self->$dest(@_) };
