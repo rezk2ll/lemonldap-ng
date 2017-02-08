@@ -94,7 +94,7 @@ sub run {
             foreach my $param (
                 qw/response_type scope client_id state redirect_uri nonce
                 response_mode display prompt max_age ui_locales id_token_hint
-                login_hint acr_valuesi request request_uri/
+                login_hint acr_values request request_uri/
               )
             {
                 if ( $req->param($param) ) {
