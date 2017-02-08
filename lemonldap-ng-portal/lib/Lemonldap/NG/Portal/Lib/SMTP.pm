@@ -45,8 +45,8 @@ sub send_mail {
     $self->lmLog( "send_mail called to send \"$subject\" to $mail", 'debug' );
 
     # Encode the body with the given charset
-    $body    = encode( $self->charset, $body );
-    $subject = encode( $self->charset, $subject );
+    $body    = encode( $self->charset, decode( 'utf-8', $body ) );
+    $subject = encode( $self->charset, decode( 'utf-8', $subject ) );
 
     # Debug messages
     $self->lmLog( "SMTP From " . $self->conf->{mailFrom}, 'debug' );
