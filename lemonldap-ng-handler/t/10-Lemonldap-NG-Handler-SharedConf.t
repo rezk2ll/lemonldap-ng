@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 5;
+use Test::More tests => 6;
 use Cwd 'abs_path';
 use File::Basename;
 use File::Temp;
@@ -54,6 +54,8 @@ our $apacheRequest;
 my $h = 'Lemonldap::NG::Handler::Test';
 
 ok( $h->init(), 'Initialize handler' );
+
+ok( $h->checkType($apacheRequest) eq 'Main', 'Get Main type');
 
 ok( $ret = $h->run($apacheRequest),
     'run Handler with basic configuration and no cookie' );

@@ -1,9 +1,11 @@
 package Lemonldap::NG::Handler::Main::Init;
 
+our $VERSION = '2.0.0';
+
+package Lemonldap::NG::Handler::Main;
+
 use strict;
 use Lemonldap::NG::Common::Conf;
-
-our $VERSION = '2.0.0';
 
 ## @imethod void init(hashRef args)
 # Read parameters and build the Lemonldap::NG::Common::Conf object.

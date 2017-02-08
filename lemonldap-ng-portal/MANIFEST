@@ -307,6 +307,8 @@ site/templates/dark/password.tpl
 site/templates/dark/redirect.tpl
 site/templates/dark/register.tpl
 site/templates/dark/standardform.tpl
+site/templates/dark/u2fcheck.tpl
+site/templates/dark/u2fregister.tpl
 site/templates/dark/yubikeyform.tpl
 site/templates/impact/authmessage.tpl
 site/templates/impact/confirm.tpl
@@ -327,6 +329,8 @@ site/templates/impact/password.tpl
 site/templates/impact/redirect.tpl
 site/templates/impact/register.tpl
 site/templates/impact/standardform.tpl
+site/templates/impact/u2fcheck.tpl
+site/templates/impact/u2fregister.tpl
 site/templates/impact/yubikeyform.tpl
 site/templates/pastel/confirm.tpl
 site/templates/pastel/customfooter.tpl
@@ -346,6 +350,8 @@ site/templates/pastel/password.tpl
 site/templates/pastel/redirect.tpl
 site/templates/pastel/register.tpl
 site/templates/pastel/standardform.tpl
+site/templates/pastel/u2fcheck.tpl
+site/templates/pastel/u2fregister.tpl
 site/templates/pastel/yubikeyform.tpl
 t/01-AuthDemo.t
 t/02-Password-Demo.t

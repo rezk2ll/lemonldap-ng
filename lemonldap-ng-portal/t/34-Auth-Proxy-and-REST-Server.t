@@ -11,11 +11,11 @@ my ( $issuer, $sp, $res, $spId, $idpId );
 my %handlerOR = ( issuer => [], sp => [] );
 
 ok( $issuer = issuer(), 'Issuer portal' );
-$handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
+$handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
 switch ('sp');
 
 ok( $sp = sp(), 'SP portal' );
-$handlerOR{sp} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
+$handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
 count(2);
 
 # Simple SP access
@@ -234,7 +234,7 @@ sub LWP::UserAgent::request {
 
 sub switch {
     my $type = shift;
-    @Lemonldap::NG::Handler::Main::Reload::_onReload = @{
+    @Lemonldap::NG::Handler::Main::_onReload = @{
         $handlerOR{$type};
     };
 }

@@ -8,8 +8,8 @@
 package Lemonldap::NG::Handler::Menu;
 
 use strict;
-use Lemonldap::NG::Handler::ApacheMP2 qw(:all);
-use base qw(Lemonldap::NG::Handler::ApacheMP2);
+use Lemonldap::NG::Handler::ApacheMP2::Main qw(:all);
+use base qw(Lemonldap::NG::Handler::ApacheMP2::Main);
 use Apache2::Filter ();
 use constant BUFF_LEN => 8192;
 

@@ -151,7 +151,7 @@ sub switch {
     my $type = shift;
     pass( '==> Switching to ' . uc($type) . ' <==' );
     count(1);
-    @Lemonldap::NG::Handler::Main::Reload::_onReload = @{
+    @Lemonldap::NG::Handler::Main::_onReload = @{
         $handlerOR{$type};
     };
 }

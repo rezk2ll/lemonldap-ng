@@ -1,12 +1,15 @@
 package Lemonldap::NG::Handler::Main::Run;
 
+our $VERSION = '2.0.0';
+
+package Lemonldap::NG::Handler::Main;
+
 use strict;
 
 #use AutoLoader 'AUTOLOAD';
 use MIME::Base64;
 use URI::Escape;
 use Lemonldap::NG::Common::Session;
-our $VERSION = '2.0.0';
 
 # PUBLIC METHODS
 
@@ -45,6 +48,21 @@ sub status {
     return $class->OK;
 }
 
+sub checkType {
+    my ( $class, $req ) = @_;
+
+    $class->newRequest($req);
+    if ( time() - $class->lastCheck > $class->checkTime ) {
+        die("$class: No configuration found")
+          unless ( $class->checkConf );
+    }
+    my $vhost = $class->resolveAlias;
+    return
+      ( defined $class->tsv->{type}->{$vhost} )
+      ? $class->tsv->{type}->{$vhost}
+      : 'Main';
+}
+
 ## @rmethod int run
 # Check configuration and launch Lemonldap::NG::Handler::Main::run().
 # Each $checkTime, the Apache child verify if its configuration is the same
@@ -56,11 +74,6 @@ sub run {
     my ( $class, $req, $rule, $protection ) = @_;
     my ( $id, $session );
 
-    $class->newRequest($req);
-    if ( time() - $class->lastCheck > $class->checkTime ) {
-        die("$class: No configuration found")
-          unless ( $class->checkConf );
-    }
     return $class->DECLINED unless ( $class->is_initial_req );
 
     # Direct return if maintenance mode is active

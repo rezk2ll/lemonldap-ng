@@ -2983,6 +2983,28 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => -1,
             'type'    => 'int'
         },
+        'vhostType' => {
+            'default' => 'Main',
+            'select'  => [
+                {
+                    'k' => 'Main',
+                    'v' => 'Main'
+                },
+                {
+                    'k' => 'Zimbra',
+                    'v' => 'ZimbraPreAuth'
+                },
+                {
+                    'k' => 'AuthBasic',
+                    'v' => 'AuthBasic'
+                },
+                {
+                    'k' => 'SecureToken',
+                    'v' => 'SecureToken'
+                }
+            ],
+            'type' => 'select'
+        },
         'virtualHosts' => {
             'type' => 'virtualHostContainer'
         },

@@ -5,8 +5,9 @@ example/scripts/purgeLocalCache
 example/scripts/purgeLocalCache.cron.d
 lib/Lemonldap/NG/Handler.pm
 lib/Lemonldap/NG/Handler/ApacheMP2.pm
+lib/Lemonldap/NG/Handler/ApacheMP2/AuthBasic.pm
+lib/Lemonldap/NG/Handler/ApacheMP2/Main.pm
 lib/Lemonldap/NG/Handler/API/ExperimentalNginx.pm
-lib/Lemonldap/NG/Handler/AuthBasic.pm
 lib/Lemonldap/NG/Handler/Lib/AuthBasic.pm
 lib/Lemonldap/NG/Handler/Main.pm
 lib/Lemonldap/NG/Handler/Main/Init.pm
@@ -37,7 +38,6 @@ t/12-Lemonldap-NG-Handler-Jail.t
 t/13-Lemonldap-NG-Handler-Fake-Safe.t
 t/50-Lemonldap-NG-Handler-SecureToken.t
 t/51-Lemonldap-NG-Handler-Zimbra.t
-t/52-Lemonldap-NG-Handler-AuthBasic.t
 t/60-Lemonldap-NG-Handler-PSGI.t
 t/61-Lemonldap-NG-Handler-PSGI-Server.t
 t/62-Lemonldap-NG-Handler-Nginx.t

@@ -92,7 +92,7 @@ sub init {
 
     # Purge loaded module list
     $self->loadedModules( {} );
-    Lemonldap::NG::Handler::Main::Reload->onReload( $self, 'reloadConf' );
+    Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
     return 0 unless ( $self->SUPER::init($args) );
     return 0 if ( $self->error );
 

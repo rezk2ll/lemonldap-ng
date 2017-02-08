@@ -1,5 +1,9 @@
 package Lemonldap::NG::Handler::Main::Reload;
 
+our $VERSION = '2.0.0';
+
+package Lemonldap::NG::Handler::Main;
+
 use strict;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Crypto;
@@ -9,8 +13,6 @@ use Scalar::Util qw(weaken);
 
 use constant UNPROTECT => 1;
 use constant SKIP      => 2;
-
-our $VERSION = '2.0.0';
 
 our @_onReload;
 
@@ -213,6 +215,12 @@ sub defaultValuesInit {
                     $class->tsv->{$opt}->{$vhost} = $val;
                 }
             }
+        }
+    }
+    if ( $conf->{vhostOptions} ) {
+        foreach my $vhost ( keys %{ $conf->{vhostOptions} } ) {
+            $class->tsv->{type}->{$vhost} =
+              $conf->{vhostOptions}->{$vhost}->{vhostType};
         }
     }
     return 1;

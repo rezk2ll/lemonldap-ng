@@ -1,11 +1,13 @@
 package Lemonldap::NG::Handler::Main::SharedVariables;
 
+our $VERSION = '2.0.0';
+
 # Since handler has no instances but only static classes, this module provides
 # classes properties with accessors
 
-use strict;
+package Lemonldap::NG::Handler::Main;
 
-our $VERSION = '2.0.0';
+use strict;
 
 # Thread shared properties (if threads are available: needs to be loaded elsewhere)
 our $_tshv = {

@@ -114,6 +114,9 @@ sub reload {
 # response is 200.
 sub _authAndTrace {
     my ( $self, $req, $noCall ) = @_;
+
+    # TODO: handle types
+    my $type = $self->api->checkType($req);
     my ( $res, $session ) = $self->api->run( $req, $self->{rule} );
     $self->portal( $self->api->tsv->{portal}->() );
     $req->userData($session) if ($session);

@@ -42,11 +42,11 @@ sub retrieveSession {
 
     # First check if session already exists
     return 1
-      if ( $class->Lemonldap::NG::Handler::Main::Run::retrieveSession($id) );
+      if ( $class->Lemonldap::NG::Handler::Main::retrieveSession($id) );
 
     # Then ask portal to create it
     if ( $class->createSession($id) ) {
-        return $class->Lemonldap::NG::Handler::Main::Run::retrieveSession($id);
+        return $class->Lemonldap::NG::Handler::Main::retrieveSession($id);
     }
     else {
         return 0;
@@ -65,15 +65,16 @@ sub createSession {
     $xheader .= $class->remote_ip;
     my $soapHeaders = HTTP::Headers->new( "X-Forwarded-For" => $xheader );
 
-    my $soapClient = SOAP::Lite->proxy( $class->tsv->{portal}->(),
-        default_headers => $soapHeaders )
-      ->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
+    # TODO: use adminSession or sessions
+    my $soapClient = SOAP::Lite->proxy(
+        $class->tsv->{portal}->() . '/sessions',
+        default_headers => $soapHeaders
+    )->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
 
     my $creds = $class->header_in('Authorization');
     $creds =~ s/^Basic\s+//;
     my ( $user, $pwd ) = ( decode_base64($creds) =~ /^(.*?):(.*)$/ );
     $class->lmLog( "AuthBasic authentication for user: $user", 'debug' );
-    die 'Replace this by REST call';
     my $soapRequest = $soapClient->getCookies( $user, $pwd, $id );
 
     # Catch SOAP errors
@@ -116,8 +117,7 @@ sub hideCookie {
 sub goToPortal {
     my ( $class, $url, $arg ) = @_;
     if ($arg) {
-        return $class->Lemonldap::NG::Handler::Main::Run::goToPortal( $url,
-            $arg );
+        return $class->Lemonldap::NG::Handler::Main::goToPortal( $url, $arg );
     }
     else {
         $class->set_header_out(

@@ -209,7 +209,7 @@ sub virtualHosts {
         }
         return $self->sendJSONresponse( $req, $resp );
     }
-    elsif ( $query =~ /^vhost(?:(?:Aliase|Http)s|Maintenance|Port)$/ ) {
+    elsif ( $query =~ /^vhost(?:(?:Aliase|Http)s|Maintenance|Port|Type)$/ ) {
         $self->lmLog( "Query for $vh/$query key", 'debug' );
 
         # TODO: verify how this is done actually

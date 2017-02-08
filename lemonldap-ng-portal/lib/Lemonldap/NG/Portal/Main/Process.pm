@@ -418,7 +418,7 @@ sub store {
 
     # Main session
     my $session =
-      $self->getApacheSession( $req->{id}, force => $self->{force} );
+      $self->getApacheSession( $req->{id}, force => $req->{force} );
     return PE_APACHESESSIONERROR unless ($session);
     $req->id( $session->{id} );
 

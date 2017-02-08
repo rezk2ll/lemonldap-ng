@@ -26,7 +26,7 @@ our $oidcOPMetaDataNodeKeys = 'oidcOPMetaData(?:Options(?:C(?:lient(?:Secret|ID)
 our $oidcRPMetaDataNodeKeys = 'oidcRPMetaData(?:Options(?:I(?:DToken(?:Expiration|SignAlg)|con)|(?:RedirectUri|ExtraClaim)s|AccessTokenExpiration|Client(?:Secret|ID)|BypassConsent|DisplayName|UserIDAttr)|ExportedVars)';
 our $samlIDPMetaDataNodeKeys = 'samlIDPMetaData(?:Options(?:(?:Check(?:S[LS]OMessageSignatur|Audienc|Tim)|EncryptionMod|IsPassiv)e|A(?:llow(?:LoginFromIDP|ProxiedAuthn)|daptSessionUtime)|Re(?:questedAuthnContext|solutionRule|layStateURL)|S(?:ignS[LS]OMessage|toreSAMLToken|[LS]OBinding)|Force(?:Authn|UTF8)|NameIDFormat)|ExportedAttributes|XML)';
 our $samlSPMetaDataNodeKeys = 'samlSPMetaData(?:Options(?:N(?:ameID(?:SessionKey|Format)|otOnOrAfterTimeout)|S(?:essionNotOnOrAfterTimeout|ignS[LS]OMessage)|(?:CheckS[LS]OMessageSignatur|OneTimeUs)e|En(?:ableIDPInitiatedURL|cryptionMode)|ForceUTF8)|ExportedAttributes|XML)';
-our $virtualHostKeys = '(?:vhost(?:(?:Aliase|Http)s|Maintenance|Port)|(?:exportedHeader|locationRule)s|post)';
+our $virtualHostKeys = '(?:vhost(?:(?:Maintenanc|Typ)e|(?:Aliase|Http)s|Port)|(?:exportedHeader|locationRule)s|post)';
 
 our $authParameters = {
   adParams => [qw(ADPwdMaxAge ADPwdExpireWarning)],

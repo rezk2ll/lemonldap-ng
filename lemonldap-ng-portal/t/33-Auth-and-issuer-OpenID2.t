@@ -18,11 +18,11 @@ SKIP: {
         skip 'Net::OpenID::* notfound', $maintests;
     }
     ok( $issuer = issuer(), 'Issuer portal' );
-    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
+    $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
     switch ('sp');
 
     ok( $sp = sp(), 'SP portal' );
-    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::Reload::_onReload;
+    $handlerOR{sp} = \@Lemonldap::NG::Handler::Main::_onReload;
 
     # Simple SP access
     my $res;
@@ -99,7 +99,7 @@ done_testing( count() );
 
 sub switch {
     my $type = shift;
-    @Lemonldap::NG::Handler::Main::Reload::_onReload = @{
+    @Lemonldap::NG::Handler::Main::_onReload = @{
         $handlerOR{$type};
     };
 }

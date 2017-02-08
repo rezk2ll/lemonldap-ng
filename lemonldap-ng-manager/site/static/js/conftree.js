@@ -915,6 +915,31 @@ function templates(tpl,key) {
             "get" : tpl+"s/"+key+"/"+"vhostAliases",
             "id" : tpl+"s/"+key+"/"+"vhostAliases",
             "title" : "vhostAliases"
+         },
+         {
+            "default" : "Main",
+            "get" : tpl+"s/"+key+"/"+"vhostType",
+            "id" : tpl+"s/"+key+"/"+"vhostType",
+            "select" : [
+               {
+                  "k" : "Main",
+                  "v" : "Main"
+               },
+               {
+                  "k" : "Zimbra",
+                  "v" : "ZimbraPreAuth"
+               },
+               {
+                  "k" : "AuthBasic",
+                  "v" : "AuthBasic"
+               },
+               {
+                  "k" : "SecureToken",
+                  "v" : "SecureToken"
+               }
+            ],
+            "title" : "vhostType",
+            "type" : "select"
          }
       ],
       "help" : "configvhost.html#options",

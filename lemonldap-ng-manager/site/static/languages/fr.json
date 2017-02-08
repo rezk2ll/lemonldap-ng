@@ -671,6 +671,7 @@
 "vhostMaintenance": "Mode maintenance",
 "vhostOptions": "Options",
 "vhostPort": "Port",
+"vhostType": "Type",
 "view": "Aperçu",
 "virtualHost": "Hôte virtuel",
 "virtualHostName": "Nom de l'hôte virtuel",
