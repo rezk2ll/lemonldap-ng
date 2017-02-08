@@ -51,7 +51,7 @@ sub genRoute {
         }
         if ( $dest =~ /^(.+)\.html$/ ) {
             my $tpl = $1 or die;
-            $self->lmLog( "route $dest will use $tpl" );
+            $self->lmLog( "route $dest will use $tpl", 'debug' );
             $routes->{$word} = sub { $self->sendHtml( $_[1], $tpl ) };
             return;
         }
