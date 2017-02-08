@@ -18,6 +18,10 @@ extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::OpenIDConnect',
   'Lemonldap::NG::Common::Conf::AccessLib';
 
+# INTERFACE
+
+sub beforeAuth { 'exportRequestParameters' }
+
 # INITIALIZATION
 
 # OIDC has 7 endpoints managed here as PSGI endpoints or in run() [Main/Issuer.pm
@@ -1344,6 +1348,24 @@ sub metadata {
 
     # op_policy_uri
     # op_tos_uri
+}
+
+# Store request parameters in %ENV
+sub exportRequestParameters {
+    my ( $self, $req ) = @_;
+
+    foreach my $param (
+        qw/response_type scope client_id state redirect_uri nonce
+        response_mode display prompt max_age ui_locales id_token_hint
+        login_hint acr_values request request_uri/
+      )
+    {
+        if ( $req->param($param) ) {
+            $ENV{ "llng_oidc_" . $param } = $req->param($param);
+        }
+    }
+
+    return PE_OK;
 }
 
 1;
