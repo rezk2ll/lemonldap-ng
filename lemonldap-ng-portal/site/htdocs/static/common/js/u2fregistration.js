@@ -5,25 +5,117 @@ LemonLDAP::NG U2F registration script
  */
 
 (function() {
-  var register;
+  var register, setMsg, verify;
+
+  setMsg = function(msg, level) {
+    $('#msg').html(window.translate(msg));
+    $('#color').removeClass('message-positive message-warning alert-success alert-warning');
+    $('#color').addClass("message-" + level);
+    if (level === 'positive') {
+      level = 'success';
+    }
+    return $('#color').addClass("alert-" + level);
+  };
 
   register = function() {
-    var request;
-    request = [
-      {
-        challenge: window.datas.challenge,
-        version: 'U2F_V2'
+    return $.ajax({
+      type: "POST",
+      url: portal + "u2fregister/register",
+      data: {},
+      dataType: 'json',
+      error: function(j, status, err) {
+        return console.log('Error', err);
+      },
+      success: function(ch) {
+        var request;
+        request = [
+          {
+            challenge: ch.challenge,
+            version: ch.version
+          }
+        ];
+        setMsg('touchU2fDevice', 'positive');
+        $('#u2fPermission').show();
+        return u2f.register(ch.appId, request, [], function(data) {
+          $('#u2fPermission').hide();
+          if (data.errorCode) {
+            return setMsg('unableToGetU2FKey', 'warning');
+          } else {
+            return $.ajax({
+              type: "POST",
+              url: portal + "u2fregister/registration",
+              data: {
+                registration: JSON.stringify(data)
+              },
+              dataType: 'json',
+              success: function(resp) {
+                if (resp.error) {
+                  return setMsg('u2fFailed', 'warning');
+                } else if (resp.result) {
+                  return setMsg('u2fSuccess', 'positive');
+                }
+              },
+              error: function(j, status, err) {
+                return console.log('error', err);
+              }
+            });
+          }
+        });
       }
-    ];
-    console.log('Register: ', request);
-    return u2f.register(window.datas.appId, request, [], function(data) {
-      $('#bind-data').val(JSON.stringify(data));
-      return $('#bind-form').submit();
+    });
+  };
+
+  verify = function() {
+    return $.ajax({
+      type: "POST",
+      url: portal + "u2fregister/verify",
+      data: {},
+      dataType: 'json',
+      error: function(j, status, err) {
+        return console.log('Error', err);
+      },
+      success: function(ch) {
+        var request;
+        request = [
+          {
+            keyHandle: ch.keyHandle,
+            version: ch.version
+          }
+        ];
+        setMsg('touchU2fDevice', 'positive');
+        return u2f.sign(ch.appId, ch.challenge, request, function(data) {
+          if (data.errorCode) {
+            return setMsg('unableToGetU2FKey', 'warning');
+          } else {
+            return $.ajax({
+              type: "POST",
+              url: portal + "u2fregister/signature",
+              data: {
+                signature: JSON.stringify(data)
+              },
+              dataType: 'json',
+              success: function(resp) {
+                if (resp.error) {
+                  return setMsg('u2fFailed', 'warning');
+                } else if (resp.result) {
+                  return setMsg('u2fSuccess', 'positive');
+                }
+              },
+              error: function(j, status, err) {
+                return console.log('error', err);
+              }
+            });
+          }
+        });
+      }
     });
   };
 
   $(document).ready(function() {
-    return setTimeout(register, 1000);
+    $('#u2fPermission').hide();
+    $('#register').on('click', register);
+    $('#verify').on('click', verify);
+    return $('#goback').attr('href', portal);
   });
 
 }).call(this);

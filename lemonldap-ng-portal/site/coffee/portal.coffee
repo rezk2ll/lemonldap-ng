@@ -17,6 +17,8 @@ translatePage = (lang) ->
 translate = (str) ->
 	return if translationFields[str] then translationFields[str] else str
 
+window.translate = translate
+
 # Initialization variables
 getValues = () ->
 	values = {}

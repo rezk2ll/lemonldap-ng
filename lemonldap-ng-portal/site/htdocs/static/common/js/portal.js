@@ -30,6 +30,8 @@ LemonLDAP::NG Portal jQuery scripts
     }
   };
 
+  window.translate = translate;
+
   getValues = function() {
     var values;
     values = {};

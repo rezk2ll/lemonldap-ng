@@ -3,7 +3,6 @@ package Lemonldap::NG::Portal::Register::U2F;
 
 use strict;
 use Mouse;
-use MIME::Base64;
 
 our $VERSION = '2.0.0';
 
@@ -42,8 +41,8 @@ sub run {
             $self->p->updatePersistentSession(
                 $req,
                 {
-                    _u2fKeyHandle => encode_base64( $keyHandle, '' ),
-                    _u2fUserKey   => encode_base64( $userKey,   '' )
+                    _u2fKeyHandle => $self->encode_base64url( $keyHandle, '' ),
+                    _u2fUserKey   => $self->encode_base64url( $userKey,   '' )
                 }
             );
             return [
@@ -90,14 +89,14 @@ sub run {
 sub loadUser {
     my ( $self, $req ) = @_;
     my $uid     = $req->userData->{ $self->conf->{whatToTrace} };
-    my $session = getPersistentSession($uid);
+    my $session = $self->p->getPersistentSession($uid);
     my $kh      = $session->data->{_u2fKeyHandle};
     my $uk      = $session->data->{_u2fUserKey};
     unless ( $kh and $uk ) {
         return 0;
     }
-    $self->crypter->{keyHandle} = decode_base64($kh);
-    $self->crypter->{publicKey} = decode_base64($uk);
+    $self->crypter->{keyHandle} = $self->decode_base64url($kh);
+    $self->crypter->{publicKey} = $self->decode_base64url($uk);
     unless ( $self->crypter->setKeyHandle and $self->crypter->setPublicKey ) {
         my $error = Crypt::U2F::Server::Simple::lastError();
         return ( -1, $error );

@@ -6,7 +6,6 @@ package Lemonldap::NG::Portal::Plugins::U2F;
 
 use strict;
 use Mouse;
-use MIME::Base64;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_ERROR
   PE_NOTOKEN
@@ -148,8 +147,8 @@ sub loadUser {
     if (    ( $kh = $req->sessionInfo->{_u2fKeyHandle} )
         and ( $uk = $req->sessionInfo->{_u2fUserKey} ) )
     {
-        $self->crypter->{keyHandle} = decode_base64($kh);
-        $self->crypter->{publicKey} = decode_base64($uk);
+        $self->crypter->{keyHandle} = $self->decode_base64url($kh);
+        $self->crypter->{publicKey} = $self->decode_base64url($uk);
         unless ( $self->crypter->setKeyHandle and $self->crypter->setPublicKey )
         {
             $self->lmLog(
