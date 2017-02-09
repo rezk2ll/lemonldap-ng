@@ -56,10 +56,10 @@ sub reval {
     # Replace variables by session content
     # Manage subroutine not the same way as plain perl expressions
     if ( $e =~ /^sub\s*{/ ) {
-        $e =~ s/\$(?!ENV)(?!self)(\w+)/\$self->{sessionInfo}->{$1}/g;
+        $e =~ s/\$(?!ENV)(?!self)(\w+)/\$req->{sessionInfo}->{$1}/g;
     }
     else {
-        $e =~ s/\$(?!ENV)(\w+)/\$self->{p}->{sessionInfo}->{$1}/g;
+        $e =~ s/\$(?!ENV)(\w+)/\$req->{sessionInfo}->{$1}/g;
     }
 
     $self->{p}->lmLog( "Evaluate expression: $e", 'debug' );

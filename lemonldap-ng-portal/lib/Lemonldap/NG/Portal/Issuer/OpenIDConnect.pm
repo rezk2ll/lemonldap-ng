@@ -1361,7 +1361,7 @@ sub exportRequestParameters {
       )
     {
         if ( $req->param($param) ) {
-            $ENV{ "llng_oidc_" . $param } = $req->param($param);
+            $req->env->{ "llng_oidc_" . $param } = $req->param($param);
         }
     }
 

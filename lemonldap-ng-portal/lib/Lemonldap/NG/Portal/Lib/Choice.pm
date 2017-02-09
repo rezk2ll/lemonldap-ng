@@ -120,7 +120,7 @@ sub _buildAuthLoop {
         if ( $auth and $userDB and $passwordDB ) {
 
             # Default URL
-            $url = ( defined $url ? $url .= $ENV{'REQUEST_URI'} : '#' );
+            $url = ( defined $url ? $url .= $req->env->{'REQUEST_URI'} : '#' );
             $self->lmLog( "Use URL $url", 'debug' );
 
             # Options to store in the loop

@@ -57,7 +57,6 @@ sub build_jail {
 
     if ( $self->useSafeJail ) {
         $self->jail( Safe->new );
-        $self->jail->share_from( 'main', ['%ENV'] );
     }
     else {
         $self->jail($self);
