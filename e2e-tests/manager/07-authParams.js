@@ -28,15 +28,17 @@ describe('Lemonldap::NG Manager', function() {
       expect(element(by.id('t-ldapParams')).isDisplayed()).toBeTruthy();
     });
 
-    it('should display auth modules chosen with authMulti', function() {
+    it('should display auth modules chosen with authCombination', function() {
       element(by.id('t-authentication')).click();
-      element(by.xpath("//option[@value='Multi']")).click();
-      expect(element(by.id('t-multiParams')).isDisplayed()).toBeTruthy();
-      element(by.id('a-multiParams')).click();
-      element(by.id('t-multiAuthStack')).click();
-      element(by.id('textinput')).sendKeys('LDAP 1==0;CAS 1==1');
+      element(by.xpath("//option[@value='Combination']")).click();
+      expect(element(by.id('t-combinationParams')).isDisplayed()).toBeTruthy();
+      element(by.id('a-combinationParams')).click();
+      element(by.id('t-combModules')).click();
+      element(by.css('.glyphicon-plus-sign')).click();
+      element(by.xpath("//option[@value='DBI']")).click();
+      expect(element(by.id('t-dbiParams')).isDisplayed()).toBeTruthy();
+      element(by.xpath("//option[@value='LDAP']")).click();
       expect(element(by.id('t-ldapParams')).isDisplayed()).toBeTruthy();
-      expect(element(by.id('t-casParams')).isDisplayed()).toBeTruthy();
     });
   });
 });
