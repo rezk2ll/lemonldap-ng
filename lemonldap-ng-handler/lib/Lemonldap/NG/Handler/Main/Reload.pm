@@ -170,10 +170,12 @@ sub configReload {
 sub jailInit {
     my ( $class, $conf ) = @_;
 
-    $class->tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new({
-        'useSafeJail'     => $conf->{useSafeJail},
-        'customFunctions' => $conf->{customFunctions}
-    });
+    $class->tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new(
+        {
+            'useSafeJail'     => $conf->{useSafeJail},
+            'customFunctions' => $conf->{customFunctions}
+        }
+    );
     $class->tsv->{jail}->build_jail($class);
 }
 
@@ -453,7 +455,7 @@ sub conditionSub {
     # targets are available only for it.
     # This error can also appear with Manager configured as CGI script
     if ( $cond =~ /^logout_app/i
-        and not $class->isa('Lemonldap::NG::Handler::ApacheMP2') )
+        and not $class->isa('Lemonldap::NG::Handler::ApacheMP2::Main') )
     {
         $class->lmLog( "Rules logout_app and logout_app_sso require Apache>=2",
             'info' );
@@ -466,11 +468,12 @@ sub conditionSub {
         eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
         return (
             sub {
-                $Lemonldap::NG::Handler::ApacheMP2::request->add_output_filter(
+                $Lemonldap::NG::Handler::ApacheMP2::Main::request
+                  ->add_output_filter(
                     sub {
                         return $class->redirectFilter( $u, @_ );
                     }
-                );
+                  );
                 1;
             },
             0
@@ -484,7 +487,8 @@ sub conditionSub {
 
                 #TODO: check this
                 $class->localUnlog;
-                $Lemonldap::NG::Handler::ApacheMP2::request->add_output_filter(
+                $Lemonldap::NG::Handler::ApacheMP2::Main::request
+                  ->add_output_filter(
                     sub {
                         my $r = $_[0]->r;
                         return $class->redirectFilter(
@@ -494,7 +498,7 @@ sub conditionSub {
                             @_
                         );
                     }
-                );
+                  );
                 1;
             },
             0
