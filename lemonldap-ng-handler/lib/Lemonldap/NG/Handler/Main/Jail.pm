@@ -70,7 +70,7 @@ sub build_jail {
         $api,
         [
             qw( &hostname &remote_ip &uri &uri_with_args
-              &unparsed_uri &args &method &header_in   )
+              &unparsed_uri &args &method &header_in &env )
         ]
     );
     $self->jail->share_from( __PACKAGE__, [ @t, '&encrypt' ] );
@@ -90,6 +90,7 @@ sub encrypt {
 # Fake reval method if useSafeJail is off
 sub reval {
     my ( $self, $e ) = @_;
+
     my $res = eval $e;
     if ($@) {
         $self->error($@);
@@ -140,19 +141,17 @@ sub share_from {
 sub jail_reval {
     my ( $self, $reval ) = @_;
 
+    $reval =~ s/\$ENV\{/&env()->\{/g;
+
     # if nothing is returned by reval, add the return statement to
     # the "no safe wrap" reval
-    my $nosw_reval = $reval;
-    if ( $reval !~ /^sub\{return\(.*\}$/ ) {
-        $nosw_reval =~ s/^sub\{(.*)\}$/sub{return($1)}/;
-    }
 
     my $res;
     eval {
         $res = (
-            SAFEWRAP
+            SAFEWRAP and $self->useSafeJail
             ? $self->jail->wrap_code_ref( $self->jail->reval($reval) )
-            : $self->jail->reval($nosw_reval)
+            : $self->jail->reval($reval)
         );
     };
     if ($@) {

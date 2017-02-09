@@ -248,6 +248,11 @@ sub method {
     return $request->method;
 }
 
+## Return environment variables as hash
+sub env {
+    return \%ENV;
+}
+
 ## @method void print(string data)
 # write data in HTTP response body
 # @param data Text to add in response body

@@ -170,11 +170,10 @@ sub configReload {
 sub jailInit {
     my ( $class, $conf ) = @_;
 
-    $class->tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new(
-        'jail'            => $class->tsv->{jail},
+    $class->tsv->{jail} = Lemonldap::NG::Handler::Main::Jail->new({
         'useSafeJail'     => $conf->{useSafeJail},
         'customFunctions' => $conf->{customFunctions}
-    );
+    });
     $class->tsv->{jail}->build_jail($class);
 }
 
