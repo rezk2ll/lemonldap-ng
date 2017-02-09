@@ -1,3 +1,4 @@
+# Main running methods file
 package Lemonldap::NG::Handler::Main::Run;
 
 our $VERSION = '2.0.0';
@@ -11,7 +12,7 @@ use MIME::Base64;
 use URI::Escape;
 use Lemonldap::NG::Common::Session;
 
-# PUBLIC METHODS
+# Methods that must be overloaded
 
 sub handler {
     die "Must be overloaded" unless ($#_);
@@ -30,6 +31,14 @@ sub status {
     my $class;
     $class = $#_ ? shift : __PACKAGE__;
     $class->newRequest( $_[0] );
+    return $class->getStatus();
+}
+
+# Public methods
+
+# Return Handler::Status output
+sub getStatus {
+    my ($class) = @_;
     $class->lmLog( "Request for status", 'debug' );
     my $statusPipe = $class->tsv->{statusPipe};
     my $statusOut  = $class->tsv->{statusOut};
@@ -48,6 +57,8 @@ sub status {
     return $class->OK;
 }
 
+# Method that must be called by base packages (Handler::ApacheMP2,...) to get
+# type of handler to call (Main, AuthBasic,...)
 sub checkType {
     my ( $class, $req ) = @_;
 
@@ -57,8 +68,7 @@ sub checkType {
           unless ( $class->checkConf );
     }
     my $vhost = $class->resolveAlias;
-    return
-      ( defined $class->tsv->{type}->{$vhost} )
+    return ( defined $class->tsv->{type}->{$vhost} )
       ? $class->tsv->{type}->{$vhost}
       : 'Main';
 }
@@ -98,7 +108,8 @@ sub run {
     {
         if ( $class->fetchId and $session = $class->retrieveSession($id) ) {
             $class->lmLog(
-                'CDA asked for an already available session, skipping', 'info' );
+                'CDA asked for an already available session, skipping',
+                'info' );
         }
         else {
             my $cdaid = $1;
@@ -213,6 +224,16 @@ sub run {
         $class->updateStatus( $id ? 'EXPIRED' : 'REDIRECT' );
         return $class->goToPortal( $class->unparsed_uri );
     }
+}
+
+## @rmethod protected int unlog()
+# Call localUnlog() then goToPortal() to unlog the current user.
+# @return Constant value returned by goToPortal()
+sub unlog {
+    my $class = shift;
+    $class->localUnlog(@_);
+    $class->updateStatus('LOGOUT');
+    return $class->goToPortal( '/', 'logout=1' );
 }
 
 # INTERNAL METHODS
@@ -663,16 +684,6 @@ sub localUnlog {
             $class->tsv->{refLocalStorage}->remove($id);
         }
     }
-}
-
-## @rmethod protected int unlog()
-# Call localUnlog() then goToPortal() to unlog the current user.
-# @return Constant value returned by goToPortal()
-sub unlog {
-    my $class = shift;
-    $class->localUnlog(@_);
-    $class->updateStatus('LOGOUT');
-    return $class->goToPortal( '/', 'logout=1' );
 }
 
 ## @rmethod protected postOutputFilter(string uri)
