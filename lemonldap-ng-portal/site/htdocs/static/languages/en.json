@@ -197,6 +197,7 @@
 "updateCdc": "Update Common Domain Cookie",
 "user":"User",
 "useYubikey":"use your Yubikey",
+"verify": "Verify",
 "wait":"Wait",
 "warning":"Warning",
 "welcomeOnPortal":"Welcome on your secured authentication portal.",
