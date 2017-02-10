@@ -13,18 +13,6 @@ use Regexp::Common qw/URI/;
 my $perlExpr = sub {
     my ( $val, $conf ) = @_;
     my $s  = '';
-    my @cf = qw(
-      encode_base64 checkLogonHours date checkDate basic unicode2iso
-      iso2unicode groupMatch encrypt
-    );
-    push @cf,
-      defined $conf->{customFunctions}
-      ? map { my $f = $_; $f =~ s/\w+:://g; ( $f, $_ ) }
-      split( /\s+/, $conf->{customFunctions} )
-      : ();
-    foreach my $f (@cf) {
-        $s = "sub $f {1} $s";
-    }
     no warnings( 'redefine', 'uninitialized' );
     eval "$s $val";
     return $@ ? ( 1, "__badExpression__: $@" ) : (1);
@@ -1053,16 +1041,6 @@ sub attributes {
                           : ( 0, '__badUrl__' );
                     }
                     $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
-                    my @cf =
-                      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch encrypt);
-                    push @cf,
-                      defined $conf->{customFunctions}
-                      ? map { my $f = $_; $f =~ s/\w+:://g; ( $f, $_ ) }
-                      split( /\s+/, $conf->{customFunctions} )
-                      : ();
-                    foreach my $f (@cf) {
-                        $s = "sub $f {1} $s";
-                    }
                     no warnings( 'redefine', 'uninitialized' );
                     eval $s;
                     return $@ ? ( 1, "__badExpression__: $@" ) : (1);
@@ -1087,16 +1065,6 @@ sub attributes {
                 test       => sub {
                     my ( $val, $conf ) = @_;
                     my $s = $val;
-                    my @cf =
-                      qw(encode_base64 checkLogonHours date checkDate basic unicode2iso iso2unicode groupMatch encrypt);
-                    push @cf,
-                      defined $conf->{customFunctions}
-                      ? map { my $f = $_; $f =~ s/\w+:://g; ( $f, $_ ) }
-                      split( /\s+/, $conf->{customFunctions} )
-                      : ();
-                    foreach my $f (@cf) {
-                        $s = "sub $f {1} $s";
-                    }
                     no warnings( 'redefine', 'uninitialized' );
                     eval $s;
                     return $@ ? ( 1, "__badExpression__: $@" ) : (1);
