@@ -52,7 +52,7 @@ sub newRequest {
 # @param user string username
 sub set_user {
     my ( $class, $user ) = @_;
-    push @{ $request->respHeaders }, 'Lm-Remote-User' => $user;
+    push @{ $request->{respHeaders} }, 'Lm-Remote-User' => $user;
 }
 
 ## @method string header_in(string header)
@@ -62,7 +62,7 @@ sub set_user {
 sub header_in {
     my ( $class, $header ) = @_;
     $header ||= $class;    # to use header_in as a method or as a function
-    return $request->env->{ cgiName($header) };
+    return $request->{env}->{ cgiName($header) };
 }
 
 ## @method void set_header_in(hash headers)
@@ -71,7 +71,7 @@ sub header_in {
 sub set_header_in {
     my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        $request->env->{ cgiName($h) } = $v;
+        $request->{env}->{ cgiName($h) } = $v;
     }
 }
 
@@ -81,7 +81,7 @@ sub set_header_in {
 sub unset_header_in {
     my ( $class, @headers ) = @_;
     foreach my $h (@headers) {
-        delete $request->env->{ cgiName($h) };
+        delete $request->{env}->{ cgiName($h) };
     }
 }
 
@@ -91,7 +91,7 @@ sub unset_header_in {
 sub set_header_out {
     my ( $class, %headers ) = @_;
     while ( my ( $h, $v ) = each %headers ) {
-        push @{ $request->respHeaders }, $h => $v;
+        push @{ $request->{respHeaders} }, $h => $v;
     }
 }
 
@@ -99,7 +99,7 @@ sub set_header_out {
 # returns host, as set by full URI or Host header
 # @return host string Host value
 sub hostname {
-    my $h = $request->hostname;
+    my $h = $request->{env}->{HTTP_HOST};
     $h =~ s/:\d+//;
     return $h;
 }
@@ -108,7 +108,7 @@ sub hostname {
 # returns client IP address
 # @return IP_Addr string client IP
 sub remote_ip {
-    return $request->address;
+    return $request->{env}->{REMOTE_ADDR};
 }
 
 ## @method boolean is_initial_req
@@ -122,7 +122,7 @@ sub is_initial_req {
 # gets the query string
 # @return args string Query string
 sub args {
-    return $request->query_string;
+    return $request->{env}->{QUERY_STRING};
 }
 
 ## @method string uri
@@ -140,33 +140,33 @@ sub uri {
 # returns the URI, with arguments and with path portion normalized
 # @return URI with normalized path portion
 sub uri_with_args {
-    return $request->request_uri;
+    return $request->{env}->{REQUEST_URI};
 }
 
 ## @method string unparsed_uri
 # returns the full original request URI, with arguments
 # @return full original request URI, with arguments
 sub unparsed_uri {
-    return $request->request_uri;
+    return $request->{env}->{REQUEST_URI};
 }
 
 ## @method string get_server_port
 # returns the port the server is receiving the current request on
 # @return port string server port
 sub get_server_port {
-    return $request->port;
+    return $request->{env}->{SERVER_PORT};
 }
 
 ## @method string method
 # returns the request method
 # @return port string server port
 sub method {
-    return $request->method;
+    return $request->{env}->{REQUEST_METHOD};
 }
 
 ## Return FastCGI environment variables as hash
 sub env {
-    return $request->env;
+    return $request->{env};
 }
 
 ## @method void print(string data)

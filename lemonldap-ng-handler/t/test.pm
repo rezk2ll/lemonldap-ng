@@ -1,3 +1,7 @@
+package main;
+
+sub hostname { 'test1.example.com' };
+
 package Lemonldap::NG::Handler::Test;
 
 use Lemonldap::NG::Handler::Main;
@@ -5,7 +9,8 @@ our @ISA = qw(Lemonldap::NG::Handler::Main);
 our $header;
 
 use constant REDIRECT => 302;
-sub hostname           { 'test1.example.com' }
+#sub hostname           { 'test1.example.com' }
+*hostname = \&main::hostname;
 sub newRequest         { 1 }
 sub header_in          { "" }
 sub is_initial_req     { '1' }
