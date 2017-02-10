@@ -1,3 +1,4 @@
+* remove cache on handler init()
 * public\_page
 * GrantSession plugin
 * Test ForceAuth
