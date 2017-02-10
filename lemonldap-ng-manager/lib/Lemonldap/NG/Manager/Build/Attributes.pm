@@ -12,10 +12,12 @@ use Regexp::Common qw/URI/;
 
 my $perlExpr = sub {
     my ( $val, $conf ) = @_;
-    my $s  = '';
+    my $s = '';
     no warnings( 'redefine', 'uninitialized' );
     eval "$s $val";
-    return $@ ? ( 1, "__badExpression__: $@" ) : (1);
+    my $err = join( '',
+        grep { $_ =~ /Undefined subroutine/ ? () : $_ } split( /\n/, $@ ) );
+    return $err ? ( 1, "__badExpression__: $err" ) : (1);
 };
 
 my $url = $RE{URI}{HTTP}{ -scheme => "https?" };
@@ -1043,7 +1045,10 @@ sub attributes {
                     $s =~ s/\b(accept|deny|unprotect|skip)\b/1/g;
                     no warnings( 'redefine', 'uninitialized' );
                     eval $s;
-                    return $@ ? ( 1, "__badExpression__: $@" ) : (1);
+                    my $err = join( '',
+                        grep { $_ =~ /Undefined subroutine/ ? () : $_ }
+                          split( /\n/, $@ ) );
+                    return $err ? ( 1, "__badExpression__: $err" ) : (1);
                 },
                 msgFail => '__badExpression__',
             },
@@ -1067,7 +1072,10 @@ sub attributes {
                     my $s = $val;
                     no warnings( 'redefine', 'uninitialized' );
                     eval $s;
-                    return $@ ? ( 1, "__badExpression__: $@" ) : (1);
+                    my $err = join( '',
+                        grep { $_ =~ /Undefined subroutine/ ? () : $_ }
+                          split( /\n/, $@ ) );
+                    return $err ? ( 1, "__badExpression__: $err" ) : (1);
                   }
             },
             documentation => 'Virtualhost headers',

@@ -30,7 +30,12 @@ sub types {
 "\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
-                return $@ ? ( 1, "__badExpression__: $@" ) : 1;
+                my $err = join(
+                    '',
+                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
+                        split( /\n/, $@, 0 ) )
+                );
+                return $err ? ( 1, "__badExpression__: $err" ) : 1;
               }
         },
         'catAndAppList' => {
@@ -867,7 +872,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 "\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                     }
                     eval $s;
-                    return $@ ? ( 1, "__badExpression__: $@" ) : 1;
+                    my $err = join(
+                        '',
+                        grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
+                            split( /\n/, $@, 0 ) )
+                    );
+                    return $err ? ( 1, "__badExpression__: $err" ) : 1;
                   }
             },
             'type' => 'keyTextContainer'
@@ -931,7 +941,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 "\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
-                return $@ ? ( 1, "__badExpression__: $@" ) : 1;
+                my $err = join(
+                    '',
+                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
+                        split( /\n/, $@, 0 ) )
+                );
+                return $err ? ( 1, "__badExpression__: $err" ) : 1;
             },
             'test' => sub {
                 1;
@@ -949,7 +964,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 "\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
-                return $@ ? ( 1, "__badExpression__: $@" ) : 1;
+                my $err = join(
+                    '',
+                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
+                        split( /\n/, $@, 0 ) )
+                );
+                return $err ? ( 1, "__badExpression__: $err" ) : 1;
             },
             'type' => 'keyTextContainer'
         },
@@ -1256,7 +1276,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 "\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                     }
                     eval $s;
-                    return $@ ? ( 1, "__badExpression__: $@" ) : 1;
+                    my $err = join(
+                        '',
+                        grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
+                            split( /\n/, $@, 0 ) )
+                    );
+                    return $err ? ( 1, "__badExpression__: $err" ) : 1;
                   }
             },
             'type' => 'ruleContainer'
@@ -1285,7 +1310,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 "\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
-                return $@ ? ( 1, "__badExpression__: $@" ) : 1;
+                my $err = join(
+                    '',
+                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
+                        split( /\n/, $@, 0 ) )
+                );
+                return $err ? ( 1, "__badExpression__: $err" ) : 1;
             },
             'type' => 'keyTextContainer'
         },
@@ -1904,7 +1934,12 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
 "\x54\x55\x55\x55\x15\x55\x55\x55\x55\x55\x51\x55\x55\x55\x55\x55\x55";
                 }
                 eval "$s $val";
-                return $@ ? ( 1, "__badExpression__: $@" ) : 1;
+                my $err = join(
+                    '',
+                    grep( { $_ =~ /Undefined subroutine/ ? () : $_; }
+                        split( /\n/, $@, 0 ) )
+                );
+                return $err ? ( 1, "__badExpression__: $err" ) : 1;
             },
             'msgFail' => '__badValue__',
             'test'    => qr/^\w+$/,
