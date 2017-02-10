@@ -112,7 +112,7 @@ my $app = sub {
 };
 
 # Hook for customFunctions initialization
-Lemonldap::NG::Handler::Main::Reload->onReload(
+Lemonldap::NG::Handler::Main->onReload(
     bless( {}, 'Lemonldap::NG::Handler::FastCGI::Loader' ),
     'loadCustomLogins' );
 
