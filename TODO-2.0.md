@@ -1,3 +1,5 @@
+* Change language in portal
+* FastCGI server logs
 * securize SOAP session creation by cipher
 * write REST method to create session with an id
 * remove cache on handler init()
@@ -13,10 +15,7 @@
 * checkLogins in SAML
 * 2nd arg for trspan
 * verify activeTimer on/off on screen
-* Verify `useSafeJail=0`
-* Finish IssuerGet logout (-> info())
 * Import r5420 (ssl\_opts) to trunk
-* Verify DBI (UserUser)
 
 * Don't display "login" when connected
 * Import fastcgi-server changes (nginxCustomHandlers)

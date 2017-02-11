@@ -1,8 +1,4 @@
-## @file
-# Alias for Lemonldap::NG::SharedConf
-
-## @class
-# Alias for Lemonldap::NG::SharedConf
+# Alias for Lemonldap::NG::Portal::Main
 package Lemonldap::NG::Portal;
 
 our $VERSION = '2.0.0';

@@ -253,11 +253,11 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::_CAS - Common CAS functions
+Lemonldap::NG::Portal::Lib::CAS - Common CAS functions
 
 =head1 SYNOPSIS
 
-use Lemonldap::NG::Portal::_CAS;
+use Lemonldap::NG::Portal::Lib::CAS;
 
 =head1 DESCRIPTION
 
