@@ -1,4 +1,4 @@
-package Lemonldap::NG::Handler::PSGI::API;
+package Lemonldap::NG::Handler::PSGI::Main;
 
 use strict;
 use base 'Lemonldap::NG::Handler::Main';

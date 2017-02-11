@@ -645,12 +645,6 @@ sub tree {
                                     ]
                                 },
                                 {
-                                    title => 'sympaHandler',
-                                    help  => 'applications/sympa.html',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [ 'sympaSecret', 'sympaMailKey' ]
-                                },
-                                {
                                     title => 'secureTokenHandler',
                                     help  => 'securetoken.html',
                                     form  => 'simpleInputContainer',

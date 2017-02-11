@@ -1,16 +1,16 @@
 # PSGI authentication package written for Nginx. It replace
 # Lemonldap::NG::Handler::PSGI::Server to manage Nginx behaviour
-package Lemonldap::NG::Handler::Nginx;
+package Lemonldap::NG::Handler::Server::Nginx;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Handler::PSGI::API::Server;
+use Lemonldap::NG::Handler::Server::Main;
 
 extends 'Lemonldap::NG::Handler::PSGI';
 
 sub init {
     my $self = shift;
-    $self->api('Lemonldap::NG::Handler::PSGI::API::Server');
+    $self->api('Lemonldap::NG::Handler::Server::Main');
     my $tmp = $self->SUPER::init(@_);
 }
 
@@ -54,7 +54,7 @@ sub _run {
 #    # OR
 #    #fastcgi_param $fheadername1 $headervalue1;
 #
-# LLNG::Handler::PSGI::API add also a header called Lm-Remote-User set to
+# LLNG::Handler::Server::Main add also a header called Lm-Remote-User set to
 # whatToTrace value that can be used in Nginx virtualhost configuration to
 # insert user id in logs
 #

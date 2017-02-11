@@ -8,14 +8,11 @@
 
 # This specific handler is intended to be called directly by Apache
 
-package Lemonldap::NG::Handler::Specific::SecureToken;
+package Lemonldap::NG::Handler::Lib::SecureToken;
 
 use strict;
-use Lemonldap::NG::Handler::ApacheMP2 qw(:all);
-use base qw(Lemonldap::NG::Handler::ApacheMP2);
 use Cache::Memcached;
 use Apache::Session::Generate::MD5;
-use Lemonldap::NG::Handler::Main::Logger;
 
 our $VERSION = '2.0.0';
 
@@ -27,11 +24,6 @@ BEGIN {
         require threads::shared;
         threads::share($secureTokenMemcachedConnection);
     };
-}
-
-sub handler {
-    my ( $class, $request ) = ( __PACKAGE__, shift );
-    $class->run($request);
 }
 
 ## @rmethod Apache2::Const run(Apache2::RequestRec r)
@@ -245,7 +237,5 @@ sub _returnError {
         return $class->SERVER_ERROR;
     }
 }
-
-__PACKAGE__->init( {} );
 
 1;

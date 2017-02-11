@@ -1214,10 +1214,6 @@ sub attributes {
         zimbraUrl    => { type => 'text', },
         zimbraSsoUrl => { type => 'text', },
 
-        # Sympa
-        sympaSecret  => { type => 'text', },
-        sympaMailKey => { type => 'text', },
-
         # Secure Token
         secureTokenMemcachedServers => {
             type          => 'text',

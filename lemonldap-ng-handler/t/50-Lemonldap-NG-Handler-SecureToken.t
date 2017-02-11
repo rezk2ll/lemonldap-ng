@@ -38,7 +38,7 @@ SKIP: {
 "Cache::Memcached is not installed, so Lemonldap::NG::Handler::SecureToken will not be useable",
       1
       if ($@);
-    use_ok('Lemonldap::NG::Handler::SecureToken');
+    use_ok('Lemonldap::NG::Handler::Lib::SecureToken');
 }
 
 $LLNG_DEFAULTCONFFILE = undef;

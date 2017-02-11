@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Main::Constants;
 use strict;
 use Exporter 'import';
 
-use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::API';
+use constant HANDLER => 'Lemonldap::NG::Handler::PSGI::Main';
 use constant {
 
     # Portal errors

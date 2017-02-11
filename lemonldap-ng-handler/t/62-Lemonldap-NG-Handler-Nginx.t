@@ -7,7 +7,7 @@ use MIME::Base64;
 
 require 't/test-psgi-lib.pm';
 
-init('Lemonldap::NG::Handler::Nginx');
+init('Lemonldap::NG::Handler::Server::Nginx');
 
 my $res;
 

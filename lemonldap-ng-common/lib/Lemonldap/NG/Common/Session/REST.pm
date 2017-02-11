@@ -90,9 +90,9 @@ sub getApacheSession {
             storageModule        => $mod->{module},
             storageModuleOptions => $mod->{options},
             cacheModule =>
-              Lemonldap::NG::Handler::PSGI::API->tsv->{sessionCacheModule},
+              Lemonldap::NG::Handler::PSGI::Main->tsv->{sessionCacheModule},
             cacheModuleOptions =>
-              Lemonldap::NG::Handler::PSGI::API->tsv->{sessionCacheOptions},
+              Lemonldap::NG::Handler::PSGI::Main->tsv->{sessionCacheOptions},
             id   => $id,
             kind => $mod->{kind},
         }

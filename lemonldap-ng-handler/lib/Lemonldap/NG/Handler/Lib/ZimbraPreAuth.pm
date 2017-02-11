@@ -8,34 +8,24 @@
 
 # This specific handler is intended to be called directly by Apache
 
-package Lemonldap::NG::Handler::Specific::ZimbraPreAuth;
+package Lemonldap::NG::Handler::Lib::ZimbraPreAuth;
 
 use strict;
-use Lemonldap::NG::Handler::ApacheMP2 qw(:all);
 use base qw(Lemonldap::NG::Handler::ApacheMP2::Main);
 use Digest::HMAC_SHA1 qw(hmac_sha1 hmac_sha1_hex);
 
 our $VERSION = '2.0.0';
 
-sub handler {
-    my ( $class, $request ) = ( __PACKAGE__, shift );
-    $class->run($request);
-}
-
-## @rmethod Apache2::Const run(Apache2::RequestRec r)
 # Overload main run method
-# @param r Current request
-# @return Apache2::Const value ($class->OK, $class->FORBIDDEN, $class->REDIRECT or $class->SERVER_ERROR)
 sub run {
-    my $class = shift;
-    my $r     = $_[0];
-    my $ret   = $class->SUPER::run();
+    my($class,$req) = @_;
+    my $ret   = $class->SUPER::run($req);
 
     # Continue only if user is authorized
     return $ret unless ( $ret == $class->OK );
 
     # Get current URI
-    my $uri = $class->uri_with_args($r);
+    my $uri = $class->uri_with_args($req);
 
     # Get Zimbra parameters
     my $localConfig      = $class->localConfig;
@@ -110,7 +100,5 @@ sub _buildZimbraPreAuthUrl {
 
     return $zimbra_url;
 }
-
-__PACKAGE__->init( {} );
 
 1;

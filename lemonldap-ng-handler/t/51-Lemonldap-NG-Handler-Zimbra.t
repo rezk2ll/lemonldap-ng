@@ -34,10 +34,10 @@ open STDERR, '>/dev/null';
 SKIP: {
     eval { require Digest::HMAC_SHA1 };
     skip
-"Digest::HMAC_SHA1 is not installed, so Lemonldap::NG::Handler::ZimbraPreAuth will not be useable",
+"Digest::HMAC_SHA1 is not installed, so Lemonldap::NG::Handler::Lib::ZimbraPreAuth will not be useable",
       1
       if ($@);
-    use_ok('Lemonldap::NG::Handler::ZimbraPreAuth');
+    use_ok('Lemonldap::NG::Handler::Lib::ZimbraPreAuth');
 }
 
 $LLNG_DEFAULTCONFFILE = undef;

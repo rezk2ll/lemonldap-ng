@@ -1,7 +1,7 @@
 ## @file
 # Status process mechanism
 
-package Lemonldap::NG::Handler::Status;
+package Lemonldap::NG::Handler::Lib::Status;
 
 use strict;
 use POSIX qw(setuid setgid);

@@ -1,4 +1,4 @@
-package Lemonldap::NG::Handler::PSGI::Base;
+package Lemonldap::NG::Handler::Lib::PSGI;
 
 use 5.10.0;
 use Mouse;
@@ -116,9 +116,11 @@ sub _authAndTrace {
     my ( $self, $req, $noCall ) = @_;
 
     # TODO: handle types
-    my $type = $self->api->checkType($req);
-    my ( $res, $session ) = $self->api->run( $req, $self->{rule} );
-    $self->portal( $self->api->tsv->{portal}->() );
+    my $type = $self->api;
+    $type =~ s/::\w+$/::/;
+    $type .= $self->api->checkType($req);
+    my ( $res, $session ) = $type->run( $req, $self->{rule} );
+    $self->portal( $type->tsv->{portal}->() );
     $req->userData($session) if ($session);
 
     if ( $res < 300 ) {
@@ -137,7 +139,7 @@ sub _authAndTrace {
     }
     else {
         my %h = $req->{respHeaders} ? @{ $req->{respHeaders} } : ();
-        my $s = $self->api->tsv->{portal}->() . "?lmError=$res";
+        my $s = $type->tsv->{portal}->() . "?lmError=$res";
         $s =
             '<html><head><title>Redirection</title></head><body>'
           . qq{<script type="text/javascript">window.location='$s'</script>}

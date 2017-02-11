@@ -2,17 +2,17 @@ package Lemonldap::NG::Handler::PSGI::Router;
 
 use 5.10.0;
 use Mouse;
-require Lemonldap::NG::Handler::PSGI::API;
+require Lemonldap::NG::Handler::PSGI::Main;
 
-extends 'Lemonldap::NG::Handler::PSGI::Base',
+extends 'Lemonldap::NG::Handler::Lib::PSGI',
   'Lemonldap::NG::Common::PSGI::Router';
 
 our $VERSION = '2.0.0';
 
 sub init {
-    $_[0]->api('Lemonldap::NG::Handler::PSGI::API');
+    $_[0]->api('Lemonldap::NG::Handler::PSGI::Main');
     my $tmp = ( $_[0]->Lemonldap::NG::Common::PSGI::Router::init( $_[1] )
-          and $_[0]->Lemonldap::NG::Handler::PSGI::Base::init( $_[1] ) );
+          and $_[0]->Lemonldap::NG::Handler::Lib::PSGI::init( $_[1] ) );
     return $tmp;
 }
 

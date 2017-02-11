@@ -36,7 +36,7 @@ sub status {
 
 # Public methods
 
-# Return Handler::Status output
+# Return Handler::Lib::Status output
 sub getStatus {
     my ($class) = @_;
     $class->lmLog( "Request for status", 'debug' );

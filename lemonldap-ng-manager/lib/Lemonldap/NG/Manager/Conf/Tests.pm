@@ -183,7 +183,7 @@ sub tests {
         testApacheSession => sub {
             my ( $id, %h );
             my $gc =
-              $Lemonldap::NG::Handler::PSGI::API::tsv->{sessionStorageModule};
+              $Lemonldap::NG::Handler::PSGI::Main::tsv->{sessionStorageModule};
             return 1
               if ( ( $gc and $gc eq $conf->{globalStorage} )
                 or $conf->{globalStorage} =~

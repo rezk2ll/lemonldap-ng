@@ -57,20 +57,16 @@ if ($customFunctionsFile) {
 
 my %builder = (
     handler => sub {
-        require Lemonldap::NG::Handler::Nginx;
-        return Lemonldap::NG::Handler::Nginx->run( {} );
-    },
-    authbasic => sub {
-        require Lemonldap::NG::Handler::Nginx::AuthBasic;
-        return Lemonldap::NG::Handler::Nginx::AuthBasic->run( {} );
+        require Lemonldap::NG::Handler::Server::Nginx;
+        return Lemonldap::NG::Handler::Server::Nginx->run( {} );
     },
     reload => sub {
-        require Lemonldap::NG::Handler::Nginx;
-        return Lemonldap::NG::Handler::Nginx->reload();
+        require Lemonldap::NG::Handler::Server::Nginx;
+        return Lemonldap::NG::Handler::Server::Nginx->reload();
     },
     status => sub {
-        require Lemonldap::NG::Handler::Nginx;
-        return Lemonldap::NG::Handler::Nginx->status();
+        require Lemonldap::NG::Handler::Server::Nginx;
+        return Lemonldap::NG::Handler::Server::Nginx->status();
     },
     manager => sub {
         require Lemonldap::NG::Manager;

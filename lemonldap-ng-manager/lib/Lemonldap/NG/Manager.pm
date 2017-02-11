@@ -89,7 +89,7 @@ sub init {
     }
 
     $self->menuLinks( [] );
-    if ( my $portal = Lemonldap::NG::Handler::PSGI::API->tsv->{portal}->() ) {
+    if ( my $portal = Lemonldap::NG::Handler::PSGI::Main->tsv->{portal}->() ) {
         push @{ $self->menuLinks },
           {
             target => $portal,

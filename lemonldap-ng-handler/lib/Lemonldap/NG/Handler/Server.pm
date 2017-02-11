@@ -1,8 +1,8 @@
-package Lemonldap::NG::Handler::PSGI::Server;
+package Lemonldap::NG::Handler::Server;
 
 use strict;
 use Mouse;
-use Lemonldap::NG::Handler::PSGI::API::Server;
+use Lemonldap::NG::Handler::Server::Main;
 
 our $VERSION = '2.0.0';
 
@@ -10,7 +10,7 @@ extends 'Lemonldap::NG::Handler::PSGI';
 
 sub init {
     my $self = shift;
-    $self->api('Lemonldap::NG::Handler::PSGI::API::Server');
+    $self->api('Lemonldap::NG::Handler::Server::Main');
     my $tmp = $self->SUPER::init(@_);
 }
 
