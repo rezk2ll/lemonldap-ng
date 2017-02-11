@@ -26,7 +26,10 @@ sub status {
 
 # Internal method to get class to load
 sub getClass {
-    my $type  = Lemonldap::NG::Handler::ApacheMP2::Main->checkType(@_);
+    my $type = Lemonldap::NG::Handler::ApacheMP2::Main->checkType(@_);
+    if ( my $t = $_[0]->dir_config('VHOSTTYPE') ) {
+        $type = $t;
+    }
     my $class = "Lemonldap::NG::Handler::ApacheMP2::$type";
     eval "require $class";
     die $@ if ($@);

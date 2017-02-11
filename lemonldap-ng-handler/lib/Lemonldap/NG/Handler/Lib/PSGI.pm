@@ -116,9 +116,15 @@ sub _authAndTrace {
     my ( $self, $req, $noCall ) = @_;
 
     # TODO: handle types
-    my $type = $self->api;
-    $type =~ s/::\w+$/::/;
-    $type .= $self->api->checkType($req);
+    my $type = $self->api->checkType($req);
+    if ( my $t = $req->env->{VHOSTTYPE} ) {
+        $type = $t;
+    }
+    my $tmp = $self->api;
+    $tmp =~ s/::\w+$/::/;
+    $type = $tmp . $type;
+    eval "require $type";
+    die $@ if ($@);
     my ( $res, $session ) = $type->run( $req, $self->{rule} );
     $self->portal( $type->tsv->{portal}->() );
     $req->userData($session) if ($session);
