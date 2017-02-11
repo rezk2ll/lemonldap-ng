@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:confignginx</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,confignginx"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="confignginx.html"/>
@@ -49,10 +49,16 @@
 <div>
 
 <ul class="toc">
-<li class="level1"><div class="li"><a href="#files">Files</a></div>
+<li class="level1"><div class="li"><a href="#fastcgi_server">FastCGI server</a></div>
 <ul class="toc">
 <li class="level2"><div class="li"><a href="#debianubuntu">Debian/Ubuntu</a></div></li>
 <li class="level2"><div class="li"><a href="#red_hatcentos">Red Hat/CentOS</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#files">Files</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#debianubuntu1">Debian/Ubuntu</a></div></li>
+<li class="level2"><div class="li"><a href="#red_hatcentos1">Red Hat/CentOS</a></div></li>
 </ul></li>
 </ul>
 </div>
@@ -64,7 +70,40 @@
 
 </div>
 <!-- EDIT1 SECTION "Deploy Nginx configuration" [1-42] -->
-<h2 class="sectionedit2" id="files">Files</h2>
+<h2 class="sectionedit2" id="fastcgi_server">FastCGI server</h2>
+<div class="level2">
+
+<p>
+To use Nginx, you must install LemonLDAP::NG FastCGI server, which is not installed by default lemonldap-ng meta package.
+</p>
+
+</div>
+<!-- EDIT2 SECTION "FastCGI server" [43-193] -->
+<h3 class="sectionedit3" id="debianubuntu">Debian/Ubuntu</h3>
+<div class="level3">
+<pre class="code">apt install lemonldap-ng-fastcgi-server</pre>
+
+<p>
+Enable and start the service :
+</p>
+<pre class="code">systemctl enable llng-fastcgi-server
+systemctl start llng-fastcgi-server</pre>
+
+</div>
+<!-- EDIT3 SECTION "Debian/Ubuntu" [194-394] -->
+<h3 class="sectionedit4" id="red_hatcentos">Red Hat/CentOS</h3>
+<div class="level3">
+<pre class="code">yum install lemonldap-ng-fastcgi-server</pre>
+
+<p>
+Enable and start the service :
+</p>
+<pre class="code">systemctl enable llng-fastcgi-server
+systemctl start llng-fastcgi-server</pre>
+
+</div>
+<!-- EDIT4 SECTION "Red Hat/CentOS" [395-596] -->
+<h2 class="sectionedit5" id="files">Files</h2>
 <div class="level2">
 
 <p>
@@ -76,8 +115,8 @@ You have to include them in Nginx main configuration.
 </p>
 
 </div>
-<!-- EDIT2 SECTION "Files" [43-265] -->
-<h3 class="sectionedit3" id="debianubuntu">Debian/Ubuntu</h3>
+<!-- EDIT5 SECTION "Files" [597-819] -->
+<h3 class="sectionedit6" id="debianubuntu1">Debian/Ubuntu</h3>
 <div class="level3">
 
 <p>
@@ -97,8 +136,8 @@ ln -s /etc/nginx/sites-available/portal-nginx.conf /etc/nginx/sites-enabled/
 ln -s /etc/nginx/sites-available/test-nginx.conf /etc/nginx/sites-enabled/</pre>
 
 </div>
-<!-- EDIT3 SECTION "Debian/Ubuntu" [266-1024] -->
-<h3 class="sectionedit4" id="red_hatcentos">Red Hat/CentOS</h3>
+<!-- EDIT6 SECTION "Debian/Ubuntu" [820-1578] -->
+<h3 class="sectionedit7" id="red_hatcentos1">Red Hat/CentOS</h3>
 <div class="level3">
 
 <p>
@@ -110,6 +149,6 @@ ln -s /etc/lemonldap-ng/portal-nginx.conf /etc/nginx/conf.d/
 ln -s /etc/lemonldap-ng/test-nginx.conf /etc/nginx/conf.d/</pre>
 
 </div>
-<!-- EDIT4 SECTION "Red Hat/CentOS" [1025-] --></div>
+<!-- EDIT7 SECTION "Red Hat/CentOS" [1579-] --></div>
 </body>
 </html>

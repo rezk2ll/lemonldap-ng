@@ -64,6 +64,7 @@
 </li>
 <li class="level1"><div class="li"><a href="#known_problems">Known problems</a></div>
 <ul class="toc">
+<li class="level2"><div class="li"><a href="#federation_protocols">Federation protocols</a></div></li>
 <li class="level2"><div class="li"><a href="#authapache_authentication">AuthApache authentication</a></div></li>
 <li class="level2"><div class="li"><a href="#ssl_authentication">SSL authentication</a></div></li>
 </ul></li>
@@ -272,7 +273,29 @@ The following rule is valid:
 
 </div>
 <!-- EDIT11 SECTION "Known problems" [3611-3638] -->
-<h3 class="sectionedit12" id="authapache_authentication">AuthApache authentication</h3>
+<h3 class="sectionedit12" id="federation_protocols">Federation protocols</h3>
+<div class="level3">
+
+<p>
+<a href="authsaml.html" class="wikilink1" title="documentation:2.0:authsaml">SAML</a>, <a href="authopenidconnect.html" class="wikilink1" title="documentation:2.0:authopenidconnect">OpenID-Connect</a>, <a href="authcas.html" class="wikilink1" title="documentation:2.0:authcas">CAS</a> or <a href="authopenid.html" class="wikilink1" title="documentation:2.0:authopenid">old OpenID</a> can&#039;t be chained with a “and” for authentication part. So “[<abbr title="Security Assertion Markup Language">SAML</abbr>] and [LDAP]” isn&#039;t valid. This is because their authentication kinematic don&#039;t use the same steps.
+</p>
+<div class="table sectionedit13"><table class="inline table table-bordered table-striped">
+	<thead>
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Bad expression  </th><th class="col1 centeralign">  Solution  </th><th class="col2 centeralign">  Explanation  </th>
+	</tr>
+	</thead>
+	<tr class="row1 rowodd">
+		<td class="col0"> <em><code>[<abbr title="Security Assertion Markup Language">SAML</abbr>] and [LDAP]</code></em> </td><td class="col1"> <code>[<abbr title="Security Assertion Markup Language">SAML</abbr>, <abbr title="Security Assertion Markup Language">SAML</abbr> and LDAP]</code> </td><td class="col2"> Authentication is done by <abbr title="Security Assertion Markup Language">SAML</abbr> only but user must match an LDAP entry </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> <em><code>[<abbr title="Security Assertion Markup Language">SAML</abbr>] and [LDAP] or [LDAP]</code></em> </td><td class="col1"> <code>[<abbr title="Security Assertion Markup Language">SAML</abbr>, <abbr title="Security Assertion Markup Language">SAML</abbr> and LDAP] or [LDAP]</code> </td><td class="col2"> Authentication is done by <abbr title="Security Assertion Markup Language">SAML</abbr> or LDAP but user must match an LDAP entry </td>
+	</tr>
+</table></div>
+<!-- EDIT13 TABLE [3938-4270] -->
+</div>
+<!-- EDIT12 SECTION "Federation protocols" [3639-4271] -->
+<h3 class="sectionedit14" id="authapache_authentication">AuthApache authentication</h3>
 <div class="level3">
 
 <p>
@@ -288,8 +311,8 @@ To bypass this, follow the documentation of <a href="authapache.html" class="wik
 </p>
 
 </div>
-<!-- EDIT12 SECTION "AuthApache authentication" [3639-4055] -->
-<h3 class="sectionedit13" id="ssl_authentication">SSL authentication</h3>
+<!-- EDIT14 SECTION "AuthApache authentication" [4272-4688] -->
+<h3 class="sectionedit15" id="ssl_authentication">SSL authentication</h3>
 <div class="level3">
 
 <p>
@@ -297,6 +320,6 @@ To chain SSL, you have to set “SSLRequire optional” in Apache configuration,
 </p>
 
 </div>
-<!-- EDIT13 SECTION "SSL authentication" [4056-] --></div>
+<!-- EDIT15 SECTION "SSL authentication" [4689-] --></div>
 </body>
 </html>

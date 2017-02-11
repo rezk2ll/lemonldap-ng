@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>documentation:2.0:customhandlers</title>
 <meta name="generator" content="DokuWiki"/>
-<meta name="robots" content="index,follow"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="keywords" content="documentation,2.0,customhandlers"/>
 <link rel="search" type="application/opensearchdescription+xml" href="lib/exe/opensearch.html" title="LemonLDAP::NG"/>
 <link rel="start" href="customhandlers.html"/>
@@ -43,30 +43,115 @@
 </head>
 <body>
 <div class="dokuwiki export container">
+<!-- TOC START -->
+<div id="dw__toc">
+<h3 class="toggle">Table of Contents</h3>
+<div>
+
+<ul class="toc">
+<li class="level1"><div class="li"><a href="#add_a_new_handler_type">Add a new handler type</a></div>
+<ul class="toc">
+<li class="level2"><div class="li"><a href="#enable_it">Enable it</a></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><a href="#add_a_new_platform">Add a new platform</a></div></li>
+<li class="level1"><div class="li"><a href="#old_fashion_nginx_handlers">Old fashion Nginx handlers</a></div></li>
+</ul>
+</div>
+</div>
+<!-- TOC END -->
 
 <h1 class="sectionedit1" id="custom_handlers">Custom handlers</h1>
 <div class="level1">
 
 <p>
-LLNG provides Perl libraries that can be easily used by inheritance. To launch them:
+LLNG provides Perl libraries that can be easily used by inheritance. So you can write your own handlers but you need first to understand <a href="handlerarch.html" class="wikilink1" title="documentation:2.0:handlerarch">Handler architecture</a>
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Custom handlers" [1-206] -->
+<h2 class="sectionedit2" id="add_a_new_handler_type">Add a new handler type</h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> Write your new Module (in Lemonldap/NG/Handler/Lib for example) that overload some Lemonldap::NG::Handler::Main methods</div>
+</li>
+<li class="level1"><div class="li"> Write a wrapper in each platform directory <em>(see Lemonldap::NG::Handler::Apache2::AuthBasic or Lemonldap::NG::Handler::Server::AuthBasic for examples)</em></div>
+</li>
+</ol>
+
+<p>
+Wrapper usually look at this:
+</p>
+<pre class="code file perl"><a href="http://perldoc.perl.org/functions/package.html"><span class="kw3">package</span></a> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Handler</span><span class="sy0">::</span><span class="me2">ApacheMP2</span><span class="sy0">::</span><span class="me2">MyType</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw2">use</span> base <span class="st_h">'Lemonldap::NG::Handler::ApacheMP2::Main'</span><span class="sy0">,</span> <span class="st_h">'Lemonldap::NG::Handler::Lib::MyType'</span><span class="sy0">;</span>
+&nbsp;
+<span class="nu0">1</span><span class="sy0">;</span></pre>
+
+</div>
+<!-- EDIT2 SECTION "Add a new handler type" [207-723] -->
+<h3 class="sectionedit3" id="enable_it">Enable it</h3>
+<div class="level3">
+
+<p>
+You can enable it either:
 </p>
 <ul>
-<li class="level1"><div class="li"> with Apache: replace simply Lemonldap::NG::Handler by your own package in Apache configuration file</div>
+<li class="level1"><div class="li"> by setting a “PerlSetVar” in the Apache configuration file</div>
 </li>
-<li class="level1"><div class="li"> with Nginx: you can declare them as follow.</div>
+<li class="level1"><div class="li"> by adding it to the menu: add its name in <code>vhostType</code> “select” declaration (file <code>lemonldap-ng-manager/lib/Lemonldap/NG/Build/Attributes</code>) and rebuild LLNG</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT1 SECTION "Custom handlers" [1-269] -->
-<h2 class="sectionedit2" id="use_custom_handler_with_nginx">Use custom handler with Nginx</h2>
+<!-- EDIT3 SECTION "Enable it" [724-998] -->
+<h2 class="sectionedit4" id="add_a_new_platform">Add a new platform</h2>
 <div class="level2">
 
+<p>
+LLNG provides 3 platforms:
+</p>
+<ul>
+<li class="level1"><div class="li"> ApacheMP2</div>
+</li>
+<li class="level1"><div class="li"> FastCGI server <em>(Nginx is build from there)</em></div>
+</li>
+<li class="level1"><div class="li"> Auto-protected PSGI</div>
+</li>
+</ul>
+
+<p>
+If you want to add another, you must write:
+</p>
+<ul>
+<li class="level1"><div class="li"> the platform launcher file that launch the required type <em>(see <code>lemonldap-ng-handler/lib/Lemonldap/NG/Handler/ApacheMP2</code> file for example)</em></div>
+</li>
+<li class="level1"><div class="li"> write the main platform file (<code>Lemonldap::NG::Handler::MyPlatform::Main</code>) that provides required method <em>(see <code>lemonldap-ng-handler/lib/Lemonldap/NG/Handler/*/Main</code> for examples)</em> and inherits from <code>Lemonldap::NG::Handler::Main</code></div>
+</li>
+<li class="level1"><div class="li"> write the “type” wrapper files (AuthBasic,…).</div>
+</li>
+</ul>
+
+<p>
+Wrapper usually look at this:
+</p>
+<pre class="code file perl"><a href="http://perldoc.perl.org/functions/package.html"><span class="kw3">package</span></a> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Handler</span><span class="sy0">::</span><span class="me2">MyPlatform</span><span class="sy0">::</span><span class="me2">AuthBasic</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw2">use</span> base <span class="st_h">'Lemonldap::NG::Handler::MyPlatform::Main'</span><span class="sy0">,</span> <span class="st_h">'Lemonldap::NG::Handler::Lib::AuthBasic'</span><span class="sy0">;</span>
+&nbsp;
+<span class="nu0">1</span><span class="sy0">;</span></pre>
+
+</div>
+<!-- EDIT4 SECTION "Add a new platform" [999-1839] -->
+<h2 class="sectionedit5" id="old_fashion_nginx_handlers">Old fashion Nginx handlers</h2>
+<div class="level2">
+<div class="noteimportant">There is no need to use this feature now. It is kept for compatibility.
+</div>
 <p>
 Three actions are needed:
 </p>
 <ul>
-<li class="level1"><div class="li"> declare them in the manager “General Parameters » Advanced Parameters » Custom handlers (Nginx)”. Key is the name that will be used below and value is the name of the custom package,</div>
+<li class="level1"><div class="li"> declare your own module in the manager “General Parameters » Advanced Parameters » Custom handlers (Nginx)”. Key is the name that will be used below and value is the name of the custom package,</div>
 </li>
 <li class="level1"><div class="li"> in your Nginx configuration file, add <code>LLTYPE=&lt;name&gt;;</code> in the <code>location = /lmauth {…}</code> paragraph</div>
 </li>
@@ -75,6 +160,6 @@ Three actions are needed:
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Use custom handler with Nginx" [270-] --></div>
+<!-- EDIT5 SECTION "Old fashion Nginx handlers" [1840-] --></div>
 </body>
 </html>

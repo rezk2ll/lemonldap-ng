@@ -868,6 +868,14 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation/latest/applications/zimbra.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/latest/applications/zimbra.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>APT-GET</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141136Z" changeid="guimard">
@@ -5030,14 +5038,6 @@ $WebserverAuth_autouserprofile = Array(</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>BrowserID (Mozilla Persona)</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20131025T082342Z" changeid="xavier">
-        <seg>BrowserID (Mozilla Persona)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Build:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100950Z" changeid="xavier">
@@ -6606,6 +6606,14 @@ cda = 1</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192351Z" changeid="xavier">
         <seg>Ce type de mécanisme SSO n'est pas parfait et peut générer des problèmes tels des blocages de mots-de-passe, sessions locales mal closes, etc...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:applications:zimbra</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:applications:zimbra</seg>
       </tuv>
     </tu>
     <tu>
@@ -14212,14 +14220,6 @@ portalSkin = dark</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Affiche le module de changement de mot-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Logout user from current application and from Lemonldap::NG and redirect it to http://intranet/</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120506T060539Z" changeid="xavier">
-        <seg>Déconnecte l'utilisateur de l'application courante et de Lemonldap::NG le redirige vers http://intranet/</seg>
       </tuv>
     </tu>
     <tu>
@@ -33170,14 +33170,6 @@ maxretry = 3</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T055427Z" changeid="xavier">
         <seg>$uid eq &quot;bart.simpson&quot;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Logout user from current application and redirect it to the menu</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120506T060501Z" changeid="xavier">
-        <seg>Déconnecte l'utilisateur de l'application courante et le redirige vers le menu</seg>
       </tuv>
     </tu>
     <tu>

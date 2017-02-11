@@ -49,6 +49,7 @@
 <div>
 
 <ul class="toc">
+<li class="level1"><div class="li"><a href="#prerequisites_and_dependencies">Prerequisites and dependencies</a></div></li>
 <li class="level1"><div class="li"><a href="#configuration">Configuration</a></div></li>
 <li class="level1"><div class="li"><a href="#assistance">Assistance</a></div></li>
 <li class="level1"><div class="li"><a href="#developer_corner">Developer corner</a></div></li>
@@ -71,7 +72,16 @@ LLNG can propose to users to register their keys. When done, registered user can
 </div>
 </div>
 <!-- EDIT1 SECTION "Universal 2nd Factor Authentication (U2F)" [1-521] -->
-<h2 class="sectionedit2" id="configuration">Configuration</h2>
+<h2 class="sectionedit2" id="prerequisites_and_dependencies">Prerequisites and dependencies</h2>
+<div class="level2">
+
+<p>
+This feature uses <a href="https://metacpan.org/pod/Crypt::U2F::Server::Simple" class="urlextern" title="https://metacpan.org/pod/Crypt::U2F::Server::Simple"  rel="nofollow">Crypt::U2F::Server::Simple</a> that is available only via CPAN for now. Before compiling it, you must install Yubico&#039;s C library headers (called libu2f-server-dev on Debian).
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Prerequisites and dependencies" [522-811] -->
+<h2 class="sectionedit3" id="configuration">Configuration</h2>
 <div class="level2">
 
 <p>
@@ -85,8 +95,8 @@ In the manager (advanced parameters), you just have to enable it:
 </ul>
 
 </div>
-<!-- EDIT2 SECTION "Configuration" [522-818] -->
-<h2 class="sectionedit3" id="assistance">Assistance</h2>
+<!-- EDIT3 SECTION "Configuration" [812-1108] -->
+<h2 class="sectionedit4" id="assistance">Assistance</h2>
 <div class="level2">
 
 <p>
@@ -94,14 +104,14 @@ If a user lost its key, you may remove it&#039;s persistent session using the se
 </p>
 
 </div>
-<!-- EDIT3 SECTION "Assistance" [819-934] -->
-<h2 class="sectionedit4" id="developer_corner">Developer corner</h2>
+<!-- EDIT4 SECTION "Assistance" [1109-1224] -->
+<h2 class="sectionedit5" id="developer_corner">Developer corner</h2>
 <div class="level2">
 
 <p>
 If you have another U2F registration interface, you have to populate session (using exported variables) to set these keys:
 </p>
-<div class="table sectionedit5"><table class="inline table table-bordered table-striped">
+<div class="table sectionedit6"><table class="inline table table-bordered table-striped">
 	<thead>
 	<tr class="row0 roweven">
 		<th class="col0"> Name </th><th class="col1"> Value </th>
@@ -114,12 +124,12 @@ If you have another U2F registration interface, you have to populate session (us
 		<td class="col0"> _u2fUserKey </td><td class="col1"> user key value, base64 encoded </td>
 	</tr>
 </table></div>
-<!-- EDIT5 TABLE [1089-1207] -->
+<!-- EDIT6 TABLE [1379-1497] -->
 <p>
 Note that both “origin” and “appId” are fixed to portal <abbr title="Uniform Resource Locator">URL</abbr>.
 </p>
 
 </div>
-<!-- EDIT4 SECTION "Developer corner" [935-] --></div>
+<!-- EDIT5 SECTION "Developer corner" [1225-] --></div>
 </body>
 </html>
