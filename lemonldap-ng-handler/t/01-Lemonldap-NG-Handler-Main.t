@@ -46,7 +46,8 @@ my $conf = {
     },
 };
 
-ok( $h->init($conf),         'init' );
+eval { $h->localConfig($conf); $h->logLevelInit() };
+ok( !$@,                     'init' );
 ok( $h->configReload($conf), 'Load conf' );
 
 ok( $h->tsv->{portal}->() eq 'http://auth.example.com/', 'portal' );
