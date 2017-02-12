@@ -1,5 +1,9 @@
 package Lemonldap::NG::Common::Logger::Apache2;
 
+use Apache2::ServerRec;
+
+sub init{}
+
 sub AUTOLOAD {
     shift;
     $AUTOLOAD =~ s/.*:://;

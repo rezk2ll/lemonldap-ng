@@ -50,8 +50,9 @@ sub init {
     foreach my $k ( keys %$args ) {
         $self->{$k} = $args->{$k};
     }
-    eval "use $self->{logger} '$self->{logLevel}'";
+    eval "require $self->{logger}";
     die $@ if($@);
+    $self->logger->init($self);
     return 1;
 }
 

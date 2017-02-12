@@ -34,7 +34,7 @@ sub init($$) {
 
     # Few actions that must be done at server startup:
     # * set log level for Lemonldap::NG logs
-    $class->logLevelInit( $class->localConfig->{logLevel} );
+    $class->logLevelInit();
 
     # * set server signature
     $class->serverSignatureInit unless ( $class->localConfig->{hideSignature} );
@@ -47,11 +47,11 @@ sub init($$) {
 # @method void logLevelInit
 # Set log level for Lemonldap::NG logs
 sub logLevelInit {
-    my ( $class, $level ) = @_;
+    my ($class) = @_;
     my $logger = $class->localConfig->{logger} ||= $class->defaultLogger;
-    $level ||= 'info';
-    eval "use $logger '$level'";
-    die $@ if($@);
+    eval "require $logger";
+    die $@ if ($@);
+    $logger->init( $class->localConfig );
 }
 
 # @method void serverSignatureInit
