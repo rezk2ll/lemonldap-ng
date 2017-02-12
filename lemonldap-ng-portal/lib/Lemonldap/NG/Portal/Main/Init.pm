@@ -93,7 +93,7 @@ sub init {
     # Purge loaded module list
     $self->loadedModules( {} );
     Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
-    return 0 unless ( $self->SUPER::init($args) );
+    return 0 unless ( $self->SUPER::init($self->localConfig) );
     return 0 if ( $self->error );
 
     # Handle requests (other path may be declared in enabled plugins)

@@ -14,6 +14,7 @@ use constant DONE              => 0;
 use constant SERVER_ERROR      => 500;
 use constant AUTH_REQUIRED     => 401;
 use constant MAINTENANCE       => 503;
+use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
 
 our $request;
 
@@ -39,13 +40,6 @@ sub newRequest {
     my ( $class, $r ) = @_;
     $request = $r;
 }
-
-## @method void _lmLog(string $msg, string $level)
-# logs message $msg to STDERR with level $level
-# set Env Var lmLogLevel to set loglevel; set to "info" by default
-# @param $msg string message to log
-# @param $level string loglevel
-*_lmLog = *Lemonldap::NG::Common::PSGI::lmLog;
 
 ## @method void set_user(string user)
 # sets remote_user in response headers

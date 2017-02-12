@@ -7,7 +7,7 @@
 
 package My::Package;
 
-use Test::More tests => 5;
+use Test::More tests => 6;
 
 BEGIN {
     use_ok('Lemonldap::NG::Handler::Main');
@@ -21,6 +21,13 @@ BEGIN {
 my $globalinit;
 
 my $tsv = {};
+
+sub Lemonldap::NG::Handler::Main::defaultLogger {
+    'Lemonldap::NG::Common::Logger::Std';
+}
+
+eval { Lemonldap::NG::Handler::Main->logLevelInit('error') };
+ok( !$@, 'logLevelInit' );
 
 ok(
     Lemonldap::NG::Handler::Main->jailInit(

@@ -48,12 +48,10 @@ sub init($$) {
 # Set log level for Lemonldap::NG logs
 sub logLevelInit {
     my ( $class, $level ) = @_;
-    if ( $level and not defined $class->logLevels->{$level} ) {
-        $class->lmLog( "Undefined log level: $level", 'error' );
-    }
-    else {
-        $class->_logLevel( $class->logLevels->{ $level || 'notice' } );
-    }
+    my $logger = $class->localConfig->{logger} ||= $class->defaultLogger;
+    $level ||= 'info';
+    eval "use $logger '$level'";
+    die $@ if($@);
 }
 
 # @method void serverSignatureInit

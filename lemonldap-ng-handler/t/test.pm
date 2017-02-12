@@ -8,6 +8,8 @@ use Lemonldap::NG::Handler::Main;
 our @ISA = qw(Lemonldap::NG::Handler::Main);
 our $header;
 
+use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
+
 use constant REDIRECT => 302;
 #sub hostname           { 'test1.example.com' }
 *hostname = \&main::hostname;

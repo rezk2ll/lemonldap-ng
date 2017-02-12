@@ -3,7 +3,7 @@ use strict;
 use warnings;
 require 't/test.pm';
 
-use Test::More tests => 9;
+use Test::More tests => 10;
 BEGIN { use_ok('Lemonldap::NG::Handler::Main') }
 
 # get a standard basic configuration in $args hashref
@@ -23,6 +23,7 @@ $ENV{SERVER_NAME} = "test1.example.com";
 
 my $conf = {
     'cfgNum'        => 1,
+    'logLevel'      => 'error',
     'portal'        => 'http://auth.example.com/',
     'globalStorage' => 'Apache::Session::File',
     'post'          => {},
@@ -45,6 +46,7 @@ my $conf = {
     },
 };
 
+ok( $h->init($conf),         'init' );
 ok( $h->configReload($conf), 'Load conf' );
 
 ok( $h->tsv->{portal}->() eq 'http://auth.example.com/', 'portal' );

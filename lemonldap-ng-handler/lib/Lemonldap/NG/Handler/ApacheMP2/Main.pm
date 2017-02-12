@@ -25,6 +25,7 @@ use constant SERVER_ERROR      => Apache2::Const::SERVER_ERROR;
 use constant AUTH_REQUIRED     => Apache2::Const::AUTH_REQUIRED;
 use constant MAINTENANCE       => Apache2::Const::HTTP_SERVICE_UNAVAILABLE;
 use constant BUFF_LEN          => 8192;
+use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Apache2';
 
 eval { require threads::shared; };
 
@@ -91,17 +92,6 @@ sub setServerSignature {
 sub newRequest {
     my ( $class, $r ) = @_;
     $request = $r;
-}
-
-## @method void _lmLog(string $msg, string $level)
-# logs message $msg to Apache logs with loglevel $level
-# @param $msg string message to log
-# @param $level string loglevel
-sub _lmLog {
-    my ( $class, $msg, $level ) = @_;
-
-    # TODO: remove the useless tag 'ApacheMP2.pm(70):' in debug logs
-    Apache2::ServerRec->log->$level($msg);
 }
 
 ## @method void set_user(string user)

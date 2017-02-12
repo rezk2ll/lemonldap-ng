@@ -18,18 +18,6 @@ our $_tshv = {
     confAcc     => {},
     lmConf      => {},
     localConfig => {},
-    logLevel    => 'notice',
-    _logLevel   => 2,
-    logLevels   => {
-        emerg  => 7,
-        alert  => 6,
-        crit   => 5,
-        error  => 4,
-        warn   => 3,
-        notice => 2,
-        info   => 1,
-        debug  => 0,
-    }
 };
 
 # Current sessions properties
@@ -38,7 +26,7 @@ our $_v = { session => {}, datas => {} };
 BEGIN {
     # Thread shared accessors
     foreach (
-        qw(tsv cfgNum lastCheck checkTime confAcc localConfig logLevel _logLevel logLevels lmConf)
+        qw(tsv cfgNum lastCheck checkTime confAcc localConfig lmConf)
       )
     {
         eval " sub $_ {

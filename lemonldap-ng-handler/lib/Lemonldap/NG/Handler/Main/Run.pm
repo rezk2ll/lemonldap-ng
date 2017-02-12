@@ -259,19 +259,7 @@ sub updateStatus {
 # @param $level string (emerg|alert|crit|error|warn|notice|info|debug)
 sub lmLog {
     my ( $class, $msg, $level ) = @_;
-    return if ( $class->logLevels->{$level} < $class->_logLevel );
-
-    my ( $module, $file, $line ) = caller();
-
-    if ( $level eq 'debug' ) {
-        $file =~ s#.+/##;
-        $class->_lmLog( "$file($line): $msg", 'debug' );
-    }
-    else {
-        $class->_lmLog( "$file($line):", 'debug' )
-          if ( $class->_logLevel == 0 );
-        $class->_lmLog( "Lemonldap::NG::Handler: $msg", $level );
-    }
+    return $class->localConfig->{logger}->$level($msg);
 }
 
 ## @rmethod protected boolean checkMaintenanceMode

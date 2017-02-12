@@ -10,6 +10,8 @@ our $VERSION = '2.0.0';
 
 our $_json = JSON->new->allow_nonref;
 
+# PROPERTIES
+
 has error        => ( is => 'rw', default => '' );
 has languages    => ( is => 'rw', isa     => 'Str', default => 'en' );
 has logLevel     => ( is => 'rw', isa     => 'Str', default => 'info' );
@@ -18,6 +20,7 @@ has staticPrefix => ( is => 'rw', isa     => 'Str' );
 has templateDir  => ( is => 'rw', isa     => 'Str' );
 has links        => ( is => 'rw', isa     => 'ArrayRef' );
 has menuLinks    => ( is => 'rw', isa     => 'ArrayRef' );
+has logger => ( is => 'rw', default => 'Lemonldap::NG::Common::Logger::Std', );
 has syslog => (
     is      => 'rw',
     isa     => 'Str',
@@ -36,22 +39,31 @@ has syslog => (
     },
 );
 
+# INITIALIZATION
+
+sub init {
+    my ( $self, $args ) = @_;
+    unless ( ref $args ) {
+        $self->error('init argument must be a hashref');
+        return 0;
+    }
+    foreach my $k ( keys %$args ) {
+        $self->{$k} = $args->{$k};
+    }
+    eval "use $self->{logger} '$self->{logLevel}'";
+    die $@ if($@);
+    return 1;
+}
+
+# RUNNING METHODS
+
 ## @method void lmLog(string mess, string level)
 # Log subroutine. Print on STDERR messages if it exceeds `logLevel` value
 # @param $mess Text to log
 # @param $level Level (debug|info|notice|warn|error)
 sub lmLog {
     my ( $self, $msg, $level ) = @_;
-    my $levels = {
-        error  => 4,
-        warn   => 3,
-        notice => 2,
-        info   => 1,
-        debug  => 0
-    };
-    my $l = $levels->{$level} || 1;
-    return if ( ref($self) and $l < $levels->{ $self->{logLevel} } );
-    print STDERR "[$level] " . ( $l ? '' : (caller)[0] . ': ' ) . " $msg\n";
+    return $self->logger->$level($msg);
 }
 
 ##@method void userLog(string mess, string level)
@@ -189,18 +201,6 @@ sub _mustBeDefined {
     my $call = ( caller(1) )[0];
     my $ref = ref( $_[0] ) || $call;
     die "$name() method must be implemented (probably in $ref)";
-}
-
-sub init {
-    my ( $self, $args ) = @_;
-    unless ( ref $args ) {
-        $self->error('init argument must be a hashref');
-        return 0;
-    }
-    foreach my $k ( keys %$args ) {
-        $self->{$k} = $args->{$k};
-    }
-    return 1;
 }
 
 sub handler { _mustBeDefined(@_) }
