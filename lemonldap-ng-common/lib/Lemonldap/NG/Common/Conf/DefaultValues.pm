@@ -226,18 +226,11 @@ sub defaultValues {
 'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;#PORTAL#/saml/proxySingleLogoutSOAP;',
         'samlSPSSODescriptorWantAssertionsSigned' => 1,
         'securedCookie'                           => 0,
-        'secureTokenAllowOnError'                 => 1,
-        'secureTokenAttribute'                    => 'uid',
-        'secureTokenExpiration'                   => 60,
-        'secureTokenHeader'                       => 'Auth-Token',
-        'secureTokenMemcachedServers'             => '127.0.0.1:11211',
-        'secureTokenUrls'                         => '.*',
         'slaveAuthnLevel'                         => 2,
         'slaveExportedVars'                       => {},
         'SMTPServer'                              => '',
         'SSLAuthnLevel'                           => 5,
         'successLoginNumber'                      => 5,
-        'syslog'                                  => '',
         'timeout'                                 => 72000,
         'timeoutActivity'                         => 0,
         'timeoutActivityInterval'                 => 60,
@@ -251,8 +244,7 @@ sub defaultValues {
         'webIDExportedVars'                       => {},
         'whatToTrace'                             => 'uid',
         'yubikeyAuthnLevel'                       => 3,
-        'yubikeyPublicIDSize'                     => 12,
-        'zimbraBy'                                => ''
+        'yubikeyPublicIDSize'                     => 12
     };
 }
 

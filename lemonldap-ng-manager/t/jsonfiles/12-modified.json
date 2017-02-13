@@ -1158,11 +1158,6 @@
     "type": "simpleInputContainer",
     "nodes": [{
       "default": "",
-      "id": "syslog",
-      "title": "syslog",
-      "data": ""
-    }, {
-      "default": "",
       "id": "trustedProxies",
       "title": "trustedProxies",
       "data": ""

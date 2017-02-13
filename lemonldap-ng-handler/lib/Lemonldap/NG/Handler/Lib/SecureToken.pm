@@ -49,8 +49,8 @@ sub run {
     my $secureTokenAttribute  = $localConfig->{secureTokenAttribute}  || 'uid';
     my $secureTokenUrls       = $localConfig->{'secureTokenUrls'}     || ['.*'];
     my $secureTokenHeader = $localConfig->{secureTokenHeader} || 'Auth-Token';
-    my $secureTokenAllowOnError = 1
-      unless defined $localConfig->{'secureTokenAllowOnError'};
+    my $secureTokenAllowOnError = $localConfig->{'secureTokenAllowOnError'}
+      // 1;
 
     # Force some parameters to be array references
     foreach (qw/secureTokenMemcachedServers secureTokenUrls/) {

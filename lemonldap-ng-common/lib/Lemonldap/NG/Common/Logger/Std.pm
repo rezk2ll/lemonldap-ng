@@ -1,5 +1,7 @@
 package Lemonldap::NG::Common::Logger::Std;
 
+use strict;
+
 sub new {
     no warnings 'redefine';
     my $level = $_[1]->{logLevel} || 'info';

@@ -1005,10 +1005,6 @@
   }, {
     "_nodes": [{
       "default": "",
-      "id": "syslog",
-      "title": "syslog"
-    }, {
-      "default": "",
       "id": "trustedProxies",
       "title": "trustedProxies"
     }, {

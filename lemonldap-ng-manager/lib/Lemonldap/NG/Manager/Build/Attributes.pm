@@ -324,14 +324,6 @@ sub attributes {
             type          => 'text',
             documentation => 'Prefix of static files for HTML templates',
         },
-        syslog => {
-            type => 'text',
-            test => qr/^(?:auth|authpriv|daemon|local\d|user)?$/,
-            msgFail =>
-              '__authorizedValues__: auth, authpriv, daemon, local0-7, user',
-            default       => '',
-            documentation => 'Syslog facility',
-        },
         multiValuesSeparator => {
             type          => 'authParamsText',
             default       => '; ',
@@ -1198,54 +1190,6 @@ sub attributes {
         openIdSreg_dob => { type => 'lmAttrOrMacro', },
         openIdSPList   => { type => 'blackWhiteList', default => '0;' },
 
-        # Zimbra
-        zimbraPreAuthKey => { type => 'text', },
-        zimbraAccountKey => { type => 'text', },
-        zimbraBy         => {
-            type   => 'select',
-            select => [
-                { k => '',                 v => '' },
-                { k => 'name',             v => 'User name' },
-                { k => 'id',               v => 'User id' },
-                { k => 'foreignPrincipal', v => 'Foreign principal' },
-            ],
-            default => '',
-        },
-        zimbraUrl    => { type => 'text', },
-        zimbraSsoUrl => { type => 'text', },
-
-        # Secure Token
-        secureTokenMemcachedServers => {
-            type          => 'text',
-            default       => '127.0.0.1:11211',
-            documentation => 'Secure Token Handler memcached servers',
-        },
-        secureTokenExpiration => {
-            type          => 'int',
-            default       => 60,
-            documentation => 'Secure Token Handler token expiration',
-        },
-        secureTokenAttribute => {
-            type          => 'text',
-            default       => 'uid',
-            documentation => 'Secure Token Handler attribute to store',
-        },
-        secureTokenUrls => {
-            type    => 'pcre',
-            default => '.*',
-            documentation =>
-              'Secure Token Handler regular expression to match protected URL',
-        },
-        secureTokenHeader => {
-            type          => 'text',
-            default       => 'Auth-Token',
-            documentation => 'Secure Token Handler header name',
-        },
-        secureTokenAllowOnError => {
-            default       => 1,
-            type          => 'bool',
-            documentation => 'Secure Token Handler allow request on error',
-        },
         #########
         ## SAML #
         #########

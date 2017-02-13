@@ -440,8 +440,7 @@ sub tree {
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
                     nodes => [
-                        'syslog',      'trustedProxies',
-                        'whatToTrace', 'hiddenAttributes'
+                        'trustedProxies', 'whatToTrace', 'hiddenAttributes'
                     ]
                 },
                 {
@@ -628,36 +627,6 @@ sub tree {
                             help  => 'redirections.html#portal_redirections',
                             form  => 'simpleInputContainer',
                             nodes => [ 'jsRedirect', 'noAjaxHook' ]
-                        },
-                        {
-                            title => 'specialHandlers',
-                            nodes => [
-                                {
-                                    title => 'zimbraHandler',
-                                    help  => 'applications/zimbra.html',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [
-                                        'zimbraPreAuthKey',
-                                        'zimbraAccountKey',
-                                        'zimbraBy',
-                                        'zimbraUrl',
-                                        'zimbraSsoUrl'
-                                    ]
-                                },
-                                {
-                                    title => 'secureTokenHandler',
-                                    help  => 'securetoken.html',
-                                    form  => 'simpleInputContainer',
-                                    nodes => [
-                                        'secureTokenMemcachedServers',
-                                        'secureTokenExpiration',
-                                        'secureTokenAttribute',
-                                        'secureTokenUrls',
-                                        'secureTokenHeader',
-                                        'secureTokenAllowOnError'
-                                    ]
-                                }
-                            ]
                         },
                         'nginxCustomHandlers',
                         'logoutServices',

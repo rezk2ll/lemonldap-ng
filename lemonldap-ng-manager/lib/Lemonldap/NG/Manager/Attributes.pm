@@ -2774,13 +2774,6 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'default' => 5,
             'type'    => 'int'
         },
-        'syslog' => {
-            'default' => '',
-            'msgFail' =>
-              '__authorizedValues__: auth, authpriv, daemon, local0-7, user',
-            'test' => qr/^(?:auth|authpriv|daemon|local\d|user)?$/,
-            'type' => 'text'
-        },
         'timeout' => {
             'default' => 72000,
             'test'    => sub {
