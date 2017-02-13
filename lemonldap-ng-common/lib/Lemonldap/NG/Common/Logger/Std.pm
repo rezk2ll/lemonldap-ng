@@ -1,6 +1,6 @@
 package Lemonldap::NG::Common::Logger::Std;
 
-sub init {
+sub new {
     no warnings 'redefine';
     my $level = $_[1]->{logLevel} || 'info';
     my $show = 1;
@@ -14,6 +14,7 @@ sub init {
         $show = 0 if ( $level eq $_ );
     }
     die "unknown level $level" if ($show);
+    return bless {}, shift;
 }
 
 1;

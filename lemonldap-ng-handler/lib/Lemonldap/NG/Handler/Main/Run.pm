@@ -259,7 +259,7 @@ sub updateStatus {
 # @param $level string (emerg|alert|crit|error|warn|notice|info|debug)
 sub lmLog {
     my ( $class, $msg, $level ) = @_;
-    return $class->localConfig->{logger}->$level($msg);
+    return $class->logger->$level($msg);
 }
 
 ## @rmethod protected boolean checkMaintenanceMode

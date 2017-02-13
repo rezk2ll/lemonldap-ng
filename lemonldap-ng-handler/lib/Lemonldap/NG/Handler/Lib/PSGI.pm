@@ -15,7 +15,7 @@ has api        => ( is => 'rw', isa => 'Str' );
 # Initalize main handler
 sub init {
     my ( $self, $args ) = @_;
-    eval { $self->api->init($self) };
+    eval { $self->api->init($args) };
     if ( $@ and not( $self->{protection} and $self->{protection} eq 'none' ) ) {
         $self->error($@);
         return 0;

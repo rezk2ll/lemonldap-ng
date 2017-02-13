@@ -20,24 +20,8 @@ has staticPrefix => ( is => 'rw', isa     => 'Str' );
 has templateDir  => ( is => 'rw', isa     => 'Str' );
 has links        => ( is => 'rw', isa     => 'ArrayRef' );
 has menuLinks    => ( is => 'rw', isa     => 'ArrayRef' );
-has logger => ( is => 'rw', default => 'Lemonldap::NG::Common::Logger::Std', );
-has syslog => (
-    is      => 'rw',
-    isa     => 'Str',
-    trigger => sub {
-
-        if ( $_[0]->{syslog} ) {
-            eval {
-                require Sys::Syslog;
-                Sys::Syslog->import(':standard');
-                openlog( 'lemonldap-ng', 'ndelay,pid', $_[0]->{syslog} );
-            };
-            $_[0]
-              ->error("Unable to use syslog with facility $_[0]->{syslog}: $@")
-              if ($@);
-        }
-    },
-);
+has logger     => ( is => 'rw' );
+has userLogger => ( is => 'rw' );
 
 # INITIALIZATION
 
@@ -48,11 +32,16 @@ sub init {
         return 0;
     }
     foreach my $k ( keys %$args ) {
-        $self->{$k} = $args->{$k};
+        $self->{$k} = $args->{$k} unless ( $k eq 'logger' );
     }
-    eval "require $self->{logger}";
-    die $@ if($@);
-    $self->logger->init($self);
+    my $logger = $args->{logger} || 'Lemonldap::NG::Common::Logger::Std';
+    eval "require $logger";
+    die $@ if ($@);
+    $self->logger( $logger->new($self) );
+    $logger = $args->{userLogger} || $logger;
+    eval "require $logger";
+    die $@ if ($@);
+    $self->userLogger( $logger->new( $self, user => 1 ) );
     return 1;
 }
 
@@ -72,22 +61,16 @@ sub lmLog {
 # @param $mess string to log
 # @param $level level of log message
 sub userLog {
-    my ( $self, $mess, $level ) = @_;
-    if ( $self->{syslog} ) {
-        $level =~ s/^warn$/warning/;
-        syslog( $level || 'notice', $mess );
-    }
-    else {
-        $self->lmLog( $mess, $level );
-    }
+    my ( $self, $msg, $level ) = @_;
+    return $self->userLogger->$level($msg);
 }
 
 ##@method void userInfo(string mess)
 # Log non important user actions. Alias for userLog() with facility "info".
 # @param $mess string to log
 sub userInfo {
-    my ( $self, $mess ) = @_;
-    $self->userLog( $mess, 'info' );
+    my ( $self, $msg ) = @_;
+    return $self->userLogger->info($msg);
 }
 
 ##@method void userNotice(string mess)
@@ -95,17 +78,26 @@ sub userInfo {
 # "notice".
 # @param $mess string to log
 sub userNotice {
-    my ( $self, $mess ) = @_;
-    $self->userLog( $mess, 'notice' );
+    my ( $self, $msg ) = @_;
+    return $self->userLogger->notice($msg);
 }
 
-##@method void userError(string mess)
+##@method void userWarn(string mess)
 # Log user errors like "bad password". Alias for userLog() with facility
 # "warn".
 # @param $mess string to log
+sub userWarn {
+    my ( $self, $msg ) = @_;
+    return $self->userLogger->warn($msg);
+}
+
+##@method void userError(string mess)
+# Log user errors like "try to change password without token". Alias for
+# userLog() with facility "error".
+# @param $mess string to log
 sub userError {
-    my ( $self, $mess ) = @_;
-    $self->userLog( $mess, 'warn' );
+    my ( $self, $msg ) = @_;
+    return $self->userLogger->error($msg);
 }
 
 # Responses methods

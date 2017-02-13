@@ -51,7 +51,11 @@ sub logLevelInit {
     my $logger = $class->localConfig->{logger} ||= $class->defaultLogger;
     eval "require $logger";
     die $@ if ($@);
-    $logger->init( $class->localConfig );
+    $class->logger( $logger->new( $class->localConfig ) );
+    $logger = $class->localConfig->{userLogger} || $logger;
+    eval "require $logger";
+    die $@ if ($@);
+    $class->userLogger( $logger->new( $class->localConfig ), user => 1 );
 }
 
 # @method void serverSignatureInit

@@ -9,26 +9,25 @@ package Lemonldap::NG::Handler::Main;
 
 use strict;
 
-# Thread shared properties (if threads are available: needs to be loaded elsewhere)
-our $_tshv = {
-    tsv         => {},
-    cfgNum      => 0,
-    lastCheck   => 0,
-    checkTime   => 600,
-    confAcc     => {},
-    lmConf      => {},
-    localConfig => {},
-};
-
-# Current sessions properties
-our $_v = { session => {}, datas => {} };
-
 BEGIN {
+# Thread shared properties (if threads are available: needs to be loaded elsewhere)
+    our $_tshv = {
+        tsv         => {},
+        cfgNum      => 0,
+        lastCheck   => 0,
+        checkTime   => 600,
+        confAcc     => {},
+        logger      => {},
+        userLogger  => {},
+        lmConf      => {},
+        localConfig => {},
+    };
+
+    # Current sessions properties
+    our $_v = { session => {}, datas => {}, datasUpdate => {}, };
+
     # Thread shared accessors
-    foreach (
-        qw(tsv cfgNum lastCheck checkTime confAcc localConfig lmConf)
-      )
-    {
+    foreach ( keys %$_tshv ) {
         eval " sub $_ {
             my \$v = \$_[1];
             \$_tshv->{$_} = \$v if(defined \$v);
@@ -39,7 +38,7 @@ BEGIN {
 
     # Current session accessors
     eval "threads::shared::share(\$_tshv);";
-    foreach (qw(session datas datasUpdate)) {
+    foreach ( keys %$_v ) {
         eval " sub $_ {
             my \$v = \$_[1];
             \$_v->{$_} = \$v if(\$v);

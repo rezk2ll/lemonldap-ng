@@ -2,7 +2,9 @@ package Lemonldap::NG::Common::Logger::Apache2;
 
 use Apache2::ServerRec;
 
-sub init{}
+sub new{
+    return bless {}, shift;
+}
 
 sub AUTOLOAD {
     shift;

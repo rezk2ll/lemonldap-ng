@@ -4,6 +4,8 @@ use strict;
 
 use base 'Lemonldap::NG::Handler::PSGI::Main';
 
+use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Syslog';
+
 # In server mode, headers are not passed to a PSGI application but returned
 # to the server
 

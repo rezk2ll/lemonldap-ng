@@ -90,6 +90,7 @@ has app => (
                 cookieName    => 'lemonldap',
                 securedCookie => 0,
                 https         => 0,
+                logger => 'Lemonldap::NG::Common::Logger::Std',
             }
         );
     }
