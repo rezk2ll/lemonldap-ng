@@ -895,7 +895,7 @@ sub token {
 
     unless ($codeSession) {
         $self->lmLog( "Unable to find OIDC session $code", "error" );
-        $self->p->sendError( $req, "invalid_request", 400 );
+        $self->p->sendError( $req, "invalid_grant", 400 );
     }
 
     # Check we have the same redirect_uri value
