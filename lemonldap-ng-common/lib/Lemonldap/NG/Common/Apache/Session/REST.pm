@@ -17,7 +17,10 @@ sub TIEHASH {
         data     => { _session_id => $session_id },
         modified => 0,
     };
-    foreach (qw(baseUrl user password realm localStorage localStorageOptions)) {
+    foreach (
+        qw(baseUrl user password realm localStorage localStorageOptions lwpOpts lwpSslOpts)
+      )
+    {
         $self->{$_} = $args->{$_};
     }
     bless $self, $class;
@@ -91,7 +94,8 @@ sub DESTROY {
 sub ua {
     my ($self) = @_;
     return $self->{ua} if ( $self->{ua} );
-    my $ua = Lemonldap::NG::Common::UserAgent->new( $self->{lwpOpts} );
+    my $ua = Lemonldap::NG::Common::UserAgent->new(
+        { lwpOpts => $self->{lwpOpts}, lwpSslOpts => $self->{lwpSslOpts} } );
     if ( $self->{user} ) {
         my $url = $self->{baseUrl};
         my $port = ( $url =~ /^https/ ? 443 : 80 );
@@ -300,9 +304,25 @@ L<Lemonldap::NG::Portal> provides the ability to acces to
 Lemonldap::NG sessions via REST: the portal act as a proxy to access to the
 real Apache::Session module (see HTML documentation for more)
 
+=head1 PARAMETERS
+
+=over
+
+=item baseUrl (required): remote LLNG portal
+
+=item realm, user and password (optional): AuthBasic parameters if needed
+
+=item lwpOpts: L<LWP::UserAgent> options (hash ref)
+
+=item lwpSlsOpts: L<LWP::UserAgent> SSL options (will be given to LWP::UserAgent
+constructor in parameter C<ssl_opts>
+
+=back
+
 =head1 SEE ALSO
 
-L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Portal>, L<Apache::Session>
+L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Portal>, L<Apache::Session>,
+L<LWP::UserAgent>
 
 =head1 AUTHORS
 
