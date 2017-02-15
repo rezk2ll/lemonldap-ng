@@ -51,7 +51,7 @@ sub run {
             ];
         }
         my $err = Crypt::U2F::Server::Simple::lastError();
-        $self->p->userError("U2F Registration failed: $err");
+        $self->userLogger->warn("U2F Registration failed: $err");
         return $self->p->sendError( $req, $err, 200 );
     }
     if ( $action eq 'verify' ) {

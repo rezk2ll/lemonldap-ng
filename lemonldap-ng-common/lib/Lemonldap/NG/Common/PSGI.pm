@@ -369,12 +369,13 @@ debug, info, notice, warn, error.
 
 =head3 userLog ($msg, $level)
 
-If $self->syslog is configured, store message with it, else called simply lmLog().
-$self->syslog must be empty or contain syslog facility
+Alias for $self->userLogger->$level($msg). Prefer to use this form (required
+for Auth/Combination)
 
 =head3 userError() userNotice() userInfo()
 
-Alias for userLog(level).
+Alias for userLog(level). Note that you must use $self->userLogger->$level
+instead
 
 =head2 Content sending
 

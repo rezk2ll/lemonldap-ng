@@ -1452,7 +1452,7 @@ sub getIDP {
 
     # Alert when selected IDP is unknown
     if ( $idp and !exists $self->idpList->{$idp} ) {
-        $self->p->userError("Required IDP $idp does not exists");
+        $self->userLogger->error("Required IDP $idp does not exists");
         $idp = undef;
     }
 

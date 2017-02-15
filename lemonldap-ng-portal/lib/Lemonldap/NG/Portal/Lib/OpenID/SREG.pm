@@ -159,7 +159,7 @@ sub sregHook {
 
     # Check if user has agreed request
     if ($accepted) {
-        $self->p->userInfo(
+        $self->userLogger->info(
             $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
               . " has accepted OpenID SREG exchange with $trust_root" );
         return ( 1, \%r );

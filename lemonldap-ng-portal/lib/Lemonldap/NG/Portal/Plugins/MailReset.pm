@@ -111,7 +111,7 @@ sub _reset {
         # Check if token is valid
         my $mailSession = $self->mailott->getToken($mailToken);
         unless ($mailSession) {
-            $self->p->userNotice('Bad reset token');
+            $self->userLogger->warn('Bad reset token');
             return PE_BADMAILTOKEN;
         }
 
@@ -133,7 +133,7 @@ sub _reset {
             $token = $req->param('token');
             unless ($token) {
                 $self->setSecurity($req);
-                $self->p->userNotice('Reset try without token');
+                $self->userLogger->warn('Reset try without token');
                 return PE_NOTOKEN;
             }
         }
@@ -143,7 +143,7 @@ sub _reset {
             my $captcha = $req->param('captcha');
 
             unless ($captcha) {
-                $self->p->userNotice('Reset try with captcha not filled');
+                $self->userLogger->notice('Reset try with captcha not filled');
 
                 # Set captcha or token
                 $self->setSecurity($req);
@@ -152,7 +152,7 @@ sub _reset {
 
             # Check captcha
             unless ( $self->captcha->validateCaptcha( $token, $captcha ) ) {
-                $self->p->userInfo('Captcha failed: wrong code');
+                $self->userLogger->info('Captcha failed: wrong code');
 
                 # Set captcha or token
                 $self->setSecurity($req);
@@ -163,7 +163,7 @@ sub _reset {
         elsif ( $self->conf->{requireToken} ) {
             unless ( $self->ott->getToken($token) ) {
                 $self->setSecurity($req);
-                $self->p->userNotice('Reset try with expired/bas token');
+                $self->userLogger->warn('Reset try with expired/bas token');
                 return PE_TOKENEXPIRED;
             }
         }
@@ -184,7 +184,7 @@ sub _reset {
     );
     if ( my $error = $self->p->process($req) ) {
         if ( $error == PE_USERNOTFOUND or $error = PE_BADCREDENTIALS ) {
-            $self->p->userNotice(
+            $self->userLogger->warn(
                 "Reset asked for a unvalid user ($req->{mail})");
 
             # To avoid mail enumeration, return OK
@@ -263,7 +263,7 @@ sub _reset {
         if ( $req->datas->{mailAlreadySent}
             and !$req->param('resendconfirmation') )
         {
-            $self->p->userNotice(
+            $self->userLogger->notice(
                 'Reset mail already sent to ' . $req->{mail} );
 
             # To avoid enumeration, return OK
@@ -346,7 +346,7 @@ sub changePwd {
     if ( my $token = $req->param('token') ) {
         $req->sessionInfo( $self->ott->getToken($token) );
         unless ( $req->sessionInfo ) {
-            $self->p->userNotice(
+            $self->userLogger->warn(
                 'User tries to change password with an invalid or expired token'
             );
             return PE_NOTOKEN;
@@ -356,11 +356,11 @@ sub changePwd {
     # These 2 cases means that a user tries to change password without
     # following valid links!!!
     else {
-        $self->p->userError('User tries to change password without token');
+        $self->userLogger->error('User tries to change password without token');
         return PE_NOTOKEN;
     }
     unless ( delete $req->sessionInfo->{pwdAllowed} ) {
-        $self->p->userError(
+        $self->userLogger->error(
             'User tries to use another token to change a password');
         return PE_NOTOKEN;
     }

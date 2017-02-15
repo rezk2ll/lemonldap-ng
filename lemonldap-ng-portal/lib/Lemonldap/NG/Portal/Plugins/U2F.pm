@@ -84,12 +84,12 @@ sub verify {
     # TODO: set sessionInfo with token
     my $token;
     unless ( $token = $req->param('token') ) {
-        $self->p->userError('U2F access without token');
+        $self->userLogger->error('U2F access without token');
         $req->error(PE_NOTOKEN);
         return $self->fail($req);
     }
     unless ( $req->sessionInfo( $self->ott->getToken($token) ) ) {
-        $self->p->userInfo('Token expired');
+        $self->userLogger->info('Token expired');
         $req->error(PE_TOKENEXPIRED);
         return $self->fail($req);
     }
@@ -103,12 +103,12 @@ sub verify {
             delete $req->sessionInfo->{_u2fRealSession};
             $self->p->rebuildCookies($req);
             $req->mustRedirect(1);
-            $self->p->userInfo( 'U2F signature verified for '
+            $self->userLogger->info( 'U2F signature verified for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
             return $self->p->do( $req, [ sub { PE_OK } ] );
         }
         else {
-            $self->p->userNotice( 'Invalid U2F signature for '
+            $self->userLogger->notice( 'Invalid U2F signature for '
                   . $req->sessionInfo->{ $self->conf->{whatToTrace} } . ' ('
                   . Crypt::U2F::Server::u2fclib_getError()
                   . ')' );
@@ -117,7 +117,7 @@ sub verify {
         }
     }
     else {
-        $self->p->userNotice( 'No U2F response for user'
+        $self->userLogger->notice( 'No U2F response for user'
               . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
         return $self->fail($req);
     }

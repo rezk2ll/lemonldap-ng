@@ -53,7 +53,7 @@ sub getUser {
         return PE_ERROR;
     }
     unless ( $req->datas->{entry} = $sth->fetchrow_hashref() ) {
-        $self->p->userNotice("User $user not found");
+        $self->userLogger->warn("User $user not found");
         return PE_BADCREDENTIALS;
     }
     PE_OK;

@@ -177,7 +177,7 @@ sub userBind {
         # Return direct unless control resonse
         unless ( defined $resp ) {
             if ( $mesg->code == 49 ) {
-                $self->{portal}->userError("Bad password");
+                $self->{portal}->userLogger->warn("Bad password");
                 return PE_BADCREDENTIALS;
             }
             return ( $mesg->code == 0 ? PE_OK : PE_LDAPERROR );
@@ -186,7 +186,7 @@ sub userBind {
         # Check for ppolicy error
         my $pp_error = $resp->pp_error;
         if ( defined $pp_error ) {
-            $self->{portal}->userError(
+            $self->{portal}->userLogger->error(
                 "Password policy error $pp_error for $self->{portal}->{user}");
             return [
                 PE_PP_PASSWORD_EXPIRED,
@@ -227,7 +227,7 @@ sub userBind {
             return PE_OK;
         }
     }
-    $self->{portal}->userError("Bad password for $self->{portal}->{user}");
+    $self->{portal}->userLogger->warn("Bad password for $self->{portal}->{user}");
     return PE_BADCREDENTIALS;
 }
 
@@ -368,7 +368,8 @@ sub userModifyPassword {
         return PE_PP_PASSWORD_MOD_NOT_ALLOWED
           if ( $mesg->code == 19 && $ad );
         return PE_LDAPERROR unless ( $mesg->code == 0 );
-        $self->{portal}->userNotice("Password changed $self->{portal}->{user}");
+        $self->{portal}
+          ->userLogger->notice("Password changed $self->{portal}->{user}");
 
         # Rebind as manager for next LDAP operations if we were bound as user
         $self->bind() if $asUser;
@@ -502,7 +503,7 @@ sub userModifyPassword {
           if ( $mesg->code == 50 || $mesg->code == 8 );
         if ( $mesg->code == 0 ) {
             $self->{portal}
-              ->userNotice("Password changed $self->{portal}->{user}");
+              ->userLogger->notice("Password changed $self->{portal}->{user}");
 
            # Rebind as manager for next LDAP operations if we were bound as user
             $self->bind() if $asUser;
@@ -513,7 +514,7 @@ sub userModifyPassword {
         if ( defined $resp ) {
             my $pp_error = $resp->pp_error;
             if ( defined $pp_error ) {
-                $self->{portal}->userError("Password policy error $pp_error");
+                $self->{portal}->logger->error("Password policy error $pp_error");
                 return [
                     PE_PP_PASSWORD_EXPIRED,
                     PE_PP_ACCOUNT_LOCKED,

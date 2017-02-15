@@ -2774,7 +2774,7 @@ sub getSamlSession {
 
     if ( $samlSession->error ) {
         if ($id) {
-            $self->userInfo("SAML session $id isn't yet available");
+            $self->userLogger->warn("SAML session $id isn't yet available");
         }
         else {
             $self->logger->error("Unable to create new SAML session");

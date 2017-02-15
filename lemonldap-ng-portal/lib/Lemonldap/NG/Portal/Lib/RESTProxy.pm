@@ -52,7 +52,7 @@ sub getUser {
     }
     $req->sessionInfo->{_proxyQueryDone}++;
     unless ( $res->{result} ) {
-        $self->p->userNotice("Authentication refused for $req->{user}");
+        $self->userLogger->notice("Authentication refused for $req->{user}");
         return PE_BADCREDENTIALS;
     }
     $req->sessionInfo->{_proxyCookies} = join '; ',

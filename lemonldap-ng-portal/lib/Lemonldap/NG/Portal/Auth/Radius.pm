@@ -52,7 +52,7 @@ sub authenticate {
 
     my $res = $self->radius->check_pwd( $req->user, $req->datas->{password} );
     unless ( $res == 1 ) {
-        $self->p->userNotice("Unable to authenticate $req->{user} !");
+        $self->userLogger->warn("Unable to authenticate $req->{user} !");
         return PE_BADCREDENTIALS;
     }
     return PE_OK;

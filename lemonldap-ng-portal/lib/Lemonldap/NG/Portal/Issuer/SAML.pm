@@ -734,7 +734,7 @@ sub run {
                     last;
                 }
             }
-            $self->p->userNotice(
+            $self->userLogger->notice(
 "SAML authentication response sent to SAML SP $spConfKey for $user$nameIDLog"
             );
 

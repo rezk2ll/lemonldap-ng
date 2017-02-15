@@ -99,7 +99,7 @@ sub extractFormInfo {
     if ( $self->captcha or $self->ott ) {
         my $token;
         unless ( $token = $req->param('token') ) {
-            $self->p->userError('Authentication tried without token');
+            $self->userLogger->error('Authentication tried without token');
             return PE_NOTOKEN;
         }
         if ( $self->captcha ) {
@@ -110,7 +110,7 @@ sub extractFormInfo {
             }
             unless ( $self->captcha->validateCaptcha( $token, $code ) ) {
                 $self->captcha->setCaptcha($req);
-                $self->p->userNotice("Captcha failed: wrong or expired code");
+                $self->userLogger->warn("Captcha failed: wrong or expired code");
                 return PE_CAPTCHAERROR;
             }
             $self->logger->debug("Captcha code verified");
@@ -118,7 +118,7 @@ sub extractFormInfo {
         elsif ( $self->ott ) {
             unless ( $self->ott->getToken($token) ) {
                 $self->ott->setToken($req);
-                $self->p->userNotice('Token expired');
+                $self->userLogger->warn('Token expired');
                 return PE_TOKENEXPIRED;
             }
         }

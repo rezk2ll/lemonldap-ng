@@ -46,7 +46,7 @@ sub getCasSession {
 
     if ( $casSession->error ) {
         if ($id) {
-            $self->p->userInfo("CAS session $id isn't yet available");
+            $self->userLogger->notice("CAS session $id isn't yet available");
         }
         else {
             $self->logger->error("Unable to create new CAS session");

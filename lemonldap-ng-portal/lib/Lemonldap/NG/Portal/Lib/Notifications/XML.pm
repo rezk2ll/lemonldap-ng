@@ -184,7 +184,7 @@ sub getNotifBack {
                         unless ($checks->{$refId}
                             and $toCheckCount == @{ $checks->{$refId} } )
                         {
-                            $self->p->userNotice(
+                            $self->userLogger->notice(
                                 "$uid has not accepted notification $reference"
                             );
                             $result = $fileResult = 0;
@@ -203,7 +203,7 @@ sub getNotifBack {
                 }
 
                 # Register acceptation
-                $self->p->userNotice(
+                $self->userLogger->notice(
                     "$uid has accepted notification $reference");
                 $self->p->updatePersistentSession( $req,
                     { "notification_$reference" => time() } );

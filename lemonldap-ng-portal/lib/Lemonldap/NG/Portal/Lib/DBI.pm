@@ -124,7 +124,7 @@ sub check_password {
         return 1;
     }
     else {
-        $self->p->userError("Bad password for $user");
+        $self->userLogger->warn("Bad password for $user");
         return 0;
     }
 

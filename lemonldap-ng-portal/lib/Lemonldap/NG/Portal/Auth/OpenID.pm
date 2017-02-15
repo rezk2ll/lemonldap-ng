@@ -99,7 +99,7 @@ sub extractFormInfo {
 
         # If confirmation is needed
         if ( my $setup_url = $csr->user_setup_url ) {
-            $self->userInfo('OpenID confirmation needed');
+            $self->userLogger->info('OpenID confirmation needed');
             $req->urldc($setup_url);
             return PE_REDIRECT;
         }
@@ -131,7 +131,7 @@ sub extractFormInfo {
         my $tmp = $url;
         $tmp =~ m#^https?://(.*?)/#;
         if ( $tmp =~ $self->idpList xor $self->listIsWhite ) {
-            $self->p->userNotice("$url is forbidden for openID exchange");
+            $self->userLogger->warn("$url is forbidden for openID exchange");
             return PE_BADPARTNER;
         }
         my $claimed_identity = $req->datas->{csr}->claimed_identity($url);

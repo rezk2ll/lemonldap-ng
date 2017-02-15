@@ -460,7 +460,7 @@ sub _deleteSession {
 
     # Log
     my $user = $req->{sessionInfo}->{ $self->conf->{whatToTrace} };
-    $self->userNotice("User $user has been disconnected") if $user;
+    $self->userLogger->notice("User $user has been disconnected") if $user;
 
     return $session->error ? 0 : 1;
 }

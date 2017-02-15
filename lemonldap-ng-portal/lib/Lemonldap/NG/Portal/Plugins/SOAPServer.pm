@@ -209,12 +209,12 @@ sub getAttributes {
 
     my @tmp = ();
     unless ($session) {
-        $self->p->userNotice("SOAP attributes request: session $id not found");
+        $self->userLogger->notice("SOAP attributes request: session $id not found");
         push @tmp, SOAP::Data->name( error => 1 )->type('int');
     }
     else {
         my $wtt = $session->data->{ $self->conf->{whatToTrace} };
-        $self->p->userInfo(
+        $self->userLogger->info(
             "SOAP attributes request for " . ( $wtt ? $wtt : $id ) );
         push @tmp, SOAP::Data->name( error => 0 )->type('int');
         push @tmp,

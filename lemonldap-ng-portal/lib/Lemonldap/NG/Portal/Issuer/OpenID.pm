@@ -212,7 +212,7 @@ sub _openIDResponse {
             return PE_CONFIRM;
         }
         elsif ( $req->datas->{_badOpenIdentity} ) {
-            $self->p->userNotice(
+            $self->userLogger->warn(
 "The user $req->{sessionInfo}->{_user} tries to use the id \"$data->{identity}\" on $data->{trust_root}"
             );
             return PE_OPENID_BADID;
@@ -223,7 +223,7 @@ sub _openIDResponse {
 
         # User has refused sharing its datas
         else {
-            $self->userNotice(
+            $self->userLogger->notice(
                 $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
                   . ' refused to share its OpenIdentity' );
             return PE_OK;

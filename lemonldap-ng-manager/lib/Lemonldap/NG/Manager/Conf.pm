@@ -239,7 +239,7 @@ sub newConf {
             $args{force} = 1 if ( $req->params('force') );
             my $s = $self->confAcc->saveConf( $parser->newConf, %args );
             if ( $s > 0 ) {
-                $self->userNotice(
+                $self->userLogger->notice(
                     'User ' . $self->userId($req) . " has stored conf $s" );
                 $res->{result} = 1;
                 $res->{cfgNum} = $s;
@@ -250,7 +250,7 @@ sub newConf {
                 }
             }
             else {
-                $self->userNotice(
+                $self->userLogger->notice(
                     'Saving attempt rejected, asking for confirmation to '
                       . $self->userId($req) );
                 $res->{result} = 0;
@@ -292,13 +292,13 @@ sub newRawConf {
         # chances to be equal to last config cfgNum
         my $s = $self->confAcc->saveConf( $new, force => 1 );
         if ( $s > 0 ) {
-            $self->userNotice(
+            $self->userLogger->notice(
                 'User ' . $self->userId($req) . " has stored (raw) conf $s" );
             $res->{result} = 1;
             $res->{cfgNum} = $s;
         }
         else {
-            $self->userNotice(
+            $self->userLogger->notice(
                 'Raw saving attempt rejected, asking for confirmation to '
                   . $self->userId($req) );
             $res->{result} = 0;
@@ -355,14 +355,14 @@ sub applyConf {
         if ( $response->code != 200 ) {
             $status->{$host} =
               "Error " . $response->code . " (" . $response->message . ")";
-            $self->userError( "Apply configuration for $host: error "
+            $self->logger->error( "Apply configuration for $host: error "
                   . $response->code . " ("
                   . $response->message
                   . ")" );
         }
         else {
             $status->{$host} = "OK";
-            $self->userNotice("Apply configuration for $host: ok");
+            $self->logger->notice("Apply configuration for $host: ok");
         }
     }
 

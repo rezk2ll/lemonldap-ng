@@ -43,7 +43,7 @@ sub setSessionInfo {
         $self->logger->error("Unable to get $v from FOAF document: $@")
           if ($@);
         if ( $req and not $req->{sessionInfo}->{$attr} ) {
-            $self->p->userNotice(
+            $self->userLogger->warn(
                 "Required attribute $v is missing (user: $req->{user})");
             return PE_MISSINGREQATTR;
         }

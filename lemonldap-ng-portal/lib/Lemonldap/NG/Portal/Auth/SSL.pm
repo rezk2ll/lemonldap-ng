@@ -28,12 +28,12 @@ sub extractFormInfo {
     return PE_OK
       if ( $req->user( $req->env->{ $self->SSLField } ) );
     if ( $req->{SSL_CLIENT_S_DN} ) {
-        $self->p->userError(
+        $self->userLogger->warn(
             "$self->SSLField was not found in user certificate");
         return PE_BADCERTIFICATE;
     }
     else {
-        $self->p->userError('No certificate found');
+        $self->userlogger->warn('No certificate found');
         return PE_CERTIFICATEREQUIRED;
     }
 }

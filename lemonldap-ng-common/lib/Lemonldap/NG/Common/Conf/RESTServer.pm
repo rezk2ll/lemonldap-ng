@@ -619,7 +619,7 @@ sub metadatas {
     if ( $req->params('full') and $req->params('full') !~ NO ) {
         my $c = $self->getConfKey( $req, 'cfgNum' );
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
-        $self->userNotice( 'User '
+        $self->userLogger->notice( 'User '
               . $self->userId($req)
               . ' ask for full configuration '
               . $c );
@@ -648,7 +648,7 @@ sub metadatas {
         my ($ind) = map { $id++; $_ == $res->{cfgNum} ? ($id) : () } @a;
         if ($ind) { $res->{prev} = $a[ $ind - 1 ]; }
         if ( $ind and $ind < $#a ) { $res->{next} = $a[ $ind + 1 ]; }
-        $self->userNotice( 'User '
+        $self->userLogger->notice( 'User '
               . $self->userId($req)
               . ' ask for configuration metadatas ('
               . $res->{cfgNum}
@@ -672,7 +672,7 @@ sub getKey {
     unless ($key) {
         return $self->metadatas($req);
     }
-    $self->userInfo( 'User ' . $self->userId($req) . " asks for key $key" );
+    $self->userLogger->info( 'User ' . $self->userId($req) . " asks for key $key" );
     my $value = $self->getConfKey( $req, $key );
     return $self->sendError( $req, undef, 400 ) if ( $req->error );
 

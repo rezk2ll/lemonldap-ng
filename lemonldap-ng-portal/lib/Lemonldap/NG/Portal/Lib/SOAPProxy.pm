@@ -42,7 +42,7 @@ sub getUser {
 
     # If authentication failed, display error
     if ( $res->{errorCode} ) {
-        $self->p->userError(
+        $self->userLogger->warn(
             "Authentication failed for $req->{user}: error $res->{errorCode}");
         return PE_BADCREDENTIALS;
     }
@@ -68,7 +68,7 @@ sub setSessionInfo {
     }
     my $res = $r->result();
     if ( $res->{error} ) {
-        $self->userError("Unable to get attributes for $self->{user} ");
+        $self->userLogger->warn("Unable to get attributes for $self->{user} ");
         return PE_ERROR;
     }
     foreach ( keys %{ $res->{attributes} } ) {

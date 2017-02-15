@@ -160,7 +160,7 @@ sub _register {
                 $token = $req->param('token');
                 unless ($token) {
                     $self->setSecurity($req);
-                    $self->p->userNotice('Register try without token');
+                    $self->userLogger->warn('Register try without token');
                     return PE_NOTOKEN;
                 }
             }
@@ -170,7 +170,7 @@ sub _register {
                 my $captcha = $req->param('captcha');
 
                 unless ($captcha) {
-                    $self->p->userNotice(
+                    $self->userLogger->warn(
                         'Register try with captcha not filled');
 
                     # Set captcha or token
@@ -180,7 +180,7 @@ sub _register {
 
                 # Check captcha
                 unless ( $self->captcha->validateCaptcha( $token, $captcha ) ) {
-                    $self->p->userInfo('Captcha failed: wrong code');
+                    $self->userLogger->info('Captcha failed: wrong code');
 
                     # Set captcha or token
                     $self->setSecurity($req);
@@ -191,7 +191,7 @@ sub _register {
             elsif ( $self->ott ) {
                 unless ( $self->ott->getToken($token) ) {
                     $self->setSecurity($req);
-                    $self->p->userNotice('Register try with expired/bas token');
+                    $self->userLogger->notice('Register try with expired/bad token');
                     return PE_TOKENEXPIRED;
                 }
             }

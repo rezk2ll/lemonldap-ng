@@ -23,7 +23,7 @@ sub checkIP {
       if (!$self->conf->{slaveMasterIP}
         || $self->conf->{slaveMasterIP} =~ /\b$remoteIP\b/ );
 
-    $self->userError('Client IP not accredited for Slave module');
+    $self->userLogger->warn('Client IP not accredited for Slave module');
     return 0;
 }
 
@@ -37,7 +37,7 @@ sub checkHeader {
     my $headerContent = $req->{ $self->conf->{slaveHeaderName} };
     return 1 if ( $self->conf->{slaveHeaderContent} =~ /\b$headerContent\b/ );
 
-    $self->userError('Matching header not found for Slave module ');
+    $self->userLogger->warn('Matching header not found for Slave module ');
     return 0;
 }
 

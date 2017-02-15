@@ -647,7 +647,7 @@ sub getOpenIDConnectSession {
 
     if ( $oidcSession->error ) {
         if ($id) {
-            $self->p->userInfo("OpenIDConnect session $id isn't yet available");
+            $self->userLogger->warn("OpenIDConnect session $id isn't yet available");
         }
         else {
             $self->logger->error("Unable to create new OpenIDConnect session");
