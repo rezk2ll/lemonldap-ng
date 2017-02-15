@@ -13,7 +13,6 @@
 * replace SOAP by REST for notification creation
 * "mail" in UserDB/*
 * checkLogins in SAML
-* 2nd arg for trspan
 * verify activeTimer on/off on screen
 * Import r5420 (ssl\_opts) to trunk
 

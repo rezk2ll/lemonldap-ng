@@ -14,7 +14,14 @@ LemonLDAP::NG Portal jQuery scripts
     return $.getJSON(window.staticPrefix + "languages/" + lang + ".json", function(data) {
       translationFields = data;
       $("[trspan]").each(function() {
-        return $(this).text(translate($(this).attr('trspan')));
+        var args, i, len, txt, v;
+        args = $(this).attr('trspan').split(',');
+        txt = args.shift();
+        for (i = 0, len = args.length; i < len; i++) {
+          v = args[i];
+          txt.replace(/%[ds]/, v);
+        }
+        return $(this).text(txt);
       });
       return $("[trmsg]").each(function() {
         return $(this).text(translate("PE" + ($(this).attr('trmsg'))));

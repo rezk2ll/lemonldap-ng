@@ -10,7 +10,11 @@ translatePage = (lang) ->
 	$.getJSON "#{window.staticPrefix}languages/#{lang}.json", (data) ->
 		translationFields = data
 		$("[trspan]").each ->
-			$(this).text translate $(this).attr 'trspan'
+			args = $(this).attr('trspan').split(',')
+			txt = args.shift()
+			for v in args
+				txt.replace /%[ds]/, v
+			$(this).text txt
 		$("[trmsg]").each ->
 			$(this).text translate "PE#{$(this).attr 'trmsg'}"
 
