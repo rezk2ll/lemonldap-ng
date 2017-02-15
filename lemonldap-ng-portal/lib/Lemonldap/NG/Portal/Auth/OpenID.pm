@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Common::FormEncode;
 use Lemonldap::NG::Common::Regexp;
+use Lemonldap::NG::Common::UserAgent;
 use Cache::FileCache;
 use Lemonldap::NG::Portal::Main::Constants qw(
   PE_BADCREDENTIALS
@@ -49,7 +50,7 @@ has ua => (
     builder => sub {
 
         # TODO : LWP options to use a proxy for example
-        my $ua = LWP::UserAgent->new();
+        my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
         return $ua;
     }
 );

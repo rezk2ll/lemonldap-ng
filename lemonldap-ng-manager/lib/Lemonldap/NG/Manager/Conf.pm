@@ -10,6 +10,7 @@ use 5.10.0;
 use utf8;
 use Mouse;
 use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Common::UserAgent;
 use Crypt::OpenSSL::RSA;
 use Convert::PEM;
 use URI::URL;
@@ -26,8 +27,11 @@ our $VERSION = '2.0.0';
 
 use constant defaultRoute => 'manager.html';
 
+has ua => ( is => 'rw' );
+
 sub addRoutes {
     my ( $self, $conf ) = @_;
+    $self->ua(Lemonldap::NG::Common::UserAgent->new($conf));
 
     # HTML template
     $self->addRoute( 'manager.html', undef, ['GET'] )
@@ -125,11 +129,9 @@ sub prx {
       unless ( $query->{url} );
     return $self->sendError( $req, 'Bad parameter', 400 )
       unless ( $query->{url} =~ m#^(?:f|ht)tps?://\w# );
-    require LWP::UserAgent;
-    my $ua = new LWP::UserAgent();
-    $ua->timeout(10);
+    $self->ua->timeout(10);
 
-    my $response = $ua->get( $query->{url} );
+    my $response = $self->ua->get( $query->{url} );
     unless ( $response->code == 200 ) {
         return $self->sendError( $req,
             $response->code . " (" . $response->message . ")", 400 );
@@ -329,10 +331,7 @@ sub applyConf {
     }
     return {} unless (%reloadUrls);
 
-    # Create user agent
-    require LWP::UserAgent;
-    my $ua = new LWP::UserAgent( requests_redirectable => [] );
-    $ua->timeout(3);
+    $self->ua->timeout(3);
 
     # Parse apply values
     while ( my ( $host, $request ) = each %reloadUrls ) {
@@ -351,7 +350,7 @@ sub applyConf {
             }
         }
 
-        my $response = $ua->request($r);
+        my $response = $self->ua->request($r);
         if ( $response->code != 200 ) {
             $status->{$host} =
               "Error " . $response->code . " (" . $response->message . ")";

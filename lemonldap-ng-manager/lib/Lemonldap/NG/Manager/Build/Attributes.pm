@@ -558,9 +558,13 @@ sub attributes {
             default       => 'uid',
             documentation => 'Session parameter used to fill REMOTE_USER',
         },
-        lwpSslOpts => {
+        lwpOpts => {
             type          => 'keyTextContainer',
             documentation => 'Options given to LWP::UserAgent',
+        },
+        lwpSslOpts => {
+            type          => 'keyTextContainer',
+            documentation => 'SSL options given to LWP::UserAgent',
         },
 
         # History

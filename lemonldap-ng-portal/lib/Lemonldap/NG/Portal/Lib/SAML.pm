@@ -4,7 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use Lemonldap::NG::Common::Session;
-use LWP::UserAgent;
+use Lemonldap::NG::Common::UserAgent;
 use XML::Simple;
 use MIME::Base64;
 use String::Random;
@@ -34,8 +34,7 @@ has ua => (
     builder => sub {
 
         # TODO : LWP options to use a proxy for example
-        my $ua = LWP::UserAgent->new();
-        push @{ $ua->requests_redirectable }, 'POST';
+        my $ua = Lemonldap::NG::Common::UserAgent->new( $_[0]->{conf} );
         $ua->env_proxy();
         return $ua;
     }

@@ -593,6 +593,7 @@ sub tree {
                                 'trustedDomains',
                                 'useSafeJail',
                                 'checkXSS',
+                                'lwpOpts',
                                 'lwpSslOpts',
                                 {
                                     title => 'contentSecurityPolicy',

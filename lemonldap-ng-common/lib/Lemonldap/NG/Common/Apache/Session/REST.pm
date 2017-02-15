@@ -1,7 +1,7 @@
 package Lemonldap::NG::Common::Apache::Session::REST;
 
 use strict;
-use LWP::UserAgent;
+use Lemonldap::NG::Common::UserAgent;
 use JSON qw(from_json to_json);
 
 our $VERSION = '2.0.0';
@@ -91,7 +91,7 @@ sub DESTROY {
 sub ua {
     my ($self) = @_;
     return $self->{ua} if ( $self->{ua} );
-    my $ua = LWP::UserAgent->new( %{ $self->{lwpOpts} || {} } );
+    my $ua = Lemonldap::NG::Common::UserAgent->new( $self->{lwpOpts} );
     if ( $self->{user} ) {
         my $url = $self->{baseUrl};
         my $port = ( $url =~ /^https/ ? 443 : 80 );

@@ -312,6 +312,7 @@
 "logout": "Déconnexion",
 "logoutServices": "Transfert de la déconnexion",
 "logParams": "Journalisation",
+"lwpOpts": "Options pour les requêtes serveur",
 "lwpSslOpts": "Options SSL pour les requêtes serveur",
 "macros": "Macros",
 "mailBody": "Contenu du message de succès",

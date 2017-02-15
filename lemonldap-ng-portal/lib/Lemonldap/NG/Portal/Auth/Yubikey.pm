@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Auth::Yubikey;
 use strict;
 use Mouse;
 use JSON;
-use LWP::UserAgent;
+use Lemonldap::NG::Common::UserAgent;
 use HTTP::Request;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_FORMEMPTY);
 

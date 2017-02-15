@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::Lib::RESTProxy;
 use strict;
 use JSON;
 use Mouse;
-use LWP::UserAgent;
+use Lemonldap::NG::Common::UserAgent;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR PE_BADCREDENTIALS);
 use Lemonldap::NG::Common::FormEncode;
 
@@ -19,7 +19,7 @@ sub init {
     $self->conf->{proxySessionService} ||=
       $self->conf->{proxyAuthService} . '/mysession';
     $self->conf->{proxySessionService} =~ s#/*$##;
-    $self->ua( LWP::UserAgent->new );
+    $self->ua( Lemonldap::NG::Common::UserAgent->new( $self->conf ) );
     $self->ua->default_header( Accept => 'application/json' );
 
     unless ( defined $self->conf->{proxyAuthService} ) {

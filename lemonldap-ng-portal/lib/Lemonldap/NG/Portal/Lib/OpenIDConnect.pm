@@ -13,7 +13,7 @@ use Digest::SHA
   sha512 sha256_base64 sha384_base64 sha512_base64/;
 use JSON;
 use Lemonldap::NG::Common::FormEncode;
-use LWP::UserAgent;
+use Lemonldap::NG::Common::UserAgent;
 use MIME::Base64 qw/encode_base64 decode_base64/;
 use Mouse;
 
@@ -44,8 +44,7 @@ has ua => (
     builder => sub {
 
         # TODO : LWP options to use a proxy for example
-        my $ua = LWP::UserAgent->new();
-        push @{ $ua->requests_redirectable }, 'POST';
+        my $ua = Lemonldap::NG::Common::UserAgent->new($_[0]->{conf});
         $ua->env_proxy();
         return $ua;
     }

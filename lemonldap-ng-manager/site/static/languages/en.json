@@ -312,6 +312,7 @@
 "logout": "Logout",
 "logoutServices": "Logout forward",
 "logParams": "Logs",
+"lwpOpts": "Options for server requests",
 "lwpSslOpts": "SSL options for server requests",
 "macros": "Macros",
 "mailBody": "Success mail content",

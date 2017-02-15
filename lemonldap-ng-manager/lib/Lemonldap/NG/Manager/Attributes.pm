@@ -1294,6 +1294,9 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => {},
             'type'    => 'keyTextContainer'
         },
+        'lwpOpts' => {
+            'type' => 'keyTextContainer'
+        },
         'lwpSslOpts' => {
             'type' => 'keyTextContainer'
         },
