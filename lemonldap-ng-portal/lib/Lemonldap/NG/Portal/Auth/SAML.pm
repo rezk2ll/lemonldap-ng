@@ -309,44 +309,46 @@ sub extractFormInfo {
             $req->datas->{_samlToken} = $saml_token;
 
             # Restore initial SAML request in case of proxying
-            my $moduleOptions = $self->conf->{samlStorageOptions} || {};
-            $moduleOptions->{backend} = $self->conf->{samlStorage};
-            my $module = "Lemonldap::NG::Common::Apache::Session";
+            if ($assertion_responded) {
+                my $moduleOptions = $self->conf->{samlStorageOptions} || {};
+                $moduleOptions->{backend} = $self->conf->{samlStorage};
+                my $module = "Lemonldap::NG::Common::Apache::Session";
 
-            my $saml_sessions =
-              $module->searchOn( $moduleOptions, "ProxyID",
-                $assertion_responded );
+                my $saml_sessions =
+                  $module->searchOn( $moduleOptions, "ProxyID",
+                    $assertion_responded );
 
-            if ( my @saml_sessions_keys = keys %$saml_sessions ) {
+                if ( my @saml_sessions_keys = keys %$saml_sessions ) {
 
-                # Warning if more than one session found
-                if ( $#saml_sessions_keys > 0 ) {
-                    $self->logger->warn(
+                    # Warning if more than one session found
+                    if ( $#saml_sessions_keys > 0 ) {
+                        $self->logger->warn(
 "More than one SAML proxy session found for ID $assertion_responded"
-                    );
-                }
+                        );
+                    }
 
-                # Take the first session
-                my $saml_session = shift @saml_sessions_keys;
+                    # Take the first session
+                    my $saml_session = shift @saml_sessions_keys;
 
-                # Get session
-                $self->logger->debug(
+                    # Get session
+                    $self->logger->debug(
 "Retrieve SAML proxy session $saml_session for ID $assertion_responded"
-                );
+                    );
 
-                my $samlSessionInfo = $self->getSamlSession($saml_session);
+                    my $samlSessionInfo = $self->getSamlSession($saml_session);
 
-                $req->datas->{_proxiedRequest} =
-                  $samlSessionInfo->data->{Request};
-                $req->datas->{_proxiedMethod} =
-                  $samlSessionInfo->data->{Method};
-                $req->datas->{_proxiedRelayState} =
-                  $samlSessionInfo->data->{RelayState};
-                $req->datas->{_proxiedArtifact} =
-                  $samlSessionInfo->data->{Artifact};
+                    $req->datas->{_proxiedRequest} =
+                      $samlSessionInfo->data->{Request};
+                    $req->datas->{_proxiedMethod} =
+                      $samlSessionInfo->data->{Method};
+                    $req->datas->{_proxiedRelayState} =
+                      $samlSessionInfo->data->{RelayState};
+                    $req->datas->{_proxiedArtifact} =
+                      $samlSessionInfo->data->{Artifact};
 
-                # Delete session
-                $samlSessionInfo->remove();
+                    # Delete session
+                    $samlSessionInfo->remove();
+                }
             }
 
             return PE_OK;
