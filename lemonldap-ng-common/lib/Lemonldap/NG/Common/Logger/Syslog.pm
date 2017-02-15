@@ -13,14 +13,16 @@ sub new {
     else {
         $self->{facility} = $conf->{syslogFacility} || 'daemon';
     }
-    openlog( 'LLNG', 'cons,pid,ndelay', $self->{facility} );
+    eval { openlog( 'LLNG', 'cons,pid,ndelay', $self->{facility} ) };
     no warnings 'redefine';
     my $show = 1;
     foreach (qw(error warn notice info debug)) {
         if ($show) {
             my $name = $_;
             $name = 'warning' if ( $_ eq 'warn' );
-            eval qq'sub $_ {syslog("$name|\$[0]->{facility}",\$_[1])}';
+            $name = 'err'     if ( $_ eq 'error' );
+            eval qq'sub $_ {syslog("$name|".\$_[0]->{facility},\$_[1])}';
+            die $@ if($@);
         }
         else {
             eval qq'sub $_ {1}';

@@ -34,14 +34,19 @@ sub init {
     foreach my $k ( keys %$args ) {
         $self->{$k} = $args->{$k} unless ( $k eq 'logger' );
     }
-    my $logger = $args->{logger} || 'Lemonldap::NG::Common::Logger::Std';
-    eval "require $logger";
-    die $@ if ($@);
-    $self->logger( $logger->new($self) );
-    $logger = $args->{userLogger} || $logger;
-    eval "require $logger";
-    die $@ if ($@);
-    $self->userLogger( $logger->new( $self, user => 1 ) );
+    unless ( $self->logger and $self->userLogger ) {
+        my $logger =
+             $args->{logger}
+          || $ENV{LLNG_DEFAULTLOGGER}
+          || 'Lemonldap::NG::Common::Logger::Std';
+        eval "require $logger";
+        die $@ if ($@);
+        $self->logger( $logger->new($self) );
+        $logger = $ENV{LLNG_USERLOGGER} || $args->{userLogger} || $logger;
+        eval "require $logger";
+        die $@ if ($@);
+        $self->userLogger( $logger->new( $self, user => 1 ) );
+    }
     return 1;
 }
 

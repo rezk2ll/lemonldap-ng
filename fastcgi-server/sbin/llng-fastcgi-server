@@ -17,6 +17,7 @@ our (
 my %_apps;
 
 $SIG{'PIPE'} = 'IGNORE';
+$ENV{LLNG_DEFAULTLOGGER} ||= 'Lemonldap::NG::Common::Logger::Syslog';
 
 $foreground = 0;
 $engine  ||= $ENV{ENGINE} || 'FCGI';

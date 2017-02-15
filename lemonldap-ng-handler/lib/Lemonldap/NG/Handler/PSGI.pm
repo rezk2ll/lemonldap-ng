@@ -9,9 +9,10 @@ extends 'Lemonldap::NG::Handler::Lib::PSGI', 'Lemonldap::NG::Common::PSGI';
 our $VERSION = '2.0.0';
 
 sub init {
-    $_[0]->api('Lemonldap::NG::Handler::PSGI::Main') unless ( $_[0]->api );
-    my $tmp = ( $_[0]->Lemonldap::NG::Common::PSGI::init( $_[1] )
-          and $_[0]->Lemonldap::NG::Handler::Lib::PSGI::init( $_[1] ) );
+    my ($self,$args)=@_;
+    $self->api('Lemonldap::NG::Handler::PSGI::Main') unless ( $self->api );
+    my $tmp = ( $self->Lemonldap::NG::Common::PSGI::init( $args )
+          and $self->Lemonldap::NG::Handler::Lib::PSGI::init( $args ) );
     return $tmp;
 }
 

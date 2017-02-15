@@ -25,11 +25,17 @@ use constant SERVER_ERROR      => Apache2::Const::SERVER_ERROR;
 use constant AUTH_REQUIRED     => Apache2::Const::AUTH_REQUIRED;
 use constant MAINTENANCE       => Apache2::Const::HTTP_SERVICE_UNAVAILABLE;
 use constant BUFF_LEN          => 8192;
+
+# Set default logger
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Apache2';
+
+# Set also default logger for PSGI launched in the same Perl process
+$ENV{LLNG_DEFAULTLOGGER} = 'Lemonldap::NG::Common::Logger::Apache2';
 
 eval { require threads::shared; };
 
 our $request;    # Apache2::RequestRec object for current request
+
 
 #*run = \&Lemonldap::NG::Handler::Main::run;
 
