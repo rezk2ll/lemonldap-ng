@@ -12,6 +12,13 @@ extends 'Lemonldap::NG::Portal::Auth::Base';
 
 has stackSub => ( is => 'rw' );
 
+has wrapUserLogger => (
+    is      => 'rw',
+    default => sub {
+        Lemonldap::NG::Portal::Multi::UserLogger->new( $_[0]->{userLogger} );
+    }
+);
+
 # INITIALIZATION
 
 sub init {
@@ -156,6 +163,10 @@ sub try {
         ( $res, $name ) = $stack->[$nb]->[$type]->( $subname, $req );
     }
     $req->sessionInfo->{ [ '_auth', '_userDB' ]->[$type] } = $name;
+    if ( $res > 0 ) {
+        $self->userLogger->warn( 'All schemes failed'
+              . ( $req->user ? ' for user ' . $req->user : '' ) );
+    }
     return $res;
 }
 
@@ -186,7 +197,23 @@ sub loadPlugin {
     }
     return 0
       unless ( $obj = $self->p->loadModule( "$plugin", $nc ) );
-    return $self->p->findEP( $plugin, $obj );
+    $obj = $self->p->findEP( $plugin, $obj );
+    $obj->userLogger( $self->wrapUserLogger );
+    return $obj;
+}
+
+package Lemonldap::NG::Portal::Multi::UserLogger;
+
+# This logger rewrite "warn" to "notice"
+
+sub new {
+    my ( $class, $realLogger ) = @_;
+    return bless { logger => $realLogger }, $class;
+}
+
+sub warn {
+    my ($auth) = caller(0);
+    $_[0]->{logger}->notice("Combination ($auth): $_[1]");
 }
 
 1;
