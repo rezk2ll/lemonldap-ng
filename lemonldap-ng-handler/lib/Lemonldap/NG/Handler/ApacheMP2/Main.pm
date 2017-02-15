@@ -30,7 +30,7 @@ use constant BUFF_LEN          => 8192;
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Apache2';
 
 # Set also default logger for PSGI launched in the same Perl process
-$ENV{LLNG_DEFAULTLOGGER} = 'Lemonldap::NG::Common::Logger::Apache2';
+$ENV{LLNG_DEFAULTLOGGER} ||= 'Lemonldap::NG::Common::Logger::Apache2';
 
 eval { require threads::shared; };
 
