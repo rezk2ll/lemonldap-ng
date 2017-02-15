@@ -2665,30 +2665,6 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
             ],
             'type' => 'select'
         },
-        'secureTokenAllowOnError' => {
-            'default' => 1,
-            'type'    => 'bool'
-        },
-        'secureTokenAttribute' => {
-            'default' => 'uid',
-            'type'    => 'text'
-        },
-        'secureTokenExpiration' => {
-            'default' => 60,
-            'type'    => 'int'
-        },
-        'secureTokenHeader' => {
-            'default' => 'Auth-Token',
-            'type'    => 'text'
-        },
-        'secureTokenMemcachedServers' => {
-            'default' => '127.0.0.1:11211',
-            'type'    => 'text'
-        },
-        'secureTokenUrls' => {
-            'default' => '.*',
-            'type'    => 'pcre'
-        },
         'sessionDataToRemember' => {
             'keyMsgFail' => '__invalidSessionData__',
             'keyTest'    => qr/^[_a-zA-Z][a-zA-Z0-9_]*$/,
@@ -2942,40 +2918,6 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
             'type'    => 'int'
         },
         'yubikeySecretKey' => {
-            'type' => 'text'
-        },
-        'zimbraAccountKey' => {
-            'type' => 'text'
-        },
-        'zimbraBy' => {
-            'default' => '',
-            'select'  => [
-                {
-                    'k' => '',
-                    'v' => ''
-                },
-                {
-                    'k' => 'name',
-                    'v' => 'User name'
-                },
-                {
-                    'k' => 'id',
-                    'v' => 'User id'
-                },
-                {
-                    'k' => 'foreignPrincipal',
-                    'v' => 'Foreign principal'
-                }
-            ],
-            'type' => 'select'
-        },
-        'zimbraPreAuthKey' => {
-            'type' => 'text'
-        },
-        'zimbraSsoUrl' => {
-            'type' => 'text'
-        },
-        'zimbraUrl' => {
             'type' => 'text'
         }
     };

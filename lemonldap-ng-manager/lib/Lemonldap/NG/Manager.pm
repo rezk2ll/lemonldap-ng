@@ -32,8 +32,8 @@ sub init {
     $args ||= {};
 
     if ( my $localconf = $self->confAcc->getLocalConf(MANAGERSECTION) ) {
-        $self->{$_} = $args->{$_} // $localconf->{$_}
-          foreach ( keys %$localconf );
+        $self->{$_} = $args->{$_} //= $localconf->{$_}
+          foreach ( grep {$_ !~ /^(?:l|userL)ogger$/} keys %$localconf );
     }
 
     # Manager needs to keep new Ajax behaviour
