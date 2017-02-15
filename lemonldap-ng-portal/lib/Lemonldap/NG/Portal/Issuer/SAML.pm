@@ -409,17 +409,19 @@ sub run {
 
                 # Replay authentication process
                 $req->{updateSession} = 1;
-                die 'TODO: recall';
-
-               #$self->{error}         = $self->_subProcess(
-               #    qw(issuerDBInit authInit issuerForUnAuthUser extractFormInfo
-               #      userDBInit getUser setAuthSessionInfo setSessionInfo
-               #      setMacros setGroups setPersistentSessionInfo
-               #      setLocalGroups authenticate store authFinish)
-               #);
+                $req->steps(
+                    [
+                        @{ $self->p->beforeAuth },
+                        $self->p->authProcess,
+                        @{ $self->p->betweenAuthAndDatas },
+                        $self->p->sessionDatas,
+                        @{ $self->p->afterDatas }
+                    ]
+                );
+                $req->error( $self->p->process($req) );
 
                 # Return error if any
-                #return $self->{error} if $self->{error} > 0;
+                return $req->{error} if $req->{error} > 0;
 
                 # Else remove flag
                 $forceAuthnSessionInfo =
