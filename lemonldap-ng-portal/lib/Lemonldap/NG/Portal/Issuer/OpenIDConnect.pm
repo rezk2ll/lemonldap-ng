@@ -1333,6 +1333,24 @@ sub exportRequestParameters {
         }
     }
 
+    # Extract request_uri/request parameter
+    my $request = $req->param('request');
+    if ( $req->param('request_uri') ) {
+        $request = $self->getRequestJWT( $req->param('request_uri') );
+    }
+
+    if ($request) {
+        my $request_data = $self->getJWTJSONData($request);
+        foreach ( keys %$request_data ) {
+            $req->env->{ "llng_oidc_" . $_ } = $request_data->{$_};
+        }
+    }
+
+    if ( $req->param('client_id') ) {
+        my $rp = $self->getRP( $req->param('client_id') );
+        $req->env->{"llng_oidc_rp"} = $rp if $rp;
+    }
+
     return PE_OK;
 }
 
