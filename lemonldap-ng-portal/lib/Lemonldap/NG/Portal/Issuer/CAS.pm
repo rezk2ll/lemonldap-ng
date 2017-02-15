@@ -16,6 +16,10 @@ our $VERSION = '2.0.0';
 extends 'Lemonldap::NG::Portal::Main::Issuer',
   'Lemonldap::NG::Portal::Lib::CAS';
 
+# INTERFACE
+
+sub beforeAuth { 'exportRequestParameters' }
+
 # INITIALIZATION
 
 sub init {
@@ -622,6 +626,19 @@ sub _validate2 {
     $self->deleteCasSession($casServiceSession);
     return $self->returnCasServiceValidateSuccess( $req, $username,
         $casProxyGrantingTicketIOU, $proxies, $attributes );
+}
+
+# Store request parameters in %ENV
+sub exportRequestParameters {
+    my ( $self, $req ) = @_;
+
+    foreach my $param (qw/service renew gateway/) {
+        if ( $req->param($param) ) {
+            $req->env->{ "llng_cas_" . $param } = $req->param($param);
+        }
+    }
+
+    return PE_OK;
 }
 
 1;
