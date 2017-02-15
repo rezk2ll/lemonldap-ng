@@ -36,7 +36,6 @@ eval { require threads::shared; };
 
 our $request;    # Apache2::RequestRec object for current request
 
-
 #*run = \&Lemonldap::NG::Handler::Main::run;
 
 ## @rmethod protected int redirectFilter(string url, Apache2::Filter f)

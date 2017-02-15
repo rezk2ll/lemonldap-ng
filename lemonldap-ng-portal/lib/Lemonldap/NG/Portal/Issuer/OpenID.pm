@@ -72,7 +72,7 @@ sub forUnauthUser {
     my ( $self, $req ) = @_;
     my $mode = $req->param('openid.mode');
     unless ($mode) {
-        $self->lmLog( 'OpenID SP test', 'debug' );
+        $self->logger->debug('OpenID SP test');
         return PE_OPENID_EMPTY;
     }
     if ( $mode eq 'associate' ) {
@@ -91,14 +91,13 @@ sub run {
     my $mode = $req->param('openid.mode');
 
     unless ($mode) {
-        $self->lmLog( 'OpenID SP test', 'debug' );
+        $self->logger->debug('OpenID SP test');
         return PE_OPENID_EMPTY;
     }
 
     unless ( $mode =~ /^checkid_(?:immediate|setup)/ ) {
-        $self->lmLog(
-"OpenID error : $mode is not known at this step (issuerForAuthUser)",
-            'error'
+        $self->logger->error(
+            "OpenID error : $mode is not known at this step (issuerForAuthUser)"
         );
         return PE_ERROR;
     }
@@ -149,13 +148,13 @@ sub openIDServer {
             my $tmp = $trust_root;
             $tmp =~ s#^http://(.*?)/#$1#;
             if ( $tmp =~ $self->spList xor $self->listIsWhite ) {
-                $self->lmLog( "$trust_root is forbidden for openID exchange",
-                    'warn' );
+                $self->userLogger->warn(
+                    "$trust_root is forbidden for openID exchange");
                 $req->datas->{_openIdForbidden} = 1;
                 return 0;
             }
             elsif ( $req->{sessionInfo}->{"_openidTrust$trust_root"} ) {
-                $self->lmLog( 'OpenID request already trusted', 'debug' );
+                $self->logger->debug('OpenID request already trusted');
                 return 1;
             }
             elsif ( $req->param("confirm") and $req->param("confirm") == 1 ) {
@@ -169,7 +168,7 @@ sub openIDServer {
                 return 0;
             }
             else {
-                $self->lmLog( 'OpenID request not trusted', 'debug' );
+                $self->logger->debug('OpenID request not trusted');
                 $req->datas->{_openIdTrustRequired} = 1;
                 return 0;
             }
@@ -194,7 +193,7 @@ sub _openIDResponse {
 
     # Redirect
     if ( $type eq 'redirect' ) {
-        $self->lmLog( "OpenID redirection to $data", 'debug' );
+        $self->logger->debug("OpenID redirection to $data");
         $req->{urldc} = $data;
         return PE_REDIRECT;
     }
@@ -209,7 +208,7 @@ sub _openIDResponse {
             $req->info('<h3 trspan="openidExchange,$data->{trust_root}"></h3>');
             $req->info( $req->datas->{_openIdTrustExtMsg} )
               if ( $req->datas->{_openIdTrustExtMsg} );
-            $self->lmLog( 'OpenID confirmation', 'debug' );
+            $self->logger->debug('OpenID confirmation');
             return PE_CONFIRM;
         }
         elsif ( $req->datas->{_badOpenIdentity} ) {
@@ -231,7 +230,7 @@ sub _openIDResponse {
         }
     }
     elsif ($type) {
-        $self->lmLog( "OpenID generated page ($type)", 'debug' );
+        $self->logger->debug("OpenID generated page ($type)");
         $req->response( [ 200, [ 'Content-Type' => $type ], [$data] ] );
     }
     else {

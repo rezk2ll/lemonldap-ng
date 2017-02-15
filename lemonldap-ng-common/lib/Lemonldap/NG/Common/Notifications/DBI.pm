@@ -14,9 +14,10 @@ use Encode;
 our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
+
 sub import {
     shift;
-    return Lemonldap::NG::Common::Notifications->import(@_)
+    return Lemonldap::NG::Common::Notifications->import(@_);
 }
 
 has dbiTable => (
@@ -32,7 +33,7 @@ has dbiChain => (
 has dbiUser => (
     is      => 'ro',
     default => sub {
-        $_[0]->{p}->lmLog( 'Warning: "dbiUser" parameter is not set', 'warn' );
+        $_[0]->{p}->logger->warn('Warning: "dbiUser" parameter is not set');
         return '';
     }
 );
@@ -49,7 +50,7 @@ has _dbh => (
             $self->{dbiChain}, $self->{dbiUser},
             $self->{dbiPassword}, { RaiseError => 0 }
         );
-        $self->lmLog( $DBI::errstr, 'error' ) unless ($r);
+        $self->logger->error($DBI::errstr) unless ($r);
         return $r;
     }
 );
@@ -83,7 +84,7 @@ sub get {
           &getIdentifier( $self, $h->{uid}, $h->{ref}, $h->{date} );
         $result->{$identifier} = $xml;
     }
-    $self->lmLog( $self->sth->err(), 'warn' ) if ( $self->sth->err() );
+    $self->logger->warn( $self->sth->err() ) if ( $self->sth->err() );
     return $result;
 }
 
@@ -104,7 +105,7 @@ sub getAll {
             condition => $h->{condition}
         };
     }
-    $self->lmLog( $self->sth->err(), 'warn' ) if ( $self->sth->err() );
+    $self->logger->warn( $self->sth->err() ) if ( $self->sth->err() );
     return $result;
 }
 
@@ -115,7 +116,7 @@ sub delete {
     my ( $self, $myref ) = @_;
     my ( $d, $u, $r );
     unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
-        $self->lmLog( "Bad reference $myref", 'warn' );
+        $self->logger->warn("Bad reference $myref");
         return 0;
     }
     my @ts = localtime();
@@ -136,7 +137,7 @@ sub purge {
     my ( $self, $myref, $force ) = @_;
     my ( $d, $u, $r );
     unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
-        $self->lmLog( "Bad reference $myref", 'warn' );
+        $self->logger->warn("Bad reference $myref");
         return 0;
     }
 
@@ -186,7 +187,7 @@ sub getDone {
         $result->{"$h->{date}#$h->{uid}#$h->{ref}"} =
           { notified => $done, uid => $h->{uid}, ref => $h->{ref}, };
     }
-    $self->lmLog( $self->sth->err(), 'warn' ) if ( $self->sth->err() );
+    $self->logger->warn( $self->sth->err() ) if ( $self->sth->err() );
     return $result;
 }
 
@@ -197,12 +198,12 @@ sub _execute {
     my ( $self, $query, @args ) = @_;
     my $dbh = $self->_dbh or return 0;
     unless ( $self->sth( $dbh->prepare($query) ) ) {
-        $self->lmLog( $dbh->errstr(), 'warn' );
+        $self->logger->warn( $dbh->errstr() );
         return 0;
     }
     my $tmp;
     unless ( $tmp = $self->sth->execute(@args) ) {
-        $self->lmLog( $self->sth->errstr(), 'warn' );
+        $self->logger->warn( $self->sth->errstr() );
         return 0;
     }
     return $tmp;

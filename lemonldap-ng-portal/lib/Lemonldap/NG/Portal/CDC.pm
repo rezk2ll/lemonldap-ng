@@ -40,12 +40,9 @@ sub init {
     }
     $self->cdc_name( $conf->{samlCommonDomainCookieName} || '_saml_idp' );
     $self->cdc_domain( $conf->{samlCommonDomainCookieDomain} );
-    $self->lmLog( "[CDC] Cookie name: " . $self->cdc_name, 'debug' );
-    $self->lmLog(
-        "[CDC] Domain name: "
-          . ( $self->cdc_domain ? $self->cdc_domain : '<host name>' ),
-        'debug'
-    );
+    $self->logger->debug( "[CDC] Cookie name: " . $self->cdc_name );
+    $self->logger->debug( "[CDC] Domain name: "
+          . ( $self->cdc_domain ? $self->cdc_domain : '<host name>' ) );
 
     foreach (qw(httpOnly cookieExpiration oldStyleUrl)) {
         $self->$_( $conf->{$_} );
@@ -71,7 +68,7 @@ sub handler {
     # TODO: Control URL
     #my $control_url = $self->_sub('controlUrlOrigin');
     #unless ( $control_url == PE_OK ) {
-    #    $self->lmLog( "[CDC] Bad URL", 'error' );
+    #    $self->logger->error( "[CDC] Bad URL");
     #    return $control_url;
     #}
 
@@ -81,7 +78,7 @@ sub handler {
     $cdc_cookie = $cookies{ $self->cdc_name } if %cookies;
 
     if ($cdc_cookie) {
-        $self->lmLog( "[CDC] Cookie found with value $cdc_cookie", 'debug' );
+        $self->logger->debug("[CDC] Cookie found with value $cdc_cookie");
     }
 
     # Write request
@@ -90,7 +87,7 @@ sub handler {
     # Append IDP to common domain cookie
     if ( $action eq 'write' ) {
 
-        $self->lmLog( "[CDC] Write request detected", 'debug' );
+        $self->logger->debug("[CDC] Write request detected");
 
         # Check IDP value
         unless ($idp) {
@@ -98,7 +95,7 @@ sub handler {
         }
 
         # Add IDP value
-        $self->lmLog( "[CDC] Will add IDP $idp to IDP list", 'debug' );
+        $self->logger->debug("[CDC] Will add IDP $idp to IDP list");
 
         my $encoded_idp = encode_base64( $idp, '' );
 
@@ -109,9 +106,8 @@ sub handler {
         $cdc_cookie .= ( $cdc_cookie ? " " : "" );
         $cdc_cookie .= $encoded_idp;
 
-        $self->lmLog(
-            "[CDC] Build cookie $self->{cdc_name} with value $cdc_cookie",
-            'debug' );
+        $self->logger->debug(
+            "[CDC] Build cookie $self->{cdc_name} with value $cdc_cookie");
 
         # Build cookie
         $req->addCookie(
@@ -130,15 +126,15 @@ sub handler {
 
     elsif ( $action eq 'read' ) {
 
-        $self->lmLog( "[CDC] Read request detected", 'debug' );
+        $self->logger->debug("[CDC] Read request detected");
 
         # Get last IDP from cookie
         if ($cdc_cookie) {
             $cdc_idp = decode_base64( ( split /\s+/, $cdc_cookie )[-1] );
-            $self->lmLog( "[CDC] Get value $cdc_idp", 'debug' );
+            $self->logger->debug("[CDC] Get value $cdc_idp");
         }
         else {
-            $self->lmLog( "[CDC] No cookie, set a default value", 'debug' );
+            $self->logger->debug("[CDC] No cookie, set a default value");
             $cdc_idp = 'notfound';
         }
     }

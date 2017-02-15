@@ -88,7 +88,7 @@ SKIP: {
     ok( $res = $sp->_get( '/', query => $query, accept => 'text/html' ),
         'Follow redirection to SP' );
     my $spId = expectCookie($res);
-    expectRedirection($res,qr#^http://auth.sp.com/?$#);
+    expectRedirection( $res, qr#^http://auth.sp.com/?$# );
 
     #print STDERR Dumper($res);
 }

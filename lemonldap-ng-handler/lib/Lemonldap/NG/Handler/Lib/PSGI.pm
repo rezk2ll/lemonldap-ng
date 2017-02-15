@@ -45,7 +45,7 @@ sub _run {
 
     # Override _run() only if protection != 'none'
     if ( !$self->rule or $self->rule ne 'none' ) {
-        $self->lmLog( 'PSGI app is protected', 'debug' );
+        $self->logger->debug('PSGI app is protected');
 
         # Handle requests
         # Developers, be careful: Only this part is executed at each request
@@ -56,13 +56,13 @@ sub _run {
     }
 
     else {
-        $self->lmLog( 'PSGI app is not protected', 'debug' );
+        $self->logger->debug('PSGI app is not protected');
 
         # Check if main handler initialization has been done
         unless ( $self->api->tsv ) {
-            $self->lmLog( 'Checking conf', 'debug' );
+            $self->logger->debug('Checking conf');
             eval { $self->api->checkConf() };
-            $self->lmLog( $@, 'error' ) if ($@);
+            $self->logger->error($@) if ($@);
         }
 
         # Handle unprotected requests
@@ -83,7 +83,7 @@ sub status {
     # Check if main handler initialization has been done
     unless ( %$self->api->tsv ) {
         eval { $self->api->checkConf() };
-        $self->lmLog( $@, 'error' ) if ($@);
+        $self->logger->error($@) if ($@);
     }
     return sub {
         my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
@@ -100,7 +100,7 @@ sub reload {
     # Check if main handler initialization has been done
     unless ( %$self->api->tsv ) {
         eval { $self->api->checkConf() };
-        $self->lmLog( $@, 'error' ) if ($@);
+        $self->logger->error($@) if ($@);
     }
     return sub {
         my $req = Lemonldap::NG::Common::PSGI::Request->new( $_[0] );
@@ -134,7 +134,7 @@ sub _authAndTrace {
             return [ $res, $req->{respHeaders}, [] ];
         }
         else {
-            $self->lmLog( 'User authenticated, calling handler()', 'debug' );
+            $self->logger->debug('User authenticated, calling handler()');
             $res = $self->handler($req);
             push @{ $res->[1] }, @{ $req->{respHeaders} };
         }

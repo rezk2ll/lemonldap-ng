@@ -58,21 +58,21 @@ sub validateCaptcha {
     my ( $self, $token, $value ) = @_;
     my $s = $self->ott->getToken($token);
     unless ($s) {
-        $self->lmLog( "Captcha token $token isn't valid", 'warn' );
+        $self->logger->warn("Captcha token $token isn't valid");
         return 0;
     }
     unless ( $s->{captcha} == $value ) {
-        $self->lmLog( 'Bad captcha response', 'notice' );
+        $self->logger->notice('Bad captcha response');
         return 0;
     }
-    $self->lmLog( 'Good captcha response', 'debug' );
+    $self->logger->debug('Good captcha response');
     return 1;
 }
 
 sub setCaptcha {
     my ( $self,  $req )   = @_;
     my ( $token, $image ) = $self->getCaptcha;
-    $self->lmLog( 'Prepare captcha', 'debug' );
+    $self->logger->debug('Prepare captcha');
     $req->token($token);
     $req->captcha($image);
 }

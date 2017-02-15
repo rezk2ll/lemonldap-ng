@@ -59,7 +59,7 @@ ok(
     'if(0) then [A,B] else [A,B] and [B,C]' );
 
 while ( my $expr = shift @tests ) {
-    ok( [getok($expr)]->[0] == 0, qq{"$expr" returns PE_OK as auth result} )
+    ok( [ getok($expr) ]->[0] == 0, qq{"$expr" returns PE_OK as auth result} )
       or print STDERR "Expect 0, get " . getok($expr) . "\n";
 }
 

@@ -31,22 +31,28 @@ ok( ( defined($basic) ), 'basic extended function is defined' );
 
 $sub = "sub { return ( encode_base64('test','') ) }";
 my $code = $jail->jail_reval($sub);
-ok( ( defined($code) and ref($code) eq 'CODE' ),
-    'encode_base64 function is defined' );
+ok(
+    ( defined($code) and ref($code) eq 'CODE' ),
+    'encode_base64 function is defined'
+);
 ok( $res = &$code, "Function works" );
 ok( $res eq 'dGVzdA==', 'Get good result' );
 
-$sub = "sub { return(checkDate('20000000000000','21000000000000')) }";
+$sub  = "sub { return(checkDate('20000000000000','21000000000000')) }";
 $code = $jail->jail_reval($sub);
-ok( ( defined($code) and ref($code) eq 'CODE' ),
-    'checkDate extended function is defined' );
+ok(
+    ( defined($code) and ref($code) eq 'CODE' ),
+    'checkDate extended function is defined'
+);
 ok( $res = &$code, "Function works" );
 ok( $res == 1, 'Get good result' );
 
-$sub = "sub { return (hostname()) }";
+$sub  = "sub { return (hostname()) }";
 $code = $jail->jail_reval($sub);
-ok( ( defined($code) and ref($code) eq 'CODE' ),
-    'hostname api function is defined' );
+ok(
+    ( defined($code) and ref($code) eq 'CODE' ),
+    'hostname api function is defined'
+);
 ok( $res = &$code, "Function works $res" );
 ok( $res eq 'test1.example.com', 'Get good result' );
 

@@ -106,18 +106,18 @@ sub init {
     }
 
     unless (LASSOTHINSESSIONS) {
-        $self->lmLog( 'Lasso thin-sessions flag could not be set', 'warn' );
+        $self->logger->warn('Lasso thin-sessions flag could not be set');
     }
     else {
-        $self->lmLog( 'Lasso thin-sessions flag set', 'debug' );
+        $self->logger->debug('Lasso thin-sessions flag set');
     }
     if (GLIB) {
         Glib::Log->set_handler(
             "Lasso",
             [qw/ error critical warning message info debug /],
             sub {
-                $self->lmLog( $_[0] . " error " . $_[1] . ": " . $_[2],
-                    'debug' );
+                $self->logger->debug(
+                    $_[0] . " error " . $_[1] . ": " . $_[2] );
             }
         );
     }
@@ -154,12 +154,12 @@ sub loadService {
         and $self->conf->{samlServicePublicKeySig} =~ /CERTIFICATE/ )
     {
         $serviceCertificate = $self->conf->{samlServicePublicKeySig};
-        $self->lmLog( 'Certificate will be used in SAML responses', 'debug' );
+        $self->logger->debug('Certificate will be used in SAML responses');
 
     }
 
     # Get metadata from configuration
-    $self->lmLog( "Get Metadata for this service", 'debug' );
+    $self->logger->debug("Get Metadata for this service");
     my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
 
     # Create Lasso server with service metadata
@@ -188,7 +188,7 @@ sub loadService {
         $self->error('Unable to create Lasso server');
         return 0;
     }
-    $self->lmLog( "Service created", 'debug' );
+    $self->logger->debug("Service created");
 
     return $server;
 }
@@ -200,7 +200,7 @@ sub loadIDPs {
     unless ( $self->conf->{samlIDPMetaDataXML}
         and keys %{ $self->conf->{samlIDPMetaDataXML} } )
     {
-        $self->lmLog( "No IDP found in configuration", 'warn' );
+        $self->logger->warn("No IDP found in configuration");
     }
 
     # Load identity provider metadata
@@ -212,7 +212,7 @@ sub loadIDPs {
     # TODO: QUESTION: do we have to return 0 (<=> block initialization) if one
     #                 IdP load fails ?
     foreach ( keys %{ $self->conf->{samlIDPMetaDataXML} } ) {
-        $self->lmLog( "Get Metadata for IDP $_", 'debug' );
+        $self->logger->debug("Get Metadata for IDP $_");
 
         my $idp_metadata =
           $self->conf->{samlIDPMetaDataXML}->{$_}->{samlIDPMetaDataXML};
@@ -261,10 +261,9 @@ sub loadIDPs {
             return 0;
         }
 
-        $self->lmLog( "Set encryption mode $encryption_mode on IDP $_",
-            'debug' );
+        $self->logger->debug("Set encryption mode $encryption_mode on IDP $_");
 
-        $self->lmLog( "IDP $_ added", 'debug' );
+        $self->logger->debug("IDP $_ added");
     }
     return 1;
 }
@@ -276,7 +275,7 @@ sub loadSPs {
     unless ( $self->conf->{samlSPMetaDataXML}
         and keys %{ $self->conf->{samlSPMetaDataXML} } )
     {
-        $self->lmLog( "No SP found in configuration", 'warn' );
+        $self->logger->warn("No SP found in configuration");
     }
 
     # Load service provider metadata
@@ -286,7 +285,7 @@ sub loadSPs {
     $self->spList( {} );
     foreach ( keys %{ $self->conf->{samlSPMetaDataXML} } ) {
 
-        $self->lmLog( "Get Metadata for SP $_", 'debug' );
+        $self->logger->debug("Get Metadata for SP $_");
 
         my $sp_metadata =
           $self->conf->{samlSPMetaDataXML}->{$_}->{samlSPMetaDataXML};
@@ -335,10 +334,9 @@ sub loadSPs {
             return 0;
         }
 
-        $self->lmLog( "Set encryption mode $encryption_mode on SP $_",
-            'debug' );
+        $self->logger->debug("Set encryption mode $encryption_mode on SP $_");
 
-        $self->lmLog( "SP $_ added", 'debug' );
+        $self->logger->debug("SP $_ added");
     }
 
     return 1;
@@ -365,13 +363,13 @@ sub checkMessage {
     if ( $request_method eq 'GET' ) {
 
         $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
-        $self->lmLog( "SAML method: HTTP-REDIRECT", 'debug' );
+        $self->logger->debug("SAML method: HTTP-REDIRECT");
 
         if ( $req->param('SAMLResponse') ) {
 
             # Response in query string
             $response = $self->getQueryString($req);
-            $self->lmLog( "HTTP-REDIRECT: SAML Response $response", 'debug' );
+            $self->logger->debug("HTTP-REDIRECT: SAML Response $response");
 
         }
 
@@ -379,7 +377,7 @@ sub checkMessage {
 
             # Request in query string
             $request = $self->getQueryString($req);
-            $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
+            $self->logger->debug("HTTP-REDIRECT: SAML Request $request");
 
         }
 
@@ -387,7 +385,7 @@ sub checkMessage {
 
             # Artifact in query string
             $artifact = $self->getQueryString($req);
-            $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact", 'debug' );
+            $self->logger->debug("HTTP-REDIRECT: SAML Artifact $artifact");
 
             # Resolve Artifact
             $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
@@ -411,13 +409,13 @@ sub checkMessage {
         if ( $content_type !~ /xml/ ) {
 
             $method = Lasso::Constants::HTTP_METHOD_POST;
-            $self->lmLog( "SAML method: HTTP-POST", 'debug' );
+            $self->logger->debug("SAML method: HTTP-POST");
 
             if ( $req->param('SAMLResponse') ) {
 
                 # Response in body part
                 $response = $req->param('SAMLResponse');
-                $self->lmLog( "HTTP-POST: SAML Response $response", 'debug' );
+                $self->logger->debug("HTTP-POST: SAML Response $response");
 
             }
 
@@ -425,7 +423,7 @@ sub checkMessage {
 
                 # Request in body part
                 $request = $req->param('SAMLRequest');
-                $self->lmLog( "HTTP-POST: SAML Request $request", 'debug' );
+                $self->logger->debug("HTTP-POST: SAML Request $request");
 
             }
 
@@ -433,7 +431,7 @@ sub checkMessage {
 
                 # Artifact in SAMLart param
                 $artifact = $req->param('SAMLart');
-                $self->lmLog( "HTTP-POST: SAML Artifact $artifact", 'debug' );
+                $self->logger->debug("HTTP-POST: SAML Artifact $artifact");
 
                 # Resolve Artifact
                 $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_POST;
@@ -456,11 +454,11 @@ sub checkMessage {
         else {
 
             $method = Lasso::Constants::HTTP_METHOD_SOAP;
-            $self->lmLog( "SAML method: HTTP-SOAP", 'debug' );
+            $self->logger->debug("SAML method: HTTP-SOAP");
 
             # SOAP is always a request
             $request = $req->content;
-            $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
+            $self->logger->debug("HTTP-SOAP: SAML Request $request");
 
         }
 
@@ -482,13 +480,13 @@ sub checkLassoError {
     # If $error is not a Lasso::Error object, display error string
     unless ( ref($error) and $error->isa("Lasso::Error") ) {
         return 1 unless $error;
-        $self->lmLog( "Lasso error: $error", $level );
+        $self->p->lmLog( "Lasso error: $error", $level );
         return 0;
     }
 
     # Else check error code and error message
     if ( $error->{code} ) {
-        $self->lmLog(
+        $self->p->lmLog(
             "Lasso error code " . $error->{code} . ": " . $error->{message},
             $level );
         return 0;
@@ -696,14 +694,14 @@ sub createAuthnRequest {
     my $login = $self->createLogin($server);
 
     unless ($login) {
-        $self->lmLog( 'Unable to create Lasso login', 'error' );
+        $self->logger->error('Unable to create Lasso login');
         return;
     }
 
     # Init authentication request
     unless ( $self->initAuthnRequest( $login, $idp, $method ) ) {
-        $self->lmLog( "Could not initiate authentication request on $idp",
-            'error' );
+        $self->logger->error(
+            "Could not initiate authentication request on $idp");
         return;
     }
 
@@ -712,7 +710,7 @@ sub createAuthnRequest {
         $self->storeRelayState( $req, 'urldc', 'checkLogins' ) )
     {
         $login->msg_relayState($relaystate);
-        $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+        $self->logger->debug("Set $relaystate in RelayState");
     }
 
     # Customize request
@@ -724,7 +722,7 @@ sub createAuthnRequest {
     # * Forward some authn constraints
     if ( $req->datas->{_proxiedSamlRequest} ) {
 
-        $self->lmLog( "IDP Proxy mode detected", 'debug' );
+        $self->logger->debug("IDP Proxy mode detected");
 
         # Get ProxyCount value
         eval {
@@ -735,12 +733,12 @@ sub createAuthnRequest {
         # Deny request if ProxyCount eq 0
         if ( defined $proxyCount ) {
 
-            $self->lmLog( "Found proxyCount $proxyCount in proxied request",
-                'debug' );
+            $self->logger->debug(
+                "Found proxyCount $proxyCount in proxied request");
 
             if ( $proxyCount eq 0 ) {
-                $self->lmLog( "SAML request cannot be proxied (ProxyCount 0)",
-                    'error' );
+                $self->userLogger->error(
+                    "SAML request cannot be proxied (ProxyCount 0)");
                 return;
             }
             else {
@@ -767,7 +765,7 @@ sub createAuthnRequest {
 
     # NameIDFormat
     if ($nameIDFormat) {
-        $self->lmLog( "Use NameIDFormat $nameIDFormat", 'debug' );
+        $self->logger->debug("Use NameIDFormat $nameIDFormat");
         $request->NameIDPolicy()->Format($nameIDFormat);
     }
 
@@ -776,19 +774,19 @@ sub createAuthnRequest {
 
     # Force authentication
     if ($forceAuthn) {
-        $self->lmLog( "Force authentication on IDP", 'debug' );
+        $self->logger->debug("Force authentication on IDP");
         $request->ForceAuthn(1);
     }
 
     # Passive authentication
     if ($isPassive) {
-        $self->lmLog( "Passive authentication on IDP", 'debug' );
+        $self->logger->debug("Passive authentication on IDP");
         $request->IsPassive(1);
     }
 
     # Allow proxy
     unless ($allowProxiedAuthn) {
-        $self->lmLog( "Do not allow this request to be proxied", 'debug' );
+        $self->logger->debug("Do not allow this request to be proxied");
         eval {
             my $proxyRestriction = Lasso::Saml2ProxyRestriction->new();
             $proxyRestriction->Audience($idp);
@@ -806,25 +804,24 @@ sub createAuthnRequest {
 
     # Signature
     if ( $signSSOMessage == 0 ) {
-        $self->lmLog( "SSO request will not be signed", 'debug' );
+        $self->logger->debug("SSO request will not be signed");
         $self->disableSignature($login);
     }
     elsif ( $signSSOMessage == 1 ) {
-        $self->lmLog( "SSO request will be signed", 'debug' );
+        $self->logger->debug("SSO request will be signed");
         $self->forceSignature($login);
     }
     else {
-        $self->lmLog( "SSO request signature according to metadata", 'debug' );
+        $self->logger->debug("SSO request signature according to metadata");
     }
 
     # Requested authentication context
     if ($proxyRequestedAuthnContext) {
-        $self->lmLog( "Use RequestedAuthnContext from proxied request",
-            'debug' );
+        $self->logger->debug("Use RequestedAuthnContext from proxied request");
         $request->RequestedAuthnContext($proxyRequestedAuthnContext);
     }
     elsif ($requestedAuthnContext) {
-        $self->lmLog( "Request $requestedAuthnContext context", 'debug' );
+        $self->logger->debug("Request $requestedAuthnContext context");
         eval {
             my $context = Lasso::Samlp2RequestedAuthnContext->new();
             $context->AuthnContextClassRef($requestedAuthnContext);
@@ -839,8 +836,7 @@ sub createAuthnRequest {
 
     # Build authentication request
     unless ( $self->buildAuthnRequestMsg($login) ) {
-        $self->lmLog( "Could not build authentication request on $idp",
-            'error' );
+        $self->logger->error("Could not build authentication request on $idp");
         return;
     }
 
@@ -1145,7 +1141,7 @@ sub extractRelayState {
 
     return 0 unless $relaystate;
     if ( $relayStateURL and $relaystate =~ /^https?:\/\// ) {
-        $self->lmLog( "RelayState is a redirection URL: $relaystate", 'debug' );
+        $self->logger->debug("RelayState is a redirection URL: $relaystate");
         $req->{urldc} = $relaystate;
         return 1;
     }
@@ -1164,11 +1160,11 @@ sub extractRelayState {
 
         # delete relaystate session
         if ( $samlSessionInfo->remove ) {
-            $self->lmLog( "Relaystate $relaystate was deleted", 'debug' );
+            $self->logger->debug("Relaystate $relaystate was deleted");
         }
         else {
-            $self->lmLog( "Unable to delete relaystate $relaystate", 'error' );
-            $self->lmLog( $samlSessionInfo->error,                   'error' );
+            $self->logger->error("Unable to delete relaystate $relaystate");
+            $self->logger->error( $samlSessionInfo->error );
         }
 
     }
@@ -1258,8 +1254,7 @@ sub validateConditions {
     # Time
     if ($checkTime) {
         eval {
-            $status =
-              Lasso::Saml2Assertion::validate_time_checks( $assertion,
+            $status = Lasso::Saml2Assertion::validate_time_checks( $assertion,
                 $tolerance );
         };
 
@@ -1269,15 +1264,14 @@ sub validateConditions {
         }
 
         unless ( $status eq Lasso::Constants::SAML2_ASSERTION_VALID ) {
-            $self->lmLog( "Time conditions validations result: $status",
-                'error' );
+            $self->logger->error("Time conditions validations result: $status");
             return 0;
         }
 
-        $self->lmLog( "Time conditions validated", 'debug' );
+        $self->logger->debug("Time conditions validated");
     }
     else {
-        $self->lmLog( "Time conditions not checked", 'debug' );
+        $self->logger->debug("Time conditions not checked");
     }
 
     # Audience
@@ -1293,15 +1287,15 @@ sub validateConditions {
         }
 
         unless ( $status eq Lasso::Constants::SAML2_ASSERTION_VALID ) {
-            $self->lmLog( "Audience conditions validations result: $status",
-                'error' );
+            $self->logger->error(
+                "Audience conditions validations result: $status");
             return 0;
         }
 
-        $self->lmLog( "Audience conditions validated", 'debug' );
+        $self->logger->debug("Audience conditions validated");
     }
     else {
-        $self->lmLog( "Audience conditions not checked", 'debug' );
+        $self->logger->debug("Audience conditions not checked");
     }
 
     return 1;
@@ -1322,39 +1316,38 @@ sub createLogoutRequest {
     my $logout = $self->createLogout($server);
 
     unless ( $self->setSessionFromDump( $logout, $session_dump ) ) {
-        $self->lmLog( "Could not fill Lasso::Logout with session dump",
-            'error' );
+        $self->logger->error("Could not fill Lasso::Logout with session dump");
         return;
     }
 
     # Init logout request
     unless ( $self->initLogoutRequest( $logout, undef, $method ) ) {
-        $self->lmLog( "Could not initiate logout request", 'error' );
+        $self->logger->error("Could not initiate logout request");
         return;
     }
 
     # Set RelayState
     if ( my $relaystate = $self->storeRelayState( $req, 'urldc' ) ) {
         $logout->msg_relayState($relaystate);
-        $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+        $self->logger->debug("Set $relaystate in RelayState");
     }
 
     # Signature
     if ( $signSLOMessage == 0 ) {
-        $self->lmLog( "SLO request will not be signed", 'debug' );
+        $self->logger->debug("SLO request will not be signed");
         $self->disableSignature($logout);
     }
     elsif ( $signSLOMessage == 1 ) {
-        $self->lmLog( "SLO request will be signed", 'debug' );
+        $self->logger->debug("SLO request will be signed");
         $self->forceSignature($logout);
     }
     else {
-        $self->lmLog( "SLO request signature according to metadata", 'debug' );
+        $self->logger->debug("SLO request signature according to metadata");
     }
 
     # Build logout request
     unless ( $self->buildLogoutRequestMsg($logout) ) {
-        $self->lmLog( "Could not build logout request", 'error' );
+        $self->logger->error("Could not build logout request");
         return;
     }
 
@@ -1420,7 +1413,7 @@ sub buildLogoutRequestMsg {
 sub setSessionFromDump {
     my ( $self, $profile, $dump ) = @_;
 
-    $self->lmLog( "Loading Session dump: $dump", 'debug' );
+    $self->logger->debug("Loading Session dump: $dump");
 
     eval { Lasso::Profile::set_session_from_dump( $profile, $dump ); };
 
@@ -1475,7 +1468,7 @@ sub getRouteFromMetaDataURL {
     my ( $self, $key, $index, $sub ) = @_;
     my $uri = $self->getMetaDataURL( $key, $index, 0 );
     unless ( $uri =~ m#^/\w# ) {
-        $self->lmLog( "$key has no index $index", 'debug' );
+        $self->logger->debug("$key has no index $index");
         return ();
     }
     my @t = grep /\w/, split( /\//, $uri );
@@ -1539,8 +1532,7 @@ sub processLogoutRequestMsg {
 
     return 1 if ( $@ or !$notOnOrAfter );
 
-    $self->lmLog( "Found NotOnOrAfter $notOnOrAfter in logout request",
-        'debug' );
+    $self->logger->debug("Found NotOnOrAfter $notOnOrAfter in logout request");
 
     my $expirationTime = $self->samldate2timestamp($notOnOrAfter);
 
@@ -1597,8 +1589,8 @@ sub storeReplayProtection {
 
     my $session_id = $samlSessionInfo->id;
 
-    $self->lmLog( "Keep request ID $samlID in assertion session $session_id",
-        'debug' );
+    $self->logger->debug(
+        "Keep request ID $samlID in assertion session $session_id");
 
     return 1;
 }
@@ -1611,8 +1603,8 @@ sub replayProtection {
     my ( $self, $samlID ) = @_;
 
     unless ($samlID) {
-        $self->lmLog( "Cannot verify replay because no SAML ID given",
-            'error' );
+        $self->userLogger->error(
+            "Cannot verify replay because no SAML ID given");
         return 0;
     }
 
@@ -1639,18 +1631,16 @@ sub replayProtection {
             }
 
             if ( $samlSessionInfo->remove ) {
-                $self->lmLog(
-"Assertion session $session (Message ID $samlID) was deleted",
-                    'debug'
+                $self->logger->debug(
+"Assertion session $session (Message ID $samlID) was deleted"
                 );
                 return $result;
             }
             else {
-                $self->lmLog(
-"Unable to delete assertion session $session (Message ID $samlID)",
-                    'error'
+                $self->logger->error(
+"Unable to delete assertion session $session (Message ID $samlID)"
                 );
-                $self->lmLog( $samlSessionInfo->error, 'error' );
+                $self->logger->error( $samlSessionInfo->error );
                 return 0;
             }
         }
@@ -1681,7 +1671,7 @@ sub resolveArtifact {
         return unless $self->checkLassoError($@);
 
         unless ( $profile->msg_url ) {
-            $self->lmLog( "No artifact resolution URL found", 'error' );
+            $self->logger->error("No artifact resolution URL found");
             return;
         }
 
@@ -1690,15 +1680,14 @@ sub resolveArtifact {
         $request->header( Accept => 'application/xml' );
         $request->content( $profile->msg_body );
 
-        $self->lmLog(
-            "Send message " . $profile->msg_body . " to " . $profile->msg_url,
-            'debug' );
+        $self->logger->debug(
+            "Send message " . $profile->msg_body . " to " . $profile->msg_url );
 
         # SOAP call
         my $soap_answer = $self->ua->request($request);
         if ( $soap_answer->code() == "200" ) {
             $message = $soap_answer->content();
-            $self->lmLog( "Get message $message", 'debug' );
+            $self->logger->debug("Get message $message");
         }
     }
 
@@ -1730,7 +1719,7 @@ sub storeArtifact {
 
     my $art_session_id = $samlSessionInfo->id;
 
-    $self->lmLog( "Keep artifact $id in session $art_session_id", 'debug' );
+    $self->logger->debug("Keep artifact $id in session $art_session_id");
 
     return 1;
 }
@@ -1744,7 +1733,7 @@ sub loadArtifact {
     my $art_session;
 
     unless ($id) {
-        $self->lmLog( "Cannot load artifact because no id given", 'error' );
+        $self->logger->error("Cannot load artifact because no id given");
         return;
     }
 
@@ -1758,7 +1747,7 @@ sub loadArtifact {
 
         my $nb_sessions = $#keys + 1;
 
-        $self->lmLog( "Found $nb_sessions sessions for artifact $id", 'debug' );
+        $self->logger->debug("Found $nb_sessions sessions for artifact $id");
 
         # There should only be 1 result
         return if ( $nb_sessions != 1 );
@@ -1778,15 +1767,15 @@ sub loadArtifact {
 
         # Delete session
         if ( $samlSessionInfo->remove ) {
-            $self->lmLog( "Artifact session $session (ID $id) was deleted",
-                'debug' );
+            $self->logger->debug(
+                "Artifact session $session (ID $id) was deleted");
 
             return $art_session;
         }
         else {
-            $self->lmLog( "Unable to delete artifact session $session (ID $id)",
-                'error' );
-            $self->lmLog( $samlSessionInfo->error, 'error' );
+            $self->logger->error(
+                "Unable to delete artifact session $session (ID $id)");
+            $self->logger->error( $samlSessionInfo->error );
             return;
         }
     }
@@ -1808,21 +1797,20 @@ sub createArtifactResponse {
     eval { $login->set_artifact_message( $art_session->{message} ); };
     if ($@) {
         $self->checkLassoError($@);
-        $self->lmLog( "Cannot load artifact message", 'error' );
+        $self->logger->error("Cannot load artifact message");
         return;
     }
 
-    $self->lmLog( "Response loaded", 'debug' );
+    $self->logger->debug("Response loaded");
 
     # Try to get Lasso session
     my $session_id = $art_session->{_saml_id};
     if ($session_id) {
-        $self->lmLog( "Find session_id $session_id in artifact session",
-            'debug' );
+        $self->logger->debug("Find session_id $session_id in artifact session");
 
         my $session = $self->p->getApacheSession($session_id);
         unless ($session) {
-            $self->lmLog( "Unable to open session $session_id", 'error' );
+            $self->logger->error("Unable to open session $session_id");
             return;
         }
 
@@ -1830,29 +1818,29 @@ sub createArtifactResponse {
 
         if ($lassoSession) {
             unless ( $self->setSessionFromDump( $login, $lassoSession ) ) {
-                $self->lmLog( "Unable to load Lasso Session", 'error' );
+                $self->logger->error("Unable to load Lasso Session");
                 return;
             }
-            $self->lmLog( "Lasso Session loaded", 'debug' );
+            $self->logger->debug("Lasso Session loaded");
         }
 
     }
     else {
-        $self->lmLog( "No session_id in artifact session", 'debug' );
+        $self->logger->debug("No session_id in artifact session");
     }
 
     # Build artifact response
     eval { Lasso::Login::build_response_msg($login); };
     if ($@) {
         $self->checkLassoError($@);
-        $self->lmLog( "Cannot build artifact response", 'error' );
+        $self->logger->error("Cannot build artifact response");
         return;
     }
-    $self->lmLog( "Artifact response built", 'debug' );
+    $self->logger->debug("Artifact response built");
 
     # Store Lasso session if session opened
     if ( $session_id and $login->is_session_dirty ) {
-        $self->lmLog( "Save Lasso session in session", 'debug' );
+        $self->logger->debug("Save Lasso session in session");
         $self->updateSession( $req,
             { _lassoSessionDump => $login->get_session->dump }, $session_id );
     }
@@ -1913,16 +1901,16 @@ sub sendSOAPMessage {
     $request->header( Accept => 'application/xml' );
     $request->content($message);
 
-    $self->lmLog( "Send SOAP message $message to $endpoint", 'debug' );
+    $self->logger->debug("Send SOAP message $message to $endpoint");
 
     # SOAP call
     my $soap_answer = $self->ua()->request($request);
     if ( $soap_answer->code() == "200" ) {
         $response = $soap_answer->content();
-        $self->lmLog( "Get response $response", 'debug' );
+        $self->logger->debug("Get response $response");
     }
     else {
-        $self->lmLog( "No response to SOAP request", 'debug' );
+        $self->logger->debug("No response to SOAP request");
         return;
     }
 
@@ -1961,7 +1949,7 @@ sub createAttributeRequest {
     # Create assertion query
     return unless ( $query = $self->createAssertionQuery($server) );
 
-    $self->lmLog( "Assertion query created", 'debug' );
+    $self->logger->debug("Assertion query created");
 
     # Init request
     my $method = Lasso::Constants::HTTP_METHOD_SOAP;
@@ -1974,7 +1962,7 @@ sub createAttributeRequest {
         return;
     }
 
-    $self->lmLog( "Assertion query request initiated", 'debug' );
+    $self->logger->debug("Assertion query request initiated");
 
     # Set NameID
     eval { $query->request()->Subject()->NameID($nameid); };
@@ -1983,8 +1971,8 @@ sub createAttributeRequest {
         return;
     }
 
-    $self->lmLog( "Set NameID " . $nameid->dump . " in assertion query",
-        'debug' );
+    $self->logger->debug(
+        "Set NameID " . $nameid->dump . " in assertion query" );
 
     # Store attributes in request
     my @requested_attributes;
@@ -2053,7 +2041,7 @@ sub processAttributeRequest {
     # Create assertion query
     return unless ( $query = $self->createAssertionQuery($server) );
 
-    $self->lmLog( "Assertion query created", 'debug' );
+    $self->logger->debug("Assertion query created");
 
     # Process response
     eval { Lasso::AssertionQuery::process_request_msg( $query, $request ); };
@@ -2062,7 +2050,7 @@ sub processAttributeRequest {
         return;
     }
 
-    $self->lmLog( "Attribute request is valid", 'debug' );
+    $self->logger->debug("Attribute request is valid");
 
     return $query;
 }
@@ -2096,7 +2084,7 @@ sub processAttributeResponse {
     # Create assertion query
     return unless ( $query = $self->createAssertionQuery($server) );
 
-    $self->lmLog( "Assertion query created", 'debug' );
+    $self->logger->debug("Assertion query created");
 
     # Process response
     eval { Lasso::AssertionQuery::process_response_msg( $query, $response ); };
@@ -2105,7 +2093,7 @@ sub processAttributeResponse {
         return;
     }
 
-    $self->lmLog( "Attribute response is valid", 'debug' );
+    $self->logger->debug("Attribute response is valid");
 
     return $query;
 }
@@ -2305,8 +2293,8 @@ sub timestamp2samldate {
     my @t = gmtime($timestamp);
     my $samldate = strftime( "%Y-%m-%dT%TZ", @t );
 
-    $self->lmLog( "Convert timestamp $timestamp in SAML2 date: $samldate",
-        'debug' );
+    $self->logger->debug(
+        "Convert timestamp $timestamp in SAML2 date: $samldate");
 
     return $samldate;
 }
@@ -2318,15 +2306,14 @@ sub timestamp2samldate {
 sub samldate2timestamp {
     my ( $self, $samldate ) = @_;
 
-    my ( $year, $mon, $mday, $hour, $min, $sec, $msec, $ztime ) =
-      ( $samldate =~
+    my ( $year, $mon, $mday, $hour, $min, $sec, $msec, $ztime ) = ( $samldate =~
           /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\.\d+)?(Z)?/ );
 
     my $timestamp =
       timegm( $sec, $min, $hour, $mday, $mon - 1, $year - 1900, 0 );
 
-    $self->lmLog( "Convert SAML2 date $samldate in timestamp: $timestamp",
-        'debug' );
+    $self->logger->debug(
+        "Convert SAML2 date $samldate in timestamp: $timestamp");
 
     return $timestamp;
 }
@@ -2403,7 +2390,7 @@ sub sendLogoutRequestToProvider {
 
     # Find EntityID in spList or idpList
     unless ( defined $self->{ lc($type) . 'List' }->{$providerID} ) {
-        $self->lmLog( "$providerID does not match any known $type", 'error' );
+        $self->logger->error("$providerID does not match any known $type");
         return ( 0, undef, undef );
     }
 
@@ -2429,56 +2416,54 @@ sub sendLogoutRequestToProvider {
       ->{ 'saml' . $type . 'MetaDataOptionsSignSLOMessage' };
 
     if ( $signSLOMessage == 0 ) {
-        $self->lmLog( "SLO request will not be signed", 'debug' );
+        $self->logger->debug("SLO request will not be signed");
         $self->disableSignature($logout);
     }
     elsif ( $signSLOMessage == 1 ) {
-        $self->lmLog( "SLO request will be signed", 'debug' );
+        $self->logger->debug("SLO request will be signed");
         $self->forceSignature($logout);
     }
     else {
-        $self->lmLog( "SLO request signature according to metadata", 'debug' );
+        $self->logger->debug("SLO request signature according to metadata");
     }
 
     # Relay State
     if ($relayState) {
         eval { $logout->msg_relayState($relayState); };
         if ($@) {
-            $self->lmLog(
-"Unable to set Relay State $relayState in SLO request for $confKey",
-                'error'
+            $self->logger->error(
+"Unable to set Relay State $relayState in SLO request for $confKey"
             );
             return ( 0, $method, undef );
         }
-        $self->lmLog( 'Relay state set', 'debug' );
+        $self->logger->debug('Relay state set');
     }
 
     # Build the request
     unless ( $logout->request() ) {
 
-        $self->lmLog( "No logout request found, build it", 'debug' );
+        $self->logger->debug("No logout request found, build it");
 
         # Initiate the logout request
         unless ( $self->initLogoutRequest( $logout, $providerID, $method ) ) {
-            $self->lmLog( "Initiate logout request failed for $providerID",
-                'error' );
+            $self->logger->error(
+                "Initiate logout request failed for $providerID");
             return ( 0, $method, undef );
         }
 
         # Build request message
         unless ( $self->buildLogoutRequestMsg($logout) ) {
-            $self->lmLog( "Build logout request failed for $providerID",
-                'error' );
+            $self->logger->error("Build logout request failed for $providerID");
             return ( 0, $method, undef );
         }
 
-        $self->lmLog( "Request built for $providerID", 'debug' );
+        $self->logger->debug("Request built for $providerID");
     }
 
     # Keep message ID in memory to prevent replay
     my $samlID = $logout->request()->ID;
     unless ( $self->storeReplayProtection($samlID) ) {
-        $self->lmLog( "Unable to store message ID", 'error' );
+        $self->logger->error("Unable to store message ID");
         return ( 0, $method, undef );
     }
 
@@ -2490,8 +2475,8 @@ sub sendLogoutRequestToProvider {
     # HTTP-REDIRECT
     if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
 
-        $self->lmLog( "Send HTTP-REDIRECT logout request to $providerID",
-            'debug' );
+        $self->logger->debug(
+            "Send HTTP-REDIRECT logout request to $providerID");
 
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
@@ -2507,8 +2492,7 @@ sub sendLogoutRequestToProvider {
     # HTTP-POST
     elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
-        $self->lmLog( "Build POST relay logout request to $providerID",
-            'debug' );
+        $self->logger->debug("Build POST relay logout request to $providerID");
 
         # Create a new relay session
         my $relayInfos = $self->getSamlSession();
@@ -2544,8 +2528,8 @@ sub sendLogoutRequestToProvider {
         # Build a relay request, to be used after SLO process is done
         if ($relay) {
 
-            $self->lmLog( "Build SOAP relay logout request for $providerID",
-                'debug' );
+            $self->logger->debug(
+                "Build SOAP relay logout request for $providerID");
 
             # Create a new relay session
             my $relayInfos = $self->getSamlSession();
@@ -2580,7 +2564,7 @@ sub sendLogoutRequestToProvider {
         # Send the request directly
         else {
 
-            $self->lmLog( "Send SOAP logout request to $providerID", 'debug' );
+            $self->logger->debug("Send SOAP logout request to $providerID");
 
             my $slo_url  = $logout->msg_url;
             my $slo_body = $logout->msg_body;
@@ -2589,7 +2573,7 @@ sub sendLogoutRequestToProvider {
             my $sp_response = $self->sendSOAPMessage( $slo_url, $slo_body );
 
             unless ($sp_response) {
-                $self->lmLog( "No logout response to SOAP request", 'error' );
+                $self->logger->error("No logout response to SOAP request");
                 return ( 0, $method, undef );
             }
 
@@ -2598,7 +2582,7 @@ sub sendLogoutRequestToProvider {
               $self->processLogoutResponseMsg( $logout, $sp_response );
 
             unless ($sp_result) {
-                $self->lmLog( "Fail to process logout response", 'error' );
+                $self->logger->error("Fail to process logout response");
                 return ( 0, $method, undef );
             }
 
@@ -2607,18 +2591,16 @@ sub sendLogoutRequestToProvider {
 
             if ($sloStatusSessionInfos) {
                 $sloStatusSessionInfos->update( { $confKey => 1 } );
-                $self->lmLog(
-                    "Store SLO status for $confKey in session $relayState",
-                    'debug' );
+                $self->logger->debug(
+                    "Store SLO status for $confKey in session $relayState");
             }
             else {
-                $self->lmLog(
-"Unable to store SLO status for $confKey in session $relayState",
-                    'warn'
+                $self->logger->warn(
+"Unable to store SLO status for $confKey in session $relayState"
                 );
             }
 
-            $self->lmLog( "Logout response is valid", 'debug' );
+            $self->logger->debug("Logout response is valid");
 
         }
 
@@ -2704,8 +2686,9 @@ sub authnContext2authnLevel {
     return $self->conf->{samlAuthnContextMapPassword}
       if ( $authnContext eq $self->getAuthnContext("password") );
     return $self->conf->{samlAuthnContextMapPasswordProtectedTransport}
-      if ( $authnContext eq
-        $self->getAuthnContext("password-protected-transport") );
+      if (
+        $authnContext eq $self->getAuthnContext("password-protected-transport")
+      );
     return $self->conf->{samlAuthnContextMapKerberos}
       if ( $authnContext eq $self->getAuthnContext("kerberos") );
     return $self->conf->{samlAuthnContextMapTLSClient}
@@ -2748,11 +2731,11 @@ sub checkDestination {
 
     # Ok if no Destination
     if ( $@ or !$destination ) {
-        $self->lmLog( "No Destination in SAML message", 'debug' );
+        $self->logger->debug("No Destination in SAML message");
         return 1;
     }
 
-    $self->lmLog( "Destination $destination found in SAML message", 'debug' );
+    $self->logger->debug("Destination $destination found in SAML message");
 
     # Retrieve full URL
     my $portal = $self->conf->{portal};
@@ -2762,11 +2745,11 @@ sub checkDestination {
 
     # Compare Destination and URL
     if ( $destination eq $url ) {
-        $self->lmLog( "Destination match URL $url", 'debug' );
+        $self->logger->debug("Destination match URL $url");
         return 1;
     }
 
-    $self->lmLog( "Destination does not match URL $url", 'error' );
+    $self->logger->error("Destination does not match URL $url");
     return 0;
 }
 
@@ -2794,8 +2777,8 @@ sub getSamlSession {
             $self->userInfo("SAML session $id isn't yet available");
         }
         else {
-            $self->lmLog( "Unable to create new SAML session", 'error' );
-            $self->lmLog( $samlSession->error,                 'error' );
+            $self->logger->error("Unable to create new SAML session");
+            $self->logger->error( $samlSession->error );
         }
         return undef;
     }
@@ -2849,9 +2832,9 @@ sub createAttributeValue {
     return unless defined $value;
 
     # Decode UTF-8
-    $self->lmLog( "Decode UTF8 value $value", 'debug' ) if $force_utf8;
+    $self->logger->debug("Decode UTF8 value $value") if $force_utf8;
     $value = decode( "utf8", $value ) if $force_utf8;
-    $self->lmLog( "Create attribute value $value", 'debug' );
+    $self->logger->debug("Create attribute value $value");
 
     # SAML2 attribute value
     eval { $saml2value = Lasso::Saml2AttributeValue->new(); };
@@ -2931,25 +2914,24 @@ sub deleteSAMLSecondarySessions {
         foreach my $saml_session (@saml_sessions_keys) {
 
             # Get session
-            $self->lmLog( "Retrieve SAML session $saml_session", 'debug' );
+            $self->logger->debug("Retrieve SAML session $saml_session");
 
             my $samlSessionInfo = $self->getSamlSession($saml_session);
 
             # Delete session
             if ( $samlSessionInfo->remove ) {
-                $self->lmLog( "SAML session $saml_session deleted", 'debug' );
+                $self->logger->debug("SAML session $saml_session deleted");
             }
             else {
-                $self->lmLog( "Unable to delete SAML session $saml_session",
-                    'error' );
-                $self->lmLog( $samlSessionInfo->error, "error" );
+                $self->logger->error(
+                    "Unable to delete SAML session $saml_session");
+                $self->logger->error( $samlSessionInfo->error );
                 $result = 0;
             }
         }
     }
     else {
-        $self->lmLog( "No SAML session found for session $session_id ",
-            'debug' );
+        $self->logger->debug("No SAML session found for session $session_id ");
     }
 
     return $result;
@@ -2992,7 +2974,7 @@ sub sendSLOSoapErrorResponse {
             "Could not set empty session in logout object" );
     }
     my $slo_body = $logout->msg_body;
-    $self->lmLog( "SOAP response $slo_body", 'debug' );
+    $self->logger->debug("SOAP response $slo_body");
     return [
         200,
         [

@@ -21,15 +21,14 @@ sub forceAuth {
     # Do not force authentication if last successful authentication is recent
     my $last_authn_utime = $req->{sessionInfo}->{_lastAuthnUTime} || 0;
     if ( time() - $last_authn_utime < $self->{portalForceAuthnInterval} ) {
-        $self->lmLog(
-"Authentication is recent, so do not force authentication for session $req->id",
-            'debug'
+        $self->logger->debug(
+"Authentication is recent, so do not force authentication for session $req->id"
         );
     }
     else {
 
         # Else, launch authentication process
-        $self->lmLog( "Force reauthentication for session $req->id", 'debug' );
+        $self->logger->debug("Force reauthentication for session $req->id");
         $req->steps(
             [
                 @{ $self->p->beforeAuth },

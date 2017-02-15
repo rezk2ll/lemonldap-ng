@@ -106,8 +106,7 @@ sub _reset {
 
     # OTHER FORMS
     if ($mailToken) {
-        $self->lmLog( "Token given for password reset: " . $mailToken,
-            'debug' );
+        $self->logger->debug( "Token given for password reset: " . $mailToken );
 
         # Check if token is valid
         my $mailSession = $self->mailott->getToken($mailToken);
@@ -119,7 +118,7 @@ sub _reset {
         $req->{mail} = $mailSession->{user};
         $req->datas->{mailAddress} =
           $mailSession->{ $self->conf->{mailSessionKey} };
-        $self->lmLog( 'User associated to: ' . $req->{mail}, 'debug' );
+        $self->logger->debug( 'User associated to: ' . $req->{mail} );
     }
 
     # Check for values posted
@@ -159,7 +158,7 @@ sub _reset {
                 $self->setSecurity($req);
                 return PE_CAPTCHAERROR;
             }
-            $self->lmLog( "Captcha code verified", 'debug' );
+            $self->logger->debug("Captcha code verified");
         }
         elsif ( $self->conf->{requireToken} ) {
             unless ( $self->ott->getToken($token) ) {
@@ -234,7 +233,7 @@ sub _reset {
         $req->id( $mailSession->id );
     }
     elsif ($mailSession) {
-        $self->lmLog( 'Mail session found: ' . $mailSession->id, 'debug' );
+        $self->logger->debug( 'Mail session found: ' . $mailSession->id );
         $req->datas->{mailAlreadySent} = 1;
     }
 
@@ -244,7 +243,7 @@ sub _reset {
         # Mail session expiration date
         my $expTimestamp = $mailSession->data->{mailSessionTimeoutTimestamp};
 
-        $self->lmLog( "Mail expiration timestamp: $expTimestamp", 'debug' );
+        $self->logger->debug("Mail expiration timestamp: $expTimestamp");
 
         $req->datas->{expMailDate} =
           strftime( "%d/%m/%Y", localtime $expTimestamp );
@@ -254,7 +253,7 @@ sub _reset {
         # Mail session start date
         my $startTimestamp = $mailSession->data->{mailSessionStartTimestamp};
 
-        $self->lmLog( "Mail start timestamp: $startTimestamp", 'debug' );
+        $self->logger->debug("Mail start timestamp: $startTimestamp");
         $req->datas->{startMailDate} =
           strftime( "%d/%m/%Y", localtime $startTimestamp );
         $req->datas->{startMailTime} =
@@ -326,7 +325,7 @@ sub _reset {
             )
           )
         {
-            $self->lmLog( 'Unable to send reset mail', 'debug' );
+            $self->logger->debug('Unable to send reset mail');
 
             # Don't return an error here to avoid enumeration
         }
@@ -342,7 +341,7 @@ sub _reset {
 
 sub changePwd {
     my ( $self, $req ) = @_;
-    $self->lmLog( 'Change password form response', 'debug' );
+    $self->logger->debug('Change password form response');
 
     if ( my $token = $req->param('token') ) {
         $req->sessionInfo( $self->ott->getToken($token) );
@@ -368,15 +367,14 @@ sub changePwd {
 
     # Check if user wants to generate the new password
     if ( $req->param('reset') ) {
-        $self->lmLog(
-            "Reset password request for " . $req->{sessionInfo}->{_user},
-            'debug' );
+        $self->logger->debug(
+            "Reset password request for " . $req->{sessionInfo}->{_user} );
 
         # Generate a complex password
         my $password =
           $self->gen_password( $self->conf->{randomPasswordRegexp} );
 
-        $self->lmLog( "Generated password: " . $password, 'debug' );
+        $self->logger->debug( "Generated password: " . $password );
 
         $req->datas->{newpassword}     = $password;
         $req->datas->{confirmpassword} = $password;
@@ -460,7 +458,7 @@ sub setSecurity {
 
 sub display {
     my ( $self, $req ) = @_;
-    $self->lmLog( 'Display called with code: ' . $req->error, 'debug' );
+    $self->logger->debug( 'Display called with code: ' . $req->error );
     my %tplPrm = (
         PORTAL_URL      => $self->conf->{portal},
         SKIN_PATH       => '/static',
@@ -514,25 +512,25 @@ sub display {
         and !$req->datas->{mailToken}
       )
     {
-        $self->lmLog( 'Display form', 'debug' );
+        $self->logger->debug('Display form');
         $tplPrm{DISPLAY_FORM} = 1;
     }
 
     # Display mail confirmation resent form
     elsif ( $req->error == PE_MAILCONFIRMATION_ALREADY_SENT ) {
-        $self->lmLog( 'Display resend form', 'debug' );
+        $self->logger->debug('Display resend form');
         $tplPrm{DISPLAY_RESEND_FORM} = 1;
     }
 
     # Display confirmation mail sent
     elsif ( $req->error == PE_MAILCONFIRMOK ) {
-        $self->lmLog( 'Display "confirm mail sent"', 'debug' );
+        $self->logger->debug('Display "confirm mail sent"');
         $tplPrm{DISPLAY_CONFIRMMAILSENT} = 1;
     }
 
     # Display mail sent
     elsif ( $req->error == PE_MAILOK ) {
-        $self->lmLog( 'Display "mail sent"', 'debug' );
+        $self->logger->debug('Display "mail sent"');
         $tplPrm{DISPLAY_MAILSENT} = 1;
     }
 
@@ -542,7 +540,7 @@ sub display {
         and $req->error != PE_BADMAILTOKEN
         and $req->error != PE_MAILOK )
     {
-        $self->lmLog( 'Display password form', 'debug' );
+        $self->logger->debug('Display password form');
         $tplPrm{DISPLAY_PASSWORD_FORM} = 1;
     }
 

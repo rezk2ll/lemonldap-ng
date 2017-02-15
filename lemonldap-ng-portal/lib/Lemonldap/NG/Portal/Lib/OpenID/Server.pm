@@ -17,7 +17,8 @@ our $VERSION = '2.0.0';
 
 use constant OPENID2_NS => 'http://specs.openid.net/auth/2.0';
 
-use constant OPENID2_ID_SELECT => 'http://specs.openid.net/auth/2.0/identifier_select';
+use constant OPENID2_ID_SELECT =>
+  'http://specs.openid.net/auth/2.0/identifier_select';
 
 *_push_url_arg =
   ( $Net::OpenID::Server::VERSION >= 1.09 )

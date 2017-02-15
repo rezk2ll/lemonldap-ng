@@ -37,11 +37,17 @@ sub init {
     if ( my $path = $self->conf->{"issuerDB${type}Path"} ) {
         $path =~ s/^.*?(\w+).*?$/$1/;
         $self->path($path);
-        $self->addUnauthRoute( $path => { '*' => '_redirect' },  ['GET','POST'] );
-        $self->addAuthRoute( $path => { '*' => "_forAuthUser" },  ['GET','POST'] );
+        $self->addUnauthRoute(
+            $path => { '*' => '_redirect' },
+            [ 'GET', 'POST' ]
+        );
+        $self->addAuthRoute(
+            $path => { '*' => "_forAuthUser" },
+            [ 'GET', 'POST' ]
+        );
     }
     else {
-        $self->lmLog( "No path declared for issuer $type. Skipping", 'debug' );
+        $self->logger->debug("No path declared for issuer $type. Skipping");
     }
 }
 
@@ -51,13 +57,14 @@ sub init {
 
 sub _redirect {
     my ( $self, $req, @path ) = @_;
-    $self->lmLog( 'Processing _redirect', 'debug' );
+    $self->logger->debug('Processing _redirect');
     my $prms = $req->parameters;
     foreach my $k ( keys %$prms ) {
         $self->p->setHiddenFormValue( $req, $k, $prms->{$k}, '', 0 );
     }
     $self->p->setHiddenFormValue( $req, 'issuerMethod', $req->method, '', 0 );
-    $self->p->setHiddenFormValue( $req, 'issuerQuery',  $req->query_string,  '', 0 );
+    $self->p->setHiddenFormValue( $req, 'issuerQuery', $req->query_string, '',
+        0 );
     $req->{urldc} =
         $self->conf->{portal}
       . $req->path
@@ -83,7 +90,7 @@ sub _redirect {
 # Case 3: authentified user, launch
 sub _forAuthUser {
     my ( $self, $req, @path ) = @_;
-    $self->lmLog( 'Processing _forAuthUser', 'debug' );
+    $self->logger->debug('Processing _forAuthUser');
     return $self->p->do(
         $req,
         [

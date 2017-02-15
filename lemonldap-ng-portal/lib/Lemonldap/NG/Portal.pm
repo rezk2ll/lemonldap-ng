@@ -108,7 +108,9 @@ portal main object. Some main methods are mapped to the plugin namespace:
 
 =over
 
-=item lmLog()
+=item logger() accessor to log
+
+=item userLogger() accessor to log user actions
 
 =item error() accessor (use it to store error during initialization)
 

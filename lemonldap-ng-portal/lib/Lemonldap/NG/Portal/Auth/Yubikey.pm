@@ -24,8 +24,8 @@ sub init {
     unless ($self->conf->{yubikeyClientID}
         and $self->conf->{yubikeySecretKey} )
     {
-        $self->lmLog( "Missing mandatory parameters (Client ID and secret key)",
-            'error' );
+        $self->logger->error(
+            "Missing mandatory parameters (Client ID and secret key)");
         return 0;
     }
     $self->conf->{yubikeyPublicIDSize} ||= 12;
@@ -39,7 +39,7 @@ sub extractFormInfo {
     my $otp = $req->param('yubikeyOTP');
     return PE_FORMEMPTY unless $otp;
 
-    $self->lmLog( "Received Yubikey OTP $otp", 'debug' );
+    $self->logger->debug("Received Yubikey OTP $otp");
 
     # Verify OTP
     my $result = Auth::Yubikey_WebClient::yubikey_webclient(

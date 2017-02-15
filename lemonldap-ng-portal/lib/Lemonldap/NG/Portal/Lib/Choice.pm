@@ -37,16 +37,13 @@ sub init {
           . $mods[$type];
         if ( $module = $self->loadPlugin( $name, $module ) ) {
             $self->modules->{$name} = $module;
-            $self->p->lmLog(
+            $self->logger->debug(
                 [qw(Authentication User Password)]->[$type]
-                  . " module $name selected",
-                'debug'
-            );
+                  . " module $name selected" );
         }
         else {
-            $self->lmLog(
-                "Choice: unable to load $name, disabling it: " . $self->error,
-                'error' );
+            $self->logger->error(
+                "Choice: unable to load $name, disabling it: " . $self->error );
             $self->error('');
         }
     }
@@ -65,7 +62,7 @@ sub checkChoice {
       or return 0;
     return $name if ( $req->datas->{ "enabledMods" . $self->type } );
     unless ( defined $self->modules->{$name} ) {
-        $self->lmLog( "Unknown choice '$name'", 'error' );
+        $self->logger->error("Unknown choice '$name'");
         return 0;
     }
     $req->sessionInfo->{_choice} = $name;
@@ -94,7 +91,7 @@ sub _buildAuthLoop {
 
     # Test authentication choices
     unless ( ref $self->conf->{authChoiceModules} eq 'HASH' ) {
-        $self->lmLog( "No authentication choices defined", 'warn' );
+        $self->logger->warn("No authentication choices defined");
         return [];
     }
 
@@ -121,7 +118,7 @@ sub _buildAuthLoop {
 
             # Default URL
             $url = ( defined $url ? $url .= $req->env->{'REQUEST_URI'} : '#' );
-            $self->lmLog( "Use URL $url", 'debug' );
+            $self->logger->debug("Use URL $url");
 
             # Options to store in the loop
             my $optionsLoop =
@@ -132,8 +129,7 @@ sub _buildAuthLoop {
             my $displayType = "Lemonldap::NG::Portal::Auth::${auth}"
               ->can('getDisplayType')->( undef, $req );
 
-            $self->lmLog( "Display type $displayType for module $auth",
-                'debug' );
+            $self->logger->debug("Display type $displayType for module $auth");
             $optionsLoop->{$displayType} = 1;
 
            # If displayType is logo, check if key.png is available
@@ -151,8 +147,8 @@ sub _buildAuthLoop {
             # Register item in loop
             push @authLoop, $optionsLoop;
 
-            $self->lmLog( "Authentication choice $name will be displayed",
-                'debug' );
+            $self->logger->debug(
+                "Authentication choice $name will be displayed");
         }
 
         else {

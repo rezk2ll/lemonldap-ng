@@ -24,14 +24,14 @@ sub addRoute {
 sub addAuthRoute {
     my $self = shift;
     $self->routes( $self->authRoutes );
-    $self->lmLog( 'Declaring auth route', 'debug' );
+    $self->logger->debug('Declaring auth route');
     return $self->SUPER::addRoute(@_);
 }
 
 sub addUnauthRoute {
     my $self = shift;
     $self->routes( $self->unAuthRoutes );
-    $self->lmLog( 'Declaring unauth route', 'debug' );
+    $self->logger->debug('Declaring unauth route');
     return $self->SUPER::addRoute(@_);
 }
 
@@ -60,9 +60,8 @@ sub _run {
         }
         else {
             # Unset headers (handler adds a Location header)
-            $self->lmLog(
-                "User not authenticated, Try in use, cancel redirection",
-                'debug' );
+            $self->logger->debug(
+                "User not authenticated, Try in use, cancel redirection");
             $req->userData( {} );
             $req->respHeaders( [] );
             $self->routes( $self->unAuthRoutes );

@@ -61,14 +61,13 @@ sub extractFormInfo {
                     { fields => join( ',', @fields ) }
                 )->as_hash;
                 unless ( ref $datas ) {
-                    $self->lmLog( "Unable to get any Facebook field", 'error' );
+                    $self->logger->error("Unable to get any Facebook field");
                     return PE_ERROR;
                 }
                 if ( $datas->{error} ) {
                     my $tmp = pop @fields;
-                    $self->lmLog(
-"Unable to get some Facebook fields ($datas->{error}->{message}). Retrying without $tmp",
-                        'warn'
+                    $self->logger->warn(
+"Unable to get some Facebook fields ($datas->{error}->{message}). Retrying without $tmp"
                     );
                 }
                 else {
@@ -76,13 +75,13 @@ sub extractFormInfo {
                 }
             }
             unless (@fields) {
-                $self->lmLog( "Unable to get any Facebook field", 'error' );
+                $self->logger->error("Unable to get any Facebook field");
                 return PE_ERROR;
             }
 
             # Use id fieldto trace user
             unless ( $req->{user} = $datas->{id} ) {
-                $self->lmLog( 'Unable to get Facebook id', 'error' );
+                $self->logger->error('Unable to get Facebook id');
                 return PE_ERROR;
             }
             $req->datas->{_facebookDatas} = $datas;
@@ -97,8 +96,7 @@ sub extractFormInfo {
     # 1.2 Bad responses
     if ( my $error_code = $req->param('error_code') ) {
         my $error_message = $req->param('error_message');
-        $self->lmLog( "Facebook error code $error_code: $error_message",
-            'error' );
+        $self->logger->error("Facebook error code $error_code: $error_message");
         return PE_ERROR;
     }
 
@@ -160,7 +158,7 @@ sub fb {
             callback           => $ret,
         );
     };
-    $self->lmLog( $@, 'error' ) if ($@);
+    $self->logger->error($@) if ($@);
     return $fb;
 }
 

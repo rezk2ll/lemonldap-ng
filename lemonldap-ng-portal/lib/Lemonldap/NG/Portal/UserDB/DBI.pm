@@ -49,7 +49,7 @@ sub getUser {
     if ($@) {
 
         # If connection isn't available, error is displayed by dbh()
-        $self->lmLog( "DBI error: $@", 'error' ) if ( $self->_dbh );
+        $self->logger->error("DBI error: $@") if ( $self->_dbh );
         return PE_ERROR;
     }
     unless ( $req->datas->{entry} = $sth->fetchrow_hashref() ) {

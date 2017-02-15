@@ -42,7 +42,7 @@ sub status {
             }
         }
     }
-    return $self->p->sendJSONresponse($req,$res);
+    return $self->p->sendJSONresponse( $req, $res );
 }
 
 1;

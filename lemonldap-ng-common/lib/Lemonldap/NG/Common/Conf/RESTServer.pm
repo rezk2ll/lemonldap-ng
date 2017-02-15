@@ -28,14 +28,14 @@ extends 'Lemonldap::NG::Common::Conf::AccessLib';
 #@return keyvalue (string, int or hashref)
 sub getConfKey {
     my ( $self, $req, $key, @args ) = @_;
-    $self->lmLog( "Search for $key in conf", 'debug' );
+    $self->logger->debug("Search for $key in conf");
 
     # Verify that cfgNum has been asked
     unless ( defined $req->params('cfgNum') ) {
         $req->error("Missing configuration number");
         return undef;
     }
-    $self->lmLog( "Cfgnum set to " . $req->params('cfgNum'), 'debug' );
+    $self->logger->debug( "Cfgnum set to " . $req->params('cfgNum') );
 
     # when 'latest' => replace by last cfgNum
     if ( $req->params('cfgNum') eq 'latest' ) {
@@ -117,7 +117,7 @@ sub getConfByNum {
 #@return PSGI JSON response
 sub complexNodesRoot {
     my ( $self, $req, $query, $tpl ) = @_;
-    $self->lmLog( "Query for $query template keys", 'debug' );
+    $self->logger->debug("Query for $query template keys");
 
     my $tmp = $self->getConfKey( $req, $query );
     return $self->sendError( $req, undef, 400 ) if ( $req->error );
@@ -170,7 +170,7 @@ sub virtualHosts {
         my ( $id, $resp ) = ( 1, [] );
         my $vhk = eval { $self->getConfKey( $req, $query )->{$vh} } // {};
         return $self->sendError( $req, undef, 400 ) if ( $req->error );
-        $self->lmLog( "Query for $vh/$query keys", 'debug' );
+        $self->logger->debug("Query for $vh/$query keys");
 
         # Keys are ordered except 'default' which must be at the end
         foreach my $r (
@@ -210,7 +210,7 @@ sub virtualHosts {
         return $self->sendJSONresponse( $req, $resp );
     }
     elsif ( $query =~ /^vhost(?:(?:Aliase|Http)s|Maintenance|Port|Type)$/ ) {
-        $self->lmLog( "Query for $vh/$query key", 'debug' );
+        $self->logger->debug("Query for $vh/$query key");
 
         # TODO: verify how this is done actually
         my $k1 = $self->getConfKey( $req, 'vhostOptions' );
@@ -593,14 +593,14 @@ sub combModules {
     foreach my $mod ( keys %$val ) {
         my $tmp;
         $tmp->{title} = $mod;
-        $tmp->{id} = "combModules/$mod";
-        $tmp->{type} = 'cmbModule';
+        $tmp->{id}    = "combModules/$mod";
+        $tmp->{type}  = 'cmbModule';
         $tmp->{data}->{$_} = $val->{$mod}->{$_} foreach (qw(type for));
         my $over = $val->{$mod}->{over} // {};
         $tmp->{data}->{over} = [ map { [ $_, $over->{$_} ] } keys %$over ];
         push @$res, $tmp;
     }
-    return $self->sendJSONresponse($req,$res);
+    return $self->sendJSONresponse( $req, $res );
 }
 
 # 33 - Root queries

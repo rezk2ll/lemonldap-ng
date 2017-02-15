@@ -22,8 +22,8 @@ SKIP: {
     ok( $issuer = issuer(), 'Issuer portal' );
     $handlerOR{issuer} = \@Lemonldap::NG::Handler::Main::_onReload;
 
-    ok( $res = $issuer->_get('/saml/metadata'), 'Get metadata');
-    ok( $res->[2]->[0] =~ m#^<\?xml version="1.0"\?>#s, 'Metadata is XML');
+    ok( $res = $issuer->_get('/saml/metadata'), 'Get metadata' );
+    ok( $res->[2]->[0] =~ m#^<\?xml version="1.0"\?>#s, 'Metadata is XML' );
 
     #print STDERR Dumper($res);
 }

@@ -38,7 +38,7 @@ sub build_jail {
       $self->customFunctions ? split( /\s+/, $self->customFunctions ) : ();
     foreach (@t) {
         no warnings 'redefine';
-        $api->lmLog( "Custom function : $_", 'debug' );
+        $api->logger->debug("Custom function : $_");
         my $sub = $_;
         unless (/::/) {
             $sub = "$self\::$_";
@@ -51,7 +51,7 @@ sub build_jail {
             my \$uri = $api\::uri_with_args();
             return $sub(\$uri,\@_)
         }";
-        $api->lmLog( $@, 'error' ) if ($@);
+        $api->logger->error($@) if ($@);
         $_ = "&$_";
     }
 
@@ -149,7 +149,8 @@ sub jail_reval {
     my $res;
     eval {
         $res = (
-            SAFEWRAP and $self->useSafeJail
+            SAFEWRAP
+              and $self->useSafeJail
             ? $self->jail->wrap_code_ref( $self->jail->reval($reval) )
             : $self->jail->reval($reval)
         );

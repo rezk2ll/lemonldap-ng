@@ -33,7 +33,7 @@ sub modifyPassword {
     if ($@) {
 
         # If connection isn't available, error is displayed by dbh()
-        $self->lmLog( "DBI password modification error: $@", 'error' )
+        $self->logger->error("DBI password modification error: $@")
           if ( $self->_dbh );
         return PE_ERROR;
     }

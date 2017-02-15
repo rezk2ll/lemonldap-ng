@@ -35,6 +35,7 @@ lib/Lemonldap/NG/Common/Crypto.pm
 lib/Lemonldap/NG/Common/FormEncode.pm
 lib/Lemonldap/NG/Common/Logger/Apache2.pm
 lib/Lemonldap/NG/Common/Logger/Std.pm
+lib/Lemonldap/NG/Common/Logger/Syslog.pm
 lib/Lemonldap/NG/Common/Module.pm
 lib/Lemonldap/NG/Common/Notifications.pm
 lib/Lemonldap/NG/Common/Notifications/DBI.pm

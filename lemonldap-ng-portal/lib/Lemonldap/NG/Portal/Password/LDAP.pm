@@ -48,24 +48,18 @@ sub modifyPassword {
         );
 
         unless ( $result->code == 0 ) {
-            $self->lmLog(
-                "LDAP modify "
+            $self->logger->error( "LDAP modify "
                   . $self->{ldapPasswordResetAttribute}
                   . " error: "
-                  . $result->code,
-                'error'
-            );
+                  . $result->code );
             $self->ldap->unbind;
             $self->{flags}->{ldapActive} = 0;
             return PE_LDAPERROR;
         }
 
-        $self->lmLog(
-            $self->{ldapPasswordResetAttribute}
+        $self->logger->debug( $self->{ldapPasswordResetAttribute}
               . " set to "
-              . $self->{ldapPasswordResetAttributeValue},
-            'debug'
-        );
+              . $self->{ldapPasswordResetAttributeValue} );
     }
 
     return $code;

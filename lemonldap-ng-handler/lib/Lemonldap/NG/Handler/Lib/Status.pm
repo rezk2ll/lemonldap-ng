@@ -157,7 +157,7 @@ sub run {
             if ( my ( $cacheModule, $cacheOptions ) = ( $1, $2 ) ) {
                 eval "use $cacheModule;"
                   . "\$cache = new $cacheModule(\$cacheOptions);";
-                print STDERR "$@\n" if ($@);    # TODO: use lmLog instead
+                print STDERR "$@\n" if ($@);    # TODO: use logger instead
             }
             else {
                 $cache = undef;

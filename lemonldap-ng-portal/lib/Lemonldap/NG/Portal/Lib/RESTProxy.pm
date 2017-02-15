@@ -35,20 +35,19 @@ no warnings 'once';
 sub getUser {
     my ( $self, $req ) = @_;
     return PE_OK if ( $req->datas->{_proxyQueryDone} );
-    $self->lmLog( 'Proxy push auth to ' . $self->conf->{proxyAuthService},
-        'debug' );
+    $self->logger->debug(
+        'Proxy push auth to ' . $self->conf->{proxyAuthService} );
     my $resp = $self->ua->post( $self->conf->{proxyAuthService},
         { user => $req->{user}, password => $req->datas->{password} } );
     unless ( $resp->is_success ) {
-        $self->lmLog(
-            'Unable to query authentication service: ' . $resp->status_line,
-            'error' );
+        $self->logger->error(
+            'Unable to query authentication service: ' . $resp->status_line );
         return PE_ERROR;
     }
-    $self->lmLog( 'Proxy gets a response', 'debug' );
+    $self->logger->debug('Proxy gets a response');
     my $res = eval { JSON::from_json( $resp->content ) };
     if ($@) {
-        $self->lmLog("Bad content: $@");
+        $self->logger->error("Bad content: $@");
         return PE_ERROR;
     }
     $req->sessionInfo->{_proxyQueryDone}++;
@@ -58,11 +57,9 @@ sub getUser {
     }
     $req->sessionInfo->{_proxyCookies} = join '; ',
       map { s/;.*$//; $_ } $resp->header('Set-Cookie');
-    $self->lmLog(
-        'Store remote cookies in session ('
-          . $req->sessionInfo->{_proxyCookies} . ')',
-        'debug'
-    );
+    $self->logger->debug( 'Store remote cookies in session ('
+          . $req->sessionInfo->{_proxyCookies}
+          . ')' );
     PE_OK;
 }
 
@@ -78,14 +75,14 @@ sub setSessionInfo {
     );
     my $resp = $self->ua->request($q);
     unless ( $resp->is_success ) {
-        $self->lmLog( 'Unable to query session service: ' . $resp->status_line,
-            'error' );
+        $self->logger->error(
+            'Unable to query session service: ' . $resp->status_line );
         return PE_ERROR;
     }
-    $self->lmLog( 'Proxy gets a response', 'debug' );
+    $self->logger->debug('Proxy gets a response');
     my $res = eval { JSON::from_json( $resp->content ) };
     if ($@) {
-        $self->lmLog("Bad content: $@");
+        $self->logger->error("Bad content: $@");
         return PE_ERROR;
     }
     foreach ( keys %$res ) {
@@ -97,7 +94,8 @@ sub setSessionInfo {
 
 sub authLogout {
     my ( $self, $req ) = @_;
-    $self->lmLog( 'Proxy ask logout to '. $self->conf->{proxyAuthService},'debug');
+    $self->logger->debug(
+        'Proxy ask logout to ' . $self->conf->{proxyAuthService} );
     my $q = HTTP::Request->new(
         GET => $self->conf->{proxyAuthService} . '?logout=1',
         [

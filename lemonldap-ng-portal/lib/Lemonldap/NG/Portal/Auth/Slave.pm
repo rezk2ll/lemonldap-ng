@@ -28,8 +28,8 @@ sub extractFormInfo {
     $user_header =~ s/\-/_/g;
 
     unless ( $req->{user} = $req->env->{$user_header} ) {
-        $self->lmLog( "No header " . $self->conf->{slaveUserHeader} . " found",
-            'error' );
+        $self->userLogger->error(
+            "No header " . $self->conf->{slaveUserHeader} . " found" );
         return PE_USERNOTFOUND;
     }
     PE_OK;

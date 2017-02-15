@@ -43,8 +43,7 @@ sub setSessionInfo {
     my $exportedAttr;
 
     # Force UTF-8
-    my $force_utf8 =
-      $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
+    my $force_utf8 = $self->conf->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsForceUTF8};
 
     # Get all required attributes, not already set
@@ -65,16 +64,14 @@ sub setSessionInfo {
             $exportedAttr->{$_} =
               $self->conf->{samlIDPMetaDataExportedAttributes}->{$idpConfKey}
               ->{$_};
-            $self->lmLog( "Attribute $_ will be requested to $idpConfKey",
-                'debug' );
+            $self->logger->debug(
+                "Attribute $_ will be requested to $idpConfKey");
         }
     }
 
     unless ( keys %$exportedAttr ) {
-        $self->lmLog(
-            "All mandatory attributes were present in authentication response",
-            'debug'
-        );
+        $self->logger->debug(
+            "All mandatory attributes were present in authentication response");
         return PE_OK;
     }
 
@@ -84,12 +81,11 @@ sub setSessionInfo {
     my $server = $self->lassoServer;
 
     unless ($server) {
-        $self->lmLog( "Unable to create service for attribute request",
-            'error' );
+        $self->logger->error('Unable to create service for attribute request');
         return PE_SAML_LOAD_SERVICE_ERROR;
     }
 
-    $self->lmLog( "Service for attribute request created", 'debug' );
+    $self->logger->debug("Service for attribute request created");
 
     # Add current IDP as Attribute Authority
     my $idp_metadata =
@@ -101,9 +97,8 @@ sub setSessionInfo {
 
     # Add this IDP to Lasso::Server as AA
     unless ( $self->addAA( $server, $idp_metadata ) ) {
-        $self->lmLog(
-            "Fail to use IDP $idpConfKey Metadata as Attribute Authority",
-            'error' );
+        $self->logger->error(
+            "Fail to use IDP $idpConfKey Metadata as Attribute Authority");
         return PE_SAML_LOAD_IDP_ERROR;
     }
 
@@ -112,8 +107,8 @@ sub setSessionInfo {
       $self->createAttributeRequest( $server, $idp, $exportedAttr, $nameid );
 
     unless ($query) {
-        $self->lmLog( "Unable to build attribute request for $idpConfKey",
-            'error' );
+        $self->logger->error(
+            "Unable to build attribute request for $idpConfKey");
         return PE_SAML_ATTR_ERROR;
     }
 
@@ -125,7 +120,7 @@ sub setSessionInfo {
     my $response = $self->sendSOAPMessage( $query_url, $query_body );
 
     unless ($response) {
-        $self->lmLog( "No attribute response to SOAP request", 'error' );
+        $self->logger->error("No attribute response to SOAP request");
         return PE_SAML_ATTR_ERROR;
     }
 
@@ -133,7 +128,7 @@ sub setSessionInfo {
     my $result = $self->processAttributeResponse( $server, $response );
 
     unless ($result) {
-        $self->lmLog( "Fail to process attribute response", 'error' );
+        $self->logger->error("Fail to process attribute response");
         return PE_SAML_ATTR_ERROR;
     }
 
@@ -144,7 +139,7 @@ sub setSessionInfo {
           $result->response()->Assertion()->AttributeStatement()->Attribute();
     };
     if ($@) {
-        $self->lmLog( "No attributes defined in attribute response", 'error' );
+        $self->logger->error("No attributes defined in attribute response");
         return PE_SAML_ATTR_ERROR;
     }
 
@@ -160,14 +155,13 @@ sub setSessionInfo {
             \@response_attributes, $force_utf8 );
 
         unless ($value) {
-            $self->lmLog(
-"Attribute $_ is mandatory, but was not delivered by $idpConfKey",
-                'error'
+            $self->logger->error(
+"Attribute $_ is mandatory, but was not delivered by $idpConfKey"
             );
             return PE_SAML_ATTR_ERROR;
         }
 
-        $self->lmLog( "Get value $value for attribute $_", 'debug' );
+        $self->logger->debug("Get value $value for attribute $_");
 
         # Store value in sessionInfo
         $req->{sessionInfo}->{$_} = $value;

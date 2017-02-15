@@ -113,7 +113,7 @@ sub extractFormInfo {
                 $self->p->userNotice("Captcha failed: wrong or expired code");
                 return PE_CAPTCHAERROR;
             }
-            $self->lmLog( "Captcha code verified", 'debug' );
+            $self->logger->debug("Captcha code verified");
         }
         elsif ( $self->ott ) {
             unless ( $self->ott->getToken($token) ) {

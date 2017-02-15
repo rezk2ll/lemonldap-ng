@@ -27,7 +27,7 @@ sub getUser {
 sub setSessionInfo {
     my ( $self, $req ) = @_;
     unless ( $req->datas->{_webid} ) {
-        $self->lmLog( 'No webid object found', 'error' );
+        $self->logger->error('No webid object found');
         return PE_ERROR;
     }
 
@@ -40,7 +40,7 @@ sub setSessionInfo {
         my $req;
         $attr =~ s/^!// and $req = 1;
         eval { $req->{sessionInfo}->{$attr} = $req->datas->{_webid}->get($v) };
-        $self->lmLog( "Unable to get $v from FOAF document: $@", 'error' )
+        $self->logger->error("Unable to get $v from FOAF document: $@")
           if ($@);
         if ( $req and not $req->{sessionInfo}->{$attr} ) {
             $self->p->userNotice(

@@ -74,7 +74,7 @@ sub createSession {
     my $creds = $class->header_in('Authorization');
     $creds =~ s/^Basic\s+//;
     my ( $user, $pwd ) = ( decode_base64($creds) =~ /^(.*?):(.*)$/ );
-    $class->lmLog( "AuthBasic authentication for user: $user", 'debug' );
+    $class->logger->debug("AuthBasic authentication for user: $user");
     my $soapRequest = $soapClient->getCookies( $user, $pwd, $id );
 
     # Catch SOAP errors
@@ -87,11 +87,8 @@ sub createSession {
 
         # If authentication failed, display error
         if ( $res->{errorCode} ) {
-            $class->lmLog(
-                "Authentication failed for $user: "
-                  . $soapClient->error( $res->{errorCode}, 'en' )->result(),
-                'notice'
-            );
+            $class->userLogger->notice( "Authentication failed for $user: "
+                  . $soapClient->error( $res->{errorCode}, 'en' )->result() );
             return 0;
         }
         else {
@@ -104,7 +101,7 @@ sub createSession {
 # Hide user credentials to the protected application
 sub hideCookie {
     my $class = shift;
-    $class->lmLog( "removing Authorization header", 'debug' );
+    $class->logger->debug("removing Authorization header");
     $class->unset_header_in('Authorization');
 }
 

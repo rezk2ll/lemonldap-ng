@@ -9,7 +9,8 @@ use Lemonldap::NG::Portal::Main::Constants qw(
 
 our $VERSION = '2.0.0';
 
-extends 'Lemonldap::NG::Common::Module', 'Lemonldap::NG::Portal::Lib::OpenIDConnect';
+extends 'Lemonldap::NG::Common::Module',
+  'Lemonldap::NG::Portal::Lib::OpenIDConnect';
 
 # INITIALIZATION
 
@@ -22,25 +23,25 @@ sub init {
 
 sub getUser {
     my ( $self, $req ) = @_;
-    my $op   = $req->datas->{_oidcOPCurrent};
+    my $op = $req->datas->{_oidcOPCurrent};
 
     my $access_token = $req->datas->{access_token};
 
     my $userinfo_content = $self->getUserInfo( $op, $access_token );
 
     unless ($userinfo_content) {
-        $self->lmLog( "No User Info content", 'warn' );
+        $self->logger->warn("No User Info content");
         return PE_OK;
     }
 
-    $self->lmLog( "UserInfo received: $userinfo_content", 'debug' );
+    $self->logger->debug("UserInfo received: $userinfo_content");
 
     $req->datas->{OpenIDConnect_user_info} =
       $self->decodeJSON($userinfo_content);
 
     # Check that received sub is the same than current user
     unless ( $req->datas->{OpenIDConnect_user_info}->{sub} eq $req->{user} ) {
-        $self->lmLog( "Received sub do not match current user", 'error' );
+        $self->logger->error("Received sub do not match current user");
         return PE_BADCREDENTIALS;
     }
 
@@ -50,7 +51,7 @@ sub getUser {
 # Get all required attributes
 sub setSessionInfo {
     my ( $self, $req ) = @_;
-    my $op   = $req->datas->{_oidcOPCurrent};
+    my $op = $req->datas->{_oidcOPCurrent};
 
     my %vars = (
         %{ $self->conf->{exportedVars} },
@@ -58,8 +59,7 @@ sub setSessionInfo {
     );
 
     while ( my ( $k, $v ) = each %vars ) {
-        $req->{sessionInfo}->{$k} =
-          $req->datas->{OpenIDConnect_user_info}->{$v}
+        $req->{sessionInfo}->{$k} = $req->datas->{OpenIDConnect_user_info}->{$v}
           || "";
     }
 

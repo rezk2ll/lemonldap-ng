@@ -152,8 +152,8 @@ sub newSession {
 
     $session->update($infos);
 
-    $self->lmLog( "SOAP request create a new session (" . $session->id . ")",
-        'debug' );
+    $self->logger->debug(
+        "SOAP request create a new session (" . $session->id . ")" );
 
     return $self->p->sendJSONresponse( $req,
         { result => 1, session => $session->data } );
@@ -174,7 +174,7 @@ sub updateSession {
       or return $self->p->sendError( $req, undef, 400 );
 
     # Store them
-    $self->lmLog( "REST request to update session $id", 'debug' );
+    $self->logger->debug("REST request to update session $id");
     $session->update($infos);
     return $self->p->sendJSONresponse( $req, { result => 1 } );
 }
@@ -190,9 +190,9 @@ sub delSession {
       or return $self->p->sendError( $req, 'Session id does not exists', 400 );
 
     # Delete it
-    $self->lmLog( "REST request to delete session $id", 'debug' );
+    $self->logger->debug("REST request to delete session $id");
     my $res = $self->p->_deleteSession( $req, $session );
-    $self->lmLog( " Result is $res", 'debug' );
+    $self->logger->debug(" Result is $res");
     return $self->p->sendJSONresponse( $req, { result => $res } );
 }
 
@@ -226,21 +226,21 @@ sub mysession {
         my ( $host, $uri ) = ( $url =~ m#^https?://([^/]+)(/.*)?$# );
         return $self->p->sendError( $req, 'Bad URL', 400 ) unless ($host);
 
-        $self->lmLog( "Looking for authorization for $url", 'debug' );
+        $self->logger->debug("Looking for authorization for $url");
 
         # Now check for authorization
         my $res =
           $self->p->HANDLER->grant( $req->userDatas, $uri, undef, $host );
-        $self->lmLog( " Result is $res", 'debug' );
+        $self->logger->debug(" Result is $res");
         return $self->p->sendJSONresponse( $req, { result => $res } );
     }
-    return $self->p->sendError( $req,
-        'whoami or authorizationfor is required', 400 );
+    return $self->p->sendError( $req, 'whoami or authorizationfor is required',
+        400 );
 }
 
 sub getMyKey {
     my ( $self, $req, $key ) = @_;
-    $self->lmLog( 'Request to get personal session info', 'debug' );
+    $self->logger->debug('Request to get personal session info');
     return $self->session(
         $req,
         $req->userData->{_session_id},

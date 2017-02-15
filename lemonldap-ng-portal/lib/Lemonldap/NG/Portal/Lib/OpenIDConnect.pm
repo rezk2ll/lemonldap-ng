@@ -64,8 +64,8 @@ sub loadOPs {
     unless ( $self->conf->{oidcOPMetaDataJSON}
         and keys %{ $self->conf->{oidcOPMetaDataJSON} } )
     {
-        $self->lmLog( "No OpenID Connect Provider found in configuration",
-            'warn' );
+        $self->logger->warn(
+            "No OpenID Connect Provider found in configuration");
     }
 
     # Extract JSON data
@@ -88,8 +88,8 @@ sub loadRPs {
     unless ( $self->conf->{oidcRPMetaDataOptions}
         and keys %{ $self->conf->{oidcRPMetaDataOptions} } )
     {
-        $self->lmLog( "No OpenID Connect Relying Party found in configuration",
-            'warn' );
+        $self->logger->warn(
+            "No OpenID Connect Relying Party found in configuration");
     }
     $self->oidcRPList( $self->conf->{oidcRPMetaDataOptions} );
     foreach my $rp ( keys %{ $self->oidcRPList } ) {
@@ -106,7 +106,7 @@ sub loadRPs {
 
         if ($extraClaims) {
             foreach my $claim ( keys %$extraClaims ) {
-                $self->lmLog( "Using extra claim $claim for $rp", 'debug' );
+                $self->logger->debug("Using extra claim $claim for $rp");
                 my @extraAttributes = split( /\s/, $extraClaims->{$claim} );
                 $attributes->{$claim} = \@extraAttributes;
             }
@@ -125,9 +125,8 @@ sub refreshJWKSdata {
     unless ( $self->conf->{oidcOPMetaDataJSON}
         and keys %{ $self->conf->{oidcOPMetaDataJSON} } )
     {
-        $self->lmLog(
-            "No OpenID Provider configured, JWKS data will not be refreshed",
-            'debug' );
+        $self->logger->debug(
+            "No OpenID Provider configured, JWKS data will not be refreshed");
         return 1;
     }
 
@@ -143,33 +142,30 @@ sub refreshJWKSdata {
         my $jwksUri = $self->oidcOPList->{$_}->{conf}->{jwks_uri};
 
         unless ($jwksTimeout) {
-            $self->lmLog( "No JWKS refresh timeout defined for $_, skipping...",
-                'debug' );
+            $self->logger->debug(
+                "No JWKS refresh timeout defined for $_, skipping...");
             next;
         }
 
         unless ($jwksUri) {
-            $self->lmLog( "No JWKS URI defined for $_, skipping...", 'debug' );
+            $self->logger->debug("No JWKS URI defined for $_, skipping...");
             next;
         }
 
         if ( $self->oidcOPList->{$_}->{jwks}->{time} + $jwksTimeout > time ) {
-            $self->lmLog( "JWKS data still valid for $_, skipping...",
-                'debug' );
+            $self->logger->debug("JWKS data still valid for $_, skipping...");
             next;
         }
 
-        $self->lmLog( "Refresh JWKS data for $_ from $jwksUri", 'debug' );
+        $self->logger->debug("Refresh JWKS data for $_ from $jwksUri");
 
         my $response = $self->ua->get($jwksUri);
 
         if ( $response->is_error ) {
-            $self->lmLog(
+            $self->logger->warn(
                 "Unable to get JWKS data for $_ from $jwksUri: "
-                  . $response->message,
-                "warn"
-            );
-            $self->lmLog( $response->content, 'debug' );
+                  . $response->message );
+            $self->logger->debug( $response->content );
             next;
         }
 
@@ -222,7 +218,7 @@ sub getCallbackUri {
               $req->param( $self->conf->{authChoiceParam} ) );
     }
 
-    $self->lmLog( "OpenIDConnect Callback URI: $callback_uri", 'debug' );
+    $self->logger->debug("OpenIDConnect Callback URI: $callback_uri");
     return $callback_uri;
 }
 
@@ -285,9 +281,8 @@ sub buildAuthorizationCodeAuthnRequest {
         ( defined $acr_values ? ( acr_values => $acr_values ) : () )
       );
 
-    $self->lmLog(
-        "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri",
-        'debug' );
+    $self->logger->debug(
+        "OpenIDConnect Authorization Code Flow Authn Request: $authn_uri");
 
     return $authn_uri;
 }
@@ -391,13 +386,12 @@ sub getAuthorizationCodeAccessToken {
     my $grant_type = "authorization_code";
 
     unless ( $auth_method =~ /^client_secret_(basic|post)$/o ) {
-        $self->lmLog( "Bad authentication method on token endpoint", 'error' );
+        $self->logger->error("Bad authentication method on token endpoint");
         return 0;
     }
 
-    $self->lmLog(
-        "Using auth method $auth_method to token endpoint $access_token_uri",
-        'debug' );
+    $self->logger->debug(
+        "Using auth method $auth_method to token endpoint $access_token_uri");
 
     my $response;
 
@@ -429,13 +423,13 @@ sub getAuthorizationCodeAccessToken {
             "Content-Type" => 'application/x-www-form-urlencoded' );
     }
     else {
-        $self->lmLog( "Unknown auth method $auth_method", 'error' );
+        $self->logger->error("Unknown auth method $auth_method");
     }
 
     if ( $response->is_error ) {
-        $self->lmLog( "Bad authorization response: " . $response->message,
-            "error" );
-        $self->lmLog( $response->content, 'debug' );
+        $self->logger->error(
+            "Bad authorization response: " . $response->message );
+        $self->logger->debug( $response->content );
         return 0;
     }
     return $response->decoded_content;
@@ -448,15 +442,14 @@ sub checkTokenResponseValidity {
 
     # token_type MUST be Bearer
     unless ( $json->{token_type} eq "Bearer" ) {
-        $self->lmLog(
-            "Token type is " . $json->{token_type} . " but must be Bearer",
-            'error' );
+        $self->logger->error(
+            "Token type is " . $json->{token_type} . " but must be Bearer" );
         return 0;
     }
 
     # id_token MUST be present
     unless ( $json->{id_token} ) {
-        $self->lmLog( "No id_token", 'error' );
+        $self->logger->error("No id_token");
         return 0;
     }
 
@@ -486,7 +479,7 @@ sub checkIDTokenValidity {
 
     # Check issuer
     unless ( $id_token->{iss} eq $self->oidcOPList->{$op}->{conf}->{issuer} ) {
-        $self->lmLog( "Issuer mismatch", 'error' );
+        $self->logger->error("Issuer mismatch");
         return 0;
     }
 
@@ -494,29 +487,28 @@ sub checkIDTokenValidity {
     if ( ref $id_token->{aud} ) {
         my @audience = @{ $id_token->{aud} };
         unless ( grep $_ eq $client_id, @audience ) {
-            $self->lmLog( "Client ID not found in audience array", 'error' );
+            $self->logger->error("Client ID not found in audience array");
             return 0;
         }
 
         if ( $#audience > 1 ) {
             unless ( $id_token->{azp} eq $client_id ) {
-                $self->lmLog(
-                    "More than one audience, and azp not equal to client ID",
-                    'error' );
+                $self->logger->error(
+                    "More than one audience, and azp not equal to client ID");
                 return 0;
             }
         }
     }
     else {
         unless ( $id_token->{aud} eq $client_id ) {
-            $self->lmLog( "Audience mismatch", 'error' );
+            $self->logger->error("Audience mismatch");
             return 0;
         }
     }
 
     # Check time
     unless ( time < $id_token->{exp} ) {
-        $self->lmLog( "ID token expired", 'error' );
+        $self->logger->error("ID token expired");
         return 0;
     }
 
@@ -524,8 +516,8 @@ sub checkIDTokenValidity {
     my $iat = $id_token->{iat};
     if ($id_token_max_age) {
         unless ( $iat + $id_token_max_age > time ) {
-            $self->lmLog( "ID token too old (Max age: $id_token_max_age)",
-                'error' );
+            $self->logger->error(
+                "ID token too old (Max age: $id_token_max_age)");
             return 0;
         }
     }
@@ -534,19 +526,19 @@ sub checkIDTokenValidity {
     if ($use_nonce) {
         my $nonce = $id_token->{nonce};
         unless ($nonce) {
-            $self->lmLog( "Nonce was not returned by OP $op", 'error' );
+            $self->logger->error("Nonce was not returned by OP $op");
             return 0;
         }
         else {
             # Get nonce session
             my $nonceSession = $self->getOpenIDConnectSession($nonce);
             unless ($nonceSession) {
-                $self->lmLog( "Nonce $nonce verification failed", 'error' );
+                $self->logger->error("Nonce $nonce verification failed");
                 return 0;
             }
             else {
                 $nonceSession->remove;
-                $self->lmLog( "Nonce $nonce deleted", 'debug' );
+                $self->logger->debug("Nonce $nonce deleted");
             }
         }
     }
@@ -555,13 +547,12 @@ sub checkIDTokenValidity {
     my $acr = $id_token->{acr};
     if ( defined $acr_values ) {
         unless ($acr) {
-            $self->lmLog( "ACR was not returned by OP $op", 'error' );
+            $self->logger->error("ACR was not returned by OP $op");
             return 0;
         }
         unless ( $acr_values =~ /\b$acr\b/i ) {
-            $self->lmLog(
-                "ACR $acr not listed in request ACR values ($acr_values)",
-                'error' );
+            $self->logger->error(
+                "ACR $acr not listed in request ACR values ($acr_values)");
             return 0;
         }
     }
@@ -570,13 +561,12 @@ sub checkIDTokenValidity {
     my $auth_time = $id_token->{auth_time};
     if ($max_age) {
         unless ($auth_time) {
-            $self->lmLog( "Auth time was not returned by OP $op", 'error' );
+            $self->logger->error("Auth time was not returned by OP $op");
             return 0;
         }
         if ( $auth_time + $max_age > time ) {
-            $self->lmLog(
-"Authentication time ($auth_time) is too old (Max age: $max_age)",
-                'error'
+            $self->userLogger->error(
+"Authentication time ($auth_time) is too old (Max age: $max_age)"
             );
             return 0;
         }
@@ -594,20 +584,19 @@ sub getUserInfo {
       $self->oidcOPList->{$op}->{conf}->{userinfo_endpoint};
 
     unless ($userinfo_uri) {
-        $self->lmLog( "UserInfo URI not found in $op configuration", 'error' );
+        $self->logger->error("UserInfo URI not found in $op configuration");
         return 0;
     }
 
-    $self->lmLog(
-        "Request User Info on $userinfo_uri with access token $access_token",
-        'debug' );
+    $self->logger->debug(
+        "Request User Info on $userinfo_uri with access token $access_token");
 
     my $response = $self->ua->get( $userinfo_uri,
         "Authorization" => "Bearer $access_token" );
 
     if ( $response->is_error ) {
-        $self->lmLog( "Bad userinfo response: " . $response->message, "error" );
-        $self->lmLog( $response->content,                             'debug' );
+        $self->logger->error( "Bad userinfo response: " . $response->message );
+        $self->logger->debug( $response->content );
         return 0;
     }
 
@@ -661,9 +650,8 @@ sub getOpenIDConnectSession {
             $self->p->userInfo("OpenIDConnect session $id isn't yet available");
         }
         else {
-            $self->lmLog( "Unable to create new OpenIDConnect session",
-                'error' );
-            $self->lmLog( $oidcSession->error, 'error' );
+            $self->logger->error("Unable to create new OpenIDConnect session");
+            $self->logger->error( $oidcSession->error );
         }
         return undef;
     }
@@ -730,17 +718,17 @@ sub extractState {
             $req->$_($tmp);
         }
         else {
-            $self->lmLog( "Unknown request property $_, skipping", 'warn' );
+            $self->logger->warn("Unknown request property $_, skipping");
         }
     }
 
     # Delete state session
     if ( $stateSession->remove ) {
-        $self->lmLog( "State $state was deleted", 'debug' );
+        $self->logger->debug("State $state was deleted");
     }
     else {
-        $self->lmLog( "Unable to delete state $state", 'error' );
-        $self->lmLog( $stateSession->error,            'error' );
+        $self->logger->error("Unable to delete state $state");
+        $self->logger->error( $stateSession->error );
     }
 
     return 1;
@@ -761,7 +749,7 @@ sub extractJWT {
 sub verifyJWTSignature {
     my ( $self, $jwt, $op, $rp ) = @_;
 
-    $self->lmLog( "Verification of JWT signature: $jwt", 'debug' );
+    $self->logger->debug("Verification of JWT signature: $jwt");
 
     # Extract JWT parts
     my $jwt_parts = $self->extractJWT($jwt);
@@ -774,18 +762,15 @@ sub verifyJWTSignature {
     # Get signature algorithm
     my $alg = $jwt_header_hash->{alg};
 
-    $self->lmLog( "JWT signature algorithm: $alg", 'debug' );
+    $self->logger->debug("JWT signature algorithm: $alg");
 
     if ( $alg eq "none" ) {
 
         # If none alg, signature should be empty
         if ( $jwt_parts->[2] ) {
-            $self->lmLog(
-                "Signature "
+            $self->logger->debug( "Signature "
                   . $jwt_parts->[2]
-                  . " is present but algorithm is 'none'",
-                'debug'
-            );
+                  . " is present but algorithm is 'none'" );
             return 0;
         }
         return 1;
@@ -829,9 +814,8 @@ sub verifyJWTSignature {
         $digest =~ s/\//_/g;
 
         unless ( $digest eq $jwt_parts->[2] ) {
-            $self->lmLog(
-                "Digest $digest not equal to signature " . $jwt_parts->[2],
-                'debug' );
+            $self->logger->debug(
+                "Digest $digest not equal to signature " . $jwt_parts->[2] );
             return 0;
         }
         return 1;
@@ -840,14 +824,14 @@ sub verifyJWTSignature {
     if ( $alg eq "RS256" or $alg eq "RS384" or $alg eq "RS512" ) {
 
         if ($rp) {
-            $self->lmLog( "Algorithm $alg not supported", 'debug' );
+            $self->logger->debug("Algorithm $alg not supported");
             return 0;
         }
 
         # The public key is needed
         unless ( $self->oidcOPList->{$op}->{jwks} ) {
-            $self->lmLog( "Cannot verify $alg signature: no JWKS data found",
-                'error' );
+            $self->logger->error(
+                "Cannot verify $alg signature: no JWKS data found");
             return 0;
         }
 
@@ -858,7 +842,7 @@ sub verifyJWTSignature {
         my $kid = $jwt_header_hash->{kid};
 
         if ($kid) {
-            $self->lmLog( "Search key with id $kid", 'debug' );
+            $self->logger->debug("Search key with id $kid");
             foreach (@$keys) {
                 if ( $_->{kid} eq $kid ) {
                     $key_hash = $_;
@@ -871,14 +855,14 @@ sub verifyJWTSignature {
         }
 
         unless ($key_hash) {
-            $self->lmLog( "No key found in JWKS data", 'error' );
+            $self->logger->error("No key found in JWKS data");
             return 0;
         }
 
-        $self->lmLog( "Found public key parameter n: " . $key_hash->{n},
-            'debug' );
-        $self->lmLog( "Found public key parameter e: " . $key_hash->{e},
-            'debug' );
+        $self->logger->debug(
+            "Found public key parameter n: " . $key_hash->{n} );
+        $self->logger->debug(
+            "Found public key parameter e: " . $key_hash->{e} );
 
         # Create public key
         my $n =
@@ -909,7 +893,7 @@ sub verifyJWTSignature {
     }
 
     # Other algorithms not managed
-    $self->lmLog( "Algorithm $alg not known", 'debug' );
+    $self->logger->debug("Algorithm $alg not known");
 
     return 0;
 }
@@ -924,7 +908,7 @@ sub verifyJWTSignature {
 sub verifyHash {
     my ( $self, $value, $hash, $id_token ) = @_;
 
-    $self->lmLog( "Verification of value $value with hash $hash", 'debug' );
+    $self->logger->debug("Verification of value $value with hash $hash");
 
     # Extract ID token parts
     my $jwt_parts = $self->extractJWT($id_token);
@@ -937,13 +921,12 @@ sub verifyHash {
     # Get signature algorithm
     my $alg = $jwt_header_hash->{alg};
 
-    $self->lmLog( "ID Token signature algorithm: $alg", 'debug' );
+    $self->logger->debug("ID Token signature algorithm: $alg");
 
     if ( $alg eq "none" ) {
 
         # Not supported
-        $self->lmLog( "Cannot check hash without signature algorithm",
-            'debug' );
+        $self->logger->debug("Cannot check hash without signature algorithm");
         return 0;
     }
 
@@ -952,20 +935,20 @@ sub verifyHash {
         # Hash Level
         my $hash_level = $1;
 
-        $self->lmLog( "Use SHA $hash_level to check hash", 'debug' );
+        $self->logger->debug("Use SHA $hash_level to check hash");
 
         my $cHash = $self->createHash( $value, $hash_level );
 
         # Compare values
         unless ( $cHash eq $hash ) {
-            $self->lmLog( "Hash $hash not equal to hash $cHash", 'debug' );
+            $self->logger->debug("Hash $hash not equal to hash $cHash");
             return 0;
         }
         return 1;
     }
 
     # Other algorithms not managed
-    $self->lmLog( "Algorithm $alg not known", 'debug' );
+    $self->logger->debug("Algorithm $alg not known");
 
     return 0;
 }
@@ -977,7 +960,7 @@ sub verifyHash {
 sub createHash {
     my ( $self, $value, $hash_level ) = @_;
 
-    $self->lmLog( "Use SHA $hash_level to hash $value", 'debug' );
+    $self->logger->debug("Use SHA $hash_level to hash $value");
 
     my $hash;
 
@@ -1059,15 +1042,15 @@ sub getEndPointAuthenticationCredentials {
 
     my $authorization = $req->authorization;
     if ( $authorization and $authorization =~ /^Basic (\w+)/i ) {
-        $self->lmLog( "Method client_secret_basic used", 'debug' );
+        $self->logger->debug("Method client_secret_basic used");
         eval {
             ( $client_id, $client_secret ) =
               split( /:/, decode_base64($1) );
         };
-        $self->lmLog( "Bad authentication header: $@", 'error' ) if ($@);
+        $self->logger->error("Bad authentication header: $@") if ($@);
     }
     elsif ( $req->param('client_id') and $req->param('client_secret') ) {
-        $self->lmLog( "Method client_secret_post used", 'debug' );
+        $self->logger->debug("Method client_secret_post used");
         $client_id     = $req->param('client_id');
         $client_secret = $req->param('client_secret');
     }
@@ -1083,11 +1066,11 @@ sub getEndPointAccessToken {
 
     my $authorization = $req->authorization;
     if ( $authorization =~ /^Bearer (\w+)/i ) {
-        $self->lmLog( "Bearer access token", 'debug' );
+        $self->logger->debug("Bearer access token");
         $access_token = $1;
     }
     elsif ( $access_token = $req->param('access_token') ) {
-        $self->lmLog( "GET/POST access token", 'debug' );
+        $self->logger->debug("GET/POST access token");
     }
 
     return $access_token;
@@ -1115,7 +1098,7 @@ sub buildUserInfoResponse {
     my $apacheSession = $self->p->getApacheSession($user_session_id);
 
     unless ($apacheSession) {
-        $self->lmLog( "Unable to find user session", "error" );
+        $self->logger->error("Unable to find user session");
         return undef;
     }
     my $user_id_attribute =
@@ -1124,14 +1107,14 @@ sub buildUserInfoResponse {
       || $self->conf->{whatToTrace};
     my $user_id = $apacheSession->data->{$user_id_attribute};
 
-    $self->lmLog( "Found corresponding user: $user_id", 'debug' );
+    $self->logger->debug("Found corresponding user: $user_id");
 
     $userinfo_response->{sub} = $user_id;
 
     # Parse scope and return allowed attributes
     foreach my $claim ( split( /\s/, $scope ) ) {
         next if ( $claim eq "openid" );
-        $self->lmLog( "Get attributes linked to claim $claim", 'debug' );
+        $self->logger->debug("Get attributes linked to claim $claim");
         my $list = $self->getAttributesListFromClaim( $rp, $claim );
         next unless $list;
         foreach my $attribute (@$list) {
@@ -1233,7 +1216,7 @@ sub createJWT {
         return $jwt_header . "." . $jwt_payload . "." . $digest;
     }
 
-    $self->lmLog( "Algorithm $alg not supported to sign JWT", 'debug' );
+    $self->logger->debug("Algorithm $alg not supported to sign JWT");
 
     return;
 }
@@ -1248,7 +1231,7 @@ sub createIDToken {
     # Get signature algorithm
     my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
       ->{oidcRPMetaDataOptionsIDTokenSignAlg};
-    $self->lmLog( "ID Token signature algorithm: $alg", 'debug' );
+    $self->logger->debug("ID Token signature algorithm: $alg");
 
     return $self->createJWT( $payload, $alg, $rp );
 }
@@ -1371,7 +1354,7 @@ sub getRequestJWT {
     my $response = $self->ua->get($request_uri);
 
     if ( $response->is_error ) {
-        $self->lmLog( "Unable to get request JWT on $request_uri", 'error' );
+        $self->logger->error("Unable to get request JWT on $request_uri");
         return;
     }
 

@@ -37,18 +37,16 @@ sub setSessionInfo {
         if ( $v =~ Lemonldap::NG::Common::Regexp::OPENIDSREGATTR() ) {
             my $p = $req->param("openid.sreg.$v");
             if ( $required and not defined $p ) {
-                $self->lmLog(
-"Required parameter $attr is not provided by OpenID server, aborted",
-                    'warn'
+                $self->userLogger->warn(
+"Required parameter $attr is not provided by OpenID server, aborted"
                 );
                 return PE_MISSINGREQATTR;
             }
             $self->{sessionInfo}->{$attr} = $p;
         }
         else {
-            $self->lmLog(
-"Ignoring attribute $v which is not a valid OpenID SREG attribute",
-                'warn'
+            $self->userLogger->warn(
+"Ignoring attribute $v which is not a valid OpenID SREG attribute"
             );
         }
     }

@@ -34,11 +34,8 @@ sub getUser {
       ->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
     my $r = $soap->getCookies( $req->{user}, $req->datas->{password} );
     if ( $r->fault ) {
-        $self->lmLog(
-            "Unable to query authentication service: "
-              . $r->fault->{faultstring},
-            'error'
-        );
+        $self->logger->error( "Unable to query authentication service: "
+              . $r->fault->{faultstring} );
         return PE_ERROR;
     }
     my $res = $r->result();
@@ -52,7 +49,7 @@ sub getUser {
     unless ( $req->datas->{_remoteId} =
         $res->{cookies}->{ $self->conf->{remoteCookieName} } )
     {
-        $self->lmLog( "No cookie named $self->{remoteCookieName}", 'error' );
+        $self->logger->error("No cookie named $self->{remoteCookieName}");
         return PE_ERROR;
     }
     $req->datas->{_proxyQueryDone}++;
@@ -66,10 +63,8 @@ sub setSessionInfo {
       ->uri('urn:Lemonldap/NG/Common/PSGI/SOAPService');
     my $r = $soap->getAttributes( $req->datas->{_remoteId} );
     if ( $r->fault ) {
-        $self->lmLog(
-            "Unable to query authentication service" . $r->fault->{faultstring},
-            'error'
-        );
+        $self->logger->error( "Unable to query authentication service"
+              . $r->fault->{faultstring} );
     }
     my $res = $r->result();
     if ( $res->{error} ) {

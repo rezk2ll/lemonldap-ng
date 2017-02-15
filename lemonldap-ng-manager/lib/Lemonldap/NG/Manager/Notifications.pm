@@ -232,8 +232,8 @@ sub notification {
         my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
         my $n = $self->notifAccess->get( $uid, $ref );
         unless ($n) {
-            $self->lmLog( "Notification $ref not found for user $uid",
-                'notice' );
+            $self->userLogger->notice(
+                "Notification $ref not found for user $uid");
             return $self->sendJSONresponse(
                 $req,
                 {
@@ -291,14 +291,14 @@ sub newNotification {
             delete $json->{xml};
         };
         if ($@) {
-            $self->lmLog( "Notification malformed $@", 'error' );
+            $self->logger->error("Notification malformed $@");
             return $self->sendError( $req, "Notification malformed: $@", 200 );
         }
         $newNotif = to_json($json);
     }
 
     unless ( eval { $self->notifAccess->newNotification($newNotif) } ) {
-        $self->lmLog( "Notification not created: $@", 'error' );
+        $self->logger->error("Notification not created: $@");
         return $self->sendError( $req, "Notification not created: $@", 200 );
     }
     else {
@@ -323,7 +323,7 @@ sub updateNotification {
     my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
     my ( $n, $res );
     unless ( $n = $self->notifAccess->get( $uid, $ref ) ) {
-        $self->lmLog( "Notification $ref not found for user $uid", 'notice' );
+        $self->logger->notice("Notification $ref not found for user $uid");
         return $self->sendError( $req,
             "Notification $ref not found for user $uid" );
     }
@@ -335,13 +335,13 @@ sub updateNotification {
     }
 
     unless ($status) {
-        $self->lmLog( "Notification $ref for user $uid not deleted", 'error' );
+        $self->logger->error("Notification $ref for user $uid not deleted");
         return $self->sendError( $req,
             "Notification $ref for user $uid not deleted" );
     }
 
     else {
-        $self->lmLog( "Notification $ref deleted for user $uid", 'info' );
+        $self->logger->info("Notification $ref deleted for user $uid");
         return $self->sendJSONresponse( $req, { result => 1 } );
     }
 }
@@ -355,12 +355,12 @@ sub deleteDoneNotification {
     my ( $uid, $ref, $date ) = ( $id =~ /([^_]+?)_([^_]+?)_(.+)/ );
     my $identifier = $self->notifAccess->getIdentifier( $uid, $ref, $date );
     unless ( eval { $self->notifAccess->purge($identifier) } ) {
-        $self->lmLog( "Notification $identifier not purged ($@)", 'warn' );
+        $self->logger->warn("Notification $identifier not purged ($@)");
         return $self->sendError( $req,
             "Notification $identifier not purged ($@)", 400 );
     }
 
-    $self->lmLog( "Notification $identifier purged", 'info' );
+    $self->logger->info("Notification $identifier purged");
     return $self->sendJSONresponse( $req, { result => 1 } );
 }
 

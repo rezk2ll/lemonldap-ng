@@ -51,9 +51,9 @@ sub init {
 
     if ( $self->adPwdExpireWarning > $self->adPwdMaxAge ) {
         $self->adPwdExpireWarning( $self->adPwdMaxAge );
-        $self->lmLog(
+        $self->logger->warn(
             "Error: ADPwdExpireWarning > ADPwdMaxAge, this should not happen",
-            'warn' );
+        );
     }
     return $self->SUPER::init();
 }
@@ -73,14 +73,14 @@ sub authenticate {
         my $expired_flag =
           0x800000;   # 8 at 6th position for flag UF_PASSWORD_EXPIRED to be set
         if ( ( $computed & $mask ) == $expired_flag ) {
-            $self->lmLog( "[AD] Password has expired", 'warn' );
+            $self->logger->warn("[AD] Password has expired");
             $res = PE_PP_PASSWORD_EXPIRED;
         }
 
         # Password must be changed if pwdLastSet 0
         if ( defined $pls and $pls == 0 ) {
-            $self->lmLog( "[AD] Password reset. User must change his password",
-                'warn' );
+            $self->userLogger->warn(
+                "[AD] Password reset. User must change his password");
             $res = PE_PP_CHANGE_AFTER_RESET;
         }
 

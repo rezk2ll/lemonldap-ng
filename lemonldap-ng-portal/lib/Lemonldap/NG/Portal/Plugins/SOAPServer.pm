@@ -138,7 +138,7 @@ _RETURN $getCookiesResponse Response
 
 sub getCookies {
     my ( $self, $req, $user, $password, $sessionid ) = @_;
-    $self->lmLog( "SOAP authentication request for $user", 'debug' );
+    $self->logger->debug("SOAP authentication request for $user");
 
     $req->{user} = $user;
     $req->datas->{password} = $password;
@@ -165,9 +165,8 @@ sub getCookies {
             ]
         );
         $req->{error} = $self->p->process($req);
-        $self->lmLog(
-            "SOAP authentication result for $user: code $req->{error}",
-            'debug' );
+        $self->logger->debug(
+            "SOAP authentication result for $user: code $req->{error}");
         $self->p->updateSession($req);
     }
     my @tmp = ();
@@ -246,11 +245,11 @@ sub setAttributes {
     my $session = $self->p->getApacheSession($id);
 
     unless ($session) {
-        $self->lmLog( "Session $id does not exists ($@)", 'warn' );
+        $self->logger->warn("Session $id does not exists ($@)");
         return 0;
     }
 
-    $self->lmLog( "SOAP request to update session $id", 'debug' );
+    $self->logger->debug("SOAP request to update session $id");
 
     my $infos = {};
     %$infos = %$args;
@@ -288,7 +287,7 @@ sub newSession {
     my $session = $self->p->getApacheSession();
 
     unless ($session) {
-        $self->lmLog( "Unable to create session", 'error' );
+        $self->logger->error("Unable to create session");
         return 0;
     }
 
@@ -299,8 +298,8 @@ sub newSession {
 
     $session->update($infos);
 
-    $self->lmLog( "SOAP request create a new session (" . $session->id . ")",
-        'debug' );
+    $self->logger->debug(
+        "SOAP request create a new session (" . $session->id . ")" );
 
     return SOAP::Data->name( attributes => _buildSoapHash( $session->data ) );
 }
@@ -315,7 +314,7 @@ sub deleteSession {
 
     return 0 unless ($session);
 
-    $self->lmLog( "SOAP request to delete session $id", 'debug' );
+    $self->logger->debug("SOAP request to delete session $id");
 
     return $self->p->_deleteSession( $req, $session );
 }
@@ -381,7 +380,7 @@ sub isAuthorizedURI {
     my $session = $self->p->getApacheSession($id);
 
     unless ($session) {
-        $self->lmLog( "Session $id does not exists", 'warn' );
+        $self->logger->warn("Session $id does not exists");
         return 0;
     }
 

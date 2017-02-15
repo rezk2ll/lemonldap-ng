@@ -39,7 +39,7 @@ sub _modifyPassword {
 
         # TODO: verify oldpassword
         unless ( $req->datas->{oldpassword} = $req->param('oldpassword') ) {
-            $self->lmLog( "Portal require old password", 'warn' );
+            $self->logger->warn("Portal require old password");
             return PE_PP_MUST_SUPPLY_OLD_PASSWORD;
         }
 
@@ -56,7 +56,7 @@ sub _modifyPassword {
     # Call password package
     my $res = $self->modifyPassword( $req, $req->datas->{newpassword} );
     if ( $res == PE_PASSWORD_OK ) {
-        $self->lmLog( 'Update password in session for ' . $req->user, 'debug' );
+        $self->logger->debug( 'Update password in session for ' . $req->user );
         my $infos;
 
         # Store new password if asked

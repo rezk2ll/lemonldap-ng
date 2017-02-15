@@ -27,7 +27,7 @@ our $VERSION = '2.0.0';
 use constant defaultRoute => 'manager.html';
 
 sub addRoutes {
-    my($self,$conf) = @_;
+    my ( $self, $conf ) = @_;
 
     # HTML template
     $self->addRoute( 'manager.html', undef, ['GET'] )
@@ -167,7 +167,7 @@ sub getConfByNum {
         }
         else {
             $tmp = $self->SUPER::getConfByNum( $cfgNum, @args );
-            return undef unless (defined $tmp);
+            return undef unless ( defined $tmp );
         }
     }
     return $cfgNum;

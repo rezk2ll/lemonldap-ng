@@ -40,7 +40,7 @@ sub init {
     }
     my $re = Regexp::Assemble->new();
     foreach my $h (@hosts) {
-        $self->lmLog( "Add $h in WebID whitelist", 'debug' );
+        $self->logger->debug("Add $h in WebID whitelist");
         $h = quotemeta($h);
         $h =~ s/\\\*/\.\*\?/g;
         $re->add($h);

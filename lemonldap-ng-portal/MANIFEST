@@ -7,8 +7,6 @@ example/soaperrortest.pl
 example/soaptest.pl
 KINEMATIC.md
 lib/Lemonldap/NG/Portal.pm
-lib/Lemonldap/NG/Portal/_i18n.pm
-lib/Lemonldap/NG/Portal/_Multi.pm
 lib/Lemonldap/NG/Portal/Auth/_WebForm.pm
 lib/Lemonldap/NG/Portal/Auth/AD.pm
 lib/Lemonldap/NG/Portal/Auth/Apache.pm
@@ -34,7 +32,6 @@ lib/Lemonldap/NG/Portal/Auth/WebID.pm
 lib/Lemonldap/NG/Portal/Auth/Yubikey.pm
 lib/Lemonldap/NG/Portal/AuthMulti.pm
 lib/Lemonldap/NG/Portal/CDC.pm
-lib/Lemonldap/NG/Portal/Display.pm
 lib/Lemonldap/NG/Portal/Issuer/CAS.pm
 lib/Lemonldap/NG/Portal/Issuer/Get.pm
 lib/Lemonldap/NG/Portal/Issuer/OpenID.pm
@@ -71,7 +68,6 @@ lib/Lemonldap/NG/Portal/Main/Plugins.pm
 lib/Lemonldap/NG/Portal/Main/Process.pm
 lib/Lemonldap/NG/Portal/Main/Request.pm
 lib/Lemonldap/NG/Portal/Main/Run.pm
-lib/Lemonldap/NG/Portal/Menu.pm
 lib/Lemonldap/NG/Portal/Password/Base.pm
 lib/Lemonldap/NG/Portal/Password/Choice.pm
 lib/Lemonldap/NG/Portal/Password/DBI.pm
@@ -90,7 +86,6 @@ lib/Lemonldap/NG/Portal/Register/AD.pm
 lib/Lemonldap/NG/Portal/Register/Demo.pm
 lib/Lemonldap/NG/Portal/Register/LDAP.pm
 lib/Lemonldap/NG/Portal/Register/U2F.pm
-lib/Lemonldap/NG/Portal/Simple.pm
 lib/Lemonldap/NG/Portal/UserDB/AD.pm
 lib/Lemonldap/NG/Portal/UserDB/Choice.pm
 lib/Lemonldap/NG/Portal/UserDB/Combination.pm

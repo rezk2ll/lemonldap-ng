@@ -69,11 +69,8 @@ sub run {
                 TOKEN      => $token
             }
         );
-        $self->lmLog(
-            'Prepare U2F verification for '
-              . $req->sessionInfo->{ $self->conf->{whatToTrace} },
-            "debug"
-        );
+        $self->logger->debug( 'Prepare U2F verification for '
+              . $req->sessionInfo->{ $self->conf->{whatToTrace} } );
 
         $req->response($tmp);
         return PE_SENDRESPONSE;
@@ -151,9 +148,8 @@ sub loadUser {
         $self->crypter->{publicKey} = $self->decode_base64url($uk);
         unless ( $self->crypter->setKeyHandle and $self->crypter->setPublicKey )
         {
-            $self->lmLog(
-                'U2F error: ' . Crypt::U2F::Server::u2fclib_getError(),
-                'error' );
+            $self->logger->error(
+                'U2F error: ' . Crypt::U2F::Server::u2fclib_getError() );
             return -1;
         }
         return 1;

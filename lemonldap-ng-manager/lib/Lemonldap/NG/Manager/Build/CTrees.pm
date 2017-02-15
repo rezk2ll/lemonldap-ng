@@ -25,7 +25,8 @@ sub cTrees {
                 help  => 'configvhost.html#options',
                 nodes => [
                     'vhostPort',        'vhostHttps',
-                    'vhostMaintenance', 'vhostAliases', 'vhostType',
+                    'vhostMaintenance', 'vhostAliases',
+                    'vhostType',
                 ],
             },
         ],

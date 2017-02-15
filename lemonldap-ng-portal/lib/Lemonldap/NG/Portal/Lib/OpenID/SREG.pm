@@ -29,7 +29,7 @@ sub sregHook {
     # If identity is not trusted, does nothing
     return ( 0, $prm ) unless ( $is_id and $is_trusted );
 
-    $self->lmLog( "SREG start", 'debug' );
+    $self->logger->debug("SREG start");
 
     my $accepted = 1;
 
@@ -40,7 +40,8 @@ sub sregHook {
         if ( $k eq 'policy_url' ) {
             if ( $v =~ Lemonldap::NG::Common::Regexp::HTTP_URI ) {
                 $req->datas->{_openIdTrustExtMsg} .=
-                    '<dl><dt trspan="openidPA">' . "&nbsp;:</dt><dd><a href=\"$v\">$v</a></dd></dl>";
+                    '<dl><dt trspan="openidPA">'
+                  . "&nbsp;:</dt><dd><a href=\"$v\">$v</a></dd></dl>";
 
                 # Question: is it important to notify policy changes ?
                 # if yes, uncomment this
@@ -49,24 +50,25 @@ sub sregHook {
                 #$accepted = 0 unless ( $p and $p eq $v );
             }
             else {
-                $self->lmLog( "Bad policy url", 'error' );
+                $self->logger->error("Bad policy url");
             }
         }
 
         # Parse required attributes
         elsif ( $k eq 'required' ) {
-            $self->lmLog( "Required attr $v", 'debug' );
+            $self->logger->debug("Required attr $v");
             push @req, split( /,/, $v );
         }
 
         # Parse optional attributes
         elsif ( $k eq 'optional' ) {
-            $self->lmLog( "Optional attr $v", 'debug' );
-            push @opt, grep { defined $self->conf->{"openIdSreg_$trust_root$_"} }
+            $self->logger->debug("Optional attr $v");
+            push @opt,
+              grep { defined $self->conf->{"openIdSreg_$trust_root$_"} }
               split( /,/, $v );
         }
         else {
-            $self->lmLog( "Unknown OpenID SREG request $k", 'error' );
+            $self->logger->error("Unknown OpenID SREG request $k");
         }
     }
 
@@ -81,12 +83,11 @@ sub sregHook {
     # If a required data is not available, returns nothing
     foreach my $k (@req) {
         unless ( $self->conf->{"openIdSreg_$k"} ) {
-            $self->lmLog(
-"Parameter $k is required by $trust_root but not defined in configuration",
-                'notice'
+            $self->logger->notice(
+"Parameter $k is required by $trust_root but not defined in configuration"
             );
 
-            $req->info( qq'<h3 trspan="openidRpns,$k"></h3>');
+            $req->info(qq'<h3 trspan="openidRpns,$k"></h3>');
             return ( 0, {} );
         }
     }
@@ -202,7 +203,7 @@ sub sregHook {
 
         $req->datas->{_openIdTrustExtMsg} .= "</table>\n";
 
-        $self->lmLog( 'Building validation form', 'debug' );
+        $self->logger->debug('Building validation form');
         return ( 0, $prm );
     }
 }
@@ -231,12 +232,9 @@ sub sregfilter {
 
     # Warn if some parameters are rejected
     if (@rej) {
-        $self->lmLog(
-            "Requested parameter(s) "
+        $self->logger->warn( "Requested parameter(s) "
               . join( ',', @rej )
-              . "is(are) not valid OpenID SREG parameter(s)",
-            'warn'
-        );
+              . "is(are) not valid OpenID SREG parameter(s)" );
     }
 
     # Return valid SREG parameters

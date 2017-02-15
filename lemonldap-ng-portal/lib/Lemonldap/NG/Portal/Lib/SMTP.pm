@@ -42,19 +42,19 @@ sub gen_password {
 # @return boolean result
 sub send_mail {
     my ( $self, $mail, $subject, $body, $html ) = @_;
-    $self->lmLog( "send_mail called to send \"$subject\" to $mail", 'debug' );
+    $self->logger->debug("send_mail called to send \"$subject\" to $mail");
 
     # Encode the body with the given charset
     $body    = encode( $self->charset, decode( 'utf-8', $body ) );
     $subject = encode( $self->charset, decode( 'utf-8', $subject ) );
 
     # Debug messages
-    $self->lmLog( "SMTP From " . $self->conf->{mailFrom}, 'debug' );
-    $self->lmLog( "SMTP To " . $mail,                     'debug' );
-    $self->lmLog( "SMTP Subject " . $subject,             'debug' );
-    $self->lmLog( "SMTP Body " . $body,                   'debug' );
-    $self->lmLog( "SMTP HTML flag " . ( $html ? "on" : "off" ), 'debug' );
-    $self->lmLog( "SMTP Reply-To " . $self->conf->{mailReplyTo}, 'debug' )
+    $self->logger->debug( "SMTP From " . $self->conf->{mailFrom} );
+    $self->logger->debug( "SMTP To " . $mail );
+    $self->logger->debug( "SMTP Subject " . $subject );
+    $self->logger->debug( "SMTP Body " . $body );
+    $self->logger->debug( "SMTP HTML flag " . ( $html ? "on" : "off" ) );
+    $self->logger->debug( "SMTP Reply-To " . $self->conf->{mailReplyTo} )
       if $self->conf->{mailReplyTo};
 
     # Encode the subject
@@ -130,7 +130,7 @@ sub send_mail {
           : $message->send();
     };
     if ($@) {
-        $self->lmLog( "Send message failed: $@", 'error' );
+        $self->logger->error("Send message failed: $@");
         return 0;
     }
 

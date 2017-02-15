@@ -93,7 +93,7 @@ sub init {
     # Purge loaded module list
     $self->loadedModules( {} );
     Lemonldap::NG::Handler::Main->onReload( $self, 'reloadConf' );
-    return 0 unless ( $self->SUPER::init($self->localConfig) );
+    return 0 unless ( $self->SUPER::init( $self->localConfig ) );
     return 0 if ( $self->error );
 
     # Handle requests (other path may be declared in enabled plugins)
@@ -205,7 +205,7 @@ sub reloadConf {
             foreach ( split( /\s+/, $td ) ) {
                 next unless ($td);
                 s#^\.#([^/]+\.)?#;
-                $self->lmLog( "Domain $_ added in trusted domains", 'debug' );
+                $self->logger->debug("Domain $_ added in trusted domains");
                 s/\./\\./g;
 
                 # This regexp is valid for the followings hosts:
@@ -219,14 +219,14 @@ sub reloadConf {
             }
         }
         foreach my $vhost ( keys %{ $self->conf->{locationRules} } ) {
-            $self->lmLog( "Vhost $vhost added in trusted domains", 'debug' );
+            $self->logger->debug("Vhost $vhost added in trusted domains");
             $re->add( quotemeta($vhost) );
             if ( my $tmp =
                 $self->conf->{vhostOptions}->{$vhost}->{vhostAliases} )
             {
                 foreach my $alias ( split /\s+/, $tmp ) {
-                    $self->lmLog( "Alias $alias added in trusted domains",
-                        'debug' );
+                    $self->logger->debug(
+                        "Alias $alias added in trusted domains");
                     $re->add( quotemeta($alias) );
                 }
             }
@@ -247,20 +247,16 @@ sub reloadConf {
                     $self->{"_$type"}->{$name} = $sub;
                 }
                 else {
-                    $self->lmLog(
-                        "$type $name returns an error: "
-                          . HANDLER->tsv->{jail}->error,
-                        'error'
-                    );
+                    $self->logger->error( "$type $name returns an error: "
+                          . HANDLER->tsv->{jail}->error );
                 }
             }
         }
     }
     $self->{_jsRedirect} =
       HANDLER->buildSub( HANDLER->substitute( $self->conf->{jsRedirect} ) )
-      or $self->lmLog(
-        'jsRedirect returns an error: ' . HANDLER->tsv->{jail}->error,
-        'error' );
+      or $self->logger->error(
+        'jsRedirect returns an error: ' . HANDLER->tsv->{jail}->error );
 
     $self->menu( $self->loadPlugin('::Main::Menu') );
     $self->displayInit;
@@ -287,15 +283,15 @@ sub findEP {
         qw(beforeAuth betweenAuthAndDatas afterDatas forAuthUser beforeLogout))
     {
         if ( $obj->can($sub) ) {
-            $self->lmLog( " Found $sub entry point:", 'debug' );
+            $self->logger->debug(" Found $sub entry point:");
             if ( my $callback = $obj->$sub ) {
                 push @{ $self->{$sub} }, sub { $obj->$callback( $_[0] ) };
-                $self->lmLog( "  -> $callback", 'debug' );
+                $self->logger->debug("  -> $callback");
             }
         }
     }
     ( $obj and $obj->init ) or return 0;
-    $self->lmLog( "Plugin $plugin initializated", 'debug' );
+    $self->logger->debug("Plugin $plugin initializated");
     return $obj;
 }
 
@@ -307,12 +303,12 @@ sub loadModule {
 
     eval "require $module";
     if ($@) {
-        $self->lmLog( "$module load error: $@", 'error' );
+        $self->logger->error("$module load error: $@");
         return 0;
     }
     eval {
         $obj = $module->new( { p => $self, conf => $conf } );
-        $self->lmLog( "Module $module loaded", 'debug' );
+        $self->logger->debug("Module $module loaded");
     };
     if ($@) {
         $self->error("Unable to build $module object: $@");
@@ -323,7 +319,7 @@ sub loadModule {
 }
 
 sub fail {
-    $_[0]->lmLog( $_[0]->error, 'error' );
+    $_[0]->userLogger->error( $_[0]->error );
     $_[0]->addUnauthRoute( '*' => 'displayError' );
     $_[0]->addAuthRoute( '*' => 'displayError' );
     return 0;

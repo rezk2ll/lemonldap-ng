@@ -23,7 +23,7 @@ sub changeUrldc {
         and $self->p->isTrustedUrl($urldc) )
     {
         my $ssl = $urldc =~ /^https/;
-        $self->lmLog( 'CDA request', 'debug' );
+        $self->logger->debug('CDA request');
 
         # Create CDA session
         if ( my $cdaSession = $self->getApacheSession( undef, kind => "CDA" ) )
@@ -46,10 +46,10 @@ sub changeUrldc {
               . $self->{conf}->{cookieName} . "cda="
               . $cdaSession->id;
 
-            $self->lmLog( "CDA redirection to " . $req->{urldc}, 'debug' );
+            $self->logger->debug( "CDA redirection to " . $req->{urldc} );
         }
         else {
-            $self->lmLog( "Unable to create CDA session", 'error' );
+            $self->logger->error("Unable to create CDA session");
             return PE_APACHESESSIONERROR;
         }
     }

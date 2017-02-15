@@ -252,8 +252,7 @@ sub tree {
                         {
                             title => 'combinationParams',
                             help  => 'authcombination.html',
-                            nodes =>
-                              [ 'combination', 'combModules' ]
+                            nodes => [ 'combination', 'combModules' ]
                         },
                         {
                             title => 'nullParams',
@@ -439,9 +438,8 @@ sub tree {
                     title => 'logParams',
                     help  => 'logs.html',
                     form  => 'simpleInputContainer',
-                    nodes => [
-                        'trustedProxies', 'whatToTrace', 'hiddenAttributes'
-                    ]
+                    nodes =>
+                      [ 'trustedProxies', 'whatToTrace', 'hiddenAttributes' ]
                 },
                 {
                     title => 'cookieParams',

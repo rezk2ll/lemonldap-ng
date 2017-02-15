@@ -18,8 +18,7 @@ has menuModules => (
         my @res;
         foreach (qw(Appslist ChangePassword LoginHistory Logout)) {
             my $cond = $conf->{"portalDisplay$_"} // 1;
-            $_[0]
-              ->p->lmLog( "Evaluate condition $cond for module $_", 'debug' );
+            $_[0]->p->logger->debug("Evaluate condition $cond for module $_");
             my $tmp =
               $_[0]->{p}->HANDLER->buildSub($cond);
             push @res, [ $_, $tmp ] if ($tmp);
@@ -31,7 +30,8 @@ has menuModules => (
 has imgPath => (
     is      => 'rw',
     builder => sub {
-        return $_[0]->{conf}->{impgPath} || $_[0]->{conf}->{staticPrefix} . '/logos';
+        return $_[0]->{conf}->{impgPath}
+          || $_[0]->{conf}->{staticPrefix} . '/logos';
     }
 );
 
@@ -104,7 +104,7 @@ sub displayModules {
     # Foreach module, eval condition
     # Store module in result if condition is valid
     foreach my $module ( @{ $self->menuModules } ) {
-        $self->lmLog( "Check if $module->[0] has to be displayed", 'debug' );
+        $self->logger->debug("Check if $module->[0] has to be displayed");
 
         if ( $module->[1]->() ) {
             my $moduleHash = { $module->[0] => 1 };

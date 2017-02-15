@@ -60,8 +60,11 @@ ok(
 );
 expectReject($res);
 ok(
-    $res =
-      $client->_post( '/', IO::String->new($query), length => length($query), accept=>'text/html' ),
+    $res = $client->_post(
+        '/', IO::String->new($query),
+        length => length($query),
+        accept => 'text/html'
+    ),
     'Verify that there is a new token'
 );
 expectForm( $res, '#', undef, 'token' );

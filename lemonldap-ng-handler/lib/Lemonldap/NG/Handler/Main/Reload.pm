@@ -37,37 +37,32 @@ sub checkConf {
         { local => !$force, localPrm => $class->localConfig } );
 
     unless ( ref($conf) ) {
-        $class->lmLog(
-"$class: Unable to load configuration: $Lemonldap::NG::Common::Conf::msg",
-            'error'
+        $class->logger->error(
+"$class: Unable to load configuration: $Lemonldap::NG::Common::Conf::msg"
         );
         return $force ? 0 : $class->cfgNum ? 1 : 0;
     }
 
     if ( !$class->cfgNum or $class->cfgNum != $conf->{cfgNum} ) {
-        $class->lmLog(
-"Get configuration $conf->{cfgNum} ($Lemonldap::NG::Common::Conf::msg)",
-            'debug'
+        $class->logger->debug(
+"Get configuration $conf->{cfgNum} ($Lemonldap::NG::Common::Conf::msg)"
         );
         $class->lastCheck( time() );
         unless ( $class->cfgNum( $conf->{cfgNum} ) ) {
-            $class->lmLog( 'No configuration available', 'error' );
+            $class->logger->error('No configuration available');
             return 0;
         }
         $class->configReload($conf);
     }
-    $class->lmLog( "$class: configuration is up to date", 'debug' );
+    $class->logger->debug("$class: configuration is up to date");
     foreach (@_onReload) {
         my ( $obj, $sub ) = @$_;
         if ($obj) {
-            $class->lmLog( 'Launching ' . ref($obj) . "->$sub(conf)", 'debug' );
+            $class->logger->debug( 'Launching ' . ref($obj) . "->$sub(conf)" );
             unless ( $obj->$sub($conf) ) {
-                $class->lmLog(
-                    "Underlying object can't load conf ("
+                $class->logger->error( "Underlying object can't load conf ("
                       . ref($obj)
-                      . "->$sub)",
-                    'error'
-                );
+                      . "->$sub)" );
             }
         }
     }
@@ -83,7 +78,7 @@ sub checkConf {
 # @return Apache constant ($class->OK or $class->SERVER_ERROR)
 sub reload {
     my $class = shift;
-    $class->lmLog( "Request for configuration reload", 'notice' );
+    $class->logger->notice("Request for configuration reload");
     return $class->checkConf(1) ? $class->DONE : $class->SERVER_ERROR;
 }
 
@@ -150,15 +145,15 @@ sub reload {
 # @param $tsv reference to the thread-shared parameters conf
 sub configReload {
     my ( $class, $conf ) = @_;
-    $class->lmLog( "Loading configuration $conf->{cfgNum} for process $$",
-        "info" );
+    $class->logger->info(
+        "Loading configuration $conf->{cfgNum} for process $$");
 
     foreach my $sub (
         qw( jailInit defaultValuesInit portalInit locationRulesInit
         sessionStorageInit headersInit postUrlInit aliasInit )
       )
     {
-        $class->lmLog( "Process $$ calls $sub", "debug" );
+        $class->logger->debug("Process $$ calls $sub");
         $class->$sub($conf);
     }
     return 1;
@@ -211,8 +206,8 @@ sub defaultValuesInit {
 
                 # Keep default value if $val is negative
                 if ( defined $val and $val >= 0 ) {
-                    $class->lmLog( "Options $opt for vhost $vhost: $val",
-                        'debug' );
+                    $class->logger->debug(
+                        "Options $opt for vhost $vhost: $val");
                     $class->tsv->{$opt}->{$vhost} = $val;
                 }
             }
@@ -233,7 +228,7 @@ sub defaultValuesInit {
 sub portalInit {
     my ( $class, $conf ) = @_;
     unless ( $conf->{portal} ) {
-        $class->lmLog( "portal parameter required", 'error' );
+        $class->logger->error("portal parameter required");
         return 0;
     }
     if ( $conf->{portal} =~ /[\$\(&\|"']/ ) {
@@ -267,11 +262,9 @@ sub locationRulesInit {
             my ( $cond, $prot ) = $class->conditionSub( $rules->{$url} );
             unless ($cond) {
                 $class->tsv->{maintenance}->{$vhost} = 1;
-                $class->lmLog(
+                $class->logger->error(
                     "Unable to build rule '$rules->{$url}': "
-                      . $class->tsv->{jail}->error,
-                    'error'
-                );
+                      . $class->tsv->{jail}->error );
                 next;
             }
 
@@ -307,7 +300,7 @@ sub locationRulesInit {
 sub sessionStorageInit {
     my ( $class, $conf ) = @_;
     unless ( $class->tsv->{sessionStorageModule} = $conf->{globalStorage} ) {
-        $class->lmLog( "globalStorage required", 'error' );
+        $class->logger->error("globalStorage required");
         return 0;
     }
     eval "use " . $class->tsv->{sessionStorageModule};
@@ -355,10 +348,8 @@ sub headersInit {
             $class->buildSub($sub) )
         {
             $class->tsv->{maintenance}->{$vhost} = 1;
-            $class->lmLog(
-                "$class Unable to forge headers: " . $class->tsv->{jail}->error,
-                'error'
-            );
+            $class->logger->error( "$class Unable to forge headers: "
+                  . $class->tsv->{jail}->error );
         }
     }
     return 1;
@@ -376,7 +367,7 @@ sub postUrlInit {
         #  Browse all POST URI
         foreach my $url ( keys %{ $conf->{post}->{$vhost} } ) {
             my $d = $conf->{post}->{$vhost}->{$url};
-            $class->lmLog( "Compiling POST data for $url", 'debug' );
+            $class->logger->debug("Compiling POST data for $url");
 
             # Where to POST
             $d->{target} ||= $url;
@@ -392,11 +383,9 @@ sub postUrlInit {
                 $class->buildSub($sub) )
             {
                 $class->tsv->{maintenance}->{$vhost} = 1;
-                $class->lmLog(
+                $class->logger->error(
                     "$class: Unable to build post datas: "
-                      . $class->tsv->{jail}->error,
-                    'error'
-                );
+                      . $class->tsv->{jail}->error );
             }
 
             $class->tsv->{postFormParams}->{$vhost}->{$url} = $d;
@@ -457,8 +446,8 @@ sub conditionSub {
     if ( $cond =~ /^logout_app/i
         and not $class->isa('Lemonldap::NG::Handler::ApacheMP2::Main') )
     {
-        $class->lmLog( "Rules logout_app and logout_app_sso require Apache>=2",
-            'info' );
+        $class->logger->info(
+            "Rules logout_app and logout_app_sso require Apache>=2");
         return ( sub { 1 }, 0 );
     }
 
@@ -509,11 +498,8 @@ sub conditionSub {
     $cond = $class->substitute($cond);
     my $sub;
     unless ( $sub = $class->buildSub($cond) ) {
-        $class->lmLog(
-            "$class: Unable to build condition ($cond): "
-              . $class->tsv->{jail}->error,
-            'error'
-        );
+        $class->logger->error( "$class: Unable to build condition ($cond): "
+              . $class->tsv->{jail}->error );
     }
 
     # Return sub and protected flag
@@ -530,7 +516,7 @@ sub aliasInit {
         if ( my $aliases = $conf->{vhostOptions}->{$vhost}->{vhostAliases} ) {
             foreach ( split /\s+/, $aliases ) {
                 $class->tsv->{vhostAlias}->{$_} = $vhost;
-                $class->lmLog( "Registering $_ as alias of $vhost", 'debug' );
+                $class->logger->debug("Registering $_ as alias of $vhost");
             }
         }
     }

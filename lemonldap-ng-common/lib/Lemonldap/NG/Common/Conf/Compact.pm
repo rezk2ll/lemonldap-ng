@@ -18,7 +18,7 @@ sub compactConf {
         $keep{$mod} = 1;
     }
     if ( $keep{combination} ) {
-        foreach my $md (keys %{$conf->{combModules}}) {
+        foreach my $md ( keys %{ $conf->{combModules} } ) {
             $_ = $conf->{combModules}->{$md}->{type};
             s/^(\w+).*$/lc($1)/e;
             s/OpenIDConnect/oidc/i;
@@ -35,7 +35,7 @@ sub compactConf {
             }
         }
     }
-    foreach my $key (keys %$authParameters) {
+    foreach my $key ( keys %$authParameters ) {
         my $mod = $key;
         $mod =~ s/Params$//;
         unless ( $keep{$mod} ) {

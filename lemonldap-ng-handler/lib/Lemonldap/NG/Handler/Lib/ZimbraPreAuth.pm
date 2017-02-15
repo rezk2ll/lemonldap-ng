@@ -18,8 +18,8 @@ our $VERSION = '2.0.0';
 
 # Overload main run method
 sub run {
-    my($class,$req) = @_;
-    my $ret   = $class->SUPER::run($req);
+    my ( $class, $req ) = @_;
+    my $ret = $class->SUPER::run($req);
 
     # Continue only if user is authorized
     return $ret unless ( $ret == $class->OK );
@@ -37,19 +37,19 @@ sub run {
     my $timeout          = $localConfig->{'timeout'} || '0';
 
     # Display found values in debug mode
-    $class->lmLog( "zimbraPreAuthKey: $zimbraPreAuthKey", 'debug' );
-    $class->lmLog( "zimbraAccountKey: $zimbraAccountKey", 'debug' );
-    $class->lmLog( "zimbraBy: $zimbraBy",                 'debug' );
-    $class->lmLog( "zimbraUrl: $zimbraUrl",               'debug' );
-    $class->lmLog( "zimbraSsoUrl: $zimbraSsoUrl",         'debug' );
-    $class->lmLog( "timeout: $timeout",                   'debug' );
+    $class->logger->debug("zimbraPreAuthKey: $zimbraPreAuthKey");
+    $class->logger->debug("zimbraAccountKey: $zimbraAccountKey");
+    $class->logger->debug("zimbraBy: $zimbraBy");
+    $class->logger->debug("zimbraUrl: $zimbraUrl");
+    $class->logger->debug("zimbraSsoUrl: $zimbraSsoUrl");
+    $class->logger->debug("timeout: $timeout");
 
     # Return if we are not on a Zimbra SSO URI
     return $class->OK unless ( $uri =~ $zimbraSsoUrl );
 
     # Check mandatory parameters
     unless ($zimbraPreAuthKey) {
-        $class->lmLog( "No Zimbra preauth key configured", 'error' );
+        $class->logger->error("No Zimbra preauth key configured");
         return $class->SERVER_ERROR;
     }
 
@@ -88,15 +88,14 @@ sub _buildZimbraPreAuthUrl {
     my $computed_value =
       hmac_sha1_hex( "$account|$by|$expires|$timestamp", $key );
 
-    $class->lmLog(
-        "Compute value $account|$by|$expires|$timestamp into $computed_value",
-        'debug' );
+    $class->logger->debug(
+        "Compute value $account|$by|$expires|$timestamp into $computed_value");
 
     # Build PreAuth URL
     my $zimbra_url =
 "$url?account=$account&by=$by&timestamp=$timestamp&expires=$expires&preauth=$computed_value";
 
-    $class->lmLog( "Build Zimbra URL: $zimbra_url", 'debug' );
+    $class->logger->debug("Build Zimbra URL: $zimbra_url");
 
     return $zimbra_url;
 }

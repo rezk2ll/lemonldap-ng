@@ -128,7 +128,7 @@ sub do {
         return $req->response;
     }
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
-        $self->lmLog( 'Processing to JSON response', 'debug' );
+        $self->logger->debug('Processing to JSON response');
         if ( $err > 0 and !$req->id ) {
             return [
                 401,
@@ -170,11 +170,11 @@ sub do {
           )
         {
             my ( $tpl, $prms ) = $self->display($req);
-            $self->lmLog( "Calling sendHtml with template $tpl", 'debug' );
+            $self->logger->debug("Calling sendHtml with template $tpl");
             return $self->sendHtml( $req, $tpl, params => $prms );
         }
         else {
-            $self->lmLog( 'Calling autoredirect', 'debug' );
+            $self->logger->debug('Calling autoredirect');
             return $self->autoRedirect($req);
         }
     }
@@ -224,12 +224,12 @@ sub autoRedirect {
             $req->datas->{redirectFormMethod} = "get";
         }
         else {
-            return [ 302, [ Location => $req->{urldc}, @{ $req->respHeaders } ],
-                [] ];
+            return [ 302,
+                [ Location => $req->{urldc}, @{ $req->respHeaders } ], [] ];
         }
     }
     my ( $tpl, $prms ) = $self->display($req);
-    $self->lmLog( "Calling sendHtml with template $tpl", 'debug' );
+    $self->logger->debug("Calling sendHtml with template $tpl");
     return $self->sendHtml( $req, $tpl, params => $prms );
 }
 
@@ -240,10 +240,10 @@ sub getApacheSession {
     $args{kind} ||= "SSO";
 
     if ($id) {
-        $self->lmLog( "Try to get $args{kind} session $id", 'debug' );
+        $self->logger->debug("Try to get $args{kind} session $id");
     }
     else {
-        $self->lmLog( "Try to get a new $args{kind} session", 'debug' );
+        $self->logger->debug("Try to get a new $args{kind} session");
     }
 
     my $as = Lemonldap::NG::Common::Session->new(
@@ -265,7 +265,7 @@ sub getApacheSession {
     }
 
     if ( $id and !$args{force} and !$as->data ) {
-        $self->lmLog( "Session $args{kind} $id not found", 'debug' );
+        $self->logger->debug("Session $args{kind} $id not found");
         return;
     }
 
@@ -282,11 +282,11 @@ sub getApacheSession {
         )
       )
     {
-        $self->lmLog( "Session $args{kind} $id expired", 'debug' );
+        $self->logger->debug("Session $args{kind} $id expired");
         return;
     }
 
-    $self->lmLog( "Return $args{kind} session " . $as->id, 'debug' );
+    $self->logger->debug( "Return $args{kind} session " . $as->id );
 
     return $as;
 }
@@ -311,7 +311,7 @@ sub getPersistentSession {
     );
 
     if ( $ps->error ) {
-        $self->lmLog( $ps->error, 'debug' );
+        $self->logger->debug( $ps->error );
     }
 
     # Set _session_uid if not already present
@@ -346,21 +346,19 @@ sub updatePersistentSession {
     $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
       || $req->userData->{ $self->conf->{whatToTrace} };
     unless ($uid) {
-        $self->lmLog( 'No uid found, skipping updatePersistentSession',
-            'debug' );
+        $self->logger->debug('No uid found, skipping updatePersistentSession');
         return ();
     }
-    $self->lmLog( "Update $uid persistent session", 'debug' );
+    $self->logger->debug("Update $uid persistent session");
 
     my $persistentSession = $self->getPersistentSession($uid);
 
     $persistentSession->update($infos);
 
     if ( $persistentSession->error ) {
-        $self->lmLog(
-            "Cannot update persistent session " . $self->_md5hash($uid),
-            'error' );
-        $self->lmLog( $persistentSession->error, 'error' );
+        $self->logger->error(
+            "Cannot update persistent session " . $self->_md5hash($uid) );
+        $self->logger->error( $persistentSession->error );
     }
 }
 
@@ -387,8 +385,8 @@ sub updateSession {
         ## sessionInfo updated if $id defined : quite strange !!
         ## See http://jira.ow2.org/browse/LEMONLDAP-430
         foreach ( keys %$infos ) {
-            $self->lmLog( "Update sessionInfo $_ with " . $infos->{$_},
-                'debug' );
+            $self->logger->debug(
+                "Update sessionInfo $_ with " . $infos->{$_} );
             $req->{sessionInfo}->{$_} = $infos->{$_};
         }
 
@@ -402,8 +400,8 @@ sub updateSession {
             $apacheSession->update($infos);
 
             if ( $apacheSession->error ) {
-                $self->lmLog( "Cannot update session $id", 'error' );
-                $self->lmLog( $apacheSession->error,       'error' );
+                $self->logger->error("Cannot update session $id");
+                $self->logger->error( $apacheSession->error );
             }
         }
     }
@@ -427,9 +425,9 @@ sub _deleteSession {
             if ( my $session2 = $self->getApacheSession($id2) ) {
                 $session2->remove;
                 if ( $session2->error ) {
-                    $self->lmLog( "Unable to remove linked session $id2",
-                        'debug' );
-                    $self->lmLog( $session2->error, 'debug' );
+                    $self->logger->debug(
+                        "Unable to remove linked session $id2");
+                    $self->logger->debug( $session2->error );
                 }
             }
         }
@@ -531,7 +529,7 @@ sub setHiddenFormValue {
         $key = $prefix . $key;
         $val =~ s/\+/%2B/g;
         $req->{portalHiddenFormValues}->{$key} = $val;
-        $self->lmLog( "Store $val in hidden key $key", 'debug' );
+        $self->logger->debug("Store $val in hidden key $key");
     }
 }
 
@@ -554,7 +552,7 @@ sub getHiddenFormValue {
     if ( my $val = $req->param($key) ) {
         $val = decode_base64($val) if $base64;
         return $val;
-        $self->lmLog( "Hidden value $val found for key $key", 'debug' );
+        $self->logger->debug("Hidden value $val found for key $key");
     }
 
     # No value found
@@ -571,12 +569,12 @@ sub clearHiddenFormValue {
 
     unless ( defined $keys ) {
         delete $req->{portalHiddenFormValues};
-        $self->lmLog( "Delete all hidden values", 'debug' );
+        $self->logger->debug("Delete all hidden values");
     }
     else {
         foreach (@$keys) {
             delete $req->{portalHiddenFormValues}->{$_};
-            $self->lmLog( "Delete hidden value for key $_", 'debug' );
+            $self->logger->debug("Delete hidden value for key $_");
         }
     }
 
@@ -625,7 +623,7 @@ sub _dump {
     my ( $self, $variable ) = @_;
     require Data::Dumper;
     $Data::Dumper::Indent = 0;
-    $self->lmLog( "Dump: " . Data::Dumper::Dumper($variable), 'debug' );
+    $self->logger->debug( "Dump: " . Data::Dumper::Dumper($variable) );
     return;
 }
 

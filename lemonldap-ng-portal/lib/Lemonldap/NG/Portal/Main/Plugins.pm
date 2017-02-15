@@ -33,7 +33,7 @@ sub enabledPlugins {
     # Search for Issuer* modules enabled
     foreach my $key (qw(SAML OpenID CAS OpenIDConnect Get)) {
         if ( $self->conf->{"issuerDB${key}Activation"} ) {
-            $self->lmLog( "Issuer${key} enabled", 'debug' );
+            $self->logger->debug("Issuer${key} enabled");
             push @res, "::Issuer::$key";
         }
     }
@@ -62,8 +62,8 @@ sub enabledPlugins {
     # Check if custom plugins are required
     # TODO: change this name
     if ( $self->conf->{customPlugins} ) {
-        $self->lmLog( 'Custom plugins: ' . $self->conf->{customPlugins},
-            'debug' );
+        $self->logger->debug(
+            'Custom plugins: ' . $self->conf->{customPlugins} );
         push @res, grep ( /\w/, split( /,\s*/, $self->conf->{customPlugins} ) );
     }
     return @res;

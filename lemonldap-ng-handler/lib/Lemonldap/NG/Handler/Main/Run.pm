@@ -39,7 +39,7 @@ sub status {
 # Return Handler::Lib::Status output
 sub getStatus {
     my ($class) = @_;
-    $class->lmLog( "Request for status", 'debug' );
+    $class->logger->debug("Request for status");
     my $statusPipe = $class->tsv->{statusPipe};
     my $statusOut  = $class->tsv->{statusOut};
     return $class->abort("$class: status page can not be displayed")
@@ -90,12 +90,11 @@ sub run {
     if ( $class->checkMaintenanceMode ) {
 
         if ( $class->tsv->{useRedirectOnError} ) {
-            $class->lmLog( "Got to portal with maintenance error code",
-                'debug' );
+            $class->logger->debug("Go to portal with maintenance error code");
             return $class->goToPortal( '/', 'lmError=' . $class->MAINTENANCE );
         }
         else {
-            $class->lmLog( "Return maintenance error code", 'debug' );
+            $class->logger->debug("Return maintenance error code");
             return $class->MAINTENANCE;
         }
     }
@@ -107,18 +106,16 @@ sub run {
         and $uri =~ s/[\?&;]${cn}cda=(\w+)$//oi )
     {
         if ( $class->fetchId and $session = $class->retrieveSession($id) ) {
-            $class->lmLog(
-                'CDA asked for an already available session, skipping',
-                'info' );
+            $class->logger->info(
+                'CDA asked for an already available session, skipping');
         }
         else {
             my $cdaid = $1;
-            $class->lmLog( "CDA request with id $cdaid", 'debug' );
+            $class->logger->debug("CDA request with id $cdaid");
 
             my $cdaInfos = $class->getCDAInfos($cdaid);
             unless ( $cdaInfos->{cookie_value} and $cdaInfos->{cookie_name} ) {
-                $class->lmLog( "CDA request for id $cdaid is not valid",
-                    'error' );
+                $class->logger->error("CDA request for id $cdaid is not valid");
                 return $class->FORBIDDEN;
             }
 
@@ -151,7 +148,7 @@ sub run {
       unless ( defined $protection );
 
     if ( $protection == $class->SKIP ) {
-        $class->lmLog( "Access control skipped", 'debug' );
+        $class->logger->debug("Access control skipped");
         $class->updateStatus('SKIP');
         $class->hideCookie;
         $class->cleanHeaders;
@@ -182,7 +179,7 @@ sub run {
 
         # Store local macros
         if ( keys %$session > $kc ) {
-            $class->lmLog( "Update local cache", 'debug' );
+            $class->logger->debug("Update local cache");
             $class->session->update( $session, { updateCache => 2 } );
         }
 
@@ -190,12 +187,9 @@ sub run {
         $class->hideCookie;
 
         # Log access granted
-        $class->lmLog(
-            "User "
+        $class->logger->debug( "User "
               . $session->{ $class->tsv->{whatToTrace} }
-              . " was granted to access to $uri",
-            'debug'
-        );
+              . " was granted to access to $uri" );
 
         #  Catch POST rules
         $class->postOutputFilter( $session, $uri );
@@ -207,7 +201,7 @@ sub run {
     elsif ( $protection == $class->UNPROTECT ) {
 
         # Ignore unprotected URIs
-        $class->lmLog( "No valid session but unprotected access", 'debug' );
+        $class->logger->debug("No valid session but unprotected access");
         $class->updateStatus('UNPROTECT');
         $class->hideCookie;
         $class->cleanHeaders;
@@ -217,7 +211,7 @@ sub run {
     else {
 
         # Redirect user to the portal
-        $class->lmLog( "No cookie found", 'info' )
+        $class->logger->info("No cookie found")
           unless ($id);
 
         # if the cookie was fetched, a log is sent by retrieveSession()
@@ -274,7 +268,7 @@ sub checkMaintenanceMode {
       : $class->tsv->{maintenance}->{_};
 
     if ($_maintenance) {
-        $class->lmLog( "Maintenance mode activated", 'debug' );
+        $class->logger->debug("Maintenance mode activated");
         return 1;
     }
     return 0;
@@ -292,23 +286,19 @@ sub grant {
     $vhost ||= $class->resolveAlias;
     for ( my $i = 0 ; $i < $class->tsv->{locationCount}->{$vhost} ; $i++ ) {
         if ( $uri =~ $class->tsv->{locationRegexp}->{$vhost}->[$i] ) {
-            $class->lmLog(
-                'Regexp "'
+            $class->logger->debug( 'Regexp "'
                   . $class->tsv->{locationConditionText}->{$vhost}->[$i]
-                  . '" match',
-                'debug'
-            );
+                  . '" match' );
             return $class->tsv->{locationCondition}->{$vhost}->[$i]->($session);
         }
     }
     unless ( $class->tsv->{defaultCondition}->{$vhost} ) {
-        $class->lmLog(
-            "User rejected because VirtualHost \"$vhost\" has no configuration",
-            'warn'
+        $class->logger->warn(
+            "User rejected because VirtualHost \"$vhost\" has no configuration"
         );
         return 0;
     }
-    $class->lmLog( "$vhost: Apply default rule", 'debug' );
+    $class->logger->debug("$vhost: Apply default rule");
     return $class->tsv->{defaultCondition}->{$vhost}->($session);
 }
 
@@ -331,21 +321,18 @@ sub forbidden {
     }
 
     # Log forbidding
-    $class->lmLog(
-        "User "
+    $class->userLogger->notice( "User "
           . $session->{ $class->tsv->{whatToTrace} }
-          . " was forbidden to access to $vhost$uri",
-        "notice"
-    );
+          . " was forbidden to access to $vhost$uri" );
     $class->updateStatus( 'REJECT', $session->{ $class->tsv->{whatToTrace} } );
 
     # Redirect or Forbidden?
     if ( $class->tsv->{useRedirectOnForbidden} ) {
-        $class->lmLog( "Use redirect for forbidden access", 'debug' );
+        $class->logger->debug("Use redirect for forbidden access");
         return $class->goToPortal( $uri, 'lmError=403' );
     }
     else {
-        $class->lmLog( "Return forbidden access", 'debug' );
+        $class->logger->debug("Return forbidden access");
         return $class->FORBIDDEN;
     }
 }
@@ -354,7 +341,7 @@ sub forbidden {
 # Hide Lemonldap::NG cookie to the protected application.
 sub hideCookie {
     my $class = shift;
-    $class->lmLog( "removing cookie", 'debug' );
+    $class->logger->debug("removing cookie");
     my $cookie = $class->header_in('Cookie');
     my $cn     = $class->tsv->{cookieName};
     $cookie =~ s/$cn(http)?=[^,;]*[,;\s]*//og;
@@ -384,9 +371,8 @@ sub goToPortal {
     my ( $class, $url, $arg ) = @_;
     my ( $ret, $msg );
     my $urlc_init = $class->encodeUrl($url);
-    $class->lmLog(
-        "Redirect " . $class->remote_ip . " to portal (url was $url)",
-        'debug' );
+    $class->logger->debug(
+        "Redirect " . $class->remote_ip . " to portal (url was $url)" );
     $class->set_header_out( 'Location' => $class->tsv->{portal}->()
           . "?url=$urlc_init"
           . ( $arg ? "&$arg" : "" ) );
@@ -418,8 +404,8 @@ sub fetchId {
     elsif ( $value =~ s/^c:// ) {
         $value = $class->tsv->{cipher}->decrypt($value);
         unless ( $value =~ s/^(.*)? (.*)$/$1/ and $2 eq $vhost ) {
-            $class->lmLog( "Bad CDA cookie: available for $2 instead od $vhost",
-                'error' );
+            $class->userLogger->error(
+                "Bad CDA cookie: available for $2 instead od $vhost");
             return undef;
         }
     }
@@ -439,7 +425,7 @@ sub retrieveSession {
         and $id eq $class->datas->{_session_id}
         and ( $now - $class->datasUpdate < 60 ) )
     {
-        $class->lmLog( "Get session $id from Handler internal cache", 'debug' );
+        $class->logger->debug("Get session $id from Handler internal cache");
         return $class->datas;
     }
 
@@ -461,7 +447,7 @@ sub retrieveSession {
 
         $class->datas( $session->data );
 
-        $class->lmLog( "Get session $id", 'debug' );
+        $class->logger->debug("Get session $id");
 
         # Verify that session is valid
         if (
@@ -472,7 +458,7 @@ sub retrieveSession {
                 $class->tsv->{timeoutActivity} )
           )
         {
-            $class->lmLog( "Session $id expired", 'info' );
+            $class->logger->info("Session $id expired");
 
             # Clean cached data
             $class->datas( {} );
@@ -489,11 +475,11 @@ sub retrieveSession {
             $class->session->update( { '_lastSeen' => $now } );
 
             if ( $session->error ) {
-                $class->lmLog( "Cannot update session $id", 'error' );
-                $class->lmLog( $class->session->error,      'error' );
+                $class->logger->error("Cannot update session $id");
+                $class->logger->error( $class->session->error );
             }
             else {
-                $class->lmLog( "Update _lastSeen with $now", 'debug' );
+                $class->logger->debug("Update _lastSeen with $now");
             }
         }
 
@@ -501,8 +487,8 @@ sub retrieveSession {
         return $session->data;
     }
     else {
-        $class->lmLog( "Session $id can't be retrieved", 'info' );
-        $class->lmLog( $session->error,                  'info' );
+        $class->logger->info("Session $id can't be retrieved");
+        $class->logger->info( $session->error );
 
         return 0;
     }
@@ -528,7 +514,7 @@ sub getCDAInfos {
     );
 
     unless ( $cdaSession->error ) {
-        $class->lmLog( "Get CDA session $id", 'debug' );
+        $class->logger->debug("Get CDA session $id");
 
         $infos->{cookie_value} = $cdaSession->data->{cookie_value};
         $infos->{cookie_name}  = $cdaSession->data->{cookie_name};
@@ -536,8 +522,8 @@ sub getCDAInfos {
         $cdaSession->remove;
     }
     else {
-        $class->lmLog( "CDA Session $id can't be retrieved", 'info' );
-        $class->lmLog( $cdaSession->error,                   'info' );
+        $class->logger->info("CDA Session $id can't be retrieved");
+        $class->logger->info( $cdaSession->error );
     }
 
     return $infos;
@@ -564,7 +550,7 @@ sub _buildUrl {
           or ( !$_https && $portString == 80 )
     ) ? '' : ":$portString";
     my $url = "http" . ( $_https ? "s" : "" ) . "://$vhost$portString$s";
-    $class->lmLog( "Build URL $url", 'debug' );
+    $class->logger->debug("Build URL $url");
     return $url;
 }
 
@@ -595,10 +581,10 @@ sub sendHeaders {
         my %headers = $class->tsv->{forgeHeaders}->{$vhost}->($session);
         foreach my $h ( sort keys %headers ) {
             if ( defined( my $v = $headers{$h} ) ) {
-                $class->lmLog( "Send header $h with value $v", 'debug' );
+                $class->logger->debug("Send header $h with value $v");
             }
             else {
-                $class->lmLog( "Send header $h with empty value", 'debug' );
+                $class->logger->debug("Send header $h with empty value");
             }
         }
         $class->set_header_in(%headers);
@@ -637,11 +623,11 @@ sub abort {
     eval {
         my $uri = $class->unparsed_uri;
 
-        $class->lmLog( $msg, 'error' );
+        $class->logger->error($msg);
 
         # Redirect or die
         if ( $class->tsv->{useRedirectOnError} ) {
-            $class->lmLog( "Use redirect for error", 'debug' );
+            $class->logger->debug("Use redirect for error");
             return $class->goToPortal( $uri, 'lmError=500' );
         }
         else {
@@ -655,7 +641,7 @@ sub abort {
 # Delete current user from local cache entry.
 sub localUnlog {
     my ( $class, $id ) = @_;
-    $class->lmLog( 'Local handler logout', 'debug' );
+    $class->logger->debug('Local handler logout');
     if ( $id //= $class->fetchId ) {
 
         # Delete thread datas
@@ -682,7 +668,7 @@ sub postOutputFilter {
     my $vhost = $class->resolveAlias;
 
     if ( defined( $class->tsv->{outputPostData}->{$vhost}->{$uri} ) ) {
-        $class->lmLog( "Filling a html form with fake data", "debug" );
+        $class->logger->debug("Filling a html form with fake data");
 
         $class->unset_header_in("Accept-Encoding");
         my %postdata =
@@ -701,7 +687,7 @@ sub postInputFilter {
     my $vhost = $class->resolveAlias;
 
     if ( defined( $class->tsv->{inputPostData}->{$vhost}->{$uri} ) ) {
-        $class->lmLog( "Replacing fake data with real form data", "debug" );
+        $class->logger->debug("Replacing fake data with real form data");
 
         my %data = $class->tsv->{inputPostData}->{$vhost}->{$uri}->($session);
         foreach ( keys %data ) {

@@ -56,30 +56,28 @@ sub run {
     foreach (qw/secureTokenMemcachedServers secureTokenUrls/) {
         no strict 'refs';
         unless ( ref ${$_} eq "ARRAY" ) {
-            $class->lmLog( "Transform $_ value into an array reference",
-                'debug' );
+            $class->logger->debug("Transform $_ value into an array reference");
             my @array = split( /\s+/, ${$_} );
             ${$_} = \@array;
         }
     }
 
     # Display found values in debug mode
-    $class->lmLog( "secureTokenMemcachedServers: @$secureTokenMemcachedServers",
-        'debug' );
-    $class->lmLog( "secureTokenExpiration: $secureTokenExpiration", 'debug' );
-    $class->lmLog( "secureTokenAttribute: $secureTokenAttribute",   'debug' );
-    $class->lmLog( "secureTokenUrls: @$secureTokenUrls",            'debug' );
-    $class->lmLog( "secureTokenHeader: $secureTokenHeader",         'debug' );
-    $class->lmLog( "secureTokenAllowOnError: $secureTokenAllowOnError",
-        'debug' );
+    $class->logger->debug(
+        "secureTokenMemcachedServers: @$secureTokenMemcachedServers");
+    $class->logger->debug("secureTokenExpiration: $secureTokenExpiration");
+    $class->logger->debug("secureTokenAttribute: $secureTokenAttribute");
+    $class->logger->debug("secureTokenUrls: @$secureTokenUrls");
+    $class->logger->debug("secureTokenHeader: $secureTokenHeader");
+    $class->logger->debug("secureTokenAllowOnError: $secureTokenAllowOnError");
 
     # Return if we are not on a secure token URL
     my $checkurl = 0;
     foreach (@$secureTokenUrls) {
         if ( $uri =~ m#$_# ) {
             $checkurl = 1;
-            $class->lmLog( "URL $uri detected as an Secure Token URL (rule $_)",
-                'debug' );
+            $class->logger->debug(
+                "URL $uri detected as an Secure Token URL (rule $_)");
             last;
         }
     }
@@ -138,7 +136,7 @@ sub _createMemcachedConnection {
         'debug'   => 0,
     };
 
-    $class->lmLog( "Memcached connection created", 'debug' );
+    $class->logger->debug("Memcached connection created");
 
     return $memd;
 }
@@ -162,7 +160,7 @@ sub _setToken {
         return;
     }
 
-    $class->lmLog( "Set $value in token $key", 'info' );
+    $class->logger->info("Set $value in token $key");
 
     return $key;
 }
@@ -180,7 +178,7 @@ sub _deleteToken {
         $class->( "Unable to delete secure token $key", 'error' );
     }
     else {
-        $class->lmLog( "Token $key deleted", 'info' );
+        $class->logger->info("Token $key deleted");
     }
 
     return $res;
@@ -228,12 +226,12 @@ sub _returnError {
 
     # Redirect or Forbidden?
     if ( $class->tsv->{useRedirectOnError} ) {
-        $class->lmLog( "Use redirect for error", 'debug' );
+        $class->logger->debug("Use redirect for error");
         return $class->goToPortal( '/', 'lmError=500' );
     }
 
     else {
-        $class->lmLog( "Return error", 'debug' );
+        $class->logger->debug("Return error");
         return $class->SERVER_ERROR;
     }
 }

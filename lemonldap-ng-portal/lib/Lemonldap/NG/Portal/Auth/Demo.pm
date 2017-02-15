@@ -21,9 +21,8 @@ sub init {
     my $self = shift;
 
     # Add warning in log
-    $self->lmLog(
-        "Using demonstration mode, go to Manager to edit the configuration",
-        'warn' );
+    $self->logger->warn(
+        "Using demonstration mode, go to Manager to edit the configuration");
 
     return $self->Lemonldap::NG::Portal::Auth::_WebForm::init();
 }

@@ -56,7 +56,7 @@ sub extractFormInfo {
 
     # 1. Request to authenticate
     unless ( $req->param('twitterback') ) {
-        $self->lmLog( 'Redirection to Twitter', 'debug' );
+        $self->logger->debug('Redirection to Twitter');
 
         # 1.1 Try to get token to dialog with Twitter
         my $callback_url = $self->url();
@@ -80,8 +80,7 @@ sub extractFormInfo {
         # Forward hidden fields
         if ( exists $req->{portalHiddenFormValues} ) {
 
-            $self->lmLog( "Add hidden values to Twitter redirect URL",
-                'debug' );
+            $self->logger->debug("Add hidden values to Twitter redirect URL");
 
             foreach ( keys %{ $req->{portalHiddenFormValues} } ) {
                 $callback_url .=
@@ -106,10 +105,10 @@ sub extractFormInfo {
 
         my $request_url = $request->to_url;
 
-        $self->lmLog( "POST $request_url to Twitter", 'debug' );
+        $self->logger->debug("POST $request_url to Twitter");
 
         my $res = $self->ua()->post($request_url);
-        $self->lmLog( "Twitter response: " . $res->as_string, 'debug' );
+        $self->logger->debug( "Twitter response: " . $res->as_string );
 
         if ( $res->is_success ) {
             my $response = Net::OAuth->response('request token')
@@ -131,8 +130,8 @@ sub extractFormInfo {
             $self->quit();
         }
         else {
-            $self->lmLog( 'Twitter OAuth protocol error: ' . $res->content,
-                'error' );
+            $self->logger->error(
+                'Twitter OAuth protocol error: ' . $res->content );
             return PE_ERROR;
         }
     }
@@ -141,13 +140,12 @@ sub extractFormInfo {
     my $request_token = $req->param('oauth_token');
     my $verifier      = $req->param('oauth_verifier');
     unless ( $request_token and $verifier ) {
-        $self->lmLog( 'Twitter OAuth protocol error', 'error' );
+        $self->logger->error('Twitter OAuth protocol error');
         return PE_ERROR;
     }
 
-    $self->lmLog(
-        "Get token $request_token and verifier $verifier from Twitter",
-        'debug' );
+    $self->logger->debug(
+        "Get token $request_token and verifier $verifier from Twitter");
 
     # 2.1 Reconnect to Twitter
     my $access = Net::OAuth->request("access token")->new(
@@ -166,10 +164,10 @@ sub extractFormInfo {
 
     my $access_url = $access->to_url;
 
-    $self->lmLog( "POST $access_url to Twitter", 'debug' );
+    $self->logger->debug("POST $access_url to Twitter");
 
     my $res_access = $self->ua()->post($access_url);
-    $self->lmLog( "Twitter response: " . $res_access->as_string, 'debug' );
+    $self->logger->debug( "Twitter response: " . $res_access->as_string );
 
     if ( $res_access->is_success ) {
         my $response = Net::OAuth->response('access token')
@@ -180,23 +178,20 @@ sub extractFormInfo {
         $req->datas->{_twitterScreenName} =
           $response->{extra_params}->{screen_name};
 
-        $self->lmLog(
-            "Get user id "
+        $self->logger->debug( "Get user id "
               . $req->datas->{_twitterUserId}
               . " and screen name "
-              . $req->datas->{_twitterScreenName},
-            'debug'
-        );
+              . $req->datas->{_twitterScreenName} );
     }
     else {
-        $self->lmLog( 'Twitter OAuth protocol error: ' . $res_access->content,
-            'error' );
+        $self->logger->error(
+            'Twitter OAuth protocol error: ' . $res_access->content );
         return PE_ERROR;
     }
 
     # 2.4 Set $req->{user} to screen name
     $req->user( $req->datas->{_twitterScreenName} );
-    $self->lmLog( "Good Twitter authentication for $req->{user}", 'debug' );
+    $self->logger->debug("Good Twitter authentication for $req->{user}");
 
     # Force redirection to avoid displaying OAuth datas
     $req->{mustRedirect} = 1;

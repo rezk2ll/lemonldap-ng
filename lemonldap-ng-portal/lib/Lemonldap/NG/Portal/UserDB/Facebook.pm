@@ -41,9 +41,8 @@ sub setSessionInfo {
         my $required = ( $attr =~ s/^!// ) ? 1 : 0;
         $req->{sessionInfo}->{$attr} = $req->datas->{_facebookDatas}->{$v};
         if ( $required and not( defined $self->{sessionInfo}->{$attr} ) ) {
-            $self->lmLog(
-"Required parameter $v is not provided by Facebook server, aborted",
-                'warn'
+            $self->logger->warn(
+"Required parameter $v is not provided by Facebook server, aborted"
             );
 
             $req->mustRedirect(0);

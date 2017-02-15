@@ -111,7 +111,7 @@ sub _register {
 
         # Set captcha or token
         $self->setSecurity($req);
-        $self->lmLog( 'First access to register form', 'debug' );
+        $self->logger->debug('First access to register form');
         return PE_REGISTERFIRSTACCESS if ( $req->method eq 'GET' );
         return PE_REGISTERFORMEMPTY;
     }
@@ -122,9 +122,8 @@ sub _register {
     # If a register token is present, find the corresponding info
     if ( $req->datas->{register_token} ) {
 
-        $self->lmLog(
-            "Token given for register: " . $req->datas->{register_token},
-            'debug' );
+        $self->logger->debug(
+            "Token given for register: " . $req->datas->{register_token} );
 
         # Get the corresponding session
         if ( my $datas =
@@ -133,11 +132,8 @@ sub _register {
             foreach (qw(mail firstname lastname ipAddr)) {
                 $req->datas->{registerInfo}->{$_} = $datas->{$_};
             }
-            $self->lmLog(
-                "User associated to token: "
-                  . $req->datas->{registerInfo}->{mail},
-                'debug'
-            );
+            $self->logger->debug( "User associated to token: "
+                  . $req->datas->{registerInfo}->{mail} );
         }
         else {
             return PE_BADMAILTOKEN;
@@ -190,7 +186,7 @@ sub _register {
                     $self->setSecurity($req);
                     return PE_CAPTCHAERROR;
                 }
-                $self->lmLog( "Captcha code verified", 'debug' );
+                $self->logger->debug("Captcha code verified");
             }
             elsif ( $self->ott ) {
                 unless ( $self->ott->getToken($token) ) {
@@ -211,9 +207,8 @@ sub _register {
     # If the user already exists, register is forbidden
     $req->datas->{mail} = $req->{registerInfo}->{mail};
     if ( $self->p->_userDB->getUser($req) == PE_OK ) {
-        $self->lmLog(
-"Register: refuse mail $req->{mail} because already exists in UserDB",
-            'error'
+        $self->userLogger->error(
+"Register: refuse mail $req->{mail} because already exists in UserDB"
         );
         return PE_REGISTERALREADYEXISTS;
     }
@@ -243,12 +238,12 @@ sub _register {
     unless ( $req->datas->{register_token} ) {
 
         # Check if confirmation mail has already been sent
-        $self->lmLog( 'No register_token', 'debug' );
+        $self->logger->debug('No register_token');
 
         # Read session to get creation and expiration dates
         $req->id($register_session) unless $req->id;
 
-        $self->lmLog( "Register session found: $register_session", 'debug' );
+        $self->logger->debug("Register session found: $register_session");
 
         my $registerSessionObj = $self->p->getApacheSession($register_session);
 
@@ -256,7 +251,7 @@ sub _register {
         my $expTimestamp =
           $self->{conf}->{registerTimeout} || $self->conf->{timeout} + time;
 
-        $self->lmLog( "Register expiration timestamp: $expTimestamp", 'debug' );
+        $self->logger->debug("Register expiration timestamp: $expTimestamp");
 
         $req->datas->{expMailDate} =
           strftime( "%d/%m/%Y", localtime $expTimestamp );
@@ -266,7 +261,7 @@ sub _register {
         # Mail session start date
         my $startTimestamp = time;
 
-        $self->lmLog( "Register start timestamp: $startTimestamp", 'debug' );
+        $self->logger->debug("Register start timestamp: $startTimestamp");
 
         $req->datas->{startMailDate} =
           strftime( "%d/%m/%Y", localtime $startTimestamp );
@@ -315,14 +310,14 @@ sub _register {
           unless $self->send_mail( $req->datas->{registerInfo}->{mail},
             $subject, $body, $html );
 
-        $self->lmLog( 'Register message sent', 'debug' );
+        $self->logger->debug('Register message sent');
         return PE_MAILCONFIRMOK;
     }
 
     # Generate a complex password
     my $password = $self->gen_password( $self->conf->{randomPasswordRegexp} );
 
-    $self->lmLog( "Generated password: " . $password, 'debug' );
+    $self->logger->debug( "Generated password: " . $password );
 
     $req->datas->{registerInfo}->{password} = $password;
     $req->datas->{forceReset} = 1;
@@ -330,22 +325,18 @@ sub _register {
     # Find a login
     my $result = $self->registerModule->computeLogin($req);
     unless ( $result == PE_OK ) {
-        $self->lmLog(
-            "Could not compute login for "
-              . $req->datas->{registerInfo}->{mail},
-            'error'
-        );
+        $self->logger->error( "Could not compute login for "
+              . $req->datas->{registerInfo}->{mail} );
         return $result;
     }
 
     # Create user
-    $self->lmLog( 'Create new user ' . $req->datas->{registerInfo}->{login},
-        'debug' );
+    $self->logger->debug(
+        'Create new user ' . $req->datas->{registerInfo}->{login} );
     $result = $self->registerModule->createUser($req);
     unless ( $result == PE_OK ) {
-        $self->lmLog(
-            "Could not create user " . $req->datas->{registerInfo}->{login},
-            'error' );
+        $self->logger->error(
+            "Could not create user " . $req->datas->{registerInfo}->{login} );
         return $result;
     }
 

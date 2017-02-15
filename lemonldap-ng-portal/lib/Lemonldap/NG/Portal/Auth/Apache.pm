@@ -19,8 +19,7 @@ sub init {
 sub extractFormInfo {
     my ( $self, $req ) = @_;
     unless ( $req->{user} = $req->env->{REMOTE_USER} ) {
-        $self->lmLog( 'Apache is not configured to authenticate users!',
-            'error' );
+        $self->logger->error('Apache is not configured to authenticate users!');
         return PE_ERROR;
     }
 

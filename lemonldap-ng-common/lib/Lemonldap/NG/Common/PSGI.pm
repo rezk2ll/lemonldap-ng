@@ -186,7 +186,7 @@ body{background:#000;color:#fff;padding:10px 50px;font-family:sans-serif;}a{text
 
 sub abort {
     my ( $self, $err ) = @_;
-    $self->lmLog( $err, 'error' );
+    $self->logger->error($err);
     return sub {
         $self->sendError( Lemonldap::NG::Common::PSGI::Request->new( $_[0] ),
             $err, 500 );
@@ -233,7 +233,7 @@ sub sendHtml {
     return $self->sendError( $req, "Unable to read $template", 500 )
       unless ( -r $template and -f $template );
     eval {
-        $self->lmLog( "Starting HTML generation using $template", 'debug' );
+        $self->logger->debug("Starting HTML generation using $template");
         require HTML::Template;
         $htpl = HTML::Template->new(
             filehandle             => IO::File->new($template),
@@ -263,7 +263,7 @@ sub sendHtml {
 
     # Set headers
     my $hdrs = [ 'Content-Type' => 'text/html', @{ $args{headers} } ];
-    $self->lmLog( "Sending $template", 'debug' );
+    $self->logger->debug("Sending $template");
     return [ $args{code}, $hdrs, [ $htpl->output() ] ];
 }
 

@@ -24,12 +24,17 @@ ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
 ok( $resBody->{result} == 1, "JSON response contains \"result:1\"" )
   or print STDERR Dumper($res);
 
-ok( $res = &client->_get( '/confs/2/combModules', 'application/json' ), 'Get combModules');
+ok( $res = &client->_get( '/confs/2/combModules', 'application/json' ),
+    'Get combModules' );
 ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
 
-ok( $res = &client->_get( '/confs/2/ldapServer', 'application/json' ), 'Get combModules');
+ok( $res = &client->_get( '/confs/2/ldapServer', 'application/json' ),
+    'Get combModules' );
 ok( $resBody = from_json( $res->[2]->[0] ), "Result body contains JSON text" );
-ok( $resBody->{value} eq 'ldap://192.168.1.1', 'Key ldapServer has been modified');
+ok(
+    $resBody->{value} eq 'ldap://192.168.1.1',
+    'Key ldapServer has been modified'
+);
 
 count(9);
 

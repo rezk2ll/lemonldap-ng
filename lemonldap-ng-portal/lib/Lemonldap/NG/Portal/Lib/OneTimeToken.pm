@@ -43,14 +43,14 @@ sub createToken {
 sub getToken {
     my ( $self, $id ) = @_;
     unless ($id) {
-        $self->lmLog( 'getToken called without id', 'error' );
+        $self->logger->error('getToken called without id');
         return undef;
     }
 
     # Get token session
     my $tsession = $self->p->getApacheSession($id);
     unless ($tsession) {
-        $self->lmLog( "Bad (or expired) token $id", 'notice' );
+        $self->logger->notice("Bad (or expired) token $id");
         return undef;
     }
     my %h = %{ $tsession->{data} };
@@ -60,7 +60,7 @@ sub getToken {
 
 sub setToken {
     my ( $self, $req, $info ) = @_;
-    $self->lmLog( 'Prepare token', 'debug' );
+    $self->logger->debug('Prepare token');
     $req->token( $self->createToken($info) );
 }
 

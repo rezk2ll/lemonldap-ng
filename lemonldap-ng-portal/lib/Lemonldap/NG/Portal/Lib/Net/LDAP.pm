@@ -55,7 +55,7 @@ sub new {
         ( $conf->{caPath}      ? ( capath  => $conf->{caPath} )      : () ),
     );
     unless ($self) {
-        $portal->lmLog( $@, 'error' );
+        $portal->logger->error($@);
         return 0;
     }
     bless $self, $class;
@@ -65,7 +65,7 @@ sub new {
         $h{capath} = $conf->{caPath} if ( $conf->{caPath} );
         my $mesg = $self->start_tls(%h);
         if ( $mesg->code ) {
-            $portal->lmLog( 'StartTLS failed', 'error' );
+            $portal->logger->error('StartTLS failed');
             return 0;
         }
     }
@@ -122,7 +122,7 @@ sub unbind {
     my $self     = shift;
     my $ldap_uri = $self->uri;
 
-    $self->{portal}->lmLog( "Unbind and disconnect from $ldap_uri", 'debug' );
+    $self->{portal}->logger->debug("Unbind and disconnect from $ldap_uri");
 
     my $mesg = $self->SUPER::unbind();
     $self->SUPER::disconnect();
@@ -147,9 +147,8 @@ sub loadPP {
     # Require Perl module
     eval { require Net::LDAP::Control::PasswordPolicy };
     if ($@) {
-        $self->{portal}->lmLog(
-            "Module Net::LDAP::Control::PasswordPolicy not found in @INC",
-            'error' );
+        $self->{portal}->logger->error(
+            "Module Net::LDAP::Control::PasswordPolicy not found in @INC");
         return 0;
     }
     $ppLoaded = 1;
@@ -261,7 +260,7 @@ sub userModifyPassword {
             $oldpassword =
               utf8( chr(34) . $oldpassword . chr(34) )->utf16le();
         }
-        $self->{portal}->lmLog( "Active Directory mode enabled", 'debug' );
+        $self->{portal}->logger->debug("Active Directory mode enabled");
 
     }
 
@@ -275,7 +274,7 @@ sub userModifyPassword {
 
                 $mesg = $self->bind( $dn, password => $oldpassword );
                 if ( $mesg->code != 0 ) {
-                    $self->{portal}->lmLog( "Bad old password", 'debug' );
+                    $self->{portal}->userLogger->notice("Bad old password");
                     return PE_BADOLDPASSWORD;
                 }
             }
@@ -296,7 +295,7 @@ sub userModifyPassword {
 
             # Catch the "Unwilling to perform" error
             if ( $mesg->code == 53 ) {
-                $self->{portal}->lmLog( "Bad old password", 'debug' );
+                $self->{portal}->userLogger->notice("Bad old password");
                 return PE_BADOLDPASSWORD;
             }
         }
@@ -334,7 +333,7 @@ sub userModifyPassword {
 # 52e: password is incorrect
                             unless ( ( $1 eq '532' ) || ( $1 eq '773' ) ) {
                                 $self->{portal}
-                                  ->lmLog( "Bad old password", 'warn' );
+                                  ->userLogger->warn("Bad old password");
                                 return PE_BADOLDPASSWORD;
                             }
                         }
@@ -345,7 +344,7 @@ sub userModifyPassword {
                     {   # this is not AD, a 0 error code means good old password
                         if ( $mesg->code != 0 ) {
                             $self->{portal}
-                              ->lmLog( "Bad old password", 'warn' );
+                              ->userLogger->warn('Bad old password');
                             return PE_BADOLDPASSWORD;
                         }
                     }
@@ -361,7 +360,7 @@ sub userModifyPassword {
             }
         }
         $self->{portal}
-          ->lmLog( "Modification return code: " . $mesg->code, 'debug' );
+          ->logger->debug( 'Modification return code: ' . $mesg->code );
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
         return PE_PP_INSUFFICIENT_PASSWORD_QUALITY
@@ -395,7 +394,7 @@ sub userModifyPassword {
 
                 unless ( defined $bind_resp ) {
                     if ( $mesg->code != 0 ) {
-                        $self->{portal}->lmLog( "Bad old password", 'debug' );
+                        $self->{portal}->logger->debug("Bad old password");
                         return PE_BADOLDPASSWORD;
                     }
                 }
@@ -407,15 +406,13 @@ sub userModifyPassword {
                         and $pp_error == 0
                         and $self->{conf}->{ldapAllowResetExpiredPassword} )
                     {
-                        $self->{portal}->lmLog(
-"Password is expired but user is allowed to change it",
-                            'debug'
+                        $self->{portal}->logger->debug(
+"Password is expired but user is allowed to change it"
                         );
                     }
                     else {
                         if ( $mesg->code != 0 ) {
-                            $self->{portal}
-                              ->lmLog( "Bad old password", 'debug' );
+                            $self->{portal}->logger->debug("Bad old password");
                             return PE_BADOLDPASSWORD;
                         }
                     }
@@ -442,7 +439,7 @@ sub userModifyPassword {
 
             # Catch the "Unwilling to perform" error
             if ( $mesg->code == 53 ) {
-                $self->{portal}->lmLog( "Bad old password", 'debug' );
+                $self->{portal}->logger->debug("Bad old password");
                 return PE_BADOLDPASSWORD;
             }
         }
@@ -459,7 +456,7 @@ sub userModifyPassword {
 
                 unless ( defined $bind_resp ) {
                     if ( $mesg->code != 0 ) {
-                        $self->{portal}->lmLog( "Bad old password", 'debug' );
+                        $self->{portal}->logger->debug("Bad old password");
                         return PE_BADOLDPASSWORD;
                     }
                 }
@@ -471,15 +468,13 @@ sub userModifyPassword {
                         and $pp_error == 0
                         and $self->{conf}->{ldapAllowResetExpiredPassword} )
                     {
-                        $self->{portal}->lmLog(
-"Password is expired but user is allowed to change it",
-                            'debug'
+                        $self->{portal}->logger->debug(
+"Password is expired but user is allowed to change it"
                         );
                     }
                     else {
                         if ( $mesg->code != 0 ) {
-                            $self->{portal}
-                              ->lmLog( "Bad old password", 'debug' );
+                            $self->{portal}->logger->debug("Bad old password");
                             return PE_BADOLDPASSWORD;
                         }
                     }
@@ -502,7 +497,7 @@ sub userModifyPassword {
         my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
 
         $self->{portal}
-          ->lmLog( "Modification return code: " . $mesg->code, 'debug' );
+          ->logger->debug( "Modification return code: " . $mesg->code );
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
         if ( $mesg->code == 0 ) {
@@ -549,14 +544,14 @@ sub ldap {
         and my $mesg = $self->{ldap}->bind )
     {
         if ( $mesg->code != 0 ) {
-            $self->lmLog( "LDAP error: " . $mesg->error, 'error' );
+            $self->logger->error( "LDAP error: " . $mesg->error );
             $self->{ldap}->unbind;
         }
         else {
             if ( $self->{ldapPpolicyControl}
                 and not $self->{ldap}->loadPP() )
             {
-                $self->lmLog( "LDAP password policy error", 'error' );
+                $self->logger->error("LDAP password policy error");
                 $self->{ldap}->unbind;
             }
             else {
@@ -566,7 +561,7 @@ sub ldap {
         }
     }
     else {
-        $self->lmLog( "LDAP error: $@", 'error' );
+        $self->logger->error("LDAP error: $@");
     }
     return 0;
 }
@@ -591,7 +586,7 @@ sub searchGroups {
     }
     $searchFilter .= "))";
 
-    $self->{p}->lmLog( "Group search filter: $searchFilter", 'debug' );
+    $self->{p}->logger->debug("Group search filter: $searchFilter");
 
     # Search
     my $mesg = $self->search(
@@ -606,7 +601,7 @@ sub searchGroups {
         foreach my $entry ( $mesg->all_entries ) {
 
             $self->{p}
-              ->lmLog( "Matching group " . $entry->dn() . " found", 'debug' );
+              ->logger->debug( "Matching group " . $entry->dn() . " found" );
 
             # If recursive search is activated, do it here
             if ( $self->{conf}->{ldapGroupRecursive} ) {
@@ -620,7 +615,7 @@ sub searchGroups {
                 if ($group_value) {
 
                     $self->{p}
-                      ->lmLog( "Recursive search for $group_value", 'debug' );
+                      ->logger->debug("Recursive search for $group_value");
 
                     my $recursive_groups =
                       $self->searchGroups( $base, $key, $group_value,
@@ -646,8 +641,8 @@ sub searchGroups {
                 my $data = $entry->get_value( $_, asref => 1 );
 
                 if ($data) {
-                    $self->{p}->lmLog( "Store values of $_ in group $groupName",
-                        'debug' );
+                    $self->{p}
+                      ->logger->debug("Store values of $_ in group $groupName");
                     $groups->{$groupName}->{$_} = $data;
                 }
             }

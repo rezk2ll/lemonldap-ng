@@ -64,7 +64,7 @@ count(3);
 
 # Pad path test
 
-ok($res = $client->_get('/[]/test'), 'Try a bad path');
+ok( $res = $client->_get('/[]/test'), 'Try a bad path' );
 ok( $res->[0] == 400, 'Response is 400' );
 count(2);
 

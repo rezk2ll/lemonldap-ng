@@ -1,6 +1,6 @@
 package main;
 
-sub hostname { 'test1.example.com' };
+sub hostname { 'test1.example.com' }
 
 package Lemonldap::NG::Handler::Test;
 
@@ -11,9 +11,10 @@ our $header;
 use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
 
 use constant REDIRECT => 302;
+
 #sub hostname           { 'test1.example.com' }
 *hostname = \&main::hostname;
-*logger = \&Lemonldap::NG::Handler::Main::logger;
+*logger   = \&Lemonldap::NG::Handler::Main::logger;
 sub newRequest         { 1 }
 sub header_in          { "" }
 sub is_initial_req     { '1' }

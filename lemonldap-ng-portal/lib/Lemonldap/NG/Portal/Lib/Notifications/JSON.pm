@@ -45,14 +45,14 @@ sub checkForNotifications {
             # Get the reference
             my $reference = $notif->{reference};
 
-            $self->lmLog( "Get reference $reference", 'debug' );
+            $self->logger->debug("Get reference $reference");
 
             # Check it in session
             if ( exists $req->{sessionInfo}->{"notification_$reference"} ) {
 
                 # The notification was already accepted
-                $self->lmLog( "Notification $reference was already accepted",
-                    'debug' );
+                $self->logger->debug(
+                    "Notification $reference was already accepted");
                 next LOOP;
             }
             push @res, $notif;
@@ -146,9 +146,8 @@ sub getNotifBack {
                     # Current pending notification has not been found in
                     # request
                     $result = $fileResult = 0;
-                    $self->lmLog(
-                        'Current pending notification has not been found',
-                        'debug' );
+                    $self->logger->debug(
+                        'Current pending notification has not been found');
                     next;
                 }
 
@@ -157,15 +156,14 @@ sub getNotifBack {
                     "$uid has accepted notification $reference");
                 $self->p->updatePersistentSession( $req,
                     { "notification_$reference" => time() } );
-                $self->lmLog(
-                    "Notification $reference registered in persistent session",
-                    'debug'
+                $self->logger->debug(
+                    "Notification $reference registered in persistent session"
                 );
             }
 
         # Notifications accepted for this file, delete it unless it's a wildcard
             if ( $fileResult and exists $forUser->{$fileName} ) {
-                $self->lmLog( "Notification file deleted", 'debug' );
+                $self->logger->debug("Notification file deleted");
                 $self->notifObject->delete($fileName);
             }
         }
@@ -174,22 +172,21 @@ sub getNotifBack {
             # One pending notification has been found and not accepted,
             # restart process to display pending notifications
             # TODO: is it a good idea to launch all 'afterDatas' subs ?
-            $self->lmLog(
-                'Pending notification has been found and not accepted',
-                'debug' );
+            $self->logger->debug(
+                'Pending notification has been found and not accepted');
             return $self->p->do( $req, $self->p->afterDatas );
         }
 
         # All pending notifications have been accepted, restore cookies and
         # launch 'controlUrl' to restore "urldc" using do()
-        $self->lmLog( 'All pending notifications have been accepted', 'debug' );
+        $self->logger->debug('All pending notifications have been accepted');
         $self->p->rebuildCookies($req);
         return $self->p->do( $req, ['controlUrl'] );
     }
     else {
         # No notifications checked here, this entry point must not be called.
         # Redirecting to portal
-        $self->lmLog( 'No notifications checked', 'debug' );
+        $self->logger->debug('No notifications checked');
         $req->mustRedirect(1);
         return $self->p->do( $req, [] );
     }

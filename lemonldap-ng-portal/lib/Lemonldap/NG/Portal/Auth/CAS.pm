@@ -72,7 +72,7 @@ sub extractFormInfo {
         and %{ $req->{portalHiddenFormValues} } )
     {
 
-        $self->lmLog( "Add hidden values to CAS redirect URL\n", 'debug' );
+        $self->logger->debug("Add hidden values to CAS redirect URL\n");
 
         foreach ( keys %{ $req->{portalHiddenFormValues} } ) {
             $local_url .=
@@ -83,7 +83,7 @@ sub extractFormInfo {
     }
 
     if ( $self->proxy ) {
-        $self->lmLog( "CAS: Proxy mode activated", 'debug' );
+        $self->logger->debug("CAS: Proxy mode activated");
         my $proxy_url = $self->p->fullUrl($req) . '?casProxy=1';
 
         if ( $self->conf->{authChoiceParam}
@@ -92,7 +92,7 @@ sub extractFormInfo {
             $proxy_url .= '&' . $self->conf->{authChoiceParam} . "=$tmp";
         }
 
-        $self->lmLog( "CAS Proxy URL: $proxy_url", 'debug' );
+        $self->logger->debug("CAS Proxy URL: $proxy_url");
 
         $self->cas->proxyMode(
             pgtFile        => $self->conf->{CAS_pgtFile},
@@ -102,7 +102,7 @@ sub extractFormInfo {
 
     # Catch proxy callback
     if ( $req->param('casProxy') ) {
-        $self->lmLog( "CAS: Proxy callback detected", 'debug' );
+        $self->logger->debug("CAS: Proxy callback detected");
 
         my $pgtIou = $req->param('pgtIou');
         my $pgtId  = $req->param('pgtId');
@@ -111,11 +111,11 @@ sub extractFormInfo {
 
             # Store pgtId and pgtIou
             unless ( $self->cas->storePGT( $pgtIou, $pgtId ) ) {
-                $self->lmLog( "CAS: error " . &AuthCAS::get_errors(), 'error' );
+                $self->logger->error( "CAS: error " . &AuthCAS::get_errors() );
             }
             else {
-                $self->lmLog( "CAS: Store pgtIou $pgtIou and pgtId $pgtId",
-                    'debug' );
+                $self->logger->debug(
+                    "CAS: Store pgtIou $pgtIou and pgtId $pgtId");
             }
         }
 
@@ -134,21 +134,21 @@ sub extractFormInfo {
 
     # Unless a ticket has been found, we redirect the user
     unless ($ticket) {
-        $self->lmLog( "CAS: Redirect user to $login_url", 'debug' );
+        $self->logger->debug("CAS: Redirect user to $login_url");
         $req->{urldc} = $login_url;
         $req->steps( [] );
         return PE_REDIRECT;
     }
 
-    $self->lmLog( "CAS: Service Ticket received: $ticket", 'debug' );
+    $self->logger->debug("CAS: Service Ticket received: $ticket");
 
     # Ticket found, try to validate it
     unless ( $req->{user} = $self->cas->validateST( $local_url, $ticket ) ) {
-        $self->lmLog( "CAS: error " . &AuthCAS::get_errors(), 'error' );
+        $self->logger->error( "CAS: error " . &AuthCAS::get_errors() );
         return PE_ERROR;
     }
     else {
-        $self->lmLog( "CAS: User $req->{user} found", 'debug' );
+        $self->logger->debug("CAS: User $req->{user} found");
     }
 
     # Request proxy tickets for proxied services
@@ -158,8 +158,8 @@ sub extractFormInfo {
         my $pgtId = $self->cas->{pgtId};
 
         unless ($pgtId) {
-            $self->lmLog( "CAS: Proxy mode activated, but no PGT received",
-                'error' );
+            $self->logger->error(
+                "CAS: Proxy mode activated, but no PGT received");
             return PE_ERROR;
         }
 
@@ -169,14 +169,13 @@ sub extractFormInfo {
             my $pt      = $self->cas->retrievePT($service);
 
             unless ($pt) {
-                $self->lmLog(
-                    "CAS: No proxy ticket recevied for service $service",
-                    'error' );
+                $self->logger->error(
+                    "CAS: No proxy ticket recevied for service $service");
                 return PE_ERROR;
             }
 
-            $self->lmLog( "CAS: Received proxy ticket $pt for service $service",
-                'debug' );
+            $self->logger->debug(
+                "CAS: Received proxy ticket $pt for service $service");
 
             # Store it in session
             $req->{sessionInfo}->{ '_casPT' . $_ } = $pt;
@@ -205,7 +204,7 @@ sub authLogout {
     my $logout_url =
       $self->cas->getServerLogoutURL( uri_escape( $self->p->fullUrl($req) ) );
 
-    $self->lmLog( "Build CAS logout URL: $logout_url", 'debug' );
+    $self->logger->debug("Build CAS logout URL: $logout_url");
 
     # Register CAS logout URL in logoutServices
     $req->datas->{logoutServices}->{CASserver} = $logout_url;

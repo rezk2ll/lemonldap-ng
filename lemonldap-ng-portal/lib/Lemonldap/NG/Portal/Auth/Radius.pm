@@ -17,9 +17,12 @@ our $VERSION = '2.0.0';
 
 has radius => ( is => 'rw' );
 
-has authnLevel => ( is => 'rw', default => sub {
-    $_[0]->conf->{radiusAuthnLevel};
-});
+has authnLevel => (
+    is      => 'rw',
+    default => sub {
+        $_[0]->conf->{radiusAuthnLevel};
+    }
+);
 
 sub initRadius {
     $_[0]->radius(
@@ -44,11 +47,11 @@ sub init {
 
 sub authenticate {
     my ( $self, $req ) = @_;
-    $self->initRadius unless($self->radius);
-    return PE_RADIUSCONNECTFAILED unless($self->radius);
+    $self->initRadius unless ( $self->radius );
+    return PE_RADIUSCONNECTFAILED unless ( $self->radius );
 
-    my $res = $self->radius->check_pwd($req->user, $req->datas->{password});
-    unless($res==1){
+    my $res = $self->radius->check_pwd( $req->user, $req->datas->{password} );
+    unless ( $res == 1 ) {
         $self->p->userNotice("Unable to authenticate $req->{user} !");
         return PE_BADCREDENTIALS;
     }

@@ -22,7 +22,7 @@ sub addRoute {
     my ( $self, $word, $dest, $methods, $transform ) = (@_);
     $methods ||= [qw(GET POST PUT DELETE)];
     foreach my $method (@$methods) {
-        $self->lmLog( "Add $method route:", 'debug' );
+        $self->logger->debug("Add $method route:");
         $self->genRoute( $self->routes->{$method}, $word, $dest, $transform );
     }
     return $self;
@@ -51,7 +51,7 @@ sub genRoute {
         }
         if ( $dest =~ /^(.+)\.html$/ ) {
             my $tpl = $1 or die;
-            $self->lmLog( "route $dest will use $tpl", 'debug' );
+            $self->logger->debug("route $dest will use $tpl");
             $routes->{$word} = sub { $self->sendHtml( $_[1], $tpl ) };
             return;
         }
@@ -85,7 +85,7 @@ sub genRoute {
         else {
             die "$dest() isn't a method";
         }
-        $self->lmLog( "route $word added", 'debug' );
+        $self->logger->debug("route $word added");
     }
 }
 
@@ -121,7 +121,7 @@ sub handler {
         $last = 1 if ( $_ =~ /[^\.\w]/ );
         ( $last or /^$/ ? 0 : 1 );
     } split /\//, $req->path();
-    $self->lmLog( "Start routing " . ( $path[0] // 'default route' ), 'debug' );
+    $self->logger->debug( "Start routing " . ( $path[0] // 'default route' ) );
 
     if ( !@path and $self->defaultRoute ) {
         @path = ( $self->defaultRoute );

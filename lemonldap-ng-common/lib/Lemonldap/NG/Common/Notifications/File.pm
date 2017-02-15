@@ -48,8 +48,8 @@ sub get {
     my $files;
     foreach my $file (@notif) {
         unless ( open F, $self->{dirName} . "/$file" ) {
-            $self->lmLog( "Unable to read notification $self->{dirName}/$file",
-                'error' );
+            $self->logger->error(
+                "Unable to read notification $self->{dirName}/$file");
             next;
         }
         $files->{$file} = join( '', <F> );

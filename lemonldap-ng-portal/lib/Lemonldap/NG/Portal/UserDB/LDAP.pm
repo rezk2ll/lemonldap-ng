@@ -51,12 +51,11 @@ sub getUser {
         attrs  => $self->attrs,
     );
     if ( $mesg->code() != 0 ) {
-        $self->lmLog( 'LDAP Search error: ' . $mesg->error, 'error' );
+        $self->logger->error( 'LDAP Search error: ' . $mesg->error );
         return PE_LDAPERROR;
     }
     if ( $mesg->count() > 1 ) {
-        $self->lmLog( 'More than one entry returned by LDAP directory',
-            'error' );
+        $self->logger->error('More than one entry returned by LDAP directory');
         return PE_BADCREDENTIALS;
     }
     unless ( $req->datas->{entry} = $mesg->entry(0) ) {
@@ -99,12 +98,9 @@ sub setGroups {
         my $group_value = $self->ldap->getLdapValue( $req->datas->{entry},
             $self->conf->{ldapGroupAttributeNameUser} );
 
-        $self->lmLog(
-            "Searching LDAP groups in "
+        $self->logger->debug( "Searching LDAP groups in "
               . $self->{ldapGroupBase}
-              . " for $group_value",
-            'debug'
-        );
+              . " for $group_value" );
 
         # Call searchGroups
         my $ldapGroups = $self->ldap->searchGroups(

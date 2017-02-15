@@ -20,11 +20,9 @@ sub displayInit {
                   [ $self->conf->{portalSkinRules}->{$skinRule}, $sub ];
             }
             else {
-                $self->lmLog(
+                $self->logger->error(
                     qq(Skin rule "$skinRule" returns an error: )
-                      . HANDLER->tsv->{jail}->error,
-                    'error'
-                );
+                      . HANDLER->tsv->{jail}->error );
             }
         }
     }
@@ -190,10 +188,7 @@ sub display {
             );
         }
         if ( $req->token ) {
-            %templateParams = (
-                %templateParams,
-                TOKEN  => $req->token,
-            );
+            %templateParams = ( %templateParams, TOKEN => $req->token, );
         }
 
         # Show password form if password policy error
@@ -274,7 +269,7 @@ sub display {
 
                 my $displayType = $self->_authentication->getDisplayType($req);
 
-                $self->lmLog( "Display type $displayType ", 'debug' );
+                $self->logger->debug("Display type $displayType ");
 
                 %templateParams = (
                     %templateParams,
@@ -317,7 +312,7 @@ sub display {
         %templateParams = ( %templateParams, %$customParams );
     }
 
-    $self->lmLog( "Skin returned: $skinfile", 'debug' );
+    $self->logger->debug("Skin returned: $skinfile");
     return ( $skinfile, \%templateParams );
 }
 
@@ -381,7 +376,7 @@ sub getSkin {
     foreach my $rule ( @{ $self->conf->{skinRules} } ) {
         if ( $rule->[1]->( $req->sessionInfo ) ) {
             $skin = $rule->[0];
-            $self->lmLog( "Skin $skin selected from skin rule", 'debug' );
+            $self->logger->debug("Skin $skin selected from skin rule");
         }
     }
 
@@ -389,7 +384,7 @@ sub getSkin {
     my $skinParam = $req->param('skin');
     if ( defined $skinParam && !$self->checkXSSAttack( 'skin', $skinParam ) ) {
         $skin = $skinParam;
-        $self->lmLog( "Skin $skin selected from GET/POST parameter", 'debug' );
+        $self->logger->debug("Skin $skin selected from GET/POST parameter");
     }
 
     return $skin;
@@ -406,8 +401,8 @@ sub getCustomTemplateParameters {
         next unless ( $_ =~ /^tpl_(.+)$/ );
         my $tplParam = $1;
         my $tplValue = $conf->{$_};
-        $self->lmLog( "Set custom template parameter $tplParam with $tplValue",
-            'debug' );
+        $self->logger->debug(
+            "Set custom template parameter $tplParam with $tplValue");
 
         $customTplParams->{$tplParam} = $tplValue;
     }
@@ -439,9 +434,9 @@ sub mkSessionArray {
 
     foreach my $session (@$sessions) {
         $tmp .= "<tr>"
-        .($displayUser ? "<td>$session->{user}</td>" : '')
-        . qq'<td class="localeDate" val="$session->{_utime}"></td>'
-        . "<td>$session->{ipAddr}</td>";
+          . ( $displayUser ? "<td>$session->{user}</td>" : '' )
+          . qq'<td class="localeDate" val="$session->{_utime}"></td>'
+          . "<td>$session->{ipAddr}</td>";
         $tmp .= "<td>" . ( $session->{$_} || "" ) . "</td>"
           foreach ( keys %{ $self->conf->{sessionDataToRemember} } );
         $tmp .= "<td>$session->{error}</td>" if ($displayError);

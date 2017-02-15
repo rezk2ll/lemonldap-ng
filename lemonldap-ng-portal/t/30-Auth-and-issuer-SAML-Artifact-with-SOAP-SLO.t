@@ -137,11 +137,12 @@ SKIP: {
         'Query SP for logout'
     );
     expectOK($res);
-    #($url,$query)=expectRedirection($res,qr#http://auth.idp.com(/saml/singleLogout)\?(SAMLart=.*)#);
+
+#($url,$query)=expectRedirection($res,qr#http://auth.idp.com(/saml/singleLogout)\?(SAMLart=.*)#);
 
     ## Push logout artifact to IdP
-    #switch('issuer');
-    #ok($res=$issuer->_get($url,query=>$query,accept=>'text/html',cookie=>"lemonldap=$idpId"),'Follow redirection');
+#switch('issuer');
+#ok($res=$issuer->_get($url,query=>$query,accept=>'text/html',cookie=>"lemonldap=$idpId"),'Follow redirection');
 
     # Test if logout is done
     switch ('issuer');

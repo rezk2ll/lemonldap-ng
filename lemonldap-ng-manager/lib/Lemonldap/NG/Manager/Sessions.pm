@@ -25,7 +25,7 @@ our $VERSION = '2.0.0';
 use constant defaultRoute => 'sessions.html';
 
 sub addRoutes {
-    my($self,$conf) = @_;
+    my ( $self, $conf ) = @_;
 
     # HTML template
     $self->addRoute( 'sessions.html', undef, ['GET'] )

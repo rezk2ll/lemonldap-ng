@@ -22,19 +22,19 @@ sub run {
     $req->path =~ m#^$self->{conf}->{issuerDBGetPath}/(log(?:in|out))#;
     my $logInOut = $1 || 'login';
     if ( $logInOut eq 'login' ) {
-        $self->lmLog( "IssuerGet: request for login", 'debug' );
+        $self->logger->debug("IssuerGet: request for login");
         $self->computeGetParams($req);
         return PE_OK;
     }
     elsif ( $logInOut eq 'logout' ) {
-        $self->lmLog( "IssuerGet: request for logout", 'debug' );
+        $self->logger->debug("IssuerGet: request for logout");
 
         # TODO
         # Display a link to the provided URL
         return PE_OK;
     }
     else {
-        $self->lmLog( "IssuerGet: bad url", 'error' );
+        $self->logger->error("IssuerGet: bad url");
         return PE_BADURL;
     }
 }
@@ -53,21 +53,21 @@ sub computeGetParams {
     my @getPrms;
     if ( exists $self->conf->{issuerDBGetParameters} ) {
         unless ( $req->urldc =~ m#^https?://([^/]+)# ) {
-            $self->lmLog( "Malformed url $req->urldc", 'error' );
+            $self->logger->error("Malformed url $req->urldc");
             return;
         }
         my $vhost = $1;
         my $prms  = $self->conf->{issuerDBGetParameters}->{$vhost};
         unless ($prms) {
-            $self->lmLog( "IssuerGet: $vhost has no configuration", 'warn' );
+            $self->logger->warn("IssuerGet: $vhost has no configuration");
             return '';
         }
         foreach my $param ( keys %$prms ) {
             my $value =
               eval { uri_escape( $req->{sessionInfo}->{ $prms->{$param} } ) };
             if ($@) {
-                $self->lmLog( "IssuerGet: unable to compute $param ($@)",
-                    'error' );
+                $self->logger->error(
+                    "IssuerGet: unable to compute $param ($@)");
                 return;
             }
             $value =~ s/[\r\n\t]//;
@@ -75,7 +75,7 @@ sub computeGetParams {
         }
     }
     else {
-        $self->lmLog( "IssuerGet: no configuration", 'warn' );
+        $self->logger->warn("IssuerGet: no configuration");
         return;
     }
     my $getVars = join '&', @getPrms;

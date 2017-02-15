@@ -90,8 +90,8 @@ sub run {
 
         # AUTHORIZE
         if ( $path eq $self->conf->{oidcServiceMetaDataAuthorizeURI} ) {
-            $self->lmLog( "URL  detected as an OpenID Connect AUTHORIZE URL",
-                'debug' );
+            $self->logger->debug(
+                "URL  detected as an OpenID Connect AUTHORIZE URL");
 
             # Get and save parameters
             my $oidc_request = {};
@@ -103,11 +103,8 @@ sub run {
             {
                 if ( $req->param($param) ) {
                     $oidc_request->{$param} = $req->param($param);
-                    $self->lmLog(
-                        "OIDC request parameter $param: "
-                          . $oidc_request->{$param},
-                        'debug'
-                    );
+                    $self->logger->debug( "OIDC request parameter $param: "
+                          . $oidc_request->{$param} );
                 }
             }
 
@@ -116,13 +113,11 @@ sub run {
             my $flow          = $self->getFlowType($response_type);
 
             unless ($flow) {
-                $self->lmLog( "Unknown response type: $response_type",
-                    'error' );
+                $self->logger->error("Unknown response type: $response_type");
                 return PE_ERROR;
             }
-            $self->lmLog(
-                "OIDC $flow flow requested (response type: $response_type)",
-                'debug' );
+            $self->logger->debug(
+                "OIDC $flow flow requested (response type: $response_type)");
 
             # Extract request_uri/request parameter
             if ( $oidc_request->{'request_uri'} ) {
@@ -133,8 +128,7 @@ sub run {
                     $oidc_request->{'request'} = $request;
                 }
                 else {
-                    $self->lmLog( "Error with Request URI resolution",
-                        'error' );
+                    $self->logger->error("Error with Request URI resolution");
                     return PE_ERROR;
                 }
             }
@@ -145,9 +139,8 @@ sub run {
 
                 # Override OIDC parameters by request content
                 foreach ( keys %$request ) {
-                    $self->lmLog(
-"Override $_ OIDC param by value present in request parameter",
-                        'debug'
+                    $self->logger->debug(
+"Override $_ OIDC param by value present in request parameter"
                     );
                     $oidc_request->{$_} = $request->{$_};
                     $self->p->setHiddenFormValue( $_, $request->{$_}, '' );
@@ -156,11 +149,11 @@ sub run {
 
             # Check all required parameters
             unless ( $oidc_request->{'redirect_uri'} ) {
-                $self->lmLog( "Redirect URI is required", 'error' );
+                $self->logger->error("Redirect URI is required");
                 return PE_ERROR;
             }
             unless ( $oidc_request->{'scope'} ) {
-                $self->lmLog( "Scope is required", 'error' );
+                $self->logger->error("Scope is required");
                 $self->returnRedirectError(
                     $req,
                     $oidc_request->{'redirect_uri'},
@@ -172,7 +165,7 @@ sub run {
                 );
             }
             unless ( $oidc_request->{'client_id'} ) {
-                $self->lmLog( "Client ID is required", 'error' );
+                $self->logger->error("Client ID is required");
                 return $self->returnRedirectError(
                     $req,
                     $oidc_request->{'redirect_uri'},
@@ -185,7 +178,7 @@ sub run {
             }
             if ( $flow eq "implicit" and not defined $oidc_request->{'nonce'} )
             {
-                $self->lmLog( "Nonce is required for implicit flow", 'error' );
+                $self->logger->error("Nonce is required for implicit flow");
                 return $self->returnRedirectError(
                     $req, $oidc_request->{'redirect_uri'},
                     "invalid_request", "nonce required",
@@ -197,8 +190,8 @@ sub run {
             if ( $flow eq "authorizationcode"
                 and not $self->conf->{oidcServiceAllowAuthorizationCodeFlow} )
             {
-                $self->lmLog( "Authorization code flow is not allowed",
-                    'error' );
+                $self->userLogger->error(
+                    "Authorization code flow is not allowed");
                 return $self->returnRedirectError(
                     $req,           $oidc_request->{'redirect_uri'},
                     "server_error", "Authorization code flow not allowed",
@@ -209,7 +202,7 @@ sub run {
             if ( $flow eq "implicit"
                 and not $self->conf->{oidcServiceAllowImplicitFlow} )
             {
-                $self->lmLog( "Implicit flow is not allowed", 'error' );
+                $self->logger->error("Implicit flow is not allowed");
                 return $self->returnRedirectError(
                     $req,           $oidc_request->{'redirect_uri'},
                     "server_error", "Implicit flow not allowed",
@@ -220,7 +213,7 @@ sub run {
             if ( $flow eq "hybrid"
                 and not $self->conf->{oidcServiceAllowHybridFlow} )
             {
-                $self->lmLog( "Hybrid flow is not allowed", 'error' );
+                $self->logger->error("Hybrid flow is not allowed");
                 return $self->returnRedirectError(
                     $req,           $oidc_request->{'redirect_uri'},
                     "server_error", "Hybrid flow not allowed",
@@ -233,9 +226,8 @@ sub run {
             my $reauthentication = 0;
             my $prompt           = $oidc_request->{'prompt'};
             if ( $prompt and $prompt =~ /\blogin\b/ ) {
-                $self->lmLog(
-"Reauthentication requested by Relying Party in prompt parameter",
-                    'debug'
+                $self->logger->debug(
+"Reauthentication requested by Relying Party in prompt parameter"
                 );
                 $reauthentication = 1;
             }
@@ -243,9 +235,8 @@ sub run {
             my $max_age         = $oidc_request->{'max_age'};
             my $_lastAuthnUTime = $req->{sessionInfo}->{_lastAuthnUTime};
             if ( $max_age && time > $_lastAuthnUTime + $max_age ) {
-                $self->lmLog(
-"Reauthentication forced cause authentication time ($_lastAuthnUTime) is too old (>$max_age s)",
-                    'debug'
+                $self->logger->debug(
+"Reauthentication forced cause authentication time ($_lastAuthnUTime) is too old (>$max_age s)"
                 );
                 $reauthentication = 1;
             }
@@ -272,7 +263,7 @@ sub run {
 
             # Check openid scope
             unless ( $oidc_request->{'scope'} =~ /\bopenid\b/ ) {
-                $self->lmLog( "No openid scope found", 'debug' );
+                $self->logger->debug("No openid scope found");
 
                 #TODO manage standard OAuth request
                 return PE_OK;
@@ -280,15 +271,14 @@ sub run {
 
             # Check client_id
             my $client_id = $oidc_request->{'client_id'};
-            $self->lmLog( "Request from client id $client_id", 'debug' );
+            $self->logger->debug("Request from client id $client_id");
 
             # Verify that client_id is registered in configuration
             my $rp = $self->getRP($client_id);
 
             unless ($rp) {
-                $self->lmLog(
-"No registered Relying Party found with client_id $client_id",
-                    'error'
+                $self->logger->error(
+"No registered Relying Party found with client_id $client_id"
                 );
                 return $self->returnRedirectError(
                     $req,
@@ -301,7 +291,7 @@ sub run {
                 );
             }
             else {
-                $self->lmLog( "Client id $client_id match RP $rp", 'debug' );
+                $self->logger->debug("Client id $client_id match RP $rp");
             }
 
             # Check Request JWT signature
@@ -313,12 +303,12 @@ sub run {
                     )
                   )
                 {
-                    $self->lmLog( "Request JWT signature could not be verified",
-                        'error' );
+                    $self->logger->error(
+                        "Request JWT signature could not be verified");
                     return PE_ERROR;
                 }
                 else {
-                    $self->lmLog( "Request JWT signature verified", 'debug' );
+                    $self->logger->debug("Request JWT signature verified");
                 }
             }
 
@@ -333,8 +323,8 @@ sub run {
                     $redirect_uri_allowed = 1 if $redirect_uri eq $_;
                 }
                 unless ($redirect_uri_allowed) {
-                    $self->lmLog( "Redirect URI $redirect_uri not allowed",
-                        'error' );
+                    $self->userLogger->error(
+                        "Redirect URI $redirect_uri not allowed");
                     return PE_BADURL;
                 }
             }
@@ -343,7 +333,7 @@ sub run {
             my $id_token_hint = $oidc_request->{'id_token_hint'};
             if ($id_token_hint) {
 
-                $self->lmLog( "Check sub of ID Token $id_token_hint", 'debug' );
+                $self->logger->debug("Check sub of ID Token $id_token_hint");
 
                 # Check that id_token_hint sub match current user
                 my $sub = $self->getIDTokenSub($id_token_hint);
@@ -353,9 +343,8 @@ sub run {
                   || $self->conf->{whatToTrace};
                 my $user_id = $req->{sessionInfo}->{$user_id_attribute};
                 unless ( $sub eq $user_id ) {
-                    $self->lmLog(
-                        "ID Token hint sub $sub do not match user $user_id",
-                        'error' );
+                    $self->userLogger->error(
+                        "ID Token hint sub $sub do not match user $user_id");
                     return $self->returnRedirectError(
                         $req,
                         $oidc_request->{'redirect_uri'},
@@ -367,8 +356,8 @@ sub run {
                     );
                 }
                 else {
-                    $self->lmLog( "ID Token hint sub $sub match current user",
-                        'debug' );
+                    $self->logger->debug(
+                        "ID Token hint sub $sub match current user");
                 }
             }
 
@@ -376,9 +365,8 @@ sub run {
             my $bypassConsent = $self->conf->{oidcRPMetaDataOptions}->{$rp}
               ->{oidcRPMetaDataOptionsBypassConsent};
             if ($bypassConsent) {
-                $self->lmLog(
-                    "Consent is disabled for RP $rp, user will not be prompted",
-                    'debug'
+                $self->logger->debug(
+                    "Consent is disabled for RP $rp, user will not be prompted"
                 );
             }
             else {
@@ -392,9 +380,8 @@ sub run {
                     my $consent_scope =
                       $req->{sessionInfo}->{"_oidc_consent_scope_$rp"};
 
-                    $self->lmLog(
-"Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)",
-                        'debug'
+                    $self->logger->debug(
+"Consent already given for Relying Party $rp (time: $consent_time, scope: $consent_scope)"
                     );
 
                     # Check accepted scope
@@ -402,14 +389,12 @@ sub run {
                         split( /\s+/, $oidc_request->{'scope'} ) )
                     {
                         if ( $consent_scope =~ /\b$requested_scope\b/ ) {
-                            $self->lmLog(
-                                "Scope $requested_scope already accepted",
-                                'debug' );
+                            $self->logger->debug(
+                                "Scope $requested_scope already accepted");
                         }
                         else {
-                            $self->lmLog(
-"Scope $requested_scope was not previously accepted",
-                                'debug'
+                            $self->logger->debug(
+"Scope $requested_scope was not previously accepted"
                             );
                             $ask_for_consent = 1;
                             last;
@@ -431,15 +416,14 @@ sub run {
                                   $oidc_request->{'scope'}
                             }
                         );
-                        $self->lmLog( "Consent given for Relying Party $rp",
-                            'debug' );
+                        $self->logger->debug(
+                            "Consent given for Relying Party $rp");
                     }
                     elsif ( $req->param('confirm')
                         and $req->param('confirm') == -1 )
                     {
-                        $self->lmLog(
-                            "User refused consent for Relying party $rp",
-                            'debug' );
+                        $self->logger->debug(
+                            "User refused consent for Relying party $rp");
                         return $self->returnRedirectError(
                             $req,
                             $oidc_request->{'redirect_uri'},
@@ -451,15 +435,13 @@ sub run {
                         );
                     }
                     else {
-                        $self->lmLog(
-                            "Obtain user consent for Relying Party $rp",
-                            'debug' );
+                        $self->logger->debug(
+                            "Obtain user consent for Relying Party $rp");
 
                         # Return error if prompt is none
                         if ( $prompt and $prompt =~ /\bnone\b/ ) {
-                            $self->lmLog(
-                                "Consent is needed but prompt is none",
-                                'debug' );
+                            $self->logger->debug(
+                                "Consent is needed but prompt is none");
                             return $self->returnRedirectError(
                                 $req,
                                 $oidc_request->{'redirect_uri'},
@@ -526,7 +508,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 my $codeSession = $self->getOpenIDConnectSession();
                 my $code        = $codeSession->id();
 
-                $self->lmLog( "Generated code: $code", 'debug' );
+                $self->logger->debug("Generated code: $code");
 
                 # Store data in session
                 $codeSession->update(
@@ -546,7 +528,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                     $session_state
                 );
 
-                $self->lmLog( "Redirect user to $response_url", 'debug' );
+                $self->logger->debug("Redirect user to $response_url");
                 $req->urldc($response_url);
 
                 return PE_REDIRECT;
@@ -564,9 +546,8 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                     my $accessTokenSession = $self->getOpenIDConnectSession;
 
                     unless ($accessTokenSession) {
-                        $self->lmLog(
-                            "Unable to create OIDC session for access_token",
-                            "error" );
+                        $self->logger->error(
+                            "Unable to create OIDC session for access_token");
                         $self->returnRedirectError( $req,
                             $oidc_request->{'redirect_uri'},
                             "server_error", undef, undef,
@@ -585,8 +566,8 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 
                     $access_token = $accessTokenSession->id;
 
-                    $self->lmLog( "Generated access token: $access_token",
-                        'debug' );
+                    $self->logger->debug(
+                        "Generated access token: $access_token");
 
                     # Compute hash to store in at_hash
                     my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -642,7 +623,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 my $id_token =
                   $self->createIDToken( $id_token_payload_hash, $rp );
 
-                $self->lmLog( "Generated id token: $id_token", 'debug' );
+                $self->logger->debug("Generated id token: $id_token");
 
                 # Send token response
                 my $expires_in = $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -656,7 +637,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                     $session_state
                 );
 
-                $self->lmLog( "Redirect user to $response_url", 'debug' );
+                $self->logger->debug("Redirect user to $response_url");
                 $req->urldc($response_url);
 
                 return PE_REDIRECT;
@@ -679,7 +660,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                 my $codeSession = $self->getOpenIDConnectSession();
                 my $code        = $codeSession->id();
 
-                $self->lmLog( "Generated code: $code", 'debug' );
+                $self->logger->debug("Generated code: $code");
 
                 # Store data in session
                 $codeSession->update(
@@ -701,9 +682,8 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                     my $accessTokenSession = $self->getOpenIDConnectSession;
 
                     unless ($accessTokenSession) {
-                        $self->lmLog(
-                            "Unable to create OIDC session for access_token",
-                            "error" );
+                        $self->logger->error(
+                            "Unable to create OIDC session for access_token");
                         return $self->returnRedirectError( $req,
                             $oidc_request->{'redirect_uri'},
                             "server_error", undef, undef,
@@ -722,8 +702,8 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
 
                     $access_token = $accessTokenSession->id;
 
-                    $self->lmLog( "Generated access token: $access_token",
-                        'debug' );
+                    $self->logger->debug(
+                        "Generated access token: $access_token");
 
                     # Compute hash to store in at_hash
                     $at_hash = $self->createHash( $access_token, $hash_level );
@@ -769,7 +749,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                     $id_token =
                       $self->createIDToken( $id_token_payload_hash, $rp );
 
-                    $self->lmLog( "Generated id token: $id_token", 'debug' );
+                    $self->logger->debug("Generated id token: $id_token");
                 }
 
                 my $expires_in = $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -783,30 +763,27 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                     $session_state
                 );
 
-                $self->lmLog( "Redirect user to $response_url", 'debug' );
+                $self->logger->debug("Redirect user to $response_url");
                 $req->urldc($response_url);
                 return PE_REDIRECT;
             }
 
-            $self->lmLog( "No flow has been selected", 'debug' );
+            $self->logger->debug("No flow has been selected");
             return PE_OK;
         }
 
         # LOGOUT
         elsif ( $path eq $self->conf->{oidcServiceMetaDataEndSessionURI} ) {
-            $self->lmLog( "URL detected as an OpenID Connect END SESSION URL",
-                'debug' );
+            $self->logger->debug(
+                "URL detected as an OpenID Connect END SESSION URL");
 
             # Set hidden fields
             my $oidc_request = {};
             foreach my $param (qw/id_token_hint post_logout_redirect_uri state/)
             {
                 if ( $oidc_request->{$param} = $req->param($param) ) {
-                    $self->lmLog(
-                        "OIDC request parameter $param: "
-                          . $oidc_request->{$param},
-                        'debug'
-                    );
+                    $self->logger->debug( "OIDC request parameter $param: "
+                          . $oidc_request->{$param} );
                     $self->p->setHiddenFormValue( $param,
                         $oidc_request->{$param}, '' );
                 }
@@ -830,7 +807,7 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
                       $self->buildLogoutResponse( $post_logout_redirect_uri,
                         $state );
 
-                    $self->lmLog( "Redirect user to $response_url", 'debug' );
+                    $self->logger->debug("Redirect user to $response_url");
                     $req->urldc($response_url);
                     return PE_REDIRECT;
                 }
@@ -844,23 +821,22 @@ qq'<h3 trspan="oidcConsent,$display_name">The application $display_name would li
             return PE_CONFIRM;
         }
     }
-    $self->lmLog( "Unknown OIDC endpoint $path, skipping", 'error' );
+    $self->logger->error("Unknown OIDC endpoint $path, skipping");
     return PE_ERROR;
 }
 
 # Handle token endpoint
 sub token {
     my ( $self, $req ) = @_;
-    $self->lmLog( "URL detected as an OpenID Connect TOKEN URL", 'debug' );
+    $self->logger->debug("URL detected as an OpenID Connect TOKEN URL");
 
     # Check authentication
     my ( $client_id, $client_secret ) =
       $self->getEndPointAuthenticationCredentials($req);
 
     unless ( $client_id && $client_secret ) {
-        $self->lmLog(
-"No authentication provided to get token, or authentication type not supported",
-            "error"
+        $self->logger->error(
+"No authentication provided to get token, or authentication type not supported"
         );
         return $self->p->sendError( $req, 'unauthorized_client', 401 );
     }
@@ -869,43 +845,39 @@ sub token {
     my $rp = $self->getRP($client_id);
 
     unless ($rp) {
-        $self->lmLog(
-            "No registered Relying Party found with client_id $client_id",
-            'error' );
+        $self->userLogger->error(
+            "No registered Relying Party found with client_id $client_id");
         return $self->p->sendError( $req, "unauthorized_client", 403 );
     }
     else {
-        $self->lmLog( "Client id $client_id match RP $rp", 'debug' );
+        $self->logger->debug("Client id $client_id match RP $rp");
     }
 
     # Check client_secret
     unless ( $client_secret eq $self->conf->{oidcRPMetaDataOptions}->{$rp}
         ->{oidcRPMetaDataOptionsClientSecret} )
     {
-        $self->lmLog( "Wrong credentials for $rp", "error" );
+        $self->logger->error("Wrong credentials for $rp");
         return $self->p->sendError( "access_denied", 403 );
     }
 
     # Get code session
     my $code = $req->param('code');
 
-    $self->lmLog( "OpenID Connect Code: $code", 'debug' );
+    $self->logger->debug("OpenID Connect Code: $code");
 
     my $codeSession = $self->getOpenIDConnectSession($code);
 
     unless ($codeSession) {
-        $self->lmLog( "Unable to find OIDC session $code", "error" );
+        $self->logger->error("Unable to find OIDC session $code");
         $self->p->sendError( $req, "invalid_grant", 400 );
     }
 
     # Check we have the same redirect_uri value
     unless ( $req->param("redirect_uri") eq $codeSession->data->{redirect_uri} )
     {
-        $self->lmLog(
-            "Provided redirect_uri is different from "
-              . $codeSession->{redirect_uri},
-            "error"
-        );
+        $self->userLogger->error( "Provided redirect_uri is different from "
+              . $codeSession->{redirect_uri} );
         $self->p->sendError( $req, "invalid_request", 400 );
     }
 
@@ -915,9 +887,8 @@ sub token {
         noInfo => 1 );
 
     unless ($apacheSession) {
-        $self->lmLog(
-            "Unable to find user session linked to OIDC session $code",
-            "error" );
+        $self->userLogger->error(
+            "Unable to find user session linked to OIDC session $code");
         $codeSession->remove();
         $self->p->sendError( $req, "invalid_request", 400 );
     }
@@ -928,14 +899,14 @@ sub token {
       || $self->conf->{whatToTrace};
     my $user_id = $apacheSession->data->{$user_id_attribute};
 
-    $self->lmLog( "Found corresponding user: $user_id", 'debug' );
+    $self->logger->debug("Found corresponding user: $user_id");
 
     # Generate access_token
     my $accessTokenSession = $self->getOpenIDConnectSession;
 
     unless ($accessTokenSession) {
-        $self->lmLog( "Unable to create OIDC session for access_token",
-            "error" );
+        $self->userLogger->error(
+            "Unable to create OIDC session for access_token");
         $codeSession->remove();
         $self->p->sendError( $req, "invalid_request", 400 );
     }
@@ -952,7 +923,7 @@ sub token {
 
     my $access_token = $accessTokenSession->id;
 
-    $self->lmLog( "Generated access token: $access_token", 'debug' );
+    $self->logger->debug("Generated access token: $access_token");
 
     # Compute hash to store in at_hash
     my $alg = $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -973,8 +944,8 @@ sub token {
         aud => [$client_id],                                # Audience
         exp => $id_token_exp,                               # expiration
         iat => time,                                        # Issued time
-        auth_time =>
-          $apacheSession->data->{_lastAuthnUTime},    # Authentication time
+        auth_time => $apacheSession->data->{_lastAuthnUTime}
+        ,    # Authentication time
         acr => $id_token_acr,    # Authentication Context Class Reference
         azp => $client_id,       # Authorized party
                                  # TODO amr
@@ -987,7 +958,7 @@ sub token {
     # Create ID Token
     my $id_token = $self->createIDToken( $id_token_payload_hash, $rp );
 
-    $self->lmLog( "Generated id token: $id_token", 'debug' );
+    $self->logger->debug("Generated id token: $id_token");
 
     # Send token response
     my $expires_in = $self->conf->{oidcRPMetaDataOptions}->{$rp}
@@ -1000,7 +971,7 @@ sub token {
         id_token     => $id_token,
     };
 
-    $self->lmLog( "Send token response", 'debug' );
+    $self->logger->debug("Send token response");
 
     $codeSession->remove();
     return $self->p->sendJSONresponse( $req, $token_response );
@@ -1009,23 +980,23 @@ sub token {
 # Handle uerinfo endpoint
 sub userInfo {
     my ( $self, $req ) = @_;
-    $self->lmLog( "URL detected as an OpenID Connect USERINFO URL", 'debug' );
+    $self->logger->debug("URL detected as an OpenID Connect USERINFO URL");
 
     my $access_token = $self->getEndPointAccessToken($req);
 
     unless ($access_token) {
-        $self->lmLog( "Unable to get access_token", "error" );
+        $self->logger->error("Unable to get access_token");
         return $self->returnBearerError( "invalid_request",
             "Access token not found in request" );
     }
 
-    $self->lmLog( "Received Access Token $access_token", 'debug' );
+    $self->logger->debug("Received Access Token $access_token");
 
     my $accessTokenSession = $self->getOpenIDConnectSession($access_token);
 
     unless ($accessTokenSession) {
-        $self->lmLog( "Unable to get access token session for id $access_token",
-            "error" );
+        $self->userLogger->error(
+            "Unable to get access token session for id $access_token");
         return $self->returnBearerError( "invalid_token",
             "Access Token not found or expired" );
     }
@@ -1050,7 +1021,7 @@ sub userInfo {
     else {
         my $userinfo_jwt =
           $self->createJWT( $userinfo_response, $userinfo_sign_alg, $rp );
-        $self->lmLog( "Return UserInfo as JWT: $userinfo_jwt", 'debug' );
+        $self->logger->debug("Return UserInfo as JWT: $userinfo_jwt");
         return [
             200,
             [
@@ -1065,7 +1036,7 @@ sub userInfo {
 # Handle jwks endpoint
 sub jwks {
     my ( $self, $req ) = @_;
-    $self->lmLog( "URL detected as an OpenID Connect JWKS URL", 'debug' );
+    $self->logger->debug("URL detected as an OpenID Connect JWKS URL");
 
     my $jwks = { keys => [] };
 
@@ -1078,26 +1049,25 @@ sub jwks {
         $key->{kid} = $key_id_sig if $key_id_sig;
         push @{ $jwks->{keys} }, $key;
     }
-    $self->lmLog( "Send JWKS response sent", 'debug' );
+    $self->logger->debug("Send JWKS response sent");
     return $self->p->sendJSONresponse( $req, $jwks );
 }
 
 # Handle register endpoint
 sub registration {
     my ( $self, $req ) = @_;
-    $self->lmLog( "URL detected as an OpenID Connect REGISTRATION URL",
-        'debug' );
+    $self->logger->debug("URL detected as an OpenID Connect REGISTRATION URL");
 
     # TODO: check Initial Access Token
 
     # Specific message to allow DOS detection
     my $source_ip = $req->address;
-    $self->lmLog( "OpenID Connect Registration request from $source_ip",
-        'warn' );
+    $self->logger->notice(
+        "OpenID Connect Registration request from $source_ip");
 
     # Check dynamic registration is allowed
     unless ( $self->conf->{oidcServiceAllowDynamicRegistration} ) {
-        $self->lmLog( "Dynamic registration is not allowed", 'error' );
+        $self->logger->error("Dynamic registration is not allowed");
         $self->p->sendError( $req, 'server_error' );
     }
 
@@ -1107,14 +1077,14 @@ sub registration {
         return $self->p->sendError( $req, 'Missing POST datas', 400 );
     }
 
-    $self->lmLog( "Client metadata received: $client_metadata_json", 'debug' );
+    $self->logger->debug("Client metadata received: $client_metadata_json");
 
     my $client_metadata       = $self->decodeJSON($client_metadata_json);
     my $registration_response = {};
 
     # Check redirect_uris
     unless ( $client_metadata->{redirect_uris} ) {
-        $self->lmLog( "Field redirect_uris is mandatory", 'error' );
+        $self->logger->error("Field redirect_uris is mandatory");
         return $self->p->sendError( $req, 'invalid_client_metadata', 400 );
     }
 
@@ -1179,13 +1149,12 @@ sub registration {
           if defined $userinfo_signed_response_alg;
     }
     else {
-        $self->lmLog(
-            "Configuration not saved: $Lemonldap::NG::Common::Conf::msg",
-            'error' );
+        $self->logger->error(
+            "Configuration not saved: $Lemonldap::NG::Common::Conf::msg");
         return $self->p->sendError( $req, 'server_error', 500 );
     }
 
-    $self->lmLog( "Registration response sent", 'debug' );
+    $self->logger->debug("Registration response sent");
     return $self->p->sendJSONresponse( $req, $registration_response,
         code => 201 );
 }
@@ -1193,9 +1162,8 @@ sub registration {
 # Handle logout endpoint for unauthenticated users
 sub endSessionDone {
     my ( $self, $req ) = @_;
-    $self->lmLog( "URL  detected as an OpenID Connect END SESSION URL",
-        'debug' );
-    $self->lmLog( "User is already logged out", 'debug' );
+    $self->logger->debug("URL  detected as an OpenID Connect END SESSION URL");
+    $self->logger->debug("User is already logged out");
 
     my $post_logout_redirect_uri = $req->param('post_logout_redirect_uri');
     my $state                    = $req->param('state');
@@ -1206,7 +1174,7 @@ sub endSessionDone {
         my $response_url =
           $self->buildLogoutResponse( $post_logout_redirect_uri, $state );
 
-        $self->lmLog( "Redirect user to $response_url", 'debug' );
+        $self->logger->debug("Redirect user to $response_url");
         return [ 302, [ Location => $response_url ], [] ];
     }
 
@@ -1217,8 +1185,8 @@ sub endSessionDone {
 # Handle checksession endpoint
 sub checkSession {
     my ( $self, $req ) = @_;
-    $self->lmLog( "URL  detected as an OpenID Connect CHECK SESSION URL",
-        'debug' );
+    $self->logger->debug(
+        "URL  detected as an OpenID Connect CHECK SESSION URL");
 
     # TODO: access_control_allow_origin => '*'
     $req->frame(1);
@@ -1252,7 +1220,7 @@ sub addRouteFromConf {
         my $sub  = $subs{$_};
         my $path = $self->conf->{$_};
         unless ($path) {
-            $self->lmLog( "$_ parameter not defined", 'error' );
+            $self->logger->error("$_ parameter not defined");
             next;
         }
         $self->$adder( $self->path => { $path => $sub }, [ 'GET', 'POST' ] );

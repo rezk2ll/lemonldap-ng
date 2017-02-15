@@ -49,8 +49,8 @@ sub getCasSession {
             $self->p->userInfo("CAS session $id isn't yet available");
         }
         else {
-            $self->lmLog( "Unable to create new CAS session", 'error' );
-            $self->lmLog( $casSession->error,                 'error' );
+            $self->logger->error("Unable to create new CAS session");
+            $self->logger->error( $casSession->error );
         }
         return undef;
     }
@@ -62,7 +62,7 @@ sub getCasSession {
 sub returnCasValidateError {
     my ( $self, $req ) = @_;
 
-    $self->lmLog( "Return CAS validate error", 'debug' );
+    $self->logger->debug("Return CAS validate error");
 
     return [ 200, [ 'Content-Length' => 4 ], ["no\n\n"] ];
 }
@@ -71,8 +71,7 @@ sub returnCasValidateError {
 sub returnCasValidateSuccess {
     my ( $self, $req, $username ) = @_;
 
-    $self->lmLog( "Return CAS validate success with username $username",
-        'debug' );
+    $self->logger->debug("Return CAS validate success with username $username");
 
     return $self->sendSoapResponse( $req, "yes\n$username\n" );
 }
@@ -84,7 +83,7 @@ sub returnCasServiceValidateError {
     $code ||= 'INTERNAL_ERROR';
     $text ||= 'No description provided';
 
-    $self->lmLog( "Return CAS service validate error $code ($text)", 'debug' );
+    $self->logger->debug("Return CAS service validate error $code ($text)");
 
     return $self->sendSoapResponse(
         $req, "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
@@ -99,8 +98,8 @@ sub returnCasServiceValidateError {
 sub returnCasServiceValidateSuccess {
     my ( $self, $req, $username, $pgtIou, $proxies, $attributes ) = @_;
 
-    $self->lmLog( "Return CAS service validate success with username $username",
-        'debug' );
+    $self->logger->debug(
+        "Return CAS service validate success with username $username");
 
     my $s = "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
 \t<cas:authenticationSuccess>
@@ -121,13 +120,12 @@ sub returnCasServiceValidateSuccess {
         $s .= "\t\t</cas:attributes>\n";
     }
     if ( defined $pgtIou ) {
-        $self->lmLog( "Add proxy granting ticket $pgtIou in response",
-            'debug' );
+        $self->logger->debug("Add proxy granting ticket $pgtIou in response");
         $s .=
           "\t\t<cas:proxyGrantingTicket>$pgtIou</cas:proxyGrantingTicket>\n";
     }
     if ($proxies) {
-        $self->lmLog( "Add proxies $proxies in response", 'debug' );
+        $self->logger->debug("Add proxies $proxies in response");
         $s .= "\t\t<cas:proxies>\n\t\t\t<cas:proxy>$_</cas:proxy>\n"
           foreach ( split( /$self->{multiValuesSeparator}/, $proxies ) );
         $s .= "\t\t</cas:proxies>\n";
@@ -144,7 +142,7 @@ sub returnCasProxyError {
     $code ||= 'INTERNAL_ERROR';
     $text ||= 'No description provided';
 
-    $self->lmLog( "Return CAS proxy error $code ($text)", 'debug' );
+    $self->logger->debug("Return CAS proxy error $code ($text)");
 
     return $self->sendSoapResponse(
         $req, "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
@@ -159,7 +157,7 @@ sub returnCasProxyError {
 sub returnCasProxySuccess {
     my ( $self, $req, $ticket ) = @_;
 
-    $self->lmLog( "Return CAS proxy success with ticket $ticket", 'debug' );
+    $self->logger->debug("Return CAS proxy success with ticket $ticket");
 
     return $self->sendSoapResponse(
         $req, "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
@@ -188,7 +186,7 @@ sub deleteCasSecondarySessions {
         foreach my $cas_session (@cas_sessions_keys) {
 
             # Get session
-            $self->lmLog( "Retrieve CAS session $cas_session", 'debug' );
+            $self->logger->debug("Retrieve CAS session $cas_session");
 
             my $casSession = $self->getCasSession($cas_session);
 
@@ -197,8 +195,7 @@ sub deleteCasSecondarySessions {
         }
     }
     else {
-        $self->lmLog( "No CAS session found for session $session_id ",
-            'debug' );
+        $self->logger->debug("No CAS session found for session $session_id ");
     }
 
     return $result;
@@ -211,7 +208,7 @@ sub deleteCasSession {
 
     # Check session object
     unless ( $session && $session->data ) {
-        $self->lmLog( "No session to delete", 'error' );
+        $self->logger->error("No session to delete");
         return 0;
     }
 
@@ -220,11 +217,11 @@ sub deleteCasSession {
 
     # Delete session
     unless ( $session->remove ) {
-        $self->lmLog( $session->error, 'error' );
+        $self->logger->error( $session->error );
         return 0;
     }
 
-    $self->lmLog( "CAS session $session_id deleted", 'debug' );
+    $self->logger->debug("CAS session $session_id deleted");
 
     return 1;
 }
@@ -237,7 +234,7 @@ sub callPgtUrl {
     my $url =
       $pgtUrl . ( $pgtUrl =~ /\?/ ? '&' : '?' ) . "pgtIou=$pgtIou&pgtId=$pgtId";
 
-    $self->lmLog( "Call URL $url", 'debug' );
+    $self->logger->debug("Call URL $url");
 
     # GET URL
     my $response = $self->ua->get($url);

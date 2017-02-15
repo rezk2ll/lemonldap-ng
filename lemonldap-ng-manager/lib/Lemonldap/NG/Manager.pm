@@ -33,7 +33,7 @@ sub init {
 
     if ( my $localconf = $self->confAcc->getLocalConf(MANAGERSECTION) ) {
         $self->{$_} = $args->{$_} //= $localconf->{$_}
-          foreach ( grep {$_ !~ /^(?:l|userL)ogger$/} keys %$localconf );
+          foreach ( grep { $_ !~ /^(?:l|userL)ogger$/ } keys %$localconf );
     }
 
     # Manager needs to keep new Ajax behaviour
@@ -59,14 +59,14 @@ sub init {
     for ( my $i = 0 ; $i < @enabledModules ; $i++ ) {
         my $mod = $enabledModules[$i];
         no strict 'refs';
-        if ( &{"${mod}::addRoutes"}($self,$conf) ) {
-            $self->lmLog( "Module $mod enabled", 'debug' );
+        if ( &{"${mod}::addRoutes"}( $self, $conf ) ) {
+            $self->logger->debug("Module $mod enabled");
             push @working, $mod;
         }
         else {
             $links[$i] = undef;
-            $self->lmLog( "Module $mod can not be enabled: " . $self->error,
-                'error' );
+            $self->logger->error(
+                "Module $mod can not be enabled: " . $self->error );
         }
     }
     return 0 unless (@working);
@@ -114,9 +114,11 @@ sub javascript {
     return
       'var formPrefix=staticPrefix+"forms/";var confPrefix=scriptname+"confs/";'
       . ( $self->links ? 'var links=' . to_json( $self->links ) . ';' : '' )
-      . ( $self->menuLinks
+      . (
+        $self->menuLinks
         ? 'var menulinks=' . to_json( $self->menuLinks ) . ';'
-        : '' );
+        : ''
+      );
 }
 
 1;

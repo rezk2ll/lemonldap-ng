@@ -28,7 +28,7 @@ sub _run {
     my $self = shift;
     return sub {
         my $req = $_[0];
-        $self->lmLog( 'New request', 'debug' );
+        $self->logger->debug('New request');
         my $res = $self->_authAndTrace(
             Lemonldap::NG::Common::PSGI::Request->new($req) );
 

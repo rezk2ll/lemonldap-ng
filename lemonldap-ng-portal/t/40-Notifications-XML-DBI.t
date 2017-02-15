@@ -59,7 +59,7 @@ qq{INSERT INTO notifications VALUES ('dwho','testref','2016-05-30 00:00:00','<?x
     );
     expectOK($res);
     my $id = expectCookie($res);
-    ok($res->[2]->[0] =~ /1x1x1/,' Found ref');
+    ok( $res->[2]->[0] =~ /1x1x1/, ' Found ref' );
     expectForm( $res, undef, '/notifback', 'reference1x1', 'url' );
 
     # Verify that cookie is ciphered (session unvalid)

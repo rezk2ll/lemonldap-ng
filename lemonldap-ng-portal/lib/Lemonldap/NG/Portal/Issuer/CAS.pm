@@ -61,7 +61,7 @@ sub run {
     # 1. LOGIN
     if ( $target eq $cas_login ) {
 
-        $self->lmLog( "URL $url detected as an CAS LOGIN URL", 'debug' );
+        $self->logger->debug("URL $url detected as an CAS LOGIN URL");
 
         # GET parameters
         my $service = $self->p->getHiddenFormValue( $req, 'service' )
@@ -76,7 +76,7 @@ sub run {
         if ( $renew and $renew eq 'true' ) {
 
             # Authentication must be replayed
-            $self->lmLog( "Authentication renew requested", 'debug' );
+            $self->logger->debug("Authentication renew requested");
             $self->{updateSession} = 1;
             $req->steps(
                 [
@@ -92,7 +92,7 @@ sub run {
 
         # If no service defined, exit
         unless ( defined $service ) {
-            $self->lmLog( "No service defined in CAS URL", 'debug' );
+            $self->logger->debug("No service defined in CAS URL");
             return PE_OK;
         }
 
@@ -100,36 +100,34 @@ sub run {
         my $casAccessControlPolicy = $self->conf->{casAccessControlPolicy};
 
         if ( $casAccessControlPolicy =~ /^(error|faketicket)$/i ) {
-            $self->lmLog( "CAS access control requested on service $service",
-                'debug' );
+            $self->logger->debug(
+                "CAS access control requested on service $service");
 
             ## HERE
             unless ( $service =~ m#^https?://([^/]+)(/.*)?$# ) {
-                $self->lmLog( "Bad service $service", 'error' );
+                $self->logger->error("Bad service $service");
                 return PE_ERROR;
             }
             my ( $host, $uri ) = ( $1, $2 );
             if ( $self->p->HANDLER->grant( $req->sessionInfo, $1, undef, $2 ) )
             {
-                $self->lmLog( "CAS service $service access allowed", 'debug' );
+                $self->logger->debug("CAS service $service access allowed");
             }
 
             else {
-                $self->lmLog( "CAS service $service access not allowed",
-                    'error' );
+                $self->userLogger->error(
+                    "CAS service $service access not allowed");
 
                 if ( $casAccessControlPolicy =~ /^(error)$/i ) {
-                    $self->lmLog(
-"Return error instead of redirecting user on CAS service",
-                        'debug'
+                    $self->logger->debug(
+"Return error instead of redirecting user on CAS service"
                     );
                     return PE_CAS_SERVICE_NOT_ALLOWED;
                 }
 
                 else {
-                    $self->lmLog(
-                        "Redirect user on CAS service with a fake ticket",
-                        'debug' );
+                    $self->logger->debug(
+                        "Redirect user on CAS service with a fake ticket");
                     $casServiceTicket = "ST-F4K3T1CK3T";
                 }
             }
@@ -145,21 +143,20 @@ sub run {
                 time() - $last_authn_utime <
                 $self->conf->{portalForceAuthnInterval} )
             {
-                $self->lmLog(
-                    "Authentication is recent, will set CAS renew flag to true",
-                    'debug'
+                $self->logger->debug(
+                    "Authentication is recent, will set CAS renew flag to true"
                 );
                 $casRenewFlag = 1;
             }
 
             # Create a service ticket
-            $self->lmLog( "Create a CAS service ticket for service $service",
-                'debug' );
+            $self->logger->debug(
+                "Create a CAS service ticket for service $service");
 
             my $casServiceSession = $self->getCasSession();
 
             unless ($casServiceSession) {
-                $self->lmLog( "Unable to create CAS session", 'error' );
+                $self->logger->error("Unable to create CAS session");
                 return PE_ERROR;
             }
 
@@ -175,8 +172,8 @@ sub run {
             my $casServiceSessionID = $casServiceSession->id;
             $casServiceTicket = "ST-" . $casServiceSessionID;
 
-            $self->lmLog( "CAS service session $casServiceSessionID created",
-                'debug' );
+            $self->logger->debug(
+                "CAS service session $casServiceSessionID created");
         }
 
         # Redirect to service
@@ -187,7 +184,7 @@ sub run {
             : '?ticket=' . $casServiceTicket
         );
 
-        $self->lmLog( "Redirect user to $service_url", 'debug' );
+        $self->logger->debug("Redirect user to $service_url");
 
         $req->{urldc} = $service_url;
 
@@ -198,7 +195,7 @@ sub run {
     # 2. LOGOUT
     if ( $target eq $cas_logout ) {
 
-        $self->lmLog( "URL $url detected as an CAS LOGOUT URL", 'debug' );
+        $self->logger->debug("URL $url detected as an CAS LOGOUT URL");
 
         # Disable Content-Security-Policy header since logout can be embedded
         # in a frame
@@ -213,14 +210,14 @@ sub run {
         # Delete local session
         if ( my $session = $self->p->getApacheSession($session_id) ) {
             unless ( $self->p->_deleteSession( $req, $session ) ) {
-                $self->lmLog( "Fail to delete session $session_id ", 'error' );
+                $self->logger->error("Fail to delete session $session_id ");
             }
 
             if ($logout_url) {
 
                 # Display a link to the provided URL
-                $self->lmLog( "Logout URL $logout_url will be displayed",
-                    'debug' );
+                $self->logger->debug(
+                    "Logout URL $logout_url will be displayed");
 
                 $req->info(
 '<h3 trmsg="back2CasUrl">The application you just logged out of has provided a link it would like you to follow</h3>'
@@ -232,7 +229,7 @@ sub run {
             }
         }
         else {
-            $self->lmLog( "Unknown session $session_id", 'info' );
+            $self->logger->info("Unknown session $session_id");
         }
 
         return PE_LOGOUT_OK;
@@ -242,12 +239,11 @@ sub run {
     # 3. VALIDATE [CAS 1.0]
     if ( $target eq $cas_validate ) {
 
-        $self->lmLog( "URL $url detected as an CAS VALIDATE URL", 'debug' );
+        $self->logger->debug("URL $url detected as an CAS VALIDATE URL");
 
         # This URL must not be called by authenticated users
-        $self->lmLog(
-            "CAS VALIDATE URL called by authenticated user, ignore it",
-            'info' );
+        $self->userLogger->info(
+            "CAS VALIDATE URL called by authenticated user, ignore it");
 
         return PE_OK;
     }
@@ -255,14 +251,12 @@ sub run {
     # 4. SERVICE VALIDATE [CAS 2.0]
     if ( $target eq $cas_serviceValidate ) {
 
-        $self->lmLog( "URL $url detected as an CAS SERVICE VALIDATE URL",
-            'debug' );
+        $self->logger->debug(
+            "URL $url detected as an CAS SERVICE VALIDATE URL");
 
         # This URL must not be called by authenticated users
-        $self->lmLog(
-            "CAS SERVICE VALIDATE URL called by authenticated user, ignore it",
-            'info'
-        );
+        $self->userLogger->info(
+            "CAS SERVICE VALIDATE URL called by authenticated user, ignore it");
 
         return PE_OK;
     }
@@ -270,13 +264,11 @@ sub run {
     # 5. PROXY VALIDATE [CAS 2.0]
     if ( $target eq $cas_proxyValidate ) {
 
-        $self->lmLog( "URL $url detected as an CAS PROXY VALIDATE URL",
-            'debug' );
+        $self->logger->debug("URL $url detected as an CAS PROXY VALIDATE URL");
 
         # This URL must not be called by authenticated users
-        $self->lmLog(
-            "CAS PROXY VALIDATE URL called by authenticated user, ignore it",
-            'info' );
+        $self->userLogger->info(
+            "CAS PROXY VALIDATE URL called by authenticated user, ignore it");
 
         return PE_OK;
     }
@@ -284,11 +276,11 @@ sub run {
     # 6. PROXY [CAS 2.0]
     if ( $target eq $cas_proxy ) {
 
-        $self->lmLog( "URL $url detected as an CAS PROXY URL", 'debug' );
+        $self->logger->debug("URL $url detected as an CAS PROXY URL");
 
         # This URL must not be called by authenticated users
-        $self->lmLog( "CAS PROXY URL called by authenticated user, ignore it",
-            'info' );
+        $self->userLogger->info(
+            "CAS PROXY URL called by authenticated user, ignore it");
 
         return PE_OK;
     }
@@ -312,8 +304,8 @@ sub logout {
 
 sub validate {
     my ( $self, $req ) = @_;
-    $self->lmLog( 'URL ' . $req->uri . ' detected as an CAS VALIDATE URL',
-        'debug' );
+    $self->logger->debug(
+        'URL ' . $req->uri . ' detected as an CAS VALIDATE URL' );
 
     # GET parameters
     my $service = $req->param('service');
@@ -322,27 +314,26 @@ sub validate {
 
     # Required parameters: service and ticket
     unless ( $service and $ticket ) {
-        $self->lmLog( "Service and Ticket parameters required", 'error' );
+        $self->logger->error("Service and Ticket parameters required");
         return $self->returnCasValidateError();
     }
 
-    $self->lmLog(
-        "Get validate request with ticket $ticket for service $service",
-        'debug' );
+    $self->logger->debug(
+        "Get validate request with ticket $ticket for service $service");
 
     unless ( $ticket =~ s/^ST-// ) {
-        $self->lmLog( "Provided ticket is not a service ticket (ST)", 'error' );
+        $self->logger->error("Provided ticket is not a service ticket (ST)");
         return $self->returnCasValidateError();
     }
 
     my $casServiceSession = $self->getCasSession($ticket);
 
     unless ($casServiceSession) {
-        $self->lmLog( "Service ticket session $ticket not found", 'error' );
+        $self->logger->error("Service ticket session $ticket not found");
         return $self->returnCasValidateError();
     }
 
-    $self->lmLog( "Service ticket session $ticket found", 'debug' );
+    $self->logger->debug("Service ticket session $ticket found");
 
     my $service1_uri = URI->new($service);
     my $service2_uri = URI->new( $casServiceSession->data->{service} );
@@ -354,38 +345,32 @@ sub validate {
         if (   $service1_uri->rel($service2_uri) eq "./"
             or $service2_uri->rel($service1_uri) eq "./" )
         {
-            $self->lmLog(
+            $self->logger->notice(
 "Submitted service $service1_uri does not exactly match initial service "
                   . $service2_uri
-                  . ' but difference is tolerated.',
-                'warn'
-            );
+                  . ' but difference is tolerated.' );
         }
         else {
-            $self->lmLog(
+            $self->logger->error(
                 "Submitted service $service does not match initial service "
-                  . $casServiceSession->data->{service},
-                'error'
-            );
+                  . $casServiceSession->data->{service} );
             $self->deleteCasSession($casServiceSession);
             return $self->returnCasValidateError();
         }
     }
     else {
-        $self->lmLog( "Submitted service $service math initial servce",
-            'debug' );
+        $self->logger->debug("Submitted service $service math initial servce");
     }
 
     # Check renew
     if ( $renew and $renew eq 'true' ) {
 
         # We should check the ST was delivered with primary credentials
-        $self->lmLog( "Renew flag detected ", 'debug' );
+        $self->logger->debug("Renew flag detected ");
 
         unless ( $casServiceSession->data->{renew} ) {
-            $self->lmLog(
-"Authentication renew requested, but not done in former authentication process",
-                'error'
+            $self->logger->error(
+"Authentication renew requested, but not done in former authentication process"
             );
             $self->deleteCasSession($casServiceSession);
             return $self->returnCasValidateError();
@@ -397,12 +382,9 @@ sub validate {
       $self->p->getApacheSession( $casServiceSession->data->{_cas_id} );
 
     unless ($localSession) {
-        $self->lmLog(
-            "Local session "
+        $self->logger->warn( "Local session "
               . $casServiceSession->data->{_cas_id}
-              . " notfound",
-            'error'
-        );
+              . " notfound" );
         $self->deleteCasSession($casServiceSession);
         return $self->returnCasValidateError();
     }
@@ -412,7 +394,7 @@ sub validate {
       $localSession->data->{ $self->conf->{casAttr}
           || $self->conf->{whatToTrace} };
 
-    $self->lmLog( "Get username $username", 'debug' );
+    $self->logger->debug("Get username $username");
 
     # Return success message
     $self->deleteCasSession($casServiceSession);
@@ -437,9 +419,8 @@ sub proxyValidate {
 
 sub _validate2 {
     my ( $self, $urlType, $req ) = @_;
-    $self->lmLog(
-        'URL ' . $req->uri . " detected as an CAS $urlType VALIDATE URL",
-        'debug' );
+    $self->logger->debug(
+        'URL ' . $req->uri . " detected as an CAS $urlType VALIDATE URL" );
 
     # GET parameters
     my $service = $req->param('service');
@@ -452,27 +433,24 @@ sub _validate2 {
 
     # Required parameters: service and ticket
     unless ( $service and $ticket ) {
-        $self->lmLog( "Service and Ticket parameters required", 'error' );
+        $self->logger->error("Service and Ticket parameters required");
         return $self->returnCasServiceValidateError( 'INVALID_REQUEST',
             'Missing mandatory parameters (service, ticket)' );
     }
 
-    $self->lmLog(
-        "Get "
+    $self->logger->debug( "Get "
           . lc($urlType)
-          . " validate request with ticket $ticket for service $service",
-        'debug'
-    );
+          . " validate request with ticket $ticket for service $service" );
 
     # Get CAS session corresponding to ticket
     if ( $urlType eq 'SERVICE' and !( $ticket =~ s/^ST-// ) ) {
-        $self->lmLog( "Provided ticket is not a service ticket (ST)", 'error' );
+        $self->logger->error("Provided ticket is not a service ticket (ST)");
         return $self->returnCasServiceValidateError( 'INVALID_TICKET',
             'Provided ticket is not a service ticket' );
     }
     elsif ( $urlType eq 'PROXY' and !( $ticket =~ s/^(P|S)T-// ) ) {
-        $self->lmLog( "Provided ticket is not a service or proxy ticket ($1T)",
-            'error' );
+        $self->userLogger->error(
+            "Provided ticket is not a service or proxy ticket ($1T)");
         return $self->returnCasServiceValidateError( 'INVALID_TICKET',
             'Provided ticket is not a service or proxy ticket' );
     }
@@ -480,12 +458,12 @@ sub _validate2 {
     my $casServiceSession = $self->getCasSession($ticket);
 
     unless ($casServiceSession) {
-        $self->lmLog( "$urlType ticket session $ticket not found", 'error' );
+        $self->logger->error("$urlType ticket session $ticket not found");
         return $self->returnCasServiceValidateError( 'INVALID_TICKET',
             'Ticket not found' );
     }
 
-    $self->lmLog( "$urlType ticket session $ticket found", 'debug' );
+    $self->logger->debug("$urlType ticket session $ticket found");
 
     my $service1_uri = URI->new($service);
     my $service2_uri = URI->new( $casServiceSession->data->{service} );
@@ -497,39 +475,34 @@ sub _validate2 {
         if (   $service1_uri->rel($service2_uri) eq "./"
             or $service2_uri->rel($service1_uri) eq "./" )
         {
-            $self->lmLog(
+            $self->logger->notice(
 "Submitted service $service1_uri does not exactly match initial service "
                   . $service2_uri
-                  . ' but difference is tolerated.',
-                'warn'
-            );
+                  . ' but difference is tolerated.' );
         }
         else {
-            $self->lmLog(
+            $self->userLogger->error(
                 "Submitted service $service does not match initial service "
-                  . $casServiceSession->data->{service},
-                'error'
-            );
+                  . $casServiceSession->data->{service} );
             $self->deleteCasSession($casServiceSession);
             return $self->returnCasServiceValidateError( 'INVALID_SERVICE',
                 'Submitted service does not match initial service' );
         }
     }
     else {
-        $self->lmLog( "Submitted service $service match initial service",
-            'debug' );
+        $self->logger->debug(
+            "Submitted service $service match initial service");
     }
 
     # Check renew
     if ( $renew and $renew eq 'true' ) {
 
         # We should check the ST was delivered with primary credentials
-        $self->lmLog( "Renew flag detected ", 'debug' );
+        $self->logger->debug("Renew flag detected ");
 
         unless ( $casServiceSession->data->{renew} ) {
-            $self->lmLog(
-"Authentication renew requested, but not done in former authentication process",
-                'error'
+            $self->logger->error(
+"Authentication renew requested, but not done in former authentication process"
             );
             $self->deleteCasSession($casServiceSession);
             return $self->returnCasValidateError();
@@ -544,8 +517,8 @@ sub _validate2 {
     if ($pgtUrl) {
 
         # Create a proxy granting ticket
-        $self->lmLog( "Create a CAS proxy granting ticket for service $service",
-            'debug' );
+        $self->logger->debug(
+            "Create a CAS proxy granting ticket for service $service");
 
         my $casProxyGrantingSession = $self->getCasSession();
 
@@ -571,9 +544,8 @@ sub _validate2 {
 
             $casProxyGrantingSession->update($PGinfos);
 
-            $self->lmLog(
-                "CAS proxy granting session $casProxyGrantingSessionID created",
-                'debug'
+            $self->logger->debug(
+                "CAS proxy granting session $casProxyGrantingSessionID created"
             );
 
             # Generate the proxy granting ticket IOU
@@ -583,9 +555,8 @@ sub _validate2 {
 
                 $casProxyGrantingTicketIOU = "PGTIOU-" . $tmpCasSession->id;
                 $self->deleteCasSession($tmpCasSession);
-                $self->lmLog(
-"Generate proxy granting ticket IOU $casProxyGrantingTicketIOU",
-                    'debug'
+                $self->logger->debug(
+"Generate proxy granting ticket IOU $casProxyGrantingTicketIOU"
                 );
 
                 # Request pgtUrl
@@ -596,22 +567,20 @@ sub _validate2 {
                     )
                   )
                 {
-                    $self->lmLog(
-                        "Proxy granting URL $pgtUrl called with success",
-                        'debug' );
+                    $self->logger->debug(
+                        "Proxy granting URL $pgtUrl called with success");
                 }
                 else {
-                    $self->lmLog( "Error calling proxy granting URL $pgtUrl",
-                        'warn' );
+                    $self->logger->error(
+                        "Error calling proxy granting URL $pgtUrl");
                     $casProxyGrantingTicketIOU = undef;
                 }
             }
 
         }
         else {
-            $self->lmLog(
-                "Error in proxy granting ticket management, bypass it",
-                'warn' );
+            $self->logger->warn(
+                "Error in proxy granting ticket management, bypass it");
         }
     }
 
@@ -620,12 +589,9 @@ sub _validate2 {
       $self->p->getApacheSession( $casServiceSession->data->{_cas_id} );
 
     unless ($localSession) {
-        $self->lmLog(
-            "Local session "
+        $self->userLogger->error( "Local session "
               . $casServiceSession->data->{_cas_id}
-              . " notfound",
-            'error'
-        );
+              . " notfound" );
         $self->deleteCasSession($casServiceSession);
         return $self->returnCasServiceValidateError( 'INTERNAL_ERROR',
             'No session associated to ticket' );
@@ -636,7 +602,7 @@ sub _validate2 {
       $localSession->data->{ $self->conf->{casAttr}
           || $self->conf->{whatToTrace} };
 
-    $self->lmLog( "Get username $username", 'debug' );
+    $self->logger->debug("Get username $username");
 
     # Get attributes [CAS 3.0]
     my $attributes = {};

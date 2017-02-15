@@ -22,7 +22,7 @@ sub new {
             $name = 'warning' if ( $_ eq 'warn' );
             $name = 'err'     if ( $_ eq 'error' );
             eval qq'sub $_ {syslog("$name|".\$_[0]->{facility},\$_[1])}';
-            die $@ if($@);
+            die $@ if ($@);
         }
         else {
             eval qq'sub $_ {1}';

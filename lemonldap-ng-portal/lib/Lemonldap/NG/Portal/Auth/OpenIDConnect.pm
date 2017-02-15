@@ -26,7 +26,7 @@ sub init {
     return 0 unless ( $self->loadOPs and $self->refreshJWKSdata );
     my @tab = ( sort keys %{ $self->oidcOPList } );
     unless (@tab) {
-        $self->lmLog( "No OP configured", 'error' );
+        $self->logger->error("No OP configured");
         return 0;
     }
     $self->opNumber( scalar @tab );
@@ -69,8 +69,8 @@ sub extractFormInfo {
     # Check callback
     if ( $req->param( $self->conf->{oidcRPCallbackGetParam} ) ) {
 
-        $self->lmLog( 'OpenIDConnect callback URI detected: ' . $req->uri,
-            'debug' );
+        $self->logger->debug(
+            'OpenIDConnect callback URI detected: ' . $req->uri );
 
         # AuthN Response
         my $state = $req->param('state');
@@ -78,10 +78,10 @@ sub extractFormInfo {
         # Restore state
         if ($state) {
             if ( $self->extractState( $req, $state ) ) {
-                $self->lmLog( "State $state extracted", 'debug' );
+                $self->logger->debug("State $state extracted");
             }
             else {
-                $self->lmLog( "Unable to extract state $state", 'error' );
+                $self->logger->error("Unable to extract state $state");
                 return PE_ERROR;
             }
         }
@@ -90,11 +90,11 @@ sub extractFormInfo {
         my $op = $req->datas->{_oidcOPCurrent};
 
         unless ($op) {
-            $self->lmLog( "OpenID Provider not found", 'error' );
+            $self->logger->error("OpenID Provider not found");
             return PE_ERROR;
         }
 
-        $self->lmLog( "Using OpenID Provider $op", 'debug' );
+        $self->logger->debug("Using OpenID Provider $op");
 
         # Check error
         my $error = $req->param("error");
@@ -102,10 +102,10 @@ sub extractFormInfo {
             my $error_description = $req->param("error_description");
             my $error_uri         = $req->param("error_uri");
 
-            $self->lmLog( "Error returned by $op Provider: $error", 'error' );
-            $self->lmLog( "Error description: $error_description",  'error' )
+            $self->logger->error("Error returned by $op Provider: $error");
+            $self->logger->error("Error description: $error_description")
               if $error_description;
-            $self->lmLog( "Error URI: $error_uri", 'error' ) if $error_uri;
+            $self->logger->error("Error URI: $error_uri") if $error_uri;
 
             return PE_ERROR;
         }
@@ -125,38 +125,37 @@ sub extractFormInfo {
         my $json = $self->decodeJSON($content);
 
         if ( $json->{error} ) {
-            $self->lmLog( "Error in token response:" . $json->{error},
-                'error' );
+            $self->logger->error( "Error in token response:" . $json->{error} );
             return PE_ERROR;
         }
 
         # Check validity of token response
         unless ( $self->checkTokenResponseValidity($json) ) {
-            $self->lmLog( "Token response is not valid", 'error' );
+            $self->logger->error("Token response is not valid");
             return PE_ERROR;
         }
         else {
-            $self->lmLog( "Token response is valid", 'debug' );
+            $self->logger->debug("Token response is valid");
         }
 
         my $access_token = $json->{access_token};
         my $id_token     = $json->{id_token};
 
-        $self->lmLog( "Access token: $access_token", 'debug' );
-        $self->lmLog( "ID token: $id_token",         'debug' );
+        $self->logger->debug("Access token: $access_token");
+        $self->logger->debug("ID token: $id_token");
 
         # Verify JWT signature
         if ( $self->conf->{oidcOPMetaDataOptions}->{$op}
             ->{oidcOPMetaDataOptionsCheckJWTSignature} )
         {
             unless ( $self->verifyJWTSignature( $id_token, $op ) ) {
-                $self->lmLog( "JWT signature verification failed", 'error' );
+                $self->logger->error("JWT signature verification failed");
                 return PE_ERROR;
             }
-            $self->lmLog( "JWT signature verified", 'debug' );
+            $self->logger->debug("JWT signature verified");
         }
         else {
-            $self->lmLog( "JWT signature check disabled", 'debug' );
+            $self->logger->debug("JWT signature check disabled");
         }
 
         my $id_token_payload = $self->extractJWT($id_token)->[1];
@@ -168,25 +167,24 @@ sub extractFormInfo {
         my $at_hash = $id_token_payload_hash->{at_hash};
         if ($at_hash) {
             unless ( $self->verifyHash( $access_token, $at_hash, $id_token ) ) {
-                $self->lmLog( "Access token hash verification failed",
-                    'error' );
+                $self->userLogger->error(
+                    "Access token hash verification failed");
                 return PE_ERROR;
             }
-            $self->lmLog( "Access token hash verified", 'debug' );
+            $self->logger->debug("Access token hash verified");
         }
         else {
-            $self->lmLog(
-                "No at_hash in ID Token, access token will not be verified",
-                'debug' );
+            $self->logger->debug(
+                "No at_hash in ID Token, access token will not be verified");
         }
 
         # Check validity of ID Token
         unless ( $self->checkIDTokenValidity( $op, $id_token_payload_hash ) ) {
-            $self->lmLog( 'ID Token not valid', 'error' );
+            $self->logger->error('ID Token not valid');
             return PE_ERROR;
         }
         else {
-            $self->lmLog( 'ID Token is valid', 'debug' );
+            $self->logger->debug('ID Token is valid');
         }
 
         # Get user id defined in 'sub' field
@@ -196,7 +194,7 @@ sub extractFormInfo {
         $req->datas->{access_token} = $access_token;
         $req->datas->{id_token}     = $id_token;
 
-        $self->lmLog( "Found user_id: " . $user_id, 'debug' );
+        $self->logger->debug( "Found user_id: " . $user_id );
         $req->user($user_id);
 
         return PE_OK;
@@ -206,12 +204,12 @@ sub extractFormInfo {
     my $op;
 
     unless ( $op = $req->param("idp") ) {
-        $self->lmLog( "Redirecting user to OP list", 'debug' );
+        $self->logger->debug("Redirecting user to OP list");
 
         # Auto select provider if there is only one
         if ( $self->opNumber == 1 ) {
             $op = $self->opList->[0]->{val};
-            $self->lmLog( "Selecting the only defined OP: $op", 'debug' );
+            $self->logger->debug("Selecting the only defined OP: $op");
         }
 
         else {
@@ -231,12 +229,12 @@ sub extractFormInfo {
     }
 
     # Provider is choosen
-    $self->lmLog( "OpenID Provider $op choosen", 'debug' );
+    $self->logger->debug("OpenID Provider $op choosen");
 
     $req->datas->{_oidcOPCurrent} = $op;
 
     # AuthN Request
-    $self->lmLog( "Build OpenIDConnect AuthN Request", 'debug' );
+    $self->logger->debug("Build OpenIDConnect AuthN Request");
 
     # Save state
     my $state = $self->storeState( $req, qw/urldc checkLogins _oidcOPCurrent/ );
@@ -245,7 +243,7 @@ sub extractFormInfo {
     $req->urldc(
         $self->buildAuthorizationCodeAuthnRequest( $req, $op, $state ) );
 
-    $self->lmLog( "Redirect user to " . $req->{urldc}, 'debug' );
+    $self->logger->debug( "Redirect user to " . $req->{urldc} );
     $req->continue(1);
     $req->steps( [] );
 
@@ -270,11 +268,11 @@ sub setAuthSessionInfo {
     my $store_IDToken = $self->conf->{oidcOPMetaDataOptions}->{$op}
       ->{oidcOPMetaDataOptionsStoreIDToken};
     if ($store_IDToken) {
-        $self->lmLog( "Store ID Token in session", 'debug' );
+        $self->logger->debug("Store ID Token in session");
         $req->{sessionInfo}->{OpenIDConnect_IDToken} = $req->datas->{id_token};
     }
     else {
-        $self->lmLog( "ID Token will not be stored in session", 'debug' );
+        $self->logger->debug("ID Token will not be stored in session");
     }
 
     PE_OK;
@@ -298,12 +296,11 @@ sub authLogout {
             )
         );
 
-        $self->lmLog(
-            "OpenID Connect logout to $op will be done on " . $req->urldc,
-            'debug' );
+        $self->logger->debug(
+            "OpenID Connect logout to $op will be done on " . $req->urldc );
     }
     else {
-        $self->lmLog( "No end session endpoint found for $op", 'debug' );
+        $self->logger->debug("No end session endpoint found for $op");
     }
     PE_OK;
 }

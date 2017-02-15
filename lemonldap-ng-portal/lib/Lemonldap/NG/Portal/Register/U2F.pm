@@ -35,7 +35,7 @@ sub run {
             return $self->p->sendError( $req, 'Missing registration parameter',
                 400 );
         }
-        $self->lmLog( "Get registration data $resp", 'debug' );
+        $self->logger->debug("Get registration data $resp");
         my ( $keyHandle, $userKey ) = $self->crypter->registrationVerify($resp);
         if ( $keyHandle and $userKey ) {
             $self->p->updatePersistentSession(

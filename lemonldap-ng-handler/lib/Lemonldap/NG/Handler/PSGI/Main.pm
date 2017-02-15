@@ -14,7 +14,7 @@ use constant DONE              => 0;
 use constant SERVER_ERROR      => 500;
 use constant AUTH_REQUIRED     => 401;
 use constant MAINTENANCE       => 503;
-use constant defaultLogger => 'Lemonldap::NG::Common::Logger::Std';
+use constant defaultLogger     => 'Lemonldap::NG::Common::Logger::Std';
 
 our $request;
 
@@ -179,9 +179,8 @@ sub cgiName {
 
 sub addToHtmlHead {
     my $self = shift;
-    $self->lmLog(
-        'Features like form replay or logout_app can only be used with Apache',
-        'error'
+    $self->logger->error(
+        'Features like form replay or logout_app can only be used with Apache'
       ),
       ;
 }

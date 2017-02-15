@@ -55,7 +55,7 @@ my $h = 'Lemonldap::NG::Handler::Test';
 
 ok( $h->init(), 'Initialize handler' );
 
-ok( $h->checkType($apacheRequest) eq 'Main', 'Get Main type');
+ok( $h->checkType($apacheRequest) eq 'Main', 'Get Main type' );
 
 ok( $ret = $h->run($apacheRequest),
     'run Handler with basic configuration and no cookie' );

@@ -34,11 +34,9 @@ sub createUser {
     );
 
     if ( $mesg->is_error ) {
-        $self->lmLog(
-            "Can not create entry for " . $req->datas->{registerInfo}->{login},
-            'error'
-        );
-        $self->lmLog( "LDAP error " . $mesg->error, 'error' );
+        $self->userLogger->error( "Can not create entry for "
+              . $req->datas->{registerInfo}->{login} );
+        $self->logger->error( "LDAP error " . $mesg->error );
 
         $self->ldap->unbind();
         $self->{flags}->{ldapActive} = 0;
@@ -62,12 +60,12 @@ sub isLoginUsed {
     );
 
     if ( $mesg->code() != 0 ) {
-        $self->lmLog( "LDAP Search error for $login: " . $mesg->error, 'warn' );
+        $self->logger->warn( "LDAP Search error for $login: " . $mesg->error );
         return 1;
     }
 
     if ( $mesg->count() > 0 ) {
-        $self->lmLog( "Login $login already used in LDAP", 'debug' );
+        $self->logger->debug("Login $login already used in LDAP");
         return 1;
     }
 

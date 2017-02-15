@@ -124,7 +124,7 @@ sub getStack {
     return $req->datas->{multiStack} if ( $req->datas->{multiStack} );
     my $stack = $req->datas->{multiStack} = $self->stackSub->( $req->env );
     unless ($stack) {
-        $self->lmLog( 'No authentication scheme for this user', 'error' );
+        $self->logger->error('No authentication scheme for this user');
     }
     @{ $req->datas->{multiSteps} } = ( @steps, @{ $req->steps } );
     $req->datas->{multiTry} = 0;
@@ -145,8 +145,8 @@ sub try {
 
         # On error, restart authentication with next scheme
         if ( $res > PE_OK ) {
-            $self->lmLog( qq'Scheme "$name" has return $res, trying next',
-                'info' );
+            $self->logger->info(
+                qq'Scheme "$name" has return $res, trying next');
             $req->datas->{multiTry}++;
             $req->steps( [ @{ $req->datas->{multiSteps} } ] );
             return PE_OK;

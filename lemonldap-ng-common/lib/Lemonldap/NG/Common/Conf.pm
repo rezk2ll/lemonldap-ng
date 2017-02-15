@@ -173,7 +173,7 @@ sub getConf {
         unless ( ref( $self->{refLocalStorage} ) ) {
             $msg .= "Get remote configuration (localStorage unavailable).\n";
             $r = $self->getDBConf($args);
-            return undef unless ($r->{cfgNum});
+            return undef unless ( $r->{cfgNum} );
             $self->setDefault( $r, $args->{localPrm} );
             $self->compactConf($r);
         }

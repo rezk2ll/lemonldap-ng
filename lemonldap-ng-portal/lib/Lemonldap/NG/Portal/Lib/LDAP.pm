@@ -29,16 +29,16 @@ sub newLdap {
       )
     {
         if ( $msg->code != 0 ) {
-            $self->lmLog( "LDAP error: " . $msg->error, 'error' );
+            $self->logger->error( "LDAP error: " . $msg->error );
         }
         else {
             if ( $self->{conf}->{ldapPpolicyControl} and not $ldap->loadPP() ) {
-                $self->lmLog( "LDAP password policy error", 'error' );
+                $self->logger->error("LDAP password policy error");
             }
         }
     }
     else {
-        $self->lmLog( "LDAP error: $@", 'error' );
+        $self->logger->error("LDAP error: $@");
     }
     return $ldap;
 }
@@ -51,7 +51,7 @@ has filter => (
 
 sub buildFilter {
     my $conf = $_[0]->{conf};
-    $_[0]->{p}->lmLog( "LDAP Search base: $_[0]->{conf}->{ldapBase}", 'debug' );
+    $_[0]->{p}->logger->debug("LDAP Search base: $_[0]->{conf}->{ldapBase}");
 
     # TODO : mailLDAPFilter
     my $filter =
@@ -63,7 +63,7 @@ sub buildFilter {
     $filter =~ s/\$req->\{sessionInfo\}->\{user\}/\$req->{user}/g;
     $filter =~
       s/\$req->\{sessionInfo\}->\{(_?password|mail)\}/\$req->{datas}->{$1}/g;
-    $_[0]->{p}->lmLog( "LDAP transformed filter: $filter", 'debug' );
+    $_[0]->{p}->logger->debug("LDAP transformed filter: $filter");
     $filter = "sub{my(\$req)=\$_[0];return \"$filter\";}";
     return eval $filter;
 }
@@ -74,6 +74,7 @@ sub init {
     my ($self) = @_;
     $self->ldap and $self->filter;
 }
+
 # RUNNING METHODS
 
 # Test LDAP connection before trying to bind
@@ -84,10 +85,10 @@ sub bind {
     {
         $self->ldap( $self->newLdap );
     }
-    return undef unless($self->ldap);
+    return undef unless ( $self->ldap );
     my $msg = $self->ldap->bind(@_);
     if ( $msg->code ) {
-        $self->lmLog( $msg->error, 'error' );
+        $self->logger->error( $msg->error );
         return undef;
     }
     return 1;

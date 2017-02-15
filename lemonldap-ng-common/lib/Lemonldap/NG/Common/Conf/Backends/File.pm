@@ -96,14 +96,14 @@ sub store {
 
 sub load {
     my ( $self, $cfgNum, $fields ) = @_;
-    my ($f,$filename);
+    my ( $f, $filename );
     if ( -e $self->_file($cfgNum) ) {
         $filename = $self->_file($cfgNum);
     }
     elsif ( -e "$self->{dirName}/lmConf-$cfgNum.js" ) {
         $filename = "$self->{dirName}/lmConf-$cfgNum.js";
     }
-    if($filename) {
+    if ($filename) {
         local $/ = '';
         my $ret;
         unless ( open FILE, $filename ) {

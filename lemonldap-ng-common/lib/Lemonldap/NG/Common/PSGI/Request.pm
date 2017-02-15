@@ -37,8 +37,8 @@ sub new {
 sub uri { $_[0]->{uri} }
 
 sub userData {
-    my($self,$v)=@_;
-    return $_[0]->{userData} = $v if($v);
+    my ( $self, $v ) = @_;
+    return $_[0]->{userData} = $v if ($v);
     return $_[0]->{userData} || { _whatToTrace => $_[0]->user, };
 }
 

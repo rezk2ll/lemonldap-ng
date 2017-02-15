@@ -56,8 +56,8 @@ sub checkRemoteId {
         );
 
         if ( $remoteSession->error ) {
-            $self->lmLog( "Remote session error", 'error' );
-            $self->lmLog( $remoteSession->error,  'error' );
+            $self->logger->error("Remote session error");
+            $self->logger->error( $remoteSession->error );
             return PE_ERROR;
         }
 

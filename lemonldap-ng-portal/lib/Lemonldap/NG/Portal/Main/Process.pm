@@ -21,15 +21,15 @@ sub process {
     my $err = PE_OK;
     while ( my $sub = shift @{ $req->steps } ) {
         if ( ref $sub ) {
-            $self->lmLog( "Processing code ref", 'debug' );
+            $self->logger->debug("Processing code ref");
             last if ( $err = $sub->($req) );
         }
         else {
-            $self->lmLog( "Processing $sub", 'debug' );
+            $self->logger->debug("Processing $sub");
             last if ( $err = $self->$sub($req) );
         }
     }
-    $self->lmLog( "Returned error: $err", 'debug' ) if ($err);
+    $self->logger->debug("Returned error: $err") if ($err);
     return $err;
 }
 
@@ -64,11 +64,11 @@ sub controlUrl {
         if ( $self->conf->{cipher} and $2 ne "1" ) {
             my $time = time() - $self->conf->{cipher}->decrypt($2);
             if ( $time < 600 ) {
-                $self->lmLog( "Confirm parameter accepted $c", 'debug' );
+                $self->logger->debug("Confirm parameter accepted $c");
                 $req->set_param( 'confirm', $c );
             }
             else {
-                $self->lmLog( 'Confirmation to old, refused', 'notice' );
+                $self->logger->notice('Confirmation to old, refused');
                 $req->set_param( 'confirm', 0 );
             }
         }
@@ -82,9 +82,8 @@ sub controlUrl {
         }
         else {
             if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
-                $self->lmLog(
-                    "Value must be in BASE64 (param: url | value: $url)",
-                    "warn" );
+                $self->userLogger->error(
+                    "Value must be in BASE64 (param: url | value: $url)");
                 return PE_BADURL;
             }
             $req->{urldc} = decode_base64($url);
@@ -112,12 +111,10 @@ sub controlUrl {
 
         # Non protected hosts
         if ( $tmp and !$self->isTrustedUrl($tmp) ) {
-            $self->lmLog(
-                "URL contains a non protected host (param: "
+            $self->userLogger->error(
+                    "URL contains a non protected host (param: "
                   . ( $req->param('logout') ? 'HTTP Referer' : 'urldc' )
-                  . " | value: $tmp)",
-                "warn"
-            );
+                  . " | value: $tmp)" );
             delete $req->{urldc};
             return PE_BADURL;
         }
@@ -147,16 +144,16 @@ sub deleteSession {
     my $apacheSession = $self->getApacheSession( $req->id );
     my $id            = $req->id;
     unless ($apacheSession) {
-        $self->lmLog( "Session $id already deleted", 'debug' );
+        $self->logger->debug("Session $id already deleted");
         return PE_OK;
     }
     unless ( $self->_deleteSession( $req, $apacheSession ) ) {
-        $self->lmLog( "Unable to delete session $id", 'error' );
-        $self->lmLog( $apacheSession->error,          'error' );
+        $self->logger->error("Unable to delete session $id");
+        $self->logger->error( $apacheSession->error );
         return PE_ERROR;
     }
     else {
-        $self->lmLog( "Session $id deleted from global storage", 'debug' );
+        $self->logger->debug("Session $id deleted from global storage");
     }
 
     # TODO
@@ -164,7 +161,7 @@ sub deleteSession {
     if ( $req->datas->{logoutServices} and %{ $req->datas->{logoutServices} } )
     {
 
-        $self->lmLog( "Create iFrames to forward logout to services", 'debug' );
+        $self->logger->debug("Create iFrames to forward logout to services");
 
         $req->info('<h3 trmsg="logoutFromOtherApp"></h3>');
 
@@ -173,11 +170,8 @@ sub deleteSession {
             my $logoutServiceUrl =
               $req->datas->{logoutServices}->{$logoutServiceName};
 
-            $self->lmLog(
-                "Find logout service $logoutServiceName ($logoutServiceUrl)",
-
-                'debug'
-            );
+            $self->logger->debug(
+                "Find logout service $logoutServiceName ($logoutServiceUrl)");
 
             my $iframe =
                 qq'<iframe src="$logoutServiceUrl" alt="$logoutServiceName"'
@@ -190,8 +184,7 @@ sub deleteSession {
 
         # Redirect on logout page if no other target defined
         if ( !$req->urldc and !$req->postUrl ) {
-            $self->lmLog( 'No other target defined, redirect on logout',
-                'debug' );
+            $self->logger->debug('No other target defined, redirect on logout');
             $req->urldc( $req->script_name . "?logout=1" );
         }
     }
@@ -231,8 +224,8 @@ sub checkXSSAttack {
     # Test value
     $value =~ s/\%25/\%/g;
     if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|3C|22|27|2C))/ ) {
-        $self->lmLog( "XSS attack detected (param: $name | value: $value)",
-            "warn" );
+        $self->userLogger->error(
+            "XSS attack detected (param: $name | value: $value)");
         return $self->conf->{checkXSS};
     }
 
@@ -246,9 +239,8 @@ sub extractFormInfo {
     my ( $self, $req ) = @_;
     my $ret = $self->_authentication->extractFormInfo($req);
     if ( $ret == PE_OK and not( $req->user or $req->continue ) ) {
-        $self->lmLog(
-            'Authentication module succeed but has not set $req->user',
-            'error' );
+        $self->logger->error(
+            'Authentication module succeed but has not set $req->user');
         return PE_ERROR;
     }
     elsif ( $ret == PE_FIRSTACCESS
@@ -287,8 +279,7 @@ sub setAuthSessionInfo {
     if ( $ret == PE_OK
         and not( defined $req->sessionInfo->{authenticationLevel} ) )
     {
-        $self->lmLog( 'Authentication level is not set by auth module',
-            'error' );
+        $self->logger->error('Authentication level is not set by auth module');
     }
     return $ret;
 }
@@ -366,12 +357,12 @@ sub setPersistentSessionInfo {
         my $persistentSession = $self->getPersistentSession($key);
 
         if ($persistentSession) {
-            $self->lmLog( "Persistent session found for $key", 'debug' );
+            $self->logger->debug("Persistent session found for $key");
             foreach my $k ( keys %{ $persistentSession->data } ) {
 
                 # Do not restore some parameters
                 next if $k =~ /^_(?:utime|session_(?:u?id|kind))$/;
-                $self->lmLog( "Restore persistent parameter $k", 'debug' );
+                $self->logger->debug("Restore persistent parameter $k");
                 $req->{sessionInfo}->{$k} = $persistentSession->data->{$k};
             }
         }
@@ -438,7 +429,7 @@ sub store {
         {
             $displayValue = '****';
         }
-        $self->lmLog( "Store $displayValue in session key $k", 'debug' );
+        $self->logger->debug("Store $displayValue in session key $k");
         $self->_dump($displayValue) if ref($displayValue);
         $infos->{$k} = $req->{sessionInfo}->{$k};
     }

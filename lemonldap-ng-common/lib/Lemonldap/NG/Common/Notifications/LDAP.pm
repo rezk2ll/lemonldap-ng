@@ -16,9 +16,10 @@ use utf8;
 our $VERSION = '2.0.0';
 
 extends 'Lemonldap::NG::Common::Notifications';
+
 sub import {
     shift;
-    return Lemonldap::NG::Common::Notifications->import(@_)
+    return Lemonldap::NG::Common::Notifications->import(@_);
 }
 
 has ldapServer => (
@@ -38,7 +39,7 @@ has ldapConfBase => (
 has ldapBindDN => (
     is      => 'ro',
     default => sub {
-        $_[0]->p->lmLog( 'Warning: "ldapBindDN" parameter is not set', 'warn' );
+        $_[0]->p->logger->warn('Warning: "ldapBindDN" parameter is not set');
         return '';
     }
 );
@@ -69,7 +70,7 @@ sub get {
         my $identifier =
           &getIdentifier( $self, $f->{uid}, $f->{ref}, $f->{date} );
         $result->{$identifier} = "$xml";
-        $self->lmLog( "notification $identifier found", 'info' );
+        $self->logger->info("notification $identifier found");
 
     }
     return $result;
@@ -113,7 +114,7 @@ sub delete {
     my ( $self, $myref ) = @_;
     my ( $d, $u, $r );
     unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
-        $self->lmLog( "Bad reference $myref", 'warn' );
+        $self->logger->warn("Bad reference $myref");
         return 0;
     }
     my @ts = localtime();
@@ -140,7 +141,7 @@ sub purge {
     my ( $self, $myref, $force ) = @_;
     my ( $d, $u, $r );
     unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
-        $self->lmLog( "Bad reference $myref", 'warn' );
+        $self->logger->warn("Bad reference $myref");
         return 0;
     }
 
@@ -235,7 +236,7 @@ sub _search {
     );
 
     if ( $search->code ) {
-        $self->lmLog( "search error: " . $search->error(), 'error' );
+        $self->logger->error( "search error: " . $search->error() );
         return ();
     }
 
@@ -385,7 +386,7 @@ sub _ldap {
     );
 
     unless ($ldap) {
-        $self->lmLog( 'connexion failed: ' . $@, 'error' );
+        $self->logger->error( 'connexion failed: ' . $@ );
         return;
     }
 
@@ -396,7 +397,7 @@ sub _ldap {
         $h{capath} = $self->{caPath} if ( $self->{caPath} );
         my $start_tls = $ldap->start_tls(%h);
         if ( $start_tls->code ) {
-            $self->lmLog( 'tls failed: ' . $start_tls->error, 'error' );
+            $self->logger->error( 'tls failed: ' . $start_tls->error );
             return;
         }
     }
@@ -405,7 +406,7 @@ sub _ldap {
     my $bind =
       $ldap->bind( $self->{ldapBindDN}, password => $self->{ldapBindPassword} );
     if ( $bind->code ) {
-        $self->lmLog( 'bind failed: ' . $bind->error, 'error' );
+        $self->logger->error( 'bind failed: ' . $bind->error );
         return;
     }
 

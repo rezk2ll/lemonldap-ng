@@ -31,7 +31,7 @@ sub dbh {
         );
     };
     if ($@) {
-        $_[0]->{p}->lmLog( "DBI connection error: $@", 'error' );
+        $_[0]->{p}->logger->error("DBI connection error: $@");
         return 0;
     }
     return $_[0]->{_dbh};
@@ -54,12 +54,12 @@ sub init {
 sub hash_password {
     my ( $self, $password, $hash ) = @_;
     if ( $hash =~ /^(md5|sha|sha1|encrypt)$/i ) {
-        $self->lmLog( "Using " . uc($hash) . " to hash password", 'debug' );
+        $self->logger->debug( "Using " . uc($hash) . " to hash password" );
         return uc($hash) . "($password)";
     }
     else {
-        $self->lmLog( "No valid password hash, using clear text for password",
-            'warn' );
+        $self->logger->notice(
+            "No valid password hash, using clear text for password");
         return $password;
     }
 
@@ -115,12 +115,12 @@ sub check_password {
     if ($@) {
 
         # If connection isn't available, error is displayed by dbh()
-        $self->lmLog( "DBI error: $@", 'error' ) if ( $self->_dbh );
+        $self->logger->error("DBI error: $@") if ( $self->_dbh );
         return 0;
     }
 
     if ( @rows == 1 ) {
-        $self->lmLog( "One row returned by SQL query", 'debug' );
+        $self->logger->debug("One row returned by SQL query");
         return 1;
     }
     else {

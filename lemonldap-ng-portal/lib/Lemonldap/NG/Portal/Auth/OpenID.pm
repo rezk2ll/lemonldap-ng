@@ -93,7 +93,7 @@ sub extractFormInfo {
 
         # Remote error
         unless ( $csr->is_server_response() ) {
-            $self->lmLog( 'No OpenID valid message found', 'info' );
+            $self->logger->info('No OpenID valid message found');
             return PE_BADCREDENTIALS;
         }
 
@@ -106,22 +106,22 @@ sub extractFormInfo {
 
         # Check if user has refused to share his authentication
         elsif ( $csr->user_cancel() ) {
-            $self->lmLog( 'OpenID request cancelled by user', 'info' );
+            $self->logger->info('OpenID request cancelled by user');
             return PE_FIRSTACCESS;
         }
 
         # TODO: check verified identity
         elsif ( $req->datas->{vident} = $csr->verified_identity ) {
             $req->user( $req->datas->{vident}->url() );
-            $self->lmLog( "OpenID good authentication for $req->{user}",
-                'debug' );
+            $self->userLogger->notice(
+                "OpenID good authentication for $req->{user}");
             $req->{mustRedirect} = 1;
             return PE_OK;
         }
 
         # Other errors
         else {
-            $self->lmLog( 'OpenID error: ' . $csr->err, 'warn' );
+            $self->logger->warn( 'OpenID error: ' . $csr->err );
             return PE_ERROR;
         }
     }
@@ -138,12 +138,12 @@ sub extractFormInfo {
 
         # Check if url is valid
         unless ($claimed_identity) {
-            $self->lmLog( 'OpenID error : ' . $req->{csr}->err(), 'warn' );
+            $self->logger->warn( 'OpenID error : ' . $req->{csr}->err() );
             return PE_BADCREDENTIALS;
         }
 
         # Build the redirection
-        $self->lmLog( "OpenID redirection to $url", 'debug' );
+        $self->logger->debug("OpenID redirection to $url");
         my $check_url = $claimed_identity->check_url(
             return_to => $self->conf->{portal}
               . '?openid=1&'
@@ -175,9 +175,8 @@ sub extractFormInfo {
                     else                  { push @o, $k }
                 }
                 else {
-                    $self->lmLog(
-qq'Unknown "OpenID Simple Registration Extension" field name: $k',
-                        'warn'
+                    $self->logger->warn(
+qq'Unknown "OpenID Simple Registration Extension" field name: $k'
                     );
                 }
             }

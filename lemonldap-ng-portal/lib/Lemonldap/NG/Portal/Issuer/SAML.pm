@@ -151,7 +151,7 @@ sub run {
     # 1.1. SSO (SSO URL or Proxy Mode)
     if ( $url =~ $self->ssoUrlRe or $req->datas->{_proxiedRequest} ) {
 
-        $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
+        $self->logger->debug("URL $url detected as an SSO request URL");
 
         # Check message
         my ( $request, $response, $method, $relaystate, $artifact ) =
@@ -172,18 +172,18 @@ sub run {
 
             if ($session) {
                 unless ( $self->setSessionFromDump( $login, $session ) ) {
-                    $self->lmLog( "Unable to load Lasso Session", 'error' );
+                    $self->logger->error("Unable to load Lasso Session");
                     return PE_SAML_SSO_ERROR;
                 }
-                $self->lmLog( "Lasso Session loaded", 'debug' );
+                $self->logger->debug("Lasso Session loaded");
             }
 
             if ($identity) {
                 unless ( $self->setIdentityFromDump( $login, $identity ) ) {
-                    $self->lmLog( "Unable to load Lasso Identity", 'error' );
+                    $self->logger->error("Unable to load Lasso Identity");
                     return PE_SAML_SSO_ERROR;
                 }
-                $self->lmLog( "Lasso Identity loaded", 'debug' );
+                $self->logger->debug("Lasso Identity loaded");
             }
 
             my $result;
@@ -193,9 +193,8 @@ sub run {
 
                 # Need sp or spConfKey parameter
                 unless ( $idp_initiated_sp or $idp_initiated_spConfKey ) {
-                    $self->lmLog(
-"sp or spConfKey parameter needed to make IDP initiated SSO",
-                        'error'
+                    $self->userLogger->warn(
+"sp or spConfKey parameter needed to make IDP initiated SSO"
                     );
                     return PE_SAML_SSO_ERROR;
                 }
@@ -214,8 +213,8 @@ sub run {
                 }
                 else {
                     unless ( defined $self->spList->{$idp_initiated_sp} ) {
-                        $self->lmLog( "SP $idp_initiated_sp not known",
-                            'error' );
+                        $self->userLogger->error(
+                            "SP $idp_initiated_sp not known");
                         return PE_SAML_UNKNOWN_ENTITY;
                     }
                     $idp_initiated_spConfKey =
@@ -227,9 +226,8 @@ sub run {
                     ->{$idp_initiated_spConfKey}
                     ->{samlSPMetaDataOptionsEnableIDPInitiatedURL} )
                 {
-                    $self->lmLog(
-"IDP Initiated SSO not allowed for SP $idp_initiated_spConfKey",
-                        'error'
+                    $self->userLogger->error(
+"IDP Initiated SSO not allowed for SP $idp_initiated_spConfKey"
                     );
                     return PE_SAML_SSO_ERROR;
                 }
@@ -238,9 +236,8 @@ sub run {
                   $self->initIdpInitiatedAuthnRequest( $login,
                     $idp_initiated_sp );
                 unless ($result) {
-                    $self->lmLog(
-"SSO: Fail to init IDP Initiated authentication request",
-                        'error'
+                    $self->logger->error(
+                        "SSO: Fail to init IDP Initiated authentication request"
                     );
                     return PE_SAML_SSO_ERROR;
                 }
@@ -268,26 +265,26 @@ sub run {
             }
 
             unless ($result) {
-                $self->lmLog( "SSO: Fail to process authentication request",
-                    'error' );
+                $self->logger->error(
+                    "SSO: Fail to process authentication request");
                 return PE_SAML_SSO_ERROR;
             }
 
             # Get SP entityID
             my $sp = $request ? $login->remote_providerID() : $idp_initiated_sp;
 
-            $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
+            $self->logger->debug("Found entityID $sp in SAML message");
 
             # SP conf key
             my $spConfKey = $self->spList->{$sp}->{confKey};
 
             unless ($spConfKey) {
-                $self->lmLog( "$sp do not match any SP in configuration",
-                    'error' );
+                $self->userLogger->error(
+                    "$sp do not match any SP in configuration");
                 return PE_SAML_UNKNOWN_ENTITY;
             }
 
-            $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
+            $self->logger->debug("$sp match $spConfKey SP in configuration");
 
             # Do we check signature?
             my $checkSSOMessageSignature =
@@ -306,39 +303,37 @@ sub run {
                 }
 
                 unless ($result) {
-                    $self->lmLog( "Signature is not valid", 'error' );
+                    $self->logger->error("Signature is not valid");
                     return PE_SAML_SIGNATURE_ERROR;
                 }
                 else {
-                    $self->lmLog( "Signature is valid", 'debug' );
+                    $self->logger->debug("Signature is valid");
                 }
             }
             else {
-                $self->lmLog( "Message signature will not be checked",
-                    'debug' );
+                $self->logger->debug("Message signature will not be checked");
             }
 
             # Validate request
             unless ( $self->validateRequestMsg( $login, 1, 1 ) ) {
-                $self->lmLog( "Unable to validate SSO request message",
-                    'error' );
+                $self->logger->error("Unable to validate SSO request message");
                 return PE_SAML_SSO_ERROR;
             }
 
-            $self->lmLog( "SSO: authentication request is valid", 'debug' );
+            $self->logger->debug("SSO: authentication request is valid");
 
             # Get ForceAuthn flag
             my $force_authn;
 
             eval { $force_authn = $login->request()->ForceAuthn(); };
             if ($@) {
-                $self->lmLog( "Unable to get ForceAuthn flag, set it to false",
-                    'warn' );
+                $self->logger->warn(
+                    "Unable to get ForceAuthn flag, set it to false");
                 $force_authn = 0;
             }
 
-            $self->lmLog( "Found ForceAuthn flag with value $force_authn",
-                'debug' );
+            $self->logger->debug(
+                "Found ForceAuthn flag with value $force_authn");
 
             # Get ForceAuthn sessions for this session_id
             my $moduleOptions = $self->conf->{samlStorageOptions} || {};
@@ -359,9 +354,8 @@ sub run {
 
                 # Warning if more than one session found
                 if ( $#forceAuthn_sessions_keys > 0 ) {
-                    $self->lmLog(
-"More than one ForceAuthn session found for session $session_id",
-                        'warn'
+                    $self->logger->warn(
+"More than one ForceAuthn session found for session $session_id"
                     );
                 }
 
@@ -369,9 +363,8 @@ sub run {
                 $forceAuthn_session = shift @forceAuthn_sessions_keys;
 
                 # Get session
-                $self->lmLog(
-"Retrieve ForceAuthn session $forceAuthn_session for session $session_id",
-                    'debug'
+                $self->logger->debug(
+"Retrieve ForceAuthn session $forceAuthn_session for session $session_id"
                 );
 
                 $forceAuthnSessionInfo =
@@ -380,17 +373,15 @@ sub run {
                 # Check forceAuthn flag for current SP
                 if ( $forceAuthnSessionInfo->data->{$spConfKey} ) {
 
-                    $self->lmLog(
-"User was already forced to reauthenticate for SP $spConfKey",
-                        'debug'
+                    $self->logger->debug(
+"User was already forced to reauthenticate for SP $spConfKey"
                     );
                     $force_authn = 1;
                 }
             }
             else {
-                $self->lmLog(
-                    "No ForceAuthn session found for session $session_id",
-                    'debug' );
+                $self->logger->debug(
+                    "No ForceAuthn session found for session $session_id");
             }
 
             # Force authentication if flag is on, or previous flag still active
@@ -408,14 +399,12 @@ sub run {
                     $forceInfos->{'_utime'}   = $time;
                     $forceAuthnSessionInfo->update($forceInfos);
                     $forceAuthn_session = $forceAuthnSessionInfo->id;
-                    $self->lmLog(
-                        "Create ForceAuthn session $forceAuthn_session",
-                        'debug' );
+                    $self->logger->debug(
+                        "Create ForceAuthn session $forceAuthn_session");
                 }
 
-                $self->lmLog(
-"Set ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session",
-                    'debug'
+                $self->logger->debug(
+"Set ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session"
                 );
 
                 # Replay authentication process
@@ -437,9 +426,8 @@ sub run {
                   $self->getSamlSession($forceAuthn_session);
                 $forceAuthnSessionInfo->update( { $spConfKey => 0 } );
 
-                $self->lmLog(
-"Unset ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session",
-                    'debug'
+                $self->logger->debug(
+"Unset ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session"
                 );
             }
 
@@ -456,7 +444,7 @@ sub run {
             $authn_context =
               $self->authnLevel2authnContext($authenticationLevel);
 
-            $self->lmLog( "Authentication context is $authn_context", 'debug' );
+            $self->logger->debug("Authentication context is $authn_context");
 
             # Get SP options notOnOrAfterTimeout
             my $notOnOrAfterTimeout =
@@ -470,11 +458,11 @@ sub run {
                 )
               )
             {
-                $self->lmLog( "Unable to build assertion", 'error' );
+                $self->logger->error("Unable to build assertion");
                 return PE_SAML_SSO_ERROR;
             }
 
-            $self->lmLog( "SSO: assertion is built", 'debug' );
+            $self->logger->debug("SSO: assertion is built");
 
             # Get default NameID Format from configuration
             # Set to "email" if no value in configuration
@@ -486,8 +474,8 @@ sub run {
             # Check NameID Policy in request
             if ( $login->request()->NameIDPolicy ) {
                 $nameIDFormat = $login->request()->NameIDPolicy->Format();
-                $self->lmLog( "Get NameID format $nameIDFormat from request",
-                    'debug' );
+                $self->logger->debug(
+                    "Get NameID format $nameIDFormat from request");
             }
 
             # NameID unspecified is forced to default NameID format
@@ -553,11 +541,10 @@ sub run {
                 $login->nameIdentifier($nameIdentifier);
             }
 
-            $self->lmLog( "NameID Format is " . $login->nameIdentifier->Format,
-                'debug' );
-            $self->lmLog(
-                "NameID Content is " . $login->nameIdentifier->content,
-                'debug' );
+            $self->logger->debug(
+                "NameID Format is " . $login->nameIdentifier->Format );
+            $self->logger->debug(
+                "NameID Content is " . $login->nameIdentifier->content );
 
             # Push mandatory attributes
             my @attributes;
@@ -581,32 +568,30 @@ sub run {
 
                 # Do not send attribute if not mandatory
                 unless ($mandatory) {
-                    $self->lmLog( "SAML2 attribute $name is not mandatory",
-                        'debug' );
+                    $self->logger->debug(
+                        "SAML2 attribute $name is not mandatory");
                     next;
                 }
 
                 # Error if corresponding attribute is not in user session
                 my $value = $req->{sessionInfo}->{$_};
                 unless ( defined $value ) {
-                    $self->lmLog(
-"Session key $_ is required to set SAML $name attribute",
-                        'error'
+                    $self->logger->warn(
+                        "Session key $_ is required to set SAML $name attribute"
                     );
                     return PE_SAML_SSO_ERROR;
                 }
 
-                $self->lmLog(
-                    "SAML2 attribute $name will be set with $_ session key",
-                    'debug' );
+                $self->logger->debug(
+                    "SAML2 attribute $name will be set with $_ session key");
 
                 # SAML2 attribute
                 my $attribute =
                   $self->createAttribute( $name, $format, $friendly_name );
 
                 unless ($attribute) {
-                    $self->lmLog( "Unable to create a new SAML attribute",
-                        'error' );
+                    $self->logger->error(
+                        "Unable to create a new SAML attribute");
                     return PE_SAML_SSO_ERROR;
                 }
 
@@ -622,16 +607,15 @@ sub run {
                           ->{samlSPMetaDataOptionsForceUTF8} );
 
                     unless ($saml2value) {
-                        $self->lmLog(
-                            "Unable to create a new SAML attribute value",
-                            'error' );
+                        $self->logger->error(
+                            "Unable to create a new SAML attribute value");
                         $self->checkLassoError($@);
                         return PE_SAML_SSO_ERROR;
                     }
 
                     push @saml2values, $saml2value;
 
-                    $self->lmLog( "Push $_ in SAML attribute $name", 'debug' );
+                    $self->logger->debug("Push $_ in SAML attribute $name");
 
                 }
 
@@ -646,7 +630,7 @@ sub run {
             my @response_assertions = $login->response->Assertion;
 
             unless ( $response_assertions[0] ) {
-                $self->lmLog( "Unable to get response assertion", 'error' );
+                $self->logger->error("Unable to get response assertion");
                 return PE_SAML_SSO_ERROR;
             }
 
@@ -665,7 +649,7 @@ sub run {
                     $oneTimeUse );
             };
             if ($@) {
-                $self->lmLog( "Basic conditions not set: $@", 'debug' );
+                $self->logger->debug("Basic conditions not set: $@");
             }
 
             # Create attribute statement
@@ -699,9 +683,8 @@ sub run {
             my $sessionIndex = $self->conf->{cipher}->encrypt($session_id);
             $authn_statements[0]->SessionIndex($sessionIndex);
 
-            $self->lmLog(
-                "Set sessionIndex $sessionIndex (encrypted from $session_id)",
-                'debug' );
+            $self->logger->debug(
+                "Set sessionIndex $sessionIndex (encrypted from $session_id)");
 
             # Set SessionNotOnOrAfter
             my $sessionNotOnOrAfterTimeout =
@@ -712,8 +695,8 @@ sub run {
             my $sessionNotOnOrAfter = $self->timestamp2samldate($timeout);
             $authn_statements[0]->SessionNotOnOrAfter($sessionNotOnOrAfter);
 
-            $self->lmLog( "Set sessionNotOnOrAfter $sessionNotOnOrAfter",
-                'debug' );
+            $self->logger->debug(
+                "Set sessionNotOnOrAfter $sessionNotOnOrAfter");
 
             # Register AuthnStatement in assertion
             $response_assertions[0]->AuthnStatement(@authn_statements);
@@ -727,16 +710,16 @@ sub run {
               ->{samlSPMetaDataOptionsSignSSOMessage} // -1;
 
             if ( $signSSOMessage == 0 ) {
-                $self->lmLog( "SSO response will not be signed", 'debug' );
+                $self->logger->debug("SSO response will not be signed");
                 $self->disableSignature($login);
             }
             elsif ( $signSSOMessage == 1 ) {
-                $self->lmLog( "SSO response will be signed", 'debug' );
+                $self->logger->debug("SSO response will be signed");
                 $self->forceSignature($login);
             }
             else {
-                $self->lmLog( "SSO response signature according to metadata",
-                    'debug' );
+                $self->logger->debug(
+                    "SSO response signature according to metadata");
             }
 
             # log that a SAML authn response is build
@@ -783,13 +766,12 @@ sub run {
 
                 # Build artifact message
                 unless ( $self->buildArtifactMsg( $login, $artifact_method ) ) {
-                    $self->lmLog(
-                        "Unable to build SSO artifact response message",
-                        'error' );
+                    $self->logger->error(
+                        "Unable to build SSO artifact response message");
                     return PE_SAML_ART_ERROR;
                 }
 
-                $self->lmLog( "SSO: artifact response is built", 'debug' );
+                $self->logger->debug("SSO: artifact response is built");
 
                 # Get artifact ID and Content, and store them
                 my $artifact_id      = $login->get_artifact;
@@ -803,13 +785,12 @@ sub run {
             else {
 
                 unless ( $self->buildAuthnResponseMsg($login) ) {
-                    $self->lmLog( "Unable to build SSO response message",
-                        'error' );
+                    $self->logger->error(
+                        "Unable to build SSO response message");
                     return PE_SAML_SSO_ERROR;
                 }
 
-                $self->lmLog( "SSO: authentication response is built",
-                    'debug' );
+                $self->logger->debug("SSO: authentication response is built");
 
             }
 
@@ -817,14 +798,14 @@ sub run {
             if ( $login->is_identity_dirty ) {
 
                 # Update session
-                $self->lmLog( "Save Lasso identity in session", 'debug' );
+                $self->logger->debug("Save Lasso identity in session");
                 $self->updatePersistentSession(
                     { _lassoIdentityDump => $login->get_identity->dump },
                     undef, $session_id );
             }
 
             if ( $login->is_session_dirty ) {
-                $self->lmLog( "Save Lasso session in session", 'debug' );
+                $self->logger->debug("Save Lasso session in session");
                 $self->p->updateSession( $req,
                     { _lassoSessionDump => $login->get_session->dump },
                     $session_id );
@@ -833,12 +814,9 @@ sub run {
             # Keep SAML elements for later queries
             my $nameid = $login->nameIdentifier;
 
-            $self->lmLog(
-                "Store NameID "
+            $self->logger->debug( "Store NameID "
                   . $nameid->dump
-                  . " and SessionIndex $sessionIndex for session $session_id",
-                'debug'
-            );
+                  . " and SessionIndex $sessionIndex for session $session_id" );
 
             my $samlSessionInfo = $self->getSamlSession();
 
@@ -856,9 +834,8 @@ sub run {
 
             my $saml_session_id = $samlSessionInfo->id;
 
-            $self->lmLog(
-                "Link session $session_id to SAML session $saml_session_id",
-                'debug' );
+            $self->logger->debug(
+                "Link session $session_id to SAML session $saml_session_id");
 
             # Send SSO Response
 
@@ -868,9 +845,8 @@ sub run {
             {
                 my $cdc_idp = $self->getMetaDataURL( "samlEntityID", 0, 1 );
 
-                $self->lmLog(
-                    "Will register IDP $cdc_idp in Common Domain Cookie",
-                    'debug' );
+                $self->logger->debug(
+                    "Will register IDP $cdc_idp in Common Domain Cookie");
 
                 # Redirection to CDC Writer page in a hidden iframe
                 my $cdc_writer_url =
@@ -936,7 +912,7 @@ sub run {
 
                 # Redirect user to response URL
                 my $sso_url = $login->msg_url;
-                $self->lmLog( "Redirect user to $sso_url", 'debug' );
+                $self->logger->debug("Redirect user to $sso_url");
 
                 $req->{urldc} = $sso_url;
                 $req->mustRedirect(1);
@@ -948,9 +924,8 @@ sub run {
         }
 
         elsif ($response) {
-            $self->lmLog(
-                "Authentication responses are not managed by this module",
-                'debug' );
+            $self->logger->debug(
+                "Authentication responses are not managed by this module");
             return PE_OK;
         }
 
@@ -958,7 +933,7 @@ sub run {
 
             # No request or response
             # This should not happen
-            $self->lmLog( "No request or response found", 'debug' );
+            $self->logger->debug("No request or response found");
             return PE_OK;
         }
 
@@ -971,9 +946,8 @@ sub run {
 
 sub artifactServer {
     my ( $self, $req ) = @_;
-    $self->lmLog(
-        "URL $req->uri detected as an artifact resolution service URL",
-        'debug' );
+    $self->logger->debug(
+        "URL $req->uri detected as an artifact resolution service URL");
 
     # Artifact request are sent with SOAP trough POST
     my $art_request = $req->content;
@@ -1002,7 +976,7 @@ sub artifactServer {
     $self->{SOAPMessage} = $art_response;
 
     # Return SOAP message
-    $self->lmLog( "Send SOAP Message: $art_response", 'debug' );
+    $self->logger->debug("Send SOAP Message: $art_response");
     return [
         200,
         [
@@ -1019,7 +993,7 @@ sub soapSloServer {
     my $request_method = $req->param('issuerMethod') || $req->method;
     my $content_type   = $req->content_type();
 
-    $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
+    $self->logger->debug("URL $url detected as an SLO URL");
 
     # Check SAML Message
     my ( $request, $response, $method, $relaystate, $artifact ) =
@@ -1040,7 +1014,7 @@ sub soapSloServer {
                 "SLO: Fail to process logout request", 400 );
         }
 
-        $self->lmLog( "SLO: Logout request is valid", 'debug' );
+        $self->logger->debug("SLO: Logout request is valid");
 
         # We accept only SOAP here
         unless ( $method eq $self->getHttpMethod('soap') ) {
@@ -1051,7 +1025,7 @@ sub soapSloServer {
         # Get SP entityID
         my $sp = $logout->remote_providerID();
 
-        $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
+        $self->logger->debug("Found entityID $sp in SAML message");
 
         # SP conf key
         my $spConfKey = $self->spList->{$sp}->{confKey};
@@ -1061,7 +1035,7 @@ sub soapSloServer {
                 "$sp do not match any SP in configuration", 400 );
         }
 
-        $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
+        $self->logger->debug("$sp match $spConfKey SP in configuration");
 
         # Do we check signature?
         my $checkSLOMessageSignature =
@@ -1077,11 +1051,11 @@ sub soapSloServer {
                     400 );
             }
             else {
-                $self->lmLog( "Signature is valid", 'debug' );
+                $self->logger->debug("Signature is valid");
             }
         }
         else {
-            $self->lmLog( "Message signature will not be checked", 'debug' );
+            $self->logger->debug("Message signature will not be checked");
         }
 
         # Get SAML request
@@ -1107,10 +1081,8 @@ sub soapSloServer {
         # Decrypt session index
         my $local_session_id = $self->conf->{cipher}->decrypt($session_index);
 
-        $self->lmLog(
-            "Get session id $local_session_id (decrypted from $session_index)",
-            'debug'
-        );
+        $self->logger->debug(
+            "Get session id $local_session_id (decrypted from $session_index)");
 
         # Open local session
         my $local_session = $self->p->getApacheSession($local_session_id);
@@ -1128,7 +1100,7 @@ sub soapSloServer {
                 return $self->p->sendError( $req,
                     "Unable to load Lasso Session", 400 );
             }
-            $self->lmLog( "Lasso Session loaded", 'debug' );
+            $self->logger->debug("Lasso Session loaded");
         }
 
         if ($identity) {
@@ -1136,7 +1108,7 @@ sub soapSloServer {
                 return $self->p->sendError( $req,
                     "Unable to load Lasso Identity", 400 );
             }
-            $self->lmLog( "Lasso Identity loaded", 'debug' );
+            $self->logger->debug("Lasso Identity loaded");
         }
 
         # Close SAML sessions
@@ -1166,40 +1138,39 @@ sub soapSloServer {
                 $self->getHttpMethod('soap'), 0 );
 
             if ($rstatus) {
-                $self->lmLog( "SOAP SLO successful on $providerID", 'debug' );
+                $self->logger->debug("SOAP SLO successful on $providerID");
             }
             else {
-                $self->lmLog( "SOAP SLO error on $providerID", 'debug' );
+                $self->logger->debug("SOAP SLO error on $providerID");
             }
         }
 
         # Set RelayState
         if ($relaystate) {
             $logout->msg_relayState($relaystate);
-            $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+            $self->logger->debug("Set $relaystate in RelayState");
         }
 
         # Signature
-        my $signSLOMessage =
-          $self->{samlSPMetaDataOptions}->{$spConfKey}
+        my $signSLOMessage = $self->{samlSPMetaDataOptions}->{$spConfKey}
           ->{samlSPMetaDataOptionsSignSLOMessage} // 0;
 
         if ( $signSLOMessage == 0 ) {
-            $self->lmLog( "SLO response will not be signed", 'debug' );
+            $self->logger->debug("SLO response will not be signed");
             $self->disableSignature($logout);
         }
         elsif ( $signSLOMessage == 1 ) {
-            $self->lmLog( "SLO response will be signed", 'debug' );
+            $self->logger->debug("SLO response will be signed");
             $self->forceSignature($logout);
         }
         else {
-            $self->lmLog( "SLO response signature according to metadata",
-                'debug' );
+            $self->logger->debug(
+                "SLO response signature according to metadata");
         }
 
         # Send logout response
         unless ( $self->buildLogoutResponseMsg($logout) ) {
-            $self->lmLog( "Unable to build SLO response", 'error' );
+            $self->logger->error("Unable to build SLO response");
             return $self->p->sendError( $req, 'Unable to build SLO response',
                 400 );
         }
@@ -1225,7 +1196,7 @@ sub logout {
 
     # Close SAML sessions
     unless ( $self->deleteSAMLSecondarySessions($session_id) ) {
-        $self->lmLog( "Fail to delete SAML sessions", 'error' );
+        $self->logger->error("Fail to delete SAML sessions");
     }
 
     # Create Logout object
@@ -1237,25 +1208,25 @@ sub logout {
 
     if ($session) {
         unless ( $self->setSessionFromDump( $logout, $session ) ) {
-            $self->lmLog( "Unable to load Lasso Session", 'error' );
+            $self->logger->error("Unable to load Lasso Session");
             return PE_SAML_SLO_ERROR;
         }
-        $self->lmLog( "Lasso Session loaded", 'debug' );
+        $self->logger->debug("Lasso Session loaded");
     }
 
     # No need to initiate logout requests on SP, if no SAML session is
     # available into the session.
     else {
-        $self->lmLog( 'No SAML session available into this session', 'debug' );
+        $self->logger->debug('No SAML session available into this session');
         return PE_OK;
     }
 
     if ($identity) {
         unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
-            $self->lmLog( "Unable to load Lasso Identity", 'error' );
+            $self->logger->error("Unable to load Lasso Identity");
             return PE_SAML_SLO_ERROR;
         }
-        $self->lmLog( "Lasso Identity loaded", 'debug' );
+        $self->logger->debug("Lasso Identity loaded");
     }
 
     # Proceed to logout on all others SP.
@@ -1273,29 +1244,29 @@ sub logout {
 
 sub sloRelaySoap {
     my ( $self, $req ) = @_;
-    $self->lmLog( "URL " . $req->uri . " detected as a SOAP relay service URL",
-        'debug' );
+    $self->logger->debug(
+        "URL " . $req->uri . " detected as a SOAP relay service URL" );
 
     # Check if relay parameter is present (mandatory)
     my $relayID;
     unless ( $relayID = $req->param('relay') ) {
-        $self->lmLog( "No relayID detected", 'error' );
+        $self->logger->error("No relayID detected");
         return $self->imgnok($req);
     }
 
     # Retrieve the corresponding data from samlStorage
     my $relayInfos = $self->getSamlSession($relayID);
     unless ($relayInfos) {
-        $self->lmLog( "Could not get relay session $relayID", 'error' );
+        $self->logger->error("Could not get relay session $relayID");
         return $self->imgnok($req);
     }
 
-    $self->lmLog( "Found relay session $relayID", 'debug' );
+    $self->logger->debug("Found relay session $relayID");
 
     # Rebuild the logout object
     my $logout;
     unless ( $logout = $self->createLogout( $self->lassoServer ) ) {
-        $self->lmLog( "Could not rebuild logout object", 'error' );
+        $self->logger->error("Could not rebuild logout object");
         return $self->imgnok($req);
     }
 
@@ -1308,18 +1279,18 @@ sub sloRelaySoap {
 
     if ($session) {
         unless ( $self->setSessionFromDump( $logout, $session ) ) {
-            $self->lmLog( "Unable to load Lasso Session", 'error' );
+            $self->logger->error("Unable to load Lasso Session");
             return $self->imgnok($req);
         }
-        $self->lmLog( "Lasso Session loaded", 'debug' );
+        $self->logger->debug("Lasso Session loaded");
     }
 
     if ($identity) {
         unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
-            $self->lmLog( "Unable to load Lasso Identity", 'error' );
+            $self->logger->error("Unable to load Lasso Identity");
             return $self->imgnok($req);
         }
-        $self->lmLog( "Lasso Identity loaded", 'debug' );
+        $self->logger->debug("Lasso Identity loaded");
     }
 
     # Send the logout request
@@ -1328,8 +1299,8 @@ sub sloRelaySoap {
         Lasso::Constants::HTTP_METHOD_SOAP,
         undef, $relayState );
     unless ($rstatus) {
-        $self->lmLog( "Fail to process SOAP logout request to $providerID",
-            'error' );
+        $self->logger->error(
+            "Fail to process SOAP logout request to $providerID");
         return $self->imgnok($req);
     }
 
@@ -1338,28 +1309,26 @@ sub sloRelaySoap {
 
     if ($sloStatusSessionInfos) {
         $sloStatusSessionInfos->update( { $spConfKey => 1 } );
-        $self->lmLog( "Store SLO status for $spConfKey in session $relayState",
-            'debug' );
+        $self->logger->debug(
+            "Store SLO status for $spConfKey in session $relayState");
     }
     else {
-        $self->lmLog(
-            "Unable to store SLO status for $spConfKey in session $relayState",
-            'warn'
-        );
+        $self->logger->warn(
+            "Unable to store SLO status for $spConfKey in session $relayState");
     }
 
     # Delete relay session
     $relayInfos->remove();
 
     # SLO response is OK
-    $self->lmLog( "Display OK status for SLO on $spConfKey", 'debug' );
+    $self->logger->debug("Display OK status for SLO on $spConfKey");
     return $self->imgok($req);
 }
 
 sub sloRelayPost {
     my ( $self, $req ) = @_;
-    $self->lmLog( "URL " . $req->uri . " detected as a POST relay service URL",
-        'debug' );
+    $self->logger->debug(
+        "URL " . $req->uri . " detected as a POST relay service URL" );
 
     # Check if relay parameter is present (mandatory)
     my $relayID;
@@ -1374,7 +1343,7 @@ sub sloRelayPost {
             "Could not get relay session $relayID" );
     }
 
-    $self->lmLog( "Found relay session $relayID", 'debug' );
+    $self->logger->debug("Found relay session $relayID");
 
     # Get data to build POST form
     $req->{postUrl}                     = $relayInfos->data->{url};
@@ -1398,7 +1367,7 @@ sub sloServer {
     my $url            = $req->uri;
     my $request_method = $req->param('issuerMethod') || $req->method;
     my $content_type   = $req->content_type();
-    $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
+    $self->logger->debug("URL $url detected as an SLO URL");
 
     # Check SAML Message
     my ( $request, $response, $method, $relaystate, $artifact ) =
@@ -1423,12 +1392,12 @@ sub sloServer {
                 "SLO: Fail to process logout request", 400 );
         }
 
-        $self->lmLog( "SLO: Logout request is valid", 'debug' );
+        $self->logger->debug("SLO: Logout request is valid");
 
         # Get SP entityID
         my $sp = $logout->remote_providerID();
 
-        $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
+        $self->logger->debug("Found entityID $sp in SAML message");
 
         # SP conf key
         my $spConfKey = $self->spList->{$sp}->{confKey};
@@ -1438,7 +1407,7 @@ sub sloServer {
                 "$sp do not match any SP in configuration", 400 );
         }
 
-        $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
+        $self->logger->debug("$sp match $spConfKey SP in configuration");
 
         # Load Session and Identity if they exist
         my ( $session, $session_index, $identity, $local_session_id );
@@ -1447,15 +1416,13 @@ sub sloServer {
 
         # SLO requests without session index are not accepted
         unless ( defined $session_index ) {
-            $self->lmLog( "No session index in SLO request from $spConfKey SP",
-                'error' );
+            $self->logger->error(
+                "No session index in SLO request from $spConfKey SP");
             return $self->sendSLOErrorResponse( $logout, $method );
         }
         $local_session_id = $self->conf->{cipher}->decrypt($session_index);
-        $self->lmLog(
-            "Get session id $local_session_id (decrypted from $session_index)",
-            'debug'
-        );
+        $self->logger->debug(
+            "Get session id $local_session_id (decrypted from $session_index)");
 
         if ( $req->{sessionInfo} ) {
             $session  = $req->{sessionInfo}->{_lassoSessionDump};
@@ -1467,7 +1434,7 @@ sub sloServer {
             my $local_session = $self->p->getApacheSession($local_session_id);
 
             unless ($local_session) {
-                $self->lmLog( "No local session found", 'error' );
+                $self->logger->error("No local session found");
                 return $self->sendSLOErrorResponse( $logout, $method );
             }
 
@@ -1486,7 +1453,7 @@ sub sloServer {
                 return $self->p->sendError( $req,
                     "Unable to load Lasso Session", 400 );
             }
-            $self->lmLog( "Lasso Session loaded", 'debug' );
+            $self->logger->debug("Lasso Session loaded");
         }
 
         if ($identity) {
@@ -1494,7 +1461,7 @@ sub sloServer {
                 return $self->p->sendError( $req,
                     "Unable to load Lasso Identity", 400 );
             }
-            $self->lmLog( "Lasso Identity loaded", 'debug' );
+            $self->logger->debug("Lasso Identity loaded");
         }
 
         # Do we check signature?
@@ -1511,11 +1478,11 @@ sub sloServer {
                     400 );
             }
             else {
-                $self->lmLog( "Signature is valid", 'debug' );
+                $self->logger->debug("Signature is valid");
             }
         }
         else {
-            $self->lmLog( "Message signature will not be checked", 'debug' );
+            $self->logger->debug("Message signature will not be checked");
         }
 
         # Check Destination
@@ -1530,7 +1497,7 @@ sub sloServer {
         # Set RelayState
         if ($relaystate) {
             $logout->msg_relayState($relaystate);
-            $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+            $self->logger->debug("Set $relaystate in RelayState");
         }
 
         # Create SLO status session and get ID
@@ -1552,7 +1519,7 @@ sub sloServer {
 
         # Close SAML sessions
         unless ( $self->deleteSAMLSecondarySessions($local_session_id) ) {
-            $self->lmLog( "Fail to delete SAML sessions", 'error' );
+            $self->logger->error("Fail to delete SAML sessions");
         }
 
         # Close local session
@@ -1563,20 +1530,19 @@ sub sloServer {
         $self->p->do( $req, [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
 
         # Signature
-        my $signSLOMessage =
-          $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
+        my $signSLOMessage = $self->conf->{samlSPMetaDataOptions}->{$spConfKey}
           ->{samlSPMetaDataOptionsSignSLOMessage};
 
         unless ($signSLOMessage) {
-            $self->lmLog( "Do not sign this SLO response", 'debug' );
+            $self->logger->debug("Do not sign this SLO response");
             return $self->sendSLOErrorResponse( $logout, $method )
               unless ( $self->disableSignature($logout) );
         }
 
         # If no waiting SP, return directly SLO response
         unless ($provider_nb) {
-            return $self->sendLogoutResponseToServiceProvider( $req,
-                $logout, $method );
+            return $self->sendLogoutResponseToServiceProvider( $req, $logout,
+                $method );
         }
 
         # Else build SLO status relay URL and display info
@@ -1593,9 +1559,8 @@ sub sloServer {
 
         # No SLO response should be here
         # else it means SSO session was not closed: launching it
-        $self->lmLog(
-            "SLO response found on an active SSO session, ignoring it",
-            'debug' );
+        $self->logger->debug(
+            "SLO response found on an active SSO session, ignoring it");
         $req->datas->{samlSLOCalled} = 1;
         return $self->p->do( $req,
             [ @{ $self->p->beforeLogout }, 'deleteSession' ] );
@@ -1612,7 +1577,7 @@ sub sloServer {
 sub attributeServer {
     my ( $self, $req, ) = @_;
     my $url = $req->uri;
-    $self->lmLog( "URL $url detected as an attribute service URL", 'debug' );
+    $self->logger->debug("URL $url detected as an attribute service URL");
 
     # Attribute request are sent with SOAP trough POST
     my $att_request = $req->content;
@@ -1629,7 +1594,7 @@ sub attributeServer {
     # Get SP entityID
     my $sp = $query->remote_providerID();
 
-    $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
+    $self->logger->debug("Found entityID $sp in SAML message");
 
     # SP conf key
     my $spConfKey = $self->spList->{$sp}->{confKey};
@@ -1639,7 +1604,7 @@ sub attributeServer {
             "$sp do not match any SP in configuration", 400 );
     }
 
-    $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
+    $self->logger->debug("$sp match $spConfKey SP in configuration");
 
     # Check Destination
     unless ( $self->checkDestination( $query->request, $url ) ) {
@@ -1674,24 +1639,24 @@ sub attributeServer {
 
         # Warning if more than one session found
         if ( $#saml_sessions_keys > 0 ) {
-            $self->lmLog( "More than one SAML session found for user $user",
-                'warn' );
+            $self->logger->warn(
+                "More than one SAML session found for user $user");
         }
 
         # Take the first session
         my $saml_session = shift @saml_sessions_keys;
 
         # Get session
-        $self->lmLog( "Retrieve SAML session $saml_session for user $user",
-            'debug' );
+        $self->logger->debug(
+            "Retrieve SAML session $saml_session for user $user");
 
         my $samlSessionInfo = $self->getSamlSession($saml_session);
 
         # Get real session
         my $real_session = $samlSessionInfo->data->{_saml_id};
 
-        $self->lmLog( "Retrieve real session $real_session for user $user",
-            'debug' );
+        $self->logger->debug(
+            "Retrieve real session $real_session for user $user");
 
         $sessionInfo = $self->p->getApacheSession($real_session);
 
@@ -1746,20 +1711,19 @@ sub attributeServer {
               if (  $rfriendly_name
                 and $rfriendly_name !~ /^$friendly_name$/ );
 
-            $self->lmLog(
-                "SP $spConfKey is authorized to access attribute $rname",
-                'debug' );
+            $self->logger->debug(
+                "SP $spConfKey is authorized to access attribute $rname");
 
-            $self->lmLog( "Attribute $rname is linked to $sp_attr session key",
-                'debug' );
+            $self->logger->debug(
+                "Attribute $rname is linked to $sp_attr session key");
 
             # Check if values are given
             my $rvalue =
               $self->getAttributeValue( $rname, $rformat, $rfriendly_name,
                 [$req_attr] );
 
-            $self->lmLog( "Some values are explicitely requested: $rvalue",
-                'debug' )
+            $self->logger->debug(
+                "Some values are explicitely requested: $rvalue")
               if defined $rvalue;
 
             # Get session value
@@ -1792,9 +1756,8 @@ sub attributeServer {
                             ) )
                       )
                     {
-                        $self->lmLog(
-"$local_value value is not in requested values, it will not be sent",
-                            'warn'
+                        $self->logger->warn(
+"$local_value value is not in requested values, it will not be sent"
                         );
                         next;
                     }
@@ -1812,8 +1775,8 @@ sub attributeServer {
 
                     push @saml2values, $saml2value;
 
-                    $self->lmLog( "Push $local_value in SAML attribute $name",
-                        'debug' );
+                    $self->logger->debug(
+                        "Push $local_value in SAML attribute $name");
 
                 }
 
@@ -1824,7 +1787,7 @@ sub attributeServer {
 
             }
             else {
-                $self->lmLog( "No session value for $sp_attr", 'debug' );
+                $self->logger->debug("No session value for $sp_attr");
             }
 
         }

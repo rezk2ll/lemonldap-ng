@@ -19,7 +19,7 @@ sub newNotification {
     my ( $self, $xml ) = @_;
     eval { $xml = $self->parser->parse_string($xml) };
     if ( my $err = $@ ) {
-        eval { $self->lmLog( "Unable to read XML file : $err", 'error' ) };
+        eval { $self->logger->error("Unable to read XML file : $err") };
         return 0;
     }
     my @notifs;
@@ -33,7 +33,7 @@ sub newNotification {
         foreach (qw(date uid reference)) {
             my $tmp;
             unless ( $tmp = $notif->getAttribute($_) ) {
-                $self->lmLog( "Attribute $_ is missing", 'error' );
+                $self->logger->error("Attribute $_ is missing");
                 return 0;
             }
             push @datas, $tmp;
@@ -75,15 +75,13 @@ sub deleteNotification {
 
     # Check input parameters
     unless ( $uid and $myref ) {
-        $self->lmLog(
-            "SOAP service deleteNotification called without all parameters",
-            'error' );
+        $self->userLogger->error(
+            "SOAP service deleteNotification called without all parameters");
         return 0;
     }
 
-    $self->lmLog(
-"SOAP service deleteNotification called for uid $uid and reference $myref",
-        'debug'
+    $self->logger->debug(
+"SOAP service deleteNotification called for uid $uid and reference $myref"
     );
 
     # Get notifications
@@ -111,7 +109,7 @@ sub deleteNotification {
             # Delete the notification (really)
             foreach (@data) {
                 if ( $self->purge( $_, 1 ) ) {
-                    $self->lmLog( "Notification $_ was removed.", 'debug' );
+                    $self->logger->debug("Notification $_ was removed.");
                     $count++;
                 }
             }
