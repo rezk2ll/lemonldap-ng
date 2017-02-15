@@ -4,6 +4,7 @@ use strict;
 use Mouse;
 use Lemonldap::NG::Common::Combination::Parser;
 use Lemonldap::NG::Portal::Main::Constants qw(PE_OK PE_ERROR);
+use Scalar::Util 'weaken';
 
 # TODO: See Lib::Wrapper
 extends 'Lemonldap::NG::Portal::Auth::Base';
@@ -15,7 +16,8 @@ has stackSub => ( is => 'rw' );
 has wrapUserLogger => (
     is      => 'rw',
     default => sub {
-        Lemonldap::NG::Portal::Multi::UserLogger->new( $_[0]->{userLogger} );
+        Lemonldap::NG::Portal::Lib::Combination::UserLogger->new(
+            $_[0]->{userLogger} );
     }
 );
 
@@ -198,11 +200,12 @@ sub loadPlugin {
     return 0
       unless ( $obj = $self->p->loadModule( "$plugin", $nc ) );
     $obj = $self->p->findEP( $plugin, $obj );
-    $obj->userLogger( $self->wrapUserLogger );
+    $obj->{userLogger} = $self->wrapUserLogger;
+    weaken $obj->{userLogger};
     return $obj;
 }
 
-package Lemonldap::NG::Portal::Multi::UserLogger;
+package Lemonldap::NG::Portal::Lib::Combination::UserLogger;
 
 # This logger rewrite "warn" to "notice"
 
@@ -214,6 +217,12 @@ sub new {
 sub warn {
     my ($auth) = caller(0);
     $_[0]->{logger}->notice("Combination ($auth): $_[1]");
+}
+
+sub AUTOLOAD {
+    no strict;
+    return $_[0]->{logger}->$AUTOLOAD( $_[1] )
+      if ( $AUTOLOAD =~ /^(?:notice|debug|error|info)$/ );
 }
 
 1;
