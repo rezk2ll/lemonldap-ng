@@ -33,7 +33,10 @@ has stylesheet => (
               and -e $self->conf->{notificationXSLTfile} )
           ? $self->conf->{notificationXSLTfile}
           : $self->conf->{templatesDir} . '/common/notification.xsl';
-        die "$styleFile not found" unless ( -e $styleFile );
+        unless ( -e $styleFile ) {
+            $self->{logger}->error("$styleFile not found, aborting");
+            die "$styleFile not found";
+        }
         return $xslt->parse_stylesheet( $self->parser->parse_file($styleFile) );
     }
 );
