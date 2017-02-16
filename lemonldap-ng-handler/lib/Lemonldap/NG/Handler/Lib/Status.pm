@@ -156,7 +156,7 @@ sub run {
         elsif (/^RELOADCACHE(?:\s+(\S+?),(.+))?$/) {
             if ( my ( $cacheModule, $cacheOptions ) = ( $1, $2 ) ) {
                 eval "use $cacheModule;"
-                  . "\$cache = new $cacheModule(\$cacheOptions);";
+                  . "\$cache = new $cacheModule($cacheOptions);";
                 print STDERR "$@\n" if ($@);    # TODO: use logger instead
             }
             else {
