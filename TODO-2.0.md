@@ -1,5 +1,3 @@
-* Change language in portal
-* FastCGI server logs
 * securize SOAP session creation by cipher
 * write REST method to create session with an id
 * remove cache on handler init()
