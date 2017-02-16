@@ -1110,6 +1110,7 @@ sub attributes {
                 { k => 'Zimbra',      v => 'ZimbraPreAuth' },
                 { k => 'AuthBasic',   v => 'AuthBasic' },
                 { k => 'SecureToken', v => 'SecureToken' },
+                { k => 'CDA',         v => 'CDA' },
             ],
             default       => 'Main',
             documentation => 'Handler type',

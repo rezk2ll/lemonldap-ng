@@ -95,7 +95,6 @@ sub reload {
 #      - jail
 # - defaultValuesInit():
 #      (scalars for global options)
-#      - cda
 #      - cookieExpiration  # warning: absent from default Conf
 #      - cookieName
 #      - securedCookie,
@@ -182,11 +181,10 @@ sub defaultValuesInit {
 
     $class->tsv->{$_} = $conf->{$_} foreach (
         qw(
-        cda                    cookieExpiration cookieName
-        customFunctions        httpOnly         securedCookie
-        timeout                timeoutActivity  timeoutActivityInterval
-        useRedirectOnError     useRedirectOnForbidden useSafeJail
-        whatToTrace
+        cookieExpiration        cookieName         customFunctions httpOnly
+        securedCookie           timeout            timeoutActivity
+        timeoutActivityInterval useRedirectOnError useRedirectOnForbidden
+        useSafeJail             whatToTrace
         )
     );
 
