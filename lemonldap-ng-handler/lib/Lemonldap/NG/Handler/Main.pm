@@ -1,3 +1,6 @@
+# Common class for all handlers
+#
+# See http://lemonldap-ng.org/documentation/latest/handlerarch
 package Lemonldap::NG::Handler::Main;
 
 use strict;

@@ -1,7 +1,6 @@
-# Auth-basic authentication with Lemonldap::NG rights management
-
-# This specific handler is intended to be called directly by Apache
-
+# LLNG wrapper class to enable ZimbraPreAuth handler with FastCGI handler
+#
+# See http://lemonldap-ng.org/documentation/latest/handlerarch
 package Lemonldap::NG::Handler::Server::ZimbraPreAuth;
 
 use strict;

@@ -1,3 +1,6 @@
+# Main auto-protected PSGI adapter for LLNG handler
+#
+# See http://lemonldap-ng.org/documentation/latest/handlerarch
 package Lemonldap::NG::Handler::PSGI::Main;
 
 use strict;

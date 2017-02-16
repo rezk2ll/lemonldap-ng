@@ -1,5 +1,5 @@
 # PSGI authentication package written for Nginx. It replace
-# Lemonldap::NG::Handler::PSGI::Server to manage Nginx behaviour
+# Lemonldap::NG::Handler::Server to manage Nginx behaviour
 package Lemonldap::NG::Handler::Server::Nginx;
 
 use strict;

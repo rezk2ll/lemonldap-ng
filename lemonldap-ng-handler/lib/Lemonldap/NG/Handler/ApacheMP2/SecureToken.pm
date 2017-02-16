@@ -1,7 +1,6 @@
-# Auth-basic authentication with Lemonldap::NG rights management
-
-# This specific handler is intended to be called directly by Apache
-
+# LLNG wrapper class to enable SecureToken handler with Apache-2/ModPerl-2
+#
+# See http://lemonldap-ng.org/documentation/latest/handlerarch
 package Lemonldap::NG::Handler::ApacheMP2::SecureToken;
 
 use strict;

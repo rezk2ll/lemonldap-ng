@@ -1,3 +1,6 @@
+# LLNG platform class for FastCGI handler (Nginx)
+#
+# See http://lemonldap-ng.org/documentation/latest/handlerarch
 package Lemonldap::NG::Handler::Server;
 
 use strict;
