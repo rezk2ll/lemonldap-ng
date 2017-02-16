@@ -21,6 +21,13 @@ extends 'Lemonldap::NG::Portal::Main::Issuer',
 
 has ssoUrlRe => ( is => 'rw' );
 
+has ssoUrlArtifact => ( is => 'rw' );
+
+# INTERFACE
+
+# Simply store SP in $req->env
+use constant beforeAuth => 'storeEnv';
+
 # INITIALIZATION
 
 sub init {
@@ -44,6 +51,8 @@ sub init {
     $self->ssoUrlRe(
 qr/^($saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_url_ret|$saml_sso_art_url|$saml_sso_art_url_ret)(?:\?.*)?$/i
     );
+    $self->ssoUrlArtifact(
+        qr/^($saml_sso_art_url|$saml_sso_art_url_ret)(?:\?.*)?$/i);
 
     # Launch parents initialization subroutines, then launch IdP en SP lists
     my $res = (
@@ -124,6 +133,24 @@ qr/^($saml_sso_get_url|$saml_sso_get_url_ret|$saml_sso_post_url|$saml_sso_post_u
 }
 
 # RUNNING METHODS
+
+# "beforeAuth" entry point. Store just SP and SP confKey in $req->env
+sub storeEnv {
+    my ( $self, $req ) = @_;
+    return PE_OK
+      if ( $req->uri !~ $self->ssoUrlRe or $req->uri =~ $self->ssoUrlArtifact );
+    my ( $request, $response, $method, $relaystate, $artifact ) =
+      $self->checkMessage( $req, $req->uri, $req->method, $req->content_type );
+    return PE_OK if ( $artifact or !$request );
+    my $login = $self->createLogin( $self->lassoServer );
+    if ( my $sp = $login->remote_providerID() ) {
+        $req->env->{llng_saml_sp} = $sp;
+        if ( my $spConfKey = $self->spList->{$sp}->{confKey} ) {
+            $req->env->{llng_saml_spconfkey} = $spConfKey;
+        }
+    }
+    return PE_OK;
+}
 
 # Main method (launched only for authenticated users, see Main/Issuer)
 sub run {
@@ -274,6 +301,7 @@ sub run {
             my $sp = $request ? $login->remote_providerID() : $idp_initiated_sp;
 
             $self->logger->debug("Found entityID $sp in SAML message");
+            $req->env->{llng_saml_sp} = $sp;
 
             # SP conf key
             my $spConfKey = $self->spList->{$sp}->{confKey};
@@ -285,6 +313,7 @@ sub run {
             }
 
             $self->logger->debug("$sp match $spConfKey SP in configuration");
+            $req->env->{llng_saml_spconfkey} = $spConfKey;
 
             # Do we check signature?
             my $checkSSOMessageSignature =
@@ -940,9 +969,6 @@ sub run {
         }
 
     }
-
-    # 1.2. SLO
-
     return PE_OK;
 }
 
@@ -1398,6 +1424,7 @@ sub sloServer {
 
         # Get SP entityID
         my $sp = $logout->remote_providerID();
+        $req->env->{llng_saml_sp} = $sp;
 
         $self->logger->debug("Found entityID $sp in SAML message");
 
@@ -1410,6 +1437,7 @@ sub sloServer {
         }
 
         $self->logger->debug("$sp match $spConfKey SP in configuration");
+        $req->env->{llng_saml_spconfkey} = $spConfKey;
 
         # Load Session and Identity if they exist
         my ( $session, $session_index, $identity, $local_session_id );
