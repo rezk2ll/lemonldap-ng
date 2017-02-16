@@ -25,7 +25,10 @@ llapp = angular.module 'llApp', []
 llapp.provider '$translator', ->
 	res = {}
 	# Language detection
-	if navigator
+	c = decodeURIComponent(document.cookie)
+	if c.match /llnglanguage=(\w+)/
+		res.lang = RegExp.$1
+	else if navigator
 		langs = []
 		langs2 = []
 		nlangs = [ navigator.language ]
@@ -68,6 +71,9 @@ llapp.provider '$translator', ->
 		res.last = ''
 		res.init = (lang) ->
 			lang = res.lang unless lang
+			d = new Date()
+			d.setTime d.getTime() + 30*86400000
+			document.cookie = "llnglanguage=#{lang}; expires=#{d.toUTCString()}; path=/"
 			d = $q.defer()
 			if res.last != lang
 				res.last = lang

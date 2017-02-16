@@ -3,7 +3,7 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
- <title><span trspan="authPortal">Authentication portal</span></title>
+ <title trspan="authPortal">Authentication portal</title>
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  <meta http-equiv="Content-Script-Type" content="text/javascript" />
  <meta http-equiv="cache-control" content="no-cache" />
@@ -11,9 +11,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
  </TMPL_IF>
  <!-- //if:cssminified
-  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/styles.min.css" />
+  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">/<TMPL_VAR NAME="SKIN">/css/styles.min.css" />
  //else -->
-  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/css/styles.css" />
+  <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="STATIC_PREFIX">/<TMPL_VAR NAME="SKIN">/css/styles.css" />
  <!-- //endif -->
  <TMPL_INCLUDE NAME="../common/background.tpl">
  <link href="<TMPL_VAR NAME="STATIC_PREFIX">common/favicon.ico" rel="icon" type="image/vnd.microsoft.icon" sizes="16x16 32x32 48x48 64x64 128x128" />

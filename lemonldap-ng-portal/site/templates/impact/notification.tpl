@@ -3,7 +3,7 @@
   <div id="content">
     <div id="content-all">
       <div class="title">
-        <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/logo-ok.png" />
+        <img src="<TMPL_VAR NAME="STATIC_PREFIX">/<TMPL_VAR NAME="SKIN">/images/logo-ok.png" />
         <span trspan="gotNewMessages">You have some new messages</span>
       </div>
       <hr class="solid" />

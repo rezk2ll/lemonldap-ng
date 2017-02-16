@@ -5,7 +5,7 @@ LemonLDAP::NG Portal jQuery scripts
  */
 
 (function() {
-  var datas, getOrder, getValues, isHiddenFormValueSet, ping, restoreOrder, setSelector, translate, translatePage, translationFields,
+  var datas, getCookie, getOrder, getValues, isHiddenFormValueSet, ping, restoreOrder, setCookie, setSelector, translate, translatePage, translationFields,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   translationFields = {};
@@ -16,7 +16,7 @@ LemonLDAP::NG Portal jQuery scripts
       $("[trspan]").each(function() {
         var args, i, len, txt, v;
         args = $(this).attr('trspan').split(',');
-        txt = args.shift();
+        txt = translate(args.shift());
         for (i = 0, len = args.length; i < len; i++) {
           v = args[i];
           txt.replace(/%[ds]/, v);
@@ -123,10 +123,32 @@ LemonLDAP::NG Portal jQuery scripts
 
   window.ping = ping;
 
+  getCookie = function(cname) {
+    var c, ca, i, len, name, re;
+    name = cname + "=";
+    ca = decodeURIComponent(document.cookie).split(';');
+    re = new RegExp('^ *' + cname + '=');
+    for (i = 0, len = ca.length; i < len; i++) {
+      c = ca[i];
+      if (c.match(re)) {
+        c = c.replace(re, '');
+        return c;
+      }
+    }
+    return '';
+  };
+
+  setCookie = function(name, value, exdays) {
+    var d;
+    d = new Date();
+    d.setTime(d.getTime() + exdays * 86400000);
+    return document.cookie = name + "=" + value + "; expires=" + (d.toUTCString()) + "; path=/";
+  };
+
   datas = {};
 
   $(document).ready(function() {
-    var action, al, authMenuTabs, back_url, i, j, lang, langs, langs2, len, len1, link, menuIndex, menuTabs, method, nl, nlangs, ref;
+    var action, al, authMenuTabs, back_url, i, j, l, lang, langdiv, langs, langs2, len, len1, len2, link, menuIndex, menuTabs, method, nl, nlangs, ref, ref1;
     datas = getValues();
     window.datas = datas;
     if (datas['antiframe'] && top !== self) {
@@ -182,38 +204,54 @@ LemonLDAP::NG Portal jQuery scripts
       link = $("p.removeOther a").attr("href") + "&method=" + method + "&url=" + btoa(back_url);
       $("p.removeOther a").attr("href", link);
     }
-    if (navigator) {
-      langs = [];
-      langs2 = [];
-      nlangs = [navigator.language];
-      if (navigator.languages) {
-        nlangs = navigator.languages;
-      }
-      for (i = 0, len = nlangs.length; i < len; i++) {
-        nl = nlangs[i];
+    lang = getCookie('llnglanguage');
+    if (!lang) {
+      if (navigator) {
+        langs = [];
+        langs2 = [];
+        nlangs = [navigator.language];
+        if (navigator.languages) {
+          nlangs = navigator.languages;
+        }
         ref = window.availableLanguages;
-        for (j = 0, len1 = ref.length; j < len1; j++) {
-          al = ref[j];
-          if (al === nl) {
-            langs.push(al);
-          } else if (al.substring(0, 1) === nl.substring(0, 1)) {
-            langs2.push(al);
+        for (i = 0, len = ref.length; i < len; i++) {
+          al = ref[i];
+          langdiv += "<img class=\"langicon\" src=\"" + window.staticPrefix + "common/" + al + ".png\" title=\"" + al + "\"> ";
+          for (j = 0, len1 = nlangs.length; j < len1; j++) {
+            nl = nlangs[j];
+            if (al === nl) {
+              langs.push(al);
+            } else if (al.substring(0, 1) === nl.substring(0, 1)) {
+              langs2.push(al);
+            }
           }
         }
+        lang = langs[0] ? langs[0] : langs2[0] ? langs2[0] : 'en';
+      } else {
+        lang = 'en';
       }
-      lang = langs[0] ? langs[0] : langs2[0] ? langs2[0] : 'en';
-    } else {
-      lang = 'en';
     }
+    translatePage(lang);
+    langdiv = '';
+    ref1 = window.availableLanguages;
+    for (l = 0, len2 = ref1.length; l < len2; l++) {
+      al = ref1[l];
+      langdiv += "<img class=\"langicon\" src=\"" + window.staticPrefix + "common/" + al + ".png\" title=\"" + al + "\"> ";
+    }
+    $('#languages').html(langdiv);
+    $('.langicon').on('click', function() {
+      lang = $(this).attr('title');
+      setCookie('llnglanguage', lang);
+      return translatePage(lang);
+    });
     if (datas['pingInterval'] && datas['pingInterval'] > 0) {
       window.setTimeout(ping, datas['pingInterval']);
     }
-    $(".localeDate").each(function() {
+    return $(".localeDate").each(function() {
       var s;
       s = new Date($(this).attr("val") * 1000);
       return $(this).text(s.toLocaleString());
     });
-    return translatePage(lang);
   });
 
 }).call(this);

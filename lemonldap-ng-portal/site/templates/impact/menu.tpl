@@ -11,6 +11,7 @@
       </TMPL_IF>
       <p>
         <span class="text-error"><span trspan="connectedAs">Connected as</span>: <u><TMPL_VAR NAME="AUTH_USER"></u></span>
+        <span id="languages"></span>
       </p>
 
       <div id="menu">

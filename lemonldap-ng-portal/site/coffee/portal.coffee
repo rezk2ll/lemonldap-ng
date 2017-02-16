@@ -11,7 +11,7 @@ translatePage = (lang) ->
 		translationFields = data
 		$("[trspan]").each ->
 			args = $(this).attr('trspan').split(',')
-			txt = args.shift()
+			txt = translate args.shift()
 			for v in args
 				txt.replace /%[ds]/, v
 			$(this).text txt
@@ -115,6 +115,21 @@ ping = ->
 
 window.ping = ping
 
+getCookie = (cname) ->
+	name = cname + "="
+	ca = decodeURIComponent(document.cookie).split ';'
+	re = new RegExp('^ *'+cname+'=')
+	for c in ca
+		if c.match re
+			c = c.replace re, ''
+			return c
+	return ''
+
+setCookie = (name, value, exdays) ->
+	d = new Date()
+	d.setTime d.getTime() + exdays*86400000
+	document.cookie = "#{name}=#{value}; expires=#{d.toUTCString()}; path=/"
+
 # Initialization
 datas = {}
 $(document).ready ->
@@ -186,21 +201,35 @@ $(document).ready ->
 		$("p.removeOther a").attr "href", link
 
 	# Language detection
-	if navigator
-		langs = []
-		langs2 = []
-		nlangs = [ navigator.language ]
-		if navigator.languages
-			nlangs = navigator.languages
-		for nl in nlangs
+	lang = getCookie 'llnglanguage'
+	if !lang
+		if navigator
+			langs = []
+			langs2 = []
+			nlangs = [ navigator.language ]
+			if navigator.languages
+				nlangs = navigator.languages
 			for al in window.availableLanguages
-				if al == nl
-					langs.push al
-				else if al.substring(0, 1) == nl.substring(0, 1)
-					langs2.push al
-		lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else 'en';
-	else
-		lang = 'en'
+				langdiv += "<img class=\"langicon\" src=\"#{window.staticPrefix}common/#{al}.png\" title=\"#{al}\"> "
+				for nl in nlangs
+					if al == nl
+						langs.push al
+					else if al.substring(0, 1) == nl.substring(0, 1)
+						langs2.push al
+			lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else 'en'
+		else
+			lang = 'en'
+	translatePage(lang)
+
+	# Build language icons
+	langdiv = ''
+	for al in window.availableLanguages
+		langdiv += "<img class=\"langicon\" src=\"#{window.staticPrefix}common/#{al}.png\" title=\"#{al}\"> "
+	$('#languages').html langdiv
+	$('.langicon').on 'click', () ->
+		lang = $(this).attr 'title'
+		setCookie 'llnglanguage', lang
+		translatePage lang
 
 	# Ping if asked
 	if datas['pingInterval'] and datas['pingInterval'] > 0
@@ -210,5 +239,4 @@ $(document).ready ->
 	$(".localeDate").each ->
 		s = new Date($(this).attr("val")*1000)
 		$(this).text s.toLocaleString()
-	translatePage(lang)
 

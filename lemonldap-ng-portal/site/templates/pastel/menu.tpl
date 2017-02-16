@@ -8,7 +8,7 @@
 
   <div id="menu">
 
-    <div class="user"><span trspan="connectedAs">Connected as</span> <TMPL_VAR NAME="AUTH_USER"></div>
+    <div class="user"><span trspan="connectedAs">Connected as</span> <TMPL_VAR NAME="AUTH_USER"> <span id="languages"></span></div>
 
     <TMPL_IF DISPLAY_MODULES>
     <!-- Tabs list -->

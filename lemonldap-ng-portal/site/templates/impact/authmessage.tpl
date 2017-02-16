@@ -1,4 +1,4 @@
-      <p><img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/logo-lock.png" /></p>
+      <p><img src="<TMPL_VAR NAME="STATIC_PREFIX">/<TMPL_VAR NAME="SKIN">/images/logo-lock.png" /></p>
       <h1>
         <span trspan="welcomeOnPortal">Welcome on your secured authentication portal.</span>
       </h1>

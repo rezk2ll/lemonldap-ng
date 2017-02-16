@@ -17,9 +17,12 @@ LemonLDAP::NG base app module
   llapp = angular.module('llApp', []);
 
   llapp.provider('$translator', function() {
-    var al, j, k, langs, langs2, len, len1, nl, nlangs, ref, res;
+    var al, c, j, k, langs, langs2, len, len1, nl, nlangs, ref, res;
     res = {};
-    if (navigator) {
+    c = decodeURIComponent(document.cookie);
+    if (c.match(/llnglanguage=(\w+)/)) {
+      res.lang = RegExp.$1;
+    } else if (navigator) {
       langs = [];
       langs2 = [];
       nlangs = [navigator.language];
@@ -69,6 +72,9 @@ LemonLDAP::NG base app module
           if (!lang) {
             lang = res.lang;
           }
+          d = new Date();
+          d.setTime(d.getTime() + 30 * 86400000);
+          document.cookie = "llnglanguage=" + lang + "; expires=" + (d.toUTCString()) + "; path=/";
           d = $q.defer();
           if (res.last !== lang) {
             res.last = lang;
