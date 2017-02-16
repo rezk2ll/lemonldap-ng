@@ -104,6 +104,10 @@
 
       </TMPL_IF>
 
+    <form action="#" method="post" class="login">
+      <TMPL_VAR NAME="HIDDEN_INPUTS">
+      <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+      <input type="hidden" name="timezone" />
     <TMPL_IF NAME="DISPLAY_FORM">
 
     <div id="content-left">
@@ -124,12 +128,7 @@
       <TMPL_IF NAME="AUTH_ERROR">
       <p><span class="text-error" trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span> <span id="languages"></span></p>
       </TMPL_IF>
-      <form action="#" method="post" class="login">
-        <TMPL_VAR NAME="HIDDEN_INPUTS">
-        <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
-        <input type="hidden" name="timezone" />
         <TMPL_INCLUDE NAME="standardform.tpl">
-      </form>
     </div>
 
     </TMPL_IF>
@@ -154,12 +153,7 @@
       <TMPL_IF NAME="AUTH_ERROR">
       <p><span class="text-error" trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span> <span id="languages"></span></p>
       </TMPL_IF>
-      <form action="#" method="post" class="login">
-        <TMPL_VAR NAME="HIDDEN_INPUTS">
-        <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
-        <input type="hidden" name="timezone" />
         <TMPL_INCLUDE NAME="openidform.tpl">
-      </form>
     </div>
 
     </TMPL_IF>
@@ -184,15 +178,11 @@
       <TMPL_IF NAME="AUTH_ERROR">
       <p><span class="text-error" trmsg="<TMPL_VAR NAME="AUTH_ERROR">"></span> <span id="languages"></span></p>
       </TMPL_IF>
-      <form action="#" method="post" class="login">
-        <TMPL_VAR NAME="HIDDEN_INPUTS">
-        <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
-        <input type="hidden" name="timezone" />
         <TMPL_INCLUDE NAME="yubikeyform.tpl">
-      </form>
     </div>
 
     </TMPL_IF>
+    </form>
 
     <TMPL_IF NAME="DISPLAY_LOGO_FORM">
 

@@ -273,9 +273,9 @@ sub display {
 
                 %templateParams = (
                     %templateParams,
-                    DISPLAY_FORM => $displayType eq "standardform" ? 1 : 0,
-                    DISPLAY_OPENID_FORM => $displayType eq "openidform" ? 1 : 0,
-                    DISPLAY_YUBIKEY_FORM => $displayType eq "yubikeyform" ? 1
+                    DISPLAY_FORM => $displayType =~ /\bstandardform\b/ ? 1 : 0,
+                    DISPLAY_OPENID_FORM => $displayType =~ /\bopenidform\b/ ? 1 : 0,
+                    DISPLAY_YUBIKEY_FORM => $displayType =~ /\byubikeyform\b/ ? 1
                     : 0,
                     DISPLAY_LOGO_FORM => $displayType eq "logo" ? 1 : 0,
                     module => $displayType eq "logo"

@@ -99,48 +99,31 @@
 
   </TMPL_IF>
 
-  <TMPL_IF NAME="DISPLAY_FORM">
+  <form action="#" method="post" class="login" role="form">
+   <!-- Hidden fields -->
+   <TMPL_VAR NAME="HIDDEN_INPUTS">
+   <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+   <input type="hidden" name="timezone" />
 
-    <div class="panel panel-default">
-    <form action="#" method="post" class="login" role="form">
-      <!-- Hidden fields -->
-      <TMPL_VAR NAME="HIDDEN_INPUTS">
-      <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
-      <input type="hidden" name="timezone" />
+   <TMPL_IF NAME="DISPLAY_FORM">
+     <div class="panel panel-default">
       <TMPL_INCLUDE NAME="standardform.tpl">
-    </form>
+     </div>
+   </TMPL_IF>
 
-    </div>
-
-  </TMPL_IF>
-
-  <TMPL_IF NAME="DISPLAY_OPENID_FORM">
-
-    <div class="panel panel-default">
-    <form action="#" method="post" class="login" role="form">
-      <!-- Hidden fields -->
-      <TMPL_VAR NAME="HIDDEN_INPUTS">
-      <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
-      <input type="hidden" name="timezone" />
+   <TMPL_IF NAME="DISPLAY_OPENID_FORM">
+     <div class="panel panel-default">
       <TMPL_INCLUDE NAME="openidform.tpl">
-    </form>
-    </div>
+     </div>
+   </TMPL_IF>
 
-  </TMPL_IF>
-
-  <TMPL_IF NAME="DISPLAY_YUBIKEY_FORM">
-
-    <div class="panel panel-default">
-    <form action="#" method="post" class="login" role="form">
-      <!-- Hidden fields -->
-      <TMPL_VAR NAME="HIDDEN_INPUTS">
-      <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
-      <input type="hidden" name="timezone" />
+   <TMPL_IF NAME="DISPLAY_YUBIKEY_FORM">
+     <div class="panel panel-default">
       <TMPL_INCLUDE NAME="yubikeyform.tpl">
-    </form>
-    </div>
+     </div>
+   </TMPL_IF>
 
-  </TMPL_IF>
+  </form>
 
   <TMPL_IF NAME="DISPLAY_LOGO_FORM">
 
