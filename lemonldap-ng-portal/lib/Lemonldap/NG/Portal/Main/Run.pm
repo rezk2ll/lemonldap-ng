@@ -104,6 +104,35 @@ sub postAuthenticatedRequest {
     );
 }
 
+sub refresh {
+    my ( $self, $req ) = @_;
+    $req->mustRedirect(1);
+    my %datas = %{ $req->userData };
+    $req->user( $datas{ $self->conf->{whatToTrace} } );
+    $req->id( $datas{_session_id} );
+    $self->userLogger->notice('Refresh request for '.$req->user);
+    foreach ( keys %datas ) {
+        delete $datas{$_} unless ( /^_/ or /^(?:startTime)$/ );
+    }
+    return $self->do(
+        $req,
+        [
+            'getUser',
+            @{ $self->betweenAuthAndDatas },
+            'setAuthSessionInfo',
+            'setSessionInfo',
+            'setMacros',
+            'setGroups',
+            'setLocalGroups',
+            sub {
+                $req->sessionInfo->{$_} = $datas{$_} foreach ( keys %datas );
+                return PE_OK;
+            },
+            'store',
+        ]
+    );
+}
+
 sub logout {
     my ( $self, $req ) = @_;
     return $self->do(

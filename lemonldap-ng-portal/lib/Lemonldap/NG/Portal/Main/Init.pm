@@ -109,6 +109,9 @@ sub init {
       ->addUnauthRoute( ping => 'pleaseAuth', ['GET'] )
       ->addAuthRoute( ping => 'authenticated', ['GET'] )
 
+      # Refresh session
+      ->addAuthRoute( refresh => 'refresh', ['GET'] )
+
       # Logout
       ->addAuthRoute( logout => 'logout', ['GET'] );
 
