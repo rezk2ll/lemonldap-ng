@@ -189,9 +189,11 @@ site/htdocs/static/common/css/inputicons.css
 site/htdocs/static/common/css/inputicons.min.css
 site/htdocs/static/common/door_out.png
 site/htdocs/static/common/email.png
+site/htdocs/static/common/en.png
 site/htdocs/static/common/error.png
 site/htdocs/static/common/Facebook.png
 site/htdocs/static/common/favicon.ico
+site/htdocs/static/common/fr.png
 site/htdocs/static/common/Google.png
 site/htdocs/static/common/js/browserid.js
 site/htdocs/static/common/js/browserid.min.js

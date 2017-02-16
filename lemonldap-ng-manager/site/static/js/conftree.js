@@ -936,6 +936,10 @@ function templates(tpl,key) {
                {
                   "k" : "SecureToken",
                   "v" : "SecureToken"
+               },
+               {
+                  "k" : "CDA",
+                  "v" : "CDA"
                }
             ],
             "title" : "vhostType",

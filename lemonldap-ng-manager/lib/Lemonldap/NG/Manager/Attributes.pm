@@ -2883,6 +2883,10 @@ qr/^(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-
                 {
                     'k' => 'SecureToken',
                     'v' => 'SecureToken'
+                },
+                {
+                    'k' => 'CDA',
+                    'v' => 'CDA'
                 }
             ],
             'type' => 'select'
