@@ -37,7 +37,7 @@ llapp.provider '$translator', ->
 					langs.push al
 				else if al.substring(0, 1) == nl.substring(0, 1)
 					langs2.push al
-		res.lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else 'en';
+		res.lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else 'en'
 	else
 		res.lang = 'en'
 
