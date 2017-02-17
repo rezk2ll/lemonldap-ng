@@ -110,7 +110,7 @@ sub refresh {
     my %datas = %{ $req->userData };
     $req->user( $datas{ $self->conf->{whatToTrace} } );
     $req->id( $datas{_session_id} );
-    $self->userLogger->notice('Refresh request for '.$req->user);
+    $self->userLogger->notice( 'Refresh request for ' . $req->user );
     foreach ( keys %datas ) {
         delete $datas{$_} unless ( /^_/ or /^(?:startTime)$/ );
     }
@@ -158,7 +158,7 @@ sub do {
     }
     if ( !$self->conf->{noAjaxHook} and $req->wantJSON ) {
         $self->logger->debug('Processing to JSON response');
-        if ( $err > 0 and !$req->id ) {
+        if ( ( $err > 0 and !$req->id ) or $err eq PE_SESSIONNOTGRANTED ) {
             return [
                 401,
                 [
