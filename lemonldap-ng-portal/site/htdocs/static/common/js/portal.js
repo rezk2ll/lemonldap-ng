@@ -231,6 +231,7 @@ LemonLDAP::NG Portal jQuery scripts
         lang = 'en';
       }
     }
+    setCookie('llnglanguage', lang);
     translatePage(lang);
     langdiv = '';
     ref1 = window.availableLanguages;

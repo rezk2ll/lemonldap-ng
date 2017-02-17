@@ -2,7 +2,6 @@
 * write REST method to create session with an id
 * remove cache on handler init()
 * public\_page
-* Uniq session plugins
 * Test ForceAuth
 * Calendar in notifications explorer
 * login history

@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Plugins::Register;
 
 use strict;
 use Encode;
+use HTML::Template;
 use Mouse;
 use POSIX qw(strftime);
 use Lemonldap::NG::Portal::Main::Constants qw(
@@ -191,7 +192,8 @@ sub _register {
             elsif ( $self->ott ) {
                 unless ( $self->ott->getToken($token) ) {
                     $self->setSecurity($req);
-                    $self->userLogger->notice('Register try with expired/bad token');
+                    $self->userLogger->notice(
+                        'Register try with expired/bad token');
                     return PE_TOKENEXPIRED;
                 }
             }
@@ -296,7 +298,10 @@ sub _register {
         $tplfile =
           $self->conf->{templateDir} . '/common/mail_register_confirm.tpl'
           unless ( -e $tplfile );
-        my $template = HTML::Template->new( filename => $tplfile, );
+        my $template = HTML::Template->new(
+            filename => $tplfile,
+            filter   => $self->translate($req),
+        );
         $body = $template->output();
 
         # Replace variables in body
@@ -351,7 +356,10 @@ sub _register {
       . "/mail_register_done.tpl";
     $tplfile = $self->conf->{templateDir} . "/common/mail_register_done.tpl"
       unless ( -e $tplfile );
-    my $template = HTML::Template->new( filename => $tplfile, );
+    my $template = HTML::Template->new(
+        filename => $tplfile,
+        filter   => $self->translate($req),
+    );
     $body = $template->output();
 
     # Replace variables in body

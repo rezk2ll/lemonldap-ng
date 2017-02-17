@@ -49,6 +49,7 @@ lib/Lemonldap/NG/Portal/Lib/OneTimeToken.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/Server.pm
 lib/Lemonldap/NG/Portal/Lib/OpenID/SREG.pm
 lib/Lemonldap/NG/Portal/Lib/OpenIDConnect.pm
+lib/Lemonldap/NG/Portal/Lib/OtherSessions.pm
 lib/Lemonldap/NG/Portal/Lib/Remote.pm
 lib/Lemonldap/NG/Portal/Lib/RESTProxy.pm
 lib/Lemonldap/NG/Portal/Lib/SAML.pm
@@ -75,10 +76,13 @@ lib/Lemonldap/NG/Portal/Password/Demo.pm
 lib/Lemonldap/NG/Portal/Password/LDAP.pm
 lib/Lemonldap/NG/Portal/Plugins/CDA.pm
 lib/Lemonldap/NG/Portal/Plugins/ForceAuth.pm
+lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
+lib/Lemonldap/NG/Portal/Plugins/History.pm
 lib/Lemonldap/NG/Portal/Plugins/MailReset.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
 lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
+lib/Lemonldap/NG/Portal/Plugins/SingleSession.pm
 lib/Lemonldap/NG/Portal/Plugins/SOAPServer.pm
 lib/Lemonldap/NG/Portal/Plugins/Status.pm
 lib/Lemonldap/NG/Portal/Plugins/U2F.pm
@@ -275,6 +279,8 @@ site/templates/bootstrap/yubikeyform.tpl
 site/templates/common/background.tpl
 site/templates/common/bullet_go.png
 site/templates/common/key.png
+site/templates/common/mail/en.json
+site/templates/common/mail/fr.json
 site/templates/common/mail_confirm.tpl
 site/templates/common/mail_footer.tpl
 site/templates/common/mail_header.tpl
@@ -396,6 +402,8 @@ t/43-MailReset-with-token.t
 t/43-MailReset.t
 t/50-IssuerGet.t
 t/60-status.t
+t/61-grantSession.t
+t/62-singleSession.t
 t/90-translations.t
 t/99-pod.t
 t/lmConf-1.js

@@ -66,7 +66,7 @@ my @unTr   = ();
 find(
     sub {
         my $f = $File::Find::name;
-        return unless ( $_ =~ /tpl$/ and -f $_ );
+        return unless ( $_ =~ /tpl$/ and -f $_ and $_ !~ m#mail_# );
         open F, $_;
         while ( my $l = <F> ) {
             push @trspan, ( $l =~ /trspan="(\w+)"/g );

@@ -219,6 +219,7 @@ $(document).ready ->
 			lang = if langs[0] then langs[0] else if langs2[0] then langs2[0] else 'en'
 		else
 			lang = 'en'
+	setCookie 'llnglanguage', lang
 	translatePage(lang)
 
 	# Build language icons

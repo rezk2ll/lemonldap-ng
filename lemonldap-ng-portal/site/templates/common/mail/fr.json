@@ -1,0 +1,12 @@
+{
+"accountCreated":"Votre compte a été créé, un mot de passe temporaire a été envoyé à votre adresse mail.",
+"autoMail":"Ceci est un message automatique",
+"click2Register":"Cliquez ici pour confirmer l'enregistrement de votre compte",
+"click2Reset":"Cliquez ici pour réinitialiser votre mot de passe",
+"hello":"Bonjour",
+"newPwdIs":"Votre nouveau mot de passe est",
+"pwdChanged":"Votre mot de passe a été changé.",
+"pwdIs":"Votre mot de passe est",
+"requestIssuedFromIP":"La demande provient de l'IP",
+"yourLoginIs":"Votre identifiant est"
+}

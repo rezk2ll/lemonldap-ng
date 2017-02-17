@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::Lib::SMTP;
 
 use strict;
 use Mouse;
+use JSON qw(from_json);
 use String::Random;
 use MIME::Lite;
 use MIME::Base64;
@@ -26,6 +27,24 @@ has charset => (
     is      => 'rw',
     default => sub { return $_[0]->{conf}->{mailCharset} || 'utf-8' }
 );
+
+sub translate {
+    my ( $self, $req ) = @_;
+
+    # Get language using llnglanguage cookie
+    my $lang = $req->cookies->{llnglanguage} || 'en';
+    my $json = $self->conf->{templateDir} . "/common/mail/$lang.json";
+    $json = $self->conf->{templateDir} . '/common/mail/en.json'
+      unless ( -f $json );
+    open F, $json or die $!;
+    $json = join '', <F>;
+    close F;
+    $lang = from_json($json);
+    return sub {
+        ($_) = @_;
+        $$_ =~ s/\s+trspan="(\w+?)"(.*?)>.*?</"$2>".($lang->{$1}||$1).'<'/gse;
+    };
+}
 
 # Generate a complex password based on a regular expression
 # @param regexp regular expression
