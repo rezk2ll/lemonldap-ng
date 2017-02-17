@@ -1,0 +1,97 @@
+package Lemonldap::NG::Portal::Plugins::SingleSession;
+
+use strict;
+use Mouse;
+use Lemonldap::NG::Portal::Main::Constants qw(PE_OK);
+
+our $VERSION = '2.0.0';
+
+extends 'Lemonldap::NG::Portal::Main::Plugin',
+  'Lemonldap::NG::Portal::Lib::OtherSessions';
+
+sub afterDatas { 'run' }
+
+sub init { 1 }
+
+sub run {
+    my ( $self, $req ) = @_;
+    my $deleted       = [];
+    my $otherSessions = [];
+
+    my $moduleOptions = $self->conf->{globalStorageOptions} || {};
+    $moduleOptions->{backend} = $self->conf->{globalStorage};
+
+    my $sessions = $self->module->searchOn(
+        $moduleOptions,
+        $self->conf->{whatToTrace},
+        $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
+    );
+    foreach my $id ( keys %$sessions ) {
+        next if ( $req->id eq $id );
+        my $session = $self->p->getApacheSession($id) or next;
+        if (
+            $self->conf->{singleSession}
+            or (    $self->conf->{singleIP}
+                and $req->{sessionInfo}->{ipAddr} ne $session->data->{ipAddr} )
+          )
+        {
+            push @$deleted, $self->_sumUpSession( $session->data );
+            $self->p->_deleteSession( $req, $session, 1 );
+        }
+        else {
+            push @$otherSessions, $self->_sumUpSession( $session->data );
+        }
+    }
+    if ( $self->conf->{singleUserByIP} ) {
+        my $sessions =
+          $self->module->searchOn( $moduleOptions, 'ipAddr',
+            $req->sessionInfo->ipAddr );
+        foreach my $id ( keys %$sessions ) {
+            next if ( $req->id eq $id );
+            my $session = $self->p->getApacheSession($id) or next;
+            unless ( $req->{sessionInfo}->{ $self->conf->{whatToTrace} } eq
+                $session->data->{ $self->conf->{whatToTrace} } )
+            {
+                push @$deleted, $self->_sumUpSession( $session->data );
+                $self->p->_deleteSession( $req, $session, 1 );
+            }
+        }
+    }
+    $req->info( $self->mkSessionArray( $deleted, 'sessionsDeleted', 1 ) )
+      if ( $self->conf->{notifyDeleted} and @$deleted );
+    $req->info( $self->mkSessionArray( $otherSessions, 'otherSessions', 1 )
+          . $self->_mkRemoveOtherLink() )
+      if ( $self->conf->{notifyOther} and @$otherSessions );
+
+    PE_OK;
+}
+
+# put main session data into a hash ref
+# @param hashref $session The session to sum up
+# @return hashref
+sub _sumUpSession {
+    my ( $self, $session, $withoutUser ) = @_;
+    my $res =
+      $withoutUser
+      ? {}
+      : { user => $session->{ $self->conf->{whatToTrace} } };
+    $res->{$_} = $session->{$_}
+      foreach ( "_utime", "ipAddr",
+        keys %{ $self->conf->{sessionDataToRemember} } );
+    return $res;
+}
+
+# Build the removeOther link
+# Last part of URL is built trough javascript
+# @return removeOther link in HTML code
+sub _mkRemoveOtherLink {
+    my $self = shift;
+
+    my $link = $self->conf->{portal} . "?removeOther=1";
+
+    # TODO: remove this
+    return
+qq'<p class="removeOther"><a href="$link" onclick="_go=0" trspan="removeOtherSessions></a></p>';
+}
+
+1;

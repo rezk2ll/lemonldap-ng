@@ -21,6 +21,7 @@ our @pList = (
     u2fActivation              => '::Plugins::U2F',
     u2fSelfRegistration        => '::Register::U2F',
     notification               => '::Plugins::Notifications',
+    checkLogins                => '::Plugins::History',
 );
 
 ##@method list enabledPlugins
@@ -28,11 +29,12 @@ our @pList = (
 #@return list of enabled plugins
 sub enabledPlugins {
     my ($self) = @_;
+    my $conf = $self->conf;
     my @res;
 
     # Search for Issuer* modules enabled
     foreach my $key (qw(SAML OpenID CAS OpenIDConnect Get)) {
-        if ( $self->conf->{"issuerDB${key}Activation"} ) {
+        if ( $conf->{"issuerDB${key}Activation"} ) {
             $self->logger->debug("Issuer${key} enabled");
             push @res, "::Issuer::$key";
         }
@@ -40,31 +42,37 @@ sub enabledPlugins {
 
     # Load static plugin list
     for ( my $i = 0 ; $i < @pList ; $i += 2 ) {
-        push @res, $pList[ $i + 1 ] if ( $self->conf->{ $pList[$i] } );
+        push @res, $pList[ $i + 1 ] if ( $conf->{ $pList[$i] } );
     }
+
+    # Load single session
+    push @res, '::Plugins::SingleSession'
+      if ( $conf->{singleSession}
+        or $conf->{singleIP}
+        or $conf->{singleUserByIP}
+        or $conf->{notifyOther} );
 
     # Check if SOAP is enabled
     push @res, '::Plugins::SOAPServer'
-      if ( $self->conf->{soapSessionServer}
-        or $self->conf->{soapConfigServer} );
+      if ( $conf->{soapSessionServer}
+        or $conf->{soapConfigServer} );
 
     # Add REST (check is done by it)
     push @res, '::Plugins::RESTServer';
 
-    if ( my $p = $self->conf->{passwordDB} ) {
+    if ( my $p = $conf->{passwordDB} ) {
         push @res, "::Password::$p" if ( $p ne 'Null' );
     }
 
     # Check if register is enabled
     push @res, '::Plugins::Register'
-      if ( $self->conf->{registerDB} and $self->conf->{registerDB} ne 'Null' );
+      if ( $conf->{registerDB} and $conf->{registerDB} ne 'Null' );
 
     # Check if custom plugins are required
     # TODO: change this name
-    if ( $self->conf->{customPlugins} ) {
-        $self->logger->debug(
-            'Custom plugins: ' . $self->conf->{customPlugins} );
-        push @res, grep ( /\w/, split( /,\s*/, $self->conf->{customPlugins} ) );
+    if ( $conf->{customPlugins} ) {
+        $self->logger->debug( 'Custom plugins: ' . $conf->{customPlugins} );
+        push @res, grep ( /\w/, split( /,\s*/, $conf->{customPlugins} ) );
     }
     return @res;
 }
