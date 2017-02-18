@@ -8,10 +8,8 @@
 * "mail" in UserDB/*
 * checkLogins in SAML
 * verify activeTimer on/off on screen
-* Import r5420 (ssl\_opts) to trunk
 
 * Don't display "login" when connected
-* Import fastcgi-server changes (nginxCustomHandlers)
 * Add test for #173
 * lwpSslOpt
 

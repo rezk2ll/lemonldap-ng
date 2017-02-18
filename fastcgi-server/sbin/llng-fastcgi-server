@@ -111,7 +111,7 @@ my $app = sub {
 # Hook for customFunctions initialization
 Lemonldap::NG::Handler::Main->onReload(
     bless( {}, 'Lemonldap::NG::Handler::FastCGI::Loader' ),
-    'loadCustomLogins' );
+    'loadCustomHandlers' );
 
 my $server = Plack::Runner->new();
 $server->parse_options(
@@ -131,7 +131,7 @@ $server->run($app);
 package Lemonldap::NG::Handler::FastCGI::Loader;
 
 # Load configuration and look if custom handlers have been defined
-sub loadCustomLogins {
+sub loadCustomHandlers {
     my ( $obj, $conf ) = @_;
     foreach my $lltype ( keys %{ $conf->{nginxCustomHandlers} // {} } ) {
         my $v = $conf->{nginxCustomHandlers}->{$lltype};
