@@ -467,7 +467,6 @@ sub display {
     my ( $self, $req ) = @_;
     $self->logger->debug( 'Display called with code: ' . $req->error );
     my %tplPrm = (
-        PORTAL_URL      => $self->conf->{portal},
         SKIN_PATH       => '/static',
         SKIN            => $self->conf->{portalSkin},
         SKIN_BG         => $self->conf->{portalSkinBackground},

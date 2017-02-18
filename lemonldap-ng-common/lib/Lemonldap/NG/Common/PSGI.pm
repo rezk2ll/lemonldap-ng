@@ -249,12 +249,12 @@ sub sendHtml {
         $htpl->param(
             STATIC_PREFIX => $sp,
             SCRIPTNAME    => $sc,
+            ( $self->can('tplParams') ? ( $self->tplParams ) : () ),
             (
                 $args{params}
                 ? %{ $args{params} }
                 : ()
             ),
-            ( $self->can('tplParams') ? ( $self->tplParams ) : () ),
         );
     };
     if ($@) {

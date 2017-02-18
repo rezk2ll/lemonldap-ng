@@ -45,7 +45,6 @@ sub display {
         $self->controlUrl($req);
 
         %templateParams = (
-            PORTAL_URL => $self->conf->{portal},
             LOGOUT_URL => $self->conf->{portal} . "?logout=1",
             URL        => $req->{urldc},
         );
@@ -125,7 +124,6 @@ sub display {
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $req->error_type,
             PROVIDERURI     => $p,
-            PORTAL_URL      => $self->conf->{portal},
             MSG             => $req->info(),
         );
         $templateParams{ID} = $req->datas->{_openidPortal} . $id if ($id);
@@ -240,7 +238,6 @@ sub display {
                 DISPLAY_OPENID_FORM   => 0,
                 DISPLAY_YUBIKEY_FORM  => 0,
                 AUTH_LOOP             => [],
-                PORTAL_URL            => $self->conf->{portal},
                 MSG                   => $req->info(),
             );
 

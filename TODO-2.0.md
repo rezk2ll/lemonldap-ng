@@ -1,7 +1,6 @@
 * securize SOAP session creation by cipher
 * write REST method to create session with an id
 * remove cache on handler init()
-* public\_page
 * Test ForceAuth
 * Calendar in notifications explorer
 * login history

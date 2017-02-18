@@ -708,7 +708,10 @@ sub rebuildCookies {
 }
 
 sub tplParams {
-    return ( SKIN => $_[0]->conf->{portalSkin} );
+    return (
+        SKIN       => $_[0]->conf->{portalSkin},
+        PORTAL_URL => $_[0]->conf->{portal},
+    );
 }
 
 1;

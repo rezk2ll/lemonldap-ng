@@ -63,7 +63,6 @@ sub run {
             $req,
             'u2fcheck',
             params => {
-                PORTAL_URL => $self->conf->{portal},
                 SKIN       => $self->conf->{portalSkin},
                 CHALLENGE  => $challenge,
                 TOKEN      => $token
@@ -129,7 +128,6 @@ sub fail {
         $req,
         'u2fcheck',
         params => {
-            PORTAL_URL      => $self->conf->{portal},
             AUTH_ERROR      => $req->error,
             AUTH_ERROR_TYPE => $req->error_type,
             SKIN            => $self->conf->{portalSkin},

@@ -80,6 +80,7 @@ lib/Lemonldap/NG/Portal/Plugins/GrantSession.pm
 lib/Lemonldap/NG/Portal/Plugins/History.pm
 lib/Lemonldap/NG/Portal/Plugins/MailReset.pm
 lib/Lemonldap/NG/Portal/Plugins/Notifications.pm
+lib/Lemonldap/NG/Portal/Plugins/PublicPages.pm
 lib/Lemonldap/NG/Portal/Plugins/Register.pm
 lib/Lemonldap/NG/Portal/Plugins/RESTServer.pm
 lib/Lemonldap/NG/Portal/Plugins/SingleSession.pm
@@ -270,6 +271,7 @@ site/templates/bootstrap/notification.tpl
 site/templates/bootstrap/openid.tpl
 site/templates/bootstrap/openidform.tpl
 site/templates/bootstrap/password.tpl
+site/templates/bootstrap/public/test.tpl
 site/templates/bootstrap/redirect.tpl
 site/templates/bootstrap/register.tpl
 site/templates/bootstrap/standardform.tpl
