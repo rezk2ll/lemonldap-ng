@@ -39,8 +39,8 @@ eval { $res = JSON::from_json( $res->[2]->[0] ) };
 ok( !$@, 'Content is JSON' ) or print STDERR Dumper($@);
 count(1);
 
-ok( $res->{global} == 1,     'Found 1 session' );
-ok( $res->{persistent} == 1, 'Found 1 persistent session' );
+ok( $res->{storage}->{global} == 1,     'Found 1 session' );
+ok( $res->{storage}->{persistent} == 1, 'Found 1 persistent session' );
 count(2);
 
 clean_sessions();
