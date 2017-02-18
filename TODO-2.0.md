@@ -4,7 +4,6 @@
 * Calendar in notifications explorer
 * login history
 * Test for Zero
-* updateStatus( Main, SOAP server )
 * replace SOAP by REST for notification creation
 * "mail" in UserDB/*
 * checkLogins in SAML

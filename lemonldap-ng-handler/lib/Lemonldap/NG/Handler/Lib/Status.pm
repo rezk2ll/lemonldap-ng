@@ -5,6 +5,7 @@ package Lemonldap::NG::Handler::Lib::Status;
 
 use strict;
 use POSIX qw(setuid setgid);
+use JSON qw(to_json);
 use Data::Dumper;
 
 our $VERSION = '2.0.0';
@@ -173,7 +174,7 @@ sub run {
             my $tmp  = $1;
             my $args = {};
             %$args = split( /[=&]/, $tmp ) if ($tmp);
-            &head;
+            &head unless ( $args->{json} );
 
             my ( $c, $m, $u );
             foreach my $user ( keys %{ $status->{user} } ) {
@@ -194,8 +195,13 @@ sub run {
                 $m->{$_} = int( $m->{$_} ) if ( $m->{$_} > 99 );
             }
 
+            # JSON values
+            if ( $args->{json} ) {
+                print to_json( { average => $m, total => $c } ) . "\nEND\n";
+            }
+
             # Raw values (Dump)
-            if ( $args->{'dump'} ) {
+            elsif ( $args->{'dump'} ) {
                 print "<div id=\"dump\"><pre>\n";
                 print Dumper( $status, $activity, $count );
                 print "</pre></div>\n";

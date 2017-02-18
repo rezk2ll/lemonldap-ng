@@ -153,6 +153,11 @@ sub do {
     my $err = $req->error( $self->process($req) );
 
     # TODO: updateStatus
+    if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
+        print $p ( $req->user ? $req->user : $req->address ) . ' => '
+          . $req->uri
+          . " $err\n";
+    }
     if ( $err == PE_SENDRESPONSE ) {
         return $req->response;
     }

@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::Plugins::Status;
 
 use strict;
 use Mouse;
+use JSON qw(from_json);
 use MIME::Base64;
 
 our $VERSION = '2.0.0';
@@ -25,6 +26,29 @@ sub init {
 sub status {
     my ( $self, $req ) = @_;
     my $res = {};
+    if ( my $p = $self->p->HANDLER->tsv->{statusPipe} ) {
+        print $p "STATUS json=1\n";
+        my $buf;
+        $p = $self->p->HANDLER->tsv->{statusOut};
+        while (<$p>) {
+            last if (/^END$/);
+            $buf .= $_;
+        }
+        if ($buf) {
+            eval { $res = from_json($buf) };
+            if ($@) {
+                $self->logger->error("JSON error: $@");
+                $self->logger->error("JSON: $buf");
+            }
+            foreach (qw(total average)) {
+                if ( $res->{$_} ) {
+                    foreach my $k ( keys %{ $res->{$_} } ) {
+                        delete $res->{$_}->{$k} unless ( $k =~ /^PORTAL/ );
+                    }
+                }
+            }
+        }
+    }
     foreach my $type (qw(global persistent cas saml oidc)) {
         if ( $self->conf->{"${type}Storage"} ) {
             my %modOpts = (
@@ -38,7 +62,7 @@ sub status {
             );
             if (%$sessions) {
                 my @s = keys %$sessions;
-                $res->{$type} = @s;
+                $res->{storage}->{$type} = @s;
             }
         }
     }
