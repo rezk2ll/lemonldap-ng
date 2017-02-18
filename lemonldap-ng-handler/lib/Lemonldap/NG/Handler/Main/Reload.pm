@@ -33,8 +33,9 @@ sub onReload {
 # @return true if config is up to date or if reload config succeeded
 sub checkConf {
     my ( $class, $force ) = @_;
-    my $conf = $class->confAcc->getConf(
-        { local => !$force, localPrm => $class->localConfig } );
+    my $prm = { local => !$force, localPrm => $class->localConfig };
+    $prm->{noCache} = 1 unless ( $class->cfgNum );
+    my $conf = $class->confAcc->getConf($prm);
 
     unless ( ref($conf) ) {
         $class->logger->error(
