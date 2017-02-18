@@ -94,7 +94,7 @@ sub extractFormInfo {
 
         # Remote error
         unless ( $csr->is_server_response() ) {
-            $self->logger->info('No OpenID valid message found');
+            $self->userLogger->info('No OpenID valid message found');
             return PE_BADCREDENTIALS;
         }
 
@@ -107,7 +107,7 @@ sub extractFormInfo {
 
         # Check if user has refused to share his authentication
         elsif ( $csr->user_cancel() ) {
-            $self->logger->info('OpenID request cancelled by user');
+            $self->userLogger->info('OpenID request cancelled by user');
             return PE_FIRSTACCESS;
         }
 
@@ -122,7 +122,7 @@ sub extractFormInfo {
 
         # Other errors
         else {
-            $self->logger->warn( 'OpenID error: ' . $csr->err );
+            $self->logger->error( 'OpenID error: ' . $csr->err );
             return PE_ERROR;
         }
     }
@@ -139,7 +139,7 @@ sub extractFormInfo {
 
         # Check if url is valid
         unless ($claimed_identity) {
-            $self->logger->warn( 'OpenID error : ' . $req->{csr}->err() );
+            $self->userLogger->warn( 'OpenID error : ' . $req->{csr}->err() );
             return PE_BADCREDENTIALS;
         }
 

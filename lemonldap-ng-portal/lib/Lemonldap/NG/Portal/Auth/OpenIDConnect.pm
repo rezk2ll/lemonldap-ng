@@ -81,7 +81,7 @@ sub extractFormInfo {
                 $self->logger->debug("State $state extracted");
             }
             else {
-                $self->logger->error("Unable to extract state $state");
+                $self->userLogger->error("Unable to extract state $state");
                 return PE_ERROR;
             }
         }
@@ -90,7 +90,7 @@ sub extractFormInfo {
         my $op = $req->datas->{_oidcOPCurrent};
 
         unless ($op) {
-            $self->logger->error("OpenID Provider not found");
+            $self->userLogger->error("OpenID Provider not found");
             return PE_ERROR;
         }
 
@@ -180,7 +180,7 @@ sub extractFormInfo {
 
         # Check validity of ID Token
         unless ( $self->checkIDTokenValidity( $op, $id_token_payload_hash ) ) {
-            $self->logger->error('ID Token not valid');
+            $self->userLogger->error('ID Token not valid');
             return PE_ERROR;
         }
         else {

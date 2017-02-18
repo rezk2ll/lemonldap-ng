@@ -111,7 +111,7 @@ sub extractFormInfo {
 
             # Store pgtId and pgtIou
             unless ( $self->cas->storePGT( $pgtIou, $pgtId ) ) {
-                $self->logger->error( "CAS: error " . &AuthCAS::get_errors() );
+                $self->userLogger->error( "CAS: error " . &AuthCAS::get_errors() );
             }
             else {
                 $self->logger->debug(
@@ -144,7 +144,7 @@ sub extractFormInfo {
 
     # Ticket found, try to validate it
     unless ( $req->{user} = $self->cas->validateST( $local_url, $ticket ) ) {
-        $self->logger->error( "CAS: error " . &AuthCAS::get_errors() );
+        $self->userLogger->error( "CAS: error " . &AuthCAS::get_errors() );
         return PE_ERROR;
     }
     else {

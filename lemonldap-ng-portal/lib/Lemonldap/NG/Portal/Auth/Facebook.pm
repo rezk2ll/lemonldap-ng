@@ -96,7 +96,7 @@ sub extractFormInfo {
     # 1.2 Bad responses
     if ( my $error_code = $req->param('error_code') ) {
         my $error_message = $req->param('error_message');
-        $self->logger->error("Facebook error code $error_code: $error_message");
+        $self->userLogger->error("Facebook error code $error_code: $error_message");
         return PE_ERROR;
     }
 

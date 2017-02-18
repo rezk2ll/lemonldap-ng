@@ -73,7 +73,7 @@ sub authenticate {
         my $expired_flag =
           0x800000;   # 8 at 6th position for flag UF_PASSWORD_EXPIRED to be set
         if ( ( $computed & $mask ) == $expired_flag ) {
-            $self->logger->warn("[AD] Password has expired");
+            $self->userLogger->warn("[AD] Password has expired");
             $res = PE_PP_PASSWORD_EXPIRED;
         }
 

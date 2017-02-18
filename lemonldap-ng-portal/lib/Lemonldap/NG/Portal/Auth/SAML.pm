@@ -152,7 +152,7 @@ sub extractFormInfo {
                 }
 
                 unless ($result) {
-                    $self->logger->error("Signature is not valid");
+                    $self->userLogger->error("Signature is not valid");
                     return PE_SAML_SIGNATURE_ERROR;
                 }
                 else {
@@ -166,7 +166,7 @@ sub extractFormInfo {
             # Get SAML response
             my $saml_response = $login->response();
             unless ($saml_response) {
-                $self->logger->error("No SAML response found");
+                $self->userLogger->error("No SAML response found");
                 return PE_SAML_SSO_ERROR;
             }
 
@@ -200,7 +200,7 @@ sub extractFormInfo {
             my $assertion = $self->getAssertion($login);
 
             unless ($assertion) {
-                $self->logger->error("No assertion found");
+                $self->userLogger->error("No assertion found");
                 return PE_SAML_SSO_ERROR;
             }
 
@@ -219,7 +219,7 @@ sub extractFormInfo {
                 )
               )
             {
-                $self->logger->error("Conditions not validated");
+                $self->userLogger->error("Conditions not validated");
                 return PE_SAML_CONDITIONS_ERROR;
             }
 
@@ -287,7 +287,7 @@ sub extractFormInfo {
             my $user = $nameid->content;
 
             unless ($user) {
-                $self->logger->error("No NameID value found");
+                $self->userLogger->error("No NameID value found");
                 return PE_SAML_SSO_ERROR;
             }
 
@@ -364,7 +364,7 @@ sub extractFormInfo {
         else {
 
             # This should not happen
-            $self->logger->error("SSO request or response was not found");
+            $self->userLogger->error("SSO request or response was not found");
 
             return PE_SAML_ERROR;
         }
@@ -395,7 +395,7 @@ sub extractFormInfo {
             my $result = $self->processLogoutResponseMsg( $logout, $response );
 
             unless ($result) {
-                $self->logger->error("Fail to process logout response");
+                $self->userLogger->error("Fail to process logout response");
                 return PE_SAML_SLO_ERROR;
             }
 
@@ -433,7 +433,7 @@ sub extractFormInfo {
                 $result = $self->processLogoutResponseMsg( $logout, $response );
 
                 unless ($result) {
-                    $self->logger->error("Signature is not valid");
+                    $self->userLogger->error("Signature is not valid");
                     return PE_SAML_SIGNATURE_ERROR;
                 }
                 else {
@@ -485,7 +485,7 @@ sub extractFormInfo {
 
             # Process logout request
             unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
-                $self->logger->error("Fail to process logout request");
+                $self->userLogger->error("Fail to process logout request");
                 $logout_error = 1;
             }
 
@@ -518,7 +518,7 @@ sub extractFormInfo {
 
             if ($checkSLOMessageSignature) {
                 unless ( $self->checkSignatureStatus($logout) ) {
-                    $self->logger->error("Signature is not valid");
+                    $self->userLogger->error("Signature is not valid");
                     return PE_SAML_SIGNATURE_ERROR;
                 }
                 else {
@@ -632,7 +632,7 @@ sub extractFormInfo {
             # Validate request if no previous error
             unless ($logout_error) {
                 unless ( $self->validateLogoutRequest($logout) ) {
-                    $self->logger->error("SLO request is not valid");
+                    $self->userLogger->error("SLO request is not valid");
                 }
             }
 
@@ -739,7 +739,7 @@ sub extractFormInfo {
         else {
 
             # This should not happen
-            $self->logger->error("SLO request or response was not found");
+            $self->userLogger->error("SLO request or response was not found");
 
             # Redirect user
             $req->mustRedirect(1);
@@ -895,7 +895,7 @@ sub extractFormInfo {
     my $idpConfKey = $self->idpList->{$idp}->{confKey};
 
     unless ($idpConfKey) {
-        $self->logger->error("$idp do not match any IDP in configuration");
+        $self->userLogger->error("$idp do not match any IDP in configuration");
         return PE_SAML_UNKNOWN_ENTITY;
     }
 
@@ -962,7 +962,7 @@ sub extractFormInfo {
     );
 
     unless ($login) {
-        $self->logger->error(
+        $self->userLogger->error(
             "Could not create authentication request on $idpConfKey");
         return PE_SAML_SSO_ERROR;
     }
@@ -1060,7 +1060,7 @@ sub setAuthSessionInfo {
     my $assertion = $self->getAssertion($login);
 
     unless ($assertion) {
-        $self->logger->error("No assertion found");
+        $self->userLogger->error("No assertion found");
         return PE_SAML_SSO_ERROR;
     }
 
@@ -1218,7 +1218,7 @@ sub authLogout {
     my $session_dump = $req->{sessionInfo}->{_lassoSessionDump};
 
     unless ($session_dump) {
-        $self->logger->error("Could not get session dump from session");
+        $self->userLogger->error("Could not get session dump from session");
         return PE_SAML_SLO_ERROR;
     }
 
@@ -1338,14 +1338,14 @@ sub authLogout {
         unless ( $self->replayProtection($samlID) ) {
 
             # Logout request was already consumed or is expired
-            $self->logger->error("Message $samlID already used or expired");
+            $self->userLogger->error("Message $samlID already used or expired");
             return PE_SAML_SLO_ERROR;
         }
 
         return PE_OK;
     }
     else {
-        $self->logger->error("Lasso method $method not implemented here");
+        $self->userLogger->error("Lasso method $method not implemented here");
         return PE_SAML_SLO_ERROR;
     }
 }
