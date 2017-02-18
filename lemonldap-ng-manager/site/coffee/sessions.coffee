@@ -15,13 +15,13 @@ schemes =
 	]
 	ipAddr: [
 		(t,v) ->
-			"groupBy=net4(#{t},1)"
+			"#{t}=#{v}*&groupBy=net4(#{t},1)"
 		(t,v) ->
-			"groupBy=net4(#{t},2)"
+			"#{t}=#{v}*&groupBy=net4(#{t},2)"
 		(t,v) ->
-			"groupBy=net4(#{t},3)"
+			"#{t}=#{v}*&groupBy=net4(#{t},3)"
 		(t,v) ->
-			"groupBy=net4(#{t},4)"
+			"#{t}=#{v}&groupBy=net4(#{t},4)"
 		(t,v) ->
 			"#{t}=#{v}&groupBy=_whatToTrace"
 		(t,v,q) ->

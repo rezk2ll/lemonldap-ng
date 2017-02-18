@@ -19,13 +19,13 @@
     ],
     ipAddr: [
       function(t, v) {
-        return "groupBy=net4(" + t + ",1)";
+        return t + "=" + v + "*&groupBy=net4(" + t + ",1)";
       }, function(t, v) {
-        return "groupBy=net4(" + t + ",2)";
+        return t + "=" + v + "*&groupBy=net4(" + t + ",2)";
       }, function(t, v) {
-        return "groupBy=net4(" + t + ",3)";
+        return t + "=" + v + "*&groupBy=net4(" + t + ",3)";
       }, function(t, v) {
-        return "groupBy=net4(" + t + ",4)";
+        return t + "=" + v + "&groupBy=net4(" + t + ",4)";
       }, function(t, v) {
         return t + "=" + v + "&groupBy=_whatToTrace";
       }, function(t, v, q) {
