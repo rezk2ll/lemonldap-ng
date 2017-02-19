@@ -1481,19 +1481,17 @@
         "title": "mailContent",
         "type": "simpleInputContainer",
         "nodes": [{
-          "default": "[LemonLDAP::NG] Your new password",
+          "default": "",
           "id": "mailSubject",
-          "title": "mailSubject",
-          "data": "[LemonLDAP::NG] Your new password"
+          "title": "mailSubject"
         }, {
           "id": "mailBody",
           "title": "mailBody",
           "type": "longtext"
         }, {
-          "default": "[LemonLDAP::NG] Password reset confirmation",
+          "default": "",
           "id": "mailConfirmSubject",
-          "title": "mailConfirmSubject",
-          "data": "[LemonLDAP::NG] Password reset confirmation"
+          "title": "mailConfirmSubject"
         }, {
           "id": "mailConfirmBody",
           "title": "mailConfirmBody",
@@ -1556,15 +1554,13 @@
         "type": "int",
         "data": 0
       }, {
-        "default": "[LemonLDAP::NG] Account register confirmation",
+        "default": "",
         "id": "registerConfirmSubject",
-        "title": "registerConfirmSubject",
-        "data": "[LemonLDAP::NG] Account register confirmation"
+        "title": "registerConfirmSubject"
       }, {
-        "default": "[LemonLDAP::NG] Your new account",
+        "default": "",
         "id": "registerDoneSubject",
-        "title": "registerDoneSubject",
-        "data": "[LemonLDAP::NG] Your new account"
+        "title": "registerDoneSubject"
       }]
     }, {
       "id": "security",

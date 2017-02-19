@@ -2041,7 +2041,7 @@
       },
       {
         "_nodes": [{
-          "default": "[LemonLDAP::NG] Your new password",
+          "default": "",
           "id": "mailSubject",
           "title": "mailSubject"
         },
@@ -2051,7 +2051,7 @@
           "type": "longtext"
         },
         {
-          "default": "[LemonLDAP::NG] Password reset confirmation",
+          "default": "",
           "id": "mailConfirmSubject",
           "title": "mailConfirmSubject"
         },
@@ -2124,12 +2124,12 @@
         "type": "int"
       },
       {
-        "default": "[LemonLDAP::NG] Account register confirmation",
+        "default": "",
         "id": "registerConfirmSubject",
         "title": "registerConfirmSubject"
       },
       {
-        "default": "[LemonLDAP::NG] Your new account",
+        "default": "",
         "id": "registerDoneSubject",
         "title": "registerDoneSubject"
       }],

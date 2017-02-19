@@ -1308,7 +1308,7 @@
         "type": "simpleInputContainer"
       }, {
         "_nodes": [{
-          "default": "[LemonLDAP::NG] Your new password",
+          "default": "",
           "id": "mailSubject",
           "title": "mailSubject"
         }, {
@@ -1316,7 +1316,7 @@
           "title": "mailBody",
           "type": "longtext"
         }, {
-          "default": "[LemonLDAP::NG] Password reset confirmation",
+          "default": "",
           "id": "mailConfirmSubject",
           "title": "mailConfirmSubject"
         }, {
@@ -1377,11 +1377,11 @@
         "title": "registerTimeout",
         "type": "int"
       }, {
-        "default": "[LemonLDAP::NG] Account register confirmation",
+        "default": "",
         "id": "registerConfirmSubject",
         "title": "registerConfirmSubject"
       }, {
-        "default": "[LemonLDAP::NG] Your new account",
+        "default": "",
         "id": "registerDoneSubject",
         "title": "registerDoneSubject"
       }],
