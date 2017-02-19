@@ -108,10 +108,12 @@ ping = ->
 			ping: 1
 		dataType: 'json'
 		success: (data) ->
-			if data.auth
+			if data.result? and data.result == 1
 				setTimeout ping, datas['pingInterval']
 			else
 				location.reload true
+		error: (j,t,e) ->
+			location.reload true
 
 window.ping = ping
 

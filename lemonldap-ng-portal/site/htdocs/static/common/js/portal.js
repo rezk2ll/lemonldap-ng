@@ -74,7 +74,7 @@ LemonLDAP::NG Portal jQuery scripts
   };
 
   restoreOrder = function() {
-    var IDs, child, i, item, itemID, items, j, len, len1, list, rebuild, savedOrd, v;
+    var IDs, child, i, item, itemID, items, l, len, len1, list, rebuild, savedOrd, v;
     list = $(setSelector);
     if (!((list != null) && datas['appslistorder'])) {
       return null;
@@ -86,8 +86,8 @@ LemonLDAP::NG Portal jQuery scripts
       v = items[i];
       rebuild[v] = v;
     }
-    for (j = 0, len1 = IDs.length; j < len1; j++) {
-      itemID = IDs[j];
+    for (l = 0, len1 = IDs.length; l < len1; l++) {
+      itemID = IDs[l];
       if (indexOf.call(rebuild, itemID) >= 0) {
         item = rebuild[itemID];
         child = $(setSelector + ".ui-sortable").children("#" + item);
@@ -112,11 +112,14 @@ LemonLDAP::NG Portal jQuery scripts
       },
       dataType: 'json',
       success: function(data) {
-        if (data.auth) {
+        if ((data.result != null) && data.result === 1) {
           return setTimeout(ping, datas['pingInterval']);
         } else {
           return location.reload(true);
         }
+      },
+      error: function(j, t, e) {
+        return location.reload(true);
       }
     });
   };
@@ -148,7 +151,7 @@ LemonLDAP::NG Portal jQuery scripts
   datas = {};
 
   $(document).ready(function() {
-    var action, al, authMenuTabs, back_url, i, j, l, lang, langdiv, langs, langs2, len, len1, len2, link, menuIndex, menuTabs, method, nl, nlangs, ref, ref1;
+    var action, al, authMenuTabs, back_url, i, l, lang, langdiv, langs, langs2, len, len1, len2, link, m, menuIndex, menuTabs, method, nl, nlangs, ref, ref1;
     datas = getValues();
     window.datas = datas;
     if (datas['antiframe'] && top !== self) {
@@ -217,8 +220,8 @@ LemonLDAP::NG Portal jQuery scripts
         for (i = 0, len = ref.length; i < len; i++) {
           al = ref[i];
           langdiv += "<img class=\"langicon\" src=\"" + window.staticPrefix + "common/" + al + ".png\" title=\"" + al + "\"> ";
-          for (j = 0, len1 = nlangs.length; j < len1; j++) {
-            nl = nlangs[j];
+          for (l = 0, len1 = nlangs.length; l < len1; l++) {
+            nl = nlangs[l];
             if (al === nl) {
               langs.push(al);
             } else if (al.substring(0, 1) === nl.substring(0, 1)) {
@@ -235,8 +238,8 @@ LemonLDAP::NG Portal jQuery scripts
     translatePage(lang);
     langdiv = '';
     ref1 = window.availableLanguages;
-    for (l = 0, len2 = ref1.length; l < len2; l++) {
-      al = ref1[l];
+    for (m = 0, len2 = ref1.length; m < len2; m++) {
+      al = ref1[m];
       langdiv += "<img class=\"langicon\" src=\"" + window.staticPrefix + "common/" + al + ".png\" title=\"" + al + "\"> ";
     }
     $('#languages').html(langdiv);
