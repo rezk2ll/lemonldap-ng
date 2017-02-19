@@ -406,6 +406,7 @@ t/50-IssuerGet.t
 t/60-status.t
 t/61-grantSession.t
 t/62-singleSession.t
+t/63-History.t
 t/90-translations.t
 t/99-pod.t
 t/lmConf-1.js

@@ -35,11 +35,11 @@ sub run {
                 and $req->{sessionInfo}->{ipAddr} ne $session->data->{ipAddr} )
           )
         {
-            push @$deleted, $self->_sumUpSession( $session->data );
+            push @$deleted, $self->p->_sumUpSession( $session->data );
             $self->p->_deleteSession( $req, $session, 1 );
         }
         else {
-            push @$otherSessions, $self->_sumUpSession( $session->data );
+            push @$otherSessions, $self->p->_sumUpSession( $session->data );
         }
     }
     if ( $self->conf->{singleUserByIP} ) {
@@ -52,7 +52,7 @@ sub run {
             unless ( $req->{sessionInfo}->{ $self->conf->{whatToTrace} } eq
                 $session->data->{ $self->conf->{whatToTrace} } )
             {
-                push @$deleted, $self->_sumUpSession( $session->data );
+                push @$deleted, $self->p->_sumUpSession( $session->data );
                 $self->p->_deleteSession( $req, $session, 1 );
             }
         }
@@ -64,21 +64,6 @@ sub run {
       if ( $self->conf->{notifyOther} and @$otherSessions );
 
     PE_OK;
-}
-
-# put main session data into a hash ref
-# @param hashref $session The session to sum up
-# @return hashref
-sub _sumUpSession {
-    my ( $self, $session, $withoutUser ) = @_;
-    my $res =
-      $withoutUser
-      ? {}
-      : { user => $session->{ $self->conf->{whatToTrace} } };
-    $res->{$_} = $session->{$_}
-      foreach ( "_utime", "ipAddr",
-        keys %{ $self->conf->{sessionDataToRemember} } );
-    return $res;
 }
 
 # Build the removeOther link

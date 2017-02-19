@@ -152,11 +152,16 @@ sub do {
     $req->steps($steps);
     my $err = $req->error( $self->process($req) );
 
-    # TODO: updateStatus
+    # Update status
     if ( my $p = $self->HANDLER->tsv->{statusPipe} ) {
         print $p ( $req->user ? $req->user : $req->address ) . ' => '
           . $req->uri
           . " $err\n";
+    }
+
+    # Update history
+    if ( $self->conf->{loginHistoryEnabled} ) {
+        $self->registerLogin($req);
     }
     if ( $err == PE_SENDRESPONSE ) {
         return $req->response;
@@ -374,9 +379,6 @@ sub updatePersistentSession {
     # Return if no infos to update
     return () unless ( ref $infos eq 'HASH' and %$infos );
 
-    # Update current session
-    $self->updateSession( $req, $infos, $id );
-
     $uid ||= $req->{sessionInfo}->{ $self->conf->{whatToTrace} }
       || $req->userData->{ $self->conf->{whatToTrace} };
     unless ($uid) {
@@ -384,6 +386,9 @@ sub updatePersistentSession {
         return ();
     }
     $self->logger->debug("Update $uid persistent session");
+
+    # Update current session
+    $self->updateSession( $req, $infos, $id );
 
     my $persistentSession = $self->getPersistentSession($uid);
 
@@ -717,6 +722,45 @@ sub tplParams {
         SKIN       => $_[0]->conf->{portalSkin},
         PORTAL_URL => $_[0]->conf->{portal},
     );
+}
+
+sub registerLogin {
+    my ( $self, $req ) = @_;
+    return unless ( defined $req->authResult );
+    my $history = $req->sessionInfo->{loginHistory} ||= {};
+    my $type = ( $req->authResult > 0 ? 'failed' : 'success' ) . 'Login';
+    $history->{$type} ||= [];
+    $self->logger->debug("Current login saved into $type");
+
+    # Gather current login's parameters
+    my $login = $self->_sumUpSession( $req->{sessionInfo}, 1 );
+    $login->{error} = $self->error( $req->authResult )
+      if ( $req->authResult );
+
+    # Add current login into history
+    unshift @{ $history->{$type} }, $login;
+
+    # Forget oldest logins
+    splice @{ $history->{$type} }, $self->conf->{ $type . "Number" }
+      if ( scalar @{ $history->{$type} } > $self->conf->{ $type . "Number" } );
+
+    # Save into persistent session
+    $self->updatePersistentSession( $req, { loginHistory => $history, } );
+}
+
+# put main session data into a hash ref
+# @param hashref $session The session to sum up
+# @return hashref
+sub _sumUpSession {
+    my ( $self, $session, $withoutUser ) = @_;
+    my $res =
+      $withoutUser
+      ? {}
+      : { user => $session->{ $self->conf->{whatToTrace} } };
+    $res->{$_} = $session->{$_}
+      foreach ( "_utime", "ipAddr",
+        keys %{ $self->conf->{sessionDataToRemember} } );
+    return $res;
 }
 
 1;

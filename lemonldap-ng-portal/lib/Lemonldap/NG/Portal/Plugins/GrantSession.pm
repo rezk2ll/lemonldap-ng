@@ -40,11 +40,11 @@ sub grantSession {
     foreach ( sort sortByComment keys %{ $self->rules } ) {
         $self->logger->debug("Grant session condition \"$_\"");
         unless ( $self->rules->{$_}->( $req->sessionInfo ) ) {
-            $req->userData({});
+            $req->userData( {} );
             $self->userLogger->error( 'User '
                   . $req->user
                   . " was not granted to open session (rule $_)" );
-            return PE_SESSIONNOTGRANTED;
+            return $req->authResult(PE_SESSIONNOTGRANTED);
         }
     }
     return PE_OK;

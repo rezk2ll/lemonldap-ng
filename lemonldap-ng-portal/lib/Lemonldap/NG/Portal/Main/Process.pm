@@ -141,6 +141,7 @@ sub authLogout {
 
 sub deleteSession {
     my ( $self, $req ) = @_;
+    $req->userData( {} );
     my $apacheSession = $self->getApacheSession( $req->id );
     my $id            = $req->id;
     unless ($apacheSession) {
@@ -267,7 +268,7 @@ sub getUser {
 
 sub authenticate {
     my ( $self, $req ) = @_;
-    return $self->_authentication->authenticate($req);
+    return $req->authResult( $self->_authentication->authenticate($req) );
 }
 
 # Third block: Session data providing

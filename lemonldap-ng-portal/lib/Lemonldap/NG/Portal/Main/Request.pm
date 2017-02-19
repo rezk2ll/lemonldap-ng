@@ -12,6 +12,9 @@ extends 'Lemonldap::NG::Common::PSGI::Request';
 # List of methods to call
 has steps => ( is => 'rw' );
 
+# Authentication result
+has authResult => ( is => 'rw' );
+
 # Datas shared between methods
 has datas => ( is => 'rw' );
 
