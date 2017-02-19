@@ -883,7 +883,7 @@
       }, {
         "cnodes": "remoteGlobalStorageOptions",
         "default": [{
-          "data": "http://auth.example.com/Lemonldap/NG/Common/CGI/SOAPService",
+          "data": "http://auth.example.com/Lemonldap/NG/Common/PSGI/SOAPService",
           "id": "remoteGlobalStorageOptions/ns",
           "title": "ns",
           "type": "keyText"

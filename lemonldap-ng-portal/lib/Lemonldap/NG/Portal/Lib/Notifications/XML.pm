@@ -246,4 +246,37 @@ sub getNotifBack {
     }
 }
 
+has imported => ( is => 'rw', default => 0 );
+has server => ( is => 'rw' );
+
+sub notificationServer {
+    my ( $self, $req ) = @_;
+    unless ($self->imported) {
+        eval {
+            require Lemonldap::NG::Common::PSGI::SOAPServer;
+            require Lemonldap::NG::Common::PSGI::SOAPService;
+        };
+        if ($@) {
+            return $self->p->sendError( $req, $@, 500 );
+        }
+        $self->server(
+            Lemonldap::NG::Common::PSGI::SOAPServer->new
+        );
+        $self->imported(1);
+    }
+    unless ( $req->env->{HTTP_SOAPACTION} ) {
+        return $self->p->sendError( $req, 'SOAP requests only', 400 );
+    }
+    return $self->server->dispatch_to(
+        Lemonldap::NG::Common::PSGI::SOAPService->new(
+            $self, $req, 'newNotification',
+        )
+    )->handle($req);
+}
+
+sub newNotification {
+    my($self,$req,$xml) = @_;
+    return $self->notifObject->newNotification($xml);
+}
+
 1;

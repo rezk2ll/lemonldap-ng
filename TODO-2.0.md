@@ -3,10 +3,8 @@
 * Test ForceAuth
 * Calendar in notifications explorer
 * Test for Zero
-* replace SOAP by REST for notification creation
 * "mail" in UserDB/*
 * verify activeTimer on/off on screen
-
 * Add test for #173
 
 # Combination

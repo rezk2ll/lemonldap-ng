@@ -374,6 +374,7 @@
 "notAValidPerlExpression": "Pas une expression Perl valide",
 "notification": "Activation",
 "notifications": "Notifications",
+"notificationServer": "Serveur de notifications",
 "notificationCreated": "La notification a été créée",
 "notificationDeleted": "La notification a été marquée comme lue",
 "notificationDone": "notification validée",

@@ -224,4 +224,13 @@ sub toForm {
     return $tpl->output;
 }
 
+sub notificationServer {
+    my ( $self, $req ) = @_;
+    return $self->p->sendError( $req, 'Only JSON requests here', 400 )
+      unless ( $req->wantJSON );
+    my $res = $self->notifObject->newNotification( $req->content );
+    return $self->p->sendError( $req, 'Bad request', 400 ) unless ($res);
+    return $self->p->sendJSONresponse( $req, { result => $res } );
+}
+
 1;

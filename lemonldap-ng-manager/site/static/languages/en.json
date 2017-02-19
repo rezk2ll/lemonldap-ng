@@ -374,6 +374,7 @@
 "notAValidPerlExpression": "Not a valid Perl expression",
 "notification": "Activation",
 "notifications": "Notifications",
+"notificationServer": "Notification server",
 "notificationCreated": "Notification has been created",
 "notificationDeleted": "Notification deleted",
 "notificationDone": "notification done",

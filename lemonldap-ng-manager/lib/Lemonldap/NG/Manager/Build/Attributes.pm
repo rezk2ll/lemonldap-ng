@@ -667,6 +667,11 @@ sub attributes {
             type          => 'bool',
             documentation => 'Notification activation',
         },
+        notificationServer => {
+            default       => 0,
+            type          => 'bool',
+            documentation => 'Notification server activation',
+        },
         notificationStorage => {
             type          => 'PerlModule',
             default       => 'File',
@@ -1984,7 +1989,7 @@ m{^(?:ldapi://[^/]*/?|\w[\w\-\.]*(?::\d{1,5})?|ldap(?:s|\+tls)?://\w[\w\-\.]*(?:
             default => {
                 proxy => 'http://auth.example.com/sessions',
                 ns =>
-                  'http://auth.example.com/Lemonldap/NG/Common/CGI/SOAPService',
+                  'http://auth.example.com/Lemonldap/NG/Common/PSGI/SOAPService',
             },
             documentation => 'Demo exported variables',
         },

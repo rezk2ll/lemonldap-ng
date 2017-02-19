@@ -170,7 +170,7 @@ sub defaultValues {
         'remoteGlobalStorage' => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         'remoteGlobalStorageOptions' => {
             'ns' =>
-              'http://auth.example.com/Lemonldap/NG/Common/CGI/SOAPService',
+              'http://auth.example.com/Lemonldap/NG/Common/PSGI/SOAPService',
             'proxy' => 'http://auth.example.com/sessions'
         },
         'requireToken' => 1,

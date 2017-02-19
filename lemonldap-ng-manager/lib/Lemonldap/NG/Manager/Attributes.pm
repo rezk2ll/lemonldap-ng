@@ -1398,6 +1398,10 @@ qr/^(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-
             'default' => 0,
             'type'    => 'bool'
         },
+        'notificationServer' => {
+            'default' => 0,
+            'type'    => 'bool'
+        },
         'notificationStorage' => {
             'default' => 'File',
             'type'    => 'PerlModule'
@@ -2061,7 +2065,7 @@ qr/(?:(?:https?):\/\/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.]
         'remoteGlobalStorageOptions' => {
             'default' => {
                 'ns' =>
-                  'http://auth.example.com/Lemonldap/NG/Common/CGI/SOAPService',
+'http://auth.example.com/Lemonldap/NG/Common/PSGI/SOAPService',
                 'proxy' => 'http://auth.example.com/sessions'
             },
             'type' => 'keyTextContainer'

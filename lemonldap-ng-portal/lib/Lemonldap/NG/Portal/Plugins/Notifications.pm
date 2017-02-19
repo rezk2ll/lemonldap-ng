@@ -40,6 +40,14 @@ sub init {
     $self->addUnauthRoute( 'notifback' => 'getNotifBack', ['POST'] );
     $self->addAuthRoute( 'notifback' => 'getNotifBack', ['POST'] );
 
+    if ( $self->conf->{notificationServer} ) {
+        $self->logger->debug('Notification server enable');
+        $self->addUnauthRoute(
+            'notifications' => 'notificationServer',
+            ['POST']
+        );
+    }
+
     # Search for configuration options
     my $type = $self->conf->{notificationStorage};
     unless ($type) {
@@ -112,6 +120,11 @@ sub checkNotifDuringAuth {
 sub getNotifBack {
     my $self = shift;
     return $self->module->getNotifBack(@_);
+}
+
+sub notificationServer {
+    my ( $self, $req ) = @_;
+    return $self->module->notificationServer($req);
 }
 
 1;
